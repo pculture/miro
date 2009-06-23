@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:37+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -26,10 +26,6 @@ msgstr "ট্রে আইকন সক্রিয়করণ"
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:42
 msgid "When I click the red close button:"
 msgstr "যখন আমি লাল বোতাম ক্লিক করব তখন :"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:45
-msgid "Close to tray so that downloads can continue."
-msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Quit Miro completely."
@@ -46,6 +42,111 @@ msgid ""
 msgstr ""
 "লাল বোতাম টেপার পর আপনি কি মীরো -কে সিস্টেম ট্রেতে রাখতে না সম্পূর্ণ ভাবে "
 "বন্ধ করতে ইচ্ছুক? আপনি পরে এই সেটিংটি অপশণ্স-এ গিয়ে পরিবর্তন করতে পারবেন।"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
+msgid "Install Adobe Flash?"
+msgstr "Adobe Flash ইন্সটল করব?"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
+msgid "Install Adobe Flash"
+msgstr "Adobe Flash ইন্সটল করুন"
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
+msgid "You must restart Miro for renderer changes to take effect."
+msgstr ""
+"রেন্ডারার -এর পরিবর্তনগুলি সক্রিয় করার জন্য আপনাকে মিরো -কে পুনরায় চালু করতে "
+"হবে।"
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:120
+#: ../../portable/frontends/widgets/gtk/video.py:300
+#: ../../portable/frontends/widgets/itemcontextmenu.py:152
+msgid "Share"
+msgstr "শেয়ার"
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:124
+#: ../../portable/frontends/widgets/style.py:232
+#: ../../portable/frontends/widgets/style.py:970
+#: ../../portable/frontends/widgets/style.py:1134
+#: ../../portable/frontends/widgets/gtk/video.py:279
+#: ../../portable/frontends/widgets/itemcontextmenu.py:109
+#: ../../portable/frontends/widgets/itemcontextmenu.py:211
+#: ../../portable/dialogs.py:106
+msgid "Keep"
+msgstr "রেখে দাও"
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:128
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
+#: ../../portable/frontends/widgets/gtk/video.py:274
+#: ../../portable/frontends/widgets/gtk/video.py:282
+#: ../../portable/frontends/widgets/itemcontextmenu.py:65
+#: ../../portable/dialogs.py:107
+msgid "Delete"
+msgstr "মুছে ফেলুন"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
+msgid "Services"
+msgstr "পরিসেবা"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
+msgid "Preferences..."
+msgstr "পছন্দসমূহ..."
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:150
+msgid "Close Window"
+msgstr "উইন্ডো বন্ধ করুন"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
+msgid "Cut"
+msgstr "কাট"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
+msgid "Copy"
+msgstr "কপি"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
+msgid "Paste"
+msgstr "পেষ্ট"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
+msgid "Select All"
+msgstr "সবকিছু নির্বাচন কর"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
+msgid "Edit"
+msgstr "সম্পাদনা"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
+msgid "Zoom"
+msgstr "জুম"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
+msgid "Minimize"
+msgstr "ছোট করুন"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
+msgid "Main Window"
+msgstr "প্রধান উইন্ডো"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
+msgid "Window"
+msgstr "উইন্ডো"
+
+#: ../../portable/frontends/widgets/prefpanel.py:625
+msgid "Playback"
+msgstr "বাজাও"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:273
+#: ../../portable/dialogs.py:85
+msgid "Cancel"
+msgstr "বাতিল"
+
+#: ../../portable/dialogs.py:83
+msgid "Ok"
+msgstr "ঠিক আছে"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:45
+msgid "Close to tray so that downloads can continue."
+msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:182
 msgid "Error Bombing Item"
@@ -78,20 +179,12 @@ msgstr ""
 msgid "Do you want to download it now?"
 msgstr ""
 
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
-msgid "Install Adobe Flash?"
-msgstr "Adobe Flash ইন্সটল করব?"
-
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
 #, python-format
 msgid ""
 "For the best %(appname)s experience, we suggest you install Adobe Flash.  "
 "Would you like to do this now?"
 msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
-msgid "Install Adobe Flash"
-msgstr "Adobe Flash ইন্সটল করুন"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
 msgid ""
@@ -105,12 +198,6 @@ msgstr ""
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
 msgid "Renderer options:"
 msgstr ""
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
-msgid "You must restart Miro for renderer changes to take effect."
-msgstr ""
-"রেন্ডারার -এর পরিবর্তনগুলি সক্রিয় করার জন্য আপনাকে মিরো -কে পুনরায় চালু করতে "
-"হবে।"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:72
 msgid "Video renderer:"
@@ -128,32 +215,6 @@ msgstr ""
 msgid "Use this for video when playing audio:"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:120
-#: ../../portable/frontends/widgets/gtk/video.py:300
-#: ../../portable/frontends/widgets/itemcontextmenu.py:152
-msgid "Share"
-msgstr "শেয়ার"
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:124
-#: ../../portable/frontends/widgets/style.py:232
-#: ../../portable/frontends/widgets/style.py:970
-#: ../../portable/frontends/widgets/style.py:1134
-#: ../../portable/frontends/widgets/gtk/video.py:279
-#: ../../portable/frontends/widgets/itemcontextmenu.py:109
-#: ../../portable/frontends/widgets/itemcontextmenu.py:211
-#: ../../portable/dialogs.py:106
-msgid "Keep"
-msgstr "রেখে দাও"
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:128
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
-#: ../../portable/frontends/widgets/gtk/video.py:274
-#: ../../portable/frontends/widgets/gtk/video.py:282
-#: ../../portable/frontends/widgets/itemcontextmenu.py:65
-#: ../../portable/dialogs.py:107
-msgid "Delete"
-msgstr "মুছে ফেলুন"
-
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:132
 msgid "Add to Library"
 msgstr ""
@@ -166,11 +227,6 @@ msgstr ""
 msgid "Pop In"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
-msgid "Services"
-msgstr "পরিসেবা"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 msgid "Hide Miro"
 msgstr ""
 
@@ -182,37 +238,8 @@ msgstr ""
 msgid "Show All"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
-msgid "Preferences..."
-msgstr "পছন্দসমূহ..."
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
 msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:150
-msgid "Close Window"
-msgstr "উইন্ডো বন্ধ করুন"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
-msgid "Cut"
-msgstr "কাট"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
-msgid "Copy"
-msgstr "কপি"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
-msgid "Paste"
-msgstr "পেষ্ট"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
-msgid "Select All"
-msgstr "সবকিছু নির্বাচন কর"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
-msgid "Edit"
-msgstr "সম্পাদনা"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
 msgid "Present Half Size"
@@ -230,27 +257,10 @@ msgstr ""
 msgid "Present Video"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
-msgid "Zoom"
-msgstr "জুম"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
-msgid "Minimize"
-msgstr "ছোট করুন"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
-msgid "Main Window"
-msgstr "প্রধান উইন্ডো"
-
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
 msgid "Bring All to Front"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
-msgid "Window"
-msgstr "উইন্ডো"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Miro Help"
 msgstr ""
 
@@ -277,7 +287,6 @@ msgstr ""
 msgid "Example Playlist"
 msgstr ""
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr ""
 
@@ -332,23 +341,19 @@ msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr ""
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr ""
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -758,7 +763,6 @@ msgstr ""
 msgid "_Toggle Detached/Attached"
 msgstr ""
 
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr ""
 
@@ -1074,7 +1078,6 @@ msgstr ""
 msgid "Remove from playlist"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr ""
 
@@ -1220,7 +1223,6 @@ msgstr ""
 msgid "Migrate existing movies?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
@@ -1314,10 +1316,6 @@ msgstr ""
 msgid "Disk space"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:625
-msgid "Playback"
-msgstr "বাজাও"
-
 #: ../../portable/frontends/widgets/prefpanel.py:629
 msgid "Preferences"
 msgstr ""
@@ -1334,7 +1332,6 @@ msgstr ""
 msgid "Password:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
 msgstr ""
 
@@ -1347,21 +1344,15 @@ msgstr ""
 msgid "No Results Found"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
 msgid "Library"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr ""
 
@@ -1934,7 +1925,6 @@ msgstr ""
 msgid "Choose"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -2201,11 +2191,6 @@ msgstr ""
 msgid "Searching for media files"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:273
-#: ../../portable/dialogs.py:85
-msgid "Cancel"
-msgstr "বাতিল"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:311
 #, python-format
 msgid "parsed %(count)s file"
@@ -2288,7 +2273,6 @@ msgstr ""
 msgid "Mark as Played"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr ""
 
@@ -2308,7 +2292,6 @@ msgstr ""
 msgid "Resume Download"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
 msgstr ""
 
@@ -2368,10 +2351,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemcontextmenu.py:278
 msgid "Remove From Playlist"
 msgstr ""
-
-#: ../../portable/dialogs.py:83
-msgid "Ok"
-msgstr "ঠিক আছে"
 
 #: ../../portable/dialogs.py:84
 msgid "Close"

@@ -15,8 +15,277 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:182
+msgid "Error Bombing Item"
+msgstr "Rắc rối bombing tiết mục"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:184
+msgid "Error Recommending Item"
+msgstr "Rắc rối giới-thiệu tiết mục"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:186
+msgid "Error Opening Website"
+msgstr "Rắc rối khai-mạc tiết mục"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:191
+#, python-format
+msgid ""
+"There was an error opening %(url)s.  Please try again in a few seconds"
+msgstr ""
+"Có một chút rắc rối khi mở %(url)s.  Xin vui lòng thử lại trong vài giây"
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
+msgid "Renderer options:"
+msgstr "Cách biểu hiện"
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
+msgid "You must restart Miro for renderer changes to take effect."
+msgstr "Bạn phải khởi động lại Miro cho cái biểu hiện thay đổi có hiệu lực."
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:86
+msgid "Use this for video when playing audio:"
+msgstr "Sử dụng cái biểu hiện này để hát audio:"
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:128
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
+#: ../../portable/frontends/widgets/gtk/video.py:274
+#: ../../portable/frontends/widgets/gtk/video.py:282
+#: ../../portable/frontends/widgets/itemcontextmenu.py:65
+#: ../../portable/dialogs.py:107
+msgid "Delete"
+msgstr "Xóa"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
+msgid "Services"
+msgstr "Dịch vụ"
+
+msgid "Hide Miro"
+msgstr "Giấu Miro"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
+msgid "Hide Others"
+msgstr "Giấu những cái khác"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
+msgid "Show All"
+msgstr "Trưng bày tất cả"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
+msgid "Preferences..."
+msgstr "Ý chọn"
+
+msgid "Quit Miro"
+msgstr "Thoát Miro"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:150
+msgid "Close Window"
+msgstr "Đóng Window"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
+msgid "Cut"
+msgstr "Cắt"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
+msgid "Copy"
+msgstr "Chép"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
+msgid "Paste"
+msgstr "Dán"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
+msgid "Select All"
+msgstr "Chọn tất cả"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
+msgid "Edit"
+msgstr "Sửa lại"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
+msgid "Zoom"
+msgstr "Thu-phóng"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
+msgid "Minimize"
+msgstr "Thu nhỏ"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
+msgid "Main Window"
+msgstr "Window chính"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
+msgid "Bring All to Front"
+msgstr "Đưa tất cả về trước"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
+msgid "Window"
+msgstr "Window"
+
+msgid "Miro Help"
+msgstr "Miro giúp"
+
+#: ../../portable/menubar.py:256
+msgid "_Next Video"
+msgstr "_Video  tiếp"
+
+#: ../../portable/menubar.py:257
+msgid "_Previous Video"
+msgstr "_Video trước"
+
+#: ../../portable/menubar.py:265
+msgid "_Fullscreen"
+msgstr "_Toàn màn hình"
+
+#: ../../portable/menubar.py:282
+msgid "_Video"
+msgstr "_Video"
+
+#: ../../portable/frontends/widgets/style.py:233
+#: ../../portable/frontends/widgets/prefpanel.py:485
+#: ../../portable/frontends/widgets/tablist.py:523
+#: ../../portable/frontends/widgets/tablist.py:535
+#: ../../portable/frontends/widgets/tablist.py:541
+#: ../../portable/frontends/widgets/tablist.py:578
+#: ../../portable/frontends/widgets/tablist.py:584
+#: ../../portable/frontends/widgets/tablist.py:589
+#: ../../portable/dialogs.py:108
+msgid "Remove"
+msgstr "Loại bỏ"
+
+#: ../../portable/frontends/widgets/prefpanel.py:289
+#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+#: ../../portable/frontends/widgets/statictabs.py:103
+msgid "New"
+msgstr "Tạo mới"
+
+#: ../../portable/frontends/widgets/prefpanel.py:290
+#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+msgid "All"
+msgstr "Tất cả"
+
+#: ../../portable/frontends/widgets/prefpanel.py:291
+#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+msgid "Off"
+msgstr "Tắt"
+
+#: ../../portable/frontends/widgets/prefpanel.py:580
+msgid "1 day"
+msgstr "1 ngày"
+
+#: ../../portable/frontends/widgets/prefpanel.py:581
+msgid "3 days"
+msgstr "3 ngày"
+
+#: ../../portable/frontends/widgets/prefpanel.py:582
+msgid "6 days"
+msgstr "6 ngày"
+
+#: ../../portable/frontends/widgets/prefpanel.py:583
+msgid "10 days"
+msgstr "10 ngày"
+
+#: ../../portable/frontends/widgets/prefpanel.py:584
+msgid "1 month"
+msgstr "1 tháng"
+
+#: ../../portable/frontends/widgets/prefpanel.py:590
+msgid "By default, videos expire after:"
+msgstr "Theo mặc định, video hết hạn vào:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:625
+msgid "Playback"
+msgstr "Phát lại"
+
+#: ../../portable/frontends/widgets/itemlistcontroller.py:413
+#: ../../portable/frontends/widgets/statictabs.py:86
+msgid "Video Search"
+msgstr "Tìm kiếm Video"
+
+#: ../../portable/frontends/widgets/diagnostics.py:77
+#: ../../portable/frontends/widgets/gtk/trayicon.py:83
+msgid "Show"
+msgstr "Trưng bày"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:81
+msgid "Hide"
+msgstr "Giấu"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:74
+msgid "Search for:"
+msgstr "Tìm kiếm:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:80
+msgid "In this:"
+msgstr "Trong:"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:137
+#: ../../portable/frontends/widgets/firsttimedialog.py:170
+#: ../../portable/dialogs.py:87
+msgid "Yes"
+msgstr "Đồng Ý"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:138
+#: ../../portable/frontends/widgets/firsttimedialog.py:169
+#: ../../portable/dialogs.py:88
+msgid "No"
+msgstr "Không"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:213
+#: ../../portable/frontends/widgets/firsttimedialog.py:215
+#: ../../portable/frontends/widgets/firsttimedialog.py:272
+#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
+msgid "Search"
+msgstr "Tìm kiếm"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:273
+#: ../../portable/dialogs.py:85
+msgid "Cancel"
+msgstr "Huỷ bỏ"
+
+#: ../../portable/dialogs.py:83
+msgid "Ok"
+msgstr "Đồng ý"
+
+#: ../../portable/dialogs.py:101
+msgid "Create"
+msgstr "Tạo"
+
+#: ../../portable/singleclick.py:100
+msgid "Download already exists"
+msgstr "Download đã có rồi"
+
+#: ../../portable/singleclick.py:101
+msgid "That URL is already an external download."
+msgstr "URL đó đã là một cái download bên ngoài rồi."
+
+#: ../../portable/singleclick.py:107
+msgid "Miro will begin downloading it now."
+msgstr "Miro sẽ bắt đầu tải xuống ngay bây giờ."
+
+#: ../../portable/singleclick.py:109
+msgid "It is downloading now."
+msgstr "Đang tải xuống."
+
+#: ../../portable/singleclick.py:111
+msgid "It has already been downloaded."
+msgstr "Đã tải xuống rồi."
+
+#: ../../portable/singleclick.py:166
+msgid "Download Error"
+msgstr "Rắc rối khi tải xuống"
+
+#: ../../portable/singleclick.py:168
+#, python-format
+msgid ""
+"Miro is not able to download a file at this URL:\n"
+"\n"
+"URL: %(url)s"
+msgstr ""
+"Miro không tải được tập tin tại URL này: \n"
+"URL: %(url)s"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
@@ -44,25 +313,6 @@ msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
 msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:182
-msgid "Error Bombing Item"
-msgstr "Rắc rối bombing tiết mục"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:184
-msgid "Error Recommending Item"
-msgstr "Rắc rối giới-thiệu tiết mục"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:186
-msgid "Error Opening Website"
-msgstr "Rắc rối khai-mạc tiết mục"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:191
-#, python-format
-msgid ""
-"There was an error opening %(url)s.  Please try again in a few seconds"
-msgstr ""
-"Có một chút rắc rối khi mở %(url)s.  Xin vui lòng thử lại trong vài giây"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
 msgid "Update Available"
@@ -101,14 +351,6 @@ msgid ""
 "installed."
 msgstr ""
 
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
-msgid "Renderer options:"
-msgstr "Cách biểu hiện"
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
-msgid "You must restart Miro for renderer changes to take effect."
-msgstr "Bạn phải khởi động lại Miro cho cái biểu hiện thay đổi có hiệu lực."
-
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:72
 msgid "Video renderer:"
 msgstr ""
@@ -120,10 +362,6 @@ msgstr ""
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:80
 msgid "None"
 msgstr ""
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:86
-msgid "Use this for video when playing audio:"
-msgstr "Sử dụng cái biểu hiện này để hát audio:"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:120
 #: ../../portable/frontends/widgets/gtk/video.py:300
@@ -142,15 +380,6 @@ msgstr ""
 msgid "Keep"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:128
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
-#: ../../portable/frontends/widgets/gtk/video.py:274
-#: ../../portable/frontends/widgets/gtk/video.py:282
-#: ../../portable/frontends/widgets/itemcontextmenu.py:65
-#: ../../portable/dialogs.py:107
-msgid "Delete"
-msgstr "Xóa"
-
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:132
 msgid "Add to Library"
 msgstr ""
@@ -162,54 +391,6 @@ msgstr ""
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:206
 msgid "Pop In"
 msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
-msgid "Services"
-msgstr "Dịch vụ"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
-msgid "Hide Miro"
-msgstr "Giấu Miro"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
-msgid "Hide Others"
-msgstr "Giấu những cái khác"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
-msgid "Show All"
-msgstr "Trưng bày tất cả"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
-msgid "Preferences..."
-msgstr "Ý chọn"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
-msgid "Quit Miro"
-msgstr "Thoát Miro"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:150
-msgid "Close Window"
-msgstr "Đóng Window"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
-msgid "Cut"
-msgstr "Cắt"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
-msgid "Copy"
-msgstr "Chép"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
-msgid "Paste"
-msgstr "Dán"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
-msgid "Select All"
-msgstr "Chọn tất cả"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
-msgid "Edit"
-msgstr "Sửa lại"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
 msgid "Present Half Size"
@@ -226,30 +407,6 @@ msgstr ""
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
 msgid "Present Video"
 msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
-msgid "Zoom"
-msgstr "Thu-phóng"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
-msgid "Minimize"
-msgstr "Thu nhỏ"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
-msgid "Main Window"
-msgstr "Window chính"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
-msgid "Bring All to Front"
-msgstr "Đưa tất cả về trước"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
-msgid "Window"
-msgstr "Window"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
-msgid "Miro Help"
-msgstr "Miro giúp"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:166
 msgid "Download Completed"
@@ -274,7 +431,6 @@ msgstr ""
 msgid "Example Playlist"
 msgstr ""
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr ""
 
@@ -329,23 +485,19 @@ msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr ""
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr ""
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -723,14 +875,6 @@ msgstr ""
 msgid "_Stop"
 msgstr ""
 
-#: ../../portable/menubar.py:256
-msgid "_Next Video"
-msgstr "_Video  tiếp"
-
-#: ../../portable/menubar.py:257
-msgid "_Previous Video"
-msgstr "_Video trước"
-
 #: ../../portable/menubar.py:259
 msgid "Skip _Forward"
 msgstr ""
@@ -747,15 +891,10 @@ msgstr ""
 msgid "Volume _Down"
 msgstr ""
 
-#: ../../portable/menubar.py:265
-msgid "_Fullscreen"
-msgstr "_Toàn màn hình"
-
 #: ../../portable/menubar.py:266
 msgid "_Toggle Detached/Attached"
 msgstr ""
 
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr ""
 
@@ -783,10 +922,6 @@ msgstr ""
 #: ../../portable/menubar.py:277
 msgid "_Planet Miro"
 msgstr ""
-
-#: ../../portable/menubar.py:282
-msgid "_Video"
-msgstr "_Video"
 
 #: ../../portable/menubar.py:284
 msgid "_File"
@@ -1045,18 +1180,6 @@ msgstr ""
 msgid "Newly Available"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:233
-#: ../../portable/frontends/widgets/prefpanel.py:485
-#: ../../portable/frontends/widgets/tablist.py:523
-#: ../../portable/frontends/widgets/tablist.py:535
-#: ../../portable/frontends/widgets/tablist.py:541
-#: ../../portable/frontends/widgets/tablist.py:578
-#: ../../portable/frontends/widgets/tablist.py:584
-#: ../../portable/frontends/widgets/tablist.py:589
-#: ../../portable/dialogs.py:108
-msgid "Remove"
-msgstr "Loại bỏ"
-
 #: ../../portable/frontends/widgets/style.py:234
 #: ../../portable/frontends/widgets/itemcontextmenu.py:113
 msgid "Stop seeding"
@@ -1071,7 +1194,6 @@ msgstr ""
 msgid "Remove from playlist"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr ""
 
@@ -1094,22 +1216,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/prefpanel.py:284
 msgid "Manually"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
-#: ../../portable/frontends/widgets/statictabs.py:103
-msgid "New"
-msgstr "Tạo mới"
-
-#: ../../portable/frontends/widgets/prefpanel.py:290
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
-msgid "All"
-msgstr "Tất cả"
-
-#: ../../portable/frontends/widgets/prefpanel.py:291
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
-msgid "Off"
-msgstr "Tắt"
 
 #: ../../portable/frontends/widgets/prefpanel.py:297
 msgid "0"
@@ -1217,7 +1323,6 @@ msgstr ""
 msgid "Migrate existing movies?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
@@ -1249,30 +1354,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/prefpanel.py:577
 msgid "GB"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:580
-msgid "1 day"
-msgstr "1 ngày"
-
-#: ../../portable/frontends/widgets/prefpanel.py:581
-msgid "3 days"
-msgstr "3 ngày"
-
-#: ../../portable/frontends/widgets/prefpanel.py:582
-msgid "6 days"
-msgstr "6 ngày"
-
-#: ../../portable/frontends/widgets/prefpanel.py:583
-msgid "10 days"
-msgstr "10 ngày"
-
-#: ../../portable/frontends/widgets/prefpanel.py:584
-msgid "1 month"
-msgstr "1 tháng"
-
-#: ../../portable/frontends/widgets/prefpanel.py:590
-msgid "By default, videos expire after:"
-msgstr "Theo mặc định, video hết hạn vào:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:599
 msgid "Always play videos in a separate window."
@@ -1311,10 +1392,6 @@ msgstr ""
 msgid "Disk space"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:625
-msgid "Playback"
-msgstr "Phát lại"
-
 #: ../../portable/frontends/widgets/prefpanel.py:629
 msgid "Preferences"
 msgstr ""
@@ -1331,41 +1408,24 @@ msgstr ""
 msgid "Password:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
 msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:413
-#: ../../portable/frontends/widgets/statictabs.py:86
-msgid "Video Search"
-msgstr "Tìm kiếm Video"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:427
 msgid "No Results Found"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
 msgid "Library"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr ""
-
-#: ../../portable/frontends/widgets/diagnostics.py:77
-#: ../../portable/frontends/widgets/gtk/trayicon.py:83
-msgid "Show"
-msgstr "Trưng bày"
 
 #: ../../portable/frontends/widgets/diagnostics.py:84
 msgid "Movies location:"
@@ -1911,10 +1971,6 @@ msgstr ""
 msgid "Resume All Downloads (%(paused)d)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:81
-msgid "Hide"
-msgstr "Giấu"
-
 #: ../../portable/frontends/widgets/gtk/video.py:272
 msgid "Add to library"
 msgstr ""
@@ -1931,7 +1987,6 @@ msgstr ""
 msgid "Choose"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -2095,14 +2150,6 @@ msgstr ""
 msgid "A search feed contains items that match a search term."
 msgstr ""
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:74
-msgid "Search for:"
-msgstr "Tìm kiếm:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:80
-msgid "In this:"
-msgstr "Trong:"
-
 #: ../../portable/frontends/widgets/newsearchfeed.py:87
 msgid "Feed:"
 msgstr ""
@@ -2137,18 +2184,6 @@ msgstr ""
 msgid "Would you like to run Miro on startup?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:137
-#: ../../portable/frontends/widgets/firsttimedialog.py:170
-#: ../../portable/dialogs.py:87
-msgid "Yes"
-msgstr "Đồng Ý"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:138
-#: ../../portable/frontends/widgets/firsttimedialog.py:169
-#: ../../portable/dialogs.py:88
-msgid "No"
-msgstr "Không"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:146
 msgid "Next >"
 msgstr ""
@@ -2182,13 +2217,6 @@ msgstr ""
 msgid "< Previous"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:213
-#: ../../portable/frontends/widgets/firsttimedialog.py:215
-#: ../../portable/frontends/widgets/firsttimedialog.py:272
-#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
-msgid "Search"
-msgstr "Tìm kiếm"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:215
 #: ../../portable/frontends/widgets/firsttimedialog.py:283
 msgid "Finish"
@@ -2197,11 +2225,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:263
 msgid "Searching for media files"
 msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:273
-#: ../../portable/dialogs.py:85
-msgid "Cancel"
-msgstr "Huỷ bỏ"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:311
 #, python-format
@@ -2285,7 +2308,6 @@ msgstr ""
 msgid "Mark as Played"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr ""
 
@@ -2305,7 +2327,6 @@ msgstr ""
 msgid "Resume Download"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
 msgstr ""
 
@@ -2366,10 +2387,6 @@ msgstr ""
 msgid "Remove From Playlist"
 msgstr ""
 
-#: ../../portable/dialogs.py:83
-msgid "Ok"
-msgstr "Đồng ý"
-
 #: ../../portable/dialogs.py:84
 msgid "Close"
 msgstr ""
@@ -2422,10 +2439,6 @@ msgstr ""
 msgid "Delete Videos"
 msgstr ""
 
-#: ../../portable/dialogs.py:101
-msgid "Create"
-msgstr "Tạo"
-
 #: ../../portable/dialogs.py:102
 msgid "Create Feed"
 msgstr ""
@@ -2475,26 +2488,6 @@ msgstr ""
 msgid "Enter a new name for the playlist %s"
 msgstr ""
 
-#: ../../portable/singleclick.py:100
-msgid "Download already exists"
-msgstr "Download đã có rồi"
-
-#: ../../portable/singleclick.py:101
-msgid "That URL is already an external download."
-msgstr "URL đó đã là một cái download bên ngoài rồi."
-
-#: ../../portable/singleclick.py:107
-msgid "Miro will begin downloading it now."
-msgstr "Miro sẽ bắt đầu tải xuống ngay bây giờ."
-
-#: ../../portable/singleclick.py:109
-msgid "It is downloading now."
-msgstr "Đang tải xuống."
-
-#: ../../portable/singleclick.py:111
-msgid "It has already been downloaded."
-msgstr "Đã tải xuống rồi."
-
 #: ../../portable/singleclick.py:138
 msgid "File Download"
 msgstr ""
@@ -2504,20 +2497,6 @@ msgstr ""
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 msgstr ""
-
-#: ../../portable/singleclick.py:166
-msgid "Download Error"
-msgstr "Rắc rối khi tải xuống"
-
-#: ../../portable/singleclick.py:168
-#, python-format
-msgid ""
-"Miro is not able to download a file at this URL:\n"
-"\n"
-"URL: %(url)s"
-msgstr ""
-"Miro không tải được tập tin tại URL này: \n"
-"URL: %(url)s"
 
 #: ../../portable/singleclick.py:297
 msgid "Subscribing to multiple feeds"
@@ -2768,297 +2747,3 @@ msgstr ""
 #: ../../portable/feed.py:2421
 msgid "Playing File"
 msgstr ""
-
-#~ msgid "Save this video"
-#~ msgstr "Lưu video này"
-
-#~ msgid "_Play / Pause"
-#~ msgstr "_Phát / Tạm dừng"
-
-#~ msgid "_Remove Channel"
-#~ msgstr "_Xóa kênh"
-
-#~ msgid "_Update Channel"
-#~ msgstr "_Cập nhật kênh"
-
-#~ msgid "Copy Channel _Link"
-#~ msgstr "Chép link kênh"
-
-#~ msgid "Don't start a download if it leaves less than"
-#~ msgstr "Không tải về nếu nhỏ hơn"
-
-#~ msgid " "
-#~ msgstr " "
-
-#~ msgid "$log"
-#~ msgstr "$log"
-
-#~ msgid ""
-#~ "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
-#~ "href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were "
-#~ "doing, paste in the log message from the box above, and answer a few "
-#~ "questions, and we'll get right to work.</font>"
-#~ msgstr ""
-#~ "<font face=\"Lucida Grande\" size=\"-1\">Phần mềm theo dõi lỗi tại <a "
-#~ "href=\"$bugTrackerURL\">$bugTrackerURL</a>. Chỉ cần nói cho chúng tôi biết "
-#~ "bạn đang làm gì, dán và bảng tin lưu từ hộp ở trên, trả lời một số câu hỏi, "
-#~ "và chúng tôi sẽ tiến hành ngay.</font>"
-
-#~ msgid ""
-#~ "Actually, if you have a minute, would you be willing to submit a crash "
-#~ "report to our bug-tracking system? At a minimum, what we'd need is "
-#~ "description of what you were doing at the time -- as precise as possible -- "
-#~ "plus the artfully-phrased nonsense in the box below:"
-#~ msgstr ""
-#~ "Thật ra, nếu bạn có một phút, bạn có sẵn lòng gửi một báo cáo gấp tới hệ "
-#~ "thống theo dõi lỗi? Ít nhất, chúng tôi cần bạn mô tả lại lúc đó bạn làm gì --"
-#~ " càng chính xác càng tốt -- cùng với những chuyện lẩm cẩm trong hộp nhận chữ "
-#~ "dưới đây\""
-
-#~ msgid "About Democracy"
-#~ msgstr "Về phần mềm Democracy"
-
-#~ msgid "Channel"
-#~ msgstr "Kênh"
-
-#~ msgid "Clear Menu"
-#~ msgstr "Xóa thực đơn"
-
-#~ msgid "File"
-#~ msgstr "Tệp tin"
-
-#~ msgid "Help"
-#~ msgstr "Trợ giúp"
-
-#~ msgid "Hide Democracy"
-#~ msgstr "Ẩn chương trình"
-
-#~ msgid "MainMenu"
-#~ msgstr "Cửa sổ chính"
-
-#~ msgid "New Channel Folder..."
-#~ msgstr "Thư mục kênh mới"
-
-#~ msgid "New Playlist Folder..."
-#~ msgstr "Thư mục xem mới"
-
-#~ msgid "New Playlist..."
-#~ msgstr "Danh sách mới..."
-
-#~ msgid "Open Recent"
-#~ msgstr "Mở gần đây"
-
-#~ msgid "Open..."
-#~ msgstr "Mở..."
-
-#~ msgid "Play Video"
-#~ msgstr "Xem Video"
-
-#~ msgid "Preferencesâ¦"
-#~ msgstr "Tùy chọn"
-
-#~ msgid "Quit Democracy"
-#~ msgstr "Thoát"
-
-#~ msgid "Rename..."
-#~ msgstr "Đổi tên..."
-
-#~ msgid "Stop Video"
-#~ msgstr "Dừng Video"
-
-#~ msgid "Update All Channels"
-#~ msgstr "Cập nhật các kênh"
-
-#~ msgid "Update Channel"
-#~ msgstr "Cập nhật kênh"
-
-#~ msgid "00:00:00"
-#~ msgstr "00:00:00"
-
-#~ msgid "Box"
-#~ msgstr "Khung"
-
-#~ msgid "FullScreen Controls"
-#~ msgstr "Điều chỉnh toàn màn hình"
-
-#~ msgid "VideoWindow"
-#~ msgstr "Cửa sổ Video"
-
-#~ msgid ""
-#~ "Location http://foo.bar.com/baz requires a username and password for \"text "
-#~ "supplied by server\". (Do not localize -- test data)\n"
-#~ msgstr ""
-#~ "Địa chỉ http://foo.bar.com/baz cần tên người dùng và mật khẩu cho \"chữ do "
-#~ "mạng cung cấp\". (Xin đừng bản địa hóa -- dữ liệu thử)\n"
-
-#~ msgid "Password:\n"
-#~ msgstr "Mật khẩu\n"
-
-#~ msgid "Username and password required"
-#~ msgstr "Cần có tên người dùng và mật khẩu"
-
-#~ msgid ""
-#~ "Username:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Tên người dùng:\n"
-#~ "\n"
-
-#~ msgid " limit upstream to"
-#~ msgstr " giới hạn lưu lượng tải lên"
-
-#~ msgid "(You must restart Democracy for this change to take effect)\n"
-#~ msgstr "(Bạn phải khởi động chương trình này để hiệu quả có tác dụng)\n"
-
-#~ msgid "(movies directory path goes here)"
-#~ msgstr "(đặt đường dẫn thư mục phim ở đây)"
-
-#~ msgid "3 hours"
-#~ msgstr "3 giờ"
-
-#~ msgid "4"
-#~ msgstr "4"
-
-#~ msgid "5"
-#~ msgstr "5"
-
-#~ msgid "Check channels for new content:"
-#~ msgstr "Kiểm tra nội dung mới của kênh:"
-
-#~ msgid "GB free."
-#~ msgstr "GB miễn phí"
-
-#~ msgid "Never"
-#~ msgstr "Không bao giờ"
-
-#~ msgid "Run Democracy at startup"
-#~ msgstr "Chạy khi khởi động máy"
-
-#~ msgid "every 30 minutes"
-#~ msgstr "mỗi 30 phút"
-
-#~ msgid "every hour"
-#~ msgstr "mỗi giờ"
-
-#~ msgid "manually"
-#~ msgstr "thủ công"
-
-#~ msgid "Back"
-#~ msgstr "Quay lại"
-
-#~ msgid "Next"
-#~ msgstr "Tiếp sau"
-
-#~ msgid "Add Channel..."
-#~ msgstr "Thêm kênh..."
-
-#~ msgid "Check for New Version"
-#~ msgstr "Kiểm tra phiên bản mới"
-
-#~ msgid "Copy Channel URL"
-#~ msgstr "Chép URL kênh"
-
-#~ msgid "Copy Video URL"
-#~ msgstr "Chép URL Video"
-
-#~ msgid "New Channel Guide..."
-#~ msgstr "Hướng dẫn kênh mới"
-
-#~ msgid "New Search Channel..."
-#~ msgstr "Kênh tìm kiếm mới..."
-
-#~ msgid "Next Video"
-#~ msgstr "Video kế tiếp"
-
-#~ msgid "Playlists"
-#~ msgstr "Danh sách"
-
-#~ msgid "Previous Video"
-#~ msgstr "Video trước"
-
-#~ msgid "Remove..."
-#~ msgstr "Xóa..."
-
-#~ msgid "Save Video As..."
-#~ msgstr "Lưu Video là..."
-
-#~ msgid "Send This Channel to a Friend"
-#~ msgstr "Gửi kênh này cho bạn bè"
-
-#~ msgid "99999"
-#~ msgstr "99999"
-
-#~ msgid "BitTorrent ports:"
-#~ msgstr "Cổng BitTorrent:"
-
-#~ msgid "Maximum:"
-#~ msgstr "Tối đa"
-
-#~ msgid "Minimum:"
-#~ msgstr "Tối thiểu:"
-
-#~ msgid "Play videos one after another."
-#~ msgstr "Xem liên tiếp"
-
-#~ msgid "Stop after each video."
-#~ msgstr "Dừng sau mỗi video."
-
-#~ msgid "Item1"
-#~ msgstr "mục1"
-
-#~ msgid "URL"
-#~ msgstr "URL"
-
-#~ msgid "Save Video _As..."
-#~ msgstr "Lưu video như..."
-
-#~ msgid "_Copy Video URL"
-#~ msgstr "_Chép URL Video"
-
-#~ msgid "_Remove Video"
-#~ msgstr "_Xóa video"
-
-#~ msgid "_Stop Video"
-#~ msgstr "_Dừng video"
-
-#~ msgid "_Send this channel to a friend"
-#~ msgstr "_Gửi kênh này cho bạn bè"
-
-#~ msgid "Re_name Channel"
-#~ msgstr "Đổi _tên kênh"
-
-#~ msgid "_Channels"
-#~ msgstr "_Kênh"
-
-#~ msgid "-00:00:00"
-#~ msgstr "-00:00:00"
-
-#~ msgid "Change..."
-#~ msgstr "Thay đổi..."
-
-#~ msgid "Save downloaded videos in this folder:"
-#~ msgstr "Lưu video tải về vào thư mục:"
-
-#~ msgid "To avoid internet slowdowns:"
-#~ msgstr "Để tránh interrnet chậm:"
-
-#~ msgid "Search this folder:"
-#~ msgstr "Tìm trong thư mục:"
-
-#~ msgid "OK"
-#~ msgstr "Đồng ý"
-
-#~ msgid "Full Screen"
-#~ msgstr "Toàn màn hình"
-
-#~ msgid "Browse"
-#~ msgstr "Duyệt"
-
-#~ msgid "Democracy Help"
-#~ msgstr "Trợ giúp"
-
-#~ msgid "Searching for Videos"
-#~ msgstr "Tìm video"
-
-#~ msgid "Donate"
-#~ msgstr "Quyên góp"

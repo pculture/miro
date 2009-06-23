@@ -16,8 +16,358 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:124
+msgid "Close to tray?"
+msgstr "Zatvori u traku?"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:125
+msgid ""
+"When you click the red close button, would you like Miro to close to the "
+"system tray or quit?  You can change this setting later in the Options."
+msgstr ""
+"Kad kliknete na crveno dugme, hoćete li da Miro ode u traku alata ili se "
+"isključi?\r\n"
+"Ovo podešavanje možete kasnije promeniti u podešavanjima."
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:186
+msgid "Error Opening Website"
+msgstr "Greška u otvaranju sajta"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
+msgid "Update Available"
+msgstr "Dostupna je nadogradnja"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
+#, python-format
+msgid "A new version of %s is available for download."
+msgstr "Nova verzija %s je slobodna za download."
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:120
+#: ../../portable/frontends/widgets/gtk/video.py:300
+#: ../../portable/frontends/widgets/itemcontextmenu.py:152
+msgid "Share"
+msgstr "Deljeno"
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:124
+#: ../../portable/frontends/widgets/style.py:232
+#: ../../portable/frontends/widgets/style.py:970
+#: ../../portable/frontends/widgets/style.py:1134
+#: ../../portable/frontends/widgets/gtk/video.py:279
+#: ../../portable/frontends/widgets/itemcontextmenu.py:109
+#: ../../portable/frontends/widgets/itemcontextmenu.py:211
+#: ../../portable/dialogs.py:106
+msgid "Keep"
+msgstr "Zadrži"
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:128
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
+#: ../../portable/frontends/widgets/gtk/video.py:274
+#: ../../portable/frontends/widgets/gtk/video.py:282
+#: ../../portable/frontends/widgets/itemcontextmenu.py:65
+#: ../../portable/dialogs.py:107
+msgid "Delete"
+msgstr "Izbriši"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
+msgid "Services"
+msgstr "Servisi"
+
+msgid "Hide Miro"
+msgstr "Sakrij Miro"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
+msgid "Hide Others"
+msgstr "Sakrij ostale"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
+msgid "Show All"
+msgstr "Prikaži sve"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
+msgid "Preferences..."
+msgstr "Podešavanja..."
+
+msgid "Quit Miro"
+msgstr "Prekini Miro"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:150
+msgid "Close Window"
+msgstr "Zatvori prozor"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
+msgid "Cut"
+msgstr "Izreži"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
+msgid "Copy"
+msgstr "Kopiraj"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
+msgid "Select All"
+msgstr "Odaberi sve"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
+msgid "Edit"
+msgstr "Izmeni"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
+msgid "Zoom"
+msgstr "Uveličavanje"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
+msgid "Minimize"
+msgstr "Umanji"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
+msgid "Main Window"
+msgstr "Glavni prozor"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
+msgid "Bring All to Front"
+msgstr "Prebaci sve napred"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
+msgid "Window"
+msgstr "Prozor"
+
+msgid "Miro Help"
+msgstr "Miro pomoć"
+
+#: ../../portable/downloader.py:268 ../../portable/httpclient.py:145
+#: ../../portable/httpclient.py:174
+msgid "File not found"
+msgstr "Fajl nije nađen"
+
+#: ../../portable/dl_daemon/download.py:507
+#: ../../portable/frontends/widgets/style.py:228
+msgid "Error"
+msgstr "Greška"
+
+#: ../../portable/dl_daemon/download.py:621
+#: ../../portable/dl_daemon/download.py:838
+msgid "Not enough disk space"
+msgstr "Nedovoljno slobodnog prostora na disku"
+
+#: ../../portable/dl_daemon/download.py:1041
+msgid "Corrupt Torrent"
+msgstr "neispravan torent"
+
+#: ../../portable/dl_daemon/download.py:1067
+msgid "Torrent file deleted"
+msgstr "Torent fajl obrisan"
+
+#: ../../portable/menubar.py:196
+msgid "_Quit"
+msgstr "_Završi"
+
+#: ../../portable/menubar.py:256
+msgid "_Next Video"
+msgstr "_Sledeći Video"
+
+#: ../../portable/menubar.py:257
+msgid "_Previous Video"
+msgstr "_Prethodni Video"
+
+#: ../../portable/menubar.py:271
+msgid "_Donate"
+msgstr "_Donacije"
+
+#: ../../portable/frontends/widgets/crashdialog.py:46
+#: ../../portable/httpclient.py:158
+msgid "Internal Error"
+msgstr "Interna greška"
+
+#: ../../portable/frontends/widgets/style.py:233
+#: ../../portable/frontends/widgets/prefpanel.py:485
+#: ../../portable/frontends/widgets/tablist.py:523
+#: ../../portable/frontends/widgets/tablist.py:535
+#: ../../portable/frontends/widgets/tablist.py:541
+#: ../../portable/frontends/widgets/tablist.py:578
+#: ../../portable/frontends/widgets/tablist.py:584
+#: ../../portable/frontends/widgets/tablist.py:589
+#: ../../portable/dialogs.py:108
+msgid "Remove"
+msgstr "Ukloni"
+
+#: ../../portable/frontends/widgets/prefpanel.py:289
+#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+#: ../../portable/frontends/widgets/statictabs.py:103
+msgid "New"
+msgstr "Novi"
+
+#: ../../portable/frontends/widgets/prefpanel.py:290
+#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+msgid "All"
+msgstr "Sve"
+
+#: ../../portable/frontends/widgets/prefpanel.py:291
+#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+msgid "Off"
+msgstr "Isključeno"
+
+#: ../../portable/frontends/widgets/prefpanel.py:542
+msgid "Store downloads in this folder:"
+msgstr "Sačuvaj download u ovom folderu:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:568
+msgid "Keep at least this much free space on my drive:"
+msgstr "Ostavi bar ovoliko slobodnog prostora na disku:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:580
+msgid "1 day"
+msgstr "1 dan"
+
+#: ../../portable/frontends/widgets/prefpanel.py:581
+msgid "3 days"
+msgstr "3 dana"
+
+#: ../../portable/frontends/widgets/prefpanel.py:582
+msgid "6 days"
+msgstr "6 dana"
+
+#: ../../portable/frontends/widgets/prefpanel.py:583
+msgid "10 days"
+msgstr "10 dana"
+
+#: ../../portable/frontends/widgets/prefpanel.py:584
+msgid "1 month"
+msgstr "1 mesec"
+
+#: ../../portable/frontends/widgets/prefpanel.py:590
+msgid "By default, videos expire after:"
+msgstr "Po pravilu, video ne radi posle:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:625
+msgid "Playback"
+msgstr "Reprodukcija"
+
+#: ../../portable/frontends/widgets/rundialog.py:82
+msgid "Username:"
+msgstr "Korisničko ime:"
+
+#: ../../portable/frontends/widgets/rundialog.py:86
+msgid "Password:"
+msgstr "Lozinka:"
+
+msgid "New Videos"
+msgstr "Novi video fajlovi"
+
+#: ../../portable/frontends/widgets/itemlistcontroller.py:413
+#: ../../portable/frontends/widgets/statictabs.py:86
+msgid "Video Search"
+msgstr "Video pretraživanje"
+
+#: ../../portable/frontends/widgets/diagnostics.py:77
+#: ../../portable/frontends/widgets/gtk/trayicon.py:83
+msgid "Show"
+msgstr "Prikaži"
+
+#: ../../portable/frontends/widgets/feedcontroller.py:127
+msgid "Downloaded"
+msgstr "Preuzeto"
+
+#: ../../portable/frontends/widgets/application.py:750
+msgid "Are you sure you want to quit?"
+msgstr "Да ли сте сигурни да желите да изађете?"
+
+#: ../../portable/frontends/widgets/application.py:757
+msgid "Warn me when I attempt to quit with downloads in progress"
+msgstr "Upozori me na prekid kada download traje"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:81
+msgid "Hide"
+msgstr "Sakrij"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:74
+msgid "Search for:"
+msgstr "Traži:"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:137
+#: ../../portable/frontends/widgets/firsttimedialog.py:170
+#: ../../portable/dialogs.py:87
+msgid "Yes"
+msgstr "Da"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:138
+#: ../../portable/frontends/widgets/firsttimedialog.py:169
+#: ../../portable/dialogs.py:88
+msgid "No"
+msgstr "Ne"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:213
+#: ../../portable/frontends/widgets/firsttimedialog.py:215
+#: ../../portable/frontends/widgets/firsttimedialog.py:272
+#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
+msgid "Search"
+msgstr "Pretraži"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:273
+#: ../../portable/dialogs.py:85
+msgid "Cancel"
+msgstr "Prekinuti"
+
+#: ../../portable/frontends/widgets/statictabs.py:110
+msgid "Downloading"
+msgstr "Downloading"
+
+#: ../../portable/dialogs.py:83
+msgid "Ok"
+msgstr "U redu"
+
+#: ../../portable/dialogs.py:89
+msgid "Quit"
+msgstr "Završi"
+
+#: ../../portable/dialogs.py:90
+msgid "Continue"
+msgstr "Настави"
+
+#: ../../portable/dialogs.py:101
+msgid "Create"
+msgstr "Kreiraj"
+
+#: ../../portable/singleclick.py:166
+msgid "Download Error"
+msgstr "Грешка у скидању"
+
+#: ../../portable/httpclient.py:105 ../../portable/httpclient.py:111
+msgid "Can't connect"
+msgstr "Ne mogu da se povežem"
+
+#: ../../portable/httpclient.py:112
+msgid "SSL connection error"
+msgstr "greška SSL konekcije"
+
+#: ../../portable/httpclient.py:116
+msgid "HTTP error"
+msgstr "HTTP greška"
+
+#: ../../portable/httpclient.py:146
+msgid "Got 404 status code"
+msgstr "Got 404 status code"
+
+#: ../../portable/httpclient.py:159
+msgid "Pipeline request never started"
+msgstr "Pipeline request never started"
+
+#: ../../portable/httpclient.py:163
+msgid "Timeout"
+msgstr "Timeout"
+
+#: ../../portable/httpclient.py:168
+msgid "Invalid URL"
+msgstr "Neispravan URL"
+
+#: ../../portable/httpclient.py:408
+msgid "Connection closed"
+msgstr "Veza je zatvorena"
+
+#: ../../portable/httpclient.py:829
+msgid "Unknown"
+msgstr "Nepoznato"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
@@ -36,19 +386,6 @@ msgstr ""
 msgid "Quit Miro completely."
 msgstr ""
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:124
-msgid "Close to tray?"
-msgstr "Zatvori u traku?"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:125
-msgid ""
-"When you click the red close button, would you like Miro to close to the "
-"system tray or quit?  You can change this setting later in the Options."
-msgstr ""
-"Kad kliknete na crveno dugme, hoćete li da Miro ode u traku alata ili se "
-"isključi?\r\n"
-"Ovo podešavanje možete kasnije promeniti u podešavanjima."
-
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:182
 msgid "Error Bombing Item"
 msgstr ""
@@ -57,24 +394,11 @@ msgstr ""
 msgid "Error Recommending Item"
 msgstr ""
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:186
-msgid "Error Opening Website"
-msgstr "Greška u otvaranju sajta"
-
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:191
 #, python-format
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
-msgid "Update Available"
-msgstr "Dostupna je nadogradnja"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
-#, python-format
-msgid "A new version of %s is available for download."
-msgstr "Nova verzija %s je slobodna za download."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
@@ -128,32 +452,6 @@ msgstr ""
 msgid "Use this for video when playing audio:"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:120
-#: ../../portable/frontends/widgets/gtk/video.py:300
-#: ../../portable/frontends/widgets/itemcontextmenu.py:152
-msgid "Share"
-msgstr "Deljeno"
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:124
-#: ../../portable/frontends/widgets/style.py:232
-#: ../../portable/frontends/widgets/style.py:970
-#: ../../portable/frontends/widgets/style.py:1134
-#: ../../portable/frontends/widgets/gtk/video.py:279
-#: ../../portable/frontends/widgets/itemcontextmenu.py:109
-#: ../../portable/frontends/widgets/itemcontextmenu.py:211
-#: ../../portable/dialogs.py:106
-msgid "Keep"
-msgstr "Zadrži"
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:128
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
-#: ../../portable/frontends/widgets/gtk/video.py:274
-#: ../../portable/frontends/widgets/gtk/video.py:282
-#: ../../portable/frontends/widgets/itemcontextmenu.py:65
-#: ../../portable/dialogs.py:107
-msgid "Delete"
-msgstr "Izbriši"
-
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:132
 msgid "Add to Library"
 msgstr ""
@@ -166,53 +464,9 @@ msgstr ""
 msgid "Pop In"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
-msgid "Services"
-msgstr "Servisi"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
-msgid "Hide Miro"
-msgstr "Sakrij Miro"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
-msgid "Hide Others"
-msgstr "Sakrij ostale"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
-msgid "Show All"
-msgstr "Prikaži sve"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
-msgid "Preferences..."
-msgstr "Podešavanja..."
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
-msgid "Quit Miro"
-msgstr "Prekini Miro"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:150
-msgid "Close Window"
-msgstr "Zatvori prozor"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
-msgid "Cut"
-msgstr "Izreži"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
-msgid "Copy"
-msgstr "Kopiraj"
-
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
 msgid "Paste"
 msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
-msgid "Select All"
-msgstr "Odaberi sve"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
-msgid "Edit"
-msgstr "Izmeni"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
 msgid "Present Half Size"
@@ -229,30 +483,6 @@ msgstr ""
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
 msgid "Present Video"
 msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
-msgid "Zoom"
-msgstr "Uveličavanje"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
-msgid "Minimize"
-msgstr "Umanji"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
-msgid "Main Window"
-msgstr "Glavni prozor"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
-msgid "Bring All to Front"
-msgstr "Prebaci sve napred"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
-msgid "Window"
-msgstr "Prozor"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
-msgid "Miro Help"
-msgstr "Miro pomoć"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:166
 msgid "Download Completed"
@@ -277,7 +507,6 @@ msgstr ""
 msgid "Example Playlist"
 msgstr ""
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr ""
 
@@ -332,23 +561,19 @@ msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr ""
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr ""
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -505,11 +730,6 @@ msgstr[1] ""
 msgid "activity"
 msgstr ""
 
-#: ../../portable/downloader.py:268 ../../portable/httpclient.py:145
-#: ../../portable/httpclient.py:174
-msgid "File not found"
-msgstr "Fajl nije nađen"
-
 #: ../../portable/downloader.py:269
 msgid "Flash URL Scraping Error"
 msgstr ""
@@ -518,20 +738,10 @@ msgstr ""
 msgid "starting up"
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:507
-#: ../../portable/frontends/widgets/style.py:228
-msgid "Error"
-msgstr "Greška"
-
 #: ../../portable/dl_daemon/download.py:596
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr ""
-
-#: ../../portable/dl_daemon/download.py:621
-#: ../../portable/dl_daemon/download.py:838
-msgid "Not enough disk space"
-msgstr "Nedovoljno slobodnog prostora na disku"
 
 #: ../../portable/dl_daemon/download.py:622
 #: ../../portable/dl_daemon/download.py:839
@@ -552,18 +762,10 @@ msgstr ""
 msgid "BitTorrent failed to startup"
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:1041
-msgid "Corrupt Torrent"
-msgstr "neispravan torent"
-
 #: ../../portable/dl_daemon/download.py:1042
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr ""
-
-#: ../../portable/dl_daemon/download.py:1067
-msgid "Torrent file deleted"
-msgstr "Torent fajl obrisan"
 
 #: ../../portable/dl_daemon/download.py:1068
 msgid "The torrent file for this item was deleted outside of Miro."
@@ -608,10 +810,6 @@ msgstr ""
 #: ../../portable/menubar.py:195
 msgid "_Options"
 msgstr ""
-
-#: ../../portable/menubar.py:196
-msgid "_Quit"
-msgstr "_Završi"
 
 #: ../../portable/menubar.py:205
 msgid "Cu_t"
@@ -726,14 +924,6 @@ msgstr ""
 msgid "_Stop"
 msgstr ""
 
-#: ../../portable/menubar.py:256
-msgid "_Next Video"
-msgstr "_Sledeći Video"
-
-#: ../../portable/menubar.py:257
-msgid "_Previous Video"
-msgstr "_Prethodni Video"
-
 #: ../../portable/menubar.py:259
 msgid "Skip _Forward"
 msgstr ""
@@ -758,13 +948,8 @@ msgstr ""
 msgid "_Toggle Detached/Attached"
 msgstr ""
 
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr ""
-
-#: ../../portable/menubar.py:271
-msgid "_Donate"
-msgstr "_Donacije"
 
 #: ../../portable/menubar.py:272 ../../portable/menubar.py:293
 msgid "_Help"
@@ -806,11 +991,6 @@ msgstr ""
 #: ../../portable/menubar.py:292
 msgid "P_layback"
 msgstr ""
-
-#: ../../portable/frontends/widgets/crashdialog.py:46
-#: ../../portable/httpclient.py:158
-msgid "Internal Error"
-msgstr "Interna greška"
 
 #: ../../portable/frontends/widgets/crashdialog.py:52
 msgid ""
@@ -1048,18 +1228,6 @@ msgstr ""
 msgid "Newly Available"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:233
-#: ../../portable/frontends/widgets/prefpanel.py:485
-#: ../../portable/frontends/widgets/tablist.py:523
-#: ../../portable/frontends/widgets/tablist.py:535
-#: ../../portable/frontends/widgets/tablist.py:541
-#: ../../portable/frontends/widgets/tablist.py:578
-#: ../../portable/frontends/widgets/tablist.py:584
-#: ../../portable/frontends/widgets/tablist.py:589
-#: ../../portable/dialogs.py:108
-msgid "Remove"
-msgstr "Ukloni"
-
 #: ../../portable/frontends/widgets/style.py:234
 #: ../../portable/frontends/widgets/itemcontextmenu.py:113
 msgid "Stop seeding"
@@ -1074,7 +1242,6 @@ msgstr ""
 msgid "Remove from playlist"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr ""
 
@@ -1097,22 +1264,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/prefpanel.py:284
 msgid "Manually"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
-#: ../../portable/frontends/widgets/statictabs.py:103
-msgid "New"
-msgstr "Novi"
-
-#: ../../portable/frontends/widgets/prefpanel.py:290
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
-msgid "All"
-msgstr "Sve"
-
-#: ../../portable/frontends/widgets/prefpanel.py:291
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
-msgid "Off"
-msgstr "Isključeno"
 
 #: ../../portable/frontends/widgets/prefpanel.py:297
 msgid "0"
@@ -1220,7 +1371,6 @@ msgstr ""
 msgid "Migrate existing movies?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
@@ -1236,46 +1386,14 @@ msgstr ""
 msgid "Add Watched Folder"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:542
-msgid "Store downloads in this folder:"
-msgstr "Sačuvaj download u ovom folderu:"
-
 #: ../../portable/frontends/widgets/prefpanel.py:549
 msgid "Watch for new videos in these folders and include them in library:"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:568
-msgid "Keep at least this much free space on my drive:"
-msgstr "Ostavi bar ovoliko slobodnog prostora na disku:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:571
 #: ../../portable/frontends/widgets/prefpanel.py:577
 msgid "GB"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:580
-msgid "1 day"
-msgstr "1 dan"
-
-#: ../../portable/frontends/widgets/prefpanel.py:581
-msgid "3 days"
-msgstr "3 dana"
-
-#: ../../portable/frontends/widgets/prefpanel.py:582
-msgid "6 days"
-msgstr "6 dana"
-
-#: ../../portable/frontends/widgets/prefpanel.py:583
-msgid "10 days"
-msgstr "10 dana"
-
-#: ../../portable/frontends/widgets/prefpanel.py:584
-msgid "1 month"
-msgstr "1 mesec"
-
-#: ../../portable/frontends/widgets/prefpanel.py:590
-msgid "By default, videos expire after:"
-msgstr "Po pravilu, video ne radi posle:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:599
 msgid "Always play videos in a separate window."
@@ -1314,10 +1432,6 @@ msgstr ""
 msgid "Disk space"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:625
-msgid "Playback"
-msgstr "Reprodukcija"
-
 #: ../../portable/frontends/widgets/prefpanel.py:629
 msgid "Preferences"
 msgstr ""
@@ -1326,49 +1440,21 @@ msgstr ""
 msgid "Open in browser"
 msgstr ""
 
-#: ../../portable/frontends/widgets/rundialog.py:82
-msgid "Username:"
-msgstr "Korisničko ime:"
-
-#: ../../portable/frontends/widgets/rundialog.py:86
-msgid "Password:"
-msgstr "Lozinka:"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
-msgid "New Videos"
-msgstr "Novi video fajlovi"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:413
-#: ../../portable/frontends/widgets/statictabs.py:86
-msgid "Video Search"
-msgstr "Video pretraživanje"
-
 #: ../../portable/frontends/widgets/itemlistcontroller.py:427
 msgid "No Results Found"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
 msgid "Library"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr ""
-
-#: ../../portable/frontends/widgets/diagnostics.py:77
-#: ../../portable/frontends/widgets/gtk/trayicon.py:83
-msgid "Show"
-msgstr "Prikaži"
 
 #: ../../portable/frontends/widgets/diagnostics.py:84
 msgid "Movies location:"
@@ -1401,10 +1487,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/diagnostics.py:111
 msgid "Total number of db objects:"
 msgstr ""
-
-#: ../../portable/frontends/widgets/feedcontroller.py:127
-msgid "Downloaded"
-msgstr "Preuzeto"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:137
 msgid "Full Feed"
@@ -1679,20 +1761,12 @@ msgstr ""
 msgid "Are you sure you want to remove %(name)s?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:750
-msgid "Are you sure you want to quit?"
-msgstr "Да ли сте сигурни да желите да изађете?"
-
 #: ../../portable/frontends/widgets/application.py:752
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] ""
 msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:757
-msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr "Upozori me na prekid kada download traje"
 
 #: ../../portable/frontends/widgets/application.py:1011
 msgid "Message"
@@ -1914,10 +1988,6 @@ msgstr ""
 msgid "Resume All Downloads (%(paused)d)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:81
-msgid "Hide"
-msgstr "Sakrij"
-
 #: ../../portable/frontends/widgets/gtk/video.py:272
 msgid "Add to library"
 msgstr ""
@@ -1934,7 +2004,6 @@ msgstr ""
 msgid "Choose"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -2098,10 +2167,6 @@ msgstr ""
 msgid "A search feed contains items that match a search term."
 msgstr ""
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:74
-msgid "Search for:"
-msgstr "Traži:"
-
 #: ../../portable/frontends/widgets/newsearchfeed.py:80
 msgid "In this:"
 msgstr ""
@@ -2140,18 +2205,6 @@ msgstr ""
 msgid "Would you like to run Miro on startup?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:137
-#: ../../portable/frontends/widgets/firsttimedialog.py:170
-#: ../../portable/dialogs.py:87
-msgid "Yes"
-msgstr "Da"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:138
-#: ../../portable/frontends/widgets/firsttimedialog.py:169
-#: ../../portable/dialogs.py:88
-msgid "No"
-msgstr "Ne"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:146
 msgid "Next >"
 msgstr ""
@@ -2185,13 +2238,6 @@ msgstr ""
 msgid "< Previous"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:213
-#: ../../portable/frontends/widgets/firsttimedialog.py:215
-#: ../../portable/frontends/widgets/firsttimedialog.py:272
-#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
-msgid "Search"
-msgstr "Pretraži"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:215
 #: ../../portable/frontends/widgets/firsttimedialog.py:283
 msgid "Finish"
@@ -2200,11 +2246,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:263
 msgid "Searching for media files"
 msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:273
-#: ../../portable/dialogs.py:85
-msgid "Cancel"
-msgstr "Prekinuti"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:311
 #, python-format
@@ -2223,10 +2264,6 @@ msgstr[1] ""
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
 msgstr ""
-
-#: ../../portable/frontends/widgets/statictabs.py:110
-msgid "Downloading"
-msgstr "Downloading"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:90
 msgid "Single and external downloads"
@@ -2288,7 +2325,6 @@ msgstr ""
 msgid "Mark as Played"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr ""
 
@@ -2308,7 +2344,6 @@ msgstr ""
 msgid "Resume Download"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
 msgstr ""
 
@@ -2369,10 +2404,6 @@ msgstr ""
 msgid "Remove From Playlist"
 msgstr ""
 
-#: ../../portable/dialogs.py:83
-msgid "Ok"
-msgstr "U redu"
-
 #: ../../portable/dialogs.py:84
 msgid "Close"
 msgstr ""
@@ -2380,14 +2411,6 @@ msgstr ""
 #: ../../portable/dialogs.py:86
 msgid "Done"
 msgstr ""
-
-#: ../../portable/dialogs.py:89
-msgid "Quit"
-msgstr "Završi"
-
-#: ../../portable/dialogs.py:90
-msgid "Continue"
-msgstr "Настави"
 
 #: ../../portable/dialogs.py:91
 msgid "Ignore"
@@ -2424,10 +2447,6 @@ msgstr ""
 #: ../../portable/dialogs.py:100
 msgid "Delete Videos"
 msgstr ""
-
-#: ../../portable/dialogs.py:101
-msgid "Create"
-msgstr "Kreiraj"
 
 #: ../../portable/dialogs.py:102
 msgid "Create Feed"
@@ -2507,10 +2526,6 @@ msgstr ""
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 msgstr ""
-
-#: ../../portable/singleclick.py:166
-msgid "Download Error"
-msgstr "Грешка у скидању"
 
 #: ../../portable/singleclick.py:168
 #, python-format
@@ -2615,22 +2630,10 @@ msgstr ""
 msgid "Error: %(msg)s"
 msgstr ""
 
-#: ../../portable/httpclient.py:105 ../../portable/httpclient.py:111
-msgid "Can't connect"
-msgstr "Ne mogu da se povežem"
-
 #: ../../portable/httpclient.py:106
 #, python-format
 msgid "Connection Error: %(msg)s"
 msgstr ""
-
-#: ../../portable/httpclient.py:112
-msgid "SSL connection error"
-msgstr "greška SSL konekcije"
-
-#: ../../portable/httpclient.py:116
-msgid "HTTP error"
-msgstr "HTTP greška"
 
 #: ../../portable/httpclient.py:120
 #, python-format
@@ -2657,10 +2660,6 @@ msgstr ""
 msgid "%(host)s closed connection"
 msgstr ""
 
-#: ../../portable/httpclient.py:146
-msgid "Got 404 status code"
-msgstr "Got 404 status code"
-
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Bad Status Code: %(code)s"
@@ -2670,22 +2669,10 @@ msgstr ""
 msgid "Authorization failed"
 msgstr ""
 
-#: ../../portable/httpclient.py:159
-msgid "Pipeline request never started"
-msgstr "Pipeline request never started"
-
-#: ../../portable/httpclient.py:163
-msgid "Timeout"
-msgstr "Timeout"
-
 #: ../../portable/httpclient.py:164
 #, python-format
 msgid "Connection to %(host)s timed out"
 msgstr ""
-
-#: ../../portable/httpclient.py:168
-msgid "Invalid URL"
-msgstr "Neispravan URL"
 
 #: ../../portable/httpclient.py:169
 #, python-format
@@ -2709,14 +2696,6 @@ msgstr ""
 #: ../../portable/httpclient.py:376
 msgid "Unknown Error code"
 msgstr ""
-
-#: ../../portable/httpclient.py:408
-msgid "Connection closed"
-msgstr "Veza je zatvorena"
-
-#: ../../portable/httpclient.py:829
-msgid "Unknown"
-msgstr "Nepoznato"
 
 #: ../../portable/httpclient.py:830
 msgid "Internal Error: Not ready to send"
@@ -2769,274 +2748,3 @@ msgstr ""
 #: ../../portable/feed.py:2421
 msgid "Playing File"
 msgstr ""
-
-#~ msgid "Save this video"
-#~ msgstr "Snimi ovaj video"
-
-#~ msgid "_Update Channel"
-#~ msgstr "_Osveži Kanal"
-
-#~ msgid "_Open..."
-#~ msgstr "_Otvori..."
-
-#~ msgid "%s database save failed"
-#~ msgstr "Није успело снимање базе података %s"
-
-#~ msgid "An unknown error has occurred %s."
-#~ msgstr "Došlo je do nepoznate greške %s."
-
-#~ msgid "My Collection"
-#~ msgstr "Moja kolekcija"
-
-#~ msgid "Recommend"
-#~ msgstr "Preporuči"
-
-#~ msgid "Saved"
-#~ msgstr "Snimljeno"
-
-#~ msgid "Simple translation"
-#~ msgstr "Jednostavan prevod"
-
-#~ msgid "truck stop in a ${can}"
-#~ msgstr "kamion staje za ${can}"
-
-#~ msgid "GO BIG:"
-#~ msgstr "GO BIG:"
-
-#~ msgid "NEW STUFF:"
-#~ msgstr "NOVO:"
-
-#~ msgid " "
-#~ msgstr " "
-
-#~ msgid "You have %d download still in progress."
-#~ msgid_plural "You have %d downloads still in progress."
-#~ msgstr[0] "Имате %d скидање још увек у току."
-#~ msgstr[1] "Имате %d скидања још увек у току."
-
-#~ msgid "$log"
-#~ msgstr "$log"
-
-#~ msgid "About Democracy"
-#~ msgstr "O Democracy"
-
-#~ msgid "Channel"
-#~ msgstr "Kanal"
-
-#~ msgid "Clear Menu"
-#~ msgstr "Počisti meni"
-
-#~ msgid "Help"
-#~ msgstr "Pomoć"
-
-#~ msgid "Hide Democracy"
-#~ msgstr "Sakrij Democracy"
-
-#~ msgid "Open..."
-#~ msgstr "Otvori..."
-
-#~ msgid "Play Video"
-#~ msgstr "Pokreni video"
-
-#~ msgid "Rename..."
-#~ msgstr "Promeni ime..."
-
-#~ msgid "00:00:00"
-#~ msgstr "00:00:00"
-
-#~ msgid "Box"
-#~ msgstr "Kutija"
-
-#~ msgid ""
-#~ "Location http://foo.bar.com/baz requires a username and password for \"text "
-#~ "supplied by server\". (Do not localize -- test data)\n"
-#~ msgstr ""
-#~ "Lokacija http://foo.bar.com/baz zahteva korisničko ime i lozinku za \"text \n"
-#~ "supplied by server\". (Do not localize -- test data)\n"
-
-#~ msgid "Password:\n"
-#~ msgstr "Lozinka:\n"
-
-#~ msgid "3 hours"
-#~ msgstr "3 sata"
-
-#~ msgid "4"
-#~ msgstr "4"
-
-#~ msgid "5"
-#~ msgstr "5"
-
-#~ msgid "GB free."
-#~ msgstr "GB slobodno."
-
-#~ msgid "Never"
-#~ msgstr "Nikada"
-
-#~ msgid "Run Democracy at startup"
-#~ msgstr "Democracy se pokreće na uključenju"
-
-#~ msgid "every 30 minutes"
-#~ msgstr "svakih 30 minuta"
-
-#~ msgid "every hour"
-#~ msgstr "svakih sat vremena"
-
-#~ msgid "manually"
-#~ msgstr "manuelno"
-
-#~ msgid "(parsed %d files - found %d videos)"
-#~ msgstr "(pretraženo %d fajlova - pronađeno %d video fajlova)"
-
-#~ msgid "Back"
-#~ msgstr "Nazad"
-
-#~ msgid "Next"
-#~ msgstr "Dalje"
-
-#~ msgid "Welcome to Internet TV!"
-#~ msgstr "Dobrodošli na Internet TV!"
-
-#~ msgid ""
-#~ "%message%\n"
-#~ "%message%"
-#~ msgstr ""
-#~ "%poruka%\n"
-#~ "%poruka%"
-
-#~ msgid "Create new playlist"
-#~ msgstr "Kreiraj novu plejlistu"
-
-#~ msgid "onStartup called twice"
-#~ msgstr "naUključenju pozvan dvaput"
-
-#~ msgid "Add Channel..."
-#~ msgstr "Dodaj kanal"
-
-#~ msgid "Channels"
-#~ msgstr "Kanali"
-
-#~ msgid "Check for New Version"
-#~ msgstr "Proveri nove verzije"
-
-#~ msgid "Copy Video URL"
-#~ msgstr "Kopiraj URL video"
-
-#~ msgid "Next Video"
-#~ msgstr "Sledeći video"
-
-#~ msgid "Remove..."
-#~ msgstr "Ukloni..."
-
-#~ msgid "99999"
-#~ msgstr "99999"
-
-#~ msgid "BitTorrent ports:"
-#~ msgstr "BitTorrent portovi:"
-
-#~ msgid "Maximum:"
-#~ msgstr "Maksimum:"
-
-#~ msgid "Minimum:"
-#~ msgstr "Minimum:"
-
-#~ msgid "Play videos one after another."
-#~ msgstr "Reprodukuj video fajlove jedan za drugim."
-
-#~ msgid "Stop after each video."
-#~ msgstr "Stop posle svakog videa."
-
-#~ msgid "$title$"
-#~ msgstr "$naslov$"
-
-#~ msgid "Search Engine"
-#~ msgstr "Pretraživač"
-
-#~ msgid "URL"
-#~ msgstr "Internet adresa"
-
-#~ msgid "_Stop Video"
-#~ msgstr "_Stop Video"
-
-#~ msgid "_Channels"
-#~ msgstr "_Kanali"
-
-#~ msgid "New Channel _Guide..."
-#~ msgstr "Novi TV _Vodič..."
-
-#~ msgid "_Remove Playlists..."
-#~ msgstr "_Ukloni Plejliste..."
-
-#~ msgid "Remove Channel Guides..."
-#~ msgstr "Ukloni TV Vodiče..."
-
-#~ msgid "Remove Video..."
-#~ msgstr "Ukloni Video Fajl..."
-
-#~ msgid "Could not write to %s"
-#~ msgstr "Ne mogu da upisujem na %s"
-
-#~ msgid "%s MB required to store this video"
-#~ msgstr "%s MB potrebno za snimanje ovog video fajla"
-
-#~ msgid "The torrent file for this item was deleted "
-#~ msgstr "Odgovarajući torent fajl je obrisan "
-
-#~ msgid "-00:00:00"
-#~ msgstr "-00:00:00"
-
-#~ msgid "Change..."
-#~ msgstr "Promeni..."
-
-#~ msgid "DELETE"
-#~ msgstr "IZBRIŠI"
-
-#~ msgid "default"
-#~ msgstr "podrazumevano"
-
-#~ msgid "SHARE IT"
-#~ msgstr "PODELI SA DRUGIMA"
-
-#~ msgid "OK"
-#~ msgstr "U redu"
-
-#~ msgid "Starting up"
-#~ msgstr "Startujem"
-
-#~ msgid "Error: %s"
-#~ msgstr "Greška: %s"
-
-#~ msgid "Bad Status Code: %s"
-#~ msgstr "Bad Status Code: %s"
-
-#~ msgid "Democracy Help"
-#~ msgstr "Demokracy pomoć"
-
-#~ msgid "Democracy"
-#~ msgstr "Democracy"
-
-#~ msgid "Remove Channel..."
-#~ msgstr "Ukloni Kanal..."
-
-#~ msgid "Loading window"
-#~ msgstr "Učitavam prozor"
-
-#~ msgid "_Remove Videos..."
-#~ msgstr "_Ukloni Video Fajlove..."
-
-#~ msgid "Re_name Playlist Folder..."
-#~ msgstr "Promeni-ime Foldera Plejliste..."
-
-#~ msgid "Re_name..."
-#~ msgstr "Promeni_ime"
-
-#~ msgid "Connection Error: %s"
-#~ msgstr "Grečka u povezivanju %s"
-
-#~ msgid "${count} Channels Selected"
-#~ msgstr "${count} kanala izabrano"
-
-#~ msgid ""
-#~ "This folder contains ${count} playlists, but the playlists do not contain "
-#~ "any items."
-#~ msgstr ""
-#~ "Ovaj folder sadrži ${count} plejliste, ali su plejliste bez sadržaja."

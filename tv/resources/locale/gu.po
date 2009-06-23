@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -65,6 +65,261 @@ msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr "%(url)s ખોલતા ભુલ. મહેરબાની કરી થોડી ક્ષણોમાં ફરીથી કોષશ કરો."
 
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
+msgid "Renderer options:"
+msgstr "ભાષાંતરનાં વિકલ્પો"
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
+msgid "You must restart Miro for renderer changes to take effect."
+msgstr "ભાષાંતરનાં વિકલ્પો શકય બનાવવા, મિરો ફરીથી ચાલું કરવું"
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:72
+msgid "Video renderer:"
+msgstr "વિડયો ભાષાંતર"
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:80
+msgid "None"
+msgstr "કશું નંહિ"
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:86
+msgid "Use this for video when playing audio:"
+msgstr "આ વિડયો પ્રદષિત કરજો, ધ્વનિ ફાઈલ સાથે"
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:128
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
+#: ../../portable/frontends/widgets/gtk/video.py:274
+#: ../../portable/frontends/widgets/gtk/video.py:282
+#: ../../portable/frontends/widgets/itemcontextmenu.py:65
+#: ../../portable/dialogs.py:107
+msgid "Delete"
+msgstr "દૂર કરો"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
+msgid "Services"
+msgstr "સેવાઓ"
+
+msgid "Hide Miro"
+msgstr "મિરોને છુંપાવ"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
+msgid "Hide Others"
+msgstr "બિજાને છુંપાવ"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
+msgid "Show All"
+msgstr "બધુ બતાવો"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
+msgid "Preferences..."
+msgstr "પસંદગીઓ..."
+
+msgid "Quit Miro"
+msgstr "બંધ કરો મિરોને"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:150
+msgid "Close Window"
+msgstr "વિન્ડો બંધ કરો"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
+msgid "Cut"
+msgstr "કાપો"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
+msgid "Copy"
+msgstr "નકલ કરો"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
+msgid "Paste"
+msgstr "ચોંટાડો"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
+msgid "Select All"
+msgstr "બધુ પસંદ કરો"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
+msgid "Edit"
+msgstr "ફેરફાર"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
+msgid "Zoom"
+msgstr "નાનુમોટુ કરવુ"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
+msgid "Minimize"
+msgstr "ન્યુનતમ કરો"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
+msgid "Main Window"
+msgstr "મુંખ્ય વિન્ડો"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
+msgid "Bring All to Front"
+msgstr "બધાને આગળ લાવો"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
+msgid "Window"
+msgstr "વિન્ડો"
+
+msgid "Miro Help"
+msgstr "મિરો મદદ"
+
+#: ../../portable/downloader.py:268 ../../portable/httpclient.py:145
+#: ../../portable/httpclient.py:174
+msgid "File not found"
+msgstr "ફાઈલ મળી નથી"
+
+#: ../../portable/dl_daemon/download.py:507
+#: ../../portable/frontends/widgets/style.py:228
+msgid "Error"
+msgstr "ભૂલ"
+
+#: ../../portable/dl_daemon/download.py:621
+#: ../../portable/dl_daemon/download.py:838
+msgid "Not enough disk space"
+msgstr "ડિસ્કમાં પૂરતી જગ્યા નથી"
+
+#: ../../portable/menubar.py:196
+msgid "_Quit"
+msgstr "બંધ કરો (_Q)"
+
+#: ../../portable/menubar.py:265
+msgid "_Fullscreen"
+msgstr "સંપૂર્ણ સ્ક્રીન (_F)"
+
+#: ../../portable/menubar.py:272 ../../portable/menubar.py:293
+msgid "_Help"
+msgstr "મદદ (_H)"
+
+#: ../../portable/frontends/widgets/crashdialog.py:46
+#: ../../portable/httpclient.py:158
+msgid "Internal Error"
+msgstr "આંતરિક ભૂલ"
+
+#: ../../portable/frontends/widgets/style.py:226
+#: ../../portable/frontends/widgets/style.py:1040
+#: ../../portable/frontends/widgets/style.py:1051
+#: ../../portable/frontends/widgets/itemcontextmenu.py:129
+#: ../../portable/frontends/widgets/itemcontextmenu.py:224
+#: ../../portable/dialogs.py:95
+msgid "Download"
+msgstr "ડાઉનલોડ"
+
+#: ../../portable/frontends/widgets/style.py:233
+#: ../../portable/frontends/widgets/prefpanel.py:485
+#: ../../portable/frontends/widgets/tablist.py:523
+#: ../../portable/frontends/widgets/tablist.py:535
+#: ../../portable/frontends/widgets/tablist.py:541
+#: ../../portable/frontends/widgets/tablist.py:578
+#: ../../portable/frontends/widgets/tablist.py:584
+#: ../../portable/frontends/widgets/tablist.py:589
+#: ../../portable/dialogs.py:108
+msgid "Remove"
+msgstr "દૂર કરો"
+
+#: ../../portable/frontends/widgets/prefpanel.py:435
+#: ../../portable/frontends/widgets/firsttimedialog.py:184
+msgid "Change"
+msgstr "બદલો"
+
+#: ../../portable/frontends/widgets/prefpanel.py:482
+#: ../../portable/dialogs.py:104
+msgid "Add"
+msgstr "ઉમેરો"
+
+#: ../../portable/frontends/widgets/prefpanel.py:625
+msgid "Playback"
+msgstr "વગાડો"
+
+#: ../../portable/frontends/widgets/prefpanel.py:629
+msgid "Preferences"
+msgstr "પસંદગીઓ"
+
+#: ../../portable/frontends/widgets/rundialog.py:82
+msgid "Username:"
+msgstr "વપરાશકર્તા નામ:"
+
+#: ../../portable/frontends/widgets/rundialog.py:86
+msgid "Password:"
+msgstr "પાસવર્ડ:"
+
+#: ../../portable/frontends/widgets/application.py:750
+msgid "Are you sure you want to quit?"
+msgstr "શું તમે ખરેખર બહાર નીકળવા માંગો છો?"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:633
+msgid "Settings"
+msgstr "સુયોજનાઓ"
+
+#: ../../portable/frontends/widgets/newfeed.py:60
+#: ../../portable/frontends/widgets/newsearchfeed.py:98
+msgid "URL:"
+msgstr "યૂ આર એલ (URL):"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:74
+msgid "Search for:"
+msgstr "માટેની શોધ:"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:137
+#: ../../portable/frontends/widgets/firsttimedialog.py:170
+#: ../../portable/dialogs.py:87
+msgid "Yes"
+msgstr "હા"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:138
+#: ../../portable/frontends/widgets/firsttimedialog.py:169
+#: ../../portable/dialogs.py:88
+msgid "No"
+msgstr "ના"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:213
+#: ../../portable/frontends/widgets/firsttimedialog.py:215
+#: ../../portable/frontends/widgets/firsttimedialog.py:272
+#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
+msgid "Search"
+msgstr "શોધો"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:273
+#: ../../portable/dialogs.py:85
+msgid "Cancel"
+msgstr "રદ કરો"
+
+#: ../../portable/frontends/widgets/statictabs.py:110
+msgid "Downloading"
+msgstr "ડાઉનલોડ કરી રહ્યા છીએ"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:94
+#: ../../portable/frontends/widgets/itemcontextmenu.py:192
+msgid "Play"
+msgstr "વગાડવુ"
+
+#: ../../portable/dialogs.py:83
+msgid "Ok"
+msgstr "બરાબર"
+
+#: ../../portable/dialogs.py:89
+msgid "Quit"
+msgstr "બંધ કરો"
+
+#: ../../portable/dialogs.py:97
+msgid "Delete File"
+msgstr "ફાઈલ કાઢી નાંખો"
+
+#: ../../portable/dialogs.py:98
+msgid "Delete Files"
+msgstr "ફાઈલ કાઢી નાંખો"
+
+#: ../../portable/dialogs.py:101
+msgid "Create"
+msgstr "બનાવો"
+
+#: ../../portable/httpclient.py:163
+msgid "Timeout"
+msgstr "સમય પૂરો"
+
+#: ../../portable/httpclient.py:829
+msgid "Unknown"
+msgstr "અજાણ્યુ"
+
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
 msgid "Update Available"
 msgstr ""
@@ -102,29 +357,9 @@ msgid ""
 "installed."
 msgstr ""
 
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
-msgid "Renderer options:"
-msgstr "ભાષાંતરનાં વિકલ્પો"
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
-msgid "You must restart Miro for renderer changes to take effect."
-msgstr "ભાષાંતરનાં વિકલ્પો શકય બનાવવા, મિરો ફરીથી ચાલું કરવું"
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:72
-msgid "Video renderer:"
-msgstr "વિડયો ભાષાંતર"
-
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:77
 msgid "You must restart playback for visualization changes to take effect."
 msgstr ""
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:80
-msgid "None"
-msgstr "કશું નંહિ"
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:86
-msgid "Use this for video when playing audio:"
-msgstr "આ વિડયો પ્રદષિત કરજો, ધ્વનિ ફાઈલ સાથે"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:120
 #: ../../portable/frontends/widgets/gtk/video.py:300
@@ -143,15 +378,6 @@ msgstr ""
 msgid "Keep"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:128
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
-#: ../../portable/frontends/widgets/gtk/video.py:274
-#: ../../portable/frontends/widgets/gtk/video.py:282
-#: ../../portable/frontends/widgets/itemcontextmenu.py:65
-#: ../../portable/dialogs.py:107
-msgid "Delete"
-msgstr "દૂર કરો"
-
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:132
 msgid "Add to Library"
 msgstr ""
@@ -163,54 +389,6 @@ msgstr ""
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:206
 msgid "Pop In"
 msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
-msgid "Services"
-msgstr "સેવાઓ"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
-msgid "Hide Miro"
-msgstr "મિરોને છુંપાવ"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
-msgid "Hide Others"
-msgstr "બિજાને છુંપાવ"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
-msgid "Show All"
-msgstr "બધુ બતાવો"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
-msgid "Preferences..."
-msgstr "પસંદગીઓ..."
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
-msgid "Quit Miro"
-msgstr "બંધ કરો મિરોને"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:150
-msgid "Close Window"
-msgstr "વિન્ડો બંધ કરો"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
-msgid "Cut"
-msgstr "કાપો"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
-msgid "Copy"
-msgstr "નકલ કરો"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
-msgid "Paste"
-msgstr "ચોંટાડો"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
-msgid "Select All"
-msgstr "બધુ પસંદ કરો"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
-msgid "Edit"
-msgstr "ફેરફાર"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
 msgid "Present Half Size"
@@ -227,30 +405,6 @@ msgstr ""
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
 msgid "Present Video"
 msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
-msgid "Zoom"
-msgstr "નાનુમોટુ કરવુ"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
-msgid "Minimize"
-msgstr "ન્યુનતમ કરો"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
-msgid "Main Window"
-msgstr "મુંખ્ય વિન્ડો"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
-msgid "Bring All to Front"
-msgstr "બધાને આગળ લાવો"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
-msgid "Window"
-msgstr "વિન્ડો"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
-msgid "Miro Help"
-msgstr "મિરો મદદ"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:166
 msgid "Download Completed"
@@ -275,7 +429,6 @@ msgstr ""
 msgid "Example Playlist"
 msgstr ""
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr ""
 
@@ -330,23 +483,19 @@ msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr ""
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr ""
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -503,11 +652,6 @@ msgstr[1] ""
 msgid "activity"
 msgstr ""
 
-#: ../../portable/downloader.py:268 ../../portable/httpclient.py:145
-#: ../../portable/httpclient.py:174
-msgid "File not found"
-msgstr "ફાઈલ મળી નથી"
-
 #: ../../portable/downloader.py:269
 msgid "Flash URL Scraping Error"
 msgstr ""
@@ -516,20 +660,10 @@ msgstr ""
 msgid "starting up"
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:507
-#: ../../portable/frontends/widgets/style.py:228
-msgid "Error"
-msgstr "ભૂલ"
-
 #: ../../portable/dl_daemon/download.py:596
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr ""
-
-#: ../../portable/dl_daemon/download.py:621
-#: ../../portable/dl_daemon/download.py:838
-msgid "Not enough disk space"
-msgstr "ડિસ્કમાં પૂરતી જગ્યા નથી"
 
 #: ../../portable/dl_daemon/download.py:622
 #: ../../portable/dl_daemon/download.py:839
@@ -606,10 +740,6 @@ msgstr ""
 #: ../../portable/menubar.py:195
 msgid "_Options"
 msgstr ""
-
-#: ../../portable/menubar.py:196
-msgid "_Quit"
-msgstr "બંધ કરો (_Q)"
 
 #: ../../portable/menubar.py:205
 msgid "Cu_t"
@@ -748,25 +878,16 @@ msgstr ""
 msgid "Volume _Down"
 msgstr ""
 
-#: ../../portable/menubar.py:265
-msgid "_Fullscreen"
-msgstr "સંપૂર્ણ સ્ક્રીન (_F)"
-
 #: ../../portable/menubar.py:266
 msgid "_Toggle Detached/Attached"
 msgstr ""
 
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr ""
 
 #: ../../portable/menubar.py:271
 msgid "_Donate"
 msgstr ""
-
-#: ../../portable/menubar.py:272 ../../portable/menubar.py:293
-msgid "_Help"
-msgstr "મદદ (_H)"
 
 #: ../../portable/menubar.py:274
 #: ../../portable/frontends/widgets/diagnostics.py:119
@@ -804,11 +925,6 @@ msgstr ""
 #: ../../portable/menubar.py:292
 msgid "P_layback"
 msgstr ""
-
-#: ../../portable/frontends/widgets/crashdialog.py:46
-#: ../../portable/httpclient.py:158
-msgid "Internal Error"
-msgstr "આંતરિક ભૂલ"
 
 #: ../../portable/frontends/widgets/crashdialog.py:52
 msgid ""
@@ -1019,15 +1135,6 @@ msgstr ""
 msgid "Down Total"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:226
-#: ../../portable/frontends/widgets/style.py:1040
-#: ../../portable/frontends/widgets/style.py:1051
-#: ../../portable/frontends/widgets/itemcontextmenu.py:129
-#: ../../portable/frontends/widgets/itemcontextmenu.py:224
-#: ../../portable/dialogs.py:95
-msgid "Download"
-msgstr "ડાઉનલોડ"
-
 #: ../../portable/frontends/widgets/style.py:227
 msgid "Download Torrent"
 msgstr ""
@@ -1046,18 +1153,6 @@ msgstr ""
 msgid "Newly Available"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:233
-#: ../../portable/frontends/widgets/prefpanel.py:485
-#: ../../portable/frontends/widgets/tablist.py:523
-#: ../../portable/frontends/widgets/tablist.py:535
-#: ../../portable/frontends/widgets/tablist.py:541
-#: ../../portable/frontends/widgets/tablist.py:578
-#: ../../portable/frontends/widgets/tablist.py:584
-#: ../../portable/frontends/widgets/tablist.py:589
-#: ../../portable/dialogs.py:108
-msgid "Remove"
-msgstr "દૂર કરો"
-
 #: ../../portable/frontends/widgets/style.py:234
 #: ../../portable/frontends/widgets/itemcontextmenu.py:113
 msgid "Stop seeding"
@@ -1072,7 +1167,6 @@ msgstr ""
 msgid "Remove from playlist"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr ""
 
@@ -1205,11 +1299,6 @@ msgstr ""
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:435
-#: ../../portable/frontends/widgets/firsttimedialog.py:184
-msgid "Change"
-msgstr "બદલો"
-
 #: ../../portable/frontends/widgets/prefpanel.py:440
 msgid "Choose Movies Directory"
 msgstr ""
@@ -1218,17 +1307,11 @@ msgstr ""
 msgid "Migrate existing movies?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
 "moved until they finish.)"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:482
-#: ../../portable/dialogs.py:104
-msgid "Add"
-msgstr "ઉમેરો"
 
 #: ../../portable/frontends/widgets/prefpanel.py:523
 msgid "Add Watched Folder"
@@ -1312,27 +1395,10 @@ msgstr ""
 msgid "Disk space"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:625
-msgid "Playback"
-msgstr "વગાડો"
-
-#: ../../portable/frontends/widgets/prefpanel.py:629
-msgid "Preferences"
-msgstr "પસંદગીઓ"
-
 #: ../../portable/frontends/widgets/browser.py:94
 msgid "Open in browser"
 msgstr ""
 
-#: ../../portable/frontends/widgets/rundialog.py:82
-msgid "Username:"
-msgstr "વપરાશકર્તા નામ:"
-
-#: ../../portable/frontends/widgets/rundialog.py:86
-msgid "Password:"
-msgstr "પાસવર્ડ:"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
 msgstr ""
 
@@ -1345,21 +1411,15 @@ msgstr ""
 msgid "No Results Found"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
 msgid "Library"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr ""
 
@@ -1677,10 +1737,6 @@ msgstr ""
 msgid "Are you sure you want to remove %(name)s?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:750
-msgid "Are you sure you want to quit?"
-msgstr "શું તમે ખરેખર બહાર નીકળવા માંગો છો?"
-
 #: ../../portable/frontends/widgets/application.py:752
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
@@ -1794,10 +1850,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemlistwidgets.py:627
 msgid "Share feed"
 msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:633
-msgid "Settings"
-msgstr "સુયોજનાઓ"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:639
 msgid "Remove feed"
@@ -1932,7 +1984,6 @@ msgstr ""
 msgid "Choose"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -1971,11 +2022,6 @@ msgid_plural ""
 "progress will be canceled."
 msgstr[0] ""
 msgstr[1] ""
-
-#: ../../portable/frontends/widgets/newfeed.py:60
-#: ../../portable/frontends/widgets/newsearchfeed.py:98
-msgid "URL:"
-msgstr "યૂ આર એલ (URL):"
 
 #: ../../portable/frontends/widgets/newfeed.py:69
 msgid "Feed should go in this section:"
@@ -2096,10 +2142,6 @@ msgstr ""
 msgid "A search feed contains items that match a search term."
 msgstr ""
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:74
-msgid "Search for:"
-msgstr "માટેની શોધ:"
-
 #: ../../portable/frontends/widgets/newsearchfeed.py:80
 msgid "In this:"
 msgstr ""
@@ -2138,18 +2180,6 @@ msgstr ""
 msgid "Would you like to run Miro on startup?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:137
-#: ../../portable/frontends/widgets/firsttimedialog.py:170
-#: ../../portable/dialogs.py:87
-msgid "Yes"
-msgstr "હા"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:138
-#: ../../portable/frontends/widgets/firsttimedialog.py:169
-#: ../../portable/dialogs.py:88
-msgid "No"
-msgstr "ના"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:146
 msgid "Next >"
 msgstr ""
@@ -2183,13 +2213,6 @@ msgstr ""
 msgid "< Previous"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:213
-#: ../../portable/frontends/widgets/firsttimedialog.py:215
-#: ../../portable/frontends/widgets/firsttimedialog.py:272
-#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
-msgid "Search"
-msgstr "શોધો"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:215
 #: ../../portable/frontends/widgets/firsttimedialog.py:283
 msgid "Finish"
@@ -2198,11 +2221,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:263
 msgid "Searching for media files"
 msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:273
-#: ../../portable/dialogs.py:85
-msgid "Cancel"
-msgstr "રદ કરો"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:311
 #, python-format
@@ -2221,10 +2239,6 @@ msgstr[1] ""
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
 msgstr ""
-
-#: ../../portable/frontends/widgets/statictabs.py:110
-msgid "Downloading"
-msgstr "ડાઉનલોડ કરી રહ્યા છીએ"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:90
 msgid "Single and external downloads"
@@ -2258,11 +2272,6 @@ msgstr ""
 msgid "Remove From the Library"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:94
-#: ../../portable/frontends/widgets/itemcontextmenu.py:192
-msgid "Play"
-msgstr "વગાડવુ"
-
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just this Item"
 msgstr ""
@@ -2286,7 +2295,6 @@ msgstr ""
 msgid "Mark as Played"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr ""
 
@@ -2306,7 +2314,6 @@ msgstr ""
 msgid "Resume Download"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
 msgstr ""
 
@@ -2367,10 +2374,6 @@ msgstr ""
 msgid "Remove From Playlist"
 msgstr ""
 
-#: ../../portable/dialogs.py:83
-msgid "Ok"
-msgstr "બરાબર"
-
 #: ../../portable/dialogs.py:84
 msgid "Close"
 msgstr ""
@@ -2378,10 +2381,6 @@ msgstr ""
 #: ../../portable/dialogs.py:86
 msgid "Done"
 msgstr ""
-
-#: ../../portable/dialogs.py:89
-msgid "Quit"
-msgstr "બંધ કરો"
 
 #: ../../portable/dialogs.py:90
 msgid "Continue"
@@ -2407,14 +2406,6 @@ msgstr ""
 msgid "Remove Entry"
 msgstr ""
 
-#: ../../portable/dialogs.py:97
-msgid "Delete File"
-msgstr "ફાઈલ કાઢી નાંખો"
-
-#: ../../portable/dialogs.py:98
-msgid "Delete Files"
-msgstr "ફાઈલ કાઢી નાંખો"
-
 #: ../../portable/dialogs.py:99
 msgid "Keep Videos"
 msgstr ""
@@ -2422,10 +2413,6 @@ msgstr ""
 #: ../../portable/dialogs.py:100
 msgid "Delete Videos"
 msgstr ""
-
-#: ../../portable/dialogs.py:101
-msgid "Create"
-msgstr "બનાવો"
 
 #: ../../portable/dialogs.py:102
 msgid "Create Feed"
@@ -2672,10 +2659,6 @@ msgstr ""
 msgid "Pipeline request never started"
 msgstr ""
 
-#: ../../portable/httpclient.py:163
-msgid "Timeout"
-msgstr "સમય પૂરો"
-
 #: ../../portable/httpclient.py:164
 #, python-format
 msgid "Connection to %(host)s timed out"
@@ -2711,10 +2694,6 @@ msgstr ""
 #: ../../portable/httpclient.py:408
 msgid "Connection closed"
 msgstr ""
-
-#: ../../portable/httpclient.py:829
-msgid "Unknown"
-msgstr "અજાણ્યુ"
 
 #: ../../portable/httpclient.py:830
 msgid "Internal Error: Not ready to send"

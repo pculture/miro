@@ -15,8 +15,119 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
+msgid "Quit Miro completely."
+msgstr "Kuitaat Miro da vat."
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
+msgid "Services"
+msgstr "Servijoù"
+
+msgid "Hide Miro"
+msgstr "Kuzhat Miro"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
+msgid "Hide Others"
+msgstr "Kuzhat ar re all"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:150
+msgid "Close Window"
+msgstr "Serriñ ar prenestr"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
+msgid "Cut"
+msgstr "Troc'hañ"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
+msgid "Copy"
+msgstr "Eilañ"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
+msgid "Select All"
+msgstr "Dibab"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
+msgid "Edit"
+msgstr "Aozañ"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
+msgid "Zoom"
+msgstr "Zoom"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
+msgid "Minimize"
+msgstr "Digreskiñ"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
+msgid "Main Window"
+msgstr "Prenestr kentañ"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
+msgid "Window"
+msgstr "Prenestr"
+
+msgid "Miro Help"
+msgstr "Sikour Miro"
+
+#: ../../portable/dl_daemon/download.py:507
+#: ../../portable/frontends/widgets/style.py:228
+msgid "Error"
+msgstr "Fazi"
+
+#: ../../portable/frontends/widgets/style.py:233
+#: ../../portable/frontends/widgets/prefpanel.py:485
+#: ../../portable/frontends/widgets/tablist.py:523
+#: ../../portable/frontends/widgets/tablist.py:535
+#: ../../portable/frontends/widgets/tablist.py:541
+#: ../../portable/frontends/widgets/tablist.py:578
+#: ../../portable/frontends/widgets/tablist.py:584
+#: ../../portable/frontends/widgets/tablist.py:589
+#: ../../portable/dialogs.py:108
+msgid "Remove"
+msgstr "Lemel"
+
+#: ../../portable/frontends/widgets/prefpanel.py:580
+msgid "1 day"
+msgstr "1 deiz"
+
+#: ../../portable/frontends/widgets/prefpanel.py:584
+msgid "1 month"
+msgstr "1 miz"
+
+#: ../../portable/frontends/widgets/prefpanel.py:622
+#: ../../portable/frontends/widgets/downloadscontroller.py:81
+msgid "Downloads"
+msgstr "Pellgargadennoù"
+
+#: ../../portable/frontends/widgets/rundialog.py:86
+msgid "Password:"
+msgstr "Ger-tremen:"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:81
+msgid "Hide"
+msgstr "Kuzhat"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:137
+#: ../../portable/frontends/widgets/firsttimedialog.py:170
+#: ../../portable/dialogs.py:87
+msgid "Yes"
+msgstr "Ya"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:273
+#: ../../portable/dialogs.py:85
+msgid "Cancel"
+msgstr "Nullañ"
+
+#: ../../portable/dialogs.py:89
+msgid "Quit"
+msgstr "Kuitaat"
+
+#: ../../portable/dialogs.py:101
+msgid "Create"
+msgstr "Krouiñ"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
@@ -30,10 +141,6 @@ msgstr ""
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:45
 msgid "Close to tray so that downloads can continue."
 msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
-msgid "Quit Miro completely."
-msgstr "Kuitaat Miro da vat."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:124
 msgid "Close to tray?"
@@ -162,18 +269,6 @@ msgstr ""
 msgid "Pop In"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
-msgid "Services"
-msgstr "Servijoù"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
-msgid "Hide Miro"
-msgstr "Kuzhat Miro"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
-msgid "Hide Others"
-msgstr "Kuzhat ar re all"
-
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
 msgid "Show All"
 msgstr ""
@@ -182,33 +277,12 @@ msgstr ""
 msgid "Preferences..."
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
 msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:150
-msgid "Close Window"
-msgstr "Serriñ ar prenestr"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
-msgid "Cut"
-msgstr "Troc'hañ"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
-msgid "Copy"
-msgstr "Eilañ"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
 msgid "Paste"
 msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
-msgid "Select All"
-msgstr "Dibab"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
-msgid "Edit"
-msgstr "Aozañ"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
 msgid "Present Half Size"
@@ -226,29 +300,9 @@ msgstr ""
 msgid "Present Video"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
-msgid "Zoom"
-msgstr "Zoom"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
-msgid "Minimize"
-msgstr "Digreskiñ"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
-msgid "Main Window"
-msgstr "Prenestr kentañ"
-
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
 msgid "Bring All to Front"
 msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
-msgid "Window"
-msgstr "Prenestr"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
-msgid "Miro Help"
-msgstr "Sikour Miro"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:166
 msgid "Download Completed"
@@ -273,7 +327,6 @@ msgstr ""
 msgid "Example Playlist"
 msgstr ""
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr ""
 
@@ -328,23 +381,19 @@ msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr ""
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr ""
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -513,11 +562,6 @@ msgstr ""
 #: ../../portable/downloader.py:447
 msgid "starting up"
 msgstr ""
-
-#: ../../portable/dl_daemon/download.py:507
-#: ../../portable/frontends/widgets/style.py:228
-msgid "Error"
-msgstr "Fazi"
 
 #: ../../portable/dl_daemon/download.py:596
 #, python-format
@@ -754,7 +798,6 @@ msgstr ""
 msgid "_Toggle Detached/Attached"
 msgstr ""
 
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr ""
 
@@ -1044,18 +1087,6 @@ msgstr ""
 msgid "Newly Available"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:233
-#: ../../portable/frontends/widgets/prefpanel.py:485
-#: ../../portable/frontends/widgets/tablist.py:523
-#: ../../portable/frontends/widgets/tablist.py:535
-#: ../../portable/frontends/widgets/tablist.py:541
-#: ../../portable/frontends/widgets/tablist.py:578
-#: ../../portable/frontends/widgets/tablist.py:584
-#: ../../portable/frontends/widgets/tablist.py:589
-#: ../../portable/dialogs.py:108
-msgid "Remove"
-msgstr "Lemel"
-
 #: ../../portable/frontends/widgets/style.py:234
 #: ../../portable/frontends/widgets/itemcontextmenu.py:113
 msgid "Stop seeding"
@@ -1070,7 +1101,6 @@ msgstr ""
 msgid "Remove from playlist"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr ""
 
@@ -1216,7 +1246,6 @@ msgstr ""
 msgid "Migrate existing movies?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
@@ -1249,10 +1278,6 @@ msgstr ""
 msgid "GB"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:580
-msgid "1 day"
-msgstr "1 deiz"
-
 #: ../../portable/frontends/widgets/prefpanel.py:581
 msgid "3 days"
 msgstr ""
@@ -1264,10 +1289,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/prefpanel.py:583
 msgid "10 days"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:584
-msgid "1 month"
-msgstr "1 miz"
 
 #: ../../portable/frontends/widgets/prefpanel.py:590
 msgid "By default, videos expire after:"
@@ -1297,11 +1318,6 @@ msgstr ""
 msgid "Feeds"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:622
-#: ../../portable/frontends/widgets/downloadscontroller.py:81
-msgid "Downloads"
-msgstr "Pellgargadennoù"
-
 #: ../../portable/frontends/widgets/prefpanel.py:623
 msgid "Folders"
 msgstr ""
@@ -1326,11 +1342,6 @@ msgstr ""
 msgid "Username:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/rundialog.py:86
-msgid "Password:"
-msgstr "Ger-tremen:"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
 msgstr ""
 
@@ -1343,21 +1354,15 @@ msgstr ""
 msgid "No Results Found"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
 msgid "Library"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr ""
 
@@ -1910,10 +1915,6 @@ msgstr ""
 msgid "Resume All Downloads (%(paused)d)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:81
-msgid "Hide"
-msgstr "Kuzhat"
-
 #: ../../portable/frontends/widgets/gtk/video.py:272
 msgid "Add to library"
 msgstr ""
@@ -1930,7 +1931,6 @@ msgstr ""
 msgid "Choose"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -2136,12 +2136,6 @@ msgstr ""
 msgid "Would you like to run Miro on startup?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:137
-#: ../../portable/frontends/widgets/firsttimedialog.py:170
-#: ../../portable/dialogs.py:87
-msgid "Yes"
-msgstr "Ya"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:138
 #: ../../portable/frontends/widgets/firsttimedialog.py:169
 #: ../../portable/dialogs.py:88
@@ -2196,11 +2190,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:263
 msgid "Searching for media files"
 msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:273
-#: ../../portable/dialogs.py:85
-msgid "Cancel"
-msgstr "Nullañ"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:311
 #, python-format
@@ -2284,7 +2273,6 @@ msgstr ""
 msgid "Mark as Played"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr ""
 
@@ -2304,7 +2292,6 @@ msgstr ""
 msgid "Resume Download"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
 msgstr ""
 
@@ -2377,10 +2364,6 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
-#: ../../portable/dialogs.py:89
-msgid "Quit"
-msgstr "Kuitaat"
-
 #: ../../portable/dialogs.py:90
 msgid "Continue"
 msgstr ""
@@ -2420,10 +2403,6 @@ msgstr ""
 #: ../../portable/dialogs.py:100
 msgid "Delete Videos"
 msgstr ""
-
-#: ../../portable/dialogs.py:101
-msgid "Create"
-msgstr "Krouiñ"
 
 #: ../../portable/dialogs.py:102
 msgid "Create Feed"

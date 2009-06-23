@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1 ? 0: (((n % 100 > 19) || ((n % 100 "
 "== 0) && (n != 0))) ? 2: 1));\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -162,19 +162,10 @@ msgstr "Șterge"
 msgid "Add to Library"
 msgstr "Adaugă la bibliotecă"
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:203
-msgid "Pop Out"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:206
-msgid "Pop In"
-msgstr ""
-
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
 msgid "Services"
 msgstr "Servicii"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 msgid "Hide Miro"
 msgstr "Ascunde Miro"
 
@@ -190,7 +181,6 @@ msgstr "Afișează tot"
 msgid "Preferences..."
 msgstr "Preferințe..."
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
 msgstr "Închide Miro"
 
@@ -254,7 +244,6 @@ msgstr "Adu tot în prim-plan"
 msgid "Window"
 msgstr "Fereastră"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Miro Help"
 msgstr "Ajutor"
 
@@ -281,7 +270,6 @@ msgstr "Rulați o versiune %(appname)s cu un set personalizat de canale."
 msgid "Example Playlist"
 msgstr "Exemplu de listă de redare"
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr "Miro - Raportează o problemă"
 
@@ -338,12 +326,10 @@ msgstr[0] "%(count)d flux deja existent a fost sărit."
 msgstr[1] "%(count)d fluxuri deja existente au fost sărite."
 msgstr[2] "%(count)d de fluxuri deja existente au fost sărite."
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "Salvarea bazei de date %(appname)s a avut succes"
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -351,12 +337,10 @@ msgstr ""
 "Baza de date a fost salvată cu succes. Acum puteți închide programul în "
 "siguranță."
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "Salvarea bazei de date %(appname)s a eșuat"
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -785,7 +769,6 @@ msgstr "_Tot ecranul"
 msgid "_Toggle Detached/Attached"
 msgstr "_Activează dezatașare/atașare"
 
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr "_Despre Miro"
 
@@ -1109,7 +1092,6 @@ msgstr "pauză"
 msgid "Remove from playlist"
 msgstr "Elimină din lista de redare"
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr "Pornește automat Miro când pornesc calculatorul."
 
@@ -1255,7 +1237,6 @@ msgstr "Alegeți dosarul pentru filme"
 msgid "Migrate existing movies?"
 msgstr "Să migrez filmele existente?"
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
@@ -1374,7 +1355,6 @@ msgstr "Nume utilizator:"
 msgid "Password:"
 msgstr "Parolă:"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
 msgstr "Clipuri noi"
 
@@ -1387,21 +1367,15 @@ msgstr "Căutare clipuri video"
 msgid "No Results Found"
 msgstr "Nici un rezultat găsit"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
 msgid "Library"
 msgstr "Bibliotecă"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr "Elemente separate"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr "Nimic de afișat"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr "Această filă reține descărcările care nu fac parte din nici un flux."
 
@@ -2024,7 +1998,6 @@ msgstr "Toate fișierele"
 msgid "Choose"
 msgstr "Alege"
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -2413,7 +2386,6 @@ msgstr "Marchează ca ne-redat"
 msgid "Mark as Played"
 msgstr "Marchează ca redat"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr "Pornește transmiterea"
 
@@ -2433,7 +2405,6 @@ msgstr "Suspendă descărcarea"
 msgid "Resume Download"
 msgstr "Reia descărcarea"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
 msgstr "Pagină web"
 
@@ -2928,1086 +2899,10 @@ msgstr "Fișiere locale"
 msgid "Playing File"
 msgstr "Fișier redat"
 
-#~ msgid "_Save Video..."
-#~ msgstr "_Salvează secvenţa video"
-
-#~ msgid "Save this video"
-#~ msgstr "Salvează acest fişier"
-
-#~ msgid "_Play / Pause"
-#~ msgstr "_Porneşte / Pauză"
-
-#~ msgid "_Remove Channel"
-#~ msgstr "Şter_ge canalul"
-
-#~ msgid "_Update Channel"
-#~ msgstr "_Actualizează canalul"
-
-#~ msgid "Copy Channel _Link"
-#~ msgstr "Copiaza a_dresa canalului"
-
-#~ msgid "_Open..."
-#~ msgstr "_Deschide"
-
-#~ msgid "Open various files"
-#~ msgstr "Deschide diferite fişiere"
-
-#~ msgid "P_references"
-#~ msgstr "_Preferinţe"
-
-#~ msgid "Quit the Program"
-#~ msgstr "Închide programul"
-
-#~ msgid "_Channel"
-#~ msgstr "_Canal"
-
-#~ msgid "_Add Channel..."
-#~ msgstr "_Adauga canal..."
-
-#~ msgid "U_pdate All Channels"
-#~ msgstr "Actuali_zează toate canalele"
-
-#~ msgid "Channel requires authentication"
-#~ msgstr "Canalul necesită autentificare"
-
-#~ msgid "%s requires a username and password for \"%s\"."
-#~ msgstr "%s necesită un nume de utilizator şi o parolă pentru \"%s\"."
-
-#~ msgid "Not a DTV-style channel"
-#~ msgstr "Nu este un canal de tipul DTV"
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files.\n"
-#~ "- It may take time to list the videos\n"
-#~ "- Descriptions may look funny\n"
-#~ "\n"
-#~ "Please contact the publishers of %s and ask if they have a DTV-style channel."
-#~ msgstr ""
-#~ "Dar vom încerca tot ceea ce e posibil pentru a prelua fişierele\n"
-#~ "- S-ar putea sa ia timp pentru a lista secvenţele video\n"
-#~ "- Descrierile pot arata ciudat\n"
-#~ "\n"
-#~ "Vă rugăm contactaţi editorii lui %s şi întrebaţi-i dacă au un canal de tipul "
-#~ "DTV."
-
-#~ msgid "DTV Version Alert"
-#~ msgstr "Alertă - versiunea DTV"
-
-#~ msgid ""
-#~ "A new version of DTV is available.\n"
-#~ "\n"
-#~ "Would you like to download it now?"
-#~ msgstr ""
-#~ "O nouă versiune DTV este disponibilă.\n"
-#~ "\n"
-#~ "Vrei să o descarc acum ?"
-
-#~ msgid "DTV Version Check"
-#~ msgstr "Verificare versiune DTV"
-
-#~ msgid "This version of DTV is up to date."
-#~ msgstr "Ai ultima versiune DTV."
-
-#~ msgid "%s database save failed"
-#~ msgstr "Salvarea bazei de date %s a eşuat."
-
-#~ msgid ""
-#~ "%s was unable to save its database: %s.\n"
-#~ "Recent changes may be lost."
-#~ msgstr ""
-#~ "%s nu a putut să-şi salveze baza de date: %s.\n"
-#~ "Schimbările recente pot fi pierdute."
-
-#~ msgid "Remove Channel"
-#~ msgstr "Şterge canalul"
-
-#~ msgid ""
-#~ "Are you sure you want to <b>remove</b> the channel\n"
-#~ "   '<b>%s</b>'?\n"
-#~ "<b>This operation cannot be undone.</b>"
-#~ msgstr ""
-#~ "Eşti sigur ca vrei să <b>ştergi</b> canalul\n"
-#~ "   '<b>%s</b>'?\n"
-#~ "<b>Această operaţie este definitivă.</b>"
-
-#~ msgid "You have %d download%s still in progress."
-#~ msgstr "Aii %d descărcări%s înca în derulare."
-
-#~ msgid "Unknown Runtime Error"
-#~ msgstr "Eroare de execuţie necunoscută"
-
-#~ msgid "An unknown error has occurred %s."
-#~ msgstr "O eroare necunoscută a apărut %s."
-
-#~ msgid "Pending Auto Download"
-#~ msgstr "Aştept descărcarea automată"
-
-#~ msgid "Pending Manual Download"
-#~ msgstr "Aştept descărcarea manuală"
-
-#~ msgid "Unwatched"
-#~ msgstr "Nevizionat"
-
-#~ msgid "Save"
-#~ msgstr "Salvează"
-
-#~ msgid "Expires"
-#~ msgstr "Expiră"
-
-#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
-#~ msgstr ""
-#~ "Nu este nimic de afişat.<br></br> Introdu un criteriu în câmpul de căutare "
-#~ "de mai sus."
-
-#~ msgid "Searching..."
-#~ msgstr "Caut..."
-
-#~ msgid "Channel Guide"
-#~ msgstr "Ghid canale"
-
-#~ msgid "My Collection"
-#~ msgstr "Colecţia mea"
-
-#~ msgid "Democracy - External Playback Template"
-#~ msgstr "Democracy - Şablonul extern de redare"
-
-#~ msgid "Continue To Next Video"
-#~ msgstr "Continuă cu următoarea secvenţă video"
-
-#~ msgid "Recommend"
-#~ msgstr "Recomandă"
-
-#~ msgid "Back to Channel"
-#~ msgstr "Înapoi la canal"
-
-#~ msgid "Channel Settings"
-#~ msgstr "Setările canalului"
-
-#~ msgid "Videos expire after:"
-#~ msgstr "Secvenţa video expiră după:"
-
-#~ msgid "Default"
-#~ msgstr "Standard"
-
-#~ msgid "Auto download should:"
-#~ msgstr "Descărcarea auto ar trebui:"
-
-#~ msgid ""
-#~ "If I have ${maxnew} ${maxnew2} videos waiting, don't auto download more."
-#~ msgstr ""
-#~ "Daca am ${maxnew} ${maxnew2} secvenţe video ce aşteaptă, nu mai descarc "
-#~ "automat."
-
-#~ msgid "(Keeps channel from hogging disk space)"
-#~ msgstr "(Menţine canalul să nu ocupe prea mult spaţiu pe disc)"
-
-#~ msgid "Channel URL"
-#~ msgstr "URL-ul canalului"
-
-#~ msgid "Videos on this Channel"
-#~ msgstr "Secvenţe video în acest canal"
-
-#~ msgid "Watched"
-#~ msgstr "Vizionat"
-
-#~ msgid "Saved"
-#~ msgstr "Salvat"
-
-#~ msgid "Feed Title"
-#~ msgstr "Titlul fluxului"
-
-#~ msgid ""
-#~ "This file type (${format}) can't be played in the main Democracy window."
-#~ msgstr ""
-#~ "Acest tip de fişier (${format}) nu poate fi rulat în fereastra principală a "
-#~ "aplicaţiei Democracy."
-
-#~ msgid "Skip Video ${countdown}"
-#~ msgstr "Sări peste secvenţa video ${countdown}"
-
-#~ msgid "Simple translation"
-#~ msgstr "Traducere simplă"
-
-#~ msgid "truck stop in a ${can}"
-#~ msgstr "opreşte camionul într-o ${can}"
-
-#~ msgid ""
-#~ "This is a ${car} and this is a ${truck} <span> This text is <b>raw</b> "
-#~ "text</span>"
-#~ msgstr ""
-#~ "Aceasta este o ${car} şi acesta este un ${truck} <span> Acest text este test "
-#~ "<b>neprelucrat</b></span>"
-
-#~ msgid "Active Downloads"
-#~ msgstr "Descarcări active"
-
-#~ msgid "Expiring"
-#~ msgstr "Expiră"
-
-#~ msgid "Democracy Internet TV: How to Get Started"
-#~ msgstr "Democracy Internet TV: Cum să începem"
-
-#~ msgid "GO BIG:"
-#~ msgstr "ÎN MARE:"
-
-#~ msgid "This is your fullscreen button. Click it and lean back."
-#~ msgstr "Acesta este butonul pentru tot ecranul. Apasă-l şi lasă-te pe spate."
-
-#~ msgid "NEW STUFF:"
-#~ msgstr "CE MAI E NOU PRIN ZONĂ:"
-
-#~ msgid ""
-#~ "Blue circles mean the channel has new videos available, green circles mean "
-#~ "you have downloaded videos ready to watch."
-#~ msgstr ""
-#~ "Cercurile albastre înseamnă că avem secvenţe video noi în canal iar cele "
-#~ "verzi că secvenţele video descărcate sunt gata pentru vizionare."
-
-#~ msgid ""
-#~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
-#~ "onclick=\"eventURL('action:doneWithIntro');\">Go to Channel Guide "
-#~ ">></a></strong>"
-#~ msgstr ""
-#~ "<strong i18n:translate=\"\">Sari peste introducere: <a style=\"color: "
-#~ "#090;\" href=\"#\" onclick=\"eventURL('action:doneWithIntro');\">Du-te la "
-#~ "Ghidul canalului>></a></strong>"
-
-#~ msgid ""
-#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
-#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
-#~ "channels in the guide are free.</strong>"
-#~ msgstr ""
-#~ "<strong>Adaugă canale:</strong> Ghidul canalului este locaţia de bază pentru "
-#~ "canalele de internet TV. Apasă 'Adaugă' ca să te abonezi la un canal-- "
-#~ "<strong>canalele din ghid sunt gratuite.</strong>"
-
-#~ msgid ""
-#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
-#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
-#~ "waiting for videos: start some downloads and check back later."
-#~ msgstr ""
-#~ "<strong>Nu aştepta:</strong> Democracy este diferit faţă de o pagină web ce "
-#~ "conţine secvenţe video-- editorii pot oferi secvenţe video mari la o "
-#~ "calitate foarte bună. Aşa că nu aştepta secvenţele video: porneşte câteva "
-#~ "descărcări şi verifică mai târziu."
-
-#~ msgid ""
-#~ "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
-#~ "new videos and downloads in the background. Leaving it running means you'll "
-#~ "have new videos when you're ready to watch."
-#~ msgstr ""
-#~ "<strong>Lasă-l pornit:</strong> În mod regulat Democracy Player  verifică "
-#~ "dacă au mai apărut secvenţe video noi în canale şi le descarcă în "
-#~ "background. Lăsându-l pornit înseamnă că vei avea secvenţe video noi când "
-#~ "eşti pregătit pentru vizionare."
-
-#~ msgid ""
-#~ "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
-#~ "features an 'expiration' system that helps clean out older videos to make "
-#~ "room for new videos. You can always keep a video permanently by clicking "
-#~ "'save' and you can set a channel's settings to save videos automatically."
-#~ msgstr ""
-#~ "<strong>Nu vă îngrijoraţi de spaţiul de pe disc:</strong> Ca şi un TiVo, "
-#~ "funcţionalităţile aplicaţiei Democracy Player au un sistem de 'expirare' "
-#~ "care ajută la înlăturarea secvenţelor video mai vechi pentru a face loc "
-#~ "celor noi. Puteţi ţine o secvenţă video permanent apăsând 'Salvează' şi "
-#~ "puteţi specifica setările canalului pentru a salva secvenţele video automat."
-
-#~ msgid ""
-#~ "%s was unable to save its database: %s.\n"
-#~ "Recent changes may be lost.\n"
-#~ "Quit Anyway?"
-#~ msgstr ""
-#~ "%s nu a reuşit să-şi salveze baza de date: %s.\n"
-#~ "Schimbările recente pot fi pierdute.\n"
-#~ "Renunţi oricum?"
-
-#~ msgid ""
-#~ "1 day\n"
-#~ "3 days\n"
-#~ "6 days\n"
-#~ "10 days\n"
-#~ "1 month\n"
-#~ "Never"
-#~ msgstr ""
-#~ "1 zi\n"
-#~ "3 zile\n"
-#~ "6 zile\n"
-#~ "10 zile\n"
-#~ "1 luna\n"
-#~ "Niciodată"
-
-#~ msgid "<b>Channels</b>"
-#~ msgstr "<b>Canale</b>"
-
-#~ msgid "<b>Disk Space</b>"
-#~ msgstr "<b>Spaţiu pe disc</b>"
-
-#~ msgid "<b>Downloads</b>"
-#~ msgstr "<b>Descărcări</b>"
-
-#~ msgid "<b>Movies Directory</b>"
-#~ msgstr "<b>Directorul cu filme</b>"
-
-#~ msgid "Add Channel"
-#~ msgstr "Adaugă canal"
-
-#~ msgid "By default, videos expire after"
-#~ msgstr "În mod standard secvenţele video expiră după"
-
-#~ msgid "Check Channels for new content"
-#~ msgstr "Verfic canalul daca are conţinut nou"
-
-#~ msgid "Democracy - Add Channel"
-#~ msgstr "Democracy - Adaugă canal"
-
-#~ msgid "Democracy Player"
-#~ msgstr "Democracy Player"
-
-#~ msgid "Don't start a download if it leaves less than"
-#~ msgstr "Nu porni o descărcare dacă rămîne mai puțin de"
-
-#~ msgid "Enter the URL of the channel to add"
-#~ msgstr "Introdu URL-ul canalului de adăugat"
-
-#~ msgid ""
-#~ "Every 30 minutes\n"
-#~ "Every hour\n"
-#~ "Manually"
-#~ msgstr ""
-#~ "Fiecare 30 minute\n"
-#~ "Fiecare oră\n"
-#~ "Manual"
-
-#~ msgid "GB free"
-#~ msgstr "GB liberi"
-
-#~ msgid "KB/s when my computer is active"
-#~ msgstr "KB/s când calculatorul meu este activ"
-
-#~ msgid "Select Movies Directory"
-#~ msgstr "Selectează directorul cu filme"
-
-#~ msgid "Store downloaded movies in"
-#~ msgstr "Pastrează filmele descărcate în"
-
-#~ msgid "To avoid slowdowns, limit upstream to"
-#~ msgstr "Pentru a evita descărcările lente, mareşte stream-ul la"
-
-#~ msgid "Volume:"
-#~ msgstr "Volum:"
-
-#~ msgid ""
-#~ "You've selected a new folder to download movies to.  Should Democracy "
-#~ "migrate your existing downloads there?  (Currently dowloading movies will "
-#~ "not be moved until they finish.)"
-#~ msgstr ""
-#~ "Ai selectat un director nou în care să descarci filmele. Ar trebui ca "
-#~ "Democracy să mute fişierele descărcate deja în această nouă locaţie? "
-#~ "(Filmele care se descarcă în prezent nu vor fi mutate până ce nu se termină "
-#~ "de descărcat.)"
-
-#~ msgid ""
-#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
-#~ "style=\"color:red\">raw</b> text</span>"
-#~ msgstr ""
-#~ "Aceasta este o ${maşină} şi acesta este un ${camion} <span> Acest text este "
-#~ "test <b>neprelucrat</b></span>"
-
-#~ msgid " "
-#~ msgstr " "
-
-#~ msgid "'"
-#~ msgstr "'"
-
-#~ msgid "Please enter the URL of the channel you'd like to add."
-#~ msgstr "Te rog să introduci URL-ul canalului pe care ai vrea să-l adaugi."
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files. It may take extra time to list the "
-#~ "videos, and descriptions may look funny."
-#~ msgstr ""
-#~ "Dar noi vom face tot ceea ce e posibil ca să preluam fişierele. E posibil să "
-#~ "necesite timp suplimentar pentru a afişa secvenţele video iar descrierile "
-#~ "pot parea distractive."
-
-#~ msgid "Channel is not compatible with Democracy!"
-#~ msgstr "Canalul nu este compatibil cu Democracy!"
-
-#~ msgid "Please contact the publishers of"
-#~ msgstr "Te rog contactează editorul lui"
-
-#~ msgid ""
-#~ "and ask if they can supply a feed in a format that will work with Democracy."
-#~ msgstr ""
-#~ "şi întreabă dacă ei pot furniza o sursă într-un format care este suportat de "
-#~ "Democracy."
-
-#~ msgid ""
-#~ "Please enter the username and password given to you by this channel's "
-#~ "publisher."
-#~ msgstr ""
-#~ "Te rog specifică numele de utilizator şi parola ce ti-au fost furnizate de "
-#~ "către editorul canalului."
-
-#~ msgid "Question"
-#~ msgstr "Întrebare"
-
-#~ msgid ""
-#~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
-#~ "$publisher."
-#~ msgstr ""
-#~ "$longAppName versiunea $appVersion ($appRevision); drepturi de autor (c) "
-#~ "2005, 2006 $publisher."
-
-#~ msgid "About $longAppName"
-#~ msgstr "Despre $longAppName"
-
-#~ msgid "Copy log to clipboard"
-#~ msgstr "Copiază log-ul în memorie"
-
-#~ msgid "Open up the bug tracker"
-#~ msgstr "Deschide catalogul cu erori"
-
-#~ msgid "Please help us fix it. Copy and paste all the"
-#~ msgstr "Te rog ajută-ne să-l reparăm. Copiază şi reproduce toate"
-
-#~ msgid ""
-#~ "information into our bug tracker and tell us what you were doing when the"
-#~ msgstr "informaţiile în catalogul nostru cu erori şi spune-ne ce făceai când"
-
-#~ msgid "problem occurred."
-#~ msgstr "a apărut problema."
-
-#~ msgid ""
-#~ "Then, please restart Democracy Player (or you may keep getting related "
-#~ "errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
-#~ "with your help we're fixing problems fast!"
-#~ msgstr ""
-#~ "Apoi, te rog, restartează Democracy Player-ul (sau tu poţi obţine erori "
-#~ "asemănătoare). Scuze pentru neplăceri. Democracy Player este încă în fază "
-#~ "beta dar cu ajutorul tău putem rezolva problemele repede !"
-
-#~ msgid "You found a bug in Democracy!"
-#~ msgstr "Ai găsit o eroare în Democracy!"
-
-#~ msgid "$longAppName"
-#~ msgstr "$longAppName"
-
-#~ msgid "You have %d download still in progress."
-#~ msgid_plural "You have %d downloads still in progress."
-#~ msgstr[0] "Ai %d descărcare în derulare."
-#~ msgstr[1] "Ai %d descărcări în derulare."
-#~ msgstr[2] "Ai %d descărcări în derulare."
-
-#~ msgid "$log"
-#~ msgstr "$log"
-
-#~ msgid ""
-#~ "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
-#~ "href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were "
-#~ "doing, paste in the log message from the box above, and answer a few "
-#~ "questions, and we'll get right to work.</font>"
-#~ msgstr ""
-#~ "<font face=\"Lucida Grande\" size=\"-1\">Trackerul de buguri este la <a "
-#~ "href=\"$bugTrackerURL\">$bugTrackerURL</a>. Spuneți-ne ce făceați, lipiți "
-#~ "mesajul logului din caseta de mai sus, răspundeți la cîteva întrebări și ne "
-#~ "vom pune pe treabă</font>"
-
-#~ msgid ""
-#~ "Actually, if you have a minute, would you be willing to submit a crash "
-#~ "report to our bug-tracking system? At a minimum, what we'd need is "
-#~ "description of what you were doing at the time -- as precise as possible -- "
-#~ "plus the artfully-phrased nonsense in the box below:"
-#~ msgstr ""
-#~ "De fapt dacă aveți un pic de timp puteți trimite un raport despre prăbușire "
-#~ "la sistemul nostru de urmărire a bugurilor. Avem nevoie cel puțin de o "
-#~ "descriere a ceea ce făceați în momentul respectiv -- cît de precisă posibil -"
-#~ "- la care trebuie atașat nonsensul bine articulat din caseta de mai jos :"
-
-#~ msgid ""
-#~ "Misfortune! $longAppName fell prey to some sort of internal confusion or "
-#~ "wrong-headedness $when. We apologize and suggest that you exit and restart "
-#~ "$shortAppName. That'll teach it, and it'll also reduce your chance of losing "
-#~ "your preferences or channel subscriptions."
-#~ msgstr ""
-#~ "Nenorocire! $longAppName a căzut pradă unui oarecare tip de confuzie internă "
-#~ "sau de încăpățînare în greșeală $when. Ne cerem scuze și vă sugerăm să "
-#~ "părăsiți și apoi să reporniți $shortAppName. Asta îl va învăța minte și de "
-#~ "asemenea va reduce șansele de a vă pierde preferințele sau abonamentele la "
-#~ "canale."
-
-#~ msgid "The fall of $shortAppName??"
-#~ msgstr "Prăbușirea lui $shortAppName??"
-
-#~ msgid "About Democracy"
-#~ msgstr "Despre Democracy"
-
-#~ msgid "Channel"
-#~ msgstr "Canal"
-
-#~ msgid "Clear Menu"
-#~ msgstr "Șterge meniul"
-
-#~ msgid "File"
-#~ msgstr "Fișier"
-
-#~ msgid "Help"
-#~ msgstr "Ajutor"
-
-#~ msgid "Hide Democracy"
-#~ msgstr "Ascunde Democracy"
-
-#~ msgid "MainMenu"
-#~ msgstr "Meniul Principal"
-
-#~ msgid "New Channel Folder..."
-#~ msgstr "Dosar de Canale Nou..."
-
-#~ msgid "New Playlist Folder..."
-#~ msgstr "Dosar cu Liste de Redare Nou..."
-
-#~ msgid "New Playlist..."
-#~ msgstr "Listă de Redare Nouă"
-
-#~ msgid "Open Recent"
-#~ msgstr "Deschide Unul Recent"
-
-#~ msgid "Open..."
-#~ msgstr "Deschide..."
-
-#~ msgid "Play Video"
-#~ msgstr "Redă Videoul"
-
-#~ msgid "Preferencesâ¦"
-#~ msgstr "Preferințe"
-
-#~ msgid "Quit Democracy"
-#~ msgstr "Închide Democracy"
-
-#~ msgid "Rename..."
-#~ msgstr "Redenumește"
-
-#~ msgid "Stop Video"
-#~ msgstr "Oprește Video"
-
-#~ msgid "Update All Channels"
-#~ msgstr "Actualizează toate Canalele"
-
-#~ msgid "Update Channel"
-#~ msgstr "Actualizează Canalul"
-
-#~ msgid "%channel feed%"
-#~ msgstr "%fluxul canalului%"
-
-#~ msgid "%channel title%"
-#~ msgstr "%titlul canalului%"
-
-#~ msgid "00:00:00"
-#~ msgstr "00:00:00"
-
-#~ msgid "Box"
-#~ msgstr "Casetă"
-
-#~ msgid "FullScreen Controls"
-#~ msgstr "Controale în modul Ecran Complet"
-
-#~ msgid "VideoWindow"
-#~ msgstr "Fereastra Videoului"
-
-#~ msgid ""
-#~ "Location http://foo.bar.com/baz requires a username and password for \"text "
-#~ "supplied by server\". (Do not localize -- test data)\n"
-#~ msgstr ""
-#~ "Locația http://foo.bar.com/baz necesită un nume de utilizator și o parolă "
-#~ "pentru \"text supplied by server\".\n"
-
-#~ msgid "Password:\n"
-#~ msgstr "Parola:\n"
-
-#~ msgid "Username and password required"
-#~ msgstr "Sînt necesare Numele de Utilizator și Parola"
-
-#~ msgid ""
-#~ "Username:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Nume de Utilizator\n"
-#~ "\n"
-
-#~ msgid " limit upstream to"
-#~ msgstr " limitează traficul ascendent la"
-
-#~ msgid "(You must restart Democracy for this change to take effect)\n"
-#~ msgstr ""
-#~ "(Trebuie să reporniți Democracy pentru ca schimbarea să aibă efect)\n"
-
-#~ msgid "(movies directory path goes here)"
-#~ msgstr "(calea dosarului cu filme se trece aici)"
-
-#~ msgid "3 hours"
-#~ msgstr "3 ore"
-
-#~ msgid "4"
-#~ msgstr "4"
-
-#~ msgid "5"
-#~ msgstr "5"
-
-#~ msgid "Check channels for new content:"
-#~ msgstr "Controlează dacă e conținut nou în canale:"
-
-#~ msgid "GB free."
-#~ msgstr "GB gratuit"
-
-#~ msgid "KB/s when my computer is active."
-#~ msgstr "KB/s cînd calculatorul meu este activ."
-
-#~ msgid "Never"
-#~ msgstr "Niciodată"
-
-#~ msgid "OtherViews"
-#~ msgstr "Alte Vizualizări"
-
-#~ msgid "Run Democracy at startup"
-#~ msgstr "Lansează Democracy la pornirea SO"
-
-#~ msgid "every 30 minutes"
-#~ msgstr "la fiecare 30 de minute"
-
-#~ msgid "every hour"
-#~ msgstr "la fiecare oră"
-
-#~ msgid "manually"
-#~ msgstr "manual"
-
-#~ msgid "(parsed %d files - found %d videos)"
-#~ msgstr "(parsate %d fișiere - găsite %d videouri)"
-
-#~ msgid "Back"
-#~ msgstr "Înapoi"
-
-#~ msgid "Next"
-#~ msgstr "Următorul"
-
-#~ msgid ""
-#~ "The next few screens will help you set up Democracy Player so that it works "
-#~ "best for you. Here's the first question."
-#~ msgstr ""
-#~ "Următoarele cîteva ecrane vă vor ajuta să setați Democracy Player în așa fel "
-#~ "încît să meargă optim pentru dv. Iată prima întrebare."
-
-#~ msgid ""
-#~ "We recommend that you allow Democracy Player to launch when your computer "
-#~ "starts up. This way, videos that haven't finished downloading can finish and "
-#~ "new videos on your channels will be ready when you want to watch.\n"
-#~ "\n"
-#~ "\n"
-#~ "Would you like to run Democracy when your computer starts up?"
-#~ msgstr ""
-#~ "Vă recomandăm să permiteți ca Democracy Player să fie lansat la pornirea "
-#~ "sistemului. În acest fel videourile la care nu s-a terminat descărcarea pot "
-#~ "fi terminate, iar noile videouri din canalele dv. vor fi gata cînd veți dori "
-#~ "să le vizionați.\n"
-#~ "\n"
-#~ "Doriți ca Democracy să fie lansat la pornirea sistemului?"
-
-#~ msgid "Welcome to Internet TV!"
-#~ msgstr "Bine ați venit la TV prin internet!"
-
-#~ msgid ""
-#~ "Welcome to Internet TV. There's a lot you can do with Democracy Player: "
-#~ "automatically download videos from your favorite channels, watch new videos "
-#~ "one after the other, download torrents, recommend videos to friends, and "
-#~ "lots more.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Bine ați venit la TV prin internet. Puteți face multe cu Democracy Player: "
-#~ "descărcare de videouri de pe canalele preferate, vizionare de videouri noi "
-#~ "unul după altul, descărcare de torente, recomandare de videouri către "
-#~ "prieteni și multe altele.\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "You're done!\n"
-#~ "\n"
-#~ "Setup is complete -- now you can find some channels and start watching.\n"
-#~ "\n"
-#~ "Don't Wait: Democracy is different than watching webpage videos -- "
-#~ "publishers can offer big, high quality videos. So don't sit around waiting "
-#~ "for videos: start some downloads and check back later. \n"
-#~ "\n"
-#~ "Leave it On: Democracy Player regularly checks channels for new videos and "
-#~ "downloads in the background. Leaving it running means you'll have new videos "
-#~ "when you're ready to watch.\n"
-#~ "\n"
-#~ "Don't Worry About Disk Space: Like a TiVo, Democracy Player features an "
-#~ "'expiration' system that helps clean out older videos to make room for new "
-#~ "videos. You can always keep a video permanently by clicking 'save' and you "
-#~ "can set a channel's settings to save videos automatically.\n"
-#~ "\n"
-#~ "Go Big: The button to the right of the play button shows videos fullscreen.\n"
-#~ "\n"
-#~ "Find Videos: The Democracy Channel Guide has hundreds of internet TV "
-#~ "channels, all of them are free. Just click 'ADD' to watch a channel.\n"
-#~ msgstr ""
-#~ "Sînteți gata!\n"
-#~ "\n"
-#~ "Setarea e completă -- acum puteți găsi niște canale pentru a le viziona\n"
-#~ "\n"
-#~ "Nu mai așteptați: Democracy e diferit de vizionarea videourilor din paginile "
-#~ "web -- producătorii pot oferi videouri de calitate superioară. Deci nu stați "
-#~ "degeaba așteptînd videouri: porniți cîteva descărcări și reveniți mai "
-#~ "tîrziu. \n"
-#~ "\n"
-#~ "Lăsați-l pornit: Democracy Player controlează cu regularitate canalele "
-#~ "pentru videouri noi și le descarcă în fundal. Dacă îl lăsați pornit înseamnă "
-#~ "că veți avea videouri noi la dispoziție cînd veți fi pregătit de vizionare.\n"
-#~ "\n"
-#~ "Nu vă îngrijorați pentru spațiul de pe disc: Ca și TiVo, Democracy Player "
-#~ "posedă un sistem de 'expirare' care ajută la eliminarea videourilor vechi ca "
-#~ "să facă loc pentru cele noi. Puteți totuși păstra un video în mod permanent "
-#~ "făcînd clic pe 'salvează' și puteți seta un canal ca să autosalveze "
-#~ "videourile .\n"
-#~ "\n"
-#~ "Faceți-l Mare: Butonul de la dreapta celui de redare maximizează "
-#~ "videourile.\n"
-#~ "\n"
-#~ "Găsiți Videouri: Ghidul de Canale Democracy are sute de canale de TV prin "
-#~ "internet, toate gratuite. Faceți clic pe 'ADAUGĂ' pentru a vedea un canal.\n"
-
-#~ msgid ""
-#~ "%message%\n"
-#~ "%message%"
-#~ msgstr ""
-#~ "%message%\n"
-#~ "%message%"
-
-#~ msgid "Create new playlist"
-#~ msgstr "Creează listă de redare nouă"
-
-#~ msgid "onStartup called twice"
-#~ msgstr "onStartup apelat de două ori"
-
-#~ msgid "There was an error opening %s.  Please try again in a few seconds"
-#~ msgstr ""
-#~ "A apărut o eroare la deschiderea %s. Încercați din nou peste cîteva secunde"
-
-#~ msgid "${count} Downloads in Progress"
-#~ msgstr "${count} Descărcări Aflate în Curs"
-
-#~ msgid "1 Download in Progress"
-#~ msgstr "1 Descărcare Aflată în Curs"
-
-#~ msgid "${len} Videos On This Channel"
-#~ msgstr "${len} Videouri În Acest Canal"
-
-#~ msgid "All ${len} Videos Match This Search"
-#~ msgstr "Toate Cele ${len} Videouri Se Potrivesc Cu Această Căutare"
-
-#~ msgid "Looking for videos at this URL"
-#~ msgstr "Caută clipuri la această adresă"
-
-#~ msgid "%s database save succeeded"
-#~ msgstr "%s bază de date salvată cu succes"
-
-#~ msgid "Add Channel..."
-#~ msgstr "Adaugă Canal"
-
-#~ msgid "Channels"
-#~ msgstr "Canale"
-
-#~ msgid "Check for New Version"
-#~ msgstr "Caută Versiune Nouă"
-
-#~ msgid "Copy Channel URL"
-#~ msgstr "Copiază URL-ul Canalului"
-
-#~ msgid "Copy Video URL"
-#~ msgstr "Copiază URL-ul Videoului"
-
-#~ msgid "New Channel Guide..."
-#~ msgstr "Ghid de Canale Nou..."
-
-#~ msgid "New Search Channel..."
-#~ msgstr "Canal de Căutare Nou"
-
-#~ msgid "Next Video"
-#~ msgstr "Următorul Video"
-
-#~ msgid "Playlists"
-#~ msgstr "Liste de Redare"
-
-#~ msgid "Previous Video"
-#~ msgstr "Precedentul Video"
-
-#~ msgid "Remove..."
-#~ msgstr "Șterge"
-
-#~ msgid "Save Video As..."
-#~ msgstr "Salvează Video ca..."
-
-#~ msgid "Send This Channel to a Friend"
-#~ msgstr "Trimite Acest Canal unui Prieten"
-
-#~ msgid "99999"
-#~ msgstr "99999"
-
-#~ msgid "BitTorrent ports:"
-#~ msgstr "Porturi BitTorrent:"
-
-#~ msgid "Maximum:"
-#~ msgstr "Maximum:"
-
-#~ msgid "Minimum:"
-#~ msgstr "Minimum:"
-
-#~ msgid "Play videos one after another."
-#~ msgstr "Redă videourile unul după altul."
-
-#~ msgid "Stop after each video."
-#~ msgstr "Oprire după fiecare video."
-
-#~ msgid "$label$"
-#~ msgstr "$etichetă$"
-
-#~ msgid "$title$"
-#~ msgstr "$titlu$"
-
-#~ msgid "Item1"
-#~ msgstr "Item1"
-
-#~ msgid "Search Engine"
-#~ msgstr "Motor de Căutare"
-
-#~ msgid "URL"
-#~ msgstr "URL"
-
-#~ msgid "Only search my Movies folder."
-#~ msgstr "Caută numai în dosarul Movies"
-
-#~ msgid "Search my entire Home folder."
-#~ msgstr "Caută în tot dosarul meu Home."
-
-#~ msgid "Save Video _As..."
-#~ msgstr "Salvează Videoul _ca..."
-
-#~ msgid "_Copy Video URL"
-#~ msgstr "_Copiază URL-ul Videoului"
-
-#~ msgid "_Remove Video"
-#~ msgstr "_Înlătură Video"
-
-#~ msgid "_Stop Video"
-#~ msgstr "_Oprește Video"
-
-#~ msgid "_Send this channel to a friend"
-#~ msgstr "_Trimite acest canal unui prieten"
-
-#~ msgid "Re_name Channel"
-#~ msgstr "Re_denumește Canalul"
-
-#~ msgid "_Channels"
-#~ msgstr "_Canale"
-
-#~ msgid "New _Playlist..."
-#~ msgstr "_Listă de Redare Nouă"
-
-#~ msgid "New Playlist _Folder..."
-#~ msgstr "_Dosar Nou cu Liste de redare..."
-
-#~ msgid "New Channel _Folder..."
-#~ msgstr "_Dosar Nou cu Canale..."
-
-#~ msgid "Add _Channel..."
-#~ msgstr "Adaugă _Canal..."
-
-#~ msgid "New Searc_h Channel..."
-#~ msgstr "Canal de Căutar_e Nou ..."
-
-#~ msgid "New Channel _Guide..."
-#~ msgstr "Ghid de Canale Nou ..."
-
-#~ msgid "Delete selection"
-#~ msgstr "Șterge selecția"
-
-#~ msgid "_Remove..."
-#~ msgstr "_Înlătură"
-
-#~ msgid "_Remove Playlist..."
-#~ msgstr "_Înlătură Lista de Redare..."
-
-#~ msgid "_Remove Playlists..."
-#~ msgstr "_Înlătură Listele de Redare..."
-
-#~ msgid "_Remove Playlist Folder..."
-#~ msgstr "_Înlătură Dosarul Listei de Redare..."
-
-#~ msgid "_Remove Playlist Folders..."
-#~ msgstr "_Înlătură Dosarele Listelor de Redare..."
-
-#~ msgid "_Remove Channel..."
-#~ msgstr "_Înlătură Canalul..."
-
-#~ msgid "_Remove Channels..."
-#~ msgstr "_Înlătură Canalele..."
-
-#~ msgid "_Remove Channel Folder..."
-#~ msgstr "_Înlătură Dosarul Canalului..."
-
-#~ msgid "_Remove Channel Folders..."
-#~ msgstr "_Înlătură Dosarele Canalelor..."
-
-#~ msgid "_Remove Channel Guide..."
-#~ msgstr "_Înlătură Ghidul Canalelor..."
-
-#~ msgid "_Update Channels..."
-#~ msgstr "_Actualizează Canalele..."
-
-#~ msgid "Remove Playlist..."
-#~ msgstr "Înlătură Lista de Redare"
-
-#~ msgid "Remove Playlists..."
-#~ msgstr "Înlătură Listele de Redare"
-
-#~ msgid "Remove Playlist Folder..."
-#~ msgstr "Înlătură Dosarul Listei de Redare"
-
-#~ msgid "Remove Playlist Folders..."
-#~ msgstr "Înlătură Dosarele Listei de Redare"
-
-#~ msgid "Remove Channel Folder..."
-#~ msgstr "Înlătură Dosarul de Canale..."
-
-#~ msgid "Remove Channel Folders..."
-#~ msgstr "Înlătură Dosarele de Canale..."
-
-#~ msgid "Remove Channel Guide..."
-#~ msgstr "Înlătură Ghidul de Canale..."
-
-#~ msgid "Remove Channel Guides..."
-#~ msgstr "Înlătură Ghidurile de Canale..."
-
-#~ msgid "Remove Video..."
-#~ msgstr "Înlătură Videoul..."
-
-#~ msgid "Remove Videos..."
-#~ msgstr "Înlătură Videourile..."
-
-#~ msgid "Rename Playlist..."
-#~ msgstr "Redenumește Lista de Redare..."
-
-#~ msgid "Rename Playlist Folder..."
-#~ msgstr "Redenumește Dosarul cu Liste de Redare..."
-
-#~ msgid "Rename Channel..."
-#~ msgstr "Redenumește Canalul..."
-
-#~ msgid "Rename Channel Folder..."
-#~ msgstr "Redenumește Dosarul Canalului..."
-
-#~ msgid "Rename Channel Guide..."
-#~ msgstr "Redenumește Ghidul Canalelor..."
-
-#~ msgid "Update Channel..."
-#~ msgstr "Actualizează Canalul..."
-
-#~ msgid "Update Channels..."
-#~ msgstr "Actualizează Canalele"
-
-#~ msgid "Could not write to %s"
-#~ msgstr "Nu pot scrie în %s"
-
-#~ msgid "%s MB required to store this video"
-#~ msgstr "%s MB necesari pentru a stoca acest video"
-
-#~ msgid "The torrent file at %s was not valid"
-#~ msgstr "Fișierul torent de la %s nu era valid"
-
-#~ msgid "The torrent file for this item was deleted "
-#~ msgstr "Fișierul torent pentru acest item a fost șters "
-
-#~ msgid "outside of democracy."
-#~ msgstr "la exteriorul democracy"
-
-#~ msgid "%1.1fGB"
-#~ msgstr "%1.1fGB"
-
-#~ msgid "%1.1fMB"
-#~ msgstr "%1.1fMB"
-
-#~ msgid "-00:00:00"
-#~ msgstr "-00:00:00"
-
-#~ msgid "Change..."
-#~ msgstr "Modifică:"
-
-#~ msgid "Download at most"
-#~ msgstr "Descarcă cel mult"
-
-#~ msgid "Save downloaded videos in this folder:"
-#~ msgstr "Salvează videourile descărcate în acest dosar:"
-
-#~ msgid "To avoid internet slowdowns:"
-#~ msgstr "Pentru a evita încetinirea internetului:"
-
-#~ msgid "videos at once."
-#~ msgstr "videouri odată."
-
-#~ msgid "Search this folder:"
-#~ msgstr "Caută în acest dosar:"
-
-#~ msgid "STAR"
-#~ msgstr "MARCAJ"
-
-#~ msgid "SAVED"
-#~ msgstr "SALVAT"
-
-#~ msgid "DELETE"
-#~ msgstr "ȘTERGE"
-
-#~ msgid "default"
-#~ msgstr "implicit"
-
-#~ msgid "Videos expire after"
-#~ msgstr "Videourile expiră după"
-
-#~ msgid "When turned on, Auto Download should"
-#~ msgstr "Cînd e activată, Auto-Descărcarea trebuie"
-
-#~ msgid ""
-#~ "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
-#~ "unwatched."
-#~ msgstr ""
-#~ "Nu Auto-Descărca atunci cînd mai mult de ${maxnew} ${maxnew2} videouri "
-#~ "așteaptă să fie vizionate."
-
-#~ msgid "<label for=\"automatic\">Auto Download</label>"
-#~ msgstr "label for=\"automatic\">Descarcă Automat</label>"
-
-#~ msgid ""
-#~ "Democracy can't play this file. You may be able to open it with a different "
-#~ "program.<br></br><br></br><strong>Filename:</strong> "
-#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
-#~ msgstr ""
-#~ "Democracy nu poate reda acest fișier. E posibil să reușiți să-l deschideți "
-#~ "cu un alt program.<br></br><br></br><strong>Numele Fișierului:</strong> "
-#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
-
-#~ msgid "REVEAL FILE"
-#~ msgstr "REVELEAZĂ FIȘIERUL"
-
-#~ msgid "Skip >> ${countdown}"
-#~ msgstr "Sari >> ${countdown}"
-
-#~ msgid "SHOW FILE"
-#~ msgstr "ARATĂ FIȘIERUL"
-
-#~ msgid "SHOW FOLDER"
-#~ msgstr "ARATĂ DOSARUL"
-
-#~ msgid "SHARE IT"
-#~ msgstr "PARTAJEAZĂ-L"
-
-#~ msgid "STAR IT"
-#~ msgstr "MARCHEAZĂ-L"
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:203
+msgid "Pop Out"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:206
+msgid "Pop In"
+msgstr ""

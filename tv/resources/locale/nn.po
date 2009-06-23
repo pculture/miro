@@ -9,20 +9,20 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-03-10 12:29+0000\n"
-"Last-Translator: Odin Hørthe Omdal <odin.omdal@gmail.com>\n"
+"PO-Revision-Date: 2009-06-07 10:28+0000\n"
+"Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 msgid "Enable tray icon"
-msgstr "Vis ikon i systemtrauet"
+msgstr "Vis ikon i systemtrauet."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:42
 msgid "When I click the red close button:"
@@ -51,11 +51,11 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:182
 msgid "Error Bombing Item"
-msgstr "Feil ved videobombing"
+msgstr "Feil ved bombing"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:184
 msgid "Error Recommending Item"
-msgstr "Feil ved videoanbefaling"
+msgstr "Feil ved anbefaling"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:186
 msgid "Error Opening Website"
@@ -79,7 +79,7 @@ msgstr "Det finst ein ny versjon av %s tilgjengeleg for nedlasting."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
-msgstr "Vil du lasta han ned no?"
+msgstr "Ønskjer du å lasta han ned no?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
@@ -119,7 +119,7 @@ msgstr "Framvisarval:"
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
 msgid "You must restart Miro for renderer changes to take effect."
 msgstr ""
-"Du må starta Miro på nytt for at framvisarendringane skal tre i kraft."
+"Du må starta Miro på nytt for at endringa av framvisaren skal tre i kraft."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:72
 msgid "Video renderer:"
@@ -128,8 +128,8 @@ msgstr "Framvisar for videoar:"
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:77
 msgid "You must restart playback for visualization changes to take effect."
 msgstr ""
-"Du må starta avspelinga på nytt for at visualiseringsendringa skal tre i "
-"kraft."
+"Du må starta avspelinga på nytt for at endringa av lydillustrasjonen skal "
+"tre i kraft."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:80
 msgid "None"
@@ -175,15 +175,11 @@ msgstr "Sprett ut"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:206
 msgid "Pop In"
-msgstr "Hent inn"
+msgstr "Sprett inn"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
 msgid "Services"
 msgstr "Tenester"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
-msgid "Hide Miro"
-msgstr "Gøym Miro"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
 msgid "Hide Others"
@@ -196,10 +192,6 @@ msgstr "Vis alle"
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
 msgid "Preferences..."
 msgstr "Innstillingar …"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
-msgid "Quit Miro"
-msgstr "Avslutt Miro"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:150
 msgid "Close Window"
@@ -261,10 +253,6 @@ msgstr "Flytt alt fram"
 msgid "Window"
 msgstr "Vindauge"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
-msgid "Miro Help"
-msgstr "Miro-hjelp"
-
 #: ../../platform/osx/plat/frontends/widgets/application.py:166
 msgid "Download Completed"
 msgstr "Nedlasting fullførd"
@@ -287,10 +275,6 @@ msgstr "Du køyrer ein versjon av %(appname)s med eit eigedefinert kanalsett."
 #: ../../portable/theme.py:171
 msgid "Example Playlist"
 msgstr "Eksempelspeleliste"
-
-#: ../../portable/theme.py:175
-msgid "Miro - Report a Problem"
-msgstr "Miro – meld frå om problem"
 
 #: ../../portable/searchengines.py:146
 msgid "Search All"
@@ -334,44 +318,15 @@ msgstr "Samandrag av OPML-import"
 #, python-format
 msgid "Successfully imported %(count)d feed."
 msgid_plural "Successfully imported %(count)d feeds."
-msgstr[0] "%(count)d filmkjelde vart importert."
-msgstr[1] "%(count)d filmkjelder vart importerte."
+msgstr[0] "%(count)d kjelde vart importert."
+msgstr[1] "%(count)d kjelder vart importerte."
 
 #: ../../portable/opml.py:198
 #, python-format
 msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
-msgstr[0] "Hoppa over %(count)d eksisterande filmkjelde."
-msgstr[1] "Hoppa over %(count)d eksisterande filmkjelder."
-
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
-#, python-format
-msgid "%(appname)s database save succeeded"
-msgstr "Lagring av %(appname)s-database fullførd"
-
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
-msgid ""
-"The database has been successfully saved. It is now safe to quit without "
-"losing any data."
-msgstr "Databasen er lagra. Du kan no trygt avslutta utan å mista data."
-
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
-#, python-format
-msgid "%(appname)s database save failed"
-msgstr "Feil ved lagring av %(appname)s-database"
-
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
-#, python-format
-msgid ""
-"%(appname)s was unable to save its database: Disk Full.\n"
-"We suggest deleting files from the full disk or simply deleting some movies "
-"from your collection.\n"
-"Recent changes may be lost."
-msgstr ""
-"%(appname)s klarte ikkje å lagra databasen då disken er full.\n"
-"Du kan anten sletta filer frå disken, eller sletta nokre videoar frå "
-"samlinga.\n"
-"Nye endringar kan ha gått tapt."
+msgstr[0] "Hoppa over %(count)d eksisterande kjelde."
+msgstr[1] "Hoppa over %(count)d eksisterande kjelder."
 
 #: ../../portable/messagehandler.py:1266
 msgid "Subscribed to new feed:"
@@ -776,10 +731,6 @@ msgstr "_Fullskjerm"
 msgid "_Toggle Detached/Attached"
 msgstr "_Kopla frå/til"
 
-#: ../../portable/menubar.py:270
-msgid "_About Miro"
-msgstr "_Om Miro"
-
 #: ../../portable/menubar.py:271
 msgid "_Donate"
 msgstr "_Doner"
@@ -819,11 +770,11 @@ msgstr "_Sidestolpe"
 
 #: ../../portable/menubar.py:291
 msgid "_Playlists"
-msgstr "_Spelelister"
+msgstr "S_pelelister"
 
 #: ../../portable/menubar.py:292
 msgid "P_layback"
-msgstr "A_vspeling"
+msgstr "_Avspeling"
 
 #: ../../portable/frontends/widgets/crashdialog.py:46
 #: ../../portable/httpclient.py:158
@@ -945,7 +896,7 @@ msgstr "Dei gamle elementa er fjerna."
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause Auto-Downloading when this many items are unplayed:"
-msgstr "Stopp automatisk nedlasting når så mange videoar er uspela:"
+msgstr "Stopp automatisk nedlasting når så mange element er uspela:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
@@ -1096,10 +1047,6 @@ msgstr "pause"
 msgid "Remove from playlist"
 msgstr "Fjern frå speleliste"
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
-msgid "Automatically run Miro when I log in."
-msgstr "Køyr automatisk Miro ved innlogging."
-
 #: ../../portable/frontends/widgets/prefpanel.py:271
 msgid "Warn me if I attempt to quit with downloads in progress."
 msgstr "Åtvar ved forsøk på å avslutta med uferdige nedlastingar."
@@ -1124,7 +1071,7 @@ msgstr "Manuelt"
 #: ../../portable/frontends/widgets/itemlistwidgets.py:620
 #: ../../portable/frontends/widgets/statictabs.py:103
 msgid "New"
-msgstr "Ny"
+msgstr "Nye"
 
 #: ../../portable/frontends/widgets/prefpanel.py:290
 #: ../../portable/frontends/widgets/itemlistwidgets.py:620
@@ -1134,7 +1081,7 @@ msgstr "Alle"
 #: ../../portable/frontends/widgets/prefpanel.py:291
 #: ../../portable/frontends/widgets/itemlistwidgets.py:620
 msgid "Off"
-msgstr "Av"
+msgstr "Ingen"
 
 #: ../../portable/frontends/widgets/prefpanel.py:297
 msgid "0"
@@ -1171,7 +1118,7 @@ msgstr "Sjå etter nytt innhald:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:320
 msgid "Auto download setting:"
-msgstr "Innstillingar for autonedlasting:"
+msgstr "Last ned automatisk:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:326
 msgid "Remember this many old items:"
@@ -1243,16 +1190,6 @@ msgstr "Vel videomappe"
 msgid "Migrate existing movies?"
 msgstr "Flytta lagra videoar?"
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
-msgid ""
-"You've selected a new folder to download movies to.  Should Miro migrate "
-"your existing downloads there? (Currently dowloading movies will not be "
-"moved until they finish.)"
-msgstr ""
-"Du har valt ei ny mappe for nedlasting av videoar. Vil du at Miro skal "
-"flytta ferdige nedlastingar der? (Videoar som er i ferd med å lastast ned "
-"vert ikkje flytta før dei er ferdig nedlasta.)"
-
 #: ../../portable/frontends/widgets/prefpanel.py:482
 #: ../../portable/dialogs.py:104
 msgid "Add"
@@ -1307,19 +1244,19 @@ msgstr "Som standard utgår videoane etter:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:599
 msgid "Always play videos in a separate window."
-msgstr "Spel alltid videoar i eit eksternt vindauge."
+msgstr "Spel alltid videoane i eksterne vindauge."
 
 #: ../../portable/frontends/widgets/prefpanel.py:603
 msgid "Resume playing a video from the point it was last stopped."
-msgstr "Hald fram avspeling av videoar frå der dei vart stoppa."
+msgstr "Hald fram avspeling av videoane frå der dei vart stoppa."
 
 #: ../../portable/frontends/widgets/prefpanel.py:608
 msgid "Play videos one after another"
-msgstr "Spel av filmar éin etter éin"
+msgstr "Spel av videoane éin etter éin"
 
 #: ../../portable/frontends/widgets/prefpanel.py:609
 msgid "Stop after each video"
-msgstr "Stopp etter kvar film"
+msgstr "Stopp etter kvar video"
 
 #: ../../portable/frontends/widgets/prefpanel.py:620
 msgid "General"
@@ -1362,10 +1299,6 @@ msgstr "Brukarnamn:"
 msgid "Password:"
 msgstr "Passord:"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
-msgid "New Videos"
-msgstr "Nye videoar"
-
 #: ../../portable/frontends/widgets/itemlistcontroller.py:413
 #: ../../portable/frontends/widgets/statictabs.py:86
 msgid "Video Search"
@@ -1374,24 +1307,6 @@ msgstr "Videosøk"
 #: ../../portable/frontends/widgets/itemlistcontroller.py:427
 msgid "No Results Found"
 msgstr "Fann ingen resultat"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
-msgid "Library"
-msgstr "Bibliotek"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
-msgid "Single Items"
-msgstr "Einskildelement"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
-msgid "No Items to Display"
-msgstr "Ingenting å visa"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
-msgid "This tab keeps track of downloads that aren't part of a feed."
-msgstr "Denne fana inneheld nedlastingar som ikkje er del av ei kjelde."
 
 #: ../../portable/frontends/widgets/diagnostics.py:77
 #: ../../portable/frontends/widgets/gtk/trayicon.py:83
@@ -1500,7 +1415,7 @@ msgstr ""
 "Dette kan vera fordi mappa ligg på ein ekstern harddisk som ikkje er kopla "
 "til.\n"
 "\n"
-"Om du held fram, vert videomappa nullstilt til ei plassering på denne     "
+"Om du held fram, vert videomappa nullstilt til ei plassering på denne "
 "stasjonen. Dette vil føra til at %(shortappname)s mistar nokre detaljar om "
 "videoane som ligg på den eksterne stasjonen.\n"
 "\n"
@@ -1581,10 +1496,10 @@ msgid_plural ""
 "Some of these items were not downloaded from a feed. Would you like to "
 "delete them or just remove them from the Library?"
 msgstr[0] ""
-"Éin av desse elementa vart ikkje lasta ned frå ei kjelde. Vil du sletta "
+"Eitt av desse elementa vart ikkje lasta ned frå ei kjelde. Vil du sletta "
 "fila, eller berre fjerna oppføringa frå biblioteket?"
 msgstr[1] ""
-"Éin eller fleire av desse elementa vart ikkje lasta ned frå ei kjelde. Vil "
+"Eitt eller fleire av desse elementa vart ikkje lasta ned frå ei kjelde. Vil "
 "du sletta filene, eller berre fjerna oppføringane frå biblioteket?"
 
 #: ../../portable/frontends/widgets/application.py:419
@@ -1791,7 +1706,7 @@ msgstr "Storleik"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:291
 msgid "ETA"
-msgstr "Tid ferdig"
+msgstr "Tid att"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:292
 msgid "Speed"
@@ -1826,7 +1741,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemlistwidgets.py:555
 #, python-format
 msgid "%(available)s free for downloads (%(amount)s free on disk)"
-msgstr "%(available)s ledige for nedlasting (%(amount)s ledig på disken)"
+msgstr "%(available)s ledig for nedlasting (%(amount)s ledig på disken)"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:560
 #, python-format
@@ -1845,7 +1760,7 @@ msgstr "%(rate)s lastar ned"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:615
 msgid "Auto Download"
-msgstr "Automatisk nedlasting"
+msgstr "Last ned automatisk"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:627
 msgid "Share feed"
@@ -1991,15 +1906,6 @@ msgstr "Alle filer"
 msgid "Choose"
 msgstr "Vel"
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
-#, python-format
-msgid ""
-"%(copyright)s.  See LICENSE file for details.\n"
-"Miro and Miro logo are trademarks of the Participatory Culture Foundation."
-msgstr ""
-"%(copyright)s. Sjå fila «LICENSE» for meir informasjon.\n"
-"«Miro» og Miro-logoen er varemerke til Participatory Culture Foundation."
-
 #: ../../portable/frontends/widgets/removefeeds.py:49
 msgid "Remove Feed"
 msgid_plural "Remove Feeds"
@@ -2047,7 +1953,7 @@ msgstr "Adresse:"
 
 #: ../../portable/frontends/widgets/newfeed.py:69
 msgid "Feed should go in this section:"
-msgstr "Kjelda bør inngå i denne kategorien:"
+msgstr "Legg kjelda i denne kategorien:"
 
 #: ../../portable/frontends/widgets/newfeed.py:71
 #: ../../portable/frontends/widgets/newfolder.py:70
@@ -2189,7 +2095,7 @@ msgstr "Søkjemotor:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:132
 msgid "Add new feed to this section:"
-msgstr "Legg til ny kjelde i denne kategorien:"
+msgstr "Legg kjelda i denne kategorien:"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:60
 msgid "Miro First Time Setup"
@@ -2212,8 +2118,8 @@ msgstr ""
 "mogleg for deg.\n"
 "\n"
 "Det er anbefalt å la Miro starta automatisk når datamaskina vert starta. Då "
-"kan filmar som ikkje er ferdig nedlasta lastast ned automatisk, og nye "
-"filmar er klare når du ønskjer å sjå dei."
+"kan mediefiler som ikkje er ferdig nedlasta lastast ned automatisk, og nye "
+"filer er klare når du ønskjer å sjå dei."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:132
 msgid "Would you like to run Miro on startup?"
@@ -2372,10 +2278,6 @@ msgstr "Merk som uspela"
 msgid "Mark as Played"
 msgstr "Merk som avspela"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
-msgid "Start seeding"
-msgstr "Start sending"
-
 #: ../../portable/frontends/widgets/itemcontextmenu.py:118
 #: ../../portable/frontends/widgets/itemcontextmenu.py:240
 #: ../../portable/frontends/widgets/itemcontextmenu.py:258
@@ -2391,10 +2293,6 @@ msgstr "Stopp nedlasting mellombels"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:254
 msgid "Resume Download"
 msgstr "Hald fram med nedlasting"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
-msgid "Web page"
-msgstr "Nettside"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:139
 msgid "License"
@@ -2515,7 +2413,7 @@ msgstr "Lag"
 
 #: ../../portable/dialogs.py:102
 msgid "Create Feed"
-msgstr "Lag kjelde"
+msgstr "Legg til kjelde"
 
 #: ../../portable/dialogs.py:103
 msgid "Create Folder"
@@ -2591,7 +2489,7 @@ msgstr "Filnedlasting"
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 msgstr ""
-"Fila på %(url)s ser ikkje ut til å vera ei lyd-, film- eller RSS-kjelde."
+"Fila på %(url)s ser ikkje ut til å vera ei lyd-, video- eller RSS-kjelde."
 
 #: ../../portable/singleclick.py:166
 msgid "Download Error"
@@ -2617,7 +2515,7 @@ msgstr "Abonnering på fleire kjelder"
 msgid "Create feed?"
 msgid_plural "Create %(count)d feeds?"
 msgstr[0] "Lag kjelde?"
-msgstr[1] "Lag"
+msgstr[1] "Lag %(count)d kjelder?"
 
 #: ../../portable/singleclick.py:318
 msgid "Enter a name for the new feed folder"
@@ -2876,1374 +2774,83 @@ msgstr "Lokale filer"
 msgid "Playing File"
 msgstr "Spelar fil"
 
-#~ msgid "Copy Channel _Link"
-#~ msgstr "Kopier kanal_lenkje"
-
-#~ msgid "_Open..."
-#~ msgstr "_Opna …"
-
-#~ msgid "Channel requires authentication"
-#~ msgstr "Kanalen krev godkjenning"
-
-#~ msgid "Unknown Runtime Error"
-#~ msgstr "Ukjend køyretidsfeil"
-
-#~ msgid "An unknown error has occurred %s."
-#~ msgstr "Det oppstod ein ukjend feil: %s."
-
-#~ msgid "Channel Settings"
-#~ msgstr "Kanalinnstillingar"
-
-#~ msgid ""
-#~ "1 day\n"
-#~ "3 days\n"
-#~ "6 days\n"
-#~ "10 days\n"
-#~ "1 month\n"
-#~ "Never"
-#~ msgstr ""
-#~ "1 dag\n"
-#~ "3 dagar\n"
-#~ "6 dagar\n"
-#~ "10 dagar\n"
-#~ "1 månad\n"
-#~ "Aldri"
-
-#~ msgid "Add Channel"
-#~ msgstr "Legg til kanal"
-
-#~ msgid ""
-#~ "Every 30 minutes\n"
-#~ "Every hour\n"
-#~ "Manually"
-#~ msgstr ""
-#~ "kvar halvtime\n"
-#~ "kvar time\n"
-#~ "manuelt"
-
-#~ msgid "Select Movies Directory"
-#~ msgstr "Vel filmmappe"
-
-#~ msgid "Volume:"
-#~ msgstr "Lydstyrke:"
-
-#~ msgid " "
-#~ msgstr " "
-
-#~ msgid "'"
-#~ msgstr "’"
-
-#~ msgid "Please enter the URL of the channel you'd like to add."
-#~ msgstr "Skriv inn adressa til kanalen du vil leggja til."
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files. It may take extra time to list the "
-#~ "videos, and descriptions may look funny."
-#~ msgstr ""
-#~ "Men me vil gjera vårt beste for å få tak i filmfilene. Det kan vera det tar "
-#~ "lengre tid å visa filmoversikta, og programskildringane kan sjå rare ut."
-
-#~ msgid "Please contact the publishers of"
-#~ msgstr "Ta kontakt med utgjevaren av"
-
-#~ msgid ""
-#~ "Please enter the username and password given to you by this channel's "
-#~ "publisher."
-#~ msgstr ""
-#~ "Skriv inn brukarnamnet og passordet du har fått frå utgjevaren av kanalen."
-
-#~ msgid "Question"
-#~ msgstr "Spørsmål"
-
-#~ msgid "About $longAppName"
-#~ msgstr "Om $longAppName"
-
-#~ msgid "Copy log to clipboard"
-#~ msgstr "Kopier logg til utklippstavla"
-
-#~ msgid "Open up the bug tracker"
-#~ msgstr "Opna feildatabase"
-
-#~ msgid "$longAppName"
-#~ msgstr "$longAppName"
-
-#~ msgid "$log"
-#~ msgstr "$log"
-
-#~ msgid ""
-#~ "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
-#~ "href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were "
-#~ "doing, paste in the log message from the box above, and answer a few "
-#~ "questions, and we'll get right to work.</font>"
-#~ msgstr ""
-#~ "<font face=\"Lucida Grande\" size=\"-1\">Du finn feildatabasen vår på <a "
-#~ "href=\"$bugTrackerURL\">$bugTrackerURL</a>. Berre skriv kva du gjorde, lim "
-#~ "inn loggmeldinga frå feltet ovanfor og svar på nokre enkle spørsmål, så skal "
-#~ "me straks prøva å få feilen retta.</font>"
-
-#~ msgid ""
-#~ "Actually, if you have a minute, would you be willing to submit a crash "
-#~ "report to our bug-tracking system? At a minimum, what we'd need is "
-#~ "description of what you were doing at the time -- as precise as possible -- "
-#~ "plus the artfully-phrased nonsense in the box below:"
-#~ msgstr ""
-#~ "Om du har tid, kunne du tenkt deg å senda ein krasjrapport til feildatabasen "
-#~ "vår? Me treng minst ei skildring av kva du gjorde når programmet krasja, så "
-#~ "nøyaktig som råd er, pluss teksten nedanfor:"
-
-#~ msgid ""
-#~ "Misfortune! $longAppName fell prey to some sort of internal confusion or "
-#~ "wrong-headedness $when. We apologize and suggest that you exit and restart "
-#~ "$shortAppName. That'll teach it, and it'll also reduce your chance of losing "
-#~ "your preferences or channel subscriptions."
-#~ msgstr ""
-#~ "Uff! $longAppName vart offer for éi eller anna form for intern forvirring "
-#~ "eller liknande $when. Me er leie for dette, og vil rå deg til å avslutta og "
-#~ "starta $shortAppName på nytt. Dette vil redusera faren for at mistar "
-#~ "innstillingane eller kanalabonnementa dine."
-
-#~ msgid "The fall of $shortAppName??"
-#~ msgstr "Slutten for $shortAppName?"
-
-#~ msgid "Clear Menu"
-#~ msgstr "Tøm meny"
-
-#~ msgid "Help"
-#~ msgstr "Hjelp"
-
-#~ msgid "MainMenu"
-#~ msgstr "Hovudmeny"
-
-#~ msgid "New Channel Folder..."
-#~ msgstr "Ny kanalmappe …"
-
-#~ msgid "Open Recent"
-#~ msgstr "Nyleg brukte"
-
-#~ msgid "Play Video"
-#~ msgstr "Spel av film"
-
-#~ msgid "Update All Channels"
-#~ msgstr "Oppdater alle kanalar"
-
-#~ msgid "%channel title%"
-#~ msgstr "%channel title%"
-
-#~ msgid "00:00:00"
-#~ msgstr "00:00:00"
-
-#~ msgid "Box"
-#~ msgstr "Boks"
-
-#~ msgid "FullScreen Controls"
-#~ msgstr "Fullskjemskontrollar"
-
-#~ msgid "VideoWindow"
-#~ msgstr "Filmvindauge"
-
-#~ msgid ""
-#~ "Location http://foo.bar.com/baz requires a username and password for \"text "
-#~ "supplied by server\". (Do not localize -- test data)\n"
-#~ msgstr ""
-#~ "Location http://foo.bar.com/baz requires a username and password for \"text "
-#~ "supplied by server\". (Do not localize -- test data)\n"
-
-#~ msgid "Password:\n"
-#~ msgstr "Passord:\n"
-
-#~ msgid "Username and password required"
-#~ msgstr "Treng brukarnamn og passord"
-
-#~ msgid ""
-#~ "Username:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Brukarnamn:\n"
-#~ "\n"
-
-#~ msgid "(movies directory path goes here)"
-#~ msgstr "(mappe for lagring av filmar)"
-
-#~ msgid "4"
-#~ msgstr "4"
-
-#~ msgid "Never"
-#~ msgstr "Aldri"
-
-#~ msgid "OtherViews"
-#~ msgstr "Andre visningar"
-
-#~ msgid "every 30 minutes"
-#~ msgstr "kvar halvtime"
-
-#~ msgid "every hour"
-#~ msgstr "kvar time"
-
-#~ msgid "manually"
-#~ msgstr "manuelt"
-
-#~ msgid "Back"
-#~ msgstr "Tilbake"
-
-#~ msgid "Welcome to Internet TV!"
-#~ msgstr "Velkommen til Internett-TV!"
-
-#~ msgid ""
-#~ "%message%\n"
-#~ "%message%"
-#~ msgstr ""
-#~ "%message%\n"
-#~ "%message%"
-
-#~ msgid "onStartup called twice"
-#~ msgstr "onStartup køyrd to gongar"
-
-#~ msgid "Add Channel..."
-#~ msgstr "Legg til kanal …"
-
-#~ msgid "Channels"
-#~ msgstr "Kanalar"
-
-#~ msgid "Check for New Version"
-#~ msgstr "Sjå etter ny versjon"
-
-#~ msgid "Copy Channel URL"
-#~ msgstr "Kopier kanaladresse"
-
-#~ msgid "Copy Video URL"
-#~ msgstr "Kopier filmadresse"
-
-#~ msgid "New Search Channel..."
-#~ msgstr "Ny søkjekanal …"
-
-#~ msgid "Playlists"
-#~ msgstr "Spelelister"
-
-#~ msgid "Remove..."
-#~ msgstr "Fjern …"
-
-#~ msgid "Send This Channel to a Friend"
-#~ msgstr "Send kanalen til ein venn"
-
-#~ msgid "99999"
-#~ msgstr "99999"
-
-#~ msgid "$label$"
-#~ msgstr "$label$"
-
-#~ msgid "Item1"
-#~ msgstr "Item1"
-
-#~ msgid "Search Engine"
-#~ msgstr "Søkjemotor"
-
-#~ msgid "URL"
-#~ msgstr "Adresse"
-
-#~ msgid "Only search my Movies folder."
-#~ msgstr "Berre søk i filmmappa."
-
-#~ msgid "Search my entire Home folder."
-#~ msgstr "Søk i heile heimemappa."
-
-#~ msgid "_Send this channel to a friend"
-#~ msgstr "_Send denne kanalen til ein venn"
-
-#~ msgid "_Channels"
-#~ msgstr "_Kanalar"
-
-#~ msgid "New _Playlist..."
-#~ msgstr "Ny _speleliste …"
-
-#~ msgid "New Searc_h Channel..."
-#~ msgstr "Ny _søkjekanal …"
-
-#~ msgid "New Channel _Guide..."
-#~ msgstr "Ny kanal_gaid …"
-
-#~ msgid "_Remove Playlist..."
-#~ msgstr "_Fjern speleliste …"
-
-#~ msgid "_Remove Playlists..."
-#~ msgstr "_Fjern spelelister …"
-
-#~ msgid "_Remove Playlist Folder..."
-#~ msgstr "_Fjern spelelistemappe …"
-
-#~ msgid "_Remove Playlist Folders..."
-#~ msgstr "_Fjern spelelistemapper …"
-
-#~ msgid "_Remove Channel..."
-#~ msgstr "_Fjern kanal …"
-
-#~ msgid "_Remove Channels..."
-#~ msgstr "_Fjern kanalar …"
-
-#~ msgid "_Remove Channel Folder..."
-#~ msgstr "_Fjern kanalmappe …"
-
-#~ msgid "_Remove Channel Folders..."
-#~ msgstr "_Fjern kanalmapper …"
-
-#~ msgid "_Update Channels..."
-#~ msgstr "_Oppdater kanalar …"
-
-#~ msgid "%1.1fGB"
-#~ msgstr "%1.1f GB"
-
-#~ msgid "%1.1fMB"
-#~ msgstr "%1.1f MB"
-
-#~ msgid "-00:00:00"
-#~ msgstr "-00:00:00"
-
-#~ msgid "Change..."
-#~ msgstr "Endra …"
-
-#~ msgid "Search this folder:"
-#~ msgstr "Søk i denne mappa:"
-
-#~ msgid "DELETE"
-#~ msgstr "SLETT"
-
-#~ msgid "Videos expire after"
-#~ msgstr "Som standard utgår videoar etter"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "%donation label%"
-#~ msgstr "%donation label%"
-
-#~ msgid "Browse"
-#~ msgstr "Bla gjennom"
-
-#~ msgid "Removing %s"
-#~ msgstr "Fjernar %s"
-
-#~ msgid "%d days"
-#~ msgstr "%d dagar"
-
-#~ msgid "Are you sure you want to remove %s"
-#~ msgstr "Er du sikker på at du vil fjerna «%s»?"
-
-#~ msgid "Invalid Value"
-#~ msgstr "Ugyldig verdi"
-
-#~ msgid "Create Channel"
-#~ msgstr "Lag kanal"
-
-#~ msgid "TORRENT"
-#~ msgstr "TORRENT"
-
-#~ msgid "WEB PAGE"
-#~ msgstr "NETTSIDE"
-
-#~ msgid "%s remaining"
-#~ msgstr "%s att"
-
-#~ msgid "Adding %d channels to a new folder"
-#~ msgstr "Legg %d kanalar til ny mappe"
-
-#~ msgid "_Search For:"
-#~ msgstr "_Søk etter:"
-
-#~ msgid "_URL"
-#~ msgstr "_Adresse"
-
-#~ msgid "<b>BitTorrent</b>"
-#~ msgstr "<b>BitTorrent</b>"
-
-#~ msgid "Go"
-#~ msgstr "Start"
-
-#~ msgid "Channel:"
-#~ msgstr "Kanal:"
-
-#~ msgid "Search For:"
-#~ msgstr "Søk etter:"
-
-#~ msgid "Don't Worry About Disk Space:"
-#~ msgstr "Uroa deg ikkje om diskplass:"
-
-#~ msgid "Reset Search"
-#~ msgstr "Tilbakestill søk"
-
-#~ msgid "You're done!"
-#~ msgstr "Ferdig!"
-
-#~ msgid "downloading..."
-#~ msgstr "lastar ned …"
-
-#~ msgid "In This:"
-#~ msgstr "Her:"
-
-#~ msgid "Find Videos:"
-#~ msgstr "Finn filmar:"
-
-#~ msgid "Loading window"
-#~ msgstr "Opnar vindauge"
-
-#~ msgid ""
-#~ "Are you sure you want to remove %s?  Any downloads in progress will be "
-#~ "canceled."
-#~ msgstr ""
-#~ "Er du sikker på at du vil fjerna «%s»? Alle ufullførte nedlastingar vert "
-#~ "avbrotne."
-
-#~ msgid ""
-#~ "What would you like to do with the videos in this channel that you've "
-#~ "downloaded?"
-#~ msgstr ""
-#~ "Kva ønskjer du å gjera med filmane i denne kanalen som du har lasta ned?"
-
-#~ msgid ""
-#~ "What would you like to do with the videos in these channels that you've "
-#~ "downloaded?"
-#~ msgstr ""
-#~ "Kva ønskjer du å gjera med filmane i desse kanalane som du har lasta ned?"
-
-#~ msgid "%s is invalid.  You must enter a non-negative number."
-#~ msgstr "«%s» er ugyldig. Du må skriva inn eit ikkjenegativt tal."
-
-#~ msgid "_Remove Video..."
-#~ msgstr "_Fjern film …"
-
-#~ msgid "_Remove Videos..."
-#~ msgstr "_Fjern filmar …"
-
-#~ msgid "Re_name Playlist..."
-#~ msgstr "_Endra namn på speleliste …"
-
-#~ msgid "Re_name Playlist Folder..."
-#~ msgstr "_Endra namn på spelelistemappe …"
-
-#~ msgid "Re_name Channel..."
-#~ msgstr "_Endra namn på kanal …"
-
-#~ msgid "Re_name Channel Folder..."
-#~ msgstr "_Endra namn på kanalmappe …"
-
-#~ msgid "_Update Channel..."
-#~ msgstr "_Oppdater kanal …"
-
-#~ msgid "%1.1fKB"
-#~ msgstr "%1.1f KB"
-
-#~ msgid "Removing %s items"
-#~ msgstr "Fjernar %s element"
-
-#~ msgid ""
-#~ "One or more of these items is a folder.  When you remove or delete a folder, "
-#~ "any items inside that folder will also be removed or deleted."
-#~ msgstr ""
-#~ "Éin eller fleire av desse elementa er mapper. Når du fjernar/slettar ei "
-#~ "mappe, vert òg alle mapper og filmar inni mappa fjerna/sletta."
-
-#~ msgid "Rename Channel"
-#~ msgstr "Endra namn på kanal"
-
-#~ msgid "Revert Title to Default"
-#~ msgstr "Tilbakestill tittel"
-
-#~ msgid "Create %d channels?"
-#~ msgstr "Lag %d kanalar?"
-
-#~ msgid "<b>Searching for Videos</b>"
-#~ msgstr "<b>Søkjer etter filmar</b>"
-
-#~ msgid "C_hannel:"
-#~ msgstr "_Kanal:"
-
-#~ msgid "C_reate Channel"
-#~ msgstr "_Lag kanal"
-
-#~ msgid "Restrict to my full _home folder"
-#~ msgstr "Avgrens til heile _heimemappa"
-
-#~ msgid "Search _Engine:"
-#~ msgstr "Søkje_motor:"
-
-#~ msgid "Select custom search directory"
-#~ msgstr "Vel sjølvvald søkjemappe"
-
-#~ msgid ""
-#~ "This item is a folder.  When you remove a folder, any items inside that "
-#~ "folder will be deleted."
-#~ msgstr ""
-#~ "Dette er ei mappe. Når du slettar mapper, vert òg alle elementa i mappene "
-#~ "sletta."
-
-#~ msgid "Search _custom folder:"
-#~ msgstr "Søk i _sjølvvald mappe:"
-
-#~ msgid "Go Big:"
-#~ msgstr "Tenk stort:"
-
-#~ msgid "Leave it On:"
-#~ msgstr "La programmet køyra:"
-
-#~ msgid ""
-#~ "Now you can explore the Channel Guide\n"
-#~ "and start watching.  A few tips to get started:"
-#~ msgstr ""
-#~ "No kan du utforska kanalgaiden og begynna\n"
-#~ "å sjå filmar. Nokre tips for å komma igang:"
-
-#~ msgid "The button to the right of the play button shows videos fullscreen."
-#~ msgstr ""
-#~ "Trykk på knappen til høgre for avspelingsknappen for å sjå filmane over "
-#~ "heile skjermen."
-
-#~ msgid "Add..."
-#~ msgstr "Legg til …"
-
-#~ msgid "Remember video position."
-#~ msgstr "Hugs filmplassering."
-
-#~ msgid "Show as Channel"
-#~ msgstr "Vis som kanal"
-
-#~ msgid ""
-#~ "Error importing modules:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Feil ved importering av modular:\n"
-#~ "%s"
-
-#~ msgid "Download Failed"
-#~ msgstr "Feil ved nedlasting"
-
-#~ msgid "Download of video '%s' has failed."
-#~ msgstr "Feil ved nedlasting av filmen «%s»."
-
-#~ msgid "Enter the URL of the channel you would like to subscribe to."
-#~ msgstr "Skriv inn adressa til kanalen du vil abonnera på."
-
-#~ msgid "Select"
-#~ msgstr "Vel"
-
-#~ msgid "Search!"
-#~ msgstr "Søk!"
-
-#~ msgid "Unsupported version of Quicktime"
-#~ msgstr "Ikkje-støtta versjon av QuickTime"
-
-#~ msgid ""
-#~ "To run %s you need the most recent version of Quicktime, which is a free "
-#~ "update."
-#~ msgstr ""
-#~ "For å køyra %s treng du den nyaste versjonen av QuickTime, som er ei gratis "
-#~ "oppdatering."
-
-#~ msgid "Folder Location"
-#~ msgstr "Mappeplassering"
-
-#~ msgid "%s Version Alert"
-#~ msgstr "%s-versjonsvarsling"
-
-#~ msgid "%s Version Check"
-#~ msgstr "%s-versjonskontroll"
-
-#~ msgid "%dGB"
-#~ msgstr "%d GB"
-
-#~ msgid "%dMB"
-#~ msgstr "%d MB"
-
-#~ msgid "%dKB"
-#~ msgstr "%d KB"
-
-#~ msgid "%1.1fB"
-#~ msgstr "%1.1f B"
-
-#~ msgid "%dB"
-#~ msgstr "%d B"
-
-#~ msgid "_Delete"
-#~ msgstr "_Slett"
-
-#~ msgid "Add _Channel"
-#~ msgstr "Legg til _kanal"
-
-#~ msgid "_About"
-#~ msgstr "_Om"
-
-#~ msgid "Will retry in %s"
-#~ msgstr "Prøver på nytt om %s"
-
-#~ msgid "Total Down:"
-#~ msgstr "Totalt ned:"
-
-#~ msgid "Down Total:"
-#~ msgstr "Ned totalt:"
-
-#~ msgid "Up Total:"
-#~ msgstr "Opp totalt:"
-
-#~ msgid "direct link to file"
-#~ msgstr "direktelenkje til fil"
-
-#~ msgid "REVEAL LOCAL FOLDER"
-#~ msgstr "VIS LOKAL MAPPE"
-
-#~ msgid "REVEAL LOCAL FILE"
-#~ msgstr "VIS LOKAL FIL"
-
-#~ msgid "Torrent Details"
-#~ msgstr "Torrent-detaljar"
-
-#~ msgid "Are you sure you want to stop watching %s?"
-#~ msgstr "Er du sikker på at du ønskjer å stoppa overvakinga av %s?"
-
-#~ msgid "Stop watching %s directories"
-#~ msgstr "Stopp overvaking av %s mapper"
-
-#~ msgid "Are you sure you want to stop watching these %s directories?"
-#~ msgstr ""
-#~ "Er du sikker på at du ønskjer å stoppa overvakinga av desse %s mappene?"
-
-#~ msgid "$shortAppName - Add Channel"
-#~ msgstr "$shortAppName – legg til kanal"
-
-#~ msgid "_Add Folder"
-#~ msgstr "_Legg til mappe"
-
-#~ msgid ""
-#~ "Please help us fix it. Copy and paste all the\n"
-#~ "information into our bug tracker and tell us what you were doing when the\n"
-#~ "problem occurred."
-#~ msgstr ""
-#~ "Hjelp oss å løysa problemet. Kopier og lim inn all informasjonen til "
-#~ "feildatabasen vår, og skriv ned kva du gjorde då problemet oppstod."
-
-#~ msgid ""
-#~ "Then, please restart $longAppName (or you may keep getting related errors). "
-#~ "Sorry for the inconvenience. $longAppName is still in beta, but with your "
-#~ "help we're fixing problems fast!"
-#~ msgstr ""
-#~ "Start så $longAppName på nytt (elles kan det oppstå liknande feil). "
-#~ "$longAppName er framleis på prøvestadiet, men med di hjelp kan me retta opp "
-#~ "i problema fortare."
-
-#~ msgid "You found a bug in $longAppName!"
-#~ msgstr "Du fann ein feil i $longAppName!"
-
-#~ msgid ""
-#~ "and ask if they can supply a feed in a format that will work with "
-#~ "$shortAppName."
-#~ msgstr ""
-#~ "og spør om dei kan tilby filmkjelda i eit format som $shortAppName støttar."
-
-#~ msgid ""
-#~ "You've selected a new folder to download movies to.  Should $shortAppName "
-#~ "migrate your existing downloads there?(Currently dowloading movies will not "
-#~ "be moved until they finish)"
-#~ msgstr ""
-#~ "Du har vald ei ny mappe for nedlasting av filmar. Vil du at $shortAppName "
-#~ "skal flytta ferdige nedlastingar der? (Filmar som er i ferd med å lastast "
-#~ "ned vert ikkje flytta før dei er ferdig nedlasta.)"
-
-#~ msgid ""
-#~ "(WARNING: Changes won't go into effect until you restart $longAppName.)"
-#~ msgstr ""
-#~ "(Åtvaring: Endringane vil først trå i kraft etter at du har starta "
-#~ "$longAppName på nytt.)"
-
-#~ msgid "Add Folder..."
-#~ msgstr "Legg til mappe …"
-
-#~ msgid "Store downloaded videos in this folder:"
-#~ msgstr "Lagra nedlasta filmar i denne mappa:"
-
-#~ msgid ""
-#~ "WARNING: This setting will not go into effect until you restart $longAppName."
-#~ msgstr ""
-#~ "Åtvaring: Endringane vil først trå i kraft etter at du har starta "
-#~ "$longAppName på nytt."
-
-#~ msgid ""
-#~ "$longAppName can find all the videos on your computer to help you organize "
-#~ "your collection."
-#~ msgstr ""
-#~ "$longAppName kan finna alle filmane på datamaskina di, og hjelpa deg å halda "
-#~ "orden på desse."
-
-#~ msgid ""
-#~ "$longAppName regularly checks channels for new videos and downloads in the "
-#~ "background.  Leaving it running means you'll have new videos when you're "
-#~ "ready to watch."
-#~ msgstr ""
-#~ "$longAppName ser regelmessig på kanalane etter nye filmar, og lastar dei ned "
-#~ "i bakgrunnen. Om du lar programmet køyra, har du alltid nye filmar klar når "
-#~ "du ønskjer å sjå dei."
-
-#~ msgid ""
-#~ "Like a TiVo, $longAppName features an 'expiration' system that helps clean "
-#~ "out older videos to make room for new videos.  You can always keep a video "
-#~ "permanently by clicking 'save' and you can set a channel's settings to save "
-#~ "videos automatically."
-#~ msgstr ""
-#~ "$longAppName har eit tidsutløpssystem som hjelper deg å fjerna gamle filmar "
-#~ "for å gje plass til nye. Du kan velja å behalda einskildfilmar ved å trykkja "
-#~ "på «Behald», og du kan setja opp kanalar til å lagra alle filmar automatisk."
-
-#~ msgid ""
-#~ "The next few screens will help you set up $longAppName so that it works best "
-#~ "for you."
-#~ msgstr ""
-#~ "Dei følgjande skjermbileta hjelper deg å setja opp $longAppName til å verka "
-#~ "best mogleg for deg."
-
-#~ msgid "Would you like $longAppName to look for video files on your computer?"
-#~ msgstr "Vil du at $longAppName skal sjå etter filmar på maskina?"
-
-#~ msgid "Release Notes:"
-#~ msgstr "Versjonsnotat:"
-
-#~ msgid "KEEP"
-#~ msgstr "BEHALD"
-
-#~ msgid "Miro"
-#~ msgstr "Miro"
-
-#~ msgid "Report a bug"
-#~ msgstr "Meld frå om feil"
-
-#~ msgid "Run Miro at startup"
-#~ msgstr "Køyr Miro ved oppstart"
-
-#~ msgid ""
-#~ "The next few screens will help you set up the Miro Player so that it works "
-#~ "best for you. Here's the first question."
-#~ msgstr ""
-#~ "Dei følgjande skjermbileta hjelper deg å setja opp Miro til å verka best "
-#~ "mogleg for deg. Her er første spørsmål."
-
-#~ msgid ""
-#~ "We recommend that you allow the Miro Player to launch when your computer "
-#~ "starts up. This way, videos that haven't finished downloading can finish and "
-#~ "new videos on your channels will be ready when you want to watch.\n"
-#~ "\n"
-#~ "\n"
-#~ "Would you like to run Miro when your computer starts up?"
-#~ msgstr ""
-#~ "Det er anbefalt å la Miro starta automatisk når datamaskina vert starta. Då "
-#~ "kan filmar som ikkje er ferdig nedlasta lastast ned automatisk, og nye "
-#~ "filmar er klare når du ønskjer å sjå dei.\n"
-#~ "\n"
-#~ "\n"
-#~ "Vil du at Miro skal starta automatisk når datamaskina vert starta?"
-
-#~ msgid ""
-#~ "Welcome to Internet TV. There's a lot you can do with the Miro Player: "
-#~ "automatically download videos from your favorite channels, watch new videos "
-#~ "one after the other, download torrents, recommend videos to friends, and "
-#~ "lots more.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Velkommen til Internett-TV. Det er mykje du kan gjera med Miro: Du kan lasta "
-#~ "ned filmar frå favorittkanalane dine, sjå filmane etter kvarandre, lasta ned "
-#~ "BitTorrent-filer, anbefala filmar til venner, og mykje anna.\n"
-#~ "\n"
-
-#~ msgid "Select a Directory to store %s downloads in."
-#~ msgstr "Vel mappa du vil lagra %s-nedlastingar i."
-
-#~ msgid ""
-#~ "You've selected a new folder to download movies to.  Should %s migrate your "
-#~ "existing downloads there?  (Currently dowloading movies will not be moved "
-#~ "until they finish)."
-#~ msgstr ""
-#~ "Du har vald ei ny mappe for nedlasting av filmar. Vil du at %s skal flytta "
-#~ "ferdige nedlastingar der? (Filmar som er i ferd med å lastast ned vert ikkje "
-#~ "flytta før dei er ferdig nedlasta.)"
-
-#~ msgid "View this Directory in the Library"
-#~ msgstr "Vis denne mappa i biblioteket"
-
-#~ msgid "Select a Directory to view in the Library."
-#~ msgstr "Vel mappa du vil visa i biblioteket."
-
-#~ msgid "_Remove Miro Guides..."
-#~ msgstr "_Fjern Miro-gaidar …"
-
-#~ msgid "Re_name Miro Guide..."
-#~ msgstr "_Endra namn på Miro-gaid …"
-
-#~ msgid ""
-#~ "Would you like to delete this folder and all of its videos or just remove "
-#~ "its entry from the Library?"
-#~ msgstr ""
-#~ "Vil du sletta mappa og alle filmane ho inneheld eller berre oppføringa frå "
-#~ "biblioteket?"
-
-#~ msgid "$shortAppName - Add Miro Guide"
-#~ msgstr "$shortAppName – legg til Miro-gaid"
-
-#~ msgid "<b>Would you like Miro to look for video files on your computer?</b>"
-#~ msgstr "<b>Vil du at Miro skal sjå etter filmar på datamaskina di?</b>"
-
-#~ msgid "<b>Would you like to run Miro when your computer starts up?</b>"
-#~ msgstr "<b>Vil du at Miro skal starta automatisk når du slår på maskina?</b>"
-
-#~ msgid ""
-#~ "<b>You're done!</b>\n"
-#~ "\n"
-#~ "Setup is complete -- now you can find some channels and start watching.\n"
-#~ "\n"
-#~ "<b>Don't Wait:</b> Miro is different than watching webpage videos -- "
-#~ "publishers can offer big, high quality videos.  So don't sit around waiting "
-#~ "for videos: start some downloads and check back later.\n"
-#~ "\n"
-#~ "<b>Leave it On:</b> Miro regularly checks channels for new videos and "
-#~ "downloads in the background.  Leaving it running means you'll have new "
-#~ "videos when you're ready to watch.\n"
-#~ "\n"
-#~ "<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an "
-#~ "'expiration' system that helps clean out older videos to make room for new "
-#~ "videos.  You can always keep a video permanently by clicking 'save' and you "
-#~ "can set a channel's settings to save videos automatically.\n"
-#~ "\n"
-#~ "<b>Go Big:</b> The button to the right of the play button shows videos "
-#~ "fullscreen.\n"
-#~ "\n"
-#~ "<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all "
-#~ "of them are free.  Just click 'ADD' to watch a channel."
-#~ msgstr ""
-#~ "<b>Ferdig!</b>\n"
-#~ "\n"
-#~ "Oppsettet er fullført. Du kan no finna nye kanalar og begynna å sjå filmar.\n"
-#~ "\n"
-#~ "<b>Ikkje vent:</b> Å bruka Miro er annleis enn å sjå filmklipp på nettsider. "
-#~ "Utgjevarar kan tilby store filmfiler i høg kvalitet. Så ikkje sit og vent: "
-#~ "start nokre nedlastingar og sjå innom seinare.\n"
-#~ "\n"
-#~ "<b>La programmet køyra:</b> Miro ser regelmessig på kanalane etter nye "
-#~ "filmar, og lastar dei ned i bakgrunnen. Om du lar programmet køyra, har du "
-#~ "alltid nye filmar klar når du ønskjer å sjå dei.\n"
-#~ "\n"
-#~ "<b>Uroa deg ikkje om diskplass:</b> Miro har eit tidsutløpssystem som "
-#~ "hjelper deg å fjerna gamle filmar for å gje plass til nye. Du kan velja å "
-#~ "behalda einskildfilmar ved å trykkja på «Behald», og du kan setja opp "
-#~ "kanalar til å lagra alle filmar automatisk.\n"
-#~ "\n"
-#~ "<b>Tenk stort:</b> Trykk på knappen til høgre for avspelingsknappen for å "
-#~ "sjå filmane over heile skjermen.\n"
-#~ "\n"
-#~ "<b>Finn nye filmar:</b> Miro-gaiden har tusenvis av nettfjernsynskanalar, og "
-#~ "alle er heilt gratis. Berre trykk «Legg til» for å overvaka ein kanal."
-
-#~ msgid ""
-#~ "Miro can find all the videos on your computer to help you organize your "
-#~ "collection."
-#~ msgstr ""
-#~ "Miro kan finna alle filmane på datamaskina di, og hjelpa deg å halda orden "
-#~ "på desse."
-
-#~ msgid ""
-#~ "The next few screens will help you set up Miro so that it works best for "
-#~ "you.  Here's the first question."
-#~ msgstr ""
-#~ "Dei følgjande skjermbileta hjelper deg å setja opp Miro til å verka best "
-#~ "mogleg for deg. Her er første spørsmål."
-
-#~ msgid ""
-#~ "We recommend that you allow Miro to launch when your computer starts up.  "
-#~ "This way, videos that haven't finished downloading can finish and new videos "
-#~ "on your channels will be ready when you want to watch."
-#~ msgstr ""
-#~ "Det er anbefalt å la Miro starta automatisk når datamaskina vert starta. Då "
-#~ "kan filmar som ikkje er ferdig nedlasta lastast ned automatisk, og nye "
-#~ "filmar er klare når du ønskjer å sjå dei."
-
-#~ msgid ""
-#~ "Welcome to Internet TV.  There's a lot you can do with Miro: automatically "
-#~ "download videos from your favorite channels, watch new videos one after the "
-#~ "other, download torrents, recommend videos to friends, and lots more."
-#~ msgstr ""
-#~ "Velkommen til Internett-TV. Det er mykje du kan gjera med Miro: Du kan lasta "
-#~ "ned filmar frå favorittkanalane dine, sjå filmane etter kvarandre, lasta ned "
-#~ "BitTorrent-filer, anbefala filmar til venner, og mykje anna."
-
-#~ msgid "Spacebar"
-#~ msgstr "Mellomrom"
-
-#~ msgid "Add Channel _Guide..."
-#~ msgstr "Legg til kanal_gaid …"
-
-#~ msgid "Hide Window"
-#~ msgstr "Gøym vindauge"
-
-#~ msgid "Show Window"
-#~ msgstr "Vis vindauge"
-
-#~ msgid "Export Channels (OPML)..."
-#~ msgstr "Eksporter kanalar (OPML) …"
-
-#~ msgid "Import Channels (OPML)..."
-#~ msgstr "Importer kanalar (OPML) …"
-
-#~ msgid "_Options..."
-#~ msgstr "_Val …"
-
-#~ msgid "Options..."
-#~ msgstr "Val …"
-
-#~ msgid ""
-#~ "Would you like to delete this file or just remove its entry from the Library?"
-#~ msgstr "Vil du sletta fila eller berre oppføringa frå biblioteket?"
-
-#~ msgid "Torrent Details <i>stopped</i>"
-#~ msgstr "Torrent-detaljar <i>stoppa</i>"
-
-#~ msgid "Video Directory Missing"
-#~ msgstr "Filmmappa manglar"
-
-#~ msgid "$shortAppName - Download Video"
-#~ msgstr "$shortAppName – last ned film"
-
-#~ msgid "Error Changing Movies Directory"
-#~ msgstr "Feil ved byte av filmmappe"
-
-#~ msgid ""
-#~ "You don't have permission to write to the directory you selected.  Miro will "
-#~ "continue to use the old videos directory."
-#~ msgstr ""
-#~ "Du har ikkje løyve til å skriva til mappa du valde. Miro vil halda fram å "
-#~ "bruka den gamle filmmappa."
-
-#~ msgid "By default, videos _expire after"
-#~ msgstr "Som standard _utgår filmar etter"
-
-#~ msgid "C_hannels"
-#~ msgstr "_Kanalar"
-
-#~ msgid "Check Channels for _new content"
-#~ msgstr "Sjå etter _nytt innhald på kanalar"
-
-#~ msgid "Disk _Space"
-#~ msgstr "Disk_plass"
-
-#~ msgid "Play _videos one after another"
-#~ msgstr "Spel _av filmar éin etter éin"
-
-#~ msgid "S_top after each video"
-#~ msgstr "S_topp etter kvar film"
-
-#~ msgid "S_tore downloaded videos in this folder:"
-#~ msgstr "La_gra nedlasta filmar i denne mappa:"
-
-#~ msgid "_Downloads"
-#~ msgstr "_Nedlastingar"
-
-#~ msgid "_Folders"
-#~ msgstr "_Mapper"
-
-#~ msgid "_General"
-#~ msgstr "_Generelt"
-
-#~ msgid "_Playback"
-#~ msgstr "_Avspeling"
-
-#~ msgid "_Warn me when I attempt to quit with downloads in progress"
-#~ msgstr "_Åtvar ved forsøk på å avslutta med uferdige nedlastingar"
-
-#~ msgid ""
-#~ "_Watch for new videos in these folders and include them in the Library"
-#~ msgstr ""
-#~ "_Sjå etter nye filmar i desse mappene, og legg dei automatisk til biblioteket"
-
-#~ msgid "Automatically run $longAppName when I login."
-#~ msgstr "Køyr automatisk $longAppName ved innlogging."
-
-#~ msgid "Check channels for new content"
-#~ msgstr "Sjå etter nytt innhald på kanalar"
-
-#~ msgid "Folder"
-#~ msgstr "Mappe"
-
-#~ msgid "Play one video, then stop."
-#~ msgstr "Spel éin film, og så stopp."
-
-#~ msgid ""
-#~ "Remember where I stopped watching a video and continue playing from that "
-#~ "point."
-#~ msgstr ""
-#~ "Hugs kor eg slutta å sjå på ein film, og hald fram avspelinga frå den staden "
-#~ "neste gong."
-
-#~ msgid "Watch for new videos in these folders and include them in my Library."
-#~ msgstr ""
-#~ "Sjå etter nye filmar i desse mappene, og legg dei automatisk til biblioteket."
-
-#~ msgid ""
-#~ "Miro is still uploading your crash report. If you quit now the upload will "
-#~ "be canceled.  Quit Anyway?"
-#~ msgstr ""
-#~ "Miro held framleis på med å lasta opp krasjrapporten. Viss du avsluttar no, "
-#~ "vert opplastinga avbroten. Vil du likevel avslutta?"
-
-#~ msgid "Error:"
-#~ msgstr "Feil:"
-
-#~ msgid "Error Saving Video"
-#~ msgstr "Feil ved lagring av film"
-
-#~ msgid ""
-#~ "An error occured while trying to save %s.  Please check that the file has "
-#~ "not been deleted and try again."
-#~ msgstr ""
-#~ "Det oppstod ein feil ved lagring av «%s». Kontroller at fila ikkje vart "
-#~ "sletta, og prøv på nytt."
-
-#~ msgid ""
-#~ "The $shortAppName Channel Guide has hundreds of internet TV channels; all of "
-#~ "them are free.  Just click 'ADD' to watch a channel."
-#~ msgstr ""
-#~ "$shortAppName-gaiden har tusenvis av nettfjernsynskanalar, og alle er heilt "
-#~ "gratis. Berre trykk «Legg til» for å overvaka ein kanal."
-
-#~ msgid "-"
-#~ msgstr "–"
-
-#~ msgid "Automatically forward ports"
-#~ msgstr "Vidaresend automatisk portar"
-
-#~ msgid "Don't auto-download more than this many videos per channel at once:"
-#~ msgstr ""
-#~ "Ikkje last ned automatisk meir enn så mange filmar på kanal på éin gong:"
-
-#~ msgid "GB\n"
-#~ msgstr "GB\n"
-
-#~ msgid "KB/s."
-#~ msgstr "KB/s."
-
-#~ msgid "Limit downstream to"
-#~ msgstr "Avgrens nedlasting til"
-
-#~ msgid "Stop uploads when this ratio is reached:"
-#~ msgstr "Stopp opplastingar når dette forholdet er nådd:"
-
-#~ msgid "To avoid internet slowdowns, limit upstream to"
-#~ msgstr "For å hindra overbelasta nettverk, avgrens opplasting til"
-
-#~ msgid "Use these ports:"
-#~ msgstr "Bruk desse portane:"
-
-#~ msgid "Install iHeartMiro"
-#~ msgstr "Installer iHeartMiro"
-
-#~ msgid "see permalink"
-#~ msgstr "sjå fastlenkje"
-
-#~ msgid "license page"
-#~ msgstr "lisensside"
-
-#~ msgid ""
-#~ "<b>Note:</b> If you change the renderer used to play videos, you MUST \n"
-#~ "restart Miro for the changes to take effect."
-#~ msgstr ""
-#~ "<b>Merk:</b> Viss du endrar filmvisaren, <i>må</i> du starta Miro på nytt "
-#~ "før den nye visaren vert teken i bruk."
-
-#~ msgid "Auto download default setting for new channels"
-#~ msgstr "Standarval for nedlasting av nye kanalar:"
-
-#~ msgid "G_B"
-#~ msgstr "G_B"
-
-#~ msgid "Ignore Un_encrypted Connections."
-#~ msgstr "Ignorer _ukrypterte samband"
-
-#~ msgid "Maximum number of channel auto-downloads at a time: "
-#~ msgstr "Maks tal på automatiske nedlastingar per kanal: "
-
-#~ msgid "Maximum number of manual downloads at a time: "
-#~ msgstr "Maks tal på manuelle nedlastingar: "
-
-#~ msgid ""
-#~ "New\n"
-#~ "All\n"
-#~ "Off"
-#~ msgstr ""
-#~ "Nye\n"
-#~ "Alle\n"
-#~ "Av"
-
-#~ msgid "To avoid internet slowdowns, limit _upstream to:"
-#~ msgstr "For å hindra overbalasta nettverk, avgrens _opplasting til:"
-
-#~ msgid "Use _ports:"
-#~ msgstr "Bruk _portane:"
-
-#~ msgid "Use this renderer to play videos:"
-#~ msgstr "Bruk denne filmvisaren:"
-
-#~ msgid "_KB/s."
-#~ msgstr "_KB/s."
-
-#~ msgid "_Keep at least this much free space on my drive:"
-#~ msgstr "_Ha alltid minst så mykje ledig plass att på disken:"
-
-#~ msgid ""
-#~ "xine\n"
-#~ "gstreamer"
-#~ msgstr ""
-#~ "xine\n"
-#~ "gstreamer"
-
-#~ msgid "Automatically Forward Ports"
-#~ msgstr "Vidaresend automatisk portar"
-
-#~ msgid "Ignore Unencrypted Connections"
-#~ msgstr "Ignorer ukrypterte samband"
-
-#~ msgid "To avoid internet slowdowns, limit upstream bandwith to:"
-#~ msgstr ""
-#~ "For å hindra overbelasta nettverk, avgrens opplastingsbandbreidd til:"
-
-#~ msgid ""
-#~ "\n"
-#~ "Miro can't find your primary video directory $moviesDirectory.  This may be "
-#~ "because it's located on an external drive that is currently disconnected.  "
-#~ "Please, connect the drive or create the directory, then start Miro again."
-#~ msgstr ""
-#~ "\n"
-#~ "Miro finn ikkje hovudfilmmappa «$moviesDirectory». Dette kan vera fordi "
-#~ "mappa ligg på     ein ekstern harddisk som ikkje er kopla til. Avslutt Miro, "
-#~ "kopla til den eksterne harddisken, og start så Miro på nytt."
-
-#~ msgid "<b>xine</b>"
-#~ msgstr "<b>xine</b>"
-
-#~ msgid ""
-#~ "goom\n"
-#~ "oscope\n"
-#~ "fftscope\n"
-#~ "fftgraph\n"
-#~ "none"
-#~ msgstr ""
-#~ "goom\n"
-#~ "oscope\n"
-#~ "fftscope\n"
-#~ "fftgraph\n"
-#~ "none"
-
-#~ msgid ""
-#~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 "
-#~ "$publisher.  $longAppName and the $longAppName logo are trademarks of "
-#~ "$publisher."
-#~ msgstr ""
-#~ "$longAppName versjon $appVersion ($appRevision). Copyright © 2005–2008 "
-#~ "$publisher. $longAppName og $longAppName-logoen er varemerker til $publisher."
-
-#~ msgid "Full Channel"
-#~ msgstr "Full kanal"
-
-#~ msgid "EMAIL A FRIEND"
-#~ msgstr "E-POST TIL EIN VENN"
-
-#~ msgid "PERMALINK"
-#~ msgstr "FASTLENKJE"
-
-#~ msgid "COMMENTS"
-#~ msgstr "MERKNADER"
-
-#~ msgid "ADD TO LIBRARY"
-#~ msgstr "LEGG TIL BIBLIOTEK"
-
-#~ msgid "Date:"
-#~ msgstr "Dato:"
-
-#~ msgid "Length:"
-#~ msgstr "Lengd:"
-
-#~ msgid "Size:"
-#~ msgstr "Storleik:"
-
-#~ msgid "Hide Details"
-#~ msgstr "Gøym detaljar"
-
-#~ msgid "Install iHeartMiro?"
-#~ msgstr "Vil du installera iHeartMiro?"
-
-#~ msgid "parsed %(countfiles)d files - found %(countvideos)d videos"
-#~ msgstr "søkte gjennom %(countfiles)d filer, og fann %(countvideos)d videoar"
-
-#~ msgid "bad parsed %(countfiles)d files - found %(countvideos)d videos"
-#~ msgstr "las %(countfiles)d ugyldige filer, og fann %(countvideos)d videoar"
-
-#~ msgid "%(count)d video found"
-#~ msgid_plural "%(count)d videos found"
-#~ msgstr[0] "fann %(count)d video"
-#~ msgstr[1] "fann %(count)d videoar"
-
-#~ msgid "bad %(count)d video found"
-#~ msgid_plural "bad %(count)d videos found"
-#~ msgstr[0] "fann %(count)d ugyldig video"
-#~ msgstr[1] "fann %(count)d ugyldige videoar"
-
-#~ msgid "show"
-#~ msgstr "vis"
-
-#~ msgid "Restart %(appname)s?"
-#~ msgstr "Vil du starta %(appname)s på nytt?"
-
-#~ msgid ""
-#~ "To enable the Flash plugin, %(appname)s needs to be restarted.  Click Yes to "
-#~ "shut %(appname)s down, or No to do it later."
-#~ msgstr ""
-#~ "Du må starta %(appname)s på nytt for at Flash-tillegget skal tre i kraft. "
-#~ "Trykk «Ja» for å avslutta %(appname)s no, eller «Nei» for å venta med dette "
-#~ "til seinare."
-
-#~ msgid "Create channel?"
-#~ msgid_plural "Create %(count)d channels?"
-#~ msgstr[0] "Vil du laga ein kanal?"
-#~ msgstr[1] "Vil du laga %(count)d kanalar?"
-
-#~ msgid "Default (%(number)s)"
-#~ msgstr "Standard (%(number)s)"
-
-#~ msgid "Local directory"
-#~ msgstr "Lokal mappe"
-
-#~ msgid "Local file"
-#~ msgstr "Lokal fil"
-
-#~ msgid "Add Channel - Invalid URL"
-#~ msgstr "Legg til kanal – ugyldig adresse"
-
-#~ msgid "Add Guide"
-#~ msgstr "Legg til kanalgaid"
-
-#~ msgid ""
-#~ "The address you entered is not a valid url.\n"
-#~ "Please check the URL and try again.\n"
-#~ "\n"
-#~ "Enter the URL of the Miro guide to add"
-#~ msgstr ""
-#~ "Adressa du skreiv inn er ikkje gyldig.\n"
-#~ "Kontroller adressa og prøv så på nytt.\n"
-#~ "\n"
-#~ "Skriv inn adressa til Miro-gaiden du vil leggja til."
-
-#~ msgid "Enter a new name for the channel %(name)s"
-#~ msgstr "Skriv inn nytt namn på kanalen «%(name)s»"
-
-#~ msgid "1 Downloaded Item"
-#~ msgid_plural "%(count)d Downloaded Items"
-#~ msgstr[0] "1 nedlasta element"
-#~ msgstr[1] "%(count)d nedlasta element"
-
-#~ msgid "1 Downloading Item"
-#~ msgid_plural "%(count)d Downloading Items"
-#~ msgstr[0] "1 nedlasta element"
-#~ msgstr[1] "%(count)d nedlasta element"
-
-#~ msgid "all"
-#~ msgstr "alle"
-
-#~ msgid "new"
-#~ msgstr "nye"
-
-#~ msgid "off"
-#~ msgstr "av"
-
-#~ msgid "%(count)d Video"
-#~ msgid_plural "%(count)d Videos"
-#~ msgstr[0] "%(count)d video"
-#~ msgstr[1] "%(count)d videoar"
-
-#~ msgid ""
-#~ "If you click 'Install iHeartMiro' below, Firefox will launch and ask if it's "
-#~ "ok.   Just say yes and you're done!   It takes about 7 seconds.  Thanks for "
-#~ "your help."
-#~ msgstr ""
-#~ "Når du trykkjer «Installer iHeartMiro» nedanfor, vert Firefox starta, og vil "
-#~ "spørja deg om det er greitt at tillegget vert installert. Berre svar ja, og "
-#~ "du er ferdig. Det heile tar rundt 7 sekund. Og tusen takk for støtta di!"
-
-#~ msgid ""
-#~ "If you click 'Install iHeartMiro' below, we'll install the extension.  "
-#~ "Thanks for your help."
-#~ msgstr ""
-#~ "Når du trykkjer «Installer iHeartMiro» nedanfor, vert utvidinga installert. "
-#~ "Tusen takk for hjelpa di!"
-
-#~ msgid ""
-#~ "An Effortless Way to Help Miro\n"
-#~ "\n"
-#~ "Miro is open-source and built by a non-profit.  We need your help to "
-#~ "continue our work.\n"
-#~ "\n"
-#~ "I Heart Miro is a simple %(installer)s extension that gives a referral fee "
-#~ "to the Miro organization when you shop at Amazon.  You'll never notice it, "
-#~ "it doesn't cost you a thing, and it's easy to uninstall at any time.\n"
-#~ "\n"
-#~ "%(instructions)s"
-#~ msgstr ""
-#~ "Ein enkel måte å hjelpa Miro på\n"
-#~ "\n"
-#~ "Miro er fri og gratis programvare, og vert utvikla av eit nonprofitt-"
-#~ "selskap. Me treng di hjelp til å kunna halda fram med dette.\n"
-#~ "\n"
-#~ "«I Heart Miro» («eg elskar Miro») er eit %(installer)s-tillegg som gjev "
-#~ "referentpengar til Miro-organisasjonen når du handlar på Amazon. Du vil "
-#~ "ikkje merka at tillegget køyrer, det kostar deg ingenting, og det er lett å "
-#~ "avinstallera.\n"
-#~ "\n"
-#~ "%(instructions)s"
-
-#~ msgid "Sample Channels"
-#~ msgstr "Eksempelkanalar"
-
-#~ msgid "%(size)sGB/s"
-#~ msgstr "%(size)s GB/s"
-
-#~ msgid "%(size)sMB/s"
-#~ msgstr "%(size)s MB/s"
-
-#~ msgid "%(size)sKB/s"
-#~ msgstr "%(size)s KB/s"
-
-#~ msgid "New Playlist Fol_der..."
-#~ msgstr "Ny speleliste_mappe …"
-
-#~ msgid "1 hour"
-#~ msgid_plural "%(count)d hours"
-#~ msgstr[0] "1 time"
-#~ msgstr[1] "%(count)d timar"
-
-#~ msgid "1 minute"
-#~ msgid_plural "%(count)d minutes"
-#~ msgstr[0] "1 minutt"
-#~ msgstr[1] "%(count)d minutt"
-
-#~ msgid "Channel downloads"
-#~ msgstr "Kanalnedlastingar"
-
-#~ msgid "Remember this many older items in addition to the current contents"
-#~ msgstr "Hugs så mange gamle element i tillegg til det gjeldande innhaldet"
-
-#~ msgid "Clear older items now"
-#~ msgstr "Fjern gamle element no"
-
-#~ msgid "commentslink"
-#~ msgstr "merknadslenkje"
-
-#~ msgid "No watched folders"
-#~ msgstr "Ingen overvaka mapper"
-
-#~ msgid "Remove channel"
-#~ msgid_plural "Remove %(count)d channels"
-#~ msgstr[0] "Fjern kanal"
-#~ msgstr[1] "Fjern %(count)d kanalar"
-
-#~ msgid "_Remove Item..."
-#~ msgstr "_Fjern element …"
-
-#~ msgid "Revert Channel Name"
-#~ msgstr "Tilbakestill kanalnamn"
+msgid "Hide Miro"
+msgstr "Gøym Miro"
+
+msgid "Quit Miro"
+msgstr "Avslutt Miro"
+
+msgid "Miro Help"
+msgstr "Miro-hjelp"
+
+msgid "Miro - Report a Problem"
+msgstr "Miro – meld frå om problem"
+
+#, python-format
+msgid "%(appname)s database save succeeded"
+msgstr "Lagring av %(appname)s-database fullførd"
+
+msgid ""
+"The database has been successfully saved. It is now safe to quit without "
+"losing any data."
+msgstr "Databasen er lagra. Du kan no trygt avslutta utan å mista data."
+
+#, python-format
+msgid "%(appname)s database save failed"
+msgstr "Feil ved lagring av %(appname)s-database"
+
+#, python-format
+msgid ""
+"%(appname)s was unable to save its database: Disk Full.\n"
+"We suggest deleting files from the full disk or simply deleting some movies "
+"from your collection.\n"
+"Recent changes may be lost."
+msgstr ""
+"%(appname)s klarte ikkje å lagra databasen då disken er full.\n"
+"Du kan anten sletta filer frå disken, eller sletta nokre videoar frå "
+"samlinga.\n"
+"Nye endringar kan ha gått tapt."
+
+msgid "_About Miro"
+msgstr "_Om Miro"
+
+msgid "Automatically run Miro when I log in."
+msgstr "Køyr automatisk Miro ved innlogging."
+
+msgid ""
+"You've selected a new folder to download movies to.  Should Miro migrate "
+"your existing downloads there? (Currently dowloading movies will not be "
+"moved until they finish.)"
+msgstr ""
+"Du har valt ei ny mappe for nedlasting av videoar. Vil du at Miro skal "
+"flytta ferdige nedlastingar der? (Videoar som er i ferd med å lastast ned "
+"vert ikkje flytta før dei er ferdig nedlasta.)"
+
+msgid "New Videos"
+msgstr "Nye videoar"
+
+msgid "Library"
+msgstr "Bibliotek"
+
+msgid "Single Items"
+msgstr "Einskildelement"
+
+msgid "No Items to Display"
+msgstr "Ingenting å visa"
+
+msgid "This tab keeps track of downloads that aren't part of a feed."
+msgstr "Denne fana inneheld nedlastingar som ikkje er del av ei kjelde."
+
+#, python-format
+msgid ""
+"%(copyright)s.  See LICENSE file for details.\n"
+"Miro and Miro logo are trademarks of the Participatory Culture Foundation."
+msgstr ""
+"%(copyright)s. Sjå fila «LICENSE» for meir informasjon.\n"
+"«Miro» og Miro-logoen er varemerke til Participatory Culture Foundation."
+
+msgid "Start seeding"
+msgstr "Start sending"
+
+msgid "Web page"
+msgstr "Nettside"

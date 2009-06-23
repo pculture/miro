@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:37+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -117,14 +117,6 @@ msgstr "렌더러(renderer)의 변경이 적용되려면 반드시 재시작 하
 msgid "Video renderer:"
 msgstr "비디오 렌더러"
 
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:77
-msgid "You must restart playback for visualization changes to take effect."
-msgstr ""
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:80
-msgid "None"
-msgstr ""
-
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:86
 msgid "Use this for video when playing audio:"
 msgstr "소리를 재생할 때 비디오로 사용함"
@@ -155,23 +147,10 @@ msgstr "유지"
 msgid "Delete"
 msgstr "지우기"
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:132
-msgid "Add to Library"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:203
-msgid "Pop Out"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:206
-msgid "Pop In"
-msgstr ""
-
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
 msgid "Services"
 msgstr "서비스"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 msgid "Hide Miro"
 msgstr "미로 숨기기"
 
@@ -187,7 +166,6 @@ msgstr "모두 보기"
 msgid "Preferences..."
 msgstr "환경설정"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
 msgstr "미로 끝내기"
 
@@ -251,7 +229,6 @@ msgstr "모두 앞으로 보내기"
 msgid "Window"
 msgstr "창"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Miro Help"
 msgstr "미로 도움말"
 
@@ -268,17 +245,10 @@ msgstr "'%s' 비디오 다운로드 완료."
 msgid "Custom Channels"
 msgstr "채널 설정"
 
-#: ../../portable/theme.py:138
-#, python-format
-msgid ""
-"You are running a version of %(appname)s with a custom set of channels."
-msgstr ""
-
 #: ../../portable/theme.py:171
 msgid "Example Playlist"
 msgstr "재생 목록 예제"
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr "미로 - 문제점 보고하기"
 
@@ -331,23 +301,19 @@ msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] "이미 가져온 %(count)d 개의 피드들은 건너뛰었습니다."
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "%(appname)s 데이터베이스 저장이 성공하였습니다."
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr "데이터베이스를 저장했습니다. 데이터 분실 없이 안전하게 종료할 수 있습니다."
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "%(appname)s 데이터베이스 저장이 실패하였습니다."
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -748,7 +714,6 @@ msgstr "전체 화면"
 msgid "_Toggle Detached/Attached"
 msgstr "떼기/붙이기 바꾸기"
 
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr "미로 정보(_A)"
 
@@ -846,11 +811,6 @@ msgstr[0] "%(count)d 달 전"
 msgid "Auto-Expire Videos:"
 msgstr "자동만료 동영상"
 
-#: ../../portable/frontends/widgets/feedsettingspanel.py:95
-#, python-format
-msgid "Watched %(expiration)s (Default)"
-msgstr ""
-
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
 msgstr "어제 봄"
@@ -874,31 +834,6 @@ msgstr "한달 전에 봄"
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
 msgstr "오래된 피드들"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:139
-#, python-format
-msgid "Keep %(number)s (Default)"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:141
-msgid "Keep 0"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:142
-msgid "Keep 20"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:143
-msgid "Keep 50"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:144
-msgid "Keep 100"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:145
-msgid "Keep 1000"
-msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
@@ -935,10 +870,6 @@ msgstr "보지 않은 항목이 열다섯 개 있음"
 #: ../../portable/frontends/widgets/feedsettingspanel.py:241
 msgid "Feed Settings"
 msgstr "피드 설정"
-
-#: ../../portable/frontends/widgets/style.py:209
-msgid "From"
-msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:210
 msgid "File name:"
@@ -987,10 +918,6 @@ msgstr "파일 종류"
 #: ../../portable/frontends/widgets/style.py:220
 msgid "Seeders"
 msgstr "배포자"
-
-#: ../../portable/frontends/widgets/style.py:221
-msgid "Leechers"
-msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:222
 msgid "Upload Rate"
@@ -1061,7 +988,6 @@ msgstr "멈춤"
 msgid "Remove from playlist"
 msgstr "재생 목록에서 빼기"
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr "로그인 하면 자동으로 미로 실행하기"
 
@@ -1100,10 +1026,6 @@ msgstr "모두"
 #: ../../portable/frontends/widgets/itemlistwidgets.py:620
 msgid "Off"
 msgstr "끔"
-
-#: ../../portable/frontends/widgets/prefpanel.py:297
-msgid "0"
-msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:298
 msgid "20"
@@ -1207,7 +1129,6 @@ msgstr "동영상 디렉토리 선택"
 msgid "Migrate existing movies?"
 msgstr "현재 동영상을 이동할까요?"
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
@@ -1232,10 +1153,6 @@ msgstr "다운로드 폴더:"
 #: ../../portable/frontends/widgets/prefpanel.py:549
 msgid "Watch for new videos in these folders and include them in library:"
 msgstr "폴더에 있는 새 동영상 재생 및 라이브러리에 추가"
-
-#: ../../portable/frontends/widgets/prefpanel.py:568
-msgid "Keep at least this much free space on my drive:"
-msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:571
 #: ../../portable/frontends/widgets/prefpanel.py:577
@@ -1323,7 +1240,6 @@ msgstr "사용자명"
 msgid "Password:"
 msgstr "암호"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
 msgstr "새 동영상"
 
@@ -1336,21 +1252,15 @@ msgstr "동영상 검색"
 msgid "No Results Found"
 msgstr "검색 결과가 없습니다."
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
 msgid "Library"
 msgstr "모음집"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr "개별 항목들"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr "표시할 항목이 없습니다."
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr "피드에 포함되지 않은 다운로드를 기록합니다."
 
@@ -1761,16 +1671,6 @@ msgstr "모두 취소"
 msgid "Download Settings"
 msgstr "다운로드 설정"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:549
-#, python-format
-msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:555
-#, python-format
-msgid "%(available)s free for downloads (%(amount)s free on disk)"
-msgstr ""
-
 #: ../../portable/frontends/widgets/itemlistwidgets.py:560
 #, python-format
 msgid "%(amount)s free on disk"
@@ -1895,199 +1795,19 @@ msgstr "다음 보지 않은 항목 재생(%(unplayed)d개)"
 msgid "Play All Unplayed (%(unplayed)d)"
 msgstr "보지 않은 모든 항목 재생(%(unplayed)d개)"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:70
-#, python-format
-msgid "Pause All Downloads (%(downloading)d)"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:73
-#, python-format
-msgid "Resume All Downloads (%(paused)d)"
-msgstr ""
-
 #: ../../portable/frontends/widgets/gtk/trayicon.py:81
 msgid "Hide"
 msgstr "숨기기"
-
-#: ../../portable/frontends/widgets/gtk/video.py:272
-msgid "Add to library"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/video.py:311
-msgid "Permalink"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/window.py:470
-msgid "All files"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/window.py:499
-msgid "Choose"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/window.py:526
-#, python-format
-msgid ""
-"%(copyright)s.  See LICENSE file for details.\n"
-"Miro and Miro logo are trademarks of the Participatory Culture Foundation."
-msgstr ""
-
-#: ../../portable/frontends/widgets/removefeeds.py:49
-msgid "Remove Feed"
-msgid_plural "Remove Feeds"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/removefeeds.py:57
-msgid "Are you sure you want to remove this feed:"
-msgid_plural "Are you sure you want to remove these feeds:"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/removefeeds.py:77
-msgid "Keep items that have been downloaded in my library."
-msgstr ""
-
-#: ../../portable/frontends/widgets/removefeeds.py:83
-msgid ""
-"Watched folders will be removed from the sidebar but their contents will "
-"still appear in your library.  You can stop watching watched folders "
-"completely in the Miro preference panel."
-msgstr ""
-
-#: ../../portable/frontends/widgets/removefeeds.py:93
-msgid ""
-"Are you sure you want to remove this feed?  The downloads currently in "
-"progress will be canceled."
-msgid_plural ""
-"Are you sure you want to remove these feeds?  The downloads currently in "
-"progress will be canceled."
-msgstr[0] ""
-msgstr[1] ""
 
 #: ../../portable/frontends/widgets/newfeed.py:60
 #: ../../portable/frontends/widgets/newsearchfeed.py:98
 msgid "URL:"
 msgstr "URL:"
 
-#: ../../portable/frontends/widgets/newfeed.py:69
-msgid "Feed should go in this section:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfeed.py:71
-#: ../../portable/frontends/widgets/newfolder.py:70
-#: ../../portable/frontends/widgets/newsearchfeed.py:135
-msgid "video"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfeed.py:72
-#: ../../portable/frontends/widgets/newfolder.py:71
-#: ../../portable/frontends/widgets/newsearchfeed.py:136
-msgid "audio"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfeed.py:110
-msgid "Add Feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfeed.py:111
-msgid "Enter the URL of the feed to add"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfeed.py:122
-msgid "Add Feed - Invalid URL"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfeed.py:123
-msgid ""
-"The address you entered is not a valid url.\n"
-"Please check the URL and try again.\n"
-"\n"
-"Enter the URL of the feed to add"
-msgstr ""
-
 #: ../../portable/frontends/widgets/tablist.py:475
 #: ../../portable/frontends/widgets/tablist.py:534
 msgid "Copy URL to clipboard"
 msgstr "URL을 클립보드로 복사"
-
-#: ../../portable/frontends/widgets/tablist.py:477
-msgid "Remove Site"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:521
-msgid "Update Feeds In Folder"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:528
-msgid "Update Feed Now"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:531
-msgid "Rename"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:533
-msgid "Revert Feed Name"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:540
-msgid "Update Feeds Now"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:605
-msgid "SITES"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:607
-msgid "FEEDS"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:609
-msgid "AUDIO FEEDS"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:611
-msgid "PLAYLISTS"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfolder.py:60
-msgid "Folder name:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfolder.py:68
-msgid "Folder should go in this section:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfolder.py:107
-#: ../../portable/frontends/widgets/newfolder.py:109
-msgid "Create Feed Folder"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfolder.py:110
-msgid "Enter the name of the folder to add"
-msgstr ""
-
-#: ../../portable/frontends/widgets/linkhandler.py:54
-msgid "Subscribe to Feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/linkhandler.py:56
-#, python-format
-msgid ""
-"This link appears to be a feed.  Do you want to add it to your "
-"subscriptions?\n"
-"\n"
-"%(url)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:58
-msgid "New Search Feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:59
-msgid "A search feed contains items that match a search term."
-msgstr ""
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:74
 msgid "Search for:"
@@ -2096,40 +1816,6 @@ msgstr "찾기:"
 #: ../../portable/frontends/widgets/newsearchfeed.py:80
 msgid "In this:"
 msgstr "위치:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:87
-msgid "Feed:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:92
-msgid "Search engine:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:132
-msgid "Add new feed to this section:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:60
-msgid "Miro First Time Setup"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:117
-msgid "Welcome to the Miro First Time Setup"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:120
-msgid ""
-"The next few screens will help you set up Miro so that it works best for "
-"you.\n"
-"\n"
-"We recommend that you have Miro launch when your computer starts up.  This "
-"way, downloads in progress can finish downloading and new media files can be "
-"downloaded in the background, ready when you want to watch."
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:132
-msgid "Would you like to run Miro on startup?"
-msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:137
 #: ../../portable/frontends/widgets/firsttimedialog.py:170
@@ -2143,38 +1829,9 @@ msgstr "예"
 msgid "No"
 msgstr "아니오"
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:146
-msgid "Next >"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:156
-msgid "Completing the Miro First Time Setup"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:159
-msgid ""
-"Miro can find all the media files on your computer to help you organize your "
-"collection.\n"
-"\n"
-"Would you like Miro to look for media files on your computer?"
-msgstr ""
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:177
 msgid "Restrict to all my personal files."
 msgstr "개인 파일로 제한"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:178
-msgid "Search custom folders:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:189
-msgid "Choose directory to search for media files"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:200
-#: ../../portable/frontends/widgets/firsttimedialog.py:280
-msgid "< Previous"
-msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:213
 #: ../../portable/frontends/widgets/firsttimedialog.py:215
@@ -2183,69 +1840,14 @@ msgstr ""
 msgid "Search"
 msgstr "검색"
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:215
-#: ../../portable/frontends/widgets/firsttimedialog.py:283
-msgid "Finish"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:263
-msgid "Searching for media files"
-msgstr ""
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:273
 #: ../../portable/dialogs.py:85
 msgid "Cancel"
 msgstr "스캔 취소"
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:311
-#, python-format
-msgid "parsed %(count)s file"
-msgid_plural "parsed %(count)s files"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:316
-#, python-format
-msgid "found %(count)s media file"
-msgid_plural "found %(count)s media files"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/statictabs.py:44
-msgid "Miro Guide"
-msgstr ""
-
 #: ../../portable/frontends/widgets/statictabs.py:110
 msgid "Downloading"
 msgstr "다운로드 중"
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:90
-msgid "Single and external downloads"
-msgstr ""
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:93
-msgid "Feed downloads"
-msgstr ""
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:96
-msgid "Seeding"
-msgstr ""
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
-msgid "Add a Playlist"
-msgstr ""
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
-msgid "Add items to an existing playlist or a new one."
-msgstr ""
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
-msgid "Existing playlist:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
-msgid "New playlist:"
-msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
@@ -2255,33 +1857,6 @@ msgstr "모음집에서 제거"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:192
 msgid "Play"
 msgstr "재생"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:95
-msgid "Play Just this Item"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:96
-#: ../../portable/frontends/widgets/itemcontextmenu.py:193
-msgid "Add to Playlist"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:101
-msgid "Revert Item Name"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:103
-#: ../../portable/frontends/widgets/itemcontextmenu.py:200
-msgid "Mark as Unplayed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:106
-#: ../../portable/frontends/widgets/itemcontextmenu.py:205
-msgid "Mark as Played"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
-msgid "Start seeding"
-msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:118
 #: ../../portable/frontends/widgets/itemcontextmenu.py:240
@@ -2293,64 +1868,6 @@ msgstr "다운로드 취소"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:241
 msgid "Pause Download"
 msgstr "내려받기 잠시 멈춤"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:125
-#: ../../portable/frontends/widgets/itemcontextmenu.py:254
-msgid "Resume Download"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
-msgid "Web page"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:139
-msgid "License"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:142
-msgid "File in Browser"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:144
-#, python-format
-msgid "File in %(progname)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:146
-msgid "File on Disk"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:149
-msgid "View"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:187
-#, python-format
-msgid "%(count)d Downloaded Item"
-msgid_plural "%(count)d Downloaded Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:216
-#, python-format
-msgid "%(count)d Available Item"
-msgid_plural "%(count)d Available Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:229
-#, python-format
-msgid "%(count)d Downloading Item"
-msgid_plural "%(count)d Downloading Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:246
-#, python-format
-msgid "%(count)d Paused Item"
-msgid_plural "%(count)d Paused Items"
-msgstr[0] ""
-msgstr[1] ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:264
 msgid "Restart Upload"
@@ -2364,14 +1881,6 @@ msgstr "재생 목록에서 삭제"
 msgid "Ok"
 msgstr "확인"
 
-#: ../../portable/dialogs.py:84
-msgid "Close"
-msgstr ""
-
-#: ../../portable/dialogs.py:86
-msgid "Done"
-msgstr ""
-
 #: ../../portable/dialogs.py:89
 msgid "Quit"
 msgstr "종료"
@@ -2379,14 +1888,6 @@ msgstr "종료"
 #: ../../portable/dialogs.py:90
 msgid "Continue"
 msgstr "계속"
-
-#: ../../portable/dialogs.py:91
-msgid "Ignore"
-msgstr ""
-
-#: ../../portable/dialogs.py:92
-msgid "Submit Crash Report"
-msgstr ""
 
 #: ../../portable/dialogs.py:93
 msgid "Migrate"
@@ -2420,182 +1921,26 @@ msgstr "동영상 삭제"
 msgid "Create"
 msgstr "만들기"
 
-#: ../../portable/dialogs.py:102
-msgid "Create Feed"
-msgstr ""
-
-#: ../../portable/dialogs.py:103
-msgid "Create Folder"
-msgstr ""
-
 #: ../../portable/dialogs.py:105
 msgid "Add Into New Folder"
 msgstr "새 폴더로 추가"
-
-#: ../../portable/dialogs.py:109
-msgid "Not Now"
-msgstr ""
-
-#: ../../portable/dialogs.py:110
-msgid "Close to Tray"
-msgstr ""
-
-#: ../../portable/dialogs.py:111
-msgid "Launch Miro"
-msgstr ""
-
-#: ../../portable/dialogs.py:112
-msgid "Download Anyway"
-msgstr ""
-
-#: ../../portable/dialogs.py:113
-msgid "Open in External Browser"
-msgstr ""
-
-#: ../../portable/dialogs.py:114
-msgid "Don't Install"
-msgstr ""
-
-#: ../../portable/dialogs.py:115
-msgid "Subscribe"
-msgstr ""
-
-#: ../../portable/dialogs.py:116
-msgid "Stop Watching"
-msgstr ""
 
 #: ../../portable/playlist.py:180
 #, python-format
 msgid "Enter a new name for the playlist %s"
 msgstr "%s에 대해 바꿀 이름을 입력하세요."
 
-#: ../../portable/singleclick.py:100
-msgid "Download already exists"
-msgstr ""
-
-#: ../../portable/singleclick.py:101
-msgid "That URL is already an external download."
-msgstr ""
-
-#: ../../portable/singleclick.py:107
-msgid "Miro will begin downloading it now."
-msgstr ""
-
-#: ../../portable/singleclick.py:109
-msgid "It is downloading now."
-msgstr ""
-
-#: ../../portable/singleclick.py:111
-msgid "It has already been downloaded."
-msgstr ""
-
-#: ../../portable/singleclick.py:138
-msgid "File Download"
-msgstr ""
-
-#: ../../portable/singleclick.py:139
-#, python-format
-msgid ""
-"This file at %(url)s does not appear to be audio, video, or an RSS feed."
-msgstr ""
-
 #: ../../portable/singleclick.py:166
 msgid "Download Error"
 msgstr "다운로드 에러"
-
-#: ../../portable/singleclick.py:168
-#, python-format
-msgid ""
-"Miro is not able to download a file at this URL:\n"
-"\n"
-"URL: %(url)s"
-msgstr ""
-
-#: ../../portable/singleclick.py:297
-msgid "Subscribing to multiple feeds"
-msgstr ""
-
-#: ../../portable/singleclick.py:298
-#, python-format
-msgid "Create feed?"
-msgid_plural "Create %(count)d feeds?"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/singleclick.py:318
-msgid "Enter a name for the new feed folder"
-msgstr ""
-
-#: ../../portable/singleclick.py:322
-#, python-format
-msgid ""
-"NOTE: You are already subscribed to one of these feeds.  These feeds will "
-"stay where they currently are."
-msgid_plural ""
-"NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-"will stay where they currently are."
-msgstr[0] ""
-msgstr[1] ""
 
 #: ../../portable/singleclick.py:337
 msgid "Subscription error"
 msgstr "구독 오류"
 
-#: ../../portable/singleclick.py:347
-#, python-format
-msgid ""
-"This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
-"the publisher of this file."
-msgstr ""
-
-#: ../../portable/singleclick.py:356
-#, python-format
-msgid ""
-"This %(appname)s feed file has the wrong content type: %(url)s. Please "
-"notify the publisher of this file."
-msgstr ""
-
-#: ../../portable/singleclick.py:364
-#, python-format
-msgid "Could not download the %(appname)s feed file: %(url)s"
-msgstr ""
-
 #: ../../portable/singleclick.py:414
 msgid "Invalid Torrent"
 msgstr "유효하지 않은 토런트"
-
-#: ../../portable/singleclick.py:416
-#, python-format
-msgid ""
-"The torrent file %(filename)s appears to be corrupt and cannot be opened. "
-"[OK]"
-msgstr ""
-
-#: ../../portable/item.py:439
-#, python-format
-msgid "%(count)d day"
-msgid_plural "%(count)d days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/item.py:444
-#, python-format
-msgid "%(count)d hour"
-msgid_plural "%(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/item.py:449
-#, python-format
-msgid "%(count)d minute"
-msgid_plural "%(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/item.py:733 ../../portable/item.py:749
-#: ../../portable/item.py:761
-msgid "no title"
-msgstr ""
 
 #: ../../portable/item.py:1008
 msgid "starting up..."
@@ -2688,10 +2033,6 @@ msgstr "\"%(url)s\"는 잘못된 URL 입니다."
 msgid "The file \"%(path)s\" doesn't exist"
 msgstr "\"%(path)s\" 파일이 존재하지 않습니다."
 
-#: ../../portable/httpclient.py:179
-msgid "Read error"
-msgstr ""
-
 #: ../../portable/httpclient.py:180
 #, python-format
 msgid "Error while reading from \"%(path)s\""
@@ -2767,1680 +2108,640 @@ msgstr "로컬 파일"
 msgid "Playing File"
 msgstr "재생중인 파일"
 
-#~ msgid "Save this video"
-#~ msgstr "현재 동영상 저장"
-
-#~ msgid "_Play / Pause"
-#~ msgstr "재생 / 중지"
-
-#~ msgid "_Remove Channel"
-#~ msgstr "채널 제거"
-
-#~ msgid "_Update Channel"
-#~ msgstr "채널 업데이트"
-
-#~ msgid "Copy Channel _Link"
-#~ msgstr "채널 링크 복사"
-
-#~ msgid "_Open..."
-#~ msgstr "새로 열기"
-
-#~ msgid "Open various files"
-#~ msgstr "여러 파일 열기"
-
-#~ msgid "P_references"
-#~ msgstr "설정"
-
-#~ msgid "Quit the Program"
-#~ msgstr "프로그램 종료"
-
-#~ msgid "U_pdate All Channels"
-#~ msgstr "모든 채널 갱신"
-
-#~ msgid "Channel requires authentication"
-#~ msgstr "인증 필요 채널"
-
-#~ msgid "%s database save failed"
-#~ msgstr "%s 데이터베이스 저장 실패"
-
-#~ msgid "Unknown Runtime Error"
-#~ msgstr "알수 없는 Runtime 오류"
-
-#~ msgid "An unknown error has occurred %s."
-#~ msgstr "알 수 없는 오류가 발생했습니다 %s."
-
-#~ msgid "Pending Auto Download"
-#~ msgstr "자동 다운로드 중"
-
-#~ msgid "Unwatched"
-#~ msgstr "미 시청"
-
-#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
-#~ msgstr "표시할 사항 없음.<br></br>검색 항목에 찾을 단어를 입력하세요."
-
-#~ msgid "Searching..."
-#~ msgstr "검색 중..."
-
-#~ msgid "Channel Guide"
-#~ msgstr "채널 가이드"
-
-#~ msgid "My Collection"
-#~ msgstr "나의 모음집"
-
-#~ msgid "Democracy - External Playback Template"
-#~ msgstr "Democracy - 외부 재생기"
-
-#~ msgid "Continue To Next Video"
-#~ msgstr "다음 동영상으로 계속"
-
-#~ msgid "Recommend"
-#~ msgstr "추천"
-
-#~ msgid "Default"
-#~ msgstr "기본"
-
-#~ msgid "Watched"
-#~ msgstr "재생 완료"
-
-#~ msgid "Saved"
-#~ msgstr "저장 완료"
-
-#~ msgid "Simple translation"
-#~ msgstr "간단 번역"
-
-#~ msgid "truck stop in a ${can}"
-#~ msgstr "truck stop in a ${can}"
-
-#~ msgid "Democracy Internet TV: How to Get Started"
-#~ msgstr "Democracy 인터넷 TV: 시작하기"
-
-#~ msgid "GO BIG:"
-#~ msgstr "크게 보기:"
-
-#~ msgid "This is your fullscreen button. Click it and lean back."
-#~ msgstr "전체화면 보기입니다."
-
-#~ msgid "NEW STUFF:"
-#~ msgstr "NEW STUFF:"
-
-#~ msgid ""
-#~ "Blue circles mean the channel has new videos available, green circles mean "
-#~ "you have downloaded videos ready to watch."
-#~ msgstr "파란 원은 새 동영상이 있습니다. 녹색 원은 시청 가능한 동영상이 있습니다."
-
-#~ msgid ""
-#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
-#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
-#~ "channels in the guide are free.</strong>"
-#~ msgstr ""
-#~ "<strong>채널 추가:</strong> 채널 가이드는 집에서 사용가능한 인터넷 TV 채널입니다. 채널을 구독하시려면 '추가'를 "
-#~ "선택하세요. <strong>채널 가이드는 무료 입니다.</strong>"
-
-#~ msgid ""
-#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
-#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
-#~ "waiting for videos: start some downloads and check back later."
-#~ msgstr ""
-#~ "<strong>이제 기다리지 마세요!:</strong> Democracy는 웹 페이지 동영상을 보는 다른 방식입니다. 제작자는 고 품질 "
-#~ "비디오를 제공할 수 있고 시청자는 여러 곳을 다니지 않고도 동영상을  바로 볼 수 있습니다."
-
-#~ msgid ""
-#~ "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
-#~ "new videos and downloads in the background. Leaving it running means you'll "
-#~ "have new videos when you're ready to watch."
-#~ msgstr ""
-#~ "<strong>기다리지 마세요:</strong> Democracy 플레이어는 새로운 동영상을 정기적으로 확인하여 다운로드 합니다. "
-#~ "기다리지 않고도 시청 가능하면 알려 줍니다."
-
-#~ msgid ""
-#~ "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
-#~ "features an 'expiration' system that helps clean out older videos to make "
-#~ "room for new videos. You can always keep a video permanently by clicking "
-#~ "'save' and you can set a channel's settings to save videos automatically."
-#~ msgstr ""
-#~ "<strong>저장 공간에 대해 걱정하지 마세요!</strong> Tivo처럼 Democracy Player는 '만료'시스템을 가지고 "
-#~ "있습니다. 저장하고 싶은 파일은 '저장' 버튼을 눌러 저장 할 수 있지만 그렇지 않은 파일은 새로운 동영상이 다운로드 되면 자동적으로 "
-#~ "오래된 순서에 따라 지워집니다."
-
-#~ msgid ""
-#~ "1 day\n"
-#~ "3 days\n"
-#~ "6 days\n"
-#~ "10 days\n"
-#~ "1 month\n"
-#~ "Never"
-#~ msgstr ""
-#~ "1일\n"
-#~ "3일\n"
-#~ "6일\n"
-#~ "10일\n"
-#~ "1개월\n"
-#~ "사용하지 않음"
-
-#~ msgid "<b>Channels</b>"
-#~ msgstr "<b>채널</b>"
-
-#~ msgid "<b>Disk Space</b>"
-#~ msgstr "<b>저장 공간</b>"
-
-#~ msgid "<b>Downloads</b>"
-#~ msgstr "<b>다운로드</b>"
-
-#~ msgid "<b>Movies Directory</b>"
-#~ msgstr "<b>영화 디렉토리</b>"
-
-#~ msgid "Add Channel"
-#~ msgstr "채널 추가"
-
-#~ msgid "By default, videos expire after"
-#~ msgstr "동영상 만료 설정 시간 :"
-
-#~ msgid "Check Channels for new content"
-#~ msgstr "새 컨텐츠 채널 확인"
-
-#~ msgid "Democracy - Add Channel"
-#~ msgstr "Democracy - 채널 추가"
-
-#~ msgid "Democracy Player"
-#~ msgstr "Democracy 플레이어"
-
-#~ msgid "Don't start a download if it leaves less than"
-#~ msgstr "아래의 경우, 다운로드를 시작하지 마십시오."
-
-#~ msgid "Enter the URL of the channel to add"
-#~ msgstr "추가할 채널 URL 입력"
-
-#~ msgid ""
-#~ "Every 30 minutes\n"
-#~ "Every hour\n"
-#~ "Manually"
-#~ msgstr ""
-#~ "매 30분\n"
-#~ "매 시간\n"
-#~ "사용자 정의"
-
-#~ msgid "GB free"
-#~ msgstr "GB 사용 가능"
-
-#~ msgid "KB/s when my computer is active"
-#~ msgstr "KB/s (컴퓨터 켜져 있을 경우)"
-
-#~ msgid "Select Movies Directory"
-#~ msgstr "동영상 폴더 선택"
-
-#~ msgid "To avoid slowdowns, limit upstream to"
-#~ msgstr "느려지지 않도록 트래픽 조정:"
-
-#~ msgid "Volume:"
-#~ msgstr "소리 크기:"
-
-#~ msgid ""
-#~ "You've selected a new folder to download movies to.  Should Democracy "
-#~ "migrate your existing downloads there?  (Currently dowloading movies will "
-#~ "not be moved until they finish.)"
-#~ msgstr ""
-#~ "동영상을 다운로드할 새 폴더를 선택했습니다. Democracy에서 현재 다운로드한 동영상을 이동하시겠습니까? (현재 다운로드 중인 것은 "
-#~ "완료 후 이동합니다.)"
-
-#~ msgid ""
-#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
-#~ "style=\"color:red\">raw</b> text</span>"
-#~ msgstr ""
-#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
-#~ "style=\"color:red\">raw</b> text</span>"
-
-#~ msgid " "
-#~ msgstr " "
-
-#~ msgid "'"
-#~ msgstr "'"
-
-#~ msgid "Please enter the URL of the channel you'd like to add."
-#~ msgstr "추가 하고 싶은 채널의 URL을 입력하세요."
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files. It may take extra time to list the "
-#~ "videos, and descriptions may look funny."
-#~ msgstr "파일을 찾고 있습니다. 동영상을 찾아 목록을 만드는 데 시간이 걸립니다."
-
-#~ msgid "Channel is not compatible with Democracy!"
-#~ msgstr "Democracy 비호환 채널입니다!"
-
-#~ msgid "Please contact the publishers of"
-#~ msgstr "제작자에게 연락하세요."
-
-#~ msgid ""
-#~ "and ask if they can supply a feed in a format that will work with Democracy."
-#~ msgstr "Democracy이 동작 가능한 형식인지 확인해 주세요."
-
-#~ msgid ""
-#~ "Please enter the username and password given to you by this channel's "
-#~ "publisher."
-#~ msgstr "채널 제작자가 설정한 사용자명과 암호를 입력해주세요."
-
-#~ msgid "Question"
-#~ msgstr "질문"
-
-#~ msgid ""
-#~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
-#~ "$publisher."
-#~ msgstr ""
-#~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
-#~ "$publisher."
-
-#~ msgid "About $longAppName"
-#~ msgstr "$longAppName 소개"
-
-#~ msgid "Copy log to clipboard"
-#~ msgstr "클립 보드로 복사"
-
-#~ msgid "Open up the bug tracker"
-#~ msgstr "문제 처리 하기"
-
-#~ msgid "Please help us fix it. Copy and paste all the"
-#~ msgstr "문제 파악에 도움을 주십시오. 아래 항목을 모두 복사해서 붙여 넣으세요."
-
-#~ msgid ""
-#~ "information into our bug tracker and tell us what you were doing when the"
-#~ msgstr "버그 시스템에 등록 해 주시고 문제가 발생할 때 알려 주십시오."
-
-#~ msgid "problem occurred."
-#~ msgstr "문제가 발생했습니다."
-
-#~ msgid ""
-#~ "Then, please restart Democracy Player (or you may keep getting related "
-#~ "errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
-#~ "with your help we're fixing problems fast!"
-#~ msgstr ""
-#~ "이제 Democracy 플레이어를 재시작 하십시오. 불편을 드려 죄송합니다. 현재 프로그램은 베타 버전이므로 문제점을 빠르게 "
-#~ "수정하겠습니다."
-
-#~ msgid "You found a bug in Democracy!"
-#~ msgstr "버그를 발견했습니다!"
-
-#~ msgid "$longAppName"
-#~ msgstr "$longAppName"
-
-#~ msgid "$log"
-#~ msgstr "$log"
-
-#~ msgid ""
-#~ "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
-#~ "href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were "
-#~ "doing, paste in the log message from the box above, and answer a few "
-#~ "questions, and we'll get right to work.</font>"
-#~ msgstr ""
-#~ "<font face=\"Lucida Grande\" size=\"-1\">버그 신고: <a "
-#~ "href=\"$bugTrackerURL\">$bugTrackerURL</a>.  대화 상자에 있는 로그 메시지를 복사하고 문제가 생기게 "
-#~ "된 경위를 알려 주시면 적극적으로 문제를 찾도록 하겠습니다</font>"
-
-#~ msgid ""
-#~ "Actually, if you have a minute, would you be willing to submit a crash "
-#~ "report to our bug-tracking system? At a minimum, what we'd need is "
-#~ "description of what you were doing at the time -- as precise as possible -- "
-#~ "plus the artfully-phrased nonsense in the box below:"
-#~ msgstr ""
-#~ "잠시 시간을 내어 문제점을 버그 시스템에 등록해 주시겠습니까? 문제가 생기게 된 경위를 아주 간단하게 적어 주시더라도 매우 도움이 될 "
-#~ "것입니다."
-
-#~ msgid ""
-#~ "Misfortune! $longAppName fell prey to some sort of internal confusion or "
-#~ "wrong-headedness $when. We apologize and suggest that you exit and restart "
-#~ "$shortAppName. That'll teach it, and it'll also reduce your chance of losing "
-#~ "your preferences or channel subscriptions."
-#~ msgstr ""
-#~ "경고! $longAppName는 내부 오류가 생겼습니다 ($when). 프로그램을 종류하고 $shortAppName를 재시작 해주시기 "
-#~ "바랍니다. 이 문제에 대해 빠른 시일내에 처리해서 채널 구독이나 설정의 문제가 없도록 하겠습니다."
-
-#~ msgid "The fall of $shortAppName??"
-#~ msgstr "$shortAppName 구동이 실패했습니까?"
-
-#~ msgid "About Democracy"
-#~ msgstr "Democracy 소개"
-
-#~ msgid "Channel"
-#~ msgstr "채널"
-
-#~ msgid "Clear Menu"
-#~ msgstr "메뉴 제거"
-
-#~ msgid "File"
-#~ msgstr "파일"
-
-#~ msgid "Help"
-#~ msgstr "도움말"
-
-#~ msgid "Hide Democracy"
-#~ msgstr "Democracy 숨기기"
-
-#~ msgid "MainMenu"
-#~ msgstr "기본 메뉴"
-
-#~ msgid "New Channel Folder..."
-#~ msgstr "새 채널 폴더"
-
-#~ msgid "New Playlist Folder..."
-#~ msgstr "새 재생 목록 폴더..."
-
-#~ msgid "New Playlist..."
-#~ msgstr "새 재생 목록..."
-
-#~ msgid "Open Recent"
-#~ msgstr "최근에 본 동영상"
-
-#~ msgid "Open..."
-#~ msgstr "열기"
-
-#~ msgid "Play Video"
-#~ msgstr "동영상 재생"
-
-#~ msgid "Preferencesâ¦"
-#~ msgstr "환경 설정"
-
-#~ msgid "Quit Democracy"
-#~ msgstr "Democracy 종료"
-
-#~ msgid "Rename..."
-#~ msgstr "새 이름으로..."
-
-#~ msgid "Stop Video"
-#~ msgstr "동영상 멈춤"
-
-#~ msgid "Update All Channels"
-#~ msgstr "모든 채널 갱신"
-
-#~ msgid "Update Channel"
-#~ msgstr "채널 갱신"
-
-#~ msgid "%channel feed%"
-#~ msgstr "%channel feed%"
-
-#~ msgid "%channel title%"
-#~ msgstr "%channel title%"
-
-#~ msgid "00:00:00"
-#~ msgstr "00:00:00"
-
-#~ msgid "Box"
-#~ msgstr "상자"
-
-#~ msgid "FullScreen Controls"
-#~ msgstr "전체 화면"
-
-#~ msgid "VideoWindow"
-#~ msgstr "동영상 창"
-
-#~ msgid ""
-#~ "Location http://foo.bar.com/baz requires a username and password for \"text "
-#~ "supplied by server\". (Do not localize -- test data)\n"
-#~ msgstr ""
-#~ "Location http://foo.bar.com/baz requires a username and password for \"text "
-#~ "supplied by server\". (Do not localize -- test data)\n"
-
-#~ msgid "Password:\n"
-#~ msgstr "암호:\n"
-
-#~ msgid "Username and password required"
-#~ msgstr "사용자명과 암호가 필요합니다."
-
-#~ msgid ""
-#~ "Username:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "사용자명:\n"
-#~ "\n"
-
-#~ msgid " limit upstream to"
-#~ msgstr " limit upstream to"
-
-#~ msgid "(You must restart Democracy for this change to take effect)\n"
-#~ msgstr "(변경 사항을 적용하려면 Democracy를 재시작 해야 합니다)\n"
-
-#~ msgid "(movies directory path goes here)"
-#~ msgstr "(영화 디렉토리 경로)"
-
-#~ msgid "3 hours"
-#~ msgstr "3시간"
-
-#~ msgid "4"
-#~ msgstr "4"
-
-#~ msgid "5"
-#~ msgstr "5"
-
-#~ msgid "Check channels for new content:"
-#~ msgstr "채널 업데이트 확인"
-
-#~ msgid "GB free."
-#~ msgstr "GB 사용 가능."
-
-#~ msgid "KB/s when my computer is active."
-#~ msgstr "KB/s (컴퓨터 시작시)"
-
-#~ msgid "Never"
-#~ msgstr "실행안함"
-
-#~ msgid "OtherViews"
-#~ msgstr "다른 보기"
-
-#~ msgid "Run Democracy at startup"
-#~ msgstr "시스템 시작 시 Democracy 실행"
-
-#~ msgid "every 30 minutes"
-#~ msgstr "매 30분"
-
-#~ msgid "every hour"
-#~ msgstr "매 시간"
-
-#~ msgid "manually"
-#~ msgstr "수동"
-
-#~ msgid "(parsed %d files - found %d videos)"
-#~ msgstr "(총 %d 파일 검색 - 찾은 동영상 수: %d)"
-
-#~ msgid "Back"
-#~ msgstr "뒤로"
-
-#~ msgid "Next"
-#~ msgstr "다음"
-
-#~ msgid ""
-#~ "The next few screens will help you set up Democracy Player so that it works "
-#~ "best for you. Here's the first question."
-#~ msgstr "다음 화면은 여러분에게 최적화 된 Democracy 플레이어를 설정합니다. 다음 사항에 답해 주시기 바랍니다."
-
-#~ msgid ""
-#~ "We recommend that you allow Democracy Player to launch when your computer "
-#~ "starts up. This way, videos that haven't finished downloading can finish and "
-#~ "new videos on your channels will be ready when you want to watch.\n"
-#~ "\n"
-#~ "\n"
-#~ "Would you like to run Democracy when your computer starts up?"
-#~ msgstr ""
-#~ "Democracy 플레이어를 컴퓨터 시작시 실행하시면 이전에 멈춘 동영상 다운로드를 빠르게 완료할 수 있습니다.\n"
-#~ "\n"
-#~ "\n"
-#~ "컴퓨터 시작 시 구동 하시겠습니까?"
-
-#~ msgid "Welcome to Internet TV!"
-#~ msgstr "인터넷 TV에 오신 것을 환영합니다!"
-
-#~ msgid ""
-#~ "Welcome to Internet TV. There's a lot you can do with Democracy Player: "
-#~ "automatically download videos from your favorite channels, watch new videos "
-#~ "one after the other, download torrents, recommend videos to friends, and "
-#~ "lots more.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "인터넷 TV에 오신것을 환영합니다. Democracy 플레이어로 다양한 경험을 즐리세요! 선호 채널로 부터 동영상 자동 다운로드, 새 "
-#~ "동영상 시청, 비트토런트 다운로드, 친구에게 추천 기능 등 다양한 기능이 있습니다.\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "You're done!\n"
-#~ "\n"
-#~ "Setup is complete -- now you can find some channels and start watching.\n"
-#~ "\n"
-#~ "Don't Wait: Democracy is different than watching webpage videos -- "
-#~ "publishers can offer big, high quality videos. So don't sit around waiting "
-#~ "for videos: start some downloads and check back later. \n"
-#~ "\n"
-#~ "Leave it On: Democracy Player regularly checks channels for new videos and "
-#~ "downloads in the background. Leaving it running means you'll have new videos "
-#~ "when you're ready to watch.\n"
-#~ "\n"
-#~ "Don't Worry About Disk Space: Like a TiVo, Democracy Player features an "
-#~ "'expiration' system that helps clean out older videos to make room for new "
-#~ "videos. You can always keep a video permanently by clicking 'save' and you "
-#~ "can set a channel's settings to save videos automatically.\n"
-#~ "\n"
-#~ "Go Big: The button to the right of the play button shows videos fullscreen.\n"
-#~ "\n"
-#~ "Find Videos: The Democracy Channel Guide has hundreds of internet TV "
-#~ "channels, all of them are free. Just click 'ADD' to watch a channel.\n"
-#~ msgstr ""
-#~ "완료 하였습니다!\n"
-#~ "\n"
-#~ "설치가 완료되었습니다. 새 채널을 만든 후 시청할 수 있습니다.\n"
-#~ "\n"
-#~ "Democracy는 웹 페이지에서 제공하는 동영상을 볼 수 있는 새로운 방법입니다. 제작자는 좀 더 고급 품질의 비디오를 제공할 수 있고 "
-#~ "어디에서나 기다리지 않고 동영상을 볼 수 있습니다.\n"
-
-#~ msgid ""
-#~ "%message%\n"
-#~ "%message%"
-#~ msgstr ""
-#~ "%message%\n"
-#~ "%message%"
-
-#~ msgid "Create new playlist"
-#~ msgstr "새 재생 목록 만들기"
-
-#~ msgid "onStartup called twice"
-#~ msgstr "시작 시 두번 호출됨"
-
-#~ msgid "There was an error opening %s.  Please try again in a few seconds"
-#~ msgstr "다음과 같은 오류가 발생했습니다: %s. 몇 초후 재시도 하세요."
-
-#~ msgid "${count} Downloads in Progress"
-#~ msgstr "${count}: 다운로드 진행 중..."
-
-#~ msgid "1 Download in Progress"
-#~ msgstr "다운로드 진행 중..."
-
-#~ msgid "${len} Videos On This Channel"
-#~ msgstr "현재 채널 동영상 수: ${len}개"
-
-#~ msgid "All ${len} Videos Match This Search"
-#~ msgstr "총 ${len}개 동영상을 검색하였습니다."
-
-#~ msgid "Looking for videos at this URL"
-#~ msgstr "현재 페이지에서 동영상 찾기"
-
-#~ msgid "%s database save succeeded"
-#~ msgstr "%s 데이터베이스 저장 완료"
-
-#~ msgid "Add Channel..."
-#~ msgstr "채널 추가..."
-
-#~ msgid "Channels"
-#~ msgstr "채널"
-
-#~ msgid "Check for New Version"
-#~ msgstr "새 버전 확인 하기"
-
-#~ msgid "Copy Channel URL"
-#~ msgstr "채널 URL 복사"
-
-#~ msgid "Copy Video URL"
-#~ msgstr "동영상 URL 복사"
-
-#~ msgid "New Channel Guide..."
-#~ msgstr "새 채널 가이드..."
-
-#~ msgid "New Search Channel..."
-#~ msgstr "새 검색 채널..."
-
-#~ msgid "Next Video"
-#~ msgstr "다음 동영상"
-
-#~ msgid "Playlists"
-#~ msgstr "재생 목록"
-
-#~ msgid "Previous Video"
-#~ msgstr "이전 동영상"
-
-#~ msgid "Remove..."
-#~ msgstr "제거하기..."
-
-#~ msgid "Save Video As..."
-#~ msgstr "다른 이름으로 저장..."
-
-#~ msgid "Send This Channel to a Friend"
-#~ msgstr "현재 채널 친구에게 보내기"
-
-#~ msgid "99999"
-#~ msgstr "99999"
-
-#~ msgid "BitTorrent ports:"
-#~ msgstr "비트토런트 포트:"
-
-#~ msgid "Maximum:"
-#~ msgstr "최대:"
-
-#~ msgid "Minimum:"
-#~ msgstr "최소:"
-
-#~ msgid "Play videos one after another."
-#~ msgstr "동영상을 차례 대로 재생합니다."
-
-#~ msgid "Stop after each video."
-#~ msgstr "동영상 재생 후 멈춤"
-
-#~ msgid "$label$"
-#~ msgstr "$label$"
-
-#~ msgid "$title$"
-#~ msgstr "$title$"
-
-#~ msgid "Item1"
-#~ msgstr "항목1"
-
-#~ msgid "Search Engine"
-#~ msgstr "검색 엔진"
-
-#~ msgid "URL"
-#~ msgstr "URL"
-
-#~ msgid "Only search my Movies folder."
-#~ msgstr "내 비디오 폴더 만 검색합니다."
-
-#~ msgid "Search my entire Home folder."
-#~ msgstr "모든 폴더를 검색 합니다."
-
-#~ msgid "Save Video _As..."
-#~ msgstr "다른 이름으로 저장..."
-
-#~ msgid "_Copy Video URL"
-#~ msgstr "동영상 URL 복사"
-
-#~ msgid "_Remove Video"
-#~ msgstr "동영상 제거"
-
-#~ msgid "_Stop Video"
-#~ msgstr "동영상 멈춤"
-
-#~ msgid "_Send this channel to a friend"
-#~ msgstr "이 채널을 친구에게 보내기"
-
-#~ msgid "Re_name Channel"
-#~ msgstr "채널 이름 변경"
-
-#~ msgid "_Channels"
-#~ msgstr "채널"
-
-#~ msgid "New _Playlist..."
-#~ msgstr "새 재생 목록..."
-
-#~ msgid "New Playlist _Folder..."
-#~ msgstr "새 재생 목록 폴더..."
-
-#~ msgid "New Channel _Folder..."
-#~ msgstr "새 채널 폴더..."
-
-#~ msgid "Add _Channel..."
-#~ msgstr "채널 추가..."
-
-#~ msgid "New Searc_h Channel..."
-#~ msgstr "새 검색 채널..."
-
-#~ msgid "New Channel _Guide..."
-#~ msgstr "새 채널 가이드..."
-
-#~ msgid "Delete selection"
-#~ msgstr "선택사항 삭제"
-
-#~ msgid "_Remove..."
-#~ msgstr "제거하기..."
-
-#~ msgid "_Remove Playlist..."
-#~ msgstr "재생 목록 삭제..."
-
-#~ msgid "_Remove Playlists..."
-#~ msgstr "재생 목록 삭제..."
-
-#~ msgid "_Remove Playlist Folder..."
-#~ msgstr "재생 목록 폴더 삭제..."
-
-#~ msgid "_Remove Playlist Folders..."
-#~ msgstr "재생 목록 폴더 삭제..."
-
-#~ msgid "_Remove Channel..."
-#~ msgstr "채널 삭제..."
-
-#~ msgid "_Remove Channels..."
-#~ msgstr "채널 삭제..."
-
-#~ msgid "_Remove Channel Folder..."
-#~ msgstr "채널 폴더 삭제..."
-
-#~ msgid "_Remove Channel Folders..."
-#~ msgstr "채널 폴더 삭제..."
-
-#~ msgid "_Remove Channel Guide..."
-#~ msgstr "채널 가이드 삭제..."
-
-#~ msgid "_Update Channels..."
-#~ msgstr "채널 갱신..."
-
-#~ msgid "Remove Playlist..."
-#~ msgstr "재생 목록 삭제..."
-
-#~ msgid "Remove Playlists..."
-#~ msgstr "재생 목록 삭제..."
-
-#~ msgid "Remove Playlist Folder..."
-#~ msgstr "재생 목록 폴더 삭제..."
-
-#~ msgid "Remove Playlist Folders..."
-#~ msgstr "재생 목록 폴더 삭제..."
-
-#~ msgid "Remove Channel Folder..."
-#~ msgstr "채널 폴더 삭제..."
-
-#~ msgid "Remove Channel Folders..."
-#~ msgstr "채널 폴더 삭제..."
-
-#~ msgid "Remove Channel Guide..."
-#~ msgstr "채널 가이드 삭제..."
-
-#~ msgid "Remove Channel Guides..."
-#~ msgstr "채널 가이드 삭제..."
-
-#~ msgid "Remove Video..."
-#~ msgstr "동영상 삭제..."
-
-#~ msgid "Remove Videos..."
-#~ msgstr "동영상 삭제..."
-
-#~ msgid "Rename Playlist..."
-#~ msgstr "재생 목록 이름 변경..."
-
-#~ msgid "Rename Playlist Folder..."
-#~ msgstr "재생 목록 이름 변경..."
-
-#~ msgid "Rename Channel..."
-#~ msgstr "채널 이름 변경..."
-
-#~ msgid "Rename Channel Folder..."
-#~ msgstr "채널 폴더 이름 변경..."
-
-#~ msgid "Rename Channel Guide..."
-#~ msgstr "채널 가이드 이름 변경..."
-
-#~ msgid "Update Channel..."
-#~ msgstr "채널 갱신..."
-
-#~ msgid "Update Channels..."
-#~ msgstr "채널 갱신..."
-
-#~ msgid "Could not write to %s"
-#~ msgstr "%s에 저장할 수 없음"
-
-#~ msgid "%s MB required to store this video"
-#~ msgstr "이 비디오를 저장하는 데 %s MB가 필요합니다."
-
-#~ msgid "The torrent file at %s was not valid"
-#~ msgstr "%s 토런트 파일이 유효하지 않음"
-
-#~ msgid "The torrent file for this item was deleted "
-#~ msgstr "이 항목에 대한 토런트 파일이 지워짐 "
-
-#~ msgid "outside of democracy."
-#~ msgstr "외부 democracy"
-
-#~ msgid "%1.1fGB"
-#~ msgstr "%1.1fGB"
-
-#~ msgid "%1.1fMB"
-#~ msgstr "%1.1fMB"
-
-#~ msgid "-00:00:00"
-#~ msgstr "-00:00:00"
-
-#~ msgid "Change..."
-#~ msgstr "변경..."
-
-#~ msgid "Download at most"
-#~ msgstr "다운로드 용량"
-
-#~ msgid "Save downloaded videos in this folder:"
-#~ msgstr "동영상 저장 폴더:"
-
-#~ msgid "To avoid internet slowdowns:"
-#~ msgstr "인터넷 속도 저하 시:"
-
-#~ msgid "videos at once."
-#~ msgstr "동영상 모두"
-
-#~ msgid "Search this folder:"
-#~ msgstr "다음 폴더 검색:"
-
-#~ msgid "STAR"
-#~ msgstr "별표"
-
-#~ msgid "SAVED"
-#~ msgstr "저장됨"
-
-#~ msgid "DELETE"
-#~ msgstr "삭제"
-
-#~ msgid "default"
-#~ msgstr "기본 설정"
-
-#~ msgid "Videos expire after"
-#~ msgstr "동영상 유효 기간:"
-
-#~ msgid "When turned on, Auto Download should"
-#~ msgstr "재생 하면 자동 다운로드 시작"
-
-#~ msgid ""
-#~ "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
-#~ "unwatched."
-#~ msgstr "총  ${maxnew} ${maxnew2}개 동영상을 시청 하지 않은 경우 자동 다운로드를 하지 마십시오."
-
-#~ msgid "<label for=\"automatic\">Auto Download</label>"
-#~ msgstr "<label for=\"automatic\">자동 다운로드</label>"
-
-#~ msgid ""
-#~ "Democracy can't play this file. You may be able to open it with a different "
-#~ "program.<br></br><br></br><strong>Filename:</strong> "
-#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
-#~ msgstr ""
-#~ "Democracy는 이 파일을 재생할 수 없습니다. 다른 프로그램을 사용하여 재생하시기 "
-#~ "바랍니다.<br></br><br></br><strong>파일명:</strong> ${filename}<Br></Br><strong>파일 "
-#~ "형식:</strong> ${format}"
-
-#~ msgid "REVEAL FILE"
-#~ msgstr "REVEAL FILE"
-
-#~ msgid "Skip >> ${countdown}"
-#~ msgstr "건너뛰기 >> ${countdown}"
-
-#~ msgid "SHOW FILE"
-#~ msgstr "SHOW FILE"
-
-#~ msgid "SHOW FOLDER"
-#~ msgstr "SHOW FOLDER"
-
-#~ msgid "SHARE IT"
-#~ msgstr "SHARE IT"
-
-#~ msgid "STAR IT"
-#~ msgstr "STAR IT"
-
-#~ msgid "OK"
-#~ msgstr "확인"
-
-#~ msgid "Full Screen"
-#~ msgstr "전체화면"
-
-#~ msgid "%donation label%"
-#~ msgstr "%donation label%"
-
-#~ msgid "Browse"
-#~ msgstr "보기"
-
-#~ msgid "Starting up"
-#~ msgstr "시작 중"
-
-#~ msgid "Removing %s"
-#~ msgstr "%s 제거"
-
-#~ msgid "%d days"
-#~ msgstr "%d 일"
-
-#~ msgid "Remove %s"
-#~ msgstr "%s 제거"
-
-#~ msgid "Are you sure you want to remove the guide %s?"
-#~ msgstr "%s 가이드를 제거 하시겠습니까?"
-
-#~ msgid "Are you sure you want to remove %s"
-#~ msgstr "%s를 제거하시겠습니까?"
-
-#~ msgid "Remove %s channels"
-#~ msgstr "%s 채널 제거"
-
-#~ msgid "Invalid Value"
-#~ msgstr "유효하지 않음."
-
-#~ msgid "Error: %s"
-#~ msgstr "오류: %s"
-
-#~ msgid "Bad Status Code: %s"
-#~ msgstr "오류 상태 코드: %s"
-
-#~ msgid "Create Channel"
-#~ msgstr "채널 만들기"
-
-#~ msgid "New Search Channel"
-#~ msgstr "새 검색 채널"
-
-#~ msgid "%d hours"
-#~ msgstr "%d 시간"
-
-#~ msgid "%d minutes"
-#~ msgstr "%d 분"
-
-#~ msgid "TORRENT"
-#~ msgstr "TORRENT"
-
-#~ msgid "WEB PAGE"
-#~ msgstr "WEB PAGE"
-
-#~ msgid "%s remaining"
-#~ msgstr "%s 남음"
-
-#~ msgid "Add to new playlist"
-#~ msgstr "새 재생 목록에 추가"
-
-#~ msgid "Update Channels Now"
-#~ msgstr "현재 채널 갱신"
-
-#~ msgid "Adding %d channels to a new folder"
-#~ msgstr "%d 채널을 새 폴더에 추가"
-
-#~ msgid "_Search For:"
-#~ msgstr "검색 :"
-
-#~ msgid "_URL"
-#~ msgstr "_URL"
-
-#~ msgid "and"
-#~ msgstr "와"
-
-#~ msgid "<b>BitTorrent</b>"
-#~ msgstr "<b>비트 토런트</b>"
-
-#~ msgid "Go"
-#~ msgstr "바로 가기"
-
-#~ msgid "Channel:"
-#~ msgstr "채널:"
-
-#~ msgid "Search Engine:"
-#~ msgstr "검색 엔진:"
-
-#~ msgid "Search For:"
-#~ msgstr "검색 하기:"
-
-#~ msgid "Don't Worry About Disk Space:"
-#~ msgstr "저장 공간을 걱장 하지 마세요:"
-
-#~ msgid "Reset Search"
-#~ msgstr "검색 재설정"
-
-#~ msgid "You're done!"
-#~ msgstr "완료됨!"
-
-#~ msgid "Democracy Help"
-#~ msgstr "Democracy 도움말"
-
-#~ msgid "Democracy"
-#~ msgstr "Democracy"
-
-#~ msgid "Remove Channel..."
-#~ msgstr "채널 제거"
-
-#~ msgid "Create new playlist folder"
-#~ msgstr "새 재생 목록 폴더 만들기"
-
-#~ msgid "Create new channel folder"
-#~ msgstr "새 채널 폴더 만들기"
-
-#~ msgid "Searching for Videos"
-#~ msgstr "동영상 검색 중"
-
-#~ msgid "SAVE"
-#~ msgstr "저장"
-
-#~ msgid "Donate"
-#~ msgstr "기부하기"
-
-#~ msgid "Remove Channels..."
-#~ msgstr "채널 삭제..."
-
-#~ msgid "Expires in %s"
-#~ msgstr "만료 시간: %s"
-
-#~ msgid "downloading..."
-#~ msgstr "다운로드 중..."
-
-#~ msgid "Remove From My Collection"
-#~ msgstr "내 항목에서 삭제"
-
-#~ msgid "Play Just This Video"
-#~ msgstr "현재 동영상만 재생"
-
-#~ msgid "(Changes won't go into effect until you restart Democracy Player.)"
-#~ msgstr "(Democracy 플레이어를 재시작 해야 변경 사항이 적용됩니다.)"
-
-#~ msgid "<b>Playback</b>"
-#~ msgstr "<b>재생</b>"
-
-#~ msgid "Bit Torrent uses ports between"
-#~ msgstr "비트 토런트 사용 포트:"
-
-#~ msgid "In This:"
-#~ msgstr "현재 항목:"
-
-#~ msgid "Results for \"${query}\""
-#~ msgstr "검색 결과: \"${query}\""
-
-#~ msgid "Empty Playlist"
-#~ msgstr "빈 재생 목록"
-
-#~ msgid "Drag downloaded videos to this playlist to add them."
-#~ msgstr "다운로드한 동영상을 현재 재생 목록으로 이동하십시오."
-
-#~ msgid "${size} available for downloads"
-#~ msgstr "다운로드 가능 용량: ${size}"
-
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>일반</b>"
-
-#~ msgid "Automatically run Democracy Player when I log in"
-#~ msgstr "로그인 시 Democracy 플레이어 자동 실행"
-
-#~ msgid "_Store downloaded videos in this folder:"
-#~ msgstr "현재 폴더에 다운로드한 동영상 저장:"
-
-#~ msgid "Cancel Search"
-#~ msgstr "검색 취소"
-
-#~ msgid "Find Videos:"
-#~ msgstr "동영상 찾기:"
-
-#~ msgid ""
-#~ "Democracy Player can find all the videos on your computer to help you "
-#~ "organize your collection.\n"
-#~ "\n"
-#~ "\n"
-#~ "Would you like Democracy Player to look for video files on your computer?"
-#~ msgstr ""
-#~ "Democracy 플레이어는 동영상 관리에 도움이 되도록 컴퓨터 내에 모든 동영상을 찾을 수 있습니다.\n"
-#~ "\n"
-#~ "\n"
-#~ "Democracy 플레이어를 통해  PC 내 모든 동영상을 검색하시겠습니까?"
-
-#~ msgid ""
-#~ "Error importing democracy modules:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "democracy 모듈 가져 오기 중 오류:\n"
-#~ "%s"
-
-#~ msgid "${len} Videos Match This Search"
-#~ msgstr "${len}개 동영상을 검색하였습니다."
-
-#~ msgid "${count} Videos on this Channel"
-#~ msgstr "현재 채널 동영상 수: ${count} 개"
-
-#~ msgid ""
-#~ "Would you like to delete this file or just remove its entry from My "
-#~ "Collection?"
-#~ msgstr "내 항목에 있는 동영상만 삭제하시겠습니까?"
-
-#~ msgid "%s closed connection"
-#~ msgstr "%s 연결 끊김"
-
-#~ msgid "Could not download the Democracy channel file: %s."
-#~ msgstr "Democracy 채널을 다운로드 할 수 없습니다: %s"
-
-#~ msgid "Loading window"
-#~ msgstr "창 여는 중"
-
-#~ msgid ""
-#~ "Are you sure you want to remove %s?  Any downloads in progress will be "
-#~ "canceled."
-#~ msgstr "%s를 제거 하시겠습니까? 모든 다운로드 작업을 취소합니다."
-
-#~ msgid ""
-#~ "What would you like to do with the videos in this channel that you've "
-#~ "downloaded?"
-#~ msgstr "다운로드한 채널 내 비디오에 적용하시겠습니까?"
-
-#~ msgid ""
-#~ "What would you like to do with the videos in these channels that you've "
-#~ "downloaded?"
-#~ msgstr "다운로드한 채널 내 비디오에 적용하시겠습니까?"
-
-#~ msgid "%s is invalid.  You must enter a non-negative number."
-#~ msgstr "%s는 유효하지 않습니다. 숫자를 사용하셔야 합니다."
-
-#~ msgid "_Remove Video..."
-#~ msgstr "동영상 삭제..."
-
-#~ msgid "_Remove Videos..."
-#~ msgstr "동영상 삭제..."
-
-#~ msgid "Re_name Playlist..."
-#~ msgstr "재생 목록 이름 변경..."
-
-#~ msgid "Re_name Playlist Folder..."
-#~ msgstr "재생 목록 폴더 이름 변경..."
-
-#~ msgid "Re_name Channel..."
-#~ msgstr "채널 이름 변경..."
-
-#~ msgid "Re_name Channel Folder..."
-#~ msgstr "채널 폴더 이름 변경..."
-
-#~ msgid "_Update Channel..."
-#~ msgstr "채널 갱신..."
-
-#~ msgid "%1.1fKB"
-#~ msgstr "%1.1fKB"
-
-#~ msgid "Removing %s items"
-#~ msgstr "%s 항목 제거"
-
-#~ msgid ""
-#~ "One or more of these items is a folder.  When you remove or delete a folder, "
-#~ "any items inside that folder will also be removed or deleted."
-#~ msgstr "이 항목은 폴더 입니다. 폴더를 삭제하거나 제거하면 폴더 내 모든 항목이 삭제 되거나 제거됩니다."
-
-#~ msgid "Rename Channel"
-#~ msgstr "채널 이름 변경"
-
-#~ msgid "Revert Title to Default"
-#~ msgstr "제목을 기본으로 변경"
-
-#~ msgid "Create %d channels?"
-#~ msgstr "%d 채널을 만드시겠습니까?"
-
-#~ msgid "<b>Searching for Videos</b>"
-#~ msgstr "<b>동영상 찾기</b>"
-
-#~ msgid "C_hannel:"
-#~ msgstr "채널"
-
-#~ msgid "C_reate Channel"
-#~ msgstr "채널 만들기"
-
-#~ msgid "Restrict to my full _home folder"
-#~ msgstr "개인 폴더로 한정"
-
-#~ msgid "Search _Engine:"
-#~ msgstr "검색 엔진:"
-
-#~ msgid "Select custom search directory"
-#~ msgstr "현재 검색 디렉토리 선택"
-
-#~ msgid ""
-#~ "This item is a folder.  When you remove a folder, any items inside that "
-#~ "folder will be deleted."
-#~ msgstr "이 항목은 폴더입니다. 폴더를 삭제하시면 내부의 모든 항목이 삭제됩니다."
-
-#~ msgid "Search _custom folder:"
-#~ msgstr "특정 폴더 검색:"
-
-#~ msgid "Go Big:"
-#~ msgstr "크게 보기:"
-
-#~ msgid "Leave it On:"
-#~ msgstr "확인 하지 마세요:"
-
-#~ msgid ""
-#~ "Now you can explore the Channel Guide\n"
-#~ "and start watching.  A few tips to get started:"
-#~ msgstr ""
-#~ "이제 채널 가이드를 탐험해 보십시오\n"
-#~ "바로 보고 싶은 동영상을 찾을 수 있습니다:"
-
-#~ msgid "The button to the right of the play button shows videos fullscreen."
-#~ msgstr "오른쪽 버튼을 누르면 동영상을 전체 화면으로 재생합니다."
-
-#~ msgid ""
-#~ "%s was unable to save its database: Disk Full.\n"
-#~ "We suggest deleting files from the full disk or simply deleting some movies "
-#~ "from your collection.\n"
-#~ "Recent changes may be lost."
-#~ msgstr ""
-#~ "%s는 데이터베이스를 저장할 수 없습니다: 디스크 꽉참\n"
-#~ "저장 공간 일부를 삭제하거나 저장된 다른 동영상 파일을 삭제하세요.\n"
-#~ "최근 변경 사항은 저장 되지 않습니다."
-
-#~ msgid "Rename Channel Folder"
-#~ msgstr "채널 폴더 이름 변경"
-
-#~ msgid "Enter a new name for the channel folder %s"
-#~ msgstr "채널 폴더 %s에 대한 새 이름 입력"
-
-#~ msgid "Enter a new name for the playlist folder %s"
-#~ msgstr "재생 목록 폴더 %s에 대한 새 이름 입력"
-
-#~ msgid "Create Channel Folder"
-#~ msgstr "채널 폴더 만들기"
-
-#~ msgid "Enter a name for the new channel folder"
-#~ msgstr "새 채널 폴더에 대한 이름 입력"
-
-#~ msgid ""
-#~ "This Democracy channel file has an invalid format: %s. Please notify the "
-#~ "publisher of this file."
-#~ msgstr "Democracy 채널이 유효하지 않은 포맷입니다: %s. 이 파일의 제작자에게 알려주세요."
-
-#~ msgid ""
-#~ "This Democracy channel file has the wrong content type: %s. Please notify "
-#~ "the publisher of this file."
-#~ msgstr "Democracy 채널 파일의 컨텐츠 형식이 틀렸습니다: %s. 이 파일의 제작자에게 알려 주세요."
-
-#~ msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-#~ msgstr "토런트 파일 %s가 파손됐거나 열 수 없습니다. [확인]"
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files. It may take extra time to list the "
-#~ "videos, and descriptions may look funny.  Please contact the publishers of "
-#~ "$url and ask if they can supply a feed in a format that will work with "
-#~ "Democracy.\n"
-#~ "\n"
-#~ "Do you want to try to load this channel anyway?"
-#~ msgstr ""
-#~ "파일을 찾고 있습니다. 동영상을 찾아 목록을 만드는 데 시간이 걸립니다. 만든 사람의 $url을 확인 하신 후 이 항목이 "
-#~ "Democracy에 동작 가능한지 여부를 확인해 보시기 바랍니다.\n"
-#~ "\n"
-#~ "그래도 이 채널을 계속 읽으시겠습니까?"
-
-#~ msgid "Are you sure you want to remove these %s playlists"
-#~ msgstr "%s 재생 목록을 제거 하시겠습니까"
-
-#~ msgid ""
-#~ "Are you sure you want to remove these %s channels?  Any downloads in "
-#~ "progress will be canceled."
-#~ msgstr "현재 %s 채널을 제거 하시겠습니까? 모든 다운로드 작업을 취소합니다."
-
-#~ msgid " - Invalid URL"
-#~ msgstr " - 유효하지 않은 URL"
-
-#~ msgid ""
-#~ "The address you entered is not a valid URL.\n"
-#~ "Please double check and try again.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "입력한 주소가 유효하지 않은 URL 입니다.\n"
-#~ "다시 한번 확인해 주세요.\n"
-#~ "\n"
-
-#~ msgid "Democracy - Add Channel Guide"
-#~ msgstr "Democracy - 채널 가이드 추가"
-
-#~ msgid "Enter the URL of the channel guide to add"
-#~ msgstr "추가할 채널 가이드 URL 입력"
-
-#~ msgid ""
-#~ "You are running a version of Democracy Player with a custom set of channels."
-#~ msgstr "채널 설정으로 Democracy 플레이어 버전을 실행 하고 있습니다."
-
-#~ msgid "Re_name..."
-#~ msgstr "새 이름으로..."
-
-#~ msgid "Re_name Channel Guide..."
-#~ msgstr "채널 가이드 이름 변경..."
-
-#~ msgid "%d video found"
-#~ msgid_plural "%d videos found"
-#~ msgstr[0] "%d개의 동영상이 검색되었습니다."
-
-#~ msgid "Connection Error: %s"
-#~ msgstr "접속 오류: %s"
-
-#~ msgid "Bad Status Line: %s"
-#~ msgstr "줄 상태 오류 : %s"
-
-#~ msgid "Bad Header Line: %s"
-#~ msgstr "헤더 오류: %s"
-
-#~ msgid "Bad Chunk size: %s"
-#~ msgstr "Chuck 크기 오류: %s"
-
-#~ msgid "Connection to %s timed out"
-#~ msgstr "%s 연결 시간 초과"
-
-#~ msgid "%s is not a valid URL"
-#~ msgstr "%s는 유효하지 않음"
-
-#~ msgid "A search channel contains items that match a search term."
-#~ msgstr "검색 채널에는 검색어와 부합하는 항목이 포함됩니다."
-
-#~ msgid "Deleting %s"
-#~ msgstr "%s 삭제"
-
-#~ msgid "Mark as Unwatched"
-#~ msgstr "미시청 항목으로 표시"
-
-#~ msgid "%d Downloaded Items"
-#~ msgstr "%d 항목 다운로드"
-
-#~ msgid "%d Available Items"
-#~ msgstr "%d 항목 사용 가능"
-
-#~ msgid "%d Downloading Items"
-#~ msgstr "%d 항목 다운로드 중"
-
-#~ msgid "Update Channel Now"
-#~ msgstr "현재 채널 업그레이드"
-
-#~ msgid "Enter a new name for the channel %s"
-#~ msgstr "%s 채널 이름 변경"
-
-#~ msgid "Couldn't load the feed at %s (%s)."
-#~ msgstr "다음 피드 항목 읽기 오류: %s (%s)"
-
-#~ msgid "Subscribing to multiple channels"
-#~ msgstr "여러 채널을 구독 하기"
-
-#~ msgid ""
-#~ "NOTE: You are already subscribed to %d of these channels.  These channels "
-#~ "will stay where they currently are."
-#~ msgstr "주의: 현재 채널에 %d 항목을 구독하고 있습니다. 이 채널은 계속 사용하고 있습니다."
-
-#~ msgid "Drag playlists to this folder to add them."
-#~ msgstr "이 폴더를 재생 목록으로 이동하세요."
-
-#~ msgid ""
-#~ "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
-#~ "playlists)"
-#~ msgstr "${count}개의 재생 목록 폴더 선택<br></br>(재생 목록 갯수: ${containedcount}개)"
-
-#~ msgid "Clear Completed Torrents"
-#~ msgstr "완료된 토런트 삭제"
-
-#~ msgid "Empty Channel Folder"
-#~ msgstr "빈 채널 폴더"
-
-#~ msgid "Drag channels to this folder to add them."
-#~ msgstr "이 폴더에 채널 옮기기"
-
-#~ msgid ""
-#~ "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
-#~ "channels)"
-#~ msgstr "${count}개 폴더 선택<br></br>(채널 갯수: ${containedcount})"
-
-#~ msgid "${count} Channels Selected"
-#~ msgstr "${count}개 채널 선택"
-
-#~ msgid "Local File"
-#~ msgstr "로컬 파일"
-
-#~ msgid "Search custom folder:"
-#~ msgstr "특정 폴더 검색:"
-
-#~ msgid "New Channel Folder"
-#~ msgstr "새 채널 폴더"
-
-#~ msgid "New Channel Guide"
-#~ msgstr "새 채널 가이드"
-
-#~ msgid "Pause Video"
-#~ msgstr "동영상 중지"
-
-#~ msgid "Send This Channel to a Friend..."
-#~ msgstr "채널을 친구에게 전성"
-
-#~ msgid "_Remove Channel Guides..."
-#~ msgstr "채널 가이드 삭제..."
-
-#~ msgid "%0.0fB"
-#~ msgstr "%0.0fB"
-
-#~ msgid ""
-#~ "Would you like to delete this folder and all of its videos or just remove "
-#~ "its entry from My Collection?"
-#~ msgstr "이 폴더 내 동영상, 혹은 내 항목에 있는 모든 동영상 항목을 삭제하시겠습니까?"
-
-#~ msgid ""
-#~ "One or more of these videos was not downloaded from a channel.  Would you "
-#~ "like to delete these items or just remove their entries from My Collection?"
-#~ msgstr "이 동영상등은 채널 항목으로 다운로드 되지 않았습니다. 이들 항목을 삭제 하거나 내 항목에서 이들을 제거 하시겠습니까?"
-
-#~ msgid ""
-#~ "You have a database that was saved with a newer version of Democracy. You "
-#~ "must download the latest version of Democracy and run that."
-#~ msgstr "Democracy의 새 버전에 저장된 데이터 베이스가 있습니다. 실행 하기 전에 최신 버전을 다운로드 해야 합니다."
-
-#~ msgid ""
-#~ "<b>Would you like Democracy Player to look for video files on your "
-#~ "computer?</b>"
-#~ msgstr "<b>Democracy 플레이어로 현재 컴퓨터 내 동영상을 시청하시겠습니까?</b>"
-
-#~ msgid "<b>Would you like to run Democracy when your computer starts up?</b>"
-#~ msgstr "<b>컴퓨터 시작 시 Democracy를 실행하시겠습니까?</b>"
-
-#~ msgid ""
-#~ "<b>You're done!</b>\n"
-#~ "\n"
-#~ "Setup is complete -- now you can find some channels and start watching.\n"
-#~ "\n"
-#~ "<b>Don't Wait:</b> Democracy is different than watching webpage videos -- "
-#~ "publishers can offer big, high quality videos.  So don't sit around waiting "
-#~ "for videos: start some downloads and check back later.\n"
-#~ "\n"
-#~ "<b>Leave it On:</b> Democracy Player regularly checks channels for new "
-#~ "videos and downloads in the background.  Leaving it running means you'll "
-#~ "have new videos when you're ready to watch.\n"
-#~ "\n"
-#~ "<b>Don't Worry About Disk Space:</b> Like a TiVo, Democracy Player features "
-#~ "an 'expiration' system that helps clean out older videos to make room for "
-#~ "new videos.  You can always keep a video permanently by clicking 'save' and "
-#~ "you can set a channel's settings to save videos automatically.\n"
-#~ "\n"
-#~ "<b>Go Big:</b> The button to the right of the play button shows videos "
-#~ "fullscreen.\n"
-#~ "\n"
-#~ "<b>Find Videos:</b> The Democracy Channel Guide has hundreds of internet TV "
-#~ "channels, all of them are free.  Just click 'ADD' to watch a channel."
-#~ msgstr ""
-#~ "<b>모두 완료 하였습니다!</b>\n"
-#~ "\n"
-#~ "설정을 마쳤습니다-- 이제 시청할 채널을 찾아 보십시오.\n"
-#~ "\n"
-#~ "<b>매번 기다리지 마세요!</b> Democracy는 웹 페이지 동영상을 시청하는 새로운 방식입니다 -- 제작자들이 고품질의 비디오를 "
-#~ "제공합니다. 동영상을 찾으러 다니지 않다러도 간단한 검색으로만 찾을 수 있습니다.\n"
-#~ "\n"
-#~ "<b>매번 확인 하지 마세요!</b> Democracy 플레이어는 자동적으로 채널에 새 동영상이 추가 되었는지 주기적으로 확인합니다. "
-#~ "시청할 동영상이 준비되면 여러분게 알려 드립니다.\n"
-#~ "\n"
-#~ "<b>저장 공간에 대해 걱정 마세요!</b> Tivo와 같이 Democracy 플레이어는 새 비디오를 저장 하는 데 문제가 없는 '만료' "
-#~ "시스템을 가지고 있습니다. 저장한 동영상은 계속 볼 수 있고 그렇지 않는 동영상은 새 동영상을 위해 자동으로 지워 집니다.\n"
-#~ "\n"
-#~ "<b>크게 보세요!</b> 재생 버튼 오른쪼을 누르시면 전체 화면으로 볼 수 있습니다.\n"
-#~ "\n"
-#~ "<b>동영상 검색</b>: Deomocracy 채널 가이드는 수 백개의 TV 채널을 볼 수 있으며, 모두 무료로 제공됩니다. 단지 "
-#~ "\"추가\"만 누르세요."
-
-#~ msgid ""
-#~ "Democracy Player can find all the videos on your computer to help you "
-#~ "organize your collection."
-#~ msgstr "Democracy 플레이어가 컴퓨터 내 모든 동영상을 찾아 관리하도록 도와 줍니다."
-
-#~ msgid ""
-#~ "The next few screens will help you set up democracy player so that it works "
-#~ "best for you.  Here's the first question."
-#~ msgstr "다음 화면은 Democracy 플레이어를 최적으로 설정하는데 도움을 줍니다."
-
-#~ msgid ""
-#~ "We recommend that you allow Democracy Player to launch when your computer "
-#~ "starts up.  This way, videos that haven't finished downloading can finish "
-#~ "and new videos on your channels will be ready when you want to watch."
-#~ msgstr ""
-#~ "Democracy 플레이어를 컴퓨터 시작시 실행하도록 권장 합니다. 이를 통해 아직 다운로드 하지 않은 동영상을 계속 다운로드 받아 원할 "
-#~ "때 시청할 수 있습니다."
-
-#~ msgid ""
-#~ "Welcome to Internet TV.  There's a lot you can do with Democracy Player: "
-#~ "automatically download videos from your favorite channels, watch new videos "
-#~ "one after the other, download torrents, recommend videos to friends, and "
-#~ "lots more."
-#~ msgstr ""
-#~ "인터넷 TV에 오신것을 환영합니다. Democracy 플레이어로 다양한 경험을 즐리세요! 선호 채널로 부터 동영상 자동 다운로드, 새 "
-#~ "동영상 시청, 비트토런트 다운로드, 친구에게 추천 기능 등 다양한 기능이 있습니다"
-
-#~ msgid "Empty Playlist Folder"
-#~ msgstr "빈 재생 목록 폴더"
-
-#~ msgid ""
-#~ "This folder contains ${count} playlists, but the playlists do not contain "
-#~ "any items."
-#~ msgstr "현재 폴더에는 ${count}개의 재생 목록이 있습니다. 하지만 저장된 항목은 없습니다."
-
-#~ msgid "${count} Playlists Selected"
-#~ msgstr "선택한 재생 목록: ${count}개"
-
-#~ msgid "${size} disk space free"
-#~ msgstr "남은 디스크 용량: ${size}"
-
-#~ msgid ""
-#~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
-#~ "onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>"
-#~ msgstr ""
-#~ "<strong i18n:translate=\"\">소개 건너뛰기: <a style=\"color: #090;\" href=\"#\" "
-#~ "onclick=\"doneWithIntro();\">채널 가이드로 바로 가기 >></a></strong>"
-
-#~ msgid "Show movies in these directories in My Collection"
-#~ msgstr "내 항목내 이 디렉토리에 영화 보여주기"
-
-#~ msgid "_Add Directory"
-#~ msgstr "디렉토리 추가"
-
-#~ msgid "A search channel contains"
-#~ msgstr "채널 검색"
-
-#~ msgid "items that match a search term."
-#~ msgstr "검색 결과 항목"
-
-#~ msgid "Democracy First Time Setup"
-#~ msgstr "Democracy 처음 설정"
-
-#~ msgid ""
-#~ "Democracy Player regularly checks channels for new videos and downloads in "
-#~ "the background.  Leaving it running means you'll have new videos when you're "
-#~ "ready to watch."
-#~ msgstr ""
-#~ "Democracy 플레이어는 새로운 동영상을 정기적으로 확인하여 다운로드 합니다. 기다리지 않고도 시청 가능하면 알려 줍니다."
-
-#~ msgid ""
-#~ "Like a TiVo, Democracy Player features an 'expiration' system that helps "
-#~ "clean out older videos to make room for new videos.  You can always keep a "
-#~ "video permanently by clicking 'save' and you can set a channel's settings to "
-#~ "save videos automatically."
-#~ msgstr ""
-#~ "Tivo처럼 Democracy Player는 '만료'시스템을 가지고 있습니다. 저장하고 싶은 파일은 '저장' 버튼을 눌러 저장 할 수 "
-#~ "있지만 그렇지 않은 파일은 새로운 동영상이 다운로드 되면 자동적으로 오래된 순서에 따라 지워집니다."
-
-#~ msgid ""
-#~ "The Democracy Channel Guide has hundreds of internet TV channels, all of "
-#~ "them are free.  Just click 'ADD' to watch a channel."
-#~ msgstr ""
-#~ "Democracy 채널 가이드는 수 백개의 인터넷 채널을 가지고 있으며, 모두 무료 입니다. 채널을 추가하려만 '추가' 버튼을 누르세요."
-
-#~ msgid ""
-#~ "The next few screens will help you set up Democracy Player so that it works "
-#~ "best for you."
-#~ msgstr "다음 화면은 Democracy를 설정하는 데 도움을 드릴 것입니다."
-
-#~ msgid ""
-#~ "We recommend that you have Democracy Player launch when your computer starts "
-#~ "up.  This way, videos in progress can finish downloading and new videos can "
-#~ "be downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "Democracy 플레이어를 컴퓨터 시작 시 함께 실행하는 것을 권장합니다. 이를 통해 아직 다운로드 완료되지 않은 파일을 백그라운드로 "
-#~ "실행 하여 준비되면 알려 주게 됩니다."
-
-#~ msgid ""
-#~ "Would you like Democracy Player to look for video files on your computer?"
-#~ msgstr "Democracy 플레이어로 컴퓨터 내 동영상을 검색 할까요?"
-
-#~ msgid "Would you like to run Democracy on startup?"
-#~ msgstr "Democracy를 시작 시 실행하겠습니까?"
-
-#~ msgid "A"
-#~ msgstr "A"
-
-#~ msgid "Alt+Enter"
-#~ msgstr "Alt+Enter"
-
-#~ msgid "C"
-#~ msgstr "C"
-
-#~ msgid "Check Version"
-#~ msgstr "버전 확인"
-
-#~ msgid "Ctrl+A"
-#~ msgstr "Ctrl+A"
-
-#~ msgid "Ctrl+C"
-#~ msgstr "Ctrl+C"
-
-#~ msgid "Ctrl+D"
-#~ msgstr "Ctrl+D"
-
-#~ msgid "Ctrl+N"
-#~ msgstr "Ctrl+N"
-
-#~ msgid "Ctrl+O"
-#~ msgstr "Ctrl+O"
-
-#~ msgid "Ctrl+P"
-#~ msgstr "Ctrl+P"
-
-#~ msgid "Ctrl+Shift+N"
-#~ msgstr "Ctrl+Shift+N"
-
-#~ msgid "Ctrl+Shitf+P"
-#~ msgstr "Ctrl+Shitf+P"
-
-#~ msgid "Ctrl+V"
-#~ msgstr "Ctrl+V"
-
-#~ msgid "D"
-#~ msgstr "D"
-
-#~ msgid "Donate to the Democracy project"
-#~ msgstr "Democracy 프로젝트 지원"
-
-#~ msgid "E"
-#~ msgstr "E"
-
-#~ msgid "F"
-#~ msgstr "F"
-
-#~ msgid "Fullscreen"
-#~ msgstr "전체 화면"
-
-#~ msgid "G"
-#~ msgstr "G"
-
-#~ msgid "H"
-#~ msgstr "H"
-
-#~ msgid "L"
-#~ msgstr "L"
-
-#~ msgid "Left"
-#~ msgstr "왼쪽"
-
-#~ msgid "N"
-#~ msgstr "N"
-
-#~ msgid "New Channel"
-#~ msgstr "새 채널"
-
-#~ msgid "New Playlist"
-#~ msgstr "새 재생 목록"
-
-#~ msgid "New Playlist Folder"
-#~ msgstr "새 재생 목록 폴더"
-
-#~ msgid "O"
-#~ msgstr "O"
-
-#~ msgid "P"
-#~ msgstr "P"
-
-#~ msgid "Playlist"
-#~ msgstr "재생 목록"
-
-#~ msgid "Q"
-#~ msgstr "Q"
-
-#~ msgid "R"
-#~ msgstr "R"
-
-#~ msgid "Remove Video"
-#~ msgstr "동영상 제거"
-
-#~ msgid "Right"
-#~ msgstr "오른쪽"
-
-#~ msgid "S"
-#~ msgstr "S"
-
-#~ msgid "Space"
-#~ msgstr "공간"
-
-#~ msgid "U"
-#~ msgstr "U"
-
-#~ msgid "V"
-#~ msgstr "V"
-
-#~ msgid "Expected CRLF got: %r"
-#~ msgstr "CRLF가 필요함: %r"
-
-#~ msgid "_Search"
-#~ msgstr "검색"
-
-#~ msgid "Preferencesa|"
-#~ msgstr "환경 설정"
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:77
+msgid "You must restart playback for visualization changes to take effect."
+msgstr ""
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:80
+msgid "None"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:132
+msgid "Add to Library"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:203
+msgid "Pop Out"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:206
+msgid "Pop In"
+msgstr ""
+
+#: ../../portable/theme.py:138
+#, python-format
+msgid ""
+"You are running a version of %(appname)s with a custom set of channels."
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:95
+#, python-format
+msgid "Watched %(expiration)s (Default)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:139
+#, python-format
+msgid "Keep %(number)s (Default)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:141
+msgid "Keep 0"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:142
+msgid "Keep 20"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:143
+msgid "Keep 50"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:144
+msgid "Keep 100"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:145
+msgid "Keep 1000"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:209
+msgid "From"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:221
+msgid "Leechers"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:297
+msgid "0"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:568
+msgid "Keep at least this much free space on my drive:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:549
+#, python-format
+msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:555
+#, python-format
+msgid "%(available)s free for downloads (%(amount)s free on disk)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:70
+#, python-format
+msgid "Pause All Downloads (%(downloading)d)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:73
+#, python-format
+msgid "Resume All Downloads (%(paused)d)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/video.py:272
+msgid "Add to library"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/video.py:311
+msgid "Permalink"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/window.py:470
+msgid "All files"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/window.py:499
+msgid "Choose"
+msgstr ""
+
+#, python-format
+msgid ""
+"%(copyright)s.  See LICENSE file for details.\n"
+"Miro and Miro logo are trademarks of the Participatory Culture Foundation."
+msgstr ""
+
+#: ../../portable/frontends/widgets/removefeeds.py:49
+msgid "Remove Feed"
+msgid_plural "Remove Feeds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/removefeeds.py:57
+msgid "Are you sure you want to remove this feed:"
+msgid_plural "Are you sure you want to remove these feeds:"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/removefeeds.py:77
+msgid "Keep items that have been downloaded in my library."
+msgstr ""
+
+#: ../../portable/frontends/widgets/removefeeds.py:83
+msgid ""
+"Watched folders will be removed from the sidebar but their contents will "
+"still appear in your library.  You can stop watching watched folders "
+"completely in the Miro preference panel."
+msgstr ""
+
+#: ../../portable/frontends/widgets/removefeeds.py:93
+msgid ""
+"Are you sure you want to remove this feed?  The downloads currently in "
+"progress will be canceled."
+msgid_plural ""
+"Are you sure you want to remove these feeds?  The downloads currently in "
+"progress will be canceled."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/newfeed.py:69
+msgid "Feed should go in this section:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfeed.py:71
+#: ../../portable/frontends/widgets/newfolder.py:70
+#: ../../portable/frontends/widgets/newsearchfeed.py:135
+msgid "video"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfeed.py:72
+#: ../../portable/frontends/widgets/newfolder.py:71
+#: ../../portable/frontends/widgets/newsearchfeed.py:136
+msgid "audio"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfeed.py:110
+msgid "Add Feed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfeed.py:111
+msgid "Enter the URL of the feed to add"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfeed.py:122
+msgid "Add Feed - Invalid URL"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfeed.py:123
+msgid ""
+"The address you entered is not a valid url.\n"
+"Please check the URL and try again.\n"
+"\n"
+"Enter the URL of the feed to add"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:477
+msgid "Remove Site"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:521
+msgid "Update Feeds In Folder"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:528
+msgid "Update Feed Now"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:531
+msgid "Rename"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:533
+msgid "Revert Feed Name"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:540
+msgid "Update Feeds Now"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:605
+msgid "SITES"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:607
+msgid "FEEDS"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:609
+msgid "AUDIO FEEDS"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:611
+msgid "PLAYLISTS"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfolder.py:60
+msgid "Folder name:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfolder.py:68
+msgid "Folder should go in this section:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfolder.py:107
+#: ../../portable/frontends/widgets/newfolder.py:109
+msgid "Create Feed Folder"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfolder.py:110
+msgid "Enter the name of the folder to add"
+msgstr ""
+
+#: ../../portable/frontends/widgets/linkhandler.py:54
+msgid "Subscribe to Feed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/linkhandler.py:56
+#, python-format
+msgid ""
+"This link appears to be a feed.  Do you want to add it to your "
+"subscriptions?\n"
+"\n"
+"%(url)s"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:58
+msgid "New Search Feed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:59
+msgid "A search feed contains items that match a search term."
+msgstr ""
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:87
+msgid "Feed:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:92
+msgid "Search engine:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:132
+msgid "Add new feed to this section:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:60
+msgid "Miro First Time Setup"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:117
+msgid "Welcome to the Miro First Time Setup"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:120
+msgid ""
+"The next few screens will help you set up Miro so that it works best for "
+"you.\n"
+"\n"
+"We recommend that you have Miro launch when your computer starts up.  This "
+"way, downloads in progress can finish downloading and new media files can be "
+"downloaded in the background, ready when you want to watch."
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:132
+msgid "Would you like to run Miro on startup?"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:146
+msgid "Next >"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:156
+msgid "Completing the Miro First Time Setup"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:159
+msgid ""
+"Miro can find all the media files on your computer to help you organize your "
+"collection.\n"
+"\n"
+"Would you like Miro to look for media files on your computer?"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:178
+msgid "Search custom folders:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:189
+msgid "Choose directory to search for media files"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:200
+#: ../../portable/frontends/widgets/firsttimedialog.py:280
+msgid "< Previous"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:215
+#: ../../portable/frontends/widgets/firsttimedialog.py:283
+msgid "Finish"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:263
+msgid "Searching for media files"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:311
+#, python-format
+msgid "parsed %(count)s file"
+msgid_plural "parsed %(count)s files"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:316
+#, python-format
+msgid "found %(count)s media file"
+msgid_plural "found %(count)s media files"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/statictabs.py:44
+msgid "Miro Guide"
+msgstr ""
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:90
+msgid "Single and external downloads"
+msgstr ""
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:93
+msgid "Feed downloads"
+msgstr ""
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:96
+msgid "Seeding"
+msgstr ""
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
+msgid "Add a Playlist"
+msgstr ""
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
+msgid "Add items to an existing playlist or a new one."
+msgstr ""
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
+msgid "Existing playlist:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
+msgid "New playlist:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:95
+msgid "Play Just this Item"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:96
+#: ../../portable/frontends/widgets/itemcontextmenu.py:193
+msgid "Add to Playlist"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:101
+msgid "Revert Item Name"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:103
+#: ../../portable/frontends/widgets/itemcontextmenu.py:200
+msgid "Mark as Unplayed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:106
+#: ../../portable/frontends/widgets/itemcontextmenu.py:205
+msgid "Mark as Played"
+msgstr ""
+
+msgid "Start seeding"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:125
+#: ../../portable/frontends/widgets/itemcontextmenu.py:254
+msgid "Resume Download"
+msgstr ""
+
+msgid "Web page"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:139
+msgid "License"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:142
+msgid "File in Browser"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:144
+#, python-format
+msgid "File in %(progname)s"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:146
+msgid "File on Disk"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:149
+msgid "View"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:187
+#, python-format
+msgid "%(count)d Downloaded Item"
+msgid_plural "%(count)d Downloaded Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:216
+#, python-format
+msgid "%(count)d Available Item"
+msgid_plural "%(count)d Available Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:229
+#, python-format
+msgid "%(count)d Downloading Item"
+msgid_plural "%(count)d Downloading Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:246
+#, python-format
+msgid "%(count)d Paused Item"
+msgid_plural "%(count)d Paused Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/dialogs.py:84
+msgid "Close"
+msgstr ""
+
+#: ../../portable/dialogs.py:86
+msgid "Done"
+msgstr ""
+
+#: ../../portable/dialogs.py:91
+msgid "Ignore"
+msgstr ""
+
+#: ../../portable/dialogs.py:92
+msgid "Submit Crash Report"
+msgstr ""
+
+#: ../../portable/dialogs.py:102
+msgid "Create Feed"
+msgstr ""
+
+#: ../../portable/dialogs.py:103
+msgid "Create Folder"
+msgstr ""
+
+#: ../../portable/dialogs.py:109
+msgid "Not Now"
+msgstr ""
+
+#: ../../portable/dialogs.py:110
+msgid "Close to Tray"
+msgstr ""
+
+#: ../../portable/dialogs.py:111
+msgid "Launch Miro"
+msgstr ""
+
+#: ../../portable/dialogs.py:112
+msgid "Download Anyway"
+msgstr ""
+
+#: ../../portable/dialogs.py:113
+msgid "Open in External Browser"
+msgstr ""
+
+#: ../../portable/dialogs.py:114
+msgid "Don't Install"
+msgstr ""
+
+#: ../../portable/dialogs.py:115
+msgid "Subscribe"
+msgstr ""
+
+#: ../../portable/dialogs.py:116
+msgid "Stop Watching"
+msgstr ""
+
+#: ../../portable/singleclick.py:100
+msgid "Download already exists"
+msgstr ""
+
+#: ../../portable/singleclick.py:101
+msgid "That URL is already an external download."
+msgstr ""
+
+#: ../../portable/singleclick.py:107
+msgid "Miro will begin downloading it now."
+msgstr ""
+
+#: ../../portable/singleclick.py:109
+msgid "It is downloading now."
+msgstr ""
+
+#: ../../portable/singleclick.py:111
+msgid "It has already been downloaded."
+msgstr ""
+
+#: ../../portable/singleclick.py:138
+msgid "File Download"
+msgstr ""
+
+#: ../../portable/singleclick.py:139
+#, python-format
+msgid ""
+"This file at %(url)s does not appear to be audio, video, or an RSS feed."
+msgstr ""
+
+#: ../../portable/singleclick.py:168
+#, python-format
+msgid ""
+"Miro is not able to download a file at this URL:\n"
+"\n"
+"URL: %(url)s"
+msgstr ""
+
+#: ../../portable/singleclick.py:297
+msgid "Subscribing to multiple feeds"
+msgstr ""
+
+#: ../../portable/singleclick.py:298
+#, python-format
+msgid "Create feed?"
+msgid_plural "Create %(count)d feeds?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/singleclick.py:318
+msgid "Enter a name for the new feed folder"
+msgstr ""
+
+#: ../../portable/singleclick.py:322
+#, python-format
+msgid ""
+"NOTE: You are already subscribed to one of these feeds.  These feeds will "
+"stay where they currently are."
+msgid_plural ""
+"NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
+"will stay where they currently are."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/singleclick.py:347
+#, python-format
+msgid ""
+"This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
+"the publisher of this file."
+msgstr ""
+
+#: ../../portable/singleclick.py:356
+#, python-format
+msgid ""
+"This %(appname)s feed file has the wrong content type: %(url)s. Please "
+"notify the publisher of this file."
+msgstr ""
+
+#: ../../portable/singleclick.py:364
+#, python-format
+msgid "Could not download the %(appname)s feed file: %(url)s"
+msgstr ""
+
+#: ../../portable/singleclick.py:416
+#, python-format
+msgid ""
+"The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+"[OK]"
+msgstr ""
+
+#: ../../portable/item.py:439
+#, python-format
+msgid "%(count)d day"
+msgid_plural "%(count)d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/item.py:444
+#, python-format
+msgid "%(count)d hour"
+msgid_plural "%(count)d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/item.py:449
+#, python-format
+msgid "%(count)d minute"
+msgid_plural "%(count)d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/item.py:733 ../../portable/item.py:749
+#: ../../portable/item.py:761
+msgid "no title"
+msgstr ""
+
+#: ../../portable/httpclient.py:179
+msgid "Read error"
+msgstr ""

@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:37+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -178,7 +178,6 @@ msgstr "Pop In"
 msgid "Services"
 msgstr "Services"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 msgid "Hide Miro"
 msgstr "Hide Miro"
 
@@ -194,7 +193,6 @@ msgstr "Show All"
 msgid "Preferences..."
 msgstr "Preferences..."
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
 msgstr "Quit Miro"
 
@@ -258,7 +256,6 @@ msgstr "Bring All to Front"
 msgid "Window"
 msgstr "Window"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Miro Help"
 msgstr "Miro Help"
 
@@ -286,13 +283,329 @@ msgstr ""
 msgid "Example Playlist"
 msgstr "Example Playlist"
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr "Miro - Report a Problem"
 
 #: ../../portable/searchengines.py:146
 msgid "Search All"
 msgstr "Search All"
+
+#: ../../portable/messages.py:965 ../../portable/item.py:618
+msgid "queued for download"
+msgstr "Queued for Download"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:55
+#: ../../portable/frontends/widgets/feedsettingspanel.py:102
+#: ../../portable/frontends/widgets/prefpanel.py:585
+msgid "never"
+msgstr "Never"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:182
+msgid "Old items have been removed."
+msgstr "Old items have been removed."
+
+#: ../../portable/frontends/widgets/style.py:213
+#: ../../portable/frontends/widgets/gtk/video.py:309
+#: ../../portable/frontends/widgets/itemcontextmenu.py:137
+msgid "Comments"
+msgstr "Comments"
+
+#: ../../portable/frontends/widgets/style.py:220
+msgid "Seeders"
+msgstr "Seeders"
+
+#: ../../portable/frontends/widgets/style.py:221
+msgid "Leechers"
+msgstr "Leechers"
+
+#: ../../portable/frontends/widgets/style.py:224
+msgid "Down Rate"
+msgstr "Down Rate"
+
+#: ../../portable/frontends/widgets/style.py:225
+msgid "Down Total"
+msgstr "Down Total"
+
+#: ../../portable/frontends/widgets/style.py:226
+#: ../../portable/frontends/widgets/style.py:1040
+#: ../../portable/frontends/widgets/style.py:1051
+#: ../../portable/frontends/widgets/itemcontextmenu.py:129
+#: ../../portable/frontends/widgets/itemcontextmenu.py:224
+#: ../../portable/dialogs.py:95
+msgid "Download"
+msgstr "Download"
+
+#: ../../portable/frontends/widgets/style.py:227
+msgid "Download Torrent"
+msgstr "Download Torrent"
+
+#: ../../portable/frontends/widgets/style.py:229
+msgid "queued for autodownload"
+msgstr "Queued for Auto-Download"
+
+#: ../../portable/frontends/widgets/style.py:233
+#: ../../portable/frontends/widgets/prefpanel.py:485
+#: ../../portable/frontends/widgets/tablist.py:523
+#: ../../portable/frontends/widgets/tablist.py:535
+#: ../../portable/frontends/widgets/tablist.py:541
+#: ../../portable/frontends/widgets/tablist.py:578
+#: ../../portable/frontends/widgets/tablist.py:584
+#: ../../portable/frontends/widgets/tablist.py:589
+#: ../../portable/dialogs.py:108
+msgid "Remove"
+msgstr "Remove"
+
+#: ../../portable/frontends/widgets/style.py:234
+#: ../../portable/frontends/widgets/itemcontextmenu.py:113
+msgid "Stop seeding"
+msgstr "Stop Seeding"
+
+#: ../../portable/frontends/widgets/style.py:544
+#: ../../portable/frontends/widgets/style.py:1099
+msgid "paused"
+msgstr "Paused"
+
+#: ../../portable/frontends/widgets/style.py:972
+msgid "Remove from playlist"
+msgstr "Remove from playlist"
+
+msgid "Automatically run Miro when I log in."
+msgstr "Automatically start Miro when I log in."
+
+#: ../../portable/frontends/widgets/prefpanel.py:289
+#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+#: ../../portable/frontends/widgets/statictabs.py:103
+msgid "New"
+msgstr "New"
+
+#: ../../portable/frontends/widgets/prefpanel.py:290
+#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+msgid "All"
+msgstr "All"
+
+#: ../../portable/frontends/widgets/prefpanel.py:291
+#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+msgid "Off"
+msgstr "Off"
+
+#: ../../portable/frontends/widgets/prefpanel.py:453
+msgid "Migrate existing movies?"
+msgstr "Migrate existing movies?"
+
+#: ../../portable/frontends/widgets/prefpanel.py:542
+msgid "Store downloads in this folder:"
+msgstr "Store downloads in this folder:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:568
+msgid "Keep at least this much free space on my drive:"
+msgstr "Keep at least this much free space on my drive:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:580
+msgid "1 day"
+msgstr "one day"
+
+#: ../../portable/frontends/widgets/prefpanel.py:581
+msgid "3 days"
+msgstr "3 Days"
+
+#: ../../portable/frontends/widgets/prefpanel.py:582
+msgid "6 days"
+msgstr "Six Days"
+
+#: ../../portable/frontends/widgets/prefpanel.py:583
+msgid "10 days"
+msgstr "10 Days"
+
+#: ../../portable/frontends/widgets/prefpanel.py:584
+msgid "1 month"
+msgstr "1 Month"
+
+#: ../../portable/frontends/widgets/prefpanel.py:590
+msgid "By default, videos expire after:"
+msgstr "By default, videos expire after:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:620
+msgid "General"
+msgstr "General"
+
+#: ../../portable/frontends/widgets/prefpanel.py:622
+#: ../../portable/frontends/widgets/downloadscontroller.py:81
+msgid "Downloads"
+msgstr "Downloads"
+
+#: ../../portable/frontends/widgets/prefpanel.py:623
+msgid "Folders"
+msgstr "Folders"
+
+#: ../../portable/frontends/widgets/prefpanel.py:625
+msgid "Playback"
+msgstr "Playback"
+
+#: ../../portable/frontends/widgets/browser.py:94
+msgid "Open in browser"
+msgstr "Open in browser"
+
+#: ../../portable/frontends/widgets/rundialog.py:82
+msgid "Username:"
+msgstr "Username"
+
+#: ../../portable/frontends/widgets/rundialog.py:86
+msgid "Password:"
+msgstr "Password:"
+
+#: ../../portable/frontends/widgets/itemlistcontroller.py:413
+#: ../../portable/frontends/widgets/statictabs.py:86
+msgid "Video Search"
+msgstr "Video Search"
+
+msgid "Library"
+msgstr "Library"
+
+msgid "Single Items"
+msgstr "Single Items"
+
+#: ../../portable/frontends/widgets/diagnostics.py:77
+#: ../../portable/frontends/widgets/gtk/trayicon.py:83
+msgid "Show"
+msgstr "Show"
+
+#: ../../portable/frontends/widgets/application.py:757
+msgid "Warn me when I attempt to quit with downloads in progress"
+msgstr "Warn me if I attempt to quit while downloading is in progress"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:633
+msgid "Settings"
+msgstr "Settings"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:81
+msgid "Hide"
+msgstr "Hide"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:74
+msgid "Search for:"
+msgstr "Search for:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:80
+msgid "In this:"
+msgstr "In this:"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:137
+#: ../../portable/frontends/widgets/firsttimedialog.py:170
+#: ../../portable/dialogs.py:87
+msgid "Yes"
+msgstr "Yes"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:138
+#: ../../portable/frontends/widgets/firsttimedialog.py:169
+#: ../../portable/dialogs.py:88
+msgid "No"
+msgstr "No"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:215
+#: ../../portable/frontends/widgets/firsttimedialog.py:283
+msgid "Finish"
+msgstr "Finish"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:273
+#: ../../portable/dialogs.py:85
+msgid "Cancel"
+msgstr "Cancel"
+
+#: ../../portable/frontends/widgets/statictabs.py:44
+msgid "Miro Guide"
+msgstr "Miro Guide"
+
+#: ../../portable/frontends/widgets/statictabs.py:110
+msgid "Downloading"
+msgstr "Downloading"
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:90
+msgid "Single and external downloads"
+msgstr "Single and External downloads"
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:96
+msgid "Seeding"
+msgstr "Seeding"
+
+msgid "Web page"
+msgstr "Webpage"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:139
+msgid "License"
+msgstr "License"
+
+#: ../../portable/dialogs.py:83
+msgid "Ok"
+msgstr "Okay"
+
+#: ../../portable/dialogs.py:89
+msgid "Quit"
+msgstr "Quit"
+
+#: ../../portable/dialogs.py:101
+msgid "Create"
+msgstr "Create"
+
+#: ../../portable/singleclick.py:100
+msgid "Download already exists"
+msgstr "The downloaded file already exists."
+
+#: ../../portable/singleclick.py:101
+msgid "That URL is already an external download."
+msgstr "That URL is already an external download."
+
+#: ../../portable/singleclick.py:414
+msgid "Invalid Torrent"
+msgstr "Invalid Torrent!"
+
+#: ../../portable/singleclick.py:416
+#, python-format
+msgid ""
+"The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+"[OK]"
+msgstr ""
+"The Torrent file %(filename)s appears to be corrupt and cannot be opened. "
+"[OK]"
+
+#: ../../portable/item.py:439
+#, python-format
+msgid "%(count)d day"
+msgid_plural "%(count)d days"
+msgstr[0] "%(count)d Day"
+msgstr[1] "%(count)dDays"
+
+#: ../../portable/item.py:444
+#, python-format
+msgid "%(count)d hour"
+msgid_plural "%(count)d hours"
+msgstr[0] "%(count)d Hour"
+msgstr[1] "%(count)d Hours"
+
+#: ../../portable/item.py:733 ../../portable/item.py:749
+#: ../../portable/item.py:761
+msgid "no title"
+msgstr "No Title"
+
+#: ../../portable/item.py:1008
+msgid "starting up..."
+msgstr "Starting Up..."
+
+#: ../../portable/feed.py:1055
+msgid "Bad content-type"
+msgstr "Bad content type!"
+
+#: ../../portable/feed.py:1068
+#, python-format
+msgid "Channel is not compatible with %(appname)s"
+msgstr "Channel is not compatible with %(appname)s"
+
+#: ../../portable/feed.py:2407
+msgid "Local Files"
+msgstr "Local Files"
+
+#: ../../portable/feed.py:2421
+msgid "Playing File"
+msgstr "Playing File"
 
 #: ../../portable/util.py:279 ../../portable/util.py:281
 #, python-format
@@ -341,23 +654,19 @@ msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr ""
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr ""
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -373,10 +682,6 @@ msgstr ""
 #: ../../portable/messagehandler.py:1269
 msgid "Subscribed to new feeds:"
 msgstr ""
-
-#: ../../portable/messages.py:965 ../../portable/item.py:618
-msgid "queued for download"
-msgstr "Queued for Download"
 
 #: ../../portable/startup.py:91
 msgid "Unknown Error"
@@ -767,7 +1072,6 @@ msgstr ""
 msgid "_Toggle Detached/Attached"
 msgstr ""
 
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr ""
 
@@ -836,12 +1140,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/crashdialog.py:64
 msgid "Describe what you were doing when you got this error:"
 msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:55
-#: ../../portable/frontends/widgets/feedsettingspanel.py:102
-#: ../../portable/frontends/widgets/prefpanel.py:585
-msgid "never"
-msgstr "Never"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:58
 #, python-format
@@ -926,10 +1224,6 @@ msgstr ""
 msgid "Remove All"
 msgstr ""
 
-#: ../../portable/frontends/widgets/feedsettingspanel.py:182
-msgid "Old items have been removed."
-msgstr "Old items have been removed."
-
 #: ../../portable/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause Auto-Downloading when this many items are unplayed:"
 msgstr ""
@@ -974,12 +1268,6 @@ msgstr ""
 msgid "Show Less"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:213
-#: ../../portable/frontends/widgets/gtk/video.py:309
-#: ../../portable/frontends/widgets/itemcontextmenu.py:137
-msgid "Comments"
-msgstr "Comments"
-
 #: ../../portable/frontends/widgets/style.py:215
 #, python-format
 msgid "Reveal in %(progname)s"
@@ -1006,14 +1294,6 @@ msgstr ""
 msgid "File Type"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:220
-msgid "Seeders"
-msgstr "Seeders"
-
-#: ../../portable/frontends/widgets/style.py:221
-msgid "Leechers"
-msgstr "Leechers"
-
 #: ../../portable/frontends/widgets/style.py:222
 msgid "Upload Rate"
 msgstr ""
@@ -1021,31 +1301,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:223
 msgid "Upload Total"
 msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:224
-msgid "Down Rate"
-msgstr "Down Rate"
-
-#: ../../portable/frontends/widgets/style.py:225
-msgid "Down Total"
-msgstr "Down Total"
-
-#: ../../portable/frontends/widgets/style.py:226
-#: ../../portable/frontends/widgets/style.py:1040
-#: ../../portable/frontends/widgets/style.py:1051
-#: ../../portable/frontends/widgets/itemcontextmenu.py:129
-#: ../../portable/frontends/widgets/itemcontextmenu.py:224
-#: ../../portable/dialogs.py:95
-msgid "Download"
-msgstr "Download"
-
-#: ../../portable/frontends/widgets/style.py:227
-msgid "Download Torrent"
-msgstr "Download Torrent"
-
-#: ../../portable/frontends/widgets/style.py:229
-msgid "queued for autodownload"
-msgstr "Queued for Auto-Download"
 
 #: ../../portable/frontends/widgets/style.py:230
 #: ../../portable/frontends/widgets/style.py:1088
@@ -1056,36 +1311,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:1106
 msgid "Newly Available"
 msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:233
-#: ../../portable/frontends/widgets/prefpanel.py:485
-#: ../../portable/frontends/widgets/tablist.py:523
-#: ../../portable/frontends/widgets/tablist.py:535
-#: ../../portable/frontends/widgets/tablist.py:541
-#: ../../portable/frontends/widgets/tablist.py:578
-#: ../../portable/frontends/widgets/tablist.py:584
-#: ../../portable/frontends/widgets/tablist.py:589
-#: ../../portable/dialogs.py:108
-msgid "Remove"
-msgstr "Remove"
-
-#: ../../portable/frontends/widgets/style.py:234
-#: ../../portable/frontends/widgets/itemcontextmenu.py:113
-msgid "Stop seeding"
-msgstr "Stop Seeding"
-
-#: ../../portable/frontends/widgets/style.py:544
-#: ../../portable/frontends/widgets/style.py:1099
-msgid "paused"
-msgstr "Paused"
-
-#: ../../portable/frontends/widgets/style.py:972
-msgid "Remove from playlist"
-msgstr "Remove from playlist"
-
-#: ../../portable/frontends/widgets/prefpanel.py:267
-msgid "Automatically run Miro when I log in."
-msgstr "Automatically start Miro when I log in."
 
 #: ../../portable/frontends/widgets/prefpanel.py:271
 msgid "Warn me if I attempt to quit with downloads in progress."
@@ -1106,22 +1331,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/prefpanel.py:284
 msgid "Manually"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
-#: ../../portable/frontends/widgets/statictabs.py:103
-msgid "New"
-msgstr "New"
-
-#: ../../portable/frontends/widgets/prefpanel.py:290
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
-msgid "All"
-msgstr "All"
-
-#: ../../portable/frontends/widgets/prefpanel.py:291
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
-msgid "Off"
-msgstr "Off"
 
 #: ../../portable/frontends/widgets/prefpanel.py:297
 msgid "0"
@@ -1225,11 +1434,6 @@ msgstr ""
 msgid "Choose Movies Directory"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:453
-msgid "Migrate existing movies?"
-msgstr "Migrate existing movies?"
-
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
@@ -1245,46 +1449,14 @@ msgstr ""
 msgid "Add Watched Folder"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:542
-msgid "Store downloads in this folder:"
-msgstr "Store downloads in this folder:"
-
 #: ../../portable/frontends/widgets/prefpanel.py:549
 msgid "Watch for new videos in these folders and include them in library:"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:568
-msgid "Keep at least this much free space on my drive:"
-msgstr "Keep at least this much free space on my drive:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:571
 #: ../../portable/frontends/widgets/prefpanel.py:577
 msgid "GB"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:580
-msgid "1 day"
-msgstr "one day"
-
-#: ../../portable/frontends/widgets/prefpanel.py:581
-msgid "3 days"
-msgstr "3 Days"
-
-#: ../../portable/frontends/widgets/prefpanel.py:582
-msgid "6 days"
-msgstr "Six Days"
-
-#: ../../portable/frontends/widgets/prefpanel.py:583
-msgid "10 days"
-msgstr "10 Days"
-
-#: ../../portable/frontends/widgets/prefpanel.py:584
-msgid "1 month"
-msgstr "1 Month"
-
-#: ../../portable/frontends/widgets/prefpanel.py:590
-msgid "By default, videos expire after:"
-msgstr "By default, videos expire after:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:599
 msgid "Always play videos in a separate window."
@@ -1302,82 +1474,30 @@ msgstr ""
 msgid "Stop after each video"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:620
-msgid "General"
-msgstr "General"
-
 #: ../../portable/frontends/widgets/prefpanel.py:621
 msgid "Feeds"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:622
-#: ../../portable/frontends/widgets/downloadscontroller.py:81
-msgid "Downloads"
-msgstr "Downloads"
-
-#: ../../portable/frontends/widgets/prefpanel.py:623
-msgid "Folders"
-msgstr "Folders"
 
 #: ../../portable/frontends/widgets/prefpanel.py:624
 msgid "Disk space"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:625
-msgid "Playback"
-msgstr "Playback"
-
 #: ../../portable/frontends/widgets/prefpanel.py:629
 msgid "Preferences"
 msgstr ""
 
-#: ../../portable/frontends/widgets/browser.py:94
-msgid "Open in browser"
-msgstr "Open in browser"
-
-#: ../../portable/frontends/widgets/rundialog.py:82
-msgid "Username:"
-msgstr "Username"
-
-#: ../../portable/frontends/widgets/rundialog.py:86
-msgid "Password:"
-msgstr "Password:"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
 msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:413
-#: ../../portable/frontends/widgets/statictabs.py:86
-msgid "Video Search"
-msgstr "Video Search"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:427
 msgid "No Results Found"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
-msgid "Library"
-msgstr "Library"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
-msgid "Single Items"
-msgstr "Single Items"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr ""
-
-#: ../../portable/frontends/widgets/diagnostics.py:77
-#: ../../portable/frontends/widgets/gtk/trayicon.py:83
-msgid "Show"
-msgstr "Show"
 
 #: ../../portable/frontends/widgets/diagnostics.py:84
 msgid "Movies location:"
@@ -1699,10 +1819,6 @@ msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:757
-msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr "Warn me if I attempt to quit while downloading is in progress"
-
 #: ../../portable/frontends/widgets/application.py:1011
 msgid "Message"
 msgstr ""
@@ -1805,10 +1921,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemlistwidgets.py:627
 msgid "Share feed"
 msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:633
-msgid "Settings"
-msgstr "Settings"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:639
 msgid "Remove feed"
@@ -1923,10 +2035,6 @@ msgstr ""
 msgid "Resume All Downloads (%(paused)d)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:81
-msgid "Hide"
-msgstr "Hide"
-
 #: ../../portable/frontends/widgets/gtk/video.py:272
 msgid "Add to library"
 msgstr ""
@@ -1943,7 +2051,6 @@ msgstr ""
 msgid "Choose"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -2107,14 +2214,6 @@ msgstr ""
 msgid "A search feed contains items that match a search term."
 msgstr ""
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:74
-msgid "Search for:"
-msgstr "Search for:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:80
-msgid "In this:"
-msgstr "In this:"
-
 #: ../../portable/frontends/widgets/newsearchfeed.py:87
 msgid "Feed:"
 msgstr ""
@@ -2148,18 +2247,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:132
 msgid "Would you like to run Miro on startup?"
 msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:137
-#: ../../portable/frontends/widgets/firsttimedialog.py:170
-#: ../../portable/dialogs.py:87
-msgid "Yes"
-msgstr "Yes"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:138
-#: ../../portable/frontends/widgets/firsttimedialog.py:169
-#: ../../portable/dialogs.py:88
-msgid "No"
-msgstr "No"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:146
 msgid "Next >"
@@ -2201,19 +2288,9 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:215
-#: ../../portable/frontends/widgets/firsttimedialog.py:283
-msgid "Finish"
-msgstr "Finish"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:263
 msgid "Searching for media files"
 msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:273
-#: ../../portable/dialogs.py:85
-msgid "Cancel"
-msgstr "Cancel"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:311
 #, python-format
@@ -2229,25 +2306,9 @@ msgid_plural "found %(count)s media files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/statictabs.py:44
-msgid "Miro Guide"
-msgstr "Miro Guide"
-
-#: ../../portable/frontends/widgets/statictabs.py:110
-msgid "Downloading"
-msgstr "Downloading"
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:90
-msgid "Single and external downloads"
-msgstr "Single and External downloads"
-
 #: ../../portable/frontends/widgets/downloadscontroller.py:93
 msgid "Feed downloads"
 msgstr ""
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:96
-msgid "Seeding"
-msgstr "Seeding"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
@@ -2297,7 +2358,6 @@ msgstr ""
 msgid "Mark as Played"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr ""
 
@@ -2316,14 +2376,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemcontextmenu.py:254
 msgid "Resume Download"
 msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
-msgid "Web page"
-msgstr "Webpage"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:139
-msgid "License"
-msgstr "License"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:142
 msgid "File in Browser"
@@ -2378,10 +2430,6 @@ msgstr ""
 msgid "Remove From Playlist"
 msgstr ""
 
-#: ../../portable/dialogs.py:83
-msgid "Ok"
-msgstr "Okay"
-
 #: ../../portable/dialogs.py:84
 msgid "Close"
 msgstr ""
@@ -2389,10 +2437,6 @@ msgstr ""
 #: ../../portable/dialogs.py:86
 msgid "Done"
 msgstr ""
-
-#: ../../portable/dialogs.py:89
-msgid "Quit"
-msgstr "Quit"
 
 #: ../../portable/dialogs.py:90
 msgid "Continue"
@@ -2433,10 +2477,6 @@ msgstr ""
 #: ../../portable/dialogs.py:100
 msgid "Delete Videos"
 msgstr ""
-
-#: ../../portable/dialogs.py:101
-msgid "Create"
-msgstr "Create"
 
 #: ../../portable/dialogs.py:102
 msgid "Create Feed"
@@ -2486,14 +2526,6 @@ msgstr ""
 #, python-format
 msgid "Enter a new name for the playlist %s"
 msgstr ""
-
-#: ../../portable/singleclick.py:100
-msgid "Download already exists"
-msgstr "The downloaded file already exists."
-
-#: ../../portable/singleclick.py:101
-msgid "That URL is already an external download."
-msgstr "That URL is already an external download."
 
 #: ../../portable/singleclick.py:107
 msgid "Miro will begin downloading it now."
@@ -2578,48 +2610,12 @@ msgstr ""
 msgid "Could not download the %(appname)s feed file: %(url)s"
 msgstr ""
 
-#: ../../portable/singleclick.py:414
-msgid "Invalid Torrent"
-msgstr "Invalid Torrent!"
-
-#: ../../portable/singleclick.py:416
-#, python-format
-msgid ""
-"The torrent file %(filename)s appears to be corrupt and cannot be opened. "
-"[OK]"
-msgstr ""
-"The Torrent file %(filename)s appears to be corrupt and cannot be opened. "
-"[OK]"
-
-#: ../../portable/item.py:439
-#, python-format
-msgid "%(count)d day"
-msgid_plural "%(count)d days"
-msgstr[0] "%(count)d Day"
-msgstr[1] "%(count)dDays"
-
-#: ../../portable/item.py:444
-#, python-format
-msgid "%(count)d hour"
-msgid_plural "%(count)d hours"
-msgstr[0] "%(count)d Hour"
-msgstr[1] "%(count)d Hours"
-
 #: ../../portable/item.py:449
 #, python-format
 msgid "%(count)d minute"
 msgid_plural "%(count)d minutes"
 msgstr[0] ""
 msgstr[1] ""
-
-#: ../../portable/item.py:733 ../../portable/item.py:749
-#: ../../portable/item.py:761
-msgid "no title"
-msgstr "No Title"
-
-#: ../../portable/item.py:1008
-msgid "starting up..."
-msgstr "Starting Up..."
 
 #: ../../portable/httpclient.py:90
 #, python-format
@@ -2746,15 +2742,6 @@ msgstr ""
 msgid "Would you like to keep the feed?"
 msgstr ""
 
-#: ../../portable/feed.py:1055
-msgid "Bad content-type"
-msgstr "Bad content type!"
-
-#: ../../portable/feed.py:1068
-#, python-format
-msgid "Channel is not compatible with %(appname)s"
-msgstr "Channel is not compatible with %(appname)s"
-
 #: ../../portable/feed.py:1071
 #, python-format
 msgid ""
@@ -2772,11 +2759,3 @@ msgstr ""
 #, python-format
 msgid "Search All: %(text)s"
 msgstr ""
-
-#: ../../portable/feed.py:2407
-msgid "Local Files"
-msgstr "Local Files"
-
-#: ../../portable/feed.py:2421
-msgid "Playing File"
-msgstr "Playing File"

@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:37+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -178,7 +178,6 @@ msgstr "Kiinnitä"
 msgid "Services"
 msgstr "Palvelut"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 msgid "Hide Miro"
 msgstr "Piilota Miro"
 
@@ -194,7 +193,6 @@ msgstr "Näytä kaikki"
 msgid "Preferences..."
 msgstr "Asetukset..."
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
 msgstr "Sulje Miro"
 
@@ -258,7 +256,6 @@ msgstr "Tuo kaikki eteen"
 msgid "Window"
 msgstr "Ikkuna"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Miro Help"
 msgstr "Apua Miroon"
 
@@ -285,7 +282,6 @@ msgstr "Käytössäsi on versio %(appname)s:sta, jossa on muokattu kanavalista."
 msgid "Example Playlist"
 msgstr "Esimerkkisoittolista"
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr "Miro - Ilmoita ongelmasta"
 
@@ -340,12 +336,10 @@ msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] "Ohitettiin %(count)d syöte, joka on jo saatavilla."
 msgstr[1] "Ohitettiin %(count)d syötettä, jotka ovat jo saatavilla."
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "%(appname)s:n tietokannan tallennus onnistui"
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -353,12 +347,10 @@ msgstr ""
 "Tietokanta on tallennettu onnistuneesti. Ohjelman voi nyt sammuttaa "
 "turvallisesti."
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "%(appname)s:n tietokannan tallennus epäonnistui"
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -776,7 +768,6 @@ msgstr "_Kokoruutu"
 msgid "_Toggle Detached/Attached"
 msgstr "_Vaihda irrotettu/kiinnitetty"
 
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr "_Tietoa Mirosta"
 
@@ -1096,7 +1087,6 @@ msgstr "pysäytetty"
 msgid "Remove from playlist"
 msgstr "Poista soittolistalta"
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr "Käynnistä Miro automaattisesti kun kirjaudun sisään."
 
@@ -1242,7 +1232,6 @@ msgstr "Valitse videokansio"
 msgid "Migrate existing movies?"
 msgstr "Siirretäänkö olemassa olevat videot?"
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
@@ -1359,7 +1348,6 @@ msgstr "Käyttäjätunnus:"
 msgid "Password:"
 msgstr "Salasana:"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
 msgstr "Uudet videot"
 
@@ -1372,21 +1360,15 @@ msgstr "Videohaku"
 msgid "No Results Found"
 msgstr "Ei tuloksia"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
 msgid "Library"
 msgstr "Kirjasto"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr "Yksittäiset kohteet"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr "Ei näytettäviä kohteita"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr ""
 "Tämä välilehti näyttää lataukset, jotka eivät kuulu mihinkään syötteeseen."
@@ -1991,7 +1973,6 @@ msgstr "Kaikki tiedostot"
 msgid "Choose"
 msgstr "Valitse"
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -2372,7 +2353,6 @@ msgstr "Merkitse toistamattomaksi"
 msgid "Mark as Played"
 msgstr "Merkitse toistetuksi"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr "Aloita lähettäminen"
 
@@ -2392,7 +2372,6 @@ msgstr "Pysäytä lataaminen"
 msgid "Resume Download"
 msgstr "Jatka lataamista"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
 msgstr "Web-sivu"
 

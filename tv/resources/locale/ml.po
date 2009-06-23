@@ -15,8 +15,191 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:37+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:128
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
+#: ../../portable/frontends/widgets/gtk/video.py:274
+#: ../../portable/frontends/widgets/gtk/video.py:282
+#: ../../portable/frontends/widgets/itemcontextmenu.py:65
+#: ../../portable/dialogs.py:107
+msgid "Delete"
+msgstr "മായ്ക്കുക"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
+msgid "Services"
+msgstr "സേവനങ്ങള്‍"
+
+msgid "Hide Miro"
+msgstr "'മിേറാെയ' മറചചു്വക്കുക."
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
+msgid "Hide Others"
+msgstr "മെറ്റല്ലാം മറചചു്വക്കുക."
+
+msgid "Quit Miro"
+msgstr "'മിേറാെയ' നശിപ്പിക്കുക"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:150
+msgid "Close Window"
+msgstr "ജാലകം (വിന്‍ഡോ) അടയ്‍ക്കുക"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
+msgid "Cut"
+msgstr "മുറിക്കുക"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
+msgid "Copy"
+msgstr "പകര്‍ത്തുക"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
+msgid "Paste"
+msgstr "ഒട്ടിയ്ക്കുക"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
+msgid "Select All"
+msgstr "എല്ലാം തിരഞ്ഞെടുക്കുക"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
+msgid "Edit"
+msgstr "തിരുത്തിയെഴുതുക (Edit)"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
+msgid "Zoom"
+msgstr "സൂം"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
+msgid "Minimize"
+msgstr "ചുരുക്കുക"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
+msgid "Main Window"
+msgstr "പ്രധാന ജാലകം"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
+msgid "Window"
+msgstr "വിന്‍ഡോ (ജാലകം)"
+
+#: ../../portable/frontends/widgets/style.py:233
+#: ../../portable/frontends/widgets/prefpanel.py:485
+#: ../../portable/frontends/widgets/tablist.py:523
+#: ../../portable/frontends/widgets/tablist.py:535
+#: ../../portable/frontends/widgets/tablist.py:541
+#: ../../portable/frontends/widgets/tablist.py:578
+#: ../../portable/frontends/widgets/tablist.py:584
+#: ../../portable/frontends/widgets/tablist.py:589
+#: ../../portable/dialogs.py:108
+msgid "Remove"
+msgstr "നീക്കം ചെയ്യുക"
+
+#: ../../portable/frontends/widgets/prefpanel.py:580
+msgid "1 day"
+msgstr "1 ദിവസം"
+
+#: ../../portable/frontends/widgets/prefpanel.py:581
+msgid "3 days"
+msgstr "3 ദിവസങ്ങള്‍"
+
+#: ../../portable/frontends/widgets/prefpanel.py:582
+msgid "6 days"
+msgstr "6 ദിവസങ്ങള്‍"
+
+#: ../../portable/frontends/widgets/prefpanel.py:583
+msgid "10 days"
+msgstr "10 ദിവസങ്ങള്‍"
+
+#: ../../portable/frontends/widgets/prefpanel.py:584
+msgid "1 month"
+msgstr "ഒരു മാസം"
+
+#: ../../portable/frontends/widgets/prefpanel.py:620
+msgid "General"
+msgstr "സാധാരണമായ"
+
+#: ../../portable/frontends/widgets/prefpanel.py:622
+#: ../../portable/frontends/widgets/downloadscontroller.py:81
+msgid "Downloads"
+msgstr "ഡൌണ്‍‍ലോഡുകള്‍"
+
+#: ../../portable/frontends/widgets/prefpanel.py:623
+msgid "Folders"
+msgstr "ഫോള്‍ഡറുകള്‍"
+
+#: ../../portable/frontends/widgets/rundialog.py:82
+msgid "Username:"
+msgstr "ഉപയോക്തൃനാമം:"
+
+#: ../../portable/frontends/widgets/rundialog.py:86
+msgid "Password:"
+msgstr "പാസ്സ്‍വേഡ്:"
+
+#: ../../portable/frontends/widgets/itemlistcontroller.py:413
+#: ../../portable/frontends/widgets/statictabs.py:86
+msgid "Video Search"
+msgstr "ചലച്ചിത്ര തിരയല്‍"
+
+#: ../../portable/frontends/widgets/diagnostics.py:77
+#: ../../portable/frontends/widgets/gtk/trayicon.py:83
+msgid "Show"
+msgstr "കാണിക്കുക"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:633
+msgid "Settings"
+msgstr "ക്രമീകരണങ്ങള്‍"
+
+#: ../../portable/frontends/widgets/displays.py:361
+msgid "Filename:"
+msgstr "ഫയല്‍നാമം:"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:81
+msgid "Hide"
+msgstr "മറയ്ക്കുക"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:137
+#: ../../portable/frontends/widgets/firsttimedialog.py:170
+#: ../../portable/dialogs.py:87
+msgid "Yes"
+msgstr "ഉവ്വ്"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:138
+#: ../../portable/frontends/widgets/firsttimedialog.py:169
+#: ../../portable/dialogs.py:88
+msgid "No"
+msgstr "ഇല്ല"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:213
+#: ../../portable/frontends/widgets/firsttimedialog.py:215
+#: ../../portable/frontends/widgets/firsttimedialog.py:272
+#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
+msgid "Search"
+msgstr "തിരച്ചില്‍"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:273
+#: ../../portable/dialogs.py:85
+msgid "Cancel"
+msgstr "റദ്ദാക്കുക"
+
+#: ../../portable/frontends/widgets/statictabs.py:110
+msgid "Downloading"
+msgstr "ഡൌണ്‍ലോഡ് ചെയ്യുന്നു"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:94
+#: ../../portable/frontends/widgets/itemcontextmenu.py:192
+msgid "Play"
+msgstr "പ്രവര്‍ത്തിപ്പിക്കുക"
+
+#: ../../portable/dialogs.py:84
+msgid "Close"
+msgstr "അടയ്ക്കുക"
+
+#: ../../portable/dialogs.py:89
+msgid "Quit"
+msgstr "മതിയാക്കുക"
+
+#: ../../portable/dialogs.py:101
+msgid "Create"
+msgstr "സൃഷ്ടിക്കുക"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
@@ -141,15 +324,6 @@ msgstr ""
 msgid "Keep"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:128
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
-#: ../../portable/frontends/widgets/gtk/video.py:274
-#: ../../portable/frontends/widgets/gtk/video.py:282
-#: ../../portable/frontends/widgets/itemcontextmenu.py:65
-#: ../../portable/dialogs.py:107
-msgid "Delete"
-msgstr "മായ്ക്കുക"
-
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:132
 msgid "Add to Library"
 msgstr ""
@@ -162,18 +336,6 @@ msgstr ""
 msgid "Pop In"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
-msgid "Services"
-msgstr "സേവനങ്ങള്‍"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
-msgid "Hide Miro"
-msgstr "'മിേറാെയ' മറചചു്വക്കുക."
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
-msgid "Hide Others"
-msgstr "മെറ്റല്ലാം മറചചു്വക്കുക."
-
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
 msgid "Show All"
 msgstr ""
@@ -181,34 +343,6 @@ msgstr ""
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
 msgid "Preferences..."
 msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
-msgid "Quit Miro"
-msgstr "'മിേറാെയ' നശിപ്പിക്കുക"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:150
-msgid "Close Window"
-msgstr "ജാലകം (വിന്‍ഡോ) അടയ്‍ക്കുക"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
-msgid "Cut"
-msgstr "മുറിക്കുക"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
-msgid "Copy"
-msgstr "പകര്‍ത്തുക"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
-msgid "Paste"
-msgstr "ഒട്ടിയ്ക്കുക"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
-msgid "Select All"
-msgstr "എല്ലാം തിരഞ്ഞെടുക്കുക"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
-msgid "Edit"
-msgstr "തിരുത്തിയെഴുതുക (Edit)"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
 msgid "Present Half Size"
@@ -226,27 +360,10 @@ msgstr ""
 msgid "Present Video"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
-msgid "Zoom"
-msgstr "സൂം"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
-msgid "Minimize"
-msgstr "ചുരുക്കുക"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
-msgid "Main Window"
-msgstr "പ്രധാന ജാലകം"
-
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
 msgid "Bring All to Front"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
-msgid "Window"
-msgstr "വിന്‍ഡോ (ജാലകം)"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Miro Help"
 msgstr ""
 
@@ -273,7 +390,6 @@ msgstr ""
 msgid "Example Playlist"
 msgstr ""
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr ""
 
@@ -328,23 +444,19 @@ msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr ""
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr ""
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -754,7 +866,6 @@ msgstr ""
 msgid "_Toggle Detached/Attached"
 msgstr ""
 
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr ""
 
@@ -1044,18 +1155,6 @@ msgstr ""
 msgid "Newly Available"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:233
-#: ../../portable/frontends/widgets/prefpanel.py:485
-#: ../../portable/frontends/widgets/tablist.py:523
-#: ../../portable/frontends/widgets/tablist.py:535
-#: ../../portable/frontends/widgets/tablist.py:541
-#: ../../portable/frontends/widgets/tablist.py:578
-#: ../../portable/frontends/widgets/tablist.py:584
-#: ../../portable/frontends/widgets/tablist.py:589
-#: ../../portable/dialogs.py:108
-msgid "Remove"
-msgstr "നീക്കം ചെയ്യുക"
-
 #: ../../portable/frontends/widgets/style.py:234
 #: ../../portable/frontends/widgets/itemcontextmenu.py:113
 msgid "Stop seeding"
@@ -1070,7 +1169,6 @@ msgstr ""
 msgid "Remove from playlist"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr ""
 
@@ -1216,7 +1314,6 @@ msgstr ""
 msgid "Migrate existing movies?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
@@ -1249,26 +1346,6 @@ msgstr ""
 msgid "GB"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:580
-msgid "1 day"
-msgstr "1 ദിവസം"
-
-#: ../../portable/frontends/widgets/prefpanel.py:581
-msgid "3 days"
-msgstr "3 ദിവസങ്ങള്‍"
-
-#: ../../portable/frontends/widgets/prefpanel.py:582
-msgid "6 days"
-msgstr "6 ദിവസങ്ങള്‍"
-
-#: ../../portable/frontends/widgets/prefpanel.py:583
-msgid "10 days"
-msgstr "10 ദിവസങ്ങള്‍"
-
-#: ../../portable/frontends/widgets/prefpanel.py:584
-msgid "1 month"
-msgstr "ഒരു മാസം"
-
 #: ../../portable/frontends/widgets/prefpanel.py:590
 msgid "By default, videos expire after:"
 msgstr ""
@@ -1289,22 +1366,9 @@ msgstr ""
 msgid "Stop after each video"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:620
-msgid "General"
-msgstr "സാധാരണമായ"
-
 #: ../../portable/frontends/widgets/prefpanel.py:621
 msgid "Feeds"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:622
-#: ../../portable/frontends/widgets/downloadscontroller.py:81
-msgid "Downloads"
-msgstr "ഡൌണ്‍‍ലോഡുകള്‍"
-
-#: ../../portable/frontends/widgets/prefpanel.py:623
-msgid "Folders"
-msgstr "ഫോള്‍ഡറുകള്‍"
 
 #: ../../portable/frontends/widgets/prefpanel.py:624
 msgid "Disk space"
@@ -1322,49 +1386,24 @@ msgstr ""
 msgid "Open in browser"
 msgstr ""
 
-#: ../../portable/frontends/widgets/rundialog.py:82
-msgid "Username:"
-msgstr "ഉപയോക്തൃനാമം:"
-
-#: ../../portable/frontends/widgets/rundialog.py:86
-msgid "Password:"
-msgstr "പാസ്സ്‍വേഡ്:"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
 msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:413
-#: ../../portable/frontends/widgets/statictabs.py:86
-msgid "Video Search"
-msgstr "ചലച്ചിത്ര തിരയല്‍"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:427
 msgid "No Results Found"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
 msgid "Library"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr ""
-
-#: ../../portable/frontends/widgets/diagnostics.py:77
-#: ../../portable/frontends/widgets/gtk/trayicon.py:83
-msgid "Show"
-msgstr "കാണിക്കുക"
 
 #: ../../portable/frontends/widgets/diagnostics.py:84
 msgid "Movies location:"
@@ -1793,10 +1832,6 @@ msgstr ""
 msgid "Share feed"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:633
-msgid "Settings"
-msgstr "ക്രമീകരണങ്ങള്‍"
-
 #: ../../portable/frontends/widgets/itemlistwidgets.py:639
 msgid "Remove feed"
 msgstr ""
@@ -1814,10 +1849,6 @@ msgid ""
 "Miro can't play this file.  You may be able to open it with a different "
 "program"
 msgstr ""
-
-#: ../../portable/frontends/widgets/displays.py:361
-msgid "Filename:"
-msgstr "ഫയല്‍നാമം:"
 
 #: ../../portable/frontends/widgets/displays.py:364
 msgid "File type:"
@@ -1910,10 +1941,6 @@ msgstr ""
 msgid "Resume All Downloads (%(paused)d)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:81
-msgid "Hide"
-msgstr "മറയ്ക്കുക"
-
 #: ../../portable/frontends/widgets/gtk/video.py:272
 msgid "Add to library"
 msgstr ""
@@ -1930,7 +1957,6 @@ msgstr ""
 msgid "Choose"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -2136,18 +2162,6 @@ msgstr ""
 msgid "Would you like to run Miro on startup?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:137
-#: ../../portable/frontends/widgets/firsttimedialog.py:170
-#: ../../portable/dialogs.py:87
-msgid "Yes"
-msgstr "ഉവ്വ്"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:138
-#: ../../portable/frontends/widgets/firsttimedialog.py:169
-#: ../../portable/dialogs.py:88
-msgid "No"
-msgstr "ഇല്ല"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:146
 msgid "Next >"
 msgstr ""
@@ -2181,13 +2195,6 @@ msgstr ""
 msgid "< Previous"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:213
-#: ../../portable/frontends/widgets/firsttimedialog.py:215
-#: ../../portable/frontends/widgets/firsttimedialog.py:272
-#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
-msgid "Search"
-msgstr "തിരച്ചില്‍"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:215
 #: ../../portable/frontends/widgets/firsttimedialog.py:283
 msgid "Finish"
@@ -2196,11 +2203,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:263
 msgid "Searching for media files"
 msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:273
-#: ../../portable/dialogs.py:85
-msgid "Cancel"
-msgstr "റദ്ദാക്കുക"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:311
 #, python-format
@@ -2219,10 +2221,6 @@ msgstr[1] ""
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
 msgstr ""
-
-#: ../../portable/frontends/widgets/statictabs.py:110
-msgid "Downloading"
-msgstr "ഡൌണ്‍ലോഡ് ചെയ്യുന്നു"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:90
 msgid "Single and external downloads"
@@ -2256,11 +2254,6 @@ msgstr ""
 msgid "Remove From the Library"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:94
-#: ../../portable/frontends/widgets/itemcontextmenu.py:192
-msgid "Play"
-msgstr "പ്രവര്‍ത്തിപ്പിക്കുക"
-
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just this Item"
 msgstr ""
@@ -2284,7 +2277,6 @@ msgstr ""
 msgid "Mark as Played"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr ""
 
@@ -2304,7 +2296,6 @@ msgstr ""
 msgid "Resume Download"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
 msgstr ""
 
@@ -2369,17 +2360,9 @@ msgstr ""
 msgid "Ok"
 msgstr ""
 
-#: ../../portable/dialogs.py:84
-msgid "Close"
-msgstr "അടയ്ക്കുക"
-
 #: ../../portable/dialogs.py:86
 msgid "Done"
 msgstr ""
-
-#: ../../portable/dialogs.py:89
-msgid "Quit"
-msgstr "മതിയാക്കുക"
 
 #: ../../portable/dialogs.py:90
 msgid "Continue"
@@ -2420,10 +2403,6 @@ msgstr ""
 #: ../../portable/dialogs.py:100
 msgid "Delete Videos"
 msgstr ""
-
-#: ../../portable/dialogs.py:101
-msgid "Create"
-msgstr "സൃഷ്ടിക്കുക"
 
 #: ../../portable/dialogs.py:102
 msgid "Create Feed"

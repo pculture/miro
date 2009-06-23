@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:37+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -178,7 +178,6 @@ msgstr "Zastrčiť"
 msgid "Services"
 msgstr "Služby"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 msgid "Hide Miro"
 msgstr "Skryť Miro"
 
@@ -194,7 +193,6 @@ msgstr "Zobraziť všetko"
 msgid "Preferences..."
 msgstr "Nastavenia..."
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
 msgstr "Ukončiť Miro"
 
@@ -258,7 +256,6 @@ msgstr "Preniesť všetky do popredia"
 msgid "Window"
 msgstr "Okno"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Miro Help"
 msgstr "Pomocník Miro"
 
@@ -285,7 +282,6 @@ msgstr "Používate verziu %(appname)s s prispôsobenou sadou kanálov."
 msgid "Example Playlist"
 msgstr "Ukážkový playlist"
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr "Miro - nahláste nám problém"
 
@@ -342,12 +338,10 @@ msgstr[0] "Preskočený %(count)d už existujúci zdroj."
 msgstr[1] "Preskočené %(count)d už existujúce zdroje."
 msgstr[2] "Preskočených %(count)d už existujúcych zdrojov."
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "%(appname)s databáza uložená úspešne"
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -355,12 +349,10 @@ msgstr ""
 "Databáza bola úspešne uložená. Teraz môžete bezpečne ukončiť program bez "
 "straty údajov."
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "%(appname)s databázu sa nepodarilo uložiť"
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -788,7 +780,6 @@ msgstr "_Celá obrazovka"
 msgid "_Toggle Detached/Attached"
 msgstr "Zmeniť pripojené/odpojené"
 
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr "_O Miro"
 
@@ -1099,11 +1090,6 @@ msgstr "Novinka"
 msgid "Remove"
 msgstr "Odstrániť"
 
-#: ../../portable/frontends/widgets/style.py:234
-#: ../../portable/frontends/widgets/itemcontextmenu.py:113
-msgid "Stop seeding"
-msgstr ""
-
 #: ../../portable/frontends/widgets/style.py:544
 #: ../../portable/frontends/widgets/style.py:1099
 msgid "paused"
@@ -1113,7 +1099,6 @@ msgstr "Pozastavené"
 msgid "Remove from playlist"
 msgstr "Odstrániť z playlistu"
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr "Spustiť Miro automaticky po prihlásení."
 
@@ -1177,26 +1162,6 @@ msgstr "1000"
 msgid "Default settings for new feeds:"
 msgstr "Predvolené nastavenia pre nové zdroje"
 
-#: ../../portable/frontends/widgets/prefpanel.py:311
-msgid "(These can be changed using the feed's settings button)"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:315
-msgid "Check for new content:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:320
-msgid "Auto download setting:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:326
-msgid "Remember this many old items:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:327
-msgid "(in addition to the current contents)"
-msgstr ""
-
 #: ../../portable/frontends/widgets/prefpanel.py:340
 msgid "Maximum number of manual downloads at a time:"
 msgstr "Maximálny počet manuálnych downloadov naraz:"
@@ -1209,30 +1174,14 @@ msgstr "Maximálny počet automatických downloadov naraz:"
 msgid "Bittorrent:"
 msgstr "Bittorrent:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:360
-msgid "Limit upstream bandwidth to:"
-msgstr ""
-
 #: ../../portable/frontends/widgets/prefpanel.py:369
 #: ../../portable/frontends/widgets/prefpanel.py:380
 msgid "KB/s"
 msgstr "KB/s"
 
-#: ../../portable/frontends/widgets/prefpanel.py:372
-msgid "Limit downstream bandwidth to:"
-msgstr ""
-
 #: ../../portable/frontends/widgets/prefpanel.py:383
 msgid "Limit torrent connections to:"
 msgstr "Obmedziť torrent pripojení na:"
-
-#: ../../portable/frontends/widgets/prefpanel.py:400
-msgid "Starting port:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:404
-msgid "Ending port:"
-msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:410
 msgid "Automatically forward ports.  (UPNP)"
@@ -1246,34 +1195,10 @@ msgstr "Ingorovať nešifrované spojenia."
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr "Zastaviť upload torrentu, keď je dosiahnutý tento pomer:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:435
-#: ../../portable/frontends/widgets/firsttimedialog.py:184
-msgid "Change"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:440
-msgid "Choose Movies Directory"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:453
-msgid "Migrate existing movies?"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:454
-msgid ""
-"You've selected a new folder to download movies to.  Should Miro migrate "
-"your existing downloads there? (Currently dowloading movies will not be "
-"moved until they finish.)"
-msgstr ""
-
 #: ../../portable/frontends/widgets/prefpanel.py:482
 #: ../../portable/dialogs.py:104
 msgid "Add"
 msgstr "Pridať"
-
-#: ../../portable/frontends/widgets/prefpanel.py:523
-msgid "Add Watched Folder"
-msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:542
 msgid "Store downloads in this folder:"
@@ -1292,10 +1217,6 @@ msgstr "Ponechať aspoň toľko miesta na disku:"
 msgid "GB"
 msgstr "GB"
 
-#: ../../portable/frontends/widgets/prefpanel.py:580
-msgid "1 day"
-msgstr ""
-
 #: ../../portable/frontends/widgets/prefpanel.py:581
 msgid "3 days"
 msgstr "3 dni"
@@ -1312,34 +1233,14 @@ msgstr "10 dní"
 msgid "1 month"
 msgstr "1 mesiac"
 
-#: ../../portable/frontends/widgets/prefpanel.py:590
-msgid "By default, videos expire after:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:599
-msgid "Always play videos in a separate window."
-msgstr ""
-
 #: ../../portable/frontends/widgets/prefpanel.py:603
 msgid "Resume playing a video from the point it was last stopped."
 msgstr ""
 "Pokračovať v prehrávaní videa z miesta, kedy bolo naposledy pozastavené."
 
-#: ../../portable/frontends/widgets/prefpanel.py:608
-msgid "Play videos one after another"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:609
-msgid "Stop after each video"
-msgstr ""
-
 #: ../../portable/frontends/widgets/prefpanel.py:620
 msgid "General"
 msgstr "Všeobecné"
-
-#: ../../portable/frontends/widgets/prefpanel.py:621
-msgid "Feeds"
-msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:622
 #: ../../portable/frontends/widgets/downloadscontroller.py:81
@@ -1362,10 +1263,6 @@ msgstr "Prehrávanie"
 msgid "Preferences"
 msgstr "Nastavenia"
 
-#: ../../portable/frontends/widgets/browser.py:94
-msgid "Open in browser"
-msgstr ""
-
 #: ../../portable/frontends/widgets/rundialog.py:82
 msgid "Username:"
 msgstr "Užívateľské meno:"
@@ -1374,7 +1271,6 @@ msgstr "Užívateľské meno:"
 msgid "Password:"
 msgstr "Heslo:"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
 msgstr "Nová videá"
 
@@ -1383,27 +1279,11 @@ msgstr "Nová videá"
 msgid "Video Search"
 msgstr "Hľadanie videa"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:427
-msgid "No Results Found"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
 msgid "Library"
 msgstr "Knižnica"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr "Samostatné položky"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
-msgid "No Items to Display"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
-msgid "This tab keeps track of downloads that aren't part of a feed."
-msgstr ""
 
 #: ../../portable/frontends/widgets/diagnostics.py:77
 #: ../../portable/frontends/widgets/gtk/trayicon.py:83
@@ -1434,28 +1314,9 @@ msgstr "Umiestnenie databázového súboru:"
 msgid "Space free on disk:"
 msgstr "Miesto voľné na disku:"
 
-#: ../../portable/frontends/widgets/diagnostics.py:109
-msgid "Database size:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/diagnostics.py:111
-msgid "Total number of db objects:"
-msgstr ""
-
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
 msgstr "Stiahnuté"
-
-#: ../../portable/frontends/widgets/feedcontroller.py:137
-msgid "Full Feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedcontroller.py:191
-#, python-format
-msgid "Show %(count)d More Item"
-msgid_plural "Show %(count)d More Items"
-msgstr[0] ""
-msgstr[1] ""
 
 #: ../../portable/frontends/widgets/feedcontroller.py:224
 #: ../../portable/frontends/widgets/feedcontroller.py:251
@@ -1465,47 +1326,6 @@ msgid_plural "%(count)d Downloading"
 msgstr[0] "%(count)d sa sťahuje"
 msgstr[1] "%(count)d sa sťahujú"
 msgstr[2] "%(count)d sa sťahuje"
-
-#: ../../portable/frontends/widgets/feedcontroller.py:235
-#: ../../portable/frontends/widgets/feedcontroller.py:247
-#, python-format
-msgid "%(count)d Item"
-msgid_plural "%(count)d Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/feedcontroller.py:257
-#, python-format
-msgid "%(count)d Item Matches Search"
-msgid_plural "%(count)d Items Match Search"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/feedcontroller.py:262
-msgid "All Items Match Search"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:134
-msgid "Movies directory gone"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:136
-#, python-format
-msgid ""
-"%(shortappname)s can't find the primary video directory located at:\n"
-"\n"
-"%(moviedirectory)s\n"
-"\n"
-"This may be because it is located on an external drive that is not "
-"connected.\n"
-"\n"
-"If you continue, the primary video directory will be reset to a location on "
-"this drive.  If you had videos downloaded this will cause %(shortappname)s "
-"to lose details about those videos.\n"
-"\n"
-"If you quit, then you can connect the drive or otherwise fix the problem and "
-"relaunch %(shortappname)s."
-msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:304
 msgid "Error Revealing File"
@@ -1531,53 +1351,13 @@ msgstr "Otvoriť súbory - Chyba"
 msgid "File %(filename)s does not exist."
 msgstr "Súbor %(filename)s neexistuje."
 
-#: ../../portable/frontends/widgets/application.py:329
-msgid "The following files do not exist:"
-msgstr ""
-
 #: ../../portable/frontends/widgets/application.py:366
 msgid "New Download"
 msgstr "Nový download"
 
-#: ../../portable/frontends/widgets/application.py:367
-msgid "Enter the URL of the item to download"
-msgstr ""
-
 #: ../../portable/frontends/widgets/application.py:368
 msgid "New Download - Invalid URL"
 msgstr "Nový download - Chybná adresa"
-
-#: ../../portable/frontends/widgets/application.py:369
-msgid ""
-"The address you entered is not a valid url.\n"
-"Please check the URL and try again.\n"
-"\n"
-"Enter the URL of the item to download"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:377
-msgid "Miro is up to date"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:378
-msgid "Miro is up to date!"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:400
-msgid "Remove item"
-msgid_plural "Remove items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:404
-msgid ""
-"One of these items was not downloaded from a feed. Would you like to delete "
-"it or just remove it from the Library?"
-msgid_plural ""
-"Some of these items were not downloaded from a feed. Would you like to "
-"delete them or just remove them from the Library?"
-msgstr[0] ""
-msgstr[1] ""
 
 #: ../../portable/frontends/widgets/application.py:419
 #, python-format
@@ -1586,35 +1366,6 @@ msgid_plural "Are you sure you want to delete all %(count)d items?"
 msgstr[0] "Naozaj chcete odstrániť položku?"
 msgstr[1] "Naozaj chcete odstrániť všetky %(count)d položky?"
 msgstr[2] "Naozaj chcete odstrániť všetkých %(count)d položiek?"
-
-#: ../../portable/frontends/widgets/application.py:449
-#: ../../portable/frontends/widgets/itemcontextmenu.py:99
-msgid "Rename Item"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:450
-msgid "Enter the new name for the item"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:473
-msgid "Save Item As..."
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:527
-msgid "Enter the URL of the site to add"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:528
-msgid "Add Site - Invalid URL"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:529
-msgid ""
-"The address you entered is not a valid url.\n"
-"Please check the URL and try again.\n"
-"\n"
-"Enter the URL of the site to add"
-msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:578
 msgid "Import OPML File"
@@ -1648,25 +1399,6 @@ msgstr "Nová zložka playlistu"
 msgid "Enter a name for the new playlist folder"
 msgstr "Zadajte názov pre novú zložku playlist"
 
-#: ../../portable/frontends/widgets/application.py:660
-#: ../../portable/frontends/widgets/tablist.py:522
-msgid "Rename Feed Folder"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:661
-#, python-format
-msgid "Enter a new name for the feed folder %(name)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:665
-msgid "Rename Feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:666
-#, python-format
-msgid "Enter a new name for the feed %(name)s"
-msgstr ""
-
 #: ../../portable/frontends/widgets/application.py:670
 #: ../../portable/frontends/widgets/tablist.py:583
 #: ../../portable/playlist.py:179
@@ -1698,97 +1430,9 @@ msgstr "Premenovať stránku"
 msgid "Enter a new name for the site %(name)s"
 msgstr "Zadajte nový názov pre stránku %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:704
-msgid "Remove playlist"
-msgid_plural "Remove playlists"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:706
-#, python-format
-msgid "Are you sure you want to remove this playlist?"
-msgid_plural "Are you sure you want to remove these %(count)s playlists?"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:724
-#, python-format
-msgid "Remove %(name)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:725
-#, python-format
-msgid "Are you sure you want to remove %(name)s?"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:750
-msgid "Are you sure you want to quit?"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:752
-#, python-format
-msgid "You have %(count)d download in progress.  Quit anyway?"
-msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:757
-msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:1011
-msgid "Message"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:1036
-msgid "Migrating Files"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:1046
-msgid "Migrating files"
-msgstr ""
-
 #: ../../portable/frontends/widgets/itemlistwidgets.py:177
 msgid "Save Search"
 msgstr "Uložiť hľadanie"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:282
-msgid "Title"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:284
-msgid "Feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:286
-#: ../../portable/frontends/widgets/itemlistwidgets.py:725
-msgid "Date"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:287
-msgid "Length"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:288
-msgid "Status"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:726
-msgid "Size"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:291
-msgid "ETA"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:292
-msgid "Speed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:428
-msgid "Save as a Feed"
-msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:482
 msgid "Pause All"
@@ -1797,24 +1441,6 @@ msgstr "Pozastaviť všetky"
 #: ../../portable/frontends/widgets/itemlistwidgets.py:489
 msgid "Resume All"
 msgstr "Pokračovať všetky"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:496
-msgid "Cancel All"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:503
-msgid "Download Settings"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:549
-#, python-format
-msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:555
-#, python-format
-msgid "%(available)s free for downloads (%(amount)s free on disk)"
-msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:560
 #, python-format
@@ -1835,116 +1461,9 @@ msgstr "%(rate)s sťahuje"
 msgid "Auto Download"
 msgstr "Automaticky sťahovať"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:627
-msgid "Share feed"
-msgstr ""
-
 #: ../../portable/frontends/widgets/itemlistwidgets.py:633
 msgid "Settings"
 msgstr "Nastavenia"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:639
-msgid "Remove feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:724
-msgid "Name"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:727
-msgid "Time"
-msgstr ""
-
-#: ../../portable/frontends/widgets/displays.py:353
-msgid ""
-"Miro can't play this file.  You may be able to open it with a different "
-"program"
-msgstr ""
-
-#: ../../portable/frontends/widgets/displays.py:361
-msgid "Filename:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/displays.py:364
-msgid "File type:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/displays.py:370
-msgid "Play Externally"
-msgstr ""
-
-#: ../../portable/frontends/widgets/displays.py:371
-msgid "Skip"
-msgstr ""
-
-#: ../../portable/frontends/widgets/displays.py:543
-#, python-format
-msgid "%(count)d Feed Folder Selected"
-msgid_plural "%(count)d Feed Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/displays.py:548
-#, python-format
-msgid "(contains %(count)d feed)"
-msgid_plural "(contains %(count)d feeds)"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/displays.py:554
-#, python-format
-msgid "%(count)d Playlist Folder Selected"
-msgid_plural "%(count)d Playlist Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/displays.py:559
-#, python-format
-msgid "(contains %(count)d playlist)"
-msgid_plural "(contains %(count)d playlist)"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/displays.py:569
-#, python-format
-msgid "%(count)d Feed Selected"
-msgid_plural "%(count)d Feeds Selected"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/displays.py:575
-#, python-format
-msgid "%(count)d Playlist Selected"
-msgid_plural "%(count)d Playlists Selected"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/displays.py:582
-msgid "Delete All"
-msgstr ""
-
-#: ../../portable/frontends/widgets/displays.py:586
-msgid "Put Into a New Folder"
-msgstr ""
-
-#: ../../portable/frontends/widgets/playlist.py:146
-msgid "This Playlist is Empty"
-msgstr ""
-
-#: ../../portable/frontends/widgets/playlist.py:149
-msgid ""
-"To add an item, drag it onto the name of this playlist in the sidebar."
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:63
-#, python-format
-msgid "Play Next Unplayed (%(unplayed)d)"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:67
-#, python-format
-msgid "Play All Unplayed (%(unplayed)d)"
-msgstr ""
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:70
 #, python-format
@@ -1960,23 +1479,10 @@ msgstr "Pokračovať vo všetkých downloadoch (%(paused)d)"
 msgid "Hide"
 msgstr "Skryť"
 
-#: ../../portable/frontends/widgets/gtk/video.py:272
-msgid "Add to library"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/video.py:311
-msgid "Permalink"
-msgstr ""
-
 #: ../../portable/frontends/widgets/gtk/window.py:470
 msgid "All files"
 msgstr "Všetky súbory"
 
-#: ../../portable/frontends/widgets/gtk/window.py:499
-msgid "Choose"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -1985,80 +1491,6 @@ msgstr ""
 "%(copyright)s.  Pozri súbor LICENSE pre detaily.\n"
 "Miro and Miro logo sú ochranné známky organizácie Participatory Culture "
 "Foundation."
-
-#: ../../portable/frontends/widgets/removefeeds.py:49
-msgid "Remove Feed"
-msgid_plural "Remove Feeds"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/removefeeds.py:57
-msgid "Are you sure you want to remove this feed:"
-msgid_plural "Are you sure you want to remove these feeds:"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/removefeeds.py:77
-msgid "Keep items that have been downloaded in my library."
-msgstr ""
-
-#: ../../portable/frontends/widgets/removefeeds.py:83
-msgid ""
-"Watched folders will be removed from the sidebar but their contents will "
-"still appear in your library.  You can stop watching watched folders "
-"completely in the Miro preference panel."
-msgstr ""
-
-#: ../../portable/frontends/widgets/removefeeds.py:93
-msgid ""
-"Are you sure you want to remove this feed?  The downloads currently in "
-"progress will be canceled."
-msgid_plural ""
-"Are you sure you want to remove these feeds?  The downloads currently in "
-"progress will be canceled."
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/newfeed.py:60
-#: ../../portable/frontends/widgets/newsearchfeed.py:98
-msgid "URL:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfeed.py:69
-msgid "Feed should go in this section:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfeed.py:71
-#: ../../portable/frontends/widgets/newfolder.py:70
-#: ../../portable/frontends/widgets/newsearchfeed.py:135
-msgid "video"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfeed.py:72
-#: ../../portable/frontends/widgets/newfolder.py:71
-#: ../../portable/frontends/widgets/newsearchfeed.py:136
-msgid "audio"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfeed.py:110
-msgid "Add Feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfeed.py:111
-msgid "Enter the URL of the feed to add"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfeed.py:122
-msgid "Add Feed - Invalid URL"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfeed.py:123
-msgid ""
-"The address you entered is not a valid url.\n"
-"Please check the URL and try again.\n"
-"\n"
-"Enter the URL of the feed to add"
-msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:475
 #: ../../portable/frontends/widgets/tablist.py:534
@@ -2069,26 +1501,6 @@ msgstr "Kopírovať URL do schránky"
 msgid "Remove Site"
 msgstr "Odstrániť stránku"
 
-#: ../../portable/frontends/widgets/tablist.py:521
-msgid "Update Feeds In Folder"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:528
-msgid "Update Feed Now"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:531
-msgid "Rename"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:533
-msgid "Revert Feed Name"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:540
-msgid "Update Feeds Now"
-msgstr ""
-
 #: ../../portable/frontends/widgets/tablist.py:605
 msgid "SITES"
 msgstr "STRÁNKY"
@@ -2097,30 +1509,9 @@ msgstr "STRÁNKY"
 msgid "FEEDS"
 msgstr "ZDROJE"
 
-#: ../../portable/frontends/widgets/tablist.py:609
-msgid "AUDIO FEEDS"
-msgstr ""
-
 #: ../../portable/frontends/widgets/tablist.py:611
 msgid "PLAYLISTS"
 msgstr "PLAYLISTY"
-
-#: ../../portable/frontends/widgets/newfolder.py:60
-msgid "Folder name:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfolder.py:68
-msgid "Folder should go in this section:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfolder.py:107
-#: ../../portable/frontends/widgets/newfolder.py:109
-msgid "Create Feed Folder"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfolder.py:110
-msgid "Enter the name of the folder to add"
-msgstr ""
 
 #: ../../portable/frontends/widgets/linkhandler.py:54
 msgid "Subscribe to Feed"
@@ -2139,14 +1530,6 @@ msgstr ""
 "\n"
 "%(url)s"
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:58
-msgid "New Search Feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:59
-msgid "A search feed contains items that match a search term."
-msgstr ""
-
 #: ../../portable/frontends/widgets/newsearchfeed.py:74
 msgid "Search for:"
 msgstr "Hľadať:"
@@ -2154,40 +1537,6 @@ msgstr "Hľadať:"
 #: ../../portable/frontends/widgets/newsearchfeed.py:80
 msgid "In this:"
 msgstr "V"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:87
-msgid "Feed:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:92
-msgid "Search engine:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:132
-msgid "Add new feed to this section:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:60
-msgid "Miro First Time Setup"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:117
-msgid "Welcome to the Miro First Time Setup"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:120
-msgid ""
-"The next few screens will help you set up Miro so that it works best for "
-"you.\n"
-"\n"
-"We recommend that you have Miro launch when your computer starts up.  This "
-"way, downloads in progress can finish downloading and new media files can be "
-"downloaded in the background, ready when you want to watch."
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:132
-msgid "Would you like to run Miro on startup?"
-msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:137
 #: ../../portable/frontends/widgets/firsttimedialog.py:170
@@ -2201,39 +1550,6 @@ msgstr "Áno"
 msgid "No"
 msgstr "Nie"
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:146
-msgid "Next >"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:156
-msgid "Completing the Miro First Time Setup"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:159
-msgid ""
-"Miro can find all the media files on your computer to help you organize your "
-"collection.\n"
-"\n"
-"Would you like Miro to look for media files on your computer?"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:177
-msgid "Restrict to all my personal files."
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:178
-msgid "Search custom folders:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:189
-msgid "Choose directory to search for media files"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:200
-#: ../../portable/frontends/widgets/firsttimedialog.py:280
-msgid "< Previous"
-msgstr ""
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:213
 #: ../../portable/frontends/widgets/firsttimedialog.py:215
 #: ../../portable/frontends/widgets/firsttimedialog.py:272
@@ -2241,33 +1557,10 @@ msgstr ""
 msgid "Search"
 msgstr "Hľadať"
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:215
-#: ../../portable/frontends/widgets/firsttimedialog.py:283
-msgid "Finish"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:263
-msgid "Searching for media files"
-msgstr ""
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:273
 #: ../../portable/dialogs.py:85
 msgid "Cancel"
 msgstr "Zrušiť"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:311
-#, python-format
-msgid "parsed %(count)s file"
-msgid_plural "parsed %(count)s files"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:316
-#, python-format
-msgid "found %(count)s media file"
-msgid_plural "found %(count)s media files"
-msgstr[0] ""
-msgstr[1] ""
 
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
@@ -2277,34 +1570,6 @@ msgstr "Sprievodca Miro"
 msgid "Downloading"
 msgstr "Sťahuje sa"
 
-#: ../../portable/frontends/widgets/downloadscontroller.py:90
-msgid "Single and external downloads"
-msgstr ""
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:93
-msgid "Feed downloads"
-msgstr ""
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:96
-msgid "Seeding"
-msgstr ""
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
-msgid "Add a Playlist"
-msgstr ""
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
-msgid "Add items to an existing playlist or a new one."
-msgstr ""
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
-msgid "Existing playlist:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
-msgid "New playlist:"
-msgstr ""
-
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
 msgstr "Odstrániť z knižnice"
@@ -2313,33 +1578,6 @@ msgstr "Odstrániť z knižnice"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:192
 msgid "Play"
 msgstr "Prehrať"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:95
-msgid "Play Just this Item"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:96
-#: ../../portable/frontends/widgets/itemcontextmenu.py:193
-msgid "Add to Playlist"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:101
-msgid "Revert Item Name"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:103
-#: ../../portable/frontends/widgets/itemcontextmenu.py:200
-msgid "Mark as Unplayed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:106
-#: ../../portable/frontends/widgets/itemcontextmenu.py:205
-msgid "Mark as Played"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
-msgid "Start seeding"
-msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:118
 #: ../../portable/frontends/widgets/itemcontextmenu.py:240
@@ -2357,58 +1595,12 @@ msgstr "Pozastaviť sťahovanie"
 msgid "Resume Download"
 msgstr "Obnoviť sťahovanie"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
 msgstr "Web stránka"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:139
 msgid "License"
 msgstr "Licencia"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:142
-msgid "File in Browser"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:144
-#, python-format
-msgid "File in %(progname)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:146
-msgid "File on Disk"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:149
-msgid "View"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:187
-#, python-format
-msgid "%(count)d Downloaded Item"
-msgid_plural "%(count)d Downloaded Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:216
-#, python-format
-msgid "%(count)d Available Item"
-msgid_plural "%(count)d Available Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:229
-#, python-format
-msgid "%(count)d Downloading Item"
-msgid_plural "%(count)d Downloading Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:246
-#, python-format
-msgid "%(count)d Paused Item"
-msgid_plural "%(count)d Paused Items"
-msgstr[0] ""
-msgstr[1] ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:264
 msgid "Restart Upload"
@@ -2433,10 +1625,6 @@ msgstr "Hotovo"
 #: ../../portable/dialogs.py:89
 msgid "Quit"
 msgstr "Skončiť"
-
-#: ../../portable/dialogs.py:90
-msgid "Continue"
-msgstr ""
 
 #: ../../portable/dialogs.py:91
 msgid "Ignore"
@@ -2478,14 +1666,6 @@ msgstr "Vymazať videá"
 msgid "Create"
 msgstr "Vytvoriť"
 
-#: ../../portable/dialogs.py:102
-msgid "Create Feed"
-msgstr ""
-
-#: ../../portable/dialogs.py:103
-msgid "Create Folder"
-msgstr ""
-
 #: ../../portable/dialogs.py:105
 msgid "Add Into New Folder"
 msgstr "Pridať do novej zložky"
@@ -2505,10 +1685,6 @@ msgstr "Spustiť Miro"
 #: ../../portable/dialogs.py:112
 msgid "Download Anyway"
 msgstr "Stiahnuť aj tak"
-
-#: ../../portable/dialogs.py:113
-msgid "Open in External Browser"
-msgstr ""
 
 #: ../../portable/dialogs.py:114
 msgid "Don't Install"
@@ -2572,54 +1748,9 @@ msgstr ""
 "\n"
 "URL: %(url)s"
 
-#: ../../portable/singleclick.py:297
-msgid "Subscribing to multiple feeds"
-msgstr ""
-
-#: ../../portable/singleclick.py:298
-#, python-format
-msgid "Create feed?"
-msgid_plural "Create %(count)d feeds?"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/singleclick.py:318
-msgid "Enter a name for the new feed folder"
-msgstr ""
-
-#: ../../portable/singleclick.py:322
-#, python-format
-msgid ""
-"NOTE: You are already subscribed to one of these feeds.  These feeds will "
-"stay where they currently are."
-msgid_plural ""
-"NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-"will stay where they currently are."
-msgstr[0] ""
-msgstr[1] ""
-
 #: ../../portable/singleclick.py:337
 msgid "Subscription error"
 msgstr "Chyba pri odoberaní"
-
-#: ../../portable/singleclick.py:347
-#, python-format
-msgid ""
-"This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
-"the publisher of this file."
-msgstr ""
-
-#: ../../portable/singleclick.py:356
-#, python-format
-msgid ""
-"This %(appname)s feed file has the wrong content type: %(url)s. Please "
-"notify the publisher of this file."
-msgstr ""
-
-#: ../../portable/singleclick.py:364
-#, python-format
-msgid "Could not download the %(appname)s feed file: %(url)s"
-msgstr ""
 
 #: ../../portable/singleclick.py:414
 msgid "Invalid Torrent"
@@ -2647,13 +1778,6 @@ msgid_plural "%(count)d hours"
 msgstr[0] "%(count)d hodina"
 msgstr[1] "%(count)d hodiny"
 msgstr[2] "%(count)d hodín"
-
-#: ../../portable/item.py:449
-#, python-format
-msgid "%(count)d minute"
-msgid_plural "%(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
 
 #: ../../portable/item.py:733 ../../portable/item.py:749
 #: ../../portable/item.py:761
@@ -2798,6 +1922,869 @@ msgstr "Zlý typ obsahu"
 msgid "Channel is not compatible with %(appname)s"
 msgstr "Kanál nie je kompatibilný s %(appname)s"
 
+#: ../../portable/feed.py:2407
+msgid "Local Files"
+msgstr "Lokálne súbory"
+
+#: ../../portable/feed.py:2421
+msgid "Playing File"
+msgstr "Prehrávanie súboru"
+
+#: ../../portable/frontends/widgets/style.py:234
+#: ../../portable/frontends/widgets/itemcontextmenu.py:113
+msgid "Stop seeding"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:311
+msgid "(These can be changed using the feed's settings button)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:315
+msgid "Check for new content:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:320
+msgid "Auto download setting:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:326
+msgid "Remember this many old items:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:327
+msgid "(in addition to the current contents)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:360
+msgid "Limit upstream bandwidth to:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:372
+msgid "Limit downstream bandwidth to:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:400
+msgid "Starting port:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:404
+msgid "Ending port:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:435
+#: ../../portable/frontends/widgets/firsttimedialog.py:184
+msgid "Change"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:440
+msgid "Choose Movies Directory"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:453
+msgid "Migrate existing movies?"
+msgstr ""
+
+msgid ""
+"You've selected a new folder to download movies to.  Should Miro migrate "
+"your existing downloads there? (Currently dowloading movies will not be "
+"moved until they finish.)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:523
+msgid "Add Watched Folder"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:580
+msgid "1 day"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:590
+msgid "By default, videos expire after:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:599
+msgid "Always play videos in a separate window."
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:608
+msgid "Play videos one after another"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:609
+msgid "Stop after each video"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:621
+msgid "Feeds"
+msgstr ""
+
+#: ../../portable/frontends/widgets/browser.py:94
+msgid "Open in browser"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistcontroller.py:427
+msgid "No Results Found"
+msgstr ""
+
+msgid "No Items to Display"
+msgstr ""
+
+msgid "This tab keeps track of downloads that aren't part of a feed."
+msgstr ""
+
+#: ../../portable/frontends/widgets/diagnostics.py:109
+msgid "Database size:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/diagnostics.py:111
+msgid "Total number of db objects:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedcontroller.py:137
+msgid "Full Feed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedcontroller.py:191
+#, python-format
+msgid "Show %(count)d More Item"
+msgid_plural "Show %(count)d More Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/feedcontroller.py:235
+#: ../../portable/frontends/widgets/feedcontroller.py:247
+#, python-format
+msgid "%(count)d Item"
+msgid_plural "%(count)d Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/feedcontroller.py:257
+#, python-format
+msgid "%(count)d Item Matches Search"
+msgid_plural "%(count)d Items Match Search"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/feedcontroller.py:262
+msgid "All Items Match Search"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:134
+msgid "Movies directory gone"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:136
+#, python-format
+msgid ""
+"%(shortappname)s can't find the primary video directory located at:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"This may be because it is located on an external drive that is not "
+"connected.\n"
+"\n"
+"If you continue, the primary video directory will be reset to a location on "
+"this drive.  If you had videos downloaded this will cause %(shortappname)s "
+"to lose details about those videos.\n"
+"\n"
+"If you quit, then you can connect the drive or otherwise fix the problem and "
+"relaunch %(shortappname)s."
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:329
+msgid "The following files do not exist:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:367
+msgid "Enter the URL of the item to download"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:369
+msgid ""
+"The address you entered is not a valid url.\n"
+"Please check the URL and try again.\n"
+"\n"
+"Enter the URL of the item to download"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:377
+msgid "Miro is up to date"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:378
+msgid "Miro is up to date!"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:400
+msgid "Remove item"
+msgid_plural "Remove items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:404
+msgid ""
+"One of these items was not downloaded from a feed. Would you like to delete "
+"it or just remove it from the Library?"
+msgid_plural ""
+"Some of these items were not downloaded from a feed. Would you like to "
+"delete them or just remove them from the Library?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:449
+#: ../../portable/frontends/widgets/itemcontextmenu.py:99
+msgid "Rename Item"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:450
+msgid "Enter the new name for the item"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:473
+msgid "Save Item As..."
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:527
+msgid "Enter the URL of the site to add"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:528
+msgid "Add Site - Invalid URL"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:529
+msgid ""
+"The address you entered is not a valid url.\n"
+"Please check the URL and try again.\n"
+"\n"
+"Enter the URL of the site to add"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:660
+#: ../../portable/frontends/widgets/tablist.py:522
+msgid "Rename Feed Folder"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:661
+#, python-format
+msgid "Enter a new name for the feed folder %(name)s"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:665
+msgid "Rename Feed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:666
+#, python-format
+msgid "Enter a new name for the feed %(name)s"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:704
+msgid "Remove playlist"
+msgid_plural "Remove playlists"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:706
+#, python-format
+msgid "Are you sure you want to remove this playlist?"
+msgid_plural "Are you sure you want to remove these %(count)s playlists?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:724
+#, python-format
+msgid "Remove %(name)s"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:725
+#, python-format
+msgid "Are you sure you want to remove %(name)s?"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:750
+msgid "Are you sure you want to quit?"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:752
+#, python-format
+msgid "You have %(count)d download in progress.  Quit anyway?"
+msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:757
+msgid "Warn me when I attempt to quit with downloads in progress"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:1011
+msgid "Message"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:1036
+msgid "Migrating Files"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:1046
+msgid "Migrating files"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:282
+msgid "Title"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:284
+msgid "Feed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:286
+#: ../../portable/frontends/widgets/itemlistwidgets.py:725
+msgid "Date"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:287
+msgid "Length"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:288
+msgid "Status"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:289
+#: ../../portable/frontends/widgets/itemlistwidgets.py:726
+msgid "Size"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:291
+msgid "ETA"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:292
+msgid "Speed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:428
+msgid "Save as a Feed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:496
+msgid "Cancel All"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:503
+msgid "Download Settings"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:549
+#, python-format
+msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:555
+#, python-format
+msgid "%(available)s free for downloads (%(amount)s free on disk)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:627
+msgid "Share feed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:639
+msgid "Remove feed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:724
+msgid "Name"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:727
+msgid "Time"
+msgstr ""
+
+#: ../../portable/frontends/widgets/displays.py:353
+msgid ""
+"Miro can't play this file.  You may be able to open it with a different "
+"program"
+msgstr ""
+
+#: ../../portable/frontends/widgets/displays.py:361
+msgid "Filename:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/displays.py:364
+msgid "File type:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/displays.py:370
+msgid "Play Externally"
+msgstr ""
+
+#: ../../portable/frontends/widgets/displays.py:371
+msgid "Skip"
+msgstr ""
+
+#: ../../portable/frontends/widgets/displays.py:543
+#, python-format
+msgid "%(count)d Feed Folder Selected"
+msgid_plural "%(count)d Feed Folders Selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/displays.py:548
+#, python-format
+msgid "(contains %(count)d feed)"
+msgid_plural "(contains %(count)d feeds)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/displays.py:554
+#, python-format
+msgid "%(count)d Playlist Folder Selected"
+msgid_plural "%(count)d Playlist Folders Selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/displays.py:559
+#, python-format
+msgid "(contains %(count)d playlist)"
+msgid_plural "(contains %(count)d playlist)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/displays.py:569
+#, python-format
+msgid "%(count)d Feed Selected"
+msgid_plural "%(count)d Feeds Selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/displays.py:575
+#, python-format
+msgid "%(count)d Playlist Selected"
+msgid_plural "%(count)d Playlists Selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/displays.py:582
+msgid "Delete All"
+msgstr ""
+
+#: ../../portable/frontends/widgets/displays.py:586
+msgid "Put Into a New Folder"
+msgstr ""
+
+#: ../../portable/frontends/widgets/playlist.py:146
+msgid "This Playlist is Empty"
+msgstr ""
+
+#: ../../portable/frontends/widgets/playlist.py:149
+msgid ""
+"To add an item, drag it onto the name of this playlist in the sidebar."
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:63
+#, python-format
+msgid "Play Next Unplayed (%(unplayed)d)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:67
+#, python-format
+msgid "Play All Unplayed (%(unplayed)d)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/video.py:272
+msgid "Add to library"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/video.py:311
+msgid "Permalink"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/window.py:499
+msgid "Choose"
+msgstr ""
+
+#: ../../portable/frontends/widgets/removefeeds.py:49
+msgid "Remove Feed"
+msgid_plural "Remove Feeds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/removefeeds.py:57
+msgid "Are you sure you want to remove this feed:"
+msgid_plural "Are you sure you want to remove these feeds:"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/removefeeds.py:77
+msgid "Keep items that have been downloaded in my library."
+msgstr ""
+
+#: ../../portable/frontends/widgets/removefeeds.py:83
+msgid ""
+"Watched folders will be removed from the sidebar but their contents will "
+"still appear in your library.  You can stop watching watched folders "
+"completely in the Miro preference panel."
+msgstr ""
+
+#: ../../portable/frontends/widgets/removefeeds.py:93
+msgid ""
+"Are you sure you want to remove this feed?  The downloads currently in "
+"progress will be canceled."
+msgid_plural ""
+"Are you sure you want to remove these feeds?  The downloads currently in "
+"progress will be canceled."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/newfeed.py:60
+#: ../../portable/frontends/widgets/newsearchfeed.py:98
+msgid "URL:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfeed.py:69
+msgid "Feed should go in this section:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfeed.py:71
+#: ../../portable/frontends/widgets/newfolder.py:70
+#: ../../portable/frontends/widgets/newsearchfeed.py:135
+msgid "video"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfeed.py:72
+#: ../../portable/frontends/widgets/newfolder.py:71
+#: ../../portable/frontends/widgets/newsearchfeed.py:136
+msgid "audio"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfeed.py:110
+msgid "Add Feed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfeed.py:111
+msgid "Enter the URL of the feed to add"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfeed.py:122
+msgid "Add Feed - Invalid URL"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfeed.py:123
+msgid ""
+"The address you entered is not a valid url.\n"
+"Please check the URL and try again.\n"
+"\n"
+"Enter the URL of the feed to add"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:521
+msgid "Update Feeds In Folder"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:528
+msgid "Update Feed Now"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:531
+msgid "Rename"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:533
+msgid "Revert Feed Name"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:540
+msgid "Update Feeds Now"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:609
+msgid "AUDIO FEEDS"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfolder.py:60
+msgid "Folder name:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfolder.py:68
+msgid "Folder should go in this section:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfolder.py:107
+#: ../../portable/frontends/widgets/newfolder.py:109
+msgid "Create Feed Folder"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfolder.py:110
+msgid "Enter the name of the folder to add"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:58
+msgid "New Search Feed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:59
+msgid "A search feed contains items that match a search term."
+msgstr ""
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:87
+msgid "Feed:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:92
+msgid "Search engine:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:132
+msgid "Add new feed to this section:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:60
+msgid "Miro First Time Setup"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:117
+msgid "Welcome to the Miro First Time Setup"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:120
+msgid ""
+"The next few screens will help you set up Miro so that it works best for "
+"you.\n"
+"\n"
+"We recommend that you have Miro launch when your computer starts up.  This "
+"way, downloads in progress can finish downloading and new media files can be "
+"downloaded in the background, ready when you want to watch."
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:132
+msgid "Would you like to run Miro on startup?"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:146
+msgid "Next >"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:156
+msgid "Completing the Miro First Time Setup"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:159
+msgid ""
+"Miro can find all the media files on your computer to help you organize your "
+"collection.\n"
+"\n"
+"Would you like Miro to look for media files on your computer?"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:177
+msgid "Restrict to all my personal files."
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:178
+msgid "Search custom folders:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:189
+msgid "Choose directory to search for media files"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:200
+#: ../../portable/frontends/widgets/firsttimedialog.py:280
+msgid "< Previous"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:215
+#: ../../portable/frontends/widgets/firsttimedialog.py:283
+msgid "Finish"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:263
+msgid "Searching for media files"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:311
+#, python-format
+msgid "parsed %(count)s file"
+msgid_plural "parsed %(count)s files"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:316
+#, python-format
+msgid "found %(count)s media file"
+msgid_plural "found %(count)s media files"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:90
+msgid "Single and external downloads"
+msgstr ""
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:93
+msgid "Feed downloads"
+msgstr ""
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:96
+msgid "Seeding"
+msgstr ""
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
+msgid "Add a Playlist"
+msgstr ""
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
+msgid "Add items to an existing playlist or a new one."
+msgstr ""
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
+msgid "Existing playlist:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
+msgid "New playlist:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:95
+msgid "Play Just this Item"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:96
+#: ../../portable/frontends/widgets/itemcontextmenu.py:193
+msgid "Add to Playlist"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:101
+msgid "Revert Item Name"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:103
+#: ../../portable/frontends/widgets/itemcontextmenu.py:200
+msgid "Mark as Unplayed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:106
+#: ../../portable/frontends/widgets/itemcontextmenu.py:205
+msgid "Mark as Played"
+msgstr ""
+
+msgid "Start seeding"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:142
+msgid "File in Browser"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:144
+#, python-format
+msgid "File in %(progname)s"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:146
+msgid "File on Disk"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:149
+msgid "View"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:187
+#, python-format
+msgid "%(count)d Downloaded Item"
+msgid_plural "%(count)d Downloaded Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:216
+#, python-format
+msgid "%(count)d Available Item"
+msgid_plural "%(count)d Available Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:229
+#, python-format
+msgid "%(count)d Downloading Item"
+msgid_plural "%(count)d Downloading Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:246
+#, python-format
+msgid "%(count)d Paused Item"
+msgid_plural "%(count)d Paused Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/dialogs.py:90
+msgid "Continue"
+msgstr ""
+
+#: ../../portable/dialogs.py:102
+msgid "Create Feed"
+msgstr ""
+
+#: ../../portable/dialogs.py:103
+msgid "Create Folder"
+msgstr ""
+
+#: ../../portable/dialogs.py:113
+msgid "Open in External Browser"
+msgstr ""
+
+#: ../../portable/singleclick.py:297
+msgid "Subscribing to multiple feeds"
+msgstr ""
+
+#: ../../portable/singleclick.py:298
+#, python-format
+msgid "Create feed?"
+msgid_plural "Create %(count)d feeds?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/singleclick.py:318
+msgid "Enter a name for the new feed folder"
+msgstr ""
+
+#: ../../portable/singleclick.py:322
+#, python-format
+msgid ""
+"NOTE: You are already subscribed to one of these feeds.  These feeds will "
+"stay where they currently are."
+msgid_plural ""
+"NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
+"will stay where they currently are."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/singleclick.py:347
+#, python-format
+msgid ""
+"This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
+"the publisher of this file."
+msgstr ""
+
+#: ../../portable/singleclick.py:356
+#, python-format
+msgid ""
+"This %(appname)s feed file has the wrong content type: %(url)s. Please "
+"notify the publisher of this file."
+msgstr ""
+
+#: ../../portable/singleclick.py:364
+#, python-format
+msgid "Could not download the %(appname)s feed file: %(url)s"
+msgstr ""
+
+#: ../../portable/item.py:449
+#, python-format
+msgid "%(count)d minute"
+msgid_plural "%(count)d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
 #: ../../portable/feed.py:1071
 #, python-format
 msgid ""
@@ -2815,11 +2802,3 @@ msgstr ""
 #, python-format
 msgid "Search All: %(text)s"
 msgstr ""
-
-#: ../../portable/feed.py:2407
-msgid "Local Files"
-msgstr "Lokálne súbory"
-
-#: ../../portable/feed.py:2421
-msgid "Playing File"
-msgstr "Prehrávanie súboru"

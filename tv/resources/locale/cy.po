@@ -16,8 +16,682 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : (n != 8 || n != 11) ? "
 "2 : 3;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:124
+msgid "Close to tray?"
+msgstr "Cau i'r trei?"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:125
+msgid ""
+"When you click the red close button, would you like Miro to close to the "
+"system tray or quit?  You can change this setting later in the Options."
+msgstr ""
+"Pryd rwyt ti'n clicio ar y botwm coch, wyt eisiau i Miro cau i drei'r system "
+"neu cau lawr? Ti'n gallu newid y dewis yma wedyn yn yr Opsiynau."
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:184
+msgid "Error Recommending Item"
+msgstr "Gwall wrth awgrymu eitem"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
+msgid "Update Available"
+msgstr "Fersiwn newydd Ar Gael"
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:124
+#: ../../portable/frontends/widgets/style.py:232
+#: ../../portable/frontends/widgets/style.py:970
+#: ../../portable/frontends/widgets/style.py:1134
+#: ../../portable/frontends/widgets/gtk/video.py:279
+#: ../../portable/frontends/widgets/itemcontextmenu.py:109
+#: ../../portable/frontends/widgets/itemcontextmenu.py:211
+#: ../../portable/dialogs.py:106
+msgid "Keep"
+msgstr "Cadw"
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:128
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
+#: ../../portable/frontends/widgets/gtk/video.py:274
+#: ../../portable/frontends/widgets/gtk/video.py:282
+#: ../../portable/frontends/widgets/itemcontextmenu.py:65
+#: ../../portable/dialogs.py:107
+msgid "Delete"
+msgstr "Dileu"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
+msgid "Services"
+msgstr "Gwasanaethau"
+
+msgid "Hide Miro"
+msgstr "Cuddio Miro"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
+msgid "Hide Others"
+msgstr "Cuddio'r gweddill"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
+msgid "Show All"
+msgstr "Dangos Popeth"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
+msgid "Preferences..."
+msgstr "Dewisiadau..."
+
+msgid "Quit Miro"
+msgstr "Gadael Miro"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:150
+msgid "Close Window"
+msgstr "Cau Ffenestr"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
+msgid "Cut"
+msgstr "Torri"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
+msgid "Copy"
+msgstr "Copio"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
+msgid "Paste"
+msgstr "Gludo"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
+msgid "Select All"
+msgstr "Dewis popeth"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
+msgid "Edit"
+msgstr "Golygu"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
+msgid "Zoom"
+msgstr "Chwyddo"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
+msgid "Minimize"
+msgstr "Lleihau"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
+msgid "Main Window"
+msgstr "Prif Ffenestr"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
+msgid "Bring All to Front"
+msgstr "Popeth i'r Blaen"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
+msgid "Window"
+msgstr "Ffenest"
+
+msgid "Miro Help"
+msgstr "Cymorth Miro"
+
+#: ../../platform/osx/plat/frontends/widgets/application.py:166
+msgid "Download Completed"
+msgstr "Llwytho i lawr wedi gorffen"
+
+#: ../../portable/opml.py:185
+msgid "OPML Import failed"
+msgstr "Mewnforio OPML wedi methu"
+
+#: ../../portable/opml.py:191
+msgid "OPML Import summary"
+msgstr "Crynodeb mewnforio OPML"
+
+msgid ""
+"The database has been successfully saved. It is now safe to quit without "
+"losing any data."
+msgstr ""
+"Mae'r cronfa ddata wedi ei chadw'n iawn. Mae'n saff i gau heb golli unrhyw "
+"data."
+
+#: ../../portable/startup.py:173
+msgid "Database too new"
+msgstr "Cronfa data rhy newydd"
+
+#: ../../portable/downloader.py:268 ../../portable/httpclient.py:145
+#: ../../portable/httpclient.py:174
+msgid "File not found"
+msgstr "Heb ffeindio ffeil"
+
+#: ../../portable/downloader.py:269
+msgid "Flash URL Scraping Error"
+msgstr "Gwall Flash URL Scraping"
+
+#: ../../portable/downloader.py:447
+msgid "starting up"
+msgstr "Yn dechrau"
+
+#: ../../portable/dl_daemon/download.py:507
+#: ../../portable/frontends/widgets/style.py:228
+msgid "Error"
+msgstr "Gwall"
+
+#: ../../portable/dl_daemon/download.py:621
+#: ../../portable/dl_daemon/download.py:838
+msgid "Not enough disk space"
+msgstr "Dim digon o le ar ddisg"
+
+#: ../../portable/dl_daemon/download.py:852
+msgid "BitTorrent failure"
+msgstr "Methiant BitTorrent"
+
+#: ../../portable/dl_daemon/download.py:853
+msgid "BitTorrent failed to startup"
+msgstr "BitTorrent wedi methu wrth ddechrau"
+
+#: ../../portable/dl_daemon/download.py:1041
+msgid "Corrupt Torrent"
+msgstr "Torrent wedi llygru"
+
+#: ../../portable/dl_daemon/download.py:1067
+msgid "Torrent file deleted"
+msgstr "Wedi dileu ffeil Torrent"
+
+#: ../../portable/menubar.py:184
+msgid "_Open"
+msgstr "_Agor"
+
+#: ../../portable/menubar.py:196
+msgid "_Quit"
+msgstr "_Cau"
+
+#: ../../portable/menubar.py:205
+msgid "Cu_t"
+msgstr "_Torri"
+
+#: ../../portable/menubar.py:206
+msgid "_Copy"
+msgstr "_Copio"
+
+#: ../../portable/menubar.py:207
+msgid "_Paste"
+msgstr "_Pastio"
+
+#: ../../portable/menubar.py:208
+msgid "Select _All"
+msgstr "Dewis _Popeth"
+
+#: ../../portable/menubar.py:233
+msgid "New _Playlist"
+msgstr "Rhest_Chwarae Newydd"
+
+#: ../../portable/menubar.py:234
+msgid "New Playlist Fol_der"
+msgstr "Ffol_der Rhestr Chwarae Newydd"
+
+#: ../../portable/menubar.py:236
+msgid "Re_name Playlist"
+msgstr "Ail_enwi Rhestr Chwarae"
+
+#: ../../portable/menubar.py:237
+msgid "_Remove Playlist"
+msgstr "_Dileu Rhestr Chwarae"
+
+#: ../../portable/menubar.py:238
+msgid "_Remove Playlists"
+msgstr "_Dileu Rhestri Chwarae"
+
+#: ../../portable/menubar.py:239
+msgid "_Remove Playlist Folders"
+msgstr "_Dileu Ffolderi Rhestr Chwarae"
+
+#: ../../portable/menubar.py:240
+msgid "_Remove Playlist Folder"
+msgstr "_Dileu Ffolder Rhestr Chwarae"
+
+#: ../../portable/menubar.py:251 ../../portable/menubar.py:252
+msgid "_Play"
+msgstr "_Chwarae"
+
+#: ../../portable/menubar.py:254
+msgid "_Stop"
+msgstr "_Stopio"
+
+#: ../../portable/menubar.py:256
+msgid "_Next Video"
+msgstr "_Fideo Nesaf"
+
+#: ../../portable/menubar.py:257
+msgid "_Previous Video"
+msgstr "_Fideo Blaenorol"
+
+#: ../../portable/menubar.py:259
+msgid "Skip _Forward"
+msgstr "Neidio _Ymlaen"
+
+#: ../../portable/menubar.py:260
+msgid "Skip _Back"
+msgstr "Neidio yn ôl"
+
+#: ../../portable/menubar.py:262
+msgid "Volume _Up"
+msgstr "Lefel Sain i _Fyny"
+
+#: ../../portable/menubar.py:263
+msgid "Volume _Down"
+msgstr "Lefel Sain i _Lawr"
+
+#: ../../portable/menubar.py:265
+msgid "_Fullscreen"
+msgstr "_Sgrin lawn"
+
+#: ../../portable/menubar.py:271
+msgid "_Donate"
+msgstr "_Cyfranu"
+
+#: ../../portable/menubar.py:272 ../../portable/menubar.py:293
+msgid "_Help"
+msgstr "_Cymorth"
+
+#: ../../portable/menubar.py:275
+msgid "Report a _Bug"
+msgstr "Adridd_Byg"
+
+#: ../../portable/menubar.py:284
+msgid "_File"
+msgstr "_Ffeil"
+
+#: ../../portable/menubar.py:291
+msgid "_Playlists"
+msgstr "_Rhestri Chwarae"
+
+#: ../../portable/menubar.py:292
+msgid "P_layback"
+msgstr "C_hwarae yn ôl"
+
+#: ../../portable/frontends/widgets/crashdialog.py:46
+#: ../../portable/httpclient.py:158
+msgid "Internal Error"
+msgstr "Gwall Mewnol"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:55
+#: ../../portable/frontends/widgets/feedsettingspanel.py:102
+#: ../../portable/frontends/widgets/prefpanel.py:585
+msgid "never"
+msgstr "byth"
+
+#: ../../portable/frontends/widgets/style.py:225
+msgid "Down Total"
+msgstr "Cyfanswm i lawr"
+
+#: ../../portable/frontends/widgets/style.py:226
+#: ../../portable/frontends/widgets/style.py:1040
+#: ../../portable/frontends/widgets/style.py:1051
+#: ../../portable/frontends/widgets/itemcontextmenu.py:129
+#: ../../portable/frontends/widgets/itemcontextmenu.py:224
+#: ../../portable/dialogs.py:95
+msgid "Download"
+msgstr "Llwytho i lawr"
+
+#: ../../portable/frontends/widgets/style.py:233
+#: ../../portable/frontends/widgets/prefpanel.py:485
+#: ../../portable/frontends/widgets/tablist.py:523
+#: ../../portable/frontends/widgets/tablist.py:535
+#: ../../portable/frontends/widgets/tablist.py:541
+#: ../../portable/frontends/widgets/tablist.py:578
+#: ../../portable/frontends/widgets/tablist.py:584
+#: ../../portable/frontends/widgets/tablist.py:589
+#: ../../portable/dialogs.py:108
+msgid "Remove"
+msgstr "Tynnu"
+
+#: ../../portable/frontends/widgets/prefpanel.py:289
+#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+#: ../../portable/frontends/widgets/statictabs.py:103
+msgid "New"
+msgstr "Newydd"
+
+#: ../../portable/frontends/widgets/prefpanel.py:435
+#: ../../portable/frontends/widgets/firsttimedialog.py:184
+msgid "Change"
+msgstr "Newid"
+
+#: ../../portable/frontends/widgets/prefpanel.py:482
+#: ../../portable/dialogs.py:104
+msgid "Add"
+msgstr "Adio"
+
+#: ../../portable/frontends/widgets/prefpanel.py:580
+msgid "1 day"
+msgstr "1 diwrnod"
+
+#: ../../portable/frontends/widgets/prefpanel.py:581
+msgid "3 days"
+msgstr "3 diwrnod"
+
+#: ../../portable/frontends/widgets/prefpanel.py:582
+msgid "6 days"
+msgstr "6 diwrnod"
+
+#: ../../portable/frontends/widgets/prefpanel.py:583
+msgid "10 days"
+msgstr "10 diwrnod"
+
+#: ../../portable/frontends/widgets/prefpanel.py:584
+msgid "1 month"
+msgstr "1 mis"
+
+#: ../../portable/frontends/widgets/prefpanel.py:590
+msgid "By default, videos expire after:"
+msgstr "Mae'r fideos yn dod i ben wedi:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:620
+msgid "General"
+msgstr "Cyffredinol"
+
+#: ../../portable/frontends/widgets/prefpanel.py:622
+#: ../../portable/frontends/widgets/downloadscontroller.py:81
+msgid "Downloads"
+msgstr "Llwythiadau i lawr"
+
+#: ../../portable/frontends/widgets/prefpanel.py:623
+msgid "Folders"
+msgstr "Ffolder"
+
+#: ../../portable/frontends/widgets/prefpanel.py:625
+msgid "Playback"
+msgstr "Chwarae Nôl"
+
+#: ../../portable/frontends/widgets/itemlistcontroller.py:413
+#: ../../portable/frontends/widgets/statictabs.py:86
+msgid "Video Search"
+msgstr "Chwilio Fideo"
+
+msgid "Library"
+msgstr "Llyfrgell"
+
+#: ../../portable/frontends/widgets/application.py:578
+msgid "Import OPML File"
+msgstr "Mewnforio Ffeil OPML"
+
+#: ../../portable/frontends/widgets/application.py:580
+msgid "OPML Files"
+msgstr "Ffeils OPML"
+
+#: ../../portable/frontends/widgets/application.py:593
+msgid "Export OPML File"
+msgstr "Allforio Ffeil OPML"
+
+#: ../../portable/frontends/widgets/application.py:616
+msgid "Create Playlist"
+msgstr "Creu Rhestr Chwarae"
+
+#: ../../portable/frontends/widgets/application.py:617
+msgid "Enter a name for the new playlist"
+msgstr "Rhoi enw i'r rhestr chwarae newydd"
+
+#: ../../portable/frontends/widgets/application.py:638
+msgid "Create Playlist Folder"
+msgstr "Creu Ffolder Rhestr Chwarae"
+
+#: ../../portable/frontends/widgets/application.py:639
+msgid "Enter a name for the new playlist folder"
+msgstr "Rho enw newydd am ffolder y rhestr chwarae"
+
+#: ../../portable/frontends/widgets/application.py:670
+#: ../../portable/frontends/widgets/tablist.py:583
+#: ../../portable/playlist.py:179
+msgid "Rename Playlist"
+msgstr "Ail enwi'r Rhestr Chwarae"
+
+#: ../../portable/frontends/widgets/application.py:675
+#: ../../portable/frontends/widgets/tablist.py:577
+msgid "Rename Playlist Folder"
+msgstr "Ail Enwi Ffolder Rhestr Chwarae"
+
+#: ../../portable/frontends/widgets/application.py:757
+msgid "Warn me when I attempt to quit with downloads in progress"
+msgstr "Rhybuddio fi pan dwi'n ceisio gadael tra bod llwytho ar y gweill"
+
+#: ../../portable/frontends/widgets/displays.py:361
+msgid "Filename:"
+msgstr "Enw ffeil:"
+
+#: ../../portable/frontends/widgets/displays.py:364
+msgid "File type:"
+msgstr "Math Ffeil:"
+
+#: ../../portable/frontends/widgets/tablist.py:475
+#: ../../portable/frontends/widgets/tablist.py:534
+msgid "Copy URL to clipboard"
+msgstr "Copio URL i glipfwrdd"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:74
+msgid "Search for:"
+msgstr "Chwilio am:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:80
+msgid "In this:"
+msgstr "Yn hwn:"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:137
+#: ../../portable/frontends/widgets/firsttimedialog.py:170
+#: ../../portable/dialogs.py:87
+msgid "Yes"
+msgstr "Ie"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:138
+#: ../../portable/frontends/widgets/firsttimedialog.py:169
+#: ../../portable/dialogs.py:88
+msgid "No"
+msgstr "Na"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:213
+#: ../../portable/frontends/widgets/firsttimedialog.py:215
+#: ../../portable/frontends/widgets/firsttimedialog.py:272
+#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
+msgid "Search"
+msgstr "Chwilio"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:215
+#: ../../portable/frontends/widgets/firsttimedialog.py:283
+msgid "Finish"
+msgstr "Gorffen"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:273
+#: ../../portable/dialogs.py:85
+msgid "Cancel"
+msgstr "Canslo"
+
+#: ../../portable/frontends/widgets/statictabs.py:110
+msgid "Downloading"
+msgstr "Yn Llwytho i Lawr"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:63
+msgid "Remove From the Library"
+msgstr "Dileu o'r Llyfrgell"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:94
+#: ../../portable/frontends/widgets/itemcontextmenu.py:192
+msgid "Play"
+msgstr "Chwarae"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:118
+#: ../../portable/frontends/widgets/itemcontextmenu.py:240
+#: ../../portable/frontends/widgets/itemcontextmenu.py:258
+msgid "Cancel Download"
+msgstr "Canslo Llwytho i Lawr"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:122
+#: ../../portable/frontends/widgets/itemcontextmenu.py:241
+msgid "Pause Download"
+msgstr "Oedi'r Llwytho i Lawr"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:264
+msgid "Restart Upload"
+msgstr "Ail ddechrau llwytho fyny"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:278
+msgid "Remove From Playlist"
+msgstr "Dileu o'r rhestr chwarae"
+
+#: ../../portable/dialogs.py:83
+msgid "Ok"
+msgstr "Iawn"
+
+#: ../../portable/dialogs.py:91
+msgid "Ignore"
+msgstr "Anwybyddu"
+
+#: ../../portable/dialogs.py:92
+msgid "Submit Crash Report"
+msgstr "Anfon adroddiad gwall"
+
+#: ../../portable/dialogs.py:96
+msgid "Remove Entry"
+msgstr "Diddymu Cofnod"
+
+#: ../../portable/dialogs.py:97
+msgid "Delete File"
+msgstr "Dileu Ffeil"
+
+#: ../../portable/dialogs.py:98
+msgid "Delete Files"
+msgstr "Dileu Ffeiliau"
+
+#: ../../portable/dialogs.py:99
+msgid "Keep Videos"
+msgstr "Cadw Fideos"
+
+#: ../../portable/dialogs.py:100
+msgid "Delete Videos"
+msgstr "Dileu Fideos"
+
+#: ../../portable/dialogs.py:101
+msgid "Create"
+msgstr "Creu"
+
+#: ../../portable/dialogs.py:105
+msgid "Add Into New Folder"
+msgstr "Adio mewn i Ffolder Newydd"
+
+#: ../../portable/dialogs.py:109
+msgid "Not Now"
+msgstr "Dim nawr"
+
+#: ../../portable/dialogs.py:110
+msgid "Close to Tray"
+msgstr "Cau i'r Trei"
+
+#: ../../portable/dialogs.py:111
+msgid "Launch Miro"
+msgstr "Lansio Miro"
+
+#: ../../portable/dialogs.py:112
+msgid "Download Anyway"
+msgstr "Dal i lwytho i lawr"
+
+#: ../../portable/playlist.py:180
+#, python-format
+msgid "Enter a new name for the playlist %s"
+msgstr "Rhoi enw i'r rhestr chwarae newydd %s"
+
+#: ../../portable/singleclick.py:100
+msgid "Download already exists"
+msgstr "Llwytho i lawr yno'n barod"
+
+#: ../../portable/singleclick.py:107
+msgid "Miro will begin downloading it now."
+msgstr "Mae Miro yn mynd i'w lwytho i lawr nawr."
+
+#: ../../portable/singleclick.py:109
+msgid "It is downloading now."
+msgstr "Llwytho i lawr yn awr."
+
+#: ../../portable/singleclick.py:111
+msgid "It has already been downloaded."
+msgstr "Wedi'i lwytho i lawr yn barod."
+
+#: ../../portable/singleclick.py:138
+msgid "File Download"
+msgstr "Ffeil wedi llwytho i lawr"
+
+#: ../../portable/singleclick.py:166
+msgid "Download Error"
+msgstr "Gwall llwytho i lawr"
+
+#: ../../portable/singleclick.py:337
+msgid "Subscription error"
+msgstr "Gwall Tanysgrifo"
+
+#: ../../portable/singleclick.py:414
+msgid "Invalid Torrent"
+msgstr "Torrent Annilys"
+
+#: ../../portable/item.py:1008
+msgid "starting up..."
+msgstr "Yn dechrau..."
+
+#: ../../portable/httpclient.py:105 ../../portable/httpclient.py:111
+msgid "Can't connect"
+msgstr "Methu cysylltu"
+
+#: ../../portable/httpclient.py:112
+msgid "SSL connection error"
+msgstr "Gwall cysylltu SSL"
+
+#: ../../portable/httpclient.py:116
+msgid "HTTP error"
+msgstr "Gwall HTTP"
+
+#: ../../portable/httpclient.py:153
+msgid "Authorization failed"
+msgstr "Awrdurdodi wedi methu"
+
+#: ../../portable/httpclient.py:159
+msgid "Pipeline request never started"
+msgstr "Cais Pipeline heb gychwyn"
+
+#: ../../portable/httpclient.py:163
+msgid "Timeout"
+msgstr "Amseri allan"
+
+#: ../../portable/httpclient.py:168
+msgid "Invalid URL"
+msgstr "URL Annilys"
+
+#: ../../portable/httpclient.py:179
+msgid "Read error"
+msgstr "Gwall darllen"
+
+#: ../../portable/httpclient.py:376
+msgid "Unknown Error code"
+msgstr "Gwall Côd Anhysbys"
+
+#: ../../portable/httpclient.py:408
+msgid "Connection closed"
+msgstr "Cysylltiad Wedi Cau"
+
+#: ../../portable/httpclient.py:829
+msgid "Unknown"
+msgstr "Anhysbys"
+
+#: ../../portable/httpclient.py:830
+msgid "Internal Error: Not ready to send"
+msgstr "Gwall mewnol: Dim yn barod i yrru"
+
+#: ../../portable/feed.py:925
+msgid "Error loading feed"
+msgstr "Gwall  llwytho ffynhonnell"
+
+#: ../../portable/feed.py:930
+msgid "Would you like to keep the feed?"
+msgstr "Eisiau cadw'r ffynhonnell?"
+
+#: ../../portable/feed.py:1055
+msgid "Bad content-type"
+msgstr "Math-cynnwys drwg"
+
+#: ../../portable/feed.py:2407
+msgid "Local Files"
+msgstr "Ffeils Lleol"
+
+#: ../../portable/feed.py:2421
+msgid "Playing File"
+msgstr "Chwarae Ffeil"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
@@ -36,25 +710,9 @@ msgstr ""
 msgid "Quit Miro completely."
 msgstr ""
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:124
-msgid "Close to tray?"
-msgstr "Cau i'r trei?"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:125
-msgid ""
-"When you click the red close button, would you like Miro to close to the "
-"system tray or quit?  You can change this setting later in the Options."
-msgstr ""
-"Pryd rwyt ti'n clicio ar y botwm coch, wyt eisiau i Miro cau i drei'r system "
-"neu cau lawr? Ti'n gallu newid y dewis yma wedyn yn yr Opsiynau."
-
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:182
 msgid "Error Bombing Item"
 msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:184
-msgid "Error Recommending Item"
-msgstr "Gwall wrth awgrymu eitem"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:186
 msgid "Error Opening Website"
@@ -65,10 +723,6 @@ msgstr ""
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
-msgid "Update Available"
-msgstr "Fersiwn newydd Ar Gael"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
 #, python-format
@@ -133,26 +787,6 @@ msgstr ""
 msgid "Share"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:124
-#: ../../portable/frontends/widgets/style.py:232
-#: ../../portable/frontends/widgets/style.py:970
-#: ../../portable/frontends/widgets/style.py:1134
-#: ../../portable/frontends/widgets/gtk/video.py:279
-#: ../../portable/frontends/widgets/itemcontextmenu.py:109
-#: ../../portable/frontends/widgets/itemcontextmenu.py:211
-#: ../../portable/dialogs.py:106
-msgid "Keep"
-msgstr "Cadw"
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:128
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
-#: ../../portable/frontends/widgets/gtk/video.py:274
-#: ../../portable/frontends/widgets/gtk/video.py:282
-#: ../../portable/frontends/widgets/itemcontextmenu.py:65
-#: ../../portable/dialogs.py:107
-msgid "Delete"
-msgstr "Dileu"
-
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:132
 msgid "Add to Library"
 msgstr ""
@@ -164,54 +798,6 @@ msgstr ""
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:206
 msgid "Pop In"
 msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
-msgid "Services"
-msgstr "Gwasanaethau"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
-msgid "Hide Miro"
-msgstr "Cuddio Miro"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
-msgid "Hide Others"
-msgstr "Cuddio'r gweddill"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
-msgid "Show All"
-msgstr "Dangos Popeth"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
-msgid "Preferences..."
-msgstr "Dewisiadau..."
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
-msgid "Quit Miro"
-msgstr "Gadael Miro"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:150
-msgid "Close Window"
-msgstr "Cau Ffenestr"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
-msgid "Cut"
-msgstr "Torri"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
-msgid "Copy"
-msgstr "Copio"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
-msgid "Paste"
-msgstr "Gludo"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
-msgid "Select All"
-msgstr "Dewis popeth"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
-msgid "Edit"
-msgstr "Golygu"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
 msgid "Present Half Size"
@@ -228,34 +814,6 @@ msgstr ""
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
 msgid "Present Video"
 msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
-msgid "Zoom"
-msgstr "Chwyddo"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
-msgid "Minimize"
-msgstr "Lleihau"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
-msgid "Main Window"
-msgstr "Prif Ffenestr"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
-msgid "Bring All to Front"
-msgstr "Popeth i'r Blaen"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
-msgid "Window"
-msgstr "Ffenest"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
-msgid "Miro Help"
-msgstr "Cymorth Miro"
-
-#: ../../platform/osx/plat/frontends/widgets/application.py:166
-msgid "Download Completed"
-msgstr "Llwytho i lawr wedi gorffen"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:167
 #, python-format
@@ -276,7 +834,6 @@ msgstr ""
 msgid "Example Playlist"
 msgstr ""
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr ""
 
@@ -304,18 +861,10 @@ msgstr ""
 msgid "%(size)sB"
 msgstr ""
 
-#: ../../portable/opml.py:185
-msgid "OPML Import failed"
-msgstr "Mewnforio OPML wedi methu"
-
 #: ../../portable/opml.py:186
 msgid ""
 "The selected OPML file appears to be invalid.  Import was interrupted."
 msgstr ""
-
-#: ../../portable/opml.py:191
-msgid "OPML Import summary"
-msgstr "Crynodeb mewnforio OPML"
 
 #: ../../portable/opml.py:192
 #, python-format
@@ -331,25 +880,14 @@ msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr ""
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
-msgid ""
-"The database has been successfully saved. It is now safe to quit without "
-"losing any data."
-msgstr ""
-"Mae'r cronfa ddata wedi ei chadw'n iawn. Mae'n saff i gau heb golli unrhyw "
-"data."
-
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr ""
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -380,10 +918,6 @@ msgid ""
 "An unknown error prevented Miro from startup.  Please file a bug report at "
 "%(url)s."
 msgstr ""
-
-#: ../../portable/startup.py:173
-msgid "Database too new"
-msgstr "Cronfa data rhy newydd"
 
 #: ../../portable/startup.py:175
 #, python-format
@@ -506,33 +1040,10 @@ msgstr[1] ""
 msgid "activity"
 msgstr ""
 
-#: ../../portable/downloader.py:268 ../../portable/httpclient.py:145
-#: ../../portable/httpclient.py:174
-msgid "File not found"
-msgstr "Heb ffeindio ffeil"
-
-#: ../../portable/downloader.py:269
-msgid "Flash URL Scraping Error"
-msgstr "Gwall Flash URL Scraping"
-
-#: ../../portable/downloader.py:447
-msgid "starting up"
-msgstr "Yn dechrau"
-
-#: ../../portable/dl_daemon/download.py:507
-#: ../../portable/frontends/widgets/style.py:228
-msgid "Error"
-msgstr "Gwall"
-
 #: ../../portable/dl_daemon/download.py:596
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr ""
-
-#: ../../portable/dl_daemon/download.py:621
-#: ../../portable/dl_daemon/download.py:838
-msgid "Not enough disk space"
-msgstr "Dim digon o le ar ddisg"
 
 #: ../../portable/dl_daemon/download.py:622
 #: ../../portable/dl_daemon/download.py:839
@@ -545,34 +1056,14 @@ msgstr ""
 msgid "Couldn't open %(filename)s for writing"
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:852
-msgid "BitTorrent failure"
-msgstr "Methiant BitTorrent"
-
-#: ../../portable/dl_daemon/download.py:853
-msgid "BitTorrent failed to startup"
-msgstr "BitTorrent wedi methu wrth ddechrau"
-
-#: ../../portable/dl_daemon/download.py:1041
-msgid "Corrupt Torrent"
-msgstr "Torrent wedi llygru"
-
 #: ../../portable/dl_daemon/download.py:1042
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:1067
-msgid "Torrent file deleted"
-msgstr "Wedi dileu ffeil Torrent"
-
 #: ../../portable/dl_daemon/download.py:1068
 msgid "The torrent file for this item was deleted outside of Miro."
 msgstr ""
-
-#: ../../portable/menubar.py:184
-msgid "_Open"
-msgstr "_Agor"
 
 #: ../../portable/menubar.py:185
 msgid "_Download Item"
@@ -609,26 +1100,6 @@ msgstr ""
 #: ../../portable/menubar.py:195
 msgid "_Options"
 msgstr ""
-
-#: ../../portable/menubar.py:196
-msgid "_Quit"
-msgstr "_Cau"
-
-#: ../../portable/menubar.py:205
-msgid "Cu_t"
-msgstr "_Torri"
-
-#: ../../portable/menubar.py:206
-msgid "_Copy"
-msgstr "_Copio"
-
-#: ../../portable/menubar.py:207
-msgid "_Paste"
-msgstr "_Pastio"
-
-#: ../../portable/menubar.py:208
-msgid "Select _All"
-msgstr "Dewis _Popeth"
 
 #: ../../portable/menubar.py:212
 msgid "Add _Feed"
@@ -687,98 +1158,21 @@ msgstr ""
 msgid "Copy URL"
 msgstr ""
 
-#: ../../portable/menubar.py:233
-msgid "New _Playlist"
-msgstr "Rhest_Chwarae Newydd"
-
-#: ../../portable/menubar.py:234
-msgid "New Playlist Fol_der"
-msgstr "Ffol_der Rhestr Chwarae Newydd"
-
-#: ../../portable/menubar.py:236
-msgid "Re_name Playlist"
-msgstr "Ail_enwi Rhestr Chwarae"
-
-#: ../../portable/menubar.py:237
-msgid "_Remove Playlist"
-msgstr "_Dileu Rhestr Chwarae"
-
-#: ../../portable/menubar.py:238
-msgid "_Remove Playlists"
-msgstr "_Dileu Rhestri Chwarae"
-
-#: ../../portable/menubar.py:239
-msgid "_Remove Playlist Folders"
-msgstr "_Dileu Ffolderi Rhestr Chwarae"
-
-#: ../../portable/menubar.py:240
-msgid "_Remove Playlist Folder"
-msgstr "_Dileu Ffolder Rhestr Chwarae"
-
-#: ../../portable/menubar.py:251 ../../portable/menubar.py:252
-msgid "_Play"
-msgstr "_Chwarae"
-
 #: ../../portable/menubar.py:253
 msgid "_Pause"
 msgstr ""
-
-#: ../../portable/menubar.py:254
-msgid "_Stop"
-msgstr "_Stopio"
-
-#: ../../portable/menubar.py:256
-msgid "_Next Video"
-msgstr "_Fideo Nesaf"
-
-#: ../../portable/menubar.py:257
-msgid "_Previous Video"
-msgstr "_Fideo Blaenorol"
-
-#: ../../portable/menubar.py:259
-msgid "Skip _Forward"
-msgstr "Neidio _Ymlaen"
-
-#: ../../portable/menubar.py:260
-msgid "Skip _Back"
-msgstr "Neidio yn ôl"
-
-#: ../../portable/menubar.py:262
-msgid "Volume _Up"
-msgstr "Lefel Sain i _Fyny"
-
-#: ../../portable/menubar.py:263
-msgid "Volume _Down"
-msgstr "Lefel Sain i _Lawr"
-
-#: ../../portable/menubar.py:265
-msgid "_Fullscreen"
-msgstr "_Sgrin lawn"
 
 #: ../../portable/menubar.py:266
 msgid "_Toggle Detached/Attached"
 msgstr ""
 
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr ""
-
-#: ../../portable/menubar.py:271
-msgid "_Donate"
-msgstr "_Cyfranu"
-
-#: ../../portable/menubar.py:272 ../../portable/menubar.py:293
-msgid "_Help"
-msgstr "_Cymorth"
 
 #: ../../portable/menubar.py:274
 #: ../../portable/frontends/widgets/diagnostics.py:119
 msgid "Diagnostics"
 msgstr ""
-
-#: ../../portable/menubar.py:275
-msgid "Report a _Bug"
-msgstr "Adridd_Byg"
 
 #: ../../portable/menubar.py:276
 msgid "_Translate"
@@ -792,26 +1186,9 @@ msgstr ""
 msgid "_Video"
 msgstr ""
 
-#: ../../portable/menubar.py:284
-msgid "_File"
-msgstr "_Ffeil"
-
 #: ../../portable/menubar.py:290
 msgid "_Sidebar"
 msgstr ""
-
-#: ../../portable/menubar.py:291
-msgid "_Playlists"
-msgstr "_Rhestri Chwarae"
-
-#: ../../portable/menubar.py:292
-msgid "P_layback"
-msgstr "C_hwarae yn ôl"
-
-#: ../../portable/frontends/widgets/crashdialog.py:46
-#: ../../portable/httpclient.py:158
-msgid "Internal Error"
-msgstr "Gwall Mewnol"
 
 #: ../../portable/frontends/widgets/crashdialog.py:52
 msgid ""
@@ -828,12 +1205,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/crashdialog.py:64
 msgid "Describe what you were doing when you got this error:"
 msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:55
-#: ../../portable/frontends/widgets/feedsettingspanel.py:102
-#: ../../portable/frontends/widgets/prefpanel.py:585
-msgid "never"
-msgstr "byth"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:58
 #, python-format
@@ -1018,19 +1389,6 @@ msgstr ""
 msgid "Down Rate"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:225
-msgid "Down Total"
-msgstr "Cyfanswm i lawr"
-
-#: ../../portable/frontends/widgets/style.py:226
-#: ../../portable/frontends/widgets/style.py:1040
-#: ../../portable/frontends/widgets/style.py:1051
-#: ../../portable/frontends/widgets/itemcontextmenu.py:129
-#: ../../portable/frontends/widgets/itemcontextmenu.py:224
-#: ../../portable/dialogs.py:95
-msgid "Download"
-msgstr "Llwytho i lawr"
-
 #: ../../portable/frontends/widgets/style.py:227
 msgid "Download Torrent"
 msgstr ""
@@ -1049,18 +1407,6 @@ msgstr ""
 msgid "Newly Available"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:233
-#: ../../portable/frontends/widgets/prefpanel.py:485
-#: ../../portable/frontends/widgets/tablist.py:523
-#: ../../portable/frontends/widgets/tablist.py:535
-#: ../../portable/frontends/widgets/tablist.py:541
-#: ../../portable/frontends/widgets/tablist.py:578
-#: ../../portable/frontends/widgets/tablist.py:584
-#: ../../portable/frontends/widgets/tablist.py:589
-#: ../../portable/dialogs.py:108
-msgid "Remove"
-msgstr "Tynnu"
-
 #: ../../portable/frontends/widgets/style.py:234
 #: ../../portable/frontends/widgets/itemcontextmenu.py:113
 msgid "Stop seeding"
@@ -1075,7 +1421,6 @@ msgstr ""
 msgid "Remove from playlist"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr ""
 
@@ -1098,12 +1443,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/prefpanel.py:284
 msgid "Manually"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
-#: ../../portable/frontends/widgets/statictabs.py:103
-msgid "New"
-msgstr "Newydd"
 
 #: ../../portable/frontends/widgets/prefpanel.py:290
 #: ../../portable/frontends/widgets/itemlistwidgets.py:620
@@ -1208,11 +1547,6 @@ msgstr ""
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:435
-#: ../../portable/frontends/widgets/firsttimedialog.py:184
-msgid "Change"
-msgstr "Newid"
-
 #: ../../portable/frontends/widgets/prefpanel.py:440
 msgid "Choose Movies Directory"
 msgstr ""
@@ -1221,17 +1555,11 @@ msgstr ""
 msgid "Migrate existing movies?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
 "moved until they finish.)"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:482
-#: ../../portable/dialogs.py:104
-msgid "Add"
-msgstr "Adio"
 
 #: ../../portable/frontends/widgets/prefpanel.py:523
 msgid "Add Watched Folder"
@@ -1254,30 +1582,6 @@ msgstr ""
 msgid "GB"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:580
-msgid "1 day"
-msgstr "1 diwrnod"
-
-#: ../../portable/frontends/widgets/prefpanel.py:581
-msgid "3 days"
-msgstr "3 diwrnod"
-
-#: ../../portable/frontends/widgets/prefpanel.py:582
-msgid "6 days"
-msgstr "6 diwrnod"
-
-#: ../../portable/frontends/widgets/prefpanel.py:583
-msgid "10 days"
-msgstr "10 diwrnod"
-
-#: ../../portable/frontends/widgets/prefpanel.py:584
-msgid "1 month"
-msgstr "1 mis"
-
-#: ../../portable/frontends/widgets/prefpanel.py:590
-msgid "By default, videos expire after:"
-msgstr "Mae'r fideos yn dod i ben wedi:"
-
 #: ../../portable/frontends/widgets/prefpanel.py:599
 msgid "Always play videos in a separate window."
 msgstr ""
@@ -1294,30 +1598,13 @@ msgstr ""
 msgid "Stop after each video"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:620
-msgid "General"
-msgstr "Cyffredinol"
-
 #: ../../portable/frontends/widgets/prefpanel.py:621
 msgid "Feeds"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:622
-#: ../../portable/frontends/widgets/downloadscontroller.py:81
-msgid "Downloads"
-msgstr "Llwythiadau i lawr"
-
-#: ../../portable/frontends/widgets/prefpanel.py:623
-msgid "Folders"
-msgstr "Ffolder"
-
 #: ../../portable/frontends/widgets/prefpanel.py:624
 msgid "Disk space"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:625
-msgid "Playback"
-msgstr "Chwarae Nôl"
 
 #: ../../portable/frontends/widgets/prefpanel.py:629
 msgid "Preferences"
@@ -1335,34 +1622,19 @@ msgstr ""
 msgid "Password:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
 msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:413
-#: ../../portable/frontends/widgets/statictabs.py:86
-msgid "Video Search"
-msgstr "Chwilio Fideo"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:427
 msgid "No Results Found"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
-msgid "Library"
-msgstr "Llyfrgell"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr ""
 
@@ -1575,37 +1847,9 @@ msgid ""
 "Enter the URL of the site to add"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:578
-msgid "Import OPML File"
-msgstr "Mewnforio Ffeil OPML"
-
-#: ../../portable/frontends/widgets/application.py:580
-msgid "OPML Files"
-msgstr "Ffeils OPML"
-
 #: ../../portable/frontends/widgets/application.py:587
 msgid "Import OPML File - Error"
 msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:593
-msgid "Export OPML File"
-msgstr "Allforio Ffeil OPML"
-
-#: ../../portable/frontends/widgets/application.py:616
-msgid "Create Playlist"
-msgstr "Creu Rhestr Chwarae"
-
-#: ../../portable/frontends/widgets/application.py:617
-msgid "Enter a name for the new playlist"
-msgstr "Rhoi enw i'r rhestr chwarae newydd"
-
-#: ../../portable/frontends/widgets/application.py:638
-msgid "Create Playlist Folder"
-msgstr "Creu Ffolder Rhestr Chwarae"
-
-#: ../../portable/frontends/widgets/application.py:639
-msgid "Enter a name for the new playlist folder"
-msgstr "Rho enw newydd am ffolder y rhestr chwarae"
 
 #: ../../portable/frontends/widgets/application.py:660
 #: ../../portable/frontends/widgets/tablist.py:522
@@ -1626,21 +1870,10 @@ msgstr ""
 msgid "Enter a new name for the feed %(name)s"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:670
-#: ../../portable/frontends/widgets/tablist.py:583
-#: ../../portable/playlist.py:179
-msgid "Rename Playlist"
-msgstr "Ail enwi'r Rhestr Chwarae"
-
 #: ../../portable/frontends/widgets/application.py:671
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:675
-#: ../../portable/frontends/widgets/tablist.py:577
-msgid "Rename Playlist Folder"
-msgstr "Ail Enwi Ffolder Rhestr Chwarae"
 
 #: ../../portable/frontends/widgets/application.py:676
 #, python-format
@@ -1690,10 +1923,6 @@ msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] ""
 msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:757
-msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr "Rhybuddio fi pan dwi'n ceisio gadael tra bod llwytho ar y gweill"
 
 #: ../../portable/frontends/widgets/application.py:1011
 msgid "Message"
@@ -1820,14 +2049,6 @@ msgid ""
 "program"
 msgstr ""
 
-#: ../../portable/frontends/widgets/displays.py:361
-msgid "Filename:"
-msgstr "Enw ffeil:"
-
-#: ../../portable/frontends/widgets/displays.py:364
-msgid "File type:"
-msgstr "Math Ffeil:"
-
 #: ../../portable/frontends/widgets/displays.py:370
 msgid "Play Externally"
 msgstr ""
@@ -1935,7 +2156,6 @@ msgstr ""
 msgid "Choose"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -2016,11 +2236,6 @@ msgid ""
 "Enter the URL of the feed to add"
 msgstr ""
 
-#: ../../portable/frontends/widgets/tablist.py:475
-#: ../../portable/frontends/widgets/tablist.py:534
-msgid "Copy URL to clipboard"
-msgstr "Copio URL i glipfwrdd"
-
 #: ../../portable/frontends/widgets/tablist.py:477
 msgid "Remove Site"
 msgstr ""
@@ -2099,14 +2314,6 @@ msgstr ""
 msgid "A search feed contains items that match a search term."
 msgstr ""
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:74
-msgid "Search for:"
-msgstr "Chwilio am:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:80
-msgid "In this:"
-msgstr "Yn hwn:"
-
 #: ../../portable/frontends/widgets/newsearchfeed.py:87
 msgid "Feed:"
 msgstr ""
@@ -2141,18 +2348,6 @@ msgstr ""
 msgid "Would you like to run Miro on startup?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:137
-#: ../../portable/frontends/widgets/firsttimedialog.py:170
-#: ../../portable/dialogs.py:87
-msgid "Yes"
-msgstr "Ie"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:138
-#: ../../portable/frontends/widgets/firsttimedialog.py:169
-#: ../../portable/dialogs.py:88
-msgid "No"
-msgstr "Na"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:146
 msgid "Next >"
 msgstr ""
@@ -2186,26 +2381,9 @@ msgstr ""
 msgid "< Previous"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:213
-#: ../../portable/frontends/widgets/firsttimedialog.py:215
-#: ../../portable/frontends/widgets/firsttimedialog.py:272
-#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
-msgid "Search"
-msgstr "Chwilio"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:215
-#: ../../portable/frontends/widgets/firsttimedialog.py:283
-msgid "Finish"
-msgstr "Gorffen"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:263
 msgid "Searching for media files"
 msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:273
-#: ../../portable/dialogs.py:85
-msgid "Cancel"
-msgstr "Canslo"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:311
 #, python-format
@@ -2224,10 +2402,6 @@ msgstr[1] ""
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
 msgstr ""
-
-#: ../../portable/frontends/widgets/statictabs.py:110
-msgid "Downloading"
-msgstr "Yn Llwytho i Lawr"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:90
 msgid "Single and external downloads"
@@ -2257,15 +2431,6 @@ msgstr ""
 msgid "New playlist:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:63
-msgid "Remove From the Library"
-msgstr "Dileu o'r Llyfrgell"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:94
-#: ../../portable/frontends/widgets/itemcontextmenu.py:192
-msgid "Play"
-msgstr "Chwarae"
-
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just this Item"
 msgstr ""
@@ -2289,27 +2454,14 @@ msgstr ""
 msgid "Mark as Played"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:118
-#: ../../portable/frontends/widgets/itemcontextmenu.py:240
-#: ../../portable/frontends/widgets/itemcontextmenu.py:258
-msgid "Cancel Download"
-msgstr "Canslo Llwytho i Lawr"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:122
-#: ../../portable/frontends/widgets/itemcontextmenu.py:241
-msgid "Pause Download"
-msgstr "Oedi'r Llwytho i Lawr"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:125
 #: ../../portable/frontends/widgets/itemcontextmenu.py:254
 msgid "Resume Download"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
 msgstr ""
 
@@ -2362,18 +2514,6 @@ msgid_plural "%(count)d Paused Items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:264
-msgid "Restart Upload"
-msgstr "Ail ddechrau llwytho fyny"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:278
-msgid "Remove From Playlist"
-msgstr "Dileu o'r rhestr chwarae"
-
-#: ../../portable/dialogs.py:83
-msgid "Ok"
-msgstr "Iawn"
-
 #: ../../portable/dialogs.py:84
 msgid "Close"
 msgstr ""
@@ -2390,14 +2530,6 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-#: ../../portable/dialogs.py:91
-msgid "Ignore"
-msgstr "Anwybyddu"
-
-#: ../../portable/dialogs.py:92
-msgid "Submit Crash Report"
-msgstr "Anfon adroddiad gwall"
-
 #: ../../portable/dialogs.py:93
 msgid "Migrate"
 msgstr ""
@@ -2406,30 +2538,6 @@ msgstr ""
 msgid "Don't Migrate"
 msgstr ""
 
-#: ../../portable/dialogs.py:96
-msgid "Remove Entry"
-msgstr "Diddymu Cofnod"
-
-#: ../../portable/dialogs.py:97
-msgid "Delete File"
-msgstr "Dileu Ffeil"
-
-#: ../../portable/dialogs.py:98
-msgid "Delete Files"
-msgstr "Dileu Ffeiliau"
-
-#: ../../portable/dialogs.py:99
-msgid "Keep Videos"
-msgstr "Cadw Fideos"
-
-#: ../../portable/dialogs.py:100
-msgid "Delete Videos"
-msgstr "Dileu Fideos"
-
-#: ../../portable/dialogs.py:101
-msgid "Create"
-msgstr "Creu"
-
 #: ../../portable/dialogs.py:102
 msgid "Create Feed"
 msgstr ""
@@ -2437,26 +2545,6 @@ msgstr ""
 #: ../../portable/dialogs.py:103
 msgid "Create Folder"
 msgstr ""
-
-#: ../../portable/dialogs.py:105
-msgid "Add Into New Folder"
-msgstr "Adio mewn i Ffolder Newydd"
-
-#: ../../portable/dialogs.py:109
-msgid "Not Now"
-msgstr "Dim nawr"
-
-#: ../../portable/dialogs.py:110
-msgid "Close to Tray"
-msgstr "Cau i'r Trei"
-
-#: ../../portable/dialogs.py:111
-msgid "Launch Miro"
-msgstr "Lansio Miro"
-
-#: ../../portable/dialogs.py:112
-msgid "Download Anyway"
-msgstr "Dal i lwytho i lawr"
 
 #: ../../portable/dialogs.py:113
 msgid "Open in External Browser"
@@ -2474,44 +2562,15 @@ msgstr ""
 msgid "Stop Watching"
 msgstr ""
 
-#: ../../portable/playlist.py:180
-#, python-format
-msgid "Enter a new name for the playlist %s"
-msgstr "Rhoi enw i'r rhestr chwarae newydd %s"
-
-#: ../../portable/singleclick.py:100
-msgid "Download already exists"
-msgstr "Llwytho i lawr yno'n barod"
-
 #: ../../portable/singleclick.py:101
 msgid "That URL is already an external download."
 msgstr ""
-
-#: ../../portable/singleclick.py:107
-msgid "Miro will begin downloading it now."
-msgstr "Mae Miro yn mynd i'w lwytho i lawr nawr."
-
-#: ../../portable/singleclick.py:109
-msgid "It is downloading now."
-msgstr "Llwytho i lawr yn awr."
-
-#: ../../portable/singleclick.py:111
-msgid "It has already been downloaded."
-msgstr "Wedi'i lwytho i lawr yn barod."
-
-#: ../../portable/singleclick.py:138
-msgid "File Download"
-msgstr "Ffeil wedi llwytho i lawr"
 
 #: ../../portable/singleclick.py:139
 #, python-format
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 msgstr ""
-
-#: ../../portable/singleclick.py:166
-msgid "Download Error"
-msgstr "Gwall llwytho i lawr"
 
 #: ../../portable/singleclick.py:168
 #, python-format
@@ -2547,10 +2606,6 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/singleclick.py:337
-msgid "Subscription error"
-msgstr "Gwall Tanysgrifo"
-
 #: ../../portable/singleclick.py:347
 #, python-format
 msgid ""
@@ -2569,10 +2624,6 @@ msgstr ""
 #, python-format
 msgid "Could not download the %(appname)s feed file: %(url)s"
 msgstr ""
-
-#: ../../portable/singleclick.py:414
-msgid "Invalid Torrent"
-msgstr "Torrent Annilys"
 
 #: ../../portable/singleclick.py:416
 #, python-format
@@ -2607,31 +2658,15 @@ msgstr[1] ""
 msgid "no title"
 msgstr ""
 
-#: ../../portable/item.py:1008
-msgid "starting up..."
-msgstr "Yn dechrau..."
-
 #: ../../portable/httpclient.py:90
 #, python-format
 msgid "Error: %(msg)s"
 msgstr ""
 
-#: ../../portable/httpclient.py:105 ../../portable/httpclient.py:111
-msgid "Can't connect"
-msgstr "Methu cysylltu"
-
 #: ../../portable/httpclient.py:106
 #, python-format
 msgid "Connection Error: %(msg)s"
 msgstr ""
-
-#: ../../portable/httpclient.py:112
-msgid "SSL connection error"
-msgstr "Gwall cysylltu SSL"
-
-#: ../../portable/httpclient.py:116
-msgid "HTTP error"
-msgstr "Gwall HTTP"
 
 #: ../../portable/httpclient.py:120
 #, python-format
@@ -2667,26 +2702,10 @@ msgstr ""
 msgid "Bad Status Code: %(code)s"
 msgstr ""
 
-#: ../../portable/httpclient.py:153
-msgid "Authorization failed"
-msgstr "Awrdurdodi wedi methu"
-
-#: ../../portable/httpclient.py:159
-msgid "Pipeline request never started"
-msgstr "Cais Pipeline heb gychwyn"
-
-#: ../../portable/httpclient.py:163
-msgid "Timeout"
-msgstr "Amseri allan"
-
 #: ../../portable/httpclient.py:164
 #, python-format
 msgid "Connection to %(host)s timed out"
 msgstr ""
-
-#: ../../portable/httpclient.py:168
-msgid "Invalid URL"
-msgstr "URL Annilys"
 
 #: ../../portable/httpclient.py:169
 #, python-format
@@ -2698,47 +2717,15 @@ msgstr ""
 msgid "The file \"%(path)s\" doesn't exist"
 msgstr ""
 
-#: ../../portable/httpclient.py:179
-msgid "Read error"
-msgstr "Gwall darllen"
-
 #: ../../portable/httpclient.py:180
 #, python-format
 msgid "Error while reading from \"%(path)s\""
 msgstr ""
 
-#: ../../portable/httpclient.py:376
-msgid "Unknown Error code"
-msgstr "Gwall Côd Anhysbys"
-
-#: ../../portable/httpclient.py:408
-msgid "Connection closed"
-msgstr "Cysylltiad Wedi Cau"
-
-#: ../../portable/httpclient.py:829
-msgid "Unknown"
-msgstr "Anhysbys"
-
-#: ../../portable/httpclient.py:830
-msgid "Internal Error: Not ready to send"
-msgstr "Gwall mewnol: Dim yn barod i yrru"
-
-#: ../../portable/feed.py:925
-msgid "Error loading feed"
-msgstr "Gwall  llwytho ffynhonnell"
-
 #: ../../portable/feed.py:927
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr ""
-
-#: ../../portable/feed.py:930
-msgid "Would you like to keep the feed?"
-msgstr "Eisiau cadw'r ffynhonnell?"
-
-#: ../../portable/feed.py:1055
-msgid "Bad content-type"
-msgstr "Math-cynnwys drwg"
 
 #: ../../portable/feed.py:1068
 #, python-format
@@ -2762,11 +2749,3 @@ msgstr ""
 #, python-format
 msgid "Search All: %(text)s"
 msgstr ""
-
-#: ../../portable/feed.py:2407
-msgid "Local Files"
-msgstr "Ffeils Lleol"
-
-#: ../../portable/feed.py:2421
-msgid "Playing File"
-msgstr "Chwarae Ffeil"

@@ -15,8 +15,223 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:186
+msgid "Error Opening Website"
+msgstr "May Mali sa Pagbukas ng Website"
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:124
+#: ../../portable/frontends/widgets/style.py:232
+#: ../../portable/frontends/widgets/style.py:970
+#: ../../portable/frontends/widgets/style.py:1134
+#: ../../portable/frontends/widgets/gtk/video.py:279
+#: ../../portable/frontends/widgets/itemcontextmenu.py:109
+#: ../../portable/frontends/widgets/itemcontextmenu.py:211
+#: ../../portable/dialogs.py:106
+msgid "Keep"
+msgstr "Panatilihin"
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:128
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
+#: ../../portable/frontends/widgets/gtk/video.py:274
+#: ../../portable/frontends/widgets/gtk/video.py:282
+#: ../../portable/frontends/widgets/itemcontextmenu.py:65
+#: ../../portable/dialogs.py:107
+msgid "Delete"
+msgstr "burahin"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
+msgid "Services"
+msgstr "Mga Serbisyo"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
+msgid "Hide Others"
+msgstr "Itago ang iba"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
+msgid "Show All"
+msgstr "Ipakita Lahat"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
+msgid "Cut"
+msgstr ""
+"Gupitin\r\n"
+"I think \"putulin\" connotes \"cut short\" while gupitin invokes a scissor "
+"to snip off a bit. The scissors icon is sometimes used in the context of cut-"
+"and-paste."
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
+msgid "Copy"
+msgstr "Kopyahin"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
+msgid "Paste"
+msgstr "idikit"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
+msgid "Edit"
+msgstr "Ibahin"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
+msgid "Zoom"
+msgstr "Ilapit"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
+msgid "Minimize"
+msgstr "Paliitin"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
+msgid "Bring All to Front"
+msgstr "Ilagay lahat sa harapan"
+
+#: ../../portable/downloader.py:447
+msgid "starting up"
+msgstr "nag-uumpisa na"
+
+#: ../../portable/dl_daemon/download.py:507
+#: ../../portable/frontends/widgets/style.py:228
+msgid "Error"
+msgstr "May Mali"
+
+#: ../../portable/menubar.py:256
+msgid "_Next Video"
+msgstr ""
+"_Susunod na Video\r\n"
+"_Susunod na Palabas"
+
+#: ../../portable/menubar.py:257
+msgid "_Previous Video"
+msgstr ""
+"_Naunang Video\r\n"
+"_Naunang Palabas"
+
+#: ../../portable/menubar.py:271
+msgid "_Donate"
+msgstr "_Magbigay"
+
+#: ../../portable/menubar.py:282
+msgid "_Video"
+msgstr "_Video"
+
+#: ../../portable/frontends/widgets/crashdialog.py:46
+#: ../../portable/httpclient.py:158
+msgid "Internal Error"
+msgstr "May Maling Internal"
+
+#: ../../portable/frontends/widgets/prefpanel.py:482
+#: ../../portable/dialogs.py:104
+msgid "Add"
+msgstr "Magdagdag"
+
+#: ../../portable/frontends/widgets/prefpanel.py:580
+msgid "1 day"
+msgstr ""
+"Isang Araw\r\n"
+"1 Araw"
+
+#: ../../portable/frontends/widgets/prefpanel.py:581
+msgid "3 days"
+msgstr ""
+"Tatlong Araw\r\n"
+"3 Araw"
+
+#: ../../portable/frontends/widgets/prefpanel.py:582
+msgid "6 days"
+msgstr ""
+"Anim na Araw\r\n"
+"6 na Araw"
+
+#: ../../portable/frontends/widgets/prefpanel.py:583
+msgid "10 days"
+msgstr ""
+"Sampung Araw\r\n"
+"10 Araw"
+
+#: ../../portable/frontends/widgets/prefpanel.py:584
+msgid "1 month"
+msgstr ""
+"Isang  Buwan\r\n"
+"1 Buwan"
+
+msgid "New Videos"
+msgstr "Mga Bagong Video"
+
+#: ../../portable/frontends/widgets/tablist.py:475
+#: ../../portable/frontends/widgets/tablist.py:534
+msgid "Copy URL to clipboard"
+msgstr "Kopyahin ang URL sa clipboard"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:74
+msgid "Search for:"
+msgstr "Maghanap ng:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:80
+msgid "In this:"
+msgstr "Dito:"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:137
+#: ../../portable/frontends/widgets/firsttimedialog.py:170
+#: ../../portable/dialogs.py:87
+msgid "Yes"
+msgstr "Oo"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:213
+#: ../../portable/frontends/widgets/firsttimedialog.py:215
+#: ../../portable/frontends/widgets/firsttimedialog.py:272
+#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
+msgid "Search"
+msgstr "Maghanap"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:94
+#: ../../portable/frontends/widgets/itemcontextmenu.py:192
+msgid "Play"
+msgstr "Ipalabas"
+
+#: ../../portable/dialogs.py:83
+msgid "Ok"
+msgstr "Ok"
+
+#: ../../portable/dialogs.py:89
+msgid "Quit"
+msgstr "Ihinto"
+
+#: ../../portable/dialogs.py:99
+msgid "Keep Videos"
+msgstr "Panatilihin ang mga Video"
+
+#: ../../portable/dialogs.py:100
+msgid "Delete Videos"
+msgstr "Tanggalin ng mga Video"
+
+#: ../../portable/dialogs.py:101
+msgid "Create"
+msgstr "Gumawa"
+
+#: ../../portable/item.py:1008
+msgid "starting up..."
+msgstr "nag-uumpisa..."
+
+#: ../../portable/httpclient.py:105 ../../portable/httpclient.py:111
+msgid "Can't connect"
+msgstr "hindi maka-konek"
+
+#: ../../portable/httpclient.py:112
+msgid "SSL connection error"
+msgstr "May Mali sa koneksiyon ng SSL"
+
+#: ../../portable/httpclient.py:116
+msgid "HTTP error"
+msgstr "May mali sa HTTP"
+
+#: ../../portable/httpclient.py:408
+msgid "Connection closed"
+msgstr "Saradong Koneksiyon"
+
+#: ../../portable/httpclient.py:830
+msgid "Internal Error: Not ready to send"
+msgstr "May Maling Internal: Di handang ipadala"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
@@ -52,10 +267,6 @@ msgstr ""
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:184
 msgid "Error Recommending Item"
 msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:186
-msgid "Error Opening Website"
-msgstr "May Mali sa Pagbukas ng Website"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:191
 #, python-format
@@ -130,26 +341,6 @@ msgstr ""
 msgid "Share"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:124
-#: ../../portable/frontends/widgets/style.py:232
-#: ../../portable/frontends/widgets/style.py:970
-#: ../../portable/frontends/widgets/style.py:1134
-#: ../../portable/frontends/widgets/gtk/video.py:279
-#: ../../portable/frontends/widgets/itemcontextmenu.py:109
-#: ../../portable/frontends/widgets/itemcontextmenu.py:211
-#: ../../portable/dialogs.py:106
-msgid "Keep"
-msgstr "Panatilihin"
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:128
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
-#: ../../portable/frontends/widgets/gtk/video.py:274
-#: ../../portable/frontends/widgets/gtk/video.py:282
-#: ../../portable/frontends/widgets/itemcontextmenu.py:65
-#: ../../portable/dialogs.py:107
-msgid "Delete"
-msgstr "burahin"
-
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:132
 msgid "Add to Library"
 msgstr ""
@@ -162,27 +353,13 @@ msgstr ""
 msgid "Pop In"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
-msgid "Services"
-msgstr "Mga Serbisyo"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 msgid "Hide Miro"
 msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
-msgid "Hide Others"
-msgstr "Itago ang iba"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
-msgid "Show All"
-msgstr "Ipakita Lahat"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
 msgid "Preferences..."
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
 msgstr ""
 
@@ -190,29 +367,9 @@ msgstr ""
 msgid "Close Window"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
-msgid "Cut"
-msgstr ""
-"Gupitin\r\n"
-"I think \"putulin\" connotes \"cut short\" while gupitin invokes a scissor "
-"to snip off a bit. The scissors icon is sometimes used in the context of cut-"
-"and-paste."
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
-msgid "Copy"
-msgstr "Kopyahin"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
-msgid "Paste"
-msgstr "idikit"
-
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
 msgid "Select All"
 msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
-msgid "Edit"
-msgstr "Ibahin"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
 msgid "Present Half Size"
@@ -230,27 +387,14 @@ msgstr ""
 msgid "Present Video"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
-msgid "Zoom"
-msgstr "Ilapit"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
-msgid "Minimize"
-msgstr "Paliitin"
-
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
 msgid "Main Window"
 msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
-msgid "Bring All to Front"
-msgstr "Ilagay lahat sa harapan"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
 msgid "Window"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Miro Help"
 msgstr ""
 
@@ -277,7 +421,6 @@ msgstr ""
 msgid "Example Playlist"
 msgstr ""
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr ""
 
@@ -332,23 +475,19 @@ msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr ""
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr ""
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -513,15 +652,6 @@ msgstr ""
 #: ../../portable/downloader.py:269
 msgid "Flash URL Scraping Error"
 msgstr ""
-
-#: ../../portable/downloader.py:447
-msgid "starting up"
-msgstr "nag-uumpisa na"
-
-#: ../../portable/dl_daemon/download.py:507
-#: ../../portable/frontends/widgets/style.py:228
-msgid "Error"
-msgstr "May Mali"
 
 #: ../../portable/dl_daemon/download.py:596
 #, python-format
@@ -726,18 +856,6 @@ msgstr ""
 msgid "_Stop"
 msgstr ""
 
-#: ../../portable/menubar.py:256
-msgid "_Next Video"
-msgstr ""
-"_Susunod na Video\r\n"
-"_Susunod na Palabas"
-
-#: ../../portable/menubar.py:257
-msgid "_Previous Video"
-msgstr ""
-"_Naunang Video\r\n"
-"_Naunang Palabas"
-
 #: ../../portable/menubar.py:259
 msgid "Skip _Forward"
 msgstr ""
@@ -762,13 +880,8 @@ msgstr ""
 msgid "_Toggle Detached/Attached"
 msgstr ""
 
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr ""
-
-#: ../../portable/menubar.py:271
-msgid "_Donate"
-msgstr "_Magbigay"
 
 #: ../../portable/menubar.py:272 ../../portable/menubar.py:293
 msgid "_Help"
@@ -791,10 +904,6 @@ msgstr ""
 msgid "_Planet Miro"
 msgstr ""
 
-#: ../../portable/menubar.py:282
-msgid "_Video"
-msgstr "_Video"
-
 #: ../../portable/menubar.py:284
 msgid "_File"
 msgstr ""
@@ -810,11 +919,6 @@ msgstr ""
 #: ../../portable/menubar.py:292
 msgid "P_layback"
 msgstr ""
-
-#: ../../portable/frontends/widgets/crashdialog.py:46
-#: ../../portable/httpclient.py:158
-msgid "Internal Error"
-msgstr "May Maling Internal"
 
 #: ../../portable/frontends/widgets/crashdialog.py:52
 msgid ""
@@ -1078,7 +1182,6 @@ msgstr ""
 msgid "Remove from playlist"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr ""
 
@@ -1224,17 +1327,11 @@ msgstr ""
 msgid "Migrate existing movies?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
 "moved until they finish.)"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:482
-#: ../../portable/dialogs.py:104
-msgid "Add"
-msgstr "Magdagdag"
 
 #: ../../portable/frontends/widgets/prefpanel.py:523
 msgid "Add Watched Folder"
@@ -1256,36 +1353,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/prefpanel.py:577
 msgid "GB"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:580
-msgid "1 day"
-msgstr ""
-"Isang Araw\r\n"
-"1 Araw"
-
-#: ../../portable/frontends/widgets/prefpanel.py:581
-msgid "3 days"
-msgstr ""
-"Tatlong Araw\r\n"
-"3 Araw"
-
-#: ../../portable/frontends/widgets/prefpanel.py:582
-msgid "6 days"
-msgstr ""
-"Anim na Araw\r\n"
-"6 na Araw"
-
-#: ../../portable/frontends/widgets/prefpanel.py:583
-msgid "10 days"
-msgstr ""
-"Sampung Araw\r\n"
-"10 Araw"
-
-#: ../../portable/frontends/widgets/prefpanel.py:584
-msgid "1 month"
-msgstr ""
-"Isang  Buwan\r\n"
-"1 Buwan"
 
 #: ../../portable/frontends/widgets/prefpanel.py:590
 msgid "By default, videos expire after:"
@@ -1348,10 +1415,6 @@ msgstr ""
 msgid "Password:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
-msgid "New Videos"
-msgstr "Mga Bagong Video"
-
 #: ../../portable/frontends/widgets/itemlistcontroller.py:413
 #: ../../portable/frontends/widgets/statictabs.py:86
 msgid "Video Search"
@@ -1361,21 +1424,15 @@ msgstr ""
 msgid "No Results Found"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
 msgid "Library"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr ""
 
@@ -1948,7 +2005,6 @@ msgstr ""
 msgid "Choose"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -2029,11 +2085,6 @@ msgid ""
 "Enter the URL of the feed to add"
 msgstr ""
 
-#: ../../portable/frontends/widgets/tablist.py:475
-#: ../../portable/frontends/widgets/tablist.py:534
-msgid "Copy URL to clipboard"
-msgstr "Kopyahin ang URL sa clipboard"
-
 #: ../../portable/frontends/widgets/tablist.py:477
 msgid "Remove Site"
 msgstr ""
@@ -2112,14 +2163,6 @@ msgstr ""
 msgid "A search feed contains items that match a search term."
 msgstr ""
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:74
-msgid "Search for:"
-msgstr "Maghanap ng:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:80
-msgid "In this:"
-msgstr "Dito:"
-
 #: ../../portable/frontends/widgets/newsearchfeed.py:87
 msgid "Feed:"
 msgstr ""
@@ -2153,12 +2196,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:132
 msgid "Would you like to run Miro on startup?"
 msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:137
-#: ../../portable/frontends/widgets/firsttimedialog.py:170
-#: ../../portable/dialogs.py:87
-msgid "Yes"
-msgstr "Oo"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:138
 #: ../../portable/frontends/widgets/firsttimedialog.py:169
@@ -2198,13 +2235,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:280
 msgid "< Previous"
 msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:213
-#: ../../portable/frontends/widgets/firsttimedialog.py:215
-#: ../../portable/frontends/widgets/firsttimedialog.py:272
-#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
-msgid "Search"
-msgstr "Maghanap"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:215
 #: ../../portable/frontends/widgets/firsttimedialog.py:283
@@ -2274,11 +2304,6 @@ msgstr ""
 msgid "Remove From the Library"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:94
-#: ../../portable/frontends/widgets/itemcontextmenu.py:192
-msgid "Play"
-msgstr "Ipalabas"
-
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just this Item"
 msgstr ""
@@ -2302,7 +2327,6 @@ msgstr ""
 msgid "Mark as Played"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr ""
 
@@ -2322,7 +2346,6 @@ msgstr ""
 msgid "Resume Download"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
 msgstr ""
 
@@ -2383,10 +2406,6 @@ msgstr ""
 msgid "Remove From Playlist"
 msgstr ""
 
-#: ../../portable/dialogs.py:83
-msgid "Ok"
-msgstr "Ok"
-
 #: ../../portable/dialogs.py:84
 msgid "Close"
 msgstr ""
@@ -2394,10 +2413,6 @@ msgstr ""
 #: ../../portable/dialogs.py:86
 msgid "Done"
 msgstr ""
-
-#: ../../portable/dialogs.py:89
-msgid "Quit"
-msgstr "Ihinto"
 
 #: ../../portable/dialogs.py:90
 msgid "Continue"
@@ -2430,18 +2445,6 @@ msgstr ""
 #: ../../portable/dialogs.py:98
 msgid "Delete Files"
 msgstr ""
-
-#: ../../portable/dialogs.py:99
-msgid "Keep Videos"
-msgstr "Panatilihin ang mga Video"
-
-#: ../../portable/dialogs.py:100
-msgid "Delete Videos"
-msgstr "Tanggalin ng mga Video"
-
-#: ../../portable/dialogs.py:101
-msgid "Create"
-msgstr "Gumawa"
 
 #: ../../portable/dialogs.py:102
 msgid "Create Feed"
@@ -2620,31 +2623,15 @@ msgstr[1] ""
 msgid "no title"
 msgstr ""
 
-#: ../../portable/item.py:1008
-msgid "starting up..."
-msgstr "nag-uumpisa..."
-
 #: ../../portable/httpclient.py:90
 #, python-format
 msgid "Error: %(msg)s"
 msgstr ""
 
-#: ../../portable/httpclient.py:105 ../../portable/httpclient.py:111
-msgid "Can't connect"
-msgstr "hindi maka-konek"
-
 #: ../../portable/httpclient.py:106
 #, python-format
 msgid "Connection Error: %(msg)s"
 msgstr ""
-
-#: ../../portable/httpclient.py:112
-msgid "SSL connection error"
-msgstr "May Mali sa koneksiyon ng SSL"
-
-#: ../../portable/httpclient.py:116
-msgid "HTTP error"
-msgstr "May mali sa HTTP"
 
 #: ../../portable/httpclient.py:120
 #, python-format
@@ -2724,17 +2711,9 @@ msgstr ""
 msgid "Unknown Error code"
 msgstr ""
 
-#: ../../portable/httpclient.py:408
-msgid "Connection closed"
-msgstr "Saradong Koneksiyon"
-
 #: ../../portable/httpclient.py:829
 msgid "Unknown"
 msgstr ""
-
-#: ../../portable/httpclient.py:830
-msgid "Internal Error: Not ready to send"
-msgstr "May Maling Internal: Di handang ipadala"
 
 #: ../../portable/feed.py:925
 msgid "Error loading feed"

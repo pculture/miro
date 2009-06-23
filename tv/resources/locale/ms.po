@@ -8,20 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-03-10 12:38+0000\n"
-"Last-Translator: Muhammad Syafiq Zainuddin <kmkd1234@yahoo.com>\n"
+"PO-Revision-Date: 2009-06-22 06:58+0000\n"
+"Last-Translator: abuyop <Unknown>\n"
 "Language-Team: Malay <ms@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
-msgid "Enable tray icon"
-msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:42
 msgid "When I click the red close button:"
@@ -60,12 +55,6 @@ msgstr "Ralat Mengesyorkan Item"
 msgid "Error Opening Website"
 msgstr "Ralat Membuka Laman Web"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:191
-#, python-format
-msgid ""
-"There was an error opening %(url)s.  Please try again in a few seconds"
-msgstr ""
-
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
 msgid "Update Available"
 msgstr "Kemaskini boleh didapati"
@@ -83,38 +72,6 @@ msgstr "Anda hendak memuat turun sekarang?"
 msgid "Install Adobe Flash?"
 msgstr "Pasang Adobe Flash?"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
-#, python-format
-msgid ""
-"For the best %(appname)s experience, we suggest you install Adobe Flash.  "
-"Would you like to do this now?"
-msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
-msgid "Install Adobe Flash"
-msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
-msgid ""
-"Your browser will load the web-site where you can download and install Adobe "
-"Flash.\n"
-"\n"
-"You should quit Miro now and start it up again after Adobe Flash has been "
-"installed."
-msgstr ""
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
-msgid "Renderer options:"
-msgstr ""
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
-msgid "You must restart Miro for renderer changes to take effect."
-msgstr ""
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:72
-msgid "Video renderer:"
-msgstr ""
-
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:77
 msgid "You must restart playback for visualization changes to take effect."
 msgstr "Anda mesti ulang semula untuk visual yang diubah berfungsi."
@@ -122,10 +79,6 @@ msgstr "Anda mesti ulang semula untuk visual yang diubah berfungsi."
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:80
 msgid "None"
 msgstr "Tiada"
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:86
-msgid "Use this for video when playing audio:"
-msgstr ""
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:120
 #: ../../portable/frontends/widgets/gtk/video.py:300
@@ -157,19 +110,10 @@ msgstr "Padam"
 msgid "Add to Library"
 msgstr "Tambah pada perpustakaan."
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:203
-msgid "Pop Out"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:206
-msgid "Pop In"
-msgstr ""
-
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
 msgid "Services"
 msgstr "Perkhidmatan"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 msgid "Hide Miro"
 msgstr "Sembunyikan Miro"
 
@@ -185,7 +129,6 @@ msgstr "Papar Semua"
 msgid "Preferences..."
 msgstr "Keutamaan..."
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
 msgstr "Berhentikan Miro"
 
@@ -249,7 +192,6 @@ msgstr "Bawa Semua Ke Depan"
 msgid "Window"
 msgstr "Tetingkap"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Miro Help"
 msgstr "Bantuan Miro"
 
@@ -266,17 +208,10 @@ msgstr "Muat turun video '%s' sudah tamat"
 msgid "Custom Channels"
 msgstr "Siaran pilihan"
 
-#: ../../portable/theme.py:138
-#, python-format
-msgid ""
-"You are running a version of %(appname)s with a custom set of channels."
-msgstr ""
-
 #: ../../portable/theme.py:171
 msgid "Example Playlist"
 msgstr "Contoh senarai"
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr "Miro - Laporan masalah"
 
@@ -284,59 +219,14 @@ msgstr "Miro - Laporan masalah"
 msgid "Search All"
 msgstr "Cari semua"
 
-#: ../../portable/util.py:279 ../../portable/util.py:281
-#, python-format
-msgid "%(size)sGB"
-msgstr ""
-
-#: ../../portable/util.py:285 ../../portable/util.py:287
-#, python-format
-msgid "%(size)sMB"
-msgstr ""
-
-#: ../../portable/util.py:291 ../../portable/util.py:293
-#, python-format
-msgid "%(size)sKB"
-msgstr ""
-
-#: ../../portable/util.py:297 ../../portable/util.py:299
-#, python-format
-msgid "%(size)sB"
-msgstr ""
-
 #: ../../portable/opml.py:185
 msgid "OPML Import failed"
 msgstr "Gagal Mengimpot OPML"
-
-#: ../../portable/opml.py:186
-msgid ""
-"The selected OPML file appears to be invalid.  Import was interrupted."
-msgstr ""
 
 #: ../../portable/opml.py:191
 msgid "OPML Import summary"
 msgstr "Ringkasan Impot OPML"
 
-#: ../../portable/opml.py:192
-#, python-format
-msgid "Successfully imported %(count)d feed."
-msgid_plural "Successfully imported %(count)d feeds."
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/opml.py:198
-#, python-format
-msgid "Skipped %(count)d feed already present."
-msgid_plural "Skipped %(count)d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
-#, python-format
-msgid "%(appname)s database save succeeded"
-msgstr ""
-
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -344,163 +234,9 @@ msgstr ""
 "Pangkalan data ini berjaya disimpan, Sekarang sudah selamat untuk berhenti "
 "tanpa kehilangan sebarang data."
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
-#, python-format
-msgid "%(appname)s database save failed"
-msgstr ""
-
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
-#, python-format
-msgid ""
-"%(appname)s was unable to save its database: Disk Full.\n"
-"We suggest deleting files from the full disk or simply deleting some movies "
-"from your collection.\n"
-"Recent changes may be lost."
-msgstr ""
-
-#: ../../portable/messagehandler.py:1266
-msgid "Subscribed to new feed:"
-msgstr ""
-
-#: ../../portable/messagehandler.py:1269
-msgid "Subscribed to new feeds:"
-msgstr ""
-
-#: ../../portable/messages.py:965 ../../portable/item.py:618
-msgid "queued for download"
-msgstr ""
-
-#: ../../portable/startup.py:91
-msgid "Unknown Error"
-msgstr ""
-
-#: ../../portable/startup.py:93
-#, python-format
-msgid ""
-"An unknown error prevented Miro from startup.  Please file a bug report at "
-"%(url)s."
-msgstr ""
-
 #: ../../portable/startup.py:173
 msgid "Database too new"
 msgstr "Pangkalan Data terlalu baru"
-
-#: ../../portable/startup.py:175
-#, python-format
-msgid ""
-"You have a database that was saved with a newer version of %(appname)s. You "
-"must download the latest version of %(appname)s and run that."
-msgstr ""
-
-#: ../../portable/displaytext.py:40
-#, python-format
-msgid "%(size)s gb/s"
-msgstr ""
-
-#: ../../portable/displaytext.py:43
-#, python-format
-msgid "%(size)s mb/s"
-msgstr ""
-
-#: ../../portable/displaytext.py:46
-#, python-format
-msgid "%(size)s kb/s"
-msgstr ""
-
-#: ../../portable/displaytext.py:49
-#, python-format
-msgid "%(size)s b/s"
-msgstr ""
-
-#: ../../portable/displaytext.py:56
-#, python-format
-msgid "%(num).1f day"
-msgid_plural "%(num).1f days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:59
-#, python-format
-msgid "%(num).1f hr"
-msgid_plural "%(num).1f hrs"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:62
-#, python-format
-msgid "%(num).1f min"
-msgid_plural "%(num).1f mins"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:64
-#, python-format
-msgid "%(num)d sec"
-msgid_plural "%(num)d secs"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:78
-#, python-format
-msgid "%(size)s gb"
-msgstr ""
-
-#: ../../portable/displaytext.py:81
-#, python-format
-msgid "%(size)s mb"
-msgstr ""
-
-#: ../../portable/displaytext.py:84
-#, python-format
-msgid "%(size)s kb"
-msgstr ""
-
-#: ../../portable/displaytext.py:86
-#, python-format
-msgid "%(size)s b"
-msgstr ""
-
-#: ../../portable/displaytext.py:91
-#, python-format
-msgid "Expires in %(count)d day"
-msgid_plural "Expires in %(count)d days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:96
-#, python-format
-msgid "Expires in %(count)d hour"
-msgid_plural "Expires in %(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:101
-#, python-format
-msgid "Expires in %(count)d minute"
-msgid_plural "Expires in %(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:109
-#, python-format
-msgid "Expires: %(count)d day"
-msgid_plural "Expires: %(count)d days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:114
-#, python-format
-msgid "Expires: %(count)d hour"
-msgid_plural "Expires: %(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:119
-#, python-format
-msgid "Expires: %(count)d minute"
-msgid_plural "Expires: %(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
 
 #: ../../portable/downloader.py:233
 msgid "activity"
@@ -524,26 +260,10 @@ msgstr "Memulakan"
 msgid "Error"
 msgstr "Ralat"
 
-#: ../../portable/dl_daemon/download.py:596
-#, python-format
-msgid "Could not write to %(filename)s"
-msgstr ""
-
 #: ../../portable/dl_daemon/download.py:621
 #: ../../portable/dl_daemon/download.py:838
 msgid "Not enough disk space"
 msgstr "Ruangan Cakera Keras tidak mencukupi"
-
-#: ../../portable/dl_daemon/download.py:622
-#: ../../portable/dl_daemon/download.py:839
-#, python-format
-msgid "%(amount)s MB required to store this video"
-msgstr ""
-
-#: ../../portable/dl_daemon/download.py:637
-#, python-format
-msgid "Couldn't open %(filename)s for writing"
-msgstr ""
 
 #: ../../portable/dl_daemon/download.py:852
 msgid "BitTorrent failure"
@@ -557,58 +277,17 @@ msgstr "BitTorrent gagal untuk bermula"
 msgid "Corrupt Torrent"
 msgstr "Torrent Rosak"
 
-#: ../../portable/dl_daemon/download.py:1042
-#, python-format
-msgid "The torrent file at %(url)s was not valid"
-msgstr ""
-
 #: ../../portable/dl_daemon/download.py:1067
 msgid "Torrent file deleted"
 msgstr "Fail Torrent dipadamkan"
-
-#: ../../portable/dl_daemon/download.py:1068
-msgid "The torrent file for this item was deleted outside of Miro."
-msgstr ""
 
 #: ../../portable/menubar.py:184
 msgid "_Open"
 msgstr "_Buka"
 
-#: ../../portable/menubar.py:185
-msgid "_Download Item"
-msgstr ""
-
 #: ../../portable/menubar.py:186
 msgid "Check _Version"
 msgstr "Periksa _Versi"
-
-#: ../../portable/menubar.py:188
-msgid "_Remove Item"
-msgstr ""
-
-#: ../../portable/menubar.py:189
-msgid "_Remove Items"
-msgstr ""
-
-#: ../../portable/menubar.py:190
-msgid "Re_name Item"
-msgstr ""
-
-#: ../../portable/menubar.py:191
-msgid "Save Item _As"
-msgstr ""
-
-#: ../../portable/menubar.py:192
-msgid "Save Items _As"
-msgstr ""
-
-#: ../../portable/menubar.py:193
-msgid "Copy Item _URL"
-msgstr ""
-
-#: ../../portable/menubar.py:195
-msgid "_Options"
-msgstr ""
 
 #: ../../portable/menubar.py:196
 msgid "_Quit"
@@ -629,63 +308,6 @@ msgstr "_Tampal"
 #: ../../portable/menubar.py:208
 msgid "Select _All"
 msgstr "Pilih Semu_a"
-
-#: ../../portable/menubar.py:212
-msgid "Add _Feed"
-msgstr ""
-
-#: ../../portable/menubar.py:213
-#: ../../portable/frontends/widgets/application.py:526
-msgid "Add Site"
-msgstr ""
-
-#: ../../portable/menubar.py:214
-msgid "New Searc_h Feed"
-msgstr ""
-
-#: ../../portable/menubar.py:215
-msgid "New _Folder"
-msgstr ""
-
-#: ../../portable/menubar.py:217
-msgid "Re_name"
-msgstr ""
-
-#: ../../portable/menubar.py:218
-msgid "_Remove"
-msgstr ""
-
-#: ../../portable/menubar.py:219
-msgid "_Remove Folder"
-msgstr ""
-
-#: ../../portable/menubar.py:221
-msgid "_Update Feed"
-msgstr ""
-
-#: ../../portable/menubar.py:222
-msgid "_Update Feeds"
-msgstr ""
-
-#: ../../portable/menubar.py:223
-msgid "Update _All Feeds"
-msgstr ""
-
-#: ../../portable/menubar.py:225
-msgid "_Import Feeds (OPML)"
-msgstr ""
-
-#: ../../portable/menubar.py:226
-msgid "E_xport Feeds (OPML)"
-msgstr ""
-
-#: ../../portable/menubar.py:228
-msgid "_Share with a Friend"
-msgstr ""
-
-#: ../../portable/menubar.py:229
-msgid "Copy URL"
-msgstr ""
 
 #: ../../portable/menubar.py:233
 msgid "New _Playlist"
@@ -719,10 +341,6 @@ msgstr "_Buang Folder Senarai-main"
 msgid "_Play"
 msgstr "_Main"
 
-#: ../../portable/menubar.py:253
-msgid "_Pause"
-msgstr ""
-
 #: ../../portable/menubar.py:254
 msgid "_Stop"
 msgstr "_Henti"
@@ -743,25 +361,9 @@ msgstr "Langkau kehadapan"
 msgid "Skip _Back"
 msgstr "Langkau Ke_belakang"
 
-#: ../../portable/menubar.py:262
-msgid "Volume _Up"
-msgstr ""
-
-#: ../../portable/menubar.py:263
-msgid "Volume _Down"
-msgstr ""
-
 #: ../../portable/menubar.py:265
 msgid "_Fullscreen"
 msgstr "_Skrin Penuh"
-
-#: ../../portable/menubar.py:266
-msgid "_Toggle Detached/Attached"
-msgstr ""
-
-#: ../../portable/menubar.py:270
-msgid "_About Miro"
-msgstr ""
 
 #: ../../portable/menubar.py:271
 msgid "_Donate"
@@ -771,22 +373,9 @@ msgstr "_Derma"
 msgid "_Help"
 msgstr "_Bantuan"
 
-#: ../../portable/menubar.py:274
-#: ../../portable/frontends/widgets/diagnostics.py:119
-msgid "Diagnostics"
-msgstr ""
-
 #: ../../portable/menubar.py:275
 msgid "Report a _Bug"
 msgstr "Laporkan _Pepijat"
-
-#: ../../portable/menubar.py:276
-msgid "_Translate"
-msgstr ""
-
-#: ../../portable/menubar.py:277
-msgid "_Planet Miro"
-msgstr ""
 
 #: ../../portable/menubar.py:282
 msgid "_Video"
@@ -795,10 +384,6 @@ msgstr "_Video"
 #: ../../portable/menubar.py:284
 msgid "_File"
 msgstr "_Fail"
-
-#: ../../portable/menubar.py:290
-msgid "_Sidebar"
-msgstr ""
 
 #: ../../portable/menubar.py:291
 msgid "_Playlists"
@@ -813,11 +398,870 @@ msgstr "Main Kemba_li"
 msgid "Internal Error"
 msgstr "Ralat Dalaman"
 
+#: ../../portable/frontends/widgets/feedsettingspanel.py:55
+#: ../../portable/frontends/widgets/feedsettingspanel.py:102
+#: ../../portable/frontends/widgets/prefpanel.py:585
+msgid "never"
+msgstr "jangan sekali-kali"
+
+#: ../../portable/frontends/widgets/style.py:225
+msgid "Down Total"
+msgstr "Jumlah kebawah"
+
+#: ../../portable/frontends/widgets/style.py:226
+#: ../../portable/frontends/widgets/style.py:1040
+#: ../../portable/frontends/widgets/style.py:1051
+#: ../../portable/frontends/widgets/itemcontextmenu.py:129
+#: ../../portable/frontends/widgets/itemcontextmenu.py:224
+#: ../../portable/dialogs.py:95
+msgid "Download"
+msgstr "Muat turun"
+
+#: ../../portable/frontends/widgets/style.py:233
+#: ../../portable/frontends/widgets/prefpanel.py:485
+#: ../../portable/frontends/widgets/tablist.py:523
+#: ../../portable/frontends/widgets/tablist.py:535
+#: ../../portable/frontends/widgets/tablist.py:541
+#: ../../portable/frontends/widgets/tablist.py:578
+#: ../../portable/frontends/widgets/tablist.py:584
+#: ../../portable/frontends/widgets/tablist.py:589
+#: ../../portable/dialogs.py:108
+msgid "Remove"
+msgstr "Buang"
+
+#: ../../portable/frontends/widgets/prefpanel.py:289
+#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+#: ../../portable/frontends/widgets/statictabs.py:103
+msgid "New"
+msgstr "Baru"
+
+#: ../../portable/frontends/widgets/prefpanel.py:290
+#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+msgid "All"
+msgstr "Semua"
+
+#: ../../portable/frontends/widgets/prefpanel.py:291
+#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+msgid "Off"
+msgstr "Padam"
+
+#: ../../portable/frontends/widgets/prefpanel.py:453
+msgid "Migrate existing movies?"
+msgstr "Alih filem sedia ada?"
+
+#: ../../portable/frontends/widgets/prefpanel.py:482
+#: ../../portable/dialogs.py:104
+msgid "Add"
+msgstr "Tambah"
+
+#: ../../portable/frontends/widgets/prefpanel.py:542
+msgid "Store downloads in this folder:"
+msgstr "Simpan muat-turun ke dalam folder ini:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:568
+msgid "Keep at least this much free space on my drive:"
+msgstr "Simpan sekurang-kurangnya sebanyak ini ruang pada cakera saya:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:580
+msgid "1 day"
+msgstr "1 hari"
+
+#: ../../portable/frontends/widgets/prefpanel.py:581
+msgid "3 days"
+msgstr "3 hari"
+
+#: ../../portable/frontends/widgets/prefpanel.py:582
+msgid "6 days"
+msgstr "6 hari"
+
+#: ../../portable/frontends/widgets/prefpanel.py:583
+msgid "10 days"
+msgstr "10 hari"
+
+#: ../../portable/frontends/widgets/prefpanel.py:584
+msgid "1 month"
+msgstr "1 bulan"
+
+#: ../../portable/frontends/widgets/prefpanel.py:590
+msgid "By default, videos expire after:"
+msgstr "Secara default, video tamat tempoh selepas:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:620
+msgid "General"
+msgstr "Am"
+
+#: ../../portable/frontends/widgets/prefpanel.py:622
+#: ../../portable/frontends/widgets/downloadscontroller.py:81
+msgid "Downloads"
+msgstr "Beban kebawah"
+
+#: ../../portable/frontends/widgets/prefpanel.py:623
+msgid "Folders"
+msgstr "Folder"
+
+#: ../../portable/frontends/widgets/prefpanel.py:625
+msgid "Playback"
+msgstr "Main Balik"
+
+#: ../../portable/frontends/widgets/rundialog.py:82
+msgid "Username:"
+msgstr "Nama pengguna:"
+
+#: ../../portable/frontends/widgets/rundialog.py:86
+msgid "Password:"
+msgstr "Kata laluan:"
+
+msgid "Library"
+msgstr "Pustaka"
+
+#: ../../portable/frontends/widgets/diagnostics.py:77
+#: ../../portable/frontends/widgets/gtk/trayicon.py:83
+msgid "Show"
+msgstr "Papar"
+
+#: ../../portable/frontends/widgets/application.py:578
+msgid "Import OPML File"
+msgstr "Impot Fail OPML"
+
+#: ../../portable/frontends/widgets/application.py:580
+msgid "OPML Files"
+msgstr "Fail OPML"
+
+#: ../../portable/frontends/widgets/application.py:593
+msgid "Export OPML File"
+msgstr "Expot Fail OPML"
+
+#: ../../portable/frontends/widgets/application.py:616
+msgid "Create Playlist"
+msgstr "Hasilkan Senarai-main"
+
+#: ../../portable/frontends/widgets/application.py:617
+msgid "Enter a name for the new playlist"
+msgstr "Masukkan nama untuk senarai-main baru"
+
+#: ../../portable/frontends/widgets/application.py:638
+msgid "Create Playlist Folder"
+msgstr "Hasilkan Folder Senarai-main"
+
+#: ../../portable/frontends/widgets/application.py:639
+msgid "Enter a name for the new playlist folder"
+msgstr "Masukkan nama untuk folder senarai-main yang baru"
+
+#: ../../portable/frontends/widgets/application.py:670
+#: ../../portable/frontends/widgets/tablist.py:583
+#: ../../portable/playlist.py:179
+msgid "Rename Playlist"
+msgstr "Namakan kembali Senarai-main"
+
+#: ../../portable/frontends/widgets/application.py:675
+#: ../../portable/frontends/widgets/tablist.py:577
+msgid "Rename Playlist Folder"
+msgstr "Namakan semula Folder Senarai-main"
+
+#: ../../portable/frontends/widgets/application.py:757
+msgid "Warn me when I attempt to quit with downloads in progress"
+msgstr ""
+"Berikan amaran apabila saya cuba berhenti dengan proses membeban kebawah "
+"masih berlangsung"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:633
+msgid "Settings"
+msgstr "Tetapan"
+
+#: ../../portable/frontends/widgets/displays.py:361
+msgid "Filename:"
+msgstr "Nama fail:"
+
+#: ../../portable/frontends/widgets/displays.py:364
+msgid "File type:"
+msgstr "Jenis fail:"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:81
+msgid "Hide"
+msgstr "Sembunyikan"
+
+#: ../../portable/frontends/widgets/tablist.py:475
+#: ../../portable/frontends/widgets/tablist.py:534
+msgid "Copy URL to clipboard"
+msgstr "Salain URL ke Papan-klip"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:74
+msgid "Search for:"
+msgstr "Carian untuk:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:80
+msgid "In this:"
+msgstr "Dalam ini:"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:137
+#: ../../portable/frontends/widgets/firsttimedialog.py:170
+#: ../../portable/dialogs.py:87
+msgid "Yes"
+msgstr "Ya"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:138
+#: ../../portable/frontends/widgets/firsttimedialog.py:169
+#: ../../portable/dialogs.py:88
+msgid "No"
+msgstr "Tidak"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:213
+#: ../../portable/frontends/widgets/firsttimedialog.py:215
+#: ../../portable/frontends/widgets/firsttimedialog.py:272
+#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
+msgid "Search"
+msgstr "Cari"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:215
+#: ../../portable/frontends/widgets/firsttimedialog.py:283
+msgid "Finish"
+msgstr "Selesai"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:273
+#: ../../portable/dialogs.py:85
+msgid "Cancel"
+msgstr "Batal"
+
+#: ../../portable/frontends/widgets/statictabs.py:44
+msgid "Miro Guide"
+msgstr "Panduan Miro"
+
+#: ../../portable/frontends/widgets/statictabs.py:110
+msgid "Downloading"
+msgstr "Memuat turun"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:63
+msgid "Remove From the Library"
+msgstr "BUang dari Perpustakaan"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:94
+#: ../../portable/frontends/widgets/itemcontextmenu.py:192
+msgid "Play"
+msgstr "Main"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:118
+#: ../../portable/frontends/widgets/itemcontextmenu.py:240
+#: ../../portable/frontends/widgets/itemcontextmenu.py:258
+msgid "Cancel Download"
+msgstr "Batalkan Muat turun"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:122
+#: ../../portable/frontends/widgets/itemcontextmenu.py:241
+msgid "Pause Download"
+msgstr "Hentikan seketika Muat turun"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:264
+msgid "Restart Upload"
+msgstr "Mulakan Kembali Memuat naik"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:278
+msgid "Remove From Playlist"
+msgstr "Buang dari Senarai-main"
+
+#: ../../portable/dialogs.py:83
+msgid "Ok"
+msgstr "OK"
+
+#: ../../portable/dialogs.py:89
+msgid "Quit"
+msgstr "Keluar"
+
+#: ../../portable/dialogs.py:91
+msgid "Ignore"
+msgstr "Abaikan"
+
+#: ../../portable/dialogs.py:92
+msgid "Submit Crash Report"
+msgstr "Hantar Laporan Pelanggaran"
+
+#: ../../portable/dialogs.py:93
+msgid "Migrate"
+msgstr "Pindah"
+
+#: ../../portable/dialogs.py:94
+msgid "Don't Migrate"
+msgstr "Jangan Pindah"
+
+#: ../../portable/dialogs.py:96
+msgid "Remove Entry"
+msgstr "Buang  Entri"
+
+#: ../../portable/dialogs.py:97
+msgid "Delete File"
+msgstr "Padam Fail"
+
+#: ../../portable/dialogs.py:98
+msgid "Delete Files"
+msgstr "Padam Fail"
+
+#: ../../portable/dialogs.py:99
+msgid "Keep Videos"
+msgstr "Simpan Video"
+
+#: ../../portable/dialogs.py:100
+msgid "Delete Videos"
+msgstr "Padam Video"
+
+#: ../../portable/dialogs.py:101
+msgid "Create"
+msgstr "Cipta"
+
+#: ../../portable/dialogs.py:105
+msgid "Add Into New Folder"
+msgstr "Tambah ke Folder Baru"
+
+#: ../../portable/dialogs.py:109
+msgid "Not Now"
+msgstr "Bukan Sekarang"
+
+#: ../../portable/dialogs.py:110
+msgid "Close to Tray"
+msgstr "Tutup ke Tray"
+
+#: ../../portable/dialogs.py:111
+msgid "Launch Miro"
+msgstr "Lancarkan Miro"
+
+#: ../../portable/dialogs.py:112
+msgid "Download Anyway"
+msgstr "Muat Turun Juga"
+
+#: ../../portable/playlist.py:180
+#, python-format
+msgid "Enter a new name for the playlist %s"
+msgstr "Masukkan nama baru untuk Senarai-main %s"
+
+#: ../../portable/singleclick.py:100
+msgid "Download already exists"
+msgstr "Muat turun telah wujud"
+
+#: ../../portable/singleclick.py:101
+msgid "That URL is already an external download."
+msgstr "URL tersebut telah menjadi muat turun luaran"
+
+#: ../../portable/singleclick.py:107
+msgid "Miro will begin downloading it now."
+msgstr "Miro akan mula memuat turun sekarang"
+
+#: ../../portable/singleclick.py:109
+msgid "It is downloading now."
+msgstr "Ianya sedang dimuat turun"
+
+#: ../../portable/singleclick.py:111
+msgid "It has already been downloaded."
+msgstr "Ianya telah dimuat turun"
+
+#: ../../portable/singleclick.py:138
+msgid "File Download"
+msgstr "Muat turun Fail"
+
+#: ../../portable/singleclick.py:166
+msgid "Download Error"
+msgstr "Ralat Muat turun"
+
+#: ../../portable/singleclick.py:337
+msgid "Subscription error"
+msgstr "Ralat Langganan"
+
+#: ../../portable/item.py:1008
+msgid "starting up..."
+msgstr "Memulakan..."
+
+#: ../../portable/httpclient.py:105 ../../portable/httpclient.py:111
+msgid "Can't connect"
+msgstr "Tidak boleh disambung"
+
+#: ../../portable/httpclient.py:112
+msgid "SSL connection error"
+msgstr "Ralat Sambungan SSL"
+
+#: ../../portable/httpclient.py:116
+msgid "HTTP error"
+msgstr "ralat HTTP"
+
+#: ../../portable/httpclient.py:146
+msgid "Got 404 status code"
+msgstr "Mendapat kod status 404"
+
+#: ../../portable/httpclient.py:153
+msgid "Authorization failed"
+msgstr "Pengesahan gagal"
+
+#: ../../portable/httpclient.py:159
+msgid "Pipeline request never started"
+msgstr "Permintaan Barispaip tidak pernah bermula"
+
+#: ../../portable/httpclient.py:163
+msgid "Timeout"
+msgstr "Masa tamat"
+
+#: ../../portable/httpclient.py:168
+msgid "Invalid URL"
+msgstr "URL tidak sah"
+
+#: ../../portable/httpclient.py:376
+msgid "Unknown Error code"
+msgstr "Kod Ralat tidak diketahui"
+
+#: ../../portable/httpclient.py:408
+msgid "Connection closed"
+msgstr "Sambungan ditutup"
+
+#: ../../portable/httpclient.py:829
+msgid "Unknown"
+msgstr "Tidak diketahui"
+
+#: ../../portable/httpclient.py:830
+msgid "Internal Error: Not ready to send"
+msgstr "Ralat dalaman: Tidak sedia untuk dihantar"
+
+#: ../../portable/feed.py:925
+msgid "Error loading feed"
+msgstr "Ralat memuat turun suapan"
+
+#: ../../portable/feed.py:930
+msgid "Would you like to keep the feed?"
+msgstr "Adakah anda ingin mengekalkan suapan tersebut?"
+
+#: ../../portable/feed.py:1055
+msgid "Bad content-type"
+msgstr "Jenis-kandungan Tidak bagus"
+
+#: ../../portable/feed.py:2407
+msgid "Local Files"
+msgstr "Fail Lokal"
+
+#: ../../portable/feed.py:2421
+msgid "Playing File"
+msgstr "Memainkan Fail"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
+msgid "Enable tray icon"
+msgstr ""
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:191
+#, python-format
+msgid ""
+"There was an error opening %(url)s.  Please try again in a few seconds"
+msgstr ""
+
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
+#, python-format
+msgid ""
+"For the best %(appname)s experience, we suggest you install Adobe Flash.  "
+"Would you like to do this now?"
+msgstr ""
+
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
+msgid "Install Adobe Flash"
+msgstr "Pasang Adobe Flash"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
+msgid ""
+"Your browser will load the web-site where you can download and install Adobe "
+"Flash.\n"
+"\n"
+"You should quit Miro now and start it up again after Adobe Flash has been "
+"installed."
+msgstr ""
+"Pelungsur anda akan memuatkan laman sesawang dimana anda boleh memuaturun "
+"dan memasang Adobe Flash./n\n"
+"Anda seharusnya tutup Miro dan ulangmula sekali lagi selepas Adobe Flash "
+"selesai dipasang."
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
+msgid "Renderer options:"
+msgstr ""
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
+msgid "You must restart Miro for renderer changes to take effect."
+msgstr ""
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:72
+msgid "Video renderer:"
+msgstr ""
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:86
+msgid "Use this for video when playing audio:"
+msgstr "Guna video ini semasa memainkan audio:"
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:203
+msgid "Pop Out"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:206
+msgid "Pop In"
+msgstr ""
+
+#: ../../portable/theme.py:138
+#, python-format
+msgid ""
+"You are running a version of %(appname)s with a custom set of channels."
+msgstr "Anda menggunakan versi %(appname)s dengan set channel suai"
+
+#: ../../portable/util.py:279 ../../portable/util.py:281
+#, python-format
+msgid "%(size)sGB"
+msgstr "%(size)sGB"
+
+#: ../../portable/util.py:285 ../../portable/util.py:287
+#, python-format
+msgid "%(size)sMB"
+msgstr "%(size)sMB"
+
+#: ../../portable/util.py:291 ../../portable/util.py:293
+#, python-format
+msgid "%(size)sKB"
+msgstr "%(size)sKB"
+
+#: ../../portable/util.py:297 ../../portable/util.py:299
+#, python-format
+msgid "%(size)sB"
+msgstr "%(size)sB"
+
+#: ../../portable/opml.py:186
+msgid ""
+"The selected OPML file appears to be invalid.  Import was interrupted."
+msgstr ""
+"Fail OPML yang dipilih adalah tidak sah. Proses mengimport terganggu."
+
+#: ../../portable/opml.py:192
+#, python-format
+msgid "Successfully imported %(count)d feed."
+msgid_plural "Successfully imported %(count)d feeds."
+msgstr[0] "Berjaya mengimport %(count)d suapan"
+msgstr[1] "Berjaya mengimport %(count)d suapan"
+
+#: ../../portable/opml.py:198
+#, python-format
+msgid "Skipped %(count)d feed already present."
+msgid_plural "Skipped %(count)d feeds already present."
+msgstr[0] "Langkau  %(count)d suapan yang sudah ada"
+msgstr[1] "Langkau  %(count)d suapan yang sudah ada"
+
+#, python-format
+msgid "%(appname)s database save succeeded"
+msgstr "Pengkalan data %(appname)s berjaya disimpan"
+
+#, python-format
+msgid "%(appname)s database save failed"
+msgstr "Pengkalan data %(appname)s gagal disimpan"
+
+#, python-format
+msgid ""
+"%(appname)s was unable to save its database: Disk Full.\n"
+"We suggest deleting files from the full disk or simply deleting some movies "
+"from your collection.\n"
+"Recent changes may be lost."
+msgstr ""
+"%(appname)s tidak boleh menyimpan pengkalan datanya: Cakera Penuh./n\n"
+"Kami cadangkan, buang fail-fail dari cakera tersebut ataupun buang filem di "
+"dalam koleksi anda./n\n"
+"Perubahan terkini mungkin hilang."
+
+#: ../../portable/messagehandler.py:1266
+msgid "Subscribed to new feed:"
+msgstr "Daftar suapan baru:"
+
+#: ../../portable/messagehandler.py:1269
+msgid "Subscribed to new feeds:"
+msgstr "Daftar suapan baru:"
+
+#: ../../portable/messages.py:965 ../../portable/item.py:618
+msgid "queued for download"
+msgstr "Menunggu giliran untuk dimuaturun"
+
+#: ../../portable/startup.py:91
+msgid "Unknown Error"
+msgstr "Ralat Tidak Diketahui"
+
+#: ../../portable/startup.py:93
+#, python-format
+msgid ""
+"An unknown error prevented Miro from startup.  Please file a bug report at "
+"%(url)s."
+msgstr ""
+"Ralat yang tidak diketahui menghalang pembukaan Miro. Sila buat laporan di "
+"%(url)s."
+
+#: ../../portable/startup.py:175
+#, python-format
+msgid ""
+"You have a database that was saved with a newer version of %(appname)s. You "
+"must download the latest version of %(appname)s and run that."
+msgstr ""
+"Anda mempunyai pengkalan data yang disimpan menggunakan versi %(appname)s "
+"yang baru. Anda mesti memuaturun versi terkini %(appname)s dan "
+"menggunakannya."
+
+#: ../../portable/displaytext.py:40
+#, python-format
+msgid "%(size)s gb/s"
+msgstr "%(size)s gb/s"
+
+#: ../../portable/displaytext.py:43
+#, python-format
+msgid "%(size)s mb/s"
+msgstr "%(size)s mb/s"
+
+#: ../../portable/displaytext.py:46
+#, python-format
+msgid "%(size)s kb/s"
+msgstr "%(size)s kb/s"
+
+#: ../../portable/displaytext.py:49
+#, python-format
+msgid "%(size)s b/s"
+msgstr "%(size)s b/s"
+
+#: ../../portable/displaytext.py:56
+#, python-format
+msgid "%(num).1f day"
+msgid_plural "%(num).1f days"
+msgstr[0] "%(num).1f hari"
+msgstr[1] "%(num).1f hari"
+
+#: ../../portable/displaytext.py:59
+#, python-format
+msgid "%(num).1f hr"
+msgid_plural "%(num).1f hrs"
+msgstr[0] "%(num).1f jam"
+msgstr[1] "%(num).1f jam"
+
+#: ../../portable/displaytext.py:62
+#, python-format
+msgid "%(num).1f min"
+msgid_plural "%(num).1f mins"
+msgstr[0] "%(num).1f min"
+msgstr[1] "%(num).1f min"
+
+#: ../../portable/displaytext.py:64
+#, python-format
+msgid "%(num)d sec"
+msgid_plural "%(num)d secs"
+msgstr[0] "%(num)d saat"
+msgstr[1] "%(num)d saat"
+
+#: ../../portable/displaytext.py:78
+#, python-format
+msgid "%(size)s gb"
+msgstr "%(size)s gb"
+
+#: ../../portable/displaytext.py:81
+#, python-format
+msgid "%(size)s mb"
+msgstr "%(size)s mb"
+
+#: ../../portable/displaytext.py:84
+#, python-format
+msgid "%(size)s kb"
+msgstr "%(size)s kb"
+
+#: ../../portable/displaytext.py:86
+#, python-format
+msgid "%(size)s b"
+msgstr "%(size)s b"
+
+#: ../../portable/displaytext.py:91
+#, python-format
+msgid "Expires in %(count)d day"
+msgid_plural "Expires in %(count)d days"
+msgstr[0] "Luput dalam %(count)d hari"
+msgstr[1] "Luput dalam %(count)d hari"
+
+#: ../../portable/displaytext.py:96
+#, python-format
+msgid "Expires in %(count)d hour"
+msgid_plural "Expires in %(count)d hours"
+msgstr[0] "Luput dalam %(count)d jam"
+msgstr[1] "Luput dalam %(count)d jam"
+
+#: ../../portable/displaytext.py:101
+#, python-format
+msgid "Expires in %(count)d minute"
+msgid_plural "Expires in %(count)d minutes"
+msgstr[0] "Luput dalam %(count)d minit"
+msgstr[1] "Luput dalam %(count)d minit"
+
+#: ../../portable/displaytext.py:109
+#, python-format
+msgid "Expires: %(count)d day"
+msgid_plural "Expires: %(count)d days"
+msgstr[0] "Luput: %(count)d hari"
+msgstr[1] "Luput: %(count)d hari"
+
+#: ../../portable/displaytext.py:114
+#, python-format
+msgid "Expires: %(count)d hour"
+msgid_plural "Expires: %(count)d hours"
+msgstr[0] "Luput: %(count)d jam"
+msgstr[1] "Luput: %(count)d jam"
+
+#: ../../portable/displaytext.py:119
+#, python-format
+msgid "Expires: %(count)d minute"
+msgid_plural "Expires: %(count)d minutes"
+msgstr[0] "Luput: %(count)d minit"
+msgstr[1] "Luput: %(count)d minit"
+
+#: ../../portable/dl_daemon/download.py:596
+#, python-format
+msgid "Could not write to %(filename)s"
+msgstr "Tidak dapat menulis ke %(filename)s"
+
+#: ../../portable/dl_daemon/download.py:622
+#: ../../portable/dl_daemon/download.py:839
+#, python-format
+msgid "%(amount)s MB required to store this video"
+msgstr "%(amount)s MB diperlukan untuk menyimpan video ini"
+
+#: ../../portable/dl_daemon/download.py:637
+#, python-format
+msgid "Couldn't open %(filename)s for writing"
+msgstr "Tidak dapat membuka %(filename)s untuk ditulis"
+
+#: ../../portable/dl_daemon/download.py:1042
+#, python-format
+msgid "The torrent file at %(url)s was not valid"
+msgstr "Fail torrent di %(url)s adalah tidak sah"
+
+#: ../../portable/dl_daemon/download.py:1068
+msgid "The torrent file for this item was deleted outside of Miro."
+msgstr "Fail torrent untuk item ini telah dibuang diluar Miro."
+
+#: ../../portable/menubar.py:185
+msgid "_Download Item"
+msgstr "_Muaturun Item"
+
+#: ../../portable/menubar.py:188
+msgid "_Remove Item"
+msgstr "_Buang Item"
+
+#: ../../portable/menubar.py:189
+msgid "_Remove Items"
+msgstr "_Buang Item"
+
+#: ../../portable/menubar.py:190
+msgid "Re_name Item"
+msgstr "Nama _semula Item"
+
+#: ../../portable/menubar.py:191
+msgid "Save Item _As"
+msgstr "Simpan Item _Sebagai"
+
+#: ../../portable/menubar.py:192
+msgid "Save Items _As"
+msgstr "Simpan Item _Sebagai"
+
+#: ../../portable/menubar.py:193
+msgid "Copy Item _URL"
+msgstr ""
+
+#: ../../portable/menubar.py:195
+msgid "_Options"
+msgstr "_Pilihan"
+
+#: ../../portable/menubar.py:212
+msgid "Add _Feed"
+msgstr "Tambah _Suapan"
+
+#: ../../portable/menubar.py:213
+#: ../../portable/frontends/widgets/application.py:526
+msgid "Add Site"
+msgstr "Tambah Laman"
+
+#: ../../portable/menubar.py:214
+msgid "New Searc_h Feed"
+msgstr "Cari Suapan _Baru"
+
+#: ../../portable/menubar.py:215
+msgid "New _Folder"
+msgstr "Folder _Baru"
+
+#: ../../portable/menubar.py:217
+msgid "Re_name"
+msgstr "Nama _Semula"
+
+#: ../../portable/menubar.py:218
+msgid "_Remove"
+msgstr "_Buang"
+
+#: ../../portable/menubar.py:219
+msgid "_Remove Folder"
+msgstr "_Buang Folder"
+
+#: ../../portable/menubar.py:221
+msgid "_Update Feed"
+msgstr "_Kemaskini Suapan"
+
+#: ../../portable/menubar.py:222
+msgid "_Update Feeds"
+msgstr "_Kemaskini Suapan"
+
+#: ../../portable/menubar.py:223
+msgid "Update _All Feeds"
+msgstr "Kemaskini _Semua Suapan"
+
+#: ../../portable/menubar.py:225
+msgid "_Import Feeds (OPML)"
+msgstr "_Import Suapan (OPML)"
+
+#: ../../portable/menubar.py:226
+msgid "E_xport Feeds (OPML)"
+msgstr "E_ksport Suapan (OPML)"
+
+#: ../../portable/menubar.py:228
+msgid "_Share with a Friend"
+msgstr "_Kongsi dengan Rakan"
+
+#: ../../portable/menubar.py:229
+msgid "Copy URL"
+msgstr "Salin URL"
+
+#: ../../portable/menubar.py:253
+msgid "_Pause"
+msgstr "_Henti Sebentar"
+
+#: ../../portable/menubar.py:262
+msgid "Volume _Up"
+msgstr "Volum Di_naikan"
+
+#: ../../portable/menubar.py:263
+msgid "Volume _Down"
+msgstr "Volum Di_turunkan"
+
+#: ../../portable/menubar.py:266
+msgid "_Toggle Detached/Attached"
+msgstr ""
+
+msgid "_About Miro"
+msgstr "_Perihal Miro"
+
+#: ../../portable/menubar.py:274
+#: ../../portable/frontends/widgets/diagnostics.py:119
+msgid "Diagnostics"
+msgstr "Diagnostik"
+
+#: ../../portable/menubar.py:276
+msgid "_Translate"
+msgstr "_Terjemah"
+
+#: ../../portable/menubar.py:277
+msgid "_Planet Miro"
+msgstr "_Planet Miro"
+
+#: ../../portable/menubar.py:290
+msgid "_Sidebar"
+msgstr "Bar _Sisi"
+
 #: ../../portable/frontends/widgets/crashdialog.py:52
 msgid ""
 "Miro has encountered an internal error.  You can help us track down this "
 "problem and fix it by submitting an error report."
 msgstr ""
+"Miro mengalami ralat dalaan. Anda boleh membantu kami mengesan masalah ini "
+"dan perbaikinya dengan mengahntar laporan ralat."
 
 #: ../../portable/frontends/widgets/crashdialog.py:59
 msgid ""
@@ -828,12 +1272,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/crashdialog.py:64
 msgid "Describe what you were doing when you got this error:"
 msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:55
-#: ../../portable/frontends/widgets/feedsettingspanel.py:102
-#: ../../portable/frontends/widgets/prefpanel.py:585
-msgid "never"
-msgstr "jangan sekali-kali"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:58
 #, python-format
@@ -858,7 +1296,7 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Videos:"
-msgstr ""
+msgstr "Luput Video secara Automatik:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:95
 #, python-format
@@ -1018,19 +1456,6 @@ msgstr ""
 msgid "Down Rate"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:225
-msgid "Down Total"
-msgstr "Jumlah kebawah"
-
-#: ../../portable/frontends/widgets/style.py:226
-#: ../../portable/frontends/widgets/style.py:1040
-#: ../../portable/frontends/widgets/style.py:1051
-#: ../../portable/frontends/widgets/itemcontextmenu.py:129
-#: ../../portable/frontends/widgets/itemcontextmenu.py:224
-#: ../../portable/dialogs.py:95
-msgid "Download"
-msgstr "Muat turun"
-
 #: ../../portable/frontends/widgets/style.py:227
 msgid "Download Torrent"
 msgstr ""
@@ -1049,18 +1474,6 @@ msgstr ""
 msgid "Newly Available"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:233
-#: ../../portable/frontends/widgets/prefpanel.py:485
-#: ../../portable/frontends/widgets/tablist.py:523
-#: ../../portable/frontends/widgets/tablist.py:535
-#: ../../portable/frontends/widgets/tablist.py:541
-#: ../../portable/frontends/widgets/tablist.py:578
-#: ../../portable/frontends/widgets/tablist.py:584
-#: ../../portable/frontends/widgets/tablist.py:589
-#: ../../portable/dialogs.py:108
-msgid "Remove"
-msgstr "Buang"
-
 #: ../../portable/frontends/widgets/style.py:234
 #: ../../portable/frontends/widgets/itemcontextmenu.py:113
 msgid "Stop seeding"
@@ -1075,7 +1488,6 @@ msgstr ""
 msgid "Remove from playlist"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr ""
 
@@ -1098,22 +1510,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/prefpanel.py:284
 msgid "Manually"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
-#: ../../portable/frontends/widgets/statictabs.py:103
-msgid "New"
-msgstr "Baru"
-
-#: ../../portable/frontends/widgets/prefpanel.py:290
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
-msgid "All"
-msgstr "Semua"
-
-#: ../../portable/frontends/widgets/prefpanel.py:291
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
-msgid "Off"
-msgstr "Padam"
 
 #: ../../portable/frontends/widgets/prefpanel.py:297
 msgid "0"
@@ -1217,66 +1613,24 @@ msgstr ""
 msgid "Choose Movies Directory"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:453
-msgid "Migrate existing movies?"
-msgstr "Alih filem sedia ada?"
-
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
 "moved until they finish.)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:482
-#: ../../portable/dialogs.py:104
-msgid "Add"
-msgstr "Tambah"
-
 #: ../../portable/frontends/widgets/prefpanel.py:523
 msgid "Add Watched Folder"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:542
-msgid "Store downloads in this folder:"
-msgstr "Simpan muat-turun ke dalam folder ini:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:549
 msgid "Watch for new videos in these folders and include them in library:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:568
-msgid "Keep at least this much free space on my drive:"
-msgstr "Simpan sekurang-kurangnya sebanyak ini ruang pada cakera saya:"
-
 #: ../../portable/frontends/widgets/prefpanel.py:571
 #: ../../portable/frontends/widgets/prefpanel.py:577
 msgid "GB"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:580
-msgid "1 day"
-msgstr "1 hari"
-
-#: ../../portable/frontends/widgets/prefpanel.py:581
-msgid "3 days"
-msgstr "3 hari"
-
-#: ../../portable/frontends/widgets/prefpanel.py:582
-msgid "6 days"
-msgstr "6 hari"
-
-#: ../../portable/frontends/widgets/prefpanel.py:583
-msgid "10 days"
-msgstr "10 hari"
-
-#: ../../portable/frontends/widgets/prefpanel.py:584
-msgid "1 month"
-msgstr "1 bulan"
-
-#: ../../portable/frontends/widgets/prefpanel.py:590
-msgid "By default, videos expire after:"
-msgstr "Secara default, video tamat tempoh selepas:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:599
 msgid "Always play videos in a separate window."
@@ -1294,30 +1648,13 @@ msgstr ""
 msgid "Stop after each video"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:620
-msgid "General"
-msgstr "Am"
-
 #: ../../portable/frontends/widgets/prefpanel.py:621
 msgid "Feeds"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:622
-#: ../../portable/frontends/widgets/downloadscontroller.py:81
-msgid "Downloads"
-msgstr "Beban kebawah"
-
-#: ../../portable/frontends/widgets/prefpanel.py:623
-msgid "Folders"
-msgstr "Folder"
-
 #: ../../portable/frontends/widgets/prefpanel.py:624
 msgid "Disk space"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:625
-msgid "Playback"
-msgstr "Main Balik"
 
 #: ../../portable/frontends/widgets/prefpanel.py:629
 msgid "Preferences"
@@ -1327,15 +1664,6 @@ msgstr ""
 msgid "Open in browser"
 msgstr ""
 
-#: ../../portable/frontends/widgets/rundialog.py:82
-msgid "Username:"
-msgstr "Nama pengguna:"
-
-#: ../../portable/frontends/widgets/rundialog.py:86
-msgid "Password:"
-msgstr "Kata laluan:"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
 msgstr ""
 
@@ -1348,28 +1676,14 @@ msgstr ""
 msgid "No Results Found"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
-msgid "Library"
-msgstr "Pustaka"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr ""
-
-#: ../../portable/frontends/widgets/diagnostics.py:77
-#: ../../portable/frontends/widgets/gtk/trayicon.py:83
-msgid "Show"
-msgstr "Papar"
 
 #: ../../portable/frontends/widgets/diagnostics.py:84
 msgid "Movies location:"
@@ -1575,37 +1889,9 @@ msgid ""
 "Enter the URL of the site to add"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:578
-msgid "Import OPML File"
-msgstr "Impot Fail OPML"
-
-#: ../../portable/frontends/widgets/application.py:580
-msgid "OPML Files"
-msgstr "Fail OPML"
-
 #: ../../portable/frontends/widgets/application.py:587
 msgid "Import OPML File - Error"
 msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:593
-msgid "Export OPML File"
-msgstr "Expot Fail OPML"
-
-#: ../../portable/frontends/widgets/application.py:616
-msgid "Create Playlist"
-msgstr "Hasilkan Senarai-main"
-
-#: ../../portable/frontends/widgets/application.py:617
-msgid "Enter a name for the new playlist"
-msgstr "Masukkan nama untuk senarai-main baru"
-
-#: ../../portable/frontends/widgets/application.py:638
-msgid "Create Playlist Folder"
-msgstr "Hasilkan Folder Senarai-main"
-
-#: ../../portable/frontends/widgets/application.py:639
-msgid "Enter a name for the new playlist folder"
-msgstr "Masukkan nama untuk folder senarai-main yang baru"
 
 #: ../../portable/frontends/widgets/application.py:660
 #: ../../portable/frontends/widgets/tablist.py:522
@@ -1626,21 +1912,10 @@ msgstr ""
 msgid "Enter a new name for the feed %(name)s"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:670
-#: ../../portable/frontends/widgets/tablist.py:583
-#: ../../portable/playlist.py:179
-msgid "Rename Playlist"
-msgstr "Namakan kembali Senarai-main"
-
 #: ../../portable/frontends/widgets/application.py:671
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:675
-#: ../../portable/frontends/widgets/tablist.py:577
-msgid "Rename Playlist Folder"
-msgstr "Namakan semula Folder Senarai-main"
 
 #: ../../portable/frontends/widgets/application.py:676
 #, python-format
@@ -1690,12 +1965,6 @@ msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] ""
 msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:757
-msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr ""
-"Berikan amaran apabila saya cuba berhenti dengan proses membeban kebawah "
-"masih berlangsung"
 
 #: ../../portable/frontends/widgets/application.py:1011
 msgid "Message"
@@ -1800,10 +2069,6 @@ msgstr ""
 msgid "Share feed"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:633
-msgid "Settings"
-msgstr "Tetapan"
-
 #: ../../portable/frontends/widgets/itemlistwidgets.py:639
 msgid "Remove feed"
 msgstr ""
@@ -1821,14 +2086,6 @@ msgid ""
 "Miro can't play this file.  You may be able to open it with a different "
 "program"
 msgstr ""
-
-#: ../../portable/frontends/widgets/displays.py:361
-msgid "Filename:"
-msgstr "Nama fail:"
-
-#: ../../portable/frontends/widgets/displays.py:364
-msgid "File type:"
-msgstr "Jenis fail:"
 
 #: ../../portable/frontends/widgets/displays.py:370
 msgid "Play Externally"
@@ -1917,10 +2174,6 @@ msgstr ""
 msgid "Resume All Downloads (%(paused)d)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:81
-msgid "Hide"
-msgstr "Sembunyikan"
-
 #: ../../portable/frontends/widgets/gtk/video.py:272
 msgid "Add to library"
 msgstr ""
@@ -1937,7 +2190,6 @@ msgstr ""
 msgid "Choose"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -2018,11 +2270,6 @@ msgid ""
 "Enter the URL of the feed to add"
 msgstr ""
 
-#: ../../portable/frontends/widgets/tablist.py:475
-#: ../../portable/frontends/widgets/tablist.py:534
-msgid "Copy URL to clipboard"
-msgstr "Salain URL ke Papan-klip"
-
 #: ../../portable/frontends/widgets/tablist.py:477
 msgid "Remove Site"
 msgstr ""
@@ -2101,14 +2348,6 @@ msgstr ""
 msgid "A search feed contains items that match a search term."
 msgstr ""
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:74
-msgid "Search for:"
-msgstr "Carian untuk:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:80
-msgid "In this:"
-msgstr "Dalam ini:"
-
 #: ../../portable/frontends/widgets/newsearchfeed.py:87
 msgid "Feed:"
 msgstr ""
@@ -2143,18 +2382,6 @@ msgstr ""
 msgid "Would you like to run Miro on startup?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:137
-#: ../../portable/frontends/widgets/firsttimedialog.py:170
-#: ../../portable/dialogs.py:87
-msgid "Yes"
-msgstr "Ya"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:138
-#: ../../portable/frontends/widgets/firsttimedialog.py:169
-#: ../../portable/dialogs.py:88
-msgid "No"
-msgstr "Tidak"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:146
 msgid "Next >"
 msgstr ""
@@ -2188,26 +2415,9 @@ msgstr ""
 msgid "< Previous"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:213
-#: ../../portable/frontends/widgets/firsttimedialog.py:215
-#: ../../portable/frontends/widgets/firsttimedialog.py:272
-#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
-msgid "Search"
-msgstr "Cari"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:215
-#: ../../portable/frontends/widgets/firsttimedialog.py:283
-msgid "Finish"
-msgstr "Selesai"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:263
 msgid "Searching for media files"
 msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:273
-#: ../../portable/dialogs.py:85
-msgid "Cancel"
-msgstr "Batal"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:311
 #, python-format
@@ -2222,14 +2432,6 @@ msgid "found %(count)s media file"
 msgid_plural "found %(count)s media files"
 msgstr[0] ""
 msgstr[1] ""
-
-#: ../../portable/frontends/widgets/statictabs.py:44
-msgid "Miro Guide"
-msgstr "Panduan Miro"
-
-#: ../../portable/frontends/widgets/statictabs.py:110
-msgid "Downloading"
-msgstr "Memuat turun"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:90
 msgid "Single and external downloads"
@@ -2259,15 +2461,6 @@ msgstr ""
 msgid "New playlist:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:63
-msgid "Remove From the Library"
-msgstr "BUang dari Perpustakaan"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:94
-#: ../../portable/frontends/widgets/itemcontextmenu.py:192
-msgid "Play"
-msgstr "Main"
-
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just this Item"
 msgstr ""
@@ -2291,27 +2484,14 @@ msgstr ""
 msgid "Mark as Played"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:118
-#: ../../portable/frontends/widgets/itemcontextmenu.py:240
-#: ../../portable/frontends/widgets/itemcontextmenu.py:258
-msgid "Cancel Download"
-msgstr "Batalkan Muat turun"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:122
-#: ../../portable/frontends/widgets/itemcontextmenu.py:241
-msgid "Pause Download"
-msgstr "Hentikan seketika Muat turun"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:125
 #: ../../portable/frontends/widgets/itemcontextmenu.py:254
 msgid "Resume Download"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
 msgstr ""
 
@@ -2364,18 +2544,6 @@ msgid_plural "%(count)d Paused Items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:264
-msgid "Restart Upload"
-msgstr "Mulakan Kembali Memuat naik"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:278
-msgid "Remove From Playlist"
-msgstr "Buang dari Senarai-main"
-
-#: ../../portable/dialogs.py:83
-msgid "Ok"
-msgstr "OK"
-
 #: ../../portable/dialogs.py:84
 msgid "Close"
 msgstr ""
@@ -2384,53 +2552,9 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
-#: ../../portable/dialogs.py:89
-msgid "Quit"
-msgstr "Keluar"
-
 #: ../../portable/dialogs.py:90
 msgid "Continue"
 msgstr ""
-
-#: ../../portable/dialogs.py:91
-msgid "Ignore"
-msgstr "Abaikan"
-
-#: ../../portable/dialogs.py:92
-msgid "Submit Crash Report"
-msgstr "Hantar Laporan Pelanggaran"
-
-#: ../../portable/dialogs.py:93
-msgid "Migrate"
-msgstr "Pindah"
-
-#: ../../portable/dialogs.py:94
-msgid "Don't Migrate"
-msgstr "Jangan Pindah"
-
-#: ../../portable/dialogs.py:96
-msgid "Remove Entry"
-msgstr "Buang  Entri"
-
-#: ../../portable/dialogs.py:97
-msgid "Delete File"
-msgstr "Padam Fail"
-
-#: ../../portable/dialogs.py:98
-msgid "Delete Files"
-msgstr "Padam Fail"
-
-#: ../../portable/dialogs.py:99
-msgid "Keep Videos"
-msgstr "Simpan Video"
-
-#: ../../portable/dialogs.py:100
-msgid "Delete Videos"
-msgstr "Padam Video"
-
-#: ../../portable/dialogs.py:101
-msgid "Create"
-msgstr "Cipta"
 
 #: ../../portable/dialogs.py:102
 msgid "Create Feed"
@@ -2439,26 +2563,6 @@ msgstr ""
 #: ../../portable/dialogs.py:103
 msgid "Create Folder"
 msgstr ""
-
-#: ../../portable/dialogs.py:105
-msgid "Add Into New Folder"
-msgstr "Tambah ke Folder Baru"
-
-#: ../../portable/dialogs.py:109
-msgid "Not Now"
-msgstr "Bukan Sekarang"
-
-#: ../../portable/dialogs.py:110
-msgid "Close to Tray"
-msgstr "Tutup ke Tray"
-
-#: ../../portable/dialogs.py:111
-msgid "Launch Miro"
-msgstr "Lancarkan Miro"
-
-#: ../../portable/dialogs.py:112
-msgid "Download Anyway"
-msgstr "Muat Turun Juga"
 
 #: ../../portable/dialogs.py:113
 msgid "Open in External Browser"
@@ -2476,44 +2580,11 @@ msgstr ""
 msgid "Stop Watching"
 msgstr ""
 
-#: ../../portable/playlist.py:180
-#, python-format
-msgid "Enter a new name for the playlist %s"
-msgstr "Masukkan nama baru untuk Senarai-main %s"
-
-#: ../../portable/singleclick.py:100
-msgid "Download already exists"
-msgstr "Muat turun telah wujud"
-
-#: ../../portable/singleclick.py:101
-msgid "That URL is already an external download."
-msgstr "URL tersebut telah menjadi muat turun luaran"
-
-#: ../../portable/singleclick.py:107
-msgid "Miro will begin downloading it now."
-msgstr "Miro akan mula memuat turun sekarang"
-
-#: ../../portable/singleclick.py:109
-msgid "It is downloading now."
-msgstr "Ianya sedang dimuat turun"
-
-#: ../../portable/singleclick.py:111
-msgid "It has already been downloaded."
-msgstr "Ianya telah dimuat turun"
-
-#: ../../portable/singleclick.py:138
-msgid "File Download"
-msgstr "Muat turun Fail"
-
 #: ../../portable/singleclick.py:139
 #, python-format
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 msgstr ""
-
-#: ../../portable/singleclick.py:166
-msgid "Download Error"
-msgstr "Ralat Muat turun"
 
 #: ../../portable/singleclick.py:168
 #, python-format
@@ -2548,10 +2619,6 @@ msgid_plural ""
 "will stay where they currently are."
 msgstr[0] ""
 msgstr[1] ""
-
-#: ../../portable/singleclick.py:337
-msgid "Subscription error"
-msgstr "Ralat Langganan"
 
 #: ../../portable/singleclick.py:347
 #, python-format
@@ -2609,31 +2676,15 @@ msgstr[1] ""
 msgid "no title"
 msgstr ""
 
-#: ../../portable/item.py:1008
-msgid "starting up..."
-msgstr "Memulakan..."
-
 #: ../../portable/httpclient.py:90
 #, python-format
 msgid "Error: %(msg)s"
 msgstr ""
 
-#: ../../portable/httpclient.py:105 ../../portable/httpclient.py:111
-msgid "Can't connect"
-msgstr "Tidak boleh disambung"
-
 #: ../../portable/httpclient.py:106
 #, python-format
 msgid "Connection Error: %(msg)s"
 msgstr ""
-
-#: ../../portable/httpclient.py:112
-msgid "SSL connection error"
-msgstr "Ralat Sambungan SSL"
-
-#: ../../portable/httpclient.py:116
-msgid "HTTP error"
-msgstr "ralat HTTP"
 
 #: ../../portable/httpclient.py:120
 #, python-format
@@ -2660,35 +2711,15 @@ msgstr ""
 msgid "%(host)s closed connection"
 msgstr ""
 
-#: ../../portable/httpclient.py:146
-msgid "Got 404 status code"
-msgstr "Mendapat kod status 404"
-
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Bad Status Code: %(code)s"
 msgstr ""
 
-#: ../../portable/httpclient.py:153
-msgid "Authorization failed"
-msgstr "Pengesahan gagal"
-
-#: ../../portable/httpclient.py:159
-msgid "Pipeline request never started"
-msgstr "Permintaan Barispaip tidak pernah bermula"
-
-#: ../../portable/httpclient.py:163
-msgid "Timeout"
-msgstr "Masa tamat"
-
 #: ../../portable/httpclient.py:164
 #, python-format
 msgid "Connection to %(host)s timed out"
 msgstr ""
-
-#: ../../portable/httpclient.py:168
-msgid "Invalid URL"
-msgstr "URL tidak sah"
 
 #: ../../portable/httpclient.py:169
 #, python-format
@@ -2709,38 +2740,10 @@ msgstr ""
 msgid "Error while reading from \"%(path)s\""
 msgstr ""
 
-#: ../../portable/httpclient.py:376
-msgid "Unknown Error code"
-msgstr "Kod Ralat tidak diketahui"
-
-#: ../../portable/httpclient.py:408
-msgid "Connection closed"
-msgstr "Sambungan ditutup"
-
-#: ../../portable/httpclient.py:829
-msgid "Unknown"
-msgstr "Tidak diketahui"
-
-#: ../../portable/httpclient.py:830
-msgid "Internal Error: Not ready to send"
-msgstr "Ralat dalaman: Tidak sedia untuk dihantar"
-
-#: ../../portable/feed.py:925
-msgid "Error loading feed"
-msgstr "Ralat memuat turun suapan"
-
 #: ../../portable/feed.py:927
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr ""
-
-#: ../../portable/feed.py:930
-msgid "Would you like to keep the feed?"
-msgstr "Adakah anda ingin mengekalkan suapan tersebut?"
-
-#: ../../portable/feed.py:1055
-msgid "Bad content-type"
-msgstr "Jenis-kandungan Tidak bagus"
 
 #: ../../portable/feed.py:1068
 #, python-format
@@ -2764,128 +2767,3 @@ msgstr ""
 #, python-format
 msgid "Search All: %(text)s"
 msgstr ""
-
-#: ../../portable/feed.py:2407
-msgid "Local Files"
-msgstr "Fail Lokal"
-
-#: ../../portable/feed.py:2421
-msgid "Playing File"
-msgstr "Memainkan Fail"
-
-#~ msgid "Add Channel"
-#~ msgstr "Tambah Saluran"
-
-#~ msgid " "
-#~ msgstr " "
-
-#~ msgid "$log"
-#~ msgstr "$log"
-
-#~ msgid "About Democracy"
-#~ msgstr "Mengenai Demokrasi"
-
-#~ msgid "File"
-#~ msgstr "Fail"
-
-#~ msgid "Hide Democracy"
-#~ msgstr "Sorok Demokrasi"
-
-#~ msgid "MainMenu"
-#~ msgstr "Menu Utama"
-
-#~ msgid "New Channel Folder..."
-#~ msgstr "Saluran Baru"
-
-#~ msgid "New Playlist..."
-#~ msgstr "Senarai-main Baru"
-
-#~ msgid "Play Video"
-#~ msgstr "Mainkan Video"
-
-#~ msgid "Preferencesâ¦"
-#~ msgstr "Kesukaan"
-
-#~ msgid "Quit Democracy"
-#~ msgstr "Tutup Demokrasi"
-
-#~ msgid "Stop Video"
-#~ msgstr "Hentikan Video"
-
-#~ msgid "%channel title%"
-#~ msgstr "%tajuk saluran%"
-
-#~ msgid "Box"
-#~ msgstr "Kekotak"
-
-#~ msgid "VideoWindow"
-#~ msgstr "Tetingkap Video"
-
-#~ msgid ""
-#~ "Location http://foo.bar.com/baz requires a username and password for \"text "
-#~ "supplied by server\". (Do not localize -- test data)\n"
-#~ msgstr ""
-#~ "Lokasi http://foo.bar.com/baz memerlukan nama pengguna dan kata laluan "
-#~ "\"text supplied by server\". (Do not localize -- test data)\n"
-
-#~ msgid "Password:\n"
-#~ msgstr "Kata Laluan\n"
-
-#~ msgid "Username and password required"
-#~ msgstr "Nama Pengguna dan Kata Laluan Diperlukan"
-
-#~ msgid ""
-#~ "Username:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Nama Pengguna\n"
-#~ "\n"
-
-#~ msgid " limit upstream to"
-#~ msgstr " bataskan saluratas kepada"
-
-#~ msgid "(You must restart Democracy for this change to take effect)\n"
-#~ msgstr ""
-#~ "(Ini kena restart Demokrasi Player baru boleh tengok kesan tukar tadi)\n"
-
-#~ msgid "Add Channel..."
-#~ msgstr "Tambah Saluran..."
-
-#~ msgid "Channels"
-#~ msgstr "Saluran"
-
-#~ msgid "Copy Channel URL"
-#~ msgstr "Salin Saluran URL"
-
-#~ msgid "New Channel Guide..."
-#~ msgstr "Panduan Saluran Baru"
-
-#~ msgid "Next Video"
-#~ msgstr "Video Seterusnya"
-
-#~ msgid "Playlists"
-#~ msgstr "Senarai-Main"
-
-#~ msgid "Previous Video"
-#~ msgstr "Video Sebelum"
-
-#~ msgid "Remove..."
-#~ msgstr "Buang"
-
-#~ msgid "Save Video As..."
-#~ msgstr "Simpan Video Sebagai..."
-
-#~ msgid "Full Screen"
-#~ msgstr "Skrin Penuh"
-
-#~ msgid "%donation label%"
-#~ msgstr "%tanda derma%"
-
-#~ msgid "Democracy Help"
-#~ msgstr "Bantuan Untuk Demokrasi"
-
-#~ msgid "Democracy"
-#~ msgstr "Demokrasi"
-
-#~ msgid "Donate"
-#~ msgstr "Derma"

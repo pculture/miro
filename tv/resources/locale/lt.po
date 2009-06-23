@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "(n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -164,19 +164,10 @@ msgstr "Pašalinti"
 msgid "Add to Library"
 msgstr "Įtraukti į archyvą"
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:203
-msgid "Pop Out"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:206
-msgid "Pop In"
-msgstr ""
-
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
 msgid "Services"
 msgstr "Paslaugos"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 msgid "Hide Miro"
 msgstr "Paslėpti „Miro“"
 
@@ -192,7 +183,6 @@ msgstr "Rodyti visus"
 msgid "Preferences..."
 msgstr "Nustatymai..."
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
 msgstr "Išjungti „Miro“"
 
@@ -232,10 +222,6 @@ msgstr "Originalus dydis"
 msgid "Present Double Size"
 msgstr "Išdidinti du kart"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
-msgid "Present Video"
-msgstr ""
-
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
 msgid "Zoom"
 msgstr "Mastelis"
@@ -256,7 +242,6 @@ msgstr "Perkelti viską į priekį"
 msgid "Window"
 msgstr "Langas"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Miro Help"
 msgstr "„Miro“ žinynas"
 
@@ -284,7 +269,6 @@ msgstr ""
 msgid "Example Playlist"
 msgstr "Grojaraščio pavyzdys"
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr "Miro - Pranešti apie problemą"
 
@@ -341,12 +325,10 @@ msgstr[0] "Atšauktas %(count)d kanala jau įkeltas"
 msgstr[1] "Atšaukti %(count)d kanalai jau įkelti."
 msgstr[2] "Atšaukti %(count)d kanalai jau įkelti."
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "%(appname)s duomenų bazė sėkmingai išsaugota"
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -354,12 +336,10 @@ msgstr ""
 "Duomenų bazė buvo sėkmingai išsaugota. Dabar saugu išjungti „Miro“ "
 "neprarandant jokių duomenų."
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "%(appname)s duomenų bazės išsaugoti nepavyko"
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -783,11 +763,6 @@ msgstr "_Mažinti garsumą"
 msgid "_Fullscreen"
 msgstr "_Visame ekrane"
 
-#: ../../portable/menubar.py:266
-msgid "_Toggle Detached/Attached"
-msgstr ""
-
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr "_Apie Miro"
 
@@ -895,11 +870,6 @@ msgstr[2] "prieš %(count)d mėnesius"
 msgid "Auto-Expire Videos:"
 msgstr "Automatiškai trinti failus pasibaigus laikui:"
 
-#: ../../portable/frontends/widgets/feedsettingspanel.py:95
-#, python-format
-msgid "Watched %(expiration)s (Default)"
-msgstr ""
-
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
 msgstr "Peržiūrėta prieš 1 dieną"
@@ -919,35 +889,6 @@ msgstr "Peržiūrėta prieš 10 dienų"
 #: ../../portable/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
 msgstr "Peržiūrėta prieš 1 mėnesį"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:137
-msgid "Outdated Feed Items:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:139
-#, python-format
-msgid "Keep %(number)s (Default)"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:141
-msgid "Keep 0"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:142
-msgid "Keep 20"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:143
-msgid "Keep 50"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:144
-msgid "Keep 100"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:145
-msgid "Keep 1000"
-msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
@@ -1006,16 +947,6 @@ msgstr "Rodyti mažiau"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:137
 msgid "Comments"
 msgstr "Komentarai"
-
-#: ../../portable/frontends/widgets/style.py:215
-#, python-format
-msgid "Reveal in %(progname)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:215
-#: ../../portable/frontends/widgets/displays.py:369
-msgid "Reveal File"
-msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:216
 msgid "Web Page"
@@ -1110,7 +1041,6 @@ msgstr "pristabdyta"
 msgid "Remove from playlist"
 msgstr "Ištrinti iš grojaraščio"
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr "Automatiškai paleisti Miro kai aš prisijungiu."
 
@@ -1190,10 +1120,6 @@ msgstr "Automatinio siuntimo nuostatos:"
 msgid "Remember this many old items:"
 msgstr "Atsiminti labai senus įrašus:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:327
-msgid "(in addition to the current contents)"
-msgstr ""
-
 #: ../../portable/frontends/widgets/prefpanel.py:340
 msgid "Maximum number of manual downloads at a time:"
 msgstr "Maksimalus siuntimų skaičius vienu metu:"
@@ -1256,7 +1182,6 @@ msgstr "Pasirinkite filmų katalogą"
 msgid "Migrate existing movies?"
 msgstr "Ar migruoti turimus filmus?"
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
@@ -1373,7 +1298,6 @@ msgstr "Vartotojo vardas:"
 msgid "Password:"
 msgstr "Slaptažodis:"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
 msgstr "Nauji video įrašai"
 
@@ -1386,23 +1310,14 @@ msgstr "Video paieška"
 msgid "No Results Found"
 msgstr "Nerasta jokių rezultatų"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
 msgid "Library"
 msgstr "Biblioteka"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr "Vienas įrašas"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr "Negalima parodyti jokių įrašų"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
-msgid "This tab keeps track of downloads that aren't part of a feed."
-msgstr ""
 
 #: ../../portable/frontends/widgets/diagnostics.py:77
 #: ../../portable/frontends/widgets/gtk/trayicon.py:83
@@ -1420,10 +1335,6 @@ msgstr "Paveiksliukų laikymo vieta:"
 #: ../../portable/frontends/widgets/diagnostics.py:92
 msgid "Log file location:"
 msgstr "Log failų laikymo vieta:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:96
-msgid "Downloader log file location:"
-msgstr ""
 
 #: ../../portable/frontends/widgets/diagnostics.py:100
 msgid "Database file location:"
@@ -2016,7 +1927,6 @@ msgstr "Visi failai"
 msgid "Choose"
 msgstr "Pasirinkti"
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -2075,10 +1985,6 @@ msgstr[2] ""
 msgid "URL:"
 msgstr "URL:"
 
-#: ../../portable/frontends/widgets/newfeed.py:69
-msgid "Feed should go in this section:"
-msgstr ""
-
 #: ../../portable/frontends/widgets/newfeed.py:71
 #: ../../portable/frontends/widgets/newfolder.py:70
 #: ../../portable/frontends/widgets/newsearchfeed.py:135
@@ -2136,10 +2042,6 @@ msgstr "Atnaujinti kanalą"
 msgid "Rename"
 msgstr "Pervadinti"
 
-#: ../../portable/frontends/widgets/tablist.py:533
-msgid "Revert Feed Name"
-msgstr ""
-
 #: ../../portable/frontends/widgets/tablist.py:540
 msgid "Update Feeds Now"
 msgstr "Atnaujinti kanalą"
@@ -2163,10 +2065,6 @@ msgstr "GROJARAŠČIAI"
 #: ../../portable/frontends/widgets/newfolder.py:60
 msgid "Folder name:"
 msgstr "Katalogo pavadinimas:"
-
-#: ../../portable/frontends/widgets/newfolder.py:68
-msgid "Folder should go in this section:"
-msgstr ""
 
 #: ../../portable/frontends/widgets/newfolder.py:107
 #: ../../portable/frontends/widgets/newfolder.py:109
@@ -2317,13 +2215,6 @@ msgstr "Ieškoma media failų"
 msgid "Cancel"
 msgstr "Atšaukti"
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:311
-#, python-format
-msgid "parsed %(count)s file"
-msgid_plural "parsed %(count)s files"
-msgstr[0] ""
-msgstr[1] ""
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:316
 #, python-format
 msgid "found %(count)s media file"
@@ -2339,10 +2230,6 @@ msgstr "„Miro“ gidas"
 #: ../../portable/frontends/widgets/statictabs.py:110
 msgid "Downloading"
 msgstr "Atsiunčiama"
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:90
-msgid "Single and external downloads"
-msgstr ""
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:93
 msgid "Feed downloads"
@@ -2386,10 +2273,6 @@ msgstr "Leisti vien tik šį įrašą"
 msgid "Add to Playlist"
 msgstr "Įdėti į grojaraštį"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:101
-msgid "Revert Item Name"
-msgstr ""
-
 #: ../../portable/frontends/widgets/itemcontextmenu.py:103
 #: ../../portable/frontends/widgets/itemcontextmenu.py:200
 msgid "Mark as Unplayed"
@@ -2400,7 +2283,6 @@ msgstr "Pažymėti kaip nežiūrėtą"
 msgid "Mark as Played"
 msgstr "Pažymėti kaip žiūrėtą"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr "Pradėti platinimą"
 
@@ -2420,7 +2302,6 @@ msgstr "Pristabdyti siuntimą"
 msgid "Resume Download"
 msgstr "Pratęsti siuntimą"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
 msgstr "Interneto puslapis"
 
@@ -2782,11 +2663,6 @@ msgstr "Bloga antraštės eilutė: %(msg)s"
 msgid "Bad Chunk size: %(msg)s"
 msgstr "Blogas dalies dydis: %(msg)s"
 
-#: ../../portable/httpclient.py:135
-#, python-format
-msgid "Expected CRLF got: %(character)r"
-msgstr ""
-
 #: ../../portable/httpclient.py:140
 #, python-format
 msgid "%(host)s closed connection"
@@ -2804,10 +2680,6 @@ msgstr "Blogas būsenos kodas: %(code)s"
 #: ../../portable/httpclient.py:153
 msgid "Authorization failed"
 msgstr "Patvirtinimas nepavyko"
-
-#: ../../portable/httpclient.py:159
-msgid "Pipeline request never started"
-msgstr ""
 
 #: ../../portable/httpclient.py:163
 msgid "Timeout"
@@ -2910,3 +2782,110 @@ msgstr "Vietiniai failai"
 #: ../../portable/feed.py:2421
 msgid "Playing File"
 msgstr "Grojantysis failas"
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:203
+msgid "Pop Out"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:206
+msgid "Pop In"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
+msgid "Present Video"
+msgstr ""
+
+#: ../../portable/menubar.py:266
+msgid "_Toggle Detached/Attached"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:95
+#, python-format
+msgid "Watched %(expiration)s (Default)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:137
+msgid "Outdated Feed Items:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:139
+#, python-format
+msgid "Keep %(number)s (Default)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:141
+msgid "Keep 0"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:142
+msgid "Keep 20"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:143
+msgid "Keep 50"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:144
+msgid "Keep 100"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:145
+msgid "Keep 1000"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:215
+#, python-format
+msgid "Reveal in %(progname)s"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:215
+#: ../../portable/frontends/widgets/displays.py:369
+msgid "Reveal File"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:327
+msgid "(in addition to the current contents)"
+msgstr ""
+
+msgid "This tab keeps track of downloads that aren't part of a feed."
+msgstr ""
+
+#: ../../portable/frontends/widgets/diagnostics.py:96
+msgid "Downloader log file location:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfeed.py:69
+msgid "Feed should go in this section:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:533
+msgid "Revert Feed Name"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfolder.py:68
+msgid "Folder should go in this section:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:311
+#, python-format
+msgid "parsed %(count)s file"
+msgid_plural "parsed %(count)s files"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:90
+msgid "Single and external downloads"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:101
+msgid "Revert Item Name"
+msgstr ""
+
+#: ../../portable/httpclient.py:135
+#, python-format
+msgid "Expected CRLF got: %(character)r"
+msgstr ""
+
+#: ../../portable/httpclient.py:159
+msgid "Pipeline request never started"
+msgstr ""

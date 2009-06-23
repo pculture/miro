@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-Language: Polish\n"
@@ -176,7 +176,6 @@ msgstr "Przypnij"
 msgid "Services"
 msgstr "Usługi"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 msgid "Hide Miro"
 msgstr "Ukryj Miro"
 
@@ -192,7 +191,6 @@ msgstr "Pokaż Wszystko"
 msgid "Preferences..."
 msgstr "Ustawienia..."
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
 msgstr "Zakończ Miro"
 
@@ -256,7 +254,6 @@ msgstr "Przenieś wszystko na wierzch"
 msgid "Window"
 msgstr "Okno"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Miro Help"
 msgstr "Pomoc"
 
@@ -283,7 +280,6 @@ msgstr "Używasz wersji %(appname)s ze zmienionym zestawem kanałów."
 msgid "Example Playlist"
 msgstr "Przykładowa lista odtwarzania"
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr "Miro - Zgłoś problem"
 
@@ -341,24 +337,20 @@ msgstr[0] "Pominięto %(count)d źródło już obecne."
 msgstr[1] "Pominięto %(count)d źródła już obecne."
 msgstr[2] "Pominięto %(count)d źródeł już obecnych."
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "Zapis bazy danych %(appname)s przebiegł poprawnie"
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 "Baza danych została poprawnie zapisana. Można teraz wyjść bez utraty danych."
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "Zapis bazy danych %(appname)s nie powiódł się"
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -785,7 +777,6 @@ msgstr "Pełny ekr_an"
 msgid "_Toggle Detached/Attached"
 msgstr "Odłącz/przyłącz okno wideo"
 
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr "_O Miro"
 
@@ -1109,7 +1100,6 @@ msgstr "wstrzymane"
 msgid "Remove from playlist"
 msgstr "Usuń z listy odtwarzania"
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr "Uruchom Miro przy starcie systemu."
 
@@ -1256,7 +1246,6 @@ msgstr "Wybierz katalog wideo"
 msgid "Migrate existing movies?"
 msgstr "Przenieść istniejące filmy?"
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
@@ -1374,7 +1363,6 @@ msgstr "Nazwa użytkownika:"
 msgid "Password:"
 msgstr "Hasło:"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
 msgstr "Nowe pliki wideo"
 
@@ -1387,21 +1375,15 @@ msgstr "Wyszukiwanie wideo"
 msgid "No Results Found"
 msgstr "Nic nie znaleziono"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
 msgid "Library"
 msgstr "Biblioteka"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr "Pojedyncze elementy"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr "Brak elementów do wyświetlenia"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr ""
 "Ta zakładka przechowuje ścieżkę pobranych elementów, które nie są częścią "
@@ -2027,7 +2009,6 @@ msgstr "Wszystkie pliki"
 msgid "Choose"
 msgstr "Wybierz"
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -2412,7 +2393,6 @@ msgstr "Oznacz jako nieodtwarzane"
 msgid "Mark as Played"
 msgstr "Oznacz jako odtwarzane"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr "Rozpocznij rozsiewanie"
 
@@ -2432,7 +2412,6 @@ msgstr "Wstrzymaj pobieranie"
 msgid "Resume Download"
 msgstr "Wznów pobieranie"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
 msgstr "Strona internetowa"
 
@@ -2927,305 +2906,3 @@ msgstr "Pliki lokalne"
 #: ../../portable/feed.py:2421
 msgid "Playing File"
 msgstr "Odtwarzany plik"
-
-#~ msgid "Copy Channel _Link"
-#~ msgstr "_Kopiuj odnośnik do kanału"
-
-#~ msgid "%s database save failed"
-#~ msgstr "Błąd zapisu do bazy danych %s"
-
-#~ msgid "An unknown error has occurred %s."
-#~ msgstr "Wystąpił nieznany błąd %s."
-
-#~ msgid "Add Channel"
-#~ msgstr "Dodaj kanał"
-
-#~ msgid "Don't start a download if it leaves less than"
-#~ msgstr "Nie zaczynaj pobierania jeśli po zakończeniu pozostanie mniej niż"
-
-#~ msgid "Volume:"
-#~ msgstr "Głośność:"
-
-#~ msgid " "
-#~ msgstr " "
-
-#~ msgid "'"
-#~ msgstr "\""
-
-#~ msgid "Question"
-#~ msgstr "Pytanie"
-
-#~ msgid "Copy log to clipboard"
-#~ msgstr "Skopiuj zapis do schowka."
-
-#~ msgid "Open up the bug tracker"
-#~ msgstr "Otwieranie systemu śledzenia błędów"
-
-#~ msgid "$longAppName"
-#~ msgstr "$longAppName"
-
-#~ msgid "$log"
-#~ msgstr "$log"
-
-#~ msgid "Channel"
-#~ msgstr "Kanał"
-
-#~ msgid "File"
-#~ msgstr "Plik"
-
-#~ msgid "Help"
-#~ msgstr "Pomoc"
-
-#~ msgid "New Channel Folder..."
-#~ msgstr "Nowy folder kanałów..."
-
-#~ msgid "New Playlist..."
-#~ msgstr "Nowa lista odtwarzania..."
-
-#~ msgid "Open Recent"
-#~ msgstr "Ostatnio otwierane"
-
-#~ msgid "Open..."
-#~ msgstr "Otwórz..."
-
-#~ msgid "Play Video"
-#~ msgstr "Odtwórz"
-
-#~ msgid "Rename..."
-#~ msgstr "Zmień nazwę..."
-
-#~ msgid "Stop Video"
-#~ msgstr "Zatrzymaj"
-
-#~ msgid "Update All Channels"
-#~ msgstr "Odśwież wszystkie kanały"
-
-#~ msgid "Update Channel"
-#~ msgstr "Odśwież kanał"
-
-#~ msgid "%channel feed%"
-#~ msgstr "%channel feed%"
-
-#~ msgid "%channel title%"
-#~ msgstr "%channel title%"
-
-#~ msgid "00:00:00"
-#~ msgstr "00:00:00"
-
-#~ msgid "Box"
-#~ msgstr "Ramka"
-
-#~ msgid "FullScreen Controls"
-#~ msgstr "Przyciski trybu pełnoekranowego"
-
-#~ msgid "VideoWindow"
-#~ msgstr "Okno odtwarzania"
-
-#~ msgid "Password:\n"
-#~ msgstr "Hasło:\n"
-
-#~ msgid "Username and password required"
-#~ msgstr "Wymagana nazwa użytkownika i hasło"
-
-#~ msgid ""
-#~ "Username:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Nazwa użytkownika:\n"
-#~ "\n"
-
-#~ msgid "3 hours"
-#~ msgstr "3 godziny"
-
-#~ msgid "4"
-#~ msgstr "4"
-
-#~ msgid "5"
-#~ msgstr "5"
-
-#~ msgid "GB free."
-#~ msgstr "GB wolnego miejsca na dysku."
-
-#~ msgid "OtherViews"
-#~ msgstr "Inne widoki"
-
-#~ msgid "every 30 minutes"
-#~ msgstr "co 30 minut"
-
-#~ msgid "every hour"
-#~ msgstr "co godzinę"
-
-#~ msgid "manually"
-#~ msgstr "ręcznie"
-
-#~ msgid "Back"
-#~ msgstr "Wstecz"
-
-#~ msgid ""
-#~ "%message%\n"
-#~ "%message%"
-#~ msgstr ""
-#~ "%message%\n"
-#~ "%message%"
-
-#~ msgid "onStartup called twice"
-#~ msgstr "onStartup wywołano podwójnie"
-
-#~ msgid "Channels"
-#~ msgstr "Kanały"
-
-#~ msgid "Copy Channel URL"
-#~ msgstr "Kopiuj URL kanału"
-
-#~ msgid "Copy Video URL"
-#~ msgstr "Kopiuj URL wideo"
-
-#~ msgid "Playlists"
-#~ msgstr "Lista odtwarzania"
-
-#~ msgid "Remove..."
-#~ msgstr "Usuń..."
-
-#~ msgid "99999"
-#~ msgstr "99999"
-
-#~ msgid "BitTorrent ports:"
-#~ msgstr "Porty BitTorrenta:"
-
-#~ msgid "Maximum:"
-#~ msgstr "Maksymalnie:"
-
-#~ msgid "Minimum:"
-#~ msgstr "Minimalnie:"
-
-#~ msgid "$label$"
-#~ msgstr "$label$"
-
-#~ msgid "$title$"
-#~ msgstr "$title$"
-
-#~ msgid "Search Engine"
-#~ msgstr "Wyszukiwarka"
-
-#~ msgid "URL"
-#~ msgstr "Adres URL:"
-
-#~ msgid "_Channels"
-#~ msgstr "_Kanały"
-
-#~ msgid "The torrent file at %s was not valid"
-#~ msgstr "Plik torrent pochodzący z %s nie jest poprawny"
-
-#~ msgid "-00:00:00"
-#~ msgstr "-00:00:00"
-
-#~ msgid "Change..."
-#~ msgstr "Zmień..."
-
-#~ msgid "Search this folder:"
-#~ msgstr "Przeszukaj ten folder:"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Full Screen"
-#~ msgstr "Pełny ekran"
-
-#~ msgid "%donation label%"
-#~ msgstr "%donation label%"
-
-#~ msgid "Browse"
-#~ msgstr "Przeglądaj"
-
-#~ msgid "Starting up"
-#~ msgstr "Uruchamianie"
-
-#~ msgid "Removing %s"
-#~ msgstr "Usuwanie %s"
-
-#~ msgid "%d days"
-#~ msgstr "%d dni"
-
-#~ msgid "Remove %s"
-#~ msgstr "Usuń %s"
-
-#~ msgid "Are you sure you want to remove the guide %s?"
-#~ msgstr "Czy na pewno chcesz usunąć przewodnik %s?"
-
-#~ msgid "Are you sure you want to remove %s"
-#~ msgstr "Czy na pewno chcesz usunąć %s?"
-
-#~ msgid "Remove %s channels"
-#~ msgstr "Usuń %s kanałów"
-
-#~ msgid "Invalid Value"
-#~ msgstr "Niewłaściwa wartość"
-
-#~ msgid "Error: %s"
-#~ msgstr "Błąd: %s"
-
-#~ msgid "Bad Status Code: %s"
-#~ msgstr "Błędny kod statusu: %s"
-
-#~ msgid "Create Channel"
-#~ msgstr "Utwórz kanał"
-
-#~ msgid "New Search Channel"
-#~ msgstr "Nowy kanał wyszukiwania"
-
-#~ msgid "%d hours"
-#~ msgstr "%d godzin"
-
-#~ msgid "%d minutes"
-#~ msgstr "%d minut"
-
-#~ msgid "TORRENT"
-#~ msgstr "Torrent"
-
-#~ msgid "WEB PAGE"
-#~ msgstr "Strona internetowa"
-
-#~ msgid "%s remaining"
-#~ msgstr "pozostało %s"
-
-#~ msgid "Add to new playlist"
-#~ msgstr "Dodaj do nowej listy odtwarzania"
-
-#~ msgid "Update Channels Now"
-#~ msgstr "Uaktualnij kanały"
-
-#~ msgid "Adding %d channels to a new folder"
-#~ msgstr "Dodaje %d kanał/ów do nowego folderu"
-
-#~ msgid "_Search For:"
-#~ msgstr "_Szukaj:"
-
-#~ msgid "_URL"
-#~ msgstr "Adres _URL"
-
-#~ msgid "and"
-#~ msgstr "i"
-
-#~ msgid "<b>BitTorrent</b>"
-#~ msgstr "<b>BitTorrent</b>"
-
-#~ msgid "Go"
-#~ msgstr "Rozpocznij"
-
-#~ msgid "Channel:"
-#~ msgstr "Kanał:"
-
-#~ msgid "Search Engine:"
-#~ msgstr "Wyszukiwarka:"
-
-#~ msgid "Search For:"
-#~ msgstr "Szukaj:"
-
-#~ msgid "Don't Worry About Disk Space:"
-#~ msgstr "Nie martw się o miejsce na dysku:"
-
-#~ msgid "Reset Search"
-#~ msgstr "Wyczyść wyszukiwanie"
-
-#~ msgid "You're done!"
-#~ msgstr "Gotowe!"

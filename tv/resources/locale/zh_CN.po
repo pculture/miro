@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:37+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -169,7 +169,6 @@ msgstr "弹入"
 msgid "Services"
 msgstr "服务"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 msgid "Hide Miro"
 msgstr "隐藏Miro"
 
@@ -185,7 +184,6 @@ msgstr "全部显示"
 msgid "Preferences..."
 msgstr "首选项..."
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
 msgstr "退出Miro"
 
@@ -249,7 +247,6 @@ msgstr "提取全部到最前面"
 msgid "Window"
 msgstr "窗口"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Miro Help"
 msgstr "Miro帮助"
 
@@ -276,7 +273,6 @@ msgstr "您正使用自定义频道列表的 %(appname)s 版本."
 msgid "Example Playlist"
 msgstr "播放列表示例"
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr "Miro - 报告问题"
 
@@ -329,23 +325,19 @@ msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] "跳过已经显示的 %(count)d 个订阅源."
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "%(appname)s 数据库保存成功"
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr "数据库保存成功。可以安全的退出了(不会丢失数据)。"
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "%(appname)s 数据库保存失败"
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -748,7 +740,6 @@ msgstr "全屏(_F)"
 msgid "_Toggle Detached/Attached"
 msgstr "切换分离/连接(_T)"
 
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr "关于 Miro(_A)"
 
@@ -1061,7 +1052,6 @@ msgstr "已暂停"
 msgid "Remove from playlist"
 msgstr "从播放列表中删除"
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr "当我登录时自动运行 Miro."
 
@@ -1207,7 +1197,6 @@ msgstr "选择电影目录"
 msgid "Migrate existing movies?"
 msgstr "转移已有的电影吗?"
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
@@ -1321,7 +1310,6 @@ msgstr "用户名"
 msgid "Password:"
 msgstr "密码:"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
 msgstr "新视频"
 
@@ -1334,21 +1322,15 @@ msgstr "视频搜索"
 msgid "No Results Found"
 msgstr "搜索结果为空"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
 msgid "Library"
 msgstr "媒体库"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr "单项"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr "没有可显示项"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr "此页记录不属于订阅源部分的下载"
 
@@ -1938,7 +1920,6 @@ msgstr "所有文件"
 msgid "Choose"
 msgstr "选择"
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -1946,12 +1927,6 @@ msgid ""
 msgstr ""
 "%(copyright)s. 详细条款请查看用户协议。\n"
 "Miro 以及 Miro 图标都是 Participatory Culture Foundation 的注册商标。"
-
-#: ../../portable/frontends/widgets/removefeeds.py:49
-msgid "Remove Feed"
-msgid_plural "Remove Feeds"
-msgstr[0] ""
-msgstr[1] ""
 
 #: ../../portable/frontends/widgets/removefeeds.py:57
 msgid "Are you sure you want to remove this feed:"
@@ -2307,7 +2282,6 @@ msgstr "设置为“未播放”"
 msgid "Mark as Played"
 msgstr "设置为“已播放”"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr "开始做种"
 
@@ -2327,7 +2301,6 @@ msgstr "暂停下载"
 msgid "Resume Download"
 msgstr "恢复下载"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
 msgstr "网页"
 
@@ -2338,11 +2311,6 @@ msgstr "许可"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:142
 msgid "File in Browser"
 msgstr "文件在浏览器中"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:144
-#, python-format
-msgid "File in %(progname)s"
-msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:146
 msgid "File on Disk"
@@ -2357,27 +2325,6 @@ msgstr "查看"
 msgid "%(count)d Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
 msgstr[0] "%(count)d个下载的项目"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:216
-#, python-format
-msgid "%(count)d Available Item"
-msgid_plural "%(count)d Available Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:229
-#, python-format
-msgid "%(count)d Downloading Item"
-msgid_plural "%(count)d Downloading Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:246
-#, python-format
-msgid "%(count)d Paused Item"
-msgid_plural "%(count)d Paused Items"
-msgstr[0] ""
-msgstr[1] ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:264
 msgid "Restart Upload"
@@ -2446,10 +2393,6 @@ msgstr "删除视频"
 #: ../../portable/dialogs.py:101
 msgid "Create"
 msgstr "创建"
-
-#: ../../portable/dialogs.py:102
-msgid "Create Feed"
-msgstr ""
 
 #: ../../portable/dialogs.py:103
 msgid "Create Folder"
@@ -2545,50 +2488,9 @@ msgstr ""
 msgid "Subscribing to multiple feeds"
 msgstr "订阅多个 Feeds"
 
-#: ../../portable/singleclick.py:298
-#, python-format
-msgid "Create feed?"
-msgid_plural "Create %(count)d feeds?"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/singleclick.py:318
-msgid "Enter a name for the new feed folder"
-msgstr ""
-
-#: ../../portable/singleclick.py:322
-#, python-format
-msgid ""
-"NOTE: You are already subscribed to one of these feeds.  These feeds will "
-"stay where they currently are."
-msgid_plural ""
-"NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-"will stay where they currently are."
-msgstr[0] ""
-msgstr[1] ""
-
 #: ../../portable/singleclick.py:337
 msgid "Subscription error"
 msgstr "订阅出错"
-
-#: ../../portable/singleclick.py:347
-#, python-format
-msgid ""
-"This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
-"the publisher of this file."
-msgstr ""
-
-#: ../../portable/singleclick.py:356
-#, python-format
-msgid ""
-"This %(appname)s feed file has the wrong content type: %(url)s. Please "
-"notify the publisher of this file."
-msgstr ""
-
-#: ../../portable/singleclick.py:364
-#, python-format
-msgid "Could not download the %(appname)s feed file: %(url)s"
-msgstr ""
 
 #: ../../portable/singleclick.py:414
 msgid "Invalid Torrent"
@@ -2613,13 +2515,6 @@ msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
 msgstr[0] "%(count)d小时"
 
-#: ../../portable/item.py:449
-#, python-format
-msgid "%(count)d minute"
-msgid_plural "%(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
-
 #: ../../portable/item.py:733 ../../portable/item.py:749
 #: ../../portable/item.py:761
 msgid "no title"
@@ -2629,19 +2524,9 @@ msgstr "无标题"
 msgid "starting up..."
 msgstr "启动中..."
 
-#: ../../portable/httpclient.py:90
-#, python-format
-msgid "Error: %(msg)s"
-msgstr ""
-
 #: ../../portable/httpclient.py:105 ../../portable/httpclient.py:111
 msgid "Can't connect"
 msgstr "无法连接"
-
-#: ../../portable/httpclient.py:106
-#, python-format
-msgid "Connection Error: %(msg)s"
-msgstr ""
 
 #: ../../portable/httpclient.py:112
 msgid "SSL connection error"
@@ -2651,26 +2536,6 @@ msgstr "SSL(加密套接字协议层)连接错误"
 msgid "HTTP error"
 msgstr "HTTP 错误"
 
-#: ../../portable/httpclient.py:120
-#, python-format
-msgid "Bad Status Line: %(msg)s"
-msgstr ""
-
-#: ../../portable/httpclient.py:125
-#, python-format
-msgid "Bad Header Line: %(msg)s"
-msgstr ""
-
-#: ../../portable/httpclient.py:130
-#, python-format
-msgid "Bad Chunk size: %(msg)s"
-msgstr ""
-
-#: ../../portable/httpclient.py:135
-#, python-format
-msgid "Expected CRLF got: %(character)r"
-msgstr ""
-
 #: ../../portable/httpclient.py:140
 #, python-format
 msgid "%(host)s closed connection"
@@ -2679,11 +2544,6 @@ msgstr "%(host)s 连接关闭"
 #: ../../portable/httpclient.py:146
 msgid "Got 404 status code"
 msgstr "网络请求时收到表示\"没有找到\"的404代码"
-
-#: ../../portable/httpclient.py:148
-#, python-format
-msgid "Bad Status Code: %(code)s"
-msgstr ""
 
 #: ../../portable/httpclient.py:153
 msgid "Authorization failed"
@@ -2758,6 +2618,138 @@ msgstr "您想保留该feed(供稿)吗？"
 msgid "Bad content-type"
 msgstr "无效的content-type(内容类型)"
 
+#: ../../portable/feed.py:1644
+#, python-format
+msgid "Search All: %(text)s"
+msgstr "搜索所有%(text)s"
+
+#: ../../portable/feed.py:2407
+msgid "Local Files"
+msgstr "本地文件"
+
+#: ../../portable/feed.py:2421
+msgid "Playing File"
+msgstr "播放文件"
+
+#: ../../portable/frontends/widgets/removefeeds.py:49
+msgid "Remove Feed"
+msgid_plural "Remove Feeds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:144
+#, python-format
+msgid "File in %(progname)s"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:216
+#, python-format
+msgid "%(count)d Available Item"
+msgid_plural "%(count)d Available Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:229
+#, python-format
+msgid "%(count)d Downloading Item"
+msgid_plural "%(count)d Downloading Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:246
+#, python-format
+msgid "%(count)d Paused Item"
+msgid_plural "%(count)d Paused Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/dialogs.py:102
+msgid "Create Feed"
+msgstr ""
+
+#: ../../portable/singleclick.py:298
+#, python-format
+msgid "Create feed?"
+msgid_plural "Create %(count)d feeds?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/singleclick.py:318
+msgid "Enter a name for the new feed folder"
+msgstr ""
+
+#: ../../portable/singleclick.py:322
+#, python-format
+msgid ""
+"NOTE: You are already subscribed to one of these feeds.  These feeds will "
+"stay where they currently are."
+msgid_plural ""
+"NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
+"will stay where they currently are."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/singleclick.py:347
+#, python-format
+msgid ""
+"This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
+"the publisher of this file."
+msgstr ""
+
+#: ../../portable/singleclick.py:356
+#, python-format
+msgid ""
+"This %(appname)s feed file has the wrong content type: %(url)s. Please "
+"notify the publisher of this file."
+msgstr ""
+
+#: ../../portable/singleclick.py:364
+#, python-format
+msgid "Could not download the %(appname)s feed file: %(url)s"
+msgstr ""
+
+#: ../../portable/item.py:449
+#, python-format
+msgid "%(count)d minute"
+msgid_plural "%(count)d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/httpclient.py:90
+#, python-format
+msgid "Error: %(msg)s"
+msgstr ""
+
+#: ../../portable/httpclient.py:106
+#, python-format
+msgid "Connection Error: %(msg)s"
+msgstr ""
+
+#: ../../portable/httpclient.py:120
+#, python-format
+msgid "Bad Status Line: %(msg)s"
+msgstr ""
+
+#: ../../portable/httpclient.py:125
+#, python-format
+msgid "Bad Header Line: %(msg)s"
+msgstr ""
+
+#: ../../portable/httpclient.py:130
+#, python-format
+msgid "Bad Chunk size: %(msg)s"
+msgstr ""
+
+#: ../../portable/httpclient.py:135
+#, python-format
+msgid "Expected CRLF got: %(character)r"
+msgstr ""
+
+#: ../../portable/httpclient.py:148
+#, python-format
+msgid "Bad Status Code: %(code)s"
+msgstr ""
+
 #: ../../portable/feed.py:1068
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
@@ -2775,1490 +2767,3 @@ msgid ""
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
-
-#: ../../portable/feed.py:1644
-#, python-format
-msgid "Search All: %(text)s"
-msgstr "搜索所有%(text)s"
-
-#: ../../portable/feed.py:2407
-msgid "Local Files"
-msgstr "本地文件"
-
-#: ../../portable/feed.py:2421
-msgid "Playing File"
-msgstr "播放文件"
-
-#~ msgid "Save this video"
-#~ msgstr "保存这个视频"
-
-#~ msgid "_Play / Pause"
-#~ msgstr "播放/暂停(_P)"
-
-#~ msgid "_Remove Channel"
-#~ msgstr "删除频道(_R)"
-
-#~ msgid "_Update Channel"
-#~ msgstr "更新频道(_U)"
-
-#~ msgid "Copy Channel _Link"
-#~ msgstr "复制频道链接地址(_L)"
-
-#~ msgid "_Open..."
-#~ msgstr "打开...(_O)"
-
-#~ msgid "Open various files"
-#~ msgstr "打开多种文件"
-
-#~ msgid "P_references"
-#~ msgstr "首选项(_P)"
-
-#~ msgid "Quit the Program"
-#~ msgstr "退出程序"
-
-#~ msgid "U_pdate All Channels"
-#~ msgstr "更新所有频道(_U)"
-
-#~ msgid "Channel requires authentication"
-#~ msgstr "频道需要验证授权"
-
-#~ msgid "%s database save failed"
-#~ msgstr "%s数据库保存失败"
-
-#~ msgid "Unknown Runtime Error"
-#~ msgstr "未知的运行时错误"
-
-#~ msgid "An unknown error has occurred %s."
-#~ msgstr "发生了未知错误%s。"
-
-#~ msgid "Pending Auto Download"
-#~ msgstr "未决的自动下载"
-
-#~ msgid "Unwatched"
-#~ msgstr "没有观看过"
-
-#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
-#~ msgstr "没有要显示的。<br></br>您可以在上面的搜索框中查寻。"
-
-#~ msgid "Searching..."
-#~ msgstr "正在搜索..."
-
-#~ msgid "Channel Guide"
-#~ msgstr "频道导航"
-
-#~ msgid "My Collection"
-#~ msgstr "我的收藏"
-
-#~ msgid "Democracy - External Playback Template"
-#~ msgstr "Democracy - 外部播放模板"
-
-#~ msgid "Continue To Next Video"
-#~ msgstr "继续到下一个视频"
-
-#~ msgid "Recommend"
-#~ msgstr "推荐"
-
-#~ msgid "Default"
-#~ msgstr "默认"
-
-#~ msgid "Watched"
-#~ msgstr "已看过"
-
-#~ msgid "Saved"
-#~ msgstr "已保存"
-
-#~ msgid "Simple translation"
-#~ msgstr "简单的翻译"
-
-#~ msgid "Democracy Internet TV: How to Get Started"
-#~ msgstr "民主互联网电视：怎样开始"
-
-#~ msgid "GO BIG:"
-#~ msgstr "放大："
-
-#~ msgid "This is your fullscreen button. Click it and lean back."
-#~ msgstr "这是全屏按钮。点击它然后轻松地欣赏吧。"
-
-#~ msgid "NEW STUFF:"
-#~ msgstr "新东西："
-
-#~ msgid ""
-#~ "Blue circles mean the channel has new videos available, green circles mean "
-#~ "you have downloaded videos ready to watch."
-#~ msgstr "蓝色的圆圈表示频道有新的视频了，绿色表示有下载了的视频可以看了。"
-
-#~ msgid ""
-#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
-#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
-#~ "channels in the guide are free.</strong>"
-#~ msgstr ""
-#~ "<strong>添加频道：</strong> 频道导航是您的互联网电视频道的总部。点击'ADD(添加)'就会订阅那个频道-- "
-#~ "<strong>频道导航里的频道是免费的。</strong>"
-
-#~ msgid ""
-#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
-#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
-#~ "waiting for videos: start some downloads and check back later."
-#~ msgstr ""
-#~ "<strong>别犹豫：</strong> Democracy与网页里面看视频不同-- "
-#~ "视频发布者可以提供大的高品质的视频。所以您不要无所事事站在一边：现在开始下载吧，别忘了以后还来。"
-
-#~ msgid ""
-#~ "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
-#~ "new videos and downloads in the background. Leaving it running means you'll "
-#~ "have new videos when you're ready to watch."
-#~ msgstr ""
-#~ "<strong>让它自己运行</strong> "
-#~ "Democracy播放器时常检查频道里的新视频并下载。留着它运行意味着您想看新视频的时候它们就已经准备下载好了。"
-
-#~ msgid ""
-#~ "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
-#~ "features an 'expiration' system that helps clean out older videos to make "
-#~ "room for new videos. You can always keep a video permanently by clicking "
-#~ "'save' and you can set a channel's settings to save videos automatically."
-#~ msgstr ""
-#~ "<strong>不用担心磁盘空间：</strong>就象TiVo(TiVo公司)，Democracy有一项\"逾期处理\"特性帮助您清除旧的视频腾出空间给"
-#~ "新的视频。另一方面您可以点击\"save(保存)\"来永久保留一个视频或者您可以设置一个频道来保存视频。"
-
-#~ msgid ""
-#~ "1 day\n"
-#~ "3 days\n"
-#~ "6 days\n"
-#~ "10 days\n"
-#~ "1 month\n"
-#~ "Never"
-#~ msgstr ""
-#~ "1天\n"
-#~ "3天\n"
-#~ "6天\n"
-#~ "10天\n"
-#~ "1月\n"
-#~ "从不"
-
-#~ msgid "<b>Channels</b>"
-#~ msgstr "<b>频道</b>"
-
-#~ msgid "<b>Disk Space</b>"
-#~ msgstr "<b>磁盘空间</b>"
-
-#~ msgid "<b>Downloads</b>"
-#~ msgstr "<b>下载</b>"
-
-#~ msgid "<b>Movies Directory</b>"
-#~ msgstr "<b>影视目录</b>"
-
-#~ msgid "Add Channel"
-#~ msgstr "添加频道"
-
-#~ msgid "By default, videos expire after"
-#~ msgstr "默认地，视频在这之后过期"
-
-#~ msgid "Check Channels for new content"
-#~ msgstr "检查频道的新内容"
-
-#~ msgid "Democracy - Add Channel"
-#~ msgstr "Democracy - 添加频道"
-
-#~ msgid "Democracy Player"
-#~ msgstr "Democracy播放器"
-
-#~ msgid "Don't start a download if it leaves less than"
-#~ msgstr "不要启动下载低于"
-
-#~ msgid "Enter the URL of the channel to add"
-#~ msgstr "输入要添加的频道网络地址"
-
-#~ msgid ""
-#~ "Every 30 minutes\n"
-#~ "Every hour\n"
-#~ "Manually"
-#~ msgstr ""
-#~ "每30分钟\n"
-#~ "每小时\n"
-#~ "手动"
-
-#~ msgid "GB free"
-#~ msgstr "G字节空余空间"
-
-#~ msgid "KB/s when my computer is active"
-#~ msgstr "K字节/秒，当我的电脑活跃时。"
-
-#~ msgid "Select Movies Directory"
-#~ msgstr "选择影视目录"
-
-#~ msgid "To avoid slowdowns, limit upstream to"
-#~ msgstr "为了防止速度过慢，上传上限设置为"
-
-#~ msgid " "
-#~ msgstr " "
-
-#~ msgid "'"
-#~ msgstr "’"
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files. It may take extra time to list the "
-#~ "videos, and descriptions may look funny."
-#~ msgstr "不过我们尽力抓取那些文件。可能要额外的时间列出视频，并且描述可能看起来滑稽。"
-
-#~ msgid "Channel is not compatible with Democracy!"
-#~ msgstr "该频道Democracy和不兼容！"
-
-#~ msgid "Please contact the publishers of"
-#~ msgstr "请联系它的发布人--"
-
-#~ msgid ""
-#~ "and ask if they can supply a feed in a format that will work with Democracy."
-#~ msgstr "并且问问他们是否能够提供让Democracy工作的格式的feed(供稿)。"
-
-#~ msgid ""
-#~ "Please enter the username and password given to you by this channel's "
-#~ "publisher."
-#~ msgstr "请输入这个频道发布者给您的用户名和密码。"
-
-#~ msgid ""
-#~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
-#~ "$publisher."
-#~ msgstr ""
-#~ "$longAppName 版本 $appVersion ($appRevision); 版权所有 2005, 2006 $publisher。"
-
-#~ msgid "About $longAppName"
-#~ msgstr "关于$longAppName"
-
-#~ msgid "Copy log to clipboard"
-#~ msgstr "复制日志到剪切板"
-
-#~ msgid "Open up the bug tracker"
-#~ msgstr "开启臭虫(即错误缺陷)追踪器"
-
-#~ msgid "Please help us fix it. Copy and paste all the"
-#~ msgstr "请协助我们来修复它。复制和粘贴所有的"
-
-#~ msgid ""
-#~ "information into our bug tracker and tell us what you were doing when the"
-#~ msgstr "信息到臭虫(即错误缺陷)追踪系统并且告诉我们您正在做什么"
-
-#~ msgid "problem occurred."
-#~ msgstr "在问题发生时。"
-
-#~ msgid ""
-#~ "Then, please restart Democracy Player (or you may keep getting related "
-#~ "errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
-#~ "with your help we're fixing problems fast!"
-#~ msgstr ""
-#~ "然后，请重启Democracy播放器(您还是可能得到同样的错误)。很抱歉给您带来麻烦。Democracy播放器还在测试阶段，但是您的帮助会帮我们最快的修复"
-#~ "问题！"
-
-#~ msgid "You found a bug in Democracy!"
-#~ msgstr "您发现了Democracy的一个臭虫(即错误缺陷)！"
-
-#~ msgid "$longAppName"
-#~ msgstr "$longAppName"
-
-#~ msgid "Channel"
-#~ msgstr "频道"
-
-#~ msgid "Clear Menu"
-#~ msgstr "清除菜单"
-
-#~ msgid "File"
-#~ msgstr "文件"
-
-#~ msgid "Help"
-#~ msgstr "帮助"
-
-#~ msgid "Hide Democracy"
-#~ msgstr "隐藏Democracy"
-
-#~ msgid "MainMenu"
-#~ msgstr "主菜单"
-
-#~ msgid "New Channel Folder..."
-#~ msgstr "新建频道夹..."
-
-#~ msgid "New Playlist Folder..."
-#~ msgstr "新建播放列表夹..."
-
-#~ msgid "New Playlist..."
-#~ msgstr "新建播放列表..."
-
-#~ msgid "Open..."
-#~ msgstr "打开..."
-
-#~ msgid "Play Video"
-#~ msgstr "播放视频"
-
-#~ msgid "Preferencesâ¦"
-#~ msgstr "选项"
-
-#~ msgid "Quit Democracy"
-#~ msgstr "退出软件"
-
-#~ msgid "Rename..."
-#~ msgstr "重命名..."
-
-#~ msgid "Stop Video"
-#~ msgstr "停止播放"
-
-#~ msgid "Update All Channels"
-#~ msgstr "更新所有频道"
-
-#~ msgid "Update Channel"
-#~ msgstr "更新该频道"
-
-#~ msgid "00:00:00"
-#~ msgstr "00:00:00"
-
-#~ msgid "Box"
-#~ msgstr "方框"
-
-#~ msgid "FullScreen Controls"
-#~ msgstr "全屏控制"
-
-#~ msgid "VideoWindow"
-#~ msgstr "视频窗口"
-
-#~ msgid ""
-#~ "Location http://foo.bar.com/baz requires a username and password for \"text "
-#~ "supplied by server\". (Do not localize -- test data)\n"
-#~ msgstr "网址http://foo.bar.com/baz需要用户名和密码运行“由服务器提供文字”。（请不要本地化 －－测试数据）\n"
-
-#~ msgid "Password:\n"
-#~ msgstr "密码\n"
-
-#~ msgid "Username and password required"
-#~ msgstr "请输入用户名和密码"
-
-#~ msgid ""
-#~ "Username:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "用户名\n"
-#~ "\n"
-
-#~ msgid " limit upstream to"
-#~ msgstr " 上传上限是"
-
-#~ msgid "(You must restart Democracy for this change to take effect)\n"
-#~ msgstr "（此次修改在重新运行本软件后生效）\n"
-
-#~ msgid "(movies directory path goes here)"
-#~ msgstr "(视频文件的文件夹置于此)"
-
-#~ msgid "3 hours"
-#~ msgstr "三小时"
-
-#~ msgid "4"
-#~ msgstr "4"
-
-#~ msgid "5"
-#~ msgstr "5"
-
-#~ msgid "Check channels for new content:"
-#~ msgstr "检查该频道是否添加新内容"
-
-#~ msgid "GB free."
-#~ msgstr "千兆的剩余空间。"
-
-#~ msgid "KB/s when my computer is active."
-#~ msgstr "千字节/每秒(当我的电脑处于活跃状态时)"
-
-#~ msgid "Never"
-#~ msgstr "从不"
-
-#~ msgid "OtherViews"
-#~ msgstr "其它视图"
-
-#~ msgid "Run Democracy at startup"
-#~ msgstr "在电脑启动时自动运行democracy软件"
-
-#~ msgid "every 30 minutes"
-#~ msgstr "每三十分钟"
-
-#~ msgid "every hour"
-#~ msgstr "每小时"
-
-#~ msgid "manually"
-#~ msgstr "手动"
-
-#~ msgid "Back"
-#~ msgstr "上一步"
-
-#~ msgid "Next"
-#~ msgstr "下一步"
-
-#~ msgid ""
-#~ "The next few screens will help you set up Democracy Player so that it works "
-#~ "best for you. Here's the first question."
-#~ msgstr "下面很少的几个界面将帮助您设置\"Democracy播放器\"让它为您工作在最佳状态。这是第一个问题。"
-
-#~ msgid ""
-#~ "We recommend that you allow Democracy Player to launch when your computer "
-#~ "starts up. This way, videos that haven't finished downloading can finish and "
-#~ "new videos on your channels will be ready when you want to watch.\n"
-#~ "\n"
-#~ "\n"
-#~ "Would you like to run Democracy when your computer starts up?"
-#~ msgstr ""
-#~ "我们推荐您让\"Democracy播放器\"开机时启动。这样的话，未下载完的视频能继续下载并且您的频道中新的视频在您想观看时也准备好了。\n"
-#~ "\n"
-#~ "\n"
-#~ "您愿意让Democracy播放器在您的电脑启动时启动吗？"
-
-#~ msgid "Welcome to Internet TV!"
-#~ msgstr "欢迎来到互联网电视！"
-
-#~ msgid ""
-#~ "%message%\n"
-#~ "%message%"
-#~ msgstr ""
-#~ "%消息％\n"
-#~ "％消息％"
-
-#~ msgid "Create new playlist"
-#~ msgstr "创建新播放列表"
-
-#~ msgid "onStartup called twice"
-#~ msgstr "onStartup被调用了两次"
-
-#~ msgid "There was an error opening %s.  Please try again in a few seconds"
-#~ msgstr "打开%s时发生错误。请几秒钟后重试看看"
-
-#~ msgid "${count} Downloads in Progress"
-#~ msgstr "正有${count}个下载"
-
-#~ msgid "1 Download in Progress"
-#~ msgstr "正有1个下载"
-
-#~ msgid "${len} Videos On This Channel"
-#~ msgstr "在这个频道上有${len}个视频"
-
-#~ msgid "All ${len} Videos Match This Search"
-#~ msgstr "共有${len}个视频匹配此搜索"
-
-#~ msgid "Looking for videos at this URL"
-#~ msgstr "在这个网址寻找视频"
-
-#~ msgid "%s database save succeeded"
-#~ msgstr "%s数据库保存成功"
-
-#~ msgid "Add Channel..."
-#~ msgstr "添加频道..."
-
-#~ msgid "Channels"
-#~ msgstr "频道"
-
-#~ msgid "Check for New Version"
-#~ msgstr "检测新版本"
-
-#~ msgid "New Channel Guide..."
-#~ msgstr "新建频道导航..."
-
-#~ msgid "New Search Channel..."
-#~ msgstr "新建搜索频道..."
-
-#~ msgid "Next Video"
-#~ msgstr "下一个视频"
-
-#~ msgid "Playlists"
-#~ msgstr "播放列表"
-
-#~ msgid "Previous Video"
-#~ msgstr "前一个视频"
-
-#~ msgid "Remove..."
-#~ msgstr "删除..."
-
-#~ msgid "99999"
-#~ msgstr "99999"
-
-#~ msgid "BitTorrent ports:"
-#~ msgstr "BT端口"
-
-#~ msgid "Maximum:"
-#~ msgstr "最大："
-
-#~ msgid "Minimum:"
-#~ msgstr "最小："
-
-#~ msgid "Play videos one after another."
-#~ msgstr "连续播放视频"
-
-#~ msgid "Stop after each video."
-#~ msgstr "每个视频播放完后停止"
-
-#~ msgid "$label$"
-#~ msgstr "$标签$"
-
-#~ msgid "$title$"
-#~ msgstr "$主题$"
-
-#~ msgid "Item1"
-#~ msgstr "条目1"
-
-#~ msgid "Search Engine"
-#~ msgstr "搜索引擎"
-
-#~ msgid "URL"
-#~ msgstr "网址"
-
-#~ msgid "Only search my Movies folder."
-#~ msgstr "只搜索\"我的视频\"文件夹"
-
-#~ msgid "Search my entire Home folder."
-#~ msgstr "搜索我的用户个人文件夹"
-
-#~ msgid "Save Video _As..."
-#~ msgstr "保存视频为...(_A)"
-
-#~ msgid "_Copy Video URL"
-#~ msgstr "拷贝视频地址(_C)"
-
-#~ msgid "_Remove Video"
-#~ msgstr "删除视频(_R)"
-
-#~ msgid "_Stop Video"
-#~ msgstr "停止视频(_S)"
-
-#~ msgid "_Send this channel to a friend"
-#~ msgstr "把该频道发送给朋友(_S)"
-
-#~ msgid "Re_name Channel"
-#~ msgstr "重命名频道(_N)"
-
-#~ msgid "_Channels"
-#~ msgstr "频道(_C)"
-
-#~ msgid "New _Playlist..."
-#~ msgstr "新建播放列表(_P)"
-
-#~ msgid "New Playlist _Folder..."
-#~ msgstr "新建播放列表夹(_F)"
-
-#~ msgid "New Channel _Folder..."
-#~ msgstr "新建频道夹(_F)"
-
-#~ msgid "Add _Channel..."
-#~ msgstr "添加频道(_C)"
-
-#~ msgid "New Searc_h Channel..."
-#~ msgstr "新建搜索频道(_H)"
-
-#~ msgid "New Channel _Guide..."
-#~ msgstr "新建频道导航(_G)"
-
-#~ msgid "Delete selection"
-#~ msgstr "删除选中内容"
-
-#~ msgid "_Remove..."
-#~ msgstr "删除...(_R)"
-
-#~ msgid "_Remove Playlist..."
-#~ msgstr "删除播放列表(_R)"
-
-#~ msgid "_Remove Playlists..."
-#~ msgstr "删除多个播放列表...(_R)"
-
-#~ msgid "_Remove Playlist Folder..."
-#~ msgstr "删除播放列表夹...(_R)"
-
-#~ msgid "_Remove Playlist Folders..."
-#~ msgstr "删除多个播放列表夹...(_R)"
-
-#~ msgid "_Remove Channel..."
-#~ msgstr "删除频道...(_R)"
-
-#~ msgid "_Remove Channels..."
-#~ msgstr "删除多个频道...(_R)"
-
-#~ msgid "_Remove Channel Folder..."
-#~ msgstr "删除频道夹...(_R)"
-
-#~ msgid "_Remove Channel Folders..."
-#~ msgstr "删除多个频道夹...(_R)"
-
-#~ msgid "_Remove Channel Guide..."
-#~ msgstr "删除频道导航...(_R)"
-
-#~ msgid "_Update Channels..."
-#~ msgstr "更新多个频道...(_U)"
-
-#~ msgid "Remove Playlist..."
-#~ msgstr "移除播放列表..."
-
-#~ msgid "Remove Playlists..."
-#~ msgstr "移除多个播放列表..."
-
-#~ msgid "Remove Playlist Folder..."
-#~ msgstr "移除播放列表夹..."
-
-#~ msgid "Remove Playlist Folders..."
-#~ msgstr "移除多个播放列表夹..."
-
-#~ msgid "Remove Channel Folder..."
-#~ msgstr "移除频道夹..."
-
-#~ msgid "Remove Channel Folders..."
-#~ msgstr "移除多个频道夹..."
-
-#~ msgid "Remove Channel Guide..."
-#~ msgstr "移除频道导航..."
-
-#~ msgid "Remove Channel Guides..."
-#~ msgstr "移除频道导航..."
-
-#~ msgid "Remove Video..."
-#~ msgstr "移除视频..."
-
-#~ msgid "Remove Videos..."
-#~ msgstr "移除(多个)视频..."
-
-#~ msgid "Rename Playlist..."
-#~ msgstr "重命名播放列表..."
-
-#~ msgid "Rename Playlist Folder..."
-#~ msgstr "重命名播放列表夹..."
-
-#~ msgid "Rename Channel..."
-#~ msgstr "重命名频道..."
-
-#~ msgid "Rename Channel Folder..."
-#~ msgstr "重命名频道夹..."
-
-#~ msgid "Rename Channel Guide..."
-#~ msgstr "重命名频道导航..."
-
-#~ msgid "Update Channel..."
-#~ msgstr "更新频道..."
-
-#~ msgid "Update Channels..."
-#~ msgstr "更新多个频道..."
-
-#~ msgid "Could not write to %s"
-#~ msgstr "不能写入 %s"
-
-#~ msgid "%s MB required to store this video"
-#~ msgstr "需要%s MB保存这个视频"
-
-#~ msgid "The torrent file at %s was not valid"
-#~ msgstr "%s的BitTorrent种子文件非法"
-
-#~ msgid "The torrent file for this item was deleted "
-#~ msgstr "它的BitTorrent种子被删除了 "
-
-#~ msgid "outside of democracy."
-#~ msgstr "在democracy之外。"
-
-#~ msgid "%1.1fGB"
-#~ msgstr "%1.1fG字节"
-
-#~ msgid "%1.1fMB"
-#~ msgstr "%1.1f兆字节"
-
-#~ msgid "-00:00:00"
-#~ msgstr "到00:00:00"
-
-#~ msgid "Change..."
-#~ msgstr "更改…"
-
-#~ msgid "Download at most"
-#~ msgstr "一次最多下载"
-
-#~ msgid "Save downloaded videos in this folder:"
-#~ msgstr "保存下载的视频到这个文件夹："
-
-#~ msgid "To avoid internet slowdowns:"
-#~ msgstr "为了避免互联网速度问题："
-
-#~ msgid "videos at once."
-#~ msgstr "个视频"
-
-#~ msgid "Search this folder:"
-#~ msgstr "搜索这个文件夹："
-
-#~ msgid "STAR"
-#~ msgstr "(STAR)评星级"
-
-#~ msgid "SAVED"
-#~ msgstr "已保存"
-
-#~ msgid "DELETE"
-#~ msgstr "删除"
-
-#~ msgid "default"
-#~ msgstr "默认"
-
-#~ msgid "Videos expire after"
-#~ msgstr "视频到期开始于"
-
-#~ msgid "When turned on, Auto Download should"
-#~ msgstr "选择此项,自动下载将"
-
-#~ msgid ""
-#~ "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
-#~ "unwatched."
-#~ msgstr "当多于${maxnew} ${maxnew2}个视频等着观看时不要自动下载."
-
-#~ msgid "<label for=\"automatic\">Auto Download</label>"
-#~ msgstr "<label for=\"automatic\">自动下载</label>"
-
-#~ msgid ""
-#~ "Democracy can't play this file. You may be able to open it with a different "
-#~ "program.<br></br><br></br><strong>Filename:</strong> "
-#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
-#~ msgstr ""
-#~ "Democracy无法播放这个文件. 您可以用别的程序试试.<br></br><br></br><strong>文件名:</strong> "
-#~ "${filename}<Br></Br><strong>文件类型:</strong> ${format}"
-
-#~ msgid "REVEAL FILE"
-#~ msgstr "显示文件位置"
-
-#~ msgid "Skip >> ${countdown}"
-#~ msgstr "跳过 >> ${countdown}"
-
-#~ msgid "SHOW FILE"
-#~ msgstr "显示文件"
-
-#~ msgid "SHOW FOLDER"
-#~ msgstr "显示文件夹"
-
-#~ msgid "SHARE IT"
-#~ msgstr "共享它"
-
-#~ msgid "STAR IT"
-#~ msgstr "给它STAR(评星级)"
-
-#~ msgid "Full Screen"
-#~ msgstr "全屏"
-
-#~ msgid "%donation label%"
-#~ msgstr "捐助标签"
-
-#~ msgid "Browse"
-#~ msgstr "浏览"
-
-#~ msgid "Starting up"
-#~ msgstr "正在启动"
-
-#~ msgid "Removing %s"
-#~ msgstr "正在删除 %s"
-
-#~ msgid "%d days"
-#~ msgstr "%d 天"
-
-#~ msgid "Remove %s"
-#~ msgstr "移除%s"
-
-#~ msgid "Are you sure you want to remove the guide %s?"
-#~ msgstr "您确定要移除向导%s吗？"
-
-#~ msgid "Are you sure you want to remove %s"
-#~ msgstr "您确定要移除%s吗？"
-
-#~ msgid "Remove %s channels"
-#~ msgstr "移除%s频道"
-
-#~ msgid "Invalid Value"
-#~ msgstr "无效值"
-
-#~ msgid "Error: %s"
-#~ msgstr "错误: %s"
-
-#~ msgid "Bad Status Code: %s"
-#~ msgstr "错误的状态代码：%s"
-
-#~ msgid "Create Channel"
-#~ msgstr "新建频道"
-
-#~ msgid "New Search Channel"
-#~ msgstr "新建搜索频道"
-
-#~ msgid "%d hours"
-#~ msgstr "%d 小时"
-
-#~ msgid "%d minutes"
-#~ msgstr "%d 分钟"
-
-#~ msgid "TORRENT"
-#~ msgstr "BitTorrent种子"
-
-#~ msgid "WEB PAGE"
-#~ msgstr "网页"
-
-#~ msgid "%s remaining"
-#~ msgstr "%s 剩余时间"
-
-#~ msgid "Add to new playlist"
-#~ msgstr "添加到新的播放列表"
-
-#~ msgid "Update Channels Now"
-#~ msgstr "现在更新频道"
-
-#~ msgid "Adding %d channels to a new folder"
-#~ msgstr "添加%d个频道到新夹子中"
-
-#~ msgid "_Search For:"
-#~ msgstr "查找(_S)："
-
-#~ msgid "_URL"
-#~ msgstr "网络地址(_U)"
-
-#~ msgid "and"
-#~ msgstr "和"
-
-#~ msgid "<b>BitTorrent</b>"
-#~ msgstr "<b>BitTorrent</b>"
-
-#~ msgid "Go"
-#~ msgstr "开始"
-
-#~ msgid "Channel:"
-#~ msgstr "频道："
-
-#~ msgid "Search Engine:"
-#~ msgstr "搜索引擎："
-
-#~ msgid "Search For:"
-#~ msgstr "查找："
-
-#~ msgid "Don't Worry About Disk Space:"
-#~ msgstr "不要担心磁盘空间："
-
-#~ msgid "Reset Search"
-#~ msgstr "重置搜索"
-
-#~ msgid "You're done!"
-#~ msgstr "完成了！"
-
-#~ msgid "Remove Channel..."
-#~ msgstr "移除频道..."
-
-#~ msgid "Create new playlist folder"
-#~ msgstr "创建新播放列表夹"
-
-#~ msgid "Create new channel folder"
-#~ msgstr "新建频道夹"
-
-#~ msgid "Searching for Videos"
-#~ msgstr "正在搜索视频文件"
-
-#~ msgid "SAVE"
-#~ msgstr "保存"
-
-#~ msgid "Donate"
-#~ msgstr "捐赠"
-
-#~ msgid "Remove Channels..."
-#~ msgstr "移除多个频道..."
-
-#~ msgid "Expires in %s"
-#~ msgstr "%s后过期"
-
-#~ msgid "downloading..."
-#~ msgstr "下载中..."
-
-#~ msgid "Remove From My Collection"
-#~ msgstr "从我的收藏中删除"
-
-#~ msgid "Play Just This Video"
-#~ msgstr "只播放这个视频"
-
-#~ msgid "(Changes won't go into effect until you restart Democracy Player.)"
-#~ msgstr "(直到您重新启动Democracy播放器后更改才会生效。)"
-
-#~ msgid "<b>Playback</b>"
-#~ msgstr "<b>播放</b>"
-
-#~ msgid "Bit Torrent uses ports between"
-#~ msgstr "BitTorrent使用这之间的端口"
-
-#~ msgid "In This:"
-#~ msgstr "这样："
-
-#~ msgid "Results for \"${query}\""
-#~ msgstr "\"${query}\"的结果"
-
-#~ msgid "Empty Playlist"
-#~ msgstr "播放列表为空"
-
-#~ msgid "Drag downloaded videos to this playlist to add them."
-#~ msgstr "拖放下载的视频到此播放列表就会添加进播放列表。"
-
-#~ msgid "${size} available for downloads"
-#~ msgstr "下载剩余大小:${size}"
-
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>常规</b>"
-
-#~ msgid "Automatically run Democracy Player when I log in"
-#~ msgstr "当我登入时自动运行Democracy播放器"
-
-#~ msgid "_Store downloaded videos in this folder:"
-#~ msgstr "保存下载的视频到这个文件夹(_S)"
-
-#~ msgid "Cancel Search"
-#~ msgstr "取消搜索"
-
-#~ msgid "Find Videos:"
-#~ msgstr "找到视频："
-
-#~ msgid ""
-#~ "Democracy Player can find all the videos on your computer to help you "
-#~ "organize your collection.\n"
-#~ "\n"
-#~ "\n"
-#~ "Would you like Democracy Player to look for video files on your computer?"
-#~ msgstr ""
-#~ "Democracy播放器能够搜索阁下电脑内储存的所有视频档案，帮助您整理阁下的珍藏。\n"
-#~ "\n"
-#~ "\n"
-#~ "阁下是否想让它搜索您电脑内的视频档案呢？"
-
-#~ msgid ""
-#~ "Error importing democracy modules:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "导入Democracy模块时发生错误：\n"
-#~ "%s"
-
-#~ msgid "${len} Videos Match This Search"
-#~ msgstr "有${len}个视频匹配此搜索"
-
-#~ msgid "${count} Videos on this Channel"
-#~ msgstr "在这个频道上有${count}个视频"
-
-#~ msgid ""
-#~ "Would you like to delete this file or just remove its entry from My "
-#~ "Collection?"
-#~ msgstr "您是要删除这个文件还是仅仅从我的收藏中删除？"
-
-#~ msgid "%s closed connection"
-#~ msgstr "%s 关闭的连接"
-
-#~ msgid "Could not download the Democracy channel file: %s."
-#~ msgstr "无法下载Democracy频道文件：%s。"
-
-#~ msgid "Loading window"
-#~ msgstr "正在装载窗口"
-
-#~ msgid ""
-#~ "Are you sure you want to remove %s?  Any downloads in progress will be "
-#~ "canceled."
-#~ msgstr "您确定要删除%s吗？它的任何下载将被取消。"
-
-#~ msgid ""
-#~ "What would you like to do with the videos in this channel that you've "
-#~ "downloaded?"
-#~ msgstr "对于这个频道的下载完成的视频您想怎样处理？"
-
-#~ msgid ""
-#~ "What would you like to do with the videos in these channels that you've "
-#~ "downloaded?"
-#~ msgstr "对于这些频道的下载完成的视频您想怎样处理？"
-
-#~ msgid "%s is invalid.  You must enter a non-negative number."
-#~ msgstr "无效的%s。您必须输入非负的数字。"
-
-#~ msgid "_Remove Video..."
-#~ msgstr "删除视频...(_R)"
-
-#~ msgid "_Remove Videos..."
-#~ msgstr "删除多个视频...(_R)"
-
-#~ msgid "Re_name Playlist..."
-#~ msgstr "重命名播放列表(_N)"
-
-#~ msgid "Re_name Playlist Folder..."
-#~ msgstr "重命名播放列表夹(_N)"
-
-#~ msgid "Re_name Channel..."
-#~ msgstr "重命名频道(_N)"
-
-#~ msgid "Re_name Channel Folder..."
-#~ msgstr "重命名频道夹(_N)"
-
-#~ msgid "_Update Channel..."
-#~ msgstr "更新频道...(_U)"
-
-#~ msgid "%1.1fKB"
-#~ msgstr "%1.1f千字节"
-
-#~ msgid "Removing %s items"
-#~ msgstr "正在移除%s条目"
-
-#~ msgid ""
-#~ "One or more of these items is a folder.  When you remove or delete a folder, "
-#~ "any items inside that folder will also be removed or deleted."
-#~ msgstr "这些条目中一个或多个是文件夹。当您移除或删除文件夹时，文件夹中的条目也将被移除或删除。"
-
-#~ msgid "Rename Channel"
-#~ msgstr "重命名频道"
-
-#~ msgid "Revert Title to Default"
-#~ msgstr "恢复标题到默认值"
-
-#~ msgid "Create %d channels?"
-#~ msgstr "创建%d个频道？"
-
-#~ msgid "<b>Searching for Videos</b>"
-#~ msgstr "<b>搜索视频</b>"
-
-#~ msgid "C_hannel:"
-#~ msgstr "频道(_C)"
-
-#~ msgid "C_reate Channel"
-#~ msgstr "创建频道(_C)"
-
-#~ msgid "Restrict to my full _home folder"
-#~ msgstr "限制在我的个人文件夹(_h)"
-
-#~ msgid "Search _Engine:"
-#~ msgstr "搜索引擎(_E)"
-
-#~ msgid "Select custom search directory"
-#~ msgstr "选择自定义搜索目录"
-
-#~ msgid "Search _custom folder:"
-#~ msgstr "搜索自定义文件夹(_c)"
-
-#~ msgid "Go Big:"
-#~ msgstr "放大："
-
-#~ msgid "Leave it On:"
-#~ msgstr "让它开着："
-
-#~ msgid "The button to the right of the play button shows videos fullscreen."
-#~ msgstr "播放按钮右边的按钮让视频全屏播放。"
-
-#~ msgid ""
-#~ "%s was unable to save its database: Disk Full.\n"
-#~ "We suggest deleting files from the full disk or simply deleting some movies "
-#~ "from your collection.\n"
-#~ "Recent changes may be lost."
-#~ msgstr ""
-#~ "%s was unable to save its database: Disk Full.\n"
-#~ "We suggest deleting files from the full disk or simply deleting some movies "
-#~ "from your collection.\n"
-#~ "Recent changes may be lost."
-
-#~ msgid "Rename Channel Folder"
-#~ msgstr "重命名频道夹"
-
-#~ msgid "Enter a new name for the channel folder %s"
-#~ msgstr "为频道夹\"%s\"输入新名字"
-
-#~ msgid "Enter a new name for the playlist folder %s"
-#~ msgstr "为播放列表夹\"%s\"输入新名字"
-
-#~ msgid "Create Channel Folder"
-#~ msgstr "创建频道夹"
-
-#~ msgid "Enter a name for the new channel folder"
-#~ msgstr "为频道夹输入新名字"
-
-#~ msgid ""
-#~ "This Democracy channel file has an invalid format: %s. Please notify the "
-#~ "publisher of this file."
-#~ msgstr "这个Democracy频道文件是无效的格式：%s。请提醒这个文件的发布者。"
-
-#~ msgid ""
-#~ "This Democracy channel file has the wrong content type: %s. Please notify "
-#~ "the publisher of this file."
-#~ msgstr "这个Democracy频道文件是无效的content type(内容类型)：%s。请提醒这个文件的发布者。"
-
-#~ msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-#~ msgstr "这个BitTorrent种子文件%s看起来是坏的，不能打开。[确定]"
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files. It may take extra time to list the "
-#~ "videos, and descriptions may look funny.  Please contact the publishers of "
-#~ "$url and ask if they can supply a feed in a format that will work with "
-#~ "Democracy.\n"
-#~ "\n"
-#~ "Do you want to try to load this channel anyway?"
-#~ msgstr ""
-#~ "不过我们会尽力抓取这些文件。列出视频还会花额外的时间，并且描述可能看起来滑稽。请联系这个网络地址$url的发布者，问问他们是否能提供给Democracy使"
-#~ "用的格式的feed(供稿)。\n"
-#~ "\n"
-#~ "您要试一试装载这个频道吗？"
-
-#~ msgid "Are you sure you want to remove these %s playlists"
-#~ msgstr "您确定要移除%s这些播放列表吗？"
-
-#~ msgid ""
-#~ "Are you sure you want to remove these %s channels?  Any downloads in "
-#~ "progress will be canceled."
-#~ msgstr "您确定要删除这些%s吗？它的任何下载将被取消。"
-
-#~ msgid " - Invalid URL"
-#~ msgstr " - 无效的网络地址"
-
-#~ msgid "Democracy - Add Channel Guide"
-#~ msgstr "Democracy - 添加导航网络"
-
-#~ msgid "Enter the URL of the channel guide to add"
-#~ msgstr "输入要添加的频道导航网络地址"
-
-#~ msgid ""
-#~ "You are running a version of Democracy Player with a custom set of channels."
-#~ msgstr "您运行的是Democracy播放器的一个带自定频道的版本。"
-
-#~ msgid "Re_name..."
-#~ msgstr "重命名(_N)"
-
-#~ msgid "Re_name Channel Guide..."
-#~ msgstr "重命名频道导航...(_N)"
-
-#~ msgid "%d video found"
-#~ msgid_plural "%d videos found"
-#~ msgstr[0] "发现%d个视频"
-
-#~ msgid "Connection Error: %s"
-#~ msgstr "连接错误：%s"
-
-#~ msgid "Bad Status Line: %s"
-#~ msgstr "错误的状态行：%s"
-
-#~ msgid "Bad Header Line: %s"
-#~ msgstr "错误的Header行：%s"
-
-#~ msgid "Bad Chunk size: %s"
-#~ msgstr "错误的块尺寸：%s"
-
-#~ msgid "Connection to %s timed out"
-#~ msgstr "连接%s超时"
-
-#~ msgid "%s is not a valid URL"
-#~ msgstr "%s不是有效的网络地址"
-
-#~ msgid "A search channel contains items that match a search term."
-#~ msgstr "一个搜索频道包含了匹配搜索词语的搜索结果。"
-
-#~ msgid "Deleting %s"
-#~ msgstr "正删除 %s"
-
-#~ msgid "Mark as Unwatched"
-#~ msgstr "标记为未观看"
-
-#~ msgid "%d Downloaded Items"
-#~ msgstr "下载了%d项"
-
-#~ msgid "%d Available Items"
-#~ msgstr "%d项可用"
-
-#~ msgid "%d Downloading Items"
-#~ msgstr "%d项下载中"
-
-#~ msgid "Update Channel Now"
-#~ msgstr "现在更新频道"
-
-#~ msgid "Enter a new name for the channel %s"
-#~ msgstr "为频道\"%s\"输入新名字"
-
-#~ msgid "Couldn't load the feed at %s (%s)."
-#~ msgstr "无法装载feed(供稿)在%s (%s)。"
-
-#~ msgid "Subscribing to multiple channels"
-#~ msgstr "订阅多个频道"
-
-#~ msgid ""
-#~ "NOTE: You are already subscribed to %d of these channels.  These channels "
-#~ "will stay where they currently are."
-#~ msgstr "注意：您早已订阅了这些频道中的%d个。这些频道将原地不动。"
-
-#~ msgid "Drag playlists to this folder to add them."
-#~ msgstr "拖放播放列表到这个夹子来添加进来。"
-
-#~ msgid ""
-#~ "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
-#~ "playlists)"
-#~ msgstr "选择了${count}个播放列表文件夹<br></br>(包含了${containedcount}个播放列表)"
-
-#~ msgid "Clear Completed Torrents"
-#~ msgstr "清除完成的BitTorrent种子"
-
-#~ msgid "Empty Channel Folder"
-#~ msgstr "空的频道夹"
-
-#~ msgid "Drag channels to this folder to add them."
-#~ msgstr "拖放频道到这个夹子来添加进来。"
-
-#~ msgid ""
-#~ "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
-#~ "channels)"
-#~ msgstr "选择了${count}个频道文件夹<br></br>(包含了${containedcount}个频道)"
-
-#~ msgid "${count} Channels Selected"
-#~ msgstr "选择了${count}个频道"
-
-#~ msgid "Local File"
-#~ msgstr "本地文件"
-
-#~ msgid "Search custom folder:"
-#~ msgstr "搜索自定义文件夹："
-
-#~ msgid "New Channel Folder"
-#~ msgstr "新建频道夹"
-
-#~ msgid "New Channel Guide"
-#~ msgstr "新建频道导航"
-
-#~ msgid "Pause Video"
-#~ msgstr "暂停视频"
-
-#~ msgid "Send This Channel to a Friend..."
-#~ msgstr "把这个频道发送给朋友..."
-
-#~ msgid "_Remove Channel Guides..."
-#~ msgstr "删除多个频道导航...(_R)"
-
-#~ msgid "%0.0fB"
-#~ msgstr "%0.0f字节"
-
-#~ msgid ""
-#~ "Would you like to delete this folder and all of its videos or just remove "
-#~ "its entry from My Collection?"
-#~ msgstr "您是要删除这个文件夹和它里面所有视频还是仅仅从我的收藏中删除？"
-
-#~ msgid ""
-#~ "One or more of these videos was not downloaded from a channel.  Would you "
-#~ "like to delete these items or just remove their entries from My Collection?"
-#~ msgstr "这些视频中一个或多个没有从频道中下载。您愿意删除它(们)还是仅仅从我的收藏中移除？"
-
-#~ msgid ""
-#~ "<b>Would you like Democracy Player to look for video files on your "
-#~ "computer?</b>"
-#~ msgstr "<b>您愿意让Democracy播放器在您的电脑上查找视频文件吗？</b>"
-
-#~ msgid "<b>Would you like to run Democracy when your computer starts up?</b>"
-#~ msgstr "<b>您愿意让Democracy播放器在您的电脑启动时启动吗？</b>"
-
-#~ msgid ""
-#~ "<b>You're done!</b>\n"
-#~ "\n"
-#~ "Setup is complete -- now you can find some channels and start watching.\n"
-#~ "\n"
-#~ "<b>Don't Wait:</b> Democracy is different than watching webpage videos -- "
-#~ "publishers can offer big, high quality videos.  So don't sit around waiting "
-#~ "for videos: start some downloads and check back later.\n"
-#~ "\n"
-#~ "<b>Leave it On:</b> Democracy Player regularly checks channels for new "
-#~ "videos and downloads in the background.  Leaving it running means you'll "
-#~ "have new videos when you're ready to watch.\n"
-#~ "\n"
-#~ "<b>Don't Worry About Disk Space:</b> Like a TiVo, Democracy Player features "
-#~ "an 'expiration' system that helps clean out older videos to make room for "
-#~ "new videos.  You can always keep a video permanently by clicking 'save' and "
-#~ "you can set a channel's settings to save videos automatically.\n"
-#~ "\n"
-#~ "<b>Go Big:</b> The button to the right of the play button shows videos "
-#~ "fullscreen.\n"
-#~ "\n"
-#~ "<b>Find Videos:</b> The Democracy Channel Guide has hundreds of internet TV "
-#~ "channels, all of them are free.  Just click 'ADD' to watch a channel."
-#~ msgstr ""
-#~ "<b>完成了！</b>\n"
-#~ "\n"
-#~ "安装设置完成了 -- 您现在可以找到一些频道开始观看了。\n"
-#~ "\n"
-#~ "\n"
-#~ "<b>别犹豫：</b> 与网页里面看视频不同-- 视频发布者可以提供大的高品质的视频。所以您不要无所事事站在一边：现在开始下载吧，别忘了以后还来。\n"
-#~ "\n"
-#~ "<b>让它自己运行：</b> Democracy播放器时常检查频道里的新视频并下载。留着它运行意味着您想看新视频的时候它们就已经准备下载好了。\n"
-#~ "\n"
-#~ "<b>不用担心磁盘空间：</b> "
-#~ "就象TiVo(TiVo公司)，Democracy有一项\"逾期处理\"特性帮助您清除旧的视频腾出空间给新的视频。另一方面您可以点击\"save(保存)\""
-#~ "来永久保留一个视频或者您可以设置一个频道来保存视频。\n"
-#~ "\n"
-#~ "<b>放大视频:</b> 播放按钮右边的按钮会全屏显示视频。\n"
-#~ "\n"
-#~ "<b>找到视频:</b> Democracy频道导航有许多的互联网电视频道， 它们都是免费的。点击'ADD(添加)'来观看频道吧。"
-
-#~ msgid ""
-#~ "Democracy Player can find all the videos on your computer to help you "
-#~ "organize your collection."
-#~ msgstr "Democracy播放器可以在您的电脑里找到所有视频来帮助您组织管理您的收藏。"
-
-#~ msgid "Empty Playlist Folder"
-#~ msgstr "播放列表夹为空"
-
-#~ msgid ""
-#~ "This folder contains ${count} playlists, but the playlists do not contain "
-#~ "any items."
-#~ msgstr "这个文件夹包含${count}个播放列表，但是这些播放列表不包含任何条目。"
-
-#~ msgid "${count} Playlists Selected"
-#~ msgstr "选择了${count}个播放列表"
-
-#~ msgid "${size} disk space free"
-#~ msgstr "磁盘剩余空间:${size}"
-
-#~ msgid ""
-#~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
-#~ "onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>"
-#~ msgstr ""
-#~ "<strong i18n:translate=\"\">跳过介绍： <a style=\"color: #090;\" href=\"#\" "
-#~ "onclick=\"doneWithIntro();\">带我去频道导航 >></a></strong>"
-
-#~ msgid "Show movies in these directories in My Collection"
-#~ msgstr "显示我的收藏中这些目录里的视频"
-
-#~ msgid "_Add Directory"
-#~ msgstr "添加目录(_A)"
-
-#~ msgid "A search channel contains"
-#~ msgstr "一个搜索频道包含着"
-
-#~ msgid "items that match a search term."
-#~ msgstr "匹配搜索的结果项"
-
-#~ msgid "Democracy First Time Setup"
-#~ msgstr "Democracy的首次初始设置"
-
-#~ msgid ""
-#~ "Like a TiVo, Democracy Player features an 'expiration' system that helps "
-#~ "clean out older videos to make room for new videos.  You can always keep a "
-#~ "video permanently by clicking 'save' and you can set a channel's settings to "
-#~ "save videos automatically."
-#~ msgstr ""
-#~ "就象TiVo(TiVo公司)，Democracy有一项\"逾期处理\"特性帮助您清除旧的视频腾出空间给新的视频。另一方面您可以点击\"save(保存)\""
-#~ "来永久保留一个视频或者您可以设置一个频道来保存视频。"
-
-#~ msgid ""
-#~ "The Democracy Channel Guide has hundreds of internet TV channels, all of "
-#~ "them are free.  Just click 'ADD' to watch a channel."
-#~ msgstr "Democracy的频道导航有许多互联网电视频道，它们都是免费的。点击'ADD(添加)'来观看频道。"
-
-#~ msgid ""
-#~ "The next few screens will help you set up Democracy Player so that it works "
-#~ "best for you."
-#~ msgstr "接下来几个屏幕会帮组您设置Democracy播放器为您工作在最好的状态。"
-
-#~ msgid ""
-#~ "We recommend that you have Democracy Player launch when your computer starts "
-#~ "up.  This way, videos in progress can finish downloading and new videos can "
-#~ "be downloaded in the background, ready when you want to watch."
-#~ msgstr "我们推荐您让Democracy播放器在您的电脑启动时启动。这样，正下载的和新的视频能完成下载，当您想观看时它们已经准备好了。"
-
-#~ msgid ""
-#~ "Would you like Democracy Player to look for video files on your computer?"
-#~ msgstr "您愿意让Democracy播放器在您的电脑上寻找视频文件吗？"
-
-#~ msgid "Would you like to run Democracy on startup?"
-#~ msgstr "您愿意让Democracy播放器在您的电脑启动时启动吗？"
-
-#~ msgid "A"
-#~ msgstr "A"
-
-#~ msgid "Alt+Enter"
-#~ msgstr "Alt+Enter"
-
-#~ msgid "C"
-#~ msgstr "C"
-
-#~ msgid "Check Version"
-#~ msgstr "检查版本"
-
-#~ msgid "Ctrl+A"
-#~ msgstr "Ctrl+A"
-
-#~ msgid "Ctrl+C"
-#~ msgstr "Ctrl+C"
-
-#~ msgid "Ctrl+D"
-#~ msgstr "Ctrl+D"
-
-#~ msgid "Ctrl+N"
-#~ msgstr "Ctrl+N"
-
-#~ msgid "Ctrl+O"
-#~ msgstr "Ctrl+O"
-
-#~ msgid "Ctrl+P"
-#~ msgstr "Ctrl+P"
-
-#~ msgid "Ctrl+Shift+N"
-#~ msgstr "Ctrl+Shift+N"
-
-#~ msgid "Ctrl+Shitf+P"
-#~ msgstr "Ctrl+Shitf+P"
-
-#~ msgid "Ctrl+V"
-#~ msgstr "Ctrl+V"
-
-#~ msgid "D"
-#~ msgstr "D"
-
-#~ msgid "Donate to the Democracy project"
-#~ msgstr "为Democracy项目捐献"
-
-#~ msgid "E"
-#~ msgstr "E"
-
-#~ msgid "F"
-#~ msgstr "F"
-
-#~ msgid "Fullscreen"
-#~ msgstr "全屏"
-
-#~ msgid "G"
-#~ msgstr "G"
-
-#~ msgid "H"
-#~ msgstr "H"
-
-#~ msgid "L"
-#~ msgstr "L"
-
-#~ msgid "Left"
-#~ msgstr "左面"
-
-#~ msgid "N"
-#~ msgstr "N"
-
-#~ msgid "New Channel"
-#~ msgstr "新建频道"
-
-#~ msgid "New Playlist"
-#~ msgstr "新建播放列表"
-
-#~ msgid "New Playlist Folder"
-#~ msgstr "新建播放列表夹"
-
-#~ msgid "O"
-#~ msgstr "O"
-
-#~ msgid "P"
-#~ msgstr "p"
-
-#~ msgid "Playlist"
-#~ msgstr "播放列表"
-
-#~ msgid "Q"
-#~ msgstr "Q"
-
-#~ msgid "R"
-#~ msgstr "R"
-
-#~ msgid "Remove Video"
-#~ msgstr "移除视频"
-
-#~ msgid "Right"
-#~ msgstr "右边"
-
-#~ msgid "S"
-#~ msgstr "S"
-
-#~ msgid "Space"
-#~ msgstr "空间"
-
-#~ msgid "U"
-#~ msgstr "U"
-
-#~ msgid "V"
-#~ msgstr "V"
-
-#~ msgid "Expected CRLF got: %r"
-#~ msgstr "预期回车加接新行，结果是：%r"
-
-#~ msgid "_Search"
-#~ msgstr "搜索(_S)"

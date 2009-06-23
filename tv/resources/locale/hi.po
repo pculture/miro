@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -47,10 +47,6 @@ msgstr ""
 "जब आप ल‍‍ाल बटन पर क्लिक करें  , तो आप माईरो को टरे में छुपाना चाहेंगें या "
 "उसे बंद करना? आप बाद में इस विकल्प में इस सेटिंग को बदल सकते हैं."
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:182
-msgid "Error Bombing Item"
-msgstr ""
-
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:184
 msgid "Error Recommending Item"
 msgstr "आपको सुझाव देने में हम असमर्थ हैं"
@@ -64,19 +60,6 @@ msgstr "वेबसाइट शुरू करने में असमर�
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr "%(url)s  खोलने में असमर्थता ,कृपया थोरी देर बाद दोबारा प्रयास करें |"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
-msgid "Update Available"
-msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
-#, python-format
-msgid "A new version of %s is available for download."
-msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
-msgid "Do you want to download it now?"
-msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
@@ -162,19 +145,10 @@ msgstr "मिटाएँ"
 msgid "Add to Library"
 msgstr "कोष में शामिल करें"
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:203
-msgid "Pop Out"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:206
-msgid "Pop In"
-msgstr ""
-
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
 msgid "Services"
 msgstr "सेवाएँ"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 msgid "Hide Miro"
 msgstr "माईरो को छिपाऎं ‌‌।"
 
@@ -190,7 +164,6 @@ msgstr "सभी दिखाएँ"
 msgid "Preferences..."
 msgstr "वरीयताएं..."
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
 msgstr "मीरो बन्द करें"
 
@@ -254,7 +227,6 @@ msgstr "सबको सामने लायें"
 msgid "Window"
 msgstr "विंडो"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Miro Help"
 msgstr "MIRO में सहायता"
 
@@ -282,14 +254,6 @@ msgid "Example Playlist"
 msgstr ""
 "उदाहरन वाले चैनल लिस्ट या वो चैनल लिस्ट जो आपको पहले से ही दिए हैं ताकि आप "
 "प्रयोग कर सकें"
-
-#: ../../portable/theme.py:175
-msgid "Miro - Report a Problem"
-msgstr ""
-
-#: ../../portable/searchengines.py:146
-msgid "Search All"
-msgstr ""
 
 #: ../../portable/util.py:279 ../../portable/util.py:281
 #, python-format
@@ -338,12 +302,10 @@ msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] "जो  %(count)d फीड्स पहले से ही हैं उन्हें छोड़ दिया गया है"
 msgstr[1] "जो %(count)d फीड्स पहले से ही हैं उन्हें छोड़ दिया गया है"
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "%(appname)s का लेखाजोखा संभाल लिया गया है"
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -351,12 +313,10 @@ msgstr ""
 "लेखाजोखा संभाल लिया गया है | अब आप बिना चिंता किये इसे बंद कर सकते हैं ,और "
 "आपका डाटा खराब नहीं होगा"
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "%(appname)s डाटाबेस या लेखेजोखे को संभाला (सेव) नहीं जा सका"
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -368,14 +328,6 @@ msgstr ""
 "डिस्क पूरी भर गयी है हम आपको सलाह देते हैं की आप उस डिस्क में से कुछ फिल्में "
 "डिलीट कर दें या कोई और फाइलें डिलीट कर दें नहीं तो वर्तमान वाली चीज़ों को सेव "
 "नहीं किया जा सकता |"
-
-#: ../../portable/messagehandler.py:1266
-msgid "Subscribed to new feed:"
-msgstr ""
-
-#: ../../portable/messagehandler.py:1269
-msgid "Subscribed to new feeds:"
-msgstr ""
 
 #: ../../portable/messages.py:965 ../../portable/item.py:618
 msgid "queued for download"
@@ -426,27 +378,6 @@ msgstr "%(size)s किलो बिट प्रति सेकंड"
 msgid "%(size)s b/s"
 msgstr "%(size)s किलो बिट प्रति सेकंड"
 
-#: ../../portable/displaytext.py:56
-#, python-format
-msgid "%(num).1f day"
-msgid_plural "%(num).1f days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:59
-#, python-format
-msgid "%(num).1f hr"
-msgid_plural "%(num).1f hrs"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:62
-#, python-format
-msgid "%(num).1f min"
-msgid_plural "%(num).1f mins"
-msgstr[0] ""
-msgstr[1] ""
-
 #: ../../portable/displaytext.py:64
 #, python-format
 msgid "%(num)d sec"
@@ -468,11 +399,6 @@ msgstr "%(size)s mb"
 #, python-format
 msgid "%(size)s kb"
 msgstr "%(size)s kb"
-
-#: ../../portable/displaytext.py:86
-#, python-format
-msgid "%(size)s b"
-msgstr ""
 
 #: ../../portable/displaytext.py:91
 #, python-format
@@ -584,21 +510,9 @@ msgstr "टोरेंट फाइल नष्ट कर दी गयी"
 msgid "The torrent file for this item was deleted outside of Miro."
 msgstr "टोरेंट फाइल MIRO के बाहर ही नष्ट कर दी गयी"
 
-#: ../../portable/menubar.py:184
-msgid "_Open"
-msgstr ""
-
-#: ../../portable/menubar.py:185
-msgid "_Download Item"
-msgstr ""
-
 #: ../../portable/menubar.py:186
 msgid "Check _Version"
 msgstr "सॉफ्टवेर का नया वेर्जन (version) देखें"
-
-#: ../../portable/menubar.py:188
-msgid "_Remove Item"
-msgstr ""
 
 #: ../../portable/menubar.py:189
 msgid "_Remove Items"
@@ -608,21 +522,9 @@ msgstr "इसे हटायें"
 msgid "Re_name Item"
 msgstr "नया नाम दें"
 
-#: ../../portable/menubar.py:191
-msgid "Save Item _As"
-msgstr ""
-
-#: ../../portable/menubar.py:192
-msgid "Save Items _As"
-msgstr ""
-
 #: ../../portable/menubar.py:193
 msgid "Copy Item _URL"
 msgstr "इसका लिंक या url कॉपी करें"
-
-#: ../../portable/menubar.py:195
-msgid "_Options"
-msgstr ""
 
 #: ../../portable/menubar.py:196
 msgid "_Quit"
@@ -643,71 +545,6 @@ msgstr "चिपकाएं"
 #: ../../portable/menubar.py:208
 msgid "Select _All"
 msgstr "सभी का चयन करे (_A)"
-
-#: ../../portable/menubar.py:212
-msgid "Add _Feed"
-msgstr ""
-
-#: ../../portable/menubar.py:213
-#: ../../portable/frontends/widgets/application.py:526
-msgid "Add Site"
-msgstr ""
-
-#: ../../portable/menubar.py:214
-msgid "New Searc_h Feed"
-msgstr ""
-
-#: ../../portable/menubar.py:215
-msgid "New _Folder"
-msgstr ""
-
-#: ../../portable/menubar.py:217
-msgid "Re_name"
-msgstr ""
-
-#: ../../portable/menubar.py:218
-msgid "_Remove"
-msgstr ""
-
-#: ../../portable/menubar.py:219
-msgid "_Remove Folder"
-msgstr ""
-
-#: ../../portable/menubar.py:221
-msgid "_Update Feed"
-msgstr ""
-
-#: ../../portable/menubar.py:222
-msgid "_Update Feeds"
-msgstr ""
-
-#: ../../portable/menubar.py:223
-msgid "Update _All Feeds"
-msgstr ""
-
-#: ../../portable/menubar.py:225
-msgid "_Import Feeds (OPML)"
-msgstr ""
-
-#: ../../portable/menubar.py:226
-msgid "E_xport Feeds (OPML)"
-msgstr ""
-
-#: ../../portable/menubar.py:228
-msgid "_Share with a Friend"
-msgstr ""
-
-#: ../../portable/menubar.py:229
-msgid "Copy URL"
-msgstr ""
-
-#: ../../portable/menubar.py:233
-msgid "New _Playlist"
-msgstr ""
-
-#: ../../portable/menubar.py:234
-msgid "New Playlist Fol_der"
-msgstr ""
 
 #: ../../portable/menubar.py:236
 msgid "Re_name Playlist"
@@ -773,7 +610,6 @@ msgstr "पूर्ण स्क्रीन (_F)"
 msgid "_Toggle Detached/Attached"
 msgstr "जोड़े / हटाएं"
 
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr "Miro के बारे में"
 
@@ -810,10 +646,6 @@ msgstr "वीडियो"
 msgid "_File"
 msgstr "फ़ाइल (_F)"
 
-#: ../../portable/menubar.py:290
-msgid "_Sidebar"
-msgstr ""
-
 #: ../../portable/menubar.py:291
 msgid "_Playlists"
 msgstr "Playlists (प्लाय्लिस्ट)"
@@ -835,12 +667,6 @@ msgstr ""
 "में पंगा पड़ गया है |आप इसको दे कर हमारी सहायता कर सकते हैं ताकि हम इसे ठीक "
 "कर सकें |"
 
-#: ../../portable/frontends/widgets/crashdialog.py:59
-msgid ""
-"Include entire program database including all video and feed metadata with "
-"crash report"
-msgstr ""
-
 #: ../../portable/frontends/widgets/crashdialog.py:64
 msgid "Describe what you were doing when you got this error:"
 msgstr "हमें आप कृपया हमें बताएँ की आप क्या कर रहे थे जब ये सब कुछ हुआ"
@@ -850,20 +676,6 @@ msgstr "हमें आप कृपया हमें बताएँ की 
 #: ../../portable/frontends/widgets/prefpanel.py:585
 msgid "never"
 msgstr "कभी नहीं"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:58
-#, python-format
-msgid "%(count)d hour ago"
-msgid_plural "%(count)d hours ago"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:64
-#, python-format
-msgid "%(count)d day ago"
-msgid_plural "%(count)d days ago"
-msgstr[0] ""
-msgstr[1] ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:70
 #, python-format
@@ -910,26 +722,6 @@ msgstr "पुरानी हो चुकी चीज़ें :"
 msgid "Keep %(number)s (Default)"
 msgstr "%(number)s रखें"
 
-#: ../../portable/frontends/widgets/feedsettingspanel.py:141
-msgid "Keep 0"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:142
-msgid "Keep 20"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:143
-msgid "Keep 50"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:144
-msgid "Keep 100"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:145
-msgid "Keep 1000"
-msgstr ""
-
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
 msgstr "सबकुछ हटाएं"
@@ -938,41 +730,9 @@ msgstr "सबकुछ हटाएं"
 msgid "Old items have been removed."
 msgstr "पुरानी चीज़ों को हटा दिया गया है"
 
-#: ../../portable/frontends/widgets/feedsettingspanel.py:193
-msgid "Pause Auto-Downloading when this many items are unplayed:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:197
-msgid "1 unplayed item"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:198
-msgid "3 unplayed items"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:199
-msgid "5 unplayed items"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:200
-msgid "10 unplayed items"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:201
-msgid "15 unplayed items"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:241
-msgid "Feed Settings"
-msgstr ""
-
 #: ../../portable/frontends/widgets/style.py:209
 msgid "From"
 msgstr "यहाँ से"
-
-#: ../../portable/frontends/widgets/style.py:210
-msgid "File name:"
-msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:211
 msgid "Show More"
@@ -1091,7 +851,6 @@ msgstr "ठहरा है"
 msgid "Remove from playlist"
 msgstr "playlist में से हटायें"
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr "जब मैं लोग इन करू  तो Miro अपने आप शुरू हो जाये"
 
@@ -1150,14 +909,6 @@ msgstr "100"
 #: ../../portable/frontends/widgets/prefpanel.py:301
 msgid "1000"
 msgstr "1000"
-
-#: ../../portable/frontends/widgets/prefpanel.py:307
-msgid "Default settings for new feeds:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:311
-msgid "(These can be changed using the feed's settings button)"
-msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:315
 msgid "Check for new content:"
@@ -1239,7 +990,6 @@ msgstr "फिल्मो वाली डिरेक्टरी को च�
 msgid "Migrate existing movies?"
 msgstr "इन फिल्मो  को कहीं और भेजें ??"
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
@@ -1318,10 +1068,6 @@ msgstr "हर एक विडियो के बाद रुकें"
 msgid "General"
 msgstr "सामान्य"
 
-#: ../../portable/frontends/widgets/prefpanel.py:621
-msgid "Feeds"
-msgstr ""
-
 #: ../../portable/frontends/widgets/prefpanel.py:622
 #: ../../portable/frontends/widgets/downloadscontroller.py:81
 msgid "Downloads"
@@ -1355,7 +1101,6 @@ msgstr "उपयोक्ता नाम:"
 msgid "Password:"
 msgstr "पासवर्डः"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
 msgstr "नये वेदिओस या फिल्में"
 
@@ -1368,23 +1113,11 @@ msgstr "फिल्में ढूंढे"
 msgid "No Results Found"
 msgstr "कुछ भी नहीं मिला"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
 msgid "Library"
 msgstr "लाइब्रेरी"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr "अकेली चीज़ें"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
-msgid "No Items to Display"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
-msgid "This tab keeps track of downloads that aren't part of a feed."
-msgstr ""
 
 #: ../../portable/frontends/widgets/diagnostics.py:77
 #: ../../portable/frontends/widgets/gtk/trayicon.py:83
@@ -1415,28 +1148,9 @@ msgstr "डाटाबेस फाइल की जगह :"
 msgid "Space free on disk:"
 msgstr "डिस्क पर खाली जगह :"
 
-#: ../../portable/frontends/widgets/diagnostics.py:109
-msgid "Database size:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/diagnostics.py:111
-msgid "Total number of db objects:"
-msgstr ""
-
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
 msgstr "डाउनलोड की गयी"
-
-#: ../../portable/frontends/widgets/feedcontroller.py:137
-msgid "Full Feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedcontroller.py:191
-#, python-format
-msgid "Show %(count)d More Item"
-msgid_plural "Show %(count)d More Items"
-msgstr[0] ""
-msgstr[1] ""
 
 #: ../../portable/frontends/widgets/feedcontroller.py:224
 #: ../../portable/frontends/widgets/feedcontroller.py:251
@@ -1446,55 +1160,13 @@ msgid_plural "%(count)d Downloading"
 msgstr[0] "%(count)d डाउनलोड हो रही हैं."
 msgstr[1] "%(count)d डाउनलोड हो रही हैं."
 
-#: ../../portable/frontends/widgets/feedcontroller.py:235
-#: ../../portable/frontends/widgets/feedcontroller.py:247
-#, python-format
-msgid "%(count)d Item"
-msgid_plural "%(count)d Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/feedcontroller.py:257
-#, python-format
-msgid "%(count)d Item Matches Search"
-msgid_plural "%(count)d Items Match Search"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/feedcontroller.py:262
-msgid "All Items Match Search"
-msgstr ""
-
 #: ../../portable/frontends/widgets/application.py:134
 msgid "Movies directory gone"
 msgstr "मूवी वाली जगह मिल नहीं रही"
 
-#: ../../portable/frontends/widgets/application.py:136
-#, python-format
-msgid ""
-"%(shortappname)s can't find the primary video directory located at:\n"
-"\n"
-"%(moviedirectory)s\n"
-"\n"
-"This may be because it is located on an external drive that is not "
-"connected.\n"
-"\n"
-"If you continue, the primary video directory will be reset to a location on "
-"this drive.  If you had videos downloaded this will cause %(shortappname)s "
-"to lose details about those videos.\n"
-"\n"
-"If you quit, then you can connect the drive or otherwise fix the problem and "
-"relaunch %(shortappname)s."
-msgstr ""
-
 #: ../../portable/frontends/widgets/application.py:304
 msgid "Error Revealing File"
 msgstr "फाइल खोली नहीं जा सकी"
-
-#: ../../portable/frontends/widgets/application.py:305
-#, python-format
-msgid "The file \"%(filename)s\" was deleted from outside Miro."
-msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:312
 msgid "Open Files..."
@@ -1542,6 +1214,426 @@ msgstr "Miro बिलकुल नया है"
 #: ../../portable/frontends/widgets/application.py:378
 msgid "Miro is up to date!"
 msgstr "Miro बिलकुल नया है !"
+
+#: ../../portable/frontends/widgets/application.py:750
+msgid "Are you sure you want to quit?"
+msgstr "क्या आप निकलना चाहते हैं, पक्का?"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:633
+msgid "Settings"
+msgstr "निर्धारण"
+
+#: ../../portable/frontends/widgets/removefeeds.py:77
+msgid "Keep items that have been downloaded in my library."
+msgstr "जो भी चीज़ें डाउनलोड की हैं उन्हें लाईब्ररी में रखें"
+
+#: ../../portable/frontends/widgets/newfeed.py:60
+#: ../../portable/frontends/widgets/newsearchfeed.py:98
+msgid "URL:"
+msgstr "यू आर एल (URL):"
+
+#: ../../portable/frontends/widgets/newfeed.py:71
+#: ../../portable/frontends/widgets/newfolder.py:70
+#: ../../portable/frontends/widgets/newsearchfeed.py:135
+msgid "video"
+msgstr "वीडियो / चलचित्र"
+
+#: ../../portable/frontends/widgets/newfeed.py:72
+#: ../../portable/frontends/widgets/newfolder.py:71
+#: ../../portable/frontends/widgets/newsearchfeed.py:136
+msgid "audio"
+msgstr "ऑडियो"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:74
+msgid "Search for:"
+msgstr "इसके लिए ढूंढें:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:80
+msgid "In this:"
+msgstr "इस में :"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:137
+#: ../../portable/frontends/widgets/firsttimedialog.py:170
+#: ../../portable/dialogs.py:87
+msgid "Yes"
+msgstr "हॉं"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:138
+#: ../../portable/frontends/widgets/firsttimedialog.py:169
+#: ../../portable/dialogs.py:88
+msgid "No"
+msgstr "नहीं"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:213
+#: ../../portable/frontends/widgets/firsttimedialog.py:215
+#: ../../portable/frontends/widgets/firsttimedialog.py:272
+#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
+msgid "Search"
+msgstr "खोज"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:273
+#: ../../portable/dialogs.py:85
+msgid "Cancel"
+msgstr "रद्द करें"
+
+#: ../../portable/frontends/widgets/statictabs.py:110
+msgid "Downloading"
+msgstr "डाउनलोड किया जा रहा है"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:94
+#: ../../portable/frontends/widgets/itemcontextmenu.py:192
+msgid "Play"
+msgstr "बजाएँ"
+
+#: ../../portable/dialogs.py:83
+msgid "Ok"
+msgstr "ठीक"
+
+#: ../../portable/dialogs.py:89
+msgid "Quit"
+msgstr "बाहर जाएँ"
+
+#: ../../portable/dialogs.py:96
+msgid "Remove Entry"
+msgstr "एन्ट्री हटाएँ"
+
+#: ../../portable/dialogs.py:97
+msgid "Delete File"
+msgstr "फ़ाइल मिटाएँ"
+
+#: ../../portable/dialogs.py:98
+msgid "Delete Files"
+msgstr "फ़ाइलें मिटाएँ"
+
+#: ../../portable/dialogs.py:101
+msgid "Create"
+msgstr "बनायें"
+
+#: ../../portable/httpclient.py:163
+msgid "Timeout"
+msgstr "समय ख़त्म"
+
+#: ../../portable/httpclient.py:168
+msgid "Invalid URL"
+msgstr "यूआरएल (URL) अवैध है"
+
+#: ../../portable/httpclient.py:408
+msgid "Connection closed"
+msgstr "कनेक्शन बन्द"
+
+#: ../../portable/httpclient.py:829
+msgid "Unknown"
+msgstr "अग्यात"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:182
+msgid "Error Bombing Item"
+msgstr ""
+
+#: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
+msgid "Update Available"
+msgstr ""
+
+#: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
+#, python-format
+msgid "A new version of %s is available for download."
+msgstr ""
+
+#: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
+msgid "Do you want to download it now?"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:203
+msgid "Pop Out"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:206
+msgid "Pop In"
+msgstr ""
+
+msgid "Miro - Report a Problem"
+msgstr ""
+
+#: ../../portable/searchengines.py:146
+msgid "Search All"
+msgstr ""
+
+#: ../../portable/messagehandler.py:1266
+msgid "Subscribed to new feed:"
+msgstr ""
+
+#: ../../portable/messagehandler.py:1269
+msgid "Subscribed to new feeds:"
+msgstr ""
+
+#: ../../portable/displaytext.py:56
+#, python-format
+msgid "%(num).1f day"
+msgid_plural "%(num).1f days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/displaytext.py:59
+#, python-format
+msgid "%(num).1f hr"
+msgid_plural "%(num).1f hrs"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/displaytext.py:62
+#, python-format
+msgid "%(num).1f min"
+msgid_plural "%(num).1f mins"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/displaytext.py:86
+#, python-format
+msgid "%(size)s b"
+msgstr ""
+
+#: ../../portable/menubar.py:184
+msgid "_Open"
+msgstr ""
+
+#: ../../portable/menubar.py:185
+msgid "_Download Item"
+msgstr ""
+
+#: ../../portable/menubar.py:188
+msgid "_Remove Item"
+msgstr ""
+
+#: ../../portable/menubar.py:191
+msgid "Save Item _As"
+msgstr ""
+
+#: ../../portable/menubar.py:192
+msgid "Save Items _As"
+msgstr ""
+
+#: ../../portable/menubar.py:195
+msgid "_Options"
+msgstr ""
+
+#: ../../portable/menubar.py:212
+msgid "Add _Feed"
+msgstr ""
+
+#: ../../portable/menubar.py:213
+#: ../../portable/frontends/widgets/application.py:526
+msgid "Add Site"
+msgstr ""
+
+#: ../../portable/menubar.py:214
+msgid "New Searc_h Feed"
+msgstr ""
+
+#: ../../portable/menubar.py:215
+msgid "New _Folder"
+msgstr ""
+
+#: ../../portable/menubar.py:217
+msgid "Re_name"
+msgstr ""
+
+#: ../../portable/menubar.py:218
+msgid "_Remove"
+msgstr ""
+
+#: ../../portable/menubar.py:219
+msgid "_Remove Folder"
+msgstr ""
+
+#: ../../portable/menubar.py:221
+msgid "_Update Feed"
+msgstr ""
+
+#: ../../portable/menubar.py:222
+msgid "_Update Feeds"
+msgstr ""
+
+#: ../../portable/menubar.py:223
+msgid "Update _All Feeds"
+msgstr ""
+
+#: ../../portable/menubar.py:225
+msgid "_Import Feeds (OPML)"
+msgstr ""
+
+#: ../../portable/menubar.py:226
+msgid "E_xport Feeds (OPML)"
+msgstr ""
+
+#: ../../portable/menubar.py:228
+msgid "_Share with a Friend"
+msgstr ""
+
+#: ../../portable/menubar.py:229
+msgid "Copy URL"
+msgstr ""
+
+#: ../../portable/menubar.py:233
+msgid "New _Playlist"
+msgstr ""
+
+#: ../../portable/menubar.py:234
+msgid "New Playlist Fol_der"
+msgstr ""
+
+#: ../../portable/menubar.py:290
+msgid "_Sidebar"
+msgstr ""
+
+#: ../../portable/frontends/widgets/crashdialog.py:59
+msgid ""
+"Include entire program database including all video and feed metadata with "
+"crash report"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:58
+#, python-format
+msgid "%(count)d hour ago"
+msgid_plural "%(count)d hours ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:64
+#, python-format
+msgid "%(count)d day ago"
+msgid_plural "%(count)d days ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:141
+msgid "Keep 0"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:142
+msgid "Keep 20"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:143
+msgid "Keep 50"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:144
+msgid "Keep 100"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:145
+msgid "Keep 1000"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:193
+msgid "Pause Auto-Downloading when this many items are unplayed:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:197
+msgid "1 unplayed item"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:198
+msgid "3 unplayed items"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:199
+msgid "5 unplayed items"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:200
+msgid "10 unplayed items"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:201
+msgid "15 unplayed items"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:241
+msgid "Feed Settings"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:210
+msgid "File name:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:307
+msgid "Default settings for new feeds:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:311
+msgid "(These can be changed using the feed's settings button)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:621
+msgid "Feeds"
+msgstr ""
+
+msgid "No Items to Display"
+msgstr ""
+
+msgid "This tab keeps track of downloads that aren't part of a feed."
+msgstr ""
+
+#: ../../portable/frontends/widgets/diagnostics.py:109
+msgid "Database size:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/diagnostics.py:111
+msgid "Total number of db objects:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedcontroller.py:137
+msgid "Full Feed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedcontroller.py:191
+#, python-format
+msgid "Show %(count)d More Item"
+msgid_plural "Show %(count)d More Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/feedcontroller.py:235
+#: ../../portable/frontends/widgets/feedcontroller.py:247
+#, python-format
+msgid "%(count)d Item"
+msgid_plural "%(count)d Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/feedcontroller.py:257
+#, python-format
+msgid "%(count)d Item Matches Search"
+msgid_plural "%(count)d Items Match Search"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/feedcontroller.py:262
+msgid "All Items Match Search"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:136
+#, python-format
+msgid ""
+"%(shortappname)s can't find the primary video directory located at:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"This may be because it is located on an external drive that is not "
+"connected.\n"
+"\n"
+"If you continue, the primary video directory will be reset to a location on "
+"this drive.  If you had videos downloaded this will cause %(shortappname)s "
+"to lose details about those videos.\n"
+"\n"
+"If you quit, then you can connect the drive or otherwise fix the problem and "
+"relaunch %(shortappname)s."
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:305
+#, python-format
+msgid "The file \"%(filename)s\" was deleted from outside Miro."
+msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:400
 msgid "Remove item"
@@ -1700,10 +1792,6 @@ msgstr ""
 msgid "Are you sure you want to remove %(name)s?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:750
-msgid "Are you sure you want to quit?"
-msgstr "क्या आप निकलना चाहते हैं, पक्का?"
-
 #: ../../portable/frontends/widgets/application.py:752
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
@@ -1817,10 +1905,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemlistwidgets.py:627
 msgid "Share feed"
 msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:633
-msgid "Settings"
-msgstr "निर्धारण"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:639
 msgid "Remove feed"
@@ -1955,7 +2039,6 @@ msgstr ""
 msgid "Choose"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -1974,10 +2057,6 @@ msgid_plural "Are you sure you want to remove these feeds:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/removefeeds.py:77
-msgid "Keep items that have been downloaded in my library."
-msgstr "जो भी चीज़ें डाउनलोड की हैं उन्हें लाईब्ररी में रखें"
-
 #: ../../portable/frontends/widgets/removefeeds.py:83
 msgid ""
 "Watched folders will be removed from the sidebar but their contents will "
@@ -1995,26 +2074,9 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/newfeed.py:60
-#: ../../portable/frontends/widgets/newsearchfeed.py:98
-msgid "URL:"
-msgstr "यू आर एल (URL):"
-
 #: ../../portable/frontends/widgets/newfeed.py:69
 msgid "Feed should go in this section:"
 msgstr ""
-
-#: ../../portable/frontends/widgets/newfeed.py:71
-#: ../../portable/frontends/widgets/newfolder.py:70
-#: ../../portable/frontends/widgets/newsearchfeed.py:135
-msgid "video"
-msgstr "वीडियो / चलचित्र"
-
-#: ../../portable/frontends/widgets/newfeed.py:72
-#: ../../portable/frontends/widgets/newfolder.py:71
-#: ../../portable/frontends/widgets/newsearchfeed.py:136
-msgid "audio"
-msgstr "ऑडियो"
 
 #: ../../portable/frontends/widgets/newfeed.py:110
 msgid "Add Feed"
@@ -2119,14 +2181,6 @@ msgstr ""
 msgid "A search feed contains items that match a search term."
 msgstr ""
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:74
-msgid "Search for:"
-msgstr "इसके लिए ढूंढें:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:80
-msgid "In this:"
-msgstr "इस में :"
-
 #: ../../portable/frontends/widgets/newsearchfeed.py:87
 msgid "Feed:"
 msgstr ""
@@ -2161,18 +2215,6 @@ msgstr ""
 msgid "Would you like to run Miro on startup?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:137
-#: ../../portable/frontends/widgets/firsttimedialog.py:170
-#: ../../portable/dialogs.py:87
-msgid "Yes"
-msgstr "हॉं"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:138
-#: ../../portable/frontends/widgets/firsttimedialog.py:169
-#: ../../portable/dialogs.py:88
-msgid "No"
-msgstr "नहीं"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:146
 msgid "Next >"
 msgstr ""
@@ -2206,13 +2248,6 @@ msgstr ""
 msgid "< Previous"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:213
-#: ../../portable/frontends/widgets/firsttimedialog.py:215
-#: ../../portable/frontends/widgets/firsttimedialog.py:272
-#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
-msgid "Search"
-msgstr "खोज"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:215
 #: ../../portable/frontends/widgets/firsttimedialog.py:283
 msgid "Finish"
@@ -2221,11 +2256,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:263
 msgid "Searching for media files"
 msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:273
-#: ../../portable/dialogs.py:85
-msgid "Cancel"
-msgstr "रद्द करें"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:311
 #, python-format
@@ -2244,10 +2274,6 @@ msgstr[1] ""
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
 msgstr ""
-
-#: ../../portable/frontends/widgets/statictabs.py:110
-msgid "Downloading"
-msgstr "डाउनलोड किया जा रहा है"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:90
 msgid "Single and external downloads"
@@ -2281,11 +2307,6 @@ msgstr ""
 msgid "Remove From the Library"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:94
-#: ../../portable/frontends/widgets/itemcontextmenu.py:192
-msgid "Play"
-msgstr "बजाएँ"
-
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just this Item"
 msgstr ""
@@ -2309,7 +2330,6 @@ msgstr ""
 msgid "Mark as Played"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr ""
 
@@ -2329,7 +2349,6 @@ msgstr ""
 msgid "Resume Download"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
 msgstr ""
 
@@ -2390,10 +2409,6 @@ msgstr ""
 msgid "Remove From Playlist"
 msgstr ""
 
-#: ../../portable/dialogs.py:83
-msgid "Ok"
-msgstr "ठीक"
-
 #: ../../portable/dialogs.py:84
 msgid "Close"
 msgstr ""
@@ -2401,10 +2416,6 @@ msgstr ""
 #: ../../portable/dialogs.py:86
 msgid "Done"
 msgstr ""
-
-#: ../../portable/dialogs.py:89
-msgid "Quit"
-msgstr "बाहर जाएँ"
 
 #: ../../portable/dialogs.py:90
 msgid "Continue"
@@ -2426,18 +2437,6 @@ msgstr ""
 msgid "Don't Migrate"
 msgstr ""
 
-#: ../../portable/dialogs.py:96
-msgid "Remove Entry"
-msgstr "एन्ट्री हटाएँ"
-
-#: ../../portable/dialogs.py:97
-msgid "Delete File"
-msgstr "फ़ाइल मिटाएँ"
-
-#: ../../portable/dialogs.py:98
-msgid "Delete Files"
-msgstr "फ़ाइलें मिटाएँ"
-
 #: ../../portable/dialogs.py:99
 msgid "Keep Videos"
 msgstr ""
@@ -2445,10 +2444,6 @@ msgstr ""
 #: ../../portable/dialogs.py:100
 msgid "Delete Videos"
 msgstr ""
-
-#: ../../portable/dialogs.py:101
-msgid "Create"
-msgstr "बनायें"
 
 #: ../../portable/dialogs.py:102
 msgid "Create Feed"
@@ -2695,18 +2690,10 @@ msgstr ""
 msgid "Pipeline request never started"
 msgstr ""
 
-#: ../../portable/httpclient.py:163
-msgid "Timeout"
-msgstr "समय ख़त्म"
-
 #: ../../portable/httpclient.py:164
 #, python-format
 msgid "Connection to %(host)s timed out"
 msgstr ""
-
-#: ../../portable/httpclient.py:168
-msgid "Invalid URL"
-msgstr "यूआरएल (URL) अवैध है"
 
 #: ../../portable/httpclient.py:169
 #, python-format
@@ -2730,14 +2717,6 @@ msgstr ""
 #: ../../portable/httpclient.py:376
 msgid "Unknown Error code"
 msgstr ""
-
-#: ../../portable/httpclient.py:408
-msgid "Connection closed"
-msgstr "कनेक्शन बन्द"
-
-#: ../../portable/httpclient.py:829
-msgid "Unknown"
-msgstr "अग्यात"
 
 #: ../../portable/httpclient.py:830
 msgid "Internal Error: Not ready to send"

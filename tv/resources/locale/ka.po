@@ -15,11 +15,119 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: GEORGIA\n"
 "X-Poedit-Language: Georgian\n"
 "X-Poedit-SourceCharset: utf-8\n"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
+msgid "Bring All to Front"
+msgstr "ყველას წინა პლანზე გადმოტანა"
+
+#: ../../portable/menubar.py:196
+msgid "_Quit"
+msgstr "_გასვლა"
+
+#: ../../portable/menubar.py:265
+msgid "_Fullscreen"
+msgstr "_მთელ ეკრანზე"
+
+#: ../../portable/menubar.py:272 ../../portable/menubar.py:293
+msgid "_Help"
+msgstr "_დახმარება"
+
+#: ../../portable/menubar.py:282
+msgid "_Video"
+msgstr "_ვიდეო"
+
+#: ../../portable/frontends/widgets/prefpanel.py:453
+msgid "Migrate existing movies?"
+msgstr "არსებულ ფილმები შეუერთდეს?"
+
+#: ../../portable/frontends/widgets/prefpanel.py:629
+msgid "Preferences"
+msgstr "პარამეტრები"
+
+#: ../../portable/frontends/widgets/rundialog.py:82
+msgid "Username:"
+msgstr "მომხმარებლის სახელი:"
+
+#: ../../portable/frontends/widgets/rundialog.py:86
+msgid "Password:"
+msgstr "პაროლი:"
+
+msgid "New Videos"
+msgstr "ახალი ვიდეოები"
+
+#: ../../portable/frontends/widgets/itemlistcontroller.py:413
+#: ../../portable/frontends/widgets/statictabs.py:86
+msgid "Video Search"
+msgstr "ვიდეოთა ძიება"
+
+#: ../../portable/frontends/widgets/application.py:750
+msgid "Are you sure you want to quit?"
+msgstr "დარწმუნებული ხართ რომ გსურთ გასვლა?"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:615
+msgid "Auto Download"
+msgstr "ავტო გადმოწერა"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:633
+msgid "Settings"
+msgstr "პარამეტრები"
+
+#: ../../portable/frontends/widgets/displays.py:370
+msgid "Play Externally"
+msgstr "გარე დაკვრა"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:137
+#: ../../portable/frontends/widgets/firsttimedialog.py:170
+#: ../../portable/dialogs.py:87
+msgid "Yes"
+msgstr "კი"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:138
+#: ../../portable/frontends/widgets/firsttimedialog.py:169
+#: ../../portable/dialogs.py:88
+msgid "No"
+msgstr "არა"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:213
+#: ../../portable/frontends/widgets/firsttimedialog.py:215
+#: ../../portable/frontends/widgets/firsttimedialog.py:272
+#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
+msgid "Search"
+msgstr "ძებნა"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:273
+#: ../../portable/dialogs.py:85
+msgid "Cancel"
+msgstr "გაუქმება"
+
+#: ../../portable/dialogs.py:83
+msgid "Ok"
+msgstr "კარგი"
+
+#: ../../portable/dialogs.py:89
+msgid "Quit"
+msgstr "გასვლა"
+
+#: ../../portable/dialogs.py:90
+msgid "Continue"
+msgstr "გაგრძელება"
+
+#: ../../portable/dialogs.py:93
+msgid "Migrate"
+msgstr "მიგრირება"
+
+#: ../../portable/dialogs.py:94
+msgid "Don't Migrate"
+msgstr "არ გააერთიანო"
+
+#: ../../portable/singleclick.py:166
+msgid "Download Error"
+msgstr "ჩამოტვირთვის შეცდომა"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
@@ -169,7 +277,6 @@ msgstr ""
 msgid "Services"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 msgid "Hide Miro"
 msgstr ""
 
@@ -185,7 +292,6 @@ msgstr ""
 msgid "Preferences..."
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
 msgstr ""
 
@@ -241,15 +347,10 @@ msgstr ""
 msgid "Main Window"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
-msgid "Bring All to Front"
-msgstr "ყველას წინა პლანზე გადმოტანა"
-
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
 msgid "Window"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Miro Help"
 msgstr ""
 
@@ -276,7 +377,6 @@ msgstr ""
 msgid "Example Playlist"
 msgstr ""
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr ""
 
@@ -331,23 +431,19 @@ msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr ""
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr ""
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -608,10 +704,6 @@ msgstr ""
 msgid "_Options"
 msgstr ""
 
-#: ../../portable/menubar.py:196
-msgid "_Quit"
-msgstr "_გასვლა"
-
 #: ../../portable/menubar.py:205
 msgid "Cu_t"
 msgstr ""
@@ -749,25 +841,16 @@ msgstr ""
 msgid "Volume _Down"
 msgstr ""
 
-#: ../../portable/menubar.py:265
-msgid "_Fullscreen"
-msgstr "_მთელ ეკრანზე"
-
 #: ../../portable/menubar.py:266
 msgid "_Toggle Detached/Attached"
 msgstr ""
 
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr ""
 
 #: ../../portable/menubar.py:271
 msgid "_Donate"
 msgstr ""
-
-#: ../../portable/menubar.py:272 ../../portable/menubar.py:293
-msgid "_Help"
-msgstr "_დახმარება"
 
 #: ../../portable/menubar.py:274
 #: ../../portable/frontends/widgets/diagnostics.py:119
@@ -785,10 +868,6 @@ msgstr ""
 #: ../../portable/menubar.py:277
 msgid "_Planet Miro"
 msgstr ""
-
-#: ../../portable/menubar.py:282
-msgid "_Video"
-msgstr "_ვიდეო"
 
 #: ../../portable/menubar.py:284
 msgid "_File"
@@ -1073,7 +1152,6 @@ msgstr ""
 msgid "Remove from playlist"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr ""
 
@@ -1215,11 +1293,6 @@ msgstr ""
 msgid "Choose Movies Directory"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:453
-msgid "Migrate existing movies?"
-msgstr "არსებულ ფილმები შეუერთდეს?"
-
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
@@ -1317,50 +1390,23 @@ msgstr ""
 msgid "Playback"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:629
-msgid "Preferences"
-msgstr "პარამეტრები"
-
 #: ../../portable/frontends/widgets/browser.py:94
 msgid "Open in browser"
 msgstr ""
-
-#: ../../portable/frontends/widgets/rundialog.py:82
-msgid "Username:"
-msgstr "მომხმარებლის სახელი:"
-
-#: ../../portable/frontends/widgets/rundialog.py:86
-msgid "Password:"
-msgstr "პაროლი:"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
-msgid "New Videos"
-msgstr "ახალი ვიდეოები"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:413
-#: ../../portable/frontends/widgets/statictabs.py:86
-msgid "Video Search"
-msgstr "ვიდეოთა ძიება"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:427
 msgid "No Results Found"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
 msgid "Library"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr ""
 
@@ -1678,10 +1724,6 @@ msgstr ""
 msgid "Are you sure you want to remove %(name)s?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:750
-msgid "Are you sure you want to quit?"
-msgstr "დარწმუნებული ხართ რომ გსურთ გასვლა?"
-
 #: ../../portable/frontends/widgets/application.py:752
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
@@ -1788,17 +1830,9 @@ msgstr ""
 msgid "%(rate)s downloading"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:615
-msgid "Auto Download"
-msgstr "ავტო გადმოწერა"
-
 #: ../../portable/frontends/widgets/itemlistwidgets.py:627
 msgid "Share feed"
 msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:633
-msgid "Settings"
-msgstr "პარამეტრები"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:639
 msgid "Remove feed"
@@ -1825,10 +1859,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/displays.py:364
 msgid "File type:"
 msgstr ""
-
-#: ../../portable/frontends/widgets/displays.py:370
-msgid "Play Externally"
-msgstr "გარე დაკვრა"
 
 #: ../../portable/frontends/widgets/displays.py:371
 msgid "Skip"
@@ -1933,7 +1963,6 @@ msgstr ""
 msgid "Choose"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -2139,18 +2168,6 @@ msgstr ""
 msgid "Would you like to run Miro on startup?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:137
-#: ../../portable/frontends/widgets/firsttimedialog.py:170
-#: ../../portable/dialogs.py:87
-msgid "Yes"
-msgstr "კი"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:138
-#: ../../portable/frontends/widgets/firsttimedialog.py:169
-#: ../../portable/dialogs.py:88
-msgid "No"
-msgstr "არა"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:146
 msgid "Next >"
 msgstr ""
@@ -2184,13 +2201,6 @@ msgstr ""
 msgid "< Previous"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:213
-#: ../../portable/frontends/widgets/firsttimedialog.py:215
-#: ../../portable/frontends/widgets/firsttimedialog.py:272
-#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
-msgid "Search"
-msgstr "ძებნა"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:215
 #: ../../portable/frontends/widgets/firsttimedialog.py:283
 msgid "Finish"
@@ -2199,11 +2209,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:263
 msgid "Searching for media files"
 msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:273
-#: ../../portable/dialogs.py:85
-msgid "Cancel"
-msgstr "გაუქმება"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:311
 #, python-format
@@ -2287,7 +2292,6 @@ msgstr ""
 msgid "Mark as Played"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr ""
 
@@ -2307,7 +2311,6 @@ msgstr ""
 msgid "Resume Download"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
 msgstr ""
 
@@ -2368,10 +2371,6 @@ msgstr ""
 msgid "Remove From Playlist"
 msgstr ""
 
-#: ../../portable/dialogs.py:83
-msgid "Ok"
-msgstr "კარგი"
-
 #: ../../portable/dialogs.py:84
 msgid "Close"
 msgstr ""
@@ -2380,14 +2379,6 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
-#: ../../portable/dialogs.py:89
-msgid "Quit"
-msgstr "გასვლა"
-
-#: ../../portable/dialogs.py:90
-msgid "Continue"
-msgstr "გაგრძელება"
-
 #: ../../portable/dialogs.py:91
 msgid "Ignore"
 msgstr ""
@@ -2395,14 +2386,6 @@ msgstr ""
 #: ../../portable/dialogs.py:92
 msgid "Submit Crash Report"
 msgstr ""
-
-#: ../../portable/dialogs.py:93
-msgid "Migrate"
-msgstr "მიგრირება"
-
-#: ../../portable/dialogs.py:94
-msgid "Don't Migrate"
-msgstr "არ გააერთიანო"
 
 #: ../../portable/dialogs.py:96
 msgid "Remove Entry"
@@ -2506,10 +2489,6 @@ msgstr ""
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 msgstr ""
-
-#: ../../portable/singleclick.py:166
-msgid "Download Error"
-msgstr "ჩამოტვირთვის შეცდომა"
 
 #: ../../portable/singleclick.py:168
 #, python-format
@@ -2768,392 +2747,3 @@ msgstr ""
 #: ../../portable/feed.py:2421
 msgid "Playing File"
 msgstr ""
-
-#~ msgid "_Save Video..."
-#~ msgstr "_ვიდეოს შენახვა..."
-
-#~ msgid "Save this video"
-#~ msgstr "ამ ვიდეოს შენახვა"
-
-#~ msgid "_Play / Pause"
-#~ msgstr "_დაკვრა / პაუზა"
-
-#~ msgid "_Remove Channel"
-#~ msgstr "_არხის წაშლა"
-
-#~ msgid "_Update Channel"
-#~ msgstr "_არხის განახლება"
-
-#~ msgid "Copy Channel _Link"
-#~ msgstr "არხის ბმულის _ასლი"
-
-#~ msgid "_Open..."
-#~ msgstr "_გახსნა..."
-
-#~ msgid "Open various files"
-#~ msgstr "სხვადასხვა ფაილის გახსნა"
-
-#~ msgid "P_references"
-#~ msgstr "_პარამეტრები"
-
-#~ msgid "Quit the Program"
-#~ msgstr "პროგრამიდან გასვლა"
-
-#~ msgid "_Channel"
-#~ msgstr "_არხი"
-
-#~ msgid "_Add Channel..."
-#~ msgstr "_არხის დამატება..."
-
-#~ msgid "U_pdate All Channels"
-#~ msgstr "ყვე_ლა არხის განახლება"
-
-#~ msgid "Channel requires authentication"
-#~ msgstr "სერვერი ავთენტიფიკაციას მოითხოვს"
-
-#~ msgid "%s requires a username and password for \"%s\"."
-#~ msgstr "%s მომხმარებლის სახელსა და პაროლს მოითხოვს „%s”-სთვის."
-
-#~ msgid "Not a DTV-style channel"
-#~ msgstr "არხი DTV-სტილის არ არის"
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files.\n"
-#~ "- It may take time to list the videos\n"
-#~ "- Descriptions may look funny\n"
-#~ "\n"
-#~ "Please contact the publishers of %s and ask if they have a DTV-style channel."
-#~ msgstr ""
-#~ "მაგრამ ჩვენ მაინც შევეცდებით ფაილების მიღებას.\n"
-#~ "- ვიდეოთა სიის ნახვას შესაძლოა დრო დაჭირდეს\n"
-#~ "- შესაძლებელია აღწერილობები სასაცილოდ გამოიყურებოდეს\n"
-#~ "\n"
-#~ "გთხოვთ დაუკავშირდეთ %s-ის გამომცემელს და კითხოთ, გააჩნიათ თუ არა DTV-სტილის "
-#~ "არხი."
-
-#~ msgid "DTV Version Alert"
-#~ msgstr "DTV ვერსიის გაფრთხილება"
-
-#~ msgid ""
-#~ "A new version of DTV is available.\n"
-#~ "\n"
-#~ "Would you like to download it now?"
-#~ msgstr ""
-#~ "გამოვიდა DTV-ს ახალი ვერსია.\n"
-#~ "\n"
-#~ "გსურთ მისი ჩამოტვირთვა?"
-
-#~ msgid "DTV Version Check"
-#~ msgstr "DTV ვერსიის შემოწმება"
-
-#~ msgid "This version of DTV is up to date."
-#~ msgstr "DTV-ს ეს ვერსია აქტუალურია."
-
-#~ msgid "%s database save failed"
-#~ msgstr "%s მონაცემთა ბაზის შენახვა ვერ განხორციელდა"
-
-#~ msgid ""
-#~ "%s was unable to save its database: %s.\n"
-#~ "Recent changes may be lost."
-#~ msgstr ""
-#~ "%s-მ ვერ მოახერხა შემდეგი მონაცემთა ბაზის შენახვა: %s.\n"
-#~ "ბოლო ცვლილებები შესაძლოა დაიკარგოს."
-
-#~ msgid "Remove Channel"
-#~ msgstr "არხის წაშლა"
-
-#~ msgid ""
-#~ "Are you sure you want to <b>remove</b> the channel\n"
-#~ "   '<b>%s</b>'?\n"
-#~ "<b>This operation cannot be undone.</b>"
-#~ msgstr ""
-#~ "დარწმუნებული ხართ, რომ გსურთ <b>წაშალოთ</b> არხი\n"
-#~ "   „<b>%s</b>”?\n"
-#~ "<b>ამ ოპერაციის დაბრუნება შეუძლებელია.</b>"
-
-#~ msgid "You have %d download%s still in progress."
-#~ msgstr "ამჟამად მიმდინარეობს %d ჩამოტვირთვა%s."
-
-#~ msgid "Unknown Runtime Error"
-#~ msgstr "უცნობი შეცდომა"
-
-#~ msgid "An unknown error has occurred %s."
-#~ msgstr "წარმოიშვა უცნობი შეცდომა %s."
-
-#~ msgid "Pending Auto Download"
-#~ msgstr "რიგშია ავტო-ჩამოტვირთვა"
-
-#~ msgid "Pending Manual Download"
-#~ msgstr "რიგშია ხელით ჩამოტვირთვა"
-
-#~ msgid "Unwatched"
-#~ msgstr "მაყურებლის გარეშე"
-
-#~ msgid "Save"
-#~ msgstr "დამახსოვრება"
-
-#~ msgid "Expires"
-#~ msgstr "ვადა გადის"
-
-#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
-#~ msgstr ""
-#~ "არაფერია საჩვენებელი.<br></br> შეიყვანეთ საძიებელი ფრაზა ზემოთა ველში."
-
-#~ msgid "Searching..."
-#~ msgstr "მიმდინარეობს ძიება..."
-
-#~ msgid "Channel Guide"
-#~ msgstr "არხთა მეგზური"
-
-#~ msgid "My Collection"
-#~ msgstr "ჩემი კოლექცია"
-
-#~ msgid "Democracy - External Playback Template"
-#~ msgstr "Democracy - გარე დაკვრის შაბლონი"
-
-#~ msgid "Continue To Next Video"
-#~ msgstr "შემდეგ ვიდეოზე გადასვლა"
-
-#~ msgid "Recommend"
-#~ msgstr "რეკომენდაცია"
-
-#~ msgid "Back to Channel"
-#~ msgstr "არხთან დაბრუნება"
-
-#~ msgid "Channel Settings"
-#~ msgstr "არხის პარამეტრები"
-
-#~ msgid "Videos expire after:"
-#~ msgstr "ვიდეოს ვადა გადის:"
-
-#~ msgid "Default"
-#~ msgstr "სტანდარტული"
-
-#~ msgid "Auto download should:"
-#~ msgstr "ავტო ჩამოტვირთვა:"
-
-#~ msgid ""
-#~ "If I have ${maxnew} ${maxnew2} videos waiting, don't auto download more."
-#~ msgstr ""
-#~ "თუ უკევ რიგში ${maxnew} ${maxnew2} ვიდეოა, ავტომატურად აღარ ჩამოტვირთო"
-
-#~ msgid "(Keeps channel from hogging disk space)"
-#~ msgstr "(არხებს დისკის ადგილის დაკავების ნება არ მისცე)"
-
-#~ msgid "Channel URL"
-#~ msgstr "არხის URL"
-
-#~ msgid "Videos on this Channel"
-#~ msgstr "ვიდეოები ამ არხზე"
-
-#~ msgid "Watched"
-#~ msgstr "მაყურებლით"
-
-#~ msgid "Saved"
-#~ msgstr "შენახულია"
-
-#~ msgid "Feed Title"
-#~ msgstr "არხის სათაური"
-
-#~ msgid ""
-#~ "This file type (${format}) can't be played in the main Democracy window."
-#~ msgstr ""
-#~ "ფაილის ეს ტიპი (${format}) Democracy-ს მთავარ ფანჯარაში ვერ დაიკვრება."
-
-#~ msgid "Skip Video ${countdown}"
-#~ msgstr "ვიდეოს გამოტოვება ${countdown}"
-
-#~ msgid "Simple translation"
-#~ msgstr "მარტივი თარგმანი"
-
-#~ msgid "truck stop in a ${can}"
-#~ msgstr "სასადილო შეგხვდებათ ${can}-ში"
-
-#~ msgid ""
-#~ "This is a ${car} and this is a ${truck} <span> This text is <b>raw</b> "
-#~ "text</span>"
-#~ msgstr ""
-#~ "ეს გახლავთ ${car}, ხოლო ეს კი - ${truck} <span> ამ ტექსტს <b>ფორმატირება</b> "
-#~ "არ გააჩნია</span>"
-
-#~ msgid "Active Downloads"
-#~ msgstr "აქტიური ჩამოტვირთვები"
-
-#~ msgid "Expiring"
-#~ msgstr "ვადა გადის"
-
-#~ msgid "Democracy Internet TV: How to Get Started"
-#~ msgstr "Democracy ინტერნეტ-ტელევიზია: როგორ გამოვიყენოთ"
-
-#~ msgid "GO BIG:"
-#~ msgstr "დიიდი:"
-
-#~ msgid "This is your fullscreen button. Click it and lean back."
-#~ msgstr "ეს გახლავთ მთელ ეკრანზე ხილვის ღილაკი. დააჭირეთ და ისიამოვნეთ."
-
-#~ msgid "NEW STUFF:"
-#~ msgstr "ახალი მასალა:"
-
-#~ msgid ""
-#~ "Blue circles mean the channel has new videos available, green circles mean "
-#~ "you have downloaded videos ready to watch."
-#~ msgstr ""
-#~ "ლურჯი წრეები ნიშნავს, რომ არხ ახალი ვიდეოები აქვს, ხოლო მწვანე წრეები კი "
-#~ "მიგვანიშნებს, რომ თქვენ კვე ჩამოტვირთეთ ვიდეოეი და საყურებლად მზად არის."
-
-#~ msgid ""
-#~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
-#~ "onclick=\"eventURL('action:doneWithIntro');\">Go to Channel Guide "
-#~ ">></a></strong>"
-#~ msgstr ""
-#~ "<strong i18n:translate=\"\">შესავალის გამოტოვება: <a style=\"color: #090;\" "
-#~ "href=\"#\" onclick=\"eventURL('action:doneWithIntro');\">არხთა მეგზურის "
-#~ "მონახულება >></a></strong>"
-
-#~ msgid ""
-#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
-#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
-#~ "channels in the guide are free.</strong>"
-#~ msgstr ""
-#~ "<strong>არხების დამატება:</strong> არხთა მეგზური თქვენი საწყისი წერტილია "
-#~ "ინტერნეტ-ტელევიზიათა სამყაროში. დააწკაპუნეთ „დამატება”-ზე არხის გამოსაწერად--"
-#~ " <strong>მეგზურში არსებული არხები უფასოა.</strong>"
-
-#~ msgid ""
-#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
-#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
-#~ "waiting for videos: start some downloads and check back later."
-#~ msgstr ""
-#~ "<strong>ნუ დაელოდებით:</strong> Democracy ძირეულად განსხვავდება ვებგვერდებზე "
-#~ "განთავსებული ვიდეოების ყურებისაგან-- გამომცემლებს შეუძლიათ დიდი, "
-#~ "მაღალხარისხიანი ვიდეო-ჩანაწერები შემოგთავაზონ. ასე რომ, ნუ დაელოდებით ვიდეოს "
-#~ "უმალ დაკვრას: დაიწყეთ ჩამოტვირთვა და შეამოწმეთ მოგვიანებით."
-
-#~ msgid ""
-#~ "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
-#~ "new videos and downloads in the background. Leaving it running means you'll "
-#~ "have new videos when you're ready to watch."
-#~ msgstr ""
-#~ "<strong>დატოვეთ ჩართული:</strong> Democracy Player დროდადრო ამოწმებს არხებს "
-#~ "ახალ ვიდეოებზე და მათ უკანა ფონზე ჩამოტვირთავს. თუ პროგრამას ჩართულს "
-#~ "დატოვებთ, ყურების სუვილისას ვიდეოები ჩამოტვირთული დაგხვდებათ."
-
-#~ msgid ""
-#~ "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
-#~ "features an 'expiration' system that helps clean out older videos to make "
-#~ "room for new videos. You can always keep a video permanently by clicking "
-#~ "'save' and you can set a channel's settings to save videos automatically."
-#~ msgstr ""
-#~ "<strong>დისკის თავისუფალ ადგილზე ნუ იდარდებთ:</strong> როგორც „TiVo” "
-#~ "მოწყობილობა, Democracy Player ვადის გასვლის ფუნციით არის აღჭურვილი, რაც "
-#~ "საშუალებას იძლევა ავტომატურად წაიშალოს ვადაგასული ვიდეო, რათა ადგილი ახალი "
-#~ "ვიდეოსათვის გათავისუფლდეს. ვიდეოს სამუდამოდ შენახვა „შენახვა”-ზე "
-#~ "დაწკაპუნებით შეგიძლიათ. ასევე შეგიძლიათ დააყენოთ არხის პარამეტრებში, რომ "
-#~ "ავტომატურად შენახულ იქნას ვიდეოები."
-
-#~ msgid ""
-#~ "%s was unable to save its database: %s.\n"
-#~ "Recent changes may be lost.\n"
-#~ "Quit Anyway?"
-#~ msgstr ""
-#~ "%s-, შემდეგი მონაცემთა ბაზა ვერ შეინახა: %s.\n"
-#~ "ბოლო ცვლილებები შესაძლოა დაიკარგოს.\n"
-#~ "მაინც გსურთ გასვლა?"
-
-#~ msgid ""
-#~ "1 day\n"
-#~ "3 days\n"
-#~ "6 days\n"
-#~ "10 days\n"
-#~ "1 month\n"
-#~ "Never"
-#~ msgstr ""
-#~ "1 დღეში\n"
-#~ "3 დღეში\n"
-#~ "6 დღეში\n"
-#~ "10 დღეში\n"
-#~ "1 დღეში\n"
-#~ "არასოდეს"
-
-#~ msgid "<b>Channels</b>"
-#~ msgstr "<b>არხები</b>"
-
-#~ msgid "<b>Disk Space</b>"
-#~ msgstr "<b>ადგილი დისკზე</b>"
-
-#~ msgid "<b>Downloads</b>"
-#~ msgstr "<b>ჩამოტვირთვები</b>"
-
-#~ msgid "<b>Movies Directory</b>"
-#~ msgstr "<b>ფილმების დირექტორია</b>"
-
-#~ msgid "Add Channel"
-#~ msgstr "არხის დამატება"
-
-#~ msgid "By default, videos expire after"
-#~ msgstr "სტანდარტულად, ვიდეოებს ვადა გადის"
-
-#~ msgid "Check Channels for new content"
-#~ msgstr "არხების ახალ მასალაზე შემოწმება"
-
-#~ msgid "Democracy - Add Channel"
-#~ msgstr "Democracy - არხის დამატება"
-
-#~ msgid "Democracy Player"
-#~ msgstr "Democracy Player"
-
-#~ msgid "Don't start a download if it leaves less than"
-#~ msgstr "აღარ დაიწყო ჩამოტვირთვა, თუ დისკზე დარჩება"
-
-#~ msgid "Enter the URL of the channel to add"
-#~ msgstr "შემოიყვანეთ დასამატებელი არხის URL"
-
-#~ msgid ""
-#~ "Every 30 minutes\n"
-#~ "Every hour\n"
-#~ "Manually"
-#~ msgstr ""
-#~ "ყოველ 30 წუთში\n"
-#~ "ყოველ საათში\n"
-#~ "ხელით"
-
-#~ msgid "GB free"
-#~ msgstr "გბაიტი თავისუფალია"
-
-#~ msgid "KB/s when my computer is active"
-#~ msgstr "კბაიტი/წმ როდესაც კომპიუტერი აქტიურია"
-
-#~ msgid "Select Movies Directory"
-#~ msgstr "აირჩიეთ ფილმების დირექტორია"
-
-#~ msgid "Store downloaded movies in"
-#~ msgstr "ჩამოტვირთული ფილმების მდებარეობა"
-
-#~ msgid "To avoid slowdowns, limit upstream to"
-#~ msgstr "შეფერხებების ასაცილებლად ატვირთვა შეზღუდე"
-
-#~ msgid "Volume:"
-#~ msgstr "ხმის სიმაღლე:"
-
-#~ msgid ""
-#~ "You've selected a new folder to download movies to.  Should Democracy "
-#~ "migrate your existing downloads there?  (Currently dowloading movies will "
-#~ "not be moved until they finish.)"
-#~ msgstr ""
-#~ "თქვენ ფილმების ჩამოსატვირთად ახალი ფოლდერი მიუთითეთ.  გსურთ Democracy-მ "
-#~ "თქვენი არსებული ჩამოტვირთვებიც იქ გადაიტანოს?  (ჩამოტვირთვის პროცესში მყოფი "
-#~ "ფილმები დასრულებამდე არ გადაადგილდება.)"
-
-#~ msgid ""
-#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
-#~ "style=\"color:red\">raw</b> text</span>"
-#~ msgstr ""
-#~ "ეს არის ${car}, ხოლო ეს არის ${truck} <span>ეს ტექსტი <b "
-#~ "style=\"color:red\">დაუმუშავებელი</b> ტექსტია</span>"
-
-#~ msgid " "
-#~ msgstr " "
-
-#~ msgid "You have %d download still in progress."
-#~ msgid_plural "You have %d downloads still in progress."
-#~ msgstr[0] "ამჟამად მიმდინარეობს %d ჩამოტვირთვა"

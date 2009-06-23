@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:37+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: French\n"
 
@@ -182,7 +182,6 @@ msgstr "Affichage en une seule fenêtre"
 msgid "Services"
 msgstr "Services"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 msgid "Hide Miro"
 msgstr "Masquer Miro"
 
@@ -198,7 +197,6 @@ msgstr "Tout afficher"
 msgid "Preferences..."
 msgstr "Préférences..."
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
 msgstr "Quitter Miro"
 
@@ -262,7 +260,6 @@ msgstr "Tout ramener au premier plan"
 msgid "Window"
 msgstr "Fenêtre"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Miro Help"
 msgstr "Aide de Miro"
 
@@ -290,7 +287,6 @@ msgstr ""
 msgid "Example Playlist"
 msgstr "Exemple de liste de lecture"
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr "Miro - Signaler un problème"
 
@@ -346,12 +342,10 @@ msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] "Skipped %(count)d source already present."
 msgstr[1] "Évitées %(count)d sources déjà présente."
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "sauvegarde de %(appname)s base de données avec succès"
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -359,12 +353,10 @@ msgstr ""
 "La base de données à été sauvegardée avec succès. Il est maintenant possible "
 "de quitter sans perdre aucune donnée."
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "%(appname)s base de données pas sauvé"
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -784,7 +776,6 @@ msgstr "_Plein écran"
 msgid "_Toggle Detached/Attached"
 msgstr "Attacher/détacher"
 
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr "_À propos de Miro"
 
@@ -1106,7 +1097,6 @@ msgstr "En pause"
 msgid "Remove from playlist"
 msgstr "enlever de la playlist"
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr "Lancer automatiquement Miro lorsque je me connecte."
 
@@ -1254,7 +1244,6 @@ msgstr "Choisir répertoire des films"
 msgid "Migrate existing movies?"
 msgstr "Migrer les films existants?"
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
@@ -1374,7 +1363,6 @@ msgstr "Nom d'utilisateur:"
 msgid "Password:"
 msgstr "Mot de passe:"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
 msgstr "Nouvelles vidéos"
 
@@ -1387,21 +1375,15 @@ msgstr "Recherche vidéo"
 msgid "No Results Found"
 msgstr "Aucun résultat trouvé"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
 msgid "Library"
 msgstr "Bibliothèque"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr "Éléments simples"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr "Aucun élément à afficher"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr ""
 "Cet onglet garde une trace des téléchargements qui ne font pas partie d'un "
@@ -2010,7 +1992,6 @@ msgstr "Tous les fichiers"
 msgid "Choose"
 msgstr "Choisir"
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -2392,7 +2373,6 @@ msgstr "Marquer comme non lu"
 msgid "Mark as Played"
 msgstr "Marquer comme lu"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr "Commencer le partage"
 
@@ -2412,7 +2392,6 @@ msgstr "Suspendre le téléchargement"
 msgid "Resume Download"
 msgstr "Reprendre le téléchargement"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
 msgstr "Page Web"
 
@@ -2896,204 +2875,3 @@ msgstr "Ficher Locaux"
 #: ../../portable/feed.py:2421
 msgid "Playing File"
 msgstr "Lecture en cours"
-
-#~ msgid "Save this video"
-#~ msgstr "Sauvegarder cette vidéo"
-
-#~ msgid "_Play / Pause"
-#~ msgstr "_Lecture / Pause"
-
-#~ msgid "_Update Channel"
-#~ msgstr "_Mise à jour canal"
-
-#~ msgid "Open various files"
-#~ msgstr "Ouvrir divers fichiers"
-
-#~ msgid "Quit the Program"
-#~ msgstr "Quitter le programme"
-
-#~ msgid "%s requires a username and password for \"%s\"."
-#~ msgstr "%s requiert un nom d'utilisateur et un mot de passe pour \"%s\"."
-
-#~ msgid "Not a DTV-style channel"
-#~ msgstr "N'est pas un canal compatible DTV"
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files.\n"
-#~ "- It may take time to list the videos\n"
-#~ "- Descriptions may look funny\n"
-#~ "\n"
-#~ "Please contact the publishers of %s and ask if they have a DTV-style channel."
-#~ msgstr ""
-#~ "Mais nous allons faire de notre mieux pour récupérer les fichiers.\n"
-#~ "- Le listage des vidéos peut prendre quelque temps\n"
-#~ "- Les descriptions peuvent paraitre bizarre\n"
-#~ "\n"
-#~ "Contactez s'il vous plait les publieurs de %s et demandez leur s'ils ont un "
-#~ "canal compatible DTV."
-
-#~ msgid "DTV Version Alert"
-#~ msgstr "Alerte de version DTV"
-
-#~ msgid ""
-#~ "A new version of DTV is available.\n"
-#~ "\n"
-#~ "Would you like to download it now?"
-#~ msgstr ""
-#~ "Une nouvelle version de DTV est disponible.\n"
-#~ "\n"
-#~ "Souhaitez vous la télécharger maintenant?"
-
-#~ msgid "DTV Version Check"
-#~ msgstr "Test de version DTV"
-
-#~ msgid "This version of DTV is up to date."
-#~ msgstr "Cette version de DTV est à jour."
-
-#~ msgid "%s database save failed"
-#~ msgstr "échec de la sauvegade de la base de donnée %s"
-
-#~ msgid ""
-#~ "%s was unable to save its database: %s.\n"
-#~ "Recent changes may be lost."
-#~ msgstr ""
-#~ "%s n'est pas parvenu à sauvegarder sa base de données : %s.\n"
-#~ "Les changements récents on pu être perdus."
-
-#~ msgid "Remove Channel"
-#~ msgstr "Supprimer le canal"
-
-#~ msgid ""
-#~ "Are you sure you want to <b>remove</b> the channel\n"
-#~ "   '<b>%s</b>'?\n"
-#~ "<b>This operation cannot be undone.</b>"
-#~ msgstr ""
-#~ "Etes vous sûr de vouloir <b>supprimer</b> le canal\n"
-#~ "   '<b>%s</b>'?\n"
-#~ "<b>Cette opération est irréversible.</b>"
-
-#~ msgid "You have %d download%s still in progress."
-#~ msgstr "Vous avez %d téléchargement%s encore en cours."
-
-#~ msgid "An unknown error has occurred %s."
-#~ msgstr "Une erreur inconnue a eu lieu %s."
-
-#~ msgid "Pending Auto Download"
-#~ msgstr "Téléchargement automatique en cours"
-
-#~ msgid "Pending Manual Download"
-#~ msgstr "Téléchargement manuel en cours"
-
-#~ msgid "Unwatched"
-#~ msgstr "Non visionné"
-
-#~ msgid "Save"
-#~ msgstr "Sauvegarder"
-
-#~ msgid "Expires"
-#~ msgstr "Expire"
-
-#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
-#~ msgstr ""
-#~ "Rien à afficher.<br></br> Saisissez une requête dans le champ de recherche "
-#~ "ci-dessus."
-
-#~ msgid "Searching..."
-#~ msgstr "Recherche en cours..."
-
-#~ msgid "My Collection"
-#~ msgstr "Ma collection"
-
-#~ msgid "Recommend"
-#~ msgstr "Recommander"
-
-#~ msgid "Videos on this Channel"
-#~ msgstr "Vidéos sur ce canal"
-
-#~ msgid "Feed Title"
-#~ msgstr "Titre du fil"
-
-#~ msgid ""
-#~ "This file type (${format}) can't be played in the main Democracy window."
-#~ msgstr ""
-#~ "Ce type de fichier (${format}) ne peut être joué dans la fenêtre principale "
-#~ "de Democracy."
-
-#~ msgid "Skip Video ${countdown}"
-#~ msgstr "Sauter la vidéo ${countdown}"
-
-#~ msgid "Simple translation"
-#~ msgstr "Traduction simple"
-
-#~ msgid ""
-#~ "This is a ${car} and this is a ${truck} <span> This text is <b>raw</b> "
-#~ "text</span>"
-#~ msgstr ""
-#~ "C'est une ${car} et c'est un ${truck} <span> Ce texte est du texte "
-#~ "<b>brut</b></span>"
-
-#~ msgid "Active Downloads"
-#~ msgstr "Téléchargements actifs"
-
-#~ msgid "NEW STUFF:"
-#~ msgstr "NOUVEAUX:"
-
-#~ msgid ""
-#~ "%s was unable to save its database: %s.\n"
-#~ "Recent changes may be lost.\n"
-#~ "Quit Anyway?"
-#~ msgstr ""
-#~ "%s n'est pas parvenu à sauvegarder sa base de données: %s.\n"
-#~ "Les changements récents sont peut-être perdus.\n"
-#~ "Quitter malgré tout?"
-
-#~ msgid ""
-#~ "1 day\n"
-#~ "3 days\n"
-#~ "6 days\n"
-#~ "10 days\n"
-#~ "1 month\n"
-#~ "Never"
-#~ msgstr ""
-#~ "1 jour\n"
-#~ "3 jours\n"
-#~ "6 jours\n"
-#~ "10 jours\n"
-#~ "1 mois\n"
-#~ "Jamais"
-
-#~ msgid "<b>Disk Space</b>"
-#~ msgstr "<b>Espace disque</b>"
-
-#~ msgid "<b>Downloads</b>"
-#~ msgstr "<b>Téléchargements</b>"
-
-#~ msgid "<b>Movies Directory</b>"
-#~ msgstr "<b>Répertoire des films</b>"
-
-#~ msgid "By default, videos expire after"
-#~ msgstr "Par défaut, les vidéos expirent après"
-
-#~ msgid "Democracy Player"
-#~ msgstr "Lecteur Democracy"
-
-#~ msgid ""
-#~ "Every 30 minutes\n"
-#~ "Every hour\n"
-#~ "Manually"
-#~ msgstr ""
-#~ "Toutes les 30 minutes\n"
-#~ "Toutes les heures\n"
-#~ "Manuellement"
-
-#~ msgid "GB free"
-#~ msgstr "Go libre"
-
-#~ msgid "Select Movies Directory"
-#~ msgstr "Sélectionner le répertoire des films"
-
-#~ msgid "To avoid slowdowns, limit upstream to"
-#~ msgstr "Pour éviter les ralentissements, limiter l'upload à"
-
-#~ msgid "Volume:"
-#~ msgstr "Volume :"

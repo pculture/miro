@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:37+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -168,19 +168,10 @@ msgstr "Sil"
 msgid "Add to Library"
 msgstr "Kütüphaneye ekle"
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:203
-msgid "Pop Out"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:206
-msgid "Pop In"
-msgstr ""
-
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
 msgid "Services"
 msgstr "Hizmetler"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 msgid "Hide Miro"
 msgstr "Miro'yu gizle"
 
@@ -196,7 +187,6 @@ msgstr "Hepsini Göster"
 msgid "Preferences..."
 msgstr "Tercihler..."
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
 msgstr "Miro'yu kapat"
 
@@ -260,7 +250,6 @@ msgstr "Hepsini Öne Getir"
 msgid "Window"
 msgstr "Pencere"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Miro Help"
 msgstr "Miro Yardımı"
 
@@ -277,17 +266,10 @@ msgstr "'%s' adlı videonun indirilmesi tamamlandı."
 msgid "Custom Channels"
 msgstr "Kişisel Kanallar"
 
-#: ../../portable/theme.py:138
-#, python-format
-msgid ""
-"You are running a version of %(appname)s with a custom set of channels."
-msgstr ""
-
 #: ../../portable/theme.py:171
 msgid "Example Playlist"
 msgstr "Örnek Çalma Listesi"
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr "Miro - Hata Bildir"
 
@@ -295,25 +277,10 @@ msgstr "Miro - Hata Bildir"
 msgid "Search All"
 msgstr "Tümünü Ara"
 
-#: ../../portable/util.py:279 ../../portable/util.py:281
-#, python-format
-msgid "%(size)sGB"
-msgstr ""
-
-#: ../../portable/util.py:285 ../../portable/util.py:287
-#, python-format
-msgid "%(size)sMB"
-msgstr ""
-
 #: ../../portable/util.py:291 ../../portable/util.py:293
 #, python-format
 msgid "%(size)sKB"
 msgstr "%(size)sKB"
-
-#: ../../portable/util.py:297 ../../portable/util.py:299
-#, python-format
-msgid "%(size)sB"
-msgstr ""
 
 #: ../../portable/opml.py:185
 msgid "OPML Import failed"
@@ -340,12 +307,10 @@ msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] "Hali hazırda mevcut olan %(count)d besleme geçildi."
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "%(appname)s veritabanı kaydı yapıldı"
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -353,19 +318,9 @@ msgstr ""
 "Veritabanı kaydı başarılı oldu. Güvenli bir şekilde veri kaybetmeden "
 "kaydedip çıkabilirsiniz."
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "%(appname)s veritabanı kaydı yapılamadı"
-
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
-#, python-format
-msgid ""
-"%(appname)s was unable to save its database: Disk Full.\n"
-"We suggest deleting files from the full disk or simply deleting some movies "
-"from your collection.\n"
-"Recent changes may be lost."
-msgstr ""
 
 #: ../../portable/messagehandler.py:1266
 msgid "Subscribed to new feed:"
@@ -375,13 +330,1217 @@ msgstr "Yeni beslemeye abone olundu:"
 msgid "Subscribed to new feeds:"
 msgstr "Yeni beslemelere abone olundu:"
 
-#: ../../portable/messages.py:965 ../../portable/item.py:618
-msgid "queued for download"
-msgstr ""
-
 #: ../../portable/startup.py:91
 msgid "Unknown Error"
 msgstr "Bilinmeyen Hata"
+
+#: ../../portable/startup.py:173
+msgid "Database too new"
+msgstr "Veritabanı çok yeni"
+
+#: ../../portable/downloader.py:233
+msgid "activity"
+msgstr "hareketler"
+
+#: ../../portable/downloader.py:268 ../../portable/httpclient.py:145
+#: ../../portable/httpclient.py:174
+msgid "File not found"
+msgstr "Dosya bulunamadı"
+
+#: ../../portable/downloader.py:269
+msgid "Flash URL Scraping Error"
+msgstr "Flash Adresi Kazıma Hatası"
+
+#: ../../portable/downloader.py:447
+msgid "starting up"
+msgstr "başlatılıyor"
+
+#: ../../portable/dl_daemon/download.py:507
+#: ../../portable/frontends/widgets/style.py:228
+msgid "Error"
+msgstr "Hata"
+
+#: ../../portable/dl_daemon/download.py:621
+#: ../../portable/dl_daemon/download.py:838
+msgid "Not enough disk space"
+msgstr "Yeterli disk alanı yok"
+
+#: ../../portable/dl_daemon/download.py:852
+msgid "BitTorrent failure"
+msgstr "BitTorrent hatası"
+
+#: ../../portable/dl_daemon/download.py:853
+msgid "BitTorrent failed to startup"
+msgstr "BitTorrent başlarken hata verdi"
+
+#: ../../portable/dl_daemon/download.py:1041
+msgid "Corrupt Torrent"
+msgstr "Bozuk Torrent"
+
+#: ../../portable/dl_daemon/download.py:1067
+msgid "Torrent file deleted"
+msgstr "Torrent dosyası silindi"
+
+#: ../../portable/dl_daemon/download.py:1068
+msgid "The torrent file for this item was deleted outside of Miro."
+msgstr "Bu yayının torrent dosyası Miro dışında silinmiş"
+
+#: ../../portable/menubar.py:184
+msgid "_Open"
+msgstr "_Aç"
+
+#: ../../portable/menubar.py:186
+msgid "Check _Version"
+msgstr "Sürüm _Kontrol Et"
+
+#: ../../portable/menubar.py:195
+msgid "_Options"
+msgstr "_Seçenekler"
+
+#: ../../portable/menubar.py:196
+msgid "_Quit"
+msgstr "_Çık"
+
+#: ../../portable/menubar.py:205
+msgid "Cu_t"
+msgstr "_Kes"
+
+#: ../../portable/menubar.py:206
+msgid "_Copy"
+msgstr "K_opyala"
+
+#: ../../portable/menubar.py:207
+msgid "_Paste"
+msgstr "Ya_pıştır"
+
+#: ../../portable/menubar.py:208
+msgid "Select _All"
+msgstr "Tü_münü Seç"
+
+#: ../../portable/menubar.py:229
+msgid "Copy URL"
+msgstr "Adresi Kopyala"
+
+#: ../../portable/menubar.py:233
+msgid "New _Playlist"
+msgstr "Yeni _Oynatma Listesi"
+
+#: ../../portable/menubar.py:234
+msgid "New Playlist Fol_der"
+msgstr "Yeni Oynatma Listesi _Dizini"
+
+#: ../../portable/menubar.py:236
+msgid "Re_name Playlist"
+msgstr "_Çalma Listesini Yeniden Adlandır"
+
+#: ../../portable/menubar.py:237
+msgid "_Remove Playlist"
+msgstr "_Çalma Listesini Kaldır"
+
+#: ../../portable/menubar.py:238
+msgid "_Remove Playlists"
+msgstr "Oynatma Listelerini _Sil"
+
+#: ../../portable/menubar.py:239
+msgid "_Remove Playlist Folders"
+msgstr "Oynatma Listesi _Dizinlerini Sil"
+
+#: ../../portable/menubar.py:240
+msgid "_Remove Playlist Folder"
+msgstr "Oynatma Listesi _Dizinini Sil"
+
+#: ../../portable/menubar.py:251 ../../portable/menubar.py:252
+msgid "_Play"
+msgstr "_Oynat"
+
+#: ../../portable/menubar.py:253
+msgid "_Pause"
+msgstr "_Duraklat"
+
+#: ../../portable/menubar.py:254
+msgid "_Stop"
+msgstr "_Durdur"
+
+#: ../../portable/menubar.py:256
+msgid "_Next Video"
+msgstr "_Sonraki Video"
+
+#: ../../portable/menubar.py:257
+msgid "_Previous Video"
+msgstr "_Önceki Video"
+
+#: ../../portable/menubar.py:259
+msgid "Skip _Forward"
+msgstr "_İleri Atla"
+
+#: ../../portable/menubar.py:260
+msgid "Skip _Back"
+msgstr "_Geri Atla"
+
+#: ../../portable/menubar.py:262
+msgid "Volume _Up"
+msgstr "Sesi _Yükselt"
+
+#: ../../portable/menubar.py:263
+msgid "Volume _Down"
+msgstr "Sesi _Düşür"
+
+#: ../../portable/menubar.py:265
+msgid "_Fullscreen"
+msgstr "_Tamekran"
+
+msgid "_About Miro"
+msgstr "_Miro Hakkında"
+
+#: ../../portable/menubar.py:271
+msgid "_Donate"
+msgstr "_Bağış Yap"
+
+#: ../../portable/menubar.py:272 ../../portable/menubar.py:293
+msgid "_Help"
+msgstr "_Yardım"
+
+#: ../../portable/menubar.py:274
+#: ../../portable/frontends/widgets/diagnostics.py:119
+msgid "Diagnostics"
+msgstr "Tanılar"
+
+#: ../../portable/menubar.py:275
+msgid "Report a _Bug"
+msgstr "Hata _Bildir"
+
+#: ../../portable/menubar.py:276
+msgid "_Translate"
+msgstr "_Çevir"
+
+#: ../../portable/menubar.py:277
+msgid "_Planet Miro"
+msgstr "_Miro Gezegen"
+
+#: ../../portable/menubar.py:282
+msgid "_Video"
+msgstr "_Video"
+
+#: ../../portable/menubar.py:284
+msgid "_File"
+msgstr "_Dosya"
+
+#: ../../portable/menubar.py:290
+msgid "_Sidebar"
+msgstr "_Kenar Çubuğu"
+
+#: ../../portable/menubar.py:291
+msgid "_Playlists"
+msgstr "_Çalma Listeleri"
+
+#: ../../portable/menubar.py:292
+msgid "P_layback"
+msgstr "__Gerisar"
+
+#: ../../portable/frontends/widgets/crashdialog.py:46
+#: ../../portable/httpclient.py:158
+msgid "Internal Error"
+msgstr "İç hata"
+
+#: ../../portable/frontends/widgets/crashdialog.py:64
+msgid "Describe what you were doing when you got this error:"
+msgstr "Bu hatayı hangi işlem sonucunda aldınız ?"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:55
+#: ../../portable/frontends/widgets/feedsettingspanel.py:102
+#: ../../portable/frontends/widgets/prefpanel.py:585
+msgid "never"
+msgstr "hiçbir zaman"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:97
+msgid "Watched 1 day ago"
+msgstr "1 gün önce izlendi"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:98
+msgid "Watched 3 days ago"
+msgstr "3 gün önce izlendi"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:99
+msgid "Watched 6 days ago"
+msgstr "6 gün önce izlendi"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:100
+msgid "Watched 10 days ago"
+msgstr "10 gün önce izlendi"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:101
+msgid "Watched 1 month ago"
+msgstr "1 ay önce izlendi"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:169
+msgid "Remove All"
+msgstr "Hepsini Kaldır"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:197
+msgid "1 unplayed item"
+msgstr "1 çalınmayan dosya"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:198
+msgid "3 unplayed items"
+msgstr "3 çalınmayan dosya"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:199
+msgid "5 unplayed items"
+msgstr "5 çalınmayan dosya"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:200
+msgid "10 unplayed items"
+msgstr "10 çalınmayan dosya"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:201
+msgid "15 unplayed items"
+msgstr "15 çalınmayan dosya"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:241
+msgid "Feed Settings"
+msgstr "Besleme Ayarları"
+
+#: ../../portable/frontends/widgets/style.py:210
+msgid "File name:"
+msgstr "Dosya adı:"
+
+#: ../../portable/frontends/widgets/style.py:211
+msgid "Show More"
+msgstr "Daha Fazla"
+
+#: ../../portable/frontends/widgets/style.py:212
+msgid "Show Less"
+msgstr "Daha Az"
+
+#: ../../portable/frontends/widgets/style.py:213
+#: ../../portable/frontends/widgets/gtk/video.py:309
+#: ../../portable/frontends/widgets/itemcontextmenu.py:137
+msgid "Comments"
+msgstr "Açıklamalar"
+
+#: ../../portable/frontends/widgets/style.py:216
+msgid "Web Page"
+msgstr "Web Sayfası"
+
+#: ../../portable/frontends/widgets/style.py:217
+msgid "File URL"
+msgstr "Dosya URL"
+
+#: ../../portable/frontends/widgets/style.py:218
+msgid "License Page"
+msgstr "Lisans Bilgisi"
+
+#: ../../portable/frontends/widgets/style.py:219
+msgid "File Type"
+msgstr "Dosya Türü"
+
+#: ../../portable/frontends/widgets/style.py:220
+msgid "Seeders"
+msgstr "Kaynaklar"
+
+#: ../../portable/frontends/widgets/style.py:221
+msgid "Leechers"
+msgstr "Asalaklar"
+
+#: ../../portable/frontends/widgets/style.py:222
+msgid "Upload Rate"
+msgstr "Yükleme Hızı"
+
+#: ../../portable/frontends/widgets/style.py:224
+msgid "Down Rate"
+msgstr "İndirme Hızı"
+
+#: ../../portable/frontends/widgets/style.py:225
+msgid "Down Total"
+msgstr "Toplam İndirilen"
+
+#: ../../portable/frontends/widgets/style.py:226
+#: ../../portable/frontends/widgets/style.py:1040
+#: ../../portable/frontends/widgets/style.py:1051
+#: ../../portable/frontends/widgets/itemcontextmenu.py:129
+#: ../../portable/frontends/widgets/itemcontextmenu.py:224
+#: ../../portable/dialogs.py:95
+msgid "Download"
+msgstr "İndir"
+
+#: ../../portable/frontends/widgets/style.py:227
+msgid "Download Torrent"
+msgstr "Torrent'i İndir"
+
+#: ../../portable/frontends/widgets/style.py:231
+#: ../../portable/frontends/widgets/style.py:1106
+msgid "Newly Available"
+msgstr "Yeni"
+
+#: ../../portable/frontends/widgets/style.py:233
+#: ../../portable/frontends/widgets/prefpanel.py:485
+#: ../../portable/frontends/widgets/tablist.py:523
+#: ../../portable/frontends/widgets/tablist.py:535
+#: ../../portable/frontends/widgets/tablist.py:541
+#: ../../portable/frontends/widgets/tablist.py:578
+#: ../../portable/frontends/widgets/tablist.py:584
+#: ../../portable/frontends/widgets/tablist.py:589
+#: ../../portable/dialogs.py:108
+msgid "Remove"
+msgstr "Kaldır"
+
+#: ../../portable/frontends/widgets/style.py:544
+#: ../../portable/frontends/widgets/style.py:1099
+msgid "paused"
+msgstr "Duraklatıldı"
+
+msgid "Automatically run Miro when I log in."
+msgstr "Giriş yaptığımda otomatik olarak Mİro' yu çalıştır."
+
+#: ../../portable/frontends/widgets/prefpanel.py:271
+msgid "Warn me if I attempt to quit with downloads in progress."
+msgstr "Dosya indirme sırasında programdan çıkmaya çalışırsam uyar."
+
+#: ../../portable/frontends/widgets/prefpanel.py:281
+msgid "Every day"
+msgstr "Her gün"
+
+#: ../../portable/frontends/widgets/prefpanel.py:282
+msgid "Every hour"
+msgstr "Her saatte"
+
+#: ../../portable/frontends/widgets/prefpanel.py:283
+msgid "Every 30 minutes"
+msgstr "Her 30 dakikada"
+
+#: ../../portable/frontends/widgets/prefpanel.py:284
+msgid "Manually"
+msgstr "Siz istediğinizde"
+
+#: ../../portable/frontends/widgets/prefpanel.py:289
+#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+#: ../../portable/frontends/widgets/statictabs.py:103
+msgid "New"
+msgstr "Yeni"
+
+#: ../../portable/frontends/widgets/prefpanel.py:291
+#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+msgid "Off"
+msgstr "Kapalı"
+
+#: ../../portable/frontends/widgets/prefpanel.py:297
+msgid "0"
+msgstr "0"
+
+#: ../../portable/frontends/widgets/prefpanel.py:298
+msgid "20"
+msgstr "20"
+
+#: ../../portable/frontends/widgets/prefpanel.py:299
+msgid "50"
+msgstr "50"
+
+#: ../../portable/frontends/widgets/prefpanel.py:300
+msgid "100"
+msgstr "100"
+
+#: ../../portable/frontends/widgets/prefpanel.py:301
+msgid "1000"
+msgstr "1000"
+
+#: ../../portable/frontends/widgets/prefpanel.py:307
+msgid "Default settings for new feeds:"
+msgstr "Yeni beslemeler için varsayılan ayarlar:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:315
+msgid "Check for new content:"
+msgstr "Yeni içerik için kontrol et"
+
+#: ../../portable/frontends/widgets/prefpanel.py:320
+msgid "Auto download setting:"
+msgstr "Otomatik indirme ayarları:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:340
+msgid "Maximum number of manual downloads at a time:"
+msgstr "Tek seferde maksimum el ile indirme sayısı"
+
+#: ../../portable/frontends/widgets/prefpanel.py:347
+msgid "Maximum number of auto-downloads at a time:"
+msgstr "Tek seferde maksimum otomatik indirme sayısı"
+
+#: ../../portable/frontends/widgets/prefpanel.py:357
+msgid "Bittorrent:"
+msgstr "Bittorrent"
+
+#: ../../portable/frontends/widgets/prefpanel.py:369
+#: ../../portable/frontends/widgets/prefpanel.py:380
+msgid "KB/s"
+msgstr "KB/s"
+
+#: ../../portable/frontends/widgets/prefpanel.py:383
+msgid "Limit torrent connections to:"
+msgstr "Torrent bağlantılıarının sınırını:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:410
+msgid "Automatically forward ports.  (UPNP)"
+msgstr "Otomatik olarak Portları ilerlet. (UPNP)"
+
+#: ../../portable/frontends/widgets/prefpanel.py:414
+msgid "Ignore unencrypted connections."
+msgstr "Şifrelenmemiş bağlantıları yoksay."
+
+#: ../../portable/frontends/widgets/prefpanel.py:418
+msgid "Stop torrent uploads when this ratio is reached:"
+msgstr "Ratio bu sayıya ulaştığında torrent göndermelerini durdur:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:435
+#: ../../portable/frontends/widgets/firsttimedialog.py:184
+msgid "Change"
+msgstr "Değiştir"
+
+#: ../../portable/frontends/widgets/prefpanel.py:453
+msgid "Migrate existing movies?"
+msgstr "Varolan filmler taşınsın mi?"
+
+#: ../../portable/frontends/widgets/prefpanel.py:482
+#: ../../portable/dialogs.py:104
+msgid "Add"
+msgstr "Ekle"
+
+#: ../../portable/frontends/widgets/prefpanel.py:542
+msgid "Store downloads in this folder:"
+msgstr "İndirilen içeriği şu klasörde sakla"
+
+#: ../../portable/frontends/widgets/prefpanel.py:549
+msgid "Watch for new videos in these folders and include them in library:"
+msgstr "Bu klasörlerde yeni videoları tara ve bunları kitaplığa ekle:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:568
+msgid "Keep at least this much free space on my drive:"
+msgstr "Sabit diskimde en az bu kadar yer kalmasını sağla"
+
+#: ../../portable/frontends/widgets/prefpanel.py:571
+#: ../../portable/frontends/widgets/prefpanel.py:577
+msgid "GB"
+msgstr "GB"
+
+#: ../../portable/frontends/widgets/prefpanel.py:580
+msgid "1 day"
+msgstr "1 gün"
+
+#: ../../portable/frontends/widgets/prefpanel.py:581
+msgid "3 days"
+msgstr "3 gün"
+
+#: ../../portable/frontends/widgets/prefpanel.py:582
+msgid "6 days"
+msgstr "6 gün"
+
+#: ../../portable/frontends/widgets/prefpanel.py:583
+msgid "10 days"
+msgstr "10 gün"
+
+#: ../../portable/frontends/widgets/prefpanel.py:584
+msgid "1 month"
+msgstr "1 ay"
+
+#: ../../portable/frontends/widgets/prefpanel.py:590
+msgid "By default, videos expire after:"
+msgstr "Öntanımlı olarak, videoların süresi dolar:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:603
+msgid "Resume playing a video from the point it was last stopped."
+msgstr "Videoyu son durdurulduğu yerden oynatmaya devam ettir."
+
+#: ../../portable/frontends/widgets/prefpanel.py:608
+msgid "Play videos one after another"
+msgstr "Videoları biribiri ardına oynat"
+
+#: ../../portable/frontends/widgets/prefpanel.py:609
+msgid "Stop after each video"
+msgstr "Her videodan sonra dur"
+
+#: ../../portable/frontends/widgets/prefpanel.py:620
+msgid "General"
+msgstr "Genel"
+
+#: ../../portable/frontends/widgets/prefpanel.py:622
+#: ../../portable/frontends/widgets/downloadscontroller.py:81
+msgid "Downloads"
+msgstr "İndirmeler"
+
+#: ../../portable/frontends/widgets/prefpanel.py:623
+msgid "Folders"
+msgstr "Klasörler"
+
+#: ../../portable/frontends/widgets/prefpanel.py:624
+msgid "Disk space"
+msgstr "Disk alanı"
+
+#: ../../portable/frontends/widgets/prefpanel.py:625
+msgid "Playback"
+msgstr "Oynat"
+
+#: ../../portable/frontends/widgets/prefpanel.py:629
+msgid "Preferences"
+msgstr "Seçenekler"
+
+#: ../../portable/frontends/widgets/browser.py:94
+msgid "Open in browser"
+msgstr "Tarayıcıda aç"
+
+#: ../../portable/frontends/widgets/rundialog.py:82
+msgid "Username:"
+msgstr "Kullanıcı Adı:"
+
+#: ../../portable/frontends/widgets/rundialog.py:86
+msgid "Password:"
+msgstr "Parola:"
+
+msgid "New Videos"
+msgstr "Yeni Videolar"
+
+#: ../../portable/frontends/widgets/itemlistcontroller.py:413
+#: ../../portable/frontends/widgets/statictabs.py:86
+msgid "Video Search"
+msgstr "Video Arama"
+
+#: ../../portable/frontends/widgets/itemlistcontroller.py:427
+msgid "No Results Found"
+msgstr "Sonuç Bulunamadı"
+
+msgid "Library"
+msgstr "Arşiv"
+
+msgid "Single Items"
+msgstr "Tekil Nesneler"
+
+#: ../../portable/frontends/widgets/diagnostics.py:77
+#: ../../portable/frontends/widgets/gtk/trayicon.py:83
+msgid "Show"
+msgstr "Göster"
+
+#: ../../portable/frontends/widgets/diagnostics.py:84
+msgid "Movies location:"
+msgstr "Filmelerin bulunduğu yer:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:88
+msgid "Icon cache location:"
+msgstr "İkon bellek yeri:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:92
+msgid "Log file location:"
+msgstr "Log dosyası yeri:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:96
+msgid "Downloader log file location:"
+msgstr "İndiricinin Log dosyası yeri:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:100
+msgid "Database file location:"
+msgstr "Database dosyası yeri:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:107
+msgid "Space free on disk:"
+msgstr "Diskteki mevcut boş alan:"
+
+#: ../../portable/frontends/widgets/feedcontroller.py:127
+msgid "Downloaded"
+msgstr "İndirildi"
+
+#: ../../portable/frontends/widgets/feedcontroller.py:224
+#: ../../portable/frontends/widgets/feedcontroller.py:251
+#, python-format
+msgid "%(count)d Downloading"
+msgid_plural "%(count)d Downloading"
+msgstr[0] ""
+"%(count)d İndiriliyor\r\n"
+"\r\n"
+"%(count)d adet İndiriliyor"
+
+#: ../../portable/frontends/widgets/application.py:304
+msgid "Error Revealing File"
+msgstr "Tanımlanan dosyada hata"
+
+#: ../../portable/frontends/widgets/application.py:312
+msgid "Open Files..."
+msgstr "Dosyaları Aç..."
+
+#: ../../portable/frontends/widgets/application.py:323
+#: ../../portable/frontends/widgets/application.py:328
+msgid "Open Files - Error"
+msgstr "Dosyaları Aç - Hata"
+
+#: ../../portable/frontends/widgets/application.py:324
+#: ../../portable/frontends/widgets/application.py:588
+#, python-format
+msgid "File %(filename)s does not exist."
+msgstr "%(filename)s adlı dosya bulunmuyor"
+
+#: ../../portable/frontends/widgets/application.py:368
+msgid "New Download - Invalid URL"
+msgstr "Yeni İndirme - Geçersiz URL Adresi"
+
+#: ../../portable/frontends/widgets/application.py:419
+#, python-format
+msgid "Are you sure you want to delete the item?"
+msgid_plural "Are you sure you want to delete all %(count)d items?"
+msgstr[0] ""
+"Bu parçayı silmek istediğinizden emin misiniz?\r\n"
+"\r\n"
+"%(count)d sayıda parçayı silmek istediğinizden emin misiniz?"
+
+#: ../../portable/frontends/widgets/application.py:578
+msgid "Import OPML File"
+msgstr "İçe OPML Dosyası Aktar"
+
+#: ../../portable/frontends/widgets/application.py:580
+msgid "OPML Files"
+msgstr "OPML Dosyaları"
+
+#: ../../portable/frontends/widgets/application.py:587
+msgid "Import OPML File - Error"
+msgstr "OPML Dosyası Aktarımı - Hata"
+
+#: ../../portable/frontends/widgets/application.py:593
+msgid "Export OPML File"
+msgstr "Dışa OPML Dosyası Aktar"
+
+#: ../../portable/frontends/widgets/application.py:616
+msgid "Create Playlist"
+msgstr "Çalma Listesi Oluştur"
+
+#: ../../portable/frontends/widgets/application.py:617
+msgid "Enter a name for the new playlist"
+msgstr "Yeni Çalma Listesi İçin İsim Girin"
+
+#: ../../portable/frontends/widgets/application.py:638
+msgid "Create Playlist Folder"
+msgstr "Çalma Listesi Dizini Oluştur"
+
+#: ../../portable/frontends/widgets/application.py:639
+msgid "Enter a name for the new playlist folder"
+msgstr "Yeni çalma listesi dizini için bir isim girin"
+
+#: ../../portable/frontends/widgets/application.py:670
+#: ../../portable/frontends/widgets/tablist.py:583
+#: ../../portable/playlist.py:179
+msgid "Rename Playlist"
+msgstr "Çalma Listesini Yeniden Adlandır"
+
+#: ../../portable/frontends/widgets/application.py:671
+#, python-format
+msgid "Enter a new name for the playlist %(name)s"
+msgstr "%(name)s Çalma Listesine yeni bir as veriniz"
+
+#: ../../portable/frontends/widgets/application.py:675
+#: ../../portable/frontends/widgets/tablist.py:577
+msgid "Rename Playlist Folder"
+msgstr "Çalma Listesi Dizin Adını Değiştir"
+
+#: ../../portable/frontends/widgets/application.py:676
+#, python-format
+msgid "Enter a new name for the playlist folder %(name)s"
+msgstr "%(name)s Çalma Listesi dosyasına yeni bir ad veriniz"
+
+#: ../../portable/frontends/widgets/application.py:679
+#: ../../portable/frontends/widgets/tablist.py:476
+msgid "Rename Site"
+msgstr "Siteyi Yeniden Adlandır"
+
+#: ../../portable/frontends/widgets/application.py:680
+#, python-format
+msgid "Enter a new name for the site %(name)s"
+msgstr "%(name)s Sitesine yeni bir ad veriniz"
+
+#: ../../portable/frontends/widgets/application.py:750
+msgid "Are you sure you want to quit?"
+msgstr "Çıkmak istediğinizden emin misiniz?"
+
+#: ../../portable/frontends/widgets/application.py:757
+msgid "Warn me when I attempt to quit with downloads in progress"
+msgstr "İndirme sırasında programdan çıkmak istersem beni uyar."
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:177
+msgid "Save Search"
+msgstr "Aramayı Kaydet"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:482
+msgid "Pause All"
+msgstr "Hepsini duraklat"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:489
+msgid "Resume All"
+msgstr "Hepsini devam ettir"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:560
+#, python-format
+msgid "%(amount)s free on disk"
+msgstr "Sabit Diskte %(amount)s yer var"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:579
+#, python-format
+msgid "%(rate)s uploading"
+msgstr "%(rate)s gönderiliyor"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:581
+#, python-format
+msgid "%(rate)s downloading"
+msgstr "%(rate)s indiriliyor"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:615
+msgid "Auto Download"
+msgstr "Otomatik İndirme"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:633
+msgid "Settings"
+msgstr "Ayarlar"
+
+#: ../../portable/frontends/widgets/displays.py:361
+msgid "Filename:"
+msgstr "Dosya Adı:"
+
+#: ../../portable/frontends/widgets/displays.py:364
+msgid "File type:"
+msgstr "Dosya türü:"
+
+#: ../../portable/frontends/widgets/displays.py:370
+msgid "Play Externally"
+msgstr "Dışardan Oynat"
+
+#: ../../portable/frontends/widgets/displays.py:582
+msgid "Delete All"
+msgstr "Tümünü Sil"
+
+#: ../../portable/frontends/widgets/displays.py:586
+msgid "Put Into a New Folder"
+msgstr "Yeni Klasöre Yerleştir"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:81
+msgid "Hide"
+msgstr "Gizle"
+
+#: ../../portable/frontends/widgets/gtk/window.py:470
+msgid "All files"
+msgstr "Tüm Dosyalar"
+
+#, python-format
+msgid ""
+"%(copyright)s.  See LICENSE file for details.\n"
+"Miro and Miro logo are trademarks of the Participatory Culture Foundation."
+msgstr ""
+"%(copyright)s. Ayrıntı için LİSANS dosyasına bakınız.\n"
+"Miro ve Miro logosu Participatory Culture Foundation' un ticari markasıdır."
+
+#: ../../portable/frontends/widgets/newfeed.py:60
+#: ../../portable/frontends/widgets/newsearchfeed.py:98
+msgid "URL:"
+msgstr "Adres:"
+
+#: ../../portable/frontends/widgets/tablist.py:475
+#: ../../portable/frontends/widgets/tablist.py:534
+msgid "Copy URL to clipboard"
+msgstr "Adresi panoya kopyala"
+
+#: ../../portable/frontends/widgets/tablist.py:477
+msgid "Remove Site"
+msgstr "Siteyi Sil"
+
+#: ../../portable/frontends/widgets/tablist.py:605
+msgid "SITES"
+msgstr "SİTELER"
+
+#: ../../portable/frontends/widgets/tablist.py:607
+msgid "FEEDS"
+msgstr "BESLEMELER"
+
+#: ../../portable/frontends/widgets/tablist.py:611
+msgid "PLAYLISTS"
+msgstr "ÇALMA LİSTELERİ"
+
+#: ../../portable/frontends/widgets/linkhandler.py:54
+msgid "Subscribe to Feed"
+msgstr "Beslemeye Üye Ol"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:74
+msgid "Search for:"
+msgstr "Şunun için ara:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:80
+msgid "In this:"
+msgstr "Bunun içinde:"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:137
+#: ../../portable/frontends/widgets/firsttimedialog.py:170
+#: ../../portable/dialogs.py:87
+msgid "Yes"
+msgstr "Evet"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:138
+#: ../../portable/frontends/widgets/firsttimedialog.py:169
+#: ../../portable/dialogs.py:88
+msgid "No"
+msgstr "Hayır"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:177
+msgid "Restrict to all my personal files."
+msgstr "Benim bütün kişisel dosyalarıma kısıtlı ulaşım."
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:213
+#: ../../portable/frontends/widgets/firsttimedialog.py:215
+#: ../../portable/frontends/widgets/firsttimedialog.py:272
+#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
+msgid "Search"
+msgstr "Arama"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:215
+#: ../../portable/frontends/widgets/firsttimedialog.py:283
+msgid "Finish"
+msgstr "Bitti"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:273
+#: ../../portable/dialogs.py:85
+msgid "Cancel"
+msgstr "İptal"
+
+#: ../../portable/frontends/widgets/statictabs.py:44
+msgid "Miro Guide"
+msgstr "Miro Rehberi"
+
+#: ../../portable/frontends/widgets/statictabs.py:110
+msgid "Downloading"
+msgstr "İndiriliyor"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:63
+msgid "Remove From the Library"
+msgstr "Kütüphaneden Çıkart"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:94
+#: ../../portable/frontends/widgets/itemcontextmenu.py:192
+msgid "Play"
+msgstr "Yürüt"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:118
+#: ../../portable/frontends/widgets/itemcontextmenu.py:240
+#: ../../portable/frontends/widgets/itemcontextmenu.py:258
+msgid "Cancel Download"
+msgstr "İndirmeyi İptal Et"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:122
+#: ../../portable/frontends/widgets/itemcontextmenu.py:241
+msgid "Pause Download"
+msgstr "İndirmeyi Duraklat"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:125
+#: ../../portable/frontends/widgets/itemcontextmenu.py:254
+msgid "Resume Download"
+msgstr "İndirmeye Devam Et"
+
+msgid "Web page"
+msgstr "Web Sayfası"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:139
+msgid "License"
+msgstr "Lisans"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:264
+msgid "Restart Upload"
+msgstr "Yüklemeyi Tekrar Başlat"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:278
+msgid "Remove From Playlist"
+msgstr "Çalma Listesinden Kaldır"
+
+#: ../../portable/dialogs.py:83
+msgid "Ok"
+msgstr "Tamam"
+
+#: ../../portable/dialogs.py:89
+msgid "Quit"
+msgstr "Çık"
+
+#: ../../portable/dialogs.py:90
+msgid "Continue"
+msgstr "Devam Et"
+
+#: ../../portable/dialogs.py:91
+msgid "Ignore"
+msgstr "Önemseme"
+
+#: ../../portable/dialogs.py:92
+msgid "Submit Crash Report"
+msgstr "Hata Raporu Bildir"
+
+#: ../../portable/dialogs.py:93
+msgid "Migrate"
+msgstr "Taşı"
+
+#: ../../portable/dialogs.py:94
+msgid "Don't Migrate"
+msgstr "Taşıma"
+
+#: ../../portable/dialogs.py:96
+msgid "Remove Entry"
+msgstr "Girişi Kaldır"
+
+#: ../../portable/dialogs.py:97
+msgid "Delete File"
+msgstr "Dosyayı Sil"
+
+#: ../../portable/dialogs.py:98
+msgid "Delete Files"
+msgstr "Dosyaları Sil"
+
+#: ../../portable/dialogs.py:99
+msgid "Keep Videos"
+msgstr "Videoları Sakla"
+
+#: ../../portable/dialogs.py:100
+msgid "Delete Videos"
+msgstr "Videoları Sil"
+
+#: ../../portable/dialogs.py:101
+msgid "Create"
+msgstr "Oluştur"
+
+#: ../../portable/dialogs.py:105
+msgid "Add Into New Folder"
+msgstr "Yeni Dizine Ekle"
+
+#: ../../portable/dialogs.py:109
+msgid "Not Now"
+msgstr "Şimdi değil"
+
+#: ../../portable/dialogs.py:110
+msgid "Close to Tray"
+msgstr "Görev çubuğu çekmecesine kapat"
+
+#: ../../portable/dialogs.py:111
+msgid "Launch Miro"
+msgstr "Miro'yu Çalıştır"
+
+#: ../../portable/dialogs.py:112
+msgid "Download Anyway"
+msgstr "Her Hâlükârda İndir"
+
+#: ../../portable/dialogs.py:114
+msgid "Don't Install"
+msgstr "Yükleme"
+
+#: ../../portable/playlist.py:180
+#, python-format
+msgid "Enter a new name for the playlist %s"
+msgstr "Çalma Listesi için yeni bir isim girin %s."
+
+#: ../../portable/singleclick.py:100
+msgid "Download already exists"
+msgstr "Mevcut olsa dahi indir"
+
+#: ../../portable/singleclick.py:101
+msgid "That URL is already an external download."
+msgstr "Bu zaten harici indirme adresi."
+
+#: ../../portable/singleclick.py:107
+msgid "Miro will begin downloading it now."
+msgstr "Miro onu indirmeye şimdi başlayacak."
+
+#: ../../portable/singleclick.py:109
+msgid "It is downloading now."
+msgstr "İndiriliyor."
+
+#: ../../portable/singleclick.py:111
+msgid "It has already been downloaded."
+msgstr "O zaten indirilmiş."
+
+#: ../../portable/singleclick.py:138
+msgid "File Download"
+msgstr "Dosya İndirme"
+
+#: ../../portable/singleclick.py:139
+#, python-format
+msgid ""
+"This file at %(url)s does not appear to be audio, video, or an RSS feed."
+msgstr ""
+"%(url)s adresindeki bu dosya ses, video ya da RSS feed dosyalarından biri "
+"değildir."
+
+#: ../../portable/singleclick.py:166
+msgid "Download Error"
+msgstr "İndirme Hatası"
+
+#: ../../portable/singleclick.py:168
+#, python-format
+msgid ""
+"Miro is not able to download a file at this URL:\n"
+"\n"
+"URL: %(url)s"
+msgstr ""
+"Miro Bu URL adresinden dosya indirememekte:\n"
+"\n"
+"URL: %(url)s"
+
+#: ../../portable/singleclick.py:337
+msgid "Subscription error"
+msgstr "Abonelik hatası"
+
+#: ../../portable/singleclick.py:414
+msgid "Invalid Torrent"
+msgstr "Geçersiz Torrent"
+
+#: ../../portable/singleclick.py:416
+#, python-format
+msgid ""
+"The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+"[OK]"
+msgstr "%(filename)s adlı torrent dosyası zarar görmüş, açılamıyor. [Tamam]"
+
+#: ../../portable/item.py:439
+#, python-format
+msgid "%(count)d day"
+msgid_plural "%(count)d days"
+msgstr[0] "%(count)d gün"
+
+#: ../../portable/item.py:444
+#, python-format
+msgid "%(count)d hour"
+msgid_plural "%(count)d hours"
+msgstr[0] "%(count)d saat"
+
+#: ../../portable/item.py:1008
+msgid "starting up..."
+msgstr "başlatılıyor..."
+
+#: ../../portable/httpclient.py:105 ../../portable/httpclient.py:111
+msgid "Can't connect"
+msgstr "Bağlanamadı"
+
+#: ../../portable/httpclient.py:112
+msgid "SSL connection error"
+msgstr "SSL bağlantı hatası"
+
+#: ../../portable/httpclient.py:116
+msgid "HTTP error"
+msgstr "HTTP hatası"
+
+#: ../../portable/httpclient.py:146
+msgid "Got 404 status code"
+msgstr "404 Hata kodu alındı"
+
+#: ../../portable/httpclient.py:153
+msgid "Authorization failed"
+msgstr "İzin alınamadı"
+
+#: ../../portable/httpclient.py:159
+msgid "Pipeline request never started"
+msgstr "Ardışık düzen isteği hiç başlatılmadı"
+
+#: ../../portable/httpclient.py:163
+msgid "Timeout"
+msgstr "Zaman Aşımı"
+
+#: ../../portable/httpclient.py:168
+msgid "Invalid URL"
+msgstr "Geçersiz Adres"
+
+#: ../../portable/httpclient.py:179
+msgid "Read error"
+msgstr "Okuma hatası"
+
+#: ../../portable/httpclient.py:376
+msgid "Unknown Error code"
+msgstr "Bilinmeyen Hata Kodu"
+
+#: ../../portable/httpclient.py:408
+msgid "Connection closed"
+msgstr "Bağlantı kapatıldı"
+
+#: ../../portable/httpclient.py:829
+msgid "Unknown"
+msgstr "Bilinmeyen"
+
+#: ../../portable/httpclient.py:830
+msgid "Internal Error: Not ready to send"
+msgstr "İç Hata: Göndermeye hazır değil"
+
+#: ../../portable/feed.py:925
+msgid "Error loading feed"
+msgstr "Beslemeyi yüklemede hata"
+
+#: ../../portable/feed.py:930
+msgid "Would you like to keep the feed?"
+msgstr "Beslemeyi saklamak ister misiniz?"
+
+#: ../../portable/feed.py:1055
+msgid "Bad content-type"
+msgstr "Geçersiz içerik-tür"
+
+#: ../../portable/feed.py:1071
+#, python-format
+msgid ""
+"This channel is not compatible with %(appname)s but we'll try our best to "
+"grab the files.  It may take extra time to list the videos, and descriptions "
+"may look funny.\n"
+"\n"
+"Please contact the publishers of %(url)s and ask if they can supply a feed "
+"in a format that will work with %(appname)s.\n"
+"\n"
+"Do you want to try to load this channel anyway?"
+msgstr ""
+"Bu kanal %(appname)s ile uyumlu değil. Dosyaları yakalamak için elimizden "
+"gelenin en iyisini yapmaya çalışacağız. Videoları listelemek biraz zaman "
+"alabilir ve gülünç açıklamalar görünebilir.\n"
+"Lütfen %(url)s sitesinin yayıncısı ile irtibat kurun ve %(appname)s ile "
+"uyumlu formatta feed desteğini olup olmayacağını sorun.\n"
+"Her şeye rağmen kanalı yüklemek istiyor musunuz?"
+
+#: ../../portable/feed.py:1644
+#, python-format
+msgid "Search All: %(text)s"
+msgstr "Tümünü Ara: %(text)s"
+
+#: ../../portable/feed.py:2407
+msgid "Local Files"
+msgstr "Yerel Dosyalar"
+
+#: ../../portable/feed.py:2421
+msgid "Playing File"
+msgstr "Dosya çalınıyor"
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:203
+msgid "Pop Out"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:206
+msgid "Pop In"
+msgstr ""
+
+#: ../../portable/theme.py:138
+#, python-format
+msgid ""
+"You are running a version of %(appname)s with a custom set of channels."
+msgstr ""
+
+#: ../../portable/util.py:279 ../../portable/util.py:281
+#, python-format
+msgid "%(size)sGB"
+msgstr ""
+
+#: ../../portable/util.py:285 ../../portable/util.py:287
+#, python-format
+msgid "%(size)sMB"
+msgstr ""
+
+#: ../../portable/util.py:297 ../../portable/util.py:299
+#, python-format
+msgid "%(size)sB"
+msgstr ""
+
+#, python-format
+msgid ""
+"%(appname)s was unable to save its database: Disk Full.\n"
+"We suggest deleting files from the full disk or simply deleting some movies "
+"from your collection.\n"
+"Recent changes may be lost."
+msgstr ""
+
+#: ../../portable/messages.py:965 ../../portable/item.py:618
+msgid "queued for download"
+msgstr ""
 
 #: ../../portable/startup.py:93
 #, python-format
@@ -389,10 +1548,6 @@ msgid ""
 "An unknown error prevented Miro from startup.  Please file a bug report at "
 "%(url)s."
 msgstr ""
-
-#: ../../portable/startup.py:173
-msgid "Database too new"
-msgstr "Veritabanı çok yeni"
 
 #: ../../portable/startup.py:175
 #, python-format
@@ -511,37 +1666,10 @@ msgid_plural "Expires: %(count)d minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/downloader.py:233
-msgid "activity"
-msgstr "hareketler"
-
-#: ../../portable/downloader.py:268 ../../portable/httpclient.py:145
-#: ../../portable/httpclient.py:174
-msgid "File not found"
-msgstr "Dosya bulunamadı"
-
-#: ../../portable/downloader.py:269
-msgid "Flash URL Scraping Error"
-msgstr "Flash Adresi Kazıma Hatası"
-
-#: ../../portable/downloader.py:447
-msgid "starting up"
-msgstr "başlatılıyor"
-
-#: ../../portable/dl_daemon/download.py:507
-#: ../../portable/frontends/widgets/style.py:228
-msgid "Error"
-msgstr "Hata"
-
 #: ../../portable/dl_daemon/download.py:596
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr ""
-
-#: ../../portable/dl_daemon/download.py:621
-#: ../../portable/dl_daemon/download.py:838
-msgid "Not enough disk space"
-msgstr "Yeterli disk alanı yok"
 
 #: ../../portable/dl_daemon/download.py:622
 #: ../../portable/dl_daemon/download.py:839
@@ -554,42 +1682,14 @@ msgstr ""
 msgid "Couldn't open %(filename)s for writing"
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:852
-msgid "BitTorrent failure"
-msgstr "BitTorrent hatası"
-
-#: ../../portable/dl_daemon/download.py:853
-msgid "BitTorrent failed to startup"
-msgstr "BitTorrent başlarken hata verdi"
-
-#: ../../portable/dl_daemon/download.py:1041
-msgid "Corrupt Torrent"
-msgstr "Bozuk Torrent"
-
 #: ../../portable/dl_daemon/download.py:1042
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:1067
-msgid "Torrent file deleted"
-msgstr "Torrent dosyası silindi"
-
-#: ../../portable/dl_daemon/download.py:1068
-msgid "The torrent file for this item was deleted outside of Miro."
-msgstr "Bu yayının torrent dosyası Miro dışında silinmiş"
-
-#: ../../portable/menubar.py:184
-msgid "_Open"
-msgstr "_Aç"
-
 #: ../../portable/menubar.py:185
 msgid "_Download Item"
 msgstr ""
-
-#: ../../portable/menubar.py:186
-msgid "Check _Version"
-msgstr "Sürüm _Kontrol Et"
 
 #: ../../portable/menubar.py:188
 msgid "_Remove Item"
@@ -614,30 +1714,6 @@ msgstr ""
 #: ../../portable/menubar.py:193
 msgid "Copy Item _URL"
 msgstr ""
-
-#: ../../portable/menubar.py:195
-msgid "_Options"
-msgstr "_Seçenekler"
-
-#: ../../portable/menubar.py:196
-msgid "_Quit"
-msgstr "_Çık"
-
-#: ../../portable/menubar.py:205
-msgid "Cu_t"
-msgstr "_Kes"
-
-#: ../../portable/menubar.py:206
-msgid "_Copy"
-msgstr "K_opyala"
-
-#: ../../portable/menubar.py:207
-msgid "_Paste"
-msgstr "Ya_pıştır"
-
-#: ../../portable/menubar.py:208
-msgid "Select _All"
-msgstr "Tü_münü Seç"
 
 #: ../../portable/menubar.py:212
 msgid "Add _Feed"
@@ -692,135 +1768,9 @@ msgstr ""
 msgid "_Share with a Friend"
 msgstr ""
 
-#: ../../portable/menubar.py:229
-msgid "Copy URL"
-msgstr "Adresi Kopyala"
-
-#: ../../portable/menubar.py:233
-msgid "New _Playlist"
-msgstr "Yeni _Oynatma Listesi"
-
-#: ../../portable/menubar.py:234
-msgid "New Playlist Fol_der"
-msgstr "Yeni Oynatma Listesi _Dizini"
-
-#: ../../portable/menubar.py:236
-msgid "Re_name Playlist"
-msgstr "_Çalma Listesini Yeniden Adlandır"
-
-#: ../../portable/menubar.py:237
-msgid "_Remove Playlist"
-msgstr "_Çalma Listesini Kaldır"
-
-#: ../../portable/menubar.py:238
-msgid "_Remove Playlists"
-msgstr "Oynatma Listelerini _Sil"
-
-#: ../../portable/menubar.py:239
-msgid "_Remove Playlist Folders"
-msgstr "Oynatma Listesi _Dizinlerini Sil"
-
-#: ../../portable/menubar.py:240
-msgid "_Remove Playlist Folder"
-msgstr "Oynatma Listesi _Dizinini Sil"
-
-#: ../../portable/menubar.py:251 ../../portable/menubar.py:252
-msgid "_Play"
-msgstr "_Oynat"
-
-#: ../../portable/menubar.py:253
-msgid "_Pause"
-msgstr "_Duraklat"
-
-#: ../../portable/menubar.py:254
-msgid "_Stop"
-msgstr "_Durdur"
-
-#: ../../portable/menubar.py:256
-msgid "_Next Video"
-msgstr "_Sonraki Video"
-
-#: ../../portable/menubar.py:257
-msgid "_Previous Video"
-msgstr "_Önceki Video"
-
-#: ../../portable/menubar.py:259
-msgid "Skip _Forward"
-msgstr "_İleri Atla"
-
-#: ../../portable/menubar.py:260
-msgid "Skip _Back"
-msgstr "_Geri Atla"
-
-#: ../../portable/menubar.py:262
-msgid "Volume _Up"
-msgstr "Sesi _Yükselt"
-
-#: ../../portable/menubar.py:263
-msgid "Volume _Down"
-msgstr "Sesi _Düşür"
-
-#: ../../portable/menubar.py:265
-msgid "_Fullscreen"
-msgstr "_Tamekran"
-
 #: ../../portable/menubar.py:266
 msgid "_Toggle Detached/Attached"
 msgstr ""
-
-#: ../../portable/menubar.py:270
-msgid "_About Miro"
-msgstr "_Miro Hakkında"
-
-#: ../../portable/menubar.py:271
-msgid "_Donate"
-msgstr "_Bağış Yap"
-
-#: ../../portable/menubar.py:272 ../../portable/menubar.py:293
-msgid "_Help"
-msgstr "_Yardım"
-
-#: ../../portable/menubar.py:274
-#: ../../portable/frontends/widgets/diagnostics.py:119
-msgid "Diagnostics"
-msgstr "Tanılar"
-
-#: ../../portable/menubar.py:275
-msgid "Report a _Bug"
-msgstr "Hata _Bildir"
-
-#: ../../portable/menubar.py:276
-msgid "_Translate"
-msgstr "_Çevir"
-
-#: ../../portable/menubar.py:277
-msgid "_Planet Miro"
-msgstr "_Miro Gezegen"
-
-#: ../../portable/menubar.py:282
-msgid "_Video"
-msgstr "_Video"
-
-#: ../../portable/menubar.py:284
-msgid "_File"
-msgstr "_Dosya"
-
-#: ../../portable/menubar.py:290
-msgid "_Sidebar"
-msgstr "_Kenar Çubuğu"
-
-#: ../../portable/menubar.py:291
-msgid "_Playlists"
-msgstr "_Çalma Listeleri"
-
-#: ../../portable/menubar.py:292
-msgid "P_layback"
-msgstr "__Gerisar"
-
-#: ../../portable/frontends/widgets/crashdialog.py:46
-#: ../../portable/httpclient.py:158
-msgid "Internal Error"
-msgstr "İç hata"
 
 #: ../../portable/frontends/widgets/crashdialog.py:52
 msgid ""
@@ -833,16 +1783,6 @@ msgid ""
 "Include entire program database including all video and feed metadata with "
 "crash report"
 msgstr ""
-
-#: ../../portable/frontends/widgets/crashdialog.py:64
-msgid "Describe what you were doing when you got this error:"
-msgstr "Bu hatayı hangi işlem sonucunda aldınız ?"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:55
-#: ../../portable/frontends/widgets/feedsettingspanel.py:102
-#: ../../portable/frontends/widgets/prefpanel.py:585
-msgid "never"
-msgstr "hiçbir zaman"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:58
 #, python-format
@@ -874,26 +1814,6 @@ msgstr ""
 msgid "Watched %(expiration)s (Default)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/feedsettingspanel.py:97
-msgid "Watched 1 day ago"
-msgstr "1 gün önce izlendi"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:98
-msgid "Watched 3 days ago"
-msgstr "3 gün önce izlendi"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:99
-msgid "Watched 6 days ago"
-msgstr "6 gün önce izlendi"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:100
-msgid "Watched 10 days ago"
-msgstr "10 gün önce izlendi"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:101
-msgid "Watched 1 month ago"
-msgstr "1 ay önce izlendi"
-
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
 msgstr ""
@@ -923,10 +1843,6 @@ msgstr ""
 msgid "Keep 1000"
 msgstr ""
 
-#: ../../portable/frontends/widgets/feedsettingspanel.py:169
-msgid "Remove All"
-msgstr "Hepsini Kaldır"
-
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
 msgstr ""
@@ -935,51 +1851,9 @@ msgstr ""
 msgid "Pause Auto-Downloading when this many items are unplayed:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/feedsettingspanel.py:197
-msgid "1 unplayed item"
-msgstr "1 çalınmayan dosya"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:198
-msgid "3 unplayed items"
-msgstr "3 çalınmayan dosya"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:199
-msgid "5 unplayed items"
-msgstr "5 çalınmayan dosya"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:200
-msgid "10 unplayed items"
-msgstr "10 çalınmayan dosya"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:201
-msgid "15 unplayed items"
-msgstr "15 çalınmayan dosya"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:241
-msgid "Feed Settings"
-msgstr "Besleme Ayarları"
-
 #: ../../portable/frontends/widgets/style.py:209
 msgid "From"
 msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:210
-msgid "File name:"
-msgstr "Dosya adı:"
-
-#: ../../portable/frontends/widgets/style.py:211
-msgid "Show More"
-msgstr "Daha Fazla"
-
-#: ../../portable/frontends/widgets/style.py:212
-msgid "Show Less"
-msgstr "Daha Az"
-
-#: ../../portable/frontends/widgets/style.py:213
-#: ../../portable/frontends/widgets/gtk/video.py:309
-#: ../../portable/frontends/widgets/itemcontextmenu.py:137
-msgid "Comments"
-msgstr "Açıklamalar"
 
 #: ../../portable/frontends/widgets/style.py:215
 #, python-format
@@ -991,58 +1865,9 @@ msgstr ""
 msgid "Reveal File"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:216
-msgid "Web Page"
-msgstr "Web Sayfası"
-
-#: ../../portable/frontends/widgets/style.py:217
-msgid "File URL"
-msgstr "Dosya URL"
-
-#: ../../portable/frontends/widgets/style.py:218
-msgid "License Page"
-msgstr "Lisans Bilgisi"
-
-#: ../../portable/frontends/widgets/style.py:219
-msgid "File Type"
-msgstr "Dosya Türü"
-
-#: ../../portable/frontends/widgets/style.py:220
-msgid "Seeders"
-msgstr "Kaynaklar"
-
-#: ../../portable/frontends/widgets/style.py:221
-msgid "Leechers"
-msgstr "Asalaklar"
-
-#: ../../portable/frontends/widgets/style.py:222
-msgid "Upload Rate"
-msgstr "Yükleme Hızı"
-
 #: ../../portable/frontends/widgets/style.py:223
 msgid "Upload Total"
 msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:224
-msgid "Down Rate"
-msgstr "İndirme Hızı"
-
-#: ../../portable/frontends/widgets/style.py:225
-msgid "Down Total"
-msgstr "Toplam İndirilen"
-
-#: ../../portable/frontends/widgets/style.py:226
-#: ../../portable/frontends/widgets/style.py:1040
-#: ../../portable/frontends/widgets/style.py:1051
-#: ../../portable/frontends/widgets/itemcontextmenu.py:129
-#: ../../portable/frontends/widgets/itemcontextmenu.py:224
-#: ../../portable/dialogs.py:95
-msgid "Download"
-msgstr "İndir"
-
-#: ../../portable/frontends/widgets/style.py:227
-msgid "Download Torrent"
-msgstr "Torrent'i İndir"
 
 #: ../../portable/frontends/widgets/style.py:229
 msgid "queued for autodownload"
@@ -1053,112 +1878,23 @@ msgstr ""
 msgid "Unplayed"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:231
-#: ../../portable/frontends/widgets/style.py:1106
-msgid "Newly Available"
-msgstr "Yeni"
-
-#: ../../portable/frontends/widgets/style.py:233
-#: ../../portable/frontends/widgets/prefpanel.py:485
-#: ../../portable/frontends/widgets/tablist.py:523
-#: ../../portable/frontends/widgets/tablist.py:535
-#: ../../portable/frontends/widgets/tablist.py:541
-#: ../../portable/frontends/widgets/tablist.py:578
-#: ../../portable/frontends/widgets/tablist.py:584
-#: ../../portable/frontends/widgets/tablist.py:589
-#: ../../portable/dialogs.py:108
-msgid "Remove"
-msgstr "Kaldır"
-
 #: ../../portable/frontends/widgets/style.py:234
 #: ../../portable/frontends/widgets/itemcontextmenu.py:113
 msgid "Stop seeding"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:544
-#: ../../portable/frontends/widgets/style.py:1099
-msgid "paused"
-msgstr "Duraklatıldı"
-
 #: ../../portable/frontends/widgets/style.py:972
 msgid "Remove from playlist"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:267
-msgid "Automatically run Miro when I log in."
-msgstr "Giriş yaptığımda otomatik olarak Mİro' yu çalıştır."
-
-#: ../../portable/frontends/widgets/prefpanel.py:271
-msgid "Warn me if I attempt to quit with downloads in progress."
-msgstr "Dosya indirme sırasında programdan çıkmaya çalışırsam uyar."
-
-#: ../../portable/frontends/widgets/prefpanel.py:281
-msgid "Every day"
-msgstr "Her gün"
-
-#: ../../portable/frontends/widgets/prefpanel.py:282
-msgid "Every hour"
-msgstr "Her saatte"
-
-#: ../../portable/frontends/widgets/prefpanel.py:283
-msgid "Every 30 minutes"
-msgstr "Her 30 dakikada"
-
-#: ../../portable/frontends/widgets/prefpanel.py:284
-msgid "Manually"
-msgstr "Siz istediğinizde"
-
-#: ../../portable/frontends/widgets/prefpanel.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
-#: ../../portable/frontends/widgets/statictabs.py:103
-msgid "New"
-msgstr "Yeni"
 
 #: ../../portable/frontends/widgets/prefpanel.py:290
 #: ../../portable/frontends/widgets/itemlistwidgets.py:620
 msgid "All"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:291
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
-msgid "Off"
-msgstr "Kapalı"
-
-#: ../../portable/frontends/widgets/prefpanel.py:297
-msgid "0"
-msgstr "0"
-
-#: ../../portable/frontends/widgets/prefpanel.py:298
-msgid "20"
-msgstr "20"
-
-#: ../../portable/frontends/widgets/prefpanel.py:299
-msgid "50"
-msgstr "50"
-
-#: ../../portable/frontends/widgets/prefpanel.py:300
-msgid "100"
-msgstr "100"
-
-#: ../../portable/frontends/widgets/prefpanel.py:301
-msgid "1000"
-msgstr "1000"
-
-#: ../../portable/frontends/widgets/prefpanel.py:307
-msgid "Default settings for new feeds:"
-msgstr "Yeni beslemeler için varsayılan ayarlar:"
-
 #: ../../portable/frontends/widgets/prefpanel.py:311
 msgid "(These can be changed using the feed's settings button)"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:315
-msgid "Check for new content:"
-msgstr "Yeni içerik için kontrol et"
-
-#: ../../portable/frontends/widgets/prefpanel.py:320
-msgid "Auto download setting:"
-msgstr "Otomatik indirme ayarları:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:326
 msgid "Remember this many old items:"
@@ -1168,34 +1904,13 @@ msgstr ""
 msgid "(in addition to the current contents)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:340
-msgid "Maximum number of manual downloads at a time:"
-msgstr "Tek seferde maksimum el ile indirme sayısı"
-
-#: ../../portable/frontends/widgets/prefpanel.py:347
-msgid "Maximum number of auto-downloads at a time:"
-msgstr "Tek seferde maksimum otomatik indirme sayısı"
-
-#: ../../portable/frontends/widgets/prefpanel.py:357
-msgid "Bittorrent:"
-msgstr "Bittorrent"
-
 #: ../../portable/frontends/widgets/prefpanel.py:360
 msgid "Limit upstream bandwidth to:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:369
-#: ../../portable/frontends/widgets/prefpanel.py:380
-msgid "KB/s"
-msgstr "KB/s"
-
 #: ../../portable/frontends/widgets/prefpanel.py:372
 msgid "Limit downstream bandwidth to:"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:383
-msgid "Limit torrent connections to:"
-msgstr "Torrent bağlantılıarının sınırını:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:400
 msgid "Starting port:"
@@ -1205,204 +1920,33 @@ msgstr ""
 msgid "Ending port:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:410
-msgid "Automatically forward ports.  (UPNP)"
-msgstr "Otomatik olarak Portları ilerlet. (UPNP)"
-
-#: ../../portable/frontends/widgets/prefpanel.py:414
-msgid "Ignore unencrypted connections."
-msgstr "Şifrelenmemiş bağlantıları yoksay."
-
-#: ../../portable/frontends/widgets/prefpanel.py:418
-msgid "Stop torrent uploads when this ratio is reached:"
-msgstr "Ratio bu sayıya ulaştığında torrent göndermelerini durdur:"
-
-#: ../../portable/frontends/widgets/prefpanel.py:435
-#: ../../portable/frontends/widgets/firsttimedialog.py:184
-msgid "Change"
-msgstr "Değiştir"
-
 #: ../../portable/frontends/widgets/prefpanel.py:440
 msgid "Choose Movies Directory"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:453
-msgid "Migrate existing movies?"
-msgstr "Varolan filmler taşınsın mi?"
-
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
 "moved until they finish.)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:482
-#: ../../portable/dialogs.py:104
-msgid "Add"
-msgstr "Ekle"
-
 #: ../../portable/frontends/widgets/prefpanel.py:523
 msgid "Add Watched Folder"
 msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:542
-msgid "Store downloads in this folder:"
-msgstr "İndirilen içeriği şu klasörde sakla"
-
-#: ../../portable/frontends/widgets/prefpanel.py:549
-msgid "Watch for new videos in these folders and include them in library:"
-msgstr "Bu klasörlerde yeni videoları tara ve bunları kitaplığa ekle:"
-
-#: ../../portable/frontends/widgets/prefpanel.py:568
-msgid "Keep at least this much free space on my drive:"
-msgstr "Sabit diskimde en az bu kadar yer kalmasını sağla"
-
-#: ../../portable/frontends/widgets/prefpanel.py:571
-#: ../../portable/frontends/widgets/prefpanel.py:577
-msgid "GB"
-msgstr "GB"
-
-#: ../../portable/frontends/widgets/prefpanel.py:580
-msgid "1 day"
-msgstr "1 gün"
-
-#: ../../portable/frontends/widgets/prefpanel.py:581
-msgid "3 days"
-msgstr "3 gün"
-
-#: ../../portable/frontends/widgets/prefpanel.py:582
-msgid "6 days"
-msgstr "6 gün"
-
-#: ../../portable/frontends/widgets/prefpanel.py:583
-msgid "10 days"
-msgstr "10 gün"
-
-#: ../../portable/frontends/widgets/prefpanel.py:584
-msgid "1 month"
-msgstr "1 ay"
-
-#: ../../portable/frontends/widgets/prefpanel.py:590
-msgid "By default, videos expire after:"
-msgstr "Öntanımlı olarak, videoların süresi dolar:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:599
 msgid "Always play videos in a separate window."
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:603
-msgid "Resume playing a video from the point it was last stopped."
-msgstr "Videoyu son durdurulduğu yerden oynatmaya devam ettir."
-
-#: ../../portable/frontends/widgets/prefpanel.py:608
-msgid "Play videos one after another"
-msgstr "Videoları biribiri ardına oynat"
-
-#: ../../portable/frontends/widgets/prefpanel.py:609
-msgid "Stop after each video"
-msgstr "Her videodan sonra dur"
-
-#: ../../portable/frontends/widgets/prefpanel.py:620
-msgid "General"
-msgstr "Genel"
-
 #: ../../portable/frontends/widgets/prefpanel.py:621
 msgid "Feeds"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:622
-#: ../../portable/frontends/widgets/downloadscontroller.py:81
-msgid "Downloads"
-msgstr "İndirmeler"
-
-#: ../../portable/frontends/widgets/prefpanel.py:623
-msgid "Folders"
-msgstr "Klasörler"
-
-#: ../../portable/frontends/widgets/prefpanel.py:624
-msgid "Disk space"
-msgstr "Disk alanı"
-
-#: ../../portable/frontends/widgets/prefpanel.py:625
-msgid "Playback"
-msgstr "Oynat"
-
-#: ../../portable/frontends/widgets/prefpanel.py:629
-msgid "Preferences"
-msgstr "Seçenekler"
-
-#: ../../portable/frontends/widgets/browser.py:94
-msgid "Open in browser"
-msgstr "Tarayıcıda aç"
-
-#: ../../portable/frontends/widgets/rundialog.py:82
-msgid "Username:"
-msgstr "Kullanıcı Adı:"
-
-#: ../../portable/frontends/widgets/rundialog.py:86
-msgid "Password:"
-msgstr "Parola:"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
-msgid "New Videos"
-msgstr "Yeni Videolar"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:413
-#: ../../portable/frontends/widgets/statictabs.py:86
-msgid "Video Search"
-msgstr "Video Arama"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:427
-msgid "No Results Found"
-msgstr "Sonuç Bulunamadı"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
-msgid "Library"
-msgstr "Arşiv"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
-msgid "Single Items"
-msgstr "Tekil Nesneler"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr ""
-
-#: ../../portable/frontends/widgets/diagnostics.py:77
-#: ../../portable/frontends/widgets/gtk/trayicon.py:83
-msgid "Show"
-msgstr "Göster"
-
-#: ../../portable/frontends/widgets/diagnostics.py:84
-msgid "Movies location:"
-msgstr "Filmelerin bulunduğu yer:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:88
-msgid "Icon cache location:"
-msgstr "İkon bellek yeri:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:92
-msgid "Log file location:"
-msgstr "Log dosyası yeri:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:96
-msgid "Downloader log file location:"
-msgstr "İndiricinin Log dosyası yeri:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:100
-msgid "Database file location:"
-msgstr "Database dosyası yeri:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:107
-msgid "Space free on disk:"
-msgstr "Diskteki mevcut boş alan:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:109
 msgid "Database size:"
@@ -1411,10 +1955,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/diagnostics.py:111
 msgid "Total number of db objects:"
 msgstr ""
-
-#: ../../portable/frontends/widgets/feedcontroller.py:127
-msgid "Downloaded"
-msgstr "İndirildi"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:137
 msgid "Full Feed"
@@ -1426,16 +1966,6 @@ msgid "Show %(count)d More Item"
 msgid_plural "Show %(count)d More Items"
 msgstr[0] ""
 msgstr[1] ""
-
-#: ../../portable/frontends/widgets/feedcontroller.py:224
-#: ../../portable/frontends/widgets/feedcontroller.py:251
-#, python-format
-msgid "%(count)d Downloading"
-msgid_plural "%(count)d Downloading"
-msgstr[0] ""
-"%(count)d İndiriliyor\r\n"
-"\r\n"
-"%(count)d adet İndiriliyor"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:235
 #: ../../portable/frontends/widgets/feedcontroller.py:247
@@ -1478,29 +2008,10 @@ msgid ""
 "relaunch %(shortappname)s."
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:304
-msgid "Error Revealing File"
-msgstr "Tanımlanan dosyada hata"
-
 #: ../../portable/frontends/widgets/application.py:305
 #, python-format
 msgid "The file \"%(filename)s\" was deleted from outside Miro."
 msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:312
-msgid "Open Files..."
-msgstr "Dosyaları Aç..."
-
-#: ../../portable/frontends/widgets/application.py:323
-#: ../../portable/frontends/widgets/application.py:328
-msgid "Open Files - Error"
-msgstr "Dosyaları Aç - Hata"
-
-#: ../../portable/frontends/widgets/application.py:324
-#: ../../portable/frontends/widgets/application.py:588
-#, python-format
-msgid "File %(filename)s does not exist."
-msgstr "%(filename)s adlı dosya bulunmuyor"
 
 #: ../../portable/frontends/widgets/application.py:329
 msgid "The following files do not exist:"
@@ -1513,10 +2024,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:367
 msgid "Enter the URL of the item to download"
 msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:368
-msgid "New Download - Invalid URL"
-msgstr "Yeni İndirme - Geçersiz URL Adresi"
 
 #: ../../portable/frontends/widgets/application.py:369
 msgid ""
@@ -1550,15 +2057,6 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:419
-#, python-format
-msgid "Are you sure you want to delete the item?"
-msgid_plural "Are you sure you want to delete all %(count)d items?"
-msgstr[0] ""
-"Bu parçayı silmek istediğinizden emin misiniz?\r\n"
-"\r\n"
-"%(count)d sayıda parçayı silmek istediğinizden emin misiniz?"
-
 #: ../../portable/frontends/widgets/application.py:449
 #: ../../portable/frontends/widgets/itemcontextmenu.py:99
 msgid "Rename Item"
@@ -1588,38 +2086,6 @@ msgid ""
 "Enter the URL of the site to add"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:578
-msgid "Import OPML File"
-msgstr "İçe OPML Dosyası Aktar"
-
-#: ../../portable/frontends/widgets/application.py:580
-msgid "OPML Files"
-msgstr "OPML Dosyaları"
-
-#: ../../portable/frontends/widgets/application.py:587
-msgid "Import OPML File - Error"
-msgstr "OPML Dosyası Aktarımı - Hata"
-
-#: ../../portable/frontends/widgets/application.py:593
-msgid "Export OPML File"
-msgstr "Dışa OPML Dosyası Aktar"
-
-#: ../../portable/frontends/widgets/application.py:616
-msgid "Create Playlist"
-msgstr "Çalma Listesi Oluştur"
-
-#: ../../portable/frontends/widgets/application.py:617
-msgid "Enter a name for the new playlist"
-msgstr "Yeni Çalma Listesi İçin İsim Girin"
-
-#: ../../portable/frontends/widgets/application.py:638
-msgid "Create Playlist Folder"
-msgstr "Çalma Listesi Dizini Oluştur"
-
-#: ../../portable/frontends/widgets/application.py:639
-msgid "Enter a name for the new playlist folder"
-msgstr "Yeni çalma listesi dizini için bir isim girin"
-
 #: ../../portable/frontends/widgets/application.py:660
 #: ../../portable/frontends/widgets/tablist.py:522
 msgid "Rename Feed Folder"
@@ -1638,37 +2104,6 @@ msgstr ""
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
 msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:670
-#: ../../portable/frontends/widgets/tablist.py:583
-#: ../../portable/playlist.py:179
-msgid "Rename Playlist"
-msgstr "Çalma Listesini Yeniden Adlandır"
-
-#: ../../portable/frontends/widgets/application.py:671
-#, python-format
-msgid "Enter a new name for the playlist %(name)s"
-msgstr "%(name)s Çalma Listesine yeni bir as veriniz"
-
-#: ../../portable/frontends/widgets/application.py:675
-#: ../../portable/frontends/widgets/tablist.py:577
-msgid "Rename Playlist Folder"
-msgstr "Çalma Listesi Dizin Adını Değiştir"
-
-#: ../../portable/frontends/widgets/application.py:676
-#, python-format
-msgid "Enter a new name for the playlist folder %(name)s"
-msgstr "%(name)s Çalma Listesi dosyasına yeni bir ad veriniz"
-
-#: ../../portable/frontends/widgets/application.py:679
-#: ../../portable/frontends/widgets/tablist.py:476
-msgid "Rename Site"
-msgstr "Siteyi Yeniden Adlandır"
-
-#: ../../portable/frontends/widgets/application.py:680
-#, python-format
-msgid "Enter a new name for the site %(name)s"
-msgstr "%(name)s Sitesine yeni bir ad veriniz"
 
 #: ../../portable/frontends/widgets/application.py:704
 msgid "Remove playlist"
@@ -1693,20 +2128,12 @@ msgstr ""
 msgid "Are you sure you want to remove %(name)s?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:750
-msgid "Are you sure you want to quit?"
-msgstr "Çıkmak istediğinizden emin misiniz?"
-
 #: ../../portable/frontends/widgets/application.py:752
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] ""
 msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:757
-msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr "İndirme sırasında programdan çıkmak istersem beni uyar."
 
 #: ../../portable/frontends/widgets/application.py:1011
 msgid "Message"
@@ -1719,10 +2146,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:1046
 msgid "Migrating files"
 msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:177
-msgid "Save Search"
-msgstr "Aramayı Kaydet"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:282
 msgid "Title"
@@ -1762,14 +2185,6 @@ msgstr ""
 msgid "Save as a Feed"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:482
-msgid "Pause All"
-msgstr "Hepsini duraklat"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:489
-msgid "Resume All"
-msgstr "Hepsini devam ettir"
-
 #: ../../portable/frontends/widgets/itemlistwidgets.py:496
 msgid "Cancel All"
 msgstr ""
@@ -1788,32 +2203,9 @@ msgstr ""
 msgid "%(available)s free for downloads (%(amount)s free on disk)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:560
-#, python-format
-msgid "%(amount)s free on disk"
-msgstr "Sabit Diskte %(amount)s yer var"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:579
-#, python-format
-msgid "%(rate)s uploading"
-msgstr "%(rate)s gönderiliyor"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:581
-#, python-format
-msgid "%(rate)s downloading"
-msgstr "%(rate)s indiriliyor"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:615
-msgid "Auto Download"
-msgstr "Otomatik İndirme"
-
 #: ../../portable/frontends/widgets/itemlistwidgets.py:627
 msgid "Share feed"
 msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:633
-msgid "Settings"
-msgstr "Ayarlar"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:639
 msgid "Remove feed"
@@ -1832,18 +2224,6 @@ msgid ""
 "Miro can't play this file.  You may be able to open it with a different "
 "program"
 msgstr ""
-
-#: ../../portable/frontends/widgets/displays.py:361
-msgid "Filename:"
-msgstr "Dosya Adı:"
-
-#: ../../portable/frontends/widgets/displays.py:364
-msgid "File type:"
-msgstr "Dosya türü:"
-
-#: ../../portable/frontends/widgets/displays.py:370
-msgid "Play Externally"
-msgstr "Dışardan Oynat"
 
 #: ../../portable/frontends/widgets/displays.py:371
 msgid "Skip"
@@ -1891,14 +2271,6 @@ msgid_plural "%(count)d Playlists Selected"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/displays.py:582
-msgid "Delete All"
-msgstr "Tümünü Sil"
-
-#: ../../portable/frontends/widgets/displays.py:586
-msgid "Put Into a New Folder"
-msgstr "Yeni Klasöre Yerleştir"
-
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
 msgstr ""
@@ -1928,10 +2300,6 @@ msgstr ""
 msgid "Resume All Downloads (%(paused)d)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:81
-msgid "Hide"
-msgstr "Gizle"
-
 #: ../../portable/frontends/widgets/gtk/video.py:272
 msgid "Add to library"
 msgstr ""
@@ -1940,22 +2308,9 @@ msgstr ""
 msgid "Permalink"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/window.py:470
-msgid "All files"
-msgstr "Tüm Dosyalar"
-
 #: ../../portable/frontends/widgets/gtk/window.py:499
 msgid "Choose"
 msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/window.py:526
-#, python-format
-msgid ""
-"%(copyright)s.  See LICENSE file for details.\n"
-"Miro and Miro logo are trademarks of the Participatory Culture Foundation."
-msgstr ""
-"%(copyright)s. Ayrıntı için LİSANS dosyasına bakınız.\n"
-"Miro ve Miro logosu Participatory Culture Foundation' un ticari markasıdır."
 
 #: ../../portable/frontends/widgets/removefeeds.py:49
 msgid "Remove Feed"
@@ -1989,11 +2344,6 @@ msgid_plural ""
 "progress will be canceled."
 msgstr[0] ""
 msgstr[1] ""
-
-#: ../../portable/frontends/widgets/newfeed.py:60
-#: ../../portable/frontends/widgets/newsearchfeed.py:98
-msgid "URL:"
-msgstr "Adres:"
 
 #: ../../portable/frontends/widgets/newfeed.py:69
 msgid "Feed should go in this section:"
@@ -2031,15 +2381,6 @@ msgid ""
 "Enter the URL of the feed to add"
 msgstr ""
 
-#: ../../portable/frontends/widgets/tablist.py:475
-#: ../../portable/frontends/widgets/tablist.py:534
-msgid "Copy URL to clipboard"
-msgstr "Adresi panoya kopyala"
-
-#: ../../portable/frontends/widgets/tablist.py:477
-msgid "Remove Site"
-msgstr "Siteyi Sil"
-
 #: ../../portable/frontends/widgets/tablist.py:521
 msgid "Update Feeds In Folder"
 msgstr ""
@@ -2060,21 +2401,9 @@ msgstr ""
 msgid "Update Feeds Now"
 msgstr ""
 
-#: ../../portable/frontends/widgets/tablist.py:605
-msgid "SITES"
-msgstr "SİTELER"
-
-#: ../../portable/frontends/widgets/tablist.py:607
-msgid "FEEDS"
-msgstr "BESLEMELER"
-
 #: ../../portable/frontends/widgets/tablist.py:609
 msgid "AUDIO FEEDS"
 msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:611
-msgid "PLAYLISTS"
-msgstr "ÇALMA LİSTELERİ"
 
 #: ../../portable/frontends/widgets/newfolder.py:60
 msgid "Folder name:"
@@ -2093,10 +2422,6 @@ msgstr ""
 msgid "Enter the name of the folder to add"
 msgstr ""
 
-#: ../../portable/frontends/widgets/linkhandler.py:54
-msgid "Subscribe to Feed"
-msgstr "Beslemeye Üye Ol"
-
 #: ../../portable/frontends/widgets/linkhandler.py:56
 #, python-format
 msgid ""
@@ -2113,14 +2438,6 @@ msgstr ""
 #: ../../portable/frontends/widgets/newsearchfeed.py:59
 msgid "A search feed contains items that match a search term."
 msgstr ""
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:74
-msgid "Search for:"
-msgstr "Şunun için ara:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:80
-msgid "In this:"
-msgstr "Bunun içinde:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:87
 msgid "Feed:"
@@ -2156,18 +2473,6 @@ msgstr ""
 msgid "Would you like to run Miro on startup?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:137
-#: ../../portable/frontends/widgets/firsttimedialog.py:170
-#: ../../portable/dialogs.py:87
-msgid "Yes"
-msgstr "Evet"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:138
-#: ../../portable/frontends/widgets/firsttimedialog.py:169
-#: ../../portable/dialogs.py:88
-msgid "No"
-msgstr "Hayır"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:146
 msgid "Next >"
 msgstr ""
@@ -2184,10 +2489,6 @@ msgid ""
 "Would you like Miro to look for media files on your computer?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:177
-msgid "Restrict to all my personal files."
-msgstr "Benim bütün kişisel dosyalarıma kısıtlı ulaşım."
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:178
 msgid "Search custom folders:"
 msgstr ""
@@ -2201,26 +2502,9 @@ msgstr ""
 msgid "< Previous"
 msgstr ""
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:213
-#: ../../portable/frontends/widgets/firsttimedialog.py:215
-#: ../../portable/frontends/widgets/firsttimedialog.py:272
-#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
-msgid "Search"
-msgstr "Arama"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:215
-#: ../../portable/frontends/widgets/firsttimedialog.py:283
-msgid "Finish"
-msgstr "Bitti"
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:263
 msgid "Searching for media files"
 msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:273
-#: ../../portable/dialogs.py:85
-msgid "Cancel"
-msgstr "İptal"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:311
 #, python-format
@@ -2235,14 +2519,6 @@ msgid "found %(count)s media file"
 msgid_plural "found %(count)s media files"
 msgstr[0] ""
 msgstr[1] ""
-
-#: ../../portable/frontends/widgets/statictabs.py:44
-msgid "Miro Guide"
-msgstr "Miro Rehberi"
-
-#: ../../portable/frontends/widgets/statictabs.py:110
-msgid "Downloading"
-msgstr "İndiriliyor"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:90
 msgid "Single and external downloads"
@@ -2272,15 +2548,6 @@ msgstr ""
 msgid "New playlist:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:63
-msgid "Remove From the Library"
-msgstr "Kütüphaneden Çıkart"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:94
-#: ../../portable/frontends/widgets/itemcontextmenu.py:192
-msgid "Play"
-msgstr "Yürüt"
-
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just this Item"
 msgstr ""
@@ -2304,33 +2571,8 @@ msgstr ""
 msgid "Mark as Played"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:118
-#: ../../portable/frontends/widgets/itemcontextmenu.py:240
-#: ../../portable/frontends/widgets/itemcontextmenu.py:258
-msgid "Cancel Download"
-msgstr "İndirmeyi İptal Et"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:122
-#: ../../portable/frontends/widgets/itemcontextmenu.py:241
-msgid "Pause Download"
-msgstr "İndirmeyi Duraklat"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:125
-#: ../../portable/frontends/widgets/itemcontextmenu.py:254
-msgid "Resume Download"
-msgstr "İndirmeye Devam Et"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
-msgid "Web page"
-msgstr "Web Sayfası"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:139
-msgid "License"
-msgstr "Lisans"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:142
 msgid "File in Browser"
@@ -2377,18 +2619,6 @@ msgid_plural "%(count)d Paused Items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:264
-msgid "Restart Upload"
-msgstr "Yüklemeyi Tekrar Başlat"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:278
-msgid "Remove From Playlist"
-msgstr "Çalma Listesinden Kaldır"
-
-#: ../../portable/dialogs.py:83
-msgid "Ok"
-msgstr "Tamam"
-
 #: ../../portable/dialogs.py:84
 msgid "Close"
 msgstr ""
@@ -2396,54 +2626,6 @@ msgstr ""
 #: ../../portable/dialogs.py:86
 msgid "Done"
 msgstr ""
-
-#: ../../portable/dialogs.py:89
-msgid "Quit"
-msgstr "Çık"
-
-#: ../../portable/dialogs.py:90
-msgid "Continue"
-msgstr "Devam Et"
-
-#: ../../portable/dialogs.py:91
-msgid "Ignore"
-msgstr "Önemseme"
-
-#: ../../portable/dialogs.py:92
-msgid "Submit Crash Report"
-msgstr "Hata Raporu Bildir"
-
-#: ../../portable/dialogs.py:93
-msgid "Migrate"
-msgstr "Taşı"
-
-#: ../../portable/dialogs.py:94
-msgid "Don't Migrate"
-msgstr "Taşıma"
-
-#: ../../portable/dialogs.py:96
-msgid "Remove Entry"
-msgstr "Girişi Kaldır"
-
-#: ../../portable/dialogs.py:97
-msgid "Delete File"
-msgstr "Dosyayı Sil"
-
-#: ../../portable/dialogs.py:98
-msgid "Delete Files"
-msgstr "Dosyaları Sil"
-
-#: ../../portable/dialogs.py:99
-msgid "Keep Videos"
-msgstr "Videoları Sakla"
-
-#: ../../portable/dialogs.py:100
-msgid "Delete Videos"
-msgstr "Videoları Sil"
-
-#: ../../portable/dialogs.py:101
-msgid "Create"
-msgstr "Oluştur"
 
 #: ../../portable/dialogs.py:102
 msgid "Create Feed"
@@ -2453,33 +2635,9 @@ msgstr ""
 msgid "Create Folder"
 msgstr ""
 
-#: ../../portable/dialogs.py:105
-msgid "Add Into New Folder"
-msgstr "Yeni Dizine Ekle"
-
-#: ../../portable/dialogs.py:109
-msgid "Not Now"
-msgstr "Şimdi değil"
-
-#: ../../portable/dialogs.py:110
-msgid "Close to Tray"
-msgstr "Görev çubuğu çekmecesine kapat"
-
-#: ../../portable/dialogs.py:111
-msgid "Launch Miro"
-msgstr "Miro'yu Çalıştır"
-
-#: ../../portable/dialogs.py:112
-msgid "Download Anyway"
-msgstr "Her Hâlükârda İndir"
-
 #: ../../portable/dialogs.py:113
 msgid "Open in External Browser"
 msgstr ""
-
-#: ../../portable/dialogs.py:114
-msgid "Don't Install"
-msgstr "Yükleme"
 
 #: ../../portable/dialogs.py:115
 msgid "Subscribe"
@@ -2488,58 +2646,6 @@ msgstr ""
 #: ../../portable/dialogs.py:116
 msgid "Stop Watching"
 msgstr ""
-
-#: ../../portable/playlist.py:180
-#, python-format
-msgid "Enter a new name for the playlist %s"
-msgstr "Çalma Listesi için yeni bir isim girin %s."
-
-#: ../../portable/singleclick.py:100
-msgid "Download already exists"
-msgstr "Mevcut olsa dahi indir"
-
-#: ../../portable/singleclick.py:101
-msgid "That URL is already an external download."
-msgstr "Bu zaten harici indirme adresi."
-
-#: ../../portable/singleclick.py:107
-msgid "Miro will begin downloading it now."
-msgstr "Miro onu indirmeye şimdi başlayacak."
-
-#: ../../portable/singleclick.py:109
-msgid "It is downloading now."
-msgstr "İndiriliyor."
-
-#: ../../portable/singleclick.py:111
-msgid "It has already been downloaded."
-msgstr "O zaten indirilmiş."
-
-#: ../../portable/singleclick.py:138
-msgid "File Download"
-msgstr "Dosya İndirme"
-
-#: ../../portable/singleclick.py:139
-#, python-format
-msgid ""
-"This file at %(url)s does not appear to be audio, video, or an RSS feed."
-msgstr ""
-"%(url)s adresindeki bu dosya ses, video ya da RSS feed dosyalarından biri "
-"değildir."
-
-#: ../../portable/singleclick.py:166
-msgid "Download Error"
-msgstr "İndirme Hatası"
-
-#: ../../portable/singleclick.py:168
-#, python-format
-msgid ""
-"Miro is not able to download a file at this URL:\n"
-"\n"
-"URL: %(url)s"
-msgstr ""
-"Miro Bu URL adresinden dosya indirememekte:\n"
-"\n"
-"URL: %(url)s"
 
 #: ../../portable/singleclick.py:297
 msgid "Subscribing to multiple feeds"
@@ -2567,10 +2673,6 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/singleclick.py:337
-msgid "Subscription error"
-msgstr "Abonelik hatası"
-
 #: ../../portable/singleclick.py:347
 #, python-format
 msgid ""
@@ -2590,29 +2692,6 @@ msgstr ""
 msgid "Could not download the %(appname)s feed file: %(url)s"
 msgstr ""
 
-#: ../../portable/singleclick.py:414
-msgid "Invalid Torrent"
-msgstr "Geçersiz Torrent"
-
-#: ../../portable/singleclick.py:416
-#, python-format
-msgid ""
-"The torrent file %(filename)s appears to be corrupt and cannot be opened. "
-"[OK]"
-msgstr "%(filename)s adlı torrent dosyası zarar görmüş, açılamıyor. [Tamam]"
-
-#: ../../portable/item.py:439
-#, python-format
-msgid "%(count)d day"
-msgid_plural "%(count)d days"
-msgstr[0] "%(count)d gün"
-
-#: ../../portable/item.py:444
-#, python-format
-msgid "%(count)d hour"
-msgid_plural "%(count)d hours"
-msgstr[0] "%(count)d saat"
-
 #: ../../portable/item.py:449
 #, python-format
 msgid "%(count)d minute"
@@ -2625,31 +2704,15 @@ msgstr[1] ""
 msgid "no title"
 msgstr ""
 
-#: ../../portable/item.py:1008
-msgid "starting up..."
-msgstr "başlatılıyor..."
-
 #: ../../portable/httpclient.py:90
 #, python-format
 msgid "Error: %(msg)s"
 msgstr ""
 
-#: ../../portable/httpclient.py:105 ../../portable/httpclient.py:111
-msgid "Can't connect"
-msgstr "Bağlanamadı"
-
 #: ../../portable/httpclient.py:106
 #, python-format
 msgid "Connection Error: %(msg)s"
 msgstr ""
-
-#: ../../portable/httpclient.py:112
-msgid "SSL connection error"
-msgstr "SSL bağlantı hatası"
-
-#: ../../portable/httpclient.py:116
-msgid "HTTP error"
-msgstr "HTTP hatası"
 
 #: ../../portable/httpclient.py:120
 #, python-format
@@ -2676,35 +2739,15 @@ msgstr ""
 msgid "%(host)s closed connection"
 msgstr ""
 
-#: ../../portable/httpclient.py:146
-msgid "Got 404 status code"
-msgstr "404 Hata kodu alındı"
-
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Bad Status Code: %(code)s"
 msgstr ""
 
-#: ../../portable/httpclient.py:153
-msgid "Authorization failed"
-msgstr "İzin alınamadı"
-
-#: ../../portable/httpclient.py:159
-msgid "Pipeline request never started"
-msgstr "Ardışık düzen isteği hiç başlatılmadı"
-
-#: ../../portable/httpclient.py:163
-msgid "Timeout"
-msgstr "Zaman Aşımı"
-
 #: ../../portable/httpclient.py:164
 #, python-format
 msgid "Connection to %(host)s timed out"
 msgstr ""
-
-#: ../../portable/httpclient.py:168
-msgid "Invalid URL"
-msgstr "Geçersiz Adres"
 
 #: ../../portable/httpclient.py:169
 #, python-format
@@ -2716,81 +2759,17 @@ msgstr ""
 msgid "The file \"%(path)s\" doesn't exist"
 msgstr ""
 
-#: ../../portable/httpclient.py:179
-msgid "Read error"
-msgstr "Okuma hatası"
-
 #: ../../portable/httpclient.py:180
 #, python-format
 msgid "Error while reading from \"%(path)s\""
 msgstr ""
-
-#: ../../portable/httpclient.py:376
-msgid "Unknown Error code"
-msgstr "Bilinmeyen Hata Kodu"
-
-#: ../../portable/httpclient.py:408
-msgid "Connection closed"
-msgstr "Bağlantı kapatıldı"
-
-#: ../../portable/httpclient.py:829
-msgid "Unknown"
-msgstr "Bilinmeyen"
-
-#: ../../portable/httpclient.py:830
-msgid "Internal Error: Not ready to send"
-msgstr "İç Hata: Göndermeye hazır değil"
-
-#: ../../portable/feed.py:925
-msgid "Error loading feed"
-msgstr "Beslemeyi yüklemede hata"
 
 #: ../../portable/feed.py:927
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr ""
 
-#: ../../portable/feed.py:930
-msgid "Would you like to keep the feed?"
-msgstr "Beslemeyi saklamak ister misiniz?"
-
-#: ../../portable/feed.py:1055
-msgid "Bad content-type"
-msgstr "Geçersiz içerik-tür"
-
 #: ../../portable/feed.py:1068
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
 msgstr ""
-
-#: ../../portable/feed.py:1071
-#, python-format
-msgid ""
-"This channel is not compatible with %(appname)s but we'll try our best to "
-"grab the files.  It may take extra time to list the videos, and descriptions "
-"may look funny.\n"
-"\n"
-"Please contact the publishers of %(url)s and ask if they can supply a feed "
-"in a format that will work with %(appname)s.\n"
-"\n"
-"Do you want to try to load this channel anyway?"
-msgstr ""
-"Bu kanal %(appname)s ile uyumlu değil. Dosyaları yakalamak için elimizden "
-"gelenin en iyisini yapmaya çalışacağız. Videoları listelemek biraz zaman "
-"alabilir ve gülünç açıklamalar görünebilir.\n"
-"Lütfen %(url)s sitesinin yayıncısı ile irtibat kurun ve %(appname)s ile "
-"uyumlu formatta feed desteğini olup olmayacağını sorun.\n"
-"Her şeye rağmen kanalı yüklemek istiyor musunuz?"
-
-#: ../../portable/feed.py:1644
-#, python-format
-msgid "Search All: %(text)s"
-msgstr "Tümünü Ara: %(text)s"
-
-#: ../../portable/feed.py:2407
-msgid "Local Files"
-msgstr "Yerel Dosyalar"
-
-#: ../../portable/feed.py:2421
-msgid "Playing File"
-msgstr "Dosya çalınıyor"

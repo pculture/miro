@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:37+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -172,7 +172,6 @@ msgstr "הקפץ פנימה"
 msgid "Services"
 msgstr "שרותים"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 msgid "Hide Miro"
 msgstr "הסתר את מירו"
 
@@ -188,7 +187,6 @@ msgstr "הצג הכל"
 msgid "Preferences..."
 msgstr "העדפות..."
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
 msgstr "צא ממירו"
 
@@ -252,7 +250,6 @@ msgstr "קדם הכל לחזית"
 msgid "Window"
 msgstr "חלון"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Miro Help"
 msgstr "עזרה למירו"
 
@@ -279,7 +276,6 @@ msgstr "אתה מריץ גירסת %(appname)s עם סט מותאם של אפי�
 msgid "Example Playlist"
 msgstr "רשימת צפייה לדוגמה"
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr "מירו - דווח על בעייה"
 
@@ -334,23 +330,19 @@ msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] "דולג ערוץ %(count)d שכבר נמצא."
 msgstr[1] "דולגו %(count)d ערוצים שכבר נמצאים."
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "מסד הנתונים %(appname)s נשמר בהצלחה"
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr "מסד הנתונים נשמר בהצלחה , עכשיו בטוח לצאת בלי לאבד שום מידע"
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "שמירת מסד הנתונים %(appname)s נכשלה"
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -765,7 +757,6 @@ msgstr "_מסך מלא"
 msgid "_Toggle Detached/Attached"
 msgstr "_שנה מצב מחובר\\תלוש"
 
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr "_אודות מירו"
 
@@ -789,10 +780,6 @@ msgstr "דיווח על _באג"
 #: ../../portable/menubar.py:276
 msgid "_Translate"
 msgstr "_תרגם"
-
-#: ../../portable/menubar.py:277
-msgid "_Planet Miro"
-msgstr ""
 
 #: ../../portable/menubar.py:282
 msgid "_Video"
@@ -868,11 +855,6 @@ msgstr[1] "לפני %(count)d חודשים"
 #: ../../portable/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Videos:"
 msgstr "תפוגה אוטומטית של סרטים:"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:95
-#, python-format
-msgid "Watched %(expiration)s (Default)"
-msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
@@ -1084,7 +1066,6 @@ msgstr "מושהה"
 msgid "Remove from playlist"
 msgstr "הסר מרשימת צפייה"
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr "הרץ מירו אוטומטית כשאני מתחבר."
 
@@ -1230,7 +1211,6 @@ msgstr "בחר תיקיית סרטים"
 msgid "Migrate existing movies?"
 msgstr "העברת סרטים קיימים?"
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
@@ -1346,7 +1326,6 @@ msgstr "שם משתמש:"
 msgid "Password:"
 msgstr "סיסמה:"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
 msgstr "וידיאוים חדשים"
 
@@ -1359,21 +1338,15 @@ msgstr "חיפוש וידאו"
 msgid "No Results Found"
 msgstr "לא נמצאו תוצאות"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
 msgid "Library"
 msgstr "ספרייה"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr "פריטים בודדים"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr "אין פריטים להצגה"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr "לשונית זו עוקבת אחר הורדות שאינן חלק מהערוץ."
 
@@ -1385,10 +1358,6 @@ msgstr "הצג"
 #: ../../portable/frontends/widgets/diagnostics.py:84
 msgid "Movies location:"
 msgstr "מיקיום סרטים:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:88
-msgid "Icon cache location:"
-msgstr ""
 
 #: ../../portable/frontends/widgets/diagnostics.py:92
 msgid "Log file location:"
@@ -1592,14 +1561,6 @@ msgstr "הזן את כתובת האתר להוספה"
 #: ../../portable/frontends/widgets/application.py:528
 msgid "Add Site - Invalid URL"
 msgstr "הוספת אתר - כתובת לא תקינה"
-
-#: ../../portable/frontends/widgets/application.py:529
-msgid ""
-"The address you entered is not a valid url.\n"
-"Please check the URL and try again.\n"
-"\n"
-"Enter the URL of the site to add"
-msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:578
 msgid "Import OPML File"
@@ -1962,7 +1923,6 @@ msgstr "כל הקבצים"
 msgid "Choose"
 msgstr "בחר"
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -2334,7 +2294,6 @@ msgstr "סמן כלא-נצפה"
 msgid "Mark as Played"
 msgstr "סמן כנצפה"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr "התחל זריעה"
 
@@ -2354,7 +2313,6 @@ msgstr "ההיית הורדה"
 msgid "Resume Download"
 msgstr "רענן הורדה"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
 msgstr "עמוד אינטרנט"
 
@@ -2830,330 +2788,23 @@ msgstr "קבצים מקומיים"
 msgid "Playing File"
 msgstr "מנגן קובץ"
 
-#~ msgid "_Remove Channel"
-#~ msgstr "_הסר ערוץ"
-
-#~ msgid "_Update Channel"
-#~ msgstr "_עדכן ערוץ"
-
-#~ msgid "_Open..."
-#~ msgstr "_פתח..."
-
-#~ msgid "Open various files"
-#~ msgstr "פתח מגוון קבצים"
-
-#~ msgid "Quit the Program"
-#~ msgstr "צא מהתכנית"
-
-#~ msgid "My Collection"
-#~ msgstr "האוסף שלי"
-
-#~ msgid "Democracy - External Playback Template"
-#~ msgstr "דמוקרטיה - תבנית ניגון נוספת"
-
-#~ msgid "Continue To Next Video"
-#~ msgstr "המשך לוידאו הבא"
-
-#~ msgid "Recommend"
-#~ msgstr "מומלץ"
-
-#~ msgid "Add Channel"
-#~ msgstr "הוסף ערוץ"
-
-#~ msgid " "
-#~ msgstr " "
-
-#~ msgid "About Democracy"
-#~ msgstr "אודות נגן דמוקרטיה"
-
-#~ msgid "Channel"
-#~ msgstr "ערוץ"
-
-#~ msgid "Clear Menu"
-#~ msgstr "נקה תפריט"
-
-#~ msgid "File"
-#~ msgstr "קובץ"
-
-#~ msgid "Help"
-#~ msgstr "עזרה"
-
-#~ msgid "Hide Democracy"
-#~ msgstr "הסתר דמוקרטיה"
-
-#~ msgid "MainMenu"
-#~ msgstr "תפריט ראשי"
-
-#~ msgid "New Channel Folder..."
-#~ msgstr "תיקיית ערוץ חדשה..."
-
-#~ msgid "New Playlist Folder..."
-#~ msgstr "תיקיית רשימת השמעה חדשה..."
-
-#~ msgid "New Playlist..."
-#~ msgstr "רשימת השמעה חדשה..."
-
-#~ msgid "Open..."
-#~ msgstr "פתח..."
-
-#~ msgid "Play Video"
-#~ msgstr "נגן וידאו"
-
-#~ msgid "Rename..."
-#~ msgstr "שנה שם..."
-
-#~ msgid "Stop Video"
-#~ msgstr "עצור וידאו"
-
-#~ msgid "Update All Channels"
-#~ msgstr "עדכן את כל הערוצים"
-
-#~ msgid "Update Channel"
-#~ msgstr "עדכן ערוץ"
-
-#~ msgid "00:00:00"
-#~ msgstr "00:00:00"
-
-#~ msgid "VideoWindow"
-#~ msgstr "חלון וידאו"
-
-#~ msgid "Password:\n"
-#~ msgstr "סיסמא:\n"
-
-#~ msgid "Username and password required"
-#~ msgstr "יש צורך בשם משתמש וסיסמא"
-
-#~ msgid ""
-#~ "Username:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "שם משתמש:\n"
-#~ "\n"
-
-#~ msgid " limit upstream to"
-#~ msgstr " הגבל קצב העלאה ל"
-
-#~ msgid "(You must restart Democracy for this change to take effect)\n"
-#~ msgstr "(חייב לאתחל את דמוקרטיה על מנת ששינוי זה יפעל)\n"
-
-#~ msgid "3 hours"
-#~ msgstr "3 שעות"
-
-#~ msgid "4"
-#~ msgstr "4"
-
-#~ msgid "5"
-#~ msgstr "5"
-
-#~ msgid "Never"
-#~ msgstr "לעולם לא"
-
-#~ msgid "Run Democracy at startup"
-#~ msgstr "הפעל את דמוקרטיה בעת הפעלת המחשב"
-
-#~ msgid "every 30 minutes"
-#~ msgstr "כל 30 דקות"
-
-#~ msgid "every hour"
-#~ msgstr "כל שעה"
-
-#~ msgid "manually"
-#~ msgstr "ידני"
-
-#~ msgid "Back"
-#~ msgstr "אחורה"
-
-#~ msgid "Next"
-#~ msgstr "הבא"
-
-#~ msgid ""
-#~ "The next few screens will help you set up Democracy Player so that it works "
-#~ "best for you. Here's the first question."
-#~ msgstr ""
-#~ "המסכים הבאים יעזרו לך להגדיר את נגן דמוקרטיה בצורה הטובה ביותר עבורך. הנה "
-#~ "השאלה הראשונה."
-
-#~ msgid "1 Download in Progress"
-#~ msgstr "הורדה אחת בתהליך"
-
-#~ msgid "Looking for videos at this URL"
-#~ msgstr "חפש וידיאוים בכתובת הזאת"
-
-#~ msgid "Add Channel..."
-#~ msgstr "הוסף ערוץ ..."
-
-#~ msgid "Channels"
-#~ msgstr "ערוצים"
-
-#~ msgid "Check for New Version"
-#~ msgstr "בדוק האם קיימת גירסא חדשה"
-
-#~ msgid "Copy Video URL"
-#~ msgstr "העתק כתובת וידאו"
-
-#~ msgid "New Channel Guide..."
-#~ msgstr "מדריך ערוץ חדש..."
-
-#~ msgid "New Search Channel..."
-#~ msgstr "ערוץ חיפוש חדש..."
-
-#~ msgid "Playlists"
-#~ msgstr "רשימות השמעה"
-
-#~ msgid "Previous Video"
-#~ msgstr "וידאו קודם"
-
-#~ msgid "Remove..."
-#~ msgstr "הסר..."
-
-#~ msgid "Save Video As..."
-#~ msgstr "שמור וידאו בשם..."
-
-#~ msgid "Send This Channel to a Friend"
-#~ msgstr "שלח ערוץ זה לחבר"
-
-#~ msgid "99999"
-#~ msgstr "99999"
-
-#~ msgid "Maximum:"
-#~ msgstr "מקסימום:"
-
-#~ msgid "Minimum:"
-#~ msgstr "מינימום:"
-
-#~ msgid "Stop after each video."
-#~ msgstr "עצור לאחר כל וידאו"
-
-#~ msgid "Search Engine"
-#~ msgstr "מנוע חיפוש"
-
-#~ msgid "_Send this channel to a friend"
-#~ msgstr "_שלח ערוץ זה לחבר"
-
-#~ msgid "Re_name Channel"
-#~ msgstr "_שנה שם ערוץ"
-
-#~ msgid "_Channels"
-#~ msgstr "_ערוצים"
-
-#~ msgid "New _Playlist..."
-#~ msgstr "רשימת השמעה_חדשה..."
-
-#~ msgid "Delete selection"
-#~ msgstr "מחק בחירה"
-
-#~ msgid "_Remove..."
-#~ msgstr "_הסר..."
-
-#~ msgid "_Remove Playlist..."
-#~ msgstr "_הסר רשימת השמעה..."
-
-#~ msgid "_Remove Playlists..."
-#~ msgstr "_הסר רשימות השמעה..."
-
-#~ msgid "_Remove Playlist Folder..."
-#~ msgstr "_הסר תיקיית רשימת השמעה..."
-
-#~ msgid "outside of democracy."
-#~ msgstr "מחוץ לדמוקרטיה"
-
-#~ msgid "-00:00:00"
-#~ msgstr "-00:00:00"
-
-#~ msgid "Change..."
-#~ msgstr "שנה ..."
-
-#~ msgid "SAVED"
-#~ msgstr "שמור"
-
-#~ msgid "DELETE"
-#~ msgstr "מחק"
-
-#~ msgid "Videos expire after"
-#~ msgstr "וידאוים פג תוקפם אחרי"
-
-#~ msgid "When turned on, Auto Download should"
-#~ msgstr "מתי שמופעל , הורדה אוטומתית צריכה"
-
-#~ msgid "<label for=\"automatic\">Auto Download</label>"
-#~ msgstr "הורדה אוטומתית"
-
-#~ msgid "OK"
-#~ msgstr "אישור"
-
-#~ msgid "Full Screen"
-#~ msgstr "מסך מלא"
-
-#~ msgid "Browse"
-#~ msgstr "דפדף"
-
-#~ msgid "New Search Channel"
-#~ msgstr "חיפוש חדש בערוץ"
-
-#~ msgid "WEB PAGE"
-#~ msgstr "דף אינטרנט"
-
-#~ msgid "Add to new playlist"
-#~ msgstr "הוסף לרשימת ההשמעה"
-
-#~ msgid "Democracy Help"
-#~ msgstr "עזרה לדמוקרטיה"
-
-#~ msgid "Democracy"
-#~ msgstr "דמוקרטיה"
-
-#~ msgid "Searching for Videos"
-#~ msgstr "מחפש קבצי וידאו"
-
-#~ msgid "SAVE"
-#~ msgstr "שמור"
-
-#~ msgid "Donate"
-#~ msgstr "תרום"
-
-#~ msgid "downloading..."
-#~ msgstr "מוריד ..."
-
-#~ msgid "Remove From My Collection"
-#~ msgstr "הסר מהאוסף שלי"
-
-#~ msgid ""
-#~ "Democracy Player can find all the videos on your computer to help you "
-#~ "organize your collection.\n"
-#~ "\n"
-#~ "\n"
-#~ "Would you like Democracy Player to look for video files on your computer?"
-#~ msgstr ""
-#~ "נגן דמוקרטיה יכול לאתר את כל קבצי הוידאו שבמחשב שלך על מנת לעזור לך לארגן את "
-#~ "האוסף שלך.\n"
-#~ "\n"
-#~ "\n"
-#~ "האם ברצונך שנגן דמוקרטיה יחפש קבצי וידאו במחשב שלך?"
-
-#~ msgid "Rename Channel Folder"
-#~ msgstr "שנה את שם תקיית הערוץ"
-
-#~ msgid "Create Channel Folder"
-#~ msgstr "צור תקיית ערוץ"
-
-#~ msgid "Enter a name for the new channel folder"
-#~ msgstr "הכנס את השם לתקיית הערוץ החדשה"
-
-#~ msgid "A search channel contains items that match a search term."
-#~ msgstr "חיפוש בערוץ מכיל פריט שלא מתאים לתנאים"
-
-#~ msgid "Clear Completed Torrents"
-#~ msgstr "נקה טורנטים שהסתיימו"
-
-#~ msgid "Empty Channel Folder"
-#~ msgstr "תקיית ערוץ ריקה"
-
-#~ msgid "Drag channels to this folder to add them."
-#~ msgstr "גרור ערוצים לתייקה הזאת בשביל להוסיף אותם"
-
-#~ msgid ""
-#~ "You have a database that was saved with a newer version of Democracy. You "
-#~ "must download the latest version of Democracy and run that."
-#~ msgstr ""
-#~ "יש לך מסד נתונים שנשמר עם גירסא חדשה יותר של דמוקרטיה . אתה חייב להוריד את "
-#~ "הגירסא החדשה של דמוקרטיה בשביל להריץ את זה."
+#: ../../portable/menubar.py:277
+msgid "_Planet Miro"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:95
+#, python-format
+msgid "Watched %(expiration)s (Default)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/diagnostics.py:88
+msgid "Icon cache location:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:529
+msgid ""
+"The address you entered is not a valid url.\n"
+"Please check the URL and try again.\n"
+"\n"
+"Enter the URL of the site to add"
+msgstr ""

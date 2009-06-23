@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 01:37+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -181,7 +181,6 @@ msgstr "Ventana interna."
 msgid "Services"
 msgstr "Servicios"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 msgid "Hide Miro"
 msgstr "Ocultar Miro"
 
@@ -197,7 +196,6 @@ msgstr "Mostrar todo"
 msgid "Preferences..."
 msgstr "Preferencias..."
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
 msgstr "Cerrar Miro"
 
@@ -261,7 +259,6 @@ msgstr "Traer todo al frente"
 msgid "Window"
 msgstr "Ventana"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Miro Help"
 msgstr "Ayuda de Miro"
 
@@ -290,7 +287,6 @@ msgstr ""
 msgid "Example Playlist"
 msgstr "Ejemplo de lista de reproducción"
 
-#: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
 msgstr "Miro - Informar de un problema"
 
@@ -347,24 +343,20 @@ msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] "Pasada por alto %(count)d fuente ya presente."
 msgstr[1] "Pasadas por alto %(count)d fuentes ya presentes."
 
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "La base de datos %(appname)s se guardó correctamente."
 
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 "Se ha guardado la base de datos. Ahora puede salir sin perder información."
 
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "La base de datos %(appname)s no se pudo guardar correctamente."
 
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -782,7 +774,6 @@ msgstr "Pantalla _completa"
 msgid "_Toggle Detached/Attached"
 msgstr "_Alternar Desenlazado/Enlazado"
 
-#: ../../portable/menubar.py:270
 msgid "_About Miro"
 msgstr "_Acerca de Miro"
 
@@ -1102,7 +1093,6 @@ msgstr "en pausa"
 msgid "Remove from playlist"
 msgstr "Eliminar de la lista de reproducción"
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
 msgstr "Ejecutar automáticamente Miro cuando me conecto."
 
@@ -1248,7 +1238,6 @@ msgstr "Elegir el directorio de videos"
 msgid "Migrate existing movies?"
 msgstr "¿Migrar videos existentes?"
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
@@ -1366,7 +1355,6 @@ msgstr "Usuario:"
 msgid "Password:"
 msgstr "Contraseña:"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
 msgstr "Nuevos videos"
 
@@ -1379,21 +1367,15 @@ msgstr "Búsqueda de video"
 msgid "No Results Found"
 msgstr "No se ha encontrado ningún resultado"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
 msgid "Library"
 msgstr "Biblioteca"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
 msgid "Single Items"
 msgstr "Artículos Únicos"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
 msgstr "No hay elementos a mostrar"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr "Esta pestaña lista las descargas que no son parte del canal."
 
@@ -2000,7 +1982,6 @@ msgstr "Todos los archivos"
 msgid "Choose"
 msgstr "Elegir"
 
-#: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
 msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
@@ -2383,7 +2364,6 @@ msgstr "Marcar como no-reproducido"
 msgid "Mark as Played"
 msgstr "Marcar como no-reproducido"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr "Empezar a compartir"
 
@@ -2403,7 +2383,6 @@ msgstr "Interrumpir la descarga"
 msgid "Resume Download"
 msgstr "Reanudar la descarga"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
 msgstr "Página web"
 
