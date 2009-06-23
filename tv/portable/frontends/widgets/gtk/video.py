@@ -128,9 +128,11 @@ def make_label(text, handler, visible=True):
         lab.connect('clicked', handler)
         return lab
 
-    lab = Label(text)
+    # if the widget isn't visible, then we stick in an empty string--we just
+    # need a placeholder so that things don't move around when the item state
+    # changes.
+    lab = Label("")
     lab.set_size(0.77)
-    lab.set_color((0.0, 0.0, 0.0))
     return lab
 
 def make_image_button(image_path, handler):
