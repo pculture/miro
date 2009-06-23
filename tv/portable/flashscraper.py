@@ -78,7 +78,7 @@ def _scrape_youtube_url(url, callback):
     if components[2] == u'/watch' and 'v' in params:
         videoID = params['v'][0]
     elif components[2].startswith('/v/'):
-        videoID = re.compile(r'/v/(\w+)').match(components[2]).group(1)
+        videoID = re.compile(r'/v/([\w-]+)').match(components[2]).group(1)
     else:
         logging.warning('_scrape_youtube_url: unable to scrape YouTube Video URL')
         callback(None)
