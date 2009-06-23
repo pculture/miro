@@ -78,11 +78,10 @@ try:
 except ImportError:
     import bsddb3.db
 
-# FIXME - why do we prefer pysqlite2 over sqlite3?
 try:
-    from pysqlite2 import dbapi2 as sql
-except ImportError:
     import sqlite3 as sql
+except ImportError:
+    from pysqlite2 import dbapi2 as sql
 
 from miro.gtcache import gettext as _
 
