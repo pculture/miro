@@ -133,6 +133,28 @@ class BrowserDelegate (NSObject):
         NSWorkspace.sharedWorkspace().openURL_(url)
         listener.ignore()
 
+    def webView_didFailProvisionalLoadWithError_forFrame_(self, webview, error, frame):
+        urlError = (error.domain() == NSURLErrorDomain)
+        certError = (error.code() in (NSURLErrorServerCertificateHasBadDate, 
+                                      NSURLErrorServerCertificateHasUnknownRoot, 
+                                      NSURLErrorServerCertificateUntrusted))
+
+        if urlError and certError:
+            request = frame.provisionalDataSource().request()
+            if request is nil:
+                request = frame.dataSource().request()
+            url = request.URL()            
+            allowed = [config.get(prefs.CHANNEL_GUIDE_URL), 
+                       config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL)]
+            if url.absoluteString() in allowed:
+                # The [NSURLRequest setAllowsAnyHTTPSCertificate:forHost:] selector is
+                # not documented anywhere, so I assume it is not public. It is however 
+                # a very clean and easy way to allow us to load our channel guide from
+                # https, so let's use it here anyway :)
+                NSURLRequest.setAllowsAnyHTTPSCertificate_forHost_(YES, url.host())
+                # Now reload
+                frame.loadRequest_(request)
+
     def webView_createWebViewWithRequest_(self, webView, request):
         global jsOpened
         webView = WebView.alloc().init()
