@@ -144,7 +144,7 @@ class ChannelGuide(DDBObject):
 
         if parser:
             if parser.title:
-                self.title = unicode(parser.title)
+                self.title = unicode(parser.title.strip())
             if parser.favicon and unicode(parser.favicon) != self.favicon:
                 self.favicon = unicode(parser.favicon)
                 self.iconCache.requestUpdate(True)
