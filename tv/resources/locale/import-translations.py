@@ -58,6 +58,7 @@ def fix_names():
              os.system("mv %s %s" % (pofile, newfilename))
 
 def fix_ro_plurals():
+    bad_files = 0
     bad_str = '"Plural-Forms: nplurals=3; plural=((n == 1 ? 0: (((n %\\n"\n"100 > 19) || ((n % 100 == 0) && (n != 0))) ? 2: 1)));\\n"'
 
     good_str = '"Plural-Forms: nplurals=3; plural=((n == 1 ? 0: (((n % 100 > 19) || ((n % 100 == 0) && (n != 0))) ? 2: 1)));\\n"'
@@ -67,9 +68,11 @@ def fix_ro_plurals():
     f.close()
     if bad_str in content:
         print 'fixing ro.po'
+        bad_files += 1
         f = open(ro_path, 'wt')
         f.write(content.replace(bad_str, good_str))
         f.close()
+    print "(bad files: %d)" % bad_files
 
 def fix_pound_pipe():
     bad_files = 0
