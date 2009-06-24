@@ -323,7 +323,7 @@ class DownloadingItemsTracker(ItemTrackerBase):
     type = 'downloads'
     id = None
     def __init__(self):
-        self.view = item.Item.downloading_paused_view()
+        self.view = item.Item.download_tab_view()
         ItemTrackerBase.__init__(self)
 
 class VideoItemsTracker(ItemTrackerBase):
@@ -1093,7 +1093,7 @@ class BackendMessageHandler(messages.MessageHandler):
             item_.resume()
 
     def handle_cancel_all_downloads(self, message):
-        for item_ in item.Item.downloading_paused_view():
+        for item_ in item.Item.download_tab_view():
             if item_.is_uploading() or item_.is_uploading_paused():
                 item_.stopUpload()
             else:

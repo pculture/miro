@@ -363,11 +363,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
-    def downloading_paused_view(cls):
-        return cls.make_view("item.pendingManualDL OR "
+    def download_tab_view(cls):
+        return cls.make_view("(item.pendingManualDL OR "
                 "(rd.state in ('downloading', 'paused', 'uploading', "
-                "'uploading-paused') AND rd.main_item_id=item.id)",
-                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
+                "'uploading-paused') OR "
+                "feed.origURL == 'dtv:manualFeed') AND "
+                "rd.main_item_id=item.id)",
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id',
+                    'feed': 'item.feed_id=feed.id'})
 
     @classmethod
     def downloading_view(cls):
