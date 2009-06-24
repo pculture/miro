@@ -56,7 +56,7 @@ def check_url_exists(url):
             downloadState = None
             if i.downloader is not None:
                 downloadState = i.downloader.get_state()
-            if downloadState in ('paused', 'stopped'):
+            if downloadState in ('paused', 'stopped', 'failed'):
                 i.download()
                 text2 = _("%(appname)s will begin downloading it now.",
                           {"appname": config.get(prefs.SHORT_APP_NAME)})
