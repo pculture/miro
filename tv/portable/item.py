@@ -340,41 +340,27 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def auto_pending_view(cls):
-        def track_optimizer(obj):
-            feed = obj.get_feed()
-            return (feed.autoDownloadable and not obj.was_downloaded and
-                    (obj.eligibleForAutoDownload or feed.getEverything))
         return cls.make_view('feed.autoDownloadable AND '
                 'NOT item.was_downloaded AND '
                 '(item.eligibleForAutoDownload OR feed.getEverything)',
-                joins={'feed': 'item.feed_id=feed.id'},
-                track_optimizer=track_optimizer)
+                joins={'feed': 'item.feed_id=feed.id'})
 
     @classmethod
     def manual_pending_view(cls):
-        return cls.make_view('pendingManualDL',
-                track_optimizer=lambda obj: obj.pendingManualDL)
+        return cls.make_view('pendingManualDL')
 
     @classmethod
     def auto_downloads_view(cls):
-        def track_optimizer(obj):
-            return (obj.autoDownloaded and
-                    obj.downloader_state() in ('downloading', 'paused'))
         return cls.make_view("item.autoDownloaded AND "
                 "rd.state in ('downloading', 'paused')",
-                joins={'remote_downloader rd': 'item.downloader_id=rd.id'},
-                track_optimizer=track_optimizer)
+                joins={'remote_downloader rd': 'item.downloader_id=rd.id'})
 
     @classmethod
     def manual_downloads_view(cls):
-        def track_optimizer(obj):
-            return (not obj.autoDownloaded and not obj.pendingManualDL and
-                    obj.downloader_state() in ('downloading', 'paused'))
         return cls.make_view("NOT item.autoDownloaded AND "
                 "NOT item.pendingManualDL AND "
                 "rd.state in ('downloading', 'paused')",
-                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
-                track_optimizer=track_optimizer)
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
     def downloading_paused_view(cls):
@@ -387,43 +373,26 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def downloading_view(cls):
         return cls.make_view("rd.state in ('downloading', 'uploading') AND "
                 "rd.main_item_id=item.id",
-                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
-                track_optimizer=cls._in_downloading_view)
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
     def only_downloading_view(cls):
         return cls.make_view("rd.state='downloading' AND "
                 "rd.main_item_id=item.id",
-                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
-                track_optimizer=lambda obj: obj.is_main_item() and \
-                                 obj.downloader_state() == 'downloading')
-
-    def _in_downloading_view(self):
-        return (self.is_main_item() and
-                self.downloader_state() in ('downloading', 'uploading'))
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
     def paused_view(cls):
         return cls.make_view("rd.state in ('paused', 'uploading-paused') AND "
                 "rd.main_item_id=item.id",
-                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
-                track_optimizer=cls._in_paused_view)
-
-    def _in_paused_view(self):
-        return (self.is_main_item() and
-                self.downloader_state() in ('paused', 'uploading-paused'))
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
     def unwatched_downloaded_items(cls):
-        def track_optimizer(obj):
-            return (not obj.seen and obj.parent_id is None and
-                    obj.downloader_state() in ('finished', 'uploading',
-                        'uploading-paused'))
         return cls.make_view("NOT item.seen AND "
                 "item.parent_id IS NULL AND "
                 "rd.state in ('finished', 'uploading', 'uploading-paused')",
-                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
-                track_optimizer=track_optimizer)
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
     def newly_downloaded_view(cls):
@@ -431,14 +400,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 "(item.file_type != 'other') AND "
                 "(is_file_item OR "
                 "rd.state in ('finished', 'uploading', 'uploading-paused'))",
-                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
-                track_optimizer=cls._in_newly_downloaded_view)
-
-    def _in_newly_downloaded_view(self):
-        return (not self.seen and self.file_type != 'other' and
-                (self.is_file_item or (self.is_main_item() and
-                    self.downloader_state() in ('finished', 'uploading',
-                        'uploading-paused'))))
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
     def downloaded_view(cls):
@@ -453,14 +415,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 "(is_file_item OR "
                 "(rd.main_item_id=item.id AND "
                 "rd.state in ('finished', 'uploading', 'uploading-paused')))",
-                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
-                track_optimizer=cls._in_unique_new_video_view)
-
-    def _in_unique_new_video_view(self):
-        return (not self.seen and self.file_type == 'video' and
-                (self.is_file_item or (self.is_main_item() and
-                    self.downloader_state() in ('finished', 'uploading',
-                        'uploading-paused'))))
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
     def unique_new_audio_view(cls):
@@ -469,14 +424,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 "(is_file_item OR "
                 "(rd.main_item_id=item.id AND "
                 "rd.state in ('finished', 'uploading', 'uploading-paused')))",
-                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
-                track_optimizer=cls._in_unique_new_audio_view)
-
-    def _in_unique_new_audio_view(self):
-        return (not self.seen and self.file_type == 'audio' and
-                (self.is_file_item or (self.is_main_item() and
-                    self.downloader_state() in ('finished', 'uploading',
-                        'uploading-paused'))))
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
     def toplevel_view(cls):
@@ -488,11 +436,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def visible_feed_view(cls, feed_id):
-        def track_optimizer(obj):
-            return obj.feed_id == feed_id and not obj.deleted
         return cls.make_view('feed_id=? AND (deleted IS NULL or not deleted)',
-                (feed_id,),
-                track_optimizer=track_optimizer)
+                (feed_id,))
 
     @classmethod
     def visible_folder_view(cls, folder_id):
@@ -529,17 +474,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def feed_auto_pending_view(cls, feed_id):
-        def track_optimizer(obj):
-            feed = obj.get_feed()
-            return (obj.feed_id == feed_id and feed.autoDownloadable and
-                    not obj.was_downloaded and
-                    (obj.eligibleForAutoDownload or feed.getEverything))
         return cls.make_view('feed_id=? AND feed.autoDownloadable AND '
                 'NOT item.was_downloaded AND '
                 '(item.eligibleForAutoDownload OR feed.getEverything)',
                 (feed_id,),
-                joins={'feed': 'item.feed_id=feed.id'},
-                track_optimizer=track_optimizer)
+                joins={'feed': 'item.feed_id=feed.id'})
 
     @classmethod
     def feed_unwatched_view(cls, feed_id):

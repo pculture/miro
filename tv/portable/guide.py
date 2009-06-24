@@ -74,8 +74,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
     @classmethod
     def site_view(cls):
         default_url = config.get(prefs.CHANNEL_GUIDE_URL)
-        return cls.make_view('url != ?', (default_url,),
-                track_optimizer=lambda obj: obj.url != default_url)
+        return cls.make_view('url != ?', (default_url,))
 
     @classmethod
     def get_by_url(cls, url):

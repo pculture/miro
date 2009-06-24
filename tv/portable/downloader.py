@@ -153,10 +153,7 @@ class RemoteDownloader(DDBObject):
 
     @classmethod
     def auto_uploader_view(cls):
-        def track_optimizer(obj):
-            return obj.state == 'uploading' and not obj.manualUpload
-        return cls.make_view("state == 'uploading' AND NOT manualUpload",
-                track_optimizer=track_optimizer)
+        return cls.make_view("state == 'uploading' AND NOT manualUpload")
 
     @classmethod
     def get_by_dlid(cls, dlid):
