@@ -520,6 +520,7 @@ class RemoteDownloaderSchema(DDBObjectSchema):
         ('manualUpload', SchemaBool()),
         ('state', SchemaString()),
         ('main_item_id', SchemaInt(noneOk=True)),
+        ('child_deleted', SchemaBool()),
     ]
 
     indexes = (
@@ -619,7 +620,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]
 
-VERSION = 100
+VERSION = 101
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,

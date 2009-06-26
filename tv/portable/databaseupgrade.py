@@ -2329,3 +2329,29 @@ def upgrade100(cursor):
     cursor.execute("INSERT INTO channel_guide "
                    "(id, url, allowedURLs, updated_url, favicon, firstTime) VALUES (?, ?, ?, ?, ?, ?)",
                    (max_id + 1, audio_guide_url, "[]", audio_guide_url, favicon_url, True))
+
+def eval_container(repr):
+    """Convert a column that's stored using repr to a python list/dict."""
+    return eval(repr, __builtins__, {'datetime': datetime, 'time': time})
+
+def upgrade101(cursor):
+    """For torrent folders where a child item has been deleted, change the
+    state from 'stopped' to 'finished' and set child_deleted to True"""
+
+    cursor.execute("ALTER TABLE remote_downloader ADD child_deleted INTEGER")
+    cursor.execute("UPDATE remote_downloader SET child_deleted = 0")
+    cursor.execute("SELECT id, status FROM remote_downloader "
+            "WHERE state = 'stopped'")
+    for row in cursor.fetchall():
+        id, status = row
+        status = eval_container(status)
+        if status['endTime'] == status['startTime']:
+            # For unfinished downloads, unset the filename which got set in
+            # upgrade99
+            cursor.execute("UPDATE item SET filename=NULL "
+                    "WHERE downloader_id=?", (id,))
+        elif status['dlerType'] != 'BitTorrent':
+            status['state'] = 'finished'
+            cursor.execute("UPDATE remote_downloader "
+                    "SET state='finished', child_deleted=1, status=? "
+                    "WHERE id=?", (repr(status), id))

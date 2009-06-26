@@ -121,6 +121,7 @@ class RemoteDownloader(DDBObject):
             checkU(contentType)
         self.origURL = self.url = url
         self.itemList = []
+        self.child_deleted = False
         self.main_item_id = None
         self.dlid = generate_dlid()
         self.status = {}
@@ -148,7 +149,7 @@ class RemoteDownloader(DDBObject):
 
     @classmethod
     def finished_view(cls):
-        return cls.make_view("state in ('stopped', 'finished', 'uploading', "
+        return cls.make_view("state in ('finished', 'uploading', "
                 "'uploading-paused')")
 
     @classmethod
@@ -517,7 +518,7 @@ URL was %s""" % self.url
         return self.state
 
     def isFinished(self):
-        return self.get_state() in (u'stopped', u'finished', u'uploading', u'uploading-paused')
+        return self.get_state() in (u'finished', u'uploading', u'uploading-paused')
 
     def getTotalSize(self):
         """Returns the total size of the download in bytes
@@ -586,14 +587,14 @@ URL was %s""" % self.url
         if self.get_type() != u'bittorrent':
             logging.warn("called startUpload for non-bittorrent downloader")
             return
+        if self.child_deleted:
+            title = "Can't Resume Seeding"
+            msg = ("Seeding cannot resume because part of this torrent "
+                    "has been deleted.")
+            dialogs.MessageBoxDialog(title, msg).run()
+            return
         if self.get_state() not in (u'finished', u'uploading-paused'):
-            if self.get_state() == 'stopped':
-                title = "Can't Resume Seeding"
-                msg = ("Seeding cannot resume because part of this torrent "
-                        "has been deleted.")
-                dialogs.MessageBoxDialog(title, msg).run()
-            else:
-                logging.warn("called startUpload when downloader state "
+            logging.warn("called startUpload when downloader state "
                         "is: %s", self.get_state())
             return
         self.manualUpload = True

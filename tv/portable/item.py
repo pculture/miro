@@ -1738,10 +1738,12 @@ class FileItem(Item):
     def delete_files(self):
         if self.parent_id is not None:
             dler = self.get_parent().downloader
-            if dler:
-                dler.stop(False)
-            for sibling in self.get_parent().getChildren():
-                sibling.signal_change()
+            if dler is not None and not dler.child_deleted:
+                dler.stopUpload()
+                dler.child_deleted = True
+                dler.signal_change()
+                for sibling in self.get_parent().getChildren():
+                    sibling.signal_change(needsSave=False)
         try:
             if fileutil.isfile(self.filename):
                 fileutil.remove(self.filename)
