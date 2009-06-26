@@ -71,7 +71,7 @@ BOOST_STATIC_ASSERT(sizeof(lseek(0, 0, 0)) >= 8);
 #define O_RANDOM 0
 #endif
 
-#ifdef TORRENT_USE_WPATH
+#if TORRENT_USE_WPATH
 // for safe_convert
 #include "libtorrent/storage.hpp"
 #endif

@@ -149,6 +149,7 @@ struct bandwidth_manager
 
 	void close()
 	{
+		mutex_t::scoped_lock l(m_mutex);
 		m_abort = true;
 		m_queue.clear();
 		m_history.clear();
@@ -279,8 +280,8 @@ private:
 		if (e) return;
 
 		mutex_t::scoped_lock l(m_mutex);
-		INVARIANT_CHECK;
 		if (m_abort) return;
+		INVARIANT_CHECK;
 
 		TORRENT_ASSERT(!m_history.empty());
 

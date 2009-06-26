@@ -264,8 +264,9 @@ namespace aux {
 			, m_peer_id.begin());
 
 		// http-accepted characters:
+		// excluding ', since some buggy trackers don't support that
 		static char const printable[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-			"abcdefghijklmnopqrstuvwxyz-_.!~*'()";
+			"abcdefghijklmnopqrstuvwxyz-_.!~*()";
 
 		// the random number
 		for (unsigned char* i = m_peer_id.begin() + print.length();
@@ -588,6 +589,11 @@ namespace aux {
 		return m_ipv6_interface;
 	}
 
+	tcp::endpoint session_impl::get_ipv4_interface() const
+	{
+		return m_ipv4_interface;
+	}
+
 	session_impl::listen_socket_t session_impl::setup_listener(tcp::endpoint ep
 		, int retries, bool v6_only)
 	{
@@ -665,6 +671,9 @@ namespace aux {
 		m_listen_sockets.clear();
 		m_incoming_connection = false;
 
+		m_ipv6_interface = tcp::endpoint();
+		m_ipv4_interface = tcp::endpoint();
+
 		if (is_any(m_listen_interface.address()))
 		{
 			// this means we should open two listen sockets
@@ -680,14 +689,32 @@ namespace aux {
 				async_accept(s.sock);
 			}
 
-			s = setup_listener(
-				tcp::endpoint(address_v6::any(), m_listen_interface.port())
-				, m_listen_port_retries, true);
-
-			if (s.sock)
+			// only try to open the IPv6 port if IPv6 is installed
+			if (supports_ipv6())
 			{
-				m_listen_sockets.push_back(s);
-				async_accept(s.sock);
+				s = setup_listener(
+					tcp::endpoint(address_v6::any(), m_listen_interface.port())
+					, m_listen_port_retries, true);
+
+				if (s.sock)
+				{
+					m_listen_sockets.push_back(s);
+					async_accept(s.sock);
+				}
+			}
+
+			// set our main IPv4 and IPv6 interfaces
+			// used to send to the tracker
+			error_code ec;
+			std::vector<ip_interface> ifs = enum_net_interfaces(m_io_service, ec);
+			for (std::vector<ip_interface>::const_iterator i = ifs.begin()
+					, end(ifs.end()); i != end; ++i)
+			{
+				address const& addr = i->interface_address;
+				if (addr.is_v6() && !is_local(addr) && !is_loopback(addr))
+					m_ipv6_interface = tcp::endpoint(addr, m_listen_interface.port());
+				else if (addr.is_v4() && !is_local(addr) && !is_loopback(addr))
+					m_ipv4_interface = tcp::endpoint(addr, m_listen_interface.port());
 			}
 		}
 		else
@@ -702,39 +729,11 @@ namespace aux {
 			{
 				m_listen_sockets.push_back(s);
 				async_accept(s.sock);
-			}
-		}
 
-		m_ipv6_interface = tcp::endpoint();
-
-		for (std::list<listen_socket_t>::const_iterator i = m_listen_sockets.begin()
-			, end(m_listen_sockets.end()); i != end; ++i)
-		{
-			error_code ec;
-			tcp::endpoint ep = i->sock->local_endpoint(ec);
-			if (ec || ep.address().is_v4()) continue;
-
-			if (ep.address().to_v6() != address_v6::any())
-			{
-				// if we're listening on a specific address
-				// pick it
-				m_ipv6_interface = ep;
-			}
-			else
-			{
-				// if we're listening on any IPv6 address, enumerate them and
-				// pick the first non-local address
-				std::vector<ip_interface> const& ifs = enum_net_interfaces(m_io_service, ec);
-				for (std::vector<ip_interface>::const_iterator i = ifs.begin()
-					, end(ifs.end()); i != end; ++i)
-				{
-					if (i->interface_address.is_v4()
-						|| i->interface_address.to_v6().is_link_local()
-						|| i->interface_address.to_v6().is_loopback()) continue;
-					m_ipv6_interface = tcp::endpoint(i->interface_address, ep.port());
-					break;
-				}
-				break;
+				if (m_listen_interface.address().is_v6())
+					m_ipv6_interface = m_listen_interface;
+				else
+					m_ipv4_interface = m_listen_interface;
 			}
 		}
 
@@ -1088,6 +1087,8 @@ namespace aux {
 		torrent_map::iterator least_recently_scraped = m_torrents.begin();
 		int num_paused_auto_managed = 0;
 
+		int num_checking = 0;
+		int num_queued = 0;
 		for (torrent_map::iterator i = m_torrents.begin();
 			i != m_torrents.end();)
 		{
@@ -1098,6 +1099,8 @@ namespace aux {
 			else
 				++uncongested_torrents;
 
+			if (t.state() == torrent_status::checking_files) ++num_checking;
+			else if (t.state() == torrent_status::queued_for_checking)
 			if (t.is_auto_managed() && t.is_paused() && !t.has_error())
 			{
 				++num_paused_auto_managed;
@@ -1121,6 +1124,23 @@ namespace aux {
 
 			t.second_tick(m_stat, tick_interval);
 			++i;
+		}
+
+		// some people claim that there sometimes can be cases where
+		// there is no torrent being checked, but there are torrents
+		// waiting to be checked. I have never seen this, and I can't 
+		// see a way for it to happen. But, if it does, start one of
+		// the queued torrents
+		if (num_checking == 0 && num_queued > 0)
+		{
+			TORRENT_ASSERT(false);
+			check_queue_t::iterator i = std::min_element(m_queued_for_checking.begin()
+				, m_queued_for_checking.end(), boost::bind(&torrent::queue_position, _1)
+				< boost::bind(&torrent::queue_position, _2));
+			if (i != m_queued_for_checking.end())
+			{
+				(*i)->start_checking();
+			}
 		}
 
 		if (m_settings.rate_limit_ip_overhead)
@@ -1384,7 +1404,6 @@ namespace aux {
 				> bind(&torrent::seed_rank, _2, boost::ref(m_settings)));
 		}
 
-		int total_running = 0;
 		for (std::vector<torrent*>::iterator i = downloaders.begin()
 			, end(downloaders.end()); i != end; ++i)
 		{
@@ -1393,14 +1412,12 @@ namespace aux {
 				&& hard_limit > 0)
 			{
 				--hard_limit;
-				++total_running;
 				continue;
 			}
 
 			if (num_downloaders > 0 && hard_limit > 0)
 			{
 				--hard_limit;
-				++total_running;
 				--num_downloaders;
 				if (t->is_paused()) t->resume();
 			}
@@ -1418,7 +1435,6 @@ namespace aux {
 				&& hard_limit > 0)
 			{
 				--hard_limit;
-				++total_running;
 				continue;
 			}
 
@@ -1426,7 +1442,6 @@ namespace aux {
 			{
 				--hard_limit;
 				--num_seeds;
-				++total_running;
 				if (t->is_paused()) t->resume();
 			}
 			else
@@ -1637,6 +1652,7 @@ namespace aux {
 #endif
 				TORRENT_ASSERT(false);
 			}
+			m_io_service.reset();
 		}
 		while (!m_abort);
 
@@ -1934,14 +1950,14 @@ namespace aux {
 			if (m_natpmp.get())
 			{
 				if (m_udp_mapping[0] != -1) m_natpmp->delete_mapping(m_udp_mapping[0]);
-				m_udp_mapping[0] = m_natpmp->add_mapping(natpmp::tcp
+				m_udp_mapping[0] = m_natpmp->add_mapping(natpmp::udp
 					, m_dht_settings.service_port
 					, m_dht_settings.service_port);
 			}
 			if (m_upnp.get())
 			{
 				if (m_udp_mapping[1] != -1) m_upnp->delete_mapping(m_udp_mapping[1]);
-				m_udp_mapping[1] = m_upnp->add_mapping(upnp::tcp
+				m_udp_mapping[1] = m_upnp->add_mapping(upnp::udp
 					, m_dht_settings.service_port
 					, m_dht_settings.service_port);
 			}
@@ -2237,6 +2253,17 @@ namespace aux {
 		abort();
 		TORRENT_ASSERT(m_connections.empty());
 
+		// we need to wait for the disk-io thread to
+		// die first, to make sure it won't post any
+		// more messages to the io_service containing references
+		// to disk_io_pool inside the disk_io_thread. Once
+		// the main thread has handled all the outstanding requests
+		// we know it's safe to destruct the disk thread.
+#if defined(TORRENT_VERBOSE_LOGGING) || defined(TORRENT_LOGGING)
+		(*m_logger) << time_now_string() << " waiting for disk io thread\n";
+#endif
+		m_disk_thread.join();
+
 #ifndef TORRENT_DISABLE_GEO_IP
 		if (m_asnum_db) GeoIP_delete(m_asnum_db);
 		if (m_country_db) GeoIP_delete(m_country_db);
@@ -2245,13 +2272,6 @@ namespace aux {
 		(*m_logger) << time_now_string() << " waiting for main thread\n";
 #endif
 		m_thread->join();
-
-		TORRENT_ASSERT(m_torrents.empty());
-
-#if defined(TORRENT_VERBOSE_LOGGING) || defined(TORRENT_LOGGING)
-		(*m_logger) << time_now_string() << " waiting for disk io thread\n";
-#endif
-		m_disk_thread.join();
 
 		TORRENT_ASSERT(m_torrents.empty());
 		TORRENT_ASSERT(m_connections.empty());
