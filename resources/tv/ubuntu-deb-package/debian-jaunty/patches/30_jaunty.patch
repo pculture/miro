@@ -1,0 +1,38 @@
+Index: portable/util.py
+===================================================================
+--- portable/util.py	(revision 9421)
++++ portable/util.py	(working copy)
+@@ -35,7 +35,10 @@
+ import os
+ import random
+ import re
+-import sha
++try:
++    from hashlib import sha1 as sha
++except ImportError:
++    from sha import sha as sha
+ import string
+ import sys
+ import urllib
+@@ -241,7 +244,7 @@
+     try:
+         data = f.read()
+         metainfo = lt.bdecode(data)
+-        infohash = sha.sha(lt.bencode(metainfo['info'])).digest()
++        infohash = sha(lt.bencode(metainfo['info'])).digest()
+         return infohash
+     finally:
+         f.close()
+Index: portable/feedparser.py
+===================================================================
+--- portable/feedparser.py	(revision 9421)
++++ portable/feedparser.py	(working copy)
+@@ -2455,7 +2455,7 @@
+                 if _debug: sys.stderr.write('date handler function must return 9-tuple\n')
+                 raise ValueError
+             map(int, date9tuple)
+-            return date9tuple
++            return tuple(date9tuple)
+         except Exception, e:
+             if _debug: sys.stderr.write('%s raised %s\n' % (handler.__name__, repr(e)))
+             pass

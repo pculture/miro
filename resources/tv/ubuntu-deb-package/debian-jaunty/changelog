@@ -1,0 +1,25 @@
+miro (2.0.5-0pcf1) jaunty; urgency=low
+
+  * (OSX) fixed handling of ssl certificate errors on OSX
+  * #11917 FIXED Youtube Videos not downloading - "Error File not found"
+  * #11867 FIXED blip.tv site title is blank after restart
+  * #10695 FIXED (GTK-X11) Miro complains that my disk is full when it is not
+  * #11879 FIXED (GTK-X11) (r9694) Miro guide isn't displaying
+  * #10465 FIXED (GTK-X11) Miro 2.0.3 fails to start up on a Turkish system
+  * #11262 FIXED (GTK-X11) python 2.6 support
+  * #10801 FIXED (GTK-X11) Miro ends with segmentation fault on openSuSE 11.1 -- 
+    define MOZILLA_FIVE_HOME. Thanks Marco!
+  * #11583 FIXED (GTK-X11) Can't compile against seamonkey xulrunner package. Thanks Larry! 
+  * #11794 FIXED updated to libtorrent 0.14.4
+  * updated translations from Launchpad on 6/22/2009 
+
+ -- Will Kahn-Greene <will.guaraldi@pculture.org>  Fri, 26 Jun 2009 12:49:14 -0400
+
+miro (2.0.4-0pcf1) jaunty; urgency=low
+
+  * initial jaunty release
+  * 30_jaunty.patch fixes miro.real, nixes sha deprecation warning, and 
+    fixes the setup.py file
+  * 40_no_xine_hack.patch disables the xine hack
+
+ -- Will Kahn-Greene <will.guaraldi@pculture.org>  Tue, 28 Apr 2009 10:50:18 -0400

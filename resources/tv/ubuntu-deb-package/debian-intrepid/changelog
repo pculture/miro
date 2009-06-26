@@ -1,3 +1,46 @@
+miro (2.0.5-0pcf1) intrepid; urgency=low
+
+  * (OSX) fixed handling of ssl certificate errors on OSX
+  * #11917 FIXED Youtube Videos not downloading - "Error File not found"
+  * #11867 FIXED blip.tv site title is blank after restart
+  * #10695 FIXED (GTK-X11) Miro complains that my disk is full when it is not
+  * #11879 FIXED (GTK-X11) (r9694) Miro guide isn't displaying
+  * #10465 FIXED (GTK-X11) Miro 2.0.3 fails to start up on a Turkish system
+  * #11262 FIXED (GTK-X11) python 2.6 support
+  * #10801 FIXED (GTK-X11) Miro ends with segmentation fault on openSuSE 11.1 -- 
+    define MOZILLA_FIVE_HOME. Thanks Marco!
+  * #11583 FIXED (GTK-X11) Can't compile against seamonkey xulrunner package. Thanks Larry! 
+  * #11794 FIXED updated to libtorrent 0.14.4
+  * updated translations from Launchpad on 6/22/2009 
+
+ -- Will Kahn-Greene <will.guaraldi@pculture.org>  Fri, 26 Jun 2009 12:49:14 -0400
+
+miro (2.0.4-0pcf2) intrepid; urgency=low
+
+  * tweaked the gst_extractor.py path; this fixes thumbnail extraction when using
+    gstreamer as the renderer
+
+ -- Will Kahn-Greene <will.guaraldi@pculture.org>  Sun, 05 Apr 2009 18:26:04 -0400
+
+miro (2.0.4-0pcf1) intrepid; urgency=low
+
+  * #11636 FIXED disabled veoh search
+  * updated translations from Launchpad on 3/25/2009 
+
+ -- Will Kahn-Greene <will.guaraldi@pculture.org>  Tue, 31 Mar 2009 20:59:38 -0400
+
+miro (2.0.3-0pcf1) intrepid; urgency=low
+
+  * #11611 FIXED MiroUnicodeError?: text 'http://www.sermon.net/new' is
+    not a unicode string (type:<type 'str'>)
+  * #11607 FIXED Miro doesn't start playback of external files
+  * #11618 FIXED Sidebar -> Copy url active for channel folder
+  * #11615 FIXED After cmd-T toggle, and stop, playback menu items all
+    active when video was not playing
+  * updated translations from Launchpad on 3/11/2009
+
+ -- Will Kahn-Greene <will.guaraldi@pculture.org>  Fri, 13 Mar 2009 14:25:08 -0400
+
 miro (2.0.2-0pcf1) intrepid; urgency=low
 
   * #11385 FIXED support for both libtorrent 0.13 and 0.14
@@ -9,34 +52,34 @@ miro (2.0.2-0pcf1) intrepid; urgency=low
   * #11460 FIXED Non-UTF8 locales break things
   * #11477 FIXED Miro shows no videos in a specific invalid feed
   * #11478 FIXED TypeError?: 'NoneType?' object is unsubscriptable
-  * #11479 FIXED AttributeError?: 'AppController?' object has no attribute 
+  * #11479 FIXED AttributeError?: 'AppController?' object has no attribute
     'pausedDownloaders'
   * #11474 FIXED Can't process cookie expiration. Thanks Uwe!
   * #11022 FIXED "File name:" string is bold. Thanks Zach!
   * #11245 FIXED OPML import/export issues with non-ascii filenames
   * #11525 FIXED migrating folders with non-ascii characters
   * #11527 FIXED watched directories with non-ascii characters
-  * #11528 FIXED playback fails for items in directories with non-ascii 
+  * #11528 FIXED playback fails for items in directories with non-ascii
     characters
   * #11544 FIXED handling for site type in subscriptions
   * #11546 FIXED pause all does not pause queued downloads
-  * #11435 FIXED re-worked xine driver code so that it respects xine-driver 
+  * #11435 FIXED re-worked xine driver code so that it respects xine-driver
     property
-  * #11557 FIXED non-ascii directory names are not displayed properly in 
+  * #11557 FIXED non-ascii directory names are not displayed properly in
     Folder panel of preferences
   * #11575 FIXED non-ascii movies dir - startup check dir name mangled
   * #11546 FIXED Pause All does not pause queued downloads
   * #11554 FIXED first time startup search, non-ascii directory
-  * #11560 FIXED crash when updated torrent that is in a folder with other 
+  * #11560 FIXED crash when updated torrent that is in a folder with other
     files
-  * #11588 FIXED gstreamerrenderer passes "python" as executable for 
-    gst_extractor -- now uses sys.executable 
+  * #11588 FIXED gstreamerrenderer passes "python" as executable for
+    gst_extractor -- now uses sys.executable
   * updated translations synced from LaunchPad? on 3/04/2009
-  * #11516 Updated to libtorrent 0.14.2 
+  * #11516 Updated to libtorrent 0.14.2
   * #11518 NEW Added metavid.org search support. Thanks Uwe!
   * #11461 NEW Added 5min.com search support. Thanks Uwe!
   * #3858 NEW Added EveryZing? search support. Thanks Uwe!
-  * #11458 NEW Added vimeo.com url scraping support. Thanks Uwe! 
+  * #11458 NEW Added vimeo.com url scraping support. Thanks Uwe!
 
  -- Will Kahn-Greene <will.guaraldi@pculture.org>  Sun, 08 Mar 2009 09:48:37 -0400
 
@@ -45,8 +88,8 @@ miro (2.0.1-0pcf1) intrepid; urgency=low
   * Updated upgrade patch.
   * #11402 FIXED downloader process on gtkx11 uses same python executable as miro process
   * #11418 FIXED attributerror with getElementThumbnail
-  * #11415 FIXED updating from 1.2.8 deletes videos from feeds that have 
-    multiple enclosures per item and Miro picks a different one between 1.2.8 and 2.0 
+  * #11415 FIXED updating from 1.2.8 deletes videos from feeds that have
+    multiple enclosures per item and Miro picks a different one between 1.2.8 and 2.0
 
  -- Will Kahn-Greene <will.guaraldi@pculture.org>  Wed, 11 Feb 2009 18:06:38 -0500
 
