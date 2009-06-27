@@ -21,7 +21,7 @@ Build-Depends: cdbs,
                xulrunner-1.9-dev,
                pkg-config,
                python-libtorrent,
-               libtorrent-rasterbar2
+               libtorrent-rasterbar2,
                libtorrent-rasterbar-dev
 Standards-Version: 3.7.3
 
