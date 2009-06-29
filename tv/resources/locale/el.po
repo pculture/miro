@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-06-08 19:44-0400\n"
-"PO-Revision-Date: 2009-04-02 14:43+0000\n"
-"Last-Translator: Νιάνιος Ρωμανός <Unknown>\n"
+"PO-Revision-Date: 2009-06-26 19:01+0000\n"
+"Last-Translator: dimitris1971 <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-06-23 00:41+0000\n"
+"X-Launchpad-Export-Date: 2009-06-29 23:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -48,20 +48,20 @@ msgstr "Κάκη γραμμή κατάστασης: %(msg)s"
 #: ../../portable/httpclient.py:144 ../../portable/httpclient.py:173
 #: ../../portable/downloader.py:298
 msgid "File not found"
-msgstr "Το αρχείο δεν βρέθηκε"
+msgstr "Το αρχείο δε βρέθηκε"
 
 #: ../../portable/httpclient.py:145
 msgid "Got 404 status code"
-msgstr "Σφάλμα 404"
+msgstr "Got 404 status code"
 
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"
-msgstr "Η πιστοποίηση απέτυχε"
+msgstr "Authorization failed"
 
 #: ../../portable/httpclient.py:157
 #: ../../portable/frontends/widgets/crashdialog.py:48
 msgid "Internal Error"
-msgstr "Εσωτερικό σφάλμα"
+msgstr "Internal Error"
 
 #: ../../portable/httpclient.py:158
 msgid "Pipeline request never started"
@@ -69,11 +69,11 @@ msgstr "Ο αγωγός δεδομένων  (pipeline)ζήτησε να μην �
 
 #: ../../portable/httpclient.py:162
 msgid "Timeout"
-msgstr "Χρονική λήξη"
+msgstr "Χρονικό όριο"
 
 #: ../../portable/httpclient.py:167
 msgid "Invalid URL"
-msgstr "Μη έγκυρη διεύθυνση δικτύου URL"
+msgstr "Μη έγκυρο URL"
 
 #: ../../portable/httpclient.py:178
 msgid "Read error"
@@ -90,7 +90,7 @@ msgstr "Κώδικας Άγνωστου Σφάλματος"
 
 #: ../../portable/httpclient.py:408
 msgid "Connection closed"
-msgstr "Η σύνδεση τερματίστηκε"
+msgstr "Η σύνδεση έκλεισε"
 
 #: ../../portable/httpclient.py:829
 msgid "Unknown"
@@ -107,7 +107,7 @@ msgstr "Όδηγός του Miro"
 #: ../../portable/frontends/widgets/statictabs.py:97
 #: ../../portable/frontends/widgets/itemlistcontroller.py:419
 msgid "Video Search"
-msgstr "Αναζήτηση βίντεο"
+msgstr "Video Search"
 
 #: ../../portable/frontends/widgets/statictabs.py:108
 #: ../../portable/frontends/widgets/itemlistcontroller.py:508
@@ -116,7 +116,7 @@ msgstr "Ήχος"
 
 #: ../../portable/frontends/widgets/statictabs.py:118
 msgid "Downloading"
-msgstr "Γίνεται λήψη"
+msgstr "Λήψη"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
@@ -128,7 +128,7 @@ msgstr "Προσθήκη αντικειμένων σε μια υπάρχουσα
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
-msgstr "Διαγραφή από τη Βιβλιοθήκη"
+msgstr "Remove From the Library"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
 #: ../../portable/frontends/widgets/gtk/video.py:244
@@ -137,7 +137,7 @@ msgstr "Διαγραφή από τη Βιβλιοθήκη"
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:128
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
 msgid "Delete"
-msgstr "Διαγραφή"
+msgstr "Αφαίρεση"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:94
 #: ../../portable/frontends/widgets/itemcontextmenu.py:191
@@ -1195,17 +1195,17 @@ msgstr ""
 #: ../../portable/httpclient.py:147
 #, python-format
 msgid "Bad Status Code: %(code)s"
-msgstr ""
+msgstr "Κακή κατάσταση κώδικα: %(code)s"
 
 #: ../../portable/httpclient.py:163
 #, python-format
 msgid "Connection to %(host)s timed out"
-msgstr ""
+msgstr "Η σύνδεση στο %(host)s ξεπέρασε το χρονικό όριο"
 
 #: ../../portable/httpclient.py:168
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr ""
+msgstr "\"%(url)s\" is not a valid URL"
 
 #: ../../portable/httpclient.py:174
 #, python-format
@@ -1220,15 +1220,15 @@ msgstr ""
 #: ../../portable/frontends/widgets/statictabs.py:113
 #: ../../portable/frontends/widgets/itemlistcontroller.py:514
 msgid "Other"
-msgstr ""
+msgstr "Προγράμματα"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
 msgid "Existing playlist:"
-msgstr ""
+msgstr "Existing playlist:"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
 msgid "New playlist:"
-msgstr ""
+msgstr "New playlist:"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just This Item"

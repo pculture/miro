@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-06-08 19:44-0400\n"
-"PO-Revision-Date: 2009-06-07 09:07+0000\n"
-"Last-Translator: Daniël H. <Unknown>\n"
+"PO-Revision-Date: 2009-06-29 19:50+0000\n"
+"Last-Translator: @nton <anton@klijnsma.net>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-06-23 00:41+0000\n"
+"X-Launchpad-Export-Date: 2009-06-29 23:17+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -142,7 +142,7 @@ msgstr "Intern probleem: niet gereed om te versturen"
 
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
-msgstr "Miro gids"
+msgstr "Miro Kanaalgids"
 
 #: ../../portable/frontends/widgets/statictabs.py:97
 #: ../../portable/frontends/widgets/itemlistcontroller.py:419
@@ -205,7 +205,7 @@ msgstr "Voeg toe aan afspeellijst"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:99
 #: ../../portable/frontends/widgets/application.py:474
 msgid "Rename Item"
-msgstr "Hernoem"
+msgstr "Item hernoemen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:101
 msgid "Revert Item Name"
@@ -2495,7 +2495,7 @@ msgstr "Adobe Flash installeren"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
 msgid "When I click the red close button:"
-msgstr "Wanneer ik het venster sluit:"
+msgstr "Wanneer ik klik op de rode sluit knop:"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Close to tray so that downloads can continue."
@@ -2503,7 +2503,7 @@ msgstr "Minimaliseer naar systeemvak en blijf downloaden."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:133
 msgid "Close to tray?"
-msgstr "Minimaliseren naar systeemvak?"
+msgstr "Minimaliseren naar het systeemvak?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:192
 msgid "Error Bombing Item"
@@ -2511,7 +2511,7 @@ msgstr "Probleem 'bomben' item"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:194
 msgid "Error Recommending Item"
-msgstr "Probleem delen item"
+msgstr "Fout bij Aanbevelen Item"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:196
 msgid "Error Opening Website"
@@ -2584,6 +2584,10 @@ msgid ""
 "\n"
 "Would you like %(name)s to look for media files on your computer?"
 msgstr ""
+"%(name)s kan naar media bestanden zoeken op jouw computer om jou te helpen "
+"met het organiseren van jouw verzameling.\n"
+"\n"
+"Wil jij dat %(name)s gaat zoeken naar media bestanden op jouw computer?"
 
 #: ../../portable/frontends/widgets/crashdialog.py:54
 #, python-format
@@ -2598,7 +2602,7 @@ msgstr "Inhoud weergeven"
 
 #: ../../portable/frontends/widgets/style.py:255
 msgid "Currently Playing"
-msgstr ""
+msgstr "Momenteel aan het afspelen"
 
 #: ../../portable/frontends/widgets/displays.py:372
 #, python-format
@@ -2659,7 +2663,11 @@ msgid ""
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
 msgstr[0] ""
+"Een van deze items is een directory. Bij het verwijderen van een directory "
+"wordt ook de inhoud verwijderd."
 msgstr[1] ""
+"Sommige van deze items zijn directory's. Bij het verwijderen van een "
+"directory wordt ook de inhoud verwijderd."
 
 #: ../../portable/frontends/widgets/application.py:749
 msgid "Remove site"
@@ -2695,20 +2703,22 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:590
 msgid "By default, video and audio items expire after:"
-msgstr ""
+msgstr "Video en audio items verlopen standaard na:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:603
 msgid ""
 "Resume playing a video or audio item from the point it was last stopped."
 msgstr ""
+"Afspelen van video of audio item hervatten vanaf het punt waar het de "
+"laatste keer gestopt is."
 
 #: ../../portable/frontends/widgets/prefpanel.py:608
 msgid "Play video and audio items one after another"
-msgstr ""
+msgstr "Video en audio items achter elkaar afspelen"
 
 #: ../../portable/frontends/widgets/prefpanel.py:609
 msgid "Stop after each video or audio item"
-msgstr ""
+msgstr "Na elk video of audio item stoppen"
 
 #: ../../portable/frontends/widgets/removefeeds.py:82
 #, python-format
@@ -2746,7 +2756,11 @@ msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
 "%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
 msgstr[0] ""
+"%(count)d download in de wachtrij vanwege nog niet afgespeelde items (zie "
+"instellingen)"
 msgstr[1] ""
+"%(count)d downloads in de wachtrij vanwege nog niet afgespeelde items (zie "
+"instellingen)"
 
 #: ../../portable/frontends/widgets/tablist.py:534
 msgid "Remove Sites"
@@ -2758,7 +2772,7 @@ msgstr "BIBLIOTHEEK"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:539
 msgid "Back to feed"
-msgstr ""
+msgstr "Terug naar kanaal"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:727
 msgid "View:"
@@ -2766,7 +2780,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:730
 msgid "View|All"
-msgstr ""
+msgstr "Beeld|Alles"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:732
 msgid "Non Feed"
@@ -2774,7 +2788,7 @@ msgstr "Geen podcasts"
 
 #: ../../portable/frontends/widgets/diagnostics.py:110
 msgid "Total db objects in memory:"
-msgstr ""
+msgstr "Aantal db objecten in het geheugen"
 
 #: ../../portable/startup.py:99
 #, python-format
@@ -2786,7 +2800,7 @@ msgstr ""
 #: ../../portable/singleclick.py:61
 #, python-format
 msgid "%(appname)s will begin downloading it now."
-msgstr ""
+msgstr "%(appname)s gaat met het downloaden beginnen."
 
 #: ../../portable/singleclick.py:137
 #, python-format
@@ -2795,11 +2809,15 @@ msgid ""
 "\n"
 "URL: %(url)s"
 msgstr ""
+"%(appname)s kan het bestand met de volgende URL niet downloaden:\n"
+"\n"
+"URL: %(url)s"
 
 #: ../../portable/dl_daemon/download.py:1101
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr ""
+"Het Torrent bestand voor dit item is buiten %(appname)s om verwijderd."
 
 #: ../../portable/menubar.py:270
 #, python-format
@@ -2808,11 +2826,11 @@ msgstr "_Over %(name)s"
 
 #: ../../portable/item.py:1190
 msgid "Contents appear in the library"
-msgstr ""
+msgstr "Inhoud verschijnt in de bibliotheek"
 
 #: ../../portable/item.py:1195
 msgid "Contents:"
-msgstr ""
+msgstr "Inhoud:"
 
 #: ../../portable/displaytext.py:67
 #, python-format
@@ -2859,11 +2877,12 @@ msgstr "%(appname)s help"
 #, python-format
 msgid "You must restart %(appname)s for renderer changes to take effect."
 msgstr ""
+"Herstart %(appname)s om de veranderingen in de weergave te activeren."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
 #, python-format
 msgid "A new version of %(appname)s is available for download."
-msgstr ""
+msgstr "Een nieuwe versie van %(appname)s is beschikbaar om te downloaden."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
 #, python-format
@@ -2874,11 +2893,15 @@ msgid ""
 "You should quit %(appname)s now and start it up again after Adobe Flash has "
 "been installed."
 msgstr ""
+"De browser zal de website openen waar je Adobe Flash kan downloaden en "
+"installeren.\n"
+"Sluit %(appname)s nu af en start het opnieuw nadat Adobe Flash geïnstalleerd "
+"is."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
 #, python-format
 msgid "Quit %(appname)s completely."
-msgstr ""
+msgstr "%(appname)s helemaal afsluiten."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:134
 #, python-format

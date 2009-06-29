@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-06-08 19:44-0400\n"
-"PO-Revision-Date: 2009-05-02 16:50+0000\n"
-"Last-Translator: Eraser <Unknown>\n"
+"PO-Revision-Date: 2009-06-29 20:21+0000\n"
+"Last-Translator: lyyser <logard.1961@gmail.com>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-06-23 00:41+0000\n"
+"X-Launchpad-Export-Date: 2009-06-29 23:17+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
@@ -1338,7 +1338,7 @@ msgstr "Ühenduse viga: %(msg)s"
 #: ../../portable/httpclient.py:119
 #, python-format
 msgid "Bad Status Line: %(msg)s"
-msgstr ""
+msgstr "Halb olekuriba: %(msg)s"
 
 #: ../../portable/httpclient.py:124
 #, python-format
@@ -1358,7 +1358,7 @@ msgstr ""
 #: ../../portable/httpclient.py:139
 #, python-format
 msgid "%(host)s closed connection"
-msgstr ""
+msgstr "%(host)s sulgeb ühendust"
 
 #: ../../portable/httpclient.py:147
 #, python-format
@@ -1426,16 +1426,16 @@ msgstr "Lõpeta jagamine"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:114
 msgid "Resume Seeding"
-msgstr ""
+msgstr "Jätka jagamist"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:141
 msgid "File in Browser"
-msgstr ""
+msgstr "Sirvimisel olev fail"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:143
 #, python-format
 msgid "File in %(progname)s"
-msgstr ""
+msgstr "Failis %(progname)s"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:145
 msgid "File on Disk"
@@ -1443,7 +1443,7 @@ msgstr "Fail küvakettalt"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:148
 msgid "View"
-msgstr ""
+msgstr "Vaade"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:186
 #, python-format
@@ -1487,7 +1487,7 @@ msgstr "Automaatselt aeguvad videod:"
 #: ../../portable/frontends/widgets/feedsettingspanel.py:95
 #, python-format
 msgid "Watched %(expiration)s (Default)"
-msgstr ""
+msgstr "Jälgitav %(expiration)s (Default)"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
@@ -1516,27 +1516,27 @@ msgstr ""
 #: ../../portable/frontends/widgets/feedsettingspanel.py:139
 #, python-format
 msgid "Keep %(number)s (Default)"
-msgstr ""
+msgstr "Hoia %(number)s (Default)"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:141
 msgid "Keep 0"
-msgstr ""
+msgstr "Hoia 0"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:142
 msgid "Keep 20"
-msgstr ""
+msgstr "Hoia 20"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:143
 msgid "Keep 50"
-msgstr ""
+msgstr "Hoia 50"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:144
 msgid "Keep 100"
-msgstr ""
+msgstr "Hoia 100"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:145
 msgid "Keep 1000"
-msgstr ""
+msgstr "Hoia 1000"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause Auto-Downloading when this many items are unplayed:"
@@ -1549,12 +1549,12 @@ msgstr "Uudisvoogude seaded"
 #: ../../portable/frontends/widgets/firsttimedialog.py:63
 #, python-format
 msgid "%(name)s First Time Setup"
-msgstr ""
+msgstr "%(name)s esmakautus"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:122
 #, python-format
 msgid "Welcome to the %(name)s First Time Setup"
-msgstr ""
+msgstr "Teretulemast %(name)s esmakautusele"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:126
 #, python-format
@@ -1570,7 +1570,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:138
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
-msgstr ""
+msgstr "Kas sul meeldib %(name)s käivituks alglaadimisel?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:163
 #, python-format
@@ -1596,7 +1596,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:273
 msgid "Searching for media files"
-msgstr ""
+msgstr "Otsing meedia failidele"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:321
 #, python-format
@@ -1609,8 +1609,8 @@ msgstr[1] ""
 #, python-format
 msgid "found %(count)s media file"
 msgid_plural "found %(count)s media files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "leitud %(count)s media faili"
+msgstr[1] "leitdu %(count)s media failisi"
 
 #: ../../portable/frontends/widgets/crashdialog.py:54
 #, python-format
@@ -1631,7 +1631,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:232
 msgid "From"
-msgstr ""
+msgstr "Alates"
 
 #: ../../portable/frontends/widgets/style.py:233
 msgid "File name:"
@@ -1648,24 +1648,24 @@ msgstr "Näita vähem"
 #: ../../portable/frontends/widgets/style.py:238
 #, python-format
 msgid "Reveal in %(progname)s"
-msgstr ""
+msgstr "Ava %(progname)s"
 
 #: ../../portable/frontends/widgets/style.py:238
 #: ../../portable/frontends/widgets/displays.py:390
 msgid "Reveal File"
-msgstr ""
+msgstr "Ava fail"
 
 #: ../../portable/frontends/widgets/style.py:239
 msgid "Display Contents"
-msgstr ""
+msgstr "Kuva sisu"
 
 #: ../../portable/frontends/widgets/style.py:244
 msgid "Seeders"
-msgstr ""
+msgstr "Jagajad"
 
 #: ../../portable/frontends/widgets/style.py:245
 msgid "Leechers"
-msgstr ""
+msgstr "Tõmbajad"
 
 #: ../../portable/frontends/widgets/style.py:246
 msgid "Upload Rate"
@@ -1677,7 +1677,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:248
 msgid "Down Rate"
-msgstr ""
+msgstr "Madal kiirus"
 
 #: ../../portable/frontends/widgets/style.py:253
 msgid "queued for autodownload"
@@ -1685,11 +1685,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:255
 msgid "Currently Playing"
-msgstr ""
+msgstr "Hetkel esitamisel"
 
 #: ../../portable/frontends/widgets/style.py:259
 msgid "Stop seeding"
-msgstr ""
+msgstr "Peata jagamine"
 
 #: ../../portable/frontends/widgets/style.py:571
 #: ../../portable/frontends/widgets/style.py:1164
@@ -1713,7 +1713,7 @@ msgstr "Jäta vahele"
 
 #: ../../portable/frontends/widgets/displays.py:430
 msgid "Open Externally"
-msgstr ""
+msgstr "Ava väliselt"
 
 #: ../../portable/frontends/widgets/displays.py:542
 #, python-format
@@ -1756,7 +1756,7 @@ msgstr "Ava veebilehitsejas"
 
 #: ../../portable/frontends/widgets/browser.py:102
 msgid "Download this video"
-msgstr ""
+msgstr "Lae alla see video"
 
 #: ../../portable/frontends/widgets/application.py:135
 msgid "Movies directory gone"
@@ -1792,7 +1792,7 @@ msgstr "Ava faile..."
 #: ../../portable/frontends/widgets/application.py:325
 #: ../../portable/frontends/widgets/application.py:330
 msgid "Open Files - Error"
-msgstr ""
+msgstr "Tõrge - faili avamisel"
 
 #: ../../portable/frontends/widgets/application.py:368
 msgid "New Download"
@@ -1804,7 +1804,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:370
 msgid "New Download - Invalid URL"
-msgstr ""
+msgstr "Lae uuesti - vigane URL"
 
 #: ../../portable/frontends/widgets/application.py:371
 msgid ""
@@ -1817,12 +1817,12 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:379
 #, python-format
 msgid "%(appname)s is up to date"
-msgstr ""
+msgstr "%(appname)s ei vaja uuendamist"
 
 #: ../../portable/frontends/widgets/application.py:381
 #, python-format
 msgid "%(appname)s is up to date!"
-msgstr ""
+msgstr "%(appname)s ei vaja uuendamist"
 
 #: ../../portable/frontends/widgets/application.py:405
 msgid "Remove item"
@@ -1854,8 +1854,8 @@ msgstr[1] ""
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Kas oled kinnel et soovid kustudad seda?"
+msgstr[1] "Kas oled kinnel et soovid kustuda kõik %(count)d kirjed?"
 
 #: ../../portable/frontends/widgets/application.py:441
 msgid ""
@@ -1871,7 +1871,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:553
 msgid "Add Site - Invalid URL"
-msgstr ""
+msgstr "Lisa sait - vigane URL"
 
 #: ../../portable/frontends/widgets/application.py:554
 msgid ""
@@ -1888,7 +1888,7 @@ msgstr "OPML faili importimine - Viga"
 #: ../../portable/frontends/widgets/application.py:686
 #: ../../portable/frontends/widgets/tablist.py:579
 msgid "Rename Feed Folder"
-msgstr ""
+msgstr "Nimeta ümber voogamis kaust"
 
 #: ../../portable/frontends/widgets/application.py:687
 #, python-format
@@ -1907,35 +1907,35 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:697
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
-msgstr ""
+msgstr "Sisesta uus nimi esitusloendile %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:702
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
-msgstr ""
+msgstr "Sisesta uus nimi esitusloendi kaustale %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:705
 #: ../../portable/frontends/widgets/tablist.py:529
 msgid "Rename Site"
-msgstr ""
+msgstr "Nimeta ümber lehekülg"
 
 #: ../../portable/frontends/widgets/application.py:706
 #, python-format
 msgid "Enter a new name for the site %(name)s"
-msgstr ""
+msgstr "Sisesta lehekülje uus nimi %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:749
 msgid "Remove site"
 msgid_plural "Remove sites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Eemalda lehekülg"
+msgstr[1] "Eemalda lehekülied"
 
 #: ../../portable/frontends/widgets/application.py:751
 #, python-format
 msgid "Are you sure you want to remove this site?"
 msgid_plural "Are you sure you want to remove these %(count)s sites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Oled sa kinnel et soovid eemaltada lehekülge?"
+msgstr[1] "Oled sa kinnel et soovid eemaltada need %(count)s lehküljed?"
 
 #: ../../portable/frontends/widgets/application.py:1061
 msgid "Message"
@@ -1943,11 +1943,11 @@ msgstr "Sõnum"
 
 #: ../../portable/frontends/widgets/application.py:1086
 msgid "Migrating Files"
-msgstr ""
+msgstr "Faili siirdamine"
 
 #: ../../portable/frontends/widgets/application.py:1096
 msgid "Migrating files"
-msgstr ""
+msgstr "Faili siirdamine"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:90
 msgid "Single and external downloads"
@@ -1959,7 +1959,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:96
 msgid "Seeding"
-msgstr ""
+msgstr "Jagamine"
 
 #: ../../portable/frontends/widgets/prefpanel.py:267
 #, python-format
@@ -2063,7 +2063,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:608
 msgid "Play video and audio items one after another"
-msgstr ""
+msgstr "Esita audio ja video lugusi üksteise järgi"
 
 #: ../../portable/frontends/widgets/prefpanel.py:609
 msgid "Stop after each video or audio item"
@@ -2071,7 +2071,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:621
 msgid "Feeds"
-msgstr ""
+msgstr "Vood"
 
 #: ../../portable/frontends/widgets/prefpanel.py:624
 msgid "Disk space"
@@ -2079,7 +2079,7 @@ msgstr "Kettaruum"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:58
 msgid "New Search Feed"
-msgstr ""
+msgstr "Uus otsingu voog"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:59
 msgid "A search feed contains items that match a search term."
@@ -2087,7 +2087,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:87
 msgid "Feed:"
-msgstr ""
+msgstr "Voog:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:132
 msgid "Add new feed to this section:"
@@ -2123,8 +2123,8 @@ msgstr ""
 #: ../../portable/frontends/widgets/removefeeds.py:49
 msgid "Remove Feed"
 msgid_plural "Remove Feeds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Eemalda voog"
+msgstr[1] "Eemalda vood"
 
 #: ../../portable/frontends/widgets/removefeeds.py:57
 msgid "Are you sure you want to remove this feed:"
@@ -2160,11 +2160,11 @@ msgstr "Püsilink"
 
 #: ../../portable/frontends/widgets/gtk/video.py:292
 msgid "Pop-in"
-msgstr ""
+msgstr "Pop-sees"
 
 #: ../../portable/frontends/widgets/gtk/video.py:297
 msgid "Pop-out"
-msgstr ""
+msgstr "Pop-väljas"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:67
 #, python-format
@@ -2179,7 +2179,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/gtk/trayicon.py:74
 #, python-format
 msgid "Pause All Downloads (%(downloading)d)"
-msgstr ""
+msgstr "Peata kõik allalaadimised (%(downloading)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:77
 #, python-format
@@ -2189,7 +2189,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/gtk/window.py:522
 #, python-format
 msgid "About %(appname)s"
-msgstr ""
+msgstr "Teave %(appname)s"
 
 #: ../../portable/frontends/widgets/gtk/window.py:537
 #, python-format
@@ -2250,7 +2250,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/newfeed.py:110
 msgid "Add Feed"
-msgstr ""
+msgstr "Lisa voog"
 
 #: ../../portable/frontends/widgets/newfeed.py:111
 msgid "Enter the URL of the feed to add"
@@ -2258,7 +2258,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/newfeed.py:122
 msgid "Add Feed - Invalid URL"
-msgstr ""
+msgstr "Lisa voog _ vigane URL"
 
 #: ../../portable/frontends/widgets/newfeed.py:123
 msgid ""
@@ -2274,15 +2274,15 @@ msgstr "Eemalda sait"
 
 #: ../../portable/frontends/widgets/tablist.py:534
 msgid "Remove Sites"
-msgstr ""
+msgstr "Eemalda lehekülg"
 
 #: ../../portable/frontends/widgets/tablist.py:578
 msgid "Update Feeds In Folder"
-msgstr ""
+msgstr "Uuenda kausta vooge"
 
 #: ../../portable/frontends/widgets/tablist.py:585
 msgid "Update Feed Now"
-msgstr ""
+msgstr "Uuenda voogu nüüd"
 
 #: ../../portable/frontends/widgets/tablist.py:588
 msgid "Rename"
@@ -2294,15 +2294,15 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:597
 msgid "Update Feeds Now"
-msgstr ""
+msgstr "Uuenda vooge nüüd"
 
 #: ../../portable/frontends/widgets/tablist.py:662
 msgid "LIBRARY"
-msgstr ""
+msgstr "LOEND"
 
 #: ../../portable/frontends/widgets/tablist.py:664
 msgid "SITES"
-msgstr ""
+msgstr "LEHEKÜLJED"
 
 #: ../../portable/frontends/widgets/tablist.py:666
 msgid "FEEDS"
@@ -2310,15 +2310,15 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:668
 msgid "AUDIO FEEDS"
-msgstr ""
+msgstr "Heli vood"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:539
 msgid "Back to feed"
-msgstr ""
+msgstr "Voole tagasi"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:288
 msgid "Feed"
-msgstr ""
+msgstr "Kanal"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:291
 msgid "Length"
@@ -2358,12 +2358,12 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemlistwidgets.py:583
 #, python-format
 msgid "%(rate)s uploading"
-msgstr ""
+msgstr "%(rate)s üleslaadimise"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:585
 #, python-format
 msgid "%(rate)s downloading"
-msgstr ""
+msgstr "%(rate)s allalaadimise"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:631
 msgid "Share feed"
@@ -2375,7 +2375,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:719
 msgid "Unwatched"
-msgstr ""
+msgstr "Automaatne"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:727
 msgid "View:"
@@ -2383,7 +2383,7 @@ msgstr "Vaata:"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:730
 msgid "View|All"
-msgstr ""
+msgstr "Vaata|Kõikl"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:732
 msgid "Non Feed"
@@ -2399,7 +2399,7 @@ msgstr ""
 
 #: ../../portable/searchengines.py:172
 msgid "Search All"
-msgstr ""
+msgstr "Otsi kõike"
 
 #: ../../portable/messages.py:988 ../../portable/item.py:1057
 msgid "queued for download"
@@ -2479,7 +2479,7 @@ msgstr ""
 #: ../../portable/feed.py:1667
 #, python-format
 msgid "Search All: %(text)s"
-msgstr ""
+msgstr "Otsi kogu: %(text)s"
 
 #: ../../portable/dialogs.py:102
 msgid "Create Feed"
@@ -2491,15 +2491,15 @@ msgstr "Lisa kaust"
 
 #: ../../portable/dialogs.py:113
 msgid "Open in External Browser"
-msgstr ""
+msgstr "Ava välises veebilehitsejas"
 
 #: ../../portable/dialogs.py:115
 msgid "Subscribe"
-msgstr ""
+msgstr "Telli"
 
 #: ../../portable/dialogs.py:116
 msgid "Stop Watching"
-msgstr ""
+msgstr "Peata vaatamine"
 
 #: ../../portable/singleclick.py:61
 #, python-format
@@ -2529,7 +2529,7 @@ msgstr ""
 #: ../../portable/dl_daemon/download.py:867
 #, python-format
 msgid "%(amount)s MB required to store this video"
-msgstr ""
+msgstr "%(amount)s MB vaja selle video salvestamiseks"
 
 #: ../../portable/dl_daemon/download.py:665
 #, python-format
@@ -2572,7 +2572,7 @@ msgstr "_Valikud"
 
 #: ../../portable/menubar.py:212
 msgid "Add _Feed"
-msgstr ""
+msgstr "Lisa_voog"
 
 #: ../../portable/menubar.py:214
 msgid "New Searc_h Feed"
@@ -2613,7 +2613,7 @@ msgstr ""
 #: ../../portable/menubar.py:270
 #, python-format
 msgid "_About %(name)s"
-msgstr ""
+msgstr "_Teave %(name)s"
 
 #: ../../portable/menubar.py:294
 msgid "_Sidebar"
@@ -2665,7 +2665,7 @@ msgstr ""
 
 #: ../../portable/item.py:1195
 msgid "Contents:"
-msgstr ""
+msgstr "Sisu:"
 
 #: ../../portable/opml.py:194
 msgid ""
@@ -2716,13 +2716,13 @@ msgstr[1] "Aegub: %(count)d tunni pärast"
 #, python-format
 msgid "Expires: %(count)d minute"
 msgid_plural "Expires: %(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Aegub: %(count)d minuti"
+msgstr[1] "Aegub: %(count)d minutit"
 
 #: ../../portable/displaytext.py:141
 #, python-format
 msgid "%(month)s %(dayofmonth)s, %(year)s"
-msgstr ""
+msgstr "%(month)s %(dayofmonth)s, %(year)s"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:132
 msgid "Add to Library"
@@ -2730,60 +2730,61 @@ msgstr "Lisa videokogusse"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:207
 msgid "Pop Out"
-msgstr ""
+msgstr "Pop välja"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:210
 msgid "Pop In"
-msgstr ""
+msgstr "Pop sees"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 #, python-format
 msgid "Hide %(appname)s"
-msgstr ""
+msgstr "Taanda %(appname)s"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:148
 #, python-format
 msgid "Quit %(appname)s"
-msgstr ""
+msgstr "Välju %(appname)s"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:169
 msgid "Present Half Size"
-msgstr ""
+msgstr "Olemas poolsuurust"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:170
 msgid "Present Actual Size"
-msgstr ""
+msgstr "Olemas tegelik suurus"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
 msgid "Present Double Size"
-msgstr ""
+msgstr "Olemas topeltsuurus"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:173
 msgid "Present Video"
-msgstr ""
+msgstr "Olemas video"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:192
 #, python-format
 msgid "%(appname)s Help"
-msgstr ""
+msgstr "%(appname)s Abi"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
 msgid "Renderer options:"
-msgstr ""
+msgstr "Renderdaja seaded:"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
 #, python-format
 msgid "You must restart %(appname)s for renderer changes to take effect."
 msgstr ""
+"Sa pead taaskäivitama %(appname)s et renderdaja muutused käivituksid."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:74
 msgid "Video renderer:"
-msgstr ""
+msgstr "Video renderdaja:"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
 #, python-format
 msgid "A new version of %(appname)s is available for download."
-msgstr ""
+msgstr "Uus versioon%(appname)s on allalaadimiseks saadaval."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
 #, python-format
@@ -2805,7 +2806,7 @@ msgstr ""
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
 #, python-format
 msgid "Quit %(appname)s completely."
-msgstr ""
+msgstr "Välju %(appname)s on terviklik."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:134
 #, python-format

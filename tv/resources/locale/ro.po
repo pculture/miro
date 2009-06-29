@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-06-08 19:44-0400\n"
-"PO-Revision-Date: 2009-06-23 00:09+0000\n"
-"Last-Translator: Lucian Lupescu <lupescu81@yahoo.com>\n"
+"PO-Revision-Date: 2009-06-23 19:03+0000\n"
+"Last-Translator: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1 ? 0: (((n % 100 > 19) || ((n % 100 "
 "== 0) && (n != 0))) ? 2: 1));\n"
-"X-Launchpad-Export-Date: 2009-06-23 00:41+0000\n"
+"X-Launchpad-Export-Date: 2009-06-29 23:17+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -1376,7 +1376,7 @@ msgstr "Redă toate neredate (%(unplayed)d)"
 #: ../../portable/frontends/widgets/gtk/trayicon.py:74
 #, python-format
 msgid "Pause All Downloads (%(downloading)d)"
-msgstr "Suspendă toate transferurile (%(downloading)d)"
+msgstr "Suspendă toate `transferurile (%(downloading)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:77
 #, python-format
@@ -1623,7 +1623,7 @@ msgstr "Partajează flux"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:637
 msgid "Settings"
-msgstr "Setări"
+msgstr "Preferințe"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:643
 msgid "Remove feed"
@@ -1631,7 +1631,7 @@ msgstr "Șterge flux"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:719
 msgid "Unwatched"
-msgstr "Nevizionat"
+msgstr "Nevizualizate"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:742
 msgid "Name"
@@ -2560,29 +2560,29 @@ msgstr ""
 #: ../../portable/frontends/widgets/statictabs.py:113
 #: ../../portable/frontends/widgets/itemlistcontroller.py:514
 msgid "Other"
-msgstr ""
+msgstr "Altele"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just This Item"
-msgstr ""
+msgstr "Redă doar acest element"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:112
 msgid "Stop Seeding"
-msgstr ""
+msgstr "Oprește trimiterea"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:114
 msgid "Resume Seeding"
-msgstr ""
+msgstr "Reîncepe trimiterea"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:63
 #, python-format
 msgid "%(name)s First Time Setup"
-msgstr ""
+msgstr "Configurare inițială %(name)s"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:122
 #, python-format
 msgid "Welcome to the %(name)s First Time Setup"
-msgstr ""
+msgstr "Bun venit la meniul de configurare inițială al %(name)s"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:126
 #, python-format
@@ -2594,16 +2594,22 @@ msgid ""
 "This way, downloads in progress can finish downloading and new media files "
 "can be downloaded in the background, ready when you want to watch."
 msgstr ""
+"Următoarele câteva ecrane vă vor ajuta să configurați %(name)s pentru a "
+"funcționa după preferințele dumneavoastră.\\n\n"
+"\\n\n"
+"Vă recomandăm să configurați %(name)s să fie pornit la pornirea "
+"calculatorului. Astfel, descărcările incomplete pot fi terminate și noi "
+"fișiere media se pot transfera în fundal, pentru a fi gata de vizualizare."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:138
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
-msgstr ""
+msgstr "Doriți să lansați %(name)s la pornirea calculatorului?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:163
 #, python-format
 msgid "Completing the %(name)s First Time Setup"
-msgstr ""
+msgstr "Terminarea configurării inițiale a %(name)s"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:167
 #, python-format
@@ -2613,6 +2619,10 @@ msgid ""
 "\n"
 "Would you like %(name)s to look for media files on your computer?"
 msgstr ""
+"%(name)s poate căuta fișierele media de pe calculator pentru a vă ajuta să "
+"organizați colecția dumneavoastră.\n"
+"\n"
+"Doriți ca %(name)s să caute fișiere media de pe calculator?"
 
 #: ../../portable/frontends/widgets/crashdialog.py:54
 #, python-format
@@ -2620,14 +2630,16 @@ msgid ""
 "%(appname)s has encountered an internal error.  You can help us track down "
 "this problem and fix it by submitting an error report."
 msgstr ""
+"%(appname)s a întâlnit o eroare internă. Ne puteți ajuta să găsim eroarea și "
+"s-o rectificăm trimițând un raport de eroare."
 
 #: ../../portable/frontends/widgets/style.py:239
 msgid "Display Contents"
-msgstr ""
+msgstr "Afișează conținutul"
 
 #: ../../portable/frontends/widgets/style.py:255
 msgid "Currently Playing"
-msgstr ""
+msgstr "În curs de redare"
 
 #: ../../portable/frontends/widgets/displays.py:372
 #, python-format
@@ -2635,36 +2647,39 @@ msgid ""
 "%(appname)s can't play this file.  You may be able to open it with a "
 "different program"
 msgstr ""
+"%(appname)s nu poate reda acest fișier. S-ar putea să puteți să-l deschideți "
+"cu un alt program"
 
 #: ../../portable/frontends/widgets/displays.py:430
 msgid "Open Externally"
-msgstr ""
+msgstr "Deschide extern"
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
 msgid "%(count)d Site Selected"
 msgid_plural "%(count)d Sites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d sit selectat"
+msgstr[1] "%(count)d situri selectate"
+msgstr[2] "%(count)d de situri selectate"
 
 #: ../../portable/frontends/widgets/browser.py:102
 msgid "Download this video"
-msgstr ""
+msgstr "Descarcă acest clip video"
 
 #: ../../portable/frontends/widgets/application.py:306
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
-msgstr ""
+msgstr "Fișierul \"%(filename)s\" a fost șters din afara lui %(appname)s."
 
 #: ../../portable/frontends/widgets/application.py:379
 #, python-format
 msgid "%(appname)s is up to date"
-msgstr ""
+msgstr "%(appname)s este actualizat"
 
 #: ../../portable/frontends/widgets/application.py:381
 #, python-format
 msgid "%(appname)s is up to date!"
-msgstr ""
+msgstr "%(appname)s este actualizat!"
 
 #: ../../portable/frontends/widgets/application.py:419
 msgid ""
@@ -2674,7 +2689,14 @@ msgid_plural ""
 "Some of these items are folders.  Delete/Removeing a folder will "
 "delete/remove it's contents"
 msgstr[0] ""
+"Unul dintre aceste elemente este un dosar. Ștergerea/înlăturarea unui dosar "
+"va ștege/înlătura și conținutul acestuia."
 msgstr[1] ""
+"Unele dintre aceste elemente sunt dosare. Ștergerea/înlăturarea unui dosar "
+"va ștege/înlătura și conținutul acestuia."
+msgstr[2] ""
+"Unele dintre aceste elemente sunt dosare. Ștergerea/înlăturarea unui dosar "
+"va ștege/înlătura și conținutul acestuia."
 
 #: ../../portable/frontends/widgets/application.py:441
 msgid ""
@@ -2682,25 +2704,34 @@ msgid ""
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
 msgstr[0] ""
+"Unul dintre aceste elemente este un dosar. Ștergerea unui dosar va ștege și "
+"conținutul acestuia."
 msgstr[1] ""
+"Unele dintre aceste elemente sunt dosare. Ștergerea unui dosar va ștege și "
+"conținutul acestuia."
+msgstr[2] ""
+"Unele dintre aceste elemente sunt dosare. Ștergerea unui dosar va ștege și "
+"conținutul acestuia."
 
 #: ../../portable/frontends/widgets/application.py:749
 msgid "Remove site"
 msgid_plural "Remove sites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Elimină situl"
+msgstr[1] "Elimină siturile"
+msgstr[2] "Elimină siturile"
 
 #: ../../portable/frontends/widgets/application.py:751
 #, python-format
 msgid "Are you sure you want to remove this site?"
 msgid_plural "Are you sure you want to remove these %(count)s sites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Sigur doriți să ștergeți acest sit?"
+msgstr[1] "Sigur doriți să ștergeți aceste %(count)s situri?"
+msgstr[2] "Sigur doriți să ștergeți aceste %(count)s de situri?"
 
 #: ../../portable/frontends/widgets/prefpanel.py:267
 #, python-format
 msgid "Automatically run %(appname)s when I log in."
-msgstr ""
+msgstr "Pornește automat %(appname)s când pornesc calculatorul."
 
 #: ../../portable/frontends/widgets/prefpanel.py:454
 #, python-format
@@ -2709,29 +2740,34 @@ msgid ""
 "migrate your existing downloads there? (Currently downloading movies will "
 "not be moved until they finish.)"
 msgstr ""
+"Ați ales un nou dosar pentru descărcarea filmelor. Vreți ca %(appname)s să "
+"mute elementele deja descărcate acolo? (Filmele care se descarcă acum nu vor "
+"fi mutate până nu se termină.)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:549
 msgid ""
 "Watch for new video and audio items in these folders and include them in "
 "library:"
 msgstr ""
+"Urmărește video-uri nou adăugate în aceste directoare și include-le în "
+"bibliotecă:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:590
 msgid "By default, video and audio items expire after:"
-msgstr ""
+msgstr "În mod implicit fișierele video și audio expiră după:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:603
 msgid ""
 "Resume playing a video or audio item from the point it was last stopped."
-msgstr ""
+msgstr "Reia redarea video sau audio de unde a fost oprită ultima dată."
 
 #: ../../portable/frontends/widgets/prefpanel.py:608
 msgid "Play video and audio items one after another"
-msgstr ""
+msgstr "Redă elementele video sau audio unul după altul"
 
 #: ../../portable/frontends/widgets/prefpanel.py:609
 msgid "Stop after each video or audio item"
-msgstr ""
+msgstr "Oprește redarea după fiecare clip video sau audio"
 
 #: ../../portable/frontends/widgets/removefeeds.py:82
 #, python-format
@@ -2740,6 +2776,9 @@ msgid ""
 "still appear in your library.  You can stop watching watched folders "
 "completely in the %(appname)s preference panel."
 msgstr ""
+"Dosarele urmărite vor fi eliminate din bara laterale, dar conținutul lor va "
+"apărea în continuare în bibliotecă. Puteți să opriți urmărirea dosarelor de "
+"tot în panoul de preferințe %(appname)s."
 
 #: ../../portable/frontends/widgets/gtk/video.py:292
 msgid "Pop-in"
@@ -2752,7 +2791,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/gtk/window.py:522
 #, python-format
 msgid "About %(appname)s"
-msgstr ""
+msgstr "Despre %(appname)s"
 
 #: ../../portable/frontends/widgets/gtk/window.py:537
 #, python-format
@@ -2760,6 +2799,9 @@ msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
 "%(trademark)s"
 msgstr ""
+"%(copyright)s.  Consultați fișierul license.txt pentru detalii de "
+"licențiere.\n"
+"%(trademark)s"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:258
 #, python-format
@@ -2767,23 +2809,30 @@ msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
 "%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
 msgstr[0] ""
+"%(count)d descărcare în coadă datorată unor elemente neredate (consulați "
+"meniul Preferințe)"
 msgstr[1] ""
+"%(count)d descărcări în coadă datorate unor elemente neredate (consulați "
+"meniul Preferințe)"
+msgstr[2] ""
+"%(count)d de descărcări în coadă datorate unor elemente neredate (consulați "
+"meniul Preferințe)"
 
 #: ../../portable/frontends/widgets/tablist.py:534
 msgid "Remove Sites"
-msgstr ""
+msgstr "Șterge situl"
 
 #: ../../portable/frontends/widgets/tablist.py:662
 msgid "LIBRARY"
-msgstr ""
+msgstr "BIBLIOTECĂ"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:539
 msgid "Back to feed"
-msgstr ""
+msgstr "Înapoi la flux"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:727
 msgid "View:"
-msgstr ""
+msgstr "Vizualizare:"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:730
 msgid "View|All"
@@ -2791,11 +2840,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:732
 msgid "Non Feed"
-msgstr ""
+msgstr "Non flux"
 
 #: ../../portable/frontends/widgets/diagnostics.py:110
 msgid "Total db objects in memory:"
-msgstr ""
+msgstr "Număr total de obiecte db în memorie:"
 
 #: ../../portable/startup.py:99
 #, python-format
@@ -2803,11 +2852,13 @@ msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
 "report at %(url)s."
 msgstr ""
+"O eroare necunoscuta a împiedicat pornirea %(appname)s. Vă rugăm să "
+"raportați eroarea la %(url)s."
 
 #: ../../portable/singleclick.py:61
 #, python-format
 msgid "%(appname)s will begin downloading it now."
-msgstr ""
+msgstr "%(appname)s va începe acum să-l descarce."
 
 #: ../../portable/singleclick.py:137
 #, python-format
@@ -2816,50 +2867,57 @@ msgid ""
 "\n"
 "URL: %(url)s"
 msgstr ""
+"%(appname)s nu poate să descarce un fișier la acest URL:\n"
+"\n"
+"URL: %(url)s"
 
 #: ../../portable/dl_daemon/download.py:1101
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr ""
+"Fișierul torrent pentru acest element a fost șters din afara lui %(appname)s."
 
 #: ../../portable/menubar.py:270
 #, python-format
 msgid "_About %(name)s"
-msgstr ""
+msgstr "_Despre %(name)s"
 
 #: ../../portable/item.py:1190
 msgid "Contents appear in the library"
-msgstr ""
+msgstr "Conținutul apare în bibliotecă"
 
 #: ../../portable/item.py:1195
 msgid "Contents:"
-msgstr ""
+msgstr "Conținut:"
 
 #: ../../portable/displaytext.py:67
 #, python-format
 msgid "%(num).0f day"
 msgid_plural "%(num).0f days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f zi"
+msgstr[1] "%(num).0f zile"
+msgstr[2] "%(num).0f de zile"
 
 #: ../../portable/displaytext.py:70
 #, python-format
 msgid "%(num).0f hr"
 msgid_plural "%(num).0f hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f oră"
+msgstr[1] "%(num).0f ore"
+msgstr[2] "%(num).0f de ore"
 
 #: ../../portable/displaytext.py:73
 #, python-format
 msgid "%(num).0f min"
 msgid_plural "%(num).0f mins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f minut"
+msgstr[1] "%(num).0f minute"
+msgstr[2] "%(num).0f de minute"
 
 #: ../../portable/displaytext.py:141
 #, python-format
 msgid "%(month)s %(dayofmonth)s, %(year)s"
-msgstr ""
+msgstr "%(dayofmonth)s %(month)s %(year)s"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:207
 msgid "Pop Out"
@@ -2872,27 +2930,29 @@ msgstr ""
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 #, python-format
 msgid "Hide %(appname)s"
-msgstr ""
+msgstr "Ascunde %(appname)s"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:148
 #, python-format
 msgid "Quit %(appname)s"
-msgstr ""
+msgstr "Închide %(appname)s"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:192
 #, python-format
 msgid "%(appname)s Help"
-msgstr ""
+msgstr "Ajutor %(appname)s"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
 #, python-format
 msgid "You must restart %(appname)s for renderer changes to take effect."
 msgstr ""
+"Trebuie să reporniți %(appname)s pentru ca schimbările de afișare să ia "
+"efect."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
 #, python-format
 msgid "A new version of %(appname)s is available for download."
-msgstr ""
+msgstr "O nouă versiune a %(appname)s este disponibilă pentru descărcare."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
 #, python-format
@@ -2903,11 +2963,16 @@ msgid ""
 "You should quit %(appname)s now and start it up again after Adobe Flash has "
 "been installed."
 msgstr ""
+"Navigatorul dumneavoastră va încărca situl web de unde puteți descărca și "
+"instala Adobe Flash.\n"
+"\n"
+"Închideți acum %(appname)s, și porniți-l din nou după ce s-a instalat Adobe "
+"Flash."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
 #, python-format
 msgid "Quit %(appname)s completely."
-msgstr ""
+msgstr "Închide %(appname)s de tot."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:134
 #, python-format
@@ -2915,3 +2980,6 @@ msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
+"Când apăsați butonul roșu de închidere, doriți să trimiteți %(appname)s în "
+"zona de notificare sau să-l închideți? Puteți schimba preferința mai târziu "
+"din meniul Opțiuni."
