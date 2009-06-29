@@ -142,13 +142,11 @@ def query_revision(fn):
     """
     try:
         # first try straight-up svn
-        p = subprocess.Popen(["svn", "info", fn], stdout=subprocess.PIPE)
+        p = subprocess.Popen(["svn", "info", "--xml", fn], stdout=subprocess.PIPE)
         info = p.stdout.read()
         p.stdout.close()
-        url_match = re.search("URL: (.*)", info)
-        # FIXME - this doesn't work on non English systems because the word
-        # we're looking for will be in another language!
-        revision_match = re.search("Revision: (.*)", info)
+        url_match = re.search("<url>(.*)</url>", info)
+        revision_match = re.search('revision="([^"]*)"', info)
 
         # if that doesn't work, try git over svn.
         if not url_match:
