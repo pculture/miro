@@ -28,7 +28,10 @@
 
 """screensaver.py -- Enable/Disable the screensaver."""
 
+import os
 import dbus
+import gobject
+import subprocess
 
 class GnomeScreenSaverManager(object):
     def __init__(self):
@@ -57,9 +60,40 @@ class GnomeScreenSaverManager(object):
         obj.UnInhibit(self.cookie)
         self.cookie = None
 
+class XScreenSaverManager(object):
+    def __init__(self):
+        self.timer = None
+
+    def call_xss(self, command):
+        rc = None
+        devnull = open(os.devnull, 'w')
+        try:
+            rc = subprocess.call(['xscreensaver-command', command],
+                                 stdout=devnull, stderr=devnull)
+        except OSError:
+            pass
+        devnull.close()
+        return rc == 0
+
+    def should_use(self):
+        return call_xss('-time')
+
+    def deactivate(self):
+        return call_xss('-deactivate')
+
+    def disable(self):
+        self.timer = gobject.timer_add(1000, self.deactivate)
+
+    def enable(self):
+        if self.timer is None:
+            raise AssertionError("disable() must be called before enable()")
+        gobject.source_remove(self.timer)
+        self.timer = None
+
 managers = [
     GnomeScreenSaverManager(),
-    # TODO: make a KDE version and a generic xscreensaver version
+    XScreenSaverManager(),
+    # TODO: make a KDE3 version?
 ]
 
 def create_manager():
