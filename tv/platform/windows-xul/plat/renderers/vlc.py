@@ -91,6 +91,130 @@ def make_string_list(args):
 
 STOPPED, PAUSED, PLAYING = range(3)
 
+class VLCSniffer:
+    def __init__(self):
+        plugin_dir = os.path.join(resources.appRoot(), 'vlc-plugins')
+        self.exc = VLCException()
+
+        # Note: if you need vlc output to stdout, remove the --quiet
+        # from the list of arguments.
+        vlc_args = [
+            "vlc", '--quiet', 
+            '--nostats', '--intf', 'dummy', '--volume=0',
+            '--no-video-title-show', '--plugin-path', plugin_dir
+        ]
+        self.vlc = libvlc.libvlc_new(len(vlc_args),
+                make_string_list(vlc_args), self.exc.ref())
+        self.exc.check()
+        self.media_player = libvlc.libvlc_media_player_new(self.vlc,
+                                                           self.exc.ref())
+        self.exc.check()
+        self._callback_ref = VLC_EVENT_CALLBACK(self.event_callback)
+        self._filename = None
+        self.media_playing = None
+        self.callback_info = None
+
+    def event_callback(self, p_event, p_user_data):
+        event = p_event[0]
+        # Copy the values from event, the memory might be freed by the time
+        # handle_event gets called.
+        obj = event.p_obj
+        type = event.type
+        arg1 = event.arg1
+        arg2 = event.arg2
+        gobject.idle_add(self.handle_event, obj, type, arg1, arg2)
+
+    def handle_event(self, obj, type, state, arg2):
+        if type != libvlc_MediaStateChanged:
+            return 
+        if obj != self.media_playing:
+            return
+        if self.callback_info is None:
+            # We the video has already been opened (successfully or not)
+            if state == libvlc_Ended:
+                app.playback_manager.on_movie_finished()
+
+        else:
+            # We are waiting to see if the video opens successfully
+            if state in (libvlc_Error, libvlc_Ended):
+                self._open_failure()
+            elif state == libvlc_Playing:
+                libvlc.libvlc_media_player_pause(self.media_player,
+                                                 self.exc.ref())
+                self.exc.check()
+                self._open_success()
+
+    def _open_success(self):
+        # FIXME - sometimes _open_success is called, but callback_info
+        # is None.  not sure why this happens.
+        item_type = "failure"
+        if self.callback_info:
+            video_tracks = libvlc.libvlc_video_get_track_count(self.media_player, 
+                                                               self.exc.ref())
+            if video_tracks > 0:
+                item_type = "video"
+            else:
+                item_type = "audio"                
+        try:
+            libvlc.libvlc_media_player_stop(self.media_player, self.exc.ref())
+            self.exc.check()
+        except VLCError, vlce:
+            logging.warning("sniffer reset failed: %s", vlce)
+        self.callback_info[0](item_type)
+        self.callback_info = None
+        self.media_playing = None
+
+    def _open_failure(self):
+        try:
+            libvlc.libvlc_media_player_stop(self.media_player, self.exc.ref())
+            self.exc.check()
+        except VLCError, vlce:
+            logging.warning("sniffer reset failed: %s", vlce)
+        self.callback_info[1]()
+        self.callback_info = None
+        self.media_playing = None
+
+    def select_file(self, filename, success_callback, error_callback):
+        """starts playing the specified file"""
+
+        # filenames coming in are unicode objects, VLC expects utf-8 strings.
+        filename = filename.encode('utf-8')
+        self._filename = filename
+        self.callback_info = (success_callback, error_callback)
+        self.started_playing = STOPPED
+
+        mrl = 'file:///%s' % filename
+        media = libvlc.libvlc_media_new(self.vlc, ctypes.c_char_p(mrl),
+                self.exc.ref())
+        self.exc.check()
+        if media is None:
+            raise AssertionError("libvlc_media_new returned NULL for %s" % filename)
+        event_manager = libvlc.libvlc_media_event_manager(media, 
+                                                          self.exc.ref())
+        self.exc.check()
+        libvlc.libvlc_event_attach(event_manager, 
+                                   libvlc_MediaStateChanged,
+                                   self._callback_ref, 
+                                   None, 
+                                   self.exc.ref())
+        self.exc.check()
+        try:
+            libvlc.libvlc_media_player_set_media(self.media_player, 
+                                                 media,
+                                                 self.exc.ref())
+            self.exc.check()
+        finally:
+            libvlc.libvlc_media_release(media)
+        self.media_playing = media
+        # We want to load the media to test if we can play it.  The best way
+        # that I can see to do that is to play it, then pause once we see it's
+        # opened in the event_callack method.
+        libvlc.libvlc_media_player_play(self.media_player, self.exc.ref())
+        self.exc.check()
+
+        libvlc.libvlc_media_player_pause(self.media_player, self.exc.ref())
+        self.exc.check()
+
 class VLCRenderer:
     def __init__(self):
         logging.info("Initializing VLC")
@@ -329,18 +453,7 @@ class VLCRenderer:
     def get_rate(self):
         pass
 
+_sniffer = VLCSniffer()
+
 def get_item_type(item_info, success_callback, error_callback):
-    # FIXME - vlc 0.9.9a and earlier don't have the
-    # libvlc_video_get_track_count function which we really need
-    # to determine whether the media item has video tracks or not.
-    # So instead we have to "fake it".
-    #
-    # What we do here is return the item_info.file_type except in
-    # cases where the way the file_type is determined (by the file
-    # extension) is ambiguous.  In those cases, we return "video".
-    file_extension = os.path.splitext(item_info.video_path)[1]
-    if file_extension == ".ogg":
-        logging.info("** overriding file_type to 'video'")
-        success_callback("video")
-    else:
-        success_callback(item_info.file_type)
+    _sniffer.select_file(item_info.video_path, success_callback, error_callback)
