@@ -191,12 +191,23 @@ class LiveStorage:
         self.cursor.execute("SELECT COUNT(*) FROM sqlite_master "
                 "WHERE type='table' and name = 'dtv_objects'")
         if self.cursor.fetchone()[0] > 0:
-            self._backup_database("pre80")
+            current_version = self._get_variable(VERSION_KEY)
+            if current_version >= 80:
+                # we have a dtv_objects table, but we also have a database
+                # that's been converted to the new-style.  What happened was
+                # that the user ran a new version of Miro, than re-ran and old
+                # version.  Just deleted dtv_objects.
+                if util.chatter:
+                    logging.info("deleting dtv_objects table")
+                self.cursor.execute("DROP TABLE dtv_objects")
+            else:
+                # Need to update an old-style database
+                self._backup_database("pre80")
 
-            if util.chatter:
-                logging.info("converting pre 2.1 database")
-            convert20database.convert(self.cursor)
-            self._set_version(80)
+                if util.chatter:
+                    logging.info("converting pre 2.1 database")
+                convert20database.convert(self.cursor)
+                self._set_version(80)
 
     def _get_variable(self, name):
         self.cursor.execute("SELECT serialized_value FROM dtv_variables "
