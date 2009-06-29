@@ -55,7 +55,7 @@ class Browser(Widget):
         self.view.setResourceLoadDelegate_(self.delegate)
         self.view.setFrameLoadDelegate_(self.delegate)
         self.view.setUIDelegate_(self.delegate)
-        self.view.setCustomUserAgent_(u"%s/%s (%s)" % \
+        self.view.setApplicationNameForUserAgent_("%s/%s (%s)" % \
                                       (config.get(prefs.SHORT_APP_NAME),
                                        config.get(prefs.APP_VERSION),
                                        config.get(prefs.PROJECT_URL),))
