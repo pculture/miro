@@ -2298,6 +2298,10 @@ def upgrade99(cursor):
             cursor.execute("UPDATE item SET filename=? WHERE downloader_id=?",
                     (filename, downloader_id))
 
+def eval_container(repr):
+    """Convert a column that's stored using repr to a python list/dict."""
+    return eval(repr, __builtins__, {'datetime': datetime, 'time': time})
+
 def upgrade100(cursor):
     """Adds the Miro audio guide as a site for anyone who doesn't
     already have it and isn't using a theme.
@@ -2330,9 +2334,12 @@ def upgrade100(cursor):
                    "(id, url, allowedURLs, updated_url, favicon, firstTime) VALUES (?, ?, ?, ?, ?, ?)",
                    (max_id + 1, audio_guide_url, "[]", audio_guide_url, favicon_url, True))
 
-def eval_container(repr):
-    """Convert a column that's stored using repr to a python list/dict."""
-    return eval(repr, __builtins__, {'datetime': datetime, 'time': time})
+    # add the new Audio Guide to the site tablist
+    cursor.execute('SELECT tab_ids FROM taborder_order WHERE type=?',('site',))
+    tab_ids = eval_container(cursor.fetchone()[0])
+    tab_ids.append(max_id + 1)
+    cursor.execute('UPDATE taborder_order SET tab_ids=? WHERE type=?',
+                   (repr(tab_ids), 'site'))
 
 def upgrade101(cursor):
     """For torrent folders where a child item has been deleted, change the
