@@ -38,8 +38,8 @@ from miro import app
 
 # load the DLL
 libvlc = ctypes.cdll.libvlc
-# set up the function signatures
 
+# set up the function signatures
 libvlc_MediaStateChanged = 5
 
 ( libvlc_NothingSpecial,
@@ -48,10 +48,8 @@ libvlc_MediaStateChanged = 5
         libvlc_Playing,
         libvlc_Paused,
         libvlc_Stopped,
-        libvlc_Forward,
-        libvlc_Backward,
         libvlc_Ended,
-        libvlc_Error ) = range(10)
+        libvlc_Error ) = range(8)
 
 class VLCError(Exception):
     pass
@@ -99,6 +97,8 @@ class VLCRenderer:
         plugin_dir = os.path.join(resources.appRoot(), 'vlc-plugins')
         self.exc = VLCException()
 
+        # Note: if you need vlc output to stdout, remove the --quiet
+        # from the list of arguments.
         vlc_args = [
             "vlc", '--quiet', '--nostats', '--intf', 'dummy',
             '--no-video-title-show', '--plugin-path', plugin_dir
@@ -208,7 +208,7 @@ class VLCRenderer:
         self.play_from_time = None
         self.started_playing = STOPPED
 
-        mrl = 'file://%s' % filename
+        mrl = 'file:///%s' % filename
         media = libvlc.libvlc_media_new(self.vlc, ctypes.c_char_p(mrl),
                 self.exc.ref())
         self.exc.check()
