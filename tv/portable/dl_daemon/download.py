@@ -407,7 +407,7 @@ class BGDownloader:
         return x.send()
         
     ##
-    def pickInitialFilename(self, suffix=".part"):
+    def pickInitialFilename(self, suffix=".part", clean=True):
         """Pick a path to download to based on self.shortFilename.
 
         This method sets self.filename, as well as creates any leading paths
@@ -423,8 +423,10 @@ class BGDownloader:
             raise
         except:
             pass
-        cleaned = cleanFilename(self.shortFilename + suffix)
-        self.filename = nextFreeFilename(os.path.join(downloadDir, cleaned))
+        filename = self.shortFilename + suffix
+        if clean:
+            filename = cleanFilename(filename)
+        self.filename = nextFreeFilename(os.path.join(downloadDir, filename))
 
     def moveToMoviesDirectory(self):
         """Move our downloaded file from the Incomplete Downloads directory to
@@ -1074,9 +1076,8 @@ class BTDownloader(BGDownloader):
                 self.handleError(_("Corrupt Torrent"),
                                  _("The torrent file at %(url)s was not valid") % {"url": stringify(self.url)})
                 return
-            name = name.decode('utf-8', 'replace')
-            self.shortFilename = cleanFilename(name)
-            self.pickInitialFilename("")
+            self.shortFilename = name
+            self.pickInitialFilename(suffix="", clean=False)
         self.updateClient()
         self._resumeTorrent()
 
