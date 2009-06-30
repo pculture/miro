@@ -2218,8 +2218,9 @@ class DirectoryFeedImpl(FeedImpl):
         # Using a select statement is good here because we don't want to
         # construct all the Item objects if we don't need to.
         known_files = set(os.path.normcase(row[0]) for row in
-                models.Item.select('filename', 
-                    'filename IS NOT NULL AND feed_id != ?', (self.ufeed_id,)))
+                models.Item.select('filename',
+                    'filename IS NOT NULL AND '
+                    '(feed_id is NULL or feed_id != ?)', (self.ufeed_id,)))
 
         incomplete_dir = os.path.join(movies_dir, "Incomplete Downloads")
         known_files.add(os.path.normcase(incomplete_dir))
