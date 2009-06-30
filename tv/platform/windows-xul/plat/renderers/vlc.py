@@ -114,6 +114,14 @@ class VLCSniffer:
         self.media_playing = None
         self.callback_info = None
 
+        self._hidden_window = gtk.gdk.Window(None,
+                x=0, y=0, width=1, height=1,
+                window_type=gtk.gdk.WINDOW_TOPLEVEL,
+                wclass=gtk.gdk.INPUT_OUTPUT, event_mask=0)
+        libvlc.libvlc_media_player_set_drawable(self.media_player,
+                self._hidden_window.handle, self.exc.ref())
+        self.exc.check()
+
     def event_callback(self, p_event, p_user_data):
         event = p_event[0]
         # Copy the values from event, the memory might be freed by the time
