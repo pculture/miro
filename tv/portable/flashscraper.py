@@ -67,20 +67,14 @@ def _scrape_youtube_url(url, callback):
     components = urlparse.urlsplit(url)
     params = cgi.parse_qs(components[3])
 
-    logging.info("youtube: components[2]: %s", components[2])
-
     if components[2] == u'/watch' and 'v' in params:
-        logging.info("youtube: /watch and v case")
         videoID = params['v'][0]
     elif components[2].startswith('/v/'):
-        logging.info("youtube: v case")
         videoID = re.compile(r'/v/([\w-]+)').match(components[2]).group(1)
     else:
         logging.warning("_scrape_youtube_url: unable to scrape YouTube Video URL")
         callback(None)
         return
-
-    logging.info("youtube: videoid: %s", videoID)
 
     try:
         url = u"http://www.youtube.com/get_video_info?video_id=%s&el=embedded&ps=default&eurl=" % videoID
