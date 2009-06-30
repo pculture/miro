@@ -693,7 +693,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 if not isinstance(obj, models.Feed):
                     msg = "feed_id points to a %s instance" % obj.__class__
                     raise DatabaseConstraintError(msg)
-        if self.parent_id is not None:
+        if self.has_parent():
             try:
                 obj = Item.get_by_id(self.parent_id)
             except ObjectNotFoundError:
@@ -754,7 +754,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
         if self.feed_id is not None:
             self._feed = models.Feed.get_by_id(self.feed_id)
-        elif self.parent_id is not None:
+        elif self.has_parent():
             self._feed = self.get_parent().get_feed()
         else:
             self._feed = None
@@ -764,7 +764,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if hasattr(self, "_parent"):
             return self._parent
 
-        if self.parent_id is not None:
+        if self.has_parent():
             self._parent = Item.get_by_id(self.parent_id)
         else:
             self._parent = self
@@ -783,7 +783,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             feed_ = self.get_feed()
             if feed_.origURL != 'dtv:manualFeed':
                 return feed_.get_title()
-        if self.parent_id is not None:
+        if self.has_parent():
             return self.get_parent().get_title()
         return None
 
@@ -854,6 +854,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def has_downloader(self):
         return self.downloader_id is not None and self.downloader is not None
+
+    def has_parent(self):
+        return self.parent_id is not None
 
     def is_main_item(self):
         return (self.has_downloader() and
@@ -1248,7 +1251,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """
 
         downloader = self.downloader
-        if downloader is None and self.parent_id is not None:
+        if downloader is None and self.has_parent():
             downloader = self.get_parent().downloader
         if downloader is None or downloader.get_type() != u'bittorrent':
             return None
@@ -1584,11 +1587,16 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.has_downloader():
             self.set_downloader(None)
         self.remove_icon_cache()
+        old_parent = None
         if self.isContainerItem:
             for item in self.getChildren():
                 item.remove()
+        elif self.has_parent():
+            old_parent = self.get_parent()
         self._remove_from_playlists()
         DDBObject.remove(self)
+        if old_parent is not None and old_parent.getChildren().count() == 0:
+            old_parent.remove()
 
     def setup_links(self):
         self.split_item()
@@ -1721,7 +1729,7 @@ class FileItem(Item):
         if not fileutil.exists(self.filename):
             # item whose file has been deleted outside of Miro
             self.remove()
-        elif self.parent_id is not None:
+        elif self.has_parent():
             self.parent_id = None
             self.feed_id = models.Feed.get_manual_feed().id
             self.deleted = True
@@ -1736,7 +1744,7 @@ class FileItem(Item):
                 self.signal_change()
 
     def delete_files(self):
-        if self.parent_id is not None:
+        if self.has_parent():
             dler = self.get_parent().downloader
             if dler is not None and not dler.child_deleted:
                 dler.stopUpload()

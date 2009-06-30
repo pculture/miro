@@ -13,7 +13,7 @@ from miro.singleclick import _build_entry
 def get_entry_for_url(url):
     return _build_entry(url, 'video/x-unknown')
 
-class ItemSeenTest(MiroTestCase):
+class ContainerItemTest(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
         self.feed = Feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
@@ -32,6 +32,7 @@ class ItemSeenTest(MiroTestCase):
         f.write("FAKE DATA")
         f.close()
 
+class ItemSeenTest(ContainerItemTest):
     def test_seen_attribute(self):
         # parents should be consider "seen" when all of their audio/video
         # children are marked seen.
@@ -49,6 +50,15 @@ class ItemSeenTest(MiroTestCase):
         self.assert_(not self.container_item.seen)
         media_children[1].mark_item_seen()
         self.assert_(self.container_item.seen)
+
+class ChildRemoveTest(ContainerItemTest):
+    def test_remove(self):
+        children = list(self.container_item.getChildren())
+        for child in children[1:]:
+            child.remove()
+            self.assert_(self.container_item.idExists())
+        children[0].remove()
+        self.assert_(not self.container_item.idExists())
 
 class ExpiredViewTest(MiroTestCase):
     def setUp(self):
