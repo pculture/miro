@@ -102,6 +102,10 @@ def is_audio_filename(filename):
             return True
     return False
 
+def is_media_filename(filename):
+    """Check if a filename is a video or audio filename"""
+    return is_video_filename(filename) or is_audio_filename(filename)
+
 def is_torrent_filename(filename):
     """
     Pass a filename to this method and it will return a boolean

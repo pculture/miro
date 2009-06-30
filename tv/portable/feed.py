@@ -2166,7 +2166,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
                 ufile = filenameToUnicode(file_)
                 file_ = os.path.normcase(file_)
                 if (file_ not in known_files
-                        and (filetypes.is_video_filename(ufile) or filetypes.is_audio_filename(ufile))):
+                        and filetypes.is_media_filename(ufile)):
                     models.FileItem(file_, feed_id=self.ufeed.id)
 
         for item in self.items:
@@ -2246,7 +2246,7 @@ class DirectoryFeedImpl(FeedImpl):
                 # directory which isn't quite right.
                 if (file_ not in known_files
                         and not "incomplete downloads" in file_.lower()
-                        and filetypes.is_video_filename(filenameToUnicode(file_))):
+                        and filetypes.is_media_filename(filenameToUnicode(file_))):
                     models.FileItem(file_, feed_id=self.ufeed.id)
 
         for item in self.items:
