@@ -93,12 +93,18 @@ class ViewTrackerTest(DatabaseTestCase):
         self.feed2.signal_related_change()
         self.assertEquals(self.add_callbacks, [self.i3])
         self.assertEquals(self.remove_callbacks, [])
-        self.assertEquals(self.change_callbacks, [])
+        # i1 and i2 are in the first feed, which is in our view.  They will
+        # get the changed signal.  Note: the order is not defined and could
+        # also be [i2, i1], but we don't worry about that.
+        self.assertEquals(self.change_callbacks, [self.i1, self.i2])
         self.feed2.revert_title()
         self.feed2.signal_related_change()
         self.assertEquals(self.add_callbacks, [self.i3])
         self.assertEquals(self.remove_callbacks, [self.i3])
-        self.assertEquals(self.change_callbacks, [])
+        self.assertEquals(self.change_callbacks, [self.i1, self.i2, self.i1,
+            self.i2])
+        # i1 and i2 should get the changed signal again.  i3 won't get it
+        # because it got the removed signal.
 
     def test_track_creation_add(self):
         self.setup_view(item.Item.make_view("feed.userTitle='booya'",
