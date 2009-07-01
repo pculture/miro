@@ -603,6 +603,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             del self._num_available
         except AttributeError:
             pass
+        if self.in_folder():
+            self.get_folder().signal_change()
         self.signal_change()
 
     def startManualDownload(self):
