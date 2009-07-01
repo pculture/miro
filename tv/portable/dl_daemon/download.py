@@ -426,6 +426,11 @@ class BGDownloader:
         filename = self.shortFilename + suffix
         if clean:
             filename = cleanFilename(filename)
+        else:
+            # need to do this here since the filename needs to be unicode
+            # and that's done in cleanFilename.
+            if isinstance(filename, str):
+                filename = filename.decode('ascii', 'replace')
         self.filename = nextFreeFilename(os.path.join(downloadDir, filename))
 
     def moveToMoviesDirectory(self):
@@ -1076,7 +1081,7 @@ class BTDownloader(BGDownloader):
                 self.handleError(_("Corrupt Torrent"),
                                  _("The torrent file at %(url)s was not valid") % {"url": stringify(self.url)})
                 return
-            self.shortFilename = name
+            self.shortFilename = name.decode('utf-8', 'replace')
             self.pickInitialFilename(suffix="", clean=False)
         self.updateClient()
         self._resumeTorrent()
