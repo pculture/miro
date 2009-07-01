@@ -2187,8 +2187,7 @@ class DirectoryFeedImpl(FeedImpl):
     will continue to remember movies in the old folder.
     """
     def setup_new(self, ufeed):
-        FeedImpl.setup_new(self, url=u"dtv:directoryfeed", ufeed=ufeed,title=u"Feedless Videos")
-
+        FeedImpl.setup_new(self, url=u"dtv:directoryfeed", ufeed=ufeed, title=None)
         self.setUpdateFrequency(5)
         self.scheduleUpdateEvents(0)
 
@@ -2214,7 +2213,6 @@ class DirectoryFeedImpl(FeedImpl):
         # Make sure container items have created FileItems for their contents
         for container in models.Item.containers_view():
             container.find_new_children()
-
 
         # Calculate files known about by feeds other than the directory feed
         # Using a select statement is good here because we don't want to
@@ -2256,6 +2254,10 @@ class DirectoryFeedImpl(FeedImpl):
                 item.remove()
 
         self.scheduleUpdateEvents(-1)
+
+    @returnsUnicode
+    def get_title(self):
+        return _(u'Local Files')
 
 class SearchFeedImpl(RSSMultiFeedImpl):
     """Search and Search Results feeds
