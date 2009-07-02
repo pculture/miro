@@ -837,7 +837,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             if self.is_downloaded():
                 if self.isContainerItem:
                     for item in self.getChildren():
-                        item.expire()
+                        item.make_deleted()
                 else:
                     FileItem(self.get_filename(), feed_id=self.feed_id, parent_id=self.parent_id, deleted=True)
                 if self.has_downloader():
@@ -1719,8 +1719,6 @@ class FileItem(Item):
 
     def expire(self):
         self.confirm_db_thread()
-        self._remove_from_playlists()
-        self.downloadedTime = None
         if self.has_parent():
             old_parent = self.get_parent()
         else:
@@ -1729,20 +1727,24 @@ class FileItem(Item):
             # item whose file has been deleted outside of Miro
             self.remove()
         elif self.has_parent():
-            self.parent_id = None
-            self.feed_id = models.Feed.get_manual_feed().id
-            self.deleted = True
-            self.signal_change()
+            self.make_deleted()
         else:
             # external item that the user deleted in Miro
             url = self.get_feed_url()
             if url.startswith("dtv:manualFeed") or url.startswith("dtv:singleFeed"):
                 self.remove()
             else:
-                self.deleted = True
-                self.signal_change()
+                self.make_deleted()
         if old_parent is not None and old_parent.getChildren().count() == 0:
             old_parent.expire()
+
+    def make_deleted(self):
+        self._remove_from_playlists()
+        self.downloadedTime = None
+        self.parent_id = None
+        self.feed_id = models.Feed.get_manual_feed().id
+        self.deleted = True
+        self.signal_change()
 
     def delete_files(self):
         if self.has_parent():
