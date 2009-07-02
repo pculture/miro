@@ -132,7 +132,8 @@ class VideoPlayer (Widget, quicktime.Player):
         self.adjust_video_frame()
 
     def on_items_changed(self, message):
-        self.video_window.on_items_changed(message.changed)
+        if self.video_window is not None:
+            self.video_window.on_items_changed(message.changed)
         
     def remove_viewport(self):
         app.info_updater.item_changed_callbacks.remove('manual', 'playback-list', self.on_items_changed)
@@ -252,7 +253,8 @@ class VideoWindow (NSWindow):
         super(VideoWindow, self).close()
 
     def on_items_changed(self, changed):
-        self.palette.on_items_changed(changed)
+        if self.palette is not None:
+            self.palette.on_items_changed(changed)
 
     def canBecomeMainWindow(self):
         return NO
