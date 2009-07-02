@@ -2362,3 +2362,31 @@ def upgrade101(cursor):
             cursor.execute("UPDATE remote_downloader "
                     "SET state='finished', child_deleted=1, status=? "
                     "WHERE id=?", (repr(status), id))
+
+def upgrade102(cursor):
+    """Fix for the embarrasing bug in upgrade101
+
+    This statement was exactly the opposite of what we want:
+
+        elif status['dlerType'] != 'BitTorrent':
+    """
+
+    cursor.execute("SELECT id, status, child_deleted FROM remote_downloader "
+            "WHERE state = 'stopped'")
+    for row in cursor.fetchall():
+        id, status, child_deleted = row
+        status = eval_container(status)
+        if status['dlerType'] != 'BitTorrent' and child_deleted:
+            # I don't think that it's actually possible, but fix HTTP
+            # downloaders that were changed in upgrade101
+            status['state'] = 'stopped'
+            cursor.execute("UPDATE remote_downloader "
+                    "SET state='stopped', child_deleted=0, status=? "
+                    "WHERE id=?", (repr(status), id))
+        elif (status['endTime'] != status['startTime'] and
+                status['dlerType'] == 'BitTorrent'):
+            # correctly execute what upgrade101 was trying to do
+            status['state'] = 'finished'
+            cursor.execute("UPDATE remote_downloader "
+                    "SET state='finished', child_deleted=1, status=? "
+                    "WHERE id=?", (repr(status), id))
