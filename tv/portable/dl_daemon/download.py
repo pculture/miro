@@ -51,7 +51,7 @@ from miro import prefs
 
 from miro.dl_daemon import command, daemon
 from miro.util import checkF, checkU, stringify
-from miro.plat.utils import get_available_bytes_for_movies
+from miro.plat.utils import get_available_bytes_for_movies, utf8_to_filename
 
 chatter = True
 
@@ -406,31 +406,28 @@ class BGDownloader:
         x = command.UpdateDownloadStatus(daemon.lastDaemon, self.getStatus())
         return x.send()
         
-    ##
-    def pickInitialFilename(self, suffix=".part", clean=True):
+    def pickInitialFilename(self, suffix=".part", torrent=False):
         """Pick a path to download to based on self.shortFilename.
 
         This method sets self.filename, as well as creates any leading paths
         needed to start downloading there.
+
+        If the torrent flag is true, then the filename we're working with
+        is utf-8 and shouldn't be transformed in any way.
+
+        If the torrent flag is false, then the filename we're working with
+        is ascii and needs to be transformed into something sane.  (default)
         """
 
         downloadDir = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
                 'Incomplete Downloads')
         # Create the download directory if it doesn't already exist.
-        try:
+        if not os.path.exists(downloadDir):
             fileutil.makedirs(downloadDir)
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            pass
         filename = self.shortFilename + suffix
-        if clean:
+        if not torrent:
+            # this is an ascii filename and needs to be fixed
             filename = cleanFilename(filename)
-        else:
-            # need to do this here since the filename needs to be unicode
-            # and that's done in cleanFilename.
-            if isinstance(filename, str):
-                filename = filename.decode('ascii', 'replace')
         self.filename = nextFreeFilename(os.path.join(downloadDir, filename))
 
     def moveToMoviesDirectory(self):
@@ -1081,8 +1078,8 @@ class BTDownloader(BGDownloader):
                 self.handleError(_("Corrupt Torrent"),
                                  _("The torrent file at %(url)s was not valid") % {"url": stringify(self.url)})
                 return
-            self.shortFilename = name.decode('utf-8', 'replace')
-            self.pickInitialFilename(suffix="", clean=False)
+            self.shortFilename = utf8_to_filename(name)
+            self.pickInitialFilename(suffix="", torrent=True)
         self.updateClient()
         self._resumeTorrent()
 

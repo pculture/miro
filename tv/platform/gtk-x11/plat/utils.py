@@ -122,6 +122,12 @@ def setup_logging(inDownloader=False):
         rotater.doRollover()
 
 @returnsBinary
+def utf8_to_filename(filename):
+    if not isinstance(filename, str):
+        raise ValueError("filename is not a str")
+    return filename
+
+@returnsBinary
 def unicodeToFilename(filename, path=None):
     """Takes in a unicode string representation of a filename (NOT a file
     path) and creates a valid byte representation of it attempting to preserve
