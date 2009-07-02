@@ -49,8 +49,6 @@ menubar_key_map = {
     menubar.DELETE: 'Delete',
     menubar.BKSPACE: 'BackSpace',
     menubar.ESCAPE: 'Escape',
-    ',': 'comma',
-    '.': 'period',
     '>': 'greater',
     '<': 'less'
 }

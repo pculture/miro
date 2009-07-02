@@ -531,16 +531,7 @@ def handle_key_press(key, mods):
 
     if len(mods) != 0:
         # XXX maybe do this in menubar.py
-        if set([menubar.MOD]) == mods:
-            if key == '.':
-                app.widgetapp.on_forward_clicked()
-                return True
-            elif key == ',':
-                app.widgetapp.on_previous_clicked()
-                return True
-            else:
-                return False
-        elif set([menubar.MOD, menubar.SHIFT]) == mods:
+        if set([menubar.MOD, menubar.SHIFT]) == mods:
             if key == '>':
                 app.widgetapp.on_forward_clicked()
                 return True
