@@ -59,6 +59,7 @@ def _run_dialog(title, description, default_type):
 
             lab = widgetset.Label(_('Folder name:'))
             name_entry = widgetset.TextEntry()
+            name_entry.set_activates_default(True)
 
             h = widgetset.HBox()
             h.pack_start(lab, padding=5)
@@ -87,7 +88,8 @@ def _run_dialog(title, description, default_type):
                     section = u"audio"
 
                 name = name_entry.get_text()
-                return (name, section)
+                if name:
+                    return (name, section)
             
             return (None, None)
 

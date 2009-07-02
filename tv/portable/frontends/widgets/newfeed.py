@@ -60,6 +60,7 @@ def _run_dialog(title, description, initial_text):
             lab = widgetset.Label(_('URL:'))
             url_entry = widgetset.TextEntry()
             url_entry.set_text(initial_text)
+            url_entry.set_activates_default(True)
 
             h = widgetset.HBox()
             h.pack_start(lab, padding=5)

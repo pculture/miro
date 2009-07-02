@@ -73,6 +73,7 @@ def run_dialog():
             hb1 = widgetset.HBox()
             hb1.pack_start(widgetset.Label(_('Search for:')), padding=5)
             searchterm = widgetset.TextEntry()
+            searchterm.set_activates_default(True)
             hb1.pack_start(searchterm, expand=True)
             extra.pack_start(hb1)
 
