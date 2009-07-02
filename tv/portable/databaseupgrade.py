@@ -2390,3 +2390,22 @@ def upgrade102(cursor):
             cursor.execute("UPDATE remote_downloader "
                     "SET state='finished', child_deleted=1, status=? "
                     "WHERE id=?", (repr(status), id))
+
+def upgrade103(cursor):
+    """Possible fix for #11730.
+
+    Delete downloaders with duplicate origURL values.
+    """
+    cursor.execute("SELECT MIN(id), origURL FROM remote_downloader "
+            "GROUP BY origURL "
+            "HAVING count(*) > 1")
+    for row in cursor.fetchall():
+        id_, origURL = row
+        cursor.execute("SELECT id FROM remote_downloader "
+                "WHERE origURL=? and id != ?", (origURL, id_))
+        for row in cursor.fetchall():
+            dup_id = row[0]
+            cursor.execute("UPDATE item SET downloader_id=? "
+                    "WHERE downloader_id=?", (id_, dup_id))
+            cursor.execute("DELETE FROM remote_downloader WHERE id=?",
+                    (dup_id,))
