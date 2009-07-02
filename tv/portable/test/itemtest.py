@@ -52,13 +52,22 @@ class ItemSeenTest(ContainerItemTest):
         self.assert_(self.container_item.seen)
 
 class ChildRemoveTest(ContainerItemTest):
-    def test_remove(self):
+    def test_expire_all_children(self):
         children = list(self.container_item.getChildren())
         for child in children[1:]:
-            child.remove()
+            child.expire()
             self.assert_(self.container_item.idExists())
-        children[0].remove()
+        children[0].expire()
         self.assert_(not self.container_item.idExists())
+
+    def test_remove_parent(self):
+        # test for the conditions that caused #11941
+        self.container_item.remove()
+
+    def test_parent_delete_files(self):
+        # test for the conditions that caused #11941
+        self.container_item.delete_files()
+        self.container_item.remove()
 
 class ExpiredViewTest(MiroTestCase):
     def setUp(self):

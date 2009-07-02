@@ -1587,16 +1587,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.has_downloader():
             self.set_downloader(None)
         self.remove_icon_cache()
-        old_parent = None
         if self.isContainerItem:
             for item in self.getChildren():
                 item.remove()
-        elif self.has_parent():
-            old_parent = self.get_parent()
         self._remove_from_playlists()
         DDBObject.remove(self)
-        if old_parent is not None and old_parent.getChildren().count() == 0:
-            old_parent.remove()
 
     def setup_links(self):
         self.split_item()
@@ -1726,6 +1721,10 @@ class FileItem(Item):
         self.confirm_db_thread()
         self._remove_from_playlists()
         self.downloadedTime = None
+        if self.has_parent():
+            old_parent = self.get_parent()
+        else:
+            old_parent = None
         if not fileutil.exists(self.filename):
             # item whose file has been deleted outside of Miro
             self.remove()
@@ -1742,6 +1741,8 @@ class FileItem(Item):
             else:
                 self.deleted = True
                 self.signal_change()
+        if old_parent is not None and old_parent.getChildren().count() == 0:
+            old_parent.expire()
 
     def delete_files(self):
         if self.has_parent():
