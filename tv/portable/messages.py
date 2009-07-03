@@ -1133,7 +1133,7 @@ class TabsChanged(FrontendMessage):
     """Informs the frontend that the channel list or playlist list has been 
     changed.
 
-    :param type: ``feed``, ``playlist` or ``guide``
+    :param type: ``feed``, ``playlist`` or ``guide``
     :param added: ChannelInfo/PlaylistInfo object for each added tab.  The
                   list will be in the same order that the tabs were added.
     :param changed: list of ChannelInfo/PlaylistInfos for each changed tab.
