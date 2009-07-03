@@ -422,15 +422,19 @@ class PlaybackManager (signals.SignalEmitter):
         if new_position == None:
             new_position = self.position
 
+        playlist_ids = [playlist_item.id for playlist_item in self.playlist]
+
         self.cancel_update_timer()
         self.cancel_mark_as_watched()
-
         if (0 <= new_position < len(self.playlist)):
             self.position = new_position
             if self.is_playing:
                 self.player.stop(True)
+            messages.NowPlaying(self.playlist[new_position].id,
+                                playlist_ids).send_to_backend()
             self._select_current()
         else:
+            messages.NowPlaying(None, playlist_ids).send_to_backend()
             self.stop(save_resume_time)
 
     def _on_ready_to_play(self, obj):
