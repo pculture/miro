@@ -530,18 +530,7 @@ def handle_key_press(key, mods):
     """Handle a playback key press events """
 
     if len(mods) != 0:
-        # XXX maybe do this in menubar.py
-        if set([menubar.MOD, menubar.SHIFT]) == mods:
-            if key == '>':
-                app.widgetapp.on_forward_clicked()
-                return True
-            elif key == '<':
-                app.widgetapp.on_previous_clicked()
-                return True
-            else:
-                return False
-        else:
-            return False
+        return False
 
     if key == menubar.ESCAPE:
         if app.playback_manager.is_fullscreen:

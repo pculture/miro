@@ -71,7 +71,9 @@ KEYS_MAP = {
     RIGHT_ARROW: NSRightArrowFunctionKey,
     LEFT_ARROW: NSLeftArrowFunctionKey,
     UP_ARROW: NSUpArrowFunctionKey,
-    DOWN_ARROW: NSDownArrowFunctionKey
+    DOWN_ARROW: NSDownArrowFunctionKey,
+    '>': '>',
+    '<': '<'
 }
 
 REVERSE_MODIFIERS_MAP = dict((i[1], i[0]) for i in MODIFIERS_MAP.items())
@@ -94,12 +96,13 @@ def make_menu_item(menu_item):
             if isinstance(shortcut.key, str):
                 nsmenuitem.setKeyEquivalent_(shortcut.key)
                 nsmenuitem.setKeyEquivalentModifierMask_(make_modifier_mask(shortcut))
-                break
+                continue
             else:
                 if shortcut.key in KEYS_MAP:
                     nsmenuitem.setKeyEquivalent_(KEYS_MAP[shortcut.key])
                     nsmenuitem.setKeyEquivalentModifierMask_(make_modifier_mask(shortcut))
-                    break
+                    continue
+
         if menu_item.action in STD_ACTION_MAP:
             nsmenuitem.setTarget_(STD_ACTION_MAP[menu_item.action][0])
             nsmenuitem.setAction_(STD_ACTION_MAP[menu_item.action][1])

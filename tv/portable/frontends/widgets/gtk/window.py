@@ -162,6 +162,7 @@ class WindowBase(signals.SignalEmitter):
         self.make_actions()
         uistring = StringIO.StringIO()
         uistring.write('<ui><menubar name="MiroMenu">')
+        extra_accelerators = []
         for menu in menubar.menubar:
             uistring.write('<menu action="Menu%s">' % menu.action)
             for menuitem in menu.menuitems:
@@ -169,8 +170,15 @@ class WindowBase(signals.SignalEmitter):
                     uistring.write("<separator />")
                 else:
                     uistring.write('<menuitem action="%s" />' % menuitem.action)
+                    if len(menuitem.shortcuts) > 1:
+                        extra_accelerators.append(menuitem)
             uistring.write('</menu>')
-        uistring.write('</menubar></ui>')
+        uistring.write('</menubar>')
+        if extra_accelerators:
+            for menuitem in extra_accelerators:
+                for shortcut in menuitem.shortcuts[1:]:
+                    uistring.write('<accelerator action="%s%i" />' % (menuitem.action, id(shortcut)))
+        uistring.write('</ui>')
         self.ui_manager.add_ui_from_string(uistring.getvalue())
 
     def make_action(self, action, label, shortcuts=None):
@@ -185,6 +193,15 @@ class WindowBase(signals.SignalEmitter):
         else:
             action_group.add_action_with_accel(gtk_action,
                     get_accel_string(shortcuts[0]))
+            for shortcut in shortcuts[1:]:
+                extra_action = gtk.Action(action + str(id(shortcut)), '', None,
+                                          None)
+                extra_action.set_visible(False)
+                if callback is not None:
+                    extra_action.connect('activate', self.on_activate,
+                                         callback)
+                action_group.add_action_with_accel(extra_action,
+                                                   get_accel_string(shortcut))
 
     def make_actions(self):
         self.action_groups = {}

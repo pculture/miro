@@ -253,8 +253,10 @@ PlaybackItems = [
              pause=_("_Pause")),
     MenuItem(_("_Stop"), "StopVideo", (Key("d",MOD),), enabled=False),
     Separator(),
-    MenuItem(_("_Next Video"), "NextVideo", (Key(RIGHT_ARROW, MOD),), enabled=False),
-    MenuItem(_("_Previous Video"), "PreviousVideo", (Key(LEFT_ARROW, MOD),), enabled=False),
+    MenuItem(_("_Next Video"), "NextVideo", (
+         Key(RIGHT_ARROW, MOD), Key('>', MOD, SHIFT)), enabled=False),
+    MenuItem(_("_Previous Video"), "PreviousVideo", (
+         Key(LEFT_ARROW, MOD), Key('<', MOD, SHIFT)), enabled=False),
     Separator(),
     MenuItem(_("Skip _Forward"), "FastForward", (), enabled=False),
     MenuItem(_("Skip _Back"), "Rewind", (), enabled=False),
