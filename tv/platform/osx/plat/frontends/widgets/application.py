@@ -129,7 +129,8 @@ class OSXApplication(Application):
         # We could use Python's webbrowser.open() here, but
         # unfortunately, it doesn't have the same semantics under UNIX
         # as under other OSes. Sometimes it blocks, sometimes it doesn't.
-        NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
+        if url is not None:
+            NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
 
     def reveal_file(self, fn):
         filename = filenameTypeToOSFilename(fn)
