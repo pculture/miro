@@ -72,8 +72,8 @@ KEYS_MAP = {
     LEFT_ARROW: NSLeftArrowFunctionKey,
     UP_ARROW: NSUpArrowFunctionKey,
     DOWN_ARROW: NSDownArrowFunctionKey,
-    '>': '>',
-    '<': '<'
+    '.': '.',
+    ',': ','
 }
 
 REVERSE_MODIFIERS_MAP = dict((i[1], i[0]) for i in MODIFIERS_MAP.items())

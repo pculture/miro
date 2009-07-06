@@ -534,6 +534,13 @@ def handle_key_press(key, mods):
     """Handle a playback key press events """
 
     if len(mods) != 0:
+        if set([menubar.MOD, menubar.SHIFT]) == mods:
+            if key in ('>', '.'): # OS X sends '.', GTK sends '>'
+                app.widgetapp.on_forward_clicked()
+                return True
+            elif key in ('<', ','): # OS X sends ',', GTK sends '<'
+                app.widgetapp.on_previous_clicked()
+                return True
         return False
 
     if key == menubar.ESCAPE:

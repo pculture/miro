@@ -51,7 +51,7 @@ from miro.plat.utils import filenameToUnicode
 alive_windows = set()
 
 class MiroWindow(NSWindow):
-    def keyDown_(self, event):
+    def handle_keyDown(self, event):
         key = event.characters()
         if len(key) != 1 or not key.isalpha():
             key = osxmenus.REVERSE_KEYS_MAP.get(key)
@@ -61,9 +61,17 @@ class MiroWindow(NSWindow):
             wrapper = wrappermap.wrapper(responder)
             if isinstance(wrapper, Widget) or isinstance(wrapper, Window):
                 if wrapper.emit('key-press', key, mods):
-                    return # signal handler returned True, stop processing
+                    return True # signal handler returned True, stop processing
             responder = responder.nextResponder()
-        return NSWindow.keyDown_(self, event)
+
+    def sendEvent_(self, event):
+        if event.type() == NSKeyDown:
+            # We grab the KeyDown event here instead of with a keyDown handler
+            # because some keys (notable Cmd-> and Cmd-< aren't caught by that
+            # method.
+            if self.handle_keyDown(event):
+                return
+        return NSWindow.sendEvent_(self, event)
 
 class Window(signals.SignalEmitter):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPIfor a description of the API for this class."""
