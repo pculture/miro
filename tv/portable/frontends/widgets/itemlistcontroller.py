@@ -303,6 +303,12 @@ class ItemListController(object):
                 self.handle_item_list)
         app.info_updater.item_changed_callbacks.add(self.type, self.id,
                 self.handle_items_changed)
+        self._playback_callbacks = [
+            app.playback_manager.connect('selecting-file',
+                self._on_playback_change),
+            app.playback_manager.connect('will-stop',
+                self._on_playback_change),
+        ]
 
     def stop_tracking(self):
         """Send the message to stop tracking items."""
@@ -311,6 +317,14 @@ class ItemListController(object):
                 self.handle_item_list)
         app.info_updater.item_changed_callbacks.remove(self.type, self.id,
                 self.handle_items_changed)
+        for handle in self._playback_callbacks:
+            app.playback_manager.disconnect(handle)
+
+    def _on_playback_change(self, playback_manager, *args):
+        # The currently playing item has changed, redraw the view to change
+        # which item gets the "currently playing" badge.
+        for item_view in self.all_item_views():
+            item_view.queue_redraw()
 
     def handle_item_list(self, message):
         """Handle an ItemList message meant for this ItemContainer."""
