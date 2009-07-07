@@ -569,14 +569,6 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warning("handle_mark_item_unwatched: can't find item by id %s", message.id)
 
-    def handle_now_playing(self, message):
-        for mem in message.playlist_ids:
-            try:
-                item_ = item.Item.get_by_id(mem)
-                item_.signal_change()
-            except database.ObjectNotFoundError:
-                logging.warning("handle_now_playing: can't find item by id %s", mem)
-
     def handle_set_item_resume_time(self, message):
         try:
             item_ = item.Item.get_by_id(message.id)

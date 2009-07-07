@@ -387,20 +387,6 @@ class MarkItemUnwatched(BackendMessage):
     def __init__(self, id):
         self.id = id
 
-class NowPlaying(BackendMessage):
-    """Message to announce that the frontend is now playing item
-    with the given id.  It also tells us the item it just finished
-    playing.
-
-    :param now_playing_id: the id of the item now playing or None
-                           if there is no current item
-    :param playlist_ids: the ids of all items in the playlist including
-                         the one being played
-    """
-    def __init__(self, now_playing_id, playlist_ids):
-        self.now_playing_id = now_playing_id
-        self.playlist_ids = playlist_ids
-
 class SetItemResumeTime(BackendMessage):
     """Set an item resume time.
     """
