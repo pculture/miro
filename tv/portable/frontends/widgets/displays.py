@@ -466,13 +466,7 @@ class VideoDisplay(Display):
         self.show_renderer()
         self.cant_play_widget.set_video_path(item_info.video_path)
         self.item_info_id = item_info.id
-        # Even though the video renderer would call _open_error if it can't
-        # open an item, doing a first pass here allow to filter out items with
-        # a file_type of 'other' more easily and more reliably - luc.
-        if filetypes.is_video_filename(item_info.video_path):
-            self.renderer.set_item(item_info, self._open_success, self._open_error)
-        else:
-            self._open_error()
+        self.renderer.set_item(item_info, self._open_success, self._open_error)
         self.renderer.set_volume(volume)
 
     def enter_fullscreen(self):
