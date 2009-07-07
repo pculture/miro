@@ -34,10 +34,10 @@ import Queue
 from miro import app
 from miro import dialogs
 from miro import eventloop
+from miro import item
 from miro import folder
-from miro import indexes
 from miro import util
-from miro import views
+from miro import tabs
 from miro.frontends.cli import clidialog
 from miro.plat import resources
 
@@ -58,9 +58,9 @@ def run_in_event_loop(func):
     return decorated
 
 class FakeTab:
-    def __init__(self, tab_type, tabTemplateBase):
+    def __init__(self, tab_type, tab_template_base):
         self.type = tab_type
-        self.tabTemplateBase = tabTemplateBase
+        self.tab_template_base = tab_template_base
 
 class MiroInterpreter(cmd.Cmd):
     def __init__(self):
@@ -71,8 +71,9 @@ class MiroInterpreter(cmd.Cmd):
 
     @run_in_event_loop
     def init_database_objects(self):
-        self.channelTabs = util.getSingletonDDBObject(views.channelTabOrder)
-        self.playlistTabs = util.getSingletonDDBObject(views.playlistTabOrder)
+        self.video_feed_tabs = tabs.TabOrder.video_feed_order()
+        self.audio_feed_tabs = tabs.TabOrder.audio_feed_order()
+        self.playlist_tabs = tabs.TabOrder.playlist_order()
         self.tab_changed()
 
     def tab_changed(self):
@@ -82,18 +83,21 @@ class MiroInterpreter(cmd.Cmd):
         if self.tab is None:
             self.prompt = "> "
             self.selection_type = None
+
         elif self.tab.type == 'feed':
-            if isinstance(self.tab.obj, folder.ChannelFolder):
-                self.prompt = "channel folder: %s > " % self.tab.obj.get_title()
+            if isinstance(self.tab, folder.ChannelFolder):
+                self.prompt = "channel folder: %s > " % self.tab.get_title()
                 self.selection_type = 'channel-folder'
             else:
-                self.prompt = "channel: %s > " % self.tab.obj.get_title()
+                self.prompt = "channel: %s > " % self.tab.get_title()
                 self.selection_type = 'feed'
+
         elif self.tab.type == 'playlist':
-            self.prompt = "playlist: %s > " % self.tab.obj.get_title()
+            self.prompt = "playlist: %s > " % self.tab.get_title()
             self.selection_type = 'playlist'
+
         elif (self.tab.type == 'statictab' and
-                self.tab.tabTemplateBase == 'downloadtab'):
+              self.tab.tab_template_base == 'downloadtab'):
             self.prompt = "downloads > "
             self.selection_type = 'downloads'
         else:
@@ -127,9 +131,16 @@ class MiroInterpreter(cmd.Cmd):
     @run_in_event_loop
     def do_feed(self, line):
         """feed <name> -- Selects a feed by name."""
-        for tab in self.channelTabs.getView():
-            if tab.obj.get_title() == line:
+        for tab in self.video_feed_tabs.get_all_tabs():
+            if tab.get_title() == line:
                 self.tab = tab
+                self.tab.type = "feed"
+                self.tab_changed()
+                return
+        for tab in self.audio_feed_tabs.get_all_tabs():
+            if tab.get_title() == line:
+                self.tab = tab
+                self.tab.type = "feed"
                 self.tab_changed()
                 return
         print "Error: %s not found" % line
@@ -137,30 +148,34 @@ class MiroInterpreter(cmd.Cmd):
     @run_in_event_loop
     def do_rmfeed(self, line):
         """rmfeed <name> -- Deletes a feed."""
-        for tab in self.channelTabs.getView():
-            if tab.obj.get_title() == line:
-                tab.obj.remove()
+        for tab in self.video_feed_tabs.get_all_tabs():
+            if tab.get_title() == line:
+                tab.remove()
+                return
+        for tab in self.audio_feed_tabs.get_all_tabs():
+            if tab.get_title() == line:
+                tab.remove()
                 return
         print "Error: %s not found" % line
 
     @run_in_event_loop
     def complete_feed(self, text, line, begidx, endidx):
-        return self.handle_tab_complete(text, self.channelTabs.getView())
+        return self.handle_tab_complete(text, list(self.video_feed_tabs.get_all_tabs()) + list(self.audio_feed_tabs.get_all_tabs()))
 
     @run_in_event_loop
     def complete_rmfeed(self, text, line, begidx, endidx):
-        return self.handle_tab_complete(text, self.channelTabs.getView())
+        return self.handle_tab_complete(text, list(self.video_feed_tabs.get_all_tabs()) + list(self.audio_feed_tabs.get_all_tabs()))
 
     @run_in_event_loop
     def complete_playlist(self, text, line, begidx, endidx):
-        return self.handle_tab_complete(text, self.playlistTabs.getView())
+        return self.handle_tab_complete(text, self.playlist_tabs.get_all_tabs())
 
-    def handle_tab_complete(self, text, view):
+    def handle_tab_complete(self, text, view_items):
         text = text.lower()
         matches = []
-        for tab in view:
-            if tab.obj.get_title().lower().startswith(text):
-                matches.append(tab.obj.get_title())
+        for tab in view_items:
+            if tab.get_title().lower().startswith(text):
+                matches.append(tab.get_title())
         return matches
 
     def handle_item_complete(self, text, view, filterFunc=lambda i: True):
@@ -172,21 +187,27 @@ class MiroInterpreter(cmd.Cmd):
                 matches.append(item.get_title())
         return matches
 
+    def _print_feeds(self, feeds):
+        current_folder = None
+        for tab in feeds:
+            if isinstance(tab, folder.ChannelFolder):
+                current_folder = tab
+            elif tab.get_folder() is not current_folder:
+                current_folder = None
+            if current_folder is None:
+                print " * " + tab.get_title()
+            elif current_folder is tab:
+                print " * [Folder] %s" % tab.get_title()
+            else:
+                print " * - %s" % tab.get_title()
+
     @run_in_event_loop
     def do_feeds(self, line):
         """feeds -- Lists all feeds."""
-        current_folder = None
-        for tab in self.channelTabs.getView():
-            if isinstance(tab.obj, folder.ChannelFolder):
-                current_folder = tab.obj
-            elif tab.obj.get_folder() is not current_folder:
-                current_folder = None
-            if current_folder is None:
-                print tab.obj.get_title()
-            elif current_folder is tab.obj:
-                print "[Folder] %s" % tab.obj.get_title()
-            else:
-                print " - %s" % tab.obj.get_title()
+        print "VIDEO FEEDS"
+        self._print_feeds(self.video_feed_tabs.get_all_tabs())
+        print "AUDIO FEEDS"
+        self._print_feeds(self.audio_feed_tabs.get_all_tabs())
 
     @run_in_event_loop
     def do_play(self, line):
@@ -226,15 +247,15 @@ class MiroInterpreter(cmd.Cmd):
             print "Error: No tab/feed/playlist selected"
             return
         elif self.selection_type == 'feed':
-            feed = self.tab.obj
-            view = feed.items.sort(feed.itemSort.sort)
+            feed = self.tab
+            view = feed.items
             self.printout_item_list(view)
-            view.unlink()
         elif self.selection_type == 'playlist':
             playlist = self.tab.obj
             self.printout_item_list(playlist.getView())
         elif self.selection_type == 'downloads':
-            self.printout_item_list(views.downloadingItems, views.pausedItems)
+            self.printout_item_list(item.Item.downloading_view(),
+                                    item.Item.paused_view())
         elif self.selection_type == 'channel-folder':
             folder = self.tab.obj
             allItems = views.items.filterWithIndex(
@@ -254,7 +275,7 @@ class MiroInterpreter(cmd.Cmd):
     def printout_item_list(self, *views):
         totalItems = 0
         for view in views:
-            totalItems += len(view)
+            totalItems += view.count()
         if totalItems > 0:
             print "%-20s %-10s %s" % ("State", "Size", "Name")
             print "-" * 70
@@ -271,20 +292,16 @@ class MiroInterpreter(cmd.Cmd):
 
     def _get_item_view(self):
         if self.selection_type == 'feed':
-            feed = self.tab.obj
-            return feed.items
+            return item.Item.visible_feed_view(self.tab.id)
         elif self.selection_type == 'playlist':
-            playlist = self.tab.obj
-            return playlist.getView()
+            return item.Item.playlist_view(self.tab.id)
         elif self.selection_type == 'downloads':
-            return views.downloadingItems
+            return item.Item.downloading_view()
         elif self.selection_type == 'channel-folder':
-            folder = self.tab.obj
-            return views.items.filterWithIndex(indexes.itemsByChannelFolder,
-                    folder)
+            folder = self.tab
+            return item.Item.visible_folder_view(folder.id)
         else:
             raise ValueError("Unknown selection type")
-
 
     def _find_item(self, line):
         line = line.lower()
