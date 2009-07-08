@@ -85,11 +85,12 @@ def init_vlc(*args):
     return vlc
 
 def wait_for_play(media_player):
+    # FIXME - this is terrible; switch to event handling.
     while True:
         state = libvlc.libvlc_media_player_get_state(media_player, 
-                byref(exception))
+                                                     byref(exception))
         check_exception()
-        if state in (3, 8, 9):
+        if state in (3, 6, 7):
             # Break on the PLAYING, ENDED or ERROR states
             break
         else:
@@ -98,7 +99,7 @@ def wait_for_play(media_player):
 def make_snapshot(video_path, thumbnail_path):
     if os.path.exists(thumbnail_path):
         os.remove(thumbnail_path)
-    mrl = 'file://%s' % video_path
+    mrl = 'file:///%s' % video_path
 
     vlc = init_vlc( "vlc", "--noaudio", 
             '--vout', 'dummy', 
@@ -106,47 +107,64 @@ def make_snapshot(video_path, thumbnail_path):
             '--quiet', '--nostats', '--intf', 'dummy', 
             '--plugin-path', 'vlc-plugins')
 
-    media_player = libvlc.libvlc_media_player_new(vlc, byref(exception))
+    media_player = libvlc.libvlc_media_player_new(vlc, 
+                                                  byref(exception))
     check_exception()
-    media = libvlc.libvlc_media_new(vlc, ctypes.c_char_p(mrl),
-            byref(exception))
+    media = libvlc.libvlc_media_new(vlc, 
+                                    ctypes.c_char_p(mrl),
+                                    byref(exception))
     check_exception()
-    libvlc.libvlc_media_player_set_media(media_player, media,
-            byref(exception))
+
+    libvlc.libvlc_media_player_set_media(media_player, 
+                                         media,
+                                         byref(exception))
     check_exception()
-    libvlc.libvlc_media_player_play(media_player, byref(exception))
+    libvlc.libvlc_media_player_play(media_player, 
+                                    byref(exception))
     check_exception()
 
     wait_for_play(media_player)
-    length = libvlc.libvlc_media_player_get_length(media_player,
-            byref(exception))
+    length = libvlc.libvlc_media_player_get_length(media_player, 
+                                                   byref(exception))
     check_exception()
 
-    libvlc.libvlc_media_player_set_position(media_player, ctypes.c_float(0.5),
-            byref(exception))
+    libvlc.libvlc_media_player_set_position(media_player, 
+                                            ctypes.c_float(0.5),
+                                            byref(exception))
     check_exception()
-    sleep(0.5) # allow a little time for VLC to seek
+
+    # allow a little time for VLC to seek
+    sleep(0.5)
     libvlc.libvlc_video_take_snapshot(media_player, 
-            ctypes.c_char_p(thumbnail_path),
-            ctypes.c_int(0), ctypes.c_int(0),
-            byref(exception))
+                                      ctypes.c_char_p(thumbnail_path),
+                                      ctypes.c_int(0), 
+                                      ctypes.c_int(0),
+                                      byref(exception))
     check_exception()
-    sleep(0.5) # allow a little time for VLC to take the snapshot
+
+    # allow a little time for VLC to take the snapshot
+    sleep(0.5)
     libvlc.libvlc_media_player_stop(media_player, byref(exception))
     check_exception()
+
     libvlc.libvlc_media_player_set_media(None, byref(exception))
     check_exception()
+
     libvlc.libvlc_media_release(media)
     libvlc.libvlc_media_player_release(media_player)
     libvlc.libvlc_release(vlc)
 
-    print "Miro-Movie-Data-Length: %d" % (length)
+    print "Miro-Movie-Data-Length: %d" % length
     if os.path.exists(thumbnail_path):
         print "Miro-Movie-Data-Thumbnail: Success"
     else:
         print "Miro-Movie-Data-Thumbnail: Failure"
 
 if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        print "moviedata_util <video_path> <thumbnail_path>"
+        sys.exit(0)
+
     try:
         # disable annoying windows popup
         ctypes.windll.kernel32.SetErrorMode(SEM_NOGPFAULTERRORBOX | 
