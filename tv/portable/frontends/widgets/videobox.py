@@ -119,12 +119,15 @@ class PlaybackInfo(widgetset.DrawingArea):
         self.audio_icon = imagepool.get_surface(resources.path('images/mini-icon-audio.png'))
         self.reset()
         app.playback_manager.connect('selecting-file', self.handle_selecting)
+        app.playback_manager.connect('will-play', self.handle_play)
         app.playback_manager.connect('will-stop', self.handle_stop)
 
     def handle_selecting(self, obj, item_info):
         self.item_name = item_info.name
         self.feed_name = item_info.feed_name
         self.is_audio = (item_info.file_type == 'audio')
+
+    def handle_play(self, obj, duration):
         self.queue_redraw()
 
     def handle_stop(self, obj):
