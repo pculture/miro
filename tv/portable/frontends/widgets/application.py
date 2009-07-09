@@ -26,8 +26,9 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""The application module holds :class:`Application` and the portable
-code to handle the high level running of the Miro application.
+"""``miro.frontends.widgets.application -- The application module
+holds :class:`Application` and the portable code to handle the high
+level running of the Miro application.
 
 It also holds:
 

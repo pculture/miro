@@ -26,7 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Main Miro widget."""
+"""``miro.frontends.widgets.window`` -- Main Miro widget.
+"""
 
 from miro import app
 from miro import prefs

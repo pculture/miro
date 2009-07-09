@@ -26,16 +26,17 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""messages.py -- Message passing between the frontend thread and the backend
-thread.
+"""``miro.messages`` -- Message passing between the frontend thread
+and the backend thread.
 
-The backend thread is the eventloop, which processes things like feed updates
-and handles reading and writing to the database.  The frontend thread is the
-thread of the UI toolkit we're using.  Communication between the two threads
-is handled by passing messages between the two.  These messages are handled
-asynchronously.
+The backend thread is the eventloop, which processes things like feed
+updates and handles reading and writing to the database.  The frontend
+thread is the thread of the UI toolkit we're using.  Communication
+between the two threads is handled by passing messages between the
+two.  These messages are handled asynchronously.
 
-This module defines the messages that are passed between the two threads.
+This module defines the messages that are passed between the two
+threads.
 """
 
 import logging

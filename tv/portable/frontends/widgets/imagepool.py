@@ -26,11 +26,12 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""imagepool -- Get Image objects for image filenames.
+"""``miro.frontends.widgets.imagepool`` -- Get Image objects for image
+filenames.
 
-imagepool handles creating Image and ImageSurface objects for image filenames.
-It remembers images that have been created, and doesn't create duplicate
-Image/ImageSurface objects for a single path. 
+imagepool handles creating Image and ImageSurface objects for image
+filenames.  It remembers images that have been created, and doesn't
+create duplicate Image/ImageSurface objects for a single path.
 """
 
 import logging

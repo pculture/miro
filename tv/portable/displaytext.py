@@ -26,7 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Format strings to send to the user."""
+"""``miro.displaytext`` -- Format strings to send to the user.
+"""
 
 import math
 import datetime

@@ -26,6 +26,10 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+"""``miro.flashscraper`` -- functions for converting a web-page url
+to a media url.
+"""
+
 import logging
 import re
 from miro import httpclient

@@ -26,7 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Utility functions."""
+"""``miro.frontends.widgets.util`` -- Utility functions.
+"""
 
 def rounded_rectangle(context, x, y, width, height, xradius, yradius=None):
     """Create a path using a rounded rectangle.  xradius and yradius specifies

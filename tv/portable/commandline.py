@@ -26,9 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""
-This modules handles the parsing of files/URLs passed to Miro on the command
-line.
+"""``miro.commandline`` -- This modules handles the parsing of
+files/URLs passed to Miro on the command line.
 
 Frontends should call ``set_ommand_line_args()`` passing it a list of
 arguments that the users gives.  This should just be suspected

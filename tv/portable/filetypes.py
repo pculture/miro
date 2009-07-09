@@ -26,6 +26,10 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+"""``miro.filetypes`` - functions for determining things from the
+filename, enclosure, content-type, and other things.
+"""
+
 import os
 
 # NOTE: if you change VIDEO_EXTENSIONS or AUDIO_EXTENSIONS, consider writing a

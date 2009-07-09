@@ -26,7 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Miro playlist support."""
+"""``miro.playlist`` -- Miro playlist support.
+"""
 
 from miro.gtcache import gettext as _
 

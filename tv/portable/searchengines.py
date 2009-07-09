@@ -26,8 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""This module holds :class:`SearchEngineInfo` and related helper
-functions.
+"""``miro.searchengines`` -- This module holds
+:class:`SearchEngineInfo` and related helper functions.
 """
 
 from miro.util import checkU, returnsUnicode

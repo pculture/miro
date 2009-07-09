@@ -46,11 +46,15 @@ Trunk (unstable!)::
 
     svn co https://svn.participatoryculture.org/svn/dtv/trunk/
 
-Miro 2.0 branch (stable)::
+Miro 2.5 branch (stable)::
+
+    svn co https://svn.participatoryculture.org/svn/dtv/branches/Miro-2.5
+
+Miro 2.0 branch (stable, but old)::
 
     svn co https://svn.participatoryculture.org/svn/dtv/branches/Miro-2.0
 
-Miro 1.2 branch (stable, but old)::
+Miro 1.2 branch (stable, but very old)::
 
     svn co https://svn.participatoryculture.org/svn/dtv/branches/Miro-1.2
 

@@ -26,15 +26,15 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Handle database storage.
+"""``miro.storedatabase`` -- Handle database storage.
 
-This module does the reading/writing of our database to/from disk.  It works
-with the schema module to validate the data that we read/write and with the
-upgradedatabase module to upgrade old database storages.
+This module does the reading/writing of our database to/from disk.  It
+works with the schema module to validate the data that we read/write
+and with the upgradedatabase module to upgrade old database storages.
 
-Datastorage is handled through SQLite.  Each DDBObject class is stored in a
-separate table.  Each attribute for that class is saved using a separate
-column.
+Datastorage is handled through SQLite.  Each DDBObject class is stored
+in a separate table.  Each attribute for that class is saved using a
+separate column.
 
 Most columns are stored using SQLite datatypes (``INTEGER``, ``REAL``,
 ``TEXT``, ``DATETIME``, etc.).  However some of our python values,

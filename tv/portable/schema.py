@@ -26,19 +26,22 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""The schema module is responsible for defining what data in the database
-gets stored on disk.  
+"""``miro.schema`` -- The schema module is responsible for defining
+what data in the database gets stored on disk.
 
 The goals of this modules are:
 
-* Clearly defining which data from DDBObjects gets stored and which doesn't.
+* Clearly defining which data from DDBObjects gets stored and which
+  doesn't.
 * Validating that all data we write can be read back in
 * Making upgrades of the database schema as easy as possible
 
 Module-level variables:
-    object_schemas -- Schemas to use with the current database.
-    VERSION -- Current schema version.  If you change the schema you must bump
-    this number and add a function in the databaseupgrade module.
+
+* ``object_schemas`` -- Schemas to use with the current database.
+* ``VERSION`` -- Current schema version.  If you change the schema you
+  must bump this number and add a function in the databaseupgrade
+  module.
 
 Go to the bottom of this file for the current database schema.
 """
@@ -65,7 +68,8 @@ class SchemaItem(object):
     SchemaAttr, SchemaList are used in actual object schemas.
 
     Member variables:
-        noneOk -- specifies if None is a valid value for this attribute
+
+    * ``noneOk`` -- specifies if None is a valid value for this attribute
     """
 
     def __init__(self, noneOk=False):
@@ -105,31 +109,37 @@ class SchemaSimpleItem(SchemaItem):
     """Base class for SchemaItems for simple python types."""
 
 class SchemaBool(SchemaSimpleItem):
+    """Defines the SchemaBool type."""
     def validate(self, data):
         super(SchemaSimpleItem, self).validate(data)
         self.validateType(data, bool)
 
 class SchemaFloat(SchemaSimpleItem):
+    """Defines the SchemaFloat type."""
     def validate(self, data):
         super(SchemaSimpleItem, self).validate(data)
         self.validateType(data, float)
 
 class SchemaString(SchemaSimpleItem):
+    """Defines the SchemaString type."""
     def validate(self, data):
         super(SchemaSimpleItem, self).validate(data)
         self.validateType(data, unicode)
 
 class SchemaBinary(SchemaSimpleItem):
+    """Defines the SchemaBinary type for blobs."""
     def validate(self, data):
         super(SchemaSimpleItem, self).validate(data)
         self.validateType(data, str)
 
 class SchemaFilename(SchemaSimpleItem):
+    """Defines the SchemaFilename type."""
     def validate(self, data):
         super(SchemaSimpleItem, self).validate(data)
         self.validateType(data, FilenameType)
 
 class SchemaURL(SchemaSimpleItem):
+    """Defines the SchemaURL type."""
     def validate(self, data):
         super(SchemaSimpleItem, self).validate(data)
         self.validateType(data, unicode)
@@ -140,26 +150,30 @@ class SchemaURL(SchemaSimpleItem):
                 ValidationError(u"URL (%s) is not ASCII" % data)
 
 class SchemaInt(SchemaSimpleItem):
+    """Defines the SchemaInt type."""
     def validate(self, data):
         super(SchemaSimpleItem, self).validate(data)
         self.validateTypes(data, [int, long])
 
 class SchemaDateTime(SchemaSimpleItem):
+    """Defines the SchemaDateTime type."""
     def validate(self, data):
         super(SchemaSimpleItem, self).validate(data)
         self.validateType(data, datetime.datetime)
 
 class SchemaTimeDelta(SchemaSimpleItem):
+    """Defines the SchemaTimeDelta type."""
     def validate(self, data):
         super(SchemaSimpleItem, self).validate(data)
         self.validateType(data, datetime.timedelta)
 
 class SchemaReprContainer(SchemaItem):
-    """SchemaItem saved using repr() to save nested lists, dicts and tuples
-    that store simple types.  The look is similar to JSON, but supports a
-    couple different things, for example unicode and str values are distinct.
-    The types that we support are bool, int, long, float, unicode, None and
-    datetime.  Dictionary keys can also be byte strings (AKA str types)
+    """SchemaItem saved using repr() to save nested lists, dicts and
+    tuples that store simple types.  The look is similar to JSON, but
+    supports a couple different things, for example unicode and str
+    values are distinct.  The types that we support are bool, int,
+    long, float, unicode, None and datetime.  Dictionary keys can also
+    be byte strings (AKA str types)
     """
 
     VALID_TYPES = [bool, int, long, float, unicode, NoneType,
@@ -195,7 +209,7 @@ class SchemaReprContainer(SchemaItem):
 class SchemaList(SchemaReprContainer):
     """Special case of SchemaReprContainer that stores a simple list
 
-    All values must have the same type
+    All values in the list must have the same type.
     """
     def __init__(self, childSchema, noneOk=False):
         super(SchemaList, self).__init__(noneOk)
@@ -242,8 +256,8 @@ class SchemaDict(SchemaReprContainer):
 
 class SchemaStatusContainer(SchemaReprContainer):
     """Version of SchemaReprContainer that stores the status dict for
-    RemoteDownloaders.  It allows some values to be byte strings rather than
-    unicode objects.
+    RemoteDownloaders.  It allows some values to be byte strings
+    rather than unicode objects.
     """
 
 
@@ -267,6 +281,7 @@ class SchemaStatusContainer(SchemaReprContainer):
                     'fastResumeData')
 
 class SchemaObject(SchemaItem):
+    """SchemaObject type."""
     def __init__(self, klass, noneOk=False):
         super(SchemaObject, self).__init__(noneOk)
         self.klass = klass
@@ -281,10 +296,10 @@ class ObjectSchema(object):
 
     Member variables:
 
-    klass -- the python class that this schema is for
-    table_name -- SQL table name to store the class in
-    fields -- list of  (name, SchemaItem) pairs.  One item for each attribute
-        that should be stored to disk.
+    * ``klass`` -- the python class that this schema is for
+    * ``table_name`` -- SQL table name to store the class in
+    * ``fields`` -- list of (name, SchemaItem) pairs.  One item for
+      each attribute that should be stored to disk.
     """
 
     @classmethod
@@ -300,11 +315,11 @@ class ObjectSchema(object):
 class MultiClassObjectSchema(ObjectSchema):
     """ObjectSchema where rows will be restored to different python classes.
 
-    Instead of the klass attribute, MultiClassObjectSchema should define 2
-    class methods: ddb_object_classes() returns the list of all classes that
-    this schema works with and get_ddb_class() which inputs a dictionary
-    containing db data and return which class we should use to restore that
-    row.
+    Instead of the klass attribute, MultiClassObjectSchema should
+    define 2 class methods: ddb_object_classes() returns the list of
+    all classes that this schema works with and get_ddb_class() which
+    inputs a dictionary containing db data and return which class we
+    should use to restore that row.
     """
 
 from miro.database import DDBObject

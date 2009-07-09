@@ -26,7 +26,9 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Constants for the widgets frontend."""
+"""``miro.frontends.widgets.widgetconst`` -- Constants for the widgets
+frontend.
+"""
 
 # Control sizes
 SIZE_NORMAL = -1

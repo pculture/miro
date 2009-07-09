@@ -26,15 +26,16 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""miro.frontends.widgets.dialogs -- Dialog boxes for the Widget frontend.
+"""``miro.frontends.widgets.dialogs`` -- Dialog boxes for the Widget
+frontend.
 
-The difference between this module and rundialog.py is that rundialog handles
-dialog boxes that are coming from the backend code.  This model handles
-dialogs that we create from the frontend
+The difference between this module and rundialog.py is that rundialog
+handles dialog boxes that are coming from the backend code.  This
+model handles dialogs that we create from the frontend
 
-One big difference is that we don't have to be as general about dialogs, so
-they can present a somewhat nicer API.  One important difference is that all
-of the dialogs run modally.
+One big difference is that we don't have to be as general about
+dialogs, so they can present a somewhat nicer API.  One important
+difference is that all of the dialogs run modally.
 """
 
 from miro import app

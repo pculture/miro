@@ -14,50 +14,50 @@ platform-specific details.
 FIXME - need explanation here and probably a drawing of the architecture
 
 
-``application``
-===============
+``application`` - main application code
+=======================================
 
 .. automodule:: miro.frontends.widgets.application
    :members:
 
-``cellpack``
-============
+``cellpack`` - code to lay out CustomTableCells
+===============================================
 
 .. automodule:: miro.frontends.widgets.cellpack
    :members:
 
-``dialogs``
-===========
+``dialogs`` - dialogs
+=====================
 
 .. automodule:: miro.frontends.widgets.dialogs
    :members:
 
-``imagepool``
-=============
+``imagepool`` - Image objects for image filenames
+=================================================
 
 .. automodule:: miro.frontends.widgets.imagepool
    :members:
 
-``util``
-========
+``util`` - utility functions
+============================
 
 .. automodule:: miro.frontends.widgets.util
    :members:
 
-``widgetconst``
-===============
+``widgetconst`` - constants
+===========================
 
 .. automodule:: miro.frontends.widgets.widgetconst
    :members:
 
-``widgetutil``
-==============
+``widgetutil`` - utility functions
+==================================
 
 .. automodule:: miro.frontends.widgets.widgetutil
    :members:
 
-``window``
-==========
+``window`` - main window code
+=============================
 
 .. automodule:: miro.frontends.widgets.window
    :members:

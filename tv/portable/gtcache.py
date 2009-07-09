@@ -26,8 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""
-Caching gettext functions
+"""``miro.gtcache`` -- Caching gettext functions.
 """
 
 import gettext as _gt

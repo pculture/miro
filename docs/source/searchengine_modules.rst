@@ -4,6 +4,9 @@ searchengine modules
 
 .. _howto-searchengine:
 
+How to add a search engine
+==========================
+
 Miro allows users to do searches against sites that return RSS data
 for search queries.
 
@@ -54,8 +57,8 @@ To create a new search engine, do the following:
    new search engine and attach the ``.xml`` and ``.png`` files to it.
 
 
-``miro.searchengines`` - search engines module
-==============================================
+``searchengines`` - search engines module
+=========================================
 
 .. automodule:: miro.searchengines
    :members:

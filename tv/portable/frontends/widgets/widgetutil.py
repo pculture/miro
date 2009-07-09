@@ -26,7 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Utility functions."""
+"""``miro.frontends.widgets.widgetutil`` -- Utility functions.
+"""
 
 import math
 

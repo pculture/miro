@@ -26,7 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""messagehandler.py -- Backend message handler"""
+"""``miro.messagehandler``` -- Backend message handler
+"""
 
 from copy import copy
 import logging

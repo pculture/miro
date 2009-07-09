@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Holds the TabOrder DDBObject.
+"""``miro.tabs`` -- Holds the TabOrder DDBObject.
 """
 
 from miro import database

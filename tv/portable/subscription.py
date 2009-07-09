@@ -26,7 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""
+"""``miro.subscription`` -- Functions for handling subscriptions.
+
 This file handles checking URLs that the user clicks on to see if they are
 subscribe links.  Subscribe links are specially formatted URLs that signal
 that we should subscribe the user to a feed, add a new channel guide, start a

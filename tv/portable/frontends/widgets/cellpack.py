@@ -26,7 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""cellpack.py -- Code to layout CustomTableCells.
+"""``miro.frontends.widgets.cellpack`` -- Code to layout
+CustomTableCells.
 
 We use the hbox/vbox model to lay things out with a couple changes.
 The main difference here is that layouts are one-shot.  We don't keep

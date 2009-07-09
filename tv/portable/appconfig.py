@@ -26,12 +26,14 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""miro.appconfig -- Contains the AppConfig class, which handles holding
-the values of app.config.  If Miro is using a theme, then the theme's
-app.config value overrides the default one.
+"""``miro.appconfig`` -- Contains the AppConfig class, which handles
+holding the values of ``app.config``.
 
-Most uses of AppConfig will come from the global variable app.configfile.
-This is setup in config.load().
+If Miro is using a theme, then the theme's app.config value overrides
+the default one.
+
+Most uses of AppConfig will come from the global variable
+``app.configfile``.  This is setup in ``config.load()``.
 """
 
 import logging

@@ -26,6 +26,11 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+"""``miro.guide`` -- Holds ``ChannelGuide`` class and related things.
+
+``ChannelGuide`` is the class used for storing guides and sites.
+"""
+
 import re
 import logging
 from HTMLParser import HTMLParser, HTMLParseError

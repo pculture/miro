@@ -26,6 +26,9 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+"""``miro.config`` -- Configuration and preference related functions.
+"""
+
 from threading import RLock
 
 from miro.appconfig import AppConfig

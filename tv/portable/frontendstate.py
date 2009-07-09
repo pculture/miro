@@ -26,7 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""frontendstate.py -- Objects that store data for the frontends.  """
+"""miro.frontendstate -- Objects that store data for the frontends.
+"""
 
 from miro.database import DDBObject
 

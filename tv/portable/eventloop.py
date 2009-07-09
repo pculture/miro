@@ -26,13 +26,12 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Event loop handler.
+"""``miro.eventloop`` -- Event loop handler.
 
-This module handles the democracy event loop which is responsible for network
-requests and scheduling.
+This module handles the democracy event loop which is responsible for
+network requests and scheduling.
 
-TODO:
-    handle user setting clock back
+TODO: handle user setting clock back
 """
 
 import threading

@@ -26,6 +26,9 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+"""``miro.item`` -- Holds ``Item`` class and related things.
+"""
+
 from datetime import datetime, timedelta
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
@@ -276,7 +279,7 @@ class FeedParserValues(object):
 
 
 class Item(DDBObject, iconcache.IconCacheOwnerMixin):
-    """An item corresponds to a single entry in a feed. It has a single url
+    """An item corresponds to a single entry in a feed.  It has a single url
     associated with it.
     """
 

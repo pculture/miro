@@ -26,6 +26,10 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+"""``miro.feed`` -- Holds ``Feed`` class and related things.
+
+FIXME - talk about Feed architecture here
+"""
 
 from HTMLParser import HTMLParser, HTMLParseError
 from cStringIO import StringIO

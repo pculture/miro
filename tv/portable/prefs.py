@@ -26,13 +26,28 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+"""``miro.prefs`` -- Defines :class:`Pref` and lists global preferences.
+"""
+
 import os
 from miro import util
 
 class Pref:
+    """Class for defining preferences.  Preferences are defined using
+    keywords:
+
+    * **key** -- the name of the key--must be unique among all
+      preferences
+    * **default** -- the default value to use
+    * **platformSpecific** -- whether or not this is platform specific;
+      this should usually be False
+
+    Pref example::
+
+        FOO = Pref(key="foo", default=None, platformSpecific=False)
+    """
     def __init__(self, **kwds):
         self.__dict__.update(kwds)
-
     def __eq__(self, other):
         return self.key == other.key
     def __ne__(self, other):
