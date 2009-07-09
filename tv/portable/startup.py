@@ -161,15 +161,15 @@ def startup():
     logging.info("Revision:   %s", config.get(prefs.APP_REVISION))
     logging.info("Builder:    %s", config.get(prefs.BUILD_MACHINE))
     logging.info("Build Time: %s", config.get(prefs.BUILD_TIME))
-    eventloop.connect('thread-started', lambda obj, thread: database.set_thread(thread))
+    eventloop.connect('thread-started', finish_startup)
     logging.info("Starting event loop thread")
     eventloop.startup()
-    eventloop.addIdle(finish_startup, "finish startup")
     if DEBUG_DB_MEM_USAGE:
         mem_usage_test_event.wait()
 
 @startup_function
-def finish_startup():
+def finish_startup(obj, thread):
+    database.set_thread(thread)
     logging.info("Restoring database...")
     start = time.time()
     app.db = storedatabase.LiveStorage()
