@@ -802,7 +802,11 @@ class HTMLStripper(sgmllib.SGMLParser):
         self.__add(data)
 
     def handle_charref(self, ref):
-        self.__add(unichr(int(ref)))
+        if ref.startswith('x'):
+            charnum = int(ref[1:], 16)
+        else:
+            charnum = int(ref)
+        self.__add(unichr(charnum))
 
     def start_p(self, attributes):
         self.__add("\n")
