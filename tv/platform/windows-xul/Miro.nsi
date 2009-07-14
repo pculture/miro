@@ -237,40 +237,6 @@ FunctionEnd
 ; Installation page
 !insertmacro MUI_PAGE_INSTFILES
 
-; ****** OpenCandy START ******
-
-!include "OCSetupHlp.nsh"
-
-; Declare the OpenCandy Offer page
-
-Function OpenCandyPageStart
-  StrCmp $THEME_NAME "" +2
-  Abort
-  StrCmp $REINSTALL "0" +2
-  Abort
-  Call CheckMiroBarInstall
-  Pop $0
-  StrCmp $0 "0" +2
-  Abort
-  Call OpenCandyPageStartFn
-FunctionEnd
-
-Function OpenCandyPageLeave
-  StrCmp $THEME_NAME "" +2
-  Abort
-  StrCmp $REINSTALL "0" +2
-  Abort
-  Call CheckMiroBarInstall
-  Pop $0
-  StrCmp $0 "0" +2
-  Abort
-  Call OpenCandyPageLeaveFn
-FunctionEnd
-
-Page custom OpenCandyPageStart OpenCandyPageLeave
-
-; ****** OpenCandy END ******
-
 Page custom MiroBarInstall MiroBarInstallLeave
 
 ; Finish page
@@ -653,10 +619,6 @@ unzipok:
   File  /r resources
   File  /r xulrunner
   File  /r vlc-plugins
-
-; ****** OC START *****
-  !insertmacro OpenCandyInstallDLL	
-; ****** OC END ******
 
 !endif
 
@@ -1229,10 +1191,6 @@ Section "Uninstall" SEC91
 
 continue:
   ClearErrors
-; ******* OC START *****
-;NOTE: Change the Key on the following line (Key1) to the Key assigned to your specific product.	
-  !insertmacro OpenCandyProductUninstall ${OpenCandyKey1}
-; ******* OC END *******
 
   !insertmacro uninstall $INSTDIR
   RMDIR "$PROGRAMFILES\$PUBLISHER"
