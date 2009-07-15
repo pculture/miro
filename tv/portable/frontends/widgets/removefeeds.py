@@ -73,7 +73,7 @@ def run_dialog(channel_infos, downloaded_items, downloading_items, has_watched_f
                 scroller = widgetset.Scroller(False, True)
                 scroller.set_has_borders(True)
                 scroller.add(v2)
-                scroller_width, scroller_height = scroller.get_natural_size_request()
+                scroller_width, scroller_height = scroller.get_size_request()
                 if scroller_height == 0:
                     scroller.set_size_request(scroller_width, 5 * (lab_height + 1))
                 v2 = scroller
