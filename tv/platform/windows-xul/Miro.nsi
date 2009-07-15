@@ -27,9 +27,6 @@
 
 !define MIROBAR_EXE "askBarSetup-4.1.0.2.exe"
 
-!define OpenCandyKey1 "06388ce26efe432aa917f6f9ace6c2a0"
-!define OpenCandyKey2 "551aae7e8f606382a7a04b15b87f297f"
-
 Name "$APP_NAME"
 OutFile "${CONFIG_OUTPUT_FILE}"
 InstallDir "$PROGRAMFILES\${CONFIG_PUBLISHER}\${CONFIG_LONG_APP_NAME}"
@@ -1018,9 +1015,6 @@ StartInstall:
   StrCmp $REINSTALL "1" SkipLanguageDLL
   !insertmacro MUI_LANGDLL_DISPLAY
 SkipLanguageDLL:
-; ****** OpenCandy START ******
-  !insertmacro OpenCandyInit "Miro" ${OpenCandyKey1} ${OpenCandyKey2} "Software\${CONFIG_PUBLISHER}\OpenCandy"
-; ****** OpenCandy END ******
 
   ; Make check boxes for unhandled file extensions.
 
@@ -1131,18 +1125,12 @@ FunctionEnd
 Function .onInstSuccess
   StrCmp $THEME_NAME "" 0 end
   StrCmp $REINSTALL "1" end
-; ****** OpenCandy START ******
-  !insertmacro OpenCandyOnInstSuccess
-; ****** OpenCandy END ******
 end:
 FunctionEnd
 
 Function .onGUIEnd
   StrCmp $THEME_NAME "" 0 end
   StrCmp $REINSTALL "1" end
-; ****** OpenCandy START ******
-  !insertmacro OpenCandyOnGuiEnd
-; ****** OpenCandy END ******
 end:
 FunctionEnd
 
