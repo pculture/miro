@@ -160,10 +160,23 @@ class VLCSniffer:
         if self.callback_info:
             video_tracks = libvlc.libvlc_video_get_track_count(self.media_player, 
                                                                self.exc.ref())
+            try:
+                self.exc.check()
+            except VLCError:
+                video_tracks = 0
+            audio_tracks = libvlc.libvlc_audio_get_track_count(self.media_player,
+                                                               self.exc.ref())
+            try:
+                self.exc.check()
+            except VLCError:
+                audio_tracks = 0
+
             if video_tracks > 0:
                 item_type = "video"
+            elif audio_tracks > 0:
+                item_type = "audio"
             else:
-                item_type = "audio"                
+                item_type = "unplayable"
         try:
             libvlc.libvlc_media_player_stop(self.media_player, self.exc.ref())
             self.exc.check()
