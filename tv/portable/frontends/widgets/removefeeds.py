@@ -62,13 +62,20 @@ def run_dialog(channel_infos, downloaded_items, downloading_items, has_watched_f
             v.pack_start(widgetutil.align_left(lab))
 
             v2 = widgetset.VBox()
+            lab_height = None
             for mem in channel_infos:
                 lab_mem = widgetset.Label(util.clampText(mem.name, 40))
+                if lab_height is None:
+                    _, lab_height = lab_mem.get_size_request()
                 v2.pack_start(widgetutil.align_left(lab_mem, left_pad=15))
 
             if len(channel_infos) > 5:
                 scroller = widgetset.Scroller(False, True)
+                scroller.set_has_borders(True)
                 scroller.add(v2)
+                scroller_width, scroller_height = scroller.get_natural_size_request()
+                if scroller_height == 0:
+                    scroller.set_size_request(scroller_width, 5 * (lab_height + 1))
                 v2 = scroller
             v.pack_start(v2, padding=10)
 
