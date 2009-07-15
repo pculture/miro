@@ -987,11 +987,12 @@ class BackendMessageHandler(messages.MessageHandler):
 
         not_removed = []
         for id_ in message.video_ids:
+            found = False
             for playlist in playlists:
                 if playlist.contains_id(id_):
                     playlist.remove_id(id_)
-                    break
-            else:
+                    found = True
+            if not found:
                 not_removed.append(id_)
         for id_ in not_removed:
             logging.warn("RemoveVideosFromPlaylist: Id not found -- %s", id_)
