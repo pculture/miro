@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-06-30 10:36-0400\n"
-"PO-Revision-Date: 2009-06-19 17:22+0000\n"
-"Last-Translator: Homja4ok <Unknown>\n"
+"PO-Revision-Date: 2009-07-09 14:37+0000\n"
+"Last-Translator: CrabMan <Unknown>\n"
 "Language-Team: Ukranian <serg74@hotmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-07-09 13:56+0000\n"
+"X-Launchpad-Export-Date: 2009-07-15 19:21+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
@@ -93,7 +93,7 @@ msgstr "Пошук відео"
 #: ../../portable/frontends/widgets/statictabs.py:108
 #: ../../portable/frontends/widgets/itemlistcontroller.py:508
 msgid "Audio"
-msgstr "Аудіо"
+msgstr "Звук"
 
 #: ../../portable/frontends/widgets/statictabs.py:118
 msgid "Downloading"
@@ -230,7 +230,7 @@ msgstr "Переглянуто десять днів тому"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
-msgstr "Переглянуто один місяць тому"
+msgstr "Переглянуто місяць тому"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
@@ -348,7 +348,7 @@ msgstr "Відтворити зовнішньою програмою"
 
 #: ../../portable/frontends/widgets/displays.py:587
 msgid "Delete All"
-msgstr "Знищити все"
+msgstr "Видалити все"
 
 #: ../../portable/frontends/widgets/displays.py:591
 msgid "Put Into a New Folder"
@@ -437,7 +437,7 @@ msgstr "Що 30 хвилин"
 
 #: ../../portable/frontends/widgets/prefpanel.py:284
 msgid "Manually"
-msgstr "Власноруч"
+msgstr "Вручну"
 
 #: ../../portable/frontends/widgets/prefpanel.py:289
 #: ../../portable/frontends/widgets/itemlistwidgets.py:624
@@ -583,7 +583,7 @@ msgstr "1 місяць"
 
 #: ../../portable/frontends/widgets/prefpanel.py:599
 msgid "Always play videos in a separate window."
-msgstr "Завжди програвати відео в окремому вікні."
+msgstr "Завжди відтворювати відео в окремому вікні."
 
 #: ../../portable/frontends/widgets/prefpanel.py:620
 msgid "General"
@@ -603,11 +603,11 @@ msgstr "Місце на диску"
 
 #: ../../portable/frontends/widgets/prefpanel.py:625
 msgid "Playback"
-msgstr "відтворення"
+msgstr "Відтворення"
 
 #: ../../portable/frontends/widgets/prefpanel.py:629
 msgid "Preferences"
-msgstr "Вподобання"
+msgstr "Параметри"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:74
 msgid "Search for:"
@@ -666,7 +666,7 @@ msgstr "Автоматично завантажувати"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:637
 msgid "Settings"
-msgstr "Налаштування"
+msgstr "Параметри"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:719
 msgid "Unwatched"
@@ -678,7 +678,7 @@ msgstr "Шлях до фільмів:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:91
 msgid "Log file location:"
-msgstr "Шлях до файлу журналу"
+msgstr "Шлях до файлу журналу:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:95
 msgid "Downloader log file location:"
@@ -731,7 +731,7 @@ msgstr "Помилка підписки"
 
 #: ../../portable/commandline.py:180
 msgid "Invalid Torrent"
-msgstr "Неправильни торент"
+msgstr "Неправильний торент"
 
 #: ../../portable/downloader.py:258
 msgid "activity"
@@ -755,7 +755,7 @@ msgstr "Хочете залишити стрічку?"
 
 #: ../../portable/feed.py:1060
 msgid "Bad content-type"
-msgstr "Поганий content-type"
+msgstr "Невірний content-type"
 
 #: ../../portable/feed.py:2406
 msgid "Local Files"
@@ -779,7 +779,7 @@ msgstr "Ігнорувати"
 
 #: ../../portable/dialogs.py:92
 msgid "Submit Crash Report"
-msgstr "Заслати звіт про збій"
+msgstr "Надіслати звіт про збій"
 
 #: ../../portable/dialogs.py:93
 msgid "Migrate"
@@ -803,7 +803,7 @@ msgstr "Знищити файли"
 
 #: ../../portable/dialogs.py:99
 msgid "Keep Videos"
-msgstr "Лишити відео"
+msgstr "Залишити відео"
 
 #: ../../portable/dialogs.py:100
 msgid "Delete Videos"
@@ -815,7 +815,7 @@ msgstr "Створити"
 
 #: ../../portable/dialogs.py:105
 msgid "Add Into New Folder"
-msgstr "Додати у нову теку"
+msgstr "Додати в нову теку"
 
 #: ../../portable/dialogs.py:109
 msgid "Not Now"
@@ -823,7 +823,7 @@ msgstr "Не зараз"
 
 #: ../../portable/dialogs.py:110
 msgid "Close to Tray"
-msgstr "Згорнути до іконки"
+msgstr "Згорнути в трей"
 
 #: ../../portable/dialogs.py:111
 msgid "Launch Miro"
@@ -843,7 +843,7 @@ msgstr "Завантаження вже існує"
 
 #: ../../portable/singleclick.py:55
 msgid "That URL is already an external download."
-msgstr "Цей URL вже є зовнішнішнім завантаженням"
+msgstr "Цей URL вже є зовнішнішнім завантаженням."
 
 #: ../../portable/singleclick.py:64
 msgid "It is downloading now."
@@ -851,11 +851,11 @@ msgstr "Це завантажується зараз."
 
 #: ../../portable/singleclick.py:66
 msgid "It has already been downloaded."
-msgstr "Це вже було завантажене"
+msgstr "Це вже було завантажене."
 
 #: ../../portable/singleclick.py:96
 msgid "File Download"
-msgstr "Завантаження файла"
+msgstr "Завантаження файлу"
 
 #: ../../portable/singleclick.py:137
 msgid "Download Error"
@@ -899,7 +899,7 @@ msgstr "_Відкрити"
 
 #: ../../portable/menubar.py:186
 msgid "Check _Version"
-msgstr "Перевірити_версію"
+msgstr "Перевірити _версію"
 
 #: ../../portable/menubar.py:190
 msgid "Re_name Item"
@@ -907,7 +907,7 @@ msgstr "Пере_йменувати елемент"
 
 #: ../../portable/menubar.py:195
 msgid "_Options"
-msgstr "_Налаштування"
+msgstr "_Параметри"
 
 #: ../../portable/menubar.py:196
 msgid "_Quit"
@@ -995,7 +995,7 @@ msgstr "Перейти _вперед"
 
 #: ../../portable/menubar.py:260
 msgid "Skip _Back"
-msgstr "Минути _Назад"
+msgstr "Перейти _назад"
 
 #: ../../portable/menubar.py:262
 msgid "Volume _Up"
@@ -1043,11 +1043,11 @@ msgstr "_Бічна панель"
 
 #: ../../portable/menubar.py:295
 msgid "_Playlists"
-msgstr "Списки"
+msgstr "_Списки"
 
 #: ../../portable/menubar.py:296
 msgid "P_layback"
-msgstr "Відтворення"
+msgstr "_Відтворення"
 
 #: ../../portable/util.py:300 ../../portable/util.py:302
 #, python-format
@@ -1198,7 +1198,7 @@ msgstr "Показати все"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:146
 msgid "Preferences..."
-msgstr "Налаштування..."
+msgstr "Параметри..."
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:152
 msgid "Close Window"
@@ -1218,7 +1218,7 @@ msgstr "Вставити"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
 msgid "Select All"
-msgstr "Виділити все"
+msgstr "Вибрати все"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:164
 msgid "Edit"
@@ -1263,7 +1263,7 @@ msgstr "Вікно"
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:39
 msgid "Enable tray icon"
-msgstr "Ввімкнути іконку в треї"
+msgstr "Увімкнути іконку в треї"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
 msgid "Renderer options:"
@@ -1271,7 +1271,7 @@ msgstr "Параметри відтворювача"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:74
 msgid "Video renderer:"
-msgstr "Відеовідтворювач"
+msgstr "Відеовідтворювач:"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
 msgid "Update Available"
@@ -1279,11 +1279,11 @@ msgstr "Доступне оновлення"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
-msgstr "Ви хочете її завантажити?"
+msgstr "Завантажити зараз?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
-msgstr "Установити Adobe Flash?"
+msgstr "Встановити Adobe Flash?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
 #, python-format
@@ -1296,7 +1296,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
-msgstr "Установити Adobe Flash"
+msgstr "Встановити Adobe Flash"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
 msgid "When I click the red close button:"
@@ -1556,7 +1556,7 @@ msgstr "15 непереглянутих відео"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:241
 msgid "Feed Settings"
-msgstr "Нелаштування стрічки"
+msgstr "Налаштування стрічки"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:63
 #, python-format
@@ -1566,7 +1566,7 @@ msgstr "Початкові налаштування %(name)s"
 #: ../../portable/frontends/widgets/firsttimedialog.py:122
 #, python-format
 msgid "Welcome to the %(name)s First Time Setup"
-msgstr "Запрошуемо до початкових налаштуваннях %(name)s"
+msgstr "Запрошуемо до початкових налаштувань %(name)s"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:126
 #, python-format
@@ -1586,7 +1586,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:138
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
-msgstr "Запускати %(name)s при старті компю'тера?"
+msgstr "Запускати %(name)s при старті комп'ютера?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:153
 msgid "Next >"
@@ -1660,7 +1660,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/crashdialog.py:68
 msgid "Describe what you were doing when you got this error:"
-msgstr "Опишіть ваші дії коли ви отримали це повідомлення про помилку:"
+msgstr "Опишіть, що ви робили, коли отримали це повідомлення про помилку:"
 
 #: ../../portable/frontends/widgets/style.py:234
 msgid "Show More"
@@ -1694,7 +1694,7 @@ msgstr "Сторінка ліцензії"
 
 #: ../../portable/frontends/widgets/style.py:245
 msgid "Leechers"
-msgstr "Качаючі"
+msgstr "Лічери"
 
 #: ../../portable/frontends/widgets/style.py:246
 msgid "Upload Rate"
@@ -1746,7 +1746,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/displays.py:393
 msgid "Skip"
-msgstr "Перейти до наступного"
+msgstr "Пропустити"
 
 #: ../../portable/frontends/widgets/displays.py:430
 msgid "Open Externally"
@@ -1899,12 +1899,12 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:399
 #, python-format
 msgid "%(appname)s is up to date"
-msgstr "%(appname)s на останній версії"
+msgstr "%(appname)s є найновішою версією"
 
 #: ../../portable/frontends/widgets/application.py:401
 #, python-format
 msgid "%(appname)s is up to date!"
-msgstr "%(appname)s на останній версії!"
+msgstr "%(appname)s є найновішою версією!"
 
 #: ../../portable/frontends/widgets/application.py:425
 msgid "Remove item"
@@ -2008,7 +2008,7 @@ msgstr "Перейменувати теку стрічок"
 #: ../../portable/frontends/widgets/application.py:707
 #, python-format
 msgid "Enter a new name for the feed folder %(name)s"
-msgstr "Введіть нове ім’я для теки стірчок %(name)s"
+msgstr "Введіть нове ім’я для теки стрічок %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:711
 msgid "Rename Feed"
@@ -2017,7 +2017,7 @@ msgstr "Перейменувати стрічку"
 #: ../../portable/frontends/widgets/application.py:712
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
-msgstr "Введіть нове ім’я для стріки %(name)s"
+msgstr "Введіть нове ім’я для стрічки %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:717
 #, python-format
@@ -2112,7 +2112,7 @@ msgstr "Попереджати при спробі вийти із незаве�
 
 #: ../../portable/frontends/widgets/prefpanel.py:307
 msgid "Default settings for new feeds:"
-msgstr "Налаштування за замовчуванням для нових стрічок:"
+msgstr "Типові налаштування для нових стрічок:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:311
 msgid "(These can be changed using the feed's settings button)"
@@ -2148,7 +2148,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:590
 msgid "By default, video and audio items expire after:"
-msgstr "За промовчанням, відео та аудіо записи застаріють через:"
+msgstr "Типово відео та аудіо записи застаріють через:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:603
 msgid ""
@@ -2159,7 +2159,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:608
 msgid "Play video and audio items one after another"
-msgstr "Програвати відео та аудіо записи один за одним"
+msgstr "Відтворити відео та аудіо записи один за одним"
 
 #: ../../portable/frontends/widgets/prefpanel.py:609
 msgid "Stop after each video or audio item"
@@ -2183,7 +2183,7 @@ msgstr "Пошуковик:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:132
 msgid "Add new feed to this section:"
-msgstr "Додати нову стрічку у цей розділ:"
+msgstr "Додати нову стрічку в цей розділ:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:135
 #: ../../portable/frontends/widgets/newfolder.py:70
@@ -2215,7 +2215,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/newfolder.py:60
 msgid "Folder name:"
-msgstr "Назва теке"
+msgstr "Назва теки"
 
 #: ../../portable/frontends/widgets/newfolder.py:68
 msgid "Folder should go in this section:"
@@ -2228,7 +2228,7 @@ msgstr "Створити нову теку стрічок"
 
 #: ../../portable/frontends/widgets/newfolder.py:110
 msgid "Enter the name of the folder to add"
-msgstr "Введіть ім’я теки що додається"
+msgstr "Введіть ім’я теки, що додається"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
@@ -2289,21 +2289,21 @@ msgstr "Постійне посилання"
 
 #: ../../portable/frontends/widgets/gtk/video.py:294
 msgid "Pop-in"
-msgstr ""
+msgstr "Приєднати"
 
 #: ../../portable/frontends/widgets/gtk/video.py:299
 msgid "Pop-out"
-msgstr ""
+msgstr "Від'єднати"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:67
 #, python-format
 msgid "Play Next Unplayed (%(unplayed)d)"
-msgstr "Грати наступне негране (%(unplayed)d)"
+msgstr "Відтворити наступне невідтворене (%(unplayed)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:71
 #, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
-msgstr "Грати все негране (%(unplayed)d)"
+msgstr "Відтворити все невідтворене (%(unplayed)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:74
 #, python-format
@@ -2401,7 +2401,7 @@ msgstr "Всі записи відповідають критерію пошук
 
 #: ../../portable/frontends/widgets/newfeed.py:69
 msgid "Feed should go in this section:"
-msgstr "Стрічки мають йти у цю секцію:"
+msgstr "Стрічки мають йти в цю секцію:"
 
 #: ../../portable/frontends/widgets/newfeed.py:110
 msgid "Add Feed"
@@ -2507,7 +2507,7 @@ msgstr "Розмір"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:295
 msgid "ETA"
-msgstr ""
+msgstr "Залишилось"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:296
 msgid "Speed"
@@ -2523,7 +2523,7 @@ msgstr "Скасувати все"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:507
 msgid "Download Settings"
-msgstr "Настройки завантажень"
+msgstr "Налаштування завантажень"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:553
 #, python-format
@@ -2560,7 +2560,7 @@ msgstr "Вилучити стрічку"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:730
 msgid "View|All"
-msgstr "Вигляд|Усе"
+msgstr "Переглянути|Все"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:732
 msgid "Non Feed"
@@ -2597,8 +2597,8 @@ msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
 "report at %(url)s."
 msgstr ""
-"Невідома помилка не дала %(appname)s запуститись.  Будь ласка, зашліть звіт "
-"про помилку на %(url)s."
+"Невідома помилка не дала %(appname)s запуститись.  Будь ласка, надішліть "
+"звіт про помилку на %(url)s."
 
 #: ../../portable/commandline.py:110
 #, python-format
@@ -2606,7 +2606,7 @@ msgid ""
 "This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
 "the publisher of this file."
 msgstr ""
-"Файл стрічки новин %(appname)s має неправильний формат: %(url)s.  Будь ласка "
+"Файл стрічки новин %(appname)s має неправильний формат: %(url)s. Будь-ласка, "
 "повідомте про це видавцю файла."
 
 #: ../../portable/commandline.py:120
@@ -2615,8 +2615,8 @@ msgid ""
 "This %(appname)s feed file has the wrong content type: %(url)s. Please "
 "notify the publisher of this file."
 msgstr ""
-"Файл стрічки новин %(appname)s має неправильний тип змісту: %(url)s.  Будь "
-"ласка повідомте про це видавцю файла."
+"Файл стрічки новин %(appname)s має неправильний тип змісту: %(url)s. Будь-"
+"ласка, повідомте про це видавцю файла."
 
 #: ../../portable/commandline.py:128
 #, python-format
@@ -2755,7 +2755,7 @@ msgstr "Зберегти елементи _як"
 
 #: ../../portable/menubar.py:193
 msgid "Copy Item _URL"
-msgstr "Скопіювати _URL елемента"
+msgstr "Скопіювати _URL елементу"
 
 #: ../../portable/menubar.py:212
 msgid "Add _Feed"
@@ -2783,7 +2783,7 @@ msgstr "_Оновити стрічки"
 
 #: ../../portable/menubar.py:223
 msgid "Update _All Feeds"
-msgstr "_Оновити усі стрічки"
+msgstr "_Оновити всі стрічки"
 
 #: ../../portable/menubar.py:225
 msgid "_Import Feeds (OPML)"
@@ -2905,11 +2905,11 @@ msgstr "%(dayofmonth)s %(month)s, %(year)s"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:199
 msgid "Pop Out"
-msgstr ""
+msgstr "Від'єднати"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:202
 msgid "Pop In"
-msgstr ""
+msgstr "Приєднати"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 #, python-format
@@ -2955,7 +2955,7 @@ msgstr ""
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
 #, python-format
 msgid "Quit %(appname)s completely."
-msgstr "Закрити %(appname)s зовсім."
+msgstr "Закрити %(appname)s повністю."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:134
 #, python-format
@@ -2964,5 +2964,4 @@ msgid ""
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
 "Коли ви клацаєте по червоній кнопці закриття, ви хочете вийти з %(appname)s, "
-"чи згорнути його у трей?  Ви завжди можете змінити цю настройку у "
-"Налаштуваннях."
+"чи згорнути його у трей?  Ви завжди можете змінити цю настройку у Параметрах."

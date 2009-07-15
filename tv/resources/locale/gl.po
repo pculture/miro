@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-06-30 10:36-0400\n"
-"PO-Revision-Date: 2009-07-07 22:49+0000\n"
+"PO-Revision-Date: 2009-07-12 17:58+0000\n"
 "Last-Translator: Marcos X. <antiparvos@gmail.com>\n"
 "Language-Team: Galician <gl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-07-09 13:57+0000\n"
+"X-Launchpad-Export-Date: 2009-07-15 19:22+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/frontends/widgets/statictabs.py:97
@@ -628,7 +628,7 @@ msgstr "Eliminar da listaxe de reprodución"
 #: ../../portable/frontends/widgets/feedsettingspanel.py:102
 #: ../../portable/frontends/widgets/prefpanel.py:585
 msgid "never"
-msgstr "nunca"
+msgstr "Nunca"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:58
 #, python-format
@@ -658,36 +658,36 @@ msgstr "Expiración automática dos vídeos:"
 #: ../../portable/frontends/widgets/feedsettingspanel.py:95
 #, python-format
 msgid "Watched %(expiration)s (Default)"
-msgstr "%(expiration)s nunca (predeterminado)"
+msgstr "Vistos %(expiration)s (Predeterminado)"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
-msgstr "Visto hai 1 dia"
+msgstr "Vistos hai 1 dia"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr "Visto hai 3 días"
+msgstr "Vistos hai 3 días"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
-msgstr "Visto hai 6 días"
+msgstr "Vistos hai 6 días"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:100
 msgid "Watched 10 days ago"
-msgstr "Visto hai 10 dias"
+msgstr "Vistos hai 10 dias"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
-msgstr "Visto hai 1 mes"
+msgstr "Vistos hai 1 mes"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
-msgstr "Fontes obsoletas:"
+msgstr "Elementos da fonte desactualizados:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:139
 #, python-format
 msgid "Keep %(number)s (Default)"
-msgstr "Manter %(number)s (Por omisión)"
+msgstr "Manter %(number)s (Predeterminado)"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:141
 msgid "Keep 0"
@@ -880,7 +880,7 @@ msgstr "Estender"
 
 #: ../../portable/frontends/widgets/style.py:235
 msgid "Show Less"
-msgstr "Ocultar"
+msgstr "Encoller"
 
 #: ../../portable/frontends/widgets/style.py:238
 #, python-format
@@ -992,7 +992,7 @@ msgstr "Tipo do ficheiro:"
 
 #: ../../portable/frontends/widgets/displays.py:393
 msgid "Skip"
-msgstr "Saltar"
+msgstr "Seguinte"
 
 #: ../../portable/frontends/widgets/displays.py:430
 msgid "Open Externally"
@@ -1084,6 +1084,19 @@ msgid ""
 "If you quit, then you can connect the drive or otherwise fix the problem and "
 "relaunch %(shortappname)s."
 msgstr ""
+"%(shortappname)s non pode atopar o cartafol orixinal do vídeo situado en:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"Isto pódese deber a que estea localizado nun dispositivo externo que non "
+"está conectado.\n"
+"\n"
+"Se continúa, o cartafol orixinal será creado de novo nunha localización "
+"deste dispositivo. Se tiña outros vídeos no cartafol  %(shortappname)s "
+"perderá os seus detalles.\n"
+"\n"
+"Se sae poderá conectar o dispositivo ou arranxar o problema e volver a "
+"iniciar %(shortappname)s."
 
 #: ../../portable/frontends/widgets/application.py:325
 msgid "Error Revealing File"
@@ -1332,12 +1345,12 @@ msgstr[1] "Está certo de eliminar estas %(count)s webs?"
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
-msgstr[0] "Ten %(count)d descarga activa. Desexa pechar o Miro?"
-msgstr[1] "Ten %(count)d descargas activas. Desexa pechar o Miro?"
+msgstr[0] "Ten %(count)d descarga activa. Desexa pechar Miro?"
+msgstr[1] "Ten %(count)d descargas activas. Desexa pechar Miro?"
 
 #: ../../portable/frontends/widgets/application.py:808
 msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr "Avisarme cando tente pechar o Miro con descargas activas"
+msgstr "Avisarme cando tente pechar  Miro con descargas activas"
 
 #: ../../portable/frontends/widgets/application.py:1105
 msgid "Message"
@@ -1375,7 +1388,7 @@ msgstr "Abrir automaticamente %(appname)s cando se inicie a sesión."
 
 #: ../../portable/frontends/widgets/prefpanel.py:271
 msgid "Warn me if I attempt to quit with downloads in progress."
-msgstr "Avisarme cando tente pechar o Miro con descargas activas."
+msgstr "Avisarme cando tente pechar  Miro con descargas activas."
 
 #: ../../portable/frontends/widgets/prefpanel.py:281
 msgid "Every day"
@@ -2096,8 +2109,8 @@ msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
 "must download the latest version of %(appname)s and run that."
 msgstr ""
-"Ten unha base de datos gardada cunha versión máis nova do %(appname)s. Debe "
-"descargar a última versión do programa."
+"Ten unha base de datos gardada con unha versión máis nova do %(appname)s. "
+"Debe descargar a última versión do programa."
 
 #: ../../portable/commandline.py:100
 msgid "Subscription error"
@@ -2273,7 +2286,7 @@ msgstr "Pechar para a bandexa"
 
 #: ../../portable/dialogs.py:111
 msgid "Launch Miro"
-msgstr "Iniciar o Miro"
+msgstr "Iniciar  Miro"
 
 #: ../../portable/dialogs.py:112
 msgid "Download Anyway"
@@ -2488,7 +2501,7 @@ msgstr "E_xportar fontes (OPML)"
 
 #: ../../portable/menubar.py:228
 msgid "_Share with a Friend"
-msgstr "Co_mpartir cun amigo"
+msgstr "Co_mpartir con un amigo"
 
 #: ../../portable/menubar.py:229
 msgid "Copy URL"

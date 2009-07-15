@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: Democracy Player\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-06-30 10:36-0400\n"
-"PO-Revision-Date: 2009-07-09 06:30+0000\n"
-"Last-Translator: Piotr Łukomiak <Unknown>\n"
+"PO-Revision-Date: 2009-07-14 10:12+0000\n"
+"Last-Translator: ARM <armtsk@gmail.com>\n"
 "Language-Team: Piotr Szmitkowski <pszmitkowski@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-07-09 13:57+0000\n"
+"X-Launchpad-Export-Date: 2009-07-15 19:21+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-Language: Polish\n"
@@ -2631,7 +2631,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:239
 msgid "Display Contents"
-msgstr ""
+msgstr "Pokarz zawatrość."
 
 #: ../../portable/frontends/widgets/style.py:255
 msgid "Currently Playing"
@@ -2643,6 +2643,8 @@ msgid ""
 "%(appname)s can't play this file.  You may be able to open it with a "
 "different program"
 msgstr ""
+"%(appname)s nie może odtworzyć tego pliku. Możesz spróbować odtworzyć ten "
+"plik inną aplikacją."
 
 #: ../../portable/frontends/widgets/displays.py:430
 msgid "Open Externally"
@@ -2657,22 +2659,23 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/browser.py:102
 msgid "Download this video"
-msgstr ""
+msgstr "Pobierz ten film."
 
 #: ../../portable/frontends/widgets/application.py:326
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
 msgstr ""
+"Plik %(filename)s został usunięty z zewnątrz poprzez aplikację %(appname)s."
 
 #: ../../portable/frontends/widgets/application.py:399
 #, python-format
 msgid "%(appname)s is up to date"
-msgstr ""
+msgstr "%(appname)s jest zaktualizowana."
 
 #: ../../portable/frontends/widgets/application.py:401
 #, python-format
 msgid "%(appname)s is up to date!"
-msgstr ""
+msgstr "%(appname)s jest zaktualizowana!"
 
 #: ../../portable/frontends/widgets/application.py:439
 msgid ""

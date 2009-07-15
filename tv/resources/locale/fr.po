@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: Democracy Player 0.8.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-06-30 10:36-0400\n"
-"PO-Revision-Date: 2009-07-06 15:23+0000\n"
-"Last-Translator: Thomas D <Unknown>\n"
+"PO-Revision-Date: 2009-07-12 19:15+0000\n"
+"Last-Translator: Lanceplaine Kévin <lanceau.k@hotmail.fr>\n"
 "Language-Team: French <kde-francophone@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2009-07-09 13:57+0000\n"
+"X-Launchpad-Export-Date: 2009-07-15 19:22+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: French\n"
 
@@ -68,7 +68,7 @@ msgstr "%(host)s a fermé la connexion"
 #: ../../portable/httpclient.py:144 ../../portable/httpclient.py:173
 #: ../../portable/downloader.py:299
 msgid "File not found"
-msgstr "Fichier non trouvé"
+msgstr "Fichier introuvable"
 
 #: ../../portable/httpclient.py:145
 msgid "Got 404 status code"
@@ -94,7 +94,7 @@ msgstr "La demande de redirection n'a jamais démarré"
 
 #: ../../portable/httpclient.py:162
 msgid "Timeout"
-msgstr "Délai d'expiration"
+msgstr "Délai d'attente dépassé"
 
 #: ../../portable/httpclient.py:163
 #, python-format
@@ -103,12 +103,12 @@ msgstr "La connexion à %(host)s a expiré"
 
 #: ../../portable/httpclient.py:167
 msgid "Invalid URL"
-msgstr "URL non valable"
+msgstr "Adresse URL non valide"
 
 #: ../../portable/httpclient.py:168
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr "« %(url)s » n'est pas une URL valable"
+msgstr "\"%(url)s\" n'est pas une adresse (URL) valide"
 
 #: ../../portable/httpclient.py:174
 #, python-format
@@ -130,7 +130,7 @@ msgstr "Code d'erreur inconnu"
 
 #: ../../portable/httpclient.py:408
 msgid "Connection closed"
-msgstr "Connexion fermée"
+msgstr "Connexion coupée"
 
 #: ../../portable/httpclient.py:829
 msgid "Unknown"
@@ -142,7 +142,7 @@ msgstr "Erreur interne : pas prêt à envoyer"
 
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
-msgstr "Manuel de Miro"
+msgstr "Guide de Miro"
 
 #: ../../portable/frontends/widgets/statictabs.py:97
 #: ../../portable/frontends/widgets/itemlistcontroller.py:419

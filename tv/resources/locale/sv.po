@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-06-30 10:36-0400\n"
-"PO-Revision-Date: 2009-07-06 18:32+0000\n"
-"Last-Translator: Mibbo <icke_micke@hotmail.com>\n"
+"PO-Revision-Date: 2009-07-12 16:37+0000\n"
+"Last-Translator: Bljardkungen <honungs_macka@hotmail.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-07-09 13:57+0000\n"
+"X-Launchpad-Export-Date: 2009-07-15 19:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -63,7 +63,7 @@ msgstr "Förväntade CRLF men fick: %(character)r"
 #: ../../portable/httpclient.py:139
 #, python-format
 msgid "%(host)s closed connection"
-msgstr "%(host)s stängde anslutningen"
+msgstr "%(host)s Avbröt Anslutningen"
 
 #: ../../portable/httpclient.py:144 ../../portable/httpclient.py:173
 #: ../../portable/downloader.py:299
@@ -72,7 +72,7 @@ msgstr "Filen hittades inte"
 
 #: ../../portable/httpclient.py:145
 msgid "Got 404 status code"
-msgstr "Fick statuskod 404"
+msgstr "Fick Statuskod 404"
 
 #: ../../portable/httpclient.py:147
 #, python-format
@@ -81,7 +81,7 @@ msgstr "Ett fel har uppstått (Bad Status Code): %(code)s"
 
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"
-msgstr "Auktorisering misslyckades"
+msgstr "Behörighetskontroll misslyckades"
 
 #: ../../portable/httpclient.py:157
 #: ../../portable/frontends/widgets/crashdialog.py:48
@@ -94,7 +94,7 @@ msgstr "Ett fel har uppstått (Pipeline request never started): %(code)s"
 
 #: ../../portable/httpclient.py:162
 msgid "Timeout"
-msgstr "Tidsgräns överskriden"
+msgstr "Timeout"
 
 #: ../../portable/httpclient.py:163
 #, python-format
@@ -108,7 +108,7 @@ msgstr "Ogiltig URL"
 #: ../../portable/httpclient.py:168
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr "\"%(url)s\" är inte en giltig URL"
+msgstr "\"%(url)s\" Är inte en giltlig adress"
 
 #: ../../portable/httpclient.py:174
 #, python-format
@@ -117,7 +117,7 @@ msgstr "Filen \"%(path)s\" finns inte"
 
 #: ../../portable/httpclient.py:178
 msgid "Read error"
-msgstr "Läsfel"
+msgstr "Fel vid läsning"
 
 #: ../../portable/httpclient.py:179
 #, python-format
@@ -138,11 +138,11 @@ msgstr "Okänd"
 
 #: ../../portable/httpclient.py:830
 msgid "Internal Error: Not ready to send"
-msgstr "Internt fel: Inte redo att sända"
+msgstr "Internt Fel: Inte redo att sända"
 
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
-msgstr "Miro-guide"
+msgstr "Miro guide"
 
 #: ../../portable/frontends/widgets/statictabs.py:97
 #: ../../portable/frontends/widgets/itemlistcontroller.py:419
@@ -165,19 +165,19 @@ msgstr "Laddar ner"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
-msgstr "Skapa en spellista"
+msgstr "Skapa en spelningslista"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
 msgid "Add items to an existing playlist or a new one."
-msgstr "Lägg till i en existerande spellista eller skapa en ny."
+msgstr "Lägg till objekten i en befintlig eller ny spellista."
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
 msgid "Existing playlist:"
-msgstr "Befintlig spellista"
+msgstr "Befintlig spellista:"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
 msgid "New playlist:"
-msgstr "Ny spellista:"
+msgstr "Ny spelningslista"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
@@ -200,7 +200,7 @@ msgstr "Spela upp"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:96
 #: ../../portable/frontends/widgets/itemcontextmenu.py:192
 msgid "Add to Playlist"
-msgstr "Lägg till i spellista"
+msgstr "Lägg till i spelningslistan"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:99
 #: ../../portable/frontends/widgets/application.py:494
@@ -214,12 +214,12 @@ msgstr "Återställ objektnamn"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:103
 #: ../../portable/frontends/widgets/itemcontextmenu.py:199
 msgid "Mark as Unplayed"
-msgstr "Markera som ospelad/osedd"
+msgstr "Markera som osedd"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:106
 #: ../../portable/frontends/widgets/itemcontextmenu.py:204
 msgid "Mark as Played"
-msgstr "Markera som spelad/sedd"
+msgstr "Markera som sedd"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:210
@@ -236,17 +236,17 @@ msgstr "Behåll"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:239
 #: ../../portable/frontends/widgets/itemcontextmenu.py:257
 msgid "Cancel Download"
-msgstr "Avbryt hämtning"
+msgstr "Avbryt nerladdning"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:121
 #: ../../portable/frontends/widgets/itemcontextmenu.py:240
 msgid "Pause Download"
-msgstr "Gör paus i hämtning"
+msgstr "Pausa nerladdningen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:124
 #: ../../portable/frontends/widgets/itemcontextmenu.py:253
 msgid "Resume Download"
-msgstr "Återuppta hämtning"
+msgstr "Återuppta nerladdning"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:128
 #: ../../portable/frontends/widgets/itemcontextmenu.py:223
@@ -254,7 +254,7 @@ msgstr "Återuppta hämtning"
 #: ../../portable/frontends/widgets/style.py:1102
 #: ../../portable/frontends/widgets/style.py:1113 ../../portable/dialogs.py:95
 msgid "Download"
-msgstr "Hämta"
+msgstr "Ladda ner"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:134
 #: ../../portable/frontends/widgets/style.py:240
@@ -292,14 +292,14 @@ msgstr "Visa"
 #: ../../portable/frontends/widgets/gtk/video.py:273
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:119
 msgid "Share"
-msgstr "Dela"
+msgstr "Dela ut"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:186
 #, python-format
 msgid "%(count)d Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
 msgstr[0] "%(count)d hämtat objekt"
-msgstr[1] "%(count)d hämtade objekt"
+msgstr[1] "%(count)d Hämtade filer"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:215
 #, python-format
@@ -313,7 +313,6 @@ msgstr[1] "%(count)d tillgängliga objekt"
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
 msgstr[0] "%(count)d objekt hämtas"
-msgstr[1] "%(count)d objekt hämtas"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:245
 #, python-format
@@ -328,7 +327,7 @@ msgstr "Starta om hämtning"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:277
 msgid "Remove From Playlist"
-msgstr "Ta bort från spellista"
+msgstr "Radera från spelningslista"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:55
 #: ../../portable/frontends/widgets/feedsettingspanel.py:102
@@ -2535,7 +2534,7 @@ msgstr "Annat"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just This Item"
-msgstr "Spela endast denna"
+msgstr "Spela endast detta objekt"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:112
 msgid "Stop Seeding"
@@ -2548,12 +2547,12 @@ msgstr "Återuppta delningen"
 #: ../../portable/frontends/widgets/firsttimedialog.py:63
 #, python-format
 msgid "%(name)s First Time Setup"
-msgstr "%(name)s 1:a installation"
+msgstr "%(name)s första installation"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:122
 #, python-format
 msgid "Welcome to the %(name)s First Time Setup"
-msgstr "Välkommen till %(name)s 1:a installation"
+msgstr "Välkommen till %(name)s första installation"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:126
 #, python-format
@@ -2628,8 +2627,8 @@ msgstr "Öppna Externt"
 #, python-format
 msgid "%(count)d Site Selected"
 msgid_plural "%(count)d Sites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d webbsida vald"
+msgstr[1] "%(count)d webbsidor valda"
 
 #: ../../portable/frontends/widgets/browser.py:102
 msgid "Download this video"
@@ -2638,7 +2637,7 @@ msgstr "Hämta denna videon"
 #: ../../portable/frontends/widgets/application.py:326
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
-msgstr ""
+msgstr "Filen %(filename)s har raderats utanför %(appname)s."
 
 #: ../../portable/frontends/widgets/application.py:399
 #, python-format
@@ -2715,7 +2714,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:590
 msgid "By default, video and audio items expire after:"
-msgstr ""
+msgstr "Per standard, video- och ljudobjekt utgår efter:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:603
 msgid ""
@@ -2738,6 +2737,9 @@ msgid ""
 "still appear in your library.  You can stop watching watched folders "
 "completely in the %(appname)s preference panel."
 msgstr ""
+"Övervakade mappar kommer att tas bort från sidopanelen, men dess innehåll "
+"kommer fortfarande att synas i ditt bibliotek. Du kan inaktivera övervakade "
+"mappar helt i inställningarna för %(appname)s."
 
 #: ../../portable/frontends/widgets/gtk/video.py:294
 msgid "Pop-in"
@@ -2767,7 +2769,9 @@ msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
 "%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
 msgstr[0] ""
+"%(count)d Nerladdning Köad På Grund Av Ospelade Objekt (Se Inställningar)"
 msgstr[1] ""
+"%(count)d Nerladdningar Köade På Grund Av Ospelade Objekt (Se Inställningar)"
 
 #: ../../portable/frontends/widgets/tablist.py:534
 msgid "Remove Sites"
@@ -2779,7 +2783,7 @@ msgstr "BIBLIOTEK"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:539
 msgid "Back to feed"
-msgstr ""
+msgstr "Tillbaka till kanal"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:730
 msgid "View|All"
@@ -2830,7 +2834,7 @@ msgstr "_Om %(name)s"
 
 #: ../../portable/item.py:1205
 msgid "Contents appear in the library"
-msgstr ""
+msgstr "Innehållet syns i biblioteket"
 
 #: ../../portable/item.py:1210
 msgid "Contents:"
@@ -2897,11 +2901,16 @@ msgid ""
 "You should quit %(appname)s now and start it up again after Adobe Flash has "
 "been installed."
 msgstr ""
+"Din webbläsare kommer att ladda webbsidan där du kan ladda ner och "
+"installera Adobe Flash.\n"
+"\n"
+"Du bör avsluta %(appname)s nu, och starta det igen efter att Adobe Flash har "
+"installerats."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
 #, python-format
 msgid "Quit %(appname)s completely."
-msgstr ""
+msgstr "Avsluta %(appname)s helt."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:134
 #, python-format

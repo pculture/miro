@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-06-30 10:36-0400\n"
-"PO-Revision-Date: 2009-07-08 07:07+0000\n"
-"Last-Translator: g00mba <Unknown>\n"
+"PO-Revision-Date: 2009-07-14 20:09+0000\n"
+"Last-Translator: Khaxo <Unknown>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-07-09 13:57+0000\n"
+"X-Launchpad-Export-Date: 2009-07-15 19:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -68,11 +68,11 @@ msgstr "conexión cerrada por %(host)s"
 #: ../../portable/httpclient.py:144 ../../portable/httpclient.py:173
 #: ../../portable/downloader.py:299
 msgid "File not found"
-msgstr "No se encontró el archivo"
+msgstr "Archivo no encontrado"
 
 #: ../../portable/httpclient.py:145
 msgid "Got 404 status code"
-msgstr "Se recibió un código de estado 404"
+msgstr "Error de solicitud 404"
 
 #: ../../portable/httpclient.py:147
 #, python-format
@@ -81,12 +81,12 @@ msgstr "Código de estado incorrecto: %(code)s"
 
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"
-msgstr "Falló la autorización"
+msgstr "fallo de autorización"
 
 #: ../../portable/httpclient.py:157
 #: ../../portable/frontends/widgets/crashdialog.py:48
 msgid "Internal Error"
-msgstr "Error interno"
+msgstr "Error Interno"
 
 #: ../../portable/httpclient.py:158
 msgid "Pipeline request never started"
@@ -94,21 +94,21 @@ msgstr "La solicitud de tubería no comenzó"
 
 #: ../../portable/httpclient.py:162
 msgid "Timeout"
-msgstr "Tiempo agotado"
+msgstr "Plazo expirado"
 
 #: ../../portable/httpclient.py:163
 #, python-format
 msgid "Connection to %(host)s timed out"
-msgstr "La conexión a %(host)s expiró"
+msgstr "Conexión a %(host)s expiró"
 
 #: ../../portable/httpclient.py:167
 msgid "Invalid URL"
-msgstr "URL inválida"
+msgstr "URL inválido"
 
 #: ../../portable/httpclient.py:168
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr "«%(url)s» no es una URL válida"
+msgstr "\"%(url)s\" no es un URL válido"
 
 #: ../../portable/httpclient.py:174
 #, python-format
@@ -152,7 +152,7 @@ msgstr "Búsqueda de video"
 #: ../../portable/frontends/widgets/statictabs.py:103
 #: ../../portable/frontends/widgets/itemlistcontroller.py:502
 msgid "Video"
-msgstr "Vídeo"
+msgstr "Video"
 
 #: ../../portable/frontends/widgets/statictabs.py:108
 #: ../../portable/frontends/widgets/itemlistcontroller.py:508
@@ -2528,7 +2528,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/statictabs.py:113
 #: ../../portable/frontends/widgets/itemlistcontroller.py:514
 msgid "Other"
-msgstr "Otros"
+msgstr "Otro"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just This Item"
