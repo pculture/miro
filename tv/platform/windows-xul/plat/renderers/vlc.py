@@ -29,6 +29,7 @@
 import ctypes
 import logging
 import os
+import urllib
 
 import gtk
 import gobject
@@ -97,9 +98,9 @@ class VLCSniffer:
         self.exc = VLCException()
 
         # Note: if you need vlc output to stdout, remove the --quiet
-        # from the list of arguments.
+        # from the list of arguments.  Also, you can add -vvv.
         vlc_args = [
-            "vlc", '--quiet', 
+            "vlc", '--quiet',
             '--nostats', '--intf', 'dummy', '--volume=0',
             '--no-video-title-show', '--plugin-path', plugin_dir
         ]
@@ -186,7 +187,8 @@ class VLCSniffer:
         """starts playing the specified file"""
 
         # filenames coming in are unicode objects, VLC expects utf-8 strings.
-        filename = filename.encode('utf-8')
+        # mrls need to be percent encoded--they have to be valid urls.
+        filename = urllib.quote(filename.encode('utf-8'))
         self._filename = filename
         self.callback_info = (success_callback, error_callback)
         self.started_playing = STOPPED
@@ -334,7 +336,8 @@ class VLCRenderer:
         """starts playing the specified file"""
 
         # filenames coming in are unicode objects, VLC expects utf-8 strings.
-        filename = filename.encode('utf-8')
+        # mrls need to be percent encoded--they have to be valid urls.
+        filename = urllib.quote(filename.encode('utf-8'))
         self._filename = filename
         self.callback_info = (callback, errback)
         self.play_from_time = None
