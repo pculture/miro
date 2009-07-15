@@ -975,20 +975,26 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_remove_videos_from_playlist(self, message):
         try:
-            playlist = SavedPlaylist.get_by_id(message.playlist_id)
+            playlists = [SavedPlaylist.get_by_id(message.playlist_id)]
         except database.ObjectNotFoundError:
-            logging.warn("RemoveVideosFromPlaylist: Playlist not found -- %s",
-                    message.playlist_id)
-            return
-        to_remove = []
-        for id in message.video_ids:
-            if not playlist.contains_id(id):
-                logging.warn("RemoveVideosFromPlaylist: Id not found -- %s",
-                        id)
+            # it's possible this playlist is really a playlist folder with
+            # playlists in it.
+            try:
+                playlists = list(SavedPlaylist.folder_view(message.playlist_id))
+            except database.ObjectNotFoundError:
+                logging.warn("RemoveVideosFromPlaylist: playlist not found -- %s", message.playlist_id)
+                return
+
+        not_removed = []
+        for id_ in message.video_ids:
+            for playlist in playlists:
+                if playlist.contains_id(id_):
+                    playlist.remove_id(id_)
+                    break
             else:
-                to_remove.append(id)
-        if id in to_remove:
-            playlist.remove_id(id)
+                not_removed.append(id_)
+        for id_ in not_removed:
+            logging.warn("RemoveVideosFromPlaylist: Id not found -- %s", id_)
 
     def handle_search(self, message):
         searchengine_id = message.id
