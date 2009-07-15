@@ -1598,6 +1598,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def setup_links(self):
         self.split_item()
+        if not self.idExists():
+            # In split_item() we found out that all our children were deleted,
+            # so we were removed as well.  (#11979)
+            return
         if (self.isContainerItem is not None and
                 not fileutil.exists(self.get_filename()) and
                 not hasattr(app, 'in_unit_tests')):
