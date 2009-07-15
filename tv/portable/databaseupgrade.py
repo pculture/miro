@@ -2336,10 +2336,16 @@ def upgrade100(cursor):
 
     # add the new Audio Guide to the site tablist
     cursor.execute('SELECT tab_ids FROM taborder_order WHERE type=?',('site',))
-    tab_ids = eval_container(cursor.fetchone()[0])
-    tab_ids.append(max_id + 1)
-    cursor.execute('UPDATE taborder_order SET tab_ids=? WHERE type=?',
-                   (repr(tab_ids), 'site'))
+    row = cursor.fetchone()
+    if row is not None:
+        tab_ids = eval_container(row[0])
+        tab_ids.append(max_id + 1)
+        cursor.execute('UPDATE taborder_order SET tab_ids=? WHERE type=?',
+                       (repr(tab_ids), 'site'))
+    else:
+        # no site taborder (#11985).  We will create the TabOrder object on
+        # startup, so no need to do anything here
+        pass
 
 def upgrade101(cursor):
     """For torrent folders where a child item has been deleted, change the
