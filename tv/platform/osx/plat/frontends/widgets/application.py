@@ -260,23 +260,24 @@ class AppController(NSObject):
         self.growl_notifier = growl.GrowlNotifier(app_name, notifications)
         self.growl_notifier.register()
 
+    def applicationWillFinishLaunching_(self, notification):
+        NSExceptionHandler.defaultExceptionHandler().setExceptionHandlingMask_(NSLogAndHandleEveryExceptionMask)
+        NSExceptionHandler.defaultExceptionHandler().setDelegate_(self)
+
+        man = NSAppleEventManager.sharedAppleEventManager()
+        man.setEventHandler_andSelector_forEventClass_andEventID_(
+            self,
+            "openURL:withReplyEvent:",
+            struct.unpack(">i", "GURL")[0],
+            struct.unpack(">i", "GURL")[0])
+
+        ws = NSWorkspace.sharedWorkspace()
+        wsnc = ws.notificationCenter()
+        wsnc.addObserver_selector_name_object_(self, 'workspaceWillSleep:', NSWorkspaceWillSleepNotification, nil)
+        wsnc.addObserver_selector_name_object_(self, 'workspaceDidWake:',   NSWorkspaceDidWakeNotification,   nil)
+
     def applicationDidFinishLaunching_(self, notification):
         try:
-            NSExceptionHandler.defaultExceptionHandler().setExceptionHandlingMask_(NSLogAndHandleEveryExceptionMask)
-            NSExceptionHandler.defaultExceptionHandler().setDelegate_(self)
-
-            man = NSAppleEventManager.sharedAppleEventManager()
-            man.setEventHandler_andSelector_forEventClass_andEventID_(
-                self,
-                "openURL:withReplyEvent:",
-                struct.unpack(">i", "GURL")[0],
-                struct.unpack(">i", "GURL")[0])
-
-            ws = NSWorkspace.sharedWorkspace()
-            wsnc = ws.notificationCenter()
-            wsnc.addObserver_selector_name_object_(self, 'workspaceWillSleep:', NSWorkspaceWillSleepNotification, nil)
-            wsnc.addObserver_selector_name_object_(self, 'workspaceDidWake:',   NSWorkspaceDidWakeNotification,   nil)
-
             self.setup_growl_notifier()
             self.application.startup()
         except:
