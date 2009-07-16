@@ -32,6 +32,7 @@ exe = sys.executable
 exe_dir = exe[:exe.rfind('\\')]
 sys.path.append(exe_dir + '\\library.zip')
 
+import urllib
 import ctypes
 from ctypes import byref
 import glob
@@ -99,6 +100,11 @@ def wait_for_play(media_player):
 def make_snapshot(video_path, thumbnail_path):
     if os.path.exists(thumbnail_path):
         os.remove(thumbnail_path)
+
+    if isinstance(video_path, unicode):
+        video_path = video_path.encode("utf-8")
+    video_path = urllib.quote(video_path)
+
     mrl = 'file:///%s' % video_path
 
     vlc = init_vlc( "vlc", "--noaudio", 
