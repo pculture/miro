@@ -63,11 +63,13 @@ from miro import app
 from miro import config
 from miro import convert20database
 from miro import databaseupgrade
+from miro import dialogs
 from miro import eventloop
 from miro import schema
 from miro import prefs
 from miro import util
 from miro.download_utils import nextFreeFilename
+from miro.gtcache import gettext as _
 from miro.plat.utils import FilenameType, filenameToUnicode
 
 # Which SQLITE type should we use to store SchemaItem subclasses?
@@ -111,6 +113,8 @@ class LiveStorage:
         self._query_times = {}
         self.path = path
         self.open_connection()
+        self.error_state = False
+        self._queued_statements = []
         self._object_schemas = object_schemas
         self._schema_version = schema_version
         self._schema_map = {}
@@ -128,11 +132,11 @@ class LiveStorage:
 
     def open_connection(self):
         self.connection = sqlite3.connect(self.path,
+                isolation_level=None,
                 detect_types=sqlite3.PARSE_DECLTYPES)
         self.cursor = self.connection.cursor()
 
     def close(self):
-        self.commit_transaction()
         if self._dc:
             self._dc.cancel()
             self._dc = None
@@ -225,9 +229,6 @@ class LiveStorage:
         name TEXT PRIMARY KEY NOT NULL,
         serialized_value BLOB NOT NULL);""")
 
-    def commit_transaction(self):
-        self.connection.commit()
-
     def remember_object(self, obj):
         self._object_map[obj.id] = obj
         self._ids_loaded.add(obj.id)
@@ -255,8 +256,7 @@ class LiveStorage:
         sql = "REPLACE INTO %s (%s) VALUES(%s)" % (obj_schema.table_name,
                 ', '.join(column_names),
                 ', '.join('?' for i in xrange(len(column_names))))
-        self.cursor.execute(sql, values)
-        self._schedule_commit()
+        self._execute(sql, values, is_update=True)
         self.remember_object(obj)
 
     def remove_obj(self, obj):
@@ -264,8 +264,7 @@ class LiveStorage:
 
         schema = self._schema_map[obj.__class__]
         sql = "DELETE FROM %s WHERE id=?" % (schema.table_name)
-        self.cursor.execute(sql, (obj.id,))
-        self._schedule_commit()
+        self._execute(sql, (obj.id,), is_update=True)
         self.forget_object(obj)
 
     def get_last_id(self):
@@ -384,8 +383,7 @@ class LiveStorage:
         sql.write('DELETE FROM %s' % schema.table_name)
         if where is not None:
             sql.write('\nWHERE %s' % where)
-        self._execute(sql.getvalue(), values)
-        self._schedule_commit()
+        self._execute(sql.getvalue(), values, is_update=True)
 
     def select(self, klass, columns, where, values):
         schema = self._schema_map[klass]
@@ -394,15 +392,59 @@ class LiveStorage:
         sql.write(self._get_query_bottom(schema.table_name, where, None))
         return self._execute(sql.getvalue(), values)
 
-    def _execute(self, sql, values):
+    def _execute(self, sql, values, is_update=False):
+        if is_update and self.error_state:
+            self._queued_statements.append((sql, values))
+            return
         if values is None:
             values = ()
         start = time.time()
-        self.cursor.execute(sql, values)
-        rows = self.cursor.fetchall()
+        if is_update:
+            self._execute_update(sql, values)
+            rv = None
+        else:
+            self.cursor.execute(sql, values)
+            rv = self.cursor.fetchall()
         end = time.time()
         self._check_time(sql, end-start)
-        return rows
+        return rv
+
+    def _execute_update(self, sql, values):
+        try:
+            self.cursor.execute(sql, values)
+        except sqlite3.OperationalError, e:
+            self._handle_disk_full(e)
+            self._queued_statements.append((sql, values))
+            self._schedule_retry_statements()
+        else:
+            self._handle_disk_not_full()
+
+    def _handle_disk_full(self, exc):
+        if not self.error_state:
+            self.error_state = True
+            title = _("%(appname)s database save failed",
+                      {"appname": config.get(prefs.SHORT_APP_NAME)})
+            description = _(
+                "%(appname)s was unable to save its database: Disk Full.\n"
+                "We suggest deleting files from the full disk or simply deleting "
+                "some movies from your collection.\n"
+                "Recent changes may be lost.",
+                {"appname": config.get(prefs.SHORT_APP_NAME)}
+            )
+            dialogs.MessageBoxDialog(title, description).run()
+            logging.warn("SQL Operational Error: %s", exc)
+
+    def _handle_disk_not_full(self):
+        if self.error_state:
+            self.error_state = False
+            title = _("%(appname)s database save succeeded",
+                      {"appname": config.get(prefs.SHORT_APP_NAME)})
+            description = _(
+                "The database has been successfully saved. It is now safe to quit "
+                "without losing any data."
+            )
+            dialogs.MessageBoxDialog(title, description).run()
+
 
     def _check_time(self, sql, query_time):
         SINGLE_QUERY_LIMIT = 0.02
@@ -428,15 +470,37 @@ class LiveStorage:
             logging.timing('query cumulatively slow: %0.2f '
                     '(%0.03f): %s', cumulative, query_time, sql)
 
-    def _schedule_commit(self):
-        """Schedule a commit to run as an idle callback sometime soon."""
+    def _schedule_retry_statements(self):
         if self._dc is None:
-            self._dc = eventloop.addIdle(self._delayed_commit,
-                    'commit database')
+            self._dc = eventloop.addTimeout(1.0, self._retry_statements,
+                    'retry statements')
 
-    def _delayed_commit(self):
-        self.commit_transaction()
+    def _retry_statements(self):
+        self._execute_queued_statements()
+        if len(self._queued_statements) == 0:
+            self._handle_disk_not_full()
         self._dc = None
+        if self.error_state:
+            self._schedule_retry_statements()
+
+    def _execute_queued_statements(self):
+        """Execute as many queued statements as possible.
+
+        Statements get queued because we receive an OperationalError from
+        SQLite.  As far as I can tell (BDK) this means that the disk is full.
+        Our basic strategy to handle this is to wait a while, then re-try
+        executing statements.  If the disk got un-full, hopefully we can now
+        execute them without exceptions.
+        """
+
+        exe_count = 0
+        for sql, values in self._queued_statements:
+            try:
+                self.cursor.execute(sql, values)
+            except sqlite3.OperationalError:
+                break
+            exe_count += 1
+        self._queued_statements = self._queued_statements[exe_count:]
 
     def _init_database(self):
         """Create a new empty database."""
