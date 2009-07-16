@@ -385,6 +385,7 @@ class LiveStorage:
         if where is not None:
             sql.write('\nWHERE %s' % where)
         self._execute(sql.getvalue(), values)
+        self._schedule_commit()
 
     def select(self, klass, columns, where, values):
         schema = self._schema_map[klass]
