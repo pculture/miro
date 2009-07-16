@@ -66,7 +66,7 @@ def run_dialog(channel_infos, downloaded_items, downloading_items, has_watched_f
             for mem in channel_infos:
                 lab_mem = widgetset.Label(util.clampText(mem.name, 40))
                 if lab_height is None:
-                    _, lab_height = lab_mem.get_size_request()
+                    dummy, lab_height = lab_mem.get_size_request()
                 v2.pack_start(widgetutil.align_left(lab_mem, left_pad=15))
 
             if len(channel_infos) > 5:
