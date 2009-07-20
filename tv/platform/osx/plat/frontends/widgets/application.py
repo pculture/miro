@@ -77,6 +77,8 @@ class OSXApplication(Application):
 
     def connect_to_signals(self):
         Application.connect_to_signals(self)
+        eventloop.connect('thread-will-start', self.beginLoop)
+        eventloop.connect('thread-did-start', self.endLoop)
         eventloop.connect('begin-loop', self.beginLoop)
         eventloop.connect('end-loop', self.endLoop)
         config.add_change_callback(self.on_pref_changed)

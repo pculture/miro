@@ -208,7 +208,11 @@ class ThreadPool(object):
             
 class EventLoop(signals.SignalEmitter):
     def __init__(self):
-        signals.SignalEmitter.__init__(self, 'thread-started', 'begin-loop', 'end-loop')
+        signals.SignalEmitter.__init__(self, 'thread-will-start', 
+                                             'thread-started', 
+                                             'thread-did-start', 
+                                             'begin-loop', 
+                                             'end-loop')
         self.scheduler = Scheduler()
         self.idleQueue = CallQueue()
         self.urgentQueue = CallQueue()
@@ -252,7 +256,10 @@ class EventLoop(signals.SignalEmitter):
         self.threadPool.queueCall(callback, errback, function, name, *args, **kwargs)
 
     def loop(self):
+        self.emit('thread-will-start')
         self.emit('thread-started', threading.currentThread())
+        self.emit('thread-did-start')
+
         self.loop_ready.set()
         while not self.quitFlag:
             self.emit('begin-loop')
