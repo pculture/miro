@@ -113,12 +113,13 @@ def _getLocale():
 
     # Hmmmmm, we don't know the language for this code
     except:
+        logging.warning("Don't know what locale to choose for code '%s'", code)
         return None
 
 def initializeLocale():
     global localeInitialized
     lang = _getLocale()
-    if lang:
+    if lang is not None:
         os.environ["LANGUAGE"] = lang
     localeInitialized = True
 
