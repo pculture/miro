@@ -42,14 +42,19 @@ class Pref:
       this should usually be False
     * **possible_values** -- a list of possible values for this preference;
       if the saved value gets corrupted for some reason and therefore does not
-      correspond to any of the possible values, the default is picked instead.
+      correspond to any of the possible values, the failsafe is picked instead.
+    * **failsafe_value** -- value to be used in case of corruption (see above).
 
     Pref example::
 
         FOO = Pref(key="foo", default=None, platformSpecific=False)
     """
-    def __init__(self, **kwds):
-        self.__dict__.update(kwds)
+    def __init__(self, key, default, platformSpecific, possible_values=None, failsafe_value=None):
+        self.key = key
+        self.default = default
+        self.platformSpecific = platformSpecific
+        self.possible_values = possible_values
+        self.failsafe_value = failsafe_value
     def __eq__(self, other):
         return self.key == other.key
     def __ne__(self, other):
@@ -69,7 +74,8 @@ LIMIT_CONNECTIONS_BT        = Pref( key='limitConnectionsBT',     default=False,
 CONNECTION_LIMIT_BT_NUM     = Pref( key='connectionLimitBTNum', default=100,   platformSpecific=False )
 PRESERVE_DISK_SPACE         = Pref( key='preserveDiskSpace',     default=True,  platformSpecific=False )
 PRESERVE_X_GB_FREE          = Pref( key='preserveXGBFree',       default=0.2,   platformSpecific=False )
-EXPIRE_AFTER_X_DAYS         = Pref( key='expireAfterXDays',      default=6,     platformSpecific=False, possible_values=[1,3,6,10,30,-1] )
+EXPIRE_AFTER_X_DAYS         = Pref( key='expireAfterXDays',      default=6,     platformSpecific=False,
+                                    possible_values=[1,3,6,10,30,-1], failsafe_value=-1 )
 DOWNLOADS_TARGET            = Pref( key='DownloadsTarget',       default=8,     platformSpecific=False ) # max auto downloads
 MAX_MANUAL_DOWNLOADS        = Pref( key='MaxManualDownloads',    default=10,    platformSpecific=False )
 VOLUME_LEVEL                = Pref( key='VolumeLevel',           default=1.0,   platformSpecific=False )
