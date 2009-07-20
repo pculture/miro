@@ -39,35 +39,36 @@ gconf_name = None
 
 from miro.prefs import Pref
 
-USE_RENDERER = Pref(key="useRenderer",
-                    default=u"gstreamer",
-                    platformSpecific=False,
-                    alias="renderer",
-                    help="Which renderer to use.  (gstreamer, xine)" )
+class GTKPref(Pref):
+    def __init__(self, key, default, alias, help):
+        Pref.__init__(self, key, default, False, None, None)
+        self.alias = alias
+        self.help = help
 
-USE_XINE_XV_HACK = Pref(key="UseXineXVHack",
-                        default=True,
-                        platformSpecific=False,
-                        alias="xine-xvhack",
-                        help="Whether or not to use the Xine xv hack.  (true, false)" )
+USE_RENDERER = GTKPref(key="useRenderer",
+                       default=u"gstreamer",
+                       alias="renderer",
+                       help="Which renderer to use.  (gstreamer, xine)" )
 
-XINE_DRIVER = Pref(key="DefaultXineDriver",
-                   default="xv",
-                   platformSpecific=False,
-                   alias="xine-driver",
-                   help="Which Xine driver to use for video.  (auto, xv, xshm)" )
+USE_XINE_XV_HACK = GTKPref(key="UseXineXVHack",
+                           default=True,
+                           alias="xine-xvhack",
+                           help="Whether or not to use the Xine xv hack.  (true, false)" )
 
-GSTREAMER_IMAGESINK = Pref(key="DefaultGstreamerImagesink",
-                           default="gconfvideosink",
-                           platformSpecific=False,
-                           alias="gstreamer-imagesink",
-                           help="Which GStreamer image sink to use for video.  (autovideosink, ximagesink, xvimagesink, gconfvideosink, ...)")
+XINE_DRIVER = GTKPref(key="DefaultXineDriver",
+                      default="xv",
+                      alias="xine-driver",
+                      help="Which Xine driver to use for video.  (auto, xv, xshm)" )
 
-GSTREAMER_AUDIOSINK = Pref(key="DefaultGstreamerAudiosink",
-                           default="gconfaudiosink",
-                           platformSpecific=False,
-                           alias="gstreamer-audiosink",
-                           help="Which GStreamer sink to use for audio.  (autoaudiosink, osssink, alsasink, gconfaudiosink, ...)")
+GSTREAMER_IMAGESINK = GTKPref(key="DefaultGstreamerImagesink",
+                              default="gconfvideosink",
+                              alias="gstreamer-imagesink",
+                              help="Which GStreamer image sink to use for video.  (autovideosink, ximagesink, xvimagesink, gconfvideosink, ...)")
+
+GSTREAMER_AUDIOSINK = GTKPref(key="DefaultGstreamerAudiosink",
+                              default="gconfaudiosink",
+                              alias="gstreamer-audiosink",
+                              help="Which GStreamer sink to use for audio.  (autoaudiosink, osssink, alsasink, gconfaudiosink, ...)")
 
 
 SHOW_TRAYICON = Pref(key="showTrayicon",
