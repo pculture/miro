@@ -93,7 +93,12 @@ def get(descriptor, useThemeData=True):
         _check_validity()
 
         if _data is not None and descriptor.key in _data:
-            return _data[descriptor.key]
+            value = _data[descriptor.key]
+            if hasattr(descriptor, 'possibleValues') and not value in descriptor.possibleValues:
+                logging.debug('Incorrect preference value %s for key %s, using default', (value, descriptor.key))
+                return descriptor.default
+            else:
+                return value
         elif descriptor.platformSpecific:
             return platformcfg.get(descriptor)
         if app.configfile.contains(descriptor.key, useThemeData):

@@ -36,11 +36,13 @@ class Pref:
     """Class for defining preferences.  Preferences are defined using
     keywords:
 
-    * **key** -- the name of the key--must be unique among all
-      preferences
+    * **key** -- the name of the key--must be unique among all preferences
     * **default** -- the default value to use
     * **platformSpecific** -- whether or not this is platform specific;
       this should usually be False
+    * **possibleValues** -- a list of possible values for this preference;
+      if the saved value gets corrupted for some reason and therefore does not
+      correspond to any of the possible values, the default is picked instead.
 
     Pref example::
 
@@ -63,11 +65,11 @@ UPSTREAM_LIMIT_IN_KBS       = Pref( key='upstreamLimitInKBS',    default=12,    
 UPSTREAM_TORRENT_LIMIT      = Pref( key='upstreamTorrentLimit',  default=10,    platformSpecific=False )
 LIMIT_DOWNSTREAM_BT         = Pref( key='limitDownstreamBT',     default=False, platformSpecific=False )
 DOWNSTREAM_BT_LIMIT_IN_KBS  = Pref( key='downstreamBTLimitInKBS', default=200,   platformSpecific=False )
-LIMIT_CONNECTIONS_BT = Pref( key='limitConnectionsBT',     default=False, platformSpecific=False )
-CONNECTION_LIMIT_BT_NUM  = Pref( key='connectionLimitBTNum', default=100,   platformSpecific=False )
+LIMIT_CONNECTIONS_BT        = Pref( key='limitConnectionsBT',     default=False, platformSpecific=False )
+CONNECTION_LIMIT_BT_NUM     = Pref( key='connectionLimitBTNum', default=100,   platformSpecific=False )
 PRESERVE_DISK_SPACE         = Pref( key='preserveDiskSpace',     default=True,  platformSpecific=False )
 PRESERVE_X_GB_FREE          = Pref( key='preserveXGBFree',       default=0.2,   platformSpecific=False )
-EXPIRE_AFTER_X_DAYS         = Pref( key='expireAfterXDays',      default=6,     platformSpecific=False )
+EXPIRE_AFTER_X_DAYS         = Pref( key='expireAfterXDays',      default=6,     platformSpecific=False, possibleValues=[1,3,6,10,30,-1] )
 DOWNLOADS_TARGET            = Pref( key='DownloadsTarget',       default=8,     platformSpecific=False ) # max auto downloads
 MAX_MANUAL_DOWNLOADS        = Pref( key='MaxManualDownloads',    default=10,    platformSpecific=False )
 VOLUME_LEVEL                = Pref( key='VolumeLevel',           default=1.0,   platformSpecific=False )
