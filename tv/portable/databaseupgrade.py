@@ -2173,7 +2173,26 @@ def upgrade89(cursor):
             continue
         cursor.execute("SELECT state, status FROM remote_downloader "
                 "WHERE id=?", (downloader_id,))
-        row = cursor.fetchall()[0]
+        results = cursor.fetchall()
+        if len(results) == 0:
+            cursor.execute("SELECT origURL FROM feed "
+                    "JOIN item ON item.feed_id=feed.id "
+                    "WHERE item.id=?", (item_id,))
+            row = cursor.fetchall()[0]
+            if row[0] == 'dtv:manualFeed':
+                # external download, let's just delete the row.
+                cursor.execute("DELETE FROM item WHERE id=?", (item_id,))
+            else:
+                cursor.execute("UPDATE item "
+                        "SET downloader_id=NULL, seen=NULL, keep=NULL, "
+                        "pendingManualDL=0, filename=NULL, watchedTime=NULL, "
+                        "duration=NULL, screenshot=NULL, "
+                        "isContainerItem=NULL, expired=1 "
+                        "WHERE id=?",
+                        (item_id,))
+            continue
+
+        row = results[0]
         state = row[0]
         status = row[1]
         status = eval(status, __builtins__, {'datetime': datetime})
