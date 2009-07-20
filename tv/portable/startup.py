@@ -188,8 +188,8 @@ def finish_startup(obj, thread):
         summary = _("Insufficient disk space")
         description = _(
             "Not enough disk space to upgrade your database from the previous "
-            "version of %s.  Please delete some files and try again.",
-            config.get(prefs.SHORT_APP_NAME),
+            "version of %(appname)s.  Please delete some files and try again.",
+            {'appname': config.get(prefs.SHORT_APP_NAME)}
         )
         raise StartupError(summary, description)
     database.update_last_id()
