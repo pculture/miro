@@ -2214,9 +2214,16 @@ def upgrade90(cursor):
         downloader_id = row[0]
         cursor.execute("SELECT id FROM item WHERE downloader_id=? LIMIT 1",
                 (downloader_id,))
-        item_id = cursor.fetchone()[0]
-        cursor.execute("UPDATE remote_downloader SET main_item_id=? "
-                "WHERE id=?", (item_id, downloader_id))
+        row = cursor.fetchone()
+        if row is not None:
+            # set main_item_id to one of the item ids, it doesn't matter which
+            item_id = row[0]
+            cursor.execute("UPDATE remote_downloader SET main_item_id=? "
+                    "WHERE id=?", (item_id, downloader_id))
+        else:
+            # no items for a downloader, delete the downloader
+            cursor.execute("DELETE FROM remote_downloader WHERE id=?",
+                    (downloader_id,))
 
 def upgrade91(cursor):
     """Add lots of indexes."""
