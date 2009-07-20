@@ -184,6 +184,14 @@ def finish_startup(obj, thread):
             {"appname": config.get(prefs.SHORT_APP_NAME)},
         )
         raise StartupError(summary, description)
+    except storedatabase.UpgradeDiskSpaceError:
+        summary = _("Insufficient disk space")
+        description = _(
+            "Not enough disk space to upgrade your database from the previous "
+            "version of %s.  Please delete some files and try again.",
+            config.get(prefs.SHORT_APP_NAME),
+        )
+        raise StartupError(summary, description)
     database.update_last_id()
     end = time.time()
     logging.timing ("Database upgrade time: %.3f", end - start)

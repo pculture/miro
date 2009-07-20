@@ -72,6 +72,10 @@ from miro.download_utils import nextFreeFilename
 from miro.gtcache import gettext as _
 from miro.plat.utils import FilenameType, filenameToUnicode
 
+class UpgradeDiskSpaceError(Exception):
+    """While upgrading the database, we ran out of disk space."""
+    pass
+
 # Which SQLITE type should we use to store SchemaItem subclasses?
 _sqlite_type_map = {
         schema.SchemaBool: 'integer',
@@ -158,6 +162,10 @@ class LiveStorage:
         except (KeyError, SystemError,
                 databaseupgrade.DatabaseTooNewError):
             raise
+        except sqlite3.OperationalError:
+            raise UpgradeDiskSpaceError()
+        except UpgradeDiskSpaceError:
+            raise
         except:
             self._handle_load_error("Error upgrading database")
 
@@ -173,11 +181,14 @@ class LiveStorage:
         # copy file over
         try:
             shutil.copyfile(self.path, "%s_backup_%s" % (self.path, ver))
-        except IOError:
-            # FIXME - if we error out when backing up the database,
-            # we should probably report the error to the user and
-            # shutdown the application.
-            logging.exception("Error trying to backup database.")
+        except IOError, e:
+            if e.args[0] == 28:
+                # disk full error
+                raise UpgradeDiskSpaceError()
+            else:
+                # Other IO error, re-raising it will give the generic startup
+                # error message.
+                raise
 
         # open database
         self.open_connection()
