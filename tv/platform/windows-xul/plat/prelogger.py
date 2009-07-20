@@ -53,7 +53,9 @@ def install():
     if _handler is not None:
         raise ValueError("Prelogger already installed")
     _handler = PreLogger()
-    logging.getLogger('').addHandler(_handler)
+    logger = logging.getLogger('')
+    logger.addHandler(_handler)
+    logger.setLevel(logging.DEBUG)
 
 def remove():
     """Remove the pre logger.  Return a list of records that it logged. """
