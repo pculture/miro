@@ -40,7 +40,7 @@ class Pref:
     * **default** -- the default value to use
     * **platformSpecific** -- whether or not this is platform specific;
       this should usually be False
-    * **possibleValues** -- a list of possible values for this preference;
+    * **possible_values** -- a list of possible values for this preference;
       if the saved value gets corrupted for some reason and therefore does not
       correspond to any of the possible values, the default is picked instead.
 
@@ -69,7 +69,7 @@ LIMIT_CONNECTIONS_BT        = Pref( key='limitConnectionsBT',     default=False,
 CONNECTION_LIMIT_BT_NUM     = Pref( key='connectionLimitBTNum', default=100,   platformSpecific=False )
 PRESERVE_DISK_SPACE         = Pref( key='preserveDiskSpace',     default=True,  platformSpecific=False )
 PRESERVE_X_GB_FREE          = Pref( key='preserveXGBFree',       default=0.2,   platformSpecific=False )
-EXPIRE_AFTER_X_DAYS         = Pref( key='expireAfterXDays',      default=6,     platformSpecific=False, possibleValues=[1,3,6,10,30,-1] )
+EXPIRE_AFTER_X_DAYS         = Pref( key='expireAfterXDays',      default=6,     platformSpecific=False, possible_values=[1,3,6,10,30,-1] )
 DOWNLOADS_TARGET            = Pref( key='DownloadsTarget',       default=8,     platformSpecific=False ) # max auto downloads
 MAX_MANUAL_DOWNLOADS        = Pref( key='MaxManualDownloads',    default=10,    platformSpecific=False )
 VOLUME_LEVEL                = Pref( key='VolumeLevel',           default=1.0,   platformSpecific=False )

@@ -94,7 +94,7 @@ def get(descriptor, useThemeData=True):
 
         if _data is not None and descriptor.key in _data:
             value = _data[descriptor.key]
-            if hasattr(descriptor, 'possibleValues') and not value in descriptor.possibleValues:
+            if hasattr(descriptor, 'possible_values') and not value in descriptor.possible_values:
                 logging.debug('Incorrect preference value %s for key %s, using default', (value, descriptor.key))
                 return descriptor.default
             else:
