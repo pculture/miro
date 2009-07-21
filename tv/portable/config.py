@@ -95,7 +95,7 @@ def get(descriptor, useThemeData=True):
         if _data is not None and descriptor.key in _data:
             value = _data[descriptor.key]
             if descriptor.possible_values is not None and not value in descriptor.possible_values:
-                logging.warn('Incorrect preference value %s for key %s, using failsafe: %s', (value, descriptor.key, descriptor.failsafe_value))
+                logging.warn('Incorrect preference value %s for key %s, using failsafe: %s' % (value, descriptor.key, descriptor.failsafe_value))
                 return descriptor.failsafe_value
             else:
                 return value
