@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-06-30 10:36-0400\n"
+"POT-Creation-Date: 2009-07-16 13:21-0400\n"
 "PO-Revision-Date: 2009-03-23 17:54+0000\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-07-15 19:20+0000\n"
+"X-Launchpad-Export-Date: 2009-07-21 14:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -145,17 +145,17 @@ msgid "Miro Guide"
 msgstr "미로 시청 가이드"
 
 #: ../../portable/frontends/widgets/statictabs.py:97
-#: ../../portable/frontends/widgets/itemlistcontroller.py:419
+#: ../../portable/frontends/widgets/itemlistcontroller.py:433
 msgid "Video Search"
 msgstr "동영상 검색"
 
 #: ../../portable/frontends/widgets/statictabs.py:103
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
+#: ../../portable/frontends/widgets/itemlistcontroller.py:516
 msgid "Video"
 msgstr "비디오"
 
 #: ../../portable/frontends/widgets/statictabs.py:108
-#: ../../portable/frontends/widgets/itemlistcontroller.py:508
+#: ../../portable/frontends/widgets/itemlistcontroller.py:522
 msgid "Audio"
 msgstr "오디오"
 
@@ -188,7 +188,7 @@ msgstr "모음집에서 제거"
 #: ../../portable/frontends/widgets/gtk/video.py:255
 #: ../../portable/dialogs.py:107
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:127
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:163
 msgid "Delete"
 msgstr "삭제"
 
@@ -203,7 +203,7 @@ msgid "Add to Playlist"
 msgstr "재생 목록에 추가"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:99
-#: ../../portable/frontends/widgets/application.py:494
+#: ../../portable/frontends/widgets/application.py:495
 msgid "Rename Item"
 msgstr "항목 이름 바꾸기"
 
@@ -485,7 +485,7 @@ msgstr "< 이전"
 #: ../../portable/frontends/widgets/firsttimedialog.py:223
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:282
-#: ../../portable/feed.py:2281 ../../portable/feed.py:2388
+#: ../../portable/feed.py:2290 ../../portable/feed.py:2397
 msgid "Search"
 msgstr "검색"
 
@@ -592,7 +592,7 @@ msgid "Download Torrent"
 msgstr "토런트 다운로드"
 
 #: ../../portable/frontends/widgets/style.py:252
-#: ../../portable/dl_daemon/download.py:535
+#: ../../portable/dl_daemon/download.py:539
 msgid "Error"
 msgstr "오류"
 
@@ -653,47 +653,47 @@ msgstr "외부 재생"
 msgid "Skip"
 msgstr "건너뛰기"
 
-#: ../../portable/frontends/widgets/displays.py:542
+#: ../../portable/frontends/widgets/displays.py:536
 #, python-format
 msgid "%(count)d Feed Folder Selected"
 msgid_plural "%(count)d Feed Folders Selected"
 msgstr[0] "%(count)d개의 피드 폴더 선택"
 
-#: ../../portable/frontends/widgets/displays.py:547
+#: ../../portable/frontends/widgets/displays.py:541
 #, python-format
 msgid "(contains %(count)d feed)"
 msgid_plural "(contains %(count)d feeds)"
 msgstr[0] "(%(count)d개 피드 포함)"
 
-#: ../../portable/frontends/widgets/displays.py:553
+#: ../../portable/frontends/widgets/displays.py:547
 #, python-format
 msgid "%(count)d Playlist Folder Selected"
 msgid_plural "%(count)d Playlist Folders Selected"
 msgstr[0] "%(count)d개 재생 목록 폴더 선택"
 
-#: ../../portable/frontends/widgets/displays.py:558
+#: ../../portable/frontends/widgets/displays.py:552
 #, python-format
 msgid "(contains %(count)d playlist)"
 msgid_plural "(contains %(count)d playlist)"
 msgstr[0] "(%(count)d개 재생 목록 포함)"
 
-#: ../../portable/frontends/widgets/displays.py:568
+#: ../../portable/frontends/widgets/displays.py:562
 #, python-format
 msgid "%(count)d Feed Selected"
 msgid_plural "%(count)d Feeds Selected"
 msgstr[0] "%(count)d개 피드 선택됨"
 
-#: ../../portable/frontends/widgets/displays.py:580
+#: ../../portable/frontends/widgets/displays.py:574
 #, python-format
 msgid "%(count)d Playlist Selected"
 msgid_plural "%(count)d Playlists Selected"
 msgstr[0] "%(count)d개 재생 목록 선택"
 
-#: ../../portable/frontends/widgets/displays.py:587
+#: ../../portable/frontends/widgets/displays.py:581
 msgid "Delete All"
 msgstr "모두 삭제"
 
-#: ../../portable/frontends/widgets/displays.py:591
+#: ../../portable/frontends/widgets/displays.py:585
 msgid "Put Into a New Folder"
 msgstr "새 폴더에 넣기"
 
@@ -709,11 +709,11 @@ msgstr "암호:"
 msgid "Open in browser"
 msgstr "브라우저로 열기"
 
-#: ../../portable/frontends/widgets/application.py:155
+#: ../../portable/frontends/widgets/application.py:156
 msgid "Movies directory gone"
 msgstr "동영상 디렉터리가 사라졌습니다."
 
-#: ../../portable/frontends/widgets/application.py:157
+#: ../../portable/frontends/widgets/application.py:158
 #, python-format
 msgid ""
 "%(shortappname)s can't find the primary video directory located at:\n"
@@ -741,42 +741,42 @@ msgstr ""
 "\n"
 "만약 종료하시면 드라이브를 연결하시거나 다른 문제를 해결한 후 %(shortappname)s 프로그램을 다시 실행할 수 있습니다."
 
-#: ../../portable/frontends/widgets/application.py:325
+#: ../../portable/frontends/widgets/application.py:326
 msgid "Error Revealing File"
 msgstr "파일 보이기 오류"
 
-#: ../../portable/frontends/widgets/application.py:334
+#: ../../portable/frontends/widgets/application.py:335
 msgid "Open Files..."
 msgstr "파일 열기..."
 
-#: ../../portable/frontends/widgets/application.py:345
-#: ../../portable/frontends/widgets/application.py:350
+#: ../../portable/frontends/widgets/application.py:346
+#: ../../portable/frontends/widgets/application.py:351
 msgid "Open Files - Error"
 msgstr "파일 열기 - 오류"
 
-#: ../../portable/frontends/widgets/application.py:346
-#: ../../portable/frontends/widgets/application.py:633
+#: ../../portable/frontends/widgets/application.py:347
+#: ../../portable/frontends/widgets/application.py:634
 #, python-format
 msgid "File %(filename)s does not exist."
 msgstr "%(filename)s 파일은 존재하지 않습니다."
 
-#: ../../portable/frontends/widgets/application.py:351
+#: ../../portable/frontends/widgets/application.py:352
 msgid "The following files do not exist:"
 msgstr "다음 파일이 없습니다:"
 
-#: ../../portable/frontends/widgets/application.py:388
+#: ../../portable/frontends/widgets/application.py:389
 msgid "New Download"
 msgstr "새 다운로드"
 
-#: ../../portable/frontends/widgets/application.py:389
+#: ../../portable/frontends/widgets/application.py:390
 msgid "Enter the URL of the item to download"
 msgstr "다운로드할 항목의 URL 입력"
 
-#: ../../portable/frontends/widgets/application.py:390
+#: ../../portable/frontends/widgets/application.py:391
 msgid "New Download - Invalid URL"
 msgstr "새 다운로드 - 잘못된 URL"
 
-#: ../../portable/frontends/widgets/application.py:391
+#: ../../portable/frontends/widgets/application.py:392
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -788,12 +788,12 @@ msgstr ""
 "\n"
 "다운로드할 URL을 입력하십시오."
 
-#: ../../portable/frontends/widgets/application.py:425
+#: ../../portable/frontends/widgets/application.py:426
 msgid "Remove item"
 msgid_plural "Remove items"
 msgstr[0] "항목 제거"
 
-#: ../../portable/frontends/widgets/application.py:429
+#: ../../portable/frontends/widgets/application.py:430
 msgid ""
 "One of these items was not downloaded from a feed. Would you like to delete "
 "it or just remove it from the Library?"
@@ -802,34 +802,34 @@ msgid_plural ""
 "delete them or just remove them from the Library?"
 msgstr[0] "피드에서 다운로드되지 않은 항목이 있습니다. 해당 항목을 삭제하거나 모음집에서 제거하시겠습니까?"
 
-#: ../../portable/frontends/widgets/application.py:454
+#: ../../portable/frontends/widgets/application.py:455
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
 msgstr[0] "%(count)d개의 항목을 정말로 삭제하시겠습니까?"
 
-#: ../../portable/frontends/widgets/application.py:495
+#: ../../portable/frontends/widgets/application.py:496
 msgid "Enter the new name for the item"
 msgstr "항목의 이름 바꾸기"
 
-#: ../../portable/frontends/widgets/application.py:518
+#: ../../portable/frontends/widgets/application.py:519
 msgid "Save Item As..."
 msgstr "다른 이름으로 저장..."
 
-#: ../../portable/frontends/widgets/application.py:571
+#: ../../portable/frontends/widgets/application.py:572
 #: ../../portable/menubar.py:213
 msgid "Add Site"
 msgstr "사이트 추가"
 
-#: ../../portable/frontends/widgets/application.py:572
+#: ../../portable/frontends/widgets/application.py:573
 msgid "Enter the URL of the site to add"
 msgstr "추가할 사이트의 URL 입력"
 
-#: ../../portable/frontends/widgets/application.py:573
+#: ../../portable/frontends/widgets/application.py:574
 msgid "Add Site - Invalid URL"
 msgstr "사이트 추가 - 잘못된 URL"
 
-#: ../../portable/frontends/widgets/application.py:574
+#: ../../portable/frontends/widgets/application.py:575
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -841,122 +841,122 @@ msgstr ""
 "\n"
 "추가할 사이트의 URL 입력"
 
-#: ../../portable/frontends/widgets/application.py:623
+#: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
 msgstr "OPML 가져오기"
 
-#: ../../portable/frontends/widgets/application.py:625
+#: ../../portable/frontends/widgets/application.py:626
 msgid "OPML Files"
 msgstr "OPML 파일"
 
-#: ../../portable/frontends/widgets/application.py:632
+#: ../../portable/frontends/widgets/application.py:633
 msgid "Import OPML File - Error"
 msgstr "OPML 파일 가져오기 - 오류"
 
-#: ../../portable/frontends/widgets/application.py:638
+#: ../../portable/frontends/widgets/application.py:639
 msgid "Export OPML File"
 msgstr "OPML 파일 내보내기"
 
-#: ../../portable/frontends/widgets/application.py:662
+#: ../../portable/frontends/widgets/application.py:663
 msgid "Create Playlist"
 msgstr "재생 목록 만들기"
 
-#: ../../portable/frontends/widgets/application.py:663
+#: ../../portable/frontends/widgets/application.py:664
 msgid "Enter a name for the new playlist"
 msgstr "새 재생 목록에 대한 이름을 입력하십시오"
 
-#: ../../portable/frontends/widgets/application.py:684
+#: ../../portable/frontends/widgets/application.py:685
 msgid "Create Playlist Folder"
 msgstr "재생 목록 폴더 만들기"
 
-#: ../../portable/frontends/widgets/application.py:685
+#: ../../portable/frontends/widgets/application.py:686
 msgid "Enter a name for the new playlist folder"
 msgstr "새 재생 목록 폴더 이름 입력"
 
-#: ../../portable/frontends/widgets/application.py:706
+#: ../../portable/frontends/widgets/application.py:707
 #: ../../portable/frontends/widgets/tablist.py:579
 msgid "Rename Feed Folder"
 msgstr "피드 폴더 이름 바꾸기"
 
-#: ../../portable/frontends/widgets/application.py:707
+#: ../../portable/frontends/widgets/application.py:708
 #, python-format
 msgid "Enter a new name for the feed folder %(name)s"
 msgstr "%(name)s 피드 폴더의 새 이름을 입력하십시오"
 
-#: ../../portable/frontends/widgets/application.py:711
+#: ../../portable/frontends/widgets/application.py:712
 msgid "Rename Feed"
 msgstr "피드 이름 바꾸기"
 
-#: ../../portable/frontends/widgets/application.py:712
+#: ../../portable/frontends/widgets/application.py:713
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
 msgstr "%(name)s 피드의 새 이름을 입력하십시오"
 
-#: ../../portable/frontends/widgets/application.py:716
+#: ../../portable/frontends/widgets/application.py:717
 #: ../../portable/frontends/widgets/tablist.py:640
-#: ../../portable/playlist.py:187
+#: ../../portable/playlist.py:188
 msgid "Rename Playlist"
 msgstr "재생 목록 이름 바꾸기"
 
-#: ../../portable/frontends/widgets/application.py:717
+#: ../../portable/frontends/widgets/application.py:718
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr "%(name)s 재생 목록의 새 이름을 입력하십시오"
 
-#: ../../portable/frontends/widgets/application.py:721
+#: ../../portable/frontends/widgets/application.py:722
 #: ../../portable/frontends/widgets/tablist.py:634
 msgid "Rename Playlist Folder"
 msgstr "재생 목록 폴더 이름 바꾸기"
 
-#: ../../portable/frontends/widgets/application.py:722
+#: ../../portable/frontends/widgets/application.py:723
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
 msgstr "%(name)s 재생 목록 폴더의 새 이름을 입력하십시오"
 
-#: ../../portable/frontends/widgets/application.py:725
+#: ../../portable/frontends/widgets/application.py:726
 #: ../../portable/frontends/widgets/tablist.py:529
 msgid "Rename Site"
 msgstr "사이트 이름 바꾸기"
 
-#: ../../portable/frontends/widgets/application.py:726
+#: ../../portable/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the site %(name)s"
 msgstr "%(name)s 사이트의 새 이름을 입력하십시오"
 
-#: ../../portable/frontends/widgets/application.py:750
+#: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
 msgstr[0] "재생 목록 제거"
 
-#: ../../portable/frontends/widgets/application.py:752
+#: ../../portable/frontends/widgets/application.py:753
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
 msgstr[0] "정말로 %(count)s개의 재생 목록을 제거하시겠습니까?"
 
-#: ../../portable/frontends/widgets/application.py:801
+#: ../../portable/frontends/widgets/application.py:802
 msgid "Are you sure you want to quit?"
 msgstr "프로그램을 종료하시겠습니까?"
 
-#: ../../portable/frontends/widgets/application.py:803
+#: ../../portable/frontends/widgets/application.py:804
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] "%(count)d개의 다운로드가 진행 중입니다. 그래도 종료할까요?"
 
-#: ../../portable/frontends/widgets/application.py:808
+#: ../../portable/frontends/widgets/application.py:809
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "다운로드 진행 중 종료 시 알려주기"
 
-#: ../../portable/frontends/widgets/application.py:1105
+#: ../../portable/frontends/widgets/application.py:1106
 msgid "Message"
 msgstr "메시지"
 
-#: ../../portable/frontends/widgets/application.py:1130
+#: ../../portable/frontends/widgets/application.py:1131
 msgid "Migrating Files"
 msgstr "파일 옮기는 중"
 
-#: ../../portable/frontends/widgets/application.py:1140
+#: ../../portable/frontends/widgets/application.py:1141
 msgid "Migrating files"
 msgstr "파일 옮기는 중"
 
@@ -1195,36 +1195,36 @@ msgstr "검색 피드에는 검색어에 해당하는 항목이 들어 있습니
 msgid "Search for:"
 msgstr "검색어:"
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:80
+#: ../../portable/frontends/widgets/newsearchfeed.py:81
 msgid "In this:"
 msgstr "위치:"
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:87
+#: ../../portable/frontends/widgets/newsearchfeed.py:88
 msgid "Feed:"
 msgstr "피드:"
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:92
+#: ../../portable/frontends/widgets/newsearchfeed.py:93
 msgid "Search engine:"
 msgstr "검색 엔진:"
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:98
+#: ../../portable/frontends/widgets/newsearchfeed.py:99
 #: ../../portable/frontends/widgets/newfeed.py:60
 msgid "URL:"
 msgstr "URL:"
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:132
+#: ../../portable/frontends/widgets/newsearchfeed.py:133
 msgid "Add new feed to this section:"
 msgstr "새 피드를 다음 분류에 추가:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:135
-#: ../../portable/frontends/widgets/newfolder.py:70
-#: ../../portable/frontends/widgets/newfeed.py:71
-msgid "video"
-msgstr "비디오"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:136
 #: ../../portable/frontends/widgets/newfolder.py:71
 #: ../../portable/frontends/widgets/newfeed.py:72
+msgid "video"
+msgstr "비디오"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:137
+#: ../../portable/frontends/widgets/newfolder.py:72
+#: ../../portable/frontends/widgets/newfeed.py:73
 msgid "audio"
 msgstr "오디오"
 
@@ -1248,16 +1248,16 @@ msgstr ""
 msgid "Folder name:"
 msgstr "폴더 이름:"
 
-#: ../../portable/frontends/widgets/newfolder.py:68
+#: ../../portable/frontends/widgets/newfolder.py:69
 msgid "Folder should go in this section:"
 msgstr "폴더를 다음 분류로 이동:"
 
-#: ../../portable/frontends/widgets/newfolder.py:107
 #: ../../portable/frontends/widgets/newfolder.py:109
+#: ../../portable/frontends/widgets/newfolder.py:111
 msgid "Create Feed Folder"
 msgstr "피드 폴더 만들기"
 
-#: ../../portable/frontends/widgets/newfolder.py:110
+#: ../../portable/frontends/widgets/newfolder.py:112
 msgid "Enter the name of the folder to add"
 msgstr "추가할 폴더의 이름을 입력하십시오"
 
@@ -1280,11 +1280,11 @@ msgid "Are you sure you want to remove this feed:"
 msgid_plural "Are you sure you want to remove these feeds:"
 msgstr[0] "정말로 이 피드를 제거하시겠습니까:"
 
-#: ../../portable/frontends/widgets/removefeeds.py:77
+#: ../../portable/frontends/widgets/removefeeds.py:84
 msgid "Keep items that have been downloaded in my library."
 msgstr "다운로드한 항목을 모음집에 유지."
 
-#: ../../portable/frontends/widgets/removefeeds.py:93
+#: ../../portable/frontends/widgets/removefeeds.py:100
 msgid ""
 "Are you sure you want to remove this feed?  The downloads currently in "
 "progress will be canceled."
@@ -1326,15 +1326,15 @@ msgstr "숨기기"
 msgid "Show"
 msgstr "보기"
 
-#: ../../portable/frontends/widgets/gtk/window.py:478
+#: ../../portable/frontends/widgets/gtk/window.py:495
 msgid "All files"
 msgstr "모든 파일"
 
-#: ../../portable/frontends/widgets/gtk/window.py:507
+#: ../../portable/frontends/widgets/gtk/window.py:524
 msgid "Choose"
 msgstr "선택"
 
-#: ../../portable/frontends/widgets/gtk/window.py:576
+#: ../../portable/frontends/widgets/gtk/window.py:593
 #: ../../portable/dialogs.py:84
 msgid "Close"
 msgstr "닫기"
@@ -1377,23 +1377,23 @@ msgstr[0] "%(count)d개 항목 찾음"
 msgid "All Items Match Search"
 msgstr "모든 항목이 검색 조건에 부합합니다."
 
-#: ../../portable/frontends/widgets/newfeed.py:69
+#: ../../portable/frontends/widgets/newfeed.py:70
 msgid "Feed should go in this section:"
 msgstr "피드를 다음 분류로 이동:"
 
-#: ../../portable/frontends/widgets/newfeed.py:110
+#: ../../portable/frontends/widgets/newfeed.py:111
 msgid "Add Feed"
 msgstr "피드 추가"
 
-#: ../../portable/frontends/widgets/newfeed.py:111
+#: ../../portable/frontends/widgets/newfeed.py:112
 msgid "Enter the URL of the feed to add"
 msgstr "추가할 피드의 URL을 입력하십시오"
 
-#: ../../portable/frontends/widgets/newfeed.py:122
+#: ../../portable/frontends/widgets/newfeed.py:123
 msgid "Add Feed - Invalid URL"
 msgstr "피드 추가 - URL이 잘못되었습니다"
 
-#: ../../portable/frontends/widgets/newfeed.py:123
+#: ../../portable/frontends/widgets/newfeed.py:124
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -1450,7 +1450,7 @@ msgstr "오디오 피드"
 msgid "PLAYLISTS"
 msgstr "재생 목록"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:433
+#: ../../portable/frontends/widgets/itemlistcontroller.py:447
 msgid "No Results Found"
 msgstr "검색 결과가 없습니다."
 
@@ -1602,15 +1602,15 @@ msgstr "진단"
 msgid "Search All"
 msgstr "모두 검색"
 
-#: ../../portable/messages.py:1059 ../../portable/item.py:1072
+#: ../../portable/messages.py:1060 ../../portable/item.py:1078
 msgid "queued for download"
 msgstr "다운로드 대기중"
 
-#: ../../portable/messagehandler.py:1265
+#: ../../portable/messagehandler.py:1273
 msgid "Subscribed to new feed:"
 msgstr "새로운 피드에 등록함:"
 
-#: ../../portable/messagehandler.py:1268
+#: ../../portable/messagehandler.py:1276
 msgid "Subscribed to new feeds:"
 msgstr "새로운 피드에 등록함:"
 
@@ -1631,18 +1631,18 @@ msgstr ""
 "%(appname)s의 더 최신 버전의 데이터베이스가 있습니다. 가장 최신 버전의 %(appname)s 프로그램을 설치하신 후 "
 "실행하십시오."
 
-#: ../../portable/commandline.py:100
+#: ../../portable/commandline.py:99
 msgid "Subscription error"
 msgstr "구독 오류"
 
-#: ../../portable/commandline.py:110
+#: ../../portable/commandline.py:109
 #, python-format
 msgid ""
 "This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
 "the publisher of this file."
 msgstr "%(appname)s 피드 파일의 형식이 잘못되었습니다: %(url)s. 이 파일을 공급하는 사람에게 알려 주십시오."
 
-#: ../../portable/commandline.py:120
+#: ../../portable/commandline.py:119
 #, python-format
 msgid ""
 "This %(appname)s feed file has the wrong content type: %(url)s. Please "
@@ -1650,16 +1650,16 @@ msgid ""
 msgstr ""
 "%(appname)s 피드 파일의 컨텐트 타입이 올바르지 않습니다: %(url)s. 이 파일을 공급하는 사람에게 알려 주십시오."
 
-#: ../../portable/commandline.py:128
+#: ../../portable/commandline.py:127
 #, python-format
 msgid "Could not download the %(appname)s feed file: %(url)s"
 msgstr "%(appname)s 피드 파일을 다운로드할 수 없습니다: %(url)s"
 
-#: ../../portable/commandline.py:180
+#: ../../portable/commandline.py:179
 msgid "Invalid Torrent"
 msgstr "유효하지 않은 토런트"
 
-#: ../../portable/commandline.py:182
+#: ../../portable/commandline.py:181
 #, python-format
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
@@ -1678,29 +1678,29 @@ msgstr "플래시 URL 찾기 오류"
 msgid "starting up"
 msgstr "시작 중"
 
-#: ../../portable/feed.py:930
+#: ../../portable/feed.py:936
 msgid "Error loading feed"
 msgstr "피드 읽기 오류"
 
-#: ../../portable/feed.py:932
+#: ../../portable/feed.py:938
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr "%(url)s의 피드를 로드하지 못하였습니다(%(errordescription)s)."
 
-#: ../../portable/feed.py:935
+#: ../../portable/feed.py:941
 msgid "Would you like to keep the feed?"
 msgstr "현재 피드를 유지하시겠습니까?"
 
-#: ../../portable/feed.py:1060
+#: ../../portable/feed.py:1066
 msgid "Bad content-type"
 msgstr "잘못된 콘텐트-타입"
 
-#: ../../portable/feed.py:1073
+#: ../../portable/feed.py:1079
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
 msgstr "%(appname)s 와 호환되지 않는 채널"
 
-#: ../../portable/feed.py:1076
+#: ../../portable/feed.py:1082
 #, python-format
 msgid ""
 "This channel is not compatible with %(appname)s but we'll try our best to "
@@ -1719,16 +1719,16 @@ msgstr ""
 "\n"
 "그래도 이 채널을 읽어들여 보시겠습니까?"
 
-#: ../../portable/feed.py:1677
+#: ../../portable/feed.py:1683
 #, python-format
 msgid "Search All: %(text)s"
 msgstr "모두 검색: %(text)s"
 
-#: ../../portable/feed.py:2406
+#: ../../portable/feed.py:2264 ../../portable/feed.py:2415
 msgid "Local Files"
 msgstr "로컬 파일"
 
-#: ../../portable/feed.py:2420
+#: ../../portable/feed.py:2429
 msgid "Playing File"
 msgstr "재생 중 파일"
 
@@ -1862,45 +1862,45 @@ msgstr "%(url)s 위치의 파일은 오디오, 동영상, RSS 피드 중 어느 
 msgid "Download Error"
 msgstr "다운로드 오류"
 
-#: ../../portable/dl_daemon/download.py:624
+#: ../../portable/dl_daemon/download.py:628
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr "%(filename)s에 쓰기를 하지 못하였습니다."
 
-#: ../../portable/dl_daemon/download.py:649
-#: ../../portable/dl_daemon/download.py:866
+#: ../../portable/dl_daemon/download.py:653
+#: ../../portable/dl_daemon/download.py:870
 msgid "Not enough disk space"
 msgstr "용량 없음"
 
-#: ../../portable/dl_daemon/download.py:650
-#: ../../portable/dl_daemon/download.py:867
+#: ../../portable/dl_daemon/download.py:654
+#: ../../portable/dl_daemon/download.py:871
 #, python-format
 msgid "%(amount)s MB required to store this video"
 msgstr "이 비디오를 저장하려면 %(amount)s MB가 필요합니다."
 
-#: ../../portable/dl_daemon/download.py:665
+#: ../../portable/dl_daemon/download.py:669
 #, python-format
 msgid "Couldn't open %(filename)s for writing"
 msgstr "%(filename)s 파일을 열 수 없습니다."
 
-#: ../../portable/dl_daemon/download.py:885
+#: ../../portable/dl_daemon/download.py:889
 msgid "BitTorrent failure"
 msgstr "BitTorrent 실패"
 
-#: ../../portable/dl_daemon/download.py:885
+#: ../../portable/dl_daemon/download.py:889
 msgid "BitTorrent failed to startup"
 msgstr "BitTorrent 시작 실패"
 
-#: ../../portable/dl_daemon/download.py:1074
+#: ../../portable/dl_daemon/download.py:1078
 msgid "Corrupt Torrent"
 msgstr "토런트 오류"
 
-#: ../../portable/dl_daemon/download.py:1075
+#: ../../portable/dl_daemon/download.py:1079
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr "%(url)s에 있는 토런트 파일은 유효하지 않습니다."
 
-#: ../../portable/dl_daemon/download.py:1100
+#: ../../portable/dl_daemon/download.py:1103
 msgid "Torrent file deleted"
 msgstr "삭제한 토런트 파일"
 
@@ -2148,34 +2148,34 @@ msgstr "%(size)sKB"
 msgid "%(size)sB"
 msgstr "%(size)sB"
 
-#: ../../portable/playlist.py:188
+#: ../../portable/playlist.py:189
 #, python-format
 msgid "Enter a new name for the playlist %s"
 msgstr "%s 재생 목록의 바꿀 이름을 입력하십시오."
 
-#: ../../portable/item.py:891
+#: ../../portable/item.py:897
 #, python-format
 msgid "%(count)d day"
 msgid_plural "%(count)d days"
 msgstr[0] "%(count)d일"
 
-#: ../../portable/item.py:896
+#: ../../portable/item.py:902
 #, python-format
 msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
 msgstr[0] "%(count)d시간"
 
-#: ../../portable/item.py:901
+#: ../../portable/item.py:907
 #, python-format
 msgid "%(count)d minute"
 msgid_plural "%(count)d minutes"
 msgstr[0] "%(count)d분"
 
-#: ../../portable/item.py:1159
+#: ../../portable/item.py:1165
 msgid "no title"
 msgstr "제목 없음"
 
-#: ../../portable/item.py:1436
+#: ../../portable/item.py:1442
 msgid "starting up..."
 msgstr "시작 중..."
 
@@ -2208,93 +2208,93 @@ msgstr[0] "이미 가져온 %(count)d개의 피드는 건너뛰었습니다."
 msgid "Example Playlist"
 msgstr "재생 목록 예제"
 
-#: ../../portable/displaytext.py:51
+#: ../../portable/displaytext.py:52
 #, python-format
 msgid "%(size)s gb/s"
 msgstr "%(size)s GB/s"
 
-#: ../../portable/displaytext.py:54
+#: ../../portable/displaytext.py:55
 #, python-format
 msgid "%(size)s mb/s"
 msgstr "%(size)s MB/s"
 
-#: ../../portable/displaytext.py:57
+#: ../../portable/displaytext.py:58
 #, python-format
 msgid "%(size)s kb/s"
 msgstr "%(size)s KB/s"
 
-#: ../../portable/displaytext.py:60
+#: ../../portable/displaytext.py:61
 #, python-format
 msgid "%(size)s b/s"
 msgstr "%(size)s B/s"
 
-#: ../../portable/displaytext.py:75
+#: ../../portable/displaytext.py:76
 #, python-format
 msgid "%(num)d sec"
 msgid_plural "%(num)d secs"
 msgstr[0] "%(num)d초"
 
-#: ../../portable/displaytext.py:89
+#: ../../portable/displaytext.py:90
 #, python-format
 msgid "%(size)s gb"
 msgstr "%(size)s gb"
 
-#: ../../portable/displaytext.py:92
+#: ../../portable/displaytext.py:93
 #, python-format
 msgid "%(size)s mb"
 msgstr "%(size)s MB"
 
-#: ../../portable/displaytext.py:95
+#: ../../portable/displaytext.py:96
 #, python-format
 msgid "%(size)s kb"
 msgstr "%(size)s KB"
 
-#: ../../portable/displaytext.py:97
+#: ../../portable/displaytext.py:98
 #, python-format
 msgid "%(size)s b"
 msgstr "%(size)s B"
 
-#: ../../portable/displaytext.py:102
+#: ../../portable/displaytext.py:103
 #, python-format
 msgid "Expires in %(count)d day"
 msgid_plural "Expires in %(count)d days"
 msgstr[0] "%(count)d일 뒤 만료"
 
-#: ../../portable/displaytext.py:107
+#: ../../portable/displaytext.py:108
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
 msgstr[0] "%(count)d시간 뒤 만료"
 
-#: ../../portable/displaytext.py:112
+#: ../../portable/displaytext.py:113
 #, python-format
 msgid "Expires in %(count)d minute"
 msgid_plural "Expires in %(count)d minutes"
 msgstr[0] "%(count)d분 뒤 만료"
 
-#: ../../portable/displaytext.py:120
+#: ../../portable/displaytext.py:121
 #, python-format
 msgid "Expires: %(count)d day"
 msgid_plural "Expires: %(count)d days"
 msgstr[0] "만료: %(count)d일"
 
-#: ../../portable/displaytext.py:125
+#: ../../portable/displaytext.py:126
 #, python-format
 msgid "Expires: %(count)d hour"
 msgid_plural "Expires: %(count)d hours"
 msgstr[0] "만료: %(count)d시간"
 
-#: ../../portable/displaytext.py:130
+#: ../../portable/displaytext.py:131
 #, python-format
 msgid "Expires: %(count)d minute"
 msgid_plural "Expires: %(count)d minutes"
 msgstr[0] "만료: %(count)d분"
 
-#: ../../platform/osx/plat/frontends/widgets/application.py:168
+#: ../../platform/osx/plat/frontends/widgets/application.py:169
 msgid "Download Completed"
 msgstr "다운로드 완료"
 
-#: ../../platform/osx/plat/frontends/widgets/application.py:169
+#: ../../platform/osx/plat/frontends/widgets/application.py:170
 #, python-format
 msgid "Download of video '%s' is finished."
 msgstr "'%s' 비디오 다운로드 완료."
@@ -2307,79 +2307,79 @@ msgstr "튀어나오기"
 msgid "Pop In"
 msgstr "들어가기"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
 msgid "Services"
 msgstr "서비스"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:143
 msgid "Hide Others"
 msgstr "다른 창 숨기기"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:141
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:144
 msgid "Show All"
 msgstr "모두 보기"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:146
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:149
 msgid "Preferences..."
 msgstr "기본 설정..."
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:152
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
 msgid "Close Window"
 msgstr "창 닫기"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
 msgid "Cut"
 msgstr "잘라내기"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:161
 msgid "Copy"
 msgstr "복사"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:159
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
 msgid "Paste"
 msgstr "붙여넣기"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:165
 msgid "Select All"
 msgstr "모두 선택"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:164
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
 msgid "Edit"
 msgstr "편집"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:169
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:172
 msgid "Present Half Size"
 msgstr "절반 크기로 보이기"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:170
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:173
 msgid "Present Actual Size"
 msgstr "실제 크기로 보이기"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:174
 msgid "Present Double Size"
 msgstr "두 배 크게 보기"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:173
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:176
 msgid "Present Video"
 msgstr "비디오 보기"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:180
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
 msgid "Zoom"
 msgstr "확대"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:184
 msgid "Minimize"
 msgstr "최소화"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:186
 msgid "Main Window"
 msgstr "기본 창"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:188
 msgid "Bring All to Front"
 msgstr "모두 앞으로 보내기"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:187
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Window"
 msgstr "창"
 
@@ -2456,7 +2456,7 @@ msgstr "%(url)s 페이지를 여는 중 오류가 발생했습니다. 몇 초 �
 #~ msgstr "채널 설정"
 
 #: ../../portable/frontends/widgets/statictabs.py:113
-#: ../../portable/frontends/widgets/itemlistcontroller.py:514
+#: ../../portable/frontends/widgets/itemlistcontroller.py:528
 msgid "Other"
 msgstr ""
 
@@ -2538,7 +2538,7 @@ msgstr ""
 msgid "Open Externally"
 msgstr ""
 
-#: ../../portable/frontends/widgets/displays.py:574
+#: ../../portable/frontends/widgets/displays.py:568
 #, python-format
 msgid "%(count)d Site Selected"
 msgid_plural "%(count)d Sites Selected"
@@ -2549,22 +2549,22 @@ msgstr[1] ""
 msgid "Download this video"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:326
+#: ../../portable/frontends/widgets/application.py:327
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:399
+#: ../../portable/frontends/widgets/application.py:400
 #, python-format
 msgid "%(appname)s is up to date"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:401
+#: ../../portable/frontends/widgets/application.py:402
 #, python-format
 msgid "%(appname)s is up to date!"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:439
+#: ../../portable/frontends/widgets/application.py:440
 msgid ""
 "One of these items is a folder.  Delete/Removeing a folder will "
 "delete/remove it's contents"
@@ -2574,7 +2574,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:461
+#: ../../portable/frontends/widgets/application.py:462
 msgid ""
 "One of these items is a folder.  Deleting a folder will delete it's contents"
 msgid_plural ""
@@ -2582,13 +2582,13 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:769
+#: ../../portable/frontends/widgets/application.py:770
 msgid "Remove site"
 msgid_plural "Remove sites"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:771
+#: ../../portable/frontends/widgets/application.py:772
 #, python-format
 msgid "Are you sure you want to remove this site?"
 msgid_plural "Are you sure you want to remove these %(count)s sites?"
@@ -2631,7 +2631,7 @@ msgstr ""
 msgid "Stop after each video or audio item"
 msgstr ""
 
-#: ../../portable/frontends/widgets/removefeeds.py:82
+#: ../../portable/frontends/widgets/removefeeds.py:89
 #, python-format
 msgid ""
 "Watched folders will be removed from the sidebar but their contents will "
@@ -2647,12 +2647,12 @@ msgstr ""
 msgid "Pop-out"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/window.py:522
+#: ../../portable/frontends/widgets/gtk/window.py:539
 #, python-format
 msgid "About %(appname)s"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/window.py:537
+#: ../../portable/frontends/widgets/gtk/window.py:554
 #, python-format
 msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
@@ -2675,7 +2675,7 @@ msgstr ""
 msgid "LIBRARY"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:539
+#: ../../portable/frontends/widgets/itemlistcontroller.py:553
 msgid "Back to feed"
 msgstr ""
 
@@ -2711,7 +2711,7 @@ msgid ""
 "URL: %(url)s"
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:1101
+#: ../../portable/dl_daemon/download.py:1104
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr ""
@@ -2721,51 +2721,51 @@ msgstr ""
 msgid "_About %(name)s"
 msgstr ""
 
-#: ../../portable/item.py:1205
+#: ../../portable/item.py:1211
 msgid "Contents appear in the library"
 msgstr ""
 
-#: ../../portable/item.py:1210
+#: ../../portable/item.py:1216
 msgid "Contents:"
 msgstr ""
 
-#: ../../portable/displaytext.py:67
+#: ../../portable/displaytext.py:68
 #, python-format
 msgid "%(num).0f day"
 msgid_plural "%(num).0f days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/displaytext.py:70
+#: ../../portable/displaytext.py:71
 #, python-format
 msgid "%(num).0f hr"
 msgid_plural "%(num).0f hrs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/displaytext.py:73
+#: ../../portable/displaytext.py:74
 #, python-format
 msgid "%(num).0f min"
 msgid_plural "%(num).0f mins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/displaytext.py:141
+#: ../../portable/displaytext.py:142
 #, python-format
 msgid "%(month)s %(dayofmonth)s, %(year)s"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:141
 #, python-format
 msgid "Hide %(appname)s"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:148
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:151
 #, python-format
 msgid "Quit %(appname)s"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:192
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:195
 #, python-format
 msgid "%(appname)s Help"
 msgstr ""
