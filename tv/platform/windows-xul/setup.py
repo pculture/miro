@@ -28,6 +28,7 @@
 
 import os.path
 import os
+import shutil
 import time
 import socket
 import copy
@@ -300,6 +301,22 @@ for dir in ('searchengines', 'images'):
     data_files.extend(find_data_files(dest_dir, source_dir))
 
 data_files.append(('resources', [os.path.join(root_dir, 'ADOPTERS')]))
+
+locale_temp_dir = os.path.join(os.path.dirname(__file__), "build", "locale")
+
+# handle locale files
+for source in glob(os.path.join(resources_dir, "locale", "*.mo")):
+    lang = os.path.basename(source)[:-3]
+    dest = os.path.join(locale_temp_dir, lang, "LC_MESSAGES", "miro.mo")
+    try:
+        os.makedirs(os.path.dirname(dest))
+    except WindowsError:
+        pass
+    shutil.copyfile(source, dest)
+
+data_files.extend(find_data_files(os.path.join("resources", "locale"),
+                                  locale_temp_dir))
+
 app_config = os.path.join(resources_dir, 'app.config.template')
 template_vars = util.read_simple_config_file(app_config)
 
