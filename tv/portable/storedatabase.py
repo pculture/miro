@@ -458,8 +458,8 @@ class LiveStorage:
 
 
     def _check_time(self, sql, query_time):
-        SINGLE_QUERY_LIMIT = 0.02
-        CUMULATIVE_LIMIT = 0.1
+        SINGLE_QUERY_LIMIT = 0.5
+        CUMULATIVE_LIMIT = 1.0
         if query_time > SINGLE_QUERY_LIMIT:
             logging.timing("query slow (%0.3f seconds): %s", query_time, sql)
 
