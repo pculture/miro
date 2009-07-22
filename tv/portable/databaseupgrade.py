@@ -45,7 +45,6 @@ from miro import schema
 from miro import util
 import types
 from miro import config
-from miro import dbupgradeprogress
 from miro import prefs
 
 NO_CHANGES = set() # looks nicer as a return value
@@ -84,14 +83,10 @@ def new_style_upgrade(cursor, saved_version, upgrade_to):
                "(db version is %s)" % saved_version)
         raise DatabaseTooNewError(msg)
 
-    dbupgradeprogress.new_style_progress(saved_version, saved_version,
-            upgrade_to)
     for version in xrange(saved_version + 1, upgrade_to + 1):
         if util.chatter:
             logging.info("upgrading database to version %s" % (version))
         get_upgrade_func(version)(cursor)
-        dbupgradeprogress.new_style_progress(saved_version, version,
-                upgrade_to)
 
 def upgrade(savedObjects, saveVersion, upgradeTo=None):
     """Upgrade a list of SavableObjects that were saved using an old version 
@@ -117,9 +112,6 @@ def upgrade(savedObjects, saveVersion, upgradeTo=None):
                "(db version is %s)" % saveVersion)
         raise DatabaseTooNewError(msg)
 
-    startSaveVersion = saveVersion
-    dbupgradeprogress.old_style_progress(startSaveVersion, startSaveVersion,
-            upgradeTo)
     while saveVersion < upgradeTo:
         if util.chatter:
             print "upgrading database to version %s" % (saveVersion + 1)
@@ -130,8 +122,6 @@ def upgrade(savedObjects, saveVersion, upgradeTo=None):
         else:
             changed.update (thisChanged)
         saveVersion += 1
-        dbupgradeprogress.old_style_progress(startSaveVersion, saveVersion,
-                upgradeTo)
     return changed
 
 def upgrade2(objectList):
@@ -2135,12 +2125,6 @@ def upgrade88(cursor):
     id_counter = itertools.count(max_id + 1)
 
     folder_count = {}
-    for table_name in ('playlist_item_map', 'playlist_folder_item_map'):
-        cursor.execute("SELECT COUNT(*) FROM sqlite_master "
-                "WHERE name=? and type='table'", (table_name,))
-        if cursor.fetchone()[0] > 0:
-            logging.warn("dropping %s in upgrade88", table_name)
-            cursor.execute("DROP TABLE %s " % table_name)
     cursor.execute("CREATE TABLE playlist_item_map (id integer PRIMARY KEY, "
             "playlist_id integer, item_id integer, position integer)")
     cursor.execute("CREATE TABLE playlist_folder_item_map "
@@ -2457,7 +2441,3 @@ def upgrade103(cursor):
                     "WHERE downloader_id=?", (id_, dup_id))
             cursor.execute("DELETE FROM remote_downloader WHERE id=?",
                     (dup_id,))
-
-def upgrade104(cursor):
-    cursor.execute("UPDATE item SET seen=0 WHERE seen IS NULL")
-    cursor.execute("UPDATE item SET keep=0 WHERE keep IS NULL")

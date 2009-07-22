@@ -40,7 +40,6 @@ difference is that all of the dialogs run modally.
 
 from miro import app
 from miro.frontends.widgets import style
-from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
 from miro.dialogs import BUTTON_OK, BUTTON_CANCEL, BUTTON_IGNORE, \
@@ -93,29 +92,6 @@ class ProgressDialog(MainDialog):
             self.progress_bar.set_progress(float(current) / total)
         else:
             self.progress_bar.set_progress(0.0)
-
-class DBUpgradeProgressDialog(MainDialog):
-    def __init__(self, title):
-        MainDialog.__init__(self, title)
-        self.progress_bar = widgetset.ProgressBar()
-        self.top_label = widgetset.Label()
-        self.top_label.set_text(_("Miro is upgrading your database of feeds "
-            "and files.  This one-time process can take a long time if you "
-            "have a large number of items in Miro (it can even take more "
-            "than 30 minutes)."))
-        self.top_label.set_wrap(True)
-        self.top_label.set_size_request(200, -1)
-        self.label = widgetset.Label()
-        self.vbox = widgetset.VBox(spacing=6)
-        self.vbox.pack_end(widgetutil.align_center(self.label))
-        self.vbox.pack_end(self.progress_bar)
-        self.vbox.pack_end(widgetutil.pad(self.top_label, bottom=6))
-        height = self.vbox.get_size_request()[1] + 24
-        self.set_extra_widget(self.vbox)
-
-    def update(self, stage, stage_progress, progress):
-        self.label.set_text(stage)
-        self.progress_bar.set_progress(progress)
 
 def show_about():
     window = widgetset.AboutDialog()

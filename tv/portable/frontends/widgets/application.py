@@ -983,24 +983,6 @@ class WidgetsMessageHandler(messages.MessageHandler):
             self._pre_startup_messages.add('feed-tab-list')
             self._pre_startup_messages.add('audio-feed-tab-list')
         self.migration_progress_dialog = None
-        self.dbupgrade_progress_dialog = None
-
-    def handle_database_upgrade_start(self, message):
-        if self.dbupgrade_progress_dialog is None:
-            self.dbupgrade_progress_dialog = dialogs.DBUpgradeProgressDialog(
-                    _('Upgrading database'))
-            self.dbupgrade_progress_dialog.run()
-            # run() will return when we destroy the dialog because of a future
-            # message.
-            return
-
-    def handle_database_upgrade_progress(self, message):
-        self.dbupgrade_progress_dialog.update(message.stage,
-                message.stage_progress, message.total_progress)
-
-    def handle_database_upgrade_end(self, message):
-        self.dbupgrade_progress_dialog.destroy()
-        self.dbupgrade_progress_dialog = None
 
     def handle_startup_failure(self, message):
         dialogs.show_message(message.summary, message.description,

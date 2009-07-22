@@ -769,24 +769,6 @@ class QueryFrontendState(BackendMessage):
 
 # Frontend Messages
 
-class DatabaseUpgradeStart(FrontendMessage):
-    """We're about to do a database upgrade.
-    """
-    pass
-
-class DatabaseUpgradeProgress(FrontendMessage):
-    """We're about to do a database upgrade.
-    """
-    def __init__(self, stage, stage_progress, total_progress):
-        self.stage = stage
-        self.stage_progress = stage_progress
-        self.total_progress = total_progress
-
-class DatabaseUpgradeEnd(FrontendMessage):
-    """We're done with the database upgrade.
-    """
-    pass
-
 class StartupSuccess(FrontendMessage):
     """The startup process is complete.  The frontend should wait for
     this signal to show the UI to the user.

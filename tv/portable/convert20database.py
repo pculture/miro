@@ -50,7 +50,6 @@ except ImportError:
 
 from miro import databaseupgrade
 from miro import databasesanity
-from miro import dbupgradeprogress
 from miro import feedparser
 from miro import schemav79 as schema_mod
 from miro import util
@@ -112,11 +111,6 @@ def _run_databasesanity(objects):
 def _create_db_schema(cursor):
     for schema in schema_mod.objectSchemas:
         table_name = schema.classString.replace('-', '_')
-        cursor.execute("SELECT COUNT(*) FROM sqlite_master "
-                "WHERE name=? and type='table'", (table_name,))
-        if cursor.fetchone()[0] > 0:
-            logging.warn("dropping %s in 2.0 upgrade", table_name)
-            cursor.execute("DROP TABLE %s " % table_name)
         cursor.execute("CREATE TABLE %s (%s)" %
                 (table_name, _calc_sqlite_types(schema)))
 
@@ -152,11 +146,8 @@ def _execute_insert_sql(cursor, savable):
     cursor.execute(sql, values)
 
 def _migrate_old_data(cursor, savable_objects):
-    total = len(savable_objects)
-    for i, savable in enumerate(savable_objects):
-        dbupgradeprogress.convert20_progress(i, total)
+    for savable in savable_objects:
         _execute_insert_sql(cursor, savable)
-    dbupgradeprogress.convert20_progress(total, total)
 
 # Figure out which SQLITE type to use for SchemaItem classes.
 _sqlite_type_map = {

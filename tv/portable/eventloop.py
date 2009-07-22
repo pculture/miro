@@ -256,11 +256,11 @@ class EventLoop(signals.SignalEmitter):
         self.threadPool.queueCall(callback, errback, function, name, *args, **kwargs)
 
     def loop(self):
-        self.loop_ready.set()
         self.emit('thread-will-start')
         self.emit('thread-started', threading.currentThread())
         self.emit('thread-did-start')
 
+        self.loop_ready.set()
         while not self.quitFlag:
             self.emit('begin-loop')
             self.clearRemovedCallbacks()

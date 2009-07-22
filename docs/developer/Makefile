@@ -8,7 +8,7 @@ PYTHONPATH := dist/${PREFIX}/lib/python${PYTHON_VERSION}/site-packages/:${PYTHON
 
 # You can set these variables from the command line.
 SPHINXOPTS    =
-SPHINXBUILD   = MIRO_SHARE_ROOT=dist/${PREFIX}/share/ MIRO_RESOURCE_ROOT=dist/${PREFIX}/share/miro/resources/ PYTHONPATH=${PYTHONPATH} sphinx-build
+SPHINXBUILD   = PYTHONPATH=${PYTHONPATH} sphinx-build
 PAPER         =
 
 # Internal variables.

@@ -63,7 +63,6 @@ from miro import app
 from miro import config
 from miro import convert20database
 from miro import databaseupgrade
-from miro import dbupgradeprogress
 from miro import dialogs
 from miro import eventloop
 from miro import schema
@@ -152,8 +151,8 @@ class LiveStorage:
             logging.info("Vacuuming the db before shutting down.")
             try:
                 self.cursor.execute("vacuum")
-            except sqlite3.DatabaseError, sdbe:
-                logging.info("... Vacuuming failed with DatabaseError: %s", sdbe)
+            except sqlite3.DatabaseError:
+                logging.info("... Vacuuming failed with DatabaseError")
         self.connection.close()
 
     def upgrade_database(self):
@@ -163,8 +162,7 @@ class LiveStorage:
         except (KeyError, SystemError,
                 databaseupgrade.DatabaseTooNewError):
             raise
-        except sqlite3.OperationalError, e:
-            logging.exception('OperationalError when upgrading database: %s', e)
+        except sqlite3.OperationalError:
             raise UpgradeDiskSpaceError()
         except UpgradeDiskSpaceError:
             raise
@@ -184,34 +182,25 @@ class LiveStorage:
         try:
             shutil.copyfile(self.path, "%s_backup_%s" % (self.path, ver))
         except IOError, e:
-            logging.exception('Error when backing up database')
+            if e.args[0] == 28:
+                # disk full error
+                raise UpgradeDiskSpaceError()
+            else:
+                # Other IO error, re-raising it will give the generic startup
+                # error message.
+                raise
 
-        # re-open database
+        # open database
         self.open_connection()
 
     def _upgrade_database(self):
+        self._upgrade_20_database()
         current_version = self._get_variable(VERSION_KEY)
-
-        if current_version > self._schema_version:
-            msg = _("Database was created by a newer version of Miro " +
-                    "(db version is %(version)s)",
-                    {"version": saved_version})
-            raise databaseupgrade.DatabaseTooNewError(msg)
-
         if current_version < self._schema_version:
-            dbupgradeprogress.upgrade_start()
-            try:
-                self._upgrade_20_database()
-                # need to pull the variable again here because
-                # _upgrade_20_database will have done an upgrade
-                current_version = self._get_variable(VERSION_KEY)
-                self._backup_database(current_version)
-                databaseupgrade.new_style_upgrade(self.cursor,
-                                                  current_version,
-                                                  self._schema_version)
-                self._set_version()
-            finally:
-                dbupgradeprogress.upgrade_end()
+            self._backup_database(current_version)
+        databaseupgrade.new_style_upgrade(self.cursor,
+                current_version, self._schema_version)
+        self._set_version()
 
     def _upgrade_20_database(self):
         self.cursor.execute("SELECT COUNT(*) FROM sqlite_master "
@@ -229,7 +218,6 @@ class LiveStorage:
             else:
                 # Need to update an old-style database
                 self._backup_database("pre80")
-                dbupgradeprogress.doing_20_upgrade()
 
                 if util.chatter:
                     logging.info("converting pre 2.1 database")
