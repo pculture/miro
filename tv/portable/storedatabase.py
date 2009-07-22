@@ -162,8 +162,7 @@ class LiveStorage:
         except (KeyError, SystemError,
                 databaseupgrade.DatabaseTooNewError):
             raise
-        except sqlite3.OperationalError, e:
-            logging.exception('OperationalError when upgrading database: %s', e)
+        except sqlite3.OperationalError:
             raise UpgradeDiskSpaceError()
         except UpgradeDiskSpaceError:
             raise
@@ -183,7 +182,13 @@ class LiveStorage:
         try:
             shutil.copyfile(self.path, "%s_backup_%s" % (self.path, ver))
         except IOError, e:
-            logging.exception('Error when backing up database')
+            if e.args[0] == 28:
+                # disk full error
+                raise UpgradeDiskSpaceError()
+            else:
+                # Other IO error, re-raising it will give the generic startup
+                # error message.
+                raise
 
         # open database
         self.open_connection()

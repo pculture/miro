@@ -111,11 +111,6 @@ def _run_databasesanity(objects):
 def _create_db_schema(cursor):
     for schema in schema_mod.objectSchemas:
         table_name = schema.classString.replace('-', '_')
-        cursor.execute("SELECT COUNT(*) FROM sqlite_master "
-                "WHERE name=? and type='table'", (table_name,))
-        if cursor.fetchone()[0] > 0:
-            logging.warn("dropping %s in 2.0 upgrade", table_name)
-            cursor.execute("DROP TABLE %s " % table_name)
         cursor.execute("CREATE TABLE %s (%s)" %
                 (table_name, _calc_sqlite_types(schema)))
 
