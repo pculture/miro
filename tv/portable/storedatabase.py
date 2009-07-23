@@ -163,7 +163,7 @@ class LiveStorage:
                 databaseupgrade.DatabaseTooNewError):
             raise
         except sqlite3.OperationalError, e:
-            logging.exception('OperationalError when upgrading database: %s', e
+            logging.exception('OperationalError when upgrading database: %s', e)
             raise UpgradeDiskSpaceError()
         except UpgradeDiskSpaceError:
             raise
