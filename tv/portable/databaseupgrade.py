@@ -2125,6 +2125,12 @@ def upgrade88(cursor):
     id_counter = itertools.count(max_id + 1)
 
     folder_count = {}
+    for table_name in ('playlist_item_map', 'playlist_folder_item_map'):
+        cursor.execute("SELECT COUNT(*) FROM sqlite_master "
+                "WHERE name=? and type='table'", (table_name,))
+        if cursor.fetchone()[0] > 0:
+            logging.warn("dropping %s in upgrade88", table_name)
+            cursor.execute("DROP TABLE %s " % table_name)
     cursor.execute("CREATE TABLE playlist_item_map (id integer PRIMARY KEY, "
             "playlist_id integer, item_id integer, position integer)")
     cursor.execute("CREATE TABLE playlist_folder_item_map "
