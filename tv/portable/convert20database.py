@@ -50,6 +50,7 @@ except ImportError:
 
 from miro import databaseupgrade
 from miro import databasesanity
+from miro import dbupgradeprogress
 from miro import feedparser
 from miro import schemav79 as schema_mod
 from miro import util
@@ -151,8 +152,11 @@ def _execute_insert_sql(cursor, savable):
     cursor.execute(sql, values)
 
 def _migrate_old_data(cursor, savable_objects):
-    for savable in savable_objects:
+    total = len(savable_objects)
+    for i, savable in enumerate(savable_objects):
+        dbupgradeprogress.convert20_progress(i, total)
         _execute_insert_sql(cursor, savable)
+    dbupgradeprogress.convert20_progress(total, total)
 
 # Figure out which SQLITE type to use for SchemaItem classes.
 _sqlite_type_map = {

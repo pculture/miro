@@ -45,6 +45,7 @@ from miro import schema
 from miro import util
 import types
 from miro import config
+from miro import dbupgradeprogress
 from miro import prefs
 
 NO_CHANGES = set() # looks nicer as a return value
@@ -83,10 +84,14 @@ def new_style_upgrade(cursor, saved_version, upgrade_to):
                "(db version is %s)" % saved_version)
         raise DatabaseTooNewError(msg)
 
+    dbupgradeprogress.new_style_progress(saved_version, saved_version,
+            upgrade_to)
     for version in xrange(saved_version + 1, upgrade_to + 1):
         if util.chatter:
             logging.info("upgrading database to version %s" % (version))
         get_upgrade_func(version)(cursor)
+        dbupgradeprogress.new_style_progress(saved_version, version,
+                upgrade_to)
 
 def upgrade(savedObjects, saveVersion, upgradeTo=None):
     """Upgrade a list of SavableObjects that were saved using an old version 
@@ -112,6 +117,9 @@ def upgrade(savedObjects, saveVersion, upgradeTo=None):
                "(db version is %s)" % saveVersion)
         raise DatabaseTooNewError(msg)
 
+    startSaveVersion = saveVersion
+    dbupgradeprogress.old_style_progress(startSaveVersion, startSaveVersion,
+            upgradeTo)
     while saveVersion < upgradeTo:
         if util.chatter:
             print "upgrading database to version %s" % (saveVersion + 1)
@@ -122,6 +130,8 @@ def upgrade(savedObjects, saveVersion, upgradeTo=None):
         else:
             changed.update (thisChanged)
         saveVersion += 1
+        dbupgradeprogress.old_style_progress(startSaveVersion, saveVersion,
+                upgradeTo)
     return changed
 
 def upgrade2(objectList):
