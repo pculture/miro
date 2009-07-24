@@ -2457,3 +2457,7 @@ def upgrade103(cursor):
                     "WHERE downloader_id=?", (id_, dup_id))
             cursor.execute("DELETE FROM remote_downloader WHERE id=?",
                     (dup_id,))
+
+def upgrade104(cursor):
+    cursor.execute("UPDATE item SET seen=0 WHERE seen IS NULL")
+    cursor.execute("UPDATE item SET keep=0 WHERE keep IS NULL")
