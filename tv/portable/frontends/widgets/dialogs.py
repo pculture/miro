@@ -104,6 +104,7 @@ class DBUpgradeProgressDialog(MainDialog):
             "have a large number of items in Miro (it can even take more "
             "than 30 minutes)."))
         self.top_label.set_wrap(True)
+        self.top_label.set_size_request(200, -1)
         self.label = widgetset.Label()
         self.vbox = widgetset.VBox(spacing=6)
         self.vbox.pack_end(widgetutil.align_center(self.label))
