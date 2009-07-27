@@ -1,3 +1,61 @@
+miro (2.5.1-0pcf1) hardy; urgency=low
+
+  * #12005 (all) database upgrade needs a dialog
+  * #11564 (all) organize library by 'audio' 'video' and 'other'
+  * #11496 (all) let people download from pages that we detect are downloadable
+  * #11497 (all) bigger search box on the search tab
+  * #11406 (all) allow esc to stop playback when not in fullscreen (Thanks Uwe!)
+  * #11561 (all) Audio Playback behavior
+  * (all) better handling for torrent directories that have multiple files in them
+  * (all) better startup performance
+  * (all) rewrote database layer from an object database to a relational database
+  * #11567 (all) Sort order lost when switching views
+  * #11464 (all) Fix random minor typos and inconsistencies (Thanks Uwe!)
+  * #11484 (all) Fix random typos (Thanks Uwe!)
+  * #11617 (all) Missing license headers in some files
+  * #11660 (all) user agent problems
+  * #11784 (all) new counter displays when it shouldn't
+  * #11366 (all) performance - improve time from launch to play video
+  * #11368 (all) performance: improve time from launch to use
+  * #11627, #11629, #11631, #11632 (all) [Patch-included] Pylint cleanup (Thanks Daniël!)
+  * #19094 (GTK) hitting enter key in the add channel dialog doesn't add the channel
+  * #7570 (GTK) audio distortion on playback (Thanks Conrad!)
+  * #11397 (GTK) autoupdate disabled on gtkx11
+  * #11467 (GTK) [Patch Included] Dragging multiple feeds to a folder is not possible (Thanks Jerry!)
+  * #11526 (GTK) [Patch Included] Cannot select multiple sites (Thanks Jerry!)
+  * #11583 (GTK) Can't compile against seamonkey xulrunner package (Thanks Larry!)
+  * #11687 (GTK) thumnbail generation fails when using gstreamer with released versions of miro
+  * #11662 (GTK) Date format is not localized
+  * #10847 (GTK) Remove bsddb support
+  * #11720 (GTK) Segmentation fault with xine after playback
+  * #11783 (GTK) unknown locales causes crash
+  * #11262 (GTK) better python 2.6 support
+  * #11874 (GTK) miro doesn't place it's icons according to FreeDesktop? spec during installation
+  * #3067 (GTK) xscreensaver support (Thanks James!)
+  * #10904 (GTK/Wind) hitting enter key in the add channel dialog doesn't add the channel
+  * #11758 (all) Remove Yahoo! video from list of search engines
+  * other bug fixes, performance improvements, and awesomeness
+
+ -- Will Kahn-Greene <will.guaraldi@pculture.org>  Mon, 27 Jul 2009 12:01:49 -0400
+
+miro (2.0.5-0pcf1) hardy; urgency=low
+
+
+  * (OSX) fixed handling of ssl certificate errors on OSX
+  * #11917 FIXED Youtube Videos not downloading - "Error File not found"
+  * #11867 FIXED blip.tv site title is blank after restart
+  * #10695 FIXED (GTK-X11) Miro complains that my disk is full when it is not
+  * #11879 FIXED (GTK-X11) (r9694) Miro guide isn't displaying
+  * #10465 FIXED (GTK-X11) Miro 2.0.3 fails to start up on a Turkish system
+  * #11262 FIXED (GTK-X11) python 2.6 support
+  * #10801 FIXED (GTK-X11) Miro ends with segmentation fault on openSuSE 11.1 --
+    define MOZILLA_FIVE_HOME. Thanks Marco!
+  * #11583 FIXED (GTK-X11) Can't compile against seamonkey xulrunner package. Thanks Larry!
+  * #11794 FIXED updated to libtorrent 0.14.4
+  * updated translations from Launchpad on 6/22/2009
+
+ -- Will Kahn-Greene <will.guaraldi@pculture.org>  Fri, 26 Jun 2009 12:49:14 -0400
+
 miro (2.0.4-0pcf2) hardy; urgency=low
 
   * tweaked the gst_extractor.py path; this fixes thumbnail extraction when using
@@ -8,7 +66,7 @@ miro (2.0.4-0pcf2) hardy; urgency=low
 miro (2.0.4-0pcf1) hardy; urgency=low
 
   * #11636 FIXED disabled veoh search
-  * updated translations from Launchpad on 3/25/2009 
+  * updated translations from Launchpad on 3/25/2009
 
  -- Will Kahn-Greene <will.guaraldi@pculture.org>  Tue, 31 Mar 2009 20:59:38 -0400
 
