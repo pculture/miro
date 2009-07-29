@@ -1068,7 +1068,7 @@ class HTTPConnection(ConnectionHandler):
             trap_call(self, self.headerCallback, self.makeResponse())
         if self.state == 'closed':
             return # maybe the header callback cancelled this request
-        if ((100 <= self.status <= 199) or self.status in (204, 304) or
+        if ((100 <= self.status <= 199) or self.status in (204, 301, 303, 304, 307) or
                 self.method == 'HEAD' or self.contentLength == 0):
             self.finishRequest()
         else:
