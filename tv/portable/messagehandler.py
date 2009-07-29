@@ -315,10 +315,24 @@ class ManualItemTracker(ItemTrackerBase):
 
     def __init__(self, id, id_list):
         self.id = id
-        place_holders = ', '.join('?' for i in xrange(len(id_list)))
-        self.view = item.Item.make_view('id in (%s)' % place_holders,
-                tuple(id_list))
+        # SQLite can only handle 999 variables at once.  If there are more ids
+        # than that, we need to split things up (#12020)
+        self.views = []
+        for pos in xrange(0, len(id_list), 950):
+            bite_sized_list = id_list[pos:pos+950]
+            place_holders = ', '.join('?' for i in xrange(len(bite_sized_list)))
+            self.views.append(item.Item.make_view(
+                'id in (%s)' % place_holders, tuple(bite_sized_list)))
         ItemTrackerBase.__init__(self)
+
+    def get_object_views(self):
+        return self.views
+
+    def send_initial_list(self):
+        infos = []
+        for view in self.views:
+            infos.extend(self._make_added_list(view))
+        messages.ItemList(self.type, self.id, infos).send_to_frontend()
 
 class DownloadingItemsTracker(ItemTrackerBase):
     type = 'downloads'
