@@ -34,6 +34,7 @@ from miro.gtcache import gettext as _
 import logging
 import urlparse
 import os.path
+import time
 from feedparser import FeedParserDict
 
 from miro import dialogs
@@ -72,15 +73,15 @@ def check_url_exists(url):
     return False
 
 def _build_entry(url, contentType, additional=None):
-    entry = {'enclosures':[{'url' : url, 'type' : unicode(contentType)}]}
+    entry = {'updated_parsed': time.gmtime(time.time()),
+             'enclosures': [{'url': url, 'type': unicode(contentType)}]}
 
     if additional is not None:
         for key in 'title', 'link', 'feed':
             if key in additional:
                 entry[key] = additional[key]
         if 'description' in additional:
-            entry['description'] = entry['summary'] = additional[
-                'description']
+            entry['description'] = entry['summary'] = additional['description']
         if 'thumbnail' in additional:
             entry['thumbnail'] = {'href': additional['thumbnail']}
         if 'length' in additional:
