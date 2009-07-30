@@ -59,7 +59,11 @@ class FolderBase(DDBObject):
     def remove(self, moveItemsTo=None):
         children = list(self.getChildrenView())
         for child in children:
-            child.remove(moveItemsTo)
+            if child.is_watched_folder():
+                child.setVisible(False) # just hide watched folders
+                child.set_folder(None)
+            else:
+                child.remove(moveItemsTo)
         DDBObject.remove(self)
 
     # get_folder and set_folder are here so that channels/playlists and folders
