@@ -951,7 +951,8 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_add_files(self, message):
         # add all files to Miro in the manualFeed
         for mem in message.filenames:
-            commandline.add_video(mem, False)
+            if mem:
+                commandline.add_video(mem, False)
 
     def handle_check_version(self, message):
         up_to_date_callback = message.up_to_date_callback
