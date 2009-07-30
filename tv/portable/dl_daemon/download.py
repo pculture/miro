@@ -879,7 +879,7 @@ class BTDownloader(BGDownloader):
                 self.torrent = torrentSession.session.add_torrent(torrent_info, save_path, None, lt.storage_mode_t.storage_mode_allocate)
             try:
                 if (lt.version_major, lt.version_minor) > (0, 13):
-                    logging.info("libtorrent version is (%d, %d), setting auto_managed to False", lt.version_major, lt.version_minor)
+                    logging.debug("libtorrent version is (%d, %d), setting auto_managed to False", lt.version_major, lt.version_minor)
                     self.torrent.auto_managed(False)
             except AttributeError:
                 logging.warning("libtorrent module doesn't have version_major or version_minor")
