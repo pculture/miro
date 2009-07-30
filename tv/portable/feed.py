@@ -1733,6 +1733,10 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         self.ufeed.confirm_db_thread()
         if not self.ufeed.idExists() or url not in self.download_dc:
             return
+        if self.oldItems is None:
+            # if this is the case, then this feedparser_callback isn't
+            # paired with an update.  maybe we did two in a row?
+            return
         start = clock()
         parsed = unicodify(parsed)
         old_items = self.createItemsForParsed(parsed)
