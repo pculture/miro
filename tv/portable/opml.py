@@ -184,7 +184,11 @@ class Importer(object):
     def import_content(self, content):
         dom = minidom.parseString(content)
         root = dom.documentElement
-        body = root.getElementsByTagName("body").pop()
+        body = root.getElementsByTagName("body")
+        if not body:
+            dom.unlink()
+            return []
+        body = body.pop()
         subscriptions = self._walk_outline(body)
         dom.unlink()
         return subscriptions
@@ -212,7 +216,7 @@ class Importer(object):
         dialog = dialogs.MessageBoxDialog(title, message)
         dialog.run()
 
-    def _walk_outline(self, node, subscriptions = None):
+    def _walk_outline(self, node, subscriptions=None):
         if subscriptions is None:
             subscriptions = []
         try:
