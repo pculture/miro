@@ -29,4 +29,4 @@
 # statement from all source files in the program, then also delete it here.
 
 
-xgettext -k_ -o democracyplayer.pot `find ../../ -name '*.py' -and -not -path '*testdata*' -and -not -path '*.svn*' -and -not -path '*build*' -and -not -path '*dist*' -and -not -path '*feedparser.py' -and -not -path '*portable/test/*'`
+xgettext -k_ -o messages.pot `find ../../ -name '*.py' -and -not -path '*testdata*' -and -not -path '*.svn*' -and -not -path '*build*' -and -not -path '*dist*' -and -not -path '*feedparser.py' -and -not -path '*portable/test/*'`
