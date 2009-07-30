@@ -44,11 +44,12 @@ from miro import util
 from miro import fileutil
 from miro.plat.utils import FilenameType, killProcess, movie_data_program_info
 
-MOVIE_DATA_UTIL_TIMEOUT = 60
 # Time in seconds that we wait for the utility to execute.  If it goes longer
 # than this, we assume it's hung and kill it.
-SLEEP_DELAY = 0.1
+MOVIE_DATA_UTIL_TIMEOUT = 120
+
 # Time to sleep while we're polling the external movie command
+SLEEP_DELAY = 0.1
 
 durationRE = re.compile("Miro-Movie-Data-Length: (\d+)")
 thumbnailSuccessRE = re.compile("Miro-Movie-Data-Thumbnail: Success")
