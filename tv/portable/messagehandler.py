@@ -733,10 +733,14 @@ class BackendMessageHandler(messages.MessageHandler):
             playlist.remove()
 
     def handle_delete_site(self, message):
-        site = guide.ChannelGuide.get_by_id(message.id)
-        if site.get_default():
-            raise ValueError("Can't delete default site")
-        site.remove()
+        try:
+            site = guide.ChannelGuide.get_by_id(message.id)
+        except database.ObjectNotFoundError:
+            logging.warn("site not found: %s" % message.id)
+        else:
+            if site.get_default():
+                raise ValueError("Can't delete default site")
+            site.remove()
 
     def handle_tabs_reordered(self, message):
         # The frontend already has the channels in the correct order and with
@@ -927,10 +931,14 @@ class BackendMessageHandler(messages.MessageHandler):
                     message.path)
 
     def handle_set_watched_folder_visible(self, message):
-        feed_ = feed.Feed.get_by_id(message.id)
-        if not feed_.url.startswith("dtv:directoryfeed:"):
-            raise ValueError("%s is not a watched folder" % feed_)
-        feed_.setVisible(message.visible)
+        try:
+            feed_ = feed.Feed.get_by_id(message.id)
+        except database.ObjectNotFoundError:
+            logging.warn("watched folder not found: %s" % message.id)
+        else:
+            if not feed_.url.startswith("dtv:directoryfeed:"):
+                raise ValueError("%s is not a watched folder" % feed_)
+            feed_.setVisible(message.visible)
 
     def handle_new_playlist(self, message):
         name = message.name
