@@ -162,6 +162,11 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.favicon is None:
             parsed = urlparse(self.updated_url)
             self.favicon = parsed[0] + u"://" + parsed[1] + u"/favicon.ico"
+            if self.icon_cache is None:
+                # bug 12024.  for some reason, guides can have
+                # self.icon_cache = None at this point.  if so, we set
+                # up another one.
+                self.setup_new_icon_cache()
             self.icon_cache.request_update(True)
 
         self.extend_history(self.updated_url)
