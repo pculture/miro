@@ -362,7 +362,7 @@ class DownloadsPanel(PanelBuilder):
         limit = widgetset.TextEntry()
         limit.set_width(5)
         attach_boolean(cbx, prefs.LIMIT_UPSTREAM, (limit,))
-        attach_integer(limit, prefs.UPSTREAM_LIMIT_IN_KBS, create_integer_checker(min=0))
+        attach_integer(limit, prefs.UPSTREAM_LIMIT_IN_KBS, create_integer_checker(min=0, max=100000))
 
         grid.pack(cbx)
         grid.pack(limit)
@@ -373,7 +373,7 @@ class DownloadsPanel(PanelBuilder):
         limit = widgetset.TextEntry()
         limit.set_width(5)
         attach_boolean(cbx, prefs.LIMIT_DOWNSTREAM_BT, (limit,))
-        attach_integer(limit, prefs.DOWNSTREAM_BT_LIMIT_IN_KBS, create_integer_checker(min=0))
+        attach_integer(limit, prefs.DOWNSTREAM_BT_LIMIT_IN_KBS, create_integer_checker(min=0, max=100000))
 
         grid.pack(cbx)
         grid.pack(limit)
@@ -384,7 +384,7 @@ class DownloadsPanel(PanelBuilder):
         limit = widgetset.TextEntry()
         limit.set_width(5)
         attach_boolean(cbx, prefs.LIMIT_CONNECTIONS_BT, (limit,))
-        attach_integer(limit, prefs.CONNECTION_LIMIT_BT_NUM, create_integer_checker(min=0))
+        attach_integer(limit, prefs.CONNECTION_LIMIT_BT_NUM, create_integer_checker(min=0, max=65535))
 
         grid.pack(cbx)
         grid.pack(limit)

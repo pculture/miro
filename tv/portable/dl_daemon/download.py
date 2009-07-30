@@ -234,19 +234,28 @@ class TorrentSession:
     def setUploadLimit(self):
         limit = -1
         if config.get(prefs.LIMIT_UPSTREAM):
-            limit = config.get(prefs.UPSTREAM_LIMIT_IN_KBS) * (2 ** 10)
+            limit = config.get(prefs.UPSTREAM_LIMIT_IN_KBS)
+            if limit > 100000:
+                limit = 100000
+            limit = limit * (2 ** 10)
         self.session.set_upload_rate_limit(limit)
 
     def setDownloadLimit(self):
         limit = -1
         if config.get(prefs.LIMIT_DOWNSTREAM_BT):
-            limit = config.get(prefs.DOWNSTREAM_BT_LIMIT_IN_KBS) * (2 ** 10)
+            limit = config.get(prefs.DOWNSTREAM_BT_LIMIT_IN_KBS)
+            if limit > 100000:
+                limit = 100000
+            limit = limit * (2 ** 10)
+
         self.session.set_download_rate_limit(limit)
 
     def setConnectionLimit(self):
         limit = -1
         if config.get(prefs.LIMIT_CONNECTIONS_BT):
             limit = config.get(prefs.CONNECTION_LIMIT_BT_NUM)
+        if limit > 65535:
+            limit = 65535
         self.session.set_max_connections(limit)
 
     def setEncryption(self):
