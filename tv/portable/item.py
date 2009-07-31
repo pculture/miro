@@ -548,7 +548,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     @classmethod
     def feed_expiring_view(cls, feed_id, watched_before):
         return cls.make_view("watchedTime is not NULL AND "
-                "watchedTime < ? AND feed_id = ?",
+                "watchedTime < ? AND feed_id = ? AND keep = 0",
                 (watched_before, feed_id),
                 joins={'feed': 'item.feed_id=feed.id'})
 
