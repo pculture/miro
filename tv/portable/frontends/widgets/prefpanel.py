@@ -46,6 +46,7 @@ Refer to documentation for those functions for help.
 """
 
 import logging
+import sys
 
 from miro import app
 from miro import config
@@ -362,7 +363,9 @@ class DownloadsPanel(PanelBuilder):
         limit = widgetset.TextEntry()
         limit.set_width(5)
         attach_boolean(cbx, prefs.LIMIT_UPSTREAM, (limit,))
-        attach_integer(limit, prefs.UPSTREAM_LIMIT_IN_KBS, create_integer_checker(min=0, max=100000))
+        max_kbs = sys.maxint / (2**10) # highest value accepted: sys.maxint
+                                       # bits per second in kb/s
+        attach_integer(limit, prefs.UPSTREAM_LIMIT_IN_KBS, create_integer_checker(min=0, max=max_kbs))
 
         grid.pack(cbx)
         grid.pack(limit)
@@ -373,7 +376,7 @@ class DownloadsPanel(PanelBuilder):
         limit = widgetset.TextEntry()
         limit.set_width(5)
         attach_boolean(cbx, prefs.LIMIT_DOWNSTREAM_BT, (limit,))
-        attach_integer(limit, prefs.DOWNSTREAM_BT_LIMIT_IN_KBS, create_integer_checker(min=0, max=100000))
+        attach_integer(limit, prefs.DOWNSTREAM_BT_LIMIT_IN_KBS, create_integer_checker(min=0, max=max_kbs))
 
         grid.pack(cbx)
         grid.pack(limit)
@@ -384,7 +387,7 @@ class DownloadsPanel(PanelBuilder):
         limit = widgetset.TextEntry()
         limit.set_width(5)
         attach_boolean(cbx, prefs.LIMIT_CONNECTIONS_BT, (limit,))
-        attach_integer(limit, prefs.CONNECTION_LIMIT_BT_NUM, create_integer_checker(min=0, max=65535))
+        attach_integer(limit, prefs.CONNECTION_LIMIT_BT_NUM, create_integer_checker(min=0, max=65536))
 
         grid.pack(cbx)
         grid.pack(limit)
