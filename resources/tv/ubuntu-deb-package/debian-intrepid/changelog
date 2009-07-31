@@ -1,3 +1,17 @@
+miro (2.5.2-0pcf1) intrepid; urgency=low
+
+  * #11884 (all) Crash when deleting folder that contains watched folder
+  * #12002 (all) external downloads should have the date they were downloaded
+  * #12011 (all) setUploadLimit: long int too large to convert to int
+  * #12012 (GTK) Fullscreen does not work -> call_xss error
+  * #12016 (all) Kept videos deleted after update
+  * #12018 (all) Youtube video downloads are stuck in starting up
+  * #12020 (all) line 345, in query_ids OperationalError?: too many SQL variablesOperationalError: too many SQL variables
+  * #12023 (all) feedparser_callback fails with AttributeError?
+  * #12024 (all) self.icon_cache is None for some guides 
+
+ -- Will Kahn-Greene <will.guaraldi@pculture.org>  Fri, 31 Jul 2009 08:47:53 -0400
+
 miro (2.5.1-0pcf1) intrepid; urgency=low
 
   * #12005 (all) database upgrade needs a dialog
