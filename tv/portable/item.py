@@ -972,7 +972,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 ufeed = self.get_feed()
                 if ufeed.expire == u'never':
                     self.expiring = False
-                elif ufeed.expire == u'system' and config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
+                elif ufeed.expire == u'system' and config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0:
                     self.expiring = False
                 else:
                     self.expiring = True
