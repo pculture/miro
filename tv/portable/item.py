@@ -923,10 +923,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def get_expiration_time(self):
         """Returns the time when this item should expire.
 
-        Returns a datetime.datetime object,  or None if it doesn't expire.
+        Returns a datetime.datetime object or None if it doesn't expire.
         """
         self.confirm_db_thread()
         if self.get_watched_time() is None or not self.is_downloaded():
+            return None
+        if self.keep:
             return None
         ufeed = self.get_feed()
         if ufeed.expire == u'never' or (ufeed.expire == u'system'
@@ -964,11 +966,13 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.expiring is None:
             if not self.get_seen():
                 self.expiring = False
+            elif self.keep:
+                self.expiring = False
             else:
                 ufeed = self.get_feed()
-                if (self.keep or ufeed.expire == u'never' or
-                        (ufeed.expire == u'system' and
-                            config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0)):
+                if ufeed.expire == u'never':
+                    self.expiring = False
+                elif ufeed.expire == u'system' and config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
                     self.expiring = False
                 else:
                     self.expiring = True
