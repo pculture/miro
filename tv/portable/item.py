@@ -1731,7 +1731,12 @@ class FileItem(Item):
     def expire(self):
         self.confirm_db_thread()
         if self.has_parent():
-            old_parent = self.get_parent()
+            # if we can't find the parent, it's possible that it was
+            # already deleted.
+            try:
+                old_parent = self.get_parent()
+            except ObjectNotFoundError:
+                old_parent = None
         else:
             old_parent = None
         if not fileutil.exists(self.filename):
