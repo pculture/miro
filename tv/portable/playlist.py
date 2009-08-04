@@ -86,7 +86,12 @@ class PlaylistMixin:
 
     def remove_id(self, item_id, signal_change=True):
         """Remove an item from the playlist."""
-        self.MapClass.remove_item_id(self.id, item_id)
+        try:
+            self.MapClass.remove_item_id(self.id, item_id)
+        except playlist.ObjectNotFoundError:
+            # if the item isn't in the playlist, then we move along
+            # because there's nothing to change.
+            return
         folder = self.get_folder()
         if folder is not None:
             folder.remove_id(item_id)
