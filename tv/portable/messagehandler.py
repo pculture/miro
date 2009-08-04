@@ -782,7 +782,10 @@ class BackendMessageHandler(messages.MessageHandler):
             except database.ObjectNotFoundError:
                 continue
             for mem in feeds:
-                mem = feed.Feed.get_by_id(mem.id)
+                try:
+                    mem = feed.Feed.get_by_id(mem.id)
+                except ObjectNotFoundError:
+                    continue
                 if feed_folder.section != mem.section:
                     mem.section = feed_folder.section
                     mem.signal_change()
