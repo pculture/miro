@@ -158,7 +158,10 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
         folder = self.get_folder()
         if folder is not None:
             for map in PlaylistItemMap.playlist_view(self.id):
-                folder.remove_id(map.item_id)
+                try:
+                    folder.remove_id(map.item_id)
+                except database.ObjectNotFoundError:
+                    continue
 
     def _add_ids_to_folder(self):
         folder = self.get_folder()
