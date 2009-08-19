@@ -196,7 +196,7 @@ class LiveStorage:
         if current_version > self._schema_version:
             msg = _("Database was created by a newer version of Miro " +
                     "(db version is %(version)s)",
-                    {"version": saved_version})
+                    {"version": current_version})
             raise databaseupgrade.DatabaseTooNewError(msg)
 
         if current_version < self._schema_version:
