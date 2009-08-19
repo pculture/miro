@@ -82,7 +82,7 @@ class XScreenSaverManager(object):
         return self.call_xss('-deactivate')
 
     def disable(self):
-        self.timer = gobject.timer_add(1000, self.deactivate)
+        self.timer = gobject.timeout_add(1000, self.deactivate)
 
     def enable(self):
         if self.timer is None:
