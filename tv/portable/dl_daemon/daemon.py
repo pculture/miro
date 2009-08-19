@@ -66,7 +66,6 @@ def startDownloadDaemon(oldpid, port):
 
 def getDataFile(short_app_name):
     if hasattr(os, "getuid"):
-        logging.info("*** GET DATA FILE")
         uid = os.getuid()
     elif "USERNAME" in os.environ:
         # This works for win32, where we don't have getuid()
