@@ -566,6 +566,16 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         return cls.make_view("is_file_item")
 
     @classmethod
+    def orphaned_from_feed_view(cls):
+        return cls.make_view('feed_id IS NOT NULL AND '
+                'feed_id NOT IN (SELECT id from feed)')
+
+    @classmethod
+    def orphaned_from_parent_view(cls):
+        return cls.make_view('parent_id IS NOT NULL AND '
+                'parent_id NOT IN (SELECT id from item)')
+
+    @classmethod
     def update_folder_trackers(cls):
         """Update each view tracker that care's about the item's folder (both
         playlist and channel folders).
@@ -1847,3 +1857,14 @@ def update_incomplete_movie_data():
     for item in Item.downloaded_view():
         if item.duration is None or item.screenshot is None:
             moviedata.movieDataUpdater.request_update(item)
+
+def move_orphaned_items():
+    manual_feed = models.Feed.get_manual_feed()
+    for item in Item.orphaned_from_feed_view():
+        logging.warn("No feed for Item: %s.  Moving to manual", item.id)
+        item.setFeed(manual_feed.id)
+
+    for item in Item.orphaned_from_parent_view():
+        logging.warn("No parent for Item: %s.  Moving to manual", item.id)
+        item.parent_id = None
+        item.setFeed(manual_feed.id)
