@@ -700,8 +700,8 @@ class install_data(distutils.command.install_data.install_data):
         dest = '/usr/share/miro/resources/app.config'
 
         config_file = util.read_simple_config_file(source)
-        print "Trying to figure out the svn revision...."
-        if config_file["appVersion"].endswith("svn"):
+        print "Trying to figure out the git revision...."
+        if config_file["appVersion"].endswith("git"):
             revision = util.query_revision(root_dir)
             if revision is None:
                 revision = "unknown"
@@ -710,7 +710,7 @@ class install_data(distutils.command.install_data.install_data):
             else:
                 revisionurl = revision[0]
                 revisionnum = revision[1]
-                revision = "%s - %s" % revision
+                revision = revisionnum
         else:
             revisionurl = ""
             revisionnum = ""

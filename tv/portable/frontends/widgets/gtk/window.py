@@ -542,7 +542,7 @@ class AboutDialog(Dialog):
                 resources.share_path('icons/hicolor/128x128/apps/miro.png'), 48, 48)
         self.packing_vbox.pack_start(gtk.image_new_from_pixbuf(icon_pixbuf))
         if config.get(prefs.APP_REVISION_NUM):
-            version = "%s (r%s)" % (
+            version = "%s (%s)" % (
                     config.get(prefs.APP_VERSION),
                     config.get(prefs.APP_REVISION_NUM))
         else:

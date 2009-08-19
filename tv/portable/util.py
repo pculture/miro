@@ -141,28 +141,17 @@ def query_revision(fn):
     Returns the (url, revision) on success and None on failure.
     """
     try:
-        # first try straight-up svn
-        p = subprocess.Popen(["svn", "info", "--xml", fn], stdout=subprocess.PIPE)
+        p = subprocess.Popen(["git", "rev-parse", "HEAD"], stdout=subprocess.PIPE)
         info = p.stdout.read()
         p.stdout.close()
-        url_match = re.search("<url>(.*)</url>", info)
-        revision_match = re.search('revision="([^"]*)"', info)
-
-        # if that doesn't work, try git over svn.
-        if not url_match:
-            p = subprocess.Popen(["git", "svn", "info"], stdout=subprocess.PIPE)
-            info = p.stdout.read()
-            p.stdout.close()
-            url_match = re.search("URL: (.*)", info)
-            revision_match = re.search("Revision: (.*)", info)
-
-        url = url_match.group(1).strip()
-        revision = revision_match.group(1).strip()
+        url = ""
+        revision = info[0:8]
         return (url, revision)
     except (SystemExit, KeyboardInterrupt):
         raise
     except Exception, e:
         print "Exception thrown when querying revision: %s" % e
+    return None
 
 class AutoFlushingStream:
     """Converts a stream to an auto-flushing one.  It behaves in exactly the
