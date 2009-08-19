@@ -65,13 +65,18 @@ def startDownloadDaemon(oldpid, port):
     firstDaemonLaunch = '0'
 
 def getDataFile(short_app_name):
-    try:
+    if hasattr(os, "getuid"):
+        logging.info("*** GET DATA FILE")
         uid = os.getuid()
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    elif "USERNAME" in os.environ:
         # This works for win32, where we don't have getuid()
         uid = os.environ['USERNAME']
+    elif "USER" in os.environ:
+        uid = os.environ['USER']
+    else:
+        # FIXME - can we do something better here on Windows
+        # platforms?
+        uid = "unknown"
        
     return os.path.join(tempfile.gettempdir(),
             ('%s_Download_Daemon_%s.txt' % (short_app_name, uid)))
