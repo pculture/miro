@@ -107,7 +107,7 @@ def setup_logging(inDownloader=False):
                             format='%(asctime)s %(levelname)-8s %(message)s',
                             stream=sys.stdout)
     else:
-        if config.get(prefs.APP_VERSION).endswith("svn"):
+        if config.get(prefs.APP_VERSION).endswith("git"):
             level = logging.DEBUG
         elif options.frontend != 'cli':
             level = logging.INFO
