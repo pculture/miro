@@ -140,11 +140,20 @@ def query_revision(fn):
 
     Returns the (url, revision) on success and None on failure.
     """
+    url = "unknown"
+    revision = "unknown"
     try:
+        p = subprocess.Popen(["git", "config", "--list"], stdout=subprocess.PIPE)
+        info = p.stdout.read().splitlines()
+        p.stdout.close()
+        origline = "remote.origin.url"
+        info = [m for m in info if m.startswith(origline)]
+        if info:
+            url = info[0][len(origline)+1:].strip()
+
         p = subprocess.Popen(["git", "rev-parse", "HEAD"], stdout=subprocess.PIPE)
         info = p.stdout.read()
         p.stdout.close()
-        url = ""
         revision = info[0:8]
         return (url, revision)
     except (SystemExit, KeyboardInterrupt):

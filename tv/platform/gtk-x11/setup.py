@@ -710,7 +710,7 @@ class install_data(distutils.command.install_data.install_data):
             else:
                 revisionurl = revision[0]
                 revisionnum = revision[1]
-                revision = revisionnum
+                revision = "%s - %s" % (revisionurl, revisionnum)
         else:
             revisionurl = ""
             revisionnum = ""
