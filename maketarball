@@ -1,0 +1,80 @@
+#!/bin/bash
+
+# usage: maketarball
+#        maketarball <branch>
+#        maketarball <tag>
+#
+# With no arguments, this creates a source tarball from git master with a
+# filename based on today's date.
+#
+# With a <branch> argument, this creates a tarball of the branch.
+# 
+# With a <tag> argument, this creates a tarball of the tag.
+#
+# Examples:
+#
+#    ./maketarball
+#    ./maketarball Miro-2.5
+#    ./maketarball v2.5.2
+
+if [ -z "$1" ]
+then
+    BRANCH=master
+    PREFIX=`date "+miro-%Y-%m-%d-$BRANCH"`
+else
+    BRANCH=$1
+    PREFIX="miro-$BRANCH"
+fi
+
+# convert PREFIX to all lowercase.
+# nix the miro-miro- that happens because branch names are Miro-x.y.
+# nix the v from tag names.
+PREFIX=`echo "$PREFIX" | tr '[A-Z]' '[a-z]' | sed s/miro-miro-/miro-/ | sed s/v//`
+
+echo "== BRANCH $BRANCH"
+echo "== PREFIX $PREFIX"
+
+rm -rf temp-miro
+git archive --format=tar $BRANCH tv > miro.tar
+mkdir temp-miro
+mv miro.tar temp-miro
+cd temp-miro
+tar -xvf miro.tar
+
+if [ -e tv ]
+then
+    echo "checkout successful."
+else
+    echo "ERROR: checkout failed--see above for details."
+    exit $?;
+fi
+
+cd tv
+
+# go through app.config.template and expand the revision-related properties
+cd resources
+REVISION_NUM=`git rev-parse --short=8 "$BRANCH"`
+REVISION_URL=
+REVISION="$REVISION_URL - $REVISION_NUM"
+
+# this looks awful, but it just replaces / with \/
+REVISION_NUM_ESCAPED=`echo $REVISION_NUM | sed "s/\\\\//\\\\\\\\\\\\//g"`
+REVISION_URL_ESCAPED=`echo $REVISION_URL | sed "s/\\\\//\\\\\\\\\\\\//g"`
+REVISION_ESCAPED=`echo $REVISION         | sed "s/\\\\//\\\\\\\\\\\\//g"`
+
+cat < app.config.template | sed "s/^appRevisionNum .*$/appRevisionNum = $REVISION_NUM_ESCAPED/;s/^appRevisionURL .*$/appRevisionURL = $REVISION_URL_ESCAPED/;s/^appRevision .*$/appRevision = $REVISION_ESCAPED/" > app.config.template2
+mv app.config.template2 app.config.template
+cd ..
+cd ..
+
+# remove files that shouldn't be distributed
+rm tv/platform/windows-xul/AskInstallChecker.exe
+rm tv/platform/windows-xul/U3Action.exe
+rm tv/platform/windows-xul/askBarSetup-4.1.0.2.exe
+rm tv/platform/windows-xul/ask_toolbar.bmp
+
+mv tv "$PREFIX"
+tar -zcvf "$PREFIX.tar.gz" "$PREFIX"
+mv "$PREFIX.tar.gz" ..
+cd ..
+rm -Rf temp-miro
