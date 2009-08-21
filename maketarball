@@ -54,7 +54,7 @@ cd tv
 # go through app.config.template and expand the revision-related properties
 cd resources
 REVISION_NUM=`git rev-parse --short=8 "$BRANCH"`
-REVISION_URL=
+REVISION_URL=`git config --list | grep remote.origin.url | sed s/remote.origin.url=//`
 REVISION="$REVISION_URL - $REVISION_NUM"
 
 # this looks awful, but it just replaces / with \/
