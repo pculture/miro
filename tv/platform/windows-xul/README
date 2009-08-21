@@ -44,7 +44,7 @@ To build an installer, do::
 That'll build Miro, then wrap it in a NullSoft installer.  The resulting files
 will be something like::
 
-    dist\Miro-2.0-svn-twostage.exe
-    dist\Miro-2.0-svn.exe
+    dist\Miro-2.0-git-twostage.exe
+    dist\Miro-2.0-git.exe
 
 The second one is the "full" installer.

@@ -109,7 +109,7 @@ def setup_logging (inDownloader=False):
         logging.getLogger('').addHandler(handler)
         logging.getLogger('').setLevel(logging.INFO)
     else:
-        if config.get(prefs.APP_VERSION).endswith("svn"):
+        if config.get(prefs.APP_VERSION).endswith("git"):
             level = logging.DEBUG
         else:
             level = logging.WARN
