@@ -213,11 +213,13 @@ class WindowsApplication(Application):
         os.startfile(fn)
 
     def get_main_window_dimensions(self):
+        max_width = gtk.gdk.screen_width()
+        max_height = gtk.gdk.screen_height()
         rect = widgets.Rect.from_string(config.get(options.WINDOW_DIMENSIONS))
-        rect.x = max(min(rect.x, gtk.gdk.screen_width() - 20), 0)
-        rect.y = max(min(rect.x, gtk.gdk.screen_height() - 20), 0)
-        rect.width = max(min(rect.x, gtk.gdk.screen_width()), 100)
-        rect.height = max(min(rect.x, gtk.gdk.screen_width()), 100)
+        rect.x = max(min(rect.x, max_width - 20), 0)
+        rect.y = max(min(rect.y, max_height - 20), 0)
+        rect.width = max(min(rect.width, max_width), 800)
+        rect.height = max(min(rect.height, max_height - 20), 480)
         return rect
 
     def get_main_window_maximized(self):
