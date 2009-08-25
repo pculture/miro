@@ -1073,11 +1073,6 @@ Function CheckMiroBarInstall
   ReadRegStr $0 HKCR "CLSID\{3041D03E-FD4B-44E0-B742-2D9B88305F98}" ""
   StrCmp $0 "" 0 DontInstallBar
   StrCmp "$THEME_NAME" "" 0 DontInstallBar
-  ReadRegStr $0 HKCU "Software\Clients\StartMenuInternet" ""
-  StrCmp $0 "IEXPLORE.EXE" InstallBar
-  StrCmp $0 "" 0 DontInstallBar
-  ReadRegStr $0 HKLM "Software\Clients\StartMenuInternet" ""
-  StrCmp $0 "IEXPLORE.EXE" InstallBar DontInstallBar
 InstallBar:
   Push 1
   Return
