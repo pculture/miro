@@ -36,27 +36,15 @@ Planet
 Source code
 ===========
 
-Trunk is unstable and is where we're doing development for the next
-release.
+Source code is maintained in a `git`_ repository.
 
-The branches are stable and where we do development for minor point
-releases.
+.. _git: http://git-scm.com/
 
-Trunk (unstable!)::
+The ``master`` branch is where new development occurs.  Other branches
+hold research and development related changes or changes that are
+being pulled together for a bugfix release.
 
-    svn co https://svn.participatoryculture.org/svn/dtv/trunk/
-
-Miro 2.5 branch (stable)::
-
-    svn co https://svn.participatoryculture.org/svn/dtv/branches/Miro-2.5
-
-Miro 2.0 branch (stable, but old)::
-
-    svn co https://svn.participatoryculture.org/svn/dtv/branches/Miro-2.0
-
-Miro 1.2 branch (stable, but very old)::
-
-    svn co https://svn.participatoryculture.org/svn/dtv/branches/Miro-1.2
+The git repository is at https://git.participatoryculture.org/miro/ .
 
 
 Documentation
