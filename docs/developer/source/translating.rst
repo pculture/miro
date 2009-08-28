@@ -36,9 +36,9 @@ Testing translations on Linux
 =============================
 
 To test out your translation, make sure you get the latest source code
-from subversion::
+from git::
 
-   svn co https://svn.participatoryculture.org/svn/dtv/trunk/tv/
+   git clone https://git.participatoryculture.org/miro/
 
 Next, make sure you place your ``.po`` file in ``tv/resources/locale``.
 
