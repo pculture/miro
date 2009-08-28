@@ -113,7 +113,7 @@ class BackendMessage(Message):
         try:
             handler = self.handler
         except AttributeError:
-            logging.warn("No handler for backend messages")
+            logging.warn("No handler for backend messages (%s)", repr(self))
         else:
             handler.handle(self)
 
@@ -125,7 +125,7 @@ class FrontendMessage(Message):
         try:
             handler = self.handler
         except AttributeError:
-            logging.warn("No handler for frontend messages")
+            logging.warn("No handler for frontend messages (%s)", repr(self))
         else:
             handler.handle(self)
 
