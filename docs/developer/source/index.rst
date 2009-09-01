@@ -14,6 +14,7 @@ Contents:
    manual
    project
    howto
+   dev_howto
    translating
    searchengine_modules
    utility_modules

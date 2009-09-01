@@ -2,6 +2,8 @@
 portable widget frontend modules
 ================================
 
+.. _howto-portablewidgets
+
 Miro's widget frontend is split between portable code and
 platform-specific code.
 
