@@ -99,7 +99,7 @@ namespace
 }
 
 #endif
-#ifdef _WIN32
+#ifdef TORRENT_WINDOWS
 // for ERROR_SEM_TIMEOUT
 #include <winerror.h>
 #endif
@@ -107,7 +107,6 @@ namespace
 using boost::shared_ptr;
 using boost::weak_ptr;
 using boost::bind;
-using boost::mutex;
 using libtorrent::aux::session_impl;
 
 namespace libtorrent {
@@ -534,6 +533,7 @@ namespace aux {
 	{
 		mutex_t::scoped_lock l(m_mutex);
 		m_port_filter = f;
+		// TODO: recalculate all connect candidates for all torrents
 	}
 
 	void session_impl::set_ip_filter(ip_filter const& f)
@@ -551,6 +551,12 @@ namespace aux {
 			i->second->ip_filter_updated();
 	}
 
+	ip_filter const& session_impl::get_ip_filter() const
+	{
+		mutex_t::scoped_lock l(m_mutex);
+		return m_ip_filter;
+	}
+	
 	void session_impl::set_settings(session_settings const& s)
 	{
 		mutex_t::scoped_lock l(m_mutex);
@@ -2288,7 +2294,7 @@ namespace aux {
 
 		INVARIANT_CHECK;
 
-		if (limit <= 0) limit = (std::numeric_limits<int>::max)();
+		if (limit < 0) limit = (std::numeric_limits<int>::max)();
 		if (m_max_uploads == limit) return;
 		m_max_uploads = limit;
 		m_allowed_upload_slots = limit;
@@ -2599,7 +2605,7 @@ namespace aux {
 		TORRENT_ASSERT(int(unique.size()) == total_downloaders);
 
 		TORRENT_ASSERT(m_max_connections > 0);
-		TORRENT_ASSERT(m_max_uploads > 0);
+		TORRENT_ASSERT(m_max_uploads >= 0);
 		TORRENT_ASSERT(m_allowed_upload_slots >= m_max_uploads);
 		int unchokes = 0;
 		int num_optimistic = 0;

@@ -610,6 +610,18 @@ namespace libtorrent
 						m_picker->we_have(i);
 					}
 				}
+				else
+				{
+					lazy_entry const* slots = m_resume_entry.dict_find("slots");
+					if (slots && slots->type() == lazy_entry::list_t)
+					{
+						for (int i = 0; i < slots->list_size(); ++i)
+						{
+							int piece = slots->list_int_value_at(i, -1);
+							if (piece >= 0) m_picker->we_have(piece);
+						}
+					}
+				}
 
 				// parse unfinished pieces
 				int num_blocks_per_piece =
@@ -1542,7 +1554,7 @@ namespace libtorrent
 				}
 
 				// mark the peer as banned
-				p->banned = true;
+				m_policy.ban_peer(p);
 
 				if (p->connection)
 				{
@@ -2623,7 +2635,7 @@ namespace libtorrent
 			{
 				std::string new_filename = mapped_files->list_string_value_at(i);
 				if (new_filename.empty()) continue;
-				rename_file(i, new_filename);
+				m_torrent_file->rename_file(i, new_filename);
 			}
 		}
 
@@ -2643,6 +2655,7 @@ namespace libtorrent
 	{
 		ret["file-format"] = "libtorrent resume file";
 		ret["file-version"] = 1;
+		ret["libtorrent-version"] = LIBTORRENT_VERSION;
 
 		ret["total_uploaded"] = m_total_uploaded;
 		ret["total_downloaded"] = m_total_downloaded;
@@ -3871,7 +3884,6 @@ namespace libtorrent
 	{
 		TORRENT_ASSERT(limit >= -1);
 		if (limit <= 0) limit = (std::numeric_limits<int>::max)();
-		if (limit < num_peers() * 10) limit = num_peers() * 10;
 		m_bandwidth_limit[peer_connection::upload_channel].throttle(limit);
 	}
 
@@ -3886,7 +3898,6 @@ namespace libtorrent
 	{
 		TORRENT_ASSERT(limit >= -1);
 		if (limit <= 0) limit = (std::numeric_limits<int>::max)();
-		if (limit < num_peers() * 10) limit = num_peers() * 10;
 		m_bandwidth_limit[peer_connection::download_channel].throttle(limit);
 	}
 
@@ -3991,7 +4002,7 @@ namespace libtorrent
 		// downloaded may be 0 if the torrent is 0-sized
 		size_type downloaded = (std::max)(m_total_downloaded, m_torrent_file->total_size());
 		if (seed_time < s.seed_time_limit
-			&& (seed_time > 1 && download_time / float(seed_time) < s.seed_time_ratio_limit)
+			&& (download_time > 1 && seed_time / download_time < s.seed_time_ratio_limit)
 			&& downloaded > 0
 			&& m_total_uploaded / downloaded < s.share_ratio_limit)
 			ret |= seed_ratio_not_met;

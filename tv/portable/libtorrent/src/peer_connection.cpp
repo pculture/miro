@@ -402,6 +402,8 @@ namespace libtorrent
 		TORRENT_ASSERT(t);
 
 		int num_allowed_pieces = m_ses.settings().allowed_fast_set_size;
+		if (num_allowed_pieces == 0) return;
+
 		int num_pieces = t->torrent_file().num_pieces();
 
 		if (num_allowed_pieces >= num_pieces)
@@ -467,7 +469,7 @@ namespace libtorrent
 				<< " *** on_metadata(): THIS IS A SEED ***\n";
 #endif
 			// if this is a web seed. we don't have a peer_info struct
-			if (m_peer_info) m_peer_info->seed = true;
+			t->get_policy().set_seed(m_peer_info, true);
 			m_upload_only = true;
 
 			t->peer_has_all();
@@ -535,7 +537,7 @@ namespace libtorrent
 			(*m_logger) << " *** THIS IS A SEED ***\n";
 #endif
 			// if this is a web seed. we don't have a peer_info struct
-			if (m_peer_info) m_peer_info->seed = true;
+			t->get_policy().set_seed(m_peer_info, true);
 			m_upload_only = true;
 
 			t->peer_has_all();
@@ -1272,7 +1274,7 @@ namespace libtorrent
 			
 			if (is_seed())
 			{
-				m_peer_info->seed = true;
+				t->get_policy().set_seed(m_peer_info, true);
 				m_upload_only = true;
 				disconnect_if_redundant();
 				if (is_disconnecting()) return;
@@ -1335,7 +1337,7 @@ namespace libtorrent
 		{
 			m_have_piece = bits;
 			m_num_pieces = bits.count();
-			if (m_peer_info) m_peer_info->seed = (m_num_pieces == int(bits.size()));
+			t->get_policy().set_seed(m_peer_info, m_num_pieces == int(bits.size()));
 			return;
 		}
 
@@ -1348,7 +1350,7 @@ namespace libtorrent
 			(*m_logger) << " *** THIS IS A SEED ***\n";
 #endif
 			// if this is a web seed. we don't have a peer_info struct
-			if (m_peer_info) m_peer_info->seed = true;
+			t->get_policy().set_seed(m_peer_info, true);
 			m_upload_only = true;
 
 			m_have_piece.set_all();
@@ -1395,6 +1397,8 @@ namespace libtorrent
 
 	void peer_connection::disconnect_if_redundant()
 	{
+		// we cannot disconnect in a constructor
+		TORRENT_ASSERT(m_in_constructor == false);
 		if (!m_ses.settings().close_redundant_connections) return;
 
 		boost::shared_ptr<torrent> t = m_torrent.lock();
@@ -1982,6 +1986,10 @@ namespace libtorrent
 		boost::shared_ptr<torrent> t = m_torrent.lock();
 		TORRENT_ASSERT(t);
 
+		// we cannot disconnect in a constructor, and
+		// this function may end up doing that
+		TORRENT_ASSERT(m_in_constructor == false);
+
 #ifdef TORRENT_VERBOSE_LOGGING
 		(*m_logger) << time_now_string() << " <== HAVE_ALL\n";
 #endif
@@ -1997,7 +2005,7 @@ namespace libtorrent
 
 		m_have_all = true;
 
-		if (m_peer_info) m_peer_info->seed = true;
+		t->get_policy().set_seed(m_peer_info, true);
 		m_upload_only = true;
 		m_bitfield_received = true;
 
@@ -2058,7 +2066,7 @@ namespace libtorrent
 		}
 #endif
 		if (is_disconnecting()) return;
-		if (m_peer_info) m_peer_info->seed = false;
+		t->get_policy().set_seed(m_peer_info, false);
 		m_bitfield_received = true;
 
 		// we're never interested in a peer that doesn't have anything
@@ -2319,6 +2327,10 @@ namespace libtorrent
 
 	void peer_connection::send_not_interested()
 	{
+		// we cannot disconnect in a constructor, and
+		// this function may end up doing that
+		TORRENT_ASSERT(m_in_constructor == false);
+
 		if (!m_interesting) return;
 		boost::shared_ptr<torrent> t = m_torrent.lock();
 		if (!t->ready_for_connections()) return;
