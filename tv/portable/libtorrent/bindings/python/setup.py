@@ -41,7 +41,7 @@ if platform.system() == 'Windows':
 	except: pass
 	shutil.copyfile(r'bin\msvc-7.1\release\boost-source\geoip-static\link-static\optimization-space\threading-multi\libtorrent.pyd', r'.\build\lib\libtorrent.pyd')
 	setup( name='python-libtorrent',
-		version='0.14.4',
+		version='0.14.5',
 		author = 'Arvid Norberg',
 		author_email='arvid@cs.umu.se',
 		description = 'Python bindings for libtorrent-rasterbar',
@@ -62,10 +62,10 @@ if "OPT" in config_vars and "-Wstrict-prototypes" in config_vars["OPT"]:
 source_list = os.listdir(os.path.join(os.path.dirname(__file__), "src"))
 source_list = [os.path.join("src", s) for s in source_list if s.endswith(".cpp")]
 
-extra_cmd = '-DTORRENT_USE_OPENSSL -DTORRENT_LINKING_SHARED   -pthread -I/opt/local/include  -lboost_filesystem-mt-1_35 -lboost_thread-mt-1_35  -lssl -lcrypto -lboost_system-mt-1_35 -L/usr/lib -I/usr/include/openssl -DHAVE_SSL'
+extra_cmd = '-DBOOST_ASIO_HASH_MAP_BUCKETS=1024 -DTORRENT_USE_OPENSSL -DTORRENT_LINKING_SHARED   -pthread -I/opt/local/include  -lboost_filesystem-mt-1_35 -lboost_thread-mt-1_35  -lssl -lcrypto -lboost_system-mt-1_35 -L/usr/lib -I/usr/include/openssl -DHAVE_SSL'
 
 setup( name='python-libtorrent',
-	version='0.14.4',
+	version='0.14.5',
 	author = 'Arvid Norberg',
 	author_email='arvid@cs.umu.se',
 	description = 'Python bindings for libtorrent-rasterbar',

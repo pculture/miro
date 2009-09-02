@@ -75,7 +75,6 @@ namespace libtorrent
 		// we want large blocks as well, so
 		// we can request more bytes at once
 		request_large_blocks(true);
-		set_upload_only(true);
 
 		// we only want left-over bandwidth
 		set_priority(0);
@@ -110,6 +109,13 @@ namespace libtorrent
 
 		m_server_string = "URL seed @ ";
 		m_server_string += m_host;
+	}
+
+	void web_peer_connection::start()
+	{
+		set_upload_only(true);
+		if (is_disconnecting()) return;
+		peer_connection::start();
 	}
 
 	web_peer_connection::~web_peer_connection()
@@ -180,9 +186,9 @@ namespace libtorrent
 		// handle incorrect .torrent files which are multi-file
 		// but have web seeds not ending with a slash
 		if (!single_file_request && (m_path.empty() || m_path[m_path.size() - 1] != '/'))
-		{
 			m_path += "/";
-		}
+		if (!single_file_request && (m_url.empty() || m_url[m_url.size() - 1] != '/'))
+			m_url += "/";
 
 		torrent_info const& info = t->torrent_file();
 		

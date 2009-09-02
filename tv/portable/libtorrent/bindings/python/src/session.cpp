@@ -6,6 +6,7 @@
 #include <libtorrent/torrent.hpp>
 #include <libtorrent/storage.hpp>
 #include <libtorrent/ip_filter.hpp>
+#include <libtorrent/disk_io_thread.hpp>
 #include <boost/python.hpp>
 #include "gil.hpp"
 
@@ -106,7 +107,7 @@ namespace
             p.auto_managed = params["auto_managed"];
         if (params.has_key("duplicate_is_error"))
             p.duplicate_is_error = params["duplicate_is_error"];
-            
+
         return s.add_torrent(p);
     }
 
@@ -194,6 +195,16 @@ void bind_session()
         .value("start_default_features", session::start_default_features)
     ;
 
+     class_<cache_status>("cache_status")
+        .def_readonly("blocks_written", &cache_status::blocks_written)
+        .def_readonly("writes", &cache_status::writes)
+        .def_readonly("blocks_read", &cache_status::blocks_read)
+        .def_readonly("blocks_read_hit", &cache_status::blocks_read_hit)
+        .def_readonly("reads", &cache_status::reads)
+        .def_readonly("cache_size", &cache_status::cache_size)
+        .def_readonly("read_cache_size", &cache_status::read_cache_size)
+    ;
+
     class_<session, boost::noncopyable>("session", no_init)
         .def(
             init<fingerprint, int>((
@@ -264,12 +275,14 @@ void bind_session()
         .def("start_natpmp", &start_natpmp)
         .def("stop_natpmp", allow_threads(&session::stop_natpmp))
         .def("set_ip_filter", allow_threads(&session::set_ip_filter))
+        .def("get_ip_filter", allow_threads(&session::get_ip_filter), return_value_policy<copy_const_reference>())
         .def("find_torrent", allow_threads(&session::find_torrent))
         .def("get_torrents", &get_torrents)
         .def("pause", allow_threads(&session::pause))
         .def("resume", allow_threads(&session::resume))
         .def("is_paused", allow_threads(&session::is_paused))
         .def("id", allow_threads(&session::id))
+        .def("get_cache_status", allow_threads(&session::get_cache_status))
         ;
 
     register_ptr_to_python<std::auto_ptr<alert> >();

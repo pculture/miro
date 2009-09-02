@@ -241,6 +241,8 @@ void upnp::resend_request(error_code const& e)
 {
 	if (e) return;
 
+	boost::intrusive_ptr<upnp> me(self());
+
 	mutex_t::scoped_lock l(m_mutex);
 
 	if (m_closing) return;
@@ -301,6 +303,8 @@ void upnp::resend_request(error_code const& e)
 void upnp::on_reply(udp::endpoint const& from, char* buffer
 	, std::size_t bytes_transferred)
 {
+	boost::intrusive_ptr<upnp> me(self());
+
 	mutex_t::scoped_lock l(m_mutex);
 
 	using namespace libtorrent::detail;
@@ -610,7 +614,9 @@ void upnp::create_port_mapping(http_connection& c, rootdevice& d, int i)
 		"<NewInternalPort>" << d.mapping[i].local_port << "</NewInternalPort>"
 		"<NewInternalClient>" << c.socket().local_endpoint(ec).address() << "</NewInternalClient>"
 		"<NewEnabled>1</NewEnabled>"
-		"<NewPortMappingDescription>" << m_user_agent << "</NewPortMappingDescription>"
+		"<NewPortMappingDescription>" << m_user_agent << " at " <<
+			c.socket().local_endpoint(ec).address() << ":" << to_string(d.mapping[i].local_port).elems
+			<< "</NewPortMappingDescription>"
 		"<NewLeaseDuration>" << d.lease_duration << "</NewLeaseDuration>";
 	soap << "</u:" << soap_action << "></s:Body></s:Envelope>";
 
@@ -641,6 +647,8 @@ void upnp::update_map(rootdevice& d, int i)
 	TORRENT_ASSERT(d.mapping.size() == m_mappings.size());
 
 	if (d.upnp_connection) return;
+
+	boost::intrusive_ptr<upnp> me(self());
 
 	mapping_t& m = d.mapping[i];
 
@@ -833,6 +841,8 @@ void upnp::on_upnp_xml(error_code const& e
 	, libtorrent::http_parser const& p, rootdevice& d
 	, http_connection& c)
 {
+	boost::intrusive_ptr<upnp> me(self());
+
 	mutex_t::scoped_lock l(m_mutex);
 
 	TORRENT_ASSERT(d.magic == 1337);
@@ -1026,6 +1036,8 @@ void upnp::on_upnp_map_response(error_code const& e
 	, libtorrent::http_parser const& p, rootdevice& d, int mapping
 	, http_connection& c)
 {
+	boost::intrusive_ptr<upnp> me(self());
+
 	mutex_t::scoped_lock l(m_mutex);
 
 	TORRENT_ASSERT(d.magic == 1337);
@@ -1182,6 +1194,8 @@ void upnp::on_upnp_unmap_response(error_code const& e
 	, libtorrent::http_parser const& p, rootdevice& d, int mapping
 	, http_connection& c)
 {
+	boost::intrusive_ptr<upnp> me(self());
+
 	mutex_t::scoped_lock l(m_mutex);
 
 	TORRENT_ASSERT(d.magic == 1337);
