@@ -66,7 +66,7 @@ if [ -d "../../../dtv-binary-kit-mac" ]; then
     PKG_DIR=$(pushd ../../../dtv-binary-kit-mac/sandbox >/dev/null; pwd; popd  >/dev/null)
 else
     echo "Could not find the required Mac binary kit which should be at $ROOT_DIR/dtv-binary-kit-mac"
-    echo "Please check it out first from the Subversion repository."
+    echo "Please check it out first from the repository."
     exit
 fi
 
