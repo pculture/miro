@@ -133,10 +133,9 @@ def write_simple_config_file(path, data):
     
     f.close()
 
-def query_revision(fn):
-    """Called at build-time to ask Subversion for the revision number of
-    this checkout.  Going to fail without Cygwin. Yeah, oh well.  Pass the
-    file or directory you want to use as a reference point.
+def query_revision():
+    """Called at build-time to ask git for the revision of this
+    checkout.
 
     Returns the (url, revision) on success and None on failure.
     """

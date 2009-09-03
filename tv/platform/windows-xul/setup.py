@@ -335,7 +335,7 @@ class install_data(distutils.command.install_data.install_data):
     def install_app_config(self):
         template = os.path.join(resources_dir, 'app.config.template')
         dest = os.path.join(self.install_dir, 'resources', 'app.config')
-        revision = util.query_revision(root_dir)
+        revision = util.query_revision()
         if revision is None:
             revision = "unknown"
             revisionurl = "unknown"

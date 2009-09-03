@@ -24,9 +24,9 @@ development-related links and information are located at::
 
    https://develop.participatoryculture.org/
 
-The latest source can be retrieved via Subversion from::
+The latest source can be retrieved via git from::
 
-   https://svn.participatoryculture.org/svn/dtv/trunk/tv
+   git clone https://git.participatoryculture.org/miro
 
 Release notes and changes are listed in the dev wiki at::
 
