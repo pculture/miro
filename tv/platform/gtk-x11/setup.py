@@ -702,7 +702,7 @@ class install_data(distutils.command.install_data.install_data):
         config_file = util.read_simple_config_file(source)
         print "Trying to figure out the git revision...."
         if config_file["appVersion"].endswith("git"):
-            revision = util.query_revision(root_dir)
+            revision = util.query_revision()
             if revision is None:
                 revision = "unknown"
                 revisionurl = "unknown"
