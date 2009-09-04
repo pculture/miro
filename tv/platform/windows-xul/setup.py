@@ -43,6 +43,7 @@ from distutils.core import Command
 import distutils.command.install_data
 from distutils.ccompiler import new_compiler
 
+
 ###############################################################################
 ## Paths and configuration                                                   ##
 ###############################################################################
@@ -147,7 +148,9 @@ widgets_dir = os.path.join(platform_package_dir, 'frontends', 'widgets')
 portable_dir = os.path.join(root_dir, 'portable')
 portable_widgets_dir = os.path.join(portable_dir, 'frontends', 'widgets')
 portable_xpcom_dir = os.path.join(portable_widgets_dir, 'gtk', 'xpcom')
+test_dir = os.path.join(root_dir, 'resources')
 resources_dir = os.path.join(root_dir, 'resources')
+
 sys.path.insert(0, root_dir)
 # when we install the portable modules, they will be in the miro package, but
 # at this point, they are in a package named "portable", so let's hack it
@@ -411,6 +414,28 @@ class bdist_miro(Command):
         dist_dir = self.get_finalized_command('py2exe').dist_dir
         self.copy_file("Miro.ico", os.path.join(dist_dir, "%s.ico" % template_vars['shortAppName']))
 
+class bdist_test(Command):
+    description = "Builds Miro with unit tests"
+
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        self.run_command('bdist_miro')
+        self.copy_test_data()
+
+    def copy_test_data(self):
+        # copy test data over
+        dist_dir = self.get_finalized_command('py2exe').dist_dir
+
+        self.copy_tree(os.path.join(resources_dir, 'testdata'),
+                       os.path.join(dist_dir, 'resources', 'testdata'))
+
 class runmiro(Command):
     description = "build Miro and start it up"
 
@@ -651,6 +676,11 @@ if __name__ == "__main__":
                 'dest_base': '%s_MovieData' % template_vars['shortAppName'],
                 'icon_resources': [(0, "Miro.ico")],
             },
+            {
+                'script': 'mirotest.py',
+                'dest_base': 'mirotest',
+                'icon_resources': [(0, "Miro.ico")],
+            }
         ],
         ext_modules=ext_modules,
         packages=[
@@ -660,6 +690,7 @@ if __name__ == "__main__":
             'miro.frontends',
             'miro.frontends.widgets',
             'miro.frontends.widgets.gtk',
+            'miro.test',
             'miro.plat',
             'miro.plat.renderers',
             'miro.plat.frontends',
@@ -675,6 +706,7 @@ if __name__ == "__main__":
             'install_data': install_data,
             'bdist_miro': bdist_miro,
             'bdist_nsis': bdist_nsis,
+            'bdist_test': bdist_test,
             'runmiro': runmiro,
         },
         options={
