@@ -163,9 +163,8 @@ class LiveStorage:
         except (KeyError, SystemError,
                 databaseupgrade.DatabaseTooNewError):
             raise
-        except sqlite3.OperationalError, e:
-            logging.exception('OperationalError when upgrading database: %s',
-                    e)
+        except sqlite3.OperationalError:
+            logging.exception('OperationalError when upgrading database: %s')
             raise UpgradeDiskSpaceError()
         except UpgradeDiskSpaceError:
             raise
@@ -437,6 +436,7 @@ class LiveStorage:
         try:
             self.cursor.execute(sql, values)
         except sqlite3.OperationalError, e:
+            logging.exception("operationalerror thrown.")
             self._handle_disk_full(e)
             self._queued_statements.append((sql, values))
             self._schedule_retry_statements()
@@ -522,6 +522,7 @@ class LiveStorage:
             try:
                 self.cursor.execute(sql, values)
             except sqlite3.OperationalError:
+                logging.exception("operationalerror thrown")
                 break
             exe_count += 1
         self._queued_statements = self._queued_statements[exe_count:]

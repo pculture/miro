@@ -26,23 +26,22 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from base64 import b64encode
-from miro.gtcache import gettext as _
 import os
+import random
+import logging
+from base64 import b64encode
 
+from miro.gtcache import gettext as _
 from miro.database import DDBObject, ObjectNotFoundError
 from miro.dl_daemon import daemon, command
 from miro.download_utils import nextFreeFilename, getFileURLPath, filterDirectoryName
 from miro.util import get_torrent_info_hash, returnsUnicode, checkU, returnsFilename, unicodify, checkF, toUni
-# from miro import app
 from miro import config
 from miro import dialogs
 from miro import httpclient
 from miro import prefs
-import random
 from miro.plat.utils import samefile, FilenameType, unicodeToFilename
 from miro import flashscraper
-import logging
 from miro import fileutil
 
 daemon_starter = None
@@ -240,13 +239,14 @@ class RemoteDownloader(DDBObject):
         self = get_downloader_by_dlid(dlid=data['dlid'])
         # print data
         if self is not None:
+            # FIXME - this should get fixed.
             try:
                 if self.status == data:
                     return
-            except Exception, e:
+            except Exception:
                 # This is a known bug with the way we used to save fast resume
                 # data
-                print "WARNING exception when comparing status: %s" % e
+                logging.exception("RemoteDownloader.update_status: exception when comparing status")
 
             wasFinished = self.isFinished()
             old_filename = self.get_filename()
@@ -289,7 +289,7 @@ class RemoteDownloader(DDBObject):
             self.contentType = contentType
         if url is not None:
             self.url = url
-            logging.debug("downloading url %s" % self.url)
+            logging.debug("downloading url %s", self.url)
             c = command.StartNewDownloadCommand(RemoteDownloader.dldaemon,
                                                 self.url, self.dlid, self.contentType, self.channelName)
             c.send()
@@ -595,7 +595,7 @@ URL was %s""" % self.url
             return
         if self.get_state() not in (u'finished', u'uploading-paused'):
             logging.warn("called startUpload when downloader state "
-                        "is: %s", self.get_state())
+                         "is: %s", self.get_state())
             return
         self.manualUpload = True
         if _downloads.has_key(self.dlid):
