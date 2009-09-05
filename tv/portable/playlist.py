@@ -88,7 +88,7 @@ class PlaylistMixin:
         """Remove an item from the playlist."""
         try:
             self.MapClass.remove_item_id(self.id, item_id)
-        except playlist.ObjectNotFoundError:
+        except database.ObjectNotFoundError:
             # if the item isn't in the playlist, then we move along
             # because there's nothing to change.
             return
