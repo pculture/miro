@@ -84,4 +84,9 @@ def _send_message(stage, stage_progress, total_progress):
             total_progress).send_to_frontend()
 
 def _calc_progress(start, current, end):
+    total = end - start
+    # if total is 0.0 or less, then we return 0.0 to avoid the
+    # ZeroDivisionError.  this happens in unit testing.
+    if total <= 0.0:
+        return 0.0
     return float(current - start) / (end - start)
