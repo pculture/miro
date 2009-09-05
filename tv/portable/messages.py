@@ -97,7 +97,6 @@ class MessageHandler(object):
 class Message(object):
     """Base class for all Messages.
     """
-
     @classmethod
     def install_handler(cls, handler):
         """Install a new message handler for this class.  When
@@ -105,6 +104,10 @@ class Message(object):
         be invoked.
         """
         cls.handler = handler
+
+    @classmethod
+    def reset_handler(cls):
+        del cls.handler
 
 class BackendMessage(Message):
     """Base class for Messages that get sent to the backend.
@@ -120,7 +123,6 @@ class BackendMessage(Message):
 class FrontendMessage(Message):
     """Base class for Messages that get sent to the frontend.
     """
-
     def send_to_frontend(self):
         try:
             handler = self.handler
