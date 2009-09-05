@@ -57,14 +57,9 @@ class FolderBase(DDBObject):
             child.signal_change(needsSave=False)
 
     def remove(self, moveItemsTo=None):
-        children = list(self.getChildrenView())
-        for child in children:
-            if child.is_watched_folder():
-                child.setVisible(False) # just hide watched folders
-                child.set_folder(None)
-            else:
-                child.remove(moveItemsTo)
-        DDBObject.remove(self)
+        """Remove this folder and children.
+        """
+        raise NotImplementedError()
 
     # get_folder and set_folder are here so that channels/playlists and folders
     # have a consistent API.  They don't do much since we don't allow nested
@@ -93,6 +88,16 @@ class ChannelFolder(FolderBase):
         self.itemSort = sorts.ItemSort()
         self.itemSortDownloading = sorts.ItemSort()
         self.itemSortWatchable = sorts.ItemSortUnwatchedFirst()
+
+    def remove(self, moveItemsTo=None):
+        children = list(self.getChildrenView())
+        for child in children:
+            if child.is_watched_folder():
+                child.setVisible(False) # just hide watched folders
+                child.set_folder(None)
+            else:
+                child.remove(moveItemsTo)
+        DDBObject.remove(self)
 
     @classmethod
     def video_view(cls):
@@ -173,6 +178,12 @@ class PlaylistFolderItemMap(playlist.PlaylistItemMap):
 
 class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
     MapClass = PlaylistFolderItemMap
+
+    def remove(self, moveItemsTo=None):
+        children = list(self.getChildrenView())
+        for child in children:
+            child.remove(moveItemsTo)
+        DDBObject.remove(self)
 
     def getChildrenView(self):
         return playlist.SavedPlaylist.folder_view(self.id)
