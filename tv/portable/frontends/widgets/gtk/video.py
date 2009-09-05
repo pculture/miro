@@ -316,6 +316,7 @@ class VideoDetailsWidget(Background):
 
     def handle_keep(self, widget):
         messages.KeepVideo(self.item_info.id).send_to_backend()
+        self._widget.window.set_cursor(None)
 
     def handle_delete(self, widget):
         item_info = self.item_info
