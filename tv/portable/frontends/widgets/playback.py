@@ -326,7 +326,8 @@ class PlaybackManager (signals.SignalEmitter):
     def seek_to(self, progress):
         self.player.seek_to(progress)
         total = self.player.get_total_playback_time()
-        self.emit('playback-did-progress', progress * total, total)
+        if total is not None:
+            self.emit('playback-did-progress', progress * total, total)
 
     def on_movie_finished(self):
         self.update_current_resume_time(0)
