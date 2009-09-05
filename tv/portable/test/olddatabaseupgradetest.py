@@ -20,6 +20,10 @@ from miro.plat.utils import FilenameType
 
 from miro.test.framework import EventLoopTest, MiroTestCase
 
+class FakeHandler:
+    def handle(self, msg):
+        pass
+
 class Test20DatabaseConvert(MiroTestCase):
     """Test converting from a 2.0 database to a 2.1 database."""
 
@@ -39,7 +43,8 @@ class Test20DatabaseConvert(MiroTestCase):
         db_table_names = set(row[0] for row in self.cursor)
         for os in schemav79.objectSchemas:
             table_name = os.classString.replace('-', '_')
-            self.assert_(table_name in db_table_names)
+            self.assert_(table_name in db_table_names,
+                         "%s not in %s" % (table_name, db_table_names))
 
     def _get_column_names(self, table_name):
         self.cursor.execute('pragma table_info(%s)' % table_name)
@@ -128,7 +133,10 @@ class Test20DatabaseConvert(MiroTestCase):
         self.check_data_migrated()
 
     def test_conversion(self):
+        from miro import messages
+        messages.FrontendMessage.install_handler(FakeHandler())
         self.one_test("olddatabase.v79")
+        messages.FrontendMessage.reset_handler()
 
     def test_conversion_with_upgrade(self):
         self.one_test("olddatabase.v78")
