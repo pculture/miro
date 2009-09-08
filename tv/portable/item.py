@@ -786,7 +786,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     @returnsUnicode
     def get_feed_url(self):
         if self.feed_id is not None:
-            return self.get_feed().get_url()
+            try:
+                return self.get_feed().get_url()
+            except ObjectNotFoundError:
+                return None
         else:
             return None
 
@@ -797,7 +800,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             if feed_.origURL != 'dtv:manualFeed':
                 return feed_.get_title()
         if self.has_parent():
-            return self.get_parent().get_title()
+            try:
+                return self.get_parent().get_title()
+            except ObjectNotFoundError:
+                return None
         return None
 
     def getChildren(self):

@@ -208,7 +208,7 @@ def get_cookie_expiration_date(val):
         except ValueError, ve:
             pass
 
-    print "DTV: Warning: Can't process cookie expiration: '%s'" % val
+    logging.warning("DTV: Warning: Can't process cookie expiration: '%s'", val)
     return 0
 
 
@@ -468,8 +468,8 @@ class AsyncSocket(object):
         else:
             expectedErrors = (errno.ECONNREFUSED, errno.ECONNRESET)
         if code not in expectedErrors:
-            print "WARNING, got unexpected error during %s" % operation
-            print "%s: %s" % (errno.errorcode.get(code), msg)
+            logging.warning("WARNING, got unexpected error during %s", operation)
+            logging.warning("%s: %s", errno.errorcode.get(code), msg)
         self.handleEarlyClose(operation)
 
     def onWriteReady(self):
@@ -504,10 +504,10 @@ class AsyncSocket(object):
             # read.
             self.memoryErrors += 1
             if self.memoryErrors > self.MEMORY_ERROR_LIMIT:
-                print "ERROR: Too many MemoryErrors on %s" % self
+                logging.error("ERROR: Too many MemoryErrors on %s", self)
                 self.handleEarlyClose('read')
             else:
-                print "WARNING: Memory error while reading from %s" % self
+                logging.warning("WARNING: Memory error while reading from %s", self)
         else:
             self.memoryErrors = 0
             self.handleReadData(data)
@@ -1054,7 +1054,7 @@ class HTTPConnection(ConnectionHandler):
         value = value.strip()
         header = header.lstrip().lower()
         if value == '':
-            print "DTV: Warning: Bad Header from %s://%s:%s%s (%s)" % (self.scheme, self.host, self.port, self.path, line)
+            logging.debug("DTV: Warning: Bad Header from %s://%s:%s%s (%s)", self.scheme, self.host, self.port, self.path, line)
         if header not in self.headers:
             self.headers[header] = value
         else:
@@ -1257,8 +1257,8 @@ class HTTPConnectionPool(object):
             conns['free'].remove(conn)
             self.freeConnectionCount -= 1
         else:
-            logging.warn("_onConnectionClosed called with connection not "
-                    "in either queue")
+            logging.warning("_onConnectionClosed called with connection not "
+                            "in either queue")
         self.runPendingRequests()
 
     def _onConnectionReady(self, conn):
@@ -1267,14 +1267,14 @@ class HTTPConnectionPool(object):
             conns['active'].remove(conn)
             self.activeConnectionCount -= 1
         else:
-            logging.warn("_onConnectionReady called with connection not "
-                    "in the active queue")
+            logging.warning("_onConnectionReady called with connection not "
+                            "in the active queue")
         if conn not in conns['free']:
             conns['free'].add(conn)
             self.freeConnectionCount += 1
         else:
-            logging.warn("_onConnectionReady called with connection already "
-                    "in the free queue")
+            logging.warning("_onConnectionReady called with connection already "
+                            "in the free queue")
         self.runPendingRequests()
 
     def addRequest(self, callback, errback, requestStartCallback,
@@ -1600,7 +1600,7 @@ class HTTPClient(object):
 
     def callbackIntercept(self, response):
         if self.cancelled:
-            print "WARNING: Callback on a cancelled request for %s" % self.url
+            logging.warning("WARNING: Callback on a cancelled request for %s", self.url)
             traceback.print_stack()
             return
         if self.shouldRedirect(response):
@@ -1673,7 +1673,7 @@ class HTTPClient(object):
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
-            print "ERROR in getCookiesFromResponse()"
+            logging.error("ERROR in getCookiesFromResponse()")
             traceback.print_exc()
         return response
 

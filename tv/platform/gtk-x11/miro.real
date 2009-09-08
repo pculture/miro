@@ -130,6 +130,8 @@ from miro import commandline
 if '--unittest' in sys.argv:
     # handle this outside optparse, because unittest has its own option set
     sys.argv.remove('--unittest')
+    import logging
+    logging.basicConfig(level=logging.CRITICAL)
     import unittest
     from miro import test
     unittest.main(module=test)
