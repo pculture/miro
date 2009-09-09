@@ -985,6 +985,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
         self.migration_progress_dialog = None
         self.dbupgrade_progress_dialog = None
 
+    def handle_frontend_quit(self, message):
+        app.widgetapp.do_quit()
+
     def handle_database_upgrade_start(self, message):
         if self.dbupgrade_progress_dialog is None:
             self.dbupgrade_progress_dialog = dialogs.DBUpgradeProgressDialog(

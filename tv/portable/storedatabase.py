@@ -66,6 +66,7 @@ from miro import databaseupgrade
 from miro import dbupgradeprogress
 from miro import dialogs
 from miro import eventloop
+from miro import messages
 from miro import schema
 from miro import prefs
 from miro import util
@@ -129,8 +130,7 @@ class LiveStorage:
         self._query_times = {}
         self.path = path
         self.open_connection()
-        self.error_state = False
-        self._queued_statements = []
+        self._quitting_from_operational_error = False
         self._object_schemas = object_schemas
         self._schema_version = schema_version
         self._schema_map = {}
@@ -428,58 +428,66 @@ class LiveStorage:
         return self._execute(sql.getvalue(), values)
 
     def _execute(self, sql, values, is_update=False):
-        if is_update and self.error_state:
-            self._queued_statements.append((sql, values))
+        if is_update and self._quitting_from_operational_error:
+            # We want to avoid updating the database at this point.
             return
+
         if values is None:
             values = ()
-        start = time.time()
-        if is_update:
-            self._execute_update(sql, values)
-            rv = None
-        else:
-            self.cursor.execute(sql, values)
-            rv = self.cursor.fetchall()
-        end = time.time()
-        self._check_time(sql, end-start)
-        return rv
 
-    def _execute_update(self, sql, values):
-        try:
-            self.cursor.execute(sql, values)
-        except sqlite3.OperationalError, e:
-            self._handle_disk_full(e)
-            self._queued_statements.append((sql, values))
-            self._schedule_retry_statements()
-        else:
-            self._handle_disk_not_full()
-
-    def _handle_disk_full(self, exc):
-        if not self.error_state:
-            self.error_state = True
-            title = _("%(appname)s database save failed",
-                      {"appname": config.get(prefs.SHORT_APP_NAME)})
-            description = _(
-                "%(appname)s was unable to save its database: Disk Full.\n"
-                "We suggest deleting files from the full disk or simply deleting "
-                "some movies from your collection.\n"
-                "Recent changes may be lost.",
-                {"appname": config.get(prefs.SHORT_APP_NAME)}
-            )
-            dialogs.MessageBoxDialog(title, description).run()
-            logging.warn("SQL Operational Error: %s", exc)
-
-    def _handle_disk_not_full(self):
-        if self.error_state:
-            self.error_state = False
+        failed = False
+        while True:
+            try:
+                self._time_execute(sql, values)
+            except sqlite3.OperationalError, e:
+                if not is_update and self._quitting_from_operational_error:
+                    # This is a very bad state to be in because code calling
+                    # us expects a return value.  I think the best we can do
+                    # is re-raise the exception (BDK)
+                    raise
+                failed = True
+                logging.exception("OperationalError thrown.\n"
+                        "statement: %s\n\n%s\n\n", sql, values)
+                self._handle_operational_error()
+                if self._quitting_from_operational_error:
+                    break
+            else:
+                break
+        if failed and not self._quitting_from_operational_error:
             title = _("%(appname)s database save succeeded",
                       {"appname": config.get(prefs.SHORT_APP_NAME)})
-            description = _(
-                "The database has been successfully saved. It is now safe to quit "
-                "without losing any data."
-            )
+            description = _("The database has been successfully saved. "
+                    "It is now safe to quit without losing any data.")
             dialogs.MessageBoxDialog(title, description).run()
+        if is_update:
+            return None
+        else:
+            return self.cursor.fetchall()
 
+    def _time_execute(self, sql, values):
+        start = time.time()
+        self.cursor.execute(sql, values)
+        end = time.time()
+        self._check_time(sql, end-start)
+
+    def _handle_operational_error(self):
+        title = _("%(appname)s database save failed",
+                  {"appname": config.get(prefs.SHORT_APP_NAME)})
+        description = _(
+            "%(appname)s was unable to save its database: Disk Full.\n"
+            "We suggest deleting files from the full disk or "
+            "simply deleting some movies from your collection.\n"
+            "Recent changes may be lost.",
+            {"appname": config.get(prefs.SHORT_APP_NAME)}
+        )
+        d = dialogs.ChoiceDialog(title, description,
+                dialogs.BUTTON_RETRY, dialogs.BUTTON_QUIT)
+        choice = d.run_blocking()
+        if choice == dialogs.BUTTON_QUIT:
+            self._quitting_from_operational_error = True
+            messages.FrontendQuit().send_to_frontend()
+        else:
+            logging.warn("Re-running SQL statement")
 
     def _check_time(self, sql, query_time):
         SINGLE_QUERY_LIMIT = 0.5
@@ -504,38 +512,6 @@ class LiveStorage:
         if cumulative > CUMULATIVE_LIMIT:
             logging.timing('query cumulatively slow: %0.2f '
                     '(%0.03f): %s', cumulative, query_time, sql)
-
-    def _schedule_retry_statements(self):
-        if self._dc is None:
-            self._dc = eventloop.addTimeout(1.0, self._retry_statements,
-                    'retry statements')
-
-    def _retry_statements(self):
-        self._execute_queued_statements()
-        if len(self._queued_statements) == 0:
-            self._handle_disk_not_full()
-        self._dc = None
-        if self.error_state:
-            self._schedule_retry_statements()
-
-    def _execute_queued_statements(self):
-        """Execute as many queued statements as possible.
-
-        Statements get queued because we receive an OperationalError from
-        SQLite.  As far as I can tell (BDK) this means that the disk is full.
-        Our basic strategy to handle this is to wait a while, then re-try
-        executing statements.  If the disk got un-full, hopefully we can now
-        execute them without exceptions.
-        """
-
-        exe_count = 0
-        for sql, values in self._queued_statements:
-            try:
-                self.cursor.execute(sql, values)
-            except sqlite3.OperationalError:
-                break
-            exe_count += 1
-        self._queued_statements = self._queued_statements[exe_count:]
 
     def _init_database(self):
         """Create a new empty database."""
