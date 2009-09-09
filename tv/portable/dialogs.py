@@ -68,6 +68,8 @@ Frontend requirements:
     them.  
 """
 
+import threading
+
 from miro import eventloop
 from miro import signals
 from miro.gtcache import gettext as _
@@ -114,6 +116,7 @@ BUTTON_OPEN_IN_EXTERNAL_BROWSER = DialogButton(_("Open in External Browser"))
 BUTTON_DONT_INSTALL = DialogButton(_("Don't Install"))
 BUTTON_SUBSCRIBE = DialogButton(_("Subscribe"))
 BUTTON_STOP_WATCHING = DialogButton(_("Stop Watching"))
+BUTTON_RETRY = DialogButton(_("Retry"))
 
 class Dialog(object):
     """Abstract base class for dialogs."""
@@ -122,11 +125,21 @@ class Dialog(object):
         self.title = title
         self.description = description
         self.buttons = buttons
+        self.event = threading.Event()
 
     def run(self, callback):
         self.callback = callback
         self.choice = None
         signals.system.new_dialog(self)
+
+    def run_blocking(self):
+        """Run the dialog, blocking for a response from the frontend.
+
+        Returns the user's choice.
+        """
+        self.run(None)
+        self.event.wait()
+        return self.choice
 
     def runCallback(self, choice):
         """Run the callback for this dialog.  Choice should be the button that
@@ -135,8 +148,10 @@ class Dialog(object):
         """
 
         self.choice = choice
-        eventloop.addUrgentCall(self.callback, "%s callback" % self.__class__, 
-                args=(self,))
+        self.event.set()
+        if self.callback is not None:
+            eventloop.addUrgentCall(self.callback,
+                    "%s callback" % self.__class__, args=(self,))
 
 class MessageBoxDialog(Dialog):
     """Show the user some info in a dialog box.  The only button is Okay.  The

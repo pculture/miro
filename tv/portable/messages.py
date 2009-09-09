@@ -771,6 +771,10 @@ class QueryFrontendState(BackendMessage):
 
 # Frontend Messages
 
+class FrontendQuit(FrontendMessage):
+    """The frontend should exit."""
+    pass
+
 class DatabaseUpgradeStart(FrontendMessage):
     """We're about to do a database upgrade.
     """
