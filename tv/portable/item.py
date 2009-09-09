@@ -643,6 +643,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if not isinstance(self, FileItem) and (self.downloader is None or not self.downloader.isFinished()):
             return False
         filename_root = self.get_filename()
+        if filename_root is None:
+            return False
         if fileutil.isdir(filename_root):
             child_paths = self._find_child_paths()
             if len(child_paths) > 0:
@@ -1584,10 +1586,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @returnsFilename
     def get_filename(self):
-        if self.filename is not None:
-            return self.filename
-        else:
-            return FilenameType('')
+        return self.filename
 
     def is_video_file(self):
         return self.isContainerItem != True and filetypes.is_video_filename(self.get_filename())
