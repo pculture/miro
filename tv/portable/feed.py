@@ -634,6 +634,9 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             next.download(autodl = True)
 
     def expiring_items(self):
+        # items in watched folders never expire
+        if self.is_watched_folder():
+            return []
         if self.expire == u'never':
             return []
         elif self.expire == u'system':
@@ -646,7 +649,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         return models.Item.feed_expiring_view(self.id, datetime.now() - delta)
 
     def expire_items(self):
-        """Returns marks expired items as expired
+        """Expires items from the feed that are ready to expire.
         """
         for item in self.expiring_items():
             item.expire()
@@ -656,7 +659,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             item.signal_change(needsSave=False)
 
     def icon_changed(self):
-        """See item.get_thumbnail to figure out which items to send signals for.
+        """See item.get_thumbnail to figure out which items to send
+        signals for.
         """
         self.signal_change(needsSave=False)
         for item in self.items:
