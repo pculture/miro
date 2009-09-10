@@ -67,19 +67,19 @@ _command_line_view = None
 def add_video(path, single=False):
     path = os.path.abspath(path)
     for i in item.Item.make_view():
-        itemFilename = i.get_filename()
-        if (itemFilename != '' and
-                os.path.exists(itemFilename) and
-                samefile(itemFilename, path)):
+        item_filename = i.get_filename()
+        if ((item_filename and
+             os.path.exists(item_filename) and
+             samefile(item_filename, path))):
             logging.warn("Not adding duplicate video: %s" % path.decode('ascii', 'ignore'))
             if _command_line_videos is not None:
                 _command_line_videos.add(i)
             return
     correctFeed = feed.Feed.get_manual_feed()
-    fileItem = item.FileItem(path, feed_id=correctFeed.getID())
-    fileItem.mark_item_seen()
+    file_item = item.FileItem(path, feed_id=correctFeed.getID())
+    file_item.mark_item_seen()
     if _command_line_videos is not None:
-        _command_line_videos.add(fileItem)
+        _command_line_videos.add(file_item)
 
 
 def add_torrent(path, torrentInfohash):

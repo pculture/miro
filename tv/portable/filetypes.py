@@ -89,6 +89,8 @@ def is_video_filename(filename):
     Pass a filename to this method and it will return a boolean
     saying if the filename represents a video file.
     """
+    if not filename:
+        return False
     filename = filename.lower()
     for ext in VIDEO_EXTENSIONS:
         if filename.endswith(ext):
@@ -100,6 +102,8 @@ def is_audio_filename(filename):
     Pass a filename to this method and it will return a boolean
     saying if the filename represents an audio file.
     """
+    if not filename:
+        return False
     filename = filename.lower()
     for ext in AUDIO_EXTENSIONS:
         if filename.endswith(ext):
@@ -115,6 +119,8 @@ def is_torrent_filename(filename):
     Pass a filename to this method and it will return a boolean
     saying if the filename represents a torrent file.
     """
+    if not filename:
+        return False
     filename = filename.lower()
     return filename.endswith('.torrent')
 
@@ -123,6 +129,8 @@ def is_feed_filename(filename):
     Pass a filename to this method and it will return a boolean saying if the
     filename possibly represents an Atom or RSS feed URL.
     """
+    if not filename:
+        return False
     filename = filename.lower()
     for ext in FEED_EXTENSIONS:
         if filename.endswith(ext):

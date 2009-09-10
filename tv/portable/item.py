@@ -609,6 +609,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def _make_new_children(self, paths):
         filename_root = self.get_filename()
+        if filename_root is None:
+            logging.error("Item._make_new_children: get_filename here is None")
+            return
         for path in paths:
             assert path.startswith(filename_root)
             offsetPath = path[len(filename_root):]
@@ -684,7 +687,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         searchString = searchString.lower()
         title = self.get_title() or u''
         desc = self.get_raw_description() or u''
-        filename = filenameToUnicode(self.get_filename()) or u''
+        if self.get_filename():
+            filename = filenameToUnicode(self.get_filename())
+        else:
+            filename = u''
         if search.match(searchString, [title.lower(), desc.lower(), filename.lower()]):
             return True
         else:
@@ -859,8 +865,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 if self.isContainerItem:
                     for item in self.getChildren():
                         item.make_deleted()
-                else:
-                    FileItem(self.get_filename(), feed_id=self.feed_id, parent_id=self.parent_id, deleted=True)
+                elif self.get_filename():
+                    FileItem(self.get_filename(), feed_id=self.feed_id,
+                             parent_id=self.parent_id, deleted=True)
                 if self.has_downloader():
                     self.downloader.set_delete_files(False)
             self.remove()
@@ -1177,14 +1184,13 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """
         if self.title:
             return self.title
-        else:
-            if self.is_external() and self.is_downloaded_torrent():
+        if self.is_external() and self.is_downloaded_torrent():
+            if self.get_filename() is not None:
                 basename = os.path.basename(self.get_filename())
                 return filenameToUnicode(basename + os.path.sep)
-            if self.entry_title is not None:
-                return self.entry_title
-            else:
-                return _('no title')
+        if self.entry_title is not None:
+            return self.entry_title
+        return _('no title')
 
     def set_title(self, s):
         self.confirm_db_thread()
@@ -1428,6 +1434,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         3. RSS enclosure tag value
         """
         if self.is_downloaded():
+            if self.get_filename() is None:
+                return 0
             try:
                 fname = self.get_filename()
                 return os.path.getsize(fname)
@@ -1642,14 +1650,16 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     downloader = property(_get_downloader)
 
     def fix_incorrect_torrent_subdir(self):
-        """Up to revision 6257, torrent downloads were incorrectly being created in
-        an extra subdirectory.  This method "migrates" those torrent downloads to
-        the correct layout.
+        """Up to revision 6257, torrent downloads were incorrectly
+        being created in an extra subdirectory.  This method migrates
+        those torrent downloads to the correct layout.
 
         from: /path/to/movies/foobar.mp4/foobar.mp4
         to:   /path/to/movies/foobar.mp4
         """
         filenamePath = self.get_filename()
+        if filenamePath is None:
+            return
         if fileutil.isdir(filenamePath):
             enclosedFile = os.path.join(filenamePath, os.path.basename(filenamePath))
             if fileutil.exists(enclosedFile):
@@ -1819,7 +1829,7 @@ class FileItem(Item):
         self.confirm_db_thread()
         if self.parent_id:
             parent = self.get_parent()
-            self.filename = os.path.join (parent.get_filename(), self.offsetPath)
+            self.filename = os.path.join(parent.get_filename(), self.offsetPath)
             return
         if self.shortFilename is None:
             logging.warn("""\

@@ -74,10 +74,12 @@ class MovieDataInfo:
     * Path to the thumbnail we're trying to make.
     * List of commands that we're trying to run, and their environments.
     """
-
     def __init__(self, item):
         self.item = item
         self.videoPath = item.get_filename()
+        if self.videoPath is None:
+            self.programInfo = None
+            return
         # add a random string to the filename to ensure it's unique.  Two
         # videos can have the same basename if they're in different
         # directories.
@@ -88,8 +90,9 @@ class MovieDataInfo:
         self.programInfo = None
         if hasattr(app, 'in_unit_tests'):
             return
-        commandLine, env = movie_data_program_info(
-                fileutil.expand_filename(self.videoPath), fileutil.expand_filename(self.thumbnailPath))
+        videopath = fileutil.expand_filename(self.videoPath)
+        thumbnailpath = fileutil.expand_filename(self.thumbnailPath)
+        commandLine, env = movie_data_program_info(videopath, thumbnailpath)
         self.programInfo = (commandLine, env)
 
 class MovieDataUpdater:

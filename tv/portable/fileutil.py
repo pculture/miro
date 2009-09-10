@@ -42,10 +42,14 @@ def makedirs(path):
     return os.makedirs(path)
 
 def isfile(path):
+    if not path:
+        return False
     path = expand_filename(path)
     return os.path.isfile(path)
 
 def isdir(path):
+    if not path:
+        return False
     path = expand_filename(path)
     return os.path.isdir(path)
 
@@ -62,6 +66,8 @@ def getmtime(path):
     return os.path.getmtime(path)
 
 def exists(path):
+    if not path:
+        return False
     path = expand_filename(path)
     return os.path.exists(path)
 
