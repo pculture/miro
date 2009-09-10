@@ -2184,7 +2184,8 @@ class DirectoryWatchFeedImpl(FeedImpl):
                     models.FileItem(file_, feed_id=self.ufeed.id)
 
         for item in self.items:
-            if not fileutil.isfile(item.get_filename()):
+            if ((item.get_filename() is None
+                 or not fileutil.isfile(item.get_filename()))):
                 item.remove()
         if self.firstUpdate:
             for item in self.items:
@@ -2262,7 +2263,8 @@ class DirectoryFeedImpl(FeedImpl):
                     models.FileItem(file_, feed_id=self.ufeed.id)
 
         for item in self.items:
-            if not fileutil.exists(item.get_filename()):
+            if ((item.get_filename() is None
+                 or not fileutil.exists(item.get_filename()))):
                 item.remove()
 
         self.scheduleUpdateEvents(-1)
