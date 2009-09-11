@@ -53,6 +53,7 @@ class Renderer:
         self.xine = xine.Xine()
         self._playing = False
         self._volume = 0
+        self.xine.set_eos_callback(self.on_eos)
 
     def on_eos(self):
         # on_eos gets called by one of the xine threads, so we want to switch
@@ -134,7 +135,6 @@ class Renderer:
 class VideoRenderer(Renderer):
     def __init__(self):
         Renderer.__init__(self)
-        self.xine.set_eos_callback(self.on_eos)
         self.driver = config.get(options.XINE_DRIVER)
         logging.info("Xine video driver: %s", self.driver)
 
