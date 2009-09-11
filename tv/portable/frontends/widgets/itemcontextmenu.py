@@ -90,9 +90,14 @@ class ItemContextMenuHandler(object):
             def play_and_stop():
                 app.playback_manager.start_with_items([item])
 
+            def play_externally():
+                app.widgetapp.open_file(item.video_path)
+                messages.MarkItemWatched(item.id).send_to_backend()
+
             menu = [
                 (_('Play'), app.widgetapp.play_selection),
                 (_('Play Just This Item'), play_and_stop),
+                (_('Play Externally'), play_externally),
                 (_('Add to Playlist'), app.widgetapp.add_to_playlist),
             ]
             self._add_remove_context_menu_item(menu, [item])
