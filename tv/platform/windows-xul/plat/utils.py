@@ -79,46 +79,58 @@ def get_available_bytes_for_movies():
 #############################################################################
 # Windows specific locale                                                   #
 #############################################################################
+# see Language Identifier Constants and Strings (Windows):
+# http://msdn.microsoft.com/en-us/library/dd318693%28VS.85%29.aspx
 _langs = {
-0x401: "ar",
-0x416: "pt_BR",
-0x804: "zh_CN", # Chinese simplified
-0x404: "zh_TW", # Chinese traditional
-0x405: "cs",
-0x406: "da",
-0x413: "nl",
-#0x409: "en",  # This is the default. Don't bother with gettext in that case
-0x40b: "fi",
-0x40c: "fr",
-0x407: "de",
-0x408: "el",
-0x40d: "he",
-0x40e: "hu",
-0x410: "it",
-0x411: "jp",
-0x412: "ko",
-0x414: "nb",
-0x415: "pl",
-0x816: "pt",
-0x419: "ru",
-0xc0a: "es",
-0x41D: "sv",
-0x41f: "tr",
+    0x401: "ar",
+    0x404: "zh_TW", # Chinese traditional
+    0x405: "cs",
+    0x406: "da",
+    0x407: "de",
+    0x408: "el",
+    0x409: "en",
+    0x40b: "fi",
+    0x40c: "fr",
+    0x40d: "he",
+    0x40e: "hu",
+    0x410: "it",
+    0x411: "jp",
+    0x412: "ko",
+    0x413: "nl",
+    0x414: "nb",
+    0x415: "pl",
+    0x416: "pt_BR",
+    0x419: "ru",
+    0x41d: "sv",
+    0x41f: "tr",
+    0x804: "zh_CN", # Chinese simplified
+    0x816: "pt",
+    0xc0a: "es",
 }
 
-def _getLocale():
+def _get_locale():
+    # allows you to override the language using the MIRO_LANGUAGE
+    # environment variable
+    if os.environ.get("MIRO_LANGUAGE"):
+        return os.environ["MIRO_LANGUAGE"]
+
+    # see GetUserDefaultUILanguage Function:
+    # http://msdn.microsoft.com/en-us/library/dd318137%28VS.85%29.aspx
+    #
+    # see User Interface Language Management (Windows):
+    # http://msdn.microsoft.com/en-us/library/dd374098%28VS.85%29.aspx
     code = ctypes.windll.kernel32.GetUserDefaultUILanguage()
     try:
         return _langs[code]
-
-    # Hmmmmm, we don't know the language for this code
-    except:
-        logging.warning("Don't know what locale to choose for code '%s'", code)
-        return None
+    except KeyError:
+        # we don't know the language for this code
+        logging.warning("Don't know what locale to choose for code '%s' (%s)", 
+                        code, hex(code))
+    return None
 
 def initializeLocale():
     global localeInitialized
-    lang = _getLocale()
+    lang = _get_locale()
     if lang is not None:
         os.environ["LANGUAGE"] = lang
     localeInitialized = True
