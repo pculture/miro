@@ -642,11 +642,12 @@ HELLO: WORLD\r\n""")
         self.assert_(self.sawError)
 
     def testHeaderContinuation(self):
-        self.testRequest.handleData("HTTP/1.0 200 OK\r\n")
-        self.testRequest.handleData("Cont\r\n")
-        self.testRequest.handleData(" ent-Type: text/plain\r\n")
-        self.assertEquals(self.testRequest.headers['content-type'],
-                'text/plain')
+        self.testRequest.handleData("HTTP/1.1 200 OK\r\n")
+        self.testRequest.handleData("x-test-wrapped: one\r\n")
+        self.testRequest.handleData(" two\r\n")
+        self.testRequest.handleData("\r\n")
+        self.assertEquals(self.testRequest.headers['x-test-wrapped'],
+                'one two')
 
     def testHeaderJoin(self):
         self.testRequest.handleData("HTTP/1.0 200 OK\r\n")

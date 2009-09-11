@@ -1026,28 +1026,24 @@ class HTTPConnection(ConnectionHandler):
             self.reason = reason
 
     def handleHeaderLine(self, line):
-        if self.unparsedHeaderLine == '':
+        # "unfold" the continuation of a header
+        if len(line) > 0 and line[0] in (' ', '\t'):
+            self.unparsedHeaderLine += line
+        else:
+            # this line is not a continuation, so parse the last line
+            if self.unparsedHeaderLine != '':
+                if ':' in self.unparsedHeaderLine:
+                    self.parseHeader(self.unparsedHeaderLine)
+                else:
+                    msg = "HTTP header line without colon: %s" % \
+                            self.unparsedHeaderLine
+                    self.handleError(BadHeaderLine(msg))
             if line == '':
                 if self.status != 100:
                     self.startBody()
                 else:
                     self.changeState('response-status')
-            elif ':' in line:
-                self.parseHeader(line)
-            else:
-                self.unparsedHeaderLine = line
-        else:
-            # our last line may have been a continued header, or it may be
-            # garbage, 
-            if len(line) > 0 and line[0] in (' ', '\t'):
-                self.unparsedHeaderLine += line.lstrip()
-                if ':' in self.unparsedHeaderLine:
-                    self.parseHeader(self.unparsedHeaderLine)
-                    self.unparsedHeaderLine = ''
-            else:
-                msg = "line: %s, next line: %s" % (self.unparsedHeaderLine, 
-                        line)
-                self.handleError(BadHeaderLine(msg))
+            self.unparsedHeaderLine = line
 
     def parseHeader(self, line):
         header, value = line.split(":", 1)
