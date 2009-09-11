@@ -247,46 +247,31 @@ class VideoDetailsWidget(Background):
             outer_hbox.pack_start(_align_middle(self._delete_link))
 
         else:
-            # keep / delete
-            v = VBox()
-            lab = make_label(_("Keep"), self.handle_keep, info.expiration_date is not None)
-            v.pack_start(_align_center(lab, bottom_pad=2))
-
-            self._delete_link = make_label(_("Delete"), self.handle_delete)
-            v.pack_start(_align_center(self._delete_link))
-            outer_hbox.pack_start(_align_middle(v))
-
-            outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
-
-            # expires, share - link
-            v = VBox()
             if info.expiration_date is not None:
                 text = displaytext.expiration_date(info.expiration_date)
-            else:
-                text = " "
-            self._expiration_label = Label(text)
-            self._expiration_label.set_size(0.77)
-            self._expiration_label.set_color((152.0 / 255.0, 152.0 / 255.0, 152.0 / 255.0))
-            v.pack_start(_align_center(self._expiration_label, bottom_pad=2))
+                self._expiration_label = Label(text)
+                self._expiration_label.set_size(0.77)
+                self._expiration_label.set_color((152.0 / 255.0, 152.0 / 255.0, 152.0 / 255.0))
+                outer_hbox.pack_start(_align_middle(self._expiration_label))
+                outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
 
-            h2 = HBox()
-            lab = make_label(_("Share"), self.handle_share, info.has_sharable_url)
-            h2.pack_start(_align_center(lab))
+            lab = make_label(_("Keep"), self.handle_keep, info.expiration_date is not None)
+            outer_hbox.pack_start(_align_middle(lab))
+            outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
 
-            self._dash = Label("|")
-            self._dash.set_size(0.77)
-            self._dash.set_color(WHITE)
-            h2.pack_start(_align_middle(self._dash, left_pad=5, right_pad=5))
+            self._delete_link = make_label(_("Delete"), self.handle_delete)
+            outer_hbox.pack_start(_align_middle(self._delete_link))
+            outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
+
+            self._share_link = make_label(_("Share"), self.handle_share, info.has_sharable_url)
+            outer_hbox.pack_start(_align_middle(self._share_link))
+            outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
 
             if info.commentslink:
                 self._permalink_link = make_label(_("Comments"), self.handle_commentslink, info.commentslink)
             else:
                 self._permalink_link = make_label(_("Permalink"), self.handle_permalink, info.permalink)
-            h2.pack_start(self._permalink_link)
-            if not info.commentslink and not info.permalink:
-                self._dash.hide()
-            v.pack_start(_align_center(h2))
-            outer_hbox.pack_start(_align_middle(v))
+            outer_hbox.pack_start(_align_middle(self._permalink_link))
 
         outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
 
