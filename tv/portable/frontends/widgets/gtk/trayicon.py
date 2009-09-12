@@ -124,6 +124,7 @@ if gtk.check_version(2, 10, 0) == None:
             if window.is_visible():
                 return
             window.show()
+            window._window.deiconify()
             if self._hid_pref_panel:
                 prefpanel.show_window()
 
