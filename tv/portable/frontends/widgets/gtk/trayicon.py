@@ -63,6 +63,23 @@ if gtk.check_version(2, 10, 0) == None:
             menu_items = []
             window = app.widgetapp.window
 
+            if app.playback_manager.is_playing:
+                menu_items.append((gtk.STOCK_MEDIA_PAUSE, self.on_play_pause))
+                menu_items.append((gtk.STOCK_MEDIA_STOP, self.on_stop))
+                menu_items.append((gtk.STOCK_MEDIA_NEXT, self.on_next))
+                menu_items.append((gtk.STOCK_MEDIA_PREVIOUS, self.on_previous))
+                menu_items.append((None, None))
+            else:
+                # We need to see if there are playable items before we
+                # go forward with adding that menu option.
+                for item in app.item_list_controller_manager.get_selection():
+                    if item.downloaded:
+                        # Yay!  We found a playable item.
+                        menu_items.append(
+                            (gtk.STOCK_MEDIA_PLAY, self.on_play_pause))
+                        menu_items.append((None, None))
+                        break
+
             if config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
                 menu_items.append((_("Play Next Unplayed (%(unplayed)d)",
                                 {"unplayed": app.widgetapp.unwatched_count}),
@@ -115,6 +132,18 @@ if gtk.check_version(2, 10, 0) == None:
         def on_preferences(self, widget):
             self._show_window()
             app.widgetapp.preferences()
+
+        def on_play_pause(self, widget):
+            app.widgetapp.on_play_clicked()
+
+        def on_stop(self, widget):
+            app.widgetapp.on_stop_clicked()
+
+        def on_previous(self, widget):
+            app.widgetapp.on_previous_clicked()
+
+        def on_next(self, widget):
+            app.widgetapp.on_forward_clicked()
 
         def on_quit(self, widget):
             app.widgetapp.quit()
