@@ -64,7 +64,12 @@ if gtk.check_version(2, 10, 0) == None:
             window = app.widgetapp.window
 
             if app.playback_manager.is_playing:
-                menu_items.append((gtk.STOCK_MEDIA_PAUSE, self.on_play_pause))
+                if app.playback_manager.is_paused:
+                    menu_items.append(
+                        (gtk.STOCK_MEDIA_PLAY, self.on_play_pause))
+                else:
+                    menu_items.append(
+                        (gtk.STOCK_MEDIA_PAUSE, self.on_play_pause))
                 menu_items.append((gtk.STOCK_MEDIA_STOP, self.on_stop))
                 menu_items.append((gtk.STOCK_MEDIA_NEXT, self.on_next))
                 menu_items.append((gtk.STOCK_MEDIA_PREVIOUS, self.on_previous))
