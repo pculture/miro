@@ -113,6 +113,17 @@ class LiveStorage:
         if schema_version is None:
             schema_version = schema.VERSION
 
+        # version of sqlite3
+        try:
+            logging.info("Sqlite3 version:   %s", sqlite3.sqlite_version)
+        except AttributeError:
+            logging.info("sqlite3 has no sqlite_version attribute.")
+
+        # version of the sqlite python bindings
+        try:
+            logging.info("Pysqlite version:  %s", sqlite3.version)
+        except AttributeError:
+            logging.info("sqlite3 has no version attribute.")
 
         db_existed = os.path.exists(path)
         self._dc = None
@@ -135,7 +146,7 @@ class LiveStorage:
         if not db_existed:
             self._init_database()
 
-    def open_connection(self):
+    def open_connection(self):            
         self.connection = sqlite3.connect(self.path,
                 isolation_level=None,
                 detect_types=sqlite3.PARSE_DECLTYPES)
