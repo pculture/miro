@@ -2340,9 +2340,20 @@ def upgrade99(cursor):
             cursor.execute("UPDATE item SET filename=? WHERE downloader_id=?",
                     (filename, downloader_id))
 
+class TimeModuleShadow:
+    """In Python 2.6, time.struct_time is a named tuple and evals poorly,
+    so we have struct_time_shadow which takes the arguments that struct_time
+    should have and returns a 9-tuple
+    """
+    def struct_time(self, tm_year=0, tm_mon=0, tm_mday=0, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=0, tm_yday=0, tm_isdst=0):
+        return (tm_year, tm_mon, tm_mday, tm_hour, tm_min, tm_sec, tm_wday, tm_yday, tm_isdst)
+
+_TIME_MODULE_SHADOW = TimeModuleShadow()
+
 def eval_container(repr):
     """Convert a column that's stored using repr to a python list/dict."""
-    return eval(repr, __builtins__, {'datetime': datetime, 'time': time})
+    return eval(repr, __builtins__, {'datetime': datetime, 'time':
+        _TIME_MODULE_SHADOW})
 
 def upgrade100(cursor):
     """Adds the Miro audio guide as a site for anyone who doesn't
