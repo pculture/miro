@@ -498,7 +498,7 @@ class ScraperFeedImplSchema(FeedImplSchema):
     ]
 
     @staticmethod
-    def handle_malformed_link_history(row):
+    def handle_malformed_linkHistory(row):
         return {}
 
 class SearchFeedImplSchema(RSSMultiFeedImplSchema):
