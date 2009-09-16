@@ -287,7 +287,8 @@ class LiveStorage:
                 if util.chatter:
                     logging.warn("error validating %s for %s", name, obj)
                 raise
-            values.append(self._converter.to_sql(schema_item, value))
+            values.append(self._converter.to_sql(obj_schema, name,
+                schema_item, value))
         sql = "REPLACE INTO %s (%s) VALUES(%s)" % (obj_schema.table_name,
                 ', '.join(column_names),
                 ', '.join('?' for i in xrange(len(column_names))))
@@ -392,7 +393,8 @@ class LiveStorage:
         for (name, schema_item), value in \
                 itertools.izip(schema.fields, db_row):
             try:
-                value = self._converter.from_sql(schema_item, value)
+                value = self._converter.from_sql(schema, name, schema_item,
+                        value)
             except:
                 if util.chatter:
                     logging.warn("error converting %s (%r)", name,
@@ -625,19 +627,27 @@ class SQLiteConverter(object):
         self._to_sql_converters[schema.SchemaBinary] = buffer
         self._from_sql_converters[schema.SchemaBinary] = self._convert_binary
 
-    def to_sql(self, schema_item, value):
+    def to_sql(self, schema, name, schema_item, value):
         if value is None:
             return None
         converter = self._to_sql_converters.get(schema_item.__class__,
                 self._null_convert)
         return converter(value)
 
-    def from_sql(self, schema_item, value):
+    def from_sql(self, schema, name, schema_item, value):
         if value is None:
             return None
         converter = self._from_sql_converters.get(schema_item.__class__,
                 self._null_convert)
-        return converter(value)
+        try:
+            return converter(value)
+        except Exception, e:
+            handler_name = 'handle_malformed_%s' % name
+            if hasattr(schema, handler_name):
+                handler = getattr(schema, handler_name)
+            else:
+                raise
+            return handler(value)
 
     def _unicode_to_filename(self, value):
         return value.encode('utf-8')

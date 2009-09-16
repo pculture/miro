@@ -63,6 +63,7 @@ class TabOrder(database.DDBObject):
         """
         self._setup_views()
         self._check_for_non_existent_ids()
+        self._add_untracked_ids()
 
     def _setup_views(self):
         """Sets up all the tab-related views.
@@ -129,6 +130,12 @@ class TabOrder(database.DDBObject):
                 logging.warn("Throwing away non-existent TabOrder id: %s", id)
                 changed = True
         if changed:
+            self.signal_change()
+
+    def _add_untracked_ids(self):
+        untracked_ids = set(self.id_to_tab.keys()) - set(self.tab_ids)
+        self.tab_ids.extend(list(untracked_ids))
+        if untracked_ids:
             self.signal_change()
 
     def get_all_tabs(self):

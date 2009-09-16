@@ -420,6 +420,10 @@ class ItemSchema(MultiClassObjectSchema):
             ('item_file_type', ('file_type',)),
     )
 
+    @staticmethod
+    def handle_malformed_feedparser_output(row):
+        return {}
+
 class FeedSchema(DDBObjectSchema):
     klass = Feed
     table_name = 'feed'
@@ -476,6 +480,14 @@ class RSSMultiFeedImplSchema(FeedImplSchema):
         ('query', SchemaString(noneOk=True)),
     ]
 
+    @staticmethod
+    def handle_malformed_etag(row):
+        return {}
+
+    @staticmethod
+    def handle_malformed_modified(row):
+        return {}
+
 class ScraperFeedImplSchema(FeedImplSchema):
     klass = ScraperFeedImpl
     table_name = 'scraper_feed_impl'
@@ -484,6 +496,10 @@ class ScraperFeedImplSchema(FeedImplSchema):
         ('initialCharset', SchemaString(noneOk=True)),
         ('linkHistory', SchemaReprContainer()),
     ]
+
+    @staticmethod
+    def handle_malformed_link_history(row):
+        return {}
 
 class SearchFeedImplSchema(RSSMultiFeedImplSchema):
     klass = SearchFeedImpl
@@ -541,6 +557,10 @@ class RemoteDownloaderSchema(DDBObjectSchema):
     indexes = (
             ('downloader_state', ('state',)),
     )
+
+    @staticmethod
+    def handle_malformed_status(row):
+        return {}
 
 class HTTPAuthPasswordSchema(DDBObjectSchema):
     klass = HTTPAuthPassword
@@ -606,6 +626,10 @@ class TabOrderSchema(DDBObjectSchema):
         ('tab_ids', SchemaList(SchemaInt())),
     ]
 
+    @staticmethod
+    def handle_malformed_tab_ids(row):
+        return []
+
 class ChannelGuideSchema(DDBObjectSchema):
     klass = ChannelGuide
     table_name = 'channel_guide'
@@ -620,6 +644,10 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('firstTime', SchemaBool()),
     ]
 
+    @staticmethod
+    def handle_malformed_allowedURLs(row):
+        return []
+
 class ThemeHistorySchema(DDBObjectSchema):
     klass = ThemeHistory
     table_name = 'theme_history'
@@ -628,12 +656,20 @@ class ThemeHistorySchema(DDBObjectSchema):
         ('pastThemes', SchemaList(SchemaString(noneOk=True), noneOk=False)),
     ]
 
+    @staticmethod
+    def handle_malformed_pastThemes(row):
+        return []
+
 class WidgetsFrontendStateSchema(DDBObjectSchema):
     klass = WidgetsFrontendState
     table_name = 'widgets_frontend_state'
     fields = DDBObjectSchema.fields + [
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]
+
+    @staticmethod
+    def handle_malformed_list_view_displays(row):
+        return []
 
 VERSION = 104
 object_schemas = [
