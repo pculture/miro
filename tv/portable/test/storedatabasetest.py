@@ -8,9 +8,14 @@ import time
 from miro import app
 from miro import database
 from miro import databaseupgrade
+from miro import downloader
 from miro import item
 from miro import feed
+from miro import frontendstate
+from miro import guide
 from miro import schema
+from miro import tabs
+from miro import theme
 import shutil
 from miro import storedatabase
 from miro.plat import resources
@@ -70,6 +75,10 @@ class HumanSchema(schema.ObjectSchema):
         ('stuff', SchemaReprContainer(noneOk=True)),
         ('id_code', SchemaBinary(noneOk=True)),
     ]
+
+    @staticmethod
+    def handle_malformed_stuff(row):
+        return 'testing123'
 
 class RestorableHumanSchema(HumanSchema):
     klass = RestorableHuman
@@ -405,6 +414,20 @@ class ValidationTest(FakeSchemaTest):
         self.joe.high_scores[1943] = 1234123
         self.assert_object_invalid(self.joe)
 
+class CorruptReprTest(FakeSchemaTest):
+    # Test what happens when SchemaReprContainer objects have bad data
+    # (#12028)
+    def test_repr_failure(self):
+        app.db.cursor.execute("UPDATE human SET stuff='{baddata' "
+                "WHERE name='lee'")
+        restored_lee = self.reload_object(self.lee)
+        self.assertEqual(restored_lee.stuff, 'testing123')
+
+    def test_repr_failure_no_handler(self):
+        app.db.cursor.execute("UPDATE pcf_programmer SET stuff='{baddata' "
+                "WHERE name='ben'")
+        self.assertRaises(SyntaxError, self.reload_object, self.ben)
+
 class ConverterTest(StoreDatabaseTest):
     def test_convert_repr(self):
         converter = storedatabase.SQLiteConverter()
@@ -416,6 +439,79 @@ class ConverterTest(StoreDatabaseTest):
         test2 = """{'updated_parsed': time.struct_time(tm_year=2009, tm_mon=6, tm_mday=5, tm_hour=1, tm_min=30, tm_sec=0, tm_wday=4, tm_yday=156, tm_isdst=0)}"""
         val = converter._convert_repr(test2)
         self.assertEquals(val, {"updated_parsed": (2009, 6, 5, 1, 30, 0, 4, 156, 0)})
+
+class CorruptDDBObjectReprTest(StoreDatabaseTest):
+    # test corrupt SchemaReprContainer columns in real DDBObjects
+    def setUp(self):
+        StoreDatabaseTest.setUp(self)
+        self.feed = feed.Feed(u"dtv:multi:http://feed.org/,query")
+        self.item = item.Item({'title': u'item1'},
+                       feed_id=self.feed.id)
+        self.downloader = downloader.RemoteDownloader(
+            u'http://example.com/1/item1/movie.mpeg', self.item)
+        self.item.set_downloader(self.downloader)
+        self.tab_order = tabs.TabOrder(u'channel')
+        self.guide = guide.ChannelGuide(u'http://example.com/')
+        self.theme_hist = theme.ThemeHistory()
+        self.widgets_frontend_state = frontendstate.WidgetsFrontendState()
+
+    def test_corrupt_status(self):
+        app.db.cursor.execute("UPDATE remote_downloader "
+                "SET status='{baddata' WHERE id=?", (self.downloader.id,))
+        reloaded = self.reload_object(self.downloader)
+        # setup_restored sets some values for status, so we will have more
+        # than an empty dict
+        self.assertEquals(reloaded.status,
+                {'rate': 0, 'upRate': 0, 'eta': 0})
+
+    def test_corrupt_feedparser_output(self):
+        app.db.cursor.execute("UPDATE item "
+                "SET feedparser_output='{baddata' WHERE id=?", (self.item.id,))
+        reloaded = self.reload_object(self.item)
+        self.assertEquals(reloaded.feedparser_output, {})
+
+    def test_corrupt_etag(self):
+        app.db.cursor.execute("UPDATE rss_multi_feed_impl "
+                "SET etag='{baddata' WHERE ufeed_id=?", (self.feed.id,))
+        reloaded = self.reload_object(self.feed.actualFeed)
+        self.assertEquals(reloaded.etag, {})
+
+    def test_corrupt_modified(self):
+        app.db.cursor.execute("UPDATE rss_multi_feed_impl "
+                "SET modified='{baddata' WHERE ufeed_id=?", (self.feed.id,))
+        reloaded = self.reload_object(self.feed.actualFeed)
+        self.assertEquals(reloaded.modified, {})
+
+    def test_corrupt_tab_ids(self):
+        app.db.cursor.execute("UPDATE taborder_order "
+                "SET tab_ids='[1, 2; 3 ]' WHERE id=?", (self.tab_order.id,))
+        reloaded = self.reload_object(self.tab_order)
+        reloaded.restore_tab_list()
+        self.assertEquals(reloaded.tab_ids, [self.feed.id])
+
+    def test_corrupt_allowed_urls(self):
+        app.db.cursor.execute("UPDATE channel_guide "
+                "SET allowedURLs='[1, 2; 3 ]' WHERE id=?", (self.guide.id,))
+        reloaded = self.reload_object(self.guide)
+        self.assertEquals(reloaded.allowedURLs, [])
+
+    def test_corrupt_past_themes(self):
+        app.db.cursor.execute("UPDATE theme_history "
+                "SET pastThemes='[1, 2; 3 ]' WHERE id=?", (self.theme_hist.id,))
+        reloaded = self.reload_object(self.theme_hist)
+        self.assertEquals(reloaded.pastThemes, [])
+
+    def test_corrupt_list_view_displays(self):
+        app.db.cursor.execute("UPDATE widgets_frontend_state "
+                "SET list_view_displays='[1, 2; 3 ]' WHERE id=?",
+                (self.widgets_frontend_state.id,))
+        reloaded = self.reload_object(self.widgets_frontend_state)
+        self.assertEquals(reloaded.list_view_displays, [])
+
+    def test_corrupt_link_history(self):
+        # TODO: should test ScraperFeedIpml.linkHistory, but it's not so easy
+        # to create a ScraperFeedIpml in the unit tests.
+        pass
 
 if __name__ == '__main__':
     unittest.main()
