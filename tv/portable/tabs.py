@@ -124,10 +124,10 @@ class TabOrder(database.DDBObject):
     def _check_for_non_existent_ids(self):
         changed = False
         for i in reversed(xrange(len(self.tab_ids))):
-            id = self.tab_ids[i]
-            if not id in self.id_to_tab:
+            tab_id = self.tab_ids[i]
+            if not tab_id in self.id_to_tab:
                 del self.tab_ids[i]
-                logging.warn("Throwing away non-existent TabOrder id: %s", id)
+                logging.warn("Throwing away non-existent TabOrder id: %s", tab_id)
                 changed = True
         if changed:
             self.signal_change()
@@ -142,7 +142,7 @@ class TabOrder(database.DDBObject):
         """Get all the tabs in this tab ordering (in order), regardless if
         they are visible in the tab list or not.
         """
-        return [self.id_to_tab[id] for id in self.tab_ids]
+        return [self.id_to_tab[tab_id] for tab_id in self.tab_ids]
 
     def _on_add_tab(self, tracker, obj):
         if obj.id not in self.id_to_tab:
@@ -166,7 +166,8 @@ class TabOrder(database.DDBObject):
         """Move a sequence of tabs so that they are after another tab."""
         anchor_pos = self.tab_ids.index(anchor_id)
         move_set = set(tab_ids)
-        before = [id for id in self.tab_ids[:anchor_pos] if id not in move_set]
-        after = [id for id in self.tab_ids[anchor_pos+1:] if id not in
-                move_set]
+        before = [tab_id for tab_id in self.tab_ids[:anchor_pos]
+                  if tab_id not in move_set]
+        after = [tab_id for tab_id in self.tab_ids[anchor_pos+1:]
+                 if tab_id not in move_set]
         self.reorder(before + [anchor_id] + list(tab_ids) + after)
