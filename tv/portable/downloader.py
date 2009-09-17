@@ -395,9 +395,9 @@ WARNING: can't migrate download because we don't have a filename!
 URL was %s""" % self.url
                 return
             if fileutil.exists(filename):
-                if 'channelName' in self.status and self.status['channelName'] is not None:
+                if self.status.get('channelName', None) is not None:
                     channelName = filterDirectoryName(self.status['channelName'])
-                    directory = os.path.join (directory, channelName)
+                    directory = os.path.join(directory, channelName)
                 try:
                     fileutil.makedirs(directory)
                 except OSError:
@@ -492,7 +492,7 @@ URL was %s""" % self.url
             msg = u"getReasonFailed() called on a non-failed downloader"
             raise ValueError(msg)
         self.confirm_db_thread()
-        return self.status['reasonFailed']
+        return self.status.get('reasonFailed', _("Unknown"))
 
     @returnsUnicode
     def getShortReasonFailed(self):
@@ -500,7 +500,7 @@ URL was %s""" % self.url
             msg = u"getShortReasonFailed() called on a non-failed downloader"
             raise ValueError(msg)
         self.confirm_db_thread()
-        return self.status['shortReasonFailed']
+        return self.status.get('shortReasonFailed', _("Unknown"))
 
     @returnsUnicode
     def get_url(self):
@@ -524,13 +524,13 @@ URL was %s""" % self.url
         """Returns the total size of the download in bytes
         """
         self.confirm_db_thread()
-        return self.status.get(u'totalSize', -1)
+        return self.status.get('totalSize', -1)
 
     def get_current_size(self):
         """Returns the current amount downloaded in bytes
         """
         self.confirm_db_thread()
-        return self.status.get(u'currentSize', 0)
+        return self.status.get('currentSize', 0)
 
     @returnsFilename
     def get_filename(self):
@@ -538,6 +538,8 @@ URL was %s""" % self.url
         called until state is "finished."
         """
         self.confirm_db_thread()
+        # FIXME - FilenameType('') is a bogus value, but looks like a filename.
+        # should return None.
         return self.status.get('filename', FilenameType(''))
 
     def setup_restored(self):
@@ -572,7 +574,7 @@ URL was %s""" % self.url
                 self.stopUpload()
 
     def restart(self):
-        if len(self.status) == 0 or self.status.get('dlerType') is None:
+        if not self.status or self.status.get('dlerType') is None:
             if self.contentType == u"":
                 self.get_content_type()
             else:
@@ -594,8 +596,8 @@ URL was %s""" % self.url
             dialogs.MessageBoxDialog(title, msg).run()
             return
         if self.get_state() not in (u'finished', u'uploading-paused'):
-            logging.warn("called startUpload when downloader state "
-                         "is: %s", self.get_state())
+            logging.warn("called startUpload when downloader state is: %s",
+                         self.get_state())
             return
         self.manualUpload = True
         if _downloads.has_key(self.dlid):
