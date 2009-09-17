@@ -129,7 +129,6 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
     which is a temporary playlist that holds the videos we're playing right
     now.
     """
-
     MapClass = PlaylistItemMap
 
     def setup_new(self, title, item_ids=None):
@@ -142,6 +141,10 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
     @classmethod
     def folder_view(cls, id):
         return cls.make_view('folder_id=?', (id,))
+
+    @classmethod
+    def get_by_title(cls, title):
+        return cls.make_view('title=?', (title,)).get_singleton()
 
     def add_id(self, item_id):
         # Don't allow items to be added more than once.
