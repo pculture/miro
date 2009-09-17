@@ -35,7 +35,7 @@ from miro import config
 from miro import prefs
 import os
 from miro.eventloop import asUrgent
-from miro.database import DDBObject
+from miro.database import DDBObject, ObjectNotFoundError
 from miro import opml
 from miro.plat import resources
 from miro import guide
@@ -134,21 +134,30 @@ class ThemeHistory(DDBObject):
         # folder
         if isinstance(default, tuple) and isinstance(default[1], list):
             defaultFolder = default
-            c_folder = folder.ChannelFolder(defaultFolder[0])
-            c_folder.section = section
-            c_folder.signal_change()
+            try:
+                c_folder = folder.Folder.get_by_title(defaultFolder[0])
+            except ObjectNotFoundError:
+                c_folder = folder.ChannelFolder(defaultFolder[0])
+                c_folder.section = section
+                c_folder.signal_change()
             for url, autodownload in defaultFolder[1]:
                 logging.info("adding feed %s in section %s" % (url, section))
-                d_feed = feed.Feed(url, initiallyAutoDownloadable=autodownload)
-                d_feed.set_folder(c_folder)
-                d_feed.section = section
-                d_feed.signal_change()
+                try:
+                    d_feed = feed.Feed.get_by_url(default[0])
+                except ObjectNotFoundError:
+                    d_feed = feed.Feed(url, initiallyAutoDownloadable=autodownload)
+                    d_feed.set_folder(c_folder)
+                    d_feed.section = section
+                    d_feed.signal_change()
         # feed
         else:
-            logging.info("adding feed %s in section %s" % (default, section))
-            d_feed = feed.Feed(default[0], initiallyAutoDownloadable=default[1])
-            d_feed.section = section
-            d_feed.signal_change()
+            try:
+                d_feed = feed.Feed.get_by_url(default[0])
+            except ObjectNotFoundError:
+                logging.info("adding feed %s in section %s" % (default, section))
+                d_feed = feed.Feed(default[0], initiallyAutoDownloadable=default[1])
+                d_feed.section = section
+                d_feed.signal_change()
 
     @asUrgent
     def _install_default_feeds(self):
@@ -171,11 +180,22 @@ class ThemeHistory(DDBObject):
             self._add_default(default, u"audio")
 
         # create example playlist
-        playlist.SavedPlaylist(_(u"Example Playlist"))
+        default_playlists = [
+            u"Example Playlist"
+            ]
+        for default in default_playlists:
+            try:
+                pl = playlist.SavedPlaylist.get_by_title(default)
+            except ObjectNotFoundError:
+                playlist.SavedPlaylist(_(u"Example Playlist"))
 
-        # create default site
-        cg = guide.ChannelGuide(u"http://beta.legaltorrents.com/")
-        cg.set_title(u"LegalTorrents")
-
-        cg = guide.ChannelGuide(u'https://www.miroguide.com/audio/')
-        cg.set_title(u"Miro Audio Guide")
+        default_guides = [
+            (u"http://beta.legaltorrents.com/", u"LegalTorrents"),
+            (u"https://www.miroguide.com/audio/", u"Miro Audio Guide")
+            ]
+        for default in default_guides:
+            try:
+                cg = guide.ChannelGuide.get_by_url(default[0])
+            except ObjectNotFoundError:
+                cg = guide.ChannelGuide(default[0])
+                cg.set_title(default[1])

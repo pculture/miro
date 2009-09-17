@@ -107,6 +107,10 @@ class ChannelFolder(FolderBase):
     def audio_view(cls):
         return cls.make_view("section='audio'")
 
+    @classmethod
+    def get_by_title(cls, title):
+        return cls.make_view('title=?', (title,)).get_singleton()
+
     def getChildrenView(self):
         return feed.Feed.folder_view(self.id)
 
