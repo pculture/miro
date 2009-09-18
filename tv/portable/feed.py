@@ -1884,10 +1884,8 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         etag = None
         modified = None
         if self.linkHistory.has_key(url):
-            if self.linkHistory[url].has_key('etag'):
-                etag = self.linkHistory[url]['etag']
-            if self.linkHistory[url].has_key('modified'):
-                modified = self.linkHistory[url]['modified']
+            etag = self.linkHistory[url].get('etag', None)
+            modified = self.linkHistory[url].get('modified', None)
         def callback(info):
             if not self.ufeed.idExists():
                 return
@@ -1903,7 +1901,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
             logging.info("WARNING unhandled error for ScraperFeedImpl.getHTML: %s", error)
             self.checkDone()
         download = grabURL(url, callback, errback, etag=etag,
-                modified=modified,defaultMimeType='text/html',)
+                modified=modified, defaultMimeType='text/html')
         self.downloads.add(download)
 
     def processDownloadedHTML(self, info, urlList, depth, linkNumber, top=False):
