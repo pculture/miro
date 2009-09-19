@@ -50,6 +50,7 @@ import cPickle
 import itertools
 import logging
 import datetime
+import traceback
 import time
 import os
 from cStringIO import StringIO
@@ -441,15 +442,21 @@ class LiveStorage:
             try:
                 self._time_execute(sql, values)
             except sqlite3.OperationalError, e:
+                # printing the traceback here in whole rather than doing
+                # a logging.exception which seems to show the traceback
+                # up to the try/except handler.
+                logging.exception("OperationalError\n"
+                                  "statement: %s\n\n"
+                                  "values: %s\n\n"
+                                  "full stack:\n%s\n", sql, values,
+                                  "".join(traceback.format_stack()))
                 if not is_update and self._quitting_from_operational_error:
                     # This is a very bad state to be in because code calling
                     # us expects a return value.  I think the best we can do
                     # is re-raise the exception (BDK)
                     raise
                 failed = True
-                logging.exception("OperationalError thrown.\n"
-                        "statement: %s\n\n%s\n\n", sql, values)
-                self._handle_operational_error()
+                self._handle_operational_error(str(e))
                 if self._quitting_from_operational_error:
                     break
             else:
@@ -471,16 +478,20 @@ class LiveStorage:
         end = time.time()
         self._check_time(sql, end-start)
 
-    def _handle_operational_error(self):
+    def _handle_operational_error(self, error_text):
         title = _("%(appname)s database save failed",
                   {"appname": config.get(prefs.SHORT_APP_NAME)})
         description = _(
-            "%(appname)s was unable to save its database: Disk Full.\n"
-            "We suggest deleting files from the full disk or "
-            "simply deleting some movies from your collection.\n"
-            "Recent changes may be lost.",
-            {"appname": config.get(prefs.SHORT_APP_NAME)}
-        )
+            "%(appname)s was unable to save its database.\n\n"
+            "If your disk is full, we suggest freeing up some space and "
+            "retrying.  If your disk is not full, it's possible that "
+            "retrying will work.\n\n"
+            "If retrying did not work, please quit %(appname)s and restart.  "
+            "Recent changes may be lost.\n\n"
+            "Error: %(error_text)s\n\n",
+            {"appname": config.get(prefs.SHORT_APP_NAME),
+             "error_text": error_text}
+            )
         d = dialogs.ChoiceDialog(title, description,
                 dialogs.BUTTON_RETRY, dialogs.BUTTON_QUIT)
         choice = d.run_blocking()
