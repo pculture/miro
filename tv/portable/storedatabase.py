@@ -256,7 +256,9 @@ class LiveStorage:
         return cPickle.loads(str(row[0]))
 
     def _set_variable(self, name, value):
-        db_value = buffer(cPickle.dumps(value, cPickle.HIGHEST_PROTOCOL))
+        # we only store one variable and it's easier to deal with if we store
+        # it using ASCII-base protocol.
+        db_value = buffer(cPickle.dumps(value, 0))
         self.cursor.execute("REPLACE INTO dtv_variables "
                 "(name, serialized_value) VALUES (?,?)", (name, db_value))
 
