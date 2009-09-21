@@ -28,15 +28,25 @@
 # statement from all source files in the program, then also delete it here.
 
 
-OS_VERSION=$(uname -r | cut -c 1)
+OS_VERSION=$(uname -r | cut -d . -f 1)
 
-if [ $OS_VERSION == "9" ]; then
-    SANDBOX_ROOT=$(pushd ../../../sandbox >/dev/null; pwd; popd >/dev/null)
-    PYTHON=$SANDBOX_ROOT/Library/Frameworks/Python.framework/Versions/2.5/bin/python2.5
-else
+if [ $OS_VERSION == "8" ]; then
     PYTHON_VERSION=2.4
     PYTHON_ROOT=/Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION
-    PYTHON=$PYTHON_ROOT/bin/python$PYTHON_VERSION
+    export MACOSX_DEPLOYMENT_TARGET=10.4
+elif [ $OS_VERSION == "9" ]; then
+    PYTHON_VERSION=2.5
+    PYTHON_ROOT=/System/Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION
+    export MACOSX_DEPLOYMENT_TARGET=10.5
+elif [ $OS_VERSION == "10" ]; then
+    PYTHON_VERSION=2.6
+    PYTHON_ROOT=/System/Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION
+    export MACOSX_DEPLOYMENT_TARGET=10.6
 fi
 
-$PYTHON setup.py py2app --dist-dir . -A "$@" && Miro.app/Contents/MacOS/Miro
+PYTHON=$PYTHON_ROOT/bin/python$PYTHON_VERSION
+
+export VERSIONER_PYTHON_VERSION=$PYTHON_VERSION
+export VERSIONER_PYTHON_PREFER_32_BIT=yes
+
+$PYTHON setup.py py2app --dist-dir . -A "$@" && arch -`arch` Miro.app/Contents/MacOS/Miro

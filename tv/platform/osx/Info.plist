@@ -328,5 +328,10 @@
 	<string>$copyright, $publisher</string>
 	<key>SUCheckAtStartup</key>
 	<false/>
+	<key>LSEnvironment</key>
+	<dict>
+	    <key>VERSIONER_PYTHON_PREFER_32_BIT</key>
+	    <string>yes</string>
+    </dict>
 </dict>
 </plist>

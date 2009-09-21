@@ -578,7 +578,7 @@ class SkipSeekButtonCell (NSButtonCell):
         return newCell
     
     def initWithPrimaryAction_direction_delay_(self, action, direction, delay):
-        self = NSButtonCell.init(self)
+        self = super(SkipSeekButtonCell, self).init()
         self.primaryAction = action
         self.direction = direction
         self.seekTimer = nil

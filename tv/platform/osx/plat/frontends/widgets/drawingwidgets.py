@@ -35,7 +35,7 @@ from miro.plat.frontends.widgets.layoutmanager import LayoutManager
 
 class DrawingView(FlippedView):
     def init(self):
-        FlippedView.init(self)
+        self = super(DrawingView, self).init()
         self.layout_manager = LayoutManager()
         return self
 

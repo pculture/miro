@@ -263,7 +263,7 @@ class Button(SizedControl):
 class MiroPopupButton(NSPopUpButton):
 
     def init(self):
-        self = NSPopUpButton.init(self)
+        self = super(MiroPopupButton, self).init()
         self.setTarget_(self)
         self.setAction_('handleChange:')
         return self
@@ -387,7 +387,7 @@ class VideoSearchTextEntry (SearchTextEntry):
 class NSVideoSearchField (MiroSearchTextField):
 
     def init(self):
-        self = MiroSearchTextField.init(self)
+        self = super(NSVideoSearchField, self).init()
         self._engineToMenuItem = {}
         self.currentItem = nil
         self.setTarget_(self)

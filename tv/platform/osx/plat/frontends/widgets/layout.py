@@ -321,7 +321,7 @@ class DetachedWindowHolder(Alignment):
 class SplitterDelegate(NSObject):
 
     def initWithSplitter_(self, splitter):
-        self = NSObject.init(self)
+        self = super(SplitterDelegate, self).init()
         self.splitter = splitter
         self.normalColor = NSColor.colorWithDeviceWhite_alpha_(64.0/255.0, 1.0)
         self.disabledColor = NSColor.colorWithDeviceWhite_alpha_(135.0/255.0, 1.0)
@@ -715,7 +715,7 @@ class Scroller(Bin):
 
 class ExpanderView(FlippedView):
     def init(self):
-        self = FlippedView.init(self)
+        self = super(ExpanderView, self).init()
         self.label_rect = None
         self.content_view = None
         self.button = NSButton.alloc().init()

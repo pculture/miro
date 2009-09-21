@@ -53,19 +53,22 @@ PLATFORM_DIR = os.path.join(ROOT_DIR, 'platform', 'osx')
 PLATFORM_PACKAGE_DIR = os.path.join(PLATFORM_DIR, 'plat')
 
 OS_INFO = os.uname()
-OS_VERSION = int(OS_INFO[2][0])
+OS_VERSION = int(OS_INFO[2].split('.')[0])
+PYTHON_VERSION = sys.version[0:3]
 
-if OS_VERSION == 9:
-    SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..')))
-    SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
-    PYTHON_ROOT = os.path.join(SANDBOX_DIR, "Library", "Frameworks", "Python.framework", "Versions", "Current")
-    PYTHON_LIB = os.path.join(PYTHON_ROOT, "Python")
-    PYTHON_VERSION = "2.5"
-    sys.path.insert(0, os.path.join(PYTHON_ROOT, 'lib', 'python2.5', 'site-packages'))
-else:
+if OS_VERSION < 9:
     SANDBOX_DIR = "/usr/local"
     PYTHON_LIB = os.path.join("/", "Library", "Frameworks", "Python.framework", "Versions", "Current", "Python")
-    PYTHON_VERSION = "2.4"
+else:
+    SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..')))
+    SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
+    PYTHON_ROOT = os.path.join("/", "System", "Library", "Frameworks", "Python.framework", "Versions", PYTHON_VERSION)
+    PYTHON_LIB = os.path.join(PYTHON_ROOT, "Python")
+    sys.path.insert(0, os.path.join(SANDBOX_DIR, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages'))
+    if OS_VERSION == 9:
+        MACOSX_DEPLOYMENT_TARGET="10.5"
+    elif OS_VERSION == 10:
+        MACOSX_DEPLOYMENT_TARGET="10.6"
 
 # =============================================================================
 # Look for the Boost library in various common places.
@@ -83,8 +86,8 @@ BOOST_INCLUDE_DIR = None
 BOOST_VERSION = None
 
 for searchDir in (SANDBOX_DIR, '/usr/local', '/opt/local', '/sw'):
-    libItems = glob(os.path.join(searchDir, 'lib/libboost_python*-1_35.*'))
-    incItems = glob(os.path.join(searchDir, 'include/boost-1_35/'))
+    libItems = glob(os.path.join(searchDir, 'lib/libboost_python*-1_39.*'))
+    incItems = glob(os.path.join(searchDir, 'include/boost-1_39/'))
     if len(libItems) >= 1 and len(incItems) >= 1:
         BOOST_LIB_DIR = os.path.dirname(libItems[0])
         BOOST_INCLUDE_DIR = incItems[0]
@@ -106,11 +109,12 @@ else:
 #   isysroot flag.
 # =============================================================================
 
-BOOST_PYTHON_LIB = os.path.join(SANDBOX_DIR, "lib", "libboost_python-%s.a" % BOOST_VERSION)
-BOOST_FILESYSTEM_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_filesystem-%s.a' % BOOST_VERSION)
-BOOST_DATETIME_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_date_time-%s.a' % BOOST_VERSION)
-BOOST_THREAD_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_thread-%s.a' % BOOST_VERSION)
-BOOST_SYSTEM_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_system-%s.a' % BOOST_VERSION)
+ROOT_LIB_DIR = os.path.join(SANDBOX_DIR, "lib")
+BOOST_PYTHON_LIB = os.path.join(ROOT_LIB_DIR, "libboost_python-%s.dylib" % BOOST_VERSION)
+BOOST_FILESYSTEM_LIB = os.path.join(ROOT_LIB_DIR, 'libboost_filesystem-%s.dylib' % BOOST_VERSION)
+BOOST_DATETIME_LIB = os.path.join(ROOT_LIB_DIR, 'libboost_date_time-%s.dylib' % BOOST_VERSION)
+BOOST_THREAD_LIB = os.path.join(ROOT_LIB_DIR, 'libboost_thread-%s.dylib' % BOOST_VERSION)
+BOOST_SYSTEM_LIB = os.path.join(ROOT_LIB_DIR, 'libboost_system-%s.dylib' % BOOST_VERSION)
 
 # =============================================================================
 # Only now may we import things from the local sandbox and our own tree
@@ -367,8 +371,8 @@ class MiroBuild (py2app):
         fasttypes_inc_dirs = [BOOST_INCLUDE_DIR]
         fasttypes_extras = [PYTHON_LIB, BOOST_PYTHON_LIB]
         return Extension("miro.fasttypes", sources=fasttypes_src, 
-                                      include_dirs=fasttypes_inc_dirs, 
-                                      extra_objects=fasttypes_extras)
+                                           include_dirs=fasttypes_inc_dirs, 
+                                           extra_objects=fasttypes_extras)
     
     def get_libtorrent_ext(self):
         def libtorrent_sources_iterator():

@@ -113,8 +113,7 @@ def launchApplication():
 def launchDownloaderDaemon():
     # Increase the maximum file descriptor count (to the max)
     import resource
-    logging.info('Increasing file descriptor count limit in Downloader.')
-    resource.setrlimit(resource.RLIMIT_NOFILE, (10240,-1))
+    resource.setrlimit(resource.RLIMIT_NOFILE, (10240, -1))
 
     # Make sure we don't leak from the downloader eventloop
     from miro import eventloop
@@ -122,14 +121,24 @@ def launchDownloaderDaemon():
     def beginLoop(loop):
         loop.pool = Foundation.NSAutoreleasePool.alloc().init()
     eventloop.connect('begin-loop', beginLoop)
+    eventloop.connect('thread-will-start', beginLoop)
 
     def endLoop(loop):
         del loop.pool
     eventloop.connect('end-loop', endLoop)
+    eventloop.connect('thread-did-start', endLoop)
     
     # And launch
     from miro.dl_daemon import Democracy_Downloader
     Democracy_Downloader.launch()
+    
+    # FIXME: I have absolutely no idea why this is required when running on 10.6
+    # with python 2.6. This should be tracked down - luc
+    os_info = os.uname()
+    os_version = int(os_info[2].split('.')[0])
+    python_version = sys.version[0:3]
+    if os_version == "10" and python_version == "2.6":
+        eventloop.join()
 
 # =============================================================================
 

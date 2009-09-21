@@ -103,18 +103,18 @@ def initializeLocale():
 
 def setup_logging (inDownloader=False):
     if inDownloader:
-        logging.basicConfig(level=logging.INFO,
-                            format='%(levelname)-8s %(message)s')
-        handler = logging.StreamHandler(sys.stdout)
-        logging.getLogger('').addHandler(handler)
-        logging.getLogger('').setLevel(logging.INFO)
-    else:
+        level = logging.INFO
         if config.get(prefs.APP_VERSION).endswith("git"):
             level = logging.DEBUG
-        else:
-            level = logging.WARN
-        logging.basicConfig(level=level,
-                            format='%(levelname)-8s %(message)s')
+        logging.basicConfig(level=level, format='%(levelname)-8s %(message)s')
+        handler = logging.StreamHandler(sys.stdout)
+        logging.getLogger('').addHandler(handler)
+        logging.getLogger('').setLevel(level)
+    else:
+        level = logging.WARN
+        if config.get(prefs.APP_VERSION).endswith("git"):
+            level = logging.DEBUG
+        logging.basicConfig(level=level, format='%(levelname)-8s %(message)s')
         rotater = logging.handlers.RotatingFileHandler(config.get(prefs.LOG_PATHNAME), mode="w", maxBytes=100000, backupCount=5)
         formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
         rotater.setFormatter(formatter)
@@ -138,14 +138,12 @@ def unicodeToFilename(filename, path = None):
     checkU(filename)
     if path:
         checkB(path)
-    #else:
-    #    path = os.getcwd()
+    else:
+        path = os.getcwd()
 
     # Keep this a little shorter than the max length, so we can run
     # nextFilename
-    # FIXME: this does not run under 10.3.x
-    #MAX_LEN = os.statvfs(path)[statvfs.F_NAMEMAX]-5
-    MAX_LEN = 250
+    MAX_LEN = os.statvfs(path)[statvfs.F_NAMEMAX]-5
 
     filename.replace('/','_').replace("\000","_").replace("\\","_").replace(":","_").replace("*","_").replace("?","_").replace("\"","_").replace("<","_").replace(">","_").replace("|","_")
 
@@ -284,14 +282,16 @@ def launchDownloadDaemon(oldpid, env):
     killProcess(oldpid)
 
     env['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
+    env['VERSIONER_PYTHON_PREFER_32_BIT'] = "yes"
     env.update(os.environ)
 
     exe = NSBundle.mainBundle().executablePath()
+    arch = os.uname()[-1]
 
     global dlTask
     dlTask = NSTask.alloc().init()
-    dlTask.setLaunchPath_(exe)
-    dlTask.setArguments_([u'download_daemon'])
+    dlTask.setLaunchPath_('/usr/bin/arch')
+    dlTask.setArguments_(['-%s' % arch, exe, u'download_daemon'])
     dlTask.setEnvironment_(env)
 
     controller = NSApplication.sharedApplication().delegate()

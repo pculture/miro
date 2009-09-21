@@ -319,12 +319,12 @@ class FlippedView(NSView):
     """
 
     def init(self):
-        self = NSView.init(self)
+        self = super(FlippedView, self).init()
         self.background = None
         return self
 
     def initWithFrame_(self, rect):
-        self = NSView.initWithFrame_(self, rect)
+        self = super(FlippedView, self).initWithFrame_(rect)
         self.background = None
         return self
 

@@ -59,7 +59,7 @@ class ResizedImage(Image):
 
 class NSImageDisplay (NSView):
     def initWithImage_(self, image):
-        self = NSView.init(self)
+        self = super(NSImageDisplay, self).init()
         self.image = image
         return self
     def drawRect_(self, rect):

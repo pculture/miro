@@ -52,7 +52,7 @@ class DrawableButtonCell(NSButtonCell):
 
 class DrawableButton(NSButton):
     def init(self):
-        self = NSButton.init(self)
+        self = super(DrawableButton, self).init()
         self.layout_manager = LayoutManager()
         self.tracking_rect = None
         self.mouse_inside = False
@@ -124,7 +124,7 @@ class ContinousButtonCell(DrawableButtonCell):
 
 class ContinuousDrawableButton(DrawableButton):
     def init(self):
-        DrawableButton.init(self)
+        self = super(ContinuousDrawableButton, self).init()
         self.setContinuous_(YES)
         return self
 
@@ -181,7 +181,7 @@ class CustomSliderCell(NSSliderCell):
 
 class CustomSliderView(NSSlider):
     def init(self):
-        NSSlider.init(self)
+        self = super(CustomSliderView, self).init()
         self.layout_manager = LayoutManager()
         return self
 

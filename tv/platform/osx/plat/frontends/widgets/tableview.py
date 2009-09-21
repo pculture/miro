@@ -144,7 +144,7 @@ class HotspotTracker(object):
 
 class MiroTableCell(NSTextFieldCell):
     def init(self):
-        return self.initTextCell_('')
+        return super(MiroTableCell, self).initTextCell_('')
 
     def calcHeight_(self, view):
         font = self.font()
@@ -173,7 +173,7 @@ class MiroTableImageCell(NSImageCell):
 
 class MiroCheckboxCell(NSButtonCell):
     def init(self):
-        self = NSButtonCell.init(self)
+        self = super(MiroCheckboxCell, self).init()
         self.setButtonType_(NSSwitchButton)
         self.setTitle_('')
         return self
@@ -256,7 +256,7 @@ class CheckboxCellRenderer(signals.SignalEmitter):
 
 class CustomTableCell(NSCell):
     def init(self):
-        self = NSCell.init(self)
+        self = super(CustomTableCell, self).init()
         self.layout_manager = LayoutManager()
         self.hotspot = None
         return self
@@ -399,7 +399,7 @@ class VariableHeightOutlineViewDelegate(OutlineViewDelegate):
 
 class TableViewCommon(object):
     def init(self):
-        self = self.SuperClass.init(self)
+        self = super(self.__class__, self).init()
         self.hotspot_tracker = None
         self._tracking_rects = []
         self.hover_info = None

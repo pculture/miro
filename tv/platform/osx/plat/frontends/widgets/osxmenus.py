@@ -66,7 +66,7 @@ MODIFIERS_MAP = {
 
 KEYS_MAP = {
     SPACE: " ",
-    BKSPACE: struct.pack("H", NSBackspaceCharacter),
+    BKSPACE: struct.pack("H", ord(NSBackspaceCharacter)),
     DELETE: NSDeleteFunctionKey,
     RIGHT_ARROW: NSRightArrowFunctionKey,
     LEFT_ARROW: NSLeftArrowFunctionKey,
@@ -213,7 +213,7 @@ def populate_menu():
 
 class ContextMenuHandler(NSObject):
     def initWithCallback_(self, callback):
-        self = NSObject.init(self)
+        self = super(ContextMenuHandler, self).init()
         self.callback = callback
         return self
 
@@ -224,7 +224,7 @@ class MiroContextMenu(NSMenu):
     # Works exactly like NSMenu, except it keeps a reference to the menu
     # handler objects.
     def init(self):
-        self = NSMenu.init(self)
+        self = super(MiroContextMenu, self).init()
         self.handlers = set()
         return self
 
