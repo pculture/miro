@@ -58,6 +58,17 @@ class TabOrder(database.DDBObject):
         for sortkey, tab in decorated:
             self.tab_ids.append(tab.id)
 
+    def setup_restored(self):
+        if not isinstance(self.tab_ids, list):
+            logging.warning("tab_ids was not a list.  setting it to [].")
+            self.tab_ids = []
+            return
+        for mem in self.tab_ids:
+            if not isinstance(mem, int):
+                self.tab_ids = []
+                logging.warning("tab_ids wasn't a list of ints.  setting it to [].")
+                return
+
     def restore_tab_list(self):
         """Restores the tablist.
         """
