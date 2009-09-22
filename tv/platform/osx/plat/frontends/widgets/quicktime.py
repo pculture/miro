@@ -58,9 +58,23 @@ def register_components():
 ###############################################################################
 
 def qttime2secs(qttime):
-    if qttime.timeScale == 0:
+    timeScale = qttimescale(qttime)
+    if timeScale == 0:
         return 0.0
-    return qttime.timeValue / float(qttime.timeScale)
+    timeValue = qttimevalue(qttime)
+    return timeValue / float(timeScale)
+
+def qttimescale(qttime):
+    if isinstance(qttime, tuple):
+        return qttime[1]
+    else:
+        return qttime.timeScale
+
+def qttimevalue(qttime):
+    if isinstance(qttime, tuple):
+        return qttime[0]
+    else:
+        return qttime.timeValue
 
 ###############################################################################
 
@@ -105,15 +119,16 @@ class Player(player.Player):
     def can_open_file(self, qtmovie):
         threads.warn_if_not_on_main_thread('quicktime.Player.can_open_file')
         can_open = False
-
-        if qtmovie is not None and qtmovie.duration().timeValue > 0:
+        duration = qttimevalue(qtmovie.duration())
+        
+        if qtmovie is not None and duration > 0:
             allTracks = qtmovie.tracks()
             if len(qtmovie.tracks()) > 0:
                 # Make sure we have at least one track with a non zero length
                 allMedia = [track.media() for track in allTracks]
                 for media in allMedia:
                     mediaType = media.attributeForKey_(QTMediaTypeAttribute)
-                    mediaDuration = media.attributeForKey_(QTMediaDurationAttribute).QTTimeValue().timeValue
+                    mediaDuration = qttimevalue(media.attributeForKey_(QTMediaDurationAttribute).QTTimeValue())
                     if mediaType in self.supported_media_types and mediaDuration > 0:
                         can_open = True
                         break
@@ -148,7 +163,10 @@ class Player(player.Player):
 
     def seek_to(self, position):
         qttime = self.movie.duration()
-        qttime.timeValue = qttime.timeValue * position
+        if isinstance(qttime, tuple):
+            qttime = (qttime[0] * position, qttime[1], qttime[2])
+        else:
+            qttime.timeValue = qttime.timeValue * position
         self.movie.setCurrentTime_(qttime)
 
     def play_from_time(self, resume_time=0):
