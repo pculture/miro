@@ -75,6 +75,8 @@ class OverlayPalette (NSWindowController):
     fsButton            = IBOutlet('fsButton')
     popInOutButton      = IBOutlet('popInOutButton')
     popInOutLabel       = IBOutlet('popInOutLabel')
+    subtitlesButton     = IBOutlet('subtitlesButton')
+    subtitlesLabel      = IBOutlet('subtitlesLabel')
     
     playbackControls    = IBOutlet('playbackControls')
     playPauseButton     = IBOutlet('playPauseButton')
@@ -141,6 +143,9 @@ class OverlayPalette (NSWindowController):
         self.volumeSlider.sliderWasClicked = self.volumeSliderWasClicked
         self.volumeSlider.sliderWasDragged = self.volumeSliderWasDragged
         self.volumeSlider.setShowCursor_(True)
+        
+        self.subtitlesButton.setTarget_(self)
+        self.subtitlesButton.setAction_('showSubtitlesMenu:')
 
     def setup(self, item_info, renderer, video_window):
         from miro.frontends.widgets import widgetutil
@@ -151,6 +156,10 @@ class OverlayPalette (NSWindowController):
             self.feedLabel.setStringValue_(widgetutil.get_feed_info(item_info.feed_id).name)
         except:
             self.feedLabel.setStringValue_("")
+        subtitle_tracks = renderer.get_subtitle_tracks()
+        has_subtitles = (subtitle_tracks is not None and len(subtitle_tracks) > 0)
+        self.subtitlesButton.setHidden_(not has_subtitles)
+        self.subtitlesLabel.setHidden_(not has_subtitles)
         self.keepButton.setEnabled_(item_info.can_be_saved)
         self.shareButton.setEnabled_(item_info.has_sharable_url)
         self.adjustContent(video_window, False)
@@ -177,6 +186,24 @@ class OverlayPalette (NSWindowController):
         if self.window().isVisible():
             self.adjustContent(videoWindow, True)
 
+    def showSubtitlesMenu_(self, sender):
+        menu = NSMenu.alloc().init()
+        for track in self.renderer.get_subtitle_tracks():
+            item = NSMenuItem.alloc().init()
+            item.setTitle_(track[0])
+            item.setEnabled_(YES)
+            item.setTarget_(self)
+            item.setAction_('selectSubtitleTrack:')
+            if track[1]:
+                item.setState_(NSOnState)
+            else:
+                item.setState_(NSOffState)
+            menu.addItem_(item)
+        NSMenu.popUpContextMenu_withEvent_forView_(menu, NSApp.currentEvent(), self.window().contentView())
+
+    def selectSubtitleTrack_(self, sender):
+        self.renderer.enable_subtitle_track(sender.title())
+    
     def getHorizontalPosition(self, videoWindow, width):
         parentFrame = videoWindow.frame()
         return parentFrame.origin.x + ((parentFrame.size.width - width) / 2.0)

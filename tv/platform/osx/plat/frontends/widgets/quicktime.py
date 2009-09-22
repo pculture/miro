@@ -135,6 +135,34 @@ class Player(player.Player):
 
         return can_open
 
+    def get_subtitle_tracks(self):
+        tracks = list()
+        if self.movie is not None:
+            for track in self.movie.tracks():
+                if self.is_subtitle_track(track):
+                    name = track.attributeForKey_(QTTrackDisplayNameAttribute)
+                    is_enabled = track.attributeForKey_(QTTrackEnabledAttribute) == 1
+                    tracks.append((name, is_enabled))
+        return tracks
+
+    def is_subtitle_track(self, track):
+        layer = track.attributeForKey_(QTTrackLayerAttribute)
+        media_type = track.attributeForKey_(QTTrackMediaTypeAttribute)
+        return layer == -1 and media_type == 'vide'
+
+    def enable_subtitle_track(self, track_name):
+        if self.movie is not None:
+            current = None
+            to_enable = None
+            for track in self.movie.tracks():
+                if self.is_subtitle_track(track):
+                    if track.attributeForKey_(QTTrackEnabledAttribute) == 1:
+                        current = track
+                    if track.attributeForKey_(QTTrackDisplayNameAttribute) == track_name:
+                        to_enable = track
+            current.setAttribute_forKey_(0, QTTrackEnabledAttribute)
+            to_enable.setAttribute_forKey_(1, QTTrackEnabledAttribute)
+
     def set_volume(self, volume):
         if self.movie:
             self.movie.setVolume_(volume)
