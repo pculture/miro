@@ -76,9 +76,7 @@ class TabOrder(database.DDBObject):
         self._check_for_non_existent_ids()
         self._add_untracked_ids()
 
-    def _setup_views(self):
-        """Sets up all the tab-related views.
-        """
+    def _get_tab_views(self):
         if self.type == u'site':
             tab_views = (guide.ChannelGuide.site_view(),)
         elif self.type == u'channel':
@@ -92,6 +90,12 @@ class TabOrder(database.DDBObject):
                     folder.PlaylistFolder.make_view())
         else:
             raise ValueError("Bad type for TabOrder")
+        return tab_views
+
+    def _setup_views(self):
+        """Sets up all the tab-related views.
+        """
+        tab_views = self._get_tab_views()
 
         self.id_to_tab = {}
         for view in tab_views:
@@ -144,10 +148,29 @@ class TabOrder(database.DDBObject):
             self.signal_change()
 
     def _add_untracked_ids(self):
+        from miro.folder import FolderBase
         untracked_ids = set(self.id_to_tab.keys()) - set(self.tab_ids)
-        self.tab_ids.extend(list(untracked_ids))
-        if untracked_ids:
-            self.signal_change()
+        if not untracked_ids:
+            return
+        tab_views = self._get_tab_views()
+        # dict of folder_id -> list of children ids
+        folders = {}
+        # any non-folder item that isn't in a folder
+        extras = []
+        for view in tab_views:
+            for obj in view:
+                if isinstance(obj, FolderBase):
+                    folders.setdefault(obj.id, [])
+                    continue
+                if obj.get_folder() is None:
+                    extras.append(obj.id)
+                else:
+                    folders.setdefault(obj.get_folder().id, []).append(obj.id)
+        for folder_id, children in folders.items():
+            self.tab_ids.append(folder_id)
+            self.tab_ids.extend(children)
+        self.tab_ids.extend(extras)
+        self.signal_change()
 
     def get_all_tabs(self):
         """Get all the tabs in this tab ordering (in order), regardless if
