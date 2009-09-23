@@ -313,6 +313,7 @@ class LiveStorage:
             raise
         except:
             self._handle_load_error("Error calculating last id")
+            return self._get_last_id()
 
     def _get_last_id(self):
         max_id = 0
