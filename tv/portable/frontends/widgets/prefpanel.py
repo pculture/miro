@@ -467,7 +467,7 @@ class _MovieDirectoryHelper(object):
 
 class _WatchedFolderHelper(object):
     def __init__(self):
-        self._table = widgetset.TableView(app.watched_folder_manager.model)
+        self._table = widgetset.TableView(app.watched_folder_manager.model, True)
         folder_cell_renderer = widgetset.CellRenderer()
         folder_cell_renderer.set_text_size(widgetconst.SIZE_SMALL)
         folder_column = widgetset.TableColumn('folder',

@@ -677,7 +677,7 @@ class TableView(Widget):
     # Bit of a hack.  We create several views.  By setting CREATES_VIEW to
     # False, we get to position the views manually.
 
-    def __init__(self, model):
+    def __init__(self, model, fixed_height=False):
         Widget.__init__(self)
         self.create_signal('selection-changed')
         self.create_signal('hotspot-clicked')
@@ -701,7 +701,7 @@ class TableView(Widget):
         self.set_auto_resizes(False)
         self.draws_selection = True
         self.row_height_set = False
-        self.set_fixed_height(False)
+        self.set_fixed_height(fixed_height)
         self.auto_resizing = False
         self.header_view = MiroTableHeaderView.alloc().initWithFrame_(
             NSMakeRect(0, 0, 0, HEADER_HEIGHT))
