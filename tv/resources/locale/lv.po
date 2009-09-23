@@ -1,28 +1,36 @@
-# translation of _democracyplayer-lv.po to Latvian
 # Latvian translation for democracy
-# Copyright (c) 2007 Rosetta Contributors and Canonical Ltd 2007
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
 # This file is distributed under the same license as the democracy package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
 #
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
-# Raivis Dejus <orvils@gmail.com>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: _democracyplayer-lv\n"
+"Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-07-16 13:21-0400\n"
-"PO-Revision-Date: 2009-07-09 10:21+0000\n"
-"Last-Translator: Fil Baumanis <Unknown>\n"
-"Language-Team: Latvian <locale@laka.lv>\n"
+"PO-Revision-Date: 2009-07-23 13:48+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Latvian <lv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-07-21 14:41+0000\n"
+"X-Launchpad-Export-Date: 2009-09-23 16:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#: ../../portable/httpclient.py:89
+#, python-format
+msgid "Error: %(msg)s"
+msgstr "Kļūda: %(msg)s"
 
 #: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
 msgid "Can't connect"
 msgstr "Nevar pieslēgties"
+
+#: ../../portable/httpclient.py:105
+#, python-format
+msgid "Connection Error: %(msg)s"
+msgstr "Pieslēgšanās Kļūda: %(msg)s"
 
 #: ../../portable/httpclient.py:111
 msgid "SSL connection error"
@@ -32,6 +40,31 @@ msgstr "SSL pieslēgšanās kļūda"
 msgid "HTTP error"
 msgstr "HTTP kļūda"
 
+#: ../../portable/httpclient.py:119
+#, python-format
+msgid "Bad Status Line: %(msg)s"
+msgstr "Nepareiza Stavokļa Līnija: %(msg)s"
+
+#: ../../portable/httpclient.py:124
+#, python-format
+msgid "Bad Header Line: %(msg)s"
+msgstr ""
+
+#: ../../portable/httpclient.py:129
+#, python-format
+msgid "Bad Chunk size: %(msg)s"
+msgstr ""
+
+#: ../../portable/httpclient.py:134
+#, python-format
+msgid "Expected CRLF got: %(character)r"
+msgstr "Gribēju CRLF, dabūju: %(character)r"
+
+#: ../../portable/httpclient.py:139
+#, python-format
+msgid "%(host)s closed connection"
+msgstr "%(host)s slēdza savienojumu"
+
 #: ../../portable/httpclient.py:144 ../../portable/httpclient.py:173
 #: ../../portable/downloader.py:299
 msgid "File not found"
@@ -40,6 +73,11 @@ msgstr "Fails nav atrasts"
 #: ../../portable/httpclient.py:145
 msgid "Got 404 status code"
 msgstr "Saņemts 404 statusa kods"
+
+#: ../../portable/httpclient.py:147
+#, python-format
+msgid "Bad Status Code: %(code)s"
+msgstr ""
 
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"
@@ -58,13 +96,33 @@ msgstr "Cauruļvada pieprasījums nekad nav sākts"
 msgid "Timeout"
 msgstr "Noildze"
 
+#: ../../portable/httpclient.py:163
+#, python-format
+msgid "Connection to %(host)s timed out"
+msgstr "Savienojums ar %(host)s noildzis"
+
 #: ../../portable/httpclient.py:167
 msgid "Invalid URL"
 msgstr "Nederīgs URL"
 
+#: ../../portable/httpclient.py:168
+#, python-format
+msgid "\"%(url)s\" is not a valid URL"
+msgstr "\"%(url)s\" ir nederīgs URL"
+
+#: ../../portable/httpclient.py:174
+#, python-format
+msgid "The file \"%(path)s\" doesn't exist"
+msgstr "Datne \"%(path)s\" neexistē"
+
 #: ../../portable/httpclient.py:178
 msgid "Read error"
 msgstr "Lasīšanas kļūda"
+
+#: ../../portable/httpclient.py:179
+#, python-format
+msgid "Error while reading from \"%(path)s\""
+msgstr ""
 
 #: ../../portable/httpclient.py:376
 msgid "Unknown Error code"
@@ -91,14 +149,40 @@ msgstr "Miro programma"
 msgid "Video Search"
 msgstr "Video meklēšana"
 
+#: ../../portable/frontends/widgets/statictabs.py:103
+#: ../../portable/frontends/widgets/itemlistcontroller.py:516
+msgid "Video"
+msgstr "Video"
+
 #: ../../portable/frontends/widgets/statictabs.py:108
 #: ../../portable/frontends/widgets/itemlistcontroller.py:522
 msgid "Audio"
 msgstr "Audio"
 
+#: ../../portable/frontends/widgets/statictabs.py:113
+#: ../../portable/frontends/widgets/itemlistcontroller.py:528
+msgid "Other"
+msgstr ""
+
 #: ../../portable/frontends/widgets/statictabs.py:118
 msgid "Downloading"
 msgstr "Lejupielādē"
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
+msgid "Add a Playlist"
+msgstr "Pievienot Spēļsarakstu"
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
+msgid "Add items to an existing playlist or a new one."
+msgstr ""
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
+msgid "Existing playlist:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
+msgid "New playlist:"
+msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
@@ -118,6 +202,34 @@ msgstr "Izdzēst"
 msgid "Play"
 msgstr "Atskaņot"
 
+#: ../../portable/frontends/widgets/itemcontextmenu.py:95
+msgid "Play Just This Item"
+msgstr "Spēlēt Tikai Šo"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:96
+#: ../../portable/frontends/widgets/itemcontextmenu.py:192
+msgid "Add to Playlist"
+msgstr "Pievienot Spēļsarakstam"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:99
+#: ../../portable/frontends/widgets/application.py:495
+msgid "Rename Item"
+msgstr "Pārdēvēt Vienību"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:101
+msgid "Revert Item Name"
+msgstr "Atgriezt Vienības Vardu"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:103
+#: ../../portable/frontends/widgets/itemcontextmenu.py:199
+msgid "Mark as Unplayed"
+msgstr "Atzīmēt, kā Nespēlētu"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:106
+#: ../../portable/frontends/widgets/itemcontextmenu.py:204
+msgid "Mark as Played"
+msgstr "Atzīmēt, kā Spēlētu"
+
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:210
 #: ../../portable/frontends/widgets/style.py:257
@@ -128,6 +240,14 @@ msgstr "Atskaņot"
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:123
 msgid "Keep"
 msgstr "Paturēt"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:112
+msgid "Stop Seeding"
+msgstr "Parstāt Sēklot"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:114
+msgid "Resume Seeding"
+msgstr "Atsākt Sēklot"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:117
 #: ../../portable/frontends/widgets/itemcontextmenu.py:239
@@ -164,11 +284,61 @@ msgstr "Mājas lapa"
 msgid "Comments"
 msgstr "Komentāri"
 
+#: ../../portable/frontends/widgets/itemcontextmenu.py:138
+msgid "License"
+msgstr "Licenze"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:141
+msgid "File in Browser"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:143
+#, python-format
+msgid "File in %(progname)s"
+msgstr "Datne %(progname)s"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:145
+msgid "File on Disk"
+msgstr "Datne Diskā"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:148
+msgid "View"
+msgstr "Skatīt"
+
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
 #: ../../portable/frontends/widgets/gtk/video.py:273
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:119
 msgid "Share"
 msgstr "Dalīties"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:186
+#, python-format
+msgid "%(count)d Downloaded Item"
+msgid_plural "%(count)d Downloaded Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:215
+#, python-format
+msgid "%(count)d Available Item"
+msgid_plural "%(count)d Available Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:228
+#, python-format
+msgid "%(count)d Downloading Item"
+msgid_plural "%(count)d Downloading Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:245
+#, python-format
+msgid "%(count)d Paused Item"
+msgid_plural "%(count)d Paused Items"
+msgstr[0] "%(count)d Vienums Pauzēts"
+msgstr[1] "%(count)d Vienums Pauzēts"
+msgstr[2] "%(count)d Vienumi Pauzēti"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:263
 msgid "Restart Upload"
@@ -303,6 +473,32 @@ msgstr "15 neapskatītas vienības"
 msgid "Feed Settings"
 msgstr "Barotnes iestatījumi"
 
+#: ../../portable/frontends/widgets/firsttimedialog.py:63
+#, python-format
+msgid "%(name)s First Time Setup"
+msgstr "%(name)s Pirmās Reizes Uzstādīšana"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:122
+#, python-format
+msgid "Welcome to the %(name)s First Time Setup"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:126
+#, python-format
+msgid ""
+"The next few screens will help you set up %(name)s so that it works best for "
+"you.\n"
+"\n"
+"We recommend that you have %(name)s launch when your computer starts up.  "
+"This way, downloads in progress can finish downloading and new media files "
+"can be downloaded in the background, ready when you want to watch."
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:138
+#, python-format
+msgid "Would you like to run %(name)s on startup?"
+msgstr "Vai gribat palaist %(name)s startējot datoru?"
+
 #: ../../portable/frontends/widgets/firsttimedialog.py:144
 #: ../../portable/frontends/widgets/firsttimedialog.py:178
 #: ../../portable/dialogs.py:87
@@ -315,14 +511,45 @@ msgstr "Jā"
 msgid "No"
 msgstr "Nē"
 
+#: ../../portable/frontends/widgets/firsttimedialog.py:153
+msgid "Next >"
+msgstr "Nakošais"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:163
+#, python-format
+msgid "Completing the %(name)s First Time Setup"
+msgstr "Beidzam %(name)s Pirmās Reizes Uzstādīšanu"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:167
+#, python-format
+msgid ""
+"%(name)s can find all the media files on your computer to help you organize "
+"your collection.\n"
+"\n"
+"Would you like %(name)s to look for media files on your computer?"
+msgstr ""
+
 #: ../../portable/frontends/widgets/firsttimedialog.py:185
 msgid "Restrict to all my personal files."
 msgstr "Ierobežot uz visiem maniem personiskajiem failiem."
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:186
+msgid "Search custom folders:"
+msgstr "Meklēt citos folderos:"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:192
 #: ../../portable/frontends/widgets/prefpanel.py:435
 msgid "Change"
 msgstr "Mainīt"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:197
+msgid "Choose directory to search for media files"
+msgstr "Izvēlaties folderu, kurā meklēt mēdijas datnes"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:211
+#: ../../portable/frontends/widgets/firsttimedialog.py:290
+msgid "< Previous"
+msgstr "< Iepriekšējais"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:223
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
@@ -336,10 +563,48 @@ msgstr "Meklēt"
 msgid "Finish"
 msgstr "Pabeigt"
 
+#: ../../portable/frontends/widgets/firsttimedialog.py:273
+msgid "Searching for media files"
+msgstr "Meklējot mēdijas datnes"
+
 #: ../../portable/frontends/widgets/firsttimedialog.py:283
 #: ../../portable/dialogs.py:85
 msgid "Cancel"
 msgstr "Atcelt"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:321
+#, python-format
+msgid "parsed %(count)s file"
+msgid_plural "parsed %(count)s files"
+msgstr[0] "analizēta %(count)s datne"
+msgstr[1] "analizēta %(count)s datne"
+msgstr[2] "analizētas %(count)s datnes"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:326
+#, python-format
+msgid "found %(count)s media file"
+msgid_plural "found %(count)s media files"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/crashdialog.py:54
+#, python-format
+msgid ""
+"%(appname)s has encountered an internal error.  You can help us track down "
+"this problem and fix it by submitting an error report."
+msgstr ""
+"%(appname)s pieredzējusi iekšēju kļūdu. Jūs varat mums palīdzēt atrast un "
+"salabot šo problēmu iesniedzot kļūdas ziņu."
+
+#: ../../portable/frontends/widgets/crashdialog.py:63
+msgid ""
+"Include entire program database including all video and feed metadata with "
+"crash report"
+msgstr ""
+
+#: ../../portable/frontends/widgets/crashdialog.py:68
+msgid "Describe what you were doing when you got this error:"
+msgstr "Aprakstiet ko darijāt kad pieredzejāt šo kļūdu:"
 
 #: ../../portable/frontends/widgets/style.py:232
 msgid "From"
@@ -356,6 +621,20 @@ msgstr "Rādīt vairāk"
 #: ../../portable/frontends/widgets/style.py:235
 msgid "Show Less"
 msgstr "Rādīt mazāk"
+
+#: ../../portable/frontends/widgets/style.py:238
+#, python-format
+msgid "Reveal in %(progname)s"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:238
+#: ../../portable/frontends/widgets/displays.py:390
+msgid "Reveal File"
+msgstr "Atklāt Datni"
+
+#: ../../portable/frontends/widgets/style.py:239
+msgid "Display Contents"
+msgstr "Parādīt Sastāvu"
 
 #: ../../portable/frontends/widgets/style.py:241
 msgid "File URL"
@@ -412,6 +691,10 @@ msgstr "sarindots automātiskai lejupielādei"
 msgid "Unplayed"
 msgstr "Neapskatīts"
 
+#: ../../portable/frontends/widgets/style.py:255
+msgid "Currently Playing"
+msgstr "Pašlaik Spēle"
+
 #: ../../portable/frontends/widgets/style.py:256
 #: ../../portable/frontends/widgets/style.py:1171
 msgid "Newly Available"
@@ -442,6 +725,15 @@ msgstr "apturēts"
 msgid "Remove from playlist"
 msgstr "Aizvākt no repertuāra"
 
+#: ../../portable/frontends/widgets/displays.py:372
+#, python-format
+msgid ""
+"%(appname)s can't play this file.  You may be able to open it with a "
+"different program"
+msgstr ""
+"%(appname)s nespēj so datni atskaņot. Iespējams, ka varat to atvērt ar citu "
+"programmu."
+
 #: ../../portable/frontends/widgets/displays.py:382
 msgid "Filename:"
 msgstr "Faila nosaukums:"
@@ -450,9 +742,82 @@ msgstr "Faila nosaukums:"
 msgid "File type:"
 msgstr "Faila tips:"
 
+#: ../../portable/frontends/widgets/displays.py:391
+#: ../../portable/frontends/widgets/displays.py:428
+msgid "Play Externally"
+msgstr "Spēlet Ārēji"
+
+#: ../../portable/frontends/widgets/displays.py:393
+msgid "Skip"
+msgstr "Izlaist"
+
+#: ../../portable/frontends/widgets/displays.py:430
+msgid "Open Externally"
+msgstr ""
+
+#: ../../portable/frontends/widgets/displays.py:536
+#, python-format
+msgid "%(count)d Feed Folder Selected"
+msgid_plural "%(count)d Feed Folders Selected"
+msgstr[0] "%(count)d Barotņu Folderis Izvēlēts"
+msgstr[1] "%(count)d Barotņu Folderis Izvēlēts"
+msgstr[2] "%(count)d Barotņu Folderi Izvēlēti"
+
+#: ../../portable/frontends/widgets/displays.py:541
+#, python-format
+msgid "(contains %(count)d feed)"
+msgid_plural "(contains %(count)d feeds)"
+msgstr[0] "(sastāvā %(count)d barotne)"
+msgstr[1] "(sastāvā %(count)d barotne)"
+msgstr[2] "(sastāvā %(count)d barotnes)"
+
+#: ../../portable/frontends/widgets/displays.py:547
+#, python-format
+msgid "%(count)d Playlist Folder Selected"
+msgid_plural "%(count)d Playlist Folders Selected"
+msgstr[0] "%(count)d Spēļsaraksta Folderis Izvēlēts"
+msgstr[1] "%(count)d Spēļsaraksta Folderis Izvēlēts"
+msgstr[2] "%(count)d Spēļsaraksta Folderi Izvēlēti"
+
+#: ../../portable/frontends/widgets/displays.py:552
+#, python-format
+msgid "(contains %(count)d playlist)"
+msgid_plural "(contains %(count)d playlist)"
+msgstr[0] "(sastāvā %(count)d spēļsaraksts)"
+msgstr[1] "(sastāvā %(count)d spēļsaraksts)"
+msgstr[2] "(sastāvā %(count)d spēļsarakstu)"
+
+#: ../../portable/frontends/widgets/displays.py:562
+#, python-format
+msgid "%(count)d Feed Selected"
+msgid_plural "%(count)d Feeds Selected"
+msgstr[0] "%(count)d Barotne Izvēlēta"
+msgstr[1] "%(count)d Barotne Izvēlēta"
+msgstr[2] "%(count)d Barotnes Izvēlētas"
+
+#: ../../portable/frontends/widgets/displays.py:568
+#, python-format
+msgid "%(count)d Site Selected"
+msgid_plural "%(count)d Sites Selected"
+msgstr[0] "%(count)d Vieta Izvēlēta"
+msgstr[1] "%(count)d Vieta Izvēlēta"
+msgstr[2] "%(count)d Vietas Izvēlētas"
+
+#: ../../portable/frontends/widgets/displays.py:574
+#, python-format
+msgid "%(count)d Playlist Selected"
+msgid_plural "%(count)d Playlists Selected"
+msgstr[0] "%(count)d Spēļsaraksts Izvēlēts"
+msgstr[1] "%(count)d Spēļsaraksts Izvēlēts"
+msgstr[2] "%(count)d Spēļsaraksti Izvēlēti"
+
 #: ../../portable/frontends/widgets/displays.py:581
 msgid "Delete All"
 msgstr "Dzēst visu"
+
+#: ../../portable/frontends/widgets/displays.py:585
+msgid "Put Into a New Folder"
+msgstr "Ielikt Jaunā Folderī"
 
 #: ../../portable/frontends/widgets/rundialog.py:82
 msgid "Username:"
@@ -462,14 +827,164 @@ msgstr "Lietotājvārds:"
 msgid "Password:"
 msgstr "Parole:"
 
+#: ../../portable/frontends/widgets/browser.py:96
+msgid "Open in browser"
+msgstr "Atvērt pārlūkā"
+
+#: ../../portable/frontends/widgets/browser.py:102
+msgid "Download this video"
+msgstr "Lejupielādēt šo video"
+
+#: ../../portable/frontends/widgets/application.py:156
+msgid "Movies directory gone"
+msgstr "Filmu folderis pazudis"
+
+#: ../../portable/frontends/widgets/application.py:158
+#, python-format
+msgid ""
+"%(shortappname)s can't find the primary video directory located at:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"This may be because it is located on an external drive that is not "
+"connected.\n"
+"\n"
+"If you continue, the primary video directory will be reset to a location on "
+"this drive.  If you had videos downloaded this will cause %(shortappname)s "
+"to lose details about those videos.\n"
+"\n"
+"If you quit, then you can connect the drive or otherwise fix the problem and "
+"relaunch %(shortappname)s."
+msgstr ""
+
 #: ../../portable/frontends/widgets/application.py:326
 msgid "Error Revealing File"
 msgstr "Kļūda saņemot failu"
+
+#: ../../portable/frontends/widgets/application.py:327
+#, python-format
+msgid "The file %(filename)s was deleted from outside %(appname)s."
+msgstr "Datne %(filename)s izdzēsta ārpus %(appname)s."
+
+#: ../../portable/frontends/widgets/application.py:335
+msgid "Open Files..."
+msgstr "Atvērt Datnes..."
+
+#: ../../portable/frontends/widgets/application.py:346
+#: ../../portable/frontends/widgets/application.py:351
+msgid "Open Files - Error"
+msgstr "Atverot Datnes - Kļūda"
+
+#: ../../portable/frontends/widgets/application.py:347
+#: ../../portable/frontends/widgets/application.py:634
+#, python-format
+msgid "File %(filename)s does not exist."
+msgstr "Datne %(filename)s neeksistē."
+
+#: ../../portable/frontends/widgets/application.py:352
+msgid "The following files do not exist:"
+msgstr "Sekojošās datnes neeksistē:"
+
+#: ../../portable/frontends/widgets/application.py:389
+msgid "New Download"
+msgstr "Jauna Lejupielāde"
+
+#: ../../portable/frontends/widgets/application.py:390
+msgid "Enter the URL of the item to download"
+msgstr "Ievadiet lejupielādējamā vienuma URL"
+
+#: ../../portable/frontends/widgets/application.py:391
+msgid "New Download - Invalid URL"
+msgstr "Jauns Lejupielādējums - Nederīgs URL"
+
+#: ../../portable/frontends/widgets/application.py:392
+msgid ""
+"The address you entered is not a valid url.\n"
+"Please check the URL and try again.\n"
+"\n"
+"Enter the URL of the item to download"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:400
+#, python-format
+msgid "%(appname)s is up to date"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:402
+#, python-format
+msgid "%(appname)s is up to date!"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:426
+msgid "Remove item"
+msgid_plural "Remove items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:430
+msgid ""
+"One of these items was not downloaded from a feed. Would you like to delete "
+"it or just remove it from the Library?"
+msgid_plural ""
+"Some of these items were not downloaded from a feed. Would you like to "
+"delete them or just remove them from the Library?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:440
+msgid ""
+"One of these items is a folder.  Delete/Removeing a folder will "
+"delete/remove it's contents"
+msgid_plural ""
+"Some of these items are folders.  Delete/Removeing a folder will "
+"delete/remove it's contents"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:455
+#, python-format
+msgid "Are you sure you want to delete the item?"
+msgid_plural "Are you sure you want to delete all %(count)d items?"
+msgstr[0] "Vai parliecināti, ka gribat izdzēst šo vienumu?"
+msgstr[1] "Vai parliecināti, ka gribat izdzēst šo vienumu?"
+msgstr[2] "Vai parliecināti, ka gribat izdzēst visus %(count)d vienumus?"
+
+#: ../../portable/frontends/widgets/application.py:462
+msgid ""
+"One of these items is a folder.  Deleting a folder will delete it's contents"
+msgid_plural ""
+"Some of these items are folders.  Deleting a folder will delete it's contents"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:496
+msgid "Enter the new name for the item"
+msgstr "Ievadiet jauno vienuma vārdu"
+
+#: ../../portable/frontends/widgets/application.py:519
+msgid "Save Item As..."
+msgstr "Saglabāt Vienumu Kā..."
 
 #: ../../portable/frontends/widgets/application.py:572
 #: ../../portable/menubar.py:213
 msgid "Add Site"
 msgstr "Pievienot vietni"
+
+#: ../../portable/frontends/widgets/application.py:573
+msgid "Enter the URL of the site to add"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:574
+msgid "Add Site - Invalid URL"
+msgstr "Pievienojot Vietu - Nederīgs URL"
+
+#: ../../portable/frontends/widgets/application.py:575
+msgid ""
+"The address you entered is not a valid url.\n"
+"Please check the URL and try again.\n"
+"\n"
+"Enter the URL of the site to add"
+msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
@@ -478,6 +993,10 @@ msgstr "Importēt OPML failu"
 #: ../../portable/frontends/widgets/application.py:626
 msgid "OPML Files"
 msgstr "OPML faili"
+
+#: ../../portable/frontends/widgets/application.py:633
+msgid "Import OPML File - Error"
+msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:639
 msgid "Export OPML File"
@@ -499,29 +1018,134 @@ msgstr "Izveidot repertuāra mapi"
 msgid "Enter a name for the new playlist folder"
 msgstr "Ievadiet jaunās repertuāra mapes nosaukumu"
 
+#: ../../portable/frontends/widgets/application.py:707
+#: ../../portable/frontends/widgets/tablist.py:579
+msgid "Rename Feed Folder"
+msgstr "Pardēvēt Barotņu Folderi"
+
+#: ../../portable/frontends/widgets/application.py:708
+#, python-format
+msgid "Enter a new name for the feed folder %(name)s"
+msgstr "Ievadiet jaunu nosaukumu barotņu folderim %(name)s"
+
+#: ../../portable/frontends/widgets/application.py:712
+msgid "Rename Feed"
+msgstr "Pardēvēt Barotni"
+
+#: ../../portable/frontends/widgets/application.py:713
+#, python-format
+msgid "Enter a new name for the feed %(name)s"
+msgstr "Ievadiet jaunu nosaukumu barotnei %(name)s"
+
 #: ../../portable/frontends/widgets/application.py:717
 #: ../../portable/frontends/widgets/tablist.py:640
 #: ../../portable/playlist.py:188
 msgid "Rename Playlist"
 msgstr "Pārsaukt repertuāru"
 
+#: ../../portable/frontends/widgets/application.py:718
+#, python-format
+msgid "Enter a new name for the playlist %(name)s"
+msgstr "Ievadiet jaunu nosaukumu spēļsarakstam %(name)s"
+
 #: ../../portable/frontends/widgets/application.py:722
 #: ../../portable/frontends/widgets/tablist.py:634
 msgid "Rename Playlist Folder"
 msgstr "Pārsaukt repertuāra mapi"
 
+#: ../../portable/frontends/widgets/application.py:723
+#, python-format
+msgid "Enter a new name for the playlist folder %(name)s"
+msgstr "Ievadiet jaunu nosaukumu spēļsarakstu folderim %(name)s"
+
+#: ../../portable/frontends/widgets/application.py:726
+#: ../../portable/frontends/widgets/tablist.py:529
+msgid "Rename Site"
+msgstr "Pardēvēt Vietu"
+
+#: ../../portable/frontends/widgets/application.py:727
+#, python-format
+msgid "Enter a new name for the site %(name)s"
+msgstr "Ievadiet jaunu nosaukumu vietai %(name)s"
+
+#: ../../portable/frontends/widgets/application.py:751
+msgid "Remove playlist"
+msgid_plural "Remove playlists"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:753
+#, python-format
+msgid "Are you sure you want to remove this playlist?"
+msgid_plural "Are you sure you want to remove these %(count)s playlists?"
+msgstr[0] "Vai pārliecināti, ka gribat aizvākt šo spēļsarakstu?"
+msgstr[1] "Vai pārliecināti, ka gribat aizvākt šos %(count)s spēļsarakstus?"
+msgstr[2] "Vai pārliecināti, ka gribat aizvākt šos %(count)s spēļsarakstus?"
+
+#: ../../portable/frontends/widgets/application.py:770
+msgid "Remove site"
+msgid_plural "Remove sites"
+msgstr[0] "Aizvākt vietu"
+msgstr[1] "Aizvākt vietas"
+msgstr[2] "Aizvākt vietas"
+
+#: ../../portable/frontends/widgets/application.py:772
+#, python-format
+msgid "Are you sure you want to remove this site?"
+msgid_plural "Are you sure you want to remove these %(count)s sites?"
+msgstr[0] "Vai pārliecināti, ka gribat aizvākt šo vietu?"
+msgstr[1] "Vai pārliecināti, ka gribat aizvākt šīs %(count)s vietas?"
+msgstr[2] "Vai pārliecināti, ka gribat aizvākt šīs %(count)s vietas?"
+
 #: ../../portable/frontends/widgets/application.py:802
 msgid "Are you sure you want to quit?"
 msgstr "Vai jūs tiešām vēlaties izslēgt Miro?"
+
+#: ../../portable/frontends/widgets/application.py:804
+#, python-format
+msgid "You have %(count)d download in progress.  Quit anyway?"
+msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
+msgstr[0] "Jums pašlaik %(count)d vienums lejupielādē. Vienalga iziet?"
+msgstr[1] "Jums pašlaik %(count)d vienumu lejupielādē. Vienalga iziet?"
+msgstr[2] "Jums pašlaik %(count)d vienumu lejupielādē. Vienalga iziet?"
 
 #: ../../portable/frontends/widgets/application.py:809
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "Brīdināt mani, ja mēģinu izslēgt Miro kamēr tiek lejupielādēti faili"
 
+#: ../../portable/frontends/widgets/application.py:1124
+msgid "Message"
+msgstr "Ziņojums"
+
+#: ../../portable/frontends/widgets/application.py:1149
+msgid "Migrating Files"
+msgstr "Migrējot Datnes"
+
+#: ../../portable/frontends/widgets/application.py:1159
+msgid "Migrating files"
+msgstr "Migrējot datnes"
+
 #: ../../portable/frontends/widgets/downloadscontroller.py:81
 #: ../../portable/frontends/widgets/prefpanel.py:622
 msgid "Downloads"
 msgstr "Lejupielāde"
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:90
+msgid "Single and external downloads"
+msgstr ""
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:93
+msgid "Feed downloads"
+msgstr "Barotņu lejupielādes"
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:96
+msgid "Seeding"
+msgstr "Sēklojot"
+
+#: ../../portable/frontends/widgets/prefpanel.py:267
+#, python-format
+msgid "Automatically run %(appname)s when I log in."
+msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:271
 msgid "Warn me if I attempt to quit with downloads in progress."
@@ -598,6 +1222,10 @@ msgstr "Automātiskās lejupielādes iestatījums:"
 msgid "Remember this many old items:"
 msgstr "Atcerēties tik daudz vecas vienības:"
 
+#: ../../portable/frontends/widgets/prefpanel.py:327
+msgid "(in addition to the current contents)"
+msgstr "(pielikumā pašreizējam sastāvam)"
+
 #: ../../portable/frontends/widgets/prefpanel.py:340
 msgid "Maximum number of manual downloads at a time:"
 msgstr "Maksimālais pašrocīgās lejuplādes sakaits:"
@@ -655,14 +1283,37 @@ msgstr "Izvēlieties filmu mapi"
 msgid "Migrate existing movies?"
 msgstr "Pārcelt esošos video?"
 
+#: ../../portable/frontends/widgets/prefpanel.py:454
+#, python-format
+msgid ""
+"You've selected a new folder to download movies to.  Should %(appname)s "
+"migrate your existing downloads there? (Currently downloading movies will "
+"not be moved until they finish.)"
+msgstr ""
+"Jūs esat izvēlējušies jaunu folderi filmu lejupielādei. Vai gribat lai "
+"%(appname)s turp migrē jūsu iepriekšējās lejupielādes? (Filmas šobrīd "
+"lejupielādē netiks migrētas, kamēr nav pabeigtas.)"
+
 #: ../../portable/frontends/widgets/prefpanel.py:482
 #: ../../portable/dialogs.py:104
 msgid "Add"
 msgstr "Pievienot"
 
+#: ../../portable/frontends/widgets/prefpanel.py:523
+msgid "Add Watched Folder"
+msgstr "Pielikt Novērotu Folderi"
+
 #: ../../portable/frontends/widgets/prefpanel.py:542
 msgid "Store downloads in this folder:"
 msgstr "Saglabāt lejuplādējumus šajā mapē:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:549
+msgid ""
+"Watch for new video and audio items in these folders and include them in "
+"library:"
+msgstr ""
+"Uzmanīt jaunus audio un video vienumus šajos folderos, un pievienot tos "
+"bibliotēkai:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:568
 msgid "Keep at least this much free space on my drive:"
@@ -693,13 +1344,42 @@ msgstr "10 dienas"
 msgid "1 month"
 msgstr "1 mēnesis"
 
+#: ../../portable/frontends/widgets/prefpanel.py:590
+msgid "By default, video and audio items expire after:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:599
+msgid "Always play videos in a separate window."
+msgstr "Vienmēr spēlēt video atsevišķā lodziņā."
+
+#: ../../portable/frontends/widgets/prefpanel.py:603
+msgid ""
+"Resume playing a video or audio item from the point it was last stopped."
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:608
+msgid "Play video and audio items one after another"
+msgstr "Spēlēt video un audio vienumus vienu pēc otra"
+
+#: ../../portable/frontends/widgets/prefpanel.py:609
+msgid "Stop after each video or audio item"
+msgstr "Apstāties pēc katra video vai audio vienuma"
+
 #: ../../portable/frontends/widgets/prefpanel.py:620
 msgid "General"
 msgstr "Vispārēji"
 
+#: ../../portable/frontends/widgets/prefpanel.py:621
+msgid "Feeds"
+msgstr "Barotnes"
+
 #: ../../portable/frontends/widgets/prefpanel.py:623
 msgid "Folders"
 msgstr "Mapes"
+
+#: ../../portable/frontends/widgets/prefpanel.py:624
+msgid "Disk space"
+msgstr "Diska telpa"
 
 #: ../../portable/frontends/widgets/prefpanel.py:625
 msgid "Playback"
@@ -709,6 +1389,15 @@ msgstr "Atskaņošana"
 msgid "Preferences"
 msgstr "Iestatījumi"
 
+#: ../../portable/frontends/widgets/newsearchfeed.py:58
+msgid "New Search Feed"
+msgstr "Jauna Izmeklēšanas Barotne"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:59
+msgid "A search feed contains items that match a search term."
+msgstr ""
+"Izmeklēšanas barotne satur elementus atbilstošus meklēšanas terminam."
+
 #: ../../portable/frontends/widgets/newsearchfeed.py:74
 msgid "Search for:"
 msgstr "Meklēt:"
@@ -717,10 +1406,148 @@ msgstr "Meklēt:"
 msgid "In this:"
 msgstr "Šajā:"
 
+#: ../../portable/frontends/widgets/newsearchfeed.py:88
+msgid "Feed:"
+msgstr "Barotne:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:93
+msgid "Search engine:"
+msgstr "Meklētājs:"
+
 #: ../../portable/frontends/widgets/newsearchfeed.py:99
 #: ../../portable/frontends/widgets/newfeed.py:60
 msgid "URL:"
 msgstr "URL:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:133
+msgid "Add new feed to this section:"
+msgstr "Pievienot jaunu barotni šai sekcijai:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:136
+#: ../../portable/frontends/widgets/newfolder.py:71
+#: ../../portable/frontends/widgets/newfeed.py:72
+msgid "video"
+msgstr "video"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:137
+#: ../../portable/frontends/widgets/newfolder.py:72
+#: ../../portable/frontends/widgets/newfeed.py:73
+msgid "audio"
+msgstr "audio"
+
+#: ../../portable/frontends/widgets/linkhandler.py:54
+msgid "Subscribe to Feed"
+msgstr "Pierakstīties uz Barotni"
+
+#: ../../portable/frontends/widgets/linkhandler.py:56
+#, python-format
+msgid ""
+"This link appears to be a feed.  Do you want to add it to your "
+"subscriptions?\n"
+"\n"
+"%(url)s"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newfolder.py:60
+msgid "Folder name:"
+msgstr "Foldera nosaukums:"
+
+#: ../../portable/frontends/widgets/newfolder.py:69
+msgid "Folder should go in this section:"
+msgstr "Folderis pieder šinī sekcijā:"
+
+#: ../../portable/frontends/widgets/newfolder.py:109
+#: ../../portable/frontends/widgets/newfolder.py:111
+msgid "Create Feed Folder"
+msgstr "Radit Barotņu Folderi"
+
+#: ../../portable/frontends/widgets/newfolder.py:112
+msgid "Enter the name of the folder to add"
+msgstr "Ievadiet nosaukumu pievienojamam foderim"
+
+#: ../../portable/frontends/widgets/playlist.py:146
+msgid "This Playlist is Empty"
+msgstr ""
+
+#: ../../portable/frontends/widgets/playlist.py:149
+msgid ""
+"To add an item, drag it onto the name of this playlist in the sidebar."
+msgstr ""
+
+#: ../../portable/frontends/widgets/removefeeds.py:49
+msgid "Remove Feed"
+msgid_plural "Remove Feeds"
+msgstr[0] "Aizvākt Barotni"
+msgstr[1] "Aizvākt Barotnes"
+msgstr[2] "Aizvākt Barotnes"
+
+#: ../../portable/frontends/widgets/removefeeds.py:57
+msgid "Are you sure you want to remove this feed:"
+msgid_plural "Are you sure you want to remove these feeds:"
+msgstr[0] "Vai pārliecināti, ka gribat aizvākt barotni?"
+msgstr[1] "Vai pārliecināti, ka gribat aizvākt barotnes?"
+msgstr[2] "Vai pārliecināti, ka gribat aizvākt barotnes?"
+
+#: ../../portable/frontends/widgets/removefeeds.py:84
+msgid "Keep items that have been downloaded in my library."
+msgstr "Paturēt lejupielādētus vienumus manā bibliotēkā."
+
+#: ../../portable/frontends/widgets/removefeeds.py:89
+#, python-format
+msgid ""
+"Watched folders will be removed from the sidebar but their contents will "
+"still appear in your library.  You can stop watching watched folders "
+"completely in the %(appname)s preference panel."
+msgstr ""
+
+#: ../../portable/frontends/widgets/removefeeds.py:100
+msgid ""
+"Are you sure you want to remove this feed?  The downloads currently in "
+"progress will be canceled."
+msgid_plural ""
+"Are you sure you want to remove these feeds?  The downloads currently in "
+"progress will be canceled."
+msgstr[0] ""
+"Vai parliecināti, ka gribat aizvākt šo barotni? Aktīvas lejupielādes tiks "
+"atceltas."
+msgstr[1] ""
+"Vai parliecināti, ka gribat aizvākt šis barotnes? Aktīvas lejupielādes tiks "
+"atceltas."
+msgstr[2] ""
+"Vai parliecināti, ka gribat aizvākt šis barotnes? Aktīvas lejupielādes tiks "
+"atceltas."
+
+#: ../../portable/frontends/widgets/gtk/video.py:284
+msgid "Permalink"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/video.py:294
+msgid "Pop-in"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/video.py:299
+msgid "Pop-out"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:67
+#, python-format
+msgid "Play Next Unplayed (%(unplayed)d)"
+msgstr "Spēlēt Nakošo Nespēlēto (%(unplayed)d)"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:71
+#, python-format
+msgid "Play All Unplayed (%(unplayed)d)"
+msgstr "Spēlēt Visus Nespēlētos (%(unplayed)d)"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:74
+#, python-format
+msgid "Pause All Downloads (%(downloading)d)"
+msgstr "Pauzēt Visas Lejupielādes (%(downloading)d)"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:77
+#, python-format
+msgid "Resume All Downloads (%(paused)d)"
+msgstr "Turpināt Visas Lejupielādes (%(paused)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:85
 msgid "Hide"
@@ -731,18 +1558,219 @@ msgstr "Paslēpt"
 msgid "Show"
 msgstr "Parādīt"
 
+#: ../../portable/frontends/widgets/gtk/window.py:495
+msgid "All files"
+msgstr "Visas datnes"
+
+#: ../../portable/frontends/widgets/gtk/window.py:524
+msgid "Choose"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/window.py:539
+#, python-format
+msgid "About %(appname)s"
+msgstr "Par %(appname)s"
+
+#: ../../portable/frontends/widgets/gtk/window.py:554
+#, python-format
+msgid ""
+"%(copyright)s.  See license.txt file for details.\n"
+"%(trademark)s"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/window.py:593
+#: ../../portable/dialogs.py:84
+msgid "Close"
+msgstr "Aizvērt"
+
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
 msgstr "Lejuplādēts"
+
+#: ../../portable/frontends/widgets/feedcontroller.py:137
+msgid "Full Feed"
+msgstr "Visa Barotne"
+
+#: ../../portable/frontends/widgets/feedcontroller.py:191
+#, python-format
+msgid "Show %(count)d More Item"
+msgid_plural "Show %(count)d More Items"
+msgstr[0] "Parādīt Vēl %(count)d Vienumu"
+msgstr[1] "Parādīt Vēl %(count)d Vienumus"
+msgstr[2] "Parādīt Vēl %(count)d Vienumus"
+
+#: ../../portable/frontends/widgets/feedcontroller.py:232
+#: ../../portable/frontends/widgets/feedcontroller.py:259
+#, python-format
+msgid "%(count)d Downloading"
+msgid_plural "%(count)d Downloading"
+msgstr[0] "%(count)d Lejupielādē"
+msgstr[1] "%(count)d Lejupielādē"
+msgstr[2] "%(count)d Lejupielādē"
+
+#: ../../portable/frontends/widgets/feedcontroller.py:243
+#: ../../portable/frontends/widgets/feedcontroller.py:255
+#, python-format
+msgid "%(count)d Item"
+msgid_plural "%(count)d Items"
+msgstr[0] "%(count)d Vienums"
+msgstr[1] "%(count)d Vienumi"
+msgstr[2] "%(count)d Vienumi"
+
+#: ../../portable/frontends/widgets/feedcontroller.py:264
+#, python-format
+msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
+msgid_plural ""
+"%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
+msgstr[0] ""
+"%(count)d Lejupielāde Ielikta Rindā Nespēlētu Vienumu Dēļ (Skatiet Sastādi)"
+msgstr[1] ""
+"%(count)d Lejupielādes Ieliktas Rindā Nespēlētu Vienumu Dēļ (Skatiet Sastādi)"
+msgstr[2] ""
+"%(count)d Lejupielādes Ieliktas Rindā Nespēlētu Vienumu Dēļ (Skatiet Sastādi)"
+
+#: ../../portable/frontends/widgets/feedcontroller.py:275
+#, python-format
+msgid "%(count)d Item Matches Search"
+msgid_plural "%(count)d Items Match Search"
+msgstr[0] "%(count)d Vienums Atbilst Meklētam"
+msgstr[1] "%(count)d Vienumi Atbilst Meklētam"
+msgstr[2] "%(count)d Vienumi Atbilst Meklētam"
+
+#: ../../portable/frontends/widgets/feedcontroller.py:280
+msgid "All Items Match Search"
+msgstr "Visi Vienumi Atbilst Meklētam"
+
+#: ../../portable/frontends/widgets/newfeed.py:70
+msgid "Feed should go in this section:"
+msgstr "Barotne pieder šinī sekcijā:"
+
+#: ../../portable/frontends/widgets/newfeed.py:111
+msgid "Add Feed"
+msgstr "Pievienot Barotni"
+
+#: ../../portable/frontends/widgets/newfeed.py:112
+msgid "Enter the URL of the feed to add"
+msgstr "Ievadiet pievienojamās barotnes URL"
+
+#: ../../portable/frontends/widgets/newfeed.py:123
+msgid "Add Feed - Invalid URL"
+msgstr "Pievienojot Barotni - Nederīgs URL"
+
+#: ../../portable/frontends/widgets/newfeed.py:124
+msgid ""
+"The address you entered is not a valid url.\n"
+"Please check the URL and try again.\n"
+"\n"
+"Enter the URL of the feed to add"
+msgstr ""
+"Ievadītā adrese nav derīgs URL.\n"
+"Lūdzu parbaudiet URL un mēģiniet vēlreiz.\n"
+"\n"
+"Ievadiet pievienojamās barotnes URL"
 
 #: ../../portable/frontends/widgets/tablist.py:528
 #: ../../portable/frontends/widgets/tablist.py:591
 msgid "Copy URL to clipboard"
 msgstr "Kopēt URL uz starpliktuvi"
 
+#: ../../portable/frontends/widgets/tablist.py:530
+msgid "Remove Site"
+msgstr "Aizvākt Vietu"
+
+#: ../../portable/frontends/widgets/tablist.py:534
+msgid "Remove Sites"
+msgstr "Aizvākt Vietas"
+
+#: ../../portable/frontends/widgets/tablist.py:578
+msgid "Update Feeds In Folder"
+msgstr "Atjaunināt Barotnes Folderī"
+
+#: ../../portable/frontends/widgets/tablist.py:585
+msgid "Update Feed Now"
+msgstr "Nekavējoties Atjaunināt Barotni"
+
+#: ../../portable/frontends/widgets/tablist.py:588
+msgid "Rename"
+msgstr "Pārdēvēt"
+
+#: ../../portable/frontends/widgets/tablist.py:590
+msgid "Revert Feed Name"
+msgstr "Atgriezt Barotnes Nosaukumu"
+
+#: ../../portable/frontends/widgets/tablist.py:597
+msgid "Update Feeds Now"
+msgstr "Nekavējoties Atjaunināt Barotnes"
+
+#: ../../portable/frontends/widgets/tablist.py:662
+msgid "LIBRARY"
+msgstr "BIBLIOTĒKA"
+
+#: ../../portable/frontends/widgets/tablist.py:664
+msgid "SITES"
+msgstr "VIETAS"
+
+#: ../../portable/frontends/widgets/tablist.py:666
+msgid "FEEDS"
+msgstr "BAROTNES"
+
+#: ../../portable/frontends/widgets/tablist.py:668
+msgid "AUDIO FEEDS"
+msgstr "AUDIO BAROTNES"
+
+#: ../../portable/frontends/widgets/tablist.py:670
+msgid "PLAYLISTS"
+msgstr "SPĒĻSARAKSTI"
+
+#: ../../portable/frontends/widgets/itemlistcontroller.py:447
+msgid "No Results Found"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistcontroller.py:553
+msgid "Back to feed"
+msgstr "Atgriezties uz barotni"
+
 #: ../../portable/frontends/widgets/itemlistwidgets.py:179
 msgid "Save Search"
 msgstr "Saglabāt meklēšanu"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:286
+msgid "Title"
+msgstr "Nosaukums"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:288
+msgid "Feed"
+msgstr "Barotne"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:290
+#: ../../portable/frontends/widgets/itemlistwidgets.py:743
+msgid "Date"
+msgstr "Datums"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:291
+msgid "Length"
+msgstr "Ilgums"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:292
+msgid "Status"
+msgstr "Stāvoklis"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:293
+#: ../../portable/frontends/widgets/itemlistwidgets.py:744
+msgid "Size"
+msgstr "Izmērs"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:295
+msgid "ETA"
+msgstr "Laiks atlicis"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:296
+msgid "Speed"
+msgstr "Ātrums"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:432
+msgid "Save as a Feed"
+msgstr "Saglabāt kā Barotni"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:486
 msgid "Pause All"
@@ -752,9 +1780,107 @@ msgstr "Nopauzēt Visus"
 msgid "Resume All"
 msgstr "Turpināt Visus"
 
+#: ../../portable/frontends/widgets/itemlistwidgets.py:500
+msgid "Cancel All"
+msgstr "Atcelt Visus"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:507
+msgid "Download Settings"
+msgstr "Lejupielādes Konfigurācija"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:553
+#, python-format
+msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
+msgstr ""
+"%(available)s zem lejupielādes telpas pielaides (%(amount)s brīvs diskā)"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:559
+#, python-format
+msgid "%(available)s free for downloads (%(amount)s free on disk)"
+msgstr "%(available)s izmantojams lejupielādēm (%(amount)s brīvs diskā)"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:564
+#, python-format
+msgid "%(amount)s free on disk"
+msgstr "%(amount)s brīvs diskā"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:583
+#, python-format
+msgid "%(rate)s uploading"
+msgstr "%(rate)s augšupielādē"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:585
+#, python-format
+msgid "%(rate)s downloading"
+msgstr "%(rate)s lejupielādē"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:619
+msgid "Auto Download"
+msgstr "Automatiski Lejupielādēt"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:631
+msgid "Share feed"
+msgstr "Dalīties Barotnē"
+
 #: ../../portable/frontends/widgets/itemlistwidgets.py:637
 msgid "Settings"
 msgstr "Iestatījumi"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:643
+msgid "Remove feed"
+msgstr "Aizvākt Barotni"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:719
+msgid "Unwatched"
+msgstr "Neuzmanīts"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:730
+msgid "View|All"
+msgstr "Skatīt|Visus"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:732
+msgid "Non Feed"
+msgstr "Ne-Barotne"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:742
+msgid "Name"
+msgstr "Nosaukums"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:745
+msgid "Time"
+msgstr "Laiks"
+
+#: ../../portable/frontends/widgets/diagnostics.py:83
+msgid "Movies location:"
+msgstr "Filmu vieta:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:87
+msgid "Icon cache location:"
+msgstr "Ikonu krātuves vieta:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:91
+msgid "Log file location:"
+msgstr "Žurnāldatnes vieta:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:95
+msgid "Downloader log file location:"
+msgstr "Lejupielādētāja žurnāldatnes vieta:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:99
+msgid "Database file location:"
+msgstr "Datubāzes vieta:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:106
+msgid "Space free on disk:"
+msgstr "Brīva telpa diskā:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:108
+msgid "Database size:"
+msgstr "Datubāzes izmērs:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:110
+msgid "Total db objects in memory:"
+msgstr "Datubāzes objektu skaits atminā:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:118
 #: ../../portable/menubar.py:276
@@ -765,7 +1891,7 @@ msgstr "Diagnostika"
 msgid "Search All"
 msgstr "Meklēt visus"
 
-#: ../../portable/messages.py:1060 ../../portable/item.py:1078
+#: ../../portable/messages.py:1078 ../../portable/item.py:1078
 msgid "queued for download"
 msgstr "ierindots lejupielādei"
 
@@ -781,17 +1907,64 @@ msgstr "Pierakstīts jaunām barotnēm:"
 msgid "Unknown Error"
 msgstr "Nezināma kļūda"
 
+#: ../../portable/startup.py:99
+#, python-format
+msgid ""
+"An unknown error prevented %(appname)s from startup.  Please file a bug "
+"report at %(url)s."
+msgstr ""
+"Nezināma kļūda neatļāva %(appname)s uzsākt.  Lūdzu iesniedziet defekta ziņu "
+"šeit: %(url)s."
+
 #: ../../portable/startup.py:179
 msgid "Database too new"
 msgstr "Datubāze ir pārāk jauna"
+
+#: ../../portable/startup.py:181
+#, python-format
+msgid ""
+"You have a database that was saved with a newer version of %(appname)s. You "
+"must download the latest version of %(appname)s and run that."
+msgstr ""
+"Jusu datubāze saglabāta ar jaunāku %(appname)s versiju. Lejupielādejiet "
+"jaunāko %(appname)s versiju un lietojiet to."
 
 #: ../../portable/commandline.py:99
 msgid "Subscription error"
 msgstr "Pierakstīšanās kļūda"
 
+#: ../../portable/commandline.py:109
+#, python-format
+msgid ""
+"This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
+"the publisher of this file."
+msgstr ""
+
+#: ../../portable/commandline.py:119
+#, python-format
+msgid ""
+"This %(appname)s feed file has the wrong content type: %(url)s. Please "
+"notify the publisher of this file."
+msgstr ""
+"Šai %(appname)s barotnes datnei nederīgs satura tips: %(url)s.  Lūdzu to "
+"ziņojiet barotnes izdevējam."
+
+#: ../../portable/commandline.py:127
+#, python-format
+msgid "Could not download the %(appname)s feed file: %(url)s"
+msgstr "Nevarēja lejupielādēt %(appname)s barotnes datni: %(url)s"
+
 #: ../../portable/commandline.py:179
 msgid "Invalid Torrent"
 msgstr "Nederīgs torrents"
+
+#: ../../portable/commandline.py:181
+#, python-format
+msgid ""
+"The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+"[OK]"
+msgstr ""
+"Straumes datne %(filename)s izskatās samaitāta un nevar tikt atvērta. [OK]"
 
 #: ../../portable/downloader.py:258
 msgid "activity"
@@ -809,6 +1982,11 @@ msgstr "palaižas"
 msgid "Error loading feed"
 msgstr "Kļūda ielādējot barotni"
 
+#: ../../portable/feed.py:938
+#, python-format
+msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
+msgstr "Nevarēja ielādēt barotni %(url)s (%(errordescription)s)."
+
 #: ../../portable/feed.py:941
 msgid "Would you like to keep the feed?"
 msgstr "Vai vēlaties saglabāt šo barotni?"
@@ -816,6 +1994,29 @@ msgstr "Vai vēlaties saglabāt šo barotni?"
 #: ../../portable/feed.py:1066
 msgid "Bad content-type"
 msgstr "Slikts satura tips"
+
+#: ../../portable/feed.py:1079
+#, python-format
+msgid "Channel is not compatible with %(appname)s"
+msgstr "Kanāls ir nesakritīgs ar %(appname)s"
+
+#: ../../portable/feed.py:1082
+#, python-format
+msgid ""
+"This channel is not compatible with %(appname)s but we'll try our best to "
+"grab the files.  It may take extra time to list the videos, and descriptions "
+"may look funny.\n"
+"\n"
+"Please contact the publishers of %(url)s and ask if they can supply a feed "
+"in a format that will work with %(appname)s.\n"
+"\n"
+"Do you want to try to load this channel anyway?"
+msgstr ""
+
+#: ../../portable/feed.py:1683
+#, python-format
+msgid "Search All: %(text)s"
+msgstr "Izmeklēt Visur: %(text)s"
 
 #: ../../portable/feed.py:2264 ../../portable/feed.py:2415
 msgid "Local Files"
@@ -829,9 +2030,17 @@ msgstr "Atskaņo failu"
 msgid "Ok"
 msgstr "Labi"
 
+#: ../../portable/dialogs.py:86
+msgid "Done"
+msgstr "Pabeigts"
+
 #: ../../portable/dialogs.py:89
 msgid "Quit"
 msgstr "Iziet"
+
+#: ../../portable/dialogs.py:90
+msgid "Continue"
+msgstr "Turpināt"
 
 #: ../../portable/dialogs.py:91
 msgid "Ignore"
@@ -873,6 +2082,14 @@ msgstr "Dzēst video"
 msgid "Create"
 msgstr "Izveidot"
 
+#: ../../portable/dialogs.py:102
+msgid "Create Feed"
+msgstr "Radīt Barotni"
+
+#: ../../portable/dialogs.py:103
+msgid "Create Folder"
+msgstr "Izveidot Mapi"
+
 #: ../../portable/dialogs.py:105
 msgid "Add Into New Folder"
 msgstr "Pievienot jaunajā mapē"
@@ -893,9 +2110,21 @@ msgstr "Palaist Miro"
 msgid "Download Anyway"
 msgstr "Lejupielādēt tāpat"
 
+#: ../../portable/dialogs.py:113
+msgid "Open in External Browser"
+msgstr "Atvērt Ārejā Parlūkā"
+
 #: ../../portable/dialogs.py:114
 msgid "Don't Install"
 msgstr "Neinstalēt"
+
+#: ../../portable/dialogs.py:115
+msgid "Subscribe"
+msgstr "Pierakstīties"
+
+#: ../../portable/dialogs.py:116
+msgid "Stop Watching"
+msgstr "Parstāt Uzmanīt"
 
 #: ../../portable/singleclick.py:54
 msgid "Download already exists"
@@ -904,6 +2133,11 @@ msgstr "Lejupielāde jau eksistē"
 #: ../../portable/singleclick.py:55
 msgid "That URL is already an external download."
 msgstr "URL jau ir kā ārējā lejupielāde."
+
+#: ../../portable/singleclick.py:61
+#, python-format
+msgid "%(appname)s will begin downloading it now."
+msgstr "%(appname)s tūlit sāks to lejupielādēt."
 
 #: ../../portable/singleclick.py:64
 msgid "It is downloading now."
@@ -917,9 +2151,23 @@ msgstr "Tā jau ir lejupielādēta."
 msgid "File Download"
 msgstr "Faila lejupielāde"
 
+#: ../../portable/singleclick.py:97
+#, python-format
+msgid ""
+"This file at %(url)s does not appear to be audio, video, or an RSS feed."
+msgstr "Datne %(url)s neizskatās pēc audio, video, vai RSS barotnes."
+
 #: ../../portable/singleclick.py:137
 msgid "Download Error"
 msgstr "Lejupielādes kļūda"
+
+#: ../../portable/singleclick.py:139
+#, python-format
+msgid ""
+"%(appname)s is not able to download a file at this URL:\n"
+"\n"
+"URL: %(url)s"
+msgstr ""
 
 #: ../../portable/dl_daemon/download.py:628
 #, python-format
@@ -962,6 +2210,11 @@ msgstr "Torrent fails no %(url)s nav derīgs"
 #: ../../portable/dl_daemon/download.py:1103
 msgid "Torrent file deleted"
 msgstr "Torrent fails ir izdzēsts"
+
+#: ../../portable/dl_daemon/download.py:1104
+#, python-format
+msgid "The torrent file for this item was deleted outside of %(appname)s."
+msgstr ""
 
 #: ../../portable/menubar.py:184
 msgid "_Open"
@@ -1143,6 +2396,15 @@ msgstr "_Klusāk"
 msgid "_Fullscreen"
 msgstr "_Pa visu ekrānu"
 
+#: ../../portable/menubar.py:266
+msgid "_Toggle Detached/Attached"
+msgstr ""
+
+#: ../../portable/menubar.py:270
+#, python-format
+msgid "_About %(name)s"
+msgstr ""
+
 #: ../../portable/menubar.py:272
 msgid "_Donate"
 msgstr "_Ziedot"
@@ -1208,9 +2470,38 @@ msgstr "%(size)sB"
 msgid "Enter a new name for the playlist %s"
 msgstr "Ievadiet jauno repertuāra %s nosaukumu"
 
+#: ../../portable/item.py:897
+#, python-format
+msgid "%(count)d day"
+msgid_plural "%(count)d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/item.py:902
+#, python-format
+msgid "%(count)d hour"
+msgid_plural "%(count)d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/item.py:907
+#, python-format
+msgid "%(count)d minute"
+msgid_plural "%(count)d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
 #: ../../portable/item.py:1165
 msgid "no title"
 msgstr "bez virsraksta"
+
+#: ../../portable/item.py:1211
+msgid "Contents appear in the library"
+msgstr ""
+
+#: ../../portable/item.py:1216
+msgid "Contents:"
+msgstr ""
 
 #: ../../portable/item.py:1442
 msgid "starting up..."
@@ -1219,6 +2510,11 @@ msgstr "startējas"
 #: ../../portable/opml.py:193
 msgid "OPML Import failed"
 msgstr "OPML imports neizdevās"
+
+#: ../../portable/opml.py:194
+msgid ""
+"The selected OPML file appears to be invalid.  Import was interrupted."
+msgstr ""
 
 #: ../../portable/opml.py:201
 msgid "OPML Import summary"
@@ -1263,6 +2559,27 @@ msgstr "%(size)s kb/s"
 #, python-format
 msgid "%(size)s b/s"
 msgstr "%(size)s b/s"
+
+#: ../../portable/displaytext.py:68
+#, python-format
+msgid "%(num).0f day"
+msgid_plural "%(num).0f days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/displaytext.py:71
+#, python-format
+msgid "%(num).0f hr"
+msgid_plural "%(num).0f hrs"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/displaytext.py:74
+#, python-format
+msgid "%(num).0f min"
+msgid_plural "%(num).0f mins"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../portable/displaytext.py:76
 #, python-format
@@ -1340,11 +2657,43 @@ msgstr[0] "Noveco: %(count)d minūte"
 msgstr[1] "Noveco: %(count)d minūtes"
 msgstr[2] "Noveco: %(count)d minūtes"
 
-#: ../../platform/osx/plat/frontends/widgets/application.py:169
+#: ../../portable/displaytext.py:142
+#, python-format
+msgid "%(month)s %(dayofmonth)s, %(year)s"
+msgstr ""
+
+#: ../../portable/storedatabase.py:449
+#, python-format
+msgid "%(appname)s database save failed"
+msgstr ""
+
+#: ../../portable/storedatabase.py:452
+#, python-format
+msgid ""
+"%(appname)s was unable to save its database: Disk Full.\n"
+"We suggest deleting files from the full disk or simply deleting some movies "
+"from your collection.\n"
+"Recent changes may be lost."
+msgstr ""
+
+#: ../../portable/storedatabase.py:464
+#, python-format
+msgid "%(appname)s database save succeeded"
+msgstr ""
+
+#: ../../portable/storedatabase.py:467
+msgid ""
+"The database has been successfully saved. It is now safe to quit without "
+"losing any data."
+msgstr ""
+"Datubāze ir veiksmīgi saglabāta. Tagad Jūs droši varat izslēgt programmu "
+"nezaudējot datus."
+
+#: ../../platform/osx/plat/frontends/widgets/application.py:171
 msgid "Download Completed"
 msgstr "Lejupielāde pabeigta"
 
-#: ../../platform/osx/plat/frontends/widgets/application.py:170
+#: ../../platform/osx/plat/frontends/widgets/application.py:172
 #, python-format
 msgid "Download of video '%s' is finished."
 msgstr "'%s' video lejupielāde ir pabeigta."
@@ -1361,6 +2710,11 @@ msgstr "Sakļaut"
 msgid "Services"
 msgstr "Servisi"
 
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:141
+#, python-format
+msgid "Hide %(appname)s"
+msgstr ""
+
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:143
 msgid "Hide Others"
 msgstr "Paslēpt citus"
@@ -1372,6 +2726,11 @@ msgstr "Parādīt visu"
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:149
 msgid "Preferences..."
 msgstr "Iestatījumi..."
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:151
+#, python-format
+msgid "Quit %(appname)s"
+msgstr ""
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
 msgid "Close Window"
@@ -1409,6 +2768,10 @@ msgstr "Rādīt īstajā izmētrā"
 msgid "Present Double Size"
 msgstr "Rādīt dubultā izmērā"
 
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:176
+msgid "Present Video"
+msgstr ""
+
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
 msgid "Zoom"
 msgstr "Palielinājums"
@@ -1429,6 +2792,11 @@ msgstr "Pārcelt visu uz priekšplānu"
 msgid "Window"
 msgstr "Logs"
 
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:195
+#, python-format
+msgid "%(appname)s Help"
+msgstr ""
+
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:39
 msgid "Enable tray icon"
@@ -1438,6 +2806,11 @@ msgstr "Aktivizēt palodzes ikonu"
 msgid "Renderer options:"
 msgstr "Renderēšanas opcijas:"
 
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
+#, python-format
+msgid "You must restart %(appname)s for renderer changes to take effect."
+msgstr ""
+
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:74
 msgid "Video renderer:"
 msgstr "Viideo renderētājs:"
@@ -1445,6 +2818,11 @@ msgstr "Viideo renderētājs:"
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
 msgid "Update Available"
 msgstr "Pieejams atjauninājums"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
+#, python-format
+msgid "A new version of %(appname)s is available for download."
+msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
@@ -1454,9 +2832,26 @@ msgstr "Vai vēlateis to tagad lejupielādēt?"
 msgid "Install Adobe Flash?"
 msgstr "Instalēt Adobe Flash?"
 
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
+#, python-format
+msgid ""
+"For the best %(appname)s experience, we suggest you install Adobe Flash.  "
+"Would you like to do this now?"
+msgstr ""
+
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
 msgstr "Instalēt Adobe Flash"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
+#, python-format
+msgid ""
+"Your browser will load the web-site where you can download and install Adobe "
+"Flash.\n"
+"\n"
+"You should quit %(appname)s now and start it up again after Adobe Flash has "
+"been installed."
+msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
 msgid "When I click the red close button:"
@@ -1466,9 +2861,21 @@ msgstr "Kad es nospiežu sarkano aizvēršanas pogu:"
 msgid "Close to tray so that downloads can continue."
 msgstr "Aizvērt uz palodzi, lai lejupielādes var turpināties."
 
+#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
+#, python-format
+msgid "Quit %(appname)s completely."
+msgstr ""
+
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:133
 msgid "Close to tray?"
 msgstr "Minimizēt uz sistēmas ikonu joslu?"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:134
+#, python-format
+msgid ""
+"When you click the red close button, would you like %(appname)s to close to "
+"the system tray or quit?  You can change this setting later in the Options."
+msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:192
 msgid "Error Bombing Item"
@@ -1488,1404 +2895,3 @@ msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr ""
 "Notikusi kļūda verot vaļā %(url)s. Lūdzu pēc pāris sekundēm mēģiniet vēlreiz"
-
-#: ../../portable/httpclient.py:89
-#, python-format
-msgid "Error: %(msg)s"
-msgstr "Kļūda: %(msg)s"
-
-#: ../../portable/httpclient.py:105
-#, python-format
-msgid "Connection Error: %(msg)s"
-msgstr "Pieslēgšanās Kļūda: %(msg)s"
-
-#: ../../portable/httpclient.py:119
-#, python-format
-msgid "Bad Status Line: %(msg)s"
-msgstr "Nepareiza Stavokļa Līnija: %(msg)s"
-
-#: ../../portable/httpclient.py:124
-#, python-format
-msgid "Bad Header Line: %(msg)s"
-msgstr ""
-
-#: ../../portable/httpclient.py:129
-#, python-format
-msgid "Bad Chunk size: %(msg)s"
-msgstr ""
-
-#: ../../portable/httpclient.py:134
-#, python-format
-msgid "Expected CRLF got: %(character)r"
-msgstr "Gribēju CRLF, dabūju: %(character)r"
-
-#: ../../portable/httpclient.py:139
-#, python-format
-msgid "%(host)s closed connection"
-msgstr "%(host)s slēdza savienojumu"
-
-#: ../../portable/httpclient.py:147
-#, python-format
-msgid "Bad Status Code: %(code)s"
-msgstr ""
-
-#: ../../portable/httpclient.py:163
-#, python-format
-msgid "Connection to %(host)s timed out"
-msgstr "Savienojums ar %(host)s noildzis"
-
-#: ../../portable/httpclient.py:168
-#, python-format
-msgid "\"%(url)s\" is not a valid URL"
-msgstr "\"%(url)s\" ir nederīgs URL"
-
-#: ../../portable/httpclient.py:174
-#, python-format
-msgid "The file \"%(path)s\" doesn't exist"
-msgstr "Datne \"%(path)s\" neexistē"
-
-#: ../../portable/httpclient.py:179
-#, python-format
-msgid "Error while reading from \"%(path)s\""
-msgstr ""
-
-#: ../../portable/frontends/widgets/statictabs.py:103
-#: ../../portable/frontends/widgets/itemlistcontroller.py:516
-msgid "Video"
-msgstr "Video"
-
-#: ../../portable/frontends/widgets/statictabs.py:113
-#: ../../portable/frontends/widgets/itemlistcontroller.py:528
-msgid "Other"
-msgstr ""
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
-msgid "Add a Playlist"
-msgstr "Pievienot Spēļsarakstu"
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
-msgid "Add items to an existing playlist or a new one."
-msgstr ""
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
-msgid "Existing playlist:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
-msgid "New playlist:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:95
-msgid "Play Just This Item"
-msgstr "Spēlēt Tikai Šo"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:96
-#: ../../portable/frontends/widgets/itemcontextmenu.py:192
-msgid "Add to Playlist"
-msgstr "Pievienot Spēļsarakstam"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:99
-#: ../../portable/frontends/widgets/application.py:495
-msgid "Rename Item"
-msgstr "Pārdēvēt Vienību"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:101
-msgid "Revert Item Name"
-msgstr "Atgriezt Vienības Vardu"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:103
-#: ../../portable/frontends/widgets/itemcontextmenu.py:199
-msgid "Mark as Unplayed"
-msgstr "Atzīmēt, kā Nespēlētu"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:106
-#: ../../portable/frontends/widgets/itemcontextmenu.py:204
-msgid "Mark as Played"
-msgstr "Atzīmēt, kā Spēlētu"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:112
-msgid "Stop Seeding"
-msgstr "Parstāt Sēklot"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:114
-msgid "Resume Seeding"
-msgstr "Atsākt Sēklot"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:138
-msgid "License"
-msgstr "Licenze"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:141
-msgid "File in Browser"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:143
-#, python-format
-msgid "File in %(progname)s"
-msgstr "Datne %(progname)s"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:145
-msgid "File on Disk"
-msgstr "Datne Diskā"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:148
-msgid "View"
-msgstr "Skatīt"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:186
-#, python-format
-msgid "%(count)d Downloaded Item"
-msgid_plural "%(count)d Downloaded Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:215
-#, python-format
-msgid "%(count)d Available Item"
-msgid_plural "%(count)d Available Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:228
-#, python-format
-msgid "%(count)d Downloading Item"
-msgid_plural "%(count)d Downloading Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:245
-#, python-format
-msgid "%(count)d Paused Item"
-msgid_plural "%(count)d Paused Items"
-msgstr[0] "%(count)d Vienums Pauzēts"
-msgstr[1] "%(count)d Vienums Pauzēts"
-msgstr[2] "%(count)d Vienumi Pauzēti"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:63
-#, python-format
-msgid "%(name)s First Time Setup"
-msgstr "%(name)s Pirmās Reizes Uzstādīšana"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:122
-#, python-format
-msgid "Welcome to the %(name)s First Time Setup"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:126
-#, python-format
-msgid ""
-"The next few screens will help you set up %(name)s so that it works best for "
-"you.\n"
-"\n"
-"We recommend that you have %(name)s launch when your computer starts up.  "
-"This way, downloads in progress can finish downloading and new media files "
-"can be downloaded in the background, ready when you want to watch."
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:138
-#, python-format
-msgid "Would you like to run %(name)s on startup?"
-msgstr "Vai gribat palaist %(name)s startējot datoru?"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:153
-msgid "Next >"
-msgstr "Nakošais"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:163
-#, python-format
-msgid "Completing the %(name)s First Time Setup"
-msgstr "Beidzam %(name)s Pirmās Reizes Uzstādīšanu"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:167
-#, python-format
-msgid ""
-"%(name)s can find all the media files on your computer to help you organize "
-"your collection.\n"
-"\n"
-"Would you like %(name)s to look for media files on your computer?"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:186
-msgid "Search custom folders:"
-msgstr "Meklēt citos folderos:"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:197
-msgid "Choose directory to search for media files"
-msgstr "Izvēlaties folderu, kurā meklēt mēdijas datnes"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:211
-#: ../../portable/frontends/widgets/firsttimedialog.py:290
-msgid "< Previous"
-msgstr "< Iepriekšējais"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:273
-msgid "Searching for media files"
-msgstr "Meklējot mēdijas datnes"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:321
-#, python-format
-msgid "parsed %(count)s file"
-msgid_plural "parsed %(count)s files"
-msgstr[0] "analizēta %(count)s datne"
-msgstr[1] "analizēta %(count)s datne"
-msgstr[2] "analizētas %(count)s datnes"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:326
-#, python-format
-msgid "found %(count)s media file"
-msgid_plural "found %(count)s media files"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/crashdialog.py:54
-#, python-format
-msgid ""
-"%(appname)s has encountered an internal error.  You can help us track down "
-"this problem and fix it by submitting an error report."
-msgstr ""
-"%(appname)s pieredzējusi iekšēju kļūdu. Jūs varat mums palīdzēt atrast un "
-"salabot šo problēmu iesniedzot kļūdas ziņu."
-
-#: ../../portable/frontends/widgets/crashdialog.py:63
-msgid ""
-"Include entire program database including all video and feed metadata with "
-"crash report"
-msgstr ""
-
-#: ../../portable/frontends/widgets/crashdialog.py:68
-msgid "Describe what you were doing when you got this error:"
-msgstr "Aprakstiet ko darijāt kad pieredzejāt šo kļūdu:"
-
-#: ../../portable/frontends/widgets/style.py:238
-#, python-format
-msgid "Reveal in %(progname)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:238
-#: ../../portable/frontends/widgets/displays.py:390
-msgid "Reveal File"
-msgstr "Atklāt Datni"
-
-#: ../../portable/frontends/widgets/style.py:239
-msgid "Display Contents"
-msgstr "Parādīt Sastāvu"
-
-#: ../../portable/frontends/widgets/style.py:255
-msgid "Currently Playing"
-msgstr "Pašlaik Spēle"
-
-#: ../../portable/frontends/widgets/displays.py:372
-#, python-format
-msgid ""
-"%(appname)s can't play this file.  You may be able to open it with a "
-"different program"
-msgstr ""
-"%(appname)s nespēj so datni atskaņot. Iespējams, ka varat to atvērt ar citu "
-"programmu."
-
-#: ../../portable/frontends/widgets/displays.py:391
-#: ../../portable/frontends/widgets/displays.py:428
-msgid "Play Externally"
-msgstr "Spēlet Ārēji"
-
-#: ../../portable/frontends/widgets/displays.py:393
-msgid "Skip"
-msgstr "Izlaist"
-
-#: ../../portable/frontends/widgets/displays.py:430
-msgid "Open Externally"
-msgstr ""
-
-#: ../../portable/frontends/widgets/displays.py:536
-#, python-format
-msgid "%(count)d Feed Folder Selected"
-msgid_plural "%(count)d Feed Folders Selected"
-msgstr[0] "%(count)d Barotņu Folderis Izvēlēts"
-msgstr[1] "%(count)d Barotņu Folderis Izvēlēts"
-msgstr[2] "%(count)d Barotņu Folderi Izvēlēti"
-
-#: ../../portable/frontends/widgets/displays.py:541
-#, python-format
-msgid "(contains %(count)d feed)"
-msgid_plural "(contains %(count)d feeds)"
-msgstr[0] "(sastāvā %(count)d barotne)"
-msgstr[1] "(sastāvā %(count)d barotne)"
-msgstr[2] "(sastāvā %(count)d barotnes)"
-
-#: ../../portable/frontends/widgets/displays.py:547
-#, python-format
-msgid "%(count)d Playlist Folder Selected"
-msgid_plural "%(count)d Playlist Folders Selected"
-msgstr[0] "%(count)d Spēļsaraksta Folderis Izvēlēts"
-msgstr[1] "%(count)d Spēļsaraksta Folderis Izvēlēts"
-msgstr[2] "%(count)d Spēļsaraksta Folderi Izvēlēti"
-
-#: ../../portable/frontends/widgets/displays.py:552
-#, python-format
-msgid "(contains %(count)d playlist)"
-msgid_plural "(contains %(count)d playlist)"
-msgstr[0] "(sastāvā %(count)d spēļsaraksts)"
-msgstr[1] "(sastāvā %(count)d spēļsaraksts)"
-msgstr[2] "(sastāvā %(count)d spēļsarakstu)"
-
-#: ../../portable/frontends/widgets/displays.py:562
-#, python-format
-msgid "%(count)d Feed Selected"
-msgid_plural "%(count)d Feeds Selected"
-msgstr[0] "%(count)d Barotne Izvēlēta"
-msgstr[1] "%(count)d Barotne Izvēlēta"
-msgstr[2] "%(count)d Barotnes Izvēlētas"
-
-#: ../../portable/frontends/widgets/displays.py:568
-#, python-format
-msgid "%(count)d Site Selected"
-msgid_plural "%(count)d Sites Selected"
-msgstr[0] "%(count)d Vieta Izvēlēta"
-msgstr[1] "%(count)d Vieta Izvēlēta"
-msgstr[2] "%(count)d Vietas Izvēlētas"
-
-#: ../../portable/frontends/widgets/displays.py:574
-#, python-format
-msgid "%(count)d Playlist Selected"
-msgid_plural "%(count)d Playlists Selected"
-msgstr[0] "%(count)d Spēļsaraksts Izvēlēts"
-msgstr[1] "%(count)d Spēļsaraksts Izvēlēts"
-msgstr[2] "%(count)d Spēļsaraksti Izvēlēti"
-
-#: ../../portable/frontends/widgets/displays.py:585
-msgid "Put Into a New Folder"
-msgstr "Ielikt Jaunā Folderī"
-
-#: ../../portable/frontends/widgets/browser.py:96
-msgid "Open in browser"
-msgstr "Atvērt pārlūkā"
-
-#: ../../portable/frontends/widgets/browser.py:102
-msgid "Download this video"
-msgstr "Lejupielādēt šo video"
-
-#: ../../portable/frontends/widgets/application.py:156
-msgid "Movies directory gone"
-msgstr "Filmu folderis pazudis"
-
-#: ../../portable/frontends/widgets/application.py:158
-#, python-format
-msgid ""
-"%(shortappname)s can't find the primary video directory located at:\n"
-"\n"
-"%(moviedirectory)s\n"
-"\n"
-"This may be because it is located on an external drive that is not "
-"connected.\n"
-"\n"
-"If you continue, the primary video directory will be reset to a location on "
-"this drive.  If you had videos downloaded this will cause %(shortappname)s "
-"to lose details about those videos.\n"
-"\n"
-"If you quit, then you can connect the drive or otherwise fix the problem and "
-"relaunch %(shortappname)s."
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:327
-#, python-format
-msgid "The file %(filename)s was deleted from outside %(appname)s."
-msgstr "Datne %(filename)s izdzēsta ārpus %(appname)s."
-
-#: ../../portable/frontends/widgets/application.py:335
-msgid "Open Files..."
-msgstr "Atvērt Datnes..."
-
-#: ../../portable/frontends/widgets/application.py:346
-#: ../../portable/frontends/widgets/application.py:351
-msgid "Open Files - Error"
-msgstr "Atverot Datnes - Kļūda"
-
-#: ../../portable/frontends/widgets/application.py:347
-#: ../../portable/frontends/widgets/application.py:634
-#, python-format
-msgid "File %(filename)s does not exist."
-msgstr "Datne %(filename)s neeksistē."
-
-#: ../../portable/frontends/widgets/application.py:352
-msgid "The following files do not exist:"
-msgstr "Sekojošās datnes neeksistē:"
-
-#: ../../portable/frontends/widgets/application.py:389
-msgid "New Download"
-msgstr "Jauna Lejupielāde"
-
-#: ../../portable/frontends/widgets/application.py:390
-msgid "Enter the URL of the item to download"
-msgstr "Ievadiet lejupielādējamā vienuma URL"
-
-#: ../../portable/frontends/widgets/application.py:391
-msgid "New Download - Invalid URL"
-msgstr "Jauns Lejupielādējums - Nederīgs URL"
-
-#: ../../portable/frontends/widgets/application.py:392
-msgid ""
-"The address you entered is not a valid url.\n"
-"Please check the URL and try again.\n"
-"\n"
-"Enter the URL of the item to download"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:400
-#, python-format
-msgid "%(appname)s is up to date"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:402
-#, python-format
-msgid "%(appname)s is up to date!"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:426
-msgid "Remove item"
-msgid_plural "Remove items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:430
-msgid ""
-"One of these items was not downloaded from a feed. Would you like to delete "
-"it or just remove it from the Library?"
-msgid_plural ""
-"Some of these items were not downloaded from a feed. Would you like to "
-"delete them or just remove them from the Library?"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:440
-msgid ""
-"One of these items is a folder.  Delete/Removeing a folder will "
-"delete/remove it's contents"
-msgid_plural ""
-"Some of these items are folders.  Delete/Removeing a folder will "
-"delete/remove it's contents"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:455
-#, python-format
-msgid "Are you sure you want to delete the item?"
-msgid_plural "Are you sure you want to delete all %(count)d items?"
-msgstr[0] "Vai parliecināti, ka gribat izdzēst šo vienumu?"
-msgstr[1] "Vai parliecināti, ka gribat izdzēst šo vienumu?"
-msgstr[2] "Vai parliecināti, ka gribat izdzēst visus %(count)d vienumus?"
-
-#: ../../portable/frontends/widgets/application.py:462
-msgid ""
-"One of these items is a folder.  Deleting a folder will delete it's contents"
-msgid_plural ""
-"Some of these items are folders.  Deleting a folder will delete it's contents"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:496
-msgid "Enter the new name for the item"
-msgstr "Ievadiet jauno vienuma vārdu"
-
-#: ../../portable/frontends/widgets/application.py:519
-msgid "Save Item As..."
-msgstr "Saglabāt Vienumu Kā..."
-
-#: ../../portable/frontends/widgets/application.py:573
-msgid "Enter the URL of the site to add"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:574
-msgid "Add Site - Invalid URL"
-msgstr "Pievienojot Vietu - Nederīgs URL"
-
-#: ../../portable/frontends/widgets/application.py:575
-msgid ""
-"The address you entered is not a valid url.\n"
-"Please check the URL and try again.\n"
-"\n"
-"Enter the URL of the site to add"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:633
-msgid "Import OPML File - Error"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:707
-#: ../../portable/frontends/widgets/tablist.py:579
-msgid "Rename Feed Folder"
-msgstr "Pardēvēt Barotņu Folderi"
-
-#: ../../portable/frontends/widgets/application.py:708
-#, python-format
-msgid "Enter a new name for the feed folder %(name)s"
-msgstr "Ievadiet jaunu nosaukumu barotņu folderim %(name)s"
-
-#: ../../portable/frontends/widgets/application.py:712
-msgid "Rename Feed"
-msgstr "Pardēvēt Barotni"
-
-#: ../../portable/frontends/widgets/application.py:713
-#, python-format
-msgid "Enter a new name for the feed %(name)s"
-msgstr "Ievadiet jaunu nosaukumu barotnei %(name)s"
-
-#: ../../portable/frontends/widgets/application.py:718
-#, python-format
-msgid "Enter a new name for the playlist %(name)s"
-msgstr "Ievadiet jaunu nosaukumu spēļsarakstam %(name)s"
-
-#: ../../portable/frontends/widgets/application.py:723
-#, python-format
-msgid "Enter a new name for the playlist folder %(name)s"
-msgstr "Ievadiet jaunu nosaukumu spēļsarakstu folderim %(name)s"
-
-#: ../../portable/frontends/widgets/application.py:726
-#: ../../portable/frontends/widgets/tablist.py:529
-msgid "Rename Site"
-msgstr "Pardēvēt Vietu"
-
-#: ../../portable/frontends/widgets/application.py:727
-#, python-format
-msgid "Enter a new name for the site %(name)s"
-msgstr "Ievadiet jaunu nosaukumu vietai %(name)s"
-
-#: ../../portable/frontends/widgets/application.py:751
-msgid "Remove playlist"
-msgid_plural "Remove playlists"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:753
-#, python-format
-msgid "Are you sure you want to remove this playlist?"
-msgid_plural "Are you sure you want to remove these %(count)s playlists?"
-msgstr[0] "Vai pārliecināti, ka gribat aizvākt šo spēļsarakstu?"
-msgstr[1] "Vai pārliecināti, ka gribat aizvākt šos %(count)s spēļsarakstus?"
-msgstr[2] "Vai pārliecināti, ka gribat aizvākt šos %(count)s spēļsarakstus?"
-
-#: ../../portable/frontends/widgets/application.py:770
-msgid "Remove site"
-msgid_plural "Remove sites"
-msgstr[0] "Aizvākt vietu"
-msgstr[1] "Aizvākt vietas"
-msgstr[2] "Aizvākt vietas"
-
-#: ../../portable/frontends/widgets/application.py:772
-#, python-format
-msgid "Are you sure you want to remove this site?"
-msgid_plural "Are you sure you want to remove these %(count)s sites?"
-msgstr[0] "Vai pārliecināti, ka gribat aizvākt šo vietu?"
-msgstr[1] "Vai pārliecināti, ka gribat aizvākt šīs %(count)s vietas?"
-msgstr[2] "Vai pārliecināti, ka gribat aizvākt šīs %(count)s vietas?"
-
-#: ../../portable/frontends/widgets/application.py:804
-#, python-format
-msgid "You have %(count)d download in progress.  Quit anyway?"
-msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
-msgstr[0] "Jums pašlaik %(count)d vienums lejupielādē. Vienalga iziet?"
-msgstr[1] "Jums pašlaik %(count)d vienumu lejupielādē. Vienalga iziet?"
-msgstr[2] "Jums pašlaik %(count)d vienumu lejupielādē. Vienalga iziet?"
-
-#: ../../portable/frontends/widgets/application.py:1106
-msgid "Message"
-msgstr "Ziņojums"
-
-#: ../../portable/frontends/widgets/application.py:1131
-msgid "Migrating Files"
-msgstr "Migrējot Datnes"
-
-#: ../../portable/frontends/widgets/application.py:1141
-msgid "Migrating files"
-msgstr "Migrējot datnes"
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:90
-msgid "Single and external downloads"
-msgstr ""
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:93
-msgid "Feed downloads"
-msgstr "Barotņu lejupielādes"
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:96
-msgid "Seeding"
-msgstr "Sēklojot"
-
-#: ../../portable/frontends/widgets/prefpanel.py:267
-#, python-format
-msgid "Automatically run %(appname)s when I log in."
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:327
-msgid "(in addition to the current contents)"
-msgstr "(pielikumā pašreizējam sastāvam)"
-
-#: ../../portable/frontends/widgets/prefpanel.py:454
-#, python-format
-msgid ""
-"You've selected a new folder to download movies to.  Should %(appname)s "
-"migrate your existing downloads there? (Currently downloading movies will "
-"not be moved until they finish.)"
-msgstr ""
-"Jūs esat izvēlējušies jaunu folderi filmu lejupielādei. Vai gribat lai "
-"%(appname)s turp migrē jūsu iepriekšējās lejupielādes? (Filmas šobrīd "
-"lejupielādē netiks migrētas, kamēr nav pabeigtas.)"
-
-#: ../../portable/frontends/widgets/prefpanel.py:523
-msgid "Add Watched Folder"
-msgstr "Pielikt Novērotu Folderi"
-
-#: ../../portable/frontends/widgets/prefpanel.py:549
-msgid ""
-"Watch for new video and audio items in these folders and include them in "
-"library:"
-msgstr ""
-"Uzmanīt jaunus audio un video vienumus šajos folderos, un pievienot tos "
-"bibliotēkai:"
-
-#: ../../portable/frontends/widgets/prefpanel.py:590
-msgid "By default, video and audio items expire after:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:599
-msgid "Always play videos in a separate window."
-msgstr "Vienmēr spēlēt video atsevišķā lodziņā."
-
-#: ../../portable/frontends/widgets/prefpanel.py:603
-msgid ""
-"Resume playing a video or audio item from the point it was last stopped."
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:608
-msgid "Play video and audio items one after another"
-msgstr "Spēlēt video un audio vienumus vienu pēc otra"
-
-#: ../../portable/frontends/widgets/prefpanel.py:609
-msgid "Stop after each video or audio item"
-msgstr "Apstāties pēc katra video vai audio vienuma"
-
-#: ../../portable/frontends/widgets/prefpanel.py:621
-msgid "Feeds"
-msgstr "Barotnes"
-
-#: ../../portable/frontends/widgets/prefpanel.py:624
-msgid "Disk space"
-msgstr "Diska telpa"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:58
-msgid "New Search Feed"
-msgstr "Jauna Izmeklēšanas Barotne"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:59
-msgid "A search feed contains items that match a search term."
-msgstr ""
-"Izmeklēšanas barotne satur elementus atbilstošus meklēšanas terminam."
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:88
-msgid "Feed:"
-msgstr "Barotne:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:93
-msgid "Search engine:"
-msgstr "Meklētājs:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:133
-msgid "Add new feed to this section:"
-msgstr "Pievienot jaunu barotni šai sekcijai:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:136
-#: ../../portable/frontends/widgets/newfolder.py:71
-#: ../../portable/frontends/widgets/newfeed.py:72
-msgid "video"
-msgstr "video"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:137
-#: ../../portable/frontends/widgets/newfolder.py:72
-#: ../../portable/frontends/widgets/newfeed.py:73
-msgid "audio"
-msgstr "audio"
-
-#: ../../portable/frontends/widgets/linkhandler.py:54
-msgid "Subscribe to Feed"
-msgstr "Pierakstīties uz Barotni"
-
-#: ../../portable/frontends/widgets/linkhandler.py:56
-#, python-format
-msgid ""
-"This link appears to be a feed.  Do you want to add it to your "
-"subscriptions?\n"
-"\n"
-"%(url)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfolder.py:60
-msgid "Folder name:"
-msgstr "Foldera nosaukums:"
-
-#: ../../portable/frontends/widgets/newfolder.py:69
-msgid "Folder should go in this section:"
-msgstr "Folderis pieder šinī sekcijā:"
-
-#: ../../portable/frontends/widgets/newfolder.py:109
-#: ../../portable/frontends/widgets/newfolder.py:111
-msgid "Create Feed Folder"
-msgstr "Radit Barotņu Folderi"
-
-#: ../../portable/frontends/widgets/newfolder.py:112
-msgid "Enter the name of the folder to add"
-msgstr "Ievadiet nosaukumu pievienojamam foderim"
-
-#: ../../portable/frontends/widgets/playlist.py:146
-msgid "This Playlist is Empty"
-msgstr ""
-
-#: ../../portable/frontends/widgets/playlist.py:149
-msgid ""
-"To add an item, drag it onto the name of this playlist in the sidebar."
-msgstr ""
-
-#: ../../portable/frontends/widgets/removefeeds.py:49
-msgid "Remove Feed"
-msgid_plural "Remove Feeds"
-msgstr[0] "Aizvākt Barotni"
-msgstr[1] "Aizvākt Barotnes"
-msgstr[2] "Aizvākt Barotnes"
-
-#: ../../portable/frontends/widgets/removefeeds.py:57
-msgid "Are you sure you want to remove this feed:"
-msgid_plural "Are you sure you want to remove these feeds:"
-msgstr[0] "Vai pārliecināti, ka gribat aizvākt barotni?"
-msgstr[1] "Vai pārliecināti, ka gribat aizvākt barotnes?"
-msgstr[2] "Vai pārliecināti, ka gribat aizvākt barotnes?"
-
-#: ../../portable/frontends/widgets/removefeeds.py:84
-msgid "Keep items that have been downloaded in my library."
-msgstr "Paturēt lejupielādētus vienumus manā bibliotēkā."
-
-#: ../../portable/frontends/widgets/removefeeds.py:89
-#, python-format
-msgid ""
-"Watched folders will be removed from the sidebar but their contents will "
-"still appear in your library.  You can stop watching watched folders "
-"completely in the %(appname)s preference panel."
-msgstr ""
-
-#: ../../portable/frontends/widgets/removefeeds.py:100
-msgid ""
-"Are you sure you want to remove this feed?  The downloads currently in "
-"progress will be canceled."
-msgid_plural ""
-"Are you sure you want to remove these feeds?  The downloads currently in "
-"progress will be canceled."
-msgstr[0] ""
-"Vai parliecināti, ka gribat aizvākt šo barotni? Aktīvas lejupielādes tiks "
-"atceltas."
-msgstr[1] ""
-"Vai parliecināti, ka gribat aizvākt šis barotnes? Aktīvas lejupielādes tiks "
-"atceltas."
-msgstr[2] ""
-"Vai parliecināti, ka gribat aizvākt šis barotnes? Aktīvas lejupielādes tiks "
-"atceltas."
-
-#: ../../portable/frontends/widgets/gtk/video.py:284
-msgid "Permalink"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/video.py:294
-msgid "Pop-in"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/video.py:299
-msgid "Pop-out"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:67
-#, python-format
-msgid "Play Next Unplayed (%(unplayed)d)"
-msgstr "Spēlēt Nakošo Nespēlēto (%(unplayed)d)"
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:71
-#, python-format
-msgid "Play All Unplayed (%(unplayed)d)"
-msgstr "Spēlēt Visus Nespēlētos (%(unplayed)d)"
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:74
-#, python-format
-msgid "Pause All Downloads (%(downloading)d)"
-msgstr "Pauzēt Visas Lejupielādes (%(downloading)d)"
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:77
-#, python-format
-msgid "Resume All Downloads (%(paused)d)"
-msgstr "Turpināt Visas Lejupielādes (%(paused)d)"
-
-#: ../../portable/frontends/widgets/gtk/window.py:495
-msgid "All files"
-msgstr "Visas datnes"
-
-#: ../../portable/frontends/widgets/gtk/window.py:524
-msgid "Choose"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/window.py:539
-#, python-format
-msgid "About %(appname)s"
-msgstr "Par %(appname)s"
-
-#: ../../portable/frontends/widgets/gtk/window.py:554
-#, python-format
-msgid ""
-"%(copyright)s.  See license.txt file for details.\n"
-"%(trademark)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/window.py:593
-#: ../../portable/dialogs.py:84
-msgid "Close"
-msgstr "Aizvērt"
-
-#: ../../portable/frontends/widgets/feedcontroller.py:137
-msgid "Full Feed"
-msgstr "Visa Barotne"
-
-#: ../../portable/frontends/widgets/feedcontroller.py:191
-#, python-format
-msgid "Show %(count)d More Item"
-msgid_plural "Show %(count)d More Items"
-msgstr[0] "Parādīt Vēl %(count)d Vienumu"
-msgstr[1] "Parādīt Vēl %(count)d Vienumus"
-msgstr[2] "Parādīt Vēl %(count)d Vienumus"
-
-#: ../../portable/frontends/widgets/feedcontroller.py:232
-#: ../../portable/frontends/widgets/feedcontroller.py:259
-#, python-format
-msgid "%(count)d Downloading"
-msgid_plural "%(count)d Downloading"
-msgstr[0] "%(count)d Lejupielādē"
-msgstr[1] "%(count)d Lejupielādē"
-msgstr[2] "%(count)d Lejupielādē"
-
-#: ../../portable/frontends/widgets/feedcontroller.py:243
-#: ../../portable/frontends/widgets/feedcontroller.py:255
-#, python-format
-msgid "%(count)d Item"
-msgid_plural "%(count)d Items"
-msgstr[0] "%(count)d Vienums"
-msgstr[1] "%(count)d Vienumi"
-msgstr[2] "%(count)d Vienumi"
-
-#: ../../portable/frontends/widgets/feedcontroller.py:264
-#, python-format
-msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
-msgid_plural ""
-"%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
-msgstr[0] ""
-"%(count)d Lejupielāde Ielikta Rindā Nespēlētu Vienumu Dēļ (Skatiet Sastādi)"
-msgstr[1] ""
-"%(count)d Lejupielādes Ieliktas Rindā Nespēlētu Vienumu Dēļ (Skatiet Sastādi)"
-msgstr[2] ""
-"%(count)d Lejupielādes Ieliktas Rindā Nespēlētu Vienumu Dēļ (Skatiet Sastādi)"
-
-#: ../../portable/frontends/widgets/feedcontroller.py:275
-#, python-format
-msgid "%(count)d Item Matches Search"
-msgid_plural "%(count)d Items Match Search"
-msgstr[0] "%(count)d Vienums Atbilst Meklētam"
-msgstr[1] "%(count)d Vienumi Atbilst Meklētam"
-msgstr[2] "%(count)d Vienumi Atbilst Meklētam"
-
-#: ../../portable/frontends/widgets/feedcontroller.py:280
-msgid "All Items Match Search"
-msgstr "Visi Vienumi Atbilst Meklētam"
-
-#: ../../portable/frontends/widgets/newfeed.py:70
-msgid "Feed should go in this section:"
-msgstr "Barotne pieder šinī sekcijā:"
-
-#: ../../portable/frontends/widgets/newfeed.py:111
-msgid "Add Feed"
-msgstr "Pievienot Barotni"
-
-#: ../../portable/frontends/widgets/newfeed.py:112
-msgid "Enter the URL of the feed to add"
-msgstr "Ievadiet pievienojamās barotnes URL"
-
-#: ../../portable/frontends/widgets/newfeed.py:123
-msgid "Add Feed - Invalid URL"
-msgstr "Pievienojot Barotni - Nederīgs URL"
-
-#: ../../portable/frontends/widgets/newfeed.py:124
-msgid ""
-"The address you entered is not a valid url.\n"
-"Please check the URL and try again.\n"
-"\n"
-"Enter the URL of the feed to add"
-msgstr ""
-"Ievadītā adrese nav derīgs URL.\n"
-"Lūdzu parbaudiet URL un mēģiniet vēlreiz.\n"
-"\n"
-"Ievadiet pievienojamās barotnes URL"
-
-#: ../../portable/frontends/widgets/tablist.py:530
-msgid "Remove Site"
-msgstr "Aizvākt Vietu"
-
-#: ../../portable/frontends/widgets/tablist.py:534
-msgid "Remove Sites"
-msgstr "Aizvākt Vietas"
-
-#: ../../portable/frontends/widgets/tablist.py:578
-msgid "Update Feeds In Folder"
-msgstr "Atjaunināt Barotnes Folderī"
-
-#: ../../portable/frontends/widgets/tablist.py:585
-msgid "Update Feed Now"
-msgstr "Nekavējoties Atjaunināt Barotni"
-
-#: ../../portable/frontends/widgets/tablist.py:588
-msgid "Rename"
-msgstr "Pārdēvēt"
-
-#: ../../portable/frontends/widgets/tablist.py:590
-msgid "Revert Feed Name"
-msgstr "Atgriezt Barotnes Nosaukumu"
-
-#: ../../portable/frontends/widgets/tablist.py:597
-msgid "Update Feeds Now"
-msgstr "Nekavējoties Atjaunināt Barotnes"
-
-#: ../../portable/frontends/widgets/tablist.py:662
-msgid "LIBRARY"
-msgstr "BIBLIOTĒKA"
-
-#: ../../portable/frontends/widgets/tablist.py:664
-msgid "SITES"
-msgstr "VIETAS"
-
-#: ../../portable/frontends/widgets/tablist.py:666
-msgid "FEEDS"
-msgstr "BAROTNES"
-
-#: ../../portable/frontends/widgets/tablist.py:668
-msgid "AUDIO FEEDS"
-msgstr "AUDIO BAROTNES"
-
-#: ../../portable/frontends/widgets/tablist.py:670
-msgid "PLAYLISTS"
-msgstr "SPĒĻSARAKSTI"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:447
-msgid "No Results Found"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:553
-msgid "Back to feed"
-msgstr "Atgriezties uz barotni"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:286
-msgid "Title"
-msgstr "Nosaukums"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:288
-msgid "Feed"
-msgstr "Barotne"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:290
-#: ../../portable/frontends/widgets/itemlistwidgets.py:743
-msgid "Date"
-msgstr "Datums"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:291
-msgid "Length"
-msgstr "Ilgums"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:292
-msgid "Status"
-msgstr "Stāvoklis"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:293
-#: ../../portable/frontends/widgets/itemlistwidgets.py:744
-msgid "Size"
-msgstr "Izmērs"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:295
-msgid "ETA"
-msgstr "Laiks atlicis"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:296
-msgid "Speed"
-msgstr "Ātrums"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:432
-msgid "Save as a Feed"
-msgstr "Saglabāt kā Barotni"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:500
-msgid "Cancel All"
-msgstr "Atcelt Visus"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:507
-msgid "Download Settings"
-msgstr "Lejupielādes Konfigurācija"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:553
-#, python-format
-msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
-msgstr ""
-"%(available)s zem lejupielādes telpas pielaides (%(amount)s brīvs diskā)"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:559
-#, python-format
-msgid "%(available)s free for downloads (%(amount)s free on disk)"
-msgstr "%(available)s izmantojams lejupielādēm (%(amount)s brīvs diskā)"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:564
-#, python-format
-msgid "%(amount)s free on disk"
-msgstr "%(amount)s brīvs diskā"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:583
-#, python-format
-msgid "%(rate)s uploading"
-msgstr "%(rate)s augšupielādē"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:585
-#, python-format
-msgid "%(rate)s downloading"
-msgstr "%(rate)s lejupielādē"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:619
-msgid "Auto Download"
-msgstr "Automatiski Lejupielādēt"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:631
-msgid "Share feed"
-msgstr "Dalīties Barotnē"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:643
-msgid "Remove feed"
-msgstr "Aizvākt Barotni"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:719
-msgid "Unwatched"
-msgstr "Neuzmanīts"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:730
-msgid "View|All"
-msgstr "Skatīt|Visus"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:732
-msgid "Non Feed"
-msgstr "Ne-Barotne"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:742
-msgid "Name"
-msgstr "Nosaukums"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:745
-msgid "Time"
-msgstr "Laiks"
-
-#: ../../portable/frontends/widgets/diagnostics.py:83
-msgid "Movies location:"
-msgstr "Filmu vieta:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:87
-msgid "Icon cache location:"
-msgstr "Ikonu krātuves vieta:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:91
-msgid "Log file location:"
-msgstr "Žurnāldatnes vieta:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:95
-msgid "Downloader log file location:"
-msgstr "Lejupielādētāja žurnāldatnes vieta:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:99
-msgid "Database file location:"
-msgstr "Datubāzes vieta:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:106
-msgid "Space free on disk:"
-msgstr "Brīva telpa diskā:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:108
-msgid "Database size:"
-msgstr "Datubāzes izmērs:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:110
-msgid "Total db objects in memory:"
-msgstr "Datubāzes objektu skaits atminā:"
-
-#: ../../portable/startup.py:99
-#, python-format
-msgid ""
-"An unknown error prevented %(appname)s from startup.  Please file a bug "
-"report at %(url)s."
-msgstr ""
-"Nezināma kļūda neatļāva %(appname)s uzsākt.  Lūdzu iesniedziet defekta ziņu "
-"šeit: %(url)s."
-
-#: ../../portable/startup.py:181
-#, python-format
-msgid ""
-"You have a database that was saved with a newer version of %(appname)s. You "
-"must download the latest version of %(appname)s and run that."
-msgstr ""
-"Jusu datubāze saglabāta ar jaunāku %(appname)s versiju. Lejupielādejiet "
-"jaunāko %(appname)s versiju un lietojiet to."
-
-#: ../../portable/commandline.py:109
-#, python-format
-msgid ""
-"This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
-"the publisher of this file."
-msgstr ""
-
-#: ../../portable/commandline.py:119
-#, python-format
-msgid ""
-"This %(appname)s feed file has the wrong content type: %(url)s. Please "
-"notify the publisher of this file."
-msgstr ""
-"Šai %(appname)s barotnes datnei nederīgs satura tips: %(url)s.  Lūdzu to "
-"ziņojiet barotnes izdevējam."
-
-#: ../../portable/commandline.py:127
-#, python-format
-msgid "Could not download the %(appname)s feed file: %(url)s"
-msgstr "Nevarēja lejupielādēt %(appname)s barotnes datni: %(url)s"
-
-#: ../../portable/commandline.py:181
-#, python-format
-msgid ""
-"The torrent file %(filename)s appears to be corrupt and cannot be opened. "
-"[OK]"
-msgstr ""
-"Straumes datne %(filename)s izskatās samaitāta un nevar tikt atvērta. [OK]"
-
-#: ../../portable/feed.py:938
-#, python-format
-msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
-msgstr "Nevarēja ielādēt barotni %(url)s (%(errordescription)s)."
-
-#: ../../portable/feed.py:1079
-#, python-format
-msgid "Channel is not compatible with %(appname)s"
-msgstr "Kanāls ir nesakritīgs ar %(appname)s"
-
-#: ../../portable/feed.py:1082
-#, python-format
-msgid ""
-"This channel is not compatible with %(appname)s but we'll try our best to "
-"grab the files.  It may take extra time to list the videos, and descriptions "
-"may look funny.\n"
-"\n"
-"Please contact the publishers of %(url)s and ask if they can supply a feed "
-"in a format that will work with %(appname)s.\n"
-"\n"
-"Do you want to try to load this channel anyway?"
-msgstr ""
-
-#: ../../portable/feed.py:1683
-#, python-format
-msgid "Search All: %(text)s"
-msgstr "Izmeklēt Visur: %(text)s"
-
-#: ../../portable/dialogs.py:86
-msgid "Done"
-msgstr "Pabeigts"
-
-#: ../../portable/dialogs.py:90
-msgid "Continue"
-msgstr "Turpināt"
-
-#: ../../portable/dialogs.py:102
-msgid "Create Feed"
-msgstr "Radīt Barotni"
-
-#: ../../portable/dialogs.py:103
-msgid "Create Folder"
-msgstr "Izveidot Mapi"
-
-#: ../../portable/dialogs.py:113
-msgid "Open in External Browser"
-msgstr "Atvērt Ārejā Parlūkā"
-
-#: ../../portable/dialogs.py:115
-msgid "Subscribe"
-msgstr "Pierakstīties"
-
-#: ../../portable/dialogs.py:116
-msgid "Stop Watching"
-msgstr "Parstāt Uzmanīt"
-
-#: ../../portable/singleclick.py:61
-#, python-format
-msgid "%(appname)s will begin downloading it now."
-msgstr "%(appname)s tūlit sāks to lejupielādēt."
-
-#: ../../portable/singleclick.py:97
-#, python-format
-msgid ""
-"This file at %(url)s does not appear to be audio, video, or an RSS feed."
-msgstr "Datne %(url)s neizskatās pēc audio, video, vai RSS barotnes."
-
-#: ../../portable/singleclick.py:139
-#, python-format
-msgid ""
-"%(appname)s is not able to download a file at this URL:\n"
-"\n"
-"URL: %(url)s"
-msgstr ""
-
-#: ../../portable/dl_daemon/download.py:1104
-#, python-format
-msgid "The torrent file for this item was deleted outside of %(appname)s."
-msgstr ""
-
-#: ../../portable/menubar.py:266
-msgid "_Toggle Detached/Attached"
-msgstr ""
-
-#: ../../portable/menubar.py:270
-#, python-format
-msgid "_About %(name)s"
-msgstr ""
-
-#: ../../portable/item.py:897
-#, python-format
-msgid "%(count)d day"
-msgid_plural "%(count)d days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/item.py:902
-#, python-format
-msgid "%(count)d hour"
-msgid_plural "%(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/item.py:907
-#, python-format
-msgid "%(count)d minute"
-msgid_plural "%(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/item.py:1211
-msgid "Contents appear in the library"
-msgstr ""
-
-#: ../../portable/item.py:1216
-msgid "Contents:"
-msgstr ""
-
-#: ../../portable/opml.py:194
-msgid ""
-"The selected OPML file appears to be invalid.  Import was interrupted."
-msgstr ""
-
-#: ../../portable/displaytext.py:68
-#, python-format
-msgid "%(num).0f day"
-msgid_plural "%(num).0f days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:71
-#, python-format
-msgid "%(num).0f hr"
-msgid_plural "%(num).0f hrs"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:74
-#, python-format
-msgid "%(num).0f min"
-msgid_plural "%(num).0f mins"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:142
-#, python-format
-msgid "%(month)s %(dayofmonth)s, %(year)s"
-msgstr ""
-
-#: ../../portable/storedatabase.py:425
-#, python-format
-msgid "%(appname)s database save failed"
-msgstr ""
-
-#: ../../portable/storedatabase.py:428
-#, python-format
-msgid ""
-"%(appname)s was unable to save its database: Disk Full.\n"
-"We suggest deleting files from the full disk or simply deleting some movies "
-"from your collection.\n"
-"Recent changes may be lost."
-msgstr ""
-
-#: ../../portable/storedatabase.py:440
-#, python-format
-msgid "%(appname)s database save succeeded"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:141
-#, python-format
-msgid "Hide %(appname)s"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:151
-#, python-format
-msgid "Quit %(appname)s"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:176
-msgid "Present Video"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:195
-#, python-format
-msgid "%(appname)s Help"
-msgstr ""
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
-#, python-format
-msgid "You must restart %(appname)s for renderer changes to take effect."
-msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
-#, python-format
-msgid "A new version of %(appname)s is available for download."
-msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
-#, python-format
-msgid ""
-"For the best %(appname)s experience, we suggest you install Adobe Flash.  "
-"Would you like to do this now?"
-msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
-#, python-format
-msgid ""
-"Your browser will load the web-site where you can download and install Adobe "
-"Flash.\n"
-"\n"
-"You should quit %(appname)s now and start it up again after Adobe Flash has "
-"been installed."
-msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
-#, python-format
-msgid "Quit %(appname)s completely."
-msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:134
-#, python-format
-msgid ""
-"When you click the red close button, would you like %(appname)s to close to "
-"the system tray or quit?  You can change this setting later in the Options."
-msgstr ""

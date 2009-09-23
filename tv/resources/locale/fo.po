@@ -1,114 +1,114 @@
 # Faroese translation for democracy
-# Copyright (c) 2007 Rosetta Contributors and Canonical Ltd 2007
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
 # This file is distributed under the same license as the democracy package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-07-16 13:21-0400\n"
-"PO-Revision-Date: 2007-02-14 22:00+0000\n"
+"PO-Revision-Date: 2009-07-23 13:48+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Faroese <fo@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-07-21 14:40+0000\n"
+"X-Launchpad-Export-Date: 2009-09-23 16:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
 #, python-format
 msgid "Error: %(msg)s"
-msgstr ""
+msgstr "Feilur: %(msg)s"
 
 #: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
 msgid "Can't connect"
-msgstr ""
+msgstr "Ikki gjørligt at íbinda"
 
 #: ../../portable/httpclient.py:105
 #, python-format
 msgid "Connection Error: %(msg)s"
-msgstr ""
+msgstr "Íbindingarfeilur: %(msg)s"
 
 #: ../../portable/httpclient.py:111
 msgid "SSL connection error"
-msgstr ""
+msgstr "SSL íbindingar feilur"
 
 #: ../../portable/httpclient.py:115
 msgid "HTTP error"
-msgstr ""
+msgstr "HTTP feilur"
 
 #: ../../portable/httpclient.py:119
 #, python-format
 msgid "Bad Status Line: %(msg)s"
-msgstr ""
+msgstr "Feilur í støðulinju: %(msg)s"
 
 #: ../../portable/httpclient.py:124
 #, python-format
 msgid "Bad Header Line: %(msg)s"
-msgstr ""
+msgstr "Feilur í høvdalinju: %(msg)s"
 
 #: ../../portable/httpclient.py:129
 #, python-format
 msgid "Bad Chunk size: %(msg)s"
-msgstr ""
+msgstr "Feilur í bitastødd: %(msg)s"
 
 #: ../../portable/httpclient.py:134
 #, python-format
 msgid "Expected CRLF got: %(character)r"
-msgstr ""
+msgstr "Væntaði CRLF men fekk: %(character)r"
 
 #: ../../portable/httpclient.py:139
 #, python-format
 msgid "%(host)s closed connection"
-msgstr ""
+msgstr "%(host)s hevur afturlatið bindingina"
 
 #: ../../portable/httpclient.py:144 ../../portable/httpclient.py:173
 #: ../../portable/downloader.py:299
 msgid "File not found"
-msgstr ""
+msgstr "Fíla ei funnin"
 
 #: ../../portable/httpclient.py:145
 msgid "Got 404 status code"
-msgstr ""
+msgstr "Móttók 404 støðu feil"
 
 #: ../../portable/httpclient.py:147
 #, python-format
 msgid "Bad Status Code: %(code)s"
-msgstr ""
+msgstr "Feilur í støðu kotu: %(code)s"
 
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"
-msgstr ""
+msgstr "Heimilan miseydnaðist"
 
 #: ../../portable/httpclient.py:157
 #: ../../portable/frontends/widgets/crashdialog.py:48
 msgid "Internal Error"
-msgstr ""
+msgstr "Innanhýsis feilur"
 
 #: ../../portable/httpclient.py:158
 msgid "Pipeline request never started"
-msgstr ""
+msgstr "Pipeline fyrispurningur ongantíð byrjaður"
 
 #: ../../portable/httpclient.py:162
 msgid "Timeout"
-msgstr ""
+msgstr "Útgingið"
 
 #: ../../portable/httpclient.py:163
 #, python-format
 msgid "Connection to %(host)s timed out"
-msgstr ""
+msgstr "Íbinding til %(host)s er útgingin"
 
 #: ../../portable/httpclient.py:167
 msgid "Invalid URL"
-msgstr ""
+msgstr "Skeiv URL"
 
 #: ../../portable/httpclient.py:168
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr ""
+msgstr "\"%(url)s\" er ikki ein góðkend URL"
 
 #: ../../portable/httpclient.py:174
 #, python-format
@@ -1091,15 +1091,15 @@ msgstr[1] ""
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:1106
+#: ../../portable/frontends/widgets/application.py:1124
 msgid "Message"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:1131
+#: ../../portable/frontends/widgets/application.py:1149
 msgid "Migrating Files"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:1141
+#: ../../portable/frontends/widgets/application.py:1159
 msgid "Migrating files"
 msgstr ""
 
@@ -1841,7 +1841,7 @@ msgstr ""
 msgid "Search All"
 msgstr ""
 
-#: ../../portable/messages.py:1060 ../../portable/item.py:1078
+#: ../../portable/messages.py:1078 ../../portable/item.py:1078
 msgid "queued for download"
 msgstr ""
 
@@ -2596,12 +2596,12 @@ msgstr[1] ""
 msgid "%(month)s %(dayofmonth)s, %(year)s"
 msgstr ""
 
-#: ../../portable/storedatabase.py:425
+#: ../../portable/storedatabase.py:449
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr ""
 
-#: ../../portable/storedatabase.py:428
+#: ../../portable/storedatabase.py:452
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -2610,22 +2610,22 @@ msgid ""
 "Recent changes may be lost."
 msgstr ""
 
-#: ../../portable/storedatabase.py:440
+#: ../../portable/storedatabase.py:464
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr ""
 
-#: ../../portable/storedatabase.py:443
+#: ../../portable/storedatabase.py:467
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/application.py:169
+#: ../../platform/osx/plat/frontends/widgets/application.py:171
 msgid "Download Completed"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/application.py:170
+#: ../../platform/osx/plat/frontends/widgets/application.py:172
 #, python-format
 msgid "Download of video '%s' is finished."
 msgstr ""

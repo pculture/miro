@@ -1,26 +1,36 @@
 # Frisian translation for democracy
-# Copyright (c) 2007 Rosetta Contributors and Canonical Ltd 2007
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
 # This file is distributed under the same license as the democracy package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-07-16 13:21-0400\n"
-"PO-Revision-Date: 2007-07-20 07:30+0000\n"
-"Last-Translator: moZes <Unknown>\n"
+"PO-Revision-Date: 2009-07-23 13:48+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Frisian <fy@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-07-21 14:40+0000\n"
+"X-Launchpad-Export-Date: 2009-09-23 16:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#: ../../portable/httpclient.py:89
+#, python-format
+msgid "Error: %(msg)s"
+msgstr "Flater: %(msg)s"
 
 #: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
 msgid "Can't connect"
 msgstr "Kin gjin ferbining krije"
+
+#: ../../portable/httpclient.py:105
+#, python-format
+msgid "Connection Error: %(msg)s"
+msgstr "Ferbiningsflater: %(msg)s"
 
 #: ../../portable/httpclient.py:111
 msgid "SSL connection error"
@@ -30,6 +40,31 @@ msgstr "SSL ferbiningsflater"
 msgid "HTTP error"
 msgstr "HTTP flater"
 
+#: ../../portable/httpclient.py:119
+#, python-format
+msgid "Bad Status Line: %(msg)s"
+msgstr "Slechte steatrigel: %(msg)s"
+
+#: ../../portable/httpclient.py:124
+#, python-format
+msgid "Bad Header Line: %(msg)s"
+msgstr "Slechte koprigel: %(msg)s"
+
+#: ../../portable/httpclient.py:129
+#, python-format
+msgid "Bad Chunk size: %(msg)s"
+msgstr "Slechte dielgrutte: %(msg)s"
+
+#: ../../portable/httpclient.py:134
+#, python-format
+msgid "Expected CRLF got: %(character)r"
+msgstr "Ferwachtte CRLF, mar kryg: %(character)r"
+
+#: ../../portable/httpclient.py:139
+#, python-format
+msgid "%(host)s closed connection"
+msgstr "%(host)s hat de ferbining ferbrutsen"
+
 #: ../../portable/httpclient.py:144 ../../portable/httpclient.py:173
 #: ../../portable/downloader.py:299
 msgid "File not found"
@@ -38,6 +73,11 @@ msgstr "Bestân net fûn"
 #: ../../portable/httpclient.py:145
 msgid "Got 404 status code"
 msgstr "Krige 404 steatkoade"
+
+#: ../../portable/httpclient.py:147
+#, python-format
+msgid "Bad Status Code: %(code)s"
+msgstr "Net-korrekte steatkoade: %(code)s"
 
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"
@@ -56,9 +96,37 @@ msgstr "Pipeline fersyk net starte"
 msgid "Timeout"
 msgstr "Tiid ferstrutsen"
 
+#: ../../portable/httpclient.py:163
+#, python-format
+msgid "Connection to %(host)s timed out"
+msgstr "Timeout foar ferbining mei %(host)s"
+
 #: ../../portable/httpclient.py:167
 msgid "Invalid URL"
 msgstr "Ferkeard foarme URL"
+
+#: ../../portable/httpclient.py:168
+#, python-format
+msgid "\"%(url)s\" is not a valid URL"
+msgstr "\"%(url)s\" is gjin jildige URL."
+
+#: ../../portable/httpclient.py:174
+#, python-format
+msgid "The file \"%(path)s\" doesn't exist"
+msgstr "Triem \"%(path)s\" net fûn"
+
+#: ../../portable/httpclient.py:178
+msgid "Read error"
+msgstr "Lêsflater"
+
+#: ../../portable/httpclient.py:179
+#, python-format
+msgid "Error while reading from \"%(path)s\""
+msgstr "Flater bij it lêzen fan \"%(path)s\""
+
+#: ../../portable/httpclient.py:376
+msgid "Unknown Error code"
+msgstr "Ûnbekinde flaterkoade"
 
 #: ../../portable/httpclient.py:408
 msgid "Connection closed"
@@ -81,14 +149,40 @@ msgstr "Miro Hânlieding"
 msgid "Video Search"
 msgstr "Fideo Sykopdracht"
 
+#: ../../portable/frontends/widgets/statictabs.py:103
+#: ../../portable/frontends/widgets/itemlistcontroller.py:516
+msgid "Video"
+msgstr "Fideo"
+
 #: ../../portable/frontends/widgets/statictabs.py:108
 #: ../../portable/frontends/widgets/itemlistcontroller.py:522
 msgid "Audio"
 msgstr "Lûd"
 
+#: ../../portable/frontends/widgets/statictabs.py:113
+#: ../../portable/frontends/widgets/itemlistcontroller.py:528
+msgid "Other"
+msgstr "Oaren"
+
 #: ../../portable/frontends/widgets/statictabs.py:118
 msgid "Downloading"
 msgstr "Dwaande mei ynladen"
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
+msgid "Add a Playlist"
+msgstr "Spyllist tafoege"
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
+msgid "Add items to an existing playlist or a new one."
+msgstr ""
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
+msgid "Existing playlist:"
+msgstr "Besteande spyllist:"
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
+msgid "New playlist:"
+msgstr "Nije spyllist:"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
@@ -108,6 +202,34 @@ msgstr "Fourtsmite"
 msgid "Play"
 msgstr "Ofspylje"
 
+#: ../../portable/frontends/widgets/itemcontextmenu.py:95
+msgid "Play Just This Item"
+msgstr "Alinnich dit item spylje"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:96
+#: ../../portable/frontends/widgets/itemcontextmenu.py:192
+msgid "Add to Playlist"
+msgstr "Tafoege oan spyllist"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:99
+#: ../../portable/frontends/widgets/application.py:495
+msgid "Rename Item"
+msgstr "Item omneame"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:101
+msgid "Revert Item Name"
+msgstr "Itemnamme weromsette"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:103
+#: ../../portable/frontends/widgets/itemcontextmenu.py:199
+msgid "Mark as Unplayed"
+msgstr "Markeare as nij"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:106
+#: ../../portable/frontends/widgets/itemcontextmenu.py:204
+msgid "Mark as Played"
+msgstr "Markeare as net nij"
+
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:210
 #: ../../portable/frontends/widgets/style.py:257
@@ -118,6 +240,14 @@ msgstr "Ofspylje"
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:123
 msgid "Keep"
 msgstr "Bewarje"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:112
+msgid "Stop Seeding"
+msgstr "Stopje mei seeding"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:114
+msgid "Resume Seeding"
+msgstr "Seeding ferfetsje"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:117
 #: ../../portable/frontends/widgets/itemcontextmenu.py:239
@@ -130,6 +260,11 @@ msgstr "Stop Ynlaad"
 msgid "Pause Download"
 msgstr "Pausearje Ynlaad"
 
+#: ../../portable/frontends/widgets/itemcontextmenu.py:124
+#: ../../portable/frontends/widgets/itemcontextmenu.py:253
+msgid "Resume Download"
+msgstr "Download ferfetsje"
+
 #: ../../portable/frontends/widgets/itemcontextmenu.py:128
 #: ../../portable/frontends/widgets/itemcontextmenu.py:223
 #: ../../portable/frontends/widgets/style.py:250
@@ -137,6 +272,71 @@ msgstr "Pausearje Ynlaad"
 #: ../../portable/frontends/widgets/style.py:1113 ../../portable/dialogs.py:95
 msgid "Download"
 msgstr "Ynlade"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:134
+#: ../../portable/frontends/widgets/style.py:240
+msgid "Web Page"
+msgstr "Webside"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:136
+#: ../../portable/frontends/widgets/style.py:236
+#: ../../portable/frontends/widgets/gtk/video.py:282
+msgid "Comments"
+msgstr "Kommentaar"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:138
+msgid "License"
+msgstr "Lisensje"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:141
+msgid "File in Browser"
+msgstr "Triem yn browser"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:143
+#, python-format
+msgid "File in %(progname)s"
+msgstr "Triem yn %(progname)s"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:145
+msgid "File on Disk"
+msgstr "Triem op skiif"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:148
+msgid "View"
+msgstr "Sjen litte"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:151
+#: ../../portable/frontends/widgets/gtk/video.py:273
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:119
+msgid "Share"
+msgstr "Diele"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:186
+#, python-format
+msgid "%(count)d Downloaded Item"
+msgid_plural "%(count)d Downloaded Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:215
+#, python-format
+msgid "%(count)d Available Item"
+msgid_plural "%(count)d Available Items"
+msgstr[0] "%(count)d beskikber"
+msgstr[1] "%(count)d beskikber"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:228
+#, python-format
+msgid "%(count)d Downloading Item"
+msgid_plural "%(count)d Downloading Items"
+msgstr[0] "%(count)d Downloading Item"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:245
+#, python-format
+msgid "%(count)d Paused Item"
+msgid_plural "%(count)d Paused Items"
+msgstr[0] "%(count)d ûnderbrutsen"
+msgstr[1] "%(count)d ûnderbrutsen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:263
 msgid "Restart Upload"
@@ -152,841 +352,92 @@ msgstr "Helje Ut Ofspyllist"
 msgid "never"
 msgstr "noait"
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:144
-#: ../../portable/frontends/widgets/firsttimedialog.py:178
-#: ../../portable/dialogs.py:87
-msgid "Yes"
-msgstr "Ja"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:145
-#: ../../portable/frontends/widgets/firsttimedialog.py:177
-#: ../../portable/dialogs.py:88
-msgid "No"
-msgstr "Nee"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:185
-msgid "Restrict to all my personal files."
-msgstr "Behein oant myn persoanlike bestannen."
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:192
-#: ../../portable/frontends/widgets/prefpanel.py:435
-msgid "Change"
-msgstr "Wizigje"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:223
-#: ../../portable/frontends/widgets/firsttimedialog.py:225
-#: ../../portable/frontends/widgets/firsttimedialog.py:282
-#: ../../portable/feed.py:2290 ../../portable/feed.py:2397
-msgid "Search"
-msgstr "Sykje"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:283
-#: ../../portable/dialogs.py:85
-msgid "Cancel"
-msgstr "Ofbrekke"
-
-#: ../../portable/frontends/widgets/style.py:249
-msgid "Down Total"
-msgstr "Ynlaad Totaal"
-
-#: ../../portable/frontends/widgets/style.py:252
-#: ../../portable/dl_daemon/download.py:539
-msgid "Error"
-msgstr "Flater"
-
-#: ../../portable/frontends/widgets/style.py:258
-#: ../../portable/frontends/widgets/prefpanel.py:485
-#: ../../portable/frontends/widgets/tablist.py:580
-#: ../../portable/frontends/widgets/tablist.py:592
-#: ../../portable/frontends/widgets/tablist.py:598
-#: ../../portable/frontends/widgets/tablist.py:635
-#: ../../portable/frontends/widgets/tablist.py:641
-#: ../../portable/frontends/widgets/tablist.py:646
-#: ../../portable/dialogs.py:108
-msgid "Remove"
-msgstr "Fuortsmite"
-
-#: ../../portable/frontends/widgets/displays.py:382
-msgid "Filename:"
-msgstr "Bestânsnamme"
-
-#: ../../portable/frontends/widgets/displays.py:385
-msgid "File type:"
-msgstr "Bestânstype"
-
-#: ../../portable/frontends/widgets/displays.py:391
-#: ../../portable/frontends/widgets/displays.py:428
-msgid "Play Externally"
-msgstr "Spylje Ekstern"
-
-#: ../../portable/frontends/widgets/rundialog.py:82
-msgid "Username:"
-msgstr "Brûkersnamme:"
-
-#: ../../portable/frontends/widgets/rundialog.py:86
-msgid "Password:"
-msgstr "Wachtwurd:"
-
-#: ../../portable/frontends/widgets/application.py:663
-msgid "Create Playlist"
-msgstr "Meitsje Ofspyllist"
-
-#: ../../portable/frontends/widgets/application.py:664
-msgid "Enter a name for the new playlist"
-msgstr "Jou in namme foar de nije ôfspyllist"
-
-#: ../../portable/frontends/widgets/application.py:685
-msgid "Create Playlist Folder"
-msgstr "Meitsje Ofspyllistmap"
-
-#: ../../portable/frontends/widgets/application.py:686
-msgid "Enter a name for the new playlist folder"
-msgstr "Jou in namme foar de nije ôfspyllistmap"
-
-#: ../../portable/frontends/widgets/application.py:717
-#: ../../portable/frontends/widgets/tablist.py:640
-#: ../../portable/playlist.py:188
-msgid "Rename Playlist"
-msgstr "Werneam Ofspyllist"
-
-#: ../../portable/frontends/widgets/application.py:722
-#: ../../portable/frontends/widgets/tablist.py:634
-msgid "Rename Playlist Folder"
-msgstr "Werneam Ofspyllistmap"
-
-#: ../../portable/frontends/widgets/application.py:802
-msgid "Are you sure you want to quit?"
-msgstr "Witte jo seker dat jo ôfslute wolle?"
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:81
-#: ../../portable/frontends/widgets/prefpanel.py:622
-msgid "Downloads"
-msgstr "Ynladen Bestannen"
-
-#: ../../portable/frontends/widgets/prefpanel.py:282
-msgid "Every hour"
-msgstr "Elk oer"
-
-#: ../../portable/frontends/widgets/prefpanel.py:283
-msgid "Every 30 minutes"
-msgstr "Elke 30 minuten"
-
-#: ../../portable/frontends/widgets/prefpanel.py:284
-msgid "Manually"
-msgstr "Hânmjitich"
-
-#: ../../portable/frontends/widgets/prefpanel.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:624
-msgid "New"
-msgstr "Nij"
-
-#: ../../portable/frontends/widgets/prefpanel.py:453
-msgid "Migrate existing movies?"
-msgstr "Migrearje besteande films?"
-
-#: ../../portable/frontends/widgets/prefpanel.py:482
-#: ../../portable/dialogs.py:104
-msgid "Add"
-msgstr "Foech Ta"
-
-#: ../../portable/frontends/widgets/prefpanel.py:580
-msgid "1 day"
-msgstr "1 dei"
-
-#: ../../portable/frontends/widgets/prefpanel.py:581
-msgid "3 days"
-msgstr "3 dagen"
-
-#: ../../portable/frontends/widgets/prefpanel.py:582
-msgid "6 days"
-msgstr "6 dagen"
-
-#: ../../portable/frontends/widgets/prefpanel.py:583
-msgid "10 days"
-msgstr "10 dagen"
-
-#: ../../portable/frontends/widgets/prefpanel.py:584
-msgid "1 month"
-msgstr "1 moanne"
-
-#: ../../portable/frontends/widgets/prefpanel.py:620
-msgid "General"
-msgstr "Algemien"
-
-#: ../../portable/frontends/widgets/prefpanel.py:623
-msgid "Folders"
-msgstr "Mappen"
-
-#: ../../portable/frontends/widgets/prefpanel.py:625
-msgid "Playback"
-msgstr "Ofspylje"
-
-#: ../../portable/frontends/widgets/prefpanel.py:629
-msgid "Preferences"
-msgstr "Foarkarren"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:74
-msgid "Search for:"
-msgstr "Sykje nei:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:81
-msgid "In this:"
-msgstr "Hjir Yn:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:99
-#: ../../portable/frontends/widgets/newfeed.py:60
-msgid "URL:"
-msgstr "URL:"
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:85
-msgid "Hide"
-msgstr "Ferstopje"
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:87
-#: ../../portable/frontends/widgets/diagnostics.py:76
-msgid "Show"
-msgstr "Toane"
-
-#: ../../portable/frontends/widgets/gtk/window.py:593
-#: ../../portable/dialogs.py:84
-msgid "Close"
-msgstr "Slute"
-
-#: ../../portable/frontends/widgets/tablist.py:528
-#: ../../portable/frontends/widgets/tablist.py:591
-msgid "Copy URL to clipboard"
-msgstr "Kopiearje URL nei klamboerd"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:486
-msgid "Pause All"
-msgstr "Pausearje Alles"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:493
-msgid "Resume All"
-msgstr "Gean Fierder mei Alles"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:637
-msgid "Settings"
-msgstr "Ynstellings"
-
-#: ../../portable/startup.py:179
-msgid "Database too new"
-msgstr "Database te nij"
-
-#: ../../portable/commandline.py:99
-msgid "Subscription error"
-msgstr "Ynskriuw flater"
-
-#: ../../portable/commandline.py:179
-msgid "Invalid Torrent"
-msgstr "Foute Torrent"
-
-#: ../../portable/downloader.py:258
-msgid "activity"
-msgstr "aktiviteit"
-
-#: ../../portable/downloader.py:300
-msgid "Flash URL Scraping Error"
-msgstr "Flash URL Scraping Flater"
-
-#: ../../portable/downloader.py:482
-msgid "starting up"
-msgstr "dwaande mei opstarten"
-
-#: ../../portable/feed.py:936
-msgid "Error loading feed"
-msgstr "Flater by it laden fan feed"
-
-#: ../../portable/feed.py:941
-msgid "Would you like to keep the feed?"
-msgstr "Wolle jo de feed bewarje?"
-
-#: ../../portable/feed.py:1066
-msgid "Bad content-type"
-msgstr "Ferkeard ynhâld-type"
-
-#: ../../portable/dialogs.py:83
-msgid "Ok"
-msgstr "Ok"
-
-#: ../../portable/dialogs.py:89
-msgid "Quit"
-msgstr "Ofslute"
-
-#: ../../portable/dialogs.py:93
-msgid "Migrate"
-msgstr "Migrearje"
-
-#: ../../portable/dialogs.py:94
-msgid "Don't Migrate"
-msgstr "Net Migrearje"
-
-#: ../../portable/dialogs.py:96
-msgid "Remove Entry"
-msgstr "Ynfier fuortsmite"
-
-#: ../../portable/dialogs.py:97
-msgid "Delete File"
-msgstr "Bestân fuortsmite"
-
-#: ../../portable/dialogs.py:98
-msgid "Delete Files"
-msgstr "Bestannen fuortsmite"
-
-#: ../../portable/dialogs.py:99
-msgid "Keep Videos"
-msgstr "Bewarje Fideos"
-
-#: ../../portable/dialogs.py:100
-msgid "Delete Videos"
-msgstr "Smit Fideos Fuort"
-
-#: ../../portable/dialogs.py:101
-msgid "Create"
-msgstr "Meitsje"
-
-#: ../../portable/dialogs.py:105
-msgid "Add Into New Folder"
-msgstr "Foech ta Yn Nije Map"
-
-#: ../../portable/dialogs.py:109
-msgid "Not Now"
-msgstr "No Net"
-
-#: ../../portable/dialogs.py:110
-msgid "Close to Tray"
-msgstr "Slút nei Systeemfak"
-
-#: ../../portable/dl_daemon/download.py:653
-#: ../../portable/dl_daemon/download.py:870
-msgid "Not enough disk space"
-msgstr "Net genôch skiifromte"
-
-#: ../../portable/dl_daemon/download.py:1078
-msgid "Corrupt Torrent"
-msgstr "Korrupte Torrent"
-
-#: ../../portable/dl_daemon/download.py:1103
-msgid "Torrent file deleted"
-msgstr "Torrent bestân fuortsmiten"
-
-#: ../../portable/menubar.py:184
-msgid "_Open"
-msgstr "_Iepenje"
-
-#: ../../portable/menubar.py:186
-msgid "Check _Version"
-msgstr "Kontrolearje _Ferzje"
-
-#: ../../portable/menubar.py:195
-msgid "_Options"
-msgstr "_Opsjes"
-
-#: ../../portable/menubar.py:196
-msgid "_Quit"
-msgstr "_Ofslute"
-
-#: ../../portable/menubar.py:205
-msgid "Cu_t"
-msgstr "Kni_ppe"
-
-#: ../../portable/menubar.py:206
-msgid "_Copy"
-msgstr "_Kopiearje"
-
-#: ../../portable/menubar.py:207
-msgid "_Paste"
-msgstr "_Plakke"
-
-#: ../../portable/menubar.py:208
-msgid "Select _All"
-msgstr "Selektearje _Alles"
-
-#: ../../portable/menubar.py:233
-msgid "New _Playlist"
-msgstr "Nije _Ofspyllist"
-
-#: ../../portable/menubar.py:234
-msgid "New Playlist Fol_der"
-msgstr "Nije Ofspyllist Ma_p"
-
-#: ../../portable/menubar.py:236
-msgid "Re_name Playlist"
-msgstr "Wer_neam Ofspyllist"
-
-#: ../../portable/menubar.py:237
-msgid "_Remove Playlist"
-msgstr "_Smit Ofspyllist fuort"
-
-#: ../../portable/menubar.py:238
-msgid "_Remove Playlists"
-msgstr "_Smit Ofspyllisten fuort"
-
-#: ../../portable/menubar.py:239
-msgid "_Remove Playlist Folders"
-msgstr "_Smit Ofspyllistmappen fuort"
-
-#: ../../portable/menubar.py:240
-msgid "_Remove Playlist Folder"
-msgstr "_Smit Ofspyllistmap fuort"
-
-#: ../../portable/menubar.py:251 ../../portable/menubar.py:252
-msgid "_Play"
-msgstr "_Spylje"
-
-#: ../../portable/menubar.py:254
-msgid "_Stop"
-msgstr "_Stop"
-
-#: ../../portable/menubar.py:256
-msgid "_Next Video"
-msgstr "_Folgjende Fideo"
-
-#: ../../portable/menubar.py:257
-msgid "_Previous Video"
-msgstr "_Foarige Fideo"
-
-#: ../../portable/menubar.py:259
-msgid "Skip _Forward"
-msgstr "Stap _Foarút"
-
-#: ../../portable/menubar.py:260
-msgid "Skip _Back"
-msgstr "Stap _Tebek"
-
-#: ../../portable/menubar.py:262
-msgid "Volume _Up"
-msgstr "Volume _Omheech"
-
-#: ../../portable/menubar.py:263
-msgid "Volume _Down"
-msgstr "Volume _Omleech"
-
-#: ../../portable/menubar.py:265
-msgid "_Fullscreen"
-msgstr "_Folslein Skerm"
-
-#: ../../portable/menubar.py:272
-msgid "_Donate"
-msgstr "_Donearje"
-
-#: ../../portable/menubar.py:274 ../../portable/menubar.py:297
-msgid "_Help"
-msgstr "_Help"
-
-#: ../../portable/menubar.py:278
-msgid "Report a _Bug"
-msgstr "Rapportearje in _Bug"
-
-#: ../../portable/menubar.py:286
-msgid "_Video"
-msgstr "_Fideo"
-
-#: ../../portable/menubar.py:288
-msgid "_File"
-msgstr "_Beatân"
-
-#: ../../portable/menubar.py:295
-msgid "_Playlists"
-msgstr "_Ofspyllisten"
-
-#: ../../portable/menubar.py:296
-msgid "P_layback"
-msgstr "O_fspylje"
-
-#: ../../portable/playlist.py:189
-#, python-format
-msgid "Enter a new name for the playlist %s"
-msgstr "Jou in nije namme foar de ôfspyllist %s"
-
-#: ../../portable/item.py:1442
-msgid "starting up..."
-msgstr "dwaande mei opstarten..."
-
-#: ../../portable/theme.py:174
-msgid "Example Playlist"
-msgstr "Foarbyl Ofspyllist"
-
-#: ../../platform/osx/plat/frontends/widgets/application.py:169
-msgid "Download Completed"
-msgstr "Ynladen Dien"
-
-#: ../../platform/osx/plat/frontends/widgets/application.py:170
-#, python-format
-msgid "Download of video '%s' is finished."
-msgstr "Ynladen fan fideo '%s' is dien."
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
-msgid "Services"
-msgstr "Tsjinsten"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:143
-msgid "Hide Others"
-msgstr "Ferstop Oaren"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:144
-msgid "Show All"
-msgstr "Toan Alles"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
-msgid "Close Window"
-msgstr "Finster slute"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
-msgid "Cut"
-msgstr "Knippe"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:161
-msgid "Copy"
-msgstr "Kopieare"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
-msgid "Paste"
-msgstr "Plakke"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:165
-msgid "Select All"
-msgstr "Selektearje Alles"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
-msgid "Edit"
-msgstr "Bewurkje"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
-msgid "Zoom"
-msgstr "Zoom"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:184
-msgid "Minimize"
-msgstr "Minimalisearje"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:186
-msgid "Main Window"
-msgstr "Haadskerm"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:188
-msgid "Bring All to Front"
-msgstr "Bring alles nei foaren"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
-msgid "Window"
-msgstr "Finster"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
-msgid "Update Available"
-msgstr "Fernijing Beskikber"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
-msgid "When I click the red close button:"
-msgstr "As ik klik op de reade slútknop:"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
-msgid "Close to tray so that downloads can continue."
-msgstr "Slút nei systeemfak, sadat it ynladen trochgean kin."
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:133
-msgid "Close to tray?"
-msgstr "Slute nei it systeemfak?"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:192
-msgid "Error Bombing Item"
-msgstr "Flater Bombing Underdiel"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:194
-msgid "Error Recommending Item"
-msgstr "Flater mei Oanrikkemandearjen Underdiel"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:196
-msgid "Error Opening Website"
-msgstr "Flater mei Iepenjen fan Webstee"
-
-#: ../../portable/httpclient.py:89
-#, python-format
-msgid "Error: %(msg)s"
-msgstr ""
-
-#: ../../portable/httpclient.py:105
-#, python-format
-msgid "Connection Error: %(msg)s"
-msgstr ""
-
-#: ../../portable/httpclient.py:119
-#, python-format
-msgid "Bad Status Line: %(msg)s"
-msgstr ""
-
-#: ../../portable/httpclient.py:124
-#, python-format
-msgid "Bad Header Line: %(msg)s"
-msgstr ""
-
-#: ../../portable/httpclient.py:129
-#, python-format
-msgid "Bad Chunk size: %(msg)s"
-msgstr ""
-
-#: ../../portable/httpclient.py:134
-#, python-format
-msgid "Expected CRLF got: %(character)r"
-msgstr ""
-
-#: ../../portable/httpclient.py:139
-#, python-format
-msgid "%(host)s closed connection"
-msgstr ""
-
-#: ../../portable/httpclient.py:147
-#, python-format
-msgid "Bad Status Code: %(code)s"
-msgstr ""
-
-#: ../../portable/httpclient.py:163
-#, python-format
-msgid "Connection to %(host)s timed out"
-msgstr ""
-
-#: ../../portable/httpclient.py:168
-#, python-format
-msgid "\"%(url)s\" is not a valid URL"
-msgstr ""
-
-#: ../../portable/httpclient.py:174
-#, python-format
-msgid "The file \"%(path)s\" doesn't exist"
-msgstr ""
-
-#: ../../portable/httpclient.py:178
-msgid "Read error"
-msgstr ""
-
-#: ../../portable/httpclient.py:179
-#, python-format
-msgid "Error while reading from \"%(path)s\""
-msgstr ""
-
-#: ../../portable/httpclient.py:376
-msgid "Unknown Error code"
-msgstr ""
-
-#: ../../portable/frontends/widgets/statictabs.py:103
-#: ../../portable/frontends/widgets/itemlistcontroller.py:516
-msgid "Video"
-msgstr ""
-
-#: ../../portable/frontends/widgets/statictabs.py:113
-#: ../../portable/frontends/widgets/itemlistcontroller.py:528
-msgid "Other"
-msgstr ""
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
-msgid "Add a Playlist"
-msgstr ""
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
-msgid "Add items to an existing playlist or a new one."
-msgstr ""
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
-msgid "Existing playlist:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
-msgid "New playlist:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:95
-msgid "Play Just This Item"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:96
-#: ../../portable/frontends/widgets/itemcontextmenu.py:192
-msgid "Add to Playlist"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:99
-#: ../../portable/frontends/widgets/application.py:495
-msgid "Rename Item"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:101
-msgid "Revert Item Name"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:103
-#: ../../portable/frontends/widgets/itemcontextmenu.py:199
-msgid "Mark as Unplayed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:106
-#: ../../portable/frontends/widgets/itemcontextmenu.py:204
-msgid "Mark as Played"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:112
-msgid "Stop Seeding"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:114
-msgid "Resume Seeding"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:124
-#: ../../portable/frontends/widgets/itemcontextmenu.py:253
-msgid "Resume Download"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:134
-#: ../../portable/frontends/widgets/style.py:240
-msgid "Web Page"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:136
-#: ../../portable/frontends/widgets/style.py:236
-#: ../../portable/frontends/widgets/gtk/video.py:282
-msgid "Comments"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:138
-msgid "License"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:141
-msgid "File in Browser"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:143
-#, python-format
-msgid "File in %(progname)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:145
-msgid "File on Disk"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:148
-msgid "View"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:151
-#: ../../portable/frontends/widgets/gtk/video.py:273
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:119
-msgid "Share"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:186
-#, python-format
-msgid "%(count)d Downloaded Item"
-msgid_plural "%(count)d Downloaded Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:215
-#, python-format
-msgid "%(count)d Available Item"
-msgid_plural "%(count)d Available Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:228
-#, python-format
-msgid "%(count)d Downloading Item"
-msgid_plural "%(count)d Downloading Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:245
-#, python-format
-msgid "%(count)d Paused Item"
-msgid_plural "%(count)d Paused Items"
-msgstr[0] ""
-msgstr[1] ""
-
 #: ../../portable/frontends/widgets/feedsettingspanel.py:58
 #, python-format
 msgid "%(count)d hour ago"
 msgid_plural "%(count)d hours ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d oere"
+msgstr[1] "%(count)d oeren"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:64
 #, python-format
 msgid "%(count)d day ago"
 msgid_plural "%(count)d days ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d dei"
+msgstr[1] "%(count)d dagen"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:70
 #, python-format
 msgid "%(count)d month ago"
 msgid_plural "%(count)d months ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d moanne"
+msgstr[1] "%(count)d moannen"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Videos:"
-msgstr ""
+msgstr "Fideo's automatysk fuortsmite nei:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:95
 #, python-format
 msgid "Watched %(expiration)s (Default)"
-msgstr ""
+msgstr "%(expiration)s (standertynstelling)"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
-msgstr ""
+msgstr "1 dei"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr ""
+msgstr "3 dagen"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
-msgstr ""
+msgstr "6 dagen"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:100
 msgid "Watched 10 days ago"
-msgstr ""
+msgstr "10 dagen"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
-msgstr ""
+msgstr "1 moanne"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
-msgstr ""
+msgstr "Ôfleveringen ûnthalde:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:139
 #, python-format
 msgid "Keep %(number)s (Default)"
-msgstr ""
+msgstr "%(number)s ûnthalde (standert)"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:141
 msgid "Keep 0"
-msgstr ""
+msgstr "Neat ûnthalde"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:142
 msgid "Keep 20"
-msgstr ""
+msgstr "20 ûnthalde"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:143
 msgid "Keep 50"
-msgstr ""
+msgstr "50 ûnthalde"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:144
 msgid "Keep 100"
-msgstr ""
+msgstr "100 ûnthalde"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:145
 msgid "Keep 1000"
-msgstr ""
+msgstr "1000 ûnthalde"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
-msgstr ""
+msgstr "Alles fuortsmite"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
-msgstr ""
+msgstr "Alde items fuortsmiten."
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause Auto-Downloading when this many items are unplayed:"
@@ -994,32 +445,32 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
-msgstr ""
+msgstr "1 nij item"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:198
 msgid "3 unplayed items"
-msgstr ""
+msgstr "3 nije items"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:199
 msgid "5 unplayed items"
-msgstr ""
+msgstr "5 nije items"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:200
 msgid "10 unplayed items"
-msgstr ""
+msgstr "10 nije items"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:201
 msgid "15 unplayed items"
-msgstr ""
+msgstr "15 nije items"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:241
 msgid "Feed Settings"
-msgstr ""
+msgstr "Feedynstellings"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:63
 #, python-format
 msgid "%(name)s First Time Setup"
-msgstr ""
+msgstr "%(name)s foar de earste kear"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:122
 #, python-format
@@ -1040,16 +491,28 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:138
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
-msgstr ""
+msgstr "%(name)s automatysk iepenje bij it ynloggen?"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:144
+#: ../../portable/frontends/widgets/firsttimedialog.py:178
+#: ../../portable/dialogs.py:87
+msgid "Yes"
+msgstr "Ja"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:145
+#: ../../portable/frontends/widgets/firsttimedialog.py:177
+#: ../../portable/dialogs.py:88
+msgid "No"
+msgstr "Nee"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:153
 msgid "Next >"
-msgstr ""
+msgstr "Folgende >"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:163
 #, python-format
 msgid "Completing the %(name)s First Time Setup"
-msgstr ""
+msgstr "%(name)s foar de earste kear ôfrûnje"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:167
 #, python-format
@@ -1060,9 +523,18 @@ msgid ""
 "Would you like %(name)s to look for media files on your computer?"
 msgstr ""
 
+#: ../../portable/frontends/widgets/firsttimedialog.py:185
+msgid "Restrict to all my personal files."
+msgstr "Behein oant myn persoanlike bestannen."
+
 #: ../../portable/frontends/widgets/firsttimedialog.py:186
 msgid "Search custom folders:"
 msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:192
+#: ../../portable/frontends/widgets/prefpanel.py:435
+msgid "Change"
+msgstr "Wizigje"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:197
 msgid "Choose directory to search for media files"
@@ -1073,6 +545,13 @@ msgstr ""
 msgid "< Previous"
 msgstr ""
 
+#: ../../portable/frontends/widgets/firsttimedialog.py:223
+#: ../../portable/frontends/widgets/firsttimedialog.py:225
+#: ../../portable/frontends/widgets/firsttimedialog.py:282
+#: ../../portable/feed.py:2290 ../../portable/feed.py:2397
+msgid "Search"
+msgstr "Sykje"
+
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:293
 msgid "Finish"
@@ -1081,6 +560,11 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:273
 msgid "Searching for media files"
 msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:283
+#: ../../portable/dialogs.py:85
+msgid "Cancel"
+msgstr "Ofbrekke"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:321
 #, python-format
@@ -1175,9 +659,18 @@ msgstr ""
 msgid "Down Rate"
 msgstr ""
 
+#: ../../portable/frontends/widgets/style.py:249
+msgid "Down Total"
+msgstr "Ynlaad Totaal"
+
 #: ../../portable/frontends/widgets/style.py:251
 msgid "Download Torrent"
 msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:252
+#: ../../portable/dl_daemon/download.py:539
+msgid "Error"
+msgstr "Flater"
 
 #: ../../portable/frontends/widgets/style.py:253
 msgid "queued for autodownload"
@@ -1198,6 +691,18 @@ msgstr ""
 msgid "Newly Available"
 msgstr ""
 
+#: ../../portable/frontends/widgets/style.py:258
+#: ../../portable/frontends/widgets/prefpanel.py:485
+#: ../../portable/frontends/widgets/tablist.py:580
+#: ../../portable/frontends/widgets/tablist.py:592
+#: ../../portable/frontends/widgets/tablist.py:598
+#: ../../portable/frontends/widgets/tablist.py:635
+#: ../../portable/frontends/widgets/tablist.py:641
+#: ../../portable/frontends/widgets/tablist.py:646
+#: ../../portable/dialogs.py:108
+msgid "Remove"
+msgstr "Fuortsmite"
+
 #: ../../portable/frontends/widgets/style.py:259
 msgid "Stop seeding"
 msgstr ""
@@ -1217,6 +722,19 @@ msgid ""
 "%(appname)s can't play this file.  You may be able to open it with a "
 "different program"
 msgstr ""
+
+#: ../../portable/frontends/widgets/displays.py:382
+msgid "Filename:"
+msgstr "Bestânsnamme"
+
+#: ../../portable/frontends/widgets/displays.py:385
+msgid "File type:"
+msgstr "Bestânstype"
+
+#: ../../portable/frontends/widgets/displays.py:391
+#: ../../portable/frontends/widgets/displays.py:428
+msgid "Play Externally"
+msgstr "Spylje Ekstern"
 
 #: ../../portable/frontends/widgets/displays.py:393
 msgid "Skip"
@@ -1282,6 +800,14 @@ msgstr ""
 #: ../../portable/frontends/widgets/displays.py:585
 msgid "Put Into a New Folder"
 msgstr ""
+
+#: ../../portable/frontends/widgets/rundialog.py:82
+msgid "Username:"
+msgstr "Brûkersnamme:"
+
+#: ../../portable/frontends/widgets/rundialog.py:86
+msgid "Password:"
+msgstr "Wachtwurd:"
 
 #: ../../portable/frontends/widgets/browser.py:96
 msgid "Open in browser"
@@ -1457,6 +983,22 @@ msgstr ""
 msgid "Export OPML File"
 msgstr ""
 
+#: ../../portable/frontends/widgets/application.py:663
+msgid "Create Playlist"
+msgstr "Meitsje Ofspyllist"
+
+#: ../../portable/frontends/widgets/application.py:664
+msgid "Enter a name for the new playlist"
+msgstr "Jou in namme foar de nije ôfspyllist"
+
+#: ../../portable/frontends/widgets/application.py:685
+msgid "Create Playlist Folder"
+msgstr "Meitsje Ofspyllistmap"
+
+#: ../../portable/frontends/widgets/application.py:686
+msgid "Enter a name for the new playlist folder"
+msgstr "Jou in namme foar de nije ôfspyllistmap"
+
 #: ../../portable/frontends/widgets/application.py:707
 #: ../../portable/frontends/widgets/tablist.py:579
 msgid "Rename Feed Folder"
@@ -1476,10 +1018,21 @@ msgstr ""
 msgid "Enter a new name for the feed %(name)s"
 msgstr ""
 
+#: ../../portable/frontends/widgets/application.py:717
+#: ../../portable/frontends/widgets/tablist.py:640
+#: ../../portable/playlist.py:188
+msgid "Rename Playlist"
+msgstr "Werneam Ofspyllist"
+
 #: ../../portable/frontends/widgets/application.py:718
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:722
+#: ../../portable/frontends/widgets/tablist.py:634
+msgid "Rename Playlist Folder"
+msgstr "Werneam Ofspyllistmap"
 
 #: ../../portable/frontends/widgets/application.py:723
 #, python-format
@@ -1522,6 +1075,10 @@ msgid_plural "Are you sure you want to remove these %(count)s sites?"
 msgstr[0] ""
 msgstr[1] ""
 
+#: ../../portable/frontends/widgets/application.py:802
+msgid "Are you sure you want to quit?"
+msgstr "Witte jo seker dat jo ôfslute wolle?"
+
 #: ../../portable/frontends/widgets/application.py:804
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
@@ -1533,17 +1090,22 @@ msgstr[1] ""
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:1106
+#: ../../portable/frontends/widgets/application.py:1124
 msgid "Message"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:1131
+#: ../../portable/frontends/widgets/application.py:1149
 msgid "Migrating Files"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:1141
+#: ../../portable/frontends/widgets/application.py:1159
 msgid "Migrating files"
 msgstr ""
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:81
+#: ../../portable/frontends/widgets/prefpanel.py:622
+msgid "Downloads"
+msgstr "Ynladen Bestannen"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:90
 msgid "Single and external downloads"
@@ -1569,6 +1131,23 @@ msgstr ""
 #: ../../portable/frontends/widgets/prefpanel.py:281
 msgid "Every day"
 msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:282
+msgid "Every hour"
+msgstr "Elk oer"
+
+#: ../../portable/frontends/widgets/prefpanel.py:283
+msgid "Every 30 minutes"
+msgstr "Elke 30 minuten"
+
+#: ../../portable/frontends/widgets/prefpanel.py:284
+msgid "Manually"
+msgstr "Hânmjitich"
+
+#: ../../portable/frontends/widgets/prefpanel.py:289
+#: ../../portable/frontends/widgets/itemlistwidgets.py:624
+msgid "New"
+msgstr "Nij"
 
 #: ../../portable/frontends/widgets/prefpanel.py:290
 #: ../../portable/frontends/widgets/itemlistwidgets.py:624
@@ -1677,6 +1256,10 @@ msgstr ""
 msgid "Choose Movies Directory"
 msgstr ""
 
+#: ../../portable/frontends/widgets/prefpanel.py:453
+msgid "Migrate existing movies?"
+msgstr "Migrearje besteande films?"
+
 #: ../../portable/frontends/widgets/prefpanel.py:454
 #, python-format
 msgid ""
@@ -1684,6 +1267,11 @@ msgid ""
 "migrate your existing downloads there? (Currently downloading movies will "
 "not be moved until they finish.)"
 msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:482
+#: ../../portable/dialogs.py:104
+msgid "Add"
+msgstr "Foech Ta"
 
 #: ../../portable/frontends/widgets/prefpanel.py:523
 msgid "Add Watched Folder"
@@ -1708,6 +1296,26 @@ msgstr ""
 msgid "GB"
 msgstr ""
 
+#: ../../portable/frontends/widgets/prefpanel.py:580
+msgid "1 day"
+msgstr "1 dei"
+
+#: ../../portable/frontends/widgets/prefpanel.py:581
+msgid "3 days"
+msgstr "3 dagen"
+
+#: ../../portable/frontends/widgets/prefpanel.py:582
+msgid "6 days"
+msgstr "6 dagen"
+
+#: ../../portable/frontends/widgets/prefpanel.py:583
+msgid "10 days"
+msgstr "10 dagen"
+
+#: ../../portable/frontends/widgets/prefpanel.py:584
+msgid "1 month"
+msgstr "1 moanne"
+
 #: ../../portable/frontends/widgets/prefpanel.py:590
 msgid "By default, video and audio items expire after:"
 msgstr ""
@@ -1729,13 +1337,29 @@ msgstr ""
 msgid "Stop after each video or audio item"
 msgstr ""
 
+#: ../../portable/frontends/widgets/prefpanel.py:620
+msgid "General"
+msgstr "Algemien"
+
 #: ../../portable/frontends/widgets/prefpanel.py:621
 msgid "Feeds"
 msgstr ""
 
+#: ../../portable/frontends/widgets/prefpanel.py:623
+msgid "Folders"
+msgstr "Mappen"
+
 #: ../../portable/frontends/widgets/prefpanel.py:624
 msgid "Disk space"
 msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:625
+msgid "Playback"
+msgstr "Ofspylje"
+
+#: ../../portable/frontends/widgets/prefpanel.py:629
+msgid "Preferences"
+msgstr "Foarkarren"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:58
 msgid "New Search Feed"
@@ -1745,6 +1369,14 @@ msgstr ""
 msgid "A search feed contains items that match a search term."
 msgstr ""
 
+#: ../../portable/frontends/widgets/newsearchfeed.py:74
+msgid "Search for:"
+msgstr "Sykje nei:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:81
+msgid "In this:"
+msgstr "Hjir Yn:"
+
 #: ../../portable/frontends/widgets/newsearchfeed.py:88
 msgid "Feed:"
 msgstr ""
@@ -1752,6 +1384,11 @@ msgstr ""
 #: ../../portable/frontends/widgets/newsearchfeed.py:93
 msgid "Search engine:"
 msgstr ""
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:99
+#: ../../portable/frontends/widgets/newfeed.py:60
+msgid "URL:"
+msgstr "URL:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:133
 msgid "Add new feed to this section:"
@@ -1874,6 +1511,15 @@ msgstr ""
 msgid "Resume All Downloads (%(paused)d)"
 msgstr ""
 
+#: ../../portable/frontends/widgets/gtk/trayicon.py:85
+msgid "Hide"
+msgstr "Ferstopje"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:87
+#: ../../portable/frontends/widgets/diagnostics.py:76
+msgid "Show"
+msgstr "Toane"
+
 #: ../../portable/frontends/widgets/gtk/window.py:495
 msgid "All files"
 msgstr ""
@@ -1893,6 +1539,11 @@ msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
 "%(trademark)s"
 msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/window.py:593
+#: ../../portable/dialogs.py:84
+msgid "Close"
+msgstr "Slute"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -1967,6 +1618,11 @@ msgid ""
 "\n"
 "Enter the URL of the feed to add"
 msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:528
+#: ../../portable/frontends/widgets/tablist.py:591
+msgid "Copy URL to clipboard"
+msgstr "Kopiearje URL nei klamboerd"
 
 #: ../../portable/frontends/widgets/tablist.py:530
 msgid "Remove Site"
@@ -2066,6 +1722,14 @@ msgstr ""
 msgid "Save as a Feed"
 msgstr ""
 
+#: ../../portable/frontends/widgets/itemlistwidgets.py:486
+msgid "Pause All"
+msgstr "Pausearje Alles"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:493
+msgid "Resume All"
+msgstr "Gean Fierder mei Alles"
+
 #: ../../portable/frontends/widgets/itemlistwidgets.py:500
 msgid "Cancel All"
 msgstr ""
@@ -2106,6 +1770,10 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemlistwidgets.py:631
 msgid "Share feed"
 msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:637
+msgid "Settings"
+msgstr "Ynstellings"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:643
 msgid "Remove feed"
@@ -2172,7 +1840,7 @@ msgstr ""
 msgid "Search All"
 msgstr ""
 
-#: ../../portable/messages.py:1060 ../../portable/item.py:1078
+#: ../../portable/messages.py:1078 ../../portable/item.py:1078
 msgid "queued for download"
 msgstr ""
 
@@ -2195,12 +1863,20 @@ msgid ""
 "report at %(url)s."
 msgstr ""
 
+#: ../../portable/startup.py:179
+msgid "Database too new"
+msgstr "Database te nij"
+
 #: ../../portable/startup.py:181
 #, python-format
 msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
 "must download the latest version of %(appname)s and run that."
 msgstr ""
+
+#: ../../portable/commandline.py:99
+msgid "Subscription error"
+msgstr "Ynskriuw flater"
 
 #: ../../portable/commandline.py:109
 #, python-format
@@ -2221,6 +1897,10 @@ msgstr ""
 msgid "Could not download the %(appname)s feed file: %(url)s"
 msgstr ""
 
+#: ../../portable/commandline.py:179
+msgid "Invalid Torrent"
+msgstr "Foute Torrent"
+
 #: ../../portable/commandline.py:181
 #, python-format
 msgid ""
@@ -2228,10 +1908,34 @@ msgid ""
 "[OK]"
 msgstr ""
 
+#: ../../portable/downloader.py:258
+msgid "activity"
+msgstr "aktiviteit"
+
+#: ../../portable/downloader.py:300
+msgid "Flash URL Scraping Error"
+msgstr "Flash URL Scraping Flater"
+
+#: ../../portable/downloader.py:482
+msgid "starting up"
+msgstr "dwaande mei opstarten"
+
+#: ../../portable/feed.py:936
+msgid "Error loading feed"
+msgstr "Flater by it laden fan feed"
+
 #: ../../portable/feed.py:938
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr ""
+
+#: ../../portable/feed.py:941
+msgid "Would you like to keep the feed?"
+msgstr "Wolle jo de feed bewarje?"
+
+#: ../../portable/feed.py:1066
+msgid "Bad content-type"
+msgstr "Ferkeard ynhâld-type"
 
 #: ../../portable/feed.py:1079
 #, python-format
@@ -2264,9 +1968,17 @@ msgstr ""
 msgid "Playing File"
 msgstr ""
 
+#: ../../portable/dialogs.py:83
+msgid "Ok"
+msgstr "Ok"
+
 #: ../../portable/dialogs.py:86
 msgid "Done"
 msgstr ""
+
+#: ../../portable/dialogs.py:89
+msgid "Quit"
+msgstr "Ofslute"
 
 #: ../../portable/dialogs.py:90
 msgid "Continue"
@@ -2280,6 +1992,38 @@ msgstr ""
 msgid "Submit Crash Report"
 msgstr ""
 
+#: ../../portable/dialogs.py:93
+msgid "Migrate"
+msgstr "Migrearje"
+
+#: ../../portable/dialogs.py:94
+msgid "Don't Migrate"
+msgstr "Net Migrearje"
+
+#: ../../portable/dialogs.py:96
+msgid "Remove Entry"
+msgstr "Ynfier fuortsmite"
+
+#: ../../portable/dialogs.py:97
+msgid "Delete File"
+msgstr "Bestân fuortsmite"
+
+#: ../../portable/dialogs.py:98
+msgid "Delete Files"
+msgstr "Bestannen fuortsmite"
+
+#: ../../portable/dialogs.py:99
+msgid "Keep Videos"
+msgstr "Bewarje Fideos"
+
+#: ../../portable/dialogs.py:100
+msgid "Delete Videos"
+msgstr "Smit Fideos Fuort"
+
+#: ../../portable/dialogs.py:101
+msgid "Create"
+msgstr "Meitsje"
+
 #: ../../portable/dialogs.py:102
 msgid "Create Feed"
 msgstr ""
@@ -2287,6 +2031,18 @@ msgstr ""
 #: ../../portable/dialogs.py:103
 msgid "Create Folder"
 msgstr ""
+
+#: ../../portable/dialogs.py:105
+msgid "Add Into New Folder"
+msgstr "Foech ta Yn Nije Map"
+
+#: ../../portable/dialogs.py:109
+msgid "Not Now"
+msgstr "No Net"
+
+#: ../../portable/dialogs.py:110
+msgid "Close to Tray"
+msgstr "Slút nei Systeemfak"
 
 #: ../../portable/dialogs.py:111
 msgid "Launch Miro"
@@ -2360,6 +2116,11 @@ msgstr ""
 msgid "Could not write to %(filename)s"
 msgstr ""
 
+#: ../../portable/dl_daemon/download.py:653
+#: ../../portable/dl_daemon/download.py:870
+msgid "Not enough disk space"
+msgstr "Net genôch skiifromte"
+
 #: ../../portable/dl_daemon/download.py:654
 #: ../../portable/dl_daemon/download.py:871
 #, python-format
@@ -2379,19 +2140,35 @@ msgstr ""
 msgid "BitTorrent failed to startup"
 msgstr ""
 
+#: ../../portable/dl_daemon/download.py:1078
+msgid "Corrupt Torrent"
+msgstr "Korrupte Torrent"
+
 #: ../../portable/dl_daemon/download.py:1079
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr ""
+
+#: ../../portable/dl_daemon/download.py:1103
+msgid "Torrent file deleted"
+msgstr "Torrent bestân fuortsmiten"
 
 #: ../../portable/dl_daemon/download.py:1104
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr ""
 
+#: ../../portable/menubar.py:184
+msgid "_Open"
+msgstr "_Iepenje"
+
 #: ../../portable/menubar.py:185
 msgid "_Download Item"
 msgstr ""
+
+#: ../../portable/menubar.py:186
+msgid "Check _Version"
+msgstr "Kontrolearje _Ferzje"
 
 #: ../../portable/menubar.py:188
 msgid "_Remove Item"
@@ -2416,6 +2193,30 @@ msgstr ""
 #: ../../portable/menubar.py:193
 msgid "Copy Item _URL"
 msgstr ""
+
+#: ../../portable/menubar.py:195
+msgid "_Options"
+msgstr "_Opsjes"
+
+#: ../../portable/menubar.py:196
+msgid "_Quit"
+msgstr "_Ofslute"
+
+#: ../../portable/menubar.py:205
+msgid "Cu_t"
+msgstr "Kni_ppe"
+
+#: ../../portable/menubar.py:206
+msgid "_Copy"
+msgstr "_Kopiearje"
+
+#: ../../portable/menubar.py:207
+msgid "_Paste"
+msgstr "_Plakke"
+
+#: ../../portable/menubar.py:208
+msgid "Select _All"
+msgstr "Selektearje _Alles"
 
 #: ../../portable/menubar.py:212
 msgid "Add _Feed"
@@ -2469,9 +2270,73 @@ msgstr ""
 msgid "Copy URL"
 msgstr ""
 
+#: ../../portable/menubar.py:233
+msgid "New _Playlist"
+msgstr "Nije _Ofspyllist"
+
+#: ../../portable/menubar.py:234
+msgid "New Playlist Fol_der"
+msgstr "Nije Ofspyllist Ma_p"
+
+#: ../../portable/menubar.py:236
+msgid "Re_name Playlist"
+msgstr "Wer_neam Ofspyllist"
+
+#: ../../portable/menubar.py:237
+msgid "_Remove Playlist"
+msgstr "_Smit Ofspyllist fuort"
+
+#: ../../portable/menubar.py:238
+msgid "_Remove Playlists"
+msgstr "_Smit Ofspyllisten fuort"
+
+#: ../../portable/menubar.py:239
+msgid "_Remove Playlist Folders"
+msgstr "_Smit Ofspyllistmappen fuort"
+
+#: ../../portable/menubar.py:240
+msgid "_Remove Playlist Folder"
+msgstr "_Smit Ofspyllistmap fuort"
+
+#: ../../portable/menubar.py:251 ../../portable/menubar.py:252
+msgid "_Play"
+msgstr "_Spylje"
+
 #: ../../portable/menubar.py:253
 msgid "_Pause"
 msgstr ""
+
+#: ../../portable/menubar.py:254
+msgid "_Stop"
+msgstr "_Stop"
+
+#: ../../portable/menubar.py:256
+msgid "_Next Video"
+msgstr "_Folgjende Fideo"
+
+#: ../../portable/menubar.py:257
+msgid "_Previous Video"
+msgstr "_Foarige Fideo"
+
+#: ../../portable/menubar.py:259
+msgid "Skip _Forward"
+msgstr "Stap _Foarút"
+
+#: ../../portable/menubar.py:260
+msgid "Skip _Back"
+msgstr "Stap _Tebek"
+
+#: ../../portable/menubar.py:262
+msgid "Volume _Up"
+msgstr "Volume _Omheech"
+
+#: ../../portable/menubar.py:263
+msgid "Volume _Down"
+msgstr "Volume _Omleech"
+
+#: ../../portable/menubar.py:265
+msgid "_Fullscreen"
+msgstr "_Folslein Skerm"
 
 #: ../../portable/menubar.py:266
 msgid "_Toggle Detached/Attached"
@@ -2482,6 +2347,18 @@ msgstr ""
 msgid "_About %(name)s"
 msgstr ""
 
+#: ../../portable/menubar.py:272
+msgid "_Donate"
+msgstr "_Donearje"
+
+#: ../../portable/menubar.py:274 ../../portable/menubar.py:297
+msgid "_Help"
+msgstr "_Help"
+
+#: ../../portable/menubar.py:278
+msgid "Report a _Bug"
+msgstr "Rapportearje in _Bug"
+
 #: ../../portable/menubar.py:280
 msgid "_Translate"
 msgstr ""
@@ -2490,9 +2367,25 @@ msgstr ""
 msgid "_Planet Miro"
 msgstr ""
 
+#: ../../portable/menubar.py:286
+msgid "_Video"
+msgstr "_Fideo"
+
+#: ../../portable/menubar.py:288
+msgid "_File"
+msgstr "_Beatân"
+
 #: ../../portable/menubar.py:294
 msgid "_Sidebar"
 msgstr ""
+
+#: ../../portable/menubar.py:295
+msgid "_Playlists"
+msgstr "_Ofspyllisten"
+
+#: ../../portable/menubar.py:296
+msgid "P_layback"
+msgstr "O_fspylje"
 
 #: ../../portable/util.py:300 ../../portable/util.py:302
 #, python-format
@@ -2513,6 +2406,11 @@ msgstr ""
 #, python-format
 msgid "%(size)sB"
 msgstr ""
+
+#: ../../portable/playlist.py:189
+#, python-format
+msgid "Enter a new name for the playlist %s"
+msgstr "Jou in nije namme foar de ôfspyllist %s"
 
 #: ../../portable/item.py:897
 #, python-format
@@ -2547,6 +2445,10 @@ msgstr ""
 msgid "Contents:"
 msgstr ""
 
+#: ../../portable/item.py:1442
+msgid "starting up..."
+msgstr "dwaande mei opstarten..."
+
 #: ../../portable/opml.py:193
 msgid "OPML Import failed"
 msgstr ""
@@ -2573,6 +2475,10 @@ msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] ""
 msgstr[1] ""
+
+#: ../../portable/theme.py:174
+msgid "Example Playlist"
+msgstr "Foarbyl Ofspyllist"
 
 #: ../../portable/displaytext.py:52
 #, python-format
@@ -2689,12 +2595,12 @@ msgstr[1] ""
 msgid "%(month)s %(dayofmonth)s, %(year)s"
 msgstr ""
 
-#: ../../portable/storedatabase.py:425
+#: ../../portable/storedatabase.py:449
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr ""
 
-#: ../../portable/storedatabase.py:428
+#: ../../portable/storedatabase.py:452
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -2703,10 +2609,25 @@ msgid ""
 "Recent changes may be lost."
 msgstr ""
 
-#: ../../portable/storedatabase.py:440
+#: ../../portable/storedatabase.py:464
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr ""
+
+#: ../../portable/storedatabase.py:467
+msgid ""
+"The database has been successfully saved. It is now safe to quit without "
+"losing any data."
+msgstr "De database is súksesfol bewarre. It is no feilich om ôf te sluten."
+
+#: ../../platform/osx/plat/frontends/widgets/application.py:171
+msgid "Download Completed"
+msgstr "Ynladen Dien"
+
+#: ../../platform/osx/plat/frontends/widgets/application.py:172
+#, python-format
+msgid "Download of video '%s' is finished."
+msgstr "Ynladen fan fideo '%s' is dien."
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:199
 msgid "Pop Out"
@@ -2716,10 +2637,22 @@ msgstr ""
 msgid "Pop In"
 msgstr ""
 
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
+msgid "Services"
+msgstr "Tsjinsten"
+
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:141
 #, python-format
 msgid "Hide %(appname)s"
 msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:143
+msgid "Hide Others"
+msgstr "Ferstop Oaren"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:144
+msgid "Show All"
+msgstr "Toan Alles"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:149
 msgid "Preferences..."
@@ -2729,6 +2662,30 @@ msgstr ""
 #, python-format
 msgid "Quit %(appname)s"
 msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
+msgid "Close Window"
+msgstr "Finster slute"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
+msgid "Cut"
+msgstr "Knippe"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:161
+msgid "Copy"
+msgstr "Kopieare"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
+msgid "Paste"
+msgstr "Plakke"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:165
+msgid "Select All"
+msgstr "Selektearje Alles"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
+msgid "Edit"
+msgstr "Bewurkje"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:172
 msgid "Present Half Size"
@@ -2745,6 +2702,26 @@ msgstr ""
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:176
 msgid "Present Video"
 msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
+msgid "Zoom"
+msgstr "Zoom"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:184
+msgid "Minimize"
+msgstr "Minimalisearje"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:186
+msgid "Main Window"
+msgstr "Haadskerm"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:188
+msgid "Bring All to Front"
+msgstr "Bring alles nei foaren"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
+msgid "Window"
+msgstr "Finster"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:195
 #, python-format
@@ -2768,6 +2745,10 @@ msgstr ""
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:74
 msgid "Video renderer:"
 msgstr ""
+
+#: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
+msgid "Update Available"
+msgstr "Fernijing Beskikber"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
 #, python-format
@@ -2803,10 +2784,22 @@ msgid ""
 "been installed."
 msgstr ""
 
+#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
+msgid "When I click the red close button:"
+msgstr "As ik klik op de reade slútknop:"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
+msgid "Close to tray so that downloads can continue."
+msgstr "Slút nei systeemfak, sadat it ynladen trochgean kin."
+
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
 #, python-format
 msgid "Quit %(appname)s completely."
 msgstr ""
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:133
+msgid "Close to tray?"
+msgstr "Slute nei it systeemfak?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:134
 #, python-format
@@ -2814,6 +2807,18 @@ msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:192
+msgid "Error Bombing Item"
+msgstr "Flater Bombing Underdiel"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:194
+msgid "Error Recommending Item"
+msgstr "Flater mei Oanrikkemandearjen Underdiel"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:196
+msgid "Error Opening Website"
+msgstr "Flater mei Iepenjen fan Webstee"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:201
 #, python-format

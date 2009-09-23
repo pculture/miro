@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-07-16 13:21-0400\n"
-"PO-Revision-Date: 2009-07-20 00:07+0000\n"
+"PO-Revision-Date: 2009-07-23 15:00+0000\n"
 "Last-Translator: Jerry Bramstång <gloch_ftw@hotmail.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-07-21 14:41+0000\n"
+"X-Launchpad-Export-Date: 2009-09-23 16:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -159,6 +159,11 @@ msgstr "Video"
 msgid "Audio"
 msgstr "Ljud"
 
+#: ../../portable/frontends/widgets/statictabs.py:113
+#: ../../portable/frontends/widgets/itemlistcontroller.py:528
+msgid "Other"
+msgstr "Annat"
+
 #: ../../portable/frontends/widgets/statictabs.py:118
 msgid "Downloading"
 msgstr "Laddar ner"
@@ -197,6 +202,10 @@ msgstr "Ta bort"
 msgid "Play"
 msgstr "Spela upp"
 
+#: ../../portable/frontends/widgets/itemcontextmenu.py:95
+msgid "Play Just This Item"
+msgstr "Spela endast detta objekt"
+
 #: ../../portable/frontends/widgets/itemcontextmenu.py:96
 #: ../../portable/frontends/widgets/itemcontextmenu.py:192
 msgid "Add to Playlist"
@@ -231,6 +240,14 @@ msgstr "Markera som sedd"
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:123
 msgid "Keep"
 msgstr "Behåll"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:112
+msgid "Stop Seeding"
+msgstr "Sluta dela"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:114
+msgid "Resume Seeding"
+msgstr "Återuppta delningen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:117
 #: ../../portable/frontends/widgets/itemcontextmenu.py:239
@@ -451,6 +468,37 @@ msgstr "15 osedda objekt"
 msgid "Feed Settings"
 msgstr "Kanalinställningar"
 
+#: ../../portable/frontends/widgets/firsttimedialog.py:63
+#, python-format
+msgid "%(name)s First Time Setup"
+msgstr "%(name)s första installation"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:122
+#, python-format
+msgid "Welcome to the %(name)s First Time Setup"
+msgstr "Välkommen till %(name)s första installation"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:126
+#, python-format
+msgid ""
+"The next few screens will help you set up %(name)s so that it works best for "
+"you.\n"
+"\n"
+"We recommend that you have %(name)s launch when your computer starts up.  "
+"This way, downloads in progress can finish downloading and new media files "
+"can be downloaded in the background, ready when you want to watch."
+msgstr ""
+"De följande sidorna kommer att hjälpa dig att ställa in %(name)s så det "
+"fungerar bäst för dig.\n"
+"Vi rekommenderar att %(name)s startas när datorn startar upp, så att "
+"pågående hämtningar kan avslutas och nya mediafiler kan hämtas i bakgrunden "
+"och vara klara att ses när du önskar detta."
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:138
+#, python-format
+msgid "Would you like to run %(name)s on startup?"
+msgstr "Vill du att %(name)s startas när datorn startas upp?"
+
 #: ../../portable/frontends/widgets/firsttimedialog.py:144
 #: ../../portable/frontends/widgets/firsttimedialog.py:178
 #: ../../portable/dialogs.py:87
@@ -466,6 +514,24 @@ msgstr "Nej"
 #: ../../portable/frontends/widgets/firsttimedialog.py:153
 msgid "Next >"
 msgstr "Nästa >"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:163
+#, python-format
+msgid "Completing the %(name)s First Time Setup"
+msgstr "Färdigställer %(name)s första installation."
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:167
+#, python-format
+msgid ""
+"%(name)s can find all the media files on your computer to help you organize "
+"your collection.\n"
+"\n"
+"Would you like %(name)s to look for media files on your computer?"
+msgstr ""
+"%(name)s kan leta reda på alla mediafiler på datorn för att hjälpa dig med "
+"att organisera dom.\n"
+"\n"
+"Vill du att %(name)s letar efter mediafiler på datorn?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:185
 msgid "Restrict to all my personal files."
@@ -524,6 +590,15 @@ msgid_plural "found %(count)s media files"
 msgstr[0] "hittade %(count)s mediafil"
 msgstr[1] "hittade %(count)s mediafiler"
 
+#: ../../portable/frontends/widgets/crashdialog.py:54
+#, python-format
+msgid ""
+"%(appname)s has encountered an internal error.  You can help us track down "
+"this problem and fix it by submitting an error report."
+msgstr ""
+"%(appname)s har upptäckt ett internt fel. Du kan hjälpa oss att lösa detta "
+"problem genom att skicka en felrapport."
+
 #: ../../portable/frontends/widgets/crashdialog.py:63
 msgid ""
 "Include entire program database including all video and feed metadata with "
@@ -561,6 +636,10 @@ msgstr "Visa i %(progname)s"
 #: ../../portable/frontends/widgets/displays.py:390
 msgid "Reveal File"
 msgstr "Visa fil"
+
+#: ../../portable/frontends/widgets/style.py:239
+msgid "Display Contents"
+msgstr "Visa Inehåll"
 
 #: ../../portable/frontends/widgets/style.py:241
 msgid "File URL"
@@ -617,6 +696,10 @@ msgstr "satt i kö för automatisk nedladdning"
 msgid "Unplayed"
 msgstr "Osedd"
 
+#: ../../portable/frontends/widgets/style.py:255
+msgid "Currently Playing"
+msgstr "Spelas just nu"
+
 #: ../../portable/frontends/widgets/style.py:256
 #: ../../portable/frontends/widgets/style.py:1171
 msgid "Newly Available"
@@ -647,6 +730,15 @@ msgstr "pausad"
 msgid "Remove from playlist"
 msgstr "Ta bort från spellista"
 
+#: ../../portable/frontends/widgets/displays.py:372
+#, python-format
+msgid ""
+"%(appname)s can't play this file.  You may be able to open it with a "
+"different program"
+msgstr ""
+"Applikationen: %(appname)s kan inte spela upp denna filen. Du kan kanske "
+"öppna den i ett annat program"
+
 #: ../../portable/frontends/widgets/displays.py:382
 msgid "Filename:"
 msgstr "Filnamn:"
@@ -663,6 +755,10 @@ msgstr "Spela upp externt"
 #: ../../portable/frontends/widgets/displays.py:393
 msgid "Skip"
 msgstr "Hoppa över"
+
+#: ../../portable/frontends/widgets/displays.py:430
+msgid "Open Externally"
+msgstr "Öppna Externt"
 
 #: ../../portable/frontends/widgets/displays.py:536
 #, python-format
@@ -699,6 +795,13 @@ msgid_plural "%(count)d Feeds Selected"
 msgstr[0] "%(count)d kanal markerad"
 msgstr[1] "%(count)d kanaler markerade"
 
+#: ../../portable/frontends/widgets/displays.py:568
+#, python-format
+msgid "%(count)d Site Selected"
+msgid_plural "%(count)d Sites Selected"
+msgstr[0] "%(count)d webbsida vald"
+msgstr[1] "%(count)d webbsidor valda"
+
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
 msgid "%(count)d Playlist Selected"
@@ -725,6 +828,10 @@ msgstr "Lösenord:"
 #: ../../portable/frontends/widgets/browser.py:96
 msgid "Open in browser"
 msgstr "Öppna i webbläsare"
+
+#: ../../portable/frontends/widgets/browser.py:102
+msgid "Download this video"
+msgstr "Hämta denna videon"
 
 #: ../../portable/frontends/widgets/application.py:156
 msgid "Movies directory gone"
@@ -764,6 +871,11 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:326
 msgid "Error Revealing File"
 msgstr "Kunde inte visa fil"
+
+#: ../../portable/frontends/widgets/application.py:327
+#, python-format
+msgid "The file %(filename)s was deleted from outside %(appname)s."
+msgstr "Filen %(filename)s har raderats utanför %(appname)s."
 
 #: ../../portable/frontends/widgets/application.py:335
 msgid "Open Files..."
@@ -808,6 +920,16 @@ msgstr ""
 "\n"
 "Ange URL:en till objektet du vill hämta"
 
+#: ../../portable/frontends/widgets/application.py:400
+#, python-format
+msgid "%(appname)s is up to date"
+msgstr "%(appname)s är av senaste version"
+
+#: ../../portable/frontends/widgets/application.py:402
+#, python-format
+msgid "%(appname)s is up to date!"
+msgstr "%(appname)s är av senaste version!"
+
 #: ../../portable/frontends/widgets/application.py:426
 msgid "Remove item"
 msgid_plural "Remove items"
@@ -826,12 +948,38 @@ msgstr[1] ""
 "Vissa av dessa objekt är inte nedladdade från en kanal. Vill du radera "
 "filerna eller bara ta bort dem ur biblioteket?"
 
+#: ../../portable/frontends/widgets/application.py:440
+msgid ""
+"One of these items is a folder.  Delete/Removeing a folder will "
+"delete/remove it's contents"
+msgid_plural ""
+"Some of these items are folders.  Delete/Removeing a folder will "
+"delete/remove it's contents"
+msgstr[0] ""
+"En av dessa saker är en mapp. Att ta bort en mapp kommer innebära att även "
+"dess innehåll tas bort"
+msgstr[1] ""
+"Några av dessa saker är mappar. Att ta bort en mapp kommer innebära att även "
+"dess innehåll tas bort"
+
 #: ../../portable/frontends/widgets/application.py:455
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
 msgstr[0] "Är du säker på att du vill ta bort objektet?"
 msgstr[1] "Är du säker på att du vill ta bort alla %(count)d objekten?"
+
+#: ../../portable/frontends/widgets/application.py:462
+msgid ""
+"One of these items is a folder.  Deleting a folder will delete it's contents"
+msgid_plural ""
+"Some of these items are folders.  Deleting a folder will delete it's contents"
+msgstr[0] ""
+"Ett av dessa objekt är en mapp. Tar du bort mappen kommer även dess innehåll "
+"att tas bort"
+msgstr[1] ""
+"Några av dessa objekt är mappar. Tar du bort mapparna kommer även dess "
+"innehåll att tas bort"
 
 #: ../../portable/frontends/widgets/application.py:496
 msgid "Enter the new name for the item"
@@ -961,6 +1109,19 @@ msgid_plural "Are you sure you want to remove these %(count)s playlists?"
 msgstr[0] "Är du säker på att du vill ta bort denna spellista?"
 msgstr[1] "Är du säker på att du vill ta bort dessa %(count)s spellistor?"
 
+#: ../../portable/frontends/widgets/application.py:770
+msgid "Remove site"
+msgid_plural "Remove sites"
+msgstr[0] "Ta bort sida"
+msgstr[1] "Ta bort sidor"
+
+#: ../../portable/frontends/widgets/application.py:772
+#, python-format
+msgid "Are you sure you want to remove this site?"
+msgid_plural "Are you sure you want to remove these %(count)s sites?"
+msgstr[0] "Är du säker på att du vill ta bort denna sidan?"
+msgstr[1] "Är du säker på att du vill ta bort dessa %(count)s sidor?"
+
 #: ../../portable/frontends/widgets/application.py:802
 msgid "Are you sure you want to quit?"
 msgstr "Är du säker på att du vill avsluta?"
@@ -977,15 +1138,15 @@ msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr ""
 "Varna mig om jag försöker avsluta programmet medans nedladdningar pågår"
 
-#: ../../portable/frontends/widgets/application.py:1106
+#: ../../portable/frontends/widgets/application.py:1124
 msgid "Message"
 msgstr "Meddelande"
 
-#: ../../portable/frontends/widgets/application.py:1131
+#: ../../portable/frontends/widgets/application.py:1149
 msgid "Migrating Files"
 msgstr "Migrerar filer"
 
-#: ../../portable/frontends/widgets/application.py:1141
+#: ../../portable/frontends/widgets/application.py:1159
 msgid "Migrating files"
 msgstr "Migrerar filer"
 
@@ -1005,6 +1166,11 @@ msgstr "Kanalhämtningar"
 #: ../../portable/frontends/widgets/downloadscontroller.py:96
 msgid "Seeding"
 msgstr "Distribuerar"
+
+#: ../../portable/frontends/widgets/prefpanel.py:267
+#, python-format
+msgid "Automatically run %(appname)s when I log in."
+msgstr "Starta %(appname)s när jag loggar in."
 
 #: ../../portable/frontends/widgets/prefpanel.py:271
 msgid "Warn me if I attempt to quit with downloads in progress."
@@ -1142,6 +1308,17 @@ msgstr "Välj videokatalog"
 msgid "Migrate existing movies?"
 msgstr "Migrera existerande videos?"
 
+#: ../../portable/frontends/widgets/prefpanel.py:454
+#, python-format
+msgid ""
+"You've selected a new folder to download movies to.  Should %(appname)s "
+"migrate your existing downloads there? (Currently downloading movies will "
+"not be moved until they finish.)"
+msgstr ""
+"Du har valt en ny mapp för dina hämtade filmer. Ska %(appname)s migrera dina "
+"existerande hämtningar dit?  (Filmer som hämtas just nu kommer inte bli "
+"flyttade förens de är klara.)"
+
 #: ../../portable/frontends/widgets/prefpanel.py:482
 #: ../../portable/dialogs.py:104
 msgid "Add"
@@ -1154,6 +1331,14 @@ msgstr "Lägg till bevakad mapp"
 #: ../../portable/frontends/widgets/prefpanel.py:542
 msgid "Store downloads in this folder:"
 msgstr "Spara hämtningar i denna mapp:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:549
+msgid ""
+"Watch for new video and audio items in these folders and include them in "
+"library:"
+msgstr ""
+"Leta efter nya videos och ljudfiler i dessa mappar och inkludera dem i "
+"bibloteket:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:568
 msgid "Keep at least this much free space on my drive:"
@@ -1184,9 +1369,27 @@ msgstr "10 dagar"
 msgid "1 month"
 msgstr "1 månad"
 
+#: ../../portable/frontends/widgets/prefpanel.py:590
+msgid "By default, video and audio items expire after:"
+msgstr "Per standard, video- och ljudobjekt utgår efter:"
+
 #: ../../portable/frontends/widgets/prefpanel.py:599
 msgid "Always play videos in a separate window."
 msgstr "Spela alltid upp videos i ett separat fönster."
+
+#: ../../portable/frontends/widgets/prefpanel.py:603
+msgid ""
+"Resume playing a video or audio item from the point it was last stopped."
+msgstr ""
+"Återuppta uppspelningen av en film eller musik där jag stoppade den senast."
+
+#: ../../portable/frontends/widgets/prefpanel.py:608
+msgid "Play video and audio items one after another"
+msgstr "Spela filmer och musik efter varandra"
+
+#: ../../portable/frontends/widgets/prefpanel.py:609
+msgid "Stop after each video or audio item"
+msgstr "Stanna efter var film eller låt"
 
 #: ../../portable/frontends/widgets/prefpanel.py:620
 msgid "General"
@@ -1318,6 +1521,17 @@ msgstr[1] "Är du säker på att du vill ta bort dessa kanaler:"
 msgid "Keep items that have been downloaded in my library."
 msgstr "Behåll objekt som har hämtats i mitt bibliotek."
 
+#: ../../portable/frontends/widgets/removefeeds.py:89
+#, python-format
+msgid ""
+"Watched folders will be removed from the sidebar but their contents will "
+"still appear in your library.  You can stop watching watched folders "
+"completely in the %(appname)s preference panel."
+msgstr ""
+"Övervakade mappar kommer att tas bort från sidopanelen, men dess innehåll "
+"kommer fortfarande att synas i ditt bibliotek. Du kan inaktivera övervakade "
+"mappar helt i inställningarna för %(appname)s."
+
 #: ../../portable/frontends/widgets/removefeeds.py:100
 msgid ""
 "Are you sure you want to remove this feed?  The downloads currently in "
@@ -1335,6 +1549,14 @@ msgstr[1] ""
 #: ../../portable/frontends/widgets/gtk/video.py:284
 msgid "Permalink"
 msgstr "Permalänk"
+
+#: ../../portable/frontends/widgets/gtk/video.py:294
+msgid "Pop-in"
+msgstr "Fäll in"
+
+#: ../../portable/frontends/widgets/gtk/video.py:299
+msgid "Pop-out"
+msgstr "Fäll ut"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:67
 #, python-format
@@ -1373,6 +1595,20 @@ msgstr "Alla filer"
 msgid "Choose"
 msgstr "Välj"
 
+#: ../../portable/frontends/widgets/gtk/window.py:539
+#, python-format
+msgid "About %(appname)s"
+msgstr "Om %(appname)s"
+
+#: ../../portable/frontends/widgets/gtk/window.py:554
+#, python-format
+msgid ""
+"%(copyright)s.  See license.txt file for details.\n"
+"%(trademark)s"
+msgstr ""
+"%(copyright)s.  Se license.txt för detaljer.\n"
+"%(trademark)s"
+
 #: ../../portable/frontends/widgets/gtk/window.py:593
 #: ../../portable/dialogs.py:84
 msgid "Close"
@@ -1408,6 +1644,16 @@ msgid "%(count)d Item"
 msgid_plural "%(count)d Items"
 msgstr[0] "%(count)d objekt"
 msgstr[1] "%(count)d objekt"
+
+#: ../../portable/frontends/widgets/feedcontroller.py:264
+#, python-format
+msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
+msgid_plural ""
+"%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
+msgstr[0] ""
+"%(count)d Nerladdning Köad På Grund Av Ospelade Objekt (Se Inställningar)"
+msgstr[1] ""
+"%(count)d Nerladdningar Köade På Grund Av Ospelade Objekt (Se Inställningar)"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:275
 #, python-format
@@ -1457,6 +1703,10 @@ msgstr "Kopiera URL till urklipp"
 msgid "Remove Site"
 msgstr "Ta bort webbplats"
 
+#: ../../portable/frontends/widgets/tablist.py:534
+msgid "Remove Sites"
+msgstr "Radera Sidor"
+
 #: ../../portable/frontends/widgets/tablist.py:578
 msgid "Update Feeds In Folder"
 msgstr "Uppdatera kanaler i mapp"
@@ -1477,6 +1727,10 @@ msgstr "Återställ kanalnamn"
 msgid "Update Feeds Now"
 msgstr "Uppdatera kanaler nu"
 
+#: ../../portable/frontends/widgets/tablist.py:662
+msgid "LIBRARY"
+msgstr "BIBLIOTEK"
+
 #: ../../portable/frontends/widgets/tablist.py:664
 msgid "SITES"
 msgstr "WEBBPLATSER"
@@ -1496,6 +1750,10 @@ msgstr "SPELLISTOR"
 #: ../../portable/frontends/widgets/itemlistcontroller.py:447
 msgid "No Results Found"
 msgstr "Inga resultat hittade"
+
+#: ../../portable/frontends/widgets/itemlistcontroller.py:553
+msgid "Back to feed"
+msgstr "Tillbaka till kanal"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:179
 msgid "Save Search"
@@ -1602,6 +1860,14 @@ msgstr "Ta bort kanal"
 msgid "Unwatched"
 msgstr "Inte visad"
 
+#: ../../portable/frontends/widgets/itemlistwidgets.py:730
+msgid "View|All"
+msgstr "Visa|Allt"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:732
+msgid "Non Feed"
+msgstr "Ingen Kanal"
+
 #: ../../portable/frontends/widgets/itemlistwidgets.py:742
 msgid "Name"
 msgstr "Namn"
@@ -1638,6 +1904,10 @@ msgstr "Ledigt utrymme på disk:"
 msgid "Database size:"
 msgstr "Databasstorlek:"
 
+#: ../../portable/frontends/widgets/diagnostics.py:110
+msgid "Total db objects in memory:"
+msgstr "Totalt antal db objekt i minnet:"
+
 #: ../../portable/frontends/widgets/diagnostics.py:118
 #: ../../portable/menubar.py:276
 msgid "Diagnostics"
@@ -1647,7 +1917,7 @@ msgstr "Diagnostik"
 msgid "Search All"
 msgstr "Sök alla"
 
-#: ../../portable/messages.py:1060 ../../portable/item.py:1078
+#: ../../portable/messages.py:1078 ../../portable/item.py:1078
 msgid "queued for download"
 msgstr "kölagd för hämtning"
 
@@ -1662,6 +1932,15 @@ msgstr "Prenumerant till nya kanaler:"
 #: ../../portable/startup.py:97
 msgid "Unknown Error"
 msgstr "Okänt fel"
+
+#: ../../portable/startup.py:99
+#, python-format
+msgid ""
+"An unknown error prevented %(appname)s from startup.  Please file a bug "
+"report at %(url)s."
+msgstr ""
+"Ett okänt fel hindrade %(appname)s från att kunna starta.  Var god fyll i en "
+"bug raport på %(url)s."
 
 #: ../../portable/startup.py:179
 msgid "Database too new"
@@ -1892,6 +2171,11 @@ msgstr "Hämtningen existerar redan."
 msgid "That URL is already an external download."
 msgstr "Den URL:en är redan en extern hämtning."
 
+#: ../../portable/singleclick.py:61
+#, python-format
+msgid "%(appname)s will begin downloading it now."
+msgstr "%(appname)s kommer att starta hämtningen nu."
+
 #: ../../portable/singleclick.py:64
 msgid "It is downloading now."
 msgstr "Den hämtas ner nu."
@@ -1914,6 +2198,17 @@ msgstr ""
 #: ../../portable/singleclick.py:137
 msgid "Download Error"
 msgstr "Hämtningsfel"
+
+#: ../../portable/singleclick.py:139
+#, python-format
+msgid ""
+"%(appname)s is not able to download a file at this URL:\n"
+"\n"
+"URL: %(url)s"
+msgstr ""
+"%(appname)s kan inte hämta filen på denna adressen:\n"
+"\n"
+"Adress: %(url)s"
 
 #: ../../portable/dl_daemon/download.py:628
 #, python-format
@@ -1956,6 +2251,11 @@ msgstr "Torrentfilen på %(url)s var inte giltig"
 #: ../../portable/dl_daemon/download.py:1103
 msgid "Torrent file deleted"
 msgstr "Torrentfilen borttagen"
+
+#: ../../portable/dl_daemon/download.py:1104
+#, python-format
+msgid "The torrent file for this item was deleted outside of %(appname)s."
+msgstr "Torrent filen för detta objektet blev borttagen utanför %(appname)s."
 
 #: ../../portable/menubar.py:184
 msgid "_Open"
@@ -2141,6 +2441,11 @@ msgstr "_Helskärm"
 msgid "_Toggle Detached/Attached"
 msgstr "_Växla frånkopplad/kopplad"
 
+#: ../../portable/menubar.py:270
+#, python-format
+msgid "_About %(name)s"
+msgstr "_Om %(name)s"
+
 #: ../../portable/menubar.py:272
 msgid "_Donate"
 msgstr "_Donera"
@@ -2231,6 +2536,14 @@ msgstr[1] "%(count)d minuter"
 msgid "no title"
 msgstr "ingen titel"
 
+#: ../../portable/item.py:1211
+msgid "Contents appear in the library"
+msgstr "Innehållet syns i biblioteket"
+
+#: ../../portable/item.py:1216
+msgid "Contents:"
+msgstr "Inehåll:"
+
 #: ../../portable/item.py:1442
 msgid "starting up..."
 msgstr "startar..."
@@ -2285,6 +2598,27 @@ msgstr "%(size)s kb/s"
 #, python-format
 msgid "%(size)s b/s"
 msgstr "%(size)s b/s"
+
+#: ../../portable/displaytext.py:68
+#, python-format
+msgid "%(num).0f day"
+msgid_plural "%(num).0f days"
+msgstr[0] "%(num).0f dag"
+msgstr[1] "%(num).0f dagar"
+
+#: ../../portable/displaytext.py:71
+#, python-format
+msgid "%(num).0f hr"
+msgid_plural "%(num).0f hrs"
+msgstr[0] "%(num).0f timme"
+msgstr[1] "%(num).0f timmar"
+
+#: ../../portable/displaytext.py:74
+#, python-format
+msgid "%(num).0f min"
+msgid_plural "%(num).0f mins"
+msgstr[0] "%(num).0f minut"
+msgstr[1] "%(num).0f minuter"
 
 #: ../../portable/displaytext.py:76
 #, python-format
@@ -2355,11 +2689,47 @@ msgid_plural "Expires: %(count)d minutes"
 msgstr[0] "Upphör att gälla: %(count)d minut"
 msgstr[1] "Upphör att gälla: %(count)d minuter"
 
-#: ../../platform/osx/plat/frontends/widgets/application.py:169
+#: ../../portable/displaytext.py:142
+#, python-format
+msgid "%(month)s %(dayofmonth)s, %(year)s"
+msgstr "%(year)s - %(month)s - %(dayofmonth)s"
+
+#: ../../portable/storedatabase.py:449
+#, python-format
+msgid "%(appname)s database save failed"
+msgstr "Sparningen av %(appname)s databas misslyckades"
+
+#: ../../portable/storedatabase.py:452
+#, python-format
+msgid ""
+"%(appname)s was unable to save its database: Disk Full.\n"
+"We suggest deleting files from the full disk or simply deleting some movies "
+"from your collection.\n"
+"Recent changes may be lost."
+msgstr ""
+"%(appname)s kunde inte spara sin databas: Hårddisken är full.\n"
+"Vi rekommenderar att du raderar filer ifrån den fulla hårddisken eller helt "
+"enkelt tar bort några filmer ifrån din samling.\n"
+"Nyligen gjorda ändringar kan gå förlorade."
+
+#: ../../portable/storedatabase.py:464
+#, python-format
+msgid "%(appname)s database save succeeded"
+msgstr "Sparningen av %(appname)s databas lyckades"
+
+#: ../../portable/storedatabase.py:467
+msgid ""
+"The database has been successfully saved. It is now safe to quit without "
+"losing any data."
+msgstr ""
+"Databasen sparades. Det är nu säkert att avsluta utan att någon information "
+"går förlorad."
+
+#: ../../platform/osx/plat/frontends/widgets/application.py:171
 msgid "Download Completed"
 msgstr "Hämtningen är färdig"
 
-#: ../../platform/osx/plat/frontends/widgets/application.py:170
+#: ../../platform/osx/plat/frontends/widgets/application.py:172
 #, python-format
 msgid "Download of video '%s' is finished."
 msgstr "Hämtning av videon \"%s\" är färdig."
@@ -2376,6 +2746,11 @@ msgstr "Tillkopplad"
 msgid "Services"
 msgstr "Tjänster"
 
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:141
+#, python-format
+msgid "Hide %(appname)s"
+msgstr "Dölj %(appname)s"
+
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:143
 msgid "Hide Others"
 msgstr "Dölj övriga"
@@ -2387,6 +2762,11 @@ msgstr "Visa alla"
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:149
 msgid "Preferences..."
 msgstr "Inställningar..."
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:151
+#, python-format
+msgid "Quit %(appname)s"
+msgstr "Avsluta %(appname)s"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
 msgid "Close Window"
@@ -2448,6 +2828,11 @@ msgstr "Ta fram alla"
 msgid "Window"
 msgstr "Fönster"
 
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:195
+#, python-format
+msgid "%(appname)s Help"
+msgstr "%(appname)s Hjälp"
+
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:39
 msgid "Enable tray icon"
@@ -2457,6 +2842,12 @@ msgstr "Aktivera ikon i aktivitetsfältet"
 msgid "Renderer options:"
 msgstr "Renderingsmöjligheter:"
 
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
+#, python-format
+msgid "You must restart %(appname)s for renderer changes to take effect."
+msgstr ""
+"Du måste starta om %(appname)s för att förändringarna ska börja gälla."
+
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:74
 msgid "Video renderer:"
 msgstr "Videorenderare:"
@@ -2464,6 +2855,11 @@ msgstr "Videorenderare:"
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
 msgid "Update Available"
 msgstr "Uppdatering tillgänglig"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
+#, python-format
+msgid "A new version of %(appname)s is available for download."
+msgstr "En ny version av %(appname)s finns att hämta nu."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
@@ -2486,6 +2882,21 @@ msgstr ""
 msgid "Install Adobe Flash"
 msgstr "Installera Adobe Flash"
 
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
+#, python-format
+msgid ""
+"Your browser will load the web-site where you can download and install Adobe "
+"Flash.\n"
+"\n"
+"You should quit %(appname)s now and start it up again after Adobe Flash has "
+"been installed."
+msgstr ""
+"Din webbläsare kommer att ladda webbsidan där du kan ladda ner och "
+"installera Adobe Flash.\n"
+"\n"
+"Du bör avsluta %(appname)s nu, och starta det igen efter att Adobe Flash har "
+"installerats."
+
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
 msgid "When I click the red close button:"
 msgstr "När jag klickar på den röda stängknappen:"
@@ -2494,9 +2905,24 @@ msgstr "När jag klickar på den röda stängknappen:"
 msgid "Close to tray so that downloads can continue."
 msgstr "Minimera till aktivitetsfältet så att hämtningar kan fortsätta."
 
+#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
+#, python-format
+msgid "Quit %(appname)s completely."
+msgstr "Avsluta %(appname)s helt."
+
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:133
 msgid "Close to tray?"
 msgstr "Minimera till aktivitetsfältet?"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:134
+#, python-format
+msgid ""
+"When you click the red close button, would you like %(appname)s to close to "
+"the system tray or quit?  You can change this setting later in the Options."
+msgstr ""
+"När du trycker på den röda stäng knappen, vill du att %(appname)s ska "
+"skickas till systemfältet eller ska det avslutas? Du kan ändra detta senare "
+"i Inställningarna."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:192
 msgid "Error Bombing Item"
@@ -2516,407 +2942,3 @@ msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr ""
 "Ett fel uppstod när %(url)s öppnades.  Försök igen om några sekunder."
-
-#~ msgid "By default, videos expire after:"
-#~ msgstr "Som standard går filmen ut efter:"
-
-#~ msgid "Subscribing to multiple feeds"
-#~ msgstr "Prenumererar på flera kanaler"
-
-#~ msgid "Custom Channels"
-#~ msgstr "Anpassade kanaler"
-
-#: ../../portable/frontends/widgets/statictabs.py:113
-#: ../../portable/frontends/widgets/itemlistcontroller.py:528
-msgid "Other"
-msgstr "Annat"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:95
-msgid "Play Just This Item"
-msgstr "Spela endast detta objekt"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:112
-msgid "Stop Seeding"
-msgstr "Sluta dela"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:114
-msgid "Resume Seeding"
-msgstr "Återuppta delningen"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:63
-#, python-format
-msgid "%(name)s First Time Setup"
-msgstr "%(name)s första installation"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:122
-#, python-format
-msgid "Welcome to the %(name)s First Time Setup"
-msgstr "Välkommen till %(name)s första installation"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:126
-#, python-format
-msgid ""
-"The next few screens will help you set up %(name)s so that it works best for "
-"you.\n"
-"\n"
-"We recommend that you have %(name)s launch when your computer starts up.  "
-"This way, downloads in progress can finish downloading and new media files "
-"can be downloaded in the background, ready when you want to watch."
-msgstr ""
-"De följande sidorna kommer att hjälpa dig att ställa in %(name)s så det "
-"fungerar bäst för dig.\n"
-"Vi rekommenderar att %(name)s startas när datorn startar upp, så att "
-"pågående hämtningar kan avslutas och nya mediafiler kan hämtas i bakgrunden "
-"och vara klara att ses när du önskar detta."
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:138
-#, python-format
-msgid "Would you like to run %(name)s on startup?"
-msgstr "Vill du att %(name)s startas när datorn startas upp?"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:163
-#, python-format
-msgid "Completing the %(name)s First Time Setup"
-msgstr "Färdigställer %(name)s första installation."
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:167
-#, python-format
-msgid ""
-"%(name)s can find all the media files on your computer to help you organize "
-"your collection.\n"
-"\n"
-"Would you like %(name)s to look for media files on your computer?"
-msgstr ""
-"%(name)s kan leta reda på alla mediafiler på datorn för att hjälpa dig med "
-"att organisera dom.\n"
-"\n"
-"Vill du att %(name)s letar efter mediafiler på datorn?"
-
-#: ../../portable/frontends/widgets/crashdialog.py:54
-#, python-format
-msgid ""
-"%(appname)s has encountered an internal error.  You can help us track down "
-"this problem and fix it by submitting an error report."
-msgstr ""
-"%(appname)s har upptäckt ett internt fel. Du kan hjälpa oss att lösa detta "
-"problem genom att skicka en felrapport."
-
-#: ../../portable/frontends/widgets/style.py:239
-msgid "Display Contents"
-msgstr "Visa Inehåll"
-
-#: ../../portable/frontends/widgets/style.py:255
-msgid "Currently Playing"
-msgstr "Spelas just nu"
-
-#: ../../portable/frontends/widgets/displays.py:372
-#, python-format
-msgid ""
-"%(appname)s can't play this file.  You may be able to open it with a "
-"different program"
-msgstr ""
-"Applikationen: %(appname)s kan inte spela upp denna filen. Du kan kanske "
-"öppna den i ett annat program"
-
-#: ../../portable/frontends/widgets/displays.py:430
-msgid "Open Externally"
-msgstr "Öppna Externt"
-
-#: ../../portable/frontends/widgets/displays.py:568
-#, python-format
-msgid "%(count)d Site Selected"
-msgid_plural "%(count)d Sites Selected"
-msgstr[0] "%(count)d webbsida vald"
-msgstr[1] "%(count)d webbsidor valda"
-
-#: ../../portable/frontends/widgets/browser.py:102
-msgid "Download this video"
-msgstr "Hämta denna videon"
-
-#: ../../portable/frontends/widgets/application.py:327
-#, python-format
-msgid "The file %(filename)s was deleted from outside %(appname)s."
-msgstr "Filen %(filename)s har raderats utanför %(appname)s."
-
-#: ../../portable/frontends/widgets/application.py:400
-#, python-format
-msgid "%(appname)s is up to date"
-msgstr "%(appname)s är av senaste version"
-
-#: ../../portable/frontends/widgets/application.py:402
-#, python-format
-msgid "%(appname)s is up to date!"
-msgstr "%(appname)s är av senaste version!"
-
-#: ../../portable/frontends/widgets/application.py:440
-msgid ""
-"One of these items is a folder.  Delete/Removeing a folder will "
-"delete/remove it's contents"
-msgid_plural ""
-"Some of these items are folders.  Delete/Removeing a folder will "
-"delete/remove it's contents"
-msgstr[0] ""
-"En av dessa saker är en mapp. Att ta bort en mapp kommer innebära att även "
-"dess innehåll tas bort"
-msgstr[1] ""
-"Några av dessa saker är mappar. Att ta bort en mapp kommer innebära att även "
-"dess innehåll tas bort"
-
-#: ../../portable/frontends/widgets/application.py:462
-msgid ""
-"One of these items is a folder.  Deleting a folder will delete it's contents"
-msgid_plural ""
-"Some of these items are folders.  Deleting a folder will delete it's contents"
-msgstr[0] ""
-"Ett av dessa objekt är en mapp. Tar du bort mappen kommer även dess innehåll "
-"att tas bort"
-msgstr[1] ""
-"Några av dessa objekt är mappar. Tar du bort mapparna kommer även dess "
-"innehåll att tas bort"
-
-#: ../../portable/frontends/widgets/application.py:770
-msgid "Remove site"
-msgid_plural "Remove sites"
-msgstr[0] "Ta bort sida"
-msgstr[1] "Ta bort sidor"
-
-#: ../../portable/frontends/widgets/application.py:772
-#, python-format
-msgid "Are you sure you want to remove this site?"
-msgid_plural "Are you sure you want to remove these %(count)s sites?"
-msgstr[0] "Är du säker på att du vill ta bort denna sidan?"
-msgstr[1] "Är du säker på att du vill ta bort dessa %(count)s sidor?"
-
-#: ../../portable/frontends/widgets/prefpanel.py:267
-#, python-format
-msgid "Automatically run %(appname)s when I log in."
-msgstr "Starta %(appname)s när jag loggar in."
-
-#: ../../portable/frontends/widgets/prefpanel.py:454
-#, python-format
-msgid ""
-"You've selected a new folder to download movies to.  Should %(appname)s "
-"migrate your existing downloads there? (Currently downloading movies will "
-"not be moved until they finish.)"
-msgstr ""
-"Du har valt en ny mapp för dina hämtade filmer. Ska %(appname)s migrera dina "
-"existerande hämtningar dit?  (Filmer som hämtas just nu kommer inte bli "
-"flyttade förens de är klara.)"
-
-#: ../../portable/frontends/widgets/prefpanel.py:549
-msgid ""
-"Watch for new video and audio items in these folders and include them in "
-"library:"
-msgstr ""
-"Leta efter nya videos och ljudfiler i dessa mappar och inkludera dem i "
-"bibloteket:"
-
-#: ../../portable/frontends/widgets/prefpanel.py:590
-msgid "By default, video and audio items expire after:"
-msgstr "Per standard, video- och ljudobjekt utgår efter:"
-
-#: ../../portable/frontends/widgets/prefpanel.py:603
-msgid ""
-"Resume playing a video or audio item from the point it was last stopped."
-msgstr ""
-"Återuppta uppspelningen av en film eller musik där jag stoppade den senast."
-
-#: ../../portable/frontends/widgets/prefpanel.py:608
-msgid "Play video and audio items one after another"
-msgstr "Spela filmer och musik efter varandra"
-
-#: ../../portable/frontends/widgets/prefpanel.py:609
-msgid "Stop after each video or audio item"
-msgstr "Stanna efter var film eller låt"
-
-#: ../../portable/frontends/widgets/removefeeds.py:89
-#, python-format
-msgid ""
-"Watched folders will be removed from the sidebar but their contents will "
-"still appear in your library.  You can stop watching watched folders "
-"completely in the %(appname)s preference panel."
-msgstr ""
-"Övervakade mappar kommer att tas bort från sidopanelen, men dess innehåll "
-"kommer fortfarande att synas i ditt bibliotek. Du kan inaktivera övervakade "
-"mappar helt i inställningarna för %(appname)s."
-
-#: ../../portable/frontends/widgets/gtk/video.py:294
-msgid "Pop-in"
-msgstr "Fäll in"
-
-#: ../../portable/frontends/widgets/gtk/video.py:299
-msgid "Pop-out"
-msgstr "Fäll ut"
-
-#: ../../portable/frontends/widgets/gtk/window.py:539
-#, python-format
-msgid "About %(appname)s"
-msgstr "Om %(appname)s"
-
-#: ../../portable/frontends/widgets/gtk/window.py:554
-#, python-format
-msgid ""
-"%(copyright)s.  See license.txt file for details.\n"
-"%(trademark)s"
-msgstr ""
-"%(copyright)s.  Se license.txt för detaljer.\n"
-"%(trademark)s"
-
-#: ../../portable/frontends/widgets/feedcontroller.py:264
-#, python-format
-msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
-msgid_plural ""
-"%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
-msgstr[0] ""
-"%(count)d Nerladdning Köad På Grund Av Ospelade Objekt (Se Inställningar)"
-msgstr[1] ""
-"%(count)d Nerladdningar Köade På Grund Av Ospelade Objekt (Se Inställningar)"
-
-#: ../../portable/frontends/widgets/tablist.py:534
-msgid "Remove Sites"
-msgstr "Radera Sidor"
-
-#: ../../portable/frontends/widgets/tablist.py:662
-msgid "LIBRARY"
-msgstr "BIBLIOTEK"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:553
-msgid "Back to feed"
-msgstr "Tillbaka till kanal"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:730
-msgid "View|All"
-msgstr "Visa|Allt"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:732
-msgid "Non Feed"
-msgstr "Ingen Kanal"
-
-#: ../../portable/frontends/widgets/diagnostics.py:110
-msgid "Total db objects in memory:"
-msgstr "Totalt antal db objekt i minnet:"
-
-#: ../../portable/startup.py:99
-#, python-format
-msgid ""
-"An unknown error prevented %(appname)s from startup.  Please file a bug "
-"report at %(url)s."
-msgstr ""
-"Ett okänt fel hindrade %(appname)s från att kunna starta.  Var god fyll i en "
-"bug raport på %(url)s."
-
-#: ../../portable/singleclick.py:61
-#, python-format
-msgid "%(appname)s will begin downloading it now."
-msgstr "%(appname)s kommer att starta hämtningen nu."
-
-#: ../../portable/singleclick.py:139
-#, python-format
-msgid ""
-"%(appname)s is not able to download a file at this URL:\n"
-"\n"
-"URL: %(url)s"
-msgstr ""
-"%(appname)s kan inte hämta filen på denna adressen:\n"
-"\n"
-"Adress: %(url)s"
-
-#: ../../portable/dl_daemon/download.py:1104
-#, python-format
-msgid "The torrent file for this item was deleted outside of %(appname)s."
-msgstr "Torrent filen för detta objektet blev borttagen utanför %(appname)s."
-
-#: ../../portable/menubar.py:270
-#, python-format
-msgid "_About %(name)s"
-msgstr "_Om %(name)s"
-
-#: ../../portable/item.py:1211
-msgid "Contents appear in the library"
-msgstr "Innehållet syns i biblioteket"
-
-#: ../../portable/item.py:1216
-msgid "Contents:"
-msgstr "Inehåll:"
-
-#: ../../portable/displaytext.py:68
-#, python-format
-msgid "%(num).0f day"
-msgid_plural "%(num).0f days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:71
-#, python-format
-msgid "%(num).0f hr"
-msgid_plural "%(num).0f hrs"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:74
-#, python-format
-msgid "%(num).0f min"
-msgid_plural "%(num).0f mins"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:142
-#, python-format
-msgid "%(month)s %(dayofmonth)s, %(year)s"
-msgstr "%(year)s - %(month)s - %(dayofmonth)s"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:141
-#, python-format
-msgid "Hide %(appname)s"
-msgstr "Dölj %(appname)s"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:151
-#, python-format
-msgid "Quit %(appname)s"
-msgstr "Avsluta %(appname)s"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:195
-#, python-format
-msgid "%(appname)s Help"
-msgstr "%(appname)s Hjälp"
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
-#, python-format
-msgid "You must restart %(appname)s for renderer changes to take effect."
-msgstr ""
-"Du måste starta om %(appname)s för att förändringarna ska börja gälla."
-
-#: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
-#, python-format
-msgid "A new version of %(appname)s is available for download."
-msgstr "En ny version av %(appname)s finns att hämta nu."
-
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
-#, python-format
-msgid ""
-"Your browser will load the web-site where you can download and install Adobe "
-"Flash.\n"
-"\n"
-"You should quit %(appname)s now and start it up again after Adobe Flash has "
-"been installed."
-msgstr ""
-"Din webbläsare kommer att ladda webbsidan där du kan ladda ner och "
-"installera Adobe Flash.\n"
-"\n"
-"Du bör avsluta %(appname)s nu, och starta det igen efter att Adobe Flash har "
-"installerats."
-
-#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
-#, python-format
-msgid "Quit %(appname)s completely."
-msgstr "Avsluta %(appname)s helt."
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:134
-#, python-format
-msgid ""
-"When you click the red close button, would you like %(appname)s to close to "
-"the system tray or quit?  You can change this setting later in the Options."
-msgstr ""
-"När du trycker på den röda stäng knappen, vill du att %(appname)s ska "
-"skickas till systemfältet eller ska det avslutas? Du kan ändra detta senare "
-"i Inställningarna."

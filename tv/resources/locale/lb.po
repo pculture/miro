@@ -1,59 +1,59 @@
-# Macedonian translation for democracy
-# Copyright (c) 2007 Rosetta Contributors and Canonical Ltd 2007
+# Luxembourgish translation for democracy
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
 # This file is distributed under the same license as the democracy package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-07-16 13:21-0400\n"
-"PO-Revision-Date: 2009-07-23 15:10+0000\n"
-"Last-Translator: Igor Savic <igor.savic@gmail.com>\n"
-"Language-Team: Macedonian <mk@li.org>\n"
+"PO-Revision-Date: 2009-08-26 21:17+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Luxembourgish <lb@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2009-09-23 16:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
 #, python-format
 msgid "Error: %(msg)s"
-msgstr ""
+msgstr "Fehler: %(msg)s"
 
 #: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
 msgid "Can't connect"
-msgstr ""
+msgstr "Kann keng Verbannung hierstellen"
 
 #: ../../portable/httpclient.py:105
 #, python-format
 msgid "Connection Error: %(msg)s"
-msgstr ""
+msgstr "Verbannungs Fehler: %(msg)s"
 
 #: ../../portable/httpclient.py:111
 msgid "SSL connection error"
-msgstr ""
+msgstr "SSL Verbannungs Fehler"
 
 #: ../../portable/httpclient.py:115
 msgid "HTTP error"
-msgstr ""
+msgstr "HTTP Fehler"
 
 #: ../../portable/httpclient.py:119
 #, python-format
 msgid "Bad Status Line: %(msg)s"
-msgstr ""
+msgstr "Falsch Status Zeil: %(msg)s"
 
 #: ../../portable/httpclient.py:124
 #, python-format
 msgid "Bad Header Line: %(msg)s"
-msgstr ""
+msgstr "Falsch Header Line: %(msg)s"
 
 #: ../../portable/httpclient.py:129
 #, python-format
 msgid "Bad Chunk size: %(msg)s"
-msgstr ""
+msgstr "Falsch Zeilestéck gréisst: %(msg)s"
 
 #: ../../portable/httpclient.py:134
 #, python-format
@@ -63,114 +63,115 @@ msgstr ""
 #: ../../portable/httpclient.py:139
 #, python-format
 msgid "%(host)s closed connection"
-msgstr ""
+msgstr "%(host)s huet d' Verbannung geschloss"
 
 #: ../../portable/httpclient.py:144 ../../portable/httpclient.py:173
 #: ../../portable/downloader.py:299
 msgid "File not found"
-msgstr ""
+msgstr "Fichier net fonnt"
 
 #: ../../portable/httpclient.py:145
 msgid "Got 404 status code"
-msgstr ""
+msgstr "Krut 404 Status-Code"
 
 #: ../../portable/httpclient.py:147
 #, python-format
 msgid "Bad Status Code: %(code)s"
-msgstr ""
+msgstr "Falschen Status-Code: %(code)s"
 
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"
-msgstr ""
+msgstr "Genehmegung feelgeschloen"
 
 #: ../../portable/httpclient.py:157
 #: ../../portable/frontends/widgets/crashdialog.py:48
 msgid "Internal Error"
-msgstr ""
+msgstr "Internen Fehler"
 
 #: ../../portable/httpclient.py:158
 msgid "Pipeline request never started"
-msgstr ""
+msgstr "Pipeline Ufuerderung gouf nach ni gestart"
 
 #: ../../portable/httpclient.py:162
 msgid "Timeout"
-msgstr ""
+msgstr "Zäit ofgelaf"
 
 #: ../../portable/httpclient.py:163
 #, python-format
 msgid "Connection to %(host)s timed out"
 msgstr ""
+"Bei der Verbannung zu %(host)s ass eng Zéitiwwerschreidung virgetrueden"
 
 #: ../../portable/httpclient.py:167
 msgid "Invalid URL"
-msgstr ""
+msgstr "Ongülteg  URL"
 
 #: ../../portable/httpclient.py:168
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr ""
+msgstr "\"%(url)s\" ass kéng gülteg URL"
 
 #: ../../portable/httpclient.py:174
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
-msgstr ""
+msgstr "De Fichier \"%(path)s\" gëtt et net"
 
 #: ../../portable/httpclient.py:178
 msgid "Read error"
-msgstr ""
+msgstr "Lies Fehler"
 
 #: ../../portable/httpclient.py:179
 #, python-format
 msgid "Error while reading from \"%(path)s\""
-msgstr ""
+msgstr "Fehler während dem liesen vun \"%(path)s\""
 
 #: ../../portable/httpclient.py:376
 msgid "Unknown Error code"
-msgstr ""
+msgstr "Onbekannten Fehlercode"
 
 #: ../../portable/httpclient.py:408
 msgid "Connection closed"
-msgstr ""
+msgstr "Verbannung geschloss"
 
 #: ../../portable/httpclient.py:829
 msgid "Unknown"
-msgstr ""
+msgstr "Onbekannt"
 
 #: ../../portable/httpclient.py:830
 msgid "Internal Error: Not ready to send"
-msgstr ""
+msgstr "Internen Fehler: Net bereet fir ze verschécken"
 
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
-msgstr ""
+msgstr "Miro Guide"
 
 #: ../../portable/frontends/widgets/statictabs.py:97
 #: ../../portable/frontends/widgets/itemlistcontroller.py:433
 msgid "Video Search"
-msgstr "Пребарувај видеа"
+msgstr "Video Sichen"
 
 #: ../../portable/frontends/widgets/statictabs.py:103
 #: ../../portable/frontends/widgets/itemlistcontroller.py:516
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 #: ../../portable/frontends/widgets/statictabs.py:108
 #: ../../portable/frontends/widgets/itemlistcontroller.py:522
 msgid "Audio"
-msgstr ""
+msgstr "Musek"
 
 #: ../../portable/frontends/widgets/statictabs.py:113
 #: ../../portable/frontends/widgets/itemlistcontroller.py:528
 msgid "Other"
-msgstr ""
+msgstr "Aneres"
 
 #: ../../portable/frontends/widgets/statictabs.py:118
 msgid "Downloading"
-msgstr ""
+msgstr "Lued erof"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
-msgstr ""
+msgstr "Der Playlist bäifügen"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
 msgid "Add items to an existing playlist or a new one."
@@ -178,15 +179,15 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
 msgid "Existing playlist:"
-msgstr ""
+msgstr "Bestoend Playlist:"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
 msgid "New playlist:"
-msgstr ""
+msgstr "Nei Playlist"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
-msgstr ""
+msgstr "Vun der Bibliothéik läschen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
 #: ../../portable/frontends/widgets/gtk/video.py:246
@@ -195,12 +196,12 @@ msgstr ""
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:127
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:163
 msgid "Delete"
-msgstr ""
+msgstr "Läschen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:94
 #: ../../portable/frontends/widgets/itemcontextmenu.py:191
 msgid "Play"
-msgstr ""
+msgstr "Ofspillen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just This Item"
@@ -209,7 +210,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemcontextmenu.py:96
 #: ../../portable/frontends/widgets/itemcontextmenu.py:192
 msgid "Add to Playlist"
-msgstr ""
+msgstr "Der Playlist bäifügen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:99
 #: ../../portable/frontends/widgets/application.py:495
@@ -223,12 +224,12 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemcontextmenu.py:103
 #: ../../portable/frontends/widgets/itemcontextmenu.py:199
 msgid "Mark as Unplayed"
-msgstr ""
+msgstr "Als \"nach net ofgespillt\" markéieren"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:106
 #: ../../portable/frontends/widgets/itemcontextmenu.py:204
 msgid "Mark as Played"
-msgstr ""
+msgstr "Als \"schon eng kéier ofgespillt\" markéieren"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:210
@@ -239,31 +240,31 @@ msgstr ""
 #: ../../portable/dialogs.py:106
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:123
 msgid "Keep"
-msgstr ""
+msgstr "Behalen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:112
 msgid "Stop Seeding"
-msgstr ""
+msgstr "Seeding stoppen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:114
 msgid "Resume Seeding"
-msgstr ""
+msgstr "Seeding fortsetzen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:117
 #: ../../portable/frontends/widgets/itemcontextmenu.py:239
 #: ../../portable/frontends/widgets/itemcontextmenu.py:257
 msgid "Cancel Download"
-msgstr ""
+msgstr "Download ofbriechen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:121
 #: ../../portable/frontends/widgets/itemcontextmenu.py:240
 msgid "Pause Download"
-msgstr ""
+msgstr "Download pausen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:124
 #: ../../portable/frontends/widgets/itemcontextmenu.py:253
 msgid "Resume Download"
-msgstr ""
+msgstr "Download fortsetzen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:128
 #: ../../portable/frontends/widgets/itemcontextmenu.py:223
@@ -271,45 +272,45 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:1102
 #: ../../portable/frontends/widgets/style.py:1113 ../../portable/dialogs.py:95
 msgid "Download"
-msgstr ""
+msgstr "Eroflueden"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:134
 #: ../../portable/frontends/widgets/style.py:240
 msgid "Web Page"
-msgstr ""
+msgstr "Websäit"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:136
 #: ../../portable/frontends/widgets/style.py:236
 #: ../../portable/frontends/widgets/gtk/video.py:282
 msgid "Comments"
-msgstr ""
+msgstr "Kommentarer"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:138
 msgid "License"
-msgstr ""
+msgstr "Lizenz"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:141
 msgid "File in Browser"
-msgstr ""
+msgstr "Fichier am Browser"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:143
 #, python-format
 msgid "File in %(progname)s"
-msgstr ""
+msgstr "Fichier an %(progname)s"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:145
 msgid "File on Disk"
-msgstr ""
+msgstr "Fichier um Harddisk"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:148
 msgid "View"
-msgstr ""
+msgstr "Usicht"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
 #: ../../portable/frontends/widgets/gtk/video.py:273
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:119
 msgid "Share"
-msgstr ""
+msgstr "Deelen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:186
 #, python-format
@@ -341,38 +342,38 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:263
 msgid "Restart Upload"
-msgstr ""
+msgstr "Eroplueden fortsetzen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:277
 msgid "Remove From Playlist"
-msgstr ""
+msgstr "Vun der Playlist entfernen"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:55
 #: ../../portable/frontends/widgets/feedsettingspanel.py:102
 #: ../../portable/frontends/widgets/prefpanel.py:585
 msgid "never"
-msgstr ""
+msgstr "ni"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:58
 #, python-format
 msgid "%(count)d hour ago"
 msgid_plural "%(count)d hours ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Virun %(count)d Stonn"
+msgstr[1] "Virun %(count)d Stonnen"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:64
 #, python-format
 msgid "%(count)d day ago"
 msgid_plural "%(count)d days ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Virun %(count)d Dag"
+msgstr[1] "Virun %(count)d Deeg"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:70
 #, python-format
 msgid "%(count)d month ago"
 msgid_plural "%(count)d months ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Virun%(count)d Mount"
+msgstr[1] "Virun %(count)d Méint"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Videos:"
@@ -385,23 +386,23 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
-msgstr ""
+msgstr "Virun 1 Dag gekuckt"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr ""
+msgstr "Virun 3 Deeg gekuckt"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
-msgstr ""
+msgstr "Virun 6 Deeg gekuckt"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:100
 msgid "Watched 10 days ago"
-msgstr ""
+msgstr "Virun 10 Deeg gekuckt"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
-msgstr ""
+msgstr "Virun 1 Mount gekuckt"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
@@ -414,27 +415,27 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:141
 msgid "Keep 0"
-msgstr ""
+msgstr "0 behalen"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:142
 msgid "Keep 20"
-msgstr ""
+msgstr "20 behalen"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:143
 msgid "Keep 50"
-msgstr ""
+msgstr "50 behalen"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:144
 msgid "Keep 100"
-msgstr ""
+msgstr "100 behalen"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:145
 msgid "Keep 1000"
-msgstr ""
+msgstr "1000 behalen"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
-msgstr ""
+msgstr "All läschen"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
@@ -498,17 +499,17 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:178
 #: ../../portable/dialogs.py:87
 msgid "Yes"
-msgstr ""
+msgstr "Jo"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:145
 #: ../../portable/frontends/widgets/firsttimedialog.py:177
 #: ../../portable/dialogs.py:88
 msgid "No"
-msgstr ""
+msgstr "Nee"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:153
 msgid "Next >"
-msgstr ""
+msgstr "Nächst >"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:163
 #, python-format
@@ -702,7 +703,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/tablist.py:646
 #: ../../portable/dialogs.py:108
 msgid "Remove"
-msgstr "Отстрани"
+msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:259
 msgid "Stop seeding"
@@ -1299,23 +1300,23 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:580
 msgid "1 day"
-msgstr "1 ден"
+msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:581
 msgid "3 days"
-msgstr "3 дена"
+msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:582
 msgid "6 days"
-msgstr "6 дена"
+msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:583
 msgid "10 days"
-msgstr "10 дена"
+msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:584
 msgid "1 month"
-msgstr "1 месец"
+msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:590
 msgid "By default, video and audio items expire after:"
@@ -1971,7 +1972,7 @@ msgstr ""
 
 #: ../../portable/dialogs.py:83
 msgid "Ok"
-msgstr "Ok"
+msgstr ""
 
 #: ../../portable/dialogs.py:86
 msgid "Done"
@@ -2640,7 +2641,7 @@ msgstr ""
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
 msgid "Services"
-msgstr "Услуги"
+msgstr ""
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:141
 #, python-format
@@ -2649,11 +2650,11 @@ msgstr ""
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:143
 msgid "Hide Others"
-msgstr "Сокриј ги другите"
+msgstr ""
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:144
 msgid "Show All"
-msgstr "Прикажи ги сите"
+msgstr ""
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:149
 msgid "Preferences..."
@@ -2666,7 +2667,7 @@ msgstr ""
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
 msgid "Close Window"
-msgstr "Затвори го прозорецот"
+msgstr ""
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
 msgid "Cut"
@@ -2682,7 +2683,7 @@ msgstr ""
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:165
 msgid "Select All"
-msgstr "Избери сѐ"
+msgstr ""
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
 msgid "Edit"
@@ -2710,11 +2711,11 @@ msgstr ""
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:184
 msgid "Minimize"
-msgstr "Минимизирај"
+msgstr ""
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:186
 msgid "Main Window"
-msgstr "Главен прозорец"
+msgstr ""
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:188
 msgid "Bring All to Front"

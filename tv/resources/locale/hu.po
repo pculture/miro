@@ -1,26 +1,36 @@
 # Hungarian translation for democracy
-# Copyright (c) (c) 2006 Canonical Ltd, and Rosetta Contributors 2006
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
 # This file is distributed under the same license as the democracy package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2006.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-07-16 13:21-0400\n"
-"PO-Revision-Date: 2009-07-18 16:49+0000\n"
-"Last-Translator: denemigen <denemigen@gmail.com>\n"
+"PO-Revision-Date: 2009-07-23 13:48+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-07-21 14:40+0000\n"
+"X-Launchpad-Export-Date: 2009-09-23 16:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#: ../../portable/httpclient.py:89
+#, python-format
+msgid "Error: %(msg)s"
+msgstr "Hiba: %(msg)s"
 
 #: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
 msgid "Can't connect"
 msgstr "Nem lehet kapcsolódni"
+
+#: ../../portable/httpclient.py:105
+#, python-format
+msgid "Connection Error: %(msg)s"
+msgstr "Kapcsolódási Hiba: %(msg)s"
 
 #: ../../portable/httpclient.py:111
 msgid "SSL connection error"
@@ -30,18 +40,48 @@ msgstr "SSL kapcsolódási hiba"
 msgid "HTTP error"
 msgstr "HTTP hiba"
 
+#: ../../portable/httpclient.py:119
+#, python-format
+msgid "Bad Status Line: %(msg)s"
+msgstr "Érvénytelen státusz sor: %(msg)s"
+
+#: ../../portable/httpclient.py:124
+#, python-format
+msgid "Bad Header Line: %(msg)s"
+msgstr "Érvénytelen fejléc sor: %(msg)s"
+
+#: ../../portable/httpclient.py:129
+#, python-format
+msgid "Bad Chunk size: %(msg)s"
+msgstr "Érvénytelen méretű szelet: %(msg)s"
+
+#: ../../portable/httpclient.py:134
+#, python-format
+msgid "Expected CRLF got: %(character)r"
+msgstr "Várt: CRLF, talált: %(character)r"
+
+#: ../../portable/httpclient.py:139
+#, python-format
+msgid "%(host)s closed connection"
+msgstr "%(host)s bontotta a kapcsolatot"
+
 #: ../../portable/httpclient.py:144 ../../portable/httpclient.py:173
 #: ../../portable/downloader.py:299
 msgid "File not found"
-msgstr "A fájl nem található"
+msgstr "Fájl nem található"
 
 #: ../../portable/httpclient.py:145
 msgid "Got 404 status code"
 msgstr "404-es hiba"
 
+#: ../../portable/httpclient.py:147
+#, python-format
+msgid "Bad Status Code: %(code)s"
+msgstr "Érvénytelen státusz kód: %(code)s"
+
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"
-msgstr "Sikertelen azonosítás"
+msgstr "Azonosítás sikertelen"
 
 #: ../../portable/httpclient.py:157
 #: ../../portable/frontends/widgets/crashdialog.py:48
@@ -56,13 +96,33 @@ msgstr "A kapcsolat nem jött létre"
 msgid "Timeout"
 msgstr "Időtúllépés"
 
+#: ../../portable/httpclient.py:163
+#, python-format
+msgid "Connection to %(host)s timed out"
+msgstr "Kapcsolat a %(host)s időtúllépés miatt lejárt"
+
 #: ../../portable/httpclient.py:167
 msgid "Invalid URL"
 msgstr "Érvénytelen URL"
 
+#: ../../portable/httpclient.py:168
+#, python-format
+msgid "\"%(url)s\" is not a valid URL"
+msgstr "\"%(url)s\" nem érvényes URL"
+
+#: ../../portable/httpclient.py:174
+#, python-format
+msgid "The file \"%(path)s\" doesn't exist"
+msgstr "A fájl \"%(path)s\" nem létezik"
+
 #: ../../portable/httpclient.py:178
 msgid "Read error"
 msgstr "Olvasási hiba"
+
+#: ../../portable/httpclient.py:179
+#, python-format
+msgid "Error while reading from \"%(path)s\""
+msgstr "Hiba történt a \"%(path)s\" olvasása közben"
 
 #: ../../portable/httpclient.py:376
 msgid "Unknown Error code"
@@ -78,7 +138,7 @@ msgstr "Ismeretlen"
 
 #: ../../portable/httpclient.py:830
 msgid "Internal Error: Not ready to send"
-msgstr "Belső Hiba: Nincs felkészülve a küldésre"
+msgstr "Belső Hiba: Nem áll készen a küldésre"
 
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
@@ -87,7 +147,7 @@ msgstr "Miro Kalauz"
 #: ../../portable/frontends/widgets/statictabs.py:97
 #: ../../portable/frontends/widgets/itemlistcontroller.py:433
 msgid "Video Search"
-msgstr "Videók keresése"
+msgstr "Videó kereső"
 
 #: ../../portable/frontends/widgets/statictabs.py:103
 #: ../../portable/frontends/widgets/itemlistcontroller.py:516
@@ -97,15 +157,36 @@ msgstr "Videó"
 #: ../../portable/frontends/widgets/statictabs.py:108
 #: ../../portable/frontends/widgets/itemlistcontroller.py:522
 msgid "Audio"
-msgstr "Audió"
+msgstr "Hang"
+
+#: ../../portable/frontends/widgets/statictabs.py:113
+#: ../../portable/frontends/widgets/itemlistcontroller.py:528
+msgid "Other"
+msgstr "Egyéb"
 
 #: ../../portable/frontends/widgets/statictabs.py:118
 msgid "Downloading"
 msgstr "Letöltés"
 
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
+msgid "Add a Playlist"
+msgstr "Lejátszólista hozzáadása"
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
+msgid "Add items to an existing playlist or a new one."
+msgstr "Elemek hozzáadása egy létező lejátszólistához, vagy egy újhoz"
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
+msgid "Existing playlist:"
+msgstr "Meglévő lejátszólista"
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
+msgid "New playlist:"
+msgstr "Új lejátszólista"
+
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
-msgstr "Eltávolítás a Könyvtárból"
+msgstr "Eltávolítás a Gyűjteményből"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
 #: ../../portable/frontends/widgets/gtk/video.py:246
@@ -121,6 +202,34 @@ msgstr "Törlés"
 msgid "Play"
 msgstr "Lejátszás"
 
+#: ../../portable/frontends/widgets/itemcontextmenu.py:95
+msgid "Play Just This Item"
+msgstr "Csak ennek az elemnek a lejátszása"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:96
+#: ../../portable/frontends/widgets/itemcontextmenu.py:192
+msgid "Add to Playlist"
+msgstr "Hozzáadás lejátszólistához"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:99
+#: ../../portable/frontends/widgets/application.py:495
+msgid "Rename Item"
+msgstr "Elem átnevezése"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:101
+msgid "Revert Item Name"
+msgstr "Elem nevének visszaállítása"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:103
+#: ../../portable/frontends/widgets/itemcontextmenu.py:199
+msgid "Mark as Unplayed"
+msgstr "Megjelölés lejátszatlanként"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:106
+#: ../../portable/frontends/widgets/itemcontextmenu.py:204
+msgid "Mark as Played"
+msgstr "Megjelölés lejátszottként"
+
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:210
 #: ../../portable/frontends/widgets/style.py:257
@@ -130,7 +239,15 @@ msgstr "Lejátszás"
 #: ../../portable/dialogs.py:106
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:123
 msgid "Keep"
-msgstr "Megőrzés"
+msgstr "Megtartás"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:112
+msgid "Stop Seeding"
+msgstr "Feltöltés leállítása"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:114
+msgid "Resume Seeding"
+msgstr "Feltöltés folytatása"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:117
 #: ../../portable/frontends/widgets/itemcontextmenu.py:239
@@ -156,11 +273,71 @@ msgstr "Letöltés folytatása"
 msgid "Download"
 msgstr "Letöltés"
 
+#: ../../portable/frontends/widgets/itemcontextmenu.py:134
+#: ../../portable/frontends/widgets/style.py:240
+msgid "Web Page"
+msgstr "Weblap"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:136
+#: ../../portable/frontends/widgets/style.py:236
+#: ../../portable/frontends/widgets/gtk/video.py:282
+msgid "Comments"
+msgstr "Megjegyzések"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:138
+msgid "License"
+msgstr "Licensz"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:141
+msgid "File in Browser"
+msgstr "Fájl a Böngészőben"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:143
+#, python-format
+msgid "File in %(progname)s"
+msgstr "Fájl a %(progname)s programban"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:145
+msgid "File on Disk"
+msgstr "Fájl a lemezen"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:148
+msgid "View"
+msgstr "Nézet"
+
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
 #: ../../portable/frontends/widgets/gtk/video.py:273
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:119
 msgid "Share"
 msgstr "Megosztás"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:186
+#, python-format
+msgid "%(count)d Downloaded Item"
+msgid_plural "%(count)d Downloaded Items"
+msgstr[0] "%(count)d letöltött elem"
+msgstr[1] "%(count)d letöltött elem"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:215
+#, python-format
+msgid "%(count)d Available Item"
+msgid_plural "%(count)d Available Items"
+msgstr[0] "%(count)d elérhető elem"
+msgstr[1] "%(count)d elérhető elem"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:228
+#, python-format
+msgid "%(count)d Downloading Item"
+msgid_plural "%(count)d Downloading Items"
+msgstr[0] "%(count)d elem letöltés alatt"
+msgstr[1] "%(count)d elem letöltés alatt"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:245
+#, python-format
+msgid "%(count)d Paused Item"
+msgid_plural "%(count)d Paused Items"
+msgstr[0] "%(count)d szüneltetett elem"
+msgstr[1] "%(count)d szüneltetett elem"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:263
 msgid "Restart Upload"
@@ -176,6 +353,153 @@ msgstr "Eltávolítás a lejátszólistából"
 msgid "never"
 msgstr "soha"
 
+#: ../../portable/frontends/widgets/feedsettingspanel.py:58
+#, python-format
+msgid "%(count)d hour ago"
+msgid_plural "%(count)d hours ago"
+msgstr[0] "%(count)d órával ezelőtt"
+msgstr[1] "%(count)d órával ezelőtt"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:64
+#, python-format
+msgid "%(count)d day ago"
+msgid_plural "%(count)d days ago"
+msgstr[0] "%(count)d nappal ezelőtt"
+msgstr[1] "%(count)d nappal ezelőtt"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:70
+#, python-format
+msgid "%(count)d month ago"
+msgid_plural "%(count)d months ago"
+msgstr[0] "%(count)d hónappal ezelőtt"
+msgstr[1] "%(count)d hónappal ezelőtt"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:92
+msgid "Auto-Expire Videos:"
+msgstr "Autómatikusan Lejárnak a Videók:"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:95
+#, python-format
+msgid "Watched %(expiration)s (Default)"
+msgstr "Megtekintett %(expiration)s (Alapértelmezett)"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:97
+msgid "Watched 1 day ago"
+msgstr "Megtekintve 1 napja"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:98
+msgid "Watched 3 days ago"
+msgstr "Megtekintve 3 napja"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:99
+msgid "Watched 6 days ago"
+msgstr "Megtekintve 6 napja"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:100
+msgid "Watched 10 days ago"
+msgstr "Megtekintve 10 napja"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:101
+msgid "Watched 1 month ago"
+msgstr "Megtekintve 1 hónapja"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:137
+msgid "Outdated Feed Items:"
+msgstr "Lejárt Feed Elemek:"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:139
+#, python-format
+msgid "Keep %(number)s (Default)"
+msgstr "%(number)s megtartása (Alapértelmezett)"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:141
+msgid "Keep 0"
+msgstr "0 megtartása"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:142
+msgid "Keep 20"
+msgstr "20 megtartása"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:143
+msgid "Keep 50"
+msgstr "50 megtartása"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:144
+msgid "Keep 100"
+msgstr "100 megtartása"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:145
+msgid "Keep 1000"
+msgstr "1000 megtartása"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:169
+msgid "Remove All"
+msgstr "Összes eltávolítása"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:182
+msgid "Old items have been removed."
+msgstr "Régi elemek eltávolításra kerültek"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:193
+msgid "Pause Auto-Downloading when this many items are unplayed:"
+msgstr "Automatikus letöltés szüneteltetése ha ennyi nem játszott elem van:"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:197
+msgid "1 unplayed item"
+msgstr "1 nem játszott elem"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:198
+msgid "3 unplayed items"
+msgstr "3 nem játszott elem"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:199
+msgid "5 unplayed items"
+msgstr "5 nem játszott elem"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:200
+msgid "10 unplayed items"
+msgstr "10 nem játszott elem"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:201
+msgid "15 unplayed items"
+msgstr "15 nem játszott elem"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:241
+msgid "Feed Settings"
+msgstr "Feed Beállítások"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:63
+#, python-format
+msgid "%(name)s First Time Setup"
+msgstr "%(name)s Kezdeti Beállítása"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:122
+#, python-format
+msgid "Welcome to the %(name)s First Time Setup"
+msgstr "Üdvözöl a %(name)s Kezdeti Beállítása"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:126
+#, python-format
+msgid ""
+"The next few screens will help you set up %(name)s so that it works best for "
+"you.\n"
+"\n"
+"We recommend that you have %(name)s launch when your computer starts up.  "
+"This way, downloads in progress can finish downloading and new media files "
+"can be downloaded in the background, ready when you want to watch."
+msgstr ""
+"A következő néhány lépés segíteni fog a %(name)s neked megfelelő "
+"beállításában.\n"
+"\n"
+"Ajánljuk, hogy a %(name)s elinduljon a számítógéppel együtt.  Így a "
+"folyamatban lévő letöltések elkészülhetnek és új média fájlok is "
+"letölthetőek, hogy készen álljanak amikor meg akarod nézni őket."
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:138
+#, python-format
+msgid "Would you like to run %(name)s on startup?"
+msgstr "Szeretné, ha %(name)s elindulna a rendszer indulásakor?"
+
 #: ../../portable/frontends/widgets/firsttimedialog.py:144
 #: ../../portable/frontends/widgets/firsttimedialog.py:178
 #: ../../portable/dialogs.py:87
@@ -188,14 +512,48 @@ msgstr "Igen"
 msgid "No"
 msgstr "Nem"
 
+#: ../../portable/frontends/widgets/firsttimedialog.py:153
+msgid "Next >"
+msgstr "Következő >"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:163
+#, python-format
+msgid "Completing the %(name)s First Time Setup"
+msgstr "%(name)s Kezdeti Beállításának Befejezése"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:167
+#, python-format
+msgid ""
+"%(name)s can find all the media files on your computer to help you organize "
+"your collection.\n"
+"\n"
+"Would you like %(name)s to look for media files on your computer?"
+msgstr ""
+"%(name)s meg tudja keresni az összes média fájlt a számítógépen.\n"
+"\n"
+"Szeretné ha a %(name)s megkeresné a média fájlokat a számítógépen?"
+
 #: ../../portable/frontends/widgets/firsttimedialog.py:185
 msgid "Restrict to all my personal files."
-msgstr "Csak a saját fájljaimat"
+msgstr "Korlátozás a saját fájlaimra"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:186
+msgid "Search custom folders:"
+msgstr "Keresés kijelölt mappában:"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:192
 #: ../../portable/frontends/widgets/prefpanel.py:435
 msgid "Change"
 msgstr "Módosítás"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:197
+msgid "Choose directory to search for media files"
+msgstr "Válassz egy mappát a média fájlok keresésére"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:211
+#: ../../portable/frontends/widgets/firsttimedialog.py:290
+msgid "< Previous"
+msgstr "< Előző"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:223
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
@@ -209,14 +567,115 @@ msgstr "Keresés"
 msgid "Finish"
 msgstr "Befejezés"
 
+#: ../../portable/frontends/widgets/firsttimedialog.py:273
+msgid "Searching for media files"
+msgstr "Média fájlk keresése"
+
 #: ../../portable/frontends/widgets/firsttimedialog.py:283
 #: ../../portable/dialogs.py:85
 msgid "Cancel"
 msgstr "Mégsem"
 
+#: ../../portable/frontends/widgets/firsttimedialog.py:321
+#, python-format
+msgid "parsed %(count)s file"
+msgid_plural "parsed %(count)s files"
+msgstr[0] "%(count)s fájl elemezve"
+msgstr[1] "%(count)s fájl elemezve"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:326
+#, python-format
+msgid "found %(count)s media file"
+msgid_plural "found %(count)s media files"
+msgstr[0] "%(count)s média fájlt találtam"
+msgstr[1] "%(count)s média fájlt találtam"
+
+#: ../../portable/frontends/widgets/crashdialog.py:54
+#, python-format
+msgid ""
+"%(appname)s has encountered an internal error.  You can help us track down "
+"this problem and fix it by submitting an error report."
+msgstr ""
+"Bellső hiba történt ebben: %(appname)s.  Segíthetsz a hiba kijavításában, ha "
+"elküldöd a hiba jelentést!"
+
+#: ../../portable/frontends/widgets/crashdialog.py:63
+msgid ""
+"Include entire program database including all video and feed metadata with "
+"crash report"
+msgstr ""
+"A program adatbázisának csatolása a hiba jelentéshez, beleértve a videók és "
+"feed meta információit."
+
+#: ../../portable/frontends/widgets/crashdialog.py:68
+msgid "Describe what you were doing when you got this error:"
+msgstr "Írd le mit csináltál amikor a hiba történt:"
+
+#: ../../portable/frontends/widgets/style.py:232
+msgid "From"
+msgstr "Innen"
+
+#: ../../portable/frontends/widgets/style.py:233
+msgid "File name:"
+msgstr "Fájlnév:"
+
+#: ../../portable/frontends/widgets/style.py:234
+msgid "Show More"
+msgstr "Több mutatása"
+
+#: ../../portable/frontends/widgets/style.py:235
+msgid "Show Less"
+msgstr "Kevesebb mutatása"
+
+#: ../../portable/frontends/widgets/style.py:238
+#, python-format
+msgid "Reveal in %(progname)s"
+msgstr "Mutatás itt: %(progname)s"
+
+#: ../../portable/frontends/widgets/style.py:238
+#: ../../portable/frontends/widgets/displays.py:390
+msgid "Reveal File"
+msgstr "Fájl Mutatása"
+
+#: ../../portable/frontends/widgets/style.py:239
+msgid "Display Contents"
+msgstr "Tartalom mutatása"
+
+#: ../../portable/frontends/widgets/style.py:241
+msgid "File URL"
+msgstr "Fájl Elérési Útja"
+
+#: ../../portable/frontends/widgets/style.py:242
+msgid "License Page"
+msgstr "Licensz Oldal"
+
+#: ../../portable/frontends/widgets/style.py:243
+msgid "File Type"
+msgstr "Fájltípus"
+
+#: ../../portable/frontends/widgets/style.py:244
+msgid "Seeders"
+msgstr "Seederek"
+
+#: ../../portable/frontends/widgets/style.py:245
+msgid "Leechers"
+msgstr "Letöltők"
+
+#: ../../portable/frontends/widgets/style.py:246
+msgid "Upload Rate"
+msgstr "Feltöltési Sebesség"
+
+#: ../../portable/frontends/widgets/style.py:247
+msgid "Upload Total"
+msgstr "Teljes Feltöltés"
+
+#: ../../portable/frontends/widgets/style.py:248
+msgid "Down Rate"
+msgstr "Letöltési sebesség"
+
 #: ../../portable/frontends/widgets/style.py:249
 msgid "Down Total"
-msgstr "Összes Letöltés"
+msgstr "Teljes Letöltés"
 
 #: ../../portable/frontends/widgets/style.py:251
 msgid "Download Torrent"
@@ -226,6 +685,25 @@ msgstr "Torrent letöltése"
 #: ../../portable/dl_daemon/download.py:539
 msgid "Error"
 msgstr "Hiba"
+
+#: ../../portable/frontends/widgets/style.py:253
+msgid "queued for autodownload"
+msgstr "Automatikus letöltésre várakozik"
+
+#: ../../portable/frontends/widgets/style.py:254
+#: ../../portable/frontends/widgets/style.py:1153
+#: ../../portable/frontends/widgets/itemlistwidgets.py:721
+msgid "Unplayed"
+msgstr "Nem játszott"
+
+#: ../../portable/frontends/widgets/style.py:255
+msgid "Currently Playing"
+msgstr "Jelenleg Játszott"
+
+#: ../../portable/frontends/widgets/style.py:256
+#: ../../portable/frontends/widgets/style.py:1171
+msgid "Newly Available"
+msgstr "Újonnan Elérhető"
 
 #: ../../portable/frontends/widgets/style.py:258
 #: ../../portable/frontends/widgets/prefpanel.py:485
@@ -239,6 +717,28 @@ msgstr "Hiba"
 msgid "Remove"
 msgstr "Eltávolitás"
 
+#: ../../portable/frontends/widgets/style.py:259
+msgid "Stop seeding"
+msgstr "Feltöltés leállítása"
+
+#: ../../portable/frontends/widgets/style.py:571
+#: ../../portable/frontends/widgets/style.py:1164
+msgid "paused"
+msgstr "Felfüggesztve"
+
+#: ../../portable/frontends/widgets/style.py:1034
+msgid "Remove from playlist"
+msgstr "Eltávolítás a lejátszási listáról"
+
+#: ../../portable/frontends/widgets/displays.py:372
+#, python-format
+msgid ""
+"%(appname)s can't play this file.  You may be able to open it with a "
+"different program"
+msgstr ""
+"%(appname)s nem tudja lejátszani ezt a fájlt.  Lehet, hogy más programmal "
+"meg tudod nyitni."
+
 #: ../../portable/frontends/widgets/displays.py:382
 msgid "Filename:"
 msgstr "Fájlnév:"
@@ -251,6 +751,63 @@ msgstr "Fájltípus:"
 #: ../../portable/frontends/widgets/displays.py:428
 msgid "Play Externally"
 msgstr "Játszd le másssal"
+
+#: ../../portable/frontends/widgets/displays.py:393
+msgid "Skip"
+msgstr "Kihagyás"
+
+#: ../../portable/frontends/widgets/displays.py:430
+msgid "Open Externally"
+msgstr "Megnyitás Külső Programmal"
+
+#: ../../portable/frontends/widgets/displays.py:536
+#, python-format
+msgid "%(count)d Feed Folder Selected"
+msgid_plural "%(count)d Feed Folders Selected"
+msgstr[0] "%(count)d Feed Mappa Kijelölve"
+msgstr[1] "%(count)d Feed Mappa Kijelölve"
+
+#: ../../portable/frontends/widgets/displays.py:541
+#, python-format
+msgid "(contains %(count)d feed)"
+msgid_plural "(contains %(count)d feeds)"
+msgstr[0] "(%(count)d feedet tartalmaz)"
+msgstr[1] "(%(count)d feedet tartalmaz)"
+
+#: ../../portable/frontends/widgets/displays.py:547
+#, python-format
+msgid "%(count)d Playlist Folder Selected"
+msgid_plural "%(count)d Playlist Folders Selected"
+msgstr[0] "%(count)d Lejátszásilista Mappa Kijelölve"
+msgstr[1] "%(count)d Lejátszásilista Mappa Kijelölve"
+
+#: ../../portable/frontends/widgets/displays.py:552
+#, python-format
+msgid "(contains %(count)d playlist)"
+msgid_plural "(contains %(count)d playlist)"
+msgstr[0] "(%(count)d lejátszási listát tartalmaz)"
+msgstr[1] "(%(count)d lejátszási listát tartalmaz)"
+
+#: ../../portable/frontends/widgets/displays.py:562
+#, python-format
+msgid "%(count)d Feed Selected"
+msgid_plural "%(count)d Feeds Selected"
+msgstr[0] "%(count)d Feed Kijelölve"
+msgstr[1] "%(count)d Feed Kijelölve"
+
+#: ../../portable/frontends/widgets/displays.py:568
+#, python-format
+msgid "%(count)d Site Selected"
+msgid_plural "%(count)d Sites Selected"
+msgstr[0] "%(count)d Oldal Kijelölve"
+msgstr[1] "%(count)d Oldal Kijelölve"
+
+#: ../../portable/frontends/widgets/displays.py:574
+#, python-format
+msgid "%(count)d Playlist Selected"
+msgid_plural "%(count)d Playlists Selected"
+msgstr[0] "%(count)d Lejátszási Lista Kijelölve"
+msgstr[1] "%(count)d Lejátszási Lista Kijelölve"
 
 #: ../../portable/frontends/widgets/displays.py:581
 msgid "Delete All"
@@ -268,6 +825,192 @@ msgstr "Felhasználónév:"
 msgid "Password:"
 msgstr "Jelszó:"
 
+#: ../../portable/frontends/widgets/browser.py:96
+msgid "Open in browser"
+msgstr "Megnyitás böngészőben"
+
+#: ../../portable/frontends/widgets/browser.py:102
+msgid "Download this video"
+msgstr "Videó letöltése"
+
+#: ../../portable/frontends/widgets/application.py:156
+msgid "Movies directory gone"
+msgstr "A filmek mappája eltűnt"
+
+#: ../../portable/frontends/widgets/application.py:158
+#, python-format
+msgid ""
+"%(shortappname)s can't find the primary video directory located at:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"This may be because it is located on an external drive that is not "
+"connected.\n"
+"\n"
+"If you continue, the primary video directory will be reset to a location on "
+"this drive.  If you had videos downloaded this will cause %(shortappname)s "
+"to lose details about those videos.\n"
+"\n"
+"If you quit, then you can connect the drive or otherwise fix the problem and "
+"relaunch %(shortappname)s."
+msgstr ""
+"%(shortappname)s nem találja a videó mappát:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"Lehet, hogy egy nem csatlakoztatt külső meghajtón van.\n"
+"\n"
+"Ha folytatod, az eldődleges videó mappa újra létrejön a jelenlegi meghajtón. "
+" Ha voltak letöltött videóid a %(shortappname)s el fogja felejteni őket..\n"
+"\n"
+"Ha kilépsz kijavíthatod a hibát és újraindíthatod a programot."
+
+#: ../../portable/frontends/widgets/application.py:326
+msgid "Error Revealing File"
+msgstr "Hiba a Fájl megmutatásánál"
+
+#: ../../portable/frontends/widgets/application.py:327
+#, python-format
+msgid "The file %(filename)s was deleted from outside %(appname)s."
+msgstr "A fájl %(filename)s a %(appname)s programon kívül törölve lett."
+
+#: ../../portable/frontends/widgets/application.py:335
+msgid "Open Files..."
+msgstr "Fájlok megnyitása..."
+
+#: ../../portable/frontends/widgets/application.py:346
+#: ../../portable/frontends/widgets/application.py:351
+msgid "Open Files - Error"
+msgstr "Fájlok Megnyitása - Hiba"
+
+#: ../../portable/frontends/widgets/application.py:347
+#: ../../portable/frontends/widgets/application.py:634
+#, python-format
+msgid "File %(filename)s does not exist."
+msgstr "A fájl nem létzeik: %(filename)s"
+
+#: ../../portable/frontends/widgets/application.py:352
+msgid "The following files do not exist:"
+msgstr "A következő fájlok nem léteznek:"
+
+#: ../../portable/frontends/widgets/application.py:389
+msgid "New Download"
+msgstr "Új Letöltés"
+
+#: ../../portable/frontends/widgets/application.py:390
+msgid "Enter the URL of the item to download"
+msgstr "Add meg a letölteni kívánt elem címét"
+
+#: ../../portable/frontends/widgets/application.py:391
+msgid "New Download - Invalid URL"
+msgstr "Új Letöltés - Érvénytelen URL"
+
+#: ../../portable/frontends/widgets/application.py:392
+msgid ""
+"The address you entered is not a valid url.\n"
+"Please check the URL and try again.\n"
+"\n"
+"Enter the URL of the item to download"
+msgstr ""
+"A megadott cím nem érvényes UR:\n"
+"Kérlek ellenőrizd az URL-t és próbáld újra.\n"
+"\n"
+"Add meg a letölteni kívánt elem címét"
+
+#: ../../portable/frontends/widgets/application.py:400
+#, python-format
+msgid "%(appname)s is up to date"
+msgstr "%(appname)s legfrissebb verzióját használja."
+
+#: ../../portable/frontends/widgets/application.py:402
+#, python-format
+msgid "%(appname)s is up to date!"
+msgstr "%(appname)s legfrissebb verzióját használja!"
+
+#: ../../portable/frontends/widgets/application.py:426
+msgid "Remove item"
+msgid_plural "Remove items"
+msgstr[0] "Elem eltávolítása"
+msgstr[1] "Elemek eltávolítása"
+
+#: ../../portable/frontends/widgets/application.py:430
+msgid ""
+"One of these items was not downloaded from a feed. Would you like to delete "
+"it or just remove it from the Library?"
+msgid_plural ""
+"Some of these items were not downloaded from a feed. Would you like to "
+"delete them or just remove them from the Library?"
+msgstr[0] ""
+"Az elemek közül egy nem feedről lett letöltve.  Törölni szeretné vagy csak "
+"eltávolítani a Gyűjteményből?"
+msgstr[1] ""
+"Az elemek közül néhány nem feedről lett letöltve.  Törölni szeretné őket "
+"vagy csak eltávolítani a Gyűjteményből?"
+
+#: ../../portable/frontends/widgets/application.py:440
+msgid ""
+"One of these items is a folder.  Delete/Removeing a folder will "
+"delete/remove it's contents"
+msgid_plural ""
+"Some of these items are folders.  Delete/Removeing a folder will "
+"delete/remove it's contents"
+msgstr[0] ""
+"Az elemek közül egy mappa. A mappa eltávolítása törölni fogja annak "
+"tartalmát is."
+msgstr[1] ""
+"Az elemek közt vannak mappák. A mappak eltávolítása törölni fogja azok "
+"tartalmát is."
+
+#: ../../portable/frontends/widgets/application.py:455
+#, python-format
+msgid "Are you sure you want to delete the item?"
+msgid_plural "Are you sure you want to delete all %(count)d items?"
+msgstr[0] "Biztosan törölni akarja az elemeket?"
+msgstr[1] "Biztosan törölni akarja mind a %(count)d elemet?"
+
+#: ../../portable/frontends/widgets/application.py:462
+msgid ""
+"One of these items is a folder.  Deleting a folder will delete it's contents"
+msgid_plural ""
+"Some of these items are folders.  Deleting a folder will delete it's contents"
+msgstr[0] ""
+"Az elemek közül egy mappa. A mappa törlésével elveszik annak tartalma is"
+msgstr[1] ""
+"Az elemek közül néhány mappa. A mappák törlésével elveszik azok tartalma is"
+
+#: ../../portable/frontends/widgets/application.py:496
+msgid "Enter the new name for the item"
+msgstr "Adjd meg az új elem nevét!"
+
+#: ../../portable/frontends/widgets/application.py:519
+msgid "Save Item As..."
+msgstr "Elem mentése másként..."
+
+#: ../../portable/frontends/widgets/application.py:572
+#: ../../portable/menubar.py:213
+msgid "Add Site"
+msgstr "Oldal Hozzáadása"
+
+#: ../../portable/frontends/widgets/application.py:573
+msgid "Enter the URL of the site to add"
+msgstr "Add meg a hozzáadandó oldal címét"
+
+#: ../../portable/frontends/widgets/application.py:574
+msgid "Add Site - Invalid URL"
+msgstr "Oldal Hozzáadása - Érvénytelen URL"
+
+#: ../../portable/frontends/widgets/application.py:575
+msgid ""
+"The address you entered is not a valid url.\n"
+"Please check the URL and try again.\n"
+"\n"
+"Enter the URL of the site to add"
+msgstr ""
+"A megadott cím nem érvényes URL.\n"
+"Ellenőrizd a címet és próbáld újra!\n"
+"\n"
+"Add meg a hozzáadandó oldal címét"
+
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
 msgstr "OPML fájl importálása"
@@ -275,6 +1018,10 @@ msgstr "OPML fájl importálása"
 #: ../../portable/frontends/widgets/application.py:626
 msgid "OPML Files"
 msgstr "OPML Fájlok"
+
+#: ../../portable/frontends/widgets/application.py:633
+msgid "Import OPML File - Error"
+msgstr "OPML Fájl Importálása - Hiba"
 
 #: ../../portable/frontends/widgets/application.py:639
 msgid "Export OPML File"
@@ -296,29 +1043,135 @@ msgstr "Lejátszólista Mappa létrehozása"
 msgid "Enter a name for the new playlist folder"
 msgstr "Adjon nevet az új lejátszólista mappának"
 
+#: ../../portable/frontends/widgets/application.py:707
+#: ../../portable/frontends/widgets/tablist.py:579
+msgid "Rename Feed Folder"
+msgstr "Feed Mappa Átnevezése"
+
+#: ../../portable/frontends/widgets/application.py:708
+#, python-format
+msgid "Enter a new name for the feed folder %(name)s"
+msgstr "Adj meg egy új nevet a feed mappának: %(name)s"
+
+#: ../../portable/frontends/widgets/application.py:712
+msgid "Rename Feed"
+msgstr "Feed Átnevezése"
+
+#: ../../portable/frontends/widgets/application.py:713
+#, python-format
+msgid "Enter a new name for the feed %(name)s"
+msgstr "Adj meg egy új nevet a feednek: %(name)s"
+
 #: ../../portable/frontends/widgets/application.py:717
 #: ../../portable/frontends/widgets/tablist.py:640
 #: ../../portable/playlist.py:188
 msgid "Rename Playlist"
 msgstr "Lejátszólista átnevezése"
 
+#: ../../portable/frontends/widgets/application.py:718
+#, python-format
+msgid "Enter a new name for the playlist %(name)s"
+msgstr "Adj meg egy új nevet a lejátszásilistának: %(name)s"
+
 #: ../../portable/frontends/widgets/application.py:722
 #: ../../portable/frontends/widgets/tablist.py:634
 msgid "Rename Playlist Folder"
 msgstr "Lejátszólista mappa átnevezése"
 
+#: ../../portable/frontends/widgets/application.py:723
+#, python-format
+msgid "Enter a new name for the playlist folder %(name)s"
+msgstr "Adj meg egy új nevet a lejátszásilista mappának: %(name)s"
+
+#: ../../portable/frontends/widgets/application.py:726
+#: ../../portable/frontends/widgets/tablist.py:529
+msgid "Rename Site"
+msgstr "Oldal Átnevezése"
+
+#: ../../portable/frontends/widgets/application.py:727
+#, python-format
+msgid "Enter a new name for the site %(name)s"
+msgstr "Adj meg egy új nevet az oldalnak: %(name)s"
+
+#: ../../portable/frontends/widgets/application.py:751
+msgid "Remove playlist"
+msgid_plural "Remove playlists"
+msgstr[0] "Lejátszásilista eltvávolítása"
+msgstr[1] "Lejátszásilisták eltvávolítása"
+
+#: ../../portable/frontends/widgets/application.py:753
+#, python-format
+msgid "Are you sure you want to remove this playlist?"
+msgid_plural "Are you sure you want to remove these %(count)s playlists?"
+msgstr[0] "Biztosan el szeretnéd távolítani ezt a lejátszásilistát?"
+msgstr[1] ""
+"Biztosan el szeretnéd távolítani ezt a(z) %(count)s lejátszásilistát?"
+
+#: ../../portable/frontends/widgets/application.py:770
+msgid "Remove site"
+msgid_plural "Remove sites"
+msgstr[0] "Oldal eltávolítása"
+msgstr[1] "Oldalak eltávolítása"
+
+#: ../../portable/frontends/widgets/application.py:772
+#, python-format
+msgid "Are you sure you want to remove this site?"
+msgid_plural "Are you sure you want to remove these %(count)s sites?"
+msgstr[0] "Biztosan el szeretnéd távolítani ezt az oldalt?"
+msgstr[1] "Biztosan el szeretnéd távolítani ezt a(z) %(count)s oldalt?"
+
 #: ../../portable/frontends/widgets/application.py:802
 msgid "Are you sure you want to quit?"
 msgstr "Biztosan ki szeretne lépni?"
+
+#: ../../portable/frontends/widgets/application.py:804
+#, python-format
+msgid "You have %(count)d download in progress.  Quit anyway?"
+msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
+msgstr[0] "%(count)d folyamatban lévő letöltésed van. Biztosan kilépsz?"
+msgstr[1] "%(count)d folyamatban lévő letöltésed van. Biztosan kilépsz?"
 
 #: ../../portable/frontends/widgets/application.py:809
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "Figyelmeztessen ha letöltés közben akarok kilépni"
 
+#: ../../portable/frontends/widgets/application.py:1124
+msgid "Message"
+msgstr "Üzenet"
+
+#: ../../portable/frontends/widgets/application.py:1149
+msgid "Migrating Files"
+msgstr "Fájlok Költöztetése"
+
+#: ../../portable/frontends/widgets/application.py:1159
+msgid "Migrating files"
+msgstr "Fájlok költöztetése"
+
 #: ../../portable/frontends/widgets/downloadscontroller.py:81
 #: ../../portable/frontends/widgets/prefpanel.py:622
 msgid "Downloads"
 msgstr "Letöltések"
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:90
+msgid "Single and external downloads"
+msgstr "Egyszeri és külső letöltések"
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:93
+msgid "Feed downloads"
+msgstr "Feed letöltések"
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:96
+msgid "Seeding"
+msgstr "Seedelés"
+
+#: ../../portable/frontends/widgets/prefpanel.py:267
+#, python-format
+msgid "Automatically run %(appname)s when I log in."
+msgstr "%(appname)s indítása bejelentkezés után."
+
+#: ../../portable/frontends/widgets/prefpanel.py:271
+msgid "Warn me if I attempt to quit with downloads in progress."
+msgstr "Figyelmeztess, ha folyamatban lévő letöltés közben lépnék ki."
 
 #: ../../portable/frontends/widgets/prefpanel.py:281
 msgid "Every day"
@@ -351,27 +1204,136 @@ msgstr "Minden"
 msgid "Off"
 msgstr "Ki"
 
+#: ../../portable/frontends/widgets/prefpanel.py:297
+msgid "0"
+msgstr "0"
+
+#: ../../portable/frontends/widgets/prefpanel.py:298
+msgid "20"
+msgstr "20"
+
+#: ../../portable/frontends/widgets/prefpanel.py:299
+msgid "50"
+msgstr "50"
+
+#: ../../portable/frontends/widgets/prefpanel.py:300
+msgid "100"
+msgstr "100"
+
+#: ../../portable/frontends/widgets/prefpanel.py:301
+msgid "1000"
+msgstr "1000"
+
+#: ../../portable/frontends/widgets/prefpanel.py:307
+msgid "Default settings for new feeds:"
+msgstr "Alapértelmezett beállítások az új feedekhez:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:311
+msgid "(These can be changed using the feed's settings button)"
+msgstr "(A feed beállítások gombjával módosítható.)"
+
+#: ../../portable/frontends/widgets/prefpanel.py:315
+msgid "Check for new content:"
+msgstr "Új tartalom ellenőrzése:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:320
+msgid "Auto download setting:"
+msgstr "Autómatikus letöltési beállítás:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:326
+msgid "Remember this many old items:"
+msgstr "Ennyi régi elemet jegyezz meg:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:327
+msgid "(in addition to the current contents)"
+msgstr "(a jelenlegi tartalmakon felül)"
+
+#: ../../portable/frontends/widgets/prefpanel.py:340
+msgid "Maximum number of manual downloads at a time:"
+msgstr "Az egyidejű kézi letöltések maximális száma:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:347
+msgid "Maximum number of auto-downloads at a time:"
+msgstr "Egyidejű autómatikus letöltések maximális száma:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:357
+msgid "Bittorrent:"
+msgstr "Bittorrent:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:360
+msgid "Limit upstream bandwidth to:"
+msgstr "A feltöltés korlátozása:"
+
 #: ../../portable/frontends/widgets/prefpanel.py:369
 #: ../../portable/frontends/widgets/prefpanel.py:380
 msgid "KB/s"
 msgstr "KB/s"
 
+#: ../../portable/frontends/widgets/prefpanel.py:372
+msgid "Limit downstream bandwidth to:"
+msgstr "A letöltés korlátozása:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:383
+msgid "Limit torrent connections to:"
+msgstr "Torrent kapcsolatok korlátozása:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:400
+msgid "Starting port:"
+msgstr "Kezdő port:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:404
+msgid "Ending port:"
+msgstr "Utolsó port:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:410
+msgid "Automatically forward ports.  (UPNP)"
+msgstr "Portok autómaikus átirányítása. (UPNP)"
+
+#: ../../portable/frontends/widgets/prefpanel.py:414
+msgid "Ignore unencrypted connections."
+msgstr "Titkosítatlan kapcsolatok figyelmen kívül hagyása."
+
 #: ../../portable/frontends/widgets/prefpanel.py:418
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr "Torrent feltöltések megállítása ha az arány:"
 
+#: ../../portable/frontends/widgets/prefpanel.py:440
+msgid "Choose Movies Directory"
+msgstr "Filmek Mappájának kiválasztása"
+
 #: ../../portable/frontends/widgets/prefpanel.py:453
 msgid "Migrate existing movies?"
 msgstr "Mozgassuk a már létező filmeket?"
+
+#: ../../portable/frontends/widgets/prefpanel.py:454
+#, python-format
+msgid ""
+"You've selected a new folder to download movies to.  Should %(appname)s "
+"migrate your existing downloads there? (Currently downloading movies will "
+"not be moved until they finish.)"
+msgstr ""
+"Új mappát választottál a filmek letöltésére. Átköltöztessa a %(appname)s a "
+"meglévő letöltéseket? (A jelenleg folyó letöltések csak a letöltés "
+"befejezése utána lesznek áthelyezve.)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:482
 #: ../../portable/dialogs.py:104
 msgid "Add"
 msgstr "Hozzáad"
 
+#: ../../portable/frontends/widgets/prefpanel.py:523
+msgid "Add Watched Folder"
+msgstr "Megtekintett Mappa Hozzáadása"
+
 #: ../../portable/frontends/widgets/prefpanel.py:542
 msgid "Store downloads in this folder:"
 msgstr "Letöltések tárolása ebben a könyvtárban:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:549
+msgid ""
+"Watch for new video and audio items in these folders and include them in "
+"library:"
+msgstr "Új videó és audió elelek gyűjteménybe helyezése ezekből a mappákból:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:568
 msgid "Keep at least this much free space on my drive:"
@@ -402,13 +1364,42 @@ msgstr "10 nap"
 msgid "1 month"
 msgstr "1 hónap"
 
+#: ../../portable/frontends/widgets/prefpanel.py:590
+msgid "By default, video and audio items expire after:"
+msgstr "Videó és audió fájlok alapértelmezett lejárati ideje:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:599
+msgid "Always play videos in a separate window."
+msgstr "Videók lejátszása külön ablakban."
+
+#: ../../portable/frontends/widgets/prefpanel.py:603
+msgid ""
+"Resume playing a video or audio item from the point it was last stopped."
+msgstr "A lejátszás folytatása a megállítás utolsó pontjától."
+
+#: ../../portable/frontends/widgets/prefpanel.py:608
+msgid "Play video and audio items one after another"
+msgstr "Videó és audió elemek lejátszása egymás után"
+
+#: ../../portable/frontends/widgets/prefpanel.py:609
+msgid "Stop after each video or audio item"
+msgstr "Megállás minden videó és audió elem után"
+
 #: ../../portable/frontends/widgets/prefpanel.py:620
 msgid "General"
 msgstr "Általános"
 
+#: ../../portable/frontends/widgets/prefpanel.py:621
+msgid "Feeds"
+msgstr "Feed"
+
 #: ../../portable/frontends/widgets/prefpanel.py:623
 msgid "Folders"
 msgstr "Mappák"
+
+#: ../../portable/frontends/widgets/prefpanel.py:624
+msgid "Disk space"
+msgstr "Lemezterület"
 
 #: ../../portable/frontends/widgets/prefpanel.py:625
 msgid "Playback"
@@ -418,6 +1409,14 @@ msgstr "Lejátszás"
 msgid "Preferences"
 msgstr "Beállítások..."
 
+#: ../../portable/frontends/widgets/newsearchfeed.py:58
+msgid "New Search Feed"
+msgstr "Új Kereső Feed"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:59
+msgid "A search feed contains items that match a search term."
+msgstr "Egy kereső feed tartalmaz a keresésnek megfelelő elemeket."
+
 #: ../../portable/frontends/widgets/newsearchfeed.py:74
 msgid "Search for:"
 msgstr "Keresés:"
@@ -426,10 +1425,149 @@ msgstr "Keresés:"
 msgid "In this:"
 msgstr "Ebben:"
 
+#: ../../portable/frontends/widgets/newsearchfeed.py:88
+msgid "Feed:"
+msgstr "Feed:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:93
+msgid "Search engine:"
+msgstr "Kereső motor:"
+
 #: ../../portable/frontends/widgets/newsearchfeed.py:99
 #: ../../portable/frontends/widgets/newfeed.py:60
 msgid "URL:"
 msgstr "Cím:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:133
+msgid "Add new feed to this section:"
+msgstr "Új feed hozzáadáa ehhez:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:136
+#: ../../portable/frontends/widgets/newfolder.py:71
+#: ../../portable/frontends/widgets/newfeed.py:72
+msgid "video"
+msgstr "videó"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:137
+#: ../../portable/frontends/widgets/newfolder.py:72
+#: ../../portable/frontends/widgets/newfeed.py:73
+msgid "audio"
+msgstr "hang"
+
+#: ../../portable/frontends/widgets/linkhandler.py:54
+msgid "Subscribe to Feed"
+msgstr "Feliratkozás Feedre"
+
+#: ../../portable/frontends/widgets/linkhandler.py:56
+#, python-format
+msgid ""
+"This link appears to be a feed.  Do you want to add it to your "
+"subscriptions?\n"
+"\n"
+"%(url)s"
+msgstr ""
+"Ez a link egy feednek tűnik. Szeretnéd hozzáadni az előfizetéseidhez?\n"
+"\n"
+"%(url)s"
+
+#: ../../portable/frontends/widgets/newfolder.py:60
+msgid "Folder name:"
+msgstr "Könyvtár név:"
+
+#: ../../portable/frontends/widgets/newfolder.py:69
+msgid "Folder should go in this section:"
+msgstr "A mappa ide tartozik:"
+
+#: ../../portable/frontends/widgets/newfolder.py:109
+#: ../../portable/frontends/widgets/newfolder.py:111
+msgid "Create Feed Folder"
+msgstr "Feed mappa létrehozása"
+
+#: ../../portable/frontends/widgets/newfolder.py:112
+msgid "Enter the name of the folder to add"
+msgstr "Add meg a létrehozandó mappa nevét"
+
+#: ../../portable/frontends/widgets/playlist.py:146
+msgid "This Playlist is Empty"
+msgstr "Ez a Lejátszásilista Üres"
+
+#: ../../portable/frontends/widgets/playlist.py:149
+msgid ""
+"To add an item, drag it onto the name of this playlist in the sidebar."
+msgstr "Egy elem hozzáadásához húzza a playlist nevére az oldalsávban."
+
+#: ../../portable/frontends/widgets/removefeeds.py:49
+msgid "Remove Feed"
+msgid_plural "Remove Feeds"
+msgstr[0] "Feed Eltávolítása"
+msgstr[1] "Feedek Eltávolítása"
+
+#: ../../portable/frontends/widgets/removefeeds.py:57
+msgid "Are you sure you want to remove this feed:"
+msgid_plural "Are you sure you want to remove these feeds:"
+msgstr[0] "Biztosan el akarod távolítani ezt a feedet?"
+msgstr[1] "Biztosan el akarod távolítani ezeket a feedeket?"
+
+#: ../../portable/frontends/widgets/removefeeds.py:84
+msgid "Keep items that have been downloaded in my library."
+msgstr "Tartsd meg a gyűjteményembe letöltött elemeket."
+
+#: ../../portable/frontends/widgets/removefeeds.py:89
+#, python-format
+msgid ""
+"Watched folders will be removed from the sidebar but their contents will "
+"still appear in your library.  You can stop watching watched folders "
+"completely in the %(appname)s preference panel."
+msgstr ""
+"A megtekintett mappák el lesznek távolítva az oldalsávról, de a tartalmuk "
+"meg fog jelenni a gyűjteményban.  Teljesen megszűntetheted a megtekintett "
+"mappákat a %(appname)s beállításai közt."
+
+#: ../../portable/frontends/widgets/removefeeds.py:100
+msgid ""
+"Are you sure you want to remove this feed?  The downloads currently in "
+"progress will be canceled."
+msgid_plural ""
+"Are you sure you want to remove these feeds?  The downloads currently in "
+"progress will be canceled."
+msgstr[0] ""
+"Biztosan el szeretnéd távolítani ezt a feedet? A folyamatban lvő letöltések "
+"megszakadnak."
+msgstr[1] ""
+"Biztosan el szeretnéd távolítani ezeket a feedeket? A folyamatban lvő "
+"letöltések megszakadnak."
+
+#: ../../portable/frontends/widgets/gtk/video.py:284
+msgid "Permalink"
+msgstr "Permalink"
+
+#: ../../portable/frontends/widgets/gtk/video.py:294
+msgid "Pop-in"
+msgstr "Beugrás"
+
+#: ../../portable/frontends/widgets/gtk/video.py:299
+msgid "Pop-out"
+msgstr "Kiugrás"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:67
+#, python-format
+msgid "Play Next Unplayed (%(unplayed)d)"
+msgstr "Következő Nézettlen Lejátszása (%(unplayed)d)"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:71
+#, python-format
+msgid "Play All Unplayed (%(unplayed)d)"
+msgstr "Összes Nézettlen Lejátszás (%(unplayed)d)"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:74
+#, python-format
+msgid "Pause All Downloads (%(downloading)d)"
+msgstr "Össze Letöltés Szüneteltetése (%(downloading)d)"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:77
+#, python-format
+msgid "Resume All Downloads (%(paused)d)"
+msgstr "Összes Letöltés Folytatása (%(paused)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:85
 msgid "Hide"
@@ -440,18 +1578,217 @@ msgstr "Elrejtés"
 msgid "Show"
 msgstr "Mutatás"
 
+#: ../../portable/frontends/widgets/gtk/window.py:495
+msgid "All files"
+msgstr "Összes fájl"
+
+#: ../../portable/frontends/widgets/gtk/window.py:524
+msgid "Choose"
+msgstr "Kiválasztás"
+
+#: ../../portable/frontends/widgets/gtk/window.py:539
+#, python-format
+msgid "About %(appname)s"
+msgstr "%(appname)s névjegye"
+
+#: ../../portable/frontends/widgets/gtk/window.py:554
+#, python-format
+msgid ""
+"%(copyright)s.  See license.txt file for details.\n"
+"%(trademark)s"
+msgstr ""
+"%(copyright)s. Nézd meg a license.txt fájlt a részletekért.\n"
+"%(trademark)s"
+
+#: ../../portable/frontends/widgets/gtk/window.py:593
+#: ../../portable/dialogs.py:84
+msgid "Close"
+msgstr "Bezárás"
+
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
 msgstr "Letöltve"
+
+#: ../../portable/frontends/widgets/feedcontroller.py:137
+msgid "Full Feed"
+msgstr "Teljes Feed"
+
+#: ../../portable/frontends/widgets/feedcontroller.py:191
+#, python-format
+msgid "Show %(count)d More Item"
+msgid_plural "Show %(count)d More Items"
+msgstr[0] "További %(count)d Elem Mutatása"
+msgstr[1] "További %(count)d Elem Mutatása"
+
+#: ../../portable/frontends/widgets/feedcontroller.py:232
+#: ../../portable/frontends/widgets/feedcontroller.py:259
+#, python-format
+msgid "%(count)d Downloading"
+msgid_plural "%(count)d Downloading"
+msgstr[0] "%(count)d Letöltése"
+msgstr[1] "%(count)d Letöltése"
+
+#: ../../portable/frontends/widgets/feedcontroller.py:243
+#: ../../portable/frontends/widgets/feedcontroller.py:255
+#, python-format
+msgid "%(count)d Item"
+msgid_plural "%(count)d Items"
+msgstr[0] "%(count)d Elem"
+msgstr[1] "%(count)d Elem"
+
+#: ../../portable/frontends/widgets/feedcontroller.py:264
+#, python-format
+msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
+msgid_plural ""
+"%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
+msgstr[0] ""
+"%(count)d Letöltés Várakoztatása a Lejátszatlan Elemek Miatt (Ld. "
+"beállítások)"
+msgstr[1] ""
+"%(count)d Letöltés Várakoztatása a Lejátszatlan Elemek Miatt (Ld. "
+"beállítások)"
+
+#: ../../portable/frontends/widgets/feedcontroller.py:275
+#, python-format
+msgid "%(count)d Item Matches Search"
+msgid_plural "%(count)d Items Match Search"
+msgstr[0] "%(count)d Találat"
+msgstr[1] "%(count)d Találat"
+
+#: ../../portable/frontends/widgets/feedcontroller.py:280
+msgid "All Items Match Search"
+msgstr "Minden elem megfelel a keresésnek"
+
+#: ../../portable/frontends/widgets/newfeed.py:70
+msgid "Feed should go in this section:"
+msgstr "A feed ide tartozik:"
+
+#: ../../portable/frontends/widgets/newfeed.py:111
+msgid "Add Feed"
+msgstr "Feed Hozzáadása"
+
+#: ../../portable/frontends/widgets/newfeed.py:112
+msgid "Enter the URL of the feed to add"
+msgstr "Adja meg a hozzáadni kívánt feed címét"
+
+#: ../../portable/frontends/widgets/newfeed.py:123
+msgid "Add Feed - Invalid URL"
+msgstr "Feed Hozzáadása - Érvénytelen URL"
+
+#: ../../portable/frontends/widgets/newfeed.py:124
+msgid ""
+"The address you entered is not a valid url.\n"
+"Please check the URL and try again.\n"
+"\n"
+"Enter the URL of the feed to add"
+msgstr ""
+"A megadott cím nem érvényes URL.\n"
+"Ellenőrizd a címet és próbáld újra.\n"
+"\n"
+"Adja meg a hozzáadni kíványt feed címét"
 
 #: ../../portable/frontends/widgets/tablist.py:528
 #: ../../portable/frontends/widgets/tablist.py:591
 msgid "Copy URL to clipboard"
 msgstr "Hivatkozás másolása a vágólapra"
 
+#: ../../portable/frontends/widgets/tablist.py:530
+msgid "Remove Site"
+msgstr "Oldal Eltávolítása"
+
+#: ../../portable/frontends/widgets/tablist.py:534
+msgid "Remove Sites"
+msgstr "Oldalak Eltávolítása"
+
+#: ../../portable/frontends/widgets/tablist.py:578
+msgid "Update Feeds In Folder"
+msgstr "Feedek Frissítése a Mappában"
+
+#: ../../portable/frontends/widgets/tablist.py:585
+msgid "Update Feed Now"
+msgstr "Feed Frissítése Most"
+
+#: ../../portable/frontends/widgets/tablist.py:588
+msgid "Rename"
+msgstr "Átnevezés"
+
+#: ../../portable/frontends/widgets/tablist.py:590
+msgid "Revert Feed Name"
+msgstr "Feed Nevének Visszaállítása"
+
+#: ../../portable/frontends/widgets/tablist.py:597
+msgid "Update Feeds Now"
+msgstr "Feedek Frissítése Most"
+
+#: ../../portable/frontends/widgets/tablist.py:662
+msgid "LIBRARY"
+msgstr "GYŰJTEMÉNY"
+
+#: ../../portable/frontends/widgets/tablist.py:664
+msgid "SITES"
+msgstr "OLDALAK"
+
+#: ../../portable/frontends/widgets/tablist.py:666
+msgid "FEEDS"
+msgstr "FEEDEK"
+
+#: ../../portable/frontends/widgets/tablist.py:668
+msgid "AUDIO FEEDS"
+msgstr "AUDIÓ FEEDEK"
+
+#: ../../portable/frontends/widgets/tablist.py:670
+msgid "PLAYLISTS"
+msgstr "LEJÁTSZÁSILISTÁK"
+
+#: ../../portable/frontends/widgets/itemlistcontroller.py:447
+msgid "No Results Found"
+msgstr "Nincsenek Találatok"
+
+#: ../../portable/frontends/widgets/itemlistcontroller.py:553
+msgid "Back to feed"
+msgstr "Vissza a feedhez"
+
 #: ../../portable/frontends/widgets/itemlistwidgets.py:179
 msgid "Save Search"
 msgstr "Keresés mentése"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:286
+msgid "Title"
+msgstr "Cím"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:288
+msgid "Feed"
+msgstr "Feed"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:290
+#: ../../portable/frontends/widgets/itemlistwidgets.py:743
+msgid "Date"
+msgstr "Dátum"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:291
+msgid "Length"
+msgstr "Hossz"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:292
+msgid "Status"
+msgstr "Állapot"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:293
+#: ../../portable/frontends/widgets/itemlistwidgets.py:744
+msgid "Size"
+msgstr "Méret"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:295
+msgid "ETA"
+msgstr "Hátralévő idő"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:296
+msgid "Speed"
+msgstr "Sebesség"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:432
+msgid "Save as a Feed"
+msgstr "Mentés mint Feed"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:486
 msgid "Pause All"
@@ -461,29 +1798,192 @@ msgstr "Mind megállít"
 msgid "Resume All"
 msgstr "Mind újrakezd"
 
+#: ../../portable/frontends/widgets/itemlistwidgets.py:500
+msgid "Cancel All"
+msgstr "Összes Megszakítása"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:507
+msgid "Download Settings"
+msgstr "Letöltési Beállítások"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:553
+#, python-format
+msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
+msgstr ""
+"%(available)s kevesebb mint a letöltési hely korlátozás (%(amount)s szabad a "
+"lemezen)"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:559
+#, python-format
+msgid "%(available)s free for downloads (%(amount)s free on disk)"
+msgstr "%(available)s szabad a letöltésekhez (%(amount)s szabad a lemezen)"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:564
+#, python-format
+msgid "%(amount)s free on disk"
+msgstr "%(amount)s szabad a lemezen"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:583
+#, python-format
+msgid "%(rate)s uploading"
+msgstr "%(rate)s feltöltés"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:585
+#, python-format
+msgid "%(rate)s downloading"
+msgstr "%(rate)s letöltés"
+
 #: ../../portable/frontends/widgets/itemlistwidgets.py:619
 msgid "Auto Download"
 msgstr "Automatikus letöltés"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:631
+msgid "Share feed"
+msgstr "Feed megosztása"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:637
 msgid "Settings"
 msgstr "Beállítások"
 
+#: ../../portable/frontends/widgets/itemlistwidgets.py:643
+msgid "Remove feed"
+msgstr "Feed eltávolítása"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:719
+msgid "Unwatched"
+msgstr "Nem megtekintett"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:730
+msgid "View|All"
+msgstr "Nézet|Mind"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:732
+msgid "Non Feed"
+msgstr "Nem Feed"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:742
+msgid "Name"
+msgstr "Név"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:745
+msgid "Time"
+msgstr "Idő"
+
+#: ../../portable/frontends/widgets/diagnostics.py:83
+msgid "Movies location:"
+msgstr "Filmek helye:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:87
+msgid "Icon cache location:"
+msgstr "Ikon gyorsítótár helye:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:91
+msgid "Log file location:"
+msgstr "Naplófájlok helye:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:95
+msgid "Downloader log file location:"
+msgstr "Letöltő logfájlok helye:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:99
+msgid "Database file location:"
+msgstr "Adatbázisfájl helye:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:106
+msgid "Space free on disk:"
+msgstr "Szabad hely a lemezen:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:108
+msgid "Database size:"
+msgstr "Adatbázis méret:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:110
+msgid "Total db objects in memory:"
+msgstr "Összes adatbázis objektum a memóriában:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:118
+#: ../../portable/menubar.py:276
+msgid "Diagnostics"
+msgstr "Diagnosztika"
+
+#: ../../portable/searchengines.py:172
+msgid "Search All"
+msgstr "Összes Keresése"
+
+#: ../../portable/messages.py:1078 ../../portable/item.py:1078
+msgid "queued for download"
+msgstr "letöltésre várakozik"
+
+#: ../../portable/messagehandler.py:1273
+msgid "Subscribed to new feed:"
+msgstr "Feliraktozott a feedre:"
+
+#: ../../portable/messagehandler.py:1276
+msgid "Subscribed to new feeds:"
+msgstr "Feliratkozott a feedekre:"
+
 #: ../../portable/startup.py:97
 msgid "Unknown Error"
 msgstr "Ismeretlen hiba"
+
+#: ../../portable/startup.py:99
+#, python-format
+msgid ""
+"An unknown error prevented %(appname)s from startup.  Please file a bug "
+"report at %(url)s."
+msgstr ""
+"Egy ismeretlen hiba megakadályozta a %(appname)s programot az indulásban. "
+"Kérem jelentse a hibát ezen a címen: %(url)s"
 
 #: ../../portable/startup.py:179
 msgid "Database too new"
 msgstr "Az adatbázis túl új"
 
+#: ../../portable/startup.py:181
+#, python-format
+msgid ""
+"You have a database that was saved with a newer version of %(appname)s. You "
+"must download the latest version of %(appname)s and run that."
+msgstr ""
+"Az adatbázis a %(appname)s egy újabb verziójával volt elmentve. Le kell "
+"töltenie a %(appname)s legújabb verzióját a használatához."
+
 #: ../../portable/commandline.py:99
 msgid "Subscription error"
 msgstr "Feliratkozási hiba"
 
+#: ../../portable/commandline.py:109
+#, python-format
+msgid ""
+"This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
+"the publisher of this file."
+msgstr ""
+"A %(appname)s feed fájl formátuma nem érvényes: %(url)s Értesítse a fájl "
+"készítőjét."
+
+#: ../../portable/commandline.py:119
+#, python-format
+msgid ""
+"This %(appname)s feed file has the wrong content type: %(url)s. Please "
+"notify the publisher of this file."
+msgstr ""
+"A %(appname)s feed fájl tartalma hibás: %(url)s Értesítse a fájl készítőjét."
+
+#: ../../portable/commandline.py:127
+#, python-format
+msgid "Could not download the %(appname)s feed file: %(url)s"
+msgstr "Nem lehet letölteni a %(appname)s feed fájlt: %(url)s"
+
 #: ../../portable/commandline.py:179
 msgid "Invalid Torrent"
 msgstr "Érvénytelen Torrent"
+
+#: ../../portable/commandline.py:181
+#, python-format
+msgid ""
+"The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+"[OK]"
+msgstr "A torrent fájl %(filename)s hibás és nem lehet megnyitni. [OK]"
 
 #: ../../portable/downloader.py:258
 msgid "activity"
@@ -501,6 +2001,11 @@ msgstr "indítás"
 msgid "Error loading feed"
 msgstr "Hiba a műsor betöltése közben"
 
+#: ../../portable/feed.py:938
+#, python-format
+msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
+msgstr "Nem lehet megnyitni a feedet %(url)s (%(errordescription)s)."
+
 #: ../../portable/feed.py:941
 msgid "Would you like to keep the feed?"
 msgstr "Szeretné megőrizni a műsort?"
@@ -508,6 +2013,37 @@ msgstr "Szeretné megőrizni a műsort?"
 #: ../../portable/feed.py:1066
 msgid "Bad content-type"
 msgstr "Rossz tartalom típus"
+
+#: ../../portable/feed.py:1079
+#, python-format
+msgid "Channel is not compatible with %(appname)s"
+msgstr "A csatorna nem compatibilis a %(appname)s programmal."
+
+#: ../../portable/feed.py:1082
+#, python-format
+msgid ""
+"This channel is not compatible with %(appname)s but we'll try our best to "
+"grab the files.  It may take extra time to list the videos, and descriptions "
+"may look funny.\n"
+"\n"
+"Please contact the publishers of %(url)s and ask if they can supply a feed "
+"in a format that will work with %(appname)s.\n"
+"\n"
+"Do you want to try to load this channel anyway?"
+msgstr ""
+"Ez a csatorna nem kompatibilis a %(appname)s programmal, de mindent "
+"megteszünk a fájlok letöltéséért. Több időbe telhet listázni a videókat és "
+"leírásokat és viccesen is nézhetnek ki. \n"
+"\n"
+"Vedd fel a kapcsolatot a  %(url)s készítőjével és kérd meg, hogy tegyenek "
+"közzé kompatibilis feedet.\n"
+"\n"
+"Biztosan be szeretnéd tölteni ezt a csatornát?"
+
+#: ../../portable/feed.py:1683
+#, python-format
+msgid "Search All: %(text)s"
+msgstr "Összes Keresése: %(text)s"
 
 #: ../../portable/feed.py:2264 ../../portable/feed.py:2415
 msgid "Local Files"
@@ -521,9 +2057,17 @@ msgstr "Fájl lejátszása"
 msgid "Ok"
 msgstr "Ok"
 
+#: ../../portable/dialogs.py:86
+msgid "Done"
+msgstr "Kész"
+
 #: ../../portable/dialogs.py:89
 msgid "Quit"
 msgstr "Kilépés"
+
+#: ../../portable/dialogs.py:90
+msgid "Continue"
+msgstr "Folytatás"
 
 #: ../../portable/dialogs.py:91
 msgid "Ignore"
@@ -565,6 +2109,14 @@ msgstr "Videók törlése"
 msgid "Create"
 msgstr "Létrehoz"
 
+#: ../../portable/dialogs.py:102
+msgid "Create Feed"
+msgstr "Feed Létrehozása"
+
+#: ../../portable/dialogs.py:103
+msgid "Create Folder"
+msgstr "Mappa létrehozása"
+
 #: ../../portable/dialogs.py:105
 msgid "Add Into New Folder"
 msgstr "Hozzáadás új mappába"
@@ -585,9 +2137,21 @@ msgstr "Miro indítása"
 msgid "Download Anyway"
 msgstr "Letöltés mindenképpen"
 
+#: ../../portable/dialogs.py:113
+msgid "Open in External Browser"
+msgstr "Megnyitás Külső Böngészőben"
+
 #: ../../portable/dialogs.py:114
 msgid "Don't Install"
 msgstr "Ne telepítse"
+
+#: ../../portable/dialogs.py:115
+msgid "Subscribe"
+msgstr "Feliratkozás"
+
+#: ../../portable/dialogs.py:116
+msgid "Stop Watching"
+msgstr "Megállítás"
 
 #: ../../portable/singleclick.py:54
 msgid "Download already exists"
@@ -596,6 +2160,11 @@ msgstr "A letöltendő fájl már létezik"
 #: ../../portable/singleclick.py:55
 msgid "That URL is already an external download."
 msgstr "Ez az URL már egy külső állományra mutat."
+
+#: ../../portable/singleclick.py:61
+#, python-format
+msgid "%(appname)s will begin downloading it now."
+msgstr "A %(appname)s elkezdi a letöltést."
 
 #: ../../portable/singleclick.py:64
 msgid "It is downloading now."
@@ -609,14 +2178,47 @@ msgstr "Már letöltődött."
 msgid "File Download"
 msgstr "Fájl letöltés"
 
+#: ../../portable/singleclick.py:97
+#, python-format
+msgid ""
+"This file at %(url)s does not appear to be audio, video, or an RSS feed."
+msgstr "A fájl %(url)s nem tűnik audió, videó vagy RSS feednek."
+
 #: ../../portable/singleclick.py:137
 msgid "Download Error"
 msgstr "Letöltési hiba"
+
+#: ../../portable/singleclick.py:139
+#, python-format
+msgid ""
+"%(appname)s is not able to download a file at this URL:\n"
+"\n"
+"URL: %(url)s"
+msgstr ""
+"%(appname)s nem képes letölteni ezt:\n"
+"\n"
+"URL: %(url)s"
+
+#: ../../portable/dl_daemon/download.py:628
+#, python-format
+msgid "Could not write to %(filename)s"
+msgstr "Nem lehet írni: %(filename)s"
 
 #: ../../portable/dl_daemon/download.py:653
 #: ../../portable/dl_daemon/download.py:870
 msgid "Not enough disk space"
 msgstr "Nincs elég lemezterület"
+
+#: ../../portable/dl_daemon/download.py:654
+#: ../../portable/dl_daemon/download.py:871
+#, python-format
+msgid "%(amount)s MB required to store this video"
+msgstr "%(amount)s MB szükséges a videó tárolásához."
+
+#: ../../portable/dl_daemon/download.py:669
+#, python-format
+msgid "Couldn't open %(filename)s for writing"
+msgstr "%(filename)s nem lehet megnyitni íráshoz."
 
 #: ../../portable/dl_daemon/download.py:889
 msgid "BitTorrent failure"
@@ -630,17 +2232,60 @@ msgstr "A BitTorrent indítása sikertelen"
 msgid "Corrupt Torrent"
 msgstr "Hibás Torrent"
 
+#: ../../portable/dl_daemon/download.py:1079
+#, python-format
+msgid "The torrent file at %(url)s was not valid"
+msgstr "A torrent fájl %(url)s nem érvényes"
+
 #: ../../portable/dl_daemon/download.py:1103
 msgid "Torrent file deleted"
 msgstr "Torrent fájl törölve"
+
+#: ../../portable/dl_daemon/download.py:1104
+#, python-format
+msgid "The torrent file for this item was deleted outside of %(appname)s."
+msgstr ""
+"A torrent fájl ehhez az elemhez a %(appname)s programon kívül törölve lett."
 
 #: ../../portable/menubar.py:184
 msgid "_Open"
 msgstr "_Megynyitás..."
 
+#: ../../portable/menubar.py:185
+msgid "_Download Item"
+msgstr "_Elem Letöltése"
+
 #: ../../portable/menubar.py:186
 msgid "Check _Version"
 msgstr "Verzió_Ellenőrzés"
+
+#: ../../portable/menubar.py:188
+msgid "_Remove Item"
+msgstr "_Elem Törlése"
+
+#: ../../portable/menubar.py:189
+msgid "_Remove Items"
+msgstr "_Elemek Eltávolítása"
+
+#: ../../portable/menubar.py:190
+msgid "Re_name Item"
+msgstr "Elemek Átnevezése"
+
+#: ../../portable/menubar.py:191
+msgid "Save Item _As"
+msgstr "Elem Mentése Másként"
+
+#: ../../portable/menubar.py:192
+msgid "Save Items _As"
+msgstr "Elemek Mentése Másként"
+
+#: ../../portable/menubar.py:193
+msgid "Copy Item _URL"
+msgstr "Elem Címének Másolása"
+
+#: ../../portable/menubar.py:195
+msgid "_Options"
+msgstr "Beállítás_ok"
 
 #: ../../portable/menubar.py:196
 msgid "_Quit"
@@ -662,6 +2307,58 @@ msgstr "_Beillesztés"
 msgid "Select _All"
 msgstr "Mindent kijelöl"
 
+#: ../../portable/menubar.py:212
+msgid "Add _Feed"
+msgstr "_Feed Hozzáadása"
+
+#: ../../portable/menubar.py:214
+msgid "New Searc_h Feed"
+msgstr "Új _Kereső Feed"
+
+#: ../../portable/menubar.py:215
+msgid "New _Folder"
+msgstr "Új _Mappa"
+
+#: ../../portable/menubar.py:217
+msgid "Re_name"
+msgstr "Át_nevezés"
+
+#: ../../portable/menubar.py:218
+msgid "_Remove"
+msgstr "_Törlés"
+
+#: ../../portable/menubar.py:219
+msgid "_Remove Folder"
+msgstr "Map_pa Eltávolítása"
+
+#: ../../portable/menubar.py:221
+msgid "_Update Feed"
+msgstr "Feed _Frissítése"
+
+#: ../../portable/menubar.py:222
+msgid "_Update Feeds"
+msgstr "_Feedek Frissítése"
+
+#: ../../portable/menubar.py:223
+msgid "Update _All Feeds"
+msgstr "_Összes Feed Frissítése"
+
+#: ../../portable/menubar.py:225
+msgid "_Import Feeds (OPML)"
+msgstr "Feedek _Importálása (OPML)"
+
+#: ../../portable/menubar.py:226
+msgid "E_xport Feeds (OPML)"
+msgstr "Feedek E_xportálása (OPML)"
+
+#: ../../portable/menubar.py:228
+msgid "_Share with a Friend"
+msgstr "Megosztás _Baráttal"
+
+#: ../../portable/menubar.py:229
+msgid "Copy URL"
+msgstr "URL Másolása"
+
 #: ../../portable/menubar.py:233
 msgid "New _Playlist"
 msgstr "Új lejátszási lista"
@@ -673,6 +2370,22 @@ msgstr "Új lejátszási lista könyvtár"
 #: ../../portable/menubar.py:236
 msgid "Re_name Playlist"
 msgstr "Lejátszási lista át_nevezése"
+
+#: ../../portable/menubar.py:237
+msgid "_Remove Playlist"
+msgstr "_Lejátszásilista Eltávolítása"
+
+#: ../../portable/menubar.py:238
+msgid "_Remove Playlists"
+msgstr "_Lejátszásilisták Eltávolítása"
+
+#: ../../portable/menubar.py:239
+msgid "_Remove Playlist Folders"
+msgstr "_Lejátszásilista Mappák Eltávolítása"
+
+#: ../../portable/menubar.py:240
+msgid "_Remove Playlist Folder"
+msgstr "_Lejátszásilista Mappa Eltávolítása"
 
 #: ../../portable/menubar.py:251 ../../portable/menubar.py:252
 msgid "_Play"
@@ -714,6 +2427,15 @@ msgstr "Hangerő _Csökkentés"
 msgid "_Fullscreen"
 msgstr "_Teljes képernyő"
 
+#: ../../portable/menubar.py:266
+msgid "_Toggle Detached/Attached"
+msgstr "Csatlakoztatott/Nem csatlakoztatott _Váltása"
+
+#: ../../portable/menubar.py:270
+#, python-format
+msgid "_About %(name)s"
+msgstr "%(name)s _Névjegye"
+
 #: ../../portable/menubar.py:272
 msgid "_Donate"
 msgstr "_Támogatás"
@@ -730,6 +2452,10 @@ msgstr "Hi_ba jelentése"
 msgid "_Translate"
 msgstr "_Fordít"
 
+#: ../../portable/menubar.py:282
+msgid "_Planet Miro"
+msgstr "_Miro Bolygó"
+
 #: ../../portable/menubar.py:286
 msgid "_Video"
 msgstr "_Videó"
@@ -737,6 +2463,10 @@ msgstr "_Videó"
 #: ../../portable/menubar.py:288
 msgid "_File"
 msgstr "_Fálj"
+
+#: ../../portable/menubar.py:294
+msgid "_Sidebar"
+msgstr "_Oldalsáv"
 
 #: ../../portable/menubar.py:295
 msgid "_Playlists"
@@ -771,6 +2501,39 @@ msgstr "%(size)s B"
 msgid "Enter a new name for the playlist %s"
 msgstr "Írja be a(z) %s lejátszólista új nevét"
 
+#: ../../portable/item.py:897
+#, python-format
+msgid "%(count)d day"
+msgid_plural "%(count)d days"
+msgstr[0] "%(count)d nap"
+msgstr[1] "%(count)d nap"
+
+#: ../../portable/item.py:902
+#, python-format
+msgid "%(count)d hour"
+msgid_plural "%(count)d hours"
+msgstr[0] "%(count)d óra"
+msgstr[1] "%(count)d óra"
+
+#: ../../portable/item.py:907
+#, python-format
+msgid "%(count)d minute"
+msgid_plural "%(count)d minutes"
+msgstr[0] "%(count)d perc"
+msgstr[1] "%(count)d perc"
+
+#: ../../portable/item.py:1165
+msgid "no title"
+msgstr "nincs cím"
+
+#: ../../portable/item.py:1211
+msgid "Contents appear in the library"
+msgstr "A tartalmak a gyűjteményben látszanak"
+
+#: ../../portable/item.py:1216
+msgid "Contents:"
+msgstr "Tartalom:"
+
 #: ../../portable/item.py:1442
 msgid "starting up..."
 msgstr "indítás..."
@@ -795,22 +2558,186 @@ msgid_plural "Successfully imported %(count)d feeds."
 msgstr[0] "Sikeresen importált %(count)d elemet."
 msgstr[1] "Sikeresen importált %(count)d elemet."
 
+#: ../../portable/opml.py:208
+#, python-format
+msgid "Skipped %(count)d feed already present."
+msgid_plural "Skipped %(count)d feeds already present."
+msgstr[0] "%(count)d feed már megvan."
+msgstr[1] "%(count)d feed már megvan."
+
 #: ../../portable/theme.py:174
 msgid "Example Playlist"
 msgstr "Minta Lejátszási lista"
 
-#: ../../platform/osx/plat/frontends/widgets/application.py:169
+#: ../../portable/displaytext.py:52
+#, python-format
+msgid "%(size)s gb/s"
+msgstr "%(size)s gb/s"
+
+#: ../../portable/displaytext.py:55
+#, python-format
+msgid "%(size)s mb/s"
+msgstr "%(size)s mb/s"
+
+#: ../../portable/displaytext.py:58
+#, python-format
+msgid "%(size)s kb/s"
+msgstr "%(size)s kb/s"
+
+#: ../../portable/displaytext.py:61
+#, python-format
+msgid "%(size)s b/s"
+msgstr "%(size)s b/s"
+
+#: ../../portable/displaytext.py:68
+#, python-format
+msgid "%(num).0f day"
+msgid_plural "%(num).0f days"
+msgstr[0] "%(num).0f nap"
+msgstr[1] "%(num).0f nap"
+
+#: ../../portable/displaytext.py:71
+#, python-format
+msgid "%(num).0f hr"
+msgid_plural "%(num).0f hrs"
+msgstr[0] "%(num).0f óra"
+msgstr[1] "%(num).0f óra"
+
+#: ../../portable/displaytext.py:74
+#, python-format
+msgid "%(num).0f min"
+msgid_plural "%(num).0f mins"
+msgstr[0] "%(num).0f perc"
+msgstr[1] "%(num).0f perc"
+
+#: ../../portable/displaytext.py:76
+#, python-format
+msgid "%(num)d sec"
+msgid_plural "%(num)d secs"
+msgstr[0] "%(num)d másodperc"
+msgstr[1] "%(num)d másodperc"
+
+#: ../../portable/displaytext.py:90
+#, python-format
+msgid "%(size)s gb"
+msgstr "%(size)s gb"
+
+#: ../../portable/displaytext.py:93
+#, python-format
+msgid "%(size)s mb"
+msgstr "%(size)s mb"
+
+#: ../../portable/displaytext.py:96
+#, python-format
+msgid "%(size)s kb"
+msgstr "%(size)s kb"
+
+#: ../../portable/displaytext.py:98
+#, python-format
+msgid "%(size)s b"
+msgstr "%(size)s b"
+
+#: ../../portable/displaytext.py:103
+#, python-format
+msgid "Expires in %(count)d day"
+msgid_plural "Expires in %(count)d days"
+msgstr[0] "%(count)d nap múlva lejár"
+msgstr[1] "%(count)d nap múlva lejár"
+
+#: ../../portable/displaytext.py:108
+#, python-format
+msgid "Expires in %(count)d hour"
+msgid_plural "Expires in %(count)d hours"
+msgstr[0] "%(count)d óra múlva lejár"
+msgstr[1] "%(count)d óra múlva lejár"
+
+#: ../../portable/displaytext.py:113
+#, python-format
+msgid "Expires in %(count)d minute"
+msgid_plural "Expires in %(count)d minutes"
+msgstr[0] "%(count)d perc múlva lejár"
+msgstr[1] "%(count)d perc múlva lejár"
+
+#: ../../portable/displaytext.py:121
+#, python-format
+msgid "Expires: %(count)d day"
+msgid_plural "Expires: %(count)d days"
+msgstr[0] "Lejár: %(count)d nap"
+msgstr[1] "Lejár: %(count)d nap"
+
+#: ../../portable/displaytext.py:126
+#, python-format
+msgid "Expires: %(count)d hour"
+msgid_plural "Expires: %(count)d hours"
+msgstr[0] "Lejár: %(count)d óra"
+msgstr[1] "Lejár: %(count)d óra"
+
+#: ../../portable/displaytext.py:131
+#, python-format
+msgid "Expires: %(count)d minute"
+msgid_plural "Expires: %(count)d minutes"
+msgstr[0] "Lejár: %(count)d perc"
+msgstr[1] "Lejár: %(count)d perc"
+
+#: ../../portable/displaytext.py:142
+#, python-format
+msgid "%(month)s %(dayofmonth)s, %(year)s"
+msgstr "%(year)s %(month)s %(dayofmonth)s"
+
+#: ../../portable/storedatabase.py:449
+#, python-format
+msgid "%(appname)s database save failed"
+msgstr "%(appname)s adatbázisának mentése sikertelen"
+
+#: ../../portable/storedatabase.py:452
+#, python-format
+msgid ""
+"%(appname)s was unable to save its database: Disk Full.\n"
+"We suggest deleting files from the full disk or simply deleting some movies "
+"from your collection.\n"
+"Recent changes may be lost."
+msgstr ""
+"%(appname)s nem tudta elmenteni az adatbázisát: A lemez tele van.\n"
+"Azt ajánljuk, hogy töröljön néhány fájlt a lemezről vagy egyszerűen töröljön "
+"néhány filmet a gyűjteményéből.\n"
+"Az utolsó változások elveszhettek."
+
+#: ../../portable/storedatabase.py:464
+#, python-format
+msgid "%(appname)s database save succeeded"
+msgstr "%(appname)s adatbázisának mentése sikerült"
+
+#: ../../portable/storedatabase.py:467
+msgid ""
+"The database has been successfully saved. It is now safe to quit without "
+"losing any data."
+msgstr "Az adatbázis mentése befejeződött. Most már nyugodtan kiléphet."
+
+#: ../../platform/osx/plat/frontends/widgets/application.py:171
 msgid "Download Completed"
 msgstr "Letöltés Kész"
 
-#: ../../platform/osx/plat/frontends/widgets/application.py:170
+#: ../../platform/osx/plat/frontends/widgets/application.py:172
 #, python-format
 msgid "Download of video '%s' is finished."
 msgstr "A(z) '%s' videó letöltése befejeződött."
 
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:199
+msgid "Pop Out"
+msgstr "Kiugrás"
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:202
+msgid "Pop In"
+msgstr "Beugrás"
+
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
 msgid "Services"
 msgstr "Szolgáltatások"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:141
+#, python-format
+msgid "Hide %(appname)s"
+msgstr "%(appname)s elrejtése"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:143
 msgid "Hide Others"
@@ -823,6 +2750,11 @@ msgstr "Mutasd mind"
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:149
 msgid "Preferences..."
 msgstr "Tulajdonságok..."
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:151
+#, python-format
+msgid "Quit %(appname)s"
+msgstr "Kilépés %(appname)s"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
 msgid "Close Window"
@@ -884,6 +2816,11 @@ msgstr "Hozd mind előre"
 msgid "Window"
 msgstr "Ablak"
 
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:195
+#, python-format
+msgid "%(appname)s Help"
+msgstr "%(appname)s Segítség"
+
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:39
 msgid "Enable tray icon"
@@ -893,9 +2830,24 @@ msgstr "Tálca ikon engedélyezése"
 msgid "Renderer options:"
 msgstr "Renderelés beállítások"
 
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
+#, python-format
+msgid "You must restart %(appname)s for renderer changes to take effect."
+msgstr ""
+"Újra kell indítani a %(appname)s programot a változások érvénybe lépéséhez."
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:74
+msgid "Video renderer:"
+msgstr "Videó renderelés:"
+
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
 msgid "Update Available"
 msgstr "Új Frissítés elérhető"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
+#, python-format
+msgid "A new version of %(appname)s is available for download."
+msgstr "A %(appname)s új verziója letölthető."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
@@ -905,9 +2857,31 @@ msgstr "Biztos benne hogy letölti most?"
 msgid "Install Adobe Flash?"
 msgstr "Telepítse az Adobe Flash-t ?"
 
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
+#, python-format
+msgid ""
+"For the best %(appname)s experience, we suggest you install Adobe Flash.  "
+"Would you like to do this now?"
+msgstr ""
+"A %(appname)s élményért, ajánlott az Adobe Flash telepítése.  Megteszi most?"
+
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
 msgstr "Adobe Flash telepítése"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
+#, python-format
+msgid ""
+"Your browser will load the web-site where you can download and install Adobe "
+"Flash.\n"
+"\n"
+"You should quit %(appname)s now and start it up again after Adobe Flash has "
+"been installed."
+msgstr ""
+"A böngésződ be fogja tölteni az oldalt ahonnan az Adobe Flash letölthető.\n"
+"\n"
+"Kiléphetsz és újra indíthatod a %(appname)s programot az Adobe Flash "
+"telepítése után."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
 msgid "When I click the red close button:"
@@ -917,9 +2891,23 @@ msgstr "Amikor a piros kilépés gombra kattintok:"
 msgid "Close to tray so that downloads can continue."
 msgstr "Lerakás tálcára, hogy a letöltések folytatódhassanak."
 
+#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
+#, python-format
+msgid "Quit %(appname)s completely."
+msgstr "%(appname)s teljes kiléptetése."
+
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:133
 msgid "Close to tray?"
 msgstr "Bezárás a tálcára?"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:134
+#, python-format
+msgid ""
+"When you click the red close button, would you like %(appname)s to close to "
+"the system tray or quit?  You can change this setting later in the Options."
+msgstr ""
+"Amikor a piros bezárás gombra kattintasz, a %(appname)s kilépjen vagy csak a "
+"tálcára kerüljön?  Ezt később a Beállításoknál módosíthatod."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:192
 msgid "Error Bombing Item"
@@ -933,1893 +2921,9 @@ msgstr "Hiba történt a tartalom ajánlásakor"
 msgid "Error Opening Website"
 msgstr "Hiba történt az oldal megnyitásakor"
 
-#~ msgid "By default, videos expire after:"
-#~ msgstr "A videó ennyi idő után avul el:"
-
-#: ../../portable/httpclient.py:89
-#, python-format
-msgid "Error: %(msg)s"
-msgstr "Hiba: %(msg)s"
-
-#: ../../portable/httpclient.py:105
-#, python-format
-msgid "Connection Error: %(msg)s"
-msgstr "Kapcsolódási Hiba: %(msg)s"
-
-#: ../../portable/httpclient.py:119
-#, python-format
-msgid "Bad Status Line: %(msg)s"
-msgstr "Érvénytelen státusz sor: %(msg)s"
-
-#: ../../portable/httpclient.py:124
-#, python-format
-msgid "Bad Header Line: %(msg)s"
-msgstr "Érvénytelen fejléc sor: %(msg)s"
-
-#: ../../portable/httpclient.py:129
-#, python-format
-msgid "Bad Chunk size: %(msg)s"
-msgstr "Érvénytelen darab méret: %(msg)s"
-
-#: ../../portable/httpclient.py:134
-#, python-format
-msgid "Expected CRLF got: %(character)r"
-msgstr "Várt CRLF, talált: %(character)r"
-
-#: ../../portable/httpclient.py:139
-#, python-format
-msgid "%(host)s closed connection"
-msgstr "%(host)s bontotta a kapcsolatot"
-
-#: ../../portable/httpclient.py:147
-#, python-format
-msgid "Bad Status Code: %(code)s"
-msgstr "Érvénytelen státusz kód: %(code)s"
-
-#: ../../portable/httpclient.py:163
-#, python-format
-msgid "Connection to %(host)s timed out"
-msgstr "Kapcsolat a %(host)s időtúllépés miatt lejárt"
-
-#: ../../portable/httpclient.py:168
-#, python-format
-msgid "\"%(url)s\" is not a valid URL"
-msgstr "\"%(url)s\" nem érvényes URL"
-
-#: ../../portable/httpclient.py:174
-#, python-format
-msgid "The file \"%(path)s\" doesn't exist"
-msgstr "A fájl \"%(path)s\" nem létezik"
-
-#: ../../portable/httpclient.py:179
-#, python-format
-msgid "Error while reading from \"%(path)s\""
-msgstr "Hiba történt a beolvasás közben \"%(path)s\""
-
-#: ../../portable/frontends/widgets/statictabs.py:113
-#: ../../portable/frontends/widgets/itemlistcontroller.py:528
-msgid "Other"
-msgstr "Egyéb"
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
-msgid "Add a Playlist"
-msgstr "Lejátszólista hozzáadása"
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
-msgid "Add items to an existing playlist or a new one."
-msgstr "Elemek hozzáadása egy létező lejátszólistához, vagy egy újhoz"
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
-msgid "Existing playlist:"
-msgstr "Létező lejátszólista"
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
-msgid "New playlist:"
-msgstr "Új lejátszólista"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:95
-msgid "Play Just This Item"
-msgstr "Csak ezt az elemet játszd le"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:96
-#: ../../portable/frontends/widgets/itemcontextmenu.py:192
-msgid "Add to Playlist"
-msgstr "Hozzáadás lejátszólistához"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:99
-#: ../../portable/frontends/widgets/application.py:495
-msgid "Rename Item"
-msgstr "Elem átnevezése"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:101
-msgid "Revert Item Name"
-msgstr "Elem nevének visszaállítása"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:103
-#: ../../portable/frontends/widgets/itemcontextmenu.py:199
-msgid "Mark as Unplayed"
-msgstr "Megjelölés lejátszatlanként"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:106
-#: ../../portable/frontends/widgets/itemcontextmenu.py:204
-msgid "Mark as Played"
-msgstr "Megjelölés lejátszottként"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:112
-msgid "Stop Seeding"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:114
-msgid "Resume Seeding"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:134
-#: ../../portable/frontends/widgets/style.py:240
-msgid "Web Page"
-msgstr "Weboldal"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:136
-#: ../../portable/frontends/widgets/style.py:236
-#: ../../portable/frontends/widgets/gtk/video.py:282
-msgid "Comments"
-msgstr "Megjegyzések"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:138
-msgid "License"
-msgstr "Licensz"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:141
-msgid "File in Browser"
-msgstr "Fájl böngésző"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:143
-#, python-format
-msgid "File in %(progname)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:145
-msgid "File on Disk"
-msgstr "Fájl a lemezen"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:148
-msgid "View"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:186
-#, python-format
-msgid "%(count)d Downloaded Item"
-msgid_plural "%(count)d Downloaded Items"
-msgstr[0] "%(count)d letöltött elem"
-msgstr[1] "%(count)d letöltött elemek"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:215
-#, python-format
-msgid "%(count)d Available Item"
-msgid_plural "%(count)d Available Items"
-msgstr[0] "%(count)d elérhető elem"
-msgstr[1] "%(count)d elérhető elemek"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:228
-#, python-format
-msgid "%(count)d Downloading Item"
-msgid_plural "%(count)d Downloading Items"
-msgstr[0] "%(count)d elem letöltés alatt"
-msgstr[1] "%(count)d elemek letöltés alatt"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:245
-#, python-format
-msgid "%(count)d Paused Item"
-msgid_plural "%(count)d Paused Items"
-msgstr[0] "%(count)d szüneltetett elem"
-msgstr[1] "%(count)d szüneltetett elemek"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:58
-#, python-format
-msgid "%(count)d hour ago"
-msgid_plural "%(count)d hours ago"
-msgstr[0] "%(count)d órával ezelőtt"
-msgstr[1] "%(count)d órával ezelőtt"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:64
-#, python-format
-msgid "%(count)d day ago"
-msgid_plural "%(count)d days ago"
-msgstr[0] "%(count)d nappal ezelőtt"
-msgstr[1] "%(count)d nappal ezelőtt"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:70
-#, python-format
-msgid "%(count)d month ago"
-msgid_plural "%(count)d months ago"
-msgstr[0] "%(count)d hónappal ezelőtt"
-msgstr[1] "%(count)d hónappal ezelőtt"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:92
-msgid "Auto-Expire Videos:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:95
-#, python-format
-msgid "Watched %(expiration)s (Default)"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:97
-msgid "Watched 1 day ago"
-msgstr "Megtekintve 1 napja"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:98
-msgid "Watched 3 days ago"
-msgstr "Megtekintve 3 napja"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:99
-msgid "Watched 6 days ago"
-msgstr "Megtekintve 6 napja"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:100
-msgid "Watched 10 days ago"
-msgstr "Megtekintve 10 napja"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:101
-msgid "Watched 1 month ago"
-msgstr "Megtekintve 1 hónapja"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:137
-msgid "Outdated Feed Items:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:139
-#, python-format
-msgid "Keep %(number)s (Default)"
-msgstr "%(number)s megtartása (Alapértelmezett)"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:141
-msgid "Keep 0"
-msgstr "0 megtartása"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:142
-msgid "Keep 20"
-msgstr "20 megtartása"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:143
-msgid "Keep 50"
-msgstr "50 megtartása"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:144
-msgid "Keep 100"
-msgstr "100 megtartása"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:145
-msgid "Keep 1000"
-msgstr "1000 megtartása"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:169
-msgid "Remove All"
-msgstr "Összes eltávolítása"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:182
-msgid "Old items have been removed."
-msgstr "Régi elemek eltávolításra kerültek"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:193
-msgid "Pause Auto-Downloading when this many items are unplayed:"
-msgstr "Automatikus letöltés szüneteltetése ha ennyi nem játszott elem van:"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:197
-msgid "1 unplayed item"
-msgstr "1 nem játszott elem"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:198
-msgid "3 unplayed items"
-msgstr "3 nem játszott elem"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:199
-msgid "5 unplayed items"
-msgstr "5 nem játszott elem"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:200
-msgid "10 unplayed items"
-msgstr "10 nem játszott elem"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:201
-msgid "15 unplayed items"
-msgstr "15 nem játszott elem"
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:241
-msgid "Feed Settings"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:63
-#, python-format
-msgid "%(name)s First Time Setup"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:122
-#, python-format
-msgid "Welcome to the %(name)s First Time Setup"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:126
-#, python-format
-msgid ""
-"The next few screens will help you set up %(name)s so that it works best for "
-"you.\n"
-"\n"
-"We recommend that you have %(name)s launch when your computer starts up.  "
-"This way, downloads in progress can finish downloading and new media files "
-"can be downloaded in the background, ready when you want to watch."
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:138
-#, python-format
-msgid "Would you like to run %(name)s on startup?"
-msgstr "Szeretné, ha %(name)s futna a rendszer indulásakor?"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:153
-msgid "Next >"
-msgstr "Következő >"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:163
-#, python-format
-msgid "Completing the %(name)s First Time Setup"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:167
-#, python-format
-msgid ""
-"%(name)s can find all the media files on your computer to help you organize "
-"your collection.\n"
-"\n"
-"Would you like %(name)s to look for media files on your computer?"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:186
-msgid "Search custom folders:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:197
-msgid "Choose directory to search for media files"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:211
-#: ../../portable/frontends/widgets/firsttimedialog.py:290
-msgid "< Previous"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:273
-msgid "Searching for media files"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:321
-#, python-format
-msgid "parsed %(count)s file"
-msgid_plural "parsed %(count)s files"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:326
-#, python-format
-msgid "found %(count)s media file"
-msgid_plural "found %(count)s media files"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/crashdialog.py:54
-#, python-format
-msgid ""
-"%(appname)s has encountered an internal error.  You can help us track down "
-"this problem and fix it by submitting an error report."
-msgstr ""
-
-#: ../../portable/frontends/widgets/crashdialog.py:63
-msgid ""
-"Include entire program database including all video and feed metadata with "
-"crash report"
-msgstr ""
-
-#: ../../portable/frontends/widgets/crashdialog.py:68
-msgid "Describe what you were doing when you got this error:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:232
-msgid "From"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:233
-msgid "File name:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:234
-msgid "Show More"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:235
-msgid "Show Less"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:238
-#, python-format
-msgid "Reveal in %(progname)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:238
-#: ../../portable/frontends/widgets/displays.py:390
-msgid "Reveal File"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:239
-msgid "Display Contents"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:241
-msgid "File URL"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:242
-msgid "License Page"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:243
-msgid "File Type"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:244
-msgid "Seeders"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:245
-msgid "Leechers"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:246
-msgid "Upload Rate"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:247
-msgid "Upload Total"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:248
-msgid "Down Rate"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:253
-msgid "queued for autodownload"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:254
-#: ../../portable/frontends/widgets/style.py:1153
-#: ../../portable/frontends/widgets/itemlistwidgets.py:721
-msgid "Unplayed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:255
-msgid "Currently Playing"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:256
-#: ../../portable/frontends/widgets/style.py:1171
-msgid "Newly Available"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:259
-msgid "Stop seeding"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:571
-#: ../../portable/frontends/widgets/style.py:1164
-msgid "paused"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:1034
-msgid "Remove from playlist"
-msgstr ""
-
-#: ../../portable/frontends/widgets/displays.py:372
-#, python-format
-msgid ""
-"%(appname)s can't play this file.  You may be able to open it with a "
-"different program"
-msgstr ""
-
-#: ../../portable/frontends/widgets/displays.py:393
-msgid "Skip"
-msgstr ""
-
-#: ../../portable/frontends/widgets/displays.py:430
-msgid "Open Externally"
-msgstr ""
-
-#: ../../portable/frontends/widgets/displays.py:536
-#, python-format
-msgid "%(count)d Feed Folder Selected"
-msgid_plural "%(count)d Feed Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/displays.py:541
-#, python-format
-msgid "(contains %(count)d feed)"
-msgid_plural "(contains %(count)d feeds)"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/displays.py:547
-#, python-format
-msgid "%(count)d Playlist Folder Selected"
-msgid_plural "%(count)d Playlist Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/displays.py:552
-#, python-format
-msgid "(contains %(count)d playlist)"
-msgid_plural "(contains %(count)d playlist)"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/displays.py:562
-#, python-format
-msgid "%(count)d Feed Selected"
-msgid_plural "%(count)d Feeds Selected"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/displays.py:568
-#, python-format
-msgid "%(count)d Site Selected"
-msgid_plural "%(count)d Sites Selected"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/displays.py:574
-#, python-format
-msgid "%(count)d Playlist Selected"
-msgid_plural "%(count)d Playlists Selected"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/browser.py:96
-msgid "Open in browser"
-msgstr ""
-
-#: ../../portable/frontends/widgets/browser.py:102
-msgid "Download this video"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:156
-msgid "Movies directory gone"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:158
-#, python-format
-msgid ""
-"%(shortappname)s can't find the primary video directory located at:\n"
-"\n"
-"%(moviedirectory)s\n"
-"\n"
-"This may be because it is located on an external drive that is not "
-"connected.\n"
-"\n"
-"If you continue, the primary video directory will be reset to a location on "
-"this drive.  If you had videos downloaded this will cause %(shortappname)s "
-"to lose details about those videos.\n"
-"\n"
-"If you quit, then you can connect the drive or otherwise fix the problem and "
-"relaunch %(shortappname)s."
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:326
-msgid "Error Revealing File"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:327
-#, python-format
-msgid "The file %(filename)s was deleted from outside %(appname)s."
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:335
-msgid "Open Files..."
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:346
-#: ../../portable/frontends/widgets/application.py:351
-msgid "Open Files - Error"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:347
-#: ../../portable/frontends/widgets/application.py:634
-#, python-format
-msgid "File %(filename)s does not exist."
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:352
-msgid "The following files do not exist:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:389
-msgid "New Download"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:390
-msgid "Enter the URL of the item to download"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:391
-msgid "New Download - Invalid URL"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:392
-msgid ""
-"The address you entered is not a valid url.\n"
-"Please check the URL and try again.\n"
-"\n"
-"Enter the URL of the item to download"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:400
-#, python-format
-msgid "%(appname)s is up to date"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:402
-#, python-format
-msgid "%(appname)s is up to date!"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:426
-msgid "Remove item"
-msgid_plural "Remove items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:430
-msgid ""
-"One of these items was not downloaded from a feed. Would you like to delete "
-"it or just remove it from the Library?"
-msgid_plural ""
-"Some of these items were not downloaded from a feed. Would you like to "
-"delete them or just remove them from the Library?"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:440
-msgid ""
-"One of these items is a folder.  Delete/Removeing a folder will "
-"delete/remove it's contents"
-msgid_plural ""
-"Some of these items are folders.  Delete/Removeing a folder will "
-"delete/remove it's contents"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:455
-#, python-format
-msgid "Are you sure you want to delete the item?"
-msgid_plural "Are you sure you want to delete all %(count)d items?"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:462
-msgid ""
-"One of these items is a folder.  Deleting a folder will delete it's contents"
-msgid_plural ""
-"Some of these items are folders.  Deleting a folder will delete it's contents"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:496
-msgid "Enter the new name for the item"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:519
-msgid "Save Item As..."
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:572
-#: ../../portable/menubar.py:213
-msgid "Add Site"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:573
-msgid "Enter the URL of the site to add"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:574
-msgid "Add Site - Invalid URL"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:575
-msgid ""
-"The address you entered is not a valid url.\n"
-"Please check the URL and try again.\n"
-"\n"
-"Enter the URL of the site to add"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:633
-msgid "Import OPML File - Error"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:707
-#: ../../portable/frontends/widgets/tablist.py:579
-msgid "Rename Feed Folder"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:708
-#, python-format
-msgid "Enter a new name for the feed folder %(name)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:712
-msgid "Rename Feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:713
-#, python-format
-msgid "Enter a new name for the feed %(name)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:718
-#, python-format
-msgid "Enter a new name for the playlist %(name)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:723
-#, python-format
-msgid "Enter a new name for the playlist folder %(name)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:726
-#: ../../portable/frontends/widgets/tablist.py:529
-msgid "Rename Site"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:727
-#, python-format
-msgid "Enter a new name for the site %(name)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:751
-msgid "Remove playlist"
-msgid_plural "Remove playlists"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:753
-#, python-format
-msgid "Are you sure you want to remove this playlist?"
-msgid_plural "Are you sure you want to remove these %(count)s playlists?"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:770
-msgid "Remove site"
-msgid_plural "Remove sites"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:772
-#, python-format
-msgid "Are you sure you want to remove this site?"
-msgid_plural "Are you sure you want to remove these %(count)s sites?"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:804
-#, python-format
-msgid "You have %(count)d download in progress.  Quit anyway?"
-msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/application.py:1106
-msgid "Message"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:1131
-msgid "Migrating Files"
-msgstr ""
-
-#: ../../portable/frontends/widgets/application.py:1141
-msgid "Migrating files"
-msgstr ""
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:90
-msgid "Single and external downloads"
-msgstr ""
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:93
-msgid "Feed downloads"
-msgstr ""
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:96
-msgid "Seeding"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:267
-#, python-format
-msgid "Automatically run %(appname)s when I log in."
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:271
-msgid "Warn me if I attempt to quit with downloads in progress."
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:297
-msgid "0"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:298
-msgid "20"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:299
-msgid "50"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:300
-msgid "100"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:301
-msgid "1000"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:307
-msgid "Default settings for new feeds:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:311
-msgid "(These can be changed using the feed's settings button)"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:315
-msgid "Check for new content:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:320
-msgid "Auto download setting:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:326
-msgid "Remember this many old items:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:327
-msgid "(in addition to the current contents)"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:340
-msgid "Maximum number of manual downloads at a time:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:347
-msgid "Maximum number of auto-downloads at a time:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:357
-msgid "Bittorrent:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:360
-msgid "Limit upstream bandwidth to:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:372
-msgid "Limit downstream bandwidth to:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:383
-msgid "Limit torrent connections to:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:400
-msgid "Starting port:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:404
-msgid "Ending port:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:410
-msgid "Automatically forward ports.  (UPNP)"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:414
-msgid "Ignore unencrypted connections."
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:440
-msgid "Choose Movies Directory"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:454
-#, python-format
-msgid ""
-"You've selected a new folder to download movies to.  Should %(appname)s "
-"migrate your existing downloads there? (Currently downloading movies will "
-"not be moved until they finish.)"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:523
-msgid "Add Watched Folder"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:549
-msgid ""
-"Watch for new video and audio items in these folders and include them in "
-"library:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:590
-msgid "By default, video and audio items expire after:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:599
-msgid "Always play videos in a separate window."
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:603
-msgid ""
-"Resume playing a video or audio item from the point it was last stopped."
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:608
-msgid "Play video and audio items one after another"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:609
-msgid "Stop after each video or audio item"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:621
-msgid "Feeds"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:624
-msgid "Disk space"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:58
-msgid "New Search Feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:59
-msgid "A search feed contains items that match a search term."
-msgstr ""
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:88
-msgid "Feed:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:93
-msgid "Search engine:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:133
-msgid "Add new feed to this section:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:136
-#: ../../portable/frontends/widgets/newfolder.py:71
-#: ../../portable/frontends/widgets/newfeed.py:72
-msgid "video"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:137
-#: ../../portable/frontends/widgets/newfolder.py:72
-#: ../../portable/frontends/widgets/newfeed.py:73
-msgid "audio"
-msgstr ""
-
-#: ../../portable/frontends/widgets/linkhandler.py:54
-msgid "Subscribe to Feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/linkhandler.py:56
-#, python-format
-msgid ""
-"This link appears to be a feed.  Do you want to add it to your "
-"subscriptions?\n"
-"\n"
-"%(url)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfolder.py:60
-msgid "Folder name:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfolder.py:69
-msgid "Folder should go in this section:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfolder.py:109
-#: ../../portable/frontends/widgets/newfolder.py:111
-msgid "Create Feed Folder"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfolder.py:112
-msgid "Enter the name of the folder to add"
-msgstr ""
-
-#: ../../portable/frontends/widgets/playlist.py:146
-msgid "This Playlist is Empty"
-msgstr ""
-
-#: ../../portable/frontends/widgets/playlist.py:149
-msgid ""
-"To add an item, drag it onto the name of this playlist in the sidebar."
-msgstr ""
-
-#: ../../portable/frontends/widgets/removefeeds.py:49
-msgid "Remove Feed"
-msgid_plural "Remove Feeds"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/removefeeds.py:57
-msgid "Are you sure you want to remove this feed:"
-msgid_plural "Are you sure you want to remove these feeds:"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/removefeeds.py:84
-msgid "Keep items that have been downloaded in my library."
-msgstr ""
-
-#: ../../portable/frontends/widgets/removefeeds.py:89
-#, python-format
-msgid ""
-"Watched folders will be removed from the sidebar but their contents will "
-"still appear in your library.  You can stop watching watched folders "
-"completely in the %(appname)s preference panel."
-msgstr ""
-
-#: ../../portable/frontends/widgets/removefeeds.py:100
-msgid ""
-"Are you sure you want to remove this feed?  The downloads currently in "
-"progress will be canceled."
-msgid_plural ""
-"Are you sure you want to remove these feeds?  The downloads currently in "
-"progress will be canceled."
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/gtk/video.py:284
-msgid "Permalink"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/video.py:294
-msgid "Pop-in"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/video.py:299
-msgid "Pop-out"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:67
-#, python-format
-msgid "Play Next Unplayed (%(unplayed)d)"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:71
-#, python-format
-msgid "Play All Unplayed (%(unplayed)d)"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:74
-#, python-format
-msgid "Pause All Downloads (%(downloading)d)"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:77
-#, python-format
-msgid "Resume All Downloads (%(paused)d)"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/window.py:495
-msgid "All files"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/window.py:524
-msgid "Choose"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/window.py:539
-#, python-format
-msgid "About %(appname)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/window.py:554
-#, python-format
-msgid ""
-"%(copyright)s.  See license.txt file for details.\n"
-"%(trademark)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/window.py:593
-#: ../../portable/dialogs.py:84
-msgid "Close"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedcontroller.py:137
-msgid "Full Feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedcontroller.py:191
-#, python-format
-msgid "Show %(count)d More Item"
-msgid_plural "Show %(count)d More Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/feedcontroller.py:232
-#: ../../portable/frontends/widgets/feedcontroller.py:259
-#, python-format
-msgid "%(count)d Downloading"
-msgid_plural "%(count)d Downloading"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/feedcontroller.py:243
-#: ../../portable/frontends/widgets/feedcontroller.py:255
-#, python-format
-msgid "%(count)d Item"
-msgid_plural "%(count)d Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/feedcontroller.py:264
-#, python-format
-msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
-msgid_plural ""
-"%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/feedcontroller.py:275
-#, python-format
-msgid "%(count)d Item Matches Search"
-msgid_plural "%(count)d Items Match Search"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/feedcontroller.py:280
-msgid "All Items Match Search"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfeed.py:70
-msgid "Feed should go in this section:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfeed.py:111
-msgid "Add Feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfeed.py:112
-msgid "Enter the URL of the feed to add"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfeed.py:123
-msgid "Add Feed - Invalid URL"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfeed.py:124
-msgid ""
-"The address you entered is not a valid url.\n"
-"Please check the URL and try again.\n"
-"\n"
-"Enter the URL of the feed to add"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:530
-msgid "Remove Site"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:534
-msgid "Remove Sites"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:578
-msgid "Update Feeds In Folder"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:585
-msgid "Update Feed Now"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:588
-msgid "Rename"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:590
-msgid "Revert Feed Name"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:597
-msgid "Update Feeds Now"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:662
-msgid "LIBRARY"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:664
-msgid "SITES"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:666
-msgid "FEEDS"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:668
-msgid "AUDIO FEEDS"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:670
-msgid "PLAYLISTS"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:447
-msgid "No Results Found"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:553
-msgid "Back to feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:286
-msgid "Title"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:288
-msgid "Feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:290
-#: ../../portable/frontends/widgets/itemlistwidgets.py:743
-msgid "Date"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:291
-msgid "Length"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:292
-msgid "Status"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:293
-#: ../../portable/frontends/widgets/itemlistwidgets.py:744
-msgid "Size"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:295
-msgid "ETA"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:296
-msgid "Speed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:432
-msgid "Save as a Feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:500
-msgid "Cancel All"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:507
-msgid "Download Settings"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:553
-#, python-format
-msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:559
-#, python-format
-msgid "%(available)s free for downloads (%(amount)s free on disk)"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:564
-#, python-format
-msgid "%(amount)s free on disk"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:583
-#, python-format
-msgid "%(rate)s uploading"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:585
-#, python-format
-msgid "%(rate)s downloading"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:631
-msgid "Share feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:643
-msgid "Remove feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:719
-msgid "Unwatched"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:730
-msgid "View|All"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:732
-msgid "Non Feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:742
-msgid "Name"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:745
-msgid "Time"
-msgstr ""
-
-#: ../../portable/frontends/widgets/diagnostics.py:83
-msgid "Movies location:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/diagnostics.py:87
-msgid "Icon cache location:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/diagnostics.py:91
-msgid "Log file location:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/diagnostics.py:95
-msgid "Downloader log file location:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/diagnostics.py:99
-msgid "Database file location:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/diagnostics.py:106
-msgid "Space free on disk:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/diagnostics.py:108
-msgid "Database size:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/diagnostics.py:110
-msgid "Total db objects in memory:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/diagnostics.py:118
-#: ../../portable/menubar.py:276
-msgid "Diagnostics"
-msgstr ""
-
-#: ../../portable/searchengines.py:172
-msgid "Search All"
-msgstr ""
-
-#: ../../portable/messages.py:1060 ../../portable/item.py:1078
-msgid "queued for download"
-msgstr ""
-
-#: ../../portable/messagehandler.py:1273
-msgid "Subscribed to new feed:"
-msgstr ""
-
-#: ../../portable/messagehandler.py:1276
-msgid "Subscribed to new feeds:"
-msgstr ""
-
-#: ../../portable/startup.py:99
-#, python-format
-msgid ""
-"An unknown error prevented %(appname)s from startup.  Please file a bug "
-"report at %(url)s."
-msgstr ""
-
-#: ../../portable/startup.py:181
-#, python-format
-msgid ""
-"You have a database that was saved with a newer version of %(appname)s. You "
-"must download the latest version of %(appname)s and run that."
-msgstr ""
-
-#: ../../portable/commandline.py:109
-#, python-format
-msgid ""
-"This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
-"the publisher of this file."
-msgstr ""
-
-#: ../../portable/commandline.py:119
-#, python-format
-msgid ""
-"This %(appname)s feed file has the wrong content type: %(url)s. Please "
-"notify the publisher of this file."
-msgstr ""
-
-#: ../../portable/commandline.py:127
-#, python-format
-msgid "Could not download the %(appname)s feed file: %(url)s"
-msgstr ""
-
-#: ../../portable/commandline.py:181
-#, python-format
-msgid ""
-"The torrent file %(filename)s appears to be corrupt and cannot be opened. "
-"[OK]"
-msgstr ""
-
-#: ../../portable/feed.py:938
-#, python-format
-msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
-msgstr ""
-
-#: ../../portable/feed.py:1079
-#, python-format
-msgid "Channel is not compatible with %(appname)s"
-msgstr ""
-
-#: ../../portable/feed.py:1082
-#, python-format
-msgid ""
-"This channel is not compatible with %(appname)s but we'll try our best to "
-"grab the files.  It may take extra time to list the videos, and descriptions "
-"may look funny.\n"
-"\n"
-"Please contact the publishers of %(url)s and ask if they can supply a feed "
-"in a format that will work with %(appname)s.\n"
-"\n"
-"Do you want to try to load this channel anyway?"
-msgstr ""
-
-#: ../../portable/feed.py:1683
-#, python-format
-msgid "Search All: %(text)s"
-msgstr ""
-
-#: ../../portable/dialogs.py:86
-msgid "Done"
-msgstr ""
-
-#: ../../portable/dialogs.py:90
-msgid "Continue"
-msgstr ""
-
-#: ../../portable/dialogs.py:102
-msgid "Create Feed"
-msgstr ""
-
-#: ../../portable/dialogs.py:103
-msgid "Create Folder"
-msgstr ""
-
-#: ../../portable/dialogs.py:113
-msgid "Open in External Browser"
-msgstr ""
-
-#: ../../portable/dialogs.py:115
-msgid "Subscribe"
-msgstr ""
-
-#: ../../portable/dialogs.py:116
-msgid "Stop Watching"
-msgstr ""
-
-#: ../../portable/singleclick.py:61
-#, python-format
-msgid "%(appname)s will begin downloading it now."
-msgstr ""
-
-#: ../../portable/singleclick.py:97
-#, python-format
-msgid ""
-"This file at %(url)s does not appear to be audio, video, or an RSS feed."
-msgstr ""
-
-#: ../../portable/singleclick.py:139
-#, python-format
-msgid ""
-"%(appname)s is not able to download a file at this URL:\n"
-"\n"
-"URL: %(url)s"
-msgstr ""
-
-#: ../../portable/dl_daemon/download.py:628
-#, python-format
-msgid "Could not write to %(filename)s"
-msgstr ""
-
-#: ../../portable/dl_daemon/download.py:654
-#: ../../portable/dl_daemon/download.py:871
-#, python-format
-msgid "%(amount)s MB required to store this video"
-msgstr ""
-
-#: ../../portable/dl_daemon/download.py:669
-#, python-format
-msgid "Couldn't open %(filename)s for writing"
-msgstr ""
-
-#: ../../portable/dl_daemon/download.py:1079
-#, python-format
-msgid "The torrent file at %(url)s was not valid"
-msgstr ""
-
-#: ../../portable/dl_daemon/download.py:1104
-#, python-format
-msgid "The torrent file for this item was deleted outside of %(appname)s."
-msgstr ""
-
-#: ../../portable/menubar.py:185
-msgid "_Download Item"
-msgstr ""
-
-#: ../../portable/menubar.py:188
-msgid "_Remove Item"
-msgstr ""
-
-#: ../../portable/menubar.py:189
-msgid "_Remove Items"
-msgstr ""
-
-#: ../../portable/menubar.py:190
-msgid "Re_name Item"
-msgstr ""
-
-#: ../../portable/menubar.py:191
-msgid "Save Item _As"
-msgstr ""
-
-#: ../../portable/menubar.py:192
-msgid "Save Items _As"
-msgstr ""
-
-#: ../../portable/menubar.py:193
-msgid "Copy Item _URL"
-msgstr ""
-
-#: ../../portable/menubar.py:195
-msgid "_Options"
-msgstr ""
-
-#: ../../portable/menubar.py:212
-msgid "Add _Feed"
-msgstr ""
-
-#: ../../portable/menubar.py:214
-msgid "New Searc_h Feed"
-msgstr ""
-
-#: ../../portable/menubar.py:215
-msgid "New _Folder"
-msgstr ""
-
-#: ../../portable/menubar.py:217
-msgid "Re_name"
-msgstr ""
-
-#: ../../portable/menubar.py:218
-msgid "_Remove"
-msgstr ""
-
-#: ../../portable/menubar.py:219
-msgid "_Remove Folder"
-msgstr ""
-
-#: ../../portable/menubar.py:221
-msgid "_Update Feed"
-msgstr ""
-
-#: ../../portable/menubar.py:222
-msgid "_Update Feeds"
-msgstr ""
-
-#: ../../portable/menubar.py:223
-msgid "Update _All Feeds"
-msgstr ""
-
-#: ../../portable/menubar.py:225
-msgid "_Import Feeds (OPML)"
-msgstr ""
-
-#: ../../portable/menubar.py:226
-msgid "E_xport Feeds (OPML)"
-msgstr ""
-
-#: ../../portable/menubar.py:228
-msgid "_Share with a Friend"
-msgstr ""
-
-#: ../../portable/menubar.py:229
-msgid "Copy URL"
-msgstr ""
-
-#: ../../portable/menubar.py:237
-msgid "_Remove Playlist"
-msgstr ""
-
-#: ../../portable/menubar.py:238
-msgid "_Remove Playlists"
-msgstr ""
-
-#: ../../portable/menubar.py:239
-msgid "_Remove Playlist Folders"
-msgstr ""
-
-#: ../../portable/menubar.py:240
-msgid "_Remove Playlist Folder"
-msgstr ""
-
-#: ../../portable/menubar.py:266
-msgid "_Toggle Detached/Attached"
-msgstr ""
-
-#: ../../portable/menubar.py:270
-#, python-format
-msgid "_About %(name)s"
-msgstr ""
-
-#: ../../portable/menubar.py:282
-msgid "_Planet Miro"
-msgstr ""
-
-#: ../../portable/menubar.py:294
-msgid "_Sidebar"
-msgstr ""
-
-#: ../../portable/item.py:897
-#, python-format
-msgid "%(count)d day"
-msgid_plural "%(count)d days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/item.py:902
-#, python-format
-msgid "%(count)d hour"
-msgid_plural "%(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/item.py:907
-#, python-format
-msgid "%(count)d minute"
-msgid_plural "%(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/item.py:1165
-msgid "no title"
-msgstr ""
-
-#: ../../portable/item.py:1211
-msgid "Contents appear in the library"
-msgstr ""
-
-#: ../../portable/item.py:1216
-msgid "Contents:"
-msgstr ""
-
-#: ../../portable/opml.py:208
-#, python-format
-msgid "Skipped %(count)d feed already present."
-msgid_plural "Skipped %(count)d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:52
-#, python-format
-msgid "%(size)s gb/s"
-msgstr ""
-
-#: ../../portable/displaytext.py:55
-#, python-format
-msgid "%(size)s mb/s"
-msgstr ""
-
-#: ../../portable/displaytext.py:58
-#, python-format
-msgid "%(size)s kb/s"
-msgstr ""
-
-#: ../../portable/displaytext.py:61
-#, python-format
-msgid "%(size)s b/s"
-msgstr ""
-
-#: ../../portable/displaytext.py:68
-#, python-format
-msgid "%(num).0f day"
-msgid_plural "%(num).0f days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:71
-#, python-format
-msgid "%(num).0f hr"
-msgid_plural "%(num).0f hrs"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:74
-#, python-format
-msgid "%(num).0f min"
-msgid_plural "%(num).0f mins"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:76
-#, python-format
-msgid "%(num)d sec"
-msgid_plural "%(num)d secs"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:90
-#, python-format
-msgid "%(size)s gb"
-msgstr ""
-
-#: ../../portable/displaytext.py:93
-#, python-format
-msgid "%(size)s mb"
-msgstr ""
-
-#: ../../portable/displaytext.py:96
-#, python-format
-msgid "%(size)s kb"
-msgstr ""
-
-#: ../../portable/displaytext.py:98
-#, python-format
-msgid "%(size)s b"
-msgstr ""
-
-#: ../../portable/displaytext.py:103
-#, python-format
-msgid "Expires in %(count)d day"
-msgid_plural "Expires in %(count)d days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:108
-#, python-format
-msgid "Expires in %(count)d hour"
-msgid_plural "Expires in %(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:113
-#, python-format
-msgid "Expires in %(count)d minute"
-msgid_plural "Expires in %(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:121
-#, python-format
-msgid "Expires: %(count)d day"
-msgid_plural "Expires: %(count)d days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:126
-#, python-format
-msgid "Expires: %(count)d hour"
-msgid_plural "Expires: %(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:131
-#, python-format
-msgid "Expires: %(count)d minute"
-msgid_plural "Expires: %(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/displaytext.py:142
-#, python-format
-msgid "%(month)s %(dayofmonth)s, %(year)s"
-msgstr ""
-
-#: ../../portable/storedatabase.py:425
-#, python-format
-msgid "%(appname)s database save failed"
-msgstr ""
-
-#: ../../portable/storedatabase.py:428
-#, python-format
-msgid ""
-"%(appname)s was unable to save its database: Disk Full.\n"
-"We suggest deleting files from the full disk or simply deleting some movies "
-"from your collection.\n"
-"Recent changes may be lost."
-msgstr ""
-
-#: ../../portable/storedatabase.py:440
-#, python-format
-msgid "%(appname)s database save succeeded"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:199
-msgid "Pop Out"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:202
-msgid "Pop In"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:141
-#, python-format
-msgid "Hide %(appname)s"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:151
-#, python-format
-msgid "Quit %(appname)s"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:195
-#, python-format
-msgid "%(appname)s Help"
-msgstr ""
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
-#, python-format
-msgid "You must restart %(appname)s for renderer changes to take effect."
-msgstr ""
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:74
-msgid "Video renderer:"
-msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
-#, python-format
-msgid "A new version of %(appname)s is available for download."
-msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
-#, python-format
-msgid ""
-"For the best %(appname)s experience, we suggest you install Adobe Flash.  "
-"Would you like to do this now?"
-msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
-#, python-format
-msgid ""
-"Your browser will load the web-site where you can download and install Adobe "
-"Flash.\n"
-"\n"
-"You should quit %(appname)s now and start it up again after Adobe Flash has "
-"been installed."
-msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
-#, python-format
-msgid "Quit %(appname)s completely."
-msgstr ""
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:134
-#, python-format
-msgid ""
-"When you click the red close button, would you like %(appname)s to close to "
-"the system tray or quit?  You can change this setting later in the Options."
-msgstr ""
-
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:201
 #, python-format
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr ""
+"Hiba történt a %(url)s megnyitása közben.  Kérem próbálja újra később"

@@ -1,118 +1,44 @@
 # Sinhalese translation for democracy
-# Copyright (c) 2007 Rosetta Contributors and Canonical Ltd 2007
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
 # This file is distributed under the same license as the democracy package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-07-16 13:21-0400\n"
-"PO-Revision-Date: 2008-11-07 16:10+0000\n"
-"Last-Translator: Keheliya Gallaba <keheliya.gallaba@yahoo.com>\n"
+"PO-Revision-Date: 2009-07-23 13:48+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Sinhalese <si@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-07-21 14:40+0000\n"
+"X-Launchpad-Export-Date: 2009-09-23 16:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:65
-#: ../../portable/frontends/widgets/gtk/video.py:246
-#: ../../portable/frontends/widgets/gtk/video.py:255
-#: ../../portable/dialogs.py:107
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:127
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:163
-msgid "Delete"
-msgstr "මකන්න"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:283
-#: ../../portable/dialogs.py:85
-msgid "Cancel"
-msgstr "අවලංගු කරන්න"
-
-#: ../../portable/singleclick.py:64
-msgid "It is downloading now."
-msgstr "එය බාගත වෙමින් පවතී"
-
-#: ../../portable/singleclick.py:66
-msgid "It has already been downloaded."
-msgstr "එය දැනටමත් බාගත කර ඇත"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
-msgid "Services"
-msgstr "සේවාවන්"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:143
-msgid "Hide Others"
-msgstr "අනෙක්වා සගවන්න"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:144
-msgid "Show All"
-msgstr "සියල්ල පෙන්වන්න"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
-msgid "Close Window"
-msgstr "කවුළුව වසන්න"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
-msgid "Cut"
-msgstr "ඉවත් කරන්න"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:161
-msgid "Copy"
-msgstr "පිටපත් කරන්න"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
-msgid "Paste"
-msgstr "අලවන්න"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:165
-msgid "Select All"
-msgstr "සියල්ල තෝරන්න"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
-msgid "Edit"
-msgstr "සංස්කරණය"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
-msgid "Zoom"
-msgstr "විශාලණය"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
-msgid "Window"
-msgstr "කවුළුව"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
-msgid "When I click the red close button:"
-msgstr "මම රතු බොත්තම ඔබන විට"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:196
-msgid "Error Opening Website"
-msgstr "වෙබ් පිටුව විවෘත කිරීමෙ වරදක්"
 
 #: ../../portable/httpclient.py:89
 #, python-format
 msgid "Error: %(msg)s"
-msgstr ""
+msgstr "දෝෂය : %(msg)s"
 
 #: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
 msgid "Can't connect"
-msgstr ""
+msgstr "සම්බන්ධ විය නොහැක"
 
 #: ../../portable/httpclient.py:105
 #, python-format
 msgid "Connection Error: %(msg)s"
-msgstr ""
+msgstr "සම්බන්ධයේ දෝෂයකි: %(msg)s"
 
 #: ../../portable/httpclient.py:111
 msgid "SSL connection error"
-msgstr ""
+msgstr "SSL සම්බන්ධයේ දෝෂයකි"
 
 #: ../../portable/httpclient.py:115
 msgid "HTTP error"
-msgstr ""
+msgstr "HTTP දෝෂයකි"
 
 #: ../../portable/httpclient.py:119
 #, python-format
@@ -137,12 +63,12 @@ msgstr ""
 #: ../../portable/httpclient.py:139
 #, python-format
 msgid "%(host)s closed connection"
-msgstr ""
+msgstr "%(host)s සම්බන්ධය වසා ඇත"
 
 #: ../../portable/httpclient.py:144 ../../portable/httpclient.py:173
 #: ../../portable/downloader.py:299
 msgid "File not found"
-msgstr ""
+msgstr "ගොනුව සොයාගැනීමට නොහැකි විය"
 
 #: ../../portable/httpclient.py:145
 msgid "Got 404 status code"
@@ -155,12 +81,12 @@ msgstr ""
 
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"
-msgstr ""
+msgstr "අනුමත කිරීම අසාර්ථකයි"
 
 #: ../../portable/httpclient.py:157
 #: ../../portable/frontends/widgets/crashdialog.py:48
 msgid "Internal Error"
-msgstr ""
+msgstr "අභ්‍යන්තර දෝෂයකි"
 
 #: ../../portable/httpclient.py:158
 msgid "Pipeline request never started"
@@ -168,79 +94,79 @@ msgstr ""
 
 #: ../../portable/httpclient.py:162
 msgid "Timeout"
-msgstr ""
+msgstr "කාලසීමාව අවසන් වීම"
 
 #: ../../portable/httpclient.py:163
 #, python-format
 msgid "Connection to %(host)s timed out"
-msgstr ""
+msgstr "%(host)s සම්බන්ධ වීමේ කාලසීමාව අවසන් විය"
 
 #: ../../portable/httpclient.py:167
 msgid "Invalid URL"
-msgstr ""
+msgstr "වලංගු නොවන URL එකකි."
 
 #: ../../portable/httpclient.py:168
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr ""
+msgstr "\"%(url)s\" වලංගු නොවන URL එකකි."
 
 #: ../../portable/httpclient.py:174
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
-msgstr ""
+msgstr "\"%(path)s\" ගොනුව නොපවතී"
 
 #: ../../portable/httpclient.py:178
 msgid "Read error"
-msgstr ""
+msgstr "කියවීමේ දෝෂයකි"
 
 #: ../../portable/httpclient.py:179
 #, python-format
 msgid "Error while reading from \"%(path)s\""
-msgstr ""
+msgstr "\"%(path)s\" සිට කියවීමේ දෝෂයකි"
 
 #: ../../portable/httpclient.py:376
 msgid "Unknown Error code"
-msgstr ""
+msgstr "නොදන්නා දෝෂ කේතයකි"
 
 #: ../../portable/httpclient.py:408
 msgid "Connection closed"
-msgstr ""
+msgstr "සම්බන්ධය වැසුණි"
 
 #: ../../portable/httpclient.py:829
 msgid "Unknown"
-msgstr ""
+msgstr "අඥාත"
 
 #: ../../portable/httpclient.py:830
 msgid "Internal Error: Not ready to send"
-msgstr ""
+msgstr "අභ්‍යන්තර දෝෂයකි:  යැවීමට සූදානම් නැත"
 
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
-msgstr ""
+msgstr "Miro Guide"
 
 #: ../../portable/frontends/widgets/statictabs.py:97
 #: ../../portable/frontends/widgets/itemlistcontroller.py:433
 msgid "Video Search"
-msgstr ""
+msgstr "වීඩියෝ සෙවුම"
 
 #: ../../portable/frontends/widgets/statictabs.py:103
 #: ../../portable/frontends/widgets/itemlistcontroller.py:516
 msgid "Video"
-msgstr ""
+msgstr "වීඩියෝ"
 
 #: ../../portable/frontends/widgets/statictabs.py:108
 #: ../../portable/frontends/widgets/itemlistcontroller.py:522
 msgid "Audio"
-msgstr ""
+msgstr "හඬ"
 
 #: ../../portable/frontends/widgets/statictabs.py:113
 #: ../../portable/frontends/widgets/itemlistcontroller.py:528
 msgid "Other"
-msgstr ""
+msgstr "වෙනත්"
 
 #: ../../portable/frontends/widgets/statictabs.py:118
 msgid "Downloading"
-msgstr ""
+msgstr "භාගත වෙමින්"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
@@ -256,30 +182,39 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
 msgid "New playlist:"
-msgstr ""
+msgstr "නව වාදන ලැයිස්තුව"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
-msgstr ""
+msgstr "පුස්තකාලයෙන් ඉවත් කරන්න"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:65
+#: ../../portable/frontends/widgets/gtk/video.py:246
+#: ../../portable/frontends/widgets/gtk/video.py:255
+#: ../../portable/dialogs.py:107
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:127
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:163
+msgid "Delete"
+msgstr "මකන්න"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:94
 #: ../../portable/frontends/widgets/itemcontextmenu.py:191
 msgid "Play"
-msgstr ""
+msgstr "වාදනය"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just This Item"
-msgstr ""
+msgstr "මෙම  අයිතමය පමණක් වාදනය කරන්න"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:96
 #: ../../portable/frontends/widgets/itemcontextmenu.py:192
 msgid "Add to Playlist"
-msgstr ""
+msgstr "වාදන ලැයිස්තුවට එකතු කරන්න"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:99
 #: ../../portable/frontends/widgets/application.py:495
 msgid "Rename Item"
-msgstr ""
+msgstr "අයිතමයේ නම වෙනස් කරන්න"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:101
 msgid "Revert Item Name"
@@ -288,12 +223,12 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemcontextmenu.py:103
 #: ../../portable/frontends/widgets/itemcontextmenu.py:199
 msgid "Mark as Unplayed"
-msgstr ""
+msgstr "වාදනය නොකළ ලෙස ලකුණු කරන්න"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:106
 #: ../../portable/frontends/widgets/itemcontextmenu.py:204
 msgid "Mark as Played"
-msgstr ""
+msgstr "වාදනය කළ ලෙස ලකුණු කරන්න"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:210
@@ -304,7 +239,7 @@ msgstr ""
 #: ../../portable/dialogs.py:106
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:123
 msgid "Keep"
-msgstr ""
+msgstr "තබාගන්න"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:112
 msgid "Stop Seeding"
@@ -318,17 +253,17 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemcontextmenu.py:239
 #: ../../portable/frontends/widgets/itemcontextmenu.py:257
 msgid "Cancel Download"
-msgstr ""
+msgstr "භාගත කිරීම අවලංගු කරන්න"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:121
 #: ../../portable/frontends/widgets/itemcontextmenu.py:240
 msgid "Pause Download"
-msgstr ""
+msgstr "බාගත කිරීම අතරමග නවතන්න"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:124
 #: ../../portable/frontends/widgets/itemcontextmenu.py:253
 msgid "Resume Download"
-msgstr ""
+msgstr "බාගත කිරීම නැවත අරඹන්න"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:128
 #: ../../portable/frontends/widgets/itemcontextmenu.py:223
@@ -336,66 +271,66 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:1102
 #: ../../portable/frontends/widgets/style.py:1113 ../../portable/dialogs.py:95
 msgid "Download"
-msgstr ""
+msgstr "බාගත කරන්න"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:134
 #: ../../portable/frontends/widgets/style.py:240
 msgid "Web Page"
-msgstr ""
+msgstr "වෙබ් පිටුව"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:136
 #: ../../portable/frontends/widgets/style.py:236
 #: ../../portable/frontends/widgets/gtk/video.py:282
 msgid "Comments"
-msgstr ""
+msgstr "ප්‍රතිචාර"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:138
 msgid "License"
-msgstr ""
+msgstr "බලපත්‍රය"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:141
 msgid "File in Browser"
-msgstr ""
+msgstr "ගොනුව බ්‍රවුසරයෙහිදී"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:143
 #, python-format
 msgid "File in %(progname)s"
-msgstr ""
+msgstr "ගොනුව %(progname)s දී"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:145
 msgid "File on Disk"
-msgstr ""
+msgstr "ගොනුව ඩිස්කයේදි"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:148
 msgid "View"
-msgstr ""
+msgstr "දසුන"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
 #: ../../portable/frontends/widgets/gtk/video.py:273
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:119
 msgid "Share"
-msgstr ""
+msgstr "බෙදාගන්න"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:186
 #, python-format
 msgid "%(count)d Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "බාගත කළ අයිතම %(count)d ක්"
+msgstr[1] "බාගත කළ අයිතම %(count)d ක්"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:215
 #, python-format
 msgid "%(count)d Available Item"
 msgid_plural "%(count)d Available Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ඉතිරි අයිතම %(count)d කි"
+msgstr[1] "ඉතිරි අයිතම %(count)d කි"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:228
 #, python-format
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "බාගත වෙමින් පවතින  අයිතම %(count)d ක්"
+msgstr[1] "බාගත වෙමින් පවතින  අයිතම %(count)d ක්"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:245
 #, python-format
@@ -410,7 +345,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:277
 msgid "Remove From Playlist"
-msgstr ""
+msgstr "වාදන ලැයිස්තුවෙන් ඉවත් කරන්න"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:55
 #: ../../portable/frontends/widgets/feedsettingspanel.py:102
@@ -422,22 +357,22 @@ msgstr ""
 #, python-format
 msgid "%(count)d hour ago"
 msgid_plural "%(count)d hours ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "පැය %(count)d කට කලින්"
+msgstr[1] "පැය %(count)d කට කලින්"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:64
 #, python-format
 msgid "%(count)d day ago"
 msgid_plural "%(count)d days ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "දින %(count)d කට කලින්"
+msgstr[1] "දින %(count)d කට කලින්"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:70
 #, python-format
 msgid "%(count)d month ago"
 msgid_plural "%(count)d months ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "මාස %(count)d කට කලින්"
+msgstr[1] "මාස %(count)d කට කලින්"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Videos:"
@@ -450,23 +385,23 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
-msgstr ""
+msgstr "දිනකට කලින් නරඹන ලදි"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr ""
+msgstr "දින 3කට කලින් නරඹන ලදි"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
-msgstr ""
+msgstr "දින 6කට කලින් නරඹන ලදි"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:100
 msgid "Watched 10 days ago"
-msgstr ""
+msgstr "දින 11කට කලින් නරඹන ලදි"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
-msgstr ""
+msgstr "මාස 1කට කලින් නරඹන ලදි"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
@@ -479,55 +414,55 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:141
 msgid "Keep 0"
-msgstr ""
+msgstr "0 තබාගන්න"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:142
 msgid "Keep 20"
-msgstr ""
+msgstr "20 තබාගන්න"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:143
 msgid "Keep 50"
-msgstr ""
+msgstr "50 තබාගන්න"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:144
 msgid "Keep 100"
-msgstr ""
+msgstr "100 තබාගන්න"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:145
 msgid "Keep 1000"
-msgstr ""
+msgstr "1000 තබාගන්න"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
-msgstr ""
+msgstr "සියල්ල ඉවත් කරන්න"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
-msgstr ""
+msgstr "පැරණි අයිතම ඉවත් කරන ලදි"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause Auto-Downloading when this many items are unplayed:"
-msgstr ""
+msgstr "වාදනය නොකළ අයිතම බොහෝ ඇතිවිට ඉබේ බාගත වීම නවත්වන්න"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
-msgstr ""
+msgstr "වාදනය නොකළ අයිතම 1කි"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:198
 msgid "3 unplayed items"
-msgstr ""
+msgstr "වාදනය නොකළ අයිතම 3කි"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:199
 msgid "5 unplayed items"
-msgstr ""
+msgstr "වාදනය නොකළ අයිතම 5කි"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:200
 msgid "10 unplayed items"
-msgstr ""
+msgstr "වාදනය නොකළ අයිතම 10කි"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:201
 msgid "15 unplayed items"
-msgstr ""
+msgstr "වාදනය නොකළ අයිතම 15කි"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:241
 msgid "Feed Settings"
@@ -563,13 +498,13 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:178
 #: ../../portable/dialogs.py:87
 msgid "Yes"
-msgstr ""
+msgstr "ඔව්"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:145
 #: ../../portable/frontends/widgets/firsttimedialog.py:177
 #: ../../portable/dialogs.py:88
 msgid "No"
-msgstr ""
+msgstr "නැහැ"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:153
 msgid "Next >"
@@ -616,16 +551,21 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:282
 #: ../../portable/feed.py:2290 ../../portable/feed.py:2397
 msgid "Search"
-msgstr ""
+msgstr "සෙවුම"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:293
 msgid "Finish"
-msgstr ""
+msgstr "අවසන් කරන්න"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:273
 msgid "Searching for media files"
 msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:283
+#: ../../portable/dialogs.py:85
+msgid "Cancel"
+msgstr "අවලංගු කරන්න"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:321
 #, python-format
@@ -664,7 +604,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:233
 msgid "File name:"
-msgstr ""
+msgstr "ගොනු නාමය:"
 
 #: ../../portable/frontends/widgets/style.py:234
 msgid "Show More"
@@ -731,7 +671,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:252
 #: ../../portable/dl_daemon/download.py:539
 msgid "Error"
-msgstr ""
+msgstr "දෝෂය"
 
 #: ../../portable/frontends/widgets/style.py:253
 msgid "queued for autodownload"
@@ -762,7 +702,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/tablist.py:646
 #: ../../portable/dialogs.py:108
 msgid "Remove"
-msgstr ""
+msgstr "ඉවත් කරන්න"
 
 #: ../../portable/frontends/widgets/style.py:259
 msgid "Stop seeding"
@@ -786,7 +726,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/displays.py:382
 msgid "Filename:"
-msgstr ""
+msgstr "ගොනු නම:"
 
 #: ../../portable/frontends/widgets/displays.py:385
 msgid "File type:"
@@ -799,7 +739,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/displays.py:393
 msgid "Skip"
-msgstr ""
+msgstr "මඟහරින්න"
 
 #: ../../portable/frontends/widgets/displays.py:430
 msgid "Open Externally"
@@ -856,7 +796,7 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/displays.py:581
 msgid "Delete All"
-msgstr ""
+msgstr "සියල්ල මකන්න"
 
 #: ../../portable/frontends/widgets/displays.py:585
 msgid "Put Into a New Folder"
@@ -864,11 +804,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/rundialog.py:82
 msgid "Username:"
-msgstr ""
+msgstr "පරිශිලක නම:"
 
 #: ../../portable/frontends/widgets/rundialog.py:86
 msgid "Password:"
-msgstr ""
+msgstr "මුර පදය:"
 
 #: ../../portable/frontends/widgets/browser.py:96
 msgid "Open in browser"
@@ -1151,15 +1091,15 @@ msgstr[1] ""
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:1106
+#: ../../portable/frontends/widgets/application.py:1124
 msgid "Message"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:1131
+#: ../../portable/frontends/widgets/application.py:1149
 msgid "Migrating Files"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:1141
+#: ../../portable/frontends/widgets/application.py:1159
 msgid "Migrating files"
 msgstr ""
 
@@ -1901,7 +1841,7 @@ msgstr ""
 msgid "Search All"
 msgstr ""
 
-#: ../../portable/messages.py:1060 ../../portable/item.py:1078
+#: ../../portable/messages.py:1078 ../../portable/item.py:1078
 msgid "queued for download"
 msgstr ""
 
@@ -2141,6 +2081,14 @@ msgstr ""
 #, python-format
 msgid "%(appname)s will begin downloading it now."
 msgstr ""
+
+#: ../../portable/singleclick.py:64
+msgid "It is downloading now."
+msgstr "එය බාගත වෙමින් පවතී"
+
+#: ../../portable/singleclick.py:66
+msgid "It has already been downloaded."
+msgstr "එය දැනටමත් බාගත කර ඇත"
 
 #: ../../portable/singleclick.py:96
 msgid "File Download"
@@ -2648,12 +2596,12 @@ msgstr[1] ""
 msgid "%(month)s %(dayofmonth)s, %(year)s"
 msgstr ""
 
-#: ../../portable/storedatabase.py:425
+#: ../../portable/storedatabase.py:449
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr ""
 
-#: ../../portable/storedatabase.py:428
+#: ../../portable/storedatabase.py:452
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -2662,22 +2610,22 @@ msgid ""
 "Recent changes may be lost."
 msgstr ""
 
-#: ../../portable/storedatabase.py:440
+#: ../../portable/storedatabase.py:464
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr ""
 
-#: ../../portable/storedatabase.py:443
+#: ../../portable/storedatabase.py:467
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/application.py:169
+#: ../../platform/osx/plat/frontends/widgets/application.py:171
 msgid "Download Completed"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/application.py:170
+#: ../../platform/osx/plat/frontends/widgets/application.py:172
 #, python-format
 msgid "Download of video '%s' is finished."
 msgstr ""
@@ -2690,10 +2638,22 @@ msgstr ""
 msgid "Pop In"
 msgstr ""
 
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
+msgid "Services"
+msgstr "සේවාවන්"
+
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:141
 #, python-format
 msgid "Hide %(appname)s"
 msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:143
+msgid "Hide Others"
+msgstr "අනෙක්වා සගවන්න"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:144
+msgid "Show All"
+msgstr "සියල්ල පෙන්වන්න"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:149
 msgid "Preferences..."
@@ -2703,6 +2663,30 @@ msgstr ""
 #, python-format
 msgid "Quit %(appname)s"
 msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
+msgid "Close Window"
+msgstr "කවුළුව වසන්න"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
+msgid "Cut"
+msgstr "ඉවත් කරන්න"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:161
+msgid "Copy"
+msgstr "පිටපත් කරන්න"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
+msgid "Paste"
+msgstr "අලවන්න"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:165
+msgid "Select All"
+msgstr "සියල්ල තෝරන්න"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
+msgid "Edit"
+msgstr "සංස්කරණය"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:172
 msgid "Present Half Size"
@@ -2720,6 +2704,10 @@ msgstr ""
 msgid "Present Video"
 msgstr ""
 
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
+msgid "Zoom"
+msgstr "විශාලණය"
+
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:184
 msgid "Minimize"
 msgstr ""
@@ -2731,6 +2719,10 @@ msgstr ""
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:188
 msgid "Bring All to Front"
 msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
+msgid "Window"
+msgstr "කවුළුව"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:195
 #, python-format
@@ -2793,6 +2785,10 @@ msgid ""
 "been installed."
 msgstr ""
 
+#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
+msgid "When I click the red close button:"
+msgstr "මම රතු බොත්තම ඔබන විට"
+
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Close to tray so that downloads can continue."
 msgstr ""
@@ -2820,6 +2816,10 @@ msgstr ""
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:194
 msgid "Error Recommending Item"
 msgstr ""
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:196
+msgid "Error Opening Website"
+msgstr "වෙබ් පිටුව විවෘත කිරීමෙ වරදක්"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:201
 #, python-format

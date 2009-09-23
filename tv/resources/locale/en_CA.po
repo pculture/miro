@@ -8,15 +8,137 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-07-16 13:21-0400\n"
-"PO-Revision-Date: 2009-02-14 21:02+0000\n"
-"Last-Translator: Garth Miles <Unknown>\n"
+"PO-Revision-Date: 2009-07-23 14:52+0000\n"
+"Last-Translator: Will Guaraldi Kahn-Greene <willg@bluesock.org>\n"
 "Language-Team: English (Canada) <en_CA@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-07-21 14:40+0000\n"
+"X-Launchpad-Export-Date: 2009-09-23 16:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#: ../../portable/httpclient.py:89
+#, python-format
+msgid "Error: %(msg)s"
+msgstr "Error: %(msg)s"
+
+#: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
+msgid "Can't connect"
+msgstr "Can't connect"
+
+#: ../../portable/httpclient.py:105
+#, python-format
+msgid "Connection Error: %(msg)s"
+msgstr "Copy text   \t Connection Error: %(msg)s"
+
+#: ../../portable/httpclient.py:111
+msgid "SSL connection error"
+msgstr "SSL connection error"
+
+#: ../../portable/httpclient.py:115
+msgid "HTTP error"
+msgstr "HTTP error"
+
+#: ../../portable/httpclient.py:119
+#, python-format
+msgid "Bad Status Line: %(msg)s"
+msgstr "Bad Status Line: %(msg)s"
+
+#: ../../portable/httpclient.py:124
+#, python-format
+msgid "Bad Header Line: %(msg)s"
+msgstr "Bad Header Line: %(msg)s"
+
+#: ../../portable/httpclient.py:129
+#, python-format
+msgid "Bad Chunk size: %(msg)s"
+msgstr "Bad Chunk size: %(msg)s"
+
+#: ../../portable/httpclient.py:134
+#, python-format
+msgid "Expected CRLF got: %(character)r"
+msgstr "Expected CRLF got: %(character)r"
+
+#: ../../portable/httpclient.py:139
+#, python-format
+msgid "%(host)s closed connection"
+msgstr "%(host)s closed connection"
+
+#: ../../portable/httpclient.py:144 ../../portable/httpclient.py:173
+#: ../../portable/downloader.py:299
+msgid "File not found"
+msgstr "File not found"
+
+#: ../../portable/httpclient.py:145
+msgid "Got 404 status code"
+msgstr "Got 404 Status Code"
+
+#: ../../portable/httpclient.py:147
+#, python-format
+msgid "Bad Status Code: %(code)s"
+msgstr "Bad Status Code: %(code)s"
+
+#: ../../portable/httpclient.py:152
+msgid "Authorization failed"
+msgstr "Authorization Failed"
+
+#: ../../portable/httpclient.py:157
+#: ../../portable/frontends/widgets/crashdialog.py:48
+msgid "Internal Error"
+msgstr "Internal Error"
+
+#: ../../portable/httpclient.py:158
+msgid "Pipeline request never started"
+msgstr "Pipeline request never started"
+
+#: ../../portable/httpclient.py:162
+msgid "Timeout"
+msgstr "Timeout"
+
+#: ../../portable/httpclient.py:163
+#, python-format
+msgid "Connection to %(host)s timed out"
+msgstr "Connection to %(host)s timed out"
+
+#: ../../portable/httpclient.py:167
+msgid "Invalid URL"
+msgstr "Invalid URL"
+
+#: ../../portable/httpclient.py:168
+#, python-format
+msgid "\"%(url)s\" is not a valid URL"
+msgstr "Copy text   \t \"%(url)s\" is not a valid URL"
+
+#: ../../portable/httpclient.py:174
+#, python-format
+msgid "The file \"%(path)s\" doesn't exist"
+msgstr "The file \"%(path)s\" doesn't exist"
+
+#: ../../portable/httpclient.py:178
+msgid "Read error"
+msgstr "Read error"
+
+#: ../../portable/httpclient.py:179
+#, python-format
+msgid "Error while reading from \"%(path)s\""
+msgstr "Error while reading from \"%(path)s\""
+
+#: ../../portable/httpclient.py:376
+msgid "Unknown Error code"
+msgstr "Unknown Error code"
+
+#: ../../portable/httpclient.py:408
+msgid "Connection closed"
+msgstr "Connection closed"
+
+#: ../../portable/httpclient.py:829
+msgid "Unknown"
+msgstr "Unknown"
+
+#: ../../portable/httpclient.py:830
+msgid "Internal Error: Not ready to send"
+msgstr "Internal Error: Not ready to send"
 
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
@@ -27,14 +149,44 @@ msgstr "Miro Guide"
 msgid "Video Search"
 msgstr "Video Search"
 
+#: ../../portable/frontends/widgets/statictabs.py:103
+#: ../../portable/frontends/widgets/itemlistcontroller.py:516
+msgid "Video"
+msgstr "Video"
+
 #: ../../portable/frontends/widgets/statictabs.py:108
 #: ../../portable/frontends/widgets/itemlistcontroller.py:522
 msgid "Audio"
 msgstr "Audio"
 
+#: ../../portable/frontends/widgets/statictabs.py:113
+#: ../../portable/frontends/widgets/itemlistcontroller.py:528
+msgid "Other"
+msgstr "Other"
+
 #: ../../portable/frontends/widgets/statictabs.py:118
 msgid "Downloading"
 msgstr "Downloading"
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
+msgid "Add a Playlist"
+msgstr "Add a Playlist"
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
+msgid "Add items to an existing playlist or a new one."
+msgstr "Add items to an existing playlist or a new one."
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
+msgid "Existing playlist:"
+msgstr "Existing playlist:"
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
+msgid "New playlist:"
+msgstr "New playlist:"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:63
+msgid "Remove From the Library"
+msgstr "Remove From the Library"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
 #: ../../portable/frontends/widgets/gtk/video.py:246
@@ -44,6 +196,39 @@ msgstr "Downloading"
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:163
 msgid "Delete"
 msgstr "Delete"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:94
+#: ../../portable/frontends/widgets/itemcontextmenu.py:191
+msgid "Play"
+msgstr "Play"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:95
+msgid "Play Just This Item"
+msgstr "Play Just This Item"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:96
+#: ../../portable/frontends/widgets/itemcontextmenu.py:192
+msgid "Add to Playlist"
+msgstr "Add to Playlist"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:99
+#: ../../portable/frontends/widgets/application.py:495
+msgid "Rename Item"
+msgstr "Copy text   \t Rename Item"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:101
+msgid "Revert Item Name"
+msgstr "Revert Item Name"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:103
+#: ../../portable/frontends/widgets/itemcontextmenu.py:199
+msgid "Mark as Unplayed"
+msgstr "Mark as Unplayed"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:106
+#: ../../portable/frontends/widgets/itemcontextmenu.py:204
+msgid "Mark as Played"
+msgstr "Mark as Played"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:210
@@ -56,6 +241,30 @@ msgstr "Delete"
 msgid "Keep"
 msgstr "Keep"
 
+#: ../../portable/frontends/widgets/itemcontextmenu.py:112
+msgid "Stop Seeding"
+msgstr "Stop Seeding"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:114
+msgid "Resume Seeding"
+msgstr "Resume Seeding"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:117
+#: ../../portable/frontends/widgets/itemcontextmenu.py:239
+#: ../../portable/frontends/widgets/itemcontextmenu.py:257
+msgid "Cancel Download"
+msgstr "Cancel Download"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:121
+#: ../../portable/frontends/widgets/itemcontextmenu.py:240
+msgid "Pause Download"
+msgstr "Pause Download"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:124
+#: ../../portable/frontends/widgets/itemcontextmenu.py:253
+msgid "Resume Download"
+msgstr "Copy text   \t Resume Download"
+
 #: ../../portable/frontends/widgets/itemcontextmenu.py:128
 #: ../../portable/frontends/widgets/itemcontextmenu.py:223
 #: ../../portable/frontends/widgets/style.py:250
@@ -63,6 +272,11 @@ msgstr "Keep"
 #: ../../portable/frontends/widgets/style.py:1113 ../../portable/dialogs.py:95
 msgid "Download"
 msgstr "Download"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:134
+#: ../../portable/frontends/widgets/style.py:240
+msgid "Web Page"
+msgstr "Web Page"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:136
 #: ../../portable/frontends/widgets/style.py:236
@@ -74,11 +288,64 @@ msgstr "Comments"
 msgid "License"
 msgstr "License"
 
+#: ../../portable/frontends/widgets/itemcontextmenu.py:141
+msgid "File in Browser"
+msgstr "Copy text   \t File in Browser"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:143
+#, python-format
+msgid "File in %(progname)s"
+msgstr "File in %(progname)s"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:145
+msgid "File on Disk"
+msgstr "File on Disk"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:148
+msgid "View"
+msgstr "View"
+
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
 #: ../../portable/frontends/widgets/gtk/video.py:273
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:119
 msgid "Share"
 msgstr "Share"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:186
+#, python-format
+msgid "%(count)d Downloaded Item"
+msgid_plural "%(count)d Downloaded Items"
+msgstr[0] "%(count)d Downloaded Item"
+msgstr[1] "%(count)d Downloaded Items"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:215
+#, python-format
+msgid "%(count)d Available Item"
+msgid_plural "%(count)d Available Items"
+msgstr[0] "%(count)d Available Item"
+msgstr[1] "%(count)d Available Items"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:228
+#, python-format
+msgid "%(count)d Downloading Item"
+msgid_plural "%(count)d Downloading Items"
+msgstr[0] "%(count)d Downloading Item"
+msgstr[1] "%(count)d Downloading Items"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:245
+#, python-format
+msgid "%(count)d Paused Item"
+msgid_plural "%(count)d Paused Items"
+msgstr[0] "%(count)d Paused Item"
+msgstr[1] "%(count)d Paused Items"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:263
+msgid "Restart Upload"
+msgstr "Copy text   \t Restart Upload"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:277
+msgid "Remove From Playlist"
+msgstr "Remove From Playlist"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:55
 #: ../../portable/frontends/widgets/feedsettingspanel.py:102
@@ -86,9 +353,154 @@ msgstr "Share"
 msgid "never"
 msgstr "Never"
 
+#: ../../portable/frontends/widgets/feedsettingspanel.py:58
+#, python-format
+msgid "%(count)d hour ago"
+msgid_plural "%(count)d hours ago"
+msgstr[0] "%(count)d hour ago"
+msgstr[1] "%(count)d hours ago"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:64
+#, python-format
+msgid "%(count)d day ago"
+msgid_plural "%(count)d days ago"
+msgstr[0] "%(count)d day ago"
+msgstr[1] "%(count)d days ago"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:70
+#, python-format
+msgid "%(count)d month ago"
+msgid_plural "%(count)d months ago"
+msgstr[0] "%(count)d month ago"
+msgstr[1] "%(count)d months ago"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:92
+msgid "Auto-Expire Videos:"
+msgstr "Auto-Expire Videos:"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:95
+#, python-format
+msgid "Watched %(expiration)s (Default)"
+msgstr "Watched %(expiration)s (Default)"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:97
+msgid "Watched 1 day ago"
+msgstr "Watched 1 day ago"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:98
+msgid "Watched 3 days ago"
+msgstr "Watched 3 days ago"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:99
+msgid "Watched 6 days ago"
+msgstr "Watched 6 days ago"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:100
+msgid "Watched 10 days ago"
+msgstr "Vor 10 Tagen angesehen"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:101
+msgid "Watched 1 month ago"
+msgstr "Vor 1 Monat angesehen"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:137
+msgid "Outdated Feed Items:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:139
+#, python-format
+msgid "Keep %(number)s (Default)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:141
+msgid "Keep 0"
+msgstr "Keine behalten"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:142
+msgid "Keep 20"
+msgstr "20 behalten"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:143
+msgid "Keep 50"
+msgstr "50 behalten"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:144
+msgid "Keep 100"
+msgstr "100 behalten"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:145
+msgid "Keep 1000"
+msgstr "1000 behalten"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:169
+msgid "Remove All"
+msgstr "Alle entfernen"
+
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
 msgstr "Old items have been removed."
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:193
+msgid "Pause Auto-Downloading when this many items are unplayed:"
+msgstr ""
+"Automatisches Herunterladen ab dieser Anzahl an unabgespielten Objekten "
+"pausieren:"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:197
+msgid "1 unplayed item"
+msgstr "1 unabgespieltes Objekt"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:198
+msgid "3 unplayed items"
+msgstr "3 unabgespielte Objekte"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:199
+msgid "5 unplayed items"
+msgstr "5 unabgespielte Objekte"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:200
+msgid "10 unplayed items"
+msgstr "10 unabgespielte Objekte"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:201
+msgid "15 unplayed items"
+msgstr "15 unabgespielte Objekte"
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:241
+msgid "Feed Settings"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:63
+#, python-format
+msgid "%(name)s First Time Setup"
+msgstr "%(name)s Ersteinrichtung"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:122
+#, python-format
+msgid "Welcome to the %(name)s First Time Setup"
+msgstr "Willkommen zur %(name)s Ersteinrichtung"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:126
+#, python-format
+msgid ""
+"The next few screens will help you set up %(name)s so that it works best for "
+"you.\n"
+"\n"
+"We recommend that you have %(name)s launch when your computer starts up.  "
+"This way, downloads in progress can finish downloading and new media files "
+"can be downloaded in the background, ready when you want to watch."
+msgstr ""
+"Die nächsten Bildschirme werden Ihnen helfen, %(name)s nach Ihren Wünschen "
+"einzustellen.\n"
+"\n"
+"Wir empfehlen, %(name)s mit dem Start des Computers auszuführen. So können "
+"begonnene Downloads beendet und neue Mediendateien im Hintergrund herunter "
+"geladen werden, so dass sie zum Ansehen bereit liegen."
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:138
+#, python-format
+msgid "Would you like to run %(name)s on startup?"
+msgstr "Möchten sie %(name)s beim Hochfahren ausfūhren?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:144
 #: ../../portable/frontends/widgets/firsttimedialog.py:178
@@ -102,832 +514,9 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:225
-#: ../../portable/frontends/widgets/firsttimedialog.py:293
-msgid "Finish"
-msgstr "Finish"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:283
-#: ../../portable/dialogs.py:85
-msgid "Cancel"
-msgstr "Cancel"
-
-#: ../../portable/frontends/widgets/style.py:244
-msgid "Seeders"
-msgstr "Seeders"
-
-#: ../../portable/frontends/widgets/style.py:245
-msgid "Leechers"
-msgstr "Leechers"
-
-#: ../../portable/frontends/widgets/style.py:248
-msgid "Down Rate"
-msgstr "Down Rate"
-
-#: ../../portable/frontends/widgets/style.py:249
-msgid "Down Total"
-msgstr "Down Total"
-
-#: ../../portable/frontends/widgets/style.py:251
-msgid "Download Torrent"
-msgstr "Download Torrent"
-
-#: ../../portable/frontends/widgets/style.py:253
-msgid "queued for autodownload"
-msgstr "Queued for Auto-Download"
-
-#: ../../portable/frontends/widgets/style.py:258
-#: ../../portable/frontends/widgets/prefpanel.py:485
-#: ../../portable/frontends/widgets/tablist.py:580
-#: ../../portable/frontends/widgets/tablist.py:592
-#: ../../portable/frontends/widgets/tablist.py:598
-#: ../../portable/frontends/widgets/tablist.py:635
-#: ../../portable/frontends/widgets/tablist.py:641
-#: ../../portable/frontends/widgets/tablist.py:646
-#: ../../portable/dialogs.py:108
-msgid "Remove"
-msgstr "Remove"
-
-#: ../../portable/frontends/widgets/style.py:259
-msgid "Stop seeding"
-msgstr "Stop Seeding"
-
-#: ../../portable/frontends/widgets/style.py:571
-#: ../../portable/frontends/widgets/style.py:1164
-msgid "paused"
-msgstr "Paused"
-
-#: ../../portable/frontends/widgets/style.py:1034
-msgid "Remove from playlist"
-msgstr "Remove from playlist"
-
-#: ../../portable/frontends/widgets/rundialog.py:82
-msgid "Username:"
-msgstr "Username"
-
-#: ../../portable/frontends/widgets/rundialog.py:86
-msgid "Password:"
-msgstr "Password:"
-
-#: ../../portable/frontends/widgets/browser.py:96
-msgid "Open in browser"
-msgstr "Open in browser"
-
-#: ../../portable/frontends/widgets/application.py:809
-msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr "Warn me if I attempt to quit while downloading is in progress"
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:81
-#: ../../portable/frontends/widgets/prefpanel.py:622
-msgid "Downloads"
-msgstr "Downloads"
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:90
-msgid "Single and external downloads"
-msgstr "Single and External downloads"
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:96
-msgid "Seeding"
-msgstr "Seeding"
-
-#: ../../portable/frontends/widgets/prefpanel.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:624
-msgid "New"
-msgstr "New"
-
-#: ../../portable/frontends/widgets/prefpanel.py:290
-#: ../../portable/frontends/widgets/itemlistwidgets.py:624
-msgid "All"
-msgstr "All"
-
-#: ../../portable/frontends/widgets/prefpanel.py:291
-#: ../../portable/frontends/widgets/itemlistwidgets.py:624
-msgid "Off"
-msgstr "Off"
-
-#: ../../portable/frontends/widgets/prefpanel.py:453
-msgid "Migrate existing movies?"
-msgstr "Migrate existing movies?"
-
-#: ../../portable/frontends/widgets/prefpanel.py:542
-msgid "Store downloads in this folder:"
-msgstr "Store downloads in this folder:"
-
-#: ../../portable/frontends/widgets/prefpanel.py:568
-msgid "Keep at least this much free space on my drive:"
-msgstr "Keep at least this much free space on my drive:"
-
-#: ../../portable/frontends/widgets/prefpanel.py:580
-msgid "1 day"
-msgstr "one day"
-
-#: ../../portable/frontends/widgets/prefpanel.py:581
-msgid "3 days"
-msgstr "3 Days"
-
-#: ../../portable/frontends/widgets/prefpanel.py:582
-msgid "6 days"
-msgstr "Six Days"
-
-#: ../../portable/frontends/widgets/prefpanel.py:583
-msgid "10 days"
-msgstr "10 Days"
-
-#: ../../portable/frontends/widgets/prefpanel.py:584
-msgid "1 month"
-msgstr "1 Month"
-
-#: ../../portable/frontends/widgets/prefpanel.py:620
-msgid "General"
-msgstr "General"
-
-#: ../../portable/frontends/widgets/prefpanel.py:623
-msgid "Folders"
-msgstr "Folders"
-
-#: ../../portable/frontends/widgets/prefpanel.py:625
-msgid "Playback"
-msgstr "Playback"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:74
-msgid "Search for:"
-msgstr "Search for:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:81
-msgid "In this:"
-msgstr "In this:"
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:85
-msgid "Hide"
-msgstr "Hide"
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:87
-#: ../../portable/frontends/widgets/diagnostics.py:76
-msgid "Show"
-msgstr "Show"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:637
-msgid "Settings"
-msgstr "Settings"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:719
-msgid "Unwatched"
-msgstr "Unwatched"
-
-#: ../../portable/searchengines.py:172
-msgid "Search All"
-msgstr "Search All"
-
-#: ../../portable/messages.py:1060 ../../portable/item.py:1078
-msgid "queued for download"
-msgstr "Queued for Download"
-
-#: ../../portable/commandline.py:179
-msgid "Invalid Torrent"
-msgstr "Invalid Torrent!"
-
-#: ../../portable/commandline.py:181
-#, python-format
-msgid ""
-"The torrent file %(filename)s appears to be corrupt and cannot be opened. "
-"[OK]"
-msgstr ""
-"The Torrent file %(filename)s appears to be corrupt and cannot be opened. "
-"[OK]"
-
-#: ../../portable/feed.py:1066
-msgid "Bad content-type"
-msgstr "Bad content type!"
-
-#: ../../portable/feed.py:1079
-#, python-format
-msgid "Channel is not compatible with %(appname)s"
-msgstr "Channel is not compatible with %(appname)s"
-
-#: ../../portable/feed.py:2264 ../../portable/feed.py:2415
-msgid "Local Files"
-msgstr "Local Files"
-
-#: ../../portable/feed.py:2429
-msgid "Playing File"
-msgstr "Playing File"
-
-#: ../../portable/dialogs.py:83
-msgid "Ok"
-msgstr "Okay"
-
-#: ../../portable/dialogs.py:89
-msgid "Quit"
-msgstr "Quit"
-
-#: ../../portable/dialogs.py:101
-msgid "Create"
-msgstr "Create"
-
-#: ../../portable/singleclick.py:54
-msgid "Download already exists"
-msgstr "The downloaded file already exists."
-
-#: ../../portable/singleclick.py:55
-msgid "That URL is already an external download."
-msgstr "That URL is already an external download."
-
-#: ../../portable/item.py:897
-#, python-format
-msgid "%(count)d day"
-msgid_plural "%(count)d days"
-msgstr[0] "%(count)d Day"
-msgstr[1] "%(count)dDays"
-
-#: ../../portable/item.py:902
-#, python-format
-msgid "%(count)d hour"
-msgid_plural "%(count)d hours"
-msgstr[0] "%(count)d Hour"
-msgstr[1] "%(count)d Hours"
-
-#: ../../portable/item.py:1165
-msgid "no title"
-msgstr "No Title"
-
-#: ../../portable/item.py:1442
-msgid "starting up..."
-msgstr "Starting Up..."
-
-#: ../../portable/theme.py:174
-msgid "Example Playlist"
-msgstr "Example Playlist"
-
-#: ../../platform/osx/plat/frontends/widgets/application.py:169
-msgid "Download Completed"
-msgstr "Download Completed"
-
-#: ../../platform/osx/plat/frontends/widgets/application.py:170
-#, python-format
-msgid "Download of video '%s' is finished."
-msgstr "Download of video '%s' is finished."
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:199
-msgid "Pop Out"
-msgstr "Pop Out"
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:202
-msgid "Pop In"
-msgstr "Pop In"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
-msgid "Services"
-msgstr "Services"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:143
-msgid "Hide Others"
-msgstr "Hide Others"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:144
-msgid "Show All"
-msgstr "Show All"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:149
-msgid "Preferences..."
-msgstr "Preferences..."
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
-msgid "Close Window"
-msgstr "Close Window"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
-msgid "Cut"
-msgstr "Cut"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:161
-msgid "Copy"
-msgstr "Copy"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
-msgid "Paste"
-msgstr "Paste"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:165
-msgid "Select All"
-msgstr "Select All"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
-msgid "Edit"
-msgstr "Edit"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:172
-msgid "Present Half Size"
-msgstr "Present Half Size"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:173
-msgid "Present Actual Size"
-msgstr "Present Actual Size"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:174
-msgid "Present Double Size"
-msgstr "Present Double Size"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:176
-msgid "Present Video"
-msgstr "Present Video"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
-msgid "Zoom"
-msgstr "Zoom"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:184
-msgid "Minimize"
-msgstr "Minimize"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:186
-msgid "Main Window"
-msgstr "Main Window"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:188
-msgid "Bring All to Front"
-msgstr "Bring All to Front"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
-msgid "Window"
-msgstr "Window"
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
-#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:39
-msgid "Enable tray icon"
-msgstr "Enable the tray icon"
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
-msgid "Renderer options:"
-msgstr "Renderer Options:"
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:74
-msgid "Video renderer:"
-msgstr "Video Render:"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
-msgid "Update Available"
-msgstr "Update Available"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
-msgid "Do you want to download it now?"
-msgstr "Do you want to download it now?"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
-msgid "Install Adobe Flash?"
-msgstr "Install Adobe Flash?"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
-#, python-format
-msgid ""
-"For the best %(appname)s experience, we suggest you install Adobe Flash.  "
-"Would you like to do this now?"
-msgstr ""
-"For the best %(appname)s experience, we suggest you install Adobe Flash.  "
-"Would you like to do this now?"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
-msgid "Install Adobe Flash"
-msgstr "Install Adobe Flash"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
-msgid "When I click the red close button:"
-msgstr "when I click the close button:"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
-msgid "Close to tray so that downloads can continue."
-msgstr "Close to tray so that downloads may continue."
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:133
-msgid "Close to tray?"
-msgstr "Close Miro to the tray?"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:192
-msgid "Error Bombing Item"
-msgstr "Error Bombing the Item"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:194
-msgid "Error Recommending Item"
-msgstr "Error Recommending Item"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:196
-msgid "Error Opening Website"
-msgstr "Error Opening Website"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:201
-#, python-format
-msgid ""
-"There was an error opening %(url)s.  Please try again in a few seconds"
-msgstr ""
-"There was an error opening the page at %(url)s. Please try again in a few "
-"seconds."
-
-#: ../../portable/httpclient.py:89
-#, python-format
-msgid "Error: %(msg)s"
-msgstr ""
-
-#: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
-msgid "Can't connect"
-msgstr ""
-
-#: ../../portable/httpclient.py:105
-#, python-format
-msgid "Connection Error: %(msg)s"
-msgstr ""
-
-#: ../../portable/httpclient.py:111
-msgid "SSL connection error"
-msgstr ""
-
-#: ../../portable/httpclient.py:115
-msgid "HTTP error"
-msgstr ""
-
-#: ../../portable/httpclient.py:119
-#, python-format
-msgid "Bad Status Line: %(msg)s"
-msgstr ""
-
-#: ../../portable/httpclient.py:124
-#, python-format
-msgid "Bad Header Line: %(msg)s"
-msgstr ""
-
-#: ../../portable/httpclient.py:129
-#, python-format
-msgid "Bad Chunk size: %(msg)s"
-msgstr ""
-
-#: ../../portable/httpclient.py:134
-#, python-format
-msgid "Expected CRLF got: %(character)r"
-msgstr ""
-
-#: ../../portable/httpclient.py:139
-#, python-format
-msgid "%(host)s closed connection"
-msgstr ""
-
-#: ../../portable/httpclient.py:144 ../../portable/httpclient.py:173
-#: ../../portable/downloader.py:299
-msgid "File not found"
-msgstr ""
-
-#: ../../portable/httpclient.py:145
-msgid "Got 404 status code"
-msgstr ""
-
-#: ../../portable/httpclient.py:147
-#, python-format
-msgid "Bad Status Code: %(code)s"
-msgstr ""
-
-#: ../../portable/httpclient.py:152
-msgid "Authorization failed"
-msgstr ""
-
-#: ../../portable/httpclient.py:157
-#: ../../portable/frontends/widgets/crashdialog.py:48
-msgid "Internal Error"
-msgstr ""
-
-#: ../../portable/httpclient.py:158
-msgid "Pipeline request never started"
-msgstr ""
-
-#: ../../portable/httpclient.py:162
-msgid "Timeout"
-msgstr ""
-
-#: ../../portable/httpclient.py:163
-#, python-format
-msgid "Connection to %(host)s timed out"
-msgstr ""
-
-#: ../../portable/httpclient.py:167
-msgid "Invalid URL"
-msgstr ""
-
-#: ../../portable/httpclient.py:168
-#, python-format
-msgid "\"%(url)s\" is not a valid URL"
-msgstr ""
-
-#: ../../portable/httpclient.py:174
-#, python-format
-msgid "The file \"%(path)s\" doesn't exist"
-msgstr ""
-
-#: ../../portable/httpclient.py:178
-msgid "Read error"
-msgstr ""
-
-#: ../../portable/httpclient.py:179
-#, python-format
-msgid "Error while reading from \"%(path)s\""
-msgstr ""
-
-#: ../../portable/httpclient.py:376
-msgid "Unknown Error code"
-msgstr ""
-
-#: ../../portable/httpclient.py:408
-msgid "Connection closed"
-msgstr ""
-
-#: ../../portable/httpclient.py:829
-msgid "Unknown"
-msgstr ""
-
-#: ../../portable/httpclient.py:830
-msgid "Internal Error: Not ready to send"
-msgstr ""
-
-#: ../../portable/frontends/widgets/statictabs.py:103
-#: ../../portable/frontends/widgets/itemlistcontroller.py:516
-msgid "Video"
-msgstr ""
-
-#: ../../portable/frontends/widgets/statictabs.py:113
-#: ../../portable/frontends/widgets/itemlistcontroller.py:528
-msgid "Other"
-msgstr ""
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
-msgid "Add a Playlist"
-msgstr ""
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
-msgid "Add items to an existing playlist or a new one."
-msgstr ""
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
-msgid "Existing playlist:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
-msgid "New playlist:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:63
-msgid "Remove From the Library"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:94
-#: ../../portable/frontends/widgets/itemcontextmenu.py:191
-msgid "Play"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:95
-msgid "Play Just This Item"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:96
-#: ../../portable/frontends/widgets/itemcontextmenu.py:192
-msgid "Add to Playlist"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:99
-#: ../../portable/frontends/widgets/application.py:495
-msgid "Rename Item"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:101
-msgid "Revert Item Name"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:103
-#: ../../portable/frontends/widgets/itemcontextmenu.py:199
-msgid "Mark as Unplayed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:106
-#: ../../portable/frontends/widgets/itemcontextmenu.py:204
-msgid "Mark as Played"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:112
-msgid "Stop Seeding"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:114
-msgid "Resume Seeding"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:117
-#: ../../portable/frontends/widgets/itemcontextmenu.py:239
-#: ../../portable/frontends/widgets/itemcontextmenu.py:257
-msgid "Cancel Download"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:121
-#: ../../portable/frontends/widgets/itemcontextmenu.py:240
-msgid "Pause Download"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:124
-#: ../../portable/frontends/widgets/itemcontextmenu.py:253
-msgid "Resume Download"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:134
-#: ../../portable/frontends/widgets/style.py:240
-msgid "Web Page"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:141
-msgid "File in Browser"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:143
-#, python-format
-msgid "File in %(progname)s"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:145
-msgid "File on Disk"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:148
-msgid "View"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:186
-#, python-format
-msgid "%(count)d Downloaded Item"
-msgid_plural "%(count)d Downloaded Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:215
-#, python-format
-msgid "%(count)d Available Item"
-msgid_plural "%(count)d Available Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:228
-#, python-format
-msgid "%(count)d Downloading Item"
-msgid_plural "%(count)d Downloading Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:245
-#, python-format
-msgid "%(count)d Paused Item"
-msgid_plural "%(count)d Paused Items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:263
-msgid "Restart Upload"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:277
-msgid "Remove From Playlist"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:58
-#, python-format
-msgid "%(count)d hour ago"
-msgid_plural "%(count)d hours ago"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:64
-#, python-format
-msgid "%(count)d day ago"
-msgid_plural "%(count)d days ago"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:70
-#, python-format
-msgid "%(count)d month ago"
-msgid_plural "%(count)d months ago"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:92
-msgid "Auto-Expire Videos:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:95
-#, python-format
-msgid "Watched %(expiration)s (Default)"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:97
-msgid "Watched 1 day ago"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:98
-msgid "Watched 3 days ago"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:99
-msgid "Watched 6 days ago"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:100
-msgid "Watched 10 days ago"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:101
-msgid "Watched 1 month ago"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:137
-msgid "Outdated Feed Items:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:139
-#, python-format
-msgid "Keep %(number)s (Default)"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:141
-msgid "Keep 0"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:142
-msgid "Keep 20"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:143
-msgid "Keep 50"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:144
-msgid "Keep 100"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:145
-msgid "Keep 1000"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:169
-msgid "Remove All"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:193
-msgid "Pause Auto-Downloading when this many items are unplayed:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:197
-msgid "1 unplayed item"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:198
-msgid "3 unplayed items"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:199
-msgid "5 unplayed items"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:200
-msgid "10 unplayed items"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:201
-msgid "15 unplayed items"
-msgstr ""
-
-#: ../../portable/frontends/widgets/feedsettingspanel.py:241
-msgid "Feed Settings"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:63
-#, python-format
-msgid "%(name)s First Time Setup"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:122
-#, python-format
-msgid "Welcome to the %(name)s First Time Setup"
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:126
-#, python-format
-msgid ""
-"The next few screens will help you set up %(name)s so that it works best for "
-"you.\n"
-"\n"
-"We recommend that you have %(name)s launch when your computer starts up.  "
-"This way, downloads in progress can finish downloading and new media files "
-"can be downloaded in the background, ready when you want to watch."
-msgstr ""
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:138
-#, python-format
-msgid "Would you like to run %(name)s on startup?"
-msgstr ""
-
 #: ../../portable/frontends/widgets/firsttimedialog.py:153
 msgid "Next >"
-msgstr ""
+msgstr "Weiter >"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:163
 #, python-format
@@ -942,39 +531,53 @@ msgid ""
 "\n"
 "Would you like %(name)s to look for media files on your computer?"
 msgstr ""
+"%(name)s kann alle Mediendateien auf Ihrem Computer finden, um Ihnen bei der "
+"Organisation Ihrer Sammlung zu helfen.\n"
+"\n"
+"Möchten Sie, dass %(name)s nach Mediendateien auf Ihrem Computer sucht?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:185
 msgid "Restrict to all my personal files."
-msgstr ""
+msgstr "Auf meine persönlichen Dateien begrenzen."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:186
 msgid "Search custom folders:"
-msgstr ""
+msgstr "Bestimmte Ordner durchsuchen:"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:192
 #: ../../portable/frontends/widgets/prefpanel.py:435
 msgid "Change"
-msgstr ""
+msgstr "Ändern"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:197
 msgid "Choose directory to search for media files"
-msgstr ""
+msgstr "Verzeichnis auswählen, das nach Mediendateien durchsucht werden soll"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:211
 #: ../../portable/frontends/widgets/firsttimedialog.py:290
 msgid "< Previous"
-msgstr ""
+msgstr "< Zurück"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:223
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:282
 #: ../../portable/feed.py:2290 ../../portable/feed.py:2397
 msgid "Search"
-msgstr ""
+msgstr "Suchen"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:225
+#: ../../portable/frontends/widgets/firsttimedialog.py:293
+msgid "Finish"
+msgstr "Finish"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:273
 msgid "Searching for media files"
 msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:283
+#: ../../portable/dialogs.py:85
+msgid "Cancel"
+msgstr "Cancel"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:321
 #, python-format
@@ -1049,6 +652,14 @@ msgstr ""
 msgid "File Type"
 msgstr ""
 
+#: ../../portable/frontends/widgets/style.py:244
+msgid "Seeders"
+msgstr "Seeders"
+
+#: ../../portable/frontends/widgets/style.py:245
+msgid "Leechers"
+msgstr "Leechers"
+
 #: ../../portable/frontends/widgets/style.py:246
 msgid "Upload Rate"
 msgstr ""
@@ -1057,10 +668,26 @@ msgstr ""
 msgid "Upload Total"
 msgstr ""
 
+#: ../../portable/frontends/widgets/style.py:248
+msgid "Down Rate"
+msgstr "Down Rate"
+
+#: ../../portable/frontends/widgets/style.py:249
+msgid "Down Total"
+msgstr "Down Total"
+
+#: ../../portable/frontends/widgets/style.py:251
+msgid "Download Torrent"
+msgstr "Download Torrent"
+
 #: ../../portable/frontends/widgets/style.py:252
 #: ../../portable/dl_daemon/download.py:539
 msgid "Error"
 msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:253
+msgid "queued for autodownload"
+msgstr "Queued for Auto-Download"
 
 #: ../../portable/frontends/widgets/style.py:254
 #: ../../portable/frontends/widgets/style.py:1153
@@ -1076,6 +703,31 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:1171
 msgid "Newly Available"
 msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:258
+#: ../../portable/frontends/widgets/prefpanel.py:485
+#: ../../portable/frontends/widgets/tablist.py:580
+#: ../../portable/frontends/widgets/tablist.py:592
+#: ../../portable/frontends/widgets/tablist.py:598
+#: ../../portable/frontends/widgets/tablist.py:635
+#: ../../portable/frontends/widgets/tablist.py:641
+#: ../../portable/frontends/widgets/tablist.py:646
+#: ../../portable/dialogs.py:108
+msgid "Remove"
+msgstr "Remove"
+
+#: ../../portable/frontends/widgets/style.py:259
+msgid "Stop seeding"
+msgstr "Stop Seeding"
+
+#: ../../portable/frontends/widgets/style.py:571
+#: ../../portable/frontends/widgets/style.py:1164
+msgid "paused"
+msgstr "Paused"
+
+#: ../../portable/frontends/widgets/style.py:1034
+msgid "Remove from playlist"
+msgstr "Remove from playlist"
 
 #: ../../portable/frontends/widgets/displays.py:372
 #, python-format
@@ -1161,6 +813,18 @@ msgstr ""
 #: ../../portable/frontends/widgets/displays.py:585
 msgid "Put Into a New Folder"
 msgstr ""
+
+#: ../../portable/frontends/widgets/rundialog.py:82
+msgid "Username:"
+msgstr "Username"
+
+#: ../../portable/frontends/widgets/rundialog.py:86
+msgid "Password:"
+msgstr "Password:"
+
+#: ../../portable/frontends/widgets/browser.py:96
+msgid "Open in browser"
+msgstr "Open in browser"
 
 #: ../../portable/frontends/widgets/browser.py:102
 msgid "Download this video"
@@ -1435,21 +1099,38 @@ msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:1106
+#: ../../portable/frontends/widgets/application.py:809
+msgid "Warn me when I attempt to quit with downloads in progress"
+msgstr "Warn me if I attempt to quit while downloading is in progress"
+
+#: ../../portable/frontends/widgets/application.py:1124
 msgid "Message"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:1131
+#: ../../portable/frontends/widgets/application.py:1149
 msgid "Migrating Files"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:1141
+#: ../../portable/frontends/widgets/application.py:1159
 msgid "Migrating files"
 msgstr ""
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:81
+#: ../../portable/frontends/widgets/prefpanel.py:622
+msgid "Downloads"
+msgstr "Downloads"
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:90
+msgid "Single and external downloads"
+msgstr "Single and External downloads"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:93
 msgid "Feed downloads"
 msgstr ""
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:96
+msgid "Seeding"
+msgstr "Seeding"
 
 #: ../../portable/frontends/widgets/prefpanel.py:267
 #, python-format
@@ -1475,6 +1156,21 @@ msgstr ""
 #: ../../portable/frontends/widgets/prefpanel.py:284
 msgid "Manually"
 msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:289
+#: ../../portable/frontends/widgets/itemlistwidgets.py:624
+msgid "New"
+msgstr "New"
+
+#: ../../portable/frontends/widgets/prefpanel.py:290
+#: ../../portable/frontends/widgets/itemlistwidgets.py:624
+msgid "All"
+msgstr "All"
+
+#: ../../portable/frontends/widgets/prefpanel.py:291
+#: ../../portable/frontends/widgets/itemlistwidgets.py:624
+msgid "Off"
+msgstr "Off"
 
 #: ../../portable/frontends/widgets/prefpanel.py:297
 msgid "0"
@@ -1573,6 +1269,10 @@ msgstr ""
 msgid "Choose Movies Directory"
 msgstr ""
 
+#: ../../portable/frontends/widgets/prefpanel.py:453
+msgid "Migrate existing movies?"
+msgstr "Migrate existing movies?"
+
 #: ../../portable/frontends/widgets/prefpanel.py:454
 #, python-format
 msgid ""
@@ -1590,16 +1290,44 @@ msgstr ""
 msgid "Add Watched Folder"
 msgstr ""
 
+#: ../../portable/frontends/widgets/prefpanel.py:542
+msgid "Store downloads in this folder:"
+msgstr "Store downloads in this folder:"
+
 #: ../../portable/frontends/widgets/prefpanel.py:549
 msgid ""
 "Watch for new video and audio items in these folders and include them in "
 "library:"
 msgstr ""
 
+#: ../../portable/frontends/widgets/prefpanel.py:568
+msgid "Keep at least this much free space on my drive:"
+msgstr "Keep at least this much free space on my drive:"
+
 #: ../../portable/frontends/widgets/prefpanel.py:571
 #: ../../portable/frontends/widgets/prefpanel.py:577
 msgid "GB"
 msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:580
+msgid "1 day"
+msgstr "one day"
+
+#: ../../portable/frontends/widgets/prefpanel.py:581
+msgid "3 days"
+msgstr "3 Days"
+
+#: ../../portable/frontends/widgets/prefpanel.py:582
+msgid "6 days"
+msgstr "Six Days"
+
+#: ../../portable/frontends/widgets/prefpanel.py:583
+msgid "10 days"
+msgstr "10 Days"
+
+#: ../../portable/frontends/widgets/prefpanel.py:584
+msgid "1 month"
+msgstr "1 Month"
 
 #: ../../portable/frontends/widgets/prefpanel.py:590
 msgid "By default, video and audio items expire after:"
@@ -1622,13 +1350,25 @@ msgstr ""
 msgid "Stop after each video or audio item"
 msgstr ""
 
+#: ../../portable/frontends/widgets/prefpanel.py:620
+msgid "General"
+msgstr "General"
+
 #: ../../portable/frontends/widgets/prefpanel.py:621
 msgid "Feeds"
 msgstr ""
 
+#: ../../portable/frontends/widgets/prefpanel.py:623
+msgid "Folders"
+msgstr "Folders"
+
 #: ../../portable/frontends/widgets/prefpanel.py:624
 msgid "Disk space"
 msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:625
+msgid "Playback"
+msgstr "Playback"
 
 #: ../../portable/frontends/widgets/prefpanel.py:629
 msgid "Preferences"
@@ -1641,6 +1381,14 @@ msgstr ""
 #: ../../portable/frontends/widgets/newsearchfeed.py:59
 msgid "A search feed contains items that match a search term."
 msgstr ""
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:74
+msgid "Search for:"
+msgstr "Search for:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:81
+msgid "In this:"
+msgstr "In this:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:88
 msgid "Feed:"
@@ -1775,6 +1523,15 @@ msgstr ""
 #, python-format
 msgid "Resume All Downloads (%(paused)d)"
 msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:85
+msgid "Hide"
+msgstr "Hide"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:87
+#: ../../portable/frontends/widgets/diagnostics.py:76
+msgid "Show"
+msgstr "Show"
 
 #: ../../portable/frontends/widgets/gtk/window.py:495
 msgid "All files"
@@ -2027,9 +1784,17 @@ msgstr ""
 msgid "Share feed"
 msgstr ""
 
+#: ../../portable/frontends/widgets/itemlistwidgets.py:637
+msgid "Settings"
+msgstr "Settings"
+
 #: ../../portable/frontends/widgets/itemlistwidgets.py:643
 msgid "Remove feed"
 msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:719
+msgid "Unwatched"
+msgstr "Unwatched"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:730
 msgid "View|All"
@@ -2084,6 +1849,14 @@ msgstr ""
 msgid "Diagnostics"
 msgstr ""
 
+#: ../../portable/searchengines.py:172
+msgid "Search All"
+msgstr "Search All"
+
+#: ../../portable/messages.py:1078 ../../portable/item.py:1078
+msgid "queued for download"
+msgstr "Queued for Download"
+
 #: ../../portable/messagehandler.py:1273
 msgid "Subscribed to new feed:"
 msgstr ""
@@ -2137,6 +1910,19 @@ msgstr ""
 msgid "Could not download the %(appname)s feed file: %(url)s"
 msgstr ""
 
+#: ../../portable/commandline.py:179
+msgid "Invalid Torrent"
+msgstr "Invalid Torrent!"
+
+#: ../../portable/commandline.py:181
+#, python-format
+msgid ""
+"The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+"[OK]"
+msgstr ""
+"The Torrent file %(filename)s appears to be corrupt and cannot be opened. "
+"[OK]"
+
 #: ../../portable/downloader.py:258
 msgid "activity"
 msgstr ""
@@ -2162,6 +1948,15 @@ msgstr ""
 msgid "Would you like to keep the feed?"
 msgstr ""
 
+#: ../../portable/feed.py:1066
+msgid "Bad content-type"
+msgstr "Bad content type!"
+
+#: ../../portable/feed.py:1079
+#, python-format
+msgid "Channel is not compatible with %(appname)s"
+msgstr "Channel is not compatible with %(appname)s"
+
 #: ../../portable/feed.py:1082
 #, python-format
 msgid ""
@@ -2180,9 +1975,25 @@ msgstr ""
 msgid "Search All: %(text)s"
 msgstr ""
 
+#: ../../portable/feed.py:2264 ../../portable/feed.py:2415
+msgid "Local Files"
+msgstr "Local Files"
+
+#: ../../portable/feed.py:2429
+msgid "Playing File"
+msgstr "Playing File"
+
+#: ../../portable/dialogs.py:83
+msgid "Ok"
+msgstr "Okay"
+
 #: ../../portable/dialogs.py:86
 msgid "Done"
 msgstr ""
+
+#: ../../portable/dialogs.py:89
+msgid "Quit"
+msgstr "Quit"
 
 #: ../../portable/dialogs.py:90
 msgid "Continue"
@@ -2223,6 +2034,10 @@ msgstr ""
 #: ../../portable/dialogs.py:100
 msgid "Delete Videos"
 msgstr ""
+
+#: ../../portable/dialogs.py:101
+msgid "Create"
+msgstr "Create"
 
 #: ../../portable/dialogs.py:102
 msgid "Create Feed"
@@ -2267,6 +2082,14 @@ msgstr ""
 #: ../../portable/dialogs.py:116
 msgid "Stop Watching"
 msgstr ""
+
+#: ../../portable/singleclick.py:54
+msgid "Download already exists"
+msgstr "The downloaded file already exists."
+
+#: ../../portable/singleclick.py:55
+msgid "That URL is already an external download."
+msgstr "That URL is already an external download."
 
 #: ../../portable/singleclick.py:61
 #, python-format
@@ -2582,27 +2405,41 @@ msgstr ""
 #: ../../portable/util.py:300 ../../portable/util.py:302
 #, python-format
 msgid "%(size)sGB"
-msgstr ""
+msgstr "%(size)sGB"
 
 #: ../../portable/util.py:306 ../../portable/util.py:308
 #, python-format
 msgid "%(size)sMB"
-msgstr ""
+msgstr "%(size)sMB"
 
 #: ../../portable/util.py:312 ../../portable/util.py:314
 #, python-format
 msgid "%(size)sKB"
-msgstr ""
+msgstr "%(size)sKB"
 
 #: ../../portable/util.py:318 ../../portable/util.py:320
 #, python-format
 msgid "%(size)sB"
-msgstr ""
+msgstr "%(size)sB"
 
 #: ../../portable/playlist.py:189
 #, python-format
 msgid "Enter a new name for the playlist %s"
 msgstr ""
+
+#: ../../portable/item.py:897
+#, python-format
+msgid "%(count)d day"
+msgid_plural "%(count)d days"
+msgstr[0] "%(count)d Day"
+msgstr[1] "%(count)dDays"
+
+#: ../../portable/item.py:902
+#, python-format
+msgid "%(count)d hour"
+msgid_plural "%(count)d hours"
+msgstr[0] "%(count)d Hour"
+msgstr[1] "%(count)d Hours"
 
 #: ../../portable/item.py:907
 #, python-format
@@ -2610,6 +2447,10 @@ msgid "%(count)d minute"
 msgid_plural "%(count)d minutes"
 msgstr[0] ""
 msgstr[1] ""
+
+#: ../../portable/item.py:1165
+msgid "no title"
+msgstr "No Title"
 
 #: ../../portable/item.py:1211
 msgid "Contents appear in the library"
@@ -2619,9 +2460,13 @@ msgstr ""
 msgid "Contents:"
 msgstr ""
 
+#: ../../portable/item.py:1442
+msgid "starting up..."
+msgstr "Starting Up..."
+
 #: ../../portable/opml.py:193
 msgid "OPML Import failed"
-msgstr ""
+msgstr "Outline Processor Markup Language (OPML) file Import failed"
 
 #: ../../portable/opml.py:194
 msgid ""
@@ -2645,6 +2490,10 @@ msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] ""
 msgstr[1] ""
+
+#: ../../portable/theme.py:174
+msgid "Example Playlist"
+msgstr "Example Playlist"
 
 #: ../../portable/displaytext.py:52
 #, python-format
@@ -2761,12 +2610,12 @@ msgstr[1] ""
 msgid "%(month)s %(dayofmonth)s, %(year)s"
 msgstr ""
 
-#: ../../portable/storedatabase.py:425
+#: ../../portable/storedatabase.py:449
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr ""
 
-#: ../../portable/storedatabase.py:428
+#: ../../portable/storedatabase.py:452
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database: Disk Full.\n"
@@ -2775,41 +2624,172 @@ msgid ""
 "Recent changes may be lost."
 msgstr ""
 
-#: ../../portable/storedatabase.py:440
+#: ../../portable/storedatabase.py:464
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr ""
 
-#: ../../portable/storedatabase.py:443
+#: ../../portable/storedatabase.py:467
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/application.py:171
+msgid "Download Completed"
+msgstr "Download Completed"
+
+#: ../../platform/osx/plat/frontends/widgets/application.py:172
+#, python-format
+msgid "Download of video '%s' is finished."
+msgstr "Download of video '%s' is finished."
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:199
+msgid "Pop Out"
+msgstr "Pop Out"
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:202
+msgid "Pop In"
+msgstr "Pop In"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
+msgid "Services"
+msgstr "Services"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:141
 #, python-format
 msgid "Hide %(appname)s"
 msgstr ""
 
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:143
+msgid "Hide Others"
+msgstr "Hide Others"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:144
+msgid "Show All"
+msgstr "Show All"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:149
+msgid "Preferences..."
+msgstr "Preferences..."
+
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:151
 #, python-format
 msgid "Quit %(appname)s"
 msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
+msgid "Close Window"
+msgstr "Close Window"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
+msgid "Cut"
+msgstr "Cut"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:161
+msgid "Copy"
+msgstr "Copy"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
+msgid "Paste"
+msgstr "Paste"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:165
+msgid "Select All"
+msgstr "Select All"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
+msgid "Edit"
+msgstr "Edit"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:172
+msgid "Present Half Size"
+msgstr "Present Half Size"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:173
+msgid "Present Actual Size"
+msgstr "Present Actual Size"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:174
+msgid "Present Double Size"
+msgstr "Present Double Size"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:176
+msgid "Present Video"
+msgstr "Present Video"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
+msgid "Zoom"
+msgstr "Zoom"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:184
+msgid "Minimize"
+msgstr "Minimize"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:186
+msgid "Main Window"
+msgstr "Main Window"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:188
+msgid "Bring All to Front"
+msgstr "Bring All to Front"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
+msgid "Window"
+msgstr "Window"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:195
 #, python-format
 msgid "%(appname)s Help"
 msgstr ""
 
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
+#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:39
+msgid "Enable tray icon"
+msgstr "Enable the tray icon"
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
+msgid "Renderer options:"
+msgstr "Renderer Options:"
+
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
 #, python-format
 msgid "You must restart %(appname)s for renderer changes to take effect."
 msgstr ""
 
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:74
+msgid "Video renderer:"
+msgstr "Video Render:"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
+msgid "Update Available"
+msgstr "Update Available"
+
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
 #, python-format
 msgid "A new version of %(appname)s is available for download."
 msgstr ""
+
+#: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
+msgid "Do you want to download it now?"
+msgstr "Do you want to download it now?"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
+msgid "Install Adobe Flash?"
+msgstr "Install Adobe Flash?"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
+#, python-format
+msgid ""
+"For the best %(appname)s experience, we suggest you install Adobe Flash.  "
+"Would you like to do this now?"
+msgstr ""
+"For the best %(appname)s experience, we suggest you install Adobe Flash.  "
+"Would you like to do this now?"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
+msgid "Install Adobe Flash"
+msgstr "Install Adobe Flash"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
 #, python-format
@@ -2821,10 +2801,22 @@ msgid ""
 "been installed."
 msgstr ""
 
+#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
+msgid "When I click the red close button:"
+msgstr "when I click the close button:"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
+msgid "Close to tray so that downloads can continue."
+msgstr "Close to tray so that downloads may continue."
+
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
 #, python-format
 msgid "Quit %(appname)s completely."
 msgstr ""
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:133
+msgid "Close to tray?"
+msgstr "Close Miro to the tray?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:134
 #, python-format
@@ -2832,3 +2824,23 @@ msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:192
+msgid "Error Bombing Item"
+msgstr "Error Bombing the Item"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:194
+msgid "Error Recommending Item"
+msgstr "Error Recommending Item"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:196
+msgid "Error Opening Website"
+msgstr "Error Opening Website"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:201
+#, python-format
+msgid ""
+"There was an error opening %(url)s.  Please try again in a few seconds"
+msgstr ""
+"There was an error opening the page at %(url)s. Please try again in a few "
+"seconds."
