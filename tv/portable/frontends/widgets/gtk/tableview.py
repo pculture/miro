@@ -496,7 +496,7 @@ class TableView(Widget):
 
     draws_selection = False
 
-    def __init__(self, model):
+    def __init__(self, model, fixed_height=False):
         Widget.__init__(self)
         self.model = model
         self.set_widget(MiroTreeView(model._model))
