@@ -150,7 +150,7 @@ class Application:
             return playback.handle_key_press(key, mods)
 
     def handle_movies_gone(self, continue_callback):
-        call_on_ui_thread(lambda: self._handle_movies_gone(continue_callback))
+        call_on_ui_thread(self._handle_movies_gone, continue_callback)
 
     def _handle_movies_gone(self, continue_callback):
         title = _("Movies directory gone")
