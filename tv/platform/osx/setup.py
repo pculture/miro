@@ -111,12 +111,11 @@ else:
 #   isysroot flag.
 # =============================================================================
 
-ROOT_LIB_DIR = os.path.join(SANDBOX_DIR, "lib")
-BOOST_PYTHON_LIB = os.path.join(ROOT_LIB_DIR, "libboost_python-%s.%s" % (BOOST_VERSION, BOOST_LIB_EXT))
-BOOST_FILESYSTEM_LIB = os.path.join(ROOT_LIB_DIR, 'libboost_filesystem-%s.%s' % (BOOST_VERSION, BOOST_LIB_EXT))
-BOOST_DATETIME_LIB = os.path.join(ROOT_LIB_DIR, 'libboost_date_time-%s.%s' % (BOOST_VERSION, BOOST_LIB_EXT))
-BOOST_THREAD_LIB = os.path.join(ROOT_LIB_DIR, 'libboost_thread-%s.%s' % (BOOST_VERSION, BOOST_LIB_EXT))
-BOOST_SYSTEM_LIB = os.path.join(ROOT_LIB_DIR, 'libboost_system-%s.%s' % (BOOST_VERSION, BOOST_LIB_EXT))
+BOOST_PYTHON_LIB = os.path.join(BOOST_LIB_DIR, "libboost_python-%s.%s" % (BOOST_VERSION, BOOST_LIB_EXT))
+BOOST_FILESYSTEM_LIB = os.path.join(BOOST_LIB_DIR, 'libboost_filesystem-%s.%s' % (BOOST_VERSION, BOOST_LIB_EXT))
+BOOST_DATETIME_LIB = os.path.join(BOOST_LIB_DIR, 'libboost_date_time-%s.%s' % (BOOST_VERSION, BOOST_LIB_EXT))
+BOOST_THREAD_LIB = os.path.join(BOOST_LIB_DIR, 'libboost_thread-%s.%s' % (BOOST_VERSION, BOOST_LIB_EXT))
+BOOST_SYSTEM_LIB = os.path.join(BOOST_LIB_DIR, 'libboost_system-%s.%s' % (BOOST_VERSION, BOOST_LIB_EXT))
 
 # =============================================================================
 # Only now may we import things from the local sandbox and our own tree
