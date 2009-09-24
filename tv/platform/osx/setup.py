@@ -59,11 +59,13 @@ PYTHON_VERSION = sys.version[0:3]
 if OS_VERSION < 9:
     SANDBOX_DIR = "/usr/local"
     PYTHON_LIB = os.path.join("/", "Library", "Frameworks", "Python.framework", "Versions", "Current", "Python")
+    BOOST_LIB_EXT = 'a'
 else:
     SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..')))
     SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
     PYTHON_ROOT = os.path.join("/", "System", "Library", "Frameworks", "Python.framework", "Versions", PYTHON_VERSION)
     PYTHON_LIB = os.path.join(PYTHON_ROOT, "Python")
+    BOOST_LIB_EXT = 'dylib'
     sys.path.insert(0, os.path.join(SANDBOX_DIR, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages'))
     if OS_VERSION == 9:
         MACOSX_DEPLOYMENT_TARGET="10.5"
@@ -110,11 +112,11 @@ else:
 # =============================================================================
 
 ROOT_LIB_DIR = os.path.join(SANDBOX_DIR, "lib")
-BOOST_PYTHON_LIB = os.path.join(ROOT_LIB_DIR, "libboost_python-%s.dylib" % BOOST_VERSION)
-BOOST_FILESYSTEM_LIB = os.path.join(ROOT_LIB_DIR, 'libboost_filesystem-%s.dylib' % BOOST_VERSION)
-BOOST_DATETIME_LIB = os.path.join(ROOT_LIB_DIR, 'libboost_date_time-%s.dylib' % BOOST_VERSION)
-BOOST_THREAD_LIB = os.path.join(ROOT_LIB_DIR, 'libboost_thread-%s.dylib' % BOOST_VERSION)
-BOOST_SYSTEM_LIB = os.path.join(ROOT_LIB_DIR, 'libboost_system-%s.dylib' % BOOST_VERSION)
+BOOST_PYTHON_LIB = os.path.join(ROOT_LIB_DIR, "libboost_python-%s.%s" % (BOOST_VERSION, BOOST_LIB_EXT))
+BOOST_FILESYSTEM_LIB = os.path.join(ROOT_LIB_DIR, 'libboost_filesystem-%s.%s' % (BOOST_VERSION, BOOST_LIB_EXT))
+BOOST_DATETIME_LIB = os.path.join(ROOT_LIB_DIR, 'libboost_date_time-%s.%s' % (BOOST_VERSION, BOOST_LIB_EXT))
+BOOST_THREAD_LIB = os.path.join(ROOT_LIB_DIR, 'libboost_thread-%s.%s' % (BOOST_VERSION, BOOST_LIB_EXT))
+BOOST_SYSTEM_LIB = os.path.join(ROOT_LIB_DIR, 'libboost_system-%s.%s' % (BOOST_VERSION, BOOST_LIB_EXT))
 
 # =============================================================================
 # Only now may we import things from the local sandbox and our own tree
