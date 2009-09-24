@@ -101,7 +101,7 @@ class Application:
         from the :mod:`miro.startup` module.
         """
         self.connect_to_signals()
-        startup.install_movies_directory_gone_handler(self.handle_movies_gone)
+        startup.install_movies_directory_gone_handler(self.handle_movies_directory_gone)
         startup.install_first_time_handler(self.handle_first_time)
         startup.startup()
 
@@ -149,19 +149,21 @@ class Application:
                 app.playback_manager.detached_window is None):
             return playback.handle_key_press(key, mods)
 
-    def handle_movies_gone(self, continue_callback):
-        call_on_ui_thread(lambda: self._handle_movies_gone(continue_callback))
+    def handle_movies_directory_gone(self, continue_callback):
+        call_on_ui_thread(self._handle_movies_directory_gone, continue_callback)
 
-    def _handle_movies_gone(self, continue_callback):
+    def _handle_movies_directory_gone(self, continue_callback):
         title = _("Movies directory gone")
         description = _(
-            "%(shortappname)s can't find the primary video directory "
+            "%(shortappname)s can't use the primary video directory "
             "located at:\n"
             "\n"
             "%(moviedirectory)s\n"
             "\n"
             "This may be because it is located on an external drive that "
-            "is not connected.\n"
+            "is not connected, is a directory that %(shortappname)s does "
+            "not have write permission to, or there is something that is "
+            "not a directory at that path.\n"
             "\n"
             "If you continue, the primary video directory will be reset "
             "to a location on this drive.  If you had videos downloaded "
