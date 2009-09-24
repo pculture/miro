@@ -104,13 +104,24 @@ def startup_function(func):
             m.send_to_frontend()
     return wrapped
 
-_movies_directory_gone_handler = None
+def _movies_directory_gone_handler(callback):
+    """Default _movies_directory_gone_handler.  The frontend should
+    override this using the ``install_movies_directory_gone_handler``
+    function.
+    """
+    logging.error("Movies directory is gone -- no handler installed!")
+    eventloop.addUrgentCall(callback, "continuing startup")
 
 def install_movies_directory_gone_handler(callback):
     global _movies_directory_gone_handler
     _movies_directory_gone_handler = callback
 
-_first_time_handler = None
+def _first_time_handler(callback):
+    """Default _first_time_handler.  The frontend should override this
+    using the ``install_first_time_handler`` function.
+    """
+    logging.error("First time -- no handler installed.")
+    eventloop.addUrgentCallback(callback, "continuing startup")
 
 def install_first_time_handler(callback):
     global _first_time_handler
@@ -217,13 +228,11 @@ def finish_startup(obj, thread):
 def check_firsttime():
     """Run the first time wizard if need be.
     """
+    callback = lambda: eventloop.addUrgentCall(check_movies_gone, "check movies gone")
     if is_first_time():
-        if _first_time_handler:
-            logging.info("First time -- calling handler.")
-            _first_time_handler(lambda: eventloop.addUrgentCall(check_movies_gone, "check movies gone"))
-            return
-        else:
-            logging.warn("First time -- no handler installed!")
+        logging.info("First time -- calling handler.")
+        _first_time_handler(callback)
+        return
 
     eventloop.addUrgentCall(check_movies_gone, "check movies gone")
 
@@ -231,14 +240,25 @@ def check_firsttime():
 def check_movies_gone():
     """Checks to see if the movies directory is gone.
     """
-    if is_movies_directory_gone():
-        if _movies_directory_gone_handler:
-            logging.info("Movies directory is gone -- calling handler.")
-            _movies_directory_gone_handler(lambda: eventloop.addUrgentCall(fix_movies_gone, "startup network stuff"))
-            return
-        else:
-            logging.warn("Movies directory is gone -- no handler installed!")
+    callback = lambda: eventloop.addUrgentCall(fix_movies_gone,
+                                               "fix movies gone")
 
+    if is_movies_directory_gone():
+        logging.info("Movies directory is gone -- calling handler.")
+        _movies_directory_gone_handler(callback)
+        return
+
+    movies_dir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))
+    if not os.path.exists(movies_dir):
+        try:
+            os.makedirs(movies_dir)
+        except OSError:
+            logging.info("Movies directory can't be created -- calling handler")
+            # FIXME - this isn't technically correct, but it's probably
+            # close enough that a user can fix the issue and Miro can
+            # run happily.
+            _movies_directory_gone_handler(callback)
+            return
     eventloop.addUrgentCall(finish_backend_startup, "reconnect downloaders")
 
 @startup_function
@@ -262,7 +282,6 @@ def on_frontend_started():
     """Perform startup actions that should happen after the frontend is
     already up and running.
     """
-
     logging.info("Starting auto downloader...")
     autodler.start_downloader()
     yield None
@@ -332,24 +351,26 @@ def is_movies_directory_gone():
         if os.path.exists(movies_dir):
             contents = os.listdir(movies_dir)
             if contents:
-                # There's something inside the directory consider it present (even
-                # if all our items are missing.
+                # there's something inside the directory consider it
+                # present (even if all our items are missing).
                 return False
 
     except OSError:
-        # We can't access the directory.  Seems like it's gone.
+        # we can't access the directory--treat it as if it's gone.
         logging.info("Can't access directory.")
         return True
 
-    # make sure that we have actually downloaded something into the movies
-    # directory.
-    movies_dir = config.get(prefs.MOVIES_DIRECTORY)
+    # at this point either there's no movies_dir or there is an empty
+    # movies_dir.  we check to see if we think something is downloaded.
     for downloader_ in downloader.RemoteDownloader.make_view():
-        if (downloader_.isFinished()
-                and downloader_.get_filename().startswith(movies_dir)):
+        if ((downloader_.isFinished()
+             and downloader_.get_filename().startswith(movies_dir))):
+            # we think something is downloaded, so it seems like the
+            # movies directory is gone.
             logging.info("Directory there, but missing files.")
             return True
 
+    # we have no content, so everything's fine.
     return False
 
 def setup_theme():
