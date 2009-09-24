@@ -140,7 +140,7 @@ def launchDownloaderDaemon():
     os_info = os.uname()
     os_version = int(os_info[2].split('.')[0])
     python_version = sys.version[0:3]
-    if os_version == "10" and python_version == "2.6":
+    if os_version == 10 and python_version == "2.6":
         eventloop.join()
 
 # =============================================================================
