@@ -249,6 +249,7 @@ def check_movies_gone():
         return
 
     movies_dir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))
+    # if the directory doesn't exist, create it.
     if not os.path.exists(movies_dir):
         try:
             os.makedirs(movies_dir)
@@ -259,6 +260,17 @@ def check_movies_gone():
             # run happily.
             _movies_directory_gone_handler(callback)
             return
+
+    # make sure the directory is writeable
+    try:
+        fn = os.path.join(movies_dir, "testfile")
+        f = open(fn, "w")
+        f.write("test")
+        f.close()
+        os.remove(fn)
+    except IOError:
+        _movies_directory_gone_handler(callback)
+        return
     eventloop.addUrgentCall(finish_backend_startup, "reconnect downloaders")
 
 @startup_function
