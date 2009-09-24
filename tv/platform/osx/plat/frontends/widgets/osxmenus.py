@@ -64,9 +64,14 @@ MODIFIERS_MAP = {
     ALT:   NSAlternateKeyMask
 }
 
+if isinstance(NSBackspaceCharacter, int):
+    backspace = NSBackspaceCharacter
+else:
+    backspace = ord(NSBackspaceCharacter)
+    
 KEYS_MAP = {
     SPACE: " ",
-    BKSPACE: struct.pack("H", ord(NSBackspaceCharacter)),
+    BKSPACE: struct.pack("H", backspace),
     DELETE: NSDeleteFunctionKey,
     RIGHT_ARROW: NSRightArrowFunctionKey,
     LEFT_ARROW: NSLeftArrowFunctionKey,

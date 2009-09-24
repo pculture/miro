@@ -33,7 +33,7 @@ OS_VERSION=$(uname -r | cut -d . -f 1)
 if [ $OS_VERSION == "8" ]; then
     PYTHON_VERSION=2.4
     PYTHON_ROOT=/Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION
-    export MACOSX_DEPLOYMENT_TARGET=10.4
+    #export MACOSX_DEPLOYMENT_TARGET=10.4
 elif [ $OS_VERSION == "9" ]; then
     PYTHON_VERSION=2.5
     PYTHON_ROOT=/System/Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION

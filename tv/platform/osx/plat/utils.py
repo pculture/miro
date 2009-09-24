@@ -104,8 +104,6 @@ def initializeLocale():
 def setup_logging (inDownloader=False):
     if inDownloader:
         level = logging.INFO
-        if config.get(prefs.APP_VERSION).endswith("git"):
-            level = logging.DEBUG
         logging.basicConfig(level=level, format='%(levelname)-8s %(message)s')
         handler = logging.StreamHandler(sys.stdout)
         logging.getLogger('').addHandler(handler)
@@ -286,12 +284,21 @@ def launchDownloadDaemon(oldpid, env):
     env.update(os.environ)
 
     exe = NSBundle.mainBundle().executablePath()
-    arch = os.uname()[-1]
 
+    os_info = os.uname()
+    os_version = int(os_info[2].split('.')[0])
+    if os_version < 9:
+        launch_path = exe
+        launch_arguments = [u'download_daemon']
+    else:
+        arch = os.uname()[-1]
+        launch_path = '/usr/bin/arch'
+        launch_arguments = ['-%s' % arch, exe, u'download_daemon']
+    
     global dlTask
     dlTask = NSTask.alloc().init()
-    dlTask.setLaunchPath_('/usr/bin/arch')
-    dlTask.setArguments_(['-%s' % arch, exe, u'download_daemon'])
+    dlTask.setLaunchPath_(launch_path)
+    dlTask.setArguments_(launch_arguments)
     dlTask.setEnvironment_(env)
 
     controller = NSApplication.sharedApplication().delegate()

@@ -112,7 +112,10 @@ def launchApplication():
 
 def launchDownloaderDaemon():
     # Increase the maximum file descriptor count (to the max)
+    # NOTE: the info logging is REQUIRED for some unknown reason, if it is not
+    # done here, no further logging can be done in the daemon and it gets stuck.
     import resource
+    logging.info('Increasing file descriptor count limit in Downloader')
     resource.setrlimit(resource.RLIMIT_NOFILE, (10240, -1))
 
     # Make sure we don't leak from the downloader eventloop
