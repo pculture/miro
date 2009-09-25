@@ -224,7 +224,7 @@ class ShutDownCommand(Command):
         import threading
         eventloop.threadPoolQuit()
         for thread in threading.enumerate():
-            if thread != threading.currentThread() and not thread.isDaemon():
+            if thread != threading.currentThread() and thread.getName() != "MainThread" and not thread.isDaemon():
                 thread.join()
         endtime = starttime + DAEMONIC_THREAD_TIMEOUT
         for thread in threading.enumerate():
