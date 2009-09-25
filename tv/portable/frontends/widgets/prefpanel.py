@@ -47,6 +47,7 @@ Refer to documentation for those functions for help.
 
 import logging
 import sys
+import os
 
 from miro import app
 from miro import config
@@ -440,12 +441,28 @@ class _MovieDirectoryHelper(object):
         self.button.connect('clicked', self._on_button_clicked)
 
     def _on_button_clicked(self, button):
-        dir = dialogs.ask_for_directory(_("Choose Movies Directory"),
-                initial_directory=config.get(prefs.MOVIES_DIRECTORY),
-                transient_for=_pref_window)
-        if dir is not None:
-            self.path = dir
-            self.label.set_text(filenameToUnicode(dir))
+        d = dialogs.ask_for_directory(_("Choose Movies Directory"),
+                                      initial_directory=config.get(prefs.MOVIES_DIRECTORY),
+                                      transient_for=_pref_window)
+        if d is not None:
+            try:
+                if not os.path.exists(d):
+                    os.makedirs(d)
+                fn = os.path.join(d, "testfile")
+                f = open(fn, "w")
+                f.write("test")
+                f.close()
+                os.remove(fn)
+            except (OSError, IOError):
+                dialogs.show_message(_("Directory not valid"),
+                                     _("Directory '%s' could not be created.  " +
+                                       "Please choose a directory you have " +
+                                       "write access to."),
+                                     dialogs.WARNING_MESSAGE)
+                return
+            logging.info("Created directory.  It's valid.")
+            self.path = d
+            self.label.set_text(filenameToUnicode(d))
 
     def set_initial_path(self):
         self.path = self.initial_path = config.get(prefs.MOVIES_DIRECTORY)
