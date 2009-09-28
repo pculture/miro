@@ -76,8 +76,8 @@ PRESERVE_DISK_SPACE         = Pref( key='preserveDiskSpace',     default=True,  
 PRESERVE_X_GB_FREE          = Pref( key='preserveXGBFree',       default=0.2,   platformSpecific=False )
 EXPIRE_AFTER_X_DAYS         = Pref( key='expireAfterXDays',      default=6,     platformSpecific=False,
                                     possible_values=[1,3,6,10,30,-1], failsafe_value=-1 )
-DOWNLOADS_TARGET            = Pref( key='DownloadsTarget',       default=8,     platformSpecific=False ) # max auto downloads
-MAX_MANUAL_DOWNLOADS        = Pref( key='MaxManualDownloads',    default=10,    platformSpecific=False )
+DOWNLOADS_TARGET            = Pref( key='DownloadsTarget',       default=4,     platformSpecific=False ) # max auto downloads
+MAX_MANUAL_DOWNLOADS        = Pref( key='MaxManualDownloads',    default=5,    platformSpecific=False )
 VOLUME_LEVEL                = Pref( key='VolumeLevel',           default=1.0,   platformSpecific=False )
 BT_MIN_PORT                 = Pref( key='BitTorrentMinPort',     default=8500,  platformSpecific=False )
 BT_MAX_PORT                 = Pref( key='BitTorrentMaxPort',     default=8600,  platformSpecific=False )

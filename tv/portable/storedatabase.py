@@ -491,6 +491,9 @@ class LiveStorage:
             "retrying will work.\n\n"
             "If retrying did not work, please quit %(appname)s and restart.  "
             "Recent changes may be lost.\n\n"
+            "If you see this error often while downloading, we suggest "
+            "you reduce the number of simultaneous downloads in the Options "
+            "dialog in the Download tab.\n\n"
             "Error: %(error_text)s\n\n",
             {"appname": config.get(prefs.SHORT_APP_NAME),
              "error_text": error_text}
