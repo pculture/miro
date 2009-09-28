@@ -1312,7 +1312,7 @@ class BackendMessageHandler(messages.MessageHandler):
         config.set(prefs.MOVIES_DIRECTORY, message.path)
         if message.migrate:
             self._migrate(old_path, message.path)
-        feed.Feed.get_directory_feed().update()
+        messages.UpdateFeed(feed.Feed.get_directory_feed().id).send_to_backend()
 
     def _migrate(self, old_path, new_path):
         to_migrate = list(downloader.RemoteDownloader.finished_view())
