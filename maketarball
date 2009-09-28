@@ -17,19 +17,21 @@
 #    ./maketarball Miro-2.5
 #    ./maketarball v2.5.2
 
+NOWDATE=`date "+%Y-%m-%d"`
+
 if [ -z "$1" ]
 then
     BRANCH=master
-    PREFIX=`date "+miro-%Y-%m-%d-$BRANCH"`
+    PREFIX="miro-$NOWDATE-$BRANCH"
 else
     BRANCH=$1
     PREFIX="miro-$BRANCH"
 fi
 
 # convert PREFIX to all lowercase.
-# nix the miro-miro- that happens because branch names are Miro-x.y.
+# rename miro-miro- (branch names) to something more palatable
 # nix the v from tag names.
-PREFIX=`echo "$PREFIX" | tr '[A-Z]' '[a-z]' | sed s/miro-miro-/miro-/ | sed s/v//`
+PREFIX=`echo "$PREFIX" | tr '[A-Z]' '[a-z]' | sed s/miro-miro-/miro-$NOWDATE-Miro-/ | sed s/v//`
 
 echo "== BRANCH $BRANCH"
 echo "== PREFIX $PREFIX"
