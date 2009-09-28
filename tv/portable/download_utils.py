@@ -104,8 +104,8 @@ def parseURL(url, split_path=False):
 
     if path == '' or not path.startswith('/'):
         path = '/' + path
-    elif re.match(r'/[a-zA-Z]:', path):
-        # Fix "/C:/foo" paths
+    elif scheme.startswith("file") and re.match(r'/[a-zA-Z]:', path):
+        # fixes "file:///C:/foo" paths
         path = path[1:]
     fullPath = path
     if split_path:

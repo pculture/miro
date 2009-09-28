@@ -1128,23 +1128,23 @@ class HTTPClientTest(HTTPClientTestBase):
 #         self.assertNotEqual(self.data['body'].find('MiroTestCookie:foobar'),-1)
 
     def testParseURL(self):
-        (scheme, host, port, path) = \
-                download_utils.parseURL("https://www.foo.com/abc;123?a=b#4")
-        self.assertEquals(scheme, 'https')
-        self.assertEquals(host, 'www.foo.com')
-        self.assertEquals(port, 443)
-        self.assertEquals(path, '/abc;123?a=b')
-        (scheme, host, port, path) = \
-                download_utils.parseURL("http://www.foo.com/abc;123?a=b#4")
-        self.assertEquals(port, 80)
-        (scheme, host, port, path) = \
-                download_utils.parseURL("http://www.foo.com:5000/abc;123?a=b#4")
-        self.assertEquals(port, 5000)
-        # I guess some feeds have bad url, with a double port in them, test
-        # that we handle these.
-        (scheme, host, port, path) = \
-                download_utils.parseURL("http://www.foo.com:123:123/abc;123?a=b#4")
-        self.assertEquals(port, 123)
+        for mem in (
+            ("https://www.foo.com/abc;123?a=b#4", ("https", "www.foo.com", 443, "/abc;123?a=b")),
+            ("http://www.foo.com/abc;123?a=b#4", ("http", "www.foo.com", 80, "/abc;123?a=b")),
+            ("http://www.foo.com:5000/abc;123?a=b#4", ("http", "www.foo.com", 5000, "/abc;123?a=b")),
+
+            # I guess some feeds have bad url, with a double port in
+            # them, test that we handle these.
+            ("http://www.foo.com:123:123/abc;123?a=b#4", ("http", "www.foo.com", 123, "/abc;123?a=b")),
+
+            # handle windows file paths
+            ("file:///c:/foo/bar/baz", ("file", "", None, "c:/foo/bar/baz")),
+
+            # handle urls with : in the path
+            ("http://www.foo.com/s:6p23p/video", ("http", "www.foo.com", 80, "/s:6p23p/video"))
+            ):
+            self.assertEquals(download_utils.parseURL(mem[0]), mem[1])
+
 
 #     def checkRedirect(self, url, redirectUrl, updatedUrl, **extra):
 #         self.errbackCalled = self.callbackCalled = False
