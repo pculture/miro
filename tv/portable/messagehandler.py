@@ -1328,21 +1328,19 @@ class BackendMessageHandler(messages.MessageHandler):
             download.migrate(new_path)
             time.sleep(0.3)
         # Pass in case they don't exist or are not empty:
+        # FIXME - these will never work since they're directory trees
+        # and fileutil.rmdir calls os.rmdir which only removes non-empty
+        # directories.
         try:
             fileutil.rmdir(os.path.join(old_path, 'Incomplete Downloads'))
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except OSError:
             pass
         try:
             fileutil.rmdir(old_path)
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except OSError:
             pass
         m = messages.MigrationProgress(migration_count, migration_count, True)
         m.send_to_frontend()
-
 
     def handle_report_crash(self, message):
         app.controller.send_bug_report(message.report, message.text,

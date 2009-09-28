@@ -380,19 +380,13 @@ class RemoteDownloader(DDBObject):
             c.send()
         else:
             # downloader doesn't have our dlid.  Move the file ourself.
-            try:
-                shortFilename = self.status['shortFilename']
-            except KeyError:
-                print """\
-WARNING: can't migrate download because we don't have a shortFilename!
-URL was %s""" % self.url
+            shortFilename = self.status.get("shortFilename")
+            if not shortFilename:
+                logging.warning("can't migrate download; no shortfilename!  URL was %s", self.url)
                 return
-            try:
-                filename = self.status['filename']
-            except KeyError:
-                print """\
-WARNING: can't migrate download because we don't have a filename!
-URL was %s""" % self.url
+            filename = self.status.get("filename")
+            if not filename:
+                logging.warning("can't migrate download; no filename!  URL was %s", self.url)
                 return
             if fileutil.exists(filename):
                 if self.status.get('channelName', None) is not None:
