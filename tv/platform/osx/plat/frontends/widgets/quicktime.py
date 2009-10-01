@@ -77,6 +77,20 @@ def qttimevalue(qttime):
         return qttime.timeValue
 
 ###############################################################################
+# The QTMediaTypeSubtitle and QTMediaTypeClosedCaption media types are only
+# available in OS X 10.6 so we emulate them if they aren't defined.
+
+try:
+    dummy = QTMediaTypeSubtitle
+except:
+    QTMediaTypeSubtitle = u'sbtl'
+
+try:
+    dummy = QTMediaTypeClosedCaption
+except:
+    QTMediaTypeClosedCaption = u'clcp'
+
+###############################################################################
 
 class Player(player.Player):
 
@@ -148,7 +162,7 @@ class Player(player.Player):
     def is_subtitle_track(self, track):
         layer = track.attributeForKey_(QTTrackLayerAttribute)
         media_type = track.attributeForKey_(QTTrackMediaTypeAttribute)
-        return layer == -1 and media_type == 'vide'
+        return (layer == -1 and media_type == QTMediaTypeVideo) or media_type in [QTMediaTypeSubtitle, QTMediaTypeClosedCaption]
 
     def enable_subtitle_track(self, track_name):
         if self.movie is not None:
