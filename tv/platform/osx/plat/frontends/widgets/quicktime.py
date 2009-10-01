@@ -160,8 +160,16 @@ class Player(player.Player):
                         current = track
                     if track.attributeForKey_(QTTrackDisplayNameAttribute) == track_name:
                         to_enable = track
-            current.setAttribute_forKey_(0, QTTrackEnabledAttribute)
+            if current is not None:
+                current.setAttribute_forKey_(0, QTTrackEnabledAttribute)
             to_enable.setAttribute_forKey_(1, QTTrackEnabledAttribute)
+
+    def disable_subtitles(self):
+        if self.movie is not None:
+            for track in self.movie.tracks():
+                if self.is_subtitle_track(track):
+                    if track.attributeForKey_(QTTrackEnabledAttribute) == 1:
+                        track.setAttribute_forKey_(0, QTTrackEnabledAttribute)
 
     def set_volume(self, volume):
         if self.movie:
