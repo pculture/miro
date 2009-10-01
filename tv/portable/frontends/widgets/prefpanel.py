@@ -622,6 +622,10 @@ class PlaybackPanel(PanelBuilder):
 
         cbx = widgetset.Checkbox(_('Resume playing a video or audio item from the point it was last stopped.'))
         attach_boolean(cbx, prefs.RESUME_VIDEOS_MODE)
+        v.pack_start(widgetutil.align_left(cbx, bottom_pad=6))
+
+        cbx = widgetset.Checkbox(_('Automatically enable movie subtitles when available.'))
+        attach_boolean(cbx, prefs.ENABLE_SUBTITLES)
         v.pack_start(widgetutil.align_left(cbx, bottom_pad=12))
 
         rbg = widgetset.RadioButtonGroup()

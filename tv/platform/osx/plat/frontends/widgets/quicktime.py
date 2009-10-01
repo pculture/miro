@@ -34,6 +34,8 @@ from Foundation import *
 from QTKit import *
 
 from miro import app
+from miro import prefs
+from miro import config
 from miro import player
 from miro.plat import utils
 from miro.plat import bundle
@@ -115,6 +117,7 @@ class Player(player.Player):
             self.movie = qtmovie
             self.movie_notifications = NotificationForwarder.create(self.movie)
             self.movie_notifications.connect(self.handle_movie_notification, QTMovieDidEndNotification)
+            self.setup_subtitles()
             callback()
         else:
             errback()
@@ -148,6 +151,16 @@ class Player(player.Player):
                         break
 
         return can_open
+    
+    def setup_subtitles(self):
+        if config.get(prefs.ENABLE_SUBTITLES):
+            default_track = self.get_enabled_subtitle_track()
+            if default_track is None:
+                tracks = self.get_subtitle_tracks()
+                if len(tracks) > 0:
+                    self.enable_subtitle_track(tracks[0])
+        else:
+            self.disable_subtitles()
 
     def get_subtitle_tracks(self):
         tracks = list()
@@ -159,31 +172,39 @@ class Player(player.Player):
                     tracks.append((name, is_enabled))
         return tracks
 
+    def get_enabled_subtitle_track(self):
+        if self.movie is not None:
+            for track in self.movie.tracks():
+                if self.is_subtitle_track(track):
+                    if track.attributeForKey_(QTTrackEnabledAttribute) == 1:
+                        return track
+        return None
+
+    def get_subtitle_track_by_name(self, name):
+        if self.movie is not None:
+            for track in self.movie.tracks():
+                if self.is_subtitle_track(track):
+                    if track.attributeForKey_(QTTrackDisplayNameAttribute) == track_name:
+                        return track
+        return None
+
     def is_subtitle_track(self, track):
         layer = track.attributeForKey_(QTTrackLayerAttribute)
         media_type = track.attributeForKey_(QTTrackMediaTypeAttribute)
         return (layer == -1 and media_type == QTMediaTypeVideo) or media_type in [QTMediaTypeSubtitle, QTMediaTypeClosedCaption]
 
     def enable_subtitle_track(self, track_name):
-        if self.movie is not None:
-            current = None
-            to_enable = None
-            for track in self.movie.tracks():
-                if self.is_subtitle_track(track):
-                    if track.attributeForKey_(QTTrackEnabledAttribute) == 1:
-                        current = track
-                    if track.attributeForKey_(QTTrackDisplayNameAttribute) == track_name:
-                        to_enable = track
-            if current is not None:
-                current.setAttribute_forKey_(0, QTTrackEnabledAttribute)
+        current = self.get_enabled_subtitle_track()
+        if current is not None:
+            current.setAttribute_forKey_(0, QTTrackEnabledAttribute)
+        to_enable = self.get_subtitle_track_by_name(track_name)
+        if to_enable is not None:
             to_enable.setAttribute_forKey_(1, QTTrackEnabledAttribute)
 
     def disable_subtitles(self):
-        if self.movie is not None:
-            for track in self.movie.tracks():
-                if self.is_subtitle_track(track):
-                    if track.attributeForKey_(QTTrackEnabledAttribute) == 1:
-                        track.setAttribute_forKey_(0, QTTrackEnabledAttribute)
+        track = self.get_enabled_subtitle_track()
+        if track is not None:
+            track.setAttribute_forKey_(0, QTTrackEnabledAttribute)
 
     def set_volume(self, volume):
         if self.movie:
