@@ -1326,7 +1326,6 @@ class BackendMessageHandler(messages.MessageHandler):
                 last_progress_time = current_time
             logging.info("migrating %s", download.get_filename())
             download.migrate(new_path)
-            time.sleep(0.3)
         # Pass in case they don't exist or are not empty:
         try:
             fileutil.rmdir(os.path.join(old_path, 'Incomplete Downloads'))
