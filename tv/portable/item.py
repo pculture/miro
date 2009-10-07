@@ -588,6 +588,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             if 'folder_id' in tracker.where:
                 tracker.check_all_objects()
 
+    @classmethod
+    def downloader_view(cls, dler_id):
+        return cls.make_view("downloader_id=?", (dler_id,))
+
     def _look_for_downloader(self):
         self.set_downloader(downloader.lookup_downloader(self.get_url()))
         if self.has_downloader() and self.downloader.isFinished():
