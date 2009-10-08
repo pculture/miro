@@ -1565,6 +1565,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.set_filename(self.downloader.get_filename())
         self.split_item()
         self.signal_change()
+        self._replace_file_items()
         moviedata.movieDataUpdater.request_update(self)
 
         for other in Item.make_view('downloader_id IS NULL AND url=?',
@@ -1575,6 +1576,17 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def on_downloader_migrated(self, old_filename, new_filename):
         self.set_filename(new_filename)
         self.signal_change()
+        self._replace_file_items()
+
+    def _replace_file_items(self):
+        """Remove any FileItems that share our filename from the DB.
+
+        This fixes a race condition during migrate, where we can create
+        FileItems that duplicate existing Items.  See #12253 for details.
+        """
+        view = Item.make_view('is_file_item AND filename=?', (self.filename,))
+        for dup in view:
+            dup.remove()
 
     def set_downloader(self, downloader):
         if self.has_downloader():
