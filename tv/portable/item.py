@@ -1576,6 +1576,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def on_downloader_migrated(self, old_filename, new_filename):
         self.set_filename(new_filename)
         self.signal_change()
+        if self.isContainerItem:
+            self.migrate_children(self.get_filename())
         self._replace_file_items()
 
     def _replace_file_items(self):
@@ -1846,6 +1848,7 @@ class FileItem(Item):
         if self.parent_id:
             parent = self.get_parent()
             self.filename = os.path.join(parent.get_filename(), self.offsetPath)
+            self.signal_change()
             return
         if self.shortFilename is None:
             logging.warn("""\
