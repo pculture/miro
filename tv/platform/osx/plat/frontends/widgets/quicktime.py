@@ -30,6 +30,7 @@ import os
 import glob
 import logging
 
+from objc import pathForFramework, loadBundleFunctions
 from Foundation import *
 from QTKit import *
 
@@ -37,11 +38,23 @@ from miro import app
 from miro import prefs
 from miro import config
 from miro import player
+from miro import iso_639
 from miro.plat import utils
 from miro.plat import bundle
 from miro.plat import qtcomp
+from miro.plat import script_codes
 from miro.plat.frontends.widgets import threads
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
+
+###############################################################################
+
+script_codes.patch_iso_639_map()
+
+###############################################################################
+
+qt_framework = pathForFramework("Quicktime.framework")
+qt_bundle = NSBundle.bundleWithPath_(qt_framework)
+loadBundleFunctions(qt_bundle, globals(), (('GetMediaLanguage', 's^^{}'),))
 
 ###############################################################################
 
@@ -151,7 +164,7 @@ class Player(player.Player):
                         break
 
         return can_open
-    
+
     def setup_subtitles(self):
         if config.get(prefs.ENABLE_SUBTITLES):
             default_track = self.get_enabled_subtitle_track()
@@ -167,7 +180,17 @@ class Player(player.Player):
         if self.movie is not None:
             for track in self.movie.tracks():
                 if self.is_subtitle_track(track):
-                    name = track.attributeForKey_(QTTrackDisplayNameAttribute)
+                    media = track.media().quickTimeMedia()
+                    lang = GetMediaLanguage(media)
+                    display_name = track.attributeForKey_(QTTrackDisplayNameAttribute)
+                    if lang == 32767:    # 32764 = langUndefined
+                        name = display_name
+                    else:
+                        lang_info = iso_639.find(lang, "script-code")
+                        if lang_info is None:
+                            name = display_name
+                        else:
+                            name = lang_info["name"]
                     is_enabled = track.attributeForKey_(QTTrackEnabledAttribute) == 1
                     tracks.append((name, is_enabled))
         return tracks
