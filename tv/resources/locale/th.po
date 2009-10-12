@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-07-16 13:21-0400\n"
+"POT-Creation-Date: 2009-09-23 13:04-0400\n"
 "PO-Revision-Date: 2009-07-23 13:48+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Thai <th@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-09-23 16:44+0000\n"
+"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -117,12 +117,12 @@ msgstr "ไม่พบไฟล์ \"%(path)s\""
 
 #: ../../portable/httpclient.py:178
 msgid "Read error"
-msgstr "เกิดข้อผิดพลาดในการอ่านข้อมูล"
+msgstr "การอ่านข้อมูลผิดพลาด"
 
 #: ../../portable/httpclient.py:179
 #, python-format
 msgid "Error while reading from \"%(path)s\""
-msgstr ""
+msgstr "เกิดข้อผิดพลาดในขณะที่อ่าน \"%(path)s\""
 
 #: ../../portable/httpclient.py:376
 msgid "Unknown Error code"
@@ -142,7 +142,7 @@ msgstr "มีข้อผิดพลาดภายใน: ไม่พร้�
 
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
-msgstr "Miro ไกด์"
+msgstr "คู่มือ Miro"
 
 #: ../../portable/frontends/widgets/statictabs.py:97
 #: ../../portable/frontends/widgets/itemlistcontroller.py:433
@@ -178,11 +178,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
 msgid "Existing playlist:"
-msgstr ""
+msgstr "Playlist ที่มีอยู่แล้ว:"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
 msgid "New playlist:"
-msgstr ""
+msgstr "Playlist ใหม่:"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
@@ -190,8 +190,8 @@ msgstr "ลบออกจากไลบรารี"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
 #: ../../portable/frontends/widgets/gtk/video.py:246
-#: ../../portable/frontends/widgets/gtk/video.py:255
-#: ../../portable/dialogs.py:107
+#: ../../portable/frontends/widgets/gtk/video.py:262
+#: ../../portable/dialogs.py:109
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:127
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:163
 msgid "Delete"
@@ -235,19 +235,19 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:257
 #: ../../portable/frontends/widgets/style.py:1032
 #: ../../portable/frontends/widgets/style.py:1199
-#: ../../portable/frontends/widgets/gtk/video.py:252
-#: ../../portable/dialogs.py:106
+#: ../../portable/frontends/widgets/gtk/video.py:258
+#: ../../portable/dialogs.py:108
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:123
 msgid "Keep"
 msgstr "เก็บ"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:112
 msgid "Stop Seeding"
-msgstr ""
+msgstr "หยุดการ Seed"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:114
 msgid "Resume Seeding"
-msgstr ""
+msgstr "เริ่มการ Seed ต่อ"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:117
 #: ../../portable/frontends/widgets/itemcontextmenu.py:239
@@ -263,15 +263,15 @@ msgstr "พักการดาวน์โหลด"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:124
 #: ../../portable/frontends/widgets/itemcontextmenu.py:253
 msgid "Resume Download"
-msgstr "ดำเนินการดาวน์โหลดต่อ"
+msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:128
 #: ../../portable/frontends/widgets/itemcontextmenu.py:223
 #: ../../portable/frontends/widgets/style.py:250
 #: ../../portable/frontends/widgets/style.py:1102
-#: ../../portable/frontends/widgets/style.py:1113 ../../portable/dialogs.py:95
+#: ../../portable/frontends/widgets/style.py:1113 ../../portable/dialogs.py:97
 msgid "Download"
-msgstr "ดาวน์โหลด"
+msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:134
 #: ../../portable/frontends/widgets/style.py:240
@@ -280,9 +280,9 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:136
 #: ../../portable/frontends/widgets/style.py:236
-#: ../../portable/frontends/widgets/gtk/video.py:282
+#: ../../portable/frontends/widgets/gtk/video.py:271
 msgid "Comments"
-msgstr ""
+msgstr "ความคิดเห็น"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:138
 msgid "License"
@@ -290,23 +290,23 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:141
 msgid "File in Browser"
-msgstr ""
+msgstr "ไฟล์ในเว็บเบราเซอร์"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:143
 #, python-format
 msgid "File in %(progname)s"
-msgstr ""
+msgstr "ไฟล์ใน %(progname)s"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:145
 msgid "File on Disk"
-msgstr ""
+msgstr "ไฟล์ในฮาร์ดดิสก์"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:148
 msgid "View"
-msgstr ""
+msgstr "แสดง"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
-#: ../../portable/frontends/widgets/gtk/video.py:273
+#: ../../portable/frontends/widgets/gtk/video.py:266
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:119
 msgid "Share"
 msgstr "แบ่งปัน"
@@ -349,7 +349,7 @@ msgstr "ลบออกจากเพลย์ลิสต์"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:55
 #: ../../portable/frontends/widgets/feedsettingspanel.py:102
-#: ../../portable/frontends/widgets/prefpanel.py:585
+#: ../../portable/frontends/widgets/prefpanel.py:588
 msgid "never"
 msgstr "ไม่เคย"
 
@@ -434,7 +434,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
-msgstr ""
+msgstr "ลบทั้งหมด"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
@@ -442,7 +442,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause Auto-Downloading when this many items are unplayed:"
-msgstr ""
+msgstr "พักการดาวน์โหลดอัตโนมัติ เมื่อมีวัตถุที่ยังไม่ได้ดูเป็จจำนวน:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
@@ -488,32 +488,38 @@ msgid ""
 "This way, downloads in progress can finish downloading and new media files "
 "can be downloaded in the background, ready when you want to watch."
 msgstr ""
+"หน้าจอต่อไปนี่ จะช่วยคุณในการติดตั้ง %(name)s ให้เหมาะสมที่สุดกับคุณ\n"
+"เราแนะนำให้คุณตั้งค่าให้ %(name)s เริ่มทำงานเมื่อคอมพิวเตอร์ของคุณเริ่มทำงาน "
+"ซึ่งจะทำให้กระบวนการดาวน์โหลดสามารถดาวน์โหลดได้สำเร็จ "
+"และไฟล์สื่อใหม่ๆจะสามารถดาวน์โหลดอยู่ภายหลังได้ "
+"และพร้อมทันทีที่คุณต้องการจะรับชม"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:138
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
 msgstr ""
+"คุณต้องการจะให้ %(name)s เริ่มทำงานในขณะที่คอมพิวเตอร์เริ่มทำงานหรือไม่"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:144
 #: ../../portable/frontends/widgets/firsttimedialog.py:178
-#: ../../portable/dialogs.py:87
+#: ../../portable/dialogs.py:89
 msgid "Yes"
 msgstr "ใช่"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:145
 #: ../../portable/frontends/widgets/firsttimedialog.py:177
-#: ../../portable/dialogs.py:88
+#: ../../portable/dialogs.py:90
 msgid "No"
 msgstr "ไม่ใช่"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:153
 msgid "Next >"
-msgstr ""
+msgstr "ถัดไป>"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:163
 #, python-format
 msgid "Completing the %(name)s First Time Setup"
-msgstr ""
+msgstr "ทำการเริ่มการทำงานครั้งแรกของ %(name)s ให้สำเร็จ"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:167
 #, python-format
@@ -523,6 +529,10 @@ msgid ""
 "\n"
 "Would you like %(name)s to look for media files on your computer?"
 msgstr ""
+"%(name)s สามารถค้นหาไฟล์สื่อทั้งหมดในเครื่องคอมพิวเตอร์ของคุณได้ "
+"เพื่อจะช่วยคุณในการจัดการคอลเลคชันของคุณ\n"
+"\n"
+"คุณต้องการจะให้ %(name)s ค้นหาไฟล์สือในเครื่องคอมพิวเตอร์ของคุณหรือไม่"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:185
 msgid "Restrict to all my personal files."
@@ -530,26 +540,26 @@ msgstr "จำกัดกับแฟ้มส่วนตัวทั้งห
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:186
 msgid "Search custom folders:"
-msgstr ""
+msgstr "ค้นหาในโฟลเดอร์ที่กำหนด:"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:192
-#: ../../portable/frontends/widgets/prefpanel.py:435
+#: ../../portable/frontends/widgets/prefpanel.py:438
 msgid "Change"
 msgstr "เปลี่ยน"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:197
 msgid "Choose directory to search for media files"
-msgstr ""
+msgstr "เลือกไดเรคทอรีเพื่อจะค้นหาไฟล์สื่อ"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:211
 #: ../../portable/frontends/widgets/firsttimedialog.py:290
 msgid "< Previous"
-msgstr ""
+msgstr "<ก่อนหน้า"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:223
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:282
-#: ../../portable/feed.py:2290 ../../portable/feed.py:2397
+#: ../../portable/feed.py:2300 ../../portable/feed.py:2407
 msgid "Search"
 msgstr "ค้นหา"
 
@@ -560,10 +570,10 @@ msgstr "เสร็จสิ้น"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:273
 msgid "Searching for media files"
-msgstr ""
+msgstr "กำลังค้นหาไฟล์สื่อ"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:283
-#: ../../portable/dialogs.py:85
+#: ../../portable/dialogs.py:87
 msgid "Cancel"
 msgstr "ยกเลิก"
 
@@ -571,15 +581,13 @@ msgstr "ยกเลิก"
 #, python-format
 msgid "parsed %(count)s file"
 msgid_plural "parsed %(count)s files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "วิเคราะห์แล้ว %(count)s ไฟล์"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:326
 #, python-format
 msgid "found %(count)s media file"
 msgid_plural "found %(count)s media files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ค้นพบ %(count)s ไฟล์สื่อ"
 
 #: ../../portable/frontends/widgets/crashdialog.py:54
 #, python-format
@@ -587,24 +595,28 @@ msgid ""
 "%(appname)s has encountered an internal error.  You can help us track down "
 "this problem and fix it by submitting an error report."
 msgstr ""
+"%(appname)s พบปัญหาภายใน "
+"คุณสามารถช่วยเราในการติดตามและแก้ปัญหานี้ได้โดยการส่งรายงานข้อผิดพลาด"
 
 #: ../../portable/frontends/widgets/crashdialog.py:63
 msgid ""
 "Include entire program database including all video and feed metadata with "
 "crash report"
 msgstr ""
+"รวบรวมฐานข้อมูลของโปรแกรมทั้งหมดรวมถึงข้อมูลพื้นฐานของไฟล์วิดีโอและ Feed "
+"ส่งไปพร้อมกับรายงานข้อผิดพลาด"
 
 #: ../../portable/frontends/widgets/crashdialog.py:68
 msgid "Describe what you were doing when you got this error:"
-msgstr ""
+msgstr "อธิบายว่าคุณทำอะไรอยู่ในขณะที่เกิดข้อผิดพลาดนี้:"
 
 #: ../../portable/frontends/widgets/style.py:232
 msgid "From"
-msgstr ""
+msgstr "จาก"
 
 #: ../../portable/frontends/widgets/style.py:233
 msgid "File name:"
-msgstr ""
+msgstr "ชื่อไฟล์:"
 
 #: ../../portable/frontends/widgets/style.py:234
 msgid "Show More"
@@ -617,16 +629,16 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:238
 #, python-format
 msgid "Reveal in %(progname)s"
-msgstr ""
+msgstr "แสดงใน %(progname)s"
 
 #: ../../portable/frontends/widgets/style.py:238
 #: ../../portable/frontends/widgets/displays.py:390
 msgid "Reveal File"
-msgstr ""
+msgstr "แสดงไฟล์"
 
 #: ../../portable/frontends/widgets/style.py:239
 msgid "Display Contents"
-msgstr ""
+msgstr "แสดงคอนโซล"
 
 #: ../../portable/frontends/widgets/style.py:241
 msgid "File URL"
@@ -638,27 +650,27 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:243
 msgid "File Type"
-msgstr ""
+msgstr "ชนิดไฟล์"
 
 #: ../../portable/frontends/widgets/style.py:244
 msgid "Seeders"
-msgstr ""
+msgstr "จำนวน Seed"
 
 #: ../../portable/frontends/widgets/style.py:245
 msgid "Leechers"
-msgstr ""
+msgstr "จำนวน Leech"
 
 #: ../../portable/frontends/widgets/style.py:246
 msgid "Upload Rate"
-msgstr ""
+msgstr "อัตราการอัพโหลด"
 
 #: ../../portable/frontends/widgets/style.py:247
 msgid "Upload Total"
-msgstr ""
+msgstr "อัพโหลดทั้งหมด"
 
 #: ../../portable/frontends/widgets/style.py:248
 msgid "Down Rate"
-msgstr ""
+msgstr "อัตราดาวน์โหลด"
 
 #: ../../portable/frontends/widgets/style.py:249
 msgid "Down Total"
@@ -669,53 +681,53 @@ msgid "Download Torrent"
 msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:252
-#: ../../portable/dl_daemon/download.py:539
+#: ../../portable/dl_daemon/download.py:550
 msgid "Error"
 msgstr "ผิดพลาด"
 
 #: ../../portable/frontends/widgets/style.py:253
 msgid "queued for autodownload"
-msgstr ""
+msgstr "เข้าคิวเพื่อการดาวน์โหลดอัตโนมัติ"
 
 #: ../../portable/frontends/widgets/style.py:254
 #: ../../portable/frontends/widgets/style.py:1153
 #: ../../portable/frontends/widgets/itemlistwidgets.py:721
 msgid "Unplayed"
-msgstr ""
+msgstr "ยังไม่เคยเล่น"
 
 #: ../../portable/frontends/widgets/style.py:255
 msgid "Currently Playing"
-msgstr ""
+msgstr "กำลังเล่น"
 
 #: ../../portable/frontends/widgets/style.py:256
 #: ../../portable/frontends/widgets/style.py:1171
 msgid "Newly Available"
-msgstr ""
+msgstr "มาใหม่"
 
 #: ../../portable/frontends/widgets/style.py:258
-#: ../../portable/frontends/widgets/prefpanel.py:485
+#: ../../portable/frontends/widgets/prefpanel.py:488
 #: ../../portable/frontends/widgets/tablist.py:580
 #: ../../portable/frontends/widgets/tablist.py:592
 #: ../../portable/frontends/widgets/tablist.py:598
 #: ../../portable/frontends/widgets/tablist.py:635
 #: ../../portable/frontends/widgets/tablist.py:641
 #: ../../portable/frontends/widgets/tablist.py:646
-#: ../../portable/dialogs.py:108
+#: ../../portable/dialogs.py:110
 msgid "Remove"
-msgstr "ลบ"
+msgstr "เอาออก"
 
 #: ../../portable/frontends/widgets/style.py:259
 msgid "Stop seeding"
-msgstr ""
+msgstr "หยุดการ Seed"
 
 #: ../../portable/frontends/widgets/style.py:571
 #: ../../portable/frontends/widgets/style.py:1164
 msgid "paused"
-msgstr ""
+msgstr "หยุดพัก"
 
 #: ../../portable/frontends/widgets/style.py:1034
 msgid "Remove from playlist"
-msgstr ""
+msgstr "เอาออกจาก Playlist"
 
 #: ../../portable/frontends/widgets/displays.py:372
 #, python-format
@@ -723,6 +735,7 @@ msgid ""
 "%(appname)s can't play this file.  You may be able to open it with a "
 "different program"
 msgstr ""
+"%(appname)s ไม่สามารถเล่นไฟล์นี้ได้ คุณอาจจะสามารถเปิดมันได้กับโปรแกรมอื่น"
 
 #: ../../portable/frontends/widgets/displays.py:382
 msgid "Filename:"
@@ -800,7 +813,7 @@ msgstr "ลบทั้งหมด"
 
 #: ../../portable/frontends/widgets/displays.py:585
 msgid "Put Into a New Folder"
-msgstr ""
+msgstr "นำไปไว้ในโฟลเดอร์ใหม่"
 
 #: ../../portable/frontends/widgets/rundialog.py:82
 msgid "Username:"
@@ -812,15 +825,15 @@ msgstr "รหัสผ่าน:"
 
 #: ../../portable/frontends/widgets/browser.py:96
 msgid "Open in browser"
-msgstr ""
+msgstr "เปิดในเว็บเบราว์เซอร์"
 
 #: ../../portable/frontends/widgets/browser.py:102
 msgid "Download this video"
-msgstr ""
+msgstr "ดาวน์โหลดวิดีโอโนี้"
 
 #: ../../portable/frontends/widgets/application.py:156
 msgid "Movies directory gone"
-msgstr ""
+msgstr "ไดเคคทอรีของภาพยนต์ไม่อยู่แล้ว"
 
 #: ../../portable/frontends/widgets/application.py:158
 #, python-format
@@ -839,6 +852,18 @@ msgid ""
 "If you quit, then you can connect the drive or otherwise fix the problem and "
 "relaunch %(shortappname)s."
 msgstr ""
+"%(shortappname)s หาไดเรคทอรีเบื้องต้นของวิดีโอที่:\n"
+"\n"
+"%(moviedirectory)s ไม่พบ\n"
+"\n"
+"ซึ่งอาจเกิดขึ้นเนื่องจากมันอยู่ในไดรฟ์ภายนอกที่ไม่ได้ถูกเชื่อมต่อ\n"
+"\n"
+"ถ้าคุณดำเนินการต่อ ไดเรคทอรีเบื้องต้นของวิดีโอจะถูกคืนค่ามายังที่ไดรฟนี้แทน "
+"ซึ่งถ้าคุณมีวิดีโอที่ถูกดาวน์โหลดไว้แล้ว %(shortappname)s "
+"จะสุญเสียรายละเอียดเกี่ยวกับวิดีโอเหล่านั้น\n"
+"\n"
+"ถ้าคุณออก คุณจะสามารถเชื่อมต่อไดรฟหรือแก้ปัญหาอื่นๆที่เกิดขึ้น "
+"แล้วจึงเรียกใช้ %(shortappname)s ได้อีกครั้ง"
 
 #: ../../portable/frontends/widgets/application.py:326
 msgid "Error Revealing File"
@@ -847,38 +872,38 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:327
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
-msgstr ""
+msgstr "ไฟล์ %(filename)s ถูกลบออกจาก %(appname)s ภายนอก"
 
 #: ../../portable/frontends/widgets/application.py:335
 msgid "Open Files..."
-msgstr ""
+msgstr "เปิดไฟล์..."
 
 #: ../../portable/frontends/widgets/application.py:346
 #: ../../portable/frontends/widgets/application.py:351
 msgid "Open Files - Error"
-msgstr ""
+msgstr "เปิดไฟล์ - มีปัญหา"
 
 #: ../../portable/frontends/widgets/application.py:347
 #: ../../portable/frontends/widgets/application.py:634
 #, python-format
 msgid "File %(filename)s does not exist."
-msgstr ""
+msgstr "ไฟล์ %(filename)s ไม่มีอยู่"
 
 #: ../../portable/frontends/widgets/application.py:352
 msgid "The following files do not exist:"
-msgstr ""
+msgstr "ไฟล์ต่อไปนี้ไม่มีอยู่:"
 
 #: ../../portable/frontends/widgets/application.py:389
 msgid "New Download"
-msgstr ""
+msgstr "ดาวน์โหลดใหม่"
 
 #: ../../portable/frontends/widgets/application.py:390
 msgid "Enter the URL of the item to download"
-msgstr ""
+msgstr "ใส่ URL ของวัตถุที่ต้องการจะดาวน์โหลด"
 
 #: ../../portable/frontends/widgets/application.py:391
 msgid "New Download - Invalid URL"
-msgstr ""
+msgstr "ดาวน์โหลดใหม่ - URL ผิดพลาด"
 
 #: ../../portable/frontends/widgets/application.py:392
 msgid ""
@@ -887,6 +912,10 @@ msgid ""
 "\n"
 "Enter the URL of the item to download"
 msgstr ""
+"ที่อยู่ที่คุณใส่ ไม่ใช่ URL ที่ถูกต้อง\n"
+"กรุณาตรวจสอบ URL แล้วลองใหม่อีกครั้ง\n"
+"\n"
+"ใส่ URL ของวัตถุที่ต้องการจะดาวน์โหลด"
 
 #: ../../portable/frontends/widgets/application.py:400
 #, python-format
@@ -901,8 +930,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:426
 msgid "Remove item"
 msgid_plural "Remove items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "เอาวัตถุออก"
 
 #: ../../portable/frontends/widgets/application.py:430
 msgid ""
@@ -912,7 +940,8 @@ msgid_plural ""
 "Some of these items were not downloaded from a feed. Would you like to "
 "delete them or just remove them from the Library?"
 msgstr[0] ""
-msgstr[1] ""
+"วัตถุบางชิ้นในนี้ ไม่ได้ถูกดาวน์โหลดจาก Feed คุณต้องการที่จะลบวัตถุเหล่านั้น "
+"หรือเพียงแค่นำเอาวัตถุนั้นออกจากไลบารี?"
 
 #: ../../portable/frontends/widgets/application.py:440
 msgid ""
@@ -922,14 +951,14 @@ msgid_plural ""
 "Some of these items are folders.  Delete/Removeing a folder will "
 "delete/remove it's contents"
 msgstr[0] ""
-msgstr[1] ""
+"วัตถุบางชิ้นในนี้เป็นโฟลเดอร์ การลบหรือนำโฟลเดอร์ออก "
+"จะเป็นการลบหรือนำสิ่งที่อยู่ข้างในโฟลเดอร์ออกไปด้วย"
 
 #: ../../portable/frontends/widgets/application.py:455
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "คุณมั่นใจที่จะลบวัตถุทั้งหมด %(count)d ชิ้นใช่หรือไม่?"
 
 #: ../../portable/frontends/widgets/application.py:462
 msgid ""
@@ -937,28 +966,29 @@ msgid ""
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
 msgstr[0] ""
-msgstr[1] ""
+"วัตถุบางชิ้นในนี้เป็นโฟลเดอร์ "
+"การลบโฟลเดอร์จะเป็นการลบสิ่งที่อยู่ข้างในโฟลเดอร์ไปด้วย"
 
 #: ../../portable/frontends/widgets/application.py:496
 msgid "Enter the new name for the item"
-msgstr ""
+msgstr "ใส่ชื่อใหม่สำหรับวัตถุ"
 
 #: ../../portable/frontends/widgets/application.py:519
 msgid "Save Item As..."
-msgstr ""
+msgstr "บันทึกวัตถุเป็น..."
 
 #: ../../portable/frontends/widgets/application.py:572
 #: ../../portable/menubar.py:213
 msgid "Add Site"
-msgstr ""
+msgstr "เพิ่มเว็บไซท์"
 
 #: ../../portable/frontends/widgets/application.py:573
 msgid "Enter the URL of the site to add"
-msgstr ""
+msgstr "ใส่ URL ของเว็บไซท์ที่ต้องการจะเพิ่ม"
 
 #: ../../portable/frontends/widgets/application.py:574
 msgid "Add Site - Invalid URL"
-msgstr ""
+msgstr "เพิ่มเว็บไซท์ - URL ไม่ถูกต้อง"
 
 #: ../../portable/frontends/widgets/application.py:575
 msgid ""
@@ -967,6 +997,10 @@ msgid ""
 "\n"
 "Enter the URL of the site to add"
 msgstr ""
+"ที่อยู่ที่คุณใส่ไม่ใช่ URL ที่ถูกต้อง\n"
+"กรุณาตรวจสอบ URL แล้วลองใหม่อีกครั้ง\n"
+"\n"
+"ใส่ URL ของเว็บไซท์ที่ต้องการจะเพิ่ม"
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
@@ -978,11 +1012,11 @@ msgstr "ไฟล์ OPML"
 
 #: ../../portable/frontends/widgets/application.py:633
 msgid "Import OPML File - Error"
-msgstr ""
+msgstr "นำเข้าไฟล์ OPML - ผิดพลาด"
 
 #: ../../portable/frontends/widgets/application.py:639
 msgid "Export OPML File"
-msgstr "ส่งออก ไำฟล์ OPML"
+msgstr "ส่งออกไฟล์ OPML"
 
 #: ../../portable/frontends/widgets/application.py:663
 msgid "Create Playlist"
@@ -1017,18 +1051,18 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:713
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
-msgstr ""
+msgstr "ใส่ชื่อใหม่สำหรับ Feed %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:717
 #: ../../portable/frontends/widgets/tablist.py:640
-#: ../../portable/playlist.py:188
+#: ../../portable/playlist.py:199
 msgid "Rename Playlist"
 msgstr "เปลี่ยนชื่อเพลย์ลิสต์"
 
 #: ../../portable/frontends/widgets/application.py:718
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
-msgstr ""
+msgstr "ใส่ชื่อใหม่สำหรับเพลย์ลิสท์ %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:722
 #: ../../portable/frontends/widgets/tablist.py:634
@@ -1038,43 +1072,39 @@ msgstr "เปลี่ยนชื่อโฟลเดอร์เพลย์
 #: ../../portable/frontends/widgets/application.py:723
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
-msgstr ""
+msgstr "ใส่ชื่อใหม่สำหรับโฟลเดอร์เพลย์ลิสท์ %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:726
 #: ../../portable/frontends/widgets/tablist.py:529
 msgid "Rename Site"
-msgstr ""
+msgstr "เปลี่ยนชื่อเว็บไซท์"
 
 #: ../../portable/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the site %(name)s"
-msgstr ""
+msgstr "ใส่ชื่อใหม่สำหรับเว็บไซท์ %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "เอาเพลย์ลิสท์ออก"
 
 #: ../../portable/frontends/widgets/application.py:753
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "คุณมั่นใจหรือไม่ที่จะเอาเพลย์ลิสท์จำนวน %(count)s เพลย์ลิสท์ออก?"
 
 #: ../../portable/frontends/widgets/application.py:770
 msgid "Remove site"
 msgid_plural "Remove sites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "เอาเว็บไซท์ออก"
 
 #: ../../portable/frontends/widgets/application.py:772
 #, python-format
 msgid "Are you sure you want to remove this site?"
 msgid_plural "Are you sure you want to remove these %(count)s sites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "คุณมั่นใจหรือไม่ที่จะเอาเว็บไซท์จำนวน %(count)s เว็บไซท์ออก?"
 
 #: ../../portable/frontends/widgets/application.py:802
 msgid "Are you sure you want to quit?"
@@ -1084,27 +1114,40 @@ msgstr "ต้องการออกจากโปรแกรม ?"
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "คุณมีงานดาวน์โหลดค้างอยู่ %(count)d งาน คุณยังคงจะออกจากโปรแกรม?"
 
 #: ../../portable/frontends/widgets/application.py:809
 msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr "เตือนฉัีน ถ้าฉันพยายามออกจากโปรแกรม ขณะที่มีการดาวน์โหลดอยู่"
+msgstr "เตือนฉัน ถ้าฉันพยายามออกจากโปรแกรม ขณะที่มีการดาวน์โหลดอยู่"
 
-#: ../../portable/frontends/widgets/application.py:1124
+#: ../../portable/frontends/widgets/application.py:994
+msgid "Upgrading database"
+msgstr "กำลังอัพเกรดฐานข้อมูล"
+
+#: ../../portable/frontends/widgets/application.py:1127
 msgid "Message"
-msgstr ""
+msgstr "ข้อความ"
 
-#: ../../portable/frontends/widgets/application.py:1149
+#: ../../portable/frontends/widgets/application.py:1152
 msgid "Migrating Files"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:1159
+#: ../../portable/frontends/widgets/application.py:1162
 msgid "Migrating files"
 msgstr ""
 
+#: ../../portable/frontends/widgets/dialogs.py:102
+msgid ""
+"Miro is upgrading your database of feeds and files.  This one-time process "
+"can take a long time if you have a large number of items in Miro (it can "
+"even take more than 30 minutes)."
+msgstr ""
+"Miro กำลังอัพเกรดฐานข้อมูลของ Feed และไฟล์ของคุณ กระบวนการเพียงครั้งเดียวนี้ "
+"อาจใช้เวลานานถ้าคุณมีไฟล์อยู่ใน Miro เป็นจำนวนมาก "
+"(เป็นไปได้ที่อาจจะใช้เวลามากกว่า 30 นาที)"
+
 #: ../../portable/frontends/widgets/downloadscontroller.py:81
-#: ../../portable/frontends/widgets/prefpanel.py:622
+#: ../../portable/frontends/widgets/prefpanel.py:625
 msgid "Downloads"
 msgstr "ดาวน์โหลด"
 
@@ -1118,247 +1161,250 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:96
 msgid "Seeding"
-msgstr ""
+msgstr "กำลัง Seed"
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
+#: ../../portable/frontends/widgets/prefpanel.py:268
 #, python-format
 msgid "Automatically run %(appname)s when I log in."
-msgstr ""
+msgstr "ให้ %(appname)s เริ่มทำงานเมื่อฉันล็อคอินโดยอัตโนมัติ"
 
-#: ../../portable/frontends/widgets/prefpanel.py:271
+#: ../../portable/frontends/widgets/prefpanel.py:272
 msgid "Warn me if I attempt to quit with downloads in progress."
-msgstr ""
+msgstr "เตือนฉัน ถ้าฉันพยายามจะออกในขณะที่มีการดาวน์โหลดอยู่"
 
-#: ../../portable/frontends/widgets/prefpanel.py:281
+#: ../../portable/frontends/widgets/prefpanel.py:282
 msgid "Every day"
 msgstr "ทุกวัน"
 
-#: ../../portable/frontends/widgets/prefpanel.py:282
+#: ../../portable/frontends/widgets/prefpanel.py:283
 msgid "Every hour"
 msgstr "ทุกๆ ชั่วโมง"
 
-#: ../../portable/frontends/widgets/prefpanel.py:283
+#: ../../portable/frontends/widgets/prefpanel.py:284
 msgid "Every 30 minutes"
 msgstr "ทุกๆ 30 นาที"
 
-#: ../../portable/frontends/widgets/prefpanel.py:284
+#: ../../portable/frontends/widgets/prefpanel.py:285
 msgid "Manually"
 msgstr "ด้วยตัวเอง"
 
-#: ../../portable/frontends/widgets/prefpanel.py:289
+#: ../../portable/frontends/widgets/prefpanel.py:290
 #: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "New"
 msgstr "สร้าง"
 
-#: ../../portable/frontends/widgets/prefpanel.py:290
+#: ../../portable/frontends/widgets/prefpanel.py:291
 #: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "All"
 msgstr "ทั้งหมด"
 
-#: ../../portable/frontends/widgets/prefpanel.py:291
+#: ../../portable/frontends/widgets/prefpanel.py:292
 #: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "Off"
 msgstr "ปิด"
 
-#: ../../portable/frontends/widgets/prefpanel.py:297
+#: ../../portable/frontends/widgets/prefpanel.py:298
 msgid "0"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:298
+#: ../../portable/frontends/widgets/prefpanel.py:299
 msgid "20"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:299
+#: ../../portable/frontends/widgets/prefpanel.py:300
 msgid "50"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:300
+#: ../../portable/frontends/widgets/prefpanel.py:301
 msgid "100"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:301
+#: ../../portable/frontends/widgets/prefpanel.py:302
 msgid "1000"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:307
+#: ../../portable/frontends/widgets/prefpanel.py:308
 msgid "Default settings for new feeds:"
-msgstr ""
+msgstr "ค่าปรกติของ Feed ใหม่:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:311
+#: ../../portable/frontends/widgets/prefpanel.py:312
 msgid "(These can be changed using the feed's settings button)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:315
+#: ../../portable/frontends/widgets/prefpanel.py:316
 msgid "Check for new content:"
-msgstr ""
+msgstr "ตรวจสอบหาสิ่งใหม่:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:320
+#: ../../portable/frontends/widgets/prefpanel.py:321
 msgid "Auto download setting:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/prefpanel.py:326
-msgid "Remember this many old items:"
-msgstr ""
+msgstr "การตั้งค่าดาวน์โหลดอัตโนมัติ:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:327
+msgid "Remember this many old items:"
+msgstr "ให้จดจำวัตถุเก่าเป็นจำนวน:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:328
 msgid "(in addition to the current contents)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:340
+#: ../../portable/frontends/widgets/prefpanel.py:341
 msgid "Maximum number of manual downloads at a time:"
 msgstr "จำนวนการดาวน์โหลดด้วยตัวเองสูงสุดในเวลาหนึ่งๆ:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:347
+#: ../../portable/frontends/widgets/prefpanel.py:348
 msgid "Maximum number of auto-downloads at a time:"
-msgstr ""
+msgstr "จำนวนงานดาวน์โหลดอัตโนมัติพร้อมกันสูงสุด:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:357
+#: ../../portable/frontends/widgets/prefpanel.py:358
 msgid "Bittorrent:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:360
+#: ../../portable/frontends/widgets/prefpanel.py:361
 msgid "Limit upstream bandwidth to:"
-msgstr ""
+msgstr "จำกัดแบนวิธการอัพโหลดไว้ที่:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:369
-#: ../../portable/frontends/widgets/prefpanel.py:380
+#: ../../portable/frontends/widgets/prefpanel.py:372
+#: ../../portable/frontends/widgets/prefpanel.py:383
 msgid "KB/s"
 msgstr "กิโลไบต์/วินาที"
 
-#: ../../portable/frontends/widgets/prefpanel.py:372
+#: ../../portable/frontends/widgets/prefpanel.py:375
 msgid "Limit downstream bandwidth to:"
-msgstr ""
+msgstr "จำกัดแบนวิธการดาวน์โหลดไว้ที่:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:383
+#: ../../portable/frontends/widgets/prefpanel.py:386
 msgid "Limit torrent connections to:"
-msgstr ""
+msgstr "จำกัดจำนวนการเชื่อมต่อ Torrent ไว้ที่:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:400
+#: ../../portable/frontends/widgets/prefpanel.py:403
 msgid "Starting port:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:404
+#: ../../portable/frontends/widgets/prefpanel.py:407
 msgid "Ending port:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:410
+#: ../../portable/frontends/widgets/prefpanel.py:413
 msgid "Automatically forward ports.  (UPNP)"
-msgstr ""
+msgstr "ฟอร์เวิร์ดพอร์ทอัตโนมัติ (UPNP)์"
 
-#: ../../portable/frontends/widgets/prefpanel.py:414
+#: ../../portable/frontends/widgets/prefpanel.py:417
 msgid "Ignore unencrypted connections."
-msgstr ""
+msgstr "ไม่ยอมรับการเชื่อมต่อที่ไม่ได้เข้ารหัส"
 
-#: ../../portable/frontends/widgets/prefpanel.py:418
+#: ../../portable/frontends/widgets/prefpanel.py:421
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr "หยุดดาวน์โหลดทอเรนท์เมื่อค่าเรโชถึง:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:440
+#: ../../portable/frontends/widgets/prefpanel.py:443
 msgid "Choose Movies Directory"
-msgstr ""
+msgstr "เลือกไดเรคทอรีของภาพยนต์"
 
-#: ../../portable/frontends/widgets/prefpanel.py:453
+#: ../../portable/frontends/widgets/prefpanel.py:456
 msgid "Migrate existing movies?"
 msgstr "ย้ายวิดีโอที่มีปัจจุบัน?"
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
+#: ../../portable/frontends/widgets/prefpanel.py:457
 #, python-format
 msgid ""
 "You've selected a new folder to download movies to.  Should %(appname)s "
 "migrate your existing downloads there? (Currently downloading movies will "
 "not be moved until they finish.)"
 msgstr ""
+"คุณได้เลือกโฟลเดอร์เพื่อที่จะดาวน์โหลดมูฟวีไปไว้ คุณจะต้องการให้ %(appname)s "
+"ย้ายการดาวน์โหลดที่เหลือไปยังที่นั่นหรือไม่? "
+"(ภาพยนต์ที่กำลังดาวน์โหลดอยู่จะไม่ถูกย้ายไปจนกว่าจะดาวน์โหลดเสร็จ)"
 
-#: ../../portable/frontends/widgets/prefpanel.py:482
-#: ../../portable/dialogs.py:104
+#: ../../portable/frontends/widgets/prefpanel.py:485
+#: ../../portable/dialogs.py:106
 msgid "Add"
 msgstr "เพิ่ม"
 
-#: ../../portable/frontends/widgets/prefpanel.py:523
+#: ../../portable/frontends/widgets/prefpanel.py:526
 msgid "Add Watched Folder"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:542
+#: ../../portable/frontends/widgets/prefpanel.py:545
 msgid "Store downloads in this folder:"
 msgstr "เก็บสิ่งที่ดาวน์โหลดลงในโฟลเดอร์นี้:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:549
+#: ../../portable/frontends/widgets/prefpanel.py:552
 msgid ""
 "Watch for new video and audio items in these folders and include them in "
 "library:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:568
+#: ../../portable/frontends/widgets/prefpanel.py:571
 msgid "Keep at least this much free space on my drive:"
 msgstr "รักษาที่ว่างอย่างน้อยเท่านี้ในไดร์ฟของฉัน :"
 
-#: ../../portable/frontends/widgets/prefpanel.py:571
-#: ../../portable/frontends/widgets/prefpanel.py:577
+#: ../../portable/frontends/widgets/prefpanel.py:574
+#: ../../portable/frontends/widgets/prefpanel.py:580
 msgid "GB"
 msgstr "กิกะไบต์"
 
-#: ../../portable/frontends/widgets/prefpanel.py:580
+#: ../../portable/frontends/widgets/prefpanel.py:583
 msgid "1 day"
 msgstr "1 วัน"
 
-#: ../../portable/frontends/widgets/prefpanel.py:581
+#: ../../portable/frontends/widgets/prefpanel.py:584
 msgid "3 days"
 msgstr "3 วัน"
 
-#: ../../portable/frontends/widgets/prefpanel.py:582
+#: ../../portable/frontends/widgets/prefpanel.py:585
 msgid "6 days"
 msgstr "6 วัน"
 
-#: ../../portable/frontends/widgets/prefpanel.py:583
+#: ../../portable/frontends/widgets/prefpanel.py:586
 msgid "10 days"
 msgstr "10 วัน"
 
-#: ../../portable/frontends/widgets/prefpanel.py:584
+#: ../../portable/frontends/widgets/prefpanel.py:587
 msgid "1 month"
 msgstr "1 เดือน"
 
-#: ../../portable/frontends/widgets/prefpanel.py:590
+#: ../../portable/frontends/widgets/prefpanel.py:593
 msgid "By default, video and audio items expire after:"
-msgstr ""
+msgstr "โดยปรกติ วัตถุประเภทวิดีโอและเสียงจะหมดอายุหลังจาก:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:599
+#: ../../portable/frontends/widgets/prefpanel.py:602
 msgid "Always play videos in a separate window."
-msgstr ""
+msgstr "เล่นวิดีโอในหน้าต่างที่ถูกแยกออกไปเสมอ"
 
-#: ../../portable/frontends/widgets/prefpanel.py:603
+#: ../../portable/frontends/widgets/prefpanel.py:606
 msgid ""
 "Resume playing a video or audio item from the point it was last stopped."
-msgstr ""
+msgstr "กลับมาเล่นวิดีโอหรือเสียงจากตำแหน่งที่หยุดไว้ล่าสุด"
 
-#: ../../portable/frontends/widgets/prefpanel.py:608
+#: ../../portable/frontends/widgets/prefpanel.py:611
 msgid "Play video and audio items one after another"
-msgstr ""
+msgstr "เล่นวัตถุประเภทวิดีโอหรือเสียงอันถัดไปหลังจากที่เล่นอันหนึ่งเสร็จ"
 
-#: ../../portable/frontends/widgets/prefpanel.py:609
+#: ../../portable/frontends/widgets/prefpanel.py:612
 msgid "Stop after each video or audio item"
-msgstr ""
+msgstr "หยุดหลังจากที่เล่นวิดีโอหรือเสียงอันหนึ่งเสร็จ"
 
-#: ../../portable/frontends/widgets/prefpanel.py:620
+#: ../../portable/frontends/widgets/prefpanel.py:623
 msgid "General"
 msgstr "ค่าทั่วไป"
 
-#: ../../portable/frontends/widgets/prefpanel.py:621
+#: ../../portable/frontends/widgets/prefpanel.py:624
 msgid "Feeds"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:623
+#: ../../portable/frontends/widgets/prefpanel.py:626
 msgid "Folders"
 msgstr "โฟลเดอร์"
 
-#: ../../portable/frontends/widgets/prefpanel.py:624
+#: ../../portable/frontends/widgets/prefpanel.py:627
 msgid "Disk space"
-msgstr ""
+msgstr "พื้นที่ในดิสก์"
 
-#: ../../portable/frontends/widgets/prefpanel.py:625
+#: ../../portable/frontends/widgets/prefpanel.py:628
 msgid "Playback"
 msgstr "เล่น"
 
-#: ../../portable/frontends/widgets/prefpanel.py:629
+#: ../../portable/frontends/widgets/prefpanel.py:632
 msgid "Preferences"
 msgstr "ตั้งค่า"
 
@@ -1435,11 +1481,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/newfolder.py:112
 msgid "Enter the name of the folder to add"
-msgstr ""
+msgstr "ใส่ชื่อของโฟลเดอร์เพื่อจะเพิ่ม"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
-msgstr ""
+msgstr "เพลย์ลิสท์ว่าง"
 
 #: ../../portable/frontends/widgets/playlist.py:149
 msgid ""
@@ -1460,7 +1506,7 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/removefeeds.py:84
 msgid "Keep items that have been downloaded in my library."
-msgstr ""
+msgstr "เก็บวัตถุที่เคยถูกดาวน์โหลดไปแล้วไว้ในไลบารี"
 
 #: ../../portable/frontends/widgets/removefeeds.py:89
 #, python-format
@@ -1477,40 +1523,39 @@ msgid ""
 msgid_plural ""
 "Are you sure you want to remove these feeds?  The downloads currently in "
 "progress will be canceled."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "คุณมั่นใจที่จะเอาฟีดนี้ออก? การดาวน์โหลดในปัจจุบันจะถูกยกเลิก"
 
-#: ../../portable/frontends/widgets/gtk/video.py:284
+#: ../../portable/frontends/widgets/gtk/video.py:273
 msgid "Permalink"
-msgstr ""
+msgstr "ลิงค์ถาวร"
 
-#: ../../portable/frontends/widgets/gtk/video.py:294
+#: ../../portable/frontends/widgets/gtk/video.py:279
 msgid "Pop-in"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/video.py:299
+#: ../../portable/frontends/widgets/gtk/video.py:284
 msgid "Pop-out"
 msgstr ""
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:67
 #, python-format
 msgid "Play Next Unplayed (%(unplayed)d)"
-msgstr ""
+msgstr "เล่นสิ่งที่ยังไม่ได้เล่นถัดไป (%(unplayed)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:71
 #, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
-msgstr ""
+msgstr "เล่นสิ่งที่ยังไม่ได้เล่นทั้งหมด (%(unplayed)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:74
 #, python-format
 msgid "Pause All Downloads (%(downloading)d)"
-msgstr ""
+msgstr "พักการดาวน์โหลดทั้งหมด (%(downloading)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:77
 #, python-format
 msgid "Resume All Downloads (%(paused)d)"
-msgstr ""
+msgstr "กลับคืนสู่การดาวน์โหลดทั้งหมด (%(paused)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:85
 msgid "Hide"
@@ -1542,7 +1587,7 @@ msgid ""
 msgstr ""
 
 #: ../../portable/frontends/widgets/gtk/window.py:593
-#: ../../portable/dialogs.py:84
+#: ../../portable/dialogs.py:86
 msgid "Close"
 msgstr ""
 
@@ -1841,15 +1886,15 @@ msgstr ""
 msgid "Search All"
 msgstr ""
 
-#: ../../portable/messages.py:1078 ../../portable/item.py:1078
+#: ../../portable/messages.py:1084 ../../portable/item.py:1107
 msgid "queued for download"
 msgstr ""
 
-#: ../../portable/messagehandler.py:1273
+#: ../../portable/messagehandler.py:1299
 msgid "Subscribed to new feed:"
 msgstr ""
 
-#: ../../portable/messagehandler.py:1276
+#: ../../portable/messagehandler.py:1302
 msgid "Subscribed to new feeds:"
 msgstr ""
 
@@ -1873,6 +1918,17 @@ msgstr "ฐานข้อมูลใหม่เกินไป"
 msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
 "must download the latest version of %(appname)s and run that."
+msgstr ""
+
+#: ../../portable/startup.py:188
+msgid "Insufficient disk space"
+msgstr ""
+
+#: ../../portable/startup.py:190
+#, python-format
+msgid ""
+"Not enough disk space to upgrade your database from the previous version of "
+"%(appname)s.  Please delete some files and try again."
 msgstr ""
 
 #: ../../portable/commandline.py:99
@@ -1921,29 +1977,29 @@ msgstr "Flash URL ผิดพลาด"
 msgid "starting up"
 msgstr "กำลังเริ่ม"
 
-#: ../../portable/feed.py:936
+#: ../../portable/feed.py:940
 msgid "Error loading feed"
 msgstr "โหลดฟีดผิดพลาด"
 
-#: ../../portable/feed.py:938
+#: ../../portable/feed.py:942
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr ""
 
-#: ../../portable/feed.py:941
+#: ../../portable/feed.py:945
 msgid "Would you like to keep the feed?"
 msgstr "ต้องการเก็บฟีดนี้ไหม?"
 
-#: ../../portable/feed.py:1066
+#: ../../portable/feed.py:1070
 msgid "Bad content-type"
 msgstr "คอนเทนต์ผิดประเภท"
 
-#: ../../portable/feed.py:1079
+#: ../../portable/feed.py:1083
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
 msgstr ""
 
-#: ../../portable/feed.py:1082
+#: ../../portable/feed.py:1086
 #, python-format
 msgid ""
 "This channel is not compatible with %(appname)s but we'll try our best to "
@@ -1956,155 +2012,159 @@ msgid ""
 "Do you want to try to load this channel anyway?"
 msgstr ""
 
-#: ../../portable/feed.py:1683
+#: ../../portable/feed.py:1687
 #, python-format
 msgid "Search All: %(text)s"
 msgstr ""
 
-#: ../../portable/feed.py:2264 ../../portable/feed.py:2415
+#: ../../portable/feed.py:2274 ../../portable/feed.py:2425
 msgid "Local Files"
 msgstr "แฟ้มในเครื่อง"
 
-#: ../../portable/feed.py:2429
+#: ../../portable/feed.py:2439
 msgid "Playing File"
 msgstr "กำลังเล่นแฟ้ม"
 
-#: ../../portable/dialogs.py:83
+#: ../../portable/dialogs.py:85
 msgid "Ok"
 msgstr "ตกลง"
 
-#: ../../portable/dialogs.py:86
+#: ../../portable/dialogs.py:88
 msgid "Done"
 msgstr ""
 
-#: ../../portable/dialogs.py:89
+#: ../../portable/dialogs.py:91
 msgid "Quit"
 msgstr "ออก"
 
-#: ../../portable/dialogs.py:90
+#: ../../portable/dialogs.py:92
 msgid "Continue"
 msgstr ""
 
-#: ../../portable/dialogs.py:91
+#: ../../portable/dialogs.py:93
 msgid "Ignore"
 msgstr "ละทิ้ง"
 
-#: ../../portable/dialogs.py:92
+#: ../../portable/dialogs.py:94
 msgid "Submit Crash Report"
 msgstr "ส่งรายงานแคลช"
 
-#: ../../portable/dialogs.py:93
+#: ../../portable/dialogs.py:95
 msgid "Migrate"
 msgstr ""
 
-#: ../../portable/dialogs.py:94
+#: ../../portable/dialogs.py:96
 msgid "Don't Migrate"
 msgstr ""
 
-#: ../../portable/dialogs.py:96
+#: ../../portable/dialogs.py:98
 msgid "Remove Entry"
 msgstr "ลบรายการ"
 
-#: ../../portable/dialogs.py:97
+#: ../../portable/dialogs.py:99
 msgid "Delete File"
 msgstr "ลบแฟ้ม"
 
-#: ../../portable/dialogs.py:98
+#: ../../portable/dialogs.py:100
 msgid "Delete Files"
 msgstr "ลบแฟ้มออก"
 
-#: ../../portable/dialogs.py:99
+#: ../../portable/dialogs.py:101
 msgid "Keep Videos"
 msgstr "เก็บวิดีโอ"
 
-#: ../../portable/dialogs.py:100
+#: ../../portable/dialogs.py:102
 msgid "Delete Videos"
 msgstr "ลบวิดีโอ"
 
-#: ../../portable/dialogs.py:101
+#: ../../portable/dialogs.py:103
 msgid "Create"
 msgstr "สร้าง"
 
-#: ../../portable/dialogs.py:102
+#: ../../portable/dialogs.py:104
 msgid "Create Feed"
 msgstr ""
 
-#: ../../portable/dialogs.py:103
+#: ../../portable/dialogs.py:105
 msgid "Create Folder"
 msgstr ""
 
-#: ../../portable/dialogs.py:105
+#: ../../portable/dialogs.py:107
 msgid "Add Into New Folder"
 msgstr "เพิ่มลงโฟลเดอร์ใหม่"
 
-#: ../../portable/dialogs.py:109
+#: ../../portable/dialogs.py:111
 msgid "Not Now"
 msgstr "ไม่ใช่ตอนนี้"
 
-#: ../../portable/dialogs.py:110
+#: ../../portable/dialogs.py:112
 msgid "Close to Tray"
 msgstr "ปิดลงไปที่ถาดระบบ"
 
-#: ../../portable/dialogs.py:111
+#: ../../portable/dialogs.py:113
 msgid "Launch Miro"
 msgstr ""
 
-#: ../../portable/dialogs.py:112
+#: ../../portable/dialogs.py:114
 msgid "Download Anyway"
 msgstr ""
 
-#: ../../portable/dialogs.py:113
+#: ../../portable/dialogs.py:115
 msgid "Open in External Browser"
 msgstr ""
 
-#: ../../portable/dialogs.py:114
+#: ../../portable/dialogs.py:116
 msgid "Don't Install"
 msgstr "ไม่ติดตั้ง"
 
-#: ../../portable/dialogs.py:115
+#: ../../portable/dialogs.py:117
 msgid "Subscribe"
 msgstr ""
 
-#: ../../portable/dialogs.py:116
+#: ../../portable/dialogs.py:118
 msgid "Stop Watching"
 msgstr ""
 
-#: ../../portable/singleclick.py:54
-msgid "Download already exists"
+#: ../../portable/dialogs.py:119
+msgid "Retry"
 msgstr ""
 
 #: ../../portable/singleclick.py:55
+msgid "Download already exists"
+msgstr ""
+
+#: ../../portable/singleclick.py:56
 msgid "That URL is already an external download."
 msgstr ""
 
-#: ../../portable/singleclick.py:61
+#: ../../portable/singleclick.py:62
 #, python-format
 msgid "%(appname)s will begin downloading it now."
 msgstr ""
 
-#: ../../portable/singleclick.py:64
+#: ../../portable/singleclick.py:65
 msgid "It is downloading now."
 msgstr "กำลังดาวน์โหลด"
 
-#: ../../portable/singleclick.py:66
+#: ../../portable/singleclick.py:67
 msgid "It has already been downloaded."
 msgstr "มันถูกดาวน์โหลดไปแล้ว"
 
-#: ../../portable/singleclick.py:96
+#: ../../portable/singleclick.py:97
 msgid "File Download"
 msgstr ""
 
-#: ../../portable/singleclick.py:97
+#: ../../portable/singleclick.py:98
 #, python-format
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 msgstr ""
 
-#: ../../portable/singleclick.py:137
+#: ../../portable/singleclick.py:138
 msgid "Download Error"
 msgstr ""
 
-#: ../../portable/singleclick.py:139
+#: ../../portable/singleclick.py:140
 #, python-format
 msgid ""
 "%(appname)s is not able to download a file at this URL:\n"
@@ -2112,49 +2172,49 @@ msgid ""
 "URL: %(url)s"
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:628
+#: ../../portable/dl_daemon/download.py:639
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:653
-#: ../../portable/dl_daemon/download.py:870
+#: ../../portable/dl_daemon/download.py:664
+#: ../../portable/dl_daemon/download.py:881
 msgid "Not enough disk space"
 msgstr "เนื้อที่ดิสก์ไม่พอ"
 
-#: ../../portable/dl_daemon/download.py:654
-#: ../../portable/dl_daemon/download.py:871
+#: ../../portable/dl_daemon/download.py:665
+#: ../../portable/dl_daemon/download.py:882
 #, python-format
 msgid "%(amount)s MB required to store this video"
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:669
+#: ../../portable/dl_daemon/download.py:680
 #, python-format
 msgid "Couldn't open %(filename)s for writing"
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:889
+#: ../../portable/dl_daemon/download.py:900
 msgid "BitTorrent failure"
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:889
+#: ../../portable/dl_daemon/download.py:900
 msgid "BitTorrent failed to startup"
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:1078
+#: ../../portable/dl_daemon/download.py:1089
 msgid "Corrupt Torrent"
 msgstr "ทอร์เรนท์ผิดพลาด"
 
-#: ../../portable/dl_daemon/download.py:1079
+#: ../../portable/dl_daemon/download.py:1090
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:1103
+#: ../../portable/dl_daemon/download.py:1114
 msgid "Torrent file deleted"
 msgstr "ไฟล์ทอเรนท์ถูกลบ"
 
-#: ../../portable/dl_daemon/download.py:1104
+#: ../../portable/dl_daemon/download.py:1115
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr ""
@@ -2388,96 +2448,108 @@ msgstr "_เพลย์ลิสต์"
 msgid "P_layback"
 msgstr "_เปิดฟัง"
 
-#: ../../portable/util.py:300 ../../portable/util.py:302
+#: ../../portable/util.py:297 ../../portable/util.py:299
 #, python-format
 msgid "%(size)sGB"
 msgstr ""
 
-#: ../../portable/util.py:306 ../../portable/util.py:308
+#: ../../portable/util.py:303 ../../portable/util.py:305
 #, python-format
 msgid "%(size)sMB"
 msgstr ""
 
-#: ../../portable/util.py:312 ../../portable/util.py:314
+#: ../../portable/util.py:309 ../../portable/util.py:311
 #, python-format
 msgid "%(size)sKB"
 msgstr ""
 
-#: ../../portable/util.py:318 ../../portable/util.py:320
+#: ../../portable/util.py:315 ../../portable/util.py:317
 #, python-format
 msgid "%(size)sB"
 msgstr ""
 
-#: ../../portable/playlist.py:189
+#: ../../portable/playlist.py:200
 #, python-format
 msgid "Enter a new name for the playlist %s"
 msgstr "ใส่ชื่อใหม่ของเพลย์ลิสต์ %s"
 
-#: ../../portable/item.py:897
+#: ../../portable/dbupgradeprogress.py:60
+msgid "Upgrading Old Database"
+msgstr ""
+
+#: ../../portable/dbupgradeprogress.py:67
+msgid "Converting Old Database"
+msgstr ""
+
+#: ../../portable/dbupgradeprogress.py:80
+msgid "Upgrading Database"
+msgstr ""
+
+#: ../../portable/item.py:922
 #, python-format
 msgid "%(count)d day"
 msgid_plural "%(count)d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/item.py:902
+#: ../../portable/item.py:927
 #, python-format
 msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/item.py:907
+#: ../../portable/item.py:932
 #, python-format
 msgid "%(count)d minute"
 msgid_plural "%(count)d minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/item.py:1165
+#: ../../portable/item.py:1193
 msgid "no title"
 msgstr ""
 
-#: ../../portable/item.py:1211
+#: ../../portable/item.py:1239
 msgid "Contents appear in the library"
 msgstr ""
 
-#: ../../portable/item.py:1216
+#: ../../portable/item.py:1244
 msgid "Contents:"
 msgstr ""
 
-#: ../../portable/item.py:1442
+#: ../../portable/item.py:1472
 msgid "starting up..."
 msgstr "กำลังเริ่ม..."
 
-#: ../../portable/opml.py:193
+#: ../../portable/opml.py:197
 msgid "OPML Import failed"
 msgstr "การนำเข้า OPML ล้มเหลว"
 
-#: ../../portable/opml.py:194
+#: ../../portable/opml.py:198
 msgid ""
 "The selected OPML file appears to be invalid.  Import was interrupted."
 msgstr ""
 
-#: ../../portable/opml.py:201
+#: ../../portable/opml.py:205
 msgid "OPML Import summary"
 msgstr "สรุปการนำเข้า OPML"
 
-#: ../../portable/opml.py:202
+#: ../../portable/opml.py:206
 #, python-format
 msgid "Successfully imported %(count)d feed."
 msgid_plural "Successfully imported %(count)d feeds."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/opml.py:208
+#: ../../portable/opml.py:212
 #, python-format
 msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/theme.py:174
+#: ../../portable/theme.py:190
 msgid "Example Playlist"
 msgstr "ตัวอย่างเพลย์ลิสต์"
 
@@ -2596,31 +2668,41 @@ msgstr[1] ""
 msgid "%(month)s %(dayofmonth)s, %(year)s"
 msgstr ""
 
-#: ../../portable/storedatabase.py:449
-#, python-format
-msgid "%(appname)s database save failed"
+#: ../../portable/storedatabase.py:209
+msgid "Database was created by a newer version of Miro "
 msgstr ""
 
-#: ../../portable/storedatabase.py:452
-#, python-format
-msgid ""
-"%(appname)s was unable to save its database: Disk Full.\n"
-"We suggest deleting files from the full disk or simply deleting some movies "
-"from your collection.\n"
-"Recent changes may be lost."
-msgstr ""
-
-#: ../../portable/storedatabase.py:464
+#: ../../portable/storedatabase.py:466
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr ""
 
-#: ../../portable/storedatabase.py:467
+#: ../../portable/storedatabase.py:468
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 "ฐานข้อมูลได้ถูกบันทึกแล้ว คุณสามารถออกจากโปรแกรมได้โดยไม่สูญเสียข้อมูลใดๆ"
+
+#: ../../portable/storedatabase.py:483
+#, python-format
+msgid "%(appname)s database save failed"
+msgstr ""
+
+#: ../../portable/storedatabase.py:486
+#, python-format
+msgid ""
+"%(appname)s was unable to save its database.\n"
+"\n"
+"If your disk is full, we suggest freeing up some space and retrying.  If "
+"your disk is not full, it's possible that retrying will work.\n"
+"\n"
+"If retrying did not work, please quit %(appname)s and restart.  Recent "
+"changes may be lost.\n"
+"\n"
+"Error: %(error_text)s\n"
+"\n"
+msgstr ""
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:171
 msgid "Download Completed"

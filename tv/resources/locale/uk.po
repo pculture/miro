@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-07-16 13:21-0400\n"
+"POT-Creation-Date: 2009-09-23 13:04-0400\n"
 "PO-Revision-Date: 2009-07-23 14:55+0000\n"
 "Last-Translator: Will Guaraldi Kahn-Greene <willg@bluesock.org>\n"
 "Language-Team: Ukranian <serg74@hotmail.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-09-23 16:44+0000\n"
+"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -191,8 +191,8 @@ msgstr "Вилучити з медіаколекції."
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
 #: ../../portable/frontends/widgets/gtk/video.py:246
-#: ../../portable/frontends/widgets/gtk/video.py:255
-#: ../../portable/dialogs.py:107
+#: ../../portable/frontends/widgets/gtk/video.py:262
+#: ../../portable/dialogs.py:109
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:127
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:163
 msgid "Delete"
@@ -236,8 +236,8 @@ msgstr "Позначити як відтворене"
 #: ../../portable/frontends/widgets/style.py:257
 #: ../../portable/frontends/widgets/style.py:1032
 #: ../../portable/frontends/widgets/style.py:1199
-#: ../../portable/frontends/widgets/gtk/video.py:252
-#: ../../portable/dialogs.py:106
+#: ../../portable/frontends/widgets/gtk/video.py:258
+#: ../../portable/dialogs.py:108
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:123
 msgid "Keep"
 msgstr "Зберегти"
@@ -270,7 +270,7 @@ msgstr "Відновити завантаження"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:223
 #: ../../portable/frontends/widgets/style.py:250
 #: ../../portable/frontends/widgets/style.py:1102
-#: ../../portable/frontends/widgets/style.py:1113 ../../portable/dialogs.py:95
+#: ../../portable/frontends/widgets/style.py:1113 ../../portable/dialogs.py:97
 msgid "Download"
 msgstr "Завантажити"
 
@@ -281,7 +281,7 @@ msgstr "Веб-сторінка"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:136
 #: ../../portable/frontends/widgets/style.py:236
-#: ../../portable/frontends/widgets/gtk/video.py:282
+#: ../../portable/frontends/widgets/gtk/video.py:271
 msgid "Comments"
 msgstr "Коментарі"
 
@@ -307,7 +307,7 @@ msgid "View"
 msgstr "Перегляд"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
-#: ../../portable/frontends/widgets/gtk/video.py:273
+#: ../../portable/frontends/widgets/gtk/video.py:266
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:119
 msgid "Share"
 msgstr "Поділитись"
@@ -354,7 +354,7 @@ msgstr "Вилучити зі списку відтворення"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:55
 #: ../../portable/frontends/widgets/feedsettingspanel.py:102
-#: ../../portable/frontends/widgets/prefpanel.py:585
+#: ../../portable/frontends/widgets/prefpanel.py:588
 msgid "never"
 msgstr "ніколи"
 
@@ -508,13 +508,13 @@ msgstr "Запускати %(name)s при старті комп'ютера?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:144
 #: ../../portable/frontends/widgets/firsttimedialog.py:178
-#: ../../portable/dialogs.py:87
+#: ../../portable/dialogs.py:89
 msgid "Yes"
 msgstr "Так"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:145
 #: ../../portable/frontends/widgets/firsttimedialog.py:177
-#: ../../portable/dialogs.py:88
+#: ../../portable/dialogs.py:90
 msgid "No"
 msgstr "Ні"
 
@@ -547,7 +547,7 @@ msgid "Search custom folders:"
 msgstr "Шукати в обраних теках:"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:192
-#: ../../portable/frontends/widgets/prefpanel.py:435
+#: ../../portable/frontends/widgets/prefpanel.py:438
 msgid "Change"
 msgstr "Змінити"
 
@@ -563,7 +563,7 @@ msgstr "< Назад"
 #: ../../portable/frontends/widgets/firsttimedialog.py:223
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:282
-#: ../../portable/feed.py:2290 ../../portable/feed.py:2397
+#: ../../portable/feed.py:2300 ../../portable/feed.py:2407
 msgid "Search"
 msgstr "Пошук"
 
@@ -577,7 +577,7 @@ msgid "Searching for media files"
 msgstr "Пошук медіа-файлів"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:283
-#: ../../portable/dialogs.py:85
+#: ../../portable/dialogs.py:87
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -689,7 +689,7 @@ msgid "Download Torrent"
 msgstr "Завантажити торент"
 
 #: ../../portable/frontends/widgets/style.py:252
-#: ../../portable/dl_daemon/download.py:539
+#: ../../portable/dl_daemon/download.py:550
 msgid "Error"
 msgstr "Помилка"
 
@@ -713,14 +713,14 @@ msgid "Newly Available"
 msgstr "Останні поповнення"
 
 #: ../../portable/frontends/widgets/style.py:258
-#: ../../portable/frontends/widgets/prefpanel.py:485
+#: ../../portable/frontends/widgets/prefpanel.py:488
 #: ../../portable/frontends/widgets/tablist.py:580
 #: ../../portable/frontends/widgets/tablist.py:592
 #: ../../portable/frontends/widgets/tablist.py:598
 #: ../../portable/frontends/widgets/tablist.py:635
 #: ../../portable/frontends/widgets/tablist.py:641
 #: ../../portable/frontends/widgets/tablist.py:646
-#: ../../portable/dialogs.py:108
+#: ../../portable/dialogs.py:110
 msgid "Remove"
 msgstr "Вилучити"
 
@@ -1088,7 +1088,7 @@ msgstr "Введіть нове ім’я для стрічки %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:717
 #: ../../portable/frontends/widgets/tablist.py:640
-#: ../../portable/playlist.py:188
+#: ../../portable/playlist.py:199
 msgid "Rename Playlist"
 msgstr "Перейменувати список відтворення"
 
@@ -1164,20 +1164,34 @@ msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr ""
 "Попередити коли я намагаюсь закрити програму в процесі завантаження відео"
 
-#: ../../portable/frontends/widgets/application.py:1124
+#: ../../portable/frontends/widgets/application.py:994
+msgid "Upgrading database"
+msgstr "Оновлення бази даних"
+
+#: ../../portable/frontends/widgets/application.py:1127
 msgid "Message"
 msgstr "Повідомлення"
 
-#: ../../portable/frontends/widgets/application.py:1149
+#: ../../portable/frontends/widgets/application.py:1152
 msgid "Migrating Files"
 msgstr "Перенос файлів"
 
-#: ../../portable/frontends/widgets/application.py:1159
+#: ../../portable/frontends/widgets/application.py:1162
 msgid "Migrating files"
 msgstr "Перенос файлів"
 
+#: ../../portable/frontends/widgets/dialogs.py:102
+msgid ""
+"Miro is upgrading your database of feeds and files.  This one-time process "
+"can take a long time if you have a large number of items in Miro (it can "
+"even take more than 30 minutes)."
+msgstr ""
+"Miro оновлює бази даних каналів і файлів. Це одноразовий процес може зайняти "
+"тривалий час, якщо у вас є багато елементів в Miro ( він може навіть зайняти "
+"більше 30 хвилин)."
+
 #: ../../portable/frontends/widgets/downloadscontroller.py:81
-#: ../../portable/frontends/widgets/prefpanel.py:622
+#: ../../portable/frontends/widgets/prefpanel.py:625
 msgid "Downloads"
 msgstr "Завантаження"
 
@@ -1193,149 +1207,149 @@ msgstr "Завантаження стрічок"
 msgid "Seeding"
 msgstr "Роздача"
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
+#: ../../portable/frontends/widgets/prefpanel.py:268
 #, python-format
 msgid "Automatically run %(appname)s when I log in."
 msgstr "Автоматично запускати %(appname)s коли я входжу в систему."
 
-#: ../../portable/frontends/widgets/prefpanel.py:271
+#: ../../portable/frontends/widgets/prefpanel.py:272
 msgid "Warn me if I attempt to quit with downloads in progress."
 msgstr "Попереджувати при спробі вийти із незавершеними завантаженнями."
 
-#: ../../portable/frontends/widgets/prefpanel.py:281
+#: ../../portable/frontends/widgets/prefpanel.py:282
 msgid "Every day"
 msgstr "Кожен день"
 
-#: ../../portable/frontends/widgets/prefpanel.py:282
+#: ../../portable/frontends/widgets/prefpanel.py:283
 msgid "Every hour"
 msgstr "Щогодинни"
 
-#: ../../portable/frontends/widgets/prefpanel.py:283
+#: ../../portable/frontends/widgets/prefpanel.py:284
 msgid "Every 30 minutes"
 msgstr "Що 30 хвилин"
 
-#: ../../portable/frontends/widgets/prefpanel.py:284
+#: ../../portable/frontends/widgets/prefpanel.py:285
 msgid "Manually"
 msgstr "Вручну"
 
-#: ../../portable/frontends/widgets/prefpanel.py:289
+#: ../../portable/frontends/widgets/prefpanel.py:290
 #: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "New"
 msgstr "Нове"
 
-#: ../../portable/frontends/widgets/prefpanel.py:290
+#: ../../portable/frontends/widgets/prefpanel.py:291
 #: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "All"
 msgstr "Усе"
 
-#: ../../portable/frontends/widgets/prefpanel.py:291
+#: ../../portable/frontends/widgets/prefpanel.py:292
 #: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "Off"
 msgstr "Нічого"
 
-#: ../../portable/frontends/widgets/prefpanel.py:297
+#: ../../portable/frontends/widgets/prefpanel.py:298
 msgid "0"
 msgstr "0"
 
-#: ../../portable/frontends/widgets/prefpanel.py:298
+#: ../../portable/frontends/widgets/prefpanel.py:299
 msgid "20"
 msgstr "20"
 
-#: ../../portable/frontends/widgets/prefpanel.py:299
+#: ../../portable/frontends/widgets/prefpanel.py:300
 msgid "50"
 msgstr "50"
 
-#: ../../portable/frontends/widgets/prefpanel.py:300
+#: ../../portable/frontends/widgets/prefpanel.py:301
 msgid "100"
 msgstr "100"
 
-#: ../../portable/frontends/widgets/prefpanel.py:301
+#: ../../portable/frontends/widgets/prefpanel.py:302
 msgid "1000"
 msgstr "1000"
 
-#: ../../portable/frontends/widgets/prefpanel.py:307
+#: ../../portable/frontends/widgets/prefpanel.py:308
 msgid "Default settings for new feeds:"
 msgstr "Типові налаштування для нових стрічок:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:311
+#: ../../portable/frontends/widgets/prefpanel.py:312
 msgid "(These can be changed using the feed's settings button)"
 msgstr ""
 "(Вони можуть бути змінені за допомогою кнопки «налаштування» для стрічок)"
 
-#: ../../portable/frontends/widgets/prefpanel.py:315
+#: ../../portable/frontends/widgets/prefpanel.py:316
 msgid "Check for new content:"
 msgstr "Перевіряти наявність нового змісту:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:320
+#: ../../portable/frontends/widgets/prefpanel.py:321
 msgid "Auto download setting:"
 msgstr "Налаштування автозавантаження:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:326
+#: ../../portable/frontends/widgets/prefpanel.py:327
 msgid "Remember this many old items:"
 msgstr "Памятати старі записи:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:327
+#: ../../portable/frontends/widgets/prefpanel.py:328
 msgid "(in addition to the current contents)"
 msgstr "(на додачу до поточного змісту)"
 
-#: ../../portable/frontends/widgets/prefpanel.py:340
+#: ../../portable/frontends/widgets/prefpanel.py:341
 msgid "Maximum number of manual downloads at a time:"
 msgstr "Максимальна кількість одночасних ручних завантаженнь:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:347
+#: ../../portable/frontends/widgets/prefpanel.py:348
 msgid "Maximum number of auto-downloads at a time:"
 msgstr "Максимальна кількість одночасних автоматичних завантажень:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:357
+#: ../../portable/frontends/widgets/prefpanel.py:358
 msgid "Bittorrent:"
 msgstr "Bittorrent:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:360
+#: ../../portable/frontends/widgets/prefpanel.py:361
 msgid "Limit upstream bandwidth to:"
 msgstr "Обмежити вихідний потік до:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:369
-#: ../../portable/frontends/widgets/prefpanel.py:380
+#: ../../portable/frontends/widgets/prefpanel.py:372
+#: ../../portable/frontends/widgets/prefpanel.py:383
 msgid "KB/s"
 msgstr "КБ/c"
 
-#: ../../portable/frontends/widgets/prefpanel.py:372
+#: ../../portable/frontends/widgets/prefpanel.py:375
 msgid "Limit downstream bandwidth to:"
 msgstr "Обмежити вхідний потік до:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:383
+#: ../../portable/frontends/widgets/prefpanel.py:386
 msgid "Limit torrent connections to:"
 msgstr "Обмежити кількість torrent-з'єднань до:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:400
+#: ../../portable/frontends/widgets/prefpanel.py:403
 msgid "Starting port:"
 msgstr "Початковий порт:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:404
+#: ../../portable/frontends/widgets/prefpanel.py:407
 msgid "Ending port:"
 msgstr "Кінцевий порт:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:410
+#: ../../portable/frontends/widgets/prefpanel.py:413
 msgid "Automatically forward ports.  (UPNP)"
 msgstr "Автоматичне перенаправлення портів. (UPNP)"
 
-#: ../../portable/frontends/widgets/prefpanel.py:414
+#: ../../portable/frontends/widgets/prefpanel.py:417
 msgid "Ignore unencrypted connections."
 msgstr "Ігнорувати нешифровані з'єднання."
 
-#: ../../portable/frontends/widgets/prefpanel.py:418
+#: ../../portable/frontends/widgets/prefpanel.py:421
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr "Зупинити віддачу torrent при досягненні співвідношення:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:440
+#: ../../portable/frontends/widgets/prefpanel.py:443
 msgid "Choose Movies Directory"
 msgstr "Виберіть теку для фільмів"
 
-#: ../../portable/frontends/widgets/prefpanel.py:453
+#: ../../portable/frontends/widgets/prefpanel.py:456
 msgid "Migrate existing movies?"
 msgstr "Перенести існуючі фільми?"
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
+#: ../../portable/frontends/widgets/prefpanel.py:457
 #, python-format
 msgid ""
 "You've selected a new folder to download movies to.  Should %(appname)s "
@@ -1346,20 +1360,20 @@ msgstr ""
 "перенести ваші існуючі завантаження туди? (Поточні завантаження не будуть "
 "перенесені доки не завершаться.)"
 
-#: ../../portable/frontends/widgets/prefpanel.py:482
-#: ../../portable/dialogs.py:104
+#: ../../portable/frontends/widgets/prefpanel.py:485
+#: ../../portable/dialogs.py:106
 msgid "Add"
 msgstr "Додати"
 
-#: ../../portable/frontends/widgets/prefpanel.py:523
+#: ../../portable/frontends/widgets/prefpanel.py:526
 msgid "Add Watched Folder"
 msgstr "Додати теку для слідкування за вмістом"
 
-#: ../../portable/frontends/widgets/prefpanel.py:542
+#: ../../portable/frontends/widgets/prefpanel.py:545
 msgid "Store downloads in this folder:"
 msgstr "Зберігати завантажене в цій теці:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:549
+#: ../../portable/frontends/widgets/prefpanel.py:552
 msgid ""
 "Watch for new video and audio items in these folders and include them in "
 "library:"
@@ -1367,79 +1381,79 @@ msgstr ""
 "Слідкувати за новими відео та аудіо файлами в цих теках та додати їх до "
 "бібліотеки:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:568
+#: ../../portable/frontends/widgets/prefpanel.py:571
 msgid "Keep at least this much free space on my drive:"
 msgstr "Зберігати вільного місця на диску не менше:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:571
-#: ../../portable/frontends/widgets/prefpanel.py:577
+#: ../../portable/frontends/widgets/prefpanel.py:574
+#: ../../portable/frontends/widgets/prefpanel.py:580
 msgid "GB"
 msgstr "ГБ"
 
-#: ../../portable/frontends/widgets/prefpanel.py:580
+#: ../../portable/frontends/widgets/prefpanel.py:583
 msgid "1 day"
 msgstr "1 день"
 
-#: ../../portable/frontends/widgets/prefpanel.py:581
+#: ../../portable/frontends/widgets/prefpanel.py:584
 msgid "3 days"
 msgstr "3 дні"
 
-#: ../../portable/frontends/widgets/prefpanel.py:582
+#: ../../portable/frontends/widgets/prefpanel.py:585
 msgid "6 days"
 msgstr "6 днів"
 
-#: ../../portable/frontends/widgets/prefpanel.py:583
+#: ../../portable/frontends/widgets/prefpanel.py:586
 msgid "10 days"
 msgstr "10 днів"
 
-#: ../../portable/frontends/widgets/prefpanel.py:584
+#: ../../portable/frontends/widgets/prefpanel.py:587
 msgid "1 month"
 msgstr "1 місяць"
 
-#: ../../portable/frontends/widgets/prefpanel.py:590
+#: ../../portable/frontends/widgets/prefpanel.py:593
 msgid "By default, video and audio items expire after:"
 msgstr "Відео та аудіо записи застаріють через:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:599
+#: ../../portable/frontends/widgets/prefpanel.py:602
 msgid "Always play videos in a separate window."
 msgstr "Завжди відтворювати відео в окремому вікні."
 
-#: ../../portable/frontends/widgets/prefpanel.py:603
+#: ../../portable/frontends/widgets/prefpanel.py:606
 msgid ""
 "Resume playing a video or audio item from the point it was last stopped."
 msgstr ""
 "Відновлювати відтворення відео чи аудіо запису з того ж місця де востаннє "
 "зупинились."
 
-#: ../../portable/frontends/widgets/prefpanel.py:608
+#: ../../portable/frontends/widgets/prefpanel.py:611
 msgid "Play video and audio items one after another"
 msgstr "Відтворити відео та аудіо записи один за одним"
 
-#: ../../portable/frontends/widgets/prefpanel.py:609
+#: ../../portable/frontends/widgets/prefpanel.py:612
 msgid "Stop after each video or audio item"
 msgstr "Зупинятись після відтворення кожного відео чи аудіо запису"
 
-#: ../../portable/frontends/widgets/prefpanel.py:620
+#: ../../portable/frontends/widgets/prefpanel.py:623
 msgid "General"
 msgstr "Загальне"
 
-#: ../../portable/frontends/widgets/prefpanel.py:621
+#: ../../portable/frontends/widgets/prefpanel.py:624
 msgid "Feeds"
 msgstr "Стрічки"
 
-#: ../../portable/frontends/widgets/prefpanel.py:623
+#: ../../portable/frontends/widgets/prefpanel.py:626
 msgid "Folders"
 msgstr "Теки"
 
-#: ../../portable/frontends/widgets/prefpanel.py:624
+#: ../../portable/frontends/widgets/prefpanel.py:627
 msgid "Disk space"
 msgstr "Місце на диску"
 
-#: ../../portable/frontends/widgets/prefpanel.py:625
+#: ../../portable/frontends/widgets/prefpanel.py:628
 msgid "Playback"
 msgstr "Відтворення"
 
-#: ../../portable/frontends/widgets/prefpanel.py:629
+#: ../../portable/frontends/widgets/prefpanel.py:632
 msgid "Preferences"
 msgstr "Параметри"
 
@@ -1578,15 +1592,15 @@ msgstr[2] ""
 "Ви впевнені що хочете вилучити ці стрічки? Поточні завантаження будуть "
 "скасовані."
 
-#: ../../portable/frontends/widgets/gtk/video.py:284
+#: ../../portable/frontends/widgets/gtk/video.py:273
 msgid "Permalink"
 msgstr "Постійне посилання"
 
-#: ../../portable/frontends/widgets/gtk/video.py:294
+#: ../../portable/frontends/widgets/gtk/video.py:279
 msgid "Pop-in"
 msgstr "Приєднати"
 
-#: ../../portable/frontends/widgets/gtk/video.py:299
+#: ../../portable/frontends/widgets/gtk/video.py:284
 msgid "Pop-out"
 msgstr "Від'єднати"
 
@@ -1642,7 +1656,7 @@ msgstr ""
 "%(trademark)s"
 
 #: ../../portable/frontends/widgets/gtk/window.py:593
-#: ../../portable/dialogs.py:84
+#: ../../portable/dialogs.py:86
 msgid "Close"
 msgstr "Закрити"
 
@@ -1958,15 +1972,15 @@ msgstr "Діагностика"
 msgid "Search All"
 msgstr "Шукати всюди"
 
-#: ../../portable/messages.py:1078 ../../portable/item.py:1078
+#: ../../portable/messages.py:1084 ../../portable/item.py:1107
 msgid "queued for download"
 msgstr "в черзі на завантаження"
 
-#: ../../portable/messagehandler.py:1273
+#: ../../portable/messagehandler.py:1299
 msgid "Subscribed to new feed:"
 msgstr "Підписався на нову стрічку:"
 
-#: ../../portable/messagehandler.py:1276
+#: ../../portable/messagehandler.py:1302
 msgid "Subscribed to new feeds:"
 msgstr "Підписався на нові стрічки:"
 
@@ -1995,6 +2009,20 @@ msgid ""
 msgstr ""
 "Ваша база даних була створена новішою версією %(appname)s. Ви мусите "
 "завантажити й запускати найновішу версію %(appname)s."
+
+#: ../../portable/startup.py:188
+msgid "Insufficient disk space"
+msgstr "На диску недостатньо вільного місця"
+
+#: ../../portable/startup.py:190
+#, python-format
+msgid ""
+"Not enough disk space to upgrade your database from the previous version of "
+"%(appname)s.  Please delete some files and try again."
+msgstr ""
+"Недостатньо вільного місця на диску,  щоб оновити вашу базу даних від "
+"попередньої версії %(appname)s.  Будь ласка, видаліть непотрібні файли та "
+"спробуйте знову."
 
 #: ../../portable/commandline.py:99
 msgid "Subscription error"
@@ -2047,29 +2075,29 @@ msgstr "Flash URL Scraping Error"
 msgid "starting up"
 msgstr "запускається"
 
-#: ../../portable/feed.py:936
+#: ../../portable/feed.py:940
 msgid "Error loading feed"
 msgstr "Помилка завантаження стрічки"
 
-#: ../../portable/feed.py:938
+#: ../../portable/feed.py:942
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr "Не можу завантажити стрічку з %(url)s (%(errordescription)s)."
 
-#: ../../portable/feed.py:941
+#: ../../portable/feed.py:945
 msgid "Would you like to keep the feed?"
 msgstr "Хочете залишити стрічку?"
 
-#: ../../portable/feed.py:1066
+#: ../../portable/feed.py:1070
 msgid "Bad content-type"
 msgstr "Невірний content-type"
 
-#: ../../portable/feed.py:1079
+#: ../../portable/feed.py:1083
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
 msgstr "Канал несумісний з %(appname)s"
 
-#: ../../portable/feed.py:1082
+#: ../../portable/feed.py:1086
 #, python-format
 msgid ""
 "This channel is not compatible with %(appname)s but we'll try our best to "
@@ -2090,156 +2118,160 @@ msgstr ""
 "\n"
 "Ви все ще хочете завантажити цей канал?"
 
-#: ../../portable/feed.py:1683
+#: ../../portable/feed.py:1687
 #, python-format
 msgid "Search All: %(text)s"
 msgstr "Шукати всі: %(text)s"
 
-#: ../../portable/feed.py:2264 ../../portable/feed.py:2415
+#: ../../portable/feed.py:2274 ../../portable/feed.py:2425
 msgid "Local Files"
 msgstr "Локальні файли"
 
-#: ../../portable/feed.py:2429
+#: ../../portable/feed.py:2439
 msgid "Playing File"
 msgstr "Відтворюється файл"
 
-#: ../../portable/dialogs.py:83
+#: ../../portable/dialogs.py:85
 msgid "Ok"
 msgstr "Так"
 
-#: ../../portable/dialogs.py:86
+#: ../../portable/dialogs.py:88
 msgid "Done"
 msgstr "Готово"
 
-#: ../../portable/dialogs.py:89
+#: ../../portable/dialogs.py:91
 msgid "Quit"
 msgstr "Вихід"
 
-#: ../../portable/dialogs.py:90
+#: ../../portable/dialogs.py:92
 msgid "Continue"
 msgstr "Продовжити"
 
-#: ../../portable/dialogs.py:91
+#: ../../portable/dialogs.py:93
 msgid "Ignore"
 msgstr "Ігнорувати"
 
-#: ../../portable/dialogs.py:92
+#: ../../portable/dialogs.py:94
 msgid "Submit Crash Report"
 msgstr "Надіслати звіт про збій"
 
-#: ../../portable/dialogs.py:93
+#: ../../portable/dialogs.py:95
 msgid "Migrate"
 msgstr "Мігрувати"
 
-#: ../../portable/dialogs.py:94
+#: ../../portable/dialogs.py:96
 msgid "Don't Migrate"
 msgstr "Не мігрувати"
 
-#: ../../portable/dialogs.py:96
+#: ../../portable/dialogs.py:98
 msgid "Remove Entry"
 msgstr "Вилучити запис"
 
-#: ../../portable/dialogs.py:97
+#: ../../portable/dialogs.py:99
 msgid "Delete File"
 msgstr "Знищити файл"
 
-#: ../../portable/dialogs.py:98
+#: ../../portable/dialogs.py:100
 msgid "Delete Files"
 msgstr "Знищити файли"
 
-#: ../../portable/dialogs.py:99
+#: ../../portable/dialogs.py:101
 msgid "Keep Videos"
 msgstr "Залишити відео"
 
-#: ../../portable/dialogs.py:100
+#: ../../portable/dialogs.py:102
 msgid "Delete Videos"
 msgstr "Знищити відео"
 
-#: ../../portable/dialogs.py:101
+#: ../../portable/dialogs.py:103
 msgid "Create"
 msgstr "Створити"
 
-#: ../../portable/dialogs.py:102
+#: ../../portable/dialogs.py:104
 msgid "Create Feed"
 msgstr "Створити стрічку"
 
-#: ../../portable/dialogs.py:103
+#: ../../portable/dialogs.py:105
 msgid "Create Folder"
 msgstr "Створити теку"
 
-#: ../../portable/dialogs.py:105
+#: ../../portable/dialogs.py:107
 msgid "Add Into New Folder"
 msgstr "Додати в нову теку"
 
-#: ../../portable/dialogs.py:109
+#: ../../portable/dialogs.py:111
 msgid "Not Now"
 msgstr "Не зараз"
 
-#: ../../portable/dialogs.py:110
+#: ../../portable/dialogs.py:112
 msgid "Close to Tray"
 msgstr "Згорнути в трей"
 
-#: ../../portable/dialogs.py:111
+#: ../../portable/dialogs.py:113
 msgid "Launch Miro"
 msgstr "Запустити Miro"
 
-#: ../../portable/dialogs.py:112
+#: ../../portable/dialogs.py:114
 msgid "Download Anyway"
 msgstr "Все одно завантажити"
 
-#: ../../portable/dialogs.py:113
+#: ../../portable/dialogs.py:115
 msgid "Open in External Browser"
 msgstr "Відкрити у зовнішньому браузері"
 
-#: ../../portable/dialogs.py:114
+#: ../../portable/dialogs.py:116
 msgid "Don't Install"
 msgstr "Не встановлювати"
 
-#: ../../portable/dialogs.py:115
+#: ../../portable/dialogs.py:117
 msgid "Subscribe"
 msgstr "Підписатись"
 
-#: ../../portable/dialogs.py:116
+#: ../../portable/dialogs.py:118
 msgid "Stop Watching"
 msgstr "Перестати відслідковувати"
 
-#: ../../portable/singleclick.py:54
+#: ../../portable/dialogs.py:119
+msgid "Retry"
+msgstr ""
+
+#: ../../portable/singleclick.py:55
 msgid "Download already exists"
 msgstr "Завантаження вже існує"
 
-#: ../../portable/singleclick.py:55
+#: ../../portable/singleclick.py:56
 msgid "That URL is already an external download."
 msgstr "Цей URL вже є зовнішнішнім завантаженням."
 
-#: ../../portable/singleclick.py:61
+#: ../../portable/singleclick.py:62
 #, python-format
 msgid "%(appname)s will begin downloading it now."
 msgstr "%(appname)s почне завантажувати його зараз."
 
-#: ../../portable/singleclick.py:64
+#: ../../portable/singleclick.py:65
 msgid "It is downloading now."
 msgstr "Це завантажується зараз."
 
-#: ../../portable/singleclick.py:66
+#: ../../portable/singleclick.py:67
 msgid "It has already been downloaded."
 msgstr "Це вже було завантажене."
 
-#: ../../portable/singleclick.py:96
+#: ../../portable/singleclick.py:97
 msgid "File Download"
 msgstr "Завантаження файлу"
 
-#: ../../portable/singleclick.py:97
+#: ../../portable/singleclick.py:98
 #, python-format
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 msgstr ""
 "Цей файл %(url)s не схожий ні на аудіо, ні на відео, ні на RSS стрічку."
 
-#: ../../portable/singleclick.py:137
+#: ../../portable/singleclick.py:138
 msgid "Download Error"
 msgstr "Помилка завантаження"
 
-#: ../../portable/singleclick.py:139
+#: ../../portable/singleclick.py:140
 #, python-format
 msgid ""
 "%(appname)s is not able to download a file at this URL:\n"
@@ -2250,49 +2282,49 @@ msgstr ""
 "\n"
 "URL: %(url)s"
 
-#: ../../portable/dl_daemon/download.py:628
+#: ../../portable/dl_daemon/download.py:639
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr "Неможливо записати до %(filename)s"
 
-#: ../../portable/dl_daemon/download.py:653
-#: ../../portable/dl_daemon/download.py:870
+#: ../../portable/dl_daemon/download.py:664
+#: ../../portable/dl_daemon/download.py:881
 msgid "Not enough disk space"
 msgstr "Недостатньо дискового простору"
 
-#: ../../portable/dl_daemon/download.py:654
-#: ../../portable/dl_daemon/download.py:871
+#: ../../portable/dl_daemon/download.py:665
+#: ../../portable/dl_daemon/download.py:882
 #, python-format
 msgid "%(amount)s MB required to store this video"
 msgstr "%(amount)s Мб необхідно для збереження цього відео"
 
-#: ../../portable/dl_daemon/download.py:669
+#: ../../portable/dl_daemon/download.py:680
 #, python-format
 msgid "Couldn't open %(filename)s for writing"
 msgstr "Неможливо відкрити %(filename)s для запису"
 
-#: ../../portable/dl_daemon/download.py:889
+#: ../../portable/dl_daemon/download.py:900
 msgid "BitTorrent failure"
 msgstr "Помилка Бітторенту"
 
-#: ../../portable/dl_daemon/download.py:889
+#: ../../portable/dl_daemon/download.py:900
 msgid "BitTorrent failed to startup"
 msgstr "Бітторент не стартував"
 
-#: ../../portable/dl_daemon/download.py:1078
+#: ../../portable/dl_daemon/download.py:1089
 msgid "Corrupt Torrent"
 msgstr "Торент пошкоджений"
 
-#: ../../portable/dl_daemon/download.py:1079
+#: ../../portable/dl_daemon/download.py:1090
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr "Неправильний торент-файл на %(url)s"
 
-#: ../../portable/dl_daemon/download.py:1103
+#: ../../portable/dl_daemon/download.py:1114
 msgid "Torrent file deleted"
 msgstr "Торент-файл був знищений."
 
-#: ../../portable/dl_daemon/download.py:1104
+#: ../../portable/dl_daemon/download.py:1115
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr "Торент файл для цього запису був стертий поза %(appname)s."
@@ -2526,32 +2558,44 @@ msgstr "_Списки"
 msgid "P_layback"
 msgstr "_Відтворення"
 
-#: ../../portable/util.py:300 ../../portable/util.py:302
+#: ../../portable/util.py:297 ../../portable/util.py:299
 #, python-format
 msgid "%(size)sGB"
 msgstr "%(size)s ГБ"
 
-#: ../../portable/util.py:306 ../../portable/util.py:308
+#: ../../portable/util.py:303 ../../portable/util.py:305
 #, python-format
 msgid "%(size)sMB"
 msgstr "%(size)s МБ"
 
-#: ../../portable/util.py:312 ../../portable/util.py:314
+#: ../../portable/util.py:309 ../../portable/util.py:311
 #, python-format
 msgid "%(size)sKB"
 msgstr "%(size)s КБ"
 
-#: ../../portable/util.py:318 ../../portable/util.py:320
+#: ../../portable/util.py:315 ../../portable/util.py:317
 #, python-format
 msgid "%(size)sB"
 msgstr "%(size)s Б"
 
-#: ../../portable/playlist.py:189
+#: ../../portable/playlist.py:200
 #, python-format
 msgid "Enter a new name for the playlist %s"
 msgstr "Введіть нове ім’я списку відтворення %s"
 
-#: ../../portable/item.py:897
+#: ../../portable/dbupgradeprogress.py:60
+msgid "Upgrading Old Database"
+msgstr "Оновлення старої бази даних"
+
+#: ../../portable/dbupgradeprogress.py:67
+msgid "Converting Old Database"
+msgstr "Конвертування старої бази даних"
+
+#: ../../portable/dbupgradeprogress.py:80
+msgid "Upgrading Database"
+msgstr "Оновлення бази даних"
+
+#: ../../portable/item.py:922
 #, python-format
 msgid "%(count)d day"
 msgid_plural "%(count)d days"
@@ -2559,7 +2603,7 @@ msgstr[0] "%(count)d день"
 msgstr[1] "%(count)d дні"
 msgstr[2] "%(count)d днів"
 
-#: ../../portable/item.py:902
+#: ../../portable/item.py:927
 #, python-format
 msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
@@ -2567,7 +2611,7 @@ msgstr[0] "%(count)d година"
 msgstr[1] "%(count)d години"
 msgstr[2] "%(count)d годин"
 
-#: ../../portable/item.py:907
+#: ../../portable/item.py:932
 #, python-format
 msgid "%(count)d minute"
 msgid_plural "%(count)d minutes"
@@ -2575,36 +2619,36 @@ msgstr[0] "%(count)d хвилина"
 msgstr[1] "%(count)d хвилини"
 msgstr[2] "%(count)d хвилин"
 
-#: ../../portable/item.py:1165
+#: ../../portable/item.py:1193
 msgid "no title"
 msgstr "без заголовку"
 
-#: ../../portable/item.py:1211
+#: ../../portable/item.py:1239
 msgid "Contents appear in the library"
 msgstr "Зміст показаний у сховищі"
 
-#: ../../portable/item.py:1216
+#: ../../portable/item.py:1244
 msgid "Contents:"
 msgstr "Зміст:"
 
-#: ../../portable/item.py:1442
+#: ../../portable/item.py:1472
 msgid "starting up..."
 msgstr "Запускаємось…"
 
-#: ../../portable/opml.py:193
+#: ../../portable/opml.py:197
 msgid "OPML Import failed"
 msgstr "Не вдалося імпортувати OPML"
 
-#: ../../portable/opml.py:194
+#: ../../portable/opml.py:198
 msgid ""
 "The selected OPML file appears to be invalid.  Import was interrupted."
 msgstr "Обраний OPML-файл здається некоректним. Імпортування було перерване."
 
-#: ../../portable/opml.py:201
+#: ../../portable/opml.py:205
 msgid "OPML Import summary"
 msgstr "Підсумки імпортування OPML"
 
-#: ../../portable/opml.py:202
+#: ../../portable/opml.py:206
 #, python-format
 msgid "Successfully imported %(count)d feed."
 msgid_plural "Successfully imported %(count)d feeds."
@@ -2612,7 +2656,7 @@ msgstr[0] "Успішно імпортовано %(count)d стрічку."
 msgstr[1] "Успішно імпортовано %(count)d стрічки."
 msgstr[2] "Успішно імпортовано %(count)d стрічок."
 
-#: ../../portable/opml.py:208
+#: ../../portable/opml.py:212
 #, python-format
 msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
@@ -2620,7 +2664,7 @@ msgstr[0] "Пропущено %(count)d стрічку, яка вже наявн
 msgstr[1] "Пропущено %(count)d стрічки, які вже наявні."
 msgstr[2] "Пропущено %(count)d стрічок, які вже наявні."
 
-#: ../../portable/theme.py:174
+#: ../../portable/theme.py:190
 msgid "Example Playlist"
 msgstr "Приклад списку відтворення"
 
@@ -2749,36 +2793,41 @@ msgstr[2] "Застаріє: %(count)d хвилин"
 msgid "%(month)s %(dayofmonth)s, %(year)s"
 msgstr "%(dayofmonth)s %(month)s, %(year)s"
 
-#: ../../portable/storedatabase.py:449
-#, python-format
-msgid "%(appname)s database save failed"
-msgstr "Помилка бази даних %(appname)s"
+#: ../../portable/storedatabase.py:209
+msgid "Database was created by a newer version of Miro "
+msgstr "База даних була створена новішою версією Miro "
 
-#: ../../portable/storedatabase.py:452
-#, python-format
-msgid ""
-"%(appname)s was unable to save its database: Disk Full.\n"
-"We suggest deleting files from the full disk or simply deleting some movies "
-"from your collection.\n"
-"Recent changes may be lost."
-msgstr ""
-"%(appname)s не вдається зберегти базу даних через відсутність вільного "
-"простору: диск заповнено.\n"
-"Радимо видалити зайві файли з диску, або видалити частину відео з вашої "
-"колекції.\n"
-"Останні зміни можуть бути втрачені."
-
-#: ../../portable/storedatabase.py:464
+#: ../../portable/storedatabase.py:466
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "Збереження база даних %(appname)s успішно завершено."
 
-#: ../../portable/storedatabase.py:467
+#: ../../portable/storedatabase.py:468
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 "База даних успішно збережена. Ви можете вийти без ризику втрати інформації."
+
+#: ../../portable/storedatabase.py:483
+#, python-format
+msgid "%(appname)s database save failed"
+msgstr "Помилка бази даних %(appname)s"
+
+#: ../../portable/storedatabase.py:486
+#, python-format
+msgid ""
+"%(appname)s was unable to save its database.\n"
+"\n"
+"If your disk is full, we suggest freeing up some space and retrying.  If "
+"your disk is not full, it's possible that retrying will work.\n"
+"\n"
+"If retrying did not work, please quit %(appname)s and restart.  Recent "
+"changes may be lost.\n"
+"\n"
+"Error: %(error_text)s\n"
+"\n"
+msgstr ""
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:171
 msgid "Download Completed"

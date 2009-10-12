@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-07-16 13:21-0400\n"
+"POT-Creation-Date: 2009-09-23 13:04-0400\n"
 "PO-Revision-Date: 2009-07-23 13:48+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-09-23 16:44+0000\n"
+"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -190,8 +190,8 @@ msgstr "Poista Kirjastosta"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
 #: ../../portable/frontends/widgets/gtk/video.py:246
-#: ../../portable/frontends/widgets/gtk/video.py:255
-#: ../../portable/dialogs.py:107
+#: ../../portable/frontends/widgets/gtk/video.py:262
+#: ../../portable/dialogs.py:109
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:127
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:163
 msgid "Delete"
@@ -235,8 +235,8 @@ msgstr "Merkitse toistetuksi"
 #: ../../portable/frontends/widgets/style.py:257
 #: ../../portable/frontends/widgets/style.py:1032
 #: ../../portable/frontends/widgets/style.py:1199
-#: ../../portable/frontends/widgets/gtk/video.py:252
-#: ../../portable/dialogs.py:106
+#: ../../portable/frontends/widgets/gtk/video.py:258
+#: ../../portable/dialogs.py:108
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:123
 msgid "Keep"
 msgstr "Pidä"
@@ -269,7 +269,7 @@ msgstr "Jatka lataamista"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:223
 #: ../../portable/frontends/widgets/style.py:250
 #: ../../portable/frontends/widgets/style.py:1102
-#: ../../portable/frontends/widgets/style.py:1113 ../../portable/dialogs.py:95
+#: ../../portable/frontends/widgets/style.py:1113 ../../portable/dialogs.py:97
 msgid "Download"
 msgstr "Lataa"
 
@@ -280,7 +280,7 @@ msgstr "Web-sivu"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:136
 #: ../../portable/frontends/widgets/style.py:236
-#: ../../portable/frontends/widgets/gtk/video.py:282
+#: ../../portable/frontends/widgets/gtk/video.py:271
 msgid "Comments"
 msgstr "Kommentit"
 
@@ -306,7 +306,7 @@ msgid "View"
 msgstr "Näytä"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
-#: ../../portable/frontends/widgets/gtk/video.py:273
+#: ../../portable/frontends/widgets/gtk/video.py:266
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:119
 msgid "Share"
 msgstr "Jaa"
@@ -349,7 +349,7 @@ msgstr "Poista soittolistalta"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:55
 #: ../../portable/frontends/widgets/feedsettingspanel.py:102
-#: ../../portable/frontends/widgets/prefpanel.py:585
+#: ../../portable/frontends/widgets/prefpanel.py:588
 msgid "never"
 msgstr "ei koskaan"
 
@@ -503,13 +503,13 @@ msgstr "Haluaisitko käynnistää %(name)s:n tietokoneen käynnistyessä?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:144
 #: ../../portable/frontends/widgets/firsttimedialog.py:178
-#: ../../portable/dialogs.py:87
+#: ../../portable/dialogs.py:89
 msgid "Yes"
 msgstr "Kyllä"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:145
 #: ../../portable/frontends/widgets/firsttimedialog.py:177
-#: ../../portable/dialogs.py:88
+#: ../../portable/dialogs.py:90
 msgid "No"
 msgstr "Ei"
 
@@ -544,7 +544,7 @@ msgid "Search custom folders:"
 msgstr "Etsi valituista kansioista:"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:192
-#: ../../portable/frontends/widgets/prefpanel.py:435
+#: ../../portable/frontends/widgets/prefpanel.py:438
 msgid "Change"
 msgstr "Muuta"
 
@@ -560,7 +560,7 @@ msgstr "< Edellinen"
 #: ../../portable/frontends/widgets/firsttimedialog.py:223
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:282
-#: ../../portable/feed.py:2290 ../../portable/feed.py:2397
+#: ../../portable/feed.py:2300 ../../portable/feed.py:2407
 msgid "Search"
 msgstr "Etsi"
 
@@ -574,7 +574,7 @@ msgid "Searching for media files"
 msgstr "Etsitään mediatiedostoja"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:283
-#: ../../portable/dialogs.py:85
+#: ../../portable/dialogs.py:87
 msgid "Cancel"
 msgstr "Peruuta"
 
@@ -684,7 +684,7 @@ msgid "Download Torrent"
 msgstr "Lataa torrentti"
 
 #: ../../portable/frontends/widgets/style.py:252
-#: ../../portable/dl_daemon/download.py:539
+#: ../../portable/dl_daemon/download.py:550
 msgid "Error"
 msgstr "Virhe"
 
@@ -708,14 +708,14 @@ msgid "Newly Available"
 msgstr "Uudet"
 
 #: ../../portable/frontends/widgets/style.py:258
-#: ../../portable/frontends/widgets/prefpanel.py:485
+#: ../../portable/frontends/widgets/prefpanel.py:488
 #: ../../portable/frontends/widgets/tablist.py:580
 #: ../../portable/frontends/widgets/tablist.py:592
 #: ../../portable/frontends/widgets/tablist.py:598
 #: ../../portable/frontends/widgets/tablist.py:635
 #: ../../portable/frontends/widgets/tablist.py:641
 #: ../../portable/frontends/widgets/tablist.py:646
-#: ../../portable/dialogs.py:108
+#: ../../portable/dialogs.py:110
 msgid "Remove"
 msgstr "Poista"
 
@@ -1068,7 +1068,7 @@ msgstr "Kirjoita syötteen %(name)s uusi nimi"
 
 #: ../../portable/frontends/widgets/application.py:717
 #: ../../portable/frontends/widgets/tablist.py:640
-#: ../../portable/playlist.py:188
+#: ../../portable/playlist.py:199
 msgid "Rename Playlist"
 msgstr "Uudelleennimeä soittolista"
 
@@ -1141,20 +1141,34 @@ msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr ""
 "Varoita minua jos yritän sulkea ohjelman vaikka latauksia on käynnissä"
 
-#: ../../portable/frontends/widgets/application.py:1124
+#: ../../portable/frontends/widgets/application.py:994
+msgid "Upgrading database"
+msgstr "Päivitetään tietokantaa"
+
+#: ../../portable/frontends/widgets/application.py:1127
 msgid "Message"
 msgstr "Viesti"
 
-#: ../../portable/frontends/widgets/application.py:1149
+#: ../../portable/frontends/widgets/application.py:1152
 msgid "Migrating Files"
 msgstr "Siirretään tiedostoja"
 
-#: ../../portable/frontends/widgets/application.py:1159
+#: ../../portable/frontends/widgets/application.py:1162
 msgid "Migrating files"
 msgstr "Siirretään tiedostoja"
 
+#: ../../portable/frontends/widgets/dialogs.py:102
+msgid ""
+"Miro is upgrading your database of feeds and files.  This one-time process "
+"can take a long time if you have a large number of items in Miro (it can "
+"even take more than 30 minutes)."
+msgstr ""
+"Miro päivittää tiedosto- ja syötetietokantaa. Tämä prosessi voi viedä kauan "
+"aikaa jos sinulla on Mirossa paljon tavaraa (Prosessi voi viedä jopa yli 30 "
+"minuuttia)."
+
 #: ../../portable/frontends/widgets/downloadscontroller.py:81
-#: ../../portable/frontends/widgets/prefpanel.py:622
+#: ../../portable/frontends/widgets/prefpanel.py:625
 msgid "Downloads"
 msgstr "Lataukset"
 
@@ -1170,148 +1184,148 @@ msgstr "Syötelataukset"
 msgid "Seeding"
 msgstr "Lähetetään"
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
+#: ../../portable/frontends/widgets/prefpanel.py:268
 #, python-format
 msgid "Automatically run %(appname)s when I log in."
 msgstr "Käynnistä %(appname)s automaattisesti, kun kirjaudun sisään"
 
-#: ../../portable/frontends/widgets/prefpanel.py:271
+#: ../../portable/frontends/widgets/prefpanel.py:272
 msgid "Warn me if I attempt to quit with downloads in progress."
 msgstr "Varoita, jos yritän sulkea ohjelman, kun tiedostoja on ladattavana."
 
-#: ../../portable/frontends/widgets/prefpanel.py:281
+#: ../../portable/frontends/widgets/prefpanel.py:282
 msgid "Every day"
 msgstr "Joka päivä"
 
-#: ../../portable/frontends/widgets/prefpanel.py:282
+#: ../../portable/frontends/widgets/prefpanel.py:283
 msgid "Every hour"
 msgstr "Tunnin välein"
 
-#: ../../portable/frontends/widgets/prefpanel.py:283
+#: ../../portable/frontends/widgets/prefpanel.py:284
 msgid "Every 30 minutes"
 msgstr "30:n minuutin välein"
 
-#: ../../portable/frontends/widgets/prefpanel.py:284
+#: ../../portable/frontends/widgets/prefpanel.py:285
 msgid "Manually"
 msgstr "Manuaalisesti"
 
-#: ../../portable/frontends/widgets/prefpanel.py:289
+#: ../../portable/frontends/widgets/prefpanel.py:290
 #: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "New"
 msgstr "Uusi"
 
-#: ../../portable/frontends/widgets/prefpanel.py:290
+#: ../../portable/frontends/widgets/prefpanel.py:291
 #: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "All"
 msgstr "Kaikki"
 
-#: ../../portable/frontends/widgets/prefpanel.py:291
+#: ../../portable/frontends/widgets/prefpanel.py:292
 #: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "Off"
 msgstr "Pois päältä"
 
-#: ../../portable/frontends/widgets/prefpanel.py:297
+#: ../../portable/frontends/widgets/prefpanel.py:298
 msgid "0"
 msgstr "0"
 
-#: ../../portable/frontends/widgets/prefpanel.py:298
+#: ../../portable/frontends/widgets/prefpanel.py:299
 msgid "20"
 msgstr "20"
 
-#: ../../portable/frontends/widgets/prefpanel.py:299
+#: ../../portable/frontends/widgets/prefpanel.py:300
 msgid "50"
 msgstr "50"
 
-#: ../../portable/frontends/widgets/prefpanel.py:300
+#: ../../portable/frontends/widgets/prefpanel.py:301
 msgid "100"
 msgstr "100"
 
-#: ../../portable/frontends/widgets/prefpanel.py:301
+#: ../../portable/frontends/widgets/prefpanel.py:302
 msgid "1000"
 msgstr "1000"
 
-#: ../../portable/frontends/widgets/prefpanel.py:307
+#: ../../portable/frontends/widgets/prefpanel.py:308
 msgid "Default settings for new feeds:"
 msgstr "Oletusasetukset uusille syötteille:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:311
+#: ../../portable/frontends/widgets/prefpanel.py:312
 msgid "(These can be changed using the feed's settings button)"
 msgstr "(Näitä voi muuttaa käyttämällä syötteen Asetukset-nappia)"
 
-#: ../../portable/frontends/widgets/prefpanel.py:315
+#: ../../portable/frontends/widgets/prefpanel.py:316
 msgid "Check for new content:"
 msgstr "Tarkista uusi sisältö:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:320
+#: ../../portable/frontends/widgets/prefpanel.py:321
 msgid "Auto download setting:"
 msgstr "Automaattiset latausasetukset:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:326
+#: ../../portable/frontends/widgets/prefpanel.py:327
 msgid "Remember this many old items:"
 msgstr "Muista näin monta vanhaa kohdetta:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:327
+#: ../../portable/frontends/widgets/prefpanel.py:328
 msgid "(in addition to the current contents)"
 msgstr "(nykyisten kohteiden lisäksi)"
 
-#: ../../portable/frontends/widgets/prefpanel.py:340
+#: ../../portable/frontends/widgets/prefpanel.py:341
 msgid "Maximum number of manual downloads at a time:"
 msgstr "Suurin määrä manuaalisia latauksia kerralla:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:347
+#: ../../portable/frontends/widgets/prefpanel.py:348
 msgid "Maximum number of auto-downloads at a time:"
 msgstr "Suurin määrä automaattisia latauksia kerralla:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:357
+#: ../../portable/frontends/widgets/prefpanel.py:358
 msgid "Bittorrent:"
 msgstr "Bittorrent:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:360
+#: ../../portable/frontends/widgets/prefpanel.py:361
 msgid "Limit upstream bandwidth to:"
 msgstr "Rajoita lähetysnopeus:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:369
-#: ../../portable/frontends/widgets/prefpanel.py:380
+#: ../../portable/frontends/widgets/prefpanel.py:372
+#: ../../portable/frontends/widgets/prefpanel.py:383
 msgid "KB/s"
 msgstr "Kt/s"
 
-#: ../../portable/frontends/widgets/prefpanel.py:372
+#: ../../portable/frontends/widgets/prefpanel.py:375
 msgid "Limit downstream bandwidth to:"
 msgstr "Rajoita latausnopeus:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:383
+#: ../../portable/frontends/widgets/prefpanel.py:386
 msgid "Limit torrent connections to:"
 msgstr "Rajoita torrent-yhteydet:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:400
+#: ../../portable/frontends/widgets/prefpanel.py:403
 msgid "Starting port:"
 msgstr "Portista:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:404
+#: ../../portable/frontends/widgets/prefpanel.py:407
 msgid "Ending port:"
 msgstr "Porttiin:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:410
+#: ../../portable/frontends/widgets/prefpanel.py:413
 msgid "Automatically forward ports.  (UPNP)"
 msgstr "Välitä portit automaattisesti. (UPNP)"
 
-#: ../../portable/frontends/widgets/prefpanel.py:414
+#: ../../portable/frontends/widgets/prefpanel.py:417
 msgid "Ignore unencrypted connections."
 msgstr "Hylkää salaamattomat yhteydet."
 
-#: ../../portable/frontends/widgets/prefpanel.py:418
+#: ../../portable/frontends/widgets/prefpanel.py:421
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr "Lopeta torrentin lähetys kun tämä jakosuhde on saavutettu"
 
-#: ../../portable/frontends/widgets/prefpanel.py:440
+#: ../../portable/frontends/widgets/prefpanel.py:443
 msgid "Choose Movies Directory"
 msgstr "Valitse videokansio"
 
-#: ../../portable/frontends/widgets/prefpanel.py:453
+#: ../../portable/frontends/widgets/prefpanel.py:456
 msgid "Migrate existing movies?"
 msgstr "Siirretäänkö olemassa olevat videot?"
 
-#: ../../portable/frontends/widgets/prefpanel.py:454
+#: ../../portable/frontends/widgets/prefpanel.py:457
 #, python-format
 msgid ""
 "You've selected a new folder to download movies to.  Should %(appname)s "
@@ -1322,20 +1336,20 @@ msgstr ""
 "siirtävän olemassa olevat latauksesi sinne? (Tällä hetkellä ladattavat "
 "videot siirretään vasta, kun ne ovat latautuneet.)"
 
-#: ../../portable/frontends/widgets/prefpanel.py:482
-#: ../../portable/dialogs.py:104
+#: ../../portable/frontends/widgets/prefpanel.py:485
+#: ../../portable/dialogs.py:106
 msgid "Add"
 msgstr "Lisää"
 
-#: ../../portable/frontends/widgets/prefpanel.py:523
+#: ../../portable/frontends/widgets/prefpanel.py:526
 msgid "Add Watched Folder"
 msgstr "Lisää tarkasteltava kansio"
 
-#: ../../portable/frontends/widgets/prefpanel.py:542
+#: ../../portable/frontends/widgets/prefpanel.py:545
 msgid "Store downloads in this folder:"
 msgstr "Tallenna ladatut tiedostot kansioon:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:549
+#: ../../portable/frontends/widgets/prefpanel.py:552
 msgid ""
 "Watch for new video and audio items in these folders and include them in "
 "library:"
@@ -1343,79 +1357,79 @@ msgstr ""
 "Tarkkaile uusia video- ja äänitiedostoja näissä kansioissa ja lisää ne "
 "kirjastoon:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:568
+#: ../../portable/frontends/widgets/prefpanel.py:571
 msgid "Keep at least this much free space on my drive:"
 msgstr "Säilytä vähintään näin paljon vapaata levytilaa kovalevyllä:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:571
-#: ../../portable/frontends/widgets/prefpanel.py:577
+#: ../../portable/frontends/widgets/prefpanel.py:574
+#: ../../portable/frontends/widgets/prefpanel.py:580
 msgid "GB"
 msgstr "Gt"
 
-#: ../../portable/frontends/widgets/prefpanel.py:580
+#: ../../portable/frontends/widgets/prefpanel.py:583
 msgid "1 day"
 msgstr "1 päivä"
 
-#: ../../portable/frontends/widgets/prefpanel.py:581
+#: ../../portable/frontends/widgets/prefpanel.py:584
 msgid "3 days"
 msgstr "3 päivää"
 
-#: ../../portable/frontends/widgets/prefpanel.py:582
+#: ../../portable/frontends/widgets/prefpanel.py:585
 msgid "6 days"
 msgstr "6 päivää"
 
-#: ../../portable/frontends/widgets/prefpanel.py:583
+#: ../../portable/frontends/widgets/prefpanel.py:586
 msgid "10 days"
 msgstr "10 päivää"
 
-#: ../../portable/frontends/widgets/prefpanel.py:584
+#: ../../portable/frontends/widgets/prefpanel.py:587
 msgid "1 month"
 msgstr "1 kuukausi"
 
-#: ../../portable/frontends/widgets/prefpanel.py:590
+#: ../../portable/frontends/widgets/prefpanel.py:593
 msgid "By default, video and audio items expire after:"
 msgstr "Oletuksena video- ja äänitiedostot vanhenevat:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:599
+#: ../../portable/frontends/widgets/prefpanel.py:602
 msgid "Always play videos in a separate window."
 msgstr "Toista videot aina erillisessä ikkunassa."
 
-#: ../../portable/frontends/widgets/prefpanel.py:603
+#: ../../portable/frontends/widgets/prefpanel.py:606
 msgid ""
 "Resume playing a video or audio item from the point it was last stopped."
 msgstr ""
 "Jatka video- tai äänitiedoston toistamista kohdasta, johon se viimeksi "
 "pysäytettiin."
 
-#: ../../portable/frontends/widgets/prefpanel.py:608
+#: ../../portable/frontends/widgets/prefpanel.py:611
 msgid "Play video and audio items one after another"
 msgstr "Toista video- ja äänitiedostot yksi toisensa jälkeen"
 
-#: ../../portable/frontends/widgets/prefpanel.py:609
+#: ../../portable/frontends/widgets/prefpanel.py:612
 msgid "Stop after each video or audio item"
 msgstr "Pysäytä jokaisen video- ja äänitiedoston jälkeen"
 
-#: ../../portable/frontends/widgets/prefpanel.py:620
+#: ../../portable/frontends/widgets/prefpanel.py:623
 msgid "General"
 msgstr "Yleiset"
 
-#: ../../portable/frontends/widgets/prefpanel.py:621
+#: ../../portable/frontends/widgets/prefpanel.py:624
 msgid "Feeds"
 msgstr "Syötteet"
 
-#: ../../portable/frontends/widgets/prefpanel.py:623
+#: ../../portable/frontends/widgets/prefpanel.py:626
 msgid "Folders"
 msgstr "Kansiot"
 
-#: ../../portable/frontends/widgets/prefpanel.py:624
+#: ../../portable/frontends/widgets/prefpanel.py:627
 msgid "Disk space"
 msgstr "Levytila"
 
-#: ../../portable/frontends/widgets/prefpanel.py:625
+#: ../../portable/frontends/widgets/prefpanel.py:628
 msgid "Playback"
 msgstr "Toisto"
 
-#: ../../portable/frontends/widgets/prefpanel.py:629
+#: ../../portable/frontends/widgets/prefpanel.py:632
 msgid "Preferences"
 msgstr "Asetukset"
 
@@ -1549,15 +1563,15 @@ msgstr[1] ""
 "Oletko varma, että haluat poistaa nämä syötteet? Keskeneräiset lataukset "
 "peruutetaan."
 
-#: ../../portable/frontends/widgets/gtk/video.py:284
+#: ../../portable/frontends/widgets/gtk/video.py:273
 msgid "Permalink"
 msgstr "Pysyvä linkki"
 
-#: ../../portable/frontends/widgets/gtk/video.py:294
+#: ../../portable/frontends/widgets/gtk/video.py:279
 msgid "Pop-in"
 msgstr "Kiinnitä"
 
-#: ../../portable/frontends/widgets/gtk/video.py:299
+#: ../../portable/frontends/widgets/gtk/video.py:284
 msgid "Pop-out"
 msgstr "Irrota"
 
@@ -1613,7 +1627,7 @@ msgstr ""
 "%(trademark)s"
 
 #: ../../portable/frontends/widgets/gtk/window.py:593
-#: ../../portable/dialogs.py:84
+#: ../../portable/dialogs.py:86
 msgid "Close"
 msgstr "Sulje"
 
@@ -1918,15 +1932,15 @@ msgstr "Vianetsintä"
 msgid "Search All"
 msgstr "Etsi kaikista"
 
-#: ../../portable/messages.py:1078 ../../portable/item.py:1078
+#: ../../portable/messages.py:1084 ../../portable/item.py:1107
 msgid "queued for download"
 msgstr "lataus asetettu jonoon"
 
-#: ../../portable/messagehandler.py:1273
+#: ../../portable/messagehandler.py:1299
 msgid "Subscribed to new feed:"
 msgstr "Tilattu uusi syöte:"
 
-#: ../../portable/messagehandler.py:1276
+#: ../../portable/messagehandler.py:1302
 msgid "Subscribed to new feeds:"
 msgstr "Tilattu uudet syötteet:"
 
@@ -1955,6 +1969,19 @@ msgid ""
 msgstr ""
 "Tietokantasi on tallennettu %(appname)s:n uudemmalla versiolla. Sinun täytyy "
 "ladata uusin versio %(appname)s:sta ja käynnistää se."
+
+#: ../../portable/startup.py:188
+msgid "Insufficient disk space"
+msgstr "Levytila ei riitä"
+
+#: ../../portable/startup.py:190
+#, python-format
+msgid ""
+"Not enough disk space to upgrade your database from the previous version of "
+"%(appname)s.  Please delete some files and try again."
+msgstr ""
+"Levytila ei riitä %(appname)s tietokannan aikaisemman version "
+"päivittämiseen. Yritä poistaa joitakin tiedostoja ja kokeile uudelleen."
 
 #: ../../portable/commandline.py:99
 msgid "Subscription error"
@@ -2008,30 +2035,30 @@ msgstr "Flash URL Scraping -virhe"
 msgid "starting up"
 msgstr "käynnistetään"
 
-#: ../../portable/feed.py:936
+#: ../../portable/feed.py:940
 msgid "Error loading feed"
 msgstr "Virhe ladattaessa syötettä"
 
-#: ../../portable/feed.py:938
+#: ../../portable/feed.py:942
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr ""
 "Ei pystytty lataamaan syötettä osoitteesta %(url)s (%(errordescription)s)."
 
-#: ../../portable/feed.py:941
+#: ../../portable/feed.py:945
 msgid "Would you like to keep the feed?"
 msgstr "Haluaisitko säilyttää syötteen?"
 
-#: ../../portable/feed.py:1066
+#: ../../portable/feed.py:1070
 msgid "Bad content-type"
 msgstr "Väärä sisältötyyppi"
 
-#: ../../portable/feed.py:1079
+#: ../../portable/feed.py:1083
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
 msgstr "Kanava ei ole yhteensopiva %(appname)s:n kanssa"
 
-#: ../../portable/feed.py:1082
+#: ../../portable/feed.py:1086
 #, python-format
 msgid ""
 "This channel is not compatible with %(appname)s but we'll try our best to "
@@ -2052,145 +2079,149 @@ msgstr ""
 "\n"
 "Haluatko kuitenkin yrittää ladata tämän kanavan?"
 
-#: ../../portable/feed.py:1683
+#: ../../portable/feed.py:1687
 #, python-format
 msgid "Search All: %(text)s"
 msgstr "Etsi kaikki: %(text)s"
 
-#: ../../portable/feed.py:2264 ../../portable/feed.py:2415
+#: ../../portable/feed.py:2274 ../../portable/feed.py:2425
 msgid "Local Files"
 msgstr "Paikalliset tiedostot"
 
-#: ../../portable/feed.py:2429
+#: ../../portable/feed.py:2439
 msgid "Playing File"
 msgstr "Toistetaan tiedostoa"
 
-#: ../../portable/dialogs.py:83
+#: ../../portable/dialogs.py:85
 msgid "Ok"
 msgstr "OK"
 
-#: ../../portable/dialogs.py:86
+#: ../../portable/dialogs.py:88
 msgid "Done"
 msgstr "Valmis"
 
-#: ../../portable/dialogs.py:89
+#: ../../portable/dialogs.py:91
 msgid "Quit"
 msgstr "Lopeta"
 
-#: ../../portable/dialogs.py:90
+#: ../../portable/dialogs.py:92
 msgid "Continue"
 msgstr "Jatka"
 
-#: ../../portable/dialogs.py:91
+#: ../../portable/dialogs.py:93
 msgid "Ignore"
 msgstr "Älä huomioi"
 
-#: ../../portable/dialogs.py:92
+#: ../../portable/dialogs.py:94
 msgid "Submit Crash Report"
 msgstr "Lähetä virheraportti"
 
-#: ../../portable/dialogs.py:93
+#: ../../portable/dialogs.py:95
 msgid "Migrate"
 msgstr "Siirrä tiedot"
 
-#: ../../portable/dialogs.py:94
+#: ../../portable/dialogs.py:96
 msgid "Don't Migrate"
 msgstr "Älä siirrä tietoja"
 
-#: ../../portable/dialogs.py:96
+#: ../../portable/dialogs.py:98
 msgid "Remove Entry"
 msgstr "Poista kokoelmasta"
 
-#: ../../portable/dialogs.py:97
+#: ../../portable/dialogs.py:99
 msgid "Delete File"
 msgstr "Poista tiedosto"
 
-#: ../../portable/dialogs.py:98
+#: ../../portable/dialogs.py:100
 msgid "Delete Files"
 msgstr "Poista tiedostot"
 
-#: ../../portable/dialogs.py:99
+#: ../../portable/dialogs.py:101
 msgid "Keep Videos"
 msgstr "Säilytä videot"
 
-#: ../../portable/dialogs.py:100
+#: ../../portable/dialogs.py:102
 msgid "Delete Videos"
 msgstr "Poista videot"
 
-#: ../../portable/dialogs.py:101
+#: ../../portable/dialogs.py:103
 msgid "Create"
 msgstr "Luo"
 
-#: ../../portable/dialogs.py:102
+#: ../../portable/dialogs.py:104
 msgid "Create Feed"
 msgstr "Luo syöte"
 
-#: ../../portable/dialogs.py:103
+#: ../../portable/dialogs.py:105
 msgid "Create Folder"
 msgstr "Luo kansio"
 
-#: ../../portable/dialogs.py:105
+#: ../../portable/dialogs.py:107
 msgid "Add Into New Folder"
 msgstr "Lisää uuteen kansioon"
 
-#: ../../portable/dialogs.py:109
+#: ../../portable/dialogs.py:111
 msgid "Not Now"
 msgstr "Ei nyt"
 
-#: ../../portable/dialogs.py:110
+#: ../../portable/dialogs.py:112
 msgid "Close to Tray"
 msgstr "Sulje ilmoitusalueelle"
 
-#: ../../portable/dialogs.py:111
+#: ../../portable/dialogs.py:113
 msgid "Launch Miro"
 msgstr "Käynnistä Miro"
 
-#: ../../portable/dialogs.py:112
+#: ../../portable/dialogs.py:114
 msgid "Download Anyway"
 msgstr "Lataa silti"
 
-#: ../../portable/dialogs.py:113
+#: ../../portable/dialogs.py:115
 msgid "Open in External Browser"
 msgstr "Avaa ulkoisessa selaimessa"
 
-#: ../../portable/dialogs.py:114
+#: ../../portable/dialogs.py:116
 msgid "Don't Install"
 msgstr "Älä asenna"
 
-#: ../../portable/dialogs.py:115
+#: ../../portable/dialogs.py:117
 msgid "Subscribe"
 msgstr "Tilaa"
 
-#: ../../portable/dialogs.py:116
+#: ../../portable/dialogs.py:118
 msgid "Stop Watching"
 msgstr "Lopeta katsominen"
 
-#: ../../portable/singleclick.py:54
+#: ../../portable/dialogs.py:119
+msgid "Retry"
+msgstr ""
+
+#: ../../portable/singleclick.py:55
 msgid "Download already exists"
 msgstr "Lataus on jo olemassa"
 
-#: ../../portable/singleclick.py:55
+#: ../../portable/singleclick.py:56
 msgid "That URL is already an external download."
 msgstr "Kohde on jo ulkoisena latauksena."
 
-#: ../../portable/singleclick.py:61
+#: ../../portable/singleclick.py:62
 #, python-format
 msgid "%(appname)s will begin downloading it now."
 msgstr "%(appname)s aloittaa sen lataamisen nyt."
 
-#: ../../portable/singleclick.py:64
+#: ../../portable/singleclick.py:65
 msgid "It is downloading now."
 msgstr "Lataus on jo käynnissä."
 
-#: ../../portable/singleclick.py:66
+#: ../../portable/singleclick.py:67
 msgid "It has already been downloaded."
 msgstr "Kohde on jo ladattu."
 
-#: ../../portable/singleclick.py:96
+#: ../../portable/singleclick.py:97
 msgid "File Download"
 msgstr "Tiedoston lataus"
 
-#: ../../portable/singleclick.py:97
+#: ../../portable/singleclick.py:98
 #, python-format
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or an RSS feed."
@@ -2198,11 +2229,11 @@ msgstr ""
 "Tiedosto osoitteessa %(url)s ei näyttäisi olevan ääni-, video, eikä RSS-"
 "syöte."
 
-#: ../../portable/singleclick.py:137
+#: ../../portable/singleclick.py:138
 msgid "Download Error"
 msgstr "Latausvirhe"
 
-#: ../../portable/singleclick.py:139
+#: ../../portable/singleclick.py:140
 #, python-format
 msgid ""
 "%(appname)s is not able to download a file at this URL:\n"
@@ -2213,49 +2244,49 @@ msgstr ""
 "\n"
 "URL: %(url)s"
 
-#: ../../portable/dl_daemon/download.py:628
+#: ../../portable/dl_daemon/download.py:639
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr "Ei pystytty kirjoittamaan %(filename)s"
 
-#: ../../portable/dl_daemon/download.py:653
-#: ../../portable/dl_daemon/download.py:870
+#: ../../portable/dl_daemon/download.py:664
+#: ../../portable/dl_daemon/download.py:881
 msgid "Not enough disk space"
 msgstr "Levytilaa ei ole riittävästi"
 
-#: ../../portable/dl_daemon/download.py:654
-#: ../../portable/dl_daemon/download.py:871
+#: ../../portable/dl_daemon/download.py:665
+#: ../../portable/dl_daemon/download.py:882
 #, python-format
 msgid "%(amount)s MB required to store this video"
 msgstr "Tämän videon tallentamiseen tarvitaan %(amount)s Mt"
 
-#: ../../portable/dl_daemon/download.py:669
+#: ../../portable/dl_daemon/download.py:680
 #, python-format
 msgid "Couldn't open %(filename)s for writing"
 msgstr "Ei pystytty avaamaan %(filename)s:a kirjoitusta varten"
 
-#: ../../portable/dl_daemon/download.py:889
+#: ../../portable/dl_daemon/download.py:900
 msgid "BitTorrent failure"
 msgstr "BitTorrent-virhe"
 
-#: ../../portable/dl_daemon/download.py:889
+#: ../../portable/dl_daemon/download.py:900
 msgid "BitTorrent failed to startup"
 msgstr "BitTorrentin käynnistys epäonnistui"
 
-#: ../../portable/dl_daemon/download.py:1078
+#: ../../portable/dl_daemon/download.py:1089
 msgid "Corrupt Torrent"
 msgstr "Torrent-tiedosto on vaurioitunut"
 
-#: ../../portable/dl_daemon/download.py:1079
+#: ../../portable/dl_daemon/download.py:1090
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr "Torrent-tiedosto osoitteessa %(url)s ei ole oikeanlainen"
 
-#: ../../portable/dl_daemon/download.py:1103
+#: ../../portable/dl_daemon/download.py:1114
 msgid "Torrent file deleted"
 msgstr "Torrent-tiedosto poistettiin"
 
-#: ../../portable/dl_daemon/download.py:1104
+#: ../../portable/dl_daemon/download.py:1115
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr ""
@@ -2490,96 +2521,108 @@ msgstr "Soi_ttolistat"
 msgid "P_layback"
 msgstr "Toisto"
 
-#: ../../portable/util.py:300 ../../portable/util.py:302
+#: ../../portable/util.py:297 ../../portable/util.py:299
 #, python-format
 msgid "%(size)sGB"
 msgstr "%(size)s Gt"
 
-#: ../../portable/util.py:306 ../../portable/util.py:308
+#: ../../portable/util.py:303 ../../portable/util.py:305
 #, python-format
 msgid "%(size)sMB"
 msgstr "%(size)s Mt"
 
-#: ../../portable/util.py:312 ../../portable/util.py:314
+#: ../../portable/util.py:309 ../../portable/util.py:311
 #, python-format
 msgid "%(size)sKB"
 msgstr "%(size)s Kt"
 
-#: ../../portable/util.py:318 ../../portable/util.py:320
+#: ../../portable/util.py:315 ../../portable/util.py:317
 #, python-format
 msgid "%(size)sB"
 msgstr "%(size)s t"
 
-#: ../../portable/playlist.py:189
+#: ../../portable/playlist.py:200
 #, python-format
 msgid "Enter a new name for the playlist %s"
 msgstr "Kirjoita soittolistan %s uusi nimi"
 
-#: ../../portable/item.py:897
+#: ../../portable/dbupgradeprogress.py:60
+msgid "Upgrading Old Database"
+msgstr "Päivitetään vanhaa tietokantaa"
+
+#: ../../portable/dbupgradeprogress.py:67
+msgid "Converting Old Database"
+msgstr "Muunnetaan vanhaa tietokantaa"
+
+#: ../../portable/dbupgradeprogress.py:80
+msgid "Upgrading Database"
+msgstr "Päivitetään tietokantaa"
+
+#: ../../portable/item.py:922
 #, python-format
 msgid "%(count)d day"
 msgid_plural "%(count)d days"
 msgstr[0] "%(count)d päivä"
 msgstr[1] "%(count)d päivää"
 
-#: ../../portable/item.py:902
+#: ../../portable/item.py:927
 #, python-format
 msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
 msgstr[0] "%(count)d tunti"
 msgstr[1] "%(count)d tuntia"
 
-#: ../../portable/item.py:907
+#: ../../portable/item.py:932
 #, python-format
 msgid "%(count)d minute"
 msgid_plural "%(count)d minutes"
 msgstr[0] "%(count)d minuutti"
 msgstr[1] "%(count)d minuuttia"
 
-#: ../../portable/item.py:1165
+#: ../../portable/item.py:1193
 msgid "no title"
 msgstr "ei otsikkoa"
 
-#: ../../portable/item.py:1211
+#: ../../portable/item.py:1239
 msgid "Contents appear in the library"
 msgstr "Sisältö näkyy kirjastossa"
 
-#: ../../portable/item.py:1216
+#: ../../portable/item.py:1244
 msgid "Contents:"
 msgstr "Sisältö:"
 
-#: ../../portable/item.py:1442
+#: ../../portable/item.py:1472
 msgid "starting up..."
 msgstr "käynnistetään..."
 
-#: ../../portable/opml.py:193
+#: ../../portable/opml.py:197
 msgid "OPML Import failed"
 msgstr "OPML-tuonti epäonnistui"
 
-#: ../../portable/opml.py:194
+#: ../../portable/opml.py:198
 msgid ""
 "The selected OPML file appears to be invalid.  Import was interrupted."
 msgstr "Valittu OPML-tiedosto ei kelpaa. Tuonti keskeytettiin."
 
-#: ../../portable/opml.py:201
+#: ../../portable/opml.py:205
 msgid "OPML Import summary"
 msgstr "OPML-tuonnin yhteenveto"
 
-#: ../../portable/opml.py:202
+#: ../../portable/opml.py:206
 #, python-format
 msgid "Successfully imported %(count)d feed."
 msgid_plural "Successfully imported %(count)d feeds."
 msgstr[0] "%(count)d syöte tuotiin onnistuneesti."
 msgstr[1] "%(count)d syötettä tuotiin onnistuneesti."
 
-#: ../../portable/opml.py:208
+#: ../../portable/opml.py:212
 #, python-format
 msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] "Ohitettiin %(count)d syöte, joka on jo saatavilla."
 msgstr[1] "Ohitettiin %(count)d syötettä, jotka ovat jo saatavilla."
 
-#: ../../portable/theme.py:174
+#: ../../portable/theme.py:190
 msgid "Example Playlist"
 msgstr "Esimerkkisoittolista"
 
@@ -2698,36 +2741,42 @@ msgstr[1] "Vanhenee: %(count)d minuutissa"
 msgid "%(month)s %(dayofmonth)s, %(year)s"
 msgstr "%(dayofmonth)s. %(month)s %(year)s"
 
-#: ../../portable/storedatabase.py:449
-#, python-format
-msgid "%(appname)s database save failed"
-msgstr "%(appname)s tietokannan tallennus epäonnistui"
+#: ../../portable/storedatabase.py:209
+msgid "Database was created by a newer version of Miro "
+msgstr "Tietokanta on luotu Miron uudemmassa versiossa "
 
-#: ../../portable/storedatabase.py:452
-#, python-format
-msgid ""
-"%(appname)s was unable to save its database: Disk Full.\n"
-"We suggest deleting files from the full disk or simply deleting some movies "
-"from your collection.\n"
-"Recent changes may be lost."
-msgstr ""
-"%(appname)s ei onnistunut tallentamaan sen tietokantaa: Levy täynnä.\n"
-"Me ehdotamme poistamaan tiedostoja täynnä olevalta levyltä tai "
-"yksinkertaisesti poistamaan joitain elokuvia kokoelmaltasi.\n"
-"Tuoreet muutokset voivat hävitä."
-
-#: ../../portable/storedatabase.py:464
+#: ../../portable/storedatabase.py:466
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "%(appname)s tietokannan tallennus onnistui"
 
-#: ../../portable/storedatabase.py:467
+#: ../../portable/storedatabase.py:468
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 "Tietokanta on onnistuneesti tallennettu. Nyt on turvallista lopettaa "
 "menettämättä tietoja."
+
+#: ../../portable/storedatabase.py:483
+#, python-format
+msgid "%(appname)s database save failed"
+msgstr "%(appname)s tietokannan tallennus epäonnistui"
+
+#: ../../portable/storedatabase.py:486
+#, python-format
+msgid ""
+"%(appname)s was unable to save its database.\n"
+"\n"
+"If your disk is full, we suggest freeing up some space and retrying.  If "
+"your disk is not full, it's possible that retrying will work.\n"
+"\n"
+"If retrying did not work, please quit %(appname)s and restart.  Recent "
+"changes may be lost.\n"
+"\n"
+"Error: %(error_text)s\n"
+"\n"
+msgstr ""
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:171
 msgid "Download Completed"
