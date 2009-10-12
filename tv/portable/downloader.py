@@ -38,6 +38,7 @@ from miro.util import get_torrent_info_hash, returnsUnicode, checkU, returnsFile
 from miro import config
 from miro import dialogs
 from miro import httpclient
+from miro import models
 from miro import prefs
 import random
 from miro.plat.utils import samefile, FilenameType, unicodeToFilename
@@ -415,6 +416,9 @@ URL was %s""" % self.url
             i.migrate_children(directory)
 
     def _file_migrated(self, old_filename):
+        # Make sure that itemList is populated with items, see (#12202)
+        for item in models.Item.downloader_view(self.id):
+            self.addItem(item)
         for item in self.itemList:
             item.on_downloader_migrated(old_filename, self.get_filename())
 
