@@ -134,14 +134,12 @@ def launchDownloaderDaemon():
     # And launch
     from miro.dl_daemon import Democracy_Downloader
     Democracy_Downloader.launch()
-    
-    # FIXME: I have absolutely no idea why this is required when running on 10.6
-    # with python 2.6. This should be tracked down - luc
-    os_info = os.uname()
-    os_version = int(os_info[2].split('.')[0])
-    python_version = sys.version[0:3]
-    if os_version == 10 and python_version == "2.6":
-        eventloop.join()
+
+    # Wait for the event loop thread to finish.
+    # Although this is theorically not necessary since the event loop thread is
+    # a non-daemon thread, situations where the downloader daemon exits right
+    # after its launch as this function returns have been seen in the wild.
+    eventloop.join()
 
 # =============================================================================
 
