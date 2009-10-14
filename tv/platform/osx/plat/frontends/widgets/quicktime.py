@@ -192,35 +192,37 @@ class Player(player.Player):
                         else:
                             name = lang_info["name"]
                     is_enabled = track.attributeForKey_(QTTrackEnabledAttribute) == 1
-                    tracks.append((name, is_enabled))
+                    track_id = track.attributeForKey_(QTTrackIDAttribute)
+                    tracks.append((track_id, name, is_enabled))
         return tracks
 
-    def get_enabled_subtitle_track(self):
+    def _find_track(self, key, value):
         if self.movie is not None:
             for track in self.movie.tracks():
                 if self.is_subtitle_track(track):
-                    if track.attributeForKey_(QTTrackEnabledAttribute) == 1:
+                    if track.attributeForKey_(key) == value:
                         return track
         return None
 
+    def get_enabled_subtitle_track(self):
+        return self._find_track(QTTrackEnabledAttribute, 1)
+
     def get_subtitle_track_by_name(self, name):
-        if self.movie is not None:
-            for track in self.movie.tracks():
-                if self.is_subtitle_track(track):
-                    if track.attributeForKey_(QTTrackDisplayNameAttribute) == name:
-                        return track
-        return None
+        return self._find_track(QTTrackDisplayNameAttribute, name)
+
+    def get_subtitle_track_by_id(self, track_id):
+        return self._find_track(QTTrackIDAttribute, track_id)
 
     def is_subtitle_track(self, track):
         layer = track.attributeForKey_(QTTrackLayerAttribute)
         media_type = track.attributeForKey_(QTTrackMediaTypeAttribute)
         return (layer == -1 and media_type == QTMediaTypeVideo) or media_type in [QTMediaTypeSubtitle, QTMediaTypeClosedCaption]
 
-    def enable_subtitle_track(self, track_name):
+    def enable_subtitle_track(self, track_id):
         current = self.get_enabled_subtitle_track()
         if current is not None:
             current.setAttribute_forKey_(0, QTTrackEnabledAttribute)
-        to_enable = self.get_subtitle_track_by_name(track_name)
+        to_enable = self.get_subtitle_track_by_id(track_id)
         if to_enable is not None:
             to_enable.setAttribute_forKey_(1, QTTrackEnabledAttribute)
 

@@ -191,11 +191,12 @@ class OverlayPalette (NSWindowController):
         has_enabled_subtitle_track = False
         for track in self.renderer.get_subtitle_tracks():
             item = NSMenuItem.alloc().init()
-            item.setTitle_(track[0])
+            item.setTag_(track[0])
+            item.setTitle_(track[1])
             item.setEnabled_(YES)
             item.setTarget_(self)
             item.setAction_('selectSubtitleTrack:')
-            if track[1]:
+            if track[2]:
                 item.setState_(NSOnState)
                 has_enabled_subtitle_track = True
             else:
@@ -217,7 +218,7 @@ class OverlayPalette (NSWindowController):
         NSMenu.popUpContextMenu_withEvent_forView_(menu, NSApp().currentEvent(), self.window().contentView())
 
     def selectSubtitleTrack_(self, sender):
-        self.renderer.enable_subtitle_track(sender.title())
+        self.renderer.enable_subtitle_track(sender.tag())
     
     def disableSubtitles_(self, sender):
         self.renderer.disable_subtitles()
