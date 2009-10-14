@@ -207,7 +207,7 @@ class Player(player.Player):
         if self.movie is not None:
             for track in self.movie.tracks():
                 if self.is_subtitle_track(track):
-                    if track.attributeForKey_(QTTrackDisplayNameAttribute) == track_name:
+                    if track.attributeForKey_(QTTrackDisplayNameAttribute) == name:
                         return track
         return None
 
