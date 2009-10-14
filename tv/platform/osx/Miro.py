@@ -131,6 +131,12 @@ def launchDownloaderDaemon():
     from miro.dl_daemon import Democracy_Downloader
     Democracy_Downloader.launch()
 
+    # Wait for the event loop thread to finish.
+    # Although this is theorically not necessary since the event loop thread is
+    # a non-daemon thread, situations where the downloader daemon exits right
+    # after its launch as this function returns have been seen in the wild.
+    eventloop.join()
+
 # =============================================================================
 
 # Uncomment the following two lines to check for non unicode string trying to
