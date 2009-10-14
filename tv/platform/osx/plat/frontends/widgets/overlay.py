@@ -214,7 +214,7 @@ class OverlayPalette (NSWindowController):
             disable_item.setState_(NSOnState)
         menu.addItem_(disable_item)
 
-        NSMenu.popUpContextMenu_withEvent_forView_(menu, NSApp.currentEvent(), self.window().contentView())
+        NSMenu.popUpContextMenu_withEvent_forView_(menu, NSApp().currentEvent(), self.window().contentView())
 
     def selectSubtitleTrack_(self, sender):
         self.renderer.enable_subtitle_track(sender.title())
