@@ -241,8 +241,12 @@ class RemoteDownloader(DDBObject):
         # print data
         if self is not None:
             # FIXME - this should get fixed.
+            metainfo = data.pop('metainfo', None)
+            fast_resume_data = data.pop('fastResumeData', None)
+            current = (self.status, self.metainfo, self.fast_resume_data)
+            new = (data, metainfo, fast_resume_data)
             try:
-                if self.status == data:
+                if current == new:
                     return
             except Exception:
                 # This is a known bug with the way we used to save fast resume
@@ -258,7 +262,14 @@ class RemoteDownloader(DDBObject):
             if data.has_key('activity') and data['activity']:
                 data['activity'] = _(data['activity'])
 
-            self.status = data
+            # only set attributes if something's changed.  This makes our
+            # UPDATE statments contain less data
+            if data != self.status:
+                self.status = data
+            if metainfo != self.metainfo:
+                self.metainfo = metainfo
+            if fast_resume_data != self.fast_resume_data:
+                self.fast_resume_data = fast_resume_data
             self._recalc_state()
 
             # Store the time the download finished
@@ -579,8 +590,11 @@ class RemoteDownloader(DDBObject):
                 self.run_downloader()
         else:
             _downloads[self.dlid] = self
-            c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, 
-                                                 self.status)
+            dler_status = self.status
+            dler_status['metainfo'] = self.metainfo
+            dler_status['fastResumeData'] = self.fast_resume_data
+            c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon,
+                                                 dler_status)
             c.send()
 
     def startUpload(self):

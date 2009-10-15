@@ -351,8 +351,8 @@ class LiveStorage:
                 ', '.join(setters), obj.id)
         size = sizeit(values)
         count = len(values)
-        print 'old size: %s (%s)    new size: %s(%s)' % \
-                (old_size, old_count, size, count)
+        print 'old size: %s (%s)    new size: %s (%s, %s)' % \
+                (old_size, old_count, size, count, values)
         if len(values) > 0:
             self._execute(sql, values, is_update=True)
         self.remember_object(obj)

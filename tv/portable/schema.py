@@ -548,6 +548,8 @@ class RemoteDownloaderSchema(DDBObjectSchema):
         ('contentType', SchemaString(noneOk=True)),
         ('channelName', SchemaFilename(noneOk=True)),
         ('status', SchemaStatusContainer()),
+        ('metainfo', SchemaBinary()),
+        ('fast_resume_data', SchemaBinary()),
         ('manualUpload', SchemaBool()),
         ('state', SchemaString()),
         ('main_item_id', SchemaInt(noneOk=True)),
@@ -671,7 +673,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
     def handle_malformed_list_view_displays(row):
         return []
 
-VERSION = 104
+VERSION = 105
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,
