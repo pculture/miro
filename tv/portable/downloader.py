@@ -38,6 +38,7 @@ from miro.download_utils import nextFreeFilename, getFileURLPath, filterDirector
 from miro.util import get_torrent_info_hash, returnsUnicode, checkU, returnsFilename, unicodify, checkF, toUni
 from miro import config
 from miro import dialogs
+from miro import eventloop
 from miro import httpclient
 from miro import models
 from miro import prefs
@@ -138,6 +139,7 @@ class RemoteDownloader(DDBObject):
         self.deleteFiles = True
         self.channelName = channelName
         self.manualUpload = False
+        self._save_later_dc = None
         if contentType is None:
             self.contentType = u""
         else:
@@ -175,6 +177,38 @@ class RemoteDownloader(DDBObject):
         if needsSignalItem:
             for item in self.itemList:
                 item.signal_change(needsSave=False)
+        if needsSave:
+            self._cancel_save_later()
+
+
+    def _save_later(self):
+        """Save the remote downloader at some point in the future.
+
+        This is used to handle the fact that remote downloaders are updated
+        often, but those updates are usually just the status dict, which is
+        never used for SELECT statements.  Continually saving those changes
+        to disk is just a waste of time and IO.
+
+        Instead, we schedule the save to happen sometime in the future.  When
+        miro quits, we call the module-level function run_delayed_saves(),
+        which makes sure any pending objects are saved to disk.
+        """
+        if self._save_later_dc is None:
+            self._save_later_dc = eventloop.addTimeout(15,
+                    self._save_now, "Delayed RemoteDownloader save")
+
+    def _save_now(self):
+        """If _save_later() was called and we haven't saved the downloader to
+        disk, do it now.
+        """
+        if self.idExists() and self._save_later_dc is not None:
+            self.signal_change()
+            self._save_later_dc = None
+
+    def _cancel_save_later(self):
+        if self._save_later_dc is not None:
+            self._save_later_dc.cancel()
+            self._save_later_dc = None
 
     def on_content_type(self, info):
         if not self.idExists():
@@ -283,7 +317,9 @@ class RemoteDownloader(DDBObject):
             if self.get_state() == u'uploading' and not self.manualUpload and self.getUploadRatio() > 1.5:
                 self.stopUpload()
 
-            self.signal_change(needsSignalItem = needsSignalItem)
+            self.signal_change(needsSignalItem=needsSignalItem,
+                    needsSave=False)
+            self._save_later()
             if finished:
                 for item in self.itemList:
                     item.on_download_finished()
@@ -553,6 +589,7 @@ class RemoteDownloader(DDBObject):
         return self.status.get('filename', FilenameType(''))
 
     def setup_restored(self):
+        self._save_later_dc = None
         self.deleteFiles = True
         self.itemList = []
         if self.dlid == 'noid':
@@ -716,10 +753,17 @@ class DownloadDaemonStarter(object):
             downloader.restartIfNeeded()
 
     def shutdown(self, callback):
+        self.shutdown_callback = callback
         if not self.started:
-            callback()
+            self._on_shutdown()
         else:
-            RemoteDownloader.dldaemon.shutdown_downloader_daemon(callback=callback)
+            RemoteDownloader.dldaemon.shutdown_downloader_daemon(
+                    callback=self._on_shutdown)
+
+    def _on_shutdown(self):
+        ensure_downloaders_saved()
+        self.shutdown_callback()
+        del self.shutdown_callback
 
 def init_controller():
     """Intializes the download daemon controller.
@@ -785,3 +829,12 @@ def get_downloader_for_item(item):
             return RemoteDownloader(url, item, u'application/x-bittorrent', channelName=channelName)
     else:
         return RemoteDownloader(url, item, channelName=channelName)
+
+def ensure_downloaders_saved():
+    """Make sure any RemoteDownloaders with pending changes get saved.
+
+    For performance reasons, RemoteDownloader objects don't save to disk every
+    time their status dict is updated.
+    """
+    for downloader in RemoteDownloader.make_view():
+        downloader._save_now()
