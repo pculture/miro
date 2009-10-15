@@ -125,6 +125,7 @@ class RemoteDownloader(DDBObject):
         self.main_item_id = None
         self.dlid = generate_dlid()
         self.status = {}
+        self.metainfo = self.fast_resume_data = None
         self.state = u'downloading'
         if contentType is None:
             # HACK:  Some servers report the wrong content-type for torrent
