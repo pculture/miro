@@ -247,6 +247,31 @@ class ViewTracker(signals.SignalEmitter):
     def __len__(self):
         return len(self.current_ids)
 
+class AttributeUpdateTracker(object):
+    """Used by DDBObject to track changes to attributes."""
+
+    def __init__(self, name):
+        self.name = name
+
+    # Simple implementation of the python descriptor protocol.  We just want
+    # to update changed_attributes when attributes are set.
+
+    def __get__(self, instance, owner):
+        try:
+            return instance.__dict__[self.name]
+        except KeyError:
+            raise AttributeError(self.name)
+        except AttributeError:
+            if instance is None:
+                raise AttributeError(
+                        "Can't access '%s' as a class attribute" % self.name)
+            else:
+                raise
+
+    def __set__(self, instance, value):
+        instance.__dict__[self.name] = value
+        instance.changed_attributes.add(self.name)
+
 class DDBObject(signals.SignalEmitter):
     """Dynamic Database object
     """
@@ -256,6 +281,7 @@ class DDBObject(signals.SignalEmitter):
     def __init__(self, *args, **kwargs):
         self.in_db_init = True
         signals.SignalEmitter.__init__(self, 'removed')
+        self.changed_attributes = set()
 
         if len(args) == 0 and kwargs.keys() == ['restored_data']:
             restoring = True
@@ -276,7 +302,7 @@ class DDBObject(signals.SignalEmitter):
             self.setup_new(*args, **kwargs)
             if not self.idExists(): # handle setup_new() calling remove()
                 return
-            app.db.update_obj(self)
+            app.db.insert_obj(self)
 
         self.in_db_init = False
 
@@ -322,6 +348,34 @@ class DDBObject(signals.SignalEmitter):
     def on_db_insert(self):
         """Called after an object has been inserted into the db."""
         pass
+
+    @classmethod
+    def track_attribute_changes(cls, name):
+        """Set up tracking when attributes get set.
+
+        Call this on a DDBObject subclass to track changes to certain
+        attributes.  Each DDBObject has a changed_attributes set, which
+        contains the attributes that have changed.  
+
+        This is used by the SQLite storage layer to track which attributes are
+        changed between SQL UPDATE statements.
+
+        For example:
+
+        >> MyDDBObjectSubclass.track_attribute_changes('foo')
+        >> MyDDBObjectSubclass.track_attribute_changes('bar')
+        >>> obj = MyDDBObjectSubclass()
+        >>> print obj.changed_attributes
+        set([])
+        >> obj.foo = obj.bar = obj.baz = 3
+        >>> print obj.changed_attributes
+        set(['foo', 'bar'])
+        """
+        # The AttributeUpdateTracker class does all the work
+        setattr(cls, name, AttributeUpdateTracker(name))
+
+    def reset_changed_attributes(self):
+        self.changed_attributes = set()
 
     def getID(self):
         """Returns unique integer assocaited with this object

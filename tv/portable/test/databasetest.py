@@ -170,6 +170,7 @@ class TestDDBObjectSchema(schema.ObjectSchema):
 class DDBObjectTestCase(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
+        TestDDBObject.track_attribute_changes('foo')
         self.reload_database(schema_version=0,
                 object_schemas=[TestDDBObjectSchema])
 
@@ -181,3 +182,11 @@ class DDBObjectTestCase(MiroTestCase):
         self.assertEquals(TestDDBObject.make_view().count(), 0)
         TestDDBObject(self, remove=True)
         self.assertEquals(TestDDBObject.make_view().count(), 0)
+
+    def test_test_attribute_track(self):
+        testobj = TestDDBObject(self)
+        self.assertEquals(testobj.changed_attributes, set(['id']))
+        testobj.foo = 1
+        self.assertEquals(testobj.changed_attributes, set(['id', 'foo']))
+        testobj.bar = 2
+        self.assertEquals(testobj.changed_attributes, set(['id', 'foo']))
