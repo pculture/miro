@@ -303,35 +303,11 @@ class LiveStorage:
     def update_obj(self, obj):
         """Update a DDBObject on disk."""
 
-        def sizeit(tuple):
-            size = 0
-            for val in tuple:
-                try:
-                    size += len(val)
-                except:
-                    size += 1
-            return size
+        if not obj.changed_attributes:
+            self.remember_object(obj)
+            return
 
         obj_schema = self._schema_map[obj.__class__]
-        column_names = []
-        values = []
-        for name, schema_item in obj_schema.fields:
-            column_names.append(name)
-            value = getattr(obj, name)
-            try:
-                schema_item.validate(value)
-            except schema.ValidationError:
-                if util.chatter:
-                    logging.warn("error validating %s for %s", name, obj)
-                raise
-            values.append(self._converter.to_sql(obj_schema, name,
-                schema_item, value))
-        sql = "REPLACE INTO %s (%s) VALUES(%s)" % (obj_schema.table_name,
-                ', '.join(column_names),
-                ', '.join('?' for i in xrange(len(column_names))))
-        old_size = sizeit(values)
-        old_count = len(values)
-
         setters = []
         values = []
         for name, schema_item in obj_schema.fields:
@@ -350,12 +326,7 @@ class LiveStorage:
         obj.reset_changed_attributes()
         sql = "UPDATE %s SET %s WHERE id=%s" % (obj_schema.table_name,
                 ', '.join(setters), obj.id)
-        size = sizeit(values)
-        count = len(values)
-        print 'old size: %s (%s)    new size: %s (%s, %s)' % \
-                (old_size, old_count, size, count, values)
-        if len(values) > 0:
-            self._execute(sql, values, is_update=True)
+        self._execute(sql, values)
         self.remember_object(obj)
 
     def remove_obj(self, obj):
