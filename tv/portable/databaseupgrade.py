@@ -2486,7 +2486,15 @@ def upgrade105(cursor):
         metainfo = status.pop('metainfo', None)
         fast_resume_data = status.pop('fastResumeData', None)
         new_status = repr(status)
+        if metainfo is not None:
+            metainfo_value = buffer(metainfo)
+        else:
+            metainfo_value = None
+        if fast_resume_data is not None:
+            fast_resume_data_value = buffer(fast_resume_data)
+        else:
+            fast_resume_data_value = None
         cursor.execute("UPDATE remote_downloader "
                 "SET status=?, metainfo=?, fast_resume_data=?",
-                (new_status, buffer(metainfo), buffer(fast_resume_data)))
+                (new_status, metainfo_value, fast_resume_data_value))
 
