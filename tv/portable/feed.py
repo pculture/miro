@@ -48,6 +48,7 @@ from miro import app
 from miro import config
 from miro import iconcache
 from miro import dialogs
+from miro import download_utils
 from miro import eventloop
 from miro import feedupdate
 from miro import flashscraper
@@ -1320,11 +1321,16 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         FeedImpl.setup_new(self, url, ufeed, title)
         self.scheduleUpdateEvents(0)
 
-    def _handleNewEntry(self, entry, channelTitle):
+    def _handleNewEntry(self, entry, fp_values, channelTitle):
         """Handle getting a new entry from a feed."""
-        item = models.Item(entry, feed_id=self.ufeed.id)
-        if not item.matches_search(self.ufeed.searchTerm):
-            item.remove()
+        enclosure = fp_values.first_video_enclosure
+        if enclosure and enclosure['url'].startswith('file://'):
+            path = download_utils.getFileURLPath(enclosure['url'])
+            item = models.FileItem(path, feed_id=self.ufeed.id)
+        else:
+            item = models.Item(entry, feed_id=self.ufeed.id)
+            if not item.matches_search(self.ufeed.searchTerm):
+                item.remove()
         item.set_channel_title(channelTitle)
 
     def createItemsForParsed(self, parsed):
@@ -1419,7 +1425,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                             pass
             if (new and entry.has_key('enclosures') and
                     getFirstVideoEnclosure(entry) != None):
-                self._handleNewEntry(entry, channelTitle)
+                self._handleNewEntry(entry, fp_values, channelTitle)
         return old_items
 
     def update_finished(self, old_items):
@@ -2356,7 +2362,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
         self.update()
         self.ufeed.signal_change()
 
-    def _handleNewEntry(self, entry, channelTitle):
+    def _handleNewEntry(self, entry, fp_values, channelTitle):
         """Handle getting a new entry from a feed."""
         fp_values = FeedParserValues(entry)
         url = fp_values.data['url']
@@ -2380,7 +2386,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
                             if not fp_values.compare_to_item(item):
                                 item.update_from_feed_parser_values(fp_values)
                             return
-        RSSMultiFeedImpl._handleNewEntry(self, entry, channelTitle)
+        RSSMultiFeedImpl._handleNewEntry(self, entry, fp_values, channelTitle)
 
     def update_finished(self, old_items):
         self.searching = False
