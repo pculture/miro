@@ -1324,9 +1324,10 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
     def _handleNewEntry(self, entry, fp_values, channelTitle):
         """Handle getting a new entry from a feed."""
         enclosure = fp_values.first_video_enclosure
-        if enclosure and enclosure['url'].startswith('file://'):
+        if (self.url.startswith('file://') and enclosure and
+                enclosure['url'].startswith('file://')):
             path = download_utils.getFileURLPath(enclosure['url'])
-            item = models.FileItem(path, feed_id=self.ufeed.id)
+            item = models.FileItem(path, entry=entry, feed_id=self.ufeed.id)
         else:
             item = models.Item(entry, feed_id=self.ufeed.id)
             if not item.matches_search(self.ufeed.searchTerm):

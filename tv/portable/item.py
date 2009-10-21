@@ -1703,8 +1703,11 @@ class FileItem(Item):
     """An Item that exists as a local file
     """
 
-    def setup_new(self, filename, feed_id=None, parent_id=None, offsetPath=None, deleted=False):
-        Item.setup_new(self, get_entry_for_file(filename), feed_id=feed_id, parent_id=parent_id)
+    def setup_new(self, filename, feed_id=None, parent_id=None,
+            offsetPath=None, deleted=False, entry=None):
+        if entry is None:
+            entry = get_entry_for_file(filename)
+        Item.setup_new(self, entry, feed_id=feed_id, parent_id=parent_id)
         self.is_file_item = True
         checkF(filename)
         filename = fileutil.abspath(filename)
