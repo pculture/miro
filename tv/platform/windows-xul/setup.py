@@ -50,6 +50,9 @@ from distutils.ccompiler import new_compiler
 # The location of the NSIS compiler
 NSIS_PATH = 'C:\\Program Files\\NSIS\\makensis.exe'
 
+# This is the version of the binary kit to use
+BINARY_KIT_VERSION = "v1.0"
+
 # If you're using the prebuilt DTV Dependencies Binary Kit, just set
 # the path to it here, and ignore everything after this point. In
 # fact, if you unpacked or checked out the binary kit in the same
@@ -58,9 +61,11 @@ NSIS_PATH = 'C:\\Program Files\\NSIS\\makensis.exe'
 # Otherwise, if you build the dependencies yourself instead of using
 # the Binary Kit, ignore this setting and change all of the settings
 # below.
-defaultBinaryKitRoot = os.path.join(os.path.dirname(sys.argv[0]), \
-                                    '..', '..', '..', 'dtv-binary-kit')
-BINARY_KIT_ROOT = os.path.abspath(defaultBinaryKitRoot)
+BINARY_KIT_ROOT = "miro-binary-kit-win-%s" % BINARY_KIT_VERSION
+
+if not os.path.exists or not os.path.isdir(BINARY_KIT_ROOT):
+    print "Binary kit %s is missing.  Run 'setup_sandbox.sh'." % BINARY_KIT_ROOT
+    sys.exit()
 
 BOOST_ROOT = os.path.join(BINARY_KIT_ROOT, 'boost', 'win32')
 BOOST_LIB_PATH = os.path.join(BOOST_ROOT, 'lib')
