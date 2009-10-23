@@ -64,7 +64,7 @@ BINARY_KIT_VERSION = "v1.0"
 BINARY_KIT_ROOT = "miro-binary-kit-win-%s" % BINARY_KIT_VERSION
 
 if not os.path.exists or not os.path.isdir(BINARY_KIT_ROOT):
-    print "Binary kit %s is missing.  Run 'setup_sandbox.sh'." % BINARY_KIT_ROOT
+    print "Binary kit %s is missing.  Run 'setup_binarykit.sh'." % BINARY_KIT_ROOT
     sys.exit()
 
 BOOST_ROOT = os.path.join(BINARY_KIT_ROOT, 'boost', 'win32')
