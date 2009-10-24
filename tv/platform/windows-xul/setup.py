@@ -513,6 +513,7 @@ class bdist_nsis(Command):
         nsisVars['CONFIG_PROG_ID'] = template_vars['longAppName'].replace(" ", ".") + ".1"
         nsisVars['MIRO_INSTALL_ICON'] = self.install_icon
         nsisVars['MIRO_INSTALL_IMAGE'] = self.install_image
+        nsisVars['CONFIG_BINARY_KIT'] = BINARY_KIT_ROOT
         if self.generic:
             nsisVars['GENERIC_INSTALLER'] = '1'
 
