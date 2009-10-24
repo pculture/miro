@@ -10,6 +10,7 @@
 ;  CONFIG_ICON           eg, "Miro.ico"
 ;  CONFIG_OUTPUT_FILE    eg, "Miro-1.2.3.exe"
 ;  CONFIG_PROG_ID        eg, "Miro.1"
+;  CONFIG_BINARY_KIT     eg, "miro-binary-kit-win-v1.0"
 !define INST_KEY "Software\${CONFIG_PUBLISHER}\${CONFIG_LONG_APP_NAME}"
 !define UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${CONFIG_LONG_APP_NAME}"
 
@@ -51,9 +52,9 @@ Var PUBLISHER
 Var PROJECT_URL
 
 ; Runs in tv/platform/windows-xul/dist, so 4 ..s.
-!addplugindir ..\..\..\..\dtv-binary-kit\NSIS-Plugins\
+!addplugindir ..\${CONFIG_BINARY_KIT}\NSIS-Plugins\
 
-!addincludedir ..\..\..\..\dtv-binary-kit\NSIS-Plugins\
+!addincludedir ..\${CONFIG_BINARY_KIT}\NSIS-Plugins\
 
 !define MUI_WELCOMEPAGE_TITLE "Welcome to $APP_NAME!"
 !define MUI_WELCOMEPAGE_TEXT "To get started, choose an easy or a custom install process and then click 'Install'."
