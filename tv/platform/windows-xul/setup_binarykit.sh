@@ -28,7 +28,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-VERSION="v1.0"
+VERSION="20091025"
 
 BINARYKIT="miro-binary-kit-win-${VERSION}.tar.gz"
 BINARYKITURL="http://pculture.org/binarykits/${BINARYKIT}"
