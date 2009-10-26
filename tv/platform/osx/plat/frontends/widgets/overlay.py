@@ -39,6 +39,7 @@ from miro.gtcache import gettext as _
 from miro.plat import resources
 from miro.plat.frontends.widgets import threads
 from miro.plat.frontends.widgets import drawing
+from miro.plat.frontends.widgets import osxmenus
 
 ###############################################################################
 
@@ -188,40 +189,10 @@ class OverlayPalette (NSWindowController):
 
     def showSubtitlesMenu_(self, sender):
         menu = NSMenu.alloc().init()
-        has_enabled_subtitle_track = False
-        for track in self.renderer.get_subtitle_tracks():
-            item = NSMenuItem.alloc().init()
-            item.setTag_(track[0])
-            item.setTitle_(track[1])
-            item.setEnabled_(YES)
-            item.setTarget_(self)
-            item.setAction_('selectSubtitleTrack:')
-            if track[2]:
-                item.setState_(NSOnState)
-                has_enabled_subtitle_track = True
-            else:
-                item.setState_(NSOffState)
-            menu.addItem_(item)
-
-        menu.addItem_(NSMenuItem.separatorItem())
-        disable_item = NSMenuItem.alloc().init()
-        disable_item.setTitle_(_("Disable Subtitles"))
-        disable_item.setEnabled_(YES)
-        disable_item.setTarget_(self)
-        disable_item.setAction_('disableSubtitles:')
-        if has_enabled_subtitle_track:
-            disable_item.setState_(NSOffState)
-        else:
-            disable_item.setState_(NSOnState)
-        menu.addItem_(disable_item)
-
+        menu.setAutoenablesItems_(NO)
+        subtitles_tracks = app.playback_manager.player.get_subtitle_tracks()
+        osxmenus.populate_subtitles_menu(menu, subtitles_tracks)
         NSMenu.popUpContextMenu_withEvent_forView_(menu, NSApp().currentEvent(), self.window().contentView())
-
-    def selectSubtitleTrack_(self, sender):
-        self.renderer.enable_subtitle_track(sender.tag())
-    
-    def disableSubtitles_(self, sender):
-        self.renderer.disable_subtitles()
     
     def getHorizontalPosition(self, videoWindow, width):
         parentFrame = videoWindow.frame()

@@ -31,7 +31,7 @@
 import struct
 import logging
 
-from objc import nil
+from objc import nil, NO
 from AppKit import *
 from Foundation import *
 
@@ -179,7 +179,10 @@ def populate_menu():
         MenuItem(_("Present Double Size"), "PresentDoubleSize", (Key("2", MOD),)),
     ]
     presentMenu = Menu(_("Present Video"), "Present", *presentMenuItems)
-    menubar.findMenu("Playback").menuitems.append(presentMenu)
+    subtitlesMenu = Menu(_("Subtitles"), "Subtitles", *[])
+    playback_menu = menubar.findMenu("Playback")
+    playback_menu.menuitems.append(presentMenu)
+    playback_menu.menuitems.append(subtitlesMenu)
     menus.action_groups['PlayableVideosSelected'].extend(['PresentActualSize', 'PresentHalfSize', 'PresentDoubleSize'])
     menus.action_groups['PlayingVideo'].extend(['PresentActualSize', 'PresentHalfSize', 'PresentDoubleSize'])
 
@@ -280,3 +283,61 @@ def translate_event_modifiers(event):
     if flags & NSShiftKeyMask:
         mods.add(SHIFT)
     return mods
+
+class SubtitleChangesHandler(NSObject):
+    def selectSubtitleTrack_(self, sender):
+        app.playback_manager.player.enable_subtitle_track(sender.tag())
+        app.menu_manager.update_menus()
+    def disableSubtitles_(self, sender):
+        app.playback_manager.player.disable_subtitles()
+        app.menu_manager.update_menus()
+
+subtitles_menu_handler = SubtitleChangesHandler.alloc().init()
+
+def on_menu_change(menu_manager):
+    main_menu = NSApp().mainMenu()
+    subtitles_menu = main_menu.itemAtIndex_(5).submenu().itemAtIndex_(15).submenu()
+    subtitles_menu.setAutoenablesItems_(NO)
+    subtitles_menu.removeAllItems()
+    if app.playback_manager.is_playing and not app.playback_manager.is_playing_audio:
+        subtitles_tracks = app.playback_manager.player.get_subtitle_tracks()
+        if len(subtitles_tracks) == 0:
+            _set_no_subtitles(subtitles_menu)
+        else:
+            populate_subtitles_menu(subtitles_menu, subtitles_tracks)
+    else:
+        _set_no_subtitles(subtitles_menu)
+
+def populate_subtitles_menu(nsmenu, tracks):
+    has_enabled_subtitle_track = False
+    for track in tracks:
+        item = NSMenuItem.alloc().init()
+        item.setTag_(track[0])
+        item.setTitle_(track[1])
+        item.setEnabled_(YES)
+        item.setTarget_(subtitles_menu_handler)
+        item.setAction_('selectSubtitleTrack:')
+        if track[2]:
+            item.setState_(NSOnState)
+            has_enabled_subtitle_track = True
+        else:
+            item.setState_(NSOffState)
+        nsmenu.addItem_(item)
+
+    nsmenu.addItem_(NSMenuItem.separatorItem())
+    disable_item = NSMenuItem.alloc().init()
+    disable_item.setTitle_(_("Disable Subtitles"))
+    disable_item.setEnabled_(YES)
+    disable_item.setTarget_(subtitles_menu_handler)
+    disable_item.setAction_('disableSubtitles:')
+    if has_enabled_subtitle_track:
+        disable_item.setState_(NSOffState)
+    else:
+        disable_item.setState_(NSOnState)
+    nsmenu.addItem_(disable_item)
+
+def _set_no_subtitles(nsmenu):
+    item = NSMenuItem.alloc().init()
+    item.setTitle_(_("None Available"))
+    item.setEnabled_(NO)
+    nsmenu.addItem_(item)
