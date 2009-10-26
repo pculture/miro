@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Miro - an RSS based video player application
 # Copyright (C) 2005-2009 Participatory Culture Foundation
@@ -28,6 +28,18 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-setup_binarykit.sh
-python setup.py bdist_miro
-dist\Miro.exe
+VERSION="20091025"
+
+BINARYKIT="miro-binary-kit-win-${VERSION}.tar.gz"
+BINARYKITURL="http://pculture.org/binarykits/${BINARYKIT}"
+
+if [ -d "miro-binary-kit-win-${VERSION}" ]
+then
+    echo "Binary kit ${BINARYKIT} is already installed.";
+else
+    echo "Installing ${BINARYKIT}."
+    wget "${BINARYKITURL}";
+    tar -xzvf "${BINARYKIT}";
+    echo "Binary kit ${BINARYKIT} is installed."
+fi
+

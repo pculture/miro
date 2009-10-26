@@ -51,6 +51,9 @@ from distutils.ccompiler import new_compiler
 # The location of the NSIS compiler
 NSIS_PATH = 'C:\\Program Files\\NSIS\\makensis.exe'
 
+# This is the version of the binary kit to use
+BINARY_KIT_VERSION = "20091025"
+
 # If you're using the prebuilt DTV Dependencies Binary Kit, just set
 # the path to it here, and ignore everything after this point. In
 # fact, if you unpacked or checked out the binary kit in the same
@@ -59,17 +62,17 @@ NSIS_PATH = 'C:\\Program Files\\NSIS\\makensis.exe'
 # Otherwise, if you build the dependencies yourself instead of using
 # the Binary Kit, ignore this setting and change all of the settings
 # below.
-defaultBinaryKitRoot = os.path.join(os.path.dirname(sys.argv[0]), \
-                                    '..', '..', '..', 'dtv-binary-kit')
-BINARY_KIT_ROOT = os.path.abspath(defaultBinaryKitRoot)
+BINARY_KIT_ROOT = "miro-binary-kit-win-%s" % BINARY_KIT_VERSION
+
+if not os.path.exists or not os.path.isdir(BINARY_KIT_ROOT):
+    print "Binary kit %s is missing.  Run 'setup_binarykit.sh'." % BINARY_KIT_ROOT
+    sys.exit()
 
 BOOST_ROOT = os.path.join(BINARY_KIT_ROOT, 'boost', 'win32')
 BOOST_LIB_PATH = os.path.join(BOOST_ROOT, 'lib')
 BOOST_INCLUDE_PATH = os.path.join(BOOST_ROOT, 'include')
 BOOST_LIBRARIES = [os.path.splitext(os.path.basename(f))[0] for f in
         glob(os.path.join(BOOST_LIB_PATH, '*.lib'))]
-
-print BOOST_LIBRARIES
 
 ZLIB_INCLUDE_PATH = os.path.join(BINARY_KIT_ROOT, 'zlib', 'include')
 ZLIB_LIB_PATH = os.path.join(BINARY_KIT_ROOT, 'zlib', 'lib')
@@ -104,6 +107,7 @@ XULRUNNER_SDK_PATH = os.path.join(BINARY_KIT_ROOT, 'xulrunner-sdk')
 XULRUNNER_SDK_BIN_PATH = os.path.join(XULRUNNER_SDK_PATH, 'bin')
 
 VLC_PATH = os.path.join(BINARY_KIT_ROOT, 'libvlc')
+LIBTORRENT_PATH = os.path.join(BINARY_KIT_ROOT, 'libtorrent')
 
 def find_data_files(dest_path_base, source_path):
     retval = []
@@ -158,6 +162,8 @@ import portable
 sys.modules['miro'] = portable
 
 from miro import util
+
+sys.path.insert(0, LIBTORRENT_PATH)
 
 #### Extensions ####
 
@@ -217,58 +223,13 @@ xulrunnerbrowser_ext = Extension("miro.plat.frontends.widgets.xulrunnerbrowser",
 
 # Setting the path here allows py2exe to find the DLLS
 os.environ['PATH'] = ';'.join([
-    OPENSSL_LIB_PATH, BOOST_LIB_PATH, ZLIB_RUNTIME_LIBRARY_PATH,
-    GTK_BIN_PATH, os.environ['PATH']])
-
-##### The libtorrent extension ####
-
-def fetch_sources():
-    for root, dirs, files in os.walk(os.path.join(portable_dir, 'libtorrent')):
-        if '.svn' in dirs:
-            dirs.remove('.svn')
-        if '_svn' in dirs:
-            dirs.remove('_svn')
-        for file in files:
-            if file.endswith('.cpp') or file.endswith('.c'):
-                yield os.path.join(root, file)
-
-libtorrent_sources = list(fetch_sources())
-
-libtorrent_ext = Extension(
-        "miro.libtorrent", 
-        include_dirs=[
-            os.path.join(portable_dir, 'libtorrent', 'include'),
-            os.path.join(portable_dir, 'libtorrent', 'include', 'libtorrent'),
-            BOOST_INCLUDE_PATH, 
-            ZLIB_INCLUDE_PATH, 
-            OPENSSL_INCLUDE_PATH,
-        ],
-        library_dirs=[BOOST_LIB_PATH, OPENSSL_LIB_PATH, ZLIB_LIB_PATH],
-        libraries=OPENSSL_LIBRARIES + BOOST_LIBRARIES + [
-            'wsock32', 'gdi32', 'ws2_32', 'zdll'
-        ],
-        extra_compile_args=[
-            '-DBOOST_WINDOWS',
-            '-DWIN32',
-            '-DWIN32_LEAN_AND_MEAN',
-            '-D_WIN32_WINNT=0x0500',
-            '-DBOOST_ALL_NO_LIB',
-            '-D_FILE_OFFSET_BITS=64',
-            '-DBOOST_THREAD_USE_LIB',
-            '-D__USE_W32_SOCKETS',
-            '-D_WIN32',
-            '-DTORRENT_USE_OPENSSL=1',
-            '-DNDEBUG=1',
-            '/EHa',
-            '/GR',
-        ],
-        sources=libtorrent_sources)
+    OPENSSL_LIB_PATH, BOOST_LIB_PATH, ZLIB_RUNTIME_LIBRARY_PATH, 
+    LIBTORRENT_PATH, GTK_BIN_PATH, os.environ['PATH']])
 
 # Private extension modules to build.
 ext_modules = [
     fasttypes_ext,
     sorts_ext,
-    libtorrent_ext,
     pygtkhacks_ext,
     xulrunnerbrowser_ext,
 ]
@@ -296,6 +257,9 @@ data_files.extend(find_data_files('vlc-plugins',
     os.path.join(VLC_PATH, 'vlc-plugins')))
 data_files.append(('', [os.path.join(VLC_PATH, 'libvlc.dll')]))
 data_files.append(('', [os.path.join(VLC_PATH, 'libvlccore.dll')]))
+data_files.append(('', [os.path.join(LIBTORRENT_PATH, 'libtorrent.pyd')]))
+# data_files.append(('', [os.path.join(OPENSSL_LIB_PATH, 'libeay32.dll')]))
+# data_files.append(('', [os.path.join(OPENSSL_LIB_PATH, 'ssleay32.dll')]))
 
 # handle the resources subdirectories.
 for dir in ('searchengines', 'images'):
@@ -508,6 +472,7 @@ class bdist_nsis(Command):
         nsisVars['CONFIG_PROG_ID'] = template_vars['longAppName'].replace(" ", ".") + ".1"
         nsisVars['MIRO_INSTALL_ICON'] = self.install_icon
         nsisVars['MIRO_INSTALL_IMAGE'] = self.install_image
+        nsisVars['CONFIG_BINARY_KIT'] = BINARY_KIT_ROOT
         if self.generic:
             nsisVars['GENERIC_INSTALLER'] = '1'
 
@@ -586,76 +551,6 @@ class bdist_nsis(Command):
             for name in files:
                 self.addFile(os.path.join(root, name))
 
-if 0:
-    class bdist_u3(bdist_xul_dumb):
-        def run(self):
-            bdist_xul_dumb.run(self)
-
-            log.info("building u3p")
-
-            self.zipfile = zip.ZipFile(os.path.join(self.dist_dir, "%s-%s.u3p" % (self.getTemplateVariable('shortAppName'),self.getTemplateVariable('appVersion'),)), 'w', zip.ZIP_DEFLATED)
-
-            self.addDirectFile("miro.u3i", "manifest\\manifest.u3i")
-            self.addDirectFile("Miro.ico", "manifest\\Miro.ico")
-            self.addDirectFile("U3Action.exe", "host\\U3Action.exe")
-
-            self.addFile("%s.exe" % self.getTemplateVariable('shortAppName'))
-            self.addFile("%s.ico" % self.getTemplateVariable('shortAppName'))
-            self.addFile("%s_MovieData.exe" % self.getTemplateVariable('shortAppName'))
-            self.addFile("moviedata_util.py")
-            self.addFile("application.ini")
-            self.addGlob("*.dll")
-
-            self.addDirectory("chrome")
-            self.addDirectory("components")
-            self.addDirectory("defaults")
-            self.addDirectory("resources")
-            self.addDirectory("vlc-plugins")
-            self.addDirectory("plugins")
-            self.addDirectory("xulrunner")
-
-            self.zipfile.close()
-
-        def addDirectFile(self, filename, path):
-            print "Compressing %s as %s" % (filename, path)
-            self.zipfile.write(os.path.join(self.dist_dir, filename), path)
-
-        def addGlob(self, wildcard, src = None, dest = None):
-            import glob
-            if src is None:
-                src = self.dist_dir
-            if dest is None:
-                dest = "device/"
-            length = len(src)
-            wildcard = os.path.join(src, wildcard)
-            for filename in iglob(wildcard):
-                if filename[:length] == src:
-                    filename = filename[length:]
-                    while len(filename) > 0 and (filename[0] == '/' or filename[0] == '\\'):
-                        filename = filename[1:]
-                print "Compressing %s" % filename
-                self.zipfile.write(os.path.join(src, filename), os.path.join(dest, filename))
-
-        def addFile(self, filename, src = None, dest = None):
-            if src is None:
-                src = self.dist_dir
-            if dest is None:
-                dest = "device/"
-            length = len(src)
-            if filename[:length] == src:
-                filename = filename[length:]
-                while len(filename) > 0 and (filename[0] == '/' or filename[0] == '\\'):
-                    filename = filename[1:]
-            print "Compressing %s" % filename
-            self.zipfile.write(os.path.join(src, filename), os.path.join(dest, filename))
-
-        def addDirectory(self, dirname, src = None, dest = None):
-            if src is None:
-                src = self.dist_dir
-            for root, dirs, files in os.walk(os.path.join(src, dirname)):
-                for name in files:
-                    self.addFile(os.path.join(root, name), src, dest)
-
 if __name__ == "__main__":
     setup(
         windows=[
@@ -714,7 +609,7 @@ if __name__ == "__main__":
                 'packages': [
                     'encodings',
                     ],
-                'includes': 'cairo, pango, pangocairo, atk, gobject',
+                'includes': 'cairo, pango, pangocairo, atk, gobject, libtorrent',
             },
         },
     )

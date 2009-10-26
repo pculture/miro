@@ -142,6 +142,8 @@ class LiveStorage:
             self._all_schemas.append(oschema)
             for klass in oschema.ddb_object_classes():
                 self._schema_map[klass] = oschema
+                for field_name, schema_item in oschema.fields:
+                    klass.track_attribute_changes(field_name)
         self._converter = SQLiteConverter()
 
         if not db_existed:
@@ -274,8 +276,8 @@ class LiveStorage:
         del self._object_map[obj.id]
         self._ids_loaded.remove(obj.id)
 
-    def update_obj(self, obj):
-        """Update a DDBObject on disk."""
+    def insert_obj(self, obj):
+        """Add a new DDBObject to disk."""
 
         obj_schema = self._schema_map[obj.__class__]
         column_names = []
@@ -291,10 +293,39 @@ class LiveStorage:
                 raise
             values.append(self._converter.to_sql(obj_schema, name,
                 schema_item, value))
-        sql = "REPLACE INTO %s (%s) VALUES(%s)" % (obj_schema.table_name,
+        sql = "INSERT INTO %s (%s) VALUES(%s)" % (obj_schema.table_name,
                 ', '.join(column_names),
                 ', '.join('?' for i in xrange(len(column_names))))
         self._execute(sql, values, is_update=True)
+        self.remember_object(obj)
+
+    def update_obj(self, obj):
+        """Update a DDBObject on disk."""
+
+        if not obj.changed_attributes:
+            self.remember_object(obj)
+            return
+
+        obj_schema = self._schema_map[obj.__class__]
+        setters = []
+        values = []
+        for name, schema_item in obj_schema.fields:
+            if name not in obj.changed_attributes:
+                continue
+            setters.append('%s=?' % name)
+            value = getattr(obj, name)
+            try:
+                schema_item.validate(value)
+            except schema.ValidationError:
+                if util.chatter:
+                    logging.warn("error validating %s for %s", name, obj)
+                raise
+            values.append(self._converter.to_sql(obj_schema, name,
+                schema_item, value))
+        obj.reset_changed_attributes()
+        sql = "UPDATE %s SET %s WHERE id=%s" % (obj_schema.table_name,
+                ', '.join(setters), obj.id)
+        self._execute(sql, values)
         self.remember_object(obj)
 
     def remove_obj(self, obj):

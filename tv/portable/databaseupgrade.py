@@ -2472,3 +2472,29 @@ def upgrade103(cursor):
 def upgrade104(cursor):
     cursor.execute("UPDATE item SET seen=0 WHERE seen IS NULL")
     cursor.execute("UPDATE item SET keep=0 WHERE keep IS NULL")
+
+def upgrade105(cursor):
+    """Move metainfo and fastResumeData out of the status dict """
+    # create new colums
+    cursor.execute("ALTER TABLE remote_downloader ADD metainfo BLOB")
+    cursor.execute("ALTER TABLE remote_downloader ADD fast_resume_data BLOB")
+    # move things
+    cursor.execute("SELECT id, status FROM remote_downloader")
+    for row in cursor.fetchall():
+        id, status_repr = row
+        status = eval_container(status_repr)
+        metainfo = status.pop('metainfo', None)
+        fast_resume_data = status.pop('fastResumeData', None)
+        new_status = repr(status)
+        if metainfo is not None:
+            metainfo_value = buffer(metainfo)
+        else:
+            metainfo_value = None
+        if fast_resume_data is not None:
+            fast_resume_data_value = buffer(fast_resume_data)
+        else:
+            fast_resume_data_value = None
+        cursor.execute("UPDATE remote_downloader "
+                "SET status=?, metainfo=?, fast_resume_data=?",
+                (new_status, metainfo_value, fast_resume_data_value))
+

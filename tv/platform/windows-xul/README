@@ -24,8 +24,9 @@ To compile and run Miro in the current directory, do::
 
 This does the following two steps:
 
-1. ``python setup.py bdist_miro``
-2. ``dist\Miro.exe``
+1. ``setup_binarykit.sh``
+2. ``python setup.py bdist_miro``
+3. ``dist\Miro.exe``
 
 If you have the required dependencies it should build Miro and run it.
 
