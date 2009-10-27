@@ -31,7 +31,7 @@
 import struct
 import logging
 
-from objc import nil, NO
+from objc import nil, NO, YES
 from AppKit import *
 from Foundation import *
 
