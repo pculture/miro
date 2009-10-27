@@ -114,7 +114,6 @@ class Player(player.Player):
         self.supported_media_types = supported_media_types
         self.movie_notifications = None
         self.movie = None
-        self.subtitles_tracks = None
 
     def reset(self):
         threads.warn_if_not_on_main_thread('quicktime.Player.reset')
@@ -122,7 +121,6 @@ class Player(player.Player):
             self.movie_notifications.disconnect()
         self.movie_notifications = None
         self.movie = None
-        self.subtitles_tracks = None
 
     def set_item(self, item_info, callback, errback):
         threads.warn_if_not_on_main_thread('quicktime.Player.set_item')
@@ -178,27 +176,25 @@ class Player(player.Player):
             self.disable_subtitles()
 
     def get_subtitle_tracks(self):
-        if self.subtitles_tracks is None:
-            tracks = list()
-            if self.movie is not None:
-                for track in self.movie.tracks():
-                    if self.is_subtitle_track(track):
-                        media = track.media().quickTimeMedia()
-                        lang = GetMediaLanguage(media)
-                        display_name = track.attributeForKey_(QTTrackDisplayNameAttribute)
-                        if lang == 32767:    # 32764 = langUndefined
+        tracks = list()
+        if self.movie is not None:
+            for track in self.movie.tracks():
+                if self.is_subtitle_track(track):
+                    media = track.media().quickTimeMedia()
+                    lang = GetMediaLanguage(media)
+                    display_name = track.attributeForKey_(QTTrackDisplayNameAttribute)
+                    if lang == 32767:    # 32764 = langUndefined
+                        name = display_name
+                    else:
+                        lang_info = iso_639.find(lang, "script-code")
+                        if lang_info is None:
                             name = display_name
                         else:
-                            lang_info = iso_639.find(lang, "script-code")
-                            if lang_info is None:
-                                name = display_name
-                            else:
-                                name = lang_info["name"]
-                        is_enabled = track.attributeForKey_(QTTrackEnabledAttribute) == 1
-                        track_id = track.attributeForKey_(QTTrackIDAttribute)
-                        tracks.append((track_id, name, is_enabled))
-            self.subtitles_tracks = tracks
-        return self.subtitles_tracks
+                            name = lang_info["name"]
+                    is_enabled = track.attributeForKey_(QTTrackEnabledAttribute) == 1
+                    track_id = track.attributeForKey_(QTTrackIDAttribute)
+                    tracks.append((track_id, name, is_enabled))
+        return tracks
 
     def _find_track(self, key, value):
         if self.movie is not None:

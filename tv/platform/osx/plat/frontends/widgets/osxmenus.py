@@ -296,9 +296,9 @@ subtitles_menu_handler = SubtitleChangesHandler.alloc().init()
 
 def on_menu_change(menu_manager):
     main_menu = NSApp().mainMenu()
-    subtitles_menu = main_menu.itemAtIndex_(5).submenu().itemAtIndex_(15).submenu()
+    subtitles_menu_root = main_menu.itemAtIndex_(5).submenu().itemAtIndex_(15)
+    subtitles_menu = NSMenu.alloc().init()
     subtitles_menu.setAutoenablesItems_(NO)
-    subtitles_menu.removeAllItems()
     if app.playback_manager.is_playing and not app.playback_manager.is_playing_audio:
         subtitles_tracks = app.playback_manager.player.get_subtitle_tracks()
         if len(subtitles_tracks) == 0:
@@ -307,6 +307,7 @@ def on_menu_change(menu_manager):
             populate_subtitles_menu(subtitles_menu, subtitles_tracks)
     else:
         _set_no_subtitles(subtitles_menu)
+    subtitles_menu_root.setSubmenu_(subtitles_menu)
 
 def populate_subtitles_menu(nsmenu, tracks):
     has_enabled_subtitle_track = False
