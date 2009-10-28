@@ -409,8 +409,22 @@ class PlaybackManager (signals.SignalEmitter):
         self.is_playing_audio = True
 
     def _select_current(self):
-        volume = config.get(prefs.VOLUME_LEVEL)
         item_info = self.playlist[self.position]
+        if not config.get(prefs.PLAY_IN_MIRO):
+            if self.is_playing:
+                self.player.stop()
+                self.player = None
+                if self.video_display is not None:
+                    self.remove_video_display()
+                    self.video_display = None
+            # FIXME - do this to avoid "currently playing green thing.
+            # should be a better way.
+            self.playlist = None
+            app.widgetapp.open_file(item_info.video_path)
+            messages.MarkItemWatched(item_info.id).send_to_backend()
+            return
+
+        volume = config.get(prefs.VOLUME_LEVEL)
         self.emit('selecting-file', item_info)
         self.open_successful = False
         self._setup_player(item_info, volume)
