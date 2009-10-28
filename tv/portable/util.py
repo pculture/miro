@@ -411,6 +411,9 @@ class ThreadSafeCounter:
 def setup_logging():
     """Adds TIMING and JSALERT logging levels.
     """
+    logging.addLevelName(15, "STACK TRACE")
+    logging.stacktrace = lambda msg, *args, **kargs: logging.log(15, "%s\n%s" % ("".join(traceback.format_stack()), msg) , *args, **kargs)
+
     logging.addLevelName(25, "TIMING")
     logging.timing = lambda msg, *args, **kargs: logging.log(25, msg, *args, **kargs)
     logging.addLevelName(26, "JSALERT")
