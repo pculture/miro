@@ -303,15 +303,12 @@ class LiveStorage:
     def update_obj(self, obj):
         """Update a DDBObject on disk."""
 
-        if not obj.changed_attributes:
-            self.remember_object(obj)
-            return
-
         obj_schema = self._schema_map[obj.__class__]
         setters = []
         values = []
         for name, schema_item in obj_schema.fields:
-            if name not in obj.changed_attributes:
+            if (isinstance(schema_item, schema.SchemaSimpleItem) and
+                    name not in obj.changed_attributes):
                 continue
             setters.append('%s=?' % name)
             value = getattr(obj, name)
@@ -324,9 +321,10 @@ class LiveStorage:
             values.append(self._converter.to_sql(obj_schema, name,
                 schema_item, value))
         obj.reset_changed_attributes()
-        sql = "UPDATE %s SET %s WHERE id=%s" % (obj_schema.table_name,
-                ', '.join(setters), obj.id)
-        self._execute(sql, values)
+        if values:
+            sql = "UPDATE %s SET %s WHERE id=%s" % (obj_schema.table_name,
+                    ', '.join(setters), obj.id)
+            self._execute(sql, values)
         self.remember_object(obj)
 
     def remove_obj(self, obj):
