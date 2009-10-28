@@ -159,6 +159,8 @@ class TabOrder(database.DDBObject):
         extras = []
         for view in tab_views:
             for obj in view:
+                if obj.id not in untracked_ids:
+                    continue
                 if isinstance(obj, FolderBase):
                     folders.setdefault(obj.id, [])
                     continue
