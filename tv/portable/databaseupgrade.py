@@ -2167,8 +2167,15 @@ def upgrade88(cursor):
     for row in list(cursor.execute(sql)):
         id, item_ids = row
         item_ids = eval(item_ids, {}, {})
+        this_folder_count = folder_count[id]
         for i, item_id in enumerate(item_ids):
-            count = folder_count[id][item_id]
+            try:
+                count = this_folder_count[item_id]
+            except KeyError:
+                # item_id is listed for this playlist folder, but none of it's
+                # child folders.  It's not clear how it happened, but forget
+                # about it.  (#12301)
+                continue
             cursor.execute("INSERT INTO playlist_folder_item_map "
                     "(id, item_id, playlist_id, position, count) "
                     "VALUES (?, ?, ?, ?, ?)",
