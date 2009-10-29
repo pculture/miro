@@ -2117,22 +2117,24 @@ def remove_column(cursor, table, *column_names):
     for sql in index_sql:
         cursor.execute(sql)
 
+def get_next_id(cursor):
+    """Calculate the next id to assign to new rows.
+
+    This will be 1 higher than the max id for all tables in the DB.
+    """
+    cursor.execute("SELECT name FROM sqlite_master "
+            "WHERE type='table' and name != 'dtv_variables'")
+    max_id = 0
+    for row in cursor.fetchall():
+        print 'checkin: ', row[0]
+        cursor.execute("SELECT MAX(id) from %s" % row[0])
+        max_id = max(max_id, cursor.fetchone()[0])
+    return max_id + 1
+
 def upgrade88(cursor):
     """Replace playlist.item_ids, with PlaylistItemMap objects."""
 
-    # get the last id in the database
-    max_id = 0
-    for table in ('channel_folder', 'playlist_folder', 'channel_guide',
-            'directory_feed_impl', 'directory_watch_feed_impl',
-            'remote_downloader', 'rss_feed_impl', 'feed',
-            'rss_multi_feed_impl', 'feed_impl', 'scraper_feed_impl',
-            'http_auth_password', 'search_downloads_feed_impl icon_cache',
-            'item', 'single_feed_impl', 'manual_feed_impl', 'taborder_order',
-            'theme_history', 'widgets_frontend_state', 'playlist'):
-        cursor.execute("SELECT MAX(id) from %s" % table)
-        max_id = max(max_id, cursor.fetchone()[0])
-
-    id_counter = itertools.count(max_id + 1)
+    id_counter = itertools.count(get_next_id(cursor))
 
     folder_count = {}
     for table_name in ('playlist_item_map', 'playlist_folder_item_map'):
@@ -2377,29 +2379,18 @@ def upgrade100(cursor):
     if count > 0:
         return
 
-    max_id = 0
-    for table in ('channel_folder', 'playlist_folder_item_map',
-                  'channel_guide', 'playlist_item_map', 'feed',
-                  'directory_feed_impl', 'remote_downloader',
-                  'directory_watch_feed_impl', 'rss_feed_impl',
-                  'rss_multi_feed_impl', 'scraper_feed_impl', 'feed_impl',
-                  'search_downloads_feed_impl', 'http_auth_password',
-                  'search_feed_impl', 'icon_cache', 'single_feed_impl',
-                  'item', 'taborder_order', 'manual_feed_impl', 'theme_history',
-                  'playlist', 'widgets_frontend_state', 'playlist_folder'):
-        cursor.execute("SELECT MAX(id) from %s" % table)
-        max_id = max(max_id, cursor.fetchone()[0])
+    next_id = get_next_id(cursor)
 
     cursor.execute("INSERT INTO channel_guide "
                    "(id, url, allowedURLs, updated_url, favicon, firstTime) VALUES (?, ?, ?, ?, ?, ?)",
-                   (max_id + 1, audio_guide_url, "[]", audio_guide_url, favicon_url, True))
+                   (next_id, audio_guide_url, "[]", audio_guide_url, favicon_url, True))
 
     # add the new Audio Guide to the site tablist
     cursor.execute('SELECT tab_ids FROM taborder_order WHERE type=?',('site',))
     row = cursor.fetchone()
     if row is not None:
         tab_ids = eval_container(row[0])
-        tab_ids.append(max_id + 1)
+        tab_ids.append(next_id)
         cursor.execute('UPDATE taborder_order SET tab_ids=? WHERE type=?',
                        (repr(tab_ids), 'site'))
     else:
