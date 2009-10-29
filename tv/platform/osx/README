@@ -18,9 +18,9 @@ https://develop.participatoryculture.org/trac/democracy/wiki/OSXBuildDocs
 Setup build environment
 =======================
 
-Run ``setup_sandbox.sh`` if you're using Mac OSX 10.4.
+Run ``setup_sandbox.sh`` if you're using Mac OSX 10.5 or 10.6.
 
-Run ``setup_sandbox_10.5.sh`` if you're using Mac OSX 10.5.
+Run ``setup_sandbox_10.4.sh`` if you're using Mac OSX 10.4.
 
 
 Build and run
