@@ -51,7 +51,7 @@ from distutils.ccompiler import new_compiler
 NSIS_PATH = 'C:\\Program Files\\NSIS\\makensis.exe'
 
 # This is the version of the binary kit to use
-BINARY_KIT_VERSION = "20091025"
+BINARY_KIT_VERSION = open("binary_kit_version").read().strip()
 
 # If you're using the prebuilt DTV Dependencies Binary Kit, just set
 # the path to it here, and ignore everything after this point. In
