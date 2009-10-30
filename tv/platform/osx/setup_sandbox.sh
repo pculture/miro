@@ -32,17 +32,19 @@
 
 echo "Checking binary kit."
 BKIT_VERSION=20091025
-BKIT="miro-binary-kit-osx-${BKIT_VERSION}.tar.gz"
-BKIT_URL="http://pculture.org/binarykits/${BKIT}"
+BKIT_NAME=miro-binary-kit-osx-$BKIT_VERSION
+BKIT=$BKIT_NAME.tar.gz
+BKIT_URL=http://pculture.org/binarykits/$BKIT
 
-if [ -d "miro-binary-kit-osx-${BKIT_VERSION}" ]
+if [ -d $BKIT_NAME ]
 then
-    echo "Binary kit ${BKIT} is already installed.";
+    echo "Binary kit $BKIT is already installed."
 else
-    echo "Installing ${BKIT}.";
-    curl "${BKIT_URL}" > "${BKIT}";
-    tar -xzvf "${BKIT}";
-    echo "Binary kit ${BKIT} is installed."
+    echo "Installing $BKIT."
+    curl -O "$BKIT_URL"
+    tar -xzvf "$BKIT"
+    rm $BKIT
+    echo "Binary kit ${BKIT_NAME} is installed."
 fi
 
 # =============================================================================
