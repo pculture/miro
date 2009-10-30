@@ -44,13 +44,17 @@ from glob import glob
 # Find the top of the source tree and set the search path accordingly
 # =============================================================================
 
-BINARY_KIT_VERSION = "20091025"
+BINARY_KIT_VERSION = open("binary_kit_version").read().strip()
+BKIT_DIR = os.path.join(os.getcwd(), "miro-binary-kit-osx-%s" % BINARY_KIT_VERSION)
+
+if not os.path.exists or not os.path.isdir(BKIT_DIR):
+    print "Binary kit %s is missing.  Run 'setup_binarykit.sh'." % BKIT_DIR
+    sys.exit()
 
 ROOT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
 ROOT_DIR = os.path.join(ROOT_DIR, '../..')
 ROOT_DIR = os.path.normpath(ROOT_DIR)
 
-BKIT_DIR = os.path.join(os.getcwd(), "miro-binary-kit-osx-%s" % BINARY_KIT_VERSION)
 PORTABLE_DIR = os.path.join(ROOT_DIR, 'portable')
 PLATFORM_DIR = os.path.join(ROOT_DIR, 'platform', 'osx')
 PLATFORM_PACKAGE_DIR = os.path.join(PLATFORM_DIR, 'plat')
