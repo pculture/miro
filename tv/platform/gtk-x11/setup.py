@@ -737,6 +737,8 @@ class install_data(distutils.command.install_data.install_data):
 
         for source in glob (os.path.join (locale_dir, "*.mo")):
             lang = os.path.basename(source)[:-3]
+            if 'LINGUAS' in os.environ and lang not in os.environ['LINGUAS']:
+                continue
             dest = '/usr/share/locale/%s/LC_MESSAGES/miro.mo' % lang
             if self.root:
                 dest = change_root(self.root, dest)
