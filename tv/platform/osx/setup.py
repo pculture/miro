@@ -455,6 +455,8 @@ class MiroBuild (py2app):
         self.copy_localization_files()
         if self.theme is not None:
             self.copy_theme_files()
+        if OS_VERSION >= 9 and not self.alias:
+            self.fix_install_names()
         
         self.clean_up_incomplete_lproj()
         self.clean_up_unwanted_data()
@@ -481,6 +483,15 @@ class MiroBuild (py2app):
         infoPlist['CFBundleLocalizations'] = self.get_localizations_list()
         
         self.plist = infoPlist
+
+    def fix_install_names(self):
+        py_install_name = os.path.join("@executable_path", "..", "Frameworks", "Python.framework", "Versions", PYTHON_VERSION, "Python")
+
+        boost_python_lib = os.path.join("Miro.app", "Contents", "Frameworks", os.path.basename(BOOST_PYTHON_LIB))
+        os.system('install_name_tool -change %s %s %s' % (PYTHON_LIB, py_install_name, boost_python_lib))
+
+        fasttypes_mod = os.path.join("Miro.app", "Contents", "Resources", "lib", "python%s" % PYTHON_VERSION, "lib-dynload", "miro", "fasttypes.so")
+        os.system('install_name_tool -change %s %s %s' % (PYTHON_LIB, py_install_name, fasttypes_mod))
 
     def fix_frameworks_alias(self):
         # Py2App seems to have a bug where alias builds would get 
