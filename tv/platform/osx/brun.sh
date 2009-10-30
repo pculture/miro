@@ -32,4 +32,10 @@
 # launch it, as opposed to the 'run.sh' script which only builds the alias
 # bundle.
 
-./build.sh && ./Miro.app/Contents/MacOS/Miro
+OS_VERSION=$(uname -r | cut -d . -f 1)
+
+if [ $OS_VERSION == "8" ]; then
+    ./build.sh && ./Miro.app/Contents/MacOS/Miro
+else
+    ./build.sh && arch -`arch` Miro.app/Contents/MacOS/Miro
+fi
