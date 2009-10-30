@@ -44,10 +44,13 @@ from glob import glob
 # Find the top of the source tree and set the search path accordingly
 # =============================================================================
 
+BINARY_KIT_VERSION = "20091025"
+
 ROOT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
 ROOT_DIR = os.path.join(ROOT_DIR, '../..')
 ROOT_DIR = os.path.normpath(ROOT_DIR)
 
+BKIT_DIR = os.path.join(os.getcwd(), "miro-binary-kit-osx-%s" % BINARY_KIT_VERSION)
 PORTABLE_DIR = os.path.join(ROOT_DIR, 'portable')
 PLATFORM_DIR = os.path.join(ROOT_DIR, 'platform', 'osx')
 PLATFORM_PACKAGE_DIR = os.path.join(PLATFORM_DIR, 'plat')
@@ -71,6 +74,17 @@ else:
         MACOSX_DEPLOYMENT_TARGET="10.5"
     elif OS_VERSION == 10:
         MACOSX_DEPLOYMENT_TARGET="10.6"
+
+# =============================================================================
+# Drop out if the current binary kit isn't downloaded.
+
+if not os.path.exists(BKIT_DIR):
+    print "Binary kit %s is not installed." % BKIT_DIR
+    if OS_VERSION < 9:
+        print "Run setup_sandbox_10.4.sh."
+    else:
+        print "Run setup_sandbox.sh."
+    sys.exit(1)
 
 # =============================================================================
 # Look for the Boost library in various common places.
@@ -147,7 +161,7 @@ def extract_binaries(source, target, force=True):
         print "    (all skipped, already there)"
     else:
         os.makedirs(target)
-        rootpath = os.path.join(os.path.dirname(ROOT_DIR), 'dtv-binary-kit-mac/%s' % source)
+        rootpath = os.path.join(BKIT_DIR, source)
         binaries = glob(os.path.join(rootpath, '*.tar.gz'))
         if len(binaries) == 0:
             print "    (all skipped, not found in binary kit)"

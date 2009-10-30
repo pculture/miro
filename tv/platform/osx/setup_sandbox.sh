@@ -30,6 +30,23 @@
 
 # =============================================================================
 
+echo "Checking binary kit."
+BKIT_VERSION=20091025
+BKIT="miro-binary-kit-osx-${BKIT_VERSION}.tar.gz"
+BKIT_URL="http://pculture.org/binarykits/${BKIT}"
+
+if [ -d "miro-binary-kit-osx-${BKIT_VERSION}" ]
+then
+    echo "Binary kit ${BKIT} is already installed.";
+else
+    echo "Installing ${BKIT}.";
+    curl "${BKIT_URL}" > "${BKIT}";
+    tar -xzvf "${BKIT}";
+    echo "Binary kit ${BKIT} is installed."
+fi
+
+# =============================================================================
+
 OS_VERSION=$(uname -r | cut -d . -f 1)
 
 if [ $OS_VERSION == "9" ]; then
@@ -48,7 +65,7 @@ fi
 echo "** Building Miro sandbox for Mac OS X $TARGET_OS_VERSION."
 
 ROOT_DIR=$(pushd ../../../ >/dev/null; pwd; popd >/dev/null)
-BKIT_DIR=$ROOT_DIR/dtv-binary-kit-mac/sandbox
+BKIT_DIR=$(pwd)/miro-binary-kit-osx-$BKIT_VERSION/sandbox
 SBOX_DIR=$ROOT_DIR/sandbox
 SITE_DIR=$SBOX_DIR/lib/python$PYTHON_VERSION/site-packages
 WORK_DIR=$SBOX_DIR/pkg
