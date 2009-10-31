@@ -841,7 +841,6 @@ ext_modules.append(mozprompt_ext)
 ext_modules.append(httpobserver_ext)
 ext_modules.append(windowcreator_ext)
 ext_modules.append(pluginsdir_ext)
-ext_modules.append(Extension("miro.sorts", [os.path.join(portable_dir, 'sorts.pyx')]))
 
 #### Run setup ####
 setup(name='miro',

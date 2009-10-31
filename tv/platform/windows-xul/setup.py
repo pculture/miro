@@ -167,9 +167,6 @@ sys.path.insert(0, LIBTORRENT_PATH)
 
 #### Extensions ####
 
-sorts_ext = Extension("miro.sorts", 
-        sources=[os.path.join(root_dir, 'portable', 'sorts.pyx')])
-
 pygtkhacks_ext = Extension("miro.frontends.widgets.gtk.pygtkhacks",
         sources=[
             os.path.join(portable_widgets_dir, 'gtk', 'pygtkhacks.pyx'),
@@ -222,7 +219,6 @@ os.environ['PATH'] = ';'.join([
 
 # Private extension modules to build.
 ext_modules = [
-    sorts_ext,
     pygtkhacks_ext,
     xulrunnerbrowser_ext,
 ]
