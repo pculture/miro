@@ -34,7 +34,8 @@
 # dependencies from prebuilt packages and use some existing system libraries.
 # =============================================================================
 
-BKIT_VERSION=20091025
+./setup_binarykit.sh
+BKIT_VERSION="$(cat binary_kit_version)"
 
 # SANDBOX_VERSION=20071205002
 
