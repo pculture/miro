@@ -33,13 +33,13 @@ updating at any given time.  Right now the limit is set to 3.
 """
 
 from miro import eventloop
-from miro import fasttypes
+from miro import datastructures
 
 MAX_UPDATES = 3
 
 class FeedUpdateQueue(object):
     def __init__(self):
-        self.update_queue = fasttypes.LinkedList()
+        self.update_queue = datastructures.Fifo()
         self.timeouts = {}
         self.callback_handles = {}
         self.currently_updating = set()
@@ -59,7 +59,7 @@ class FeedUpdateQueue(object):
 
     def do_update(self, feed, update_callback):
         del self.timeouts[feed.id]
-        self.update_queue.prepend((feed, update_callback))
+        self.update_queue.enqueue((feed, update_callback))
         self.run_update_queue()
 
     def update_finished(self, feed):
@@ -71,7 +71,7 @@ class FeedUpdateQueue(object):
     def run_update_queue(self):
         while (len(self.update_queue) > 0 and 
                 len(self.currently_updating) < MAX_UPDATES):
-            feed, update_callback = self.update_queue.pop()
+            feed, update_callback = self.update_queue.dequeue()
             if feed in self.currently_updating:
                 continue
             handle = feed.connect('update-finished', self.update_finished)

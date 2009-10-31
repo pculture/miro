@@ -50,7 +50,6 @@ import time
 from miro.schema import ObjectSchema, SchemaInt, SchemaFloat, SchemaSimpleItem
 from miro.schema import SchemaObject, SchemaBool, SchemaDateTime, SchemaTimeDelta
 from miro.schema import SchemaList, SchemaDict
-from fasttypes import LinkedList
 from types import NoneType
 from miro import storedatabase
 
@@ -366,7 +365,7 @@ class SchemaSimpleContainer(SchemaSimpleItem):
         super(SchemaSimpleContainer, self).validate(data)
         self.validateTypes(data, (dict, list, tuple))
         self.memory = set()
-        toValidate = LinkedList()
+        toValidate = []
         while data:
             if id(data) in self.memory:
                 return

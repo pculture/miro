@@ -26,34 +26,41 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+"""datastructures.py -- Datastructures used by Miro.  """
 
-# Includes all PyUnit unit tests
 
-# FIXME - this needs to be re-tooled to use new frontend or a testing
-# front end
-from miro.test.unicodetest import *
+class Fifo(object):
+    """FIFO queue.
 
-from miro.test.datastructures import *
-from miro.test.schematest import *
-from miro.test.storedatabasetest import *
-from miro.test.olddatabaseupgradetest import *
-from miro.test.databasesanitytest import *
-from miro.test.subscriptiontest import *
-from miro.test.schedulertest import *
-from miro.test.httpclienttest import *
-from miro.test.httpdownloadertest import *
-from miro.test.feedtest import *
-from miro.test.feedparsertest import *
-from miro.test.parseurltest import *
-from miro.test.utiltest import *
-from miro.test.playlisttest import *
-from miro.test.signalstest import *
-from miro.test.messagetest import *
-from miro.test.strippertest import *
-from miro.test.xhtmltest import *
-from miro.test.gtcachetest import *
-from miro.test.iconcachetest import *
-from miro.test.databasetest import *
-from miro.test.itemtest import *
+    Fast implentation of a first-in-first-out queue.
 
-import miro.test.bmachinetest
+    Based off the code from Jeremy Fincher
+    (http://code.activestate.com/recipes/68436/)
+    """
+
+    def __init__(self):
+        self.back = []
+        self.front = []
+        self.frontpos = 0
+
+    def enqueue(self, item):
+        self.back.append(item)
+
+    def dequeue(self):
+        try:
+            rv = self.front[self.frontpos]
+        except IndexError:
+            pass
+        else:
+            self.frontpos += 1
+            return rv
+        if self.back:
+            self.front = self.back
+            self.back = []
+            self.frontpos = 1
+            return self.front[0]
+        else:
+            raise ValueError("Queue Empty")
+
+    def __len__(self):
+        return len(self.front) - self.frontpos + len(self.back)

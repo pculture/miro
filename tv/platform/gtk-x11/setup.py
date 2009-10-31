@@ -361,14 +361,6 @@ fi
     f.close()
 
 
-#### The fasttypes extension ####
-fasttypes_ext = \
-    Extension("miro.fasttypes",
-        sources = [os.path.join(portable_dir, 'fasttypes.cpp')],
-        libraries = [BOOST_LIB],
-    )
-
-
 ##### The libtorrent extension ####
 def fetch_sources(portable_dir):
     sources = []
@@ -840,7 +832,6 @@ class clean(Command):
             shutil.rmtree('./dist/')
 
 ext_modules = []
-ext_modules.append(fasttypes_ext)
 ext_modules.append(xine_ext)
 ext_modules.append(xlib_ext)
 if libtorrent_ext:
