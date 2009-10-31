@@ -141,6 +141,29 @@ BOOST_FILESYSTEM_LIB=$(ls $SBOX_DIR/lib/libboost_filesystem*-$BOOST_VERSION.dyli
 
 install_name_tool -change $BOOST_SYSTEM_LIB_BASENAME $BOOST_SYSTEM_LIB $BOOST_FILESYSTEM_LIB
 
-# =============================================================================
+export BOOST_ROOT=$WORK_DIR/boost_$BOOST_VERSION_FULL/
+
+# Libtorrent ===================================================================
+
+cd $WORK_DIR
+
+USER_CONFIG=`find $BOOST_ROOT -name user-config.jam`
+echo "using python : $PYTHON_VERSION ;" >> $USER_CONFIG
+
+tar -xvf $BKIT_DIR/libtorrent-rasterbar-*
+cd libtorrent-rasterbar-*/bindings/python
+
+$SBOX_DIR/bin/bjam --prefix=$SBOX_DIR \
+    dht-support=on \
+    toolset=darwin \
+    macosx-version=$TARGET_OS_VERSION \
+    architecture=combined \
+    boost=source \
+    boost-link=static \
+    release
+
+cd ../..
+
+cp `find . -name "*.so"` $SITE_DIR
 
 echo "Done."

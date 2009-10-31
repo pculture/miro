@@ -314,7 +314,6 @@ class MiroBuild (py2app):
         self.distribution.ext_modules.append(self.get_growl_image_ext())
         self.distribution.ext_modules.append(self.get_shading_ext())
         self.distribution.ext_modules.append(self.get_fasttypes_ext())
-        self.distribution.ext_modules.append(self.get_libtorrent_ext())
 
         self.distribution.packages = [
             'miro',
@@ -387,50 +386,6 @@ class MiroBuild (py2app):
         return Extension("miro.fasttypes", sources=fasttypes_src, 
                                            include_dirs=fasttypes_inc_dirs, 
                                            extra_objects=fasttypes_extras)
-    
-    def get_libtorrent_ext(self):
-        def libtorrent_sources_iterator():
-            for root,dirs,files in os.walk(os.path.join(PORTABLE_DIR, 'libtorrent')):
-                if '.svn' in dirs:
-                    dirs.remove('.svn')
-                for file in files:
-                    if file.endswith('.cpp') or file.endswith('.c'):
-                        yield os.path.join(root,file)
-
-        libtorrent_src = list(libtorrent_sources_iterator())
-        if os.path.exists(os.path.join(PORTABLE_DIR, 'libtorrent/src/file_win.cpp')):
-            libtorrent_src.remove(os.path.join(PORTABLE_DIR, 'libtorrent/src/file_win.cpp'))
-        libtorrent_inc_dirs = [BOOST_INCLUDE_DIR,
-                               os.path.join(PORTABLE_DIR, 'libtorrent', 'include'),
-                               os.path.join(PORTABLE_DIR, 'libtorrent', 'include', 'libtorrent')]
-        libtorrent_lib_dirs = [BOOST_LIB_DIR]
-        libtorrent_libs = ['z', 
-                           'pthread', 
-                           'ssl']
-
-        libtorrent_extras = [PYTHON_LIB,
-                             BOOST_PYTHON_LIB,
-                             BOOST_FILESYSTEM_LIB,
-                             BOOST_DATETIME_LIB,
-                             BOOST_THREAD_LIB,
-                             BOOST_SYSTEM_LIB]
-
-        libtorrent_compil_args = ["-Wno-missing-braces",
-                                  "-D_FILE_OFFSET_BITS=64",
-                                  "-DHAVE___INCLUDE_LIBTORRENT_ASIO_HPP=1",
-                                  "-DHAVE___INCLUDE_LIBTORRENT_ASIO_SSL_STREAM_HPP=1",
-                                  "-DHAVE___INCLUDE_LIBTORRENT_ASIO_IP_TCP_HPP=1",
-                                  "-DHAVE_PTHREAD=1", 
-                                  "-DTORRENT_USE_OPENSSL=1", 
-                                  "-DHAVE_SSL=1",
-                                  "-DNDEBUG",
-                                  "-O2"]
-
-        return Extension("miro.libtorrent", sources=libtorrent_src, 
-                                       include_dirs=libtorrent_inc_dirs,
-                                       libraries=libtorrent_libs, 
-                                       extra_objects=libtorrent_extras,
-                                       extra_compile_args=libtorrent_compil_args)
     
     def fillTemplate(self, templatepath, outpath, **vars):
         s = open(templatepath, 'rt').read()

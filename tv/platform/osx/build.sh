@@ -33,8 +33,8 @@ BKIT_VERSION="$(cat binary_kit_version)"
 
 if [ ! -d "miro-binary-kit-osx-${BKIT_VERSION}" ]
 then
-    echo "Binary kit miro-binary-kit-osx-${BKIT_VERSION} is not installed.  Run setup_binarykit.sh"
-    exit
+    echo "Binary kit miro-binary-kit-osx-${BKIT_VERSION} is not installed.  Run setup_binarykit.sh then rebuild the sandbox."
+    exit 1
 fi
 
 if [ $OS_VERSION == "8" ]; then
