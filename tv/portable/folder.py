@@ -78,10 +78,6 @@ class ChannelFolder(FolderBase):
     def setup_new(self, title, section=u'video'):
         self.section = section
         FolderBase.setup_new(self, title)
-        self.setup_common()
-
-    def setup_restored(self):
-        self.setup_common()
 
     def remove(self, moveItemsTo=None):
         children = list(self.getChildrenView())
