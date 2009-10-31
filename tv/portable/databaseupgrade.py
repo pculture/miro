@@ -2126,7 +2126,6 @@ def get_next_id(cursor):
             "WHERE type='table' and name != 'dtv_variables'")
     max_id = 0
     for row in cursor.fetchall():
-        print 'checkin: ', row[0]
         cursor.execute("SELECT MAX(id) from %s" % row[0])
         max_id = max(max_id, cursor.fetchone()[0])
     return max_id + 1
