@@ -39,22 +39,6 @@ BKIT_VERSION="$(cat binary_kit_version)"
 
 # SANDBOX_VERSION=20071205002
 
-# =============================================================================
-
-echo "Checking binary kit."
-BKIT="miro-binary-kit-osx-${BKIT_VERSION}.tar.gz"
-BKIT_URL="http://pculture.org/binarykits/${BKIT}"
-
-if [ -d "miro-binary-kit-osx-${BKIT_VERSION}" ]
-then
-    echo "Binary kit ${BKIT} is already installed.";
-else
-    echo "Installing ${BKIT}.";
-    curl "${BKIT_URL}" > "${BKIT}";
-    tar -xzvf "${BKIT}";
-    echo "Binary kit ${BKIT} is installed."
-fi
-
 PKG_DIR=$(pwd)/miro-binary-kit-osx-$BKIT_VERSION/sandbox
 
 # =============================================================================
