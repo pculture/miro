@@ -459,7 +459,32 @@ $SANDBOX_DIR/bin/bjam  --prefix=$SANDBOX_DIR \
                        release \
                        install
 
-# =============================================================================
+export BOOST_ROOT=$WORK_DIR/boost_1_35_0/
+
+# Libtorrent ===================================================================
+
+cd $WORK_DIR
+
+USER_CONFIG=`find $BOOST_ROOT -name user-config.jam`
+echo "using python : $PYTHON_VERSION ;" >> $USER_CONFIG
+
+tar -xzvf $PKG_DIR/libtorrent-rasterbar-*
+cd libtorrent-rasterbar-*/bindings/python
+
+$SANDBOX_DIR/bin/bjam --prefix=$SANDBOX_DIR \
+    dht-support=on \
+    toolset=darwin \
+    macosx-version=10.4 \
+    architecture=combined \
+    boost=source \
+    boost-link=static \
+    release
+
+cd ../..
+
+# HARDCODED!
+SITE_DIR=/Library/Frameworks/Python.framework/Versions/2.4/lib/python2.4/site-packages/
+cp `find . -name "*.so"` $SITE_DIR
 
 echo "=== FINISHED ==================================================================" >>$OUT
 #echo "Sandbox setup complete, logging signature."
