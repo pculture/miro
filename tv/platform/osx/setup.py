@@ -447,6 +447,9 @@ class MiroBuild (py2app):
         fasttypes_mod = os.path.join("Miro.app", "Contents", "Resources", "lib", "python%s" % PYTHON_VERSION, "lib-dynload", "miro", "fasttypes.so")
         os.system('install_name_tool -change %s %s %s' % (PYTHON_LIB, py_install_name, fasttypes_mod))
 
+        libtorrent_so = os.path.join("Miro.app", "Contents", "Resources", "lib", "python%s" % PYTHON_VERSION, "lib-dynload", "libtorrent.so")
+        os.system('install_name_tool -change %s %s %s' % (PYTHON_LIB, py_install_name, libtorrent_so))
+
     def fix_frameworks_alias(self):
         # Py2App seems to have a bug where alias builds would get 
         # incorrect symlinks to frameworks, so create them manually. 
