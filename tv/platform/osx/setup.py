@@ -72,8 +72,9 @@ else:
     SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
     PYTHON_ROOT = os.path.join("/", "System", "Library", "Frameworks", "Python.framework", "Versions", PYTHON_VERSION)
     PYTHON_LIB = os.path.join(PYTHON_ROOT, "Python")
+    PYTHON_SITE_DIR = os.path.join(SANDBOX_DIR, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages')
     BOOST_LIB_EXT = 'dylib'
-    sys.path.insert(0, os.path.join(SANDBOX_DIR, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages'))
+    sys.path.insert(0, PYTHON_SITE_DIR)
     if OS_VERSION == 9:
         MACOSX_DEPLOYMENT_TARGET="10.5"
     elif OS_VERSION == 10:
@@ -130,10 +131,6 @@ else:
 # =============================================================================
 
 BOOST_PYTHON_LIB = os.path.join(BOOST_LIB_DIR, "libboost_python-%s.%s" % (BOOST_VERSION, BOOST_LIB_EXT))
-BOOST_FILESYSTEM_LIB = os.path.join(BOOST_LIB_DIR, 'libboost_filesystem-%s.%s' % (BOOST_VERSION, BOOST_LIB_EXT))
-BOOST_DATETIME_LIB = os.path.join(BOOST_LIB_DIR, 'libboost_date_time-%s.%s' % (BOOST_VERSION, BOOST_LIB_EXT))
-BOOST_THREAD_LIB = os.path.join(BOOST_LIB_DIR, 'libboost_thread-%s.%s' % (BOOST_VERSION, BOOST_LIB_EXT))
-BOOST_SYSTEM_LIB = os.path.join(BOOST_LIB_DIR, 'libboost_system-%s.%s' % (BOOST_VERSION, BOOST_LIB_EXT))
 
 # =============================================================================
 # Only now may we import things from the local sandbox and our own tree
@@ -398,6 +395,7 @@ class MiroBuild (py2app):
         print "Building %s v%s (%s)" % (self.config.get('longAppName'), self.config.get('appVersion'), self.config.get('appRevision'))
         
         self.setup_info_plist()
+        self.copy_libtorrent_module()
 
         py2app.run(self)
         
@@ -438,6 +436,15 @@ class MiroBuild (py2app):
         
         self.plist = infoPlist
 
+    def copy_libtorrent_module(self):
+        print 'Copying the libtorrent module to application bundle'
+        src = os.path.join(PYTHON_SITE_DIR, 'libtorrent.so')
+        dst_root = os.path.join('build', 'bdist.macosx-%s-universal' % MACOSX_DEPLOYMENT_TARGET, 'lib.macosx-%s-universal-%s' % (MACOSX_DEPLOYMENT_TARGET, PYTHON_VERSION), 'miro')
+        if not os.path.exists(dst_root):
+            os.makedirs(dst_root)
+        dst = os.path.join(dst_root, 'libtorrent.so')
+        shutil.copy(src, dst)
+
     def fix_install_names(self):
         py_install_name = os.path.join("@executable_path", "..", "Frameworks", "Python.framework", "Versions", PYTHON_VERSION, "Python")
 
@@ -447,7 +454,7 @@ class MiroBuild (py2app):
         fasttypes_mod = os.path.join("Miro.app", "Contents", "Resources", "lib", "python%s" % PYTHON_VERSION, "lib-dynload", "miro", "fasttypes.so")
         os.system('install_name_tool -change %s %s %s' % (PYTHON_LIB, py_install_name, fasttypes_mod))
 
-        libtorrent_so = os.path.join("Miro.app", "Contents", "Resources", "lib", "python%s" % PYTHON_VERSION, "lib-dynload", "libtorrent.so")
+        libtorrent_so = os.path.join("Miro.app", "Contents", "Resources", "lib", "python%s" % PYTHON_VERSION, "lib-dynload", "miro", "libtorrent.so")
         os.system('install_name_tool -change %s %s %s' % (PYTHON_LIB, py_install_name, libtorrent_so))
 
     def fix_frameworks_alias(self):
