@@ -116,11 +116,6 @@ XPCOM_LIB = None
 GTKMOZEMBED_LIB = None
 XULRUNNER_19 = None
 
-# The name of the boost python library.  Used for building extensions.
-# If this is set to None, setup.py will divine the right lib to use.
-# It should probably be either "boost_python" or "boost_python-mt".
-BOOST_LIB = None
-
 
 ###############################################################################
 ## End of configuration. No user-serviceable parts inside                    ##
@@ -294,26 +289,6 @@ def parse_pkg_config(command, components, options_dict = None):
 
     return options_dict
 
-all_libs = []
-if os.path.exists(os.path.join(sysconfig.PREFIX, "lib")):
-    all_libs.extend(os.listdir(os.path.join(sysconfig.PREFIX, "lib")))
-if os.path.exists(os.path.join(sysconfig.PREFIX, "lib64")):
-    all_libs.extend(os.listdir(os.path.join(sysconfig.PREFIX, "lib64")))
-all_libs = [mem for mem in all_libs if mem.startswith("libboost")]
-
-def mt_or_not(s, all_libs=all_libs):
-    for mem in all_libs:
-        if mem.startswith("lib%s-mt" % s):
-            print "Using %s-mt" % s
-            return "%s-mt" % s
-    print "using %s" % s
-    return s
-
-if BOOST_LIB is None:
-    BOOST_LIB = mt_or_not("boost_python")
-else:
-    print "Using %s" % BOOST_LIB
-
 def compile_xine_extractor():
     rv = os.system("gcc %s -o %s `pkg-config --libs --cflags gdk-pixbuf-2.0 glib-2.0 libxine`" %
                    (os.path.join(platform_dir, "xine/xine_extractor.c"), os.path.join(platform_dir, "xine/xine_extractor")))
@@ -359,75 +334,6 @@ else
 fi
 """ % { "runtimelib": runtimelib})
     f.close()
-
-
-##### The libtorrent extension ####
-def fetch_sources(portable_dir):
-    sources = []
-    for root, dirs, files in os.walk(os.path.join(portable_dir, 'libtorrent')):
-        if '.svn' in dirs:
-            dirs.remove('.svn')
-        for file in files:
-            if file.endswith('.cpp') or file.endswith('.c'):
-                sources.append(os.path.join(root, file))
-    return sources
-
-def get_libtorrent_extension(portable_dir):
-    libtorrent_installed = False
-    try:
-        ret = parse_pkg_config("pkg-config", "libtorrent-rasterbar")
-        import libtorrent
-        libtorrent_installed = True
-        print "libtorrent-rasterbar (0.13 or later) and python bindings are installed--using system version."
-        return None
-    except RuntimeError:
-        print "libtorrent-rasterbar not installed on this system."
-    except ImportError:
-        print "python bindings for libtorrent-rasterbar not installed on this system"
-
-    include_dirs = [os.path.join(portable_dir, x) for x in
-                            ['libtorrent/include', 'libtorrent/include/libtorrent']]
-
-    extra_compile_args = ["-Wno-missing-braces",
-                          "-D_FILE_OFFSET_BITS=64",
-                          "-DHAVE___INCLUDE_LIBTORRENT_ASIO_HPP=1",
-                          "-DHAVE___INCLUDE_LIBTORRENT_ASIO_SSL_STREAM_HPP=1",
-                          "-DHAVE___INCLUDE_LIBTORRENT_ASIO_IP_TCP_HPP=1",
-                          "-DHAVE_PTHREAD=1", "-DTORRENT_USE_OPENSSL=1", "-DHAVE_SSL=1",
-                          "-DNDEBUG=1", "-O2"]
-
-    if is_x64():
-        extra_compile_args.append("-DAMD64")
-
-    libraries = ['z', 'pthread', 'ssl']
-
-    # get mt or non-mt versions of the boost libraries
-    libraries += [mt_or_not("boost_python"),
-                  mt_or_not("boost_filesystem"),
-                  mt_or_not("boost_date_time"),
-                  mt_or_not("boost_thread")]
-
-    config_vars = sysconfig.get_config_vars()
-    if "CFLAGS" in config_vars and "-Wstrict-prototypes" in config_vars["CFLAGS"]:
-        config_vars["CFLAGS"] = config_vars["CFLAGS"].replace("-Wstrict-prototypes", " ")
-
-    if "OPT" in config_vars and "-Wstrict-prototypes" in config_vars["OPT"]:
-        config_vars["OPT"] = config_vars["OPT"].replace("-Wstrict-prototypes", " ")
-
-    sources = fetch_sources(portable_dir)
-
-    # versions of libtorrent prior to 0.14 have this file which we don't want to
-    # compile or use
-    if os.path.exists(os.path.join(portable_dir, "libtorrent", "src", "file_win.cpp")):
-        sources.remove(os.path.join(portable_dir, "libtorrent", "src", "file_win.cpp"))
-
-    return Extension("miro.libtorrent",
-                     include_dirs=include_dirs,
-                     libraries=libraries,
-                     extra_compile_args=extra_compile_args,
-                     sources=sources)
-
-libtorrent_ext = get_libtorrent_extension(portable_dir)
 
 
 #### MozillaBrowser Extension ####
@@ -834,8 +740,6 @@ class clean(Command):
 ext_modules = []
 ext_modules.append(xine_ext)
 ext_modules.append(xlib_ext)
-if libtorrent_ext:
-    ext_modules.append(libtorrent_ext)
 ext_modules.append(pygtkhacks_ext)
 ext_modules.append(mozprompt_ext)
 ext_modules.append(httpobserver_ext)

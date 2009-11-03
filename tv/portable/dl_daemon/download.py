@@ -34,10 +34,7 @@ import sys
 
 from miro.gtcache import gettext as _
 
-try:
-    import miro.libtorrent as lt
-except ImportError:
-    import libtorrent as lt
+import libtorrent as lt
 from miro.clock import clock
 from miro.download_utils import cleanFilename, nextFreeFilename, checkFilenameExtension, filterDirectoryName
 from miro.download_utils import filenameFromURL, getFileURLPath
