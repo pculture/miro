@@ -66,7 +66,9 @@ PYTHON_VERSION = sys.version[0:3]
 
 if OS_VERSION < 9:
     SANDBOX_DIR = "/usr/local"
-    PYTHON_LIB = os.path.join("/", "Library", "Frameworks", "Python.framework", "Versions", "Current", "Python")
+    PYTHON_ROOT = os.path.join("/", "Library", "Frameworks", "Python.framework", "Versions", "Current")
+    PYTHON_LIB = os.path.join(PYTHON_ROOT, "Python")
+    PYTHON_SITE_DIR = os.path.join(PYTHON_ROOT, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages')
     BOOST_LIB_EXT = 'a'
 else:
     SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..')))
