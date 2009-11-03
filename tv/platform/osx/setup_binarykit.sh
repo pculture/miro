@@ -35,11 +35,12 @@ BINARYKITURL="http://pculture.org/binarykits/${BINARYKIT}"
 
 if [ -d "miro-binary-kit-osx-${VERSION}" ]
 then
-    echo "Binary kit ${BINARYKIT} is already installed.";
+    echo "Binary kit ${BINARYKIT} is already installed."
 else
     echo "Installing ${BINARYKIT}."
-    curl "${BINARYKITURL}" > "${BINARYKIT}";
-    tar -xzvf "${BINARYKIT}";
+    curl "${BINARYKITURL}" > "${BINARYKIT}"
+    tar -xzvf "${BINARYKIT}"
+    rm "${BINARYKIT}"
     echo "Binary kit ${BINARYKIT} is installed."
 fi
 
