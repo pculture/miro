@@ -39,6 +39,7 @@ import datetime
 import subprocess
 
 from glob import glob
+from distutils.util import get_platform
 
 # =============================================================================
 # Find the top of the source tree and set the search path accordingly
@@ -439,7 +440,8 @@ class MiroBuild (py2app):
     def copy_libtorrent_module(self):
         print 'Copying the libtorrent module to application bundle'
         src = os.path.join(PYTHON_SITE_DIR, 'libtorrent.so')
-        dst_root = os.path.join('build', 'bdist.macosx-%s-universal' % MACOSX_DEPLOYMENT_TARGET, 'lib.macosx-%s-universal-%s' % (MACOSX_DEPLOYMENT_TARGET, PYTHON_VERSION), 'miro')
+        plat = get_platform()
+        dst_root = os.path.join('build', 'bdist.%s' % plat , 'lib.%s-%s' % (plat, PYTHON_VERSION))
         if not os.path.exists(dst_root):
             os.makedirs(dst_root)
         dst = os.path.join(dst_root, 'libtorrent.so')
@@ -454,7 +456,7 @@ class MiroBuild (py2app):
         fasttypes_mod = os.path.join("Miro.app", "Contents", "Resources", "lib", "python%s" % PYTHON_VERSION, "lib-dynload", "miro", "fasttypes.so")
         os.system('install_name_tool -change %s %s %s' % (PYTHON_LIB, py_install_name, fasttypes_mod))
 
-        libtorrent_so = os.path.join("Miro.app", "Contents", "Resources", "lib", "python%s" % PYTHON_VERSION, "lib-dynload", "miro", "libtorrent.so")
+        libtorrent_so = os.path.join("Miro.app", "Contents", "Resources", "lib", "python%s" % PYTHON_VERSION, "lib-dynload", "libtorrent.so")
         os.system('install_name_tool -change %s %s %s' % (PYTHON_LIB, py_install_name, libtorrent_so))
 
     def fix_frameworks_alias(self):
