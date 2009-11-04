@@ -279,7 +279,7 @@ cd $WORK_DIR
 echo ">> Unpacking archive..."
 #tar -xzf $PKG_DIR/pysqlite-2.4.0.tar.gz 1>>$OUT 2>>$OUT
 #cd $WORK_DIR/pysqlite-2.4.0
-unzip $PKG_DIR/pysqlite-2.2.2-py2.4-macosx10.4.zip 1>>$OUT 2>>$OUT
+unzip -o $PKG_DIR/pysqlite-2.2.2-py2.4-macosx10.4.zip 1>>$OUT 2>>$OUT
 
 #
 #echo ">> Writing custom setup.cfg..."
