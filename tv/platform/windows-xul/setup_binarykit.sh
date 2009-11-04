@@ -38,8 +38,9 @@ then
     echo "Binary kit ${BINARYKIT} is already installed.";
 else
     echo "Installing ${BINARYKIT}."
-    wget "${BINARYKITURL}";
-    tar -xzvf "${BINARYKIT}";
+    wget "${BINARYKITURL}"
+    tar -xzvf "${BINARYKIT}"
     echo "Binary kit ${BINARYKIT} is installed."
+    rm -rf ${BINARYKIT}
 fi
 
