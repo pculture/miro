@@ -2117,16 +2117,20 @@ def remove_column(cursor, table, *column_names):
     for sql in index_sql:
         cursor.execute(sql)
 
+def get_object_tables(cursor):
+    """Get tables that store DDBObject subclasses."""
+    cursor.execute("SELECT name FROM sqlite_master "
+            "WHERE type='table' and name != 'dtv_variables'")
+    return [row[0] for row in cursor]
+
 def get_next_id(cursor):
     """Calculate the next id to assign to new rows.
 
     This will be 1 higher than the max id for all tables in the DB.
     """
-    cursor.execute("SELECT name FROM sqlite_master "
-            "WHERE type='table' and name != 'dtv_variables'")
     max_id = 0
-    for row in cursor.fetchall():
-        cursor.execute("SELECT MAX(id) from %s" % row[0])
+    for table in get_object_tables(cursor):
+        cursor.execute("SELECT MAX(id) from %s" % table)
         max_id = max(max_id, cursor.fetchone()[0])
     return max_id + 1
 
@@ -2495,3 +2499,60 @@ def upgrade105(cursor):
                 "SET status=?, metainfo=?, fast_resume_data=?",
                 (new_status, metainfo_value, fast_resume_data_value))
 
+
+def upgrade106(cursor):
+    tables = get_object_tables(cursor)
+    # figure out which ids, if any are duplicated
+    id_union = ' UNION ALL '.join(['SELECT id FROM %s' % t for t in tables])
+    cursor.execute("SELECT count(*) as id_count, id FROM (%s) "
+            "GROUP BY id HAVING id_count > 1" % id_union)
+    duplicate_ids = set([r[1] for r in cursor])
+    if len(duplicate_ids) == 0:
+        return
+
+    id_counter = itertools.count(get_next_id(cursor))
+
+    def update_value(table, column, old_value, new_value):
+        cursor.execute("UPDATE %s SET %s=%s WHERE %s=%s" % (table, column,
+            new_value, column, old_value))
+
+    for table in tables:
+        if table == 'feed':
+            # let feed objects keep their id, it's fairly annoying to have to
+            # update the ufeed atribute for all the FeedImpl subclasses.
+            # The id won't be a duplicate anymore once we update the other
+            # tables
+            continue
+        cursor.execute("SELECT id FROM %s" % table)
+        for row in cursor.fetchall():
+            id = row[0]
+            if id in duplicate_ids:
+                new_id = id_counter.next()
+                # assign a new id to the object
+                update_value(table, 'id', id, new_id)
+                # fix foreign keys
+                if table == 'icon_cache':
+                    update_value('item', 'icon_cache_id', id, new_id)
+                    update_value('feed', 'icon_cache_id', id, new_id)
+                    update_value('channel_guide', 'icon_cache_id', id, new_id)
+                elif table.endswith('feed_impl'):
+                    update_value('feed', 'feed_impl_id', id, new_id)
+                elif table == 'channel_folder':
+                    update_value('feed', 'folder_id', id, new_id)
+                elif table == 'remote_downloader':
+                    update_value('item', 'downloader_id', id, new_id)
+                elif table == 'item_id':
+                    update_value('item', 'parent_id', id, new_id)
+                    update_value('downloader', 'main_item_id', id, new_id)
+                    update_value('playlist_item_map', 'item_id', id, new_id)
+                    update_value('playlist_folder_item_map', 'item_id', id, new_id)
+                elif table == 'playlist_folder':
+                    update_value('playlist', 'folder_id', id, new_id)
+                elif table == 'playlist':
+                    update_value('playlist_item_map', 'playlist_id', id, new_id)
+                    update_value('playlist_folder_item_map', 'playlist_id', id, new_id)
+                # note we don't handle TabOrder.tab_ids here.  That's because
+                # it's a list of ids, so it's hard to fix using SQL.  Also,
+                # the TabOrder code is able to recover from missing/extra ids
+                # in its list.  The only bad thing that will happen is the
+                # user's tab order will be changed.
