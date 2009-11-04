@@ -480,10 +480,10 @@ $SANDBOX_DIR/bin/bjam --prefix=$SANDBOX_DIR \
     boost-link=static \
     release
 
-cd ../..
 
 # HARDCODED!
 SITE_DIR=/Library/Frameworks/Python.framework/Versions/2.4/lib/python2.4/site-packages/
+SDK_DIR=/Developer/SDKs/MacOSX10.4u.sdk
 
 # Boost does not know how to correctly build a loadable module under OS X, it
 # uses the -dynamiclib parameter when linking the module instead of -bundle, so
@@ -499,8 +499,6 @@ BOOST_SYSTEM_ARCHIVE=$(find $BOOST_ROOT -name libboost_system-*.a -print)
 BOOST_FILESYSTEM_ARCHIVE=$(find $BOOST_ROOT -name libboost_filesystem-*.a -print)
 
 g++ -bundle \
-    -Wl,-single_module \
-    -Wl,-dead_strip \
     -L"$PYTHON_ROOT/lib" \
     -L"$PYTHON_ROOT/lib/python$PYTHON_VERSION/config" \
     -o $SITE_DIR/libtorrent.so \
