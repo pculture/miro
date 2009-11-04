@@ -484,7 +484,40 @@ cd ../..
 
 # HARDCODED!
 SITE_DIR=/Library/Frameworks/Python.framework/Versions/2.4/lib/python2.4/site-packages/
-cp `find . -name "*.so"` $SITE_DIR
+
+# Boost does not know how to correctly build a loadable module under OS X, it
+# uses the -dynamiclib parameter when linking the module instead of -bundle, so
+# we need to relink here.
+
+echo "** Relinking the libtorrent module using the correct set of parameters"
+
+LT_PYTHON_MOD_OBJS=$(find bin -name "*.o" -print)
+LT_ARCHIVE=$(find ../../bin -name libtorrent.a -print)
+BOOST_PYTHON_ARCHIVE=$(find $BOOST_ROOT -name libboost_python-*.a -print)
+BOOST_THREAD_ARCHIVE=$(find $BOOST_ROOT -name libboost_thread-*.a -print)
+BOOST_SYSTEM_ARCHIVE=$(find $BOOST_ROOT -name libboost_system-*.a -print)
+BOOST_FILESYSTEM_ARCHIVE=$(find $BOOST_ROOT -name libboost_filesystem-*.a -print)
+
+g++ -bundle \
+    -Wl,-single_module \
+    -Wl,-dead_strip \
+    -L"$PYTHON_ROOT/lib" \
+    -L"$PYTHON_ROOT/lib/python$PYTHON_VERSION/config" \
+    -o $SITE_DIR/libtorrent.so \
+    -lpython$PYTHON_VERSION \
+    -lssl \
+    -lcrypto \
+    -headerpad_max_install_names \
+    -no_dead_strip_inits_and_terms \
+    -isysroot $SDK_DIR \
+    -arch i386 \
+    -arch ppc \
+    $BOOST_PYTHON_ARCHIVE \
+    $BOOST_THREAD_ARCHIVE \
+    $BOOST_SYSTEM_ARCHIVE \
+    $BOOST_FILESYSTEM_ARCHIVE \
+    $LT_ARCHIVE \
+    $LT_PYTHON_MOD_OBJS
 
 echo "=== FINISHED ==================================================================" >>$OUT
 #echo "Sandbox setup complete, logging signature."
