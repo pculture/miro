@@ -20,7 +20,6 @@ tv/platform/windows-xul/plat/frontends/widgets/XULRunnerBrowser/xulrunnerbrowser
 tv/platform/osx/Miro.app
 tv/platform/osx/build
 tv/platform/osx/miro-binary-kit-osx-*
-tv/portable/*.c
 tv/portable/frontends/widgets/gtk/pygtkhacks.c
 
 *pyc

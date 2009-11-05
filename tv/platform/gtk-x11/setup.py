@@ -478,6 +478,9 @@ pygtkhacks_ext = \
             'pygobject-2.0 gtk+-2.0 glib-2.0 gthread-2.0')
     )
 
+fasttypes_ext = Extension("miro.fasttypes", [
+    os.path.join(portable_dir, 'fasttypes.c')])
+
 mozprompt_ext = \
     Extension("miro.plat.frontends.widgets.mozprompt",
         [
@@ -754,6 +757,7 @@ ext_modules = []
 ext_modules.append(xine_ext)
 ext_modules.append(xlib_ext)
 ext_modules.append(pygtkhacks_ext)
+ext_modules.append(fasttypes_ext)
 ext_modules.append(mozprompt_ext)
 ext_modules.append(httpobserver_ext)
 ext_modules.append(windowcreator_ext)
