@@ -289,6 +289,7 @@ class RemoteDownloader(DDBObject):
                 # data
                 print "WARNING exception when comparing status: %s" % e
 
+            old_state = self.state
             wasFinished = self.isFinished()
             old_filename = self.get_filename()
             self.before_changing_status()
@@ -320,7 +321,10 @@ class RemoteDownloader(DDBObject):
 
             self.signal_change(needsSignalItem=needsSignalItem,
                     needsSave=False)
-            self._save_later()
+            if self.state == old_state:
+                self._save_later()
+            else:
+                self._save_now()
             if finished:
                 for item in self.itemList:
                     item.on_download_finished()
