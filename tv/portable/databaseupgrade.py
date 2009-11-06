@@ -2496,8 +2496,9 @@ def upgrade105(cursor):
         else:
             fast_resume_data_value = None
         cursor.execute("UPDATE remote_downloader "
-                "SET status=?, metainfo=?, fast_resume_data=?",
-                (new_status, metainfo_value, fast_resume_data_value))
+                "SET status=?, metainfo=?, fast_resume_data=? "
+                "WHERE id=?",
+                (new_status, metainfo_value, fast_resume_data_value, id))
 
 
 def upgrade106(cursor):
