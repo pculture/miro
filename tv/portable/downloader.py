@@ -610,7 +610,10 @@ class RemoteDownloader(DDBObject):
         self._recalc_state()
 
     def _recalc_state(self):
-        self.state = self.status.get('state', u'downloading')
+        new_state = self.status.get('state', u'downloading')
+        # avoid altering changed_attributes if we don't need to
+        if new_state != self.state:
+            self.state = new_state
 
     def getUploadRatio(self):
         size = self.get_current_size()
