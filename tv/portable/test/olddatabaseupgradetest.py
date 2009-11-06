@@ -189,3 +189,20 @@ class NewDatabaseUpgradeTest(DatabaseUpgradeTest):
     def test_12305(self):
         # if #12305 is present, upgrading the db will throw an exception
         self.upgrade_db('olddatabase.bug.12305')
+
+    def test_upgrade_106(self):
+        # test that upgrade 106 removes duplicate ids
+        self.upgrade_db('database.duplicate-id-test')
+        self.cursor.execute("SELECT name FROM sqlite_master "
+                "WHERE type='table' and name != 'dtv_variables'")
+        id_map = {}
+        for row in self.cursor.fetchall():
+            table = row[0]
+            self.cursor.execute("SELECT id from %s" % table)
+            for row in self.cursor:
+                id = row[0]
+                if id not in id_map:
+                    id_map[id] = table
+                else:
+                    raise AssertionError("id %s in %s and %s" % (id,
+                        id_map[id], table))

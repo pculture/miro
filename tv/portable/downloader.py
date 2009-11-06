@@ -319,7 +319,14 @@ class RemoteDownloader(DDBObject):
 
             self.signal_change(needsSignalItem=needsSignalItem,
                     needsSave=False)
-            self._save_later()
+            if self.changed_attributes == set(('status',)):
+                # if we just changed status, then we can wait a while to store
+                # things to disk.  Since we go through update_status() often,
+                # this results in a fairly large performance gain and
+                # alleviates #12101
+                self._save_later()
+            else:
+                self._save_now()
             if finished:
                 for item in self.itemList:
                     item.on_download_finished()
