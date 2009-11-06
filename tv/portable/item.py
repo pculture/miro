@@ -1587,7 +1587,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         FileItems that duplicate existing Items.  See #12253 for details.
         """
         view = Item.make_view('is_file_item AND filename=? AND id !=?', 
-                (self.filename, self.id))
+                (filenameToUnicode(self.filename), self.id))
         for dup in view:
             dup.remove()
 
