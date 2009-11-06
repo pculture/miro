@@ -288,7 +288,6 @@ class RemoteDownloader(DDBObject):
                 # data
                 logging.exception("RemoteDownloader.update_status: exception when comparing status")
 
-            old_state = self.state
             wasFinished = self.isFinished()
             old_filename = self.get_filename()
             self.before_changing_status()
@@ -320,7 +319,11 @@ class RemoteDownloader(DDBObject):
 
             self.signal_change(needsSignalItem=needsSignalItem,
                     needsSave=False)
-            if self.state == old_state:
+            if self.changed_attributes == set(('status',)):
+                # if we just changed status, then we can wait a while to store
+                # things to disk.  Since we go through update_status() often,
+                # this results in a fairly large performance gain and
+                # alleviates #12101
                 self._save_later()
             else:
                 self._save_now()

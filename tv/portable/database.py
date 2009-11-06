@@ -269,8 +269,14 @@ class AttributeUpdateTracker(object):
                 raise
 
     def __set__(self, instance, value):
-        instance.__dict__[self.name] = value
-        instance.changed_attributes.add(self.name)
+        name = self.name
+        try:
+            if value == getattr(instance, name):
+                return
+        except AttributeError:
+            pass # attr hasn't been set yet, continue on
+        instance.__dict__[name] = value
+        instance.changed_attributes.add(name)
 
 class DDBObject(signals.SignalEmitter):
     """Dynamic Database object
