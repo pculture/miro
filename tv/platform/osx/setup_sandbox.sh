@@ -30,6 +30,11 @@
 
 # =============================================================================
 
+./setup_binarykit.sh
+BKIT_VERSION="$(cat binary_kit_version)"
+
+# =============================================================================
+
 OS_VERSION=$(uname -r | cut -d . -f 1)
 
 if [ $OS_VERSION == "9" ]; then
@@ -48,7 +53,7 @@ fi
 echo "** Building Miro sandbox for Mac OS X $TARGET_OS_VERSION."
 
 ROOT_DIR=$(pushd ../../../ >/dev/null; pwd; popd >/dev/null)
-BKIT_DIR=$ROOT_DIR/dtv-binary-kit-mac/sandbox
+BKIT_DIR=$(pwd)/miro-binary-kit-osx-$BKIT_VERSION/sandbox
 SBOX_DIR=$ROOT_DIR/sandbox
 SITE_DIR=$SBOX_DIR/lib/python$PYTHON_VERSION/site-packages
 WORK_DIR=$SBOX_DIR/pkg
@@ -62,7 +67,8 @@ mkdir -p $SITE_DIR
 export VERSIONER_PYTHON_VERSION=$PYTHON_VERSION
 export VERSIONER_PYTHON_PREFER_32_BIT=yes
 
-PYTHON=/System/Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION/bin/python
+PYTHON_ROOT=/System/Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION
+PYTHON=$PYTHON_ROOT/bin/python
 
 echo "** Using Python $PYTHON_VERSION"
 
@@ -136,6 +142,59 @@ BOOST_FILESYSTEM_LIB=$(ls $SBOX_DIR/lib/libboost_filesystem*-$BOOST_VERSION.dyli
 
 install_name_tool -change $BOOST_SYSTEM_LIB_BASENAME $BOOST_SYSTEM_LIB $BOOST_FILESYSTEM_LIB
 
-# =============================================================================
+export BOOST_ROOT=$WORK_DIR/boost_$BOOST_VERSION_FULL/
+
+# Libtorrent ===================================================================
+
+cd $WORK_DIR
+
+USER_CONFIG=`find $BOOST_ROOT -name user-config.jam`
+echo "using python : $PYTHON_VERSION ;" >> $USER_CONFIG
+
+tar -xvf $BKIT_DIR/libtorrent-rasterbar-*
+cd libtorrent-rasterbar-*/bindings/python
+
+$SBOX_DIR/bin/bjam --prefix=$SBOX_DIR \
+    dht-support=on \
+    toolset=darwin \
+    macosx-version=$TARGET_OS_VERSION \
+    architecture=combined \
+    boost=source \
+    boost-link=static \
+    release
+
+# Boost does not know how to correctly build a loadable module under OS X, it
+# uses the -dynamiclib parameter when linking the module instead of -bundle, so
+# we need to relink here.
+
+echo "** Relinking the libtorrent module using the correct set of parameters"
+
+LT_PYTHON_MOD_OBJS=$(find bin -name "*.o" -print)
+LT_ARCHIVE=$(find ../../bin -name libtorrent.a -print)
+BOOST_PYTHON_ARCHIVE=$(find $BOOST_ROOT -name libboost_python-*.a -print)
+BOOST_THREAD_ARCHIVE=$(find $BOOST_ROOT -name libboost_thread-*.a -print)
+BOOST_SYSTEM_ARCHIVE=$(find $BOOST_ROOT -name libboost_system-*.a -print)
+BOOST_FILESYSTEM_ARCHIVE=$(find $BOOST_ROOT -name libboost_filesystem-*.a -print)
+
+g++ -bundle \
+    -Wl,-single_module \
+    -Wl,-dead_strip \
+    -L"$PYTHON_ROOT/lib" \
+    -L"$PYTHON_ROOT/lib/python$PYTHON_VERSION/config" \
+    -o $SITE_DIR/libtorrent.so \
+    -lpython$PYTHON_VERSION \
+    -lssl \
+    -lcrypto \
+    -headerpad_max_install_names \
+    -no_dead_strip_inits_and_terms \
+    -isysroot $SDK_DIR \
+    -arch i386 \
+    -arch ppc \
+    $BOOST_PYTHON_ARCHIVE \
+    $BOOST_THREAD_ARCHIVE \
+    $BOOST_SYSTEM_ARCHIVE \
+    $BOOST_FILESYSTEM_ARCHIVE \
+    $LT_ARCHIVE \
+    $LT_PYTHON_MOD_OBJS
 
 echo "Done."

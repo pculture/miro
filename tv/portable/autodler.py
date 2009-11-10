@@ -32,14 +32,9 @@ from miro import config
 from miro import prefs
 from miro import eventloop
 from datetime import datetime
-from miro.fasttypes import SortedList
 
 def pending_sort(a, b):
-    if a[1] < b[1]:
-        return True
-    if a[1] > b[1]:
-        return False
-    return a[2] < b[2]
+    return cmp((a[1], a[2]), (b[1], b[2]))
 
 class Downloader:
     def __init__(self, is_auto):
@@ -99,7 +94,7 @@ class Downloader:
         last_count = 0
         while self.running_count < self.MAX and self.pending_count > 0 and self.pending_count != last_count:
             last_count = self.pending_count
-            sorted = SortedList(pending_sort)
+            candidate_feeds = []
             for feed in feedmod.Feed.make_view():
                 key = self._key_for_feed(feed)
                 if self.is_auto:
@@ -112,8 +107,10 @@ class Downloader:
                             continue
                 if self.feed_pending_count.get(key, 0) <= 0:
                     continue
-                sorted.append((feed, self.feed_running_count.get(key, 0), self.feed_time.get(feed, datetime.min)))
-            for feed, count, time in sorted:
+                candidate_feeds.append((feed, self.feed_running_count.get(key, 0), self.feed_time.get(feed, datetime.min)))
+            candidate_feeds.sort(pending_sort)
+
+            for feed, count, time in candidate_feeds:
                 if self.is_auto:
                     feed.startAutoDownload()
                 else:

@@ -49,7 +49,6 @@ Go to the bottom of this file for the current database schema.
 import datetime
 import time
 from types import NoneType
-from fasttypes import LinkedList
 from miro.plat.utils import FilenameType
 from miro.frontendstate import WidgetsFrontendState
 
@@ -673,7 +672,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
     def handle_malformed_list_view_displays(row):
         return []
 
-VERSION = 105
+VERSION = 106
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,

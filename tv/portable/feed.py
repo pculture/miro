@@ -63,7 +63,6 @@ from miro import filetypes
 from miro.item import FeedParserValues
 from miro import search
 from miro import searchengines
-from miro import sorts
 import logging
 from miro.clock import clock
 
@@ -449,9 +448,6 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.create_signal('update-finished')
         self.download = None
         self.wasUpdating = False
-        self.itemSort = sorts.ItemSort()
-        self.itemSortDownloading = sorts.ItemSort()
-        self.itemSortWatchable = sorts.ItemSortUnwatchedFirst()
         self.inlineSearchTerm = None
         self.calc_item_list()
 

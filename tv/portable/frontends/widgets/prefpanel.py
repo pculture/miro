@@ -632,7 +632,17 @@ class PlaybackPanel(PanelBuilder):
         rbg = widgetset.RadioButtonGroup()
         play_rb = widgetset.RadioButton(_("Play video and audio items one after another"), rbg)
         stop_rb = widgetset.RadioButton(_("Stop after each video or audio item"), rbg)
-        attach_radio( [(stop_rb, True), (play_rb, False)], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
+
+        attach_boolean(miro_cbx, prefs.PLAY_IN_MIRO, (separate_cbx, resume_cbx, play_rb, stop_rb))
+        v.pack_start(widgetutil.align_left(miro_cbx, bottom_pad=6))
+
+        attach_boolean(separate_cbx, prefs.PLAY_DETACHED)
+        v.pack_start(widgetutil.align_left(separate_cbx, bottom_pad=6))
+
+        attach_boolean(resume_cbx, prefs.RESUME_VIDEOS_MODE)
+        v.pack_start(widgetutil.align_left(resume_cbx, bottom_pad=6))
+
+        attach_radio([(stop_rb, True), (play_rb, False)], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
         v.pack_start(widgetutil.align_left(play_rb), padding=2)
         v.pack_start(widgetutil.align_left(stop_rb))
 

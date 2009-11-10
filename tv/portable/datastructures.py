@@ -1,4 +1,3 @@
-#!/bin/bash
 # Miro - an RSS based video player application
 # Copyright (C) 2005-2009 Participatory Culture Foundation
 #
@@ -27,35 +26,41 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+"""datastructures.py -- Datastructures used by Miro.  """
 
-OS_VERSION=$(uname -r | cut -d . -f 1)
 
-if [ $OS_VERSION == "8" ]; then
-    PYTHON_VERSION=2.4
-    PYTHON_ROOT=/Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION
-    #export MACOSX_DEPLOYMENT_TARGET=10.4
-elif [ $OS_VERSION == "9" ]; then
-    # PYTHON_VERSION=2.5
-    # PYTHON_ROOT=/System/Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION
-    # export MACOSX_DEPLOYMENT_TARGET=10.5
+class Fifo(object):
+    """FIFO queue.
 
-    # OSX 10.5 is now finicky about things and needs to run with a real build.
-    # So we kick off brun.sh.
-    ./brun.sh
-    exit
-elif [ $OS_VERSION == "10" ]; then
-    PYTHON_VERSION=2.6
-    PYTHON_ROOT=/System/Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION
-    export MACOSX_DEPLOYMENT_TARGET=10.6
-fi
+    Fast implentation of a first-in-first-out queue.
 
-PYTHON=$PYTHON_ROOT/bin/python$PYTHON_VERSION
+    Based off the code from Jeremy Fincher
+    (http://code.activestate.com/recipes/68436/)
+    """
 
-export VERSIONER_PYTHON_VERSION=$PYTHON_VERSION
-export VERSIONER_PYTHON_PREFER_32_BIT=yes
+    def __init__(self):
+        self.back = []
+        self.front = []
+        self.frontpos = 0
 
-if [ $OS_VERSION == "8" ]; then
-    $PYTHON setup.py py2app --dist-dir . -A "$@" && Miro.app/Contents/MacOS/Miro
-else
-    $PYTHON setup.py py2app --dist-dir . -A "$@" && arch -`arch` Miro.app/Contents/MacOS/Miro
-fi
+    def enqueue(self, item):
+        self.back.append(item)
+
+    def dequeue(self):
+        try:
+            rv = self.front[self.frontpos]
+        except IndexError:
+            pass
+        else:
+            self.frontpos += 1
+            return rv
+        if self.back:
+            self.front = self.back
+            self.back = []
+            self.frontpos = 1
+            return self.front[0]
+        else:
+            raise ValueError("Queue Empty")
+
+    def __len__(self):
+        return len(self.front) - self.frontpos + len(self.back)

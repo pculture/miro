@@ -29,6 +29,13 @@
 # statement from all source files in the program, then also delete it here.
 
 OS_VERSION=$(uname -r | cut -d . -f 1)
+BKIT_VERSION="$(cat binary_kit_version)"
+
+if [ ! -d "miro-binary-kit-osx-${BKIT_VERSION}" ]
+then
+    echo "Binary kit miro-binary-kit-osx-${BKIT_VERSION} is not installed.  Run setup_binarykit.sh then rebuild the sandbox."
+    exit 1
+fi
 
 if [ $OS_VERSION == "8" ]; then
     PYTHON_VERSION=2.4

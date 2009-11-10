@@ -34,7 +34,12 @@
 # dependencies from prebuilt packages and use some existing system libraries.
 # =============================================================================
 
-SANDBOX_VERSION=20071205002
+./setup_binarykit.sh
+BKIT_VERSION="$(cat binary_kit_version)"
+
+# SANDBOX_VERSION=20071205002
+
+PKG_DIR=$(pwd)/miro-binary-kit-osx-$BKIT_VERSION/sandbox
 
 # =============================================================================
 
@@ -61,14 +66,6 @@ while getopts ":r:v" option
 done
 
 # -----------------------------------------------------------------------------
-
-if [ -d "../../../dtv-binary-kit-mac" ]; then
-    PKG_DIR=$(pushd ../../../dtv-binary-kit-mac/sandbox >/dev/null; pwd; popd  >/dev/null)
-else
-    echo "Could not find the required Mac binary kit which should be at $ROOT_DIR/dtv-binary-kit-mac"
-    echo "Please check it out first from the repository."
-    exit
-fi
 
 #SANDBOX_DIR=$ROOT_DIR/sandbox
 SANDBOX_DIR=/usr/local
@@ -282,7 +279,7 @@ cd $WORK_DIR
 echo ">> Unpacking archive..."
 #tar -xzf $PKG_DIR/pysqlite-2.4.0.tar.gz 1>>$OUT 2>>$OUT
 #cd $WORK_DIR/pysqlite-2.4.0
-unzip $PKG_DIR/pysqlite-2.2.2-py2.4-macosx10.4.zip 1>>$OUT 2>>$OUT
+unzip -o $PKG_DIR/pysqlite-2.2.2-py2.4-macosx10.4.zip 1>>$OUT 2>>$OUT
 
 #
 #echo ">> Writing custom setup.cfg..."
@@ -462,7 +459,63 @@ $SANDBOX_DIR/bin/bjam  --prefix=$SANDBOX_DIR \
                        release \
                        install
 
-# =============================================================================
+export BOOST_ROOT=$WORK_DIR/boost_1_35_0/
+
+# Libtorrent ===================================================================
+
+cd $WORK_DIR
+
+USER_CONFIG=`find $BOOST_ROOT -name user-config.jam`
+echo "using python : $PYTHON_VERSION ;" >> $USER_CONFIG
+
+tar -xzvf $PKG_DIR/libtorrent-rasterbar-*
+cd libtorrent-rasterbar-*/bindings/python
+
+$SANDBOX_DIR/bin/bjam --prefix=$SANDBOX_DIR \
+    dht-support=on \
+    toolset=darwin \
+    macosx-version=10.4 \
+    architecture=combined \
+    boost=source \
+    boost-link=static \
+    release
+
+
+# HARDCODED!
+SITE_DIR=/Library/Frameworks/Python.framework/Versions/2.4/lib/python2.4/site-packages/
+SDK_DIR=/Developer/SDKs/MacOSX10.4u.sdk
+
+# Boost does not know how to correctly build a loadable module under OS X, it
+# uses the -dynamiclib parameter when linking the module instead of -bundle, so
+# we need to relink here.
+
+echo "** Relinking the libtorrent module using the correct set of parameters"
+
+LT_PYTHON_MOD_OBJS=$(find bin -name "*.o" -print)
+LT_ARCHIVE=$(find ../../bin -name libtorrent.a -print)
+BOOST_PYTHON_ARCHIVE=$(find $BOOST_ROOT -name libboost_python-*.a -print)
+BOOST_THREAD_ARCHIVE=$(find $BOOST_ROOT -name libboost_thread-*.a -print)
+BOOST_SYSTEM_ARCHIVE=$(find $BOOST_ROOT -name libboost_system-*.a -print)
+BOOST_FILESYSTEM_ARCHIVE=$(find $BOOST_ROOT -name libboost_filesystem-*.a -print)
+
+g++ -bundle \
+    -L"$PYTHON_ROOT/lib" \
+    -L"$PYTHON_ROOT/lib/python$PYTHON_VERSION/config" \
+    -o $SITE_DIR/libtorrent.so \
+    -lpython$PYTHON_VERSION \
+    -lssl \
+    -lcrypto \
+    -headerpad_max_install_names \
+    -no_dead_strip_inits_and_terms \
+    -isysroot $SDK_DIR \
+    -arch i386 \
+    -arch ppc \
+    $BOOST_PYTHON_ARCHIVE \
+    $BOOST_THREAD_ARCHIVE \
+    $BOOST_SYSTEM_ARCHIVE \
+    $BOOST_FILESYSTEM_ARCHIVE \
+    $LT_ARCHIVE \
+    $LT_PYTHON_MOD_OBJS
 
 echo "=== FINISHED ==================================================================" >>$OUT
 #echo "Sandbox setup complete, logging signature."

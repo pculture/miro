@@ -33,7 +33,7 @@
 # front end
 from miro.test.unicodetest import *
 
-from miro.test.fasttypestest import *
+from miro.test.datastructures import *
 from miro.test.schematest import *
 from miro.test.storedatabasetest import *
 from miro.test.olddatabaseupgradetest import *

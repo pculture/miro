@@ -12,6 +12,7 @@ from miro import database
 from miro import feed
 from miro import olddatabaseupgrade
 from miro import schemav79
+from miro import schema
 from miro import storedatabase
 from miro import databaseupgrade
 from miro import databasesanity
@@ -24,9 +25,7 @@ class FakeHandler:
     def handle(self, msg):
         pass
 
-class Test20DatabaseConvert(MiroTestCase):
-    """Test converting from a 2.0 database to a 2.1 database."""
-
+class DatabaseUpgradeTest(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
         self.tmp_path = tempfile.mktemp()
@@ -35,7 +34,14 @@ class Test20DatabaseConvert(MiroTestCase):
     def tearDown(self):
         if self.connection is not None:
             self.connection.close()
+        try:
+            os.unlink(self.tmp_path)
+        except IOError:
+            pass
         MiroTestCase.tearDown(self)
+
+class Test20DatabaseConvert(DatabaseUpgradeTest):
+    """Test converting from a 2.0 database to a 2.5 database."""
 
     def check_tables_created(self):
         self.cursor.execute("""SELECT name FROM sqlite_master
@@ -160,3 +166,43 @@ class Test20DatabaseConvert(MiroTestCase):
         aren't used anymore.
         """
         self.one_test("olddatabase.v71")
+
+
+class NewDatabaseUpgradeTest(DatabaseUpgradeTest):
+    """Test database upgrade functions for 2.5 formatted databases."""
+
+    def upgrade_db(self, db_file):
+        old_db_path = resources.path("testdata/%s" % db_file)
+        shutil.copyfile(old_db_path, self.tmp_path)
+        self.connection = sqlite3.connect(self.tmp_path,
+                detect_types=sqlite3.PARSE_DECLTYPES)
+        self.cursor = self.connection.cursor()
+        databaseupgrade.new_style_upgrade(self.cursor, self.get_version(),
+                schema.VERSION)
+
+    def get_version(self):
+        self.cursor.execute("SELECT serialized_value FROM dtv_variables "
+                "WHERE name='Democracy Version'")
+        row = self.cursor.fetchone()
+        return cPickle.loads(str(row[0]))
+
+    def test_12305(self):
+        # if #12305 is present, upgrading the db will throw an exception
+        self.upgrade_db('olddatabase.bug.12305')
+
+    def test_upgrade_106(self):
+        # test that upgrade 106 removes duplicate ids
+        self.upgrade_db('database.duplicate-id-test')
+        self.cursor.execute("SELECT name FROM sqlite_master "
+                "WHERE type='table' and name != 'dtv_variables'")
+        id_map = {}
+        for row in self.cursor.fetchall():
+            table = row[0]
+            self.cursor.execute("SELECT id from %s" % table)
+            for row in self.cursor:
+                id = row[0]
+                if id not in id_map:
+                    id_map[id] = table
+                else:
+                    raise AssertionError("id %s in %s and %s" % (id,
+                        id_map[id], table))

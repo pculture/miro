@@ -37,6 +37,7 @@ import time
 import errno
 import signal
 import locale
+import subprocess
 
 from objc import NO, YES, nil
 from Foundation import *
@@ -291,7 +292,7 @@ def launchDownloadDaemon(oldpid, env):
         launch_path = exe
         launch_arguments = [u'download_daemon']
     else:
-        arch = os.uname()[-1]
+        arch = subprocess.Popen("arch", stdout=subprocess.PIPE).communicate()[0].strip()
         launch_path = '/usr/bin/arch'
         launch_arguments = ['-%s' % arch, exe, u'download_daemon']
     

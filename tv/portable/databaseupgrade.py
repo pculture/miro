@@ -2117,22 +2117,27 @@ def remove_column(cursor, table, *column_names):
     for sql in index_sql:
         cursor.execute(sql)
 
+def get_object_tables(cursor):
+    """Get tables that store DDBObject subclasses."""
+    cursor.execute("SELECT name FROM sqlite_master "
+            "WHERE type='table' and name != 'dtv_variables'")
+    return [row[0] for row in cursor]
+
+def get_next_id(cursor):
+    """Calculate the next id to assign to new rows.
+
+    This will be 1 higher than the max id for all tables in the DB.
+    """
+    max_id = 0
+    for table in get_object_tables(cursor):
+        cursor.execute("SELECT MAX(id) from %s" % table)
+        max_id = max(max_id, cursor.fetchone()[0])
+    return max_id + 1
+
 def upgrade88(cursor):
     """Replace playlist.item_ids, with PlaylistItemMap objects."""
 
-    # get the last id in the database
-    max_id = 0
-    for table in ('channel_folder', 'playlist_folder', 'channel_guide',
-            'directory_feed_impl', 'directory_watch_feed_impl',
-            'remote_downloader', 'rss_feed_impl', 'feed',
-            'rss_multi_feed_impl', 'feed_impl', 'scraper_feed_impl',
-            'http_auth_password', 'search_downloads_feed_impl icon_cache',
-            'item', 'single_feed_impl', 'manual_feed_impl', 'taborder_order',
-            'theme_history', 'widgets_frontend_state', 'playlist'):
-        cursor.execute("SELECT MAX(id) from %s" % table)
-        max_id = max(max_id, cursor.fetchone()[0])
-
-    id_counter = itertools.count(max_id + 1)
+    id_counter = itertools.count(get_next_id(cursor))
 
     folder_count = {}
     for table_name in ('playlist_item_map', 'playlist_folder_item_map'):
@@ -2167,8 +2172,15 @@ def upgrade88(cursor):
     for row in list(cursor.execute(sql)):
         id, item_ids = row
         item_ids = eval(item_ids, {}, {})
+        this_folder_count = folder_count[id]
         for i, item_id in enumerate(item_ids):
-            count = folder_count[id][item_id]
+            try:
+                count = this_folder_count[item_id]
+            except KeyError:
+                # item_id is listed for this playlist folder, but none of it's
+                # child folders.  It's not clear how it happened, but forget
+                # about it.  (#12301)
+                continue
             cursor.execute("INSERT INTO playlist_folder_item_map "
                     "(id, item_id, playlist_id, position, count) "
                     "VALUES (?, ?, ?, ?, ?)",
@@ -2370,29 +2382,18 @@ def upgrade100(cursor):
     if count > 0:
         return
 
-    max_id = 0
-    for table in ('channel_folder', 'playlist_folder_item_map',
-                  'channel_guide', 'playlist_item_map', 'feed',
-                  'directory_feed_impl', 'remote_downloader',
-                  'directory_watch_feed_impl', 'rss_feed_impl',
-                  'rss_multi_feed_impl', 'scraper_feed_impl', 'feed_impl',
-                  'search_downloads_feed_impl', 'http_auth_password',
-                  'search_feed_impl', 'icon_cache', 'single_feed_impl',
-                  'item', 'taborder_order', 'manual_feed_impl', 'theme_history',
-                  'playlist', 'widgets_frontend_state', 'playlist_folder'):
-        cursor.execute("SELECT MAX(id) from %s" % table)
-        max_id = max(max_id, cursor.fetchone()[0])
+    next_id = get_next_id(cursor)
 
     cursor.execute("INSERT INTO channel_guide "
                    "(id, url, allowedURLs, updated_url, favicon, firstTime) VALUES (?, ?, ?, ?, ?, ?)",
-                   (max_id + 1, audio_guide_url, "[]", audio_guide_url, favicon_url, True))
+                   (next_id, audio_guide_url, "[]", audio_guide_url, favicon_url, True))
 
     # add the new Audio Guide to the site tablist
     cursor.execute('SELECT tab_ids FROM taborder_order WHERE type=?',('site',))
     row = cursor.fetchone()
     if row is not None:
         tab_ids = eval_container(row[0])
-        tab_ids.append(max_id + 1)
+        tab_ids.append(next_id)
         cursor.execute('UPDATE taborder_order SET tab_ids=? WHERE type=?',
                        (repr(tab_ids), 'site'))
     else:
@@ -2495,6 +2496,64 @@ def upgrade105(cursor):
         else:
             fast_resume_data_value = None
         cursor.execute("UPDATE remote_downloader "
-                "SET status=?, metainfo=?, fast_resume_data=?",
-                (new_status, metainfo_value, fast_resume_data_value))
+                "SET status=?, metainfo=?, fast_resume_data=? "
+                "WHERE id=?",
+                (new_status, metainfo_value, fast_resume_data_value, id))
 
+
+def upgrade106(cursor):
+    tables = get_object_tables(cursor)
+    # figure out which ids, if any are duplicated
+    id_union = ' UNION ALL '.join(['SELECT id FROM %s' % t for t in tables])
+    cursor.execute("SELECT count(*) as id_count, id FROM (%s) "
+            "GROUP BY id HAVING id_count > 1" % id_union)
+    duplicate_ids = set([r[1] for r in cursor])
+    if len(duplicate_ids) == 0:
+        return
+
+    id_counter = itertools.count(get_next_id(cursor))
+
+    def update_value(table, column, old_value, new_value):
+        cursor.execute("UPDATE %s SET %s=%s WHERE %s=%s" % (table, column,
+            new_value, column, old_value))
+
+    for table in tables:
+        if table == 'feed':
+            # let feed objects keep their id, it's fairly annoying to have to
+            # update the ufeed atribute for all the FeedImpl subclasses.
+            # The id won't be a duplicate anymore once we update the other
+            # tables
+            continue
+        cursor.execute("SELECT id FROM %s" % table)
+        for row in cursor.fetchall():
+            id = row[0]
+            if id in duplicate_ids:
+                new_id = id_counter.next()
+                # assign a new id to the object
+                update_value(table, 'id', id, new_id)
+                # fix foreign keys
+                if table == 'icon_cache':
+                    update_value('item', 'icon_cache_id', id, new_id)
+                    update_value('feed', 'icon_cache_id', id, new_id)
+                    update_value('channel_guide', 'icon_cache_id', id, new_id)
+                elif table.endswith('feed_impl'):
+                    update_value('feed', 'feed_impl_id', id, new_id)
+                elif table == 'channel_folder':
+                    update_value('feed', 'folder_id', id, new_id)
+                elif table == 'remote_downloader':
+                    update_value('item', 'downloader_id', id, new_id)
+                elif table == 'item_id':
+                    update_value('item', 'parent_id', id, new_id)
+                    update_value('downloader', 'main_item_id', id, new_id)
+                    update_value('playlist_item_map', 'item_id', id, new_id)
+                    update_value('playlist_folder_item_map', 'item_id', id, new_id)
+                elif table == 'playlist_folder':
+                    update_value('playlist', 'folder_id', id, new_id)
+                elif table == 'playlist':
+                    update_value('playlist_item_map', 'playlist_id', id, new_id)
+                    update_value('playlist_folder_item_map', 'playlist_id', id, new_id)
+                # note we don't handle TabOrder.tab_ids here.  That's because
+                # it's a list of ids, so it's hard to fix using SQL.  Also,
+                # the TabOrder code is able to recover from missing/extra ids
+                # in its list.  The only bad thing that will happen is the
+                # user's tab order will be changed.

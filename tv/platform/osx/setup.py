@@ -39,10 +39,18 @@ import datetime
 import subprocess
 
 from glob import glob
+from distutils.util import get_platform
 
 # =============================================================================
 # Find the top of the source tree and set the search path accordingly
 # =============================================================================
+
+BINARY_KIT_VERSION = open("binary_kit_version").read().strip()
+BKIT_DIR = os.path.join(os.getcwd(), "miro-binary-kit-osx-%s" % BINARY_KIT_VERSION)
+
+if not os.path.exists or not os.path.isdir(BKIT_DIR):
+    print "Binary kit %s is missing.  Run 'setup_binarykit.sh'." % BKIT_DIR
+    sys.exit()
 
 ROOT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
 ROOT_DIR = os.path.join(ROOT_DIR, '../..')
@@ -58,19 +66,33 @@ PYTHON_VERSION = sys.version[0:3]
 
 if OS_VERSION < 9:
     SANDBOX_DIR = "/usr/local"
-    PYTHON_LIB = os.path.join("/", "Library", "Frameworks", "Python.framework", "Versions", "Current", "Python")
+    PYTHON_ROOT = os.path.join("/", "Library", "Frameworks", "Python.framework", "Versions", "Current")
+    PYTHON_LIB = os.path.join(PYTHON_ROOT, "Python")
+    PYTHON_SITE_DIR = os.path.join(PYTHON_ROOT, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages')
     BOOST_LIB_EXT = 'a'
 else:
     SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..')))
     SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
     PYTHON_ROOT = os.path.join("/", "System", "Library", "Frameworks", "Python.framework", "Versions", PYTHON_VERSION)
     PYTHON_LIB = os.path.join(PYTHON_ROOT, "Python")
+    PYTHON_SITE_DIR = os.path.join(SANDBOX_DIR, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages')
     BOOST_LIB_EXT = 'dylib'
-    sys.path.insert(0, os.path.join(SANDBOX_DIR, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages'))
+    sys.path.insert(0, PYTHON_SITE_DIR)
     if OS_VERSION == 9:
         MACOSX_DEPLOYMENT_TARGET="10.5"
     elif OS_VERSION == 10:
         MACOSX_DEPLOYMENT_TARGET="10.6"
+
+# =============================================================================
+# Drop out if the current binary kit isn't downloaded.
+
+if not os.path.exists(BKIT_DIR):
+    print "Binary kit %s is not installed." % BKIT_DIR
+    if OS_VERSION < 9:
+        print "Run setup_sandbox_10.4.sh."
+    else:
+        print "Run setup_sandbox.sh."
+    sys.exit(1)
 
 # =============================================================================
 # Look for the Boost library in various common places.
@@ -112,10 +134,6 @@ else:
 # =============================================================================
 
 BOOST_PYTHON_LIB = os.path.join(BOOST_LIB_DIR, "libboost_python-%s.%s" % (BOOST_VERSION, BOOST_LIB_EXT))
-BOOST_FILESYSTEM_LIB = os.path.join(BOOST_LIB_DIR, 'libboost_filesystem-%s.%s' % (BOOST_VERSION, BOOST_LIB_EXT))
-BOOST_DATETIME_LIB = os.path.join(BOOST_LIB_DIR, 'libboost_date_time-%s.%s' % (BOOST_VERSION, BOOST_LIB_EXT))
-BOOST_THREAD_LIB = os.path.join(BOOST_LIB_DIR, 'libboost_thread-%s.%s' % (BOOST_VERSION, BOOST_LIB_EXT))
-BOOST_SYSTEM_LIB = os.path.join(BOOST_LIB_DIR, 'libboost_system-%s.%s' % (BOOST_VERSION, BOOST_LIB_EXT))
 
 # =============================================================================
 # Only now may we import things from the local sandbox and our own tree
@@ -147,7 +165,7 @@ def extract_binaries(source, target, force=True):
         print "    (all skipped, already there)"
     else:
         os.makedirs(target)
-        rootpath = os.path.join(os.path.dirname(ROOT_DIR), 'dtv-binary-kit-mac/%s' % source)
+        rootpath = os.path.join(BKIT_DIR, source)
         binaries = glob(os.path.join(rootpath, '*.tar.gz'))
         if len(binaries) == 0:
             print "    (all skipped, not found in binary kit)"
@@ -295,9 +313,7 @@ class MiroBuild (py2app):
         self.distribution.ext_modules.append(self.get_growl_ext())
         self.distribution.ext_modules.append(self.get_growl_image_ext())
         self.distribution.ext_modules.append(self.get_shading_ext())
-        self.distribution.ext_modules.append(self.get_sorts_ext())
         self.distribution.ext_modules.append(self.get_fasttypes_ext())
-        self.distribution.ext_modules.append(self.get_libtorrent_ext())
 
         self.distribution.packages = [
             'miro',
@@ -363,10 +379,6 @@ class MiroBuild (py2app):
         shading_link_args = ['-framework', 'ApplicationServices']
         return Extension("miro.plat.shading", sources=shading_src, extra_link_args=shading_link_args)
     
-    def get_sorts_ext(self):
-        sorts_src = glob(os.path.join(ROOT_DIR, 'portable', 'sorts.pyx'))
-        return Extension("miro.sorts", sources=sorts_src)
-    
     def get_fasttypes_ext(self):
         fasttypes_src = glob(os.path.join(ROOT_DIR, 'portable', 'fasttypes.cpp'))
         fasttypes_inc_dirs = [BOOST_INCLUDE_DIR]
@@ -374,50 +386,6 @@ class MiroBuild (py2app):
         return Extension("miro.fasttypes", sources=fasttypes_src, 
                                            include_dirs=fasttypes_inc_dirs, 
                                            extra_objects=fasttypes_extras)
-    
-    def get_libtorrent_ext(self):
-        def libtorrent_sources_iterator():
-            for root,dirs,files in os.walk(os.path.join(PORTABLE_DIR, 'libtorrent')):
-                if '.svn' in dirs:
-                    dirs.remove('.svn')
-                for file in files:
-                    if file.endswith('.cpp') or file.endswith('.c'):
-                        yield os.path.join(root,file)
-
-        libtorrent_src = list(libtorrent_sources_iterator())
-        if os.path.exists(os.path.join(PORTABLE_DIR, 'libtorrent/src/file_win.cpp')):
-            libtorrent_src.remove(os.path.join(PORTABLE_DIR, 'libtorrent/src/file_win.cpp'))
-        libtorrent_inc_dirs = [BOOST_INCLUDE_DIR,
-                               os.path.join(PORTABLE_DIR, 'libtorrent', 'include'),
-                               os.path.join(PORTABLE_DIR, 'libtorrent', 'include', 'libtorrent')]
-        libtorrent_lib_dirs = [BOOST_LIB_DIR]
-        libtorrent_libs = ['z', 
-                           'pthread', 
-                           'ssl']
-
-        libtorrent_extras = [PYTHON_LIB,
-                             BOOST_PYTHON_LIB,
-                             BOOST_FILESYSTEM_LIB,
-                             BOOST_DATETIME_LIB,
-                             BOOST_THREAD_LIB,
-                             BOOST_SYSTEM_LIB]
-
-        libtorrent_compil_args = ["-Wno-missing-braces",
-                                  "-D_FILE_OFFSET_BITS=64",
-                                  "-DHAVE___INCLUDE_LIBTORRENT_ASIO_HPP=1",
-                                  "-DHAVE___INCLUDE_LIBTORRENT_ASIO_SSL_STREAM_HPP=1",
-                                  "-DHAVE___INCLUDE_LIBTORRENT_ASIO_IP_TCP_HPP=1",
-                                  "-DHAVE_PTHREAD=1", 
-                                  "-DTORRENT_USE_OPENSSL=1", 
-                                  "-DHAVE_SSL=1",
-                                  "-DNDEBUG",
-                                  "-O2"]
-
-        return Extension("miro.libtorrent", sources=libtorrent_src, 
-                                       include_dirs=libtorrent_inc_dirs,
-                                       libraries=libtorrent_libs, 
-                                       extra_objects=libtorrent_extras,
-                                       extra_compile_args=libtorrent_compil_args)
     
     def fillTemplate(self, templatepath, outpath, **vars):
         s = open(templatepath, 'rt').read()
@@ -430,6 +398,7 @@ class MiroBuild (py2app):
         print "Building %s v%s (%s)" % (self.config.get('longAppName'), self.config.get('appVersion'), self.config.get('appRevision'))
         
         self.setup_info_plist()
+        self.copy_libtorrent_module()
 
         py2app.run(self)
         
@@ -441,6 +410,8 @@ class MiroBuild (py2app):
         self.copy_localization_files()
         if self.theme is not None:
             self.copy_theme_files()
+        if OS_VERSION >= 9 and not self.alias:
+            self.fix_install_names()
         
         self.clean_up_incomplete_lproj()
         self.clean_up_unwanted_data()
@@ -467,6 +438,28 @@ class MiroBuild (py2app):
         infoPlist['CFBundleLocalizations'] = self.get_localizations_list()
         
         self.plist = infoPlist
+
+    def copy_libtorrent_module(self):
+        print 'Copying the libtorrent module to application bundle'
+        src = os.path.join(PYTHON_SITE_DIR, 'libtorrent.so')
+        plat = get_platform()
+        dst_root = os.path.join('build', 'bdist.%s' % plat , 'lib.%s-%s' % (plat, PYTHON_VERSION))
+        if not os.path.exists(dst_root):
+            os.makedirs(dst_root)
+        dst = os.path.join(dst_root, 'libtorrent.so')
+        shutil.copy(src, dst)
+
+    def fix_install_names(self):
+        py_install_name = os.path.join("@executable_path", "..", "Frameworks", "Python.framework", "Versions", PYTHON_VERSION, "Python")
+
+        boost_python_lib = os.path.join("Miro.app", "Contents", "Frameworks", os.path.basename(BOOST_PYTHON_LIB))
+        os.system('install_name_tool -change %s %s %s' % (PYTHON_LIB, py_install_name, boost_python_lib))
+
+        fasttypes_mod = os.path.join("Miro.app", "Contents", "Resources", "lib", "python%s" % PYTHON_VERSION, "lib-dynload", "miro", "fasttypes.so")
+        os.system('install_name_tool -change %s %s %s' % (PYTHON_LIB, py_install_name, fasttypes_mod))
+
+        libtorrent_so = os.path.join("Miro.app", "Contents", "Resources", "lib", "python%s" % PYTHON_VERSION, "lib-dynload", "libtorrent.so")
+        os.system('install_name_tool -change %s %s %s' % (PYTHON_LIB, py_install_name, libtorrent_so))
 
     def fix_frameworks_alias(self):
         # Py2App seems to have a bug where alias builds would get 

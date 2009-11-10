@@ -52,7 +52,7 @@ from distutils.ccompiler import new_compiler
 NSIS_PATH = 'C:\\Program Files\\NSIS\\makensis.exe'
 
 # This is the version of the binary kit to use
-BINARY_KIT_VERSION = "20091025"
+BINARY_KIT_VERSION = open("binary_kit_version").read().strip()
 
 # If you're using the prebuilt DTV Dependencies Binary Kit, just set
 # the path to it here, and ignore everything after this point. In
@@ -167,15 +167,6 @@ sys.path.insert(0, LIBTORRENT_PATH)
 
 #### Extensions ####
 
-sorts_ext = Extension("miro.sorts", 
-        sources=[os.path.join(root_dir, 'portable', 'sorts.pyx')])
-
-fasttypes_ext = Extension("miro.fasttypes", 
-        sources=[os.path.join(root_dir, 'portable', 'fasttypes.cpp')],
-        library_dirs=[BOOST_LIB_PATH],
-        include_dirs=[BOOST_INCLUDE_PATH]
-        )
-
 pygtkhacks_ext = Extension("miro.frontends.widgets.gtk.pygtkhacks",
         sources=[
             os.path.join(portable_widgets_dir, 'gtk', 'pygtkhacks.pyx'),
@@ -228,8 +219,6 @@ os.environ['PATH'] = ';'.join([
 
 # Private extension modules to build.
 ext_modules = [
-    fasttypes_ext,
-    sorts_ext,
     pygtkhacks_ext,
     xulrunnerbrowser_ext,
 ]

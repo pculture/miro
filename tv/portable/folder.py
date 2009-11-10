@@ -31,7 +31,6 @@
 
 from miro import feed
 from miro import playlist
-from miro import sorts
 from miro import util
 from miro.database import DDBObject, ObjectNotFoundError
 from miro.databasehelper import make_simple_get_set
@@ -79,15 +78,6 @@ class ChannelFolder(FolderBase):
     def setup_new(self, title, section=u'video'):
         self.section = section
         FolderBase.setup_new(self, title)
-        self.setup_common()
-
-    def setup_restored(self):
-        self.setup_common()
-
-    def setup_common(self):
-        self.itemSort = sorts.ItemSort()
-        self.itemSortDownloading = sorts.ItemSort()
-        self.itemSortWatchable = sorts.ItemSortUnwatchedFirst()
 
     def remove(self, moveItemsTo=None):
         children = list(self.getChildrenView())

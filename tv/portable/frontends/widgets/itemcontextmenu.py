@@ -31,6 +31,8 @@
 
 from miro import app
 from miro import messages
+from miro import prefs
+from miro import config
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.plat import resources
@@ -96,10 +98,11 @@ class ItemContextMenuHandler(object):
 
             menu = [
                 (_('Play'), app.widgetapp.play_selection),
-                (_('Play Just This Item'), play_and_stop),
-                (_('Play Externally'), play_externally),
-                (_('Add to Playlist'), app.widgetapp.add_to_playlist),
             ]
+            if config.get(prefs.PLAY_IN_MIRO):
+                menu.append((_('Play Just This Item'), play_and_stop))
+                menu.append((_('Play Externally'), play_externally))
+            menu.append((_('Add to Playlist'), app.widgetapp.add_to_playlist))
             self._add_remove_context_menu_item(menu, [item])
             menu.append((_('Rename Item'), app.widgetapp.rename_item))
             if not item.has_original_name:
