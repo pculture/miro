@@ -172,13 +172,18 @@ class NewDatabaseUpgradeTest(DatabaseUpgradeTest):
     """Test database upgrade functions for 2.5 formatted databases."""
 
     def upgrade_db(self, db_file):
-        old_db_path = resources.path("testdata/%s" % db_file)
-        shutil.copyfile(old_db_path, self.tmp_path)
-        self.connection = sqlite3.connect(self.tmp_path,
-                detect_types=sqlite3.PARSE_DECLTYPES)
-        self.cursor = self.connection.cursor()
-        databaseupgrade.new_style_upgrade(self.cursor, self.get_version(),
-                schema.VERSION)
+        from miro import messages
+        try:
+            messages.FrontendMessage.install_handler(FakeHandler())
+            old_db_path = resources.path("testdata/%s" % db_file)
+            shutil.copyfile(old_db_path, self.tmp_path)
+            self.connection = sqlite3.connect(self.tmp_path,
+                                              detect_types=sqlite3.PARSE_DECLTYPES)
+            self.cursor = self.connection.cursor()
+            databaseupgrade.new_style_upgrade(self.cursor, self.get_version(),
+                                              schema.VERSION)
+        except:
+            messages.FrontendMessage.reset_handler()
 
     def get_version(self):
         self.cursor.execute("SELECT serialized_value FROM dtv_variables "
