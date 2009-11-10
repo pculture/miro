@@ -83,6 +83,19 @@ class VLCEvent(ctypes.Structure):
             ('arg2', ctypes.c_int),
     ]
 
+class VLCTrackDescription(Structure):
+    # The libvlc_track_description_t structure type is self-referencing so we
+    # have to specify the fields after the class is defined.
+    pass
+
+VLCTrackDescription._fields_ = [
+            ('id', c_int),
+            ('name', c_char_p),
+            ('next', POINTER(VLCTrackDescription))
+    ]
+
+libvlc.libvlc_video_get_spu_description.restype = POINTER(VLCTrackDescription)
+
 VLC_EVENT_CALLBACK = ctypes.CFUNCTYPE(None, ctypes.POINTER(VLCEvent),
         ctypes.c_void_p)
 
@@ -323,6 +336,7 @@ class VLCRenderer:
         if self.callback_info:
             self.callback_info[0]()
         self.callback_info = None
+        self.setup_subtitles()
 
     def _open_failure(self):
         import traceback
@@ -476,6 +490,52 @@ class VLCRenderer:
 
     def get_rate(self):
         pass
+
+    def setup_subtitles(self):
+        if config.get(prefs.ENABLE_SUBTITLES):
+            track_index = self.get_enabled_subtitle_track()
+            if track_index == 0:
+                count = libvlc.libvlc_video_get_spu_count(self.media_player, self.exc.ref())
+                if count > 0:
+                    self.enable_subtitle_track(1)
+        else:
+            self.disable_subtitles()
+        
+    def get_subtitle_tracks(self):
+        tracks = list()
+        try:
+            desc = libvlc.libvlc_video_get_spu_description(self.media_player, self.exc.ref())
+            self.exc.check()
+            count = libvlc.libvlc_video_get_spu_count(self.media_player, self.exc.ref())
+            self.exc.check()
+            for i in range(0, count):
+                tracks.append((i, desc.contents.name))
+                desc = desc.contents.next
+        except VLCError, e:
+            logging.warn("exception when getting list of subtitle tracks")
+        return tracks
+
+    def get_enabled_subtitle_track(self):
+        track_index = libvlc.libvlc_video_get_spu(self.media_player, self.exc.ref())
+        try:
+            self.exc.check()
+        except VLCError, e:
+            logging.warn("exception when getting enabled subtitle track")
+            return None
+        return track_index
+
+    def enable_subtitle_track(self, track_index):
+        self._set_active_subtitle_track(track_index)
+
+    def disable_subtitles(self):
+        self._set_active_subtitle_track(0)
+        
+    def _set_active_subtitle_track(self, track_index):
+        libclv.libvlc_video_set_spu(semf.media_player, track_index, self.exc.ref())
+        try:
+            self.exc.check()
+        except VLCError, e:
+            logging.warn("exception when setting subtitle track")
 
 _sniffer = VLCSniffer()
 
