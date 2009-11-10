@@ -380,12 +380,8 @@ class MiroBuild (py2app):
         return Extension("miro.plat.shading", sources=shading_src, extra_link_args=shading_link_args)
     
     def get_fasttypes_ext(self):
-        fasttypes_src = glob(os.path.join(ROOT_DIR, 'portable', 'fasttypes.cpp'))
-        fasttypes_inc_dirs = [BOOST_INCLUDE_DIR]
-        fasttypes_extras = [PYTHON_LIB, BOOST_PYTHON_LIB]
-        return Extension("miro.fasttypes", sources=fasttypes_src, 
-                                           include_dirs=fasttypes_inc_dirs, 
-                                           extra_objects=fasttypes_extras)
+        return Extension("miro.fasttypes", 
+                [os.path.join(PORTABLE_DIR, 'fasttypes.c')])
     
     def fillTemplate(self, templatepath, outpath, **vars):
         s = open(templatepath, 'rt').read()
