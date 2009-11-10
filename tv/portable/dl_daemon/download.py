@@ -335,7 +335,9 @@ class DownloadStatusUpdater:
     happen often enough to cause CPU problems.
     """
 
-    UPDATE_CLIENT_INTERVAL = 1
+    # setting this to 2 to prevent the "downloader playing catch-up"
+    # issue where suddenly a bunch of updates happen all at once.
+    UPDATE_CLIENT_INTERVAL = 2
 
     def __init__(self):
         self.toUpdate = set()
