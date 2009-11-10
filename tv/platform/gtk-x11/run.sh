@@ -50,8 +50,6 @@ MIROPYTHONPATH=$MIROPYTHONPATH:$PYTHONPATH
 
 $PYTHON setup.py install --root=./dist --prefix=$PREFIX
 
-echo ""
-
 if [ $? = 0 ]
 then
     echo "Compile successful.  Running...."
