@@ -69,22 +69,17 @@ if OS_VERSION < 9:
     PYTHON_ROOT = os.path.join("/", "Library", "Frameworks", "Python.framework", "Versions", "Current")
     PYTHON_LIB = os.path.join(PYTHON_ROOT, "Python")
     PYTHON_SITE_DIR = os.path.join(PYTHON_ROOT, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages')
-    BOOST_LIB_EXT = 'a'
 else:
     SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..')))
     SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
     PYTHON_ROOT = os.path.join("/", "System", "Library", "Frameworks", "Python.framework", "Versions", PYTHON_VERSION)
     PYTHON_LIB = os.path.join(PYTHON_ROOT, "Python")
     PYTHON_SITE_DIR = os.path.join(SANDBOX_DIR, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages')
-    BOOST_LIB_EXT = 'dylib'
     sys.path.insert(0, PYTHON_SITE_DIR)
-    if OS_VERSION == 9:
-        MACOSX_DEPLOYMENT_TARGET="10.5"
-    elif OS_VERSION == 10:
-        MACOSX_DEPLOYMENT_TARGET="10.6"
 
 # =============================================================================
 # Drop out if the current binary kit isn't downloaded.
+# =============================================================================
 
 if not os.path.exists(BKIT_DIR):
     print "Binary kit %s is not installed." % BKIT_DIR
@@ -93,47 +88,6 @@ if not os.path.exists(BKIT_DIR):
     else:
         print "Run setup_sandbox.sh."
     sys.exit(1)
-
-# =============================================================================
-# Look for the Boost library in various common places.
-# - we assume that both the library and the include files are installed in the
-#   same directory sub-hierarchy.
-# - we look for library and include directory in:
-#   - our local sandbox
-#   - the standard '/usr/local' tree
-#   - Darwinports' standard '/opt/local' tree
-#   - Fink's standard '/sw' tree
-# =============================================================================
-
-BOOST_LIB_DIR = None
-BOOST_INCLUDE_DIR = None
-BOOST_VERSION = None
-
-for searchDir in (SANDBOX_DIR, '/usr/local', '/opt/local', '/sw'):
-    libItems = glob(os.path.join(searchDir, 'lib/libboost_python*-*.*'))
-    incItems = glob(os.path.join(searchDir, 'include/boost-*/'))
-    if len(libItems) >= 1 and len(incItems) >= 1:
-        BOOST_LIB_DIR = os.path.dirname(libItems[0])
-        BOOST_INCLUDE_DIR = incItems[0]
-        match = re.search(r'libboost_python-(.*)\..*', libItems[0])
-        BOOST_VERSION = match.groups()[0]
-        break
-
-if BOOST_LIB_DIR is None or BOOST_INCLUDE_DIR is None:
-    print 'Boost library could not be found, interrupting build.'
-    sys.exit(1)
-else:
-    print 'Boost library (version %s) found in %s' % (BOOST_VERSION, BOOST_LIB_DIR)
-
-# =============================================================================
-# We're going to explicitely pass these when linking our extensions to:
-# - avoid a linker error if we would specify the libraries using -L and -l
-#   flags since we also specify a isysroot.
-# - avoid the linker warnings which would occur if we would remove the 
-#   isysroot flag.
-# =============================================================================
-
-BOOST_PYTHON_LIB = os.path.join(BOOST_LIB_DIR, "libboost_python-%s.%s" % (BOOST_VERSION, BOOST_LIB_EXT))
 
 # =============================================================================
 # Only now may we import things from the local sandbox and our own tree
@@ -447,9 +401,6 @@ class MiroBuild (py2app):
 
     def fix_install_names(self):
         py_install_name = os.path.join("@executable_path", "..", "Frameworks", "Python.framework", "Versions", PYTHON_VERSION, "Python")
-
-        boost_python_lib = os.path.join("Miro.app", "Contents", "Frameworks", os.path.basename(BOOST_PYTHON_LIB))
-        os.system('install_name_tool -change %s %s %s' % (PYTHON_LIB, py_install_name, boost_python_lib))
 
         fasttypes_mod = os.path.join("Miro.app", "Contents", "Resources", "lib", "python%s" % PYTHON_VERSION, "lib-dynload", "miro", "fasttypes.so")
         os.system('install_name_tool -change %s %s %s' % (PYTHON_LIB, py_install_name, fasttypes_mod))
