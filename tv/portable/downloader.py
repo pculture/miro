@@ -204,7 +204,6 @@ class RemoteDownloader(DDBObject):
         """
         if self.idExists() and self._save_later_dc is not None:
             self.signal_change()
-            self._save_later_dc = None
 
     def _cancel_save_later(self):
         if self._save_later_dc is not None:
@@ -324,7 +323,7 @@ class RemoteDownloader(DDBObject):
             if self.state == old_state:
                 self._save_later()
             else:
-                self._save_now()
+                self.signal_change()
             if finished:
                 for item in self.itemList:
                     item.on_download_finished()
