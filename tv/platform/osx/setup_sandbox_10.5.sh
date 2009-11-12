@@ -27,11 +27,13 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-
 # =============================================================================
 
+./setup_binarykit.sh
+BKIT_VERSION="$(cat binary_kit_version)"
+
 ROOT_DIR=$(pushd ../../../ >/dev/null; pwd; popd >/dev/null)
-BKIT_DIR=$ROOT_DIR/dtv-binary-kit-mac/sandbox
+BKIT_DIR=$(pwd)/miro-binary-kit-osx-$BKIT_VERSION/sandbox
 SBOX_DIR=$ROOT_DIR/sandbox
 WORK_DIR=$SBOX_DIR/pkg
 

@@ -10,12 +10,12 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 #
 # In addition, as a special exception, the copyright holders give
 # permission to link the code of portions of this program with the OpenSSL
@@ -28,24 +28,18 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-OS_VERSION=$(uname -r | cut -c 1)
-BKIT_VERSION="$(cat binary_kit_version)"
+VERSION="$(cat binary_kit_version)"
 
-if [ ! -d "miro-binary-kit-osx-${BKIT_VERSION}" ]
+BINARYKIT="miro-binary-kit-osx-${VERSION}.tar.gz"
+BINARYKITURL="http://pculture.org/binarykits/${BINARYKIT}"
+
+if [ -d "miro-binary-kit-osx-${VERSION}" ]
 then
-    echo "Binary kit miro-binary-kit-osx-${BKIT_VERSION} is not installed.  Run setup_binarykit.sh."
-    exit 1
-fi
-
-if [ $OS_VERSION == "9" ]; then
-    SANDBOX_ROOT=$(pushd ../../../sandbox >/dev/null; pwd; popd >/dev/null)
-    PYTHON=$SANDBOX_ROOT/Library/Frameworks/Python.framework/Versions/2.5/bin/python2.5
+    echo "Binary kit ${BINARYKIT} is already installed."
 else
-    PYTHON_VERSION=2.4
-    PYTHON_ROOT=/Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION
-    PYTHON=$PYTHON_ROOT/bin/python$PYTHON_VERSION
+    echo "Installing ${BINARYKIT}."
+    curl "${BINARYKITURL}" > "${BINARYKIT}"
+    tar -xzvf "${BINARYKIT}"
+    rm "${BINARYKIT}"
+    echo "Binary kit ${BINARYKIT} is installed."
 fi
-
-$PYTHON setup.py py2app -O2 --dist-dir . --force-update "$@"
-
-echo Done.

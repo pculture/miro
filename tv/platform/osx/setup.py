@@ -44,6 +44,13 @@ from glob import glob
 # Find the top of the source tree and set the search path accordingly
 # =============================================================================
 
+BINARY_KIT_VERSION = open("binary_kit_version").read().strip()
+BKIT_DIR = os.path.join(os.getcwd(), "miro-binary-kit-osx-%s" % BINARY_KIT_VERSION)
+
+if not os.path.exists or not os.path.isdir(BKIT_DIR):
+    print "Binary kit %s is missing.  Run 'setup_binarykit.sh'." % BKIT_DIR
+    sys.exit(1)
+
 ROOT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
 ROOT_DIR = os.path.join(ROOT_DIR, '../..')
 ROOT_DIR = os.path.normpath(ROOT_DIR)
@@ -142,7 +149,7 @@ def extract_binaries(source, target, force=True):
         print "    (all skipped, already there)"
     else:
         os.makedirs(target)
-        rootpath = os.path.join(os.path.dirname(ROOT_DIR), 'dtv-binary-kit-mac/%s' % source)
+        rootpath = os.path.join(BKIT_DIR, source)
         binaries = glob(os.path.join(rootpath, '*.tar.gz'))
         if len(binaries) == 0:
             print "    (all skipped, not found in binary kit)"
