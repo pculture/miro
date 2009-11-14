@@ -236,7 +236,13 @@ def get_torrent_info_hash(path):
     try:
         data = f.read()
         metainfo = lt.bdecode(data)
-        infohash = sha(lt.bencode(metainfo['info'])).digest()
+        try:
+            infohash = metainfo['info']
+        except (SystemExit, KeyboardInterrupt):
+            raise
+        except:
+            raise ValueError("%s is not a valid torrent" % path)
+        infohash = sha(lt.bencode(infohash)).digest()
         return infohash
     finally:
         f.close()

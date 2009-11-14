@@ -178,7 +178,7 @@ def parse_command_line_args(args=None):
                 except ValueError:
                     title = _("Invalid Torrent")
                     msg = _(
-                        "The torrent file %(filename)s appears to be corrupt and cannot be opened. [OK]",
+                        "The torrent file %(filename)s appears to be corrupt and cannot be opened.",
                         {"filename": os.path.basename(arg)}
                     )
                     dialogs.MessageBoxDialog(title, msg).run()
