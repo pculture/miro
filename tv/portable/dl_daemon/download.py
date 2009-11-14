@@ -48,7 +48,7 @@ from miro import config
 from miro import prefs
 
 from miro.dl_daemon import command, daemon
-from miro.util import checkF, checkU, stringify
+from miro.util import checkF, checkU, stringify, MAX_TORRENT_SIZE
 from miro.plat.utils import get_available_bytes_for_movies, utf8_to_filename
 
 chatter = True
@@ -1083,23 +1083,44 @@ class BTDownloader(BGDownloader):
                     raise RuntimeError()
                 name = metainfo['info']['name']
             except RuntimeError:
-                self.handleError(_("Corrupt Torrent"),
-                                 _("The torrent file at %(url)s was not valid") % {"url": stringify(self.url)})
+                self.handleCorruptTorrent()
                 return
             self.shortFilename = utf8_to_filename(name)
             self.pickInitialFilename(suffix="", torrent=True)
         self.updateClient()
         self._resumeTorrent()
 
+    def handleCorruptTorrent(self):
+        self.handleError(_("Corrupt Torrent"),
+                         _("The torrent file at %(url)s was not valid") % {"url": stringify(self.url)})
+
     def handleMetainfo(self, metainfo):
         self.metainfo = metainfo
         self.gotMetainfo()
 
+    def _cleanup_description_vars(self):
+        del self.description_chunks
+        del self.description_size
+        del self.description_client
+
+    def on_description_data(self, data):
+        self.description_chunks.append(data)
+        self.description_size += len(data)
+        if self.description_size > MAX_TORRENT_SIZE:
+            # If we get more than 10M of data, something's wrong.  Bailout
+            # here (see #12301 for details)
+            self.description_client.cancel()
+            self.handleCorruptTorrent()
+            self._cleanup_description_vars()
+
     def onDescriptionDownload(self, info):
-        self.handleMetainfo(info['body'])
+        body = ''.join(self.description_chunks)
+        self.handleMetainfo(body)
+        self._cleanup_description_vars()
 
     def onDescriptionDownloadFailed(self, exception):
         self.handleNetworkError(exception)
+        self._cleanup_description_vars()
 
     def getMetainfo(self):
         if self.metainfo is None:
@@ -1122,8 +1143,12 @@ class BTDownloader(BGDownloader):
 
                 self.handleMetainfo(metainfo)
             else:
-                httpclient.grabURL(self.get_url(), self.onDescriptionDownload,
-                        self.onDescriptionDownloadFailed)
+                self.description_chunks = []
+                self.description_size = 0
+                self.description_client = httpclient.grabURL(self.get_url(),
+                        self.onDescriptionDownload,
+                        self.onDescriptionDownloadFailed,
+                        bodyDataCallback=self.on_description_data)
         else:
             self.gotMetainfo()
                 

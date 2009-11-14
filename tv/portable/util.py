@@ -64,6 +64,7 @@ PREFERRED_TYPES = [
 PREFERRED_TYPES_ORDER = dict((type, i) for i, type in
         enumerate(PREFERRED_TYPES))
 
+MAX_TORRENT_SIZE = 10 * (2**20)
 
 def get_nice_stack():
     """Get a stack trace that's a easier to read that the full one."""
