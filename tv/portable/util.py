@@ -232,6 +232,10 @@ def make_dummy_socket_pair():
             port += 10
 
 def get_torrent_info_hash(path):
+    if os.path.getsize(path) > MAX_TORRENT_SIZE:
+        # if the file is larger than 10M, bail out.  (see #12301)
+        raise ValueError("%s is not a valid torrent" % path)
+
     import libtorrent as lt
     f = open(path, 'rb')
     try:
