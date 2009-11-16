@@ -124,23 +124,9 @@ $SBOX_DIR/bin/bjam  --prefix=$SBOX_DIR \
                     toolset=darwin \
                     macosx-version=$TARGET_OS_VERSION \
                     architecture=combined \
-                    link=shared \
+                    link=static \
                     release \
                     install
-
-# Fix the dylib ids:
-for lib in $SBOX_DIR/lib/*.dylib; do
-    if [ ! -L $lib ]; then
-        install_name_tool -id $lib $lib
-    fi
-done
-
-# Fix boost_filesystem library dependencies:
-BOOST_SYSTEM_LIB=$(ls $SBOX_DIR/lib/libboost_system*-$BOOST_VERSION.dylib)
-BOOST_SYSTEM_LIB_BASENAME=$(basename $BOOST_SYSTEM_LIB)
-BOOST_FILESYSTEM_LIB=$(ls $SBOX_DIR/lib/libboost_filesystem*-$BOOST_VERSION.dylib)
-
-install_name_tool -change $BOOST_SYSTEM_LIB_BASENAME $BOOST_SYSTEM_LIB $BOOST_FILESYSTEM_LIB
 
 export BOOST_ROOT=$WORK_DIR/boost_$BOOST_VERSION_FULL/
 

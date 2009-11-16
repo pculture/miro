@@ -47,8 +47,5 @@ rm miro
 # plat/frontends/widgets/
 rm plat/frontends/widgets/httpobserver.c plat/frontends/widgets/mozprompt.h plat/frontends/widgets/mozprompt.c plat/frontends/widgets/pluginsdir.cpp plat/frontends/widgets/windowcreator.cpp
 
-# portable/ stuff
-rm ../../portable/sorts.c
-
 # portable/frontends/widgets/gtk/
 rm ../../portable/frontends/widgets/gtk/pygtkhacks.c

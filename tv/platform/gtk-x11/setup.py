@@ -121,6 +121,19 @@ XULRUNNER_19 = None
 ## End of configuration. No user-serviceable parts inside                    ##
 ###############################################################################
 
+import sys
+
+# verify we have required bits for compiling Miro
+
+try:
+    from Pyrex.Compiler import Version
+    if Version.version.split(".") < ["0", "9", "6", "4"]:
+        print "Pyrex 0.9.6.4 or greater required.  You have version %s." % Version.version
+        sys.exit(1)
+except ImportError:
+    print "Pyrex not found.  Please install Pyrex."
+    sys.exit(1)
+
 from distutils.cmd import Command
 from distutils.core import setup
 from distutils.extension import Extension
@@ -134,7 +147,6 @@ import os
 import pwd
 import subprocess
 import platform
-import sys
 import re
 import time
 import shutil
@@ -161,21 +173,18 @@ def get_root_dir():
         root_try = os.path.abspath(os.path.join(root_try, '..'))
     return root_dir
 
-def is_x64():
-    return platform.machine() == "x86_64" or platform.machine() == "amd64"
-
 root_dir = get_root_dir()
 portable_dir = os.path.join(root_dir, 'portable')
 portable_frontend_dir = os.path.join(portable_dir, 'frontends')
 portable_xpcom_dir = os.path.join(portable_frontend_dir, 'widgets', 'gtk',
-        'xpcom')
+                                  'xpcom')
 dl_daemon_dir = os.path.join(portable_dir, 'dl_daemon')
 test_dir = os.path.join(portable_dir, 'test')
 resource_dir = os.path.join(root_dir, 'resources')
 platform_dir = os.path.join(root_dir, 'platform', 'gtk-x11')
 platform_package_dir = os.path.join(platform_dir, 'plat')
 platform_widgets_dir = os.path.join(platform_package_dir, 'frontends',
-        'widgets')
+                                    'widgets')
 xine_dir = os.path.join(platform_dir, 'xine')
 
 # insert the root_dir to the beginning of sys.path so that we can
@@ -238,7 +247,6 @@ def get_command_output(cmd, warnOnStderr=True, warnOnReturnCode=True):
     """Wait for a command and return its output.  Check for common errors and
     raise an exception if one of these occurs.
     """
-
     p = subprocess.Popen(cmd, shell=True, close_fds=True,
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = p.communicate()
@@ -374,7 +382,9 @@ def get_mozilla_stuff():
             gtkmozembed_lib = 'firefox-gtkmozembed'
 
         else:
-            sys.exit("Can't find libxul, xulrunner-xpcom, seamonkey-xpcom, mozilla-xpcom or firefox-xpcom")
+            print "Can't find libxul, xulrunner-xpcom, seamonkey-xpcom, mozilla-xpcom or firefox-xpcom"
+            print "One of these is required."
+            sys.exit(1)
 
     print "using xpcom_lib: ", repr(xpcom_lib)
     print "using gtkmozembed_lib: ", repr(gtkmozembed_lib)
@@ -468,6 +478,9 @@ pygtkhacks_ext = \
             'pygobject-2.0 gtk+-2.0 glib-2.0 gthread-2.0')
     )
 
+fasttypes_ext = Extension("miro.fasttypes", [
+    os.path.join(portable_dir, 'fasttypes.c')])
+
 mozprompt_ext = \
     Extension("miro.plat.frontends.widgets.mozprompt",
         [
@@ -514,6 +527,9 @@ pluginsdir_ext = \
 #### Xine Extension ####
 xine_options = parse_pkg_config('pkg-config',
         'libxine pygtk-2.0 gtk+-2.0 glib-2.0 gthread-2.0')
+# this doesn't get used, but if xv isn't on the system, it causes the
+# compile to bail.
+xv_options = parse_pkg_config('pkg-config', 'xv')
 
 # If you get XINE crashes, uncommenting this might fix it. It's
 # necessary on Debian Etch and Ubuntu Feisty right now.
@@ -741,6 +757,7 @@ ext_modules = []
 ext_modules.append(xine_ext)
 ext_modules.append(xlib_ext)
 ext_modules.append(pygtkhacks_ext)
+ext_modules.append(fasttypes_ext)
 ext_modules.append(mozprompt_ext)
 ext_modules.append(httpobserver_ext)
 ext_modules.append(windowcreator_ext)
