@@ -1106,9 +1106,10 @@ class BTDownloader(BGDownloader):
     def on_description_data(self, data):
         self.description_chunks.append(data)
         self.description_size += len(data)
-        if self.description_size > MAX_TORRENT_SIZE:
-            # If we get more than 10M of data, something's wrong.  Bailout
-            # here (see #12301 for details)
+        if (self.description_size > MAX_TORRENT_SIZE or
+                self.description_chunks[0][0] != 'd'):
+            # Bailout if we get too much data or it doesn't begin with "d"
+            # (see #12301 for details)
             self.description_client.cancel()
             self.handleCorruptTorrent()
             self._cleanup_description_vars()
