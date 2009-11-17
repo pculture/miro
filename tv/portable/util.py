@@ -64,7 +64,7 @@ PREFERRED_TYPES = [
 PREFERRED_TYPES_ORDER = dict((type, i) for i, type in
         enumerate(PREFERRED_TYPES))
 
-MAX_TORRENT_SIZE = 10 * (2**20)
+MAX_TORRENT_SIZE = 500 * (2**10) # 500k
 
 def get_nice_stack():
     """Get a stack trace that's a easier to read that the full one."""
@@ -233,7 +233,7 @@ def make_dummy_socket_pair():
 
 def get_torrent_info_hash(path):
     if os.path.getsize(path) > MAX_TORRENT_SIZE:
-        # if the file is larger than 10M, bail out.  (see #12301)
+        # file is too large, bailout.  (see #12301)
         raise ValueError("%s is not a valid torrent" % path)
 
     try:
@@ -244,6 +244,9 @@ def get_torrent_info_hash(path):
     f = open(path, 'rb')
     try:
         data = f.read()
+        if data[0] != 'd':
+            # File doesn't start with 'd', bailout  (see #12301)
+            raise ValueError("%s is not a valid torrent" % path)
         metainfo = lt.bdecode(data)
         infohash = sha(lt.bencode(metainfo['info'])).digest()
         return infohash
