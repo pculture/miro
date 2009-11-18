@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -264,7 +264,7 @@ msgstr "Pausa la descarrega"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:124
 #: ../../portable/frontends/widgets/itemcontextmenu.py:253
 msgid "Resume Download"
-msgstr "Reprén descàrrega"
+msgstr "Reprèn la baixada"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:128
 #: ../../portable/frontends/widgets/itemcontextmenu.py:223
@@ -1554,7 +1554,7 @@ msgstr "Escollir"
 #: ../../portable/frontends/widgets/gtk/window.py:539
 #, python-format
 msgid "About %(appname)s"
-msgstr ""
+msgstr "Quant a %(appname)s"
 
 #: ../../portable/frontends/widgets/gtk/window.py:554
 #, python-format
@@ -1566,7 +1566,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/gtk/window.py:593
 #: ../../portable/dialogs.py:86
 msgid "Close"
-msgstr "Tancar"
+msgstr "Tanca"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -1751,7 +1751,7 @@ msgstr "Pausa-ho tot"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:493
 msgid "Resume All"
-msgstr "Reprén tot"
+msgstr "Reprèn-ho tot"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:500
 msgid "Cancel All"
@@ -1759,7 +1759,7 @@ msgstr "Cancel·lar tots"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:507
 msgid "Download Settings"
-msgstr ""
+msgstr "Paràmetres de baixada"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:553
 #, python-format
@@ -2076,7 +2076,7 @@ msgstr "Ara no"
 
 #: ../../portable/dialogs.py:112
 msgid "Close to Tray"
-msgstr "Tanca al la safata"
+msgstr "Minimitza a l'àrea de notificació"
 
 #: ../../portable/dialogs.py:113
 msgid "Launch Miro"
@@ -2266,7 +2266,7 @@ msgstr "Crea un cana_l de cerca"
 
 #: ../../portable/menubar.py:215
 msgid "New _Folder"
-msgstr ""
+msgstr "_Carpeta nova"
 
 #: ../../portable/menubar.py:217
 msgid "Re_name"
@@ -2383,7 +2383,7 @@ msgstr ""
 #: ../../portable/menubar.py:270
 #, python-format
 msgid "_About %(name)s"
-msgstr ""
+msgstr "_Quant a %(name)s"
 
 #: ../../portable/menubar.py:272
 msgid "_Donate"
@@ -2399,7 +2399,7 @@ msgstr "Informa d'una errada"
 
 #: ../../portable/menubar.py:280
 msgid "_Translate"
-msgstr "_Traduir"
+msgstr "_Traduïu aquesta aplicació..."
 
 #: ../../portable/menubar.py:282
 msgid "_Planet Miro"
@@ -2852,7 +2852,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
 msgid "When I click the red close button:"
-msgstr "Quan clico el botó vermell de tancar:"
+msgstr "En fer clic al botó de tancament vermell:"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Close to tray so that downloads can continue."

@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n % 100 >= "
 "3 && n % 100 <= 10 ? 3 : n % 100 >= 11 && n % 100 <= 99 ? 4 : 5;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -35,11 +35,11 @@ msgstr "خطأ إتصال: %(msg)s"
 
 #: ../../portable/httpclient.py:111
 msgid "SSL connection error"
-msgstr "خطأ الإتصال SSL"
+msgstr "خطأ في نظام أمن الاتصالات"
 
 #: ../../portable/httpclient.py:115
 msgid "HTTP error"
-msgstr "خطأ HTTP"
+msgstr "خطأ في بروتوكول نقل النص الفائق"
 
 #: ../../portable/httpclient.py:119
 #, python-format
@@ -69,7 +69,7 @@ msgstr "%(host)s  أنهى الإتصال"
 #: ../../portable/httpclient.py:144 ../../portable/httpclient.py:173
 #: ../../portable/downloader.py:299
 msgid "File not found"
-msgstr "يتعذر العثور على الملف"
+msgstr "لم يتم العثور على الملف"
 
 #: ../../portable/httpclient.py:145
 msgid "Got 404 status code"
@@ -95,7 +95,7 @@ msgstr "طلب الأنبوب لم يبدأ"
 
 #: ../../portable/httpclient.py:162
 msgid "Timeout"
-msgstr "انتهت المهلة"
+msgstr "وقت مستقطع"
 
 #: ../../portable/httpclient.py:163
 #, python-format
@@ -205,17 +205,17 @@ msgstr "تشغيل"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just This Item"
-msgstr "عرض هذه المادة فقط"
+msgstr "تشغيل هذه القطعة"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:96
 #: ../../portable/frontends/widgets/itemcontextmenu.py:192
 msgid "Add to Playlist"
-msgstr "الإضافة الى قائمة العرض"
+msgstr "أضف إلى قائمه"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:99
 #: ../../portable/frontends/widgets/application.py:495
 msgid "Rename Item"
-msgstr "تغيير اسم المادة"
+msgstr "أعد تسمية العنصر"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:101
 msgid "Revert Item Name"
@@ -272,7 +272,7 @@ msgstr "استئناف التنزيل"
 #: ../../portable/frontends/widgets/style.py:1102
 #: ../../portable/frontends/widgets/style.py:1113 ../../portable/dialogs.py:97
 msgid "Download"
-msgstr "تنزيل"
+msgstr "نزّل"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:134
 #: ../../portable/frontends/widgets/style.py:240
@@ -304,7 +304,7 @@ msgstr "ملف على القرص"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:148
 msgid "View"
-msgstr "المنظور"
+msgstr "اعرض"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
 #: ../../portable/frontends/widgets/gtk/video.py:266

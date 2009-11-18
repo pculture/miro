@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -182,7 +182,7 @@ msgstr "既存プレーリスト："
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
 msgid "New playlist:"
-msgstr ""
+msgstr "新規プレイリスト"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
@@ -223,12 +223,12 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemcontextmenu.py:103
 #: ../../portable/frontends/widgets/itemcontextmenu.py:199
 msgid "Mark as Unplayed"
-msgstr ""
+msgstr "未再生としてマークする"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:106
 #: ../../portable/frontends/widgets/itemcontextmenu.py:204
 msgid "Mark as Played"
-msgstr ""
+msgstr "再生済みとしてマークする"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:210
@@ -678,7 +678,7 @@ msgstr "自動ダウンロードにキュー"
 #: ../../portable/frontends/widgets/style.py:1153
 #: ../../portable/frontends/widgets/itemlistwidgets.py:721
 msgid "Unplayed"
-msgstr ""
+msgstr "未再生"
 
 #: ../../portable/frontends/widgets/style.py:255
 msgid "Currently Playing"
@@ -986,7 +986,7 @@ msgstr "プレイリストを作成"
 
 #: ../../portable/frontends/widgets/application.py:664
 msgid "Enter a name for the new playlist"
-msgstr "新しいプレイリストの名前を入力"
+msgstr "新規プレイリスト名を入力してください"
 
 #: ../../portable/frontends/widgets/application.py:685
 msgid "Create Playlist Folder"
@@ -1049,8 +1049,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "プレイリストを削除"
 
 #: ../../portable/frontends/widgets/application.py:753
 #, python-format
@@ -1225,7 +1224,7 @@ msgstr "ビットトレント:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:361
 msgid "Limit upstream bandwidth to:"
-msgstr "上流帯域の制限:"
+msgstr "アップロード速度の制限："
 
 #: ../../portable/frontends/widgets/prefpanel.py:372
 #: ../../portable/frontends/widgets/prefpanel.py:383
@@ -1234,7 +1233,7 @@ msgstr "KB/s"
 
 #: ../../portable/frontends/widgets/prefpanel.py:375
 msgid "Limit downstream bandwidth to:"
-msgstr "下流帯域の制限:"
+msgstr "ダウンロード速度の制限："
 
 #: ../../portable/frontends/widgets/prefpanel.py:386
 msgid "Limit torrent connections to:"
@@ -1777,7 +1776,7 @@ msgstr "自動ダウンロード"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:631
 msgid "Share feed"
-msgstr ""
+msgstr "フィードを共有"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:637
 msgid "Settings"
@@ -1785,7 +1784,7 @@ msgstr "設定"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:643
 msgid "Remove feed"
-msgstr ""
+msgstr "フィードを削除"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:719
 msgid "Unwatched"
@@ -1854,7 +1853,7 @@ msgstr "ダウンロードにキュー"
 
 #: ../../portable/messagehandler.py:1299
 msgid "Subscribed to new feed:"
-msgstr ""
+msgstr "新規フィードを登録:"
 
 #: ../../portable/messagehandler.py:1302
 msgid "Subscribed to new feeds:"

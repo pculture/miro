@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -162,7 +162,7 @@ msgstr "오디오"
 #: ../../portable/frontends/widgets/statictabs.py:113
 #: ../../portable/frontends/widgets/itemlistcontroller.py:528
 msgid "Other"
-msgstr ""
+msgstr "기타"
 
 #: ../../portable/frontends/widgets/statictabs.py:118
 msgid "Downloading"
@@ -617,7 +617,7 @@ msgstr "파일 보기"
 
 #: ../../portable/frontends/widgets/style.py:239
 msgid "Display Contents"
-msgstr ""
+msgstr "컨텐츠 표시하기"
 
 #: ../../portable/frontends/widgets/style.py:241
 msgid "File URL"
@@ -2480,7 +2480,7 @@ msgstr "제목 없음"
 
 #: ../../portable/item.py:1239
 msgid "Contents appear in the library"
-msgstr ""
+msgstr "라이브러리에 컨텐츠가 나타남"
 
 #: ../../portable/item.py:1244
 msgid "Contents:"

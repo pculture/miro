@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "(n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -64,7 +64,7 @@ msgstr "Tikėtasi CRLF, gauta %(character)r"
 #: ../../portable/httpclient.py:139
 #, python-format
 msgid "%(host)s closed connection"
-msgstr "%(host)s susijungimą išjungė"
+msgstr "%(host)s susijungimą nutraukė"
 
 #: ../../portable/httpclient.py:144 ../../portable/httpclient.py:173
 #: ../../portable/downloader.py:299
@@ -496,6 +496,12 @@ msgid ""
 "This way, downloads in progress can finish downloading and new media files "
 "can be downloaded in the background, ready when you want to watch."
 msgstr ""
+"Kiti toliau esantys keli paveiksliukai padės jums nustatyti %(name)s "
+"geresniam veikimui. \n"
+"\n"
+"Mes rekomenduojame nustatyti %(name)s paleidimą kiekvieno kompiuterio "
+"įjungimo metu. Šiuo būdu esami ir nauji siuntimai bus vykdomi foniniu "
+"rėžimu. Ir bus paruošti peržiūrai jums tinkamiausiu metu."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:138
 #, python-format
@@ -531,6 +537,10 @@ msgid ""
 "\n"
 "Would you like %(name)s to look for media files on your computer?"
 msgstr ""
+"%(name)s gali surasti visus media failus jūsų kompiuteryje ir padėti juos "
+"sukelti į kolekciją.\n"
+"\n"
+"Ar jūs norite leisti %(name)s ieškoti media failų jūsų kompiuteryje?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:185
 msgid "Restrict to all my personal files."
@@ -924,12 +934,12 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:400
 #, python-format
 msgid "%(appname)s is up to date"
-msgstr ""
+msgstr "%(appname)s yra naujausia"
 
 #: ../../portable/frontends/widgets/application.py:402
 #, python-format
 msgid "%(appname)s is up to date!"
-msgstr ""
+msgstr "%(appname)s yra naujausia!"
 
 #: ../../portable/frontends/widgets/application.py:426
 msgid "Remove item"
@@ -961,7 +971,14 @@ msgid_plural ""
 "Some of these items are folders.  Delete/Removeing a folder will "
 "delete/remove it's contents"
 msgstr[0] ""
+"Vienas iš šių įrašų yra katalogas. Trinant/Šalinant katalogus bus "
+"ištrintas/pašalintas jų turinys"
 msgstr[1] ""
+"Keletas iš šių įrašų yra katalogai. Trinant/Šalinant katalogus bus "
+"ištrintas/pašalintas jų turinys"
+msgstr[2] ""
+"Keletas iš šių įrašų yra katalogai. Trinant/Šalinant katalogus bus "
+"ištrintas/pašalintas jų turinys"
 
 #: ../../portable/frontends/widgets/application.py:455
 #, python-format
@@ -977,7 +994,13 @@ msgid ""
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
 msgstr[0] ""
+"Vienas iš šių įrašų yra katalogas. Trinant katalogus bus ištrintas jų turinys"
 msgstr[1] ""
+"Keletas iš šių įrašų yra katalogai. Trinant katalogus bus ištrintas jų "
+"turinys"
+msgstr[2] ""
+"Keletas iš šių įrašų yra katalogai. Trinant katalogus bus ištrintas jų "
+"turinys"
 
 #: ../../portable/frontends/widgets/application.py:496
 msgid "Enter the new name for the item"
@@ -1389,7 +1412,7 @@ msgstr "1 mėnuo"
 
 #: ../../portable/frontends/widgets/prefpanel.py:593
 msgid "By default, video and audio items expire after:"
-msgstr ""
+msgstr "Standartiškai video ir audio galiojimo laikas baigiasi po:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:602
 msgid "Always play videos in a separate window."
@@ -1880,7 +1903,7 @@ msgstr "Nematytas"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:730
 msgid "View|All"
-msgstr ""
+msgstr "Rodyti|Visus"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:732
 msgid "Non Feed"
@@ -1924,7 +1947,7 @@ msgstr "Duomenų bazės dydis:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:110
 msgid "Total db objects in memory:"
-msgstr ""
+msgstr "Iš viso db objektų atmintyje:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:118
 #: ../../portable/menubar.py:276

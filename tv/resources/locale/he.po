@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -117,7 +117,7 @@ msgstr "הקובץ \"%(path)s\" אינו קיים"
 
 #: ../../portable/httpclient.py:178
 msgid "Read error"
-msgstr "שגיאה בקריאה"
+msgstr "שגיאת קריאה"
 
 #: ../../portable/httpclient.py:179
 #, python-format
@@ -134,7 +134,7 @@ msgstr "חיבור נסגר"
 
 #: ../../portable/httpclient.py:829
 msgid "Unknown"
-msgstr "לא יודע"
+msgstr "לא ידוע"
 
 #: ../../portable/httpclient.py:830
 msgid "Internal Error: Not ready to send"

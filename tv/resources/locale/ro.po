@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1 ? 0: (((n % 100 > 19) || ((n % 100 "
 "== 0) && (n != 0))) ? 2: 1));\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -39,7 +39,7 @@ msgstr "Eroare SSL la conectare"
 
 #: ../../portable/httpclient.py:115
 msgid "HTTP error"
-msgstr "eroare HTTP"
+msgstr "Eroare HTTP"
 
 #: ../../portable/httpclient.py:119
 #, python-format
@@ -69,7 +69,7 @@ msgstr "%(host)s a închis conexiunea"
 #: ../../portable/httpclient.py:144 ../../portable/httpclient.py:173
 #: ../../portable/downloader.py:299
 msgid "File not found"
-msgstr "Fișier negăsit"
+msgstr "Fişier negăsit"
 
 #: ../../portable/httpclient.py:145
 msgid "Got 404 status code"
@@ -95,7 +95,7 @@ msgstr "Cererea „pipeline” nu a pornit"
 
 #: ../../portable/httpclient.py:162
 msgid "Timeout"
-msgstr "Timpul alocat a expirat"
+msgstr "Timp alocat expirat"
 
 #: ../../portable/httpclient.py:163
 #, python-format
@@ -104,7 +104,7 @@ msgstr "Conectarea la %(host)s a durat prea mult"
 
 #: ../../portable/httpclient.py:167
 msgid "Invalid URL"
-msgstr "URL incorect"
+msgstr "URL invalid"
 
 #: ../../portable/httpclient.py:168
 #, python-format
@@ -118,7 +118,7 @@ msgstr "Fișierul „%(path)s” nu există"
 
 #: ../../portable/httpclient.py:178
 msgid "Read error"
-msgstr "Eroare la citire"
+msgstr "Eroare de citire"
 
 #: ../../portable/httpclient.py:179
 #, python-format
@@ -131,11 +131,11 @@ msgstr "Code de eroare necunoscut"
 
 #: ../../portable/httpclient.py:408
 msgid "Connection closed"
-msgstr "Conexiune închisă"
+msgstr "Conexiunea a fost închisă"
 
 #: ../../portable/httpclient.py:829
 msgid "Unknown"
-msgstr "Necunoscut"
+msgstr "Nescunoscut"
 
 #: ../../portable/httpclient.py:830
 msgid "Internal Error: Not ready to send"
@@ -3009,8 +3009,8 @@ msgid ""
 "You should quit %(appname)s now and start it up again after Adobe Flash has "
 "been installed."
 msgstr ""
-"Navigatorul dumneavoastră va încărca situl web de unde puteți descărca și "
-"instala Adobe Flash.\n"
+"Navigatorul dumneavoastră va încărca site-ul web de unde puteți descărca și "
+"instala Adobe Flash Player.\n"
 "\n"
 "Închideți acum %(appname)s, și porniți-l din nou după ce s-a instalat Adobe "
 "Flash."
@@ -3052,7 +3052,7 @@ msgstr "Eroare la recomandarea elementului"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:196
 msgid "Error Opening Website"
-msgstr "Eroare la deschiderea sitului"
+msgstr "Eroare la deschiderea site-ului"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:201
 #, python-format

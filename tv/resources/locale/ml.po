@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -25,7 +25,7 @@ msgstr ""
 
 #: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
 msgid "Can't connect"
-msgstr ""
+msgstr "ശരിയാക്കാന്‍ കഴിഞില്ല"
 
 #: ../../portable/httpclient.py:105
 #, python-format
@@ -38,7 +38,7 @@ msgstr ""
 
 #: ../../portable/httpclient.py:115
 msgid "HTTP error"
-msgstr ""
+msgstr "HTTP പ്രശ്നം"
 
 #: ../../portable/httpclient.py:119
 #, python-format
@@ -68,7 +68,7 @@ msgstr ""
 #: ../../portable/httpclient.py:144 ../../portable/httpclient.py:173
 #: ../../portable/downloader.py:299
 msgid "File not found"
-msgstr ""
+msgstr "ഫയല്‍ കണ്ടെത്താനായില്ല"
 
 #: ../../portable/httpclient.py:145
 msgid "Got 404 status code"
@@ -94,7 +94,7 @@ msgstr ""
 
 #: ../../portable/httpclient.py:162
 msgid "Timeout"
-msgstr ""
+msgstr "സമയം കഴിഞ്ഞു"
 
 #: ../../portable/httpclient.py:163
 #, python-format
@@ -103,7 +103,7 @@ msgstr ""
 
 #: ../../portable/httpclient.py:167
 msgid "Invalid URL"
-msgstr ""
+msgstr "തെറ്റായ യുആര്‍എല്‍"
 
 #: ../../portable/httpclient.py:168
 #, python-format
@@ -130,11 +130,11 @@ msgstr ""
 
 #: ../../portable/httpclient.py:408
 msgid "Connection closed"
-msgstr ""
+msgstr "ബന്ധം നിലച്ചു"
 
 #: ../../portable/httpclient.py:829
 msgid "Unknown"
-msgstr ""
+msgstr "അപരിചിതം"
 
 #: ../../portable/httpclient.py:830
 msgid "Internal Error: Not ready to send"
@@ -152,7 +152,7 @@ msgstr "ചലച്ചിത്ര തിരയല്‍"
 #: ../../portable/frontends/widgets/statictabs.py:103
 #: ../../portable/frontends/widgets/itemlistcontroller.py:516
 msgid "Video"
-msgstr ""
+msgstr "ചലച്ചിത്രം"
 
 #: ../../portable/frontends/widgets/statictabs.py:108
 #: ../../portable/frontends/widgets/itemlistcontroller.py:522
@@ -162,7 +162,7 @@ msgstr "ശബ്ദം"
 #: ../../portable/frontends/widgets/statictabs.py:113
 #: ../../portable/frontends/widgets/itemlistcontroller.py:528
 msgid "Other"
-msgstr ""
+msgstr "മറ്റുള്ളവ"
 
 #: ../../portable/frontends/widgets/statictabs.py:118
 msgid "Downloading"
@@ -195,12 +195,12 @@ msgstr ""
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:127
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:163
 msgid "Delete"
-msgstr "മായ്ക്കുക"
+msgstr "നീക്കം ചെയ്യുക"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:94
 #: ../../portable/frontends/widgets/itemcontextmenu.py:191
 msgid "Play"
-msgstr "പ്രവര്‍ത്തിപ്പിക്കുക"
+msgstr "പ്ലേ ചെയ്യുക"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just This Item"
@@ -214,7 +214,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemcontextmenu.py:99
 #: ../../portable/frontends/widgets/application.py:495
 msgid "Rename Item"
-msgstr ""
+msgstr "പേരു് മാറ്റുക"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:101
 msgid "Revert Item Name"
@@ -239,7 +239,7 @@ msgstr ""
 #: ../../portable/dialogs.py:108
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:123
 msgid "Keep"
-msgstr ""
+msgstr "സൂക്ഷിക്കുക"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:112
 msgid "Stop Seeding"
@@ -271,22 +271,22 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:1102
 #: ../../portable/frontends/widgets/style.py:1113 ../../portable/dialogs.py:97
 msgid "Download"
-msgstr ""
+msgstr "ഡൗണ്‍ലോഡ്"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:134
 #: ../../portable/frontends/widgets/style.py:240
 msgid "Web Page"
-msgstr ""
+msgstr "വെബ്ബ് താള്"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:136
 #: ../../portable/frontends/widgets/style.py:236
 #: ../../portable/frontends/widgets/gtk/video.py:271
 msgid "Comments"
-msgstr ""
+msgstr "അഭിപ്രായങ്ങള്‍"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:138
 msgid "License"
-msgstr ""
+msgstr "അനുമതിപത്രം"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:141
 msgid "File in Browser"
@@ -303,13 +303,13 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:148
 msgid "View"
-msgstr ""
+msgstr "കാണുക"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
 #: ../../portable/frontends/widgets/gtk/video.py:266
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:119
 msgid "Share"
-msgstr ""
+msgstr "പങ്കിടുക"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:186
 #, python-format
@@ -351,7 +351,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/feedsettingspanel.py:102
 #: ../../portable/frontends/widgets/prefpanel.py:588
 msgid "never"
-msgstr ""
+msgstr "ഒരിക്കലും"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:58
 #, python-format
@@ -434,7 +434,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
-msgstr ""
+msgstr "എല്ലാം നീക്കം ചെയ്യുക"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
@@ -498,7 +498,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:178
 #: ../../portable/dialogs.py:89
 msgid "Yes"
-msgstr "ഉവ്വ്"
+msgstr "അതെ"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:145
 #: ../../portable/frontends/widgets/firsttimedialog.py:177
@@ -508,7 +508,7 @@ msgstr "ഇല്ല"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:153
 msgid "Next >"
-msgstr ""
+msgstr "അടുത്തത് >"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:163
 #, python-format
@@ -535,7 +535,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:192
 #: ../../portable/frontends/widgets/prefpanel.py:438
 msgid "Change"
-msgstr ""
+msgstr "മാറ്റുക"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:197
 msgid "Choose directory to search for media files"
@@ -544,19 +544,19 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:211
 #: ../../portable/frontends/widgets/firsttimedialog.py:290
 msgid "< Previous"
-msgstr ""
+msgstr "< മുന്‍പുള്ളത്"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:223
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:282
 #: ../../portable/feed.py:2300 ../../portable/feed.py:2407
 msgid "Search"
-msgstr "തിരച്ചില്‍"
+msgstr "തെരച്ചില്‍"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:293
 msgid "Finish"
-msgstr ""
+msgstr "സമാപ്തം"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:273
 msgid "Searching for media files"

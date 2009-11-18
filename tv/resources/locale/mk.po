@@ -15,134 +15,134 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
 #, python-format
 msgid "Error: %(msg)s"
-msgstr ""
+msgstr "Грешка: %(msg)s"
 
 #: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
 msgid "Can't connect"
-msgstr ""
+msgstr "Неуспешно поврзување"
 
 #: ../../portable/httpclient.py:105
 #, python-format
 msgid "Connection Error: %(msg)s"
-msgstr ""
+msgstr "Грешка при поврзување: %(msg)s"
 
 #: ../../portable/httpclient.py:111
 msgid "SSL connection error"
-msgstr ""
+msgstr "Грешка при SSL поврзувањето"
 
 #: ../../portable/httpclient.py:115
 msgid "HTTP error"
-msgstr ""
+msgstr "HTTP грешка"
 
 #: ../../portable/httpclient.py:119
 #, python-format
 msgid "Bad Status Line: %(msg)s"
-msgstr ""
+msgstr "Неправилна статусна линија: %(msg)s"
 
 #: ../../portable/httpclient.py:124
 #, python-format
 msgid "Bad Header Line: %(msg)s"
-msgstr ""
+msgstr "Неправилна заглавна линија: %(msg)s"
 
 #: ../../portable/httpclient.py:129
 #, python-format
 msgid "Bad Chunk size: %(msg)s"
-msgstr ""
+msgstr "Неправилна големина на парче: %(msg)s"
 
 #: ../../portable/httpclient.py:134
 #, python-format
 msgid "Expected CRLF got: %(character)r"
-msgstr ""
+msgstr "Очекуваниот CRLF доби: %(character)r"
 
 #: ../../portable/httpclient.py:139
 #, python-format
 msgid "%(host)s closed connection"
-msgstr ""
+msgstr "%(host)s ја затвори врската"
 
 #: ../../portable/httpclient.py:144 ../../portable/httpclient.py:173
 #: ../../portable/downloader.py:299
 msgid "File not found"
-msgstr ""
+msgstr "Датотеката не е пронајдена"
 
 #: ../../portable/httpclient.py:145
 msgid "Got 404 status code"
-msgstr ""
+msgstr "Добивме статусен код 404"
 
 #: ../../portable/httpclient.py:147
 #, python-format
 msgid "Bad Status Code: %(code)s"
-msgstr ""
+msgstr "Неправилен статусен код: %(code)s"
 
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"
-msgstr ""
+msgstr "Неуспешна автентификација"
 
 #: ../../portable/httpclient.py:157
 #: ../../portable/frontends/widgets/crashdialog.py:48
 msgid "Internal Error"
-msgstr ""
+msgstr "Внатрешна грешка"
 
 #: ../../portable/httpclient.py:158
 msgid "Pipeline request never started"
-msgstr ""
+msgstr "Pipeline барањето никогаш не започнало"
 
 #: ../../portable/httpclient.py:162
 msgid "Timeout"
-msgstr ""
+msgstr "Времето истече"
 
 #: ../../portable/httpclient.py:163
 #, python-format
 msgid "Connection to %(host)s timed out"
-msgstr ""
+msgstr "Поврзувањето со %(host)s истече"
 
 #: ../../portable/httpclient.py:167
 msgid "Invalid URL"
-msgstr ""
+msgstr "Неправилен URL"
 
 #: ../../portable/httpclient.py:168
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr ""
+msgstr "\"%(url)s\" е невалидна адреса"
 
 #: ../../portable/httpclient.py:174
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
-msgstr ""
+msgstr "Документот \"%(path)s\" не постои"
 
 #: ../../portable/httpclient.py:178
 msgid "Read error"
-msgstr ""
+msgstr "Грешка при читање"
 
 #: ../../portable/httpclient.py:179
 #, python-format
 msgid "Error while reading from \"%(path)s\""
-msgstr ""
+msgstr "Грешка за време на читање од \"%(path)s\""
 
 #: ../../portable/httpclient.py:376
 msgid "Unknown Error code"
-msgstr ""
+msgstr "Непознат код за грешка"
 
 #: ../../portable/httpclient.py:408
 msgid "Connection closed"
-msgstr ""
+msgstr "Поврзувањето е затворено"
 
 #: ../../portable/httpclient.py:829
 msgid "Unknown"
-msgstr ""
+msgstr "Непознато"
 
 #: ../../portable/httpclient.py:830
 msgid "Internal Error: Not ready to send"
-msgstr ""
+msgstr "Внатрешна грешка: Неспремност за испраќање"
 
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
-msgstr ""
+msgstr "Водич за Miro"
 
 #: ../../portable/frontends/widgets/statictabs.py:97
 #: ../../portable/frontends/widgets/itemlistcontroller.py:433
@@ -152,41 +152,41 @@ msgstr "Пребарувај видеа"
 #: ../../portable/frontends/widgets/statictabs.py:103
 #: ../../portable/frontends/widgets/itemlistcontroller.py:516
 msgid "Video"
-msgstr ""
+msgstr "Видео"
 
 #: ../../portable/frontends/widgets/statictabs.py:108
 #: ../../portable/frontends/widgets/itemlistcontroller.py:522
 msgid "Audio"
-msgstr ""
+msgstr "Аудио"
 
 #: ../../portable/frontends/widgets/statictabs.py:113
 #: ../../portable/frontends/widgets/itemlistcontroller.py:528
 msgid "Other"
-msgstr ""
+msgstr "Останато"
 
 #: ../../portable/frontends/widgets/statictabs.py:118
 msgid "Downloading"
-msgstr ""
+msgstr "Превземање"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
-msgstr ""
+msgstr "Додај список за репродукција"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
 msgid "Add items to an existing playlist or a new one."
-msgstr ""
+msgstr "Додади објекти на постоен или нов список за репродукција."
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
 msgid "Existing playlist:"
-msgstr ""
+msgstr "Постоечки список за репродукција:"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
 msgid "New playlist:"
-msgstr ""
+msgstr "Нов список за репродукција:"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
-msgstr ""
+msgstr "Отстрани од библиотеката"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
 #: ../../portable/frontends/widgets/gtk/video.py:246
@@ -195,40 +195,40 @@ msgstr ""
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:127
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:163
 msgid "Delete"
-msgstr ""
+msgstr "Избриши"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:94
 #: ../../portable/frontends/widgets/itemcontextmenu.py:191
 msgid "Play"
-msgstr ""
+msgstr "Репродуцирај"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just This Item"
-msgstr ""
+msgstr "Репродуцирај го само овој објект"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:96
 #: ../../portable/frontends/widgets/itemcontextmenu.py:192
 msgid "Add to Playlist"
-msgstr ""
+msgstr "Додај на списокот за репродукција"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:99
 #: ../../portable/frontends/widgets/application.py:495
 msgid "Rename Item"
-msgstr ""
+msgstr "Преименувај објект"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:101
 msgid "Revert Item Name"
-msgstr ""
+msgstr "Поврати име на објект"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:103
 #: ../../portable/frontends/widgets/itemcontextmenu.py:199
 msgid "Mark as Unplayed"
-msgstr ""
+msgstr "Означи како нерепродуциран"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:106
 #: ../../portable/frontends/widgets/itemcontextmenu.py:204
 msgid "Mark as Played"
-msgstr ""
+msgstr "Означи како репродуциран"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:210
@@ -239,31 +239,31 @@ msgstr ""
 #: ../../portable/dialogs.py:108
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:123
 msgid "Keep"
-msgstr ""
+msgstr "Задржи"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:112
 msgid "Stop Seeding"
-msgstr ""
+msgstr "Запри го споделувањето"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:114
 msgid "Resume Seeding"
-msgstr ""
+msgstr "Продолжи го споделувањето"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:117
 #: ../../portable/frontends/widgets/itemcontextmenu.py:239
 #: ../../portable/frontends/widgets/itemcontextmenu.py:257
 msgid "Cancel Download"
-msgstr ""
+msgstr "Откажи превземање"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:121
 #: ../../portable/frontends/widgets/itemcontextmenu.py:240
 msgid "Pause Download"
-msgstr ""
+msgstr "Паузирај го превземањето"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:124
 #: ../../portable/frontends/widgets/itemcontextmenu.py:253
 msgid "Resume Download"
-msgstr ""
+msgstr "Продолжи го превземањето"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:128
 #: ../../portable/frontends/widgets/itemcontextmenu.py:223
@@ -271,212 +271,213 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:1102
 #: ../../portable/frontends/widgets/style.py:1113 ../../portable/dialogs.py:97
 msgid "Download"
-msgstr ""
+msgstr "Превземање"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:134
 #: ../../portable/frontends/widgets/style.py:240
 msgid "Web Page"
-msgstr ""
+msgstr "Веб страница"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:136
 #: ../../portable/frontends/widgets/style.py:236
 #: ../../portable/frontends/widgets/gtk/video.py:271
 msgid "Comments"
-msgstr ""
+msgstr "Коментари"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:138
 msgid "License"
-msgstr ""
+msgstr "Лиценца"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:141
 msgid "File in Browser"
-msgstr ""
+msgstr "Документ во пребарувачот"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:143
 #, python-format
 msgid "File in %(progname)s"
-msgstr ""
+msgstr "Документ во %(progname)s"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:145
 msgid "File on Disk"
-msgstr ""
+msgstr "Документ на дискот"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:148
 msgid "View"
-msgstr ""
+msgstr "Види"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
 #: ../../portable/frontends/widgets/gtk/video.py:266
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:119
 msgid "Share"
-msgstr ""
+msgstr "Сподели"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:186
 #, python-format
 msgid "%(count)d Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d превземен објект"
+msgstr[1] "%(count)d превземени објекти"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:215
 #, python-format
 msgid "%(count)d Available Item"
 msgid_plural "%(count)d Available Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d достапен објект"
+msgstr[1] "%(count)d достапни објекти"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:228
 #, python-format
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d превземање на објект"
+msgstr[1] "%(count)d превземања на објекти"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:245
 #, python-format
 msgid "%(count)d Paused Item"
 msgid_plural "%(count)d Paused Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d паузиран објект"
+msgstr[1] "%(count)d паузирани објекти"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:263
 msgid "Restart Upload"
-msgstr ""
+msgstr "Рестартирај го испраќањето"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:277
 msgid "Remove From Playlist"
-msgstr ""
+msgstr "Отстрани од список за репродукција"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:55
 #: ../../portable/frontends/widgets/feedsettingspanel.py:102
 #: ../../portable/frontends/widgets/prefpanel.py:588
 msgid "never"
-msgstr ""
+msgstr "никогаш"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:58
 #, python-format
 msgid "%(count)d hour ago"
 msgid_plural "%(count)d hours ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "пред %(count)d час"
+msgstr[1] "пред %(count)d часови"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:64
 #, python-format
 msgid "%(count)d day ago"
 msgid_plural "%(count)d days ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "пред %(count)d ден"
+msgstr[1] "Пред %(count)d денови"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:70
 #, python-format
 msgid "%(count)d month ago"
 msgid_plural "%(count)d months ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "пред %(count)d месец"
+msgstr[1] "преди %(count)d месеци"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Videos:"
-msgstr ""
+msgstr "Авто-истекувачки видеа:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:95
 #, python-format
 msgid "Watched %(expiration)s (Default)"
-msgstr ""
+msgstr "Гледани %(expiration)s (Default)"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
-msgstr ""
+msgstr "Гледани пред 1 ден"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr ""
+msgstr "Гледани пред 3 дена"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
-msgstr ""
+msgstr "Гледани пред 6 дена"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:100
 msgid "Watched 10 days ago"
-msgstr ""
+msgstr "Гледани пред 10 дена"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
-msgstr ""
+msgstr "Гледани пред 1 месец"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
-msgstr ""
+msgstr "Застарени Feed објекти:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:139
 #, python-format
 msgid "Keep %(number)s (Default)"
-msgstr ""
+msgstr "Чувај ги %(number)s (Default)"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:141
 msgid "Keep 0"
-msgstr ""
+msgstr "Зачувај 0"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:142
 msgid "Keep 20"
-msgstr ""
+msgstr "Зачувај 20"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:143
 msgid "Keep 50"
-msgstr ""
+msgstr "Зачувај 50"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:144
 msgid "Keep 100"
-msgstr ""
+msgstr "Зачувај 100"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:145
 msgid "Keep 1000"
-msgstr ""
+msgstr "Зачувај 1000"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
-msgstr ""
+msgstr "Отстрани сѐ"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
-msgstr ""
+msgstr "Старите објекти беа отстранети."
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause Auto-Downloading when this many items are unplayed:"
 msgstr ""
+"Паузирај авто-превземање, кога оволкав број објекти не се репродуцирани:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
-msgstr ""
+msgstr "1 нерепродуциран објект"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:198
 msgid "3 unplayed items"
-msgstr ""
+msgstr "3 нерепродуцирани објекти"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:199
 msgid "5 unplayed items"
-msgstr ""
+msgstr "5 нерепродуцирани објекти"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:200
 msgid "10 unplayed items"
-msgstr ""
+msgstr "10 нерепродуцирани објекти"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:201
 msgid "15 unplayed items"
-msgstr ""
+msgstr "15 нерепродуцирани објекти"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:241
 msgid "Feed Settings"
-msgstr ""
+msgstr "Нагодувања за списоците со информации"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:63
 #, python-format
 msgid "%(name)s First Time Setup"
-msgstr ""
+msgstr "%(name)s Првично нагодување"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:122
 #, python-format
 msgid "Welcome to the %(name)s First Time Setup"
-msgstr ""
+msgstr "Добредојдовте во првичното нагодување на %(name)s"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:126
 #, python-format
@@ -488,32 +489,38 @@ msgid ""
 "This way, downloads in progress can finish downloading and new media files "
 "can be downloaded in the background, ready when you want to watch."
 msgstr ""
+"Следните екрани ќе Ви помогнат да го нагодите %(name)s за да работи најдобро "
+"за Вас.\n"
+"Ви препорачуваме да го вклучите %(name)s со вклучувањето на Вашиот "
+"компјутер. На тој начин активните превземања можат да се завршат и нови "
+"медијски документи можат да бидат превземени во позадина, за да бидат "
+"спремни за репродукција кога вие ќе сакате."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:138
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
-msgstr ""
+msgstr "Дали сакате да го вклучите %(name)s на почеток?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:144
 #: ../../portable/frontends/widgets/firsttimedialog.py:178
 #: ../../portable/dialogs.py:89
 msgid "Yes"
-msgstr ""
+msgstr "Да"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:145
 #: ../../portable/frontends/widgets/firsttimedialog.py:177
 #: ../../portable/dialogs.py:90
 msgid "No"
-msgstr ""
+msgstr "Не"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:153
 msgid "Next >"
-msgstr ""
+msgstr "Следно >"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:163
 #, python-format
 msgid "Completing the %(name)s First Time Setup"
-msgstr ""
+msgstr "Завршување на првичното нагодување на %(name)s"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:167
 #, python-format
@@ -523,63 +530,66 @@ msgid ""
 "\n"
 "Would you like %(name)s to look for media files on your computer?"
 msgstr ""
+"%(name)s може да ги пронајде сите медија документи на Вашиот компјутер за да "
+"Ви помогне да ја организирате Вашата колекција.\n"
+"Дали сакате %(name)s да ги бара медиа документите на Вашиот компјутер?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:185
 msgid "Restrict to all my personal files."
-msgstr ""
+msgstr "Ограничи само на моите лични документи."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:186
 msgid "Search custom folders:"
-msgstr ""
+msgstr "Пребарувај во останати папки:"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:192
 #: ../../portable/frontends/widgets/prefpanel.py:438
 msgid "Change"
-msgstr ""
+msgstr "Промени"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:197
 msgid "Choose directory to search for media files"
-msgstr ""
+msgstr "Избери папка во која ќе се бараат медиа фајлови"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:211
 #: ../../portable/frontends/widgets/firsttimedialog.py:290
 msgid "< Previous"
-msgstr ""
+msgstr "< Претходно"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:223
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:282
 #: ../../portable/feed.py:2300 ../../portable/feed.py:2407
 msgid "Search"
-msgstr ""
+msgstr "Барај"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:293
 msgid "Finish"
-msgstr ""
+msgstr "Заврши"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:273
 msgid "Searching for media files"
-msgstr ""
+msgstr "Пребарување за медиа документи"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:283
 #: ../../portable/dialogs.py:87
 msgid "Cancel"
-msgstr ""
+msgstr "Откажи"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:321
 #, python-format
 msgid "parsed %(count)s file"
 msgid_plural "parsed %(count)s files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "анализиран %(count)s документ"
+msgstr[1] "анализирани %(count)s документи"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:326
 #, python-format
 msgid "found %(count)s media file"
 msgid_plural "found %(count)s media files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "најден е %(count)s медиа документ"
+msgstr[1] "најдени се %(count)s медиа документи"
 
 #: ../../portable/frontends/widgets/crashdialog.py:54
 #, python-format
@@ -587,110 +597,114 @@ msgid ""
 "%(appname)s has encountered an internal error.  You can help us track down "
 "this problem and fix it by submitting an error report."
 msgstr ""
+"%(appname)s налета на вантрешна грешка. Можете да ни помогнете да го "
+"откриеме и поправиме овој проблем со испраќање на извештај за грешка."
 
 #: ../../portable/frontends/widgets/crashdialog.py:63
 msgid ""
 "Include entire program database including all video and feed metadata with "
 "crash report"
 msgstr ""
+"Вклучи ја целата програмска база на податоци вклучувајќи ги и сите "
+"метаподатоци за видео и инфо-списоци со извештајот за грешка."
 
 #: ../../portable/frontends/widgets/crashdialog.py:68
 msgid "Describe what you were doing when you got this error:"
-msgstr ""
+msgstr "Опишете што правевте кога се случи оваа грешка:"
 
 #: ../../portable/frontends/widgets/style.py:232
 msgid "From"
-msgstr ""
+msgstr "Од"
 
 #: ../../portable/frontends/widgets/style.py:233
 msgid "File name:"
-msgstr ""
+msgstr "Име на датотека:"
 
 #: ../../portable/frontends/widgets/style.py:234
 msgid "Show More"
-msgstr ""
+msgstr "Покажи повеќе"
 
 #: ../../portable/frontends/widgets/style.py:235
 msgid "Show Less"
-msgstr ""
+msgstr "Покажи помалку"
 
 #: ../../portable/frontends/widgets/style.py:238
 #, python-format
 msgid "Reveal in %(progname)s"
-msgstr ""
+msgstr "Покажи во %(progname)s"
 
 #: ../../portable/frontends/widgets/style.py:238
 #: ../../portable/frontends/widgets/displays.py:390
 msgid "Reveal File"
-msgstr ""
+msgstr "Покажи документ"
 
 #: ../../portable/frontends/widgets/style.py:239
 msgid "Display Contents"
-msgstr ""
+msgstr "Покажи ја содржината"
 
 #: ../../portable/frontends/widgets/style.py:241
 msgid "File URL"
-msgstr ""
+msgstr "URL на документот"
 
 #: ../../portable/frontends/widgets/style.py:242
 msgid "License Page"
-msgstr ""
+msgstr "Лиценцна страница"
 
 #: ../../portable/frontends/widgets/style.py:243
 msgid "File Type"
-msgstr ""
+msgstr "Тип на датотека"
 
 #: ../../portable/frontends/widgets/style.py:244
 msgid "Seeders"
-msgstr ""
+msgstr "Споделувачи"
 
 #: ../../portable/frontends/widgets/style.py:245
 msgid "Leechers"
-msgstr ""
+msgstr "Превземачи"
 
 #: ../../portable/frontends/widgets/style.py:246
 msgid "Upload Rate"
-msgstr ""
+msgstr "Брзина на праќање"
 
 #: ../../portable/frontends/widgets/style.py:247
 msgid "Upload Total"
-msgstr ""
+msgstr "Вкупно испратено"
 
 #: ../../portable/frontends/widgets/style.py:248
 msgid "Down Rate"
-msgstr ""
+msgstr "Брзина на превземање"
 
 #: ../../portable/frontends/widgets/style.py:249
 msgid "Down Total"
-msgstr ""
+msgstr "Вкупно превземање"
 
 #: ../../portable/frontends/widgets/style.py:251
 msgid "Download Torrent"
-msgstr ""
+msgstr "Превземи торент"
 
 #: ../../portable/frontends/widgets/style.py:252
 #: ../../portable/dl_daemon/download.py:550
 msgid "Error"
-msgstr ""
+msgstr "Грешка"
 
 #: ../../portable/frontends/widgets/style.py:253
 msgid "queued for autodownload"
-msgstr ""
+msgstr "додадено за авто-превземање"
 
 #: ../../portable/frontends/widgets/style.py:254
 #: ../../portable/frontends/widgets/style.py:1153
 #: ../../portable/frontends/widgets/itemlistwidgets.py:721
 msgid "Unplayed"
-msgstr ""
+msgstr "Нерепродуциран"
 
 #: ../../portable/frontends/widgets/style.py:255
 msgid "Currently Playing"
-msgstr ""
+msgstr "Се репродуцира во моментот"
 
 #: ../../portable/frontends/widgets/style.py:256
 #: ../../portable/frontends/widgets/style.py:1171
 msgid "Newly Available"
-msgstr ""
+msgstr "Нови достапни"
 
 #: ../../portable/frontends/widgets/style.py:258
 #: ../../portable/frontends/widgets/prefpanel.py:488
@@ -706,16 +720,16 @@ msgstr "Отстрани"
 
 #: ../../portable/frontends/widgets/style.py:259
 msgid "Stop seeding"
-msgstr ""
+msgstr "сопри го споделувањето"
 
 #: ../../portable/frontends/widgets/style.py:571
 #: ../../portable/frontends/widgets/style.py:1164
 msgid "paused"
-msgstr ""
+msgstr "паузирано"
 
 #: ../../portable/frontends/widgets/style.py:1034
 msgid "Remove from playlist"
-msgstr ""
+msgstr "Отстрани од списокот за репродукција"
 
 #: ../../portable/frontends/widgets/displays.py:372
 #, python-format
@@ -723,104 +737,106 @@ msgid ""
 "%(appname)s can't play this file.  You may be able to open it with a "
 "different program"
 msgstr ""
+"%(appname)s не може да го репродуцира овој документ. Можеби ќе можете да го "
+"отворите со друг програм"
 
 #: ../../portable/frontends/widgets/displays.py:382
 msgid "Filename:"
-msgstr ""
+msgstr "Име на датотека:"
 
 #: ../../portable/frontends/widgets/displays.py:385
 msgid "File type:"
-msgstr ""
+msgstr "Тип на датотека:"
 
 #: ../../portable/frontends/widgets/displays.py:391
 #: ../../portable/frontends/widgets/displays.py:428
 msgid "Play Externally"
-msgstr ""
+msgstr "Надворешна репродукција"
 
 #: ../../portable/frontends/widgets/displays.py:393
 msgid "Skip"
-msgstr ""
+msgstr "Прескокни"
 
 #: ../../portable/frontends/widgets/displays.py:430
 msgid "Open Externally"
-msgstr ""
+msgstr "Отвори го надворешно"
 
 #: ../../portable/frontends/widgets/displays.py:536
 #, python-format
 msgid "%(count)d Feed Folder Selected"
 msgid_plural "%(count)d Feed Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Избрана е %(count)d папка на инфо-список"
+msgstr[1] "Избрани се %(count)d папки на инфо-список"
 
 #: ../../portable/frontends/widgets/displays.py:541
 #, python-format
 msgid "(contains %(count)d feed)"
 msgid_plural "(contains %(count)d feeds)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "содржи %(count)d инфо-канал"
+msgstr[1] "содржи %(count)d инфо-канали"
 
 #: ../../portable/frontends/widgets/displays.py:547
 #, python-format
 msgid "%(count)d Playlist Folder Selected"
 msgid_plural "%(count)d Playlist Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Селектирана %(count)d папка со списоци за репродукција"
+msgstr[1] "Селектирани %(count)d папки со списоци за репродукција"
 
 #: ../../portable/frontends/widgets/displays.py:552
 #, python-format
 msgid "(contains %(count)d playlist)"
 msgid_plural "(contains %(count)d playlist)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(содржи %(count)d список за репродукција)"
+msgstr[1] "(содржи %(count)d списоци за репродукција)"
 
 #: ../../portable/frontends/widgets/displays.py:562
 #, python-format
 msgid "%(count)d Feed Selected"
 msgid_plural "%(count)d Feeds Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Избран е %(count)d инфо-канал"
+msgstr[1] "Избрани се %(count)d инфо-канали"
 
 #: ../../portable/frontends/widgets/displays.py:568
 #, python-format
 msgid "%(count)d Site Selected"
 msgid_plural "%(count)d Sites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Избран е %(count)d сајт"
+msgstr[1] "Избрани се %(count)d сајтови"
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
 msgid "%(count)d Playlist Selected"
 msgid_plural "%(count)d Playlists Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Избран е %(count)d список за репродукција"
+msgstr[1] "Избрани се %(count)d списоци за репродукција"
 
 #: ../../portable/frontends/widgets/displays.py:581
 msgid "Delete All"
-msgstr ""
+msgstr "Избриши ги сите"
 
 #: ../../portable/frontends/widgets/displays.py:585
 msgid "Put Into a New Folder"
-msgstr ""
+msgstr "Стави ги во нова папка"
 
 #: ../../portable/frontends/widgets/rundialog.py:82
 msgid "Username:"
-msgstr ""
+msgstr "Корисничко име:"
 
 #: ../../portable/frontends/widgets/rundialog.py:86
 msgid "Password:"
-msgstr ""
+msgstr "Лозинка:"
 
 #: ../../portable/frontends/widgets/browser.py:96
 msgid "Open in browser"
-msgstr ""
+msgstr "Отвори во пребарувач"
 
 #: ../../portable/frontends/widgets/browser.py:102
 msgid "Download this video"
-msgstr ""
+msgstr "Превземи го ова видео"
 
 #: ../../portable/frontends/widgets/application.py:156
 msgid "Movies directory gone"
-msgstr ""
+msgstr "Директориумот со видеа исчезна"
 
 #: ../../portable/frontends/widgets/application.py:158
 #, python-format
@@ -839,46 +855,60 @@ msgid ""
 "If you quit, then you can connect the drive or otherwise fix the problem and "
 "relaunch %(shortappname)s."
 msgstr ""
+"%(shortappname)s не може да го најде главнаиот видео директориум кој се "
+"наоѓа во:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"Това може да се случи, доколку се наоѓа на надворешен уред, којшто не е "
+"поврзан.\n"
+"\n"
+"Доколку продолжите, главниот видео директориум ќе биде насочен да покажува "
+"кон тој уред. Доколку сте имале превземени видео документи, ова ќе "
+"предизвика %(shortappname)s да ги загуби деталите за тие видео документи.\n"
+"\n"
+"Доколку излезете, може да се поврзете со уредот или да го решите проблемот "
+"на друг начин и повторно да ја вклучите %(shortappname)s."
 
 #: ../../portable/frontends/widgets/application.py:326
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Грешка при откривање на документот"
 
 #: ../../portable/frontends/widgets/application.py:327
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
-msgstr ""
+msgstr "Документот %(filename)s беше избришан надвор од %(appname)s."
 
 #: ../../portable/frontends/widgets/application.py:335
 msgid "Open Files..."
-msgstr ""
+msgstr "Отварање на документи..."
 
 #: ../../portable/frontends/widgets/application.py:346
 #: ../../portable/frontends/widgets/application.py:351
 msgid "Open Files - Error"
-msgstr ""
+msgstr "Грешка при отварање на документи"
 
 #: ../../portable/frontends/widgets/application.py:347
 #: ../../portable/frontends/widgets/application.py:634
 #, python-format
 msgid "File %(filename)s does not exist."
-msgstr ""
+msgstr "Документот  %(filename)s не постои."
 
 #: ../../portable/frontends/widgets/application.py:352
 msgid "The following files do not exist:"
-msgstr ""
+msgstr "Следниве документи не постојат:"
 
 #: ../../portable/frontends/widgets/application.py:389
 msgid "New Download"
-msgstr ""
+msgstr "Ново превземање"
 
 #: ../../portable/frontends/widgets/application.py:390
 msgid "Enter the URL of the item to download"
-msgstr ""
+msgstr "Внесете URL на објектот за превземање"
 
 #: ../../portable/frontends/widgets/application.py:391
 msgid "New Download - Invalid URL"
-msgstr ""
+msgstr "Ново превземање - невалиден URL"
 
 #: ../../portable/frontends/widgets/application.py:392
 msgid ""
@@ -887,22 +917,26 @@ msgid ""
 "\n"
 "Enter the URL of the item to download"
 msgstr ""
+"Внесеното URL е невалидно.\n"
+"Проверете го и пробајте повторно.\n"
+"\n"
+"Внесете URL на објектот за превземање"
 
 #: ../../portable/frontends/widgets/application.py:400
 #, python-format
 msgid "%(appname)s is up to date"
-msgstr ""
+msgstr "%(appname)s е обновена до последна версија"
 
 #: ../../portable/frontends/widgets/application.py:402
 #, python-format
 msgid "%(appname)s is up to date!"
-msgstr ""
+msgstr "%(appname)s е обновена до последна версија!"
 
 #: ../../portable/frontends/widgets/application.py:426
 msgid "Remove item"
 msgid_plural "Remove items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Отстрани предмет"
+msgstr[1] "Отстрани предмети"
 
 #: ../../portable/frontends/widgets/application.py:430
 msgid ""
@@ -912,7 +946,11 @@ msgid_plural ""
 "Some of these items were not downloaded from a feed. Would you like to "
 "delete them or just remove them from the Library?"
 msgstr[0] ""
+"Еден од овие објекти не беше превземен од инфо-каналот. Дали сакате да го "
+"избришете или само да го отстраните од библиотеката?"
 msgstr[1] ""
+"Некои од овие објекти не беше превземен од инфо-каналот. Дали сакате да го "
+"избришете или само да го отстраните од библиотеката?"
 
 #: ../../portable/frontends/widgets/application.py:440
 msgid ""
@@ -922,14 +960,19 @@ msgid_plural ""
 "Some of these items are folders.  Delete/Removeing a folder will "
 "delete/remove it's contents"
 msgstr[0] ""
+"Еден од следниве објекти е папка. Бришењето/Преместувањето на папка ќе ги "
+"избрише/премести содржината."
 msgstr[1] ""
+"Неколку од следниве објекти е папка. Бришењето/Преместувањето на папка ќе ги "
+"избрише/премести содржината."
 
 #: ../../portable/frontends/widgets/application.py:455
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
-msgstr[0] ""
+msgstr[0] "Дали сте сигурни дека сакате да го избришете објектот?"
 msgstr[1] ""
+"Дали сте сигурни дека сакате да ги избришете сите %(count)d објекти?"
 
 #: ../../portable/frontends/widgets/application.py:462
 msgid ""
@@ -937,28 +980,32 @@ msgid ""
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
 msgstr[0] ""
+"Еден од следниве елементи е папка. Бришењето на папка ќе ја избрише и "
+"нејзината содржина."
 msgstr[1] ""
+"Неколку од следниве елементи се папки. Бришењето на папка ќе ја избрише и "
+"нејзината содржина."
 
 #: ../../portable/frontends/widgets/application.py:496
 msgid "Enter the new name for the item"
-msgstr ""
+msgstr "Внесете ново име за објектот"
 
 #: ../../portable/frontends/widgets/application.py:519
 msgid "Save Item As..."
-msgstr ""
+msgstr "Запиши го објектот како..."
 
 #: ../../portable/frontends/widgets/application.py:572
 #: ../../portable/menubar.py:213
 msgid "Add Site"
-msgstr ""
+msgstr "Додадете страна"
 
 #: ../../portable/frontends/widgets/application.py:573
 msgid "Enter the URL of the site to add"
-msgstr ""
+msgstr "Внесете URL на страната за додавање"
 
 #: ../../portable/frontends/widgets/application.py:574
 msgid "Add Site - Invalid URL"
-msgstr ""
+msgstr "Внесете страна - Погрешен URL"
 
 #: ../../portable/frontends/widgets/application.py:575
 msgid ""
@@ -967,145 +1014,153 @@ msgid ""
 "\n"
 "Enter the URL of the site to add"
 msgstr ""
+"Страната што ја внесовме не е валиден url.\n"
+"Ве молам проверете го URL-от и пробајте повторно.\n"
+"\n"
+"Внесете го URL-от на страната за додавање"
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
-msgstr ""
+msgstr "Внесување на OPML-документ"
 
 #: ../../portable/frontends/widgets/application.py:626
 msgid "OPML Files"
-msgstr ""
+msgstr "OPML-документ"
 
 #: ../../portable/frontends/widgets/application.py:633
 msgid "Import OPML File - Error"
-msgstr ""
+msgstr "Внесување на OPML-документ - Грешка"
 
 #: ../../portable/frontends/widgets/application.py:639
 msgid "Export OPML File"
-msgstr ""
+msgstr "Извези како OPML документ"
 
 #: ../../portable/frontends/widgets/application.py:663
 msgid "Create Playlist"
-msgstr ""
+msgstr "Создади список за репродукција"
 
 #: ../../portable/frontends/widgets/application.py:664
 msgid "Enter a name for the new playlist"
-msgstr ""
+msgstr "Внеси име за новиот список за репродукција"
 
 #: ../../portable/frontends/widgets/application.py:685
 msgid "Create Playlist Folder"
-msgstr ""
+msgstr "Создади папка за списоците за репродукција"
 
 #: ../../portable/frontends/widgets/application.py:686
 msgid "Enter a name for the new playlist folder"
-msgstr ""
+msgstr "Внеси име за новата папка за списоци за репродукција"
 
 #: ../../portable/frontends/widgets/application.py:707
 #: ../../portable/frontends/widgets/tablist.py:579
 msgid "Rename Feed Folder"
-msgstr ""
+msgstr "Преименувај ја папката за инфо-канали"
 
 #: ../../portable/frontends/widgets/application.py:708
 #, python-format
 msgid "Enter a new name for the feed folder %(name)s"
-msgstr ""
+msgstr "Внесете ново име за папката за инфо-канали %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:712
 msgid "Rename Feed"
-msgstr ""
+msgstr "Преименувај инфо-канал"
 
 #: ../../portable/frontends/widgets/application.py:713
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
-msgstr ""
+msgstr "Внесете ново име за инфо-каналот %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:717
 #: ../../portable/frontends/widgets/tablist.py:640
 #: ../../portable/playlist.py:199
 msgid "Rename Playlist"
-msgstr ""
+msgstr "Преименувај список за репродукција"
 
 #: ../../portable/frontends/widgets/application.py:718
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
-msgstr ""
+msgstr "Внесете ново име за списокот за репродукција %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:722
 #: ../../portable/frontends/widgets/tablist.py:634
 msgid "Rename Playlist Folder"
-msgstr ""
+msgstr "Преименувај ја папката за списоци за репродукција"
 
 #: ../../portable/frontends/widgets/application.py:723
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
-msgstr ""
+msgstr "Внесете ново име за папката за списоци за репродукција %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:726
 #: ../../portable/frontends/widgets/tablist.py:529
 msgid "Rename Site"
-msgstr ""
+msgstr "Преименувај ја страната"
 
 #: ../../portable/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the site %(name)s"
-msgstr ""
+msgstr "Внесете ново име за страната %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Отстранете го списокот за репродукција"
+msgstr[1] "Отстранете ги списоците за репродукција"
 
 #: ../../portable/frontends/widgets/application.py:753
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
 msgstr[0] ""
+"Дали сте сигурни дека сакате да ги отстраните следниве  %(count)s списоци за "
+"репродукција?"
 msgstr[1] ""
+"Дали сте сигурни дека сакате да го отстраните списокот за репродукција?"
 
 #: ../../portable/frontends/widgets/application.py:770
 msgid "Remove site"
 msgid_plural "Remove sites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Отстранете ја страната"
+msgstr[1] "Отстранете ги страните"
 
 #: ../../portable/frontends/widgets/application.py:772
 #, python-format
 msgid "Are you sure you want to remove this site?"
 msgid_plural "Are you sure you want to remove these %(count)s sites?"
-msgstr[0] ""
+msgstr[0] "Дали сте сигурни дека сакате да ја отстраните страната?"
 msgstr[1] ""
+"Дали сте сигурни дека сакате да ги отстраните следниве %(count)s страници?"
 
 #: ../../portable/frontends/widgets/application.py:802
 msgid "Are you sure you want to quit?"
-msgstr ""
+msgstr "Дали навистина сакате да излезете?"
 
 #: ../../portable/frontends/widgets/application.py:804
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Вие имате %(count)d активно превземање. Секако излегувате?"
+msgstr[1] "Вие имате %(count)d активни превземања. Секако излегувате?"
 
 #: ../../portable/frontends/widgets/application.py:809
 msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr ""
+msgstr "Предупреди ме кога ќе пробам да излезам со активни превземања"
 
 #: ../../portable/frontends/widgets/application.py:994
 msgid "Upgrading database"
-msgstr ""
+msgstr "Подобрување на базата на податоци"
 
 #: ../../portable/frontends/widgets/application.py:1127
 msgid "Message"
-msgstr ""
+msgstr "Порака"
 
 #: ../../portable/frontends/widgets/application.py:1152
 msgid "Migrating Files"
-msgstr ""
+msgstr "Преселба на датотеки"
 
 #: ../../portable/frontends/widgets/application.py:1162
 msgid "Migrating files"
-msgstr ""
+msgstr "Преселба на датотеки"
 
 #: ../../portable/frontends/widgets/dialogs.py:102
 msgid ""
@@ -1113,164 +1168,170 @@ msgid ""
 "can take a long time if you have a large number of items in Miro (it can "
 "even take more than 30 minutes)."
 msgstr ""
+"Miro ги подобрува базите на податоци на инфо-каналите и на датотеките. Овој "
+"еднократен процес може да трае подолго време ако имате голем број на објекти "
+"во Miro (може да трае дури и повеќе од 30 минути)."
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:81
 #: ../../portable/frontends/widgets/prefpanel.py:625
 msgid "Downloads"
-msgstr ""
+msgstr "Превземања"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:90
 msgid "Single and external downloads"
-msgstr ""
+msgstr "Единечни и надворешни превземања"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:93
 msgid "Feed downloads"
-msgstr ""
+msgstr "Превземања на инфо-канали"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:96
 msgid "Seeding"
-msgstr ""
+msgstr "Споделување"
 
 #: ../../portable/frontends/widgets/prefpanel.py:268
 #, python-format
 msgid "Automatically run %(appname)s when I log in."
-msgstr ""
+msgstr "Автоматски повикај  ги %(appname)s кога ќе се најавам."
 
 #: ../../portable/frontends/widgets/prefpanel.py:272
 msgid "Warn me if I attempt to quit with downloads in progress."
 msgstr ""
+"Предупреди ме доколку се обидам да излезам со активни превземања во тек."
 
 #: ../../portable/frontends/widgets/prefpanel.py:282
 msgid "Every day"
-msgstr ""
+msgstr "Секој ден"
 
 #: ../../portable/frontends/widgets/prefpanel.py:283
 msgid "Every hour"
-msgstr ""
+msgstr "Секој час"
 
 #: ../../portable/frontends/widgets/prefpanel.py:284
 msgid "Every 30 minutes"
-msgstr ""
+msgstr "Секои 30 минути"
 
 #: ../../portable/frontends/widgets/prefpanel.py:285
 msgid "Manually"
-msgstr ""
+msgstr "Рачно"
 
 #: ../../portable/frontends/widgets/prefpanel.py:290
 #: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "New"
-msgstr ""
+msgstr "Ново"
 
 #: ../../portable/frontends/widgets/prefpanel.py:291
 #: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "All"
-msgstr ""
+msgstr "Сите"
 
 #: ../../portable/frontends/widgets/prefpanel.py:292
 #: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "Off"
-msgstr ""
+msgstr "Исклучено"
 
 #: ../../portable/frontends/widgets/prefpanel.py:298
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: ../../portable/frontends/widgets/prefpanel.py:299
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../../portable/frontends/widgets/prefpanel.py:300
 msgid "50"
-msgstr ""
+msgstr "50"
 
 #: ../../portable/frontends/widgets/prefpanel.py:301
 msgid "100"
-msgstr ""
+msgstr "100"
 
 #: ../../portable/frontends/widgets/prefpanel.py:302
 msgid "1000"
-msgstr ""
+msgstr "1000"
 
 #: ../../portable/frontends/widgets/prefpanel.py:308
 msgid "Default settings for new feeds:"
-msgstr ""
+msgstr "Вредности по подразбирање за нови инфо-канали:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:312
 msgid "(These can be changed using the feed's settings button)"
 msgstr ""
+"(Овие можат да бидат изменети користејќи го копчето за нагодување на инфо-"
+"каналите)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:316
 msgid "Check for new content:"
-msgstr ""
+msgstr "Проверка за нови содржини:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:321
 msgid "Auto download setting:"
-msgstr ""
+msgstr "Нагодувања за Авто-превземање:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:327
 msgid "Remember this many old items:"
-msgstr ""
+msgstr "Запомни оволку стари објекти:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:328
 msgid "(in addition to the current contents)"
-msgstr ""
+msgstr "(како додаток на актуелните содржини)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:341
 msgid "Maximum number of manual downloads at a time:"
-msgstr ""
+msgstr "Максимален број на рачни превземања во еден момент:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:348
 msgid "Maximum number of auto-downloads at a time:"
-msgstr ""
+msgstr "Максимален број на авто-превземања во еден момент:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:358
 msgid "Bittorrent:"
-msgstr ""
+msgstr "Битторент:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:361
 msgid "Limit upstream bandwidth to:"
-msgstr ""
+msgstr "Ограничи ја брзината за подигање на:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:372
 #: ../../portable/frontends/widgets/prefpanel.py:383
 msgid "KB/s"
-msgstr ""
+msgstr "KB/s"
 
 #: ../../portable/frontends/widgets/prefpanel.py:375
 msgid "Limit downstream bandwidth to:"
-msgstr ""
+msgstr "Ограничи ја брзината за превземање на:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:386
 msgid "Limit torrent connections to:"
-msgstr ""
+msgstr "Ограничи го бројот на торент поврзувања на:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:403
 msgid "Starting port:"
-msgstr ""
+msgstr "Почетна порта:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:407
 msgid "Ending port:"
-msgstr ""
+msgstr "Крајна порта:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:413
 msgid "Automatically forward ports.  (UPNP)"
-msgstr ""
+msgstr "Автоматски препраќај порти. (UPNP)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:417
 msgid "Ignore unencrypted connections."
-msgstr ""
+msgstr "Игнорирај неенкриптирани поврзувања."
 
 #: ../../portable/frontends/widgets/prefpanel.py:421
 msgid "Stop torrent uploads when this ratio is reached:"
-msgstr ""
+msgstr "Запрете ги подигнувањата на торенти кога овој однос е достигнат:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:443
 msgid "Choose Movies Directory"
-msgstr ""
+msgstr "Изберете директориум за филмови"
 
 #: ../../portable/frontends/widgets/prefpanel.py:456
 msgid "Migrate existing movies?"
-msgstr ""
+msgstr "Преселете ги постоечките филмови?"
 
 #: ../../portable/frontends/widgets/prefpanel.py:457
 #, python-format
@@ -1279,34 +1340,39 @@ msgid ""
 "migrate your existing downloads there? (Currently downloading movies will "
 "not be moved until they finish.)"
 msgstr ""
+"Вие избравте нова папка за превземање на филмови. Дали %(appname)s да ги "
+"пресели постојните превземања таму? (Филмовите што во моментот се превземаат "
+"нема да бидат преселени се додека не заврши превземањето.)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:485
 #: ../../portable/dialogs.py:106
 msgid "Add"
-msgstr ""
+msgstr "Додади"
 
 #: ../../portable/frontends/widgets/prefpanel.py:526
 msgid "Add Watched Folder"
-msgstr ""
+msgstr "Додај набљудувана папка"
 
 #: ../../portable/frontends/widgets/prefpanel.py:545
 msgid "Store downloads in this folder:"
-msgstr ""
+msgstr "Запишувај ги превземањата во оваа папка:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:552
 msgid ""
 "Watch for new video and audio items in these folders and include them in "
 "library:"
 msgstr ""
+"Набљудувај за нови видео и аудио објекти во овие папки и вклучи ги и нив во "
+"библиотеката:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:571
 msgid "Keep at least this much free space on my drive:"
-msgstr ""
+msgstr "Зачувај најмалку оволку слободно место на мојот уред:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:574
 #: ../../portable/frontends/widgets/prefpanel.py:580
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: ../../portable/frontends/widgets/prefpanel.py:583
 msgid "1 day"
@@ -1330,97 +1396,101 @@ msgstr "1 месец"
 
 #: ../../portable/frontends/widgets/prefpanel.py:593
 msgid "By default, video and audio items expire after:"
-msgstr ""
+msgstr "По подразбирање, видео и аудио објектите истекуваат после:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:602
 msgid "Always play videos in a separate window."
-msgstr ""
+msgstr "Секогаш репродуцирај видеа во посебни прозорци."
 
 #: ../../portable/frontends/widgets/prefpanel.py:606
 msgid ""
 "Resume playing a video or audio item from the point it was last stopped."
 msgstr ""
+"Продолжи репродукција на видео или аудио објект од местото каде што бил "
+"запрен последен пат."
 
 #: ../../portable/frontends/widgets/prefpanel.py:611
 msgid "Play video and audio items one after another"
-msgstr ""
+msgstr "Репродуцирај видео и аудио објекти еден после друг"
 
 #: ../../portable/frontends/widgets/prefpanel.py:612
 msgid "Stop after each video or audio item"
-msgstr ""
+msgstr "Запри после секој видео или аудио објект"
 
 #: ../../portable/frontends/widgets/prefpanel.py:623
 msgid "General"
-msgstr ""
+msgstr "Општо"
 
 #: ../../portable/frontends/widgets/prefpanel.py:624
 msgid "Feeds"
-msgstr ""
+msgstr "Инфо-канали"
 
 #: ../../portable/frontends/widgets/prefpanel.py:626
 msgid "Folders"
-msgstr ""
+msgstr "Папки"
 
 #: ../../portable/frontends/widgets/prefpanel.py:627
 msgid "Disk space"
-msgstr ""
+msgstr "Простор на дискот"
 
 #: ../../portable/frontends/widgets/prefpanel.py:628
 msgid "Playback"
-msgstr ""
+msgstr "Репродукција"
 
 #: ../../portable/frontends/widgets/prefpanel.py:632
 msgid "Preferences"
-msgstr ""
+msgstr "Преференци"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:58
 msgid "New Search Feed"
-msgstr ""
+msgstr "Ново инфо-канал пребарување"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:59
 msgid "A search feed contains items that match a search term."
 msgstr ""
+"Инфо-канал пребарувањето содржи објекти кои се совпаѓаат со пребаруваниот "
+"термин."
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:74
 msgid "Search for:"
-msgstr ""
+msgstr "Барај:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:81
 msgid "In this:"
-msgstr ""
+msgstr "Во:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:88
 msgid "Feed:"
-msgstr ""
+msgstr "Инфо-канал:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:93
 msgid "Search engine:"
-msgstr ""
+msgstr "Пребарувачка машина:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:99
 #: ../../portable/frontends/widgets/newfeed.py:60
 msgid "URL:"
-msgstr ""
+msgstr "URL:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:133
 msgid "Add new feed to this section:"
-msgstr ""
+msgstr "Додај нов инфо-канал на оваа секција:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:136
 #: ../../portable/frontends/widgets/newfolder.py:71
 #: ../../portable/frontends/widgets/newfeed.py:72
 msgid "video"
-msgstr ""
+msgstr "видео"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:137
 #: ../../portable/frontends/widgets/newfolder.py:72
 #: ../../portable/frontends/widgets/newfeed.py:73
 msgid "audio"
-msgstr ""
+msgstr "аудио"
 
 #: ../../portable/frontends/widgets/linkhandler.py:54
 msgid "Subscribe to Feed"
-msgstr ""
+msgstr "Претплати се на инфо-каналот"
 
 #: ../../portable/frontends/widgets/linkhandler.py:56
 #, python-format
@@ -1430,48 +1500,55 @@ msgid ""
 "\n"
 "%(url)s"
 msgstr ""
+"Оваа врска изгледа како инфо-канал. Дали сакате да ја додадете во Вашите "
+"претплати?\n"
+"\n"
+"%(url)s"
 
 #: ../../portable/frontends/widgets/newfolder.py:60
 msgid "Folder name:"
-msgstr ""
+msgstr "Име на папка:"
 
 #: ../../portable/frontends/widgets/newfolder.py:69
 msgid "Folder should go in this section:"
-msgstr ""
+msgstr "Папката би требало да оди во оваа секција:"
 
 #: ../../portable/frontends/widgets/newfolder.py:109
 #: ../../portable/frontends/widgets/newfolder.py:111
 msgid "Create Feed Folder"
-msgstr ""
+msgstr "Креирај папка за инфо-канали"
 
 #: ../../portable/frontends/widgets/newfolder.py:112
 msgid "Enter the name of the folder to add"
-msgstr ""
+msgstr "Внесете име на папката што ќе се додаде"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
-msgstr ""
+msgstr "Списокот за репродукција е празен"
 
 #: ../../portable/frontends/widgets/playlist.py:149
 msgid ""
 "To add an item, drag it onto the name of this playlist in the sidebar."
 msgstr ""
+"За додавање на објект, довлечете го врз името на овој список за репродукција "
+"во страничната лента."
 
 #: ../../portable/frontends/widgets/removefeeds.py:49
 msgid "Remove Feed"
 msgid_plural "Remove Feeds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Отстрани инфо-канал"
+msgstr[1] "Отстрани инфо-канали"
 
 #: ../../portable/frontends/widgets/removefeeds.py:57
 msgid "Are you sure you want to remove this feed:"
 msgid_plural "Are you sure you want to remove these feeds:"
-msgstr[0] ""
+msgstr[0] "Дали сте сигурни дека сакате да го отстраните овој инфо-канал:"
 msgstr[1] ""
+"Дали сте сигурни дека сакате да ги отстраните следниве инфо-канали:"
 
 #: ../../portable/frontends/widgets/removefeeds.py:84
 msgid "Keep items that have been downloaded in my library."
-msgstr ""
+msgstr "Чувај ги превземените објекти во мојата библиотека."
 
 #: ../../portable/frontends/widgets/removefeeds.py:89
 #, python-format
@@ -1480,6 +1557,10 @@ msgid ""
 "still appear in your library.  You can stop watching watched folders "
 "completely in the %(appname)s preference panel."
 msgstr ""
+"Набљудуваните папки ќе бидат отстранети од страничната лента но нивната "
+"содржина уште ќе ја има во Вашата библиотека. Можете да го запрете "
+"набљудувањето на набљудуваните папки комплетно во %(appname)s панелот за "
+"преференци."
 
 #: ../../portable/frontends/widgets/removefeeds.py:100
 msgid ""
@@ -1489,61 +1570,65 @@ msgid_plural ""
 "Are you sure you want to remove these feeds?  The downloads currently in "
 "progress will be canceled."
 msgstr[0] ""
+"Дали сте сигурни дека сакате да го отстраните овој инфо-канал? Превземањата "
+"активни во моментот ќе бидат откажани."
 msgstr[1] ""
+"Дали сте сигурни дека сакате да ги отстраните следниве инфо-канали? "
+"Превземањата активни во моментот ќе бидат откажани."
 
 #: ../../portable/frontends/widgets/gtk/video.py:273
 msgid "Permalink"
-msgstr ""
+msgstr "Траен линк"
 
 #: ../../portable/frontends/widgets/gtk/video.py:279
 msgid "Pop-in"
-msgstr ""
+msgstr "Сокриј се"
 
 #: ../../portable/frontends/widgets/gtk/video.py:284
 msgid "Pop-out"
-msgstr ""
+msgstr "Појави се"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:67
 #, python-format
 msgid "Play Next Unplayed (%(unplayed)d)"
-msgstr ""
+msgstr "Репродуцирај нареден нерепродуциран (%(unplayed)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:71
 #, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
-msgstr ""
+msgstr "Репродуцирај ги сите нерепродуцирани (%(unplayed)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:74
 #, python-format
 msgid "Pause All Downloads (%(downloading)d)"
-msgstr ""
+msgstr "Паузирај ги сите превземања (%(downloading)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:77
 #, python-format
 msgid "Resume All Downloads (%(paused)d)"
-msgstr ""
+msgstr "Активирај ги сите превземања (%(paused)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:85
 msgid "Hide"
-msgstr ""
+msgstr "Сокриј"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:87
 #: ../../portable/frontends/widgets/diagnostics.py:76
 msgid "Show"
-msgstr ""
+msgstr "Прикажи"
 
 #: ../../portable/frontends/widgets/gtk/window.py:495
 msgid "All files"
-msgstr ""
+msgstr "Сите датотеки"
 
 #: ../../portable/frontends/widgets/gtk/window.py:524
 msgid "Choose"
-msgstr ""
+msgstr "Избери"
 
 #: ../../portable/frontends/widgets/gtk/window.py:539
 #, python-format
 msgid "About %(appname)s"
-msgstr ""
+msgstr "За %(appname)s"
 
 #: ../../portable/frontends/widgets/gtk/window.py:554
 #, python-format
@@ -1551,42 +1636,44 @@ msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
 "%(trademark)s"
 msgstr ""
+"%(copyright)s. Види license.txt за детали.\n"
+"%(trademark)s"
 
 #: ../../portable/frontends/widgets/gtk/window.py:593
 #: ../../portable/dialogs.py:86
 msgid "Close"
-msgstr ""
+msgstr "Затвори"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
-msgstr ""
+msgstr "Превземени"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:137
 msgid "Full Feed"
-msgstr ""
+msgstr "Цел инфо-канал"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:191
 #, python-format
 msgid "Show %(count)d More Item"
 msgid_plural "Show %(count)d More Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Покажи %(count)d повеќе објект"
+msgstr[1] "Покажи %(count)d повеќе објекти"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:232
 #: ../../portable/frontends/widgets/feedcontroller.py:259
 #, python-format
 msgid "%(count)d Downloading"
 msgid_plural "%(count)d Downloading"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Превземање"
+msgstr[1] "%(count)d Превземања"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:243
 #: ../../portable/frontends/widgets/feedcontroller.py:255
 #, python-format
 msgid "%(count)d Item"
 msgid_plural "%(count)d Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d објект"
+msgstr[1] "%(count)d објекти"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:264
 #, python-format
@@ -1594,34 +1681,38 @@ msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
 "%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
 msgstr[0] ""
+"%(count)d Превземање закажано поради нерепродуцирани објекти (Види "
+"Нагодувања)"
 msgstr[1] ""
+"%(count)d Превземања закажани поради нерепродуцирани објекти (Види "
+"Нагодувања)"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:275
 #, python-format
 msgid "%(count)d Item Matches Search"
 msgid_plural "%(count)d Items Match Search"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Објект се совпаѓа со пребарувањето"
+msgstr[1] "%(count)d Објекти се совпаѓаат со пребарувањето"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:280
 msgid "All Items Match Search"
-msgstr ""
+msgstr "Сите објекти се совпаѓаат со пребарувањето"
 
 #: ../../portable/frontends/widgets/newfeed.py:70
 msgid "Feed should go in this section:"
-msgstr ""
+msgstr "Инфо-каналот треба да оди во оваа секција:"
 
 #: ../../portable/frontends/widgets/newfeed.py:111
 msgid "Add Feed"
-msgstr ""
+msgstr "Додај инфо-канал"
 
 #: ../../portable/frontends/widgets/newfeed.py:112
 msgid "Enter the URL of the feed to add"
-msgstr ""
+msgstr "Внесете го URL-от на инфо-каналот за додавањед"
 
 #: ../../portable/frontends/widgets/newfeed.py:123
 msgid "Add Feed - Invalid URL"
-msgstr ""
+msgstr "Додавање на инфо-канал - Погрешен URL"
 
 #: ../../portable/frontends/widgets/newfeed.py:124
 msgid ""
@@ -1630,243 +1721,249 @@ msgid ""
 "\n"
 "Enter the URL of the feed to add"
 msgstr ""
+"Адресата што ја внесовте не е валиден url.\n"
+"Ве молам проверете го URL-от и пробајте повторно.\n"
+"\n"
+"Внесете го URL-от на инфо-каналот за додавање"
 
 #: ../../portable/frontends/widgets/tablist.py:528
 #: ../../portable/frontends/widgets/tablist.py:591
 msgid "Copy URL to clipboard"
-msgstr ""
+msgstr "Копирај го URL-от во привремената меморија"
 
 #: ../../portable/frontends/widgets/tablist.py:530
 msgid "Remove Site"
-msgstr ""
+msgstr "Отстрани го сајтот"
 
 #: ../../portable/frontends/widgets/tablist.py:534
 msgid "Remove Sites"
-msgstr ""
+msgstr "Отстрани ги сајтовите"
 
 #: ../../portable/frontends/widgets/tablist.py:578
 msgid "Update Feeds In Folder"
-msgstr ""
+msgstr "Освежи ги инфо-каналите во папката"
 
 #: ../../portable/frontends/widgets/tablist.py:585
 msgid "Update Feed Now"
-msgstr ""
+msgstr "Освежи го инфо-каналот сега"
 
 #: ../../portable/frontends/widgets/tablist.py:588
 msgid "Rename"
-msgstr ""
+msgstr "Преименувај"
 
 #: ../../portable/frontends/widgets/tablist.py:590
 msgid "Revert Feed Name"
-msgstr ""
+msgstr "Врати го името на инфо-каналот"
 
 #: ../../portable/frontends/widgets/tablist.py:597
 msgid "Update Feeds Now"
-msgstr ""
+msgstr "Освежи ги инфо-каналите сега"
 
 #: ../../portable/frontends/widgets/tablist.py:662
 msgid "LIBRARY"
-msgstr ""
+msgstr "БИБЛИОТЕКА"
 
 #: ../../portable/frontends/widgets/tablist.py:664
 msgid "SITES"
-msgstr ""
+msgstr "САЈТОВИ"
 
 #: ../../portable/frontends/widgets/tablist.py:666
 msgid "FEEDS"
-msgstr ""
+msgstr "ИНФО-КАНАЛИ"
 
 #: ../../portable/frontends/widgets/tablist.py:668
 msgid "AUDIO FEEDS"
-msgstr ""
+msgstr "АУДИО ИНФО-КАНАЛИ"
 
 #: ../../portable/frontends/widgets/tablist.py:670
 msgid "PLAYLISTS"
-msgstr ""
+msgstr "СПИСОЦИ ЗА РЕПРОДУКЦИЈА"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:447
 msgid "No Results Found"
-msgstr ""
+msgstr "Не се пронајдени резултати"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:553
 msgid "Back to feed"
-msgstr ""
+msgstr "Назад кон инфо-каналот"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:179
 msgid "Save Search"
-msgstr ""
+msgstr "Зачувај го пребарувањето"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:286
 msgid "Title"
-msgstr ""
+msgstr "Наслов"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:288
 msgid "Feed"
-msgstr ""
+msgstr "Инфо-канал"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:290
 #: ../../portable/frontends/widgets/itemlistwidgets.py:743
 msgid "Date"
-msgstr ""
+msgstr "Датум"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:291
 msgid "Length"
-msgstr ""
+msgstr "Должина"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:292
 msgid "Status"
-msgstr ""
+msgstr "Статус"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:293
 #: ../../portable/frontends/widgets/itemlistwidgets.py:744
 msgid "Size"
-msgstr ""
+msgstr "Големина"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:295
 msgid "ETA"
-msgstr ""
+msgstr "Очекувано Време на Завршување"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:296
 msgid "Speed"
-msgstr ""
+msgstr "Брзина"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:432
 msgid "Save as a Feed"
-msgstr ""
+msgstr "Зачувај како инфо-канал"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:486
 msgid "Pause All"
-msgstr ""
+msgstr "Паузирај ги сите"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:493
 msgid "Resume All"
-msgstr ""
+msgstr "Повторно активирај ги сите"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:500
 msgid "Cancel All"
-msgstr ""
+msgstr "Откажи ги сите"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:507
 msgid "Download Settings"
-msgstr ""
+msgstr "Нагодувања за превземања"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:553
 #, python-format
 msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
 msgstr ""
+"%(available)s под просторното ограничување за превземања (%(amount)s "
+"слободно на дискот)"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:559
 #, python-format
 msgid "%(available)s free for downloads (%(amount)s free on disk)"
-msgstr ""
+msgstr "%(available)s слободни за превземања (%(amount)s слободно на дискот)"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:564
 #, python-format
 msgid "%(amount)s free on disk"
-msgstr ""
+msgstr "%(amount)s слободно на дискот"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:583
 #, python-format
 msgid "%(rate)s uploading"
-msgstr ""
+msgstr "%(rate)s споделување"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:585
 #, python-format
 msgid "%(rate)s downloading"
-msgstr ""
+msgstr "%(rate)s превземање"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:619
 msgid "Auto Download"
-msgstr ""
+msgstr "Авто превземање"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:631
 msgid "Share feed"
-msgstr ""
+msgstr "Сподели инфо-канал"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:637
 msgid "Settings"
-msgstr ""
+msgstr "Поставувања"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:643
 msgid "Remove feed"
-msgstr ""
+msgstr "Отстрани инфо-канал"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:719
 msgid "Unwatched"
-msgstr ""
+msgstr "Негледани"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:730
 msgid "View|All"
-msgstr ""
+msgstr "Види|Сите"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:732
 msgid "Non Feed"
-msgstr ""
+msgstr "Не инфо-канал"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:742
 msgid "Name"
-msgstr ""
+msgstr "Име"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:745
 msgid "Time"
-msgstr ""
+msgstr "Време"
 
 #: ../../portable/frontends/widgets/diagnostics.py:83
 msgid "Movies location:"
-msgstr ""
+msgstr "Локација на филмовите:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:87
 msgid "Icon cache location:"
-msgstr ""
+msgstr "Локација на кешот за икони:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:91
 msgid "Log file location:"
-msgstr ""
+msgstr "Локација на Лог-документот:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:95
 msgid "Downloader log file location:"
-msgstr ""
+msgstr "Превземач Лог-документ локација:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:99
 msgid "Database file location:"
-msgstr ""
+msgstr "Локација на документот на датабазата:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:106
 msgid "Space free on disk:"
-msgstr ""
+msgstr "Слободно место на дискот:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:108
 msgid "Database size:"
-msgstr ""
+msgstr "Големина на датабазата:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:110
 msgid "Total db objects in memory:"
-msgstr ""
+msgstr "Вкупно дб објекти во меморијата:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:118
 #: ../../portable/menubar.py:276
 msgid "Diagnostics"
-msgstr ""
+msgstr "Дијагностики"
 
 #: ../../portable/searchengines.py:172
 msgid "Search All"
-msgstr ""
+msgstr "Пребарај ги сите"
 
 #: ../../portable/messages.py:1084 ../../portable/item.py:1107
 msgid "queued for download"
-msgstr ""
+msgstr "закажано за превземање"
 
 #: ../../portable/messagehandler.py:1299
 msgid "Subscribed to new feed:"
-msgstr ""
+msgstr "Претплатен на нов инфо-канал:"
 
 #: ../../portable/messagehandler.py:1302
 msgid "Subscribed to new feeds:"
-msgstr ""
+msgstr "Претплатен на нови инфо-канали:"
 
 #: ../../portable/startup.py:97
 msgid "Unknown Error"
-msgstr ""
+msgstr "Непозната грешка"
 
 #: ../../portable/startup.py:99
 #, python-format
@@ -1874,10 +1971,12 @@ msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
 "report at %(url)s."
 msgstr ""
+"Непозната грешка го спречи %(appname)s од стартување. Ве молиме испратете "
+"извештај за грешка на %(url)s."
 
 #: ../../portable/startup.py:179
 msgid "Database too new"
-msgstr ""
+msgstr "Базата на податоци е премногу нова"
 
 #: ../../portable/startup.py:181
 #, python-format
@@ -1885,10 +1984,12 @@ msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
 "must download the latest version of %(appname)s and run that."
 msgstr ""
+"Вие имате база на податоци која е запишана со понова верзија на %(appname)s. "
+"Мора да ја превземете најновата верзија на %(appname)s и да ја повикате."
 
 #: ../../portable/startup.py:188
 msgid "Insufficient disk space"
-msgstr ""
+msgstr "Недоволен простор на дискот."
 
 #: ../../portable/startup.py:190
 #, python-format
@@ -1896,10 +1997,13 @@ msgid ""
 "Not enough disk space to upgrade your database from the previous version of "
 "%(appname)s.  Please delete some files and try again."
 msgstr ""
+"Немате доволно простор на дискот за да ја обновите базата на податоци од "
+"предходната верзија на %(appname)s. Ве молиме избришете некои документи и "
+"пробајте повторно."
 
 #: ../../portable/commandline.py:99
 msgid "Subscription error"
-msgstr ""
+msgstr "Грешка во претплатувањето"
 
 #: ../../portable/commandline.py:109
 #, python-format
@@ -1907,6 +2011,8 @@ msgid ""
 "This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
 "the publisher of this file."
 msgstr ""
+"Овој %(appname)s инфо-канал документ има погрешен формат: %(url)s. Ве молиме "
+"известете го издавачот на овој документ."
 
 #: ../../portable/commandline.py:119
 #, python-format
@@ -1914,15 +2020,17 @@ msgid ""
 "This %(appname)s feed file has the wrong content type: %(url)s. Please "
 "notify the publisher of this file."
 msgstr ""
+"Овој %(appname)s инфо-канал документ има погрешен тип на содржина: %(url)s. "
+"Ве молиме известете го издавачот на овој документ."
 
 #: ../../portable/commandline.py:127
 #, python-format
 msgid "Could not download the %(appname)s feed file: %(url)s"
-msgstr ""
+msgstr "Не можам да го превземам %(appname)s инфо-канал документот: %(url)s"
 
 #: ../../portable/commandline.py:179
 msgid "Invalid Torrent"
-msgstr ""
+msgstr "Погрешен торент"
 
 #: ../../portable/commandline.py:181
 #, python-format
@@ -1930,40 +2038,43 @@ msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
 "[OK]"
 msgstr ""
+"Торент документот %(filename)s изгледа дека е оштетен и не може да се "
+"отвори. [OK]"
 
 #: ../../portable/downloader.py:258
 msgid "activity"
-msgstr ""
+msgstr "активност"
 
 #: ../../portable/downloader.py:300
 msgid "Flash URL Scraping Error"
-msgstr ""
+msgstr "Грешка при Брзо URL бришење"
 
 #: ../../portable/downloader.py:482
 msgid "starting up"
-msgstr ""
+msgstr "започнување"
 
 #: ../../portable/feed.py:940
 msgid "Error loading feed"
-msgstr ""
+msgstr "Грешка при вчитување на инфо-канал"
 
 #: ../../portable/feed.py:942
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr ""
+"Не можам да го вчитам инфо-каналот од %(url)s (%(errordescription)s)."
 
 #: ../../portable/feed.py:945
 msgid "Would you like to keep the feed?"
-msgstr ""
+msgstr "Дали сакате да го задржите инфо-каналот?"
 
 #: ../../portable/feed.py:1070
 msgid "Bad content-type"
-msgstr ""
+msgstr "Лош тип на содржина"
 
 #: ../../portable/feed.py:1083
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
-msgstr ""
+msgstr "Каналот не е компатибилен со %(appname)s"
 
 #: ../../portable/feed.py:1086
 #, python-format
@@ -1977,19 +2088,27 @@ msgid ""
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
+"Овој канал не е компатибилен со %(appname)s но ние ќе се потрудиме да ги "
+"земеме документите. Може да потрае дополнително време за да се исчитаат "
+"видеата и објаснувањата може да изгледаат чудно.\n"
+"\n"
+"Ве молиме контактирајте ги издавачите на %(url)s и прашајте ги дали може да "
+"обезбедат инфо-канал во формат кој ќе работи со %(appname)s.\n"
+"\n"
+"Дали сакате во секој случај да пробаме да го вчитаме каналот?"
 
 #: ../../portable/feed.py:1687
 #, python-format
 msgid "Search All: %(text)s"
-msgstr ""
+msgstr "Пребарај ги сите: %(text)s"
 
 #: ../../portable/feed.py:2274 ../../portable/feed.py:2425
 msgid "Local Files"
-msgstr ""
+msgstr "Локални документи"
 
 #: ../../portable/feed.py:2439
 msgid "Playing File"
-msgstr ""
+msgstr "Репродуцирање на документ"
 
 #: ../../portable/dialogs.py:85
 msgid "Ok"
@@ -1997,99 +2116,99 @@ msgstr "Ok"
 
 #: ../../portable/dialogs.py:88
 msgid "Done"
-msgstr ""
+msgstr "Завршено"
 
 #: ../../portable/dialogs.py:91
 msgid "Quit"
-msgstr ""
+msgstr "Излез"
 
 #: ../../portable/dialogs.py:92
 msgid "Continue"
-msgstr ""
+msgstr "Продолжи"
 
 #: ../../portable/dialogs.py:93
 msgid "Ignore"
-msgstr ""
+msgstr "Игнорирај"
 
 #: ../../portable/dialogs.py:94
 msgid "Submit Crash Report"
-msgstr ""
+msgstr "Поднеси извештај за проблем"
 
 #: ../../portable/dialogs.py:95
 msgid "Migrate"
-msgstr ""
+msgstr "Пресели"
 
 #: ../../portable/dialogs.py:96
 msgid "Don't Migrate"
-msgstr ""
+msgstr "Не преселувај"
 
 #: ../../portable/dialogs.py:98
 msgid "Remove Entry"
-msgstr ""
+msgstr "Отстрани запис"
 
 #: ../../portable/dialogs.py:99
 msgid "Delete File"
-msgstr ""
+msgstr "Избриши датотека"
 
 #: ../../portable/dialogs.py:100
 msgid "Delete Files"
-msgstr ""
+msgstr "Избриши датотеки"
 
 #: ../../portable/dialogs.py:101
 msgid "Keep Videos"
-msgstr ""
+msgstr "Зачувај видеа"
 
 #: ../../portable/dialogs.py:102
 msgid "Delete Videos"
-msgstr ""
+msgstr "Избриши видеа"
 
 #: ../../portable/dialogs.py:103
 msgid "Create"
-msgstr ""
+msgstr "Создади"
 
 #: ../../portable/dialogs.py:104
 msgid "Create Feed"
-msgstr ""
+msgstr "Создај инфо-канал"
 
 #: ../../portable/dialogs.py:105
 msgid "Create Folder"
-msgstr ""
+msgstr "Создај папка"
 
 #: ../../portable/dialogs.py:107
 msgid "Add Into New Folder"
-msgstr ""
+msgstr "Додај во Нова папка"
 
 #: ../../portable/dialogs.py:111
 msgid "Not Now"
-msgstr ""
+msgstr "Не сега"
 
 #: ../../portable/dialogs.py:112
 msgid "Close to Tray"
-msgstr ""
+msgstr "Затвори до тацната"
 
 #: ../../portable/dialogs.py:113
 msgid "Launch Miro"
-msgstr ""
+msgstr "Вклучи го Miro"
 
 #: ../../portable/dialogs.py:114
 msgid "Download Anyway"
-msgstr ""
+msgstr "Превземи секако"
 
 #: ../../portable/dialogs.py:115
 msgid "Open in External Browser"
-msgstr ""
+msgstr "Отвори во надворешен пребарувач"
 
 #: ../../portable/dialogs.py:116
 msgid "Don't Install"
-msgstr ""
+msgstr "Не инсталирај"
 
 #: ../../portable/dialogs.py:117
 msgid "Subscribe"
-msgstr ""
+msgstr "Претплати ме"
 
 #: ../../portable/dialogs.py:118
 msgid "Stop Watching"
-msgstr ""
+msgstr "Запри го гледањето"
 
 #: ../../portable/dialogs.py:119
 msgid "Retry"
@@ -2097,38 +2216,39 @@ msgstr ""
 
 #: ../../portable/singleclick.py:55
 msgid "Download already exists"
-msgstr ""
+msgstr "Превземаниот документ веќе постои"
 
 #: ../../portable/singleclick.py:56
 msgid "That URL is already an external download."
-msgstr ""
+msgstr "Овој URL веќе е надворешно превземање"
 
 #: ../../portable/singleclick.py:62
 #, python-format
 msgid "%(appname)s will begin downloading it now."
-msgstr ""
+msgstr "%(appname)s ќе започне со превземање сега."
 
 #: ../../portable/singleclick.py:65
 msgid "It is downloading now."
-msgstr ""
+msgstr "се превзема сега."
 
 #: ../../portable/singleclick.py:67
 msgid "It has already been downloaded."
-msgstr ""
+msgstr "веќе беше превземан."
 
 #: ../../portable/singleclick.py:97
 msgid "File Download"
-msgstr ""
+msgstr "Превземање на документ."
 
 #: ../../portable/singleclick.py:98
 #, python-format
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 msgstr ""
+"Овој документ на %(url)s не изгледа дека е аудио, видео или RSS инфо-канал."
 
 #: ../../portable/singleclick.py:138
 msgid "Download Error"
-msgstr ""
+msgstr "Грешка при превземање"
 
 #: ../../portable/singleclick.py:140
 #, python-format
@@ -2137,254 +2257,258 @@ msgid ""
 "\n"
 "URL: %(url)s"
 msgstr ""
+"%(appname)s не е во можност да го превземе документот на овој URL:\n"
+"\n"
+"URL: %(url)s"
 
 #: ../../portable/dl_daemon/download.py:639
 #, python-format
 msgid "Could not write to %(filename)s"
-msgstr ""
+msgstr "Не можам да запишувам во %(filename)s"
 
 #: ../../portable/dl_daemon/download.py:664
 #: ../../portable/dl_daemon/download.py:881
 msgid "Not enough disk space"
-msgstr ""
+msgstr "Недоволно простор на дискот"
 
 #: ../../portable/dl_daemon/download.py:665
 #: ../../portable/dl_daemon/download.py:882
 #, python-format
 msgid "%(amount)s MB required to store this video"
-msgstr ""
+msgstr "%(amount)s MB се потребни да се запише ова видео"
 
 #: ../../portable/dl_daemon/download.py:680
 #, python-format
 msgid "Couldn't open %(filename)s for writing"
-msgstr ""
+msgstr "Не можам да го отворам %(filename)s за запишување"
 
 #: ../../portable/dl_daemon/download.py:900
 msgid "BitTorrent failure"
-msgstr ""
+msgstr "БитТорент грешка"
 
 #: ../../portable/dl_daemon/download.py:900
 msgid "BitTorrent failed to startup"
-msgstr ""
+msgstr "БитТорентот не успеа да отпочне"
 
 #: ../../portable/dl_daemon/download.py:1089
 msgid "Corrupt Torrent"
-msgstr ""
+msgstr "Оштетен Торент"
 
 #: ../../portable/dl_daemon/download.py:1090
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
-msgstr ""
+msgstr "Торент документот на %(url)s не е валиден"
 
 #: ../../portable/dl_daemon/download.py:1114
 msgid "Torrent file deleted"
-msgstr ""
+msgstr "Торент документот е избришан"
 
 #: ../../portable/dl_daemon/download.py:1115
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr ""
+"Торент документот за овој објект беше избришан надвор од %(appname)s."
 
 #: ../../portable/menubar.py:184
 msgid "_Open"
-msgstr ""
+msgstr "_Отвори"
 
 #: ../../portable/menubar.py:185
 msgid "_Download Item"
-msgstr ""
+msgstr "_Превземи објект"
 
 #: ../../portable/menubar.py:186
 msgid "Check _Version"
-msgstr ""
+msgstr "Провери_Верзија"
 
 #: ../../portable/menubar.py:188
 msgid "_Remove Item"
-msgstr ""
+msgstr "_Отстрани објект"
 
 #: ../../portable/menubar.py:189
 msgid "_Remove Items"
-msgstr ""
+msgstr "_Отстрани објекти"
 
 #: ../../portable/menubar.py:190
 msgid "Re_name Item"
-msgstr ""
+msgstr "Пре_именувај објект"
 
 #: ../../portable/menubar.py:191
 msgid "Save Item _As"
-msgstr ""
+msgstr "Запиши Објект_како"
 
 #: ../../portable/menubar.py:192
 msgid "Save Items _As"
-msgstr ""
+msgstr "Запиши објект_како"
 
 #: ../../portable/menubar.py:193
 msgid "Copy Item _URL"
-msgstr ""
+msgstr "Копирај објект_URL"
 
 #: ../../portable/menubar.py:195
 msgid "_Options"
-msgstr ""
+msgstr "_Опции"
 
 #: ../../portable/menubar.py:196
 msgid "_Quit"
-msgstr ""
+msgstr "_Заврши"
 
 #: ../../portable/menubar.py:205
 msgid "Cu_t"
-msgstr ""
+msgstr "И_сечи"
 
 #: ../../portable/menubar.py:206
 msgid "_Copy"
-msgstr ""
+msgstr "_Копирај"
 
 #: ../../portable/menubar.py:207
 msgid "_Paste"
-msgstr ""
+msgstr "_Вметни"
 
 #: ../../portable/menubar.py:208
 msgid "Select _All"
-msgstr ""
+msgstr "Избери _сѐ"
 
 #: ../../portable/menubar.py:212
 msgid "Add _Feed"
-msgstr ""
+msgstr "Додај_Инфо-канал"
 
 #: ../../portable/menubar.py:214
 msgid "New Searc_h Feed"
-msgstr ""
+msgstr "Ново Пребарува_ње Инфо-канал"
 
 #: ../../portable/menubar.py:215
 msgid "New _Folder"
-msgstr ""
+msgstr "Нова_Папка"
 
 #: ../../portable/menubar.py:217
 msgid "Re_name"
-msgstr ""
+msgstr "Пре_именувај"
 
 #: ../../portable/menubar.py:218
 msgid "_Remove"
-msgstr ""
+msgstr "_Отстрани"
 
 #: ../../portable/menubar.py:219
 msgid "_Remove Folder"
-msgstr ""
+msgstr "_Отстрани Папка"
 
 #: ../../portable/menubar.py:221
 msgid "_Update Feed"
-msgstr ""
+msgstr "_Обнови Инфо-канал"
 
 #: ../../portable/menubar.py:222
 msgid "_Update Feeds"
-msgstr ""
+msgstr "_Обнови Инфо-канали"
 
 #: ../../portable/menubar.py:223
 msgid "Update _All Feeds"
-msgstr ""
+msgstr "Обнови_ги сите Инфо-канали"
 
 #: ../../portable/menubar.py:225
 msgid "_Import Feeds (OPML)"
-msgstr ""
+msgstr "_Увези Инфо-канали (OPML)"
 
 #: ../../portable/menubar.py:226
 msgid "E_xport Feeds (OPML)"
-msgstr ""
+msgstr "Из_вези Инфо-канали (OPML)"
 
 #: ../../portable/menubar.py:228
 msgid "_Share with a Friend"
-msgstr ""
+msgstr "_Сподели со пријател"
 
 #: ../../portable/menubar.py:229
 msgid "Copy URL"
-msgstr ""
+msgstr "Копирај го URL-от"
 
 #: ../../portable/menubar.py:233
 msgid "New _Playlist"
-msgstr ""
+msgstr "Нов_Список за репродукција"
 
 #: ../../portable/menubar.py:234
 msgid "New Playlist Fol_der"
-msgstr ""
+msgstr "Нова пап_ка за Список за репродукција"
 
 #: ../../portable/menubar.py:236
 msgid "Re_name Playlist"
-msgstr ""
+msgstr "Пре_именувај Список за репродукција"
 
 #: ../../portable/menubar.py:237
 msgid "_Remove Playlist"
-msgstr ""
+msgstr "_Отстрани список за репродукција"
 
 #: ../../portable/menubar.py:238
 msgid "_Remove Playlists"
-msgstr ""
+msgstr "_Отстрани Список за репродукција"
 
 #: ../../portable/menubar.py:239
 msgid "_Remove Playlist Folders"
-msgstr ""
+msgstr "_Отстрани Папки за Списоци за репродукција"
 
 #: ../../portable/menubar.py:240
 msgid "_Remove Playlist Folder"
-msgstr ""
+msgstr "_Отстрани Папка за Списоци за репродукција"
 
 #: ../../portable/menubar.py:251 ../../portable/menubar.py:252
 msgid "_Play"
-msgstr ""
+msgstr "_Репродуцирај"
 
 #: ../../portable/menubar.py:253
 msgid "_Pause"
-msgstr ""
+msgstr "_Паузирај"
 
 #: ../../portable/menubar.py:254
 msgid "_Stop"
-msgstr ""
+msgstr "_Запри"
 
 #: ../../portable/menubar.py:256
 msgid "_Next Video"
-msgstr ""
+msgstr "_Наредно видео"
 
 #: ../../portable/menubar.py:257
 msgid "_Previous Video"
-msgstr ""
+msgstr "_Предходно видео"
 
 #: ../../portable/menubar.py:259
 msgid "Skip _Forward"
-msgstr ""
+msgstr "Прескокни _нанапред"
 
 #: ../../portable/menubar.py:260
 msgid "Skip _Back"
-msgstr ""
+msgstr "Прескокни _наназад"
 
 #: ../../portable/menubar.py:262
 msgid "Volume _Up"
-msgstr ""
+msgstr "Зголеми _звук"
 
 #: ../../portable/menubar.py:263
 msgid "Volume _Down"
-msgstr ""
+msgstr "Намали _звук"
 
 #: ../../portable/menubar.py:265
 msgid "_Fullscreen"
-msgstr ""
+msgstr "_На цел екран"
 
 #: ../../portable/menubar.py:266
 msgid "_Toggle Detached/Attached"
-msgstr ""
+msgstr "_Притисни Откачено/Закачено"
 
 #: ../../portable/menubar.py:270
 #, python-format
 msgid "_About %(name)s"
-msgstr ""
+msgstr "_За %(name)s"
 
 #: ../../portable/menubar.py:272
 msgid "_Donate"
-msgstr ""
+msgstr "_Донирајте"
 
 #: ../../portable/menubar.py:274 ../../portable/menubar.py:297
 msgid "_Help"
-msgstr ""
+msgstr "_Помош"
 
 #: ../../portable/menubar.py:278
 msgid "Report a _Bug"
-msgstr ""
+msgstr "Пријавете_Грешка"
 
 #: ../../portable/menubar.py:280
 msgid "_Translate"
@@ -2392,19 +2516,19 @@ msgstr ""
 
 #: ../../portable/menubar.py:282
 msgid "_Planet Miro"
-msgstr ""
+msgstr "_Планета_Миро"
 
 #: ../../portable/menubar.py:286
 msgid "_Video"
-msgstr ""
+msgstr "_Видео"
 
 #: ../../portable/menubar.py:288
 msgid "_File"
-msgstr ""
+msgstr "_Датотека"
 
 #: ../../portable/menubar.py:294
 msgid "_Sidebar"
-msgstr ""
+msgstr "_Странична лента"
 
 #: ../../portable/menubar.py:295
 msgid "_Playlists"
@@ -2412,7 +2536,7 @@ msgstr ""
 
 #: ../../portable/menubar.py:296
 msgid "P_layback"
-msgstr ""
+msgstr "_Список за репродукција"
 
 #: ../../portable/util.py:297 ../../portable/util.py:299
 #, python-format
@@ -2422,184 +2546,185 @@ msgstr ""
 #: ../../portable/util.py:303 ../../portable/util.py:305
 #, python-format
 msgid "%(size)sMB"
-msgstr ""
+msgstr "%(size)sMB"
 
 #: ../../portable/util.py:309 ../../portable/util.py:311
 #, python-format
 msgid "%(size)sKB"
-msgstr ""
+msgstr "%(size)sKB"
 
 #: ../../portable/util.py:315 ../../portable/util.py:317
 #, python-format
 msgid "%(size)sB"
-msgstr ""
+msgstr "%(size)sB"
 
 #: ../../portable/playlist.py:200
 #, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr ""
+msgstr "Внесете ново име за списокот за репродукција %s"
 
 #: ../../portable/dbupgradeprogress.py:60
 msgid "Upgrading Old Database"
-msgstr ""
+msgstr "Подобрување на Стара база на податоци"
 
 #: ../../portable/dbupgradeprogress.py:67
 msgid "Converting Old Database"
-msgstr ""
+msgstr "Конвертирање на Стара база на податоци"
 
 #: ../../portable/dbupgradeprogress.py:80
 msgid "Upgrading Database"
-msgstr ""
+msgstr "Подобрување на база на податоци"
 
 #: ../../portable/item.py:922
 #, python-format
 msgid "%(count)d day"
 msgid_plural "%(count)d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d ден"
+msgstr[1] "%(count)d денови"
 
 #: ../../portable/item.py:927
 #, python-format
 msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d час"
+msgstr[1] "%(count)d часови"
 
 #: ../../portable/item.py:932
 #, python-format
 msgid "%(count)d minute"
 msgid_plural "%(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d минута"
+msgstr[1] "%(count)d минути"
 
 #: ../../portable/item.py:1193
 msgid "no title"
-msgstr ""
+msgstr "нема наслов"
 
 #: ../../portable/item.py:1239
 msgid "Contents appear in the library"
-msgstr ""
+msgstr "Содржините се појавуваат во Библиотека"
 
 #: ../../portable/item.py:1244
 msgid "Contents:"
-msgstr ""
+msgstr "Содржини:"
 
 #: ../../portable/item.py:1472
 msgid "starting up..."
-msgstr ""
+msgstr "започнувам..."
 
 #: ../../portable/opml.py:197
 msgid "OPML Import failed"
-msgstr ""
+msgstr "Увозот на OPML е неуспешен"
 
 #: ../../portable/opml.py:198
 msgid ""
 "The selected OPML file appears to be invalid.  Import was interrupted."
 msgstr ""
+"Означениот OPML документ изгледа дека е невалиден. Увозот беше прекинат."
 
 #: ../../portable/opml.py:205
 msgid "OPML Import summary"
-msgstr ""
+msgstr "Збирно за OPML  увозот"
 
 #: ../../portable/opml.py:206
 #, python-format
 msgid "Successfully imported %(count)d feed."
 msgid_plural "Successfully imported %(count)d feeds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Успешно увезен %(count)d инфо-канал."
+msgstr[1] "Успешно увезени %(count)d инфо-канали."
 
 #: ../../portable/opml.py:212
 #, python-format
 msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Прескокнат %(count)d инфо-канал кој веќе постои."
+msgstr[1] "Прескокнати %(count)d инфо-канали кои веќе постојат."
 
 #: ../../portable/theme.py:190
 msgid "Example Playlist"
-msgstr ""
+msgstr "Пример за список за репродукција"
 
 #: ../../portable/displaytext.py:52
 #, python-format
 msgid "%(size)s gb/s"
-msgstr ""
+msgstr "%(size)s гб/с"
 
 #: ../../portable/displaytext.py:55
 #, python-format
 msgid "%(size)s mb/s"
-msgstr ""
+msgstr "%(size)s мб/с"
 
 #: ../../portable/displaytext.py:58
 #, python-format
 msgid "%(size)s kb/s"
-msgstr ""
+msgstr "%(size)s кб/с"
 
 #: ../../portable/displaytext.py:61
 #, python-format
 msgid "%(size)s b/s"
-msgstr ""
+msgstr "%(size)s б/с"
 
 #: ../../portable/displaytext.py:68
 #, python-format
 msgid "%(num).0f day"
 msgid_plural "%(num).0f days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f ден"
+msgstr[1] "%(num).0f денови"
 
 #: ../../portable/displaytext.py:71
 #, python-format
 msgid "%(num).0f hr"
 msgid_plural "%(num).0f hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f час"
+msgstr[1] "%(num).0f часови"
 
 #: ../../portable/displaytext.py:74
 #, python-format
 msgid "%(num).0f min"
 msgid_plural "%(num).0f mins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f мин"
+msgstr[1] "%(num).0f минути"
 
 #: ../../portable/displaytext.py:76
 #, python-format
 msgid "%(num)d sec"
 msgid_plural "%(num)d secs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)d сек"
+msgstr[1] "%(num)d секунди"
 
 #: ../../portable/displaytext.py:90
 #, python-format
 msgid "%(size)s gb"
-msgstr ""
+msgstr "%(size)s гб"
 
 #: ../../portable/displaytext.py:93
 #, python-format
 msgid "%(size)s mb"
-msgstr ""
+msgstr "%(size)s мб"
 
 #: ../../portable/displaytext.py:96
 #, python-format
 msgid "%(size)s kb"
-msgstr ""
+msgstr "%(size)s кб"
 
 #: ../../portable/displaytext.py:98
 #, python-format
 msgid "%(size)s b"
-msgstr ""
+msgstr "%(size)s б"
 
 #: ../../portable/displaytext.py:103
 #, python-format
 msgid "Expires in %(count)d day"
 msgid_plural "Expires in %(count)d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Истекува за %(count)d ден"
+msgstr[1] "Истекува за %(count)d денови"
 
 #: ../../portable/displaytext.py:108
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Истекува за %(count)d час"
+msgstr[1] "Истекува за %(count)d часови"
 
 #: ../../portable/displaytext.py:113
 #, python-format

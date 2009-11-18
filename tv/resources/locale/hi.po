@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -81,7 +81,7 @@ msgstr ""
 
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"
-msgstr ""
+msgstr "अनुमति असफल हुई"
 
 #: ../../portable/httpclient.py:157
 #: ../../portable/frontends/widgets/crashdialog.py:48
@@ -94,7 +94,7 @@ msgstr ""
 
 #: ../../portable/httpclient.py:162
 msgid "Timeout"
-msgstr "समय ख़त्म"
+msgstr "अवधि समाप्त"
 
 #: ../../portable/httpclient.py:163
 #, python-format
@@ -117,7 +117,7 @@ msgstr ""
 
 #: ../../portable/httpclient.py:178
 msgid "Read error"
-msgstr ""
+msgstr "पढ़ने में त्रुटि"
 
 #: ../../portable/httpclient.py:179
 #, python-format
@@ -152,17 +152,17 @@ msgstr "फिल्में ढूंढे"
 #: ../../portable/frontends/widgets/statictabs.py:103
 #: ../../portable/frontends/widgets/itemlistcontroller.py:516
 msgid "Video"
-msgstr ""
+msgstr "वीडियो"
 
 #: ../../portable/frontends/widgets/statictabs.py:108
 #: ../../portable/frontends/widgets/itemlistcontroller.py:522
 msgid "Audio"
-msgstr ""
+msgstr "ऑडियो"
 
 #: ../../portable/frontends/widgets/statictabs.py:113
 #: ../../portable/frontends/widgets/itemlistcontroller.py:528
 msgid "Other"
-msgstr ""
+msgstr "अन्य"
 
 #: ../../portable/frontends/widgets/statictabs.py:118
 msgid "Downloading"
@@ -214,7 +214,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemcontextmenu.py:99
 #: ../../portable/frontends/widgets/application.py:495
 msgid "Rename Item"
-msgstr ""
+msgstr "वस्तु का नाम बदलें"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:101
 msgid "Revert Item Name"
@@ -253,7 +253,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemcontextmenu.py:239
 #: ../../portable/frontends/widgets/itemcontextmenu.py:257
 msgid "Cancel Download"
-msgstr ""
+msgstr "डाउनलोड समाप्त करो"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:121
 #: ../../portable/frontends/widgets/itemcontextmenu.py:240
@@ -263,7 +263,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemcontextmenu.py:124
 #: ../../portable/frontends/widgets/itemcontextmenu.py:253
 msgid "Resume Download"
-msgstr ""
+msgstr "बलपूर्वक फिर आरम्भ करो"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:128
 #: ../../portable/frontends/widgets/itemcontextmenu.py:223
@@ -276,7 +276,7 @@ msgstr "डाउनलोड"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:134
 #: ../../portable/frontends/widgets/style.py:240
 msgid "Web Page"
-msgstr "वेब पृष्ठ"
+msgstr "वेब पेज"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:136
 #: ../../portable/frontends/widgets/style.py:236
@@ -286,7 +286,7 @@ msgstr "टिप्पणियाँ"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:138
 msgid "License"
-msgstr ""
+msgstr "लाइसेंस"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:141
 msgid "File in Browser"
@@ -303,7 +303,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:148
 msgid "View"
-msgstr ""
+msgstr "दृश्य"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
 #: ../../portable/frontends/widgets/gtk/video.py:266
@@ -345,7 +345,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:277
 msgid "Remove From Playlist"
-msgstr ""
+msgstr "गीत सूची से मिटाएँ"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:55
 #: ../../portable/frontends/widgets/feedsettingspanel.py:102
@@ -556,7 +556,7 @@ msgstr "खोज"
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:293
 msgid "Finish"
-msgstr ""
+msgstr "समाप्त"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:273
 msgid "Searching for media files"
@@ -604,7 +604,7 @@ msgstr "यहाँ से"
 
 #: ../../portable/frontends/widgets/style.py:233
 msgid "File name:"
-msgstr ""
+msgstr "फ़ाइल नाम:"
 
 #: ../../portable/frontends/widgets/style.py:234
 msgid "Show More"
@@ -726,11 +726,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/displays.py:382
 msgid "Filename:"
-msgstr ""
+msgstr "फ़ाइलनामः"
 
 #: ../../portable/frontends/widgets/displays.py:385
 msgid "File type:"
-msgstr ""
+msgstr "फ़ाइल क़िस्मः"
 
 #: ../../portable/frontends/widgets/displays.py:391
 #: ../../portable/frontends/widgets/displays.py:428
@@ -739,7 +739,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/displays.py:393
 msgid "Skip"
-msgstr ""
+msgstr "छोड़े"
 
 #: ../../portable/frontends/widgets/displays.py:430
 msgid "Open Externally"
@@ -796,7 +796,7 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/displays.py:581
 msgid "Delete All"
-msgstr ""
+msgstr "सभी मिटाएँ"
 
 #: ../../portable/frontends/widgets/displays.py:585
 msgid "Put Into a New Folder"
@@ -901,8 +901,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:426
 msgid "Remove item"
 msgid_plural "Remove items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "मद हटाएँ"
 
 #: ../../portable/frontends/widgets/application.py:430
 msgid ""
@@ -970,7 +969,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
-msgstr ""
+msgstr "ओपीएमएल फ़ाइल आयात करें"
 
 #: ../../portable/frontends/widgets/application.py:626
 msgid "OPML Files"

@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -26,7 +26,7 @@ msgstr "Ошибка: %(msg)s"
 
 #: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
 msgid "Can't connect"
-msgstr "Не могу соединиться"
+msgstr "Невозможно соединиться"
 
 #: ../../portable/httpclient.py:105
 #, python-format
@@ -879,14 +879,12 @@ msgstr ""
 "\n"
 "Возможно, он расположен на вашем внешнем диске, который не подключен.\n"
 "\n"
-"Если вы продолжите, главный каталог для видео сменит место расположения на "
-"этот диск. Если у вас есть скачанное видео, это вызовет %(shortappname)s, "
-"чтобы удалить информацию об этом видео.\n"
+"Если вы продолжите, главный каталог для видео опять разместится на этом "
+"диске. Если у вас есть скачанные видеофайлы, то это вынудит %(shortappname)s "
+"потерять информацию о них.\n"
 "\n"
-"If you quit, then you can connect the drive or otherwise fix the problem and "
-"relaunch %(shortappname)s.\n"
-"Если вы выйдите и присоедините диск или другой носитель, это исправит "
-"проблему и перезапустит  %(shortappname)s."
+"Если вы выйдите, то сможете подключить диск или решить проблему каким-либо "
+"иным способом, и после этого перезапустить %(shortappname)s."
 
 #: ../../portable/frontends/widgets/application.py:326
 msgid "Error Revealing File"
@@ -996,8 +994,8 @@ msgstr[2] ""
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
 msgstr[0] "Удалить файл, вы уверены?"
-msgstr[1] "Удалить файлы, вы уверены?"
-msgstr[2] "Удалить файлы, вы уверены?"
+msgstr[1] "Удалить все %(count)d файла, вы уверены?"
+msgstr[2] "Удалить все %(count)d файлов, вы уверены?"
 
 #: ../../portable/frontends/widgets/application.py:462
 msgid ""
@@ -1926,7 +1924,7 @@ msgstr "Непросмотренные"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:730
 msgid "View|All"
-msgstr ""
+msgstr "Показать|Все"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:732
 msgid "Non Feed"
@@ -2016,9 +2014,8 @@ msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
 "must download the latest version of %(appname)s and run that."
 msgstr ""
-"Ваша База Данных была сохранена более новой версией приложения %(appname)s. "
-"Чтобы продолжить ее использование, вам необходимо скачать  и использовать "
-"самую последную версию %(appname)s."
+"Ваша база данных была сохранена более новой версией %(appname)s. Скачайте и "
+"используйте самую последнюю версию %(appname)s."
 
 #: ../../portable/startup.py:188
 msgid "Insufficient disk space"
@@ -2119,9 +2116,9 @@ msgid ""
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
-"Этот вещание не совместимо с %(appname)s, но мы всё-равно постараемся "
-"загрузить из него файлы. Возможно на это потребуется дополнительное время, и "
-"описания файлов могут неправильно отображаться .\n"
+"Это вещание не совместимо с %(appname)s, но мы всё равно постараемся "
+"загрузить из него файлы. Возможно, на это потребуется дополнительное время, "
+"и описания файлов могут отображаться неправильно.\n"
 "\n"
 "Пожалуйста, свяжитесь с распространителями %(url)s и попросите их "
 "предоставить вещание в формате, совместимом с %(appname)s.\n"
@@ -2256,7 +2253,7 @@ msgstr "Этот URL уже загружается внешней програм
 #: ../../portable/singleclick.py:62
 #, python-format
 msgid "%(appname)s will begin downloading it now."
-msgstr "%(appname)s начнет закачку сейчас.."
+msgstr "%(appname)s начнет закачку сейчас."
 
 #: ../../portable/singleclick.py:65
 msgid "It is downloading now."
@@ -2329,7 +2326,7 @@ msgstr "Торрент-файл поврежден"
 #: ../../portable/dl_daemon/download.py:1090
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
-msgstr "Торрен-файл по адресу %(url)s не является корректным"
+msgstr "Торрент-файл по адресу %(url)s повреждён"
 
 #: ../../portable/dl_daemon/download.py:1114
 msgid "Torrent file deleted"
@@ -2636,11 +2633,11 @@ msgstr "нет заголовка"
 
 #: ../../portable/item.py:1239
 msgid "Contents appear in the library"
-msgstr ""
+msgstr "Содержимое находится в библиотеке"
 
 #: ../../portable/item.py:1244
 msgid "Contents:"
-msgstr ""
+msgstr "Содержание:"
 
 #: ../../portable/item.py:1472
 msgid "starting up..."

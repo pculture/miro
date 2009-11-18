@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -44,22 +44,22 @@ msgstr "Pogreška HTTP"
 #: ../../portable/httpclient.py:119
 #, python-format
 msgid "Bad Status Line: %(msg)s"
-msgstr ""
+msgstr "Pogreška na liniji: %(msg)s"
 
 #: ../../portable/httpclient.py:124
 #, python-format
 msgid "Bad Header Line: %(msg)s"
-msgstr ""
+msgstr "Pogreška u zaglavlju na liniji:%(msg)s"
 
 #: ../../portable/httpclient.py:129
 #, python-format
 msgid "Bad Chunk size: %(msg)s"
-msgstr ""
+msgstr "Pogreška u veličini bloka na liniji: %(msg)s"
 
 #: ../../portable/httpclient.py:134
 #, python-format
 msgid "Expected CRLF got: %(character)r"
-msgstr ""
+msgstr "Očekivani CRLF dobio je: %(character)r"
 
 #: ../../portable/httpclient.py:139
 #, python-format
@@ -78,7 +78,7 @@ msgstr "Izvještaj greške 404 je primljen"
 #: ../../portable/httpclient.py:147
 #, python-format
 msgid "Bad Status Code: %(code)s"
-msgstr ""
+msgstr "Pogreška u kodu:%(code)s"
 
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"
@@ -100,7 +100,7 @@ msgstr "Prekoračenje vremena"
 #: ../../portable/httpclient.py:163
 #, python-format
 msgid "Connection to %(host)s timed out"
-msgstr ""
+msgstr "Veza s %(host)s je istekla"
 
 #: ../../portable/httpclient.py:167
 msgid "Invalid URL"
@@ -175,7 +175,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
 msgid "Add items to an existing playlist or a new one."
-msgstr ""
+msgstr "Dodati stavke na postojeću ili novu listu izvođenja"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
 msgid "Existing playlist:"
@@ -201,35 +201,35 @@ msgstr "Obriši"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:94
 #: ../../portable/frontends/widgets/itemcontextmenu.py:191
 msgid "Play"
-msgstr "Pokreni"
+msgstr "Pokrenuti"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just This Item"
-msgstr ""
+msgstr "Izvesti samo ovu stavku"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:96
 #: ../../portable/frontends/widgets/itemcontextmenu.py:192
 msgid "Add to Playlist"
-msgstr ""
+msgstr "Dodati u playlistu"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:99
 #: ../../portable/frontends/widgets/application.py:495
 msgid "Rename Item"
-msgstr "Preimenuj dokument"
+msgstr "Preimenovati stavku"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:101
 msgid "Revert Item Name"
-msgstr ""
+msgstr "Vratiti ime stavke"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:103
 #: ../../portable/frontends/widgets/itemcontextmenu.py:199
 msgid "Mark as Unplayed"
-msgstr ""
+msgstr "Označiti kao neizvođeno"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:106
 #: ../../portable/frontends/widgets/itemcontextmenu.py:204
 msgid "Mark as Played"
-msgstr ""
+msgstr "Označiti kao izvođeno"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:210
@@ -244,17 +244,17 @@ msgstr "Zadrži"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:112
 msgid "Stop Seeding"
-msgstr ""
+msgstr "Zaustaviti sijanje"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:114
 msgid "Resume Seeding"
-msgstr ""
+msgstr "Nastaviti sijanje"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:117
 #: ../../portable/frontends/widgets/itemcontextmenu.py:239
 #: ../../portable/frontends/widgets/itemcontextmenu.py:257
 msgid "Cancel Download"
-msgstr "Prekini skidanje"
+msgstr "Prekinuti skidanje"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:121
 #: ../../portable/frontends/widgets/itemcontextmenu.py:240
@@ -296,7 +296,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemcontextmenu.py:143
 #, python-format
 msgid "File in %(progname)s"
-msgstr ""
+msgstr "Datoteka u %(progname)s"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:145
 msgid "File on Disk"
@@ -316,29 +316,33 @@ msgstr "Podijeli s nekim"
 #, python-format
 msgid "%(count)d Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Preuzeta %(count)d datoteka"
+msgstr[1] "Preuzeto %(count)d datoteka"
+msgstr[2] "Preuzeto %(count)d datoteka"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:215
 #, python-format
 msgid "%(count)d Available Item"
 msgid_plural "%(count)d Available Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Dostupna %(count)d datoteka"
+msgstr[1] "Dostupno %(count)d datoteka"
+msgstr[2] "Dostupno %(count)d datoteka"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:228
 #, python-format
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Preuzimam %(count)d datoteku"
+msgstr[1] "Preuzimam %(count)d datoteka"
+msgstr[2] "Preuzimam %(count)d datoteka"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:245
 #, python-format
 msgid "%(count)d Paused Item"
 msgid_plural "%(count)d Paused Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Pauzirana %(count)d datoteka"
+msgstr[1] "Pauzirano %(count)d datoteka"
+msgstr[2] "Pauzirano %(count)d datoteka"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:263
 msgid "Restart Upload"
@@ -475,12 +479,12 @@ msgstr "Postavke Veze"
 #: ../../portable/frontends/widgets/firsttimedialog.py:63
 #, python-format
 msgid "%(name)s First Time Setup"
-msgstr ""
+msgstr "%(name)s namiještanje početnih postavki"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:122
 #, python-format
 msgid "Welcome to the %(name)s First Time Setup"
-msgstr ""
+msgstr "Dobro došli  u %(name)s namiještanju početnih postavki"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:126
 #, python-format
@@ -492,11 +496,16 @@ msgid ""
 "This way, downloads in progress can finish downloading and new media files "
 "can be downloaded in the background, ready when you want to watch."
 msgstr ""
+"Slijedećih nekoliko ekrana pomoći će vam optimalno namjestiti  %(name)s.\n"
+"\n"
+"Preporučujemo vam aktiviranje %(name)s prilikom pokretanja vašeg računala. "
+"Ovim putem aktivna skidanja mogu se završiti i nove medijske datoteke mogu "
+"biti skidane u pozadini, spremne za izvođenje kada vi to poželite."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:138
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
-msgstr ""
+msgstr "Želite li pokrenuti %(name)s prilikom podizanja programa"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:144
 #: ../../portable/frontends/widgets/firsttimedialog.py:178
@@ -517,7 +526,7 @@ msgstr "Sljedeći >"
 #: ../../portable/frontends/widgets/firsttimedialog.py:163
 #, python-format
 msgid "Completing the %(name)s First Time Setup"
-msgstr ""
+msgstr "Dovršavanje prvog namiještanja postavki %(name)s"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:167
 #, python-format
@@ -527,6 +536,10 @@ msgid ""
 "\n"
 "Would you like %(name)s to look for media files on your computer?"
 msgstr ""
+"Pronalaženjem svih medijskih datoteka na vašem računalu, %(name)s može vam "
+"pomoći u organizaciji vaše zbirke.\n"
+"\n"
+"Želite li da %(name)s potraži medijske datoteke na  na vašem računalu?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:185
 msgid "Restrict to all my personal files."
@@ -534,7 +547,7 @@ msgstr "Ograničiti povjerljive osobne datoteke"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:186
 msgid "Search custom folders:"
-msgstr ""
+msgstr "Potražiti vlastite mape"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:192
 #: ../../portable/frontends/widgets/prefpanel.py:438
@@ -543,7 +556,7 @@ msgstr "Izmijeniti"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:197
 msgid "Choose directory to search for media files"
-msgstr ""
+msgstr "Odabrati mapu u kojem će se tražiti medijske datoteke"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:211
 #: ../../portable/frontends/widgets/firsttimedialog.py:290
@@ -564,7 +577,7 @@ msgstr "Završetak"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:273
 msgid "Searching for media files"
-msgstr ""
+msgstr "Tražim medijske datoteke"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:283
 #: ../../portable/dialogs.py:87
@@ -575,15 +588,16 @@ msgstr "Odustani"
 #, python-format
 msgid "parsed %(count)s file"
 msgid_plural "parsed %(count)s files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "analizirana %(count)s datoteka"
+msgstr[1] "analizirano %(count)s datoteka"
+msgstr[2] "analizirano %(count)s datoteka"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:326
 #, python-format
 msgid "found %(count)s media file"
 msgid_plural "found %(count)s media files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "pronađena %(count)s medijska datoteka"
+msgstr[1] "pronađeno %(count)s medijskih datoteka"
 
 #: ../../portable/frontends/widgets/crashdialog.py:54
 #, python-format
@@ -591,6 +605,8 @@ msgid ""
 "%(appname)s has encountered an internal error.  You can help us track down "
 "this problem and fix it by submitting an error report."
 msgstr ""
+"%(appname)s naišla je na unutrašnju grešku. Raportiranjem ove greške možete "
+"nam pomoći pronaći je i ispraviti je."
 
 #: ../../portable/frontends/widgets/crashdialog.py:63
 msgid ""
@@ -741,7 +757,7 @@ msgstr "Vrsta datoteke:"
 #: ../../portable/frontends/widgets/displays.py:391
 #: ../../portable/frontends/widgets/displays.py:428
 msgid "Play Externally"
-msgstr ""
+msgstr "Pokrenuti izvana"
 
 #: ../../portable/frontends/widgets/displays.py:393
 msgid "Skip"
@@ -770,7 +786,8 @@ msgstr[1] ""
 msgid "%(count)d Playlist Folder Selected"
 msgid_plural "%(count)d Playlist Folders Selected"
 msgstr[0] ""
-msgstr[1] ""
+msgstr[1] "Selektirane %(count)d mape liste izvođenja"
+msgstr[2] "Selektirano %(count)d mapa lista izvođenja"
 
 #: ../../portable/frontends/widgets/displays.py:552
 #, python-format
@@ -869,7 +886,7 @@ msgstr "Pogreška prilikom objave datoteke"
 #: ../../portable/frontends/widgets/application.py:327
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
-msgstr ""
+msgstr "Datoteka %(filename)s bila je izbrisana izvan%(appname)s."
 
 #: ../../portable/frontends/widgets/application.py:335
 msgid "Open Files..."
@@ -917,12 +934,12 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:400
 #, python-format
 msgid "%(appname)s is up to date"
-msgstr ""
+msgstr "%(appname)s je najnovija"
 
 #: ../../portable/frontends/widgets/application.py:402
 #, python-format
 msgid "%(appname)s is up to date!"
-msgstr ""
+msgstr "%(appname)s je najnovija!"
 
 #: ../../portable/frontends/widgets/application.py:426
 msgid "Remove item"
@@ -972,7 +989,9 @@ msgid ""
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
 msgstr[0] ""
+"Jedna od ovih stavki je mapa. Brisanje mape izbrisat će i njen sadržaj"
 msgstr[1] ""
+"Neke od ovih stavki su mape. Brisanjem mapa izbrisat ce se i njihov sadržaj."
 
 #: ../../portable/frontends/widgets/application.py:496
 msgid "Enter the new name for the item"
@@ -1123,8 +1142,8 @@ msgstr "Jesi li siguran da želiš odustati?"
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d skidanje u tijeku.  Želite li ipak prekinuti?"
+msgstr[1] "%(count)d skidanje u tijeku.  Želite li ipak prekinuti?"
 
 #: ../../portable/frontends/widgets/application.py:809
 msgid "Warn me when I attempt to quit with downloads in progress"
@@ -1140,11 +1159,11 @@ msgstr "Poruka"
 
 #: ../../portable/frontends/widgets/application.py:1152
 msgid "Migrating Files"
-msgstr ""
+msgstr "Prenositi datoteke"
 
 #: ../../portable/frontends/widgets/application.py:1162
 msgid "Migrating files"
-msgstr ""
+msgstr "Prenositi datotek"
 
 #: ../../portable/frontends/widgets/dialogs.py:102
 msgid ""

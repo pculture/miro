@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -81,7 +81,7 @@ msgstr "Código de Status Inválido: %(code)s"
 
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"
-msgstr "Falha na autorização"
+msgstr "Autorização falhou"
 
 #: ../../portable/httpclient.py:157
 #: ../../portable/frontends/widgets/crashdialog.py:48
@@ -94,7 +94,7 @@ msgstr "Solicitação de conexão nunca ocorreu."
 
 #: ../../portable/httpclient.py:162
 msgid "Timeout"
-msgstr "Tempo limite excedido"
+msgstr "Tempo esgotado"
 
 #: ../../portable/httpclient.py:163
 #, python-format
@@ -195,7 +195,7 @@ msgstr "Remover da Biblioteca"
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:127
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:163
 msgid "Delete"
-msgstr "Excluir"
+msgstr "Remover"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:94
 #: ../../portable/frontends/widgets/itemcontextmenu.py:191
@@ -253,7 +253,7 @@ msgstr "Continuar semeando"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:239
 #: ../../portable/frontends/widgets/itemcontextmenu.py:257
 msgid "Cancel Download"
-msgstr "Cancelar Transferência"
+msgstr "Cancelar Download"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:121
 #: ../../portable/frontends/widgets/itemcontextmenu.py:240
@@ -1046,7 +1046,7 @@ msgstr "Criar Pasta de Listas de Reprodução"
 
 #: ../../portable/frontends/widgets/application.py:686
 msgid "Enter a name for the new playlist folder"
-msgstr "Entre com nome pasta que vai armazenar a lista"
+msgstr "Digite um nome para a nova pasta de listas de reprodução"
 
 #: ../../portable/frontends/widgets/application.py:707
 #: ../../portable/frontends/widgets/tablist.py:579
@@ -1873,7 +1873,7 @@ msgstr "Remover Fonte de Notícias"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:719
 msgid "Unwatched"
-msgstr "não visto"
+msgstr "Não visto"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:730
 msgid "View|All"

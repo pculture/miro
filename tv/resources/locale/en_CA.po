@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-09-23 13:04-0400\n"
-"PO-Revision-Date: 2009-09-25 21:00+0000\n"
-"Last-Translator: Itai Molenaar <imolenaar28@gmail.com>\n"
+"PO-Revision-Date: 2009-10-27 16:08+0000\n"
+"Last-Translator: mike mcneely <mcneely.mike@gmail.com>\n"
 "Language-Team: English (Canada) <en_CA@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:45+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -2189,7 +2189,7 @@ msgstr "Stop Watching"
 
 #: ../../portable/dialogs.py:119
 msgid "Retry"
-msgstr ""
+msgstr "Retry"
 
 #: ../../portable/singleclick.py:55
 msgid "Download already exists"
@@ -2771,6 +2771,16 @@ msgid ""
 "Error: %(error_text)s\n"
 "\n"
 msgstr ""
+"%(appname)s was unable to save its database.\n"
+"\n"
+"If your disk is full, we suggest freeing up some space and retrying.  If "
+"your disk is not full, it's possible that retrying will work.\n"
+"\n"
+"If retrying did not work, please quit %(appname)s and restart.  Recent "
+"changes may be lost.\n"
+"\n"
+"Error: %(error_text)s\n"
+"\n"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:171
 msgid "Download Completed"

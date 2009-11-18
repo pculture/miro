@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -1561,7 +1561,7 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/gtk/video.py:273
 msgid "Permalink"
-msgstr ""
+msgstr "Permalink"
 
 #: ../../portable/frontends/widgets/gtk/video.py:279
 msgid "Pop-in"
@@ -2036,7 +2036,7 @@ msgstr "Error loading feed"
 #: ../../portable/feed.py:942
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
-msgstr ""
+msgstr "Couldn't load the feed at %(url)s (%(errordescription)s)."
 
 #: ../../portable/feed.py:945
 msgid "Would you like to keep the feed?"
@@ -2049,7 +2049,7 @@ msgstr "Bad content-type"
 #: ../../portable/feed.py:1083
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
-msgstr ""
+msgstr "Channel is not compatible with %(appname)s"
 
 #: ../../portable/feed.py:1086
 #, python-format
@@ -2063,11 +2063,19 @@ msgid ""
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
+"This channel is not compatible with %(appname)s but we'll try our best to "
+"grab the files.  It may take extra time to list the videos, and descriptions "
+"may look funny.\n"
+"\n"
+"Please contact the publishers of %(url)s and ask if they can supply a feed "
+"in a format that will work with %(appname)s.\n"
+"\n"
+"Do you want to try to load this channel anyway?"
 
 #: ../../portable/feed.py:1687
 #, python-format
 msgid "Search All: %(text)s"
-msgstr ""
+msgstr "Search All: %(text)s"
 
 #: ../../portable/feed.py:2274 ../../portable/feed.py:2425
 msgid "Local Files"
@@ -2083,7 +2091,7 @@ msgstr "OK"
 
 #: ../../portable/dialogs.py:88
 msgid "Done"
-msgstr ""
+msgstr "Done"
 
 #: ../../portable/dialogs.py:91
 msgid "Quit"
@@ -2135,11 +2143,11 @@ msgstr "Create"
 
 #: ../../portable/dialogs.py:104
 msgid "Create Feed"
-msgstr ""
+msgstr "Create Feed"
 
 #: ../../portable/dialogs.py:105
 msgid "Create Folder"
-msgstr ""
+msgstr "Create Folder"
 
 #: ../../portable/dialogs.py:107
 msgid "Add Into New Folder"
@@ -2163,7 +2171,7 @@ msgstr "Download Anyway"
 
 #: ../../portable/dialogs.py:115
 msgid "Open in External Browser"
-msgstr ""
+msgstr "Open in External Browser"
 
 #: ../../portable/dialogs.py:116
 msgid "Don't Install"
@@ -2171,11 +2179,11 @@ msgstr "Don't Install"
 
 #: ../../portable/dialogs.py:117
 msgid "Subscribe"
-msgstr ""
+msgstr "Subscribe"
 
 #: ../../portable/dialogs.py:118
 msgid "Stop Watching"
-msgstr ""
+msgstr "Stop Watching"
 
 #: ../../portable/dialogs.py:119
 msgid "Retry"
@@ -2192,7 +2200,7 @@ msgstr "That URL is already an external download."
 #: ../../portable/singleclick.py:62
 #, python-format
 msgid "%(appname)s will begin downloading it now."
-msgstr ""
+msgstr "%(appname)s will begin downloading it now."
 
 #: ../../portable/singleclick.py:65
 msgid "It is downloading now."
@@ -2224,6 +2232,9 @@ msgid ""
 "\n"
 "URL: %(url)s"
 msgstr ""
+"%(appname)s is not able to download a file at this URL:\n"
+"\n"
+"URL: %(url)s"
 
 #: ../../portable/dl_daemon/download.py:639
 #, python-format
@@ -2270,7 +2281,7 @@ msgstr "Torrent file deleted"
 #: ../../portable/dl_daemon/download.py:1115
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
-msgstr ""
+msgstr "The torrent file for this item was deleted outside of %(appname)s."
 
 #: ../../portable/menubar.py:184
 msgid "_Open"
@@ -2459,7 +2470,7 @@ msgstr "_Toggle Detached/Attached"
 #: ../../portable/menubar.py:270
 #, python-format
 msgid "_About %(name)s"
-msgstr ""
+msgstr "_About %(name)s"
 
 #: ../../portable/menubar.py:272
 msgid "_Donate"
@@ -2528,46 +2539,48 @@ msgstr "Enter a new name for the playlist %s"
 
 #: ../../portable/dbupgradeprogress.py:60
 msgid "Upgrading Old Database"
-msgstr ""
+msgstr "Upgrading Old Database"
 
 #: ../../portable/dbupgradeprogress.py:67
 msgid "Converting Old Database"
-msgstr ""
+msgstr "Converting Old Database"
 
 #: ../../portable/dbupgradeprogress.py:80
 msgid "Upgrading Database"
-msgstr ""
+msgstr "Upgrading Database"
 
 #: ../../portable/item.py:922
 #, python-format
 msgid "%(count)d day"
 msgid_plural "%(count)d days"
 msgstr[0] "%(count)d day"
+msgstr[1] "%(count)d days"
 
 #: ../../portable/item.py:927
 #, python-format
 msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
 msgstr[0] "%(count)d hour"
+msgstr[1] "%(count)d hours"
 
 #: ../../portable/item.py:932
 #, python-format
 msgid "%(count)d minute"
 msgid_plural "%(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d minute"
+msgstr[1] "%(count)d minutes"
 
 #: ../../portable/item.py:1193
 msgid "no title"
-msgstr ""
+msgstr "no title"
 
 #: ../../portable/item.py:1239
 msgid "Contents appear in the library"
-msgstr ""
+msgstr "Contents appear in the library"
 
 #: ../../portable/item.py:1244
 msgid "Contents:"
-msgstr ""
+msgstr "Contents:"
 
 #: ../../portable/item.py:1472
 msgid "starting up..."
@@ -2629,28 +2642,29 @@ msgstr "%(size)s b/s"
 #, python-format
 msgid "%(num).0f day"
 msgid_plural "%(num).0f days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f day"
+msgstr[1] "%(num).0f days"
 
 #: ../../portable/displaytext.py:71
 #, python-format
 msgid "%(num).0f hr"
 msgid_plural "%(num).0f hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f hr"
+msgstr[1] "%(num).0f hrs"
 
 #: ../../portable/displaytext.py:74
 #, python-format
 msgid "%(num).0f min"
 msgid_plural "%(num).0f mins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f min"
+msgstr[1] "%(num).0f mins"
 
 #: ../../portable/displaytext.py:76
 #, python-format
 msgid "%(num)d sec"
 msgid_plural "%(num)d secs"
 msgstr[0] "%(num)d sec"
+msgstr[1] "%(num)d secs"
 
 #: ../../portable/displaytext.py:90
 #, python-format
@@ -2677,48 +2691,51 @@ msgstr "%(size)s b"
 msgid "Expires in %(count)d day"
 msgid_plural "Expires in %(count)d days"
 msgstr[0] "Expires in %(count)d day"
+msgstr[1] "Expires in %(count)d days"
 
 #: ../../portable/displaytext.py:108
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
 msgstr[0] "Expires in %(count)d hour"
+msgstr[1] "Expires in %(count)d hours"
 
 #: ../../portable/displaytext.py:113
 #, python-format
 msgid "Expires in %(count)d minute"
 msgid_plural "Expires in %(count)d minutes"
 msgstr[0] "Expires in %(count)d minute"
+msgstr[1] "Expires in %(count)d minutes"
 
 #: ../../portable/displaytext.py:121
 #, python-format
 msgid "Expires: %(count)d day"
 msgid_plural "Expires: %(count)d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Expires: %(count)d day"
+msgstr[1] "Expires: %(count)d days"
 
 #: ../../portable/displaytext.py:126
 #, python-format
 msgid "Expires: %(count)d hour"
 msgid_plural "Expires: %(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Expires: %(count)d hour"
+msgstr[1] "Expires: %(count)d hours"
 
 #: ../../portable/displaytext.py:131
 #, python-format
 msgid "Expires: %(count)d minute"
 msgid_plural "Expires: %(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Expires: %(count)d minute"
+msgstr[1] "Expires: %(count)d minutes"
 
 #: ../../portable/displaytext.py:142
 #, python-format
 msgid "%(month)s %(dayofmonth)s, %(year)s"
-msgstr ""
+msgstr "%(month)s %(dayofmonth)s, %(year)s"
 
 #: ../../portable/storedatabase.py:209
 msgid "Database was created by a newer version of Miro "
-msgstr ""
+msgstr "Database was created by a newer version of Miro "
 
 #: ../../portable/storedatabase.py:466
 #, python-format
@@ -2764,11 +2781,11 @@ msgstr "Download of video '%s' is finished."
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:199
 msgid "Pop Out"
-msgstr ""
+msgstr "Pop Out"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:202
 msgid "Pop In"
-msgstr ""
+msgstr "Pop In"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
 msgid "Services"
@@ -2777,7 +2794,7 @@ msgstr "Services"
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:141
 #, python-format
 msgid "Hide %(appname)s"
-msgstr ""
+msgstr "Hide %(appname)s"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:143
 msgid "Hide Others"
@@ -2794,7 +2811,7 @@ msgstr "Preferences..."
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:151
 #, python-format
 msgid "Quit %(appname)s"
-msgstr ""
+msgstr "Quit %(appname)s"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
 msgid "Close Window"
@@ -2859,7 +2876,7 @@ msgstr "Window"
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:195
 #, python-format
 msgid "%(appname)s Help"
-msgstr ""
+msgstr "%(appname)s Help"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:39
@@ -2873,7 +2890,7 @@ msgstr "Renderer options:"
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
 #, python-format
 msgid "You must restart %(appname)s for renderer changes to take effect."
-msgstr ""
+msgstr "You must restart %(appname)s for renderer changes to take effect."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:74
 msgid "Video renderer:"
@@ -2886,11 +2903,11 @@ msgstr "Update Available"
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
 #, python-format
 msgid "A new version of %(appname)s is available for download."
-msgstr ""
+msgstr "A new version of %(appname)s is available for download."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
-msgstr ""
+msgstr "Do you want to download it now?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
@@ -2918,6 +2935,11 @@ msgid ""
 "You should quit %(appname)s now and start it up again after Adobe Flash has "
 "been installed."
 msgstr ""
+"Your browser will load the web-site where you can download and install Adobe "
+"Flash.\n"
+"\n"
+"You should quit %(appname)s now and start it up again after Adobe Flash has "
+"been installed."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
 msgid "When I click the red close button:"
@@ -2930,7 +2952,7 @@ msgstr "Minimise to tray so that downloads can continue."
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
 #, python-format
 msgid "Quit %(appname)s completely."
-msgstr ""
+msgstr "Quit %(appname)s completely."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:133
 msgid "Close to tray?"
@@ -2942,6 +2964,8 @@ msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
+"When you click the red close button, would you like %(appname)s to close to "
+"the system tray or quit?  You can change this setting later in the Options."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:192
 msgid "Error Bombing Item"

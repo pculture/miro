@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-09-23 13:04-0400\n"
-"PO-Revision-Date: 2009-07-23 14:09+0000\n"
-"Last-Translator: Will Guaraldi Kahn-Greene <willg@bluesock.org>\n"
+"PO-Revision-Date: 2009-10-28 20:11+0000\n"
+"Last-Translator: ah8982 <Unknown>\n"
 "Language-Team: German, Low <nds@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -25,7 +25,7 @@ msgstr "Fehler: %(msg)s"
 
 #: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
 msgid "Can't connect"
-msgstr "Kann nicht verbinden"
+msgstr "Künn nich verbinnen"
 
 #: ../../portable/httpclient.py:105
 #, python-format
@@ -43,22 +43,22 @@ msgstr "HTTP Fehler"
 #: ../../portable/httpclient.py:119
 #, python-format
 msgid "Bad Status Line: %(msg)s"
-msgstr ""
+msgstr "Ungültige Statuszeile: %(msg)s"
 
 #: ../../portable/httpclient.py:124
 #, python-format
 msgid "Bad Header Line: %(msg)s"
-msgstr ""
+msgstr "Ungültige Kopfzeile: %(msg)s"
 
 #: ../../portable/httpclient.py:129
 #, python-format
 msgid "Bad Chunk size: %(msg)s"
-msgstr ""
+msgstr "Ungültige Blockgröße: %(msg)s"
 
 #: ../../portable/httpclient.py:134
 #, python-format
 msgid "Expected CRLF got: %(character)r"
-msgstr ""
+msgstr "Erwartetes CRLF: %(character)r"
 
 #: ../../portable/httpclient.py:139
 #, python-format
@@ -72,16 +72,16 @@ msgstr "Datei nicht gefunden"
 
 #: ../../portable/httpclient.py:145
 msgid "Got 404 status code"
-msgstr ""
+msgstr "Der Server meldet den Fehlercode 404"
 
 #: ../../portable/httpclient.py:147
 #, python-format
 msgid "Bad Status Code: %(code)s"
-msgstr ""
+msgstr "Ungültiger Status-Code: %(code)s"
 
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"
-msgstr ""
+msgstr "Genehmigung verweigert"
 
 #: ../../portable/httpclient.py:157
 #: ../../portable/frontends/widgets/crashdialog.py:48
@@ -90,7 +90,7 @@ msgstr "Interner Fehler"
 
 #: ../../portable/httpclient.py:158
 msgid "Pipeline request never started"
-msgstr ""
+msgstr "Pipeline-Abfrage wurde nie gestartet"
 
 #: ../../portable/httpclient.py:162
 msgid "Timeout"
@@ -99,7 +99,7 @@ msgstr "Zeitüberschreitung"
 #: ../../portable/httpclient.py:163
 #, python-format
 msgid "Connection to %(host)s timed out"
-msgstr ""
+msgstr "Zeitüberschreitung bei Verbindung zu %(host)s"
 
 #: ../../portable/httpclient.py:167
 msgid "Invalid URL"
@@ -142,7 +142,7 @@ msgstr "Interner Fehler: Nicht bereit Daten zu senden"
 
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
-msgstr ""
+msgstr "Miro-Programmführer"
 
 #: ../../portable/frontends/widgets/statictabs.py:97
 #: ../../portable/frontends/widgets/itemlistcontroller.py:433
@@ -170,23 +170,23 @@ msgstr "Wird heruntergeladen"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
-msgstr ""
+msgstr "Wiedergabeliste hinzufügen"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
 msgid "Add items to an existing playlist or a new one."
-msgstr ""
+msgstr "Objekte einer bestehenden oder neuen Wiedergabeliste hinzufügen."
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
 msgid "Existing playlist:"
-msgstr ""
+msgstr "Vorhandene Wiedergabeliste:"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
 msgid "New playlist:"
-msgstr ""
+msgstr "Neue Wiedergabeliste:"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
-msgstr ""
+msgstr "Aus der Medienbibliothek entfernen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
 #: ../../portable/frontends/widgets/gtk/video.py:246
@@ -200,35 +200,35 @@ msgstr "Entfernen"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:94
 #: ../../portable/frontends/widgets/itemcontextmenu.py:191
 msgid "Play"
-msgstr ""
+msgstr "Abspielen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just This Item"
-msgstr ""
+msgstr "Nur dieses Objekt abspielen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:96
 #: ../../portable/frontends/widgets/itemcontextmenu.py:192
 msgid "Add to Playlist"
-msgstr ""
+msgstr "Zur Wiedergabeliste hinzufügen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:99
 #: ../../portable/frontends/widgets/application.py:495
 msgid "Rename Item"
-msgstr ""
+msgstr "Objekt umbenennen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:101
 msgid "Revert Item Name"
-msgstr ""
+msgstr "Objektnamen zurücksetzen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:103
 #: ../../portable/frontends/widgets/itemcontextmenu.py:199
 msgid "Mark as Unplayed"
-msgstr ""
+msgstr "Als ungespielt markieren"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:106
 #: ../../portable/frontends/widgets/itemcontextmenu.py:204
 msgid "Mark as Played"
-msgstr ""
+msgstr "Als gespielt markieren"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:210
@@ -243,27 +243,27 @@ msgstr "Behalten"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:112
 msgid "Stop Seeding"
-msgstr ""
+msgstr "Verteilung anhalten"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:114
 msgid "Resume Seeding"
-msgstr ""
+msgstr "Verteilung fortsetzen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:117
 #: ../../portable/frontends/widgets/itemcontextmenu.py:239
 #: ../../portable/frontends/widgets/itemcontextmenu.py:257
 msgid "Cancel Download"
-msgstr ""
+msgstr "Download abbrechen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:121
 #: ../../portable/frontends/widgets/itemcontextmenu.py:240
 msgid "Pause Download"
-msgstr ""
+msgstr "Download pausieren"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:124
 #: ../../portable/frontends/widgets/itemcontextmenu.py:253
 msgid "Resume Download"
-msgstr ""
+msgstr "Download fortsetzen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:128
 #: ../../portable/frontends/widgets/itemcontextmenu.py:223
@@ -286,24 +286,24 @@ msgstr "Kommentare"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:138
 msgid "License"
-msgstr ""
+msgstr "Lizenz"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:141
 msgid "File in Browser"
-msgstr ""
+msgstr "Datei im Browser"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:143
 #, python-format
 msgid "File in %(progname)s"
-msgstr ""
+msgstr "Datei in %(progname)s"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:145
 msgid "File on Disk"
-msgstr ""
+msgstr "Datei auf der Festplatte"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:148
 msgid "View"
-msgstr ""
+msgstr "Ansicht"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
 #: ../../portable/frontends/widgets/gtk/video.py:266
@@ -315,37 +315,37 @@ msgstr "Freigabe"
 #, python-format
 msgid "%(count)d Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d heruntergeladenes Objekt"
+msgstr[1] "%(count)d heruntergeladene Objekte"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:215
 #, python-format
 msgid "%(count)d Available Item"
 msgid_plural "%(count)d Available Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d verfügbares Objekt"
+msgstr[1] "%(count)d verfügbare Objekte"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:228
 #, python-format
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Objekt wird heruntergeladen"
+msgstr[1] "%(count)d Objekte werden heruntergeladen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:245
 #, python-format
 msgid "%(count)d Paused Item"
 msgid_plural "%(count)d Paused Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d angehaltener Download"
+msgstr[1] "%(count)d angehaltene Downloads"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:263
 msgid "Restart Upload"
-msgstr ""
+msgstr "Upload neu starten"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:277
 msgid "Remove From Playlist"
-msgstr ""
+msgstr "Aus Wiedergabeliste entfernen"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:55
 #: ../../portable/frontends/widgets/feedsettingspanel.py:102
@@ -473,12 +473,12 @@ msgstr "Feed Einstellungen"
 #: ../../portable/frontends/widgets/firsttimedialog.py:63
 #, python-format
 msgid "%(name)s First Time Setup"
-msgstr ""
+msgstr "%(name)s Ersteinrichtung"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:122
 #, python-format
 msgid "Welcome to the %(name)s First Time Setup"
-msgstr ""
+msgstr "Willkommen zur %(name)s Ersteinrichtung"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:126
 #, python-format
@@ -490,32 +490,38 @@ msgid ""
 "This way, downloads in progress can finish downloading and new media files "
 "can be downloaded in the background, ready when you want to watch."
 msgstr ""
+"Die nächsten Bildschirme werden Ihnen helfen, %(name)s nach Ihren Wünschen "
+"einzustellen.\n"
+"\n"
+"Wir empfehlen, %(name)s mit dem Start des Computers auszuführen. So können "
+"begonnene Downloads beendet und neue Mediendateien im Hintergrund herunter "
+"geladen werden, so dass sie zum Ansehen bereit liegen."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:138
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
-msgstr ""
+msgstr "Möchten Sie %(name)s nach dem Hochfahren starten?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:144
 #: ../../portable/frontends/widgets/firsttimedialog.py:178
 #: ../../portable/dialogs.py:89
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:145
 #: ../../portable/frontends/widgets/firsttimedialog.py:177
 #: ../../portable/dialogs.py:90
 msgid "No"
-msgstr ""
+msgstr "Nein"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:153
 msgid "Next >"
-msgstr ""
+msgstr "Weiter >"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:163
 #, python-format
 msgid "Completing the %(name)s First Time Setup"
-msgstr ""
+msgstr "Fertigstellung von %(name)s Ersteinrichtung"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:167
 #, python-format
@@ -525,14 +531,18 @@ msgid ""
 "\n"
 "Would you like %(name)s to look for media files on your computer?"
 msgstr ""
+"%(name)s kann alle Mediendateien auf Ihrem Computer finden, um Ihnen bei der "
+"Organisation Ihrer Sammlung zu helfen.\n"
+"\n"
+"Möchten Sie, dass %(name)s nach Mediendateien auf Ihrem Computer sucht?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:185
 msgid "Restrict to all my personal files."
-msgstr ""
+msgstr "Auf meine persönlichen Dateien begrenzen."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:186
 msgid "Search custom folders:"
-msgstr ""
+msgstr "Bestimmte Ordner durchsuchen:"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:192
 #: ../../portable/frontends/widgets/prefpanel.py:438
@@ -541,28 +551,28 @@ msgstr "Ändern"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:197
 msgid "Choose directory to search for media files"
-msgstr ""
+msgstr "Verzeichnis auswählen, das nach Mediendateien durchsucht werden soll"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:211
 #: ../../portable/frontends/widgets/firsttimedialog.py:290
 msgid "< Previous"
-msgstr ""
+msgstr "< Zurück"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:223
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:282
 #: ../../portable/feed.py:2300 ../../portable/feed.py:2407
 msgid "Search"
-msgstr ""
+msgstr "Suchen"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:293
 msgid "Finish"
-msgstr ""
+msgstr "Fertigstellen"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:273
 msgid "Searching for media files"
-msgstr ""
+msgstr "Nach Mediendateien suchen"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:283
 #: ../../portable/dialogs.py:87
@@ -573,15 +583,15 @@ msgstr "Abbrechen"
 #, python-format
 msgid "parsed %(count)s file"
 msgid_plural "parsed %(count)s files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s Datei analysiert"
+msgstr[1] "%(count)s Dateien analysiert"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:326
 #, python-format
 msgid "found %(count)s media file"
 msgid_plural "found %(count)s media files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s Mediadatei gefunden"
+msgstr[1] "%(count)s Mediadateien gefunden"
 
 #: ../../portable/frontends/widgets/crashdialog.py:54
 #, python-format
@@ -589,6 +599,9 @@ msgid ""
 "%(appname)s has encountered an internal error.  You can help us track down "
 "this problem and fix it by submitting an error report."
 msgstr ""
+"%(appname)s ist auf einen internen Fehler gestoßen. Sie können uns helfen, "
+"dieses Problem zu finden und beheben, indem Sie einen Fehlerbericht "
+"einsenden."
 
 #: ../../portable/frontends/widgets/crashdialog.py:63
 msgid ""
@@ -630,7 +643,7 @@ msgstr "Zeige Datei"
 
 #: ../../portable/frontends/widgets/style.py:239
 msgid "Display Contents"
-msgstr ""
+msgstr "Inhalte anzeigen"
 
 #: ../../portable/frontends/widgets/style.py:241
 msgid "File URL"
@@ -675,7 +688,7 @@ msgstr "Download Torrent"
 #: ../../portable/frontends/widgets/style.py:252
 #: ../../portable/dl_daemon/download.py:550
 msgid "Error"
-msgstr ""
+msgstr "Fehler"
 
 #: ../../portable/frontends/widgets/style.py:253
 msgid "queued for autodownload"
@@ -689,7 +702,7 @@ msgstr "Nicht wiedergegeben"
 
 #: ../../portable/frontends/widgets/style.py:255
 msgid "Currently Playing"
-msgstr ""
+msgstr "Derzeit abspielend"
 
 #: ../../portable/frontends/widgets/style.py:256
 #: ../../portable/frontends/widgets/style.py:1171
@@ -727,84 +740,86 @@ msgid ""
 "%(appname)s can't play this file.  You may be able to open it with a "
 "different program"
 msgstr ""
+"%(appname)s kann diese Datei nicht abspielen. Sie können sie möglicherweise "
+"mit einem anderen Programm öffnen."
 
 #: ../../portable/frontends/widgets/displays.py:382
 msgid "Filename:"
-msgstr ""
+msgstr "Dateiname:"
 
 #: ../../portable/frontends/widgets/displays.py:385
 msgid "File type:"
-msgstr ""
+msgstr "Dateityp:"
 
 #: ../../portable/frontends/widgets/displays.py:391
 #: ../../portable/frontends/widgets/displays.py:428
 msgid "Play Externally"
-msgstr ""
+msgstr "Extern wiedergeben"
 
 #: ../../portable/frontends/widgets/displays.py:393
 msgid "Skip"
-msgstr ""
+msgstr "Überspringen"
 
 #: ../../portable/frontends/widgets/displays.py:430
 msgid "Open Externally"
-msgstr ""
+msgstr "In externer Anwendung öffnen"
 
 #: ../../portable/frontends/widgets/displays.py:536
 #, python-format
 msgid "%(count)d Feed Folder Selected"
 msgid_plural "%(count)d Feed Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Feedordner ausgewählt"
+msgstr[1] "%(count)d Feedordner ausgewählt"
 
 #: ../../portable/frontends/widgets/displays.py:541
 #, python-format
 msgid "(contains %(count)d feed)"
 msgid_plural "(contains %(count)d feeds)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(enthält %(count)d Feed)"
+msgstr[1] "(enthält %(count)d Feeds)"
 
 #: ../../portable/frontends/widgets/displays.py:547
 #, python-format
 msgid "%(count)d Playlist Folder Selected"
 msgid_plural "%(count)d Playlist Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Wiedergabelistenordner ausgewählt"
+msgstr[1] "%(count)d Wiedergabelistenordner ausgewählt"
 
 #: ../../portable/frontends/widgets/displays.py:552
 #, python-format
 msgid "(contains %(count)d playlist)"
 msgid_plural "(contains %(count)d playlist)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(enthält %(count)d Wiedergabeliste)"
+msgstr[1] "(enthält %(count)d Wiedergabelisten)"
 
 #: ../../portable/frontends/widgets/displays.py:562
 #, python-format
 msgid "%(count)d Feed Selected"
 msgid_plural "%(count)d Feeds Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Feed ausgewählt"
+msgstr[1] "%(count)d Feeds ausgewählt"
 
 #: ../../portable/frontends/widgets/displays.py:568
 #, python-format
 msgid "%(count)d Site Selected"
 msgid_plural "%(count)d Sites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Seite ausgewählt"
+msgstr[1] "%(count)d Seiten ausgewählt"
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
 msgid "%(count)d Playlist Selected"
 msgid_plural "%(count)d Playlists Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Wiedergabeliste ausgewählt"
+msgstr[1] "%(count)d Wiedergabelisten ausgewählt"
 
 #: ../../portable/frontends/widgets/displays.py:581
 msgid "Delete All"
-msgstr ""
+msgstr "Alles Löschen"
 
 #: ../../portable/frontends/widgets/displays.py:585
 msgid "Put Into a New Folder"
-msgstr ""
+msgstr "In einen neuen Ordner"
 
 #: ../../portable/frontends/widgets/rundialog.py:82
 msgid "Username:"
@@ -820,7 +835,7 @@ msgstr "Im Browser öffnen"
 
 #: ../../portable/frontends/widgets/browser.py:102
 msgid "Download this video"
-msgstr ""
+msgstr "Dieses Video herunterladen"
 
 #: ../../portable/frontends/widgets/application.py:156
 msgid "Movies directory gone"
@@ -865,7 +880,7 @@ msgstr "Fehler beim Anzeigen der Datei"
 #: ../../portable/frontends/widgets/application.py:327
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
-msgstr ""
+msgstr "Die Datei %(filename)s wurde außerhalb von %(appname)s gelöscht."
 
 #: ../../portable/frontends/widgets/application.py:335
 msgid "Open Files..."
@@ -913,18 +928,18 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:400
 #, python-format
 msgid "%(appname)s is up to date"
-msgstr ""
+msgstr "%(appname)s ist auf dem neuesten Stand"
 
 #: ../../portable/frontends/widgets/application.py:402
 #, python-format
 msgid "%(appname)s is up to date!"
-msgstr ""
+msgstr "%(appname)s ist auf dem neuesten Stand!"
 
 #: ../../portable/frontends/widgets/application.py:426
 msgid "Remove item"
 msgid_plural "Remove items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Element entfernen"
+msgstr[1] "Elemente entfernen"
 
 #: ../../portable/frontends/widgets/application.py:430
 msgid ""
@@ -934,7 +949,11 @@ msgid_plural ""
 "Some of these items were not downloaded from a feed. Would you like to "
 "delete them or just remove them from the Library?"
 msgstr[0] ""
+"Eines dieser Elemente wurde nicht von einem Feed geladen. Wollen Sie es "
+"löschen oder nur aus der Mediathek entfernen?"
 msgstr[1] ""
+"Einige dieser Elemente wurden nicht von einem Feed geladen. Wollen Sie sie "
+"löschen oder nur aus der Mediathek entfernen?"
 
 #: ../../portable/frontends/widgets/application.py:440
 msgid ""
@@ -944,14 +963,19 @@ msgid_plural ""
 "Some of these items are folders.  Delete/Removeing a folder will "
 "delete/remove it's contents"
 msgstr[0] ""
+"Eines der ausgewählten Elemente ist ein Ordner. Das Löschen oder Entfernen "
+"eines Ordners löscht oder entfernt auch dessen Inhalt."
 msgstr[1] ""
+"Mehrere der ausgewählten Elemente sind Ordner. Das Löschen oder Entfernen "
+"eines Ordners löscht oder entfernt auch dessen Inhalt."
 
 #: ../../portable/frontends/widgets/application.py:455
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
-msgstr[0] ""
+msgstr[0] "Sind Sie sicher, dass Sie dieses Objekt entfernen wollen?"
 msgstr[1] ""
+"Sind Sie sicher, dass Sie alle %(count)d Objekte entfernen wollen?"
 
 #: ../../portable/frontends/widgets/application.py:462
 msgid ""
@@ -959,15 +983,19 @@ msgid ""
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
 msgstr[0] ""
+"Eines der ausgewählten Elemente ist ein Ordner. Das Löschen eines Ordners "
+"löscht auch dessen Inhalt."
 msgstr[1] ""
+"Mehrere der ausgewählten Elemente sind Ordner. Das Löschen eines Ordners "
+"löscht auch dessen Inhalt."
 
 #: ../../portable/frontends/widgets/application.py:496
 msgid "Enter the new name for the item"
-msgstr ""
+msgstr "Tragen Sie den neuen Namen für das Objekt ein"
 
 #: ../../portable/frontends/widgets/application.py:519
 msgid "Save Item As..."
-msgstr ""
+msgstr "Objekt speichern als..."
 
 #: ../../portable/frontends/widgets/application.py:572
 #: ../../portable/menubar.py:213
@@ -976,11 +1004,11 @@ msgstr "Seite hinzufügen"
 
 #: ../../portable/frontends/widgets/application.py:573
 msgid "Enter the URL of the site to add"
-msgstr ""
+msgstr "Geben Sie die URL der Seite ein, die Sie hinzufügen möchten."
 
 #: ../../portable/frontends/widgets/application.py:574
 msgid "Add Site - Invalid URL"
-msgstr ""
+msgstr "Seite hinzufügen - Ungültige URL"
 
 #: ../../portable/frontends/widgets/application.py:575
 msgid ""
@@ -989,125 +1017,129 @@ msgid ""
 "\n"
 "Enter the URL of the site to add"
 msgstr ""
+"Die eingegebene Adresse ist nicht gültig.\n"
+"Bitte prüfen Sie die URL und versuchen Sie es erneut."
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
-msgstr ""
+msgstr "OPML-Import"
 
 #: ../../portable/frontends/widgets/application.py:626
 msgid "OPML Files"
-msgstr ""
+msgstr "OPML-Dateien"
 
 #: ../../portable/frontends/widgets/application.py:633
 msgid "Import OPML File - Error"
-msgstr ""
+msgstr "Fehler beim Importieren der OPML Datei"
 
 #: ../../portable/frontends/widgets/application.py:639
 msgid "Export OPML File"
-msgstr ""
+msgstr "OPML-Export"
 
 #: ../../portable/frontends/widgets/application.py:663
 msgid "Create Playlist"
-msgstr ""
+msgstr "Wiedergabeliste erstellen"
 
 #: ../../portable/frontends/widgets/application.py:664
 msgid "Enter a name for the new playlist"
-msgstr ""
+msgstr "Geben Sie einen Namen für die neue Wiedergabeliste ein"
 
 #: ../../portable/frontends/widgets/application.py:685
 msgid "Create Playlist Folder"
-msgstr ""
+msgstr "Ordner für Wiedergabelisten erstellen"
 
 #: ../../portable/frontends/widgets/application.py:686
 msgid "Enter a name for the new playlist folder"
-msgstr ""
+msgstr "Geben Sie einen neuen Namen für den Ordner der Wiedergabeliste ein."
 
 #: ../../portable/frontends/widgets/application.py:707
 #: ../../portable/frontends/widgets/tablist.py:579
 msgid "Rename Feed Folder"
-msgstr ""
+msgstr "Feed-Ordner umbenennen"
 
 #: ../../portable/frontends/widgets/application.py:708
 #, python-format
 msgid "Enter a new name for the feed folder %(name)s"
-msgstr ""
+msgstr "Geben Sie einen neuen Namen für den Feed-Ordner %(name)s ein"
 
 #: ../../portable/frontends/widgets/application.py:712
 msgid "Rename Feed"
-msgstr ""
+msgstr "Feed umbenennen"
 
 #: ../../portable/frontends/widgets/application.py:713
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
-msgstr ""
+msgstr "Geben Sie einen neuen Namen für den Feed %(name)s an"
 
 #: ../../portable/frontends/widgets/application.py:717
 #: ../../portable/frontends/widgets/tablist.py:640
 #: ../../portable/playlist.py:199
 msgid "Rename Playlist"
-msgstr ""
+msgstr "Wiedergabeliste umbenennen"
 
 #: ../../portable/frontends/widgets/application.py:718
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
-msgstr ""
+msgstr "Geben Sie einen neuen Namen für die Wiedergabeliste %(name)s ein"
 
 #: ../../portable/frontends/widgets/application.py:722
 #: ../../portable/frontends/widgets/tablist.py:634
 msgid "Rename Playlist Folder"
-msgstr ""
+msgstr "Ordner für Wiedergabeliste umbenennen"
 
 #: ../../portable/frontends/widgets/application.py:723
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
 msgstr ""
+"Geben Sie einen neuen Namen für den Wiedergabelistenordner %(name)s ein"
 
 #: ../../portable/frontends/widgets/application.py:726
 #: ../../portable/frontends/widgets/tablist.py:529
 msgid "Rename Site"
-msgstr ""
+msgstr "Seite umbenennen"
 
 #: ../../portable/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the site %(name)s"
-msgstr ""
+msgstr "Geben Sie einen neuen Namen für die Seite %(name)s ein"
 
 #: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Wiedergabeliste löschen"
+msgstr[1] "%(count)d Wiedergabelisten löschen"
 
 #: ../../portable/frontends/widgets/application.py:753
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
-msgstr[0] ""
+msgstr[0] "Sind Sie sicher, dass Sie diese Playlist löschen wollen?"
 msgstr[1] ""
+"Sind Sie sicher, dass Sie diese %(count)s Playlisten löschen wollen?"
 
 #: ../../portable/frontends/widgets/application.py:770
 msgid "Remove site"
 msgid_plural "Remove sites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Seite entfernen"
+msgstr[1] "Seiten entfernen"
 
 #: ../../portable/frontends/widgets/application.py:772
 #, python-format
 msgid "Are you sure you want to remove this site?"
 msgid_plural "Are you sure you want to remove these %(count)s sites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Sind Sie sicher, dass Sie diese Seite entfernen wollen?"
+msgstr[1] "Sind Sie sicher, dass Sie %(count)s Seiten entfernen wollen?"
 
 #: ../../portable/frontends/widgets/application.py:802
 msgid "Are you sure you want to quit?"
-msgstr ""
+msgstr "Möchten Sie das Programm wirklich beenden?"
 
 #: ../../portable/frontends/widgets/application.py:804
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Sie haben noch%(count)d aktiven Download. Trotzdem beenden?"
+msgstr[1] "Sie haben noch %(count)d aktive Downloads. Trotzdem beenden?"
 
 #: ../../portable/frontends/widgets/application.py:809
 msgid "Warn me when I attempt to quit with downloads in progress"
@@ -1115,19 +1147,19 @@ msgstr "Warnen, wenn beim beenden von Miro noch downloads laufen."
 
 #: ../../portable/frontends/widgets/application.py:994
 msgid "Upgrading database"
-msgstr ""
+msgstr "Aktualisiere Datenbank"
 
 #: ../../portable/frontends/widgets/application.py:1127
 msgid "Message"
-msgstr ""
+msgstr "Mitteilung"
 
 #: ../../portable/frontends/widgets/application.py:1152
 msgid "Migrating Files"
-msgstr ""
+msgstr "Dateien übertragen"
 
 #: ../../portable/frontends/widgets/application.py:1162
 msgid "Migrating files"
-msgstr ""
+msgstr "Dateien übertragen"
 
 #: ../../portable/frontends/widgets/dialogs.py:102
 msgid ""
@@ -1135,6 +1167,9 @@ msgid ""
 "can take a long time if you have a large number of items in Miro (it can "
 "even take more than 30 minutes)."
 msgstr ""
+"Miro aktualisiert Deine in der Datenbank  vorhandenen Feeds und Dateien. "
+"Dieser einmalige Vorgang kann längere Zeit dauern, wenn Du eine große Anzahl "
+"an Objekten in Miro hast. (es kann 30 Minuten oder mehr dauern)"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:81
 #: ../../portable/frontends/widgets/prefpanel.py:625
@@ -1143,20 +1178,20 @@ msgstr "Downloads"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:90
 msgid "Single and external downloads"
-msgstr ""
+msgstr "Einzelne und externe Downloads"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:93
 msgid "Feed downloads"
-msgstr ""
+msgstr "Feed-Downloads"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:96
 msgid "Seeding"
-msgstr ""
+msgstr "Hochladen"
 
 #: ../../portable/frontends/widgets/prefpanel.py:268
 #, python-format
 msgid "Automatically run %(appname)s when I log in."
-msgstr ""
+msgstr "Starte %(appname)s automatisch, wenn ich mich anmelde."
 
 #: ../../portable/frontends/widgets/prefpanel.py:272
 msgid "Warn me if I attempt to quit with downloads in progress."
@@ -1301,6 +1336,9 @@ msgid ""
 "migrate your existing downloads there? (Currently downloading movies will "
 "not be moved until they finish.)"
 msgstr ""
+"Sie haben ein neues Verzeichnis für heruntergeladene Filme gewählt. Soll "
+"%(appname)s Ihre existierenden Downloads dorthin verschieben? (Gerade "
+"heruntergeladene Filme werden bis zum Ende des Downloads nicht verschoben.)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:485
 #: ../../portable/dialogs.py:106
@@ -1320,6 +1358,8 @@ msgid ""
 "Watch for new video and audio items in these folders and include them in "
 "library:"
 msgstr ""
+"Nach neuen Video- und Audioobjekten in diesen Ordnern überwachen und diese "
+"in die Medienbibliothek einbinden:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:571
 msgid "Keep at least this much free space on my drive:"
@@ -1352,7 +1392,7 @@ msgstr "1 Monat"
 
 #: ../../portable/frontends/widgets/prefpanel.py:593
 msgid "By default, video and audio items expire after:"
-msgstr ""
+msgstr "Video- und Audioobjekte laufen normalerweise ab, nach:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:602
 msgid "Always play videos in a separate window."
@@ -1365,11 +1405,11 @@ msgstr "Setzte die Video-/Audio-Datei von der letzten Position fort."
 
 #: ../../portable/frontends/widgets/prefpanel.py:611
 msgid "Play video and audio items one after another"
-msgstr ""
+msgstr "Video- und Audioobjekte nacheinander abspielen"
 
 #: ../../portable/frontends/widgets/prefpanel.py:612
 msgid "Stop after each video or audio item"
-msgstr ""
+msgstr "Nach jedem Video- oder Audioobjekt anhalten"
 
 #: ../../portable/frontends/widgets/prefpanel.py:623
 msgid "General"
@@ -1397,52 +1437,52 @@ msgstr "Voreinstellungen"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:58
 msgid "New Search Feed"
-msgstr ""
+msgstr "Neuer Suchfeed"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:59
 msgid "A search feed contains items that match a search term."
-msgstr ""
+msgstr "Ein Suchfeed enthält Objekte, die einer Suche entsprechen"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:74
 msgid "Search for:"
-msgstr ""
+msgstr "Suchen nach:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:81
 msgid "In this:"
-msgstr ""
+msgstr "In diesem:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:88
 msgid "Feed:"
-msgstr ""
+msgstr "Feed:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:93
 msgid "Search engine:"
-msgstr ""
+msgstr "Suchmaschine:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:99
 #: ../../portable/frontends/widgets/newfeed.py:60
 msgid "URL:"
-msgstr ""
+msgstr "Adresse:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:133
 msgid "Add new feed to this section:"
-msgstr ""
+msgstr "Einen neuen Feed hierunter einordnen:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:136
 #: ../../portable/frontends/widgets/newfolder.py:71
 #: ../../portable/frontends/widgets/newfeed.py:72
 msgid "video"
-msgstr ""
+msgstr "Video"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:137
 #: ../../portable/frontends/widgets/newfolder.py:72
 #: ../../portable/frontends/widgets/newfeed.py:73
 msgid "audio"
-msgstr ""
+msgstr "Audio"
 
 #: ../../portable/frontends/widgets/linkhandler.py:54
 msgid "Subscribe to Feed"
-msgstr ""
+msgstr "Feed abonnieren"
 
 #: ../../portable/frontends/widgets/linkhandler.py:56
 #, python-format
@@ -1452,48 +1492,54 @@ msgid ""
 "\n"
 "%(url)s"
 msgstr ""
+"Dieser Link scheint ein Feed zu sein. Möchten Sie ihn zu Ihren Abonements "
+"hinzufügen?\n"
+"\n"
+"%(url)s"
 
 #: ../../portable/frontends/widgets/newfolder.py:60
 msgid "Folder name:"
-msgstr ""
+msgstr "Ordnername:"
 
 #: ../../portable/frontends/widgets/newfolder.py:69
 msgid "Folder should go in this section:"
-msgstr ""
+msgstr "Ordner sollte hierunter einordnen:"
 
 #: ../../portable/frontends/widgets/newfolder.py:109
 #: ../../portable/frontends/widgets/newfolder.py:111
 msgid "Create Feed Folder"
-msgstr ""
+msgstr "Neuen Feedordner erstellen"
 
 #: ../../portable/frontends/widgets/newfolder.py:112
 msgid "Enter the name of the folder to add"
-msgstr ""
+msgstr "Geben Sie den Namen des neuen Ordners ein"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
-msgstr ""
+msgstr "Diese Wiedergabeliste ist leer"
 
 #: ../../portable/frontends/widgets/playlist.py:149
 msgid ""
 "To add an item, drag it onto the name of this playlist in the sidebar."
 msgstr ""
+"Um ein Objekt hinzuzufügen, ziehen Sie es auf den Namen der Wiedergabeliste "
+"in der Seitenleiste."
 
 #: ../../portable/frontends/widgets/removefeeds.py:49
 msgid "Remove Feed"
 msgid_plural "Remove Feeds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Feed löschen"
+msgstr[1] "Feeds löschen"
 
 #: ../../portable/frontends/widgets/removefeeds.py:57
 msgid "Are you sure you want to remove this feed:"
 msgid_plural "Are you sure you want to remove these feeds:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Sind Sie sicher, dass Sie diesen Feed löschen wollen:"
+msgstr[1] "Sind Sie sicher, dass Sie diese Feeds löschen wollen:"
 
 #: ../../portable/frontends/widgets/removefeeds.py:84
 msgid "Keep items that have been downloaded in my library."
-msgstr ""
+msgstr "Heruntergeladene Objekte in meiner Bibliothek behalten."
 
 #: ../../portable/frontends/widgets/removefeeds.py:89
 #, python-format
@@ -1502,6 +1548,10 @@ msgid ""
 "still appear in your library.  You can stop watching watched folders "
 "completely in the %(appname)s preference panel."
 msgstr ""
+"Beobachtete Verzeichnisse werden aus der Seitenleiste entfernt, aber ihr "
+"Inhalt wird immer noch in der Bibliothek vorhanden sein. Sie können das "
+"Beobachten dieser Verzeichnisse in den Einstellungen zu %(appname)s "
+"vollständig abschalten."
 
 #: ../../portable/frontends/widgets/removefeeds.py:100
 msgid ""
@@ -1511,43 +1561,47 @@ msgid_plural ""
 "Are you sure you want to remove these feeds?  The downloads currently in "
 "progress will be canceled."
 msgstr[0] ""
+"Sind Sie sicher, dass Sie diesen Feed löschen wollen? Alle laufenden "
+"Downloads werden dadurch beendet."
 msgstr[1] ""
+"Sind Sie sicher, dass Sie diese Feeds löschen wollen? Alle laufenden "
+"Downloads werden dadurch beendet."
 
 #: ../../portable/frontends/widgets/gtk/video.py:273
 msgid "Permalink"
-msgstr ""
+msgstr "Permalink"
 
 #: ../../portable/frontends/widgets/gtk/video.py:279
 msgid "Pop-in"
-msgstr ""
+msgstr "Andocken"
 
 #: ../../portable/frontends/widgets/gtk/video.py:284
 msgid "Pop-out"
-msgstr ""
+msgstr "Abdocken"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:67
 #, python-format
 msgid "Play Next Unplayed (%(unplayed)d)"
-msgstr ""
+msgstr "Nächstes ungesehenes Objekt abspielen (%(unplayed)d ungesehene)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:71
 #, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
-msgstr ""
+msgstr "Alle ungesehenen Objekte abspielen (%(unplayed)d ungesehene)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:74
 #, python-format
 msgid "Pause All Downloads (%(downloading)d)"
-msgstr ""
+msgstr "Alle Downloads anhalten (%(downloading)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:77
 #, python-format
 msgid "Resume All Downloads (%(paused)d)"
-msgstr ""
+msgstr "Alle Downloads fortsetzen (%(paused)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:85
 msgid "Hide"
-msgstr ""
+msgstr "Ausblenden"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:87
 #: ../../portable/frontends/widgets/diagnostics.py:76
@@ -1556,16 +1610,16 @@ msgstr "Anzeigen"
 
 #: ../../portable/frontends/widgets/gtk/window.py:495
 msgid "All files"
-msgstr ""
+msgstr "Alle Dateien"
 
 #: ../../portable/frontends/widgets/gtk/window.py:524
 msgid "Choose"
-msgstr ""
+msgstr "Auswählen"
 
 #: ../../portable/frontends/widgets/gtk/window.py:539
 #, python-format
 msgid "About %(appname)s"
-msgstr ""
+msgstr "Über %(appname)s"
 
 #: ../../portable/frontends/widgets/gtk/window.py:554
 #, python-format
@@ -1573,11 +1627,13 @@ msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
 "%(trademark)s"
 msgstr ""
+"%(copyright)s.  Weitere Details finden Sie in license.txt.\n"
+"%(trademark)s"
 
 #: ../../portable/frontends/widgets/gtk/window.py:593
 #: ../../portable/dialogs.py:86
 msgid "Close"
-msgstr ""
+msgstr "Schließen"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -1616,7 +1672,9 @@ msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
 "%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
 msgstr[0] ""
+"%(count)d Download wartet wegen ungespielten Objekten (siehe Einstellungen)"
 msgstr[1] ""
+"%(count)d Downloads warten wegen ungespielten Objekten (siehe Einstellungen)"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:275
 #, python-format
@@ -1631,19 +1689,19 @@ msgstr "Alle zur Suche passenden Objekte"
 
 #: ../../portable/frontends/widgets/newfeed.py:70
 msgid "Feed should go in this section:"
-msgstr ""
+msgstr "Feed in diesen Bereich verschieben:"
 
 #: ../../portable/frontends/widgets/newfeed.py:111
 msgid "Add Feed"
-msgstr ""
+msgstr "Feed hinzufügen"
 
 #: ../../portable/frontends/widgets/newfeed.py:112
 msgid "Enter the URL of the feed to add"
-msgstr ""
+msgstr "Geben Sie die URL des neuen Feeds ein"
 
 #: ../../portable/frontends/widgets/newfeed.py:123
 msgid "Add Feed - Invalid URL"
-msgstr ""
+msgstr "Feed hinzufügen - Ungültige URL"
 
 #: ../../portable/frontends/widgets/newfeed.py:124
 msgid ""
@@ -1652,59 +1710,62 @@ msgid ""
 "\n"
 "Enter the URL of the feed to add"
 msgstr ""
+"Die eingegebene Adresse ist keine gültige URL.\n"
+"Bitte überprüfen Sie die URL und versuchen Sie es erneut.\n"
+"Geben Sie die URL des neuen Feeds ein"
 
 #: ../../portable/frontends/widgets/tablist.py:528
 #: ../../portable/frontends/widgets/tablist.py:591
 msgid "Copy URL to clipboard"
-msgstr ""
+msgstr "URL in Zwischenablage kopieren"
 
 #: ../../portable/frontends/widgets/tablist.py:530
 msgid "Remove Site"
-msgstr ""
+msgstr "Seite entfernen"
 
 #: ../../portable/frontends/widgets/tablist.py:534
 msgid "Remove Sites"
-msgstr ""
+msgstr "Seiten entfernen"
 
 #: ../../portable/frontends/widgets/tablist.py:578
 msgid "Update Feeds In Folder"
-msgstr ""
+msgstr "Feeds in diesem Ordner aktualisieren"
 
 #: ../../portable/frontends/widgets/tablist.py:585
 msgid "Update Feed Now"
-msgstr ""
+msgstr "Feed jetzt aktualisieren"
 
 #: ../../portable/frontends/widgets/tablist.py:588
 msgid "Rename"
-msgstr ""
+msgstr "Umbenennen"
 
 #: ../../portable/frontends/widgets/tablist.py:590
 msgid "Revert Feed Name"
-msgstr ""
+msgstr "Feed-Namen zurücksetzen"
 
 #: ../../portable/frontends/widgets/tablist.py:597
 msgid "Update Feeds Now"
-msgstr ""
+msgstr "Feeds jetzt aktualisieren"
 
 #: ../../portable/frontends/widgets/tablist.py:662
 msgid "LIBRARY"
-msgstr ""
+msgstr "BIBLIOTHEK"
 
 #: ../../portable/frontends/widgets/tablist.py:664
 msgid "SITES"
-msgstr ""
+msgstr "SEITEN"
 
 #: ../../portable/frontends/widgets/tablist.py:666
 msgid "FEEDS"
-msgstr ""
+msgstr "FEEDS"
 
 #: ../../portable/frontends/widgets/tablist.py:668
 msgid "AUDIO FEEDS"
-msgstr ""
+msgstr "AUDIOFEEDS"
 
 #: ../../portable/frontends/widgets/tablist.py:670
 msgid "PLAYLISTS"
-msgstr ""
+msgstr "WIEDERGABELISTEN"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:447
 msgid "No Results Found"
@@ -1712,126 +1773,129 @@ msgstr "Keine Ergebnisse gefunden"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:553
 msgid "Back to feed"
-msgstr ""
+msgstr "Zurück zum Feed"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:179
 msgid "Save Search"
-msgstr ""
+msgstr "Suche speichern"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:286
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:288
 msgid "Feed"
-msgstr ""
+msgstr "Feed"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:290
 #: ../../portable/frontends/widgets/itemlistwidgets.py:743
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:291
 msgid "Length"
-msgstr ""
+msgstr "Länge"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:292
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:293
 #: ../../portable/frontends/widgets/itemlistwidgets.py:744
 msgid "Size"
-msgstr ""
+msgstr "Größe"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:295
 msgid "ETA"
-msgstr ""
+msgstr "Verbleibende Zeit"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:296
 msgid "Speed"
-msgstr ""
+msgstr "Geschwindigkeit"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:432
 msgid "Save as a Feed"
-msgstr ""
+msgstr "Als Feed speichern"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:486
 msgid "Pause All"
-msgstr ""
+msgstr "Alle anhalten"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:493
 msgid "Resume All"
-msgstr ""
+msgstr "Alle fortsetzen"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:500
 msgid "Cancel All"
-msgstr ""
+msgstr "Alle abbrechen"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:507
 msgid "Download Settings"
-msgstr ""
+msgstr "Download-Einstellungen"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:553
 #, python-format
 msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
 msgstr ""
+"%(available)s vom Speicherplatzlimit für Downloads entfernt (%(amount)s "
+"freier Festplattenspeicher)"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:559
 #, python-format
 msgid "%(available)s free for downloads (%(amount)s free on disk)"
 msgstr ""
+"%(available)s für Downloads verfügbar (%(amount)s freier Festplattenspeicher)"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:564
 #, python-format
 msgid "%(amount)s free on disk"
-msgstr ""
+msgstr "%(amount)s freier Festplattenspeicher"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:583
 #, python-format
 msgid "%(rate)s uploading"
-msgstr ""
+msgstr "%(rate)s Uploadgeschwindigkeit"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:585
 #, python-format
 msgid "%(rate)s downloading"
-msgstr ""
+msgstr "%(rate)s Downloadgeschwindigkeit"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:619
 msgid "Auto Download"
-msgstr ""
+msgstr "automatischer Download"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:631
 msgid "Share feed"
-msgstr ""
+msgstr "Feed mit anderen teilen"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:637
 msgid "Settings"
-msgstr ""
+msgstr "Einstellungen"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:643
 msgid "Remove feed"
-msgstr ""
+msgstr "Feed entfernen"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:719
 msgid "Unwatched"
-msgstr ""
+msgstr "Ungesehene Videos"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:730
 msgid "View|All"
-msgstr ""
+msgstr "Alle zeigen"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:732
 msgid "Non Feed"
-msgstr ""
+msgstr "Kein Feed"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:742
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:745
 msgid "Time"
-msgstr ""
+msgstr "Zeit"
 
 #: ../../portable/frontends/widgets/diagnostics.py:83
 msgid "Movies location:"
@@ -1863,7 +1927,7 @@ msgstr "Datenbank Größe:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:110
 msgid "Total db objects in memory:"
-msgstr ""
+msgstr "Anzahl von Datenbankobjekten im Speicher"
 
 #: ../../portable/frontends/widgets/diagnostics.py:118
 #: ../../portable/menubar.py:276
@@ -1896,6 +1960,8 @@ msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
 "report at %(url)s."
 msgstr ""
+"Ein unbekannter Fehler verhinderte den Start von %(appname)s. Bitte sende "
+"einen Fehlerbericht an %(url)s."
 
 #: ../../portable/startup.py:179
 msgid "Database too new"
@@ -1913,7 +1979,7 @@ msgstr ""
 
 #: ../../portable/startup.py:188
 msgid "Insufficient disk space"
-msgstr ""
+msgstr "Ungenügend Festplattenplatz"
 
 #: ../../portable/startup.py:190
 #, python-format
@@ -1921,10 +1987,13 @@ msgid ""
 "Not enough disk space to upgrade your database from the previous version of "
 "%(appname)s.  Please delete some files and try again."
 msgstr ""
+"Nicht genügend Festplattenplatz um Deine Datenbank von der vorherigen "
+"Version von %(appname)s zu aktualisieren . Bitte lösche einige Dateien und "
+"versuche es erneut."
 
 #: ../../portable/commandline.py:99
 msgid "Subscription error"
-msgstr ""
+msgstr "Abonnementfehler"
 
 #: ../../portable/commandline.py:109
 #, python-format
@@ -1932,6 +2001,8 @@ msgid ""
 "This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
 "the publisher of this file."
 msgstr ""
+"Diese %(appname)s Feed-Datei hat ein ungültiges Format: %(url)s. Bitte "
+"verständigen Sie den Herausgeber dieser Datei."
 
 #: ../../portable/commandline.py:119
 #, python-format
@@ -1939,15 +2010,17 @@ msgid ""
 "This %(appname)s feed file has the wrong content type: %(url)s. Please "
 "notify the publisher of this file."
 msgstr ""
+"Diese %(appname)s Feed-Datei hat einen ungültigen Content-Type: %(url)s. "
+"Bitte verständigen Sie den Herausgeber dieser Datei."
 
 #: ../../portable/commandline.py:127
 #, python-format
 msgid "Could not download the %(appname)s feed file: %(url)s"
-msgstr ""
+msgstr "Der Feed-Download von %(appname)s ist nicht möglich: %(url)s"
 
 #: ../../portable/commandline.py:179
 msgid "Invalid Torrent"
-msgstr ""
+msgstr "ungültiger Torrent"
 
 #: ../../portable/commandline.py:181
 #, python-format
@@ -1955,6 +2028,8 @@ msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
 "[OK]"
 msgstr ""
+"Die Torrentdatei %(filename)s scheint beschädigt zu sein und kann nicht "
+"geöffnet werden. [OK]"
 
 #: ../../portable/downloader.py:258
 msgid "activity"
@@ -1962,33 +2037,34 @@ msgstr "Aktivität"
 
 #: ../../portable/downloader.py:300
 msgid "Flash URL Scraping Error"
-msgstr ""
+msgstr "Flash URL Scraping (Datenbeschaffung) Fehler"
 
 #: ../../portable/downloader.py:482
 msgid "starting up"
-msgstr ""
+msgstr "wird gestartet"
 
 #: ../../portable/feed.py:940
 msgid "Error loading feed"
-msgstr ""
+msgstr "Fehler beim Laden des Abonnements"
 
 #: ../../portable/feed.py:942
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr ""
+"Der Feed unter %(url)s konnte nicht geladen werden (%(errordescription)s)."
 
 #: ../../portable/feed.py:945
 msgid "Would you like to keep the feed?"
-msgstr ""
+msgstr "Wullt je düssen Feed behollen?"
 
 #: ../../portable/feed.py:1070
 msgid "Bad content-type"
-msgstr ""
+msgstr "Ungültiger Dateityp"
 
 #: ../../portable/feed.py:1083
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
-msgstr ""
+msgstr "Kanal nicht kompatibel mit %(appname)s"
 
 #: ../../portable/feed.py:1086
 #, python-format
@@ -2002,19 +2078,26 @@ msgid ""
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
+"Dieser Kanal ist nicht kompatibel mit %(appname)s. %(appname)s kann "
+"versuchen, die Dateien trotzdem zu laden. Das Auflisten der Videos kann "
+"etwas Zeit in Anspruch nehmen und diverse Beschreibungen könnten etwas "
+"lustig ausfallen. \n"
+"Bitte kontaktieren Sie den Herausgeber von %(url)s and bitten Sie Ihn darum, "
+"ein mit %(appname)s kompatibles Formats zur Verfügung zu stellen.\n"
+"Wollen Sie trotzdem versuchen, den Channel zu laden?"
 
 #: ../../portable/feed.py:1687
 #, python-format
 msgid "Search All: %(text)s"
-msgstr ""
+msgstr "Alles durchsuchen: %(text)s"
 
 #: ../../portable/feed.py:2274 ../../portable/feed.py:2425
 msgid "Local Files"
-msgstr ""
+msgstr "Lokale Dateien"
 
 #: ../../portable/feed.py:2439
 msgid "Playing File"
-msgstr ""
+msgstr "Datei wird abgespielt"
 
 #: ../../portable/dialogs.py:85
 msgid "Ok"
@@ -2022,138 +2105,140 @@ msgstr "OK"
 
 #: ../../portable/dialogs.py:88
 msgid "Done"
-msgstr ""
+msgstr "Fertig"
 
 #: ../../portable/dialogs.py:91
 msgid "Quit"
-msgstr ""
+msgstr "Beenden"
 
 #: ../../portable/dialogs.py:92
 msgid "Continue"
-msgstr ""
+msgstr "Fortsetzen"
 
 #: ../../portable/dialogs.py:93
 msgid "Ignore"
-msgstr ""
+msgstr "Ignorieren"
 
 #: ../../portable/dialogs.py:94
 msgid "Submit Crash Report"
-msgstr ""
+msgstr "Fehlerbericht senden"
 
 #: ../../portable/dialogs.py:95
 msgid "Migrate"
-msgstr ""
+msgstr "Übertragen"
 
 #: ../../portable/dialogs.py:96
 msgid "Don't Migrate"
-msgstr ""
+msgstr "Nicht übertragen"
 
 #: ../../portable/dialogs.py:98
 msgid "Remove Entry"
-msgstr ""
+msgstr "Eintrag löschen"
 
 #: ../../portable/dialogs.py:99
 msgid "Delete File"
-msgstr ""
+msgstr "Datei löschen"
 
 #: ../../portable/dialogs.py:100
 msgid "Delete Files"
-msgstr ""
+msgstr "Dateien löschen"
 
 #: ../../portable/dialogs.py:101
 msgid "Keep Videos"
-msgstr ""
+msgstr "Videos behalten"
 
 #: ../../portable/dialogs.py:102
 msgid "Delete Videos"
-msgstr ""
+msgstr "Videos löschen"
 
 #: ../../portable/dialogs.py:103
 msgid "Create"
-msgstr ""
+msgstr "Erstellen"
 
 #: ../../portable/dialogs.py:104
 msgid "Create Feed"
-msgstr ""
+msgstr "Feed erstellen"
 
 #: ../../portable/dialogs.py:105
 msgid "Create Folder"
-msgstr ""
+msgstr "Ordner erstellen"
 
 #: ../../portable/dialogs.py:107
 msgid "Add Into New Folder"
-msgstr ""
+msgstr "Im neuen Ordner hinzufügen"
 
 #: ../../portable/dialogs.py:111
 msgid "Not Now"
-msgstr ""
+msgstr "Nicht jetzt"
 
 #: ../../portable/dialogs.py:112
 msgid "Close to Tray"
-msgstr ""
+msgstr "In den Tray minimieren"
 
 #: ../../portable/dialogs.py:113
 msgid "Launch Miro"
-msgstr ""
+msgstr "Miro starten"
 
 #: ../../portable/dialogs.py:114
 msgid "Download Anyway"
-msgstr ""
+msgstr "Trotzdem herunterladen"
 
 #: ../../portable/dialogs.py:115
 msgid "Open in External Browser"
-msgstr ""
+msgstr "In externem Browser öffnen"
 
 #: ../../portable/dialogs.py:116
 msgid "Don't Install"
-msgstr ""
+msgstr "Nicht installieren"
 
 #: ../../portable/dialogs.py:117
 msgid "Subscribe"
-msgstr ""
+msgstr "Abonnieren"
 
 #: ../../portable/dialogs.py:118
 msgid "Stop Watching"
-msgstr ""
+msgstr "Wiedergabe beenden"
 
 #: ../../portable/dialogs.py:119
 msgid "Retry"
-msgstr ""
+msgstr "Wiederholen"
 
 #: ../../portable/singleclick.py:55
 msgid "Download already exists"
-msgstr ""
+msgstr "Download existiert bereits."
 
 #: ../../portable/singleclick.py:56
 msgid "That URL is already an external download."
-msgstr ""
+msgstr "Diese URL ist bereits ein externer Download."
 
 #: ../../portable/singleclick.py:62
 #, python-format
 msgid "%(appname)s will begin downloading it now."
-msgstr ""
+msgstr "%(appname)s beginnt jetzt mit dem Download."
 
 #: ../../portable/singleclick.py:65
 msgid "It is downloading now."
-msgstr ""
+msgstr "Lädt jetzt herunter."
 
 #: ../../portable/singleclick.py:67
 msgid "It has already been downloaded."
-msgstr ""
+msgstr "Wurde bereits heruntergeladen."
 
 #: ../../portable/singleclick.py:97
 msgid "File Download"
-msgstr ""
+msgstr "Dateidownload"
 
 #: ../../portable/singleclick.py:98
 #, python-format
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 msgstr ""
+"Die Datei unter %(url)s scheint weder eine Audio- oder Videodatei noch ein "
+"RSS-Feed zu sein."
 
 #: ../../portable/singleclick.py:138
 msgid "Download Error"
-msgstr ""
+msgstr "Fehler beim Herunterladen"
 
 #: ../../portable/singleclick.py:140
 #, python-format
@@ -2162,27 +2247,30 @@ msgid ""
 "\n"
 "URL: %(url)s"
 msgstr ""
+"%(appname)s kann keine Datei von dieser  URL herunterladen:\n"
+"\n"
+"URL: %(url)s"
 
 #: ../../portable/dl_daemon/download.py:639
 #, python-format
 msgid "Could not write to %(filename)s"
-msgstr ""
+msgstr "In die Datei %(filename)s konnte nicht geschrieben werden"
 
 #: ../../portable/dl_daemon/download.py:664
 #: ../../portable/dl_daemon/download.py:881
 msgid "Not enough disk space"
-msgstr ""
+msgstr "Nicht genügend Platz auf dem Speichermedium"
 
 #: ../../portable/dl_daemon/download.py:665
 #: ../../portable/dl_daemon/download.py:882
 #, python-format
 msgid "%(amount)s MB required to store this video"
-msgstr ""
+msgstr "Es werden %(amount)s MB benötigt, um dieses Video zu speichern"
 
 #: ../../portable/dl_daemon/download.py:680
 #, python-format
 msgid "Couldn't open %(filename)s for writing"
-msgstr ""
+msgstr "%(filename)s konnte nicht zum Schreiben geöffnet werden"
 
 #: ../../portable/dl_daemon/download.py:900
 msgid "BitTorrent failure"
@@ -2209,6 +2297,7 @@ msgstr "Torrent Datei gelöscht"
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr ""
+"Die Torrent-Datei für dieses Objekt wurde außerhalb von %(appname)s gelöscht."
 
 #: ../../portable/menubar.py:184
 msgid "_Open"
@@ -2397,7 +2486,7 @@ msgstr "Umschalten angedockt/unangedockt"
 #: ../../portable/menubar.py:270
 #, python-format
 msgid "_About %(name)s"
-msgstr ""
+msgstr "_Über %(name)s"
 
 #: ../../portable/menubar.py:272
 msgid "_Donate"
@@ -2462,56 +2551,56 @@ msgstr "%(size)sB"
 #: ../../portable/playlist.py:200
 #, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr ""
+msgstr "Geben Sie einen neuen Namen für die Wiedergabeliste %s ein"
 
 #: ../../portable/dbupgradeprogress.py:60
 msgid "Upgrading Old Database"
-msgstr ""
+msgstr "Aktualisiere alte Datenbank"
 
 #: ../../portable/dbupgradeprogress.py:67
 msgid "Converting Old Database"
-msgstr ""
+msgstr "Konvertiere alte Datenbank"
 
 #: ../../portable/dbupgradeprogress.py:80
 msgid "Upgrading Database"
-msgstr ""
+msgstr "Aktualisiere Datenbank"
 
 #: ../../portable/item.py:922
 #, python-format
 msgid "%(count)d day"
 msgid_plural "%(count)d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Tag"
+msgstr[1] "%(count)d Tage"
 
 #: ../../portable/item.py:927
 #, python-format
 msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Stunde"
+msgstr[1] "%(count)d Stunden"
 
 #: ../../portable/item.py:932
 #, python-format
 msgid "%(count)d minute"
 msgid_plural "%(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Minute"
+msgstr[1] "%(count)d Minuten"
 
 #: ../../portable/item.py:1193
 msgid "no title"
-msgstr ""
+msgstr "kein Titel"
 
 #: ../../portable/item.py:1239
 msgid "Contents appear in the library"
-msgstr ""
+msgstr "Inhalt erscheint in der Bilbliothek"
 
 #: ../../portable/item.py:1244
 msgid "Contents:"
-msgstr ""
+msgstr "Inhalte:"
 
 #: ../../portable/item.py:1472
 msgid "starting up..."
-msgstr ""
+msgstr "Wird gestartet..."
 
 #: ../../portable/opml.py:197
 msgid "OPML Import failed"
@@ -2570,22 +2659,22 @@ msgstr "%(size)s b/s"
 #, python-format
 msgid "%(num).0f day"
 msgid_plural "%(num).0f days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f Tag"
+msgstr[1] "%(num).0f Tage"
 
 #: ../../portable/displaytext.py:71
 #, python-format
 msgid "%(num).0f hr"
 msgid_plural "%(num).0f hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f h"
+msgstr[1] "%(num).0f h"
 
 #: ../../portable/displaytext.py:74
 #, python-format
 msgid "%(num).0f min"
 msgid_plural "%(num).0f mins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f min"
+msgstr[1] "%(num).0f min"
 
 #: ../../portable/displaytext.py:76
 #, python-format
@@ -2659,27 +2748,29 @@ msgstr[1] "Verfällt: %(count)d Minuten."
 #: ../../portable/displaytext.py:142
 #, python-format
 msgid "%(month)s %(dayofmonth)s, %(year)s"
-msgstr ""
+msgstr "%(dayofmonth)s. %(month)s %(year)s"
 
 #: ../../portable/storedatabase.py:209
 msgid "Database was created by a newer version of Miro "
-msgstr ""
+msgstr "Datenbank wurde von einer neueren Version von Miro erstellt. "
 
 #: ../../portable/storedatabase.py:466
 #, python-format
 msgid "%(appname)s database save succeeded"
-msgstr ""
+msgstr "%(appname)s Datenbanksicherung erfolgt"
 
 #: ../../portable/storedatabase.py:468
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
+"Die Datenbank wurde erfolgreich gesichert. Jetzt kann sicher beendet werden, "
+"ohne möglichen Datenverlust."
 
 #: ../../portable/storedatabase.py:483
 #, python-format
 msgid "%(appname)s database save failed"
-msgstr ""
+msgstr "%(appname)s Datenbanksicherung fehlgeschlagen"
 
 #: ../../portable/storedatabase.py:486
 #, python-format
@@ -2695,6 +2786,17 @@ msgid ""
 "Error: %(error_text)s\n"
 "\n"
 msgstr ""
+"%(appname)s konnte eigene Datenbank nicht speichern.\n"
+"\n"
+"Wenn Sie nicht genügend Speicherplatz haben, dann sollten Sie einige Dateien "
+"löschen.  Falls Sie genügend Speicherplatz haben, dann könnte einNeuversuch "
+"helfen.\n"
+"\n"
+"Falls das nicht  hilft, dann Beenden Sie %(appname)s und starten neu.  "
+"Vorherhige Änderungen könnten verloren gehen.\n"
+"\n"
+"Fehler: %(error_text)s\n"
+"\n"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:171
 msgid "Download Completed"
@@ -2720,7 +2822,7 @@ msgstr "Dienste"
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:141
 #, python-format
 msgid "Hide %(appname)s"
-msgstr ""
+msgstr "%(appname)s verstecken"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:143
 msgid "Hide Others"
@@ -2737,7 +2839,7 @@ msgstr "Einstellungen"
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:151
 #, python-format
 msgid "Quit %(appname)s"
-msgstr ""
+msgstr "%(appname)s beenden"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
 msgid "Close Window"
@@ -2802,7 +2904,7 @@ msgstr "Fenster"
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:195
 #, python-format
 msgid "%(appname)s Help"
-msgstr ""
+msgstr "%(appname)s Hilfe"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:39
@@ -2817,6 +2919,8 @@ msgstr "Darstellung Optionen"
 #, python-format
 msgid "You must restart %(appname)s for renderer changes to take effect."
 msgstr ""
+"Sie müssen %(appname)s neu starten, damit die Änderungen übernommen werden "
+"können."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:74
 msgid "Video renderer:"
@@ -2829,7 +2933,7 @@ msgstr "Update verfügbar"
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
 #, python-format
 msgid "A new version of %(appname)s is available for download."
-msgstr ""
+msgstr "Eine neue Version von %(appname)s steht zum Download bereit."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
@@ -2861,6 +2965,11 @@ msgid ""
 "You should quit %(appname)s now and start it up again after Adobe Flash has "
 "been installed."
 msgstr ""
+"Ihr Browser lädt nun die Internetseite auf der Sie Adobe Flash herunterladen "
+"und installieren können.\n"
+"\n"
+"Bitte beenden Sie %(appname)s und starten es erneut nachdem Adobe Flash "
+"installiert wurde."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
 msgid "When I click the red close button:"
@@ -2874,7 +2983,7 @@ msgstr ""
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
 #, python-format
 msgid "Quit %(appname)s completely."
-msgstr ""
+msgstr "%(appname)s vollständig beenden."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:133
 msgid "Close to tray?"
@@ -2886,14 +2995,17 @@ msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
+"Wenn du den roten beenden Knopf drückst, würdest du %(appname)s gerne in die "
+"Symbolleiste verkleinern oder beenden? Du kannst diese Einstellung später "
+"über Optionen verändern."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:192
 msgid "Error Bombing Item"
-msgstr ""
+msgstr "Fehler beim \"Bomben\" der Datei"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:194
 msgid "Error Recommending Item"
-msgstr ""
+msgstr "Fehler beim Weiterempfehlen der Datei"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:196
 msgid "Error Opening Website"

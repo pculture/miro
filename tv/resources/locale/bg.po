@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -29,24 +29,6 @@ msgstr "Грешка: %(msg)s"
 #: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
 msgid "Can't connect"
 msgstr "Грешка при свързване"
-
-#: ../../portable/httpclient.py:105
-#, python-format
-msgid "Connection Error: %(msg)s"
-msgstr "Грешка при свързване: %(msg)s"
-
-#: ../../portable/httpclient.py:111
-msgid "SSL connection error"
-msgstr "Грешка при свързване по SSL"
-
-#: ../../portable/httpclient.py:115
-msgid "HTTP error"
-msgstr "Грешка в HTTP"
-
-#: ../../portable/httpclient.py:119
-#, python-format
-msgid "Bad Status Line: %(msg)s"
-msgstr "Неправилен ред за статуса: %(msg)s"
 
 #: ../../portable/httpclient.py:124
 #, python-format

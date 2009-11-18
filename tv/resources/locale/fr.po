@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -77,7 +77,7 @@ msgstr "Code d'erreur 404 reçu"
 #: ../../portable/httpclient.py:147
 #, python-format
 msgid "Bad Status Code: %(code)s"
-msgstr "Mauvais code statut: %(code)s"
+msgstr "Code d'état erroné : %(code)s"
 
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"
@@ -108,7 +108,7 @@ msgstr "URL non valable"
 #: ../../portable/httpclient.py:168
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr "\"%(url)s\" n'est pas une adresse (URL) valide"
+msgstr "« %(url)s » n'est pas une adresse (URL) valable"
 
 #: ../../portable/httpclient.py:174
 #, python-format
@@ -166,7 +166,7 @@ msgstr "Autres"
 
 #: ../../portable/frontends/widgets/statictabs.py:118
 msgid "Downloading"
-msgstr "Téléchargement en cours"
+msgstr "Téléchargement"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
@@ -533,10 +533,10 @@ msgid ""
 "\n"
 "Would you like %(name)s to look for media files on your computer?"
 msgstr ""
-"%(name)s peut trouver les fichiers multimédias de votre ordinateur afin de "
+"%(name)s peut trouver les fichiers multimédia de votre ordinateur afin de "
 "vous aider à organiser votre collection.\n"
 "\n"
-"Souhaitez-vous que %(name)s recherche vos fichiers multimédias ?"
+"Souhaitez-vous que %(name)s recherche vos fichiers multimédia ?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:185
 msgid "Restrict to all my personal files."
@@ -553,7 +553,7 @@ msgstr "Modifier"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:197
 msgid "Choose directory to search for media files"
-msgstr "Choisissez un dossier pour y rechercher des fichiers multimédias"
+msgstr "Choisissez un dossier pour y rechercher des fichiers multimédia"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:211
 #: ../../portable/frontends/widgets/firsttimedialog.py:290
@@ -701,7 +701,7 @@ msgstr "téléchargement automatique en attente"
 #: ../../portable/frontends/widgets/style.py:1153
 #: ../../portable/frontends/widgets/itemlistwidgets.py:721
 msgid "Unplayed"
-msgstr "non lu"
+msgstr "Non lu"
 
 #: ../../portable/frontends/widgets/style.py:255
 msgid "Currently Playing"
@@ -748,7 +748,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/displays.py:382
 msgid "Filename:"
-msgstr "Nom de fichier :"
+msgstr "Nom du fichier :"
 
 #: ../../portable/frontends/widgets/displays.py:385
 msgid "File type:"
@@ -870,7 +870,7 @@ msgstr ""
 "\n"
 "Si vous continuez, le dossier vidéo principal sera réinitialisé sur ce "
 "disque à l'emplacement par défaut. Si vous aviez téléchargé des vidéos, "
-"%(shortappname)s perdra des renseignements sur ces vidéos.\n"
+"%(shortappname)s perdra les renseignements sur ces vidéos.\n"
 "\n"
 "Si vous quittez, vous pourrez connecter le disque ou résoudre le problème "
 "autrement, puis relancer %(shortappname)s."
@@ -886,7 +886,7 @@ msgstr "Le fichier %(filename)s a été supprimé en dehors de %(appname)s"
 
 #: ../../portable/frontends/widgets/application.py:335
 msgid "Open Files..."
-msgstr "Ouverture des fichiers..."
+msgstr "Ouverture des fichiers…"
 
 #: ../../portable/frontends/widgets/application.py:346
 #: ../../portable/frontends/widgets/application.py:351
@@ -913,7 +913,7 @@ msgstr "Saisir l'URL du fichier à télécharger"
 
 #: ../../portable/frontends/widgets/application.py:391
 msgid "New Download - Invalid URL"
-msgstr "Nouveau téléchargement - URL invalide"
+msgstr "Nouveau téléchargement - URL non valable"
 
 #: ../../portable/frontends/widgets/application.py:392
 msgid ""
@@ -922,7 +922,7 @@ msgid ""
 "\n"
 "Enter the URL of the item to download"
 msgstr ""
-"L'adresse saisie est invalide.\n"
+"L'adresse saisie n'est pas valable.\n"
 "Veuillez vérifier l'URL et réessayer.\n"
 "\n"
 "Saisissez l'URL de l'élément à télécharger"
@@ -975,8 +975,8 @@ msgstr[1] ""
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
-msgstr[0] "Êtes-vous certain de vouloir supprimer cet élément ?"
-msgstr[1] "Êtes vous certain de vouloir effacer ces %(count)d éléments ?"
+msgstr[0] "Voulez-vous vraiment supprimer cet élément ?"
+msgstr[1] "Voulez-vous vraiment supprimer ces %(count)d éléments ?"
 
 #: ../../portable/frontends/widgets/application.py:462
 msgid ""
@@ -996,7 +996,7 @@ msgstr "Saisissez le nouveau nom de l'élément"
 
 #: ../../portable/frontends/widgets/application.py:519
 msgid "Save Item As..."
-msgstr "Enregistrer l'élément sous..."
+msgstr "Enregistrer l'élément sous…"
 
 #: ../../portable/frontends/widgets/application.py:572
 #: ../../portable/menubar.py:213
@@ -1009,7 +1009,7 @@ msgstr "Saisissez l'URL du site à ajouter"
 
 #: ../../portable/frontends/widgets/application.py:574
 msgid "Add Site - Invalid URL"
-msgstr "Ajout d'un site - URL non valide"
+msgstr "Ajout d'un site - URL non valable"
 
 #: ../../portable/frontends/widgets/application.py:575
 msgid ""
@@ -1018,7 +1018,7 @@ msgid ""
 "\n"
 "Enter the URL of the site to add"
 msgstr ""
-"L'adresse que vous avez saisi n'est pas valide\n"
+"L'adresse saisie n'est pas valable.\n"
 "Veuillez vérifier l'URL et réessayer.\n"
 "\n"
 "Saisissez L'URL du site à ajouter"
@@ -1159,7 +1159,7 @@ msgstr "Message"
 
 #: ../../portable/frontends/widgets/application.py:1152
 msgid "Migrating Files"
-msgstr "Déplacement des fichiers en cours"
+msgstr "Déplacement des fichiers"
 
 #: ../../portable/frontends/widgets/application.py:1162
 msgid "Migrating files"
@@ -1171,7 +1171,7 @@ msgid ""
 "can take a long time if you have a large number of items in Miro (it can "
 "even take more than 30 minutes)."
 msgstr ""
-"Miro met à jour votre base de donnée de flux et de fichiers. Ce processus "
+"Miro met à jour votre base de données de flux et de fichiers. Ce processus "
 "peut prendre un certain temps si vous avez un grand nombre d'éléments dans "
 "Miro (cela peut durer plus de 30 minutes)."
 
@@ -1195,7 +1195,7 @@ msgstr "Partage"
 #: ../../portable/frontends/widgets/prefpanel.py:268
 #, python-format
 msgid "Automatically run %(appname)s when I log in."
-msgstr "Lancer automatiquement %(appname)s lorsque je me connecte."
+msgstr "Lancer automatiquement %(appname)s lorsque j'ouvre ma session."
 
 #: ../../portable/frontends/widgets/prefpanel.py:272
 msgid "Warn me if I attempt to quit with downloads in progress."
@@ -1330,11 +1330,11 @@ msgstr "Arrêter l'envoi des torrents quand ce quota est atteint :"
 
 #: ../../portable/frontends/widgets/prefpanel.py:443
 msgid "Choose Movies Directory"
-msgstr "Choisir le dossier des films"
+msgstr "Choisir le dossier des vidéos"
 
 #: ../../portable/frontends/widgets/prefpanel.py:456
 msgid "Migrate existing movies?"
-msgstr "Migrer les films existants ?"
+msgstr "Déplacer les vidéos existantes ?"
 
 #: ../../portable/frontends/widgets/prefpanel.py:457
 #, python-format

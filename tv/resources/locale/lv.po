@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -48,7 +48,7 @@ msgstr "Nepareiza Stavokļa Līnija: %(msg)s"
 #: ../../portable/httpclient.py:124
 #, python-format
 msgid "Bad Header Line: %(msg)s"
-msgstr ""
+msgstr "Bojāta Galvenes rindiņa: %(msg)s"
 
 #: ../../portable/httpclient.py:129
 #, python-format
@@ -77,7 +77,7 @@ msgstr "Saņemts 404 statusa kods"
 #: ../../portable/httpclient.py:147
 #, python-format
 msgid "Bad Status Code: %(code)s"
-msgstr ""
+msgstr "Bojāts statusa kods: %(code)s"
 
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"

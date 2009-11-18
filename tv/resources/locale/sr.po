@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-09-23 13:04-0400\n"
-"PO-Revision-Date: 2009-07-23 15:11+0000\n"
-"Last-Translator: AbyssBG <tweeton@ymail.com>\n"
+"PO-Revision-Date: 2009-11-10 21:43+0000\n"
+"Last-Translator: ikrstic@gmail.com <Unknown>\n"
 "Language-Team: Serbian <sr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -35,7 +35,7 @@ msgstr "Грешка приликом повезивања: %(msg)s"
 
 #: ../../portable/httpclient.py:111
 msgid "SSL connection error"
-msgstr "Грепка SSL конекције"
+msgstr "Грешка SSL конекције"
 
 #: ../../portable/httpclient.py:115
 msgid "HTTP error"
@@ -73,7 +73,7 @@ msgstr "Датотека није пронађена"
 
 #: ../../portable/httpclient.py:145
 msgid "Got 404 status code"
-msgstr "Got 404 status code"
+msgstr "Добијен 404 статус кода"
 
 #: ../../portable/httpclient.py:147
 #, python-format
@@ -91,7 +91,7 @@ msgstr "Интерна грешка"
 
 #: ../../portable/httpclient.py:158
 msgid "Pipeline request never started"
-msgstr "Pipeline request never started"
+msgstr "Pipeline захтев није ни почео"
 
 #: ../../portable/httpclient.py:162
 msgid "Timeout"
@@ -104,17 +104,17 @@ msgstr "Веза са %(host)s је истекла"
 
 #: ../../portable/httpclient.py:167
 msgid "Invalid URL"
-msgstr "Погрешна адреса (URL)"
+msgstr "Неисправна адреса (URL)"
 
 #: ../../portable/httpclient.py:168
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr "\"%(url)s\" није исправан URL"
+msgstr "\"%(url)s\" није исправна адреса (URL)"
 
 #: ../../portable/httpclient.py:174
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
-msgstr "Datoteka \"%(path)s\" ne postoji"
+msgstr "Датотека \"%(path)s\" не постоји"
 
 #: ../../portable/httpclient.py:178
 msgid "Read error"
@@ -131,7 +131,7 @@ msgstr "Непознат код грешке"
 
 #: ../../portable/httpclient.py:408
 msgid "Connection closed"
-msgstr "Веза затворена"
+msgstr "Веза је затворена"
 
 #: ../../portable/httpclient.py:829
 msgid "Unknown"
@@ -589,8 +589,8 @@ msgstr "Prekinuti"
 #, python-format
 msgid "parsed %(count)s file"
 msgid_plural "parsed %(count)s files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "рашчлањена %(count)s датотека"
+msgstr[1] "рашчлањено %(count)s датотека"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:326
 #, python-format
@@ -614,6 +614,8 @@ msgid ""
 "Include entire program database including all video and feed metadata with "
 "crash report"
 msgstr ""
+"Укључи комплетну базу података програма укључујући и све видео и фидове "
+"метадата уз извештај о квару"
 
 #: ../../portable/frontends/widgets/crashdialog.py:68
 msgid "Describe what you were doing when you got this error:"
@@ -850,7 +852,7 @@ msgstr "Преузми овај видео"
 
 #: ../../portable/frontends/widgets/application.py:156
 msgid "Movies directory gone"
-msgstr ""
+msgstr "Директоријум са Филмовима није доступан"
 
 #: ../../portable/frontends/widgets/application.py:158
 #, python-format
@@ -869,6 +871,21 @@ msgid ""
 "If you quit, then you can connect the drive or otherwise fix the problem and "
 "relaunch %(shortappname)s."
 msgstr ""
+"%(shortappname)s неможе да пронађе главни директоријум видео датотека "
+"смештен у:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"Можда се локација односи на екстерни уређај који тренутно није повезан.\n"
+"\n"
+"Ако наставите, главни видео директоријум ће бити ресетован на предефинисану "
+"локацију на овом драјву. ако сте имали видео датотеке преузете и сачуване у "
+"овај директоријум ова промена ће изазвати да програм %(shortappname)s изгуби "
+"детаљне информације о тим видео датотекама.\n"
+"\n"
+"Ако откажете, можете повезати уређај на оме се налази директоријум са видео "
+"датотекама, или поправите проблем и поново покрените програм "
+"%(shortappname)s."
 
 #: ../../portable/frontends/widgets/application.py:326
 msgid "Error Revealing File"
@@ -1420,6 +1437,7 @@ msgstr "Пусти видео и аудио ставке једну за дру�
 #: ../../portable/frontends/widgets/prefpanel.py:612
 msgid "Stop after each video or audio item"
 msgstr ""
+"Зауставите репродукцију након сваке репродуковане видео или аудио датотеке"
 
 #: ../../portable/frontends/widgets/prefpanel.py:623
 msgid "General"
@@ -1579,7 +1597,7 @@ msgstr[2] ""
 
 #: ../../portable/frontends/widgets/gtk/video.py:273
 msgid "Permalink"
-msgstr ""
+msgstr "Пермалинк"
 
 #: ../../portable/frontends/widgets/gtk/video.py:279
 msgid "Pop-in"
@@ -1593,11 +1611,13 @@ msgstr "Искочити"
 #, python-format
 msgid "Play Next Unplayed (%(unplayed)d)"
 msgstr ""
+"Репродукуј следећу датотеку која није до сада репродукована (%(unplayed)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:71
 #, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
 msgstr ""
+"Репродукуј све датотеке које до сада нису репродуковане (%(unplayed)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:74
 #, python-format
@@ -1637,6 +1657,8 @@ msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
 "%(trademark)s"
 msgstr ""
+"%(copyright)s.  Види license.txt датотеку за детаље.\n"
+"%(trademark)s"
 
 #: ../../portable/frontends/widgets/gtk/window.py:593
 #: ../../portable/dialogs.py:86
@@ -1719,6 +1741,10 @@ msgid ""
 "\n"
 "Enter the URL of the feed to add"
 msgstr ""
+"Адреса коју сте унели није валидна УРЛ адреса.\n"
+"Молимо проверите УРЛ адресу и покушајте поново.\n"
+"\n"
+"Унесите УРЛ или фид који желите да додате"
 
 #: ../../portable/frontends/widgets/tablist.py:528
 #: ../../portable/frontends/widgets/tablist.py:591

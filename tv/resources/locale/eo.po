@@ -8,20 +8,20 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-09-23 13:04-0400\n"
-"PO-Revision-Date: 2009-07-23 13:48+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2009-10-19 14:59+0000\n"
+"Last-Translator: Kristjan <Unknown>\n"
 "Language-Team: Esperanto <eo@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
 #, python-format
 msgid "Error: %(msg)s"
-msgstr ""
+msgstr "Eraro: %(msg)s"
 
 #: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
 msgid "Can't connect"
@@ -81,7 +81,7 @@ msgstr ""
 
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"
-msgstr ""
+msgstr "Rajtigo malsukcesis"
 
 #: ../../portable/httpclient.py:157
 #: ../../portable/frontends/widgets/crashdialog.py:48
@@ -126,11 +126,11 @@ msgstr ""
 
 #: ../../portable/httpclient.py:376
 msgid "Unknown Error code"
-msgstr ""
+msgstr "Nekonata erarkodo"
 
 #: ../../portable/httpclient.py:408
 msgid "Connection closed"
-msgstr ""
+msgstr "Konekto fermiĝis"
 
 #: ../../portable/httpclient.py:829
 msgid "Unknown"
@@ -170,7 +170,7 @@ msgstr "Elŝutante"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
-msgstr ""
+msgstr "Aldoni ludliston"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
 msgid "Add items to an existing playlist or a new one."
@@ -182,7 +182,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
 msgid "New playlist:"
-msgstr ""
+msgstr "Nova ludlisto:"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
@@ -209,7 +209,7 @@ msgstr "Aŭskulti Nur Ĉi Tiun"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:96
 #: ../../portable/frontends/widgets/itemcontextmenu.py:192
 msgid "Add to Playlist"
-msgstr ""
+msgstr "Aldoni al ludlisto"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:99
 #: ../../portable/frontends/widgets/application.py:495
@@ -345,7 +345,7 @@ msgstr "Rekomenci Alŝutadon"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:277
 msgid "Remove From Playlist"
-msgstr ""
+msgstr "Forigi el la ludlisto"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:55
 #: ../../portable/frontends/widgets/feedsettingspanel.py:102
@@ -385,23 +385,23 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
-msgstr ""
+msgstr "Vidita antaŭ 1 tago"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr ""
+msgstr "Vidita antaŭ 3 tagoj"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
-msgstr ""
+msgstr "Vidita antaŭ 6 tagoj"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:100
 msgid "Watched 10 days ago"
-msgstr ""
+msgstr "Vidita antaŭ 10 tagoj"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
-msgstr ""
+msgstr "Vidita antaŭ 1 monato"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
@@ -466,7 +466,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:241
 msgid "Feed Settings"
-msgstr ""
+msgstr "Fluaj agordoj"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:63
 #, python-format
@@ -508,7 +508,7 @@ msgstr "Ne"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:153
 msgid "Next >"
-msgstr ""
+msgstr "Sekva >"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:163
 #, python-format
@@ -544,7 +544,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:211
 #: ../../portable/frontends/widgets/firsttimedialog.py:290
 msgid "< Previous"
-msgstr ""
+msgstr "< Antaŭa"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:223
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
@@ -571,8 +571,8 @@ msgstr "Rezigni"
 #, python-format
 msgid "parsed %(count)s file"
 msgid_plural "parsed %(count)s files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Sintakse analizis %(count)s dosieron"
+msgstr[1] "Sintakse analizis %(count)s dosierojn"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:326
 #, python-format
@@ -596,7 +596,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/crashdialog.py:68
 msgid "Describe what you were doing when you got this error:"
-msgstr ""
+msgstr "Priskribu tiun, kiun vi faris kiam vi ricevis ĉi tiun eraron:"
 
 #: ../../portable/frontends/widgets/style.py:232
 msgid "From"
@@ -604,15 +604,15 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:233
 msgid "File name:"
-msgstr ""
+msgstr "Dosiernomo:"
 
 #: ../../portable/frontends/widgets/style.py:234
 msgid "Show More"
-msgstr ""
+msgstr "Montri pli"
 
 #: ../../portable/frontends/widgets/style.py:235
 msgid "Show Less"
-msgstr ""
+msgstr "Montri malpli"
 
 #: ../../portable/frontends/widgets/style.py:238
 #, python-format
@@ -715,7 +715,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:1034
 msgid "Remove from playlist"
-msgstr ""
+msgstr "Forigi el ludlisto"
 
 #: ../../portable/frontends/widgets/displays.py:372
 #, python-format
@@ -739,7 +739,7 @@ msgstr "Legi ekstere"
 
 #: ../../portable/frontends/widgets/displays.py:393
 msgid "Skip"
-msgstr ""
+msgstr "Preterpasi"
 
 #: ../../portable/frontends/widgets/displays.py:430
 msgid "Open Externally"
@@ -796,11 +796,11 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/displays.py:581
 msgid "Delete All"
-msgstr ""
+msgstr "Forigi ĉiujn"
 
 #: ../../portable/frontends/widgets/displays.py:585
 msgid "Put Into a New Folder"
-msgstr ""
+msgstr "Meti en novan dosierujon"
 
 #: ../../portable/frontends/widgets/rundialog.py:82
 msgid "Username:"
@@ -812,7 +812,7 @@ msgstr "Pasvorto:"
 
 #: ../../portable/frontends/widgets/browser.py:96
 msgid "Open in browser"
-msgstr ""
+msgstr "Malfermi per foliumilo"
 
 #: ../../portable/frontends/widgets/browser.py:102
 msgid "Download this video"
@@ -851,7 +851,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:335
 msgid "Open Files..."
-msgstr ""
+msgstr "Malfermi dosierojn..."
 
 #: ../../portable/frontends/widgets/application.py:346
 #: ../../portable/frontends/widgets/application.py:351
@@ -866,11 +866,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:352
 msgid "The following files do not exist:"
-msgstr ""
+msgstr "La jenaj dosieroj ne ekzistas:"
 
 #: ../../portable/frontends/widgets/application.py:389
 msgid "New Download"
-msgstr ""
+msgstr "Nova elŝuto"
 
 #: ../../portable/frontends/widgets/application.py:390
 msgid "Enter the URL of the item to download"
@@ -901,8 +901,8 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:426
 msgid "Remove item"
 msgid_plural "Remove items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Forigi eron"
+msgstr[1] "Forigi erojn"
 
 #: ../../portable/frontends/widgets/application.py:430
 msgid ""
@@ -941,11 +941,11 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/application.py:496
 msgid "Enter the new name for the item"
-msgstr ""
+msgstr "Entajpu la novan nomon por la ero"
 
 #: ../../portable/frontends/widgets/application.py:519
 msgid "Save Item As..."
-msgstr ""
+msgstr "Konservi eron kiel..."
 
 #: ../../portable/frontends/widgets/application.py:572
 #: ../../portable/menubar.py:213
@@ -970,11 +970,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
-msgstr ""
+msgstr "Importi OPML-dosieron"
 
 #: ../../portable/frontends/widgets/application.py:626
 msgid "OPML Files"
-msgstr ""
+msgstr "OPML-dosieroj"
 
 #: ../../portable/frontends/widgets/application.py:633
 msgid "Import OPML File - Error"
@@ -986,19 +986,19 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:663
 msgid "Create Playlist"
-msgstr ""
+msgstr "Krei ludliston"
 
 #: ../../portable/frontends/widgets/application.py:664
 msgid "Enter a name for the new playlist"
-msgstr ""
+msgstr "Enigi nomon por la nova ludlisto"
 
 #: ../../portable/frontends/widgets/application.py:685
 msgid "Create Playlist Folder"
-msgstr ""
+msgstr "Krei ludlistan dosierujon"
 
 #: ../../portable/frontends/widgets/application.py:686
 msgid "Enter a name for the new playlist folder"
-msgstr ""
+msgstr "Enigi nomon por la nova ludlista dosierujo"
 
 #: ../../portable/frontends/widgets/application.py:707
 #: ../../portable/frontends/widgets/tablist.py:579
@@ -1012,7 +1012,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:712
 msgid "Rename Feed"
-msgstr ""
+msgstr "Alinomi fluon"
 
 #: ../../portable/frontends/widgets/application.py:713
 #, python-format
@@ -1023,7 +1023,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/tablist.py:640
 #: ../../portable/playlist.py:199
 msgid "Rename Playlist"
-msgstr ""
+msgstr "Alinomi ludliston"
 
 #: ../../portable/frontends/widgets/application.py:718
 #, python-format
@@ -1033,7 +1033,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:722
 #: ../../portable/frontends/widgets/tablist.py:634
 msgid "Rename Playlist Folder"
-msgstr ""
+msgstr "Alinomi ludlistan dosierujon"
 
 #: ../../portable/frontends/widgets/application.py:723
 #, python-format
@@ -1043,7 +1043,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:726
 #: ../../portable/frontends/widgets/tablist.py:529
 msgid "Rename Site"
-msgstr ""
+msgstr "Alinomi retejon"
 
 #: ../../portable/frontends/widgets/application.py:727
 #, python-format
@@ -1060,21 +1060,21 @@ msgstr[1] ""
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ĉu vi certe volas forigi ĉi tiun ludliston?"
+msgstr[1] "Ĉu vi certe volas forigi ĉi tiujn %(count)s ludlistojn?"
 
 #: ../../portable/frontends/widgets/application.py:770
 msgid "Remove site"
 msgid_plural "Remove sites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Forigi retejon"
+msgstr[1] "Forigi retejojn"
 
 #: ../../portable/frontends/widgets/application.py:772
 #, python-format
 msgid "Are you sure you want to remove this site?"
 msgid_plural "Are you sure you want to remove these %(count)s sites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ĉu vi certe volas forigi ĉi tiun retejon?"
+msgstr[1] "Ĉu vi certe volas forigi ĉi tiujn %(count)s retejojn?"
 
 #: ../../portable/frontends/widgets/application.py:802
 msgid "Are you sure you want to quit?"
@@ -1097,7 +1097,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:1127
 msgid "Message"
-msgstr ""
+msgstr "Mesaĝo"
 
 #: ../../portable/frontends/widgets/application.py:1152
 msgid "Migrating Files"
@@ -1129,7 +1129,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:96
 msgid "Seeding"
-msgstr ""
+msgstr "Fontsendante"
 
 #: ../../portable/frontends/widgets/prefpanel.py:268
 #, python-format
@@ -1142,7 +1142,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:282
 msgid "Every day"
-msgstr ""
+msgstr "Ĉiutage"
 
 #: ../../portable/frontends/widgets/prefpanel.py:283
 msgid "Every hour"
@@ -1173,7 +1173,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:298
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: ../../portable/frontends/widgets/prefpanel.py:299
 msgid "20"
@@ -1371,7 +1371,7 @@ msgstr "Listo de muzikpeco"
 
 #: ../../portable/frontends/widgets/prefpanel.py:632
 msgid "Preferences"
-msgstr "Agordo"
+msgstr "Agordoj"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:58
 msgid "New Search Feed"
@@ -1613,7 +1613,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/newfeed.py:111
 msgid "Add Feed"
-msgstr "Aldoni Fluon"
+msgstr "Aldoni fluon"
 
 #: ../../portable/frontends/widgets/newfeed.py:112
 msgid "Enter the URL of the feed to add"
@@ -1785,7 +1785,7 @@ msgstr "Konigi fluon"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:637
 msgid "Settings"
-msgstr "Agordo"
+msgstr "Agordoj"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:643
 msgid "Remove feed"
@@ -2223,7 +2223,7 @@ msgstr ""
 
 #: ../../portable/menubar.py:195
 msgid "_Options"
-msgstr "_Agordaĵoj"
+msgstr "_Agordoj"
 
 #: ../../portable/menubar.py:196
 msgid "_Quit"
@@ -2705,7 +2705,7 @@ msgstr "Montri Ĉiujn"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:149
 msgid "Preferences..."
-msgstr "Agordo..."
+msgstr "Agordoj..."
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:151
 #, python-format

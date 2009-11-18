@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-09-23 13:04-0400\n"
-"PO-Revision-Date: 2009-07-23 14:46+0000\n"
-"Last-Translator: Serkan Cankurban <sekkucum@gmail.com>\n"
+"PO-Revision-Date: 2009-11-07 22:42+0000\n"
+"Last-Translator: Boran Basar <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-10-12 19:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -72,7 +72,7 @@ msgstr "Dosya bulunamadı"
 
 #: ../../portable/httpclient.py:145
 msgid "Got 404 status code"
-msgstr "404 Hata kodu alındı"
+msgstr ""
 
 #: ../../portable/httpclient.py:147
 #, python-format
@@ -81,7 +81,7 @@ msgstr "Hatalı durum kodu : %(code)s"
 
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"
-msgstr "İzin alınamadı"
+msgstr "Yetkilendirme başarısız"
 
 #: ../../portable/httpclient.py:157
 #: ../../portable/frontends/widgets/crashdialog.py:48
@@ -103,12 +103,12 @@ msgstr "%(host)s Bağlantısı zaman aşımına uğradı"
 
 #: ../../portable/httpclient.py:167
 msgid "Invalid URL"
-msgstr "Geçersiz Adres"
+msgstr "Geçersiz URL"
 
 #: ../../portable/httpclient.py:168
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr "\"%(url)s\" geçerli URL değil"
+msgstr "\"%(url)s\" geçerli bir URL değil"
 
 #: ../../portable/httpclient.py:174
 #, python-format
@@ -130,7 +130,7 @@ msgstr "Bilinmeyen Hata Kodu"
 
 #: ../../portable/httpclient.py:408
 msgid "Connection closed"
-msgstr "Bağlantı kapatıldı"
+msgstr "Bağlantı kesildi"
 
 #: ../../portable/httpclient.py:829
 msgid "Unknown"
@@ -1542,11 +1542,11 @@ msgstr "Permalink"
 
 #: ../../portable/frontends/widgets/gtk/video.py:279
 msgid "Pop-in"
-msgstr ""
+msgstr "Küçült"
 
 #: ../../portable/frontends/widgets/gtk/video.py:284
 msgid "Pop-out"
-msgstr ""
+msgstr "Yeni Pencere"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:67
 #, python-format
@@ -1641,7 +1641,8 @@ msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
 "%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
 msgstr[0] ""
-msgstr[1] ""
+"%(count)d İndirme Çalınmayan Dosyalar Nedeniyle Sırada Bekletiliyor "
+"(Ayarlara Bakınız)"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:275
 #, python-format
@@ -1740,7 +1741,7 @@ msgstr "Sonuç Bulunamadı"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:553
 msgid "Back to feed"
-msgstr ""
+msgstr "Besleme'ye geri dön"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:179
 msgid "Save Search"
@@ -1851,7 +1852,7 @@ msgstr "Hepsi Görüntüle"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:732
 msgid "Non Feed"
-msgstr ""
+msgstr "Besleme dışı"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:742
 msgid "Name"
@@ -1891,7 +1892,7 @@ msgstr "Veritabanı boyutu"
 
 #: ../../portable/frontends/widgets/diagnostics.py:110
 msgid "Total db objects in memory:"
-msgstr ""
+msgstr "Hafızadaki toplam vt nesnesi"
 
 #: ../../portable/frontends/widgets/diagnostics.py:118
 #: ../../portable/menubar.py:276
@@ -1924,6 +1925,8 @@ msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
 "report at %(url)s."
 msgstr ""
+"Bilinmeyen bir hata %(appname)s'nun başlatılmasını engelledi. Lütfen %(url)s "
+"adresinde bir hata raporu bildirin."
 
 #: ../../portable/startup.py:179
 msgid "Database too new"
@@ -1948,6 +1951,8 @@ msgid ""
 "Not enough disk space to upgrade your database from the previous version of "
 "%(appname)s.  Please delete some files and try again."
 msgstr ""
+"%(appname)s veritabanınızın önceki sürümününden yükseltilebilmesi için "
+"yeterli disk alanı yok.  Lütfen bazı dosyalarınızı silip tekrar deneyin."
 
 #: ../../portable/commandline.py:99
 msgid "Subscription error"
@@ -2157,7 +2162,7 @@ msgstr "İzlemeyi durdur"
 
 #: ../../portable/dialogs.py:119
 msgid "Retry"
-msgstr ""
+msgstr "Tekrar dene"
 
 #: ../../portable/singleclick.py:55
 msgid "Download already exists"
@@ -2170,7 +2175,7 @@ msgstr "Bu zaten harici indirme adresi."
 #: ../../portable/singleclick.py:62
 #, python-format
 msgid "%(appname)s will begin downloading it now."
-msgstr ""
+msgstr "%(appname)s şimdi indirmeye başlayacak."
 
 #: ../../portable/singleclick.py:65
 msgid "It is downloading now."
@@ -2203,6 +2208,9 @@ msgid ""
 "\n"
 "URL: %(url)s"
 msgstr ""
+"%(appname)s şu URL adresindeki bir dosyayı indiremiyor:\n"
+"\n"
+"URL: %(url)s"
 
 #: ../../portable/dl_daemon/download.py:639
 #, python-format
@@ -2249,7 +2257,7 @@ msgstr "Torrent dosyası silindi"
 #: ../../portable/dl_daemon/download.py:1115
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
-msgstr ""
+msgstr "Buna ait torrent dosyası %(appname)s dışında silinmiş."
 
 #: ../../portable/menubar.py:184
 msgid "_Open"
@@ -2478,7 +2486,7 @@ msgstr "_Çalma Listeleri"
 
 #: ../../portable/menubar.py:296
 msgid "P_layback"
-msgstr "__Gerisar"
+msgstr "Oynat"
 
 #: ../../portable/util.py:297 ../../portable/util.py:299
 #, python-format
@@ -2610,15 +2618,13 @@ msgstr[0] "%(num).gün"
 #, python-format
 msgid "%(num).0f hr"
 msgid_plural "%(num).0f hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f saat"
 
 #: ../../portable/displaytext.py:74
 #, python-format
 msgid "%(num).0f min"
 msgid_plural "%(num).0f mins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f dk"
 
 #: ../../portable/displaytext.py:76
 #, python-format
@@ -2687,11 +2693,11 @@ msgstr[0] "Biteli %(count)d dakika oldu"
 #: ../../portable/displaytext.py:142
 #, python-format
 msgid "%(month)s %(dayofmonth)s, %(year)s"
-msgstr ""
+msgstr "%(month)s %(dayofmonth)s, %(year)s"
 
 #: ../../portable/storedatabase.py:209
 msgid "Database was created by a newer version of Miro "
-msgstr ""
+msgstr "Veritabanı Miro'nun daha yeni bir sürümü tarafından oluşturulmuş "
 
 #: ../../portable/storedatabase.py:466
 #, python-format
@@ -2725,6 +2731,16 @@ msgid ""
 "Error: %(error_text)s\n"
 "\n"
 msgstr ""
+"%(appname)s veritabanını kaydedemedi.\n"
+"\n"
+"Eğer diskiniz doluysa, biraz yer açmanızı ve tekrar denemenizi öneririz.  "
+"Eğer diskiniz dolu değilse, tekrar denemek işe yarayabilir.\n"
+"\n"
+"Eğer tekrar denemek işe yaramadıysa, lütfen %(appname)s 'den çıkın ve tekrar "
+"başlatın.  Son değişikliler kaybedilebilir.\n"
+"\n"
+"Hata: %(error_text)s\n"
+"\n"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:171
 msgid "Download Completed"
@@ -2750,7 +2766,7 @@ msgstr "Hizmetler"
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:141
 #, python-format
 msgid "Hide %(appname)s"
-msgstr ""
+msgstr "%(appname)s'yu Gizle"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:143
 msgid "Hide Others"
@@ -2767,7 +2783,7 @@ msgstr "Tercihler..."
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:151
 #, python-format
 msgid "Quit %(appname)s"
-msgstr ""
+msgstr "%(appname)s'dan Çık"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
 msgid "Close Window"
@@ -2832,7 +2848,7 @@ msgstr "Pencere"
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:195
 #, python-format
 msgid "%(appname)s Help"
-msgstr ""
+msgstr "%(appname)s Yardım"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:39
@@ -2847,6 +2863,8 @@ msgstr "Dönüştürücü Seçenekleri"
 #, python-format
 msgid "You must restart %(appname)s for renderer changes to take effect."
 msgstr ""
+"İşleyici değişikliklerinin etkili olması için %(appname)s'yu yeniden "
+"başlatın."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:74
 msgid "Video renderer:"
@@ -2859,7 +2877,7 @@ msgstr "Güncellemeler Mevcut"
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
 #, python-format
 msgid "A new version of %(appname)s is available for download."
-msgstr ""
+msgstr "%(appname)s'nun yeni versiyonu indirilmeye hazır."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
@@ -2891,6 +2909,10 @@ msgid ""
 "You should quit %(appname)s now and start it up again after Adobe Flash has "
 "been installed."
 msgstr ""
+"Tarayıcınız Adobe Flash indirip kurabileceğiniz ağ sayfasını açacak.\n"
+"\n"
+"%(appname)s 'dan şimdi çıkıp Adobe Flash kurulduktan sonra tekrar "
+"başlatmalısınız."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
 msgid "When I click the red close button:"
@@ -2903,7 +2925,7 @@ msgstr "İndirmelerin devam edebilmesi için görev çubuğu çekmecesine kapat�
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
 #, python-format
 msgid "Quit %(appname)s completely."
-msgstr ""
+msgstr "%(appname)s'dan tamamen çık."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:133
 msgid "Close to tray?"
@@ -2915,6 +2937,9 @@ msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
+"Kırmızı kapat düğmesini tıkladığınızda, %(appname)s'yu sistem çubuğuna "
+"küçültülmeyi mi, yoksa tamamen kapatmayı mı istersiniz?  Bu ayarı daha sonra "
+"Seçenekler'den değiştirebilirsiniz."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:192
 msgid "Error Bombing Item"
