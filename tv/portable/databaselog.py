@@ -30,6 +30,10 @@
 
 The purpose of this module is to help us keep track of the history of a user's
 database.  See #12419 for more info.
+
+Note: We should try hard not to let loops fill up the log file with too much
+junk, or infinitely.  Take a look at item.move_orphaned_items() for one
+technique to avoid this.
 """
 
 import time

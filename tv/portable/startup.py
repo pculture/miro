@@ -409,9 +409,14 @@ def _get_theme_history():
 def clear_icon_cache_orphans():
     # delete icon_cache rows from the database with no associated
     # item/feed/guide.
+    removed_objs = []
     for ic in iconcache.IconCache.orphaned_view():
         logging.warn("No object for IconCache: %s.  Discarding", ic)
         ic.remove()
+        removed_objs.append(str(ic.url))
+    if removed_objs:
+        databaselog.info("Removed IconCache objects without an associated "
+                "db object: %s", ','.join(removed_objs))
     yield None
 
     # delete files in the icon cache directory that don't belong to IconCache

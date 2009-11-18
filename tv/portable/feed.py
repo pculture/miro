@@ -47,6 +47,7 @@ from miro.httpclient import grabURL
 from miro import app
 from miro import config
 from miro import iconcache
+from miro import databaselog
 from miro import dialogs
 from miro import download_utils
 from miro import eventloop
@@ -2609,12 +2610,17 @@ def get_feed_by_url(url):
         return None
 
 def remove_orphaned_feed_impls():
+    removed_impls = []
     for klass in (FeedImpl, RSSFeedImpl, RSSMultiFeedImpl,
             ScraperFeedImpl, SearchFeedImpl, DirectoryFeedImpl,
             DirectoryWatchFeedImpl, SearchDownloadsFeedImpl,):
         for feed_impl in klass.orphaned_view():
             logging.warn("No feed for FeedImpl: %s.  Discarding", feed_impl)
             feed_impl.remove()
+            removed_impls.append(feed_impl.url)
+    if removed_impls:
+        databaselog.info("Removed FeedImpl objects without a feed: %s",
+                ','.join(removed_impls))
 
 restored_feeds = []
 def start_updates():

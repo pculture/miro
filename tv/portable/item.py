@@ -50,6 +50,7 @@ from miro.database import DatabaseConstraintError
 from miro.databasehelper import make_simple_get_set
 from miro import app
 from miro import iconcache
+from miro import databaselog
 from miro import downloader
 from miro import config
 from miro import eventloop
@@ -1898,11 +1899,23 @@ def update_incomplete_movie_data():
 
 def move_orphaned_items():
     manual_feed = models.Feed.get_manual_feed()
+    feedless_items = []
+    parentless_items = []
+
     for item in Item.orphaned_from_feed_view():
         logging.warn("No feed for Item: %s.  Moving to manual", item.id)
         item.setFeed(manual_feed.id)
+        feedless_items.append('%s: %s' % (item.id, item.url))
 
     for item in Item.orphaned_from_parent_view():
         logging.warn("No parent for Item: %s.  Moving to manual", item.id)
         item.parent_id = None
         item.setFeed(manual_feed.id)
+        parentless_items.append('%s: %s' % (item.id, item.url))
+
+    if feedless_items:
+        databaselog.info("Moved items to manual feed because their feed was "
+                "gone: %s", ', '.join(feedless_items))
+    if parentless_items:
+        databaselog.info("Moved items to manual feed because their parent was "
+                "gone: %s", ', '.join(parentless_items))
