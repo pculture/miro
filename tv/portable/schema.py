@@ -322,6 +322,7 @@ class MultiClassObjectSchema(ObjectSchema):
     """
 
 from miro.database import DDBObject
+from miro.databaselog import DBLogEntry
 from miro.downloader import RemoteDownloader, HTTPAuthPassword
 from miro.feed import Feed, FeedImpl, RSSFeedImpl, RSSMultiFeedImpl, ScraperFeedImpl
 from miro.feed import SearchFeedImpl, DirectoryWatchFeedImpl, DirectoryFeedImpl, SearchDownloadsFeedImpl
@@ -672,7 +673,20 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
     def handle_malformed_list_view_displays(row):
         return []
 
-VERSION = 106
+class DBLogEntrySchema(DDBObjectSchema):
+    klass = DBLogEntry
+    table_name = 'db_log_entry'
+    fields = DDBObjectSchema.fields + [
+        ('timestamp', SchemaFloat()),
+        ('priority', SchemaInt()),
+        ('description', SchemaString()),
+    ]
+
+    @staticmethod
+    def handle_malformed_list_view_displays(row):
+        return []
+
+VERSION = 107
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,
@@ -681,5 +695,6 @@ object_schemas = [
     HTTPAuthPasswordSchema, ChannelGuideSchema, ManualFeedImplSchema, SingleFeedImplSchema,
     PlaylistSchema, ChannelFolderSchema, PlaylistFolderSchema,
     PlaylistItemMapSchema, PlaylistFolderItemMapSchema,
-    TabOrderSchema, ThemeHistorySchema, WidgetsFrontendStateSchema
+    TabOrderSchema, ThemeHistorySchema, WidgetsFrontendStateSchema,
+    DBLogEntrySchema,
 ]

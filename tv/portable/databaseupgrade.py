@@ -2557,3 +2557,7 @@ def upgrade106(cursor):
                 # the TabOrder code is able to recover from missing/extra ids
                 # in its list.  The only bad thing that will happen is the
                 # user's tab order will be changed.
+
+def upgrade107(cursor):
+    cursor.execute("CREATE TABLE db_log_entry ("
+            "id integer, timestamp real, priority integer, description text)")

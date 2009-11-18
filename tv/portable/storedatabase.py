@@ -184,6 +184,7 @@ class LiveStorage:
             raise
         except:
             self._handle_load_error("Error upgrading database")
+            self.startup_version = self.current_version = self._get_version()
 
     def _backup_database(self, ver):
         """Backs up the database file.
@@ -204,7 +205,7 @@ class LiveStorage:
         self.open_connection()
 
     def _upgrade_database(self):
-        current_version = self._get_variable(VERSION_KEY)
+        self.startup_version = current_version = self._get_version()
 
         if current_version > self._schema_version:
             msg = _("Database was created by a newer version of Miro " +
@@ -218,7 +219,7 @@ class LiveStorage:
                 self._upgrade_20_database()
                 # need to pull the variable again here because
                 # _upgrade_20_database will have done an upgrade
-                current_version = self._get_variable(VERSION_KEY)
+                current_version = self._get_version()
                 self._backup_database(current_version)
                 databaseupgrade.new_style_upgrade(self.cursor,
                                                   current_version,
@@ -226,12 +227,13 @@ class LiveStorage:
                 self._set_version()
             finally:
                 dbupgradeprogress.upgrade_end()
+        self.current_version = self._schema_version
 
     def _upgrade_20_database(self):
         self.cursor.execute("SELECT COUNT(*) FROM sqlite_master "
                 "WHERE type='table' and name = 'dtv_objects'")
         if self.cursor.fetchone()[0] > 0:
-            current_version = self._get_variable(VERSION_KEY)
+            current_version = self._get_version()
             if current_version >= 80:
                 # we have a dtv_objects table, but we also have a database
                 # that's been converted to the new-style.  What happened was
@@ -571,6 +573,9 @@ class LiveStorage:
                         (name, schema.table_name, ', '.join(columns)))
         self._create_variables_table()
         self._set_version()
+
+    def _get_version(self):
+        return self._get_variable(VERSION_KEY)
 
     def _set_version(self, version=None):
         """Set the database version to the current schema version."""

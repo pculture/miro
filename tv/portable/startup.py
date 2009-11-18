@@ -50,6 +50,7 @@ from miro import autoupdate
 from miro import config
 from miro import controller
 from miro import database
+from miro import databaselog
 from miro import databaseupgrade
 from miro import downloader
 from miro import eventloop
@@ -206,6 +207,10 @@ def finish_startup(obj, thread):
     database.update_last_id()
     end = time.time()
     logging.timing ("Database upgrade time: %.3f", end - start)
+    databaselog.print_old_log_entries()
+    if app.db.startup_version != app.db.current_version:
+        databaselog.info("Upgraded database from version %s to %s",
+                app.db.startup_version, app.db.current_version)
 
     models.initialize()
     if DEBUG_DB_MEM_USAGE:
