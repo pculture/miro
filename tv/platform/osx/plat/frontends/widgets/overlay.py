@@ -36,6 +36,7 @@ from PyObjCTools import AppHelper
 from miro import app
 from miro import messages
 from miro.gtcache import gettext as _
+from miro.frontends.widgets.widgetconst import MAX_VOLUME
 from miro.plat import resources
 from miro.plat.frontends.widgets import threads
 from miro.plat.frontends.widgets import drawing
@@ -229,7 +230,7 @@ class OverlayPalette (NSWindowController):
         if (not self.window().isVisible() and not self.revealing) or (self.window().isVisible() and self.hiding):
             self.update_(nil)
             if self.renderer.movie is not None:
-                self.volumeSlider.setFloatValue_(self.renderer.movie.volume())
+                self.set_volume(self.renderer.movie.volume())
 
             self.adjustPosition(videoWindow)
             self.adjustContent(videoWindow, False)
@@ -308,7 +309,7 @@ class OverlayPalette (NSWindowController):
         self.hiding = False
     
     def set_volume(self, volume):
-        self.volumeSlider.setFloatValue_(volume)
+        self.volumeSlider.setFloatValue_(volume / MAX_VOLUME)
     
     def keep_(self, sender):
         messages.KeepVideo(self.item_info.id).send_to_backend()
@@ -388,7 +389,7 @@ class OverlayPalette (NSWindowController):
             self.renderer.play()
 
     def volumeSliderWasDragged(self, slider):
-        volume = slider.floatValue()
+        volume = slider.floatValue() * MAX_VOLUME
         app.playback_manager.set_volume(volume)
         app.widgetapp.window.videobox.volume_slider.set_value(volume)
         self.resetAutoHiding()

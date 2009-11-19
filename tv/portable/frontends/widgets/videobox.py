@@ -34,8 +34,8 @@ from miro import app
 from miro.frontends.widgets import style
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
-from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import imagebutton
+from miro.frontends.widgets.widgetconst import MAX_VOLUME
 from miro.plat.frontends.widgets import widgetset
 from miro.plat import resources
 
@@ -394,7 +394,7 @@ class ProgressTimeline(widgetset.Background):
 class VolumeSlider(widgetset.CustomSlider):
     def __init__(self):
         widgetset.CustomSlider.__init__(self)
-        self.set_range(0.0, 1.0)
+        self.set_range(0.0, MAX_VOLUME)
         self.set_increments(0.05, 0.20)
         self.track = widgetutil.make_surface('volume_track')
         self.knob = widgetutil.make_surface('volume_knob')
@@ -420,8 +420,9 @@ class VolumeSlider(widgetset.CustomSlider):
         self.track.draw(context, 0, y, self.track.width, self.track.height)
 
     def draw_knob(self, context):
+        portion_right = self.get_value() / MAX_VOLUME
         x_max = context.width - self.slider_size()
-        slider_x = int(round(self.get_value() * x_max))
+        slider_x = int(round(portion_right * x_max))
         slider_y = (context.height - self.knob.height) / 2
         self.knob.draw(context, slider_x, slider_y, self.knob.width,
                 self.knob.height)
