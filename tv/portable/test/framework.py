@@ -1,4 +1,5 @@
 import os
+import logging
 import unittest
 import tempfile
 import threading
@@ -70,6 +71,21 @@ class DummyController:
     def get_global_feed(self, url):
         return DummyGlobalFeed()
 
+class LogFilter(logging.Filter):
+    def __init__(self):
+        self.allow = False
+        self.records = []
+
+    def filter(self, record):
+        if not self.allow:
+            raise AssertionError("We shouldn't see any logging")
+        else:
+            self.records.append(record)
+            return False
+
+    def forget_records(self):
+        self.records = []
+
 class MiroTestCase(unittest.TestCase):
     def setUp(self):
         models.initialize()
@@ -87,6 +103,12 @@ class MiroTestCase(unittest.TestCase):
         signals.system.connect('error', self.handle_error)
         app.controller = DummyController()
         self.temp_files = []
+        self.log_filter = LogFilter()
+        logger = logging.getLogger()
+        logger.setLevel(logging.DEBUG)
+        for old_filter in logger.filters:
+            logger.removeFilter(old_filter)
+        logger.addFilter(self.log_filter)
 
     def tearDown(self):
         signals.system.disconnect_all()

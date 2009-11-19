@@ -1,5 +1,8 @@
+import logging
+
 from miro.test.framework import MiroTestCase
 from miro import database
+from miro import databaselog
 from miro import item
 from miro import feed
 from miro import schema
@@ -190,3 +193,26 @@ class DDBObjectTestCase(MiroTestCase):
         self.assertEquals(testobj.changed_attributes, set(['id', 'foo']))
         testobj.bar = 2
         self.assertEquals(testobj.changed_attributes, set(['id', 'foo']))
+
+class DatabaseLoggingTest(MiroTestCase):
+    def check_records(self, count):
+        records = self.log_filter.records
+        self.assertEqual(len(records), count)
+        for rec in records:
+            self.assertEqual(rec.levelno, logging.getLevelName('DBLOG'))
+
+    def test_warning_logged(self):
+        self.log_filter.allow = True
+        databaselog.info("message %s", 1)
+        databaselog.debug("message %s", 2)
+        self.check_records(2)
+
+    def test_backlog(self):
+        self.log_filter.allow = True
+        databaselog.info("message %s", 1)
+        databaselog.debug("message %s", 2)
+        self.log_filter.forget_records()
+        databaselog.print_old_log_entries()
+        # should have 3 log entries, 1 header, 1 footer, and the 1 for the
+        # info message
+        self.check_records(3)
