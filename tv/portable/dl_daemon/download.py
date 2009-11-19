@@ -182,6 +182,11 @@ def shutDown():
     torrentSession.shutdown()
 
 def restoreDownloader(downloader):
+    if downloader['dlid'] in _downloads:
+        logging.warn("Not restarting active downloader: %s",
+                downloader['dlid'])
+        return
+
     downloader = copy(downloader)
     dlerType = downloader.get('dlerType')
     if dlerType == u'HTTP':

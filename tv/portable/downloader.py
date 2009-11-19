@@ -621,7 +621,12 @@ class RemoteDownloader(DDBObject):
             return 0
         return self.status.get('uploaded', 0) / size
     
-    def restartIfNeeded(self):
+    def restart_on_startup_if_needed(self):
+        if _downloads.has_key(self.dlid):
+            # something has caused us to restart already, (for example, the
+            # user selects "resume seeding").  squelch any automatic behaviour
+            # (#12462)
+            return
         if self.get_state() in (u'downloading', u'offline'):
             self.restart()
         if self.get_state() in (u'uploading'):
@@ -760,7 +765,7 @@ class DownloadDaemonStarter(object):
 
     def restart_downloads(self):
         for downloader in self.downloads_at_startup:
-            downloader.restartIfNeeded()
+            downloader.restart_on_startup_if_needed()
 
     def shutdown(self, callback):
         self.shutdown_callback = callback
