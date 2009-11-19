@@ -432,6 +432,9 @@ class CorruptReprTest(FakeSchemaTest):
                 "WHERE name='lee'")
         restored_lee = self.reload_object(self.lee)
         self.assertEqual(restored_lee.stuff, 'testing123')
+        app.db.cursor.execute("SELECT stuff from human WHERE name='lee'")
+        row = app.db.cursor.fetchone()
+        self.assertEqual(row[0], "'testing123'")
 
     def test_repr_failure_no_handler(self):
         app.db.cursor.execute("UPDATE pcf_programmer SET stuff='{baddata' "
@@ -465,58 +468,71 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
         self.theme_hist = theme.ThemeHistory()
         self.widgets_frontend_state = frontendstate.WidgetsFrontendState()
 
+    def check_fixed_value(self, obj, column_name, value, disk_value=None):
+        obj = self.reload_object(obj)
+        self.assertEquals(getattr(obj, column_name), value)
+        # make sure the values stored on disk are correct as well
+        if disk_value is None:
+            disk_value = value
+        obj_schema = app.db._schema_map[obj.__class__]
+        app.db.cursor.execute("SELECT %s FROM %s WHERE id=?" % (column_name,
+            obj_schema.table_name), (obj.id,))
+        row = app.db.cursor.fetchone()
+        for name, schema_item in obj_schema.fields:
+            if name == column_name:
+                break
+        sql_value = app.db._converter.to_sql(obj_schema, column_name,
+                schema_item, disk_value)
+        self.assertEqual(row[0], sql_value)
+
     def test_corrupt_status(self):
         app.db.cursor.execute("UPDATE remote_downloader "
                 "SET status='{baddata' WHERE id=?", (self.downloader.id,))
-        reloaded = self.reload_object(self.downloader)
         # setup_restored sets some values for status, so we will have more
         # than an empty dict
-        self.assertEquals(reloaded.status,
-                {'rate': 0, 'upRate': 0, 'eta': 0})
+        self.check_fixed_value(self.downloader, 'status',
+                {'rate': 0, 'upRate': 0, 'eta': 0}, disk_value={})
 
     def test_corrupt_feedparser_output(self):
         app.db.cursor.execute("UPDATE item "
                 "SET feedparser_output='{baddata' WHERE id=?", (self.item.id,))
-        reloaded = self.reload_object(self.item)
-        self.assertEquals(reloaded.feedparser_output, {})
+        self.check_fixed_value(self.item, 'feedparser_output', {})
 
     def test_corrupt_etag(self):
         app.db.cursor.execute("UPDATE rss_multi_feed_impl "
                 "SET etag='{baddata' WHERE ufeed_id=?", (self.feed.id,))
-        reloaded = self.reload_object(self.feed.actualFeed)
-        self.assertEquals(reloaded.etag, {})
+        self.check_fixed_value(self.feed.actualFeed, 'etag', {})
 
     def test_corrupt_modified(self):
         app.db.cursor.execute("UPDATE rss_multi_feed_impl "
                 "SET modified='{baddata' WHERE ufeed_id=?", (self.feed.id,))
-        reloaded = self.reload_object(self.feed.actualFeed)
-        self.assertEquals(reloaded.modified, {})
+        self.check_fixed_value(self.feed.actualFeed, 'modified', {})
 
     def test_corrupt_tab_ids(self):
         app.db.cursor.execute("UPDATE taborder_order "
                 "SET tab_ids='[1, 2; 3 ]' WHERE id=?", (self.tab_order.id,))
         reloaded = self.reload_object(self.tab_order)
+        self.check_fixed_value(reloaded, 'tab_ids', [])
+        # check that restore_tab_list() re-adds the tab ids
         reloaded.restore_tab_list()
-        self.assertEquals(reloaded.tab_ids, [self.feed.id])
+        self.check_fixed_value(reloaded, 'tab_ids', [self.feed.id])
 
     def test_corrupt_allowed_urls(self):
         app.db.cursor.execute("UPDATE channel_guide "
                 "SET allowedURLs='[1, 2; 3 ]' WHERE id=?", (self.guide.id,))
-        reloaded = self.reload_object(self.guide)
-        self.assertEquals(reloaded.allowedURLs, [])
+        self.check_fixed_value(self.guide, 'allowedURLs', [])
 
     def test_corrupt_past_themes(self):
         app.db.cursor.execute("UPDATE theme_history "
                 "SET pastThemes='[1, 2; 3 ]' WHERE id=?", (self.theme_hist.id,))
-        reloaded = self.reload_object(self.theme_hist)
-        self.assertEquals(reloaded.pastThemes, [])
+        self.check_fixed_value(self.theme_hist, 'pastThemes', [])
 
     def test_corrupt_list_view_displays(self):
         app.db.cursor.execute("UPDATE widgets_frontend_state "
                 "SET list_view_displays='[1, 2; 3 ]' WHERE id=?",
                 (self.widgets_frontend_state.id,))
-        reloaded = self.reload_object(self.widgets_frontend_state)
-        self.assertEquals(reloaded.list_view_displays, [])
+        self.check_fixed_value(self.widgets_frontend_state,
+                'list_view_displays', [])
 
     def test_corrupt_link_history(self):
         # TODO: should test ScraperFeedIpml.linkHistory, but it's not so easy

@@ -423,17 +423,37 @@ class LiveStorage:
 
     def _restore_object_from_row(self, schema, db_row):
         restored_data = {}
+        columns_to_update = []
+        values_to_update = []
         for (name, schema_item), value in \
                 itertools.izip(schema.fields, db_row):
             try:
                 value = self._converter.from_sql(schema, name, schema_item,
                         value)
-            except:
-                if util.chatter:
-                    logging.warn("error converting %s (%r)", name,
-                            value)
-                raise
+            except StandardError:
+                handler = self._converter.get_malformed_data_handler(schema,
+                        name, schema_item, value)
+                if handler is None:
+                    if util.chatter:
+                        logging.warn("error converting %s (%r)", name, value)
+                    raise
+                try:
+                    value = handler(value)
+                except StandardError:
+                    if util.chatter:
+                        logging.warn("error converting %s (%r)", name, value)
+                    raise
+                columns_to_update.append(name)
+                values_to_update.append(self._converter.to_sql(schema, name,
+                    schema_item, value))
             restored_data[name] = value
+        if columns_to_update:
+            # We are using some values that are different than what's stored
+            # in disk.  Update the database to make things match.
+            setters = ['%s=?' % c for c in columns_to_update]
+            sql = "UPDATE %s SET %s WHERE id=%s" % (schema.table_name,
+                    ', '.join(setters), restored_data['id'])
+            self._execute(sql, values_to_update)
         klass = schema.get_ddb_class(restored_data)
         return klass(restored_data=restored_data)
 
@@ -685,15 +705,14 @@ class SQLiteConverter(object):
             return None
         converter = self._from_sql_converters.get(schema_item.__class__,
                 self._null_convert)
-        try:
-            return converter(value)
-        except Exception, e:
-            handler_name = 'handle_malformed_%s' % name
-            if hasattr(schema, handler_name):
-                handler = getattr(schema, handler_name)
-            else:
-                raise
-            return handler(value)
+        return converter(value)
+
+    def get_malformed_data_handler(self, schema, name, schema_item, value):
+        handler_name = 'handle_malformed_%s' % name
+        if hasattr(schema, handler_name):
+            return getattr(schema, handler_name)
+        else:
+            return None
 
     def _unicode_to_filename(self, value):
         return value.encode('utf-8')
