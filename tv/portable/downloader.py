@@ -262,6 +262,7 @@ class RemoteDownloader(DDBObject):
     def after_changing_status(self):
         global totalDownRate
         global totalUpRate
+        self._recalc_state()
         rates = self._get_rates()
         totalDownRate += rates[0]
         totalUpRate += rates[1]
