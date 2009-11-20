@@ -33,7 +33,7 @@ class LinkedListTestCase(MiroTestCase):
         assert self.list[it1] == 1
         assert self.list[2] == 2
         assert self.list[it2] == 2
-        self.assertRaises(IndexError, lambda: self.list[-1])
+        self.assertRaises(ValueError, lambda: self.list[-1])
         self.assertRaises(IndexError, lambda: self.list[3])
         count = 0
         for x in self.list:
@@ -74,17 +74,17 @@ class LinkedListTestCase(MiroTestCase):
             fail('indexing with a past-the-end iterator should raise IndexError')
         try:
             self.list[-1] = 42
-        except IndexError:
+        except (IndexError, ValueError):
             pass
         else:
-            fail('indexing -1 should raise IndexError')
+            fail('indexing -1 should raise IndexError or ValueError')
 
         try:
             self.list[4] = 42
-        except IndexError:
+        except (IndexError, ValueError):
             pass
         else:
-            fail('indexing beyond the end should raise IndexError')
+            fail('indexing beyond the end should raise IndexError or ValueError')
 
         # Apparently, reassigning values makes this iterator invalid --NN
         #
@@ -145,7 +145,7 @@ class SortedListTestCase(MiroTestCase):
         assert self.list[it1] == 1
         assert self.list[2] == 2
         assert self.list[it2] == 2
-        self.assertRaises(IndexError, lambda: self.list[-1])
+        self.assertRaises(ValueError, lambda: self.list[-1])
         self.assertRaises(IndexError, lambda: self.list[3])
         count = 0
         for x in self.list:
@@ -186,7 +186,7 @@ class SortedListTestCase(MiroTestCase):
             fail('indexing with a past-the-end iterator should raise IndexError')
         try:
             self.list[-1] = 42
-        except IndexError:
+        except (IndexError, ValueError):
             pass
         else:
             fail('indexing -1 should raise IndexError')
