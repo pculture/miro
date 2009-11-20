@@ -26,7 +26,7 @@ development-related links and information are located at::
 
 The latest source can be retrieved via git from::
 
-   git clone https://git.participatoryculture.org/miro
+   git clone http://git.participatoryculture.org/miro
 
 Release notes and changes are listed in the dev wiki at::
 
