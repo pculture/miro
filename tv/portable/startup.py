@@ -206,12 +206,11 @@ def finish_startup(obj, thread):
         raise StartupError(summary, description)
     database.update_last_id()
     end = time.time()
-    logging.timing ("Database upgrade time: %.3f", end - start)
-    databaselog.print_old_log_entries()
+    logging.timing("Database upgrade time: %.3f", end - start)
     if app.db.startup_version != app.db.current_version:
         databaselog.info("Upgraded database from version %s to %s",
                 app.db.startup_version, app.db.current_version)
-
+    databaselog.print_old_log_entries()
     models.initialize()
     if DEBUG_DB_MEM_USAGE:
         util.db_mem_usage_test()

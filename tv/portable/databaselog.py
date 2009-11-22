@@ -28,12 +28,18 @@
 
 """Log events having to do with the database.
 
-The purpose of this module is to help us keep track of the history of a user's
-database.  See #12419 for more info.
+The purpose of this module is to help us keep track of the history of
+a user's database.  This helps us doing customer support and debugging
+weird databases because we have a better idea of the history of that
+database.
 
-Note: We should try hard not to let loops fill up the log file with too much
-junk, or infinitely.  Take a look at item.move_orphaned_items() for one
-technique to avoid this.
+See bug #12419 for more info.
+
+.. note::
+
+    We should try hard not to let loops fill up the log file with too
+    much junk, or infinitely.  Take a look at
+    ``item.move_orphaned_items()`` for one technique to avoid this.
 """
 
 import time
@@ -86,7 +92,7 @@ def print_old_log_entries():
     old_entries = list(DBLogEntry.notable_entries())
     if not old_entries:
         return
-    logging.dblog("-- re-printing old log entries --")
+    logging.dblog("start database log entries")
     for entry in old_entries:
-        logging.dblog(entry.description)
-    logging.dblog("-- done --")
+        logging.dblog("* %s: %s", time.ctime(entry.timestamp), entry.description)
+    logging.dblog("end database log entries")
