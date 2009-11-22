@@ -315,7 +315,7 @@ class RemoteDownloader(DDBObject):
             self.after_changing_status()
 
             if self.get_state() == u'uploading' and not self.manualUpload and self.getUploadRatio() > 1.5:
-                self.stopUpload()
+                self.stop_upload()
 
             self.signal_change(needsSignalItem=needsSignalItem,
                     needsSave=False)
@@ -633,7 +633,7 @@ class RemoteDownloader(DDBObject):
             if self.manualUpload or self.getUploadRatio() < 1.5:
                 self.restart()
             else:
-                self.stopUpload()
+                self.stop_upload()
 
     def restart(self):
         if not self.status or self.status.get('dlerType') is None:
@@ -676,7 +676,7 @@ class RemoteDownloader(DDBObject):
             self.restart()
             self.signal_change()
 
-    def stopUpload(self):
+    def stop_upload(self):
         """
         Stop uploading/seeding and set status as "finished".
         """
@@ -738,7 +738,7 @@ def kill_uploaders(*args):
     torrent_limit = config.get(prefs.UPSTREAM_TORRENT_LIMIT)
     auto_uploads = list(RemoteDownloader.auto_uploader_view())
     for dler in auto_uploads[torrent_limit:]:
-        dler.stopUpload()
+        dler.stop_upload()
 
 def config_change_uploaders(key, value):
     if key == prefs.UPSTREAM_TORRENT_LIMIT.key:

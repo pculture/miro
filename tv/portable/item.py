@@ -901,9 +901,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             return self.downloader.state
 
-    def stopUpload(self):
+    def stop_upload(self):
         if self.downloader:
-            self.downloader.stopUpload()
+            self.downloader.stop_upload()
             if self.isContainerItem:
                 self.children_signal_change()
 
@@ -939,16 +939,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                               ceil(offset.seconds/60.0),
                               {"count": ceil(offset.seconds/60.0)})
         return result
-
-    def getUandA(self):
-        """Get whether this item is new, or newly-downloaded, or neither."""
-        state = self.get_state()
-        if state == u'new':
-            return (0, 1)
-        elif state == u'newly-downloaded':
-            return (1, 0)
-        else:
-            return (0, 0)
 
     def get_expiration_time(self):
         """Returns the time when this item should expire.
@@ -1064,11 +1054,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             self.recalc_feed_counts()
 
     @returnsUnicode
-    def getRSSID(self):
+    def get_rss_id(self):
         self.confirm_db_thread()
         return self.rss_id
 
-    def removeRSSID(self):
+    def remove_rss_id(self):
         self.confirm_db_thread()
         self.rss_id = None
         self.signal_change()
@@ -1814,7 +1804,7 @@ class FileItem(Item):
         if self.has_parent():
             dler = self.get_parent().downloader
             if dler is not None and not dler.child_deleted:
-                dler.stopUpload()
+                dler.stop_upload()
                 dler.child_deleted = True
                 dler.signal_change()
                 for sibling in self.get_parent().getChildren():

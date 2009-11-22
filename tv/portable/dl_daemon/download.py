@@ -119,7 +119,7 @@ def stopDownload(dlid, delete):
         return True
     return download.stop(delete)
 
-def stopUpload(dlid):
+def stop_upload(dlid):
     try:
         _lock.acquire()
         try:
@@ -133,7 +133,7 @@ def stopUpload(dlid):
         raise
     except: # There is no download with this id
         return
-    return download.stopUpload()
+    return download.stop_upload()
 
 def pauseUpload(dlid):
     try:
@@ -831,7 +831,7 @@ class HTTPDownloader(BGDownloader):
         self.state = "stopped"
         self.updateClient()
 
-    def stopUpload(self):
+    def stop_upload(self):
         # HTTP downloads never upload.
         pass
 
@@ -983,7 +983,7 @@ class BTDownloader(BGDownloader):
         if config.get(prefs.LIMIT_UPLOAD_RATIO):
             if status.state == lt.torrent_status.states.seeding:
                 if float(self.uploaded)/self.totalSize > config.get(prefs.UPLOAD_RATIO):
-                    self.stopUpload()
+                    self.stop_upload()
 
     def handleError(self, shortReason, reason):
         self._shutdownTorrent()
@@ -1050,7 +1050,7 @@ class BTDownloader(BGDownloader):
             except:
                 pass
 
-    def stopUpload(self):
+    def stop_upload(self):
         self.state = "finished"
         self._shutdownTorrent()
         self.updateClient()

@@ -1379,7 +1379,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         for item in self.items:
             old_items.add(item)
             try:
-                items_byid[item.getRSSID()] = item
+                items_byid[item.get_rss_id()] = item
             except KeyError:
                 items_nokey.append(item)
             by_url_title_key = (item.url, item.entry_title)
@@ -2370,7 +2370,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
                 for item in dl.itemList:
                     if item.get_feed_url() == 'dtv:searchDownloads' and item.get_url() == url:
                         try:
-                            if entry["id"] == item.getRSSID():
+                            if entry["id"] == item.get_rss_id():
                                 item.setFeed(self.ufeed.id)
                                 if not fp_values.compare_to_item(item):
                                     item.update_from_feed_parser_values(fp_values)
