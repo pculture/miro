@@ -220,9 +220,9 @@ def finish_startup(obj, thread):
     setup_global_feeds()
     # call move_orphaned_items() ASAP after the manual feed is set up
     item.move_orphaned_items()
-    logging.info("setup tabs")
+    logging.info("setup tabs...")
     setup_tabs()
-    logging.info(" theme")
+    logging.info("setup theme...")
     setup_theme()
     install_message_handler()
 
