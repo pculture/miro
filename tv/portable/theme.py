@@ -34,7 +34,7 @@ import logging
 from miro import config
 from miro import prefs
 import os
-from miro.eventloop import asUrgent
+from miro.eventloop import as_urgent
 from miro.database import DDBObject, ObjectNotFoundError
 from miro import opml
 from miro.plat import resources
@@ -73,7 +73,7 @@ class ThemeHistory(DDBObject):
             self.lastTheme = self.theme
             self.on_theme_change()
 
-    @asUrgent
+    @as_urgent
     def on_theme_change(self):
         if self.theme is None: # vanilla Miro
             guideURL = config.get(prefs.CHANNEL_GUIDE_URL)
@@ -159,7 +159,7 @@ class ThemeHistory(DDBObject):
                 d_feed.section = section
                 d_feed.signal_change()
 
-    @asUrgent
+    @as_urgent
     def _install_default_feeds(self):
         logging.info("Adding default feeds")
         default_video_feeds = []

@@ -1079,7 +1079,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             self.autoDownloaded = autodl
             self.signal_change()
 
-    @eventloop.asIdle
+    @eventloop.as_idle
     def set_resume_time(self, position):
         if not self.idExists():
             return

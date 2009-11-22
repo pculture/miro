@@ -55,7 +55,7 @@ class Exporter(object):
         self.io = StringIO()
         self.currentFolder = None
 
-    @eventloop.asIdle
+    @eventloop.as_idle
     def export_subscriptions(self, pathname):
         now = datetime.now()
 
@@ -167,7 +167,7 @@ class Importer(object):
         self.importedFeeds = 0
         self.addedChannels = 0
 
-    @eventloop.asIdle
+    @eventloop.as_idle
     def import_subscriptions(self, pathname, showSummary=True):
         f = open(pathname, "r")
         content = f.read()

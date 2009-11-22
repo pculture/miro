@@ -460,12 +460,12 @@ def threadPoolQuit():
 def threadPoolInit():
     _eventLoop.threadPool.initThreads()
 
-def asIdle(func):
+def as_idle(func):
     """Decorator to make a methods run as an idle function
 
     Suppose you have 2 methods, foo and bar
 
-    @asIdle
+    @as_idle
     def foo():
         # database operations
 
@@ -476,14 +476,17 @@ def asIdle(func):
     """
 
     def queuer(*args, **kwargs):
-        return addIdle(func, "%s() (using asIdle)" % func.__name__, args=args, kwargs=kwargs)
+        return addIdle(func, "%s() (using as_idle)" % func.__name__, 
+                       args=args, kwargs=kwargs)
     return queuer
 
-def asUrgent(func):
-    """Like asIdle, but uses addUrgentCall() instead of addIdle()."""
-
+def as_urgent(func):
+    """Like ``as_idle``, but uses ``addUrgentCall()`` instead of
+    ``addIdle()``.
+    """
     def queuer(*args, **kwargs):
-        return addUrgentCall(func, "%s() (using asUrgent)" % func.__name__, args=args, kwargs=kwargs)
+        return addUrgentCall(func, "%s() (using as_urgent)" % func.__name__, 
+                             args=args, kwargs=kwargs)
     return queuer
 
 def checkHeapSize():

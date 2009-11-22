@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from miro.eventloop import asIdle
+from miro.eventloop import as_idle
 import os.path
 import re
 import subprocess
@@ -180,7 +180,7 @@ class MovieDataUpdater:
         else:
             return -1
 
-    @asIdle
+    @as_idle
     def update_finished(self, item, duration, screenshot):
         if item.idExists():
             item.duration = duration
