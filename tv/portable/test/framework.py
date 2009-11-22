@@ -53,10 +53,10 @@ class DummyMainFrame:
         pass
 
 class DummyVideoDisplay:
-    def fileDuration (self, filename, callback):
+    def fileDuration(self, filename, callback):
         pass
 
-    def fillMovieData (self, filename, movie_data, callback):
+    def fillMovieData(self, filename, movie_data, callback):
         pass
 
 class DummyGlobalFeed:
@@ -71,21 +71,6 @@ class DummyController:
     def get_global_feed(self, url):
         return DummyGlobalFeed()
 
-class LogFilter(logging.Filter):
-    def __init__(self):
-        self.allow = False
-        self.records = []
-
-    def filter(self, record):
-        if not self.allow:
-            raise AssertionError("We shouldn't see any logging")
-        else:
-            self.records.append(record)
-            return False
-
-    def forget_records(self):
-        self.records = []
-
 class MiroTestCase(unittest.TestCase):
     def setUp(self):
         models.initialize()
@@ -94,8 +79,9 @@ class MiroTestCase(unittest.TestCase):
         database.ViewTracker.reset_trackers()
         app.db = None
         self.reload_database()
-        searchengines._engines = [ searchengines.SearchEngineInfo(u"all",
-           u"Search All", u"", -1) ]
+        searchengines._engines = [
+            searchengines.SearchEngineInfo(u"all", u"Search All", u"", -1)
+            ]
         # reset the event loop
         util.chatter = False
         self.sawError = False
@@ -103,12 +89,6 @@ class MiroTestCase(unittest.TestCase):
         signals.system.connect('error', self.handle_error)
         app.controller = DummyController()
         self.temp_files = []
-        self.log_filter = LogFilter()
-        logger = logging.getLogger()
-        logger.setLevel(logging.DEBUG)
-        for old_filter in logger.filters:
-            logger.removeFilter(old_filter)
-        logger.addFilter(self.log_filter)
 
     def tearDown(self):
         signals.system.disconnect_all()
@@ -131,14 +111,15 @@ class MiroTestCase(unittest.TestCase):
         return filename
 
     def reload_database(self, path=':memory:', schema_version=None,
-            object_schemas=None, upgrade=True):
+                        object_schemas=None, upgrade=True):
         if app.db:
             try:
                 app.db.close()
             except:
                 pass
         app.db = storedatabase.LiveStorage(path,
-                schema_version=schema_version, object_schemas=object_schemas)
+                                           schema_version=schema_version, 
+                                           object_schemas=object_schemas)
         if upgrade:
             app.db.upgrade_database()
             database.update_last_id()
