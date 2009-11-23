@@ -41,12 +41,10 @@ if platform == "osx":
 else:
    MOD = CTRL
 
-class ShortCut:
+class Key:
     def __init__(self, key, *modifiers):
         self.modifiers = modifiers
         self.key = key
-
-Key = ShortCut
 
 class MenuItem:
     def __init__(self, label, action, shortcuts, impl=None, enabled=True, **stateLabels):
