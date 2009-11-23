@@ -50,7 +50,7 @@ class IconCacheUpdater:
         self.runningCount = 0
         self.inShutdown = False
 
-    @eventloop.asIdle
+    @eventloop.as_idle
     def request_update(self, item, is_vital=False):
         if is_vital:
             item.dbItem.confirm_db_thread()
@@ -81,11 +81,11 @@ class IconCacheUpdater:
 
         eventloop.addIdle(item.request_icon, "Icon Request")
 
-    @eventloop.asIdle
+    @eventloop.as_idle
     def clear_vital(self):
         self.vital = LinkedList()
 
-    @eventloop.asIdle
+    @eventloop.as_idle
     def shutdown(self):
         self.inShutdown = True
 

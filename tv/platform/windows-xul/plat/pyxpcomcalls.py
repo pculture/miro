@@ -31,7 +31,7 @@
 
 from xpcom import components
 
-from miro.eventloop import asIdle
+from miro.eventloop import as_idle
 from miro.plat.xulhelper import makeComp
 from miro.util import random_string
 
@@ -47,7 +47,7 @@ def XPCOMifyCallback(callback):
     c.setCallbackId(idstring)
     return c
 
-@asIdle
+@as_idle
 def makeCallback(idstring, value):
     _callbacks[idstring](value)
     del _callbacks[idstring]

@@ -119,7 +119,7 @@ def stopDownload(dlid, delete):
         return True
     return download.stop(delete)
 
-def stopUpload(dlid):
+def stop_upload(dlid):
     try:
         _lock.acquire()
         try:
@@ -133,7 +133,7 @@ def stopUpload(dlid):
         raise
     except: # There is no download with this id
         return
-    return download.stopUpload()
+    return download.stop_upload()
 
 def pauseUpload(dlid):
     try:
@@ -182,6 +182,11 @@ def shutDown():
     torrentSession.shutdown()
 
 def restoreDownloader(downloader):
+    if downloader['dlid'] in _downloads:
+        logging.warn("Not restarting active downloader: %s",
+                downloader['dlid'])
+        return
+
     downloader = copy(downloader)
     dlerType = downloader.get('dlerType')
     if dlerType == u'HTTP':
@@ -826,7 +831,7 @@ class HTTPDownloader(BGDownloader):
         self.state = "stopped"
         self.updateClient()
 
-    def stopUpload(self):
+    def stop_upload(self):
         # HTTP downloads never upload.
         pass
 
@@ -978,7 +983,7 @@ class BTDownloader(BGDownloader):
         if config.get(prefs.LIMIT_UPLOAD_RATIO):
             if status.state == lt.torrent_status.states.seeding:
                 if float(self.uploaded)/self.totalSize > config.get(prefs.UPLOAD_RATIO):
-                    self.stopUpload()
+                    self.stop_upload()
 
     def handleError(self, shortReason, reason):
         self._shutdownTorrent()
@@ -1045,7 +1050,7 @@ class BTDownloader(BGDownloader):
             except:
                 pass
 
-    def stopUpload(self):
+    def stop_upload(self):
         self.state = "finished"
         self._shutdownTorrent()
         self.updateClient()
@@ -1106,9 +1111,10 @@ class BTDownloader(BGDownloader):
     def on_description_data(self, data):
         self.description_chunks.append(data)
         self.description_size += len(data)
-        if self.description_size > MAX_TORRENT_SIZE:
-            # If we get more than 10M of data, something's wrong.  Bailout
-            # here (see #12301 for details)
+        if (self.description_size > MAX_TORRENT_SIZE or
+                self.description_chunks[0][0] != 'd'):
+            # Bailout if we get too much data or it doesn't begin with "d"
+            # (see #12301 for details)
             self.description_client.cancel()
             self.handleCorruptTorrent()
             self._cleanup_description_vars()

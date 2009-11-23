@@ -55,6 +55,5 @@ from miro.test.gtcachetest import *
 from miro.test.iconcachetest import *
 from miro.test.databasetest import *
 from miro.test.itemtest import *
-from miro.test.fasttypestest import *
 
 import miro.test.bmachinetest

@@ -1129,7 +1129,7 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_cancel_all_downloads(self, message):
         for item_ in item.Item.download_tab_view():
             if item_.is_uploading() or item_.is_uploading_paused():
-                item_.stopUpload()
+                item_.stop_upload()
             else:
                 item_.expire()
 
@@ -1163,7 +1163,7 @@ class BackendMessageHandler(messages.MessageHandler):
             elif not item_.is_uploading():
                 logging.warn("%s is already stopped", item_)
             else:
-                item_.stopUpload()
+                item_.stop_upload()
 
     def handle_keep_video(self, message):
         try:

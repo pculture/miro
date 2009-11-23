@@ -305,7 +305,7 @@ class OldItemExpireTest(FeedTestCase):
     def checkGuids(self, *ids):
         actual = set()
         for i in Item.make_view():
-            actual.add(i.getRSSID())
+            actual.add(i.get_rss_id())
         correct = set(['guid-%d' % i for i in ids])
         self.assertEquals(actual, correct)
 
@@ -447,7 +447,7 @@ class FeedParserAttributesTestCase(FeedTestCase):
 
     def test_attributes(self):
         entry = self.parsed_feed.entries[0]
-        self.assertEquals(self.item.getRSSID(), entry.id)
+        self.assertEquals(self.item.get_rss_id(), entry.id)
         self.assertEquals(self.item.get_thumbnail_url(), entry.thumbnail['url'])
         self.assertEquals(self.item.get_title(), entry.title)
         self.assertEquals(self.item.get_raw_description(), entry.description)
@@ -462,9 +462,9 @@ class FeedParserAttributesTestCase(FeedTestCase):
         self.assertEquals(self.item.get_format(), '.mpeg')
 
     def test_remove_rssid(self):
-        self.item.removeRSSID()
+        self.item.remove_rss_id()
         self.save_then_restore_db()
-        self.assertEquals(self.item.getRSSID(), None)
+        self.assertEquals(self.item.get_rss_id(), None)
 
     def test_change_title(self):
         entry = self.parsed_feed.entries[0]

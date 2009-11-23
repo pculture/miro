@@ -65,7 +65,7 @@ class Controller:
         self.newVideosSearchTerm = None
         self.sendingCrashReport = 0
 
-    @eventloop.asUrgent
+    @eventloop.as_urgent
     def shutdown(self):
         logging.info("Shutting down Downloader...")
         downloader.shutdown_downloader(self.downloader_shutdown)

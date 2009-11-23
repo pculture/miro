@@ -168,6 +168,10 @@ def handle_result(duration, success):
         print "Miro-Movie-Data-Thumbnail: Failure"
     sys.exit(0)
 
-extractor = Extractor(sys.argv[1], sys.argv[2], handle_result)
-gtk.gdk.threads_init()
-gtk.main()
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        print "Syntax: gst_extractor.py <filename> <thumbnail>"
+        sys.exit(1)
+    extractor = Extractor(sys.argv[1], sys.argv[2], handle_result)
+    gtk.gdk.threads_init()
+    gtk.main()

@@ -1,4 +1,5 @@
 import os
+import logging
 import unittest
 import tempfile
 import threading
@@ -52,10 +53,10 @@ class DummyMainFrame:
         pass
 
 class DummyVideoDisplay:
-    def fileDuration (self, filename, callback):
+    def fileDuration(self, filename, callback):
         pass
 
-    def fillMovieData (self, filename, movie_data, callback):
+    def fillMovieData(self, filename, movie_data, callback):
         pass
 
 class DummyGlobalFeed:
@@ -78,8 +79,9 @@ class MiroTestCase(unittest.TestCase):
         database.ViewTracker.reset_trackers()
         app.db = None
         self.reload_database()
-        searchengines._engines = [ searchengines.SearchEngineInfo(u"all",
-           u"Search All", u"", -1) ]
+        searchengines._engines = [
+            searchengines.SearchEngineInfo(u"all", u"Search All", u"", -1)
+            ]
         # reset the event loop
         util.chatter = False
         self.sawError = False
@@ -109,14 +111,15 @@ class MiroTestCase(unittest.TestCase):
         return filename
 
     def reload_database(self, path=':memory:', schema_version=None,
-            object_schemas=None, upgrade=True):
+                        object_schemas=None, upgrade=True):
         if app.db:
             try:
                 app.db.close()
             except:
                 pass
         app.db = storedatabase.LiveStorage(path,
-                schema_version=schema_version, object_schemas=object_schemas)
+                                           schema_version=schema_version, 
+                                           object_schemas=object_schemas)
         if upgrade:
             app.db.upgrade_database()
             database.update_last_id()

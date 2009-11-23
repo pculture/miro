@@ -262,6 +262,7 @@ class RemoteDownloader(DDBObject):
     def after_changing_status(self):
         global totalDownRate
         global totalUpRate
+        self._recalc_state()
         rates = self._get_rates()
         totalDownRate += rates[0]
         totalUpRate += rates[1]
@@ -314,7 +315,7 @@ class RemoteDownloader(DDBObject):
             self.after_changing_status()
 
             if self.get_state() == u'uploading' and not self.manualUpload and self.getUploadRatio() > 1.5:
-                self.stopUpload()
+                self.stop_upload()
 
             self.signal_change(needsSignalItem=needsSignalItem,
                     needsSave=False)
@@ -620,14 +621,19 @@ class RemoteDownloader(DDBObject):
             return 0
         return self.status.get('uploaded', 0) / size
     
-    def restartIfNeeded(self):
+    def restart_on_startup_if_needed(self):
+        if _downloads.has_key(self.dlid):
+            # something has caused us to restart already, (for example, the
+            # user selects "resume seeding").  squelch any automatic behaviour
+            # (#12462)
+            return
         if self.get_state() in (u'downloading', u'offline'):
             self.restart()
         if self.get_state() in (u'uploading'):
             if self.manualUpload or self.getUploadRatio() < 1.5:
                 self.restart()
             else:
-                self.stopUpload()
+                self.stop_upload()
 
     def restart(self):
         if not self.status or self.status.get('dlerType') is None:
@@ -670,7 +676,7 @@ class RemoteDownloader(DDBObject):
             self.restart()
             self.signal_change()
 
-    def stopUpload(self):
+    def stop_upload(self):
         """
         Stop uploading/seeding and set status as "finished".
         """
@@ -732,7 +738,7 @@ def kill_uploaders(*args):
     torrent_limit = config.get(prefs.UPSTREAM_TORRENT_LIMIT)
     auto_uploads = list(RemoteDownloader.auto_uploader_view())
     for dler in auto_uploads[torrent_limit:]:
-        dler.stopUpload()
+        dler.stop_upload()
 
 def config_change_uploaders(key, value):
     if key == prefs.UPSTREAM_TORRENT_LIMIT.key:
@@ -759,7 +765,7 @@ class DownloadDaemonStarter(object):
 
     def restart_downloads(self):
         for downloader in self.downloads_at_startup:
-            downloader.restartIfNeeded()
+            downloader.restart_on_startup_if_needed()
 
     def shutdown(self, callback):
         self.shutdown_callback = callback

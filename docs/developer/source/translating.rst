@@ -38,7 +38,7 @@ Testing translations on Linux
 To test out your translation, make sure you get the latest source code
 from git::
 
-   git clone https://git.participatoryculture.org/miro/
+   git clone http://git.participatoryculture.org/miro/
 
 Next, make sure you place your ``.po`` file in ``tv/resources/locale``.
 

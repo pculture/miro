@@ -1,5 +1,8 @@
+import logging
+
 from miro.test.framework import MiroTestCase
 from miro import database
+from miro import databaselog
 from miro import item
 from miro import feed
 from miro import schema
@@ -190,3 +193,62 @@ class DDBObjectTestCase(MiroTestCase):
         self.assertEquals(testobj.changed_attributes, set(['id', 'foo']))
         testobj.bar = 2
         self.assertEquals(testobj.changed_attributes, set(['id', 'foo']))
+
+class LogFilter(logging.Filter):
+    def __init__(self):
+        self.allow = False
+        self.records = []
+
+    def filter(self, record):
+        if not self.allow:
+            raise AssertionError("We shouldn't see any logging")
+        else:
+            self.records.append(record)
+            return False
+
+    def forget_records(self):
+        self.records = []
+
+class DatabaseLoggingTest(MiroTestCase):
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        logger = logging.getLogger()
+        self._log_level = logger.getEffectiveLevel()
+        self._old_filters = logger.filters
+
+        self.log_filter = LogFilter()
+        logger.setLevel(logging.DEBUG)
+        for old_filter in logger.filters:
+            logger.removeFilter(old_filter)
+        logger.addFilter(self.log_filter)
+
+    def tearDown(self):
+        MiroTestCase.tearDown(self)
+        logger = logging.getLogger()
+        logger.setLevel(self._log_level)
+        for old_filter in logger.filters:
+            logger.removeFilter(old_filter)
+        for filter in self._old_filters:
+            logger.addFilter(filter)
+
+    def check_records(self, count):
+        records = self.log_filter.records
+        self.assertEqual(len(records), count)
+        for rec in records:
+            self.assertEqual(rec.levelno, logging.getLevelName('DBLOG'))
+
+    def test_warning_logged(self):
+        self.log_filter.allow = True
+        databaselog.info("message %s", 1)
+        databaselog.debug("message %s", 2)
+        self.check_records(2)
+
+    def test_backlog(self):
+        self.log_filter.allow = True
+        databaselog.info("message %s", 1)
+        databaselog.debug("message %s", 2)
+        self.log_filter.forget_records()
+        databaselog.print_old_log_entries()
+        # should have 3 log entries, 1 header, 1 footer, and the 1 for the
+        # info message
+        self.check_records(3)

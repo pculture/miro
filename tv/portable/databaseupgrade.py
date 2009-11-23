@@ -2392,7 +2392,10 @@ def upgrade100(cursor):
     cursor.execute('SELECT tab_ids FROM taborder_order WHERE type=?',('site',))
     row = cursor.fetchone()
     if row is not None:
-        tab_ids = eval_container(row[0])
+        try:
+            tab_ids = eval_container(row[0])
+        except StandardError:
+            tab_ids = []
         tab_ids.append(next_id)
         cursor.execute('UPDATE taborder_order SET tab_ids=? WHERE type=?',
                        (repr(tab_ids), 'site'))
@@ -2411,7 +2414,12 @@ def upgrade101(cursor):
             "WHERE state = 'stopped'")
     for row in cursor.fetchall():
         id, status = row
-        status = eval_container(status)
+        try:
+            status = eval_container(status)
+        except StandardError:
+            # Not sure what to do here.  I think ignoring is not ideal, but
+            # won't result in anything too bad (BDK)
+            continue
         if status['endTime'] == status['startTime']:
             # For unfinished downloads, unset the filename which got set in
             # upgrade99
@@ -2483,7 +2491,10 @@ def upgrade105(cursor):
     cursor.execute("SELECT id, status FROM remote_downloader")
     for row in cursor.fetchall():
         id, status_repr = row
-        status = eval_container(status_repr)
+        try:
+            status = eval_container(status_repr)
+        except StandardError:
+            status = {}
         metainfo = status.pop('metainfo', None)
         fast_resume_data = status.pop('fastResumeData', None)
         new_status = repr(status)
@@ -2557,3 +2568,7 @@ def upgrade106(cursor):
                 # the TabOrder code is able to recover from missing/extra ids
                 # in its list.  The only bad thing that will happen is the
                 # user's tab order will be changed.
+
+def upgrade107(cursor):
+    cursor.execute("CREATE TABLE db_log_entry ("
+            "id integer, timestamp real, priority integer, description text)")

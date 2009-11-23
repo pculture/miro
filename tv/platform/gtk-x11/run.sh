@@ -29,7 +29,7 @@
 # statement from all source files in the program, then also delete it here.
 
 PYTHON=`which python`
-PYTHON_VERSION=`python -c 'import sys; info=sys.version_info; print "%s.%s" % (info[0], info[1])'`
+PYTHON_VERSION=`${PYTHON} -c 'import sys; info=sys.version_info; print "%s.%s" % (info[0], info[1])'`
 PREFIX=/usr
 export MIRO_SHARE_ROOT=dist/$PREFIX/share/
 export MIRO_RESOURCE_ROOT=dist/$PREFIX/share/miro/resources/

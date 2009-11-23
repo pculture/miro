@@ -50,6 +50,7 @@ from miro.database import DatabaseConstraintError
 from miro.databasehelper import make_simple_get_set
 from miro import app
 from miro import iconcache
+from miro import databaselog
 from miro import downloader
 from miro import config
 from miro import eventloop
@@ -900,9 +901,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             return self.downloader.state
 
-    def stopUpload(self):
+    def stop_upload(self):
         if self.downloader:
-            self.downloader.stopUpload()
+            self.downloader.stop_upload()
             if self.isContainerItem:
                 self.children_signal_change()
 
@@ -938,16 +939,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                               ceil(offset.seconds/60.0),
                               {"count": ceil(offset.seconds/60.0)})
         return result
-
-    def getUandA(self):
-        """Get whether this item is new, or newly-downloaded, or neither."""
-        state = self.get_state()
-        if state == u'new':
-            return (0, 1)
-        elif state == u'newly-downloaded':
-            return (1, 0)
-        else:
-            return (0, 0)
 
     def get_expiration_time(self):
         """Returns the time when this item should expire.
@@ -1063,11 +1054,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             self.recalc_feed_counts()
 
     @returnsUnicode
-    def getRSSID(self):
+    def get_rss_id(self):
         self.confirm_db_thread()
         return self.rss_id
 
-    def removeRSSID(self):
+    def remove_rss_id(self):
         self.confirm_db_thread()
         self.rss_id = None
         self.signal_change()
@@ -1078,7 +1069,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             self.autoDownloaded = autodl
             self.signal_change()
 
-    @eventloop.asIdle
+    @eventloop.as_idle
     def set_resume_time(self, position):
         if not self.idExists():
             return
@@ -1813,7 +1804,7 @@ class FileItem(Item):
         if self.has_parent():
             dler = self.get_parent().downloader
             if dler is not None and not dler.child_deleted:
-                dler.stopUpload()
+                dler.stop_upload()
                 dler.child_deleted = True
                 dler.signal_change()
                 for sibling in self.get_parent().getChildren():
@@ -1898,11 +1889,23 @@ def update_incomplete_movie_data():
 
 def move_orphaned_items():
     manual_feed = models.Feed.get_manual_feed()
+    feedless_items = []
+    parentless_items = []
+
     for item in Item.orphaned_from_feed_view():
         logging.warn("No feed for Item: %s.  Moving to manual", item.id)
         item.setFeed(manual_feed.id)
+        feedless_items.append('%s: %s' % (item.id, item.url))
 
     for item in Item.orphaned_from_parent_view():
         logging.warn("No parent for Item: %s.  Moving to manual", item.id)
         item.parent_id = None
         item.setFeed(manual_feed.id)
+        parentless_items.append('%s: %s' % (item.id, item.url))
+
+    if feedless_items:
+        databaselog.info("Moved items to manual feed because their feed was "
+                "gone: %s", ', '.join(feedless_items))
+    if parentless_items:
+        databaselog.info("Moved items to manual feed because their parent was "
+                "gone: %s", ', '.join(parentless_items))

@@ -28,7 +28,7 @@
 
 """``miro.eventloop`` -- Event loop handler.
 
-This module handles the democracy event loop which is responsible for
+This module handles the miro event loop which is responsible for
 network requests and scheduling.
 
 TODO: handle user setting clock back
@@ -163,7 +163,7 @@ class ThreadPool(object):
     def initThreads(self):
         while len(self.threads) < ThreadPool.THREADS:
             t = threading.Thread(name='ThreadPool - %d' % len(self.threads),
-                    target=self.threadLoop)
+                                 target=self.threadLoop)
             t.setDaemon(True)
             t.start()
             self.threads.append(t)
@@ -205,14 +205,14 @@ class ThreadPool(object):
                 raise
             except:
                 pass
-            
+
 class EventLoop(signals.SignalEmitter):
     def __init__(self):
-        signals.SignalEmitter.__init__(self, 'thread-will-start', 
-                                             'thread-started', 
-                                             'thread-did-start', 
-                                             'begin-loop', 
-                                             'end-loop')
+        signals.SignalEmitter.__init__(self, 'thread-will-start',
+                                       'thread-started',
+                                       'thread-did-start',
+                                       'begin-loop',
+                                       'end-loop')
         self.scheduler = Scheduler()
         self.idleQueue = CallQueue()
         self.urgentQueue = CallQueue()
@@ -253,7 +253,8 @@ class EventLoop(signals.SignalEmitter):
             logging.warn("Error waking up eventloop (%s)", e)
 
     def callInThread(self, callback, errback, function, name, *args, **kwargs):
-        self.threadPool.queueCall(callback, errback, function, name, *args, **kwargs)
+        self.threadPool.queueCall(callback, errback, function, name,
+                                  *args, **kwargs)
 
     def loop(self):
         self.loop_ready.set()
@@ -268,8 +269,8 @@ class EventLoop(signals.SignalEmitter):
             readfds = self.readCallbacks.keys()
             writefds = self.writeCallbacks.keys()
             try:
-                readables, writeables, _ = select.select(readfds, writefds, [],
-                                                         timeout)
+                readables, writeables, _ = select.select(readfds, writefds,
+                                                         [], timeout)
             except select.error, (err, detail):
                 if err == errno.EINTR:
                     logging.warning ("eventloop: %s", detail)
@@ -290,25 +291,28 @@ class EventLoop(signals.SignalEmitter):
     def generateEvents(self, readables, writeables):
         """Generator that creates the list of events that should be dealt with
         on this iteration of the event loop.  This includes all socket
-        read/write callbacks, timeouts and idle calls.  "events" are
-        implemented as functions that should be called with no arguments.
-        """
+        read/write callbacks, timeouts and idle calls.
 
+        "events" are implemented as functions that should be called
+        with no arguments.
+        """
         for callback in self.generateCallbacks(writeables,
-                self.writeCallbacks, self.removedWriteCallbacks):
+                                               self.writeCallbacks,
+                                               self.removedWriteCallbacks):
             yield callback
         for callback in self.generateCallbacks(readables,
-                self.readCallbacks, self.removedReadCallbacks):
+                                               self.readCallbacks,
+                                               self.removedReadCallbacks):
             yield callback
         while self.scheduler.hasPendingTimeout():
             yield self.scheduler.processNextTimeout
         while self.idleQueue.hasPendingIdle():
             yield self.idleQueue.processNextIdle
 
-    def generateCallbacks(self, readyList, map, removed):
+    def generateCallbacks(self, readyList, map_, removed):
         for fd in readyList:
             try:
-                function = map[fd]
+                function = map_[fd]
             except KeyError:
                 # this can happen the write callback removes the read callback
                 # or vise versa
@@ -319,7 +323,7 @@ class EventLoop(signals.SignalEmitter):
                 when = "While talking to the network"
                 def callbackEvent():
                     if not trapcall.trap_call(when, function):
-                        del map[fd] 
+                        del map_[fd]
                 yield callbackEvent
 
     def quit(self):
@@ -369,17 +373,17 @@ def stopHandlingSocket(socket):
 
 def addTimeout(delay, function, name, args=None, kwargs=None):
     """Schedule a function to be called at some point in the future.
-    Returns a DelayedCall object that can be used to cancel the call.
+    Returns a ``DelayedCall`` object that can be used to cancel the
+    call.
     """
-
     dc = _eventLoop.scheduler.addTimeout(delay, function, name, args, kwargs)
     return dc
 
 def addIdle(function, name, args=None, kwargs=None):
     """Schedule a function to be called when we get some spare time.
-    Returns a DelayedCall object that can be used to cancel the call.
+    Returns a ``DelayedCall`` object that can be used to cancel the
+    call.
     """
-
     dc = _eventLoop.idleQueue.addIdle(function, name, args, kwargs)
     _eventLoop.wakeup()
     return dc
@@ -389,7 +393,6 @@ def addUrgentCall(function, name, args=None, kwargs=None):
     should be used for things like GUI actions, where the user is waiting on
     us.
     """
-
     dc = _eventLoop.urgentQueue.addIdle(function, name, args, kwargs)
     _eventLoop.wakeup()
     return dc
@@ -412,7 +415,8 @@ def startup():
         import profile
         def start_loop():
             _eventLoop.loop()
-        profile.runctx('_eventLoop.loop()', globals(), locals(), profile_file + ".event_loop")
+        profile.runctx('_eventLoop.loop()', globals(), locals(),
+                       profile_file + ".event_loop")
 
     global lt
     if profile_file:
@@ -432,18 +436,6 @@ def quit():
     _eventLoop.quit()
     _eventLoop.wakeup()
 
-def finished():
-    """Returns True if the eventloop is done with it's work and has quit, or
-    is about to quit.
-    """
-
-    if _eventLoop.quitFlag:
-        # call wakeup() as a precaution to make sure we really are quitting.
-        _eventLoop.wakeup() 
-        return True
-    else:
-        return False
-
 def connect(signal, callback):
     _eventLoop.connect(signal, callback)
 
@@ -460,12 +452,12 @@ def threadPoolQuit():
 def threadPoolInit():
     _eventLoop.threadPool.initThreads()
 
-def asIdle(func):
+def as_idle(func):
     """Decorator to make a methods run as an idle function
 
     Suppose you have 2 methods, foo and bar
 
-    @asIdle
+    @as_idle
     def foo():
         # database operations
 
@@ -474,21 +466,19 @@ def asIdle(func):
 
     Then calling foo() is exactly the same as calling addIdle(bar).
     """
-
     def queuer(*args, **kwargs):
-        return addIdle(func, "%s() (using asIdle)" % func.__name__, args=args, kwargs=kwargs)
+        return addIdle(func, "%s() (using as_idle)" % func.__name__,
+                       args=args, kwargs=kwargs)
     return queuer
 
-def asUrgent(func):
-    """Like asIdle, but uses addUrgentCall() instead of addIdle()."""
-
+def as_urgent(func):
+    """Like ``as_idle``, but uses ``addUrgentCall()`` instead of
+    ``addIdle()``.
+    """
     def queuer(*args, **kwargs):
-        return addUrgentCall(func, "%s() (using asUrgent)" % func.__name__, args=args, kwargs=kwargs)
+        return addUrgentCall(func, "%s() (using as_urgent)" % func.__name__,
+                             args=args, kwargs=kwargs)
     return queuer
-
-def checkHeapSize():
-    logging.info ("Heap size: %d.", len(_eventLoop.scheduler.heap))
-    addTimeout(5, checkHeapSize, "Check Heap Size")
 
 def idle_iterate(func, name, args=None, kwargs=None):
     """Iterate over a generator function using addIdle for each iteration.
@@ -496,19 +486,18 @@ def idle_iterate(func, name, args=None, kwargs=None):
     This allows long running functions to be split up into distinct steps,
     after each step other idle functions will have a chance to run.
 
-    For example:
+    For example::
 
-    def foo(x, y, z):
-        # do some computation
-        yield
-        # more computation
-        yield
-        # more computation
-        yield
+        def foo(x, y, z):
+            # do some computation
+            yield
+            # more computation
+            yield
+            # more computation
+            yield
 
-    eventloop.idle_iterate(foo, 'Foo', args=(1, 2, 3))
+        eventloop.idle_iterate(foo, 'Foo', args=(1, 2, 3))
     """
-
     if args is None:
         args = ()
     if kwargs is None:
@@ -523,12 +512,14 @@ def _idle_iterate_step(iter, name):
         return
     else:
         if rv is not None:
-            logging.warn("idle_iterate yield value ignored: %s (%s)", 
+            logging.warn("idle_iterate yield value ignored: %s (%s)",
                     rv, name)
         addIdle(_idle_iterate_step, name, args=(iter, name))
 
 def idle_iterator(func):
-    """Decorator to wrap a generator function in a idle_iterate() call."""
+    """Decorator to wrap a generator function in a ``idle_iterate()``
+    call.
+    """
     def queuer(*args, **kwargs):
         return idle_iterate(func, "%s() (using idle_iterator)" % func.__name__, args=args, kwargs=kwargs)
     return queuer

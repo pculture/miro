@@ -44,7 +44,10 @@ The ``master`` branch is where new development occurs.  Other branches
 hold research and development related changes or changes that are
 being pulled together for a bugfix release.
 
-The git repository is at https://git.participatoryculture.org/miro/ .
+The git repository is at http://git.participatoryculture.org/miro/ .  You can
+get it by doing::
+
+    git clone http://git.participatoryculture.org/miro/
 
 
 Documentation

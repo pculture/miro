@@ -50,6 +50,7 @@ from miro import autoupdate
 from miro import config
 from miro import controller
 from miro import database
+from miro import databaselog
 from miro import databaseupgrade
 from miro import downloader
 from miro import eventloop
@@ -205,8 +206,11 @@ def finish_startup(obj, thread):
         raise StartupError(summary, description)
     database.update_last_id()
     end = time.time()
-    logging.timing ("Database upgrade time: %.3f", end - start)
-
+    logging.timing("Database upgrade time: %.3f", end - start)
+    if app.db.startup_version != app.db.current_version:
+        databaselog.info("Upgraded database from version %s to %s",
+                app.db.startup_version, app.db.current_version)
+    databaselog.print_old_log_entries()
     models.initialize()
     if DEBUG_DB_MEM_USAGE:
         util.db_mem_usage_test()
@@ -216,9 +220,9 @@ def finish_startup(obj, thread):
     setup_global_feeds()
     # call move_orphaned_items() ASAP after the manual feed is set up
     item.move_orphaned_items()
-    logging.info("setup tabs")
+    logging.info("setup tabs...")
     setup_tabs()
-    logging.info(" theme")
+    logging.info("setup theme...")
     setup_theme()
     install_message_handler()
 
@@ -404,9 +408,14 @@ def _get_theme_history():
 def clear_icon_cache_orphans():
     # delete icon_cache rows from the database with no associated
     # item/feed/guide.
+    removed_objs = []
     for ic in iconcache.IconCache.orphaned_view():
         logging.warn("No object for IconCache: %s.  Discarding", ic)
         ic.remove()
+        removed_objs.append(str(ic.url))
+    if removed_objs:
+        databaselog.info("Removed IconCache objects without an associated "
+                "db object: %s", ','.join(removed_objs))
     yield None
 
     # delete files in the icon cache directory that don't belong to IconCache

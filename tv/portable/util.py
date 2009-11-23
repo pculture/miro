@@ -64,7 +64,7 @@ PREFERRED_TYPES = [
 PREFERRED_TYPES_ORDER = dict((type, i) for i, type in
         enumerate(PREFERRED_TYPES))
 
-MAX_TORRENT_SIZE = 10 * (2**20)
+MAX_TORRENT_SIZE = 500 * (2**10) # 500k
 
 def get_nice_stack():
     """Get a stack trace that's a easier to read that the full one."""
@@ -233,13 +233,16 @@ def make_dummy_socket_pair():
 
 def get_torrent_info_hash(path):
     if os.path.getsize(path) > MAX_TORRENT_SIZE:
-        # if the file is larger than 10M, bail out.  (see #12301)
+        # file is too large, bailout.  (see #12301)
         raise ValueError("%s is not a valid torrent" % path)
 
     import libtorrent as lt
     f = open(path, 'rb')
     try:
         data = f.read()
+        if data[0] != 'd':
+            # File doesn't start with 'd', bailout  (see #12301)
+            raise ValueError("%s is not a valid torrent" % path)
         metainfo = lt.bdecode(data)
         try:
             infohash = metainfo['info']
@@ -426,6 +429,9 @@ def setup_logging():
     logging.timing = lambda msg, *args, **kargs: logging.log(25, msg, *args, **kargs)
     logging.addLevelName(26, "JSALERT")
     logging.jsalert = lambda msg, *args, **kargs: logging.log(26, msg, *args, **kargs)
+
+    logging.addLevelName(21, "DBLOG")
+    logging.dblog = lambda msg, *args, **kargs: logging.log(21, msg, *args, **kargs)
 
 class MiroUnicodeError(StandardError):
     """Returned when input to a template function isn't unicode

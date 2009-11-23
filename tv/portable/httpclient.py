@@ -1153,7 +1153,7 @@ class HTTPConnection(ConnectionHandler):
 
     # This needs to be in an idle so that the connection is added
     # to the "active" list before the open callback happens --NN
-    @eventloop.asIdle
+    @eventloop.as_idle
     def maybeSendReadyCallback(self):
         if (self.readyCallback and self.canSendRequest() and not
                 self.sentReadyCallback):

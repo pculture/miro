@@ -47,6 +47,7 @@ from miro.httpclient import grabURL
 from miro import app
 from miro import config
 from miro import iconcache
+from miro import databaselog
 from miro import dialogs
 from miro import download_utils
 from miro import eventloop
@@ -1378,7 +1379,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         for item in self.items:
             old_items.add(item)
             try:
-                items_byid[item.getRSSID()] = item
+                items_byid[item.get_rss_id()] = item
             except KeyError:
                 items_nokey.append(item)
             by_url_title_key = (item.url, item.entry_title)
@@ -2369,7 +2370,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
                 for item in dl.itemList:
                     if item.get_feed_url() == 'dtv:searchDownloads' and item.get_url() == url:
                         try:
-                            if entry["id"] == item.getRSSID():
+                            if entry["id"] == item.get_rss_id():
                                 item.setFeed(self.ufeed.id)
                                 if not fp_values.compare_to_item(item):
                                     item.update_from_feed_parser_values(fp_values)
@@ -2609,12 +2610,17 @@ def get_feed_by_url(url):
         return None
 
 def remove_orphaned_feed_impls():
+    removed_impls = []
     for klass in (FeedImpl, RSSFeedImpl, RSSMultiFeedImpl,
             ScraperFeedImpl, SearchFeedImpl, DirectoryFeedImpl,
             DirectoryWatchFeedImpl, SearchDownloadsFeedImpl,):
         for feed_impl in klass.orphaned_view():
             logging.warn("No feed for FeedImpl: %s.  Discarding", feed_impl)
             feed_impl.remove()
+            removed_impls.append(feed_impl.url)
+    if removed_impls:
+        databaselog.info("Removed FeedImpl objects without a feed: %s",
+                ','.join(removed_impls))
 
 restored_feeds = []
 def start_updates():
