@@ -73,8 +73,9 @@ def translate_gtk_event(event):
     """Convert a GTK key event into the tuple (key, modifiers) where key and
     modifiers are from the portable menubar module.
     """
-
     gtk_keyval = gtk.gdk.keyval_name(event.keyval)
+    if gtk_keyval == None:
+        return None
     if len(gtk_keyval) == 1:
         key = gtk_keyval
     else:
