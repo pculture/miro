@@ -162,6 +162,7 @@ class Renderer:
                     self.select_callbacks is not None):
                 self.select_callbacks[0]()
                 self.select_callbacks = None
+                self.finish_select_file()
         elif message.type == gst.MESSAGE_EOS:
             app.playback_manager.on_movie_finished()
 
@@ -171,6 +172,9 @@ class Renderer:
         self.select_callbacks = (callback, errback)
         self.playbin.set_property("uri", "file://%s" % filename)
         self.playbin.set_state(gst.STATE_PAUSED)
+
+    def finish_select_file(self):
+        pass
 
     def get_current_time(self):
         try:
@@ -318,6 +322,33 @@ class VideoRenderer(Renderer):
     def exit_fullscreen(self):
         """Handle when the video window exits fullscreen mode."""
         logging.debug("haven't implemented exit_fullscreen method yet!")
+
+    def finish_select_file(self):
+        if config.get(prefs.ENABLE_SUBTITLES):
+            default_track = self.get_enabled_subtitle_track()
+            if default_track is None:
+                tracks = self.get_subtitle_tracks()
+                if len(tracks) > 0:
+                    self.enable_subtitle_track(tracks[0])
+        else:
+            self.disable_subtitles()
+
+    def get_subtitle_tracks(self):
+        tracks = list()
+        # TODO: implement me
+        return tracks
+
+    def get_enabled_subtitle_track(self):
+        # TODO: implement me
+        return None
+
+    def enable_subtitle_track(self, track):
+        # TODO: implement me
+        pass
+
+    def disable_subtitles(self):
+        # TODO: implement me
+        pass
 
 class AudioRenderer(Renderer):
     pass
