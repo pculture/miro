@@ -106,7 +106,10 @@ class WrappedWindow(gtk.Window):
         wrappermap.wrapper(self).emit('active-change')
 
     def do_key_press_event(self, event):
-        key, modifiers = keymap.translate_gtk_event(event)
+        ret = keymap.translate_gtk_event(event)
+        if ret == None:
+            return gtk.Window.do_key_press_event(self, event)
+        key, modifiers = ret
         if wrappermap.wrapper(self).emit('key-press', key, modifiers):
             return # handler returned True, don't process the key more
         return gtk.Window.do_key_press_event(self, event)
