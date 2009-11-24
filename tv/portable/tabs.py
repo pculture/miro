@@ -169,8 +169,15 @@ class TabOrder(database.DDBObject):
                 else:
                     folders.setdefault(obj.get_folder().id, []).append(obj.id)
         for folder_id, children in folders.items():
-            self.tab_ids.append(folder_id)
-            self.tab_ids.extend(children)
+            if folder_id in untracked_ids:
+                # folder isn't tracked, add everything to the bottom
+                self.tab_ids.append(folder_id)
+                self.tab_ids.extend(children)
+            else:
+                # folder is tracked, insert the children after the folder
+                pos = self.tab_ids.index(folder_id)
+                self.tab_ids[pos+1:pos+1] = children
+
         self.tab_ids.extend(extras)
         self.signal_change()
 
