@@ -150,12 +150,14 @@ class LiveStorage:
             self._init_database()
 
     def open_connection(self):            
+        logging.info("opening database %s", self.path)
         self.connection = sqlite3.connect(self.path,
                 isolation_level=None,
                 detect_types=sqlite3.PARSE_DECLTYPES)
         self.cursor = self.connection.cursor()
 
     def close(self):
+        logging.info("closing database")
         if self._dc:
             self._dc.cancel()
             self._dc = None
