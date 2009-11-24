@@ -28,12 +28,6 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-# Pyrex version of the DTV object database
-#
-# 09/26/2005 Checked in change that speeds up inserts, but changes
-#            filters so that they no longer keep the order of the
-#            parent view. So, filter before you sort.
-
 import traceback
 import threading
 
@@ -269,8 +263,9 @@ class AttributeUpdateTracker(object):
                 raise
 
     def __set__(self, instance, value):
+        if instance.__dict__.get(self.name, "BOGUS VALUE FOO") != value:
+            instance.changed_attributes.add(self.name)
         instance.__dict__[self.name] = value
-        instance.changed_attributes.add(self.name)
 
 class DDBObject(signals.SignalEmitter):
     """Dynamic Database object
