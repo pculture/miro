@@ -74,6 +74,7 @@ class TabOrder(database.DDBObject):
         """
         self._setup_views()
         self._check_for_non_existent_ids()
+        self._remove_out_of_order_children()
         self._add_untracked_ids()
 
     def _get_tab_views(self):
@@ -173,6 +174,29 @@ class TabOrder(database.DDBObject):
             self.tab_ids.extend(children)
         self.tab_ids.extend(extras)
         self.signal_change()
+
+    def _remove_out_of_order_children(self):
+        """Remove ids for objects that have parents, but aren't ordered
+        correctly relative to them.  (they will get added back in in
+        _add_untracked_ids())
+        """
+
+        current_folder_id = None
+
+        out_of_order_children = []
+
+        for pos, obj in enumerate(self.get_all_tabs()):
+            if obj.get_folder() is None:
+                if isinstance(obj, folder.FolderBase):
+                    current_folder_id = obj.id
+                else:
+                    current_folder_id = None
+            else:
+                if (current_folder_id is None or
+                        obj.get_folder().id != current_folder_id):
+                    out_of_order_children.append(pos)
+        for pos in reversed(out_of_order_children):
+            del self.tab_ids[pos]
 
     def get_all_tabs(self):
         """Get all the tabs in this tab ordering (in order), regardless if
