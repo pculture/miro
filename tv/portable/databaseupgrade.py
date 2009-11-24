@@ -2340,6 +2340,7 @@ def upgrade98(cursor):
 def upgrade99(cursor):
     """Set the filename attribute for downloaded Item objects
     """
+    from miro.plat.utils import filenameToUnicode
     cursor.execute("SELECT id, status from remote_downloader "
             "WHERE state in ('stopped', 'finished', 'uploading', "
             "'uploading-paused')")
@@ -2349,6 +2350,7 @@ def upgrade99(cursor):
                 {'datetime': datetime, 'time': time})
         filename = status.get('filename')
         if filename:
+            filename = filenameToUnicode(filename)
             cursor.execute("UPDATE item SET filename=? WHERE downloader_id=?",
                     (filename, downloader_id))
 
