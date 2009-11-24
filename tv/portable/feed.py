@@ -457,7 +457,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         if self._actualFeed is None:
             for klass in (FeedImpl, RSSFeedImpl, RSSMultiFeedImpl,
                     ScraperFeedImpl, SearchFeedImpl, DirectoryFeedImpl,
-                    DirectoryWatchFeedImpl, SearchDownloadsFeedImpl,):
+                    DirectoryWatchFeedImpl, SearchDownloadsFeedImpl,
+                    ManualFeedImpl, SingleFeedImpl):
                 try:
                     self._actualFeed = klass.get_by_id(self.feed_impl_id)
                     self._actualFeed.ufeed = self
