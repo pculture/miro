@@ -2191,7 +2191,7 @@ def upgrade88(cursor):
 def upgrade89(cursor):
     """Set videoFilename column for downloaded items."""
     import datetime
-    from miro.plat.utils import FilenameType
+    from miro.plat.utils import filenameToUnicode
 
     # for Items, calculate from the downloader
     for row in cursor.execute("SELECT id, downloader_id FROM item "
@@ -2227,8 +2227,7 @@ def upgrade89(cursor):
         filename = status.get('filename')
         if (state in ('stopped', 'finished', 'uploading', 'uploading-paused')
                 and filename):
-            if FilenameType is not unicode:
-                filename = filename.decode('utf-8')
+            filename = filenameToUnicode(filename)
             cursor.execute("UPDATE item SET videoFilename=? WHERE id=?",
                 (filename, item_id))
     # for FileItems, just copy from filename
