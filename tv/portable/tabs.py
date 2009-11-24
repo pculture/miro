@@ -74,6 +74,7 @@ class TabOrder(database.DDBObject):
         """
         self._setup_views()
         self._check_for_non_existent_ids()
+        self._remove_out_of_order_children()
         self._add_untracked_ids()
 
     def _get_tab_views(self):
@@ -148,7 +149,6 @@ class TabOrder(database.DDBObject):
             self.signal_change()
 
     def _add_untracked_ids(self):
-        from miro.folder import FolderBase
         untracked_ids = set(self.id_to_tab.keys()) - set(self.tab_ids)
         if not untracked_ids:
             return
@@ -161,7 +161,7 @@ class TabOrder(database.DDBObject):
             for obj in view:
                 if obj.id not in untracked_ids:
                     continue
-                if isinstance(obj, FolderBase):
+                if isinstance(obj, folder.FolderBase):
                     folders.setdefault(obj.id, [])
                     continue
                 if obj.get_folder() is None:
@@ -169,10 +169,40 @@ class TabOrder(database.DDBObject):
                 else:
                     folders.setdefault(obj.get_folder().id, []).append(obj.id)
         for folder_id, children in folders.items():
-            self.tab_ids.append(folder_id)
-            self.tab_ids.extend(children)
+            if folder_id in untracked_ids:
+                # folder isn't tracked, add everything to the bottom
+                self.tab_ids.append(folder_id)
+                self.tab_ids.extend(children)
+            else:
+                # folder is tracked, insert the children after the folder
+                pos = self.tab_ids.index(folder_id)
+                self.tab_ids[pos+1:pos+1] = children
+
         self.tab_ids.extend(extras)
         self.signal_change()
+
+    def _remove_out_of_order_children(self):
+        """Remove ids for objects that have parents, but aren't ordered
+        correctly relative to them.  (they will get added back in in
+        _add_untracked_ids())
+        """
+
+        current_folder_id = None
+
+        out_of_order_children = []
+
+        for pos, obj in enumerate(self.get_all_tabs()):
+            if obj.get_folder() is None:
+                if isinstance(obj, folder.FolderBase):
+                    current_folder_id = obj.id
+                else:
+                    current_folder_id = None
+            else:
+                if (current_folder_id is None or
+                        obj.get_folder().id != current_folder_id):
+                    out_of_order_children.append(pos)
+        for pos in reversed(out_of_order_children):
+            del self.tab_ids[pos]
 
     def get_all_tabs(self):
         """Get all the tabs in this tab ordering (in order), regardless if
