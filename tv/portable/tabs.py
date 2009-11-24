@@ -149,7 +149,6 @@ class TabOrder(database.DDBObject):
             self.signal_change()
 
     def _add_untracked_ids(self):
-        from miro.folder import FolderBase
         untracked_ids = set(self.id_to_tab.keys()) - set(self.tab_ids)
         if not untracked_ids:
             return
@@ -162,7 +161,7 @@ class TabOrder(database.DDBObject):
             for obj in view:
                 if obj.id not in untracked_ids:
                     continue
-                if isinstance(obj, FolderBase):
+                if isinstance(obj, folder.FolderBase):
                     folders.setdefault(obj.id, [])
                     continue
                 if obj.get_folder() is None:
