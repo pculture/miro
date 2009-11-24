@@ -11,6 +11,7 @@ from miro import databaseupgrade
 from miro import downloader
 from miro import item
 from miro import feed
+from miro import folder
 from miro import frontendstate
 from miro import guide
 from miro import schema
@@ -538,6 +539,45 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
         # TODO: should test ScraperFeedIpml.linkHistory, but it's not so easy
         # to create a ScraperFeedIpml in the unit tests.
         pass
+
+class BadTabOrderTest(StoreDatabaseTest):
+    # Test TabOrder objects with the wrong order
+    def setUp(self):
+        StoreDatabaseTest.setUp(self)
+        self.f1 = feed.Feed(u"http://example.com/1")
+        self.f2 = feed.Feed(u"http://example.com/2")
+        self.folder = folder.ChannelFolder(u'test channel folder')
+        self.tab_order = tabs.TabOrder(u'channel')
+
+    def screw_with_tab_order(self, *tab_ids):
+        app.db.cursor.execute("UPDATE taborder_order "
+                "SET tab_ids=? WHERE id=?",
+                (repr(list(tab_ids)), self.tab_order.id,))
+
+    def check_order(self, *tab_ids):
+        self.tab_order = self.reload_object(self.tab_order)
+        self.tab_order.restore_tab_list()
+        self.assertEqual(self.tab_order.tab_ids, list(tab_ids))
+
+    def test_missing_tab_ids(self):
+        self.screw_with_tab_order(self.f1.id, self.folder.id)
+        self.check_order(self.f1.id, self.folder.id, self.f2.id)
+
+    def test_missing_folder_ids(self):
+        self.screw_with_tab_order(self.f1.id, self.f2.id)
+        self.check_order(self.f1.id, self.f2.id, self.folder.id)
+
+    def test_extra_tab_ids(self):
+        self.screw_with_tab_order(self.f1.id, self.f2.id, self.folder.id, 123)
+        self.check_order(self.f1.id, self.f2.id, self.folder.id)
+
+    def test_order_wrong(self):
+        self.f1.set_folder(self.folder)
+        self.check_order(self.f2.id, self.folder.id, self.f1.id)
+        # f1 should follow it's parent, check that we fix things if that's not
+        # true
+        self.screw_with_tab_order(self.f1.id, self.f2.id, self.folder.id)
+        self.check_order(self.f2.id, self.folder.id, self.f1.id)
 
 if __name__ == '__main__':
     unittest.main()
