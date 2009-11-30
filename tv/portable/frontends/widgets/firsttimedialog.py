@@ -41,13 +41,14 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.utils import filenameToUnicode, FilenameType
+from miro.plat.resources import get_default_search_dir
 
 import os
 
 def _get_user_media_directory():
     """Returns the user's media directory.
     """
-    return os.path.expanduser("~/")
+    return get_default_search_dir()
 
 def _build_title(text):
     """Builds and returns a title widget for the panes in the
@@ -202,6 +203,7 @@ class FirstTimeDialog(widgetset.Window):
                 self.search_directory = dir_
             else:
                 self.search_directory = _get_user_media_directory()
+
         change_button.connect('clicked', handle_change_clicked)
 
         v.pack_start(group_box)
