@@ -127,3 +127,6 @@ def get_osname():
     osname.append(" ".join(platform.dist("Unknown", "Unknown", "Unknown")[0:2]))
     osname = "; ".join([_clean_piece(s) for s in osname])
     return osname
+
+def get_default_search_dir():
+    return os.path.expanduser("~/")
