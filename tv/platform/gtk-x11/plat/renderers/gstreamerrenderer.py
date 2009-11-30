@@ -38,11 +38,14 @@ pygst.require('0.10')
 import gst
 import gst.interfaces
 import gtk
+GST_PLAY_FLAG_TEXT          = (1 << 2)
+# not sure why this isn't in the gst module, but it's easy to define
 
 from miro import app
 from miro import config
 from miro import prefs
 from miro.download_utils import nextFreeFilename
+from miro.gtcache import gettext as _
 from miro.plat import options
 
 from miro.frontends.widgets.gtk.threads import call_on_ui_thread
@@ -119,8 +122,9 @@ class Renderer:
 
         self.rate = 1.0
         self.select_callbacks = None
+        self.subtitle_map = {}
 
-        self.playbin = gst.element_factory_make("playbin", "player")
+        self.playbin = gst.element_factory_make("playbin2", "player")
         self.bus = self.playbin.get_bus()
         self.bus.add_signal_watch()
         self.bus.enable_sync_message_emission()
@@ -333,22 +337,40 @@ class VideoRenderer(Renderer):
         else:
             self.disable_subtitles()
 
+    def _get_subtitle_track_name(self, index):
+        tag_list = self.playbin.emit("get-text-tags", index)
+        try:
+            return tag_list[gst.TAG_LANGUAGE_CODE]
+        except KeyError:
+            return _("Unknown Language")
+
     def get_subtitle_tracks(self):
+        self.subtitle_map = {}
         tracks = list()
-        # TODO: implement me
+        total_tracks = self.playbin.get_property("n-text")
+        for i in xrange(total_tracks):
+            new_item = self._get_subtitle_track_name(i)
+            self.subtitle_map[new_item] = len(tracks)
+            tracks.append(new_item)
         return tracks
 
     def get_enabled_subtitle_track(self):
-        # TODO: implement me
-        return None
+        track_num = self.playbin.get_property("current-text")
+        return self._get_subtitle_track_name(track_num)
 
     def enable_subtitle_track(self, track):
-        # TODO: implement me
-        pass
+        try:
+            track_num = self.subtitle_map[track]
+        except KeyError:
+            self.disable_subtitles()
+        else:
+            self.playbin.set_property("current-text", track_num)
+            flags = self.playbin.get_property('flags')
+            self.playbin.set_property('flags', flags | GST_PLAY_FLAG_TEXT)
 
     def disable_subtitles(self):
-        # TODO: implement me
-        pass
+        flags = self.playbin.get_property('flags')
+        self.playbin.set_property('flags', flags & ~GST_PLAY_FLAG_TEXT)
 
 class AudioRenderer(Renderer):
     pass
