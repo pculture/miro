@@ -653,6 +653,7 @@ class TabListBox(widgetset.Scroller):
         background.set_background_color((style.TAB_LIST_BACKGROUND_COLOR))
         background.add(self.build_vbox())
         self.add(background)
+        self.set_background_color((style.TAB_LIST_BACKGROUND_COLOR))
 
     def build_vbox(self):
         tlm = app.tab_list_manager
