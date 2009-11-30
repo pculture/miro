@@ -653,10 +653,11 @@ class TabListBox(widgetset.Scroller):
         background.set_background_color((style.TAB_LIST_BACKGROUND_COLOR))
         background.add(self.build_vbox())
         self.add(background)
+        self.set_background_color((style.TAB_LIST_BACKGROUND_COLOR))
 
     def build_vbox(self):
         tlm = app.tab_list_manager
-        self.header_left_pad = 10 #tlm.feed_list.view.get_left_offset()
+        self.header_left_pad = 10
         vbox = widgetset.VBox()
         vbox.pack_start(tlm.static_tab_list.view)
         vbox.pack_start(self.build_header(_('LIBRARY')))
@@ -672,8 +673,6 @@ class TabListBox(widgetset.Scroller):
         return vbox
 
     def build_header(self, text):
-        # hsep = separator.HThinSeparator(style.TAB_LIST_SEPARATOR_COLOR)
-
         label = widgetset.Label(text)
         label.set_bold(True)
         label.set_size(0.85)
