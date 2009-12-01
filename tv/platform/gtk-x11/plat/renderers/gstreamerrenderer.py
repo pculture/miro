@@ -123,7 +123,6 @@ class Renderer:
 
         self.rate = 1.0
         self.select_callbacks = None
-        self.subtitle_map = {}
 
         self.playbin = gst.element_factory_make("playbin2", "player")
         self.bus = self.playbin.get_bus()
@@ -338,43 +337,17 @@ class VideoRenderer(Renderer):
         else:
             self.disable_subtitles()
 
-    def _get_subtitle_track_name(self, index):
-        tag_list = self.playbin.emit("get-text-tags", index)
-        lang = None
-        try:
-            code = tag_list[gst.TAG_LANGUAGE_CODE]
-        except KeyError:
-            pass
-        else:
-            lang = iso_639.find(code, iso_639.THREE_LETTERS_CODE)
-        if lang is None:
-            return _("Unknown Language")
-        else:
-            return lang['name']
-
     def get_subtitle_tracks(self):
-        self.subtitle_map = {}
-        tracks = list()
         total_tracks = self.playbin.get_property("n-text")
-        for i in xrange(total_tracks):
-            new_item = self._get_subtitle_track_name(i)
-            self.subtitle_map[new_item] = len(tracks)
-            tracks.append(new_item)
-        return tracks
+        return range(total_tracks)
 
     def get_enabled_subtitle_track(self):
-        track_num = self.playbin.get_property("current-text")
-        return self._get_subtitle_track_name(track_num)
+        return self.playbin.get_property("current-text")
 
     def enable_subtitle_track(self, track):
-        try:
-            track_num = self.subtitle_map[track]
-        except KeyError:
-            self.disable_subtitles()
-        else:
-            self.playbin.set_property("current-text", track_num)
-            flags = self.playbin.get_property('flags')
-            self.playbin.set_property('flags', flags | GST_PLAY_FLAG_TEXT)
+        flags = self.playbin.get_property('flags')
+        self.playbin.set_properties(flags=flags | GST_PLAY_FLAG_TEXT,
+                current_text=track)
 
     def disable_subtitles(self):
         flags = self.playbin.get_property('flags')
