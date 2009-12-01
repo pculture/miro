@@ -48,17 +48,7 @@ class GTKPref(Pref):
 USE_RENDERER = GTKPref(key="useRenderer",
                        default=u"gstreamer",
                        alias="renderer",
-                       help="Which renderer to use.  (gstreamer, xine)" )
-
-USE_XINE_XV_HACK = GTKPref(key="UseXineXVHack",
-                           default=True,
-                           alias="xine-xvhack",
-                           help="Whether or not to use the Xine xv hack.  (true, false)" )
-
-XINE_DRIVER = GTKPref(key="DefaultXineDriver",
-                      default="xv",
-                      alias="xine-driver",
-                      help="Which Xine driver to use for video.  (auto, xv, xshm)" )
+                       help="Which renderer to use.  (gstreamer, ...)" )
 
 GSTREAMER_IMAGESINK = GTKPref(key="DefaultGstreamerImagesink",
                               default="gconfvideosink",

@@ -73,7 +73,7 @@ group.add_option('--set',
                  dest="set_prefs",
                  metavar="<PREF>",
                  nargs=1,
-                 help="Sets a preference and saves the new value for future Miro runs.  Example: miro --set renderer=xine")
+                 help="Sets a preference and saves the new value for future Miro runs.  Example: miro --set renderer=gstreamer")
 parser.set_defaults(set_prefs=[])
 parser.add_option_group(group)
 
