@@ -112,6 +112,8 @@ class Player(player.Player):
             qtmovie, error = QTMovie.movieWithURL_error_(url, None)
         else:
             qtmovie, error = QTMovie.movieWithURL_error_(url)
+        if qtmovie is None or error is not None:
+            return None
         if not self.can_open_file(qtmovie):
             return None
         return qtmovie
