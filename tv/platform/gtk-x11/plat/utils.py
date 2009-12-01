@@ -192,59 +192,31 @@ def filenameToUnicode(filename, path=None):
     except:
         return filename.decode('ascii', 'replace')
 
-# Takes filename given by the OS and turn it into a FilenameType
-def osFilenameToFilenameType(filename):
-    return FilenameType(filename)
-
-# Takes an array of filenames given by the OS and turn them into a FilenameTypes
-def osFilenamesToFilenameTypes(filenames):
-    return [osFilenameToFilenameType(filename) for filename in filenames]
-
-# Takes a FilenameType and turn it into something the OS accepts.
-def filenameTypeToOSFilename(filename):
-    return filename
-
 @returnsUnicode
-def makeURLSafe(s, safe='/'):
+def make_url_safe(s, safe='/'):
     """Takes in a byte string or a unicode string and does the right thing
     to make a URL
     """
     if isinstance(s, str):
         # quote the byte string
         return urllib.quote(s, safe=safe).decode('ascii')
-    else:
-        try:
-            return urllib.quote(s.encode(locale.getpreferredencoding()), safe=safe).decode('ascii')
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            return s.decode('ascii', 'replace')
+
+    try:
+        return urllib.quote(s.encode(locale.getpreferredencoding()), safe=safe).decode('ascii')
+    except (SystemExit, KeyboardInterrupt):
+        raise
+    except:
+        return s.decode('ascii', 'replace')
 
 @returnsBinary
-def unmakeURLSafe(s):
-    """Undoes makeURLSafe (assuming it was passed a filenameType)
+def unmake_url_safe(s):
+    """Undoes make_url_safe (assuming it was passed a filenameType)
     """
     # unquote the byte string
     checkU(s)
     return urllib.unquote(s.encode('ascii'))
 
-_convert_path_cache = None
-
-@returnsBinary
-def findConvert():
-    global _convert_path_cache
-
-    if _convert_path_cache != None:
-        return _convert_path_cache
-
-    search_path = os.environ.get('PATH', os.defpath)
-    for d in search_path.split(os.pathsep):
-        convert_path = os.path.join(d, 'convert')
-        if os.path.exists(convert_path):
-            _convert_path_cache = convert_path
-    return _convert_path_cache
-
-def pidIsRunning(pid):
+def pid_is_running(pid):
     if pid is None:
         return False
     try:
@@ -253,15 +225,15 @@ def pidIsRunning(pid):
     except OSError, err:
         return err.errno == errno.EPERM
 
-def killProcess(pid):
+def kill_process(pid):
     if pid is None:
         return
-    if pidIsRunning(pid):
+    if pid_is_running(pid):
         try:
             os.kill(pid, signal.SIGTERM)
             for i in xrange(100):
                 time.sleep(.01)
-                if not pidIsRunning(pid):
+                if not pid_is_running(pid):
                     return
             os.kill(pid, signal.SIGKILL)
         except (SystemExit, KeyboardInterrupt):
@@ -269,10 +241,10 @@ def killProcess(pid):
         except:
             logging.exception("error killing download daemon")
 
-def launchDownloadDaemon(oldpid, env):
+def launch_download_daemon(oldpid, env):
     # Use UNIX style kill
-    if oldpid is not None and pidIsRunning(oldpid):
-        killProcess(oldpid)
+    if oldpid is not None and pid_is_running(oldpid):
+        kill_process(oldpid)
 
     environ = os.environ.copy()
     environ['MIRO_FRONTEND'] = options.frontend

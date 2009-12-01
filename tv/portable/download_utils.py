@@ -38,7 +38,7 @@ from miro import util
 from miro import fileutil
 
 from miro.util import checkF, checkU, returnsFilename
-from miro.plat.utils import unicodeToFilename, unmakeURLSafe
+from miro.plat.utils import unicodeToFilename, unmake_url_safe
 from miro.fileutil import expand_filename
 
 URIPattern = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
@@ -121,7 +121,7 @@ def getFileURLPath(url):
     scheme, host, port, path = parseURL(url)
     if scheme != 'file':
         raise ValueError("%r is not a file URL" % url)
-    return unmakeURLSafe(path)
+    return unmake_url_safe(path)
 
 def checkFilenameExtension(filename, contentType):
     """If a filename doesn't have an extension, this tries to find a suitable

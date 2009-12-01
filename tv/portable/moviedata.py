@@ -42,7 +42,7 @@ from miro import prefs
 from miro import signals
 from miro import util
 from miro import fileutil
-from miro.plat.utils import FilenameType, killProcess, movie_data_program_info
+from miro.plat.utils import FilenameType, kill_process, movie_data_program_info
 
 # Time in seconds that we wait for the utility to execute.  If it goes longer
 # than this, we assume it's hung and kill it.
@@ -149,19 +149,19 @@ class MovieDataUpdater:
             time.sleep(SLEEP_DELAY)
             if time.time() - start_time > MOVIE_DATA_UTIL_TIMEOUT:
                 logging.info("Movie data process hung, killing it")
-                self.killProcess(pipe.pid)
+                self.kill_process(pipe.pid)
                 return ''
 
         if self.inShutdown:
             if pipe.poll() is None:
                 logging.info("Movie data process running after shutdown, killing it")
-                self.killProcess(pipe.pid)
+                self.kill_process(pipe.pid)
             return ''
         return pipe.stdout.read()
 
-    def killProcess(self, pid):
+    def kill_process(self, pid):
         try:
-            killProcess(pid)
+            kill_process(pid)
         except (KeyboardInterrupt, SystemExit):
             raise
         except:

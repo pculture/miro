@@ -46,7 +46,7 @@ from AppKit import *
 from miro import prefs
 from miro import config
 from miro.util import returnsUnicode, returnsBinary, checkU, checkB
-from miro.plat.filenames import osFilenameToFilenameType, osFilenamesToFilenameTypes, filenameTypeToOSFilename, FilenameType
+from miro.plat.filenames import os_filename_to_filename_type, filename_type_to_os_filename, FilenameType
 from miro.plat.frontends.widgets.threads import on_ui_thread
 
 # We need to define samefile for the portable code.  Lucky for us, this is
@@ -180,32 +180,34 @@ def filenameToUnicode(filename, path = None):
     checkB(filename)
     return filename.decode('utf-8','replace')
 
-# Takes in a byte string or a unicode string and does the right thing
-# to make a URL
 @returnsUnicode
-def makeURLSafe(string, safe='/'):
+def make_url_safe(string, safe='/'):
+    """Takes in a byte string or a unicode string and does the right thing
+    to make a URL
+    """
     if type(string) == str:
         # quote the byte string
         return urllib.quote(string, safe=safe).decode('ascii')
     else:
         return urllib.quote(string.encode('utf-8','replace'), safe=safe).decode('ascii')
 
-# Undoes makeURLSafe (assuming it was passed a filenameType)
 @returnsBinary
-def unmakeURLSafe(string):
+def unmake_url_safe(string):
+    """Undoes make_url_safe (assuming it was passed a filenameType)
+    """
     # unquote the byte string
-    checkU (string)
+    checkU(string)
     return urllib.unquote(string.encode('ascii'))
 
 # Load the image at source_path, resize it to [width, height] (and use
 # letterboxing if source and destination ratio are different) and save it to
 # dest_path
 def resizeImage(source_path, dest_path, width, height):
-    source_path = filenameTypeToOSFilename(source_path)
+    source_path = filename_type_to_os_filename(source_path)
     source = NSImage.alloc().initWithContentsOfFile_(source_path)
     jpegData = getResizedJPEGData(source, width, height)
     if jpegData is not None:
-        dest_path = filenameTypeToOSFilename(dest_path)
+        dest_path = filename_type_to_os_filename(dest_path)
         destinationFile = open(dest_path, "w")
         try:
             destinationFile.write(jpegData)
@@ -253,7 +255,7 @@ def getMajorOSVersion():
     versionInfo = versionInfo[2].split('.')
     return int(versionInfo[0])
 
-def pidIsRunning(pid):
+def pid_is_running(pid):
     if pid is None:
         return False
     try:
@@ -262,23 +264,23 @@ def pidIsRunning(pid):
     except OSError, err:
         return err.errno == errno.EPERM
 
-def killProcess(pid):
+def kill_process(pid):
     if pid is None:
         return
-    if pidIsRunning(pid):
+    if pid_is_running(pid):
         try:
             os.kill(pid, signal.SIGTERM)
             for i in xrange(100):
                 time.sleep(.01)
-                if not pidIsRunning(pid):
+                if not pid_is_running(pid):
                     return
             os.kill(pid, signal.SIGKILL)
         except:
             logging.exception ("error killing process")
 
 @on_ui_thread
-def launchDownloadDaemon(oldpid, env):
-    killProcess(oldpid)
+def launch_download_daemon(oldpid, env):
+    kill_process(oldpid)
 
     env['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
     env['VERSIONER_PYTHON_PREFER_32_BIT'] = "yes"

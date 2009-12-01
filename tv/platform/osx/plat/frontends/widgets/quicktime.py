@@ -106,7 +106,7 @@ class Player(player.Player):
             errback()
 
     def get_movie_from_file(self, path):
-        osfilename = utils.filenameTypeToOSFilename(path)
+        osfilename = utils.filename_type_to_os_filename(path)
         url = NSURL.fileURLWithPath_(osfilename)
         if utils.get_pyobjc_major_version() == 2:
             qtmovie, error = QTMovie.movieWithURL_error_(url, None)

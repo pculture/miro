@@ -30,17 +30,15 @@ from miro.util import returnsBinary
 
 FilenameType = str
 
-# Takes filename given by Python or the PyObjC bridge and turn it into a FilenameType
 @returnsBinary
-def osFilenameToFilenameType(filename):
+def os_filename_to_filename_type(filename):
+    """Takes filename given by Python or the PyObjC bridge and turn it into a FilenameType
+    """
     if isinstance(filename, str):
         return FilenameType(filename)
-    return filename.encode('utf-8','replace')
+    return filename.encode('utf-8', 'replace')
 
-# Takes an array of filenames given by the OS and turn them into a FilenameTypes
-def osFilenamesToFilenameTypes(filenames):
-    return [osFilenameToFilenameType(filename) for filename in filenames]
-
-# Takes a FilenameType and turn it into something the PyObjC bridge accepts.
-def filenameTypeToOSFilename(filename):
+def filename_type_to_os_filename(filename):
+    """Takes a FilenameType and turn it into something the PyObjC bridge accepts.
+    """
     return filename.decode('utf-8')

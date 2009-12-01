@@ -59,7 +59,7 @@ from miro.playlist import SavedPlaylist
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 from miro.xhtmltools import urlencode
 
-from miro.plat.utils import makeURLSafe
+from miro.plat.utils import make_url_safe
 
 import shutil
 
@@ -926,7 +926,7 @@ class BackendMessageHandler(messages.MessageHandler):
             tracker.send_whole_list = True
 
     def handle_new_watched_folder(self, message):
-        url = u"dtv:directoryfeed:%s" % makeURLSafe(message.path)
+        url = u"dtv:directoryfeed:%s" % make_url_safe(message.path)
         if not get_feed_by_url(url):
             feed.Feed(url)
         else:
