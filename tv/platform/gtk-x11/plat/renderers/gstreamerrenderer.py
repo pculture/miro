@@ -47,7 +47,7 @@ from miro import prefs
 from miro.download_utils import nextFreeFilename
 from miro.gtcache import gettext as _
 from miro.plat import options
-from miro.plat import isocodes
+from miro import iso_639
 
 from miro.frontends.widgets.gtk.threads import call_on_ui_thread
 
@@ -340,10 +340,17 @@ class VideoRenderer(Renderer):
 
     def _get_subtitle_track_name(self, index):
         tag_list = self.playbin.emit("get-text-tags", index)
+        lang = None
         try:
-            return isocodes.lookup(tag_list[gst.TAG_LANGUAGE_CODE])
+            code = tag_list[gst.TAG_LANGUAGE_CODE]
         except KeyError:
+            pass
+        else:
+            lang = iso_639.find(code, iso_639.THREE_LETTERS_CODE)
+        if lang is None:
             return _("Unknown Language")
+        else:
+            return lang['name']
 
     def get_subtitle_tracks(self):
         self.subtitle_map = {}
