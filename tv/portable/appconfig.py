@@ -61,15 +61,15 @@ class AppConfig(object):
                 logging.warn("Error loading theme: %s\n%s", 
                         theme_app_config, traceback.format_exc())
 
-    def get(self, key, useThemeData=True):
-        if useThemeData and key in self.theme_vars:
+    def get(self, key, use_theme_data=True):
+        if use_theme_data and key in self.theme_vars:
             return self.theme_vars[key]
         else:
             return self.default_vars[key]
 
     def __getitem__(self, key):
-        return self.get(key, useThemeData=True)
+        return self.get(key, use_theme_data=True)
 
-    def contains(self, key, useThemeData=True):
-        return ((useThemeData and key in self.theme_vars) or 
+    def contains(self, key, use_theme_data=True):
+        return ((use_theme_data and key in self.theme_vars) or 
                 (key in self.default_vars))

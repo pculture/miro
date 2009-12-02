@@ -87,7 +87,7 @@ def save():
     finally:
         _lock.release()
 
-def get(descriptor, useThemeData=True):
+def get(descriptor, use_theme_data=True):
     _lock.acquire()
     try:
         _check_validity()
@@ -101,16 +101,12 @@ def get(descriptor, useThemeData=True):
                 return value
         elif descriptor.platformSpecific:
             return platformcfg.get(descriptor)
-        if app.configfile.contains(descriptor.key, useThemeData):
-            return app.configfile.get(descriptor.key, useThemeData)
+        if app.configfile.contains(descriptor.key, use_theme_data):
+            return app.configfile.get(descriptor.key, use_theme_data)
         else:
             return descriptor.default
     finally:
         _lock.release()
-
-def get_list(descriptor):
-    # FIXME - this doesn't look used anywhere
-    return [urllib.unquote(i) for i in get(descriptor).split(",") if i]
 
 def set(descriptor, value):
     _lock.acquire()
@@ -122,10 +118,6 @@ def set(descriptor, value):
             _notify_listeners(descriptor.key, value)
     finally:
         _lock.release()
-
-def set_list(descriptor, value):
-    # FIXME - this doesn't look used anywhere
-    set(descriptor, ','.join ([urllib.quote(i) for i in value]))
 
 def _check_validity():
     if _data == None:

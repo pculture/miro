@@ -76,7 +76,7 @@ def add_video(path, single=False):
                 _command_line_videos.add(i)
             return
     correctFeed = feed.Feed.get_manual_feed()
-    file_item = item.FileItem(path, feed_id=correctFeed.getID())
+    file_item = item.FileItem(path, feed_id=correctFeed.get_id())
     file_item.mark_item_seen()
     if _command_line_videos is not None:
         _command_line_videos.add(file_item)
@@ -91,7 +91,7 @@ def add_torrent(path, torrentInfohash):
             if i.downloader.get_state() in ('paused', 'stopped'):
                 i.download()
             return
-    newItem = item.Item(item.get_entry_for_file(path), feed_id=manualFeed.getID())
+    newItem = item.Item(item.get_entry_for_file(path), feed_id=manualFeed.get_id())
     newItem.download()
 
 

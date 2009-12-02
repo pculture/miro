@@ -181,7 +181,7 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
         self.confirm_db_thread()
         self._remove_ids_from_folder()
         if new_folder is not None:
-            self.folder_id = new_folder.getID()
+            self.folder_id = new_folder.get_id()
         else:
             self.folder_id = None
         self.signal_change()

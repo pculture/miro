@@ -687,8 +687,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     def setInlineSearchTerm(self, term):
         self.inlineSearchTerm = term
 
-    def getID(self):
-        return DDBObject.getID(self)
+    def get_id(self):
+        return DDBObject.get_id(self)
 
     def hasError(self):
         self.confirm_db_thread()
@@ -855,7 +855,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         if newFolder is oldFolder:
             return
         if newFolder is not None:
-            self.folder_id = newFolder.getID()
+            self.folder_id = newFolder.get_id()
         else:
             self.folder_id = None
         self.signal_change()
@@ -1235,7 +1235,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             self.download = None
         for item in self.items:
             if moveItemsTo is not None and item.is_downloaded():
-                item.setFeed(moveItemsTo.getID())
+                item.setFeed(moveItemsTo.get_id())
             else:
                 item.remove()
         self.remove_icon_cache()
