@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
+"X-Launchpad-Export-Date: 2009-12-02 16:28+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -30,7 +30,7 @@ msgstr "S'lidhet dot"
 #: ../../portable/httpclient.py:105
 #, python-format
 msgid "Connection Error: %(msg)s"
-msgstr "Gabim në lidhje: %(msg)s"
+msgstr "Gabim në Lidhje: %(msg)s"
 
 #: ../../portable/httpclient.py:111
 msgid "SSL connection error"
@@ -43,27 +43,27 @@ msgstr "Gabim HTTP"
 #: ../../portable/httpclient.py:119
 #, python-format
 msgid "Bad Status Line: %(msg)s"
-msgstr "Rrjesht i keq i gjendjes: %(msg)s"
+msgstr "Rresht i Gabuar Gjendjeje: %(msg)s"
 
 #: ../../portable/httpclient.py:124
 #, python-format
 msgid "Bad Header Line: %(msg)s"
-msgstr "Rrjesht i keq i kokës: %(msg)s"
+msgstr "Rresht i Gabuar Titulli: %(msg)s"
 
 #: ../../portable/httpclient.py:129
 #, python-format
 msgid "Bad Chunk size: %(msg)s"
-msgstr "Masë e keqe e pjesës %(msg)s"
+msgstr "Madhësi e Gabuar Cope: %(msg)s"
 
 #: ../../portable/httpclient.py:134
 #, python-format
 msgid "Expected CRLF got: %(character)r"
-msgstr "Në pritje të CRFL %(character)r"
+msgstr "Pritej CRFL, u mor %(character)r"
 
 #: ../../portable/httpclient.py:139
 #, python-format
 msgid "%(host)s closed connection"
-msgstr "%(host)s mbyllen lidhjen"
+msgstr "%(host)s e mbylli lidhjen"
 
 #: ../../portable/httpclient.py:144 ../../portable/httpclient.py:173
 #: ../../portable/downloader.py:299
@@ -72,12 +72,12 @@ msgstr "Kartela nuk gjendet"
 
 #: ../../portable/httpclient.py:145
 msgid "Got 404 status code"
-msgstr "U morr kod gjendjeje 404"
+msgstr "U mor kod gjendjeje 404"
 
 #: ../../portable/httpclient.py:147
 #, python-format
 msgid "Bad Status Code: %(code)s"
-msgstr "Status i keq kodi: %(code)s"
+msgstr "Kod i Gabuar Gjendjeje: %(code)s"
 
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"
@@ -99,7 +99,7 @@ msgstr "Mbarim kohe"
 #: ../../portable/httpclient.py:163
 #, python-format
 msgid "Connection to %(host)s timed out"
-msgstr "Lidhja tek %(host)s u vonua"
+msgstr "Lidhjes me %(host)s i mbaroi koha"
 
 #: ../../portable/httpclient.py:167
 msgid "Invalid URL"
@@ -108,12 +108,12 @@ msgstr "URL e pavlefshme"
 #: ../../portable/httpclient.py:168
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr "\"%(url)s\" nuk është URL valide"
+msgstr "\"%(url)s\" nuk është URL e vlefshme"
 
 #: ../../portable/httpclient.py:174
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
-msgstr "Skedari \"%(path)s\" nuk ekziston"
+msgstr "Kartela \"%(path)s\" nuk ekziston"
 
 #: ../../portable/httpclient.py:178
 msgid "Read error"
@@ -122,7 +122,7 @@ msgstr "Gabim leximi"
 #: ../../portable/httpclient.py:179
 #, python-format
 msgid "Error while reading from \"%(path)s\""
-msgstr "Gabim gjatë leximit nga \"%(path)s\""
+msgstr "Gabim gjatë leximit prej \"%(path)s\""
 
 #: ../../portable/httpclient.py:376
 msgid "Unknown Error code"
@@ -142,7 +142,7 @@ msgstr "Gabim i Brendshëm: Jo gati për dërgim"
 
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
-msgstr "Udhëzime për Miro"
+msgstr "Udhërrëfyes i Miros"
 
 #: ../../portable/frontends/widgets/statictabs.py:97
 #: ../../portable/frontends/widgets/itemlistcontroller.py:433
@@ -170,23 +170,23 @@ msgstr "Po shkarkohet"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
-msgstr "Shto në Listë"
+msgstr "Shtoni Luajlistë"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
 msgid "Add items to an existing playlist or a new one."
-msgstr "Shto në listën e tanishme ose në një të re."
+msgstr "Shtoni pjesë te një luajlistë ekzistuese ose te një e re."
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
 msgid "Existing playlist:"
-msgstr "Lista Ekzistuese:"
+msgstr "Luajlistë ekzistuese:"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
 msgid "New playlist:"
-msgstr "Listë e re:"
+msgstr "Luajlistë e Re:"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
-msgstr "Hiqe nga libraria"
+msgstr "Hiqe Prej Bibliotekës"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
 #: ../../portable/frontends/widgets/gtk/video.py:246
@@ -204,17 +204,17 @@ msgstr "Luaje"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just This Item"
-msgstr "Luaje vetëm këtë artikull"
+msgstr "Luaj Vetëm Këtë Pjesë"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:96
 #: ../../portable/frontends/widgets/itemcontextmenu.py:192
 msgid "Add to Playlist"
-msgstr "Shto në Listë"
+msgstr "Shtoje te Luajlista"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:99
 #: ../../portable/frontends/widgets/application.py:495
 msgid "Rename Item"
-msgstr "Riemëro skedarin"
+msgstr "Riemërto Objektin"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:101
 msgid "Revert Item Name"
@@ -223,12 +223,12 @@ msgstr "Rikthe Emrin e Objektit"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:103
 #: ../../portable/frontends/widgets/itemcontextmenu.py:199
 msgid "Mark as Unplayed"
-msgstr "Shënjoje si të paluajtur"
+msgstr "Shënoje si të Paluajtur"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:106
 #: ../../portable/frontends/widgets/itemcontextmenu.py:204
 msgid "Mark as Played"
-msgstr "Shënjoje si të luajtur"
+msgstr "Shënoje si të Luajtur"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:210
@@ -243,11 +243,11 @@ msgstr "Mbaje"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:112
 msgid "Stop Seeding"
-msgstr "Ndale Ndarjen"
+msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:114
 msgid "Resume Seeding"
-msgstr "Grupi Resume"
+msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:117
 #: ../../portable/frontends/widgets/itemcontextmenu.py:239
@@ -263,7 +263,7 @@ msgstr "Pushoje Shkarkimin"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:124
 #: ../../portable/frontends/widgets/itemcontextmenu.py:253
 msgid "Resume Download"
-msgstr "Vazhdo Shkarkimin"
+msgstr "Rimerr Shkarkimin"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:128
 #: ../../portable/frontends/widgets/itemcontextmenu.py:223
@@ -276,7 +276,7 @@ msgstr "Shkarko"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:134
 #: ../../portable/frontends/widgets/style.py:240
 msgid "Web Page"
-msgstr "Web Faqe"
+msgstr "Faqe Web"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:136
 #: ../../portable/frontends/widgets/style.py:236
@@ -286,58 +286,58 @@ msgstr "Komente"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:138
 msgid "License"
-msgstr "Liçensë"
+msgstr "Leje"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:141
 msgid "File in Browser"
-msgstr "Skedar në Shfletues"
+msgstr "Kartelë në Shfletues"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:143
 #, python-format
 msgid "File in %(progname)s"
-msgstr "Skedar në %(progname)s"
+msgstr "Kartelë në %(progname)s"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:145
 msgid "File on Disk"
-msgstr "Skedar në Disk"
+msgstr "Kartelë në Disk"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:148
 msgid "View"
-msgstr "Shfaq"
+msgstr "Parje"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
 #: ../../portable/frontends/widgets/gtk/video.py:266
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:119
 msgid "Share"
-msgstr "Ndaje"
+msgstr "Ndajeni Me të Tjerët"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:186
 #, python-format
 msgid "%(count)d Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
-msgstr[0] "%(count)d artikull i shkarkuar"
-msgstr[1] "%(count)d artikuj të shkarkuar"
+msgstr[0] "%(count)d Objekt i Shkarkuar"
+msgstr[1] "%(count)d Objekt të Shkarkuar"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:215
 #, python-format
 msgid "%(count)d Available Item"
 msgid_plural "%(count)d Available Items"
-msgstr[0] "%(count)d artikull i disponueshëm"
-msgstr[1] "%(count)d artikuj të disponueshëm"
+msgstr[0] "%(count)d Objekt i Passhëm"
+msgstr[1] "%(count)d Objekte të Passhëm"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:228
 #, python-format
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
-msgstr[0] "%(count)d artikull në shkarkim"
-msgstr[1] "%(count)d artikuj në shkarkim"
+msgstr[0] "Po shkarkohet %(count)d Objekt"
+msgstr[1] "Po shkarkohen %(count)d Objekte"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:245
 #, python-format
 msgid "%(count)d Paused Item"
 msgid_plural "%(count)d Paused Items"
-msgstr[0] "%(count)d E pauzuar"
-msgstr[1] "%(count)d E pauzuar"
+msgstr[0] "%(count)d Objekt i Ndalur"
+msgstr[1] "%(count)d Objekte të Ndalur"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:263
 msgid "Restart Upload"
@@ -376,45 +376,45 @@ msgstr[1] "%(count)d muaj më parë"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Videos:"
-msgstr "Automatikisht Kaloju Afatin Videove:"
+msgstr "Video Me Vetëskadim:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:95
 #, python-format
 msgid "Watched %(expiration)s (Default)"
-msgstr "E shiquar %(expiration)s (Default)"
+msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
-msgstr "E shiquar 1 dit më parë"
+msgstr "Parë 1 ditë më parë"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr "E shiquar 3 ditë më parë"
+msgstr "Parë 3 ditë më parë"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
-msgstr "E shiquar 6 ditë parë"
+msgstr "Parë 6 ditë më parë"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:100
 msgid "Watched 10 days ago"
-msgstr "E shiquar 10 ditë parë"
+msgstr "Parë 10 ditë më parë"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
-msgstr "E shiquar 1 muaj parë"
+msgstr "Parë 1 muaj më parë"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
-msgstr "Ushqyesit Afatkaluar:"
+msgstr "Objekte Prurje të Vjetëruar:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:139
 #, python-format
 msgid "Keep %(number)s (Default)"
-msgstr "Mbajë %(number)s (Default)"
+msgstr "Mbaj %(number)s (Parazgjedhje)"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:141
 msgid "Keep 0"
-msgstr "Mbajë 0"
+msgstr "Mbaj 0"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:142
 msgid "Keep 20"
@@ -471,12 +471,12 @@ msgstr "Ndrrysho Ushqyesin"
 #: ../../portable/frontends/widgets/firsttimedialog.py:63
 #, python-format
 msgid "%(name)s First Time Setup"
-msgstr "Setup për herë të parë %(name)s"
+msgstr "Rregullimi i Parë i %(name)s"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:122
 #, python-format
 msgid "Welcome to the %(name)s First Time Setup"
-msgstr "Mirë se vini në Instalimin për herë të parë të %(name)s"
+msgstr "Mirë se vini te Rregullimi i Parë i %(name)s"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:126
 #, python-format
@@ -488,18 +488,18 @@ msgid ""
 "This way, downloads in progress can finish downloading and new media files "
 "can be downloaded in the background, ready when you want to watch."
 msgstr ""
-"Pamjet  e ardhshme do t'ju ndihmojnë të konfiguroni %(name)s në mënyrë që "
-"punojë sa më mirë për ju.\n"
+"Hapat pasues do t'ju ndihmojnë të rregulloni %(name)sn që të punojë sa më "
+"mirë për ju.\n"
 "\n"
-"Ne ju rekomandojmë që %(name)s të egzekutohet kur kompjuteri juaj ndizet. Në "
-"këtë mënyrë, shkarkimet në vazhdim mund të përfundojë së shkarkuari dhe "
-"skedarët e rinj multimedialë të mund të shkarkohen në sfond, të gatshëm kur "
-"të doni ti shikoni."
+"Këshillojmë që ta bëni %(name)sn të niset kur niset kompjuteri juaj.  Në "
+"këtë mënyrë, shkarkimet e lëna në punë e sipër mund të përfundohen dhe "
+"kartelat e reja media të shkarkohen në prapaskenë, të gatshme për kur doni "
+"t'i shihni."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:138
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
-msgstr "Dëshironi të egzekutoni %(name)s në ndezje?"
+msgstr "Dëshironi të xhirojë %(name)s gjatë nisjes?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:144
 #: ../../portable/frontends/widgets/firsttimedialog.py:178
@@ -530,6 +530,10 @@ msgid ""
 "\n"
 "Would you like %(name)s to look for media files on your computer?"
 msgstr ""
+"%(name)s mund të gjejë tërë videot te kompjuteri juaj, që t&apos;ju ndihë në "
+"sistemimin e koleksionit tuaj.\n"
+"\n"
+"Doni që %(name)s të shohë për kartela video te kompjuteri juaj?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:185
 msgid "Restrict to all my personal files."
@@ -537,7 +541,7 @@ msgstr "Kufizoje te tërë kartelat e mia personale."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:186
 msgid "Search custom folders:"
-msgstr ""
+msgstr "Kërko në dosje vetjake:"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:192
 #: ../../portable/frontends/widgets/prefpanel.py:438
@@ -546,12 +550,12 @@ msgstr "Ndryshoje"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:197
 msgid "Choose directory to search for media files"
-msgstr ""
+msgstr "Zgjidhni drejtori për kërkim kartelash media"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:211
 #: ../../portable/frontends/widgets/firsttimedialog.py:290
 msgid "< Previous"
-msgstr ""
+msgstr "< I mëparshmi"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:223
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
@@ -567,7 +571,7 @@ msgstr "Përfundim"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:273
 msgid "Searching for media files"
-msgstr ""
+msgstr "Po kërkohet për kartela media"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:283
 #: ../../portable/dialogs.py:87
@@ -578,15 +582,15 @@ msgstr "Anuloje"
 #, python-format
 msgid "parsed %(count)s file"
 msgid_plural "parsed %(count)s files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "u përtyp %(count)s kartelë"
+msgstr[1] "u përtypën %(count)s kartela"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:326
 #, python-format
 msgid "found %(count)s media file"
 msgid_plural "found %(count)s media files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "u gjet %(count)s kartelë media"
+msgstr[1] "u gjetën %(count)s kartelë media"
 
 #: ../../portable/frontends/widgets/crashdialog.py:54
 #, python-format
@@ -594,16 +598,20 @@ msgid ""
 "%(appname)s has encountered an internal error.  You can help us track down "
 "this problem and fix it by submitting an error report."
 msgstr ""
+"%(appname)s hasi një gabim të brendshëm. Duke parashtruar një njoftim "
+"gabimi, mund të na ndihmoni ta gjurmojmë dhe ta ndreqim këtë problem."
 
 #: ../../portable/frontends/widgets/crashdialog.py:63
 msgid ""
 "Include entire program database including all video and feed metadata with "
 "crash report"
 msgstr ""
+"Te njoftimi i vithisjes përfshi tërë bazën e të dhënave të programit, me "
+"gjithë videot dhe tejtëdhëna prurjesh"
 
 #: ../../portable/frontends/widgets/crashdialog.py:68
 msgid "Describe what you were doing when you got this error:"
-msgstr ""
+msgstr "Përshkruani ç&apos;qetë duke bërë që pruri këtë gabim"
 
 #: ../../portable/frontends/widgets/style.py:232
 msgid "From"
@@ -611,15 +619,15 @@ msgstr "Nga"
 
 #: ../../portable/frontends/widgets/style.py:233
 msgid "File name:"
-msgstr "Emri i skedarit:"
+msgstr "Emër kartele:"
 
 #: ../../portable/frontends/widgets/style.py:234
 msgid "Show More"
-msgstr "Trego më shumë"
+msgstr "Shfaq Më Tepër"
 
 #: ../../portable/frontends/widgets/style.py:235
 msgid "Show Less"
-msgstr "Trego më pak"
+msgstr "Shfaq Më Pak"
 
 #: ../../portable/frontends/widgets/style.py:238
 #, python-format
@@ -633,19 +641,19 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:239
 msgid "Display Contents"
-msgstr "Shfaq përmbajtjen"
+msgstr "Shfaq Lëndën"
 
 #: ../../portable/frontends/widgets/style.py:241
 msgid "File URL"
-msgstr "URL-ja e skedarit"
+msgstr "URL Kartele"
 
 #: ../../portable/frontends/widgets/style.py:242
 msgid "License Page"
-msgstr "Faqja e liçenses"
+msgstr "Faqja e Lejes"
 
 #: ../../portable/frontends/widgets/style.py:243
 msgid "File Type"
-msgstr "Lloji i skedarit"
+msgstr "Lloj Kartele"
 
 #: ../../portable/frontends/widgets/style.py:244
 msgid "Seeders"
@@ -657,15 +665,15 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:246
 msgid "Upload Rate"
-msgstr ""
+msgstr "Shpejtësi Përpjetë"
 
 #: ../../portable/frontends/widgets/style.py:247
 msgid "Upload Total"
-msgstr "Ngarkim total"
+msgstr "Ngarkim Githsej"
 
 #: ../../portable/frontends/widgets/style.py:248
 msgid "Down Rate"
-msgstr "Shkarkim total"
+msgstr "Shpejtësi Teposhtë"
 
 #: ../../portable/frontends/widgets/style.py:249
 msgid "Down Total"
@@ -673,7 +681,7 @@ msgstr "Gjithsej Poshtë"
 
 #: ../../portable/frontends/widgets/style.py:251
 msgid "Download Torrent"
-msgstr "Shkarko torrentin"
+msgstr "Shkarko Torrent-in"
 
 #: ../../portable/frontends/widgets/style.py:252
 #: ../../portable/dl_daemon/download.py:550
@@ -682,22 +690,22 @@ msgstr "Gabim"
 
 #: ../../portable/frontends/widgets/style.py:253
 msgid "queued for autodownload"
-msgstr "në rradhë për autoshkarkim"
+msgstr "në rradhë për vetëshkarkim"
 
 #: ../../portable/frontends/widgets/style.py:254
 #: ../../portable/frontends/widgets/style.py:1153
 #: ../../portable/frontends/widgets/itemlistwidgets.py:721
 msgid "Unplayed"
-msgstr ""
+msgstr "E paluajtur"
 
 #: ../../portable/frontends/widgets/style.py:255
 msgid "Currently Playing"
-msgstr ""
+msgstr "Tani Po Luhet"
 
 #: ../../portable/frontends/widgets/style.py:256
 #: ../../portable/frontends/widgets/style.py:1171
 msgid "Newly Available"
-msgstr ""
+msgstr "Të passhme rishtazi"
 
 #: ../../portable/frontends/widgets/style.py:258
 #: ../../portable/frontends/widgets/prefpanel.py:488
@@ -718,11 +726,11 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:571
 #: ../../portable/frontends/widgets/style.py:1164
 msgid "paused"
-msgstr ""
+msgstr "pushuar"
 
 #: ../../portable/frontends/widgets/style.py:1034
 msgid "Remove from playlist"
-msgstr ""
+msgstr "Hiqe prej luajliste"
 
 #: ../../portable/frontends/widgets/displays.py:372
 #, python-format
@@ -730,6 +738,8 @@ msgid ""
 "%(appname)s can't play this file.  You may be able to open it with a "
 "different program"
 msgstr ""
+"%(appname)s s'mund ta luajë këtë kartelë.  Mundet  të arrini ta hapni me një "
+"tjetër program"
 
 #: ../../portable/frontends/widgets/displays.py:382
 msgid "Filename:"
@@ -742,72 +752,72 @@ msgstr "Lloj kartele:"
 #: ../../portable/frontends/widgets/displays.py:391
 #: ../../portable/frontends/widgets/displays.py:428
 msgid "Play Externally"
-msgstr ""
+msgstr "Luaje Së Jashtmi"
 
 #: ../../portable/frontends/widgets/displays.py:393
 msgid "Skip"
-msgstr "Kapërce"
+msgstr "Anashkaloje"
 
 #: ../../portable/frontends/widgets/displays.py:430
 msgid "Open Externally"
-msgstr ""
+msgstr "Hape Së Jashtmi"
 
 #: ../../portable/frontends/widgets/displays.py:536
 #, python-format
 msgid "%(count)d Feed Folder Selected"
 msgid_plural "%(count)d Feed Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Dosje Prurjesh e Përzgjedhur"
+msgstr[1] "%(count)d Dosje Prurjesh të Përzgjedhura"
 
 #: ../../portable/frontends/widgets/displays.py:541
 #, python-format
 msgid "(contains %(count)d feed)"
 msgid_plural "(contains %(count)d feeds)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(përmban %(count)d prurje)"
+msgstr[1] "(përmban %(count)d prurje)"
 
 #: ../../portable/frontends/widgets/displays.py:547
 #, python-format
 msgid "%(count)d Playlist Folder Selected"
 msgid_plural "%(count)d Playlist Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Dosje Luajlistash e Përzgjedhur"
+msgstr[1] "%(count)d Dosje Luajlistash të Përzgjedhura"
 
 #: ../../portable/frontends/widgets/displays.py:552
 #, python-format
 msgid "(contains %(count)d playlist)"
 msgid_plural "(contains %(count)d playlist)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(përmban %(count)d luajlistë)"
+msgstr[1] "(përmban %(count)d luajlista)"
 
 #: ../../portable/frontends/widgets/displays.py:562
 #, python-format
 msgid "%(count)d Feed Selected"
 msgid_plural "%(count)d Feeds Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Feed Selected"
+msgstr[1] "%(count)d Prurje të Përzgjedhura"
 
 #: ../../portable/frontends/widgets/displays.py:568
 #, python-format
 msgid "%(count)d Site Selected"
 msgid_plural "%(count)d Sites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d \"Site\" i Përzgjedhur"
+msgstr[1] "%(count)d \"Site\"-e të Përzgjedhur"
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
 msgid "%(count)d Playlist Selected"
 msgid_plural "%(count)d Playlists Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Playlist Selected"
+msgstr[1] "%(count)d Luajlista të Përzgjedhura"
 
 #: ../../portable/frontends/widgets/displays.py:581
 msgid "Delete All"
-msgstr ""
+msgstr "Fshiji Krejt"
 
 #: ../../portable/frontends/widgets/displays.py:585
 msgid "Put Into a New Folder"
-msgstr ""
+msgstr "Vendose Në një Dosje të Re"
 
 #: ../../portable/frontends/widgets/rundialog.py:82
 msgid "Username:"
@@ -819,15 +829,15 @@ msgstr "Fjalëkalim:"
 
 #: ../../portable/frontends/widgets/browser.py:96
 msgid "Open in browser"
-msgstr ""
+msgstr "Hape në shfletues"
 
 #: ../../portable/frontends/widgets/browser.py:102
 msgid "Download this video"
-msgstr ""
+msgstr "Shkarkoje këtë video"
 
 #: ../../portable/frontends/widgets/application.py:156
 msgid "Movies directory gone"
-msgstr ""
+msgstr "Drejtoria e filmave ka avulluar"
 
 #: ../../portable/frontends/widgets/application.py:158
 #, python-format
@@ -846,6 +856,19 @@ msgid ""
 "If you quit, then you can connect the drive or otherwise fix the problem and "
 "relaunch %(shortappname)s."
 msgstr ""
+"%(shortappname)s s'gjen dot drejtorinë parësore për videot te:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"Kjo ndoshta ngaqë gjendet në një disk të jashtëm që nuk është lidhur në "
+"sistem.\n"
+"\n"
+"Po vazhduat, drejtoria parësore e videove do të ricaktohet te një vend në "
+"këtë disk.  Po qe se patët video të shkarkuara, kjo do të bëjë që "
+"%(shortappname)s të humbë të dhënat rreth këtyre  videove.\n"
+"\n"
+"Po qe dilni prej këtej, mund ta lidhni mandej diskun tuaj në sistem ose "
+"ndryshe ta ndreqni problemin dhe të rinisni %(shortappname)sn."
 
 #: ../../portable/frontends/widgets/application.py:326
 msgid "Error Revealing File"
@@ -854,38 +877,38 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:327
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
-msgstr ""
+msgstr "Kartela %(filename)s është fshirë nga jashtë %(appname)ss."
 
 #: ../../portable/frontends/widgets/application.py:335
 msgid "Open Files..."
-msgstr "Hap skedarë"
+msgstr "Hap Kartela..."
 
 #: ../../portable/frontends/widgets/application.py:346
 #: ../../portable/frontends/widgets/application.py:351
 msgid "Open Files - Error"
-msgstr ""
+msgstr "Hap Kartela - Gabim"
 
 #: ../../portable/frontends/widgets/application.py:347
 #: ../../portable/frontends/widgets/application.py:634
 #, python-format
 msgid "File %(filename)s does not exist."
-msgstr ""
+msgstr "Kartela %(filename)s nuk ekziston."
 
 #: ../../portable/frontends/widgets/application.py:352
 msgid "The following files do not exist:"
-msgstr ""
+msgstr "Kartelat vijuese nuk ekzistojnë."
 
 #: ../../portable/frontends/widgets/application.py:389
 msgid "New Download"
-msgstr ""
+msgstr "Shkarkim i Ri"
 
 #: ../../portable/frontends/widgets/application.py:390
 msgid "Enter the URL of the item to download"
-msgstr ""
+msgstr "Jepni URL-në e objektit për ta shkarkuar"
 
 #: ../../portable/frontends/widgets/application.py:391
 msgid "New Download - Invalid URL"
-msgstr ""
+msgstr "Shkarkim i Ri - URL e pavlefshme"
 
 #: ../../portable/frontends/widgets/application.py:392
 msgid ""
@@ -894,22 +917,26 @@ msgid ""
 "\n"
 "Enter the URL of the item to download"
 msgstr ""
+"Vendndodhja që dhatë nuk është url e vlefshme.\n"
+"Ju lutem, kontrollojeni URL-në dhe riprovoni.\n"
+"\n"
+"Jepni URL-në e objektit që doni të shkarkohet"
 
 #: ../../portable/frontends/widgets/application.py:400
 #, python-format
 msgid "%(appname)s is up to date"
-msgstr ""
+msgstr "%(appname)s është i përditësuar"
 
 #: ../../portable/frontends/widgets/application.py:402
 #, python-format
 msgid "%(appname)s is up to date!"
-msgstr ""
+msgstr "%(appname)s është i përditësuar!"
 
 #: ../../portable/frontends/widgets/application.py:426
 msgid "Remove item"
 msgid_plural "Remove items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Hiqe objektin"
+msgstr[1] "Hiqi objektet"
 
 #: ../../portable/frontends/widgets/application.py:430
 msgid ""
@@ -919,7 +946,11 @@ msgid_plural ""
 "Some of these items were not downloaded from a feed. Would you like to "
 "delete them or just remove them from the Library?"
 msgstr[0] ""
+"Një prej këtyre objekteve nuk qe shkarkuar prej ndonjë prurjeje. Doni të "
+"fshihet ky objekt apo thjesht të hiqet prej Bibliotekës?"
 msgstr[1] ""
+"Disa prej këtyre objekteve nuk qenë shkarkuar prej ndonjë prurjeje. Doni të "
+"fshihen këta elementë apo thjesht të hiqen prej Bibliotekës?"
 
 #: ../../portable/frontends/widgets/application.py:440
 msgid ""
@@ -929,14 +960,18 @@ msgid_plural ""
 "Some of these items are folders.  Delete/Removeing a folder will "
 "delete/remove it's contents"
 msgstr[0] ""
+"Një prej këtyre objekteve është dosje.  Fshirja/Heqja e një dosjeje do të "
+"fshijë/heqë lëndën e saj"
 msgstr[1] ""
+"Disa prej këtyre objekteve janë dosje.  Fshirja/Heqja e një dosjeje do të "
+"fshijë/heqë lëndën e saj"
 
 #: ../../portable/frontends/widgets/application.py:455
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Are you sure you want to delete the item?"
+msgstr[1] "Jeni i sigurt se doni të fshihen krejt %(count)d objektet?"
 
 #: ../../portable/frontends/widgets/application.py:462
 msgid ""
@@ -944,28 +979,32 @@ msgid ""
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
 msgstr[0] ""
+"Një nga këto objekte është dosje.  Fshirja e një dosje do të fshijë lëndën "
+"në të"
 msgstr[1] ""
+"Disa prej këtyre objekteve janë.  Fshirja e një dosje do të fshijë lëndën në "
+"të"
 
 #: ../../portable/frontends/widgets/application.py:496
 msgid "Enter the new name for the item"
-msgstr ""
+msgstr "Jepni emrin e ri për objektin"
 
 #: ../../portable/frontends/widgets/application.py:519
 msgid "Save Item As..."
-msgstr ""
+msgstr "Ruaje Objektin Si..."
 
 #: ../../portable/frontends/widgets/application.py:572
 #: ../../portable/menubar.py:213
 msgid "Add Site"
-msgstr ""
+msgstr "Shto \"Site\""
 
 #: ../../portable/frontends/widgets/application.py:573
 msgid "Enter the URL of the site to add"
-msgstr ""
+msgstr "Jepni URL-në e \"site\"-it për shtim"
 
 #: ../../portable/frontends/widgets/application.py:574
 msgid "Add Site - Invalid URL"
-msgstr ""
+msgstr "Shto \"Site\" - URL e Pavlefshme"
 
 #: ../../portable/frontends/widgets/application.py:575
 msgid ""
@@ -974,6 +1013,10 @@ msgid ""
 "\n"
 "Enter the URL of the site to add"
 msgstr ""
+"Vendndodhja që dhatë nuk është url e vlefshme.\n"
+"Ju lutem, kontrolloni URL-në dhe riprovoni.\n"
+"\n"
+"Jepni URL-në e \"site\"-it që duhet shtuar"
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
@@ -985,7 +1028,7 @@ msgstr "Kartela OPML"
 
 #: ../../portable/frontends/widgets/application.py:633
 msgid "Import OPML File - Error"
-msgstr ""
+msgstr "Importo Kartelë OPML - Gabim"
 
 #: ../../portable/frontends/widgets/application.py:639
 msgid "Export OPML File"
@@ -1010,21 +1053,21 @@ msgstr "Jepni emër për dosjen e re të luajlistave"
 #: ../../portable/frontends/widgets/application.py:707
 #: ../../portable/frontends/widgets/tablist.py:579
 msgid "Rename Feed Folder"
-msgstr ""
+msgstr "Riemërtoni Dosje Prurjesh"
 
 #: ../../portable/frontends/widgets/application.py:708
 #, python-format
 msgid "Enter a new name for the feed folder %(name)s"
-msgstr ""
+msgstr "Jepni emër të ri për dosjen e prurjeve %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:712
 msgid "Rename Feed"
-msgstr ""
+msgstr "Riemërtoni Prurje"
 
 #: ../../portable/frontends/widgets/application.py:713
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
-msgstr ""
+msgstr "Jepni emër të ri për prurjen %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:717
 #: ../../portable/frontends/widgets/tablist.py:640
@@ -1035,7 +1078,7 @@ msgstr "Riemërtoni Luajlistën"
 #: ../../portable/frontends/widgets/application.py:718
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
-msgstr ""
+msgstr "Jepni emër të ri për luajlistën %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:722
 #: ../../portable/frontends/widgets/tablist.py:634
@@ -1045,43 +1088,43 @@ msgstr "Riemërto Dosje Luajlistash"
 #: ../../portable/frontends/widgets/application.py:723
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
-msgstr ""
+msgstr "Jepni emër të ri për dosjen e luajlistave %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:726
 #: ../../portable/frontends/widgets/tablist.py:529
 msgid "Rename Site"
-msgstr ""
+msgstr "Riemërtoni \"Site\"-in"
 
 #: ../../portable/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the site %(name)s"
-msgstr ""
+msgstr "Jepni emër  të ri për \"site\"-in %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Hiqe luajlistën"
+msgstr[1] "Hiqi luajlistat"
 
 #: ../../portable/frontends/widgets/application.py:753
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Jeni i sigurt se doni të hiqet kjo luajlistë?"
+msgstr[1] "Jeni i sigurt se doni të hiqen këto %(count)s luajlista?"
 
 #: ../../portable/frontends/widgets/application.py:770
 msgid "Remove site"
 msgid_plural "Remove sites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Hiqe \"site\"-in"
+msgstr[1] "Hiqi \"site\"-et"
 
 #: ../../portable/frontends/widgets/application.py:772
 #, python-format
 msgid "Are you sure you want to remove this site?"
 msgid_plural "Are you sure you want to remove these %(count)s sites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Are you sure you want to remove this site?"
+msgstr[1] "Jeni i sigurt se doni të hiqen këta %(count)s \"site\"-e?"
 
 #: ../../portable/frontends/widgets/application.py:802
 msgid "Are you sure you want to quit?"
@@ -1092,7 +1135,9 @@ msgstr "Jeni i sigurt se doni të dilni?"
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] ""
+"Keni %(count)d shkarkim në kryerje e sipër.  Të dilet, sido qoftë?"
 msgstr[1] ""
+"Keni %(count)d shkarkime në kryerje e sipër.  Të dilet, sido qoftë?"
 
 #: ../../portable/frontends/widgets/application.py:809
 msgid "Warn me when I attempt to quit with downloads in progress"
@@ -1100,19 +1145,19 @@ msgstr "Sinjalizomë kur përpiqem të dal me shkarkime në kryerje e sipër"
 
 #: ../../portable/frontends/widgets/application.py:994
 msgid "Upgrading database"
-msgstr ""
+msgstr "Po përmirësohet baza e të dhënave"
 
 #: ../../portable/frontends/widgets/application.py:1127
 msgid "Message"
-msgstr ""
+msgstr "Mesazh"
 
 #: ../../portable/frontends/widgets/application.py:1152
 msgid "Migrating Files"
-msgstr ""
+msgstr "Po migrohen Kartelat"
 
 #: ../../portable/frontends/widgets/application.py:1162
 msgid "Migrating files"
-msgstr ""
+msgstr "Po migrohen kartelat"
 
 #: ../../portable/frontends/widgets/dialogs.py:102
 msgid ""
@@ -1120,6 +1165,9 @@ msgid ""
 "can take a long time if you have a large number of items in Miro (it can "
 "even take more than 30 minutes)."
 msgstr ""
+"Miro po përmirëson bazën tuaj të të dhënave për prurjet dhe kartelat.  Ky "
+"proces, që bëhet vetëm një herë, mund të zgjasë shumë nëse keni numër të "
+"madh objektesh te Miro (mund të dojë edhe më shumë se 30 minuta)."
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:81
 #: ../../portable/frontends/widgets/prefpanel.py:625
@@ -1128,11 +1176,11 @@ msgstr "Shkarkime"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:90
 msgid "Single and external downloads"
-msgstr ""
+msgstr "Shkarkime njëshe dhe të jashtme"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:93
 msgid "Feed downloads"
-msgstr ""
+msgstr "Shkarkime prurjeje"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:96
 msgid "Seeding"
@@ -1141,15 +1189,15 @@ msgstr ""
 #: ../../portable/frontends/widgets/prefpanel.py:268
 #, python-format
 msgid "Automatically run %(appname)s when I log in."
-msgstr ""
+msgstr "Nise vetvetiu %(appname)sn kur hyj."
 
 #: ../../portable/frontends/widgets/prefpanel.py:272
 msgid "Warn me if I attempt to quit with downloads in progress."
-msgstr ""
+msgstr "Sinjalizomë kur përpiqem të dal me shkarkime në kryerje e sipër."
 
 #: ../../portable/frontends/widgets/prefpanel.py:282
 msgid "Every day"
-msgstr ""
+msgstr "Përditë"
 
 #: ../../portable/frontends/widgets/prefpanel.py:283
 msgid "Every hour"
@@ -1180,47 +1228,48 @@ msgstr "Off"
 
 #: ../../portable/frontends/widgets/prefpanel.py:298
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: ../../portable/frontends/widgets/prefpanel.py:299
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../../portable/frontends/widgets/prefpanel.py:300
 msgid "50"
-msgstr ""
+msgstr "50"
 
 #: ../../portable/frontends/widgets/prefpanel.py:301
 msgid "100"
-msgstr ""
+msgstr "100"
 
 #: ../../portable/frontends/widgets/prefpanel.py:302
 msgid "1000"
-msgstr ""
+msgstr "1000"
 
 #: ../../portable/frontends/widgets/prefpanel.py:308
 msgid "Default settings for new feeds:"
-msgstr ""
+msgstr "Rregullime parazgjedhje për prurje të reja:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:312
 msgid "(These can be changed using the feed's settings button)"
 msgstr ""
+"(Këto mund të ndryshohen duke përdorur butonin e rregullimeve të prurjes)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:316
 msgid "Check for new content:"
-msgstr ""
+msgstr "Kontrollo për lëndë të re:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:321
 msgid "Auto download setting:"
-msgstr ""
+msgstr "Rregullim për vetëshkarkimet:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:327
 msgid "Remember this many old items:"
-msgstr ""
+msgstr "Mba mend kaq objekte të vjetër:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:328
 msgid "(in addition to the current contents)"
-msgstr ""
+msgstr "(si shtesë te lënda e tanishme)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:341
 msgid "Maximum number of manual downloads at a time:"
@@ -1228,15 +1277,15 @@ msgstr "Numër më i madh shkarkimesh dorazi njëherësh:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:348
 msgid "Maximum number of auto-downloads at a time:"
-msgstr ""
+msgstr "Numër më i madh vetëshkarkimesh njëherazi:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:358
 msgid "Bittorrent:"
-msgstr ""
+msgstr "Bittorrent:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:361
 msgid "Limit upstream bandwidth to:"
-msgstr ""
+msgstr "Kufizoje shpejtësinë e shpërnguljeve për sipër në:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:372
 #: ../../portable/frontends/widgets/prefpanel.py:383
@@ -1245,27 +1294,27 @@ msgstr "KB/s"
 
 #: ../../portable/frontends/widgets/prefpanel.py:375
 msgid "Limit downstream bandwidth to:"
-msgstr ""
+msgstr "Kufizoje shpejtësinë e shpërnguljeve për poshtë në:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:386
 msgid "Limit torrent connections to:"
-msgstr ""
+msgstr "Kufizo lidhjet për përrenj deri në:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:403
 msgid "Starting port:"
-msgstr ""
+msgstr "Portë fillimi:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:407
 msgid "Ending port:"
-msgstr ""
+msgstr "Portë mbarimi:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:413
 msgid "Automatically forward ports.  (UPNP)"
-msgstr ""
+msgstr "Përcilli portat vetvetiu. (UPNP)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:417
 msgid "Ignore unencrypted connections."
-msgstr ""
+msgstr "Shpërfill lidhjet e pakoduara."
 
 #: ../../portable/frontends/widgets/prefpanel.py:421
 msgid "Stop torrent uploads when this ratio is reached:"
@@ -1273,7 +1322,7 @@ msgstr "Ndal ngarkime përrenjsh kur mbërrihet në këtë përpjestim:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:443
 msgid "Choose Movies Directory"
-msgstr ""
+msgstr "Zgjidhni Drejtori Filmash"
 
 #: ../../portable/frontends/widgets/prefpanel.py:456
 msgid "Migrate existing movies?"
@@ -1286,6 +1335,9 @@ msgid ""
 "migrate your existing downloads there? (Currently downloading movies will "
 "not be moved until they finish.)"
 msgstr ""
+"Përzgjodhët një dosje të re për shkarkimin e filmave.  A duhet që  "
+"%(appname)s-ja të migronte atje shkarkimet tuaja të deritanishme? (Filmat në "
+"shkarkim e sipër nuk do të lëvizen përpara se të përfundojë shkarkimi)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:485
 #: ../../portable/dialogs.py:106
@@ -1294,7 +1346,7 @@ msgstr "Shto"
 
 #: ../../portable/frontends/widgets/prefpanel.py:526
 msgid "Add Watched Folder"
-msgstr ""
+msgstr "Shto Dosje Të shikuarat"
 
 #: ../../portable/frontends/widgets/prefpanel.py:545
 msgid "Store downloads in this folder:"
@@ -1305,6 +1357,8 @@ msgid ""
 "Watch for new video and audio items in these folders and include them in "
 "library:"
 msgstr ""
+"Shih për objekte të reja video dhe audio në këto dosje dhe përfshiji ato në "
+"bibliotekë:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:571
 msgid "Keep at least this much free space on my drive:"
@@ -1337,24 +1391,26 @@ msgstr "1 muaj"
 
 #: ../../portable/frontends/widgets/prefpanel.py:593
 msgid "By default, video and audio items expire after:"
-msgstr ""
+msgstr "Si parazgjedhje, objektet video dhe audio skadojnë pas:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:602
 msgid "Always play videos in a separate window."
-msgstr ""
+msgstr "Luaji videot përherë në dritare të veçantë."
 
 #: ../../portable/frontends/widgets/prefpanel.py:606
 msgid ""
 "Resume playing a video or audio item from the point it was last stopped."
 msgstr ""
+"Rimerre luajtjen e një objekti video ose audio prej pikës ku u ndal herën e "
+"fundit."
 
 #: ../../portable/frontends/widgets/prefpanel.py:611
 msgid "Play video and audio items one after another"
-msgstr ""
+msgstr "Luaji objektet video dhe audio njëri pas tjetrit"
 
 #: ../../portable/frontends/widgets/prefpanel.py:612
 msgid "Stop after each video or audio item"
-msgstr ""
+msgstr "Ndal pas çdo objekti video ose audio"
 
 #: ../../portable/frontends/widgets/prefpanel.py:623
 msgid "General"
@@ -1362,7 +1418,7 @@ msgstr "Të përgjithshme"
 
 #: ../../portable/frontends/widgets/prefpanel.py:624
 msgid "Feeds"
-msgstr ""
+msgstr "Prurje"
 
 #: ../../portable/frontends/widgets/prefpanel.py:626
 msgid "Folders"
@@ -1370,11 +1426,11 @@ msgstr "Dosje"
 
 #: ../../portable/frontends/widgets/prefpanel.py:627
 msgid "Disk space"
-msgstr ""
+msgstr "Hapësirë në disk"
 
 #: ../../portable/frontends/widgets/prefpanel.py:628
 msgid "Playback"
-msgstr ""
+msgstr "Luajtje"
 
 #: ../../portable/frontends/widgets/prefpanel.py:632
 msgid "Preferences"
@@ -1382,11 +1438,12 @@ msgstr "Parapëlqime"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:58
 msgid "New Search Feed"
-msgstr ""
+msgstr "Prurje Kërkimi të Ri"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:59
 msgid "A search feed contains items that match a search term."
 msgstr ""
+"Një prurje kërkimi përmban elementë me përputhje kundrejt një termi kërkimi."
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:74
 msgid "Search for:"
@@ -1398,11 +1455,11 @@ msgstr "Në këtë:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:88
 msgid "Feed:"
-msgstr ""
+msgstr "Prurje:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:93
 msgid "Search engine:"
-msgstr ""
+msgstr "Motor kërkimesh:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:99
 #: ../../portable/frontends/widgets/newfeed.py:60
@@ -1411,23 +1468,23 @@ msgstr "URL:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:133
 msgid "Add new feed to this section:"
-msgstr ""
+msgstr "Shtoni prurje të re te kjo ndarje:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:136
 #: ../../portable/frontends/widgets/newfolder.py:71
 #: ../../portable/frontends/widgets/newfeed.py:72
 msgid "video"
-msgstr ""
+msgstr "video"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:137
 #: ../../portable/frontends/widgets/newfolder.py:72
 #: ../../portable/frontends/widgets/newfeed.py:73
 msgid "audio"
-msgstr ""
+msgstr "audio"
 
 #: ../../portable/frontends/widgets/linkhandler.py:54
 msgid "Subscribe to Feed"
-msgstr ""
+msgstr "Pajtohuni te Prurja"
 
 #: ../../portable/frontends/widgets/linkhandler.py:56
 #, python-format
@@ -1437,48 +1494,51 @@ msgid ""
 "\n"
 "%(url)s"
 msgstr ""
+"Kjo lidhje duket se është prurje.  Doni të shtohet te pajtimet tuaja?\n"
+"\n"
+"%(url)s"
 
 #: ../../portable/frontends/widgets/newfolder.py:60
 msgid "Folder name:"
-msgstr ""
+msgstr "Emër dosjeje:"
 
 #: ../../portable/frontends/widgets/newfolder.py:69
 msgid "Folder should go in this section:"
-msgstr ""
+msgstr "Dosja do të duhej të shkonte te kjo ndarje:"
 
 #: ../../portable/frontends/widgets/newfolder.py:109
 #: ../../portable/frontends/widgets/newfolder.py:111
 msgid "Create Feed Folder"
-msgstr ""
+msgstr "Krijo Dosje Prurjesh"
 
 #: ../../portable/frontends/widgets/newfolder.py:112
 msgid "Enter the name of the folder to add"
-msgstr ""
+msgstr "Jepni emrin e dosjes që do shtuar"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
-msgstr ""
+msgstr "Kjo Luajlistë është Bosh një tjetër."
 
 #: ../../portable/frontends/widgets/playlist.py:149
 msgid ""
 "To add an item, drag it onto the name of this playlist in the sidebar."
-msgstr ""
+msgstr "Për ta shtuar, tërhiqeni te emri i luajlistës në anështyllë."
 
 #: ../../portable/frontends/widgets/removefeeds.py:49
 msgid "Remove Feed"
 msgid_plural "Remove Feeds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Hiqe Prurjen"
+msgstr[1] "Hiqe Prurjen"
 
 #: ../../portable/frontends/widgets/removefeeds.py:57
 msgid "Are you sure you want to remove this feed:"
 msgid_plural "Are you sure you want to remove these feeds:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Jeni i sigurt se doni të hiqet kjo prurje:"
+msgstr[1] "Jeni i sigurt se doni të hiqen këtë prurje:"
 
 #: ../../portable/frontends/widgets/removefeeds.py:84
 msgid "Keep items that have been downloaded in my library."
-msgstr ""
+msgstr "Mbaji objektet që janë shkarkuar te biblioteka ime."
 
 #: ../../portable/frontends/widgets/removefeeds.py:89
 #, python-format
@@ -1487,6 +1547,9 @@ msgid ""
 "still appear in your library.  You can stop watching watched folders "
 "completely in the %(appname)s preference panel."
 msgstr ""
+"Dosjet e shikuara do të hiqen nga balli i anështyllës por lënda e tyre prapë "
+"do të duket te biblioteka juaj.  Te paneli i parapëlqimeve të %(appname)ss "
+"mund ta ndalni krejtësisht parjen e dosjeve të shikuara."
 
 #: ../../portable/frontends/widgets/removefeeds.py:100
 msgid ""
@@ -1496,11 +1559,15 @@ msgid_plural ""
 "Are you sure you want to remove these feeds?  The downloads currently in "
 "progress will be canceled."
 msgstr[0] ""
+"Jeni i sigurt se doni të hiqet kjo prurje? Shkarkimi në punë e sipër do të "
+"anulohet."
 msgstr[1] ""
+"Jeni i sigurt se doni të hiqen këto prurje? Shkarkimet e tanishme në punë e "
+"sipër do të anulohen."
 
 #: ../../portable/frontends/widgets/gtk/video.py:273
 msgid "Permalink"
-msgstr ""
+msgstr "Permalink"
 
 #: ../../portable/frontends/widgets/gtk/video.py:279
 msgid "Pop-in"
@@ -1513,22 +1580,22 @@ msgstr ""
 #: ../../portable/frontends/widgets/gtk/trayicon.py:67
 #, python-format
 msgid "Play Next Unplayed (%(unplayed)d)"
-msgstr ""
+msgstr "Luaj të Paluajturën Pasuese (%(unplayed)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:71
 #, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
-msgstr ""
+msgstr "Luaj Tërë të Paluajturat (%(unplayed)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:74
 #, python-format
 msgid "Pause All Downloads (%(downloading)d)"
-msgstr ""
+msgstr "Pushoji Tërë Shkarkimet (%(downloading)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:77
 #, python-format
 msgid "Resume All Downloads (%(paused)d)"
-msgstr ""
+msgstr "Rimerri Tërë Shkarkimet (%(paused)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:85
 msgid "Hide"
@@ -1541,16 +1608,16 @@ msgstr "Shfaqe"
 
 #: ../../portable/frontends/widgets/gtk/window.py:495
 msgid "All files"
-msgstr ""
+msgstr "Tërë kartelat"
 
 #: ../../portable/frontends/widgets/gtk/window.py:524
 msgid "Choose"
-msgstr ""
+msgstr "Zgjidhni"
 
 #: ../../portable/frontends/widgets/gtk/window.py:539
 #, python-format
 msgid "About %(appname)s"
-msgstr ""
+msgstr "Rreth %(appname)ss"
 
 #: ../../portable/frontends/widgets/gtk/window.py:554
 #, python-format
@@ -1558,42 +1625,44 @@ msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
 "%(trademark)s"
 msgstr ""
+"%(copyright)s.  Shihni kartelën license.txt për hollësi.\n"
+"%(trademark)s"
 
 #: ../../portable/frontends/widgets/gtk/window.py:593
 #: ../../portable/dialogs.py:86
 msgid "Close"
-msgstr ""
+msgstr "Mbylle"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
-msgstr ""
+msgstr "Të shkarkuara"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:137
 msgid "Full Feed"
-msgstr ""
+msgstr "Prurje e Plotë"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:191
 #, python-format
 msgid "Show %(count)d More Item"
 msgid_plural "Show %(count)d More Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Shfaq Edhe %(count)d Objekt Më Tepër"
+msgstr[1] "Shfaq Edhe %(count)d Objekte Më Tepër"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:232
 #: ../../portable/frontends/widgets/feedcontroller.py:259
 #, python-format
 msgid "%(count)d Downloading"
 msgid_plural "%(count)d Downloading"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Shkarkim"
+msgstr[1] "%(count)d Shkarkime"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:243
 #: ../../portable/frontends/widgets/feedcontroller.py:255
 #, python-format
 msgid "%(count)d Item"
 msgid_plural "%(count)d Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Objekt"
+msgstr[1] "%(count)d Objekte"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:264
 #, python-format
@@ -1601,34 +1670,38 @@ msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
 "%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
 msgstr[0] ""
+"%(count)d Shkarkim i Vënë në radhë Për Shkak Objektesh të Paluajtur (Shihni "
+"Rregullimet)"
 msgstr[1] ""
+"%(count)d Shkarkime të Vëna në radhë Për Shkak Objektesh të Paluajtur "
+"(Shihni Rregullimet)"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:275
 #, python-format
 msgid "%(count)d Item Matches Search"
 msgid_plural "%(count)d Items Match Search"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "U përputh Me Kërkimin %(count)d Objekt"
+msgstr[1] "U përputhën Me Kërkimin %(count)d Objekte"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:280
 msgid "All Items Match Search"
-msgstr ""
+msgstr "Tërë Objektet Përputhen Me Kërkimin"
 
 #: ../../portable/frontends/widgets/newfeed.py:70
 msgid "Feed should go in this section:"
-msgstr ""
+msgstr "Prurja do të duhej të shkonte në këtë ndarje:"
 
 #: ../../portable/frontends/widgets/newfeed.py:111
 msgid "Add Feed"
-msgstr ""
+msgstr "Shtoni Prurje."
 
 #: ../../portable/frontends/widgets/newfeed.py:112
 msgid "Enter the URL of the feed to add"
-msgstr ""
+msgstr "Jepni URL-në e prurjes për shtim"
 
 #: ../../portable/frontends/widgets/newfeed.py:123
 msgid "Add Feed - Invalid URL"
-msgstr ""
+msgstr "Shtoni Prurje - URL e pavleshme"
 
 #: ../../portable/frontends/widgets/newfeed.py:124
 msgid ""
@@ -1637,6 +1710,10 @@ msgid ""
 "\n"
 "Enter the URL of the feed to add"
 msgstr ""
+"Vendndodhja që dhatë nuk është url vlefshme.\n"
+"Ju lutem kontrollojeni URL-në dhe riprovoni.\n"
+"\n"
+"Jepni URL-në e prurjes që duhet shtuar"
 
 #: ../../portable/frontends/widgets/tablist.py:528
 #: ../../portable/frontends/widgets/tablist.py:591
@@ -1645,150 +1722,151 @@ msgstr "Kopjoje URL-në te \"clipboard\"-i"
 
 #: ../../portable/frontends/widgets/tablist.py:530
 msgid "Remove Site"
-msgstr ""
+msgstr "Hiqe \"Site\"-in"
 
 #: ../../portable/frontends/widgets/tablist.py:534
 msgid "Remove Sites"
-msgstr ""
+msgstr "Hiqi \"Site\"-et"
 
 #: ../../portable/frontends/widgets/tablist.py:578
 msgid "Update Feeds In Folder"
-msgstr ""
+msgstr "Përditëso Prurjet Në Dosje"
 
 #: ../../portable/frontends/widgets/tablist.py:585
 msgid "Update Feed Now"
-msgstr ""
+msgstr "Përditësoje Prurjen Tani"
 
 #: ../../portable/frontends/widgets/tablist.py:588
 msgid "Rename"
-msgstr ""
+msgstr "Riemërtoje"
 
 #: ../../portable/frontends/widgets/tablist.py:590
 msgid "Revert Feed Name"
-msgstr ""
+msgstr "Rikthe Emër Prurjeje"
 
 #: ../../portable/frontends/widgets/tablist.py:597
 msgid "Update Feeds Now"
-msgstr ""
+msgstr "Përditësoji Prurjet Tani"
 
 #: ../../portable/frontends/widgets/tablist.py:662
 msgid "LIBRARY"
-msgstr ""
+msgstr "BIBLIOTEKË"
 
 #: ../../portable/frontends/widgets/tablist.py:664
 msgid "SITES"
-msgstr ""
+msgstr "\"SITE\"-E"
 
 #: ../../portable/frontends/widgets/tablist.py:666
 msgid "FEEDS"
-msgstr ""
+msgstr "PRURJE"
 
 #: ../../portable/frontends/widgets/tablist.py:668
 msgid "AUDIO FEEDS"
-msgstr ""
+msgstr "PRURJE AUDIO"
 
 #: ../../portable/frontends/widgets/tablist.py:670
 msgid "PLAYLISTS"
-msgstr ""
+msgstr "LUAJLISTA"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:447
 msgid "No Results Found"
-msgstr ""
+msgstr "S'u gjetën Përfundime."
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:553
 msgid "Back to feed"
-msgstr ""
+msgstr "Mbrapsht te prurja"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:179
 msgid "Save Search"
-msgstr ""
+msgstr "Ruaje Kërkimin"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:286
 msgid "Title"
-msgstr ""
+msgstr "Titull"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:288
 msgid "Feed"
-msgstr ""
+msgstr "Prurje"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:290
 #: ../../portable/frontends/widgets/itemlistwidgets.py:743
 msgid "Date"
-msgstr ""
+msgstr "Datë"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:291
 msgid "Length"
-msgstr ""
+msgstr "Gjatësi"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:292
 msgid "Status"
-msgstr ""
+msgstr "Gjendje"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:293
 #: ../../portable/frontends/widgets/itemlistwidgets.py:744
 msgid "Size"
-msgstr ""
+msgstr "Madhësi"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:295
 msgid "ETA"
-msgstr ""
+msgstr "ETA"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:296
 msgid "Speed"
-msgstr ""
+msgstr "Shpejtësi"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:432
 msgid "Save as a Feed"
-msgstr ""
+msgstr "Ruaje si Prurje"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:486
 msgid "Pause All"
-msgstr ""
+msgstr "Pushoji të Tëra"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:493
 msgid "Resume All"
-msgstr ""
+msgstr "Rimerri të Tëra"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:500
 msgid "Cancel All"
-msgstr ""
+msgstr "Anuloji të Tëra"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:507
 msgid "Download Settings"
-msgstr ""
+msgstr "Rregullime Shkarkimi"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:553
 #, python-format
 msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
 msgstr ""
+"%(available)s nën kufirin për hapësirë shkarkimi (%(amount)s të lira në disk)"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:559
 #, python-format
 msgid "%(available)s free for downloads (%(amount)s free on disk)"
-msgstr ""
+msgstr "%(available)s të lira për shkarkime (%(amount)s të lira në disk)"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:564
 #, python-format
 msgid "%(amount)s free on disk"
-msgstr ""
+msgstr "%(amount)s të lira në disk"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:583
 #, python-format
 msgid "%(rate)s uploading"
-msgstr ""
+msgstr "Ngarkim %(rate)s"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:585
 #, python-format
 msgid "%(rate)s downloading"
-msgstr ""
+msgstr "Shkarkim %(rate)s"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:619
 msgid "Auto Download"
-msgstr ""
+msgstr "Vetëshkarkim"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:631
 msgid "Share feed"
-msgstr ""
+msgstr "Ndajeni prurjen me të tjerët"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:637
 msgid "Settings"
@@ -1796,80 +1874,80 @@ msgstr "Rregullime"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:643
 msgid "Remove feed"
-msgstr ""
+msgstr "Hiqe Prurjen"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:719
 msgid "Unwatched"
-msgstr ""
+msgstr "E pashikuar"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:730
 msgid "View|All"
-msgstr ""
+msgstr "Shihini|Krejt"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:732
 msgid "Non Feed"
-msgstr ""
+msgstr "Jo Prurje"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:742
 msgid "Name"
-msgstr ""
+msgstr "Emër"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:745
 msgid "Time"
-msgstr ""
+msgstr "Kohë"
 
 #: ../../portable/frontends/widgets/diagnostics.py:83
 msgid "Movies location:"
-msgstr ""
+msgstr "Vend filmash:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:87
 msgid "Icon cache location:"
-msgstr ""
+msgstr "Vend Fshehtine Ikonash:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:91
 msgid "Log file location:"
-msgstr ""
+msgstr "Vend kartele regjistrim:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:95
 msgid "Downloader log file location:"
-msgstr ""
+msgstr "Vend kartele regjistrimi shkarkimesh:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:99
 msgid "Database file location:"
-msgstr ""
+msgstr "Vend kartele baze të dhënash:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:106
 msgid "Space free on disk:"
-msgstr ""
+msgstr "Hapësirë e lirë në disk:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:108
 msgid "Database size:"
-msgstr ""
+msgstr "Madhësi baze të dhënash:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:110
 msgid "Total db objects in memory:"
-msgstr ""
+msgstr "Objekte db gjithsej në kujtesë:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:118
 #: ../../portable/menubar.py:276
 msgid "Diagnostics"
-msgstr ""
+msgstr "Diagnostikime"
 
 #: ../../portable/searchengines.py:172
 msgid "Search All"
-msgstr ""
+msgstr "Kërko Në të Tëra"
 
 #: ../../portable/messages.py:1084 ../../portable/item.py:1107
 msgid "queued for download"
-msgstr ""
+msgstr "vënë në radhë për shkarkim"
 
 #: ../../portable/messagehandler.py:1299
 msgid "Subscribed to new feed:"
-msgstr ""
+msgstr "I pajtuar te prurja e re:"
 
 #: ../../portable/messagehandler.py:1302
 msgid "Subscribed to new feeds:"
-msgstr ""
+msgstr "I pajtuar te prurjet e reja:"
 
 #: ../../portable/startup.py:97
 msgid "Unknown Error"
@@ -1881,6 +1959,8 @@ msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
 "report at %(url)s."
 msgstr ""
+"Një gabimi panjohur e pengoi nisjen e %(appname)ss.  Ju lutem njoftoni në "
+"një të metë te %(url)s."
 
 #: ../../portable/startup.py:179
 msgid "Database too new"
@@ -1892,10 +1972,13 @@ msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
 "must download the latest version of %(appname)s and run that."
 msgstr ""
+"Keni një bazë të dhënash që qe ruajtur me një version më të ri të "
+"%(appname)ss. Duhet të shkarkoni versionin më të fundit të %(appname)s dhe "
+"të xhironi atë."
 
 #: ../../portable/startup.py:188
 msgid "Insufficient disk space"
-msgstr ""
+msgstr "Hapësirë e pamjaftueshme në disk"
 
 #: ../../portable/startup.py:190
 #, python-format
@@ -1903,6 +1986,9 @@ msgid ""
 "Not enough disk space to upgrade your database from the previous version of "
 "%(appname)s.  Please delete some files and try again."
 msgstr ""
+"Pa vend të mjaftueshëm në disk për përditësimin e bazës suaj të të dhënave "
+"nga versioni i mëparshëm i %(appname)ss. Ju lutem, fshini disa kartela dhe "
+"riprovoni."
 
 #: ../../portable/commandline.py:99
 msgid "Subscription error"
@@ -1914,6 +2000,8 @@ msgid ""
 "This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
 "the publisher of this file."
 msgstr ""
+"Kjo kartelë prurjeje %(appname)s ka format të pavlefshëm: %(url)s.  Ju "
+"lutem, njoftojeni botuesin për këtë kartelë."
 
 #: ../../portable/commandline.py:119
 #, python-format
@@ -1921,11 +2009,13 @@ msgid ""
 "This %(appname)s feed file has the wrong content type: %(url)s. Please "
 "notify the publisher of this file."
 msgstr ""
+"Kjo kartelë prurjeje %(appname)s ka lloj të gabuar lënde: %(url)s.  Ju "
+"lutem, njoftojeni botuesin për këtë kartelë."
 
 #: ../../portable/commandline.py:127
 #, python-format
 msgid "Could not download the %(appname)s feed file: %(url)s"
-msgstr ""
+msgstr "S'shkarkoi dot kartelën e prurjes %(appname)s: %(url)s"
 
 #: ../../portable/commandline.py:179
 msgid "Invalid Torrent"
@@ -1937,6 +2027,7 @@ msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
 "[OK]"
 msgstr ""
+"Kartela %(filename)s duket se është e dëmtuar dhe nuk mund të hapet. [OK]"
 
 #: ../../portable/downloader.py:258
 msgid "activity"
@@ -1957,7 +2048,7 @@ msgstr "Gabim në ngarkimin e prurjes"
 #: ../../portable/feed.py:942
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
-msgstr ""
+msgstr "S'ngarkoi dot prurjen te %(url)s (%(errordescription)s)."
 
 #: ../../portable/feed.py:945
 msgid "Would you like to keep the feed?"
@@ -1970,7 +2061,7 @@ msgstr "Lloj i gabuar lënde"
 #: ../../portable/feed.py:1083
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
-msgstr ""
+msgstr "Kanali nuk është i përputhshëm me %(appname)sn"
 
 #: ../../portable/feed.py:1086
 #, python-format
@@ -1984,11 +2075,19 @@ msgid ""
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
+"Ky kanal nuk është i përputhshëm me %(appname)sn por do të bëjmë ç'është e "
+"mundur t'i marrin kartelat.  Mudn të dojë ca më shumë kohë për të paraqitur "
+"videot, dhe përshkrimet mund të duken të çuditshme ca gallatë.\n"
+"\n"
+"Ju lutem, lidhuni me botuesit e %(url)s dhe pyetini nëse mund të ofrojnë një "
+"prurje në një format që do të punonte me %(appname)sn.\n"
+"\n"
+"Doni të provohet të ngarkohet ky kanal, sido qoftë?"
 
 #: ../../portable/feed.py:1687
 #, python-format
 msgid "Search All: %(text)s"
-msgstr ""
+msgstr "Kërko Në të Tëra: %(text)s"
 
 #: ../../portable/feed.py:2274 ../../portable/feed.py:2425
 msgid "Local Files"
@@ -2004,7 +2103,7 @@ msgstr "Ok"
 
 #: ../../portable/dialogs.py:88
 msgid "Done"
-msgstr ""
+msgstr "U bë"
 
 #: ../../portable/dialogs.py:91
 msgid "Quit"
@@ -2012,7 +2111,7 @@ msgstr "Dil"
 
 #: ../../portable/dialogs.py:92
 msgid "Continue"
-msgstr ""
+msgstr "Vazhdo"
 
 #: ../../portable/dialogs.py:93
 msgid "Ignore"
@@ -2056,11 +2155,11 @@ msgstr "Krijo"
 
 #: ../../portable/dialogs.py:104
 msgid "Create Feed"
-msgstr ""
+msgstr "Krijoni Prurje"
 
 #: ../../portable/dialogs.py:105
 msgid "Create Folder"
-msgstr ""
+msgstr "Krijoni Dosje"
 
 #: ../../portable/dialogs.py:107
 msgid "Add Into New Folder"
@@ -2084,7 +2183,7 @@ msgstr "Shkarkoje Sido Qoftë"
 
 #: ../../portable/dialogs.py:115
 msgid "Open in External Browser"
-msgstr ""
+msgstr "Hap në Shfletues të Jashtëm"
 
 #: ../../portable/dialogs.py:116
 msgid "Don't Install"
@@ -2092,11 +2191,11 @@ msgstr "Mos e Instalo"
 
 #: ../../portable/dialogs.py:117
 msgid "Subscribe"
-msgstr ""
+msgstr "Regjistrohuni"
 
 #: ../../portable/dialogs.py:118
 msgid "Stop Watching"
-msgstr ""
+msgstr "Ndale Shikimin"
 
 #: ../../portable/dialogs.py:119
 msgid "Retry"
@@ -2113,7 +2212,7 @@ msgstr "Ajo URL është tashmë shkarkim i jashtëm."
 #: ../../portable/singleclick.py:62
 #, python-format
 msgid "%(appname)s will begin downloading it now."
-msgstr ""
+msgstr "%(appname)s do të fillojë ta shkarkojë tani."
 
 #: ../../portable/singleclick.py:65
 msgid "It is downloading now."
@@ -2132,6 +2231,7 @@ msgstr "Shkarkim Kartele"
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 msgstr ""
+"Kjo kartelë te %(url)s nuk duket se është audio, video, apo prurje RSS."
 
 #: ../../portable/singleclick.py:138
 msgid "Download Error"
@@ -2144,11 +2244,14 @@ msgid ""
 "\n"
 "URL: %(url)s"
 msgstr ""
+"%(appname)s nuk është në gjendje të shkarkojë kartelë te kjo URL:\n"
+"\n"
+"URL: %(url)s"
 
 #: ../../portable/dl_daemon/download.py:639
 #, python-format
 msgid "Could not write to %(filename)s"
-msgstr ""
+msgstr "S'shkruajti dot te %(filename)s"
 
 #: ../../portable/dl_daemon/download.py:664
 #: ../../portable/dl_daemon/download.py:881
@@ -2159,12 +2262,12 @@ msgstr "Pa hapësirë të mjaftë në disk"
 #: ../../portable/dl_daemon/download.py:882
 #, python-format
 msgid "%(amount)s MB required to store this video"
-msgstr ""
+msgstr "%(amount)s MB të nevojshme për depozitimin e kësaj videoje"
 
 #: ../../portable/dl_daemon/download.py:680
 #, python-format
 msgid "Couldn't open %(filename)s for writing"
-msgstr ""
+msgstr "S'hapi dot %(filename)s për shkrim!"
 
 #: ../../portable/dl_daemon/download.py:900
 msgid "BitTorrent failure"
@@ -2181,7 +2284,7 @@ msgstr "Përrua i Dëmtuar"
 #: ../../portable/dl_daemon/download.py:1090
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
-msgstr ""
+msgstr "Kartela torrent te %(url)s nuk qe e vlefshme"
 
 #: ../../portable/dl_daemon/download.py:1114
 msgid "Torrent file deleted"
@@ -2190,7 +2293,7 @@ msgstr "U fshi kartelë përroi"
 #: ../../portable/dl_daemon/download.py:1115
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
-msgstr ""
+msgstr "Kartela torrent për këtë objekt qe fshirë nga jashtë %(appname)ss."
 
 #: ../../portable/menubar.py:184
 msgid "_Open"
@@ -2198,7 +2301,7 @@ msgstr "_Hape"
 
 #: ../../portable/menubar.py:185
 msgid "_Download Item"
-msgstr ""
+msgstr "_Shkarkoje Objektin"
 
 #: ../../portable/menubar.py:186
 msgid "Check _Version"
@@ -2206,31 +2309,31 @@ msgstr "Kontrollo _Versionin"
 
 #: ../../portable/menubar.py:188
 msgid "_Remove Item"
-msgstr ""
+msgstr "_Hiq Objektin"
 
 #: ../../portable/menubar.py:189
 msgid "_Remove Items"
-msgstr ""
+msgstr "_Hiqi Objektet"
 
 #: ../../portable/menubar.py:190
 msgid "Re_name Item"
-msgstr ""
+msgstr "Ri_emërtoje Objektin"
 
 #: ../../portable/menubar.py:191
 msgid "Save Item _As"
-msgstr ""
+msgstr "Ruaje Objektin _Si"
 
 #: ../../portable/menubar.py:192
 msgid "Save Items _As"
-msgstr ""
+msgstr "Ruaji Objektet _Si"
 
 #: ../../portable/menubar.py:193
 msgid "Copy Item _URL"
-msgstr ""
+msgstr "Kopjo _URL Objekti"
 
 #: ../../portable/menubar.py:195
 msgid "_Options"
-msgstr ""
+msgstr "_Mundësi"
 
 #: ../../portable/menubar.py:196
 msgid "_Quit"
@@ -2254,55 +2357,55 @@ msgstr "Përzgjidhi të _Tëra"
 
 #: ../../portable/menubar.py:212
 msgid "Add _Feed"
-msgstr ""
+msgstr "Shtoni _Prurje"
 
 #: ../../portable/menubar.py:214
 msgid "New Searc_h Feed"
-msgstr ""
+msgstr "Prurje _Kërkimi të Ri"
 
 #: ../../portable/menubar.py:215
 msgid "New _Folder"
-msgstr ""
+msgstr "_Dosje e Re"
 
 #: ../../portable/menubar.py:217
 msgid "Re_name"
-msgstr ""
+msgstr "_Rimeërtoje"
 
 #: ../../portable/menubar.py:218
 msgid "_Remove"
-msgstr ""
+msgstr "_Hiqe"
 
 #: ../../portable/menubar.py:219
 msgid "_Remove Folder"
-msgstr ""
+msgstr "_Hiqe Dosjen"
 
 #: ../../portable/menubar.py:221
 msgid "_Update Feed"
-msgstr ""
+msgstr "_Përditëso Prurjen"
 
 #: ../../portable/menubar.py:222
 msgid "_Update Feeds"
-msgstr ""
+msgstr "_Përditëso Prurjet"
 
 #: ../../portable/menubar.py:223
 msgid "Update _All Feeds"
-msgstr ""
+msgstr "Përditëso _Krejt Prurjet"
 
 #: ../../portable/menubar.py:225
 msgid "_Import Feeds (OPML)"
-msgstr ""
+msgstr "_Importo Prurje (OPML)"
 
 #: ../../portable/menubar.py:226
 msgid "E_xport Feeds (OPML)"
-msgstr ""
+msgstr "_Eksporto Prurje (OPML)"
 
 #: ../../portable/menubar.py:228
 msgid "_Share with a Friend"
-msgstr ""
+msgstr "_Ndajeni me një Shok"
 
 #: ../../portable/menubar.py:229
 msgid "Copy URL"
-msgstr ""
+msgstr "Kopjo URL-në"
 
 #: ../../portable/menubar.py:233
 msgid "New _Playlist"
@@ -2374,12 +2477,12 @@ msgstr "_Tërë ekrani"
 
 #: ../../portable/menubar.py:266
 msgid "_Toggle Detached/Attached"
-msgstr ""
+msgstr "_Këmbe E ngjitur/E shqitur"
 
 #: ../../portable/menubar.py:270
 #, python-format
 msgid "_About %(name)s"
-msgstr ""
+msgstr "Rreth %(name)s"
 
 #: ../../portable/menubar.py:272
 msgid "_Donate"
@@ -2395,11 +2498,11 @@ msgstr "Njoftoni një _Bug"
 
 #: ../../portable/menubar.py:280
 msgid "_Translate"
-msgstr ""
+msgstr "_Përkthe"
 
 #: ../../portable/menubar.py:282
 msgid "_Planet Miro"
-msgstr ""
+msgstr "_Planet Miro"
 
 #: ../../portable/menubar.py:286
 msgid "_Video"
@@ -2411,7 +2514,7 @@ msgstr "_Kartelë"
 
 #: ../../portable/menubar.py:294
 msgid "_Sidebar"
-msgstr ""
+msgstr "_Anështyllë"
 
 #: ../../portable/menubar.py:295
 msgid "_Playlists"
@@ -2424,22 +2527,22 @@ msgstr ""
 #: ../../portable/util.py:297 ../../portable/util.py:299
 #, python-format
 msgid "%(size)sGB"
-msgstr ""
+msgstr "%(size)sGB"
 
 #: ../../portable/util.py:303 ../../portable/util.py:305
 #, python-format
 msgid "%(size)sMB"
-msgstr ""
+msgstr "%(size)sMB"
 
 #: ../../portable/util.py:309 ../../portable/util.py:311
 #, python-format
 msgid "%(size)sKB"
-msgstr ""
+msgstr "%(size)sKB"
 
 #: ../../portable/util.py:315 ../../portable/util.py:317
 #, python-format
 msgid "%(size)sB"
-msgstr ""
+msgstr "%(size)sB"
 
 #: ../../portable/playlist.py:200
 #, python-format
@@ -2448,48 +2551,48 @@ msgstr "Jepni emër të ri për luajlistën %s"
 
 #: ../../portable/dbupgradeprogress.py:60
 msgid "Upgrading Old Database"
-msgstr ""
+msgstr "Po përmirësohet Baza e Vjetër e të Dhënave"
 
 #: ../../portable/dbupgradeprogress.py:67
 msgid "Converting Old Database"
-msgstr ""
+msgstr "Po shndërrohet Baza e Vjetër e të Dhënave"
 
 #: ../../portable/dbupgradeprogress.py:80
 msgid "Upgrading Database"
-msgstr ""
+msgstr "Po përmirësohet Baza e të Dhënave"
 
 #: ../../portable/item.py:922
 #, python-format
 msgid "%(count)d day"
 msgid_plural "%(count)d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d ditë"
+msgstr[1] "%(count)d ditë"
 
 #: ../../portable/item.py:927
 #, python-format
 msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d orë"
+msgstr[1] "%(count)d orë"
 
 #: ../../portable/item.py:932
 #, python-format
 msgid "%(count)d minute"
 msgid_plural "%(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d minutë"
+msgstr[1] "%(count)d minuta"
 
 #: ../../portable/item.py:1193
 msgid "no title"
-msgstr ""
+msgstr "pa titull"
 
 #: ../../portable/item.py:1239
 msgid "Contents appear in the library"
-msgstr ""
+msgstr "Lënda shfaqet në bibliotekë"
 
 #: ../../portable/item.py:1244
 msgid "Contents:"
-msgstr ""
+msgstr "Lëndë:"
 
 #: ../../portable/item.py:1472
 msgid "starting up..."
@@ -2503,6 +2606,7 @@ msgstr "Importimi i  OPML-së dështoi"
 msgid ""
 "The selected OPML file appears to be invalid.  Import was interrupted."
 msgstr ""
+"Kartela OPML e përzgjedhur duket të jetë e mangët. Importi u ndërpre."
 
 #: ../../portable/opml.py:205
 msgid "OPML Import summary"
@@ -2512,15 +2616,15 @@ msgstr "Përmbledhje Importimi OPML-je"
 #, python-format
 msgid "Successfully imported %(count)d feed."
 msgid_plural "Successfully imported %(count)d feeds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "U importua me sukses %(count)d prurje."
+msgstr[1] "U importuan me sukses %(count)d prurje."
 
 #: ../../portable/opml.py:212
 #, python-format
 msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "U anashkalua %(count)d prurje e pranishme tashmë."
+msgstr[1] "U anashkaluan %(count)d prurje të pranishme tashmë."
 
 #: ../../portable/theme.py:190
 msgid "Example Playlist"
@@ -2529,126 +2633,126 @@ msgstr "Shembull Luajliste"
 #: ../../portable/displaytext.py:52
 #, python-format
 msgid "%(size)s gb/s"
-msgstr ""
+msgstr "%(size)s gb/s"
 
 #: ../../portable/displaytext.py:55
 #, python-format
 msgid "%(size)s mb/s"
-msgstr ""
+msgstr "%(size)s mb/s"
 
 #: ../../portable/displaytext.py:58
 #, python-format
 msgid "%(size)s kb/s"
-msgstr ""
+msgstr "%(size)s kb/s"
 
 #: ../../portable/displaytext.py:61
 #, python-format
 msgid "%(size)s b/s"
-msgstr ""
+msgstr "%(size)s b/s"
 
 #: ../../portable/displaytext.py:68
 #, python-format
 msgid "%(num).0f day"
 msgid_plural "%(num).0f days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f ditë"
+msgstr[1] "%(num).0f ditë"
 
 #: ../../portable/displaytext.py:71
 #, python-format
 msgid "%(num).0f hr"
 msgid_plural "%(num).0f hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f orë"
+msgstr[1] "%(num).0f orë"
 
 #: ../../portable/displaytext.py:74
 #, python-format
 msgid "%(num).0f min"
 msgid_plural "%(num).0f mins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f m"
+msgstr[1] "%(num).0f m"
 
 #: ../../portable/displaytext.py:76
 #, python-format
 msgid "%(num)d sec"
 msgid_plural "%(num)d secs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)d s"
+msgstr[1] "%(num)d s"
 
 #: ../../portable/displaytext.py:90
 #, python-format
 msgid "%(size)s gb"
-msgstr ""
+msgstr "%(size)s gb"
 
 #: ../../portable/displaytext.py:93
 #, python-format
 msgid "%(size)s mb"
-msgstr ""
+msgstr "%(size)s mb"
 
 #: ../../portable/displaytext.py:96
 #, python-format
 msgid "%(size)s kb"
-msgstr ""
+msgstr "%(size)s kb"
 
 #: ../../portable/displaytext.py:98
 #, python-format
 msgid "%(size)s b"
-msgstr ""
+msgstr "%(size)s b"
 
 #: ../../portable/displaytext.py:103
 #, python-format
 msgid "Expires in %(count)d day"
 msgid_plural "Expires in %(count)d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Skadon për %(count)d ditë"
+msgstr[1] "Skadon për %(count)d ditë"
 
 #: ../../portable/displaytext.py:108
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Skadon për %(count)d orë"
+msgstr[1] "Skadon për %(count)d orë"
 
 #: ../../portable/displaytext.py:113
 #, python-format
 msgid "Expires in %(count)d minute"
 msgid_plural "Expires in %(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Skadon për %(count)d minutë"
+msgstr[1] "Skadon për %(count)d minuta"
 
 #: ../../portable/displaytext.py:121
 #, python-format
 msgid "Expires: %(count)d day"
 msgid_plural "Expires: %(count)d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Skadon për: %(count)d ditë"
+msgstr[1] "Expires: %(count)d days"
 
 #: ../../portable/displaytext.py:126
 #, python-format
 msgid "Expires: %(count)d hour"
 msgid_plural "Expires: %(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Skadon për: %(count)d orë"
+msgstr[1] "Skadon për: %(count)d orë"
 
 #: ../../portable/displaytext.py:131
 #, python-format
 msgid "Expires: %(count)d minute"
 msgid_plural "Expires: %(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Skadon për: %(count)d minutë"
+msgstr[1] "Skadon për: %(count)d minuta"
 
 #: ../../portable/displaytext.py:142
 #, python-format
 msgid "%(month)s %(dayofmonth)s, %(year)s"
-msgstr ""
+msgstr "%(dayofmonth)s %(month)s, %(year)s"
 
 #: ../../portable/storedatabase.py:209
 msgid "Database was created by a newer version of Miro "
-msgstr ""
+msgstr "Baza e të dhënave qe krijuar për një version më të ri të Miros "
 
 #: ../../portable/storedatabase.py:466
 #, python-format
 msgid "%(appname)s database save succeeded"
-msgstr ""
+msgstr "Baza e të dhënave të %(appname)ss u ruajt me sukses"
 
 #: ../../portable/storedatabase.py:468
 msgid ""
@@ -2661,7 +2765,7 @@ msgstr ""
 #: ../../portable/storedatabase.py:483
 #, python-format
 msgid "%(appname)s database save failed"
-msgstr ""
+msgstr "Ruajtja e bazës së të dhënave %(appname)s dështoi"
 
 #: ../../portable/storedatabase.py:486
 #, python-format
@@ -2702,7 +2806,7 @@ msgstr "Shërbime"
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:141
 #, python-format
 msgid "Hide %(appname)s"
-msgstr ""
+msgstr "Fshihe %(appname)sn"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:143
 msgid "Hide Others"
@@ -2719,7 +2823,7 @@ msgstr "Parapëlqime..."
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:151
 #, python-format
 msgid "Quit %(appname)s"
-msgstr ""
+msgstr "Dil nga %(appname)s"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
 msgid "Close Window"
@@ -2747,19 +2851,19 @@ msgstr "Përpunoni"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:172
 msgid "Present Half Size"
-msgstr ""
+msgstr "Gjysma e Madhësisës së Tanishme"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:173
 msgid "Present Actual Size"
-msgstr ""
+msgstr "Madhësia e Tanishme e Plotë"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:174
 msgid "Present Double Size"
-msgstr ""
+msgstr "Dyfishi i Madhësisës së Tanishme"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:176
 msgid "Present Video"
-msgstr ""
+msgstr "Videoja e Tanishme"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
 msgid "Zoom"
@@ -2784,12 +2888,12 @@ msgstr "Dritare"
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:195
 #, python-format
 msgid "%(appname)s Help"
-msgstr ""
+msgstr "Ndihmë për %(appname)sn"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:39
 msgid "Enable tray icon"
-msgstr ""
+msgstr "Aktivizo ikonë paneli"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
 msgid "Renderer options:"
@@ -2799,6 +2903,8 @@ msgstr "Opsionet e renderuesit"
 #, python-format
 msgid "You must restart %(appname)s for renderer changes to take effect."
 msgstr ""
+"Që të hyjnë në veprim ndryshimet për vizatuesinve, duhet të rinisni "
+"%(appname)sn."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:74
 msgid "Video renderer:"
@@ -2811,15 +2917,15 @@ msgstr "Përditësim i Passhëm"
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
 #, python-format
 msgid "A new version of %(appname)s is available for download."
-msgstr ""
+msgstr "Ka për shkarkim një version të ri të %(appname)ss."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
-msgstr ""
+msgstr "Doni të shkarkohet tani?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
-msgstr ""
+msgstr "Të instalohet Adobe Flash?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
 #, python-format
@@ -2827,10 +2933,12 @@ msgid ""
 "For the best %(appname)s experience, we suggest you install Adobe Flash.  "
 "Would you like to do this now?"
 msgstr ""
+"Për funksionimin sa më të mirë të %(appname)ss, këshillojmë instalimin e "
+"Adobe Flash. Donita bëni këtë tani?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
-msgstr ""
+msgstr "Instaloni Adobe Flash"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
 #, python-format
@@ -2841,6 +2949,11 @@ msgid ""
 "You should quit %(appname)s now and start it up again after Adobe Flash has "
 "been installed."
 msgstr ""
+"Shfletuesi juaj do të ngarkojë \"site\"-in web prej nga mund të shkarkoni "
+"dhe instaloni Adobe Flash-in.\n"
+"\n"
+"Do ishte mirë ta mbyllni %(appname)sn tani dhe ta nisni prapë pasi të jetë "
+"instaluar Adobe Flash."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
 msgid "When I click the red close button:"
@@ -2853,7 +2966,7 @@ msgstr "Ule në panel e kështu të mund të vazhdojnë shkarkimet."
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
 #, python-format
 msgid "Quit %(appname)s completely."
-msgstr ""
+msgstr "Dil plotësisht nga %(appname)s."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:133
 msgid "Close to tray?"
@@ -2865,6 +2978,9 @@ msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
+"Kur klikoni butonin e kuq të mbylljes, doni që %(appname)s ta ulet te paneli "
+"i sistemit apo të dalë? Këtë rregullim mund ta ndryshoni edhe më vonë te "
+"Mundësitë."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:192
 msgid "Error Bombing Item"
@@ -2883,3 +2999,5 @@ msgstr "Gabim në Hapjen e &quot;Website&quot;-it"
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr ""
+"Pati një gabim gjatë hapjes së %(url)s. Ju lutem, riprovoni pas pak "
+"sekondash."

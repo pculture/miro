@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
+"X-Launchpad-Export-Date: 2009-12-02 16:29+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -127,11 +127,11 @@ msgstr ""
 
 #: ../../portable/httpclient.py:376
 msgid "Unknown Error code"
-msgstr ""
+msgstr "Невядомы код памылкі"
 
 #: ../../portable/httpclient.py:408
 msgid "Connection closed"
-msgstr "Спалучэньне спыненае"
+msgstr "Спалучэньне закрыта"
 
 #: ../../portable/httpclient.py:829
 msgid "Unknown"
@@ -139,7 +139,7 @@ msgstr "Нявядома"
 
 #: ../../portable/httpclient.py:830
 msgid "Internal Error: Not ready to send"
-msgstr ""
+msgstr "Унутраная памылка: перасылка не гатовая"
 
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
@@ -175,7 +175,7 @@ msgstr "Дадаць сьпіс"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
 msgid "Add items to an existing playlist or a new one."
-msgstr "Дадаць элементы дя існуючага сьпісу ці ў новы."
+msgstr "Дадаць элементы да існуючага сьпісу ці ў новы."
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
 msgid "Existing playlist:"
@@ -183,11 +183,11 @@ msgstr "Існуючы сьпіс:"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
 msgid "New playlist:"
-msgstr ""
+msgstr "Новы сьпіс:"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
-msgstr ""
+msgstr "Выдаліць з бібліятэкі"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
 #: ../../portable/frontends/widgets/gtk/video.py:246
@@ -196,40 +196,40 @@ msgstr ""
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:127
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:163
 msgid "Delete"
-msgstr ""
+msgstr "Выдаліць"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:94
 #: ../../portable/frontends/widgets/itemcontextmenu.py:191
 msgid "Play"
-msgstr ""
+msgstr "Прайграваць"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just This Item"
-msgstr ""
+msgstr "Прайграваць толькі гэты элемент"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:96
 #: ../../portable/frontends/widgets/itemcontextmenu.py:192
 msgid "Add to Playlist"
-msgstr ""
+msgstr "Дадаць у сьпіс"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:99
 #: ../../portable/frontends/widgets/application.py:495
 msgid "Rename Item"
-msgstr ""
+msgstr "Перайменаваць"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:101
 msgid "Revert Item Name"
-msgstr ""
+msgstr "Вярнуть папярэдняе імя"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:103
 #: ../../portable/frontends/widgets/itemcontextmenu.py:199
 msgid "Mark as Unplayed"
-msgstr ""
+msgstr "Пазначыць як непрагледжаны"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:106
 #: ../../portable/frontends/widgets/itemcontextmenu.py:204
 msgid "Mark as Played"
-msgstr ""
+msgstr "Пазначыць як прагледжаны"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:210
@@ -240,7 +240,7 @@ msgstr ""
 #: ../../portable/dialogs.py:108
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:123
 msgid "Keep"
-msgstr ""
+msgstr "Пакінуць"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:112
 msgid "Stop Seeding"
@@ -254,17 +254,17 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemcontextmenu.py:239
 #: ../../portable/frontends/widgets/itemcontextmenu.py:257
 msgid "Cancel Download"
-msgstr ""
+msgstr "Скасаваць пампаваньне"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:121
 #: ../../portable/frontends/widgets/itemcontextmenu.py:240
 msgid "Pause Download"
-msgstr ""
+msgstr "Прапыніць пампаваньне"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:124
 #: ../../portable/frontends/widgets/itemcontextmenu.py:253
 msgid "Resume Download"
-msgstr ""
+msgstr "Узнавіць пампаваньне"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:128
 #: ../../portable/frontends/widgets/itemcontextmenu.py:223
@@ -272,26 +272,26 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:1102
 #: ../../portable/frontends/widgets/style.py:1113 ../../portable/dialogs.py:97
 msgid "Download"
-msgstr ""
+msgstr "Спампаваць"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:134
 #: ../../portable/frontends/widgets/style.py:240
 msgid "Web Page"
-msgstr ""
+msgstr "Старонка Сеціва"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:136
 #: ../../portable/frontends/widgets/style.py:236
 #: ../../portable/frontends/widgets/gtk/video.py:271
 msgid "Comments"
-msgstr ""
+msgstr "Камэнтары"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:138
 msgid "License"
-msgstr ""
+msgstr "Ліцэнзія"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:141
 msgid "File in Browser"
-msgstr ""
+msgstr "Файл у праглядчыку"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:143
 #, python-format
@@ -300,17 +300,17 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:145
 msgid "File on Disk"
-msgstr ""
+msgstr "Файл на дыску"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:148
 msgid "View"
-msgstr ""
+msgstr "Праглядзець"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
 #: ../../portable/frontends/widgets/gtk/video.py:266
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:119
 msgid "Share"
-msgstr ""
+msgstr "Падзяліцца"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:186
 #, python-format
@@ -342,17 +342,17 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:263
 msgid "Restart Upload"
-msgstr ""
+msgstr "Рэстарт запампоўкі"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:277
 msgid "Remove From Playlist"
-msgstr ""
+msgstr "Выдаліць са сьпісу"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:55
 #: ../../portable/frontends/widgets/feedsettingspanel.py:102
 #: ../../portable/frontends/widgets/prefpanel.py:588
 msgid "never"
-msgstr ""
+msgstr "ніколі"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:58
 #, python-format
@@ -377,7 +377,7 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Videos:"
-msgstr ""
+msgstr "Аўтаматычна выдаленае відэа:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:95
 #, python-format
@@ -386,27 +386,27 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
-msgstr ""
+msgstr "Прагледжана 1 дзень таму"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr ""
+msgstr "Прагледжана 3 дні таму"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
-msgstr ""
+msgstr "Прагледжана 6 дзён таму"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:100
 msgid "Watched 10 days ago"
-msgstr ""
+msgstr "Прагледжана 10 дзён таму"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
-msgstr ""
+msgstr "Прагледжана 1 месяц таму"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
-msgstr ""
+msgstr "Састарэлыя элементы плыні:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:139
 #, python-format
@@ -415,59 +415,59 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:141
 msgid "Keep 0"
-msgstr ""
+msgstr "Захоўваць 0"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:142
 msgid "Keep 20"
-msgstr ""
+msgstr "Захоўваць 20"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:143
 msgid "Keep 50"
-msgstr ""
+msgstr "Захоўваць 50"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:144
 msgid "Keep 100"
-msgstr ""
+msgstr "Захоўваць 100"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:145
 msgid "Keep 1000"
-msgstr ""
+msgstr "Захоўваць 1000"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
-msgstr ""
+msgstr "Выдаліць усё"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
-msgstr ""
+msgstr "Старыя элементы былі выдаленыя."
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause Auto-Downloading when this many items are unplayed:"
-msgstr ""
+msgstr "Прыпыніць аўта-спампаваньне калі ёсьць непрагледжаных элементаў:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
-msgstr ""
+msgstr "1 непрагледжаны элемент"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:198
 msgid "3 unplayed items"
-msgstr ""
+msgstr "3 непрагледжаных элемента"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:199
 msgid "5 unplayed items"
-msgstr ""
+msgstr "5 непрагледжаных элементаў"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:200
 msgid "10 unplayed items"
-msgstr ""
+msgstr "10 непрагледжаных элементаў"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:201
 msgid "15 unplayed items"
-msgstr ""
+msgstr "15 непрагледжаных элементаў"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:241
 msgid "Feed Settings"
-msgstr ""
+msgstr "Наладкі плыні"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:63
 #, python-format
@@ -499,17 +499,17 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:178
 #: ../../portable/dialogs.py:89
 msgid "Yes"
-msgstr ""
+msgstr "Так"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:145
 #: ../../portable/frontends/widgets/firsttimedialog.py:177
 #: ../../portable/dialogs.py:90
 msgid "No"
-msgstr ""
+msgstr "Не"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:153
 msgid "Next >"
-msgstr ""
+msgstr "Наступны >"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:163
 #, python-format
@@ -527,32 +527,32 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:185
 msgid "Restrict to all my personal files."
-msgstr ""
+msgstr "Абмежаваць толькі персанальнымі файламі."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:186
 msgid "Search custom folders:"
-msgstr ""
+msgstr "Шукаць іньшыя тэчкі:"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:192
 #: ../../portable/frontends/widgets/prefpanel.py:438
 msgid "Change"
-msgstr ""
+msgstr "Зьмяніць"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:197
 msgid "Choose directory to search for media files"
-msgstr ""
+msgstr "Абярыце тэчку для пошуку медыя файлаў"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:211
 #: ../../portable/frontends/widgets/firsttimedialog.py:290
 msgid "< Previous"
-msgstr ""
+msgstr "< Папярэдні"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:223
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:282
 #: ../../portable/feed.py:2300 ../../portable/feed.py:2407
 msgid "Search"
-msgstr ""
+msgstr "Пошук"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:293
@@ -561,12 +561,12 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:273
 msgid "Searching for media files"
-msgstr ""
+msgstr "Пошук медыя файлаў"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:283
 #: ../../portable/dialogs.py:87
 msgid "Cancel"
-msgstr ""
+msgstr "Скасаваць"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:321
 #, python-format
@@ -594,26 +594,28 @@ msgid ""
 "Include entire program database including all video and feed metadata with "
 "crash report"
 msgstr ""
+"Уключыць у справаздачу поўныя дадзеныя праграмы улучна з дадзенымі відэа і "
+"плыняў"
 
 #: ../../portable/frontends/widgets/crashdialog.py:68
 msgid "Describe what you were doing when you got this error:"
-msgstr ""
+msgstr "Напішыце што вы рабілі падчас узьнікненьня памылкі:"
 
 #: ../../portable/frontends/widgets/style.py:232
 msgid "From"
-msgstr ""
+msgstr "Адкуль"
 
 #: ../../portable/frontends/widgets/style.py:233
 msgid "File name:"
-msgstr ""
+msgstr "Імя файла:"
 
 #: ../../portable/frontends/widgets/style.py:234
 msgid "Show More"
-msgstr ""
+msgstr "Паказаць больш"
 
 #: ../../portable/frontends/widgets/style.py:235
 msgid "Show Less"
-msgstr ""
+msgstr "Паказаць меньш"
 
 #: ../../portable/frontends/widgets/style.py:238
 #, python-format
@@ -623,23 +625,23 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:238
 #: ../../portable/frontends/widgets/displays.py:390
 msgid "Reveal File"
-msgstr ""
+msgstr "Пабачыць файл"
 
 #: ../../portable/frontends/widgets/style.py:239
 msgid "Display Contents"
-msgstr ""
+msgstr "Паказаць зьмесьціва"
 
 #: ../../portable/frontends/widgets/style.py:241
 msgid "File URL"
-msgstr ""
+msgstr "URL файла"
 
 #: ../../portable/frontends/widgets/style.py:242
 msgid "License Page"
-msgstr ""
+msgstr "Старонка ліцэнзіі"
 
 #: ../../portable/frontends/widgets/style.py:243
 msgid "File Type"
-msgstr ""
+msgstr "Тып файла"
 
 #: ../../portable/frontends/widgets/style.py:244
 msgid "Seeders"
@@ -651,11 +653,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:246
 msgid "Upload Rate"
-msgstr ""
+msgstr "Хуткасьць запампаваньня"
 
 #: ../../portable/frontends/widgets/style.py:247
 msgid "Upload Total"
-msgstr ""
+msgstr "Усяго запампавана"
 
 #: ../../portable/frontends/widgets/style.py:248
 msgid "Down Rate"
@@ -667,31 +669,31 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:251
 msgid "Download Torrent"
-msgstr ""
+msgstr "Спампаваць Торэнт"
 
 #: ../../portable/frontends/widgets/style.py:252
 #: ../../portable/dl_daemon/download.py:550
 msgid "Error"
-msgstr ""
+msgstr "Памылка"
 
 #: ../../portable/frontends/widgets/style.py:253
 msgid "queued for autodownload"
-msgstr ""
+msgstr "будзе аўтаматычна спампавана"
 
 #: ../../portable/frontends/widgets/style.py:254
 #: ../../portable/frontends/widgets/style.py:1153
 #: ../../portable/frontends/widgets/itemlistwidgets.py:721
 msgid "Unplayed"
-msgstr ""
+msgstr "Непрагледжанае"
 
 #: ../../portable/frontends/widgets/style.py:255
 msgid "Currently Playing"
-msgstr ""
+msgstr "Зараз прайграецца"
 
 #: ../../portable/frontends/widgets/style.py:256
 #: ../../portable/frontends/widgets/style.py:1171
 msgid "Newly Available"
-msgstr ""
+msgstr "Дадалося новае"
 
 #: ../../portable/frontends/widgets/style.py:258
 #: ../../portable/frontends/widgets/prefpanel.py:488
@@ -703,7 +705,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/tablist.py:646
 #: ../../portable/dialogs.py:110
 msgid "Remove"
-msgstr ""
+msgstr "Выдаліць"
 
 #: ../../portable/frontends/widgets/style.py:259
 msgid "Stop seeding"
@@ -712,11 +714,11 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:571
 #: ../../portable/frontends/widgets/style.py:1164
 msgid "paused"
-msgstr ""
+msgstr "прыпынена"
 
 #: ../../portable/frontends/widgets/style.py:1034
 msgid "Remove from playlist"
-msgstr ""
+msgstr "Выдаліць са сьпісу"
 
 #: ../../portable/frontends/widgets/displays.py:372
 #, python-format
@@ -731,20 +733,20 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/displays.py:385
 msgid "File type:"
-msgstr ""
+msgstr "Тып файла:"
 
 #: ../../portable/frontends/widgets/displays.py:391
 #: ../../portable/frontends/widgets/displays.py:428
 msgid "Play Externally"
-msgstr ""
+msgstr "Зьнешні прагляд"
 
 #: ../../portable/frontends/widgets/displays.py:393
 msgid "Skip"
-msgstr ""
+msgstr "Абмінуць"
 
 #: ../../portable/frontends/widgets/displays.py:430
 msgid "Open Externally"
-msgstr ""
+msgstr "Зьнешні прагляд"
 
 #: ../../portable/frontends/widgets/displays.py:536
 #, python-format
@@ -797,31 +799,31 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/displays.py:581
 msgid "Delete All"
-msgstr ""
+msgstr "Выдаліць усё"
 
 #: ../../portable/frontends/widgets/displays.py:585
 msgid "Put Into a New Folder"
-msgstr ""
+msgstr "Зьмясьціць у новую тэчку"
 
 #: ../../portable/frontends/widgets/rundialog.py:82
 msgid "Username:"
-msgstr ""
+msgstr "Карыстальнік:"
 
 #: ../../portable/frontends/widgets/rundialog.py:86
 msgid "Password:"
-msgstr ""
+msgstr "Пароль:"
 
 #: ../../portable/frontends/widgets/browser.py:96
 msgid "Open in browser"
-msgstr ""
+msgstr "Адкрыць у браўзеры"
 
 #: ../../portable/frontends/widgets/browser.py:102
 msgid "Download this video"
-msgstr ""
+msgstr "Спампаваць гэтае відэа"
 
 #: ../../portable/frontends/widgets/application.py:156
 msgid "Movies directory gone"
-msgstr ""
+msgstr "Тэчка з фільмамі ня знойдзена"
 
 #: ../../portable/frontends/widgets/application.py:158
 #, python-format
@@ -843,7 +845,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:326
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Памылка атрыманьня файлу"
 
 #: ../../portable/frontends/widgets/application.py:327
 #, python-format
@@ -852,12 +854,12 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:335
 msgid "Open Files..."
-msgstr ""
+msgstr "Адкрыць файлы..."
 
 #: ../../portable/frontends/widgets/application.py:346
 #: ../../portable/frontends/widgets/application.py:351
 msgid "Open Files - Error"
-msgstr ""
+msgstr "Адкрыць файлы - памылка"
 
 #: ../../portable/frontends/widgets/application.py:347
 #: ../../portable/frontends/widgets/application.py:634
@@ -867,19 +869,19 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:352
 msgid "The following files do not exist:"
-msgstr ""
+msgstr "Наступныя файлы ня існуюць:"
 
 #: ../../portable/frontends/widgets/application.py:389
 msgid "New Download"
-msgstr ""
+msgstr "Новая запампоўка"
 
 #: ../../portable/frontends/widgets/application.py:390
 msgid "Enter the URL of the item to download"
-msgstr ""
+msgstr "Увядзіце URL каб спампаваць элемент"
 
 #: ../../portable/frontends/widgets/application.py:391
 msgid "New Download - Invalid URL"
-msgstr ""
+msgstr "Новая запампоўка - несапраўдны URL"
 
 #: ../../portable/frontends/widgets/application.py:392
 msgid ""
@@ -888,6 +890,10 @@ msgid ""
 "\n"
 "Enter the URL of the item to download"
 msgstr ""
+"Адрас, які вы увялі, ня ёсьць правільны URL.\n"
+"Праверце URL і паспрабуйце зноў.\n"
+"\n"
+"Увядзіце URL каб спампаваць элемент."
 
 #: ../../portable/frontends/widgets/application.py:400
 #, python-format
@@ -902,8 +908,8 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:426
 msgid "Remove item"
 msgid_plural "Remove items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Прыбраць элемэнт"
+msgstr[1] "Прыбраць элементы"
 
 #: ../../portable/frontends/widgets/application.py:430
 msgid ""
@@ -913,7 +919,11 @@ msgid_plural ""
 "Some of these items were not downloaded from a feed. Would you like to "
 "delete them or just remove them from the Library?"
 msgstr[0] ""
+"Адзін з элементаў ня быў атрыманы праз плынь. Вы жадаеце выдаліць яго ці "
+"толькі прыбраць са сьпісу?"
 msgstr[1] ""
+"Некаторыя элементы ня былі атрыманыя праз плынь. Вы жадаеце выдаліць іх ці "
+"толькі прыбраць са сьпісу?"
 
 #: ../../portable/frontends/widgets/application.py:440
 msgid ""
@@ -923,7 +933,9 @@ msgid_plural ""
 "Some of these items are folders.  Delete/Removeing a folder will "
 "delete/remove it's contents"
 msgstr[0] ""
+"Адзін з элементаў ёсьць тэчкаю. Выдаленьне тэчкі выдаляе ўсё зьмесьціва"
 msgstr[1] ""
+"Некаторыя элементы ёсьць тэчкамі. Выдаленьне тэчкі выдаляе ўсё зьмесьціва"
 
 #: ../../portable/frontends/widgets/application.py:455
 #, python-format
@@ -938,28 +950,30 @@ msgid ""
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
 msgstr[0] ""
+"Адзін з элементаў ёсьць тэчкаю. Выдаленьне тэчкі выдаляе ўсё яе зьмесьціва"
 msgstr[1] ""
+"Некаторыя элементы ёсьць тэчкамі. Выдаленьне тэчкі выдаляе ўсё яе зьмесьціва"
 
 #: ../../portable/frontends/widgets/application.py:496
 msgid "Enter the new name for the item"
-msgstr ""
+msgstr "Увядзіце новае імя элемента"
 
 #: ../../portable/frontends/widgets/application.py:519
 msgid "Save Item As..."
-msgstr ""
+msgstr "Захаваць элемент як..."
 
 #: ../../portable/frontends/widgets/application.py:572
 #: ../../portable/menubar.py:213
 msgid "Add Site"
-msgstr ""
+msgstr "Дадаць сайт"
 
 #: ../../portable/frontends/widgets/application.py:573
 msgid "Enter the URL of the site to add"
-msgstr ""
+msgstr "Увядзіце URL каб дадаць сайт"
 
 #: ../../portable/frontends/widgets/application.py:574
 msgid "Add Site - Invalid URL"
-msgstr ""
+msgstr "Дадаць сайт - несапраўдны URL"
 
 #: ../../portable/frontends/widgets/application.py:575
 msgid ""
@@ -968,43 +982,47 @@ msgid ""
 "\n"
 "Enter the URL of the site to add"
 msgstr ""
+"Уведзены адрас ня ёсьць сапраўдны URL.\n"
+"Праверце URL і паспрабуйце зноў.\n"
+"\n"
+"Увядзіце URL каб дадаць сайт"
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
-msgstr ""
+msgstr "Імпартаваць файл OPML"
 
 #: ../../portable/frontends/widgets/application.py:626
 msgid "OPML Files"
-msgstr ""
+msgstr "Файлы OPML"
 
 #: ../../portable/frontends/widgets/application.py:633
 msgid "Import OPML File - Error"
-msgstr ""
+msgstr "Імпартаваць файл OPML - памылка"
 
 #: ../../portable/frontends/widgets/application.py:639
 msgid "Export OPML File"
-msgstr ""
+msgstr "Экспарт файлу OPML"
 
 #: ../../portable/frontends/widgets/application.py:663
 msgid "Create Playlist"
-msgstr ""
+msgstr "Стварыць сьпіс"
 
 #: ../../portable/frontends/widgets/application.py:664
 msgid "Enter a name for the new playlist"
-msgstr ""
+msgstr "Увядзіце імя новага сьпісу"
 
 #: ../../portable/frontends/widgets/application.py:685
 msgid "Create Playlist Folder"
-msgstr ""
+msgstr "Стварыць тэчку са сьпісамі"
 
 #: ../../portable/frontends/widgets/application.py:686
 msgid "Enter a name for the new playlist folder"
-msgstr ""
+msgstr "Увядзіце імя новай тэчкі са сьпісамі"
 
 #: ../../portable/frontends/widgets/application.py:707
 #: ../../portable/frontends/widgets/tablist.py:579
 msgid "Rename Feed Folder"
-msgstr ""
+msgstr "Пераназваць тэчку з плынямі"
 
 #: ../../portable/frontends/widgets/application.py:708
 #, python-format
@@ -1013,7 +1031,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:712
 msgid "Rename Feed"
-msgstr ""
+msgstr "Пераназваць плынь"
 
 #: ../../portable/frontends/widgets/application.py:713
 #, python-format
@@ -1024,7 +1042,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/tablist.py:640
 #: ../../portable/playlist.py:199
 msgid "Rename Playlist"
-msgstr ""
+msgstr "Пераназваць сьпіс"
 
 #: ../../portable/frontends/widgets/application.py:718
 #, python-format
@@ -1034,7 +1052,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:722
 #: ../../portable/frontends/widgets/tablist.py:634
 msgid "Rename Playlist Folder"
-msgstr ""
+msgstr "Пераназваць тэчку са сьпісамі"
 
 #: ../../portable/frontends/widgets/application.py:723
 #, python-format
@@ -1044,7 +1062,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:726
 #: ../../portable/frontends/widgets/tablist.py:529
 msgid "Rename Site"
-msgstr ""
+msgstr "Пераназваць сайт"
 
 #: ../../portable/frontends/widgets/application.py:727
 #, python-format

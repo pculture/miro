@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
+"X-Launchpad-Export-Date: 2009-12-02 16:28+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -916,7 +916,7 @@ msgstr "Следующие файлы не существуют:"
 
 #: ../../portable/frontends/widgets/application.py:389
 msgid "New Download"
-msgstr "Новая закачка"
+msgstr "Новая загрузка"
 
 #: ../../portable/frontends/widgets/application.py:390
 msgid "Enter the URL of the item to download"
@@ -924,7 +924,7 @@ msgstr "Введите URL файла, чтобы скачать его"
 
 #: ../../portable/frontends/widgets/application.py:391
 msgid "New Download - Invalid URL"
-msgstr "Новая закачка - Некорректный адрес URL"
+msgstr "Новая загрузка - Некорректный адрес URL"
 
 #: ../../portable/frontends/widgets/application.py:392
 msgid ""
@@ -1222,7 +1222,7 @@ msgstr "Автоматически запускать %(appname)s когда я 
 
 #: ../../portable/frontends/widgets/prefpanel.py:272
 msgid "Warn me if I attempt to quit with downloads in progress."
-msgstr "При выходе из программы предупреждать о незавершенных закачках."
+msgstr "При выходе из программы предупреждать о незавершенных загрузках."
 
 #: ../../portable/frontends/widgets/prefpanel.py:282
 msgid "Every day"
@@ -1301,11 +1301,12 @@ msgstr "(в дополнение к текущему содержимому)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:341
 msgid "Maximum number of manual downloads at a time:"
-msgstr "Максимальное число загрузок вручную одновременно:"
+msgstr "Максимальное количество одновременных загрузок, запущенных вручную:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:348
 msgid "Maximum number of auto-downloads at a time:"
-msgstr "Максимальное количество одновременных автоматических закачек:"
+msgstr ""
+"Максимальное количество одновременных загрузок, запущенных автоматически:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:358
 msgid "Bittorrent:"
@@ -1338,7 +1339,7 @@ msgstr "Конечный порт:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:413
 msgid "Automatically forward ports.  (UPNP)"
-msgstr "Автоматически переадресовывать порты. (UPNP)"
+msgstr "Автоматически перенаправлять порты. (UPNP)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:417
 msgid "Ignore unencrypted connections."
@@ -1363,9 +1364,9 @@ msgid ""
 "migrate your existing downloads there? (Currently downloading movies will "
 "not be moved until they finish.)"
 msgstr ""
-"Вы выбрали новый каталог для закачки видео. Должна ли %(appname)s "
-"переместить туда существующие закачки? (активные закачки не будут перемещены "
-"до момента их завершения.)"
+"Вы выбрали новый каталог для загрузки видео. Должна ли %(appname)s "
+"переместить туда существующие загрузки? (Активные загрузки не будут "
+"перемещены до момента их завершения.)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:485
 #: ../../portable/dialogs.py:106
@@ -1708,14 +1709,11 @@ msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
 "%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
 msgstr[0] ""
-"%(count)d загрузка поставлена в очередь из-за наличия роликов, которые ни "
-"разу не проигрывались (см. настройки)"
+"%(count)d загрузка в очереди из-за непроигранных роликов (см. настройки)"
 msgstr[1] ""
-"%(count)d загрузки поставлены в очередь из-за наличия роликов, которые ни "
-"разу не проигрывались (см. настройки)"
+"%(count)d загрузки в очереди из-за непроигранных роликов (см. настройки)"
 msgstr[2] ""
-"%(count)d загрузок поставлены в очередь из-за наличия роликов, которые ни "
-"разу не проигрывались (см. настройки)"
+"%(count)d загрузок в очереди из-за непроигранных роликов (см. настройки)"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:275
 #, python-format
@@ -1743,7 +1741,7 @@ msgstr "Чтобы добавить вещание введите его URL а�
 
 #: ../../portable/frontends/widgets/newfeed.py:123
 msgid "Add Feed - Invalid URL"
-msgstr "Добавить вещание - Неправильный URL адрес"
+msgstr "Добавить вещание - Неправильный адрес URL"
 
 #: ../../portable/frontends/widgets/newfeed.py:124
 msgid ""
@@ -2399,7 +2397,7 @@ msgstr "Выделить_все"
 
 #: ../../portable/menubar.py:212
 msgid "Add _Feed"
-msgstr "Добавить канал вещание:"
+msgstr "Добавить вещание:"
 
 #: ../../portable/menubar.py:214
 msgid "New Searc_h Feed"
@@ -3015,7 +3013,7 @@ msgstr "Когда я нажимаю красную кнопку закрыти�
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Close to tray so that downloads can continue."
-msgstr "Свернуть в область уведомления и продолжить закачки"
+msgstr "Свернуть в область уведомления и продолжить загрузку"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
 #, python-format

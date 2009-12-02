@@ -15,13 +15,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-11-18 21:45+0000\n"
+"X-Launchpad-Export-Date: 2009-12-02 16:28+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
 #, python-format
 msgid "Error: %(msg)s"
-msgstr "kesalahan: %(msg)s"
+msgstr "Kesalahan: %(msg)s"
 
 #: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
 msgid "Can't connect"
@@ -43,22 +43,22 @@ msgstr "Kesalahan HTTP"
 #: ../../portable/httpclient.py:119
 #, python-format
 msgid "Bad Status Line: %(msg)s"
-msgstr "Bad Status Line: %(msg)s"
+msgstr "Baris Status Tidak Benar: %(msg)s"
 
 #: ../../portable/httpclient.py:124
 #, python-format
 msgid "Bad Header Line: %(msg)s"
-msgstr "Bad Header Line: %(msg)s"
+msgstr "Baris Header Tidak Benar: %(msg)s"
 
 #: ../../portable/httpclient.py:129
 #, python-format
 msgid "Bad Chunk size: %(msg)s"
-msgstr "Bad Chunk size: %(msg)s"
+msgstr "Ukuran Bongkahan Tidak Benar: %(msg)s"
 
 #: ../../portable/httpclient.py:134
 #, python-format
 msgid "Expected CRLF got: %(character)r"
-msgstr "Expected CRLF got: %(character)r"
+msgstr "CRLF yang Diharapkan mendapatkan: %(character)r"
 
 #: ../../portable/httpclient.py:139
 #, python-format
@@ -77,7 +77,7 @@ msgstr "Mendapatkan kode status 404"
 #: ../../portable/httpclient.py:147
 #, python-format
 msgid "Bad Status Code: %(code)s"
-msgstr "Bad Status Code: %(code)s"
+msgstr "Kode Status Tidak Benar: %(code)s"
 
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"
@@ -90,7 +90,7 @@ msgstr "Kesalahan Internal"
 
 #: ../../portable/httpclient.py:158
 msgid "Pipeline request never started"
-msgstr "Pipeline request never started"
+msgstr "Permintaan pipa saluran tidak pernah dimulai"
 
 #: ../../portable/httpclient.py:162
 msgid "Timeout"
@@ -108,12 +108,12 @@ msgstr "URL Tidak Valid"
 #: ../../portable/httpclient.py:168
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr "\"%(url)s\" is not a valid URL"
+msgstr "%(url)s\" bukan merupakan URL yang sah"
 
 #: ../../portable/httpclient.py:174
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
-msgstr "The file \"%(path)s\" doesn't exist"
+msgstr "Berkas \"%(path)s\"  tidak ada"
 
 #: ../../portable/httpclient.py:178
 msgid "Read error"
@@ -122,7 +122,7 @@ msgstr "Kesalahan baca"
 #: ../../portable/httpclient.py:179
 #, python-format
 msgid "Error while reading from \"%(path)s\""
-msgstr "Error while reading from \"%(path)s\""
+msgstr "Ada kesalahan saat membaca dari \"%(path)s\""
 
 #: ../../portable/httpclient.py:376
 msgid "Unknown Error code"
@@ -182,7 +182,7 @@ msgstr "Playlist saat ini:"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
 msgid "New playlist:"
-msgstr "PLaylist baru:"
+msgstr "Playlist baru:"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
@@ -290,16 +290,16 @@ msgstr "Lisensi"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:141
 msgid "File in Browser"
-msgstr ""
+msgstr "Berkas dalam Peramban"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:143
 #, python-format
 msgid "File in %(progname)s"
-msgstr ""
+msgstr "Berkas dalam %(progname)s"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:145
 msgid "File on Disk"
-msgstr ""
+msgstr "Berkas dalam Disk"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:148
 msgid "View"
@@ -333,8 +333,7 @@ msgstr[0] "%(count)d Item Diunduh"
 #, python-format
 msgid "%(count)d Paused Item"
 msgid_plural "%(count)d Paused Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Item Tertahan"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:263
 msgid "Restart Upload"
@@ -366,8 +365,7 @@ msgstr[0] "%(count)d hari yang lalu"
 #, python-format
 msgid "%(count)d month ago"
 msgid_plural "%(count)d months ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d bulan yang lalu"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Videos:"

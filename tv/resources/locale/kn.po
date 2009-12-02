@@ -15,30 +15,30 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-11-18 21:44+0000\n"
+"X-Launchpad-Export-Date: 2009-12-02 16:28+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
 #, python-format
 msgid "Error: %(msg)s"
-msgstr ""
+msgstr "ದೋಷ: %(msg)s"
 
 #: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
 msgid "Can't connect"
-msgstr ""
+msgstr "ಸಂಪರ್ಕಿಸಲಾಗುತಿಲ್ಲ"
 
 #: ../../portable/httpclient.py:105
 #, python-format
 msgid "Connection Error: %(msg)s"
-msgstr ""
+msgstr "ಸಂಪರ್ಕ ದೋಷ: %(msg)s"
 
 #: ../../portable/httpclient.py:111
 msgid "SSL connection error"
-msgstr ""
+msgstr "SSL ಸಂಪರ್ಕ ದೋಷ"
 
 #: ../../portable/httpclient.py:115
 msgid "HTTP error"
-msgstr ""
+msgstr "HTTP ದೋಷ"
 
 #: ../../portable/httpclient.py:119
 #, python-format
@@ -48,7 +48,7 @@ msgstr ""
 #: ../../portable/httpclient.py:124
 #, python-format
 msgid "Bad Header Line: %(msg)s"
-msgstr ""
+msgstr "ಅಹಿತವಾದ ಶಿರೋನಾಮೆ: %(msg)s"
 
 #: ../../portable/httpclient.py:129
 #, python-format
@@ -81,16 +81,16 @@ msgstr ""
 
 #: ../../portable/httpclient.py:152
 msgid "Authorization failed"
-msgstr ""
+msgstr "ಒಪ್ಪಿಗೆ ವಿಫಲವಾಗಿದೆ."
 
 #: ../../portable/httpclient.py:157
 #: ../../portable/frontends/widgets/crashdialog.py:48
 msgid "Internal Error"
-msgstr ""
+msgstr "ಆಂತರಿಕ ತೊಂದರೆ"
 
 #: ../../portable/httpclient.py:158
 msgid "Pipeline request never started"
-msgstr ""
+msgstr "ಪೈಪ್‌ಲೈನ್‌ ಕೋರಿಕೆಯು ಪ್ರಾರಂಭಗೊಂಡಿಲ್ಲ"
 
 #: ../../portable/httpclient.py:162
 msgid "Timeout"
@@ -122,7 +122,7 @@ msgstr "ಓದುವಲ್ಲಿ ದೋಷ"
 #: ../../portable/httpclient.py:179
 #, python-format
 msgid "Error while reading from \"%(path)s\""
-msgstr ""
+msgstr "\"%(path)s\"ನಿಂದ ಓದುವಾಗ ದೋಷ"
 
 #: ../../portable/httpclient.py:376
 msgid "Unknown Error code"
@@ -138,16 +138,16 @@ msgstr "ತಿಳಿಯದ ದೋಷ"
 
 #: ../../portable/httpclient.py:830
 msgid "Internal Error: Not ready to send"
-msgstr ""
+msgstr "ಅಂತರಿಕ ದೋಷ: ಕಳುಹಿಸಲು ಸಿದ್ಧವಾಗಿಲ್ಲ"
 
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
-msgstr ""
+msgstr "ಮಿರೋ ಕೈಪಿಡಿ"
 
 #: ../../portable/frontends/widgets/statictabs.py:97
 #: ../../portable/frontends/widgets/itemlistcontroller.py:433
 msgid "Video Search"
-msgstr ""
+msgstr "ವಿಡಿಯೋ ಹುಡುಕಾಟ"
 
 #: ../../portable/frontends/widgets/statictabs.py:103
 #: ../../portable/frontends/widgets/itemlistcontroller.py:516
@@ -162,31 +162,31 @@ msgstr ""
 #: ../../portable/frontends/widgets/statictabs.py:113
 #: ../../portable/frontends/widgets/itemlistcontroller.py:528
 msgid "Other"
-msgstr ""
+msgstr "ಅನ್ಯ"
 
 #: ../../portable/frontends/widgets/statictabs.py:118
 msgid "Downloading"
-msgstr ""
+msgstr "ಡೌನ್‌ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
-msgstr ""
+msgstr "ಪ್ಲೇಲಿಸ್ಟ್‌ ಸೇರಿಸು"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
 msgid "Add items to an existing playlist or a new one."
-msgstr ""
+msgstr "ಈಗಿರುವ ಅಥವಾ ಹೊಸದಾದ ಪ್ಲೇಲಿಸ್ಟ್‌ಗೆ ವಿವರಗಳನ್ನು ಸೇರಿಸು"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
 msgid "Existing playlist:"
-msgstr ""
+msgstr "ಪ್ರಸ್ತುತ ಪ್ಲೇಲಿಸ್ಟ್‌"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
 msgid "New playlist:"
-msgstr ""
+msgstr "ಹೊಸ ಪ್ಲೇಲಿಸ್ಟ್‌"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
-msgstr ""
+msgstr "ಭಂಡಾರದಿಂದ ತೆಗೆದುಹಾಕು"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
 #: ../../portable/frontends/widgets/gtk/video.py:246
@@ -195,21 +195,21 @@ msgstr ""
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:127
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:163
 msgid "Delete"
-msgstr ""
+msgstr "ಅಳಿಸಿಹಾಕು"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:94
 #: ../../portable/frontends/widgets/itemcontextmenu.py:191
 msgid "Play"
-msgstr ""
+msgstr "ಚಾಲನೆಗೊಳಿಸು"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just This Item"
-msgstr ""
+msgstr "ಈ ಅಂಶವನ್ನು ಮಾತ್ರ ಚಾಲನೆಗೊಳಿಸು"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:96
 #: ../../portable/frontends/widgets/itemcontextmenu.py:192
 msgid "Add to Playlist"
-msgstr ""
+msgstr "ಪ್ಲೇಲಿಸ್ಟ್‌ಗೆ ಸೇರಿಸು"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:99
 #: ../../portable/frontends/widgets/application.py:495
@@ -218,17 +218,17 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:101
 msgid "Revert Item Name"
-msgstr ""
+msgstr "ಅಂಶದ ಹೆಸರನ್ನು ಹಿಂದಿದ್ದಂತೆ ಮಾಡು"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:103
 #: ../../portable/frontends/widgets/itemcontextmenu.py:199
 msgid "Mark as Unplayed"
-msgstr ""
+msgstr "ಚಾಲನೆಗೊಂಡಿಲ್ಲವೆಂದು ಪರಿಗಣಿಸು"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:106
 #: ../../portable/frontends/widgets/itemcontextmenu.py:204
 msgid "Mark as Played"
-msgstr ""
+msgstr "ಚಾಲನೆಗೊಂಡಿದೆಯೆಂದು ಪರಿಗಣಿಸು"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:210
@@ -243,27 +243,27 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:112
 msgid "Stop Seeding"
-msgstr ""
+msgstr "ಸೀಡಿಂಗ್‌ ನಿಲ್ಲಿಸು"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:114
 msgid "Resume Seeding"
-msgstr ""
+msgstr "ಸೀಡಿಂಗ್‌ ಪುನರಾರಂಭಿಸು"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:117
 #: ../../portable/frontends/widgets/itemcontextmenu.py:239
 #: ../../portable/frontends/widgets/itemcontextmenu.py:257
 msgid "Cancel Download"
-msgstr ""
+msgstr "ಡೌನ್ಲೋಡ್ ರದ್ದುಮಾಡು"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:121
 #: ../../portable/frontends/widgets/itemcontextmenu.py:240
 msgid "Pause Download"
-msgstr ""
+msgstr "ಡೌನ್‌ಲೋಡನ್ನು ತಾತ್ಕಾಲಿಕವಾಗಿ ನಿಲ್ಲಿಸು"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:124
 #: ../../portable/frontends/widgets/itemcontextmenu.py:253
 msgid "Resume Download"
-msgstr ""
+msgstr "ಡೌನ್ಲೋಡ್ ಮುಂದುವರಿಸು"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:128
 #: ../../portable/frontends/widgets/itemcontextmenu.py:223
@@ -271,7 +271,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:1102
 #: ../../portable/frontends/widgets/style.py:1113 ../../portable/dialogs.py:97
 msgid "Download"
-msgstr ""
+msgstr "ಡೌನ್‌ಲೋಡ್‌"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:134
 #: ../../portable/frontends/widgets/style.py:240
@@ -282,7 +282,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:236
 #: ../../portable/frontends/widgets/gtk/video.py:271
 msgid "Comments"
-msgstr ""
+msgstr "ಅಭಿಪ್ರಾಯಗಳು"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:138
 msgid "License"
@@ -290,7 +290,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:141
 msgid "File in Browser"
-msgstr ""
+msgstr "ಬ್ರೌಸರ್‌ನಲ್ಲಿನ ಕಡತ"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:143
 #, python-format
@@ -299,80 +299,80 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:145
 msgid "File on Disk"
-msgstr ""
+msgstr "ಮುದ್ರಿಕೆಯಲ್ಲಿನ ಕಡತ"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:148
 msgid "View"
-msgstr ""
+msgstr "ನೋಟ"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
 #: ../../portable/frontends/widgets/gtk/video.py:266
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:119
 msgid "Share"
-msgstr ""
+msgstr "ಹಂಚು"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:186
 #, python-format
 msgid "%(count)d Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d ಡೌನ್‌ಲೋಡ್‌ಗೊಂಡ ಅಂಶ"
+msgstr[1] "%(count)d ಡೌನ್‌ಲೋಡ್‌ಗೊಂಡ ಅಂಶಗಳು"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:215
 #, python-format
 msgid "%(count)d Available Item"
 msgid_plural "%(count)d Available Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d ಲಭ್ಯವಿರುವ ಅಂಶ"
+msgstr[1] "%(count)d ಲಭ್ಯವಿರುವ ಅಂಶಗಳು"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:228
 #, python-format
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d ಡೌನ್‌ಲೋಡಾಗುತ್ತಿರುವ ಅಂಶ"
+msgstr[1] "%(count)d ಡೌನ್‌ಲೋಡಾಗುತ್ತಿರುವ ಅಂಶಗಳು"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:245
 #, python-format
 msgid "%(count)d Paused Item"
 msgid_plural "%(count)d Paused Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d ತಾತ್ಕಾಲಿಕವಾಗಿ ತಡೆಗೊಂಡಿರುವ ಅಂಶ"
+msgstr[1] "%(count)d ತಾತ್ಕಾಲಿಕವಾಗಿ ತಡೆಗೊಂಡಿರುವ ಅಂಶಗಳು"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:263
 msgid "Restart Upload"
-msgstr ""
+msgstr "ಅಪ್‌ಲೋಡನ್ನು ಪುನರಾರಂಭಿಸು"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:277
 msgid "Remove From Playlist"
-msgstr ""
+msgstr "ಪ್ಲೇಲಿಸ್ಟಿನಿಂದ ತೆಗೆದುಹಾಕು"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:55
 #: ../../portable/frontends/widgets/feedsettingspanel.py:102
 #: ../../portable/frontends/widgets/prefpanel.py:588
 msgid "never"
-msgstr ""
+msgstr "ಎಂದಿಗೂ ಬೇಡ"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:58
 #, python-format
 msgid "%(count)d hour ago"
 msgid_plural "%(count)d hours ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d ಗಂಟೆಗು ಮುಂಚೆ"
+msgstr[1] "%(count)d ಗಂಟೆಗಳಿಗು ಮುಂಚೆ"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:64
 #, python-format
 msgid "%(count)d day ago"
 msgid_plural "%(count)d days ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d ದಿನಕ್ಕು ಮೊದಲು"
+msgstr[1] "%(count)d ದಿನಗಳಿಗು ಮೊದಲು"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:70
 #, python-format
 msgid "%(count)d month ago"
 msgid_plural "%(count)d months ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d ತಿಂಗಳು ಮೊದಲು"
+msgstr[1] "%(count)d ತಿಂಗಳುಗಳ ಮೊದಲು"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Videos:"
@@ -381,64 +381,64 @@ msgstr ""
 #: ../../portable/frontends/widgets/feedsettingspanel.py:95
 #, python-format
 msgid "Watched %(expiration)s (Default)"
-msgstr ""
+msgstr "%(expiration)s ನೋಡಲಾಗಿದೆ (ಪೂರ್ವನಿಯೋಜಿತ)"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
-msgstr ""
+msgstr "೧ ದಿನದ ಹಿಂದೆ ನೋಡಲಾಗಿದೆ"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr ""
+msgstr "೩ ದಿನಗಳ ಹಿಂದೆ ನೋಡಲಾಗಿದೆ"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
-msgstr ""
+msgstr "೬ ದಿನಗಳ ಹಿಂದೆ ನೋಡಲಾಗಿದೆ"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:100
 msgid "Watched 10 days ago"
-msgstr ""
+msgstr "೧೦ ದಿನಗಳ ಹಿಂದೆ ನೋಡಲಾಗಿದೆ"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
-msgstr ""
+msgstr "೧ ತಿಂಗಳ ಹಿಂದೆ ನೋಡಲಾಗಿದೆ"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
-msgstr ""
+msgstr "ಹಳತಾದ ಅಂಶಗಳನ್ನು ಒದಗಿಸಲಾಗಿದೆ"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:139
 #, python-format
 msgid "Keep %(number)s (Default)"
-msgstr ""
+msgstr "%(number)s ಉಳಿಸು (ಪೂರ್ವನಿಯೋಜಿತ)"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:141
 msgid "Keep 0"
-msgstr ""
+msgstr "೦ ಉಳಿಸು"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:142
 msgid "Keep 20"
-msgstr ""
+msgstr "೨೦ ಉಳಿಸು"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:143
 msgid "Keep 50"
-msgstr ""
+msgstr "೫೦ ಉಳಿಸು"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:144
 msgid "Keep 100"
-msgstr ""
+msgstr "೧೦೦ ಉಳಿಸು"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:145
 msgid "Keep 1000"
-msgstr ""
+msgstr "೧,೦೦೦ ಉಳಿಸು"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
-msgstr ""
+msgstr "ಎಲ್ಲವನ್ನು ತೆಗೆ"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
-msgstr ""
+msgstr "ಹಳತಾದ ಅಂಶಗಳನ್ನು ತೆಗೆದುಹಾಕಲಾಗಿದೆ."
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause Auto-Downloading when this many items are unplayed:"
@@ -446,23 +446,23 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
-msgstr ""
+msgstr "೧ ಚಾಲನೆಗೊಳ್ಳದ ಅಂಶ"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:198
 msgid "3 unplayed items"
-msgstr ""
+msgstr "೩ ಚಾಲನೆಗೊಳ್ಳದ ಅಂಶಗಳು"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:199
 msgid "5 unplayed items"
-msgstr ""
+msgstr "೫ ಚಾಲನೆಗೊಳ್ಳದ ಅಂಶಗಳು"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:200
 msgid "10 unplayed items"
-msgstr ""
+msgstr "೧೦ ಚಾಲನೆಗೊಳ್ಳದ ಅಂಶಗಳು"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:201
 msgid "15 unplayed items"
-msgstr ""
+msgstr "೧೫ ಚಾಲನೆಗೊಳ್ಳದ ಅಂಶಗಳು"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:241
 msgid "Feed Settings"
@@ -492,13 +492,13 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:138
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
-msgstr ""
+msgstr "ನೀವು %(name)s ಅನ್ನು ಗಣಕದ ಪ್ರಾರಂಭದಲ್ಲೇ ಚಲಾಯಿಸಲು ಬಯಸುವಿರಾ?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:144
 #: ../../portable/frontends/widgets/firsttimedialog.py:178
 #: ../../portable/dialogs.py:89
 msgid "Yes"
-msgstr ""
+msgstr "ಹೌದು"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:145
 #: ../../portable/frontends/widgets/firsttimedialog.py:177
@@ -508,12 +508,12 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:153
 msgid "Next >"
-msgstr ""
+msgstr "ಮುಂದೆ >"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:163
 #, python-format
 msgid "Completing the %(name)s First Time Setup"
-msgstr ""
+msgstr "%(name)s ನ ಮೊದಲನೇ ಬಾರಿಯ ಸಂಸ್ಥಾಪನೆಯನ್ನು ಪೂರ್ಣಗೊಳಿಸಲಾಗುತ್ತಿದೆ"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:167
 #, python-format
@@ -523,14 +523,18 @@ msgid ""
 "\n"
 "Would you like %(name)s to look for media files on your computer?"
 msgstr ""
+"ನಿಮ್ಮ ಗಣಕದಲ್ಲಿರುವ ಎಲ್ಲಾ ಬಹುಮಾಧ್ಯಮಿಕ ಕಡತಗಳನ್ನು ಶೋಧಿಸಿ ಅಣಿಗೊಳಿಸಲು %(name)s "
+"ನಿಮಗೆ ನೆರವಾಗಬಲ್ಲದು.\n"
+"\n"
+"ನಿಮ್ಮ ಗಣಕದಲ್ಲಿರುವ ಬಹುಮಾಧ್ಯಮಿಕ ಕಡತಗಳನ್ನು %(name)s ಹುಡುಕಲು ನೀವು ಬಯಸುವಿರಾ?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:185
 msgid "Restrict to all my personal files."
-msgstr ""
+msgstr "ನನ್ನ ಎಲ್ಲಾ ವೈಯಕ್ತಿಕ ಕಡತಗಳಿಗೆ ಸೀಮಿತಗೊಳಿಸು"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:186
 msgid "Search custom folders:"
-msgstr ""
+msgstr "ಸಾಂಪ್ರದಾಯಿಕ ಕಡತಕೋಶಗಳನ್ನು ಶೋಧಿಸು:"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:192
 #: ../../portable/frontends/widgets/prefpanel.py:438
@@ -539,19 +543,19 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:197
 msgid "Choose directory to search for media files"
-msgstr ""
+msgstr "ಬುಹುಮಾಧ್ಯಮಿಕ ಕಡತಗಳನ್ನು ಶೋಧಿಸಲು ಕಡತಕೋಶವನ್ನು ಆಯ್ಕೆಮಾಡಿ"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:211
 #: ../../portable/frontends/widgets/firsttimedialog.py:290
 msgid "< Previous"
-msgstr ""
+msgstr "< ಹಿಂದಿನ"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:223
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:282
 #: ../../portable/feed.py:2300 ../../portable/feed.py:2407
 msgid "Search"
-msgstr ""
+msgstr "ಶೋಧಿಸು"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:293
@@ -560,7 +564,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:273
 msgid "Searching for media files"
-msgstr ""
+msgstr "ಬಹುಮಾಧ್ಯಮಿಕ ಕಡತಗಳಿಗಾಗಿ ಶೋಧಿಸಲಾಗುತ್ತಿದೆ."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:283
 #: ../../portable/dialogs.py:87
@@ -578,8 +582,8 @@ msgstr[1] ""
 #, python-format
 msgid "found %(count)s media file"
 msgid_plural "found %(count)s media files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s ಬಹುಮಾಧ್ಯಮಿಕ ಕಡತ ದೊರಕಿದೆ"
+msgstr[1] "%(count)s ಬಹುಮಾಧ್ಯಮಿಕ ಕಡತಗಳು ದೊರಕಿವೆ"
 
 #: ../../portable/frontends/widgets/crashdialog.py:54
 #, python-format
@@ -587,6 +591,8 @@ msgid ""
 "%(appname)s has encountered an internal error.  You can help us track down "
 "this problem and fix it by submitting an error report."
 msgstr ""
+"%(appname)sಗೆ ಆಂತರಿಕ ಅಡಚಣೆಯೊಂದು ಎದುರಾಗಿದೆ. ನೀವು ಈ ತೊಂದರೆಯ ವರದಿಯನ್ನು ಸಲ್ಲಿಸುವ "
+"ಮೂಲಕ ನಮಗೆ ಪ್ರಸ್ತುತ ತೊಡಕನ್ನು ಪರಿಶೀಲಿಸಲು ಹಾಗೂ ಸರಿಪಡಿಸಲು ನೆರವಾಗಬಹುದು."
 
 #: ../../portable/frontends/widgets/crashdialog.py:63
 msgid ""
@@ -596,7 +602,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/crashdialog.py:68
 msgid "Describe what you were doing when you got this error:"
-msgstr ""
+msgstr "ಈ ಅಡಚಣೆ ಉಂಟಾದಾಗ ನೀವು ಏನು ಮಾಡುತ್ತಿದ್ದಿರಿ ಎಂದು ವಿವರಿಸಿ:"
 
 #: ../../portable/frontends/widgets/style.py:232
 msgid "From"
