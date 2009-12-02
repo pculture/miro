@@ -49,10 +49,8 @@ FilenameType = str
 # very easy.
 from os.path import samefile
 
-
 # this is used in portable/gtcache.py
-localeInitialized = True
-
+_locale_initialized = False
 
 def get_available_bytes_for_movies():
     """Helper method used to get the free space on the disk where downloaded
@@ -92,10 +90,13 @@ def confirm_ui_thread():
         print "ui function called from thread %s" % threading.currentThread()
         traceback.print_stack()
 
+def locale_initialized():
+    return _locale_initialized
 
-# gettext understands *NIX locales, so we don't have to do anything
-def initializeLocale():
-    pass
+def initialize_locale():
+    # gettext understands *NIX locales, so we don't have to do anything
+    global _locale_initialized
+    _locale_initialized = True
 
 def setup_logging(inDownloader=False):
     if inDownloader:

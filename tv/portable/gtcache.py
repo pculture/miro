@@ -42,7 +42,7 @@ def init():
     global _gtcache
     global codeset
     _gtcache = {}
-    if not miro.plat.utils.localeInitialized:
+    if not miro.plat.utils.locale_initialized():
         raise Exception, "locale not initialized"
 
     # try to set the locale to the platform default, but if that fails

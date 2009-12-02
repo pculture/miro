@@ -62,8 +62,8 @@ def launchApplication():
     from miro.plat import migrateappname
     migrateappname.migrateSupport('Democracy', 'Miro')
 
-    from miro.plat.utils import initializeLocale
-    initializeLocale()
+    from miro.plat.utils import initialize_locale
+    initialize_locale()
     
     from glob import glob
     theme = None

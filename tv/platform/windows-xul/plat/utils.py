@@ -48,7 +48,7 @@ from miro.util import returnsUnicode, returnsBinary, checkU, checkB
 from miro.util import call_command, AutoLoggingStream
 from miro import fileutil
 
-localeInitialized = False
+_locale_initialized = False
 FilenameType = unicode
 
 def samefile(path1, path2):
@@ -128,12 +128,15 @@ def _get_locale():
                         code, hex(code))
     return None
 
-def initializeLocale():
-    global localeInitialized
+def locale_initialized():
+    return _locale_initialized
+
+def initialize_locale():
+    global _locale_initialized
     lang = _get_locale()
     if lang is not None:
         os.environ["LANGUAGE"] = lang
-    localeInitialized = True
+    _locale_initialized = True
 
 class ApatheticRotatingFileHandler(RotatingFileHandler):
     """The whole purpose of this class is to prevent rotation errors from

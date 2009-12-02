@@ -53,7 +53,8 @@ from miro.plat.frontends.widgets.threads import on_ui_thread
 # very easy.
 from os.path import samefile
 
-localeInitialized = False
+_locale_initialized = False
+
 dlTask = None
 
 def get_pyobjc_major_version():
@@ -85,8 +86,11 @@ def get_available_bytes_for_movies():
     del pool
     return available
 
-def initializeLocale():
-    global localeInitialized
+def locale_initialized():
+    return _locale_initialized
+
+def initialize_locale():
+    global _locale_initialized
 
     pool = NSAutoreleasePool.alloc().init()
     languages = list(NSUserDefaults.standardUserDefaults()["AppleLanguages"])
@@ -99,7 +103,7 @@ def initializeLocale():
     os.environ["LANGUAGE"] = ':'.join(languages)
     os.environ["LANG"] = locale.normalize(languages[0])
 
-    localeInitialized = True
+    _locale_initialized = True
     del pool
 
 def setup_logging (inDownloader=False):

@@ -109,6 +109,9 @@ parser.add_option_group(group)
 from miro.plat import options
 options.gconf_name = parsed_options.gconf_name
 
+from miro.plat import utils
+utils.initialize_locale()
+
 from miro import gtcache
 gtcache.init()
 
@@ -121,9 +124,7 @@ if sys.version_info[0] == 2 and sys.version_info[1] > 5:
     sys.modules['feedparser'] = miro.feedparser
     sys.modules['storedatabase'] = miro.storedatabase
 
-
 from miro import config
-from miro import plat
 from miro import prefs
 from miro import commandline
 
@@ -200,8 +201,6 @@ def get_keyval(keyval):
     return p, val
 
 def startapp():
-    plat.utils.initializeLocale()
-
     # Create miro directories in the user's home
     support_dir = config.get(prefs.SUPPORT_DIRECTORY)
     if not os.path.exists(support_dir):
