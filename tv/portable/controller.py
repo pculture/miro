@@ -49,10 +49,10 @@ from miro import prefs
 from miro import signals
 from miro.plat.utils import exit
 
-###############################################################################
-#### The main application app.controller object, binding model to view     ####
-###############################################################################
 class Controller:
+    """The main application app.controller object, binding model to
+    view.
+    """
     def __init__(self):
         self.frame = None
         self.inQuit = False
@@ -80,7 +80,7 @@ class Controller:
 
     def on_shutdown(self):
         try:
-            eventloop.join()        
+            eventloop.join()
             logging.info("Saving preferences...")
             config.save()
 
@@ -108,13 +108,13 @@ class Controller:
         def callback(result):
             self.sendingCrashReport -= 1
             if result['status'] != 200 or result['body'] != 'OK':
-                logging.warning(u"Failed to submit crash report.  Server returned %r" % result)
+                logging.warning("Failed to submit crash report.  Server returned %r" % result)
             else:
-                logging.info(u"Crash report submitted successfully")
+                logging.info("Crash report submitted successfully")
 
         def errback(error):
             self.sendingCrashReport -= 1
-            logging.warning(u"Failed to submit crash report %r" % error)
+            logging.warning("Failed to submit crash report %r" % error)
 
         backupfile = None
         if send_database:
