@@ -87,7 +87,7 @@ class Controller:
             logging.info("Shutting down icon cache updates")
             iconcache.iconCacheUpdater.shutdown()
             logging.info("Shutting down movie data updates")
-            moviedata.movieDataUpdater.shutdown()
+            moviedata.movie_data_updater.shutdown()
 
             if self.idlingNotifier is not None:
                 logging.info("Shutting down IdleNotifier")

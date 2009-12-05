@@ -1557,7 +1557,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.split_item()
         self.signal_change()
         self._replace_file_items()
-        moviedata.movieDataUpdater.request_update(self)
+        moviedata.movie_data_updater.request_update(self)
 
         for other in Item.make_view('downloader_id IS NULL AND url=?',
                 (self.url,)):
@@ -1707,7 +1707,7 @@ class FileItem(Item):
         self.offsetPath = offsetPath
         self.shortFilename = cleanFilename(os.path.basename(self.filename))
         self.was_downloaded = False
-        moviedata.movieDataUpdater.request_update (self)
+        moviedata.movie_data_updater.request_update (self)
 
     # FileItem downloaders are always None
     downloader = property(lambda self: None)
@@ -1879,13 +1879,15 @@ filename was %s""", stringify(self.filename))
         Item.setup_links(self)
 
 def get_entry_for_file(filename):
-    return FeedParserDict({'title':filenameToUnicode(os.path.basename(filename)),
-            'enclosures':[{'url': resources.url(filename)}]})
+    return FeedParserDict({
+            'title': filenameToUnicode(os.path.basename(filename)),
+            'enclosures': [{'url': resources.url(filename)}]
+            })
 
 def update_incomplete_movie_data():
     for item in Item.downloaded_view():
         if item.duration is None or item.screenshot is None:
-            moviedata.movieDataUpdater.request_update(item)
+            moviedata.movie_data_updater.request_update(item)
 
 def move_orphaned_items():
     manual_feed = models.Feed.get_manual_feed()

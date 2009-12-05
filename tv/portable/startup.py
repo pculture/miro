@@ -306,7 +306,7 @@ def on_frontend_started():
     logging.info("Starting movie data updates")
     item.update_incomplete_movie_data()
     yield None
-    moviedata.movieDataUpdater.startThread()
+    moviedata.movie_data_updater.start_thread()
     yield None
     parse_command_line_args()
     yield None
