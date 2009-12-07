@@ -196,7 +196,6 @@ class TabRenderer(widgetset.CustomCellRenderer):
 
 class StaticTabRenderer(TabRenderer):
     BOLD_TITLE = True
-    MIN_HEIGHT_BIG = 28
 
     def pack_bubbles(self, hbox, layout):
         if self.data.unwatched > 0:

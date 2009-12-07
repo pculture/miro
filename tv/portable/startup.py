@@ -306,7 +306,7 @@ def on_frontend_started():
     logging.info("Starting movie data updates")
     item.update_incomplete_movie_data()
     yield None
-    moviedata.movieDataUpdater.startThread()
+    moviedata.movie_data_updater.start_thread()
     yield None
     parse_command_line_args()
     yield None
@@ -451,7 +451,7 @@ def reconnect_downloaders():
     for downloader_ in downloader.RemoteDownloader.orphaned_view():
         logging.warn("removing orphaned downloader: %s", downloader_.url)
         downloader_.remove()
-    manualItems = item.Item.feed_view(feed.Feed.get_manual_feed().getID())
+    manualItems = item.Item.feed_view(feed.Feed.get_manual_feed().get_id())
     for item_ in manualItems:
         if item_.downloader is None and item_.__class__ == item.Item:
             logging.warn("removing cancelled external torrent: %s", item_)

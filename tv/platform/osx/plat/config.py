@@ -37,7 +37,7 @@ from miro import prefs
 from miro.plat import bundle
 from miro.plat import keychain
 from miro.plat import resources
-from miro.plat.filenames import osFilenameToFilenameType, filenameTypeToOSFilename
+from miro.plat.filenames import os_filename_to_filename_type, filename_type_to_os_filename
 
 sysconfPath = objc.pathForFramework('/System/Library/Frameworks/SystemConfiguration.framework')
 sysconfBundle = NSBundle.bundleWithPath_(sysconfPath)
@@ -67,7 +67,7 @@ def load():
             elif type(v) is objc._pythonify.OC_PythonLong:
                 pydict[k] = long(v)
             elif k == prefs.MOVIES_DIRECTORY.key:
-                pydict[k] = osFilenameToFilenameType(v)
+                pydict[k] = os_filename_to_filename_type(v)
 
     return pydict
 
@@ -79,7 +79,7 @@ def save(data):
                 data[k] = ""
             elif k == prefs.MOVIES_DIRECTORY.key:
                 if isinstance(v, str):
-                    data[k] = filenameTypeToOSFilename(v)
+                    data[k] = filename_type_to_os_filename(v)
 
         plist = Conversion.propertyListFromPythonCollection(data)
     except:

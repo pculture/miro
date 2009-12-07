@@ -30,10 +30,20 @@
 
 import logging
 import traceback
+import os
+import os.path
 
 from miro import app
 from miro import config
 from miro.plat import options
+
+def get_renderer_list():
+    d = os.path.dirname(__file__)
+    contents = os.listdir(d)
+    # FIXME - this sucks.  switch this to use extensions.
+    contents = [m for m in contents if m.endswith("renderer.py")]
+    contents = [m[:-11] for m in contents]
+    return contents
 
 def set_renderer(modname):
     """Attempt to set the video renderer."""

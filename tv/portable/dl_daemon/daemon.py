@@ -39,7 +39,7 @@ from miro import prefs
 from miro import eventloop
 from miro import util
 import logging
-from miro.plat.utils import launchDownloadDaemon, killProcess
+from miro.plat.utils import launch_download_daemon, kill_process
 from miro import signals
 from miro import trapcall
 from miro.httpclient import ConnectionHandler
@@ -61,7 +61,7 @@ def startDownloadDaemon(oldpid, port):
         'DEMOCRACY_DOWNLOADER_FIRST_LAUNCH' : firstDaemonLaunch,
         'DEMOCRACY_SHORT_APP_NAME' : config.get(prefs.SHORT_APP_NAME),
     }
-    launchDownloadDaemon(oldpid, daemonEnv)
+    launch_download_daemon(oldpid, daemonEnv)
     firstDaemonLaunch = '0'
 
 def getDataFile(short_app_name):
@@ -278,7 +278,7 @@ class ControllerDaemon(Daemon):
 
     def shutdown_timeout_cb(self):
         logging.warning ("killing download daemon")
-        killProcess(self.read_pid())
+        kill_process(self.read_pid())
         self.shutdownResponse()
 
     def shutdownResponse(self):

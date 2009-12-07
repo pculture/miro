@@ -32,16 +32,6 @@
 ## Paths and configuration                                                   ##
 ###############################################################################
 
-# The xine hack helps older systems.  See bug #7132.
-#
-# If this hack is enabled and Miro crashes at the end of playback when
-# the xine renderer is used, then try disabling the hack.
-#
-# As of Miro 2.0, there is a command-line option to enable/disable the 
-# hack.
-USE_XINE_HACK = False
-
-
 # The following properties allow you to explicitly set xulrunner paths and
 # library names in the case that Miro guesses them wrong for your system.
 # When setting these, you must make sure that:
@@ -185,7 +175,6 @@ platform_dir = os.path.join(root_dir, 'platform', 'gtk-x11')
 platform_package_dir = os.path.join(platform_dir, 'plat')
 platform_widgets_dir = os.path.join(platform_package_dir, 'frontends',
                                     'widgets')
-xine_dir = os.path.join(platform_dir, 'xine')
 
 # insert the root_dir to the beginning of sys.path so that we can
 # pick up portable and other packages
@@ -296,12 +285,6 @@ def parse_pkg_config(command, components, options_dict = None):
     options_dict['runtime_dirs'].append(output)
 
     return options_dict
-
-def compile_xine_extractor():
-    rv = os.system("gcc %s -o %s `pkg-config --libs --cflags gdk-pixbuf-2.0 glib-2.0 libxine`" %
-                   (os.path.join(platform_dir, "xine/xine_extractor.c"), os.path.join(platform_dir, "xine/xine_extractor")))
-    if rv != 0:
-        raise RuntimeError("xine_extractor compilation failed.  Possibly missing libxine, gdk-pixbuf-2.0, or glib-2.0.")
 
 def generate_miro(xpcom_path):
     # build a miro script that wraps the miro.real script with an LD_LIBRARY_PATH
@@ -521,31 +504,6 @@ pluginsdir_ext = \
     )
 
 
-#### Xine Extension ####
-xine_options = parse_pkg_config('pkg-config',
-        'libxine pygtk-2.0 gtk+-2.0 glib-2.0 gthread-2.0')
-# this doesn't get used, but if xv isn't on the system, it causes the
-# compile to bail.
-xv_options = parse_pkg_config('pkg-config', 'xv')
-
-# If you get XINE crashes, uncommenting this might fix it. It's
-# necessary on Debian Etch and Ubuntu Feisty right now.
-#
-# We have a horrible workaround for buggy X drivers in xine_impl.c
-# controlled by this variable
-if USE_XINE_HACK:
-    print "Using the Xine driver hack. If you experience trouble playing video,\n   try setting USE_XINE_HACK to False in setup.py."
-    if xine_options.has_key('define_macros'):
-        xine_options['define_macros'].append(('INCLUDE_XINE_DRIVER_HACK', '1'))
-    else:
-        xine_options['define_macros'] = [('INCLUDE_XINE_DRIVER_HACK', '1')]
-
-xine_ext = Extension('miro.xine', [
-                         os.path.join(xine_dir, 'xine.pyx'),
-                         os.path.join(xine_dir, 'xine_impl.c'),],
-                     **xine_options)
-
-
 #### Build the data_files list ####
 def listfiles(path):
     return [f for f in glob(os.path.join(path, '*')) if os.path.isfile(f)]
@@ -584,15 +542,12 @@ data_files += [
      [os.path.join(platform_dir, 'miro.1.gz')]),
     ('/usr/share/man/man1',
      [os.path.join(platform_dir, 'miro.real.1.gz')]),
-    ('/usr/lib/miro/',
-     [os.path.join(platform_dir, 'xine/xine_extractor')]),
 ]
 
 
 # if we're not doing "python setup.py clean", then we can do a bunch of things
 # that have file-related side-effects
 if not "clean" in sys.argv:
-    compile_xine_extractor()
     generate_miro(xpcom_runtime_path)
     # gzip the man page
     os.system ("gzip -9 < %s > %s" % (os.path.join(platform_dir, 'miro.1'), os.path.join(platform_dir, 'miro.1.gz')))
@@ -751,7 +706,6 @@ class clean(Command):
             shutil.rmtree('./dist/')
 
 ext_modules = []
-ext_modules.append(xine_ext)
 ext_modules.append(xlib_ext)
 ext_modules.append(pygtkhacks_ext)
 ext_modules.append(mozprompt_ext)

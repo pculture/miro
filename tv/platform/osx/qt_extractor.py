@@ -30,37 +30,41 @@
 import os
 import sys
 import glob
+import time
 import objc
 import QTKit
 import AppKit
 import Foundation
 
 from miro.plat import qtcomp
+from miro.plat import utils
 
 # =============================================================================
 
 def registerQuicktimeComponents():
-    bundlePath = Foundation.NSBundle.mainBundle().bundlePath()
+    bundlePath = os.getenv('MIRO_BUNDLE_PATH')
     componentsDirectoryPath = os.path.join(bundlePath, 'Contents', 'Components')
     components = glob.glob(os.path.join(componentsDirectoryPath, '*.component'))
     for component in components:
-        cmpName = os.path.basename(component)
         ok = qtcomp.register(component.encode('utf-8'))
 
 # =============================================================================
 
 def extractDuration(qtmovie):
-    qttime = qtmovie.duration()
-    if qttime.timeScale == 0:
+    try:
+        qttime = qtmovie.duration()
+        if utils.qttimescale(qttime) == 0:
+            return -1
+        return int((utils.qttimevalue(qttime) / float(utils.qttimescale(qttime))) * 1000)
+    except Exception, e:
         return -1
-    return int((qttime.timeValue / float(qttime.timeScale)) * 1000)
 
 # -----------------------------------------------------------------------------
 
 def extractThumbnail(qtmovie, target, width=0, height=0):
     try:
         qttime = qtmovie.duration()
-        qttime.timeValue *= .5
+        qttime = utils.qttimevalue_set(qttime, int(utils.qttimevalue(qttime) * 0.5))
         frame = qtmovie.frameImageAtTime_(qttime)
         if frame is objc.nil:
             return "Failure"
@@ -130,6 +134,12 @@ else:
     qtmovie, error = QTKit.QTMovie.movieWithFile_error_(moviePath)
 if qtmovie is None or error is not objc.nil:
     sys.exit(0)
+
+while True:
+    load_state = qtmovie.attributeForKey_(QTKit.QTMovieLoadStateAttribute)
+    if load_state == 100000:
+        break
+    time.sleep(0.1)
 
 duration = extractDuration(qtmovie)
 print "Miro-Movie-Data-Length: %s" % duration

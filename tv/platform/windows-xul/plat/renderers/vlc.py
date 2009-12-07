@@ -36,6 +36,7 @@ import gobject
 
 from miro.plat import resources
 from miro import app
+from miro.frontends.widgets.widgetconst import MAX_VOLUME
 
 # load the DLL
 libvlc = ctypes.cdll.libvlc
@@ -452,7 +453,7 @@ class VLCRenderer:
         return self._duration[1]
 
     def set_volume(self, volume):
-        volume = int(volume * 100)
+        volume = int(200 * volume / MAX_VOLUME)
         libvlc.libvlc_audio_set_volume(self.vlc, volume, self.exc.ref())
         self.exc.check()
 

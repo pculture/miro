@@ -56,7 +56,7 @@ from miro.plat import growl
 from miro.plat import bundle
 from miro.plat import _growlImage
 from miro.plat import migrateappname
-from miro.plat.utils import ensureDownloadDaemonIsTerminated, filenameTypeToOSFilename, osFilenamesToFilenameTypes
+from miro.plat.utils import ensureDownloadDaemonIsTerminated, filename_type_to_os_filename, os_filename_to_filename_type
 from miro.plat.frontends.widgets import quicktime, osxmenus, sparkleupdater, threads
 from miro.plat.frontends.widgets.rect import Rect
 from miro.gtcache import gettext as _
@@ -135,11 +135,11 @@ class OSXApplication(Application):
             NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
 
     def reveal_file(self, fn):
-        filename = filenameTypeToOSFilename(fn)
+        filename = filename_type_to_os_filename(fn)
         NSWorkspace.sharedWorkspace().selectFile_inFileViewerRootedAtPath_(filename, nil)
     
     def open_file(self, fn):
-        filename = filenameTypeToOSFilename(fn)
+        filename = filename_type_to_os_filename(fn)
         ws = NSWorkspace.sharedWorkspace()
         if utils.get_pyobjc_major_version() == 2:
             ok, externalApp, movieType = ws.getInfoForFile_application_type_(filename, None, None)
@@ -349,7 +349,7 @@ class AppController(NSObject):
         return NO
 
     def application_openFiles_(self, nsapp, filenames):
-        filenames = osFilenamesToFilenameTypes(filenames)
+        filenames = [os_filename_to_filename_type(f) for f in filenames]
         if self.startup_done:
             self.do_open_files(filenames)
         else:

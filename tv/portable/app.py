@@ -30,27 +30,41 @@
 
 App.py is a respository for high-level singleton objects.  Most of these
 objects get set in startup.py, but some get set in frontend code as well.
-
-Here is the list of objects that app currently stores:
-
-controller -- Handle High-level control of Miro
-selection -- Handles selected objects
-renderers -- List of active renderers
-db -- Database object
-
-The widget frontend adds:
-
-widgetapp -- Application object
-display_manger -- Handles the right-hand display.
-tab_list_manager -- Handles the tab lists and selection.
-item_list_controller_manager -- Manages ItemListControllers
-renderer -- Video rendering object (or None if the platform code can't
-        initialize a suitable renderer)
-search_manager -- Manages the search state
-inline_search_memory -- Remembers inline search terms
 """
 
+# handles high-level control of Miro
+controller = None
+
+# handles selected objects
+selection = None
+
+# list of active renderers
 renderers = []
-# NOTE: we could set controller, db, etc. to None here, but it seems better
-# not do.  This way if we call "from miro.app import controller" before the
-# controller singleton is created, then we will immediately get an error.
+
+# database object
+db = None
+
+
+# widget frontend adds these
+
+# application object
+widgetapp = None
+
+# handles the right-hand display
+display_manager = None
+
+# handles the tab display
+tab_list_manager = None
+
+# manages ItemListControllers
+item_list_controller_manager = None
+
+# video rendering object (or None if the platform code can't initialize a
+# suitable renderer)
+renderer = None
+
+# manages search state
+search_manager = None
+
+# remembers inline search terms
+inline_search_memory = None

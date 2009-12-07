@@ -39,7 +39,6 @@ def pending_sort(a, b):
 class Downloader:
     def __init__(self, is_auto):
         self.dc = None
-        self.inDownloads = False
         self.paused = False
         self.running_count = 0
         self.pending_count = 0
@@ -185,25 +184,20 @@ class Downloader:
             self.paused = False
             eventloop.addTimeout(5, self.start_downloads, "delayed start downloads")
 
-# These are both Downloader instances.
-manual_downloader = None
-auto_downloader = None
-autodlers_started = False
-auto_resume_after_start = False
+# these are both Downloader instances
+MANUAL_DOWNLOADER = None
+AUTO_DOWNLOADER = None
 
 def start_downloader():
-    global manual_downloader
-    global auto_downloader
-    global autodlers_started
-    global auto_resume_after_start
-    manual_downloader = Downloader(False)
-    auto_downloader = Downloader(True)
-    autodlers_started = True
+    global MANUAL_DOWNLOADER
+    global AUTO_DOWNLOADER
+    MANUAL_DOWNLOADER = Downloader(False)
+    AUTO_DOWNLOADER = Downloader(True)
 
 def _update_prefs(key, value):
     if key == prefs.DOWNLOADS_TARGET.key:
-        auto_downloader.update_max_downloads()
+        AUTO_DOWNLOADER.update_max_downloads()
     elif key == prefs.MAX_MANUAL_DOWNLOADS.key:
-        manual_downloader.update_max_downloads()
+        MANUAL_DOWNLOADER.update_max_downloads()
 
 config.add_change_callback(_update_prefs)

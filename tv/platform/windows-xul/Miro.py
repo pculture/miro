@@ -44,8 +44,8 @@ def startup():
     from miro.plat import prelogger
     prelogger.install()
 
-    from miro.plat.utils import initializeLocale
-    initializeLocale()
+    from miro.plat.utils import initialize_locale
+    initialize_locale()
 
     from miro import gtcache
     gtcache.init()

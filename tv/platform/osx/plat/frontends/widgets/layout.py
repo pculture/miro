@@ -675,7 +675,7 @@ class Scroller(Bin):
     def place_children(self):
         if self.child is not None:
             child_width, child_height = self.child.get_size_request()
-            child_width = max(child_width, self.view.contentView().frameSize().width)
+            child_width = max(child_width, self.view.contentView().frame().size.width)
             frame = NSRect(NSPoint(0,0), NSSize(child_width, child_height))
             if isinstance(self.child, tableview.TableView):
                 # Hack to allow the content of a table view to scroll, but not

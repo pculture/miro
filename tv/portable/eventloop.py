@@ -163,12 +163,12 @@ class ThreadPool(object):
     def initThreads(self):
         while len(self.threads) < ThreadPool.THREADS:
             t = threading.Thread(name='ThreadPool - %d' % len(self.threads),
-                                 target=self.threadLoop)
+                                 target=self.thread_loop)
             t.setDaemon(True)
             t.start()
             self.threads.append(t)
 
-    def threadLoop(self):
+    def thread_loop(self):
         while True:
             nextItem = self.queue.get()
             if nextItem == "QUIT":
