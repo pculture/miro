@@ -228,61 +228,65 @@ def on_planet():
 
 # action_group name -> list of MenuItem labels belonging to action_group
 action_groups = {
-        'NonPlaying': [
-            'Open',
-            'NewDownload',
-            'NewFeed',
-            'NewGuide',
-            'NewSearchFeed',
-            'NewFeedFolder',
-            'UpdateAllFeeds',
-            'ImportFeeds',
-            'ExportFeeds',
-            'NewPlaylist',
-            'NewPlaylistFolder'
+    # group for items that should never be enabled
+    'FakeGroup': [
+        'NoneAvailable'
         ],
-        'FeedSelected': [
-            'ShareFeed',
-            'CopyFeedURL'
+    'NonPlaying': [
+        'Open',
+        'NewDownload',
+        'NewFeed',
+        'NewGuide',
+        'NewSearchFeed',
+        'NewFeedFolder',
+        'UpdateAllFeeds',
+        'ImportFeeds',
+        'ExportFeeds',
+        'NewPlaylist',
+        'NewPlaylistFolder',
         ],
-        'FeedOrFolderSelected': [
-            'RenameFeed',
+    'FeedSelected': [
+        'ShareFeed',
+        'CopyFeedURL'
         ],
-        'FeedsSelected': [
-            'RemoveFeeds',
-            'UpdateFeeds',
+    'FeedOrFolderSelected': [
+        'RenameFeed',
         ],
-        'PlaylistSelected': [
-            'RenamePlaylist',
+    'FeedsSelected': [
+        'RemoveFeeds',
+        'UpdateFeeds',
         ],
-        'PlaylistsSelected': [
-            'RemovePlaylists',
+    'PlaylistSelected': [
+        'RenamePlaylist',
         ],
-        'PlayableSelected': [
-            'RenameItem',
-            'CopyItemURL',
-            'SaveItem',
+    'PlaylistsSelected': [
+        'RemovePlaylists',
         ],
-        'PlayablesSelected': [
-            'RemoveItems',
+    'PlayableSelected': [
+        'RenameItem',
+        'CopyItemURL',
+        'SaveItem',
         ],
-        'PlayableVideosSelected': [
+    'PlayablesSelected': [
+        'RemoveItems',
         ],
-        'PlayPause': [
-            'PlayPauseVideo',
+    'PlayableVideosSelected': [
         ],
-        'Playing': [
-            'StopVideo',
-            'NextVideo',
-            'PreviousVideo',
-            'Rewind',
-            'FastForward',
+    'PlayPause': [
+        'PlayPauseVideo',
         ],
-        'PlayingVideo': [
-            'Fullscreen',
-            'ToggleDetach',
+    'Playing': [
+        'StopVideo',
+        'NextVideo',
+        'PreviousVideo',
+        'Rewind',
+        'FastForward',
         ],
-}
+    'PlayingVideo': [
+        'Fullscreen',
+        'ToggleDetach',
+        ],
+    }
 
 action_group_map = {}
 def recompute_action_group_map():
@@ -312,7 +316,6 @@ class MenuManager(signals.SignalEmitter):
     Whenever code makes a change that could possibly affect which menu items
     should be enabled/disabled, it should call the update_menus() method.
     """
-
     def __init__(self):
         signals.SignalEmitter.__init__(self)
         self.create_signal('enabled-changed')
@@ -380,7 +383,8 @@ class MenuManager(signals.SignalEmitter):
         """Handle the user selecting things in the static tab list.
         selected_sites is a list of GuideInfo objects
         """
-        pass # We don't change menu items for the static tab list
+        # we don't change menu items for the static tab list
+        pass
 
     def _update_menus_for_selected_tabs(self):
         selection_type, selected_tabs = app.tab_list_manager.get_selection()
@@ -400,7 +404,6 @@ class MenuManager(signals.SignalEmitter):
     def _update_menus_for_selected_items(self):
         """Update the menu items based on the current item list selection.
         """
-
         selected_items = app.item_list_controller_manager.get_selection()
         downloaded = False
         has_audio = False

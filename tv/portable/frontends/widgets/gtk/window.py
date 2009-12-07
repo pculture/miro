@@ -47,7 +47,8 @@ from miro.frontends.widgets import menus
 from miro.plat import resources
 from miro.plat import utils
 
-alive_windows = set() # Keeps the objects alive until destroy() is called
+# keeps the objects alive until destroy() is called
+alive_windows = set()
 running_dialogs = set()
 
 def __get_fullscreen_stock_id():
@@ -81,10 +82,7 @@ for i in range(1, 13):
 
 def get_accel_string(shortcut):
     mod_str = ''.join(keymap.menubar_mod_map[mod] for mod in shortcut.modifiers)
-    try:
-        key_str = keymap.menubar_key_map[shortcut.key]
-    except KeyError:
-        key_str = shortcut.key
+    key_str = keymap.menubar_key_map.get(shortcut.shortcut, shortcut.shortcut)
     return mod_str + key_str
 
 def get_stock_id(n):
@@ -135,6 +133,10 @@ class WindowBase(signals.SignalEmitter):
         self.create_signal('key-press')
         self.create_signal('show')
         self.create_signal('hide')
+        # FIXME - this is a weird place to have the menu code because
+        # it causes all WindowBase subclasses to have all this extra
+        # menu stuff.
+        self.menu_structure = None
         self._setup_ui_manager()
 
     def set_window(self, window):
@@ -160,29 +162,50 @@ class WindowBase(signals.SignalEmitter):
     def connect_menu_keyboard_shortcuts(self):
         self._window.add_accel_group(self.ui_manager.get_accel_group())
 
+    def _add_menu(self, menu, outstream, parent=None):
+        outstream.write('<menu action="Menu%s">' % menu.action)
+        for mem in menu.menuitems:
+            if isinstance(mem, menubar.Menu):
+                self._add_menu(mem, outstream, menu)
+            elif isinstance(mem, menubar.Separator):
+                self._add_separator(mem, outstream)
+            elif isinstance(mem, menubar.MenuItem):
+                self._add_menuitem(mem, outstream)
+        outstream.write('</menu>')
+
+    def _add_menuitem(self, menu, outstream):
+        outstream.write('<menuitem action="%s" />' % menu.action)
+
+    def _add_separator(self, menu, outstream):
+        outstream.write("<separator />")
+
     def _setup_ui_manager(self):
+        self.menu_structure = menubar.get_menu()
+
+        # make modifications to the menu structure here
+        video_menu = self.menu_structure.get("VideoMenu")
+        video_menu.remove("CheckVersion")
+
         self.ui_manager = gtk.UIManager()
+
         self.make_actions()
-        uistring = StringIO.StringIO()
-        uistring.write('<ui><menubar name="MiroMenu">')
+
+        outstream = StringIO.StringIO()
+        outstream.write('<ui><menubar name="MiroMenu">')
         extra_accelerators = []
-        for menu in menubar.menubar:
-            uistring.write('<menu action="Menu%s">' % menu.action)
-            for menuitem in menu.menuitems:
-                if isinstance(menuitem, menubar.Separator):
-                    uistring.write("<separator />")
-                else:
-                    uistring.write('<menuitem action="%s" />' % menuitem.action)
-                    if len(menuitem.shortcuts) > 1:
-                        extra_accelerators.append(menuitem)
-            uistring.write('</menu>')
-        uistring.write('</menubar>')
-        if extra_accelerators:
-            for menuitem in extra_accelerators:
-                for shortcut in menuitem.shortcuts[1:]:
-                    uistring.write('<accelerator action="%s%i" />' % (menuitem.action, id(shortcut)))
-        uistring.write('</ui>')
-        self.ui_manager.add_ui_from_string(uistring.getvalue())
+        for mem in self.menu_structure.menuitems:
+            self._add_menu(mem, outstream)
+        outstream.write('</menubar>')
+
+        for mem in self.menu_structure:
+            if ((not isinstance(mem, menubar.MenuItem) or
+                 len(mem.shortcuts) <= 1)):
+                continue
+            for shortcut in mem.shortcuts[1:]:
+                outstream.write('<accelerator action="%s%i" />' % \
+                                (mem.action, id(shortcut)))
+        outstream.write('</ui>')
+        self.ui_manager.add_ui_from_string(outstream.getvalue())
 
     def make_action(self, action, label, shortcuts=None):
         gtk_action = gtk.Action(action, label, None, get_stock_id(action))
@@ -195,10 +218,10 @@ class WindowBase(signals.SignalEmitter):
             action_group.add_action(gtk_action)
         else:
             action_group.add_action_with_accel(gtk_action,
-                    get_accel_string(shortcuts[0]))
+                                               get_accel_string(shortcuts[0]))
             for shortcut in shortcuts[1:]:
-                extra_action = gtk.Action(action + str(id(shortcut)), '', None,
-                                          None)
+                extra_action = gtk.Action(action + str(id(shortcut)), '',
+                                          None, None)
                 extra_action.set_visible(False)
                 if callback is not None:
                     extra_action.connect('activate', self.on_activate,
@@ -211,13 +234,14 @@ class WindowBase(signals.SignalEmitter):
         for name in menus.action_group_names():
             self.action_groups[name] = gtk.ActionGroup(name)
 
-        for menu in menubar.menubar:
-            self.make_action('Menu' + menu.action, menu.label)
-            for menuitem in menu.menuitems:
-                if isinstance(menuitem, menubar.Separator):
-                    continue
-                self.make_action(menuitem.action, menuitem.label,
-                        menuitem.shortcuts)
+        for mem in self.menu_structure:
+            if isinstance(mem, menubar.Separator):
+                continue
+            if isinstance(mem, menubar.Menu):
+                self.make_action('Menu' + mem.action, mem.label)
+            elif isinstance(mem, menubar.MenuItem):
+                self.make_action(mem.action, mem.label, mem.shortcuts)
+
         for action_group in self.action_groups.values():
             self.ui_manager.insert_action_group(action_group, -1)
 
@@ -342,34 +366,41 @@ class MainWindow(Window):
         self.menubar.show_all()
 
     def on_menu_change(self, menu_manager):
+        import logging
+        logging.info(">>> menu_manager %s", type(menu_manager))
         for name, action_group in self.action_groups.items():
             if name in menu_manager.enabled_groups:
                 action_group.set_sensitive(True)
             else:
                 action_group.set_sensitive(False)
 
-        removeFeeds = menubar.menubar.getLabel("RemoveFeeds")
-        updateFeeds = menubar.menubar.getLabel("UpdateFeeds")
-        removePlaylists = menubar.menubar.getLabel("RemovePlaylists")
-        removeItems = menubar.menubar.getLabel("RemoveItems")
+        removeFeeds = self.menu_structure.get("RemoveFeeds").label
+        updateFeeds = self.menu_structure.get("UpdateFeeds").label
+        removePlaylists = self.menu_structure.get("RemovePlaylists").label
+        removeItems = self.menu_structure.get("RemoveItems").label
 
         for state, actions in menu_manager.states.items():
             if "RemoveFeeds" in actions:
-                removeFeeds = menubar.menubar.getLabel("RemoveFeeds", state)
+                removeFeeds = self.menu_structure.get("RemoveFeeds").state_labels[state]
             if "UpdateFeeds" in actions:
-                updateFeeds = menubar.menubar.getLabel("UpdateFeeds", state)
+                updateFeeds = self.menu_structure.get("UpdateFeeds").state_labels[state]
             if "RemovePlaylists" in actions:
-                removePlaylists = menubar.menubar.getLabel("RemovePlaylists", state)
+                removePlaylists = self.menu_structure.get("RemovePlaylists").state_labels[state]
             if "RemoveItems" in actions:
-                removeItems = menubar.menubar.getLabel("RemoveItems", state)
+                removeItems = self.menu_structure.get("RemoveItems").state_labels[state]
 
-        self.action_groups["FeedsSelected"].get_action("RemoveFeeds").set_property("label", removeFeeds)
-        self.action_groups["FeedsSelected"].get_action("UpdateFeeds").set_property("label", updateFeeds)
-        self.action_groups["PlaylistsSelected"].get_action("RemovePlaylists").set_property("label", removePlaylists)
-        self.action_groups["PlayablesSelected"].get_action("RemoveItems").set_property("label", removeItems)
+        action_groups = self.action_groups
 
-        play_pause = menubar.menubar.getLabel("PlayPauseVideo", menu_manager.play_pause_state)
-        self.action_groups["PlayPause"].get_action("PlayPauseVideo").set_property("label", play_pause)
+        def change_label(group, action, newlabel):
+            action_groups[group].get_action(action).set_property("label", newlabel)
+
+        change_label("FeedsSelected", "RemoveFeeds", removeFeeds)
+        change_label("FeedsSelected", "UpdateFeeds", updateFeeds)
+        change_label("PlaylistsSelected", "RemovePlaylists", removePlaylists)
+        change_label("PlayablesSelected", "RemoveItems", removeItems)
+
+        play_pause = self.menu_structure.get("PlayPauseVideo").state_labels[menu_manager.play_pause_state]
+        change_label("PlayPause", "PlayPauseVideo", play_pause)
 
     def _add_content_widget(self, widget):
         self.vbox.pack_start(widget._widget, expand=True)
