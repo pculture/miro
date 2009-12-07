@@ -30,6 +30,7 @@
 """
 
 from datetime import datetime, timedelta
+from itertools import chain
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from math import ceil
@@ -1885,8 +1886,8 @@ def get_entry_for_file(filename):
             })
 
 def update_incomplete_movie_data():
-    for item in Item.downloaded_view():
-        if item.duration is None or item.screenshot is None:
+    for item in chain(Item.downloaded_view(), Item.file_items_view()):
+        if item.duration is None or item.duration == -1 or item.screenshot is None:
             moviedata.movie_data_updater.request_update(item)
 
 def move_orphaned_items():

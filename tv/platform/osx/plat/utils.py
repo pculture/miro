@@ -346,13 +346,45 @@ def exit(returnCode):
 ###############################################################################
 
 def movie_data_program_info(moviePath, thumbnailPath):
-    py_exe_path = os.path.join(os.path.dirname(NSBundle.mainBundle().executablePath()), 'python')
-    rsrc_path = NSBundle.mainBundle().resourcePath()
+    main_bundle = NSBundle.mainBundle()
+    py_exe_path = os.path.join(os.path.dirname(main_bundle.executablePath()), 'python')
+    rsrc_path = main_bundle.resourcePath()
     script_path = os.path.join(rsrc_path, 'qt_extractor.py')
-    options = NSBundle.mainBundle().infoDictionary().get('PyOptions')
+    options = main_bundle.infoDictionary().get('PyOptions')
     env = None
     if options['alias'] == 1:
-        env = {'PYTHONPATH': ':'.join(sys.path)}
+        env = {'PYTHONPATH': ':'.join(sys.path), 'MIRO_BUNDLE_PATH': main_bundle.bundlePath()}
     else:
-        env = {'PYTHONHOME': rsrc_path}
+        env = {'PYTHONHOME': rsrc_path, 'MIRO_BUNDLE_PATH': main_bundle.bundlePath()}
     return ((py_exe_path, script_path, moviePath, thumbnailPath), env)
+
+###############################################################################
+
+def qttime2secs(qttime):
+    timeScale = qttimescale(qttime)
+    if timeScale == 0:
+        return 0.0
+    timeValue = qttimevalue(qttime)
+    return timeValue / float(timeScale)
+
+def qttimescale(qttime):
+    if isinstance(qttime, tuple):
+        return qttime[1]
+    else:
+        return qttime.timeScale
+
+def qttimevalue(qttime):
+    if isinstance(qttime, tuple):
+        return qttime[0]
+    else:
+        return qttime.timeValue
+
+def qttimevalue_set(qttime, value):
+    print qttime
+    if isinstance(qttime, tuple):
+        return(value, qttime[1], qttime[2])
+    else:
+        qttime.timeValue = value
+        return qttime
+
+###############################################################################
