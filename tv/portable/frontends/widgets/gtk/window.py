@@ -366,8 +366,6 @@ class MainWindow(Window):
         self.menubar.show_all()
 
     def on_menu_change(self, menu_manager):
-        import logging
-        logging.info(">>> menu_manager %s", type(menu_manager))
         for name, action_group in self.action_groups.items():
             if name in menu_manager.enabled_groups:
                 action_group.set_sensitive(True)
