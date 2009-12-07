@@ -136,6 +136,7 @@ class WindowBase(signals.SignalEmitter):
         # it causes all WindowBase subclasses to have all this extra
         # menu stuff.
         self.menu_structure = None
+        self.menu_action_groups = None
         self._setup_ui_manager()
 
     def set_window(self, window):
@@ -185,8 +186,11 @@ class WindowBase(signals.SignalEmitter):
         video_menu = self.menu_structure.get("VideoMenu")
         video_menu.remove("CheckVersion")
 
-        self.ui_manager = gtk.UIManager()
+        # generate action groups after making all modifications
+        mag = menus.generate_action_groups(self.menu_structure)
+        self.menu_action_groups = mag
 
+        self.ui_manager = gtk.UIManager()
         self.make_actions()
 
         outstream = StringIO.StringIO()
@@ -206,12 +210,12 @@ class WindowBase(signals.SignalEmitter):
         outstream.write('</ui>')
         self.ui_manager.add_ui_from_string(outstream.getvalue())
 
-    def make_action(self, action, label, shortcuts=None):
+    def make_action(self, action, label, shortcuts=None, groups=None):
         gtk_action = gtk.Action(action, label, None, get_stock_id(action))
         callback = menus.lookup_handler(action)
         if callback is not None:
             gtk_action.connect("activate", self.on_activate, callback)
-        action_group_name = menus.get_action_group_name(action)
+        action_group_name = groups[0]
         action_group = self.action_groups[action_group_name]
         if shortcuts is None or len(shortcuts) == 0:
             action_group.add_action(gtk_action)
@@ -230,16 +234,17 @@ class WindowBase(signals.SignalEmitter):
 
     def make_actions(self):
         self.action_groups = {}
-        for name in menus.action_group_names():
+        for name in self.menu_action_groups.keys():
             self.action_groups[name] = gtk.ActionGroup(name)
 
         for mem in self.menu_structure:
             if isinstance(mem, menus.Separator):
                 continue
             if isinstance(mem, menus.Menu):
-                self.make_action('Menu' + mem.action, mem.label)
+                self.make_action('Menu' + mem.action, mem.label,
+                                 groups=mem.groups)
             elif isinstance(mem, menus.MenuItem):
-                self.make_action(mem.action, mem.label, mem.shortcuts)
+                self.make_action(mem.action, mem.label, mem.shortcuts, mem.groups)
 
         for action_group in self.action_groups.values():
             self.ui_manager.insert_action_group(action_group, -1)

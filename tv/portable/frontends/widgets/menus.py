@@ -40,7 +40,6 @@ from miro import prefs
 (CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW,
  DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, ESCAPE,
  F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12) = range(25)
-platform = config.get(prefs.APP_PLATFORM)
 
 MOD = CTRL
 
@@ -82,8 +81,8 @@ class MenuItem:
     :param label: The label it has (must be internationalized)
     :param action: The action string for this menu item.
     :param shortcuts: None, the Shortcut, or tuple of Shortcut objects.
-    :param enabled: Whether (True) or not (False) this menu item is
-                    enabled by default.
+    :param groups: The action groups this item is enabled in.  By default
+                   this is ["AlwaysOn"]
     :param state_labels: If this menu item has states, then this is
                          the name/value pairs for all states.
 
@@ -92,20 +91,22 @@ class MenuItem:
     >>> MenuItem(_("_Options"), "EditPreferences")
     >>> MenuItem(_("Cu_t"), "ClipboardCut", Shortcut("x", MOD))
     >>> MenuItem(_("_Update Feed"), "UpdateFeeds",
-    ...          (Shortcut("r", MOD), Shortcut(F5)), enabled=False)
-    >>> MenuItem(_("_Play"), "PlayPauseVideo", enabled=False,
+    ...          (Shortcut("r", MOD), Shortcut(F5)))
+    >>> MenuItem(_("_Play"), "PlayPauseVideo",
     ...          play=_("_Play"), pause=_("_Pause"))
     """
-    def __init__(self, label, action, shortcuts=None, enabled=True,
+    def __init__(self, label, action, shortcuts=None, groups=None,
                  **state_labels):
         self.label = label
         self.action = action
-        if shortcuts == None:
+        if shortcuts is None:
             shortcuts = ()
         if not isinstance(shortcuts, tuple):
             shortcuts = (shortcuts,)
         self.shortcuts = shortcuts
-        self.enabled = enabled
+        if groups is None:
+            groups = ["AlwaysOn"]
+        self.groups = groups
         self.state_labels = state_labels
 
 class Separator:
@@ -126,10 +127,13 @@ class Menu:
     ...     Menu(_("_File"), "File", [ ... ])
     ...     ])
     """
-    def __init__(self, label, action, menuitems):
+    def __init__(self, label, action, menuitems, groups=None):
         self.label = label
         self.action = action
         self.menuitems = list(menuitems)
+        if groups is None:
+            groups = ["AlwaysOn"]
+        self.groups = groups
 
     def __iter__(self):
         for mem in self.menuitems:
@@ -180,111 +184,133 @@ class Menu:
     def append(self, menuitem):
         self.menuitems.append(menuitem)
 
-EditItems = [
-    MenuItem(_("Cu_t"), "ClipboardCut", Shortcut("x", MOD)),
-    MenuItem(_("_Copy"), "ClipboardCopy", Shortcut("c", MOD)),
-    MenuItem(_("_Paste"), "ClipboardPaste", Shortcut("v", MOD)),
-    MenuItem(_("Select _All"), "ClipboardSelectAll", Shortcut("a", MOD)),
-]
-
 def get_menu():
+    """Returns the default menu structure.
+
+    Call this, then make whatever platform-specific changes you 
+    need to make.
+    """
     mbar = Menu("", "TopLevel", [
             Menu(_("_Video"), "VideoMenu", [
-                    MenuItem(_("_Open"), "Open", Shortcut("o", MOD)),
-                    MenuItem(_("_Download Item"), "NewDownload"),
+                    MenuItem(_("_Open"), "Open", Shortcut("o", MOD),
+                             groups=["NonPlaying"]),
+                    MenuItem(_("_Download Item"), "NewDownload",
+                             groups=["NonPlaying"]),
                     MenuItem(_("Check _Version"), "CheckVersion"),
                     Separator(),
                     MenuItem(_("_Remove Item"), "RemoveItems",
-                             Shortcut(BKSPACE, MOD), enabled=False,
+                             Shortcut(BKSPACE, MOD),
+                             groups=["PlayablesSelected"],
                              plural=_("_Remove Items")),
-                    MenuItem(_("Re_name Item"), "RenameItem", enabled=False),
+                    MenuItem(_("Re_name Item"), "RenameItem",
+                             groups=["PlayableSelected"]),
                     MenuItem(_("Save Item _As"), "SaveItem",
-                             Shortcut("s", MOD), enabled=False,
+                             Shortcut("s", MOD),
+                             groups=["PlayableSelected"],
                              plural=_("Save Items _As")),
                     MenuItem(_("Copy Item _URL"), "CopyItemURL",
-                             Shortcut("u", MOD), enabled=False),
+                             Shortcut("u", MOD),
+                             groups=["PlayableSelected"]),
                     Separator(),
                     MenuItem(_("_Options"), "EditPreferences"),
                     MenuItem(_("_Quit"), "Quit", Shortcut("q", MOD)),
                     ]),
 
             Menu(_("_Sidebar"), "SidebarMenu", [
-                    MenuItem(_("Add _Feed"), "NewFeed", Shortcut("n", MOD)),
-                    MenuItem(_("Add Site"), "NewGuide"),
-                    MenuItem(_("New Searc_h Feed"), "NewSearchFeed"),
+                    MenuItem(_("Add _Feed"), "NewFeed", Shortcut("n", MOD),
+                             groups=["NonPlaying"]),
+                    MenuItem(_("Add Site"), "NewGuide",
+                             groups=["NonPlaying"]),
+                    MenuItem(_("New Searc_h Feed"), "NewSearchFeed",
+                             groups=["NonPlaying"]),
                     MenuItem(_("New _Folder"), "NewFeedFolder",
-                             Shortcut("n", MOD, SHIFT)),
+                             Shortcut("n", MOD, SHIFT),
+                             groups=["NonPlaying"]),
                     Separator(),
-                    MenuItem(_("Re_name"), "RenameFeed", enabled=False),
+                    MenuItem(_("Re_name"), "RenameFeed",
+                             groups=["FeedOrFolderSelected"]),
                     MenuItem(_("_Remove"), "RemoveFeeds",
-                             Shortcut(BKSPACE, MOD), enabled=False,
-                             folder=_("_Remove Folder"),
-                             ),
+                             Shortcut(BKSPACE, MOD),
+                             groups=["FeedsSelected"],
+                             folder=_("_Remove Folder")),
                     MenuItem(_("_Update Feed"), "UpdateFeeds",
-                             (Shortcut("r", MOD), Shortcut(F5)), enabled=False,
+                             (Shortcut("r", MOD), Shortcut(F5)),
+                             groups=["FeedsSelected"],
                              plural=_("_Update Feeds")),
                     MenuItem(_("Update _All Feeds"), "UpdateAllFeeds",
-                             Shortcut("r", MOD, SHIFT)),
+                             Shortcut("r", MOD, SHIFT),
+                             groups=["NonPlaying"]),
                     Separator(),
-                    MenuItem(_("_Import Feeds (OPML)"), "ImportFeeds"),
-                    MenuItem(_("E_xport Feeds (OPML)"), "ExportFeeds"),
+                    MenuItem(_("_Import Feeds (OPML)"), "ImportFeeds",
+                             groups=["NonPlaying"]),
+                    MenuItem(_("E_xport Feeds (OPML)"), "ExportFeeds",
+                             groups=["NonPlaying"]),
                     Separator(),
                     MenuItem(_("_Share with a Friend"), "ShareFeed",
-                             enabled=False),
-                    MenuItem(_("Copy URL"), "CopyFeedURL", enabled=False),
+                             groups=["FeedSelected"]),
+                    MenuItem(_("Copy URL"), "CopyFeedURL",
+                             groups=["FeedSelected"]),
                     ]),
 
             Menu(_("_Playlists"), "PlaylistsMenu", [
                     MenuItem(_("New _Playlist"), "NewPlaylist",
-                             Shortcut("p", MOD)),
+                             Shortcut("p", MOD),
+                             groups=["NonPlaying"]),
                     MenuItem(_("New Playlist Fol_der"), "NewPlaylistFolder",
-                             Shortcut("p", MOD, SHIFT)),
+                             Shortcut("p", MOD, SHIFT),
+                             groups=["NonPlaying"]),
                     Separator(),
                     MenuItem(_("Re_name Playlist"),"RenamePlaylist",
-                             enabled=False),
+                             groups=["PlaylistSelected"]),
                     MenuItem(_("_Remove Playlist"),"RemovePlaylists",
-                             Shortcut(BKSPACE, MOD), enabled=False,
+                             Shortcut(BKSPACE, MOD),
+                             groups=["PlaylistsSelected"],
                              plural=_("_Remove Playlists"),
                              folders=_("_Remove Playlist Folders"),
-                             folder=_("_Remove Playlist Folder"),
-                             ),
+                             folder=_("_Remove Playlist Folder")),
                     ]),
 
             Menu(_("P_layback"), "PlaybackMenu", [
-                    MenuItem(_("_Play"), "PlayPauseVideo", enabled=False,
+                    MenuItem(_("_Play"), "PlayPauseVideo",
+                             groups=["PlayPause"],
                              play=_("_Play"),
                              pause=_("_Pause")),
                     MenuItem(_("_Stop"), "StopVideo", Shortcut("d", MOD),
-                             enabled=False),
+                             groups=["Playing"]),
                     Separator(),
                     MenuItem(_("_Next Video"), "NextVideo",
-                             Shortcut(RIGHT_ARROW, MOD), enabled=False),
+                             Shortcut(RIGHT_ARROW, MOD),
+                             groups=["Playing"]),
                     MenuItem(_("_Previous Video"), "PreviousVideo",
-                             Shortcut(LEFT_ARROW, MOD), enabled=False),
+                             Shortcut(LEFT_ARROW, MOD),
+                             groups=["Playing"]),
                     Separator(),
-                    MenuItem(_("Skip _Forward"), "FastForward", enabled=False),
-                    MenuItem(_("Skip _Back"), "Rewind", enabled=False),
+                    MenuItem(_("Skip _Forward"), "FastForward",
+                             groups=["Playing"]),
+                    MenuItem(_("Skip _Back"), "Rewind",
+                             groups=["Playing"]),
                     Separator(),
                     MenuItem(_("Volume _Up"), "UpVolume",
-                             Shortcut(UP_ARROW, MOD), enabled=False),
+                             Shortcut(UP_ARROW, MOD)),
                     MenuItem(_("Volume _Down"), "DownVolume",
-                             Shortcut(DOWN_ARROW,MOD), enabled=False),
+                             Shortcut(DOWN_ARROW,MOD)),
                     Separator(),
                     MenuItem(_("_Fullscreen"), "Fullscreen",
                              (Shortcut("f", MOD), Shortcut(ENTER, ALT)),
-                             enabled=False),
+                             groups=["PlayingVideo"]),
                     MenuItem(_("_Toggle Detached/Attached"), "ToggleDetach",
-                             Shortcut("t", MOD), enabled=False),
-                    Menu(_("S_ubtitles"), "SubtitlesMenu", 
-                         [
-                            MenuItem(_("None Available"), "NoneAvailable", enabled=False)
+                             Shortcut("t", MOD),
+                             groups=["PlayingVideo"]),
+                    Menu(_("S_ubtitles"), "SubtitlesMenu", [
+                            MenuItem(_("None Available"), "NoneAvailable",
+                                     groups=["NeverEnabled"])
                             ]),
                     ]),
 
             Menu(_("_Help"), "HelpMenu", [
                     MenuItem(_("_About %(name)s",
                                {'name': config.get(prefs.SHORT_APP_NAME)}),
-                             "About", ())
+                             "About")
                     ])
             ])
 
@@ -319,7 +345,6 @@ def action_handler(name):
     return decorator
 
 # Video/File menu
-
 @action_handler("Open")
 def on_open():
     app.widgetapp.open_video()
@@ -356,9 +381,7 @@ def on_edit_preferences():
 def on_quit():
     app.widgetapp.quit()
 
-
 # Feeds menu
-
 @action_handler("NewFeed")
 def on_new_feed():
     app.widgetapp.add_new_feed()
@@ -408,7 +431,6 @@ def on_copy_feed_url():
     app.widgetapp.copy_feed_url()
 
 # Playlists menu
-
 @action_handler("NewPlaylist")
 def on_new_playlist():
     app.widgetapp.add_new_playlist()
@@ -426,7 +448,6 @@ def on_remove_playlists():
     app.widgetapp.remove_current_playlist()
 
 # Playback menu
-
 @action_handler("PlayPauseVideo")
 def on_play_pause_video():
     app.widgetapp.on_play_clicked()
@@ -468,7 +489,6 @@ def on_toggle_detach():
     app.widgetapp.on_toggle_detach_clicked()
 
 # Help menu
-
 @action_handler("About")
 def on_about():
     app.widgetapp.about()
@@ -497,85 +517,16 @@ def on_translate():
 def on_planet():
     app.widgetapp.open_url(config.get(prefs.PLANET_URL))
 
-# action_group name -> list of MenuItem labels belonging to action_group
-action_groups = {
-    # group for items that should never be enabled
-    'FakeGroup': [
-        'NoneAvailable'
-        ],
-    'NonPlaying': [
-        'Open',
-        'NewDownload',
-        'NewFeed',
-        'NewGuide',
-        'NewSearchFeed',
-        'NewFeedFolder',
-        'UpdateAllFeeds',
-        'ImportFeeds',
-        'ExportFeeds',
-        'NewPlaylist',
-        'NewPlaylistFolder',
-        ],
-    'FeedSelected': [
-        'ShareFeed',
-        'CopyFeedURL'
-        ],
-    'FeedOrFolderSelected': [
-        'RenameFeed',
-        ],
-    'FeedsSelected': [
-        'RemoveFeeds',
-        'UpdateFeeds',
-        ],
-    'PlaylistSelected': [
-        'RenamePlaylist',
-        ],
-    'PlaylistsSelected': [
-        'RemovePlaylists',
-        ],
-    'PlayableSelected': [
-        'RenameItem',
-        'CopyItemURL',
-        'SaveItem',
-        ],
-    'PlayablesSelected': [
-        'RemoveItems',
-        ],
-    'PlayableVideosSelected': [
-        ],
-    'PlayPause': [
-        'PlayPauseVideo',
-        ],
-    'Playing': [
-        'StopVideo',
-        'NextVideo',
-        'PreviousVideo',
-        'Rewind',
-        'FastForward',
-        ],
-    'PlayingVideo': [
-        'Fullscreen',
-        'ToggleDetach',
-        ],
-    }
-
-action_group_map = {}
-def recompute_action_group_map():
-    for group, actions in action_groups.items():
-        for action in actions:
-            if action not in action_group_map:
-                action_group_map[action] = list()
-            action_group_map[action].append(group)
-recompute_action_group_map()
-
-def action_group_names():
-    return action_groups.keys() + ['AlwaysOn']
-
-def get_action_group_name(action):
-    return action_group_map.get(action, ['AlwaysOn'])[0]
-
-def get_all_action_group_name(action):
-    return action_group_map.get(action, ['AlwaysOn'])
+def generate_action_groups(menu_structure):
+    """Takes a menu structure and returns a map of action group name to
+    list of menu actions in that group.
+    """
+    action_groups = {}
+    for menu in menu_structure:
+        if hasattr(menu, "groups"):
+            for grp in menu.groups:
+                action_groups.setdefault(grp, []).append(menu.action)
+    return action_groups
 
 class MenuManager(signals.SignalEmitter):
     """Updates the menu based on the current selection.
@@ -626,7 +577,8 @@ class MenuManager(signals.SignalEmitter):
                 self.enabled_groups.add('FeedSelected')
             self.enabled_groups.add('FeedOrFolderSelected')
         else:
-            if len([s for s in selected_feeds if s.is_folder]) == len(selected_feeds):
+            selected_folders = [s for s in selected_feeds if s.is_folder]
+            if len(selected_folders) == len(selected_feeds):
                 self.states["folders"].append("RemoveFeeds")
             else:
                 self.states["plural"].append("RemoveFeeds")
@@ -645,7 +597,8 @@ class MenuManager(signals.SignalEmitter):
                 self.states["folder"].append("RemovePlaylists")
             self.enabled_groups.add('PlaylistSelected')
         else:
-            if len([s for s in selected_playlists if s.is_folder]) == len(selected_playlists):
+            selected_folders = [s for s in selected_playlists if s.is_folder]
+            if len(selected_folders) == len(selected_playlists):
                 self.states["folders"].append("RemovePlaylists")
             else:
                 self.states["plural"].append("RemovePlaylists")
