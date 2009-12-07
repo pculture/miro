@@ -44,7 +44,7 @@ def set_mod(modifier):
     """Allows the platform to change the MOD key.  OSX and
     Windows have different mod keys.
 
-    Example:
+    Examples:
     >>> set_mod(CTRL)
     >>> set_mod(CMD)
     """
@@ -171,7 +171,7 @@ class Menu:
         return len(menuitems)
 
     def insert(self, index, menuitem):
-        self.menuitems.insert(menuitem, index)
+        self.menuitems.insert(index, menuitem)
 
     def append(self, menuitem):
         self.menuitems.append(menuitem)

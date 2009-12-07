@@ -57,8 +57,11 @@ STD_ACTION_MAP = {
     "CloseWindow":      (nil,     'performClose:'),
 }
 
+import miro.menubar
+miro.menubar.set_mod(CMD)
+
 MODIFIERS_MAP = {
-    MOD:   NSCommandKeyMask,
+    CMD:   NSCommandKeyMask,
     SHIFT: NSShiftKeyMask,
     CTRL:  NSControlKeyMask,
     ALT:   NSAlternateKeyMask
@@ -127,19 +130,15 @@ def populate_single_menu(nsmenu, miro_menu):
             submenu = NSMenu.alloc().init()
             populate_single_menu(submenu, miro_item)
             item = NSMenuItem.alloc().init()
-            item.setTitle_(miro_item.label)
+            item.setTitle_(miro_item.label.replace("_", ""))
             item.setSubmenu_(submenu)
         nsmenu.addItem_(item)
 
 def populate_menu():
     short_appname = config.get(prefs.SHORT_APP_NAME)
 
-    import miro.menubar
-    miro.menubar.set_mod(CMD)
-
     menubar = get_menu()
-
-    menubar.find("VideoMenu").label = _("_File")
+    menubar.get("VideoMenu").label = _("_File")
 
     # Application menu
     miroMenuItems = [
@@ -167,7 +166,7 @@ def populate_menu():
 
     # File menu
     closeWinItem = MenuItem(_("Close Window"), "CloseWindow", Shortcut("w", MOD))
-    menubar.get("Video").menuitems.append(closeWinItem)
+    menubar.get("VideoMenu").append(closeWinItem)
 
     # Edit menu
     editMenuItems = [
@@ -179,7 +178,7 @@ def populate_menu():
         MenuItem(_("Select All"), "SelectAll", Shortcut("a", MOD))
     ]
     editMenu = Menu(_("Edit"), "Edit", editMenuItems)
-    menubar.menus.insert(1, editMenu)
+    menubar.insert(1, editMenu)
 
     # Playback menu
     presentMenuItems = [
@@ -188,7 +187,7 @@ def populate_menu():
         MenuItem(_("Present Double Size"), "PresentDoubleSize", Shortcut("2", MOD)),
     ]
     presentMenu = Menu(_("Present Video"), "Present", presentMenuItems)
-    menubar.findMenu("Playback").menuitems.append(presentMenu)
+    menubar.get("PlaybackMenu").append(presentMenu)
     menus.action_groups['PlayableVideosSelected'].extend(['PresentActualSize', 'PresentHalfSize', 'PresentDoubleSize'])
     menus.action_groups['PlayingVideo'].extend(['PresentActualSize', 'PresentHalfSize', 'PresentDoubleSize'])
 
@@ -202,10 +201,10 @@ def populate_menu():
         MenuItem(_("Bring All to Front"), "BringAllToFront"),
     ]
     windowMenu = Menu(_("Window"), "Window", windowMenuItems)
-    menubar.menus.insert(5, windowMenu)
+    menubar.insert(5, windowMenu)
 
     # Help Menu
-    helpItem = menubar.findMenu("Help").findItem("Help")
+    helpItem = menubar.get("Help")
     helpItem.label = _("%(appname)s Help", {"appname": short_appname})
     helpItem.shortcuts = (Shortcut("?", MOD),)
 
@@ -214,7 +213,7 @@ def populate_menu():
     appMenu = main_menu.itemAtIndex_(0).submenu()
     populate_single_menu(appMenu, miroMenu)
 
-    for menu in menubar.menus:
+    for menu in menubar.menuitems:
         nsmenu = NSMenu.alloc().init()
         nsmenu.setTitle_(menu.label.replace("_", ""))
         populate_single_menu(nsmenu, menu)
