@@ -184,16 +184,17 @@ def populate_menu():
     # Playback menu
     presentMenuItems = [
         menus.MenuItem(_("Present Half Size"), "PresentHalfSize", 
-                       menus.Shortcut("0", MOD)),
+                       menus.Shortcut("0", MOD),
+                       groups=["PlayingVideo", "PlayableVideosSelected"]),
         menus.MenuItem(_("Present Actual Size"), "PresentActualSize", 
-                       menus.Shortcut("1", MOD)),
+                       menus.Shortcut("1", MOD),
+                       groups=["PlayingVideo", "PlayableVideosSelected"]),
         menus.MenuItem(_("Present Double Size"), "PresentDoubleSize", 
-                       menus.Shortcut("2", MOD)),
+                       menus.Shortcut("2", MOD),
+                       groups=["PlayingVideo", "PlayableVideosSelected"]),
     ]
     presentMenu = menus.Menu(_("Present Video"), "Present", presentMenuItems)
     menubar.get("PlaybackMenu").append(presentMenu)
-    menus.action_groups['PlayableVideosSelected'].extend(['PresentActualSize', 'PresentHalfSize', 'PresentDoubleSize'])
-    menus.action_groups['PlayingVideo'].extend(['PresentActualSize', 'PresentHalfSize', 'PresentDoubleSize'])
 
     # Window menu
     windowMenuItems = [
@@ -225,9 +226,13 @@ def populate_menu():
         nsmenuitem = make_menu_item(menu)
         nsmenuitem.setSubmenu_(nsmenu)
         main_menu.addItem_(nsmenuitem)
-    
-    menus.recompute_action_group_map()
 
+    # we do this to get groups correct
+    menubar.insert(0, miroMenu)
+
+    menus.osx_menu_structure = menubar
+    menus.osx_action_groups = menus.generate_action_groups(menubar)
+    
 class ContextMenuHandler(NSObject):
     def initWithCallback_(self, callback):
         self = super(ContextMenuHandler, self).init()

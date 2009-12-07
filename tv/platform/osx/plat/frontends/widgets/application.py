@@ -397,7 +397,8 @@ class AppController(NSObject):
 
     def validateUserInterfaceItem_(self, menuitem):
         action = menuitem.representedObject()
-        for group_name in menuitem.groups:
+        group_names = menus.osx_menu_structure.get(action).groups
+        for group_name in group_names:
             if group_name in app.menu_manager.enabled_groups:
                 return True
         return False
