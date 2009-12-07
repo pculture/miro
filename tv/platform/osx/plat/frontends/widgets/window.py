@@ -33,7 +33,6 @@ from Foundation import *
 from objc import YES, NO, nil
 from PyObjCTools import AppHelper
 
-from miro import menubar
 from miro import signals
 from miro.frontends.widgets import widgetconst
 from miro.plat.frontends.widgets import osxmenus

@@ -31,7 +31,6 @@
 from miro import app
 from miro import signals
 from miro import messages
-from miro import menubar
 from miro.gtcache import gettext as _
 from miro.plat import resources
 from miro.frontends.widgets import style
@@ -39,6 +38,7 @@ from miro.frontends.widgets import separator
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import statictabs
 from miro.frontends.widgets import widgetutil
+from miro.frontends.widgets import menus
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import timer
 
@@ -429,7 +429,7 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
         self.doing_change = False
 
     def on_key_press(self, view, key, mods):
-        if key == menubar.DELETE:
+        if key == menus.DELETE:
             self.on_delete_key_pressed()
             return True
 

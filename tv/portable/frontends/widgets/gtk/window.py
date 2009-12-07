@@ -37,7 +37,6 @@ import gtk
 from miro import app
 from miro import config
 from miro import prefs
-from miro import menubar
 from miro import signals
 from miro import dialogs
 from miro.gtcache import gettext as _
@@ -78,7 +77,7 @@ STOCK_IDS = {
 
 for i in range(1, 13):
     name = 'F%d' % i
-    keymap.menubar_key_map[getattr(menubar, name)] = name
+    keymap.menubar_key_map[getattr(menus, name)] = name
 
 def get_accel_string(shortcut):
     mod_str = ''.join(keymap.menubar_mod_map[mod] for mod in shortcut.modifiers)
@@ -165,11 +164,11 @@ class WindowBase(signals.SignalEmitter):
     def _add_menu(self, menu, outstream, parent=None):
         outstream.write('<menu action="Menu%s">' % menu.action)
         for mem in menu.menuitems:
-            if isinstance(mem, menubar.Menu):
+            if isinstance(mem, menus.Menu):
                 self._add_menu(mem, outstream, menu)
-            elif isinstance(mem, menubar.Separator):
+            elif isinstance(mem, menus.Separator):
                 self._add_separator(mem, outstream)
-            elif isinstance(mem, menubar.MenuItem):
+            elif isinstance(mem, menus.MenuItem):
                 self._add_menuitem(mem, outstream)
         outstream.write('</menu>')
 
@@ -180,7 +179,7 @@ class WindowBase(signals.SignalEmitter):
         outstream.write("<separator />")
 
     def _setup_ui_manager(self):
-        self.menu_structure = menubar.get_menu()
+        self.menu_structure = menus.get_menu()
 
         # make modifications to the menu structure here
         video_menu = self.menu_structure.get("VideoMenu")
@@ -198,7 +197,7 @@ class WindowBase(signals.SignalEmitter):
         outstream.write('</menubar>')
 
         for mem in self.menu_structure:
-            if ((not isinstance(mem, menubar.MenuItem) or
+            if ((not isinstance(mem, menus.MenuItem) or
                  len(mem.shortcuts) <= 1)):
                 continue
             for shortcut in mem.shortcuts[1:]:
@@ -235,11 +234,11 @@ class WindowBase(signals.SignalEmitter):
             self.action_groups[name] = gtk.ActionGroup(name)
 
         for mem in self.menu_structure:
-            if isinstance(mem, menubar.Separator):
+            if isinstance(mem, menus.Separator):
                 continue
-            if isinstance(mem, menubar.Menu):
+            if isinstance(mem, menus.Menu):
                 self.make_action('Menu' + mem.action, mem.label)
-            elif isinstance(mem, menubar.MenuItem):
+            elif isinstance(mem, menus.MenuItem):
                 self.make_action(mem.action, mem.label, mem.shortcuts)
 
         for action_group in self.action_groups.values():

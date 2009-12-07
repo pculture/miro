@@ -31,24 +31,24 @@
 
 import gtk
 
-from miro import menubar
+from miro.frontends.widgets import menus
 
 menubar_mod_map = {
-    menubar.CTRL: '<Ctrl>',
-    menubar.ALT: '<Alt>',
-    menubar.SHIFT: '<Shift>',
+    menus.CTRL: '<Ctrl>',
+    menus.ALT: '<Alt>',
+    menus.SHIFT: '<Shift>',
 }
 
 menubar_key_map = {
-    menubar.RIGHT_ARROW: 'Right',
-    menubar.LEFT_ARROW: 'Left',
-    menubar.UP_ARROW: 'Up',
-    menubar.DOWN_ARROW: 'Down',
-    menubar.SPACE: 'space',
-    menubar.ENTER: 'Return',
-    menubar.DELETE: 'Delete',
-    menubar.BKSPACE: 'BackSpace',
-    menubar.ESCAPE: 'Escape',
+    menus.RIGHT_ARROW: 'Right',
+    menus.LEFT_ARROW: 'Left',
+    menus.UP_ARROW: 'Up',
+    menus.DOWN_ARROW: 'Down',
+    menus.SPACE: 'space',
+    menus.ENTER: 'Return',
+    menus.DELETE: 'Delete',
+    menus.BKSPACE: 'BackSpace',
+    menus.ESCAPE: 'Escape',
     '>': 'greater',
     '<': 'less'
 }
@@ -57,21 +57,21 @@ menubar_key_map = {
 gtk_key_map = dict((i[1], i[0]) for i in menubar_key_map.items())
 
 def translate_gtk_modifiers(event):
-    """Convert a keypress event to a set of modifiers from the portable
-    menubar module.
+    """Convert a keypress event to a set of modifiers from the menus
+    module.
     """
     modifiers = set()
     if event.state & gtk.gdk.CONTROL_MASK:
-        modifiers.add(menubar.CTRL)
+        modifiers.add(menus.CTRL)
     if event.state & gtk.gdk.MOD1_MASK:
-        modifiers.add(menubar.ALT)
+        modifiers.add(menus.ALT)
     if event.state & gtk.gdk.SHIFT_MASK:
-        modifiers.add(menubar.SHIFT)
+        modifiers.add(menus.SHIFT)
     return modifiers
 
 def translate_gtk_event(event):
-    """Convert a GTK key event into the tuple (key, modifiers) where key and
-    modifiers are from the portable menubar module.
+    """Convert a GTK key event into the tuple (key, modifiers) where
+    key and modifiers are from the menus module.
     """
     gtk_keyval = gtk.gdk.keyval_name(event.keyval)
     if gtk_keyval == None:
