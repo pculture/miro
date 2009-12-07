@@ -183,8 +183,13 @@ class WindowBase(signals.SignalEmitter):
         self.menu_structure = menus.get_menu()
 
         # make modifications to the menu structure here
-        video_menu = self.menu_structure.get("VideoMenu")
-        video_menu.remove("CheckVersion")
+
+        # on gtk-x11, we don't have a CheckVersion option because
+        # we update with the package system.
+        this_platform = config.get(prefs.APP_PLATFORM)
+        if this_platform == 'gtk-x11':
+            video_menu = self.menu_structure.get("VideoMenu")
+            video_menu.remove("CheckVersion")
 
         # generate action groups after making all modifications
         mag = menus.generate_action_groups(self.menu_structure)
