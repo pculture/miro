@@ -26,271 +26,276 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-# Defines menu, accelerator keys, and shortcuts
-# THIS IS STILL A WORK IN PROGRESS. THE FORMAT IS NOT FINAL
+# Defines menu, accelerator keys, and shortcuts.
+
 from miro.gtcache import gettext as _
 from miro import config
 from miro import prefs
 from string import Template
 
-CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, ESCAPE, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12 = range(25)
+(CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW,
+ DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, ESCAPE,
+ F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12) = range(25)
 platform = config.get(prefs.APP_PLATFORM)
 
-if platform == "osx":
-   MOD = CMD
-else:
-   MOD = CTRL
+MOD = CTRL
 
-class Key:
-    def __init__(self, key, *modifiers):
+def set_mod(modifier):
+    """Allows the platform to change the MOD key.  OSX and
+    Windows have different mod keys.
+
+    Example:
+    >>> set_mod(CTRL)
+    >>> set_mod(CMD)
+    """
+    global MOD
+    MOD = modifier
+
+class Shortcut:
+    """Defines a shortcut key combination used to trigger this
+    menu item.
+
+    The first argument is the shortcut key.  Other arguments are
+    modifiers.
+
+    Examples:
+
+    >>> Shortcut("x", MOD)
+    >>> Shortcut(BKSPACE, MOD)
+
+    This is wrong:
+
+    >>> Shortcut(MOD, "x")
+    """
+    def __init__(self, shortcut, *modifiers):
+        self.shortcut = shortcut
         self.modifiers = modifiers
-        self.key = key
 
 class MenuItem:
-    def __init__(self, label, action, shortcuts, impl=None, enabled=True, **stateLabels):
+    """A menu item is a single item in the menu that can be clicked
+    on that has an action.
+
+    :param label: The label it has (must be internationalized)
+    :param action: The action string for this menu item.
+    :param shortcuts: None, the Shortcut, or tuple of Shortcut objects.
+    :param enabled: Whether (True) or not (False) this menu item is
+                    enabled by default.
+    :param state_labels: If this menu item has states, then this is
+                         the name/value pairs for all states.
+
+    Example:
+
+    >>> MenuItem(_("_Options"), "EditPreferences")
+    >>> MenuItem(_("Cu_t"), "ClipboardCut", Shortcut("x", MOD))
+    >>> MenuItem(_("_Update Feed"), "UpdateFeeds",
+    ...          (Shortcut("r", MOD), Shortcut(F5)), enabled=False)
+    >>> MenuItem(_("_Play"), "PlayPauseVideo", enabled=False,
+    ...          play=_("_Play"), pause=_("_Pause"))
+    """
+    def __init__(self, label, action, shortcuts=None, enabled=True,
+                 **state_labels):
         self.label = label
         self.action = action
+        if shortcuts == None:
+            shortcuts = ()
+        if not isinstance(shortcuts, tuple):
+            shortcuts = (shortcuts,)
         self.shortcuts = shortcuts
         self.enabled = enabled
-        self.stateLabels = stateLabels
-        self.impl = impl
+        self.state_labels = state_labels
 
 class Separator:
-    pass
+    """This denotes a separator in the menu.
+    """
+    def __init__(self):
+        self.action = None
 
 class Menu:
-    def __init__(self, label, action, *menuitems):
+    """A Menu holds a list of MenuItems and Menus.
+
+    Example:
+    >>> Menu(_("P_layback"), "Playback", [
+    ...      MenuItem(_("_Foo"), "Foo"),
+    ...      MenuItem(_("_Bar"), "Bar")
+    ...      ])
+    >>> Menu("", "toplevel", [
+    ...     Menu(_("_File"), "File", [ ... ])
+    ...     ])
+    """
+    def __init__(self, label, action, menuitems):
         self.label = label
         self.action = action
-        self.labels = {action:label}
-        self.stateLabels = {}
-        self.shortcuts = {}
-        self.impls = {}
         self.menuitems = list(menuitems)
-        for item in menuitems:
-            if not isinstance(item, Separator):
-                self.labels[item.action] = item.label
-                self.shortcuts[item.action] = item.shortcuts
-                self.impls[item.action] = item.impl
-                if item.stateLabels:
-                    self.stateLabels[item.action] = item.stateLabels
-            
-    def getLabel(self, action, state=None, variables=None):
-        if variables == None:
-            variables = {}
-        if state is None:
-            try:
-                return Template(self.labels[action]).substitute(**variables)
-            except KeyError:
-                return action
-        else:
-            try:
-                return Template(self.stateLabels[action][state]).substitute(**variables)
-            except KeyError:
-                return self.getLabel(action)
-
-    def getShortcuts(self, action):
-        try:
-            return self.shortcuts[action]
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            return ()
-    
-    def findItem(self, itemAction):
-        for item in self.menuitems:
-            if hasattr(item, 'action') and item.action == itemAction:
-                return item
-        return None
-    
-    def extractMenuItem(self, itemAction):
-        item = self.findItem(itemAction)
-        if item is not None:
-            self.menuitems.remove(item)
-        return item
-
-class MenuBar:
-    def __init__(self, *menus):
-        self.menus = list(menus)
-        self.labels = {}
-        self.stateLabels = {}
-        self.shortcuts = {}
-        self.impls = {}
-        for menu in menus:
-            self.labels.update(menu.labels)
-            self.stateLabels.update(menu.stateLabels)
-            self.shortcuts.update(menu.shortcuts)
-            self.impls.update(menu.impls)
 
     def __iter__(self):
-        for menu in self.menus:
-            yield menu
+        for mem in self.menuitems:
+            yield mem
+            if isinstance(mem, Menu):
+                for mem2 in mem:
+                    yield mem2
 
-    def getLabel(self, action, state=None, variables=None):
-        if variables == None:
-            variables = {}
+    def has(self, action):
+        for mem in self.menuitems:
+            if mem.action == action:
+                return True
+        return False
 
-        if state is None:
-            try:
-                return Template(self.labels[action]).substitute(**variables)
-            except KeyError:
-                return action
-        else:
-            try:
-                return Template(self.stateLabels[action][state]).substitute(**variables)
-            except KeyError:
-                return self.getLabel(action)
+    def get(self, action, default=None):
+        for mem in self.menuitems:
+            if mem.action == action:
+                return mem
+            if isinstance(mem, Menu):
+                try:
+                    return mem.get(action)
+                except ValueError:
+                    pass
 
-    def getShortcuts(self, action):
-        try:
-            if self.shortcuts[action] is None:
-                return ()
-            else:
-                return self.shortcuts[action]
-        except KeyError:
-            return ()
+        if default is not None:
+            return default
 
-    def getShortcut(self, action):
-        all = self.getShortcuts(action)
-        if len(all) > 0:
-            return all[0]
-        else:
-            return ShortCut(None)
+        raise ValueError("%s is not in this menu." % action)
 
-    def getImpl(self, action):
-        try:
-            return self.impls[action]
-        except KeyError:
-            return None
-    
-    def addImpl(self, action, impl):
-        self.impls[action] = impl
-    
-    def findMenu(self, menuAction):
-        for menu in self.menus:
-            if hasattr(menu, 'action') and menu.action == menuAction:
-                return menu
-        return None
-    
-    def extractMenuItem(self, menuAction, itemAction):
-        menu = self.findMenu(menuAction)
-        if menu is not None:
-            return menu.extractMenuItem(itemAction)
-        return None
+    def index(self, action):
+        for i, mem in enumerate(self.menuitems):
+            if mem.action == action:
+                return i
+        raise ValueError("%s not in this menu." % action)
 
-VideoItems = [
-    MenuItem(_("_Open"), "Open", (Key("o", MOD),)),
-    MenuItem(_("_Download Item"), "NewDownload", ()),
-    MenuItem(_("Check _Version"), "CheckVersion", ()),
-    Separator(),
-    MenuItem(_("_Remove Item"), "RemoveItems", (Key(BKSPACE, MOD),), enabled=False,
-             plural=_("_Remove Items")),
-    MenuItem(_("Re_name Item"), "RenameItem", (), enabled=False),
-    MenuItem(_("Save Item _As"), "SaveItem", (Key("s",MOD),), enabled=False,
-             plural=_("Save Items _As")),
-    MenuItem(_("Copy Item _URL"), "CopyItemURL", (Key("u", MOD),), enabled=False),
-    Separator(),
-    MenuItem(_("_Options"), "EditPreferences", ()),
-    MenuItem(_("_Quit"), "Quit", (Key("q",MOD),)),
-]
+    def remove(self, action):
+        # FIXME - this won't remove separators--probably should do
+        # a pass to remove a separator for two separators in a row
+        # or a separator at the beginning or end of the list
+        self.menuitems = [m for m in self.menuitems if m.action != action]
 
-# FIXME - move this to platform-specific code
-if platform == "gtk-x11":
-    del VideoItems[2] # No "Check version" on GTK platforms. We use
-                      # the package management system instead
+    def count(self):
+        return len(menuitems)
+
+    def insert(self, index, menuitem):
+        self.menuitems.insert(menuitem, index)
+
+    def append(self, menuitem):
+        self.menuitems.append(menuitem)
 
 EditItems = [
-    MenuItem(_("Cu_t"), "ClipboardCut", (Key("x",MOD),)),
-    MenuItem(_("_Copy"), "ClipboardCopy", (Key("c",MOD),)),
-    MenuItem(_("_Paste"), "ClipboardPaste", (Key("v",MOD),)),
-    MenuItem(_("Select _All"), "ClipboardSelectAll", (Key("a",MOD),)),
+    MenuItem(_("Cu_t"), "ClipboardCut", Shortcut("x", MOD)),
+    MenuItem(_("_Copy"), "ClipboardCopy", Shortcut("c", MOD)),
+    MenuItem(_("_Paste"), "ClipboardPaste", Shortcut("v", MOD)),
+    MenuItem(_("Select _All"), "ClipboardSelectAll", Shortcut("a", MOD)),
 ]
 
-SidebarItems = [
-    MenuItem(_("Add _Feed"), "NewFeed", (Key("n",MOD),)),
-    MenuItem(_("Add Site"), "NewGuide", ()),
-    MenuItem(_("New Searc_h Feed"), "NewSearchFeed", ()),
-    MenuItem(_("New _Folder"), "NewFeedFolder", (Key("n",MOD,SHIFT),)),
-    Separator(),
-    MenuItem(_("Re_name"), "RenameFeed", (), enabled=False),
-    MenuItem(_("_Remove"), "RemoveFeeds", (Key(BKSPACE, MOD),), enabled=False,
-             folder=_("_Remove Folder"),
-             ),
-    MenuItem(_("_Update Feed"), "UpdateFeeds", (Key("r",MOD),Key(F5)), enabled=False,
-             plural=_("_Update Feeds")),
-    MenuItem(_("Update _All Feeds"), "UpdateAllFeeds", (Key("r",MOD,SHIFT),)),
-    Separator(),
-    MenuItem(_("_Import Feeds (OPML)"), "ImportFeeds", ()),
-    MenuItem(_("E_xport Feeds (OPML)"), "ExportFeeds", ()),
-    Separator(),
-    MenuItem(_("_Share with a Friend"), "ShareFeed", (), enabled=False),
-    MenuItem(_("Copy URL"), "CopyFeedURL", (), enabled=False),
-]
+def get_menu():
+    mbar = Menu("", "TopLevel", [
+            Menu(_("_Video"), "VideoMenu", [
+                    MenuItem(_("_Open"), "Open", Shortcut("o", MOD)),
+                    MenuItem(_("_Download Item"), "NewDownload"),
+                    MenuItem(_("Check _Version"), "CheckVersion"),
+                    Separator(),
+                    MenuItem(_("_Remove Item"), "RemoveItems",
+                             Shortcut(BKSPACE, MOD), enabled=False,
+                             plural=_("_Remove Items")),
+                    MenuItem(_("Re_name Item"), "RenameItem", enabled=False),
+                    MenuItem(_("Save Item _As"), "SaveItem",
+                             Shortcut("s", MOD), enabled=False,
+                             plural=_("Save Items _As")),
+                    MenuItem(_("Copy Item _URL"), "CopyItemURL",
+                             Shortcut("u", MOD), enabled=False),
+                    Separator(),
+                    MenuItem(_("_Options"), "EditPreferences"),
+                    MenuItem(_("_Quit"), "Quit", Shortcut("q", MOD)),
+                    ]),
 
-PlaylistItems = [
-    MenuItem(_("New _Playlist"), "NewPlaylist", (Key("p",MOD),)),
-    MenuItem(_("New Playlist Fol_der"), "NewPlaylistFolder",(Key("p",MOD,SHIFT),)),
-    Separator(),
-    MenuItem(_("Re_name Playlist"),"RenamePlaylist",(), enabled=False),
-    MenuItem(_("_Remove Playlist"),"RemovePlaylists", (Key(BKSPACE, MOD),), enabled=False,
-             plural=_("_Remove Playlists"),
-             folders=_("_Remove Playlist Folders"),
-             folder=_("_Remove Playlist Folder"),
-             ),
-]
+            Menu(_("_Sidebar"), "SidebarMenu", [
+                    MenuItem(_("Add _Feed"), "NewFeed", Shortcut("n", MOD)),
+                    MenuItem(_("Add Site"), "NewGuide"),
+                    MenuItem(_("New Searc_h Feed"), "NewSearchFeed"),
+                    MenuItem(_("New _Folder"), "NewFeedFolder",
+                             Shortcut("n", MOD, SHIFT)),
+                    Separator(),
+                    MenuItem(_("Re_name"), "RenameFeed", enabled=False),
+                    MenuItem(_("_Remove"), "RemoveFeeds",
+                             Shortcut(BKSPACE, MOD), enabled=False,
+                             folder=_("_Remove Folder"),
+                             ),
+                    MenuItem(_("_Update Feed"), "UpdateFeeds",
+                             (Shortcut("r", MOD), Shortcut(F5)), enabled=False,
+                             plural=_("_Update Feeds")),
+                    MenuItem(_("Update _All Feeds"), "UpdateAllFeeds",
+                             Shortcut("r", MOD, SHIFT)),
+                    Separator(),
+                    MenuItem(_("_Import Feeds (OPML)"), "ImportFeeds"),
+                    MenuItem(_("E_xport Feeds (OPML)"), "ExportFeeds"),
+                    Separator(),
+                    MenuItem(_("_Share with a Friend"), "ShareFeed",
+                             enabled=False),
+                    MenuItem(_("Copy URL"), "CopyFeedURL", enabled=False),
+                    ]),
 
-# FIXME - move this to platform-specific code
-if platform == "windows-xul":
-    fullscreen_shortcuts = (Key("f", MOD), Key(ENTER, ALT))
-else:
-    fullscreen_shortcuts = (Key("f", MOD), )
+            Menu(_("_Playlists"), "PlaylistsMenu", [
+                    MenuItem(_("New _Playlist"), "NewPlaylist",
+                             Shortcut("p", MOD)),
+                    MenuItem(_("New Playlist Fol_der"), "NewPlaylistFolder",
+                             Shortcut("p", MOD, SHIFT)),
+                    Separator(),
+                    MenuItem(_("Re_name Playlist"),"RenamePlaylist",
+                             enabled=False),
+                    MenuItem(_("_Remove Playlist"),"RemovePlaylists",
+                             Shortcut(BKSPACE, MOD), enabled=False,
+                             plural=_("_Remove Playlists"),
+                             folders=_("_Remove Playlist Folders"),
+                             folder=_("_Remove Playlist Folder"),
+                             ),
+                    ]),
 
-PlaybackItems = [
-    MenuItem(_("_Play"), "PlayPauseVideo", (), enabled=False,
-             play=_("_Play"),
-             pause=_("_Pause")),
-    MenuItem(_("_Stop"), "StopVideo", (Key("d",MOD),), enabled=False),
-    Separator(),
-    MenuItem(_("_Next Video"), "NextVideo", (Key(RIGHT_ARROW, MOD),), enabled=False),
-    MenuItem(_("_Previous Video"), "PreviousVideo", (Key(LEFT_ARROW, MOD),), enabled=False),
-    Separator(),
-    MenuItem(_("Skip _Forward"), "FastForward", (), enabled=False),
-    MenuItem(_("Skip _Back"), "Rewind", (), enabled=False),
-    Separator(),
-    MenuItem(_("Volume _Up"), "UpVolume", (Key(UP_ARROW, MOD),), enabled=False),
-    MenuItem(_("Volume _Down"), "DownVolume", (Key(DOWN_ARROW,MOD),), enabled=False),
-    Separator(),
-    MenuItem(_("_Fullscreen"), "Fullscreen", fullscreen_shortcuts, enabled=False),
-    MenuItem(_("_Toggle Detached/Attached"), "ToggleDetach", (Key("t",MOD),), enabled=False),
-]
+            Menu(_("P_layback"), "PlaybackMenu", [
+                    MenuItem(_("_Play"), "PlayPauseVideo", enabled=False,
+                             play=_("_Play"),
+                             pause=_("_Pause")),
+                    MenuItem(_("_Stop"), "StopVideo", Shortcut("d", MOD),
+                             enabled=False),
+                    Separator(),
+                    MenuItem(_("_Next Video"), "NextVideo",
+                             Shortcut(RIGHT_ARROW, MOD), enabled=False),
+                    MenuItem(_("_Previous Video"), "PreviousVideo",
+                             Shortcut(LEFT_ARROW, MOD), enabled=False),
+                    Separator(),
+                    MenuItem(_("Skip _Forward"), "FastForward", enabled=False),
+                    MenuItem(_("Skip _Back"), "Rewind", enabled=False),
+                    Separator(),
+                    MenuItem(_("Volume _Up"), "UpVolume",
+                             Shortcut(UP_ARROW, MOD), enabled=False),
+                    MenuItem(_("Volume _Down"), "DownVolume",
+                             Shortcut(DOWN_ARROW,MOD), enabled=False),
+                    Separator(),
+                    MenuItem(_("_Fullscreen"), "Fullscreen",
+                             (Shortcut("f", MOD), Shortcut(ENTER, ALT)),
+                             enabled=False),
+                    MenuItem(_("_Toggle Detached/Attached"), "ToggleDetach",
+                             Shortcut("t", MOD), enabled=False),
+                    Menu(_("S_ubtitles"), "SubtitlesMenu", 
+                         [
+                            MenuItem(_("None Available"), "NoneAvailable", enabled=False)
+                            ]),
+                    ]),
 
-HelpItems = [
-    MenuItem(_("_About %(name)s", {'name': config.get(prefs.SHORT_APP_NAME)}), "About", ())]
-if config.get(prefs.DONATE_URL):
-   HelpItems.append(MenuItem(_("_Donate"), "Donate", ()))
-if config.get(prefs.HELP_URL):
-   HelpItems.append(MenuItem(_("_Help"), "Help", (Key(F1),)))
-HelpItems.extend([Separator(),
-                   MenuItem(_("Diagnostics"), "Diagnostics", ())])
-if config.get(prefs.BUG_REPORT_URL):
-    HelpItems.append(MenuItem(_("Report a _Bug"), "ReportBug", ()))
-if config.get(prefs.TRANSLATE_URL):
-    HelpItems.append(MenuItem(_("_Translate"), "Translate", ()))
-if config.get(prefs.PLANET_URL):
-   HelpItems.append(MenuItem(_("_Planet Miro"), "Planet", ()))
+            Menu(_("_Help"), "HelpMenu", [
+                    MenuItem(_("_About %(name)s",
+                               {'name': config.get(prefs.SHORT_APP_NAME)}),
+                             "About", ())
+                    ])
+            ])
 
-# FIXME - move this to platform-specific code
-if platform == "gtk-x11":
-    main_title = _("_Video")
-else:
-    main_title = _("_File")
+    help_menu = mbar.get("HelpMenu")
+    if config.get(prefs.DONATE_URL):
+        help_menu.append(MenuItem(_("_Donate"), "Donate"))
 
-# FIXME - changes this so that computations are performed as needed
-# allowing platforms to change the menu structures before computing
-# menubar.
-menubar = MenuBar(Menu(main_title, "Video", *VideoItems),
-                  Menu(_("_Sidebar"), "Sidebar", *SidebarItems),
-                  Menu(_("_Playlists"), "Playlists", *PlaylistItems),
-                  Menu(_("P_layback"), "Playback", *PlaybackItems),
-                  Menu(_("_Help"), "Help", *HelpItems),
-                 )
+    if config.get(prefs.HELP_URL):
+        help_menu.append(MenuItem(_("_Help"), "Help", Shortcut(F1)))
+    help_menu.append(Separator())
+    help_menu.append(MenuItem(_("Diagnostics"), "Diagnostics"))
+    if config.get(prefs.BUG_REPORT_URL):
+        help_menu.append(MenuItem(_("Report a _Bug"), "ReportBug"))
+    if config.get(prefs.TRANSLATE_URL):
+        help_menu.append(MenuItem(_("_Translate"), "Translate"))
+    if config.get(prefs.PLANET_URL):
+        help_menu.append(MenuItem(_("_Planet Miro"), "Planet"))
+    return mbar

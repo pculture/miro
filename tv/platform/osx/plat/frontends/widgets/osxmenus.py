@@ -36,7 +36,7 @@ from AppKit import *
 from Foundation import *
 
 from miro import app, config, prefs
-from miro.menubar import menubar, Menu, MenuItem, Separator, Key
+from miro.menubar import get_menu, Menu, MenuItem, Separator, Shortcut
 from miro.menubar import MOD, CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, ESCAPE
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import menus
@@ -98,13 +98,13 @@ def make_menu_item(menu_item):
     nsmenuitem.setTitleWithMnemonic_(menu_item.label.replace("_", "&"))
     if isinstance(menu_item, MenuItem):
         for shortcut in menu_item.shortcuts:
-            if isinstance(shortcut.key, str):
-                nsmenuitem.setKeyEquivalent_(shortcut.key)
+            if isinstance(shortcut.shortcut, str):
+                nsmenuitem.setKeyEquivalent_(shortcut.shortcut)
                 nsmenuitem.setKeyEquivalentModifierMask_(make_modifier_mask(shortcut))
                 continue
             else:
-                if shortcut.key in KEYS_MAP:
-                    nsmenuitem.setKeyEquivalent_(KEYS_MAP[shortcut.key])
+                if shortcut.shortcut in KEYS_MAP:
+                    nsmenuitem.setKeyEquivalent_(KEYS_MAP[shortcut.shortcut])
                     nsmenuitem.setKeyEquivalentModifierMask_(make_modifier_mask(shortcut))
                     continue
 
@@ -132,73 +132,82 @@ def populate_single_menu(nsmenu, miro_menu):
         nsmenu.addItem_(item)
 
 def populate_menu():
+    short_appname = config.get(prefs.SHORT_APP_NAME)
+
+    import miro.menubar
+    miro.menubar.set_mod(CMD)
+
+    menubar = get_menu()
+
+    menubar.find("VideoMenu").label = _("_File")
+
     # Application menu
     miroMenuItems = [
-        menubar.extractMenuItem("Help", "About"),
+        menubar.get("About"),
         Separator(),
-        menubar.extractMenuItem("Help", "Donate"),
-        menubar.extractMenuItem("Video", "CheckVersion"),
+        menubar.get("Donate"),
+        menubar.get("CheckVersion"),
         Separator(),
-        menubar.extractMenuItem("Video", "EditPreferences"),
+        menubar.get("EditPreferences"),
         Separator(),
-        MenuItem(_("Services"), "ServicesMenu", ()),
+        MenuItem(_("Services"), "ServicesMenu"),
         Separator(),
-        MenuItem(_("Hide %(appname)s", {"appname": config.get(prefs.SHORT_APP_NAME)}),
-                 "HideMiro", (Key("h", MOD),)),
-        MenuItem(_("Hide Others"), "HideOthers", (Key("h", MOD, ALT),)),
-        MenuItem(_("Show All"), "ShowAll", ()),
+        MenuItem(_("Hide %(appname)s", {"appname": short_appname}),
+                 "HideMiro", Shortcut("h", MOD)),
+        MenuItem(_("Hide Others"), "HideOthers", Shortcut("h", MOD, ALT)),
+        MenuItem(_("Show All"), "ShowAll"),
         Separator(),
-        menubar.extractMenuItem("Video", "Quit")
+        menubar.get("Quit")
     ]
-    miroMenu = Menu("Miro", "Miro", *miroMenuItems)
-    miroMenu.findItem("EditPreferences").label = _("Preferences...")
-    miroMenu.findItem("EditPreferences").shortcuts = (Key(",", MOD),)
-    miroMenu.findItem("Quit").label = _("Quit %(appname)s",
-                                        {"appname": config.get(prefs.SHORT_APP_NAME)})
+    miroMenu = Menu(short_appname, "Miro", miroMenuItems)
+    miroMenu.get("EditPreferences").label = _("Preferences...")
+    miroMenu.get("EditPreferences").shortcuts = (Shortcut(",", MOD),)
+    miroMenu.get("Quit").label = _("Quit %(appname)s", 
+                                   {"appname": short_appname})
 
     # File menu
-    closeWinItem = MenuItem(_("Close Window"), "CloseWindow", (Key("w", MOD),))
-    menubar.findMenu("Video").menuitems.append(closeWinItem)
+    closeWinItem = MenuItem(_("Close Window"), "CloseWindow", Shortcut("w", MOD))
+    menubar.get("Video").menuitems.append(closeWinItem)
 
     # Edit menu
     editMenuItems = [
-        MenuItem(_("Cut"), "Cut", (Key("x", MOD),)),
-        MenuItem(_("Copy"), "Copy", (Key("c", MOD),)),
-        MenuItem(_("Paste"), "Paste", (Key("v", MOD),)),
-        MenuItem(_("Delete"), "Delete", ()),
+        MenuItem(_("Cut"), "Cut", Shortcut("x", MOD)),
+        MenuItem(_("Copy"), "Copy", Shortcut("c", MOD)),
+        MenuItem(_("Paste"), "Paste", Shortcut("v", MOD)),
+        MenuItem(_("Delete"), "Delete"),
         Separator(),
-        MenuItem(_("Select All"), "SelectAll", (Key("a", MOD),))
+        MenuItem(_("Select All"), "SelectAll", Shortcut("a", MOD))
     ]
-    editMenu = Menu(_("Edit"), "Edit", *editMenuItems)
+    editMenu = Menu(_("Edit"), "Edit", editMenuItems)
     menubar.menus.insert(1, editMenu)
 
     # Playback menu
     presentMenuItems = [
-        MenuItem(_("Present Half Size"), "PresentHalfSize", (Key("0", MOD),)),
-        MenuItem(_("Present Actual Size"), "PresentActualSize", (Key("1", MOD),)),
-        MenuItem(_("Present Double Size"), "PresentDoubleSize", (Key("2", MOD),)),
+        MenuItem(_("Present Half Size"), "PresentHalfSize", Shortcut("0", MOD)),
+        MenuItem(_("Present Actual Size"), "PresentActualSize", Shortcut("1", MOD)),
+        MenuItem(_("Present Double Size"), "PresentDoubleSize", Shortcut("2", MOD)),
     ]
-    presentMenu = Menu(_("Present Video"), "Present", *presentMenuItems)
+    presentMenu = Menu(_("Present Video"), "Present", presentMenuItems)
     menubar.findMenu("Playback").menuitems.append(presentMenu)
     menus.action_groups['PlayableVideosSelected'].extend(['PresentActualSize', 'PresentHalfSize', 'PresentDoubleSize'])
     menus.action_groups['PlayingVideo'].extend(['PresentActualSize', 'PresentHalfSize', 'PresentDoubleSize'])
 
     # Window menu
     windowMenuItems = [
-        MenuItem(_("Zoom"), "Zoom", ()),
-        MenuItem(_("Minimize"), "Minimize", (Key("m", MOD),)),
+        MenuItem(_("Zoom"), "Zoom"),
+        MenuItem(_("Minimize"), "Minimize", Shortcut("m", MOD)),
         Separator(),
-        MenuItem(_("Main Window"), "ShowMain", (Key("M", MOD, SHIFT),)),
+        MenuItem(_("Main Window"), "ShowMain", Shortcut("M", MOD, SHIFT)),
         Separator(),
-        MenuItem(_("Bring All to Front"), "BringAllToFront", ()),
+        MenuItem(_("Bring All to Front"), "BringAllToFront"),
     ]
-    windowMenu = Menu(_("Window"), "Window", *windowMenuItems)
+    windowMenu = Menu(_("Window"), "Window", windowMenuItems)
     menubar.menus.insert(5, windowMenu)
 
     # Help Menu
     helpItem = menubar.findMenu("Help").findItem("Help")
-    helpItem.label = _("%(appname)s Help", {"appname": config.get(prefs.SHORT_APP_NAME)})
-    helpItem.shortcuts = (Key("?", MOD),)
+    helpItem.label = _("%(appname)s Help", {"appname": short_appname})
+    helpItem.shortcuts = (Shortcut("?", MOD),)
 
     # Now populate the main menu bar
     main_menu = NSApp().mainMenu()
@@ -214,7 +223,6 @@ def populate_menu():
         main_menu.addItem_(nsmenuitem)
     
     menus.recompute_action_group_map()
-
 
 class ContextMenuHandler(NSObject):
     def initWithCallback_(self, callback):
