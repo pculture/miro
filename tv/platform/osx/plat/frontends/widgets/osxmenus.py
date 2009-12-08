@@ -58,9 +58,10 @@ STD_ACTION_MAP = {
 }
 
 menus.set_mod(CMD)
+MOD=CMD
 
 MODIFIERS_MAP = {
-    CMD:   NSCommandKeyMask,
+    MOD:   NSCommandKeyMask,
     SHIFT: NSShiftKeyMask,
     CTRL:  NSControlKeyMask,
     ALT:   NSAlternateKeyMask
