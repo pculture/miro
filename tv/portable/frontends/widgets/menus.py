@@ -143,20 +143,15 @@ class Menu:
                     yield mem2
 
     def has(self, action):
-        for mem in self.menuitems:
+        for mem in self:
             if mem.action == action:
                 return True
         return False
 
     def get(self, action, default=None):
-        for mem in self.menuitems:
+        for mem in self:
             if mem.action == action:
                 return mem
-            if isinstance(mem, Menu):
-                try:
-                    return mem.get(action)
-                except ValueError:
-                    pass
 
         if default is not None:
             return default
@@ -174,6 +169,9 @@ class Menu:
         # a pass to remove a separator for two separators in a row
         # or a separator at the beginning or end of the list
         self.menuitems = [m for m in self.menuitems if m.action != action]
+        for mem in self.menuitems:
+            if isinstance(mem, Menu):
+                mem.remove(action)
 
     def count(self):
         return len(menuitems)
