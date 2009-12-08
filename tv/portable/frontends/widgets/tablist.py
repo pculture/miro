@@ -31,7 +31,6 @@
 from miro import app
 from miro import signals
 from miro import messages
-from miro import menubar
 from miro.gtcache import gettext as _
 from miro.plat import resources
 from miro.frontends.widgets import style
@@ -39,6 +38,7 @@ from miro.frontends.widgets import separator
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import statictabs
 from miro.frontends.widgets import widgetutil
+from miro.frontends.widgets import menus
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import timer
 
@@ -429,7 +429,7 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
         self.doing_change = False
 
     def on_key_press(self, view, key, mods):
-        if key == menubar.DELETE:
+        if key == menus.DELETE:
             self.on_delete_key_pressed()
             return True
 
@@ -653,17 +653,18 @@ class TabListBox(widgetset.Scroller):
         background.set_background_color((style.TAB_LIST_BACKGROUND_COLOR))
         background.add(self.build_vbox())
         self.add(background)
+        self.set_background_color((style.TAB_LIST_BACKGROUND_COLOR))
 
     def build_vbox(self):
         tlm = app.tab_list_manager
-        self.header_left_pad = 10 #tlm.feed_list.view.get_left_offset()
+        self.header_left_pad = 10
         vbox = widgetset.VBox()
         vbox.pack_start(tlm.static_tab_list.view)
         vbox.pack_start(self.build_header(_('LIBRARY')))
         vbox.pack_start(tlm.library_tab_list.view)
-        vbox.pack_start(self.build_header(_('SITES')))
+        vbox.pack_start(self.build_header(_('WEBSITES')))
         vbox.pack_start(tlm.site_list.view)
-        vbox.pack_start(self.build_header(_('FEEDS')))
+        vbox.pack_start(self.build_header(_('VIDEO FEEDS')))
         vbox.pack_start(tlm.feed_list.view)
         vbox.pack_start(self.build_header(_('AUDIO FEEDS')))
         vbox.pack_start(tlm.audio_feed_list.view)
@@ -672,8 +673,6 @@ class TabListBox(widgetset.Scroller):
         return vbox
 
     def build_header(self, text):
-        # hsep = separator.HThinSeparator(style.TAB_LIST_SEPARATOR_COLOR)
-
         label = widgetset.Label(text)
         label.set_bold(True)
         label.set_size(0.85)

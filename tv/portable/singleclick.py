@@ -192,7 +192,7 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
 
 def download_video(entry):
     manualFeed = feed.Feed.get_manual_feed()
-    newItem = item.Item(entry, feed_id=manualFeed.getID())
+    newItem = item.Item(entry, feed_id=manualFeed.get_id())
     newItem.download()
 
 def filter_existing_feed_urls(urls):

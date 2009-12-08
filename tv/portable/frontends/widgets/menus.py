@@ -33,10 +33,307 @@ from miro import prefs
 from miro import signals
 from miro import config
 
+from miro.gtcache import gettext as _
+from miro import config
+from miro import prefs
+
+(CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW,
+ DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, ESCAPE,
+ F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12) = range(25)
+
+MOD = CTRL
+
+def set_mod(modifier):
+    """Allows the platform to change the MOD key.  OSX and
+    Windows have different mod keys.
+
+    Examples:
+    >>> set_mod(CTRL)
+    >>> set_mod(CMD)
+    """
+    global MOD
+    MOD = modifier
+
+class Shortcut:
+    """Defines a shortcut key combination used to trigger this
+    menu item.
+
+    The first argument is the shortcut key.  Other arguments are
+    modifiers.
+
+    Examples:
+
+    >>> Shortcut("x", MOD)
+    >>> Shortcut(BKSPACE, MOD)
+
+    This is wrong:
+
+    >>> Shortcut(MOD, "x")
+    """
+    def __init__(self, shortcut, *modifiers):
+        self.shortcut = shortcut
+        self.modifiers = modifiers
+
+class MenuItem:
+    """A menu item is a single item in the menu that can be clicked
+    on that has an action.
+
+    :param label: The label it has (must be internationalized)
+    :param action: The action string for this menu item.
+    :param shortcuts: None, the Shortcut, or tuple of Shortcut objects.
+    :param groups: The action groups this item is enabled in.  By default
+                   this is ["AlwaysOn"]
+    :param state_labels: If this menu item has states, then this is
+                         the name/value pairs for all states.
+
+    Example:
+
+    >>> MenuItem(_("_Options"), "EditPreferences")
+    >>> MenuItem(_("Cu_t"), "ClipboardCut", Shortcut("x", MOD))
+    >>> MenuItem(_("_Update Feed"), "UpdateFeeds",
+    ...          (Shortcut("r", MOD), Shortcut(F5)))
+    >>> MenuItem(_("_Play"), "PlayPauseVideo",
+    ...          play=_("_Play"), pause=_("_Pause"))
+    """
+    def __init__(self, label, action, shortcuts=None, groups=None,
+                 **state_labels):
+        self.label = label
+        self.action = action
+        if shortcuts is None:
+            shortcuts = ()
+        if not isinstance(shortcuts, tuple):
+            shortcuts = (shortcuts,)
+        self.shortcuts = shortcuts
+        if groups is None:
+            groups = ["AlwaysOn"]
+        self.groups = groups
+        self.state_labels = state_labels
+
+class Separator:
+    """This denotes a separator in the menu.
+    """
+    def __init__(self):
+        self.action = None
+
+class Menu:
+    """A Menu holds a list of MenuItems and Menus.
+
+    Example:
+    >>> Menu(_("P_layback"), "Playback", [
+    ...      MenuItem(_("_Foo"), "Foo"),
+    ...      MenuItem(_("_Bar"), "Bar")
+    ...      ])
+    >>> Menu("", "toplevel", [
+    ...     Menu(_("_File"), "File", [ ... ])
+    ...     ])
+    """
+    def __init__(self, label, action, menuitems, groups=None):
+        self.label = label
+        self.action = action
+        self.menuitems = list(menuitems)
+        if groups is None:
+            groups = ["AlwaysOn"]
+        self.groups = groups
+
+    def __iter__(self):
+        for mem in self.menuitems:
+            yield mem
+            if isinstance(mem, Menu):
+                for mem2 in mem:
+                    yield mem2
+
+    def has(self, action):
+        for mem in self.menuitems:
+            if mem.action == action:
+                return True
+        return False
+
+    def get(self, action, default=None):
+        for mem in self.menuitems:
+            if mem.action == action:
+                return mem
+            if isinstance(mem, Menu):
+                try:
+                    return mem.get(action)
+                except ValueError:
+                    pass
+
+        if default is not None:
+            return default
+
+        raise ValueError("%s is not in this menu." % action)
+
+    def index(self, action):
+        for i, mem in enumerate(self.menuitems):
+            if mem.action == action:
+                return i
+        raise ValueError("%s not in this menu." % action)
+
+    def remove(self, action):
+        # FIXME - this won't remove separators--probably should do
+        # a pass to remove a separator for two separators in a row
+        # or a separator at the beginning or end of the list
+        self.menuitems = [m for m in self.menuitems if m.action != action]
+
+    def count(self):
+        return len(menuitems)
+
+    def insert(self, index, menuitem):
+        self.menuitems.insert(index, menuitem)
+
+    def append(self, menuitem):
+        self.menuitems.append(menuitem)
+
+def get_menu():
+    """Returns the default menu structure.
+
+    Call this, then make whatever platform-specific changes you 
+    need to make.
+    """
+    mbar = Menu("", "TopLevel", [
+            Menu(_("_Video"), "VideoMenu", [
+                    MenuItem(_("_Open"), "Open", Shortcut("o", MOD),
+                             groups=["NonPlaying"]),
+                    MenuItem(_("_Download Item"), "NewDownload",
+                             groups=["NonPlaying"]),
+                    MenuItem(_("Check _Version"), "CheckVersion"),
+                    Separator(),
+                    MenuItem(_("_Remove Item"), "RemoveItems",
+                             Shortcut(BKSPACE, MOD),
+                             groups=["PlayablesSelected"],
+                             plural=_("_Remove Items")),
+                    MenuItem(_("Re_name Item"), "RenameItem",
+                             groups=["PlayableSelected"]),
+                    MenuItem(_("Save Item _As"), "SaveItem",
+                             Shortcut("s", MOD),
+                             groups=["PlayableSelected"],
+                             plural=_("Save Items _As")),
+                    MenuItem(_("Copy Item _URL"), "CopyItemURL",
+                             Shortcut("u", MOD),
+                             groups=["PlayableSelected"]),
+                    Separator(),
+                    MenuItem(_("_Options"), "EditPreferences"),
+                    MenuItem(_("_Quit"), "Quit", Shortcut("q", MOD)),
+                    ]),
+
+            Menu(_("_Sidebar"), "SidebarMenu", [
+                    MenuItem(_("Add _Feed"), "NewFeed", Shortcut("n", MOD),
+                             groups=["NonPlaying"]),
+                    MenuItem(_("Add Site"), "NewGuide",
+                             groups=["NonPlaying"]),
+                    MenuItem(_("New Searc_h Feed"), "NewSearchFeed",
+                             groups=["NonPlaying"]),
+                    MenuItem(_("New _Folder"), "NewFeedFolder",
+                             Shortcut("n", MOD, SHIFT),
+                             groups=["NonPlaying"]),
+                    Separator(),
+                    MenuItem(_("Re_name"), "RenameFeed",
+                             groups=["FeedOrFolderSelected"]),
+                    MenuItem(_("_Remove"), "RemoveFeeds",
+                             Shortcut(BKSPACE, MOD),
+                             groups=["FeedsSelected"],
+                             folder=_("_Remove Folder")),
+                    MenuItem(_("_Update Feed"), "UpdateFeeds",
+                             (Shortcut("r", MOD), Shortcut(F5)),
+                             groups=["FeedsSelected"],
+                             plural=_("_Update Feeds")),
+                    MenuItem(_("Update _All Feeds"), "UpdateAllFeeds",
+                             Shortcut("r", MOD, SHIFT),
+                             groups=["NonPlaying"]),
+                    Separator(),
+                    MenuItem(_("_Import Feeds (OPML)"), "ImportFeeds",
+                             groups=["NonPlaying"]),
+                    MenuItem(_("E_xport Feeds (OPML)"), "ExportFeeds",
+                             groups=["NonPlaying"]),
+                    Separator(),
+                    MenuItem(_("_Share with a Friend"), "ShareFeed",
+                             groups=["FeedSelected"]),
+                    MenuItem(_("Copy URL"), "CopyFeedURL",
+                             groups=["FeedSelected"]),
+                    ]),
+
+            Menu(_("_Playlists"), "PlaylistsMenu", [
+                    MenuItem(_("New _Playlist"), "NewPlaylist",
+                             Shortcut("p", MOD),
+                             groups=["NonPlaying"]),
+                    MenuItem(_("New Playlist Fol_der"), "NewPlaylistFolder",
+                             Shortcut("p", MOD, SHIFT),
+                             groups=["NonPlaying"]),
+                    Separator(),
+                    MenuItem(_("Re_name Playlist"),"RenamePlaylist",
+                             groups=["PlaylistSelected"]),
+                    MenuItem(_("_Remove Playlist"),"RemovePlaylists",
+                             Shortcut(BKSPACE, MOD),
+                             groups=["PlaylistsSelected"],
+                             plural=_("_Remove Playlists"),
+                             folders=_("_Remove Playlist Folders"),
+                             folder=_("_Remove Playlist Folder")),
+                    ]),
+
+            Menu(_("P_layback"), "PlaybackMenu", [
+                    MenuItem(_("_Play"), "PlayPauseVideo",
+                             groups=["PlayPause"],
+                             play=_("_Play"),
+                             pause=_("_Pause")),
+                    MenuItem(_("_Stop"), "StopVideo", Shortcut("d", MOD),
+                             groups=["Playing"]),
+                    Separator(),
+                    MenuItem(_("_Next Video"), "NextVideo",
+                             Shortcut(RIGHT_ARROW, MOD),
+                             groups=["Playing"]),
+                    MenuItem(_("_Previous Video"), "PreviousVideo",
+                             Shortcut(LEFT_ARROW, MOD),
+                             groups=["Playing"]),
+                    Separator(),
+                    MenuItem(_("Skip _Forward"), "FastForward",
+                             groups=["Playing"]),
+                    MenuItem(_("Skip _Back"), "Rewind",
+                             groups=["Playing"]),
+                    Separator(),
+                    MenuItem(_("Volume _Up"), "UpVolume",
+                             Shortcut(UP_ARROW, MOD)),
+                    MenuItem(_("Volume _Down"), "DownVolume",
+                             Shortcut(DOWN_ARROW,MOD)),
+                    Separator(),
+                    MenuItem(_("_Fullscreen"), "Fullscreen",
+                             (Shortcut("f", MOD), Shortcut(ENTER, ALT)),
+                             groups=["PlayingVideo"]),
+                    MenuItem(_("_Toggle Detached/Attached"), "ToggleDetach",
+                             Shortcut("t", MOD),
+                             groups=["PlayingVideo"]),
+                    Menu(_("S_ubtitles"), "SubtitlesMenu", [
+                            MenuItem(_("None Available"), "NoneAvailable",
+                                     groups=["NeverEnabled"])
+                            ]),
+                    ]),
+
+            Menu(_("_Help"), "HelpMenu", [
+                    MenuItem(_("_About %(name)s",
+                               {'name': config.get(prefs.SHORT_APP_NAME)}),
+                             "About")
+                    ])
+            ])
+
+    help_menu = mbar.get("HelpMenu")
+    if config.get(prefs.DONATE_URL):
+        help_menu.append(MenuItem(_("_Donate"), "Donate"))
+
+    if config.get(prefs.HELP_URL):
+        help_menu.append(MenuItem(_("_Help"), "Help", Shortcut(F1)))
+    help_menu.append(Separator())
+    help_menu.append(MenuItem(_("Diagnostics"), "Diagnostics"))
+    if config.get(prefs.BUG_REPORT_URL):
+        help_menu.append(MenuItem(_("Report a _Bug"), "ReportBug"))
+    if config.get(prefs.TRANSLATE_URL):
+        help_menu.append(MenuItem(_("_Translate"), "Translate"))
+    if config.get(prefs.PLANET_URL):
+        help_menu.append(MenuItem(_("_Planet Miro"), "Planet"))
+    return mbar
+
 action_handlers = {}
 def lookup_handler(action_name):
-    """For a given action name from miro.menubar, get a callback to handle it.
-    Return None if no callback is found.
+    """For a given action name, get a callback to handle it.  Return
+    None if no callback is found.
     """
     return action_handlers.get(action_name)
 
@@ -47,8 +344,7 @@ def action_handler(name):
         return func
     return decorator
 
-# Video menu
-
+# Video/File menu
 @action_handler("Open")
 def on_open():
     app.widgetapp.open_video()
@@ -85,9 +381,7 @@ def on_edit_preferences():
 def on_quit():
     app.widgetapp.quit()
 
-
 # Feeds menu
-
 @action_handler("NewFeed")
 def on_new_feed():
     app.widgetapp.add_new_feed()
@@ -137,7 +431,6 @@ def on_copy_feed_url():
     app.widgetapp.copy_feed_url()
 
 # Playlists menu
-
 @action_handler("NewPlaylist")
 def on_new_playlist():
     app.widgetapp.add_new_playlist()
@@ -155,7 +448,6 @@ def on_remove_playlists():
     app.widgetapp.remove_current_playlist()
 
 # Playback menu
-
 @action_handler("PlayPauseVideo")
 def on_play_pause_video():
     app.widgetapp.on_play_clicked()
@@ -197,7 +489,6 @@ def on_toggle_detach():
     app.widgetapp.on_toggle_detach_clicked()
 
 # Help menu
-
 @action_handler("About")
 def on_about():
     app.widgetapp.about()
@@ -226,81 +517,16 @@ def on_translate():
 def on_planet():
     app.widgetapp.open_url(config.get(prefs.PLANET_URL))
 
-# action_group name -> list of MenuItem labels belonging to action_group
-action_groups = {
-        'NonPlaying': [
-            'Open',
-            'NewDownload',
-            'NewFeed',
-            'NewGuide',
-            'NewSearchFeed',
-            'NewFeedFolder',
-            'UpdateAllFeeds',
-            'ImportFeeds',
-            'ExportFeeds',
-            'NewPlaylist',
-            'NewPlaylistFolder'
-        ],
-        'FeedSelected': [
-            'ShareFeed',
-            'CopyFeedURL'
-        ],
-        'FeedOrFolderSelected': [
-            'RenameFeed',
-        ],
-        'FeedsSelected': [
-            'RemoveFeeds',
-            'UpdateFeeds',
-        ],
-        'PlaylistSelected': [
-            'RenamePlaylist',
-        ],
-        'PlaylistsSelected': [
-            'RemovePlaylists',
-        ],
-        'PlayableSelected': [
-            'RenameItem',
-            'CopyItemURL',
-            'SaveItem',
-        ],
-        'PlayablesSelected': [
-            'RemoveItems',
-        ],
-        'PlayableVideosSelected': [
-        ],
-        'PlayPause': [
-            'PlayPauseVideo',
-        ],
-        'Playing': [
-            'StopVideo',
-            'NextVideo',
-            'PreviousVideo',
-            'Rewind',
-            'FastForward',
-        ],
-        'PlayingVideo': [
-            'Fullscreen',
-            'ToggleDetach',
-        ],
-}
-
-action_group_map = {}
-def recompute_action_group_map():
-    for group, actions in action_groups.items():
-        for action in actions:
-            if action not in action_group_map:
-                action_group_map[action] = list()
-            action_group_map[action].append(group)
-recompute_action_group_map()
-
-def action_group_names():
-    return action_groups.keys() + ['AlwaysOn']
-
-def get_action_group_name(action):
-    return action_group_map.get(action, ['AlwaysOn'])[0]
-
-def get_all_action_group_name(action):
-    return action_group_map.get(action, ['AlwaysOn'])
+def generate_action_groups(menu_structure):
+    """Takes a menu structure and returns a map of action group name to
+    list of menu actions in that group.
+    """
+    action_groups = {}
+    for menu in menu_structure:
+        if hasattr(menu, "groups"):
+            for grp in menu.groups:
+                action_groups.setdefault(grp, []).append(menu.action)
+    return action_groups
 
 class MenuManager(signals.SignalEmitter):
     """Updates the menu based on the current selection.
@@ -312,7 +538,6 @@ class MenuManager(signals.SignalEmitter):
     Whenever code makes a change that could possibly affect which menu items
     should be enabled/disabled, it should call the update_menus() method.
     """
-
     def __init__(self):
         signals.SignalEmitter.__init__(self)
         self.create_signal('enabled-changed')
@@ -352,7 +577,8 @@ class MenuManager(signals.SignalEmitter):
                 self.enabled_groups.add('FeedSelected')
             self.enabled_groups.add('FeedOrFolderSelected')
         else:
-            if len([s for s in selected_feeds if s.is_folder]) == len(selected_feeds):
+            selected_folders = [s for s in selected_feeds if s.is_folder]
+            if len(selected_folders) == len(selected_feeds):
                 self.states["folders"].append("RemoveFeeds")
             else:
                 self.states["plural"].append("RemoveFeeds")
@@ -371,7 +597,8 @@ class MenuManager(signals.SignalEmitter):
                 self.states["folder"].append("RemovePlaylists")
             self.enabled_groups.add('PlaylistSelected')
         else:
-            if len([s for s in selected_playlists if s.is_folder]) == len(selected_playlists):
+            selected_folders = [s for s in selected_playlists if s.is_folder]
+            if len(selected_folders) == len(selected_playlists):
                 self.states["folders"].append("RemovePlaylists")
             else:
                 self.states["plural"].append("RemovePlaylists")
@@ -380,7 +607,8 @@ class MenuManager(signals.SignalEmitter):
         """Handle the user selecting things in the static tab list.
         selected_sites is a list of GuideInfo objects
         """
-        pass # We don't change menu items for the static tab list
+        # we don't change menu items for the static tab list
+        pass
 
     def _update_menus_for_selected_tabs(self):
         selection_type, selected_tabs = app.tab_list_manager.get_selection()
@@ -400,7 +628,6 @@ class MenuManager(signals.SignalEmitter):
     def _update_menus_for_selected_items(self):
         """Update the menu items based on the current item list selection.
         """
-
         selected_items = app.item_list_controller_manager.get_selection()
         downloaded = False
         has_audio = False

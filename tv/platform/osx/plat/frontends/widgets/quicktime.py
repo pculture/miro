@@ -136,12 +136,14 @@ class Player(player.Player):
             errback()
 
     def get_movie_from_file(self, path):
-        osfilename = utils.filenameTypeToOSFilename(path)
+        osfilename = utils.filename_type_to_os_filename(path)
         url = NSURL.fileURLWithPath_(osfilename)
         if utils.get_pyobjc_major_version() == 2:
             qtmovie, error = QTMovie.movieWithURL_error_(url, None)
         else:
             qtmovie, error = QTMovie.movieWithURL_error_(url)
+        if qtmovie is None or error is not None:
+            return None
         if not self.can_open_file(qtmovie):
             return None
         return qtmovie
@@ -149,7 +151,7 @@ class Player(player.Player):
     def can_open_file(self, qtmovie):
         threads.warn_if_not_on_main_thread('quicktime.Player.can_open_file')
         can_open = False
-        duration = qttimevalue(qtmovie.duration())
+        duration = utils.qttimevalue(qtmovie.duration())
         
         if qtmovie is not None and duration > 0:
             allTracks = qtmovie.tracks()
@@ -158,7 +160,7 @@ class Player(player.Player):
                 allMedia = [track.media() for track in allTracks]
                 for media in allMedia:
                     mediaType = media.attributeForKey_(QTMediaTypeAttribute)
-                    mediaDuration = qttimevalue(media.attributeForKey_(QTMediaDurationAttribute).QTTimeValue())
+                    mediaDuration = utils.qttimevalue(media.attributeForKey_(QTMediaDurationAttribute).QTTimeValue())
                     if mediaType in self.supported_media_types and mediaDuration > 0:
                         can_open = True
                         break
@@ -237,13 +239,13 @@ class Player(player.Player):
 
     def get_elapsed_playback_time(self):
         qttime = self.movie.currentTime()
-        return qttime2secs(qttime)
+        return utils.qttime2secs(qttime)
 
     def get_total_playback_time(self):
         if self.movie is None:
             return 0
         qttime = self.movie.duration()
-        return qttime2secs(qttime)
+        return utils.qttime2secs(qttime)
 
     def skip_forward(self):
         current = self.get_elapsed_playback_time()

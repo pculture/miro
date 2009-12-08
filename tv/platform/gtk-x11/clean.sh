@@ -32,9 +32,6 @@
 # build and dist
 rm -rf build dist
 
-# xine/ stuff
-rm xine/xine_extractor xine/xine.c
-
 # plat/ stuff
 rm plat/xlibhelper.c
 

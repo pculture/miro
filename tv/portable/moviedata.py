@@ -42,7 +42,7 @@ from miro import prefs
 from miro import signals
 from miro import util
 from miro import fileutil
-from miro.plat.utils import FilenameType, killProcess, movie_data_program_info
+from miro.plat.utils import FilenameType, kill_process, movie_data_program_info
 
 # Time in seconds that we wait for the utility to execute.  If it goes longer
 # than this, we assume it's hung and kill it.
@@ -51,11 +51,10 @@ MOVIE_DATA_UTIL_TIMEOUT = 120
 # Time to sleep while we're polling the external movie command
 SLEEP_DELAY = 0.1
 
-durationRE = re.compile("Miro-Movie-Data-Length: (\d+)")
-thumbnailSuccessRE = re.compile("Miro-Movie-Data-Thumbnail: Success")
-thumbnailRE = re.compile("Miro-Movie-Data-Thumbnail: (Success|Failure)")
+DURATION_RE = re.compile("Miro-Movie-Data-Length: (\d+)")
+THUMBNAIL_SUCCESS_RE = re.compile("Miro-Movie-Data-Thumbnail: Success")
 
-def thumbnailDirectory():
+def thumbnail_directory():
     dir_ = os.path.join(config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
     try:
         fileutil.makedirs(dir_)
@@ -76,107 +75,104 @@ class MovieDataInfo:
     """
     def __init__(self, item):
         self.item = item
-        self.videoPath = item.get_filename()
-        if self.videoPath is None:
-            self.programInfo = None
+        self.video_path = item.get_filename()
+        if self.video_path is None:
+            self.program_info = None
             return
         # add a random string to the filename to ensure it's unique.  Two
         # videos can have the same basename if they're in different
         # directories.
-        thumbnailFilename = '%s.%s.png' % (os.path.basename(self.videoPath),
-                util.random_string(5))
-        self.thumbnailPath = os.path.join(thumbnailDirectory(),
-                thumbnailFilename)
-        self.programInfo = None
+        thumbnail_filename = '%s.%s.png' % (os.path.basename(self.video_path),
+                                            util.random_string(5))
+        self.thumbnail_path = os.path.join(thumbnail_directory(),
+                                           thumbnail_filename)
+        self.program_info = None
         if hasattr(app, 'in_unit_tests'):
             return
-        videopath = fileutil.expand_filename(self.videoPath)
-        thumbnailpath = fileutil.expand_filename(self.thumbnailPath)
-        commandLine, env = movie_data_program_info(videopath, thumbnailpath)
-        self.programInfo = (commandLine, env)
+        videopath = fileutil.expand_filename(self.video_path)
+        thumbnailpath = fileutil.expand_filename(self.thumbnail_path)
+        command_line, env = movie_data_program_info(videopath, thumbnailpath)
+        self.program_info = (command_line, env)
 
 class MovieDataUpdater:
     def __init__ (self):
-        self.inShutdown = False
+        self.in_shutdown = False
         self.queue = Queue.Queue()
         self.thread = None
 
-    def startThread(self):
+    def start_thread(self):
         self.thread = threading.Thread(name='Movie Data Thread',
-                target=self.threadLoop)
+                                       target=self.thread_loop)
         self.thread.setDaemon(True)
         self.thread.start()
 
-    def threadLoop(self):
-        while not self.inShutdown:
-            movieDataInfo = self.queue.get(block=True)
-            if movieDataInfo is None or movieDataInfo.programInfo is None:
+    def thread_loop(self):
+        while not self.in_shutdown:
+            mdi = self.queue.get(block=True)
+            if mdi is None or mdi.program_info is None:
                 # shutdown() was called or there's no moviedata implemented.
                 break
             try:
                 duration = -1
-                screenshotWorked = False
+                screenshot_worked = False
                 screenshot = None
-                commandLine, env = movieDataInfo.programInfo
-                stdout = self.runMovieDataProgram(commandLine, env)
+                command_line, env = mdi.program_info
+                stdout = self.run_movie_data_program(command_line, env)
                 if duration == -1:
-                    duration = self.parseDuration(stdout)
-                if thumbnailSuccessRE.search(stdout):
-                    screenshotWorked = True
-                if (screenshotWorked and 
-                        fileutil.exists(movieDataInfo.thumbnailPath)):
-                    screenshot = movieDataInfo.thumbnailPath
+                    duration = self.parse_duration(stdout)
+                if THUMBNAIL_SUCCESS_RE.search(stdout):
+                    screenshot_worked = True
+                if ((screenshot_worked and
+                     fileutil.exists(mdi.thumbnail_path))):
+                    screenshot = mdi.thumbnail_path
                 else:
                     # All the programs failed, maybe it's an audio file?
                     # Setting it to "" instead of None, means that we won't
                     # try to take the screenshot again.
                     screenshot = FilenameType("")
-                self.update_finished(movieDataInfo.item, duration, screenshot)
+                self.update_finished(mdi.item, duration, screenshot)
             except (KeyboardInterrupt, SystemExit):
                 raise
             except:
-                if self.inShutdown:
+                if self.in_shutdown:
                     break
                 signals.system.failed_exn("When running external movie data program")
-                self.update_finished(movieDataInfo.item, -1, None)
+                self.update_finished(mdi.item, -1, None)
 
-    def runMovieDataProgram(self, commandLine, env):
+    def run_movie_data_program(self, command_line, env):
         start_time = time.time()
-        pipe = subprocess.Popen(commandLine, stdout=subprocess.PIPE,
+        pipe = subprocess.Popen(command_line, stdout=subprocess.PIPE,
                 stdin=subprocess.PIPE, stderr=subprocess.PIPE, env=env,
                 startupinfo=util.no_console_startupinfo())
-        while pipe.poll() is None and not self.inShutdown:
+        while pipe.poll() is None and not self.in_shutdown:
             time.sleep(SLEEP_DELAY)
             if time.time() - start_time > MOVIE_DATA_UTIL_TIMEOUT:
                 logging.info("Movie data process hung, killing it")
-                self.killProcess(pipe.pid)
+                self.kill_process(pipe.pid)
                 return ''
 
-        if self.inShutdown:
+        if self.in_shutdown:
             if pipe.poll() is None:
                 logging.info("Movie data process running after shutdown, killing it")
-                self.killProcess(pipe.pid)
+                self.kill_process(pipe.pid)
             return ''
         return pipe.stdout.read()
 
-    def killProcess(self, pid):
+    def kill_process(self, pid):
         try:
-            killProcess(pid)
+            kill_process(pid)
         except (KeyboardInterrupt, SystemExit):
             raise
         except:
-            logging.warn("Error trying to kill the movie data process:\n%s", traceback.format_exc())
+            logging.warn("Error trying to kill the movie data process:\n%s",
+                         traceback.format_exc())
         else:
             logging.info("Movie data process killed")
 
-    def outputValid(self, stdout):
-        return (thumbnailRE.search(stdout) is not None and
-                durationRE.search(stdout) is not None)
-
-    def parseDuration(self, stdout):
-        durationMatch = durationRE.search(stdout)
-        if durationMatch:
-            return int(durationMatch.group(1))
+    def parse_duration(self, stdout):
+        duration_match = DURATION_RE.search(stdout)
+        if duration_match:
+            return int(duration_match.group(1))
         else:
             return -1
 
@@ -189,7 +185,7 @@ class MovieDataUpdater:
             item.signal_change()
 
     def request_update(self, item):
-        if self.inShutdown:
+        if self.in_shutdown:
             return
         filename = item.get_filename()
         if not filename or not fileutil.isfile(filename):
@@ -203,9 +199,10 @@ class MovieDataUpdater:
         self.queue.put(MovieDataInfo(item))
 
     def shutdown(self):
-        self.inShutdown = True
-        self.queue.put(None) # wake up our thread
+        self.in_shutdown = True
+        # wake up our thread
+        self.queue.put(None)
         if self.thread is not None:
             self.thread.join()
 
-movieDataUpdater = MovieDataUpdater()
+movie_data_updater = MovieDataUpdater()

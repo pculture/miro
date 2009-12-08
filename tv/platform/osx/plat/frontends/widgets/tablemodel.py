@@ -69,6 +69,12 @@ class RowList(object):
     def __getitem__(self, iter):
         return self.list[iter]
 
+    def __iter__(self):
+        iter = self.firstIter()
+        while iter != self.lastIter():
+            yield iter.value()
+            iter.forward()
+
     def remove(self, iter):
         self.iter_cache = []
         return self.list.remove(iter)
@@ -149,10 +155,7 @@ class TableModelBase(signals.SignalEmitter):
         return iter.value()
 
     def __iter__(self):
-        iter = self.row_list.firstIter()
-        while iter != self.row_list.lastIter():
-            yield iter.value()
-            iter.forward()
+        return iter(self.row_list)
 
 class TableRow(object):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView for a description of the API for this class."""
@@ -236,10 +239,7 @@ class TreeNode(NSObject, TableRow):
         return TreeNode.alloc().initWithValues_parent_(values, parent)
 
     def iterchildren(self):
-        iter = self.children.firstIter()
-        while iter != self.children.lastIter():
-            yield iter.value()
-            iter.forward()
+        return iter(self.children)
 
 class TreeTableModel(TableModelBase):
     """https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView"""

@@ -38,6 +38,7 @@ from miro.frontends.widgets import dialogwidgets
 from miro.frontends.widgets.widgetutil import align_left
 from miro.frontends.widgets.prefpanel import attach_boolean, attach_radio, attach_combo
 
+from miro.plat import renderers
 from miro.plat import options 
 
 from miro import config, prefs
@@ -66,13 +67,15 @@ def _playback_panel():
     grid.end_line(spacing=12)
 
     rbg = widgetset.RadioButtonGroup()
-    gstreamer_radio = widgetset.RadioButton("gstreamer", rbg)
-    xine_radio = widgetset.RadioButton("xine", rbg)
-    attach_radio([(gstreamer_radio, "gstreamer"), (xine_radio, "xine")],
-                 options.USE_RENDERER)
+    radio_map = {}
+    for mem in renderers.get_renderer_list():
+        radio_map[mem] = widgetset.RadioButton(mem, rbg)
+
+    buttons = [(v, k) for k, v in radio_map.items()]
+    attach_radio(buttons, options.USE_RENDERER)
 
     grid.pack_label(_("Video renderer:"), grid.ALIGN_RIGHT)
-    grid.pack(dialogwidgets.radio_button_list(gstreamer_radio, xine_radio))
+    grid.pack(dialogwidgets.radio_button_list(*radio_map.values()))
 
     grid.end_line(spacing=12)
 
@@ -84,4 +87,5 @@ def get_platform_specific(panel_name):
     if panel_name == "general":
         return _general_panel()
     elif panel_name == "playback":
-        return _playback_panel()
+        if len(renderers.get_renderer_list()) > 1:
+            return _playback_panel()

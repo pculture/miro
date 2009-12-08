@@ -641,6 +641,9 @@ class Scroller(Bin):
     def set_has_borders(self, has_border):
         self.view.setBorderType_(NSBezelBorder)
 
+    def set_background_color(self, color):
+        self.view.setBackgroundColor_(self.make_color(color))
+
     def add(self, child):
         child.parent_is_scroller = True
         Bin.add(self, child)
@@ -649,34 +652,9 @@ class Scroller(Bin):
         child.parent_is_scroller = False
         Bin.remove(self)
 
-    def viewport_created(self):
-        Bin.viewport_created(self)
-        self.clip_notifications.connect(self._on_clip_view_frame_change,
-                'NSViewFrameDidChangeNotification')
-        self.clip_notifications.connect(self._on_clip_view_bounds_change,
-                'NSViewBoundsDidChangeNotification')
-
     def remove_viewport(self):
         Bin.remove_viewport(self)
         self.clip_notifications.disconnect()
-
-    def _on_clip_view_frame_change(self, notification):
-        # If the clip view is larger than the document view (probably because
-        # we auto-hid a scrollbar), resize the document view to be at least as
-        # big as the clip view.
-        if not self.child:
-            return
-        clip_size = self.view.contentView().frame().size
-        document_size = self.document_view.frame().size
-        max_width = max(clip_size.width, document_size.width)
-        max_height = max(clip_size.height, document_size.height)
-        if (max_width != document_size.width or
-                max_height != document_size.height):
-            self.document_view.setFrameSize_(NSSize(max_width, max_height))
-
-    def _on_clip_view_bounds_change(self, notification):
-        if self.child:
-            self.child.viewport_scrolled()
 
     def calc_size_request(self):
         if self.child:
@@ -695,22 +673,18 @@ class Scroller(Bin):
             return 0, 0
 
     def place_children(self):
-        if self.child:
+        if self.child is not None:
             child_width, child_height = self.child.get_size_request()
-            child_width = max(child_width, self.view.contentSize().width)
-            child_height = max(child_height, self.view.contentSize().height)
-            self.document_view.setFrameSize_(NSSize(child_width,
-                child_height))
+            child_width = max(child_width, self.view.contentView().frame().size.width)
+            frame = NSRect(NSPoint(0,0), NSSize(child_width, child_height))
             if isinstance(self.child, tableview.TableView):
                 # Hack to allow the content of a table view to scroll, but not
                 # the headers
-                self.child.place(self.document_view.frame(), self.view)
+                self.child.place(frame, self.document_view)
                 self.view.setDocumentView_(self.child.tableview)
-            elif self.child.CREATES_VIEW:
-                self.child.place(self.document_view.frame(), self.view)
-                self.view.setDocumentView_(self.child.view)
             else:
-                self.child.place(self.document_view.frame(), self.document_view)
+                self.child.place(frame, self.document_view)
+            self.document_view.setFrame_(frame)
             self.document_view.setNeedsDisplay_(YES)
         self.view.setNeedsDisplay_(YES)
 

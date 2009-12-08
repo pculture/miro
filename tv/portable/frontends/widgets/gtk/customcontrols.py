@@ -109,6 +109,10 @@ class CustomScaleMixin(CustomControlMixin):
         size -= slider_size
         return max(0, min(1, float(pos) / size))
 
+    def is_horizontal(self):
+        # this comes from a mixin
+        pass
+
     def move_slider_to_mouse(self, x, y):
         if ((not 0 <= x < self.allocation.width) or
                 (not 0 <= y < self.allocation.height)):

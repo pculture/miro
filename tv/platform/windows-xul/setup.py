@@ -68,12 +68,6 @@ if not os.path.exists or not os.path.isdir(BINARY_KIT_ROOT):
     print "Binary kit %s is missing.  Run 'setup_binarykit.sh'." % BINARY_KIT_ROOT
     sys.exit()
 
-BOOST_ROOT = os.path.join(BINARY_KIT_ROOT, 'boost', 'win32')
-BOOST_LIB_PATH = os.path.join(BOOST_ROOT, 'lib')
-BOOST_INCLUDE_PATH = os.path.join(BOOST_ROOT, 'include')
-BOOST_LIBRARIES = [os.path.splitext(os.path.basename(f))[0] for f in
-        glob(os.path.join(BOOST_LIB_PATH, '*.lib'))]
-
 ZLIB_INCLUDE_PATH = os.path.join(BINARY_KIT_ROOT, 'zlib', 'include')
 ZLIB_LIB_PATH = os.path.join(BINARY_KIT_ROOT, 'zlib', 'lib')
 ZLIB_RUNTIME_LIBRARY_PATH = os.path.join(BINARY_KIT_ROOT, 'zlib')
@@ -214,7 +208,7 @@ xulrunnerbrowser_ext = Extension("miro.plat.frontends.widgets.xulrunnerbrowser",
 
 # Setting the path here allows py2exe to find the DLLS
 os.environ['PATH'] = ';'.join([
-    OPENSSL_LIB_PATH, BOOST_LIB_PATH, ZLIB_RUNTIME_LIBRARY_PATH, 
+    OPENSSL_LIB_PATH, ZLIB_RUNTIME_LIBRARY_PATH, 
     LIBTORRENT_PATH, GTK_BIN_PATH, os.environ['PATH']])
 
 # Private extension modules to build.

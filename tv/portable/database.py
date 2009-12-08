@@ -28,12 +28,6 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-# Pyrex version of the DTV object database
-#
-# 09/26/2005 Checked in change that speeds up inserts, but changes
-#            filters so that they no longer keep the order of the
-#            parent view. So, filter before you sort.
-
 import traceback
 import threading
 
@@ -95,16 +89,15 @@ def set_thread(thread):
     if event_thread is None:
         event_thread = thread
 
-import traceback
 def confirm_db_thread():
     global event_thread
     if event_thread is None or event_thread != threading.currentThread():
         if event_thread is None:
-            errorString = "Database event thread not set"
+            error_string = "Database event thread not set"
         else:
-            errorString = "Database called from %s" % threading.currentThread()
+            error_string = "Database called from %s" % threading.currentThread()
         traceback.print_stack()
-        raise DatabaseThreadError, errorString
+        raise DatabaseThreadError, error_string
 
 class View(object):
     def __init__(self, klass, where, values, order_by, joins):
@@ -168,7 +161,7 @@ class ViewTracker(signals.SignalEmitter):
         return cls.related_trackers_for_table(app.db.table_name(klass))
 
     @classmethod
-    def _update_view_trackers(cls, obj):
+    def update_view_trackers(cls, obj):
         for tracker in cls.trackers_for_ddb_class(obj.__class__):
             tracker.object_changed(obj)
 
@@ -233,15 +226,15 @@ class ViewTracker(signals.SignalEmitter):
     def check_all_objects(self):
         new_ids = set(app.db.query_ids(self.klass, self.where,
             self.values, joins=self.joins))
-        for id in new_ids.difference(self.current_ids):
-            self.emit('added', app.db.get_obj_by_id(id))
-        for id in self.current_ids.difference(new_ids):
-            self.emit('removed', app.db.get_obj_by_id(id))
-        for id in self.current_ids.intersection(new_ids):
+        for id_ in new_ids.difference(self.current_ids):
+            self.emit('added', app.db.get_obj_by_id(id_))
+        for id_ in self.current_ids.difference(new_ids):
+            self.emit('removed', app.db.get_obj_by_id(id_))
+        for id_ in self.current_ids.intersection(new_ids):
             # XXX this hits all the IDs, but there doesn't seem to be a way to
             # check if the objects have actually been changed.  luckily, this
             # isn't called very often.
-            self.emit('changed', app.db.get_obj_by_id(id))
+            self.emit('changed', app.db.get_obj_by_id(id_))
         self.current_ids = new_ids
 
     def __len__(self):
@@ -269,8 +262,9 @@ class AttributeUpdateTracker(object):
                 raise
 
     def __set__(self, instance, value):
+        if instance.__dict__.get(self.name, "BOGUS VALUE FOO") != value:
+            instance.changed_attributes.add(self.name)
         instance.__dict__[self.name] = value
-        instance.changed_attributes.add(self.name)
 
 class DDBObject(signals.SignalEmitter):
     """Dynamic Database object
@@ -309,7 +303,7 @@ class DDBObject(signals.SignalEmitter):
         if not restoring:
             self.check_constraints()
             self.on_db_insert()
-            ViewTracker._update_view_trackers(self)
+            ViewTracker.update_view_trackers(self)
 
     @classmethod
     def make_view(cls, where=None, values=None, order_by=None, joins=None):
@@ -318,16 +312,16 @@ class DDBObject(signals.SignalEmitter):
         return View(cls, where, values, order_by, joins)
 
     @classmethod
-    def get_by_id(cls, id):
+    def get_by_id(cls, id_):
         try:
             # try memory first before going to sqlite.
-            obj = app.db.get_obj_by_id(id)
+            obj = app.db.get_obj_by_id(id_)
             if app.db.object_from_class_table(obj, cls):
                 return obj
             else:
-                raise ObjectNotFoundError(id)
+                raise ObjectNotFoundError(id_)
         except KeyError:
-            return cls.make_view('id=?', (id,)).get_singleton()
+            return cls.make_view('id=?', (id_,)).get_singleton()
 
     @classmethod
     def delete(cls, where, values=None):
@@ -377,7 +371,7 @@ class DDBObject(signals.SignalEmitter):
     def reset_changed_attributes(self):
         self.changed_attributes = set()
 
-    def getID(self):
+    def get_id(self):
         """Returns unique integer assocaited with this object
         """
         return self.id
@@ -395,7 +389,7 @@ class DDBObject(signals.SignalEmitter):
         """
         app.db.remove_obj(self)
         self.emit('removed')
-        ViewTracker._update_view_trackers(self)
+        ViewTracker.update_view_trackers(self)
 
     def confirm_db_thread(self):
         """Call this before you grab data from an object
@@ -429,7 +423,7 @@ class DDBObject(signals.SignalEmitter):
         self.check_constraints()
         if needsSave:
             app.db.update_obj(self)
-        ViewTracker._update_view_trackers(self)
+        ViewTracker.update_view_trackers(self)
 
     def on_signal_change(self):
         pass

@@ -30,7 +30,6 @@ import logging
 import os
 
 from miro import app
-from miro import menubar
 from miro import prefs
 from miro import config
 from miro import signals
@@ -39,6 +38,7 @@ from miro import messages
 from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets.displays import VideoDisplay
+from miro.frontends.widgets import menus
 
 class PlaybackManager (signals.SignalEmitter):
     
@@ -544,7 +544,7 @@ def handle_key_press(key, mods):
     """Handle a playback key press events """
 
     if len(mods) != 0:
-        if set([menubar.MOD, menubar.SHIFT]) == mods:
+        if set([menus.MOD, menus.SHIFT]) == mods:
             if key in ('>', '.'): # OS X sends '.', GTK sends '>'
                 app.widgetapp.on_forward_clicked()
                 return True
@@ -553,7 +553,7 @@ def handle_key_press(key, mods):
                 return True
         return False
 
-    if key == menubar.ESCAPE:
+    if key == menus.ESCAPE:
         if app.playback_manager.is_fullscreen:
             app.widgetapp.on_fullscreen_clicked()
             return True
@@ -566,22 +566,22 @@ def handle_key_press(key, mods):
     if app.playback_manager.is_playing_audio:
         return False
 
-    if key == menubar.RIGHT_ARROW:
+    if key == menus.RIGHT_ARROW:
         app.widgetapp.on_skip_forward()
         return True
 
-    if key == menubar.LEFT_ARROW:
+    if key == menus.LEFT_ARROW:
         app.widgetapp.on_skip_backward()
         return True
 
-    if key == menubar.UP_ARROW:
+    if key == menus.UP_ARROW:
         app.widgetapp.up_volume()
         return True
 
-    if key == menubar.DOWN_ARROW:
+    if key == menus.DOWN_ARROW:
         app.widgetapp.down_volume()
         return True
 
-    if key == menubar.SPACE:
+    if key == menus.SPACE:
         app.playback_manager.play_pause()
         return True

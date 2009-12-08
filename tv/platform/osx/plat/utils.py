@@ -46,14 +46,15 @@ from AppKit import *
 from miro import prefs
 from miro import config
 from miro.util import returnsUnicode, returnsBinary, checkU, checkB
-from miro.plat.filenames import osFilenameToFilenameType, osFilenamesToFilenameTypes, filenameTypeToOSFilename, FilenameType
+from miro.plat.filenames import os_filename_to_filename_type, filename_type_to_os_filename, FilenameType
 from miro.plat.frontends.widgets.threads import on_ui_thread
 
 # We need to define samefile for the portable code.  Lucky for us, this is
 # very easy.
 from os.path import samefile
 
-localeInitialized = False
+_locale_initialized = False
+
 dlTask = None
 
 def get_pyobjc_major_version():
@@ -85,8 +86,11 @@ def get_available_bytes_for_movies():
     del pool
     return available
 
-def initializeLocale():
-    global localeInitialized
+def locale_initialized():
+    return _locale_initialized
+
+def initialize_locale():
+    global _locale_initialized
 
     pool = NSAutoreleasePool.alloc().init()
     languages = list(NSUserDefaults.standardUserDefaults()["AppleLanguages"])
@@ -96,10 +100,14 @@ def initializeLocale():
     except:
         pass
 
-    os.environ["LANGUAGE"] = ':'.join(languages)
-    os.environ["LANG"] = locale.normalize(languages[0])
+    if os.environ.get("MIRO_LANG"):
+        os.environ["LANGUAGE"] = os.environ["MIRO_LANG"]
+        os.environ["LANG"] = locale.normalize(os.environ["MIRO_LANG"])
+    else:
+        os.environ["LANGUAGE"] = ':'.join(languages)
+        os.environ["LANG"] = locale.normalize(languages[0])
 
-    localeInitialized = True
+    _locale_initialized = True
     del pool
 
 def setup_logging (inDownloader=False):
@@ -180,32 +188,34 @@ def filenameToUnicode(filename, path = None):
     checkB(filename)
     return filename.decode('utf-8','replace')
 
-# Takes in a byte string or a unicode string and does the right thing
-# to make a URL
 @returnsUnicode
-def makeURLSafe(string, safe='/'):
+def make_url_safe(string, safe='/'):
+    """Takes in a byte string or a unicode string and does the right thing
+    to make a URL
+    """
     if type(string) == str:
         # quote the byte string
         return urllib.quote(string, safe=safe).decode('ascii')
     else:
         return urllib.quote(string.encode('utf-8','replace'), safe=safe).decode('ascii')
 
-# Undoes makeURLSafe (assuming it was passed a filenameType)
 @returnsBinary
-def unmakeURLSafe(string):
+def unmake_url_safe(string):
+    """Undoes make_url_safe (assuming it was passed a filenameType)
+    """
     # unquote the byte string
-    checkU (string)
+    checkU(string)
     return urllib.unquote(string.encode('ascii'))
 
 # Load the image at source_path, resize it to [width, height] (and use
 # letterboxing if source and destination ratio are different) and save it to
 # dest_path
 def resizeImage(source_path, dest_path, width, height):
-    source_path = filenameTypeToOSFilename(source_path)
+    source_path = filename_type_to_os_filename(source_path)
     source = NSImage.alloc().initWithContentsOfFile_(source_path)
     jpegData = getResizedJPEGData(source, width, height)
     if jpegData is not None:
-        dest_path = filenameTypeToOSFilename(dest_path)
+        dest_path = filename_type_to_os_filename(dest_path)
         destinationFile = open(dest_path, "w")
         try:
             destinationFile.write(jpegData)
@@ -253,7 +263,7 @@ def getMajorOSVersion():
     versionInfo = versionInfo[2].split('.')
     return int(versionInfo[0])
 
-def pidIsRunning(pid):
+def pid_is_running(pid):
     if pid is None:
         return False
     try:
@@ -262,23 +272,23 @@ def pidIsRunning(pid):
     except OSError, err:
         return err.errno == errno.EPERM
 
-def killProcess(pid):
+def kill_process(pid):
     if pid is None:
         return
-    if pidIsRunning(pid):
+    if pid_is_running(pid):
         try:
             os.kill(pid, signal.SIGTERM)
             for i in xrange(100):
                 time.sleep(.01)
-                if not pidIsRunning(pid):
+                if not pid_is_running(pid):
                     return
             os.kill(pid, signal.SIGKILL)
         except:
             logging.exception ("error killing process")
 
 @on_ui_thread
-def launchDownloadDaemon(oldpid, env):
-    killProcess(oldpid)
+def launch_download_daemon(oldpid, env):
+    kill_process(oldpid)
 
     env['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
     env['VERSIONER_PYTHON_PREFER_32_BIT'] = "yes"
@@ -340,13 +350,45 @@ def exit(returnCode):
 ###############################################################################
 
 def movie_data_program_info(moviePath, thumbnailPath):
-    py_exe_path = os.path.join(os.path.dirname(NSBundle.mainBundle().executablePath()), 'python')
-    rsrc_path = NSBundle.mainBundle().resourcePath()
+    main_bundle = NSBundle.mainBundle()
+    py_exe_path = os.path.join(os.path.dirname(main_bundle.executablePath()), 'python')
+    rsrc_path = main_bundle.resourcePath()
     script_path = os.path.join(rsrc_path, 'qt_extractor.py')
-    options = NSBundle.mainBundle().infoDictionary().get('PyOptions')
+    options = main_bundle.infoDictionary().get('PyOptions')
     env = None
     if options['alias'] == 1:
-        env = {'PYTHONPATH': ':'.join(sys.path)}
+        env = {'PYTHONPATH': ':'.join(sys.path), 'MIRO_BUNDLE_PATH': main_bundle.bundlePath()}
     else:
-        env = {'PYTHONHOME': rsrc_path}
+        env = {'PYTHONHOME': rsrc_path, 'MIRO_BUNDLE_PATH': main_bundle.bundlePath()}
     return ((py_exe_path, script_path, moviePath, thumbnailPath), env)
+
+###############################################################################
+
+def qttime2secs(qttime):
+    timeScale = qttimescale(qttime)
+    if timeScale == 0:
+        return 0.0
+    timeValue = qttimevalue(qttime)
+    return timeValue / float(timeScale)
+
+def qttimescale(qttime):
+    if isinstance(qttime, tuple):
+        return qttime[1]
+    else:
+        return qttime.timeScale
+
+def qttimevalue(qttime):
+    if isinstance(qttime, tuple):
+        return qttime[0]
+    else:
+        return qttime.timeValue
+
+def qttimevalue_set(qttime, value):
+    print qttime
+    if isinstance(qttime, tuple):
+        return(value, qttime[1], qttime[2])
+    else:
+        qttime.timeValue = value
+        return qttime
+
+###############################################################################

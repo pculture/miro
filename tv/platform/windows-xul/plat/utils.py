@@ -48,7 +48,7 @@ from miro.util import returnsUnicode, returnsBinary, checkU, checkB
 from miro.util import call_command, AutoLoggingStream
 from miro import fileutil
 
-localeInitialized = False
+_locale_initialized = False
 FilenameType = unicode
 
 def samefile(path1, path2):
@@ -128,12 +128,15 @@ def _get_locale():
                         code, hex(code))
     return None
 
-def initializeLocale():
-    global localeInitialized
+def locale_initialized():
+    return _locale_initialized
+
+def initialize_locale():
+    global _locale_initialized
     lang = _get_locale()
     if lang is not None:
         os.environ["LANGUAGE"] = lang
-    localeInitialized = True
+    _locale_initialized = True
 
 class ApatheticRotatingFileHandler(RotatingFileHandler):
     """The whole purpose of this class is to prevent rotation errors from
@@ -252,30 +255,8 @@ def filenameToUnicode(filename, path=None):
     checkU(filename)
     return filename
 
-def osFilenameToFilenameType(filename):
-    """Takes filename given by the OS and turn it into a FilenameType
-    where FilenameType is unicode.
-    """
-    # the filesystem encoding for Windows is "mbcs" so we have to
-    # use that for decoding--can't use the default utf8
-    try:
-        return filename.decode(sys.getfilesystemencoding())
-    except UnicodeDecodeError, ude:
-        return filename.decode("utf-8")
-
-def osFilenamesToFilenameTypes(filenames):
-    """Takes an array of filenames given by the OS and turn them into a 
-    FilenameTypes
-    """
-    return [osFilenameToFilenameType(filename) for filename in filenames]
-
-def filenameTypeToOSFilename(filename):
-    """Takes a FilenameType and turn it into something the OS accepts.
-    """
-    return filename
-
 @returnsUnicode
-def makeURLSafe(string, safe='/'):
+def make_url_safe(string, safe='/'):
     """Takes in a byte string or a unicode string and does the right thing
     to make a URL
     """
@@ -283,13 +264,13 @@ def makeURLSafe(string, safe='/'):
     return urllib.quote(string.encode('utf_8'), safe=safe).decode('ascii')
 
 @returnsUnicode
-def unmakeURLSafe(string):
-    """Undoes makeURLSafe
+def unmake_url_safe(string):
+    """Undoes make_url_safe. 
     """
     checkU(string)
     return urllib.unquote(string.encode('ascii')).decode('utf_8')
 
-def killProcess(pid):
+def kill_process(pid):
     # Kill the old process, if it exists
     if pid is not None:
         # This isn't guaranteed to kill the process, but it's likely the
@@ -301,8 +282,8 @@ def killProcess(pid):
         ctypes.windll.kernel32.TerminateProcess(handle, -1)
         ctypes.windll.kernel32.CloseHandle(handle)
 
-def launchDownloadDaemon(oldpid, env):
-    killProcess(oldpid)
+def launch_download_daemon(oldpid, env):
+    kill_process(oldpid)
     for key, value in env.items():
         os.environ[key] = value
     os.environ['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)

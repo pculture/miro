@@ -76,7 +76,7 @@ def add_video(path, single=False):
                 _command_line_videos.add(i)
             return
     correctFeed = feed.Feed.get_manual_feed()
-    file_item = item.FileItem(path, feed_id=correctFeed.getID())
+    file_item = item.FileItem(path, feed_id=correctFeed.get_id())
     file_item.mark_item_seen()
     if _command_line_videos is not None:
         _command_line_videos.add(file_item)
@@ -91,7 +91,7 @@ def add_torrent(path, torrentInfohash):
             if i.downloader.get_state() in ('paused', 'stopped'):
                 i.download()
             return
-    newItem = item.Item(item.get_entry_for_file(path), feed_id=manualFeed.getID())
+    newItem = item.Item(item.get_entry_for_file(path), feed_id=manualFeed.get_id())
     newItem.download()
 
 
@@ -195,7 +195,13 @@ def parse_command_line_args(args=None):
         else:
             logging.warning("parse_command_line_args: %s doesn't exist", arg)
 
-    if added_videos:
+    # if the user has Miro set up to play all videos externally, then
+    # we don't want to play videos added by the command line.
+    # 
+    # this fixes bug 12362 where if the user has his/her system set up
+    # to use Miro to play videos and Miro goes to play a video
+    # externally, then it causes an infinite loop and dies.
+    if added_videos and config.get(prefs.PLAY_IN_MIRO):
         item_infos = [messages.ItemInfo(i) for i in _command_line_videos]
         messages.PlayMovie(item_infos).send_to_frontend()
 

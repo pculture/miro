@@ -42,7 +42,6 @@ from urlparse import urljoin
 
 from miro import app
 from miro import messages
-from miro import menubar
 from miro import subscription
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
@@ -52,6 +51,7 @@ from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import separator
+from miro.frontends.widgets import menus
 from miro.plat.frontends.widgets import widgetset
 from miro.plat import resources
 
@@ -224,7 +224,7 @@ class ItemListController(object):
         app.frontend_states_memory.set_sort_state(self.type, self.id, sorter)
 
     def on_key_press(self, view, key, mods):
-        if key == menubar.DELETE:
+        if key == menus.DELETE:
             return self.handle_delete()
 
     def handle_delete(self):

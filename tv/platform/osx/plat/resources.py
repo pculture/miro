@@ -58,3 +58,6 @@ def get_osname():
     osname = '%s %s %s' % (platform.system(), platform.release(),
             platform.machine())
     return osname
+
+def get_default_search_dir():
+    return os.path.expanduser("~/")

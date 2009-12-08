@@ -764,12 +764,12 @@ class TableView(Widget):
 
     def on_row_inserted(self, model, path, iter):
         if self.hotspot_tracker:
-            self.hotspot_tracker.redraw_cell(self._widget)
+            self.hotspot_tracker.redraw_cell()
             self.hotspot_tracker = None
 
     def on_row_deleted(self, model, path):
         if self.hotspot_tracker:
-            self.hotspot_tracker.redraw_cell(self._widget)
+            self.hotspot_tracker.redraw_cell()
             self.hotspot_tracker = None
 
     def on_row_changed(self, model, path, iter):

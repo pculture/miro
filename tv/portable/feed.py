@@ -59,7 +59,7 @@ from miro.plat import resources
 from miro import downloader
 from miro.util import returnsUnicode, returnsFilename, unicodify, checkU, checkF, quoteUnicodeURL, getFirstVideoEnclosure, escape, toUni
 from miro import fileutil
-from miro.plat.utils import filenameToUnicode, makeURLSafe, unmakeURLSafe
+from miro.plat.utils import filenameToUnicode, make_url_safe, unmake_url_safe
 from miro import filetypes
 from miro.item import FeedParserValues
 from miro import search
@@ -457,7 +457,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         if self._actualFeed is None:
             for klass in (FeedImpl, RSSFeedImpl, RSSMultiFeedImpl,
                     ScraperFeedImpl, SearchFeedImpl, DirectoryFeedImpl,
-                    DirectoryWatchFeedImpl, SearchDownloadsFeedImpl,):
+                    DirectoryWatchFeedImpl, SearchDownloadsFeedImpl,
+                    ManualFeedImpl, SingleFeedImpl):
                 try:
                     self._actualFeed = klass.get_by_id(self.feed_impl_id)
                     self._actualFeed.ufeed = self
@@ -686,8 +687,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     def setInlineSearchTerm(self, term):
         self.inlineSearchTerm = term
 
-    def getID(self):
-        return DDBObject.getID(self)
+    def get_id(self):
+        return DDBObject.get_id(self)
 
     def hasError(self):
         self.confirm_db_thread()
@@ -854,7 +855,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         if newFolder is oldFolder:
             return
         if newFolder is not None:
-            self.folder_id = newFolder.getID()
+            self.folder_id = newFolder.get_id()
         else:
             self.folder_id = None
         self.signal_change()
@@ -883,7 +884,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             self.visible = False
         elif (self.origURL.startswith(u"dtv:directoryfeed:")):
             url = self.origURL[len(u"dtv:directoryfeed:"):]
-            dir_ = unmakeURLSafe(url)
+            dir_ = unmake_url_safe(url)
             newFeed = DirectoryWatchFeedImpl(self, dir_)
         elif self.origURL == u"dtv:search":
             newFeed = SearchFeedImpl(self)
@@ -1234,7 +1235,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             self.download = None
         for item in self.items:
             if moveItemsTo is not None and item.is_downloaded():
-                item.setFeed(moveItemsTo.getID())
+                item.setFeed(moveItemsTo.get_id())
             else:
                 item.remove()
         self.remove_icon_cache()
@@ -2125,7 +2126,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
     def setup_new(self, ufeed, directory):
         # calculate url and title arguments to FeedImpl's constructor
         if directory is not None:
-            url = u"dtv:directoryfeed:%s" % makeURLSafe(directory)
+            url = u"dtv:directoryfeed:%s" % make_url_safe(directory)
         else:
             url = u"dtv:directoryfeed"
         title = directory
