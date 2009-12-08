@@ -153,9 +153,9 @@ class WindowBase(signals.SignalEmitter):
 
     def calc_use_custom_style(self):
         base = self._window.style.base[gtk.STATE_NORMAL]
-        # Decide if we should use a custom style.  Right now the formula is
-        # the base color is a very light shade of gray/white (lighter than
-        # #f0f0f0).
+        # Decide if we should use a custom style.  Right now the
+        # formula is the base color is a very light shade of
+        # gray/white (lighter than #f0f0f0).
         self.use_custom_style = ((base.red == base.green == base.blue) and
                 base.red >= 61680)
 
@@ -249,7 +249,8 @@ class WindowBase(signals.SignalEmitter):
                 self.make_action('Menu' + mem.action, mem.label,
                                  groups=mem.groups)
             elif isinstance(mem, menus.MenuItem):
-                self.make_action(mem.action, mem.label, mem.shortcuts, mem.groups)
+                self.make_action(mem.action, mem.label, mem.shortcuts,
+                                 mem.groups)
 
         for action_group in self.action_groups.values():
             self.ui_manager.insert_action_group(action_group, -1)
@@ -261,8 +262,8 @@ class Window(WindowBase):
     """The main Miro window.  """
 
     def __init__(self, title, rect=None):
-        """Create the Miro Main Window.  Title is the name to give the window,
-        rect specifies the position it should have on screen.
+        """Create the Miro Main Window.  Title is the name to give the
+        window, rect specifies the position it should have on screen.
         """
         WindowBase.__init__(self)
         self.set_window(self._make_gtk_window())
@@ -312,9 +313,9 @@ class Window(WindowBase):
         """Set the widget that will be drawn in the content area for this
         window.
 
-        It will be allocated the entire area of the widget, except the space
-        needed for the titlebar, frame and other decorations.  When the window
-        is resized, content should also be resized.
+        It will be allocated the entire area of the widget, except the
+        space needed for the titlebar, frame and other decorations.
+        When the window is resized, content should also be resized.
         """
         self._add_content_widget(widget)
         widget._widget.show()
@@ -366,7 +367,8 @@ class MainWindow(Window):
 
     def on_key_release(self, widget, event):
         if app.playback_manager.is_playing:
-            if gtk.gdk.keyval_name(event.keyval) in ('Right', 'Left', 'Up', 'Down'):
+            if gtk.gdk.keyval_name(event.keyval) in ('Right', 'Left',
+                                                     'Up', 'Down'):
                 return True
 
     def _add_menubar(self):
@@ -386,15 +388,18 @@ class MainWindow(Window):
         removePlaylists = self.menu_structure.get("RemovePlaylists").label
         removeItems = self.menu_structure.get("RemoveItems").label
 
+        def get_state_label(action, state):
+            return self.menu_structure.get(action).state_label[state]
+
         for state, actions in menu_manager.states.items():
             if "RemoveFeeds" in actions:
-                removeFeeds = self.menu_structure.get("RemoveFeeds").state_labels[state]
+                removeFeeds = get_state_label("RemoveFeeds", state)
             if "UpdateFeeds" in actions:
-                updateFeeds = self.menu_structure.get("UpdateFeeds").state_labels[state]
+                updateFeeds = get_state_label("UpdateFeeds", state)
             if "RemovePlaylists" in actions:
-                removePlaylists = self.menu_structure.get("RemovePlaylists").state_labels[state]
+                removePlaylists = get_state_label("RemovePlaylists", state)
             if "RemoveItems" in actions:
-                removeItems = self.menu_structure.get("RemoveItems").state_labels[state]
+                removeItems = get_state_label("RemoveItems", state)
 
         action_groups = self.action_groups
 
@@ -412,14 +417,14 @@ class MainWindow(Window):
     def _add_content_widget(self, widget):
         self.vbox.pack_start(widget._widget, expand=True)
 
-
-_stock = { dialogs.BUTTON_OK.text : gtk.STOCK_OK,
-           dialogs.BUTTON_CANCEL.text : gtk.STOCK_CANCEL,
-           dialogs.BUTTON_YES.text : gtk.STOCK_YES,
-           dialogs.BUTTON_NO.text : gtk.STOCK_NO,
-           dialogs.BUTTON_QUIT.text : gtk.STOCK_QUIT,
-           dialogs.BUTTON_REMOVE.text : gtk.STOCK_REMOVE,
-           dialogs.BUTTON_DELETE.text : gtk.STOCK_DELETE,
+_stock = {
+    dialogs.BUTTON_OK.text: gtk.STOCK_OK,
+    dialogs.BUTTON_CANCEL.text: gtk.STOCK_CANCEL,
+    dialogs.BUTTON_YES.text: gtk.STOCK_YES,
+    dialogs.BUTTON_NO.text: gtk.STOCK_NO,
+    dialogs.BUTTON_QUIT.text: gtk.STOCK_QUIT,
+    dialogs.BUTTON_REMOVE.text: gtk.STOCK_REMOVE,
+    dialogs.BUTTON_DELETE.text: gtk.STOCK_DELETE,
     }
 
 class DialogBase(WindowBase):
@@ -513,10 +518,14 @@ class FileOpenDialog(FileDialogBase):
     def __init__(self, title):
         FileDialogBase.__init__(self)
         self._files = None
-        self.set_window(gtk.FileChooserDialog(title,
-                               action=gtk.FILE_CHOOSER_ACTION_OPEN,
-                               buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
-                                        gtk.STOCK_OPEN, gtk.RESPONSE_OK)))
+        fcd = gtk.FileChooserDialog(title,
+                                    action=gtk.FILE_CHOOSER_ACTION_OPEN,
+                                    buttons=(gtk.STOCK_CANCEL,
+                                             gtk.RESPONSE_CANCEL,
+                                             gtk.STOCK_OPEN,
+                                             gtk.RESPONSE_OK))
+
+        self.set_window(fcd)
 
     def set_filename(self, text):
         self._window.set_filename(text)
@@ -526,16 +535,16 @@ class FileOpenDialog(FileDialogBase):
 
     def add_filters(self, filters):
         for name, ext_list in filters:
-            filter = gtk.FileFilter()
-            filter.set_name(name)
+            f = gtk.FileFilter()
+            f.set_name(name)
             for mem in ext_list:
-                filter.add_pattern('*.%s' % mem)
-            self._window.add_filter(filter)
+                f.add_pattern('*.%s' % mem)
+            self._window.add_filter(f)
 
-        filter = gtk.FileFilter()
-        filter.set_name(_('All files'))
-        filter.add_pattern('*')
-        self._window.add_filter(filter)
+        f = gtk.FileFilter()
+        f.set_name(_('All files'))
+        f.add_pattern('*')
+        self._window.add_filter(f)
 
     def get_filenames(self):
         return [utils.FilenameType(f) for f in self._files]
@@ -547,10 +556,13 @@ class FileSaveDialog(FileDialogBase):
     def __init__(self, title):
         FileDialogBase.__init__(self)
         self._files = None
-        self.set_window(gtk.FileChooserDialog(title,
-                               action=gtk.FILE_CHOOSER_ACTION_SAVE,
-                               buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
-                                        gtk.STOCK_SAVE, gtk.RESPONSE_OK)))
+        fcd = gtk.FileChooserDialog(title,
+                                    action=gtk.FILE_CHOOSER_ACTION_SAVE,
+                                    buttons=(gtk.STOCK_CANCEL,
+                                             gtk.RESPONSE_CANCEL,
+                                             gtk.STOCK_SAVE,
+                                             gtk.RESPONSE_OK))
+        self.set_window(fcd)
 
     def set_filename(self, text):
         self._window.set_current_name(text)
@@ -563,10 +575,12 @@ class DirectorySelectDialog(FileDialogBase):
         FileDialogBase.__init__(self)
         self._files = None
         choose_str =_('Choose').encode('utf-8')
-        self.set_window(gtk.FileChooserDialog(title,
-                               action=gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
-                               buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
-                                        choose_str, gtk.RESPONSE_OK)))
+        fcd = gtk.FileChooserDialog(title,
+                                    action=gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
+                                    buttons=(gtk.STOCK_CANCEL,
+                                             gtk.RESPONSE_CANCEL,
+                                             choose_str, gtk.RESPONSE_OK))
+        self.set_window(fcd)
 
     def set_directory(self, text):
         self._window.set_filename(text)
@@ -580,12 +594,13 @@ class AboutDialog(Dialog):
                         _("About %(appname)s") % {
                 'appname': config.get(prefs.SHORT_APP_NAME)})
         icon_pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(
-                resources.share_path('icons/hicolor/128x128/apps/miro.png'), 48, 48)
+                resources.share_path('icons/hicolor/128x128/apps/miro.png'),
+                48, 48)
         self.packing_vbox.pack_start(gtk.image_new_from_pixbuf(icon_pixbuf))
         if config.get(prefs.APP_REVISION_NUM):
             version = "%s (%s)" % (
-                    config.get(prefs.APP_VERSION),
-                    config.get(prefs.APP_REVISION_NUM))
+                config.get(prefs.APP_VERSION),
+                config.get(prefs.APP_REVISION_NUM))
         else:
             version = "%s" % config.get(prefs.APP_VERSION)
         name_label = gtk.Label('<span size="xx-large" weight="bold">%s %s</span>' % (
@@ -648,7 +663,8 @@ class AlertDialog(DialogBase):
     def __init__(self, title, description, alert_type):
         DialogBase.__init__(self)
         message_type = type_map.get(alert_type, gtk.MESSAGE_INFO)
-        self.set_window(gtk.MessageDialog(type=message_type, message_format=description))
+        self.set_window(gtk.MessageDialog(type=message_type,
+                                          message_format=description))
         self._window.set_title(title)
 
     def add_button(self, text):
@@ -663,4 +679,5 @@ class AlertDialog(DialogBase):
         if response == gtk.RESPONSE_DELETE_EVENT:
             return -1
         else:
-            return response - 1 # response IDs started at 1
+            # response IDs start at 1
+            return response - 1
