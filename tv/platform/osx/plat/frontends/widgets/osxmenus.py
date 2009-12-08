@@ -193,10 +193,12 @@ def populate_menu():
                        menus.Shortcut("2", MOD),
                        groups=["PlayingVideo", "PlayableVideosSelected"]),
     ]
+    playback_menu = menubar.get("PlaybackMenu")
+    subtitlesMenu = playback_menu.get("SubtitlesMenu")
+    playback_menu.remove("SubtitlesMenu")
     presentMenu = menus.Menu(_("Present Video"), "Present", presentMenuItems)
-    subtitlesMenu = menubar.get("SubtitlesMenu")
-    menubar.get("PlaybackMenu").append(presentMenu)
-    # playback_menu.menuitems.append(subtitlesMenu)
+    playback_menu.append(presentMenu)
+    playback_menu.append(subtitlesMenu)
 
     # Window menu
     windowMenuItems = [
