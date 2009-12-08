@@ -389,7 +389,8 @@ class MainWindow(Window):
         removeItems = self.menu_structure.get("RemoveItems").label
 
         def get_state_label(action, state):
-            return self.menu_structure.get(action).state_label[state]
+            menu = self.menu_structure.get(action)
+            return menu.state_labels.get(state, menu.label)
 
         for state, actions in menu_manager.states.items():
             if "RemoveFeeds" in actions:
