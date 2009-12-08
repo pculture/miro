@@ -134,6 +134,13 @@ def populate_single_menu(nsmenu, miro_menu):
             item.setSubmenu_(submenu)
         nsmenu.addItem_(item)
 
+def extract_menu_item(menu_structure, action):
+    if menu_structure.has(action):
+        menu = menu_structure.get(action)
+        menu_structure.remove(action)
+        return menu
+    return None
+
 def populate_menu():
     short_appname = config.get(prefs.SHORT_APP_NAME)
 
@@ -142,12 +149,12 @@ def populate_menu():
 
     # Application menu
     miroMenuItems = [
-        menubar.get("About"),
+        extract_menu_item(menubar, "About"),
         menus.Separator(),
-        menubar.get("Donate"),
-        menubar.get("CheckVersion"),
+        extract_menu_item(menubar, "Donate"),
+        extract_menu_item(menubar, "CheckVersion"),
         menus.Separator(),
-        menubar.get("EditPreferences"),
+        extract_menu_item(menubar, "EditPreferences"),
         menus.Separator(),
         menus.MenuItem(_("Services"), "ServicesMenu"),
         menus.Separator(),
@@ -157,7 +164,7 @@ def populate_menu():
                        menus.Shortcut("h", MOD, ALT)),
         menus.MenuItem(_("Show All"), "ShowAll"),
         menus.Separator(),
-        menubar.get("Quit")
+        extract_menu_item(menubar, "Quit")
     ]
     miroMenu = menus.Menu(short_appname, "Miro", miroMenuItems)
     miroMenu.get("EditPreferences").label = _("Preferences...")
