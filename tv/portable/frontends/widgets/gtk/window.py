@@ -444,8 +444,7 @@ class MainWindow(Window):
         play_pause = self.menu_structure.get("PlayPauseVideo").state_labels[menu_manager.play_pause_state]
         change_label("PlayPause", "PlayPauseVideo", play_pause)
 
-        if ((config.get(prefs.ENABLE_SUBTITLES)
-             and app.playback_manager.is_playing
+        if ((app.playback_manager.is_playing
              and not app.playback_manager.is_playing_audio)):
             tracks = app.video_renderer.get_subtitle_tracks()
             if len(tracks) == 0:
@@ -460,7 +459,10 @@ class MainWindow(Window):
             self.ui_manager.remove_ui(self.merge_id)
             self.merge_id = 0
 
-        enabled_track = app.video_renderer.get_enabled_subtitle_track()
+        if config.get(prefs.ENABLE_SUBTITLES):
+            enabled_track = app.video_renderer.get_enabled_subtitle_track()
+        else:
+            enabled_track = -1
         outstream = StringIO.StringIO()
         outstream.write('''<ui>
 <menubar name="MiroMenu">
