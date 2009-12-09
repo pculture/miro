@@ -73,6 +73,7 @@ from miro.frontends.widgets import rundialog
 from miro.frontends.widgets import watchedfolders
 from miro.frontends.widgets import quitwhiledownloading
 from miro.frontends.widgets import firsttimedialog
+from miro.frontends.widgets.widgetconst import MAX_VOLUME
 from miro.frontends.widgets.window import MiroWindow
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.frontends.widgets.widgetset import Rect
@@ -291,7 +292,7 @@ class Application:
 
     def up_volume(self):
         slider = self.window.videobox.volume_slider
-        v = min(slider.get_value() + 0.05, 1.0)
+        v = min(slider.get_value() + 0.05, MAX_VOLUME)
         slider.set_value(v)
         self.on_volume_change(slider, v)
         self.on_volume_set(slider)
