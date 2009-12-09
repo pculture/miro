@@ -137,6 +137,7 @@ class WindowBase(signals.SignalEmitter):
         # menu stuff.
         self.menu_structure = None
         self.menu_action_groups = None
+        self.merge_id = 0
         self._setup_ui_manager()
 
     def set_window(self, window):
@@ -163,7 +164,7 @@ class WindowBase(signals.SignalEmitter):
         self._window.add_accel_group(self.ui_manager.get_accel_group())
 
     def _add_menu(self, menu, outstream, parent=None):
-        outstream.write('<menu action="Menu%s">' % menu.action)
+        outstream.write('<menu action="%s">' % menu.action)
         for mem in menu.menuitems:
             if isinstance(mem, menus.Menu):
                 self._add_menu(mem, outstream, menu)
@@ -174,7 +175,8 @@ class WindowBase(signals.SignalEmitter):
         outstream.write('</menu>')
 
     def _add_menuitem(self, menu, outstream):
-        outstream.write('<menuitem action="%s" />' % menu.action)
+        if menu.action != "NoneAvailable":
+            outstream.write('<menuitem action="%s" />' % menu.action)
 
     def _add_separator(self, menu, outstream):
         outstream.write("<separator />")
@@ -237,23 +239,49 @@ class WindowBase(signals.SignalEmitter):
                 action_group.add_action_with_accel(extra_action,
                                                    get_accel_string(shortcut))
 
+    def make_check_action(self, action, label, groups, callback, index,
+                          group=None):
+        gtk_action = gtk.RadioAction(action, label, None, None, index)
+        if group is not None:
+            gtk_action.set_group(group)
+        gtk_action.connect("activate", callback, index)
+        self.action_groups[groups[0]].add_action(gtk_action)
+
     def make_actions(self):
         self.action_groups = {}
         for name in self.menu_action_groups.keys():
             self.action_groups[name] = gtk.ActionGroup(name)
 
+        self.action_groups["Subtitles"] = gtk.ActionGroup("Subtitles")
+
         for mem in self.menu_structure:
             if isinstance(mem, menus.Separator):
                 continue
             if isinstance(mem, menus.Menu):
-                self.make_action('Menu' + mem.action, mem.label,
+                self.make_action(mem.action, mem.label,
                                  groups=mem.groups)
             elif isinstance(mem, menus.MenuItem):
                 self.make_action(mem.action, mem.label, mem.shortcuts,
                                  mem.groups)
 
+        # make a bunch of SubtitleTrack# actions
+        self.make_check_action("SubtitlesDisabled", _("Disable Subtitles"),
+                               ["AlwaysOn"], self.on_subtitles_change, -1)
+        radio_group = self.action_groups["AlwaysOn"].get_action("SubtitlesDisabled")
+        for i in range(20):
+            self.make_check_action("SubtitleTrack%d" % i, "", ["AlwaysOn"],
+                                   self.on_subtitles_change, i, radio_group)
+
         for action_group in self.action_groups.values():
             self.ui_manager.insert_action_group(action_group, -1)
+
+    def on_subtitles_change(self, action, track_index):
+        action_group = self.action_groups["AlwaysOn"]
+        action_group.get_action("SubtitlesDisabled").current_value = track_index
+        if track_index == -1:
+            app.video_renderer.disable_subtitles()
+        else:
+            app.video_renderer.enable_subtitle_track(track_index)
 
     def on_activate(self, action, callback):
         callback()
@@ -349,6 +377,7 @@ class MainWindow(Window):
         self._window.connect('window-state-event', self.on_window_state_event)
         self._window.connect('configure-event', self.on_configure_event)
         self.connect('will-close', self.on_close)
+        self._clear_subtitles_menu()
 
     def _make_gtk_window(self):
         return WrappedMainWindow()
@@ -414,6 +443,61 @@ class MainWindow(Window):
 
         play_pause = self.menu_structure.get("PlayPauseVideo").state_labels[menu_manager.play_pause_state]
         change_label("PlayPause", "PlayPauseVideo", play_pause)
+
+        if ((config.get(prefs.ENABLE_SUBTITLES)
+             and app.playback_manager.is_playing
+             and not app.playback_manager.is_playing_audio)):
+            tracks = app.video_renderer.get_subtitle_tracks()
+            if len(tracks) == 0:
+                self._clear_subtitles_menu()
+            else:
+                self._populate_subtitles_menu(tracks)
+        else:
+            self._clear_subtitles_menu()
+
+    def _populate_subtitles_menu(self, tracks):
+        if self.merge_id:
+            self.ui_manager.remove_ui(self.merge_id)
+            self.merge_id = 0
+
+        enabled_track = app.video_renderer.get_enabled_subtitle_track()
+        outstream = StringIO.StringIO()
+        outstream.write('''<ui>
+<menubar name="MiroMenu">
+   <menu action="PlaybackMenu">
+      <menu action="SubtitlesMenu">
+         <menuitem action="SubtitlesDisabled"/>''')
+        for i, lang in tracks:
+            outstream.write('<menuitem action="SubtitleTrack%d"/>' % i)
+        outstream.write('''
+      </menu>
+   </menu>
+</menubar>
+</ui>''')
+
+        self.merge_id = self.ui_manager.add_ui_from_string(outstream.getvalue())
+
+        action_group = self.action_groups["AlwaysOn"]
+        for i, lang in tracks:
+            action_group.get_action("SubtitleTrack%d" % i).set_property("label", lang)
+
+        action_group.get_action("SubtitlesDisabled").set_property("current-value", enabled_track)
+
+    def _clear_subtitles_menu(self):
+        if self.merge_id:
+            self.ui_manager.remove_ui(self.merge_id)
+            self.merge_id = 0
+
+        s = '''<ui>
+<menubar name="MiroMenu">
+   <menu action="PlaybackMenu">
+      <menu action="SubtitlesMenu">
+         <menuitem action="NoneAvailable"/>
+      </menu>
+   </menu>
+</menubar>
+</ui>'''
+        self.merge_id = self.ui_manager.add_ui_from_string(s)
 
     def _add_content_widget(self, widget):
         self.vbox.pack_start(widget._widget, expand=True)

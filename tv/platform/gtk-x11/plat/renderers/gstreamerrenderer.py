@@ -337,9 +337,30 @@ class VideoRenderer(Renderer):
         else:
             self.disable_subtitles()
 
+    def _get_subtitle_track_name(self, index):
+        """Returns the language for the track at the specified
+        index.
+        """
+        tag_list = self.playbin.emit("get-text-tags", index)
+        lang = None
+        try:
+            code = tag_list[gst.TAG_LANGUAGE_CODE]
+        except KeyError:
+            pass
+        else:
+            lang = iso_639.find(code, iso_639.THREE_LETTERS_CODE)
+        if lang is None:
+            return _("Unknown Language")
+        else:
+            return lang['name']
+
     def get_subtitle_tracks(self):
-        total_tracks = self.playbin.get_property("n-text")
-        return range(total_tracks)
+        """Returns a 2-tuple of (index, language) for available
+        tracks.
+        """
+        tracks = range(self.playbin.get_property("n-text"))
+        tracks = [(i, self._get_subtitle_track_name(i)) for i in tracks]
+        return tracks
 
     def get_enabled_subtitle_track(self):
         return self.playbin.get_property("current-text")
