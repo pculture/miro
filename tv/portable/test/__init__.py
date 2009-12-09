@@ -29,8 +29,6 @@
 
 # Includes all PyUnit unit tests
 
-# FIXME - this needs to be re-tooled to use new frontend or a testing
-# front end
 from miro.test.unicodetest import *
 
 from miro.test.datastructures import *
@@ -55,5 +53,3 @@ from miro.test.gtcachetest import *
 from miro.test.iconcachetest import *
 from miro.test.databasetest import *
 from miro.test.itemtest import *
-
-import miro.test.bmachinetest
