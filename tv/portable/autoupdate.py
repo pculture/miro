@@ -46,13 +46,13 @@ check_in_progress = False
 
 def check_for_updates(up_to_date_callback=None):
     """Checks the AUTOUPDATE_URL for the recent version.
-    
+
     The ``up_to_date_callback`` is a function that should take no
     arguments and return nothing.
     """
     import miro.plat
     if miro.plat.AUTOUPDATE == False:
-        logging.info("This platform has autoupdate disabled.")
+        logging.info("this platform has autoupdate disabled.  skipping.")
         return
 
     global check_in_progress
@@ -60,7 +60,8 @@ def check_for_updates(up_to_date_callback=None):
         check_in_progress = True
         logging.info("Checking for updates...")
         url = config.get(prefs.AUTOUPDATE_URL)
-        update_handler = lambda data: _handle_app_cast(data, up_to_date_callback)
+        update_handler = lambda data: _handle_app_cast(data,
+                                                       up_to_date_callback)
         error_handler = _handle_error
         grabURL(url, update_handler, error_handler)
 
@@ -91,7 +92,7 @@ def _handle_app_cast(data, up_to_date_callback):
 
             serial = int(config.get(prefs.APP_SERIAL))
             up_to_date = (serial >= _get_item_serial(latest))
-    
+
             if not up_to_date:
                 logging.info('New update available.')
                 signals.system.update_available(latest)
@@ -112,28 +113,29 @@ def _handle_app_cast(data, up_to_date_callback):
         eventloop.addTimeout(86400, check_for_updates, "Check for updates")
 
 def _get_item_for_latest(appcast):
-    """Filter out non platform items, sort remaining from latest to oldest
-    and return the item corresponding to the latest known version.
+    """Filter out non platform items, sort remaining from latest to
+    oldest and return the item corresponding to the latest known
+    version.
 
-    If there are no entries for this platform (this happens with Linux), then
-    this returns None.
+    If there are no entries for this platform (this happens with
+    Linux), then this returns None.
     """
     platform = config.get(prefs.APP_PLATFORM)
-    rejectedItems = []
+    rejected_items = []
 
     for item in appcast['entries']:
-        rejectedEnclosures = []
+        rejected_enclosures = []
         for enclosure in item['enclosures']:
             if enclosure['dtv:platform'] != platform:
-                rejectedEnclosures.append(enclosure)
+                rejected_enclosures.append(enclosure)
             if enclosure['type'] != 'application/octet-stream':
-                rejectedEnclosures.append(enclosure)
-        for enclosure in rejectedEnclosures:
+                rejected_enclosures.append(enclosure)
+        for enclosure in rejected_enclosures:
             item['enclosures'].remove(enclosure)
         if len(item['enclosures']) == 0:
-            rejectedItems.append(item)
+            rejected_items.append(item)
 
-    for item in rejectedItems:
+    for item in rejected_items:
         appcast['entries'].remove(item)
 
     # we've removed all entries that aren't relevant to this platform.

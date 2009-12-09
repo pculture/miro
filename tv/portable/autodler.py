@@ -91,7 +91,9 @@ class Downloader:
         if self.paused:
             return
         last_count = 0
-        while self.running_count < self.MAX and self.pending_count > 0 and self.pending_count != last_count:
+        while (self.running_count < self.MAX
+               and self.pending_count > 0
+               and self.pending_count != last_count):
             last_count = self.pending_count
             candidate_feeds = []
             for feed in feedmod.Feed.make_view():
@@ -106,7 +108,9 @@ class Downloader:
                             continue
                 if self.feed_pending_count.get(key, 0) <= 0:
                     continue
-                candidate_feeds.append((feed, self.feed_running_count.get(key, 0), self.feed_time.get(feed, datetime.min)))
+                candidate_feeds.append((feed,
+                                        self.feed_running_count.get(key, 0),
+                                        self.feed_time.get(feed, datetime.min)))
             candidate_feeds.sort(pending_sort)
 
             for feed, count, time in candidate_feeds:
@@ -122,17 +126,19 @@ class Downloader:
     def start_downloads(self):
         if self.dc or self.paused:
             return
-        self.dc = eventloop.addIdle(self.start_downloads_idle, "Start Downloads")
+        self.dc = eventloop.addIdle(self.start_downloads_idle,
+                                    "Start Downloads")
 
     def _key_for_feed(self, feed):
-        """Get the key to use for feed_pending_count and feed_running_count
-        dicts.  Normally this is the feed URL, but the search downloads feed
-        gets combined with the search feed (ss #11778)
+        """Get the key to use for feed_pending_count and
+        feed_running_count dicts.  Normally this is the feed URL, but
+        the search downloads feed gets combined with the search feed
+        (ss #11778)
         """
         if feed.origURL == u'dtv:searchDownloads':
             return u"dtv:search"
-        else:
-            return feed.origURL
+
+        return feed.origURL
 
     def pending_on_add(self, tracker, obj):
         feed = obj.get_feed()
@@ -140,32 +146,32 @@ class Downloader:
         self.pending_count = self.pending_count + 1
         self.feed_pending_count[key] = self.feed_pending_count.get(key, 0) + 1
         self.start_downloads()
-    
+
     def pending_on_remove(self, tracker, obj):
         feed = obj.get_feed()
         key = self._key_for_feed(feed)
         self.pending_count = self.pending_count - 1
         self.feed_pending_count[key] = self.feed_pending_count.get(key, 0) - 1
-    
+
     def running_on_add(self, tracker, obj):
         feed = obj.get_feed()
         key = self._key_for_feed(feed)
         self.running_count = self.running_count + 1
         self.feed_running_count[key] = self.feed_running_count.get(key, 0) + 1
-    
+
     def running_on_remove(self, tracker, obj):
         feed = obj.get_feed()
         key = self._key_for_feed(feed)
         self.running_count = self.running_count - 1
         self.feed_running_count[key] = self.feed_running_count.get(key, 0) - 1
         self.start_downloads()
-    
+
     def new_on_add(self, tracker, obj):
         feed = obj.get_feed()
         key = self._key_for_feed(feed)
         self.new_count = self.new_count + 1
         self.feed_new_count[key] = self.feed_new_count.get(key, 0) + 1
-    
+
     def new_on_remove(self, tracker, obj):
         feed = obj.get_feed()
         key = self._key_for_feed(feed)
@@ -182,7 +188,8 @@ class Downloader:
     def resume(self):
         if self.paused:
             self.paused = False
-            eventloop.addTimeout(5, self.start_downloads, "delayed start downloads")
+            eventloop.addTimeout(5, self.start_downloads,
+                                 "delayed start downloads")
 
 # these are both Downloader instances
 MANUAL_DOWNLOADER = None

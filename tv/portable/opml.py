@@ -168,7 +168,7 @@ class Importer(object):
         self.addedChannels = 0
 
     @eventloop.as_idle
-    def import_subscriptions(self, pathname, showSummary=True):
+    def import_subscriptions(self, pathname, show_summary=True):
         f = open(pathname, "r")
         content = f.read()
         f.close()
@@ -176,7 +176,7 @@ class Importer(object):
         try:
             subscriptions = self.import_content(content)
             self.result = subscription.Subscriber().add_subscriptions(subscriptions)
-            if showSummary:
+            if show_summary:
                 self.show_import_summary()
         except expat.ExpatError:
             self.show_xml_error()

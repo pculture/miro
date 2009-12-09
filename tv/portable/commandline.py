@@ -38,7 +38,6 @@ while Miro is already running.  They should arrange for ``add_video``
 or ``add_torrent`` to be called in the existing Miro process.
 """
 
-
 from miro.gtcache import gettext as _
 
 import os.path
@@ -58,11 +57,9 @@ from miro.plat.utils import samefile, filenameToUnicode
 from miro import singleclick
 from miro import opml
 
-
 _command_line_args = []
 _command_line_videos = None
 _command_line_view = None
-
 
 def add_video(path, single=False):
     path = os.path.abspath(path)
@@ -71,45 +68,47 @@ def add_video(path, single=False):
         if ((item_filename and
              os.path.exists(item_filename) and
              samefile(item_filename, path))):
-            logging.warn("Not adding duplicate video: %s" % path.decode('ascii', 'ignore'))
+            logging.warn("Not adding duplicate video: %s",
+                         path.decode('ascii', 'ignore'))
             if _command_line_videos is not None:
                 _command_line_videos.add(i)
             return
-    correctFeed = feed.Feed.get_manual_feed()
-    file_item = item.FileItem(path, feed_id=correctFeed.get_id())
+    correct_feed = feed.Feed.get_manual_feed()
+    file_item = item.FileItem(path, feed_id=correct_feed.get_id())
     file_item.mark_item_seen()
     if _command_line_videos is not None:
         _command_line_videos.add(file_item)
 
-
 def add_torrent(path, torrentInfohash):
-    manualFeed = feed.Feed.get_manual_feed()
-    for i in manualFeed.items:
-        if (i.downloader is not None and
-                i.downloader.status.get('infohash') == torrentInfohash):
-            logging.info("not downloading %s, it's already a download for %s", path, i)
+    manual_feed = feed.Feed.get_manual_feed()
+    for i in manual_feed.items:
+        if ((i.downloader is not None
+             and i.downloader.status.get('infohash') == torrentInfohash)):
+            logging.info("not downloading %s, it's already a download for %s",
+                         path, i)
             if i.downloader.get_state() in ('paused', 'stopped'):
                 i.download()
             return
-    newItem = item.Item(item.get_entry_for_file(path), feed_id=manualFeed.get_id())
-    newItem.download()
+    new_item = item.Item(item.get_entry_for_file(path),
+                         feed_id=manual_feed.get_id())
+    new_item.download()
 
-
-def _complain_about_subscription_url(messageText):
+def _complain_about_subscription_url(message_text):
     title = _("Subscription error")
-    dialogs.MessageBoxDialog(title, messageText).run()
+    dialogs.MessageBoxDialog(title, message_text).run()
 
-def add_subscription_url(prefix, expectedContentType, url):
-    realURL = url[len(prefix):]
+def add_subscription_url(prefix, expected_content_type, url):
+    real_url = url[len(prefix):]
     def callback(info):
-        if info.get('content-type') == expectedContentType:
+        if info.get('content-type') == expected_content_type:
             subscription_list = autodiscover.parse_content(info['body'])
             if subscription_list is None:
                 text = _(
                     "This %(appname)s feed file has an invalid format: "
                     "%(url)s.  Please notify the publisher of this file.",
-                    {"appname": config.get(prefs.SHORT_APP_NAME), "url": realURL}
-                )
+                    {"appname": config.get(prefs.SHORT_APP_NAME),
+                     "url": real_url}
+                    )
                 _complain_about_subscription_url(text)
             else:
                 subscription.SubscriptionHandler().add_subscriptions(
@@ -118,15 +117,17 @@ def add_subscription_url(prefix, expectedContentType, url):
             text = _(
                 "This %(appname)s feed file has the wrong content type: "
                 "%(url)s. Please notify the publisher of this file.",
-                {"appname": config.get(prefs.SHORT_APP_NAME), "url": realURL}
-            )
+                {"appname": config.get(prefs.SHORT_APP_NAME),
+                 "url": real_url}
+                )
             _complain_about_subscription_url(text)
 
     def errback(error):
         text = _(
             "Could not download the %(appname)s feed file: %(url)s",
-            {"appname": config.get(prefs.SHORT_APP_NAME), "url": realURL}
-        )
+            {"appname": config.get(prefs.SHORT_APP_NAME),
+             "url": real_url}
+            )
         _complain_about_subscription_url(text)
 
     httpclient.grabURL(realURL, callback, errback)
@@ -134,14 +135,12 @@ def add_subscription_url(prefix, expectedContentType, url):
 def set_command_line_args(args):
     _command_line_args.extend(args)
 
-
 def reset_command_line_view():
     global _command_line_view, _command_line_videos
     if _command_line_view is not None:
         _command_line_view.unlink()
         _command_line_view = None
     _command_line_videos = set()
-
 
 def parse_command_line_args(args=None):
     """
@@ -168,27 +167,30 @@ def parse_command_line_args(args=None):
             add_subscription_url('miro:', 'application/x-miro', arg)
         elif arg.startswith('democracy:'):
             add_subscription_url('democracy:', 'application/x-democracy', arg)
-        elif arg.startswith('http:') or arg.startswith('https:') or arg.startswith('feed:') or arg.startswith('feeds:'):
+        elif (arg.startswith('http:')
+              or arg.startswith('https:')
+              or arg.startswith('feed:')
+              or arg.startswith('feeds:')):
             singleclick.add_download(filenameToUnicode(arg))
         elif os.path.exists(arg):
             ext = os.path.splitext(arg)[1].lower()
             if ext in ('.torrent', '.tor'):
                 try:
-                    torrentInfohash = get_torrent_info_hash(arg)
+                    torrent_infohash = get_torrent_info_hash(arg)
                 except ValueError:
                     title = _("Invalid Torrent")
                     msg = _(
                         "The torrent file %(filename)s appears to be corrupt and cannot be opened.",
                         {"filename": os.path.basename(arg)}
-                    )
+                        )
                     dialogs.MessageBoxDialog(title, msg).run()
                     continue
-                add_torrent(arg, torrentInfohash)
+                add_torrent(arg, torrent_infohash)
                 added_downloads = True
             elif ext in ('.rss', '.rdf', '.atom', '.ato'):
                 feed.add_feed_from_file(arg)
             elif ext in ('.miro', '.democracy', '.dem', '.opml'):
-                opml.Importer().import_subscriptions(arg, showSummary=False)
+                opml.Importer().import_subscriptions(arg, show_summary=False)
             else:
                 add_video(arg, len(args) == 1)
                 added_videos = True
@@ -197,7 +199,7 @@ def parse_command_line_args(args=None):
 
     # if the user has Miro set up to play all videos externally, then
     # we don't want to play videos added by the command line.
-    # 
+    #
     # this fixes bug 12362 where if the user has his/her system set up
     # to use Miro to play videos and Miro goes to play a video
     # externally, then it causes an infinite loop and dies.
