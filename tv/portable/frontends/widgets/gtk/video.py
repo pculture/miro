@@ -104,11 +104,21 @@ class ClickableImageButton(CustomButton):
         CustomButton.__init__(self)
         self.image = ImageSurface(Image(image_path))
 
+        self.wrapped_widget_connect('enter-notify-event', self.on_enter_notify)
+        self.wrapped_widget_connect('leave-notify-event', self.on_leave_notify)
+
     def size_request(self, layout):
         return self.image.width, self.image.height
 
     def draw(self, context, layout):
         self.image.draw(context, 0, 0, self.image.width, self.image.height)
+
+    def on_enter_notify(self, widget, event):
+        self._widget.window.set_cursor(gtk.gdk.Cursor(gtk.gdk.HAND1))
+
+    def on_leave_notify(self, widget, event):
+        if self._widget.window:
+            self._widget.window.set_cursor(None)
 
 class NullRenderer:
     def __init__(self):
@@ -136,7 +146,7 @@ def make_label(text, handler, visible=True):
     return lab
 
 def make_image_button(image_path, handler):
-    b = ClickableImageButton(image_path)
+    b = ClickableImageButton(resources.path(image_path))
     b.connect('clicked', handler)
     return b
 
@@ -278,12 +288,12 @@ class VideoDetailsWidget(Background):
         if app.playback_manager.detached_window is not None:
             popin_link = make_label(_("Pop-in"), self.handle_popin_popout)
             outer_hbox.pack_start(_align_middle(popin_link))
-            popin_image = make_image_button(resources.path('images/popin.png'), self.handle_popin_popout)
+            popin_image = make_image_button('images/popin.png', self.handle_popin_popout)
             outer_hbox.pack_start(_align_middle(popin_image))
         else:
             popout_link = make_label(_("Pop-out"), self.handle_popin_popout)
             outer_hbox.pack_start(_align_middle(popout_link))
-            popout_image = make_image_button(resources.path('images/popout.png'), self.handle_popin_popout)
+            popout_image = make_image_button('images/popout.png', self.handle_popin_popout)
             outer_hbox.pack_start(_align_middle(popout_image))
 
         self.add(_align_right(outer_hbox, left_pad=15, right_pad=15))
