@@ -467,11 +467,11 @@ class MainWindow(Window):
         outstream.write('''<ui>
 <menubar name="MiroMenu">
    <menu action="PlaybackMenu">
-      <menu action="SubtitlesMenu">
-         <menuitem action="SubtitlesDisabled"/>''')
+      <menu action="SubtitlesMenu">''')
         for i, lang in tracks:
             outstream.write('<menuitem action="SubtitleTrack%d"/>' % i)
-        outstream.write('''
+        outstream.write('''<separator/>
+         <menuitem action="SubtitlesDisabled"/>
       </menu>
    </menu>
 </menubar>
