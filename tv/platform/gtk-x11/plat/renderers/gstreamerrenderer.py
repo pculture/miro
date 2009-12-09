@@ -343,11 +343,8 @@ class VideoRenderer(Renderer):
         """
         tag_list = self.playbin.emit("get-text-tags", index)
         lang = None
-        try:
+        if tag_list is not None and gst.TAG_LANGUAGE_CODE in tag_list:
             code = tag_list[gst.TAG_LANGUAGE_CODE]
-        except KeyError:
-            pass
-        else:
             lang = iso_639.find(code, iso_639.THREE_LETTERS_CODE)
         if lang is None:
             return _("Unknown Language")
