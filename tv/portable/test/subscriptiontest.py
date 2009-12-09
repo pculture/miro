@@ -179,7 +179,7 @@ OPML_NESTED = u"""\
 
 class TestSubscription (MiroTestCase):
 
-    autodiscover.reflexiveAutoDiscoveryOpener = open
+    autodiscover.REFLEXIVE_AUTO_DISCOVERY_OPENER = open
 
     def testInvalidSubscriptions(self):
         retval = autodiscover.parse_file("this-file-does-not-exist.xml")

@@ -26,6 +26,11 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+"""
+This file contains the RSS/Atom/OPML autodiscovery path.  It used to
+live in subscription.py
+"""
+
 import re
 import logging
 import traceback
@@ -34,17 +39,13 @@ import urllib2
 
 from miro import opml
 from miro import util
-"""
-This file contains the RSS/Atom/OPML autodiscovery path.  It used to live in
-subscription.py
-"""
 
-reflexiveAutoDiscoveryOpener = urllib2.urlopen
+REFLEXIVE_AUTO_DISCOVERY_OPENER = urllib2.urlopen
 
 def flatten(subscriptions):
     """
-    Take a nested subscription list, and remove the folders, putting everything
-    at the root level.
+    Take a nested subscription list, and remove the folders, putting
+    everything at the root level.
     """
     def _flat(subscriptions):
         for subscription in subscriptions:
@@ -72,9 +73,9 @@ def parse_content(content):
         try:
             root = dom.documentElement
             if root.nodeName == "rss":
-                return _getSubscriptionsFromRSSChannel(root)
+                return _get_subs_from_rss_channel(root)
             elif root.nodeName == "feed":
-                return _getSubscriptionsFromAtomFeed(root)
+                return _get_subs_from_atom_feed(root)
             elif root.nodeName == "opml":
                 subscriptions = opml.Importer().import_content(content)
                 return flatten(subscriptions)
@@ -89,42 +90,40 @@ def parse_content(content):
             logging.warn("Error parsing XML content...\n%s",
                     traceback.format_exc())
 
-# =========================================================================
-
-def _getSubscriptionsFromRSSChannel(root):
+def _get_subs_from_rss_channel(root):
     try:
         channel = root.getElementsByTagName("channel").pop()
-        subscriptions = _getSubscriptionsFromAtomLinkConstruct(channel)
+        subscriptions = _get_subs_from_atom_link_construct(channel)
         if subscriptions is not None:
             return subscriptions
         else:
             link = channel.getElementsByTagName("link").pop()
             href = link.firstChild.data
-            return _getSubscriptionsFromReflexiveAutoDiscovery(href, "application/rss+xml")
+            return _get_subs_from_reflexive_auto_discovery(href, "application/rss+xml")
     except (KeyboardInterrupt, SystemExit):
         raise
     except:
         pass
 
-def _getSubscriptionsFromAtomFeed(root):
+def _get_subs_from_atom_feed(root):
     try:
-        subscriptions = _getSubscriptionsFromAtomLinkConstruct(root)
+        subscriptions = _get_subs_from_atom_link_construct(root)
         if subscriptions is not None:
             return subscriptions
         else:
-            link = _getAtomLink(root)
+            link = _get_atom_link(root)
             rel = link.getAttribute("rel")
             if rel == "alternate":
                 href = link.getAttribute("href")
-                return _getSubscriptionsFromReflexiveAutoDiscovery(href, "application/atom+xml")
+                return _get_subs_from_reflexive_auto_discovery(href, "application/atom+xml")
     except (KeyboardInterrupt, SystemExit):
         raise
     except:
         pass
 
-def _getSubscriptionsFromAtomLinkConstruct(node):
+def _get_subs_from_atom_link_construct(node):
     try:
-        link = _getAtomLink(node)
+        link = _get_atom_link(node)
         if link.getAttribute("rel") in ("self", "start"):
             href = link.getAttribute("href")
             return [{'type': 'feed', 'url': href}]
@@ -133,10 +132,10 @@ def _getSubscriptionsFromAtomLinkConstruct(node):
     except:
         pass
 
-def _getSubscriptionsFromReflexiveAutoDiscovery(url, ltype):
+def _get_subs_from_reflexive_auto_discovery(url, ltype):
     try:
         urls = list()
-        html = reflexiveAutoDiscoveryOpener(url).read()
+        html = REFLEXIVE_AUTO_DISCOVERY_OPENER(url).read()
         for match in re.findall("<link[^>]+>", html):
             altMatch = re.search("rel=\"alternate\"", match)
             typeMatch = re.search("type=\"%s\"" % re.escape(ltype), match)
@@ -153,6 +152,5 @@ def _getSubscriptionsFromReflexiveAutoDiscovery(url, ltype):
             return []
     return [{'type': 'feed', 'url': url} for url in urls]
 
-def _getAtomLink(node):
+def _get_atom_link(node):
     return node.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "link").pop()
-# =========================================================================
