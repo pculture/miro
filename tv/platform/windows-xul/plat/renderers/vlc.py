@@ -36,6 +36,8 @@ import gobject
 
 from miro.plat import resources
 from miro import app
+from miro import config
+from miro import prefs
 from miro.frontends.widgets.widgetconst import MAX_VOLUME
 
 # load the DLL
@@ -84,18 +86,18 @@ class VLCEvent(ctypes.Structure):
             ('arg2', ctypes.c_int),
     ]
 
-class VLCTrackDescription(Structure):
+class VLCTrackDescription(ctypes.Structure):
     # The libvlc_track_description_t structure type is self-referencing so we
     # have to specify the fields after the class is defined.
     pass
 
 VLCTrackDescription._fields_ = [
-            ('id', c_int),
-            ('name', c_char_p),
-            ('next', POINTER(VLCTrackDescription))
+            ('id', ctypes.c_int),
+            ('name', ctypes.c_char_p),
+            ('next', ctypes.POINTER(VLCTrackDescription))
     ]
 
-libvlc.libvlc_video_get_spu_description.restype = POINTER(VLCTrackDescription)
+libvlc.libvlc_video_get_spu_description.restype = ctypes.POINTER(VLCTrackDescription)
 
 VLC_EVENT_CALLBACK = ctypes.CFUNCTYPE(None, ctypes.POINTER(VLCEvent),
         ctypes.c_void_p)
@@ -532,7 +534,7 @@ class VLCRenderer:
         self._set_active_subtitle_track(0)
         
     def _set_active_subtitle_track(self, track_index):
-        libclv.libvlc_video_set_spu(semf.media_player, track_index, self.exc.ref())
+        libvlc.libvlc_video_set_spu(self.media_player, track_index, self.exc.ref())
         try:
             self.exc.check()
         except VLCError, e:
