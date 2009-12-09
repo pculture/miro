@@ -617,17 +617,11 @@ class PlaybackPanel(PanelBuilder):
     def build_widget(self):
         v = widgetset.VBox()
 
-        cbx = widgetset.Checkbox(_('Always play videos in a separate window.'))
-        attach_boolean(cbx, prefs.PLAY_DETACHED)
-        v.pack_start(widgetutil.align_left(cbx, bottom_pad=6))
+        miro_cbx = widgetset.Checkbox(_('Play media in Miro.'))
+        separate_cbx = widgetset.Checkbox(_('Always play videos in a separate window.'))
+        resume_cbx = widgetset.Checkbox(_('Resume playing a video or audio item from the point it was last stopped.'))
 
-        cbx = widgetset.Checkbox(_('Resume playing a video or audio item from the point it was last stopped.'))
-        attach_boolean(cbx, prefs.RESUME_VIDEOS_MODE)
-        v.pack_start(widgetutil.align_left(cbx, bottom_pad=6))
-
-        cbx = widgetset.Checkbox(_('Automatically enable movie subtitles when available.'))
-        attach_boolean(cbx, prefs.ENABLE_SUBTITLES)
-        v.pack_start(widgetutil.align_left(cbx, bottom_pad=12))
+        subtitles_cbx = widgetset.Checkbox(_('Automatically enable movie subtitles when available.'))
 
         rbg = widgetset.RadioButtonGroup()
         play_rb = widgetset.RadioButton(_("Play video and audio items one after another"), rbg)
@@ -641,6 +635,9 @@ class PlaybackPanel(PanelBuilder):
 
         attach_boolean(resume_cbx, prefs.RESUME_VIDEOS_MODE)
         v.pack_start(widgetutil.align_left(resume_cbx, bottom_pad=6))
+
+        attach_boolean(subtitles_cbx, prefs.ENABLE_SUBTITLES)
+        v.pack_start(widgetutil.align_left(subtitles_cbx, bottom_pad=6))
 
         attach_radio([(stop_rb, True), (play_rb, False)], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
         v.pack_start(widgetutil.align_left(play_rb), padding=2)
