@@ -61,7 +61,8 @@ class ValidationWarning(Warning):
     pass
 
 class SchemaItem(object):
-    """SchemaItem represents a single attribute that gets stored on disk.
+    """SchemaItem represents a single attribute that gets stored on
+    disk.
 
     SchemaItem is an abstract class.  Subclasses of SchemaItem such as
     SchemaAttr, SchemaList are used in actual object schemas.
@@ -77,11 +78,12 @@ class SchemaItem(object):
     def validate(self, data):
         """Validate that data is a valid value for this SchemaItem.
 
-        validate is "dumb" when it comes to container types like SchemaList,
-        etc.  It only checks that the container is the right type, not its
-        children.  This isn't a problem because saveObject() calls
-        validate() recursively on all the data it saves, therefore validate
-        doesn't have to recursively validate things.
+        validate is "dumb" when it comes to container types like
+        SchemaList, etc.  It only checks that the container is the
+        right type, not its children.  This isn't a problem because
+        saveObject() calls validate() recursively on all the data it
+        saves, therefore validate doesn't have to recursively validate
+        things.
         """
 
         if data is None:
@@ -92,8 +94,8 @@ class SchemaItem(object):
     def validateType(self, data, correctType):
         """Helper function that many subclasses use"""
         if data is not None and not isinstance(data, correctType):
-            raise ValidationError("%r (type: %s) is not a %s" % 
-                    (data, type(data), correctType))
+            raise ValidationError("%r (type: %s) is not a %s" %
+                                  (data, type(data), correctType))
 
     def validateTypes(self, data, possibleTypes):
         if data is None:
@@ -101,8 +103,8 @@ class SchemaItem(object):
         for t in possibleTypes:
             if isinstance(data, t):
                 return
-        raise ValidationError("%r (type: %s) is not any of: %s" % 
-                (data, type(data), possibleTypes))
+        raise ValidationError("%r (type: %s) is not any of: %s" %
+                              (data, type(data), possibleTypes))
 
 class SchemaSimpleItem(SchemaItem):
     """Base class for SchemaItems for simple python types."""
@@ -176,7 +178,7 @@ class SchemaReprContainer(SchemaItem):
     """
 
     VALID_TYPES = [bool, int, long, float, unicode, NoneType,
-            datetime.datetime, time.struct_time]
+                   datetime.datetime, time.struct_time]
 
     VALID_KEY_TYPES = VALID_TYPES + [str]
 
@@ -224,10 +226,10 @@ class SchemaList(SchemaReprContainer):
                 self.childSchema.validate(value)
             except ValidationError:
                 raise ValidationError("%r (index: %s) has the wrong type" %
-                        (value, i))
+                                      (value, i))
 
 class SchemaDict(SchemaReprContainer):
-    """Special case of SchemaReprContainer that stores a simple dict
+    """Special case of SchemaReprContainer that stores a simple dict.
 
     All keys and values must have the same type.
     """
@@ -258,17 +260,17 @@ class SchemaStatusContainer(SchemaReprContainer):
     RemoteDownloaders.  It allows some values to be byte strings
     rather than unicode objects.
     """
-
-
     def validate(self, data):
         binary_fields = self._binary_fields()
         self.validateType(data, dict)
         for key, value in data.items():
             self.validateTypes(key, [bool, int, long, float, unicode,
-                    str, NoneType, datetime.datetime, time.struct_time])
+                                     str, NoneType, datetime.datetime,
+                                     time.struct_time])
             if key not in binary_fields:
                 self.validateTypes(value, [bool, int, long, float, unicode,
-                        NoneType, datetime.datetime, time.struct_time])
+                                           NoneType, datetime.datetime,
+                                           time.struct_time])
             else:
                 self.validateType(value, str)
 
@@ -290,8 +292,8 @@ class SchemaObject(SchemaItem):
         self.validateType(data, self.klass)
 
 class ObjectSchema(object):
-    """The schema to save/restore an object with.  Object schema isn't a
-    SchemaItem, it's the schema for an entire object.
+    """The schema to save/restore an object with.  Object schema isn't
+    a SchemaItem, it's the schema for an entire object.
 
     Member variables:
 
@@ -312,7 +314,8 @@ class ObjectSchema(object):
     indexes = ()
 
 class MultiClassObjectSchema(ObjectSchema):
-    """ObjectSchema where rows will be restored to different python classes.
+    """ObjectSchema where rows will be restored to different python
+    classes.
 
     Instead of the klass attribute, MultiClassObjectSchema should
     define 2 class methods: ddb_object_classes() returns the list of
@@ -324,8 +327,10 @@ class MultiClassObjectSchema(ObjectSchema):
 from miro.database import DDBObject
 from miro.databaselog import DBLogEntry
 from miro.downloader import RemoteDownloader, HTTPAuthPassword
-from miro.feed import Feed, FeedImpl, RSSFeedImpl, RSSMultiFeedImpl, ScraperFeedImpl
-from miro.feed import SearchFeedImpl, DirectoryWatchFeedImpl, DirectoryFeedImpl, SearchDownloadsFeedImpl
+from miro.feed import (Feed, FeedImpl, RSSFeedImpl, RSSMultiFeedImpl,
+                       ScraperFeedImpl)
+from miro.feed import (SearchFeedImpl, DirectoryWatchFeedImpl,
+                       DirectoryFeedImpl, SearchDownloadsFeedImpl)
 from miro.feed import ManualFeedImpl, SingleFeedImpl
 from miro.folder import ChannelFolder, PlaylistFolder, PlaylistFolderItemMap
 from miro.guide import ChannelGuide
@@ -521,7 +526,8 @@ class DirectoryFeedImplSchema(FeedImplSchema):
 class SearchDownloadsFeedImplSchema(FeedImplSchema):
     klass = SearchDownloadsFeedImpl
     table_name = 'search_downloads_feed_impl'
-    # SearchDownloadsFeedImpl doesn't have any addition fields over FeedImpl
+    # SearchDownloadsFeedImpl doesn't have any addition fields over
+    # FeedImpl
 
 class ManualFeedImplSchema(FeedImplSchema):
     klass = ManualFeedImpl
@@ -552,7 +558,7 @@ class RemoteDownloaderSchema(DDBObjectSchema):
     ]
 
     indexes = (
-            ('downloader_state', ('state',)),
+        ('downloader_state', ('state',)),
     )
 
     @staticmethod
@@ -684,11 +690,11 @@ class DBLogEntrySchema(DDBObjectSchema):
 VERSION = 108
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
-    FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, 
+    FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema,
     ScraperFeedImplSchema,
     SearchFeedImplSchema, DirectoryFeedImplSchema, DirectoryWatchFeedImplSchema,
     SearchDownloadsFeedImplSchema, RemoteDownloaderSchema,
-    HTTPAuthPasswordSchema, ChannelGuideSchema, ManualFeedImplSchema, 
+    HTTPAuthPasswordSchema, ChannelGuideSchema, ManualFeedImplSchema,
     SingleFeedImplSchema,
     PlaylistSchema, ChannelFolderSchema, PlaylistFolderSchema,
     PlaylistItemMapSchema, PlaylistFolderItemMapSchema,
