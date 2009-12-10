@@ -268,7 +268,7 @@ class WindowBase(signals.SignalEmitter):
         self.make_check_action("SubtitlesDisabled", _("Disable Subtitles"),
                                ["AlwaysOn"], self.on_subtitles_change, -1)
         radio_group = self.action_groups["AlwaysOn"].get_action("SubtitlesDisabled")
-        for i in range(20):
+        for i in range(99):
             self.make_check_action("SubtitleTrack%d" % i, "", ["AlwaysOn"],
                                    self.on_subtitles_change, i, radio_group)
 
