@@ -286,6 +286,14 @@ def parse_pkg_config(command, components, options_dict = None):
 
     return options_dict
 
+def package_exists(package_name):
+    """
+    Return True if the package is present in the system.  False otherwise.
+    The check is made with pkg-config.
+    """
+    # pkg-config returns 0 if the package is present
+    return subprocess.call(['pkg-config', '--exists', package_name]) == 0
+
 def generate_miro(xpcom_path):
     # build a miro script that wraps the miro.real script with an LD_LIBRARY_PATH
     # environment variable to pick up the xpcom we decided to use.
@@ -329,11 +337,6 @@ fi
 
 #### MozillaBrowser Extension ####
 def get_mozilla_stuff():
-    try:
-        packages = get_command_output("pkg-config --list-all")
-    except RuntimeError, error:
-        sys.exit("Package config error:\n%s" % (error,))
-
     if XPCOM_LIB and GTKMOZEMBED_LIB and XULRUNNER_19 != None:
         print "\nUsing XPCOM_LIB, GTKMOZEMBED_LIB and XULRUNNER_19 values...."
         xulrunner19 = XULRUNNER_19
@@ -343,24 +346,24 @@ def get_mozilla_stuff():
     else:
         print "\nTrying to figure out xpcom_lib, gtkmozembed_lib, and xulrunner_19 values...."
         xulrunner19 = False
-        if re.search("^libxul", packages, re.MULTILINE):
+        if package_exists('libxul'):
             xulrunner19 = True
             xpcom_lib = 'libxul'
             gtkmozembed_lib = 'libxul'
 
-        elif re.search("^xulrunner-xpcom", packages, re.MULTILINE):
+        elif package_exists('xulrunner-xpcom'):
             xpcom_lib = 'xulrunner-xpcom'
             gtkmozembed_lib = 'xulrunner-gtkmozembed'
 
-        elif re.search("^seamonkey-xpcom", packages, re.MULTILINE):
+        elif package_exists('seamonkey-xpcom'):
             xpcom_lib = 'seamonkey-xpcom'
             gtkmozembed_lib = 'seamonkey-gtkmozembed'
 
-        elif re.search("^mozilla-xpcom", packages, re.MULTILINE):
+        elif package_exists('mozilla-xpcom'):
             xpcom_lib = 'mozilla-xpcom'
             gtkmozembed_lib = 'mozilla-gtkmozembed'
 
-        elif re.search("^firefox-xpcom", packages, re.MULTILINE):
+        elif package_exists('firefox-xpcom'):
             xpcom_lib = 'firefox-xpcom'
             gtkmozembed_lib = 'firefox-gtkmozembed'
 
