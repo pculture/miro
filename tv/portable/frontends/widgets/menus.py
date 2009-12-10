@@ -551,7 +551,11 @@ class MenuManager(signals.SignalEmitter):
         if app.playback_manager.is_playing:
             self.enabled_groups.add('PlayPause')
             self.enabled_groups.add('Playing')
-            if not app.playback_manager.is_playing_audio:
+            if app.playback_manager.is_playing_audio:
+                # if it's playing audio, then we allow the user to do other
+                # things just as if the window was detached
+                self.enabled_groups.add('NonPlaying')
+            else:
                 self.enabled_groups.add('PlayingVideo')
             if app.playback_manager.detached_window is not None:
                 self.enabled_groups.add('NonPlaying')
