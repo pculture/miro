@@ -321,7 +321,8 @@ class RemoteDownloader(DDBObject):
 
             if ((self.get_state() == u'uploading'
                  and not self.manualUpload
-                 and self.get_upload_ratio() > 1.5)):
+                 and (config.get(prefs.LIMIT_UPLOAD_RATIO)
+                      and self.get_upload_ratio() > config.get(prefs.UPLOAD_RATIO)))):
                 self.stop_upload()
 
             self.signal_change(needsSignalItem=needsSignalItem,
@@ -645,7 +646,9 @@ class RemoteDownloader(DDBObject):
         if self.get_state() in (u'downloading', u'offline'):
             self.restart()
         if self.get_state() in (u'uploading'):
-            if self.manualUpload or self.get_upload_ratio() < 1.5:
+            if ((self.manualUpload
+                 or (config.get(prefs.LIMIT_UPLOAD_RATIO)
+                     and self.get_upload_ratio() < config.get(prefs.UPLOAD_RATIO)))):
                 self.restart()
             else:
                 self.stop_upload()
