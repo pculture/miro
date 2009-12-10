@@ -28,10 +28,12 @@
 
 """Handle dialog popups.
 
-Simple Choices:
-    For dialogs where you just want to ask the user a question use the
-    ChoiceDialog class.  Pass it a title, description and a the buttons to
-    display.  The call dialog.run, passing it a callback.  Here's an example:
+Simple Choices
+
+For dialogs where you just want to ask the user a question use the
+``ChoiceDialog class``.  Pass it a title, description and a the
+buttons to display.  Then call ``dialog.run``, passing it a callback.
+Here's an example::
 
     dialog = dialog.ChoiceDialog("Do you like pizza?",
         "Democracy would like to know if you enjoy eating pizza.",
@@ -40,32 +42,37 @@ Simple Choices:
         if dialog.choice is None:
             # handle the user closing the dialog windows
         elif dialog.choice == dialog.BUTTON_YES:
-           # handle yes response
+            # handle yes response
         elif dialog.choice == dialag.BUTTON_NO:
             # handle no respnose
     dialog.run(handlePizzaAnswer)
 
-Advanced usage:
-    For more advanced usage, check out the other Dialog subclasses.  They will
-    probably have different constructor arguments and may have attributes
-    other than choice that will be set.  For example, the HTTPAuthDialog has a
-    "username" and "password" attribute that store what the user entered in
-    the textboxes.
 
-Frontend requirements:
-    Frontends should implement the runDialog method in UIBackendDelegate
-    class.  It inputs a Dialog subclass and displays it to the user.  When the
-    user clicks on a button, or closes the dialog window, the frontend must
-    call dialog.runCallback().
+Advanced usage
 
-    As we add new dialog boxes, the frontend may run into Dialog subclasses
-    that it doesn't recognize.  In that case, call dialog.runCallback(None).
+For more advanced usage, check out the other ``Dialog`` subclasses.
+They will probably have different constructor arguments and may have
+attributes other than choice that will be set.  For example, the
+``HTTPAuthDialog`` has a ``username`` and ``password`` attribute that
+store what the user entered in the textboxes.
 
-    The frontend can layout the window however it wants, in particular buttons
-    can be arranged with the default on the right or the left depending on the
-    platform (The default button is the 1st button in the list).  Frontends
-    should try to recognize standard buttons and display the stock icons for
-    them.  
+
+Frontend requirements
+
+Frontends should implement the ``runDialog`` method in
+``UIBackendDelegate`` class.  It inputs a ``Dialog`` subclass and
+displays it to the user.  When the user clicks on a button, or closes
+the dialog window, the frontend must call ``dialog.run_callback()``.
+
+As we add new dialog boxes, the frontend may run into ``Dialog``
+subclasses that it doesn't recognize.  In that case, call
+``dialog.run_callback(None)``.
+
+The frontend can layout the window however it wants, in particular
+buttons can be arranged with the default on the right or the left
+depending on the platform.  The default button is the 1st button in
+the list.  Frontends should try to recognize standard buttons and
+display the stock icons for them.
 """
 
 import threading
@@ -119,8 +126,8 @@ BUTTON_STOP_WATCHING = DialogButton(_("Stop Watching"))
 BUTTON_RETRY = DialogButton(_("Retry"))
 
 class Dialog(object):
-    """Abstract base class for dialogs."""
-
+    """Abstract base class for dialogs.
+    """
     def __init__(self, title, description, buttons):
         self.title = title
         self.description = description
@@ -141,118 +148,118 @@ class Dialog(object):
         self.event.wait()
         return self.choice
 
-    def runCallback(self, choice):
-        """Run the callback for this dialog.  Choice should be the button that
-        the user clicked, or None if the user closed the window without
-        makeing a selection.
+    def run_callback(self, choice):
+        """Run the callback for this dialog.  Choice should be the
+        button that the user clicked, or None if the user closed the
+        window without makeing a selection.
         """
-
         self.choice = choice
         self.event.set()
         if self.callback is not None:
             eventloop.addUrgentCall(self.callback,
-                    "%s callback" % self.__class__, args=(self,))
+                                    "%s callback" % self.__class__,
+                                    args=(self,))
 
 class MessageBoxDialog(Dialog):
-    """Show the user some info in a dialog box.  The only button is Okay.  The
-    callback is optional for a message box dialog.  """
-
+    """Show the user some info in a dialog box.  The only button is
+    Okay.  The callback is optional for a message box dialog.
+    """
     def __init__(self, title, description):
         Dialog.__init__(self, title, description, [BUTTON_OK])
 
     def run(self, callback=None):
         Dialog.run(self, callback)
 
-    def runCallback(self, choice):
+    def run_callback(self, choice):
         if self.callback is not None:
-            Dialog.runCallback(self, choice)
+            Dialog.run_callback(self, choice)
 
 class ChoiceDialog(Dialog):
     """Give the user a choice of 2 options (Yes/No, Ok/Cancel,
     Migrate/Don't Migrate, etc.)
     """
-
-    def __init__(self, title, description, defaultButton, otherButton):
+    def __init__(self, title, description, default_button, other_button):
         super(ChoiceDialog, self).__init__(title, description,
-                [defaultButton, otherButton])
+                                           [default_button, other_button])
 
 class ThreeChoiceDialog(Dialog):
     """Give the user a choice of 3 options (e.g. Remove entry/
     Delete file/Cancel).
     """
-
-    def __init__(self, title, description, defaultButton, secondButton,
-            thirdButton):
+    def __init__(self, title, description, default_button, second_button,
+                 third_button):
         super(ThreeChoiceDialog, self).__init__(title, description,
-                [defaultButton, secondButton, thirdButton])
+                                                [default_button,
+                                                 second_button,
+                                                 third_button])
 
 class HTTPAuthDialog(Dialog):
-    """Ask for a username and password for HTTP authorization.  Frontends
-    should create a dialog with text entries for a username and password.  Use
-    prefillUser and prefillPassword for the initial values of the entries.
+    """Ask for a username and password for HTTP authorization.
+    Frontends should create a dialog with text entries for a username
+    and password.  Use prefillUser and prefillPassword for the initial
+    values of the entries.
 
     The buttons are always BUTTON_OK and BUTTON_CANCEL.
     """
-
-    def __init__(self, url, realm, prefillUser=None, prefillPassword=None):
-        desc = 'location %s requires a username and password for "%s".'  % \
-                (url, realm)
+    def __init__(self, url, realm, prefill_user=None, prefill_password=None):
+        desc = 'location %s requires a username and password for "%s".' % \
+            (url, realm)
         super(HTTPAuthDialog, self).__init__("Login Required", desc,
-                (BUTTON_OK, BUTTON_CANCEL))
-        self.prefillUser = prefillUser
-        self.prefillPassword = prefillPassword
+                                             (BUTTON_OK, BUTTON_CANCEL))
+        self.prefill_user = prefill_user
+        self.prefill_password = prefill_password
 
-    def runCallback(self, choice, username='', password=''):
+    def run_callback(self, choice, username='', password=''):
         self.username = username
         self.password = password
-        super(HTTPAuthDialog, self).runCallback(choice)
+        super(HTTPAuthDialog, self).run_callback(choice)
 
 class TextEntryDialog(Dialog):
-    """Like the ChoiceDialog, but also contains a textbox for the user to
-    enter a value into.  This is used for things like the create playlist
-    dialog, the rename dialog, etc.
+    """Like the ChoiceDialog, but also contains a textbox for the user
+    to enter a value into.  This is used for things like the create
+    playlist dialog, the rename dialog, etc.
     """
-
-    def __init__(self, title, description, defaultButton, otherButton, prefillCallback=None, fillWithClipboardURL=False):
+    def __init__(self, title, description, default_button, other_button,
+                 prefill_callback=None, fill_with_clipboard_url=False):
         super(TextEntryDialog, self).__init__(title, description,
-                [defaultButton, otherButton])
-        self.prefillCallback = prefillCallback
-        self.fillWithClipboardURL = fillWithClipboardURL
+                                              [default_button, other_button])
+        self.prefill_callback = prefill_callback
+        self.fill_with_clipboard_url = fill_with_clipboard_url
 
-    def runCallback(self, choice, value=None):
+    def run_callback(self, choice, value=None):
         self.value = value
-        super(TextEntryDialog, self).runCallback(choice)
+        super(TextEntryDialog, self).run_callback(choice)
 
 class CheckboxDialog(Dialog):
-    """Like the ChoiceDialog, but also contains a checkbox for the user to
-    enter a value into.  This is used for things like asking whether to show
-    the dialog again.  There's also a mesage for the checkbox and an initial
-    value.
+    """Like the ChoiceDialog, but also contains a checkbox for the
+    user to enter a value into.  This is used for things like asking
+    whether to show the dialog again.  There's also a mesage for the
+    checkbox and an initial value.
     """
-
-    def __init__(self, title, description, checkbox_text, checkbox_value, defaultButton, otherButton):
+    def __init__(self, title, description, checkbox_text, checkbox_value,
+                 default_button, other_button):
         super(CheckboxDialog, self).__init__(title, description,
-                [defaultButton, otherButton])
+                                             [default_button, other_button])
         self.checkbox_text = checkbox_text
         self.checkbox_value = checkbox_value
 
-    def runCallback(self, choice, checkbox_value=False):
+    def run_callback(self, choice, checkbox_value=False):
         self.checkbox_value = checkbox_value
-        super(CheckboxDialog, self).runCallback(choice)
+        super(CheckboxDialog, self).run_callback(choice)
 
 class CheckboxTextboxDialog(CheckboxDialog):
-    """Like CheckboxDialog but also with a text area. Used for
-    capturing bug report data"""
-
+    """Like ``CheckboxDialog`` but also with a text area. Used for
+    capturing bug report data.
+    """
     def __init__(self, title, description, checkbox_text,
-        checkbox_value, textbox_value, defaultButton, otherButton):
+                 checkbox_value, textbox_value, default_button, other_button):
         super(CheckboxTextboxDialog, self).__init__(title, description,
                                                     checkbox_text,
                                                     checkbox_value,
-                                                    defaultButton,
-                                                    otherButton)
+                                                    default_button,
+                                                    other_button)
         self.textbox_value = textbox_value
 
-    def runCallback(self, choice, checkbox_value=False, textbox_value=""):
+    def run_callback(self, choice, checkbox_value=False, textbox_value=""):
         self.textbox_value = textbox_value
-        super(CheckboxTextboxDialog, self).runCallback(choice, checkbox_value)
+        super(CheckboxTextboxDialog, self).run_callback(choice, checkbox_value)

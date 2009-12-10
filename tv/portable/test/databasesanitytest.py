@@ -29,17 +29,17 @@ class SanityCheckingTest(MiroTestCase):
 
     def checkObjectListFailsTest(self, objectList):
         self.assertRaises(databasesanity.DatabaseInsaneError,
-                databasesanity.checkSanity, objectList, False)
+                          databasesanity.check_sanity, objectList, False)
 
     def checkFixIfPossible(self, startList, fixedList):
         self.errorSignalOkay = True
-        rv = databasesanity.checkSanity(startList)
+        rv = databasesanity.check_sanity(startList)
         self.assertEquals(startList, fixedList)
         self.assertEquals(rv, False)
         self.assertEquals(self.sawError, True)
 
     def checkObjectListPassesTest(self, objectList):
-        databasesanity.checkSanity(objectList)
+        databasesanity.check_sanity(objectList)
 
     def testPhantomFeedChecking(self):
         f = feed.Feed(u"http://feed.uk")
@@ -58,6 +58,6 @@ class SanityCheckingTest(MiroTestCase):
         self.checkObjectListFailsTest([f, f2])
         self.errorSignalOkay = True
         testList = [f, f2, f3]
-        databasesanity.checkSanity(testList)
+        databasesanity.check_sanity(testList)
         self.assertEquals(len(testList), 1)
         self.assertEquals(self.sawError, True)

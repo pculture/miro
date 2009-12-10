@@ -1060,18 +1060,18 @@ class DownloadInfo(object):
     """
     def __init__(self, downloader):
         self.downloaded_size = downloader.get_current_size()
-        self.rate = downloader.getRate()
+        self.rate = downloader.get_rate()
         self.state = downloader.get_state()
         self.startup_activity = downloader.get_startup_activity()
-        self.finished = downloader.isFinished()
+        self.finished = downloader.is_finished()
         self.torrent = (downloader.get_type() == 'bittorrent')
         if self.state == 'failed':
-            self.reason_failed = downloader.getReasonFailed()
-            self.short_reason_failed = downloader.getShortReasonFailed()
+            self.reason_failed = downloader.get_reason_failed()
+            self.short_reason_failed = downloader.get_short_reason_failed()
         else:
             self.reason_failed = u""
             self.short_reason_failed = u""
-        self.eta = downloader.getETA()
+        self.eta = downloader.get_eta()
 
 class PendingDownloadInfo(DownloadInfo):
     """DownloadInfo object for pending downloads (downloads queued,

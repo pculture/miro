@@ -190,7 +190,7 @@ class MovieDataUpdater:
         filename = item.get_filename()
         if not filename or not fileutil.isfile(filename):
             return
-        if item.downloader and not item.downloader.isFinished():
+        if item.downloader and not item.downloader.is_finished():
             return
         if item.updating_movie_info:
             return

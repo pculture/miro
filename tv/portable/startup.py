@@ -379,7 +379,7 @@ def is_movies_directory_gone():
     # at this point either there's no movies_dir or there is an empty
     # movies_dir.  we check to see if we think something is downloaded.
     for downloader_ in downloader.RemoteDownloader.make_view():
-        if ((downloader_.isFinished()
+        if ((downloader_.is_finished()
              and downloader_.get_filename().startswith(movies_dir))):
             # we think something is downloaded, so it seems like the
             # movies directory is gone.

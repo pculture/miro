@@ -113,11 +113,11 @@ class View(object):
 
     def __iter__(self):
         return app.db.query(self.klass, self.where, self.values,
-                self.order_by, self.joins)
+                            self.order_by, self.joins)
 
     def count(self):
         return app.db.query_count(self.klass, self.where, self.values,
-                self.joins)
+                                  self.joins)
 
     def get_singleton(self):
         results = list(self)
@@ -132,8 +132,10 @@ class View(object):
         return ViewTracker(self.klass, self.where, self.values, self.joins)
 
 class ViewTracker(signals.SignalEmitter):
-    table_to_tracker = {} # maps table_name to trackers
-    joined_table_to_tracker = {} # maps joined tables to trackers
+    # maps table_name to trackers
+    table_to_tracker = {}
+    # maps joined tables to trackers
+    joined_table_to_tracker = {}
 
     @classmethod
     def reset_trackers(cls):
@@ -207,12 +209,12 @@ class ViewTracker(signals.SignalEmitter):
 
     def object_changed(self, obj):
         if isinstance(obj, self.klass):
-            # object is the type we are tracking, just need to check if the
-            # change made that object enter/leave the view
+            # object is the type we are tracking, just need to check
+            # if the change made that object enter/leave the view
             self.check_object(obj)
         else:
-            # object is the type that we are joining.  Need to check all of
-            # our objects to see what left/entered.
+            # object is the type that we are joining.  Need to check
+            # all of our objects to see what left/entered.
             self.check_all_objects()
 
     def check_object(self, obj):
@@ -235,9 +237,9 @@ class ViewTracker(signals.SignalEmitter):
         for id_ in self.current_ids.difference(new_ids):
             self.emit('removed', app.db.get_obj_by_id(id_))
         for id_ in self.current_ids.intersection(new_ids):
-            # XXX this hits all the IDs, but there doesn't seem to be a way to
-            # check if the objects have actually been changed.  luckily, this
-            # isn't called very often.
+            # XXX this hits all the IDs, but there doesn't seem to be
+            # a way to check if the objects have actually been
+            # changed.  luckily, this isn't called very often.
             self.emit('changed', app.db.get_obj_by_id(id_))
         self.current_ids = new_ids
 
@@ -250,8 +252,8 @@ class AttributeUpdateTracker(object):
     def __init__(self, name):
         self.name = name
 
-    # Simple implementation of the python descriptor protocol.  We just want
-    # to update changed_attributes when attributes are set.
+    # Simple implementation of the python descriptor protocol.  We
+    # just want to update changed_attributes when attributes are set.
 
     def __get__(self, instance, owner):
         try:
@@ -261,7 +263,7 @@ class AttributeUpdateTracker(object):
         except AttributeError:
             if instance is None:
                 raise AttributeError(
-                        "Can't access '%s' as a class attribute" % self.name)
+                    "Can't access '%s' as a class attribute" % self.name)
             else:
                 raise
 
@@ -290,15 +292,17 @@ class DDBObject(signals.SignalEmitter):
             self.__dict__.update(kwargs['restored_data'])
             app.db.remember_object(self)
             self.setup_restored()
-            if not self.idExists(): # handle setup_restored() calling remove()
+            # handle setup_restored() calling remove()
+            if not self.idExists():
                 return
         else:
             self.id = DDBObject.lastID = DDBObject.lastID + 1
-            # call remember_object so that idExists will return True when
-            # setup_new() is being run
+            # call remember_object so that idExists will return True
+            # when setup_new() is being run
             app.db.remember_object(self)
             self.setup_new(*args, **kwargs)
-            if not self.idExists(): # handle setup_new() calling remove()
+            # handle setup_new() calling remove()
+            if not self.idExists():
                 return
             app.db.insert_obj(self)
 
@@ -352,11 +356,11 @@ class DDBObject(signals.SignalEmitter):
         """Set up tracking when attributes get set.
 
         Call this on a DDBObject subclass to track changes to certain
-        attributes.  Each DDBObject has a changed_attributes set, which
-        contains the attributes that have changed.  
+        attributes.  Each DDBObject has a changed_attributes set,
+        which contains the attributes that have changed.
 
-        This is used by the SQLite storage layer to track which attributes are
-        changed between SQL UPDATE statements.
+        This is used by the SQLite storage layer to track which
+        attributes are changed between SQL UPDATE statements.
 
         For example:
 
@@ -398,7 +402,7 @@ class DDBObject(signals.SignalEmitter):
     def confirm_db_thread(self):
         """Call this before you grab data from an object
 
-        Usage:
+        Usage::
 
             view.confirm_db_thread()
             ...
@@ -406,8 +410,8 @@ class DDBObject(signals.SignalEmitter):
         confirm_db_thread()
 
     def check_constraints(self):
-        """Subclasses can override this method to do constraint checking
-        before they get saved to disk.  They should raise a
+        """Subclasses can override this method to do constraint
+        checking before they get saved to disk.  They should raise a
         DatabaseConstraintError on problems.
         """
         pass
@@ -416,12 +420,12 @@ class DDBObject(signals.SignalEmitter):
         """Call this after you change the object
         """
         if self.in_db_init:
-            # signal_change called while we were setting up a object, just
-            # ignore it.
+            # signal_change called while we were setting up a object,
+            # just ignore it.
             return
         if not self.idExists():
-            msg = "signal_change() called on non-existant object (id is %s)" \
-                    % self.id
+            msg = ("signal_change() called on non-existant object (id is %s)" \
+                       % self.id)
             raise DatabaseConstraintError, msg
         self.on_signal_change()
         self.check_constraints()
@@ -433,12 +437,12 @@ class DDBObject(signals.SignalEmitter):
         pass
 
     def signal_related_change(self, needsSave=True):
-        """Call this after you change an object and it could affect the views
-        of related object.
+        """Call this after you change an object and it could affect
+        the views of related object.
 
-        For example, when feeds get their autodownload settings, it could
-        change the view of items waiting to be autodownloaded.  In that case,
-        feed should call signal_related_change
+        For example, when feeds get their autodownload settings, it
+        could change the view of items waiting to be autodownloaded.
+        In that case, feed should call signal_related_change
         """
         ViewTracker._update_related_view_trackers(self)
 

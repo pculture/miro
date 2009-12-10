@@ -48,7 +48,7 @@ class DialogAsker(cmd.Cmd):
         line = line.strip().lower()
         for button in self.dialog.buttons:
             if button.text.lower().startswith(line):
-                self.dialog.runCallback(button)
+                self.dialog.run_callback(button)
                 self.quit_flag = True
                 return
         cmd.Cmd.default(self, line)

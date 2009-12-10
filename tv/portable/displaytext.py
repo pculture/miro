@@ -71,15 +71,16 @@ def time_string(secs):
         return ngettext('%(num).0f hr', '%(num).0f hrs', t_hr, {"num": t_hr})
     if secs >= 60:
         t_min = secs * 1.0 / 60
-        return ngettext('%(num).0f min', '%(num).0f mins', t_min, {"num": t_min})
+        return ngettext('%(num).0f min', '%(num).0f mins', t_min,
+                        {"num": t_min})
 
     return ngettext('%(num)d sec', '%(num)d secs', secs, {"num": secs})
 
 def size_string(bytes):
-    # when switching from the enclosure reported size to the downloader
-    # reported size, it takes a while to get the new size and the downloader
-    # returns -1.  the user sees the size go to -1B which is weird....
-    # better to return an empty string.
+    # when switching from the enclosure reported size to the
+    # downloader reported size, it takes a while to get the new size
+    # and the downloader returns -1.  the user sees the size go to -1B
+    # which is weird....  better to return an empty string.
     if bytes == -1 or bytes == 0:
         return ""
 
@@ -135,11 +136,12 @@ def expiration_date_short(exp_date):
 
 def release_date(release_date):
     if release_date > datetime.datetime.min:
-        # figure out the date pieces, convert to unicode, then split it on "::" so
-        # we can run gettext on it allowing translators to reorder it.
-        # see bug 11662.
+        # figure out the date pieces, convert to unicode, then split
+        # it on "::" so we can run gettext on it allowing translators
+        # to reorder it.  see bug 11662.
         m, d, y = strftime_to_unicode(release_date.strftime("%B::%d::%Y")).split("::")
-        return _("%(month)s %(dayofmonth)s, %(year)s", {"month": m, "dayofmonth": d, "year": y})
+        return _("%(month)s %(dayofmonth)s, %(year)s",
+                 {"month": m, "dayofmonth": d, "year": y})
     else:
         return ''
 

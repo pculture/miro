@@ -26,7 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""dbupgradeprogress.py -- Send updates about progress upgrading the database.
+"""dbupgradeprogress.py -- Send updates about progress upgrading the
+database.
 """
 
 from miro.gtcache import gettext as _
@@ -37,8 +38,8 @@ _doing_20_upgrade = False
 def doing_20_upgrade():
     """Call this if we are upgrading from a 2.0-style database.
 
-    This will calibrate the progress bar to take into account the fact that we
-    are running old-style upgrades and running the code in
+    This will calibrate the progress bar to take into account the fact
+    that we are running old-style upgrades and running the code in
     convert20database.py.
     """
     global _doing_20_upgrade
@@ -54,29 +55,26 @@ def upgrade_end():
 
 def old_style_progress(start_version, current_version, end_version):
     """Call while stepping through old-style upgrades"""
-
     progress = _calc_progress(start_version, current_version, end_version)
     total = 0.05 * progress # old style upgrades take us from 0% -> 5%
     _send_message(_('Upgrading Old Database'), progress, total)
 
 def convert20_progress(current_step, total_step):
     """Call while stepping through 2.0 DB conversion code."""
-
     progress = _calc_progress(0, current_step, total_step)
     total = 0.05 + 0.80 * progress # conversion take us from 5% -> 85%
     _send_message(_('Converting Old Database'), progress, total)
 
 def new_style_progress(start_version, current_version, end_version):
     """Call while stepping through new-style upgrades"""
-
     progress = _calc_progress(start_version, current_version, end_version)
     if _doing_20_upgrade:
         total = 0.85 + 0.15 * progress
         # new style upgrades take us from 85% -> 100%
     else:
         total = progress
-        # we didn't do 2.0 conversion.  New style upgrades take us from 0% to
-        # 100%
+        # We didn't do 2.0 conversion.  New style upgrades take us
+        # from 0% to 100%.
     _send_message(_('Upgrading Database'), progress, total)
 
 def _send_message(stage, stage_progress, total_progress):

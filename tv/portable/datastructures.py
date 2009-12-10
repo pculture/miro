@@ -26,8 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""datastructures.py -- Datastructures used by Miro.  """
-
+"""datastructures.py -- Datastructures used by Miro.
+"""
 
 class Fifo(object):
     """FIFO queue.
@@ -37,7 +37,6 @@ class Fifo(object):
     Based off the code from Jeremy Fincher
     (http://code.activestate.com/recipes/68436/)
     """
-
     def __init__(self):
         self.back = []
         self.front = []

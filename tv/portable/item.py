@@ -36,7 +36,9 @@ from miro.gtcache import ngettext
 from math import ceil
 from miro.xhtmltools import xhtmlify
 from xml.sax.saxutils import unescape
-from miro.util import checkU, returnsUnicode, checkF, returnsFilename, quoteUnicodeURL, stringify, getFirstVideoEnclosure, entity_replace
+from miro.util import (checkU, returnsUnicode, checkF, returnsFilename,
+                       quoteUnicodeURL, stringify, getFirstVideoEnclosure,
+                       entity_replace)
 from miro.plat.utils import FilenameType, filenameToUnicode, unicodeToFilename
 import locale
 import os.path
@@ -83,8 +85,8 @@ class FeedParserValues(object):
     """Helper class to get values from feedparser entries
 
     FeedParserValues objects inspect the FeedParserDict for the entry
-    attribute for various attributes using in Item (entry_title, rss_id, url,
-    etc...).
+    attribute for various attributes using in Item (entry_title,
+    rss_id, url, etc...).
     """
     def __init__(self, entry):
         self.entry = entry
@@ -130,13 +132,14 @@ class FeedParserValues(object):
 
     def _calc_title(self):
         if hasattr(self.entry, "title"):
-            # The title attribute shouldn't use entities, but some in the
-            # wild do (#11413).  In that case, try to fix them.
+            # The title attribute shouldn't use entities, but some in
+            # the wild do (#11413).  In that case, try to fix them.
             return entity_replace(self.entry.title)
         else:
             if (self.first_video_enclosure and
                     'url' in self.first_video_enclosure):
-                    return self.first_video_enclosure['url'].decode("ascii", "replace")
+                    return self.first_video_enclosure['url'].decode("ascii",
+                                                                    "replace")
             return None
 
     def _calc_thumbnail_url(self):
@@ -204,7 +207,8 @@ class FeedParserValues(object):
 
     def _calc_payment_link(self):
         try:
-            return self.first_video_enclosure.payment_url.decode('ascii','replace')
+            return self.first_video_enclosure.payment_url.decode('ascii',
+                                                                 'replace')
         except:
             try:
                 return self.entry.payment_url.decode('ascii','replace')
@@ -231,7 +235,8 @@ class FeedParserValues(object):
                 return None
 
     def _calc_enclosure_type(self):
-        if self.first_video_enclosure and self.first_video_enclosure.has_key('type'):
+        if ((self.first_video_enclosure
+             and self.first_video_enclosure.has_key('type'))):
             return self.first_video_enclosure['type']
         else:
             return None
@@ -281,8 +286,8 @@ class FeedParserValues(object):
 
 
 class Item(DDBObject, iconcache.IconCacheOwnerMixin):
-    """An item corresponds to a single entry in a feed.  It has a single url
-    associated with it.
+    """An item corresponds to a single entry in a feed.  It has a
+    single url associated with it.
     """
 
     ICON_CACHE_VITAL = False
@@ -324,9 +329,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.setup_common()
 
     def setup_restored(self):
-        # For unknown reason(s), some users still have databases with item
-        # objects missing the isContainerItem attribute even after
-        # a db upgrade (#8819).
+        # For unknown reason(s), some users still have databases with
+        # item objects missing the isContainerItem attribute even
+        # after a db upgrade (#8819).
 
         if not hasattr(self, 'isContainerItem'):
             self.isContainerItem = None
@@ -584,9 +589,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """
 
         for tracker in ViewTracker.trackers_for_ddb_class(cls):
-            # bit of a hack here.  We only need to update ViewTrackers that
-            # care about the item's folder.  This seems like a safe way to
-            # check if that's true.
+            # bit of a hack here.  We only need to update ViewTrackers
+            # that care about the item's folder.  This seems like a
+            # safe way to check if that's true.
             if 'folder_id' in tracker.where:
                 tracker.check_all_objects()
 
@@ -596,7 +601,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def _look_for_downloader(self):
         self.set_downloader(downloader.lookup_downloader(self.get_url()))
-        if self.has_downloader() and self.downloader.isFinished():
+        if self.has_downloader() and self.downloader.is_finished():
             self.set_filename(self.downloader.get_filename())
 
     getSelected, setSelected = make_simple_get_set(u'selected',
@@ -626,9 +631,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             FileItem (path, parent_id=self.id, offsetPath=offsetPath)
 
     def find_new_children(self):
-        """If this feed is a container item, walk through its directory and
-        find any new children.  Returns True if it found childern and ran
-        signal_change().
+        """If this feed is a container item, walk through its
+        directory and find any new children.  Returns True if it found
+        childern and ran signal_change().
         """
         if not self.isContainerItem:
             return False
@@ -649,7 +654,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """returns True if it ran signal_change()"""
         if self.isContainerItem is not None:
             return self.find_new_children()
-        if not isinstance(self, FileItem) and (self.downloader is None or not self.downloader.isFinished()):
+        if ((not isinstance(self, FileItem)
+             and (self.downloader is None
+                  or not self.downloader.is_finished()))):
             return False
         filename_root = self.get_filename()
         if filename_root is None:
@@ -697,7 +704,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             filename = filenameToUnicode(self.get_filename())
         else:
             filename = u''
-        if search.match(searchString, [title.lower(), desc.lower(), filename.lower()]):
+        if search.match(searchString, [title.lower(), desc.lower(),
+                                       filename.lower()]):
             return True
         else:
             return False
@@ -729,7 +737,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 if not isinstance(obj, Item):
                     msg = "parent_id points to a %s instance" % obj.__class__
                     raise DatabaseConstraintError(msg)
-                # If isContainerItem is None, we may be in the middle of building the children list.
+                # If isContainerItem is None, we may be in the middle
+                # of building the children list.
                 if obj.isContainerItem is not None and not obj.isContainerItem:
                     msg = "parent_id is not a containerItem"
                     raise DatabaseConstraintError(msg)
@@ -749,7 +758,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.get_feed().recalc_counts()
 
     def get_viewed(self):
-        """Returns True iff this item has never been viewed in the interface.
+        """Returns True iff this item has never been viewed in the
+        interface.
 
         Note the difference between "viewed" and seen.
         """
@@ -761,12 +771,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @returnsUnicode
     def get_url(self):
-        """Returns the URL associated with the first enclosure in the item.
+        """Returns the URL associated with the first enclosure in the
+        item.
         """
         return self.url
 
     def has_shareable_url(self):
-        """Does this item have a URL that the user can share with others?
+        """Does this item have a URL that the user can share with
+        others?
 
         This returns True when the item has a non-file URL.
         """
@@ -993,7 +1005,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 ufeed = self.get_feed()
                 if ufeed.expire == u'never':
                     self.expiring = False
-                elif ufeed.expire == u'system' and config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0:
+                elif (ufeed.expire == u'system'
+                      and config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
                     self.expiring = False
                 else:
                     self.expiring = True
@@ -1077,7 +1090,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         try:
             position = int(position)
         except TypeError:
-            logging.exception("set_resume_time: not-saving!  given non-int %s", position)
+            logging.exception("set_resume_time: not-saving!  given non-int %s",
+                              position)
             return
         if self.resumeTime != position:
             self.resumeTime = position
@@ -1111,7 +1125,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if dler is not None:
             self.set_downloader(dler)
             self.downloader.set_channel_name(unicodeToFilename(self.get_channel_title(True)))
-            if self.downloader.isFinished():
+            if self.downloader.is_finished():
                 self.on_download_finished()
             else:
                 self.downloader.start()
@@ -1148,8 +1162,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @returnsFilename
     def get_thumbnail(self):
-        """NOTE: When changing this function, change feed.icon_changed to signal
-        the right set of items.
+        """NOTE: When changing this function, change feed.icon_changed
+        to signal the right set of items.
         """
         self.confirm_db_thread()
         if self.icon_cache is not None and self.icon_cache.isValid():
@@ -1165,14 +1179,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             if feed.thumbnailValid():
                 return feed.get_thumbnail_path()
             elif (self.get_filename()
-                     and filetypes.is_audio_filename(self.get_filename())):
+                  and filetypes.is_audio_filename(self.get_filename())):
                 return resources.path("images/thumb-default-audio.png")
             else:
                 return resources.path("images/thumb-default-video.png")
 
     def is_downloaded_torrent(self):
         return (self.isContainerItem and self.has_downloader() and
-                    self.downloader.isFinished())
+                self.downloader.is_finished())
 
     @returnsUnicode
     def get_title(self):
@@ -1194,13 +1208,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.signal_change()
 
     def has_original_title(self):
-        """Returns True if this is the original title and False if the user
-        has retitled the item.
+        """Returns True if this is the original title and False if the
+        user has retitled the item.
         """
         return self.title == self.entry_title
 
     def revert_title(self):
-        """Reverts the item title back to the data we got from RSS or the url.
+        """Reverts the item title back to the data we got from RSS or
+        the url.
         """
         self.confirm_db_thread()
         self.title = self.entry_title
@@ -1238,7 +1253,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 return self.raw_descrption
         elif self.is_external() and self.is_downloaded_torrent():
             lines = [_('Contents:')]
-            lines.extend(filenameToUnicode(child.offsetPath) for child in self.getChildren())
+            lines.extend(filenameToUnicode(child.offsetPath)
+                         for child in self.getChildren())
             return u'<BR>\n'.join(lines)
         else:
             return None
@@ -1250,7 +1266,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         rawDescription = self.get_raw_description()
 
         purifiedDescription = adscraper.purify(rawDescription)
-        ret = xhtmlify(u'<span>%s</span>' % unescape(purifiedDescription), filterFontTags=True)
+        ret = xhtmlify(u'<span>%s</span>' % unescape(purifiedDescription),
+                       filterFontTags=True)
         if ret:
             return ret
 
@@ -1288,7 +1305,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return 'stopped'
 
     def is_transferring(self):
-        return self.downloader and self.downloader.get_state() in (u'uploading', u'downloading')
+        return (self.downloader
+                and self.downloader.get_state() in (u'uploading', u'downloading'))
 
     def delete_files(self):
         """Stops downloading the item.
@@ -1302,7 +1320,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 item.remove()
 
     def get_state(self):
-        """Get the state of this item.  The state will be on of the following:
+        """Get the state of this item.  The state will be on of the
+        following:
 
         * new -- User has never seen this item
         * not-downloaded -- User has seen the item, but not downloaded it
@@ -1325,9 +1344,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """Recalculate the state of an item after a change
         """
         self.confirm_db_thread()
-        # FIXME, 'failed', and 'paused' should get download icons.  The user
-        # should be able to restart or cancel them (put them into the stopped
-        # state).
+        # FIXME, 'failed', and 'paused' should get download icons.
+        # The user should be able to restart or cancel them (put them
+        # into the stopped state).
         if (self.downloader is None  or
                 self.downloader.get_state() == u'failed'):
             if self.pendingManualDL:
@@ -1345,7 +1364,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 self._state = u'downloading'
             else:
                 self._state = u'paused'
-        elif not self.downloader.isFinished():
+        elif not self.downloader.is_finished():
             self._state = u'downloading'
         elif not self.get_seen():
             self._state = u'newly-downloaded'
@@ -1358,11 +1377,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def get_channel_category(self):
         """Get the category to use for the channel template.
 
-        This method is similar to get_state(), but has some subtle differences.
-        get_state() is used by the download-item template and is usually more
-        useful to determine what's actually happening with an item.
-        get_channel_category() is used by by the channel template to figure out
-        which heading to put an item under.
+        This method is similar to get_state(), but has some subtle
+        differences.  get_state() is used by the download-item
+        template and is usually more useful to determine what's
+        actually happening with an item.  get_channel_category() is
+        used by by the channel template to figure out which heading to
+        put an item under.
 
         * downloading and not-downloaded are grouped together as
           not-downloaded
@@ -1374,7 +1394,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """
 
         self.confirm_db_thread()
-        if self.downloader is None or not self.downloader.isFinished():
+        if self.downloader is None or not self.downloader.is_finished():
             if not self.get_viewed():
                 return u'new'
             if self.expired:
@@ -1391,16 +1411,17 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return u'saved'
 
     def is_uploading(self):
-        """Returns true if this item is currently uploading.  This only
-        happens for torrents.
+        """Returns true if this item is currently uploading.  This
+        only happens for torrents.
         """
         return self.downloader and self.downloader.get_state() == u'uploading'
 
     def is_uploading_paused(self):
-        """Returns true if this item is uploading but paused.  This only
-        happens for torrents.
+        """Returns true if this item is uploading but paused.  This
+        only happens for torrents.
         """
-        return self.downloader and self.downloader.get_state() == u'uploading-paused'
+        return (self.downloader
+                and self.downloader.get_state() == u'uploading-paused')
 
     def is_downloadable(self):
         return self.get_state() in (u'new', u'not-downloaded', u'expired')
@@ -1409,7 +1430,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         return self.get_state() in (u"newly-downloaded", u"expiring", u"saved")
 
     def show_save_button(self):
-        return self.get_state() in (u'newly-downloaded', u'expiring') and not self.keep
+        return (self.get_state() in (u'newly-downloaded', u'expiring')
+                and not self.keep)
 
     def get_size_for_display(self):
         """Returns the size of the item to be displayed.
@@ -1422,8 +1444,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         return self._size
 
     def _get_size(self):
-        """Returns the size of the item. We use the following methods to get the
-        size:
+        """Returns the size of the item. We use the following methods
+        to get the size:
 
         1. Physical size of a downloaded file
         2. HTTP content-length
@@ -1438,14 +1460,15 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             except OSError:
                 return 0
         elif self.has_downloader():
-            return self.downloader.getTotalSize()
+            return self.downloader.get_total_size()
         else:
             if self.enclosure_size is not None:
                 return self.enclosure_size
         return 0
 
     def download_progress(self):
-        """Returns the download progress in absolute percentage [0.0 - 100.0].
+        """Returns the download progress in absolute percentage [0.0 -
+        100.0].
         """
         self.confirm_db_thread()
         if self.downloader is None:
@@ -1473,7 +1496,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         return self.get_release_date_obj()
 
     def get_release_date_obj(self):
-        """Returns the date this video was released or when it was published.
+        """Returns the date this video was released or when it was
+        published.
         """
         return self.releaseDateObj
 
@@ -1493,7 +1517,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return u'.torrent'
 
         if self.downloader:
-            if self.downloader.contentType and "/" in self.downloader.contentType:
+            if ((self.downloader.contentType
+                 and "/" in self.downloader.contentType)):
                 mtype, subtype = self.downloader.contentType.split('/', 1)
                 mtype = mtype.lower()
                 if mtype in KNOWN_MIME_TYPES:
@@ -1532,7 +1557,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         return self.link
 
     def get_payment_link(self):
-        """Returns the URL of the payment page associated with the item.
+        """Returns the URL of the payment page associated with the
+        item.
         """
         return self.payment_link
 
@@ -1578,7 +1604,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         This fixes a race condition during migrate, where we can create
         FileItems that duplicate existing Items.  See #12253 for details.
         """
-        view = Item.make_view('is_file_item AND filename=? AND id !=?', 
+        view = Item.make_view('is_file_item AND filename=? AND id !=?',
                 (filenameToUnicode(self.filename), self.id))
         for dup in view:
             dup.remove()
@@ -1587,12 +1613,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.has_downloader():
             if downloader is self.downloader:
                 return
-            self.downloader.removeItem(self)
+            self.downloader.remove_item(self)
         self._downloader = downloader
         if downloader is not None:
             self.downloader_id = downloader.id
             self.was_downloaded = True
-            downloader.addItem(self)
+            downloader.add_item(self)
         else:
             self.downloader_id = None
         self.signal_change()
@@ -1608,16 +1634,19 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         return self.filename
 
     def is_video_file(self):
-        return self.isContainerItem != True and filetypes.is_video_filename(self.get_filename())
-        
+        return (self.isContainerItem != True
+                and filetypes.is_video_filename(self.get_filename()))
+
     def is_audio_file(self):
-        return self.isContainerItem != True and filetypes.is_audio_filename(self.get_filename())
+        return (self.isContainerItem != True
+                and filetypes.is_audio_filename(self.get_filename()))
 
     def is_external(self):
         """Returns True iff this item was not downloaded from a Democracy
         channel.
         """
-        return self.feed_id is not None and self.get_feed_url() == 'dtv:manualFeed'
+        return (self.feed_id is not None
+                and self.get_feed_url() == 'dtv:manualFeed')
 
     def migrate_children(self, newdir):
         if self.isContainerItem:
@@ -1637,8 +1666,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def setup_links(self):
         self.split_item()
         if not self.idExists():
-            # In split_item() we found out that all our children were deleted,
-            # so we were removed as well.  (#11979)
+            # In split_item() we found out that all our children were
+            # deleted, so we were removed as well.  (#11979)
             return
         if (self.isContainerItem is not None and
                 not fileutil.exists(self.get_filename()) and
@@ -1655,7 +1684,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         except AttributeError:
             dler = downloader.get_existing_downloader(self)
             if dler is not None:
-                dler.addItem(self)
+                dler.add_item(self)
             self._downloader = dler
             return dler
     downloader = property(_get_downloader)
@@ -1672,7 +1701,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if filenamePath is None:
             return
         if fileutil.isdir(filenamePath):
-            enclosedFile = os.path.join(filenamePath, os.path.basename(filenamePath))
+            enclosedFile = os.path.join(filenamePath,
+                                        os.path.basename(filenamePath))
             if fileutil.exists(enclosedFile):
                 logging.info("Migrating incorrect torrent download: %s" % enclosedFile)
                 try:
@@ -1685,7 +1715,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 except (SystemExit, KeyboardInterrupt):
                     raise
                 except:
-                    logging.warn("fix_incorrect_torrent_subdir error:\n%s", traceback.format_exc())
+                    logging.warn("fix_incorrect_torrent_subdir error:\n%s",
+                                 traceback.format_exc())
                 self.set_filename(filenamePath)
 
     def __str__(self):
@@ -1694,7 +1725,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 class FileItem(Item):
     """An Item that exists as a local file
     """
-
     def setup_new(self, filename, feed_id=None, parent_id=None,
             offsetPath=None, deleted=False, entry=None):
         if entry is None:
@@ -1728,18 +1758,19 @@ class FileItem(Item):
     def get_channel_category(self):
         """Get the category to use for the channel template.
 
-        This method is similar to get_state(), but has some subtle differences.
-        get_state() is used by the download-item template and is usually more
-        useful to determine what's actually happening with an item.
-        get_channel_category() is used by by the channel template to figure out
-        which heading to put an item under.
+        This method is similar to get_state(), but has some subtle
+        differences.  get_state() is used by the download-item
+        template and is usually more useful to determine what's
+        actually happening with an item.  get_channel_category() is
+        used by by the channel template to figure out which heading to
+        put an item under.
 
         * downloading and not-downloaded are grouped together as
           not-downloaded
-        * Items are always new if their feed hasn't been marked as viewed
-          after the item's pub date.  This is so that when a user gets a list
-          of items and starts downloading them, the list doesn't reorder
-          itself.
+        * Items are always new if their feed hasn't been marked as
+          viewed after the item's pub date.  This is so that when a
+          user gets a list of items and starts downloading them, the
+          list doesn't reorder itself.
         * Child items match their parents for expiring, where in
           get_state, they always act as not expiring.
         """
@@ -1786,7 +1817,8 @@ class FileItem(Item):
         else:
             # external item that the user deleted in Miro
             url = self.get_feed_url()
-            if url.startswith("dtv:manualFeed") or url.startswith("dtv:singleFeed"):
+            if ((url.startswith("dtv:manualFeed")
+                 or url.startswith("dtv:singleFeed"))):
                 self.remove()
             else:
                 self.make_deleted()
@@ -1843,7 +1875,8 @@ class FileItem(Item):
         self.confirm_db_thread()
         if self.parent_id:
             parent = self.get_parent()
-            self.filename = os.path.join(parent.get_filename(), self.offsetPath)
+            self.filename = os.path.join(parent.get_filename(),
+                                         self.offsetPath)
             self.signal_change()
             return
         if self.shortFilename is None:
@@ -1887,7 +1920,8 @@ def get_entry_for_file(filename):
 
 def update_incomplete_movie_data():
     for item in chain(Item.downloaded_view(), Item.file_items_view()):
-        if item.duration is None or item.duration == -1 or item.screenshot is None:
+        if ((item.duration is None
+             or item.duration == -1 or item.screenshot is None)):
             moviedata.movie_data_updater.request_update(item)
 
 def move_orphaned_items():

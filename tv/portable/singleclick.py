@@ -98,7 +98,9 @@ def download_unknown_mime_type(url):
     text = _('This file at %(url)s does not appear to be audio, video, or an RSS feed.',
              {"url": url})
     dialog = dialogs.ThreeChoiceDialog(title, text,
-            dialogs.BUTTON_DOWNLOAD_ANYWAY, dialogs.BUTTON_OPEN_IN_EXTERNAL_BROWSER, dialogs.BUTTON_CANCEL)
+                                       dialogs.BUTTON_DOWNLOAD_ANYWAY,
+                                       dialogs.BUTTON_OPEN_IN_EXTERNAL_BROWSER,
+                                       dialogs.BUTTON_CANCEL)
     def callback(dialog):
         if check_url_exists(url):
             return

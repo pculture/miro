@@ -401,8 +401,8 @@ class BGDownloader:
             'state': self.state,
             'totalSize': self.totalSize,
             'currentSize': self.currentSize,
-            'eta': self.getETA(),
-            'rate': self.getRate(),
+            'eta': self.get_eta(),
+            'rate': self.get_rate(),
             'uploaded': 0,
             'filename': self.filename,
             'startTime': self.startTime,
@@ -475,12 +475,12 @@ class BGDownloader:
             self.updateClient()
         fileutil.migrate_file(self.filename, newfilename, callback)
 
-    ##
-    # Returns a float with the estimated number of seconds left
-    def getETA(self):
+    def get_eta(self):
+        """Returns a float with the estimated number of seconds left.
+        """
         if self.totalSize == -1:
             return -1
-        rate = self.getRate()
+        rate = self.get_rate()
         if rate > 0:
             return (self.totalSize - self.currentSize) / rate
         else:
@@ -488,7 +488,7 @@ class BGDownloader:
 
     ##
     # Returns a float with the download rate in bytes per second
-    def getRate(self):
+    def get_rate(self):
         now = clock()
         if self.endTime != self.startTime:
             rate = self.currentSize/(self.endTime-self.startTime)
@@ -1023,10 +1023,10 @@ class BTDownloader(BGDownloader):
         data['leechers'] = self.leechers
         return data
 
-    def getRate(self):
+    def get_rate(self):
         return self.rate
 
-    def getETA(self):
+    def get_eta(self):
         return self.eta
         
     def pause(self):

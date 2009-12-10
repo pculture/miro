@@ -103,8 +103,8 @@ def _upgrate_old_savables(cursor, savables):
 
 def _run_databasesanity(objects):
     try:
-        databasesanity.checkSanity(objects, quiet=True,
-                reallyQuiet=(not util.chatter))
+        databasesanity.check_sanity(objects, quiet=True,
+                                    reallyQuiet=(not util.chatter))
     except databasesanity.DatabaseInsaneError, e:
         logging.warn("Old database fails sanity test: %s", e)
         objects[:] = []

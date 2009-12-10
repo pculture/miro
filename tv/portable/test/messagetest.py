@@ -353,7 +353,7 @@ class FakeDownloader(object):
     def get_current_size(self):
         return self.current_size
 
-    def getRate(self):
+    def get_rate(self):
         return self.rate
 
     def get_state(self):
@@ -377,7 +377,7 @@ class FeedItemTrackTest(TrackerTest):
     def checkDownloadInfo(self, info, item):
         downloader = item.downloader
         self.assertEquals(info.current_size, downloader.get_current_size())
-        self.assertEquals(info.rate, downloader.getRate())
+        self.assertEquals(info.rate, downloader.get_rate())
         self.assertEquals(info.state, downloader.get_state())
 
     def checkInfo(self, itemInfo, item):
@@ -461,7 +461,7 @@ class PlaylistItemTrackTest(TrackerTest):
     def checkDownloadInfo(self, info, item):
         downloader = item.downloader
         self.assertEquals(info.current_size, downloader.get_current_size())
-        self.assertEquals(info.rate, downloader.getRate())
+        self.assertEquals(info.rate, downloader.get_rate())
         self.assertEquals(info.state, downloader.get_state())
 
     def checkInfo(self, itemInfo, item):

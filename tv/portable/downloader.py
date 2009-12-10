@@ -34,8 +34,10 @@ from base64 import b64encode
 from miro.gtcache import gettext as _
 from miro.database import DDBObject, ObjectNotFoundError
 from miro.dl_daemon import daemon, command
-from miro.download_utils import nextFreeFilename, getFileURLPath, filterDirectoryName
-from miro.util import get_torrent_info_hash, returnsUnicode, checkU, returnsFilename, unicodify, checkF, toUni
+from miro.download_utils import nextFreeFilename, getFileURLPath
+from miro.download_utils import filterDirectoryName
+from miro.util import get_torrent_info_hash, returnsUnicode, checkU
+from miro.util import returnsFilename, unicodify, checkF, toUni
 from miro import config
 from miro import dialogs
 from miro import eventloop
@@ -68,9 +70,9 @@ def find_http_auth(host, path, realm=None, scheme=None):
             return obj
     return None
 
-
 class HTTPAuthPassword(DDBObject):
-    def setup_new(self, username, password, host, realm, path, authScheme=u"Basic"):
+    def setup_new(self, username, password, host, realm, path,
+                  authScheme=u"Basic"):
         checkU(username)
         checkU(password)
         checkU(host)
@@ -98,8 +100,8 @@ class HTTPAuthPassword(DDBObject):
         self.confirm_db_thread()
         return self.authScheme
 
-totalUpRate = 0
-totalDownRate = 0
+total_up_rate = 0
+total_down_rate = 0
 
 def get_downloader_by_dlid(dlid):
     try:
@@ -129,10 +131,10 @@ class RemoteDownloader(DDBObject):
         self.metainfo = self.fast_resume_data = None
         self.state = u'downloading'
         if contentType is None:
-            # HACK:  Some servers report the wrong content-type for torrent
-            # files.  We try to work around that by assuming if the enclosure
-            # states that something is a torrent, it's a torrent.
-            # Thanks to j@v2v.cc
+            # HACK: Some servers report the wrong content-type for
+            # torrent files.  We try to work around that by assuming
+            # if the enclosure states that something is a torrent,
+            # it's a torrent.  Thanks to j@v2v.cc.
             if item.enclosure_type == u'application/x-bittorrent':
                 contentType = item.enclosure_type
         self.contentType = u""
@@ -153,7 +155,7 @@ class RemoteDownloader(DDBObject):
     @classmethod
     def finished_view(cls):
         return cls.make_view("state in ('finished', 'uploading', "
-                "'uploading-paused')")
+                             "'uploading-paused')")
 
     @classmethod
     def auto_uploader_view(cls):
@@ -184,22 +186,23 @@ class RemoteDownloader(DDBObject):
     def _save_later(self):
         """Save the remote downloader at some point in the future.
 
-        This is used to handle the fact that remote downloaders are updated
-        often, but those updates are usually just the status dict, which is
-        never used for SELECT statements.  Continually saving those changes
-        to disk is just a waste of time and IO.
+        This is used to handle the fact that remote downloaders are
+        updated often, but those updates are usually just the status
+        dict, which is never used for SELECT statements.  Continually
+        saving those changes to disk is just a waste of time and IO.
 
-        Instead, we schedule the save to happen sometime in the future.  When
-        miro quits, we call the module-level function run_delayed_saves(),
-        which makes sure any pending objects are saved to disk.
+        Instead, we schedule the save to happen sometime in the
+        future.  When miro quits, we call the module-level function
+        run_delayed_saves(), which makes sure any pending objects are
+        saved to disk.
         """
         if self._save_later_dc is None:
             self._save_later_dc = eventloop.addTimeout(15,
                     self._save_now, "Delayed RemoteDownloader save")
 
     def _save_now(self):
-        """If _save_later() was called and we haven't saved the downloader to
-        disk, do it now.
+        """If _save_later() was called and we haven't saved the
+        downloader to disk, do it now.
         """
         if self.idExists() and self._save_later_dc is not None:
             self.signal_change()
@@ -217,7 +220,8 @@ class RemoteDownloader(DDBObject):
             self.url = info['updated-url'].decode('ascii','replace')
             self.contentType = None
             try:
-                self.contentType = info['content-type'].decode('ascii','replace')
+                self.contentType = info['content-type'].decode('ascii',
+                                                               'replace')
             except (SystemExit, KeyboardInterrupt):
                 raise
             except:
@@ -237,9 +241,9 @@ class RemoteDownloader(DDBObject):
         self.signal_change()
 
     def get_content_type(self):
-        httpclient.grabHeaders(self.url,
-                               self.on_content_type, self.on_content_type_error)
- 
+        httpclient.grabHeaders(self.url, self.on_content_type,
+                               self.on_content_type_error)
+
     @classmethod
     def initialize_daemon(cls):
         RemoteDownloader.dldaemon = daemon.ControllerDaemon()
@@ -253,24 +257,25 @@ class RemoteDownloader(DDBObject):
         return (0, 0)
 
     def before_changing_status(self):
-        global totalDownRate
-        global totalUpRate
+        global total_down_rate
+        global total_up_rate
         rates = self._get_rates()
-        totalDownRate -= rates[0]
-        totalUpRate -= rates[1]
+        total_down_rate -= rates[0]
+        total_up_rate -= rates[1]
 
     def after_changing_status(self):
-        global totalDownRate
-        global totalUpRate
+        global total_down_rate
+        global total_up_rate
         self._recalc_state()
         rates = self._get_rates()
-        totalDownRate += rates[0]
-        totalUpRate += rates[1]
+        total_down_rate += rates[0]
+        total_up_rate += rates[1]
 
     @classmethod
     def update_status(cls, data):
         for field in data:
-            if field not in ['filename', 'shortFilename', 'channelName', 'metainfo', 'fastResumeData']:
+            if field not in ['filename', 'shortFilename', 'channelName',
+                             'metainfo', 'fastResumeData']:
                 data[field] = unicodify(data[field])
         self = get_downloader_by_dlid(dlid=data['dlid'])
         # print data
@@ -284,11 +289,11 @@ class RemoteDownloader(DDBObject):
                 if current == new:
                     return
             except Exception:
-                # This is a known bug with the way we used to save fast resume
-                # data
+                # This is a known bug with the way we used to save
+                # fast resume data
                 logging.exception("RemoteDownloader.update_status: exception when comparing status")
 
-            wasFinished = self.isFinished()
+            wasFinished = self.is_finished()
             old_filename = self.get_filename()
             self.before_changing_status()
 
@@ -308,22 +313,24 @@ class RemoteDownloader(DDBObject):
             self._recalc_state()
 
             # Store the time the download finished
-            finished = self.isFinished() and not wasFinished
-            file_migrated = (self.isFinished() and
+            finished = self.is_finished() and not wasFinished
+            file_migrated = (self.is_finished() and
                     self.get_filename() != old_filename)
             needsSignalItem = not (finished or file_migrated)
             self.after_changing_status()
 
-            if self.get_state() == u'uploading' and not self.manualUpload and self.getUploadRatio() > 1.5:
+            if ((self.get_state() == u'uploading'
+                 and not self.manualUpload
+                 and self.get_upload_ratio() > 1.5)):
                 self.stop_upload()
 
             self.signal_change(needsSignalItem=needsSignalItem,
-                    needsSave=False)
+                               needsSave=False)
             if self.changed_attributes == set(('status',)):
-                # if we just changed status, then we can wait a while to store
-                # things to disk.  Since we go through update_status() often,
-                # this results in a fairly large performance gain and
-                # alleviates #12101
+                # if we just changed status, then we can wait a while
+                # to store things to disk.  Since we go through
+                # update_status() often, this results in a fairly
+                # large performance gain and alleviates #12101
                 self._save_later()
             else:
                 self.signal_change()
@@ -340,14 +347,17 @@ class RemoteDownloader(DDBObject):
 
     def _run_downloader(self, url, contentType = None):
         if not self.idExists():
-            return # we got deleted while we were doing the flash scraping
+            # we got deleted while we were doing the flash scraping
+            return
         if contentType is not None:
             self.contentType = contentType
         if url is not None:
             self.url = url
             logging.debug("downloading url %s", self.url)
             c = command.StartNewDownloadCommand(RemoteDownloader.dldaemon,
-                                                self.url, self.dlid, self.contentType, self.channelName)
+                                                self.url, self.dlid,
+                                                self.contentType,
+                                                self.channelName)
             c.send()
             _downloads[self.dlid] = self
         else:
@@ -359,7 +369,8 @@ class RemoteDownloader(DDBObject):
     def pause(self):
         """Pauses the download."""
         if _downloads.has_key(self.dlid):
-            c = command.PauseDownloadCommand(RemoteDownloader.dldaemon, self.dlid)
+            c = command.PauseDownloadCommand(RemoteDownloader.dldaemon,
+                                             self.dlid)
             c.send()
         else:
             self.before_changing_status()
@@ -391,9 +402,11 @@ class RemoteDownloader(DDBObject):
         try:
             fileutil.delete(filename)
         except OSError:
-            logging.exception("Error deleting downloaded file: %s", toUni(filename))
+            logging.exception("Error deleting downloaded file: %s",
+                              toUni(filename))
 
-        parent = os.path.join(fileutil.expand_filename(filename), os.path.pardir)
+        parent = os.path.join(fileutil.expand_filename(filename),
+                              os.path.pardir)
         parent = os.path.normpath(parent)
         moviesDir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))
         if (os.path.exists(parent) and os.path.exists(moviesDir) and
@@ -402,7 +415,8 @@ class RemoteDownloader(DDBObject):
             try:
                 os.rmdir(parent)
             except OSError:
-                logging.exception("Error deleting empty download directory: %s", toUni(parent))
+                logging.exception("Error deleting empty download directory: %s",
+                                  toUni(parent))
 
     def start(self):
         """Continues a paused, stopped, or failed download thread
@@ -467,7 +481,7 @@ class RemoteDownloader(DDBObject):
     def _file_migrated(self, old_filename):
         # Make sure that itemList is populated with items, see (#12202)
         for item in models.Item.downloader_view(self.id):
-            self.addItem(item)
+            self.add_item(item)
         for item in self.itemList:
             item.on_downloader_migrated(old_filename, self.get_filename())
 
@@ -483,11 +497,11 @@ class RemoteDownloader(DDBObject):
     def remove(self):
         """Removes downloader from the database and deletes the file.
         """
-        global totalDownRate
-        global totalUpRate
+        global total_down_rate
+        global total_up_rate
         rates = self._get_rates()
-        totalDownRate -= rates[0]
-        totalUpRate -= rates[1]
+        total_down_rate -= rates[0]
+        total_up_rate -= rates[1]
         self.stop(self.deleteFiles)
         DDBObject.remove(self)
 
@@ -501,9 +515,9 @@ class RemoteDownloader(DDBObject):
         else:
             return u"http"
 
-    def addItem(self, item):
-        """In case multiple downloaders are getting the same file, we can support
-        multiple items
+    def add_item(self, item):
+        """In case multiple downloaders are getting the same file, we
+        can support multiple items
         """
         if item not in self.itemList:
             self.itemList.append(item)
@@ -511,7 +525,7 @@ class RemoteDownloader(DDBObject):
                 self.main_item_id = item.id
                 self.signal_change()
 
-    def removeItem(self, item):
+    def remove_item(self, item):
         self.itemList.remove(item)
         if len (self.itemList) == 0:
             self.remove()
@@ -519,11 +533,11 @@ class RemoteDownloader(DDBObject):
             self.main_item_id = self.itemList[0].id
             self.signal_change()
 
-    def getRate(self):
+    def get_rate(self):
         self.confirm_db_thread()
         return self.status.get('rate', 0)
 
-    def getETA(self):
+    def get_eta(self):
         self.confirm_db_thread()
         return self.status.get('eta', 0)
 
@@ -537,20 +551,20 @@ class RemoteDownloader(DDBObject):
             return activity
 
     @returnsUnicode
-    def getReasonFailed(self):
-        """Returns the reason for the failure of this download
-        This should only be called when the download is in the failed state
+    def get_reason_failed(self):
+        """Returns the reason for the failure of this download.  This
+        should only be called when the download is in the failed state.
         """
         if not self.get_state() == u'failed':
-            msg = u"getReasonFailed() called on a non-failed downloader"
+            msg = u"get_reason_failed() called on a non-failed downloader"
             raise ValueError(msg)
         self.confirm_db_thread()
         return self.status.get('reasonFailed', _("Unknown"))
 
     @returnsUnicode
-    def getShortReasonFailed(self):
+    def get_short_reason_failed(self):
         if not self.get_state() == u'failed':
-            msg = u"getShortReasonFailed() called on a non-failed downloader"
+            msg = u"get_short_reason_failed() called on a non-failed downloader"
             raise ValueError(msg)
         self.confirm_db_thread()
         return self.status.get('shortReasonFailed', _("Unknown"))
@@ -562,37 +576,38 @@ class RemoteDownloader(DDBObject):
         self.confirm_db_thread()
         return self.url
 
-    @returnsUnicode    
+    @returnsUnicode
     def get_state(self):
-        """Returns the state of the download: downloading, paused, stopped,
-        failed, or finished
+        """Returns the state of the download: downloading, paused,
+        stopped, failed, or finished.
         """
         self.confirm_db_thread()
         return self.state
 
-    def isFinished(self):
-        return self.get_state() in (u'finished', u'uploading', u'uploading-paused')
+    def is_finished(self):
+        return self.get_state() in (u'finished', u'uploading',
+                                    u'uploading-paused')
 
-    def getTotalSize(self):
-        """Returns the total size of the download in bytes
+    def get_total_size(self):
+        """Returns the total size of the download in bytes.
         """
         self.confirm_db_thread()
         return self.status.get('totalSize', -1)
 
     def get_current_size(self):
-        """Returns the current amount downloaded in bytes
+        """Returns the current amount downloaded in bytes.
         """
         self.confirm_db_thread()
         return self.status.get('currentSize', 0)
 
     @returnsFilename
     def get_filename(self):
-        """Returns the filename that we're downloading to. Should not be
+        """Returns the filename that we're downloading to.  Should not be
         called until state is "finished."
         """
         self.confirm_db_thread()
-        # FIXME - FilenameType('') is a bogus value, but looks like a filename.
-        # should return None.
+        # FIXME - FilenameType('') is a bogus value, but looks like a
+        # filename.  should return None.
         return self.status.get('filename', FilenameType(''))
 
     def setup_restored(self):
@@ -615,22 +630,22 @@ class RemoteDownloader(DDBObject):
         if new_state != self.state:
             self.state = new_state
 
-    def getUploadRatio(self):
+    def get_upload_ratio(self):
         size = self.get_current_size()
         if size == 0:
             return 0
         return self.status.get('uploaded', 0) / size
-    
+
     def restart_on_startup_if_needed(self):
         if _downloads.has_key(self.dlid):
-            # something has caused us to restart already, (for example, the
-            # user selects "resume seeding").  squelch any automatic behaviour
-            # (#12462)
+            # something has caused us to restart already, (for
+            # example, the user selects "resume seeding").  squelch
+            # any automatic behaviour (#12462)
             return
         if self.get_state() in (u'downloading', u'offline'):
             self.restart()
         if self.get_state() in (u'uploading'):
-            if self.manualUpload or self.getUploadRatio() < 1.5:
+            if self.manualUpload or self.get_upload_ratio() < 1.5:
                 self.restart()
             else:
                 self.stop_upload()
@@ -783,8 +798,8 @@ class DownloadDaemonStarter(object):
 def init_controller():
     """Intializes the download daemon controller.
 
-    This doesn't actually start up the downloader daemon, that's done in
-    startup_downloader.  Commands will be queued until then.
+    This doesn't actually start up the downloader daemon, that's done
+    in startup_downloader.  Commands will be queued until then.
     """
     global daemon_starter
     daemon_starter = DownloadDaemonStarter()
@@ -792,10 +807,10 @@ def init_controller():
 def startup_downloader():
     """Initialize the downloaders.
 
-    This method currently does 2 things.  It deletes any stale files self in
-    Incomplete Downloads, then it restarts downloads that have been restored
-    from the database.  It must be called before any RemoteDownloader objects
-    get created.
+    This method currently does 2 things.  It deletes any stale files
+    self in Incomplete Downloads, then it restarts downloads that have
+    been restored from the database.  It must be called before any
+    RemoteDownloader objects get created.
     """
     daemon_starter.startup()
 
@@ -841,15 +856,16 @@ def get_downloader_for_item(item):
         except IOError:
             return None
         else:
-            return RemoteDownloader(url, item, u'application/x-bittorrent', channelName=channelName)
+            return RemoteDownloader(url, item, u'application/x-bittorrent',
+                                    channelName=channelName)
     else:
         return RemoteDownloader(url, item, channelName=channelName)
 
 def ensure_downloaders_saved():
     """Make sure any RemoteDownloaders with pending changes get saved.
 
-    For performance reasons, RemoteDownloader objects don't save to disk every
-    time their status dict is updated.
+    For performance reasons, RemoteDownloader objects don't save to
+    disk every time their status dict is updated.
     """
     for downloader in RemoteDownloader.make_view():
         downloader._save_now()

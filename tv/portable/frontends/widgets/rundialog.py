@@ -36,7 +36,7 @@ from miro.plat.frontends.widgets import widgetset
 
 def run(dialog):
     if dialog.__class__ in (dialogs.MessageBoxDialog, dialogs.ChoiceDialog,
-            dialogs.ThreeChoiceDialog):
+                            dialogs.ThreeChoiceDialog):
         runner = DialogRunner(dialog)
     elif isinstance(dialog, dialogs.HTTPAuthDialog):
         runner = HTTPAuthDialogRunner(dialog)
@@ -63,14 +63,14 @@ class DialogRunner(object):
                 window.add_button(button.text)
             response = window.run()
             if response == -1:
-                self.dialog.runCallback(None)
+                self.dialog.run_callback(None)
             else:
                 self.handle_response(response)
         finally:
             window.destroy()
 
     def handle_response(self, response):
-        self.dialog.runCallback(self.dialog.buttons[response])
+        self.dialog.run_callback(self.dialog.buttons[response])
 
     def build_extra_widget(self, window):
         pass
@@ -92,8 +92,8 @@ class HTTPAuthDialogRunner(DialogRunner):
     def handle_response(self, response):
         username = self.username_entry.get_text()
         password = self.password_entry.get_text()
-        self.dialog.runCallback(self.dialog.buttons[response], username,
-                password)
+        self.dialog.run_callback(self.dialog.buttons[response], username,
+                                 password)
 
 class TextEntryDialogRunner(DialogRunner):
     def build_extra_widget(self, window):
@@ -110,7 +110,7 @@ class TextEntryDialogRunner(DialogRunner):
 
     def handle_response(self, response):
         text = self.entry.get_text()
-        self.dialog.runCallback(self.dialog.buttons[response], text)
+        self.dialog.run_callback(self.dialog.buttons[response], text)
 
 class CheckboxDialogRunner(DialogRunner):
     def build_extra_widget(self, window):
@@ -120,7 +120,7 @@ class CheckboxDialogRunner(DialogRunner):
 
     def handle_response(self, response):
         checked = self.checkbox.get_checked()
-        self.dialog.runCallback(self.dialog.buttons[response], checked)
+        self.dialog.run_callback(self.dialog.buttons[response], checked)
 
 class CheckboxTextboxDialogRunner(DialogRunner):
     def build_extra_widget(self, window):
@@ -136,4 +136,4 @@ class CheckboxTextboxDialogRunner(DialogRunner):
     def handle_response(self, response):
         checked = self.checkbox.get_checked()
         text = self.entry.get_text()
-        self.dialog.runCallback(self.dialog.buttons[response], checked, text)
+        self.dialog.run_callback(self.dialog.buttons[response], checked, text)

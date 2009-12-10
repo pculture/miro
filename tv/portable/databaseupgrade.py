@@ -28,8 +28,10 @@
 
 """Responsible for upgrading old versions of the database.
 
-NOTE: For really old versions (before the schema.py module, see
-olddatabaseupgrade.py)
+.. note::
+
+    For really old versions before the ``schema.py`` module, see
+    ``olddatabaseupgrade.py``.
 """
 
 from urlparse import urlparse
@@ -48,11 +50,12 @@ from miro import config
 from miro import dbupgradeprogress
 from miro import prefs
 
-NO_CHANGES = set() # looks nicer as a return value
+# looks nicer as a return value
+NO_CHANGES = set()
 
 class DatabaseTooNewError(Exception):
-    """Error that we raise when we see a database that is newer than the
-    version that we can update too.
+    """Error that we raise when we see a database that is newer than
+    the version that we can update too.
     """
     pass
 
@@ -66,60 +69,60 @@ def get_upgrade_func(version):
 def new_style_upgrade(cursor, saved_version, upgrade_to):
     """Upgrade a database using new-style upgrade functions.
 
-    This method replaces the upgrade() method.  However, we still need to keep
-    around upgrade() to upgrade old databases.  We switched upgrade styles at
-    version 80.
+    This method replaces the upgrade() method.  However, we still need
+    to keep around upgrade() to upgrade old databases.  We switched
+    upgrade styles at version 80.
 
-    This method will call upgradeX for each number X between saved_version and
-    upgrade_to.  cursor should be a SQLite database cursor that will be passed
-    to each upgrade function.  For example, if save_version is 2 and
-    upgrade_to is 4, this method is equivelant to:
+    This method will call upgradeX for each number X between
+    saved_version and upgrade_to.  cursor should be a SQLite database
+    cursor that will be passed to each upgrade function.  For example,
+    if save_version is 2 and upgrade_to is 4, this method is
+    equivelant to::
 
         upgrade3(cursor)
         upgrade4(cursor)
     """
 
     if saved_version > upgrade_to:
-        msg = ("Database was created by a newer version of Miro " 
+        msg = ("Database was created by a newer version of Miro "
                "(db version is %s)" % saved_version)
         raise DatabaseTooNewError(msg)
 
     dbupgradeprogress.new_style_progress(saved_version, saved_version,
-            upgrade_to)
+                                         upgrade_to)
     for version in xrange(saved_version + 1, upgrade_to + 1):
         if util.chatter:
-            logging.info("upgrading database to version %s" % (version))
+            logging.info("upgrading database to version %s", version)
         get_upgrade_func(version)(cursor)
         dbupgradeprogress.new_style_progress(saved_version, version,
-                upgrade_to)
+                                             upgrade_to)
 
 def upgrade(savedObjects, saveVersion, upgradeTo=None):
-    """Upgrade a list of SavableObjects that were saved using an old version 
-    of the database schema.
+    """Upgrade a list of SavableObjects that were saved using an old
+    version of the database schema.
 
-    This method will call upgradeX for each number X between saveVersion and
-    upgradeTo.  For example, if saveVersion is 2 and upgradeTo is 4, this
-    method is equivelant to:
+    This method will call upgradeX for each number X between
+    saveVersion and upgradeTo.  For example, if saveVersion is 2 and
+    upgradeTo is 4, this method is equivelant to::
 
         upgrade3(savedObjects)
         upgrade4(savedObjects)
 
     By default, upgradeTo will be the VERSION variable in schema.
     """
-
     changed = set()
 
     if upgradeTo is None:
         upgradeTo = schema.VERSION
 
     if saveVersion > upgradeTo:
-        msg = ("Database was created by a newer version of Miro " 
+        msg = ("Database was created by a newer version of Miro "
                "(db version is %s)" % saveVersion)
         raise DatabaseTooNewError(msg)
 
     startSaveVersion = saveVersion
     dbupgradeprogress.old_style_progress(startSaveVersion, startSaveVersion,
-            upgradeTo)
+                                         upgradeTo)
     while saveVersion < upgradeTo:
         if util.chatter:
             print "upgrading database to version %s" % (saveVersion + 1)
@@ -131,12 +134,11 @@ def upgrade(savedObjects, saveVersion, upgradeTo=None):
             changed.update (thisChanged)
         saveVersion += 1
         dbupgradeprogress.old_style_progress(startSaveVersion, saveVersion,
-                upgradeTo)
+                                             upgradeTo)
     return changed
 
 def upgrade2(objectList):
     """Add a dlerType variable to all RemoteDownloader objects."""
-
     for o in objectList:
         if o.classString == 'remote-downloader':
             # many of our old attributes are now stored in status
@@ -150,7 +152,6 @@ def upgrade2(objectList):
 
 def upgrade3(objectList):
     """Add the expireTime variable to FeedImpl objects."""
-
     for o in objectList:
         if o.classString == 'feed':
             feedImpl = o.savedData['actualFeed']
@@ -190,7 +191,7 @@ def upgrade8(objectList):
     for o in objectList:
         if o.classString in ('item', 'file-item'):
             o.savedData['feed_id'] = o.savedData['feed'].savedData['id']
-            
+
 def upgrade9(objectList):
     """Added the deleted field to file items"""
     for o in objectList:
@@ -198,10 +199,10 @@ def upgrade9(objectList):
             o.savedData['deleted'] = False
 
 def upgrade10(objectList):
-    """Add a watchedTime attribute to items.  Since we don't know when that
-    was, we use the downloaded time which matches with our old behaviour.
+    """Add a watchedTime attribute to items.  Since we don't know when
+    that was, we use the downloaded time which matches with our old
+    behaviour.
     """
-
     import datetime
     changed = set()
     for o in objectList:
@@ -214,8 +215,8 @@ def upgrade10(objectList):
     return changed
 
 def upgrade11(objectList):
-    """We dropped the loadedThisSession field from ChannelGuide.  No need to
-    change anything for this."""
+    """We dropped the loadedThisSession field from ChannelGuide.  No
+    need to change anything for this."""
     return set()
 
 def upgrade12(objectList):
@@ -273,8 +274,8 @@ def upgrade14(objectList):
     return changed
 
 def upgrade15(objectList):
-    """In the unlikely event that someone has a playlist around, change items
-    to item_ids."""
+    """In the unlikely event that someone has a playlist around,
+    change items to item_ids."""
     changed = set()
     for o in objectList:
         if o.classString == 'playlist':
@@ -291,8 +292,8 @@ def upgrade16(objectList):
     return changed
 
 def upgrade17(objectList):
-    """Add folder_id attributes to Feed and SavedPlaylist.  Add item_ids
-    attribute to PlaylistFolder.
+    """Add folder_id attributes to Feed and SavedPlaylist.  Add
+    item_ids attribute to PlaylistFolder.
     """
     changed = set()
     for o in objectList:
@@ -306,7 +307,6 @@ def upgrade17(objectList):
 
 def upgrade18(objectList):
     """Add shortReasonFailed to RemoteDownloader status dicts. """
-
     changed = set()
     for o in objectList:
         if o.classString == 'remote-downloader':
@@ -317,7 +317,6 @@ def upgrade18(objectList):
 
 def upgrade19(objectList):
     """Add origURL to RemoteDownloaders"""
-
     changed = set()
     for o in objectList:
         if o.classString == 'remote-downloader':
@@ -327,7 +326,6 @@ def upgrade19(objectList):
 
 def upgrade20(objectList):
     """Add redirectedURL to Guides"""
-
     changed = set()
     for o in objectList:
         if o.classString == 'channel-guide':
@@ -339,7 +337,6 @@ def upgrade20(objectList):
 
 def upgrade21(objectList):
     """Add searchTerm to Feeds"""
-
     changed = set()
     for o in objectList:
         if o.classString == 'feed':
@@ -349,7 +346,6 @@ def upgrade21(objectList):
 
 def upgrade22(objectList):
     """Add userTitle to Feeds"""
-
     changed = set()
     for o in objectList:
         if o.classString == 'feed':
@@ -359,14 +355,13 @@ def upgrade22(objectList):
 
 def upgrade23(objectList):
     """Remove container items from playlists."""
-
     changed = set()
     toFilter = set()
     playlists = set()
     for o in objectList:
         if o.classString in ('playlist', 'playlist-folder'):
             playlists.add(o)
-        elif (o.classString in ('item', 'file-item') and 
+        elif (o.classString in ('item', 'file-item') and
                 o.savedData['isContainerItem']):
             toFilter.add(o.savedData['id'])
     for p in playlists:
@@ -386,7 +381,6 @@ def upgrade24(objectList):
 
 def upgrade25(objectList):
     """Remove container items from playlists."""
-
     from datetime import datetime
 
     changed = set()
@@ -413,14 +407,15 @@ def upgrade26(objectList):
     for o in objectList:
         if o.classString == 'feed':
             feedImpl = o.savedData['actualFeed']
-            for field in ('autoDownloadable', 'getEverything', 'maxNew', 'fallBehind', 'expire', 'expireTime'):
+            for field in ('autoDownloadable', 'getEverything', 'maxNew',
+                          'fallBehind', 'expire', 'expireTime'):
                 o.savedData[field] = feedImpl.savedData[field]
             changed.add(o)
     return changed
 
 def upgrade27(objectList):
-    """We dropped the sawIntro field from ChannelGuide.  No need to change
-    anything for this."""
+    """We dropped the sawIntro field from ChannelGuide.  No need to
+    change anything for this."""
     return set()
 
 def upgrade28(objectList):
@@ -431,8 +426,8 @@ def upgrade28(objectList):
     removed = set()
 
     def getFirstVideoEnclosure(entry):
-        """Find the first video enclosure in a feedparser entry.  Returns the
-        enclosure, or None if no video enclosure is found.
+        """Find the first video enclosure in a feedparser entry.
+        Returns the enclosure, or None if no video enclosure is found.
         """
         try:
             enclosures = entry.enclosures
@@ -442,7 +437,7 @@ def upgrade28(objectList):
             if filetypes.is_video_enclosure(enclosure):
                 return enclosure
         return None
-    
+
     for i in xrange(len(objectList) - 1, -1, -1):
         o = objectList[i]
         if o.classString == 'item':
@@ -526,7 +521,8 @@ def upgrade35(objectList):
         if o.classString in ('item', 'file-item'):
             if hasattr(o.savedData,'entry'):
                 entry = o.savedData['entry']
-                if entry.has_key('title') and type(entry.title) != types.UnicodeType:
+                if ((entry.has_key('title')
+                     and type(entry.title) != types.UnicodeType)):
                     entry.title = entry.title.decode('utf-8', 'replace')
                     changed.add(o)
     return changed
@@ -610,7 +606,8 @@ def upgrade40(objectList):
             changed.add(o)
     return changed
 
-# Turns all strings in data structure to unicode, used by upgrade 41 and 47
+# Turns all strings in data structure to unicode, used by upgrade 41
+# and 47
 def unicodify(d):
     from miro.feedparser import FeedParserDict
     from types import StringType
@@ -619,9 +616,9 @@ def unicodify(d):
             try:
                 d[key] = unicodify(d[key])
             except KeyError:
-                # Feedparser dicts sometime return names in keys() that can't
-                # actually be used in keys.  I guess the best thing to do here
-                # is ignore it -- Ben
+                # Feedparser dicts sometime return names in keys()
+                # that can't actually be used in keys.  I guess the
+                # best thing to do here is ignore it -- Ben
                 pass
     elif isinstance(d, dict):
         for key in d.keys():
@@ -647,7 +644,7 @@ def upgrade41(objectList):
         icStrings = ['etag', 'modified', 'url', 'filename']
         icBinary = []
         statusBinary = ['metainfo']
-        
+
     changed = set()
     for o in objectList:
         o.savedData = unicodify(o.savedData)
@@ -706,7 +703,9 @@ def upgrade43(objectList):
 
     for i in xrange(len(objectList) - 1, -1, -1):
         o = objectList[i]
-        if o.classString == 'file-item' and o.savedData['feed_id'] == id and o.savedData['deleted'] == True:
+        if ((o.classString == 'file-item'
+             and o.savedData['feed_id'] == id
+             and o.savedData['deleted'] == True)):
             removed.add(o.savedData['id'])
             changed.add(o)
             del objectList[i]
@@ -722,15 +721,16 @@ def upgrade43(objectList):
 def upgrade44(objectList):
     changed = set()
     for o in objectList:
-        if 'iconCache' in o.savedData and o.savedData['iconCache'] is not None:
+        if (('iconCache' in o.savedData
+             and o.savedData['iconCache'] is not None)):
             iconCache = o.savedData['iconCache']
             iconCache.savedData['resized_filenames'] = {}
             changed.add(o)
     return changed
 
 def upgrade45(objectList):
-    """Dropped the ChannelGuide.redirected URL attribute.  Just need to bump
-    the db version number."""
+    """Dropped the ChannelGuide.redirected URL attribute.  Just need
+    to bump the db version number."""
     return set()
 
 def upgrade46(objectList):
@@ -792,7 +792,8 @@ def upgrade50(objectList):
     changed = set()
     for o in objectList:
         if o.classString in ('item', 'file-item'):
-            if o.savedData['videoFilename'] and o.savedData['videoFilename'][0] == '\\':
+            if ((o.savedData['videoFilename']
+                 and o.savedData['videoFilename'][0] == '\\')):
                 o.savedData['videoFilename'] = o.savedData['videoFilename'][1:]
                 changed.add(o)
     return changed
@@ -814,8 +815,8 @@ def upgrade52(objectList):
     downloads_id = 0
 
     def getVideoInfo(o):
-        """Find the first video enclosure in a feedparser entry.  Returns the
-        enclosure, or None if no video enclosure is found.
+        """Find the first video enclosure in a feedparser entry.
+        Returns the enclosure, or None if no video enclosure is found.
         """
         entry = o.savedData['entry']
         enc = None
@@ -947,10 +948,11 @@ def upgrade58(objectList):
 
 def upgrade59(objectList):
     """
-    We changed ThemeHistory to allow None in the pastTheme list.  Since we're
-    upgrading, we can assume that the default channels have been added, so
-    we'll add None to that list manually.  We also require a URL for channel
-    guides.  If it's None, eplace it with https://www.miroguide.com/.
+    We changed ThemeHistory to allow None in the pastTheme list.
+    Since we're upgrading, we can assume that the default channels
+    have been added, so we'll add None to that list manually.  We also
+    require a URL for channel guides.  If it's None, eplace it with
+    https://www.miroguide.com/.
     """
     changed = set()
     for o in objectList:
@@ -964,7 +966,8 @@ def upgrade59(objectList):
     return changed
 
 def upgrade60(objectList):
-    """search feed impl is now a subclass of rss multi, so add the needed fields"""
+    """search feed impl is now a subclass of rss multi, so add the
+    needed fields"""
     changed = set()
     for o in objectList:
         if o.classString == 'feed':
@@ -1054,14 +1057,14 @@ def upgrade69(objectList):
     return NO_CHANGES
 
 def upgrade70(objectList):
-    """
-    Added for the query item in the RSSMultiFeedImpl and SearchFeedImpl.
-    """
+    """Added for the query item in the RSSMultiFeedImpl and
+    SearchFeedImpl."""
     changed = set()
     for o in objectList:
         if o.classString == 'feed':
             feedImpl = o.savedData['actualFeed']
-            if feedImpl.classString in ('search-feed-impl', 'rss-multi-feed-impl'):
+            if feedImpl.classString in ('search-feed-impl',
+                                        'rss-multi-feed-impl'):
                 feedImpl.savedData['query'] = u""
                 changed.add(o)
     return changed
@@ -1073,17 +1076,16 @@ def upgrade71(objectList):
     """
     Add the downloader_id attribute
     """
-
-    # So this is a crazy upgrade, because we need to use a ton of functions.
-    # Rather than import a module, all of these were copied from the source
-    # code from r8953 (2009-01-17).  Some slight changes were made, mostly to
-    # drop some error checking.
+    # So this is a crazy upgrade, because we need to use a ton of
+    # functions.  Rather than import a module, all of these were
+    # copied from the source code from r8953 (2009-01-17).  Some
+    # slight changes were made, mostly to drop some error checking.
 
     def fixFileURLS(url):
-        """Fix file URLS that start with file:// instead of file:///.  Note: this
-        breaks for file URLS that include a hostname, but we never use those and
-        it's not so clear what that would mean anyway -- file URLs is an ad-hoc
-        spec as I can tell.."""
+        """Fix file URLS that start with file:// instead of file:///.
+        Note: this breaks for file URLS that include a hostname, but
+        we never use those and it's not so clear what that would mean
+        anyway -- file URLs is an ad-hoc spec as I can tell.."""
         if url.startswith('file://'):
             if not url.startswith('file:///'):
                 url = 'file:///%s' % url[len('file://'):]
@@ -1104,8 +1106,8 @@ def upgrade71(objectList):
     def parseURL(url, split_path=False):
         url = fixFileURLS(url)
         (scheme, host, path, params, query, fragment) = util.unicodify(list(urlparse(url)))
-        # Filter invalid URLs with duplicated ports (http://foo.bar:123:123/baz)
-        # which seem to be part of #441.
+        # Filter invalid URLs with duplicated ports
+        # (http://foo.bar:123:123/baz) which seem to be part of #441.
         if host.count(':') > 1:
             host = host[0:host.rfind(':')]
 
@@ -1127,7 +1129,7 @@ def upgrade71(objectList):
         host = host.lower()
         scheme = scheme.lower()
 
-        path = path.replace('|', ':') 
+        path = path.replace('|', ':')
         # Windows drive names are often specified as "C|\foo\bar"
 
         if path == '' or not path.startswith('/'):
@@ -1145,14 +1147,17 @@ def upgrade71(objectList):
                 fullPath += '?%s' % query
             return scheme, host, port, fullPath
 
-    UNSUPPORTED_MIMETYPES = ("video/3gpp", "video/vnd.rn-realvideo", "video/x-ms-asf")
-    VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.ogv', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid', '.rmvb', '.mkv', '.m2v', '.ogm']
+    UNSUPPORTED_MIMETYPES = ("video/3gpp", "video/vnd.rn-realvideo",
+                             "video/x-ms-asf")
+    VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.ogv',
+                        '.anx', '.mpg', '.avi', '.flv', '.mpeg',
+                        '.divx', '.xvid', '.rmvb', '.mkv', '.m2v', '.ogm']
     AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka']
     FEED_EXTENSIONS = ['.xml', '.rss', '.atom']
     def is_video_enclosure(enclosure):
         """
-        Pass an enclosure dictionary to this method and it will return a boolean
-        saying if the enclosure is a video or not.
+        Pass an enclosure dictionary to this method and it will return
+        a boolean saying if the enclosure is a video or not.
         """
         return (_has_video_type(enclosure) or
                 _has_video_extension(enclosure, 'url') or
@@ -1173,7 +1178,8 @@ def upgrade71(objectList):
         Pass a filename to this method and it will return a boolean
         saying if the filename represents video, audio or torrent.
         """
-        return is_video_filename(filename) or is_audio_filename(filename) or is_torrent_filename(filename)
+        return (is_video_filename(filename) or is_audio_filename(filename)
+                or is_torrent_filename(filename))
 
     def is_video_filename(filename):
         """
@@ -1241,12 +1247,12 @@ def upgrade71(objectList):
 
     def cmp_enclosures(enclosure1, enclosure2):
         """
-        Returns:
-          -1 if enclosure1 is preferred, 1 if enclosure2 is preferred, and
-          zero if there is no preference between the two of them
+        Returns -1 if enclosure1 is preferred, 1 if enclosure2 is
+        preferred, and zero if there is no preference between the two
+        of them.
         """
-        # meda:content enclosures have an isDefault which we should pick
-        # since it's the preference of the feed
+        # media:content enclosures have an isDefault which we should
+        # pick since it's the preference of the feed
         if enclosure1.get("isDefault"):
             return -1
         if enclosure2.get("isDefault"):
@@ -1294,8 +1300,8 @@ def upgrade71(objectList):
 
 
     def quoteUnicodeURL(url):
-        """Quote international characters contained in a URL according to w3c, see:
-        <http://www.w3.org/International/O-URL-code.html>
+        """Quote international characters contained in a URL according
+        to w3c, see: <http://www.w3.org/International/O-URL-code.html>
         """
         quotedChars = []
         for c in url.encode('utf8'):
@@ -1325,8 +1331,9 @@ def upgrade71(objectList):
             downloader_id = url_to_downloader_id.get(url)
             if downloader_id is None and hasattr(entry, 'enclosures'):
                 # we didn't get a downloader id using
-                # getFirstVideoEnclosure(), so try other enclosures.  We
-                # changed the way that function worked between 1.2.8 and 2.0.
+                # getFirstVideoEnclosure(), so try other enclosures.
+                # We changed the way that function worked between
+                # 1.2.8 and 2.0.
                 for other_enclosure in entry.enclosures:
                     if 'url' in other_enclosure:
                         url = quoteUnicodeURL(other_enclosure['url'].replace('+', '%20'))
@@ -1339,11 +1346,10 @@ def upgrade71(objectList):
     return changed
 
 def upgrade72(objectList):
-    """
-    We upgraded the database wrong in upgrade64, inadvertently adding a
-    str to the allowedURLs list when it should be unicode.  This
-    converts that final str to unicode before the database sanity check
-    catches us.
+    """We upgraded the database wrong in upgrade64, inadvertently
+    adding a str to the allowedURLs list when it should be unicode.
+    This converts that final str to unicode before the database sanity
+    check catches us.
     """
     changed = set()
     for o in objectList:
@@ -1356,24 +1362,26 @@ def upgrade72(objectList):
     return changed
 
 def upgrade73(objectList):
-    """We dropped the resized_filename attribute for icon cache objects."""
+    """We dropped the resized_filename attribute for icon cache
+    objects."""
     return NO_CHANGES
 
 def upgrade74(objectList):
-    """We dropped the resized_screenshots attribute for Item objects."""
+    """We dropped the resized_screenshots attribute for Item
+    objects."""
     return NO_CHANGES
 
 def upgrade75(objectList):
-    """Drop the entry attribute for items, replace it with a bunch individual
-    attributes.
+    """Drop the entry attribute for items, replace it with a bunch
+    individual attributes.
     """
     from datetime import datetime
 
     def fixFileURLS(url):
-        """Fix file URLS that start with file:// instead of file:///.  Note: this
-        breaks for file URLS that include a hostname, but we never use those and
-        it's not so clear what that would mean anyway -- file URLs is an ad-hoc
-        spec as I can tell.."""
+        """Fix file URLS that start with file:// instead of file:///.
+        Note: this breaks for file URLS that include a hostname, but
+        we never use those and it's not so clear what that would mean
+        anyway -- file URLs is an ad-hoc spec as I can tell.."""
         if url.startswith('file://'):
             if not url.startswith('file:///'):
                 url = 'file:///%s' % url[len('file://'):]
@@ -1394,8 +1402,8 @@ def upgrade75(objectList):
     def parseURL(url, split_path=False):
         url = fixFileURLS(url)
         (scheme, host, path, params, query, fragment) = util.unicodify(list(urlparse(url)))
-        # Filter invalid URLs with duplicated ports (http://foo.bar:123:123/baz)
-        # which seem to be part of #441.
+        # Filter invalid URLs with duplicated ports
+        # (http://foo.bar:123:123/baz) which seem to be part of #441.
         if host.count(':') > 1:
             host = host[0:host.rfind(':')]
 
@@ -1417,9 +1425,8 @@ def upgrade75(objectList):
         host = host.lower()
         scheme = scheme.lower()
 
-        path = path.replace('|', ':') 
+        path = path.replace('|', ':')
         # Windows drive names are often specified as "C|\foo\bar"
-
         if path == '' or not path.startswith('/'):
             path = '/' + path
         elif re.match(r'/[a-zA-Z]:', path):
@@ -1435,14 +1442,16 @@ def upgrade75(objectList):
                 fullPath += '?%s' % query
             return scheme, host, port, fullPath
 
-    UNSUPPORTED_MIMETYPES = ("video/3gpp", "video/vnd.rn-realvideo", "video/x-ms-asf")
-    VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.ogv', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid', '.rmvb', '.mkv', '.m2v', '.ogm']
+    UNSUPPORTED_MIMETYPES = ("video/3gpp", "video/vnd.rn-realvideo",
+                             "video/x-ms-asf")
+    VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.ogv',
+                        '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx',
+                        '.xvid', '.rmvb', '.mkv', '.m2v', '.ogm']
     AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka']
     FEED_EXTENSIONS = ['.xml', '.rss', '.atom']
     def is_video_enclosure(enclosure):
-        """
-        Pass an enclosure dictionary to this method and it will return a boolean
-        saying if the enclosure is a video or not.
+        """Pass an enclosure dictionary to this method and it will
+        return a boolean saying if the enclosure is a video or not.
         """
         return (_has_video_type(enclosure) or
                 _has_video_extension(enclosure, 'url') or
@@ -1459,15 +1468,15 @@ def upgrade75(objectList):
                 (enclosure['type'] not in UNSUPPORTED_MIMETYPES))
 
     def is_allowed_filename(filename):
-        """
-        Pass a filename to this method and it will return a boolean
+        """Pass a filename to this method and it will return a boolean
         saying if the filename represents video, audio or torrent.
         """
-        return is_video_filename(filename) or is_audio_filename(filename) or is_torrent_filename(filename)
+        return (is_video_filename(filename)
+                or is_audio_filename(filename)
+                or is_torrent_filename(filename))
 
     def is_video_filename(filename):
-        """
-        Pass a filename to this method and it will return a boolean
+        """Pass a filename to this method and it will return a boolean
         saying if the filename represents a video file.
         """
         filename = filename.lower()
@@ -1477,8 +1486,7 @@ def upgrade75(objectList):
         return False
 
     def is_audio_filename(filename):
-        """
-        Pass a filename to this method and it will return a boolean
+        """Pass a filename to this method and it will return a boolean
         saying if the filename represents an audio file.
         """
         filename = filename.lower()
@@ -1488,8 +1496,7 @@ def upgrade75(objectList):
         return False
 
     def is_torrent_filename(filename):
-        """
-        Pass a filename to this method and it will return a boolean
+        """Pass a filename to this method and it will return a boolean
         saying if the filename represents a torrent file.
         """
         filename = filename.lower()
@@ -1502,9 +1509,9 @@ def upgrade75(objectList):
         return False
 
     def getFirstVideoEnclosure(entry):
-        """
-        Find the first "best" video enclosure in a feedparser entry.
-        Returns the enclosure, or None if no video enclosure is found.
+        """Find the first "best" video enclosure in a feedparser
+        entry.  Returns the enclosure, or None if no video enclosure
+        is found.
         """
         try:
             enclosures = entry.enclosures
@@ -1531,13 +1538,12 @@ def upgrade75(objectList):
             return None
 
     def cmp_enclosures(enclosure1, enclosure2):
+        """Returns -1 if enclosure1 is preferred, 1 if enclosure2 is
+        preferred, and zero if there is no preference between the two
+        of them.
         """
-        Returns:
-          -1 if enclosure1 is preferred, 1 if enclosure2 is preferred, and
-          zero if there is no preference between the two of them
-        """
-        # meda:content enclosures have an isDefault which we should pick
-        # since it's the preference of the feed
+        # media:content enclosures have an isDefault which we should
+        # pick since it's the preference of the feed
         if enclosure1.get("isDefault"):
             return -1
         if enclosure2.get("isDefault"):
@@ -1585,8 +1591,8 @@ def upgrade75(objectList):
 
 
     def quoteUnicodeURL(url):
-        """Quote international characters contained in a URL according to w3c, see:
-        <http://www.w3.org/International/O-URL-code.html>
+        """Quote international characters contained in a URL according
+        to w3c, see: <http://www.w3.org/International/O-URL-code.html>
         """
         quotedChars = []
         for c in url.encode('utf8'):
@@ -1597,7 +1603,9 @@ def upgrade75(objectList):
         return u''.join(quotedChars)
 
     KNOWN_MIME_TYPES = (u'audio', u'video')
-    KNOWN_MIME_SUBTYPES = (u'mov', u'wmv', u'mp4', u'mp3', u'mpg', u'mpeg', u'avi', u'x-flv', u'x-msvideo', u'm4v', u'mkv', u'm2v', u'ogg')
+    KNOWN_MIME_SUBTYPES = (u'mov', u'wmv', u'mp4', u'mp3', u'mpg', u'mpeg',
+                           u'avi', u'x-flv', u'x-msvideo', u'm4v', u'mkv',
+                           u'm2v', u'ogg')
     MIME_SUBSITUTIONS = {
         u'QUICKTIME': u'MOV',
     }
@@ -1622,11 +1630,10 @@ def upgrade75(objectList):
     class FeedParserValues(object):
         """Helper class to get values from feedparser entries
 
-        FeedParserValues objects inspect the FeedParserDict for the entry
-        attribute for various attributes using in Item (entry_title, rss_id, url,
-        etc...).
+        FeedParserValues objects inspect the FeedParserDict for the
+        entry attribute for various attributes using in Item
+        (entry_title, rss_id, url, etc...).
         """
-
         def __init__(self, entry):
             self.entry = entry
             self.normalized_entry = normalize_feedparser_dict(entry)
@@ -1673,14 +1680,14 @@ def upgrade75(objectList):
                 # wild do (#11413).  In that case, try to fix them.
                 return entity_replace(self.entry.title)
             else:
-                if (self.first_video_enclosure and
-                        'url' in self.first_video_enclosure):
-                        return self.first_video_enclosure['url'].decode("ascii", "replace")
+                if ((self.first_video_enclosure
+                     and 'url' in self.first_video_enclosure)):
+                    return self.first_video_enclosure['url'].decode("ascii",
+                                                                    "replace")
                 return None
 
         def _calc_thumbnail_url(self):
-            """Returns a link to the thumbnail of the video.  """
-
+            """Returns a link to the thumbnail of the video."""
             # Try to get the thumbnail specific to the video enclosure
             if self.first_video_enclosure is not None:
                 url = self._get_element_thumbnail(self.first_video_enclosure)
@@ -1743,7 +1750,8 @@ def upgrade75(objectList):
 
         def _calc_payment_link(self):
             try:
-                return self.first_video_enclosure.payment_url.decode('ascii','replace')
+                return self.first_video_enclosure.payment_url.decode('ascii',
+                                                                     'replace')
             except:
                 try:
                     return self.entry.payment_url.decode('ascii','replace')
@@ -1754,8 +1762,8 @@ def upgrade75(objectList):
             return self.entry.get('comments', u"")
 
         def _calc_url(self):
-            if (self.first_video_enclosure is not None and
-                    'url' in self.first_video_enclosure):
+            if ((self.first_video_enclosure is not None
+                 and 'url' in self.first_video_enclosure)):
                 url = self.first_video_enclosure['url'].replace('+', '%20')
                 return quoteUnicodeURL(url)
             else:
@@ -1770,7 +1778,8 @@ def upgrade75(objectList):
                     return None
 
         def _calc_enclosure_type(self):
-            if self.first_video_enclosure and self.first_video_enclosure.has_key('type'):
+            if ((self.first_video_enclosure
+                 and self.first_video_enclosure.has_key('type'))):
                 return self.first_video_enclosure['type']
             else:
                 return None
@@ -1824,17 +1833,17 @@ def upgrade75(objectList):
     import types
 
     from miro import feedparser
-    # normally we shouldn't import other modules inside an upgrade function.
-    # However, it should be semi-safe to import feedparser, because it would
-    # have already been imported when unpickling FeedParserDict objects.
+    # normally we shouldn't import other modules inside an upgrade
+    # function.  However, it should be semi-safe to import feedparser,
+    # because it would have already been imported when unpickling
+    # FeedParserDict objects.
 
     # values from feedparser dicts that don't have to convert in
     # normalize_feedparser_dict()
     _simple_feedparser_values = (int, long, str, unicode, bool, NoneType,
-            datetime, struct_time )
+                                 datetime, struct_time)
     def normalize_feedparser_dict(fp_dict):
-        """Convert FeedParserDict objects to normal dictionaries.  """
-
+        """Convert FeedParserDict objects to normal dictionaries."""
         retval = {}
         for key, value in fp_dict.items():
             if isinstance(value, feedparser.FeedParserDict):
@@ -1880,7 +1889,8 @@ def upgrade76(objectList):
     return changed
 
 def upgrade77(objectList):
-    """Drop ufeed and actualFeed attributes, replace them with id values."""
+    """Drop ufeed and actualFeed attributes, replace them with id
+    values."""
     changed = set()
     last_id = 0
     feeds = []
@@ -1919,8 +1929,7 @@ def upgrade78(objectList):
     for obj in icon_cache_containers:
         icon_cache = obj.savedData['iconCache']
         if icon_cache is not None:
-            obj.savedData['icon_cache_id'] = icon_cache.savedData['id'] = \
-                    next_id
+            obj.savedData['icon_cache_id'] = icon_cache.savedData['id'] = next_id
             changed.add(icon_cache)
             objectList.append(icon_cache)
         else:
@@ -1962,8 +1971,8 @@ def upgrade79(objectList):
 
     return changed
 
-# There is no upgrade80.  That version was the version we switched how the
-# database was stored.
+# There is no upgrade80.  That version was the version we switched how
+# the database was stored.
 
 def upgrade81(cursor):
     """Add the was_downloaded column to downloader."""
@@ -1994,9 +2003,9 @@ def upgrade82(cursor):
             # downloaded at some point.
             downloaded.append(row[0])
     cursor.execute("UPDATE item SET was_downloaded=0")
-    # sqlite can only handle 999 variables at once, which can be less then the
-    # number of downloaded items (#11717).  Let's go for chunks of 500 at a
-    # time to be safe.
+    # sqlite can only handle 999 variables at once, which can be less
+    # then the number of downloaded items (#11717).  Let's go for
+    # chunks of 500 at a time to be safe.
     for start_pos in xrange(0, len(downloaded), 500):
         downloaded_chunk = downloaded[start_pos:start_pos+500]
         placeholders = ', '.join('?' for i in xrange(len(downloaded_chunk)))
@@ -2061,7 +2070,8 @@ def upgrade86(cursor):
             "(SELECT lastViewed FROM (%s) WHERE ufeed_id = feed.id)" % union)
 
 def upgrade87(cursor):
-    """Make last_viewed a "timestamp" column rather than a "TIMESTAMP" one."""
+    """Make last_viewed a "timestamp" column rather than a "TIMESTAMP"
+    one."""
     # see 11716 for details
     columns = []
     columns_with_type = []
@@ -2077,13 +2087,13 @@ def upgrade87(cursor):
         columns_with_type.append("%s %s" % (column, type))
     cursor.execute("ALTER TABLE feed RENAME TO old_feed")
     cursor.execute("CREATE TABLE feed (%s)" % ', '.join(columns_with_type))
-    cursor.execute("INSERT INTO feed (%s) SELECT %s FROM old_feed" % 
+    cursor.execute("INSERT INTO feed (%s) SELECT %s FROM old_feed" %
             (', '.join(columns), ', '.join(columns)))
     cursor.execute("DROP TABLE old_feed")
 
 def remove_column(cursor, table, *column_names):
-    """Remove a column from an SQLITE table.  This was added for upgrade88,
-    but it's probably useful for other ones as well.
+    """Remove a column from an SQLITE table.  This was added for
+    upgrade88, but it's probably useful for other ones as well.
     """
     cursor.execute("PRAGMA table_info('%s')" % table)
     columns = []
@@ -2177,9 +2187,9 @@ def upgrade88(cursor):
             try:
                 count = this_folder_count[item_id]
             except KeyError:
-                # item_id is listed for this playlist folder, but none of it's
-                # child folders.  It's not clear how it happened, but forget
-                # about it.  (#12301)
+                # item_id is listed for this playlist folder, but none
+                # of it's child folders.  It's not clear how it
+                # happened, but forget about it.  (#12301)
                 continue
             cursor.execute("INSERT INTO playlist_folder_item_map "
                     "(id, item_id, playlist_id, position, count) "
@@ -2272,7 +2282,9 @@ def upgrade92(cursor):
     remove_column(cursor, 'playlist_folder', 'item_ids')
 
 def upgrade93(cursor):
-    VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogv', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid', '.rmvb', '.mkv', '.m2v', '.ogm']
+    VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogv', '.anx',
+                        '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid',
+                        '.rmvb', '.mkv', '.m2v', '.ogm']
     AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka', '.ogg', '.flac']
 
     video_filename_expr = '(%s)' % ' OR '.join("videoFilename LIKE '%%%s'" % ext
@@ -2309,13 +2321,14 @@ def upgrade95(cursor):
                 {'datetime': datetime, 'time': time})
         if (videoFilename and videoFilename != status.get('filename')):
             pathname = os.path.join(status.get('filename'), videoFilename)
-            # Here's the situation: We downloaded a torrent and that torrent
-            # had a single video as it's child.  We then made the torrent's
-            # videoFilename be the path to that video instead of creating a
-            # new FileItem.  This is broken for a bunch of reasons, so we're
-            # getting rid of it.  Undo the trickyness that we did and delete
-            # any duplicate items that may have been created.  The next update
-            # will remove the videoFilename column.
+            # Here's the situation: We downloaded a torrent and that
+            # torrent had a single video as it's child.  We then made
+            # the torrent's videoFilename be the path to that video
+            # instead of creating a new FileItem.  This is broken for
+            # a bunch of reasons, so we're getting rid of it.  Undo
+            # the trickyness that we did and delete any duplicate
+            # items that may have been created.  The next update will
+            # remove the videoFilename column.
             cursor.execute("DELETE FROM item "
                     "WHERE is_file_item AND videoFilename =?", (pathname,))
             cursor.execute("UPDATE item "
@@ -2354,19 +2367,22 @@ def upgrade99(cursor):
                     (filename, downloader_id))
 
 class TimeModuleShadow:
-    """In Python 2.6, time.struct_time is a named tuple and evals poorly,
-    so we have struct_time_shadow which takes the arguments that struct_time
-    should have and returns a 9-tuple
+    """In Python 2.6, time.struct_time is a named tuple and evals
+    poorly, so we have struct_time_shadow which takes the arguments
+    that struct_time should have and returns a 9-tuple
     """
-    def struct_time(self, tm_year=0, tm_mon=0, tm_mday=0, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=0, tm_yday=0, tm_isdst=0):
-        return (tm_year, tm_mon, tm_mday, tm_hour, tm_min, tm_sec, tm_wday, tm_yday, tm_isdst)
+    def struct_time(self, tm_year=0, tm_mon=0, tm_mday=0, tm_hour=0,
+                    tm_min=0, tm_sec=0, tm_wday=0, tm_yday=0, tm_isdst=0):
+        return (tm_year, tm_mon, tm_mday, tm_hour, tm_min, tm_sec,
+                tm_wday, tm_yday, tm_isdst)
 
 _TIME_MODULE_SHADOW = TimeModuleShadow()
 
 def eval_container(repr):
-    """Convert a column that's stored using repr to a python list/dict."""
-    return eval(repr, __builtins__, {'datetime': datetime, 'time':
-        _TIME_MODULE_SHADOW})
+    """Convert a column that's stored using repr to a python
+    list/dict."""
+    return eval(repr, __builtins__, {'datetime': datetime,
+                                     'time': _TIME_MODULE_SHADOW})
 
 def upgrade100(cursor):
     """Adds the Miro audio guide as a site for anyone who doesn't
@@ -2378,7 +2394,8 @@ def upgrade100(cursor):
 
     audio_guide_url = u'https://www.miroguide.com/audio/'
     favicon_url = u'https://www.miroguide.com/favicon.ico'
-    cursor.execute("SELECT count(*) FROM channel_guide WHERE url=?", (audio_guide_url,))
+    cursor.execute("SELECT count(*) FROM channel_guide WHERE url=?",
+                   (audio_guide_url,))
     count = cursor.fetchone()[0]
     if count > 0:
         return
@@ -2387,10 +2404,12 @@ def upgrade100(cursor):
 
     cursor.execute("INSERT INTO channel_guide "
                    "(id, url, allowedURLs, updated_url, favicon, firstTime) VALUES (?, ?, ?, ?, ?, ?)",
-                   (next_id, audio_guide_url, "[]", audio_guide_url, favicon_url, True))
+                   (next_id, audio_guide_url, "[]", audio_guide_url,
+                    favicon_url, True))
 
     # add the new Audio Guide to the site tablist
-    cursor.execute('SELECT tab_ids FROM taborder_order WHERE type=?',('site',))
+    cursor.execute('SELECT tab_ids FROM taborder_order WHERE type=?',
+                   ('site',))
     row = cursor.fetchone()
     if row is not None:
         try:
@@ -2401,13 +2420,14 @@ def upgrade100(cursor):
         cursor.execute('UPDATE taborder_order SET tab_ids=? WHERE type=?',
                        (repr(tab_ids), 'site'))
     else:
-        # no site taborder (#11985).  We will create the TabOrder object on
-        # startup, so no need to do anything here
+        # no site taborder (#11985).  We will create the TabOrder
+        # object on startup, so no need to do anything here
         pass
 
 def upgrade101(cursor):
-    """For torrent folders where a child item has been deleted, change the
-    state from 'stopped' to 'finished' and set child_deleted to True"""
+    """For torrent folders where a child item has been deleted, change
+    the state from 'stopped' to 'finished' and set child_deleted to
+    True"""
 
     cursor.execute("ALTER TABLE remote_downloader ADD child_deleted INTEGER")
     cursor.execute("UPDATE remote_downloader SET child_deleted = 0")
@@ -2418,12 +2438,12 @@ def upgrade101(cursor):
         try:
             status = eval_container(status)
         except StandardError:
-            # Not sure what to do here.  I think ignoring is not ideal, but
-            # won't result in anything too bad (BDK)
+            # Not sure what to do here.  I think ignoring is not
+            # ideal, but won't result in anything too bad (BDK)
             continue
         if status['endTime'] == status['startTime']:
-            # For unfinished downloads, unset the filename which got set in
-            # upgrade99
+            # For unfinished downloads, unset the filename which got
+            # set in upgrade99
             cursor.execute("UPDATE item SET filename=NULL "
                     "WHERE downloader_id=?", (id,))
         elif status['dlerType'] != 'BitTorrent':
@@ -2435,11 +2455,10 @@ def upgrade101(cursor):
 def upgrade102(cursor):
     """Fix for the embarrasing bug in upgrade101
 
-    This statement was exactly the opposite of what we want:
+    This statement was exactly the opposite of what we want::
 
         elif status['dlerType'] != 'BitTorrent':
     """
-
     cursor.execute("SELECT id, status, child_deleted FROM remote_downloader "
             "WHERE state = 'stopped'")
     for row in cursor.fetchall():
@@ -2484,7 +2503,7 @@ def upgrade104(cursor):
     cursor.execute("UPDATE item SET keep=0 WHERE keep IS NULL")
 
 def upgrade105(cursor):
-    """Move metainfo and fastResumeData out of the status dict """
+    """Move metainfo and fastResumeData out of the status dict."""
     # create new colums
     cursor.execute("ALTER TABLE remote_downloader ADD metainfo BLOB")
     cursor.execute("ALTER TABLE remote_downloader ADD fast_resume_data BLOB")
@@ -2531,10 +2550,10 @@ def upgrade106(cursor):
 
     for table in tables:
         if table == 'feed':
-            # let feed objects keep their id, it's fairly annoying to have to
-            # update the ufeed atribute for all the FeedImpl subclasses.
-            # The id won't be a duplicate anymore once we update the other
-            # tables
+            # let feed objects keep their id, it's fairly annoying to
+            # have to update the ufeed atribute for all the FeedImpl
+            # subclasses.  The id won't be a duplicate anymore once we
+            # update the other tables
             continue
         cursor.execute("SELECT id FROM %s" % table)
         for row in cursor.fetchall():
@@ -2558,17 +2577,20 @@ def upgrade106(cursor):
                     update_value('item', 'parent_id', id, new_id)
                     update_value('downloader', 'main_item_id', id, new_id)
                     update_value('playlist_item_map', 'item_id', id, new_id)
-                    update_value('playlist_folder_item_map', 'item_id', id, new_id)
+                    update_value('playlist_folder_item_map', 'item_id', id,
+                                 new_id)
                 elif table == 'playlist_folder':
                     update_value('playlist', 'folder_id', id, new_id)
                 elif table == 'playlist':
                     update_value('playlist_item_map', 'playlist_id', id, new_id)
-                    update_value('playlist_folder_item_map', 'playlist_id', id, new_id)
-                # note we don't handle TabOrder.tab_ids here.  That's because
-                # it's a list of ids, so it's hard to fix using SQL.  Also,
-                # the TabOrder code is able to recover from missing/extra ids
-                # in its list.  The only bad thing that will happen is the
-                # user's tab order will be changed.
+                    update_value('playlist_folder_item_map', 'playlist_id',
+                                 id, new_id)
+                # note we don't handle TabOrder.tab_ids here.  That's
+                # because it's a list of ids, so it's hard to fix
+                # using SQL.  Also, the TabOrder code is able to
+                # recover from missing/extra ids in its list.  The
+                # only bad thing that will happen is the user's tab
+                # order will be changed.
 
 def upgrade107(cursor):
     cursor.execute("CREATE TABLE db_log_entry ("

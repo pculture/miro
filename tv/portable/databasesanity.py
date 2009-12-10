@@ -28,12 +28,14 @@
 
 """Sanity checks for the databases.
 
-This module is deprecated: database sanity checking is done by the
-check_constraints method on DDBObjects.  This is a better way to do things
-because it will catch errors right when we save objects, instead of some
-unknown point in the future.  We still have this code around, because it's
-used to do sanity checks on old databases.
+.. note::
 
+    This module is deprecated: database sanity checking is done by the
+    ``check_constraints`` method on DDBObjects.  This is a better way
+    to do things because it will catch errors right when we save
+    objects, instead of some unknown point in the future.  We still
+    have this code around, because it's used to do sanity checks on
+    old databases in ``convert20database``.
 """
 
 from miro import item
@@ -47,34 +49,38 @@ class DatabaseInsaneError(Exception):
 class SanityTest(object):
     """Base class for the sanity test objects."""
 
-    def checkObject(self, obj):
-        """checkObject will be called for each object in the object list.
-        If there is an error return a string describing it.  If not return
-        None (or just let the function hit the bottom).
+    def check_object(self, obj):
+        """``check_object`` will be called for each object in the
+        object list.  If there is an error return a string describing
+        it.  If not return None (or just let the function hit the
+        bottom).
         """
         raise NotImplementedError()
 
     def finished(self):
-        """Called when we reach the end of the object list, SanityTest
-        subclasses may implement additional checking here."""
+        """Called when we reach the end of the object list,
+        ``SanityTest`` subclasses may implement additional checking
+        here.
+        """
         return
 
-    def fixIfPossible(self, objectList):
-        """Subclasses may implement this method if it's possible to fix broken
-        databases.  The default implementation just raises a
-        DatabaseInsaneError.
+    def fix_if_possible(self, objectList):
+        """Subclasses may implement this method if it's possible to
+        fix broken databases.  The default implementation just raises
+        a ``DatabaseInsaneError``.
         """
         raise DatabaseInsaneError()
 
-class PhontomFeedTest(SanityTest):
-    """Check that no items reference a Feed that isn't around anymore."""
+class PhantomFeedTest(SanityTest):
+    """Check that no items reference a Feed that isn't around anymore.
+    """
     def __init__(self):
         self.feedsInItems = set()
         self.topLevelFeeds = set()
         self.parentsInItems = set()
         self.topLevelParents = set()
 
-    def checkObject(self, obj):
+    def check_object(self, obj):
         if isinstance(obj, item.Item):
             if obj.feed_id is not None:
                 self.feedsInItems.add(obj.feed_id)
@@ -95,15 +101,15 @@ class PhontomFeedTest(SanityTest):
             phantomsString = ', '.join([str(p) for p in phantoms])
             return "Phantom items(s) referenced in items: %s" % phantomsString
 
-    def fixIfPossible(self, objectList):
+    def fix_if_possible(self, objectList):
         for i in reversed(xrange(len(objectList))):
-            if (isinstance(objectList[i], item.Item) and 
-                    objectList[i].feed_id is not None and
-                    objectList[i].feed_id not in self.topLevelFeeds):
+            if ((isinstance(objectList[i], item.Item) and
+                 objectList[i].feed_id is not None and
+                 objectList[i].feed_id not in self.topLevelFeeds)):
                 del objectList[i]
-            elif (isinstance(objectList[i], item.Item) and 
-                    objectList[i].parent_id is not None and
-                    objectList[i].parent_id not in self.topLevelParents):
+            elif (isinstance(objectList[i], item.Item) and
+                  objectList[i].parent_id is not None and
+                  objectList[i].parent_id not in self.topLevelParents):
                 del objectList[i]
 
 class SingletonTest(SanityTest):
@@ -115,12 +121,12 @@ class SingletonTest(SanityTest):
     def __init__(self):
         self.count = 0
 
-    def checkObject(self, obj):
+    def check_object(self, obj):
         if self.objectIsSingleton(obj):
             self.count += 1
             if self.count > 1:
                 return "Extra %s in database" % self.singletonName
-    
+
     def finished(self):
         if self.count == 0:
             # For all our singletons (currently at least), we don't need to
@@ -128,7 +134,7 @@ class SingletonTest(SanityTest):
             # return "No %s in database" % self.singletonName
             pass
 
-    def fixIfPossible(self, objectList):
+    def fix_if_possible(self, objectList):
         if self.count == 0:
             # For all our singletons (currently at least), we don't need to
             # create them here.  It'll happen when Miro is restarted.
@@ -150,30 +156,32 @@ class ChannelGuideSingletonTest(SingletonTest):
 class ManualFeedSingletonTest(SingletonTest):
     singletonName = "Manual Feed"
     def objectIsSingleton(self, obj):
-        return (isinstance(obj, feed.Feed) and 
+        return (isinstance(obj, feed.Feed) and
                 isinstance(obj.actualFeed, feed.ManualFeedImpl))
 
-def checkSanity(objectList, fixIfPossible=True, quiet=False, reallyQuiet=False):
+def check_sanity(objectList, fix_if_possible=True, quiet=False,
+                 reallyQuiet=False):
     """Do all sanity checks on a list of objects.
 
-    If fixIfPossible is True, the sanity checks will try to fix errors.  If
-    this happens objectList will be modified.
+    If fix_if_possible is True, the sanity checks will try to fix
+    errors.  If this happens objectList will be modified.
 
-    If fixIfPossible is False, or if it's not possible to fix the errors
-    checkSanity will raise a DatabaseInsaneError.
+    If fix_if_possible is False, or if it's not possible to fix the
+    errors check_sanity will raise a DatabaseInsaneError.
 
-    If quiet is True, we print to the log instead of poping up an error dialog
-    on fixable problems.  We set this when we are converting old databases,
-    since sanity errors are somewhat expected.
+    If quiet is True, we print to the log instead of poping up an
+    error dialog on fixable problems.  We set this when we are
+    converting old databases, since sanity errors are somewhat
+    expected.
 
     If reallyQuiet is True, won't even print out a warning on fixable
     problems.
 
-    Returns True if the database passed all sanity tests, false otherwise.
+    Returns True if the database passed all sanity tests, false
+    otherwise.
     """
-
     tests = set([
-        PhontomFeedTest(),
+        PhantomFeedTest(),
         ChannelGuideSingletonTest(),
         ManualFeedSingletonTest(),
     ])
@@ -182,7 +190,7 @@ def checkSanity(objectList, fixIfPossible=True, quiet=False, reallyQuiet=False):
     failedTests = set()
     for obj in objectList:
         for test in tests:
-            rv = test.checkObject(obj)
+            rv = test.check_object(obj)
             if rv is not None:
                 errors.append(rv)
                 failedTests.add(test)
@@ -196,17 +204,17 @@ def checkSanity(objectList, fixIfPossible=True, quiet=False, reallyQuiet=False):
     if errors:
         errorMsg = "The database failed the following sanity tests:\n"
         errorMsg += "\n".join(errors)
-        if fixIfPossible:
+        if fix_if_possible:
             if not quiet:
-                signals.system.failed(when="While checking database", 
-                        details=errorMsg)
+                signals.system.failed(when="While checking database",
+                                      details=errorMsg)
             elif not reallyQuiet:
                 print "WARNING: Database sanity error"
                 print errorMsg
             for test in failedTests:
-                test.fixIfPossible(objectList)
-                # fixIfPossible will throw a DatabaseInsaneError if it fails,
-                # which we let get raised to our caller
+                test.fix_if_possible(objectList)
+                # fix_if_possible will throw a DatabaseInsaneError if
+                # it fails, which we let get raised to our caller
         else:
             raise DatabaseInsaneError(errorMsg)
     return (errors == [])

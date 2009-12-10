@@ -880,9 +880,9 @@ class HTTPClientTestBase(AsyncSocketTest):
         self.assertEquals(dialog.__class__, dialogs.HTTPAuthDialog)
         if self.logins:
             user, password = self.logins.pop(0)
-            dialog.runCallback(dialogs.BUTTON_OK, user, password)
+            dialog.run_callback(dialogs.BUTTON_OK, user, password)
         else:
-            dialog.runCallback(None)
+            dialog.run_callback(None)
 
 class HTTPClientTest(HTTPClientTestBase):
     def testRealRequest(self):
