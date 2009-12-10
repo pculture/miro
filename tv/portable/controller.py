@@ -26,8 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""controller.py -- Contains Controller class.  It handles high-level control
-of Miro.
+"""controller.py -- Contains Controller class.  It handles high-level
+control of Miro.
 """
 
 import logging

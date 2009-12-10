@@ -29,18 +29,18 @@
 def make_simple_get_set(attributeName, changeNeedsSave=True):
     """Creates a simple DDBObject getter and setter for an attribute.
 
-    This exists because for many DDBOBject attributes we have methods like the
-    following:
+    This exists because for many DDBOBject attributes we have methods
+    like the following::
 
-    def getFoo(self):
-        self.confirm_db_thread()
-        return self.foo
-    def setFoo(self, newFoo):
-        self.confirm_db_thread()
-        self.foo = newFoo
-        self.signal_change()
+        def getFoo(self):
+            self.confirm_db_thread()
+            return self.foo
+
+        def setFoo(self, newFoo):
+            self.confirm_db_thread()
+            self.foo = newFoo
+            self.signal_change()
     """
-
     def getter(self):
         self.confirm_db_thread()
         return getattr(self, attributeName)
@@ -49,4 +49,3 @@ def make_simple_get_set(attributeName, changeNeedsSave=True):
         setattr(self, attributeName, newValue)
         self.signal_change(needsSave=changeNeedsSave)
     return getter, setter
-

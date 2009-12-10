@@ -65,8 +65,8 @@ def _log(priority, message, *args):
     try:
         description = unicode(message) % args
     except UnicodeError:
-        logging.warn("Unicode error when creating database log entry %s %s" %
-                (message, args))
+        logging.warn("Unicode error when creating database log entry %s %s" % \
+                     (message, args))
         return
     entry = DBLogEntry(priority, description)
     logging.dblog(description)
@@ -74,25 +74,27 @@ def _log(priority, message, *args):
 def info(message, *args):
     """Log a message to the database, using the 'info' priority.
 
-    This should be used for entries that are fairly notable.  These entries
-    will be printed out every time the user starts up Miro.
+    This should be used for entries that are fairly notable.  These
+    entries will be printed out every time the user starts up Miro.
     """
     _log(INFO, message, *args)
 
 def debug(message, *args):
     """Log a message to the database, using the 'debug' priority.
 
-    This should be used for entries that are there for debugging purposes.
-    These will be only printed out to the current log file.
+    This should be used for entries that are there for debugging
+    purposes.  These will be only printed out to the current log file.
     """
     _log(DEBUG, message, *args)
 
 def print_old_log_entries():
-    """Printout old log entries to the log file."""
+    """Printout old log entries to the log file.
+    """
     old_entries = list(DBLogEntry.notable_entries())
     if not old_entries:
         return
     logging.dblog("start database log entries")
     for entry in old_entries:
-        logging.dblog("* %s: %s", time.ctime(entry.timestamp), entry.description)
+        logging.dblog("* %s: %s", time.ctime(entry.timestamp),
+                      entry.description)
     logging.dblog("end database log entries")

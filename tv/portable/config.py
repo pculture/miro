@@ -45,12 +45,12 @@ _callbacks = set()
 def add_change_callback(callback):
     """Attaches change notification callback functions.
 
-    Callback functions should have a signature like 
+    Callback functions should have a signature like
     ``callback_function: key * value -> None``.  Example::
 
         def callback_function(key, value):
             if key == prefs.PRESERVE_X_GB_FREE:
-               blah blah blah
+                blah blah blah
     """
     _callbacks.add(callback)
 
@@ -60,9 +60,6 @@ def remove_change_callback(callback):
     _callbacks.discard(callback)
 
 def load(theme=None):
-    """The theme parameter is a horrible hack to load the theme before we
-    can import other modules.  pybridge makes the extra, early call
-    """
     global _data
     _lock.acquire()
     try:
@@ -94,8 +91,10 @@ def get(descriptor, use_theme_data=True):
 
         if _data is not None and descriptor.key in _data:
             value = _data[descriptor.key]
-            if descriptor.possible_values is not None and not value in descriptor.possible_values:
-                logging.warn('Incorrect preference value %s for key %s, using failsafe: %s' % (value, descriptor.key, descriptor.failsafe_value))
+            if ((descriptor.possible_values is not None
+                 and not value in descriptor.possible_values)):
+                logging.warn('bad preference value %s for key %s.  using failsafe: %s',
+                             value, descriptor.key, descriptor.failsafe_value)
                 return descriptor.failsafe_value
             else:
                 return value
@@ -126,4 +125,5 @@ def _check_validity():
 def _notify_listeners(key, value):
     from miro import eventloop
     for callback in _callbacks:
-        eventloop.addIdle(callback, 'config callback: %s' % callback, args=(key, value))
+        eventloop.addIdle(callback, 'config callback: %s' % callback,
+                          args=(key, value))

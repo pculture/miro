@@ -41,40 +41,44 @@ class DatabaseConstraintError(Exception):
     pass
 
 class DatabaseConsistencyError(Exception):
-    """Raised when the database encounters an internal consistency issue.
+    """Raised when the database encounters an internal consistency
+    issue.
     """
     pass
 
 class DatabaseThreadError(Exception):
-    """Raised when the database encounters an internal consistency issue.
+    """Raised when the database encounters an internal consistency
+    issue.
     """
     pass
 
 class DatabaseVersionError(StandardError):
-    """Raised when an attempt is made to restore a database newer than the
-    one we support
+    """Raised when an attempt is made to restore a database newer than
+    the one we support
     """
     pass
 
 class ObjectNotFoundError(StandardError):
-    """Raised when an attempt is made to lookup an object that doesn't exist
+    """Raised when an attempt is made to lookup an object that doesn't
+    exist
     """
     pass
 
 class TooManyObjects(StandardError):
-    """Raised when an attempt is made to lookup a singleton and multiple rows
-    match the query.
+    """Raised when an attempt is made to lookup a singleton and
+    multiple rows match the query.
     """
     pass
 
 class NotRootDBError(StandardError):
     """Raised when an attempt is made to call a function that's only
-    allowed to be called from the root database
+    allowed to be called from the root database.
     """
     pass
 
 class NoValue:
-    """Used as a dummy value so that "None" can be treated as a valid value
+    """Used as a dummy value so that "None" can be treated as a valid
+    value.
     """
     pass
 
