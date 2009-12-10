@@ -478,16 +478,5 @@ class FeedParserAttributesTestCase(FeedTestCase):
         self.assertEquals(self.item.get_title(), entry.title)
         self.assert_(self.item.has_original_title())
 
-    def test_feedparser_output(self):
-        # test a couple entries from the feedparser_output attribute
-        feedparser_output = self.item.feedparser_output
-        self.assertEquals(feedparser_output['title'], 'Bumper Sticker')
-        self.assertEquals(feedparser_output['id'], 'guid-1234')
-        self.assertEquals(feedparser_output['summary'],
-            "I'm a musician and I support filesharing.")
-        self.assertEquals(feedparser_output['enclosures'],
-                [{'href': u'http://downhillbattle.org/key/gallery/movie.mpg',
-                    'type': u'video/mpeg', 'filesize': u'1234'}])
-
 if __name__ == "__main__":
     unittest.main()

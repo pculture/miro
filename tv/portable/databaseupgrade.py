@@ -59,6 +59,64 @@ class DatabaseTooNewError(Exception):
     """
     pass
 
+def remove_column(cursor, table, column_names):
+    """Remove a column from a SQLITE table.  This was added for
+    upgrade88, but it's probably useful for other ones as well.
+
+    :param table: the table to remove the columns from
+    :param column_names: list of columns to remove
+    """
+    cursor.execute("PRAGMA table_info('%s')" % table)
+    columns = []
+    columns_with_type = []
+    for column_info in cursor.fetchall():
+        column = column_info[1]
+        col_type = column_info[2]
+        if column in column_names:
+            continue
+        columns.append(column)
+        if column == 'id':
+            col_type += ' PRIMARY KEY'
+        columns_with_type.append("%s %s" % (column, col_type))
+
+    cursor.execute("PRAGMA index_list('%s')" % table)
+    index_sql = []
+    for index_info in cursor.fetchall():
+        name = index_info[1]
+        if name in column_names:
+            continue
+        cursor.execute("SELECT sql FROM sqlite_master "
+                       "WHERE name=? and type='index'", (name,))
+        index_sql.append(cursor.fetchone()[0])
+
+    cursor.execute("ALTER TABLE %s RENAME TO old_%s" % (table, table))
+    cursor.execute("CREATE TABLE %s (%s)" %
+                   (table, ', '.join(columns_with_type)))
+    cursor.execute("INSERT INTO %s SELECT %s FROM old_%s" %
+                   (table, ', '.join(columns), table))
+    cursor.execute("DROP TABLE old_%s" % table)
+    for sql in index_sql:
+        cursor.execute(sql)
+
+def get_object_tables(cursor):
+    """Returns a list of tables that store ``DDBObject`` subclasses.
+    """
+    cursor.execute("SELECT name FROM sqlite_master "
+            "WHERE type='table' and name != 'dtv_variables'")
+    return [row[0] for row in cursor]
+
+def get_next_id(cursor):
+    """Calculate the next id to assign to new rows.
+
+    This will be 1 higher than the max id for all the tables in the
+    DB.
+    """
+    max_id = 0
+    for table in get_object_tables(cursor):
+        cursor.execute("SELECT MAX(id) from %s" % table)
+        max_id = max(max_id, cursor.fetchone()[0])
+    return max_id + 1
+
 _upgrade_overide = {}
 def get_upgrade_func(version):
     if version in _upgrade_overide:
@@ -2091,59 +2149,6 @@ def upgrade87(cursor):
             (', '.join(columns), ', '.join(columns)))
     cursor.execute("DROP TABLE old_feed")
 
-def remove_column(cursor, table, *column_names):
-    """Remove a column from an SQLITE table.  This was added for
-    upgrade88, but it's probably useful for other ones as well.
-    """
-    cursor.execute("PRAGMA table_info('%s')" % table)
-    columns = []
-    columns_with_type = []
-    for column_info in cursor.fetchall():
-        column = column_info[1]
-        type = column_info[2]
-        if column in column_names:
-            continue
-        columns.append(column)
-        if column == 'id':
-            type += ' PRIMARY KEY'
-        columns_with_type.append("%s %s" % (column, type))
-
-    cursor.execute("PRAGMA index_list('%s')" % table)
-    index_sql = []
-    for index_info in cursor.fetchall():
-        name = index_info[1]
-        if name in column_names:
-            continue
-        cursor.execute("SELECT sql FROM sqlite_master "
-                "WHERE name=? and type='index'", (name,))
-        index_sql.append(cursor.fetchone()[0])
-
-    cursor.execute("ALTER TABLE %s RENAME TO old_%s" % (table, table))
-    cursor.execute("CREATE TABLE %s (%s)" %
-        (table, ', '.join(columns_with_type)))
-    cursor.execute("INSERT INTO %s SELECT %s FROM old_%s" %
-            (table, ', '.join(columns), table))
-    cursor.execute("DROP TABLE old_%s" % table)
-    for sql in index_sql:
-        cursor.execute(sql)
-
-def get_object_tables(cursor):
-    """Get tables that store DDBObject subclasses."""
-    cursor.execute("SELECT name FROM sqlite_master "
-            "WHERE type='table' and name != 'dtv_variables'")
-    return [row[0] for row in cursor]
-
-def get_next_id(cursor):
-    """Calculate the next id to assign to new rows.
-
-    This will be 1 higher than the max id for all tables in the DB.
-    """
-    max_id = 0
-    for table in get_object_tables(cursor):
-        cursor.execute("SELECT MAX(id) from %s" % table)
-        max_id = max(max_id, cursor.fetchone()[0])
-    return max_id + 1
-
 def upgrade88(cursor):
     """Replace playlist.item_ids, with PlaylistItemMap objects."""
 
@@ -2196,7 +2201,7 @@ def upgrade88(cursor):
                     "VALUES (?, ?, ?, ?, ?)",
                     (id_counter.next(), item_id, id, i, count))
     for table in ('playlist_folder', 'playlist'):
-        remove_column(cursor, table, 'item_id')
+        remove_column(cursor, table, ['item_id'])
 
 def upgrade89(cursor):
     """Set videoFilename column for downloaded items."""
@@ -2277,9 +2282,9 @@ def upgrade92(cursor):
             'search_downloads_feed_impl', 'manual_feed_impl',
             'single_feed_impl',)
     for table in feed_impl_tables:
-        remove_column(cursor, table, 'lastViewed')
-    remove_column(cursor, 'playlist', 'item_ids')
-    remove_column(cursor, 'playlist_folder', 'item_ids')
+        remove_column(cursor, table, ['lastViewed'])
+    remove_column(cursor, 'playlist', ['item_ids'])
+    remove_column(cursor, 'playlist_folder', ['item_ids'])
 
 def upgrade93(cursor):
     VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogv', '.anx',
@@ -2337,7 +2342,7 @@ def upgrade95(cursor):
 
 def upgrade96(cursor):
     """Delete the videoFilename and isVideo column."""
-    remove_column(cursor, 'item', 'videoFilename', 'isVideo')
+    remove_column(cursor, 'item', ['videoFilename', 'isVideo'])
 
 def upgrade97(cursor):
     """Add another indexes, this is make tab switching faster.
@@ -2595,3 +2600,8 @@ def upgrade106(cursor):
 def upgrade107(cursor):
     cursor.execute("CREATE TABLE db_log_entry ("
             "id integer, timestamp real, priority integer, description text)")
+
+def upgrade108(cursor):
+    """Drop the feedparser_output column from item.
+    """
+    remove_column(cursor, "item", ["feedparser_output"])

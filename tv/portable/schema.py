@@ -402,7 +402,6 @@ class ItemSchema(MultiClassObjectSchema):
         ('enclosure_size', SchemaInt(noneOk=True)),
         ('enclosure_type', SchemaString(noneOk=True)),
         ('enclosure_format', SchemaString(noneOk=True)),
-        ('feedparser_output', SchemaReprContainer()),
         ('was_downloaded', SchemaBool()),
         ('filename', SchemaFilename(noneOk=True)),
         ('deleted', SchemaBool(noneOk=True)),
@@ -419,10 +418,6 @@ class ItemSchema(MultiClassObjectSchema):
             ('item_feed_downloader', ('feed_id', 'downloader_id',)),
             ('item_file_type', ('file_type',)),
     )
-
-    @staticmethod
-    def handle_malformed_feedparser_output(row):
-        return {}
 
 class FeedSchema(DDBObjectSchema):
     klass = Feed
@@ -686,13 +681,15 @@ class DBLogEntrySchema(DDBObjectSchema):
     def handle_malformed_list_view_displays(row):
         return []
 
-VERSION = 107
+VERSION = 108
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
-    FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,
+    FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, 
+    ScraperFeedImplSchema,
     SearchFeedImplSchema, DirectoryFeedImplSchema, DirectoryWatchFeedImplSchema,
     SearchDownloadsFeedImplSchema, RemoteDownloaderSchema,
-    HTTPAuthPasswordSchema, ChannelGuideSchema, ManualFeedImplSchema, SingleFeedImplSchema,
+    HTTPAuthPasswordSchema, ChannelGuideSchema, ManualFeedImplSchema, 
+    SingleFeedImplSchema,
     PlaylistSchema, ChannelFolderSchema, PlaylistFolderSchema,
     PlaylistItemMapSchema, PlaylistFolderItemMapSchema,
     TabOrderSchema, ThemeHistorySchema, WidgetsFrontendStateSchema,

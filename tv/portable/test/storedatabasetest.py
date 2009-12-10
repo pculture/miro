@@ -197,16 +197,6 @@ class DBUpgradeTest(StoreDatabaseTest):
                 raise AssertionError("different column types for %s (%s)" %
                         (table_name, diff))
 
-    def test_empty_feedparser_output(self):
-        # make sure that if we reset feedparser_output to {} because of bug
-        # #12028 that our upgrades work.  The item with id 44 in this database
-        # has feedparser_output = {}
-        shutil.copy(resources.path("testdata/"
-            "olddatabase.empty_feedparser_output_test"), self.save_path2)
-        self.reload_database(self.save_path2)
-        app.db.cursor.execute('select count(*) from item')
-        self.assertEquals(item.Item.make_view().count(), 15)
-
     def _get_column_types(self):
         app.db.cursor.execute("SELECT name FROM sqlite_master "
                 "WHERE type='table'")
@@ -493,11 +483,6 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
         # than an empty dict
         self.check_fixed_value(self.downloader, 'status',
                 {'rate': 0, 'upRate': 0, 'eta': 0}, disk_value={})
-
-    def test_corrupt_feedparser_output(self):
-        app.db.cursor.execute("UPDATE item "
-                "SET feedparser_output='{baddata' WHERE id=?", (self.item.id,))
-        self.check_fixed_value(self.item, 'feedparser_output', {})
 
     def test_corrupt_etag(self):
         app.db.cursor.execute("UPDATE rss_multi_feed_impl "

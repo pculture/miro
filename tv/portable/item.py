@@ -112,7 +112,6 @@ class FeedParserValues(object):
     def update_item(self, item):
         for key, value in self.data.items():
             setattr(item, key, value)
-        item.feedparser_output = self.normalized_entry
 
     def compare_to_item(self, item):
         for key, value in self.data.items():
