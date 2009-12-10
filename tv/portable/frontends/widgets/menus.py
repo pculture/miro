@@ -529,12 +529,14 @@ def generate_action_groups(menu_structure):
 class MenuManager(signals.SignalEmitter):
     """Updates the menu based on the current selection.
 
-    This includes enabling/disabling menu items, changing menu text for plural
-    selection and enabling/disabling the play button.  The play button is
-    obviously not a menu item, but it's pretty closely related
+    This includes enabling/disabling menu items, changing menu text
+    for plural selection and enabling/disabling the play button.  The
+    play button is obviously not a menu item, but it's pretty closely
+    related
 
-    Whenever code makes a change that could possibly affect which menu items
-    should be enabled/disabled, it should call the update_menus() method.
+    Whenever code makes a change that could possibly affect which menu
+    items should be enabled/disabled, it should call the
+    update_menus() method.
     """
     def __init__(self):
         signals.SignalEmitter.__init__(self)
@@ -557,15 +559,16 @@ class MenuManager(signals.SignalEmitter):
             self.enabled_groups.add('NonPlaying')
 
     def _set_play_pause(self):
-        if (not app.playback_manager.is_playing or
-                app.playback_manager.is_paused):
+        if ((not app.playback_manager.is_playing
+             or app.playback_manager.is_paused)):
             self.play_pause_state = 'play'
         else:
             self.play_pause_state = 'pause'
 
     def _handle_feed_selection(self, selected_feeds):
-        """Handle the user selecting things in the feed list.  selected_feeds
-        is a list of ChannelInfo objects
+        """Handle the user selecting things in the feed list.
+
+        ``selected_feeds`` is a list of ChannelInfo objects.
         """
         self.enabled_groups.add('FeedsSelected')
         if len(selected_feeds) == 1:
@@ -583,10 +586,11 @@ class MenuManager(signals.SignalEmitter):
             self.states["plural"].append("UpdateFeeds")
 
     def _handle_site_selection(self, selected_sites):
-        """Handle the user selecting things in the site list.  selected_sites
-        is a list of GuideInfo objects
+        """Handle the user selecting things in the site list.
+        selected_sites is a list of GuideInfo objects
         """
-        pass # We don't change menu items for the site tab list
+        # we don't change menu items for the site tab list
+        pass
 
     def _handle_playlist_selection(self, selected_playlists):
         self.enabled_groups.add('PlaylistsSelected')
@@ -624,7 +628,8 @@ class MenuManager(signals.SignalEmitter):
             raise ValueError("Unknown tab list type: %s" % selection_type)
 
     def _update_menus_for_selected_items(self):
-        """Update the menu items based on the current item list selection.
+        """Update the menu items based on the current item list
+        selection.
         """
         selected_items = app.item_list_controller_manager.get_selection()
         downloaded = False
