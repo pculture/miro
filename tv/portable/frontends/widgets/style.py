@@ -246,6 +246,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     UPLOAD_TOTAL_TEXT = _("Upload Total")
     DOWN_RATE_TEXT = _("Down Rate")
     DOWN_TOTAL_TEXT = _("Down Total")
+    UP_DOWN_RATIO_TEXT = _("Up/Down Ratio")
     DOWNLOAD_TEXT = _("Download")
     DOWNLOAD_TORRENT_TEXT = _("Download Torrent")
     ERROR_TEXT = _("Error")
@@ -649,7 +650,11 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             if self.data.leechers is not None:
                 details_rows.append(
                     (self.DOWN_RATE_TEXT, displaytext.download_rate(self.data.down_rate), None))
-            details_rows.append((self.DOWN_TOTAL_TEXT, displaytext.size_string(self.data.down_total), None))
+            details_rows.append(
+                (self.DOWN_TOTAL_TEXT, displaytext.size_string(self.data.down_total), None))
+            details_rows.append((None, None, None))
+            details_rows.append(
+                (self.UP_DOWN_RATIO_TEXT, "%0.2f" % self.data.up_down_ratio, None))
 
         if details_rows:
             details_box = self.create_pseudo_table(layout, details_rows)

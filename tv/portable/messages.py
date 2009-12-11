@@ -975,6 +975,7 @@ class ItemInfo(object):
     :param down_rate: (Torrent only) how fast we're downloading data
     :param up_total: (Torrent only) total amount we've uploaded
     :param down_total: (Torrent only) total amount we've downloaded
+    :param up_down_ratio: (Torrent only) ratio of uploaded to downloaded
     """
     def __init__(self, item):
         self.name = item.get_title()
@@ -1031,6 +1032,7 @@ class ItemInfo(object):
         ## Torrent-specific stuff
         self.leechers = self.seeders = self.up_rate = None
         self.down_rate = self.up_total = self.down_total = None
+        self.up_down_ratio = 0.0
         if item.looks_like_torrent() and hasattr(item.downloader, 'status'):
             status = item.downloader.status
             if item.is_transferring():
@@ -1043,6 +1045,10 @@ class ItemInfo(object):
             # gettorrentdetailsfinished & gettorrentdetails
             self.up_total = status.get('uploaded', 0)
             self.down_total = status.get('currentSize', 0)
+            if self.down_total <= 0:
+                self.up_down_ratio = 0.0
+            else:
+                self.up_down_ratio = self.up_total * 1.0 / self.down_total
 
 class DownloadInfo(object):
     """Tracks the download state of an item.
