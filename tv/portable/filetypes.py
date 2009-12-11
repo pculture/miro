@@ -159,7 +159,7 @@ def _has_video_type(enclosure):
 def _has_video_extension(enclosure, key):
     from miro import download_utils
     if key in enclosure:
-        elems = download_utils.parseURL(enclosure[key], split_path=True)
+        elems = download_utils.parse_url(enclosure[key], split_path=True)
         return is_allowed_filename(elems[3])
     return False
 

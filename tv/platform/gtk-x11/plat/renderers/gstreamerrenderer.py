@@ -44,7 +44,7 @@ GST_PLAY_FLAG_TEXT          = (1 << 2)
 from miro import app
 from miro import config
 from miro import prefs
-from miro.download_utils import nextFreeFilename
+from miro.download_utils import next_free_filename
 from miro.gtcache import gettext as _
 from miro.plat import options
 from miro import iso_639

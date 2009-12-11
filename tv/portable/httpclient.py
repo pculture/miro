@@ -53,7 +53,8 @@ from miro.clock import clock
 from miro import httpauth
 from miro import config
 from miro import prefs
-from miro.download_utils import cleanFilename, parseURL, defaultPort, getFileURLPath, filenameFromURL
+from miro.download_utils import (clean_filename, parse_url, default_port, 
+                                 get_file_url_path, filename_from_url)
 from miro.xhtmltools import url_encode_dict, multipart_encode
 from miro import eventloop
 from miro import util
@@ -834,7 +835,7 @@ class HTTPConnection(ConnectionHandler):
         else:
             headers = headers.copy()
         headers['Host'] = host.encode('idna')
-        if port != defaultPort(self.scheme):
+        if port != default_port(self.scheme):
             headers['Host'] += ':%d' % port
         headers['Accept-Encoding'] = 'identity'
 
@@ -1280,7 +1281,7 @@ class HTTPConnectionPool(object):
         have a free connection, otherwise it will be queued.
         """
         proxy_host = proxy_port = None
-        scheme, host, port, path = parseURL(url)
+        scheme, host, port, path = parse_url(url)
         if scheme not in ['http', 'https'] or host == '' or path == '':
             errback (MalformedURL(url))
             return
@@ -1502,7 +1503,7 @@ class HTTPClient(object):
 
     def dropStaleCookies(self):
         """Remove cookies that have expired or are invalid for this URL"""
-        scheme, host, port, path = parseURL(self.url)
+        scheme, host, port, path = parse_url(self.url)
         temp = {}
         for name in self.cookies:
             if self.isValidCookie(self.cookies[name], scheme, host, port, path):
@@ -1561,7 +1562,7 @@ class HTTPClient(object):
         self.willHandleResponse = False
         self.gotBadStatusCode = False
         if 'Authorization' not in self.headers:
-            scheme, host, port, path = parseURL(self.redirectedURL)
+            scheme, host, port, path = parse_url(self.redirectedURL)
             def callback(authHeader):
                 if self.cancelled:
                     return
@@ -1687,7 +1688,7 @@ class HTTPClient(object):
         cookies = {}
         cookieStrings = []
         if response.has_key('set-cookie') or response.has_key('set-cookie2'):
-            scheme, host, port, path = parseURL(self.redirectedURL)
+            scheme, host, port, path = parse_url(self.redirectedURL)
 
             # Split header into cookie strings, respecting commas in
             # the middle of stuff
@@ -1795,8 +1796,8 @@ class HTTPClient(object):
         else:
             filename = self.findValueFromHeader(disposition, 'filename')
             if filename is not None:
-                return cleanFilename(filename)
-        return filenameFromURL(util.unicodify(response['redirected-url']), clean=True)
+                return clean_filename(filename)
+        return filename_from_url(util.unicodify(response['redirected-url']), clean=True)
 
     def getCharsetFromResponse(self, response):
         try:
@@ -1864,7 +1865,7 @@ def grabURL(url, callback, errback, headerCallback=None,
     if cookies == None:
         cookies = {}
     if url.startswith("file://"):
-        path = getFileURLPath(url)
+        path = get_file_url_path(url)
         try:
             f = file(path)
         except EnvironmentError:

@@ -217,23 +217,23 @@ class UtilTest(MiroTestCase):
                          u'http://example.org/1.ogg')
 
 class DownloadUtilsTest(MiroTestCase):
-    def checkCleanFilename(self, filename, test_against):
-        self.assertEquals(download_utils.cleanFilename(filename),
-                test_against)
+    def check_clean_filename(self, filename, test_against):
+        self.assertEquals(download_utils.clean_filename(filename),
+                          test_against)
 
-    def testCleanFilename(self):
-        self.checkCleanFilename('normalname', 'normalname')
-        self.checkCleanFilename('a:b?c>d<e|f*/g\\h"\'', 'abcdefgh')
-        self.checkCleanFilename('', '_')
+    def test_clean_filename(self):
+        self.check_clean_filename('normalname', 'normalname')
+        self.check_clean_filename('a:b?c>d<e|f*/g\\h"\'', 'abcdefgh')
+        self.check_clean_filename('', '_')
         longFilename = 'booya' * 100
         longExtension = '.' + 'foo' * 20
-        self.checkCleanFilename(longFilename, longFilename[:100])
+        self.check_clean_filename(longFilename, longFilename[:100])
         # total file length isn't over the limit, so the extension stays the
         # same
-        self.checkCleanFilename('abc' + longExtension, 
-            'abc' + longExtension)
-        self.checkCleanFilename(longFilename + longExtension,
-            longFilename[:50] + longExtension[:50])
+        self.check_clean_filename('abc' + longExtension, 
+                                  'abc' + longExtension)
+        self.check_clean_filename(longFilename + longExtension,
+                                  longFilename[:50] + longExtension[:50])
 
 class Test_simple_config_file(MiroTestCase):
     def test_read_simple_config_file(self):

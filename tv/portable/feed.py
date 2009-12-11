@@ -1324,7 +1324,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         enclosure = fp_values.first_video_enclosure
         if (self.url.startswith('file://') and enclosure and
                 enclosure['url'].startswith('file://')):
-            path = download_utils.getFileURLPath(enclosure['url'])
+            path = download_utils.get_file_url_path(enclosure['url'])
             item = models.FileItem(path, entry=entry, feed_id=self.ufeed.id)
         else:
             item = models.Item(entry, feed_id=self.ufeed.id)

@@ -162,7 +162,7 @@ def parse_command_line_args(args=None):
 
     for arg in args:
         if arg.startswith('file://'):
-            arg = download_utils.getFileURLPath(arg)
+            arg = download_utils.get_file_url_path(arg)
         elif arg.startswith('miro:'):
             add_subscription_url('miro:', 'application/x-miro', arg)
         elif arg.startswith('democracy:'):

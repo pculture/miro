@@ -1139,18 +1139,19 @@ def upgrade71(objectList):
     # copied from the source code from r8953 (2009-01-17).  Some
     # slight changes were made, mostly to drop some error checking.
 
-    def fixFileURLS(url):
-        """Fix file URLS that start with file:// instead of file:///.
-        Note: this breaks for file URLS that include a hostname, but
+    def fix_file_urls(url):
+        """Fix file urls that start with file:// instead of file:///.
+        Note: this breaks for file urls that include a hostname, but
         we never use those and it's not so clear what that would mean
-        anyway -- file URLs is an ad-hoc spec as I can tell.."""
+        anyway--file urls is an ad-hoc spec as I can tell.
+        """
         if url.startswith('file://'):
             if not url.startswith('file:///'):
                 url = 'file:///%s' % url[len('file://'):]
             url = url.replace('\\', '/')
         return url
 
-    def defaultPort(scheme):
+    def default_port(scheme):
         if scheme == 'https':
             return 443
         elif scheme == 'http':
@@ -1161,8 +1162,8 @@ def upgrade71(objectList):
             return None
         return 80
 
-    def parseURL(url, split_path=False):
-        url = fixFileURLS(url)
+    def parse_url(url, split_path=False):
+        url = fix_file_urls(url)
         (scheme, host, path, params, query, fragment) = util.unicodify(list(urlparse(url)))
         # Filter invalid URLs with duplicated ports
         # (http://foo.bar:123:123/baz) which seem to be part of #441.
@@ -1180,9 +1181,9 @@ def upgrade71(objectList):
                 raise
             except:
                 logging.warn("invalid port for %r" % url)
-                port = defaultPort(scheme)
+                port = default_port(scheme)
         else:
-            port = defaultPort(scheme)
+            port = default_port(scheme)
 
         host = host.lower()
         scheme = scheme.lower()
@@ -1271,7 +1272,7 @@ def upgrade71(objectList):
 
     def _has_video_extension(enclosure, key):
         if key in enclosure:
-            elems = parseURL(enclosure[key], split_path=True)
+            elems = parse_url(enclosure[key], split_path=True)
             return is_allowed_filename(elems[3])
         return False
     def getFirstVideoEnclosure(entry):
@@ -1435,18 +1436,19 @@ def upgrade75(objectList):
     """
     from datetime import datetime
 
-    def fixFileURLS(url):
-        """Fix file URLS that start with file:// instead of file:///.
-        Note: this breaks for file URLS that include a hostname, but
+    def fix_file_urls(url):
+        """Fix file urls that start with file:// instead of file:///.
+        Note: this breaks for file urls that include a hostname, but
         we never use those and it's not so clear what that would mean
-        anyway -- file URLs is an ad-hoc spec as I can tell.."""
+        anyway--file urls is an ad-hoc spec as I can tell.
+        """
         if url.startswith('file://'):
             if not url.startswith('file:///'):
                 url = 'file:///%s' % url[len('file://'):]
             url = url.replace('\\', '/')
         return url
 
-    def defaultPort(scheme):
+    def default_port(scheme):
         if scheme == 'https':
             return 443
         elif scheme == 'http':
@@ -1457,8 +1459,8 @@ def upgrade75(objectList):
             return None
         return 80
 
-    def parseURL(url, split_path=False):
-        url = fixFileURLS(url)
+    def parse_url(url, split_path=False):
+        url = fix_file_urls(url)
         (scheme, host, path, params, query, fragment) = util.unicodify(list(urlparse(url)))
         # Filter invalid URLs with duplicated ports
         # (http://foo.bar:123:123/baz) which seem to be part of #441.
@@ -1476,9 +1478,9 @@ def upgrade75(objectList):
                 raise
             except:
                 logging.warn("invalid port for %r" % url)
-                port = defaultPort(scheme)
+                port = default_port(scheme)
         else:
-            port = defaultPort(scheme)
+            port = default_port(scheme)
 
         host = host.lower()
         scheme = scheme.lower()
@@ -1562,7 +1564,7 @@ def upgrade75(objectList):
 
     def _has_video_extension(enclosure, key):
         if key in enclosure:
-            elems = parseURL(enclosure[key], split_path=True)
+            elems = parse_url(enclosure[key], split_path=True)
             return is_allowed_filename(elems[3])
         return False
 

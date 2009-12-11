@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from miro.download_utils import parseURL
+from miro.download_utils import parse_url
 from miro import dialogs
 from miro import eventloop
 from miro import models
@@ -52,7 +52,7 @@ def askForHTTPAuth(callback, url, realm, authScheme):
     if the user clicks cancel.
     """
 
-    scheme, host, port, path = parseURL(url)
+    scheme, host, port, path = parse_url(url)
     def handleLoginResponse(dialog):
         if dialog.choice == dialogs.BUTTON_OK:
             auth = models.HTTPAuthPassword(dialog.username,

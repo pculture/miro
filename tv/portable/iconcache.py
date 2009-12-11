@@ -33,7 +33,7 @@ from miro import httpclient
 from datastructures import Fifo
 from miro import eventloop
 from miro.database import DDBObject, ObjectNotFoundError
-from miro.download_utils import nextFreeFilename, getFileURLPath
+from miro.download_utils import next_free_filename, get_file_url_path
 from miro.util import unicodify
 from miro.plat.utils import unicodeToFilename
 from miro import config
@@ -205,7 +205,7 @@ class IconCache(DDBObject):
                 else:
                     tmp_filename = os.path.join(cachedir, info["filename"]) + ".part"
 
-                tmp_filename = nextFreeFilename(tmp_filename)
+                tmp_filename = next_free_filename(tmp_filename)
                 output = fileutil.open_file(tmp_filename, 'wb')
                 output.write(info["body"])
                 output.close()
@@ -228,7 +228,7 @@ class IconCache(DDBObject):
             self.filename = u'.'.join(parts)
             self.filename = unicodeToFilename(self.filename, cachedir)
             self.filename = os.path.join(cachedir, self.filename)
-            self.filename = nextFreeFilename(self.filename)
+            self.filename = next_free_filename(self.filename)
             needsSave = True
 
             try:
@@ -310,7 +310,7 @@ class IconCache(DDBObject):
     def get_filename(self):
         self.dbItem.confirm_db_thread()
         if self.url and self.url.startswith(u"file://"):
-            return getFileURLPath(self.url)
+            return get_file_url_path(self.url)
         elif self.url and self.url.startswith(u"/"):
             return unicodeToFilename(self.url)
         else:

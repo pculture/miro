@@ -36,8 +36,10 @@ from miro.gtcache import gettext as _
 
 import libtorrent as lt
 from miro.clock import clock
-from miro.download_utils import cleanFilename, nextFreeFilename, checkFilenameExtension, filterDirectoryName
-from miro.download_utils import filenameFromURL, getFileURLPath
+from miro.download_utils import (clean_filename, next_free_filename, 
+                                 check_filename_extension, 
+                                 filter_directory_name,
+                                 filename_from_url, get_file_url_path)
 from miro import eventloop
 from miro import httpclient
 import datetime
@@ -135,7 +137,7 @@ def stop_upload(dlid):
         return
     return download.stop_upload()
 
-def pauseUpload(dlid):
+def pause_upload(dlid):
     try:
         _lock.acquire()
         try:
@@ -149,7 +151,7 @@ def pauseUpload(dlid):
         raise
     except: # There is no download with this id
         return
-    return download.pauseUpload()
+    return download.pause_upload()
 
 def migrateDownload(dlid, directory):
     checkF(directory)
@@ -382,7 +384,7 @@ class BGDownloader:
         self.url = url
         self.startTime = clock()
         self.endTime = self.startTime
-        self.shortFilename = filenameFromURL(url)
+        self.shortFilename = filename_from_url(url)
         self.pickInitialFilename()
         self.state = u"downloading"
         self.currentSize = 0
@@ -440,8 +442,8 @@ class BGDownloader:
         filename = self.shortFilename + suffix
         if not torrent:
             # this is an ascii filename and needs to be fixed
-            filename = cleanFilename(filename)
-        self.filename = nextFreeFilename(os.path.join(downloadDir, filename))
+            filename = clean_filename(filename)
+        self.filename = next_free_filename(os.path.join(downloadDir, filename))
 
     def moveToMoviesDirectory(self):
         """Move our downloaded file from the Incomplete Downloads directory to
@@ -454,9 +456,9 @@ class BGDownloader:
     def moveToDirectory(self, directory):
         checkF(directory)
         if self.channelName:
-            channelName = filterDirectoryName(self.channelName)
-            # bug 10769: shutil and windows has problems with long filenames, so we clip
-            # the directory name.
+            channelName = filter_directory_name(self.channelName)
+            # bug 10769: shutil and windows has problems with long
+            # filenames, so we clip the directory name.
             if len(channelName) > 80:
                 channelName = channelName[:80]
             directory = os.path.join(directory, channelName)
@@ -469,7 +471,7 @@ class BGDownloader:
         newfilename = os.path.join(directory, self.shortFilename)
         if newfilename == self.filename:
             return
-        newfilename = nextFreeFilename(newfilename)
+        newfilename = next_free_filename(newfilename)
         def callback():
             self.filename = newfilename
             self.updateClient()
@@ -670,11 +672,11 @@ class HTTPDownloader(BGDownloader):
         #We have a success
         self.retryCount = -1
         #Get the length of the file, then create it
-        self.shortFilename = cleanFilename(info['filename'])
+        self.shortFilename = clean_filename(info['filename'])
         if self.expectedContentType is not None:
-            self.shortFilename = checkFilenameExtension(self.shortFilename, self.expectedContentType)
+            self.shortFilename = check_filename_extension(self.shortFilename, self.expectedContentType)
         else:
-            self.shortFilename = checkFilenameExtension(self.shortFilename, info.get('content-type'))
+            self.shortFilename = check_filename_extension(self.shortFilename, info.get('content-type'))
         self.pickInitialFilename()
         try:
             self.filehandle = fileutil.open_file(self.filename,"w+b")
@@ -1055,7 +1057,7 @@ class BTDownloader(BGDownloader):
         self._shutdownTorrent()
         self.updateClient()
 
-    def pauseUpload(self):
+    def pause_upload(self):
         self.state = "uploading-paused"
         self._shutdownTorrent()
         self.updateClient()
@@ -1131,7 +1133,7 @@ class BTDownloader(BGDownloader):
     def getMetainfo(self):
         if self.metainfo is None:
             if self.url.startswith('file://'):
-                path = getFileURLPath(self.url)
+                path = get_file_url_path(self.url)
                 try:
                     metainfoFile = open(path, 'rb')
                 except IOError:

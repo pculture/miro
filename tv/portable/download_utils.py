@@ -41,25 +41,27 @@ from miro.util import checkF, checkU, returnsFilename
 from miro.plat.utils import unicodeToFilename, unmake_url_safe
 from miro.fileutil import expand_filename
 
-URIPattern = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
+URI_PATTERN = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
 
 # filename limits this is mostly for windows where we have a 255 character
 # limit on entire pathname
 MAX_FILENAME_LENGTH = 100 
 MAX_FILENAME_EXTENSION_LENGTH = 50
 
-def fixFileURLS(url):
-    """Fix file URLS that start with file:// instead of file:///.  Note: this
-    breaks for file URLS that include a hostname, but we never use those and
-    it's not so clear what that would mean anyway -- file URLs is an ad-hoc
-    spec as I can tell.."""
+def fix_file_urls(url):
+    """Fix file urls that start with file:// instead of file:///.
+
+    Note: this breaks for file urls that include a hostname, but we
+    never use those and it's not so clear what that would mean
+    anyway--file urls is an ad-hoc spec as I can tell.
+    """
     if url.startswith('file://'):
         if not url.startswith('file:///'):
             url = 'file:///%s' % url[len('file://'):]
         url = url.replace('\\', '/')
     return url
 
-def defaultPort(scheme):
+def default_port(scheme):
     if scheme == 'https':
         return 443
     elif scheme == 'http':
@@ -70,14 +72,14 @@ def defaultPort(scheme):
         return None
     else:
         if util.chatter:
-            logging.warn("Assuming port 80 for scheme: %s" % scheme)
+            logging.warn("Assuming port 80 for scheme: %s", scheme)
     return 80
 
-def parseURL(url, split_path=False):
-    url = fixFileURLS(url)
+def parse_url(url, split_path=False):
+    url = fix_file_urls(url)
     (scheme, host, path, params, query, fragment) = util.unicodify(list(urlparse(url)))
-    # Filter invalid URLs with duplicated ports (http://foo.bar:123:123/baz)
-    # which seem to be part of #441.
+    # Filter invalid URLs with duplicated ports
+    # (http://foo.bar:123:123/baz) which seem to be part of #441.
     if host.count(':') > 1:
         host = host[0:host.rfind(':')]
 
@@ -92,9 +94,9 @@ def parseURL(url, split_path=False):
             raise
         except:
             logging.warn("invalid port for %r" % url)
-            port = defaultPort(scheme)
+            port = default_port(scheme)
     else:
-        port = defaultPort(scheme)
+        port = default_port(scheme)
 
     host = host.lower()
     scheme = scheme.lower()
@@ -117,15 +119,16 @@ def parseURL(url, split_path=False):
             fullPath += '?%s' % query
         return scheme, host, port, fullPath
 
-def getFileURLPath(url):
-    scheme, host, port, path = parseURL(url)
+def get_file_url_path(url):
+    scheme, host, port, path = parse_url(url)
     if scheme != 'file':
         raise ValueError("%r is not a file URL" % url)
     return unmake_url_safe(path)
 
-def checkFilenameExtension(filename, contentType):
-    """If a filename doesn't have an extension, this tries to find a suitable
-    one based on the HTTP content-type info and add it if one is available.
+def check_filename_extension(filename, contentType):
+    """If a filename doesn't have an extension, this tries to find a
+    suitable one based on the HTTP content-type info and add it if one
+    is available.
     """
     checkF(filename)
     if contentType is not None and not filetypes.is_allowed_filename(filename):
@@ -135,7 +138,7 @@ def checkFilenameExtension(filename, contentType):
     return filename
 
 @returnsFilename
-def nextFreeFilename(name):
+def next_free_filename(name):
     """Finds a filename that's unused and similar the the file we want
     to download
     """
@@ -159,12 +162,12 @@ def nextFreeFilename(name):
     return newname
 
 @returnsFilename
-def filenameFromURL(url, clean=False):
-    """Returns a reasonable filename for saving the given url
+def filename_from_url(url, clean=False):
+    """Returns a reasonable filename for saving the given url.
     """
     checkU(url)
     try:
-        match = URIPattern.match(url)
+        match = URI_PATTERN.match(url)
         if match is None:
             # This code path will never be executed.
             return unicodeToFilename(url)
@@ -181,7 +184,7 @@ def filenameFromURL(url, clean=False):
         if ret is None:
             ret = u'unknown'
         if clean:
-            return cleanFilename(ret)
+            return clean_filename(ret)
         else:
             return unicodeToFilename(ret)
     except (SystemExit, KeyboardInterrupt):
@@ -190,9 +193,9 @@ def filenameFromURL(url, clean=False):
         return unicodeToFilename(u'unknown')
 
 @returnsFilename
-def cleanFilename(filename):
-    """Given either a filename or a unicode "filename" return a valid clean
-    version of it
+def clean_filename(filename):
+    """Given either a filename or a unicode "filename" return a valid
+    clean version of it.
     """
     for char in ( ':', '?', '<', '>', '|', '*', '\\', '/', '"', '\'', '%'):
         filename = filename.replace(char, '')
@@ -208,48 +211,7 @@ def cleanFilename(filename):
     else:
         return unicodeToFilename(filename)
 
-def saveData(target, suggested_basename, data):
-    """Saves data, returns filename, doesn't write over existing files.
-    """
-    try:
-        fileutil.makedirs(target)
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
-        pass
-
-    filename = os.path.join(target, suggested_basename)
-
-    try:
-        # Write to a temp file.
-        tmp_filename = filename + ".part"
-        tmp_filename = nextFreeFilename(tmp_filename)
-        output = file(tmp_filename, 'wb')
-        output.write(data)
-        output.close()
-    except IOError:
-        try:
-            fileutil.remove(tmp_filename)
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            pass
-        raise
-
-    filename = nextFreeFilename(filename)
-    needsSave = True
-    try:
-        fileutil.remove(filename)
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
-        pass
-
-    fileutil.rename(tmp_filename, filename)
-
-    return filename
-
-def filterDirectoryName(name):
+def filter_directory_name(name):
     """Filter out all non alpha-numeric characters from a future directory
     name so we can create a corresponding directory on disk without bumping
     into platform specific pathname limitations.

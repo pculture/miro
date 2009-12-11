@@ -34,10 +34,10 @@ from base64 import b64encode
 from miro.gtcache import gettext as _
 from miro.database import DDBObject, ObjectNotFoundError
 from miro.dl_daemon import daemon, command
-from miro.download_utils import nextFreeFilename, getFileURLPath
-from miro.download_utils import filterDirectoryName
-from miro.util import get_torrent_info_hash, returnsUnicode, checkU
-from miro.util import returnsFilename, unicodify, checkF, toUni
+from miro.download_utils import (next_free_filename, get_file_url_path, 
+                                 filter_directory_name)
+from miro.util import (get_torrent_info_hash, returnsUnicode, checkU,
+                       returnsFilename, unicodify, checkF, toUni)
 from miro import config
 from miro import dialogs
 from miro import eventloop
@@ -53,16 +53,17 @@ daemon_starter = None
 # a hash of download ids that the server knows about.
 _downloads = {}
 
-# Returns an HTTP auth object corresponding to the given host, path or
-# None if it doesn't exist
 def find_http_auth(host, path, realm=None, scheme=None):
+    """Returns an HTTP auth object corresponding to the given host, path or
+    None if it doesn't exist
+    """
     checkU(host)
     checkU(path)
     if realm:
         checkU(realm)
     if scheme:
         checkU(scheme)
-    #print "Trying to find HTTPAuth with host %s, path %s, realm %s, and scheme %s" %(host,path,realm,scheme)
+    # print "Trying to find HTTPAuth with host %s, path %s, realm %s, and scheme %s" %(host,path,realm,scheme)
     for obj in HTTPAuthPassword.make_view():
         if (obj.host == host and path.startswith(obj.path) and
                 (realm is None or obj.realm == realm) and
@@ -396,9 +397,9 @@ class RemoteDownloader(DDBObject):
             self.signal_change()
 
     def delete(self):
-        try:
+        if "filename" in self.status:
             filename = self.status['filename']
-        except KeyError:
+        else:
             return
         try:
             fileutil.delete(filename)
@@ -410,9 +411,9 @@ class RemoteDownloader(DDBObject):
                               os.path.pardir)
         parent = os.path.normpath(parent)
         moviesDir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))
-        if (os.path.exists(parent) and os.path.exists(moviesDir) and
-                not samefile(parent, moviesDir) and
-                len(os.listdir(parent)) == 0):
+        if ((os.path.exists(parent) and os.path.exists(moviesDir) 
+             and not samefile(parent, moviesDir) 
+             and len(os.listdir(parent)) == 0)):
             try:
                 os.rmdir(parent)
             except OSError:
@@ -461,16 +462,18 @@ class RemoteDownloader(DDBObject):
                 return
             if fileutil.exists(filename):
                 if self.status.get('channelName', None) is not None:
-                    channelName = filterDirectoryName(self.status['channelName'])
+                    channelName = filter_directory_name(self.status['channelName'])
                     directory = os.path.join(directory, channelName)
-                try:
-                    fileutil.makedirs(directory)
-                except OSError:
-                    pass
+                if not os.path.exists(directory):
+                    try:
+                        fileutil.makedirs(directory)
+                    except OSError:
+                        # FIXME - what about permission issues?
+                        pass
                 newfilename = os.path.join(directory, shortFilename)
                 if newfilename == filename:
                     return
-                newfilename = nextFreeFilename(newfilename)
+                newfilename = next_free_filename(newfilename)
                 def callback():
                     self.status['filename'] = newfilename
                     self.signal_change(needsSignalItem=False)
@@ -513,8 +516,8 @@ class RemoteDownloader(DDBObject):
         self.confirm_db_thread()
         if self.contentType == u'application/x-bittorrent':
             return u"bittorrent"
-        else:
-            return u"http"
+
+        return u"http"
 
     def add_item(self, item):
         """In case multiple downloaders are getting the same file, we
@@ -548,8 +551,7 @@ class RemoteDownloader(DDBObject):
         activity = self.status.get('activity')
         if activity is None:
             return _("starting up")
-        else:
-            return activity
+        return activity
 
     @returnsUnicode
     def get_reason_failed(self):
@@ -668,18 +670,21 @@ class RemoteDownloader(DDBObject):
                                                  dler_status)
             c.send()
 
-    def startUpload(self):
+    def start_upload(self):
+        """
+        Start an upload (seeding).
+        """
         if self.get_type() != u'bittorrent':
-            logging.warn("called startUpload for non-bittorrent downloader")
+            logging.warn("called start_upload for non-bittorrent downloader")
             return
         if self.child_deleted:
             title = "Can't Resume Seeding"
             msg = ("Seeding cannot resume because part of this torrent "
-                    "has been deleted.")
+                   "has been deleted.")
             dialogs.MessageBoxDialog(title, msg).run()
             return
         if self.get_state() not in (u'finished', u'uploading-paused'):
-            logging.warn("called startUpload when downloader state is: %s",
+            logging.warn("called start_upload when downloader state is: %s",
                          self.get_state())
             return
         self.manualUpload = True
@@ -708,7 +713,7 @@ class RemoteDownloader(DDBObject):
         self.after_changing_status()
         self.signal_change()
 
-    def pauseUpload(self):
+    def pause_upload(self):
         """
         Stop uploading/seeding and set status as "uploading-paused".
         """
@@ -851,7 +856,7 @@ def get_downloader_for_item(item):
     if not channelName:
         channelName = None
     if url.startswith(u'file://'):
-        path = getFileURLPath(url)
+        path = get_file_url_path(url)
         try:
             get_torrent_info_hash(path)
         except ValueError:

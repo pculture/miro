@@ -10,7 +10,7 @@ from StringIO import StringIO
 from miro.clock import clock
 import os
 
-from miro.download_utils import cleanFilename
+from miro.download_utils import clean_filename
 from miro import app
 from miro import download_utils
 from miro import database
@@ -279,7 +279,7 @@ class TestingHTTPConnectionPool(httpclient.HTTPConnectionPool):
     def assertConnectionNotStarted(self, url):
         assert not self.checkConnectionStarted(url)
     def checkConnectionStarted(self, url):
-        scheme, host, port, path = download_utils.parseURL(url)
+        scheme, host, port, path = download_utils.parse_url(url)
         conns = self._getServerConnections(scheme, host, port)
         for conn in conns['active']:
             try:
@@ -1127,7 +1127,7 @@ class HTTPClientTest(HTTPClientTestBase):
 #         self.runEventLoop(timeout=2)
 #         self.assertNotEqual(self.data['body'].find('MiroTestCookie:foobar'),-1)
 
-    def testParseURL(self):
+    def test_parse_url(self):
         for mem in (
             ("https://www.foo.com/abc;123?a=b#4", ("https", "www.foo.com", 443, "/abc;123?a=b")),
             ("http://www.foo.com/abc;123?a=b#4", ("http", "www.foo.com", 80, "/abc;123?a=b")),
@@ -1143,7 +1143,7 @@ class HTTPClientTest(HTTPClientTestBase):
             # handle urls with : in the path
             ("http://www.foo.com/s:6p23p/video", ("http", "www.foo.com", 80, "/s:6p23p/video"))
             ):
-            self.assertEquals(download_utils.parseURL(mem[0]), mem[1])
+            self.assertEquals(download_utils.parse_url(mem[0]), mem[1])
 
 
 #     def checkRedirect(self, url, redirectUrl, updatedUrl, **extra):
@@ -1218,10 +1218,10 @@ class HTTPClientTest(HTTPClientTestBase):
 #         self.assert_(self.errbackCalled)
 #         self.assert_(isinstance(self.data, httpclient.UnexpectedStatusCode))
 
-    def testCleanFilename(self):
+    def test_clean_filename(self):
         tempdir = tempfile.gettempdir()
         def testIt(filename):
-            cleaned = cleanFilename(filename)
+            cleaned = clean_filename(filename)
             self.assertEqual(cleaned.__class__, str)
             self.assertNotEqual(cleaned, '')
             path = os.path.join(tempdir, cleaned)
@@ -1291,7 +1291,7 @@ class HTTPConnectionPoolTest(EventLoopTest):
         super(HTTPConnectionPoolTest, self).setUp()
 
     def getConnectionForURL(self, url):
-        scheme, host, port, path = download_utils.parseURL(url)
+        scheme, host, port, path = download_utils.parse_url(url)
         # Run event loop to make sure all the open callbacks have run, so that
         # each connection has a URL
         self.runPendingIdles()

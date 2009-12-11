@@ -13,7 +13,7 @@ BIGTESTFILE = { "url": u"http://www.getmiro.com/images/linux-screen.jpg",
                 "size": 45572 }
 
 
-def testingNextFreeFilename(filename):
+def testing_next_free_filename(filename):
     return tempfile.mktemp()
 
 class TestingDownloader(download.HTTPDownloader):
@@ -37,7 +37,7 @@ class HTTPDownloaderTest(EventLoopTest):
     def setUp(self):
         EventLoopTest.setUp(self)
         download.chatter = False
-        download.nextFreeFilename = testingNextFreeFilename
+        download.next_free_filename = testing_next_free_filename
         download._downloads = {}
         allConnections = []
         for conns in httpclient.HTTPClient.connectionPool.connections.values():
@@ -48,7 +48,7 @@ class HTTPDownloaderTest(EventLoopTest):
         httpclient.HTTPClient.connectionPool = httpclient.HTTPConnectionPool()
 
     def tearDown(self):
-        download.nextFreeFilename = download_utils.nextFreeFilename
+        download.next_free_filename = download_utils.next_free_filename
         download.chatter = True
         EventLoopTest.tearDown(self)
 

@@ -44,7 +44,7 @@ import locale
 import os.path
 import traceback
 
-from miro.download_utils import cleanFilename, nextFreeFilename
+from miro.download_utils import clean_filename, next_free_filename
 from miro.feedparser import FeedParserDict
 from miro.feedparserutil import normalize_feedparser_dict
 
@@ -919,15 +919,15 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             if self.isContainerItem:
                 self.children_signal_change()
 
-    def pauseUpload(self):
+    def pause_upload(self):
         if self.downloader:
-            self.downloader.pauseUpload()
+            self.downloader.pause_upload()
             if self.isContainerItem:
                 self.children_signal_change()
 
-    def startUpload(self):
+    def start_upload(self):
         if self.downloader:
-            self.downloader.startUpload()
+            self.downloader.start_upload()
             if self.isContainerItem:
                 self.children_signal_change()
 
@@ -1735,7 +1735,7 @@ class FileItem(Item):
         self.set_filename(filename)
         self.deleted = deleted
         self.offsetPath = offsetPath
-        self.shortFilename = cleanFilename(os.path.basename(self.filename))
+        self.shortFilename = clean_filename(os.path.basename(self.filename))
         self.was_downloaded = False
         moviedata.movie_data_updater.request_update (self)
 
@@ -1887,7 +1887,7 @@ filename was %s""", stringify(self.filename))
         if self.filename == newFilename:
             return
         if fileutil.exists(self.filename):
-            newFilename = nextFreeFilename(newFilename)
+            newFilename = next_free_filename(newFilename)
             def callback():
                 self.filename = newFilename
                 self.signal_change()
@@ -1900,11 +1900,11 @@ filename was %s""", stringify(self.filename))
     def setup_links(self):
         if self.shortFilename is None:
             if self.parent_id is None:
-                self.shortFilename = cleanFilename(os.path.basename(self.filename))
+                self.shortFilename = clean_filename(os.path.basename(self.filename))
             else:
                 parent_file = self.get_parent().get_filename()
                 if self.filename.startswith(parent_file):
-                    self.shortFilename = cleanFilename(self.filename[len(parent_file):])
+                    self.shortFilename = clean_filename(self.filename[len(parent_file):])
                 else:
                     logging.warn("%s is not a subdirectory of %s",
                             self.filename, parent_file)

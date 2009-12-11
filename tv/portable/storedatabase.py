@@ -71,7 +71,7 @@ from miro import messages
 from miro import schema
 from miro import prefs
 from miro import util
-from miro.download_utils import nextFreeFilename
+from miro.download_utils import next_free_filename
 from miro.gtcache import gettext as _
 from miro.plat.utils import FilenameType, filenameToUnicode
 
@@ -642,7 +642,7 @@ class LiveStorage:
         os.rename(self.path, os.path.join(dir, save_name))
 
     def dumpDatabase(self):
-        output = open (nextFreeFilename (os.path.join (config.get(prefs.SUPPORT_DIRECTORY), "database-dump.xml")), 'w')
+        output = open(next_free_filename(os.path.join(config.get(prefs.SUPPORT_DIRECTORY), "database-dump.xml")), 'w')
         def indent(level):
             output.write('    ' * level)
         def output_object(table_name, values):

@@ -1,9 +1,9 @@
 from miro.test.framework import MiroTestCase
-from miro.download_utils import parseURL
+from miro.download_utils import parse_url
 
 class TestParseURL(MiroTestCase):
     def doCheck(self, url, scheme, host, port, path):
-        result = parseURL(url)
+        result = parse_url(url)
         self.assertEquals(result[0], scheme)
         self.assertEquals(result[1], host)
         self.assertEquals(result[2], port)

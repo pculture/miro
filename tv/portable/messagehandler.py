@@ -1098,7 +1098,7 @@ class BackendMessageHandler(messages.MessageHandler):
         """Pauses all downloading and uploading items"""
         for item_ in item.Item.downloading_view():
             if item_.is_uploading():
-                item_.pauseUpload()
+                item_.pause_upload()
             else:
                 item_.pause()
 
@@ -1114,7 +1114,7 @@ class BackendMessageHandler(messages.MessageHandler):
         """Resumes downloading and uploading items"""
         for item_ in item.Item.paused_view():
             if item_.is_uploading_paused():
-                item_.startUpload()
+                item_.start_upload()
             else:
                 item_.resume()
 
@@ -1147,7 +1147,7 @@ class BackendMessageHandler(messages.MessageHandler):
             elif item_.is_uploading():
                 logging.warn("%s is already uploading", item_)
             else:
-                item_.startUpload()
+                item_.start_upload()
 
     def handle_stop_upload(self, message):
         try:
