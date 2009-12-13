@@ -58,9 +58,9 @@ class DelayedCall(object):
         self.canceled = False
 
     def _unlink(self):
-        """Removes the references that this object has to the outside world,
-        this eases the GC's work in finding cycles and fixes some memory leaks
-        on windows.
+        """Removes the references that this object has to the outside
+        world, this eases the GC's work in finding cycles and fixes
+        some memory leaks on windows.
         """
         self.function = self.args = self.kwargs = None
 
@@ -105,7 +105,7 @@ class Scheduler(object):
         heapq.heappush(self.heap, (scheduledTime, dc))
         return dc
 
-    def nextTimeout(self):
+    def next_timeout(self):
         if len(self.heap) == 0:
             return None
         else:
@@ -114,13 +114,13 @@ class Scheduler(object):
     def hasPendingTimeout(self):
         return len(self.heap) > 0 and self.heap[0][0] < clock()
 
-    def processNextTimeout(self):
+    def process_next_timeout(self):
         time, dc = heapq.heappop(self.heap)
         dc.dispatch()
 
     def processTimeouts(self):
         while self.hasPendingTimeout():
-            self.processNextTimeout()
+            self.process_next_timeout()
 
 class CallQueue(object):
     def __init__(self):
@@ -148,10 +148,10 @@ class CallQueue(object):
             self.processNextIdle()
 
 class ThreadPool(object):
-    """The thread pool is used to handle calls like gethostbyname() that block
-    and there's no asynchronous workaround.  What we do instead is call them
-    in a separate thread and return the result in a callback that executes in
-    the event loop.
+    """The thread pool is used to handle calls like gethostbyname()
+    that block and there's no asynchronous workaround.  What we do
+    instead is call them in a separate thread and return the result in
+    a callback that executes in the event loop.
     """
     THREADS = 3
 
@@ -265,7 +265,7 @@ class EventLoop(signals.SignalEmitter):
         while not self.quitFlag:
             self.emit('begin-loop')
             self.clearRemovedCallbacks()
-            timeout = self.scheduler.nextTimeout()
+            timeout = self.scheduler.next_timeout()
             readfds = self.readCallbacks.keys()
             writefds = self.writeCallbacks.keys()
             try:
@@ -289,9 +289,9 @@ class EventLoop(signals.SignalEmitter):
             self.emit('end-loop')
 
     def generateEvents(self, readables, writeables):
-        """Generator that creates the list of events that should be dealt with
-        on this iteration of the event loop.  This includes all socket
-        read/write callbacks, timeouts and idle calls.
+        """Generator that creates the list of events that should be
+        dealt with on this iteration of the event loop.  This includes
+        all socket read/write callbacks, timeouts and idle calls.
 
         "events" are implemented as functions that should be called
         with no arguments.
@@ -305,7 +305,7 @@ class EventLoop(signals.SignalEmitter):
                                                self.removedReadCallbacks):
             yield callback
         while self.scheduler.hasPendingTimeout():
-            yield self.scheduler.processNextTimeout
+            yield self.scheduler.process_next_timeout
         while self.idleQueue.hasPendingIdle():
             yield self.idleQueue.processNextIdle
 
@@ -314,8 +314,8 @@ class EventLoop(signals.SignalEmitter):
             try:
                 function = map_[fd]
             except KeyError:
-                # this can happen the write callback removes the read callback
-                # or vise versa
+                # this can happen the write callback removes the read
+                # callback or vise versa
                 pass
             else:
                 if fd in removed:
@@ -334,34 +334,35 @@ class EventLoop(signals.SignalEmitter):
 _eventLoop = EventLoop()
 
 def addReadCallback(socket, callback):
-    """Add a read callback.  When socket is ready for reading, callback will
-    be called.  If there is already a read callback installed, it will be
-    replaced.
+    """Add a read callback.  When socket is ready for reading,
+    callback will be called.  If there is already a read callback
+    installed, it will be replaced.
     """
     _eventLoop.addReadCallback(socket, callback)
 
 def removeReadCallback(socket):
-    """Remove a read callback.  If there is not a read callback installed for
-    socket, a KeyError will be thrown.
+    """Remove a read callback.  If there is not a read callback
+    installed for socket, a KeyError will be thrown.
     """
     _eventLoop.removeReadCallback(socket)
 
 def addWriteCallback(socket, callback):
-    """Add a write callback.  When socket is ready for writing, callback will
-    be called.  If there is already a write callback installed, it will be
-    replaced.
+    """Add a write callback.  When socket is ready for writing,
+    callback will be called.  If there is already a write callback
+    installed, it will be replaced.
     """
     _eventLoop.addWriteCallback(socket, callback)
 
 def removeWriteCallback(socket):
-    """Remove a write callback.  If there is not a write callback installed for
-    socket, a KeyError will be thrown.
+    """Remove a write callback.  If there is not a write callback
+    installed for socket, a KeyError will be thrown.
     """
     _eventLoop.removeWriteCallback(socket)
 
 def stopHandlingSocket(socket):
-    """Convience function to that removes both the read and write callback for
-    a socket if they exist."""
+    """Convience function to that removes both the read and write
+    callback for a socket if they exist.
+    """
     try:
         removeReadCallback(socket)
     except KeyError:
@@ -389,9 +390,9 @@ def addIdle(function, name, args=None, kwargs=None):
     return dc
 
 def addUrgentCall(function, name, args=None, kwargs=None):
-    """Schedule a function to be called as soon as possible.  This method
-    should be used for things like GUI actions, where the user is waiting on
-    us.
+    """Schedule a function to be called as soon as possible.  This
+    method should be used for things like GUI actions, where the user
+    is waiting on us.
     """
     dc = _eventLoop.urgentQueue.addIdle(function, name, args, kwargs)
     _eventLoop.wakeup()
@@ -406,7 +407,6 @@ def callInThread(callback, errback, function, name, *args, **kwargs):
 lt = None
 
 profile_file = None
-
 
 def startup():
     threadPoolInit()
@@ -481,10 +481,12 @@ def as_urgent(func):
     return queuer
 
 def idle_iterate(func, name, args=None, kwargs=None):
-    """Iterate over a generator function using addIdle for each iteration.
+    """Iterate over a generator function using addIdle for each
+    iteration.
 
-    This allows long running functions to be split up into distinct steps,
-    after each step other idle functions will have a chance to run.
+    This allows long running functions to be split up into distinct
+    steps, after each step other idle functions will have a chance to
+    run.
 
     For example::
 
@@ -521,5 +523,6 @@ def idle_iterator(func):
     call.
     """
     def queuer(*args, **kwargs):
-        return idle_iterate(func, "%s() (using idle_iterator)" % func.__name__, args=args, kwargs=kwargs)
+        return idle_iterate(func, "%s() (using idle_iterator)" % func.__name__, 
+                            args=args, kwargs=kwargs)
     return queuer

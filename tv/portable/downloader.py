@@ -34,7 +34,7 @@ from base64 import b64encode
 from miro.gtcache import gettext as _
 from miro.database import DDBObject, ObjectNotFoundError
 from miro.dl_daemon import daemon, command
-from miro.download_utils import (next_free_filename, get_file_url_path, 
+from miro.download_utils import (next_free_filename, get_file_url_path,
                                  filter_directory_name)
 from miro.util import (get_torrent_info_hash, returnsUnicode, checkU,
                        returnsFilename, unicodify, checkF, toUni)
@@ -411,8 +411,8 @@ class RemoteDownloader(DDBObject):
                               os.path.pardir)
         parent = os.path.normpath(parent)
         moviesDir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))
-        if ((os.path.exists(parent) and os.path.exists(moviesDir) 
-             and not samefile(parent, moviesDir) 
+        if ((os.path.exists(parent) and os.path.exists(moviesDir)
+             and not samefile(parent, moviesDir)
              and len(os.listdir(parent)) == 0)):
             try:
                 os.rmdir(parent)
