@@ -141,6 +141,7 @@ def extract_menu_item(menu_structure, action):
         return menu
     return None
 
+_menu_structure = None
 def populate_menu():
     short_appname = config.get(prefs.SHORT_APP_NAME)
 
@@ -245,6 +246,10 @@ def populate_menu():
     menus.osx_menu_structure = menubar
     menus.osx_action_groups = menus.generate_action_groups(menubar)
     
+    # Keep the updated structure around
+    global _menu_structure
+    _menu_structure = menubar
+    
 class ContextMenuHandler(NSObject):
     def initWithCallback_(self, callback):
         self = super(ContextMenuHandler, self).init()
@@ -322,6 +327,11 @@ subtitles_menu_handler = SubtitleChangesHandler.alloc().init()
 
 def on_menu_change(menu_manager):
     main_menu = NSApp().mainMenu()
+
+    play_pause_menu_item = main_menu.itemAtIndex_(5).submenu().itemAtIndex_(0)
+    play_pause = _menu_structure.get("PlayPauseVideo").state_labels[app.menu_manager.play_pause_state]
+    play_pause_menu_item.setTitleWithMnemonic_(play_pause.replace("_", "&"))
+
     subtitles_menu_root = main_menu.itemAtIndex_(5).submenu().itemAtIndex_(15)
     subtitles_menu = NSMenu.alloc().init()
     subtitles_menu.setAutoenablesItems_(NO)
