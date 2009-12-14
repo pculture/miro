@@ -1861,6 +1861,8 @@ def grabURL(url, callback, errback, headerCallback=None,
         bodyDataCallback=None, method="GET", start=0, etag=None,
         modified=None, cookies=None, postVariables=None, postFiles=None,
         defaultMimeType='application/octet-stream', clientClass=HTTPClient):
+    if url is None:
+        errback(MalformedURL(url))
     if cookies == None:
         cookies = {}
     if url.startswith("file://"):
