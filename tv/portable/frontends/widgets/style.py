@@ -847,8 +847,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         outer_hbox.pack(vbox, expand=True)
         outer_vbox.pack(outer_hbox)
-        outer_hbox.pack_space(12)
         if self.show_details:
+            outer_hbox.pack_space(12)
             outer_vbox.pack_end(self.pack_flap(layout))
         return self.add_background(outer_vbox)
 
