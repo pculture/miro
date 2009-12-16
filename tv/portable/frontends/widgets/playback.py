@@ -299,7 +299,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.removing_video_display = False
 
     def update_current_resume_time(self, resume_time=-1):
-        if not self.open_successful:
+        if not self.open_successful or self.player is None:
             return
         if config.get(prefs.RESUME_VIDEOS_MODE):
             if resume_time == -1:
@@ -439,7 +439,7 @@ class PlaybackManager (signals.SignalEmitter):
 
         self.cancel_update_timer()
         self.cancel_mark_as_watched()
-        if (0 <= new_position < len(self.playlist)):
+        if self.playlist is not None and (0 <= new_position < len(self.playlist)):
             self.position = new_position
             if self.is_playing:
                 self.player.stop(True)
