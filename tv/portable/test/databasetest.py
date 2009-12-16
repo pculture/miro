@@ -89,44 +89,18 @@ class ViewTrackerTest(DatabaseTestCase):
         self.assertEquals(self.remove_callbacks, [self.feed, self.feed2])
         self.assertEquals(self.change_callbacks, [self.feed2])
 
-    def test_track_join(self):
-        self.setup_view(item.Item.make_view("feed.userTitle='booya'",
-                joins={'feed': 'feed.id=item.feed_id'}))
-        self.feed2.set_title(u'booya')
-        self.feed2.signal_related_change()
-        self.assertEquals(self.add_callbacks, [self.i3])
-        self.assertEquals(self.remove_callbacks, [])
-        # i1 and i2 are in the first feed, which is in our view.  They will
-        # get the changed signal.  Note: the order is not defined and could
-        # also be [i2, i1], but we don't worry about that.
-        self.assertEquals(self.change_callbacks, [self.i1, self.i2])
-        self.feed2.revert_title()
-        self.feed2.signal_related_change()
-        self.assertEquals(self.add_callbacks, [self.i3])
-        self.assertEquals(self.remove_callbacks, [self.i3])
-        self.assertEquals(self.change_callbacks, [self.i1, self.i2, self.i1,
-            self.i2])
-        # i1 and i2 should get the changed signal again.  i3 won't get it
-        # because it got the removed signal.
-
     def test_track_creation_add(self):
         self.setup_view(item.Item.make_view("feed.userTitle='booya'",
                 joins={'feed': 'feed.id=item.feed_id'}))
-        self.feed2.set_title(u'booya')
-        self.feed2.signal_related_change()
-        self.assertEquals(self.add_callbacks, [self.i3])
 
         i4 = item.Item({'title': u'item4'}, feed_id=self.feed.id)
-        self.assertEquals(self.add_callbacks, [self.i3, i4])
+        self.assertEquals(self.add_callbacks, [i4])
 
     def test_track_destruction_remove(self):
         self.setup_view(item.Item.make_view("feed.userTitle='booya'",
                 joins={'feed': 'feed.id=item.feed_id'}))
-        self.feed2.set_title(u'booya')
-        self.feed2.signal_related_change()
-        self.assertEquals(self.remove_callbacks, [])
-        self.i3.remove()
-        self.assertEquals(self.remove_callbacks, [self.i3])
+        self.i1.remove()
+        self.assertEquals(self.remove_callbacks, [self.i1])
 
     def test_unlink(self):
         self.tracker.unlink()
@@ -136,20 +110,8 @@ class ViewTrackerTest(DatabaseTestCase):
         self.assertEquals(self.remove_callbacks, [])
         self.assertEquals(self.change_callbacks, [])
 
-    def test_unlink_join(self):
-        self.setup_view(item.Item.make_view("feed.userTitle='booya'",
-                joins={'feed': 'feed.id=item.feed_id'}))
-        self.tracker.unlink()
-        self.feed2.set_title(u'booya')
-        self.feed2.signal_related_change()
-        self.feed.revert_title()
-        self.feed.signal_related_change()
-        self.assertEquals(self.add_callbacks, [])
-        self.assertEquals(self.remove_callbacks, [])
-        self.assertEquals(self.change_callbacks, [])
-
     def test_reset(self):
-        database.ViewTracker.reset_trackers()
+        database.setup_view_tracker_manager()
         self.feed2.set_title(u"booya")
         self.feed.revert_title()
         self.assertEquals(self.add_callbacks, [])

@@ -204,7 +204,7 @@ def finish_startup(obj, thread):
             {'appname': config.get(prefs.SHORT_APP_NAME)}
         )
         raise StartupError(summary, description)
-    database.update_last_id()
+    database.initialize()
     end = time.time()
     logging.timing("Database upgrade time: %.3f", end - start)
     if app.db.startup_version != app.db.current_version:

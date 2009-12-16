@@ -76,7 +76,7 @@ class MiroTestCase(unittest.TestCase):
         models.initialize()
         app.in_unit_tests = True
         database.set_thread(threading.currentThread())
-        database.ViewTracker.reset_trackers()
+        database.setup_view_tracker_manager()
         app.db = None
         self.reload_database()
         searchengines._engines = [
@@ -96,7 +96,7 @@ class MiroTestCase(unittest.TestCase):
         # Remove any leftover database
         app.db.close()
         app.db = None
-        database.ViewTracker.reset_trackers()
+        database.setup_view_tracker_manager()
         # Remove anything that may have been accidentally queued up
         eventloop._eventLoop = eventloop.EventLoop()
         for filename in self.temp_files:

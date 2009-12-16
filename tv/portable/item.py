@@ -587,7 +587,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         playlist and channel folders).
         """
 
-        for tracker in ViewTracker.trackers_for_ddb_class(cls):
+        for tracker in app.view_tracker_manager.trackers_for_ddb_class(cls):
             # bit of a hack here.  We only need to update ViewTrackers
             # that care about the item's folder.  This seems like a
             # safe way to check if that's true.

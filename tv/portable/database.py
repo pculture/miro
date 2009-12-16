@@ -131,52 +131,30 @@ class View(object):
     def make_tracker(self):
         return ViewTracker(self.klass, self.where, self.values, self.joins)
 
+class ViewTrackerManager(object):
+    def __init__(self):
+        # maps table_name to trackers
+        self.table_to_tracker = {}
+        # maps joined tables to trackers
+        self.joined_table_to_tracker = {}
+
+    def trackers_for_table(self, table_name):
+        try:
+            return self.table_to_tracker[table_name]
+        except KeyError:
+            self.table_to_tracker[table_name] = set()
+            return self.table_to_tracker[table_name]
+
+    def trackers_for_ddb_class(self, klass):
+        return self.trackers_for_table(app.db.table_name(klass))
+
+    def update_view_trackers(self, obj):
+        """Update view trackers based on an object change."""
+
+        for tracker in self.trackers_for_ddb_class(obj.__class__):
+            tracker.object_changed(obj)
+
 class ViewTracker(signals.SignalEmitter):
-    # maps table_name to trackers
-    table_to_tracker = {}
-    # maps joined tables to trackers
-    joined_table_to_tracker = {}
-
-    @classmethod
-    def reset_trackers(cls):
-        cls.table_to_tracker = {}
-        cls.joined_table_to_tracker = {}
-
-    @classmethod
-    def trackers_for_table(cls, table_name):
-        try:
-            return cls.table_to_tracker[table_name]
-        except KeyError:
-            cls.table_to_tracker[table_name] = set()
-            return cls.table_to_tracker[table_name]
-
-    @classmethod
-    def trackers_for_ddb_class(cls, klass):
-        return cls.trackers_for_table(app.db.table_name(klass))
-
-    @classmethod
-    def related_trackers_for_table(cls, table_name):
-        try:
-            return cls.joined_table_to_tracker[table_name]
-        except KeyError:
-            cls.joined_table_to_tracker[table_name] = set()
-            return cls.joined_table_to_tracker[table_name]
-
-    @classmethod
-    def related_trackers_for_ddb_class(cls, klass):
-        return cls.related_trackers_for_table(app.db.table_name(klass))
-
-    @classmethod
-    def update_view_trackers(cls, obj):
-        for tracker in cls.trackers_for_ddb_class(obj.__class__):
-            tracker.object_changed(obj)
-
-    @classmethod
-    def _update_related_view_trackers(cls, obj):
-        table_name = app.db.table_name(obj.__class__)
-        for tracker in cls.related_trackers_for_table(table_name):
-            tracker.object_changed(obj)
-
     def __init__(self, klass, where, values, joins):
         signals.SignalEmitter.__init__(self, 'added', 'removed', 'changed')
         self.klass = klass
@@ -188,16 +166,12 @@ class ViewTracker(signals.SignalEmitter):
         self.current_ids = set(app.db.query_ids(klass, where, values,
             joins=joins))
         self.table_name = app.db.table_name(klass)
-        ViewTracker.trackers_for_table(self.table_name).add(self)
-        if joins is not None:
-            for table_name in joins.keys():
-                ViewTracker.related_trackers_for_table(table_name).add(self)
+        vt_manager = app.view_tracker_manager
+        vt_manager.trackers_for_table(self.table_name).add(self)
 
     def unlink(self):
-        ViewTracker.trackers_for_table(self.table_name).discard(self)
-        if self.joins is not None:
-            for table_name in self.joins.keys():
-                ViewTracker.related_trackers_for_table(table_name).discard(self)
+        vt_manager = app.view_tracker_manager
+        vt_manager.trackers_for_table(self.table_name).discard(self)
 
     def _obj_in_view(self, obj):
         where = '%s.id = ?' % (self.table_name,)
@@ -208,14 +182,7 @@ class ViewTracker(signals.SignalEmitter):
         return app.db.query_count(self.klass, where, values, self.joins) > 0
 
     def object_changed(self, obj):
-        if isinstance(obj, self.klass):
-            # object is the type we are tracking, just need to check
-            # if the change made that object enter/leave the view
-            self.check_object(obj)
-        else:
-            # object is the type that we are joining.  Need to check
-            # all of our objects to see what left/entered.
-            self.check_all_objects()
+        self.check_object(obj)
 
     def check_object(self, obj):
         before = (obj.id in self.current_ids)
@@ -311,7 +278,7 @@ class DDBObject(signals.SignalEmitter):
         if not restoring:
             self.check_constraints()
             self.on_db_insert()
-            ViewTracker.update_view_trackers(self)
+            app.view_tracker_manager.update_view_trackers(self)
 
     @classmethod
     def make_view(cls, where=None, values=None, order_by=None, joins=None):
@@ -397,7 +364,7 @@ class DDBObject(signals.SignalEmitter):
         """
         app.db.remove_obj(self)
         self.emit('removed')
-        ViewTracker.update_view_trackers(self)
+        app.view_tracker_manager.update_view_trackers(self)
 
     def confirm_db_thread(self):
         """Call this before you grab data from an object
@@ -431,20 +398,17 @@ class DDBObject(signals.SignalEmitter):
         self.check_constraints()
         if needsSave:
             app.db.update_obj(self)
-        ViewTracker.update_view_trackers(self)
+        app.view_tracker_manager.update_view_trackers(self)
 
     def on_signal_change(self):
         pass
 
-    def signal_related_change(self, needsSave=True):
-        """Call this after you change an object and it could affect
-        the views of related object.
-
-        For example, when feeds get their autodownload settings, it
-        could change the view of items waiting to be autodownloaded.
-        In that case, feed should call signal_related_change
-        """
-        ViewTracker._update_related_view_trackers(self)
-
 def update_last_id():
     DDBObject.lastID = app.db.get_last_id()
+
+def setup_view_tracker_manager():
+    app.view_tracker_manager = ViewTrackerManager()
+
+def initialize():
+    update_last_id()
+    setup_view_tracker_manager()
