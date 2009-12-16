@@ -154,6 +154,12 @@ class ViewTrackerManager(object):
         for tracker in self.trackers_for_ddb_class(obj.__class__):
             tracker.object_changed(obj)
 
+    def remove_from_view_trackers(self, obj):
+        """Update view trackers based on an object change."""
+
+        for tracker in self.trackers_for_ddb_class(obj.__class__):
+            tracker.remove_object(obj)
+
 class ViewTracker(signals.SignalEmitter):
     def __init__(self, klass, where, values, joins):
         signals.SignalEmitter.__init__(self, 'added', 'removed', 'changed')
@@ -183,6 +189,11 @@ class ViewTracker(signals.SignalEmitter):
 
     def object_changed(self, obj):
         self.check_object(obj)
+
+    def remove_object(self, obj):
+        if obj.id in self.current_ids:
+            self.current_ids.remove(obj.id)
+            self.emit('removed', obj)
 
     def check_object(self, obj):
         before = (obj.id in self.current_ids)
@@ -364,7 +375,7 @@ class DDBObject(signals.SignalEmitter):
         """
         app.db.remove_obj(self)
         self.emit('removed')
-        app.view_tracker_manager.update_view_trackers(self)
+        app.view_tracker_manager.remove_from_view_trackers(self)
 
     def confirm_db_thread(self):
         """Call this before you grab data from an object
