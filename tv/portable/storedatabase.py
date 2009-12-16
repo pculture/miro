@@ -327,7 +327,7 @@ class LiveStorage:
         if values:
             sql = "UPDATE %s SET %s WHERE id=%s" % (obj_schema.table_name,
                     ', '.join(setters), obj.id)
-            self._execute(sql, values)
+            self._execute(sql, values, is_update=True)
         self.remember_object(obj)
 
     def remove_obj(self, obj):
