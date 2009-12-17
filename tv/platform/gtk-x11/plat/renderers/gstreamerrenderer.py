@@ -138,7 +138,8 @@ class Renderer:
             self.audiosink = gst.element_factory_make(audiosink, "sink")
 
         except gst.ElementNotFoundError:
-            logging.info("gstreamerrenderer: ElementNotFoundError '%s'" % audiosink)
+            logging.info("gstreamerrenderer: ElementNotFoundError '%s'",
+                         audiosink)
             audiosink = "autoaudiosink"
             self.audiosink = gst.element_factory_make(audiosink, "sink")
 
@@ -162,8 +163,8 @@ class Renderer:
                 logging.error("on_bus_message: gstreamer error: %s", err)
         elif message.type == gst.MESSAGE_STATE_CHANGED:
             prev, new, pending = message.parse_state_changed()
-            if (message.src is self.playbin and new == gst.STATE_PAUSED and 
-                    self.select_callbacks is not None):
+            if ((message.src is self.playbin and new == gst.STATE_PAUSED and
+                 self.select_callbacks is not None)):
                 self.select_callbacks[0]()
                 self.select_callbacks = None
                 self.finish_select_file()
@@ -189,8 +190,6 @@ class Renderer:
             return None
 
     def _seek(self, seconds):
-        # FIXME - switch to self.playbin.seek_simple ?
-        #              self.player.seek_simple(self.time_format, gst.SEEK_FLAG_FLUSH, seek_ns)
         event = gst.event_new_seek(1.0,
                                    gst.FORMAT_TIME,
                                    gst.SEEK_FLAG_FLUSH | gst.SEEK_FLAG_ACCURATE,
@@ -201,15 +200,18 @@ class Renderer:
             logging.error("seek failed")
 
     def _on_state_changed(self, bus, message, seconds):
-        if self.playbin.get_state(0)[1] in (gst.STATE_PAUSED, gst.STATE_PLAYING):
+        if self.playbin.get_state(0)[1] in (gst.STATE_PAUSED,
+                                            gst.STATE_PLAYING):
             self._seek(seconds)
             self.bus.disconnect(self._on_state_changed_id)
 
     def set_current_time(self, seconds):
         # only want to kick these off when PAUSED or PLAYING
-        if self.playbin.get_state(0)[1] not in (gst.STATE_PAUSED, gst.STATE_PLAYING):
+        if self.playbin.get_state(0)[1] not in (gst.STATE_PAUSED,
+                                                gst.STATE_PLAYING):
             self._on_state_changed_id = self.bus.connect("message::state-changed",
-                                                         self._on_state_changed, seconds)
+                                                         self._on_state_changed,
+                                                         seconds)
             return
 
         self._seek(seconds)
@@ -246,21 +248,21 @@ class Renderer:
         self.rate = rate
         position = self.playbin.query_position(gst.FORMAT_TIME, None)[0]
         if rate >= 0:
-            self.playbin.seek(rate, 
-                gst.FORMAT_TIME, 
-                gst.SEEK_FLAG_FLUSH | gst.SEEK_FLAG_KEY_UNIT,
-                gst.SEEK_TYPE_SET,
-                position + (rate * gst.SECOND),
-                gst.SEEK_TYPE_SET, 
+            self.playbin.seek(rate,
+                              gst.FORMAT_TIME,
+                              gst.SEEK_FLAG_FLUSH | gst.SEEK_FLAG_KEY_UNIT,
+                              gst.SEEK_TYPE_SET,
+                              position + (rate * gst.SECOND),
+                              gst.SEEK_TYPE_SET,
                 -1)
         else:
             self.playbin.seek(rate,
-                gst.FORMAT_TIME, 
-                gst.SEEK_FLAG_FLUSH | gst.SEEK_FLAG_KEY_UNIT,
-                gst.SEEK_TYPE_SET, 
-                0,
-                gst.SEEK_TYPE_SET,
-                position + (rate * gst.SECOND))
+                              gst.FORMAT_TIME,
+                              gst.SEEK_FLAG_FLUSH | gst.SEEK_FLAG_KEY_UNIT,
+                              gst.SEEK_TYPE_SET,
+                              0,
+                              gst.SEEK_TYPE_SET,
+                              position + (rate * gst.SECOND))
 
 class VideoRenderer(Renderer):
     def __init__(self):
@@ -274,7 +276,8 @@ class VideoRenderer(Renderer):
             self.sink = gst.element_factory_make(videosink, "sink")
 
         except gst.ElementNotFoundError:
-            logging.info("gstreamerrenderer: ElementNotFoundError '%s'" % videosink)
+            logging.info("gstreamerrenderer: ElementNotFoundError '%s'",
+                         videosink)
             videosink = "ximagesink"
             self.sink = gst.element_factory_make(videosink, "sink")
 
@@ -365,7 +368,7 @@ class VideoRenderer(Renderer):
     def enable_subtitle_track(self, track):
         flags = self.playbin.get_property('flags')
         self.playbin.set_properties(flags=flags | GST_PLAY_FLAG_TEXT,
-                current_text=track)
+                                    current_text=track)
 
     def disable_subtitles(self):
         flags = self.playbin.get_property('flags')
@@ -373,9 +376,10 @@ class VideoRenderer(Renderer):
 
 class AudioRenderer(Renderer):
     pass
- 
+
 def movie_data_program_info(movie_path, thumbnail_path):
-    extractor_path = os.path.join(os.path.split(__file__)[0], "gst_extractor.py")
+    extractor_path = os.path.join(os.path.split(__file__)[0],
+                                  "gst_extractor.py")
     return ((sys.executable, extractor_path, movie_path, thumbnail_path), None)
 
 def get_item_type(item_info, success_callback, error_callback):
