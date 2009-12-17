@@ -44,7 +44,10 @@ from miro import displaytext
 from miro.plat import resources
 from miro.plat import screensaver
 from miro.frontends.widgets.gtk.window import Window, WrappedWindow
-from miro.frontends.widgets.gtk.widgetset import Widget, VBox, Label, HBox, Alignment, Background, DrawingArea, ImageSurface, Image, CustomButton
+from miro.frontends.widgets.gtk.widgetset import (Widget, VBox, Label, HBox,
+                                                  Alignment, Background,
+                                                  DrawingArea, ImageSurface,
+                                                  Image, CustomButton)
 from miro.frontends.widgets.gtk.persistentwindow import PersistentWindow
 
 BLACK = (0.0, 0.0, 0.0)
@@ -74,7 +77,7 @@ class ClickableLabel(Widget):
         self.create_signal('clicked')
 
     def on_click(self, widget, event):
-        self.emit('clicked')
+        self.emit('clicked', event)
         return True
 
     def on_enter_notify(self, widget, event):
@@ -106,12 +109,17 @@ class ClickableImageButton(CustomButton):
 
         self.wrapped_widget_connect('enter-notify-event', self.on_enter_notify)
         self.wrapped_widget_connect('leave-notify-event', self.on_leave_notify)
+        self.wrapped_widget_connect('button-release-event', self.on_click)
 
     def size_request(self, layout):
         return self.image.width, self.image.height
 
     def draw(self, context, layout):
         self.image.draw(context, 0, 0, self.image.width, self.image.height)
+
+    def on_click(self, widget, event):
+        self.emit('clicked', event)
+        return True
 
     def on_enter_notify(self, widget, event):
         self._widget.window.set_cursor(gtk.gdk.Cursor(gtk.gdk.HAND1))
@@ -252,11 +260,7 @@ class VideoDetailsWidget(Background):
 
         outer_hbox = HBox(5)
 
-        if info.is_external:
-            self._delete_link = make_label(_("Delete"), self.handle_delete, True)
-            outer_hbox.pack_start(_align_middle(self._delete_link))
-
-        else:
+        if not info.is_external:
             if info.expiration_date is not None:
                 text = displaytext.expiration_date(info.expiration_date)
                 self._expiration_label = Label(text)
@@ -269,18 +273,34 @@ class VideoDetailsWidget(Background):
             outer_hbox.pack_start(_align_middle(lab))
             outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
 
-            self._delete_link = make_label(_("Delete"), self.handle_delete)
-            outer_hbox.pack_start(_align_middle(self._delete_link))
+        self._subtitles_link = make_label(_("Subtitles"),
+                                          self.handle_subtitles)
+        outer_hbox.pack_start(_align_middle(self._subtitles_link))
+        subtitles_image = make_image_button('images/subtitles_down.png',
+                                            self.handle_subtitles)
+        outer_hbox.pack_start(_align_middle(subtitles_image))
+
+        outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
+
+        self._delete_link = make_label(_("Delete"), self.handle_delete)
+        outer_hbox.pack_start(_align_middle(self._delete_link))
+
+        if not info.is_external:
             outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
 
-            self._share_link = make_label(_("Share"), self.handle_share, info.has_sharable_url)
+            self._share_link = make_label(_("Share"), self.handle_share,
+                                          info.has_sharable_url)
             outer_hbox.pack_start(_align_middle(self._share_link))
             outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
 
             if info.commentslink:
-                self._permalink_link = make_label(_("Comments"), self.handle_commentslink, info.commentslink)
+                self._permalink_link = make_label(_("Comments"),
+                                                  self.handle_commentslink,
+                                                  info.commentslink)
             else:
-                self._permalink_link = make_label(_("Permalink"), self.handle_permalink, info.permalink)
+                self._permalink_link = make_label(_("Permalink"),
+                                                  self.handle_permalink,
+                                                  info.permalink)
             outer_hbox.pack_start(_align_middle(self._permalink_link))
 
         outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
@@ -288,12 +308,14 @@ class VideoDetailsWidget(Background):
         if app.playback_manager.detached_window is not None:
             popin_link = make_label(_("Pop-in"), self.handle_popin_popout)
             outer_hbox.pack_start(_align_middle(popin_link))
-            popin_image = make_image_button('images/popin.png', self.handle_popin_popout)
+            popin_image = make_image_button('images/popin.png',
+                                            self.handle_popin_popout)
             outer_hbox.pack_start(_align_middle(popin_image))
         else:
             popout_link = make_label(_("Pop-out"), self.handle_popin_popout)
             outer_hbox.pack_start(_align_middle(popout_link))
-            popout_image = make_image_button('images/popout.png', self.handle_popin_popout)
+            popout_image = make_image_button('images/popout.png',
+                                             self.handle_popin_popout)
             outer_hbox.pack_start(_align_middle(popout_image))
 
         self.add(_align_right(outer_hbox, left_pad=15, right_pad=15))
@@ -304,28 +326,72 @@ class VideoDetailsWidget(Background):
     def show(self):
         self._widget.show()
 
-    def handle_popin_popout(self, widget):
+    def handle_popin_popout(self, widget, event=None):
         if app.playback_manager.is_fullscreen:
             app.playback_manager.exit_fullscreen()
         app.playback_manager.toggle_detached_mode()
 
-    def handle_keep(self, widget):
+    def handle_keep(self, widget, event):
         messages.KeepVideo(self.item_info.id).send_to_backend()
         self._widget.window.set_cursor(None)
 
-    def handle_delete(self, widget):
+    def handle_delete(self, widget, event):
         item_info = self.item_info
         self.reset()
         app.playback_manager.on_movie_finished()
         app.widgetapp.remove_items([item_info])
 
-    def handle_commentslink(self, widget):
+    def handle_subtitles(self, widget, event):
+        tracks = []
+        menu = gtk.Menu()
+
+        tracks = app.video_renderer.get_subtitle_tracks()
+
+        if len(tracks) == 0:
+            child = gtk.MenuItem(_("None Available"))
+            child.set_sensitive(False)
+            child.show()
+            menu.append(child)
+        else:
+            enabled_track = app.video_renderer.get_enabled_subtitle_track()
+
+            first_child = None
+            for i, lang in tracks:
+                child = gtk.RadioMenuItem(first_child, lang)
+                if enabled_track == i:
+                    child.set_active(True)
+                child.connect('activate', self.handle_subtitle_change, i)
+                child.show()
+                menu.append(child)
+                if first_child == None:
+                    first_child = child
+
+            sep = gtk.SeparatorMenuItem()
+            sep.show()
+            menu.append(sep)
+
+            child = gtk.RadioMenuItem(first_child, _("Disable Subtitles"))
+            if enabled_track == -1:
+                child.set_active(True)
+            child.connect('activate', self.handle_subtitle_change, -1)
+            child.show()
+            menu.append(child)
+
+        menu.popup(None, None, None, event.button, event.time)
+
+    def handle_subtitle_change(self, widget, index):
+        if index == -1:
+            app.video_renderer.disable_subtitles()
+        else:
+            app.video_renderer.enable_subtitle_track(index)
+
+    def handle_commentslink(self, widget, event):
         app.widgetapp.open_url(self.item_info.commentslink)
 
-    def handle_share(self, widget):
+    def handle_share(self, widget, event):
         app.widgetapp.share_item(self.item_info)
 
-    def handle_permalink(self, widget):
+    def handle_permalink(self, widget, event):
         app.widgetapp.open_url(self.item_info.permalink)
 
     def update_info(self, item_info):
