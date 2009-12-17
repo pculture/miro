@@ -301,6 +301,7 @@ class LiveStorage:
                 ', '.join(column_names),
                 ', '.join('?' for i in xrange(len(column_names))))
         self._execute(sql, values, is_update=True)
+        obj.reset_changed_attributes()
 
     def update_obj(self, obj):
         """Update a DDBObject on disk."""

@@ -150,11 +150,11 @@ class DDBObjectTestCase(MiroTestCase):
 
     def test_test_attribute_track(self):
         testobj = TestDDBObject(self)
-        self.assertEquals(testobj.changed_attributes, set(['id']))
+        self.assertEquals(testobj.changed_attributes, set())
         testobj.foo = 1
-        self.assertEquals(testobj.changed_attributes, set(['id', 'foo']))
+        self.assertEquals(testobj.changed_attributes, set(['foo']))
         testobj.bar = 2
-        self.assertEquals(testobj.changed_attributes, set(['id', 'foo']))
+        self.assertEquals(testobj.changed_attributes, set(['foo']))
 
 class LogFilter(logging.Filter):
     def __init__(self):
