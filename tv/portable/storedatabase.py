@@ -98,6 +98,18 @@ _sqlite_type_map = {
 
 VERSION_KEY = "Democracy Version"
 
+def split_values_for_sqlite(value_list):
+    """Split a list of values into chunks that SQL can handle.
+
+    The cursor.execute() method can only handle 999 values at once, this
+    method splits long lists into chunks where each chunk has is safe to feed
+    to sqlite.
+    """
+    CHUNK_SIZE = 990 # use 990 just to be on the safe side.
+    for start in xrange(0, len(value_list), CHUNK_SIZE):
+        yield value_list[start:start+CHUNK_SIZE]
+
+
 class LiveStorage:
     """Handles the storage of DDBObjects.
 
@@ -280,14 +292,14 @@ class LiveStorage:
         del self._object_map[obj.id]
         self._ids_loaded.remove(obj.id)
 
-    def insert_obj(self, obj):
-        """Add a new DDBObject to disk."""
+    def _insert_sql_for_schema(self, obj_schema):
+        return "INSERT INTO %s (%s) VALUES(%s)" % (obj_schema.table_name,
+                ', '.join(name for name, schema_item in obj_schema.fields),
+                ', '.join('?' for i in xrange(len(obj_schema.fields))))
 
-        obj_schema = self._schema_map[obj.__class__]
-        column_names = []
+    def _values_for_obj(self, obj_schema, obj):
         values = []
         for name, schema_item in obj_schema.fields:
-            column_names.append(name)
             value = getattr(obj, name)
             try:
                 schema_item.validate(value)
@@ -297,11 +309,35 @@ class LiveStorage:
                 raise
             values.append(self._converter.to_sql(obj_schema, name,
                 schema_item, value))
-        sql = "INSERT INTO %s (%s) VALUES(%s)" % (obj_schema.table_name,
-                ', '.join(column_names),
-                ', '.join('?' for i in xrange(len(column_names))))
+        return values
+
+    def insert_obj(self, obj):
+        """Add a new DDBObject to disk."""
+
+        obj_schema = self._schema_map[obj.__class__]
+        values = self._values_for_obj(obj_schema, obj)
+        sql = self._insert_sql_for_schema(obj_schema)
         self._execute(sql, values, is_update=True)
         obj.reset_changed_attributes()
+
+    def bulk_insert(self, objects):
+        """Insert a list of objects in one go.
+
+        Throws a ValueError if the objects don't all use the same database
+        table.
+        """
+        if len(objects) == 0:
+            return
+        obj_schema = self._schema_map[objects[0].__class__]
+        value_list = []
+        for obj in objects:
+            if obj_schema != self._schema_map[obj.__class__]:
+                raise ValueError("Incompatible types for bulk insert")
+            value_list.append(self._values_for_obj(obj_schema, obj))
+        sql = self._insert_sql_for_schema(obj_schema)
+        self._execute(sql, value_list, is_update=True, many=True)
+        for obj in objects:
+            obj.reset_changed_attributes()
 
     def update_obj(self, obj):
         """Update a DDBObject on disk."""
@@ -336,6 +372,29 @@ class LiveStorage:
         sql = "DELETE FROM %s WHERE id=?" % (schema.table_name)
         self._execute(sql, (obj.id,), is_update=True)
         self.forget_object(obj)
+
+    def bulk_remove(self, objects):
+        """Remove a list of objects in one go.
+
+        Throws a ValueError if the objects don't all use the same database
+        table.
+        """
+
+        if len(objects) == 0:
+            return
+        obj_schema = self._schema_map[objects[0].__class__]
+        for obj in objects:
+            if obj_schema != self._schema_map[obj.__class__]:
+                raise ValueError("Incompatible types for bulk remove")
+        # we can only feed sqlite so many variables at once, send it chunks of
+        # 900 ids at once
+        for objects_chunk in split_values_for_sqlite(objects):
+            commas = ','.join('?' for x in xrange(len(objects_chunk)))
+            sql = "DELETE FROM %s WHERE id IN (%s)" % (obj_schema.table_name,
+                    commas)
+            self._execute(sql, [o.id for o in objects_chunk], is_update=True)
+        for obj in objects:
+            self.forget_object(obj)
 
     def get_last_id(self):
         try:
@@ -415,9 +474,7 @@ class LiveStorage:
         # we can only feed sqlite so many variables at once, send it chunks of
         # 900 ids at once
         id_list = tuple(id_set)
-        for start in xrange(0, len(id_list), 900):
-            id_list_chunk = id_list[start:start+900]
-
+        for id_list_chunk in split_values_for_sqlite(id_list):
             sql = StringIO()
             sql.write("SELECT %s " % (', '.join(column_names),))
             sql.write("FROM %s WHERE id IN (%s)" % (schema.table_name, 
@@ -490,7 +547,7 @@ class LiveStorage:
             None))
         return self._execute(sql.getvalue(), values)
 
-    def _execute(self, sql, values, is_update=False):
+    def _execute(self, sql, values, is_update=False, many=False):
         if is_update and self._quitting_from_operational_error:
             # We want to avoid updating the database at this point.
             return
@@ -501,7 +558,7 @@ class LiveStorage:
         failed = False
         while True:
             try:
-                self._time_execute(sql, values)
+                self._time_execute(sql, values, many)
             except sqlite3.OperationalError, e:
                 # printing the traceback here in whole rather than doing
                 # a logging.exception which seems to show the traceback
@@ -533,9 +590,12 @@ class LiveStorage:
         else:
             return self.cursor.fetchall()
 
-    def _time_execute(self, sql, values):
+    def _time_execute(self, sql, values, many):
         start = time.time()
-        self.cursor.execute(sql, values)
+        if many:
+            self.cursor.executemany(sql, values)
+        else:
+            self.cursor.execute(sql, values)
         end = time.time()
         self._check_time(sql, end-start)
 

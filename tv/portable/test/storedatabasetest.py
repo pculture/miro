@@ -352,6 +352,22 @@ class DiskTest(FakeSchemaTest):
         app.db.cursor.execute("DROP TABLE human")
         self.check_reload_error()
 
+    def test_bulk_insert(self):
+        new_humans = []
+        app.bulk_sql_manager.start()
+        # nothing should be inserted yet
+        for x in range(10):
+            name = u"lee-clone-%s" % x
+            new_humans.append(Human(name, 25, 1.4, [], {u'virtual bowling':
+                212}))
+        self.check_database()
+        self.assertEquals(Human.make_view().count(), 1)
+        app.bulk_sql_manager.finish()
+        # calling finish() should insert the new Humans
+        self.db.extend(new_humans)
+        self.check_database()
+        self.assertEquals(Human.make_view().count(), 11)
+
 class ObjectMemoryTest(FakeSchemaTest):
     def test_remove_remove_object_map(self):
         self.reload_test_database()

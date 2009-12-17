@@ -111,7 +111,7 @@ class ViewTrackerTest(DatabaseTestCase):
         self.assertEquals(self.change_callbacks, [])
 
     def test_reset(self):
-        database.setup_view_tracker_manager()
+        database.setup_managers()
         self.feed2.set_title(u"booya")
         self.feed.revert_title()
         self.assertEquals(self.add_callbacks, [])

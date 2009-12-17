@@ -28,6 +28,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import logging
 import traceback
 import threading
 
@@ -157,6 +158,14 @@ class ViewTrackerManager(object):
         for tracker in self.trackers_for_ddb_class(obj.__class__):
             tracker.object_changed(obj)
 
+    def bulk_update_view_trackers(self, table_name):
+        for tracker in self.trackers_for_table(table_name):
+            tracker.check_all_objects()
+
+    def bulk_remove_from_view_trackers(self, table_name, objects):
+        for tracker in self.trackers_for_table(table_name):
+            tracker.remove_objects(objects)
+
     def remove_from_view_trackers(self, obj):
         """Update view trackers based on an object change."""
 
@@ -198,6 +207,13 @@ class ViewTracker(signals.SignalEmitter):
             self.current_ids.remove(obj.id)
             self.emit('removed', obj)
 
+    def remove_objects(self, objects):
+        object_map = dict((o.id, o) for o in objects)
+        object_ids = set(object_map.keys())
+        for removed_id in self.current_ids.intersection(object_ids):
+            self.current_ids.remove(removed_id)
+            self.emit('removed', object_map[removed_id])
+
     def check_object(self, obj):
         before = (obj.id in self.current_ids)
         now = self._obj_in_view(obj)
@@ -226,6 +242,71 @@ class ViewTracker(signals.SignalEmitter):
 
     def __len__(self):
         return len(self.current_ids)
+
+class BulkSQLManager(object):
+    def __init__(self):
+        self.active = False
+        self.to_insert = {}
+        self.to_remove = {}
+
+    def start(self):
+        if self.active:
+            raise ValueError("BulkSQLManager.start() called twice")
+        self.active = True
+
+    def finish(self):
+        if not self.active:
+            raise ValueError("BulkSQLManager.finish() called twice")
+        self.commit()
+        self.active = False
+
+    def commit(self):
+        self._commit_sql()
+        self._update_view_trackers()
+        self.to_insert = {}
+        self.to_remove = {}
+
+    def _commit_sql(self):
+        for table_name, objects in self.to_insert.items():
+            logging.debug('bulk insert: %s %s', table_name, len(objects))
+            app.db.bulk_insert(objects)
+            for obj in objects:
+                obj.inserted_into_db()
+
+        for table_name, objects in self.to_remove.items():
+            logging.debug('bulk remove: %s %s', table_name, len(objects))
+            app.db.bulk_remove(objects)
+            for obj in objects:
+                obj.removed_from_db()
+
+    def _update_view_trackers(self):
+        for table_name in self.to_insert:
+            app.view_tracker_manager.bulk_update_view_trackers(table_name)
+
+        for table_name, objects in self.to_remove.items():
+            if table_name in self.to_insert:
+                # already updated the view above
+                continue
+            app.view_tracker_manager.bulk_remove_from_view_trackers(
+                    table_name, objects)
+
+    def add_insert(self, obj):
+        table_name = app.db.table_name(obj.__class__)
+        try:
+            inserts_for_table = self.to_insert[table_name]
+        except KeyError:
+            inserts_for_table = []
+            self.to_insert[table_name] = inserts_for_table
+        inserts_for_table.append(obj)
+
+    def add_remove(self, obj):
+        table_name = app.db.table_name(obj.__class__)
+        try:
+            removes_for_table = self.to_remove[table_name]
+        except KeyError:
+            removes_for_table = []
+            self.to_remove[table_name] = removes_for_table
+        removes_for_table.append(obj)
 
 class AttributeUpdateTracker(object):
     """Used by DDBObject to track changes to attributes."""
@@ -285,14 +366,23 @@ class DDBObject(signals.SignalEmitter):
             # handle setup_new() calling remove()
             if not self.idExists():
                 return
-            app.db.insert_obj(self)
 
         self.in_db_init = False
 
         if not restoring:
-            self.check_constraints()
-            self.on_db_insert()
+            self._insert_into_db()
+
+    def _insert_into_db(self):
+        if not app.bulk_sql_manager.active:
+            app.db.insert_obj(self)
+            self.inserted_into_db()
             app.view_tracker_manager.update_view_trackers(self)
+        else:
+            app.bulk_sql_manager.add_insert(self)
+
+    def inserted_into_db(self):
+        self.check_constraints()
+        self.on_db_insert()
 
     @classmethod
     def make_view(cls, where=None, values=None, order_by=None, joins=None,
@@ -377,9 +467,15 @@ class DDBObject(signals.SignalEmitter):
     def remove(self):
         """Call this after you've removed all references to the object
         """
-        app.db.remove_obj(self)
+        if not app.bulk_sql_manager.active:
+            app.db.remove_obj(self)
+            self.removed_from_db()
+            app.view_tracker_manager.remove_from_view_trackers(self)
+        else:
+            app.bulk_sql_manager.add_remove(self)
+
+    def removed_from_db(self):
         self.emit('removed')
-        app.view_tracker_manager.remove_from_view_trackers(self)
 
     def confirm_db_thread(self):
         """Call this before you grab data from an object
@@ -421,9 +517,10 @@ class DDBObject(signals.SignalEmitter):
 def update_last_id():
     DDBObject.lastID = app.db.get_last_id()
 
-def setup_view_tracker_manager():
+def setup_managers():
     app.view_tracker_manager = ViewTrackerManager()
+    app.bulk_sql_manager = BulkSQLManager()
 
 def initialize():
     update_last_id()
-    setup_view_tracker_manager()
+    setup_managers()
