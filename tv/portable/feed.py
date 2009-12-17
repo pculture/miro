@@ -547,11 +547,14 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.actualFeed:
             return self.actualFeed.clean_old_items()
 
-    def recalc_counts(self):
+    def invalidate_counts(self):
         for cached_count_attr in ('_num_available', '_num_unwatched',
                 '_num_downloaded', '_num_downloading'):
             if cached_count_attr in self.__dict__:
                 del self.__dict__[cached_count_attr]
+
+    def recalc_counts(self):
+        self.invalidate_counts()
         self.signal_change(needsSave=False)
         if self.in_folder():
             self.get_folder().signal_change(needsSave=False)
@@ -1443,7 +1446,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                 self.ufeed.mark_as_viewed()
             self.ufeed.signal_change()
 
-        self.ufeed.recalc_counts()
+        self.ufeed.invalidate_counts()
         self.truncateOldItems(old_items)
         self.signal_change()
 
@@ -2283,6 +2286,8 @@ class SearchFeedImpl(RSSMultiFeedImpl):
         self.query = u''
         self.setUpdateFrequency(-1)
         self.ufeed.autoDownloadable = False
+        # keeps the items from being seen as 'newly available'
+        self.ufeed.last_viewed = datetime.max
         self.ufeed.signal_change()
 
     @returnsUnicode
@@ -2384,8 +2389,6 @@ class SearchFeedImpl(RSSMultiFeedImpl):
 
     def update_finished(self, old_items):
         self.searching = False
-        # keeps the items from being seen as 'newly available'
-        self.ufeed.mark_as_viewed()
         RSSMultiFeedImpl.update_finished(self, old_items)
 
     def update(self):
