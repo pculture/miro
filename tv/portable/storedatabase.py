@@ -368,7 +368,7 @@ class LiveStorage:
     def object_from_class_table(self, obj, klass):
         return self._schema_map[klass] is self._schema_map[obj.__class__]
 
-    def _get_query_bottom(self, table_name, where, joins):
+    def _get_query_bottom(self, table_name, where, joins, order_by, limit):
         sql = StringIO()
         sql.write("FROM %s\n" % table_name)
         if joins is not None:
@@ -376,20 +376,24 @@ class LiveStorage:
                 sql.write('LEFT JOIN %s ON %s\n' % (join_table, join_where))
         if where is not None:
             sql.write("WHERE %s" % where)
+        if order_by is not None:
+            sql.write(" ORDER BY %s" % order_by)
+        if limit is not None:
+            sql.write(" LIMIT %s" % limit)
         return sql.getvalue()
 
-    def query(self, klass, where, values=None, order_by=None, joins=None):
-        for id in self.query_ids(klass, where, values, order_by, joins):
+    def query(self, klass, where, values=None, order_by=None, joins=None,
+            limit=None):
+        for id in self.query_ids(klass, where, values, order_by, joins, limit):
             yield self._object_map[id]
 
-    def query_ids(self, klass, where, values=None, order_by=None, joins=None):
+    def query_ids(self, klass, where, values=None, order_by=None, joins=None,
+            limit=None):
         schema = self._schema_map[klass]
         sql = StringIO()
         sql.write("SELECT %s.id " % schema.table_name)
-        sql.write(self._get_query_bottom(schema.table_name, where, joins))
-        if order_by is not None:
-            sql.write(" ORDER BY %s" % order_by)
-
+        sql.write(self._get_query_bottom(schema.table_name, where, joins,
+            order_by, limit))
         self.cursor.execute(sql.getvalue(), values)
         rv = [row[0] for row in self.cursor.fetchall()]
         unrestored_ids = set(rv).difference(self._ids_loaded)
@@ -462,11 +466,12 @@ class LiveStorage:
     def persistent_object_count(self):
         return len(self._object_map)
 
-    def query_count(self, klass, where, values=None, joins=None):
+    def query_count(self, klass, where, values=None, joins=None, limit=None):
         schema = self._schema_map[klass]
         sql = StringIO()
         sql.write('SELECT COUNT(*) ')
-        sql.write(self._get_query_bottom(schema.table_name, where, joins))
+        sql.write(self._get_query_bottom(schema.table_name, where, joins,
+            None, limit))
         return self._execute(sql.getvalue(), values)[0][0]
 
     def delete(self, klass, where, values):
@@ -481,7 +486,8 @@ class LiveStorage:
         schema = self._schema_map[klass]
         sql = StringIO()
         sql.write('SELECT %s ' % columns)
-        sql.write(self._get_query_bottom(schema.table_name, where, None))
+        sql.write(self._get_query_bottom(schema.table_name, where, None, None,
+            None))
         return self._execute(sql.getvalue(), values)
 
     def _execute(self, sql, values, is_update=False):

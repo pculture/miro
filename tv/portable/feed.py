@@ -1327,7 +1327,8 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             path = download_utils.get_file_url_path(enclosure['url'])
             item = models.FileItem(path, entry=entry, feed_id=self.ufeed.id)
         else:
-            item = models.Item(entry, feed_id=self.ufeed.id)
+            item = models.Item(entry, feed_id=self.ufeed.id,
+                    eligibleForAutoDownload=False)
             if not item.matches_search(self.ufeed.searchTerm):
                 item.remove()
         item.set_channel_title(channelTitle)
@@ -1435,17 +1436,9 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             self.initialUpdate = False
             startfrom = None
             itemToUpdate = None
-            for item in self.items:
-                itemTime = item.get_pub_date_parsed()
-                if startfrom is None or itemTime > startfrom:
-                    startfrom = itemTime
-                    itemToUpdate = item
-            for item in self.items:
-                if item == itemToUpdate:
-                    item.eligibleForAutoDownload = True
-                else:
-                    item.eligibleForAutoDownload = False
-                item.signal_change()
+            for latest in models.Item.latest_in_feed_view(self.ufeed_id):
+                latest.eligibleForAutoDownload = True
+                latest.signal_change()
             if self.ufeed.isAutoDownloadable():
                 self.ufeed.mark_as_viewed()
             self.ufeed.signal_change()
@@ -1956,12 +1949,14 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
                                                                             'thumbnail': FeedParserDict({'url': dict_['thumbnail']})
                                                                           })]
                                            }),
-                             linkNumber=linkNumber, feed_id=self.ufeed.id)
+                             linkNumber=linkNumber, feed_id=self.ufeed.id,
+                             eligibleForAutoDownload=False)
         else:
             i = models.Item(FeedParserDict({'title': title,
                                              'enclosures': [FeedParserDict({'url': link})]
                                            }),
-                             linkNumber=linkNumber, feed_id=self.ufeed.id)
+                             linkNumber=linkNumber, feed_id=self.ufeed.id,
+                             eligibleForAutoDownload=False)
         if (self.ufeed.searchTerm is not None and 
                 not i.matches_search(self.ufeed.searchTerm)):
             i.remove()

@@ -104,20 +104,21 @@ def confirm_db_thread():
         raise DatabaseThreadError, error_string
 
 class View(object):
-    def __init__(self, klass, where, values, order_by, joins):
+    def __init__(self, klass, where, values, order_by, joins, limit):
         self.klass = klass
         self.where = where
         self.values = values
         self.order_by = order_by
         self.joins = joins
+        self.limit = limit
 
     def __iter__(self):
         return app.db.query(self.klass, self.where, self.values,
-                            self.order_by, self.joins)
+                            self.order_by, self.joins, self.limit)
 
     def count(self):
         return app.db.query_count(self.klass, self.where, self.values,
-                                  self.joins)
+                                  self.joins, self.limit)
 
     def get_singleton(self):
         results = list(self)
@@ -129,6 +130,8 @@ class View(object):
             raise TooManyObjects("Too many results returned")
 
     def make_tracker(self):
+        if self.limit is not None:
+            raise ValueError("tracking views with limits not supported")
         return ViewTracker(self.klass, self.where, self.values, self.joins)
 
 class ViewTrackerManager(object):
@@ -292,10 +295,11 @@ class DDBObject(signals.SignalEmitter):
             app.view_tracker_manager.update_view_trackers(self)
 
     @classmethod
-    def make_view(cls, where=None, values=None, order_by=None, joins=None):
+    def make_view(cls, where=None, values=None, order_by=None, joins=None,
+            limit=None):
         if values is None:
             values = ()
-        return View(cls, where, values, order_by, joins)
+        return View(cls, where, values, order_by, joins, limit)
 
     @classmethod
     def get_by_id(cls, id_):

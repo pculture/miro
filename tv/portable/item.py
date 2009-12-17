@@ -291,7 +291,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     ICON_CACHE_VITAL = False
 
-    def setup_new(self, entry, linkNumber=0, feed_id=None, parent_id=None):
+    def setup_new(self, entry, linkNumber=0, feed_id=None, parent_id=None,
+            eligibleForAutoDownload=True):
         self.is_file_item = False
         self.feed_id = feed_id
         self.parent_id = parent_id
@@ -307,7 +308,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.expired = False
         self.keep = False
         self.filename = self.file_type = None
-        self.eligibleForAutoDownload = True
+        self.eligibleForAutoDownload = eligibleForAutoDownload
         self.duration = None
         self.screenshot = None
         self.resumeTime = 0
@@ -557,6 +558,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 "watchedTime < ? AND feed_id = ? AND keep = 0",
                 (watched_before, feed_id),
                 joins={'feed': 'item.feed_id=feed.id'})
+
+    @classmethod
+    def latest_in_feed_view(cls, feed_id):
+        return cls.make_view("feed_id=?", (feed_id,),
+                order_by='releaseDateObj DESC', limit=1)
 
     @classmethod
     def media_children_view(cls, parent_id):
@@ -1728,7 +1734,8 @@ class FileItem(Item):
             offsetPath=None, deleted=False, entry=None):
         if entry is None:
             entry = get_entry_for_file(filename)
-        Item.setup_new(self, entry, feed_id=feed_id, parent_id=parent_id)
+        Item.setup_new(self, entry, feed_id=feed_id, parent_id=parent_id,
+                eligibleForAutoDownload=False)
         self.is_file_item = True
         checkF(filename)
         filename = fileutil.abspath(filename)
