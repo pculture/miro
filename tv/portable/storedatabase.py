@@ -301,7 +301,6 @@ class LiveStorage:
                 ', '.join(column_names),
                 ', '.join('?' for i in xrange(len(column_names))))
         self._execute(sql, values, is_update=True)
-        self.remember_object(obj)
 
     def update_obj(self, obj):
         """Update a DDBObject on disk."""
@@ -328,7 +327,6 @@ class LiveStorage:
             sql = "UPDATE %s SET %s WHERE id=%s" % (obj_schema.table_name,
                     ', '.join(setters), obj.id)
             self._execute(sql, values, is_update=True)
-        self.remember_object(obj)
 
     def remove_obj(self, obj):
         """Remove a DDBObject from disk."""
