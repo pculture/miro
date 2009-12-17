@@ -137,7 +137,8 @@ class WindowBase(signals.SignalEmitter):
         # menu stuff.
         self.menu_structure = None
         self.menu_action_groups = None
-        self.merge_id = 0
+        self._merge_id = 0
+        self._subtitle_tracks_cached = None
         self._setup_ui_manager()
 
     def set_window(self, window):
@@ -455,14 +456,17 @@ class MainWindow(Window):
             self._clear_subtitles_menu()
 
     def _populate_subtitles_menu(self, tracks):
-        if self.merge_id:
-            self.ui_manager.remove_ui(self.merge_id)
-            self.merge_id = 0
+        enabled_track = app.video_renderer.get_enabled_subtitle_track()
 
-        if config.get(prefs.ENABLE_SUBTITLES):
-            enabled_track = app.video_renderer.get_enabled_subtitle_track()
-        else:
-            enabled_track = -1
+        if self._subtitle_tracks_cached == (tracks, enabled_track):
+            return
+
+        self._subtitle_tracks_cached = (tracks, enabled_track)
+
+        if self._merge_id:
+            self.ui_manager.remove_ui(self._merge_id)
+            self._merge_id = 0
+
         outstream = StringIO.StringIO()
         outstream.write('''<ui>
 <menubar name="MiroMenu">
@@ -477,7 +481,7 @@ class MainWindow(Window):
 </menubar>
 </ui>''')
 
-        self.merge_id = self.ui_manager.add_ui_from_string(outstream.getvalue())
+        self._merge_id = self.ui_manager.add_ui_from_string(outstream.getvalue())
 
         action_group = self.action_groups["AlwaysOn"]
         for i, lang in tracks:
@@ -486,9 +490,10 @@ class MainWindow(Window):
         action_group.get_action("SubtitlesDisabled").set_property("current-value", enabled_track)
 
     def _clear_subtitles_menu(self):
-        if self.merge_id:
-            self.ui_manager.remove_ui(self.merge_id)
-            self.merge_id = 0
+        if self._merge_id:
+            self.ui_manager.remove_ui(self._merge_id)
+            self._merge_id = 0
+            self._subtitle_tracks_cached = None
 
         s = '''<ui>
 <menubar name="MiroMenu">
@@ -499,7 +504,7 @@ class MainWindow(Window):
    </menu>
 </menubar>
 </ui>'''
-        self.merge_id = self.ui_manager.add_ui_from_string(s)
+        self._merge_id = self.ui_manager.add_ui_from_string(s)
 
     def _add_content_widget(self, widget):
         self.vbox.pack_start(widget._widget, expand=True)
