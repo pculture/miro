@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Miro Developer Documentation v2.5
+Miro Developer Documentation v2.6
 =================================
 
 Contents:
