@@ -128,7 +128,7 @@ $SBOX_DIR/bin/bjam  --prefix=$SBOX_DIR \
                     release \
                     install
 
-export BOOST_ROOT=$WORK_DIR/boost_$BOOST_VERSION_FULL/
+export BOOST_ROOT=$WORK_DIR/boost_$BOOST_VERSION_FULL
 
 # Libtorrent ===================================================================
 
@@ -164,7 +164,6 @@ BOOST_FILESYSTEM_ARCHIVE=$(find $BOOST_ROOT -name libboost_filesystem-*.a -print
 
 g++ -bundle \
     -Wl,-single_module \
-    -Wl,-dead_strip \
     -L"$PYTHON_ROOT/lib" \
     -L"$PYTHON_ROOT/lib/python$PYTHON_VERSION/config" \
     -o $SITE_DIR/libtorrent.so \
@@ -172,7 +171,6 @@ g++ -bundle \
     -lssl \
     -lcrypto \
     -headerpad_max_install_names \
-    -no_dead_strip_inits_and_terms \
     -isysroot $SDK_DIR \
     -arch i386 \
     -arch ppc \

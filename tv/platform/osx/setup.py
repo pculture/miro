@@ -48,9 +48,9 @@ from distutils.util import get_platform
 BINARY_KIT_VERSION = open("binary_kit_version").read().strip()
 BKIT_DIR = os.path.join(os.getcwd(), "miro-binary-kit-osx-%s" % BINARY_KIT_VERSION)
 
-if not os.path.exists or not os.path.isdir(BKIT_DIR):
+if not os.path.exists(BKIT_DIR) or not os.path.isdir(BKIT_DIR):
     print "Binary kit %s is missing.  Run 'setup_binarykit.sh'." % BKIT_DIR
-    sys.exit()
+    sys.exit(1)
 
 ROOT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
 ROOT_DIR = os.path.join(ROOT_DIR, '../..')
