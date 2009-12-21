@@ -1,6 +1,6 @@
-======
-README
-======
+========
+ README
+========
 
 This repository holds source code for several components of Miro, the
 open and free Internet TV platform.  For more information about Miro,
@@ -33,20 +33,6 @@ Miro
   channels and Video Bomb for easy end-user republishing and social
   promotion of individual videos.
 
-* ``dtv-binary-kit``
-
-  Prebuilt binary dependencies for building Miro on Windows -- so
-  developers can get up and running in half an hour instead of a
-  week. If used, it should be checked out *alongside* the source to
-  Miro Player. That is, ``tv`` and ``dtv-binary-kit`` should both be
-  subdirectories of the same directory. If you're reading this file,
-  odds are good that you just checked out the whole repository, and so
-  this has already been taken care of for you. :)
-
-* ``dtv-binary-kit-mac``
-
-  Prebuilt binary dependencies for building Miro on Mac OSX.
-
 * ``docs``
 
   Developer documentation for Miro.
@@ -55,29 +41,3 @@ Miro
 
   Scripts, packaging files, and a bunch of other stuff that helps
   us doing development on Miro and related projects.
-
-
-Broadcast Machine
------------------
-
-Channel Guide, Video Bomb, Miro Community and other projects are
-tracked in other repositories.
-
-* ``bmachine``
-
-  Broadcast Machine, an Internet TV publishing package, integrating a
-  Bittorrent tracker, an RSS server, and a content management system
-  into one easy-to-use Web application that can be installed by
-  dragging a folder into your FTP client -- no database setup needed.
-
-* ``bmachine-binary-kit``
-
-  Binary kit bits for Broadcast Machine.
-
-
-Misc
-----
-
-* ``retemplate``
-
-  I don't really know what this is.
