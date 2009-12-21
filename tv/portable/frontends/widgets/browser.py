@@ -189,16 +189,16 @@ class BrowserNav(widgetset.VBox):
         self.pack_start(separator.HThinSeparator((0.6, 0.6, 0.6)))
         self.pack_start(self.browser, expand=True)
 
-        self.toolbar.connect('browser-back', self._on_browser_back)
-        self.toolbar.connect('browser-forward', self._on_browser_forward)
-        self.toolbar.connect('browser-reload', self._on_browser_reload)
-        self.toolbar.connect('browser-stop', self._on_browser_stop)
-        self.toolbar.connect('browser-home', self._on_browser_home)
-        self.toolbar.connect('browser-download', self._on_browser_download)
-        self.toolbar.connect('browser-open', self._on_browser_open)
+        self.toolbar.connect_weak('browser-back', self._on_browser_back)
+        self.toolbar.connect_weak('browser-forward', self._on_browser_forward)
+        self.toolbar.connect_weak('browser-reload', self._on_browser_reload)
+        self.toolbar.connect_weak('browser-stop', self._on_browser_stop)
+        self.toolbar.connect_weak('browser-home', self._on_browser_home)
+        self.toolbar.connect_weak('browser-download', self._on_browser_download)
+        self.toolbar.connect_weak('browser-open', self._on_browser_open)
 
-        self.browser.connect('net-start', self._on_net_start)
-        self.browser.connect('net-stop', self._on_net_stop)
+        self.browser.connect_weak('net-start', self._on_net_start)
+        self.browser.connect_weak('net-stop', self._on_net_stop)
 
     def enable_disable_navigation(self):
         if self.browser.can_go_back():

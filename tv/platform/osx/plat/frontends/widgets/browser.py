@@ -51,15 +51,25 @@ class Browser(Widget):
         self.delegate = BrowserDelegate.alloc().initWithBrowser_(self)
         self.view = MiroWebView.alloc().initWithFrame_(NSRect((0,0), self.calc_size_request()))
         self.view.setMaintainsBackForwardList_(YES)
-        self.view.setPolicyDelegate_(self.delegate)
-        self.view.setResourceLoadDelegate_(self.delegate)
-        self.view.setFrameLoadDelegate_(self.delegate)
-        self.view.setUIDelegate_(self.delegate)
         self.view.setApplicationNameForUserAgent_("%s/%s (%s)" % \
                                       (config.get(prefs.SHORT_APP_NAME),
                                        config.get(prefs.APP_VERSION),
                                        config.get(prefs.PROJECT_URL),))
 
+    def viewport_created(self):
+        Widget.viewport_created(self)
+        self.view.setPolicyDelegate_(self.delegate)
+        self.view.setResourceLoadDelegate_(self.delegate)
+        self.view.setFrameLoadDelegate_(self.delegate)
+        self.view.setUIDelegate_(self.delegate)
+
+    def remove_viewport(self):
+        Widget.remove_viewport(self)
+        self.view.setPolicyDelegate_(nil)
+        self.view.setResourceLoadDelegate_(nil)
+        self.view.setFrameLoadDelegate_(nil)
+        self.view.setUIDelegate_(nil)
+        
     def calc_size_request(self):
         return (200, 100) # Seems like a reasonable minimum size
 
