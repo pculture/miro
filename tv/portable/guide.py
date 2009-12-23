@@ -93,6 +93,9 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
         return "Miro Guide <%s>" % self.url
 
     def remove(self):
+        if self.client is not None:
+            self.client.cancel()
+            self.client = None
         self.remove_icon_cache()
         DDBObject.remove(self)
 
@@ -141,12 +144,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
         self.signal_change(needsSave=True)
 
     def guide_downloaded(self, info):
-        # If the user deletes a ChannelGuide before it is fully loaded and this
-        # callback is called, bad things happen: bug 12580. So check if the
-        # object still exists first.
-        if not self.idExists():
-            return
-        # Safe to go now.
+        self.client = None
         self.updated_url = unicode(info["updated-url"])
         parser = None
         try:
@@ -181,9 +179,10 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
     def guide_error(self, error):
         # FIXME - this should display some kind of error page to the user
         logging.warn("Error downloading guide: %s", error)
+        self.client = None
 
     def download_guide(self):
-        httpclient.grabURL(self.get_url(), self.guide_downloaded, self.guide_error)
+        self.client = httpclient.grabURL(self.get_url(), self.guide_downloaded, self.guide_error)
 
     def get_favicon_path(self):
         """Returns the path to the favicon file.  It's either the favicon of
