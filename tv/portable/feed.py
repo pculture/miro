@@ -1331,7 +1331,6 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
 
     def _handleNewEntry(self, entry, fp_values, channel_title):
         """Handle getting a new entry from a feed."""
-        start = clock()
         enclosure = fp_values.first_video_enclosure
         if (self.url.startswith('file://') and enclosure and
                 enclosure['url'].startswith('file://')):
@@ -1354,7 +1353,6 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             app.bulk_sql_manager.finish()
 
     def _createItemsForParsed(self, parsed):
-        start = clock()
         # This is a HACK for Yahoo! search which doesn't provide
         # enclosures
         for entry in parsed['entries']:
@@ -2381,7 +2379,6 @@ class SearchFeedImpl(RSSMultiFeedImpl):
 
     def _handleNewEntry(self, entry, fp_values, channelTitle):
         """Handle getting a new entry from a feed."""
-        start = clock()
         url = fp_values.data['url']
         if url is not None:
             dl = downloader.get_existing_downloader_by_url(url)
