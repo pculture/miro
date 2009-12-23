@@ -141,6 +141,12 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
         self.signal_change(needsSave=True)
 
     def guide_downloaded(self, info):
+        # If the user deletes a ChannelGuide before it is fully loaded and this
+        # callback is called, bad things happen: bug 12580. So check if the
+        # object still exists first.
+        if not self.idExists():
+            return
+        # Safe to go now.
         self.updated_url = unicode(info["updated-url"])
         parser = None
         try:
