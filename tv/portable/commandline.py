@@ -89,7 +89,7 @@ def add_torrent(path, torrentInfohash):
             if i.downloader.get_state() in ('paused', 'stopped'):
                 i.download()
             return
-    new_item = item.Item(item.get_entry_for_file(path),
+    new_item = item.Item(item.fp_values_for_file(path),
                          feed_id=manual_feed.get_id())
     new_item.download()
 

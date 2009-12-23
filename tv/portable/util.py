@@ -49,7 +49,7 @@ import threading
 import traceback
 import subprocess
 from StringIO import StringIO
-
+from clock import clock
 
 # Should we print out warning messages.  Turn off in the unit tests.
 chatter = True
@@ -929,3 +929,15 @@ def ascii_lower(str):
     Normally str.lower() should be used though.
     """
     return str.translate(_lower_translate)
+
+class DebuggingTimer:
+    def __init__(self):
+        self.start_time = self.last_time = clock()
+
+    def log_time(self, msg):
+        current_time = clock()
+        logging.timing("%s: %0.4f", msg, current_time - self.last_time)
+        self.last_time = current_time
+
+    def log_total_time(self):
+        logging.timing("total time: %0.3f", clock() - self.start_time)

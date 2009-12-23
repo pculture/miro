@@ -3,7 +3,7 @@ from miro import prefs
 
 from miro.feed import Feed
 from miro.guide import ChannelGuide
-from miro.item import Item
+from miro.item import Item, FeedParserValues
 from miro.playlist import SavedPlaylist
 from miro.folder import PlaylistFolder, ChannelFolder
 from miro.singleclick import _build_entry
@@ -371,8 +371,9 @@ class FeedItemTrackTest(TrackerTest):
         self.runUrgentCalls()
 
     def make_item(self, url):
-        self.items.append(Item(entry=_build_entry(url, 'video/x-unknown'),
-            feed_id=self.feed.id))
+        entry =_build_entry(url, 'video/x-unknown')
+        item_ = Item(FeedParserValues(entry), feed_id=self.feed.id)
+        self.items.append(item_)
 
     def checkDownloadInfo(self, info, item):
         downloader = item.downloader
@@ -453,10 +454,10 @@ class PlaylistItemTrackTest(TrackerTest):
         self.runUrgentCalls()
 
     def make_item(self, url):
-        item = Item(entry=_build_entry(url, 'video/x-unknown'),
-                    feed_id=self.feed.id)
-        self.items.append(item)
-        self.playlist.add_item(item)
+        entry = _build_entry(url, 'video/x-unknown')
+        item_ = Item(FeedParserValues(entry), feed_id=self.feed.id)
+        self.items.append(item_)
+        self.playlist.add_item(item_)
 
     def checkDownloadInfo(self, info, item):
         downloader = item.downloader

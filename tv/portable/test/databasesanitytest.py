@@ -43,7 +43,7 @@ class SanityCheckingTest(MiroTestCase):
 
     def testPhantomFeedChecking(self):
         f = feed.Feed(u"http://feed.uk")
-        i = item.Item({}, feed_id=f.id)
+        i = item.Item(item.FeedParserValues({}), feed_id=f.id)
         i2 = item.FileItem('/foo/bar.txt', feed_id=f.id)
         self.checkObjectListFailsTest([i])
         self.checkFixIfPossible([i, i2], [])

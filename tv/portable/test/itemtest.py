@@ -5,13 +5,13 @@ import shutil
 
 from miro import config, prefs
 from miro.feed import Feed
-from miro.item import Item, FileItem
+from miro.item import Item, FileItem, FeedParserValues
 from miro.downloader import RemoteDownloader
 from miro.test.framework import MiroTestCase
 from miro.singleclick import _build_entry
 
-def get_entry_for_url(url):
-    return _build_entry(url, 'video/x-unknown')
+def fp_values_for_url(url):
+    return FeedParserValues(_build_entry(url, 'video/x-unknown'))
 
 class ContainerItemTest(MiroTestCase):
     def setUp(self):
@@ -82,9 +82,9 @@ class ExpiredViewTest(MiroTestCase):
     def test_expired_view_1(self):
         f1 = Feed(u'http://example.com/1')
 
-        i1 = Item(entry=get_entry_for_url(u'http://example.com/1/item1'),
+        i1 = Item(fp_values_for_url(u'http://example.com/1/item1'),
                 feed_id=f1.id)
-        i2 = Item(entry=get_entry_for_url(u'http://example.com/1/item2'),
+        i2 = Item(fp_values_for_url(u'http://example.com/1/item2'),
                 feed_id=f1.id)
 
         f1.setExpiration(u'never', 0)
@@ -98,9 +98,9 @@ class ExpiredViewTest(MiroTestCase):
     def test_expired_view_2(self):
         f2 = Feed(u'http://example.com/2')
 
-        i3 = Item(entry=get_entry_for_url(u'http://example.com/2/item1'),
+        i3 = Item(fp_values_for_url(u'http://example.com/2/item1'),
                 feed_id=f2.id)
-        i4 = Item(entry=get_entry_for_url(u'http://example.com/2/item2'),
+        i4 = Item(fp_values_for_url(u'http://example.com/2/item2'),
                 feed_id=f2.id)
 
         f2.setExpiration(u'system', 0)
@@ -117,9 +117,9 @@ class ExpiredViewTest(MiroTestCase):
     def test_expired_view_3(self):
         f3 = Feed(u'http://example.com/3')
 
-        i5 = Item(entry=get_entry_for_url(u'http://example.com/3/item1'),
+        i5 = Item(fp_values_for_url(u'http://example.com/3/item1'),
                 feed_id=f3.id)
-        i6 = Item(entry=get_entry_for_url(u'http://example.com/3/item2'),
+        i6 = Item(fp_values_for_url(u'http://example.com/3/item2'),
                 feed_id=f3.id)
 
         f3.setExpiration(u'feed', 24)
@@ -134,7 +134,7 @@ class ExpiredViewTest(MiroTestCase):
 class ItemRemoveTest(MiroTestCase):
     def test_watched_time_reset(self):
         feed = Feed(u'http://example.com/1')
-        item = Item(entry=get_entry_for_url(u'http://example.com/1/item1'),
+        item = Item(fp_values_for_url(u'http://example.com/1/item1'),
                 feed_id=feed.id)
         item.watchedTime = datetime.now()
         item.expire()
@@ -145,7 +145,7 @@ class ItemRemoveTest(MiroTestCase):
         # loaded lazily.  Make sure that if we remove the item, the downloader
         # is still removed.
         feed = Feed(u'http://example.com/1')
-        item = Item(entry=get_entry_for_url(u'http://example.com/1/item1'),
+        item = Item(fp_values_for_url(u'http://example.com/1/item1'),
                 feed_id=feed.id)
         item.set_downloader(RemoteDownloader(
             u'http://example.com/1/item1/movie.mpeg', item))

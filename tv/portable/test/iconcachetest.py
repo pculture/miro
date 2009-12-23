@@ -12,7 +12,7 @@ class IconCacheTest(EventLoopTest):
     def setUp(self):
         EventLoopTest.setUp(self)
         self.feed = feed.Feed(u'http://example.com/')
-        self.item = item.Item({}, feed_id=self.feed.id)
+        self.item = item.Item(item.FeedParserValues({}), feed_id=self.feed.id)
         self.guide = guide.ChannelGuide(u'http://example.com/guide/')
 
     def test_ddbobject_removed(self):

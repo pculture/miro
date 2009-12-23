@@ -2,8 +2,7 @@ import shutil
 import tempfile
 
 from miro.feed import Feed
-from miro.feedparser import FeedParserDict
-from miro.item import Item
+from miro.item import Item, FeedParserValues
 from miro.playlist import SavedPlaylist, PlaylistItemMap
 from miro.folder import PlaylistFolder, PlaylistFolderItemMap
 from miro import app
@@ -16,13 +15,13 @@ class PlaylistTestBase(EventLoopTest):
     def setUp(self):
         EventLoopTest.setUp(self)
         self.feed = Feed(u"http://feed.uk")
-        self.i1 = Item(FeedParserDict({'title': u'item1'}),
+        self.i1 = Item(FeedParserValues({'title': u'item1'}),
                        feed_id=self.feed.id)
-        self.i2 = Item(FeedParserDict({'title': u'item2'}),
+        self.i2 = Item(FeedParserValues({'title': u'item2'}),
                        feed_id=self.feed.id)
-        self.i3 = Item(FeedParserDict({'title': u'item3'}),
+        self.i3 = Item(FeedParserValues({'title': u'item3'}),
                        feed_id=self.feed.id)
-        self.i4 = Item(FeedParserDict({'title': u'item4'}),
+        self.i4 = Item(FeedParserValues({'title': u'item4'}),
                        feed_id=self.feed.id)
 
     def checkList(self, playlist, correct_order):

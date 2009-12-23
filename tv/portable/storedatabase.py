@@ -364,6 +364,9 @@ class LiveStorage:
             sql = "UPDATE %s SET %s WHERE id=%s" % (obj_schema.table_name,
                     ', '.join(setters), obj.id)
             self._execute(sql, values, is_update=True)
+            if self.cursor.rowcount != 1:
+                raise AssertionError("update_obj changed %s rows" %
+                        self.cursor.rowcount)
 
     def remove_obj(self, obj):
         """Remove a DDBObject from disk."""
@@ -593,7 +596,14 @@ class LiveStorage:
     def _time_execute(self, sql, values, many):
         start = time.time()
         if many:
-            self.cursor.executemany(sql, values)
+            self.cursor.execute("BEGIN TRANSACTION")
+            try:
+                self.cursor.executemany(sql, values)
+            except:
+                self.cursor.execute("ROLLBACK TRANSACTION")
+                raise
+            else:
+                self.cursor.execute("COMMIT TRANSACTION")
         else:
             self.cursor.execute(sql, values)
         end = time.time()
