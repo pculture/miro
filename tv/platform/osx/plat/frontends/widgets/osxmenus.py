@@ -318,20 +318,21 @@ def translate_event_modifiers(event):
 class SubtitleChangesHandler(NSObject):
     def selectSubtitleTrack_(self, sender):
         app.playback_manager.player.enable_subtitle_track(sender.tag())
-        app.menu_manager.update_menus()
+        on_playback_change(app.playback_manager)
     def disableSubtitles_(self, sender):
         app.playback_manager.player.disable_subtitles()
-        app.menu_manager.update_menus()
+        on_playback_change(app.playback_manager)
 
 subtitles_menu_handler = SubtitleChangesHandler.alloc().init()
 
 def on_menu_change(menu_manager):
     main_menu = NSApp().mainMenu()
-
     play_pause_menu_item = main_menu.itemAtIndex_(5).submenu().itemAtIndex_(0)
     play_pause = _menu_structure.get("PlayPauseVideo").state_labels[app.menu_manager.play_pause_state]
     play_pause_menu_item.setTitleWithMnemonic_(play_pause.replace("_", "&"))
 
+def on_playback_change(playback_manager):
+    main_menu = NSApp().mainMenu()
     subtitles_menu_root = main_menu.itemAtIndex_(5).submenu().itemAtIndex_(15)
     subtitles_menu = NSMenu.alloc().init()
     subtitles_menu.setAutoenablesItems_(NO)
