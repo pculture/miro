@@ -593,7 +593,14 @@ class LiveStorage:
     def _time_execute(self, sql, values, many):
         start = time.time()
         if many:
-            self.cursor.executemany(sql, values)
+            self.cursor.execute("BEGIN TRANSACTION")
+            try:
+                self.cursor.executemany(sql, values)
+            except:
+                self.cursor.execute("ROLLBACK TRANSACTION")
+                raise
+            else:
+                self.cursor.execute("COMMIT TRANSACTION")
         else:
             self.cursor.execute(sql, values)
         end = time.time()
