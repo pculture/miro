@@ -292,10 +292,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     ICON_CACHE_VITAL = False
 
     def setup_new(self, entry, linkNumber=0, feed_id=None, parent_id=None,
-            eligibleForAutoDownload=True):
+            eligibleForAutoDownload=True, channel_title=None):
         self.is_file_item = False
         self.feed_id = feed_id
         self.parent_id = parent_id
+        self.channelTitle = channel_title
         self.isContainerItem = None
         self.seen = False
         self.autoDownloaded = False
@@ -1229,6 +1230,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def set_channel_title(self, title):
         checkU(title)
         self.channelTitle = title
+        self.signal_change()
 
     @returnsUnicode
     def get_channel_title(self, allowSearchFeedTitle=False):
@@ -1731,11 +1733,11 @@ class FileItem(Item):
     """An Item that exists as a local file
     """
     def setup_new(self, filename, feed_id=None, parent_id=None,
-            offsetPath=None, deleted=False, entry=None):
+            offsetPath=None, deleted=False, entry=None, channel_title=None):
         if entry is None:
             entry = get_entry_for_file(filename)
         Item.setup_new(self, entry, feed_id=feed_id, parent_id=parent_id,
-                eligibleForAutoDownload=False)
+                eligibleForAutoDownload=False, channel_title=channel_title)
         self.is_file_item = True
         checkF(filename)
         filename = fileutil.abspath(filename)

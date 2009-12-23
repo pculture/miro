@@ -1322,20 +1322,21 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         FeedImpl.setup_new(self, url, ufeed, title)
         self.scheduleUpdateEvents(0)
 
-    def _handleNewEntry(self, entry, fp_values, channelTitle):
+    def _handleNewEntry(self, entry, fp_values, channel_title):
         """Handle getting a new entry from a feed."""
         start = clock()
         enclosure = fp_values.first_video_enclosure
         if (self.url.startswith('file://') and enclosure and
                 enclosure['url'].startswith('file://')):
             path = download_utils.get_file_url_path(enclosure['url'])
-            item = models.FileItem(path, entry=entry, feed_id=self.ufeed.id)
+            item = models.FileItem(path, entry=entry, feed_id=self.ufeed.id,
+                    channel_title=channel_title)
         else:
             item = models.Item(entry, feed_id=self.ufeed.id,
-                    eligibleForAutoDownload=False)
+                    eligibleForAutoDownload=False,
+                    channel_title=channel_title)
             if not item.matches_search(self.ufeed.searchTerm):
                 item.remove()
-        item.set_channel_title(channelTitle)
 
     def createItemsForParsed(self, parsed):
         """Update the feed using parsed XML passed in"""
