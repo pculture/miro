@@ -1236,11 +1236,18 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.download is not None:
             self.download.cancel()
             self.download = None
+        to_remove = []
         for item in self.items:
             if moveItemsTo is not None and item.is_downloaded():
                 item.setFeed(moveItemsTo.get_id())
             else:
+                to_remove.append(item)
+        app.bulk_sql_manager.start()
+        try:
+            for item in to_remove:
                 item.remove()
+        finally:
+            app.bulk_sql_manager.finish()
         self.remove_icon_cache()
         DDBObject.remove(self)
         self.actualFeed.remove()
