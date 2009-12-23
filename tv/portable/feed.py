@@ -1329,10 +1329,10 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         if (self.url.startswith('file://') and enclosure and
                 enclosure['url'].startswith('file://')):
             path = download_utils.get_file_url_path(enclosure['url'])
-            item = models.FileItem(path, entry=entry, feed_id=self.ufeed.id,
-                    channel_title=channel_title)
+            item = models.FileItem(path, fp_values=fp_values,
+                    feed_id=self.ufeed.id, channel_title=channel_title)
         else:
-            item = models.Item(entry, feed_id=self.ufeed.id,
+            item = models.Item(fp_values, feed_id=self.ufeed.id,
                     eligibleForAutoDownload=False,
                     channel_title=channel_title)
             if not item.matches_search(self.ufeed.searchTerm):
@@ -1403,8 +1403,8 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             entry = self.addScrapedThumbnail(entry)
             fp_values = FeedParserValues(entry)
             new = True
-            if entry.has_key("id"):
-                id_ = entry["id"]
+            if fp_values.data['rss_id'] is not None:
+                id_ = fp_values.data['rss_id']
                 if items_byid.has_key(id_):
                     item = items_byid[id_]
                     if not fp_values.compare_to_item(item):
@@ -1435,8 +1435,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                             raise
                         except:
                             pass
-            if (new and entry.has_key('enclosures') and
-                    getFirstVideoEnclosure(entry) != None):
+            if new and fp_values.first_video_enclosure is not None:
                 self._handleNewEntry(entry, fp_values, channelTitle)
         return old_items
 
@@ -1956,17 +1955,16 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         # Anywhere we call this, we need to convert the input back to unicode
         title = feedparser.sanitizeHTML(title, "utf-8").decode('utf-8')
         if dict_.has_key('thumbnail') > 0:
-            i = models.Item(FeedParserDict({'title': title,
-                                             'enclosures': [FeedParserDict({'url': link,
-                                                                            'thumbnail': FeedParserDict({'url': dict_['thumbnail']})
-                                                                          })]
-                                           }),
-                             linkNumber=linkNumber, feed_id=self.ufeed.id,
-                             eligibleForAutoDownload=False)
+            fp_dict = FeedParserDict({'title': title,
+                'enclosures': [FeedParserDict({'url': link,
+                    'thumbnail': FeedParserDict({'url': dict_['thumbnail']})
+                    })]
+                })
         else:
-            i = models.Item(FeedParserDict({'title': title,
-                                             'enclosures': [FeedParserDict({'url': link})]
-                                           }),
+            fp_dict = FeedParserDict({'title': title,
+                'enclosures': [FeedParserDict({'url': link})]
+                })
+        i = models.Item(FeedParserValues(fp_dict),
                              linkNumber=linkNumber, feed_id=self.ufeed.id,
                              eligibleForAutoDownload=False)
         if (self.ufeed.searchTerm is not None and 
@@ -2377,7 +2375,6 @@ class SearchFeedImpl(RSSMultiFeedImpl):
     def _handleNewEntry(self, entry, fp_values, channelTitle):
         """Handle getting a new entry from a feed."""
         start = clock()
-        fp_values = FeedParserValues(entry)
         url = fp_values.data['url']
         if url is not None:
             dl = downloader.get_existing_downloader_by_url(url)

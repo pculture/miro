@@ -90,7 +90,6 @@ class FeedParserValues(object):
     """
     def __init__(self, entry):
         self.entry = entry
-        self.normalized_entry = normalize_feedparser_dict(entry)
         self.first_video_enclosure = getFirstVideoEnclosure(entry)
 
         self.data = {
@@ -291,7 +290,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     ICON_CACHE_VITAL = False
 
-    def setup_new(self, entry, linkNumber=0, feed_id=None, parent_id=None,
+    def setup_new(self, fp_values, linkNumber=0, feed_id=None, parent_id=None,
             eligibleForAutoDownload=True, channel_title=None):
         self.is_file_item = False
         self.feed_id = feed_id
@@ -305,7 +304,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.watchedTime = None
         self.pendingReason = u""
         self.title = u""
-        FeedParserValues(entry).update_item(self)
+        fp_values.update_item(self)
         self.expired = False
         self.keep = False
         self.filename = self.file_type = None
@@ -1733,10 +1732,10 @@ class FileItem(Item):
     """An Item that exists as a local file
     """
     def setup_new(self, filename, feed_id=None, parent_id=None,
-            offsetPath=None, deleted=False, entry=None, channel_title=None):
-        if entry is None:
-            entry = get_entry_for_file(filename)
-        Item.setup_new(self, entry, feed_id=feed_id, parent_id=parent_id,
+            offsetPath=None, deleted=False, fp_values=None, channel_title=None):
+        if fp_values is None:
+            fp_values = fp_values_for_file(filename)
+        Item.setup_new(self, fp_values, feed_id=feed_id, parent_id=parent_id,
                 eligibleForAutoDownload=False, channel_title=channel_title)
         self.is_file_item = True
         checkF(filename)
@@ -1920,11 +1919,11 @@ filename was %s""", stringify(self.filename))
         self._update_release_date()
         Item.setup_links(self)
 
-def get_entry_for_file(filename):
-    return FeedParserDict({
+def fp_values_for_file(filename):
+    return FeedParserValues(FeedParserDict({
             'title': filenameToUnicode(os.path.basename(filename)),
             'enclosures': [{'url': resources.url(filename)}]
-            })
+            }))
 
 def update_incomplete_movie_data():
     for item in chain(Item.downloaded_view(), Item.file_items_view()):

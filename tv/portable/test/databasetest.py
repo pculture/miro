@@ -11,12 +11,12 @@ class DatabaseTestCase(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
         self.feed = feed.Feed(u"http://feed.org")
-        self.i1 = item.Item({'title': u'item1'},
+        self.i1 = item.Item(item.FeedParserValues({'title': u'item1'}),
                        feed_id=self.feed.id)
-        self.i2 = item.Item({'title': u'item2'},
+        self.i2 = item.Item(item.FeedParserValues({'title': u'item2'}),
                        feed_id=self.feed.id)
         self.feed2 = feed.Feed(u"http://feed.com")
-        self.i3 = item.Item({'title': u'item3'},
+        self.i3 = item.Item(item.FeedParserValues({'title': u'item3'}),
                        feed_id=self.feed2.id)
 
 class ViewTest(DatabaseTestCase):
@@ -93,7 +93,7 @@ class ViewTrackerTest(DatabaseTestCase):
         self.setup_view(item.Item.make_view("feed.userTitle='booya'",
                 joins={'feed': 'feed.id=item.feed_id'}))
 
-        i4 = item.Item({'title': u'item4'}, feed_id=self.feed.id)
+        i4 = item.Item(item.FeedParserValues({'title': u'item4'}), feed_id=self.feed.id)
         self.assertEquals(self.add_callbacks, [i4])
 
     def test_track_destruction_remove(self):

@@ -465,7 +465,7 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
     def setUp(self):
         StoreDatabaseTest.setUp(self)
         self.feed = feed.Feed(u"dtv:multi:http://feed.org/,query")
-        self.item = item.Item({'title': u'item1'},
+        self.item = item.Item(item.FeedParserValues({'title': u'item1'}),
                        feed_id=self.feed.id)
         self.downloader = downloader.RemoteDownloader(
             u'http://example.com/1/item1/movie.mpeg', self.item)
