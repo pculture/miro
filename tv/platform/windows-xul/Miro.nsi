@@ -47,6 +47,7 @@ Var THEME_TEMP_DIR
 Var INITIAL_FEEDS
 Var TACKED_ON_FILE
 Var REINSTALL
+Var ADVANCED
 Var SIMPLE_INSTALL
 Var PUBLISHER
 Var PROJECT_URL
@@ -97,8 +98,13 @@ ReserveFile "${MIROBAR_EXE}"
 !insertmacro MUI_PAGE_WELCOME
 
 Function add_radio_buttons
-  StrCmp $REINSTALL "1" 0 +2
+; if no reinstall or advanced, just start right up
+  StrCmp "$REINSTALL$ADVANCED" "00" start
+  StrCmp $ADVANCED "0" abort ; not advanced, just abort
+  StrCpy $SIMPLE_INSTALL "0" ; otherwise, advanced install and then abort
+abort:
   Abort
+start:
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Settings" "NumFields" "5"
 
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 2" "Top" "20"
@@ -215,6 +221,14 @@ Function skip_if_simple
   end:
 FunctionEnd
 
+Function skip_if_advanced
+  StrCmp $ADVANCED "1" skip_for_advanced
+  goto end
+  skip_for_advanced:
+  Abort
+  end:
+FunctionEnd
+
 ; License page
 ; !insertmacro MUI_PAGE_LICENSE "license.txt"
 
@@ -246,6 +260,7 @@ Page custom MiroBarInstall MiroBarInstallLeave
   "$PUBLISHER homepage."
 !define MUI_FINISHPAGE_LINK_LOCATION "$PROJECT_URL"
 !define MUI_FINISHPAGE_NOREBOOTSUPPORT
+!define MUI_PAGE_CUSTOMFUNCTION_PRE "skip_if_advanced"
 !define MUI_PAGE_CUSTOMFUNCTION_LEAVE "dont_leave_early"
 Function dont_leave_early
   ReadINIStr $STATE "$PLUGINSDIR\ioSpecial.ini" "Settings" "State"
@@ -801,6 +816,7 @@ Function .onInit
   StrCpy $THEME_TEMP_DIR ""
   StrCpy $APP_NAME "${CONFIG_LONG_APP_NAME}"
   StrCpy $REINSTALL "0"
+  StrCpy $ADVANCED "0"
   StrCpy $SIMPLE_INSTALL "1"
   StrCpy $PUBLISHER "${CONFIG_PUBLISHER}"
   StrCpy $PROJECT_URL "${CONFIG_PROJECT_URL}"
@@ -809,6 +825,10 @@ Function .onInit
 
   ; Check if we're reinstalling
   ${GetParameters} $R0
+  ${GetOptions} "$R0" "/ADVANCED" $R1
+  IfErrors +3 0
+  SetSilent normal
+  StrCpy $ADVANCED "1"
   ${GetOptions} "$R0" "/reinstall" $R1
   IfErrors +2 0
   StrCpy $REINSTALL "1"
@@ -939,6 +959,7 @@ NotOldDownloaderRunning:
 prompt_for_uninstall:
   ; Should we uninstall the old one?
   StrCmp $REINSTALL 1 UninstallCurrent 0
+  StrCmp $ADVANCED "1" UninstallCurrent 0
   MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
   "It looks like you already have a copy of $APP_NAME $\n\
 installed.  Do you want to continue and overwrite it?" \
@@ -1014,6 +1035,7 @@ UninstallNoReg:
 
 StartInstall:
   StrCmp $REINSTALL "1" SkipLanguageDLL
+  StrCmp "$ADVANCED" "1" SkipLanguageDLL
   !insertmacro MUI_LANGDLL_DISPLAY
 SkipLanguageDLL:
 
