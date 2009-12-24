@@ -73,6 +73,8 @@ def check_url_exists(url):
     return False
 
 def _build_entry(url, contentType, additional=None):
+    """Returns a FeedParserDict.
+    """
     entry = {'updated_parsed': time.gmtime(time.time()),
              'enclosures': [{'url': url, 'type': unicode(contentType)}]}
 
@@ -192,9 +194,10 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
 
     httpclient.grabHeaders(url, callback, errback)
 
-def download_video(entry):
+def download_video(fp_dict):
+    fp_values = item.FeedParserValues(fp_dict)
     manualFeed = feed.Feed.get_manual_feed()
-    newItem = item.Item(entry, feed_id=manualFeed.get_id())
+    newItem = item.Item(fp_values, feed_id=manualFeed.get_id())
     newItem.download()
 
 def filter_existing_feed_urls(urls):
