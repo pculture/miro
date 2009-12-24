@@ -64,6 +64,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.create_signal('selecting-file')
         self.create_signal('cant-play-file')
         self.create_signal('will-play')
+        self.create_signal('did-start-playing')
         self.create_signal('will-play-attached')
         self.create_signal('will-play-detached')
         self.create_signal('will-pause')
@@ -388,6 +389,7 @@ class PlaybackManager (signals.SignalEmitter):
             self.video_display.setup(item_info, volume)
             if self.detached_window is not None:
                 self.detached_window.set_title(item_info.name)
+        self.emit('did-start-playing')
         app.menu_manager.update_menus()
 
     def _build_video_player(self, item_info, volume):

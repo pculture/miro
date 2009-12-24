@@ -88,6 +88,8 @@ class OSXApplication(Application):
         osxmenus.populate_menu()
         Application.startup_ui(self)
         app.menu_manager.connect('enabled-changed', osxmenus.on_menu_change)
+        app.playback_manager.connect('did-start-playing', osxmenus.on_playback_change)
+        app.playback_manager.connect('did-stop', osxmenus.on_playback_change)
         quicktime.register_components()
 
     # This callback should only be called once, after startup is done.
