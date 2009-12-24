@@ -373,6 +373,8 @@ class MainWindow(Window):
         self.create_signal('save-dimensions')
         self.create_signal('save-maximized')
         app.menu_manager.connect('enabled-changed', self.on_menu_change)
+        app.playback_manager.connect('did-start-playing', self.on_playback_change)
+        app.playback_manager.connect('did-stop', self.on_playback_change)
 
         self._window.connect('key-release-event', self.on_key_release)
         self._window.connect('window-state-event', self.on_window_state_event)
@@ -445,15 +447,15 @@ class MainWindow(Window):
         play_pause = self.menu_structure.get("PlayPauseVideo").state_labels[menu_manager.play_pause_state]
         change_label("PlayPause", "PlayPauseVideo", play_pause)
 
-        if ((app.playback_manager.is_playing
-             and not app.playback_manager.is_playing_audio)):
+    def on_playback_change(self, playback_manager):
+        if app.playback_manager.is_playing_audio:
+            self._clear_subtitles_menu()
+        else:
             tracks = app.video_renderer.get_subtitle_tracks()
             if len(tracks) == 0:
                 self._clear_subtitles_menu()
             else:
                 self._populate_subtitles_menu(tracks)
-        else:
-            self._clear_subtitles_menu()
 
     def _populate_subtitles_menu(self, tracks):
         enabled_track = app.video_renderer.get_enabled_subtitle_track()

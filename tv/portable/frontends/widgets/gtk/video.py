@@ -384,6 +384,7 @@ class VideoDetailsWidget(Background):
             app.video_renderer.disable_subtitles()
         else:
             app.video_renderer.enable_subtitle_track(index)
+        app.widgetapp.window.on_playback_change(app.playback_manager)
 
     def handle_commentslink(self, widget, event):
         app.widgetapp.open_url(self.item_info.commentslink)
