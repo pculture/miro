@@ -340,7 +340,6 @@ class ProgressSlider(widgetset.CustomSlider):
 class ProgressTimeline(widgetset.Background):
     def __init__(self):
         widgetset.Background.__init__(self)
-        self.background = widgetutil.ThreeImageSurface('display')
         self.duration = self.current_time = None
         self.info = PlaybackInfo()
         self.slider = ProgressSlider()
@@ -382,14 +381,31 @@ class ProgressTimeline(widgetset.Background):
         self.time.set_current_time(current_time)
         self.remaining_time.set_current_time(current_time)
 
+    def get_height(self, layout):
+        # this assumes that the height is 14 pixels of space plus the
+        # height of two labels--one for the time and one for the
+        # title.  we do the max thing so there's a minimum height that
+        # comes out of this.
+        layout.set_font(0.8)
+        sizer_text = layout.textbox("Foo")
+        dummy, height = sizer_text.get_size()
+        return max(40, 14 + (height * 2))
+
     def size_request(self, layout):
-        return -1, self.background.height
+        layout.set_font(0.8)
+        sizer_text = layout.textbox("Foo")
+        dummy, height = sizer_text.get_size()
+        return -1, self.get_height(layout)
 
     def draw(self, context, layout):
-        fraction = 1.0
-        if not self.get_window().is_active():
-            fraction = 0.5
-        self.background.draw(context, 0, 0, context.width, fraction)
+        if self.get_window().is_active():
+            c = (40.0 / 255.0, 40.0 / 255.0, 40.0 / 255.0)
+        else:
+            c = (145.0 / 255.0, 145.0 / 255.0, 145.0 / 255.0)
+
+        widgetutil.round_rect(context, 0, 0, context.width, context.height, 5)
+        context.set_color(c)
+        context.fill()
 
 class VolumeSlider(widgetset.CustomSlider):
     def __init__(self):
