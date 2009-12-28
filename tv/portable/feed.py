@@ -513,12 +513,12 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self._actualFeed = feed_impl
         self.feed_impl_id = feed_impl.id
 
-    def signal_change(self, needsSave=True, needsSignalFolder=False):
+    def signal_change(self, needs_save=True, needsSignalFolder=False):
         if needsSignalFolder:
             folder = self.get_folder()
             if folder:
-                folder.signal_change(needsSave=False)
-        DDBObject.signal_change (self, needsSave=needsSave)
+                folder.signal_change(needs_save=False)
+        DDBObject.signal_change (self, needs_save=needs_save)
 
     def on_signal_change(self):
         isUpdating = bool(self.actualFeed.updating)
@@ -555,9 +555,9 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def recalc_counts(self):
         self.invalidate_counts()
-        self.signal_change(needsSave=False)
+        self.signal_change(needs_save=False)
         if self.in_folder():
-            self.get_folder().signal_change(needsSave=False)
+            self.get_folder().signal_change(needs_save=False)
 
     def num_downloaded(self):
         """Returns the number of downloaded items in the feed.
@@ -658,18 +658,18 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def signal_items(self):
         for item in self.items:
-            item.signal_change(needsSave=False)
+            item.signal_change(needs_save=False)
 
     def icon_changed(self):
         """See item.get_thumbnail to figure out which items to send
         signals for.
         """
-        self.signal_change(needsSave=False)
+        self.signal_change(needs_save=False)
         for item in self.items:
             if not (item.icon_cache.isValid() or
                     item.screenshot or
                     item.isContainerItem):
-                item.signal_change(needsSave=False)
+                item.signal_change(needs_save=False)
 
     def getNewItems(self):
         """Returns the number of new items with the feed
@@ -834,7 +834,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def update(self):
         self.confirm_db_thread()
-        if not self.idExists():
+        if not self.id_exists():
             return
         if self.loading:
             return
@@ -865,9 +865,9 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         if update_trackers:
             models.Item.update_folder_trackers()
         if newFolder:
-            newFolder.signal_change(needsSave=False)
+            newFolder.signal_change(needs_save=False)
         if oldFolder:
-            oldFolder.signal_change(needsSave=False)
+            oldFolder.signal_change(needs_save=False)
 
     @staticmethod
     def bulk_set_folders(folder_assignments):
@@ -948,7 +948,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             d = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_KEEP,
                     dialogs.BUTTON_DELETE)
             def callback(dialog):
-                if dialog.choice == dialogs.BUTTON_DELETE and self.idExists():
+                if dialog.choice == dialogs.BUTTON_DELETE and self.id_exists():
                     self.remove()
             d.run(callback)
             self.informOnError = False
@@ -956,7 +956,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         eventloop.addTimeout(delay, self.update, "update failed feed")
 
     def _generateFeedErrback(self, error, removeOnError):
-        if not self.idExists():
+        if not self.id_exists():
             return
         logging.info("Warning couldn't load feed at %s (%s)",
                      self.origURL, error)
@@ -973,7 +973,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         # Note that all of the raw XML and HTML in this function is in
         # byte string format
 
-        if not self.idExists():
+        if not self.id_exists():
             return
         if info['updated-url'] != self.origURL and \
                 not self.origURL.startswith('dtv:'): # we got redirected
@@ -1099,7 +1099,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
                 dialogs.BUTTON_NO)
 
         def callback(dialog):
-            if not self.idExists():
+            if not self.id_exists():
                 return
             if dialog.choice == dialogs.BUTTON_YES:
                 uinfo = unicodify(info)
@@ -1561,18 +1561,18 @@ class RSSFeedImpl(RSSFeedImplBase):
 
     def feedparser_finished(self):
         self.updating = False
-        self.ufeed.signal_change(needsSave=False)
+        self.ufeed.signal_change(needs_save=False)
         self.scheduleUpdateEvents(-1)
 
     def feedparser_errback(self, e):
-        if not self.ufeed.idExists():
+        if not self.ufeed.id_exists():
             return
         logging.info("Error updating feed: %s: %s", self.url, e)
         self.feedparser_finished()
 
     def feedparser_callback(self, parsed):
         self.ufeed.confirm_db_thread()
-        if not self.ufeed.idExists():
+        if not self.ufeed.id_exists():
             return
         start = clock()
         parsed = self.parsed = unicodify(parsed)
@@ -1598,13 +1598,13 @@ class RSSFeedImpl(RSSFeedImplBase):
         """Updates a feed
         """
         self.ufeed.confirm_db_thread()
-        if not self.ufeed.idExists():
+        if not self.ufeed.id_exists():
             return
         if self.updating:
             return
         else:
             self.updating = True
-            self.ufeed.signal_change(needsSave=False)
+            self.ufeed.signal_change(needs_save=False)
         if hasattr(self, 'initialHTML') and self.initialHTML is not None:
             html = self.initialHTML
             self.initialHTML = None
@@ -1627,15 +1627,15 @@ class RSSFeedImpl(RSSFeedImplBase):
                     self._updateErrback, etag=etag, modified=modified, defaultMimeType=u'application/rss+xml')
 
     def _updateErrback(self, error):
-        if not self.ufeed.idExists():
+        if not self.ufeed.id_exists():
             return
         logging.info("WARNING: error in Feed.update for %s -- %s", self.ufeed, error)
         self.scheduleUpdateEvents(-1)
         self.updating = False
-        self.ufeed.signal_change(needsSave=False)
+        self.ufeed.signal_change(needs_save=False)
 
     def _updateCallback(self, info):
-        if not self.ufeed.idExists():
+        if not self.ufeed.id_exists():
             return
         if info.get('status') == 304:
             self.scheduleUpdateEvents(-1)
@@ -1731,15 +1731,15 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
             self.oldItems = None
             self.scheduleUpdateEvents(-1)
 
-    def feedparser_finished(self, url, needsSave=False):
-        if not self.ufeed.idExists():
+    def feedparser_finished(self, url, needs_save=False):
+        if not self.ufeed.id_exists():
             return
         self.updating -= 1
         self.checkUpdateFinished()
         del self.download_dc[url]
 
     def feedparser_errback(self, e, url):
-        if not self.ufeed.idExists() or url not in self.download_dc:
+        if not self.ufeed.id_exists() or url not in self.download_dc:
             return
         if e:
             logging.info("Error updating feed: %s (%s): %s", self.url, url, e)
@@ -1749,7 +1749,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
 
     def feedparser_callback(self, parsed, url):
         self.ufeed.confirm_db_thread()
-        if not self.ufeed.idExists() or url not in self.download_dc:
+        if not self.ufeed.id_exists() or url not in self.download_dc:
             return
         if self.oldItems is None:
             # if this is the case, then this feedparser_callback isn't
@@ -1783,7 +1783,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
 
     def update(self):
         self.ufeed.confirm_db_thread()
-        if not self.ufeed.idExists():
+        if not self.ufeed.id_exists():
             return
         if self.updating:
             return
@@ -1799,16 +1799,16 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
             self.updating += 1
 
     def _updateErrback(self, error, url):
-        if not self.ufeed.idExists():
+        if not self.ufeed.id_exists():
             return
         logging.info("WARNING: error in Feed.update for %s (%s) -- %s", self.ufeed, url, error)
         self.scheduleUpdateEvents(-1)
         self.updating -= 1
         self.checkUpdateFinished()
-        self.ufeed.signal_change(needsSave=False)
+        self.ufeed.signal_change(needs_save=False)
 
     def _updateCallback(self, info, url):
-        if not self.ufeed.idExists():
+        if not self.ufeed.id_exists():
             return
         if info.get('status') == 304:
             self.scheduleUpdateEvents(-1)
@@ -1901,7 +1901,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
             etag = self.linkHistory[url].get('etag', None)
             modified = self.linkHistory[url].get('modified', None)
         def callback(info):
-            if not self.ufeed.idExists():
+            if not self.ufeed.id_exists():
                 return
             self.downloads.discard(download)
             try:
@@ -1909,7 +1909,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
             finally:
                 self.checkDone()
         def errback(error):
-            if not self.ufeed.idExists():
+            if not self.ufeed.id_exists():
                 return
             self.downloads.discard(download)
             logging.info("WARNING unhandled error for ScraperFeedImpl.getHTML: %s", error)
@@ -2033,13 +2033,13 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
     def update(self):
         # FIXME: go through and add error handling
         self.ufeed.confirm_db_thread()
-        if not self.ufeed.idExists():
+        if not self.ufeed.id_exists():
             return
         if self.updating:
             return
         else:
             self.updating = True
-            self.ufeed.signal_change(needsSave=False)
+            self.ufeed.signal_change(needs_save=False)
 
         if not self.initialHTML is None:
             html = self.initialHTML
@@ -2642,6 +2642,6 @@ def start_updates():
     if config.get(prefs.CHECK_CHANNELS_EVERY_X_MN) == -1:
         return
     for feed in restored_feeds:
-        if feed.idExists():
+        if feed.id_exists():
             feed.update_after_restore()
     restored_feeds = []

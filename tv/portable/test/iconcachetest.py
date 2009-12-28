@@ -26,9 +26,9 @@ class IconCacheTest(EventLoopTest):
         self.feed.remove()
         self.guide.remove()
 
-        self.assert_(not feed_icon_cache.idExists())
-        self.assert_(not item_icon_cache.idExists())
-        self.assert_(not guide_icon_cache.idExists())
+        self.assert_(not feed_icon_cache.id_exists())
+        self.assert_(not item_icon_cache.id_exists())
+        self.assert_(not guide_icon_cache.id_exists())
 
     def test_remove_before_icon_cache_referenced(self):
         # Items create the icon_cache attribute lazily when restored from db.

@@ -610,8 +610,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             self.set_filename(self.downloader.get_filename())
 
     getSelected, setSelected = make_simple_get_set(u'selected',
-            changeNeedsSave=False)
-    getActive, setActive = make_simple_get_set(u'active', changeNeedsSave=False)
+            change_needs_save=False)
+    getActive, setActive = make_simple_get_set(u'active', change_needs_save=False)
 
     def _find_child_paths(self):
         """If this item points to a directory, return the set all files
@@ -845,7 +845,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def children_signal_change(self):
         for child in self.getChildren():
-            child.signal_change(needsSave=False)
+            child.signal_change(needs_save=False)
 
     def is_playable(self):
         """Is this a playable item?"""
@@ -1090,7 +1090,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @eventloop.as_idle
     def set_resume_time(self, position):
-        if not self.idExists():
+        if not self.id_exists():
             return
         try:
             position = int(position)
@@ -1671,7 +1671,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def setup_links(self):
         self.split_item()
-        if not self.idExists():
+        if not self.id_exists():
             # In split_item() we found out that all our children were
             # deleted, so we were removed as well.  (#11979)
             return
@@ -1848,7 +1848,7 @@ class FileItem(Item):
                 dler.child_deleted = True
                 dler.signal_change()
                 for sibling in self.get_parent().getChildren():
-                    sibling.signal_change(needsSave=False)
+                    sibling.signal_change(needs_save=False)
         try:
             if fileutil.isfile(self.filename):
                 fileutil.remove(self.filename)

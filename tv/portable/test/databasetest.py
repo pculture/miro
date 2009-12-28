@@ -121,7 +121,7 @@ class ViewTrackerTest(DatabaseTestCase):
 
 class TestDDBObject(database.DDBObject):
     def setup_new(self, testcase, remove=False):
-        testcase.id_exists_retval = self.idExists()
+        testcase.id_exists_retval = self.id_exists()
         if remove:
             self.remove()
 

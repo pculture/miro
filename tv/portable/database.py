@@ -77,7 +77,7 @@ class NotRootDBError(StandardError):
     """
     pass
 
-class NoValue:
+class NoValue(object):
     """Used as a dummy value so that "None" can be treated as a valid
     value.
     """
@@ -95,7 +95,6 @@ def set_thread(thread):
         event_thread = thread
 
 def confirm_db_thread():
-    global event_thread
     if event_thread is None or event_thread != threading.currentThread():
         if event_thread is None:
             error_string = "Database event thread not set"
@@ -355,16 +354,16 @@ class DDBObject(signals.SignalEmitter):
             app.db.remember_object(self)
             self.setup_restored()
             # handle setup_restored() calling remove()
-            if not self.idExists():
+            if not self.id_exists():
                 return
         else:
             self.id = DDBObject.lastID = DDBObject.lastID + 1
-            # call remember_object so that idExists will return True
+            # call remember_object so that id_exists will return True
             # when setup_new() is being run
             app.db.remember_object(self)
             self.setup_new(*args, **kwargs)
             # handle setup_new() calling remove()
-            if not self.idExists():
+            if not self.id_exists():
                 return
 
         self.in_db_init = False
@@ -456,7 +455,7 @@ class DDBObject(signals.SignalEmitter):
         """
         return self.id
 
-    def idExists(self):
+    def id_exists(self):
         try:
             self.get_by_id(self.id)
         except ObjectNotFoundError:
@@ -494,20 +493,20 @@ class DDBObject(signals.SignalEmitter):
         """
         pass
 
-    def signal_change(self, needsSave=True):
+    def signal_change(self, needs_save=True):
         """Call this after you change the object
         """
         if self.in_db_init:
             # signal_change called while we were setting up a object,
             # just ignore it.
             return
-        if not self.idExists():
+        if not self.id_exists():
             msg = ("signal_change() called on non-existant object (id is %s)" \
                        % self.id)
             raise DatabaseConstraintError, msg
         self.on_signal_change()
         self.check_constraints()
-        if needsSave:
+        if needs_save:
             app.db.update_obj(self)
         app.view_tracker_manager.update_view_trackers(self)
 

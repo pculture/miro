@@ -178,7 +178,7 @@ class MovieDataUpdater:
 
     @as_idle
     def update_finished(self, item, duration, screenshot):
-        if item.idExists():
+        if item.id_exists():
             item.duration = duration
             item.screenshot = screenshot
             item.updating_movie_info = False

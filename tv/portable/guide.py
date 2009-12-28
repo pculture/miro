@@ -143,7 +143,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
     def set_title(self, title):
         self.confirm_db_thread()
         self.userTitle = title
-        self.signal_change(needsSave=True)
+        self.signal_change(needs_save=True)
 
     def guide_downloaded(self, info):
         self.client = None
@@ -196,7 +196,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def icon_changed(self):
         self.confirm_db_thread()
-        self.signal_change(needsSave=False)
+        self.signal_change(needs_save=False)
 
     def get_thumbnail_url(self):
         return self.favicon

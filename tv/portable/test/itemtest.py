@@ -56,9 +56,9 @@ class ChildRemoveTest(ContainerItemTest):
         children = list(self.container_item.getChildren())
         for child in children[1:]:
             child.expire()
-            self.assert_(self.container_item.idExists())
+            self.assert_(self.container_item.id_exists())
         children[0].expire()
-        self.assert_(not self.container_item.idExists())
+        self.assert_(not self.container_item.id_exists())
 
     def test_remove_parent(self):
         # test for the conditions that caused #11941
@@ -156,4 +156,4 @@ class ItemRemoveTest(MiroTestCase):
         item = self.reload_object(item)
 
         item.remove()
-        self.assert_(not downloader.idExists())
+        self.assert_(not downloader.id_exists())

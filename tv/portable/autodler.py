@@ -36,6 +36,17 @@ from datetime import datetime
 def pending_sort(a, b):
     return cmp((a[1], a[2]), (b[1], b[2]))
 
+def _key_for_feed(feed):
+    """Get the key to use for feed_pending_count and
+    feed_running_count dicts.  Normally this is the feed URL, but
+    the search downloads feed gets combined with the search feed
+    (ss #11778)
+    """
+    if feed.origURL == u'dtv:searchDownloads':
+        return u"dtv:search"
+
+    return feed.origURL
+
 class Downloader:
     def __init__(self, is_auto):
         self.dc = None
@@ -97,7 +108,7 @@ class Downloader:
             last_count = self.pending_count
             candidate_feeds = []
             for feed in feedmod.Feed.make_view():
-                key = self._key_for_feed(feed)
+                key = _key_for_feed(feed)
                 if self.is_auto:
                     max_new = feed.get_max_new()
                     if max_new != "unlimited":
@@ -113,7 +124,7 @@ class Downloader:
                                         self.feed_time.get(feed, datetime.min)))
             candidate_feeds.sort(pending_sort)
 
-            for feed, count, time in candidate_feeds:
+            for feed, count, dummy in candidate_feeds:
                 if self.is_auto:
                     feed.startAutoDownload()
                 else:
@@ -129,52 +140,41 @@ class Downloader:
         self.dc = eventloop.addIdle(self.start_downloads_idle,
                                     "Start Downloads")
 
-    def _key_for_feed(self, feed):
-        """Get the key to use for feed_pending_count and
-        feed_running_count dicts.  Normally this is the feed URL, but
-        the search downloads feed gets combined with the search feed
-        (ss #11778)
-        """
-        if feed.origURL == u'dtv:searchDownloads':
-            return u"dtv:search"
-
-        return feed.origURL
-
     def pending_on_add(self, tracker, obj):
         feed = obj.get_feed()
-        key = self._key_for_feed(feed)
+        key = _key_for_feed(feed)
         self.pending_count = self.pending_count + 1
         self.feed_pending_count[key] = self.feed_pending_count.get(key, 0) + 1
         self.start_downloads()
 
     def pending_on_remove(self, tracker, obj):
         feed = obj.get_feed()
-        key = self._key_for_feed(feed)
+        key = _key_for_feed(feed)
         self.pending_count = self.pending_count - 1
         self.feed_pending_count[key] = self.feed_pending_count.get(key, 0) - 1
 
     def running_on_add(self, tracker, obj):
         feed = obj.get_feed()
-        key = self._key_for_feed(feed)
+        key = _key_for_feed(feed)
         self.running_count = self.running_count + 1
         self.feed_running_count[key] = self.feed_running_count.get(key, 0) + 1
 
     def running_on_remove(self, tracker, obj):
         feed = obj.get_feed()
-        key = self._key_for_feed(feed)
+        key = _key_for_feed(feed)
         self.running_count = self.running_count - 1
         self.feed_running_count[key] = self.feed_running_count.get(key, 0) - 1
         self.start_downloads()
 
     def new_on_add(self, tracker, obj):
         feed = obj.get_feed()
-        key = self._key_for_feed(feed)
+        key = _key_for_feed(feed)
         self.new_count = self.new_count + 1
         self.feed_new_count[key] = self.feed_new_count.get(key, 0) + 1
 
     def new_on_remove(self, tracker, obj):
         feed = obj.get_feed()
-        key = self._key_for_feed(feed)
+        key = _key_for_feed(feed)
         self.new_count = self.new_count - 1
         self.feed_new_count[key] = self.feed_new_count.get(key, 0) - 1
         self.start_downloads()

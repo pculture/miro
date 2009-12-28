@@ -97,7 +97,7 @@ class PlaylistMixin:
             folder.remove_id(item_id)
         if signal_change:
             item = models.Item.get_by_id(item_id)
-            item.signal_change(needsSave=False)
+            item.signal_change(needs_save=False)
 
     def add_item(self, item):
         """Add an item to the end of the playlist"""
@@ -200,7 +200,7 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
         description = _("Enter a new name for the playlist %s" % self.get_title())
 
         def callback(dialog):
-            if self.idExists() and dialog.choice == dialogs.BUTTON_OK:
+            if self.id_exists() and dialog.choice == dialogs.BUTTON_OK:
                 self.set_title(dialog.value)
         dialogs.TextEntryDialog(title, description, dialogs.BUTTON_OK,
                 dialogs.BUTTON_CANCEL).run(callback)

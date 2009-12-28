@@ -175,12 +175,12 @@ class RemoteDownloader(DDBObject):
         """Downloaders with no items associated with them."""
         return cls.make_view('id NOT IN (SELECT downloader_id from item)')
 
-    def signal_change(self, needsSave=True, needsSignalItem=True):
-        DDBObject.signal_change(self, needsSave=needsSave)
+    def signal_change(self, needs_save=True, needsSignalItem=True):
+        DDBObject.signal_change(self, needs_save=needs_save)
         if needsSignalItem:
             for item in self.itemList:
-                item.signal_change(needsSave=False)
-        if needsSave:
+                item.signal_change(needs_save=False)
+        if needs_save:
             self._cancel_save_later()
 
 
@@ -205,7 +205,7 @@ class RemoteDownloader(DDBObject):
         """If _save_later() was called and we haven't saved the
         downloader to disk, do it now.
         """
-        if self.idExists() and self._save_later_dc is not None:
+        if self.id_exists() and self._save_later_dc is not None:
             self.signal_change()
 
     def _cancel_save_later(self):
@@ -214,7 +214,7 @@ class RemoteDownloader(DDBObject):
             self._save_later_dc = None
 
     def on_content_type(self, info):
-        if not self.idExists():
+        if not self.id_exists():
             return
 
         if info['status'] == 200:
@@ -233,7 +233,7 @@ class RemoteDownloader(DDBObject):
             self.on_content_type_error(error)
 
     def on_content_type_error(self, error):
-        if not self.idExists():
+        if not self.id_exists():
             return
 
         self.status['state'] = u"failed"
@@ -327,7 +327,7 @@ class RemoteDownloader(DDBObject):
                 self.stop_upload()
 
             self.signal_change(needsSignalItem=needsSignalItem,
-                               needsSave=False)
+                               needs_save=False)
             if self.changed_attributes == set(('status',)):
                 # if we just changed status, then we can wait a while
                 # to store things to disk.  Since we go through
@@ -348,7 +348,7 @@ class RemoteDownloader(DDBObject):
         flashscraper.try_scraping_url(self.url, self._run_downloader)
 
     def _run_downloader(self, url, contentType = None):
-        if not self.idExists():
+        if not self.id_exists():
             # we got deleted while we were doing the flash scraping
             return
         if contentType is not None:

@@ -115,12 +115,12 @@ class IconCache(DDBObject):
     def all_filenames(cls):
         return [r[0] for r in cls.select("filename", 'filename IS NOT NULL')]
 
-    def icon_changed(self, needsSave=True):
-        self.signal_change(needsSave=needsSave)
+    def icon_changed(self, needs_save=True):
+        self.signal_change(needs_save=needs_save)
         if hasattr(self.dbItem, 'icon_changed'):
             self.dbItem.icon_changed()
         else:
-            self.dbItem.signal_change(needsSave=False)
+            self.dbItem.signal_change(needs_save=False)
 
     def remove(self):
         self.removed = True
@@ -174,7 +174,7 @@ class IconCache(DDBObject):
             iconCacheUpdater.update_finished()
             return
 
-        needsSave = False
+        needs_save = False
         needsChange = False
 
         if info == None or (info['status'] != 304 and info['status'] != 200):
@@ -229,29 +229,29 @@ class IconCache(DDBObject):
             self.filename = unicodeToFilename(self.filename, cachedir)
             self.filename = os.path.join(cachedir, self.filename)
             self.filename = next_free_filename(self.filename)
-            needsSave = True
+            needs_save = True
 
             try:
                 fileutil.rename(tmp_filename, self.filename)
             except OSError:
                 self.filename = None
-                needsSave = True
+                needs_save = True
 
             etag = unicodify(info.get("etag"))
             modified = unicodify(info.get("modified"))
 
             if self.etag != etag:
-                needsSave = True
+                needs_save = True
                 self.etag = etag
             if self.modified != modified:
-                needsSave = True
+                needs_save = True
                 self.modified = modified
             if self.url != url:
-                needsSave = True
+                needs_save = True
                 self.url = url
         finally:
             if needsChange:
-                self.icon_changed(needsSave=needsSave)
+                self.icon_changed(needs_save=needs_save)
             self.updating = False
             if self.needsUpdate:
                 self.needsUpdate = False

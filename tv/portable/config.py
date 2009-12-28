@@ -35,7 +35,6 @@ from miro.appconfig import AppConfig
 from miro import app
 from miro import prefs
 from miro.plat import config as platformcfg
-import urllib
 import logging
 
 _data = None

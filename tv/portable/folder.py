@@ -53,7 +53,7 @@ class FolderBase(DDBObject):
         self.expanded = newExpanded
         self.signal_change()
         for child in self.getChildrenView():
-            child.signal_change(needsSave=False)
+            child.signal_change(needs_save=False)
 
     def remove(self, moveItemsTo=None):
         """Remove this folder and children.
