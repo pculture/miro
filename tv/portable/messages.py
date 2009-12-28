@@ -916,7 +916,7 @@ class GuideInfo(object):
         self.name = guide.get_title()
         self.id = guide.id
         self.url = guide.get_url()
-        self.default = guide.get_default()
+        self.default = guide.is_default()
         self.allowed_urls = guide.allowedURLs
         self.favicon = guide.get_favicon_path()
         self.faviconIsDefault = not (guide.icon_cache and

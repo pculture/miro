@@ -28,22 +28,23 @@
 
 import re
 
-quotekiller = re.compile(r'(?<!\\)"')
-slashkiller = re.compile(r'\\.')
+QUOTEKILLER = re.compile(r'(?<!\\)"')
+SLASHKILLER = re.compile(r'\\.')
 
-searchObjects = {}
+SEARCHOBJECTS = {}
 
 def match(searchString, comparisons):
     searchString = searchString.lower()
     comparisons = [c.lower() for c in comparisons]
-    if not searchObjects.has_key(searchString):
-        searchObjects[searchString] = BooleanSearch(searchString)
-    return searchObjects[searchString].match(comparisons)
+    if not SEARCHOBJECTS.has_key(searchString):
+        SEARCHOBJECTS[searchString] = BooleanSearch(searchString)
+    return SEARCHOBJECTS[searchString].match(comparisons)
 
 class BooleanSearch:
     def __init__ (self, s):
         self.string = s
         self.parse_string()
+        self.rules = []
 
     def parse_string(self):
         inquote = False
@@ -75,8 +76,8 @@ class BooleanSearch:
         if substring[0] == '-':
             substring = substring[1:]
             positive = False
-        substring = quotekiller.sub("", substring)
-        substring = slashkiller.sub(lambda x: x.group(0)[1], substring)
+        substring = QUOTEKILLER.sub("", substring)
+        substring = SLASHKILLER.sub(lambda x: x.group(0)[1], substring)
         #print substring
         return [positive, substring]
 

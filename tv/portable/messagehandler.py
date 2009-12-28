@@ -738,7 +738,7 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warn("site not found: %s" % message.id)
         else:
-            if site.get_default():
+            if site.is_default():
                 raise ValueError("Can't delete default site")
             site.remove()
 

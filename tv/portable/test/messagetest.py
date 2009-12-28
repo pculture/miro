@@ -130,7 +130,7 @@ class GuideTrackTest(TrackerTest):
         self.assertEquals(guideInfo.name, guide.get_title())
         self.assertEquals(guideInfo.id, guide.id)
         self.assertEquals(guideInfo.url, guide.get_url())
-        self.assertEquals(guideInfo.default, guide.get_default())
+        self.assertEquals(guideInfo.default, guide.is_default())
 
     def testInitialList(self):
         self.assertEquals(len(self.test_handler.messages), 1)

@@ -45,8 +45,6 @@ from miro import httpclient
 from miro import iconcache
 from miro import fileutil
 
-HTMLPattern = re.compile("^.*(<head.*?>.*</body\s*>)", re.S)
-
 class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
     ICON_CACHE_VITAL = True
 
@@ -87,10 +85,6 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
     def get_by_url(cls, url):
         return cls.make_view('url=?', (url,)).get_singleton()
 
-    @classmethod
-    def get_default(cls):
-        return cls.get_by_url(config.get(prefs.CHANNEL_GUIDE_URL))
-
     def __str__(self):
         return "Miro Guide <%s>" % self.url
 
@@ -106,7 +100,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def get_first_url(self):
         # FIXME - this is only used by get_last_visited_url
-        if self.get_default():
+        if self.is_default():
             return config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL)
         else:
             return self.url
@@ -125,7 +119,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
                 logging.info("First URL is %s", self.get_url())
                 return self.get_url()
 
-    def get_default(self):
+    def is_default(self):
         return self.url == config.get(prefs.CHANNEL_GUIDE_URL)
 
     def get_folder(self):

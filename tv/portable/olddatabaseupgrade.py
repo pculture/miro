@@ -38,7 +38,6 @@ Strategy:
 
 """
 
-from new import classobj
 from copy import copy
 from datetime import datetime
 import pickle
@@ -47,9 +46,9 @@ import threading
 import types
 import time
 
-from miro.schema import ObjectSchema, SchemaInt, SchemaFloat, SchemaSimpleItem
+from miro.schema import ObjectSchema, SchemaInt, SchemaSimpleItem
 from miro.schema import SchemaObject, SchemaBool, SchemaDateTime, SchemaTimeDelta
-from miro.schema import SchemaList, SchemaDict
+from miro.schema import SchemaList
 from types import NoneType
 from miro import storedatabase
 
@@ -154,7 +153,7 @@ class OldFileItem(OldItem):
     pass
 
 class OldFeed(OldDDBObject):
-    def __setstate__(self,state):
+    def __setstate__(self, state):
         (version, data) = state
         if version == 0:
             version += 1
@@ -197,7 +196,7 @@ class OldFeedImpl:
             self.updateFreq = -1
 
 class OldScraperFeedImpl(OldFeedImpl):
-    def __setstate__(self,state):
+    def __setstate__(self, state):
         (version, data) = state
         assert(version == 0)
         data['updating'] = False
@@ -205,7 +204,7 @@ class OldScraperFeedImpl(OldFeedImpl):
         OldFeedImpl.__setstate__(self, data)
 
 class OldRSSFeedImpl(OldFeedImpl):
-    def __setstate__(self,state):
+    def __setstate__(self, state):
         (version, data) = state
         assert(version == 0)
         data['updating'] = False
@@ -218,7 +217,7 @@ class OldSearchDownloadsFeedImpl(OldFeedImpl):
     pass
 
 class OldDirectoryFeedImpl(OldFeedImpl):
-    def __setstate__(self,state):
+    def __setstate__(self, state):
         (version, data) = state
         assert(version == 0)
         data['updating'] = False
@@ -227,7 +226,7 @@ class OldDirectoryFeedImpl(OldFeedImpl):
         OldFeedImpl.__setstate__(self, data)
 
 class OldRemoteDownloader(OldDDBObject):
-    def __setstate__(self,state):
+    def __setstate__(self, state):
         (version, data) = state
         self.__dict__ = copy(data)
         self.status = {}
@@ -239,7 +238,7 @@ class OldRemoteDownloader(OldDDBObject):
         self.dlid = 'noid'
 
 class OldChannelGuide(OldDDBObject):
-    def __setstate__(self,state):
+    def __setstate__(self, state):
         (version, data) = state
 
         if version == 0:
@@ -381,7 +380,7 @@ class SchemaSimpleContainer(SchemaSimpleItem):
                         str, NoneType, datetime, time.struct_time])
                     toValidate.append(value)
             else:
-                self.validateTypes(data, [bool, int, long, float, unicode,str,
+                self.validateTypes(data, [bool, int, long, float, unicode, str,
                         NoneType, datetime, time.struct_time])
             try:
                 data = toValidate.pop()

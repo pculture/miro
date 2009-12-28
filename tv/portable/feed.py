@@ -2547,7 +2547,7 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler, xml.sax.handler.ErrorHandle
         if tag.lower() == 'description':
             lg = HTMLLinkGrabber()
             try:
-                html = xhtmlify(unescape(self.descHTML), addTopTags=True)
+                html = xhtmlify(unescape(self.descHTML), add_top_tags=True)
                 if not self.charset is None:
                     html = fix_html_header(html, self.charset)
                 self.links[:0] = lg.get_links(html, self.baseurl)

@@ -132,9 +132,9 @@ class Controller:
         if isinstance(description, str):
             description = description.decode(locale.getpreferredencoding())
         description = description.encode("utf-8", "ignore")
-        postVars = {"description": description,
-                    "app_name": config.get(prefs.LONG_APP_NAME),
-                    "log": report}
+        post_vars = {"description": description,
+                     "app_name": config.get(prefs.LONG_APP_NAME),
+                     "log": report}
         if backupfile:
             postFiles = {"databasebackup":
                          {"filename": "databasebackup.zip",
@@ -147,7 +147,7 @@ class Controller:
         logging.info("Sending crash report....")
         httpclient.grabURL("http://participatoryculture.org/bogondeflector/index.php", 
                            callback, errback, method="POST",
-                           postVariables=postVars, postFiles=postFiles)
+                           postVariables=post_vars, postFiles=postFiles)
 
     def _backup_support_dir(self):
         # backs up the support directories to a zip file

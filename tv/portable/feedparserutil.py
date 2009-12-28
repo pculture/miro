@@ -32,14 +32,14 @@
 from datetime import datetime
 from time import struct_time
 from types import NoneType
-import types
 
 from miro import feedparser
 
 # values from feedparser dicts that don't have to convert in
 # normalize_feedparser_dict()
-_simple_feedparser_values = (int, long, str, unicode, bool, NoneType,
-        datetime, struct_time )
+SIMPLE_FEEDPARSER_VALUES = (int, long, str, unicode, bool, NoneType,
+                            datetime, struct_time )
+
 def normalize_feedparser_dict(fp_dict):
     """Convert FeedParserDicts to simple dictionaries."""
 
@@ -56,7 +56,7 @@ def normalize_feedparser_dict(fp_dict):
         elif isinstance(value, tuple):
             value = tuple(_convert_if_feedparser_dict(o) for o in value)
         else:
-            if not value.__class__ in _simple_feedparser_values:
+            if not value.__class__ in SIMPLE_FEEDPARSER_VALUES:
                 raise ValueError("Can't normalize: %r (%s)" %
                         (value, value.__class__))
         retval[key] = value

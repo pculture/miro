@@ -1273,7 +1273,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
         purifiedDescription = adscraper.purify(rawDescription)
         ret = xhtmlify(u'<span>%s</span>' % unescape(purifiedDescription),
-                       filterFontTags=True)
+                       filter_font_tags=True)
         if ret:
             return ret
 
