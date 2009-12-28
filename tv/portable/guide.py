@@ -58,6 +58,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
         self.updated_url = url
         self.title = None
         self.userTitle = None
+        self.client = None
         self.lastVisitedURL = None
         self.setup_new_icon_cache()
         self.favicon = None
@@ -75,6 +76,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
         self.lastVisitedURL = None
         self.historyLocation = None
         self.history = []
+        self.client = None
 
     @classmethod
     def site_view(cls):
