@@ -178,10 +178,20 @@ OPML_NESTED = u"""\
 # =============================================================================
 
 class TestSubscription (MiroTestCase):
-
     autodiscover.REFLEXIVE_AUTO_DISCOVERY_OPENER = open
 
-    def testInvalidSubscriptions(self):
+    def assertDiscovered(self, subscriptions, url):
+        self.assertEquals(len(subscriptions), 1)
+        self.assertEquals(subscriptions[0]['type'], 'feed')
+        self.assertEquals(subscriptions[0]['url'], url)
+
+    def test_parse_content_garbage(self):
+        retval = autodiscover.parse_content("")
+        self.assertEquals(retval, None)
+        retval = autodiscover.parse_content(1)
+        self.assertEquals(retval, None)
+
+    def test_invalid_subscriptions(self):
         retval = autodiscover.parse_file("this-file-does-not-exist.xml")
         self.assertEquals(retval, None)
         retval = autodiscover.parse_content(INVALID_CONTENT_1)
@@ -189,20 +199,15 @@ class TestSubscription (MiroTestCase):
         retval = autodiscover.parse_content(INVALID_CONTENT_2)
         self.assertEquals(retval, None)
 
-    def assertDiscovered(self, subscriptions, url):
-        self.assertEquals(len(subscriptions), 1)
-        self.assertEquals(subscriptions[0]['type'], 'feed')
-        self.assertEquals(subscriptions[0]['url'], url)
-
-    def testAtomLinkConstructInRSS(self):
+    def test_atom_link_construct_in_rss(self):
         subscriptions = autodiscover.parse_content(ATOM_LINK_CONSTRUCT_IN_RSS)
         self.assertDiscovered(subscriptions, SAMPLE_RSS_SUBSCRIPTION_URL_1)
 
-    def testAtomLinkConstructInAtom(self):
+    def test_atom_link_construct_in_atom(self):
         subscriptions = autodiscover.parse_content(ATOM_LINK_CONSTRUCT_IN_ATOM)
         self.assertDiscovered(subscriptions, SAMPLE_ATOM_SUBSCRIPTION_URL_1)
 
-    def testReflexiveAutoDiscoveryInRSS(self):
+    def test_reflexive_auto_discovery_in_rss(self):
         pageFile = file(REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS_FILENAME, "w")
         pageFile.write(REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS)
         pageFile.close()
@@ -212,7 +217,7 @@ class TestSubscription (MiroTestCase):
         finally:
             os.remove(REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS_FILENAME)
 
-    def testReflexiveAutoDiscoveryInAtom(self):
+    def test_reflexive_auto_discovery_in_atom(self):
         pageFile = file(REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM_FILENAME, "w")
         pageFile.write(REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM)
         pageFile.close()
@@ -222,7 +227,7 @@ class TestSubscription (MiroTestCase):
         finally:
             os.remove(REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM_FILENAME)
 
-    def testFlatOPMLSubscriptions(self):
+    def test_flat_opml_subscriptions(self):
         subscriptions = autodiscover.parse_content(OPML_FLAT)
         self.assertEquals(len(subscriptions), 4)
         for feed in subscriptions:
@@ -232,7 +237,7 @@ class TestSubscription (MiroTestCase):
         self.assert_(subscriptions[2]['url'] == SAMPLE_RSS_SUBSCRIPTION_URL_2)
         self.assert_(subscriptions[3]['url'] == SAMPLE_ATOM_SUBSCRIPTION_URL_2)
 
-    def testNestedOPMLSubscriptions(self):
+    def test_nested_opml_subscriptions(self):
         subscriptions = autodiscover.parse_content(OPML_NESTED)
         self.assertEquals(len(subscriptions), 4)
         for feed in subscriptions:
@@ -245,31 +250,28 @@ class TestSubscription (MiroTestCase):
 class Testfind_subscribe_links(MiroTestCase):
     def test_garbage(self):
         url = 5
-        self.assertEquals(subscription.find_subscribe_links(url),
-                          [])
+        self.assertEquals(subscription.find_subscribe_links(url), [])
 
-    def testDifferstHost(self):
+    def test_different_host(self):
         url = 'http://youtoob.com'
-        self.assertEquals(subscription.find_subscribe_links(url),
-                [])
+        self.assertEquals(subscription.find_subscribe_links(url), [])
 
-    def testNoLinks(self):
+    def test_no_links(self):
         url = 'http://subscribe.getdemocracy.com/'
-        self.assertEquals(subscription.find_subscribe_links(url),
-                [])
+        self.assertEquals(subscription.find_subscribe_links(url), [])
 
-    def testLinkInPath(self):
+    def test_link_in_path(self):
         url = 'http://subscribe.getdemocracy.com/http%3A//www.myblog.com/rss'
         self.assertEquals(subscription.find_subscribe_links(url),
                 [{'type': 'feed', 'url': 'http://www.myblog.com/rss'}])
 
-    def testLinkInQuery(self):
+    def test_link_in_query(self):
         url = ('http://subscribe.getdemocracy.com/' + \
                '?url1=http%3A//www.myblog.com/rss')
         self.assertEquals(subscription.find_subscribe_links(url),
                 [{'type': 'feed', 'url':'http://www.myblog.com/rss'}])
 
-    def testMultipleLinksInQuery(self):
+    def test_multiple_links_in_query(self):
         url = ('http://subscribe.getdemocracy.com/' + \
                '?url1=http%3A//www.myblog.com/rss' + \
                '&url2=http%3A//www.yourblog.com/atom' + \
@@ -285,7 +287,7 @@ class Testfind_subscribe_links(MiroTestCase):
                                   'http://www.myblog.com/rss',
                                   'http://www.yourblog.com/atom'])
 
-    def testQueryGarbage(self):
+    def test_query_garbage(self):
         url = ('http://subscribe.getdemocracy.com/' + \
                '?url1=http%3A//www.myblog.com/rss' + \
                '&url2=http%3A//www.yourblog.com/atom' + \
@@ -303,13 +305,13 @@ class Testfind_subscribe_links(MiroTestCase):
                                   'http://www.myblog.com/rss',
                                   'http://www.yourblog.com/atom'])
 
-    def testSiteLinks(self):
+    def test_site_links(self):
         url = ('http://subscribe.getdemocracy.com/site.php' +
                '?url1=http%3A//www.mychannelguide.com/')
         self.assertEquals(subscription.find_subscribe_links(url),
                 [{'type': 'site', 'url': 'http://www.mychannelguide.com/'}])
 
-    def testDownloadLinks(self):
+    def test_download_links(self):
         url = ('http://subscribe.getdemocracy.com/download.php' +
                '?url1=http%3A//www.myblog.com/videos/cats.ogm')
         self.assertEquals(subscription.find_subscribe_links(url),

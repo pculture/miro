@@ -59,13 +59,11 @@ from miro import prefs
 from miro.plat import resources
 from miro import downloader
 from miro.util import (returnsUnicode, returnsFilename, unicodify, checkU, 
-                       checkF, quoteUnicodeURL, getFirstVideoEnclosure, 
-                       escape, toUni)
+                       checkF, quoteUnicodeURL, escape, toUni)
 from miro import fileutil
 from miro.plat.utils import filenameToUnicode, make_url_safe, unmake_url_safe
 from miro import filetypes
 from miro.item import FeedParserValues
-from miro import search
 from miro import searchengines
 import logging
 from miro.clock import clock
@@ -2457,14 +2455,15 @@ class SingleFeedImpl(FeedImpl):
     def get_title(self):
         return _(u'Playing File')
 
+LINK_PATTERN = re.compile("<(a|embed)\s[^>]*(href|src)\s*=\s*\"([^\"]*)\"[^>]*>(.*?)</a(.*)", re.S)
+IMG_PATTERN = re.compile(".*<img\s.*?src\s*=\s*\"(.*?)\".*?>", re.S)
+TAG_PATTERN = re.compile("<.*?>")
+
 class HTMLLinkGrabber(HTMLParser):
-    """Parse HTML document and grab all of the links and their title
+    """Parse HTML document and grab all of the links and titles.
     """
     # FIXME: Grab link title from ALT tags in images
     # FIXME: Grab document title from TITLE tags
-    linkPattern = re.compile("<(a|embed)\s[^>]*(href|src)\s*=\s*\"([^\"]*)\"[^>]*>(.*?)</a(.*)", re.S)
-    imgPattern = re.compile(".*<img\s.*?src\s*=\s*\"(.*?)\".*?>", re.S)
-    tagPattern = re.compile("<.*?>")
     def get_links(self, data, baseurl):
         self.links = []
         self.lastLink = None
@@ -2475,34 +2474,37 @@ class HTMLLinkGrabber(HTMLParser):
         self.title = None
         self.thumbnailUrl = None
 
-        match = HTMLLinkGrabber.linkPattern.search(data)
+        match = LINK_PATTERN.search(data)
         while match:
             try:
-                linkURL = match.group(3).encode('ascii')
+                link_url = match.group(3).encode('ascii')
             except UnicodeError:
-                linkURL = match.group(3)
-                i = len (linkURL) - 1
+                link_url = match.group(3)
+                i = len(link_url) - 1
                 while (i >= 0):
-                    if 127 < ord(linkURL[i]) <= 255:
-                        linkURL = linkURL[:i] + "%%%02x" % (ord(linkURL[i])) + linkURL[i+1:]
+                    if 127 < ord(link_url[i]) <= 255:
+                        link_url = (link_url[:i] + 
+                                    "%%%02x" % (ord(link_url[i])) + 
+                                    link_url[i+1:])
                     i = i - 1
 
-            link = urljoin(baseurl, linkURL)
+            link = urljoin(baseurl, link_url)
             desc = match.group(4)
-            imgMatch = HTMLLinkGrabber.imgPattern.match(desc)
-            if imgMatch:
+            img_match = IMG_PATTERN.match(desc)
+            if img_match:
                 try:
-                    thumb = urljoin(baseurl, imgMatch.group(1).encode('ascii'))
+                    thumb = urljoin(baseurl, img_match.group(1).encode('ascii'))
                 except UnicodeError:
                     thumb = None
             else:
                 thumb = None
-            desc =  HTMLLinkGrabber.tagPattern.sub(' ', desc)
+            desc =  TAG_PATTERN.sub(' ', desc)
             self.links.append((link, desc, thumb))
-            match = HTMLLinkGrabber.linkPattern.search(match.group(5))
+            match = LINK_PATTERN.search(match.group(5))
         return self.links
 
-class RSSLinkGrabber(xml.sax.handler.ContentHandler, xml.sax.handler.ErrorHandler):
+class RSSLinkGrabber(xml.sax.handler.ContentHandler, 
+                     xml.sax.handler.ErrorHandler):
     def __init__(self, baseurl, charset=None):
         self.baseurl = baseurl
         self.charset = charset

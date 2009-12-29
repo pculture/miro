@@ -26,8 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""controller.py -- Contains Controller class.  It handles high-level
-control of Miro.
+"""controller.py -- Contains Controller class.  It handles application
+crashes and shutdown.
 """
 
 import logging
@@ -49,21 +49,17 @@ from miro import prefs
 from miro import signals
 from miro.plat.utils import exit
 
+BOGON_URL = "http://participatoryculture.org/bogondeflector/index.php"
+
 class Controller:
     """The main application app.controller object, binding model to
     view.
     """
     def __init__(self):
         self.frame = None
-        self.inQuit = False
-        self.guideURL = None
         self.guide = None
-        self.finishedStartup = False
-        self.idlingNotifier = None
-        self.gatheredVideos = None
-        self.librarySearchTerm = None
-        self.newVideosSearchTerm = None
-        self.sendingCrashReport = 0
+        self.idling_notifier = None
+        self.sending_crash_report = 0
 
     @eventloop.as_urgent
     def shutdown(self):
@@ -89,9 +85,9 @@ class Controller:
             logging.info("Shutting down movie data updates")
             moviedata.movie_data_updater.shutdown()
 
-            if self.idlingNotifier is not None:
+            if self.idling_notifier is not None:
                 logging.info("Shutting down IdleNotifier")
-                self.idlingNotifier.join()
+                self.idling_notifier.join()
 
             logging.info("Done shutting down.")
             logging.info("Remaining threads are:")
@@ -106,14 +102,15 @@ class Controller:
 
     def send_bug_report(self, report, description, send_database):
         def callback(result):
-            self.sendingCrashReport -= 1
+            self.sending_crash_report -= 1
             if result['status'] != 200 or result['body'] != 'OK':
-                logging.warning("Failed to submit crash report.  Server returned %r" % result)
+                logging.warning("Failed to submit crash report.  "
+                                "Server returned %r" % result)
             else:
                 logging.info("Crash report submitted successfully")
 
         def errback(error):
-            self.sendingCrashReport -= 1
+            self.sending_crash_report -= 1
             logging.warning("Failed to submit crash report %r" % error)
 
         backupfile = None
@@ -136,40 +133,46 @@ class Controller:
                      "app_name": config.get(prefs.LONG_APP_NAME),
                      "log": report}
         if backupfile:
-            postFiles = {"databasebackup":
-                         {"filename": "databasebackup.zip",
-                          "mimetype": "application/octet-stream",
-                          "handle": open(backupfile, "rb")
-                          }}
+            post_files = {"databasebackup":
+                              {"filename": "databasebackup.zip",
+                               "mimetype": "application/octet-stream",
+                               "handle": open(backupfile, "rb")
+                               }}
         else:
-            postFiles = None
-        self.sendingCrashReport += 1
+            post_files = None
+        self.sending_crash_report += 1
         logging.info("Sending crash report....")
-        httpclient.grabURL("http://participatoryculture.org/bogondeflector/index.php", 
+        httpclient.grabURL(BOGON_URL,
                            callback, errback, method="POST",
-                           postVariables=post_vars, postFiles=postFiles)
+                           postVariables=post_vars, postFiles=post_files)
 
     def _backup_support_dir(self):
         # backs up the support directories to a zip file
         # returns the name of the zip file
         logging.info("Attempting to back up support directory")
         app.db.close()
-        try:
-            tempfilename = os.path.join(tempfile.gettempdir(),
-                                        ("%012ddatabasebackup.zip" % randrange(0, 999999999999)))
-            zipfile = ZipFile(tempfilename, "w")
-            for root, dirs, files in os.walk(config.get(prefs.SUPPORT_DIRECTORY)):
-                if ((os.path.normpath(root) !=
-                     os.path.normpath(config.get(prefs.ICON_CACHE_DIRECTORY)))
-                    and not os.path.islink(root)):
 
-                    relativeroot = root[len(config.get(prefs.SUPPORT_DIRECTORY)):]
-                    while len(relativeroot) > 0 and relativeroot[0] in ['/', '\\']:
+        support_dir = config.get(prefs.SUPPORT_DIRECTORY)
+        try:
+            uniqfn = "%012databasebackup.zip" % randrange(0, 999999999999)
+            tempfilename = os.path.join(tempfile.gettempdir(), uniqfn)
+            zipfile = ZipFile(tempfilename, "w")
+            iconcache_dir = config.get(prefs.ICON_CACHE_DIRECTORY)
+
+            for root, dummy, files in os.walk(support_dir):
+                if (((os.path.normpath(root) != os.path.normpath(iconcache_dir))
+                     and not os.path.islink(root))):
+
+                    relativeroot = root[len(support_dir):]
+                    while (len(relativeroot) > 0 
+                           and relativeroot[0] in ['/', '\\']):
                         relativeroot = relativeroot[1:]
-                    for filen in files:
-                        if not os.path.islink(os.path.join(root, filen)):
-                            zipfile.write(os.path.join(root, filen),
-                                    os.path.join(relativeroot, filen).encode('ascii', 'replace'))
+                    for fn in files:
+                        path = os.path.join(root, fn)
+                        if not os.path.islink(path):
+                            relpath = os.path.join(relativeroot, fn)
+                            relpath = relpath.encode('ascii', 'replace')
+                            zipfile.write(path, relpath)
             zipfile.close()
             logging.info("Support directory backed up to %s" % tempfilename)
             return tempfilename

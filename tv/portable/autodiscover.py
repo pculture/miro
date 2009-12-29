@@ -35,6 +35,7 @@ import re
 import logging
 import traceback
 import xml.dom.minidom
+from xml.parsers.expat import ExpatError
 import urllib2
 
 from miro import opml
@@ -58,37 +59,35 @@ def flatten(subscriptions):
 
 def parse_file(path):
     try:
-        subscriptionFile = open(path, "r")
-        content = subscriptionFile.read()
-        subscriptionFile.close()
+        subscription_file = open(path, "r")
+        content = subscription_file.read()
+        subscription_file.close()
         return parse_content(content)
-    except (KeyboardInterrupt, SystemExit):
-        raise
-    except:
+    except (IOError, ExpatError):
         pass
 
 def parse_content(content):
     try:
         dom = xml.dom.minidom.parseString(content)
-        try:
-            root = dom.documentElement
-            if root.nodeName == "rss":
-                return _get_subs_from_rss_channel(root)
-            elif root.nodeName == "feed":
-                return _get_subs_from_atom_feed(root)
-            elif root.nodeName == "opml":
-                subscriptions = opml.Importer().import_content(content)
-                return flatten(subscriptions)
-            else:
-                return None
-        finally:
-            dom.unlink()
-    except (KeyboardInterrupt, SystemExit):
-        raise
-    except:
+    except (ExpatError, TypeError):
         if util.chatter:
             logging.warn("Error parsing XML content...\n%s",
                     traceback.format_exc())
+        return
+
+    try:
+        root = dom.documentElement
+        if root.nodeName == "rss":
+            return _get_subs_from_rss_channel(root)
+        elif root.nodeName == "feed":
+            return _get_subs_from_atom_feed(root)
+        elif root.nodeName == "opml":
+            subscriptions = opml.Importer().import_content(content)
+            return flatten(subscriptions)
+        else:
+            return None
+    finally:
+        dom.unlink()
 
 def _get_subs_from_rss_channel(root):
     try:
@@ -100,9 +99,7 @@ def _get_subs_from_rss_channel(root):
             link = channel.getElementsByTagName("link").pop()
             href = link.firstChild.data
             return _get_subs_from_reflexive_auto_discovery(href, "application/rss+xml")
-    except (KeyboardInterrupt, SystemExit):
-        raise
-    except:
+    except (IndexError, AttributeError):
         pass
 
 def _get_subs_from_atom_feed(root):
@@ -116,9 +113,7 @@ def _get_subs_from_atom_feed(root):
             if rel == "alternate":
                 href = link.getAttribute("href")
                 return _get_subs_from_reflexive_auto_discovery(href, "application/atom+xml")
-    except (KeyboardInterrupt, SystemExit):
-        raise
-    except:
+    except (IndexError, AttributeError):
         pass
 
 def _get_subs_from_atom_link_construct(node):
@@ -127,30 +122,31 @@ def _get_subs_from_atom_link_construct(node):
         if link.getAttribute("rel") in ("self", "start"):
             href = link.getAttribute("href")
             return [{'type': 'feed', 'url': href}]
-    except (KeyboardInterrupt, SystemExit):
-        raise
-    except:
+    except (IndexError, AttributeError):
         pass
+
+ALT_RE = re.compile("rel=\"alternate\"")
+HREF_RE = re.compile("href=\"([^\"]*)\"")
 
 def _get_subs_from_reflexive_auto_discovery(url, ltype):
     try:
         urls = list()
         html = REFLEXIVE_AUTO_DISCOVERY_OPENER(url).read()
         for match in re.findall("<link[^>]+>", html):
-            altMatch = re.search("rel=\"alternate\"", match)
-            typeMatch = re.search("type=\"%s\"" % re.escape(ltype), match)
-            hrefMatch = re.search("href=\"([^\"]*)\"", match)
-            if None not in (altMatch, typeMatch, hrefMatch):
-                href = hrefMatch.group(1)
+            alt_match = ALT_RE.search(match)
+            type_match = re.search("type=\"%s\"" % re.escape(ltype), match)
+            href_match = HREF_RE.search(match)
+            if None not in (alt_match, type_match, href_match):
+                href = href_match.group(1)
                 urls.append(href)
-    except (KeyboardInterrupt, SystemExit):
-        raise
-    except:
+    except IOError:
         return []
-    else:
-        if len(urls) == 0:
-            return []
+
+    if len(urls) == 0:
+        return []
     return [{'type': 'feed', 'url': url} for url in urls]
 
+ATOM_SPEC = "http://www.w3.org/2005/Atom"
+
 def _get_atom_link(node):
-    return node.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "link").pop()
+    return node.getElementsByTagNameNS(ATOM_SPEC, "link").pop()

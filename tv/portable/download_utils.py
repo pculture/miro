@@ -35,7 +35,6 @@ import logging
 
 from miro import filetypes
 from miro import util
-from miro import fileutil
 
 from miro.util import checkF, checkU, returnsFilename
 from miro.plat.utils import unicodeToFilename, unmake_url_safe
@@ -77,7 +76,8 @@ def default_port(scheme):
 
 def parse_url(url, split_path=False):
     url = fix_file_urls(url)
-    (scheme, host, path, params, query, fragment) = util.unicodify(list(urlparse(url)))
+    (scheme, host, path, params, query, fragment) = \
+        util.unicodify(list(urlparse(url)))
     # Filter invalid URLs with duplicated ports
     # (http://foo.bar:123:123/baz) which seem to be part of #441.
     if host.count(':') > 1:
@@ -109,15 +109,15 @@ def parse_url(url, split_path=False):
     elif scheme.startswith("file") and re.match(r'/[a-zA-Z]:', path):
         # fixes "file:///C:/foo" paths
         path = path[1:]
-    fullPath = path
+    full_path = path
     if split_path:
-        return scheme, host, port, fullPath, params, query
+        return scheme, host, port, full_path, params, query
     else:
         if params:
-            fullPath += ';%s' % params
+            full_path += ';%s' % params
         if query:
-            fullPath += '?%s' % query
-        return scheme, host, port, fullPath
+            full_path += '?%s' % query
+        return scheme, host, port, full_path
 
 def get_file_url_path(url):
     scheme, host, port, path = parse_url(url)
@@ -125,16 +125,16 @@ def get_file_url_path(url):
         raise ValueError("%r is not a file URL" % url)
     return unmake_url_safe(path)
 
-def check_filename_extension(filename, contentType):
+def check_filename_extension(filename, content_type):
     """If a filename doesn't have an extension, this tries to find a
     suitable one based on the HTTP content-type info and add it if one
     is available.
     """
     checkF(filename)
-    if contentType is not None and not filetypes.is_allowed_filename(filename):
-        guessedExt = filetypes.guess_extension(contentType)
-        if guessedExt is not None:
-            filename += guessedExt
+    if content_type is not None and not filetypes.is_allowed_filename(filename):
+        guessed_ext = filetypes.guess_extension(content_type)
+        if guessed_ext is not None:
+            filename += guessed_ext
     return filename
 
 @returnsFilename

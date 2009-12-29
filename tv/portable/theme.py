@@ -76,25 +76,25 @@ class ThemeHistory(DDBObject):
     @as_urgent
     def on_theme_change(self):
         if self.theme is None: # vanilla Miro
-            guideURL = config.get(prefs.CHANNEL_GUIDE_URL)
-            if guide.get_guide_by_url(guideURL) is None:
+            guide_url = config.get(prefs.CHANNEL_GUIDE_URL)
+            if guide.get_guide_by_url(guide_url) is None:
                 # This happens when the DB is initialized with a theme that
                 # doesn't have it's own set of default channels; None is
                 # artificially added to the pastThemes lists to prevent the
                 # default channels from being added again.  However, it means
                 # that we need to add the Miro Guide to the DB ourselves.
                 logging.warn('Installing default guide after switch to vanilla Miro')
-                guide.ChannelGuide(guideURL,
+                guide.ChannelGuide(guide_url,
                                    unicode(config.get(
                             prefs.CHANNEL_GUIDE_ALLOWED_URLS)).split())
         self.signal_change()
 
     def on_first_run(self):
         logging.info("Spawning Miro Guide...")
-        guideURL = unicode(config.get(prefs.CHANNEL_GUIDE_URL))
-        if guide.get_guide_by_url(guideURL) is None:
-            guide.ChannelGuide(guideURL,
-            unicode(config.get(prefs.CHANNEL_GUIDE_ALLOWED_URLS)).split())
+        guide_url = unicode(config.get(prefs.CHANNEL_GUIDE_URL))
+        if guide.get_guide_by_url(guide_url) is None:
+            allowed_urls = config.get(prefs.CHANNEL_GUIDE_ALLOWED_URLS)
+            guide.ChannelGuide(guide_url, unicode(allowed_urls).split())
 
         if self.theme is not None:
             # we have a theme
@@ -102,8 +102,8 @@ class ThemeHistory(DDBObject):
             for temp_guide in new_guides:
                 if guide.get_guide_by_url(temp_guide) is None:
                     guide.ChannelGuide(temp_guide)
-            if ((config.get(prefs.DEFAULT_CHANNELS_FILE) is not None) and
-                    (config.get(prefs.THEME_NAME) is not None)):
+            if (((config.get(prefs.DEFAULT_CHANNELS_FILE) is not None)
+                 and (config.get(prefs.THEME_NAME) is not None))):
                 importer = opml.Importer()
                 filepath = resources.theme_path(config.get(prefs.THEME_NAME), 
                     config.get(prefs.DEFAULT_CHANNELS_FILE))
@@ -112,7 +112,7 @@ class ThemeHistory(DDBObject):
                                                   show_summary=False)
                 else:
                     logging.warn("Theme subscription file doesn't exist: %s",
-                            filepath)
+                                 filepath)
             elif None not in self.pastThemes:
                 # We pretend to have run the default theme, and then
                 # install the default channels.  XXX: If Miro Guide isn't

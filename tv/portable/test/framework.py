@@ -49,7 +49,7 @@ class DummyMainFrame:
     def getDisplay(self, area):
         return self.displays.get(area)
 
-    def onSelectedTabChange(self, tabType, multiple, guideURL, videoFilename):
+    def onSelectedTabChange(self, tabType, multiple, guide_url, videoFilename):
         pass
 
 class DummyVideoDisplay:

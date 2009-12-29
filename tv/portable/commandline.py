@@ -79,11 +79,11 @@ def add_video(path, single=False):
     if _command_line_videos is not None:
         _command_line_videos.add(file_item)
 
-def add_torrent(path, torrentInfohash):
+def add_torrent(path, torrent_info_hash):
     manual_feed = feed.Feed.get_manual_feed()
     for i in manual_feed.items:
         if ((i.downloader is not None
-             and i.downloader.status.get('infohash') == torrentInfohash)):
+             and i.downloader.status.get('infohash') == torrent_info_hash)):
             logging.info("not downloading %s, it's already a download for %s",
                          path, i)
             if i.downloader.get_state() in ('paused', 'stopped'):
@@ -130,7 +130,7 @@ def add_subscription_url(prefix, expected_content_type, url):
             )
         _complain_about_subscription_url(text)
 
-    httpclient.grabURL(realURL, callback, errback)
+    httpclient.grabURL(real_url, callback, errback)
 
 def set_command_line_args(args):
     _command_line_args.extend(args)
@@ -167,10 +167,7 @@ def parse_command_line_args(args=None):
             add_subscription_url('miro:', 'application/x-miro', arg)
         elif arg.startswith('democracy:'):
             add_subscription_url('democracy:', 'application/x-democracy', arg)
-        elif (arg.startswith('http:')
-              or arg.startswith('https:')
-              or arg.startswith('feed:')
-              or arg.startswith('feeds:')):
+        elif arg.startswith('http:', 'https:', 'feed:', 'feeds:'):
             singleclick.add_download(filenameToUnicode(arg))
         elif os.path.exists(arg):
             ext = os.path.splitext(arg)[1].lower()
@@ -180,7 +177,8 @@ def parse_command_line_args(args=None):
                 except ValueError:
                     title = _("Invalid Torrent")
                     msg = _(
-                        "The torrent file %(filename)s appears to be corrupt and cannot be opened.",
+                        "The torrent file %(filename)s appears to be corrupt "
+                        "and cannot be opened.",
                         {"filename": os.path.basename(arg)}
                         )
                     dialogs.MessageBoxDialog(title, msg).run()
