@@ -295,33 +295,33 @@ def gather_media_files(path):
 
         yield adjusted_parsed, found
 
-def formatSizeForUser(bytes, zeroString="", withDecimals=True, kbOnly=False):
+def formatSizeForUser(nbytes, zeroString="", withDecimals=True, kbOnly=False):
     """Format an int containing the number of bytes into a string suitable for
     printing out to the user.  zeroString is the string to use if bytes == 0.
     """
     from miro.gtcache import gettext as _
-    if bytes > (1 << 30) and not kbOnly:
-        value = (bytes / (1024.0 * 1024.0 * 1024.0))
+    if nbytes > (1 << 30) and not kbOnly:
+        value = (nbytes / (1024.0 * 1024.0 * 1024.0))
         if withDecimals:
             # we do the string composing this way so as to make it easier
             # on translators.
             return _("%(size)sGB", {"size": "%1.1f" % value})
         else:
             return _("%(size)sGB", {"size": "%d" % value})
-    elif bytes > (1 << 20) and not kbOnly:
-        value = (bytes / (1024.0 * 1024.0))
+    elif nbytes > (1 << 20) and not kbOnly:
+        value = (nbytes / (1024.0 * 1024.0))
         if withDecimals:
             return _("%(size)sMB", {"size": "%1.1f" % value})
         else:
             return _("%(size)sMB", {"size": "%d" % value})
-    elif bytes > (1 << 10):
-        value = (bytes / 1024.0)
+    elif nbytes > (1 << 10):
+        value = (nbytes / 1024.0)
         if withDecimals:
             return _("%(size)sKB", {"size": "%1.1f" % value})
         else:
             return _("%(size)sKB", {"size": "%d" % value})
-    elif bytes > 1:
-        value = bytes
+    elif nbytes > 1:
+        value = nbytes
         if withDecimals:
             return _("%(size)sB", {"size": "%1.1f" % value})
         else:

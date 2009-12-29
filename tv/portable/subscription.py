@@ -60,24 +60,28 @@ SUBSCRIBE_HOSTS = ('subscribe.getdemocracy.com', 'subscribe.getmiro.com')
 # subscribe.getmiro.com/geturls.php
 ADDITIONAL_KEYS =  ('title', 'description', 'length', 'type', 'thumbnail',
                     'feed', 'link', 'trackback', 'section')
+
 # =========================================================================
 
 def get_subscriptions_from_query(subscription_type, query):
     subscriptions = []
-    # the query string shouldn't be a unicode.  if we pass it in as a unicode
-    # then parse_qs returns unicode values which aren't properly converted
-    # and then we end up with boxes instead of ' and " characters.
+    # the query string shouldn't be a unicode.  if we pass it in as a
+    # unicode then parse_qs returns unicode values which aren't
+    # properly converted and then we end up with boxes instead of '
+    # and " characters.
     query = str(query)
-    parsedQuery = cgi.parse_qs(query)
-    for key, value in parsedQuery.items():
+    parsed_query = cgi.parse_qs(query)
+    for key, value in parsed_query.items():
         match = re.match(r'^url(\d+)$', key)
         if match:
-            subscription = {'type': subscription_type, 'url': unicode(value[0], 'utf8')}
+            subscription = {'type': subscription_type,
+                            'url': unicode(value[0], 'utf8')}
             subscriptions.append(subscription)
-            urlId = match.group(1)
+            url_id = match.group(1)
             for key2 in ADDITIONAL_KEYS:
-                if '%s%s' % (key2, urlId) in parsedQuery:
-                    value = unicode(parsedQuery['%s%s' % (key2, urlId)][0], "utf-8")
+                if '%s%s' % (key2, url_id) in parsed_query:
+                    key3 = "%s%s" % (key2, url_id)
+                    value = unicode(parsed_query[key3][0], "utf-8")
                     if key2 == 'type':
                         subscription['mime_type'] = value
                     else:
@@ -93,7 +97,7 @@ def is_subscribe_link(url):
     if not isinstance(url, basestring):
         return False
 
-    scheme, host, path, params, query, frag = urlparse.urlparse(url)
+    dummy, host, dummy, dummy, dummy, dummy = urlparse.urlparse(url)
     return host in SUBSCRIBE_HOSTS
 
 def find_subscribe_links(url):
@@ -107,7 +111,7 @@ def find_subscribe_links(url):
                      url, traceback.format_exc())
         return []
 
-    scheme, host, path, params, query, frag = urlparse.urlparse(url)
+    dummy, host, path, dummy, query, dummy = urlparse.urlparse(url)
 
     if host not in SUBSCRIBE_HOSTS:
         return []
@@ -122,8 +126,9 @@ def find_subscribe_links(url):
 
 class Subscriber(object):
     """
-    This class represents the common functionality of the subscription handlers
-    (OPML import, one-click links in the Guide, and command-line additions).
+    This class represents the common functionality of the subscription
+    handlers (OPML import, one-click links in the Guide, and
+    command-line additions).
     """
 
     def _get_section(self, subscription):
@@ -134,20 +139,21 @@ class Subscriber(object):
 
     def add_subscriptions(self, subscriptions_list, parent_folder=None):
         """
-        We loop through the list of subscriptions, creating things as we go (if
-        needed).  We also keep track of what we've added.
+        We loop through the list of subscriptions, creating things as
+        we go (if needed).  We also keep track of what we've added.
 
-        Each type (folder, feed, site, download) gets dispatched to one of our
-        methods.  Each dispatcher returns True if it's added the subscription,
-        anything else if it's been ignored for some reason (generally because
-        it's already present in the DB).
+        Each type (folder, feed, site, download) gets dispatched to
+        one of our methods.  Each dispatcher returns True if it's
+        added the subscription, anything else if it's been ignored for
+        some reason (generally because it's already present in the
+        DB).
 
-        The only exception to this is the 'folder' type, which has the same
-        return signature as this method.
+        The only exception to this is the 'folder' type, which has the
+        same return signature as this method.
 
-        Returns a tuple of dictionaries (added, ignored).  Each dictionary maps
-        a subscription type (feed, site, download) to the number of
-        added/ignored items in this subscription.
+        Returns a tuple of dictionaries (added, ignored).  Each
+        dictionary maps a subscription type (feed, site, download) to
+        the number of added/ignored items in this subscription.
         """
         added = {}
         ignored = {}
@@ -157,7 +163,8 @@ class Subscriber(object):
             if handler:
                 trackback = subscription.get('trackback')
                 if trackback:
-                    httpclient.grabURL(trackback, lambda x: None, lambda x: None)
+                    httpclient.grabURL(trackback, lambda x: None,
+                                       lambda x: None)
                 ret = handler(subscription, parent_folder)
                 if ret:
                     if subscription_type == 'folder':
@@ -174,7 +181,8 @@ class Subscriber(object):
                     ignored.setdefault(subscription_type, [])
                     ignored[subscription_type].append(subscription)
             else:
-                raise ValueError('unknown subscription type: %s' % subscription_type)
+                raise ValueError('unknown subscription type: %s' %
+                                 subscription_type)
         return added, ignored
 
     def handle_folder(self, folder_dict, parent_folder):
@@ -199,20 +207,22 @@ class Subscriber(object):
         Feed subscriptions look like::
 
             {
-                'type': 'feed',
-                'url': URL of the RSS/Atom feed
-                'title': name of the feed (optional),
-                'section': one of ['audio', 'video'] (ignored if it's in a folder),
-                'search_term': terms for which this feed is a search (optional),
-                'auto_download': one of 'all', 'new', 'off' (optional),
-                'expiry_time': one of 'system', 'never', an integer of hours (optional),
+            'type': 'feed',
+            'url': URL of the RSS/Atom feed
+            'title': name of the feed (optional),
+            'section': one of ['audio', 'video'] (ignored if it's in a folder),
+            'search_term': terms for which this feed is a search (optional),
+            'auto_download': one of 'all', 'new', 'off' (optional),
+            'expiry_time': one of 'system', 'never', an integer of hours
+                           (optional),
             }
         """
         url = feed_dict['url']
 
         search_term = feed_dict.get('search_term')
         if search_term:
-            url = u"dtv:searchTerm:%s?%s" % (urlencode(url), urlencode(search_term))
+            url = u"dtv:searchTerm:%s?%s" % (urlencode(url),
+                                             urlencode(search_term))
 
         f = feed.get_feed_by_url(url)
         if f is None:
@@ -226,8 +236,8 @@ class Subscriber(object):
             if title is not None and title != '':
                 f.set_title(title)
             auto_download_mode = feed_dict.get('auto_download')
-            if auto_download_mode is not None and auto_download_mode in ['all',
-                    'new', 'off']:
+            if ((auto_download_mode is not None
+                 and auto_download_mode in ['all', 'new', 'off'])):
                 f.set_auto_download_mode(auto_download_mode)
             expiry_time = feed_dict.get('expiry_time')
             if expiry_time is not None and expiry_time != '':
@@ -269,15 +279,15 @@ class Subscriber(object):
         Download subscriptions look like::
 
             {
-                'type': 'download',
-                'url': URL of the file to download
-                'title': name of the download (optional),
-                'link': page representing this download (optional),
-                'feed': RSS feed containing this item (optional),
-                'mime_type': the MIME type of the item (optional),
-                'description': a description of the item (optional),
-                'thumbnail': a thumbnail image for the item (optional),
-                'length': the length in seconds of the item (optional)
+            'type': 'download',
+            'url': URL of the file to download
+            'title': name of the download (optional),
+            'link': page representing this download (optional),
+            'feed': RSS feed containing this item (optional),
+            'mime_type': the MIME type of the item (optional),
+            'description': a description of the item (optional),
+            'thumbnail': a thumbnail image for the item (optional),
+            'length': the length in seconds of the item (optional)
             }
         """
         assert parent_folder is None, "no folders in downloads"
@@ -285,4 +295,5 @@ class Subscriber(object):
         mime_type = download_dict.get('mime_type', 'video/x-unknown')
         entry = singleclick._build_entry(url, mime_type, download_dict)
         singleclick.download_video(entry)
-        return False # it's all async, so we don't know right away
+        # it's all async, so we don't know right away
+        return False

@@ -75,41 +75,41 @@ class PhantomFeedTest(SanityTest):
     """Check that no items reference a Feed that isn't around anymore.
     """
     def __init__(self):
-        self.feedsInItems = set()
-        self.topLevelFeeds = set()
-        self.parentsInItems = set()
-        self.topLevelParents = set()
+        self.feeds_in_items = set()
+        self.top_level_feeds = set()
+        self.parents_in_items = set()
+        self.top_level_parents = set()
 
     def check_object(self, obj):
         if isinstance(obj, item.Item):
             if obj.feed_id is not None:
-                self.feedsInItems.add(obj.feed_id)
+                self.feeds_in_items.add(obj.feed_id)
             if obj.parent_id is not None:
-                self.parentsInItems.add(obj.parent_id)
+                self.parents_in_items.add(obj.parent_id)
             if obj.isContainerItem in (None, True):
-                self.topLevelParents.add(obj.id)
+                self.top_level_parents.add(obj.id)
         elif isinstance(obj, feed.Feed):
-            self.topLevelFeeds.add(obj.id)
+            self.top_level_feeds.add(obj.id)
 
     def finished(self):
-        if not self.feedsInItems.issubset(self.topLevelFeeds):
-            phantoms = self.feedsInItems.difference(self.topLevelFeeds)
-            phantomsString = ', '.join([str(p) for p in phantoms])
-            return "Phantom feed(s) referenced in items: %s" % phantomsString
-        if not self.parentsInItems.issubset(self.topLevelParents):
-            phantoms = self.parentsInItems.difference(self.topLevelParents)
-            phantomsString = ', '.join([str(p) for p in phantoms])
-            return "Phantom items(s) referenced in items: %s" % phantomsString
+        if not self.feeds_in_items.issubset(self.top_level_feeds):
+            phantoms = self.feeds_in_items.difference(self.top_level_feeds)
+            phantoms_string = ', '.join([str(p) for p in phantoms])
+            return "Phantom feed(s) referenced in items: %s" % phantoms_string
+        if not self.parents_in_items.issubset(self.top_level_parents):
+            phantoms = self.parents_in_items.difference(self.top_level_parents)
+            phantoms_string = ', '.join([str(p) for p in phantoms])
+            return "Phantom items(s) referenced in items: %s" % phantoms_string
 
     def fix_if_possible(self, object_list):
         for i in reversed(xrange(len(object_list))):
             if ((isinstance(object_list[i], item.Item) and
                  object_list[i].feed_id is not None and
-                 object_list[i].feed_id not in self.topLevelFeeds)):
+                 object_list[i].feed_id not in self.top_level_feeds)):
                 del object_list[i]
             elif (isinstance(object_list[i], item.Item) and
                   object_list[i].parent_id is not None and
-                  object_list[i].parent_id not in self.topLevelParents):
+                  object_list[i].parent_id not in self.top_level_parents):
                 del object_list[i]
 
 class SingletonTest(SanityTest):
@@ -117,6 +117,7 @@ class SingletonTest(SanityTest):
 
     This is a baseclass for the channle guide test, manual feed test, etc.
     """
+    singletonName = ""
 
     def __init__(self):
         self.count = 0
@@ -163,7 +164,7 @@ class ManualFeedSingletonTest(SingletonTest):
                 isinstance(obj.actualFeed, feed.ManualFeedImpl))
 
 def check_sanity(object_list, fix_if_possible=True, quiet=False,
-                 reallyQuiet=False):
+                 really_quiet=False):
     """Do all sanity checks on a list of objects.
 
     If fix_if_possible is True, the sanity checks will try to fix
@@ -177,7 +178,7 @@ def check_sanity(object_list, fix_if_possible=True, quiet=False,
     converting old databases, since sanity errors are somewhat
     expected.
 
-    If reallyQuiet is True, won't even print out a warning on fixable
+    If really_quiet is True, won't even print out a warning on fixable
     problems.
 
     Returns True if the database passed all sanity tests, false
@@ -190,19 +191,19 @@ def check_sanity(object_list, fix_if_possible=True, quiet=False,
     ])
 
     errors = []
-    failedTests = set()
+    failed_tests = set()
     for obj in object_list:
         for test in tests:
             rv = test.check_object(obj)
             if rv is not None:
                 errors.append(rv)
-                failedTests.add(test)
-        tests = tests.difference(failedTests)
+                failed_tests.add(test)
+        tests = tests.difference(failed_tests)
     for test in tests:
         rv = test.finished()
         if rv is not None:
             errors.append(rv)
-            failedTests.add(test)
+            failed_tests.add(test)
 
     if errors:
         error = "The database failed the following sanity tests:\n"
@@ -211,10 +212,10 @@ def check_sanity(object_list, fix_if_possible=True, quiet=False,
             if not quiet:
                 signals.system.failed(when="While checking database",
                                       details=error)
-            elif not reallyQuiet:
+            elif not really_quiet:
                 print "WARNING: Database sanity error"
                 print error
-            for test in failedTests:
+            for test in failed_tests:
                 test.fix_if_possible(object_list)
                 # fix_if_possible will throw a DatabaseInsaneError if
                 # it fails, which we let get raised to our caller
