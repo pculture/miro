@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-def make_simple_get_set(attributeName, change_needs_save=True):
+def make_simple_get_set(attribute_name, change_needs_save=True):
     """Creates a simple DDBObject getter and setter for an attribute.
 
     This exists because for many DDBOBject attributes we have methods
@@ -43,9 +43,11 @@ def make_simple_get_set(attributeName, change_needs_save=True):
     """
     def getter(self):
         self.confirm_db_thread()
-        return getattr(self, attributeName)
-    def setter(self, newValue):
+        return getattr(self, attribute_name)
+
+    def setter(self, new_value):
         self.confirm_db_thread()
-        setattr(self, attributeName, newValue)
+        setattr(self, attribute_name, new_value)
         self.signal_change(needs_save=change_needs_save)
+
     return getter, setter

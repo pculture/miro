@@ -31,7 +31,6 @@
 ``ChannelGuide`` is the class used for storing guides and sites.
 """
 
-import re
 import logging
 from HTMLParser import HTMLParser, HTMLParseError
 from urlparse import urlparse, urljoin

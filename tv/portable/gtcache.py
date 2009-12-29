@@ -39,6 +39,7 @@ _gtcache = None
 codeset = None # The default codeset of our locale (always lower case)
 
 def init():
+    import logging
     global _gtcache
     global codeset
     _gtcache = {}
@@ -50,7 +51,6 @@ def init():
     try:
         locale.setlocale(locale.LC_ALL, '')
     except locale.Error:
-        import logging
         logging.warn("gtcache.init: setlocale failed.  setting locale to 'C'")
         locale.setlocale(locale.LC_ALL, 'C')
 
@@ -58,7 +58,6 @@ def init():
     try:
         codeset = locale.getlocale()[1]
     except ValueError:
-        import logging
         logging.warn("gtcache.init: getlocale failed.  setting locale to 'C'")
         locale.setlocale(locale.LC_ALL, "C")
         codeset = locale.getlocale()[1]

@@ -85,46 +85,40 @@ def get_subscriptions_from_query(subscription_type, query):
     return subscriptions
 
 def is_subscribe_link(url):
-    """Returns whether this is a subscribe url or not.
+    """Returns whether (True) or not (False) this is a subscribe
+    url host.
 
     It's pretty hearty and shouldn't throw exceptions.
     """
     if not isinstance(url, basestring):
         return False
-    try:
-        scheme, host, path, params, query, frag = urlparse.urlparse(url)
-    except (KeyboardInterrupt, SystemExit):
-        raise
-    except:
-        logging.warn("is_subscribe_link: Error parsing '%s'\n%s", url,
-                traceback.format_exc())
-        return False
+
+    scheme, host, path, params, query, frag = urlparse.urlparse(url)
     return host in SUBSCRIBE_HOSTS
 
 def find_subscribe_links(url):
     """Given a URL, test if it's trying to subscribe the user using
-    subscribe.getdemocracy.com.  Returns the list of parsed URLs.
+    a subscribe_host.
+
+    Returns the list of parsed URLs.
     """
-    try:
-        scheme, host, path, params, query, frag = urlparse.urlparse(url)
-    except (KeyboardInterrupt, SystemExit):
-        raise
-    except:
-        logging.warn("find_subscribe_links: Error parsing '%s'\n%s", url,
-                traceback.format_exc())
+    if not isinstance(url, basestring):
+        logging.warn("find_subscribe_links: url wrong type %r\n%s",
+                     url, traceback.format_exc())
         return []
+
+    scheme, host, path, params, query, frag = urlparse.urlparse(url)
 
     if host not in SUBSCRIBE_HOSTS:
         return []
     if path in ('/', '/opml.php'):
         return get_subscriptions_from_query('feed', query)
-    elif path in ('/download.php','/download','/download/'):
+    elif path in ('/download.php', '/download', '/download/'):
         return get_subscriptions_from_query('download', query)
     elif path in ('/site.php', '/site', '/site/'):
         return get_subscriptions_from_query('site', query)
     else:
         return [{'type': 'feed', 'url': urllib2.unquote(path[1:])}]
-
 
 class Subscriber(object):
     """

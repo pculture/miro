@@ -33,16 +33,16 @@ SLASHKILLER = re.compile(r'\\.')
 
 SEARCHOBJECTS = {}
 
-def match(searchString, comparisons):
-    searchString = searchString.lower()
+def match(search_string, comparisons):
+    search_string = search_string.lower()
     comparisons = [c.lower() for c in comparisons]
-    if not SEARCHOBJECTS.has_key(searchString):
-        SEARCHOBJECTS[searchString] = BooleanSearch(searchString)
-    return SEARCHOBJECTS[searchString].match(comparisons)
+    if not SEARCHOBJECTS.has_key(search_string):
+        SEARCHOBJECTS[search_string] = BooleanSearch(search_string)
+    return SEARCHOBJECTS[search_string].match(comparisons)
 
 class BooleanSearch:
-    def __init__ (self, s):
-        self.string = s
+    def __init__ (self, search_string):
+        self.string = search_string
         self.parse_string()
         self.rules = []
 

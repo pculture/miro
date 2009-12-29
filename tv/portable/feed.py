@@ -37,7 +37,8 @@ from datetime import datetime, timedelta
 from miro.gtcache import gettext as _
 from miro.feedparser import FeedParserDict
 from urlparse import urljoin
-from miro.xhtmltools import unescape, xhtmlify, fix_xml_header, fix_html_header, urlencode, urldecode
+from miro.xhtmltools import (unescape, xhtmlify, fix_xml_header, 
+                             fix_html_header, urlencode, urldecode)
 import os
 import re
 import xml
@@ -57,7 +58,9 @@ from miro import models
 from miro import prefs
 from miro.plat import resources
 from miro import downloader
-from miro.util import returnsUnicode, returnsFilename, unicodify, checkU, checkF, quoteUnicodeURL, getFirstVideoEnclosure, escape, toUni
+from miro.util import (returnsUnicode, returnsFilename, unicodify, checkU, 
+                       checkF, quoteUnicodeURL, getFirstVideoEnclosure, 
+                       escape, toUni)
 from miro import fileutil
 from miro.plat.utils import filenameToUnicode, make_url_safe, unmake_url_safe
 from miro import filetypes
@@ -67,9 +70,9 @@ from miro import searchengines
 import logging
 from miro.clock import clock
 
-whitespacePattern = re.compile(r"^[ \t\r\n]*$")
-youtubeURLPattern = re.compile(r"^https?://(?:(?:www|gdata).)?youtube.com(?:/.*)?$")
-youtubeTitlePattern = re.compile(r"(?:YouTube :: )?Videos (?:uploaded )?by (?P<name>\w*)")
+WHITESPACE_PATTERN = re.compile(r"^[ \t\r\n]*$")
+YOUTUBE_URL_PATTERN = re.compile(r"^https?://(?:(?:www|gdata).)?youtube.com(?:/.*)?$")
+YOUTUBE_TITLE_PATTERN = re.compile(r"(?:YouTube :: )?Videos (?:uploaded )?by (?P<name>\w*)")
 
 DEFAULT_FEED_ICON = "images/feedicon.png"
 DEFAULT_FEED_ICON_TABLIST = "images/icon-rss.png"
@@ -299,7 +302,7 @@ class FeedImpl(DDBObject):
         """
         try:
             title = self.title
-            if title is None or whitespacePattern.match(title):
+            if title is None or WHITESPACE_PATTERN.match(title):
                 if self.ufeed.baseTitle is not None:
                     title = self.ufeed.baseTitle
                 else:
@@ -1381,8 +1384,8 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                 pass
         if not self.url.startswith("dtv:multi:"):
             if channelTitle != None:
-                if youtubeURLPattern.match(self.url):
-                    titleMatch = youtubeTitlePattern.match(channelTitle)
+                if YOUTUBE_URL_PATTERN.match(self.url):
+                    titleMatch = YOUTUBE_TITLE_PATTERN.match(channelTitle)
                     if titleMatch:
                         channelTitle = titleMatch.groups('name')[0]
                 self.title = channelTitle

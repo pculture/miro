@@ -35,7 +35,7 @@ import logging
 import urlparse
 import os.path
 import time
-from feedparser import FeedParserDict
+from miro.feedparser import FeedParserDict
 
 from miro import dialogs
 from miro import item
@@ -49,34 +49,34 @@ from miro import prefs
 from miro import messages
 
 def check_url_exists(url):
-    manualFeed = feed.Feed.get_manual_feed()
-    for i in manualFeed.items:
+    manual_feed = feed.Feed.get_manual_feed()
+    for i in manual_feed.items:
         if i.get_url() == url:
             title = _("Download already exists")
             text1 = _("That URL is already an external download.")
-            downloadState = None
+            download_state = None
             if i.downloader is not None:
-                downloadState = i.downloader.get_state()
-            if downloadState in ('paused', 'stopped', 'failed'):
+                download_state = i.downloader.get_state()
+            if download_state in ('paused', 'stopped', 'failed'):
                 i.download()
                 text2 = _("%(appname)s will begin downloading it now.",
                           {"appname": config.get(prefs.SHORT_APP_NAME)})
-            elif downloadState == 'downloading':
+            elif download_state == 'downloading':
                 text2 = _("It is downloading now.")
             else:
                 text2 = _("It has already been downloaded.")
             dialogs.MessageBoxDialog(title, "%s  %s" % (text1, text2)).run()
             return True
-    existingFeed = feed.get_feed_by_url(url)
-    if existingFeed is not None:
+    existing_feed = feed.get_feed_by_url(url)
+    if existing_feed is not None:
         return True
     return False
 
-def _build_entry(url, contentType, additional=None):
+def _build_entry(url, content_type, additional=None):
     """Returns a FeedParserDict.
     """
     entry = {'updated_parsed': time.gmtime(time.time()),
-             'enclosures': [{'url': url, 'type': unicode(contentType)}]}
+             'enclosures': [{'url': url, 'type': unicode(content_type)}]}
 
     if additional is not None:
         for key in 'title', 'link', 'feed':
@@ -90,7 +90,7 @@ def _build_entry(url, contentType, additional=None):
             entry['enclosures'][0]['length'] = additional['length']
 
     if 'title' not in entry:
-        _, _, urlpath, _, _, _ = urlparse.urlparse(url)
+        dummy, dummy, urlpath, dummy, dummy, dummy = urlparse.urlparse(url)
         entry['title'] = os.path.basename(urlpath)
 
     return FeedParserDict(entry)
@@ -170,22 +170,22 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
         if check_url_exists(url):
             return
 
-        contentType = headers.get("content-type")
-        if contentType and filetypes.is_feed_content_type(contentType):
+        content_type = headers.get("content-type")
+        if content_type and filetypes.is_feed_content_type(content_type):
             add_feeds([url])
             return
 
-        if contentType and flashscraper.is_maybe_flashscrapable(url):
+        if content_type and flashscraper.is_maybe_flashscrapable(url):
             entry = _build_entry(url, 'video/x-flv', additional=metadata)
             download_video(entry)
             return
 
-        if contentType and filetypes.is_maybe_feed_content_type(contentType):
-            logging.info("%s content type is %s.  going to peek to see if it's a feed...." % (url, contentType))
+        if content_type and filetypes.is_maybe_feed_content_type(content_type):
+            logging.info("%s content type is %s.  going to peek to see if it's a feed...." % (url, content_type))
             httpclient.grabURL(url, callback_peek, errback)
             return
 
-        entry = _build_entry(url, contentType)
+        entry = _build_entry(url, content_type)
 
         if filetypes.is_video_enclosure(entry['enclosures'][0]):
             download_video(entry)
@@ -196,21 +196,19 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
 
 def download_video(fp_dict):
     fp_values = item.FeedParserValues(fp_dict)
-    manualFeed = feed.Feed.get_manual_feed()
-    newItem = item.Item(fp_values, feed_id=manualFeed.get_id())
-    newItem.download()
+    manual_feed = feed.Feed.get_manual_feed()
+    new_item = item.Item(fp_values, feed_id=manual_feed.get_id())
+    new_item.download()
 
 def filter_existing_feed_urls(urls):
     return [u for u in urls if feed.get_feed_by_url(u) is None]
 
-def add_feeds(urls, newFolderName=None):
+def add_feeds(urls, new_folder_name=None):
     if len(urls) > 0:
-        lastFeed = None
-        if newFolderName is not None:
-            newFolder = folder.ChannelFolder(newFolderName)
+        if new_folder_name is not None:
+            new_folder = folder.ChannelFolder(new_folder_name)
 
         for url in filter_existing_feed_urls(urls):
             f = feed.Feed(url)
-            if newFolderName is not None:
-                f.set_folder(newFolder)
-            lastFeed = f
+            if new_folder_name is not None:
+                f.set_folder(new_folder)

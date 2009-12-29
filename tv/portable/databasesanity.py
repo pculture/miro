@@ -64,7 +64,7 @@ class SanityTest(object):
         """
         return
 
-    def fix_if_possible(self, objectList):
+    def fix_if_possible(self, object_list):
         """Subclasses may implement this method if it's possible to
         fix broken databases.  The default implementation just raises
         a ``DatabaseInsaneError``.
@@ -101,16 +101,16 @@ class PhantomFeedTest(SanityTest):
             phantomsString = ', '.join([str(p) for p in phantoms])
             return "Phantom items(s) referenced in items: %s" % phantomsString
 
-    def fix_if_possible(self, objectList):
-        for i in reversed(xrange(len(objectList))):
-            if ((isinstance(objectList[i], item.Item) and
-                 objectList[i].feed_id is not None and
-                 objectList[i].feed_id not in self.topLevelFeeds)):
-                del objectList[i]
-            elif (isinstance(objectList[i], item.Item) and
-                  objectList[i].parent_id is not None and
-                  objectList[i].parent_id not in self.topLevelParents):
-                del objectList[i]
+    def fix_if_possible(self, object_list):
+        for i in reversed(xrange(len(object_list))):
+            if ((isinstance(object_list[i], item.Item) and
+                 object_list[i].feed_id is not None and
+                 object_list[i].feed_id not in self.topLevelFeeds)):
+                del object_list[i]
+            elif (isinstance(object_list[i], item.Item) and
+                  object_list[i].parent_id is not None and
+                  object_list[i].parent_id not in self.topLevelParents):
+                del object_list[i]
 
 class SingletonTest(SanityTest):
     """Check that singleton DB objects are really singletons.
@@ -121,8 +121,11 @@ class SingletonTest(SanityTest):
     def __init__(self):
         self.count = 0
 
+    def object_is_singleton(self, obj):
+        raise NotImplementedError()
+
     def check_object(self, obj):
-        if self.objectIsSingleton(obj):
+        if self.object_is_singleton(obj):
             self.count += 1
             if self.count > 1:
                 return "Extra %s in database" % self.singletonName
@@ -134,37 +137,37 @@ class SingletonTest(SanityTest):
             # return "No %s in database" % self.singletonName
             pass
 
-    def fix_if_possible(self, objectList):
+    def fix_if_possible(self, object_list):
         if self.count == 0:
             # For all our singletons (currently at least), we don't need to
             # create them here.  It'll happen when Miro is restarted.
             return
         else:
-            seenObject = False
-            for i in reversed(xrange(len(objectList))):
-                if self.objectIsSingleton(objectList[i]):
-                    if seenObject:
-                        del objectList[i]
+            seen_object = False
+            for i in reversed(xrange(len(object_list))):
+                if self.object_is_singleton(object_list[i]):
+                    if seen_object:
+                        del object_list[i]
                     else:
-                        seenObject = True
+                        seen_object = True
 
 class ChannelGuideSingletonTest(SingletonTest):
     singletonName = "Channel Guide"
-    def objectIsSingleton(self, obj):
+    def object_is_singleton(self, obj):
         return isinstance(obj, guide.ChannelGuide) and obj.url is None
 
 class ManualFeedSingletonTest(SingletonTest):
     singletonName = "Manual Feed"
-    def objectIsSingleton(self, obj):
+    def object_is_singleton(self, obj):
         return (isinstance(obj, feed.Feed) and
                 isinstance(obj.actualFeed, feed.ManualFeedImpl))
 
-def check_sanity(objectList, fix_if_possible=True, quiet=False,
+def check_sanity(object_list, fix_if_possible=True, quiet=False,
                  reallyQuiet=False):
     """Do all sanity checks on a list of objects.
 
     If fix_if_possible is True, the sanity checks will try to fix
-    errors.  If this happens objectList will be modified.
+    errors.  If this happens object_list will be modified.
 
     If fix_if_possible is False, or if it's not possible to fix the
     errors check_sanity will raise a DatabaseInsaneError.
@@ -188,7 +191,7 @@ def check_sanity(objectList, fix_if_possible=True, quiet=False,
 
     errors = []
     failedTests = set()
-    for obj in objectList:
+    for obj in object_list:
         for test in tests:
             rv = test.check_object(obj)
             if rv is not None:
@@ -202,19 +205,19 @@ def check_sanity(objectList, fix_if_possible=True, quiet=False,
             failedTests.add(test)
 
     if errors:
-        errorMsg = "The database failed the following sanity tests:\n"
-        errorMsg += "\n".join(errors)
+        error = "The database failed the following sanity tests:\n"
+        error += "\n".join(errors)
         if fix_if_possible:
             if not quiet:
                 signals.system.failed(when="While checking database",
-                                      details=errorMsg)
+                                      details=error)
             elif not reallyQuiet:
                 print "WARNING: Database sanity error"
-                print errorMsg
+                print error
             for test in failedTests:
-                test.fix_if_possible(objectList)
+                test.fix_if_possible(object_list)
                 # fix_if_possible will throw a DatabaseInsaneError if
                 # it fails, which we let get raised to our caller
         else:
-            raise DatabaseInsaneError(errorMsg)
+            raise DatabaseInsaneError(error)
     return (errors == [])

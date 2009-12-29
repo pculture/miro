@@ -63,9 +63,9 @@ class WeakMethodReference:
     def __call__(self):
         func = self.func()
         if func is None: return None
-        object = self.object()
-        if object is None: return None
-        return func.__get__(object, self.cls)
+        obj = self.object()
+        if obj is None: return None
+        return func.__get__(obj, self.cls)
 
 class Callback:
     def __init__(self, func, extra_args):
@@ -113,10 +113,10 @@ class SignalEmitter(object):
         """Connect a callback to a signal.  Returns an callback handle that
         can be passed into disconnect().
         """
-        id = self.id_generator.next()
+        id_ = self.id_generator.next()
         callbacks = self.get_callbacks(name)
-        callbacks[id] = Callback(func, extra_args)
-        return (name, id)
+        callbacks[id_] = Callback(func, extra_args)
+        return (name, id_)
 
     def connect_weak(self, name, method, *extra_args):
         """Connect a callback weakly.  Callback must be a method of some
@@ -125,10 +125,10 @@ class SignalEmitter(object):
         """
         if not hasattr(method, 'im_self'):
             raise TypeError("connect_weak must be called with object methods")
-        id = self.id_generator.next()
+        id_ = self.id_generator.next()
         callbacks = self.get_callbacks(name)
-        callbacks[id] = WeakCallback(method, extra_args)
-        return (name, id)
+        callbacks[id_] = WeakCallback(method, extra_args)
+        return (name, id_)
 
     def disconnect(self, callback_handle):
         """Disconnect a signal.  callback_handle must be the return value from
@@ -160,9 +160,9 @@ class SignalEmitter(object):
 
     def clear_old_weak_references(self):
         for callback_map in self.signal_callbacks.values():
-            for id in callback_map.keys():
-                if callback_map[id].is_dead():
-                    del callback_map[id]
+            for id_ in callback_map.keys():
+                if callback_map[id_].is_dead():
+                    del callback_map[id_]
 
 class SystemSignals(SignalEmitter):
     """System wide signals for Miro.  These can be accessed from the singleton

@@ -36,15 +36,15 @@ from miro import gtcache
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 
-def strftime_to_unicode(bytes):
+def strftime_to_unicode(nbytes):
     """Convert the value return by strftime() to a unicode string.
 
     By default, it's in whatever the default codeset is.
     """
     if gtcache.codeset is None:
-        return bytes
+        return nbytes
     else:
-        return bytes.decode(gtcache.codeset)
+        return nbytes.decode(gtcache.codeset)
 
 def download_rate(rate):
     if rate >= (1 << 30):
@@ -76,27 +76,27 @@ def time_string(secs):
 
     return ngettext('%(num)d sec', '%(num)d secs', secs, {"num": secs})
 
-def size_string(bytes):
+def size_string(nbytes):
     # when switching from the enclosure reported size to the
     # downloader reported size, it takes a while to get the new size
     # and the downloader returns -1.  the user sees the size go to -1B
     # which is weird....  better to return an empty string.
-    if bytes == -1 or bytes == 0:
+    if nbytes == -1 or nbytes == 0:
         return ""
 
     # FIXME this is a repeat of util.formatSizeForUser ...  should
     # probably ditch one of them.
-    if bytes >= (1 << 30):
-        value = "%.1f" % (bytes / float(1 << 30))
+    if nbytes >= (1 << 30):
+        value = "%.1f" % (nbytes / float(1 << 30))
         return _("%(size)s gb", {"size": value})
-    elif bytes >= (1 << 20):
-        value = "%.1f" % (bytes / float(1 << 20))
+    elif nbytes >= (1 << 20):
+        value = "%.1f" % (nbytes / float(1 << 20))
         return _("%(size)s mb", {"size": value})
-    elif bytes >= (1 << 10):
-        value = "%.1f" % (bytes / float(1 << 10))
+    elif nbytes >= (1 << 10):
+        value = "%.1f" % (nbytes / float(1 << 10))
         return _("%(size)s kb", {"size": value})
     else:
-        return _("%(size)s b", {"size": bytes})
+        return _("%(size)s b", {"size": nbytes})
 
 def expiration_date(exp_date):
     offset = exp_date - datetime.datetime.now()
@@ -134,21 +134,33 @@ def expiration_date_short(exp_date):
                         math.ceil(offset.seconds/60.0),
                         {"count": math.ceil(offset.seconds/60.0)})
 
-def release_date(release_date):
-    if release_date > datetime.datetime.min:
+def release_date(rdate):
+    """Takes a date object and returns the "month day, year"
+    representation.
+
+    If the rdate is below the minimum date, then this returns an
+    empty string.
+    """
+    if rdate > datetime.datetime.min:
         # figure out the date pieces, convert to unicode, then split
         # it on "::" so we can run gettext on it allowing translators
         # to reorder it.  see bug 11662.
-        m, d, y = strftime_to_unicode(release_date.strftime("%B::%d::%Y")).split("::")
+        m, d, y = strftime_to_unicode(rdate.strftime("%B::%d::%Y")).split("::")
         return _("%(month)s %(dayofmonth)s, %(year)s",
                  {"month": m, "dayofmonth": d, "year": y})
     else:
         return ''
 
-def release_date_slashes(release_date):
-    if release_date > datetime.datetime.min:
+def release_date_slashes(rdate):
+    """Takes a date object and returns the "MM/DD/YYYY"
+    representation.
+
+    If the rdate is below the minimum date, then this returns an
+    empty string.
+    """
+    if rdate > datetime.datetime.min:
         # note: %x is locale-appropriate
-        return strftime_to_unicode(release_date.strftime("%x"))
+        return strftime_to_unicode(rdate.strftime("%x"))
     else:
         return ''
 

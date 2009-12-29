@@ -242,7 +242,12 @@ class TestSubscription (MiroTestCase):
         self.assert_(subscriptions[2]['url'] == SAMPLE_RSS_SUBSCRIPTION_URL_2)
         self.assert_(subscriptions[3]['url'] == SAMPLE_ATOM_SUBSCRIPTION_URL_2)
 
-class Testfind_subscribe_links (MiroTestCase):
+class Testfind_subscribe_links(MiroTestCase):
+    def test_garbage(self):
+        url = 5
+        self.assertEquals(subscription.find_subscribe_links(url),
+                          [])
+
     def testDifferstHost(self):
         url = 'http://youtoob.com'
         self.assertEquals(subscription.find_subscribe_links(url),
@@ -310,9 +315,18 @@ class Testfind_subscribe_links (MiroTestCase):
         self.assertEquals(subscription.find_subscribe_links(url),
                 [{'type': 'download', 'url': 'http://www.myblog.com/videos/cats.ogm'}])
 
-    def testSubscribeLinks(self):
+class Testis_subscribe_links(MiroTestCase):
+    def test_garbage(self):
+        is_s_l = subscription.is_subscribe_link
+        self.assertEquals(is_s_l(None), False)
+        self.assertEquals(is_s_l(1), False)
+        self.assertEquals(is_s_l({}), False)
+
+    def test_negative(self):
         is_s_l = subscription.is_subscribe_link
         self.assertEquals(is_s_l('http://example.com/'), False)
-        self.assertEquals(is_s_l('http://subscribe.getdemocracy.com/'), True)
-        self.assertEquals(is_s_l(None), False)
         self.assertEquals(is_s_l('foobar'), False)
+
+    def test_positive(self):
+        is_s_l = subscription.is_subscribe_link
+        self.assertEquals(is_s_l('http://subscribe.getdemocracy.com/'), True)
