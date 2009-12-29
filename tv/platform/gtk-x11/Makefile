@@ -23,6 +23,7 @@ clean:
 	-rm plat/frontends/widgets/pluginsdir.cpp
 	-rm plat/frontends/widgets/windowcreator.cpp
 	-rm ../../portable/frontends/widgets/gtk/pygtkhacks.c
+	-rm -rf tmp
 
 build:
 	$(python) setup.py install --root=./dist --prefix=$(prefix)
