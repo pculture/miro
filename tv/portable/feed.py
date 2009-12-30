@@ -1845,8 +1845,6 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
     def setup_restored(self):
         """Called by pickle during deserialization
         """
-        #FIXME: the update dies if all of the items aren't restored, so we
-        # wait a little while before we start the update
         FeedImpl.setup_restored(self)
         self.download_dc = {}
         self.updating = 0
