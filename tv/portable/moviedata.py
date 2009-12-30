@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from miro.eventloop import as_idle
+from miro.eventloop import as_idle, addTimeout
 import os.path
 import re
 import subprocess
@@ -99,12 +99,14 @@ class MovieDataUpdater:
         self.in_shutdown = False
         self.queue = Queue.Queue()
         self.thread = None
+        self.thread_started = False
 
     def start_thread(self):
         self.thread = threading.Thread(name='Movie Data Thread',
                                        target=self.thread_loop)
         self.thread.setDaemon(True)
         self.thread.start()
+        self.thread_started = True
 
     def thread_loop(self):
         while not self.in_shutdown:
@@ -187,6 +189,13 @@ class MovieDataUpdater:
     def request_update(self, item):
         if self.in_shutdown:
             return
+        if not self.thread_started:
+            logging.info("Movie data thread not started, waiting to "
+                    "request update for %s", item)
+            addTimeout(1, self.request_update, "movie data update request",
+                    args=(item,))
+            return
+
         filename = item.get_filename()
         if not filename or not fileutil.isfile(filename):
             return
