@@ -167,7 +167,10 @@ def parse_command_line_args(args=None):
             add_subscription_url('miro:', 'application/x-miro', arg)
         elif arg.startswith('democracy:'):
             add_subscription_url('democracy:', 'application/x-democracy', arg)
-        elif arg.startswith('http:', 'https:', 'feed:', 'feeds:'):
+        elif (arg.startswith('http:')
+              or arg.startswith('https:')
+              or arg.startswith('feed:')
+              or arg.startswith('feeds:')):
             singleclick.add_download(filenameToUnicode(arg))
         elif os.path.exists(arg):
             ext = os.path.splitext(arg)[1].lower()
