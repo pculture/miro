@@ -244,7 +244,9 @@ def miro_allfiles(directory):
     except OSError:
         return []
     for name in listing:
-        if name.startswith('.') or name.lower() == 'thumbs.db':
+        name_lower = name.lower()
+        if (name.startswith('.') or name_lower == 'thumbs.db' or
+                name_lower == "incomplete downloads"):
             # thumbs.db is a windows file that speeds up thumbnails.  We know
             # it's not a movie file.
             continue

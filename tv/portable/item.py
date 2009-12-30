@@ -638,7 +638,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def find_new_children(self):
         """If this feed is a container item, walk through its
         directory and find any new children.  Returns True if it found
-        childern and ran signal_change().
+        children and ran signal_change().
         """
         if not self.isContainerItem:
             return False
@@ -1732,7 +1732,8 @@ class FileItem(Item):
     """An Item that exists as a local file
     """
     def setup_new(self, filename, feed_id=None, parent_id=None,
-            offsetPath=None, deleted=False, fp_values=None, channel_title=None):
+            offsetPath=None, deleted=False, fp_values=None,
+            channel_title=None, mark_seen=False):
         if fp_values is None:
             fp_values = fp_values_for_file(filename)
         Item.setup_new(self, fp_values, feed_id=feed_id, parent_id=parent_id,
@@ -1745,6 +1746,14 @@ class FileItem(Item):
         self.offsetPath = offsetPath
         self.shortFilename = clean_filename(os.path.basename(self.filename))
         self.was_downloaded = False
+        if mark_seen:
+            self.mark_seen = True
+            self.watchedTime = datetime.now()
+        if not fileutil.isdir(self.filename):
+            # If our file isn't a directory, then we know we are definitely
+            # not a container item.  Note that the opposite isn't true in the
+            # case where we are a directory with only 1 file inside.
+            self.isContainerItem = False
         moviedata.movie_data_updater.request_update (self)
 
     # FileItem downloaders are always None

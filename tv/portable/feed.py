@@ -2133,7 +2133,96 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         self.downloads = set()
         self.tempHistory = {}
 
-class DirectoryWatchFeedImpl(FeedImpl):
+class DirectoryScannerImplBase(FeedImpl):
+    """Base class for FeedImpls that scan directories for items."""
+
+    def expire_items(self):
+        """Directory Items shouldn't automatically expire
+        """
+        pass
+
+    def setUpdateFrequency(self, frequency):
+        newFreq = frequency*60
+        if newFreq != self.updateFreq:
+            self.updateFreq = newFreq
+            self.scheduleUpdateEvents(-1)
+
+    # the following methods much be implemented by subclasses
+    def _scan_dir(self):
+        raise NotImplementedError()
+
+    # the following methods may be implemented by subclasses if they need to
+    def _before_update(self):
+        pass
+
+    def _after_update(self):
+        pass
+
+    def _add_known_files(self, known_files):
+        pass
+
+    def _make_child(self, file_):
+        models.FileItem(file_, feed_id=self.ufeed.id)
+
+    def update(self):
+        self.ufeed.confirm_db_thread()
+
+        self._before_update()
+
+        # Calculate files known about by feeds other than the directory feed
+        # Using a select statement is good here because we don't want to
+        # construct all the Item objects if we don't need to.
+        known_files = set(os.path.normcase(row[0]) for row in
+                models.Item.select('filename',
+                    'filename IS NOT NULL AND '
+                    '(feed_id is NULL or feed_id != ?)', (self.ufeed_id,)))
+        self._add_known_files(known_files)
+
+        # Remove items with deleted files or that that are in feeds
+        to_remove = []
+        for item in self.items:
+            filename = item.get_filename()
+            if (filename is None or
+                not fileutil.isfile(filename) or
+                os.path.normcase(filename) in known_files):
+                to_remove.append(item)
+        app.bulk_sql_manager.start()
+        try:
+            for item in to_remove:
+                item.remove()
+        finally:
+            app.bulk_sql_manager.finish()
+
+        # now that we've checked for items that need to be removed, we
+        # add our items to known_files so that they don't get added
+        # multiple times to this feed.
+        for x in self.items:
+            known_files.add(os.path.normcase(x.get_filename()))
+
+        # adds any files we don't know about
+        # files on the filesystem
+        to_add = []
+        scan_dir = self._scan_dir()
+        if fileutil.isdir(scan_dir):
+            all_files = fileutil.miro_allfiles(scan_dir)
+            for file_ in all_files:
+                file_ = os.path.normcase(file_)
+                ufile = filenameToUnicode(file_)
+                if (file_ not in known_files and
+                        filetypes.is_media_filename(ufile)):
+                    to_add.append(file_)
+
+        app.bulk_sql_manager.start()
+        try:
+            for file_ in to_add:
+                self._make_child(file_)
+        finally:
+            app.bulk_sql_manager.finish()
+
+        self._after_update()
+        self.scheduleUpdateEvents(-1)
+
+class DirectoryWatchFeedImpl(DirectoryScannerImplBase):
     def setup_new(self, ufeed, directory):
         # calculate url and title arguments to FeedImpl's constructor
         if directory is not None:
@@ -2151,64 +2240,19 @@ class DirectoryWatchFeedImpl(FeedImpl):
         self.setUpdateFrequency(5)
         self.scheduleUpdateEvents(0)
 
-    def expire_items(self):
-        """Directory Items shouldn't automatically expire
-        """
-        pass
+    def _scan_dir(self):
+        return self.dir
 
-    def setUpdateFrequency(self, frequency):
-        newFreq = frequency*60
-        if newFreq != self.updateFreq:
-            self.updateFreq = newFreq
-            self.scheduleUpdateEvents(-1)
+    def _make_child(self, file_):
+        models.FileItem(file_, feed_id=self.ufeed.id,
+                mark_seen=self.firstUpdate)
 
-    def update(self):
-        self.ufeed.confirm_db_thread()
-
-        # Calculate files known about by feeds other than the directory watch
-        # feeds.
-        # Using a select statement is good here because we don't want to
-        # construct all the Item objects if we don't need to.
-        watched_folder_ids = tuple(f.id for f in Feed.watched_folder_view())
-        watched_folder_ids = ', '.join(str(id) for id in watched_folder_ids)
-        known_files = set(os.path.normcase(row[0]) for row in
-                models.Item.select('filename',
-                    "filename IS NOT NULL AND "
-                    "feed_id NOT IN (%s)" % watched_folder_ids))
-
-        # Remove items that are in feeds, but we have in our list
-        for item in self.items:
-            if os.path.normcase(item.get_filename()) in known_files:
-                item.remove()
-
-        # Now that we've checked for items that need to be removed, we
-        # add our items to known_files so that they don't get added
-        # multiple times to this feed.
-        for x in self.items:
-            known_files.add(os.path.normcase(x.get_filename()))
-
-        # adds any files we don't know about on the filesystem
-        if fileutil.isdir(self.dir):
-            all_files = fileutil.miro_allfiles(self.dir)
-            for file_ in all_files:
-                ufile = filenameToUnicode(file_)
-                file_ = os.path.normcase(file_)
-                if (file_ not in known_files
-                        and filetypes.is_media_filename(ufile)):
-                    models.FileItem(file_, feed_id=self.ufeed.id)
-
-        for item in self.items:
-            if ((item.get_filename() is None
-                 or not fileutil.isfile(item.get_filename()))):
-                item.remove()
+    def _after_update(self):
         if self.firstUpdate:
-            for item in self.items:
-                item.mark_item_seen()
             self.firstUpdate = False
+            self.signal_change()
 
-        self.scheduleUpdateEvents(-1)
-
-class DirectoryFeedImpl(FeedImpl):
+class DirectoryFeedImpl(DirectoryScannerImplBase):
     """A feed of all of the Movies we find in the movie folder that don't
     belong to a "real" feed.  If the user changes her movies folder, this feed
     will continue to remember movies in the old folder.
@@ -2218,70 +2262,21 @@ class DirectoryFeedImpl(FeedImpl):
         self.setUpdateFrequency(5)
         self.scheduleUpdateEvents(0)
 
-    def expire_items(self):
-        """Directory Items shouldn't automatically expire
-        """
-        pass
-
-    def setUpdateFrequency(self, frequency):
-        newFreq = frequency*60
-        if newFreq != self.updateFreq:
-            self.updateFreq = newFreq
-            self.scheduleUpdateEvents(-1)
-
-    def update(self):
-        # FIXME - this method and the fileutils.miro_allfiles methods
-        # should be re-written to better handle U3/PortableApps-style 
-        # pathnames, case-insensitive file-systems, and file-systems 
-        # that do 8.3 paths.  what we have here is a veritable mess.
-        self.ufeed.confirm_db_thread()
-        movies_dir = config.get(prefs.MOVIES_DIRECTORY)
-
+    def _before_update(self):
         # Make sure container items have created FileItems for their contents
         for container in models.Item.containers_view():
             container.find_new_children()
 
-        # Calculate files known about by feeds other than the directory feed
-        # Using a select statement is good here because we don't want to
-        # construct all the Item objects if we don't need to.
-        known_files = set(os.path.normcase(row[0]) for row in
-                models.Item.select('filename',
-                    'filename IS NOT NULL AND '
-                    '(feed_id is NULL or feed_id != ?)', (self.ufeed_id,)))
+    def _calc_known_files(self):
+        pass
 
+    def _add_known_files(self, known_files):
+        movies_dir = config.get(prefs.MOVIES_DIRECTORY)
         incomplete_dir = os.path.join(movies_dir, "Incomplete Downloads")
         known_files.add(os.path.normcase(incomplete_dir))
 
-        # remove items that are in feeds, but we have in our list
-        for item in self.items:
-            if os.path.normcase(item.get_filename()) in known_files:
-                item.remove()
-
-        # now that we've checked for items that need to be removed, we
-        # add our items to known_files so that they don't get added
-        # multiple times to this feed.
-        for x in self.items:
-            known_files.add(os.path.normcase(x.get_filename()))
-
-        # adds any files we don't know about
-        # files on the filesystem
-        if fileutil.isdir(movies_dir):
-            all_files = fileutil.miro_allfiles(movies_dir)
-            for file_ in all_files:
-                file_ = os.path.normcase(file_)
-                # FIXME - this prevents files from ANY Incomplete Downloads
-                # directory which isn't quite right.
-                if (file_ not in known_files
-                        and not "incomplete downloads" in file_.lower()
-                        and filetypes.is_media_filename(filenameToUnicode(file_))):
-                    models.FileItem(file_, feed_id=self.ufeed.id)
-
-        for item in self.items:
-            if ((item.get_filename() is None
-                 or not fileutil.exists(item.get_filename()))):
-                item.remove()
-
-        self.scheduleUpdateEvents(-1)
+    def _scan_dir(self):
+        return config.get(prefs.MOVIES_DIRECTORY)
 
     @returnsUnicode
     def get_title(self):
