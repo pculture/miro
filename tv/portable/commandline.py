@@ -42,6 +42,7 @@ from miro.gtcache import gettext as _
 
 import os.path
 import logging
+from miro import app
 from miro import config
 from miro import prefs
 from miro import messages
@@ -61,23 +62,38 @@ _command_line_args = []
 _command_line_videos = None
 _command_line_view = None
 
-def add_video(path, single=False):
+def _item_exists_for_path(path):
+    # in SQLite, LIKE is case insensitive, so we can use it to only look at
+    # filenames that possibly will match
+    for row in item.Item.select('filename',
+            'filename IS NOT NULL AND filename LIKE ?', (path,)):
+        if samefile(row[0], path):
+            return True
+    return False
+
+def add_video(path, manual_feed=None):
     path = os.path.abspath(path)
-    for i in item.Item.make_view():
-        item_filename = i.get_filename()
-        if ((item_filename and
-             os.path.exists(item_filename) and
-             samefile(item_filename, path))):
-            logging.warn("Not adding duplicate video: %s",
-                         path.decode('ascii', 'ignore'))
-            if _command_line_videos is not None:
-                _command_line_videos.add(i)
-            return
-    correct_feed = feed.Feed.get_manual_feed()
-    file_item = item.FileItem(path, feed_id=correct_feed.get_id())
-    file_item.mark_item_seen()
+    if _item_exists_for_path(path):
+        logging.warn("Not adding duplicate video: %s",
+                path.decode('ascii', 'ignore'))
+        if _command_line_videos is not None:
+            _command_line_videos.add(i)
+        return
+    if manual_feed is None:
+        manual_feed = feed.Feed.get_manual_feed()
+    file_item = item.FileItem(path, feed_id=manual_feed.get_id(),
+            mark_seen=True)
     if _command_line_videos is not None:
         _command_line_videos.add(file_item)
+
+def add_videos(paths):
+    manual_feed = feed.Feed.get_manual_feed()
+    app.bulk_sql_manager.start()
+    try:
+        for path in paths:
+            add_video(path, manual_feed=manual_feed)
+    finally:
+        app.bulk_sql_manager.finish()
 
 def add_torrent(path, torrent_info_hash):
     manual_feed = feed.Feed.get_manual_feed()
