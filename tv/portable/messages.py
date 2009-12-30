@@ -358,7 +358,7 @@ class RenameObject(BackendMessage):
     def __init__(self, type, id, new_name):
         self.type = type
         self.id = id
-        self.new_name = util.toUni(new_name)
+        self.new_name = util.to_uni(new_name)
 
 class UpdateFeed(BackendMessage):
     """Updates a feed.
@@ -438,13 +438,13 @@ class NewGuide(BackendMessage):
     """Create a new channel guide.
     """
     def __init__(self, url):
-        self.url = util.toUni(url)
+        self.url = util.to_uni(url)
 
 class NewFeed(BackendMessage):
     """Creates a new feed.
     """
     def __init__(self, url, section=u"video"):
-        self.url = util.toUni(url)
+        self.url = util.to_uni(url)
         self.section = section
 
 class NewFeedSearchFeed(BackendMessage):
@@ -488,14 +488,14 @@ class NewPlaylist(BackendMessage):
     """Create a new playlist.
     """
     def __init__(self, name, ids):
-        self.name = util.toUni(name)
+        self.name = util.to_uni(name)
         self.ids = ids
 
 class NewFeedFolder(BackendMessage):
     """Create a new feed folder.
     """
     def __init__(self, name, section, child_feed_ids):
-        self.name = util.toUni(name)
+        self.name = util.to_uni(name)
         self.section = section
         self.child_feed_ids = child_feed_ids
 
@@ -503,7 +503,7 @@ class NewPlaylistFolder(BackendMessage):
     """Create a new playlist folder.
     """
     def __init__(self, name, child_playlist_ids):
-        self.name = util.toUni(name)
+        self.name = util.to_uni(name)
         self.child_playlist_ids = child_playlist_ids
 
 class ChangeMoviesDirectory(BackendMessage):
@@ -542,7 +542,7 @@ class DownloadURL(BackendMessage):
     :param metadata: dict of name/value pairs to include in the item.
     """
     def __init__(self, url, handle_unknown_callback=None, metadata=None):
-        self.url = util.toUni(url)
+        self.url = util.to_uni(url)
         self.handle_unknown_callback = handle_unknown_callback
         self.metadata = metadata
 
@@ -1119,7 +1119,7 @@ class GuideList(FrontendMessage):
             # for it to have a default channel guide persisted, but when you
             # set the channel guide via the DTV_CHANNELGUIDE_URL, then there's
             # no default guide.  So we generate one here.  Bug #11027.
-            cg = guide.ChannelGuide(util.toUni(config.get(prefs.CHANNEL_GUIDE_URL)))
+            cg = guide.ChannelGuide(util.to_uni(config.get(prefs.CHANNEL_GUIDE_URL)))
             cg_info = GuideInfo(cg)
             self.default_guide = [cg_info]
         elif len(self.default_guide) > 1:

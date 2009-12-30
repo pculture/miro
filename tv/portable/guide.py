@@ -37,7 +37,7 @@ from urlparse import urlparse, urljoin
 
 from miro.plat import resources
 from miro.database import DDBObject, ObjectNotFoundError
-from miro.util import returnsUnicode, checkU
+from miro.util import returns_unicode, check_u
 from miro import config
 from miro import prefs
 from miro import httpclient
@@ -48,7 +48,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
     ICON_CACHE_VITAL = True
 
     def setup_new(self, url, allowedURLs=None):
-        checkU(url)
+        check_u(url)
         # FIXME - clean up the allowedURLs thing here
         self.allowedURLs = []
         self.url = url
@@ -124,7 +124,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
     def get_folder(self):
         return None
 
-    @returnsUnicode
+    @returns_unicode
     def get_title(self):
         if self.userTitle:
             return self.userTitle

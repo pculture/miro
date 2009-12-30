@@ -43,9 +43,9 @@ from miro.frontends.widgets import separator
 from miro.frontends.widgets import style
 from miro.frontends.widgets.dialogs import MainDialog
 from miro.frontends.widgets.widgetutil import build_control_line
-from miro.util import clampText, returnsUnicode
+from miro.util import clamp_text, returns_unicode
 
-@returnsUnicode
+@returns_unicode
 def get_formatted_default_expiration():
     """Returns the 'system' expiration delay as a formatted string
     """
@@ -76,12 +76,12 @@ def get_formatted_default_expiration():
 def _build_header(channel):
     v = widgetset.VBox(6)
     
-    lab = widgetset.Label(clampText(channel.name, 60))
+    lab = widgetset.Label(clamp_text(channel.name, 60))
     lab.set_bold(True)
     lab.set_size(1.2)
     v.pack_start(widgetutil.align_left(lab))
 
-    lab = widgetset.Label(clampText(channel.url, 80))
+    lab = widgetset.Label(clamp_text(channel.url, 80))
     lab.set_size(widgetconst.SIZE_SMALL)
     lab.set_color(widgetconst.DIALOG_NOTE_COLOR)
     v.pack_start(widgetutil.align_left(lab))

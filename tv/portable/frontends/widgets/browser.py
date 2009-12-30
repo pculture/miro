@@ -156,7 +156,7 @@ class Browser(widgetset.Browser):
             del self.seen_cache[url]
             return True
 
-        url = util.toUni(url)
+        url = util.to_uni(url)
         if subscription.is_subscribe_link(url):
             messages.SubscriptionLinkClicked(url).send_to_backend()
             return False

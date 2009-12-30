@@ -45,8 +45,9 @@ from AppKit import *
 
 from miro import prefs
 from miro import config
-from miro.util import returnsUnicode, returnsBinary, checkU, checkB
-from miro.plat.filenames import os_filename_to_filename_type, filename_type_to_os_filename, FilenameType
+from miro.util import returns_unicode, returns_binary, check_u, check_b
+from miro.plat.filenames import (os_filename_to_filename_type,
+                                 filename_type_to_os_filename, FilenameType)
 from miro.plat.frontends.widgets.threads import on_ui_thread
 
 # We need to define samefile for the portable code.  Lucky for us, this is
@@ -129,7 +130,7 @@ def setup_logging (inDownloader=False):
         logging.getLogger('').setLevel(level)
         rotater.doRollover()
 
-@returnsBinary
+@returns_binary
 def utf8_to_filename(filename):
     if not isinstance(filename, str):
         raise ValueError("filename is not a str")
@@ -140,11 +141,11 @@ def utf8_to_filename(filename):
 #
 # This is not guaranteed to give the same results every time it is run,
 # not is it garanteed to reverse the results of filenameToUnicode
-@returnsBinary
+@returns_binary
 def unicodeToFilename(filename, path = None):
-    checkU(filename)
+    check_u(filename)
     if path:
-        checkB(path)
+        check_b(path)
     else:
         path = os.getcwd()
 
@@ -161,9 +162,9 @@ def unicodeToFilename(filename, path = None):
 
     return newFilename
 
-@returnsUnicode
+@returns_unicode
 def shortenFilename(filename):
-    checkU(filename)
+    check_u(filename)
     # Find the first part and the last part
     pieces = filename.split(u".")
     lastpart = pieces[-1]
@@ -181,14 +182,14 @@ def shortenFilename(filename):
 #
 # Since this is not guaranteed to give the same results every time it is run,
 # not is it garanteed to reverse the results of unicodeToFilename
-@returnsUnicode
+@returns_unicode
 def filenameToUnicode(filename, path = None):
     if path:
-        checkB(path)
-    checkB(filename)
+        check_b(path)
+    check_b(filename)
     return filename.decode('utf-8','replace')
 
-@returnsUnicode
+@returns_unicode
 def make_url_safe(string, safe='/'):
     """Takes in a byte string or a unicode string and does the right thing
     to make a URL
@@ -199,12 +200,12 @@ def make_url_safe(string, safe='/'):
     else:
         return urllib.quote(string.encode('utf-8','replace'), safe=safe).decode('ascii')
 
-@returnsBinary
+@returns_binary
 def unmake_url_safe(string):
     """Undoes make_url_safe (assuming it was passed a filenameType)
     """
     # unquote the byte string
-    checkU(string)
+    check_u(string)
     return urllib.unquote(string.encode('ascii'))
 
 # Load the image at source_path, resize it to [width, height] (and use
@@ -305,7 +306,7 @@ def launch_download_daemon(oldpid, env):
         arch = subprocess.Popen("arch", stdout=subprocess.PIPE).communicate()[0].strip()
         launch_path = '/usr/bin/arch'
         launch_arguments = ['-%s' % arch, exe, u'download_daemon']
-    
+
     global dlTask
     dlTask = NSTask.alloc().init()
     dlTask.setLaunchPath_(launch_path)

@@ -84,7 +84,7 @@ def size_string(nbytes):
     if nbytes == -1 or nbytes == 0:
         return ""
 
-    # FIXME this is a repeat of util.formatSizeForUser ...  should
+    # FIXME this is a repeat of util.format_size_for_user ...  should
     # probably ditch one of them.
     if nbytes >= (1 << 30):
         value = "%.1f" % (nbytes / float(1 << 30))

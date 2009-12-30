@@ -50,7 +50,7 @@ from miro import config
 from miro import prefs
 
 from miro.dl_daemon import command, daemon
-from miro.util import checkF, checkU, stringify, MAX_TORRENT_SIZE
+from miro.util import check_f, check_u, stringify, MAX_TORRENT_SIZE
 from miro.plat.utils import get_available_bytes_for_movies, utf8_to_filename
 
 chatter = True
@@ -64,8 +64,8 @@ def configReceived():
     torrentSession.startup()
 
 def createDownloader(url, contentType, dlid):
-    checkU(url)
-    checkU(contentType)
+    check_u(url)
+    check_u(contentType)
     if contentType == u'application/x-bittorrent':
         return BTDownloader(url, dlid)
     else:
@@ -73,10 +73,10 @@ def createDownloader(url, contentType, dlid):
 
 # Creates a new downloader object. Returns id on success, None on failure
 def startNewDownload(url, dlid, contentType, channelName):
-    checkU(url)
-    checkU(contentType)
+    check_u(url)
+    check_u(contentType)
     if channelName:
-        checkF(channelName)
+        check_f(channelName)
     dl = createDownloader(url, contentType, dlid)
     dl.channelName = channelName
     _downloads[dlid] = dl
@@ -154,7 +154,7 @@ def pause_upload(dlid):
     return download.pause_upload()
 
 def migrateDownload(dlid, directory):
-    checkF(directory)
+    check_f(directory)
     try:
         download = _downloads[dlid]
     except (SystemExit, KeyboardInterrupt):
@@ -454,7 +454,7 @@ class BGDownloader:
         self.moveToDirectory(config.get(prefs.MOVIES_DIRECTORY))
 
     def moveToDirectory(self, directory):
-        checkF(directory)
+        check_f(directory)
         if self.channelName:
             channelName = filter_directory_name(self.channelName)
             # bug 10769: shutil and windows has problems with long

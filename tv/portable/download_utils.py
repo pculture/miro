@@ -36,7 +36,7 @@ import logging
 from miro import filetypes
 from miro import util
 
-from miro.util import checkF, checkU, returnsFilename
+from miro.util import check_f, check_u, returns_filename
 from miro.plat.utils import unicodeToFilename, unmake_url_safe
 from miro.fileutil import expand_filename
 
@@ -130,19 +130,19 @@ def check_filename_extension(filename, content_type):
     suitable one based on the HTTP content-type info and add it if one
     is available.
     """
-    checkF(filename)
+    check_f(filename)
     if content_type is not None and not filetypes.is_allowed_filename(filename):
         guessed_ext = filetypes.guess_extension(content_type)
         if guessed_ext is not None:
             filename += guessed_ext
     return filename
 
-@returnsFilename
+@returns_filename
 def next_free_filename(name):
     """Finds a filename that's unused and similar the the file we want
     to download
     """
-    checkF(name)
+    check_f(name)
     if not access(expand_filename(name), F_OK):
         return name
     parts = name.split('.')
@@ -161,11 +161,11 @@ def next_free_filename(name):
             newname = '.'.join(parts)
     return newname
 
-@returnsFilename
+@returns_filename
 def filename_from_url(url, clean=False):
     """Returns a reasonable filename for saving the given url.
     """
-    checkU(url)
+    check_u(url)
     try:
         match = URI_PATTERN.match(url)
         if match is None:
@@ -192,7 +192,7 @@ def filename_from_url(url, clean=False):
     except:
         return unicodeToFilename(u'unknown')
 
-@returnsFilename
+@returns_filename
 def clean_filename(filename):
     """Given either a filename or a unicode "filename" return a valid
     clean version of it.

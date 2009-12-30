@@ -37,7 +37,7 @@ import urlparse
 import cgi
 from xml.dom import minidom
 from urllib import unquote_plus
-from miro.util import checkU
+from miro.util import check_u
 
 def is_maybe_flashscrapable(url):
     """Returns whether or not the given url is possibly handled by one of
@@ -51,7 +51,7 @@ def is_maybe_flashscrapable(url):
     return _get_scrape_function_for(url) is not None
 
 def try_scraping_url(url, callback):
-    checkU(url)
+    check_u(url)
     scrape = _get_scrape_function_for(url)
     if scrape is not None:
         scrape(url, lambda x, y=u"video/x-flv": _actual_url_callback(url, callback, x, y))
@@ -63,18 +63,18 @@ def try_scraping_url(url, callback):
 # The callback is wrapped in this for flv videos
 def _actual_url_callback(url, callback, newURL, contentType):
     if newURL:
-        checkU(newURL)
+        check_u(newURL)
     callback(newURL, contentType=contentType)
 
 def _get_scrape_function_for(url):
-    checkU(url)
+    check_u(url)
     for scrapeInfo in scraperInfoMap:
         if scrapeInfo['pattern'].match(url) is not None:
             return scrapeInfo['func']
     return None
 
 def _scrape_youtube_url(url, callback):
-    checkU(url)
+    check_u(url)
 
     components = urlparse.urlsplit(url)
     params = cgi.parse_qs(components[3])

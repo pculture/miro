@@ -192,9 +192,9 @@ class UtilTest(MiroTestCase):
              u'http://example.org/2.mov',
              u'http://example.org/5.mpeg'])
             
-    def testGetFirstVideoEnclosure(self):
+    def test_get_first_video_enclosure(self):
         """
-        Test for util.getFirstVideoEnclosure
+        Test for util.get_first_video_enclosure
         """
         class FakeEntry(object):
             def __init__(self, enclosures):
@@ -206,9 +206,9 @@ class UtilTest(MiroTestCase):
         combinations_entry = FakeEntry(self.combination_elements)
 
         # get their "selected" results
-        selected_filesize = util.getFirstVideoEnclosure(filesizes_entry)
-        selected_type = util.getFirstVideoEnclosure(types_entry)
-        selected_combination = util.getFirstVideoEnclosure(combinations_entry)
+        selected_filesize = util.get_first_video_enclosure(filesizes_entry)
+        selected_type = util.get_first_video_enclosure(types_entry)
+        selected_combination = util.get_first_video_enclosure(combinations_entry)
 
         # now make sure they returned what we expected..
         self.assertEqual(selected_filesize['href'], u'http://example.org/4.ogg')

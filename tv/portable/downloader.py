@@ -36,8 +36,8 @@ from miro.database import DDBObject, ObjectNotFoundError
 from miro.dl_daemon import daemon, command
 from miro.download_utils import (next_free_filename, get_file_url_path,
                                  filter_directory_name)
-from miro.util import (get_torrent_info_hash, returnsUnicode, checkU,
-                       returnsFilename, unicodify, checkF, toUni)
+from miro.util import (get_torrent_info_hash, returns_unicode, check_u,
+                       returns_filename, unicodify, check_f, to_uni)
 from miro import config
 from miro import dialogs
 from miro import eventloop
@@ -57,12 +57,12 @@ def find_http_auth(host, path, realm=None, scheme=None):
     """Returns an HTTP auth object corresponding to the given host, path or
     None if it doesn't exist
     """
-    checkU(host)
-    checkU(path)
+    check_u(host)
+    check_u(path)
     if realm:
-        checkU(realm)
+        check_u(realm)
     if scheme:
-        checkU(scheme)
+        check_u(scheme)
     # print "Trying to find HTTPAuth with host %s, path %s, realm %s, and scheme %s" %(host,path,realm,scheme)
     for obj in HTTPAuthPassword.make_view():
         if (obj.host == host and path.startswith(obj.path) and
@@ -74,12 +74,12 @@ def find_http_auth(host, path, realm=None, scheme=None):
 class HTTPAuthPassword(DDBObject):
     def setup_new(self, username, password, host, realm, path,
                   authScheme=u"Basic"):
-        checkU(username)
-        checkU(password)
-        checkU(host)
-        checkU(realm)
-        checkU(path)
-        checkU(authScheme)
+        check_u(username)
+        check_u(password)
+        check_u(host)
+        check_u(realm)
+        check_u(path)
+        check_u(authScheme)
         oldAuth = find_http_auth(host, path, realm, authScheme)
         while not oldAuth is None:
             oldAuth.remove()
@@ -110,7 +110,7 @@ def get_downloader_by_dlid(dlid):
     except ObjectNotFoundError:
         return None
 
-@returnsUnicode
+@returns_unicode
 def generate_dlid():
     dlid = u"download%08d" % random.randint(0, 99999999)
     while get_downloader_by_dlid(dlid=dlid):
@@ -120,9 +120,9 @@ def generate_dlid():
 class RemoteDownloader(DDBObject):
     """Download a file using the downloader daemon."""
     def setup_new(self, url, item, contentType=None, channelName=None):
-        checkU(url)
+        check_u(url)
         if contentType:
-            checkU(contentType)
+            check_u(contentType)
         self.origURL = self.url = url
         self.itemList = []
         self.child_deleted = False
@@ -405,7 +405,7 @@ class RemoteDownloader(DDBObject):
             fileutil.delete(filename)
         except OSError:
             logging.exception("Error deleting downloaded file: %s",
-                              toUni(filename))
+                              to_uni(filename))
 
         parent = os.path.join(fileutil.expand_filename(filename),
                               os.path.pardir)
@@ -418,7 +418,7 @@ class RemoteDownloader(DDBObject):
                 os.rmdir(parent)
             except OSError:
                 logging.exception("Error deleting empty download directory: %s",
-                                  toUni(parent))
+                                  to_uni(parent))
 
     def start(self):
         """Continues a paused, stopped, or failed download thread
@@ -495,7 +495,7 @@ class RemoteDownloader(DDBObject):
     def set_channel_name(self, channelName):
         if self.channelName is None:
             if channelName:
-                checkF(channelName)
+                check_f(channelName)
             self.channelName = channelName
 
     def remove(self):
@@ -545,7 +545,7 @@ class RemoteDownloader(DDBObject):
         self.confirm_db_thread()
         return self.status.get('eta', 0)
 
-    @returnsUnicode
+    @returns_unicode
     def get_startup_activity(self):
         self.confirm_db_thread()
         activity = self.status.get('activity')
@@ -553,7 +553,7 @@ class RemoteDownloader(DDBObject):
             return _("starting up")
         return activity
 
-    @returnsUnicode
+    @returns_unicode
     def get_reason_failed(self):
         """Returns the reason for the failure of this download.  This
         should only be called when the download is in the failed state.
@@ -564,7 +564,7 @@ class RemoteDownloader(DDBObject):
         self.confirm_db_thread()
         return self.status.get('reasonFailed', _("Unknown"))
 
-    @returnsUnicode
+    @returns_unicode
     def get_short_reason_failed(self):
         if not self.get_state() == u'failed':
             msg = u"get_short_reason_failed() called on a non-failed downloader"
@@ -572,14 +572,14 @@ class RemoteDownloader(DDBObject):
         self.confirm_db_thread()
         return self.status.get('shortReasonFailed', _("Unknown"))
 
-    @returnsUnicode
+    @returns_unicode
     def get_url(self):
         """Returns the URL we're downloading
         """
         self.confirm_db_thread()
         return self.url
 
-    @returnsUnicode
+    @returns_unicode
     def get_state(self):
         """Returns the state of the download: downloading, paused,
         stopped, failed, or finished.
@@ -603,7 +603,7 @@ class RemoteDownloader(DDBObject):
         self.confirm_db_thread()
         return self.status.get('currentSize', 0)
 
-    @returnsFilename
+    @returns_filename
     def get_filename(self):
         """Returns the filename that we're downloading to.  Should not be
         called until state is "finished."

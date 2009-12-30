@@ -35,7 +35,7 @@ from miro import feed
 from miro import folder
 from miro import eventloop
 from miro import playlist
-from miro.util import checkU
+from miro.util import check_u
 
 import logging
 
@@ -49,7 +49,7 @@ class TabOrder(database.DDBObject):
         """Construct a TabOrder.  type should be either ``channel`` or
         ``playlist``.
         """
-        checkU(type)
+        check_u(type)
         self.type = type
         self.tab_ids = []
         self._setup_views()

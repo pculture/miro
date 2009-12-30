@@ -33,7 +33,7 @@ code for the "Add to Playlist" dialog.
 from miro.gtcache import gettext as _
 from miro import searchengines
 
-from miro.util import clampText
+from miro.util import clamp_text
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.dialogs import MainDialog
@@ -74,7 +74,7 @@ def run_dialog():
             rbg = widgetset.RadioButtonGroup()
 
             existing_rb = widgetset.RadioButton(_("Existing playlist:"), rbg)
-            existing_option = widgetset.OptionMenu([clampText(pi.name) for pi in playlists])
+            existing_option = widgetset.OptionMenu([clamp_text(pi.name) for pi in playlists])
 
             choice_table.pack(existing_rb, 0, 0)
             choice_table.pack(existing_option, 1, 0)

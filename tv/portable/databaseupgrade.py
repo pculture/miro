@@ -483,7 +483,7 @@ def upgrade28(objectList):
     items = set()
     removed = set()
 
-    def getFirstVideoEnclosure(entry):
+    def get_first_video_enclosure(entry):
         """Find the first video enclosure in a feedparser entry.
         Returns the enclosure, or None if no video enclosure is found.
         """
@@ -500,7 +500,7 @@ def upgrade28(objectList):
         o = objectList[i]
         if o.classString == 'item':
             entry = o.savedData['entry']
-            videoEnc = getFirstVideoEnclosure(entry)
+            videoEnc = get_first_video_enclosure(entry)
             if videoEnc is not None:
                 entryURL = videoEnc.get('url')
             else:
@@ -1275,7 +1275,7 @@ def upgrade71(objectList):
             elems = parse_url(enclosure[key], split_path=True)
             return is_allowed_filename(elems[3])
         return False
-    def getFirstVideoEnclosure(entry):
+    def get_first_video_enclosure(entry):
         """
         Find the first "best" video enclosure in a feedparser entry.
         Returns the enclosure, or None if no video enclosure is found.
@@ -1358,7 +1358,7 @@ def upgrade71(objectList):
         'video/x-msmpeg', 'video/x-flv']
 
 
-    def quoteUnicodeURL(url):
+    def quote_unicode_url(url):
         """Quote international characters contained in a URL according
         to w3c, see: <http://www.w3.org/International/O-URL-code.html>
         """
@@ -1382,20 +1382,20 @@ def upgrade71(objectList):
     for o in objectList:
         if o.classString in ('item', 'file-item'):
             entry = o.savedData['entry']
-            videoEnclosure = getFirstVideoEnclosure(entry)
+            videoEnclosure = get_first_video_enclosure(entry)
             if videoEnclosure is not None and 'url' in videoEnclosure:
-                url = quoteUnicodeURL(videoEnclosure['url'].replace('+', '%20'))
+                url = quote_unicode_url(videoEnclosure['url'].replace('+', '%20'))
             else:
                 url = None
             downloader_id = url_to_downloader_id.get(url)
             if downloader_id is None and hasattr(entry, 'enclosures'):
                 # we didn't get a downloader id using
-                # getFirstVideoEnclosure(), so try other enclosures.
+                # get_first_video_enclosure(), so try other enclosures.
                 # We changed the way that function worked between
                 # 1.2.8 and 2.0.
                 for other_enclosure in entry.enclosures:
                     if 'url' in other_enclosure:
-                        url = quoteUnicodeURL(other_enclosure['url'].replace('+', '%20'))
+                        url = quote_unicode_url(other_enclosure['url'].replace('+', '%20'))
                         downloader_id = url_to_downloader_id.get(url)
                         if downloader_id is not None:
                             break
@@ -1568,7 +1568,7 @@ def upgrade75(objectList):
             return is_allowed_filename(elems[3])
         return False
 
-    def getFirstVideoEnclosure(entry):
+    def get_first_video_enclosure(entry):
         """Find the first "best" video enclosure in a feedparser
         entry.  Returns the enclosure, or None if no video enclosure
         is found.
@@ -1650,7 +1650,7 @@ def upgrade75(objectList):
         'video/x-msmpeg', 'video/x-flv']
 
 
-    def quoteUnicodeURL(url):
+    def quote_unicode_url(url):
         """Quote international characters contained in a URL according
         to w3c, see: <http://www.w3.org/International/O-URL-code.html>
         """
@@ -1697,7 +1697,7 @@ def upgrade75(objectList):
         def __init__(self, entry):
             self.entry = entry
             self.normalized_entry = normalize_feedparser_dict(entry)
-            self.first_video_enclosure = getFirstVideoEnclosure(entry)
+            self.first_video_enclosure = get_first_video_enclosure(entry)
 
             self.data = {
                     'license': entry.get("license"),
@@ -1825,7 +1825,7 @@ def upgrade75(objectList):
             if ((self.first_video_enclosure is not None
                  and 'url' in self.first_video_enclosure)):
                 url = self.first_video_enclosure['url'].replace('+', '%20')
-                return quoteUnicodeURL(url)
+                return quote_unicode_url(url)
             else:
                 return u''
 

@@ -39,7 +39,8 @@ import locale
 import urllib
 import sys
 import time
-from miro.util import returnsUnicode, returnsBinary, checkU, checkB, call_command
+from miro.util import (returns_unicode, returns_binary, check_u, check_b,
+                       call_command)
 import miro
 from miro.plat import options
 
@@ -122,13 +123,13 @@ def setup_logging(inDownloader=False):
         logging.getLogger('').addHandler(rotater)
         rotater.doRollover()
 
-@returnsBinary
+@returns_binary
 def utf8_to_filename(filename):
     if not isinstance(filename, str):
         raise ValueError("filename is not a str")
     return filename
 
-@returnsBinary
+@returns_binary
 def unicodeToFilename(filename, path=None):
     """Takes in a unicode string representation of a filename (NOT a file
     path) and creates a valid byte representation of it attempting to preserve
@@ -137,9 +138,9 @@ def unicodeToFilename(filename, path=None):
     Note: This is not guaranteed to give the same results every time it is run,
     nor is it guaranteed to reverse the results of filenameToUnicode.
     """
-    @returnsUnicode
+    @returns_unicode
     def shortenFilename(filename):
-        checkU(filename)
+        check_u(filename)
         first, last = os.path.splitext(filename)
 
         if first:
@@ -147,9 +148,9 @@ def unicodeToFilename(filename, path=None):
 
         return unicode(last[:-1])
 
-    checkU(filename)
+    check_u(filename)
     if path:
-        checkB(path)
+        check_b(path)
     else:
         path = os.getcwd()
 
@@ -176,7 +177,7 @@ def unicodeToFilename(filename, path=None):
 
     return new_filename
 
-@returnsUnicode
+@returns_unicode
 def filenameToUnicode(filename, path=None):
     """Given a filename in raw bytes, return the unicode representation
 
@@ -184,8 +185,8 @@ def filenameToUnicode(filename, path=None):
     not is it guaranteed to reverse the results of unicodeToFilename.
     """
     if path:
-        checkB(path)
-    checkB(filename)
+        check_b(path)
+    check_b(filename)
     try:
         return filename.decode(locale.getpreferredencoding())
     except (SystemExit, KeyboardInterrupt):
@@ -193,7 +194,7 @@ def filenameToUnicode(filename, path=None):
     except:
         return filename.decode('ascii', 'replace')
 
-@returnsUnicode
+@returns_unicode
 def make_url_safe(s, safe='/'):
     """Takes in a byte string or a unicode string and does the right thing
     to make a URL
@@ -209,12 +210,12 @@ def make_url_safe(s, safe='/'):
     except:
         return s.decode('ascii', 'replace')
 
-@returnsBinary
+@returns_binary
 def unmake_url_safe(s):
     """Undoes make_url_safe (assuming it was passed a filenameType)
     """
     # unquote the byte string
-    checkU(s)
+    check_u(s)
     return urllib.unquote(s.encode('ascii'))
 
 def pid_is_running(pid):

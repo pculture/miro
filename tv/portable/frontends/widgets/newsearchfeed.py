@@ -33,7 +33,7 @@ code for the New Search Feed dialog.
 from miro.gtcache import gettext as _
 from miro import searchengines
 
-from miro.util import clampText
+from miro.util import clamp_text
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.dialogs import MainDialog
@@ -86,7 +86,7 @@ def run_dialog():
             rbg = widgetset.RadioButtonGroup()
 
             channel_rb = widgetset.RadioButton(_("Feed:"), rbg)
-            channel_option = widgetset.OptionMenu([clampText(ci.name) for ci in channels])
+            channel_option = widgetset.OptionMenu([clamp_text(ci.name) for ci in channels])
             choice_table.pack(channel_rb, 0, 0)
             choice_table.pack(channel_option, 1, 0)
 

@@ -40,7 +40,7 @@ from miro.gtcache import ngettext
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import style
 from miro.frontends.widgets.widgetutil import build_hbox
-from miro.util import clampText, returnsUnicode
+from miro.util import clamp_text
 
 KEEP_ITEMS = "keep_items"
 
@@ -64,7 +64,7 @@ def run_dialog(channel_infos, downloaded_items, downloading_items, has_watched_f
             v2 = widgetset.VBox()
             lab_height = None
             for mem in channel_infos:
-                lab_mem = widgetset.Label(util.clampText(mem.name, 40))
+                lab_mem = widgetset.Label(util.clamp_text(mem.name, 40))
                 if lab_height is None:
                     dummy, lab_height = lab_mem.get_size_request()
                 v2.pack_start(widgetutil.align_left(lab_mem, left_pad=15))

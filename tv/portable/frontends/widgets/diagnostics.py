@@ -80,36 +80,36 @@ SHOW = _("Show")
 # Note for data that changes over time, stick the calculation in a lambda so
 # that the diagnostics dialog shows the most recent calculation.
 ITEMS = [
-    { "label": _("Movies location:"),
-      "data": config.get(prefs.MOVIES_DIRECTORY),
-      "button_face": SHOW,
-      "button_fun": open_helper(config.get(prefs.MOVIES_DIRECTORY)) },
-    { "label": _("Icon cache location:"),
-      "data": config.get(prefs.ICON_CACHE_DIRECTORY),
-      "button_face": SHOW,
-      "button_fun": open_helper(config.get(prefs.ICON_CACHE_DIRECTORY)) },
-    { "label": _("Log file location:"),
-      "data": config.get(prefs.LOG_PATHNAME),
-      "button_face": SHOW,
-      "button_fun": open_helper(config.get(prefs.LOG_PATHNAME)) },
-    { "label": _("Downloader log file location:"),
-      "data": config.get(prefs.DOWNLOADER_LOG_PATHNAME),
-      "button_face": SHOW,
-      "button_fun": open_helper(config.get(prefs.DOWNLOADER_LOG_PATHNAME)) },
-    { "label": _("Database file location:"),
-      "data": config.get(prefs.SQLITE_PATHNAME),
-      "button_face": SHOW,
-      "button_fun": open_helper(config.get(prefs.SQLITE_PATHNAME)) },
+    {"label": _("Movies location:"),
+     "data": config.get(prefs.MOVIES_DIRECTORY),
+     "button_face": SHOW,
+     "button_fun": open_helper(config.get(prefs.MOVIES_DIRECTORY))},
+    {"label": _("Icon cache location:"),
+     "data": config.get(prefs.ICON_CACHE_DIRECTORY),
+     "button_face": SHOW,
+     "button_fun": open_helper(config.get(prefs.ICON_CACHE_DIRECTORY))},
+    {"label": _("Log file location:"),
+     "data": config.get(prefs.LOG_PATHNAME),
+     "button_face": SHOW,
+     "button_fun": open_helper(config.get(prefs.LOG_PATHNAME))},
+    {"label": _("Downloader log file location:"),
+     "data": config.get(prefs.DOWNLOADER_LOG_PATHNAME),
+     "button_face": SHOW,
+     "button_fun": open_helper(config.get(prefs.DOWNLOADER_LOG_PATHNAME))},
+    {"label": _("Database file location:"),
+     "data": config.get(prefs.SQLITE_PATHNAME),
+     "button_face": SHOW,
+     "button_fun": open_helper(config.get(prefs.SQLITE_PATHNAME))},
 
     SEPARATOR,
 
-    { "label": _("Space free on disk:"),
-      "data": lambda : util.formatSizeForUser(get_available_bytes_for_movies(), "0B", False) },
-    { "label": _("Database size:"),
-      "data": lambda : util.formatSizeForUser(get_database_size(), "0B", False) },
-    { "label": _("Total db objects in memory:"),
-      "data": lambda : "%d" % get_database_object_count() }
-]
+    {"label": _("Space free on disk:"),
+     "data": lambda: util.format_size_for_user(get_available_bytes_for_movies(), "0B", False)},
+    {"label": _("Database size:"),
+     "data": lambda: util.format_size_for_user(get_database_size(), "0B", False)},
+    {"label": _("Total db objects in memory:"),
+     "data": lambda: "%d" % get_database_object_count()}
+    ]
 
 def run_dialog():
     """Displays a diagnostics windows that tells a user how Miro is set

@@ -26,13 +26,14 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from miro.util import returnsBinary
+from miro.util import returns_binary
 
 FilenameType = str
 
-@returnsBinary
+@returns_binary
 def os_filename_to_filename_type(filename):
-    """Takes filename given by Python or the PyObjC bridge and turn it into a FilenameType
+    """Takes filename given by Python or the PyObjC bridge and turn it
+    into a FilenameType
     """
     if isinstance(filename, str):
         return FilenameType(filename)

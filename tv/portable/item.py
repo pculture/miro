@@ -36,8 +36,8 @@ from miro.gtcache import ngettext
 from math import ceil
 from miro.xhtmltools import xhtmlify
 from xml.sax.saxutils import unescape
-from miro.util import (checkU, returnsUnicode, checkF, returnsFilename,
-                       quoteUnicodeURL, stringify, getFirstVideoEnclosure,
+from miro.util import (check_u, returns_unicode, check_f, returns_filename,
+                       quote_unicode_url, stringify, get_first_video_enclosure,
                        entity_replace)
 from miro.plat.utils import FilenameType, filenameToUnicode, unicodeToFilename
 import locale
@@ -90,7 +90,7 @@ class FeedParserValues(object):
     """
     def __init__(self, entry):
         self.entry = entry
-        self.first_video_enclosure = getFirstVideoEnclosure(entry)
+        self.first_video_enclosure = get_first_video_enclosure(entry)
 
         self.data = {
             'license': entry.get("license"),
@@ -220,7 +220,7 @@ class FeedParserValues(object):
         if (self.first_video_enclosure is not None and
                 'url' in self.first_video_enclosure):
             url = self.first_video_enclosure['url'].replace('+', '%20')
-            return quoteUnicodeURL(url)
+            return quote_unicode_url(url)
         else:
             return u''
 
@@ -774,7 +774,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         except AttributeError:
             return self.get_feed().last_viewed >= self.creationTime
 
-    @returnsUnicode
+    @returns_unicode
     def get_url(self):
         """Returns the URL associated with the first enclosure in the
         item.
@@ -814,7 +814,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             self._parent = self
         return self._parent
 
-    @returnsUnicode
+    @returns_unicode
     def get_feed_url(self):
         if self.feed_id is not None:
             try:
@@ -824,7 +824,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             return None
 
-    @returnsUnicode
+    @returns_unicode
     def get_source(self):
         if self.feed_id is not None:
             feed_ = self.get_feed()
@@ -937,7 +937,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             if self.isContainerItem:
                 self.children_signal_change()
 
-    @returnsUnicode
+    @returns_unicode
     def getString(self, when):
         """Get the expiration time a string to display to the user."""
         offset = when - datetime.now()
@@ -1072,7 +1072,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                         item.mark_item_unseen(False)
             self.recalc_feed_counts()
 
-    @returnsUnicode
+    @returns_unicode
     def get_rss_id(self):
         self.confirm_db_thread()
         return self.rss_id
@@ -1161,11 +1161,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         return (self.get_feed().isAutoDownloadable() and
                 self.is_eligible_for_auto_download())
 
-    @returnsUnicode
+    @returns_unicode
     def get_thumbnail_url(self):
         return self.thumbnail_url
 
-    @returnsFilename
+    @returns_filename
     def get_thumbnail(self):
         """NOTE: When changing this function, change feed.icon_changed
         to signal the right set of items.
@@ -1193,7 +1193,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         return (self.isContainerItem and self.has_downloader() and
                 self.downloader.is_finished())
 
-    @returnsUnicode
+    @returns_unicode
     def get_title(self):
         """Returns the title of the item.
         """
@@ -1227,11 +1227,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.signal_change()
 
     def set_channel_title(self, title):
-        checkU(title)
+        check_u(title)
         self.channelTitle = title
         self.signal_change()
 
-    @returnsUnicode
+    @returns_unicode
     def get_channel_title(self, allowSearchFeedTitle=False):
         implClass = self.get_feed().actualFeed.__class__
         if implClass in (models.RSSFeedImpl, models.ScraperFeedImpl):
@@ -1247,7 +1247,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             return u''
 
-    @returnsUnicode
+    @returns_unicode
     def get_raw_description(self):
         """Returns the raw description of the video (unicode).
         """
@@ -1265,7 +1265,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             return None
 
-    @returnsUnicode
+    @returns_unicode
     def get_description(self):
         """Returns valid XHTML containing a description of the video (str).
         """
@@ -1345,7 +1345,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             self._calc_state()
             return self._state
 
-    @returnsUnicode
+    @returns_unicode
     def _calc_state(self):
         """Recalculate the state of an item after a change
         """
@@ -1379,7 +1379,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             self._state = u'saved'
 
-    @returnsUnicode
+    @returns_unicode
     def get_channel_category(self):
         """Get the category to use for the channel template.
 
@@ -1442,7 +1442,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def get_size_for_display(self):
         """Returns the size of the item to be displayed.
         """
-        return util.formatSizeForUser(self.get_size())
+        return util.format_size_for_user(self.get_size())
 
     def get_size(self):
         if not hasattr(self, "_size"):
@@ -1487,7 +1487,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             else:
                 return (100.0*dled) / size
 
-    @returnsUnicode
+    @returns_unicode
     def get_startup_activity(self):
         if self.pendingManualDL:
             return self.pendingReason
@@ -1515,7 +1515,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             secs = self.duration / 1000
         return secs
 
-    @returnsUnicode
+    @returns_unicode
     def get_format(self, emptyForUnknown=True):
         """Returns string with the format of the video.
         """
@@ -1542,7 +1542,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return u""
         return u"unknown"
 
-    @returnsUnicode
+    @returns_unicode
     def get_license(self):
         """Return the license associated with the video.
         """
@@ -1551,7 +1551,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return self.license
         return self.get_feed().get_license()
 
-    @returnsUnicode
+    @returns_unicode
     def get_comments_link(self):
         """Returns the comments link if it exists in the feed item.
         """
@@ -1635,7 +1635,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             self.keep = True
             self.signal_change()
 
-    @returnsFilename
+    @returns_filename
     def get_filename(self):
         return self.filename
 
@@ -1738,7 +1738,7 @@ class FileItem(Item):
         Item.setup_new(self, fp_values, feed_id=feed_id, parent_id=parent_id,
                 eligibleForAutoDownload=False, channel_title=channel_title)
         self.is_file_item = True
-        checkF(filename)
+        check_f(filename)
         filename = fileutil.abspath(filename)
         self.set_filename(filename)
         self.deleted = deleted
@@ -1750,7 +1750,7 @@ class FileItem(Item):
     # FileItem downloaders are always None
     downloader = property(lambda self: None)
 
-    @returnsUnicode
+    @returns_unicode
     def get_state(self):
         if self.deleted:
             return u"expired"

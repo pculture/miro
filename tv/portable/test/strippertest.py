@@ -1,11 +1,3 @@
-from StringIO import StringIO
-
-import os.path
-import os
-from miro.test.framework import MiroTestCase
-from miro import util
-from miro.plat import resources
-
 """
 See tv/resources/testdata/stripperdata/ for test files.
 
@@ -20,12 +12,44 @@ test will fail--but StripperTest will tell you what the output is.  You can
 verify the output, then copy and paste it into a .expected file.
 """
 
-class StripperTest(MiroTestCase):
-    def testHTMLStripper(self):
+from StringIO import StringIO
+
+import os.path
+import os
+from miro.test.framework import MiroTestCase
+from miro import util
+from miro.plat import resources
+
+class HTMLStripperTest(MiroTestCase):
+    def test_garbage(self):
+        stripper = util.HTMLStripper()
+
+        for mem in [(1, ("", [])),
+                    (None, ("", [])),
+                    ({}, ("", []))
+                    ]:
+            self.assertEquals(stripper.strip(mem[0]), mem[1])
+
+        for mem in [("<html>", ("", [])),
+                    ("<html></html>", ("", []))]:
+            self.assertEquals(stripper.strip(mem[0]), mem[1])
+
+    def test_simple(self):
+        stripper = util.HTMLStripper()
+
+        for mem in [("<html", ("<html", [])),
+                    ("<html><html>", ("", [])),
+                    ("</html></html>", ("", [])),
+                    ("<p>foo</p>", ("foo", [])),
+                    ("<p>foo</p><br/>", ("foo", []))
+                    ]:
+            self.assertEquals(stripper.strip(mem[0]), mem[1])
+
+    def test_stripper_data(self):
         stripper = util.HTMLStripper()
 
         testdir = resources.path("testdata/stripperdata")
-        tests = [ m for m in os.listdir(testdir) if m.endswith(".in") ]
+        tests = [m for m in os.listdir(testdir) if m.endswith(".in")]
 
         for mem in tests:
             mem = os.path.join(testdir, mem)

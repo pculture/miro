@@ -30,7 +30,7 @@
 :class:`SearchEngineInfo` and related helper functions.
 """
 
-from miro.util import checkU, returnsUnicode
+from miro.util import check_u, returns_unicode
 from miro.xhtmltools import urlencode
 from xml.dom.minidom import parse
 from miro.plat import resources
@@ -50,9 +50,9 @@ class SearchEngineInfo:
        ``.xml`` files in the ``resources/searchengines/`` directory.
     """
     def __init__(self, name, title, url, sort_order=0, filename=None):
-        checkU(name)
-        checkU(title)
-        checkU(url)
+        check_u(name)
+        check_u(title)
+        check_u(url)
         self.name = name
         self.title = title
         self.url = url
@@ -192,7 +192,7 @@ def create_engines():
                 new_engines.extend(_engines)
         _engines = new_engines
 
-@returnsUnicode
+@returns_unicode
 def get_request_url(engine_name, query, filter_adult_contents=True, limit=50):
     """Returns the url for the given search engine, query,
     filter_adult_contents, and limit.

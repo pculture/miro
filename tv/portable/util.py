@@ -40,12 +40,10 @@ try:
 except ImportError:
     from sha import sha
 import string
-import sys
 import urllib
 import socket
 import logging
 from miro import filetypes
-import threading
 import traceback
 import subprocess
 from StringIO import StringIO
@@ -62,7 +60,7 @@ PREFERRED_TYPES = [
     'video/x-msmpeg', 'video/x-flv']
 
 PREFERRED_TYPES_ORDER = dict((type, i) for i, type in
-        enumerate(PREFERRED_TYPES))
+                             enumerate(PREFERRED_TYPES))
 
 MAX_TORRENT_SIZE = 500 * (2**10) # 500k
 
@@ -71,15 +69,15 @@ def get_nice_stack():
     stack = traceback.extract_stack()
     # We don't care about the unit test lines
     while (len(stack) > 0
-            and os.path.basename(stack[0][0]) == 'unittest.py'
-            or (isinstance(stack[0][3], str)
-                and stack[0][3].startswith('unittest.main'))):
+           and os.path.basename(stack[0][0]) == 'unittest.py'
+           or (isinstance(stack[0][3], str)
+               and stack[0][3].startswith('unittest.main'))):
         stack = stack[1:]
 
     # remove after the call to signals.system.failed
     for i in xrange(len(stack)):
-        if (os.path.basename(stack[i][0]) == 'signals.py'
-                and stack[i][2] in ('system.failed', 'system.failed_exn')):
+        if ((os.path.basename(stack[i][0]) == 'signals.py'
+             and stack[i][2] in ('system.failed', 'system.failed_exn'))):
             stack = stack[:i+1]
             break
 
@@ -87,7 +85,7 @@ def get_nice_stack():
     stack = [i for i in stack if 'trap_call' in i]
     return stack
 
-_config_line_re = re.compile(r"^([^ ]+) *= *([^\r\n]*)[\r\n]*$")
+CONFIG_LINE_RE = re.compile(r"^([^ ]+) *= *([^\r\n]*)[\r\n]*$")
 
 def read_simple_config_file(path):
     """Parse a configuration file in a very simple format and return contents
@@ -101,18 +99,19 @@ def read_simple_config_file(path):
     """
     ret = {}
 
-    f = open(path, "rt")
-    for line in f.readlines():
+    filep = open(path, "rt")
+    for line in filep.readlines():
         # Skip blank lines
         if not line.strip():
             continue
 
         # Otherwise it'd better be a configuration setting
-        match = _config_line_re.match(line)
+        match = CONFIG_LINE_RE.match(line)
         if not match:
-            print "WARNING: %s: ignored bad configuration directive '%s'" % (path, line)
+            print ("WARNING: %s: ignored bad configuration directive '%s'" %
+                   (path, line))
             continue
-        
+
         key = match.group(1)
         value = match.group(2)
         if key in ret:
@@ -127,12 +126,12 @@ def write_simple_config_file(path, data):
     """Given a dict, write a configuration file in the format that
     read_simple_config_file reads.
     """
-    f = open(path, "wt")
+    filep = open(path, "wt")
 
     for k, v in data.iteritems():
-        f.write("%s = %s\n" % (k, v))
-    
-    f.close()
+        filep.write("%s = %s\n" % (k, v))
+
+    filep.close()
 
 def query_revision():
     """Called at build-time to ask git for the revision of this
@@ -143,29 +142,29 @@ def query_revision():
     url = "unknown"
     revision = "unknown"
     try:
-        p = subprocess.Popen(["git", "config", "--list"], stdout=subprocess.PIPE)
-        info = p.stdout.read().splitlines()
-        p.stdout.close()
+        proc = subprocess.Popen(["git", "config", "--list"],
+                             stdout=subprocess.PIPE)
+        info = proc.stdout.read().splitlines()
+        proc.stdout.close()
         origline = "remote.origin.url"
         info = [m for m in info if m.startswith(origline)]
         if info:
             url = info[0][len(origline)+1:].strip()
 
-        p = subprocess.Popen(["git", "rev-parse", "HEAD"], stdout=subprocess.PIPE)
-        info = p.stdout.read()
-        p.stdout.close()
+        proc = subprocess.Popen(["git", "rev-parse", "HEAD"],
+                             stdout=subprocess.PIPE)
+        info = proc.stdout.read()
+        proc.stdout.close()
         revision = info[0:8]
         return (url, revision)
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except Exception, e:
-        print "Exception thrown when querying revision: %s" % e
-    return None
+    except StandardError, exc:
+        print "Exception thrown when querying revision: %s" % exc
+    return (url, revision)
 
 class AutoFlushingStream:
-    """Converts a stream to an auto-flushing one.  It behaves in exactly the
-    same way, except all write() calls are automatically followed by a
-    flush().
+    """Converts a stream to an auto-flushing one.  It behaves in
+    exactly the same way, except all write() calls are automatically
+    followed by a flush().
     """
     def __init__(self, stream):
         self.__dict__['stream'] = stream
@@ -184,12 +183,13 @@ class AutoFlushingStream:
 
 
 class AutoLoggingStream(StringIO):
-    """Create a stream that intercepts write calls and sends them to the log.
+    """Create a stream that intercepts write calls and sends them to
+    the log.
     """
     def __init__(self, logging_callback, prefix):
         StringIO.__init__(self)
-        # We init from StringIO to give us a bunch of stream-related methods,
-        # like closed() and read() automatically.
+        # We init from StringIO to give us a bunch of stream-related
+        # methods, like closed() and read() automatically.
         self.logging_callback = logging_callback
         self.prefix = prefix
 
@@ -246,25 +246,12 @@ def get_torrent_info_hash(path):
         metainfo = lt.bdecode(data)
         try:
             infohash = metainfo['info']
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except StandardError:
             raise ValueError("%s is not a valid torrent" % path)
         infohash = sha(lt.bencode(infohash)).digest()
         return infohash
     finally:
         f.close()
-
-class ExponentialBackoffTracker:
-    """Utility class to track exponential backoffs."""
-    def __init__(self, baseDelay):
-        self.baseDelay = self.currentDelay = baseDelay
-    def nextDelay(self):
-        rv = self.currentDelay
-        self.currentDelay *= 2
-        return rv
-    def reset(self):
-        self.currentDelay = self.baseDelay
 
 def gather_media_files(path):
     """Gather media files on the disk in a directory tree.
@@ -295,43 +282,46 @@ def gather_media_files(path):
 
         yield adjusted_parsed, found
 
-def formatSizeForUser(nbytes, zeroString="", withDecimals=True, kbOnly=False):
-    """Format an int containing the number of bytes into a string suitable for
-    printing out to the user.  zeroString is the string to use if bytes == 0.
+def format_size_for_user(nbytes, zero_string="", with_decimals=True,
+                         kb_only=False):
+    """Format an int containing the number of bytes into a string
+    suitable for printing out to the user.
+
+    zero_string is the string to use if bytes == 0.
     """
     from miro.gtcache import gettext as _
-    if nbytes > (1 << 30) and not kbOnly:
+    if nbytes > (1 << 30) and not kb_only:
         value = (nbytes / (1024.0 * 1024.0 * 1024.0))
-        if withDecimals:
+        if with_decimals:
             # we do the string composing this way so as to make it easier
             # on translators.
             return _("%(size)sGB", {"size": "%1.1f" % value})
         else:
             return _("%(size)sGB", {"size": "%d" % value})
-    elif nbytes > (1 << 20) and not kbOnly:
+    elif nbytes > (1 << 20) and not kb_only:
         value = (nbytes / (1024.0 * 1024.0))
-        if withDecimals:
+        if with_decimals:
             return _("%(size)sMB", {"size": "%1.1f" % value})
         else:
             return _("%(size)sMB", {"size": "%d" % value})
     elif nbytes > (1 << 10):
         value = (nbytes / 1024.0)
-        if withDecimals:
+        if with_decimals:
             return _("%(size)sKB", {"size": "%1.1f" % value})
         else:
             return _("%(size)sKB", {"size": "%d" % value})
     elif nbytes > 1:
         value = nbytes
-        if withDecimals:
+        if with_decimals:
             return _("%(size)sB", {"size": "%1.1f" % value})
         else:
             return _("%(size)sB", {"size": "%d" % value})
     else:
-        return zeroString
+        return zero_string
 
-def clampText(text, maxLength=20):
-    if len(text) > maxLength:
-        return text[:maxLength-3] + '...'
+def clamp_text(text, max_length=20):
+    if len(text) > max_length:
+        return text[:max_length-3] + '...'
     else:
         return text
 
@@ -354,7 +344,8 @@ def db_mem_usage_test():
         except TypeError:
             continue
         if name == 'FileItem':
-            # Item and FileItem share a db table, so we only need to load one
+            # Item and FileItem share a db table, so we only need to
+            # load one
             continue
 
         # make sure each object is loaded in memory and count the total
@@ -373,51 +364,6 @@ def db_mem_usage_test():
 
 def get_mem_usage():
     return int(call_command('ps', '-o', 'rss', 'hp', str(os.getpid())))
-
-class TooManySingletonsError(Exception):
-    pass
-
-def getSingletonDDBObject(view):
-    view.confirm_db_thread()
-    viewLength = view.len()
-    if viewLength == 1:
-        view.resetCursor()
-        return view.next()
-    elif viewLength == 0:
-        raise LookupError("Can't find singleton in %s" % repr(view))
-    else:
-        msg = "%d objects in %s" % (viewLength, len(view))
-        raise TooManySingletonsError(msg)
-
-class ThreadSafeCounter:
-    """Implements a counter that can be access by multiple threads."""
-    def __init__(self, initialValue=0):
-        self.value = initialValue
-        self.lock = threading.Lock()
-
-    def inc(self):
-        """Increments the value by 1."""
-        self.lock.acquire()
-        try:
-            self.value += 1
-        finally:
-            self.lock.release()
-
-    def dec(self):
-        """Decrements the value by 1."""
-        self.lock.acquire()
-        try:
-            self.value -= 1
-        finally:
-            self.lock.release()
-
-    def getvalue(self):
-        """Returns the current value."""
-        self.lock.acquire()
-        try:
-            return self.value
-        finally:
-            self.lock.release()
 
 def setup_logging():
     """Adds TIMING and JSALERT logging levels.
@@ -438,130 +384,113 @@ class MiroUnicodeError(StandardError):
     """
     pass
 
-def checkU(text):
+def check_u(text):
     """Raise an exception if input isn't unicode
     """
     if text is not None and not isinstance(text, unicode):
-        raise MiroUnicodeError(u"text %r is not a unicode string (type:%s)" % (text, type(text)))
+        raise MiroUnicodeError(u"text %r is not a unicode string (type:%s)" %
+                               (text, type(text)))
 
-def returnsUnicode(func):
-    """Decorator that raised an exception if the function doesn't return unicode
+def returns_unicode(func):
+    """Decorator that raised an exception if the function doesn't
+    return unicode
     """
-    def checkFunc(*args, **kwargs):
+    def check_func(*args, **kwargs):
         result = func(*args, **kwargs)
         if result is not None:
-            checkU(result)
+            check_u(result)
         return result
-    return checkFunc
+    return check_func
 
-def checkB(text):
+def check_b(text):
     """Raise an exception if input isn't a binary string
     """
     if text is not None and not isinstance(text, str):
         raise MiroUnicodeError, (u"text \"%s\" is not a binary string" % text)
 
-def returnsBinary(func):
-    """Decorator that raised an exception if the function doesn't return unicode
+def returns_binary(func):
+    """Decorator that raised an exception if the function doesn't
+    return unicode
     """
-    def checkFunc(*args, **kwargs):
+    def check_func(*args, **kwargs):
         result = func(*args, **kwargs)
         if result is not None:
-            checkB(result)
+            check_b(result)
         return result
-    return checkFunc
+    return check_func
 
-def checkURL(text):
-    """Raise an exception if input isn't a URL type
-    """
-    if not isinstance(text, unicode):
-        raise MiroUnicodeError, (u"url \"%s\" is not unicode" % text)
-    try:
-        text.encode('ascii')
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
-        raise MiroUnicodeError, (u"url \"%s\" contains extended characters" % text)
-
-def returnsURL(func):
-    """Decorator that raised an exception if the function doesn't return a filename
-    """
-    def checkFunc(*args, **kwargs):
-        result = func(*args, **kwargs)
-        if result is not None:
-            checkURL(result)
-        return result
-    return checkFunc
-
-def checkF(text):
+def check_f(text):
     """Returns exception if input isn't a filename type
     """
     from miro.plat.utils import FilenameType
     if text is not None and not isinstance(text, FilenameType):
         raise MiroUnicodeError, (u"text %r is not a valid filename type" %
-                                     text)
+                                 text)
 
-def returnsFilename(func):
-    """Decorator that raised an exception if the function doesn't return a filename
+def returns_filename(func):
+    """Decorator that raised an exception if the function doesn't
+    return a filename
     """
-    def checkFunc(*args, **kwargs):
+    def check_func(*args, **kwargs):
         result = func(*args, **kwargs)
         if result is not None:
-            checkF(result)
+            check_f(result)
         return result
-    return checkFunc
+    return check_func
 
-def unicodify(d):
+def unicodify(data):
     """Turns all strings in data structure to unicode.
     """
-    if isinstance(d, dict):
-        for key in d.keys():
-            d[key] = unicodify(d[key])
-    elif isinstance(d, list):
-        for key in range(len(d)):
-            d[key] = unicodify(d[key])
-    elif isinstance(d, str):
-        d = d.decode('ascii', 'replace')
-    return d
+    if isinstance(data, dict):
+        for key, val in data.items():
+            data[key] = unicodify(val)
+    elif isinstance(data, list):
+        for i, mem in enumerate(data):
+            data[i] = unicodify(mem)
+    elif isinstance(data, str):
+        data = data.decode('ascii', 'replace')
+    return data
 
-def stringify(u, handleerror="xmlcharrefreplace"):
-    """Takes a possibly unicode string and converts it to a string string.
-    This is required for some logging especially where the things being
-    logged are filenames which can be Unicode in the Windows platform.
+def stringify(unicode_str, handleerror="xmlcharrefreplace"):
+    """Takes a possibly unicode string and converts it to a string
+    string.  This is required for some logging especially where the
+    things being logged are filenames which can be Unicode in the
+    Windows platform.
 
     You can pass in a handleerror argument which defaults to
     ``"xmlcharrefreplace"``.  This will increase the string size as it
     converts unicode characters that don't have ascii equivalents into
-    escape sequences.  If you don't want to increase the string length, use
-    ``"replace"`` which will use ? for unicode characters that don't have
-    ascii equivalents.
+    escape sequences.  If you don't want to increase the string
+    length, use ``"replace"`` which will use ? for unicode characters
+    that don't have ascii equivalents.
 
     .. note::
 
        This is not the inverse of unicodify!
     """
-    if isinstance(u, unicode):
-        return u.encode("ascii", handleerror)
-    if not isinstance(u, str):
-        return str(u)
-    return u
+    if isinstance(unicode_str, unicode):
+        return unicode_str.encode("ascii", handleerror)
+    if not isinstance(unicode_str, str):
+        return str(unicode_str)
+    return unicode_str
 
-def quoteUnicodeURL(url):
-    """Quote international characters contained in a URL according to w3c, see:
-    <http://www.w3.org/International/O-URL-code.html>
+def quote_unicode_url(url):
+    """Quote international characters contained in a URL according to
+    w3c, see: <http://www.w3.org/International/O-URL-code.html>
     """
-    checkU(url)
-    quotedChars = []
+    check_u(url)
+    quoted_chars = []
     for c in url.encode('utf8'):
         if ord(c) > 127:
-            quotedChars.append(urllib.quote(c))
+            quoted_chars.append(urllib.quote(c))
         else:
-            quotedChars.append(c)
-    return u''.join(quotedChars)
+            quoted_chars.append(c)
+    return u''.join(quoted_chars)
 
 def no_console_startupinfo():
-    """Returns the startupinfo argument for subprocess.Popen so that we don't
-    open a console window.  On platforms other than windows, this is just
-    None.  On windows, it's some win32 silliness.
+    """Returns the startupinfo argument for subprocess.Popen so that
+    we don't open a console window.  On platforms other than windows,
+    this is just None.  On windows, it's some win32 silliness.
     """
     if subprocess.mswindows:
         startupinfo = subprocess.STARTUPINFO()
@@ -571,8 +500,9 @@ def no_console_startupinfo():
         return None
 
 def call_command(*args, **kwargs):
-    """Call an external command.  If the command doesn't exit with status 0,
-    or if it outputs to stderr, an exception will be raised.  Returns stdout.
+    """Call an external command.  If the command doesn't exit with
+    status 0, or if it outputs to stderr, an exception will be raised.
+    Returns stdout.
     """
     ignore_stderr = kwargs.pop('ignore_stderr', False)
     if kwargs:
@@ -583,73 +513,60 @@ def call_command(*args, **kwargs):
             startupinfo=no_console_startupinfo())
     stdout, stderr = pipe.communicate()
     if pipe.returncode != 0:
-        raise OSError("call_command with %s has return code %s\nstdout:%s\nstderr:%s" % 
-                (args, pipe.returncode, stdout, stderr))
+        raise OSError("call_command with %s has return code %s\n"
+                      "stdout:%s\nstderr:%s" %
+                      (args, pipe.returncode, stdout, stderr))
     elif stderr and not ignore_stderr:
-        raise OSError("call_command with %s outputed error text:\n%s" % 
-                (args, stderr))
+        raise OSError("call_command with %s outputed error text:\n%s" %
+                      (args, stderr))
     else:
         return stdout
 
 def random_string(length):
     return ''.join(random.choice(string.ascii_letters) for i in xrange(length))
 
-def _get_enclosure_index(enclosure):
-    return PREFERRED_TYPES_ORDER.get(enclosure.get('type'), sys.maxint)
+def _get_enclosure_index(enc):
+    maxindex = len(PREFERRED_TYPES_ORDER)
+    return maxindex - PREFERRED_TYPES_ORDER.get(enc.get('type'), maxindex)
 
-def _get_enclosure_size(enclosure):
-    if 'filesize' in enclosure and enclosure['filesize'].isdigit():
-        return int(enclosure['filesize'])
-    else:
-        return -1
-
-def _get_enclosure_bitrate(enclosure):
-    if 'bitrate' in enclosure and enclosure['bitrate'].isdigit():
-        return int(enclosure['bitrate'])
+def _get_enclosure_size(enc):
+    if 'filesize' in enc and enc['filesize'].isdigit():
+        return int(enc['filesize'])
     else:
         return None
 
-def cmp_enclosures(enclosure1, enclosure2):
+def _get_enclosure_bitrate(enc):
+    if 'bitrate' in enc and enc['bitrate'].isdigit():
+        return int(enc['bitrate'])
+    else:
+        return None
+
+def cmp_enclosures(enc1, enc2):
+    """Compares two enclosures looking for the best one (i.e.
+    the one with the biggest values).
+
+    Returns -1 if enclosure1 is preferred, 1 if enclosure2 is
+    preferred, and zero if there is no preference between the two of
+    them.
     """
-    Returns:
-      -1 if enclosure1 is preferred, 1 if enclosure2 is preferred, and
-      zero if there is no preference between the two of them
-    """
-    # meda:content enclosures have an isDefault which we should pick
+    # media:content enclosures have an isDefault which we should pick
     # since it's the preference of the feed
-    if enclosure1.get("isDefault"):
-        return -1
-    if enclosure2.get("isDefault"):
-        return 1
 
-    # let's try sorting by preference
-    enclosure1_index = _get_enclosure_index(enclosure1)
-    enclosure2_index = _get_enclosure_index(enclosure2)
-    if enclosure1_index < enclosure2_index:
-        return -1
-    elif enclosure2_index < enclosure1_index:
-        return 1
+    # if that's not there, then we sort by preference, bitrate, and
+    # then size
+    encdata1 = (enc1.get("isDefault"),
+                _get_enclosure_index(enc1),
+                _get_enclosure_bitrate(enc1),
+                _get_enclosure_size(enc1))
 
-    # next, let's try sorting by bitrate..
-    enclosure1_bitrate = _get_enclosure_bitrate(enclosure1)
-    enclosure2_bitrate = _get_enclosure_bitrate(enclosure2)
-    if enclosure1_bitrate > enclosure2_bitrate:
-        return -1
-    elif enclosure2_bitrate > enclosure1_bitrate:
-        return 1
+    encdata2 = (enc2.get("isDefault"),
+                _get_enclosure_index(enc2),
+                _get_enclosure_bitrate(enc2),
+                _get_enclosure_size(enc2))
 
-    # next, let's try sorting by filesize..
-    enclosure1_size = _get_enclosure_size(enclosure1)
-    enclosure2_size = _get_enclosure_size(enclosure2)
-    if enclosure1_size > enclosure2_size:
-        return -1
-    elif enclosure2_size > enclosure1_size:
-        return 1
+    return cmp(encdata2, encdata1)
 
-    # at this point they're the same for all we care
-    return 0
-
-def getFirstVideoEnclosure(entry):
+def get_first_video_enclosure(entry):
     """
     Find the first "best" video enclosure in a feedparser entry.
     Returns the enclosure, or None if no video enclosure is found.
@@ -675,71 +592,95 @@ _default_encoding = "iso-8859-1" # aka Latin-1
 _utf8cache = {}
 
 def _to_utf8_bytes(s, encoding=None):
-    """Takes a string and do whatever needs to be done to make it into a
-    UTF-8 string. If a Unicode string is given, it is just encoded in
-    UTF-8. Otherwise, if an encoding hint is given, first try to decode
-    the string as if it were in that encoding; if that fails (or the
-    hint isn't given), liberally (if necessary lossily) interpret it as
-    _default_encoding.
+    """Takes a string and do whatever needs to be done to make it into
+    a UTF-8 string. If a Unicode string is given, it is just encoded
+    in UTF-8. Otherwise, if an encoding hint is given, first try to
+    decode the string as if it were in that encoding; if that fails
+    (or the hint isn't given), liberally (if necessary lossily)
+    interpret it as _default_encoding.
     """
     try:
         return _utf8cache[(s, encoding)]
     except KeyError:
-        result = None
-        # If we got a Unicode string, half of our work is already done.
-        if isinstance(s, unicode):
-            result = s.encode('utf-8')
-        elif not isinstance(s, str):
-            s = str(s)
-        if result is None and encoding is not None:
-            # If we knew the encoding of the s, try that.
-            try:
-                decoded = s.decode(encoding,'replace')
-            except (UnicodeDecodeError, ValueError, LookupError):
-                pass
-            else:
-                result = decoded.encode('utf-8')
-        if result is None:
-            # Encoding wasn't provided, or it was wrong. Interpret provided string
-            # liberally as a fixed _default_encoding (see above.)
-            result = s.decode(_default_encoding, 'replace').encode('utf-8')
+        pass
 
-        _utf8cache[(s, encoding)] = result
-        return _utf8cache[(s, encoding)]
+    result = None
+    # If we got a Unicode string, half of our work is already done.
+    if isinstance(s, unicode):
+        result = s.encode('utf-8')
+    elif not isinstance(s, str):
+        s = str(s)
+    if result is None and encoding is not None:
+        # If we knew the encoding of the s, try that.
+        try:
+            decoded = s.decode(encoding, 'replace')
+        except UnicodeDecodeError:
+            pass
+        else:
+            result = decoded.encode('utf-8')
+    if result is None:
+        # Encoding wasn't provided, or it was wrong. Interpret
+        # provided string liberally as a fixed _default_encoding (see
+        # above.)
+        result = s.decode(_default_encoding, 'replace').encode('utf-8')
 
+    _utf8cache[(s, encoding)] = result
+    return _utf8cache[(s, encoding)]
 
 _unicache = {}
 _escapecache = {}
 
-def escape(orig):
-    orig = unicode(orig)
+def escape(str_):
+    """Takes a string and returns a new unicode string with &, >, and
+    < replaced by &amp;, &gt;, and &lt; respectively.
+    """
     try:
-        return _escapecache[orig]
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
-        _escapecache[orig] = orig.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
-        return _escapecache[orig]
+        return _escapecache[str_]
+    except KeyError:
+        pass
 
-def toUni(orig, encoding=None):
+    new_str = unicode(str_)
+    for mem in [("&", "&amp;"),
+                ("<", "&lt;"),
+                (">", "&gt;")]:
+        new_str = new_str.replace(mem[0], mem[1])
+    _escapecache[str_] = new_str
+    return new_str
+
+def to_uni(orig, encoding=None):
+    """Takes a stringish thing and returns the unicode version
+    of it.
+
+    If the stringish thing is already unicode, it returns it--no-op.
+
+    If the stringish thing is a string, then it converts it to utf-8
+    from the specified encoding, then turns it into a unicode.
+    """
+    if isinstance(orig, unicode):
+        return orig
+
     try:
         return _unicache[orig]
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
-        if isinstance(orig, unicode):
-            # Let's not bother putting this in the cache.  Calculating
-            # it is very fast, and since this is a very common case,
-            # not caching here should help with memory usage.
-            return orig
-        elif not isinstance(orig, str):
-            _unicache[orig] = unicode(orig)
-        else:
-            orig = _to_utf8_bytes(orig, encoding)
-            _unicache[orig] = unicode(orig, 'utf-8')
-        return _unicache[orig]
+    except KeyError:
+        pass
+
+    if isinstance(orig, str):
+        orig = _to_utf8_bytes(orig, encoding)
+        _unicache[orig] = unicode(orig, 'utf-8')
+    else:
+        _unicache[orig] = unicode(orig)
+    return _unicache[orig]
 
 import sgmllib
+
+# replaces one or more non-newline whitespace characters
+WHITESPACE_RE = re.compile("[ \\t]+", re.M)
+
+# replaces one or more newline characters
+NEWLINE_RE = re.compile("[ ]*\\n[ \\n]+", re.M)
+
+# <xyz/> -> <xyz /> fix--sgmllib.SGMLParser doesn't handle these right
+UNARY_RE = re.compile("\\<[ ]*([A-Za-z]+)[ ]*[/]?\\>", re.M)
 
 class HTMLStripper(sgmllib.SGMLParser):
     """Strips html from text while maintaining links and newline-like HTML
@@ -750,38 +691,29 @@ class HTMLStripper(sgmllib.SGMLParser):
     """
     def __init__(self):
         sgmllib.SGMLParser.__init__(self)
-        self.__temp = []
-        self.__data = ""
-        self.__pointer = 0
-        self.__links = []
-
-        # replaces one or more non-newline whitespace characters
-        self.__whitespacere = re.compile("[ \\t]+", re.M)
-
-        # replaces one or more newline characters
-        self.__newlinere = re.compile("[ ]*\\n[ \\n]+", re.M)
-
-        # <xyz/> -> <xyz /> fix--sgmllib.SGMLParser doesn't handle these right
-        self.__unaryre = re.compile("\\<[ ]*([A-Za-z]+)[ ]*[/]?\\>", re.M)
+        self._temp = []
+        self._data = ""
+        self._pointer = 0
+        self._links = []
 
     def strip(self, s):
         """Takes a string ``s`` and returns the stripped version.
         """
+        if not isinstance(s, basestring):
+            return ("", [])
+
         if "<" not in s:
             return (s.strip(), [])
 
         s = s.replace("\r\n", "\n")
-        s = self.__unaryre.sub("<\\1 />", s)
+        s = UNARY_RE.sub("<\\1 />", s)
+
+        self.feed(s)
+        self.close()
 
         try:
-            self.feed(s)
-            self.close()
-        except:
-            pass
-
-        try:
-            self.__flush()
-            data, links = self.__data, self.__links
+            self._flush()
+            data, links = self._data, self._links
             data = data.rstrip()
         finally:
             self.reset()
@@ -790,49 +722,49 @@ class HTMLStripper(sgmllib.SGMLParser):
 
     def reset(self):
         sgmllib.SGMLParser.reset(self)
-        self.__data = ""
-        self.__data = []
-        self.__pointer = 0
-        self.__links = []
+        self._data = ""
+        self._data = []
+        self._pointer = 0
+        self._links = []
 
-    def __clean(self, s):
-        s = self.__whitespacere.sub(" ", s)
-        s = self.__newlinere.sub("\n", s)
+    def _clean(self, s):
+        s = WHITESPACE_RE.sub(" ", s)
+        s = NEWLINE_RE.sub("\n", s)
         return s
 
-    def __add(self, s):
-        self.__temp.append(s)
+    def _add(self, s):
+        self._temp.append(s)
 
-    def __flush(self):
-        temp = self.__clean("".join(self.__temp))
-        if not self.__data:
-            self.__data = temp.lstrip()
+    def _flush(self):
+        temp = self._clean("".join(self._temp))
+        if not self._data:
+            self._data = temp.lstrip()
         else:
-            self.__data += temp
-        self.__temp = []
- 
+            self._data += temp
+        self._temp = []
+
     def handle_data(self, data):
         data = data.replace("\n", " ")
-        self.__add(data)
+        self._add(data)
 
     def handle_charref(self, ref):
         if ref.startswith('x'):
             charnum = int(ref[1:], 16)
         else:
             charnum = int(ref)
-        self.__add(unichr(charnum))
+        self._add(unichr(charnum))
 
     def start_p(self, attributes):
-        self.__add("\n")
+        self._add("\n")
 
     def end_p(self):
-        self.__add("\n")
+        self._add("\n")
 
     def start_br(self, attributes):
-        self.__add("\n")
+        self._add("\n")
 
     def end_br(self):
-        self.__add("\n")
+        self._add("\n")
 
     def start_a(self, attributes):
         for key, val in attributes:
@@ -842,18 +774,18 @@ class HTMLStripper(sgmllib.SGMLParser):
         else:
             return
 
-        self.__flush()
-        self.__links.append((len(self.__data), -1, href))
+        self._flush()
+        self._links.append((len(self._data), -1, href))
 
     def end_a(self):
-        self.__flush()
-        if self.__links and self.__links[-1][1] == -1:
-            beg, _, url = self.__links[-1]
-            self.__links[-1] = (beg, len(self.__data), url)
+        self._flush()
+        if self._links and self._links[-1][1] == -1:
+            beg, dummy, url = self._links[-1]
+            self._links[-1] = (beg, len(self._data), url)
 
 class Matrix(object):
     """2 Dimensional matrix.
-    
+
     Matrix objects are accessed like a list, except tuples are used as
     indices, for example:
 
@@ -882,11 +814,13 @@ class Matrix(object):
         return iter(self.data)
 
     def __repr__(self):
-        return "\n".join([", ".join([repr(r) for r in list(self.row(i))]) for i in xrange(self.rows)])
+        return "\n".join([", ".join([repr(r)
+                                     for r in list(self.row(i))])
+                          for i in xrange(self.rows)])
 
     def remove(self, value):
-        """This sets the value to None--it does NOT remove the cell from the
-        Matrix because that doesn't make any sense.
+        """This sets the value to None--it does NOT remove the cell
+        from the Matrix because that doesn't make any sense.
         """
         i = self.data.index(value)
         self.data[i] = None
@@ -913,22 +847,23 @@ def entity_replace(text):
             ('&lt;', '<'),
             ('&#62;', '>'),
             ('&gt;', '>'),
-    ] # FIXME: have a more general, charset-aware way to do this.
+    ]
+    # FIXME: have a more general, charset-aware way to do this.
     for src, dest in replacements:
         text = text.replace(src, dest)
     return text
 
-_lower_translate = string.maketrans(string.ascii_uppercase,
-        string.ascii_lowercase)
+LOWER_TRANSLATE = string.maketrans(string.ascii_uppercase,
+                                   string.ascii_lowercase)
 
-def ascii_lower(str):
+def ascii_lower(s):
     """Converts a string to lower case, using a simple translations of ASCII
     characters.
 
     This method is not locale-dependant, which is useful in some cases.
-    Normally str.lower() should be used though.
+    Normally s.lower() should be used though.
     """
-    return str.translate(_lower_translate)
+    return s.translate(LOWER_TRANSLATE)
 
 class DebuggingTimer:
     def __init__(self):

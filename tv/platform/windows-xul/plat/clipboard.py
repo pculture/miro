@@ -30,8 +30,9 @@
 
 import logging
 
-from miro.util import toUni
+from miro.util import to_uni
 import ctypes
+
 CF_TEXT = 1
 GMEM_MOVEABLE = 0x2
 GMEM_ZEROINIT = 0x40
@@ -62,7 +63,7 @@ def get_text():
         logging.warning("OpenClipboard(0) call failed.")
 
     if text is not None:
-        text = toUni(text)
+        text = to_uni(text)
     return text
 
 def set_text(text):
