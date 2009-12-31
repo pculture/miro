@@ -572,14 +572,15 @@ class LiveStorage:
             # We want to avoid updating the database at this point.
             return
 
-        if len(self._statements_in_transaction) == 0:
+        if is_update and len(self._statements_in_transaction) == 0:
             self.cursor.execute("BEGIN TRANSACTION")
 
         if values is None:
             values = ()
 
         failed = False
-        self._statements_in_transaction.append((sql, values, many))
+        if is_update:
+            self._statements_in_transaction.append((sql, values, many))
         try:
             self._time_execute(sql, values, many)
         except sqlite3.OperationalError, e:
