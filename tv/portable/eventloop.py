@@ -69,10 +69,12 @@ class DelayedCall(object):
         self._unlink()
 
     def dispatch(self):
+        success = True
         if not self.canceled:
             when = "While handling %s" % self.name
             start = clock()
-            trapcall.trap_call(when, self.function, *self.args, **self.kwargs)
+            success = trapcall.trap_call(when, self.function, *self.args,
+                    **self.kwargs)
             end = clock()
             if end-start > 0.5:
                 logging.timing("%s too slow (%.3f secs)",
@@ -90,6 +92,7 @@ class DelayedCall(object):
                                self.name, total)
                 cumulative[self.name] = 0
         self._unlink()
+        return success
 
 class Scheduler(object):
     def __init__(self):
@@ -116,7 +119,7 @@ class Scheduler(object):
 
     def process_next_timeout(self):
         time, dc = heapq.heappop(self.heap)
-        dc.dispatch()
+        return dc.dispatch()
 
     def processTimeouts(self):
         while self.hasPendingTimeout():
@@ -138,7 +141,7 @@ class CallQueue(object):
 
     def processNextIdle(self):
         dc = self.queue.get()
-        dc.dispatch()
+        return dc.dispatch()
 
     def hasPendingIdle(self):
         return not self.queue.empty()
@@ -212,7 +215,8 @@ class EventLoop(signals.SignalEmitter):
                                        'thread-started',
                                        'thread-did-start',
                                        'begin-loop',
-                                       'end-loop')
+                                       'end-loop',
+                                       'event-finished')
         self.scheduler = Scheduler()
         self.idleQueue = CallQueue()
         self.urgentQueue = CallQueue()
@@ -278,15 +282,22 @@ class EventLoop(signals.SignalEmitter):
                     raise
             if self.quitFlag:
                 break
-            self.urgentQueue.processIdles()
+            self._process_urgent_events()
             for event in self.generateEvents(readables, writeables):
-                event()
+                success = event()
+                self.emit('event-finished', success)
                 if self.quitFlag:
                     break
-                self.urgentQueue.processIdles()
+                self._process_urgent_events()
                 if self.quitFlag:
                     break
             self.emit('end-loop')
+
+    def _process_urgent_events(self):
+        queue = self.urgentQueue
+        while queue.hasPendingIdle() and not queue.quit_flag:
+            success = queue.processNextIdle()
+            self.emit('event-finished', success)
 
     def generateEvents(self, readables, writeables):
         """Generator that creates the list of events that should be
@@ -322,8 +333,10 @@ class EventLoop(signals.SignalEmitter):
                     continue
                 when = "While talking to the network"
                 def callbackEvent():
-                    if not trapcall.trap_call(when, function):
+                    success = trapcall.trap_call(when, function)
+                    if not success:
                         del map_[fd]
+                    return success
                 yield callbackEvent
 
     def quit(self):

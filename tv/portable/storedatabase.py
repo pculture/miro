@@ -150,6 +150,8 @@ class LiveStorage:
         self._all_schemas = []
         self._object_map = {} # maps object id -> DDBObjects in memory
         self._ids_loaded = set()
+        self._statements_in_transaction = []
+        eventloop.connect("event-finished", self.on_event_finished)
         for oschema in object_schemas:
             self._all_schemas.append(oschema)
             for klass in oschema.ddb_object_classes():
@@ -173,6 +175,7 @@ class LiveStorage:
         if self._dc:
             self._dc.cancel()
             self._dc = None
+        self.finish_transaction()
 
         # the unittests run in memory and vacuum causes a segfault if
         # the db is in memory.
@@ -364,7 +367,8 @@ class LiveStorage:
             sql = "UPDATE %s SET %s WHERE id=%s" % (obj_schema.table_name,
                     ', '.join(setters), obj.id)
             self._execute(sql, values, is_update=True)
-            if self.cursor.rowcount != 1:
+            if (self.cursor.rowcount != 1 and not
+                    self._quitting_from_operational_error):
                 raise AssertionError("update_obj changed %s rows" %
                         self.cursor.rowcount)
 
@@ -550,38 +554,45 @@ class LiveStorage:
             None))
         return self._execute(sql.getvalue(), values)
 
+    def on_event_finished(self, eventloop, success):
+        self.finish_transaction(commit=success)
+
+    def finish_transaction(self, commit=True):
+        if len(self._statements_in_transaction) == 0:
+            return
+        if not self._quitting_from_operational_error:
+            if commit:
+                self.cursor.execute("COMMIT TRANSACTION")
+            else:
+                self.cursor.execute("ROLLBACK TRANSACTION")
+        self._statements_in_transaction = []
+
     def _execute(self, sql, values, is_update=False, many=False):
         if is_update and self._quitting_from_operational_error:
             # We want to avoid updating the database at this point.
             return
 
+        if is_update and len(self._statements_in_transaction) == 0:
+            self.cursor.execute("BEGIN TRANSACTION")
+
         if values is None:
             values = ()
 
         failed = False
-        while True:
-            try:
-                self._time_execute(sql, values, many)
-            except sqlite3.OperationalError, e:
-                # printing the traceback here in whole rather than doing
-                # a logging.exception which seems to show the traceback
-                # up to the try/except handler.
-                logging.exception("OperationalError\n"
-                                  "statement: %s\n\n"
-                                  "values: %s\n\n"
-                                  "full stack:\n%s\n", sql, values,
-                                  "".join(traceback.format_stack()))
-                if not is_update and self._quitting_from_operational_error:
-                    # This is a very bad state to be in because code calling
-                    # us expects a return value.  I think the best we can do
-                    # is re-raise the exception (BDK)
-                    raise
-                failed = True
-                self._handle_operational_error(str(e))
-                if self._quitting_from_operational_error:
-                    break
-            else:
-                break
+        if is_update:
+            self._statements_in_transaction.append((sql, values, many))
+        try:
+            self._time_execute(sql, values, many)
+        except sqlite3.OperationalError, e:
+            self._log_error(sql, values, many)
+            failed = True
+            self._handle_operational_error(e)
+            if self._quitting_from_operational_error and not is_update:
+                # This is a very bad state to be in because code calling
+                # us expects a return value.  I think the best we can do
+                # is re-raise the exception (BDK)
+                raise
+
         if failed and not self._quitting_from_operational_error:
             title = _("%(appname)s database save succeeded",
                       {"appname": config.get(prefs.SHORT_APP_NAME)})
@@ -596,20 +607,50 @@ class LiveStorage:
     def _time_execute(self, sql, values, many):
         start = time.time()
         if many:
-            self.cursor.execute("BEGIN TRANSACTION")
-            try:
-                self.cursor.executemany(sql, values)
-            except:
-                self.cursor.execute("ROLLBACK TRANSACTION")
-                raise
-            else:
-                self.cursor.execute("COMMIT TRANSACTION")
+            self.cursor.executemany(sql, values)
         else:
             self.cursor.execute(sql, values)
         end = time.time()
         self._check_time(sql, end-start)
 
-    def _handle_operational_error(self, error_text):
+    def _log_error(self, sql, values, many):
+            # printing the traceback here in whole rather than doing
+            # a logging.exception which seems to show the traceback
+            # up to the try/except handler.
+            logging.exception("OperationalError\n"
+                              "statement: %s\n\n"
+                              "values: %s\n\n"
+                              "many: %s\n\n"
+                              "full stack:\n%s\n", sql, values, many,
+                              "".join(traceback.format_stack()))
+
+    def _try_rerunning_transaction(self):
+        self.cursor.execute("BEGIN TRANSACTION")
+        for (sql, values, many) in self._statements_in_transaction:
+            try:
+                self._time_execute(sql, values, many)
+            except sqlite3.OperationalError, e:
+                self._log_error(sql, values, many)
+                return False
+        return True
+
+    def _handle_operational_error(self, e):
+        if self._quitting_from_operational_error:
+            return
+        while True:
+            # try to rollback our old transaction if SQLite hasn't done it
+            # automatically
+            try:
+                self.cursor.execute("ROLLBACK TRANSACTION")
+            except sqlite3.OperationalError:
+                pass
+            self._show_save_error_dialog(str(e))
+            if self._quitting_from_operational_error:
+                return
+            if self._try_rerunning_transaction():
+                break
+
+    def _show_save_error_dialog(self, error_text):
         title = _("%(appname)s database save failed",
                   {"appname": config.get(prefs.SHORT_APP_NAME)})
         description = _(
