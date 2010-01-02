@@ -253,26 +253,22 @@ class FeedParserDict(UserDict):
                 return self.container.reverse_key(self.subiter.next())
         return ExtendedIter (self)
 
-    def equal (self, other):
+    def equal(self, other):
         try:
             iter = other.get_iter()
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except StandardError:
             iter = other.__iter__()
         try:
             checked = {}
             for key in iter:
-                if not _entry_equal (self[key], other[key]):
+                if not _entry_equal(self[key], other[key]):
                     return False
                 checked[key] = key
             for key in self.get_iter():
-                if not checked.has_key (key):
+                if not checked.has_key(key):
                     return False
             return True
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except StandardError:
             return False
 
     def __getitem__(self, key):
