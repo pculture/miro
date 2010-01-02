@@ -12,17 +12,18 @@ class DatabaseTestCase(MiroTestCase):
         MiroTestCase.setUp(self)
         self.feed = feed.Feed(u"http://feed.org")
         self.i1 = item.Item(item.FeedParserValues({'title': u'item1'}),
-                       feed_id=self.feed.id)
+                            feed_id=self.feed.id)
         self.i2 = item.Item(item.FeedParserValues({'title': u'item2'}),
-                       feed_id=self.feed.id)
+                            feed_id=self.feed.id)
+
         self.feed2 = feed.Feed(u"http://feed.com")
         self.i3 = item.Item(item.FeedParserValues({'title': u'item3'}),
-                       feed_id=self.feed2.id)
+                            feed_id=self.feed2.id)
 
 class ViewTest(DatabaseTestCase):
     def test_iter(self):
         view = item.Item.make_view('feed_id=?', (self.feed.id,))
-        self.assertEquals(set(view), set([self.i2, self.i1]))
+        self.assertSameSet(view, [self.i2, self.i1])
 
     def test_count(self):
         view = item.Item.make_view('feed_id=?', (self.feed.id,))
@@ -32,7 +33,7 @@ class ViewTest(DatabaseTestCase):
         self.feed.set_title(u'booya')
         view = item.Item.make_view("feed.userTitle='booya'",
                 joins={'feed': 'feed.id=item.feed_id'})
-        self.assertEquals(set(view), set([self.i2, self.i1]))
+        self.assertSameSet(view, [self.i2, self.i1])
         self.assertEquals(view.count(), 2)
 
 class ViewTrackerTest(DatabaseTestCase):
@@ -93,7 +94,8 @@ class ViewTrackerTest(DatabaseTestCase):
         self.setup_view(item.Item.make_view("feed.userTitle='booya'",
                 joins={'feed': 'feed.id=item.feed_id'}))
 
-        i4 = item.Item(item.FeedParserValues({'title': u'item4'}), feed_id=self.feed.id)
+        i4 = item.Item(item.FeedParserValues({'title': u'item4'}), 
+                       feed_id=self.feed.id)
         self.assertEquals(self.add_callbacks, [i4])
 
     def test_track_destruction_remove(self):

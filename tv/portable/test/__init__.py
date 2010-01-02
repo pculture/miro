@@ -31,7 +31,7 @@
 
 from miro.test.unicodetest import *
 
-from miro.test.datastructures import *
+from miro.test.datastructurestest import *
 from miro.test.schematest import *
 from miro.test.storedatabasetest import *
 from miro.test.olddatabaseupgradetest import *
@@ -49,7 +49,15 @@ from miro.test.signalstest import *
 from miro.test.messagetest import *
 from miro.test.strippertest import *
 from miro.test.xhtmltest import *
-from miro.test.gtcachetest import *
 from miro.test.iconcachetest import *
 from miro.test.databasetest import *
 from miro.test.itemtest import *
+from miro.test.filetypestest import *
+
+# platform specific tests
+
+from miro import config
+from miro import prefs
+
+if config.get(prefs.APP_PLATFORM) == "gtk-x11":
+    from miro.test.gtcachetest import *

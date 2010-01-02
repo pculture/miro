@@ -84,8 +84,8 @@ class MiroTestCase(unittest.TestCase):
             ]
         # reset the event loop
         util.chatter = False
-        self.sawError = False
-        self.errorSignalOkay = False
+        self.saw_error = False
+        self.error_signal_okay = False
         signals.system.connect('error', self.handle_error)
         app.controller = DummyController()
         self.temp_files = []
@@ -115,7 +115,7 @@ class MiroTestCase(unittest.TestCase):
         if app.db:
             try:
                 app.db.close()
-            except:
+            except StandardError:
                 pass
         app.db = storedatabase.LiveStorage(path,
                                            schema_version=schema_version, 
@@ -131,8 +131,8 @@ class MiroTestCase(unittest.TestCase):
         return obj.__class__.get_by_id(obj.id)
 
     def handle_error(self, obj, report):
-        if self.errorSignalOkay:
-            self.sawError = True
+        if self.error_signal_okay:
+            self.saw_error = True
         else:
             raise Exception("error signal %s" % report)
 

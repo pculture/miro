@@ -26,12 +26,12 @@ from miro.plat import resources
 #    msgfmt miro.po -o miro.mo
 
 def make_french(f):
-    def __make_french(*args, **kwargs):
-        oldLang = None
+    def _make_french(*args, **kwargs):
+        old_lang = None
         try:
             try:
-                oldLang = os.environ["LANGUAGE"]
-            except:
+                old_lang = os.environ["LANGUAGE"]
+            except StandardError:
                 pass
             os.environ["LANGUAGE"] = "fr"
             gtcache._gtcache = {}
@@ -43,11 +43,14 @@ def make_french(f):
             f(*args, **kwargs)
 
         finally:
-            if oldLang is None:
+            if old_lang is None:
                 del os.environ["LANGUAGE"]
             else:
-                os.environ["LANGUAGE"] = oldLang
-    return __make_french
+                os.environ["LANGUAGE"] = old_lang
+    return _make_french
+
+INPUT = "parsed %(countfiles)d files - found %(countvideos)d videos"
+OUTPUT = u'%(countfiles)d fichiers analys\xe9s  - %(countvideos)d vid\xe9os trouv\xe9es'
 
 class GettextTest(MiroTestCase):
     # FIXME - we probably want to test that something is logged instead of
@@ -68,35 +71,35 @@ class GettextTest(MiroTestCase):
 
     @make_french
     def test_gettext_values(self):
-        input = "parsed %(countfiles)d files - found %(countvideos)d videos"
-        output = u'%(countfiles)d fichiers analys\xe9s  - %(countvideos)d vid\xe9os trouv\xe9es'
-
         # test with no value expansion
-        self.assertEqual(gtcache.gettext(input), output)
+        self.assertEqual(gtcache.gettext(INPUT), OUTPUT)
 
         # test with old value expansion
-        self.assertEqual(gtcache.gettext(input) % {"countfiles": 1, "countvideos": 2},
-                         output % {"countfiles": 1, "countvideos": 2})
+        self.assertEqual(gtcache.gettext(INPUT) % {"countfiles": 1, "countvideos": 2},
+                         OUTPUT % {"countfiles": 1, "countvideos": 2})
 
         # test with value expansion done by gtcache.gettext
-        self.assertEqual(gtcache.gettext(input, {"countfiles": 1, "countvideos": 2}),
-                         output % {"countfiles": 1, "countvideos": 2})
+        self.assertEqual(gtcache.gettext(INPUT, 
+                                         {"countfiles": 1, "countvideos": 2}),
+                         OUTPUT % {"countfiles": 1, "countvideos": 2})
 
-
+    @make_french
+    def test_gettext_values_failures(self):
         # try gettext with a bad translation.  the string is fine, but
-        # the translated version of the string is missing the d characters
-        # which causes a Python formatting syntax error.
+        # the translated version of the string is missing the d
+        # characters which causes a Python formatting syntax error.
         input2 = "bad parsed %(countfiles)d files - found %(countvideos)d videos"
 
-        # first we call gettext on the string by itself--this is fine, so
-        # we should get the translated version of the string.
+        # first we call gettext on the string by itself--this is fine,
+        # so we should get the translated version of the string.
         self.assertEqual(gtcache.gettext(input2),
                          u'bad %(countfiles) fichiers analys\xe9s  - %(countvideos) vid\xe9os trouv\xe9es')
 
         # now we pass in a values dict which will kick up a ValueError
         # when trying to expand the values.  that causes gettext to
         # return the english form of the string with values expanded.
-        self.assertEqual(gtcache.gettext(input2, {"countfiles": 1, "countvideos": 2}),
+        self.assertEqual(gtcache.gettext(input2, 
+                                         {"countfiles": 1, "countvideos": 2}),
                          input2 % {"countfiles": 1, "countvideos": 2})
 
     @make_french

@@ -24,7 +24,7 @@ class AcceptScrapeTestDelegate:
     def __init__(self):
         self.calls = 0
 
-    def runDialog(self, dialog):
+    def run_dialog(self, dialog):
         self.calls += 1
         if not isinstance(dialog, dialogs.ChoiceDialog):
             raise AssertionError("Only expected ChoiceDialogs")
@@ -34,58 +34,67 @@ class AcceptScrapeTestDelegate:
         dialog.callback(dialog)
 
 class FeedURLValidationTest(MiroTestCase):
-    def test(self):
-        self.assertEqual(validate_feed_url(u"http://foo.bar.com/"), True)
-        self.assertEqual(validate_feed_url(u"https://foo.bar.com/"), True)
-                         
-        self.assertEqual(validate_feed_url(u"feed://foo.bar.com/"), False)
-        self.assertEqual(validate_feed_url(u"http://foo.bar.com"), False)
-        self.assertEqual(validate_feed_url(u"http:foo.bar.com/"), False)
-        self.assertEqual(validate_feed_url(u"https:foo.bar.com/"), False)
-        self.assertEqual(validate_feed_url(u"feed:foo.bar.com/"), False)
-        self.assertEqual(validate_feed_url(u"http:/foo.bar.com/"), False)
-        self.assertEqual(validate_feed_url(u"https:/foo.bar.com/"), False)
-        self.assertEqual(validate_feed_url(u"feed:/foo.bar.com/"), False)
-        self.assertEqual(validate_feed_url(u"http:///foo.bar.com/"), False)
-        self.assertEqual(validate_feed_url(u"https:///foo.bar.com/"), False)
-        self.assertEqual(validate_feed_url(u"feed:///foo.bar.com/"), False)
+    def test_positive(self):
+        for i, o in [(u"http://foo.bar.com/", True),
+                     (u"https://foo.bar.com/", True)
+                     ]:
+            self.assertEqual(validate_feed_url(i), o)
 
-        self.assertEqual(validate_feed_url(u"foo.bar.com"), False)
-        self.assertEqual(validate_feed_url(u"crap:foo.bar.com"), False)
-        self.assertEqual(validate_feed_url(u"crap:/foo.bar.com"), False)
-        self.assertEqual(validate_feed_url(u"crap://foo.bar.com"), False)
-        self.assertEqual(validate_feed_url(u"crap:///foo.bar.com"), False)
+    def test_negative(self):
+        for i, o in [(u"feed://foo.bar.com/", False),
+                     (u"http://foo.bar.com", False),
+                     (u"http:foo.bar.com/", False),
+                     (u"https:foo.bar.com/", False),
+                     (u"feed:foo.bar.com/", False),
+                     (u"http:/foo.bar.com/", False),
+                     (u"https:/foo.bar.com/", False),
+                     (u"feed:/foo.bar.com/", False),
+                     (u"http:///foo.bar.com/", False),
+                     (u"https:///foo.bar.com/", False),
+                     (u"feed:///foo.bar.com/", False),
+                     (u"foo.bar.com", False),
+                     (u"crap:foo.bar.com", False),
+                     (u"crap:/foo.bar.com", False),
+                     (u"crap://foo.bar.com", False),
+                     (u"crap:///foo.bar.com", False),
+                     ]:
+            self.assertEqual(validate_feed_url(i), o)
 
-        # FIXME - add tests for all the other kinds of urls that validate_feed_url
-        # handles.
+        # FIXME - add tests for all the other kinds of urls that
+        # validate_feed_url handles.
 
 class FeedURLNormalizationTest(MiroTestCase):
-    def test(self):
-        self.assertEqual(normalize_feed_url(u"http://foo.bar.com"), u"http://foo.bar.com/")
-        self.assertEqual(normalize_feed_url(u"https://foo.bar.com"), u"https://foo.bar.com/")
-        self.assertEqual(normalize_feed_url(u"feed://foo.bar.com"), u"http://foo.bar.com/")
+    def test_easy(self):
+        for i, o in [(u"http://foo.bar.com", u"http://foo.bar.com/"),
+                     (u"https://foo.bar.com", u"https://foo.bar.com/"),
+                     (u"feed://foo.bar.com", u"http://foo.bar.com/")
+                     ]:
+            self.assertEqual(normalize_feed_url(i), o)
 
-        self.assertEqual(normalize_feed_url(u"http:foo.bar.com"), u"http://foo.bar.com/")
-        self.assertEqual(normalize_feed_url(u"https:foo.bar.com"), u"https://foo.bar.com/")
-        self.assertEqual(normalize_feed_url(u"feed:foo.bar.com"), u"http://foo.bar.com/")
-        self.assertEqual(normalize_feed_url(u"http:/foo.bar.com"), u"http://foo.bar.com/")
-        self.assertEqual(normalize_feed_url(u"https:/foo.bar.com"), u"https://foo.bar.com/")
-        self.assertEqual(normalize_feed_url(u"feed:/foo.bar.com"), u"http://foo.bar.com/")
-        self.assertEqual(normalize_feed_url(u"http:///foo.bar.com"), u"http://foo.bar.com/")
-        self.assertEqual(normalize_feed_url(u"https:///foo.bar.com"), u"https://foo.bar.com/")
-        self.assertEqual(normalize_feed_url(u"feed:///foo.bar.com"), u"http://foo.bar.com/")
+    def test_garbage(self):
+        for i, o in [(u"http:foo.bar.com", u"http://foo.bar.com/"),
+                     (u"https:foo.bar.com", u"https://foo.bar.com/"),
+                     (u"feed:foo.bar.com", u"http://foo.bar.com/"),
+                     (u"http:/foo.bar.com", u"http://foo.bar.com/"),
+                     (u"https:/foo.bar.com", u"https://foo.bar.com/"),
+                     (u"feed:/foo.bar.com", u"http://foo.bar.com/"),
+                     (u"http:///foo.bar.com", u"http://foo.bar.com/"),
+                     (u"https:///foo.bar.com", u"https://foo.bar.com/"),
+                     (u"feed:///foo.bar.com", u"http://foo.bar.com/"),
+                     (u"foo.bar.com", u"http://foo.bar.com/"),
+                     (u"http://foo.bar.com:80", u"http://foo.bar.com:80/"),
+                     ]:
+            self.assertEquals(normalize_feed_url(i), o)
 
-        self.assertEqual(normalize_feed_url(u"foo.bar.com"), u"http://foo.bar.com/")
-
-        # FIXME - add tests for all the other kinds of feeds that normalize_feed_url
-        # handles.
+        # FIXME - add tests for all the other kinds of feeds that
+        # normalize_feed_url handles.
 
 class FeedTestCase(EventLoopTest):
     def setUp(self):
         EventLoopTest.setUp(self)
         self.filename = self.make_temp_path()
 
-    def writefile(self, content):
+    def write_file(self, content):
         self.url = u'file://%s' % self.filename
         handle = file(self.filename,"wb")
         # RSS 2.0 example feed
@@ -93,15 +102,15 @@ class FeedTestCase(EventLoopTest):
         handle.write(content)
         handle.close()
 
-    def makeFeed(self):
-        feed = Feed(self.url)
-        self.updateFeed(feed)
-        return feed
-
-    def updateFeed(self, feed):
+    def update_feed(self, feed):
         feed.update()
         self.processThreads()
         self.processIdles()
+
+    def make_feed(self):
+        feed = Feed(self.url)
+        self.update_feed(feed)
+        return feed
 
 class SimpleFeedTestCase(FeedTestCase):
     def setUp(self):
@@ -110,7 +119,7 @@ class SimpleFeedTestCase(FeedTestCase):
         # http://cyber.law.harvard.edu/blogs/gems/tech/rss2sample.xml
 
         # this rss feed has no enclosures.
-        self.writefile("""<?xml version="1.0"?>
+        self.write_file("""<?xml version="1.0"?>
 <rss version="2.0">
    <channel>
       <title>Liftoff News</title>
@@ -152,9 +161,10 @@ class SimpleFeedTestCase(FeedTestCase):
       </item>
    </channel>
 </rss>""")
-    def testRun(self):
+
+    def test_run(self):
         dialogs.delegate = AcceptScrapeTestDelegate()
-        myFeed = self.makeFeed()
+        my_feed = self.make_feed()
 
         # the feed has no enclosures, but we now insert enclosures into it.
         # thus it should not cause a dialog to pop up and ask the user if they
@@ -165,10 +175,10 @@ class SimpleFeedTestCase(FeedTestCase):
         self.assertEqual(len(items), 1)
 
         # make sure that re-updating doesn't re-create the items
-        myFeed.update()
+        my_feed.update()
         items = list(Item.make_view())
         self.assertEqual(len(items), 1)
-        myFeed.remove()
+        my_feed.remove()
 
 class MultiFeedExpireTest(FeedTestCase):
     def write_files(self, subfeed_count, feed_item_count):
@@ -193,6 +203,16 @@ class MultiFeedExpireTest(FeedTestCase):
         # make a feed with a new item and parse it
         items = []
         counter = 0
+
+        items.append("""<?xml version="1.0"?>
+<rss version="2.0">
+   <channel>
+      <title>Downhill Battle Pics</title>
+      <link>http://downhillbattle.org/</link>
+      <description>Downhill Battle is a non-profit organization working to support participatory culture and build a fairer music industry.</description>
+      <pubDate>Wed, 16 Mar 2005 12:03:42 EST</pubDate>
+""")
+
         for x in range(entry_count):
             counter += 1
             items.append("""\
@@ -203,32 +223,28 @@ class MultiFeedExpireTest(FeedTestCase):
  <description>I'm a musician and I support filesharing.</description>
 </item>
 """ % (counter, counter))
-        return """<?xml version="1.0"?>
-<rss version="2.0">
-   <channel>
-      <title>Downhill Battle Pics</title>
-      <link>http://downhillbattle.org/</link>
-      <description>Downhill Battle is a non-profit organization working to support participatory culture and build a fairer music industry.</description>
-      <pubDate>Wed, 16 Mar 2005 12:03:42 EST</pubDate>
-      %s
+
+        items.append("""
    </channel>
-</rss>""" % '\n'.join(items)
+</rss>""")
+        return "".join(items)
 
     def test_multi_feed_expire(self):
-        # test what happens when a RSSMultiFeed has feeds that reference the
-        # same item, and they are truncated at the same time (#11756)
+        # test what happens when a RSSMultiFeed has feeds that
+        # reference the same item, and they are truncated at the same
+        # time (#11756)
 
         self.write_files(5, 10) # 5 feeds containing 10 identical items
-        self.feed = self.makeFeed()
+        self.feed = self.make_feed()
         config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 4)
         config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 5)
         self.rewrite_files(1) # now only 5 items in each feed
-        self.updateFeed(self.feed)
+        self.update_feed(self.feed)
 
 class EnclosureFeedTestCase(FeedTestCase):
     def setUp(self):
         FeedTestCase.setUp(self)
-        self.writefile("""<?xml version="1.0"?>
+        self.write_file("""<?xml version="1.0"?>
 <rss version="2.0">
    <channel>
       <title>Downhill Battle Pics</title>
@@ -258,29 +274,40 @@ class EnclosureFeedTestCase(FeedTestCase):
       
    </channel>
 </rss>""")
-    def testRun(self):
-        myFeed = self.makeFeed()
+
+    def test_run(self):
+        my_feed = self.make_feed()
         items = list(Item.make_view())
-        self.assertEqual(len(items),4)
-        #Make sure that re-updating doesn't re-create the items
-        myFeed.update()
+        self.assertEqual(len(items), 4)
+        # make sure that re-updating doesn't re-create the items
+        my_feed.update()
         items = list(Item.make_view())
-        self.assertEqual(len(items),4)
-        myFeed.remove()
+        self.assertEqual(len(items), 4)
+        my_feed.remove()
 
 class OldItemExpireTest(FeedTestCase):
     # Test that old items expire when the feed gets too big
     def setUp(self):
         FeedTestCase.setUp(self)
         self.counter = 0
-        self.writeNewFeed()
-        self.feed = self.makeFeed()
+        self.write_new_feed()
+        self.feed = self.make_feed()
         config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 4)
         config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 20)
 
-    def writeNewFeed(self, entryCount=2):
+    def write_new_feed(self, entryCount=2):
         # make a feed with a new item and parse it
         items = []
+
+        items.append("""<?xml version="1.0"?>
+<rss version="2.0">
+   <channel>
+      <title>Downhill Battle Pics</title>
+      <link>http://downhillbattle.org/</link>
+      <description>Downhill Battle is a non-profit organization working to support participatory culture and build a fairer music industry.</description>
+      <pubDate>Wed, 16 Mar 2005 12:03:42 EST</pubDate>
+""")
+
         for x in range(entryCount):
             self.counter += 1
             items.append("""\
@@ -291,63 +318,58 @@ class OldItemExpireTest(FeedTestCase):
  <description>I'm a musician and I support filesharing.</description>
 </item>
 """ % (self.counter, self.counter))
-        self.writefile("""<?xml version="1.0"?>
-<rss version="2.0">
-   <channel>
-      <title>Downhill Battle Pics</title>
-      <link>http://downhillbattle.org/</link>
-      <description>Downhill Battle is a non-profit organization working to support participatory culture and build a fairer music industry.</description>
-      <pubDate>Wed, 16 Mar 2005 12:03:42 EST</pubDate>
-      %s
-   </channel>
-</rss>""" % '\n'.join(items))
 
-    def checkGuids(self, *ids):
+        items.append("""
+   </channel>
+</rss>""")
+        self.write_file("\n".join(items))
+
+    def check_guids(self, *ids):
         actual = set()
         for i in Item.make_view():
             actual.add(i.get_rss_id())
         correct = set(['guid-%d' % i for i in ids])
         self.assertEquals(actual, correct)
 
-    def parseNewFeed(self, entryCount=2):
-        self.writeNewFeed(entryCount)
-        self.updateFeed(self.feed)
+    def parse_new_feed(self, entryCount=2):
+        self.write_new_feed(entryCount)
+        self.update_feed(self.feed)
 
-    def testSimpleOverflow(self):
+    def test_simple_overflow(self):
         self.assertEqual(Item.make_view().count(), 2)
-        self.parseNewFeed()
+        self.parse_new_feed()
         self.assertEqual(Item.make_view().count(), 4)
-        self.parseNewFeed()
+        self.parse_new_feed()
         self.assertEqual(Item.make_view().count(), 4)
-        self.checkGuids(3, 4, 5, 6)
+        self.check_guids(3, 4, 5, 6)
 
-    def testOverflowWithDownloads(self):
+    def test_overflow_with_downloads(self):
         items = list(Item.make_view())
         items[0]._downloader = FakeDownloader()
         items[1]._downloader = FakeDownloader()
         self.assertEqual(len(items), 2)
-        self.parseNewFeed()
-        self.parseNewFeed()
-        self.checkGuids(1, 2, 5, 6)
+        self.parse_new_feed()
+        self.parse_new_feed()
+        self.check_guids(1, 2, 5, 6)
 
-    def testOverflowStillInFeed(self):
+    def test_overflow_still_in_feed(self):
         config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 0)
-        self.parseNewFeed(6)
-        self.checkGuids(3, 4, 5, 6, 7, 8)
+        self.parse_new_feed(6)
+        self.check_guids(3, 4, 5, 6, 7, 8)
 
-    def testOverflowWithReplacement(self):
+    def test_overflow_with_replacement(self):
         # Keep item with guid-2 in the feed.
         config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 0)
         self.counter = 1
-        self.parseNewFeed(5)
-        self.checkGuids(2, 3, 4, 5, 6)
+        self.parse_new_feed(5)
+        self.check_guids(2, 3, 4, 5, 6)
 
-    def testOverflowWithMaxOldItems(self):
+    def test_overflow_with_max_old_items(self):
         config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 1000) # don't bother
         self.assertEqual(Item.make_view().count(), 2)
-        self.parseNewFeed()
+        self.parse_new_feed()
         self.assertEquals(Item.make_view().count(), 4)
-        self.parseNewFeed()
+        self.parse_new_feed()
         self.feed.setMaxOldItems(4)
         self.feed.actualFeed.clean_old_items()
         while self.feed.actualFeed.updating:
@@ -362,14 +384,14 @@ class OldItemExpireTest(FeedTestCase):
             self.processIdles()
             sleep(0.1)
         self.assertEquals(Item.make_view().count(), 4)
-        self.checkGuids(3, 4, 5, 6)
+        self.check_guids(3, 4, 5, 6)
 
-    def testOverflowWithGlobalMaxOldItems(self):
+    def test_overflow_with_global_max_old_items(self):
         config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 1000) # don't bother
         self.assertEqual(Item.make_view().count(), 2)
-        self.parseNewFeed()
+        self.parse_new_feed()
         self.assertEquals(Item.make_view().count(), 4)
-        self.parseNewFeed()
+        self.parse_new_feed()
         config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 4)
         self.feed.actualFeed.clean_old_items()
         while self.feed.actualFeed.updating:
@@ -384,7 +406,7 @@ class OldItemExpireTest(FeedTestCase):
             self.processIdles()
             sleep(0.1)
         self.assertEquals(Item.make_view().count(), 4)
-        self.checkGuids(3, 4, 5, 6)
+        self.check_guids(3, 4, 5, 6)
 
 class FeedParserAttributesTestCase(FeedTestCase):
     """Test that we save/restore attributes from feedparser correctly.
@@ -393,7 +415,6 @@ class FeedParserAttributesTestCase(FeedTestCase):
     checking if the values we to the database are the same as the original
     ones from feedparser.
     """
-
     def setUp(self):
         FeedTestCase.setUp(self)
         self.tempdb = os.path.join(gettempdir(), 'democracy-temp-db')
@@ -402,7 +423,7 @@ class FeedParserAttributesTestCase(FeedTestCase):
         self.reload_database(self.tempdb)
         self.write_feed()
         self.parsed_feed = feedparser.parse(self.filename)
-        self.makeFeed()
+        self.make_feed()
         self.save_then_restore_db()
 
     def tearDown(self):
@@ -416,7 +437,7 @@ class FeedParserAttributesTestCase(FeedTestCase):
         self.item = Item.make_view().get_singleton()
 
     def write_feed(self):
-        self.writefile("""<?xml version="1.0"?>
+        self.write_file("""<?xml version="1.0"?>
 <rss version="2.0">
     <channel>
         <title>Downhill Battle Pics</title>
