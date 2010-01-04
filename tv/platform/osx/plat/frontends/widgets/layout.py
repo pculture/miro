@@ -634,9 +634,6 @@ class Scroller(Bin):
         self.document_view = FlippedView.alloc().init()
         self.view.setDocumentView_(self.document_view)
         clip_view = self.view.contentView()
-        self.clip_notifications = NotificationForwarder.create(clip_view)
-        clip_view.setPostsFrameChangedNotifications_(YES)
-        clip_view.setPostsBoundsChangedNotifications_(YES)
 
     def set_has_borders(self, has_border):
         self.view.setBorderType_(NSBezelBorder)
@@ -651,10 +648,6 @@ class Scroller(Bin):
     def remove(self):
         child.parent_is_scroller = False
         Bin.remove(self)
-
-    def remove_viewport(self):
-        Bin.remove_viewport(self)
-        self.clip_notifications.disconnect()
 
     def calc_size_request(self):
         if self.child:
@@ -677,7 +670,7 @@ class Scroller(Bin):
             child_width, child_height = self.child.get_size_request()
             child_width = max(child_width, self.view.contentView().frame().size.width)
             frame = NSRect(NSPoint(0,0), NSSize(child_width, child_height))
-            if isinstance(self.child, tableview.TableView):
+            if isinstance(self.child, tableview.TableView) and self.child.is_showing_headers():
                 # Hack to allow the content of a table view to scroll, but not
                 # the headers
                 self.child.place(frame, self.document_view)

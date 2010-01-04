@@ -1013,6 +1013,9 @@ class TableView(Widget):
             self._add_views()
         self.invalidate_size_request()
         self.queue_redraw()
+    
+    def is_showing_headers(self):
+        return self._show_headers
 
     def set_search_column(self, model_index):
         pass
