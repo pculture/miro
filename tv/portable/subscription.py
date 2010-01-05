@@ -108,7 +108,7 @@ def find_subscribe_links(url):
     """
     if not isinstance(url, basestring):
         logging.warn("find_subscribe_links: url wrong type %r\n%s",
-                     url, traceback.format_exc())
+                     url, "".join(traceback.format_stack()))
         return []
 
     dummy, host, path, dummy, query, dummy = urlparse.urlparse(url)
