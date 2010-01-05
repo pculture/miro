@@ -97,6 +97,26 @@ def wait_for_play(media_player):
         else:
             sleep(0.1)
 
+def get_type(media_player):
+    video_tracks = libvlc.libvlc_video_get_track_count(media_player, 
+            byref(exception))
+    try:
+        check_exception()
+    except VLCError:
+        video_tracks = 0
+    audio_tracks = libvlc.libvlc_audio_get_track_count(media_player,
+            byref(exception))
+    try:
+        check_exception()
+    except VLCError:
+        audio_tracks = 0
+    if video_tracks > 0:
+        return 'video'
+    elif audio_tracks > 0:
+        return 'audio'
+    else:
+        return 'other'
+
 def make_snapshot(video_path, thumbnail_path):
     if os.path.exists(thumbnail_path):
         os.remove(thumbnail_path)
@@ -134,6 +154,8 @@ def make_snapshot(video_path, thumbnail_path):
                                                    byref(exception))
     check_exception()
 
+    media_type = get_type(media_player)
+
     libvlc.libvlc_media_player_set_position(media_player, 
                                             ctypes.c_float(0.5),
                                             byref(exception))
@@ -165,6 +187,7 @@ def make_snapshot(video_path, thumbnail_path):
         print "Miro-Movie-Data-Thumbnail: Success"
     else:
         print "Miro-Movie-Data-Thumbnail: Failure"
+    print "Miro-Movie-Data-Type: %s" % media_type
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:

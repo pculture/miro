@@ -38,6 +38,7 @@ import Foundation
 
 from miro.plat import qtcomp
 from miro.plat import utils
+from miro.plat.frontends.widgets import mediatypes
 
 # =============================================================================
 
@@ -58,6 +59,31 @@ def extractDuration(qtmovie):
         return int((utils.qttimevalue(qttime) / float(utils.qttimescale(qttime))) * 1000)
     except Exception, e:
         return -1
+
+def get_type(qtmovie):
+    if qtmovie is None:
+        return 'unplayable'
+
+    allTracks = qtmovie.tracks()
+    if len(allTracks) == 0:
+        return 'unplayable'
+
+    has_audio = False
+    has_video = False
+    for track in allTracks:
+        media_type = track.attributeForKey_(QTKit.QTTrackMediaTypeAttribute)
+        if media_type in mediatypes.AUDIO_MEDIA_TYPES:
+            has_audio = True
+        elif media_type in mediatypes.VIDEO_MEDIA_TYPES:
+            has_video = True
+
+    item_type = 'unplayable'
+    if has_video:
+        item_type = 'video'
+    elif has_audio:
+        item_type = 'audio'
+
+    return item_type
 
 # -----------------------------------------------------------------------------
 

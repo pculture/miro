@@ -34,6 +34,7 @@ from AppKit import *
 from QTKit import *
 
 from miro import app
+from miro.plat.frontends.widgets import mediatypes
 from miro.plat.frontends.widgets import threads
 from miro.plat.frontends.widgets import overlay
 from miro.plat.frontends.widgets import quicktime
@@ -60,7 +61,7 @@ loadBundleFunctions(coreServicesBundle, globals(), ((u'UpdateSystemActivity', 'I
 
 ###############################################################################
 
-SUPPORTED_MEDIA_TYPES = (QTMediaTypeVideo, QTMediaTypeMPEG, QTMediaTypeMovie, QTMediaTypeFlash)
+SUPPORTED_MEDIA_TYPES = mediatypes.VIDEO_MEDIA_TYPES
 
 ###############################################################################
 

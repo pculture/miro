@@ -52,6 +52,7 @@ MOVIE_DATA_UTIL_TIMEOUT = 120
 SLEEP_DELAY = 0.1
 
 DURATION_RE = re.compile("Miro-Movie-Data-Length: (\d+)")
+TYPE_RE = re.compile("Miro-Movie-Data-Type: (audio|video|other)")
 THUMBNAIL_SUCCESS_RE = re.compile("Miro-Movie-Data-Thumbnail: Success")
 
 def thumbnail_directory():
@@ -130,6 +131,7 @@ class MovieDataUpdater:
                 stdout = self.run_movie_data_program(command_line, env)
                 if duration == -1:
                     duration = self.parse_duration(stdout)
+                type = self.parse_type(stdout)
                 if THUMBNAIL_SUCCESS_RE.search(stdout):
                     screenshot_worked = True
                 if ((screenshot_worked and
@@ -140,14 +142,14 @@ class MovieDataUpdater:
                     # Setting it to "" instead of None, means that we won't
                     # try to take the screenshot again.
                     screenshot = FilenameType("")
-                self.update_finished(mdi.item, duration, screenshot)
+                self.update_finished(mdi.item, duration, screenshot, type)
             except (KeyboardInterrupt, SystemExit):
                 raise
             except:
                 if self.in_shutdown:
                     break
                 signals.system.failed_exn("When running external movie data program")
-                self.update_finished(mdi.item, -1, None)
+                self.update_finished(mdi.item, -1, None, type)
 
     def run_movie_data_program(self, command_line, env):
         start_time = time.time()
@@ -186,12 +188,21 @@ class MovieDataUpdater:
         else:
             return -1
 
+    def parse_type(self, stdout):
+        type_match = TYPE_RE.search(stdout)
+        if type_match:
+            return type_match.group(1)
+        else:
+            return None
+
     @as_idle
-    def update_finished(self, item, duration, screenshot):
+    def update_finished(self, item, duration, screenshot, type):
         if item.id_exists():
             item.duration = duration
             item.screenshot = screenshot
             item.updating_movie_info = False
+            if type is not None:
+                item.file_type = unicode(type)
             item.signal_change()
 
     def request_update(self, item):

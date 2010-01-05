@@ -50,6 +50,7 @@ class Extractor:
         self.duration = -1
         self.buffer_probes = {}
         self.audio_only = False
+        self.saw_video_tag = self.saw_audio_tag = False
 
         self.pipeline = gst.parse_launch('filesrc location="%s" ! decodebin ! ffmpegcolorspace ! video/x-raw-rgb,depth=24,bpp=24 ! fakesink signal-handoffs=True' % (filename,))
 
@@ -79,7 +80,13 @@ class Extractor:
             
     def done (self):
 #        print "done()"
-        self.callback(self.duration, self.success)
+        if self.saw_video_tag:
+            type = 'video'
+        elif self.saw_audio_tag:
+            type = 'audio'
+        else:
+            type = 'other'
+        self.callback(self.duration, self.success, type)
 
     def paused_reached(self):
 #        print "paused_reached()"
@@ -119,6 +126,12 @@ class Extractor:
                     gobject.idle_add(self.paused_reached)
         if message.type == gst.MESSAGE_ERROR:
             gobject.idle_add(self.error_occurred)
+        if message.type == gst.MESSAGE_TAG:
+            taglist = message.parse_tag()
+            if 'video-codec' in taglist:
+                self.saw_video_tag = True
+            if 'audio-codec' in taglist:
+                self.saw_audio_tag = True
 
     def buffer_probe_handler_real(self, pad, buff, name):
         """Capture buffers as gdk_pixbufs when told to."""
@@ -157,7 +170,7 @@ class Extractor:
             self.bus.disconnect(self.watch_id)
             self.bus = None
 
-def handle_result(duration, success):
+def handle_result(duration, success, type):
     if duration != -1:
         print "Miro-Movie-Data-Length: %s" % (duration / 1000000)
     else:
@@ -166,6 +179,7 @@ def handle_result(duration, success):
         print "Miro-Movie-Data-Thumbnail: Success"
     else:
         print "Miro-Movie-Data-Thumbnail: Failure"
+    print "Miro-Movie-Data-Type: %s" % type
     sys.exit(0)
 
 if __name__ == "__main__":
