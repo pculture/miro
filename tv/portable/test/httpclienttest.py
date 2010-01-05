@@ -19,6 +19,7 @@ from miro import httpclient
 from miro import signals
 from miro import util
 from miro.test.framework import EventLoopTest, MiroTestCase, HadToStopEventLoop
+from miro.plat.utils import FilenameType
 
 class TestingConnectionHandler(httpclient.ConnectionHandler):
     def __init__(self, test):
@@ -1308,7 +1309,7 @@ class HTTPClientTest(HTTPClientTestBase):
         tempdir = tempfile.gettempdir()
         def testIt(filename):
             cleaned = clean_filename(filename)
-            self.assertEqual(cleaned.__class__, str)
+            self.assertEqual(cleaned.__class__, FilenameType)
             self.assertNotEqual(cleaned, '')
             path = os.path.join(tempdir, cleaned)
             f = open(path, 'w')
