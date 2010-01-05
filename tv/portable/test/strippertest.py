@@ -1,15 +1,16 @@
 """
 See tv/resources/testdata/stripperdata/ for test files.
 
-Files ending with ``.in`` are input files.  These should be in utf-8 coding
-and the entire file is used as input.
+Files ending with ``.in`` are input files.  These should be in utf-8
+coding and the entire file is used as input.
 
-Files ending with ``.expected`` are expected output files.  These files are
-the repr(...) of the output from HTMLStripper.strip.
+Files ending with ``.expected`` are expected output files.  These
+files are the repr(...) of the output from HTMLStripper.strip.
 
-If you need to write new tests, write the test, run the unittest and the
-test will fail--but StripperTest will tell you what the output is.  You can
-verify the output, then copy and paste it into a .expected file.
+If you need to write new tests, write the test, run the unittest and
+the test will fail--but StripperTest will tell you what the output is.
+You can verify the output, then copy and paste it into a .expected
+file.
 """
 
 from StringIO import StringIO

@@ -22,15 +22,15 @@ from miro import storedatabase
 from miro.plat import resources
 
 from miro.test.framework import MiroTestCase, EventLoopTest
-# sooo much easier to type...
-from miro.schema import SchemaString, SchemaInt, SchemaFloat, SchemaReprContainer
-from miro.schema import SchemaList, SchemaDict, SchemaObject, SchemaBool
-from miro.schema import SchemaFilename, SchemaBinary
+from miro.schema import (SchemaString, SchemaInt, SchemaFloat,
+                         SchemaReprContainer, SchemaList, SchemaDict,
+                         SchemaObject, SchemaBool, SchemaFilename,
+                         SchemaBinary)
 
 # create a dummy object schema
 class Human(database.DDBObject):
     def setup_new(self, name, age, meters_tall, friends, high_scores=None,
-            **stuff):
+                  **stuff):
         self.name = name
         self.age = age
         self.meters_tall = meters_tall
@@ -86,7 +86,6 @@ class RestorableHumanSchema(HumanSchema):
     table_name = 'restorable_human'
 
 class PCFProgramerSchema(schema.MultiClassObjectSchema):
-
     table_name = 'pcf_programmer'
     fields = HumanSchema.fields + [
         ('file', SchemaFilename()),
@@ -110,7 +109,7 @@ def upgrade1(cursor):
     cursor.execute("UPDATE human set name='new name'")
 
 def upgrade2(cursor):
-    1/0
+    1 / 0
 
 class StoreDatabaseTest(EventLoopTest):
     OBJECT_SCHEMAS = None
@@ -134,7 +133,7 @@ class StoreDatabaseTest(EventLoopTest):
     def tearDown(self):
         self.remove_database()
         corrupt_path = os.path.join(os.path.dirname(self.save_path),
-                'corrupt_database')
+                                    'corrupt_database')
         if os.path.exists(corrupt_path):
             os.remove(corrupt_path)
         databaseupgrade._upgrade_overide = {}
@@ -170,13 +169,13 @@ class DBUpgradeTest(StoreDatabaseTest):
         self.remove_database()
         self.reload_database()
         app.db.cursor.execute("SELECT name FROM sqlite_master "
-                "WHERE type='index'")
+                              "WHERE type='index'")
         blank_db_indexes = set(app.db.cursor)
         shutil.copy(resources.path("testdata/olddatabase.v79"),
-                self.save_path2)
+                    self.save_path2)
         self.reload_database(self.save_path2)
         app.db.cursor.execute("SELECT name FROM sqlite_master "
-                "WHERE type='index'")
+                              "WHERE type='index'")
         upgraded_db_indexes = set(app.db.cursor)
         self.assertEquals(upgraded_db_indexes, blank_db_indexes)
 
@@ -185,21 +184,21 @@ class DBUpgradeTest(StoreDatabaseTest):
         self.reload_database()
         blank_column_types = self._get_column_types()
         shutil.copy(resources.path("testdata/olddatabase.v79"),
-                self.save_path2)
+                    self.save_path2)
         self.reload_database(self.save_path2)
         upgraded_column_types = self._get_column_types()
         self.assertEquals(set(blank_column_types.keys()),
-                set(upgraded_column_types.keys()))
+                          set(upgraded_column_types.keys()))
         for table_name in blank_column_types:
             diff = blank_column_types[table_name].symmetric_difference(
-                    upgraded_column_types[table_name])
+                upgraded_column_types[table_name])
             if diff:
                 raise AssertionError("different column types for %s (%s)" %
-                        (table_name, diff))
+                                     (table_name, diff))
 
     def _get_column_types(self):
         app.db.cursor.execute("SELECT name FROM sqlite_master "
-                "WHERE type='table'")
+                              "WHERE type='table'")
         rv = {}
         for table_name in app.db.cursor.fetchall():
             app.db.cursor.execute('pragma table_info(%s)' % table_name)
@@ -213,9 +212,9 @@ class FakeSchemaTest(StoreDatabaseTest):
         StoreDatabaseTest.setUp(self)
         self.lee = Human(u"lee", 25, 1.4, [], {u'virtual bowling': 212})
         self.joe = RestorableHuman(u"joe", 14, 1.4, [self.lee], car=u'toyota',
-                dog=u'scruffy')
+                                   dog=u'scruffy')
         self.ben = PCFProgramer(u'ben', 25, 3.4, [self.joe],
-                '/home/ben/\u1234'.encode("utf-8"), True)
+                                '/home/ben/\u1234'.encode("utf-8"), True)
         self.db = [self.lee, self.joe, self.ben]
         databaseupgrade._upgrade_overide[1] = upgrade1
         databaseupgrade._upgrade_overide[2] = upgrade2
@@ -246,7 +245,8 @@ class DiskTest(FakeSchemaTest):
                         obj_value, name))
 
     def test_create(self):
-        # Test that the database we set up in __init__ restores correctly
+        # Test that the database we set up in __init__ restores
+        # correctly
         self.reload_test_database()
         self.check_database()
 
@@ -312,7 +312,8 @@ class DiskTest(FakeSchemaTest):
         # oppertunity to commit when it's closed.
         app.db.connection.close()
         app.db = storedatabase.LiveStorage(self.save_path,
-                schema_version=0, object_schemas=self.OBJECT_SCHEMAS)
+                                           schema_version=0,
+                                           object_schemas=self.OBJECT_SCHEMAS)
         app.db.upgrade_database()
         self.check_database()
 
@@ -335,7 +336,7 @@ class DiskTest(FakeSchemaTest):
 
     def check_reload_error(self, **reload_args):
         corrupt_path = os.path.join(os.path.dirname(self.save_path),
-                'corrupt_database')
+                                    'corrupt_database')
         self.assert_(not os.path.exists(corrupt_path))
         self.reload_test_database(**reload_args)
         self.assert_(os.path.exists(corrupt_path))
@@ -359,7 +360,7 @@ class DiskTest(FakeSchemaTest):
         for x in range(10):
             name = u"lee-clone-%s" % x
             new_humans.append(Human(name, 25, 1.4, [], {u'virtual bowling':
-                212}))
+                                                        212}))
         self.check_database()
         self.assertEquals(Human.make_view().count(), 1)
         app.bulk_sql_manager.finish()
@@ -391,40 +392,40 @@ class ValidationTest(FakeSchemaTest):
     def assert_object_invalid(self, obj):
         self.assertRaises(schema.ValidationError, obj.signal_change)
 
-    def testNoneValues(self):
+    def test_none_values(self):
         self.lee.age = None
         self.assert_object_invalid(self.lee)
         self.lee.age = 25
         self.lee.stuff = None
         self.assert_object_valid(self.lee)
 
-    def testIntValidation(self):
+    def test_int_validation(self):
         self.lee.age = '25'
         self.assert_object_invalid(self.lee)
         self.lee.age = 25L
         self.assert_object_valid(self.lee)
 
-    def testStringValidation(self):
+    def test_string_validation(self):
         self.lee.name = 133
         self.assert_object_invalid(self.lee)
         self.lee.name = u'lee'
         self.assert_object_valid(self.lee)
 
-    def testBinaryValidation(self):
+    def test_binary_validation(self):
         self.lee.id_code = u'abc'
         self.assert_object_invalid(self.lee)
         self.lee.id_code = 'abc'
         self.assert_object_valid(self.lee)
 
-    def testFloatValidation(self):
+    def test_float_validation(self):
         self.lee.meters_tall = 3
         self.assert_object_invalid(self.lee)
 
-    def testListValidation(self):
+    def test_list_validation(self):
         self.lee.friend_names = [1234]
         self.assert_object_invalid(self.lee)
 
-    def testDictValidation(self):
+    def test_dict_validation(self):
         self.joe.high_scores['pong'] = u"One Million"
         self.assert_object_invalid(self.joe)
         del self.joe.high_scores['pong']
@@ -436,7 +437,7 @@ class CorruptReprTest(FakeSchemaTest):
     # (#12028)
     def test_repr_failure(self):
         app.db.cursor.execute("UPDATE human SET stuff='{baddata' "
-                "WHERE name='lee'")
+                              "WHERE name='lee'")
         restored_lee = self.reload_object(self.lee)
         self.assertEqual(restored_lee.stuff, 'testing123')
         app.db.cursor.execute("SELECT stuff from human WHERE name='lee'")
@@ -445,7 +446,7 @@ class CorruptReprTest(FakeSchemaTest):
 
     def test_repr_failure_no_handler(self):
         app.db.cursor.execute("UPDATE pcf_programmer SET stuff='{baddata' "
-                "WHERE name='ben'")
+                              "WHERE name='ben'")
         self.assertRaises(SyntaxError, self.reload_object, self.ben)
 
 class ConverterTest(StoreDatabaseTest):
@@ -454,11 +455,13 @@ class ConverterTest(StoreDatabaseTest):
 
         test1 = """{'updated_parsed': (2009, 6, 5, 1, 30, 0, 4, 156, 0)}"""
         val = converter._convert_repr(test1)
-        self.assertEquals(val, {"updated_parsed": (2009, 6, 5, 1, 30, 0, 4, 156, 0)})
+        self.assertEquals(val, {"updated_parsed":
+                                (2009, 6, 5, 1, 30, 0, 4, 156, 0)})
 
         test2 = """{'updated_parsed': time.struct_time(tm_year=2009, tm_mon=6, tm_mday=5, tm_hour=1, tm_min=30, tm_sec=0, tm_wday=4, tm_yday=156, tm_isdst=0)}"""
         val = converter._convert_repr(test2)
-        self.assertEquals(val, {"updated_parsed": (2009, 6, 5, 1, 30, 0, 4, 156, 0)})
+        self.assertEquals(val, {"updated_parsed":
+                                (2009, 6, 5, 1, 30, 0, 4, 156, 0)})
 
 class CorruptDDBObjectReprTest(StoreDatabaseTest):
     # test corrupt SchemaReprContainer columns in real DDBObjects
@@ -495,8 +498,8 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
     def test_corrupt_status(self):
         app.db.cursor.execute("UPDATE remote_downloader "
                 "SET status='{baddata' WHERE id=?", (self.downloader.id,))
-        # setup_restored sets some values for status, so we will have more
-        # than an empty dict
+        # setup_restored sets some values for status, so we will have
+        # more than an empty dict
         self.check_fixed_value(self.downloader, 'status',
                 {'rate': 0, 'upRate': 0, 'eta': 0}, disk_value={})
 

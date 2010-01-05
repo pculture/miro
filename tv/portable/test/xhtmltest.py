@@ -37,7 +37,6 @@ class Test_fix_xml_header(MiroTestCase):
 """.strip())
 
 
-
 class Test_fix_html_header(MiroTestCase):
     def test(self):
         doc1 = """

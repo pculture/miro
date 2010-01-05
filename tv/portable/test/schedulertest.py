@@ -7,44 +7,44 @@ from miro.test.framework import EventLoopTest
 
 class SchedulerTest(EventLoopTest):
     def setUp(self):
-        self.gotArgs = []
-        self.gotKwargs = []
+        self.got_args = []
+        self.got_kwargs = []
         EventLoopTest.setUp(self)
     
     def callback(self, *args, **kwargs):
-        self.gotArgs.append(args)
-        self.gotKwargs.append(kwargs)
+        self.got_args.append(args)
+        self.got_kwargs.append(kwargs)
         if 'stop' in kwargs.keys():
             eventloop.quit()
 
-    def testCallbacks(self):
+    def test_callbacks(self):
         eventloop.addIdle(self.callback, "foo")
         eventloop.addTimeout(0.1, self.callback, "foo", args=("chris",), 
-                kwargs={'hula':"hula"})
+                             kwargs={'hula': "hula"})
         eventloop.addTimeout(0.2, self.callback, "foo", args=("ben",), 
-                kwargs={'hula':'moreHula', 'stop':1})
+                             kwargs={'hula': 'moreHula', 'stop': 1})
         self.runEventLoop()
-        self.assertEquals(self.gotArgs[0], ())
-        self.assertEquals(self.gotArgs[1], ("chris",))
-        self.assertEquals(self.gotArgs[2], ("ben",))
-        self.assertEquals(self.gotKwargs[0], {})
-        self.assertEquals(self.gotKwargs[1], {'hula':'hula'})
-        self.assertEquals(self.gotKwargs[2], {'hula':'moreHula', 'stop':1})
+        self.assertEquals(self.got_args[0], ())
+        self.assertEquals(self.got_args[1], ("chris",))
+        self.assertEquals(self.got_args[2], ("ben",))
+        self.assertEquals(self.got_kwargs[0], {})
+        self.assertEquals(self.got_kwargs[1], {'hula':'hula'})
+        self.assertEquals(self.got_kwargs[2], {'hula': 'moreHula', 'stop': 1})
 
-    def testQuitWithStuffStillScheduled(self):
-        eventloop.addTimeout(0.1, self.callback, "foo", kwargs={'stop':1})
+    def test_quit_with_stuff_still_scheduled(self):
+        eventloop.addTimeout(0.1, self.callback, "foo", kwargs={'stop': 1})
         eventloop.addTimeout(2, self.callback, "foo")
         self.runEventLoop()
-        self.assertEquals(len(self.gotArgs), 1)
+        self.assertEquals(len(self.got_args), 1)
 
-    def testTiming(self):
-        startTime = time()
-        eventloop.addTimeout(0.2, self.callback, "foo", kwargs={'stop':1})
+    def test_timing(self):
+        start_time = time()
+        eventloop.addTimeout(0.2, self.callback, "foo", kwargs={'stop': 1})
         self.runEventLoop()
-        endTime = time()
-        self.assertAlmostEqual(startTime + 0.2, endTime, places=1)
+        end_time = time()
+        self.assertAlmostEqual(start_time + 0.2, end_time, places=1)
 
-    def testLotsOfThreads(self):
+    def test_lots_of_threads(self):
         timeouts = [0, 0, 0.1, 0.2, 0.3]
         threadCount = 8
         def thread():
@@ -57,4 +57,4 @@ class SchedulerTest(EventLoopTest):
         eventloop.addTimeout(1, self.callback, "foo", kwargs={'stop':1})
         self.runEventLoop()
         totalCalls = len(timeouts) * threadCount + 1
-        self.assertEquals(len(self.gotArgs), totalCalls)
+        self.assertEquals(len(self.got_args), totalCalls)

@@ -162,8 +162,8 @@ class Test20DatabaseConvert(DatabaseUpgradeTest):
         self.check_data_migrated()
 
     def test_left_over_data(self):
-        """Test what happens if the SavableObjects have keys around that
-        aren't used anymore.
+        """Test what happens if the SavableObjects have keys around
+        that aren't used anymore.
         """
         self.one_test("olddatabase.v71")
 

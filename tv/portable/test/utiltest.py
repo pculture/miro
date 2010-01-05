@@ -14,15 +14,17 @@ util.PREFERRED_TYPES = [
     'video/quicktime', 'video/mpeg']
 
 class FakeStream:
-    """Fake streams are used for the AutoFlushingStream test.  They don't
-    really do much, except check that write is always called with a string
-    object (unicode won't always work when writing to stdout).
+    """Fake streams are used for the AutoFlushingStream test.  They
+    don't really do much, except check that write is always called
+    with a string object (unicode won't always work when writing to
+    stdout).
     """
 
     def write(self, out):
         if not isinstance(out, str):
             raise ValueError("Got non-string object (%s) from "
             "autoflushing stream" % str.__class__)
+
     def flush(self):
         pass
 
@@ -32,12 +34,12 @@ class AutoFlushingStreamTest(MiroTestCase):
         self.stream = FakeStream()
         self.afs = util.AutoFlushingStream(self.stream)
 
-    def testBasicWrite(self):
+    def test_basic_write(self):
         self.afs.write("Hello World\n")
         self.afs.write("")
         self.afs.write("LotsofData" * 200)
 
-    def testUnicodeWrite(self):
+    def test_unicode_write(self):
         self.afs.write(u'\xf8')
 
 class LoggingStreamTest(MiroTestCase):
@@ -49,12 +51,12 @@ class LoggingStreamTest(MiroTestCase):
         self.stderr = util.AutoLoggingStream(self.err_callback, '(from stderr) ')
 
     def _check_data(self, data):
-        """Check that write is always called with a string object (unicode
-        won't always work when writing to stdout)
+        """Check that write is always called with a string object
+        (unicode won't always work when writing to stdout)
         """
         if not isinstance(data, str):
             raise ValueError("Got non-string object (%r) from LoggingStream" %
-                    data)
+                             data)
 
     def warn_callback(self, data):
         self._check_data(data)
@@ -64,7 +66,7 @@ class LoggingStreamTest(MiroTestCase):
         self._check_data(data)
         self.errors.append(data)
 
-    def testBasicWrite(self):
+    def test_basic_write(self):
         self.stdout.write("Hello World\n")
         self.stdout.write("")
         self.stderr.write("LotsofData" * 200)
@@ -74,7 +76,7 @@ class LoggingStreamTest(MiroTestCase):
         self.assertEquals(self.errors[0], '(from stderr) ' + 
             "LotsofData" * 200)
 
-    def testUnicodeWrite(self):
+    def test_unicode_write(self):
         self.stdout.write(u'\xf8')
         self.assertEquals(len(self.warnings), 1)
         self.assertEquals(self.warnings[0], '(from stdout) \\xf8')
@@ -131,26 +133,26 @@ class UtilTest(MiroTestCase):
              'type': u'video/mpeg',
              'filesize': u'244700'}]
 
-    def testStringify(self):
-        # input, handleerror, expected output
-        # if handlerror is None, then it isn't passed in as an argument
-        t = [
-              ( "", None, ""),
-              ( "abc", None, "abc"),
-              ( 5, None, "5"),
-              ( 5.5, None, "5.5"),
-              ( u"abc", None, "abc"),
-              ( u"abc\xe4", None, "abc&#228;"),
-              ( u"abc\xe4", "replace", "abc?")
-            ]
+    def test_stringify(self):
+        # input, handleerror, expected output if handlerror is None,
+        # then it isn't passed in as an argument
 
-        for i, h, o in t:
+        for i, h, o in [
+            ( "", None, ""),
+            ( "abc", None, "abc"),
+            ( 5, None, "5"),
+            ( 5.5, None, "5.5"),
+            ( u"abc", None, "abc"),
+            ( u"abc\xe4", None, "abc&#228;"),
+            ( u"abc\xe4", "replace", "abc?")
+            ]:
+
             if h == None:
                 self.assertEquals(util.stringify(i), o)
             else:
                 self.assertEquals(util.stringify(i, h), o)
 
-    def testRandomString(self):
+    def test_random_string(self):
         ret = util.random_string(0)
         self.assertEquals(len(ret), 0)
 
@@ -159,7 +161,7 @@ class UtilTest(MiroTestCase):
             self.assertEquals(len(ret), length)
             self.assertEquals(ret.isalpha(), True)
 
-    def testCmpEnclosures(self):
+    def test_cmp_enclosures(self):
         """
         Test for util.cmp_enclosures
         """
@@ -225,15 +227,15 @@ class DownloadUtilsTest(MiroTestCase):
         self.check_clean_filename('normalname', 'normalname')
         self.check_clean_filename('a:b?c>d<e|f*/g\\h"\'', 'abcdefgh')
         self.check_clean_filename('', '_')
-        longFilename = 'booya' * 100
-        longExtension = '.' + 'foo' * 20
-        self.check_clean_filename(longFilename, longFilename[:100])
-        # total file length isn't over the limit, so the extension stays the
-        # same
-        self.check_clean_filename('abc' + longExtension, 
-                                  'abc' + longExtension)
-        self.check_clean_filename(longFilename + longExtension,
-                                  longFilename[:50] + longExtension[:50])
+        long_filename = 'booya' * 100
+        long_extension = '.' + 'foo' * 20
+        self.check_clean_filename(long_filename, long_filename[:100])
+        # total file length isn't over the limit, so the extension
+        # stays the same
+        self.check_clean_filename('abc' + long_extension, 
+                                  'abc' + long_extension)
+        self.check_clean_filename(long_filename + long_extension,
+                                  long_filename[:50] + long_extension[:50])
 
 class Test_simple_config_file(MiroTestCase):
     def test_read_simple_config_file(self):
@@ -282,7 +284,7 @@ E = F
             os.remove(fn)
 
 class MatrixTest(MiroTestCase):
-    def testMatrixInit(self):
+    def test_matrix_init(self):
         m = util.Matrix(1, 2)
         self.assertEquals(list(m), [None, None])
 
@@ -307,7 +309,7 @@ class MatrixTest(MiroTestCase):
         self.assertEquals(m[3, 0], None)
         self.assertEquals(m[4, 0], None)
 
-    def testGetSet(self):
+    def test_get_set(self):
         m = util.Matrix(3, 2)
         m[0, 0] = 1
         m[0, 1] = 2
@@ -323,7 +325,21 @@ class MatrixTest(MiroTestCase):
         m[0,0] = 17
         self.assertEquals(m[0,0], 17)
 
-    def testRowsColumns(self):
+    def test_columns(self):
+        m = util.Matrix(3, 2)
+        m[0, 0] = 1
+        m[0, 1] = 2
+        m[1, 0] = 3
+        m[1, 1] = 4
+        m[2, 0] = 5
+        m[2, 1] = 6
+
+        self.assertEquals(list(m.column(0)), [1, 2])
+        self.assertEquals(list(m.column(1)), [3, 4])
+        self.assertEquals(list(m.column(2)), [5, 6])
+
+
+    def test_rows(self):
         m = util.Matrix(3, 2)
         m[0, 0] = 1
         m[0, 1] = 2
@@ -334,11 +350,8 @@ class MatrixTest(MiroTestCase):
 
         self.assertEquals(list(m.row(0)), [1, 3, 5])
         self.assertEquals(list(m.row(1)), [2, 4, 6])
-        self.assertEquals(list(m.column(0)), [1, 2])
-        self.assertEquals(list(m.column(1)), [3, 4])
-        self.assertEquals(list(m.column(2)), [5, 6])
-
-    def testRemove(self):
+        
+    def test_remove(self):
         m = util.Matrix(1, 2)
         m[0,0] = 1
         m[0,1] = 2

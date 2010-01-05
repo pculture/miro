@@ -34,8 +34,8 @@ class ContainerItemTest(MiroTestCase):
 
 class ItemSeenTest(ContainerItemTest):
     def test_seen_attribute(self):
-        # parents should be consider "seen" when all of their audio/video
-        # children are marked seen.
+        # parents should be consider "seen" when all of their
+        # audio/video children are marked seen.
         children = list(self.container_item.getChildren())
         media_children = [i for i in children if i.is_playable()]
         other_children = [i for i in children if not i.is_playable()]
@@ -141,9 +141,9 @@ class ItemRemoveTest(MiroTestCase):
         self.assertEquals(item.watchedTime, None)
 
     def test_remove_before_downloader_referenced(self):
-        # when items are restored from the DB, the downloader attribute is
-        # loaded lazily.  Make sure that if we remove the item, the downloader
-        # is still removed.
+        # when items are restored from the DB, the downloader
+        # attribute is loaded lazily.  Make sure that if we remove the
+        # item, the downloader is still removed.
         feed = Feed(u'http://example.com/1')
         item = Item(fp_values_for_url(u'http://example.com/1/item1'),
                 feed_id=feed.id)

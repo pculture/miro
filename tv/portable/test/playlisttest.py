@@ -24,7 +24,7 @@ class PlaylistTestBase(EventLoopTest):
         self.i4 = Item(FeedParserValues({'title': u'item4'}),
                        feed_id=self.feed.id)
 
-    def checkList(self, playlist, correct_order):
+    def check_list(self, playlist, correct_order):
         correct_ids = [item.id for item in correct_order]
         actual_ids = list(i.id for i in Item.playlist_view(playlist.id))
         self.assertEquals(actual_ids, correct_ids)
@@ -41,65 +41,65 @@ class PlaylistTestCase(PlaylistTestBase):
     def remove_callback(self, tracker, obj):
         self.remove_callbacks.append(obj)
 
-    def testBasicOperations(self):
+    def test_basic_operations(self):
         playlist = SavedPlaylist(u"rocketboom")
         self.assertEquals(playlist.get_title(), u'rocketboom')
-        self.checkList(playlist, [])
+        self.check_list(playlist, [])
         playlist.add_item(self.i4)
         playlist.add_item(self.i1)
         playlist.add_item(self.i3)
         playlist.add_item(self.i2)
-        self.checkList(playlist, [self.i4, self.i1, self.i3, self.i2])
+        self.check_list(playlist, [self.i4, self.i1, self.i3, self.i2])
         playlist.add_item(self.i2)
-        self.checkList(playlist, [self.i4, self.i1, self.i3, self.i2])
+        self.check_list(playlist, [self.i4, self.i1, self.i3, self.i2])
         self.assert_(self.i1.keep)
         self.assert_(self.i2.keep)
         self.assert_(self.i3.keep)
         self.assert_(self.i4.keep)
         playlist.remove_item(self.i2)
-        self.checkList(playlist, [self.i4, self.i1, self.i3])
+        self.check_list(playlist, [self.i4, self.i1, self.i3])
         playlist.reorder([self.i3.id, self.i4.id, self.i1.id])
-        self.checkList(playlist, [self.i3, self.i4, self.i1])
+        self.check_list(playlist, [self.i3, self.i4, self.i1])
         playlist.remove_item(self.i3)
-        self.checkList(playlist, [self.i4, self.i1])
+        self.check_list(playlist, [self.i4, self.i1])
 
-    def testInitialList(self):
+    def test_initial_list(self):
         initialList = [self.i1, self.i2, self.i3]
         playlist = SavedPlaylist(u"rocketboom", [i.id for i in initialList])
         self.assertEquals(playlist.get_title(), u'rocketboom')
-        self.checkList(playlist, initialList)
+        self.check_list(playlist, initialList)
 
-    def checkCallbacks(self, add_callbacks, remove_callbacks):
+    def check_callbacks(self, add_callbacks, remove_callbacks):
         self.assertEquals(self.add_callbacks, add_callbacks)
         self.assertEquals(self.remove_callbacks, remove_callbacks)
 
-    def testCallbacks(self):
+    def test_callbacks(self):
         initialList = [self.i1, self.i2, self.i3]
         playlist = SavedPlaylist(u"rocketboom", [i.id for i in initialList])
         tracker = Item.playlist_view(playlist.id).make_tracker()
         tracker.connect('added', self.add_callback)
         tracker.connect('removed', self.remove_callback)
         playlist.add_item(self.i4)
-        self.checkCallbacks([self.i4], [])
+        self.check_callbacks([self.i4], [])
         playlist.remove_item(self.i3)
-        self.checkCallbacks([self.i4], [self.i3])
+        self.check_callbacks([self.i4], [self.i3])
 
-    def testExpireRemovesItem(self):
-        checkList = [self.i1, self.i2, self.i3, self.i4]
-        playlist = SavedPlaylist(u"rocketboom", [i.id for i in checkList])
+    def test_expire_removes_item(self):
+        check_list = [self.i1, self.i2, self.i3, self.i4]
+        playlist = SavedPlaylist(u"rocketboom", [i.id for i in check_list])
         for i in [self.i1, self.i3, self.i4, self.i2]:
             i.expire()
-            checkList.remove(i)
-            self.checkList(playlist, checkList)
+            check_list.remove(i)
+            self.check_list(playlist, check_list)
 
-    def testRemovalRemovesItem(self):
-        checkList = [self.i1, self.i2, self.i3, self.i4]
-        playlist = SavedPlaylist(u"rocketboom", [i.id for i in checkList])
-        self.checkList(playlist, checkList)
+    def test_removal_removes_item(self):
+        check_list = [self.i1, self.i2, self.i3, self.i4]
+        playlist = SavedPlaylist(u"rocketboom", [i.id for i in check_list])
+        self.check_list(playlist, check_list)
         for i in [self.i1, self.i3, self.i4, self.i2]:
             i.remove()
-            checkList.remove(i)
-            self.checkList(playlist, checkList)
+            check_list.remove(i)
+            self.check_list(playlist, check_list)
 
 class PlaylistFolderTestCase(PlaylistTestBase):
     def setUp(self):
@@ -107,7 +107,8 @@ class PlaylistFolderTestCase(PlaylistTestBase):
         self.playlistTabOrder = tabs.TabOrder(u'playlist')
         self.p1 = SavedPlaylist(u"rocketboom", [self.i1.id, self.i3.id])
         self.p2 = SavedPlaylist(u"telemusicvision", [self.i4.id, self.i3.id])
-        self.p3 = SavedPlaylist(u"digg", [self.i1.id, self.i2.id, self.i3.id, self.i4.id])
+        self.p3 = SavedPlaylist(u"digg", [self.i1.id, self.i2.id,
+                                          self.i3.id, self.i4.id])
         self.folder = PlaylistFolder(u"My Best Vids")
         self.p1.set_folder(self.folder)
         self.p2.set_folder(self.folder)
@@ -142,8 +143,8 @@ class PlaylistFolderTestCase(PlaylistTestBase):
         self.p3.remove_item(self.i2)
         self.check_list([self.i1, self.i3, self.i4])
         self.p3.remove_item(self.i3)
-        # i3 is still in other children of self.folder, so it shouldn't be
-        # removed
+        # i3 is still in other children of self.folder, so it
+        # shouldn't be removed
         self.check_list([self.i1, self.i3, self.i4])
 
     def test_order_independent(self):
@@ -164,7 +165,7 @@ class Upgrade88TestCase(MiroTestCase):
     def tearDown(self):
         try:
             os.remove(self.tmp_path)
-        except:
+        except StandardError:
             pass
         MiroTestCase.tearDown(self)
 

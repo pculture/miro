@@ -16,8 +16,8 @@ class IconCacheTest(EventLoopTest):
         self.guide = guide.ChannelGuide(u'http://example.com/guide/')
 
     def test_ddbobject_removed(self):
-        """Test that we remove our IconCache DDBObject when it's container is
-        removed.
+        """Test that we remove our IconCache DDBObject when it's
+        container is removed.
         """
         feed_icon_cache = self.feed.icon_cache
         item_icon_cache = self.item.icon_cache
@@ -31,8 +31,9 @@ class IconCacheTest(EventLoopTest):
         self.assert_(not guide_icon_cache.id_exists())
 
     def test_remove_before_icon_cache_referenced(self):
-        # Items create the icon_cache attribute lazily when restored from db.
-        # Make sure that removing an item before it's created is okay.
+        # Items create the icon_cache attribute lazily when restored
+        # from db.  Make sure that removing an item before it's
+        # created is okay.
 
         # trick LiveStorage into restoring our feed, item and guide
         self.feed = self.reload_object(self.feed)
