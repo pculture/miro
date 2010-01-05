@@ -61,55 +61,34 @@ class FakeStream:
         self.input = ''
         self.pendingOutput = ''
         self.timedOut = False
+        # to add a new page response, add the uri in the appropriate
+        # host, then add the appropriate response in _generateResponse
         self.pages = {
-            'participatoryculture.org':
-                {'/democracytest/normalpage.txt': 'I AM A NORMAL PAGE\n',
-                 '/democracytest/normalpage2.txt': 'I AM A NORMAL PAGE\n',
-                 '/democracytest/normalpage3.txt': 'I AM A NORMAL PAGE\n',
-                 '/democracytest/nohead.php': "DYNAMIC CONTENT",
-                 '/democracytest/cookie.php': "DYNAMIC CONTENT"
+            'pculture.org':
+                {'/normalpage.txt': 'I AM A NORMAL PAGE\n',
+                 '/normalpage2.txt': 'I AM A NORMAL PAGE\n',
+                 '/normalpage3.txt': 'I AM A NORMAL PAGE\n',
+                 '/nohead.php': 'DYNAMIC CONTENT',
+                 '/cookie.php': 'normal page',
+                 '/etag.txt': 'normal page',
+                 '/BasicAuthentication/': 'normal page',
+                 '/DigestAuthentication/': 'normal page',
+                 '/secure.txt': 'Normal',
                  },
-            'jigsaw.w3.org':
-                {'/HTTP/Basic/': "normal page",
-                 '/HTTP/Digest/': "normal page"
-                 },
+            'www.foo.com':
+                {'/': "Normal", '/2': "Blah"},
             'www.bar.com':
-                {'/': "Normal",
-                 '/2': "Blah"
-                 },
+                {'/': "Normal", '/2': "Blah"},
             'www.baz.com':
-                {'/': "Normal",
-                 '/2': "Blah"
-                 },
+                {'/': "Normal", '/2': "Blah"},
             'www.froz.com':
-                {'/': "Normal",
-                 '/2': "Blah"
-                 },
+                {'/': "Normal", '/2': "Blah"},
             'www.qux.com':
-                {'/': "Normal",
-                 '/2': "Blah"
-                 },
-            'www.gibill.va.gov':
-                {'/wave/': "Normal"
-                 },
-            }
-
-        self.cookie_pages = {
-            'participatoryculture.org': ['/democracytest/cookie.php']
-            }
-        self.no_head_pages = {
-            'participatoryculture.org': [
-                '/democracytest/nohead.php']
-            }
-        self.basic_auth_pages = {
-            'jigsaw.w3.org': {'/HTTP/Basic/': 'Basic Z3Vlc3Q6Z3Vlc3Q='}
-            }
-        self.digest_auth_pages = {
-            'jigsaw.w3.org': {'/HTTP/Digest/': 'STUFF GOES HERE'}
+                {'/': "Normal", '/2': "Blah"},
             }
 
     def _tryReadCallback(self):
-        if ((len(self.pendingOutput)>0 and self.readCallback 
+        if ((len(self.pendingOutput) > 0 and self.readCallback
              and not self.paused)):
             response = self.pendingOutput
             self.pendingOutput = ''
@@ -140,13 +119,9 @@ class FakeStream:
 
         if text is not None:
             if method == "GET":
-                basic_host = self.basic_auth_pages.get(headers["Host"], {})
-                digest_host = self.digest_auth_pages.get(headers["Host"], {})
-                cookie_host = self.cookie_pages.get(headers["Host"], {})
-
-                if ((uri in basic_host.keys()
-                     and (not headers.has_key('Authorization') 
-                          or basic_host[uri] != headers['Authorization']))):
+                if ((uri == '/BasicAuthentication/'
+                     and (not headers.has_key('Authorization')
+                          or headers['Authorization'] != 'Basic Z3Vlc3Q6Z3Vlc3Q='))):
                     text = "Not authorized"
                     return "\r\n".join([
                             "HTTP/1.1 401 Unauthorized",
@@ -157,27 +132,44 @@ class FakeStream:
                             "",
                             text])
 
-                elif ((uri in digest_host.keys()
+                elif ((uri == '/DigestAuthentication/'
                        and (not headers.has_key('Authorization')
-                            or (digest_host[uri] != headers['Authorization'])))):
+                            or (headers['Authorization'] != 'FOO')))):
                     text = "Not authorized"
                     return "\r\n".join([
                             "HTTP/1.1 401 Unauthorized",
-                            "WWW-Authenticate: Digest realm=\"test\",domain=\"/HTTP/Digest\",nonce=\"13dc6f6b70fec989c0d5bd5956818b33\"",
+                            "WWW-Authenticate: Digest realm=\"test\",domain=\"/DigestAuthentication\",nonce=\"13dc6f6b70fec989c0d5bd5956818b33\"",
                             "Content-Type: text/html; charset=UTF-8",
                             "Date: %s" % now,
                             "Content-Length: %d" % len(text),
                             "",
                             text])
 
-                elif uri in cookie_host:
-                    text = "STUFF"
+                elif uri == '/etag.txt':
+                    etag = "\"1262547188.66\""
+                    if headers.get("If-None-Match") == etag:
+                        return "\r\n".join([
+                                "HTTP/1.1 304 Not Modified",
+                                "ETag: %s" % etag,
+                                "",
+                                ""])
+                    else:
+                        return "\r\n".join([
+                                "HTTP/1.1 200 OK",
+                                "ETag: %s" % etag,
+                                "Last-Modified: Sun, 03 Jan 2010 19:33:08 GMT",
+                                "Content-Length: %d" % len(text),
+                                "Content-Type: text/plain",
+                                "",
+                                text])
+
+                elif uri == '/cookie.php':
                     if "Cookie" in headers:
                         text += "\n%s" % headers["Cookie"]
                     return "\r\n".join([
                             "HTTP/1.1 200 OK",
                             "Content-Type: text/plain; charset=UTF-8",
-                            "Set-Cookie: MiroTestCookie=foobar; path=/democracytest/; domain=participatoryculture.org",
+                            "Set-Cookie: MiroTestCookie=foobar; path=/; domain=pculture.org",
                             "Last-Modified: %s" % now,
                             "Date: %s" % now,
                             "Content-Length: %d" % len(text),
@@ -195,8 +187,7 @@ class FakeStream:
                             text])
 
             elif method == "HEAD":
-                if ((self.no_head_pages.has_key(headers["Host"])
-                     and (uri in self.no_head_pages[headers["Host"]]))):
+                if uri == '/nohead.php':
                     return "\r\n".join([
                             "HTTP/1.1 405 NOT ALLOWED",
                             "Date: %s" % now,
@@ -249,7 +240,7 @@ class FakeStream:
     def stopReadTimeout(self):
         pass
 
-    def openConnection(self, host, port, callback, errback, 
+    def openConnection(self, host, port, callback, errback,
                        disabledReadTimeout=None):
         self.name = "Outgoing %s:%s" % (host, port)
         self.output = ''
@@ -314,6 +305,7 @@ class TestingHTTPConnectionPool(httpclient.HTTPConnectionPool):
     MAX_CONNECTIONS = 4
     HTTP_CONN = TestingHTTPConnection
     HTTPS_CONN = TestingHTTPSConnection
+    streamFactory = FakeStream
 
     def getConnection(self, scheme, host, port=None, type='active'):
         if port is None:
@@ -344,7 +336,7 @@ class TestingHTTPConnectionPool(httpclient.HTTPConnectionPool):
         conns = self._getServerConnections(scheme, host, port)
         for conn in conns['active']:
             try:
-                if ((conn.host == host and conn.port == port 
+                if ((conn.host == host and conn.port == port
                      and conn.path == path)):
                     return True
             except StandardError:
@@ -370,7 +362,7 @@ def startResponse(version='1.1', status=200, headers={}):
           "Last-Modified: Wed, 10 May 2006 22:30:33 GMT",
           "Date: Wed, 10 May 2006 22:38:39 GMT"
           ]
-    
+
     for key, value in headers.items():
         rv.append('%s: %s' % (key, value))
 
@@ -447,7 +439,7 @@ class WeirdCloseConnectionTest(AsyncSocketTest):
         Test opening a connection, then closing the HTTPConnection
         before it happens.  The openConnection callback shouldn't be
         called.
-        
+
         Open a socket on localhost and try to connect to that, this
         should be pretty much instantaneous, so we don't need a long
         timeout to runEventLoop.
@@ -466,12 +458,12 @@ class WeirdCloseConnectionTest(AsyncSocketTest):
         finally:
             sock.close()
 
-    def testCloseDurringAcceptConnection(self):
+    def test_close_during_accept_connection(self):
         """
         Test opening a connection, then closing the HTTPConnection
         before it happens.  The openConnection callback shouldn't be
         called.
-        
+
         Open a socket on localhost and try to connect to that, this
         should be pretty much instantaneous, so we don't need a long
         timeout to runEventLoop.
@@ -556,8 +548,9 @@ class ConnectionHandlerTest(EventLoopTest):
     def test_remote_close2(self):
         self.remoteSocket.shutdown(socket.SHUT_RD)
         self.remoteSocket.close()
-        # NOTE, we have to send enough data so that the OS won't buffer the
-        # entire send call.  Otherwise we may miss that the socket has closed.
+        # Note: we have to send enough data so that the OS won't
+        # buffer the entire send call.  Otherwise we may miss that the
+        # socket has closed.
         self.connectionHandler.sendData("A" * 1024 * 1024)
         self.runEventLoop(timeout=1)
         self.assertEquals(self.connectionHandler.gotHandleClose, True)
@@ -571,7 +564,7 @@ class DumbHTTPClientTest(AsyncSocketTest):
     def setUp(self):
         AsyncSocketTest.setUp(self)
         self.testRequest = DumbTestingHTTPConnection()
-        self.testRequest.openConnection('foo.com', 80, 
+        self.testRequest.openConnection('foo.com', 80,
                                         lambda x: None,
                                         lambda x: None)
         self.testRequest.sendRequest(self.callback, self.errback, "", 80,
@@ -785,7 +778,7 @@ class DumbHTTPClientTest(AsyncSocketTest):
         # no content length means we can't pipeline a request
         self.assertEquals(self.testRequest.canSendRequest(), False)
         self.assertRaises(httpclient.NetworkError,
-                          self.testRequest.sendRequest, self.callback, 
+                          self.testRequest.sendRequest, self.callback,
                           self.errback, "", 80)
 
     def test_pipeline_never_started(self):
@@ -820,7 +813,7 @@ class DumbHTTPClientTest(AsyncSocketTest):
 
     def test_transfer_encoding_trumps_content_length(self):
         self.testRequest.handleData(startResponse(
-                headers={'Content-Length': '5', 
+                headers={'Content-Length': '5',
                          'Transfer-Encoding': 'chunked'}))
         self.assertEquals(self.testRequest.contentLength, None)
 
@@ -932,9 +925,9 @@ class HTTPClientTestBase(AsyncSocketTest):
     def setUp(self):
         AsyncSocketTest.setUp(self)
         self.testRequest = TestingHTTPConnection()
-        self.testRequest.openConnection('foo.com', 80, lambda x: None, 
+        self.testRequest.openConnection('foo.com', 80, lambda x: None,
                                         lambda x: None)
-        self.testRequest.sendRequest(self.callback, self.errback, "", 80, 
+        self.testRequest.sendRequest(self.callback, self.errback, "", 80,
                                      method='GET', path='/bar/baz;123?a=b')
         TestHTTPClient.connectionPool = TestingHTTPConnectionPool()
         TestingHeaderGrabber.connectionPool = TestingHTTPConnectionPool()
@@ -954,26 +947,27 @@ class HTTPClientTestBase(AsyncSocketTest):
 
 class HTTPClientTest(HTTPClientTestBase):
     def test_real_request(self):
-        url = 'http://participatoryculture.org/democracytest/normalpage.txt'
-        httpclient.grabURL(url, self.callback, self.errback, 
+        url = 'http://pculture.org/normalpage.txt'
+        httpclient.grabURL(url, self.callback, self.errback,
                            clientClass=TestHTTPClient)
         self.runEventLoop(timeout=10)
         self.assert_(self.callbackCalled)
         self.assertEquals(self.data['body'], "I AM A NORMAL PAGE\n")
 
     def test_grab_headers(self):
-        url = 'http://participatoryculture.org/democracytest/normalpage.txt'
-        httpclient.grabHeaders(url, self.callback, self.errback, 
+        url = 'http://pculture.org/normalpage.txt'
+        httpclient.grabHeaders(url, self.callback, self.errback,
                                TestingHeaderGrabber)
         self.runEventLoop(timeout=10)
         self.assert_(self.callbackCalled)
         self.assertEquals(self.data['body'], "")
         self.assertEquals(self.data['status'], 200)
         self.assertEquals(self.data['original-url'], self.data['updated-url'])
-        self.assertEquals(self.data['original-url'], self.data['redirected-url'])
+        self.assertEquals(self.data['original-url'],
+                          self.data['redirected-url'])
 
     def test_grab_headers2(self):
-        url = 'http://participatoryculture.org/democracytest/nohead.php'
+        url = 'http://pculture.org/nohead.php'
         httpclient.grabHeaders(url, self.callback, self.errback,
                                clientClass = TestingHeaderGrabber)
         self.runEventLoop(timeout=10)
@@ -981,17 +975,18 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assertEquals(self.data['body'], "")
         self.assertEquals(self.data['status'], 200)
         self.assertEquals(self.data['original-url'], self.data['updated-url'])
-        self.assertEquals(self.data['original-url'], self.data['redirected-url'])
+        self.assertEquals(self.data['original-url'],
+                          self.data['redirected-url'])
 
     def test_grab_headers_cancel(self):
-        url = 'http://participatoryculture.org/democracytest/normalpage.txt'
+        url = 'http://pculture.org/normalpage.txt'
         client = httpclient.grabHeaders(url, self.callback, self.errback,
                                         clientClass = TestingHeaderGrabber)
         client.cancel()
 
         # Hmmmm.... it looks like the behavior changed, so cancel no
         # longer triggers an errback. I guess this is okay. --NN
-        self.assertRaises(HadToStopEventLoop, 
+        self.assertRaises(HadToStopEventLoop,
                           lambda: self.runEventLoop(timeout=1))
 
     def test_connection_failure(self):
@@ -1004,24 +999,24 @@ class HTTPClientTest(HTTPClientTestBase):
     def test_multiple_requests(self):
         def middleCallback(data):
             self.firstData = data
-            req.sendRequest(self.callback, self.errback, 
-                            "participatoryculture.org", 80, method='GET', 
-                            path='/democracytest/normalpage.txt')
+            req.sendRequest(self.callback, self.errback,
+                            "pculture.org", 80, method='GET',
+                            path='/normalpage.txt')
 
         req = TestingHTTPConnection()
         def stopEventLoop(conn):
             self.stopEventLoop(False)
-        self.addIdle(lambda: req.openConnection('participatoryculture.org', 80,
-                                                stopEventLoop, self.errback), 
+        self.addIdle(lambda: req.openConnection('pculture.org', 80,
+                                                stopEventLoop, self.errback),
                      "Open connection")
         self.runEventLoop()
         self.assert_(not self.errbackCalled)
         self.addIdle(lambda: req.sendRequest(middleCallback,
                                              self.errback,
-                                             "participatoryculture.org",
+                                             "pculture.org",
                                              80,
                                              method='GET',
-                                             path='/democracytest/normalpage.txt'),
+                                             path='/normalpage.txt'),
                      "Send Request")
         self.runEventLoop()
         self.assert_(not self.errbackCalled)
@@ -1039,7 +1034,7 @@ class HTTPClientTest(HTTPClientTestBase):
             self.onHeadersCalled = True
         def onBodyData(data):
             self.onBodyDataCalled = True
-        url = "http://participatoryculture.org/404"
+        url = "http://pculture.org/404"
         client = TestHTTPClient(url, self.callback, self.errback,
                                 onHeaders, onBodyData)
         client.startRequest()
@@ -1055,7 +1050,7 @@ class HTTPClientTest(HTTPClientTestBase):
             self.callbackCalledInHeaderCallback = self.callbackCalled
             self.errbackCalledInHeaderCallback = self.errbackCalled
             self.stopEventLoop(False)
-        url = 'http://participatoryculture.org/democracytest/normalpage.txt'
+        url = 'http://pculture.org/normalpage.txt'
         httpclient.grabURL(url, self.callback, self.errback,
                 headerCallback=headerCallback, clientClass=TestHTTPClient)
         self.runEventLoop()
@@ -1068,7 +1063,7 @@ class HTTPClientTest(HTTPClientTestBase):
         def headerCallback(response):
             reqId.cancel()
             self.stopEventLoop(False)
-        url = 'http://participatoryculture.org/democracytest/normalpage.txt'
+        url = 'http://pculture.org/normalpage.txt'
         reqId = httpclient.grabURL(url, self.callback, self.errback,
                 headerCallback=headerCallback, clientClass=TestHTTPClient)
         self.error_signal_okay = True
@@ -1081,7 +1076,7 @@ class HTTPClientTest(HTTPClientTestBase):
         def bodyDataCallback(response):
             reqId.cancel()
             self.stopEventLoop(False)
-        url = 'http://participatoryculture.org/democracytest/normalpage.txt'
+        url = 'http://pculture.org/normalpage.txt'
         reqId = httpclient.grabURL(url, self.callback, self.errback,
                 bodyDataCallback=bodyDataCallback, clientClass=TestHTTPClient)
         self.error_signal_okay = True
@@ -1125,7 +1120,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assert_(self.callbackCalled)
 
     def test_body_data_callback_real_request(self):
-        url = 'http://participatoryculture.org/democracytest/normalpage.txt'
+        url = 'http://pculture.org/normalpage.txt'
         self.gotData = ''
         def bodyDataCallback(data):
             self.gotData += data
@@ -1133,7 +1128,7 @@ class HTTPClientTest(HTTPClientTestBase):
                 self.stopEventLoop(False)
 
         httpclient.grabURL(url, self.callback, self.errback,
-                           bodyDataCallback=bodyDataCallback, 
+                           bodyDataCallback=bodyDataCallback,
                            clientClass=TestHTTPClient)
         self.runEventLoop()
         self.assertEquals(self.gotData, 'I AM A NORMAL PAGE\n')
@@ -1141,7 +1136,7 @@ class HTTPClientTest(HTTPClientTestBase):
     def test_auth(self):
         self.addLogin(u'ben', u'baddpassword')
         self.addLogin(u'guest', u'guest')
-        url = 'http://jigsaw.w3.org/HTTP/Basic/'
+        url = 'http://pculture.org/BasicAuthentication/'
         client = TestHTTPClient(url, self.callback, self.errback)
         client.startRequest()
         self.runEventLoop()
@@ -1153,7 +1148,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self.addLogin(u'baduser', u'baddpass')
         self.addLogin(u'anotherbadtry', u'god')
         self.addLogin(u'billgates', u'password')
-        url = 'http://jigsaw.w3.org/HTTP/Basic/'
+        url = 'http://pculture.org/BasicAuthentication/'
         client = TestHTTPClient(url, self.callback, self.errback)
         client.startRequest()
         self.runEventLoop()
@@ -1164,7 +1159,7 @@ class HTTPClientTest(HTTPClientTestBase):
     def test_digest_auth(self):
         # we don't support digest authorization yet, make sure we get the
         # right errback at least
-        url = 'http://jigsaw.w3.org/HTTP/Digest/'
+        url = 'http://pculture.org/DigestAuthentication/'
         client = TestHTTPClient(url, self.callback, self.errback)
         client.startRequest()
         self.runEventLoop()
@@ -1194,49 +1189,49 @@ class HTTPClientTest(HTTPClientTestBase):
 #             self.assertEquals(lines[x], bodyLine)
 
     def test_cookie(self):
-        url = "http://participatoryculture.org/democracytest/cookie.php"
-        httpclient.grabURL(url, self.callback, self.errback, 
+        url = "http://pculture.org/cookie.php"
+        httpclient.grabURL(url, self.callback, self.errback,
                            clientClass=TestHTTPClient)
         self.runEventLoop(timeout=5)
         # self.data is a 404
         self.assertEquals(len(self.data['cookies']), 1)
         self.assert_(self.data['cookies'].has_key('MiroTestCookie'))
-        self.assertEquals(self.data['cookies']['MiroTestCookie']['Value'], 
+        self.assertEquals(self.data['cookies']['MiroTestCookie']['Value'],
                           'foobar')
-        httpclient.grabURL(url, self.callback, self.errback, 
-                           cookies=self.data['cookies'], 
+        httpclient.grabURL(url, self.callback, self.errback,
+                           cookies=self.data['cookies'],
                            clientClass=TestHTTPClient)
         self.runEventLoop(timeout=2)
         self.assertNotEqual(self.data['body'].find('MiroTestCookie=foobar'), -1)
 
     def test_parse_url(self):
         for mem in ([
-                ("https://www.foo.com/abc;123?a=b#4", 
+                ("https://www.foo.com/abc;123?a=b#4",
                  ("https", "www.foo.com", 443, "/abc;123?a=b")),
 
-                ("http://www.foo.com/abc;123?a=b#4", 
+                ("http://www.foo.com/abc;123?a=b#4",
                  ("http", "www.foo.com", 80, "/abc;123?a=b")),
 
-                ("http://www.foo.com:5000/abc;123?a=b#4", 
+                ("http://www.foo.com:5000/abc;123?a=b#4",
                  ("http", "www.foo.com", 5000, "/abc;123?a=b")),
-                
+
                 # I guess some feeds have bad url, with a double port in
                 # them, test that we handle these.
-                ("http://www.foo.com:123:123/abc;123?a=b#4", 
+                ("http://www.foo.com:123:123/abc;123?a=b#4",
                  ("http", "www.foo.com", 123, "/abc;123?a=b")),
-                
+
                 # handle windows file paths
-                ("file:///c:/foo/bar/baz", 
+                ("file:///c:/foo/bar/baz",
                  ("file", "", None, "c:/foo/bar/baz")),
-                
+
                 # handle urls with : in the path
-                ("http://www.foo.com/s:6p23p/video", 
+                ("http://www.foo.com/s:6p23p/video",
                  ("http", "www.foo.com", 80, "/s:6p23p/video"))
                 ]):
             self.assertEquals(download_utils.parse_url(mem[0]), mem[1])
 
 # FIXME - these need to be reimplemented with TestHTTPClient above.
-# 
+#
 #     def checkRedirect(self, url, redirectUrl, updatedUrl, **extra):
 #         self.errbackCalled = self.callbackCalled = False
 #         httpclient.grabURL(url, self.callback, self.errback, clientClass=TestHTTPClient, **extra)
@@ -1281,13 +1276,13 @@ class HTTPClientTest(HTTPClientTestBase):
 #         # The updated-url should be redirect3.php, since that it was the 1st
 #         # redirect that was temporary
 #         self.checkRedirect(
-#                 'http://participatoryculture.org/democracytest/redirect.php',
-#                 'http://participatoryculture.org/democracytest/end.txt',
-#                 'http://participatoryculture.org/democracytest/redirect3.php')
+#                 'http://pculture.org/redirect.php',
+#                 'http://pculture.org/end.txt',
+#                 'http://pculture.org/redirect3.php')
 
 #     def testFileUpload(self):
 #         self.errbackCalled = self.callbackCalled = False
-#         httpclient.grabURL('http://participatoryculture.org/democracytest/fileupload.php', self.callback, self.errback, method="POST", postFiles = {'myfile': {
+#         httpclient.grabURL('http://pculture.org/fileupload.php', self.callback, self.errback, method="POST", postFiles = {'myfile': {
 #             'filename' : 'tempfile.txt',
 #             'mimetype' : 'application/octet-stream',
 #             'handle'   : StringIO('This is a test file', clientClass=TestHTTPClient)
@@ -1301,7 +1296,7 @@ class HTTPClientTest(HTTPClientTestBase):
 #         self.assertEqual(result[2], '0b26e313ed4a7ca6904b0e9369e5b957')
 
 #     def testRedirectLimit(self):
-#         url = 'http://participatoryculture.org/democracytest/redirect.php'
+#         url = 'http://pculture.org/redirect.php'
 #         client = httpclient.HTTPClient(url, self.callback, self.errback)
 #         client.MAX_REDIRECTS = 2
 #         client.startRequest()
@@ -1326,7 +1321,7 @@ class HTTPClientTest(HTTPClientTestBase):
         testIt(u'\xf8???.\xf2\xf3x')
 
     def test_get_filename_from_response(self):
-        client = TestHTTPClient('http://www.foo.com', self.callback, 
+        client = TestHTTPClient('http://www.foo.com', self.callback,
                                 self.errback)
 
         def getIt(path, cd=None):
@@ -1358,7 +1353,7 @@ class HTTPClientTest(HTTPClientTestBase):
                           getIt('/uncl*ean"fil?"ena|m""e2"'))
 
     def test_get_charset_from_response(self):
-        client = TestHTTPClient('http://participatoryculture.org/democracytest/normal.txt', 
+        client = TestHTTPClient('http://pculture.org/normal.txt',
                                 self.callback, self.errback)
         def get_it(content_type):
             if content_type:
@@ -1445,34 +1440,34 @@ class HTTPConnectionPoolTest(EventLoopTest):
         self.check_counts(0, 0, 0)
 
     def test_counts(self):
-        self.add_request("http://participatoryculture.org/")
-        self.add_request("http://participatoryculture.org/democracytest/normalpage.txt")
-        self.add_request("https://participatoryculture.org/")
+        self.add_request("http://pculture.org/")
+        self.add_request("http://pculture.org/normalpage.txt")
+        self.add_request("https://pculture.org/")
         self.check_counts(3, 0, 0)
-        self.finish_connection_for_url('http://participatoryculture.org')
+        self.finish_connection_for_url('http://pculture.org/')
         self.check_counts(2, 1, 0)
-        self.close_connection_for_url('https://participatoryculture.org/')
+        self.close_connection_for_url('https://pculture.org/')
         self.check_counts(1, 1, 0)
-        self.close_connection_for_url('http://participatoryculture.org/')
+        self.close_connection_for_url('http://pculture.org/')
         self.check_counts(1, 0, 0)
 
     def test_server_limit(self):
-        self.add_request("http://participatoryculture.org/democracytest/normalpage.txt")
-        self.add_request("http://participatoryculture.org/democracytest/normalpage2.txt")
-        self.add_request("https://participatoryculture.org/democracytest/normalpage.txt")
+        self.add_request("http://pculture.org/normalpage.txt")
+        self.add_request("http://pculture.org/normalpage2.txt")
+        self.add_request("https://pculture.org/normalpage.txt")
         self.check_counts(3, 0, 0)
-        self.add_request("http://participatoryculture.org/democracytest/normalpage3.txt")
+        self.add_request("http://pculture.org/normalpage3.txt")
         self.check_counts(3, 0, 1)
-        self.pool.assertConnectionNotStarted('http://participatoryculture.org/democracytest/normalpage3.txt')
-        self.finish_connection_for_url("http://participatoryculture.org/democracytest/normalpage.txt")
+        self.pool.assertConnectionNotStarted('http://pculture.org/normalpage3.txt')
+        self.finish_connection_for_url("http://pculture.org/normalpage.txt")
         self.check_counts(3, 0, 0)
-        self.finish_connection_for_url("http://participatoryculture.org/democracytest/normalpage2.txt")
-        self.pool.assertConnectionStarted('http://participatoryculture.org/democracytest/normalpage3.txt')
+        self.finish_connection_for_url("http://pculture.org/normalpage2.txt")
+        self.pool.assertConnectionStarted('http://pculture.org/normalpage3.txt')
         self.check_counts(2, 1, 0)
 
     def test_total_limit(self):
-        self.add_request("http://participatoryculture.org/democracytest/normalpage.txt")
-        self.add_request("http://participatoryculture.org/democracytest/normalpage2.txt")
+        self.add_request("http://pculture.org/normalpage.txt")
+        self.add_request("http://pculture.org/normalpage2.txt")
         self.add_request("http://www.bar.com/")
         self.add_request("http://www.bar.com/2")
         self.add_request("http://www.baz.com/")
@@ -1482,28 +1477,28 @@ class HTTPConnectionPoolTest(EventLoopTest):
     def test_both_limits(self):
         # This test is kind of pointless now, but I can't see a way to
         # test it as well as before.
-        self.add_request("http://participatoryculture.org/")
-        self.add_request("http://participatoryculture.org/2")
-        self.add_request("http://participatoryculture.org/3")
+        self.add_request("http://pculture.org/")
+        self.add_request("http://pculture.org/2")
+        self.add_request("http://pculture.org/3")
         self.check_counts(2, 0, 1)
-        self.pool.assertConnectionNotStarted('http://participatoryculture.org/3')
+        self.pool.assertConnectionNotStarted('http://pculture.org/3')
         self.add_request("https://www.bar.com/")
         self.add_request("http://www.bar.com/2")
         self.add_request("http://www.baz.com/")
         self.check_counts(4, 0, 2)
         self.pool.assertConnectionNotStarted('http://www.baz.com/')
-        self.pool.assertConnectionNotStarted('http://participatoryculture.org/3')
+        self.pool.assertConnectionNotStarted('http://pculture.org/3')
         self.finish_connection_for_url('https://www.bar.com/')
         self.check_counts(3, 1, 1)
-        self.pool.assertConnectionNotStarted('http://participatoryculture.org/3')
-        self.finish_connection_for_url('http://participatoryculture.org/')
+        self.pool.assertConnectionNotStarted('http://pculture.org/3')
+        self.finish_connection_for_url('http://pculture.org/')
         self.check_counts(3, 1, 0)
 
     def test_drop_the_lru(self):
         # Check that the first connection dropped when we run out of
         # connections is the least recently used
         self.add_request("http://www.baz.com/")
-        self.add_request("http://participatoryculture.org/")
+        self.add_request("http://pculture.org/")
         self.add_request("http://www.bar.com/")
         self.add_request("http://www.froz.com/")
         self.finish_connection_for_url('http://www.baz.com/')
@@ -1512,25 +1507,24 @@ class HTTPConnectionPoolTest(EventLoopTest):
         self.get_connection_for_url('http://www.bar.com').idleSince = 20
         # baz.com has been idle longer, so it should be dropped when
         # we add a new request
-        self.assert_(len(self.pool.connections['http:www.baz.com:80']['free'])==1 and len(self.pool.connections['http:www.baz.com:80']['active'])==0)
+        self.assert_(len(self.pool.connections['http:www.baz.com:80']['free']) == 1 and len(self.pool.connections['http:www.baz.com:80']['active']) == 0)
         self.add_request("http://www.booya.com/2")
-        self.assert_(len(self.pool.connections['http:www.baz.com:80']['free'])==0 and len(self.pool.connections['http:www.baz.com:80']['active'])==0)
+        self.assert_(len(self.pool.connections['http:www.baz.com:80']['free']) == 0 and len(self.pool.connections['http:www.baz.com:80']['active']) == 0)
 
 class HTTPSConnectionTest(HTTPClientTestBase):
-    # We should have more tests here, but I have no idea how to fake SSL
-    # connections.  So I just put some attempts to connect to an https site
-    # The first https site I found was:
-    # WAVE - Web Automated Verification of Enrollment
-    # https://www.gibill.va.gov/wave/
+    # This should have more tests, but we're using a TestHTTPClient,
+    # so these are faked and probably not wildly useful.
 
     def test_scheme(self):
         conn = httpclient.HTTPSConnection()
         self.assertEquals(conn.scheme, 'https')
 
     def test_https_connection(self):
+        # Note: this is a real test--we really connect to
+        # www.gibill.va.gov with this test.
         conn = httpclient.HTTPSConnection()
         def handleOpen(data):
-            conn.sendRequest(self.callback, self.errback, 
+            conn.sendRequest(self.callback, self.errback,
                              'www.gibill.va.gov', 443,
                              method="GET", path='/wave/')
         def handleError(error):
@@ -1542,8 +1536,8 @@ class HTTPSConnectionTest(HTTPClientTestBase):
 
     def test_grab_url(self):
         # this is faking things since we're using our TestHTTPClient
-        httpclient.grabURL('https://www.gibill.va.gov/wave/', 
-                           self.callback, self.errback, 
+        httpclient.grabURL('https://pculture.org/secure.txt',
+                           self.callback, self.errback,
                            clientClass=TestHTTPClient)
         self.runEventLoop()
         self.assertEquals(self.data['status'], 200)
@@ -1551,8 +1545,8 @@ class HTTPSConnectionTest(HTTPClientTestBase):
 
 class GrabURLTest(AsyncSocketTest):
     def test_start(self):
-        url = 'http://participatoryculture.org/democracytest/normalpage.txt'
-        httpclient.grabURL(url, self.callback, self.errback, 
+        url = 'http://pculture.org/normalpage.txt'
+        httpclient.grabURL(url, self.callback, self.errback,
                            clientClass=TestHTTPClient)
         self.runEventLoop()
         self.orig_data = self.data
@@ -1562,76 +1556,90 @@ class GrabURLTest(AsyncSocketTest):
         self.assertEquals(self.data['body'], self.orig_data['body'])
         self.assertEquals(self.data['status'], 200)
 
-#     def testEtag(self):
-#         url = 'http://jigsaw.w3.org/HTTP/'
-#         httpclient.grabURL(url, self.callback, self.errback, clientClass=TestHTTPClient)
-#         self.runEventLoop()
-#         etag = self.data['etag']
-#         httpclient.grabURL(url, self.callback, self.errback, etag=etag, clientClass=TestHTTPClient)
-#         self.runEventLoop()
-#         self.assertEquals(self.data['status'], 304)
-#         self.assertEquals(self.data['body'], '')
+class EtagTest(AsyncSocketTest):
+    # FIXME - This has to be a test by itself because the response has
+    # no body and that screws up other tests.  I think that's probably
+    # a bug in the FakeStream or something like that.
+    def test_etag(self):
+        url = 'http://pculture.org/etag.txt'
+        httpclient.grabURL(url, self.callback, self.errback,
+                           clientClass=TestHTTPClient)
+        self.runEventLoop()
+        etag = self.data['etag']
+        httpclient.grabURL(url, self.callback, self.errback, etag=etag,
+                           clientClass=TestHTTPClient)
+        self.runEventLoop()
+        self.assertEquals(self.data['status'], 304)
+        self.assertEquals(self.data['body'], '')
 
-#     def testBadEtag(self):
-#         url = 'http://jigsaw.w3.org/HTTP/'
-#         httpclient.grabURL(url, self.callback, self.errback, clientClass=TestHTTPClient)
-#         self.runEventLoop()
-#         etag = "aaaaaaa:bbbbbbbb"
-#         firstBody = self.data['body']
-#         httpclient.grabURL(url, self.callback, self.errback, etag=etag, clientClass=TestHTTPClient)
-#         self.runEventLoop()
-#         self.assertEquals(self.data['status'], 200)
-#         self.assertEquals(self.data['body'], firstBody)
+class OtherEtagTests(AsyncSocketTest):
+    def test_bad_etag(self):
+        # this sends a bad etag.  the server returns the body
+        # twice.
+        url = 'http://pculture.org/etag.txt'
+        httpclient.grabURL(url, self.callback, self.errback,
+                           clientClass=TestHTTPClient)
+        self.runEventLoop()
+        etag = "aaaaaaa:bbbbbbbb"
+        firstBody = self.data['body']
+        httpclient.grabURL(url, self.callback, self.errback, etag=etag,
+                           clientClass=TestHTTPClient)
+        self.runEventLoop()
+        self.assertEquals(self.data['status'], 200)
+        self.assertEquals(self.data['body'], firstBody)
 
-#     def testModified(self):
-#         url = 'http://jigsaw.w3.org/HTTP/'
-#         httpclient.grabURL(url, self.callback, self.errback, clientClass=TestHTTPClient)
-#         self.runEventLoop()
-#         firstBody = self.data['body']
-#         modifiedTuple = rfc822.parsedate_tz(self.data['last-modified'])
-#         modifiedTime = rfc822.mktime_tz(modifiedTuple)
-#         modifiedTime -= 5
-#         httpclient.grabURL(url, self.callback, self.errback,
-#                 modified=rfc822.formatdate(modifiedTime, clientClass=TestHTTPClient))
-#         self.runEventLoop()
-#         self.assertEquals(self.data['status'], 200)
-#         self.assertEquals(self.data['body'], firstBody)
+    def test_modified(self):
+        import rfc822
+        url = 'http://pculture.org/etag.txt'
+        httpclient.grabURL(url, self.callback, self.errback,
+                           clientClass=TestHTTPClient)
+        self.runEventLoop()
+        first_body = self.data['body']
+        modified_tuple = rfc822.parsedate_tz(self.data['last-modified'])
+        modified_time = rfc822.mktime_tz(modified_tuple)
+        modified_time -= 5
+        httpclient.grabURL(url, self.callback, self.errback,
+                           modified=rfc822.formatdate(modified_time),
+                           clientClass=TestHTTPClient)
+        self.runEventLoop()
+        self.assertEquals(self.data['status'], 200)
+        self.assertEquals(self.data['body'], first_body)
 
 
-# class HTTPClientPipelineCounter(httpclient.HTTPClient):
-#     def __init__(self, url, callback, errback):
-#         httpclient.HTTPClient.__init__(self, url, callback, errback)
-#         self.pipelineErrorsSeen = 0
+## class HTTPClientPipelineCounter(httpclient.HTTPClient):
+##     def __init__(self, url, callback, errback):
+##         httpclient.HTTPClient.__init__(self, url, callback, errback)
+##         self.pipelineErrorsSeen = 0
 
-#     def errbackIntercept(self, error):
-#         if isinstance(error, httpclient.PipelinedRequestNeverStarted):
-#             self.pipelineErrorsSeen += 1
-#         return httpclient.HTTPClient.errbackIntercept(self, error)
+##     def errbackIntercept(self, error):
+##         if isinstance(error, httpclient.PipelinedRequestNeverStarted):
+##             self.pipelineErrorsSeen += 1
+##         return httpclient.HTTPClient.errbackIntercept(self, error)
 
-# class PipelineTest(HTTPClientTestBase):
-#     def setUp(self):
-#         HTTPClientTestBase.setUp(self)
-#         self.pool = TestingHTTPConnectionPool()
-#         self.pool.MAX_CONNECTIONS_PER_SERVER = 1
-#         url = "http://www.foo.com/"
-#         self.firstClient = httpclient.HTTPClient(url, self.callback,
-#                 self.errback)
-#         self.firstClient.connectionPool = self.pool
-#         self.firstClient.startRequest()
-#         url = "http://www.foo.com/2"
-#         self.pipelineResponse = self.pipelineError = None
-#         def pipelineCallback(response):
-#             self.pipelineResponse = response
-#         def pipelineErrback(error):
-#             self.pipelineError = error
-#         self.runPendingIdles()
-#         conn = self.pool.getConnection('http', 'www.foo.com')
-#         conn.handleData(startResponse(headers={'Content-Length': 128}))
-#         self.pipelinedClient = HTTPClientPipelineCounter(url,
-#                 pipelineCallback, pipelineErrback)
-#         self.pipelinedClient.connectionPool = self.pool
-#         self.pipelinedClient.startRequest()
-#         self.runPendingIdles()
+## class PipelineTest(HTTPClientTestBase):
+##     def setUp(self):
+##         HTTPClientTestBase.setUp(self)
+##         self.pool = TestingHTTPConnectionPool()
+##         self.pool.MAX_CONNECTIONS_PER_SERVER = 1
+##         url = "http://www.foo.com/"
+##         self.firstClient = TestHTTPClient(url, self.callback, self.errback)
+##         self.firstClient.connectionPool = self.pool
+##         self.firstClient.startRequest()
+##         url = "http://www.foo.com/2"
+##         self.pipelineResponse = self.pipelineError = None
+##         def pipelineCallback(response):
+##             self.pipelineResponse = response
+##         def pipelineErrback(error):
+##             self.pipelineError = error
+##         self.runPendingIdles()
+##         conn = self.pool.getConnection('http', 'www.foo.com')
+##         conn.handleData(startResponse(headers={'Content-Length': 128}))
+##         self.pipelinedClient = HTTPClientPipelineCounter(url,
+##                                                          pipelineCallback,
+##                                                          pipelineErrback)
+##         self.pipelinedClient.connectionPool = self.pool
+##         self.pipelinedClient.startRequest()
+##         self.runPendingIdles()
 
 #     def testPipelineRetry(self):
 #         conn = self.pool.getConnection('http', 'www.foo.com')
@@ -1691,52 +1699,53 @@ class GrabURLTest(AsyncSocketTest):
 #         self.checkPipelineCanceled()
 
 class BadURLTest(HTTPClientTestBase):
-    def testScheme(self):
-        url = 'participatoryculture.org/democracytest/normalpage.txt'
-        httpclient.grabURL(url, self.callback, self.errback, clientClass=TestHTTPClient)
+    def test_scheme(self):
+        url = 'pculture.org/normalpage.txt'
+        httpclient.grabURL(url, self.callback, self.errback,
+                           clientClass=TestHTTPClient)
         self.runPendingIdles()
         self.assertEquals(self.errbackCalled, True)
         self.assertEquals(self.callbackCalled, False)
 
-    def testSlashes(self):
+    def test_slashes(self):
         url = 'http:jigsaw.w3.org/HTTP/'
-        httpclient.grabURL(url, self.callback, self.errback, clientClass=TestHTTPClient)
+        httpclient.grabURL(url, self.callback, self.errback,
+                           clientClass=TestHTTPClient)
         self.runPendingIdles()
         self.assertEquals(self.errbackCalled, True)
         self.assertEquals(self.callbackCalled, False)
 
-    def testHost(self):
+    def test_host(self):
         url = 'http:///HTTP/'
-        httpclient.grabURL(url, self.callback, self.errback, clientClass=TestHTTPClient)
+        httpclient.grabURL(url, self.callback, self.errback,
+                           clientClass=TestHTTPClient)
         self.runPendingIdles()
         self.assertEquals(self.errbackCalled, True)
         self.assertEquals(self.callbackCalled, False)
 
-    def testOtherScheme(self):
+    def test_other_scheme(self):
         url = 'rtsp://jigsaw.w3.org/'
-        httpclient.grabURL(url, self.callback, self.errback, clientClass=TestHTTPClient)
+        httpclient.grabURL(url, self.callback, self.errback,
+                           clientClass=TestHTTPClient)
         self.runPendingIdles()
         self.assertEquals(self.errbackCalled, True)
         self.assertEquals(self.callbackCalled, False)
 
-# class SocketCallbackTest(EventLoopTest):
-#     """This is a really weird situation, we"""
+class SocketCallbackTest(EventLoopTest):
+    def setUp(self):
+        EventLoopTest.setUp(self)
 
-#     def setUp(self):
-#         EventLoopTest.setUp(self)
+    def make_socket(self):
+        sock = socket.socket()
+        sock.connect(('pculture.org', 80))
+        return sock
 
-#     def makeSocket(self):
-#         sock = socket.socket()
-#         sock.connect(('participatoryculture.org', 80))
-#         return sock
-
-#     def testAddOnExisting(self):
-#         # This test fails right now..  It seems like it could be an error, but
-#         # I'm don't think it causes any harm, so I'm disabling it - Ben
-#         return
-
-#         s1 = self.makeSocket()
-#         s2 = self.makeSocket()
+# This test fails right now..  It seems like it could be an error, but
+# I'm don't think it causes any harm, so I'm disabling it - Ben
+#
+#     def test_add_on_existing(self):
+#         s1 = self.make_socket()
+#         s2 = self.make_socket()
 #         self.badCallbackCalled = self.goodCallbackCalled = False
 #         def badCallback():
 #             self.badCallbackCalled = True
@@ -1749,59 +1758,63 @@ class BadURLTest(HTTPClientTestBase):
 #         self.assert_(self.goodCallbackCalled)
 #         self.assert_(not self.badCallbackCalled)
 
-#     def testRemoveThenAdd(self):
-#         """Test adding a write callback right after we remove one.  This case
-#         isn't so bad actually, the really bad case (which I don't know how to
-#         simulate, is if we closed s2, then made a new socket, s3 that had the
-#         same fileno as s2 used to have."""
-#         s1 = self.makeSocket()
-#         s2 = self.makeSocket()
-#         self.count = 0
-#         def callback():
-#             self.count += 1
-#             if self.count == 1:
-#                 self.removeWriteCallback(s1)
-#                 self.addWriteCallback(s1, callback)
-#                 self.removeWriteCallback(s2)
-#                 self.addWriteCallback(s2, callback)
-#         self.addWriteCallback(s1, callback)
-#         self.addWriteCallback(s2, callback)
-#         self.addIdle(lambda: self.stopEventLoop(False), 'stop event loop')
-#         self.runEventLoop()
-#         self.assertEquals(self.count, 1)
-
+    def test_remove_then_add(self):
+        """Test adding a write callback right after we remove one.
+        This case isn't so bad actually, the really bad case (which I
+        don't know how to simulate, is if we closed s2, then made a
+        new socket, s3 that had the same fileno as s2 used to have.
+        """
+        s1 = self.make_socket()
+        s2 = self.make_socket()
+        self.count = 0
+        def callback():
+            self.count += 1
+            if self.count == 1:
+                self.removeWriteCallback(s1)
+                self.addWriteCallback(s1, callback)
+                self.removeWriteCallback(s2)
+                self.addWriteCallback(s2, callback)
+        self.addWriteCallback(s1, callback)
+        self.addWriteCallback(s2, callback)
+        self.addIdle(lambda: self.stopEventLoop(False), 'stop event loop')
+        self.runEventLoop()
+        self.assertEquals(self.count, 1)
 
 class CookieExpirationDateTestCase(unittest.TestCase):
-    def testCookieExpirationDate(self):
-        """Tests get_cookie_expiration_date to make sure it's returning
-        sane values and handles cookie expiration formats we've had
-        problems with.
+    def test_cookie_expiration_date(self):
+        """Tests get_cookie_expiration_date to make sure it's
+        returning sane values and handles cookie expiration formats
+        we've had problems with.
         """
         from time import mktime, strptime, localtime
         from miro.httpclient import get_cookie_expiration_date
 
-        for cd in ( ("Thu, 03-May-07 22:48:52 GMT", "2007-05-03 22:48:52 GMT"),
-                    ("Fri, 03-Jun-11 13:41:15 GMT", "2011-06-03 13:41:15 GMT"),
-                    ("Sun, 17-Jan-2038 19:14:07 GMT", "2038-01-17 19:14:07 GMT"),
-                    ("Mon, 09-Apr-07 23:50:49 GMT", "2007-04-09 23:50:49 GMT"),
-                    ("Tue, 01-Jan-2030 10:00:00 GMT", "2030-01-01 10:00:00 GMT"),
-                    ("Tue, 17-Jul-2007 02:09:00 GMT", "2007-07-17 02:09:00 GMT"),
-                    ("Monday, 15-Feb-10 17:13:07 GMT", "2010-02-15 17:13:07 GMT")):
+        for cd in [("Thu, 03-May-07 22:48:52 GMT", "2007-05-03 22:48:52 GMT"),
+                   ("Fri, 03-Jun-11 13:41:15 GMT", "2011-06-03 13:41:15 GMT"),
+                   ("Sun, 17-Jan-2038 19:14:07 GMT", "2038-01-17 19:14:07 GMT"),
+                   ("Mon, 09-Apr-07 23:50:49 GMT", "2007-04-09 23:50:49 GMT"),
+                   ("Tue, 01-Jan-2030 10:00:00 GMT", "2030-01-01 10:00:00 GMT"),
+                   ("Tue, 17-Jul-2007 02:09:00 GMT", "2007-07-17 02:09:00 GMT"),
+                   ("Monday, 15-Feb-10 17:13:07 GMT", "2010-02-15 17:13:07 GMT")
+                   ]:
 
-            # compare the 9-tuple we get from localtime because tuples are
-            # easier to compare (and more accurate for what we're looking for)
-            self.assertEquals( localtime(get_cookie_expiration_date(cd[0])),
-                               localtime(mktime(strptime(cd[1], "%Y-%m-%d %H:%M:%S %Z"))) )
+            # compare the 9-tuple we get from localtime because tuples
+            # are easier to compare (and more accurate for what we're
+            # looking for)
+            self.assertEquals(localtime(get_cookie_expiration_date(cd[0])),
+                              localtime(mktime(strptime(cd[1], "%Y-%m-%d %H:%M:%S %Z"))))
 
-    def testOverflowCookieExpirationDate(self):
-        """tests the case of get_cookie_expiration_date where the cookie
-        expiration date causes an overflow error when parsing it.
+    def test_overflow_cookie_expiration_date(self):
+        """Tests the case of get_cookie_expiration_date where the
+        cookie expiration date causes an overflow error when parsing
+        it.
         """
-        if sys.maxint > 2**31-1:
+        if sys.maxint > 2**31 - 1:
             # this test can't be executed on 64 bit systems
             return
         from time import localtime
         from miro.httpclient import get_cookie_expiration_date, DATEINFUTURE
 
-        self.assertEquals( localtime(get_cookie_expiration_date("Tue, 26-Jul-2050 10:00:00 GMT")),
-                           localtime(httpclient.DATEINFUTURE) )
+        dt = "Tue, 26-Jul-2050 10:00:00 GMT"
+        self.assertEquals(localtime(get_cookie_expiration_date(dt)),
+                          localtime(httpclient.DATEINFUTURE))
