@@ -26,17 +26,6 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-#import sys
-#class AutoFlushingStream:
-#    def __init__(self, stream):
-#        self.stream = stream
-#    def write(self, *args):
-#        self.stream.write(*args)
-#        self.stream.flush()
-#mylog = open("\\sitelog","wt")
-#sys.stdout = sys.stderr = AutoFlushingStream(mylog)
-#print "this is sitelog; path now %s" % sys.path
-
 """Customized site-setup script that leaves sys.path alone.
 
 In a normal Python implementation, this module is automatically
