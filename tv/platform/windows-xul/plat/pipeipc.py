@@ -116,6 +116,7 @@ class Server(object):
 
     def quit(self):
         kernel32.SetEvent(self.quit_event)
+        self.thread.join()
 
     def _wait_for_pipe(self):
         kernel32.WaitForMultipleObjects(2, self.event_array, False, INFINITE)
