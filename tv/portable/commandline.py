@@ -209,7 +209,7 @@ def parse_command_line_args(args=None):
             elif ext in ('.miro', '.democracy', '.dem', '.opml'):
                 opml.Importer().import_subscriptions(arg, show_summary=False)
             else:
-                add_video(arg, len(args) == 1)
+                add_video(arg)
                 added_videos = True
         else:
             logging.warning("parse_command_line_args: %s doesn't exist", arg)
