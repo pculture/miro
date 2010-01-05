@@ -9,6 +9,7 @@ from miro.item import Item, FileItem, FeedParserValues
 from miro.downloader import RemoteDownloader
 from miro.test.framework import MiroTestCase
 from miro.singleclick import _build_entry
+from miro.plat.utils import FilenameType
 
 def fp_values_for_url(url):
     return FeedParserValues(_build_entry(url, 'video/x-unknown'))
@@ -17,7 +18,7 @@ class ContainerItemTest(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
         self.feed = Feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
-        self.tempdir = tempfile.mkdtemp()
+        self.tempdir = FilenameType(tempfile.mkdtemp())
         self._make_fake_item("pcf.mpeg")
         self._make_fake_item("dean.avi")
         self._make_fake_item("npr.txt")
