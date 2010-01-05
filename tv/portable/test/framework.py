@@ -112,17 +112,20 @@ class MiroTestCase(unittest.TestCase):
 
     def reload_database(self, path=':memory:', schema_version=None,
                         object_schemas=None, upgrade=True):
-        if app.db:
-            try:
-                app.db.close()
-            except StandardError:
-                pass
+        self.shutdown_database()
         app.db = storedatabase.LiveStorage(path,
                                            schema_version=schema_version, 
                                            object_schemas=object_schemas)
         if upgrade:
             app.db.upgrade_database()
             database.update_last_id()
+
+    def shutdown_database(self):
+        if app.db:
+            try:
+                app.db.close()
+            except StandardError:
+                pass
 
     def reload_object(self, obj):
         # force an object to be reloaded from the databas.

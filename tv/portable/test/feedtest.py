@@ -428,6 +428,7 @@ class FeedParserAttributesTestCase(FeedTestCase):
 
     def tearDown(self):
         self.runPendingIdles()
+        self.shutdown_database()
         os.remove(self.tempdb)
         FeedTestCase.tearDown(self)
 
