@@ -546,6 +546,7 @@ class ConnectionHandlerTest(EventLoopTest):
         self.runEventLoop()
         self.assertEquals(self.connectionHandler.gotHandleClose, True)
 
+    # FIXME - this test fails on Windows.
     def test_remote_close2(self):
         self.remoteSocket.shutdown(socket.SHUT_RD)
         self.remoteSocket.close()

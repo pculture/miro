@@ -1,5 +1,6 @@
 import shutil
 import tempfile
+import os
 
 from miro.feed import Feed
 from miro.item import Item, FeedParserValues
@@ -169,6 +170,9 @@ class Upgrade88TestCase(MiroTestCase):
             pass
         MiroTestCase.tearDown(self)
 
+    # FIXME - this test fails on Windows.  I'm pretty sure we need
+    # a Windows-specific predbupgrade88 because the databases are
+    # platform specific.
     def test_live_storage_converts(self):
         # run upgrade 88
         old_db_path = resources.path("testdata/olddatabase.predbupgrade88")
