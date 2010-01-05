@@ -1714,9 +1714,10 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         self.query = None
         self.splitURLs()
 
+    @returns_unicode
     def get_title(self):
         if self.query:
-            return _("Search All: %(text)s", {"text": self.query})
+            return unicode(_("Search All: %(text)s", {"text": self.query}))
         return RSSFeedImplBase.get_title(self)
 
     def splitURLs(self):
