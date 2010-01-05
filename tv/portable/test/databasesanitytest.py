@@ -12,6 +12,7 @@ from miro import feed
 from miro import databasesanity
 from miro import database
 from miro import util
+from miro.plat.utils import FilenameType
 
 from miro.test.framework import MiroTestCase
 
@@ -44,7 +45,7 @@ class SanityCheckingTest(MiroTestCase):
     def test_phantom_feed_checking(self):
         f = feed.Feed(u"http://feed.uk")
         i = item.Item(item.FeedParserValues({}), feed_id=f.id)
-        i2 = item.FileItem('/foo/bar.txt', feed_id=f.id)
+        i2 = item.FileItem(FilenameType('/foo/bar.txt'), feed_id=f.id)
         self.check_object_list_fails_test([i])
         self.check_fix_if_possible([i, i2], [])
         self.check_object_list_passes_test([i, f])
