@@ -31,6 +31,15 @@
 
 import unittest
 import sys
+import logging
+
+from miro.plat import utils
+utils.initialize_locale()
+
+from miro import gtcache
+gtcache.init()
+
+logging.basicConfig(level=logging.CRITICAL)
 
 from miro import test
 from miro.plat import resources
