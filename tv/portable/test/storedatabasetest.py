@@ -307,8 +307,7 @@ class DiskTest(FakeSchemaTest):
         self.check_database()
 
     def test_commit_without_close(self):
-        # we should commit using an idle callback.
-        self.runPendingIdles()
+        app.db.finish_transaction()
         # close the database connection without giving LiveStorage the
         # oppertunity to commit when it's closed.
         app.db.connection.close()
