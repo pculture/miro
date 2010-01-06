@@ -34,7 +34,6 @@ from itertools import chain
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from math import ceil
-from miro.xhtmltools import xhtmlify
 from xml.sax.saxutils import unescape
 from miro.util import (check_u, returns_unicode, check_f, returns_filename,
                        quote_unicode_url, stringify, get_first_video_enclosure,
@@ -793,8 +792,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def get_feed(self):
         """Returns the feed this item came from.
         """
-        if hasattr(self, "_feed"):
+        try:
             return self._feed
+        except AttributeError:
+            pass
 
         if self.feed_id is not None:
             self._feed = models.Feed.get_by_id(self.feed_id)
@@ -816,13 +817,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @returns_unicode
     def get_feed_url(self):
-        if self.feed_id is not None:
-            try:
-                return self.get_feed().get_url()
-            except ObjectNotFoundError:
-                return None
-        else:
-            return None
+        return self.get_feed().origURL
 
     @returns_unicode
     def get_source(self):
@@ -1267,17 +1262,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @returns_unicode
     def get_description(self):
-        """Returns valid XHTML containing a description of the video (str).
+        """Returns the description of the video (unicode).
         """
-        rawDescription = self.get_raw_description()
+        raw_description = self.get_raw_description()
 
-        purifiedDescription = adscraper.purify(rawDescription)
-        ret = xhtmlify(u'<span>%s</span>' % unescape(purifiedDescription),
-                       filter_font_tags=True)
-        if ret:
-            return ret
-
-        return u'<span />'
+        return unicode(adscraper.purify(raw_description))
 
     def looks_like_torrent(self):
         """Returns true if we think this item is a torrent.  (For items that
