@@ -43,8 +43,8 @@ def match(search_string, comparisons):
 class BooleanSearch:
     def __init__ (self, search_string):
         self.string = search_string
-        self.parse_string()
         self.rules = []
+        self.parse_string()
 
     def parse_string(self):
         inquote = False
@@ -52,7 +52,6 @@ class BooleanSearch:
         while i < len (self.string) and self.string[i] == ' ':
             i += 1
         laststart = i
-        self.rules = []
         while (i < len(self.string)):
             i = laststart
             while (i < len(self.string)):
