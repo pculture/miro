@@ -48,6 +48,7 @@ from miro import app
 from miro import autodler
 from miro import autoupdate
 from miro import config
+from miro import commandline
 from miro import controller
 from miro import database
 from miro import databaselog
@@ -71,7 +72,6 @@ from miro import theme
 from miro import util
 from miro import searchengines
 from miro import storedatabase
-from miro.commandline import parse_command_line_args
 
 DEBUG_DB_MEM_USAGE = False
 mem_usage_test_event = threading.Event()
@@ -308,7 +308,7 @@ def on_frontend_started():
     yield None
     moviedata.movie_data_updater.start_thread()
     yield None
-    parse_command_line_args()
+    commandline.startup()
     yield None
     autoupdate.check_for_updates()
     yield None

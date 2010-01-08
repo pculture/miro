@@ -59,6 +59,7 @@ from miro import singleclick
 from miro import opml
 
 _command_line_args = []
+_started_up = False
 _command_line_videos = None
 _command_line_view = None
 
@@ -158,19 +159,14 @@ def reset_command_line_view():
         _command_line_view = None
     _command_line_videos = set()
 
-def parse_command_line_args(args=None):
+def parse_command_line_args(args):
     """
     This goes through a list of files which could be arguments passed
     in on the command line or a list of files from other source.
-
-    If the args list is None, then this pulls from the internal
-    _command_line_args list which is populated by set_command_line_args.
     """
-    if args is None:
-        global _command_line_args
-        args = _command_line_args
-        _command_line_args = []
-
+    if not _started_up:
+        _command_line_args.extend(args)
+        return
     reset_command_line_view()
 
     added_videos = False
@@ -227,3 +223,10 @@ def parse_command_line_args(args=None):
     if added_downloads:
         # FIXME - switch to downloads tab?
         pass
+
+def startup():
+    global _command_line_args
+    global _started_up
+    _started_up = True
+    parse_command_line_args(_command_line_args)
+    _command_line_args = []
