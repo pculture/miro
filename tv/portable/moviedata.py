@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from miro.eventloop import as_idle, addTimeout
+from miro.eventloop import as_idle
 import os.path
 import re
 import subprocess
@@ -77,7 +77,7 @@ class MovieDataInfo:
         self.item = item
         self.video_path = item.get_filename()
         if self.video_path is None:
-            self.program_info = None
+            self._program_info = None
             return
         # add a random string to the filename to ensure it's unique.  Two
         # videos can have the same basename if they're in different
@@ -86,27 +86,35 @@ class MovieDataInfo:
                                             util.random_string(5))
         self.thumbnail_path = os.path.join(thumbnail_directory(),
                                            thumbnail_filename)
-        self.program_info = None
         if hasattr(app, 'in_unit_tests'):
-            return
+            self._program_info = None
+
+    def _get_program_info(self):
+        try:
+            return self._program_info
+        except AttributeError:
+            self._calc_program_info()
+            return self._program_info
+
+    def _calc_program_info(self):
         videopath = fileutil.expand_filename(self.video_path)
         thumbnailpath = fileutil.expand_filename(self.thumbnail_path)
         command_line, env = movie_data_program_info(videopath, thumbnailpath)
         self.program_info = (command_line, env)
+
+    program_info = property(_get_program_info)
 
 class MovieDataUpdater:
     def __init__ (self):
         self.in_shutdown = False
         self.queue = Queue.Queue()
         self.thread = None
-        self.thread_started = False
 
     def start_thread(self):
         self.thread = threading.Thread(name='Movie Data Thread',
                                        target=self.thread_loop)
         self.thread.setDaemon(True)
         self.thread.start()
-        self.thread_started = True
 
     def thread_loop(self):
         while not self.in_shutdown:
@@ -189,13 +197,6 @@ class MovieDataUpdater:
     def request_update(self, item):
         if self.in_shutdown:
             return
-        if not self.thread_started:
-            logging.info("Movie data thread not started, waiting to "
-                    "request update for %s", item)
-            addTimeout(1, self.request_update, "movie data update request",
-                    args=(item,))
-            return
-
         filename = item.get_filename()
         if not filename or not fileutil.isfile(filename):
             return
