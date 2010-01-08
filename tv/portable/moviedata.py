@@ -100,7 +100,7 @@ class MovieDataInfo:
         videopath = fileutil.expand_filename(self.video_path)
         thumbnailpath = fileutil.expand_filename(self.thumbnail_path)
         command_line, env = movie_data_program_info(videopath, thumbnailpath)
-        self.program_info = (command_line, env)
+        self._program_info = (command_line, env)
 
     program_info = property(_get_program_info)
 
