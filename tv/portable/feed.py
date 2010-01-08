@@ -46,6 +46,7 @@ import xml
 from miro.database import DDBObject, ObjectNotFoundError
 from miro.httpclient import grabURL
 from miro import app
+from miro import autodler
 from miro import config
 from miro import iconcache
 from miro import databaselog
@@ -820,8 +821,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.maxNew = max_new
         self.signal_change()
         if self.maxNew >= oldMaxNew or self.maxNew < 0:
-            from miro import autodler
-            autodler.auto_downloader.start_downloads()
+            autodler.AUTO_DOWNLOADER.start_downloads()
 
     def setMaxOldItems(self, maxOldItems):
         self.confirm_db_thread()

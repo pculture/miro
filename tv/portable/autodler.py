@@ -26,8 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from miro import item as itemmod
-from miro import feed as feedmod
+from miro import models
 from miro import config
 from miro import prefs
 from miro import eventloop
@@ -58,12 +57,12 @@ class Downloader:
         self.feed_time = {}
         self.is_auto = is_auto
         if is_auto:
-            pending_items = itemmod.Item.auto_pending_view()
-            running_items = itemmod.Item.auto_downloads_view()
+            pending_items = models.Item.auto_pending_view()
+            running_items = models.Item.auto_downloads_view()
             self.MAX = config.get(prefs.DOWNLOADS_TARGET)
         else:
-            pending_items = itemmod.Item.manual_pending_view()
-            running_items = itemmod.Item.manual_downloads_view()
+            pending_items = models.Item.manual_pending_view()
+            running_items = models.Item.manual_downloads_view()
             self.MAX = config.get(prefs.MAX_MANUAL_DOWNLOADS)
 
         for item in pending_items:
@@ -82,7 +81,7 @@ class Downloader:
         if is_auto:
             self.new_count = 0
             self.feed_new_count = {}
-            new_items = itemmod.Item.unwatched_downloaded_items()
+            new_items = models.Item.unwatched_downloaded_items()
             for item in new_items:
                 self.new_on_add(None, item)
             self.new_items_tracker = new_items.make_tracker()
@@ -107,7 +106,7 @@ class Downloader:
                and self.pending_count != last_count):
             last_count = self.pending_count
             candidate_feeds = []
-            for feed in feedmod.Feed.make_view():
+            for feed in models.Feed.make_view():
                 key = _key_for_feed(feed)
                 if self.is_auto:
                     max_new = feed.get_max_new()
