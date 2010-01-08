@@ -225,6 +225,7 @@ def finish_startup(obj, thread):
     logging.info("setup theme...")
     setup_theme()
     install_message_handler()
+    downloader.init_controller()
 
     eventloop.addUrgentCall(check_firsttime, "check first time")
 
@@ -288,7 +289,6 @@ def finish_backend_startup():
     # Uncomment the next line to test startup error handling
     # raise StartupError("Test Error", "Startup Failed")
     reconnect_downloaders()
-    downloader.init_controller()
     guide.download_guides()
     feed.remove_orphaned_feed_impls()
     messages.StartupSuccess().send_to_frontend()

@@ -640,6 +640,8 @@ class RemoteDownloader(DDBObject):
         return self.status.get('uploaded', 0) / size
 
     def restart_on_startup_if_needed(self):
+        if not self.id_exists():
+            return
         if _downloads.has_key(self.dlid):
             # something has caused us to restart already, (for
             # example, the user selects "resume seeding").  squelch
