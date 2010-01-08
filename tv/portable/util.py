@@ -702,9 +702,6 @@ class HTMLStripper(sgmllib.SGMLParser):
         if not isinstance(s, basestring):
             return ("", [])
 
-        if "<" not in s:
-            return (s.strip(), [])
-
         s = s.replace("\r\n", "\n")
         s = UNARY_RE.sub("<\\1 />", s)
 
