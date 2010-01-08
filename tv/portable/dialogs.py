@@ -196,7 +196,7 @@ class ThreeChoiceDialog(Dialog):
 class HTTPAuthDialog(Dialog):
     """Ask for a username and password for HTTP authorization.
     Frontends should create a dialog with text entries for a username
-    and password.  Use prefillUser and prefillPassword for the initial
+    and password.  Use prefill_user and prefill_password for the initial
     values of the entries.
 
     The buttons are always BUTTON_OK and BUTTON_CANCEL.

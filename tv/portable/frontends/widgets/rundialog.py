@@ -80,11 +80,12 @@ class HTTPAuthDialogRunner(DialogRunner):
         table = widgetset.Table(2, 2)
         table.set_column_spacing(12)
         table.pack(widgetset.Label(_("Username:")), 0, 0)
-        self.username_entry = widgetset.TextEntry(self.dialog.prefillUser)
+        self.username_entry = widgetset.TextEntry(self.dialog.prefill_user)
         self.username_entry.set_width(20)
         table.pack(self.username_entry, 1, 0)
         table.pack(widgetset.Label(_("Password:")), 0, 1)
-        self.password_entry = widgetset.SecureTextEntry(self.dialog.prefillPassword)
+        self.password_entry = widgetset.SecureTextEntry(
+                self.dialog.prefill_password)
         self.password_entry.set_activates_default(True)
         table.pack(self.password_entry, 1, 1)
         window.set_extra_widget(widgetutil.align_center(table))
@@ -101,8 +102,8 @@ class TextEntryDialogRunner(DialogRunner):
         initial = None
         if self.dialog.fillWithClipboardURL:
             initial = 'http://clipboard.com/'
-        if initial is None and self.dialog.prefillCallback:
-            initial = self.dialog.prefillCallback()
+        if initial is None and self.dialog.prefill_callback:
+            initial = self.dialog.prefill_callback()
         if initial is not None:
             self.entry.set_text(initial)
         self.entry.set_activates_default(True)
