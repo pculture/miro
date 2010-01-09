@@ -367,7 +367,14 @@ class PlaybackManager (signals.SignalEmitter):
             self._finish_setup_player(item_info, item_type, volume)
         def _handle_unsuccessful_sniff():
             self._finish_setup_player(item_info, "unplayable", volume)
-        widgetset.get_item_type(item_info, _handle_successful_sniff, _handle_unsuccessful_sniff)
+        if item_info.media_type_checked:
+            type = item_info.file_type
+            if type == 'other':
+                # the backend and frontend use different names for this
+                type = 'unplayable'
+            self._finish_setup_player(item_info, type, volume)
+        else:
+            widgetset.get_item_type(item_info, _handle_successful_sniff, _handle_unsuccessful_sniff)
     
     def _finish_setup_player(self, item_info, item_type, volume):
         if item_type == 'audio':
