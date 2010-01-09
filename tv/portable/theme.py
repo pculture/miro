@@ -164,6 +164,7 @@ class ThemeHistory(DDBObject):
         logging.info("Adding default feeds")
         default_video_feeds = []
         default_video_feeds.extend([
+            (u'http://vodo.net/feeds/promoted', False),
             (u'http://feeds.feedburner.com/earth-touch_podcast_720p', False),
             (u'http://www.linktv.org/rss/hq/globalpulse.xml', False),
             ])
