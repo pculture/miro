@@ -66,6 +66,9 @@ class TextEntry(Widget):
         if initial_text is not None:
             self._widget.set_text(initial_text)
 
+    def focus(self):
+        self._widget.grab_focus()
+
     def set_text(self, text):
         self._widget.set_text(text)
 

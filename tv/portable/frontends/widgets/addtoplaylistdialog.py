@@ -81,6 +81,7 @@ def run_dialog():
 
             new_rb = widgetset.RadioButton(_("New playlist:"), rbg)
             new_text = widgetset.TextEntry()
+            new_text.set_activates_default(True)
             choice_table.pack(new_rb, 0, 1)
             choice_table.pack(new_text, 1, 1)
 
@@ -96,6 +97,8 @@ def run_dialog():
                 else:
                     choice_table.disable(row=0, column=1)
                     choice_table.enable(row=1, column=1)
+                if new_rb.get_selected():
+                    new_text.focus()
 
             existing_rb.connect('clicked', handle_clicked)
             new_rb.connect('clicked', handle_clicked)

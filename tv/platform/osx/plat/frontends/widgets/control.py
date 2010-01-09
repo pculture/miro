@@ -79,6 +79,9 @@ class BaseTextEntry(SizedControl):
         self.create_signal('changed')
         self.create_signal('validate')
 
+    def focus(self):
+        self.view.window().makeFirstResponder_(self.view)
+
     def viewport_created(self):
         SizedControl.viewport_created(self)
         self.notifications.connect(self.on_changed, 'NSControlTextDidChangeNotification')
