@@ -195,23 +195,25 @@ class ItemListController(object):
         elif info.download_info is None:
             messages.StartDownload(info.id).send_to_backend()
 
+    def _toolbar_filter_changed(self):
+        for item_view in self.all_item_views():
+            item_view.model_changed()
+        self.check_for_empty_list()
+
     def on_view_all_clicked(self, button):
         self.widget.toolbar.switch_to_view_all()
         self.item_list.view_all()
-        for item_view in self.all_item_views():
-            item_view.model_changed()
+        self._toolbar_filter_changed()
 
     def on_toggle_unwatched(self, button):
         self.widget.toolbar.toggle_unwatched_only()
         self.item_list.toggle_unwatched_only()
-        for item_view in self.all_item_views():
-            item_view.model_changed()
+        self._toolbar_filter_changed()
 
     def on_toggle_non_feed(self, button):
         self.widget.toolbar.toggle_non_feed_only()
         self.item_list.toggle_non_feed()
-        for item_view in self.all_item_views():
-            item_view.model_changed()
+        self._toolbar_filter_changed()
 
     def on_sort_changed(self, object, sort_key, ascending):
         sorter = itemlist.SORT_KEY_MAP[sort_key](ascending)
