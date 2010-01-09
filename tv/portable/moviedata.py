@@ -105,8 +105,9 @@ class MovieDataInfo:
 
     program_info = property(_get_program_info)
 
-class MovieDataUpdater:
+class MovieDataUpdater(signals.SignalEmitter):
     def __init__ (self):
+        signals.SignalEmitter.__init__(self, 'begin-loop', 'end-loop')
         self.in_shutdown = False
         self.queue = Queue.Queue()
         self.thread = None
@@ -119,9 +120,11 @@ class MovieDataUpdater:
 
     def thread_loop(self):
         while not self.in_shutdown:
+            self.emit('begin-loop')
             mdi = self.queue.get(block=True)
             if mdi is None or mdi.program_info is None:
                 # shutdown() was called or there's no moviedata implemented.
+                self.emit('end-loop')
                 break
             try:
                 duration = -1
@@ -150,6 +153,7 @@ class MovieDataUpdater:
                     break
                 signals.system.failed_exn("When running external movie data program")
                 self.update_finished(mdi.item, -1, None, type)
+            self.emit('end-loop')
 
     def run_movie_data_program(self, command_line, env):
         start_time = time.time()
