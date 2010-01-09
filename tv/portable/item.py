@@ -310,6 +310,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.eligibleForAutoDownload = eligibleForAutoDownload
         self.duration = None
         self.screenshot = None
+        self.media_type_checked = False
         self.resumeTime = 0
         self.channelTitle = None
         self.downloader_id = None
@@ -1925,8 +1926,8 @@ def fp_values_for_file(filename):
 
 def update_incomplete_movie_data():
     for item in chain(Item.downloaded_view(), Item.file_items_view()):
-        if ((item.duration is None
-             or item.duration == -1 or item.screenshot is None)):
+        if ((item.duration is None or item.duration == -1 or
+            item.screenshot is None or not item.media_type_checked)):
             moviedata.movie_data_updater.request_update(item)
 
 def move_orphaned_items():

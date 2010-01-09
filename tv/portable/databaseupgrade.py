@@ -2607,3 +2607,8 @@ def upgrade108(cursor):
     """Drop the feedparser_output column from item.
     """
     remove_column(cursor, "item", ["feedparser_output"])
+
+def upgrade109(cursor):
+    """Add the media_type_checked column to item """
+    cursor.execute("ALTER TABLE item ADD media_type_checked integer")
+    cursor.execute("UPDATE item SET media_type_checked=0")

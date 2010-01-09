@@ -203,6 +203,7 @@ class MovieDataUpdater:
             item.updating_movie_info = False
             if type is not None:
                 item.file_type = unicode(type)
+                item.media_type_checked = True
             item.signal_change()
 
     def request_update(self, item):
