@@ -61,10 +61,14 @@ class TabListView(widgetset.TableView):
     def __init__(self, renderer, table_model_class=None):
         if table_model_class is None:
             table_model_class = widgetset.TreeTableModel
-        table_model = table_model_class('object', 'boolean')
-        # columns are the tab_info object and if the tab should be blinking
+        table_model = table_model_class('object', 'boolean', 'integer')
+        # columns are:
+        # - the tab_info object
+        # - should the tab should be blinking?
+        # - should we draw an uploading icon?  -1: no, 0-7: frame to draw
         widgetset.TableView.__init__(self, table_model)
-        self.column = widgetset.TableColumn('tab', renderer, data=0, blink=1)
+        self.column = widgetset.TableColumn('tab', renderer, data=0, blink=1,
+                updating_frame=2)
         self.column.set_min_width(renderer.MIN_WIDTH)
         self.add_column(self.column)
         self.set_show_headers(False)
@@ -74,10 +78,10 @@ class TabListView(widgetset.TableView):
         self.set_auto_resizes(True)
 
     def append_tab(self, tab_info):
-        return self.model.append(tab_info, False)
+        return self.model.append(tab_info, False, -1)
 
     def append_child_tab(self, parent_iter, tab_info):
-        return self.model.append_child(parent_iter, tab_info, False)
+        return self.model.append_child(parent_iter, tab_info, False, -1)
 
     def update_tab(self, iter, tab_info):
         self.model.update_value(iter, 0, tab_info)
@@ -87,6 +91,13 @@ class TabListView(widgetset.TableView):
 
     def unblink_tab(self, iter):
         self.model.update_value(iter, 1, False)
+
+    def pulse_updating_image(self, iter):
+        frame = self.model[iter][2]
+        self.model.update_value(iter, 2, (frame + 1) % 8)
+
+    def stop_updating_image(self, iter):
+        self.model.update_value(iter, 2, -1)
 
 class TabBlinkerMixin(object):
     def blink_tab(self, id):
@@ -553,14 +564,46 @@ class FeedList(NestedTabList):
 
     def __init__(self):
         TabList.__init__(self)
+        self.setup_dnd()
+        self.updating_animations = {}
+
+    def setup_dnd(self):
         self.view.set_drag_source(FeedListDragHandler())
         self.view.set_drag_dest(FeedListDropHandler(self))
 
     def on_delete_key_pressed(self):
         app.widgetapp.remove_current_feed()
 
+    def feed_is_updating(self, info):
+        if info.id in self.updating_animations:
+            return
+        timer_id = timer.add(0, self.pulse_updating_animation, info.id)
+        self.updating_animations[info.id] = timer_id
+
+    def feed_not_updating(self, info):
+        if info.id not in self.updating_animations:
+            return
+        self.view.stop_updating_image(self.iter_map[info.id])
+        timer_id = self.updating_animations.pop(info.id)
+        timer.cancel(timer_id)
+
+    def pulse_updating_animation(self, id):
+        try:
+            iter = self.iter_map[id]
+        except KeyError:
+            # feed was removed
+            del self.updating_animations[id]
+            return
+        self.view.pulse_updating_image(iter)
+        timer_id = timer.add(0.2, self.pulse_updating_animation, id)
+        self.updating_animations[id] = timer_id
+
     def init_info(self, info):
         info.icon = imagepool.get_surface(info.tab_icon, size=(16, 16))
+        if info.is_updating:
+            self.feed_is_updating(info)
+        else:
+            self.feed_not_updating(info)
 
     def get_feeds(self):
         infos = [self.view.model[i][0] for i in self.iter_map.values()]
@@ -599,8 +642,7 @@ class FeedList(NestedTabList):
         ]
 
 class AudioFeedList(FeedList):
-    def __init__(self):
-        TabList.__init__(self)
+    def setup_dnd(self):
         self.view.set_drag_source(AudioFeedListDragHandler())
         self.view.set_drag_dest(FeedListDropHandler(self))
 

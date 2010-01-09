@@ -156,8 +156,9 @@ class TabRenderer(widgetset.CustomCellRenderer):
         renderer.render_layout(context)
 
     def pack_bubbles(self, hbox, layout):
-        if getattr(self.data, 'is_updating', None):
-            updating_image = widgetutil.make_surface("icon-updating")
+        if self.updating_frame > -1:
+            image_name = 'icon-updating-%s' % self.updating_frame
+            updating_image = widgetutil.make_surface(image_name)
             alignment = cellpack.Alignment(updating_image, yalign=0.5, yscale=0.0,
                     xalign=0.0, xscale=0.0, min_width=20)
             hbox.pack(alignment)
