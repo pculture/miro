@@ -173,6 +173,9 @@ print "Miro-Movie-Data-Length: %s" % duration
 thmbResult = extractThumbnail(qtmovie, thumbPath)
 print "Miro-Movie-Data-Thumbnail: %s" % thmbResult
 
+movie_type = get_type(qtmovie)
+print "Miro-Movie-Data-Type: %s" % movie_type
+
 sys.exit(0)
 
 # =============================================================================
