@@ -450,26 +450,26 @@ class ItemList(object):
     def set_new_only(self, new_only):
         """Set if only new items are to be displayed (default False)."""
         self.new_only = new_only
-        self._recaclulate_hidden_items()
+        self._recalculate_hidden_items()
 
     def view_all(self):
         self.unwatched_only = False
         self.non_feed_only = False
-        self._recaclulate_hidden_items()
+        self._recalculate_hidden_items()
 
     def toggle_unwatched_only(self):
         self.unwatched_only = not self.unwatched_only
-        self._recaclulate_hidden_items()
+        self._recalculate_hidden_items()
 
     def toggle_non_feed(self):
         self.non_feed_only = not self.non_feed_only
-        self._recaclulate_hidden_items()
+        self._recalculate_hidden_items()
 
     def set_search_text(self, search_text):
         self._search_text = search_text
-        self._recaclulate_hidden_items()
+        self._recalculate_hidden_items()
 
-    def _recaclulate_hidden_items(self):
+    def _recalculate_hidden_items(self):
         newly_matching = self._find_newly_matching_items()
         removed = self._remove_non_matching_items()
         self._sorter.sort_items(newly_matching)
