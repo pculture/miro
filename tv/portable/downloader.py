@@ -26,6 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import datetime
 import os
 import random
 import logging
@@ -40,6 +41,7 @@ from miro.util import (get_torrent_info_hash, returns_unicode, check_u,
                        returns_filename, unicodify, check_f, to_uni)
 from miro import config
 from miro import dialogs
+from miro import displaytext
 from miro import eventloop
 from miro import httpclient
 from miro import models
@@ -143,6 +145,7 @@ class RemoteDownloader(DDBObject):
         self.channelName = channelName
         self.manualUpload = False
         self._save_later_dc = None
+        self._update_retry_time_dc = None
         if contentType is None:
             self.contentType = u""
         else:
@@ -549,9 +552,27 @@ class RemoteDownloader(DDBObject):
     def get_startup_activity(self):
         self.confirm_db_thread()
         activity = self.status.get('activity')
+        if (activity is None and self.status.get('retryCount', -1) > -1 and
+                'retryTime' in self.status):
+            activity = self._calc_retry_time()
+            if self._update_retry_time_dc is None:
+                self._update_retry_time_dc = eventloop.addTimeout(1,
+                        self._update_retry_time, 'Updating retry time')
         if activity is None:
             return _("starting up")
         return activity
+
+    def _calc_retry_time(self):
+        retry_delta = self.status['retryTime'] - datetime.datetime.now()
+        time_str = displaytext.time_string(retry_delta.seconds)
+        return _('no connection - retrying in %s') % time_str
+
+    def _update_retry_time(self):
+        if self.id_exists():
+            # calling signal_change() will cause the us to call
+            # get_startup_activity() again which will have a new time now.
+            self.signal_change(needs_save=False)
+            self._update_retry_time_dc = None
 
     @returns_unicode
     def get_reason_failed(self):
@@ -615,6 +636,7 @@ class RemoteDownloader(DDBObject):
 
     def setup_restored(self):
         self._save_later_dc = None
+        self._update_retry_time_dc = None
         self.deleteFiles = True
         self.itemList = []
         if self.dlid == 'noid':
