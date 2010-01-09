@@ -302,13 +302,19 @@ class PlaybackManager (signals.SignalEmitter):
     def update_current_resume_time(self, resume_time=-1):
         if not self.open_successful or self.player is None:
             return
+        item_info = self.playlist[self.position]
         if config.get(prefs.RESUME_VIDEOS_MODE):
             if resume_time == -1:
                 resume_time = self.player.get_elapsed_playback_time()
+                # if we are 95% of the way into the movie and less than 30
+                # seconds before the end, don't save resume time (#11956)
+                if resume_time > min(item_info.duration * 0.95,
+                        item_info.duration - 30):
+                    resume_time = 0
         else:
             resume_time = 0
-        id = self.playlist[self.position].id
-        messages.SetItemResumeTime(id, resume_time).send_to_backend()
+        m = messages.SetItemResumeTime(item_info.id, resume_time)
+        m.send_to_backend()
 
     def set_playback_rate(self, rate):
         if self.is_playing:
