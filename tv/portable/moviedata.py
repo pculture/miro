@@ -44,8 +44,8 @@ from miro import util
 from miro import fileutil
 from miro.plat.utils import FilenameType, kill_process, movie_data_program_info
 
-# Time in seconds that we wait for the utility to execute.  If it goes longer
-# than this, we assume it's hung and kill it.
+# Time in seconds that we wait for the utility to execute.  If it goes
+# longer than this, we assume it's hung and kill it.
 MOVIE_DATA_UTIL_TIMEOUT = 120
 
 # Time to sleep while we're polling the external movie command
@@ -65,9 +65,9 @@ def thumbnail_directory():
         pass
     return dir_
 
-class MovieDataInfo:
-    """Little utility class to keep track of data associated with each movie.
-    This is:
+class MovieDataInfo(object):
+    """Little utility class to keep track of data associated with each
+    movie.  This is:
 
     * The item.
     * The path to the video.
@@ -80,9 +80,9 @@ class MovieDataInfo:
         if self.video_path is None:
             self._program_info = None
             return
-        # add a random string to the filename to ensure it's unique.  Two
-        # videos can have the same basename if they're in different
-        # directories.
+        # add a random string to the filename to ensure it's unique.
+        # Two videos can have the same basename if they're in
+        # different directories.
         thumbnail_filename = '%s.%s.png' % (os.path.basename(self.video_path),
                                             util.random_string(5))
         self.thumbnail_path = os.path.join(thumbnail_directory(),
@@ -123,7 +123,8 @@ class MovieDataUpdater(signals.SignalEmitter):
             self.emit('begin-loop')
             mdi = self.queue.get(block=True)
             if mdi is None or mdi.program_info is None:
-                # shutdown() was called or there's no moviedata implemented.
+                # shutdown() was called or there's no moviedata
+                # implemented.
                 self.emit('end-loop')
                 break
             try:
@@ -134,25 +135,24 @@ class MovieDataUpdater(signals.SignalEmitter):
                 stdout = self.run_movie_data_program(command_line, env)
                 if duration == -1:
                     duration = self.parse_duration(stdout)
-                type = self.parse_type(stdout)
+                mediatype = self.parse_type(stdout)
                 if THUMBNAIL_SUCCESS_RE.search(stdout):
                     screenshot_worked = True
                 if ((screenshot_worked and
                      fileutil.exists(mdi.thumbnail_path))):
                     screenshot = mdi.thumbnail_path
                 else:
-                    # All the programs failed, maybe it's an audio file?
-                    # Setting it to "" instead of None, means that we won't
-                    # try to take the screenshot again.
+                    # All the programs failed, maybe it's an audio
+                    # file?  Setting it to "" instead of None, means
+                    # that we won't try to take the screenshot again.
                     screenshot = FilenameType("")
-                self.update_finished(mdi.item, duration, screenshot, type)
-            except (KeyboardInterrupt, SystemExit):
-                raise
-            except:
+                self.update_finished(mdi.item, duration, screenshot, mediatype)
+            except StandardError:
                 if self.in_shutdown:
                     break
-                signals.system.failed_exn("When running external movie data program")
-                self.update_finished(mdi.item, -1, None, type)
+                signals.system.failed_exn(
+                    "When running external movie data program")
+                self.update_finished(mdi.item, -1, None, mediatype)
             self.emit('end-loop')
 
     def run_movie_data_program(self, command_line, env):
@@ -169,7 +169,8 @@ class MovieDataUpdater(signals.SignalEmitter):
 
         if self.in_shutdown:
             if pipe.poll() is None:
-                logging.info("Movie data process running after shutdown, killing it")
+                logging.info("Movie data process running after shutdown, "
+                             "killing it")
                 self.kill_process(pipe.pid)
             return ''
         return pipe.stdout.read()
@@ -200,13 +201,13 @@ class MovieDataUpdater(signals.SignalEmitter):
             return None
 
     @as_idle
-    def update_finished(self, item, duration, screenshot, type):
+    def update_finished(self, item, duration, screenshot, mediatype):
         if item.id_exists():
             item.duration = duration
             item.screenshot = screenshot
             item.updating_movie_info = False
-            if type is not None:
-                item.file_type = unicode(type)
+            if mediatype is not None:
+                item.file_type = unicode(mediatype)
                 item.media_type_checked = True
             item.signal_change()
 
