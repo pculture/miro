@@ -181,13 +181,17 @@ class Renderer:
     def finish_select_file(self):
         pass
 
-    def get_current_time(self):
+    def get_current_time(self, attempt=0):
+        # query_position fails periodically, so this attempts it 5 times
+        # and if after that it fails, then we return 0.
+        if attempt == 5:
+            return 0
         try:
             position, format = self.playbin.query_position(gst.FORMAT_TIME)
             return to_seconds(position)
-        except Exception, e:
+        except gst.QueryError:
             logging.warn("get_current_time: caught exception: %s" % e)
-            return None
+            return self.get_current_time(attempt + 1)
 
     def _seek(self, seconds):
         event = gst.event_new_seek(1.0,
