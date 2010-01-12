@@ -42,6 +42,7 @@ from distutils import sysconfig
 from distutils.core import Command
 import distutils.command.install_data
 from distutils.ccompiler import new_compiler
+from distutils import file_util, dir_util
 
 
 ###############################################################################
@@ -81,20 +82,20 @@ GTK_INCLUDE_PATH = os.path.join(GTK_ROOT_PATH, 'include')
 GTK_LIB_PATH = os.path.join(GTK_ROOT_PATH, 'lib')
 GTK_BIN_PATH = os.path.join(GTK_ROOT_PATH, 'bin')
 GTK_INCLUDE_DIRS = [
-        os.path.join(GTK_INCLUDE_PATH, 'atk-1.0'),
-        os.path.join(GTK_INCLUDE_PATH, 'gtk-2.0'),
-        os.path.join(GTK_INCLUDE_PATH, 'glib-2.0'),
-        os.path.join(GTK_INCLUDE_PATH, 'glib-2.0'),
-        os.path.join(GTK_INCLUDE_PATH, 'pango-1.0'),
-        os.path.join(GTK_INCLUDE_PATH, 'cairo'),
-        os.path.join(GTK_LIB_PATH, 'glib-2.0', 'include'),
-        os.path.join(GTK_LIB_PATH, 'gtk-2.0', 'include'),
+    os.path.join(GTK_INCLUDE_PATH, 'atk-1.0'),
+    os.path.join(GTK_INCLUDE_PATH, 'gtk-2.0'),
+    os.path.join(GTK_INCLUDE_PATH, 'glib-2.0'),
+    os.path.join(GTK_INCLUDE_PATH, 'glib-2.0'),
+    os.path.join(GTK_INCLUDE_PATH, 'pango-1.0'),
+    os.path.join(GTK_INCLUDE_PATH, 'cairo'),
+    os.path.join(GTK_LIB_PATH, 'glib-2.0', 'include'),
+    os.path.join(GTK_LIB_PATH, 'gtk-2.0', 'include'),
 ]
 
 PYGOBJECT_INCLUDE_DIR = os.path.join(BINARY_KIT_ROOT, 'pygobject')
 
-# Path to the Mozilla "xulrunner-sdk" distribution. We include a build in
-# the Binary Kit to save you a minute or two, but if you want to be
+# Path to the Mozilla "xulrunner-sdk" distribution. We include a build
+# in the Binary Kit to save you a minute or two, but if you want to be
 # more up-to-date, nightlies are available from Mozilla at:
 # http://ftp.mozilla.org/pub/mozilla.org/xulrunner/nightly/latest-trunk/
 XULRUNNER_SDK_PATH = os.path.join(BINARY_KIT_ROOT, 'xulrunner-sdk')
@@ -150,8 +151,9 @@ test_dir = os.path.join(root_dir, 'resources')
 resources_dir = os.path.join(root_dir, 'resources')
 
 sys.path.insert(0, root_dir)
-# when we install the portable modules, they will be in the miro package, but
-# at this point, they are in a package named "portable", so let's hack it
+# when we install the portable modules, they will be in the miro
+# package, but at this point, they are in a package named "portable",
+# so let's hack it
 import portable
 sys.modules['miro'] = portable
 
@@ -161,55 +163,58 @@ sys.path.insert(0, LIBTORRENT_PATH)
 
 #### Extensions ####
 
-pygtkhacks_ext = Extension("miro.frontends.widgets.gtk.pygtkhacks",
-        sources=[
-            os.path.join(portable_widgets_dir, 'gtk', 'pygtkhacks.pyx'),
+pygtkhacks_ext = Extension(
+    "miro.frontends.widgets.gtk.pygtkhacks",
+    sources=[
+        os.path.join(portable_widgets_dir, 'gtk', 'pygtkhacks.pyx'),
         ],
-        include_dirs=GTK_INCLUDE_DIRS + [PYGOBJECT_INCLUDE_DIR],
-        library_dirs=[GTK_LIB_PATH],
-        libraries=[
-            'gtk-win32-2.0',
-        ])
+    include_dirs=GTK_INCLUDE_DIRS + [PYGOBJECT_INCLUDE_DIR],
+    library_dirs=[GTK_LIB_PATH],
+    libraries=[
+        'gtk-win32-2.0',
+        ]
+    )
 
 xulrunnerbrowser_ext_dir = os.path.join(widgets_dir, 'XULRunnerBrowser')
-xulrunnerbrowser_ext = Extension("miro.plat.frontends.widgets.xulrunnerbrowser",
-        include_dirs=[
-            os.path.join(XULRUNNER_SDK_PATH, 'sdk', 'include'),
-            os.path.join(XULRUNNER_SDK_PATH, 'include'),
-            os.path.join(XULRUNNER_SDK_PATH, 'include', 'xpcom'),
-            portable_xpcom_dir,
+xulrunnerbrowser_ext = Extension(
+    "miro.plat.frontends.widgets.xulrunnerbrowser",
+    include_dirs=[
+        os.path.join(XULRUNNER_SDK_PATH, 'sdk', 'include'),
+        os.path.join(XULRUNNER_SDK_PATH, 'include'),
+        os.path.join(XULRUNNER_SDK_PATH, 'include', 'xpcom'),
+        portable_xpcom_dir,
         ] + GTK_INCLUDE_DIRS,
-        define_macros=[
-            ("XP_WIN", 1), 
-            ("XPCOM_GLUE", 1),
-            ("PCF_USING_XULRUNNER19", 1),
+    define_macros=[
+        ("XP_WIN", 1), 
+        ("XPCOM_GLUE", 1),
+        ("PCF_USING_XULRUNNER19", 1),
         ],
-        library_dirs=[
-            os.path.join(XULRUNNER_SDK_PATH, 'lib'),
-            GTK_LIB_PATH,
+    library_dirs=[
+        os.path.join(XULRUNNER_SDK_PATH, 'lib'),
+        GTK_LIB_PATH,
         ],
-        libraries=[
-            'xpcomglue',
-            'xul',
-            'user32',
-            'gdk-win32-2.0',
-            'gtk-win32-2.0',
+    libraries=[
+        'xpcomglue',
+        'xul',
+        'user32',
+        'gdk-win32-2.0',
+        'gtk-win32-2.0',
         ],
-        language="c++",
-        sources = [
-            os.path.join(xulrunnerbrowser_ext_dir, 'xulrunnerbrowser.pyx'),
-            os.path.join(portable_xpcom_dir, 'HttpObserver.cc'),
-            os.path.join(xulrunnerbrowser_ext_dir, 'MiroBrowserEmbed.cpp'),
-            os.path.join(xulrunnerbrowser_ext_dir, 'MiroWindowCreator.cpp'),
-            os.path.join(xulrunnerbrowser_ext_dir, 'FixFocus.cpp'),
-            os.path.join(xulrunnerbrowser_ext_dir, 'Init.cpp'),
-            ]
-        )
+    language="c++",
+    sources=[
+        os.path.join(xulrunnerbrowser_ext_dir, 'xulrunnerbrowser.pyx'),
+        os.path.join(portable_xpcom_dir, 'HttpObserver.cc'),
+        os.path.join(xulrunnerbrowser_ext_dir, 'MiroBrowserEmbed.cpp'),
+        os.path.join(xulrunnerbrowser_ext_dir, 'MiroWindowCreator.cpp'),
+        os.path.join(xulrunnerbrowser_ext_dir, 'FixFocus.cpp'),
+        os.path.join(xulrunnerbrowser_ext_dir, 'Init.cpp'),
+        ]
+    )
 
 # Setting the path here allows py2exe to find the DLLS
 os.environ['PATH'] = ';'.join([
-    OPENSSL_LIB_PATH, ZLIB_RUNTIME_LIBRARY_PATH, 
-    LIBTORRENT_PATH, GTK_BIN_PATH, os.environ['PATH']])
+        OPENSSL_LIB_PATH, ZLIB_RUNTIME_LIBRARY_PATH, 
+        LIBTORRENT_PATH, GTK_BIN_PATH, os.environ['PATH']])
 
 # Private extension modules to build.
 ext_modules = [
@@ -236,13 +241,11 @@ for path in (image_loader_path, theme_engine_path, theme_path):
     data_files.extend(find_data_files(path, src_path))
 
 data_files.append(('', iglob(os.path.join(GTK_BIN_PATH, '*.dll'))))
-data_files.extend(find_data_files('vlc-plugins', 
-    os.path.join(VLC_PATH, 'vlc-plugins')))
+data_files.extend(find_data_files(
+        'vlc-plugins', os.path.join(VLC_PATH, 'vlc-plugins')))
 data_files.append(('', [os.path.join(VLC_PATH, 'libvlc.dll')]))
 data_files.append(('', [os.path.join(VLC_PATH, 'libvlccore.dll')]))
 data_files.append(('', [os.path.join(LIBTORRENT_PATH, 'libtorrent.pyd')]))
-# data_files.append(('', [os.path.join(OPENSSL_LIB_PATH, 'libeay32.dll')]))
-# data_files.append(('', [os.path.join(OPENSSL_LIB_PATH, 'ssleay32.dll')]))
 
 # handle the resources subdirectories.
 for dir in ('searchengines', 'images'):
@@ -254,16 +257,22 @@ data_files.append(('resources', [os.path.join(root_dir, 'ADOPTERS')]))
 
 locale_temp_dir = os.path.join(os.path.dirname(__file__), "build", "locale")
 
-# handle locale files
-for source in glob(os.path.join(resources_dir, "locale", "*.mo")):
-    lang = os.path.basename(source)[:-3]
-    dest = os.path.join(locale_temp_dir, lang, "LC_MESSAGES", "miro.mo")
-    try:
-        os.makedirs(os.path.dirname(dest))
-    except WindowsError:
-        pass
-    shutil.copyfile(source, dest)
+def copy_locale_files():
+    print "*** copying locale files ***"
+    # handle locale files
+    locale_files = []
+    for source in glob(os.path.join(resources_dir, "locale", "*.mo")):
+        lang = os.path.basename(source)[:-3]
+        dest = os.path.join(locale_temp_dir, lang, "LC_MESSAGES", "miro.mo")
+        locale_files.append((source, dest))
 
+    dir_util.create_tree(os.path.dirname(__file__), [dst for src, dst in locale_files])
+
+    for source, dest in locale_files:
+        file_util.copy_file(source, dest, update=True, verbose=True)
+
+# FIXME - this should be done inside a build command
+copy_locale_files()
 data_files.extend(find_data_files(os.path.join("resources", "locale"),
                                   locale_temp_dir))
 
@@ -272,14 +281,15 @@ template_vars = util.read_simple_config_file(app_config)
 
 # pixmap for the about dialog
 icon_path = os.path.join("icons", "hicolor", "128x128", "apps")
-data_files.append((os.path.join("resources", icon_path), [os.path.join(platform_dir, icon_path, "miro.png")]))
+data_files.append((os.path.join("resources", icon_path), 
+                   [os.path.join(platform_dir, icon_path, "miro.png")]))
 
-###############################################################################
+###########################################################################
 
 #### Our specialized install_data command ####
 class install_data(distutils.command.install_data.install_data):
-    """install_data extends to default implementation so that it automatically
-    installs app.config from app.config.template.
+    """install_data extends to default implementation so that it
+    automatically installs app.config from app.config.template.
     """
 
     def install_app_config(self):
@@ -298,8 +308,8 @@ class install_data(distutils.command.install_data.install_data):
         print "Using %s" % revisionnum
 
         self.mkpath(os.path.dirname(dest))
-        # We don't use the dist utils copy_file() because it only copies
-        # the file if the timestamp is newer
+        # We don't use the dist utils copy_file() because it only
+        # copies the file if the timestamp is newer
         fill_template(template, dest,
             APP_REVISION=revision,
             APP_REVISION_NUM=revisionnum,
@@ -315,10 +325,10 @@ class install_data(distutils.command.install_data.install_data):
         source = os.path.join(GTK_ROOT_PATH, basename)
         dest = os.path.join(self.install_dir, basename)
         contents = open(source).read()
-        # Not sure why they have paths like this in the file, but we need to
-        # change them.
-        contents = contents.replace("c:/devel/target/9c384abfa28a3e070eb60fc2972f823b/",
-                "")
+        # Not sure why they have paths like this in the file, but we
+        # need to change them.
+        contents = contents.replace(
+            "c:/devel/target/9c384abfa28a3e070eb60fc2972f823b/", "")
         self.mkpath(os.path.dirname(dest))
         open(dest, 'wt').write(contents)
         self.outfiles.append(dest)
@@ -332,7 +342,7 @@ class install_data(distutils.command.install_data.install_data):
 # Recipe taken from
 # http://www.py2exe.org/index.cgi/OverridingCriteraForIncludingDlls
 DLLS_TO_INCLUDE = [
-        'msvcp71.dll',
+    'msvcp71.dll',
 ]
 origIsSystemDLL = py2exe.build_exe.isSystemDLL
 def isSystemDLL(pathname):
@@ -359,7 +369,9 @@ class bdist_miro(Command):
 
     def copy_ico(self):
         dist_dir = self.get_finalized_command('py2exe').dist_dir
-        self.copy_file("Miro.ico", os.path.join(dist_dir, "%s.ico" % template_vars['shortAppName']))
+        shortappname = template_vars["shortAppName"]
+        self.copy_file("Miro.ico", 
+                       os.path.join(dist_dir, "%s.ico" % shortappname))
 
 class bdist_test(Command):
     description = "Builds Miro with unit tests"
@@ -404,9 +416,11 @@ class runmiro(Command):
 class bdist_nsis(Command):
     description = "create Miro installer using NSIS"
 
-    user_options = [('generic', None, 'Build a generic installer instead of the Miro-branded installer.'),
-                    ('install-icon=', None, 'ICO file to use for the installer.'),
-                    ('install-image=', None, 'BMP file to use for the welcome/finish pages.')]
+    user_options = [
+        ('generic', None, 'Build a generic installer instead of the Miro-branded installer.'),
+        ('install-icon=', None, 'ICO file to use for the installer.'),
+        ('install-image=', None, 'BMP file to use for the welcome/finish pages.')
+        ]
 
     def initialize_options(self):
         self.generic = False
@@ -415,7 +429,8 @@ class bdist_nsis(Command):
 
     def finalize_options(self):
         if self.generic and (self.install_icon or self.install_icon):
-            raise AssertionError('cannot specify install images with generic installer')
+            raise AssertionError("cannot specify install images with "
+                                 "generic installer")
         if self.generic:
             self.install_icon = 'miro-installer-generic.ico'
             self.install_image = 'miro-install-generic.bmp'
@@ -437,102 +452,103 @@ class bdist_nsis(Command):
         self.copy_file("askBarSetup-4.1.0.2.exe", self.dist_dir)
         self.copy_file("ask_toolbar.bmp", self.dist_dir)
 
-        nsisVars = {}
-        for (ourName, nsisName) in [
-                ('appVersion', 'CONFIG_VERSION'),
-                ('projectURL', 'CONFIG_PROJECT_URL'),
-                ('shortAppName', 'CONFIG_SHORT_APP_NAME'),
-                ('longAppName', 'CONFIG_LONG_APP_NAME'),
-                ('publisher', 'CONFIG_PUBLISHER')]:
-            nsisVars[nsisName] = template_vars[ourName]
+        nsis_vars = {}
+        for our_name, nsis_name in [('appVersion', 'CONFIG_VERSION'),
+                                    ('projectURL', 'CONFIG_PROJECT_URL'),
+                                    ('shortAppName', 'CONFIG_SHORT_APP_NAME'),
+                                    ('longAppName', 'CONFIG_LONG_APP_NAME'),
+                                    ('publisher', 'CONFIG_PUBLISHER')]:
+            nsis_vars[nsis_name] = template_vars[our_name]
 
-        nsisVars['CONFIG_EXECUTABLE'] = "%s.exe" % template_vars['shortAppName']
-        nsisVars['CONFIG_DOWNLOADER_EXECUTABLE'] = "%s_Downloader.exe" % \
+        nsis_vars['CONFIG_EXECUTABLE'] = "%s.exe" % template_vars['shortAppName']
+        nsis_vars['CONFIG_DOWNLOADER_EXECUTABLE'] = "%s_Downloader.exe" % \
                 template_vars['shortAppName']
-        nsisVars['CONFIG_MOVIE_DATA_EXECUTABLE'] = "%s_MovieData.exe" % \
+        nsis_vars['CONFIG_MOVIE_DATA_EXECUTABLE'] = "%s_MovieData.exe" % \
                 template_vars['shortAppName']
-        nsisVars['CONFIG_ICON'] = "%s.ico" % template_vars['shortAppName']
-        nsisVars['CONFIG_PROG_ID'] = template_vars['longAppName'].replace(" ", ".") + ".1"
-        nsisVars['MIRO_INSTALL_ICON'] = self.install_icon
-        nsisVars['MIRO_INSTALL_IMAGE'] = self.install_image
-        nsisVars['CONFIG_BINARY_KIT'] = BINARY_KIT_ROOT
+        nsis_vars['CONFIG_ICON'] = "%s.ico" % template_vars['shortAppName']
+        nsis_vars['CONFIG_PROG_ID'] = template_vars['longAppName'].replace(" ", ".") + ".1"
+        nsis_vars['MIRO_INSTALL_ICON'] = self.install_icon
+        nsis_vars['MIRO_INSTALL_IMAGE'] = self.install_image
+        nsis_vars['CONFIG_BINARY_KIT'] = BINARY_KIT_ROOT
         if self.generic:
-            nsisVars['GENERIC_INSTALLER'] = '1'
+            nsis_vars['GENERIC_INSTALLER'] = '1'
 
         # One stage installer
         if self.generic:
-            outputFile = "%s-%s-generic.exe"
+            output_file = "%s-%s-generic.exe"
         else:
-            outputFile = "%s-%s.exe"
-        outputFile = outputFile % \
-                (template_vars['shortAppName'], template_vars['appVersion'])
-        nsisVars['CONFIG_OUTPUT_FILE'] = outputFile
-        nsisVars['CONFIG_TWOSTAGE'] = "No"
+            output_file = "%s-%s.exe"
+        output_file = (output_file % 
+                       (template_vars['shortAppName'], template_vars['appVersion']))
+        nsis_vars['CONFIG_OUTPUT_FILE'] = output_file
+        nsis_vars['CONFIG_TWOSTAGE'] = "No"
 
-        nsisArgs = ["/D%s=%s" % (k, v) for (k, v) in nsisVars.iteritems()]
-        nsisArgs.append(os.path.join(self.dist_dir, "Miro.nsi"))
+        nsis_args = ["/D%s=%s" % (k, v) for (k, v) in nsis_vars.iteritems()]
+        nsis_args.append(os.path.join(self.dist_dir, "Miro.nsi"))
 
-        if os.access(outputFile, os.F_OK):
-            os.remove(outputFile)
-        if subprocess.call([NSIS_PATH] + nsisArgs) != 0:
+        if os.access(output_file, os.F_OK):
+            os.remove(output_file)
+        if subprocess.call([NSIS_PATH] + nsis_args) != 0:
             print "ERROR creating the 1 stage installer, quitting"
             return
 
         # Two stage installer
         if self.generic:
-            outputFile = '%s-%s-generic-twostage.exe'
+            output_file = '%s-%s-generic-twostage.exe'
         else:
-            outputFile = "%s-%s-twostage.exe"
-        outputFile = outputFile % \
-            (template_vars['shortAppName'], template_vars['appVersion'])
-        nsisVars['CONFIG_OUTPUT_FILE'] = outputFile
-        nsisVars['CONFIG_TWOSTAGE'] = "Yes"
+            output_file = "%s-%s-twostage.exe"
+        output_file = (output_file % 
+                       (template_vars['shortAppName'], template_vars['appVersion']))
+        nsis_vars['CONFIG_OUTPUT_FILE'] = output_file
+        nsis_vars['CONFIG_TWOSTAGE'] = "Yes"
 
-        nsisArgs = ["/D%s=%s" % (k, v) for (k, v) in nsisVars.iteritems()]
-        nsisArgs.append(os.path.join(self.dist_dir, "Miro.nsi"))
+        nsis_args = ["/D%s=%s" % (k, v) for (k, v) in nsis_vars.iteritems()]
+        nsis_args.append(os.path.join(self.dist_dir, "Miro.nsi"))
 
-        if os.access(outputFile, os.F_OK):
-            os.remove(outputFile)
-        subprocess.call([NSIS_PATH] + nsisArgs)
+        if os.access(output_file, os.F_OK):
+            os.remove(output_file)
+        subprocess.call([NSIS_PATH] + nsis_args)
 
         zip_path = os.path.join(self.dist_dir, "%s-Contents-%s.zip" %
-            (template_vars['shortAppName'],template_vars['appVersion']))
+            (template_vars['shortAppName'], template_vars['appVersion']))
         self.zipfile = zip.ZipFile(zip_path, 'w', zip.ZIP_DEFLATED)
-        self.addFile(nsisVars['CONFIG_EXECUTABLE'])
-        self.addFile(nsisVars['CONFIG_ICON'])
-        self.addFile(nsisVars['CONFIG_MOVIE_DATA_EXECUTABLE'])
-        self.addGlob("*.dll")
+        self.add_file(nsis_vars['CONFIG_EXECUTABLE'])
+        self.add_file(nsis_vars['CONFIG_ICON'])
+        self.add_file(nsis_vars['CONFIG_MOVIE_DATA_EXECUTABLE'])
+        self.add_glob("*.dll")
 
-        self.addDirectory("defaults")
-        self.addDirectory("resources")
-        self.addDirectory("xulrunner")
+        self.add_directory("defaults")
+        self.add_directory("resources")
+        self.add_directory("xulrunner")
 
         self.zipfile.close()
 
-    def addGlob(self, wildcard):
+    def add_glob(self, wildcard):
         wildcard = os.path.join(self.dist_dir, wildcard)
         length = len(self.dist_dir)
         for filename in iglob(wildcard):
             if filename[:length] == self.dist_dir:
                 filename = filename[length:]
-                while len(filename) > 0 and (filename[0] == '/' or filename[0] == '\\'):
+                while (len(filename) > 0 
+                       and (filename[0] == '/' or filename[0] == '\\')):
                     filename = filename[1:]
             print "Compressing %s" % filename
             self.zipfile.write(os.path.join(self.dist_dir, filename), filename)
 
-    def addFile(self, filename):
+    def add_file(self, filename):
         length = len(self.dist_dir)
         if filename[:length] == self.dist_dir:
             filename = filename[length:]
-            while len(filename) > 0 and (filename[0] == '/' or filename[0] == '\\'):
+            while (len(filename) > 0 
+                   and (filename[0] == '/' or filename[0] == '\\')):
                 filename = filename[1:]
         print "Compressing %s" % filename
         self.zipfile.write(os.path.join(self.dist_dir, filename), filename)
 
-    def addDirectory(self, dirname):
+    def add_directory(self, dirname):
         for root, dirs, files in os.walk(os.path.join(self.dist_dir, dirname)):
             for name in files:
-                self.addFile(os.path.join(root, name))
+                self.add_file(os.path.join(root, name))
 
 if __name__ == "__main__":
     setup(
@@ -541,25 +557,25 @@ if __name__ == "__main__":
                 'script': 'Miro.py',
                 'dest_base': template_vars['shortAppName'],
                 'icon_resources': [(0, "Miro.ico")],
-            },
+                },
             {
                 'script': 'Miro_Downloader.py',
                 'dest_base': '%s_Downloader' % template_vars['shortAppName'],
                 'icon_resources': [(0, "Miro.ico")],
-            },
-        ],
+                },
+            ],
         console=[
             {
                 'script': 'moviedata_util.py',
                 'dest_base': '%s_MovieData' % template_vars['shortAppName'],
                 'icon_resources': [(0, "Miro.ico")],
-            },
+                },
             {
                 'script': 'mirotest.py',
                 'dest_base': 'mirotest',
                 'icon_resources': [(0, "Miro.ico")],
-            }
-        ],
+                }
+            ],
         ext_modules=ext_modules,
         packages=[
             'miro',
@@ -573,11 +589,11 @@ if __name__ == "__main__":
             'miro.plat.renderers',
             'miro.plat.frontends',
             'miro.plat.frontends.widgets',
-        ],
+            ],
         package_dir={
             'miro': portable_dir,
             'miro.plat': platform_package_dir,
-        },
+            },
         data_files=data_files,
         cmdclass={
             'build_ext': build_ext,
@@ -586,13 +602,13 @@ if __name__ == "__main__":
             'bdist_nsis': bdist_nsis,
             'bdist_test': bdist_test,
             'runmiro': runmiro,
-        },
+            },
         options={
             'py2exe': {
                 'packages': [
                     'encodings',
                     ],
                 'includes': 'cairo, pango, pangocairo, atk, gobject, libtorrent',
+                },
             },
-        },
-    )
+        )
