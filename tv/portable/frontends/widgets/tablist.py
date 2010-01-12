@@ -94,10 +94,12 @@ class TabListView(widgetset.TableView):
 
     def pulse_updating_image(self, iter):
         frame = self.model[iter][2]
-        self.model.update_value(iter, 2, (frame + 1) % 8)
+        self.model.update_value(iter, 2, (frame + 1) % 12)
+        self.model_changed()
 
     def stop_updating_image(self, iter):
         self.model.update_value(iter, 2, -1)
+        self.model_changed()
 
 class TabBlinkerMixin(object):
     def blink_tab(self, id):
@@ -595,7 +597,7 @@ class FeedList(NestedTabList):
             del self.updating_animations[id]
             return
         self.view.pulse_updating_image(iter)
-        timer_id = timer.add(0.2, self.pulse_updating_animation, id)
+        timer_id = timer.add(0.1, self.pulse_updating_animation, id)
         self.updating_animations[id] = timer_id
 
     def init_info(self, info):
