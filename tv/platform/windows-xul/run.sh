@@ -30,4 +30,4 @@
 
 setup_binarykit.sh
 python setup.py bdist_miro
-dist/Miro.exe
+cd dist && Miro.exe
