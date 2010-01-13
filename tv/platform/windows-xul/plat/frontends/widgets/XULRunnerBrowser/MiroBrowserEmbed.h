@@ -143,7 +143,7 @@ protected:
     nsCOMPtr<nsIWebBrowser> mWebBrowser;
     nsCOMPtr<nsIWebNavigation> mWebNavigation;
     nsCOMPtr<nsIURIContentListener> mParentContentListener;
-    void log(int level, char* string);
+    PRBool is_enabled();
 };
 
 /* Couple of utility functions, since the XPCOM Macros don't seem to work from
