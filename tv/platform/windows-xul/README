@@ -3,7 +3,7 @@ README
 ======
 
 :Author: Will Kahn-Greene <will.guaraldi at pculture dot org>
-:Date: October 30, 2009
+:Date: Januayr 14, 2010
 
 
 Summary
@@ -14,7 +14,11 @@ This is the Gtk-Windows port of Miro.
 Instructions and build requirements are documented at
 https://develop.participatoryculture.org/trac/democracy/wiki/WindowsBuildDocs
 
-The shell scripts are written for cygwin.
+The shell scripts are written for CYGWIN, but otherwise CYGWIN is not reuired
+to build Miro.
+
+If you have problems, visit us on ``#miro-hackers`` on
+``irc.freenode.net``.
 
 
 Build and run
