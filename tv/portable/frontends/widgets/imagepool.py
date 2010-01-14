@@ -89,9 +89,7 @@ def get(path, size=None):
     except KeyError:
         try:
             image = widgetset.Image(path)
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except StandardError:
             logging.warn("error loading image %s:\n%s", path,
                     traceback.format_exc())
             image = broken_image

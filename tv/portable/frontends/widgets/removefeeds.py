@@ -118,9 +118,7 @@ def run_dialog(channel_infos, downloaded_items, downloading_items, has_watched_f
                 if downloaded_items:
                     ret[KEEP_ITEMS] = cbx_downloaded.get_checked()
                 return ret
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except StandardError:
             logging.exception("removefeeds threw exception.")
     finally:
         rc_window.destroy()

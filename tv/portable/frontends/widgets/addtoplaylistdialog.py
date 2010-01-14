@@ -114,9 +114,7 @@ def run_dialog():
                     return ("existing", playlists[existing_option.get_selected()])
                 elif new_text.get_text():
                     return ("new", new_text.get_text())
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except StandardError:
             logging.exception("addtoplaylistdialog threw exception.")
     finally:
         window.destroy()

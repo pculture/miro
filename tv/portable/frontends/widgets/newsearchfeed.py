@@ -164,9 +164,7 @@ def run_dialog():
                             url_text.get_text(),
                             term,
                             section)
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except StandardError:
             logging.exception("newsearchfeed threw exception.")
     finally:
         window.destroy()

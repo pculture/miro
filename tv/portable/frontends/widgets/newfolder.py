@@ -93,9 +93,7 @@ def _run_dialog(title, description, default_type):
             
             return (None, None)
 
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except StandardError:
             logging.exception("newfeed threw exception.")
     finally:
         window.destroy()

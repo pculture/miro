@@ -81,9 +81,7 @@ def run_dialog(obj, report):
                 messages.ReportCrash(report, text.get_text(), cbx.get_checked()).send_to_backend()
             else:
                 return IGNORE_ERRORS
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except StandardError:
             logging.exception("crashdialog threw exception.")
     finally:
         window.destroy()

@@ -260,9 +260,7 @@ def run_dialog(channel):
             pref_window.add_button(BUTTON_DONE.text)
 
             pref_window.run()
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except StandardError:
             logging.exception("feed settings panel threw exception.")
     finally:
         pref_window.destroy()

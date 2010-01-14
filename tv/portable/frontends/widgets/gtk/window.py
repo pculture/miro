@@ -53,9 +53,7 @@ running_dialogs = set()
 def __get_fullscreen_stock_id():
     try:
         return gtk.STOCK_FULLSCREEN
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except StandardError:
         pass
 
 STOCK_IDS = {
