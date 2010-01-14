@@ -687,7 +687,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def set_filename(self, filename):
         self.filename = filename
-        self.file_type = self._file_type_for_filename(filename)
+        # self.file_type = self._file_type_for_filename(filename)
+
+    def set_file_type(self, file_type):
+        self.file_type = file_type
+        self.signal_change()
 
     def _file_type_for_filename(self, filename):
         filename = filename.lower()
@@ -1206,20 +1210,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def set_title(self, s):
         self.confirm_db_thread()
         self.title = s
-        self.signal_change()
-
-    def has_original_title(self):
-        """Returns True if this is the original title and False if the
-        user has retitled the item.
-        """
-        return self.title == self.entry_title
-
-    def revert_title(self):
-        """Reverts the item title back to the data we got from RSS or
-        the url.
-        """
-        self.confirm_db_thread()
-        self.title = self.entry_title
         self.signal_change()
 
     def set_channel_title(self, title):
@@ -1927,7 +1917,7 @@ def fp_values_for_file(filename):
 def update_incomplete_movie_data():
     for item in chain(Item.downloaded_view(), Item.file_items_view()):
         if ((item.duration is None or item.duration == -1 or
-            item.screenshot is None or not item.media_type_checked)):
+             item.screenshot is None or not item.media_type_checked)):
             moviedata.movie_data_updater.request_update(item)
 
 def move_orphaned_items():

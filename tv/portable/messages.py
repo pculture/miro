@@ -663,21 +663,15 @@ class DeleteVideo(BackendMessage):
     def __repr__(self):
         return BackendMessage.__repr__(self) + (", id: %s" % self.id)
 
-class RenameVideo(BackendMessage):
-    """Renames the video.
+class EditItem(BackendMessage):
+    """Changes a bunch of things on an item.
     """
-    def __init__(self, id, new_name):
-        self.id = id
-        self.new_name = new_name
+    def __init__(self, item_id, change_dict):
+        self.item_id = item_id
+        self.change_dict = change_dict
 
 class RevertFeedTitle(BackendMessage):
     """Reverts the feed's title back to the original.
-    """
-    def __init__(self, id):
-        self.id = id
-
-class RevertItemTitle(BackendMessage):
-    """Reverts the item's title back to the original.
     """
     def __init__(self, id):
         self.id = id
@@ -980,7 +974,6 @@ class ItemInfo(object):
     """
     def __init__(self, item):
         self.name = item.get_title()
-        self.has_original_name = item.has_original_title()
         self.id = item.id
         self.feed_id = item.feed_id
         self.feed_name = item.get_source()

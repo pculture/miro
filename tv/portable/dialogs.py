@@ -90,6 +90,7 @@ class DialogButton(object):
         return "DialogButton(%r)" % self.text
 
 BUTTON_OK = DialogButton(_("Ok"))
+BUTTON_APPLY = DialogButton(_("Apply"))
 BUTTON_CLOSE = DialogButton(_("Close"))
 BUTTON_CANCEL = DialogButton(_("Cancel"))
 BUTTON_DONE = DialogButton(_("Done"))
