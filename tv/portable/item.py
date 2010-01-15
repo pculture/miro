@@ -1568,12 +1568,21 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.split_item()
         self.signal_change()
         self._replace_file_items()
-        moviedata.movie_data_updater.request_update(self)
+        self.check_media_file(signal_change=False)
 
         for other in Item.make_view('downloader_id IS NULL AND url=?',
                 (self.url,)):
             other.set_downloader(self.downloader)
         self.recalc_feed_counts()
+
+    def check_media_file(self, signal_change=True):
+        if filetypes.is_other_filename(self.filename):
+            self.file_type = u'other'
+            self.media_type_checked = True
+            if signal_change:
+                self.signal_change()
+        else:
+            moviedata.movie_data_updater.request_update(self)
 
     def on_downloader_migrated(self, old_filename, new_filename):
         self.set_filename(new_filename)
@@ -1732,7 +1741,7 @@ class FileItem(Item):
             # not a container item.  Note that the opposite isn't true in the
             # case where we are a directory with only 1 file inside.
             self.isContainerItem = False
-        moviedata.movie_data_updater.request_update (self)
+        self.check_media_file(signal_change=False)
         self.split_item()
 
     # FileItem downloaders are always None
@@ -1917,7 +1926,7 @@ def update_incomplete_movie_data():
     for item in chain(Item.downloaded_view(), Item.file_items_view()):
         if ((item.duration is None or item.duration == -1 or
              item.screenshot is None or not item.media_type_checked)):
-            moviedata.movie_data_updater.request_update(item)
+            item.check_media_file()
 
 def move_orphaned_items():
     manual_feed = models.Feed.get_manual_feed()
