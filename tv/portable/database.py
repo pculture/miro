@@ -260,30 +260,42 @@ class BulkSQLManager(object):
         self.active = False
 
     def commit(self):
-        self._commit_sql()
-        self._update_view_trackers()
+        for x in range(100):
+            to_insert = self.to_insert
+            to_remove = self.to_remove
+            self.to_insert = {}
+            self.to_remove = {}
+            self._commit_sql(to_insert, to_remove)
+            self._update_view_trackers(to_insert, to_remove)
+            if len(self.to_insert) == len(self.to_remove) == 0:
+                break
+            # inside _commit_sql() or _update_view_trackers(), we were asked
+            # to insert or remove more items, repeat the proccess again
+        else:
+            raise AssertionError("Called _commit_sql 100 times and still "
+                    "have items to commit.  Are we in a circular loop?")
         self.to_insert = {}
         self.to_remove = {}
 
-    def _commit_sql(self):
-        for table_name, objects in self.to_insert.items():
+    def _commit_sql(self, to_insert, to_remove):
+        for table_name, objects in to_insert.items():
             logging.debug('bulk insert: %s %s', table_name, len(objects))
             app.db.bulk_insert(objects)
             for obj in objects:
                 obj.inserted_into_db()
 
-        for table_name, objects in self.to_remove.items():
+        for table_name, objects in to_remove.items():
             logging.debug('bulk remove: %s %s', table_name, len(objects))
             app.db.bulk_remove(objects)
             for obj in objects:
                 obj.removed_from_db()
 
-    def _update_view_trackers(self):
-        for table_name in self.to_insert:
+    def _update_view_trackers(self, to_insert, to_remove):
+        for table_name in to_insert:
             app.view_tracker_manager.bulk_update_view_trackers(table_name)
 
-        for table_name, objects in self.to_remove.items():
-            if table_name in self.to_insert:
+        for table_name, objects in to_remove.items():
+            if table_name in to_insert:
                 # already updated the view above
                 continue
             app.view_tracker_manager.bulk_remove_from_view_trackers(
