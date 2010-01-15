@@ -327,6 +327,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self._update_release_date()
         self._look_for_downloader()
         self.setup_common()
+        self.split_item()
 
     def setup_restored(self):
         # For unknown reason(s), some users still have databases with
@@ -344,9 +345,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.expiring = None
         self.showMoreInfo = False
         self.updating_movie_info = False
-
-    def on_db_insert(self):
-        self.split_item()
 
     @classmethod
     def auto_pending_view(cls):
@@ -1735,6 +1733,7 @@ class FileItem(Item):
             # case where we are a directory with only 1 file inside.
             self.isContainerItem = False
         moviedata.movie_data_updater.request_update (self)
+        self.split_item()
 
     # FileItem downloaders are always None
     downloader = property(lambda self: None)
