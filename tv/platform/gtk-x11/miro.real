@@ -267,16 +267,15 @@ else:
         try:
             onetime.OneTime()
             startapp()
-        except onetime.NameExistsException:
-            # This onetime.NameExistsException is either dbus.NameExistsException
-            # or an exception we created ourselves.  Change it to
-            # dbus.NameExistsException when we get rid of code that allows Miro to
-            # run on platforms with the older dbus-python bindings.
+        except dbus.NameExistsException:
             bus = dbus.SessionBus()
-            proxy_obj = bus.get_object('org.participatoryculture.dtv.onetime', '/org/participatoryculture/dtv/OneTime')
-            iface = dbus.Interface(proxy_obj, 'org.participatoryculture.dtv.OneTimeIface')
-            for i in xrange(len(args)):
-                args[i] = args[i].decode('latin1')
+            proxy_obj = bus.get_object(
+                'org.participatoryculture.dtv.onetime',
+                '/org/participatoryculture/dtv/OneTime')
+            iface = dbus.Interface(
+                proxy_obj, 'org.participatoryculture.dtv.OneTimeIFace')
+            for i, arg in enumerate(args):
+                args[i] = arg.decode('latin1')
             dbusargs = dbus.Array(args, signature="s")
 
             try:
