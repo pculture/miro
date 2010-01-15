@@ -57,7 +57,7 @@ def set_renderer(modname):
         app.movie_data_program_info = module.movie_data_program_info
         app.get_item_type = module.get_item_type
         logging.info("set_renderer: successfully loaded %s", modname)
-    except:
+    except StandardError:
         logging.info("set_renderer: couldn't load %s: %s", modname,
                 traceback.format_exc())
         raise
@@ -76,14 +76,14 @@ def init_renderer():
     try:
         set_renderer("%srenderer" % r)
         return
-    except:
+    except StandardError:
         logging.exception("init_renderer: error detected...  trying to use gstreamerrenderer")
 
     try:
         # try to add the gstreamer renderer if the preferences aren't right
         set_renderer("gstreamerrenderer")
         return
-    except:
+    except StandardError:
         logging.exception("init_renderer: no valid renderer has been loaded")
     app.audio_renderer = None
     app.video_renderer = None

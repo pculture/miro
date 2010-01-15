@@ -29,7 +29,6 @@
 import sys
 import logging
 import os
-import time
 import thread
 from threading import Event
 
@@ -44,7 +43,6 @@ GST_PLAY_FLAG_TEXT          = (1 << 2)
 from miro import app
 from miro import config
 from miro import prefs
-from miro.download_utils import next_free_filename
 from miro.gtcache import gettext as _
 from miro.plat import options
 from miro import iso_639
@@ -147,7 +145,7 @@ class Renderer:
             logging.info("gstreamerrenderer: Exception thrown '%s'" % e)
             logging.exception("sink exception")
             audiosink = "alsasink"
-            self.audiosink = gst.element_factory_make(alsasink, "sink")
+            self.audiosink = gst.element_factory_make(audiosink, "sink")
 
         logging.info("GStreamer audiosink: %s", audiosink)
         self.playbin.set_property("audio-sink", self.audiosink)
@@ -189,8 +187,8 @@ class Renderer:
         try:
             position, format = self.playbin.query_position(gst.FORMAT_TIME)
             return to_seconds(position)
-        except gst.QueryError:
-            logging.warn("get_current_time: caught exception: %s" % e)
+        except gst.QueryError, qe:
+            logging.warn("get_current_time: caught exception: %s" % qe)
             return self.get_current_time(attempt + 1)
 
     def _seek(self, seconds):
@@ -222,10 +220,10 @@ class Renderer:
 
     def get_duration(self):
         try:
-            duration, format = self.playbin.query_duration(gst.FORMAT_TIME)
+            duration, fmt = self.playbin.query_duration(gst.FORMAT_TIME)
             return to_seconds(duration)
-        except Exception, e:
-            logging.warn("get_duration: caught exception: %s" % e)
+        except gst.QueryError, qe:
+            logging.warn("get_duration: caught exception: %s" % qe)
             return None
 
     def reset(self):
