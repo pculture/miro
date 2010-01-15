@@ -397,6 +397,13 @@ class SetItemResumeTime(BackendMessage):
         self.id = id
         self.resume_time = time
 
+class SetItemMediaType(BackendMessage):
+    """Adds a list of videos to a playlist.
+    """
+    def __init__(self, media_type, video_ids):
+        self.media_type = media_type
+        self.video_ids = video_ids
+
 class UpdateAllFeeds(BackendMessage):
     """Updates all feeds.
     """

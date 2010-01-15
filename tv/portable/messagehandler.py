@@ -591,6 +591,15 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warning("handle_set_item_resume_time: can't find item by id %s", message.id)
 
+    def handle_set_item_media_type(self, message):
+        for id in message.video_ids:
+            try:
+                item_ = item.Item.get_by_id(id)
+            except database.ObjectNotFoundError:
+                logging.warn("SetItemMediaType: Item not found -- %s", id)
+                continue
+            item_.set_file_type(message.media_type)
+
     def handle_set_feed_expire(self, message):
         channel_info = message.channel_info
         expire_type = message.expire_type
