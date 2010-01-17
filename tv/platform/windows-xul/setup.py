@@ -77,7 +77,7 @@ OPENSSL_INCLUDE_PATH = os.path.join(BINARY_KIT_ROOT, 'openssl', 'include')
 OPENSSL_LIB_PATH = os.path.join(BINARY_KIT_ROOT, 'openssl', 'lib')
 OPENSSL_LIBRARIES = ['ssleay32', 'libeay32']
 
-GTK_ROOT_PATH = os.path.join(BINARY_KIT_ROOT, 'gtk+-2.14.7-bundle')
+GTK_ROOT_PATH = os.path.join(BINARY_KIT_ROOT, 'gtk+-bundle_2.16.6-20091215_win32')
 GTK_INCLUDE_PATH = os.path.join(GTK_ROOT_PATH, 'include')
 GTK_LIB_PATH = os.path.join(GTK_ROOT_PATH, 'lib')
 GTK_BIN_PATH = os.path.join(GTK_ROOT_PATH, 'bin')
