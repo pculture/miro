@@ -283,6 +283,8 @@ class ItemListController(object):
             id = item_info.id
             items = itemview.item_list.get_items(start_id=id)
             self._play_item_list(items)
+        elif name == 'play_pause':
+            app.playback_manager.play_pause()
 
     def on_selection_changed(self, item_view):
         if (item_view is not self.current_item_view and

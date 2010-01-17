@@ -271,6 +271,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             'images/video-download-resume.png'))
         self.play_button = imagepool.get_surface(resources.path(
             'images/play-button.png'))
+        self.pause_playback_button = imagepool.get_surface(resources.path(
+            'images/pause-item-button.png'))
         self.thumb_overlay = imagepool.get_surface(resources.path(
             'images/thumb-overlay.png'))
         self.alert_image = imagepool.get_surface(resources.path(
@@ -701,7 +703,16 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         layout.set_font(0.85)
         if self.data.downloaded:
             if self.data.is_playable:
-                button = cellpack.Hotspot('play', self.play_button)
+                if ((app.playback_manager.get_playing_item()
+                     and app.playback_manager.get_playing_item().id == self.data.id)):
+                    if app.playback_manager.is_paused:
+                        button = cellpack.Hotspot('play_pause',
+                                                  self.play_button)
+                    else:
+                        button = cellpack.Hotspot('play_pause',
+                                                  self.pause_playback_button)
+                else:
+                    button = cellpack.Hotspot('play', self.play_button)
             else:
                 button = self._make_button(layout, self.REVEAL_IN_TEXT,
                         'show_local_file')
