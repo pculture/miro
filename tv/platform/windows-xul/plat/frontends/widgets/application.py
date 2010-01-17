@@ -185,7 +185,7 @@ class WindowsApplication(Application):
             webbrowser.get("windows-default").open_new(url)
         except:
             logging.warn("Error opening URL: %r\n%s", url,
-                    traceback.format_ext())
+                    traceback.format_exc())
             recommendURL = config.get(prefs.RECOMMEND_URL)
 
             if url.startswith(config.get(prefs.VIDEOBOMB_URL)):
