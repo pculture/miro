@@ -78,7 +78,8 @@ def add_video(path, manual_feed=None):
         logging.warn("Not adding duplicate video: %s",
                 path.decode('ascii', 'ignore'))
         if _command_line_videos is not None:
-            _command_line_videos.add(i)
+            item_ = item.Item.make_view('filename=?', (path,)).get_singleton()
+            _command_line_videos.add(item_)
         return
     if manual_feed is None:
         manual_feed = feed.Feed.get_manual_feed()
