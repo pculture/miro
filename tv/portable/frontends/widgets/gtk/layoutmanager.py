@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2009 Participatory Culture Foundation
+# Copyright (C) 2005-2010 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,8 +27,8 @@
 # statement from all source files in the program, then also delete it here.
 
 """drawing.py -- Contains the LayoutManager class.  LayoutManager is
-handles laying out complex objects for the custom drawing code like text
-blocks and buttons.
+handles laying out complex objects for the custom drawing code like
+text blocks and buttons.
 """
 
 import itertools
@@ -213,9 +213,10 @@ class TextBox(object):
         width, height = self.layout.get_size()
         if 0 <= x < width and 0 <= y < height:
             index, leading = self.layout.xy_to_index(x, y)
-            # xy_to_index returns the nearest character, but that doesn't mean
-            # the user actually clicked on it.  Double check that (x, y) is
-            # actually inside that char's bounding box
+            # xy_to_index returns the nearest character, but that
+            # doesn't mean the user actually clicked on it.  Double
+            # check that (x, y) is actually inside that char's
+            # bounding box
             char_x, char_y, char_w, char_h = self.layout.index_to_pos(index)
             if char_w > 0: # the glyph is LTR
                 left = char_x
@@ -258,14 +259,14 @@ class TextBox(object):
         cairo_context.new_path()
 
 class UnderlineDrawer(object):
-    """Class to draw our own underlines because cairo's don't look that great
-    at small fonts.  We make sure that the underline is always drawn at a
-    pixel boundary and that there always is space between the text and the
-    baseline.
+    """Class to draw our own underlines because cairo's don't look
+    that great at small fonts.  We make sure that the underline is
+    always drawn at a pixel boundary and that there always is space
+    between the text and the baseline.
 
-    This class makes a couple assumptions that might not be that great.  It
-    assumes that the correct underline size is 1 pixel and that the text color
-    doesn't change in the middle of an underline.
+    This class makes a couple assumptions that might not be that
+    great.  It assumes that the correct underline size is 1 pixel and
+    that the text color doesn't change in the middle of an underline.
     """
     def __init__(self, underlines):
         self.underline_iter = iter(underlines)
@@ -275,12 +276,11 @@ class UnderlineDrawer(object):
     def next_underline(self):
         try:
             self.startpos, self.endpos = self.underline_iter.next()
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except StopIteration:
             self.finished = True
         else:
-            self.endpos -= 1 # endpos is the char to stop underlining at
+            # endpos is the char to stop underlining at
+            self.endpos -= 1
 
     def draw(self, context, x, baseline, line):
         baseline = round(baseline) + 0.5
@@ -311,9 +311,9 @@ class NativeButton(object):
         self.pad_y = style.ythickness + 1
         self.style = style
         self.widget = widget
-        # The above code assumes an "inner-border" style property of 1. PyGTK
-        # doesn't seem to support Border objects very well, so can't get it
-        # from the widget style.
+        # The above code assumes an "inner-border" style property of
+        # 1. PyGTK doesn't seem to support Border objects very well,
+        # so can't get it from the widget style.
         self.min_width = 0
         self.icon = None
 
@@ -336,7 +336,8 @@ class NativeButton(object):
         text_width, text_height = self.layout.get_pixel_size()
         if self.icon:
             inner_width = text_width + self.icon.width + self.ICON_PAD
-            # calculate the icon position x and y are still in cairo coordinates
+            # calculate the icon position x and y are still in cairo
+            # coordinates
             icon_x = x + (width - inner_width) / 2.0
             icon_y = y + (height - self.icon.height) / 2.0
             text_x = icon_x + self.icon.width + self.ICON_PAD
@@ -346,8 +347,8 @@ class NativeButton(object):
 
         x, y = context.context.user_to_device(x, y)
         text_x, text_y = context.context.user_to_device(text_x, text_y)
-        # Hmm, maybe we should somehow support floating point numbers here,
-        # but I don't know how to.
+        # Hmm, maybe we should somehow support floating point numbers
+        # here, but I don't know how to.
         x, y, width, height = (int(f) for f in (x, y, width, height))
         context.context.get_target().flush()
         self.draw_box(context.window, x, y, width, height)
@@ -365,8 +366,8 @@ class NativeButton(object):
             state = gtk.STATE_NORMAL
         if 'QtCurveStyle' in str(self.style):
             # This is a horrible hack for the libqtcurve library.  See
-            # http://bugzilla.pculture.org/show_bug.cgi?id=10380
-            # for details
+            # http://bugzilla.pculture.org/show_bug.cgi?id=10380 for
+            # details
             widget = window.get_user_data()
         else:
             widget = self.widget
@@ -417,7 +418,8 @@ class StyledButton(object):
             height = max(height, self.icon.height)
         height += self.PAD_VERTICAL * 2
         if height % 2 == 1:
-            # make height even so that the radius of our circle is whole
+            # make height even so that the radius of our circle is
+            # whole
             height += 1
         width += self.PAD_HORIZONTAL * 2 + height
         return max(self.min_width, width), height

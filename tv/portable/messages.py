@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2009 Participatory Culture Foundation
+# Copyright (C) 2005-2010 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -397,6 +397,13 @@ class SetItemResumeTime(BackendMessage):
         self.id = id
         self.resume_time = time
 
+class SetItemMediaType(BackendMessage):
+    """Adds a list of videos to a playlist.
+    """
+    def __init__(self, media_type, video_ids):
+        self.media_type = media_type
+        self.video_ids = video_ids
+
 class UpdateAllFeeds(BackendMessage):
     """Updates all feeds.
     """
@@ -663,21 +670,15 @@ class DeleteVideo(BackendMessage):
     def __repr__(self):
         return BackendMessage.__repr__(self) + (", id: %s" % self.id)
 
-class RenameVideo(BackendMessage):
-    """Renames the video.
+class EditItem(BackendMessage):
+    """Changes a bunch of things on an item.
     """
-    def __init__(self, id, new_name):
-        self.id = id
-        self.new_name = new_name
+    def __init__(self, item_id, change_dict):
+        self.item_id = item_id
+        self.change_dict = change_dict
 
 class RevertFeedTitle(BackendMessage):
     """Reverts the feed's title back to the original.
-    """
-    def __init__(self, id):
-        self.id = id
-
-class RevertItemTitle(BackendMessage):
-    """Reverts the item's title back to the original.
     """
     def __init__(self, id):
         self.id = id
@@ -980,7 +981,6 @@ class ItemInfo(object):
     """
     def __init__(self, item):
         self.name = item.get_title()
-        self.has_original_name = item.has_original_title()
         self.id = item.id
         self.feed_id = item.feed_id
         self.feed_name = item.get_source()

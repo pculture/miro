@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2009 Participatory Culture Foundation
+# Copyright (C) 2005-2010 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -327,6 +327,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self._update_release_date()
         self._look_for_downloader()
         self.setup_common()
+        self.split_item()
 
     def setup_restored(self):
         # For unknown reason(s), some users still have databases with
@@ -344,9 +345,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.expiring = None
         self.showMoreInfo = False
         self.updating_movie_info = False
-
-    def on_db_insert(self):
-        self.split_item()
 
     @classmethod
     def auto_pending_view(cls):
@@ -687,7 +685,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def set_filename(self, filename):
         self.filename = filename
-        self.file_type = self._file_type_for_filename(filename)
+        # self.file_type = self._file_type_for_filename(filename)
+
+    def set_file_type(self, file_type):
+        self.file_type = file_type
+        self.signal_change()
 
     def _file_type_for_filename(self, filename):
         filename = filename.lower()
@@ -1208,20 +1210,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.title = s
         self.signal_change()
 
-    def has_original_title(self):
-        """Returns True if this is the original title and False if the
-        user has retitled the item.
-        """
-        return self.title == self.entry_title
-
-    def revert_title(self):
-        """Reverts the item title back to the data we got from RSS or
-        the url.
-        """
-        self.confirm_db_thread()
-        self.title = self.entry_title
-        self.signal_change()
-
     def set_channel_title(self, title):
         check_u(title)
         self.channelTitle = title
@@ -1580,12 +1568,21 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.split_item()
         self.signal_change()
         self._replace_file_items()
-        moviedata.movie_data_updater.request_update(self)
+        self.check_media_file(signal_change=False)
 
         for other in Item.make_view('downloader_id IS NULL AND url=?',
                 (self.url,)):
             other.set_downloader(self.downloader)
         self.recalc_feed_counts()
+
+    def check_media_file(self, signal_change=True):
+        if filetypes.is_other_filename(self.filename):
+            self.file_type = u'other'
+            self.media_type_checked = True
+            if signal_change:
+                self.signal_change()
+        else:
+            moviedata.movie_data_updater.request_update(self)
 
     def on_downloader_migrated(self, old_filename, new_filename):
         self.set_filename(new_filename)
@@ -1744,7 +1741,8 @@ class FileItem(Item):
             # not a container item.  Note that the opposite isn't true in the
             # case where we are a directory with only 1 file inside.
             self.isContainerItem = False
-        moviedata.movie_data_updater.request_update (self)
+        self.check_media_file(signal_change=False)
+        self.split_item()
 
     # FileItem downloaders are always None
     downloader = property(lambda self: None)
@@ -1927,8 +1925,8 @@ def fp_values_for_file(filename):
 def update_incomplete_movie_data():
     for item in chain(Item.downloaded_view(), Item.file_items_view()):
         if ((item.duration is None or item.duration == -1 or
-            item.screenshot is None or not item.media_type_checked)):
-            moviedata.movie_data_updater.request_update(item)
+             item.screenshot is None or not item.media_type_checked)):
+            item.check_media_file()
 
 def move_orphaned_items():
     manual_feed = models.Feed.get_manual_feed()

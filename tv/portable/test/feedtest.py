@@ -493,12 +493,6 @@ class FeedParserAttributesTestCase(FeedTestCase):
         self.item.set_title(u"new title")
         self.save_then_restore_db()
         self.assertEquals(self.item.get_title(), "new title")
-        self.assert_(not self.item.has_original_title())
-
-        self.item.revert_title()
-        self.save_then_restore_db()
-        self.assertEquals(self.item.get_title(), entry.title)
-        self.assert_(self.item.has_original_title())
 
 if __name__ == "__main__":
     unittest.main()

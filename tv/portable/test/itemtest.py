@@ -19,10 +19,17 @@ class ContainerItemTest(MiroTestCase):
         MiroTestCase.setUp(self)
         self.feed = Feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
         self.tempdir = FilenameType(tempfile.mkdtemp())
-        self._make_fake_item("pcf.mpeg")
+        self._make_fake_item("pcf.avi")
         self._make_fake_item("dean.avi")
         self._make_fake_item("npr.txt")
         self.container_item = FileItem(self.tempdir, self.feed.id)
+        for child in self.container_item.getChildren():
+            if child.filename.endswith("avi"):
+                child.file_type = u'video'
+            else:
+                child.file_type = u'other'
+            child.media_type_checked = True
+            child.signal_change()
 
     def tearDown(self):
         shutil.rmtree(self.tempdir, ignore_errors=True)

@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2009 Participatory Culture Foundation
+# Copyright (C) 2005-2010 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -89,9 +89,7 @@ def get(path, size=None):
     except KeyError:
         try:
             image = widgetset.Image(path)
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except StandardError:
             logging.warn("error loading image %s:\n%s", path,
                     traceback.format_exc())
             image = broken_image

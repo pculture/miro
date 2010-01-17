@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2009 Participatory Culture Foundation
+# Copyright (C) 2005-2010 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -104,9 +104,7 @@ class ItemContextMenuHandler(object):
                 menu.append((_('Play Externally'), play_externally))
             menu.append((_('Add to Playlist'), app.widgetapp.add_to_playlist))
             self._add_remove_context_menu_item(menu, [item])
-            menu.append((_('Rename Item'), app.widgetapp.rename_item))
-            if not item.has_original_name:
-                menu.append((_('Revert Item Name'), app.widgetapp.revert_item_name))
+            menu.append((_("Edit Item"), app.widgetapp.edit_item))
             if item.video_watched:
                 menu.append((_('Mark as Unplayed'),
                     messages.MarkItemUnwatched(item.id).send_to_backend))

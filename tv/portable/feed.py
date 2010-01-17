@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2009 Participatory Culture Foundation
+# Copyright (C) 2005-2010 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -1352,11 +1352,14 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             if not item.matches_search(self.ufeed.searchTerm):
                 item.remove()
 
+    def remember_old_items(self):
+        self.old_items = set(self.items)
+
     def createItemsForParsed(self, parsed):
         """Update the feed using parsed XML passed in"""
         app.bulk_sql_manager.start()
         try:
-            return self._createItemsForParsed(parsed)
+            self._createItemsForParsed(parsed)
         finally:
             app.bulk_sql_manager.finish()
 
@@ -1404,9 +1407,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         items_byid = {}
         items_byURLTitle = {}
         items_nokey = []
-        old_items = set()
         for item in self.items:
-            old_items.add(item)
             try:
                 items_byid[item.get_rss_id()] = item
             except KeyError:
@@ -1425,7 +1426,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                     if not fp_values.compare_to_item(item):
                         item.update_from_feed_parser_values(fp_values)
                     new = False
-                    old_items.discard(item)
+                    self.old_items.discard(item)
             if new:
                 by_url_title_key = (fp_values.data['url'],
                         fp_values.data['entry_title'])
@@ -1435,7 +1436,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                         if not fp_values.compare_to_item(item):
                             item.update_from_feed_parser_values(fp_values)
                         new = False
-                        old_items.discard(item)
+                        self.old_items.discard(item)
             if new:
                 for item in items_nokey:
                     if fp_values.compare_to_item(item):
@@ -1445,16 +1446,15 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                             if fp_values.compare_to_item_enclosures(item):
                                 item.update_from_feed_parser_values(fp_values)
                                 new = False
-                                old_items.discard(item)
+                                self.old_items.discard(item)
                         except (SystemExit, KeyboardInterrupt):
                             raise
                         except:
                             pass
             if new and fp_values.first_video_enclosure is not None:
                 self._handleNewEntry(entry, fp_values, channelTitle)
-        return old_items
 
-    def update_finished(self, old_items):
+    def update_finished(self):
         """
         Called by subclasses to finish the update.
         """
@@ -1470,15 +1470,13 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             self.ufeed.signal_change()
 
         self.ufeed.invalidate_counts()
-        self.truncateOldItems(old_items)
+        self.truncateOldItems()
+        del self.old_items
         self.signal_change()
 
-    def truncateOldItems(self, old_items):
+    def truncateOldItems(self):
         """Truncate items so that the number of items in this feed doesn't
         exceed self.get_max_old_items()
-
-        old_items should be an iterable that contains items that aren't in the
-        feed anymore.
 
         Items are only truncated if they don't exist in the feed anymore, and
         if the user hasn't downloaded them.
@@ -1490,15 +1488,15 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         item_count = self.items.count()
         if item_count > config.get(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS):
             truncate = item_count - config.get(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS)
-            if truncate > len(old_items):
+            if truncate > len(self.old_items):
                 truncate = 0
             limit = min(limit, truncate)
-        extra = len(old_items) - limit
+        extra = len(self.old_items) - limit
         if extra <= 0:
             return
 
         candidates = []
-        for item in old_items:
+        for item in self.old_items:
             if item.downloader is None:
                 candidates.append((item.creationTime, item))
         candidates.sort()
@@ -1588,7 +1586,8 @@ class RSSFeedImpl(RSSFeedImplBase):
             return
         start = clock()
         parsed = self.parsed = unicodify(parsed)
-        old_items = self.createItemsForParsed(parsed)
+        self.remember_old_items()
+        self.createItemsForParsed(parsed)
 
         try:
             updateFreq = self.parsed["feed"]["ttl"]
@@ -1596,7 +1595,7 @@ class RSSFeedImpl(RSSFeedImplBase):
             updateFreq = 0
         self.setUpdateFrequency(updateFreq)
 
-        self.update_finished(old_items)
+        self.update_finished()
         self.feedparser_finished()
         end = clock()
         if end - start > 1.0:
@@ -1647,7 +1646,7 @@ class RSSFeedImpl(RSSFeedImplBase):
         if not self.ufeed.id_exists():
             return
         logging.info("WARNING: error in Feed.update for %s -- %s", self.ufeed,
-                     error)
+                str(error))
         self.scheduleUpdateEvents(-1)
         self.updating = False
         self.ufeed.signal_change(needs_save=False)
@@ -1706,7 +1705,6 @@ class RSSFeedImpl(RSSFeedImplBase):
 class RSSMultiFeedImpl(RSSFeedImplBase):
     def setup_new(self, url, ufeed, title=None):
         RSSFeedImplBase.setup_new(self, url, ufeed, title)
-        self.oldItems = None
         self.etag = {}
         self.modified = {}
         self.download_dc = {}
@@ -1746,8 +1744,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
 
     def checkUpdateFinished(self):
         if self.updating == 0:
-            self.update_finished(self.oldItems)
-            self.oldItems = None
+            self.update_finished()
             self.scheduleUpdateEvents(-1)
 
     def feedparser_finished(self, url, needs_save=False):
@@ -1770,14 +1767,9 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         self.ufeed.confirm_db_thread()
         if not self.ufeed.id_exists() or url not in self.download_dc:
             return
-        if self.oldItems is None:
-            # if this is the case, then this feedparser_callback isn't
-            # paired with an update.  maybe we did two in a row?
-            return
         start = clock()
         parsed = unicodify(parsed)
-        old_items = self.createItemsForParsed(parsed)
-        self.oldItems.update(old_items)
+        self.createItemsForParsed(parsed)
         self.feedparser_finished(url)
         end = clock()
         if end - start > 1.0:
@@ -1807,7 +1799,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
             return
         if self.updating:
             return
-        self.oldItems = set()
+        self.remember_old_items()
         for url in self.urls:
             etag = self.etag.get(url)
             modified = self.modified.get(url)
@@ -1821,8 +1813,8 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
     def _updateErrback(self, error, url):
         if not self.ufeed.id_exists():
             return
-        logging.info("WARNING: error in Feed.update for %s (%s) -- %s",
-                     self.ufeed, url, error)
+        logging.warn("WARNING: error in Feed.update for %s (%s) -- %s",
+                     self.ufeed, url, str(error))
         self.scheduleUpdateEvents(-1)
         self.updating -= 1
         self.checkUpdateFinished()
@@ -2425,9 +2417,9 @@ class SearchFeedImpl(RSSMultiFeedImpl):
                             return
         RSSMultiFeedImpl._handleNewEntry(self, entry, fp_values, channelTitle)
 
-    def update_finished(self, old_items):
+    def update_finished(self):
         self.searching = False
-        RSSMultiFeedImpl.update_finished(self, old_items)
+        RSSMultiFeedImpl.update_finished(self)
 
     def update(self):
         if self.url is not None and self.url != u'':

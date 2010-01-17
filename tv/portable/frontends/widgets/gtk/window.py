@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2009 Participatory Culture Foundation
+# Copyright (C) 2005-2010 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -53,9 +53,7 @@ running_dialogs = set()
 def __get_fullscreen_stock_id():
     try:
         return gtk.STOCK_FULLSCREEN
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except StandardError:
         pass
 
 STOCK_IDS = {

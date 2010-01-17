@@ -1,6 +1,6 @@
 /*
  * Miro - an RSS based video player application
- * Copyright (C) 2005-2009 Participatory Culture Foundation
+ * Copyright (C) 2005-2010 Participatory Culture Foundation
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -143,7 +143,7 @@ protected:
     nsCOMPtr<nsIWebBrowser> mWebBrowser;
     nsCOMPtr<nsIWebNavigation> mWebNavigation;
     nsCOMPtr<nsIURIContentListener> mParentContentListener;
-    void log(int level, char* string);
+    PRBool is_enabled();
 };
 
 /* Couple of utility functions, since the XPCOM Macros don't seem to work from

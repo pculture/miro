@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2009 Participatory Culture Foundation
+# Copyright (C) 2005-2010 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -590,6 +590,15 @@ class BackendMessageHandler(messages.MessageHandler):
             item_.set_resume_time(message.resume_time)
         except database.ObjectNotFoundError:
             logging.warning("handle_set_item_resume_time: can't find item by id %s", message.id)
+
+    def handle_set_item_media_type(self, message):
+        for id in message.video_ids:
+            try:
+                item_ = item.Item.get_by_id(id)
+            except database.ObjectNotFoundError:
+                logging.warn("SetItemMediaType: Item not found -- %s", id)
+                continue
+            item_.set_file_type(message.media_type)
 
     def handle_set_feed_expire(self, message):
         channel_info = message.channel_info
@@ -1213,6 +1222,20 @@ class BackendMessageHandler(messages.MessageHandler):
         else:
             item_.set_title(message.new_name)
 
+    def handle_edit_item(self, message):
+        try:
+            item_ = item.Item.get_by_id(message.item_id)
+        except database.ObjectNotFoundError:
+            logging.warn("EditItem: Item not found -- %s", message.item_id)
+            return
+        change_dict = message.change_dict
+
+        if "name" in change_dict:
+            item_.set_title(change_dict["name"])
+
+        if "file_type" in change_dict:
+            item_.set_file_type(change_dict["file_type"])
+
     def handle_revert_feed_title(self, message):
         try:
             feed_object = feed.Feed.get_by_id(message.id)
@@ -1220,14 +1243,6 @@ class BackendMessageHandler(messages.MessageHandler):
             logging.warn("RevertFeedTitle: Feed not found -- %s", message.id)
         else:
             feed_object.revert_title()
-
-    def handle_revert_item_title(self, message):
-        try:
-            item_ = item.Item.get_by_id(message.id)
-        except database.ObjectNotFoundError:
-            logging.warn("RevertItemTitle: Item not found -- %s", message.id)
-        else:
-            item_.revert_title()
 
     def handle_autodownload_change(self, message):
         try:

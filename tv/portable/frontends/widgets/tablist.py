@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2009 Participatory Culture Foundation
+# Copyright (C) 2005-2010 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -150,6 +150,7 @@ class LibraryTabList(StaticTabListBase):
         self.view = TabListView(style.StaticTabRenderer())
         self.view.allow_multiple_select(False)
         self.view.set_fixed_height(False)
+        self.view.set_drag_dest(MediaTypeDropHandler())
 
     def build_tabs(self):
         self.add(statictabs.VideoLibraryTab())
@@ -260,6 +261,37 @@ class TabDnDReorder(object):
                 child_iter = model.append_child(iter, *child_row)
                 retval[child_row[0].id] = child_iter
         return retval
+
+class MediaTypeDropHandler(object):
+    """Drop Handler that changes the media type (audio/video/other) of items
+    that get dropped on it.
+    """
+
+    def allowed_types(self):
+        return ('downloaded-item',)
+
+    def allowed_actions(self):
+        return widgetset.DRAG_ACTION_COPY
+
+    def validate_drop(self, table_view, model, type, source_actions, parent,
+            position):
+        if (type == 'downloaded-item' and parent is not None
+            and position == -1):
+            return widgetset.DRAG_ACTION_COPY
+        return widgetset.DRAG_ACTION_NONE
+
+    def accept_drop(self, table_view, model, type, source_actions, parent,
+            position, data):
+        if type == 'downloaded-item':
+            if parent is not None and position == -1:
+                video_ids = [int(id) for id in data.split('-')]
+                media_type = model[parent][0].media_type
+                m = messages.SetItemMediaType(media_type, video_ids)
+                m.send_to_backend()
+                return True
+        # We shouldn't get here, because don't allow it in validate_drop.
+        # Return False just in case
+        return False
 
 class TabListDropHandler(object):
     def __init__(self, tablist):

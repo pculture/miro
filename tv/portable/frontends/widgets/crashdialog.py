@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2009 Participatory Culture Foundation
+# Copyright (C) 2005-2010 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -81,9 +81,7 @@ def run_dialog(obj, report):
                 messages.ReportCrash(report, text.get_text(), cbx.get_checked()).send_to_backend()
             else:
                 return IGNORE_ERRORS
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except StandardError:
             logging.exception("crashdialog threw exception.")
     finally:
         window.destroy()

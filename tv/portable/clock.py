@@ -19,7 +19,7 @@
 # Software.
 #
 # Copyright (C) 2002 John Hoffman
-#               2006 Participatory Culture Foundation
+#               2006-2010 Participatory Culture Foundation
 
 from time import time, clock
 import sys

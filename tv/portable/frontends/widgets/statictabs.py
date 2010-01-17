@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2009 Participatory Culture Foundation
+# Copyright (C) 2005-2010 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -102,16 +102,19 @@ class VideoLibraryTab(StaticTab):
     id = 'videos'
     name = _('Video')
     icon_name = 'icon-video'
+    media_type = u'video'
 
 class AudioLibraryTab(StaticTab):
     id = 'audios'
     name = _('Audio')
     icon_name = 'icon-audio'
+    media_type = u'audio'
 
 class OtherLibraryTab(StaticTab):
     id = 'others'
     name = _('Other')
     icon_name = 'icon-other'
+    media_type = u'other'
 
 class DownloadsTab(StaticTab):
     id = 'downloading'

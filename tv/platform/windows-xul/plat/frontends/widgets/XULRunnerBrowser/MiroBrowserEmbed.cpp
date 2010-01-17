@@ -1,6 +1,6 @@
 /*
  * Miro - an RSS based video player application
- * Copyright (C) 2005-2009 Participatory Culture Foundation
+ * Copyright (C) 2005-2010 Participatory Culture Foundation
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -137,6 +137,14 @@ void MiroBrowserEmbed::destroy()
 {
     nsCOMPtr<nsIBaseWindow> browserBaseWindow(do_QueryInterface(mWebBrowser));
     browserBaseWindow->Destroy();
+}
+
+PRBool MiroBrowserEmbed::is_enabled()
+{
+    PRBool enabled;
+    nsCOMPtr<nsIBaseWindow> browserBaseWindow(do_QueryInterface(mWebBrowser));
+    browserBaseWindow->GetEnabled(&enabled);
+    return enabled;
 }
 
 // Load a URI into the browser
@@ -355,13 +363,15 @@ NS_IMETHODIMP MiroBrowserEmbed::ExitModalEventLoop(nsresult aStatus)
 //*****************************************************************************   
 NS_IMETHODIMP MiroBrowserEmbed::FocusNextElement()
 {
-    if(mFocusCallback) mFocusCallback(PR_TRUE, mFocusCallbackData);
+    if(mFocusCallback && is_enabled())
+        mFocusCallback(PR_TRUE, mFocusCallbackData);
     return NS_OK;
 }
 
 NS_IMETHODIMP MiroBrowserEmbed::FocusPrevElement()
 {
-    if(mFocusCallback) mFocusCallback(PR_FALSE, mFocusCallbackData);
+    if(mFocusCallback && is_enabled())
+        mFocusCallback(PR_FALSE, mFocusCallbackData);
     return NS_OK;
 }
 
@@ -448,7 +458,7 @@ NS_IMETHODIMP MiroBrowserEmbed::OnStartURIOpen(nsIURI *aURI, PRBool *_retval)
     // Hmm, the docs seem to suggest that retval should be TRUE if we want to
     // continue the load.  However, it seems like the opposite is actually the
     // case.
-    if(mURICallback) {
+    if(mURICallback && is_enabled()) {
         if(mURICallback((char*)specString.get(), mURICallbackData) == 0) {
             *_retval = PR_TRUE;
         }
@@ -522,7 +532,7 @@ NS_IMETHODIMP MiroBrowserEmbed::SetParentContentListener(nsIURIContentListener *
 NS_IMETHODIMP MiroBrowserEmbed::OnStateChange(nsIWebProgress *aWebProgress, nsIRequest *aRequest, PRUint32 aStateFlags, nsresult aStatus)
 {
     if((aStateFlags & nsIWebProgressListener::STATE_IS_NETWORK) &&
-            mNetworkCallback) {
+            mNetworkCallback && is_enabled()) {
         if(aStateFlags & nsIWebProgressListener::STATE_START) {
             mNetworkCallback(PR_TRUE, mNetworkCallbackData);
         } else if(aStateFlags & nsIWebProgressListener::STATE_STOP) {

@@ -86,7 +86,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.assertEqual(u"\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d",i.get_title())
 
         self.assertEqual(type(i.get_description()), unicode)
-        self.assertEqual(u"<span>\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</span>", i.get_description())
+        self.assertEqual(u"\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d", i.get_description())
 
     # This is a latin1 feed that claims to be UTF-8
     def test_invalid_latin1_feed(self):

@@ -52,6 +52,12 @@ class RestorableHuman(Human):
     def setup_restored(self):
         self.iveBeenRestored = True
 
+class DBInsertCallbackHuman(Human):
+    callback = None
+    def on_db_insert(self):
+        if self.__class__.callback:
+            self.__class__.callback(self)
+
 class PCFProgramer(Human):
     def setup_new(self, name, age, meters_tall, friends, file, developer,
             high_scores = None):
@@ -86,6 +92,10 @@ class RestorableHumanSchema(HumanSchema):
     klass = RestorableHuman
     table_name = 'restorable_human'
 
+class DBInsertCallbackHumanSchema(HumanSchema):
+    klass = DBInsertCallbackHuman
+    table_name = 'db_insert_callback_human'
+
 class PCFProgramerSchema(schema.MultiClassObjectSchema):
     table_name = 'pcf_programmer'
     fields = HumanSchema.fields + [
@@ -104,7 +114,8 @@ class PCFProgramerSchema(schema.MultiClassObjectSchema):
         else:
             return PCFProgramer
 
-test_object_schemas = [HumanSchema, PCFProgramerSchema, RestorableHumanSchema]
+test_object_schemas = [HumanSchema, PCFProgramerSchema, RestorableHumanSchema,
+        DBInsertCallbackHumanSchema]
 
 def upgrade1(cursor):
     cursor.execute("UPDATE human set name='new name'")
@@ -368,6 +379,33 @@ class DiskTest(FakeSchemaTest):
         self.db.extend(new_humans)
         self.check_database()
         self.assertEquals(Human.make_view().count(), 11)
+
+    def test_bulk_remove(self):
+        new_humans = []
+        for x in range(10):
+            name = u"lee-clone-%s" % x
+            new_humans.append(Human(name, 25, 1.4, [], {u'virtual bowling':
+                                                        212}))
+        self.assertEquals(Human.make_view().count(), 11)
+        app.bulk_sql_manager.start()
+        for new_dude in new_humans:
+            new_dude.remove()
+        self.assertEquals(Human.make_view().count(), 11)
+        app.bulk_sql_manager.finish()
+        self.assertEquals(Human.make_view().count(), 1)
+
+    def test_insert_during_on_insert(self):
+        # what happens if on_db_insert creates a new item (see #12680)
+        def insert_callback(obj):
+            Human(u'minnie', 25, 1.4, [], {})
+        DBInsertCallbackHuman.callback = insert_callback
+        app.bulk_sql_manager.start()
+        ben = DBInsertCallbackHuman(u'janet', 25, 1.4, [], {})
+        # calling finish() will invoke insert_callback and create minnie.
+        # Check that this is reflected on disk
+        self.assertEquals(Human.make_view().count(), 1)
+        app.bulk_sql_manager.finish()
+        self.assertEquals(Human.make_view().count(), 2)
 
 class ObjectMemoryTest(FakeSchemaTest):
     def test_remove_remove_object_map(self):

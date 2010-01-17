@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2009 Participatory Culture Foundation
+# Copyright (C) 2005-2010 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -90,6 +90,7 @@ class DialogButton(object):
         return "DialogButton(%r)" % self.text
 
 BUTTON_OK = DialogButton(_("Ok"))
+BUTTON_APPLY = DialogButton(_("Apply"))
 BUTTON_CLOSE = DialogButton(_("Close"))
 BUTTON_CANCEL = DialogButton(_("Cancel"))
 BUTTON_DONE = DialogButton(_("Done"))

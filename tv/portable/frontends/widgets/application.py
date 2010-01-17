@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2009 Participatory Culture Foundation
+# Copyright (C) 2005-2010 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -58,6 +58,7 @@ from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import newsearchfeed
 from miro.frontends.widgets import newfeed
 from miro.frontends.widgets import newfolder
+from miro.frontends.widgets import itemedit
 from miro.frontends.widgets import addtoplaylistdialog
 from miro.frontends.widgets import removefeeds
 from miro.frontends.widgets import diagnostics
@@ -486,7 +487,7 @@ class Application:
                 else:
                     messages.DeleteVideo(mem.id).send_to_backend()
 
-    def rename_item(self):
+    def edit_item(self):
         selection = app.item_list_controller_manager.get_selection()
         selection = [s for s in selection if s.downloaded]
 
@@ -495,22 +496,9 @@ class Application:
 
         item_info = selection[0]
 
-        title = _('Rename Item')
-        description = _('Enter the new name for the item')
-        text = item_info.name
-
-        name = dialogs.ask_for_string(title, description, initial_text=text)
-        if name:
-            messages.RenameVideo(item_info.id, name).send_to_backend()
-
-    def revert_item_name(self):
-        selection = app.item_list_controller_manager.get_selection()
-        selection = [s for s in selection if s.downloaded]
-
-        if not selection:
-            return
-        item_info = selection[0]
-        messages.RevertItemTitle(item_info.id).send_to_backend()
+        change_dict = itemedit.run_dialog(item_info)
+        if change_dict:
+            messages.EditItem(item_info.id, change_dict).send_to_backend()
 
     def save_item(self):
         selection = app.item_list_controller_manager.get_selection()

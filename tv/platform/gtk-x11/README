@@ -3,7 +3,7 @@ README
 ======
 
 :Author: Will Kahn-Greene <will.guaraldi at pculture dot org>
-:Date: June 1st, 2009
+:Date: January 14, 2010
 
 
 Summary
@@ -51,12 +51,16 @@ and other files::
 .. Note:: Setting ``HOME`` doesn't work in KDE--it causes other problems.
 
 
-Wiping out preferences
-======================
+Preferences
+===========
 
 Miro stores preferences in gconf.  To wipe out all preferences, do::
 
    gconftool-2 --recursive-unset /apps/miro
+
+To backup your preferences, do::
+
+   gconftool-2 --dump /apps/miro > /tmp/foobar
 
 
 Unittest instructions

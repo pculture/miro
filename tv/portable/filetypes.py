@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2009 Participatory Culture Foundation
+# Copyright (C) 2005-2010 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -38,6 +38,9 @@ import os
 VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogv', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid', '.rmvb', '.mkv', '.m2v', '.ogm']
 AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka', '.flac', '.ogg']
 FEED_EXTENSIONS = ['.xml', '.rss', '.atom']
+OTHER_EXTENSIONS = ['.pdf', '.txt', '.html', '.doc', '.bmp', '.gif', '.jpg',
+        '.jpeg', '.png', '.psd', '.tif', '.tiff',]
+
 
 UNSUPPORTED_MIMETYPES = ("video/3gpp", "video/vnd.rn-realvideo", "video/x-ms-asf")
 
@@ -84,31 +87,35 @@ def is_playable_filename(filename):
     """
     return is_video_filename(filename) or is_audio_filename(filename)
 
+def _check_filename(filename, extension_list):
+    if not filename:
+        return False
+    filename = filename.lower()
+    for ext in extension_list:
+        if filename.endswith(ext):
+            return True
+    return False
+
 def is_video_filename(filename):
     """
     Pass a filename to this method and it will return a boolean
     saying if the filename represents a video file.
     """
-    if not filename:
-        return False
-    filename = filename.lower()
-    for ext in VIDEO_EXTENSIONS:
-        if filename.endswith(ext):
-            return True
-    return False
+    return _check_filename(filename, VIDEO_EXTENSIONS)
 
 def is_audio_filename(filename):
     """
     Pass a filename to this method and it will return a boolean
     saying if the filename represents an audio file.
     """
-    if not filename:
-        return False
-    filename = filename.lower()
-    for ext in AUDIO_EXTENSIONS:
-        if filename.endswith(ext):
-            return True
-    return False
+    return _check_filename(filename, AUDIO_EXTENSIONS)
+
+def is_other_filename(filename):
+    """
+    Pass a filename to this method and it will return a boolean
+    saying if the filename represents a non-audio, non-video file.
+    """
+    return _check_filename(filename, OTHER_EXTENSIONS)
 
 def is_media_filename(filename):
     """Check if a filename is a video or audio filename"""
