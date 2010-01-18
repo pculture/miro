@@ -422,7 +422,10 @@ class MiroOutlineViewDataSource(DataSourceBase, protocols.NSOutlineViewDataSourc
         return row_list.nth_iter(child).value()
 
     def outlineView_isItemExpandable_(self, view, item):
-        return len(item.children) > 0
+        if item is nil:
+            return len(self.model) > 0
+        else:
+            return len(item.children) > 0
 
     def outlineView_numberOfChildrenOfItem_(self, view, item):
         if item is nil:
