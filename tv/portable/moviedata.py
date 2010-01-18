@@ -34,9 +34,9 @@ import time
 import traceback
 import threading
 import Queue
+import logging
 
 from miro import app
-import logging
 from miro import config
 from miro import prefs
 from miro import signals
@@ -146,6 +146,8 @@ class MovieDataUpdater(signals.SignalEmitter):
                     # file?  Setting it to "" instead of None, means
                     # that we won't try to take the screenshot again.
                     screenshot = FilenameType("")
+                logging.debug("moviedata: %s %s %s", duration, screenshot, 
+                              mediatype)
                 self.update_finished(mdi.item, duration, screenshot, mediatype)
             except StandardError:
                 if self.in_shutdown:
