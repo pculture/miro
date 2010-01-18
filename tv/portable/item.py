@@ -685,7 +685,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def set_filename(self, filename):
         self.filename = filename
-        # self.file_type = self._file_type_for_filename(filename)
+        if not self.media_type_checked:
+            self.file_type = self._file_type_for_filename(filename)
 
     def set_file_type(self, file_type):
         self.file_type = file_type
