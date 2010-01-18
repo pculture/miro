@@ -66,20 +66,19 @@ _command_line_view = None
 def _item_exists_for_path(path):
     # in SQLite, LIKE is case insensitive, so we can use it to only look at
     # filenames that possibly will match
-    for row in item.Item.select('filename',
-            'filename IS NOT NULL AND filename LIKE ?', (path,)):
-        if samefile(row[0], path):
-            return True
+    for item_ in item.Item.make_view('filename LIKE ?', (path,)):
+        if samefile(item_.filename, path):
+            return item_
     return False
 
 def add_video(path, manual_feed=None):
     path = os.path.abspath(path)
-    if _item_exists_for_path(path):
+    item_for_path = _item_exists_for_path(path)
+    if item_for_path:
         logging.warn("Not adding duplicate video: %s",
-                path.decode('ascii', 'ignore'))
+                     path.decode('ascii', 'ignore'))
         if _command_line_videos is not None:
-            item_ = item.Item.make_view('filename=?', (path,)).get_singleton()
-            _command_line_videos.add(item_)
+            _command_line_videos.add(item_for_path)
         return
     if manual_feed is None:
         manual_feed = feed.Feed.get_manual_feed()
