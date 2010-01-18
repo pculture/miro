@@ -110,6 +110,7 @@ def get_type(media_player):
         check_exception()
     except VLCError:
         audio_tracks = 0
+
     if video_tracks > 0:
         return 'video'
     elif audio_tracks > 0:
@@ -163,15 +164,27 @@ def make_snapshot(video_path, thumbnail_path):
 
     # allow a little time for VLC to seek
     sleep(0.5)
-    libvlc.libvlc_video_take_snapshot(media_player, 
-                                      ctypes.c_char_p(thumbnail_path),
-                                      ctypes.c_int(0), 
-                                      ctypes.c_int(0),
-                                      byref(exception))
-    check_exception()
 
-    # allow a little time for VLC to take the snapshot
-    sleep(0.5)
+    # if it's a video, take a snapshot
+    if media_type == "video":
+        libvlc.libvlc_video_take_snapshot(media_player, 
+                                          ctypes.c_char_p(thumbnail_path),
+                                          ctypes.c_int(0), 
+                                          ctypes.c_int(0),
+                                          byref(exception))
+        check_exception()
+
+        # allow a little time for VLC to take the snapshot
+        sleep(0.5)
+
+    # if the length didn't work out before, we try it again
+    # FIXME - we can probably remove this when we switch to
+    # event handling in wait_for_play.
+    if length <= 0:
+        length = libvlc.libvlc_media_player_get_length(media_player, 
+                                                       byref(exception))
+        check_exception()
+
     libvlc.libvlc_media_player_stop(media_player, byref(exception))
     check_exception()
 
