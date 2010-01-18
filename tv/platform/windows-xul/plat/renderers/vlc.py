@@ -216,14 +216,12 @@ class VLCSniffer:
         """starts playing the specified file"""
 
         # filenames coming in are unicode objects, VLC expects utf-8 strings.
-        # mrls need to be percent encoded--they have to be valid urls.
-        filename = urllib.quote(filename.encode('utf-8'))
+        filename = filename.encode('utf-8')
         self._filename = filename
         self.callback_info = (success_callback, error_callback)
         self.started_playing = STOPPED
 
-        mrl = 'file:///%s' % filename
-        media = libvlc.libvlc_media_new(self.vlc, ctypes.c_char_p(mrl),
+        media = libvlc.libvlc_media_new(self.vlc, ctypes.c_char_p(filename),
                 self.exc.ref())
         self.exc.check()
         if media is None:
@@ -367,16 +365,14 @@ class VLCRenderer:
         """starts playing the specified file"""
 
         # filenames coming in are unicode objects, VLC expects utf-8 strings.
-        # mrls need to be percent encoded--they have to be valid urls.
-        filename = urllib.quote(filename.encode('utf-8'))
+        filename = filename.encode('utf-8')
         self._filename = filename
         self.subtitle_info = []
         self.callback_info = (callback, errback)
         self.play_from_time = None
         self.started_playing = STOPPED
 
-        mrl = 'file:///%s' % filename
-        media = libvlc.libvlc_media_new(self.vlc, ctypes.c_char_p(mrl),
+        media = libvlc.libvlc_media_new(self.vlc, ctypes.c_char_p(filename),
                 self.exc.ref())
         self.exc.check()
         if media is None:
