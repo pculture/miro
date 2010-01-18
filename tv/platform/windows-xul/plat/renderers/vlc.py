@@ -280,6 +280,7 @@ class VLCRenderer:
         self._rate = 1.0
         self.media_playing = None
         self.callback_info = None
+        self.subtitle_info = []
 
     def event_callback(self, p_event, p_user_data):
         event = p_event[0]
@@ -336,10 +337,10 @@ class VLCRenderer:
     def _open_success(self):
         # FIXME - sometimes _open_success is called, but callback_info
         # is None.  not sure why this happens.
+        self.setup_subtitles()
         if self.callback_info:
             self.callback_info[0]()
         self.callback_info = None
-        self.setup_subtitles()
 
     def _open_failure(self):
         import traceback
@@ -369,6 +370,7 @@ class VLCRenderer:
         # mrls need to be percent encoded--they have to be valid urls.
         filename = urllib.quote(filename.encode('utf-8'))
         self._filename = filename
+        self.subtitle_info = []
         self.callback_info = (callback, errback)
         self.play_from_time = None
         self.started_playing = STOPPED
@@ -425,6 +427,7 @@ class VLCRenderer:
         libvlc.libvlc_media_player_stop(self.media_player, self.exc.ref())
         self.exc.check()
         self.started_playing = STOPPED
+        self.subtitle_info = []
 
     def reset(self):
         self.stop()
@@ -495,6 +498,7 @@ class VLCRenderer:
         pass
 
     def setup_subtitles(self):
+        self.setup_subtitle_info()
         if config.get(prefs.ENABLE_SUBTITLES):
             track_index = self.get_enabled_subtitle_track()
             if track_index == 0:
@@ -505,18 +509,22 @@ class VLCRenderer:
             self.disable_subtitles()
         
     def get_subtitle_tracks(self):
-        tracks = list()
+        return self.subtitle_info
+
+    def setup_subtitle_info(self):
+        self.subtitle_info = list()
         try:
             desc = libvlc.libvlc_video_get_spu_description(self.media_player, self.exc.ref())
             self.exc.check()
             count = libvlc.libvlc_video_get_spu_count(self.media_player, self.exc.ref())
             self.exc.check()
+            first_desc = desc
             for i in range(0, count):
-                tracks.append((i, desc.contents.name))
+                self.subtitle_info.append((i, desc.contents.name))
                 desc = desc.contents.next
+            libvlc.libvlc_track_description_release(first_desc)
         except VLCError, e:
             logging.warn("exception when getting list of subtitle tracks")
-        return tracks
 
     def get_enabled_subtitle_track(self):
         track_index = libvlc.libvlc_video_get_spu(self.media_player, self.exc.ref())
@@ -534,6 +542,12 @@ class VLCRenderer:
         self._set_active_subtitle_track(0)
         
     def _set_active_subtitle_track(self, track_index):
+        count = libvlc.libvlc_video_get_spu_count(self.media_player, self.exc.ref())
+        self.exc.check()
+        if track_index >= count:
+            logging.warn("Subtitle track too high: %s (count: %s)",
+                    track_index, count)
+
         libvlc.libvlc_video_set_spu(self.media_player, track_index, self.exc.ref())
         try:
             self.exc.check()
