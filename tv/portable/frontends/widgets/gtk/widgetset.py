@@ -31,25 +31,26 @@ import gtk
 from miro.frontends.widgets.gtk.base import Widget, Bin
 from miro.frontends.widgets.gtk.const import *
 from miro.frontends.widgets.gtk.controls import TextEntry, SecureTextEntry, \
-        Checkbox, RadioButton, RadioButtonGroup, OptionMenu, Button
+     MultilineTextEntry, Checkbox, RadioButton, RadioButtonGroup, \
+     OptionMenu, Button
 from miro.frontends.widgets.gtk.searchentry import SearchTextEntry, \
-        VideoSearchTextEntry
+     VideoSearchTextEntry
 from miro.frontends.widgets.gtk.customcontrols import CustomButton, \
-        ContinuousCustomButton, CustomSlider
+     ContinuousCustomButton, CustomSlider
 from miro.frontends.widgets.gtk.drawing import ImageSurface, DrawingContext, \
-        DrawingArea, Background, Gradient
+     DrawingArea, Background, Gradient
 from miro.frontends.widgets.gtk.layout import HBox, VBox, Alignment, \
-        Splitter, Table, TabContainer, DetachedWindowHolder
+     Splitter, Table, TabContainer, DetachedWindowHolder
 from miro.frontends.widgets.gtk.window import Window, MainWindow, Dialog, \
-        FileOpenDialog, FileSaveDialog, DirectorySelectDialog, AboutDialog, \
-        AlertDialog
+     FileOpenDialog, FileSaveDialog, DirectorySelectDialog, AboutDialog, \
+     AlertDialog
 from miro.frontends.widgets.gtk.preferenceswindow import PreferencesWindow
 from miro.frontends.widgets.gtk.tableview import TableView, TableModel, \
-        TableColumn, TreeTableModel, CellRenderer, ImageCellRenderer, \
-        CheckboxCellRenderer, CustomCellRenderer
+     TableColumn, TreeTableModel, CellRenderer, ImageCellRenderer, \
+     CheckboxCellRenderer, CustomCellRenderer
 from miro.frontends.widgets.gtk.simple import Image, ImageDisplay, \
-        AnimatedImageDisplay, Label, Scroller, Expander, SolidBackground, \
-        ProgressBar
+     AnimatedImageDisplay, Label, Scroller, Expander, SolidBackground, \
+     ProgressBar
 from miro.frontends.widgets.gtk.audio import AudioPlayer
 from miro.frontends.widgets.gtk.video import VideoPlayer
 from miro.frontends.widgets.gtk.widgets import Rect

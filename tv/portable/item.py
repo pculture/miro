@@ -132,12 +132,12 @@ class FeedParserValues(object):
             # The title attribute shouldn't use entities, but some in
             # the wild do (#11413).  In that case, try to fix them.
             return entity_replace(self.entry.title)
-        else:
-            if (self.first_video_enclosure and
-                    'url' in self.first_video_enclosure):
-                    return self.first_video_enclosure['url'].decode("ascii",
-                                                                    "replace")
-            return None
+
+        if ((self.first_video_enclosure
+             and 'url' in self.first_video_enclosure)):
+            return self.first_video_enclosure['url'].decode("ascii",
+                                                                "replace")
+        return None
 
     def _calc_thumbnail_url(self):
         """Returns a link to the thumbnail of the video.  """
@@ -1205,9 +1205,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return self.entry_title
         return _('no title')
 
-    def set_title(self, s):
+    def set_title(self, title):
         self.confirm_db_thread()
-        self.title = s
+        self.title = title
+        self.signal_change()
+
+    def set_description(self, desc):
+        self.confirm_db_thread()
+        self.raw_descrption = desc
         self.signal_change()
 
     def set_channel_title(self, title):

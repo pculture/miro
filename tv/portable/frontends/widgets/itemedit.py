@@ -58,6 +58,27 @@ def build_text_entry(key, label, value):
 
     return lab, entry, handler
 
+def build_multiline_text_entry(key, label, value):
+    """Takes a key, label, and value and generates a label, multiline
+    text entry in a scroller, and a handler.
+
+    :param key: used as the key in the response dict
+    :param label: the label the user sees
+    :param value: the current value of this thing
+
+    :returns: label widget, section widget, handler function
+    """
+    lab = widgetset.Label(label)
+    entry = widgetset.MultilineTextEntry()
+    entry.set_text(value)
+    scroller = widgetset.Scroller(True, True)
+    scroller.add(entry)
+    def handler(response_dict):
+        if entry.get_text() != value:
+            response_dict[key] = entry.get_text()
+
+    return lab, scroller, handler
+
 def build_radio(key, label, value, options):
     """Takes a key, label, value and list of (option label, option value)
     pairs and generates a radio button group, label and handler.
@@ -108,10 +129,11 @@ def _run_dialog(iteminfo):
             sections = []
 
             sections.append(build_text_entry(
-                "name", _("Item title:"), iteminfo.name))
+                "name", _("Title:"), iteminfo.name))
+            sections.append(build_multiline_text_entry(
+                "description", _("Description:"), iteminfo.description))
             sections.append(build_radio(
-                "file_type",
-                _("Media type:"),
+                "file_type", _("Media type:"),
                 iteminfo.file_type,
                 [(_("video"), u"video"),
                  (_("audio"), u"audio"),

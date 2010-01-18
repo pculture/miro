@@ -1233,6 +1233,9 @@ class BackendMessageHandler(messages.MessageHandler):
         if "name" in change_dict:
             item_.set_title(change_dict["name"])
 
+        if "description" in change_dict:
+            item_.set_description(change_dict["description"])
+
         if "file_type" in change_dict:
             item_.set_file_type(change_dict["file_type"])
 

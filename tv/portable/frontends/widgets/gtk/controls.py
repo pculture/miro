@@ -64,7 +64,7 @@ class TextEntry(Widget):
         self.forward_signal('activate')
         self.forward_signal('changed')
         if initial_text is not None:
-            self._widget.set_text(initial_text)
+            self.set_text(initial_text)
 
     def focus(self):
         self._widget.grab_focus()
@@ -96,6 +96,33 @@ class SecureTextEntry(TextEntry):
         TextEntry.__init__(self, initial_text)
         self.set_invisible(True)
 
+class MultilineTextEntry(Widget):
+    entry_class = gtk.TextView
+    def __init__(self, initial_text=None):
+        Widget.__init__(self)
+        self.set_widget(self.entry_class())
+        if initial_text is not None:
+            self.set_text(initial_text)
+        self._widget.set_wrap_mode(gtk.WRAP_WORD)
+
+    def focus(self):
+        self._widget.grab_focus()
+
+    def set_text(self, text):
+        self._widget.get_buffer().set_text(text)
+
+    def get_text(self):
+        buffer_ = self._widget.get_buffer()
+        return buffer_.get_text(*(buffer_.get_bounds())).decode('utf-8')
+
+    def baseline(self):
+        # FIXME
+        layout_height = pango.PIXELS(self._widget.get_layout().get_size()[1])
+        ypad = (self._widget.size_request()[1] - layout_height) / 2
+        pango_context = self._widget.get_pango_context()
+        metrics = pango_context.get_metrics(self._widget.style.font_desc)
+        return pango.PIXELS(metrics.get_descent()) + ypad
+        
 class Checkbox(Widget, BinBaselineCalculator):
     """Widget that the user can toggle on or off."""
 
