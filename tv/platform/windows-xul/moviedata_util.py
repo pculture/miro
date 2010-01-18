@@ -190,7 +190,7 @@ def make_snapshot(video_path, thumbnail_path):
     print "Miro-Movie-Data-Type: %s" % media_type
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
+    if len(sys.argv) < 3:
         print "moviedata_util <video_path> <thumbnail_path>"
         sys.exit(0)
 
