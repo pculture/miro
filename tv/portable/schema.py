@@ -400,6 +400,7 @@ class ItemSchema(MultiClassObjectSchema):
         ('rss_id', SchemaString(noneOk=True)),
         ('thumbnail_url', SchemaURL(noneOk=True)),
         ('entry_title', SchemaString(noneOk=True)),
+        # FIXME - this is spelled wrong!!!
         ('raw_descrption', SchemaString(noneOk=False)),
         ('link', SchemaURL(noneOk=False)),
         ('payment_link', SchemaURL(noneOk=False)),
