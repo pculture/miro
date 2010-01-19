@@ -114,6 +114,7 @@ class Player(player.Player):
         self.supported_media_types = supported_media_types
         self.movie_notifications = None
         self.movie = None
+        self.item_info = None
 
     def reset(self):
         threads.warn_if_not_on_main_thread('quicktime.Player.reset')
@@ -121,6 +122,7 @@ class Player(player.Player):
             self.movie_notifications.disconnect()
         self.movie_notifications = None
         self.movie = None
+        self.item_info = None
 
     def set_item(self, item_info, callback, errback):
         threads.warn_if_not_on_main_thread('quicktime.Player.set_item')
@@ -128,6 +130,7 @@ class Player(player.Player):
         self.reset()
         if qtmovie is not None:
             self.movie = qtmovie
+            self.item_info = item_info
             self.movie_notifications = NotificationForwarder.create(self.movie)
             self.movie_notifications.connect(self.handle_movie_notification, QTMovieDidEndNotification)
             self.setup_subtitles()
@@ -232,6 +235,33 @@ class Player(player.Player):
         track = self.get_enabled_subtitle_track()
         if track is not None:
             track.setAttribute_forKey_(0, QTTrackEnabledAttribute)
+
+    def select_subtitle_file(self, sub_path):
+        sub_basename = os.path.basename(sub_path)
+        sub_basename_root, sub_ext = os.path.splitext(sub_basename)
+        movie_basename = os.path.basename(self.item_info.video_path)
+        movie_basename_root, movie_ext = os.path.splitext(movie_basename)
+        if sub_basename_root != movie_basename_root:
+            sub_basename = movie_basename_root + sub_ext
+        dest_path = os.path.join(os.path.dirname(self.item_info.video_path), sub_basename)
+        if os.path.exists(dest_path):
+            os.unlink(dest_path)
+        os.link(sub_path, dest_path)
+
+        total_time = self.get_total_playback_time()
+        saved_pos = self.get_elapsed_playback_time()
+        saved_item_info = self.item_info
+        
+        def handle_ok():
+            app.playback_manager.emit('will-play', total_time)
+            self.play_from_time(saved_pos)
+            app.playback_manager.emit('did-start-playing')
+        def handle_err():
+            app.playback_manager.stop()
+
+        app.playback_manager.emit('will-pause')
+        self.stop()
+        self.set_item(saved_item_info, handle_ok, handle_err)
 
     def set_volume(self, volume):
         if self.movie:

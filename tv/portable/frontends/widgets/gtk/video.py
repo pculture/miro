@@ -377,6 +377,16 @@ class VideoDetailsWidget(Background):
             child.show()
             menu.append(child)
 
+        sep = gtk.SeparatorMenuItem()
+        sep.show()
+        menu.append(sep)
+
+        child = gtk.MenuItem(_("Select a Subtitles file..."))
+        child.set_active(True)
+        child.connect('activate', self.handle_select_subtitle_file)
+        child.show()
+        menu.append(child)
+
         menu.popup(None, None, None, event.button, event.time)
 
     def handle_subtitle_change(self, widget, index):
@@ -385,6 +395,9 @@ class VideoDetailsWidget(Background):
         else:
             app.video_renderer.enable_subtitle_track(index)
         app.widgetapp.window.on_playback_change(app.playback_manager)
+
+    def handle_select_subtitle_file(self, widget):
+        app.playback_manager.open_subtitle_file()
 
     def handle_commentslink(self, widget, event):
         app.widgetapp.open_url(self.item_info.commentslink)

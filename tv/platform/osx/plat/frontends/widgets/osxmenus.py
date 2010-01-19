@@ -319,6 +319,8 @@ class SubtitleChangesHandler(NSObject):
     def selectSubtitleTrack_(self, sender):
         app.playback_manager.player.enable_subtitle_track(sender.tag())
         on_playback_change(app.playback_manager)
+    def openSubtitleFile_(self, sender):
+        app.playback_manager.open_subtitle_file()
     def disableSubtitles_(self, sender):
         app.playback_manager.player.disable_subtitles()
         on_playback_change(app.playback_manager)
@@ -363,6 +365,7 @@ def populate_subtitles_menu(nsmenu, tracks):
         nsmenu.addItem_(item)
 
     nsmenu.addItem_(NSMenuItem.separatorItem())
+    
     disable_item = NSMenuItem.alloc().init()
     disable_item.setTitle_(_("Disable Subtitles"))
     disable_item.setEnabled_(YES)
@@ -374,8 +377,23 @@ def populate_subtitles_menu(nsmenu, tracks):
         disable_item.setState_(NSOnState)
     nsmenu.addItem_(disable_item)
 
-def _set_no_subtitles(nsmenu):
+    nsmenu.addItem_(NSMenuItem.separatorItem())
+
+    _add_open_item(nsmenu)
+
+def _set_no_subtitles(nsmenu):    
     item = NSMenuItem.alloc().init()
     item.setTitle_(_("None Available"))
     item.setEnabled_(NO)
     nsmenu.addItem_(item)
+
+    nsmenu.addItem_(NSMenuItem.separatorItem())
+    _add_open_item(nsmenu)
+
+def _add_open_item(nsmenu):    
+    load_item = NSMenuItem.alloc().init()
+    load_item.setTitle_(_("Select a Subtitles file..."))
+    load_item.setEnabled_(YES)
+    load_item.setTarget_(subtitles_menu_handler)
+    load_item.setAction_('openSubtitleFile:')
+    nsmenu.addItem_(load_item)

@@ -35,10 +35,12 @@ from miro import config
 from miro import signals
 from miro import messages
 
+from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets.displays import VideoDisplay
 from miro.frontends.widgets import menus
+from miro.frontends.widgets import dialogs
 
 class PlaybackManager (signals.SignalEmitter):
     
@@ -531,6 +533,14 @@ class PlaybackManager (signals.SignalEmitter):
         self.finish_attached_playback(False)
         self.prepare_detached_playback()
         self.schedule_update()
+
+    def open_subtitle_file(self):
+        title = _('Open Subtitles File...')
+        filters = [(_('Subtitle files'), ['srt', 'sub', 'ass', 'ssa'])]
+        filename = dialogs.ask_for_open_pathname(title, filters=filters, select_multiple=False)
+        if filename is None:
+            return
+        self.player.select_subtitle_file(filename)
 
 class DetachedWindow(widgetset.Window):
     def __init__(self, title, rect):

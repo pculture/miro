@@ -376,6 +376,9 @@ class VideoRenderer(Renderer):
         flags = self.playbin.get_property('flags')
         self.playbin.set_property('flags', flags & ~GST_PLAY_FLAG_TEXT)
 
+    def select_subtitle_file(self, path):
+        pass
+
 class AudioRenderer(Renderer):
     pass
 
