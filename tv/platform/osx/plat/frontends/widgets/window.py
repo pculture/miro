@@ -316,16 +316,25 @@ class FileDialogBase(DialogBase):
         self._types = None
         self._filename = None
         self._directory = None
+        self._filter_on_run = True
 
     def run(self):
         self._panel.setAllowedFileTypes_(self._types)
         if self.sheet_parent is None:
-            response = self._panel.runModalForDirectory_file_(self._directory, self._filename, self._types)
+            if self._filter_on_run:
+                response = self._panel.runModalForDirectory_file_types_(self._directory, self._filename, self._types)
+            else:
+                response = self._panel.runModalForDirectory_file_(self._directory, self._filename)
         else:
             delegate = SheetDelegate.alloc().init()
-            self._panel.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
-                self._directory, self._filename,
-                self.sheet_parent.nswindow, delegate, 'sheetDidEnd:returnCode:contextInfo:', 0)
+            if self._filter_on_run:
+                self._panel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
+                    self._directory, self._filename, self._types,
+                    self.sheet_parent.nswindow, delegate, 'sheetDidEnd:returnCode:contextInfo:', 0)
+            else:
+                self._panel.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
+                    self._directory, self._filename,
+                    self.sheet_parent.nswindow, delegate, 'sheetDidEnd:returnCode:contextInfo:', 0)
             response = NSApp().runModalForWindow_(self._panel)
             self._panel.orderOut_(nil)
         return response
@@ -335,7 +344,10 @@ class FileSaveDialog(FileDialogBase):
         FileDialogBase.__init__(self)
         self._title = title
         self._panel = NSSavePanel.savePanel()
+        self._panel.setCanChooseFiles_(YES)
+        self._panel.setCanChooseDirectories_(NO)
         self._filename = None
+        self._filter_on_run = False
 
     def set_filename(self, s):
         self._filename = filenameToUnicode(s)
@@ -361,6 +373,8 @@ class FileOpenDialog(FileDialogBase):
         FileDialogBase.__init__(self)
         self._title = title
         self._panel = NSOpenPanel.openPanel()
+        self._panel.setCanChooseFiles_(YES)
+        self._panel.setCanChooseDirectories_(NO)
         self._filenames = None
 
     def set_select_multiple(self, value):
