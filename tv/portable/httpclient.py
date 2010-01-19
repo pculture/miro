@@ -70,6 +70,17 @@ SOCKET_READ_TIMEOUT = 60
 SOCKET_INITIAL_READ_TIMEOUT = 30
 SOCKET_CONNECT_TIMEOUT = 15
 
+# socket.ssl is deprecated as of Python 2.6, so we use socket_ssl for
+# pre Python 2.6 and ssl.wrap_socket for Python 2.6 and later.
+try:
+    import ssl
+    ssl.wrap_socket
+    def convert_to_ssl(sock):
+        return ssl.wrap_socket(sock)
+except (ImportError, AttributeError):
+    def convert_to_ssl(sock):
+        return socket.ssl(sock)
+
 def user_agent():
     return "%s/%s (%s; %s)" % (config.get(prefs.SHORT_APP_NAME),
             config.get(prefs.APP_VERSION),
@@ -539,18 +550,20 @@ class AsyncSSLStream(AsyncSocket):
     def openConnection(self, host, port, callback, errback, disableReadTimeout=None):
         def onSocketOpen(self):
             self.socket.setblocking(1)
-            eventloop.callInThread(onSSLOpen, handleSSLError, socket.ssl,
+            eventloop.callInThread(onSSLOpen, handleSSLError, convert_to_ssl,
                                    "AsyncSSL onSocketOpen()",
                                    self.socket)
         def onSSLOpen(ssl):
             if self.socket is None:
-                # the connection was closed while we were calling socket.ssl
+                # the connection was closed while we were calling
+                # convert_to_ssl
                 return
             self.socket.setblocking(0)
             self.ssl = ssl
             # finally we can call the actuall callback
             callback(self)
         def handleSSLError(error):
+            logging.error("handleSSLError: %r", error)
             errback(SSLConnectionError())
         super(AsyncSSLStream, self).openConnection(host, port, onSocketOpen,
                 errback, disableReadTimeout)
@@ -638,21 +651,24 @@ class ProxiedAsyncSSLStream(AsyncSSLStream):
                     data += self.socket.recv(1)
                 data = data.split("\r\n")
                 if -1 == data[0].find(' 200 '):
-                    eventloop.addIdle(lambda :handleSSLError(NetworkError(data[0])),"Network Error")
+                    eventloop.addIdle(lambda :handleSSLError(
+                        NetworkError(data[0])), "Network Error")
                 else:
-                    return socket.ssl(self.socket)
+                    return convert_to_ssl(self.socket)
             except socket.error, (code, msg):
                 handleSSLError(msg)
 
         def onSSLOpen(ssl):
             if self.socket is None or ssl is None:
-                # the connection was closed while we were calling socket.ssl
+                # the connection was closed while we were calling
+                # convert_to_ssl
                 return
             self.socket.setblocking(0)
             self.ssl = ssl
             # finally we can call the actuall callback
             callback(self)
         def handleSSLError(error):
+            logging.error("handleSSLError: %r", error)
             errback(SSLConnectionError())
         proxy_host = config.get(prefs.HTTP_PROXY_HOST)
         proxy_port = config.get(prefs.HTTP_PROXY_PORT)
@@ -1887,7 +1903,8 @@ def grabURL(url, callback, errback, headerCallback=None,
                            })
     else:
         client = clientClass(url, callback, errback, headerCallback,
-            bodyDataCallback, method, start, etag, modified, cookies, postVariables, postFiles)
+                             bodyDataCallback, method, start, etag,
+                             modified, cookies, postVariables, postFiles)
         client.startRequest()
         return client
 
