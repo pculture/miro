@@ -277,28 +277,32 @@ def kill_process(pid):
         # best we can do
         # See http://support.microsoft.com/kb/q178893/
         # http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/347462
-        PROCESS_TERMINATE = 1
-        handle = ctypes.windll.kernel32.OpenProcess(PROCESS_TERMINATE, False, pid)
-        ctypes.windll.kernel32.TerminateProcess(handle, -1)
-        ctypes.windll.kernel32.CloseHandle(handle)
+        try:
+            PROCESS_TERMINATE = 1
+            handle = ctypes.windll.kernel32.OpenProcess(PROCESS_TERMINATE,
+                                                        False, pid)
+            ctypes.windll.kernel32.TerminateProcess(handle, -1)
+            ctypes.windll.kernel32.CloseHandle(handle)
+        except ValueError:
+            logging.exception("problem killing process")
 
 def launch_download_daemon(oldpid, env):
     kill_process(oldpid)
     for key, value in env.items():
         os.environ[key] = value
     os.environ['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
-    # Start the downloader.  We use the subprocess module to turn off the
-    # console.  One slightly awkward thing is that the current process
-    # might not have a valid stdin/stdout/stderr, so we create a pipe to
-    # it that we never actually use.
+    # Start the downloader.  We use the subprocess module to turn off
+    # the console.  One slightly awkward thing is that the current
+    # process might not have a valid stdin/stdout/stderr, so we create
+    # a pipe to it that we never actually use.
 
     # Note that we use "Miro" instead of the app name here, so custom
     # versions will work
 
-    # Note that the application filename has to be in double-quotes otherwise
-    # it kicks up "%1 is not a valid Win32 application" errors on some Windows
-    # machines.  Why it only happens on some is a mystery of the universe.
-    # Bug #9274.
+    # Note that the application filename has to be in double-quotes
+    # otherwise it kicks up "%1 is not a valid Win32 application"
+    # errors on some Windows machines.  Why it only happens on some is
+    # a mystery of the universe.  Bug #9274.
     downloaderPath = '"%s"' % os.path.join(resources.appRoot(),
             "Miro_Downloader.exe") 
     startupinfo = subprocess.STARTUPINFO()
