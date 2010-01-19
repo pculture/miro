@@ -553,7 +553,9 @@ class ItemRenderer(widgetset.CustomCellRenderer):
                 'visit_filelink', not (self.data.file_url and not self.data.file_url.startswith('file:')))
         hbox.pack(cellpack.align_center(fileurl_hotspot))
 
-        license_hotspot = self._make_button(layout, self.LICENSE_PAGE_TEXT, 'visit_license', not self.data.license)
+        license_hotspot = self._make_button(layout, self.LICENSE_PAGE_TEXT,
+                                            'visit_license',
+                                            not util.is_url(self.data.license))
         hbox.pack(cellpack.align_center(license_hotspot))
 
         # 12px between the normal content and the flap border and 8px between

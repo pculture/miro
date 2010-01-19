@@ -35,30 +35,30 @@ class AcceptScrapeTestDelegate:
 
 class FeedURLValidationTest(MiroTestCase):
     def test_positive(self):
-        for i, o in [(u"http://foo.bar.com/", True),
-                     (u"https://foo.bar.com/", True)
-                     ]:
-            self.assertEqual(validate_feed_url(i), o)
+        for testurl in [u"http://foo.bar.com/",
+                        u"https://foo.bar.com/",
+                        ]:
+            self.assertEqual(validate_feed_url(testurl), True)
 
     def test_negative(self):
-        for i, o in [(u"feed://foo.bar.com/", False),
-                     (u"http://foo.bar.com", False),
-                     (u"http:foo.bar.com/", False),
-                     (u"https:foo.bar.com/", False),
-                     (u"feed:foo.bar.com/", False),
-                     (u"http:/foo.bar.com/", False),
-                     (u"https:/foo.bar.com/", False),
-                     (u"feed:/foo.bar.com/", False),
-                     (u"http:///foo.bar.com/", False),
-                     (u"https:///foo.bar.com/", False),
-                     (u"feed:///foo.bar.com/", False),
-                     (u"foo.bar.com", False),
-                     (u"crap:foo.bar.com", False),
-                     (u"crap:/foo.bar.com", False),
-                     (u"crap://foo.bar.com", False),
-                     (u"crap:///foo.bar.com", False),
-                     ]:
-            self.assertEqual(validate_feed_url(i), o)
+        for testurl in [u"feed://foo.bar.com/",
+                        u"http://foo.bar.com",
+                        u"http:foo.bar.com/",
+                        u"https:foo.bar.com/",
+                        u"feed:foo.bar.com/",
+                        u"http:/foo.bar.com/",
+                        u"https:/foo.bar.com/",
+                        u"feed:/foo.bar.com/",
+                        u"http:///foo.bar.com/",
+                        u"https:///foo.bar.com/",
+                        u"feed:///foo.bar.com/",
+                        u"foo.bar.com",
+                        u"crap:foo.bar.com",
+                        u"crap:/foo.bar.com",
+                        u"crap://foo.bar.com",
+                        u"crap:///foo.bar.com",
+                        ]:
+            self.assertEqual(validate_feed_url(testurl), False)
 
         # FIXME - add tests for all the other kinds of urls that
         # validate_feed_url handles.

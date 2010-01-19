@@ -133,6 +133,36 @@ class UtilTest(MiroTestCase):
              'type': u'video/mpeg',
              'filesize': u'244700'}]
 
+    def test_is_url_positive(self):
+        for testurl in [u"http://foo.bar.com/",
+                        u"https://foo.bar.com/",
+                        ]:
+            self.assertEqual(util.is_url(testurl), True)
+
+    def test_is_url_negative(self):
+        for testurl in [u"",
+                        None,
+                        u"feed://foo.bar.com/",
+                        u"http://foo.bar.com",
+                        u"http:foo.bar.com/",
+                        u"https:foo.bar.com/",
+                        u"feed:foo.bar.com/",
+                        u"http:/foo.bar.com/",
+                        u"https:/foo.bar.com/",
+                        u"feed:/foo.bar.com/",
+                        u"http:///foo.bar.com/",
+                        u"https:///foo.bar.com/",
+                        u"feed:///foo.bar.com/",
+                        u"foo.bar.com",
+                        u"crap:foo.bar.com",
+                        u"crap:/foo.bar.com",
+                        u"crap://foo.bar.com",
+                        u"crap:///foo.bar.com",
+                        # Bug #12645
+                        u"No license (All rights reserved)",
+                        ]:
+            self.assertEqual(util.is_url(testurl), False)
+
     def test_stringify(self):
         # input, handleerror, expected output if handlerror is None,
         # then it isn't passed in as an argument

@@ -60,7 +60,8 @@ from miro import prefs
 from miro.plat import resources
 from miro import downloader
 from miro.util import (returns_unicode, returns_filename, unicodify, check_u,
-                       check_f, quote_unicode_url, escape, to_uni)
+                       check_f, quote_unicode_url, escape, to_uni,
+                       is_url)
 from miro import fileutil
 from miro.plat.utils import filenameToUnicode, make_url_safe, unmake_url_safe
 from miro import filetypes
@@ -128,21 +129,22 @@ def add_feed_from_web_page(url):
         logging.warning ("unhandled error in add_feed_from_web_page: %s", error)
     grabURL(url, callback, errback)
 
+FILE_MATCH_RE = re.compile(r"^file://.")
+SEARCH_MATCH_RE = re.compile(r"^dtv:searchTerm:(.*)\?(.*)$")
+MULTI_MATCH_RE = re.compile(r"^dtv:multi:")
+
 def validate_feed_url(url):
     """URL validitation and normalization
     """
     check_u(url)
-    for c in url.encode('utf8'):
-        if ord(c) > 127:
-            return False
-    if re.match(r"^(http|https)://[^/ ]+/[^ ]*$", url) is not None:
+    if is_url(url):
         return True
-    if re.match(r"^file://.", url) is not None:
+    if FILE_MATCH_RE.match(url) is not None:
         return True
-    match = re.match(r"^dtv:searchTerm:(.*)\?(.*)$", url)
+    match = SEARCH_MATCH_RE.match(url)
     if match is not None and validate_feed_url(urldecode(match.group(1))):
         return True
-    match = re.match(r"^dtv:multi:", url)
+    match = MULTI_MATCH_RE.match(url)
     if match is not None:
         return True
     return False

@@ -85,6 +85,7 @@ def get_nice_stack():
     stack = [i for i in stack if 'trap_call' in i]
     return stack
 
+
 CONFIG_LINE_RE = re.compile(r"^([^ ]+) *= *([^\r\n]*)[\r\n]*$")
 
 def read_simple_config_file(path):
@@ -849,6 +850,21 @@ def entity_replace(text):
     for src, dest in replacements:
         text = text.replace(src, dest)
     return text
+
+HTTP_HTTPS_MATCH_RE = re.compile(r"^(http|https)://[^/ ]+/[^ ]*$")
+
+def is_url(url):
+    """Returns True if this is URL-ish.
+    """
+    if not url:
+        return False
+    check_u(url)
+    for c in url.encode('utf-8'):
+        if ord(c) > 127:
+            return False
+    if HTTP_HTTPS_MATCH_RE.match(url) is not None:
+        return True
+    return False
 
 LOWER_TRANSLATE = string.maketrans(string.ascii_uppercase,
                                    string.ascii_lowercase)
