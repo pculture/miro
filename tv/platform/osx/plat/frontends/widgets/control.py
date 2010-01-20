@@ -67,6 +67,7 @@ class BaseTextEntry(SizedControl):
         self.view.cell().setScrollable_(YES)
         self.view.cell().setLineBreakMode_(NSLineBreakByClipping)
         self.sizer_cell = self.view.cell().copy()
+        self.auto_sizer_cell = self.sizer_cell.copy()
         if initial_text:
             self.view.setStringValue_(initial_text)
             self.set_width(len(initial_text))
@@ -98,6 +99,11 @@ class BaseTextEntry(SizedControl):
 
     def calc_size_request(self):
         size = self.sizer_cell.cellSize()
+        if self.parent_is_scroller:
+            self.auto_sizer_cell.setStringValue_(self.view.stringValue())
+            text_size = self.auto_sizer_cell.cellSize()
+            size.width = max(size.width, text_size.width)
+            size.height = max(size.height, text_size.height)
         return size.width, size.height
 
     def set_text(self, text):
@@ -127,6 +133,18 @@ class MiroTextField(NSTextField):
         wrappermap.wrapper(self).emit('activate')
         return NSTextField.becomeFirstResponder(self)
 
+    def textDidChange_(self, notification):
+        if wrappermap.wrapper(self).parent_is_scroller:
+            wrappermap.wrapper(self).invalidate_size_request()
+
+class MiroMultilineTextField(MiroTextField):
+    def textView_doCommandBySelector_(self, field_editor, selector):
+        retval = False
+        if selector == 'insertNewline:':
+            field_editor.insertNewlineIgnoringFieldEditor_(None)
+            retval = True
+        return retval
+
 class TextEntry(BaseTextEntry):
     def make_view(self):
         return MiroTextField.alloc().init()
@@ -149,6 +167,10 @@ class SearchTextEntry(BaseTextEntry):
     def make_view(self):
         return MiroSearchTextField.alloc().init()
 
+class MultilineTextEntry(TextEntry):
+    def make_view(self):
+        view =  MiroMultilineTextField.alloc().init()
+        return view
 
 class MiroButton(NSButton):
     

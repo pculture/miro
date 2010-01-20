@@ -122,7 +122,7 @@ class MultilineTextEntry(Widget):
         pango_context = self._widget.get_pango_context()
         metrics = pango_context.get_metrics(self._widget.style.font_desc)
         return pango.PIXELS(metrics.get_descent()) + ypad
-        
+
 class Checkbox(Widget, BinBaselineCalculator):
     """Widget that the user can toggle on or off."""
 
