@@ -382,7 +382,7 @@ class VideoDetailsWidget(Background):
         menu.append(sep)
 
         child = gtk.MenuItem(_("Select a Subtitles file..."))
-        child.set_active(True)
+        child.set_sensitive(True)
         child.connect('activate', self.handle_select_subtitle_file)
         child.show()
         menu.append(child)
