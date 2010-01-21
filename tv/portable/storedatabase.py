@@ -147,6 +147,7 @@ class LiveStorage:
         self._object_schemas = object_schemas
         self._schema_version = schema_version
         self._schema_map = {}
+        self._schema_column_map = {}
         self._all_schemas = []
         self._object_map = {} # maps object id -> DDBObjects in memory
         self._ids_loaded = set()
@@ -158,6 +159,8 @@ class LiveStorage:
                 self._schema_map[klass] = oschema
                 for field_name, schema_item in oschema.fields:
                     klass.track_attribute_changes(field_name)
+            for name, schema_item in oschema.fields:
+                self._schema_column_map[oschema, name] = schema_item
         self._converter = SQLiteConverter()
 
         if not db_existed:
@@ -549,10 +552,17 @@ class LiveStorage:
     def select(self, klass, columns, where, values):
         schema = self._schema_map[klass]
         sql = StringIO()
-        sql.write('SELECT %s ' % columns)
+        sql.write('SELECT %s ' % ', '.join(columns))
         sql.write(self._get_query_bottom(schema.table_name, where, None, None,
             None))
-        return self._execute(sql.getvalue(), values)
+        schema_items = [self._schema_column_map[schema, c] for c in columns]
+        for row in self._execute(sql.getvalue(), values):
+            converted_row = []
+            for name, schema_item, value in itertools.izip(columns,
+                    schema_items, row):
+                converted_row.append(self._converter.from_sql(schema, name,
+                    schema_item, value))
+            yield converted_row
 
     def on_event_finished(self, eventloop, success):
         self.finish_transaction(commit=success)

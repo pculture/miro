@@ -2192,7 +2192,7 @@ class DirectoryScannerImplBase(FeedImpl):
         # Using a select statement is good here because we don't want to
         # construct all the Item objects if we don't need to.
         known_files = set(os.path.normcase(row[0]) for row in
-                models.Item.select('filename',
+                models.Item.select(['filename'],
                     'filename IS NOT NULL AND '
                     '(feed_id is NULL or feed_id != ?)', (self.ufeed_id,)))
         self._add_known_files(known_files)
