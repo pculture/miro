@@ -1011,11 +1011,16 @@ class TableView(Widget):
             if drop_action:
                 self.set_drag_dest_row(pos_info[2], pos_info[3])
                 break
+        else:
+            self.unset_drag_dest_row()
         drag_context.drag_status(drop_action, timestamp)
         return True
 
     def set_drag_dest_row(self, path, position):
         self._widget.set_drag_dest_row(path, position)
+
+    def unset_drag_dest_row(self):
+        self._widget.unset_drag_dest_row()
 
     def on_drag_leave(self, treeview, drag_context, timestamp):
         treeview.unset_drag_dest_row()
