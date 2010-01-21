@@ -321,6 +321,8 @@ class TabListDropHandler(object):
                 ((position == -1 and is_folder) or parent is not None)):
             # Don't allow folders to be dropped in other folders
             return widgetset.DRAG_ACTION_NONE
+        elif type not in self.item_types + self.folder_types:
+            return widgetset.DRAG_ACTION_NONE
         return widgetset.DRAG_ACTION_MOVE
 
     def accept_drop(self, table_view, model, type, source_actions, parent,

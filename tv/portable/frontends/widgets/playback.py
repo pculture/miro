@@ -576,6 +576,9 @@ def handle_key_press(key, mods):
             elif key in ('<', ','): # OS X sends ',', GTK sends '<'
                 app.widgetapp.on_previous_clicked()
                 return True
+        if set([menus.MOD]) == mods and key == menus.SPACE:
+            app.playback_manager.play_pause()
+            return True
         return False
 
     if key == menus.ESCAPE:
