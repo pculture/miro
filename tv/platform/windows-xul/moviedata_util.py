@@ -43,6 +43,10 @@ from time import sleep, time
 SEM_FAILCRITICALERRORS = 0x0001
 SEM_NOGPFAULTERRORBOX = 0x0002
 
+VLC_PLAYING = 3
+VLC_ENDED = 6
+VLC_ERROR = 7
+
 # load the DLL
 libvlc = ctypes.cdll.libvlc
 # set up the function signatures
@@ -91,9 +95,9 @@ def wait_for_play(media_player):
         state = libvlc.libvlc_media_player_get_state(media_player, 
                                                      byref(exception))
         check_exception()
-        if state in (3, 6, 7):
+        if state in (VLC_PLAYING, VLC_ENDED, VLC_ERROR):
             # Break on the PLAYING, ENDED or ERROR states
-            break
+            return state
         else:
             sleep(0.1)
 
@@ -124,9 +128,6 @@ def make_snapshot(video_path, thumbnail_path):
 
     if isinstance(video_path, unicode):
         video_path = video_path.encode("utf-8")
-    video_path = urllib.quote(video_path)
-
-    mrl = 'file:///%s' % video_path
 
     vlc = init_vlc( "vlc", "--noaudio", 
             '--vout', 'dummy', 
@@ -138,7 +139,7 @@ def make_snapshot(video_path, thumbnail_path):
                                                   byref(exception))
     check_exception()
     media = libvlc.libvlc_media_new(vlc, 
-                                    ctypes.c_char_p(mrl),
+                                    ctypes.c_char_p(video_path),
                                     byref(exception))
     check_exception()
 
@@ -150,7 +151,11 @@ def make_snapshot(video_path, thumbnail_path):
                                     byref(exception))
     check_exception()
 
-    wait_for_play(media_player)
+    state = wait_for_play(media_player)
+    if state == VLC_ERROR:
+        print "Miro-Try-Again: True"
+        return
+    
     length = libvlc.libvlc_media_player_get_length(media_player, 
                                                    byref(exception))
     check_exception()
@@ -210,7 +215,7 @@ if __name__ == '__main__':
     try:
         # disable annoying windows popup
         ctypes.windll.kernel32.SetErrorMode(SEM_NOGPFAULTERRORBOX | 
-                SEM_FAILCRITICALERRORS)
+                                            SEM_FAILCRITICALERRORS)
         make_snapshot(sys.argv[1], sys.argv[2])
     except Exception, e:
         import traceback

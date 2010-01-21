@@ -54,6 +54,7 @@ SLEEP_DELAY = 0.1
 DURATION_RE = re.compile("Miro-Movie-Data-Length: (\d+)")
 TYPE_RE = re.compile("Miro-Movie-Data-Type: (audio|video|other)")
 THUMBNAIL_SUCCESS_RE = re.compile("Miro-Movie-Data-Thumbnail: Success")
+TRY_AGAIN_RE = re.compile("Miro-Try-Again: True")
 
 def thumbnail_directory():
     dir_ = os.path.join(config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
@@ -133,6 +134,12 @@ class MovieDataUpdater(signals.SignalEmitter):
                 screenshot = None
                 command_line, env = mdi.program_info
                 stdout = self.run_movie_data_program(command_line, env)
+
+                # if the moviedata program tells us to try again, we move
+                # along without updating the item at all
+                if TRY_AGAIN_RE.search(stdout):
+                    continue
+
                 if duration == -1:
                     duration = self.parse_duration(stdout)
                 mediatype = self.parse_type(stdout)
