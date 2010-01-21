@@ -103,7 +103,10 @@ def _youtube_get_first_successful(info, current_url, urls, callback):
     status = info["status"]
 
     if status == 200:
-        callback(current_url)
+        if info.get("content-type"):
+            callback(current_url, unicode(info["content-type"]))
+        else:
+            callback(current_url)
         return
 
     if len(urls) == 0:
