@@ -424,7 +424,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def unique_new_video_view(cls):
         return cls.make_view("NOT item.seen AND "
                 "item.file_type='video' AND "
-                "(is_file_item OR "
+                "((is_file_item AND NOT deleted) OR "
                 "(rd.main_item_id=item.id AND "
                 "rd.state in ('finished', 'uploading', 'uploading-paused')))",
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
@@ -433,7 +433,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def unique_new_audio_view(cls):
         return cls.make_view("NOT item.seen AND "
                 "item.file_type='audio' AND "
-                "(is_file_item OR "
+                "((is_file_item AND NOT deleted) OR "
                 "(rd.main_item_id=item.id AND "
                 "rd.state in ('finished', 'uploading', 'uploading-paused')))",
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
