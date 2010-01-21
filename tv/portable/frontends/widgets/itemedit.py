@@ -36,7 +36,17 @@ from miro.frontends.widgets.dialogs import MainDialog
 from miro.frontends.widgets import dialogwidgets
 from miro.dialogs import BUTTON_CANCEL, BUTTON_APPLY
 
+import textwrap
 import logging
+
+def build_info(label, value):
+    """Takes a label and a value and generates two labels.
+    """
+    lab = widgetset.Label(label)
+    lab2 = widgetset.Label(value)
+    lab2.set_wrap(True)
+
+    return lab, lab2, lambda x: x
 
 def build_text_entry(key, label, value):
     """Takes a key, label, and value and generates a label, text entry
@@ -72,6 +82,11 @@ def build_multiline_text_entry(key, label, value):
     entry = widgetset.MultilineTextEntry()
     entry.set_text(value)
     scroller = widgetset.Scroller(True, True)
+    # FIXME: this is a hack to ensure that the text entry gets enough size on
+    # OS X.  I think a better way to do this would be to give the entire Table
+    # a size, however that's currently busted on OS X, so this will have to
+    # do.
+    scroller.set_size_request(400, 100)
     scroller.add(entry)
     def handler(response_dict):
         if entry.get_text() != value:
@@ -119,8 +134,7 @@ def _run_dialog(iteminfo):
 
     Returns a dict of new name -> value.
     """
-    window = MainDialog(_('Edit Item'),
-                        _('Edit the metadata of this item.'))
+    window = MainDialog(_('Edit Item'), "")
     try:
         try:
             window.add_button(BUTTON_APPLY.text)
@@ -139,11 +153,17 @@ def _run_dialog(iteminfo):
                  (_("audio"), u"audio"),
                  (_("other"), u"other")]))
 
+            # we do this to force wrapping at 50 characters
+            sections.append(build_info(
+                _("Path:"), "\n".join(textwrap.wrap(iteminfo.video_path, 50))))
+
             grid = dialogwidgets.ControlGrid()
             
             for lab, sec, handler in sections:
-                grid.pack(lab, grid.ALIGN_LEFT)
-                grid.pack(sec)
+                vbox = widgetset.VBox()
+                vbox.pack_start(lab, True, padding=2)
+                grid.pack(vbox, grid.ALIGN_LEFT)
+                grid.pack(sec, grid.ALIGN_LEFT)
                 grid.end_line(spacing=5)
 
             window.set_extra_widget(grid.make_table())

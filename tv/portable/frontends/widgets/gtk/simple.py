@@ -159,6 +159,10 @@ class Scroller(Bin):
             self._widget.add(self.child._widget)
         else:
             self._widget.add_with_viewport(self.child._widget)
+        if isinstance(self.child._widget, gtk.TextView):
+            self._widget.set_shadow_type(gtk.SHADOW_IN)
+        else:
+            self._widget.set_shadow_type(gtk.SHADOW_NONE)
 
 class SolidBackground(Bin):
     def __init__(self, color=None):
