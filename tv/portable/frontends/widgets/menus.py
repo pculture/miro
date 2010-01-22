@@ -301,7 +301,9 @@ def get_menu():
                              groups=["PlayingVideo"]),
                     Menu(_("S_ubtitles"), "SubtitlesMenu", [
                             MenuItem(_("None Available"), "NoneAvailable",
-                                     groups=["NeverEnabled"])
+                                     groups=["NeverEnabled"]),
+                            MenuItem(_("Select a Subtitles File..."),
+                                     "SubtitlesSelect")
                             ]),
                     ]),
 
@@ -485,6 +487,10 @@ def on_fullscreen():
 @action_handler("ToggleDetach")
 def on_toggle_detach():
     app.widgetapp.on_toggle_detach_clicked()
+
+@action_handler("SubtitlesSelect")
+def on_subtitles_select():
+    app.playback_manager.open_subtitle_file()
 
 # Help menu
 @action_handler("About")

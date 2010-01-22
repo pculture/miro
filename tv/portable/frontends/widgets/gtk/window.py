@@ -174,7 +174,7 @@ class WindowBase(signals.SignalEmitter):
         outstream.write('</menu>')
 
     def _add_menuitem(self, menu, outstream):
-        if menu.action != "NoneAvailable":
+        if menu.action not in ("NoneAvailable", "SubtitlesSelect"):
             outstream.write('<menuitem action="%s" />' % menu.action)
 
     def _add_separator(self, menu, outstream):
@@ -267,8 +267,6 @@ class WindowBase(signals.SignalEmitter):
         self.make_check_action("SubtitlesDisabled", _("Disable Subtitles"),
                                ["AlwaysOn"], self.on_subtitles_change, -1)
         radio_group = self.action_groups["AlwaysOn"].get_action("SubtitlesDisabled")
-        self.make_check_action("SubtitlesSelect", _("Select a Subtitles file..."),
-                               ["AlwaysOn"], self.on_subtitles_select, -2)
         for i in range(99):
             self.make_check_action("SubtitleTrack%d" % i, "", ["AlwaysOn"],
                                    self.on_subtitles_change, i, radio_group)
@@ -279,7 +277,6 @@ class WindowBase(signals.SignalEmitter):
     def on_subtitles_select(self, action, track_index):
         action_group = self.action_groups["AlwaysOn"]
         action_group.get_action("SubtitlesDisabled").current_value = -2
-
         app.playback_manager.open_subtitle_file()
 
     def on_subtitles_change(self, action, track_index):
@@ -507,13 +504,12 @@ class MainWindow(Window):
 
         s = '''<ui>
 <menubar name="MiroMenu">
-   <menu action="PlaybackMenu">
-      <menu action="SubtitlesMenu">
-         <menuitem action="NoneAvailable"/>
-         <separator/>
-         <menuitem action="SubtitlesSelect"/>
-      </menu>
-   </menu>
+<menu action="PlaybackMenu">
+<menu action="SubtitlesMenu">
+<menuitem action="NoneAvailable"/>
+<menuitem action="SubtitlesSelect"/>
+</menu>
+</menu>
 </menubar>
 </ui>'''
         self._merge_id = self.ui_manager.add_ui_from_string(s)
