@@ -578,6 +578,15 @@ def handle_key_press(key, mods):
             elif key in ('<', ','): # OS X sends ',', GTK sends '<'
                 app.widgetapp.on_previous_clicked()
                 return True
+
+        if set([menus.SHIFT]) == mods:
+            if key == menus.RIGHT_ARROW:
+                app.widgetapp.on_skip_forward()
+                return True
+            elif key == menus.LEFT_ARROW:
+                app.widgetapp.on_skip_backward()
+                return True
+
         if set([menus.MOD]) == mods and key == menus.SPACE:
             app.playback_manager.play_pause()
             return True
