@@ -584,10 +584,6 @@ def get_first_video_enclosure(entry):
     enclosures.sort(cmp_enclosures)
     return enclosures[0]
 
-def quoteattr(orig):
-    orig = unicode(orig)
-    return orig.replace(u'"', u'&quot;')
-
 
 _default_encoding = "iso-8859-1" # aka Latin-1
 _utf8cache = {}
