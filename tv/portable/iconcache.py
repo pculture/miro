@@ -113,7 +113,7 @@ class IconCache(DDBObject):
 
     @classmethod
     def all_filenames(cls):
-        return [r[0] for r in cls.select("filename", 'filename IS NOT NULL')]
+        return [r[0] for r in cls.select(["filename"], 'filename IS NOT NULL')]
 
     def icon_changed(self, needs_save=True):
         self.signal_change(needs_save=needs_save)

@@ -228,16 +228,17 @@ class ViewTracker(signals.SignalEmitter):
     def check_all_objects(self):
         new_ids = set(app.db.query_ids(self.klass, self.where,
             self.values, joins=self.joins))
-        for id_ in new_ids.difference(self.current_ids):
+        old_ids = self.current_ids
+        self.current_ids = new_ids
+        for id_ in new_ids.difference(old_ids):
             self.emit('added', app.db.get_obj_by_id(id_))
-        for id_ in self.current_ids.difference(new_ids):
+        for id_ in old_ids.difference(new_ids):
             self.emit('removed', app.db.get_obj_by_id(id_))
-        for id_ in self.current_ids.intersection(new_ids):
+        for id_ in old_ids.intersection(new_ids):
             # XXX this hits all the IDs, but there doesn't seem to be
             # a way to check if the objects have actually been
             # changed.  luckily, this isn't called very often.
             self.emit('changed', app.db.get_obj_by_id(id_))
-        self.current_ids = new_ids
 
     def __len__(self):
         return len(self.current_ids)
