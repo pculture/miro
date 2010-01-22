@@ -37,8 +37,9 @@ pygst.require('0.10')
 import gst
 import gst.interfaces
 import gtk
-GST_PLAY_FLAG_TEXT          = (1 << 2)
+
 # not sure why this isn't in the gst module, but it's easy to define
+GST_PLAY_FLAG_TEXT          = (1 << 2)
 
 from miro import app
 from miro import config
@@ -122,37 +123,50 @@ class Renderer:
         self.rate = 1.0
         self.select_callbacks = None
 
-        self.playbin = gst.element_factory_make("playbin2", "player")
-        self.bus = self.playbin.get_bus()
-        self.bus.add_signal_watch()
-        self.bus.enable_sync_message_emission()
-
-        self.bus.connect("message::eos", self.on_bus_message)
-        self.bus.connect("message::state-changed", self.on_bus_message)
-        self.bus.connect("message::error", self.on_bus_message)
-
         audiosink = config.get(options.GSTREAMER_AUDIOSINK)
         try:
-            self.audiosink = gst.element_factory_make(audiosink, "sink")
+            self.audiosink = gst.element_factory_make(audiosink, "audiosink")
 
         except gst.ElementNotFoundError:
             logging.info("gstreamerrenderer: ElementNotFoundError '%s'",
                          audiosink)
             audiosink = "autoaudiosink"
-            self.audiosink = gst.element_factory_make(audiosink, "sink")
+            self.audiosink = gst.element_factory_make(audiosink, "audiosink")
 
         except Exception, e:
             logging.info("gstreamerrenderer: Exception thrown '%s'" % e)
             logging.exception("sink exception")
             audiosink = "alsasink"
-            self.audiosink = gst.element_factory_make(audiosink, "sink")
+            self.audiosink = gst.element_factory_make(audiosink, "audiosink")
 
         logging.info("GStreamer audiosink: %s", audiosink)
+
+        self.playbin = None
+        self.bus = None
+        self.watch_ids = []
+
+    def build_playbin(self):
+        self.playbin = gst.element_factory_make("playbin2", "player")
+        self.bus = self.playbin.get_bus()
+        self.bus.add_signal_watch()
+        self.bus.enable_sync_message_emission()
+
+        self.watch_ids.append(self.bus.connect("message", self.on_bus_message))
         self.playbin.set_property("audio-sink", self.audiosink)
+
+    def destroy_playbin(self):
+        if self.playbin is None:
+            return
+        for watch_id in self.watch_ids:
+            self.bus.disconnect(watch_id)
+        self.watch_ids = []
+        self.bus = None
+        self.playbin = None
 
     def on_bus_message(self, bus, message):
         """receives message posted on the GstBus"""
         if message.type == gst.MESSAGE_ERROR:
+            err, debug = message.parse_error()
             if self.select_callbacks is not None:
                 self.select_callbacks[1]()
                 self.select_callbacks = None
@@ -169,11 +183,18 @@ class Renderer:
         elif message.type == gst.MESSAGE_EOS:
             app.playback_manager.on_movie_finished()
 
-    def select_file(self, filename, callback, errback):
+    def select_file(self, filename, callback, errback, sub_filename=""):
         """starts playing the specified file"""
         self.stop()
+        self.destroy_playbin()
+        self.build_playbin()
+
         self.select_callbacks = (callback, errback)
         self.playbin.set_property("uri", "file://%s" % filename)
+        if sub_filename:
+            self.playbin.set_property("suburi", "file://%s" % sub_filename)
+        else:
+            self.playbin.set_property("suburi", None)
         self.playbin.set_state(gst.STATE_PAUSED)
 
     def finish_select_file(self):
@@ -201,19 +222,20 @@ class Renderer:
         if not result:
             logging.error("seek failed")
 
-    def _on_state_changed(self, bus, message, seconds):
+    def _set_current_time_actual(self, bus, message, seconds):
         if self.playbin.get_state(0)[1] in (gst.STATE_PAUSED,
                                             gst.STATE_PLAYING):
             self._seek(seconds)
-            self.bus.disconnect(self._on_state_changed_id)
+            self.bus.disconnect(self._set_current_time_actual_id)
 
     def set_current_time(self, seconds):
         # only want to kick these off when PAUSED or PLAYING
         if self.playbin.get_state(0)[1] not in (gst.STATE_PAUSED,
                                                 gst.STATE_PLAYING):
-            self._on_state_changed_id = self.bus.connect("message::state-changed",
-                                                         self._on_state_changed,
-                                                         seconds)
+            self._set_current_time_actual_id = self.bus.connect(
+                "message::state-changed",
+                self._set_current_time_actual,
+                seconds)
             return
 
         self._seek(seconds)
@@ -227,7 +249,9 @@ class Renderer:
             return None
 
     def reset(self):
-        self.playbin.set_state(gst.STATE_NULL)
+        if self.playbin:
+            self.playbin.set_state(gst.STATE_NULL)
+            self.destroy_playbin()
 
     def set_volume(self, level):
         self.playbin.set_property("volume", level)
@@ -239,7 +263,9 @@ class Renderer:
         self.playbin.set_state(gst.STATE_PAUSED)
 
     def stop(self):
-        self.playbin.set_state(gst.STATE_NULL)
+        if self.playbin:
+            self.playbin.set_state(gst.STATE_NULL)
+            self.destroy_playbin()
 
     def get_rate(self):
         return 256
@@ -256,7 +282,7 @@ class Renderer:
                               gst.SEEK_TYPE_SET,
                               position + (rate * gst.SECOND),
                               gst.SEEK_TYPE_SET,
-                -1)
+                              -1)
         else:
             self.playbin.seek(rate,
                               gst.FORMAT_TIME,
@@ -266,31 +292,42 @@ class Renderer:
                               gst.SEEK_TYPE_SET,
                               position + (rate * gst.SECOND))
 
+class AudioRenderer(Renderer):
+    pass
+
 class VideoRenderer(Renderer):
     def __init__(self):
         Renderer.__init__(self)
-        logging.info("GStreamer version: %s", gst.version_string())
-
-        self.bus.connect('sync-message::element', self.on_sync_message)
 
         videosink = config.get(options.GSTREAMER_IMAGESINK)
         try:
-            self.sink = gst.element_factory_make(videosink, "sink")
+            self.videosink = gst.element_factory_make(videosink, "videosink")
 
         except gst.ElementNotFoundError:
             logging.info("gstreamerrenderer: ElementNotFoundError '%s'",
                          videosink)
-            videosink = "ximagesink"
-            self.sink = gst.element_factory_make(videosink, "sink")
+            videosink = "xvimagesink"
+            self.videosink = gst.element_factory_make(videosink, "videosink")
 
         except Exception, e:
             logging.info("gstreamerrenderer: Exception thrown '%s'" % e)
             logging.exception("sink exception")
             videosink = "ximagesink"
-            self.sink = gst.element_factory_make(videosink, "sink")
+            self.videosink = gst.element_factory_make(videosink, "videosink")
 
         logging.info("GStreamer videosink: %s", videosink)
-        self.playbin.set_property("video-sink", self.sink)
+        self.textsink = gst.element_factory_make("textoverlay", "textsink")
+
+    def build_playbin(self):
+        Renderer.build_playbin(self)
+        self.watch_ids.append(self.bus.connect('sync-message::element', self.on_sync_message))
+        self.playbin.set_property("video-sink", self.videosink)
+        self.playbin.set_property("text-sink", self.textsink)
+
+    def select_file(self, filename, callback, errback, sub_filename=""):
+        Renderer.select_file(self, filename, callback, errback, sub_filename)
+        if sub_filename != "":
+            self.pick_subtitle_track = 0
 
     def on_sync_message(self, bus, message):
         if message.structure is None:
@@ -309,11 +346,12 @@ class VideoRenderer(Renderer):
         self.gc.foreground = gtk.gdk.color_parse("black")
 
     def on_destroy(self, widget):
-        self.playbin.set_state(gst.STATE_NULL)
+        if self.playbin:
+            self.playbin.set_state(gst.STATE_NULL)
 
     def on_expose(self, widget, event):
-        if self.sink and hasattr(self.sink, "expose"):
-            self.sink.expose()
+        if self.videosink and hasattr(self.videosink, "expose"):
+            self.videosink.expose()
         else:
             # if we had an image to show, we could do so here...  that image
             # would show for audio-only items.
@@ -333,14 +371,19 @@ class VideoRenderer(Renderer):
         logging.debug("haven't implemented exit_fullscreen method yet!")
 
     def finish_select_file(self):
-        if config.get(prefs.ENABLE_SUBTITLES):
-            default_track = self.get_enabled_subtitle_track()
-            if default_track is None:
-                tracks = self.get_subtitle_tracks()
-                if len(tracks) > 0:
-                    self.enable_subtitle_track(tracks[0])
+        if hasattr(self, "pick_subtitle_track"):
+            self.enable_subtitle_track(self.pick_subtitle_track)
+            del self.__dict__["pick_subtitle_track"]
+
         else:
-            self.disable_subtitles()
+            if config.get(prefs.ENABLE_SUBTITLES):
+                default_track = self.get_enabled_subtitle_track()
+                if default_track is None:
+                    tracks = self.get_subtitle_tracks()
+                    if len(tracks) > 0:
+                        self.enable_subtitle_track(tracks[0])
+            else:
+                self.disable_subtitles()
 
     def _get_subtitle_track_name(self, index):
         """Returns the language for the track at the specified
@@ -360,8 +403,11 @@ class VideoRenderer(Renderer):
         """Returns a 2-tuple of (index, language) for available
         tracks.
         """
-        tracks = range(self.playbin.get_property("n-text"))
-        tracks = [(i, self._get_subtitle_track_name(i)) for i in tracks]
+        if self.playbin:
+            tracks = range(self.playbin.get_property("n-text"))
+            tracks = [(i, self._get_subtitle_track_name(i)) for i in tracks]
+        else:
+            tracks = []
         return tracks
 
     def get_enabled_subtitle_track(self):
@@ -376,11 +422,16 @@ class VideoRenderer(Renderer):
         flags = self.playbin.get_property('flags')
         self.playbin.set_property('flags', flags & ~GST_PLAY_FLAG_TEXT)
 
-    def select_subtitle_file(self, path):
-        pass
-
-class AudioRenderer(Renderer):
-    pass
+    def select_subtitle_file(self, iteminfo, sub_path):
+        total_time = self.get_duration()
+        def handle_ok():
+            app.playback_manager.emit('will-play', total_time)
+            self.play()
+            app.playback_manager.emit('did-start-playing')
+        def handle_err():
+            app.playback_manager.stop()
+        app.playback_manager.emit('will-pause')
+        self.select_file(iteminfo.video_path, handle_ok, handle_err, sub_path)
 
 def movie_data_program_info(movie_path, thumbnail_path):
     extractor_path = os.path.join(os.path.split(__file__)[0],
