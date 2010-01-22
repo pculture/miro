@@ -628,3 +628,8 @@ class VideoPlayer(player.Player, VBox):
         self._widget.disconnect(self.motion_handler)
         self.cancel_hide_controls()
         _window().window.set_cursor(None)
+
+    def select_subtitle_file(self, sub_path):
+        app.video_renderer.select_subtitle_file(
+            app.playback_manager.get_playing_item(), sub_path)
+        

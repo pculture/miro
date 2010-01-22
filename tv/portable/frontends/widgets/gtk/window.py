@@ -267,12 +267,20 @@ class WindowBase(signals.SignalEmitter):
         self.make_check_action("SubtitlesDisabled", _("Disable Subtitles"),
                                ["AlwaysOn"], self.on_subtitles_change, -1)
         radio_group = self.action_groups["AlwaysOn"].get_action("SubtitlesDisabled")
+        self.make_check_action("SubtitlesSelect", _("Select a Subtitles file..."),
+                               ["AlwaysOn"], self.on_subtitles_select, -2)
         for i in range(99):
             self.make_check_action("SubtitleTrack%d" % i, "", ["AlwaysOn"],
                                    self.on_subtitles_change, i, radio_group)
 
         for action_group in self.action_groups.values():
             self.ui_manager.insert_action_group(action_group, -1)
+
+    def on_subtitles_select(self, action, track_index):
+        action_group = self.action_groups["AlwaysOn"]
+        action_group.get_action("SubtitlesDisabled").current_value = -2
+
+        app.playback_manager.open_subtitle_file()
 
     def on_subtitles_change(self, action, track_index):
         action_group = self.action_groups["AlwaysOn"]
@@ -477,6 +485,7 @@ class MainWindow(Window):
             outstream.write('<menuitem action="SubtitleTrack%d"/>' % i)
         outstream.write('''<separator/>
          <menuitem action="SubtitlesDisabled"/>
+         <menuitem action="SubtitlesSelect"/>
       </menu>
    </menu>
 </menubar>
@@ -501,6 +510,8 @@ class MainWindow(Window):
    <menu action="PlaybackMenu">
       <menu action="SubtitlesMenu">
          <menuitem action="NoneAvailable"/>
+         <separator/>
+         <menuitem action="SubtitlesSelect"/>
       </menu>
    </menu>
 </menubar>

@@ -535,6 +535,8 @@ class PlaybackManager (signals.SignalEmitter):
         self.schedule_update()
 
     def open_subtitle_file(self):
+        if not self.is_playing:
+            return
         title = _('Open Subtitles File...')
         filters = [(_('Subtitle files'), ['srt', 'sub', 'ass', 'ssa'])]
         filename = dialogs.ask_for_open_pathname(title, filters=filters, select_multiple=False)
