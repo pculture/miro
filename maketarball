@@ -70,8 +70,6 @@ cd ..
 cd ..
 
 # remove files that shouldn't be distributed
-rm tv/platform/windows-xul/AskInstallChecker.exe
-rm tv/platform/windows-xul/U3Action.exe
 rm tv/platform/windows-xul/askBarSetup-4.1.0.2.exe
 rm tv/platform/windows-xul/ask_toolbar.bmp
 
