@@ -122,7 +122,7 @@ def _first_time_handler(callback):
     using the ``install_first_time_handler`` function.
     """
     logging.error("First time -- no handler installed.")
-    eventloop.addUrgentCallback(callback, "continuing startup")
+    eventloop.addUrgentCall(callback, "continuing startup")
 
 def install_first_time_handler(callback):
     global _first_time_handler

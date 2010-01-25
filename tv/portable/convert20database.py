@@ -181,7 +181,8 @@ for schema in schema_mod.objectSchemas:
     _class_to_schema[schema.classString] = schema
 
 class SavableObject:
-    """Holdover from 2.0 databases.
+    """Holdover from 2.0 databases.  We need this around to be able
+    to unpickle it.
 
     Member variables:
 
@@ -201,27 +202,6 @@ class SavableObject:
     # In both cases "storedatabase" works, because we try to unpickle it from
     # inside the miro directory.
     __module__ = 'storedatabase'
-
-    def __init__(self, classString):
-        self.classString = classString
-        self.savedData = {}
-
-    def __str__(self):
-        return '<SavableObject: %s>' % self.classString
-
-
-class SavableObject:
-    """Holdover from previous database versions.  We need this around to be
-    able to unpickle it.
-
-    Member variables:
-
-    classString -- specifies the class this object was converted from.
-    savedData -- dict that stores the data we've saved.
-
-    The SavableObject class is guaranteed to never change.  This means we can
-    always safely unpickle them.
-    """
 
     def __init__(self, classString):
         self.classString = classString

@@ -65,6 +65,8 @@ import shutil
 
 class ViewTracker(object):
     """Handles tracking views for TrackGuides, TrackChannels, TrackPlaylist and TrackItems."""
+    type = None
+    InfoClass = None
 
     def __init__(self):
         self.trackers = []
@@ -98,6 +100,9 @@ class ViewTracker(object):
         if message.added or message.changed or message.removed:
             message.send_to_frontend()
         self.reset_changes()
+
+    def make_changed_message(self, added, changed, removed):
+        raise NotImplementedError()
 
     def _make_new_info(self, obj):
         info = self.InfoClass(obj)
@@ -180,6 +185,9 @@ class TabTracker(ViewTracker):
     def __init__(self):
         ViewTracker.__init__(self)
         self.send_whole_list = False
+
+    def get_tab_order(self):
+        raise NotImplementedError()
 
     def make_changed_message(self, added, changed, removed):
         return messages.TabsChanged(self.type, added, changed, removed)
@@ -270,6 +278,11 @@ class WatchedFolderTracker(ViewTracker):
 
 class ItemTrackerBase(ViewTracker):
     InfoClass = messages.ItemInfo
+
+    def __init__(self):
+        ViewTracker.__init__(self)
+        self.id = None
+        self.view = None
 
     def make_changed_message(self, added, changed, removed):
         return messages.ItemsChanged(self.type, self.id,
@@ -414,6 +427,12 @@ class CountTracker(object):
         self.tracker = self.get_view().make_tracker()
         self.tracker.connect('added', self.on_count_changed)
         self.tracker.connect('removed', self.on_count_changed)
+
+    def get_view(self):
+        raise NotImplementedError()
+
+    def make_message(self, count):
+        raise NotImplementedError()
 
     def on_count_changed(self, tracker, obj):
         self.send_message()

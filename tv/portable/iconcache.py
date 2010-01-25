@@ -83,7 +83,7 @@ class IconCacheUpdater:
 
     @eventloop.as_idle
     def clear_vital(self):
-        self.vital = LinkedList()
+        self.vital = Fifo()
 
     @eventloop.as_idle
     def shutdown(self):

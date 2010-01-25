@@ -70,7 +70,7 @@ class ItemSort(object):
 
         Must be implemented by subclasses.
         """
-        raise NotImplentedError()
+        raise NotImplementedError()
 
     def compare(self, item, other):
         """Compare two items

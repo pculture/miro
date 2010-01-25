@@ -621,15 +621,15 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.signal_change()
 
     def startManualDownload(self):
-        next = None
+        next_ = None
         for item in self.items:
             if item.is_pending_manual_download():
-                if next is None:
-                    next = item
-                elif item.get_pub_date_parsed() > next.get_pub_date_parsed():
-                    next = item
-        if next is not None:
-            next.download(autodl = False)
+                if next_ is None:
+                    next_ = item
+                elif item.get_pub_date_parsed() > next_.get_pub_date_parsed():
+                    next_ = item
+        if next_ is not None:
+            next_.download(autodl=False)
 
     def startAutoDownload(self):
         next = None

@@ -128,7 +128,7 @@ def add_subscription_url(prefix, expected_content_type, url):
                     )
                 _complain_about_subscription_url(text)
             else:
-                subscription.SubscriptionHandler().add_subscriptions(
+                subscription.Subscriber().add_subscriptions(
                     subscription_list)
         else:
             text = _(

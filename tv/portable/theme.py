@@ -135,7 +135,7 @@ class ThemeHistory(DDBObject):
         if isinstance(default, tuple) and isinstance(default[1], list):
             defaultFolder = default
             try:
-                c_folder = folder.Folder.get_by_title(defaultFolder[0])
+                c_folder = folder.ChannelFolder.get_by_title(defaultFolder[0])
             except ObjectNotFoundError:
                 c_folder = folder.ChannelFolder(defaultFolder[0])
                 c_folder.section = section

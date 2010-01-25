@@ -113,6 +113,9 @@ class Packer(object):
         """
         self._layout(context, x, y, width, height)
 
+    def _find_child_at(self, x, y, width, height):
+        raise NotImplementedError()
+
     def get_size(self):
         """Get the minimum size required to hold the Packer.  """
         try:

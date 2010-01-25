@@ -174,7 +174,7 @@ class Menu:
                 mem.remove(action)
 
     def count(self):
-        return len(menuitems)
+        return len(self.menuitems)
 
     def insert(self, index, menuitem):
         self.menuitems.insert(index, menuitem)
@@ -453,7 +453,7 @@ def on_play_pause_video():
     app.widgetapp.on_play_clicked()
 
 @action_handler("StopVideo")
-def on_play_pause_video():
+def on_stop_video():
     app.widgetapp.on_stop_clicked()
 
 @action_handler("NextVideo")

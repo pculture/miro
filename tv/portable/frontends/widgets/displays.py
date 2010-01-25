@@ -152,8 +152,8 @@ class DisplayManager(object):
             if klass.should_display(tab_type, selected_tabs):
                 self.select_display(klass(tab_type, selected_tabs))
                 return
-        raise AssertionError("Can't find display for %s %s" % (tabs,
-            selected_tabs))
+        raise AssertionError(
+            "Can't find display for %s %s" % (tab_type, selected_tabs))
 
     def select_display(self, display):
         """Select a display and clear out the current display stack."""
