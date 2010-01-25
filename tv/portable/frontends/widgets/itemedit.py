@@ -174,7 +174,6 @@ def _run_dialog(iteminfo):
             if response == 0:
                 for lab, sec, handler in sections:
                     handler(response_dict)
-            logging.info("response dict: %r", response_dict)
             return response_dict
 
         except StandardError:
