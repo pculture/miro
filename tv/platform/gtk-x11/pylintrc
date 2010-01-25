@@ -37,7 +37,7 @@ load-plugins=
 
 # Enable all checker(s) except those with the given id(s). This option conflict
 # with the disable-checker option
-#disable-checker=
+disable-checker=imports
 
 # Enable all messages in the listed categories.
 #enable-msg-cat=
@@ -52,7 +52,7 @@ load-plugins=
 # see http://pylint-messages.wikidot.com/all-codes for codes
 # C0111: Missing docstring
 # C0302: Too many lines in module (%s)
-disable-msg=C0302,C0111
+disable-msg=C0302,C0111,R0801
 
 
 [REPORTS]

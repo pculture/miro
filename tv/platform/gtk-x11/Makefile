@@ -43,5 +43,8 @@ test: build
 	   $(bindir)/miro --unittest
 
 pylint: build
+	# remove .so files that pylint flips out on
+	find dist -name "*.so" | xargs rm
+	rm -rf dist/usr/lib/python2.6/site-packages/miro/test
 	cd dist/$(prefix)/lib/python$(python_version)/site-packages && \
 	   pylint --rcfile ../../../../../pylintrc miro > ../../../../../pylint.output 2>&1
