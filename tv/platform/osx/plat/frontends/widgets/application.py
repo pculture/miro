@@ -94,6 +94,7 @@ class OSXApplication(Application):
         app.playback_manager.connect('did-start-playing', osxmenus.on_playback_change)
         app.playback_manager.connect('did-stop', osxmenus.on_playback_change)
         quicktime.register_components()
+        quicktime.warm_up()
 
     # This callback should only be called once, after startup is done.
     # (see superclass implementation)
