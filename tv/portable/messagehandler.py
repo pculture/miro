@@ -281,8 +281,6 @@ class ItemTrackerBase(ViewTracker):
 
     def __init__(self):
         ViewTracker.__init__(self)
-        self.id = None
-        self.view = None
 
     def make_changed_message(self, added, changed, removed):
         return messages.ItemsChanged(self.type, self.id,
