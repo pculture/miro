@@ -669,7 +669,6 @@ class Scroller(Bin):
         if self.child is not None:
             child_width, child_height = self.child.get_size_request()
             child_width = max(child_width, self.view.contentView().frame().size.width)
-            child_height = max(child_height, self.view.contentView().frame().size.height)
             frame = NSRect(NSPoint(0,0), NSSize(child_width, child_height))
             if isinstance(self.child, tableview.TableView) and self.child.is_showing_headers():
                 # Hack to allow the content of a table view to scroll, but not
