@@ -51,6 +51,7 @@ from miro.plat.utils import set_properties
 from miro.plat.config import gconf_lock
 from miro.frontends.widgets.gtk import trayicon
 from miro.plat import resources
+from miro.plat.frontends.widgets import mediakeys
 
 from miro.frontends.widgets.gtk.widgetset import Rect
 
@@ -112,6 +113,7 @@ class GtkX11Application(Application):
         langs = [(l, os.environ.get(l)) for l in langs if os.environ.get(l)]
         logging.info("Language:          %s", langs)
         renderers.init_renderer()
+        self.mediakeyhandler = mediakeys.get_media_key_handler()
         gtk.main()
         app.controller.on_shutdown()
 
