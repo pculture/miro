@@ -77,8 +77,6 @@ class OverlayPalette (NSWindowController):
     fsButton            = IBOutlet('fsButton')
     popInOutButton      = IBOutlet('popInOutButton')
     popInOutLabel       = IBOutlet('popInOutLabel')
-    subtitlesButton     = IBOutlet('subtitlesButton')
-    subtitlesLabel      = IBOutlet('subtitlesLabel')
     
     playbackControls    = IBOutlet('playbackControls')
     playPauseButton     = IBOutlet('playPauseButton')
@@ -145,9 +143,6 @@ class OverlayPalette (NSWindowController):
         self.volumeSlider.sliderWasClicked = self.volumeSliderWasClicked
         self.volumeSlider.sliderWasDragged = self.volumeSliderWasDragged
         self.volumeSlider.setShowCursor_(True)
-        
-        self.subtitlesButton.setTarget_(self)
-        self.subtitlesButton.setAction_('showSubtitlesMenu:')
 
     def setup(self, item_info, renderer, video_window):
         from miro.frontends.widgets import widgetutil
@@ -158,10 +153,6 @@ class OverlayPalette (NSWindowController):
             self.feedLabel.setStringValue_(widgetutil.get_feed_info(item_info.feed_id).name)
         except:
             self.feedLabel.setStringValue_("")
-        subtitle_tracks = renderer.get_subtitle_tracks()
-        has_subtitles = (subtitle_tracks is not None and len(subtitle_tracks) > 0)
-        self.subtitlesButton.setHidden_(not has_subtitles)
-        self.subtitlesLabel.setHidden_(not has_subtitles)
         self.keepButton.setEnabled_(item_info.can_be_saved)
         self.shareButton.setEnabled_(item_info.has_sharable_url)
         self.adjustContent(video_window, False)
