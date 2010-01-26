@@ -43,7 +43,8 @@ class PlaylistItemMap(database.DDBObject):
     def setup_new(self, playlist_id, item_id):
         self.playlist_id = playlist_id
         self.item_id = item_id
-        rows = self.select(['MAX(position+1)'], 'playlist_id=?', (playlist_id,))
+        rows = self.select(['MAX(position+1)'], 'playlist_id=?',
+                (playlist_id,), convert=False)
         self.position = rows[0][0]
         if self.position is None:
             self.position = 0
