@@ -72,6 +72,61 @@ def register_components():
 
 ###############################################################################
 
+class WarmupProgressHandler(NSObject):
+    def init(self):
+        self = super(WarmupProgressHandler, self).init()
+        self.complete = False
+        return self
+    def loadStateChanged_(self, notification):
+        self.handleLoadStateForMovie_(notification.object())
+    def handleInitialLoadStateForMovie_(self, movie):
+        load_state = movie.attributeForKey_(QTMovieLoadStateAttribute).longValue()
+        if load_state < QTMovieLoadStateComplete:
+            NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
+                warmup_handler, 
+                'loadStateChanged:', 
+                QTMovieLoadStateDidChangeNotification, 
+                warmup_movie)
+        else:
+            self.handleLoadStateForMovie_(movie)
+    def handleLoadStateForMovie_(self, movie):
+        load_state = movie.attributeForKey_(QTMovieLoadStateAttribute).longValue()
+        if load_state == QTMovieLoadStateComplete:
+            logging.info("Quicktime warm up complete")
+            NSNotificationCenter.defaultCenter().removeObserver_(self)
+            NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
+                10, self, 'releaseWarmupMovie:', None, False)
+            self.complete = True
+    def releaseWarmupMovie_(self, timer):
+        logging.info("Releasing warmup movie.")
+        global warmup_movie
+        del warmup_movie
+
+warmup_handler = WarmupProgressHandler.alloc().init()
+warmup_movie = None
+
+def warm_up():
+    logging.info('Warming up Quicktime')
+    rsrcPath = bundle.getBundleResourcePath()
+
+    attributes = NSMutableDictionary.dictionary()
+    attributes['QTMovieFileNameAttribute'] = os.path.join(rsrcPath, 'warmup.mov')
+    attributes['QTMovieOpenAsyncRequiredAttribute'] = True
+    attributes['QTMovieDelegateAttribute'] = None
+
+    global warmup_movie
+    if utils.get_pyobjc_major_version() == 2:
+        warmup_movie, error = QTMovie.movieWithAttributes_error_(attributes, None)
+    else:
+        warmup_movie, error = QTMovie.movieWithAttributes_error_(attributes)
+    
+    if error is not None:
+        logging.warn("Quicktime Warm Up failed: %s" % error)
+    else:
+        warmup_handler.handleInitialLoadStateForMovie_(warmup_movie)
+
+###############################################################################
+
 def qttime2secs(qttime):
     timeScale = qttimescale(qttime)
     if timeScale == 0:

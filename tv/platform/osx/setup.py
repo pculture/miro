@@ -295,6 +295,7 @@ class MiroBuild (py2app):
             'qt_extractor.py'
         ]
         self.resources.extend(glob(os.path.join('Resources-Widgets', '*.png')))
+        self.resources.extend(glob(os.path.join('Resources-Widgets', 'warmup.mov')))
     
     def setup_options(self):
         self.bundleRoot = os.path.join(self.dist_dir, '%s.app/Contents' % self.config.get('shortAppName'))
