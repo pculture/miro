@@ -549,20 +549,25 @@ class LiveStorage:
             sql.write('\nWHERE %s' % where)
         self._execute(sql.getvalue(), values, is_update=True)
 
-    def select(self, klass, columns, where, values):
+    def select(self, klass, columns, where, values, convert=True):
         schema = self._schema_map[klass]
         sql = StringIO()
         sql.write('SELECT %s ' % ', '.join(columns))
         sql.write(self._get_query_bottom(schema.table_name, where, None, None,
             None))
+        results = self._execute(sql.getvalue(), values)
+        if not convert:
+            return results
         schema_items = [self._schema_column_map[schema, c] for c in columns]
-        for row in self._execute(sql.getvalue(), values):
+        rows = []
+        for row in results:
             converted_row = []
             for name, schema_item, value in itertools.izip(columns,
                     schema_items, row):
                 converted_row.append(self._converter.from_sql(schema, name,
                     schema_item, value))
-            yield converted_row
+            rows.append(converted_row)
+        return rows
 
     def on_event_finished(self, eventloop, success):
         self.finish_transaction(commit=success)

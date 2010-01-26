@@ -633,7 +633,7 @@ class Scroller(Bin):
         self.view.setHasVerticalScroller_(vertical)
         self.document_view = FlippedView.alloc().init()
         self.view.setDocumentView_(self.document_view)
-        clip_view = self.view.contentView()
+        self.view.setAutohidesScrollers_(True)
 
     def set_has_borders(self, has_border):
         self.view.setBorderType_(NSBezelBorder)

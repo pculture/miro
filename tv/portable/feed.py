@@ -2448,9 +2448,6 @@ class ManualFeedImpl(FeedImpl):
                 title=None)
         self.ufeed.expire = u'never'
         self.setUpdateFrequency(-1)
-
-    def setup_common(self):
-        FeedImpl.setup_common()
         self.ufeed.last_viewed = datetime.max
 
     @returns_unicode

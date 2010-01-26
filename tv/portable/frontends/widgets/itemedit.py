@@ -33,7 +33,7 @@ metainformation about an item.
 from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets.dialogs import MainDialog
-from miro.frontends.widgets import dialogwidgets
+from miro.frontends.widgets import dialogwidgets, widgetconst
 from miro.dialogs import BUTTON_CANCEL, BUTTON_APPLY
 
 import textwrap
@@ -43,7 +43,9 @@ def build_info(label, value):
     """Takes a label and a value and generates two labels.
     """
     lab = widgetset.Label(label)
+    lab.set_color(widgetconst.DIALOG_NOTE_COLOR)
     lab2 = widgetset.Label(value)
+    lab2.set_color(widgetconst.DIALOG_NOTE_COLOR)
     lab2.set_wrap(True)
 
     return lab, lab2, lambda x: x
@@ -81,11 +83,8 @@ def build_multiline_text_entry(key, label, value):
     lab = widgetset.Label(label)
     entry = widgetset.MultilineTextEntry()
     entry.set_text(value)
-    scroller = widgetset.Scroller(True, True)
-    # FIXME: this is a hack to ensure that the text entry gets enough size on
-    # OS X.  I think a better way to do this would be to give the entire Table
-    # a size, however that's currently busted on OS X, so this will have to
-    # do.
+    scroller = widgetset.Scroller(False, True)
+    scroller.set_has_borders(True)
     scroller.set_size_request(400, 100)
     scroller.add(entry)
     def handler(response_dict):
@@ -106,7 +105,7 @@ def build_radio(key, label, value, options):
 
     :returns: label widget, section widget, handler function
     """
-    hbox = widgetset.HBox()
+    vbox = widgetset.VBox()
 
     lab = widgetset.Label(label)
     rbg = widgetset.RadioButtonGroup()
@@ -114,7 +113,7 @@ def build_radio(key, label, value, options):
     for option, option_value in options:
         butt = widgetset.RadioButton(option, rbg)
         option_buttons.append((butt, option_value))
-        hbox.pack_start(butt)
+        vbox.pack_start(butt)
         if option_value == value:
             butt.set_selected()
 
@@ -126,7 +125,7 @@ def build_radio(key, label, value, options):
                     response_dict[key] = rbv
                 break
 
-    return lab, hbox, handler
+    return lab, vbox, handler
 
 def _run_dialog(iteminfo):
     """Creates and launches the item edit dialog.  This
@@ -149,9 +148,9 @@ def _run_dialog(iteminfo):
             sections.append(build_radio(
                 "file_type", _("Media type:"),
                 iteminfo.file_type,
-                [(_("video"), u"video"),
-                 (_("audio"), u"audio"),
-                 (_("other"), u"other")]))
+                [(_("Video"), u"video"),
+                 (_("Audio"), u"audio"),
+                 (_("Other"), u"other")]))
 
             # we do this to force wrapping at 50 characters
             sections.append(build_info(
@@ -161,10 +160,10 @@ def _run_dialog(iteminfo):
             
             for lab, sec, handler in sections:
                 vbox = widgetset.VBox()
-                vbox.pack_start(lab, True, padding=2)
-                grid.pack(vbox, grid.ALIGN_LEFT)
-                grid.pack(sec, grid.ALIGN_LEFT)
-                grid.end_line(spacing=5)
+                vbox.pack_start(lab, expand=True, padding=2)
+                grid.pack(vbox, grid.ALIGN_RIGHT)
+                grid.pack(sec, grid.FILL)
+                grid.end_line(spacing=8)
 
             window.set_extra_widget(grid.make_table())
 

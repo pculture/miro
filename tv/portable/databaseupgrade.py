@@ -2612,3 +2612,10 @@ def upgrade109(cursor):
     """Add the media_type_checked column to item """
     cursor.execute("ALTER TABLE item ADD media_type_checked integer")
     cursor.execute("UPDATE item SET media_type_checked=0")
+
+def upgrade110(cursor):
+    """Make set last_viewed on the  manual feed to datetime.max"""
+    cursor.execute("select ufeed_id from manual_feed_impl")
+    for row in cursor:
+        cursor.execute("UPDATE feed SET last_viewed=? WHERE id=?",
+                (datetime.datetime.max, row[0]))

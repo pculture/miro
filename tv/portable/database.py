@@ -420,8 +420,8 @@ class DDBObject(signals.SignalEmitter):
         return app.db.delete(cls, where, values)
 
     @classmethod
-    def select(cls, columns, where=None, values=None):
-        return app.db.select(cls, columns, where, values)
+    def select(cls, columns, where=None, values=None, convert=True):
+        return app.db.select(cls, columns, where, values, convert)
 
     def setup_new(self):
         """Initialize a newly created object."""
