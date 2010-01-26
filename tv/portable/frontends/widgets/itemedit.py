@@ -81,11 +81,8 @@ def build_multiline_text_entry(key, label, value):
     lab = widgetset.Label(label)
     entry = widgetset.MultilineTextEntry()
     entry.set_text(value)
-    scroller = widgetset.Scroller(True, True)
-    # FIXME: this is a hack to ensure that the text entry gets enough size on
-    # OS X.  I think a better way to do this would be to give the entire Table
-    # a size, however that's currently busted on OS X, so this will have to
-    # do.
+    scroller = widgetset.Scroller(False, True)
+    scroller.set_has_borders(True)
     scroller.set_size_request(400, 100)
     scroller.add(entry)
     def handler(response_dict):

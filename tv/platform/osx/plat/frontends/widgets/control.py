@@ -67,7 +67,6 @@ class BaseTextEntry(SizedControl):
         self.view.cell().setScrollable_(YES)
         self.view.cell().setLineBreakMode_(NSLineBreakByClipping)
         self.sizer_cell = self.view.cell().copy()
-        self.auto_sizer_cell = self.sizer_cell.copy()
         if initial_text:
             self.view.setStringValue_(initial_text)
             self.set_width(len(initial_text))
@@ -99,11 +98,6 @@ class BaseTextEntry(SizedControl):
 
     def calc_size_request(self):
         size = self.sizer_cell.cellSize()
-        if self.parent_is_scroller:
-            self.auto_sizer_cell.setStringValue_(self.view.stringValue())
-            text_size = self.auto_sizer_cell.cellSize()
-            size.width = max(size.width, text_size.width)
-            size.height = max(size.height, text_size.height)
         return size.width, size.height
 
     def set_text(self, text):
@@ -133,18 +127,6 @@ class MiroTextField(NSTextField):
         wrappermap.wrapper(self).emit('activate')
         return NSTextField.becomeFirstResponder(self)
 
-    def textDidChange_(self, notification):
-        if wrappermap.wrapper(self).parent_is_scroller:
-            wrappermap.wrapper(self).invalidate_size_request()
-
-class MiroMultilineTextField(MiroTextField):
-    def textView_doCommandBySelector_(self, field_editor, selector):
-        retval = False
-        if selector == 'insertNewline:':
-            field_editor.insertNewlineIgnoringFieldEditor_(None)
-            retval = True
-        return retval
-
 class TextEntry(BaseTextEntry):
     def make_view(self):
         return MiroTextField.alloc().init()
@@ -167,11 +149,51 @@ class SearchTextEntry(BaseTextEntry):
     def make_view(self):
         return MiroSearchTextField.alloc().init()
 
-class MultilineTextEntry(TextEntry):
-    def make_view(self):
-        view =  MiroMultilineTextField.alloc().init()
-        return view
+class MultilineTextEntry(Widget):
 
+    def __init__(self, initial_text=None):
+        Widget.__init__(self)
+        if initial_text is None:
+            initial_text = ""
+        self.view = NSTextView.alloc().initWithFrame_(NSRect((0,0),(50,50)))
+        self.view.setMaxSize_((1.0e7, 1.0e7))
+        self.view.setHorizontallyResizable_(NO)
+        self.view.setVerticallyResizable_(YES)
+        self.notifications = NotificationForwarder.create(self.view)
+        if initial_text is not None:
+            self.set_text(initial_text)
+
+    def viewport_created(self):
+        Widget.viewport_created(self)
+        self.notifications.connect(self.on_changed, 'NSTextDidChangeNotification')
+        self.invalidate_size_request()
+
+    def remove_viewport(self):
+        Widget.remove_viewport(self)
+        self.notifications.disconnect()
+
+    def focus(self):
+        self.view.window().makeFirstResponder_(self.view)
+
+    def set_text(self, text):
+        self.view.setString_(text)
+        self.invalidate_size_request()
+
+    def get_text(self):
+        return self.view.string()
+
+    def on_changed(self, notification):
+        self.invalidate_size_request()
+
+    def calc_size_request(self):
+        if self.view.superview() is None:
+            return (50, 50)
+        width = self.view.superview().frame().size.width
+        height = self.view.frame().size.height
+        if self.parent_is_scroller:
+            width -= NSScroller.scrollerWidth()
+        return (width, height)
+    
 class MiroButton(NSButton):
     
     def initWithSignal_(self, signal):
