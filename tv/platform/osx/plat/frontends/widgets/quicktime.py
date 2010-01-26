@@ -87,6 +87,8 @@ class WarmupProgressHandler(NSObject):
                 'loadStateChanged:', 
                 QTMovieLoadStateDidChangeNotification, 
                 warmup_movie)
+        else:
+            self.handleLoadStateForMovie_(movie)
     def handleLoadStateForMovie_(self, movie):
         load_state = movie.attributeForKey_(QTMovieLoadStateAttribute).longValue()
         if load_state == QTMovieLoadStateComplete:
