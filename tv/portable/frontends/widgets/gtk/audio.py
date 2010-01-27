@@ -38,7 +38,7 @@ class NullRenderer:
     def reset(self):
         pass
 
-    def select_file(self, item_info, success_callback, error_callback):
+    def select_file(self, iteminfo, success_callback, error_callback):
         error_callback()
 
     def stop(self):
@@ -64,7 +64,7 @@ class AudioPlayer(player.Player):
         self.renderer.reset()
 
     def set_item(self, item_info, success_callback, error_callback):
-        self.renderer.select_file(item_info.video_path, success_callback, error_callback)
+        self.renderer.select_file(item_info, success_callback, error_callback)
 
     def play(self):
         self.renderer.play()

@@ -488,7 +488,7 @@ class VideoPlayer(player.Player, VBox):
 
     def set_item(self, item_info, success_callback, error_callback):
         self._video_details.set_video_details(item_info)
-        self.renderer.select_file(item_info.video_path, success_callback, error_callback)
+        self.renderer.select_file(item_info, success_callback, error_callback)
         self._item_id = item_info.id
 
     def get_elapsed_playback_time(self):

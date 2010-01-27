@@ -212,8 +212,9 @@ class VLCSniffer:
         self.callback_info = None
         self.media_playing = None
 
-    def select_file(self, filename, success_callback, error_callback):
+    def select_file(self, iteminfo, success_callback, error_callback):
         """starts playing the specified file"""
+        filename = iteminfo.video_path
 
         # filenames coming in are unicode objects, VLC expects utf-8 strings.
         filename = filename.encode('utf-8')

@@ -183,14 +183,16 @@ class Renderer:
         elif message.type == gst.MESSAGE_EOS:
             app.playback_manager.on_movie_finished()
 
-    def select_file(self, filename, callback, errback, sub_filename=""):
+    def select_file(self, iteminfo, callback, errback, sub_filename=""):
         """starts playing the specified file"""
         self.stop()
         self.destroy_playbin()
         self.build_playbin()
 
+        self.iteminfo = iteminfo
+
         self.select_callbacks = (callback, errback)
-        self.playbin.set_property("uri", "file://%s" % filename)
+        self.playbin.set_property("uri", "file://%s" % iteminfo.video_path)
         if sub_filename:
             self.playbin.set_property("suburi", "file://%s" % sub_filename)
         else:
@@ -406,6 +408,8 @@ class VideoRenderer(Renderer):
         if self.playbin:
             tracks = range(self.playbin.get_property("n-text"))
             tracks = [(i, self._get_subtitle_track_name(i)) for i in tracks]
+
+            # files = util.gather_subtitle_files(
         else:
             tracks = []
         return tracks
