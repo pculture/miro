@@ -74,7 +74,7 @@ class ControlLine(object):
                 bottom_pad = pad_bottom + max_baseline - baseline
                 yalign = 1.0
             else:
-                bottom_pad = 0
+                bottom_pad = pad_bottom
                 yalign = 0.0
             alignment = widgetset.Alignment(xalign, yalign, xscale, 0.0)
             alignment.set_padding(0, bottom_pad, pad_left, pad_right)
