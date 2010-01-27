@@ -423,11 +423,14 @@ class VideoRenderer(Renderer):
         self.playbin.set_property('flags', flags & ~GST_PLAY_FLAG_TEXT)
 
     def select_subtitle_file(self, iteminfo, sub_path):
+        current_time = self.get_current_time()
         total_time = self.get_duration()
+
         def handle_ok():
             app.playback_manager.emit('will-play', total_time)
             self.play()
             app.playback_manager.emit('did-start-playing')
+            self.set_current_time(current_time)
         def handle_err():
             app.playback_manager.stop()
         app.playback_manager.emit('will-pause')
