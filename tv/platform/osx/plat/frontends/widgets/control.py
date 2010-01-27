@@ -162,6 +162,16 @@ class MultilineTextEntry(Widget):
         self.notifications = NotificationForwarder.create(self.view)
         if initial_text is not None:
             self.set_text(initial_text)
+        self.set_size(widgetconst.SIZE_NORMAL)
+
+    def set_size(self, size):
+        if size == widgetconst.SIZE_NORMAL:
+            font = NSFont.systemFontOfSize_(NSFont.systemFontSize())
+        elif size == widgetconst.SIZE_SMALL:
+            self.view.cell().setControlSize_(NSSmallControlSize)
+        else:
+            raise ValueError("Unknown size: %s" % size)
+        self.view.setFont_(font)
 
     def viewport_created(self):
         Widget.viewport_created(self)
