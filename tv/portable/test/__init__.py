@@ -34,7 +34,6 @@ from miro.test.unicodetest import *
 from miro.test.datastructurestest import *
 from miro.test.schematest import *
 from miro.test.storedatabasetest import *
-from miro.test.olddatabaseupgradetest import *
 from miro.test.databasesanitytest import *
 from miro.test.subscriptiontest import *
 from miro.test.schedulertest import *
