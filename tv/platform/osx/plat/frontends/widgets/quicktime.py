@@ -310,11 +310,14 @@ class Player(player.Player):
         def handle_ok():
             app.playback_manager.emit('will-play', total_time)
             self.play_from_time(saved_pos)
+            app.playback_manager.notify_update()
+            app.playback_manager.schedule_update()
             app.playback_manager.emit('did-start-playing')
         def handle_err():
             app.playback_manager.stop()
 
         app.playback_manager.emit('will-pause')
+        app.playback_manager.cancel_update_timer()
         self.stop()
         self.set_item(saved_item_info, handle_ok, handle_err)
 
