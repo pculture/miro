@@ -558,13 +558,16 @@ class VLCRenderer:
         except VLCError, e:
             logging.warn("exception when setting subtitle track: %s", e)
 
-    def select_subtitle_file(self, path):
-        res = libvlc.libvlc_video_set_subtitle_file(
-            self.media_player, path, self.exc.ref())
+    def select_subtitle_file(self, item, path):
+        path = path.encode('utf-8')
+        res = libvlc.libvlc_video_set_subtitle_file(self.media_player, 
+                ctypes.c_char_p(path), self.exc.ref())
         try:
             self.exc.check()
         except VLCError, e:
             logging.warn("exception when setting subtitle track to file: %s", e)
+        else:
+            self.setup_subtitles()
 
 _sniffer = VLCSniffer()
 
