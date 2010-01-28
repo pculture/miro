@@ -507,7 +507,7 @@ class VLCRenderer:
             track_index = self.get_enabled_subtitle_track()
             if track_index == 0:
                 count = libvlc.libvlc_video_get_spu_count(self.media_player, self.exc.ref())
-                if count > 0:
+                if count > 1:
                     self.enable_subtitle_track(1)
         else:
             self.disable_subtitles()
@@ -524,7 +524,8 @@ class VLCRenderer:
             self.exc.check()
             first_desc = desc
             for i in range(0, count):
-                self.subtitle_info.append((i, desc.contents.name))
+                if i > 0: # track 0 is "disabled", don't include it
+                    self.subtitle_info.append((i, desc.contents.name))
                 desc = desc.contents.next
             libvlc.libvlc_track_description_release(first_desc)
         except VLCError, e:
