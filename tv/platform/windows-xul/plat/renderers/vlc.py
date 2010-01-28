@@ -569,4 +569,4 @@ class VLCRenderer:
 _sniffer = VLCSniffer()
 
 def get_item_type(item_info, success_callback, error_callback):
-    _sniffer.select_file(item_info.video_path, success_callback, error_callback)
+    _sniffer.select_file(item_info, success_callback, error_callback)
