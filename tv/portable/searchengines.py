@@ -41,6 +41,9 @@ from miro import prefs
 import logging
 from miro.gtcache import gettext as _
 
+class IntentionalCrash(Exception):
+    pass
+
 class SearchEngineInfo:
     """Defines a search engine in Miro.
 
@@ -67,10 +70,12 @@ class SearchEngineInfo:
         """Returns the request url expanding the query, filter adult content,
         and results limit place holders.
         """
-        requestURL = self.url.replace(u"%s", urlencode(query))
-        requestURL = requestURL.replace(u"%a", unicode(int(not filterAdultContents)))
-        requestURL = requestURL.replace(u"%l", unicode(int(limit)))
-        return requestURL
+        request_url = self.url.replace(u"%s", urlencode(query))
+        request_url = request_url.replace(u"%a", 
+                                          unicode(int(not filterAdultContents)))
+        request_url = request_url.replace(u"%l", unicode(int(limit)))
+
+        return request_url
 
     def __repr__(self):
         return "<SearchEngineInfo %s %s>" % (self.name, self.title)
@@ -89,7 +94,8 @@ def _search_for_search_engines(dir_):
     try:
         for f in os.listdir(dir_):
             if f.endswith(".xml"):
-                engines[os.path.normcase(f)] = os.path.normcase(os.path.join(dir_, f))
+                engines[os.path.normcase(f)] = os.path.normcase(
+                    os.path.join(dir_, f))
     except OSError:
         pass
     return engines
@@ -160,7 +166,8 @@ def create_engines():
     global _engines
     _delete_engines()
     engines = _search_for_search_engines(resources.path("searchengines"))
-    engines_dir = os.path.join(config.get(prefs.SUPPORT_DIRECTORY), "searchengines")
+    engines_dir = os.path.join(
+        config.get(prefs.SUPPORT_DIRECTORY), "searchengines")
     engines.update(_search_for_search_engines(engines_dir))
     if config.get(prefs.THEME_NAME):
         theme_engines_dir = resources.theme_path(config.get(prefs.THEME_NAME),
@@ -199,16 +206,15 @@ def get_request_url(engine_name, query, filter_adult_contents=True, limit=50):
 
     There are two "magic" queries:
 
-    * ``LET'S TEST DTV'S CRASH REPORTER TODAY`` which rases a NameError thus
-      allowing us to test the crash reporter
+    * ``LET'S TEST DTV'S CRASH REPORTER TODAY`` which rases a
+      NameError thus allowing us to test the crash reporter
 
     * ``LET'S DEBUT DTV: DUMP DATABASE`` which causes Miro to dump the
-       database to xml and place it in the Miro configuration directory
+       database to xml and place it in the Miro configuration
+       directory
     """
     if query == "LET'S TEST DTV'S CRASH REPORTER TODAY":
-        # FIXME - should change this to a real exception rather than a NameError
-        someVariable = intentionallyUndefinedVariableToTestCrashReporter
-        return u""
+        raise IntentionalCrash("intentional error here")
 
     if query == "LET'S DEBUG DTV: DUMP DATABASE":
         app.db.dumpDatabase()
@@ -239,8 +245,8 @@ def get_engine_for_name(name):
     return None
 
 def get_last_engine():
-    """Checks the preferences and returns the SearchEngine object of that
-    name or ``None``.
+    """Checks the preferences and returns the SearchEngine object of
+    that name or ``None``.
     """
     e = config.get(prefs.LAST_SEARCH_ENGINE)
     engine = get_engine_for_name(e)
