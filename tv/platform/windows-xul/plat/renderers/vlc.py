@@ -362,8 +362,9 @@ class VLCRenderer:
         widget.persistent_window.draw_rectangle(gc, True, event.area.x,
                 event.area.y, event.area.width, event.area.height)
 
-    def select_file(self, filename, callback, errback):
+    def select_file(self, iteminfo, callback, errback):
         """starts playing the specified file"""
+        filename = iteminfo.video_path
 
         # filenames coming in are unicode objects, VLC expects utf-8 strings.
         filename = filename.encode('utf-8')
