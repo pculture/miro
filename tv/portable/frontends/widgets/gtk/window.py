@@ -135,7 +135,7 @@ class WindowBase(signals.SignalEmitter):
         # menu stuff.
         self.menu_structure = None
         self.menu_action_groups = None
-        self._merge_id = 0
+        self._merge_id = None
         self._subtitle_tracks_cached = None
         self._setup_ui_manager()
 
@@ -267,7 +267,7 @@ class WindowBase(signals.SignalEmitter):
         self.make_check_action("SubtitlesDisabled", _("Disable Subtitles"),
                                ["AlwaysOn"], self.on_subtitles_change, -1)
         radio_group = self.action_groups["AlwaysOn"].get_action("SubtitlesDisabled")
-        for i in range(99):
+        for i in range(199):
             self.make_check_action("SubtitleTrack%d" % i, "", ["AlwaysOn"],
                                    self.on_subtitles_change, i, radio_group)
 
@@ -280,6 +280,10 @@ class WindowBase(signals.SignalEmitter):
         app.playback_manager.open_subtitle_file()
 
     def on_subtitles_change(self, action, track_index):
+        if hasattr(self, "_ignore_on_subtitles_change"):
+            return
+        if action.get_property("current-value") != action.get_property("value"):
+            return
         action_group = self.action_groups["AlwaysOn"]
         action_group.get_action("SubtitlesDisabled").current_value = track_index
         if track_index == -1:
@@ -452,6 +456,7 @@ class MainWindow(Window):
         change_label("PlayPause", "PlayPauseVideo", play_pause)
 
     def on_playback_change(self, playback_manager, *extra_args):
+        self._ignore_on_subtitles_change = True
         if app.playback_manager.is_playing_audio:
             self._clear_subtitles_menu()
         else:
@@ -460,27 +465,28 @@ class MainWindow(Window):
                 self._clear_subtitles_menu()
             else:
                 self._populate_subtitles_menu(tracks)
+        delattr(self, "_ignore_on_subtitles_change")
 
     def _populate_subtitles_menu(self, tracks):
         enabled_track = app.video_renderer.get_enabled_subtitle_track()
 
-        if self._subtitle_tracks_cached == (tracks, enabled_track):
+        if self._subtitle_tracks_cached == (tuple(tracks), enabled_track):
             return
 
-        self._subtitle_tracks_cached = (tracks, enabled_track)
+        self._subtitle_tracks_cached = (tuple(tracks), enabled_track)
 
-        if self._merge_id:
+        if self._merge_id is not None:
             self.ui_manager.remove_ui(self._merge_id)
-            self._merge_id = 0
 
         outstream = StringIO.StringIO()
         outstream.write('''<ui>
 <menubar name="MiroMenu">
    <menu action="PlaybackMenu">
-      <menu action="SubtitlesMenu">''')
+      <menu action="SubtitlesMenu">
+''')
         for i, lang in tracks:
-            outstream.write('<menuitem action="SubtitleTrack%d"/>' % i)
-        outstream.write('''<separator/>
+            outstream.write('         <menuitem action="SubtitleTrack%d"/>\n' % i)
+        outstream.write('''         <separator/>
          <menuitem action="SubtitlesDisabled"/>
          <menuitem action="SubtitlesSelect"/>
       </menu>
@@ -489,7 +495,7 @@ class MainWindow(Window):
 </ui>''')
 
         self._merge_id = self.ui_manager.add_ui_from_string(outstream.getvalue())
-
+        
         action_group = self.action_groups["AlwaysOn"]
         for i, lang in tracks:
             action_group.get_action("SubtitleTrack%d" % i).set_property("label", lang)
@@ -497,9 +503,8 @@ class MainWindow(Window):
         action_group.get_action("SubtitlesDisabled").set_property("current-value", enabled_track)
 
     def _clear_subtitles_menu(self):
-        if self._merge_id:
+        if self._merge_id is not None:
             self.ui_manager.remove_ui(self._merge_id)
-            self._merge_id = 0
             self._subtitle_tracks_cached = None
 
         s = '''<ui>

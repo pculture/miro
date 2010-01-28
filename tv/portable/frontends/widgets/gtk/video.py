@@ -373,7 +373,7 @@ class VideoDetailsWidget(Background):
             child = gtk.RadioMenuItem(first_child, _("Disable Subtitles"))
             if enabled_track == -1:
                 child.set_active(True)
-            child.connect('activate', self.handle_subtitle_change, -1)
+            child.connect('activate', self.handle_disable_subtitles)
             child.show()
             menu.append(child)
 
@@ -389,12 +389,15 @@ class VideoDetailsWidget(Background):
 
         menu.popup(None, None, None, event.button, event.time)
 
-    def handle_subtitle_change(self, widget, index):
-        if index == -1:
+    def handle_disable_subtitles(self, widget):
+        if widget.active:
             app.video_renderer.disable_subtitles()
-        else:
+            app.widgetapp.window.on_playback_change(app.playback_manager)
+
+    def handle_subtitle_change(self, widget, index):
+        if widget.active:
             app.video_renderer.enable_subtitle_track(index)
-        app.widgetapp.window.on_playback_change(app.playback_manager)
+            app.widgetapp.window.on_playback_change(app.playback_manager)
 
     def handle_select_subtitle_file(self, widget):
         app.playback_manager.open_subtitle_file()
