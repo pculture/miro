@@ -51,12 +51,15 @@ def run_dialog(obj, report):
             vbox = widgetset.VBox(spacing=5)
 
             lab = widgetset.Label(_(
-                "%(appname)s has encountered an internal error.  You can help us track "
-                "down this problem and fix it by submitting an error report.",
+                "%(appname)s has encountered an internal error.  You can "
+                "help us track down this problem and fix it by submitting "
+                "an error report.",
                 {"appname": config.get(prefs.SHORT_APP_NAME)}
                 ))
 
             lab.set_wrap(True)
+            lab.set_size_request(600, -1)
+
             vbox.pack_start(widgetutil.align_left(lab))
 
             cbx = widgetset.Checkbox(_(
@@ -68,8 +71,8 @@ def run_dialog(obj, report):
             lab2 = widgetset.Label(_("Describe what you were doing when you got this error:"))
             vbox.pack_start(widgetutil.align_left(lab2))
 
-            text = widgetset.TextEntry()
-            text.set_width(45)
+            text = widgetset.MultilineTextEntry()
+            text.set_size_request(600, 100)
             vbox.pack_start(widgetutil.align_left(text))
 
             window.set_extra_widget(vbox)
