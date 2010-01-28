@@ -30,6 +30,7 @@ import sys
 import logging
 import os
 import thread
+import shutil
 from threading import Event
 
 import pygst
@@ -44,6 +45,7 @@ GST_PLAY_FLAG_TEXT          = (1 << 2)
 from miro import app
 from miro import config
 from miro import prefs
+from miro.util import gather_subtitle_files
 from miro.gtcache import gettext as _
 from miro.plat import options
 from miro import iso_639
@@ -165,18 +167,22 @@ class Renderer:
 
     def on_bus_message(self, bus, message):
         """receives message posted on the GstBus"""
+        if message.src is not self.playbin:
+            return
+
         if message.type == gst.MESSAGE_ERROR:
             err, debug = message.parse_error()
             if self.select_callbacks is not None:
                 self.select_callbacks[1]()
                 self.select_callbacks = None
+                logging.error("on_bus_message: gstreamer error: %s", err)
             else:
                 err, debug = message.parse_error()
                 logging.error("on_bus_message: gstreamer error: %s", err)
         elif message.type == gst.MESSAGE_STATE_CHANGED:
             prev, new, pending = message.parse_state_changed()
-            if ((message.src is self.playbin and new == gst.STATE_PAUSED and
-                 self.select_callbacks is not None)):
+            if ((new == gst.STATE_PAUSED
+                 and self.select_callbacks is not None)):
                 self.select_callbacks[0]()
                 self.select_callbacks = None
                 self.finish_select_file()
@@ -188,6 +194,7 @@ class Renderer:
         self.stop()
         self.destroy_playbin()
         self.build_playbin()
+        self.enabled_track = None
 
         self.iteminfo = iteminfo
 
@@ -208,7 +215,7 @@ class Renderer:
         if attempt == 5:
             return 0
         try:
-            position, format = self.playbin.query_position(gst.FORMAT_TIME)
+            position, fmt = self.playbin.query_position(gst.FORMAT_TIME)
             return to_seconds(position)
         except gst.QueryError, qe:
             logging.warn("get_current_time: caught exception: %s" % qe)
@@ -373,23 +380,23 @@ class VideoRenderer(Renderer):
         logging.debug("haven't implemented exit_fullscreen method yet!")
 
     def finish_select_file(self):
+        Renderer.finish_select_file(self)
         if hasattr(self, "pick_subtitle_track"):
-            self.enable_subtitle_track(self.pick_subtitle_track)
+            flags = self.playbin.get_property('flags')
+            self.playbin.set_properties(flags=flags | GST_PLAY_FLAG_TEXT,
+                                        current_text=0)
             del self.__dict__["pick_subtitle_track"]
+            return
 
-        else:
-            if config.get(prefs.ENABLE_SUBTITLES):
-                default_track = self.get_enabled_subtitle_track()
-                if default_track is None:
-                    tracks = self.get_subtitle_tracks()
-                    if len(tracks) > 0:
-                        self.enable_subtitle_track(tracks[0])
-            else:
-                self.disable_subtitles()
+        if config.get(prefs.ENABLE_SUBTITLES):
+            default_track = self.get_enabled_subtitle_track()
+            if default_track is None:
+                tracks = self.get_subtitle_tracks()
+                if len(tracks) > 0:
+                    self.enable_subtitle_track(0)
 
     def _get_subtitle_track_name(self, index):
-        """Returns the language for the track at the specified
-        index.
+        """Returns the language for the track at the specified index.
         """
         tag_list = self.playbin.emit("get-text-tags", index)
         lang = None
@@ -401,26 +408,83 @@ class VideoRenderer(Renderer):
         else:
             return lang['name']
 
+    def _get_subtitle_file_name(self, filename):
+        """Returns the language for the file at the specified
+        filename.
+        """
+        basename, ext = os.path.splitext(filename)
+        movie_file, code = os.path.splitext(basename)
+
+        # if the filename is like "foo.srt" and "srt", then there
+        # is no language code, so we return None
+        if not code:
+            return None
+
+        # remove . in the code so we end up with what's probably
+        # a two or three letter language code
+        if "." in code:
+            code = code.replace(".", "")
+
+        lang = iso_639.find(code, iso_639.THREE_LETTERS_CODE)
+        if lang == None:
+            lang = iso_639.find(code, iso_639.TWO_LETTERS_CODE)
+
+        if lang is None:
+            return _("Unknown Language")
+        else:
+            return lang['name']
+
+    def get_subtitles(self):
+        """Returns a dict of index -> (language, filename) for available
+        tracks.
+        """
+        if not self.playbin:
+            return {}
+
+        tracks = {}
+
+        for track_index in range(self.playbin.get_property("n-text")):
+            tracks[track_index] = (self._get_subtitle_track_name(track_index),
+                                   None)
+
+        files = gather_subtitle_files(self.iteminfo.video_path)
+
+        external_track_id = 100
+        for i, mem in enumerate(files):
+            tracks[external_track_id + i] = (self._get_subtitle_file_name(mem),
+                                             mem)
+        return tracks
+
     def get_subtitle_tracks(self):
         """Returns a 2-tuple of (index, language) for available
         tracks.
         """
-        if self.playbin:
-            tracks = range(self.playbin.get_property("n-text"))
-            tracks = [(i, self._get_subtitle_track_name(i)) for i in tracks]
-
-            # files = util.gather_subtitle_files(
-        else:
-            tracks = []
+        tracks = [(index, filename)
+                  for index, (filename, language) in self.get_subtitles().items()]
         return tracks
 
     def get_enabled_subtitle_track(self):
+        if self.enabled_track is not None:
+            return self.enabled_track
         return self.playbin.get_property("current-text")
 
-    def enable_subtitle_track(self, track):
+    def enable_subtitle_track(self, track_index):
+        tracks = self.get_subtitles()
+        if tracks.get(track_index) is None:
+            return
+
+        language, filename = tracks[track_index]
+
+        if filename is not None:
+            # file-based subtitle tracks have to get selected as files
+            # first, then enable_subtitle_track gets called again with
+            # the new track_index
+            self.select_subtitle_file(self.iteminfo, filename)
+            self.enabled_track = track_index
+            return
         flags = self.playbin.get_property('flags')
         self.playbin.set_properties(flags=flags | GST_PLAY_FLAG_TEXT,
-                                    current_text=track)
+                                    current_text=track_index)
 
     def disable_subtitles(self):
         flags = self.playbin.get_property('flags')
@@ -430,15 +494,23 @@ class VideoRenderer(Renderer):
         current_time = self.get_current_time()
         total_time = self.get_duration()
 
+        filenames = [filename for lang, filename in self.get_subtitles().values()]
+        if sub_path not in filenames:
+            dstname = os.path.splitext(iteminfo.video_path)[0]
+            ext = os.path.splitext(sub_path)[1]
+            dstpath = dstname + ".ex" + ext
+            shutil.copyfile(sub_path, dstpath)
+            sub_path = dstpath
+
         def handle_ok():
             app.playback_manager.emit('will-play', total_time)
+            self.set_current_time(current_time)
             self.play()
             app.playback_manager.emit('did-start-playing')
-            self.set_current_time(current_time)
         def handle_err():
             app.playback_manager.stop()
         app.playback_manager.emit('will-pause')
-        self.select_file(iteminfo.video_path, handle_ok, handle_err, sub_path)
+        self.select_file(iteminfo, handle_ok, handle_err, sub_path)
 
 def movie_data_program_info(movie_path, thumbnail_path):
     extractor_path = os.path.join(os.path.split(__file__)[0],

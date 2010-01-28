@@ -283,6 +283,45 @@ def gather_media_files(path):
 
         yield adjusted_parsed, found
 
+def gather_subtitle_files(movie_path):
+    """Given an absolute path for a video file, this returns a list of
+    filenames of sidecar subtitle file that are in the same directory
+    or in a subtitles directory that are associated with the video
+    file.
+
+    >>> gather_subtitles_file('/tmp/foo.ogv")
+    []
+    >>> gather_subtitle_files("/tmp/bar.ogv")
+    ["/tmp/bar.en.srt", "/tmp/bar.fr.srt"]
+    >>> gather_subtitle_files("/tmp/baz.ogv")
+    ["/tmp/subtitles/baz.en.sub", "/tmp/subtitles/baz.fr.sub"]
+    """
+    check_f(movie_path)
+    subtitle_files = []
+    dirname, movie_file = os.path.split(movie_path)
+    basename, ext = os.path.splitext(movie_file)
+
+    # check for files in the current directory
+    possible = [os.path.join(dirname, mem)
+                for mem in os.listdir(dirname)
+                if mem.startswith(basename)
+                and (mem.endswith(".srt") or mem.endswith(".sub"))]
+    if len(possible) > 0:
+        subtitle_files.extend(possible)
+
+    # check for files in the subtitles/ directory
+    subdir = os.path.join(dirname, "subtitles")
+    if os.path.exists(subdir):
+        possible = [os.path.join(subdir, mem)
+                    for mem in os.listdir(subdir)
+                    if mem.startswith(basename)
+                    and (mem.endswith(".srt") or mem.endswith(".sub"))]
+        if len(possible) > 0:
+            subtitle_files.extend(possible)
+
+    subtitle_files.sort()
+    return subtitle_files
+
 def format_size_for_user(nbytes, zero_string="", with_decimals=True,
                          kb_only=False):
     """Format an int containing the number of bytes into a string

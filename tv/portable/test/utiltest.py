@@ -1,11 +1,12 @@
 import os
 import os.path
 import tempfile
+import shutil
 
 from miro.test.framework import MiroTestCase
 from miro import download_utils
 from miro import util
-
+from miro.plat.utils import FilenameType
 
 # We're going to override this so we can guarantee that if the order
 # changes later that it doesn't really affect us.
@@ -390,3 +391,71 @@ class MatrixTest(MiroTestCase):
 
         self.assertEquals(m[0,0], 1)
         self.assertEquals(m[0,1], None)
+
+class Test_find_subtitles(MiroTestCase):
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.tempdir = tempfile.mkdtemp()
+
+    def tearDown(self):
+        MiroTestCase.tearDown(self)
+        shutil.rmtree(self.tempdir, ignore_errors=True)
+
+    def create_files(self, movie_file, sub_files=None):
+        if sub_files is None:
+            sub_files = []
+
+        movie_file = os.path.join(self.tempdir, movie_file)
+        sub_files = [os.path.join(self.tempdir, mem) for mem in sub_files]
+        sub_files.sort()
+
+        all_files = [movie_file] + list(sub_files)
+        for mem in all_files:
+            dirname = os.path.dirname(mem)
+            if not os.path.exists(dirname):
+                os.makedirs(dirname)
+
+            filep = open(mem, "w")
+            filep.write("lalala")
+            filep.close()
+
+        return movie_file, sub_files
+
+    def test_no_subtitle_files(self):
+        movie_file, sub_files = self.create_files("foo.mov")
+        self.assertEquals(sub_files,
+                          util.gather_subtitle_files(FilenameType(movie_file)))
+
+    def test_single_file(self):
+        movie_file, sub_files = self.create_files(
+            "foo.mov", ["foo.en.srt"])
+        self.assertEquals(sub_files,
+                          util.gather_subtitle_files(FilenameType(movie_file)))
+
+    def test_multiple_files(self):
+        movie_file, sub_files = self.create_files(
+            "foo.mov", ["foo.en.srt", "foo.fr.srt", "foo.es.srt"])
+        self.assertEquals(sub_files,
+                          util.gather_subtitle_files(FilenameType(movie_file)))
+
+    def test_lots_of_files(self):
+        movie_file, sub_files = self.create_files(
+            "foo.mov", ["foo.en.srt", "blah.ogv", "foo.ogv"])
+
+        # weed out the non-srt files so we can test correctly
+        sub_files = [mem for mem in sub_files if mem.endswith(".srt")]
+        self.assertEquals(sub_files,
+                          util.gather_subtitle_files(FilenameType(movie_file)))
+
+    def test_subtitles_dir(self):
+        movie_file, sub_files = self.create_files(
+            "foo.mov", ["subtitles/foo.en.srt", "subtitles/foo.fr.srt"])
+        self.assertEquals(sub_files,
+                          util.gather_subtitle_files(FilenameType(movie_file)))
+
+    def test_filename_possibilities(self):
+        movie_file, sub_files = self.create_files(
+            "foo.mov", ["foo.en.srt", "foo.en.sub", "foo.srt", "foo.sub"])
+
+        self.assertEquals(sub_files,
+                          util.gather_subtitle_files(FilenameType(movie_file)))
