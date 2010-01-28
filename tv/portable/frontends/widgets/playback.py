@@ -196,7 +196,8 @@ class PlaybackManager (signals.SignalEmitter):
             detached_window_frame = widgetset.Rect(0, 0, 800, 600)
         else:
             detached_window_frame = widgetset.Rect.from_string(detached_window_frame)
-        self.detached_window = DetachedWindow("", detached_window_frame)
+        title = self.playlist[self.position].name
+        self.detached_window = DetachedWindow(title, detached_window_frame)
         self.align = widgetset.DetachedWindowHolder()
         self.align.add(self.video_display.widget)
         self.detached_window.set_content_widget(self.align)
