@@ -29,6 +29,7 @@
 import ctypes
 import logging
 import os
+import traceback
 import urllib
 
 import gtk
@@ -220,7 +221,7 @@ class VLCSniffer:
         filename = filename.encode('utf-8')
         self._filename = filename
         self.callback_info = (success_callback, error_callback)
-        self.started_playing = STOPPED
+        self.play_state = STOPPED
 
         media = libvlc.libvlc_media_new(self.vlc, ctypes.c_char_p(filename),
                 self.exc.ref())
@@ -273,7 +274,7 @@ class VLCRenderer:
         self.exc.check()
         self._callback_ref = VLC_EVENT_CALLBACK(self.event_callback)
         self.play_from_time = None
-        self.started_playing = STOPPED
+        self.play_state = STOPPED
         self._duration = None
         self._filename = None
         self._rate = 1.0
@@ -342,7 +343,6 @@ class VLCRenderer:
         self.callback_info = None
 
     def _open_failure(self):
-        import traceback
         logging.info("_open_failure\n%s", "".join(traceback.format_stack()))
         self.callback_info[1]()
         self.callback_info = None
@@ -372,7 +372,7 @@ class VLCRenderer:
         self.subtitle_info = []
         self.callback_info = (callback, errback)
         self.play_from_time = None
-        self.started_playing = STOPPED
+        self.play_state = STOPPED
 
         media = libvlc.libvlc_media_new(self.vlc, ctypes.c_char_p(filename),
                 self.exc.ref())
@@ -407,30 +407,36 @@ class VLCRenderer:
         self._handle_state_change(self.media_playing, state)
 
     def play(self):
+        if self.play_state == PLAYING:
+            return
         libvlc.libvlc_media_player_play(self.media_player, self.exc.ref())
         self.exc.check()
-        self.started_playing = PLAYING
+        self.play_state = PLAYING
         if self.play_from_time is not None:
             self.set_current_time(self.play_from_time)
             self.play_from_time = None
 
     def pause(self):
+        if self.play_state == PAUSED:
+            return
         libvlc.libvlc_media_player_pause(self.media_player, self.exc.ref())
         self.exc.check()
-        self.started_playing = PAUSED
+        self.play_state = PAUSED
 
     def stop(self):
+        if self.play_state == STOPPED:
+            return
         self.callback_info = None
         self.media_playing = None
         libvlc.libvlc_media_player_stop(self.media_player, self.exc.ref())
         self.exc.check()
-        self.started_playing = STOPPED
+        self.play_state = STOPPED
         self.subtitle_info = []
 
     def reset(self):
         self.stop()
         self.play_from_time = None
-        self.started_playing = STOPPED
+        self.play_state = STOPPED
 
     def get_current_time(self):
         t = libvlc.libvlc_media_player_get_time(self.media_player, self.exc.ref())
@@ -443,7 +449,7 @@ class VLCRenderer:
         return t / 1000.0
 
     def set_current_time(self, seconds):
-        if not self.started_playing == PLAYING:
+        if not self.play_state == PLAYING:
             self.play_from_time = seconds
             return
         t = int(seconds * 1000)
