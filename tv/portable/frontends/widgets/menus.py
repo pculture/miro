@@ -225,8 +225,8 @@ def get_menu():
                              Shortcut("n", MOD, SHIFT),
                              groups=["NonPlaying"]),
                     Separator(),
-                    MenuItem(_("Re_name"), "RenameFeed",
-                             groups=["FeedOrFolderSelected"]),
+                    MenuItem(_("Re_name"), "RenameSomething",
+                             groups=["FeedOrFolderOrSiteSelected"]),
                     MenuItem(_("_Remove"), "RemoveFeeds",
                              Shortcut(BKSPACE, MOD),
                              groups=["FeedsSelected"],
@@ -398,7 +398,7 @@ def on_new_search_feed():
 def on_new_feed_folder():
     app.widgetapp.add_new_feed_folder()
 
-@action_handler("RenameFeed")
+@action_handler("RenameSomething")
 def on_rename_feed():
     app.widgetapp.rename_something()
 
@@ -586,7 +586,7 @@ class MenuManager(signals.SignalEmitter):
                 self.states["folder"].append("RemoveFeeds")
             else:
                 self.enabled_groups.add('FeedSelected')
-            self.enabled_groups.add('FeedOrFolderSelected')
+            self.enabled_groups.add('FeedOrFolderOrSiteSelected')
         else:
             selected_folders = [s for s in selected_feeds if s.is_folder]
             if len(selected_folders) == len(selected_feeds):
@@ -599,8 +599,8 @@ class MenuManager(signals.SignalEmitter):
         """Handle the user selecting things in the site list.
         selected_sites is a list of GuideInfo objects
         """
-        # we don't change menu items for the site tab list
-        pass
+        if len(selected_sites) == 1:
+            self.enabled_groups.add('FeedOrFolderOrSiteSelected')
 
     def _handle_playlist_selection(self, selected_playlists):
         self.enabled_groups.add('PlaylistsSelected')
