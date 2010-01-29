@@ -1048,12 +1048,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             # FIXME html and xmldata can be non-unicode at this point
             parser = xml.sax.make_parser()
             parser.setFeature(xml.sax.handler.feature_namespaces, 1)
-            try:
-                parser.setFeature(xml.sax.handler.feature_external_ges, 0)
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
-                pass
+            parser.setFeature(xml.sax.handler.feature_external_ges, 0)
             handler = RSSLinkGrabber(unicodify(info['redirected-url']), charset)
             parser.setContentHandler(handler)
             parser.setErrorHandler(handler)
@@ -1373,9 +1368,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             if 'enclosures' not in entry:
                 try:
                     url = entry['link']
-                except (SystemExit, KeyboardInterrupt):
-                    raise
-                except:
+                except KeyError:
                     continue
                 mimetype = filetypes.guess_mime_type(url)
                 if mimetype is not None:
@@ -1640,15 +1633,11 @@ class RSSFeedImpl(RSSFeedImplBase):
         else:
             try:
                 etag = self.etag
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
+            except AttributeError:
                 etag = None
             try:
                 modified = self.modified
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
+            except AttributeError:
                 modified = None
             logging.info("updating %s", self.url)
             self.download = grabURL(self.url, self._updateCallback,
