@@ -13,6 +13,7 @@ Contents:
 
    manual
    project
+   conventions
    howto
    dev_howto
    translating
