@@ -141,7 +141,7 @@ class Browser(widgetset.Browser):
         self.seen_cache[url] = 1
         self.navigate(url)
 
-    def should_load_url(self, url):
+    def should_load_url(self, url, mimetype=None):
         """Returns True if the Miro browser should handle the url and False
         otherwise.
 
@@ -150,7 +150,10 @@ class Browser(widgetset.Browser):
         * if the url is something that Miro should download instead
         * other things?
         """
-        logging.debug("got %s", url)
+        if mimetype is not None:
+            logging.debug("got %s (%s)" % (url, mimetype))
+        else:
+            logging.debug("got %s" % url)
 
         if url in self.seen_cache:
             del self.seen_cache[url]
@@ -171,6 +174,11 @@ class Browser(widgetset.Browser):
         # if so, try downloading it.
         ret = urlparse(url)
         if filetypes.is_allowed_filename(ret[2]):
+            logging.debug("miro wants to handle %s", url)
+            messages.DownloadURL(url, lambda x: call_on_ui_thread(self.handle_unknown_url, x)).send_to_backend()
+            return False
+
+        if mimetype is not None and filetypes.is_allowed_mimetype(mimetype):
             logging.debug("miro wants to handle %s", url)
             messages.DownloadURL(url, lambda x: call_on_ui_thread(self.handle_unknown_url, x)).send_to_backend()
             return False

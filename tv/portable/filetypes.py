@@ -73,6 +73,13 @@ for (mimetype, exts) in MIMETYPES_EXT_MAP.iteritems():
             EXT_MIMETYPES_MAP[ext] = list()
         EXT_MIMETYPES_MAP[ext].append(mimetype)
 
+def is_allowed_mimetype(mimetype):
+    """
+    Pass a mimetype to this method and it will return a boolean
+    saying if the mimetype is something Miro can handle.
+    """
+    return (mimetype in MIMETYPES_EXT_MAP.keys())
+
 def is_allowed_filename(filename):
     """
     Pass a filename to this method and it will return a boolean

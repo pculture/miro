@@ -125,20 +125,12 @@ class BrowserDelegate (NSObject):
     def webView_didFinishLoadForFrame_(self, webview, frame):
         self.browser.emit('net-stop')
 
-    # Intercept navigation actions and give program a chance to respond
-    def webView_decidePolicyForNavigationAction_request_frame_decisionListener_(self, webview, action, request, frame, listener):
-        method = request.HTTPMethod()
+    def webView_decidePolicyForMIMEType_request_frame_decisionListener_(self, webview, mtype, request, frame, listener):
         url = unicode(request.URL())
-        body = request.HTTPBody()
-        ntype = action['WebActionNavigationTypeKey']
-        #print "policy %d for url %s" % (ntype, url)
-        if ntype in (WebNavigationTypeLinkClicked, WebNavigationTypeFormSubmitted, WebNavigationTypeOther):
-            if self.browser.should_load_url(url):
-                listener.use()
-            else:
-                listener.ignore()
-        else:
+        if self.browser.should_load_url(url, mtype):
             listener.use()
+        else:
+            listener.ignore()        
 
     # Intercept external links requests
     def webView_decidePolicyForNewWindowAction_request_newFrameName_decisionListener_(self, webView, info, request, name, listener):
