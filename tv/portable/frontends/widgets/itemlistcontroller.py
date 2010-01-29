@@ -409,6 +409,7 @@ class SimpleItemListController(ItemListController):
 
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
+        self.check_for_empty_list()
 
     def normal_item_views(self):
         return [self.item_view]
