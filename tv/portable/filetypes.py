@@ -40,6 +40,7 @@ AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka', '.flac', '.ogg']
 FEED_EXTENSIONS = ['.xml', '.rss', '.atom']
 OTHER_EXTENSIONS = ['.pdf', '.txt', '.html', '.doc', '.bmp', '.gif', '.jpg',
         '.jpeg', '.png', '.psd', '.tif', '.tiff',]
+SUBTITLES_EXTENSIONS = ['.srt', '.sub', '.ass', '.ssa', '.smil', '.cmml']
 
 
 UNSUPPORTED_MIMETYPES = ("video/3gpp", "video/vnd.rn-realvideo", "video/x-ms-asf")
@@ -133,23 +134,21 @@ def is_torrent_filename(filename):
     Pass a filename to this method and it will return a boolean
     saying if the filename represents a torrent file.
     """
-    if not filename:
-        return False
-    filename = filename.lower()
-    return filename.endswith('.torrent')
+    return _check_filename(filename, ['.torrent'])
 
 def is_feed_filename(filename):
     """
     Pass a filename to this method and it will return a boolean saying if the
     filename possibly represents an Atom or RSS feed URL.
     """
-    if not filename:
-        return False
-    filename = filename.lower()
-    for ext in FEED_EXTENSIONS:
-        if filename.endswith(ext):
-            return True
-    return False
+    return _check_filename(filename, FEED_EXTENSIONS)
+
+def is_subtitle_filename(filename):
+    """
+    Pass a filename to this method and it will return a boolean saying if the
+    filename possibly represents a sidecar subtitle file.
+    """
+    return _check_filename(filename, SUBTITLES_EXTENSIONS)
 
 def is_video_enclosure(enclosure):
     """
