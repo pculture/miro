@@ -28,8 +28,14 @@
 
 TWO_LETTERS_CODE = "alpha2"
 THREE_LETTERS_CODE = "alpha3"
+LENGTH_MAP = {2: TWO_LETTERS_CODE, 3: THREE_LETTERS_CODE}
 
-def find(value, key=TWO_LETTERS_CODE):
+def find(value, key=None):
+    if key is None:
+        try:
+            key = LENGTH_MAP[len(value)]
+        except Exception, e:
+            return None
     for lang in LANGUAGES_MAP:
         if key in lang and lang[key] == value:
             return lang

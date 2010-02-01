@@ -32,12 +32,7 @@ def patch_iso_639_map():
     for code in OSX_SCRIPT_CODES_LIST:
         key = code[1]
         if key is not None:
-            if len(key) == 2:
-                lang = iso_639.find(key, iso_639.TWO_LETTERS_CODE)
-            elif len(key) == 3:
-                lang = iso_639.find(key, iso_639.THREE_LETTERS_CODE)
-            else:
-                lang = None
+            lang = iso_639.find(key)
             if lang is not None:
                 lang["script-code"] = code[0]
 

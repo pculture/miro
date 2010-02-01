@@ -402,7 +402,7 @@ class VideoRenderer(Renderer):
         lang = None
         if tag_list is not None and gst.TAG_LANGUAGE_CODE in tag_list:
             code = tag_list[gst.TAG_LANGUAGE_CODE]
-            lang = iso_639.find(code, iso_639.THREE_LETTERS_CODE)
+            lang = iso_639.find(code)
         if lang is None:
             return _("Unknown Language")
         else:
@@ -425,10 +425,7 @@ class VideoRenderer(Renderer):
         if "." in code:
             code = code.replace(".", "")
 
-        lang = iso_639.find(code, iso_639.THREE_LETTERS_CODE)
-        if lang == None:
-            lang = iso_639.find(code, iso_639.TWO_LETTERS_CODE)
-
+        lang = iso_639.find(code)
         if lang is None:
             return _("Unknown Language")
         else:
