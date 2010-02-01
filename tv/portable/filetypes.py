@@ -35,15 +35,18 @@ import os
 # NOTE: if you change VIDEO_EXTENSIONS or AUDIO_EXTENSIONS, consider writing a
 # database update so that the file_type attribute of the item table gets fixed
 
-VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogv', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid', '.rmvb', '.mkv', '.m2v', '.ogm']
+VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogv', '.anx',
+                    '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid',
+                    '.rmvb', '.mkv', '.m2v', '.ogm']
 AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka', '.flac', '.ogg']
 FEED_EXTENSIONS = ['.xml', '.rss', '.atom']
 OTHER_EXTENSIONS = ['.pdf', '.txt', '.html', '.doc', '.bmp', '.gif', '.jpg',
-        '.jpeg', '.png', '.psd', '.tif', '.tiff',]
+                    '.jpeg', '.png', '.psd', '.tif', '.tiff',]
 SUBTITLES_EXTENSIONS = ['.srt', '.sub', '.ass', '.ssa', '.smil', '.cmml']
 
 
-UNSUPPORTED_MIMETYPES = ("video/3gpp", "video/vnd.rn-realvideo", "video/x-ms-asf")
+UNSUPPORTED_MIMETYPES = ("video/3gpp", "video/vnd.rn-realvideo",
+                         "video/x-ms-asf")
 
 MIMETYPES_EXT_MAP = {
     'video/quicktime':  ['.mov'],
@@ -86,7 +89,9 @@ def is_allowed_filename(filename):
     Pass a filename to this method and it will return a boolean
     saying if the filename represents video, audio or torrent.
     """
-    return is_video_filename(filename) or is_audio_filename(filename) or is_torrent_filename(filename)
+    return (is_video_filename(filename)
+            or is_audio_filename(filename)
+            or is_torrent_filename(filename))
 
 def is_playable_filename(filename):
     """
@@ -155,19 +160,19 @@ def is_video_enclosure(enclosure):
     Pass an enclosure dictionary to this method and it will return a boolean
     saying if the enclosure is a video or not.
     """
-    return (_has_video_type(enclosure) or
-            _has_video_extension(enclosure, 'url') or
-            _has_video_extension(enclosure, 'href'))
+    return (_has_video_type(enclosure)
+            or _has_video_extension(enclosure, 'url')
+            or _has_video_extension(enclosure, 'href'))
 
 def _has_video_type(enclosure):
-    return ('type' in enclosure and
-            (enclosure['type'].startswith(u'video/') or
-             enclosure['type'].startswith(u'audio/') or
-             enclosure['type'] == u"application/ogg" or
-             enclosure['type'] == u"application/x-annodex" or
-             enclosure['type'] == u"application/x-bittorrent" or
-             enclosure['type'] == u"application/x-shockwave-flash") and
-            (enclosure['type'] not in UNSUPPORTED_MIMETYPES))
+    return ('type' in enclosure
+            and (enclosure['type'].startswith(u'video/')
+                 or enclosure['type'].startswith(u'audio/')
+                 or enclosure['type'] == u"application/ogg"
+                 or enclosure['type'] == u"application/x-annodex"
+                 or enclosure['type'] == u"application/x-bittorrent"
+                 or enclosure['type'] == u"application/x-shockwave-flash")
+            and (enclosure['type'] not in UNSUPPORTED_MIMETYPES))
 
 def _has_video_extension(enclosure, key):
     from miro import download_utils
@@ -176,22 +181,22 @@ def _has_video_extension(enclosure, key):
         return is_allowed_filename(elems[3])
     return False
 
-def is_feed_content_type(contentType):
+def is_feed_content_type(content_type):
     """Is a content-type for a RSS feed?"""
 
-    feedTypes = [ u'application/rdf+xml', u'application/atom+xml',
-            u'application/rss+xml', u'application/podcast+xml', u'text/xml',
-            u'application/xml', 
-        ]
-    for type in feedTypes:
-        if contentType.startswith(type):
+    feed_types = [u'application/rdf+xml', u'application/atom+xml',
+                  u'application/rss+xml', u'application/podcast+xml',
+                  u'text/xml', u'application/xml', 
+                  ]
+    for type_ in feed_types:
+        if content_type.startswith(type_):
             return True
     return False
 
-def is_maybe_feed_content_type(contentType):
+def is_maybe_feed_content_type(content_type):
     """Could the content type contain a feed?
     """
-    return contentType.startswith(u"text/")
+    return content_type.startswith(u"text/")
 
 def is_maybe_rss(body):
     """Sniffs the body to determine whether it's a feed or not.
@@ -202,38 +207,40 @@ def is_maybe_rss(body):
     if len(body) > 512:
         body = body[0:512]
 
-    for mem in ( "<rss", "<feed", "<rdf:RDF" ):
+    for mem in ("<rss", "<feed", "<rdf:RDF"):
         if body.find(mem) != -1:
             return True
     return False
 
 def is_maybe_rss_url(url):
-    return (url.startswith("http") and
-            (url.startswith("http://feeds.feedburner.com") or "rss" in url))
+    return (url.startswith("http")
+            and (url.startswith("http://feeds.feedburner.com")
+                 or "rss" in url))
 
 def guess_extension(mimetype):
     """
-    Pass a mime type to this method and it will return a corresponding file
-    extension, or None if it doesn't know about the type.
+    Pass a mime type to this method and it will return a corresponding
+    file extension, or None if it doesn't know about the type.
     """
-    possibleExtensions = MIMETYPES_EXT_MAP.get(mimetype)
-    if possibleExtensions is None:
+    possible_extensions = MIMETYPES_EXT_MAP.get(mimetype)
+    if possible_extensions is None:
         return None
-    return possibleExtensions[0]
+    return possible_extensions[0]
 
 def guess_mime_type(filename):
     """
-    Pass a filename to this method and it will return a corresponding mime type,
-    or 'video/unknown' if the filename has a known video extension but no 
-    corresponding mime type, or None if it doesn't know about the file extension.
+    Pass a filename to this method and it will return a corresponding
+    mime type, or 'video/unknown' if the filename has a known video
+    extension but no corresponding mime type, or None if it doesn't
+    know about the file extension.
     """
     root, ext = os.path.splitext(filename)
-    possibleTypes = EXT_MIMETYPES_MAP.get(ext)
-    if possibleTypes is None:
+    possible_types = EXT_MIMETYPES_MAP.get(ext)
+    if possible_types is None:
         if is_video_filename(filename):
             return 'video/unknown'
         elif is_audio_filename(filename):
             return 'audio/unknown'
         else:
             return None
-    return possibleTypes[0]
+    return possible_types[0]
