@@ -45,6 +45,7 @@ from miro.plat import qtcomp
 from miro.plat import script_codes
 from miro.plat.frontends.widgets import threads
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
+from miro.util import copy_subtitle_file
 
 ###############################################################################
 
@@ -292,26 +293,7 @@ class Player(player.Player):
             track.setAttribute_forKey_(0, QTTrackEnabledAttribute)
 
     def select_subtitle_file(self, sub_path):
-        sub_basename = os.path.basename(sub_path)
-        match = re.match("(.*)(\....?)(\..*)", sub_basename)
-        if match is not None:
-            sub_basename_root = match.group(1)
-            sub_language = match.group(2)
-            sub_ext = match.group(3)
-            if iso_639.find(sub_language[1:]) is not None:
-                sub_ext = sub_language + sub_ext
-            else:
-                sub_basename_root = sub_basename_root + sub_language
-        else:
-            sub_basename_root, sub_ext = os.path.splitext(sub_basename)
-        movie_basename = os.path.basename(self.item_info.video_path)
-        movie_basename_root, movie_ext = os.path.splitext(movie_basename)
-        if sub_basename_root != movie_basename_root:
-            sub_basename = movie_basename_root + sub_ext
-        dest_path = os.path.join(os.path.dirname(self.item_info.video_path), sub_basename)
-        if os.path.exists(dest_path):
-            os.unlink(dest_path)
-        os.link(sub_path, dest_path)
+        sub_path = copy_subtitle_file(sub_path, self.item_info)
 
         total_time = self.get_total_playback_time()
         saved_pos = self.get_elapsed_playback_time()
