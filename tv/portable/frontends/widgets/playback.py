@@ -34,6 +34,7 @@ from miro import prefs
 from miro import config
 from miro import signals
 from miro import messages
+from miro import filetypes
 
 from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import timer
@@ -539,7 +540,7 @@ class PlaybackManager (signals.SignalEmitter):
         if not self.is_playing:
             return
         title = _('Open Subtitles File...')
-        filters = [(_('Subtitle files'), ['srt', 'sub', 'ass', 'ssa'])]
+        filters = [(_('Subtitle files'), [ext[1:] for ext in filetypes.SUBTITLES_EXTENSIONS])]
         filename = dialogs.ask_for_open_pathname(title, filters=filters, select_multiple=False)
         if filename is None:
             return
