@@ -577,10 +577,20 @@ class VLCRenderer:
         except VLCError, e:
             logging.warn("exception when setting subtitle track: %s", e)
 
-    def select_subtitle_file(self, item, path):
-        path = path.encode('utf-8')
+    def select_subtitle_file(self, item, sub_path):
+        sub_path = sub_path.encode('utf-8')
+        try:
+            sub_path = copy_subtitle_file(sub_path, item.video_path)
+        except WindowsError:
+            # FIXME - need a better way to deal with this.  when this
+            # happens, then the subtitle file isn't in the right place
+            # for VLC to pick it up on the next playback forcing the
+            # user to select it again.
+            # This is bug 12813.
+            logging.exception("exception thrown when copying subtitle file")
+
         res = libvlc.libvlc_video_set_subtitle_file(
-            self.media_player, ctypes.c_char_p(path), self.exc.ref())
+            self.media_player, ctypes.c_char_p(sub_path), self.exc.ref())
         try:
             self.exc.check()
         except VLCError, e:
