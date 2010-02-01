@@ -34,7 +34,7 @@ def find(value, key=None):
     if key is None:
         try:
             key = LENGTH_MAP[len(value)]
-        except Exception, e:
+        except (TypeError, KeyError):
             return None
     for lang in LANGUAGES_MAP:
         if key in lang and lang[key] == value:
