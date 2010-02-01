@@ -293,7 +293,17 @@ class Player(player.Player):
 
     def select_subtitle_file(self, sub_path):
         sub_basename = os.path.basename(sub_path)
-        sub_basename_root, sub_ext = os.path.splitext(sub_basename)
+        match = re.match("(.*)(\....?)(\..*)", sub_basename)
+        if match is not None:
+            sub_basename_root = match.group(1)
+            sub_language = match.group(2)
+            sub_ext = match.group(3)
+            if iso_639.find(sub_language[1:]) is not None:
+                sub_ext = sub_language + sub_ext
+            else:
+                sub_basename_root = sub_basename_root + sub_language
+        else:
+            sub_basename_root, sub_ext = os.path.splitext(sub_basename)
         movie_basename = os.path.basename(self.item_info.video_path)
         movie_basename_root, movie_ext = os.path.splitext(movie_basename)
         if sub_basename_root != movie_basename_root:
