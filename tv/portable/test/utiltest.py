@@ -392,7 +392,7 @@ class MatrixTest(MiroTestCase):
         self.assertEquals(m[0,0], 1)
         self.assertEquals(m[0,1], None)
 
-class Test_find_subtitles(MiroTestCase):
+class Test_gather_subtitles_files(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
         self.tempdir = tempfile.mkdtemp()

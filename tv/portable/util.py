@@ -315,7 +315,7 @@ def gather_subtitle_files(movie_path):
         possible = [os.path.join(subdir, mem)
                     for mem in os.listdir(subdir)
                     if mem.startswith(basename)
-                    and (mem.endswith(".srt") or mem.endswith(".sub"))]
+                    and filetypes.is_subtitle_filename(mem)]
         if len(possible) > 0:
             subtitle_files.extend(possible)
 
