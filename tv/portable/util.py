@@ -35,6 +35,7 @@ any other Miro modules.
 import os
 import random
 import re
+import shutil
 try:
     from hashlib import sha1 as sha
 except ImportError:
@@ -321,6 +322,38 @@ def gather_subtitle_files(movie_path):
 
     subtitle_files.sort()
     return subtitle_files
+
+def copy_subtitle_file(sub_path, video_path):
+    """Copies the subtitle file located at sub_path alongside the
+    video file located at video_path.  It also changes the name
+    so that the subtitle file follows the rules of sidecar files.
+
+    Returns the path the subtitle file was copied to.
+    """
+    from miro import iso_639
+    
+    sub_basename = os.path.basename(sub_path)
+    match = re.match("(.*)(\....?)(\..*)", sub_basename)
+    if match is not None:
+        sub_basename_root = match.group(1)
+        sub_language = match.group(2)
+        sub_ext = match.group(3)
+        if iso_639.find(sub_language[1:]) is not None:
+            sub_ext = sub_language + sub_ext
+        else:
+            sub_basename_root = sub_basename_root + sub_language
+    else:
+        sub_basename_root, sub_ext = os.path.splitext(sub_basename)
+
+    video_basename = os.path.basename(video_path)
+    video_basename_root, video_ext = os.path.splitext(video_basename)
+    if sub_basename_root != video_basename_root:
+        sub_basename = video_basename_root + sub_ext
+    dest_path = os.path.join(os.path.dirname(video_path), sub_basename)
+    if os.path.exists(dest_path):
+        os.remove(dest_path)
+    shutil.copyfile(sub_path, dest_path)
+    return dest_path
 
 def format_size_for_user(nbytes, zero_string="", with_decimals=True,
                          kb_only=False):

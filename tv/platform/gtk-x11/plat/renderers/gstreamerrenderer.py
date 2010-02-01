@@ -45,7 +45,7 @@ GST_PLAY_FLAG_TEXT          = (1 << 2)
 from miro import app
 from miro import config
 from miro import prefs
-from miro.util import gather_subtitle_files
+from miro.util import gather_subtitle_files, copy_subtitle_file
 from miro.gtcache import gettext as _
 from miro.plat import options
 from miro import iso_639
@@ -493,11 +493,7 @@ class VideoRenderer(Renderer):
 
         filenames = [filename for lang, filename in self.get_subtitles().values()]
         if sub_path not in filenames:
-            dstname = os.path.splitext(iteminfo.video_path)[0]
-            ext = os.path.splitext(sub_path)[1]
-            dstpath = dstname + ".ex" + ext
-            shutil.copyfile(sub_path, dstpath)
-            sub_path = dstpath
+            sub_path = copy_subtitle_file(sub_path, iteminfo.video_path)
 
         def handle_ok():
             app.playback_manager.emit('will-play', total_time)

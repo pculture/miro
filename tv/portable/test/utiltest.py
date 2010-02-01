@@ -459,3 +459,54 @@ class Test_gather_subtitles_files(MiroTestCase):
 
         self.assertEquals(sub_files,
                           util.gather_subtitle_files(FilenameType(movie_file)))
+
+class Test_gather_subtitles_files(MiroTestCase):
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.tempdir = tempfile.mkdtemp()
+
+    def tearDown(self):
+        MiroTestCase.tearDown(self)
+        shutil.rmtree(self.tempdir, ignore_errors=True)
+
+    def create_files(self, files):
+        for mem in files:
+            dirname = os.path.dirname(mem)
+            if not os.path.exists(dirname):
+                os.makedirs(dirname)
+
+            filep = open(mem, "w")
+            filep.write("lalala")
+            filep.close()
+
+    def test_simple(self):
+        sub_path = os.path.join(self.tempdir, "otherdir/subtitle.srt")
+        video_path = os.path.join(self.tempdir, "foo.mov")
+        self.create_files([sub_path, video_path])
+
+        ret = util.copy_subtitle_file(sub_path, video_path)
+        expected = os.path.join(self.tempdir, "foo.srt")
+        self.assert_(os.path.exists(expected))
+        self.assertEqual(expected, ret)
+
+    def test_simple_with_language(self):
+        sub_path = os.path.join(self.tempdir, "otherdir/subtitle.en.srt")
+        video_path = os.path.join(self.tempdir, "foo.mov")
+        self.create_files([sub_path, video_path])
+
+        ret = util.copy_subtitle_file(sub_path, video_path)
+        expected = os.path.join(self.tempdir, "foo.en.srt")
+        self.assert_(os.path.exists(expected))
+        self.assertEqual(expected, ret)
+
+    def test_nonlanguage(self):
+        # "ex" is not a valid language code, so this should ignore
+        # that part
+        sub_path = os.path.join(self.tempdir, "otherdir/subtitle.ex.srt")
+        video_path = os.path.join(self.tempdir, "foo.mov")
+        self.create_files([sub_path, video_path])
+
+        ret = util.copy_subtitle_file(sub_path, video_path)
+        expected = os.path.join(self.tempdir, "foo.srt")
+        self.assert_(os.path.exists(expected))
+        self.assertEqual(expected, ret)
