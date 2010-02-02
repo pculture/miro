@@ -418,7 +418,7 @@ class VideoRenderer(Renderer):
         # if the filename is like "foo.srt" and "srt", then there
         # is no language code, so we return None
         if not code:
-            return None
+            return _("Unknown Language")
 
         # remove . in the code so we end up with what's probably
         # a two or three letter language code
@@ -450,6 +450,7 @@ class VideoRenderer(Renderer):
         for i, mem in enumerate(files):
             tracks[external_track_id + i] = (self._get_subtitle_file_name(mem),
                                              mem)
+
         return tracks
 
     def get_subtitle_tracks(self):
