@@ -293,7 +293,7 @@ class Player(player.Player):
             track.setAttribute_forKey_(0, QTTrackEnabledAttribute)
 
     def select_subtitle_file(self, sub_path):
-        sub_path = copy_subtitle_file(sub_path, self.item_info)
+        sub_path = copy_subtitle_file(sub_path, self.item_info.video_path)
 
         total_time = self.get_total_playback_time()
         saved_pos = self.get_elapsed_playback_time()
