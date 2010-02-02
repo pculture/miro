@@ -241,11 +241,13 @@ class PlaybackManager (signals.SignalEmitter):
         if not self.removing_video_display:
             self.stop()
 
-    def play(self):
+    def play(self, start_at=0):
         duration = self.player.get_total_playback_time()
         self.emit('will-play', duration)
         resume_time = self.playlist[self.position].resume_time
-        if (config.get(prefs.RESUME_VIDEOS_MODE)
+        if start_at > 0:
+            self.player.play_from_time(start_at)
+        elif (config.get(prefs.RESUME_VIDEOS_MODE)
                and resume_time > 10
                and not self.is_paused):
             self.player.play_from_time(resume_time)
@@ -539,12 +541,21 @@ class PlaybackManager (signals.SignalEmitter):
     def open_subtitle_file(self):
         if not self.is_playing:
             return
+
+        pos = self.player.get_elapsed_playback_time()
+        def after_successful_select():
+            self.play(start_at=pos)
+
+        self.pause()
+
         title = _('Open Subtitles File...')
         filters = [(_('Subtitle files'), [ext[1:] for ext in filetypes.SUBTITLES_EXTENSIONS])]
         filename = dialogs.ask_for_open_pathname(title, filters=filters, select_multiple=False)
         if filename is None:
+            self.play()
             return
-        self.player.select_subtitle_file(filename)
+
+        self.player.select_subtitle_file(filename, after_successful_select)
 
 class DetachedWindow(widgetset.Window):
     def __init__(self, title, rect):

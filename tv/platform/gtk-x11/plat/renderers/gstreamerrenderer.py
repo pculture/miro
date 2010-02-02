@@ -488,22 +488,14 @@ class VideoRenderer(Renderer):
         flags = self.playbin.get_property('flags')
         self.playbin.set_property('flags', flags & ~GST_PLAY_FLAG_TEXT)
 
-    def select_subtitle_file(self, iteminfo, sub_path):
-        current_time = self.get_current_time()
-        total_time = self.get_duration()
-
+    def select_subtitle_file(self, iteminfo, sub_path, handle_successful_select):
+        def handle_ok():
+            handle_successful_select()
+        def handle_err():
+            app.playback_manager.stop()
         filenames = [filename for lang, filename in self.get_subtitles().values()]
         if sub_path not in filenames:
             sub_path = copy_subtitle_file(sub_path, iteminfo.video_path)
-
-        def handle_ok():
-            app.playback_manager.emit('will-play', total_time)
-            self.set_current_time(current_time)
-            self.play()
-            app.playback_manager.emit('did-start-playing')
-        def handle_err():
-            app.playback_manager.stop()
-        app.playback_manager.emit('will-pause')
         self.select_file(iteminfo, handle_ok, handle_err, sub_path)
 
 def movie_data_program_info(movie_path, thumbnail_path):

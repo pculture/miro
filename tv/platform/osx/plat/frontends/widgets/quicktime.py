@@ -292,26 +292,13 @@ class Player(player.Player):
         if track is not None:
             track.setAttribute_forKey_(0, QTTrackEnabledAttribute)
 
-    def select_subtitle_file(self, sub_path):
-        sub_path = copy_subtitle_file(sub_path, self.item_info.video_path)
-
-        total_time = self.get_total_playback_time()
-        saved_pos = self.get_elapsed_playback_time()
-        saved_item_info = self.item_info
-        
+    def select_subtitle_file(self, sub_path, handle_successful_select):
         def handle_ok():
-            app.playback_manager.emit('will-play', total_time)
-            self.play_from_time(saved_pos)
-            app.playback_manager.notify_update()
-            app.playback_manager.schedule_update()
-            app.playback_manager.emit('did-start-playing')
+            handle_successful_select()
         def handle_err():
             app.playback_manager.stop()
-
-        app.playback_manager.emit('will-pause')
-        app.playback_manager.cancel_update_timer()
-        self.stop()
-        self.set_item(saved_item_info, handle_ok, handle_err)
+        copy_subtitle_file(sub_path, self.item_info.video_path)
+        self.set_item(self.item_info, handle_ok, handle_err)
 
     def set_volume(self, volume):
         if self.movie:
