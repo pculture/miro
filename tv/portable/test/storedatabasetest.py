@@ -407,6 +407,19 @@ class DiskTest(FakeSchemaTest):
         app.bulk_sql_manager.finish()
         self.assertEquals(Human.make_view().count(), 2)
 
+    def test_bulk_insert_with_signal_change(self):
+        app.bulk_sql_manager.start()
+        # nothing should be inserted yet
+        lee2 = Human(u'lee2', 25, 1.4, [], {u'virtual bowling': 212})
+        lee2.name = u'lee2-changed'
+        # calling signal_change() shouldn't throw an exception like it did in
+        # ticket #12806
+        lee2.signal_change()
+        app.bulk_sql_manager.finish()
+        # double check that the new name is the correct one.
+        lee2 = self.reload_object(lee2)
+        self.assertEqual(lee2.name, u'lee2-changed')
+
 class ObjectMemoryTest(FakeSchemaTest):
     def test_remove_remove_object_map(self):
         self.reload_test_database()

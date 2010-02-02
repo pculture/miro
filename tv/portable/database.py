@@ -248,6 +248,7 @@ class BulkSQLManager(object):
         self.active = False
         self.to_insert = {}
         self.to_remove = {}
+        self.pending_inserts = set()
 
     def start(self):
         if self.active:
@@ -277,6 +278,7 @@ class BulkSQLManager(object):
                     "have items to commit.  Are we in a circular loop?")
         self.to_insert = {}
         self.to_remove = {}
+        self.pending_inserts = set()
 
     def _commit_sql(self, to_insert, to_remove):
         for table_name, objects in to_insert.items():
@@ -310,9 +312,17 @@ class BulkSQLManager(object):
             inserts_for_table = []
             self.to_insert[table_name] = inserts_for_table
         inserts_for_table.append(obj)
+        self.pending_inserts.add(obj)
+
+    def will_insert(self, obj):
+        return obj in self.pending_inserts
 
     def add_remove(self, obj):
         table_name = app.db.table_name(obj.__class__)
+        if self.will_insert(obj):
+            self.to_insert[table_name].remove(obj)
+            self.pending_inserts.remove(obj)
+            return
         try:
             removes_for_table = self.to_remove[table_name]
         except KeyError:
@@ -519,6 +529,11 @@ class DDBObject(signals.SignalEmitter):
             raise DatabaseConstraintError, msg
         self.on_signal_change()
         self.check_constraints()
+        if app.bulk_sql_manager.will_insert(self):
+            # Don't need to send an UPDATE SQL command, or check the view
+            # trackers in this case.  Both will be done when the
+            # BulkSQLManager.finish() is called.
+            return
         if needs_save:
             app.db.update_obj(self)
         app.view_tracker_manager.update_view_trackers(self)
