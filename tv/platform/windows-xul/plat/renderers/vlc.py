@@ -566,6 +566,12 @@ class VLCRenderer:
         count = libvlc.libvlc_video_get_spu_count(
             self.media_player, self.exc.ref())
         self.exc.check()
+
+        # if we're disabling subtitles but there aren't any, we
+        # just return
+        if track_index == 0 and count == 0:
+            return
+
         if track_index >= count:
             logging.warn("Subtitle track too high: %s (count: %s)",
                     track_index, count)
@@ -596,7 +602,9 @@ class VLCRenderer:
         except VLCError, e:
             logging.warn("exception when setting subtitle track to file: %s", e)
         else:
-            self.setup_subtitles()
+            # this is the track of the external file
+            self.enable_subtitle_track(1)
+            handle_successful_select()
 
 _sniffer = VLCSniffer()
 
