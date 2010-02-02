@@ -423,7 +423,7 @@ class MainWindow(Window):
             else:
                 action_group.set_sensitive(False)
 
-        removeFeeds = self.menu_structure.get("RemoveFeeds").label
+        removeSomething = self.menu_structure.get("RemoveSomething").label
         updateFeeds = self.menu_structure.get("UpdateFeeds").label
         removePlaylists = self.menu_structure.get("RemovePlaylists").label
         removeItems = self.menu_structure.get("RemoveItems").label
@@ -433,8 +433,8 @@ class MainWindow(Window):
             return menu.state_labels.get(state, menu.label)
 
         for state, actions in menu_manager.states.items():
-            if "RemoveFeeds" in actions:
-                removeFeeds = get_state_label("RemoveFeeds", state)
+            if "RemoveSomething" in actions:
+                removeSomething = get_state_label("RemoveSomething", state)
             if "UpdateFeeds" in actions:
                 updateFeeds = get_state_label("UpdateFeeds", state)
             if "RemovePlaylists" in actions:
@@ -447,7 +447,7 @@ class MainWindow(Window):
         def change_label(group, action, newlabel):
             action_groups[group].get_action(action).set_property("label", newlabel)
 
-        change_label("FeedsSelected", "RemoveFeeds", removeFeeds)
+        change_label("FeedsSelected", "RemoveSomething", removeSomething)
         change_label("FeedsSelected", "UpdateFeeds", updateFeeds)
         change_label("PlaylistsSelected", "RemovePlaylists", removePlaylists)
         change_label("PlayablesSelected", "RemoveItems", removeItems)

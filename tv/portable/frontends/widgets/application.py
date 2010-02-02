@@ -568,6 +568,13 @@ class Application:
         if url is not None:
             messages.NewGuide(url).send_to_backend()
 
+    def remove_something(self):
+        t, infos = app.tab_list_manager.get_selection_and_children()
+        if t in ('feed', 'audio-feed'):
+            self.remove_feeds(infos)
+        elif t in('site'):
+            self.remove_sites(infos)
+
     def remove_current_feed(self):
         t, channel_infos = app.tab_list_manager.get_selection_and_children()
         if t in ('feed', 'audio-feed'):
@@ -758,20 +765,23 @@ class Application:
     def remove_current_site(self):
         t, infos = app.tab_list_manager.get_selection()
         if t == 'site':
-            title = ngettext('Remove site', 'Remove sites', len(infos))
-            description = ngettext(
-                'Are you sure you want to remove this site?',
-                'Are you sure you want to remove these %(count)s sites?',
-                len(infos),
-                {"count": len(infos)}
-                )
+            self.remove_sites(infos)
+    
+    def remove_sites(self, infos):
+        title = ngettext('Remove site', 'Remove sites', len(infos))
+        description = ngettext(
+            'Are you sure you want to remove this site?',
+            'Are you sure you want to remove these %(count)s sites?',
+            len(infos),
+            {"count": len(infos)}
+            )
 
-            ret = dialogs.show_choice_dialog(title, description,
-                    [dialogs.BUTTON_REMOVE, dialogs.BUTTON_CANCEL])
+        ret = dialogs.show_choice_dialog(title, description,
+                [dialogs.BUTTON_REMOVE, dialogs.BUTTON_CANCEL])
 
-            if ret == dialogs.BUTTON_REMOVE:
-                for si in infos:
-                    messages.DeleteSite(si.id).send_to_backend()
+        if ret == dialogs.BUTTON_REMOVE:
+            for si in infos:
+                messages.DeleteSite(si.id).send_to_backend()
 
     def quit_ui(self):
         """Quit  out of the UI event loop."""

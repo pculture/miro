@@ -226,11 +226,18 @@ def get_menu():
                              groups=["NonPlaying"]),
                     Separator(),
                     MenuItem(_("Re_name"), "RenameSomething",
-                             groups=["FeedOrFolderOrSiteSelected"]),
-                    MenuItem(_("_Remove"), "RemoveFeeds",
+                             groups=["FeedOrFolderSelected", "SiteSelected"],
+                             feed=_("Re_name Feed"),
+                             site=_("Re_name Site")),
+                    MenuItem(_("_Remove"), "RemoveSomething",
                              Shortcut(BKSPACE, MOD),
-                             groups=["FeedsSelected"],
-                             folder=_("_Remove Folder")),
+                             groups=["FeedsSelected", "SitesSelected"],
+                             feed=_("_Remove Feed"),
+                             feeds=_("_Remove Feeds"),
+                             folder=_("_Remove Folder"),
+                             folders=_("_Remove Folders"),
+                             site=_("_Remove Site"),
+                             sites=_("_Remove Sites")),
                     MenuItem(_("_Update Feed"), "UpdateFeeds",
                              (Shortcut("r", MOD), Shortcut(F5)),
                              groups=["FeedsSelected"],
@@ -402,9 +409,9 @@ def on_new_feed_folder():
 def on_rename_feed():
     app.widgetapp.rename_something()
 
-@action_handler("RemoveFeeds")
+@action_handler("RemoveSomething")
 def on_remove_feeds():
-    app.widgetapp.remove_current_feed()
+    app.widgetapp.remove_something()
 
 @action_handler("UpdateFeeds")
 def on_update_feeds():
@@ -552,7 +559,10 @@ class MenuManager(signals.SignalEmitter):
         self.play_pause_state = "play"
 
     def reset(self):
-        self.states = {"plural": [], "folder": [], "folders": []}
+        self.states = { "feed": [], "feeds": [],
+                        "folder": [], "folders": [], 
+                        "site": [], "sites": [],
+                        "plural": [] }
         self.enabled_groups = set(['AlwaysOn'])
         if app.playback_manager.is_playing:
             self.enabled_groups.add('PlayPause')
@@ -583,24 +593,34 @@ class MenuManager(signals.SignalEmitter):
         self.enabled_groups.add('FeedsSelected')
         if len(selected_feeds) == 1:
             if selected_feeds[0].is_folder:
-                self.states["folder"].append("RemoveFeeds")
+                self.states["folder"].append("RemoveSomething")
             else:
+                self.states["feed"].append("RemoveSomething")
+                self.states["feed"].append("RenameSomething")
                 self.enabled_groups.add('FeedSelected')
-            self.enabled_groups.add('FeedOrFolderOrSiteSelected')
+            self.enabled_groups.add('FeedOrFolderSelected')
         else:
             selected_folders = [s for s in selected_feeds if s.is_folder]
             if len(selected_folders) == len(selected_feeds):
-                self.states["folders"].append("RemoveFeeds")
+                self.states["folders"].append("RemoveSomething")
             else:
-                self.states["plural"].append("RemoveFeeds")
+                self.states["plural"].append("RemoveSomething")
+                self.states["feeds"].append("RemoveSomething")
+                self.states["feeds"].append("RenameSomething")
             self.states["plural"].append("UpdateFeeds")
 
     def _handle_site_selection(self, selected_sites):
         """Handle the user selecting things in the site list.
         selected_sites is a list of GuideInfo objects
         """
+        self.enabled_groups.add('SitesSelected')
         if len(selected_sites) == 1:
-            self.enabled_groups.add('FeedOrFolderOrSiteSelected')
+            self.enabled_groups.add('SiteSelected')
+            self.states["site"].append("RemoveSomething")
+            self.states["site"].append("RenameSomething")
+        else:
+            self.states["sites"].append("RemoveSomething")
+            self.states["sites"].append("RenameSomething")
 
     def _handle_playlist_selection(self, selected_playlists):
         self.enabled_groups.add('PlaylistsSelected')

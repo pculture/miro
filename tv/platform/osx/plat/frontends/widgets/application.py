@@ -404,7 +404,16 @@ class AppController(NSObject):
 
     def validateUserInterfaceItem_(self, menuitem):
         action = menuitem.representedObject()
-        group_names = menus.osx_menu_structure.get(action).groups
+        item = menus.osx_menu_structure.get(action)
+
+        label = item.label
+        for state, actions in app.menu_manager.states.items():
+            if action in actions:
+                label = item.state_labels.get(state, item.label)
+                break
+        menuitem.setTitleWithMnemonic_(label.replace("_", "&"))
+
+        group_names = item.groups
         for group_name in group_names:
             if group_name in app.menu_manager.enabled_groups:
                 return True
