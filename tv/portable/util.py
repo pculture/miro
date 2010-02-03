@@ -299,6 +299,8 @@ def gather_subtitle_files(movie_path):
     """
     check_f(movie_path)
     subtitle_files = []
+    if movie_path is None:
+        return subtitle_files
     dirname, movie_file = os.path.split(movie_path)
     basename, ext = os.path.splitext(movie_file)
 
