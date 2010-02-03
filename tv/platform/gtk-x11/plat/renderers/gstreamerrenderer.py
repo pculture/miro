@@ -404,7 +404,7 @@ class VideoRenderer(Renderer):
             code = tag_list[gst.TAG_LANGUAGE_CODE]
             lang = iso_639.find(code)
         if lang is None:
-            return _("Unknown Language")
+            return None
         else:
             return lang['name']
 
@@ -418,7 +418,7 @@ class VideoRenderer(Renderer):
         # if the filename is like "foo.srt" and "srt", then there
         # is no language code, so we return None
         if not code:
-            return _("Unknown Language")
+            return None
 
         # remove . in the code so we end up with what's probably
         # a two or three letter language code
@@ -427,7 +427,7 @@ class VideoRenderer(Renderer):
 
         lang = iso_639.find(code)
         if lang is None:
-            return _("Unknown Language")
+            return None
         else:
             return lang['name']
 
@@ -441,15 +441,21 @@ class VideoRenderer(Renderer):
         tracks = {}
 
         for track_index in range(self.playbin.get_property("n-text")):
-            tracks[track_index] = (self._get_subtitle_track_name(track_index),
-                                   None)
+            track_name = self._get_subtitle_track_name(track_index)
+            if track_name is None:
+                track_name = _("Track %(tracknumber)d",
+                               {"tracknumber": track_index})
+            tracks[track_index] = (track_name, None)
 
         files = gather_subtitle_files(self.iteminfo.video_path)
 
         external_track_id = 100
         for i, mem in enumerate(files):
-            tracks[external_track_id + i] = (self._get_subtitle_file_name(mem),
-                                             mem)
+            track_name = self._get_subtitle_file_name(mem)
+            if track_name is None:
+                track_name = _("Subtitle file %(tracknumber)d",
+                               {"tracknumber": i})
+            tracks[external_track_id + i] = (track_name, mem)
 
         return tracks
 
