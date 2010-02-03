@@ -477,7 +477,15 @@ class VideoRenderer(Renderer):
             # file-based subtitle tracks have to get selected as files
             # first, then enable_subtitle_track gets called again with
             # the new track_index
-            self.select_subtitle_file(self.iteminfo, filename)
+            pos = self.get_current_time()
+
+            # note: select_success needs to mirror what playback
+            # manager does
+            def select_success():
+                self.set_current_time(pos)
+                self.play()
+
+            self.select_subtitle_file(self.iteminfo, filename, select_success)
             self.enabled_track = track_index
             return
         flags = self.playbin.get_property('flags')
@@ -488,7 +496,8 @@ class VideoRenderer(Renderer):
         flags = self.playbin.get_property('flags')
         self.playbin.set_property('flags', flags & ~GST_PLAY_FLAG_TEXT)
 
-    def select_subtitle_file(self, iteminfo, sub_path, handle_successful_select):
+    def select_subtitle_file(self, iteminfo, sub_path,
+                             handle_successful_select):
         def handle_ok():
             handle_successful_select()
         def handle_err():
