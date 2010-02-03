@@ -1308,6 +1308,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             for item in self.getChildren():
                 item.delete_files()
                 item.remove()
+        self.delete_subtitle_files()
+
+    def delete_subtitle_files(self):
+        """Deletes subtitle files associated with this item.
+        """
+        files = util.gather_subtitle_files(self.get_filename())
+        for mem in files:
+            fileutil.delete(mem)
 
     def get_state(self):
         """Get the state of this item.  The state will be on of the
