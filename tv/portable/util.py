@@ -305,12 +305,13 @@ def gather_subtitle_files(movie_path):
     basename, ext = os.path.splitext(movie_file)
 
     # check for files in the current directory
-    possible = [os.path.join(dirname, mem)
-                for mem in os.listdir(dirname)
-                if mem.startswith(basename)
-                and filetypes.is_subtitle_filename(mem)]
-    if len(possible) > 0:
-        subtitle_files.extend(possible)
+    if os.path.exists(dirname):
+        possible = [os.path.join(dirname, mem)
+                    for mem in os.listdir(dirname)
+                    if mem.startswith(basename)
+                    and filetypes.is_subtitle_filename(mem)]
+        if len(possible) > 0:
+            subtitle_files.extend(possible)
 
     # check for files in the subtitles/ directory
     subdir = os.path.join(dirname, "subtitles")
