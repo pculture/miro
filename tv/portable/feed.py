@@ -1590,6 +1590,10 @@ class RSSFeedImpl(RSSFeedImplBase):
         self.ufeed.confirm_db_thread()
         if not self.ufeed.id_exists():
             return
+        if len(parsed.entries) == len(parsed.feed) == 0:
+            logging.warn("Empty feed, not updating: %s", self.url)
+            self.feedparser_finished()
+            return
         start = clock()
         parsed = self.parsed = unicodify(parsed)
         self.remember_old_items()
