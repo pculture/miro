@@ -421,6 +421,12 @@ class Test_gather_subtitles_files(MiroTestCase):
 
         return movie_file, sub_files
 
+    def test_no_directory(self):
+        # tests the case where the foofeed directory doesn't exist
+        movie_file = os.path.join(self.tempdir, "foofeed", "foo.mov")
+        self.assertEquals([],
+                          util.gather_subtitle_files(FilenameType(movie_file)))
+
     def test_no_subtitle_files(self):
         movie_file, sub_files = self.create_files("foo.mov")
         self.assertEquals(sub_files,
@@ -460,7 +466,7 @@ class Test_gather_subtitles_files(MiroTestCase):
         self.assertEquals(sub_files,
                           util.gather_subtitle_files(FilenameType(movie_file)))
 
-class Test_gather_subtitles_files(MiroTestCase):
+class Test_copy_subtitle_file(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
         self.tempdir = tempfile.mkdtemp()
