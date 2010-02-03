@@ -53,7 +53,7 @@ class Rect(object):
 
     def get_y(self):
         return self.nsrect.origin.y
-    def set_y(self, x):
+    def set_y(self, y):
         self.nsrect.origin.x = y
     y = property(get_y, set_y)
 
