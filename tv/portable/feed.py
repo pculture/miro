@@ -1345,7 +1345,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                     feed_id=self.ufeed.id, channel_title=channel_title)
         else:
             item = models.Item(fp_values, feed_id=self.ufeed.id,
-                    eligibleForAutoDownload=False,
+                    eligibleForAutoDownload=not self.initialUpdate,
                     channel_title=channel_title)
             if not item.matches_search(self.ufeed.searchTerm):
                 item.remove()
