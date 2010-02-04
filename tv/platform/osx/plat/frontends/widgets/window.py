@@ -509,6 +509,13 @@ class PreferencesWindow (Window):
         self.first_show = True
         self.nswindow.setShowsToolbarButton_(NO)
         self.nswindow.setReleasedWhenClosed_(NO)
+        self.app_notifications = NotificationForwarder.create(NSApp())
+        self.app_notifications.connect(self.on_app_quit, 
+            'NSApplicationWillTerminateNotification')
+
+    def destroy(self):
+        super(PreferencesWindow, self).destroy()
+        self.app_notifications.disconnect()
 
     def get_style_mask(self):
         return NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask
@@ -550,3 +557,6 @@ class PreferencesWindow (Window):
             self.nswindow.center()
             self.first_show = False
         Window.show(self)
+
+    def on_app_quit(self, notification):
+        self.close()
