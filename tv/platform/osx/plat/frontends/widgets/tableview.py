@@ -47,13 +47,6 @@ from miro.plat.frontends.widgets.drawing import DrawingContext, DrawingStyle, Gr
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
 from miro.plat.frontends.widgets.layoutmanager import LayoutManager
 
-def get_all_indexes(tableview, index_set):
-    rows = list()
-    index = index_set.firstIndex()
-    while (index != NSNotFound):
-        rows.append(index)
-        index = index_set.indexGreaterThanIndex_(index)
-    return rows
 
 # Disclosure button used as a reference in get_left_offset()
 _disclosure_button = NSButton.alloc().init()
@@ -434,7 +427,7 @@ class TableViewCommon(object):
                         rect)
             context = NSGraphicsContext.currentContext()
             focused = self.isDescendantOf_(self.window().firstResponder())
-            for row in get_all_indexes(self, self.selectedRowIndexes()):
+            for row in tablemodel.list_from_nsindexset(self.selectedRowIndexes()):
                 self.drawBackgroundGradient(context, focused, row)
     
     def setFrameSize_(self, size):
@@ -1058,7 +1051,7 @@ class TableView(Widget):
     def get_selection(self):
         selection = self.tableview.selectedRowIndexes()
         return [self.model.iter_for_row(self.tableview, row)  \
-                for row in get_all_indexes(self.tableview, selection)]
+                for row in tablemodel.list_from_nsindexset(selection)]
 
     def get_selected(self):
         if self.tableview.allowsMultipleSelection():

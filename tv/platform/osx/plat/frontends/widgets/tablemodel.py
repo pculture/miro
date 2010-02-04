@@ -31,13 +31,21 @@
 import itertools
 
 from AppKit import NSDragOperationNone, NSTableViewDropOn, protocols
-from Foundation import NSObject
+from Foundation import NSObject, NSNotFound
 from objc import YES, NO, nil
 
 from miro import fasttypes
 from miro import signals
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets.simple import Image
+
+def list_from_nsindexset(index_set):
+    rows = list()
+    index = index_set.firstIndex()
+    while (index != NSNotFound):
+        rows.append(index)
+        index = index_set.indexGreaterThanIndex_(index)
+    return rows
 
 class RowList(object):
     """RowList is a Linked list that has some optimizations for looking up
@@ -383,15 +391,10 @@ class MiroTableViewDataSource(DataSourceBase, protocols.NSTableDataSource):
         self.model.remember_row_at_index(node, row)
         return get_column_data(node.values, column)
 
-    def tableView_writeRowIndexes_toPasteboard_(self, tableview, rowIndexes,
+    def tableView_writeRowsWithIndexes_toPasteboard_(self, tableview, rowIndexes,
             pasteboard):
-        indexes = get_all_indexes(tablview, rowIndexes)
+        indexes = list_from_nsindexset(rowIndexes)
         data = [self.model[self.model.nth_iter(i)] for i in indexes]
-        return self.view_writeColumnData_ToPasteboard_(tableview, data, 
-                pasteboard)
-
-    def tableView_writeRows_toPasteboard_(self, tableview, rows, pasteboard):
-        data = [self.model[self.model.nth_iter(i)] for i in rows]
         return self.view_writeColumnData_ToPasteboard_(tableview, data, 
                 pasteboard)
 
