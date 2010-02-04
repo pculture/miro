@@ -447,7 +447,7 @@ class MainWindow(Window):
         def change_label(group, action, newlabel):
             action_groups[group].get_action(action).set_property("label", newlabel)
 
-        change_label("FeedsSelected", "RemoveSomething", removeSomething)
+        change_label("RemoveAllowed", "RemoveSomething", removeSomething)
         change_label("FeedsSelected", "UpdateFeeds", updateFeeds)
         change_label("PlaylistsSelected", "RemovePlaylists", removePlaylists)
         change_label("PlayablesSelected", "RemoveItems", removeItems)

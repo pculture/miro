@@ -226,12 +226,14 @@ def get_menu():
                              groups=["NonPlaying"]),
                     Separator(),
                     MenuItem(_("Re_name"), "RenameSomething",
-                             groups=["FeedOrFolderSelected", "SiteSelected"],
+                             groups=["RenameAllowed"],
+                             # groups=["FeedOrFolderSelected", "SiteSelected"],
                              feed=_("Re_name Feed"),
                              site=_("Re_name Site")),
                     MenuItem(_("_Remove"), "RemoveSomething",
                              Shortcut(BKSPACE, MOD),
-                             groups=["FeedsSelected", "SitesSelected"],
+                             groups=["RemoveAllowed"],
+                             # groups=["FeedsSelected", "SitesSelected"],
                              feed=_("_Remove Feed"),
                              feeds=_("_Remove Feeds"),
                              folder=_("_Remove Folder"),
@@ -591,6 +593,7 @@ class MenuManager(signals.SignalEmitter):
         ``selected_feeds`` is a list of ChannelInfo objects.
         """
         self.enabled_groups.add('FeedsSelected')
+        self.enabled_groups.add("RemoveAllowed")
         if len(selected_feeds) == 1:
             if selected_feeds[0].is_folder:
                 self.states["folder"].append("RemoveSomething")
@@ -599,6 +602,7 @@ class MenuManager(signals.SignalEmitter):
                 self.states["feed"].append("RenameSomething")
                 self.enabled_groups.add('FeedSelected')
             self.enabled_groups.add('FeedOrFolderSelected')
+            self.enabled_groups.add("RenameAllowed")
         else:
             selected_folders = [s for s in selected_feeds if s.is_folder]
             if len(selected_folders) == len(selected_feeds):
@@ -614,8 +618,10 @@ class MenuManager(signals.SignalEmitter):
         selected_sites is a list of GuideInfo objects
         """
         self.enabled_groups.add('SitesSelected')
+        self.enabled_groups.add("RemoveAllowed")
         if len(selected_sites) == 1:
             self.enabled_groups.add('SiteSelected')
+            self.enabled_groups.add("RenameAllowed")
             self.states["site"].append("RemoveSomething")
             self.states["site"].append("RenameSomething")
         else:
