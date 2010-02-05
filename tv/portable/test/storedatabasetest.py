@@ -322,9 +322,8 @@ class DiskTest(FakeSchemaTest):
         # close the database connection without giving LiveStorage the
         # oppertunity to commit when it's closed.
         app.db.connection.close()
-        app.db = storedatabase.LiveStorage(self.save_path,
-                                           schema_version=0,
-                                           object_schemas=self.OBJECT_SCHEMAS)
+        self.setup_new_database(self.save_path, schema_version=0,
+                object_schemas=self.OBJECT_SCHEMAS)
         app.db.upgrade_database()
         self.check_database()
 
@@ -349,7 +348,9 @@ class DiskTest(FakeSchemaTest):
         corrupt_path = os.path.join(os.path.dirname(self.save_path),
                                     'corrupt_database')
         self.assert_(not os.path.exists(corrupt_path))
+        self.allow_db_load_errors(True)
         self.reload_test_database(**reload_args)
+        self.allow_db_load_errors(False)
         self.assert_(os.path.exists(corrupt_path))
 
     def test_upgrade_error(self):

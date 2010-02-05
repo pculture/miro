@@ -139,6 +139,7 @@ class LiveStorage:
             logging.info("sqlite3 has no version attribute.")
 
         db_existed = os.path.exists(path)
+        self.raise_load_errors = False # only gets set in unittests
         self._dc = None
         self._query_times = {}
         self.path = path
@@ -755,6 +756,8 @@ class LiveStorage:
         basic strategy is to log the error, save the current database then
         start fresh with an empty database.
         """
+        if self.raise_load_errors:
+            raise
         if util.chatter:
             logging.exception(message)
         self.connection.close()

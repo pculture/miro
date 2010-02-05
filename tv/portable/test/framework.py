@@ -77,6 +77,7 @@ class MiroTestCase(unittest.TestCase):
         app.in_unit_tests = True
         database.set_thread(threading.currentThread())
         database.setup_managers()
+        self.raise_db_load_errors = True
         app.db = None
         self.reload_database()
         searchengines._engines = [
@@ -113,12 +114,19 @@ class MiroTestCase(unittest.TestCase):
     def reload_database(self, path=':memory:', schema_version=None,
                         object_schemas=None, upgrade=True):
         self.shutdown_database()
-        app.db = storedatabase.LiveStorage(path,
-                                           schema_version=schema_version, 
-                                           object_schemas=object_schemas)
+        self.setup_new_database(path, schema_version, object_schemas)
         if upgrade:
             app.db.upgrade_database()
             database.update_last_id()
+
+    def setup_new_database(self, path, schema_version, object_schemas):
+        app.db = storedatabase.LiveStorage(path,
+                                           schema_version=schema_version,
+                                           object_schemas=object_schemas)
+        app.db.raise_load_errors = self.raise_db_load_errors
+
+    def allow_db_load_errors(self, allow):
+        app.db.raise_load_errors = self.raise_db_load_errors = not allow
 
     def shutdown_database(self):
         if app.db:

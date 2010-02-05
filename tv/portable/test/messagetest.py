@@ -38,7 +38,7 @@ class MessageHandlerTest(MiroTestCase):
 
     def tearDown(self):
         MiroTestCase.tearDown(self)
-        messages.BackendMessage.install_handler(None)
+        messages.BackendMessage.reset_handler()
 
     def testMessageMap(self):
         handler = messages.MessageHandler()
@@ -74,8 +74,8 @@ class TrackerTest(EventLoopTest):
 
     def tearDown(self):
         EventLoopTest.tearDown(self)
-        messages.BackendMessage.install_handler(None)
-        messages.FrontendMessage.install_handler(None)
+        messages.BackendMessage.reset_handler()
+        messages.FrontendMessage.reset_handler()
 
     def check_changed_message(self, index, added=None, changed=None,
                               removed=None):
