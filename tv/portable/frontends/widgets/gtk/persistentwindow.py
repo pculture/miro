@@ -79,7 +79,6 @@ class PersistentWindow(gtk.DrawingArea):
 
     def do_configure_event(self, event):
         self.persistent_window.resize(event.width, event.height)
-        gtk.DrawingArea.do_configure_event(self, event)
 
     def do_size_allocate(self, allocation):
         gtk.DrawingArea.do_size_allocate(self, allocation)
