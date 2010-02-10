@@ -358,12 +358,17 @@ class VLCRenderer:
 
     def set_widget(self, widget):
         hwnd = widget.persistent_window.handle
-        libvlc.libvlc_media_player_set_drawable(self.media_player, hwnd,
+        libvlc.libvlc_media_player_set_hwnd(self.media_player, hwnd,
                                                 self.exc.ref())
         self.exc.check()
 
         widget.add_events(gtk.gdk.EXPOSURE_MASK)
         widget.connect('expose-event', self._on_expose)
+
+    def unset_widget(self):
+        libvlc.libvlc_media_player_set_hwnd(self.media_player, 0,
+                self.exc.ref())
+        self.exc.check()
 
     def _on_expose(self, widget, event):
         gc = widget.style.black_gc
@@ -445,6 +450,7 @@ class VLCRenderer:
 
     def reset(self):
         self.stop()
+        self.unset_widget()
         self.play_from_time = None
         self.play_state = STOPPED
 

@@ -93,6 +93,7 @@ class PersistentWindow(gtk.DrawingArea):
     def do_destroy(self):
         try:
             gtk.DrawingArea.do_destroy(self)
+            self.persistent_window.withdraw()
             self.persistent_window.destroy()
             self.persistent_window = None
         except AttributeError:

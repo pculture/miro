@@ -230,6 +230,9 @@ class VideoWidget(Widget):
         self._widget.add_events(gtk.gdk.BUTTON_PRESS_MASK)
         renderer.set_widget(self._widget)
 
+    def destroy(self):
+        self._widget.destroy()
+
 class Divider(DrawingArea):
     def size_request(self, layout):
         return (1, 25)
@@ -479,6 +482,7 @@ class VideoPlayer(player.Player, VBox):
         app.info_updater.item_changed_callbacks.remove('manual',
                 'playback-list', self._on_items_changed)
         self._items_changed_callback = None
+        self._video_widget.destroy()
 
     def _on_items_changed(self, message):
         for item_info in message.changed:
