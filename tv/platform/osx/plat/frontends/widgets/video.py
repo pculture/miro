@@ -175,13 +175,13 @@ class VideoPlayer (Widget, quicktime.Player):
         self.video_view.setFrame_(NSOffsetRect(frame, 1, 1))
         self.video_view.setFrame_(frame)
 
-    def set_item(self, item_info, callback, errback):
+    def set_item(self, item_info, callback, errback, force_subtitles=False):
         def callback2():
             self.video_view.setMovie_(self.movie)
             self.video_view.setNeedsDisplay_(YES)
             self.video_window.setup(item_info, self)
             callback()
-        quicktime.Player.set_item(self, item_info, callback2, errback)
+        quicktime.Player.set_item(self, item_info, callback2, errback, force_subtitles)
 
     def set_volume(self, volume):
         quicktime.Player.set_volume(self, volume)

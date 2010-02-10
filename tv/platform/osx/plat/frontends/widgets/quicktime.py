@@ -180,7 +180,7 @@ class Player(player.Player):
         self.movie = None
         self.item_info = None
 
-    def set_item(self, item_info, callback, errback):
+    def set_item(self, item_info, callback, errback, force_subtitles=False):
         threads.warn_if_not_on_main_thread('quicktime.Player.set_item')
         qtmovie = self.get_movie_from_file(item_info.video_path)
         self.reset()
@@ -189,7 +189,7 @@ class Player(player.Player):
             self.item_info = item_info
             self.movie_notifications = NotificationForwarder.create(self.movie)
             self.movie_notifications.connect(self.handle_movie_notification, QTMovieDidEndNotification)
-            self.setup_subtitles()
+            self.setup_subtitles(force_subtitles)
             callback()
         else:
             errback()
@@ -226,8 +226,8 @@ class Player(player.Player):
 
         return can_open
 
-    def setup_subtitles(self):
-        if config.get(prefs.ENABLE_SUBTITLES):
+    def setup_subtitles(self, force_subtitles):
+        if config.get(prefs.ENABLE_SUBTITLES) or force_subtitles:
             default_track = self.get_enabled_subtitle_track()
             if default_track is None:
                 tracks = self.get_subtitle_tracks()
@@ -298,7 +298,7 @@ class Player(player.Player):
         def handle_err():
             app.playback_manager.stop()
         copy_subtitle_file(sub_path, self.item_info.video_path)
-        self.set_item(self.item_info, handle_ok, handle_err)
+        self.set_item(self.item_info, handle_ok, handle_err, True)
 
     def set_volume(self, volume):
         if self.movie:
