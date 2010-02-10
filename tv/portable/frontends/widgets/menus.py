@@ -311,8 +311,10 @@ def get_menu():
                     Menu(_("S_ubtitles"), "SubtitlesMenu", [
                             MenuItem(_("None Available"), "NoneAvailable",
                                      groups=["NeverEnabled"]),
+                            Separator(),
                             MenuItem(_("Select a Subtitles File..."),
-                                     "SubtitlesSelect")
+                                     "SubtitlesSelect",
+                                     groups=["PlayingVideo"])
                             ]),
                     ]),
 
