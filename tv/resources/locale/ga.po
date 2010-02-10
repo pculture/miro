@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2010-01-18 16:01-0500\n"
+"POT-Creation-Date: 2010-02-02 19:24-0500\n"
 "PO-Revision-Date: 2009-10-01 23:18+0000\n"
 "Last-Translator: Seanan <Unknown>\n"
 "Language-Team: Irish <ga@li.org>\n"
@@ -15,131 +15,139 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n==2 ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-02-03 00:08+0000\n"
+"X-Launchpad-Export-Date: 2010-02-10 16:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: ../../portable/httpclient.py:90
+#: ../../portable/httpclient.py:101
 #, python-format
 msgid "Error: %(msg)s"
 msgstr "Botún: %(msg)s"
 
-#: ../../portable/httpclient.py:105 ../../portable/httpclient.py:111
+#: ../../portable/httpclient.py:116 ../../portable/httpclient.py:122
 msgid "Can't connect"
 msgstr "Ní féidir nasc"
 
-#: ../../portable/httpclient.py:106
+#: ../../portable/httpclient.py:117
 #, python-format
 msgid "Connection Error: %(msg)s"
 msgstr "Botún nascaithe %(msg)s"
 
-#: ../../portable/httpclient.py:112
+#: ../../portable/httpclient.py:123
 msgid "SSL connection error"
 msgstr "Botún naisc SSL"
 
-#: ../../portable/httpclient.py:116
+#: ../../portable/httpclient.py:127
 msgid "HTTP error"
 msgstr "Botún HTTP"
 
-#: ../../portable/httpclient.py:120
+#: ../../portable/httpclient.py:131
 #, python-format
 msgid "Bad Status Line: %(msg)s"
 msgstr ""
 
-#: ../../portable/httpclient.py:125
+#: ../../portable/httpclient.py:136
 #, python-format
 msgid "Bad Header Line: %(msg)s"
 msgstr ""
 
-#: ../../portable/httpclient.py:130
+#: ../../portable/httpclient.py:141
 #, python-format
 msgid "Bad Chunk size: %(msg)s"
 msgstr "Droch Giotamhéid: %(msg)s"
 
-#: ../../portable/httpclient.py:135
+#: ../../portable/httpclient.py:146
 #, python-format
 msgid "Expected CRLF got: %(character)r"
 msgstr ""
 
-#: ../../portable/httpclient.py:140
+#: ../../portable/httpclient.py:151
 #, python-format
 msgid "%(host)s closed connection"
 msgstr "Dún %(host)s an nasc"
 
-#: ../../portable/httpclient.py:145 ../../portable/httpclient.py:174
+#: ../../portable/httpclient.py:156 ../../portable/httpclient.py:185
 #: ../../portable/downloader.py:370
 msgid "File not found"
 msgstr "Níor aimsíodh an comhad"
 
-#: ../../portable/httpclient.py:146
+#: ../../portable/httpclient.py:157
 msgid "Got 404 status code"
 msgstr "Fuarthas cód stádais 404"
 
-#: ../../portable/httpclient.py:148
+#: ../../portable/httpclient.py:159
 #, python-format
 msgid "Bad Status Code: %(code)s"
 msgstr ""
 
-#: ../../portable/httpclient.py:153
+#: ../../portable/httpclient.py:164
 msgid "Authorization failed"
 msgstr "Theip ar an t-údarú"
 
-#: ../../portable/httpclient.py:158
+#: ../../portable/httpclient.py:169
 #: ../../portable/frontends/widgets/crashdialog.py:48
 msgid "Internal Error"
 msgstr "Botún Inmheánach"
 
-#: ../../portable/httpclient.py:159
+#: ../../portable/httpclient.py:170
 msgid "Pipeline request never started"
 msgstr "Níor thosaíodh an t-iarratas píblíne"
 
-#: ../../portable/httpclient.py:163
+#: ../../portable/httpclient.py:174
 msgid "Timeout"
 msgstr "Teorainn Ama"
 
-#: ../../portable/httpclient.py:164
+#: ../../portable/httpclient.py:175
 #, python-format
 msgid "Connection to %(host)s timed out"
 msgstr "D'imigh an nasc chuig %(host)s thar am"
 
-#: ../../portable/httpclient.py:168
+#: ../../portable/httpclient.py:179
 msgid "Invalid URL"
 msgstr "URL Neamhsheasmhach"
 
-#: ../../portable/httpclient.py:169
+#: ../../portable/httpclient.py:180
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
 msgstr "Ní URL ceart é \"%(url)s\""
 
-#: ../../portable/httpclient.py:175
+#: ../../portable/httpclient.py:186
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
 msgstr "Níl an conair \"%(path)s\" ann"
 
-#: ../../portable/httpclient.py:179
+#: ../../portable/httpclient.py:190
 msgid "Read error"
 msgstr "Tharla botún sa léamh"
 
-#: ../../portable/httpclient.py:180
+#: ../../portable/httpclient.py:191
 #, python-format
 msgid "Error while reading from \"%(path)s\""
 msgstr ""
 
-#: ../../portable/httpclient.py:377
+#: ../../portable/httpclient.py:388
 msgid "Unknown Error code"
 msgstr "Cód Botúin Anaithnid"
 
-#: ../../portable/httpclient.py:409
+#: ../../portable/httpclient.py:420
 msgid "Connection closed"
 msgstr "Nasc dúnta"
 
-#: ../../portable/httpclient.py:830 ../../portable/downloader.py:586
+#: ../../portable/httpclient.py:846 ../../portable/downloader.py:586
 #: ../../portable/downloader.py:594
 msgid "Unknown"
 msgstr "Anaithnid"
 
-#: ../../portable/httpclient.py:831
+#: ../../portable/httpclient.py:847
 msgid "Internal Error: Not ready to send"
 msgstr "Botún Inmheánach: Níl sé réidh le seoladh"
+
+#: ../../portable/frontends/widgets/playback.py:551
+msgid "Open Subtitles File..."
+msgstr ""
+
+#: ../../portable/frontends/widgets/playback.py:552
+msgid "Subtitle files"
+msgstr ""
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -232,7 +240,7 @@ msgid "Total db objects in memory:"
 msgstr ""
 
 #: ../../portable/frontends/widgets/diagnostics.py:118
-#: ../../portable/frontends/widgets/menus.py:322
+#: ../../portable/frontends/widgets/menus.py:331
 msgid "Diagnostics"
 msgstr ""
 
@@ -262,14 +270,12 @@ msgid "Folder should go in this section:"
 msgstr "Ba chóir donn fillteán dul sa roinnn seo:"
 
 #: ../../portable/frontends/widgets/newfolder.py:71
-#: ../../portable/frontends/widgets/itemedit.py:138
 #: ../../portable/frontends/widgets/newfeed.py:72
 #: ../../portable/frontends/widgets/newsearchfeed.py:136
 msgid "video"
 msgstr "físeán"
 
 #: ../../portable/frontends/widgets/newfolder.py:72
-#: ../../portable/frontends/widgets/itemedit.py:139
 #: ../../portable/frontends/widgets/newfeed.py:73
 #: ../../portable/frontends/widgets/newsearchfeed.py:137
 msgid "audio"
@@ -320,29 +326,43 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/itemedit.py:122
+#: ../../portable/frontends/widgets/itemedit.py:136
 #: ../../portable/frontends/widgets/itemcontextmenu.py:107
 msgid "Edit Item"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemedit.py:123
-msgid "Edit the metadata of this item."
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemedit.py:132
+#: ../../portable/frontends/widgets/itemedit.py:145
 msgid "Title:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemedit.py:134
+#: ../../portable/frontends/widgets/itemedit.py:147
 msgid "Description:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemedit.py:136
+#: ../../portable/frontends/widgets/itemedit.py:149
 msgid "Media type:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemedit.py:140
-msgid "other"
+#: ../../portable/frontends/widgets/itemedit.py:151
+#: ../../portable/frontends/widgets/itemlistcontroller.py:521
+#: ../../portable/frontends/widgets/statictabs.py:103
+msgid "Video"
+msgstr "Físeán"
+
+#: ../../portable/frontends/widgets/itemedit.py:152
+#: ../../portable/frontends/widgets/itemlistcontroller.py:527
+#: ../../portable/frontends/widgets/statictabs.py:109
+msgid "Audio"
+msgstr "Fuaim"
+
+#: ../../portable/frontends/widgets/itemedit.py:153
+#: ../../portable/frontends/widgets/itemlistcontroller.py:533
+#: ../../portable/frontends/widgets/statictabs.py:115
+msgid "Other"
+msgstr "Eile"
+
+#: ../../portable/frontends/widgets/itemedit.py:157
+msgid "Path:"
 msgstr ""
 
 #: ../../portable/frontends/widgets/playlist.py:146
@@ -474,7 +494,7 @@ msgstr "Neamhfheicthe"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:721
 #: ../../portable/frontends/widgets/style.py:255
-#: ../../portable/frontends/widgets/style.py:1169
+#: ../../portable/frontends/widgets/style.py:1171
 msgid "Unplayed"
 msgstr "Neamhsheinnte"
 
@@ -510,88 +530,88 @@ msgstr ""
 msgid "New playlist:"
 msgstr "Seinnréim nua:"
 
-#: ../../portable/frontends/widgets/tablist.py:573
-#: ../../portable/frontends/widgets/tablist.py:668
+#: ../../portable/frontends/widgets/tablist.py:575
+#: ../../portable/frontends/widgets/tablist.py:670
 msgid "Copy URL to clipboard"
 msgstr "Macasamhlaigh an URL chuig an ghearrthaisce"
 
-#: ../../portable/frontends/widgets/tablist.py:574
-#: ../../portable/frontends/widgets/application.py:717
+#: ../../portable/frontends/widgets/tablist.py:576
+#: ../../portable/frontends/widgets/application.py:724
 msgid "Rename Site"
 msgstr "Athainmnigh an Suíomh"
 
-#: ../../portable/frontends/widgets/tablist.py:575
+#: ../../portable/frontends/widgets/tablist.py:577
 msgid "Remove Site"
 msgstr "Bain an Suíomh"
 
-#: ../../portable/frontends/widgets/tablist.py:579
+#: ../../portable/frontends/widgets/tablist.py:581
 msgid "Remove Sites"
 msgstr "Bain na Suíomhanna"
 
-#: ../../portable/frontends/widgets/tablist.py:655
+#: ../../portable/frontends/widgets/tablist.py:657
 msgid "Update Feeds In Folder"
 msgstr "Nuashonraigh Fothaí Sa bhFillteán"
 
-#: ../../portable/frontends/widgets/tablist.py:656
-#: ../../portable/frontends/widgets/application.py:698
+#: ../../portable/frontends/widgets/tablist.py:658
+#: ../../portable/frontends/widgets/application.py:705
 msgid "Rename Feed Folder"
 msgstr ""
 
-#: ../../portable/frontends/widgets/tablist.py:657
-#: ../../portable/frontends/widgets/tablist.py:669
-#: ../../portable/frontends/widgets/tablist.py:675
-#: ../../portable/frontends/widgets/tablist.py:711
-#: ../../portable/frontends/widgets/tablist.py:717
-#: ../../portable/frontends/widgets/tablist.py:722
+#: ../../portable/frontends/widgets/tablist.py:659
+#: ../../portable/frontends/widgets/tablist.py:671
+#: ../../portable/frontends/widgets/tablist.py:677
+#: ../../portable/frontends/widgets/tablist.py:713
+#: ../../portable/frontends/widgets/tablist.py:719
+#: ../../portable/frontends/widgets/tablist.py:724
 #: ../../portable/frontends/widgets/prefpanel.py:506
 #: ../../portable/frontends/widgets/style.py:259 ../../portable/dialogs.py:118
 msgid "Remove"
 msgstr "Bain"
 
-#: ../../portable/frontends/widgets/tablist.py:662
+#: ../../portable/frontends/widgets/tablist.py:664
 msgid "Update Feed Now"
 msgstr "Nuashonraigh An Fotha Anois"
 
-#: ../../portable/frontends/widgets/tablist.py:665
+#: ../../portable/frontends/widgets/tablist.py:667
 msgid "Rename"
 msgstr "Athainmnigh"
 
-#: ../../portable/frontends/widgets/tablist.py:667
+#: ../../portable/frontends/widgets/tablist.py:669
 msgid "Revert Feed Name"
 msgstr ""
 
-#: ../../portable/frontends/widgets/tablist.py:674
+#: ../../portable/frontends/widgets/tablist.py:676
 msgid "Update Feeds Now"
 msgstr "Nuashonraigh Fothaí Anois"
 
-#: ../../portable/frontends/widgets/tablist.py:710
-#: ../../portable/frontends/widgets/application.py:713
+#: ../../portable/frontends/widgets/tablist.py:712
+#: ../../portable/frontends/widgets/application.py:720
 msgid "Rename Playlist Folder"
 msgstr "Athainmnigh Fillteán na Seinmréime"
 
-#: ../../portable/frontends/widgets/tablist.py:716
-#: ../../portable/frontends/widgets/application.py:708
-#: ../../portable/playlist.py:199
+#: ../../portable/frontends/widgets/tablist.py:718
+#: ../../portable/frontends/widgets/application.py:715
+#: ../../portable/playlist.py:200
 msgid "Rename Playlist"
 msgstr "Athainmnigh an Seinmréim"
 
-#: ../../portable/frontends/widgets/tablist.py:739
+#: ../../portable/frontends/widgets/tablist.py:741
 msgid "LIBRARY"
 msgstr "LEABHARLANN"
 
-#: ../../portable/frontends/widgets/tablist.py:741
+#: ../../portable/frontends/widgets/tablist.py:743
 msgid "WEBSITES"
 msgstr ""
 
-#: ../../portable/frontends/widgets/tablist.py:743
+#: ../../portable/frontends/widgets/tablist.py:745
 msgid "VIDEO FEEDS"
 msgstr ""
 
-#: ../../portable/frontends/widgets/tablist.py:745
+#: ../../portable/frontends/widgets/tablist.py:747
 msgid "AUDIO FEEDS"
 msgstr "FOTHAÍ FUAIME"
 
-#: ../../portable/frontends/widgets/tablist.py:747
+#: ../../portable/frontends/widgets/tablist.py:749
 msgid "PLAYLISTS"
 msgstr "SEINNRÉIMEANNA"
 
@@ -880,12 +900,12 @@ msgstr "Folaigh"
 
 #: ../../portable/frontends/widgets/gtk/video.py:272
 #: ../../portable/frontends/widgets/style.py:258
-#: ../../portable/frontends/widgets/style.py:1048
-#: ../../portable/frontends/widgets/style.py:1215
+#: ../../portable/frontends/widgets/style.py:1050
+#: ../../portable/frontends/widgets/style.py:1217
 #: ../../portable/frontends/widgets/itemcontextmenu.py:115
 #: ../../portable/frontends/widgets/itemcontextmenu.py:216
 #: ../../portable/dialogs.py:116
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:127
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:125
 msgid "Keep"
 msgstr "Coimeád"
 
@@ -896,14 +916,14 @@ msgstr ""
 #: ../../portable/frontends/widgets/gtk/video.py:285
 #: ../../portable/frontends/widgets/itemcontextmenu.py:67
 #: ../../portable/dialogs.py:117
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:131
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:129
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:186
 msgid "Delete"
 msgstr "Scrios"
 
 #: ../../portable/frontends/widgets/gtk/video.py:291
 #: ../../portable/frontends/widgets/itemcontextmenu.py:157
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:123
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:121
 msgid "Share"
 msgstr "Roinn"
 
@@ -926,8 +946,8 @@ msgid "Pop-out"
 msgstr ""
 
 #: ../../portable/frontends/widgets/gtk/video.py:351
-#: ../../portable/frontends/widgets/menus.py:303
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:379
+#: ../../portable/frontends/widgets/menus.py:310
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:378
 msgid "None Available"
 msgstr ""
 
@@ -937,56 +957,46 @@ msgstr ""
 msgid "Disable Subtitles"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/window.py:637
+#: ../../portable/frontends/widgets/gtk/video.py:384
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:385
+msgid "Select a Subtitles file..."
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/window.py:650
 msgid "All files"
 msgstr "Gach comhad"
 
-#: ../../portable/frontends/widgets/gtk/window.py:669
+#: ../../portable/frontends/widgets/gtk/window.py:682
 msgid "Choose"
 msgstr "Roghnaigh"
 
-#: ../../portable/frontends/widgets/gtk/window.py:686
+#: ../../portable/frontends/widgets/gtk/window.py:699
 #, python-format
 msgid "About %(appname)s"
 msgstr "Maidir le %(appname)s"
 
-#: ../../portable/frontends/widgets/gtk/window.py:702
+#: ../../portable/frontends/widgets/gtk/window.py:715
 #, python-format
 msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
 "%(trademark)s"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/window.py:741
+#: ../../portable/frontends/widgets/gtk/window.py:754
 #: ../../portable/dialogs.py:94
 msgid "Close"
 msgstr "Dún"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:437
+#: ../../portable/frontends/widgets/itemlistcontroller.py:438
 #: ../../portable/frontends/widgets/statictabs.py:97
 msgid "Video Search"
 msgstr "Cuardach Físeáin"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:451
+#: ../../portable/frontends/widgets/itemlistcontroller.py:452
 msgid "No Results Found"
 msgstr "Níor Aimsíodh Torthaí"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:520
-#: ../../portable/frontends/widgets/statictabs.py:103
-msgid "Video"
-msgstr "Físeán"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:526
-#: ../../portable/frontends/widgets/statictabs.py:109
-msgid "Audio"
-msgstr "Fuaim"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:532
-#: ../../portable/frontends/widgets/statictabs.py:115
-msgid "Other"
-msgstr "Eile"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:557
+#: ../../portable/frontends/widgets/itemlistcontroller.py:558
 msgid "Back to feed"
 msgstr ""
 
@@ -1032,7 +1042,7 @@ msgid "Open Files - Error"
 msgstr "Oscail Comhaid - Botún"
 
 #: ../../portable/frontends/widgets/application.py:351
-#: ../../portable/frontends/widgets/application.py:625
+#: ../../portable/frontends/widgets/application.py:632
 #, python-format
 msgid "File %(filename)s does not exist."
 msgstr "Níl an comhad %(filename)s ann."
@@ -1141,88 +1151,88 @@ msgid ""
 "Enter the URL of the site to add"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:615
+#: ../../portable/frontends/widgets/application.py:622
 msgid "Import OPML File"
 msgstr "Allmhairigh Comhad OPML"
 
-#: ../../portable/frontends/widgets/application.py:617
+#: ../../portable/frontends/widgets/application.py:624
 msgid "OPML Files"
 msgstr "Comhaid OPML"
 
-#: ../../portable/frontends/widgets/application.py:624
+#: ../../portable/frontends/widgets/application.py:631
 msgid "Import OPML File - Error"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:630
+#: ../../portable/frontends/widgets/application.py:637
 msgid "Export OPML File"
 msgstr "Onnmhairigh Comhad OPML"
 
-#: ../../portable/frontends/widgets/application.py:654
+#: ../../portable/frontends/widgets/application.py:661
 msgid "Create Playlist"
 msgstr "Cruthaigh Seinmréim"
 
-#: ../../portable/frontends/widgets/application.py:655
+#: ../../portable/frontends/widgets/application.py:662
 msgid "Enter a name for the new playlist"
 msgstr "Cuir isteach ainm don seinmréim nua"
 
-#: ../../portable/frontends/widgets/application.py:676
+#: ../../portable/frontends/widgets/application.py:683
 msgid "Create Playlist Folder"
 msgstr "Cruthaigh Fillteán don Seinmréim"
 
-#: ../../portable/frontends/widgets/application.py:677
+#: ../../portable/frontends/widgets/application.py:684
 msgid "Enter a name for the new playlist folder"
 msgstr "Cuir isteach ainm do fillteán na seinmréime"
 
-#: ../../portable/frontends/widgets/application.py:699
+#: ../../portable/frontends/widgets/application.py:706
 #, python-format
 msgid "Enter a new name for the feed folder %(name)s"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:703
+#: ../../portable/frontends/widgets/application.py:710
 msgid "Rename Feed"
 msgstr "Athainmnigh an Fotha"
 
-#: ../../portable/frontends/widgets/application.py:704
+#: ../../portable/frontends/widgets/application.py:711
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
 msgstr "Cuir isteach ainm nua don fhotha %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:709
+#: ../../portable/frontends/widgets/application.py:716
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:714
+#: ../../portable/frontends/widgets/application.py:721
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:718
+#: ../../portable/frontends/widgets/application.py:725
 #, python-format
 msgid "Enter a new name for the site %(name)s"
 msgstr "Cuir isteach ainm nua don suíomh %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:742
+#: ../../portable/frontends/widgets/application.py:749
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:744
+#: ../../portable/frontends/widgets/application.py:751
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:761
+#: ../../portable/frontends/widgets/application.py:771
 msgid "Remove site"
 msgid_plural "Remove sites"
 msgstr[0] "Bain an suíomh"
 msgstr[1] "Bain na suíomhanna"
 msgstr[2] "Bain na suíomhanna"
 
-#: ../../portable/frontends/widgets/application.py:763
+#: ../../portable/frontends/widgets/application.py:773
 #, python-format
 msgid "Are you sure you want to remove this site?"
 msgid_plural "Are you sure you want to remove these %(count)s sites?"
@@ -1232,36 +1242,36 @@ msgstr[1] ""
 msgstr[2] ""
 "An bhfuil tú cinnte go dteastaíonn uait na %(count)s suíomhanna seo a bhaint?"
 
-#: ../../portable/frontends/widgets/application.py:793
+#: ../../portable/frontends/widgets/application.py:803
 msgid "Are you sure you want to quit?"
 msgstr "An bhfuil tú cinnte go dteastaíonn uait scoir?"
 
-#: ../../portable/frontends/widgets/application.py:795
+#: ../../portable/frontends/widgets/application.py:805
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:800
+#: ../../portable/frontends/widgets/application.py:810
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr ""
 "Tabhair foráileamh dom nuair a dhéanaim iarracht scoir fad is atá rudaí ag "
 "íosluchtú"
 
-#: ../../portable/frontends/widgets/application.py:985
+#: ../../portable/frontends/widgets/application.py:995
 msgid "Upgrading database"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:1118
+#: ../../portable/frontends/widgets/application.py:1128
 msgid "Message"
 msgstr "Teachtaireacht"
 
-#: ../../portable/frontends/widgets/application.py:1143
+#: ../../portable/frontends/widgets/application.py:1153
 msgid "Migrating Files"
 msgstr "Ag Aistriú Na Comhaid"
 
-#: ../../portable/frontends/widgets/application.py:1153
+#: ../../portable/frontends/widgets/application.py:1163
 msgid "Migrating files"
 msgstr ""
 
@@ -1341,8 +1351,8 @@ msgid "Up/Down Ratio"
 msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:251
-#: ../../portable/frontends/widgets/style.py:1118
-#: ../../portable/frontends/widgets/style.py:1129
+#: ../../portable/frontends/widgets/style.py:1120
+#: ../../portable/frontends/widgets/style.py:1131
 #: ../../portable/frontends/widgets/itemcontextmenu.py:134
 #: ../../portable/frontends/widgets/itemcontextmenu.py:229
 #: ../../portable/dialogs.py:105
@@ -1367,7 +1377,7 @@ msgid "Currently Playing"
 msgstr "Á Seinm Faoi Láthair"
 
 #: ../../portable/frontends/widgets/style.py:257
-#: ../../portable/frontends/widgets/style.py:1187
+#: ../../portable/frontends/widgets/style.py:1189
 msgid "Newly Available"
 msgstr "Ar Fáil Anois"
 
@@ -1375,12 +1385,12 @@ msgstr "Ar Fáil Anois"
 msgid "Stop seeding"
 msgstr "Stad ag síolú"
 
-#: ../../portable/frontends/widgets/style.py:574
-#: ../../portable/frontends/widgets/style.py:1180
+#: ../../portable/frontends/widgets/style.py:576
+#: ../../portable/frontends/widgets/style.py:1182
 msgid "paused"
 msgstr "moillithe"
 
-#: ../../portable/frontends/widgets/style.py:1050
+#: ../../portable/frontends/widgets/style.py:1052
 msgid "Remove from playlist"
 msgstr "Bain ón seinnréim"
 
@@ -1505,149 +1515,181 @@ msgid "Re_name"
 msgstr "_Athainmnigh"
 
 #: ../../portable/frontends/widgets/menus.py:230
+msgid "Re_name Feed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/menus.py:231
+msgid "Re_name Site"
+msgstr ""
+
+#: ../../portable/frontends/widgets/menus.py:232
 msgid "_Remove"
 msgstr "_Bain"
 
-#: ../../portable/frontends/widgets/menus.py:233
+#: ../../portable/frontends/widgets/menus.py:235
+msgid "_Remove Feed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/menus.py:236
+msgid "_Remove Feeds"
+msgstr ""
+
+#: ../../portable/frontends/widgets/menus.py:237
 msgid "_Remove Folder"
 msgstr "_Bain Fillteán"
 
-#: ../../portable/frontends/widgets/menus.py:234
+#: ../../portable/frontends/widgets/menus.py:238
+msgid "_Remove Folders"
+msgstr ""
+
+#: ../../portable/frontends/widgets/menus.py:239
+msgid "_Remove Site"
+msgstr ""
+
+#: ../../portable/frontends/widgets/menus.py:240
+msgid "_Remove Sites"
+msgstr ""
+
+#: ../../portable/frontends/widgets/menus.py:241
 msgid "_Update Feed"
 msgstr "Nuashonraigh an Fotha"
 
-#: ../../portable/frontends/widgets/menus.py:237
+#: ../../portable/frontends/widgets/menus.py:244
 msgid "_Update Feeds"
 msgstr "Nuashonraigh na Fothaí"
 
-#: ../../portable/frontends/widgets/menus.py:238
+#: ../../portable/frontends/widgets/menus.py:245
 msgid "Update _All Feeds"
 msgstr "Nuashonraigh Gach Fotha"
 
-#: ../../portable/frontends/widgets/menus.py:242
+#: ../../portable/frontends/widgets/menus.py:249
 msgid "_Import Feeds (OPML)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/menus.py:244
+#: ../../portable/frontends/widgets/menus.py:251
 msgid "E_xport Feeds (OPML)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/menus.py:247
+#: ../../portable/frontends/widgets/menus.py:254
 msgid "_Share with a Friend"
 msgstr "Comhroinn le Cara"
 
-#: ../../portable/frontends/widgets/menus.py:249
+#: ../../portable/frontends/widgets/menus.py:256
 msgid "Copy URL"
 msgstr "Macasamhlaigh an t-URL"
 
-#: ../../portable/frontends/widgets/menus.py:253
+#: ../../portable/frontends/widgets/menus.py:260
 msgid "_Playlists"
 msgstr "_Seinmréimeanna"
 
-#: ../../portable/frontends/widgets/menus.py:254
+#: ../../portable/frontends/widgets/menus.py:261
 msgid "New _Playlist"
 msgstr "_Seinmréim Nua"
 
-#: ../../portable/frontends/widgets/menus.py:257
+#: ../../portable/frontends/widgets/menus.py:264
 msgid "New Playlist Fol_der"
 msgstr "Fill_teán Seinmréim Nua"
 
-#: ../../portable/frontends/widgets/menus.py:261
+#: ../../portable/frontends/widgets/menus.py:268
 msgid "Re_name Playlist"
 msgstr "Athai_nmnigh an Seinmréim"
 
-#: ../../portable/frontends/widgets/menus.py:263
+#: ../../portable/frontends/widgets/menus.py:270
 msgid "_Remove Playlist"
 msgstr "_Bain an Seinmréim"
 
-#: ../../portable/frontends/widgets/menus.py:266
+#: ../../portable/frontends/widgets/menus.py:273
 msgid "_Remove Playlists"
 msgstr "_Bain na Seinmréimeanna"
 
-#: ../../portable/frontends/widgets/menus.py:267
+#: ../../portable/frontends/widgets/menus.py:274
 msgid "_Remove Playlist Folders"
 msgstr "_Bain Fillteáin na Seinmréimeanna"
 
-#: ../../portable/frontends/widgets/menus.py:268
+#: ../../portable/frontends/widgets/menus.py:275
 msgid "_Remove Playlist Folder"
 msgstr "_Bain Fillteán na Seinmréime"
 
-#: ../../portable/frontends/widgets/menus.py:271
+#: ../../portable/frontends/widgets/menus.py:278
 msgid "P_layback"
 msgstr "Athsh_einm"
 
-#: ../../portable/frontends/widgets/menus.py:272
-#: ../../portable/frontends/widgets/menus.py:274
+#: ../../portable/frontends/widgets/menus.py:279
+#: ../../portable/frontends/widgets/menus.py:281
 msgid "_Play"
 msgstr "_Seinn"
 
-#: ../../portable/frontends/widgets/menus.py:275
+#: ../../portable/frontends/widgets/menus.py:282
 msgid "_Pause"
 msgstr "_Moilligh"
 
-#: ../../portable/frontends/widgets/menus.py:276
+#: ../../portable/frontends/widgets/menus.py:283
 msgid "_Stop"
 msgstr "_Stad"
 
-#: ../../portable/frontends/widgets/menus.py:279
+#: ../../portable/frontends/widgets/menus.py:286
 msgid "_Next Video"
 msgstr "_An Físeán Ar Aghaidh"
 
-#: ../../portable/frontends/widgets/menus.py:282
+#: ../../portable/frontends/widgets/menus.py:289
 msgid "_Previous Video"
 msgstr "_An Físeán Roimhe"
 
-#: ../../portable/frontends/widgets/menus.py:286
+#: ../../portable/frontends/widgets/menus.py:293
 msgid "Skip _Forward"
 msgstr "Léim _Ar Aghaidh"
 
-#: ../../portable/frontends/widgets/menus.py:288
+#: ../../portable/frontends/widgets/menus.py:295
 msgid "Skip _Back"
 msgstr "Léim _Siar"
 
-#: ../../portable/frontends/widgets/menus.py:291
+#: ../../portable/frontends/widgets/menus.py:298
 msgid "Volume _Up"
 msgstr "Airde _Suas"
 
-#: ../../portable/frontends/widgets/menus.py:293
+#: ../../portable/frontends/widgets/menus.py:300
 msgid "Volume _Down"
 msgstr "Airde _Síos"
 
-#: ../../portable/frontends/widgets/menus.py:296
+#: ../../portable/frontends/widgets/menus.py:303
 msgid "_Fullscreen"
 msgstr "_Lánscáiléan"
 
-#: ../../portable/frontends/widgets/menus.py:299
+#: ../../portable/frontends/widgets/menus.py:306
 msgid "_Toggle Detached/Attached"
 msgstr ""
 
-#: ../../portable/frontends/widgets/menus.py:302
+#: ../../portable/frontends/widgets/menus.py:309
 msgid "S_ubtitles"
 msgstr ""
 
-#: ../../portable/frontends/widgets/menus.py:308
-#: ../../portable/frontends/widgets/menus.py:320
+#: ../../portable/frontends/widgets/menus.py:312
+msgid "Select a Subtitles File..."
+msgstr ""
+
+#: ../../portable/frontends/widgets/menus.py:317
+#: ../../portable/frontends/widgets/menus.py:329
 msgid "_Help"
 msgstr "_Cabhair"
 
-#: ../../portable/frontends/widgets/menus.py:309
+#: ../../portable/frontends/widgets/menus.py:318
 #, python-format
 msgid "_About %(name)s"
 msgstr ""
 
-#: ../../portable/frontends/widgets/menus.py:317
+#: ../../portable/frontends/widgets/menus.py:326
 msgid "_Donate"
 msgstr "_Bronn Airgead"
 
-#: ../../portable/frontends/widgets/menus.py:324
+#: ../../portable/frontends/widgets/menus.py:333
 msgid "Report a _Bug"
 msgstr "Fógraigh _Fabht"
 
-#: ../../portable/frontends/widgets/menus.py:326
+#: ../../portable/frontends/widgets/menus.py:335
 msgid "_Translate"
 msgstr "_Aistrigh"
 
-#: ../../portable/frontends/widgets/menus.py:328
+#: ../../portable/frontends/widgets/menus.py:337
 msgid "_Planet Miro"
 msgstr "_Planet Miro"
 
@@ -1875,13 +1917,13 @@ msgid ""
 "this problem and fix it by submitting an error report."
 msgstr ""
 
-#: ../../portable/frontends/widgets/crashdialog.py:63
+#: ../../portable/frontends/widgets/crashdialog.py:66
 msgid ""
 "Include entire program database including all video and feed metadata with "
 "crash report"
 msgstr ""
 
-#: ../../portable/frontends/widgets/crashdialog.py:68
+#: ../../portable/frontends/widgets/crashdialog.py:71
 msgid "Describe what you were doing when you got this error:"
 msgstr "Inis dúinn cad a bhí ar siúl agat nuair a tharla an botún seo:"
 
@@ -2079,7 +2121,7 @@ msgstr "< Roimhe"
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:227
 #: ../../portable/frontends/widgets/firsttimedialog.py:284
-#: ../../portable/feed.py:2329 ../../portable/feed.py:2438
+#: ../../portable/feed.py:2331 ../../portable/feed.py:2440
 msgid "Search"
 msgstr "Cuardaigh"
 
@@ -2120,23 +2162,23 @@ msgstr "Oscail i líonléitheoir"
 msgid "Download this video"
 msgstr "Íosluchtaigh an físeán seo"
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:58
+#: ../../portable/frontends/widgets/newsearchfeed.py:57
 msgid "New Search Feed"
 msgstr ""
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:59
+#: ../../portable/frontends/widgets/newsearchfeed.py:58
 msgid "A search feed contains items that match a search term."
 msgstr ""
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:74
+#: ../../portable/frontends/widgets/newsearchfeed.py:73
 msgid "Search for:"
 msgstr "Déan cuardach ar:"
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:81
+#: ../../portable/frontends/widgets/newsearchfeed.py:80
 msgid "In this:"
 msgstr "Sa:"
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:88
+#: ../../portable/frontends/widgets/newsearchfeed.py:87
 msgid "Feed:"
 msgstr "Fotha:"
 
@@ -2287,34 +2329,34 @@ msgstr[2] "As feidhm: %(count)d nóim"
 msgid "%(month)s %(dayofmonth)s, %(year)s"
 msgstr ""
 
-#: ../../portable/playlist.py:200
+#: ../../portable/playlist.py:201
 #, python-format
 msgid "Enter a new name for the playlist %s"
 msgstr "Cuir isteach ainm nua don seinmréim  %s"
 
-#: ../../portable/feed.py:946
+#: ../../portable/feed.py:949
 msgid "Error loading feed"
 msgstr "Tharla botún ag luchtú an fothaire"
 
-#: ../../portable/feed.py:948
+#: ../../portable/feed.py:951
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr ""
 
-#: ../../portable/feed.py:951
+#: ../../portable/feed.py:954
 msgid "Would you like to keep the feed?"
 msgstr "Ar mhaith leat an fothaire a choimeád?"
 
-#: ../../portable/feed.py:1078
+#: ../../portable/feed.py:1076
 msgid "Bad content-type"
 msgstr "Droch cineál-ábhar"
 
-#: ../../portable/feed.py:1091
+#: ../../portable/feed.py:1089
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
 msgstr "Ní comhoiriúnaíonn an bealach le %(appname)s"
 
-#: ../../portable/feed.py:1094
+#: ../../portable/feed.py:1092
 #, python-format
 msgid ""
 "This channel is not compatible with %(appname)s but we'll try our best to "
@@ -2327,16 +2369,16 @@ msgid ""
 "Do you want to try to load this channel anyway?"
 msgstr ""
 
-#: ../../portable/feed.py:1718
+#: ../../portable/feed.py:1720
 #, python-format
 msgid "Search All: %(text)s"
 msgstr "Cuardaigh Uile: %(text)s"
 
-#: ../../portable/feed.py:2300 ../../portable/feed.py:2456
+#: ../../portable/feed.py:2302 ../../portable/feed.py:2455
 msgid "Local Files"
 msgstr "Comhaid Loganta"
 
-#: ../../portable/feed.py:2470
+#: ../../portable/feed.py:2469
 msgid "Playing File"
 msgstr "Ag Seinm an Comhad"
 
@@ -2551,11 +2593,11 @@ msgstr "Éirigh As Féachaint Air"
 msgid "Retry"
 msgstr ""
 
-#: ../../portable/messagehandler.py:1317
+#: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"
 msgstr ""
 
-#: ../../portable/messagehandler.py:1320
+#: ../../portable/messagehandler.py:1337
 msgid "Subscribed to new feeds:"
 msgstr ""
 
@@ -2619,7 +2661,7 @@ msgid ""
 "%(appname)s.  Please delete some files and try again."
 msgstr ""
 
-#: ../../portable/item.py:943
+#: ../../portable/item.py:944
 #, python-format
 msgid "%(count)d day"
 msgid_plural "%(count)d days"
@@ -2627,7 +2669,7 @@ msgstr[0] "%(count)d lá"
 msgstr[1] "%(count)d lá"
 msgstr[2] "%(count)d lá"
 
-#: ../../portable/item.py:948
+#: ../../portable/item.py:949
 #, python-format
 msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
@@ -2635,7 +2677,7 @@ msgstr[0] "%(count)d uair"
 msgstr[1] "%(count)d uair"
 msgstr[2] "%(count)d uair"
 
-#: ../../portable/item.py:953
+#: ../../portable/item.py:954
 #, python-format
 msgid "%(count)d minute"
 msgid_plural "%(count)d minutes"
@@ -2643,23 +2685,23 @@ msgstr[0] "%(count)d nóiméad"
 msgstr[1] "%(count)d nóiméid"
 msgstr[2] "%(count)d nóiméid"
 
-#: ../../portable/item.py:1120 ../../portable/messages.py:1092
+#: ../../portable/item.py:1121 ../../portable/messages.py:1092
 msgid "queued for download"
 msgstr "i scuaine le híosluchtú"
 
-#: ../../portable/item.py:1206
+#: ../../portable/item.py:1207
 msgid "no title"
 msgstr "gan teideal"
 
-#: ../../portable/item.py:1245
+#: ../../portable/item.py:1246
 msgid "Contents appear in the library"
 msgstr ""
 
-#: ../../portable/item.py:1250
+#: ../../portable/item.py:1251
 msgid "Contents:"
 msgstr ""
 
-#: ../../portable/item.py:1480
+#: ../../portable/item.py:1489
 msgid "starting up..."
 msgstr "ag tosú..."
 
@@ -2696,7 +2738,7 @@ msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
 msgstr ""
 
-#: ../../portable/searchengines.py:172
+#: ../../portable/searchengines.py:179
 msgid "Search All"
 msgstr "Cuardaigh Uile"
 
@@ -2704,16 +2746,16 @@ msgstr "Cuardaigh Uile"
 msgid "Example Playlist"
 msgstr "Seinmréim Samplach"
 
-#: ../../portable/storedatabase.py:228
+#: ../../portable/storedatabase.py:231
 msgid "Database was created by a newer version of Miro "
 msgstr ""
 
-#: ../../portable/storedatabase.py:597
+#: ../../portable/storedatabase.py:612
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr ""
 
-#: ../../portable/storedatabase.py:599
+#: ../../portable/storedatabase.py:614
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -2721,12 +2763,12 @@ msgstr ""
 "Chuireadh i dtaisce an bunachar sonraí go rathúil. Tá sé slán scoir anois "
 "gan aon sonraí a chailliúint."
 
-#: ../../portable/storedatabase.py:654
+#: ../../portable/storedatabase.py:669
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr ""
 
-#: ../../portable/storedatabase.py:657
+#: ../../portable/storedatabase.py:672
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -2744,22 +2786,22 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../../portable/util.py:298 ../../portable/util.py:300
+#: ../../portable/util.py:371 ../../portable/util.py:373
 #, python-format
 msgid "%(size)sGB"
 msgstr "%(size)sGB"
 
-#: ../../portable/util.py:304 ../../portable/util.py:306
+#: ../../portable/util.py:377 ../../portable/util.py:379
 #, python-format
 msgid "%(size)sMB"
 msgstr "%(size)sMB"
 
-#: ../../portable/util.py:310 ../../portable/util.py:312
+#: ../../portable/util.py:383 ../../portable/util.py:385
 #, python-format
 msgid "%(size)sKB"
 msgstr "%(size)sKB"
 
-#: ../../portable/util.py:316 ../../portable/util.py:318
+#: ../../portable/util.py:389 ../../portable/util.py:391
 #, python-format
 msgid "%(size)sB"
 msgstr "%(size)sB"
@@ -2865,24 +2907,26 @@ msgstr ""
 msgid "Video renderer:"
 msgstr ""
 
-#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:355
+#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:407
+#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:421
+#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:430
 msgid "Unknown Language"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/application.py:177
+#: ../../platform/osx/plat/frontends/widgets/application.py:178
 msgid "Download Completed"
 msgstr "Íosluchtú Críochnaithe"
 
-#: ../../platform/osx/plat/frontends/widgets/application.py:178
+#: ../../platform/osx/plat/frontends/widgets/application.py:179
 #, python-format
 msgid "Download of video '%s' is finished."
 msgstr "Tá íosluchtú an físeán '%s' críochnaithe."
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:217
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:208
 msgid "Pop Out"
 msgstr "Preab Amach"
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:220
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:211
 msgid "Pop In"
 msgstr "Preab Isteach"
 
