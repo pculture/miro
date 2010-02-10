@@ -486,7 +486,6 @@ class VLCRenderer:
 
     def reset(self):
         self.stop()
-        self.unset_widget()
         self.play_from_time = None
         self.play_state = STOPPED
 
