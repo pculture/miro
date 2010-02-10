@@ -103,6 +103,8 @@ VLCTrackDescription._fields_ = [
 
 libvlc.libvlc_video_get_spu_description.restype = ctypes.POINTER(
     VLCTrackDescription)
+libvlc.libvlc_video_get_track_description.restype = ctypes.POINTER(
+    VLCTrackDescription)
 
 VLC_EVENT_CALLBACK = ctypes.CFUNCTYPE(
     None, ctypes.POINTER(VLCEvent), ctypes.c_void_p)
@@ -140,7 +142,7 @@ class VLCSniffer:
             None, x=0, y=0, width=1, height=1,
             window_type=gtk.gdk.WINDOW_TOPLEVEL,
             wclass=gtk.gdk.INPUT_OUTPUT, event_mask=0)
-        libvlc.libvlc_media_player_set_drawable(
+        libvlc.libvlc_media_player_set_hwnd(
             self.media_player, self._hidden_window.handle, self.exc.ref())
         self.exc.check()
 
@@ -288,6 +290,11 @@ class VLCRenderer:
         self.media_playing = None
         self.callback_info = None
         self.subtitle_info = []
+        self._hidden_window = gtk.gdk.Window(
+            None, x=0, y=0, width=1, height=1,
+            window_type=gtk.gdk.WINDOW_TOPLEVEL,
+            wclass=gtk.gdk.INPUT_OUTPUT, event_mask=0)
+        self.unset_widget()
 
     def event_callback(self, p_event, p_user_data):
         event = p_event[0]
@@ -332,6 +339,10 @@ class VLCRenderer:
         if attempt > 3:
             self._open_failure()
             return
+        if self._file_type != 'video':
+            # for items the user has marked as audio, disable video
+            # output #12692
+            self._disable_video()
 
         length = libvlc.libvlc_media_player_get_length(
             self.media_player, self.exc.ref())
@@ -356,6 +367,18 @@ class VLCRenderer:
         self.callback_info = None
         self.media_playing = None
 
+    def _disable_video(self):
+        desc = libvlc.libvlc_video_get_track_description(
+                self.media_player, self.exc.ref())
+        self.exc.check()
+        # the 1st description should be "Disable"
+        if desc is not None:
+            track_id = desc.contents.id
+            libvlc.libvlc_track_description_release(desc)
+            libvlc.libvlc_video_set_track(self.media_player, track_id,
+                    self.exc.ref())
+            self.exc.check()
+
     def set_widget(self, widget):
         hwnd = widget.persistent_window.handle
         libvlc.libvlc_media_player_set_hwnd(self.media_player, hwnd,
@@ -366,8 +389,8 @@ class VLCRenderer:
         widget.connect('expose-event', self._on_expose)
 
     def unset_widget(self):
-        libvlc.libvlc_media_player_set_hwnd(self.media_player, 0,
-                self.exc.ref())
+        libvlc.libvlc_media_player_set_hwnd(
+            self.media_player, self._hidden_window.handle, self.exc.ref())
         self.exc.check()
 
     def _on_expose(self, widget, event):
@@ -384,6 +407,7 @@ class VLCRenderer:
         # strings.
         filename = filename.encode('utf-8')
         self._filename = filename
+        self._file_type = iteminfo.file_type
         self.subtitle_info = []
         self.callback_info = (callback, errback)
         self.play_from_time = None
