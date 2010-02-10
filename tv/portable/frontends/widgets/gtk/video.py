@@ -53,6 +53,9 @@ from miro.frontends.widgets.gtk.persistentwindow import PersistentWindow
 BLACK = (0.0, 0.0, 0.0)
 WHITE = (1.0, 1.0, 1.0)
 
+# Global VideoWidget object.  We re-use so we can re-use our PersistentWindow
+video_widget = None
+
 class ClickableLabel(Widget):
     """This is like a label and reimplements many of the Label things, but
     it's an EventBox with a Label child widget.
@@ -451,6 +454,7 @@ class VideoPlayer(player.Player, VBox):
     HIDE_CONTROLS_TIMEOUT = 2000
 
     def __init__(self):
+        global video_widget
         player.Player.__init__(self)
         VBox.__init__(self)
         if app.video_renderer is not None:
@@ -460,7 +464,9 @@ class VideoPlayer(player.Player, VBox):
 
         self.overlay = None
 
-        self._video_widget = VideoWidget(self.renderer)
+        if video_widget is None:
+            video_widget = VideoWidget(self.renderer)
+        self._video_widget = video_widget
         self.pack_start(self._video_widget, expand=True)
 
         self._video_details = VideoDetailsWidget()
@@ -482,7 +488,7 @@ class VideoPlayer(player.Player, VBox):
         app.info_updater.item_changed_callbacks.remove('manual',
                 'playback-list', self._on_items_changed)
         self._items_changed_callback = None
-        self._video_widget.destroy()
+        self.remove(self._video_widget)
 
     def _on_items_changed(self, message):
         for item_info in message.changed:

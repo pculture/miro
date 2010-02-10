@@ -148,6 +148,7 @@ class WindowsApplication(Application):
             self.quit()
 
     def quit_ui(self):
+        app.video_renderer.shutdown()
         for widget in persistentwindow.get_widgets():
             widget.destroy()
         if hasattr(self, "trayicon"):

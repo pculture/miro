@@ -146,6 +146,11 @@ class VLCSniffer:
             self.media_player, self._hidden_window.handle, self.exc.ref())
         self.exc.check()
 
+    def shutdown(self):
+        logging.info("shutting down VLC Sniffer")
+        libvlc.libvlc_media_player_release(self.media_player)
+        libvlc.libvlc_release(self.vlc)
+
     def event_callback(self, p_event, p_user_data):
         event = p_event[0]
         # Copy the values from event, the memory might be freed by the
@@ -295,6 +300,13 @@ class VLCRenderer:
             window_type=gtk.gdk.WINDOW_TOPLEVEL,
             wclass=gtk.gdk.INPUT_OUTPUT, event_mask=0)
         self.unset_widget()
+
+    def shutdown(self):
+        logging.info("shutting down VLC")
+        self.reset()
+        libvlc.libvlc_media_player_release(self.media_player)
+        libvlc.libvlc_release(self.vlc)
+        _sniffer.shutdown()
 
     def event_callback(self, p_event, p_user_data):
         event = p_event[0]
