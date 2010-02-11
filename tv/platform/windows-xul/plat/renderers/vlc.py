@@ -384,7 +384,7 @@ class VLCRenderer:
                 self.media_player, self.exc.ref())
         self.exc.check()
         # the 1st description should be "Disable"
-        if desc is not None:
+        if desc:
             track_id = desc.contents.id
             libvlc.libvlc_track_description_release(desc)
             libvlc.libvlc_video_set_track(self.media_player, track_id,
