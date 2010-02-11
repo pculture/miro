@@ -200,7 +200,7 @@ def get_menu():
                              Shortcut(BKSPACE, MOD),
                              groups=["PlayablesSelected"],
                              plural=_("_Remove Items")),
-                    MenuItem(_("Re_name Item"), "RenameItem",
+                    MenuItem(_("_Edit Item"), "EditItem",
                              groups=["PlayableSelected"]),
                     MenuItem(_("Save Item _As"), "SaveItem",
                              Shortcut("s", MOD),
@@ -372,9 +372,9 @@ def on_check_version():
 def on_remove_items():
     app.widgetapp.remove_items()
 
-@action_handler("RenameItem")
+@action_handler("EditItem")
 def on_rename_item():
-    app.widgetapp.rename_item()
+    app.widgetapp.edit_item()
 
 @action_handler("SaveItem")
 def on_save_item():
