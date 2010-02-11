@@ -294,6 +294,7 @@ class VLCRenderer:
         self._rate = 1.0
         self.media_playing = None
         self.callback_info = None
+        self._change_subtitle_timout = None
         self.subtitle_info = []
         self._hidden_window = gtk.gdk.Window(
             None, x=0, y=0, width=1, height=1,
@@ -598,6 +599,9 @@ class VLCRenderer:
         return track_index
 
     def enable_subtitle_track(self, track_index):
+        if self._change_subtitle_timout:
+            gobject.source_remove(self._change_subtitle_timout)
+            self._change_subtitle_timout = None
         self._set_active_subtitle_track(track_index)
 
     def disable_subtitles(self):
@@ -643,9 +647,11 @@ class VLCRenderer:
         except VLCError, e:
             logging.warn("exception when setting subtitle track to file: %s", e)
         else:
-            # this is the track of the external file
-            self.enable_subtitle_track(1)
             handle_successful_select()
+            # 1 is the track of the external file, don't select it quite yet
+            # because VLC might not be ready.  (#12858)
+            self._change_subtitle_timout = gobject.timeout_add(100,
+                    self.enable_subtitle_track, 1)
 
 _sniffer = VLCSniffer()
 
