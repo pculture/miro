@@ -651,7 +651,12 @@ class VLCRenderer:
             # 1 is the track of the external file, don't select it quite yet
             # because VLC might not be ready.  (#12858)
             self._change_subtitle_timout = gobject.timeout_add(100,
-                    self.enable_subtitle_track, 1)
+                    self.handle_change_subtitle_timout)
+
+    def handle_change_subtitle_timout(self):
+        self._change_subtitle_timout = None
+        self.setup_subtitle_info()
+        self.enable_subtitle_track(1)
 
 _sniffer = VLCSniffer()
 
