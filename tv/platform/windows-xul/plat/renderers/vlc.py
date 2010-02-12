@@ -640,6 +640,7 @@ class VLCRenderer:
             # This is bug 12813.
             logging.exception("exception thrown when copying subtitle file")
 
+        sub_path = sub_path.encode('utf-8')
         res = libvlc.libvlc_video_set_subtitle_file(
             self.media_player, ctypes.c_char_p(sub_path), self.exc.ref())
         try:
