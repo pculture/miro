@@ -154,12 +154,12 @@ Long strings (description of things, ...) should be formatted like
 this::
 
     description = _(
-       "This is a really long string that is formatted using explicit "
-       "whitespace and explicit string delimiters.  It avoids whitespace "
-       "problems that can't be seen (extra spaces, carriage returns, ... "
-       "without causing parsing problems.\n"
-       "\n"
-       "You can do multiple paragraphs as well."
+        "This is a really long string that is formatted using explicit "
+        "whitespace and explicit string delimiters.  It avoids whitespace "
+        "problems that can't be seen (extra spaces, carriage returns, ... "
+        "without causing parsing problems.\n"
+        "\n"
+        "You can do multiple paragraphs as well."
     )
 
 If you need to expand variables in the long string, use the Python

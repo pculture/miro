@@ -2,7 +2,7 @@
 platform-specific widget frontend modules
 =========================================
 
-.. _howto-platformwidgets
+.. _howto-platformwidgets:
 
 Platform code is in a handful of locations depending on the platform.
 All OSX platform code is in:

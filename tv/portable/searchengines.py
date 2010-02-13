@@ -49,7 +49,7 @@ class SearchEngineInfo:
 
     .. note::
 
-       Don't instantiate this yourself--search engines are defined by
+       Don't instantiate this yourself---search engines are defined by
        ``.xml`` files in the ``resources/searchengines/`` directory.
     """
     def __init__(self, name, title, url, sort_order=0, filename=None):

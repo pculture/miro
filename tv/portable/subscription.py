@@ -28,15 +28,15 @@
 
 """``miro.subscription`` -- Functions for handling subscriptions.
 
-This file handles checking URLs that the user clicks on to see if they are
-subscribe links.  Subscribe links are specially formatted URLs that signal
-that we should subscribe the user to a feed, add a new channel guide, start a
-new video download, or something similar.
+This file handles checking URLs that the user clicks on to see if they
+are subscribe links.  Subscribe links are specially formatted URLs
+that signal that we should subscribe the user to a feed, add a new
+channel guide, start a new video download, or something similar.
 
-Our basic strategy is to have have links with the host subscribe.getmiro.com.
-That way we can parse them in miro and have an actual page on
-subscribe.getmiro.com that the user will see if they click it in an actual web
-browser.
+Our basic strategy is to have have links with the host
+subscribe.getmiro.com.  That way we can parse them in miro and have an
+actual page on subscribe.getmiro.com that the user will see if they
+click it in an actual web browser.
 """
 
 import cgi
@@ -190,10 +190,10 @@ class Subscriber(object):
         Folder subscriptions look like::
 
             {
-                'type': 'folder',
-                'title': name of the folder,
-                'section': one of ['audio', 'video'],
-                'children': a list of sub-feeds
+            'type': 'folder',
+            'title': name of the folder,
+            'section': one of ['audio', 'video'],
+            'children': a list of sub-feeds
             }
         """
         assert parent_folder is None, "no nested folders"
@@ -258,9 +258,9 @@ class Subscriber(object):
         Site subscriptions look like::
 
             {
-                'type': 'site',
-                'url': URL of the site
-                'title': name of the site (optional),
+            'type': 'site',
+            'url': URL of the site
+            'title': name of the site (optional),
             }
         """
         assert parent_folder is None, "no folders in site section"
