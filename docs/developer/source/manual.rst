@@ -9,8 +9,8 @@ This manual is developer-focused and will codify out-of-line
 documentation, standard practices, how-to documents and other things
 for the Miro project.
 
-It is versioned alongside Miro--2.6 of this document corresponds to
-Miro 2.6.
+It is versioned alongside Miro--3.0 of this document corresponds to
+Miro 3.0.
 
 
 How to help

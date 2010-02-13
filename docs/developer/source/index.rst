@@ -3,8 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Miro Developer Documentation v2.6
-=================================
+Miro Developer Documentation
+============================
+
+This is Miro Developer Documentation for Miro 3.0.
 
 Contents:
 
