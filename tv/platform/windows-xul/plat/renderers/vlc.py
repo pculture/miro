@@ -629,7 +629,6 @@ class VLCRenderer:
             logging.warn("exception when setting subtitle track: %s", e)
 
     def select_subtitle_file(self, item, sub_path, handle_successful_select):
-        sub_path = sub_path.encode('utf-8')
         try:
             sub_path = copy_subtitle_file(sub_path, item.video_path)
         except WindowsError:
