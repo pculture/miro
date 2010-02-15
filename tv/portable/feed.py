@@ -1652,7 +1652,7 @@ class RSSFeedImpl(RSSFeedImplBase):
         if not self.ufeed.id_exists():
             return
         logging.info("WARNING: error in Feed.update for %s -- %s", self.ufeed,
-                str(error))
+                error.encode('ascii', 'replace'))
         self.scheduleUpdateEvents(-1)
         self.updating = False
         self.ufeed.signal_change(needs_save=False)
@@ -1820,7 +1820,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         if not self.ufeed.id_exists():
             return
         logging.warn("WARNING: error in Feed.update for %s (%s) -- %s",
-                     self.ufeed, url, str(error))
+                     self.ufeed, url, error.encode('ascii', 'replace'))
         self.scheduleUpdateEvents(-1)
         self.updating -= 1
         self.checkUpdateFinished()
