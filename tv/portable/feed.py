@@ -61,7 +61,7 @@ from miro.plat import resources
 from miro import downloader
 from miro.util import (returns_unicode, returns_filename, unicodify, check_u,
                        check_f, quote_unicode_url, escape, to_uni,
-                       is_url)
+                       is_url, stringify)
 from miro import fileutil
 from miro.plat.utils import filenameToUnicode, make_url_safe, unmake_url_safe
 from miro import filetypes
@@ -1652,7 +1652,7 @@ class RSSFeedImpl(RSSFeedImplBase):
         if not self.ufeed.id_exists():
             return
         logging.info("WARNING: error in Feed.update for %s -- %s", self.ufeed,
-                error.encode('ascii', 'replace'))
+                stringify(error))
         self.scheduleUpdateEvents(-1)
         self.updating = False
         self.ufeed.signal_change(needs_save=False)
@@ -1820,7 +1820,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         if not self.ufeed.id_exists():
             return
         logging.warn("WARNING: error in Feed.update for %s (%s) -- %s",
-                     self.ufeed, url, error.encode('ascii', 'replace'))
+                     self.ufeed, url, stringify(error))
         self.scheduleUpdateEvents(-1)
         self.updating -= 1
         self.checkUpdateFinished()
