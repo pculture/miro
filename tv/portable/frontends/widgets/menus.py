@@ -88,7 +88,7 @@ class MenuItem:
 
     Example:
 
-    >>> MenuItem(_("_Options"), "EditPreferences")
+    >>> MenuItem(_("Preferences"), "EditPreferences")
     >>> MenuItem(_("Cu_t"), "ClipboardCut", Shortcut("x", MOD))
     >>> MenuItem(_("_Update Feed"), "UpdateFeeds",
     ...          (Shortcut("r", MOD), Shortcut(F5)))
@@ -210,14 +210,14 @@ def get_menu():
                              Shortcut("u", MOD),
                              groups=["PlayableSelected"]),
                     Separator(),
-                    MenuItem(_("_Options"), "EditPreferences"),
+                    MenuItem(_("_Preferences"), "EditPreferences"),
                     MenuItem(_("_Quit"), "Quit", Shortcut("q", MOD)),
                     ]),
 
             Menu(_("_Sidebar"), "SidebarMenu", [
                     MenuItem(_("Add _Feed"), "NewFeed", Shortcut("n", MOD),
                              groups=["NonPlaying"]),
-                    MenuItem(_("Add Site"), "NewGuide",
+                    MenuItem(_("Add Website"), "NewGuide",
                              groups=["NonPlaying"]),
                     MenuItem(_("New Searc_h Feed"), "NewSearchFeed",
                              groups=["NonPlaying"]),
@@ -229,7 +229,7 @@ def get_menu():
                              groups=["RenameAllowed"],
                              # groups=["FeedOrFolderSelected", "SiteSelected"],
                              feed=_("Re_name Feed"),
-                             site=_("Re_name Site")),
+                             site=_("Re_name Website")),
                     MenuItem(_("_Remove"), "RemoveSomething",
                              Shortcut(BKSPACE, MOD),
                              groups=["RemoveAllowed"],
@@ -238,8 +238,8 @@ def get_menu():
                              feeds=_("_Remove Feeds"),
                              folder=_("_Remove Folder"),
                              folders=_("_Remove Folders"),
-                             site=_("_Remove Site"),
-                             sites=_("_Remove Sites")),
+                             site=_("_Remove Website"),
+                             sites=_("_Remove Websites")),
                     MenuItem(_("_Update Feed"), "UpdateFeeds",
                              (Shortcut("r", MOD), Shortcut(F5)),
                              groups=["FeedsSelected"],

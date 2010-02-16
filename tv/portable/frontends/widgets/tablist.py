@@ -573,12 +573,12 @@ class SiteList(TabList):
         if len(selected_rows) == 1:
             return [
                 (_('Copy URL to clipboard'), app.widgetapp.copy_site_url),
-                (_('Rename Site'), app.widgetapp.rename_something),
-                (_('Remove Site'), app.widgetapp.remove_current_site),
+                (_('Rename Website'), app.widgetapp.rename_something),
+                (_('Remove Website'), app.widgetapp.remove_current_site),
             ]
         else:
             return [
-                (_('Remove Sites'), app.widgetapp.remove_current_site),
+                (_('Remove Websites'), app.widgetapp.remove_current_site),
             ]
 
 class NestedTabList(TabList):
