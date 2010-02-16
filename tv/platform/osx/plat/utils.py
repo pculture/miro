@@ -385,7 +385,6 @@ def qttimevalue(qttime):
         return qttime.timeValue
 
 def qttimevalue_set(qttime, value):
-    print qttime
     if isinstance(qttime, tuple):
         return(value, qttime[1], qttime[2])
     else:
