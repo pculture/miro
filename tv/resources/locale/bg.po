@@ -10,15 +10,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracyplayer-bg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-02 19:24-0500\n"
-"PO-Revision-Date: 2010-02-10 01:16+0000\n"
-"Last-Translator: efreeti1401 <efreeti@mail.bg>\n"
+"POT-Creation-Date: 2010-02-10 12:32-0500\n"
+"PO-Revision-Date: 2010-02-14 11:14+0000\n"
+"Last-Translator: Kostadin Vodenicharov <Unknown>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-02-10 16:41+0000\n"
+"X-Launchpad-Export-Date: 2010-02-16 18:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:117
@@ -75,7 +75,7 @@ msgstr "Файлът не е намерен"
 
 #: ../../portable/httpclient.py:157
 msgid "Got 404 status code"
-msgstr "Грешка . Код 404"
+msgstr "Получен е код за грешка 404"
 
 #: ../../portable/httpclient.py:159
 #, python-format
@@ -242,7 +242,7 @@ msgid "Total db objects in memory:"
 msgstr "Общо db обекти в паметта:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:118
-#: ../../portable/frontends/widgets/menus.py:331
+#: ../../portable/frontends/widgets/menus.py:335
 msgid "Diagnostics"
 msgstr "Диагностика"
 
@@ -615,7 +615,7 @@ msgstr "СТРАНИЦИ"
 
 #: ../../portable/frontends/widgets/tablist.py:745
 msgid "VIDEO FEEDS"
-msgstr ""
+msgstr "ВИДЕО ЕМИСИИ"
 
 #: ../../portable/frontends/widgets/tablist.py:747
 msgid "AUDIO FEEDS"
@@ -760,7 +760,7 @@ msgstr "Директорията не е валидна"
 #: ../../portable/frontends/widgets/prefpanel.py:458
 #, python-format
 msgid "Directory '%s' could not be created.  "
-msgstr ""
+msgstr "Директорията '%s' не можа да се създаде.  "
 
 #: ../../portable/frontends/widgets/prefpanel.py:473
 msgid "Migrate existing movies?"
@@ -838,7 +838,7 @@ msgstr "По подразбиране видео и аудио файловет�
 
 #: ../../portable/frontends/widgets/prefpanel.py:620
 msgid "Play media in Miro."
-msgstr ""
+msgstr "Пусни медиата в Miro."
 
 #: ../../portable/frontends/widgets/prefpanel.py:621
 msgid "Always play videos in a separate window."
@@ -910,7 +910,7 @@ msgstr "Продължаване на всички изтегляния (%(pause
 msgid "Hide"
 msgstr "Скриване"
 
-#: ../../portable/frontends/widgets/gtk/video.py:272
+#: ../../portable/frontends/widgets/gtk/video.py:278
 #: ../../portable/frontends/widgets/style.py:258
 #: ../../portable/frontends/widgets/style.py:1050
 #: ../../portable/frontends/widgets/style.py:1217
@@ -921,11 +921,11 @@ msgstr "Скриване"
 msgid "Keep"
 msgstr "Запазване"
 
-#: ../../portable/frontends/widgets/gtk/video.py:276
+#: ../../portable/frontends/widgets/gtk/video.py:282
 msgid "Subtitles"
 msgstr "Субтитри"
 
-#: ../../portable/frontends/widgets/gtk/video.py:285
+#: ../../portable/frontends/widgets/gtk/video.py:291
 #: ../../portable/frontends/widgets/itemcontextmenu.py:67
 #: ../../portable/dialogs.py:117
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:129
@@ -933,43 +933,43 @@ msgstr "Субтитри"
 msgid "Delete"
 msgstr "Изтрий"
 
-#: ../../portable/frontends/widgets/gtk/video.py:291
+#: ../../portable/frontends/widgets/gtk/video.py:297
 #: ../../portable/frontends/widgets/itemcontextmenu.py:157
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:121
 msgid "Share"
 msgstr "Споделяне"
 
-#: ../../portable/frontends/widgets/gtk/video.py:297
+#: ../../portable/frontends/widgets/gtk/video.py:303
 #: ../../portable/frontends/widgets/style.py:236
 #: ../../portable/frontends/widgets/itemcontextmenu.py:142
 msgid "Comments"
 msgstr "Коментари"
 
-#: ../../portable/frontends/widgets/gtk/video.py:301
+#: ../../portable/frontends/widgets/gtk/video.py:307
 msgid "Permalink"
 msgstr "Постоянна връзка"
 
-#: ../../portable/frontends/widgets/gtk/video.py:309
+#: ../../portable/frontends/widgets/gtk/video.py:315
 msgid "Pop-in"
 msgstr "Покажи вътре"
 
-#: ../../portable/frontends/widgets/gtk/video.py:315
+#: ../../portable/frontends/widgets/gtk/video.py:321
 msgid "Pop-out"
 msgstr "Покажи отвън"
 
-#: ../../portable/frontends/widgets/gtk/video.py:351
-#: ../../portable/frontends/widgets/menus.py:310
+#: ../../portable/frontends/widgets/gtk/video.py:357
+#: ../../portable/frontends/widgets/menus.py:312
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:378
 msgid "None Available"
 msgstr "Не е достъпно"
 
-#: ../../portable/frontends/widgets/gtk/video.py:373
+#: ../../portable/frontends/widgets/gtk/video.py:379
 #: ../../portable/frontends/widgets/gtk/window.py:267
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:367
 msgid "Disable Subtitles"
 msgstr "Изключи субтитри"
 
-#: ../../portable/frontends/widgets/gtk/video.py:384
+#: ../../portable/frontends/widgets/gtk/video.py:390
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:385
 msgid "Select a Subtitles file..."
 msgstr "Селектирай файл със субтитри..."
@@ -1036,6 +1036,21 @@ msgid ""
 "If you quit, then you can connect the drive or otherwise fix the problem and "
 "relaunch %(shortappname)s."
 msgstr ""
+"%(shortappname)s не може да използва основната видео директория:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"Може да се дължи на това, че директорията се намира на външно устройство, "
+"което не е свързано, %(shortappname)s няма права за достъп до нея или "
+"адресът на директорията е невалиден.\n"
+"\n"
+"Ако продължите, основната видео директория ще бъде променена на такава, "
+"която се намира на текущия твърд диск. Ако вече имате свалени видео файлове, "
+"тази промяна ще накара %(shortappname)s да загуби данни за тези видео "
+"файлове.\n"
+"\n"
+"Ако напуснете, можете да свържете устройството или да решите проблема по "
+"друг начин и да рестартирате %(shortappname)s."
 
 #: ../../portable/frontends/widgets/application.py:330
 msgid "Error Revealing File"
@@ -1372,7 +1387,7 @@ msgstr "Общо изтеглено"
 
 #: ../../portable/frontends/widgets/style.py:250
 msgid "Up/Down Ratio"
-msgstr ""
+msgstr "Съотношение качване/сваляне"
 
 #: ../../portable/frontends/widgets/style.py:251
 #: ../../portable/frontends/widgets/style.py:1120
@@ -1545,182 +1560,182 @@ msgstr "Нова _Папка"
 msgid "Re_name"
 msgstr "Преимен_уване"
 
-#: ../../portable/frontends/widgets/menus.py:230
-msgid "Re_name Feed"
-msgstr ""
-
 #: ../../portable/frontends/widgets/menus.py:231
+msgid "Re_name Feed"
+msgstr "Пре_именувай емисията"
+
+#: ../../portable/frontends/widgets/menus.py:232
 msgid "Re_name Site"
 msgstr "Преиманувай Страницата"
 
-#: ../../portable/frontends/widgets/menus.py:232
+#: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
 msgstr "Пре_махване"
 
-#: ../../portable/frontends/widgets/menus.py:235
-msgid "_Remove Feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/menus.py:236
-msgid "_Remove Feeds"
-msgstr ""
-
 #: ../../portable/frontends/widgets/menus.py:237
+msgid "_Remove Feed"
+msgstr "_Премахни емисията"
+
+#: ../../portable/frontends/widgets/menus.py:238
+msgid "_Remove Feeds"
+msgstr "_Премахни емисиите"
+
+#: ../../portable/frontends/widgets/menus.py:239
 msgid "_Remove Folder"
 msgstr "Премахване на _папка"
 
-#: ../../portable/frontends/widgets/menus.py:238
+#: ../../portable/frontends/widgets/menus.py:240
 msgid "_Remove Folders"
 msgstr "Премахни Папки"
 
-#: ../../portable/frontends/widgets/menus.py:239
+#: ../../portable/frontends/widgets/menus.py:241
 msgid "_Remove Site"
 msgstr "Премахни Страници"
 
-#: ../../portable/frontends/widgets/menus.py:240
+#: ../../portable/frontends/widgets/menus.py:242
 msgid "_Remove Sites"
 msgstr "Премахни Страници"
 
-#: ../../portable/frontends/widgets/menus.py:241
+#: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
 msgstr "_Обновяване на емисия"
 
-#: ../../portable/frontends/widgets/menus.py:244
+#: ../../portable/frontends/widgets/menus.py:246
 msgid "_Update Feeds"
 msgstr "_Обновяване на емисии"
 
-#: ../../portable/frontends/widgets/menus.py:245
+#: ../../portable/frontends/widgets/menus.py:247
 msgid "Update _All Feeds"
 msgstr "Обновяване на _всички емисии"
 
-#: ../../portable/frontends/widgets/menus.py:249
+#: ../../portable/frontends/widgets/menus.py:251
 msgid "_Import Feeds (OPML)"
 msgstr "_Внасяне на емисии (OPML)"
 
-#: ../../portable/frontends/widgets/menus.py:251
+#: ../../portable/frontends/widgets/menus.py:253
 msgid "E_xport Feeds (OPML)"
 msgstr "_Изнасяне на емисии (OPML)"
 
-#: ../../portable/frontends/widgets/menus.py:254
+#: ../../portable/frontends/widgets/menus.py:256
 msgid "_Share with a Friend"
 msgstr "_Споделяне с приятел"
 
-#: ../../portable/frontends/widgets/menus.py:256
+#: ../../portable/frontends/widgets/menus.py:258
 msgid "Copy URL"
 msgstr "Копиране на адреса"
 
-#: ../../portable/frontends/widgets/menus.py:260
+#: ../../portable/frontends/widgets/menus.py:262
 msgid "_Playlists"
 msgstr "_Списъци"
 
-#: ../../portable/frontends/widgets/menus.py:261
+#: ../../portable/frontends/widgets/menus.py:263
 msgid "New _Playlist"
 msgstr "Нов _списък"
 
-#: ../../portable/frontends/widgets/menus.py:264
+#: ../../portable/frontends/widgets/menus.py:266
 msgid "New Playlist Fol_der"
 msgstr "Нова _папка за списъци"
 
-#: ../../portable/frontends/widgets/menus.py:268
+#: ../../portable/frontends/widgets/menus.py:270
 msgid "Re_name Playlist"
 msgstr "Пре_именуване на списъка"
 
-#: ../../portable/frontends/widgets/menus.py:270
+#: ../../portable/frontends/widgets/menus.py:272
 msgid "_Remove Playlist"
 msgstr "_Премахване на списъка"
 
-#: ../../portable/frontends/widgets/menus.py:273
+#: ../../portable/frontends/widgets/menus.py:275
 msgid "_Remove Playlists"
 msgstr "_Премахване на списъците"
 
-#: ../../portable/frontends/widgets/menus.py:274
+#: ../../portable/frontends/widgets/menus.py:276
 msgid "_Remove Playlist Folders"
 msgstr "_Премахване на папките за списъци"
 
-#: ../../portable/frontends/widgets/menus.py:275
+#: ../../portable/frontends/widgets/menus.py:277
 msgid "_Remove Playlist Folder"
 msgstr "_Премахване на папката за списъци"
 
-#: ../../portable/frontends/widgets/menus.py:278
+#: ../../portable/frontends/widgets/menus.py:280
 msgid "P_layback"
 msgstr "Из_пълнение"
 
-#: ../../portable/frontends/widgets/menus.py:279
 #: ../../portable/frontends/widgets/menus.py:281
+#: ../../portable/frontends/widgets/menus.py:283
 msgid "_Play"
 msgstr "_Изпълнение"
 
-#: ../../portable/frontends/widgets/menus.py:282
+#: ../../portable/frontends/widgets/menus.py:284
 msgid "_Pause"
 msgstr "Спи_ране"
 
-#: ../../portable/frontends/widgets/menus.py:283
+#: ../../portable/frontends/widgets/menus.py:285
 msgid "_Stop"
 msgstr "_Спиране"
 
-#: ../../portable/frontends/widgets/menus.py:286
+#: ../../portable/frontends/widgets/menus.py:288
 msgid "_Next Video"
 msgstr "_Следващ филм"
 
-#: ../../portable/frontends/widgets/menus.py:289
+#: ../../portable/frontends/widgets/menus.py:291
 msgid "_Previous Video"
 msgstr "_Предишен филм"
 
-#: ../../portable/frontends/widgets/menus.py:293
+#: ../../portable/frontends/widgets/menus.py:295
 msgid "Skip _Forward"
 msgstr "Превъртане на_пред"
 
-#: ../../portable/frontends/widgets/menus.py:295
+#: ../../portable/frontends/widgets/menus.py:297
 msgid "Skip _Back"
 msgstr "Превъртане на_зад"
 
-#: ../../portable/frontends/widgets/menus.py:298
+#: ../../portable/frontends/widgets/menus.py:300
 msgid "Volume _Up"
 msgstr "_Усилване на звука"
 
-#: ../../portable/frontends/widgets/menus.py:300
+#: ../../portable/frontends/widgets/menus.py:302
 msgid "Volume _Down"
 msgstr "_Намаляане на звука"
 
-#: ../../portable/frontends/widgets/menus.py:303
+#: ../../portable/frontends/widgets/menus.py:305
 msgid "_Fullscreen"
 msgstr "_Цял екран"
 
-#: ../../portable/frontends/widgets/menus.py:306
+#: ../../portable/frontends/widgets/menus.py:308
 msgid "_Toggle Detached/Attached"
 msgstr "Смени откачено/прикачено"
 
-#: ../../portable/frontends/widgets/menus.py:309
+#: ../../portable/frontends/widgets/menus.py:311
 msgid "S_ubtitles"
 msgstr "С_убтитри"
 
-#: ../../portable/frontends/widgets/menus.py:312
+#: ../../portable/frontends/widgets/menus.py:315
 msgid "Select a Subtitles File..."
 msgstr "Посочи файл със субтитри"
 
-#: ../../portable/frontends/widgets/menus.py:317
-#: ../../portable/frontends/widgets/menus.py:329
+#: ../../portable/frontends/widgets/menus.py:321
+#: ../../portable/frontends/widgets/menus.py:333
 msgid "_Help"
 msgstr "Помо_щ"
 
-#: ../../portable/frontends/widgets/menus.py:318
+#: ../../portable/frontends/widgets/menus.py:322
 #, python-format
 msgid "_About %(name)s"
 msgstr "_Относно %(name)s"
 
-#: ../../portable/frontends/widgets/menus.py:326
+#: ../../portable/frontends/widgets/menus.py:330
 msgid "_Donate"
 msgstr "_Даряване"
 
-#: ../../portable/frontends/widgets/menus.py:333
+#: ../../portable/frontends/widgets/menus.py:337
 msgid "Report a _Bug"
 msgstr "Докладване за _грешка"
 
-#: ../../portable/frontends/widgets/menus.py:335
+#: ../../portable/frontends/widgets/menus.py:339
 msgid "_Translate"
 msgstr "_Превод"
 
-#: ../../portable/frontends/widgets/menus.py:337
+#: ../../portable/frontends/widgets/menus.py:341
 msgid "_Planet Miro"
 msgstr "_Планета Miro"
 
@@ -2162,7 +2177,7 @@ msgstr "< Предишен"
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:227
 #: ../../portable/frontends/widgets/firsttimedialog.py:284
-#: ../../portable/feed.py:2331 ../../portable/feed.py:2440
+#: ../../portable/feed.py:2335 ../../portable/feed.py:2444
 msgid "Search"
 msgstr "Търсене"
 
@@ -2410,16 +2425,16 @@ msgstr ""
 "\n"
 "Желате ли въпреки това този канал да се зареди?"
 
-#: ../../portable/feed.py:1720
+#: ../../portable/feed.py:1724
 #, python-format
 msgid "Search All: %(text)s"
 msgstr "Търси всички: %(text)s"
 
-#: ../../portable/feed.py:2302 ../../portable/feed.py:2455
+#: ../../portable/feed.py:2306 ../../portable/feed.py:2459
 msgid "Local Files"
 msgstr "Локални файлове"
 
-#: ../../portable/feed.py:2469
+#: ../../portable/feed.py:2473
 msgid "Playing File"
 msgstr "Изпълнение на файл"
 
@@ -2634,7 +2649,7 @@ msgstr "Спиране на наблюдението"
 
 #: ../../portable/dialogs.py:127
 msgid "Retry"
-msgstr ""
+msgstr "Опитай отново"
 
 #: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"
@@ -2796,16 +2811,16 @@ msgstr "Търсене на всичко"
 msgid "Example Playlist"
 msgstr "Примерен списък"
 
-#: ../../portable/storedatabase.py:231
+#: ../../portable/storedatabase.py:232
 msgid "Database was created by a newer version of Miro "
 msgstr "Базата данни е била създадена от по-нова версия на Миро "
 
-#: ../../portable/storedatabase.py:612
+#: ../../portable/storedatabase.py:613
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "Базата данни на %(appname)s се запази успешно"
 
-#: ../../portable/storedatabase.py:614
+#: ../../portable/storedatabase.py:615
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -2813,12 +2828,12 @@ msgstr ""
 "Базата данни e запазена успешно. Вече е безопасно да затворите програмата "
 "без да изгубите информация."
 
-#: ../../portable/storedatabase.py:669
+#: ../../portable/storedatabase.py:670
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "Базата данни на %(appname)s не можа да се запази"
 
-#: ../../portable/storedatabase.py:672
+#: ../../portable/storedatabase.py:673
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -2851,22 +2866,22 @@ msgstr ""
 "Грешка: %(error_text)s\n"
 "\n"
 
-#: ../../portable/util.py:371 ../../portable/util.py:373
+#: ../../portable/util.py:374 ../../portable/util.py:376
 #, python-format
 msgid "%(size)sGB"
 msgstr "%(size)sГБ"
 
-#: ../../portable/util.py:377 ../../portable/util.py:379
+#: ../../portable/util.py:380 ../../portable/util.py:382
 #, python-format
 msgid "%(size)sMB"
 msgstr "%(size)sМБ"
 
-#: ../../portable/util.py:383 ../../portable/util.py:385
+#: ../../portable/util.py:386 ../../portable/util.py:388
 #, python-format
 msgid "%(size)sKB"
 msgstr "%(size)sКБ"
 
-#: ../../portable/util.py:389 ../../portable/util.py:391
+#: ../../portable/util.py:392 ../../portable/util.py:394
 #, python-format
 msgid "%(size)sB"
 msgstr "%(size)sБ"
@@ -2916,19 +2931,19 @@ msgstr ""
 "се скрие, но иконата му да се показва на системната табла, или предпочитате "
 "да напуснете? Може да промените тази настройка по-късно в Настройки."
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:192
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:193
 msgid "Error Bombing Item"
 msgstr "Грешка при бомбардирането на обекта."
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:194
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:195
 msgid "Error Recommending Item"
 msgstr "Грешка при препоръчването на обекта."
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:196
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:197
 msgid "Error Opening Website"
 msgstr "Грешка при зареждане на  уеб страницата"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:201
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:202
 #, python-format
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
@@ -2981,11 +2996,15 @@ msgstr ""
 msgid "Video renderer:"
 msgstr "Видео рендер"
 
-#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:407
-#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:421
-#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:430
-msgid "Unknown Language"
-msgstr "Непознат Език"
+#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:446
+#, python-format
+msgid "Track %(tracknumber)d"
+msgstr "Трек %(tracknumber)d"
+
+#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:456
+#, python-format
+msgid "Subtitle file %(tracknumber)d"
+msgstr "Файл със субтитри %(tracknumber)d"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:178
 msgid "Download Completed"

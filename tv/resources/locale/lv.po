@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: _democracyplayer-lv\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2010-02-02 19:24-0500\n"
+"POT-Creation-Date: 2010-02-10 12:32-0500\n"
 "PO-Revision-Date: 2009-11-07 22:34+0000\n"
 "Last-Translator: Yuuko <spragona@gmail.com>\n"
 "Language-Team: Latvian <locale@laka.lv>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-02-10 16:41+0000\n"
+"X-Launchpad-Export-Date: 2010-02-16 18:57+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -247,7 +247,7 @@ msgid "Total db objects in memory:"
 msgstr "Datubāzes objektu skaits atminā:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:118
-#: ../../portable/frontends/widgets/menus.py:331
+#: ../../portable/frontends/widgets/menus.py:335
 msgid "Diagnostics"
 msgstr "Diagnostika"
 
@@ -914,7 +914,7 @@ msgstr "Turpināt Visas Lejupielādes (%(paused)d)"
 msgid "Hide"
 msgstr "Paslēpt"
 
-#: ../../portable/frontends/widgets/gtk/video.py:272
+#: ../../portable/frontends/widgets/gtk/video.py:278
 #: ../../portable/frontends/widgets/style.py:258
 #: ../../portable/frontends/widgets/style.py:1050
 #: ../../portable/frontends/widgets/style.py:1217
@@ -925,11 +925,11 @@ msgstr "Paslēpt"
 msgid "Keep"
 msgstr "Paturēt"
 
-#: ../../portable/frontends/widgets/gtk/video.py:276
+#: ../../portable/frontends/widgets/gtk/video.py:282
 msgid "Subtitles"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/video.py:285
+#: ../../portable/frontends/widgets/gtk/video.py:291
 #: ../../portable/frontends/widgets/itemcontextmenu.py:67
 #: ../../portable/dialogs.py:117
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:129
@@ -937,43 +937,43 @@ msgstr ""
 msgid "Delete"
 msgstr "Izdzēst"
 
-#: ../../portable/frontends/widgets/gtk/video.py:291
+#: ../../portable/frontends/widgets/gtk/video.py:297
 #: ../../portable/frontends/widgets/itemcontextmenu.py:157
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:121
 msgid "Share"
 msgstr "Dalīties"
 
-#: ../../portable/frontends/widgets/gtk/video.py:297
+#: ../../portable/frontends/widgets/gtk/video.py:303
 #: ../../portable/frontends/widgets/style.py:236
 #: ../../portable/frontends/widgets/itemcontextmenu.py:142
 msgid "Comments"
 msgstr "Komentāri"
 
-#: ../../portable/frontends/widgets/gtk/video.py:301
+#: ../../portable/frontends/widgets/gtk/video.py:307
 msgid "Permalink"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/video.py:309
+#: ../../portable/frontends/widgets/gtk/video.py:315
 msgid "Pop-in"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/video.py:315
+#: ../../portable/frontends/widgets/gtk/video.py:321
 msgid "Pop-out"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/video.py:351
-#: ../../portable/frontends/widgets/menus.py:310
+#: ../../portable/frontends/widgets/gtk/video.py:357
+#: ../../portable/frontends/widgets/menus.py:312
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:378
 msgid "None Available"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/video.py:373
+#: ../../portable/frontends/widgets/gtk/video.py:379
 #: ../../portable/frontends/widgets/gtk/window.py:267
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:367
 msgid "Disable Subtitles"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/video.py:384
+#: ../../portable/frontends/widgets/gtk/video.py:390
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:385
 msgid "Select a Subtitles file..."
 msgstr ""
@@ -1530,182 +1530,182 @@ msgstr "Jauna _mape"
 msgid "Re_name"
 msgstr "Pā_rsaukt"
 
-#: ../../portable/frontends/widgets/menus.py:230
+#: ../../portable/frontends/widgets/menus.py:231
 msgid "Re_name Feed"
 msgstr ""
 
-#: ../../portable/frontends/widgets/menus.py:231
+#: ../../portable/frontends/widgets/menus.py:232
 msgid "Re_name Site"
 msgstr ""
 
-#: ../../portable/frontends/widgets/menus.py:232
+#: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
 msgstr "_Aizvākt"
 
-#: ../../portable/frontends/widgets/menus.py:235
+#: ../../portable/frontends/widgets/menus.py:237
 msgid "_Remove Feed"
 msgstr ""
 
-#: ../../portable/frontends/widgets/menus.py:236
+#: ../../portable/frontends/widgets/menus.py:238
 msgid "_Remove Feeds"
 msgstr ""
 
-#: ../../portable/frontends/widgets/menus.py:237
+#: ../../portable/frontends/widgets/menus.py:239
 msgid "_Remove Folder"
 msgstr "_Aizvākt mapi"
 
-#: ../../portable/frontends/widgets/menus.py:238
+#: ../../portable/frontends/widgets/menus.py:240
 msgid "_Remove Folders"
 msgstr ""
 
-#: ../../portable/frontends/widgets/menus.py:239
+#: ../../portable/frontends/widgets/menus.py:241
 msgid "_Remove Site"
 msgstr ""
 
-#: ../../portable/frontends/widgets/menus.py:240
+#: ../../portable/frontends/widgets/menus.py:242
 msgid "_Remove Sites"
 msgstr ""
 
-#: ../../portable/frontends/widgets/menus.py:241
+#: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
 msgstr "Atjau_unot barotni"
 
-#: ../../portable/frontends/widgets/menus.py:244
+#: ../../portable/frontends/widgets/menus.py:246
 msgid "_Update Feeds"
 msgstr "Atjau_unot barotnes"
 
-#: ../../portable/frontends/widgets/menus.py:245
+#: ../../portable/frontends/widgets/menus.py:247
 msgid "Update _All Feeds"
 msgstr "Atjau_unot visas barotnes"
 
-#: ../../portable/frontends/widgets/menus.py:249
+#: ../../portable/frontends/widgets/menus.py:251
 msgid "_Import Feeds (OPML)"
 msgstr "_Importēt farotnes (OPML)"
 
-#: ../../portable/frontends/widgets/menus.py:251
+#: ../../portable/frontends/widgets/menus.py:253
 msgid "E_xport Feeds (OPML)"
 msgstr "E_ksportēt barotnes (OPML)"
 
-#: ../../portable/frontends/widgets/menus.py:254
+#: ../../portable/frontends/widgets/menus.py:256
 msgid "_Share with a Friend"
 msgstr "Pa_stāstīt draugam"
 
-#: ../../portable/frontends/widgets/menus.py:256
+#: ../../portable/frontends/widgets/menus.py:258
 msgid "Copy URL"
 msgstr "Kopēt URL"
 
-#: ../../portable/frontends/widgets/menus.py:260
+#: ../../portable/frontends/widgets/menus.py:262
 msgid "_Playlists"
 msgstr "_Repertuāri"
 
-#: ../../portable/frontends/widgets/menus.py:261
+#: ../../portable/frontends/widgets/menus.py:263
 msgid "New _Playlist"
 msgstr "Jauns re_pertuārs"
 
-#: ../../portable/frontends/widgets/menus.py:264
+#: ../../portable/frontends/widgets/menus.py:266
 msgid "New Playlist Fol_der"
 msgstr "Jauna repertuāru ma_pe"
 
-#: ../../portable/frontends/widgets/menus.py:268
+#: ../../portable/frontends/widgets/menus.py:270
 msgid "Re_name Playlist"
 msgstr "Pā_rsaukt repertuāru"
 
-#: ../../portable/frontends/widgets/menus.py:270
+#: ../../portable/frontends/widgets/menus.py:272
 msgid "_Remove Playlist"
 msgstr "_Noņemt repertuāru"
 
-#: ../../portable/frontends/widgets/menus.py:273
+#: ../../portable/frontends/widgets/menus.py:275
 msgid "_Remove Playlists"
 msgstr "_Noņemt repertuārus"
 
-#: ../../portable/frontends/widgets/menus.py:274
+#: ../../portable/frontends/widgets/menus.py:276
 msgid "_Remove Playlist Folders"
 msgstr "_Noņemt repertuāru mapes"
 
-#: ../../portable/frontends/widgets/menus.py:275
+#: ../../portable/frontends/widgets/menus.py:277
 msgid "_Remove Playlist Folder"
 msgstr "_Noņemt repertuāru mapi"
 
-#: ../../portable/frontends/widgets/menus.py:278
+#: ../../portable/frontends/widgets/menus.py:280
 msgid "P_layback"
 msgstr "A_tskaņošana"
 
-#: ../../portable/frontends/widgets/menus.py:279
 #: ../../portable/frontends/widgets/menus.py:281
+#: ../../portable/frontends/widgets/menus.py:283
 msgid "_Play"
 msgstr "_Atskaņot"
 
-#: ../../portable/frontends/widgets/menus.py:282
+#: ../../portable/frontends/widgets/menus.py:284
 msgid "_Pause"
 msgstr "_Pauze"
 
-#: ../../portable/frontends/widgets/menus.py:283
+#: ../../portable/frontends/widgets/menus.py:285
 msgid "_Stop"
 msgstr "A_pturēt"
 
-#: ../../portable/frontends/widgets/menus.py:286
+#: ../../portable/frontends/widgets/menus.py:288
 msgid "_Next Video"
 msgstr "_Nākamais video"
 
-#: ../../portable/frontends/widgets/menus.py:289
+#: ../../portable/frontends/widgets/menus.py:291
 msgid "_Previous Video"
 msgstr "_Iepriekšējais video"
 
-#: ../../portable/frontends/widgets/menus.py:293
+#: ../../portable/frontends/widgets/menus.py:295
 msgid "Skip _Forward"
 msgstr "Uz _priekšu"
 
-#: ../../portable/frontends/widgets/menus.py:295
+#: ../../portable/frontends/widgets/menus.py:297
 msgid "Skip _Back"
 msgstr "_Atpakaļ"
 
-#: ../../portable/frontends/widgets/menus.py:298
+#: ../../portable/frontends/widgets/menus.py:300
 msgid "Volume _Up"
 msgstr "_Skaļāk"
 
-#: ../../portable/frontends/widgets/menus.py:300
+#: ../../portable/frontends/widgets/menus.py:302
 msgid "Volume _Down"
 msgstr "_Klusāk"
 
-#: ../../portable/frontends/widgets/menus.py:303
+#: ../../portable/frontends/widgets/menus.py:305
 msgid "_Fullscreen"
 msgstr "_Pa visu ekrānu"
 
-#: ../../portable/frontends/widgets/menus.py:306
+#: ../../portable/frontends/widgets/menus.py:308
 msgid "_Toggle Detached/Attached"
 msgstr ""
 
-#: ../../portable/frontends/widgets/menus.py:309
+#: ../../portable/frontends/widgets/menus.py:311
 msgid "S_ubtitles"
 msgstr ""
 
-#: ../../portable/frontends/widgets/menus.py:312
+#: ../../portable/frontends/widgets/menus.py:315
 msgid "Select a Subtitles File..."
 msgstr ""
 
-#: ../../portable/frontends/widgets/menus.py:317
-#: ../../portable/frontends/widgets/menus.py:329
+#: ../../portable/frontends/widgets/menus.py:321
+#: ../../portable/frontends/widgets/menus.py:333
 msgid "_Help"
 msgstr "_Palīdzība"
 
-#: ../../portable/frontends/widgets/menus.py:318
+#: ../../portable/frontends/widgets/menus.py:322
 #, python-format
 msgid "_About %(name)s"
 msgstr ""
 
-#: ../../portable/frontends/widgets/menus.py:326
+#: ../../portable/frontends/widgets/menus.py:330
 msgid "_Donate"
 msgstr "_Ziedot"
 
-#: ../../portable/frontends/widgets/menus.py:333
+#: ../../portable/frontends/widgets/menus.py:337
 msgid "Report a _Bug"
 msgstr "Ziņot par _kļūdu"
 
-#: ../../portable/frontends/widgets/menus.py:335
+#: ../../portable/frontends/widgets/menus.py:339
 msgid "_Translate"
 msgstr "_Pārraidīt"
 
-#: ../../portable/frontends/widgets/menus.py:337
+#: ../../portable/frontends/widgets/menus.py:341
 msgid "_Planet Miro"
 msgstr "Miro _planēta"
 
@@ -2143,7 +2143,7 @@ msgstr "< Iepriekšējais"
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:227
 #: ../../portable/frontends/widgets/firsttimedialog.py:284
-#: ../../portable/feed.py:2331 ../../portable/feed.py:2440
+#: ../../portable/feed.py:2335 ../../portable/feed.py:2444
 msgid "Search"
 msgstr "Meklēt"
 
@@ -2392,16 +2392,16 @@ msgid ""
 "Do you want to try to load this channel anyway?"
 msgstr ""
 
-#: ../../portable/feed.py:1720
+#: ../../portable/feed.py:1724
 #, python-format
 msgid "Search All: %(text)s"
 msgstr "Izmeklēt Visur: %(text)s"
 
-#: ../../portable/feed.py:2302 ../../portable/feed.py:2455
+#: ../../portable/feed.py:2306 ../../portable/feed.py:2459
 msgid "Local Files"
 msgstr "Lokālie faili"
 
-#: ../../portable/feed.py:2469
+#: ../../portable/feed.py:2473
 msgid "Playing File"
 msgstr "Atskaņo failu"
 
@@ -2773,16 +2773,16 @@ msgstr "Meklēt visus"
 msgid "Example Playlist"
 msgstr "Paraug repertuārs"
 
-#: ../../portable/storedatabase.py:231
+#: ../../portable/storedatabase.py:232
 msgid "Database was created by a newer version of Miro "
 msgstr ""
 
-#: ../../portable/storedatabase.py:612
+#: ../../portable/storedatabase.py:613
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr ""
 
-#: ../../portable/storedatabase.py:614
+#: ../../portable/storedatabase.py:615
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -2790,12 +2790,12 @@ msgstr ""
 "Datubāze ir veiksmīgi saglabāta. Tagad Jūs droši varat izslēgt programmu "
 "nezaudējot datus."
 
-#: ../../portable/storedatabase.py:669
+#: ../../portable/storedatabase.py:670
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr ""
 
-#: ../../portable/storedatabase.py:672
+#: ../../portable/storedatabase.py:673
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -2813,22 +2813,22 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../../portable/util.py:371 ../../portable/util.py:373
+#: ../../portable/util.py:374 ../../portable/util.py:376
 #, python-format
 msgid "%(size)sGB"
 msgstr "%(size)sGB"
 
-#: ../../portable/util.py:377 ../../portable/util.py:379
+#: ../../portable/util.py:380 ../../portable/util.py:382
 #, python-format
 msgid "%(size)sMB"
 msgstr "%(size)sMB"
 
-#: ../../portable/util.py:383 ../../portable/util.py:385
+#: ../../portable/util.py:386 ../../portable/util.py:388
 #, python-format
 msgid "%(size)sKB"
 msgstr "%(size)sKB"
 
-#: ../../portable/util.py:389 ../../portable/util.py:391
+#: ../../portable/util.py:392 ../../portable/util.py:394
 #, python-format
 msgid "%(size)sB"
 msgstr "%(size)sB"
@@ -2875,19 +2875,19 @@ msgid ""
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:192
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:193
 msgid "Error Bombing Item"
 msgstr "Kļūda bumbojot video"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:194
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:195
 msgid "Error Recommending Item"
 msgstr "Kļūda iesakot video"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:196
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:197
 msgid "Error Opening Website"
 msgstr "Kļūda atverot mājas lapu"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:201
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:202
 #, python-format
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
@@ -2932,10 +2932,14 @@ msgstr ""
 msgid "Video renderer:"
 msgstr "Viideo renderētājs:"
 
-#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:407
-#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:421
-#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:430
-msgid "Unknown Language"
+#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:446
+#, python-format
+msgid "Track %(tracknumber)d"
+msgstr ""
+
+#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:456
+#, python-format
+msgid "Subtitle file %(tracknumber)d"
 msgstr ""
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:178

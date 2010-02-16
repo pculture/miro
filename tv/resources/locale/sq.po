@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2010-02-02 19:24-0500\n"
-"PO-Revision-Date: 2009-12-25 16:13+0000\n"
+"POT-Creation-Date: 2010-02-10 12:32-0500\n"
+"PO-Revision-Date: 2010-02-13 09:45+0000\n"
 "Last-Translator: Besnik <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <sq@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-02-10 16:40+0000\n"
+"X-Launchpad-Export-Date: 2010-02-16 18:57+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -143,11 +143,11 @@ msgstr "Gabim i Brendshëm: Jo gati për dërgim"
 
 #: ../../portable/frontends/widgets/playback.py:551
 msgid "Open Subtitles File..."
-msgstr ""
+msgstr "Hap Kartelë Titrash..."
 
 #: ../../portable/frontends/widgets/playback.py:552
 msgid "Subtitle files"
-msgstr ""
+msgstr "Kartela titrash"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -241,7 +241,7 @@ msgid "Total db objects in memory:"
 msgstr "Objekte db gjithsej në kujtesë:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:118
-#: ../../portable/frontends/widgets/menus.py:331
+#: ../../portable/frontends/widgets/menus.py:335
 msgid "Diagnostics"
 msgstr "Diagnostikime"
 
@@ -335,19 +335,19 @@ msgstr[1] ""
 #: ../../portable/frontends/widgets/itemedit.py:136
 #: ../../portable/frontends/widgets/itemcontextmenu.py:107
 msgid "Edit Item"
-msgstr ""
+msgstr "Përpuno Objekt"
 
 #: ../../portable/frontends/widgets/itemedit.py:145
 msgid "Title:"
-msgstr ""
+msgstr "Titull:"
 
 #: ../../portable/frontends/widgets/itemedit.py:147
 msgid "Description:"
-msgstr ""
+msgstr "Përshkrim:"
 
 #: ../../portable/frontends/widgets/itemedit.py:149
 msgid "Media type:"
-msgstr ""
+msgstr "Lloj media:"
 
 #: ../../portable/frontends/widgets/itemedit.py:151
 #: ../../portable/frontends/widgets/itemlistcontroller.py:521
@@ -369,7 +369,7 @@ msgstr "Të tjera"
 
 #: ../../portable/frontends/widgets/itemedit.py:157
 msgid "Path:"
-msgstr ""
+msgstr "Shteg:"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
@@ -608,11 +608,11 @@ msgstr "BIBLIOTEKË"
 
 #: ../../portable/frontends/widgets/tablist.py:743
 msgid "WEBSITES"
-msgstr ""
+msgstr "WEBSITES"
 
 #: ../../portable/frontends/widgets/tablist.py:745
 msgid "VIDEO FEEDS"
-msgstr ""
+msgstr "PRURJE VIDEO"
 
 #: ../../portable/frontends/widgets/tablist.py:747
 msgid "AUDIO FEEDS"
@@ -752,12 +752,12 @@ msgstr "Zgjidhni Drejtori Filmash"
 
 #: ../../portable/frontends/widgets/prefpanel.py:457
 msgid "Directory not valid"
-msgstr ""
+msgstr "Drejtori jo e vlefshme"
 
 #: ../../portable/frontends/widgets/prefpanel.py:458
 #, python-format
 msgid "Directory '%s' could not be created.  "
-msgstr ""
+msgstr "Drejtoria '%s' nuk u krijua dot.  "
 
 #: ../../portable/frontends/widgets/prefpanel.py:473
 msgid "Migrate existing movies?"
@@ -836,7 +836,7 @@ msgstr "Si parazgjedhje, objektet video dhe audio skadojnë pas:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:620
 msgid "Play media in Miro."
-msgstr ""
+msgstr "Luani media në Miro."
 
 #: ../../portable/frontends/widgets/prefpanel.py:621
 msgid "Always play videos in a separate window."
@@ -851,7 +851,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:624
 msgid "Automatically enable movie subtitles when available."
-msgstr ""
+msgstr "Aktivizo vetvetiu titra filmash, kur ka të tillë."
 
 #: ../../portable/frontends/widgets/prefpanel.py:627
 msgid "Play video and audio items one after another"
@@ -909,7 +909,7 @@ msgstr "Rimerri Tërë Shkarkimet (%(paused)d)"
 msgid "Hide"
 msgstr "Fshihe"
 
-#: ../../portable/frontends/widgets/gtk/video.py:272
+#: ../../portable/frontends/widgets/gtk/video.py:278
 #: ../../portable/frontends/widgets/style.py:258
 #: ../../portable/frontends/widgets/style.py:1050
 #: ../../portable/frontends/widgets/style.py:1217
@@ -920,11 +920,11 @@ msgstr "Fshihe"
 msgid "Keep"
 msgstr "Mbaje"
 
-#: ../../portable/frontends/widgets/gtk/video.py:276
+#: ../../portable/frontends/widgets/gtk/video.py:282
 msgid "Subtitles"
-msgstr ""
+msgstr "Titra"
 
-#: ../../portable/frontends/widgets/gtk/video.py:285
+#: ../../portable/frontends/widgets/gtk/video.py:291
 #: ../../portable/frontends/widgets/itemcontextmenu.py:67
 #: ../../portable/dialogs.py:117
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:129
@@ -932,46 +932,46 @@ msgstr ""
 msgid "Delete"
 msgstr "Fshije"
 
-#: ../../portable/frontends/widgets/gtk/video.py:291
+#: ../../portable/frontends/widgets/gtk/video.py:297
 #: ../../portable/frontends/widgets/itemcontextmenu.py:157
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:121
 msgid "Share"
 msgstr "Ndajeni Me të Tjerët"
 
-#: ../../portable/frontends/widgets/gtk/video.py:297
+#: ../../portable/frontends/widgets/gtk/video.py:303
 #: ../../portable/frontends/widgets/style.py:236
 #: ../../portable/frontends/widgets/itemcontextmenu.py:142
 msgid "Comments"
 msgstr "Komente"
 
-#: ../../portable/frontends/widgets/gtk/video.py:301
+#: ../../portable/frontends/widgets/gtk/video.py:307
 msgid "Permalink"
 msgstr "Permalink"
 
-#: ../../portable/frontends/widgets/gtk/video.py:309
+#: ../../portable/frontends/widgets/gtk/video.py:315
 msgid "Pop-in"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/video.py:315
+#: ../../portable/frontends/widgets/gtk/video.py:321
 msgid "Pop-out"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/video.py:351
-#: ../../portable/frontends/widgets/menus.py:310
+#: ../../portable/frontends/widgets/gtk/video.py:357
+#: ../../portable/frontends/widgets/menus.py:312
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:378
 msgid "None Available"
-msgstr ""
+msgstr "Asnjë i Passhëm"
 
-#: ../../portable/frontends/widgets/gtk/video.py:373
+#: ../../portable/frontends/widgets/gtk/video.py:379
 #: ../../portable/frontends/widgets/gtk/window.py:267
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:367
 msgid "Disable Subtitles"
-msgstr ""
+msgstr "Çaktivizo Titrat"
 
-#: ../../portable/frontends/widgets/gtk/video.py:384
+#: ../../portable/frontends/widgets/gtk/video.py:390
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:385
 msgid "Select a Subtitles file..."
-msgstr ""
+msgstr "Përzgjidhni Kartelë titrash..."
 
 #: ../../portable/frontends/widgets/gtk/window.py:650
 msgid "All files"
@@ -1035,6 +1035,21 @@ msgid ""
 "If you quit, then you can connect the drive or otherwise fix the problem and "
 "relaunch %(shortappname)s."
 msgstr ""
+"%(shortappname)s s'mund të përdorë drejtorinë parësore për videot që gjendet "
+"te:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"Kjo mund të vijë ngaqë gjendet në një disk të jashtëm, i cili nuk është "
+"lidhur në sistem, ngaqë është drejtori te e cila %(shortappname)s nuk ka "
+"leje shkrimi, ose ka diçka në atë shteg që nuk është drejtori.\n"
+"\n"
+"Nëse vazhdoni, si drejtori parësore videosh do të caktohet një vend në këtë "
+"disk.  Nëse keni video të shkarkuara, kjo do ta bëjë %(shortappname)s të "
+"humbë hollësitë mbi këto video.\n"
+"\n"
+"Nëse e ndalni këtu, mandej mund të lidhni diskun në sistem ose të ndreqni "
+"problemin dhe të rinisni %(shortappname)s."
 
 #: ../../portable/frontends/widgets/application.py:330
 msgid "Error Revealing File"
@@ -1349,11 +1364,11 @@ msgstr "Lloj Kartele"
 
 #: ../../portable/frontends/widgets/style.py:244
 msgid "Seeders"
-msgstr ""
+msgstr "\"Seeders\""
 
 #: ../../portable/frontends/widgets/style.py:245
 msgid "Leechers"
-msgstr ""
+msgstr "\"Leechers\""
 
 #: ../../portable/frontends/widgets/style.py:246
 msgid "Upload Rate"
@@ -1373,7 +1388,7 @@ msgstr "Gjithsej Poshtë"
 
 #: ../../portable/frontends/widgets/style.py:250
 msgid "Up/Down Ratio"
-msgstr ""
+msgstr "Përpjestim Sipër/Poshtë"
 
 #: ../../portable/frontends/widgets/style.py:251
 #: ../../portable/frontends/widgets/style.py:1120
@@ -1408,7 +1423,7 @@ msgstr "Të passhme rishtazi"
 
 #: ../../portable/frontends/widgets/style.py:260
 msgid "Stop seeding"
-msgstr ""
+msgstr "Ndale \"seeding\""
 
 #: ../../portable/frontends/widgets/style.py:576
 #: ../../portable/frontends/widgets/style.py:1182
@@ -1546,182 +1561,182 @@ msgstr "_Dosje e Re"
 msgid "Re_name"
 msgstr "_Rimeërtoje"
 
-#: ../../portable/frontends/widgets/menus.py:230
-msgid "Re_name Feed"
-msgstr ""
-
 #: ../../portable/frontends/widgets/menus.py:231
-msgid "Re_name Site"
-msgstr ""
+msgid "Re_name Feed"
+msgstr "Ri_emërtoni Prurjen"
 
 #: ../../portable/frontends/widgets/menus.py:232
+msgid "Re_name Site"
+msgstr "Ri_emërtoni 'Site''-in"
+
+#: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
 msgstr "_Hiqe"
 
-#: ../../portable/frontends/widgets/menus.py:235
-msgid "_Remove Feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/menus.py:236
-msgid "_Remove Feeds"
-msgstr ""
-
 #: ../../portable/frontends/widgets/menus.py:237
+msgid "_Remove Feed"
+msgstr "_Hiqe Prurjen"
+
+#: ../../portable/frontends/widgets/menus.py:238
+msgid "_Remove Feeds"
+msgstr "_Hiqi Prurjet"
+
+#: ../../portable/frontends/widgets/menus.py:239
 msgid "_Remove Folder"
 msgstr "_Hiqe Dosjen"
 
-#: ../../portable/frontends/widgets/menus.py:238
-msgid "_Remove Folders"
-msgstr ""
-
-#: ../../portable/frontends/widgets/menus.py:239
-msgid "_Remove Site"
-msgstr ""
-
 #: ../../portable/frontends/widgets/menus.py:240
-msgid "_Remove Sites"
-msgstr ""
+msgid "_Remove Folders"
+msgstr "_Hiqi Dosjet"
 
 #: ../../portable/frontends/widgets/menus.py:241
+msgid "_Remove Site"
+msgstr "_Hiqe \"Site\"-in"
+
+#: ../../portable/frontends/widgets/menus.py:242
+msgid "_Remove Sites"
+msgstr "_Hiqi \"Site\"-et"
+
+#: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
 msgstr "_Përditëso Prurjen"
 
-#: ../../portable/frontends/widgets/menus.py:244
+#: ../../portable/frontends/widgets/menus.py:246
 msgid "_Update Feeds"
 msgstr "_Përditëso Prurjet"
 
-#: ../../portable/frontends/widgets/menus.py:245
+#: ../../portable/frontends/widgets/menus.py:247
 msgid "Update _All Feeds"
 msgstr "Përditëso _Krejt Prurjet"
 
-#: ../../portable/frontends/widgets/menus.py:249
+#: ../../portable/frontends/widgets/menus.py:251
 msgid "_Import Feeds (OPML)"
 msgstr "_Importo Prurje (OPML)"
 
-#: ../../portable/frontends/widgets/menus.py:251
+#: ../../portable/frontends/widgets/menus.py:253
 msgid "E_xport Feeds (OPML)"
 msgstr "_Eksporto Prurje (OPML)"
 
-#: ../../portable/frontends/widgets/menus.py:254
+#: ../../portable/frontends/widgets/menus.py:256
 msgid "_Share with a Friend"
 msgstr "_Ndajeni me një Shok"
 
-#: ../../portable/frontends/widgets/menus.py:256
+#: ../../portable/frontends/widgets/menus.py:258
 msgid "Copy URL"
 msgstr "Kopjo URL-në"
 
-#: ../../portable/frontends/widgets/menus.py:260
+#: ../../portable/frontends/widgets/menus.py:262
 msgid "_Playlists"
 msgstr "_Luajlista"
 
-#: ../../portable/frontends/widgets/menus.py:261
+#: ../../portable/frontends/widgets/menus.py:263
 msgid "New _Playlist"
 msgstr "_Luajlistë e Re"
 
-#: ../../portable/frontends/widgets/menus.py:264
+#: ../../portable/frontends/widgets/menus.py:266
 msgid "New Playlist Fol_der"
 msgstr "_Dosje e Re Luajliste"
 
-#: ../../portable/frontends/widgets/menus.py:268
+#: ../../portable/frontends/widgets/menus.py:270
 msgid "Re_name Playlist"
 msgstr "Ri_emërto Luajlistën"
 
-#: ../../portable/frontends/widgets/menus.py:270
+#: ../../portable/frontends/widgets/menus.py:272
 msgid "_Remove Playlist"
 msgstr "_Hiqe Luajlistën"
 
-#: ../../portable/frontends/widgets/menus.py:273
+#: ../../portable/frontends/widgets/menus.py:275
 msgid "_Remove Playlists"
 msgstr "_Hiq Luajlistat"
 
-#: ../../portable/frontends/widgets/menus.py:274
+#: ../../portable/frontends/widgets/menus.py:276
 msgid "_Remove Playlist Folders"
 msgstr "_Hiq Dosje Luajlistash"
 
-#: ../../portable/frontends/widgets/menus.py:275
+#: ../../portable/frontends/widgets/menus.py:277
 msgid "_Remove Playlist Folder"
 msgstr "_Hiq Dosje Luajliste"
 
-#: ../../portable/frontends/widgets/menus.py:278
+#: ../../portable/frontends/widgets/menus.py:280
 msgid "P_layback"
-msgstr ""
+msgstr "_Luaje"
 
-#: ../../portable/frontends/widgets/menus.py:279
 #: ../../portable/frontends/widgets/menus.py:281
+#: ../../portable/frontends/widgets/menus.py:283
 msgid "_Play"
 msgstr "_Luaje"
 
-#: ../../portable/frontends/widgets/menus.py:282
+#: ../../portable/frontends/widgets/menus.py:284
 msgid "_Pause"
 msgstr "_Pushoje"
 
-#: ../../portable/frontends/widgets/menus.py:283
+#: ../../portable/frontends/widgets/menus.py:285
 msgid "_Stop"
 msgstr "_Ndale"
 
-#: ../../portable/frontends/widgets/menus.py:286
+#: ../../portable/frontends/widgets/menus.py:288
 msgid "_Next Video"
 msgstr "Videoja _Pasuese"
 
-#: ../../portable/frontends/widgets/menus.py:289
+#: ../../portable/frontends/widgets/menus.py:291
 msgid "_Previous Video"
 msgstr "Videoja e _Mëparshme"
 
-#: ../../portable/frontends/widgets/menus.py:293
+#: ../../portable/frontends/widgets/menus.py:295
 msgid "Skip _Forward"
 msgstr "Anashkalo _Përpara"
 
-#: ../../portable/frontends/widgets/menus.py:295
+#: ../../portable/frontends/widgets/menus.py:297
 msgid "Skip _Back"
 msgstr "Anashkalo _Mbrapsht"
 
-#: ../../portable/frontends/widgets/menus.py:298
+#: ../../portable/frontends/widgets/menus.py:300
 msgid "Volume _Up"
 msgstr "_Ngrije Volumin"
 
-#: ../../portable/frontends/widgets/menus.py:300
+#: ../../portable/frontends/widgets/menus.py:302
 msgid "Volume _Down"
 msgstr "_Ule Volumin"
 
-#: ../../portable/frontends/widgets/menus.py:303
+#: ../../portable/frontends/widgets/menus.py:305
 msgid "_Fullscreen"
 msgstr "_Tërë ekrani"
 
-#: ../../portable/frontends/widgets/menus.py:306
+#: ../../portable/frontends/widgets/menus.py:308
 msgid "_Toggle Detached/Attached"
 msgstr "_Këmbe E ngjitur/E shqitur"
 
-#: ../../portable/frontends/widgets/menus.py:309
+#: ../../portable/frontends/widgets/menus.py:311
 msgid "S_ubtitles"
-msgstr ""
+msgstr "_Nëntituj"
 
-#: ../../portable/frontends/widgets/menus.py:312
+#: ../../portable/frontends/widgets/menus.py:315
 msgid "Select a Subtitles File..."
-msgstr ""
+msgstr "Përzgjidhni Kartelë Titrash"
 
-#: ../../portable/frontends/widgets/menus.py:317
-#: ../../portable/frontends/widgets/menus.py:329
+#: ../../portable/frontends/widgets/menus.py:321
+#: ../../portable/frontends/widgets/menus.py:333
 msgid "_Help"
 msgstr "_Ndihmë"
 
-#: ../../portable/frontends/widgets/menus.py:318
+#: ../../portable/frontends/widgets/menus.py:322
 #, python-format
 msgid "_About %(name)s"
 msgstr "Rreth %(name)s"
 
-#: ../../portable/frontends/widgets/menus.py:326
+#: ../../portable/frontends/widgets/menus.py:330
 msgid "_Donate"
 msgstr "_Dhuroni"
 
-#: ../../portable/frontends/widgets/menus.py:333
+#: ../../portable/frontends/widgets/menus.py:337
 msgid "Report a _Bug"
 msgstr "Njoftoni një _Bug"
 
-#: ../../portable/frontends/widgets/menus.py:335
+#: ../../portable/frontends/widgets/menus.py:339
 msgid "_Translate"
 msgstr "_Përkthe"
 
-#: ../../portable/frontends/widgets/menus.py:337
+#: ../../portable/frontends/widgets/menus.py:341
 msgid "_Planet Miro"
 msgstr "_Planet Miro"
 
@@ -1761,11 +1776,11 @@ msgstr "Shënoje si të Luajtur"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:118
 msgid "Stop Seeding"
-msgstr ""
+msgstr "Ndale \"Seeding\""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:120
 msgid "Resume Seeding"
-msgstr ""
+msgstr "Rikthe \"Seeding\""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:123
 #: ../../portable/frontends/widgets/itemcontextmenu.py:245
@@ -2161,7 +2176,7 @@ msgstr "< I mëparshmi"
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:227
 #: ../../portable/frontends/widgets/firsttimedialog.py:284
-#: ../../portable/feed.py:2331 ../../portable/feed.py:2440
+#: ../../portable/feed.py:2335 ../../portable/feed.py:2444
 msgid "Search"
 msgstr "Kërko"
 
@@ -2245,7 +2260,7 @@ msgstr "po fillohet"
 #: ../../portable/downloader.py:568
 #, python-format
 msgid "no connection - retrying in %s"
-msgstr ""
+msgstr "s'ka lidhje - provë sërish për %s"
 
 #: ../../portable/displaytext.py:52
 #, python-format
@@ -2410,16 +2425,16 @@ msgstr ""
 "\n"
 "Doni të provohet të ngarkohet ky kanal, sido qoftë?"
 
-#: ../../portable/feed.py:1720
+#: ../../portable/feed.py:1724
 #, python-format
 msgid "Search All: %(text)s"
 msgstr "Kërko Në të Tëra: %(text)s"
 
-#: ../../portable/feed.py:2302 ../../portable/feed.py:2455
+#: ../../portable/feed.py:2306 ../../portable/feed.py:2459
 msgid "Local Files"
 msgstr "Kartela Vendore"
 
-#: ../../portable/feed.py:2469
+#: ../../portable/feed.py:2473
 msgid "Playing File"
 msgstr "Po luan Kartelën"
 
@@ -2535,7 +2550,7 @@ msgstr "Ok"
 
 #: ../../portable/dialogs.py:93
 msgid "Apply"
-msgstr ""
+msgstr "Zbatoje"
 
 #: ../../portable/dialogs.py:96
 msgid "Done"
@@ -2635,7 +2650,7 @@ msgstr "Ndale Shikimin"
 
 #: ../../portable/dialogs.py:127
 msgid "Retry"
-msgstr ""
+msgstr "Riprovoni"
 
 #: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"
@@ -2791,6 +2806,7 @@ msgstr "Përrua i Pavlefshëm"
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
 msgstr ""
+"Kartela rrëke %(filename)s duket të jetë e dëmtuar dhe nuk mund të hapet."
 
 #: ../../portable/searchengines.py:179
 msgid "Search All"
@@ -2800,16 +2816,16 @@ msgstr "Kërko Në të Tëra"
 msgid "Example Playlist"
 msgstr "Shembull Luajliste"
 
-#: ../../portable/storedatabase.py:231
+#: ../../portable/storedatabase.py:232
 msgid "Database was created by a newer version of Miro "
 msgstr "Baza e të dhënave qe krijuar për një version më të ri të Miros "
 
-#: ../../portable/storedatabase.py:612
+#: ../../portable/storedatabase.py:613
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "Baza e të dhënave të %(appname)ss u ruajt me sukses"
 
-#: ../../portable/storedatabase.py:614
+#: ../../portable/storedatabase.py:615
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -2817,12 +2833,12 @@ msgstr ""
 "Baza e të dhënave u ruajt me sukses. Tani nuk ka rrezik të humbasin të dhëna "
 "gjatë daljes."
 
-#: ../../portable/storedatabase.py:669
+#: ../../portable/storedatabase.py:670
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "Ruajtja e bazës së të dhënave %(appname)s dështoi"
 
-#: ../../portable/storedatabase.py:672
+#: ../../portable/storedatabase.py:673
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -2839,23 +2855,37 @@ msgid ""
 "Error: %(error_text)s\n"
 "\n"
 msgstr ""
+"%(appname)s nuk qe në gjendje të ruaj bazën e tij të të dhënave.\n"
+"\n"
+"Nëse disku juaj është plot, këshillojmë të lironi ca vend dhe të riprovoni.  "
+"Nëse disku juaj nuk është plot, ka mundësi që riprova të bëjë punë.\n"
+"\n"
+"Nëse riprova nuk bëri punë, ju lutem, mbylleni %(appname)s dhe riniseni.  "
+"Ndryshimet e fundit mund të humbin.\n"
+"\n"
+"Nëse e shihni shpesh këtë gabim gjatë shkarkimesh, këshillojmë të zvogëloni "
+"numrin e shkarkimeve të njëkohshme te dialogu i Mundësive në skedën "
+"Shkarkime.\n"
+"\n"
+"Gabim: %(error_text)s\n"
+"\n"
 
-#: ../../portable/util.py:371 ../../portable/util.py:373
+#: ../../portable/util.py:374 ../../portable/util.py:376
 #, python-format
 msgid "%(size)sGB"
 msgstr "%(size)sGB"
 
-#: ../../portable/util.py:377 ../../portable/util.py:379
+#: ../../portable/util.py:380 ../../portable/util.py:382
 #, python-format
 msgid "%(size)sMB"
 msgstr "%(size)sMB"
 
-#: ../../portable/util.py:383 ../../portable/util.py:385
+#: ../../portable/util.py:386 ../../portable/util.py:388
 #, python-format
 msgid "%(size)sKB"
 msgstr "%(size)sKB"
 
-#: ../../portable/util.py:389 ../../portable/util.py:391
+#: ../../portable/util.py:392 ../../portable/util.py:394
 #, python-format
 msgid "%(size)sB"
 msgstr "%(size)sB"
@@ -2905,19 +2935,19 @@ msgstr ""
 "i sistemit apo të dalë? Këtë rregullim mund ta ndryshoni edhe më vonë te "
 "Mundësitë."
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:192
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:193
 msgid "Error Bombing Item"
 msgstr ""
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:194
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:195
 msgid "Error Recommending Item"
 msgstr "Gabim në Rekomandim Objekti"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:196
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:197
 msgid "Error Opening Website"
 msgstr "Gabim në Hapjen e &quot;Website&quot;-it"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:201
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:202
 #, python-format
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
@@ -2972,11 +3002,15 @@ msgstr ""
 msgid "Video renderer:"
 msgstr "Renderues video"
 
-#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:407
-#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:421
-#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:430
-msgid "Unknown Language"
-msgstr ""
+#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:446
+#, python-format
+msgid "Track %(tracknumber)d"
+msgstr "Gjurma %(tracknumber)d"
+
+#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:456
+#, python-format
+msgid "Subtitle file %(tracknumber)d"
+msgstr "Kartelë titrash %(tracknumber)d"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:178
 msgid "Download Completed"

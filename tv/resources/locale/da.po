@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2010-02-02 19:24-0500\n"
-"PO-Revision-Date: 2010-01-31 15:44+0000\n"
-"Last-Translator: hygnos7 <Unknown>\n"
+"POT-Creation-Date: 2010-02-10 12:32-0500\n"
+"PO-Revision-Date: 2010-02-14 23:33+0000\n"
+"Last-Translator: Mads Konradsen <Unknown>\n"
 "Language-Team: Danish <da@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-02-10 16:40+0000\n"
+"X-Launchpad-Export-Date: 2010-02-16 18:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/frontends/widgets/style.py:257
@@ -148,11 +148,11 @@ msgstr "Intern fejl: Ikke parat til at sende"
 
 #: ../../portable/frontends/widgets/playback.py:551
 msgid "Open Subtitles File..."
-msgstr ""
+msgstr "Åben undertekstfil"
 
 #: ../../portable/frontends/widgets/playback.py:552
 msgid "Subtitle files"
-msgstr ""
+msgstr "Undertekstfiler"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -246,7 +246,7 @@ msgid "Total db objects in memory:"
 msgstr "Totale db objekter i hukommelse:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:118
-#: ../../portable/frontends/widgets/menus.py:331
+#: ../../portable/frontends/widgets/menus.py:335
 msgid "Diagnostics"
 msgstr "Diagnostik"
 
@@ -374,7 +374,7 @@ msgstr "Andre"
 
 #: ../../portable/frontends/widgets/itemedit.py:157
 msgid "Path:"
-msgstr ""
+msgstr "Placering:"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
@@ -916,7 +916,7 @@ msgstr "Genoptag alle hentninger (%(paused)d)"
 msgid "Hide"
 msgstr "Skjul"
 
-#: ../../portable/frontends/widgets/gtk/video.py:272
+#: ../../portable/frontends/widgets/gtk/video.py:278
 #: ../../portable/frontends/widgets/style.py:258
 #: ../../portable/frontends/widgets/style.py:1050
 #: ../../portable/frontends/widgets/style.py:1217
@@ -927,11 +927,11 @@ msgstr "Skjul"
 msgid "Keep"
 msgstr "Behold"
 
-#: ../../portable/frontends/widgets/gtk/video.py:276
+#: ../../portable/frontends/widgets/gtk/video.py:282
 msgid "Subtitles"
 msgstr "Undertekster"
 
-#: ../../portable/frontends/widgets/gtk/video.py:285
+#: ../../portable/frontends/widgets/gtk/video.py:291
 #: ../../portable/frontends/widgets/itemcontextmenu.py:67
 #: ../../portable/dialogs.py:117
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:129
@@ -939,46 +939,46 @@ msgstr "Undertekster"
 msgid "Delete"
 msgstr "Slet"
 
-#: ../../portable/frontends/widgets/gtk/video.py:291
+#: ../../portable/frontends/widgets/gtk/video.py:297
 #: ../../portable/frontends/widgets/itemcontextmenu.py:157
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:121
 msgid "Share"
 msgstr "Del"
 
-#: ../../portable/frontends/widgets/gtk/video.py:297
+#: ../../portable/frontends/widgets/gtk/video.py:303
 #: ../../portable/frontends/widgets/style.py:236
 #: ../../portable/frontends/widgets/itemcontextmenu.py:142
 msgid "Comments"
 msgstr "Kommentarer"
 
-#: ../../portable/frontends/widgets/gtk/video.py:301
+#: ../../portable/frontends/widgets/gtk/video.py:307
 msgid "Permalink"
 msgstr "Permanentlink"
 
-#: ../../portable/frontends/widgets/gtk/video.py:309
+#: ../../portable/frontends/widgets/gtk/video.py:315
 msgid "Pop-in"
 msgstr "Pop-ind"
 
-#: ../../portable/frontends/widgets/gtk/video.py:315
+#: ../../portable/frontends/widgets/gtk/video.py:321
 msgid "Pop-out"
 msgstr "Pop-ud"
 
-#: ../../portable/frontends/widgets/gtk/video.py:351
-#: ../../portable/frontends/widgets/menus.py:310
+#: ../../portable/frontends/widgets/gtk/video.py:357
+#: ../../portable/frontends/widgets/menus.py:312
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:378
 msgid "None Available"
 msgstr "Ingen tilgængelige"
 
-#: ../../portable/frontends/widgets/gtk/video.py:373
+#: ../../portable/frontends/widgets/gtk/video.py:379
 #: ../../portable/frontends/widgets/gtk/window.py:267
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:367
 msgid "Disable Subtitles"
 msgstr "Vis ikke undertekster"
 
-#: ../../portable/frontends/widgets/gtk/video.py:384
+#: ../../portable/frontends/widgets/gtk/video.py:390
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:385
 msgid "Select a Subtitles file..."
-msgstr ""
+msgstr "Vælg en undertekstfil"
 
 #: ../../portable/frontends/widgets/gtk/window.py:650
 msgid "All files"
@@ -1562,182 +1562,182 @@ msgstr "Ny _Mappe"
 msgid "Re_name"
 msgstr "Om_døb"
 
-#: ../../portable/frontends/widgets/menus.py:230
-msgid "Re_name Feed"
-msgstr ""
-
 #: ../../portable/frontends/widgets/menus.py:231
-msgid "Re_name Site"
-msgstr ""
+msgid "Re_name Feed"
+msgstr "Om_døb Feed"
 
 #: ../../portable/frontends/widgets/menus.py:232
+msgid "Re_name Site"
+msgstr "Om_døb side"
+
+#: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
 msgstr "_Fjern"
 
-#: ../../portable/frontends/widgets/menus.py:235
-msgid "_Remove Feed"
-msgstr ""
-
-#: ../../portable/frontends/widgets/menus.py:236
-msgid "_Remove Feeds"
-msgstr ""
-
 #: ../../portable/frontends/widgets/menus.py:237
+msgid "_Remove Feed"
+msgstr "_Fjern Feed"
+
+#: ../../portable/frontends/widgets/menus.py:238
+msgid "_Remove Feeds"
+msgstr "_Fjern Feeds"
+
+#: ../../portable/frontends/widgets/menus.py:239
 msgid "_Remove Folder"
 msgstr "_Fjern mappe"
 
-#: ../../portable/frontends/widgets/menus.py:238
-msgid "_Remove Folders"
-msgstr ""
-
-#: ../../portable/frontends/widgets/menus.py:239
-msgid "_Remove Site"
-msgstr ""
-
 #: ../../portable/frontends/widgets/menus.py:240
-msgid "_Remove Sites"
-msgstr ""
+msgid "_Remove Folders"
+msgstr "_Fjern mapper"
 
 #: ../../portable/frontends/widgets/menus.py:241
+msgid "_Remove Site"
+msgstr "_Fjern side"
+
+#: ../../portable/frontends/widgets/menus.py:242
+msgid "_Remove Sites"
+msgstr "_Fjern sider"
+
+#: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
 msgstr "_Opdater feed"
 
-#: ../../portable/frontends/widgets/menus.py:244
+#: ../../portable/frontends/widgets/menus.py:246
 msgid "_Update Feeds"
 msgstr "_Opdater feeds"
 
-#: ../../portable/frontends/widgets/menus.py:245
+#: ../../portable/frontends/widgets/menus.py:247
 msgid "Update _All Feeds"
 msgstr "Opdater _alle feeds"
 
-#: ../../portable/frontends/widgets/menus.py:249
+#: ../../portable/frontends/widgets/menus.py:251
 msgid "_Import Feeds (OPML)"
 msgstr "_Importer feeds (OPML)"
 
-#: ../../portable/frontends/widgets/menus.py:251
+#: ../../portable/frontends/widgets/menus.py:253
 msgid "E_xport Feeds (OPML)"
 msgstr "E_ksporter feeds (OPML)"
 
-#: ../../portable/frontends/widgets/menus.py:254
+#: ../../portable/frontends/widgets/menus.py:256
 msgid "_Share with a Friend"
 msgstr "_Del med en ven"
 
-#: ../../portable/frontends/widgets/menus.py:256
+#: ../../portable/frontends/widgets/menus.py:258
 msgid "Copy URL"
 msgstr "Kopier URL"
 
-#: ../../portable/frontends/widgets/menus.py:260
+#: ../../portable/frontends/widgets/menus.py:262
 msgid "_Playlists"
 msgstr "_Playlister"
 
-#: ../../portable/frontends/widgets/menus.py:261
+#: ../../portable/frontends/widgets/menus.py:263
 msgid "New _Playlist"
 msgstr "Ny _Playliste"
 
-#: ../../portable/frontends/widgets/menus.py:264
+#: ../../portable/frontends/widgets/menus.py:266
 msgid "New Playlist Fol_der"
 msgstr "Ny Playliste map_pe"
 
-#: ../../portable/frontends/widgets/menus.py:268
+#: ../../portable/frontends/widgets/menus.py:270
 msgid "Re_name Playlist"
 msgstr "Omdøb Playliste"
 
-#: ../../portable/frontends/widgets/menus.py:270
+#: ../../portable/frontends/widgets/menus.py:272
 msgid "_Remove Playlist"
 msgstr "Slet Playliste"
 
-#: ../../portable/frontends/widgets/menus.py:273
+#: ../../portable/frontends/widgets/menus.py:275
 msgid "_Remove Playlists"
 msgstr "_Fjern Playlister"
 
-#: ../../portable/frontends/widgets/menus.py:274
+#: ../../portable/frontends/widgets/menus.py:276
 msgid "_Remove Playlist Folders"
 msgstr "_Fjern Playliste mapper"
 
-#: ../../portable/frontends/widgets/menus.py:275
+#: ../../portable/frontends/widgets/menus.py:277
 msgid "_Remove Playlist Folder"
 msgstr "_Fjern Playliste mappe"
 
-#: ../../portable/frontends/widgets/menus.py:278
+#: ../../portable/frontends/widgets/menus.py:280
 msgid "P_layback"
 msgstr "Afs_Pil"
 
-#: ../../portable/frontends/widgets/menus.py:279
 #: ../../portable/frontends/widgets/menus.py:281
+#: ../../portable/frontends/widgets/menus.py:283
 msgid "_Play"
 msgstr "_Afspil"
 
-#: ../../portable/frontends/widgets/menus.py:282
+#: ../../portable/frontends/widgets/menus.py:284
 msgid "_Pause"
 msgstr "_Pause"
 
-#: ../../portable/frontends/widgets/menus.py:283
+#: ../../portable/frontends/widgets/menus.py:285
 msgid "_Stop"
 msgstr "_Stop"
 
-#: ../../portable/frontends/widgets/menus.py:286
+#: ../../portable/frontends/widgets/menus.py:288
 msgid "_Next Video"
 msgstr "_Næste video"
 
-#: ../../portable/frontends/widgets/menus.py:289
+#: ../../portable/frontends/widgets/menus.py:291
 msgid "_Previous Video"
 msgstr "_Forrige video"
 
-#: ../../portable/frontends/widgets/menus.py:293
+#: ../../portable/frontends/widgets/menus.py:295
 msgid "Skip _Forward"
 msgstr "Hop _frem"
 
-#: ../../portable/frontends/widgets/menus.py:295
+#: ../../portable/frontends/widgets/menus.py:297
 msgid "Skip _Back"
 msgstr "Hop til_Bage"
 
-#: ../../portable/frontends/widgets/menus.py:298
+#: ../../portable/frontends/widgets/menus.py:300
 msgid "Volume _Up"
 msgstr "Volumen _Op"
 
-#: ../../portable/frontends/widgets/menus.py:300
+#: ../../portable/frontends/widgets/menus.py:302
 msgid "Volume _Down"
 msgstr "Lydstyrke _Ned"
 
-#: ../../portable/frontends/widgets/menus.py:303
+#: ../../portable/frontends/widgets/menus.py:305
 msgid "_Fullscreen"
 msgstr "_Fuldskærm"
 
-#: ../../portable/frontends/widgets/menus.py:306
+#: ../../portable/frontends/widgets/menus.py:308
 msgid "_Toggle Detached/Attached"
 msgstr "_Skift Frakoblet/Tilkoblet"
 
-#: ../../portable/frontends/widgets/menus.py:309
+#: ../../portable/frontends/widgets/menus.py:311
 msgid "S_ubtitles"
 msgstr "_Undertekster"
 
-#: ../../portable/frontends/widgets/menus.py:312
+#: ../../portable/frontends/widgets/menus.py:315
 msgid "Select a Subtitles File..."
-msgstr ""
+msgstr "Vælg en undertekstfil"
 
-#: ../../portable/frontends/widgets/menus.py:317
-#: ../../portable/frontends/widgets/menus.py:329
+#: ../../portable/frontends/widgets/menus.py:321
+#: ../../portable/frontends/widgets/menus.py:333
 msgid "_Help"
 msgstr "_Hjælp"
 
-#: ../../portable/frontends/widgets/menus.py:318
+#: ../../portable/frontends/widgets/menus.py:322
 #, python-format
 msgid "_About %(name)s"
 msgstr "_Om %(name)s"
 
-#: ../../portable/frontends/widgets/menus.py:326
+#: ../../portable/frontends/widgets/menus.py:330
 msgid "_Donate"
 msgstr "_Donér"
 
-#: ../../portable/frontends/widgets/menus.py:333
+#: ../../portable/frontends/widgets/menus.py:337
 msgid "Report a _Bug"
 msgstr "Meld en _programfejl"
 
-#: ../../portable/frontends/widgets/menus.py:335
+#: ../../portable/frontends/widgets/menus.py:339
 msgid "_Translate"
 msgstr "_Oversæt"
 
-#: ../../portable/frontends/widgets/menus.py:337
+#: ../../portable/frontends/widgets/menus.py:341
 msgid "_Planet Miro"
 msgstr "_Planet Miro"
 
@@ -2177,7 +2177,7 @@ msgstr "< Tidligere"
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:227
 #: ../../portable/frontends/widgets/firsttimedialog.py:284
-#: ../../portable/feed.py:2331 ../../portable/feed.py:2440
+#: ../../portable/feed.py:2335 ../../portable/feed.py:2444
 msgid "Search"
 msgstr "Søg"
 
@@ -2425,16 +2425,16 @@ msgstr ""
 "\n"
 "Ønsker du at forsøge at hente kanalen alligevel?"
 
-#: ../../portable/feed.py:1720
+#: ../../portable/feed.py:1724
 #, python-format
 msgid "Search All: %(text)s"
 msgstr "Søg alle: %(text)s"
 
-#: ../../portable/feed.py:2302 ../../portable/feed.py:2455
+#: ../../portable/feed.py:2306 ../../portable/feed.py:2459
 msgid "Local Files"
 msgstr "Lokale filer"
 
-#: ../../portable/feed.py:2469
+#: ../../portable/feed.py:2473
 msgid "Playing File"
 msgstr "Afspiller fil"
 
@@ -2815,27 +2815,27 @@ msgstr "Søg alle"
 msgid "Example Playlist"
 msgstr "Playliste eksempel"
 
-#: ../../portable/storedatabase.py:231
+#: ../../portable/storedatabase.py:232
 msgid "Database was created by a newer version of Miro "
 msgstr "Databasen er oprettet af en nyere version af Miro "
 
-#: ../../portable/storedatabase.py:612
+#: ../../portable/storedatabase.py:613
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "%(appname)s har gemt databasen"
 
-#: ../../portable/storedatabase.py:614
+#: ../../portable/storedatabase.py:615
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr "Databasen er gemt. Du kan nu afslutte uden at miste data."
 
-#: ../../portable/storedatabase.py:669
+#: ../../portable/storedatabase.py:670
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "%(appname)s kunne ikke gemme databasen"
 
-#: ../../portable/storedatabase.py:672
+#: ../../portable/storedatabase.py:673
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -2867,22 +2867,22 @@ msgstr ""
 "Fejl: %(error_text)s\n"
 "\n"
 
-#: ../../portable/util.py:371 ../../portable/util.py:373
+#: ../../portable/util.py:374 ../../portable/util.py:376
 #, python-format
 msgid "%(size)sGB"
 msgstr "%(size)sGB"
 
-#: ../../portable/util.py:377 ../../portable/util.py:379
+#: ../../portable/util.py:380 ../../portable/util.py:382
 #, python-format
 msgid "%(size)sMB"
 msgstr "%(size)sMB"
 
-#: ../../portable/util.py:383 ../../portable/util.py:385
+#: ../../portable/util.py:386 ../../portable/util.py:388
 #, python-format
 msgid "%(size)sKB"
 msgstr "%(size)sKB"
 
-#: ../../portable/util.py:389 ../../portable/util.py:391
+#: ../../portable/util.py:392 ../../portable/util.py:394
 #, python-format
 msgid "%(size)sB"
 msgstr "%(size)sB"
@@ -2932,19 +2932,19 @@ msgstr ""
 "til statusfeltet eller lukker? Du kan ændre denne indstilling senere under "
 "Indstillinger."
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:192
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:193
 msgid "Error Bombing Item"
 msgstr "Bombning fejlede"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:194
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:195
 msgid "Error Recommending Item"
 msgstr "Anbefaling fejlede"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:196
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:197
 msgid "Error Opening Website"
 msgstr "Fejl ved åbning af hjemmeside"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:201
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:202
 #, python-format
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
@@ -2996,11 +2996,15 @@ msgstr ""
 msgid "Video renderer:"
 msgstr "Video renderer:"
 
-#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:407
-#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:421
-#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:430
-msgid "Unknown Language"
-msgstr "Ukendt sprog"
+#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:446
+#, python-format
+msgid "Track %(tracknumber)d"
+msgstr "Spor %(tracknumber)d"
+
+#: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:456
+#, python-format
+msgid "Subtitle file %(tracknumber)d"
+msgstr "Undertekstfil %(tracknumber)d"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:178
 msgid "Download Completed"
