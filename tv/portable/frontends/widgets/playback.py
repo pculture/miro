@@ -600,7 +600,7 @@ def handle_key_press(key, mods):
                 app.widgetapp.on_skip_backward()
                 return True
 
-        if set([menus.MOD]) == mods and key == menus.SPACE:
+        if set([menus.CTRL]) == mods and key == menus.SPACE:
             app.playback_manager.play_pause()
             return True
         return False

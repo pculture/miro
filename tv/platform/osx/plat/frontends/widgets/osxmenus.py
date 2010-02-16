@@ -309,6 +309,8 @@ def translate_event_modifiers(event):
     flags = event.modifierFlags()
     if flags & NSCommandKeyMask:
         mods.add(CMD)
+    if flags & NSControlKeyMask:
+        mods.add(CTRL)
     if flags & NSAlternateKeyMask:
         mods.add(ALT)
     if flags & NSShiftKeyMask:

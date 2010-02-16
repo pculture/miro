@@ -51,7 +51,7 @@ alive_windows = set()
 
 class MiroWindow(NSWindow):
     def handle_keyDown(self, event):
-        key = event.characters()
+        key = event.charactersIgnoringModifiers()
         if len(key) != 1 or not key.isalpha():
             key = osxmenus.REVERSE_KEYS_MAP.get(key)
         mods = osxmenus.translate_event_modifiers(event)
