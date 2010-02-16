@@ -62,11 +62,11 @@ def extractDuration(qtmovie):
 
 def get_type(qtmovie):
     if qtmovie is None:
-        return 'unplayable'
+        return 'other'
 
     allTracks = qtmovie.tracks()
     if len(allTracks) == 0:
-        return 'unplayable'
+        return 'other'
 
     has_audio = False
     has_video = False
@@ -77,7 +77,7 @@ def get_type(qtmovie):
         elif media_type in mediatypes.VIDEO_MEDIA_TYPES:
             has_video = True
 
-    item_type = 'unplayable'
+    item_type = 'other'
     if has_video:
         item_type = 'video'
     elif has_audio:
@@ -161,20 +161,27 @@ else:
 if qtmovie is None or error is not objc.nil:
     sys.exit(0)
 
-while True:
-    load_state = qtmovie.attributeForKey_(QTKit.QTMovieLoadStateAttribute)
-    if load_state == 100000:
-        break
-    time.sleep(0.1)
+movie_type = get_type(qtmovie)
+print "Miro-Movie-Data-Type: %s" % movie_type
 
 duration = extractDuration(qtmovie)
 print "Miro-Movie-Data-Length: %s" % duration
 
-thmbResult = extractThumbnail(qtmovie, thumbPath)
-print "Miro-Movie-Data-Thumbnail: %s" % thmbResult
+if movie_type == "video":
+    max_load_state = 100000
+    if utils.getMajorOSVersion() == 8:
+        max_load_state = 20000
+    while True:
+        load_state = qtmovie.attributeForKey_(QTKit.QTMovieLoadStateAttribute)
+        if load_state >= max_load_state  or load_state == -1:
+            break
+        time.sleep(0.1)
 
-movie_type = get_type(qtmovie)
-print "Miro-Movie-Data-Type: %s" % movie_type
+    thmbResult = extractThumbnail(qtmovie, thumbPath)
+    print "Miro-Movie-Data-Thumbnail: %s" % thmbResult
+else:
+    print "Miro-Movie-Data-Thumbnail: Failure"
+
 
 sys.exit(0)
 
