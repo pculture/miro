@@ -169,7 +169,7 @@ print "Miro-Movie-Data-Length: %s" % duration
 
 if movie_type == "video":
     max_load_state = 100000
-    if utils.getMajorOSVersion() == 8:
+    if utils.getMajorOSVersion() < 10:
         max_load_state = 20000
     while True:
         load_state = qtmovie.attributeForKey_(QTKit.QTMovieLoadStateAttribute)
