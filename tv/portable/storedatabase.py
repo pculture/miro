@@ -200,6 +200,7 @@ class LiveStorage:
             raise
         except sqlite3.OperationalError, e:
             logging.exception('OperationalError when upgrading database: %s', e)
+            self.save_invalid_db()
             raise UpgradeDiskSpaceError()
         except UpgradeDiskSpaceError:
             raise
