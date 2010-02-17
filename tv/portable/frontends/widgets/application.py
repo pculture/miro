@@ -1009,8 +1009,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
         self.dbupgrade_progress_dialog = None
 
     def handle_startup_failure(self, message):
-        dialogs.show_message(message.summary, message.description,
-                dialogs.CRITICAL_MESSAGE)
+        if message.summary:
+            dialogs.show_message(message.summary, message.description,
+                    dialogs.CRITICAL_MESSAGE)
         app.widgetapp.do_quit()
 
     def handle_startup_success(self, message):

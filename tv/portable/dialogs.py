@@ -125,6 +125,7 @@ BUTTON_DONT_INSTALL = DialogButton(_("Don't Install"))
 BUTTON_SUBSCRIBE = DialogButton(_("Subscribe"))
 BUTTON_STOP_WATCHING = DialogButton(_("Stop Watching"))
 BUTTON_RETRY = DialogButton(_("Retry"))
+BUTTON_START_FRESH = DialogButton(_("Start Fresh"))
 
 class Dialog(object):
     """Abstract base class for dialogs.

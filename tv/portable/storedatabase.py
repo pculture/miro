@@ -75,7 +75,7 @@ from miro.download_utils import next_free_filename
 from miro.gtcache import gettext as _
 from miro.plat.utils import FilenameType, filenameToUnicode
 
-class UpgradeDiskSpaceError(Exception):
+class UpgradeError(Exception):
     """While upgrading the database, we ran out of disk space."""
     pass
 
@@ -167,9 +167,11 @@ class LiveStorage:
         if not db_existed:
             self._init_database()
 
-    def open_connection(self):            
-        logging.info("opening database %s", self.path)
-        self.connection = sqlite3.connect(self.path,
+    def open_connection(self, path=None):
+        if path is None:
+            path = self.path
+        logging.info("opening database %s", path)
+        self.connection = sqlite3.connect(path,
                 isolation_level=None,
                 detect_types=sqlite3.PARSE_DECLTYPES)
         self.cursor = self.connection.cursor()
@@ -198,18 +200,34 @@ class LiveStorage:
         except (KeyError, SystemError,
                 databaseupgrade.DatabaseTooNewError):
             raise
-        except sqlite3.OperationalError, e:
-            logging.exception('OperationalError when upgrading database: %s', e)
-            self.save_invalid_db()
-            raise UpgradeDiskSpaceError()
-        except UpgradeDiskSpaceError:
-            raise
-        except:
+        except Exception, e:
+            logging.exception('error when upgrading database: %s', e)
+            self._handle_upgrade_error()
+
+    def _handle_upgrade_error(self):
+        title = _("%(appname)s database upgrade failed",
+                  {"appname": config.get(prefs.SHORT_APP_NAME)})
+        description = _(
+            "%(appname)s was unable to upgrade its database.\n\n"
+            "You can either quit or start with a empty database.\n\n"
+            "If your disk is full, try quitting, then freeing up some space "
+            "and restarting %(appname)s." %
+            {"appname": config.get(prefs.SHORT_APP_NAME)}
+            )
+        d = dialogs.ChoiceDialog(title, description,
+                dialogs.BUTTON_QUIT, dialogs.BUTTON_START_FRESH)
+        choice = d.run_blocking()
+        if choice == dialogs.BUTTON_START_FRESH:
             self._handle_load_error("Error upgrading database")
             self.startup_version = self.current_version = self._get_version()
+        else:
+            raise UpgradeError()
 
-    def _backup_database(self, ver):
-        """Backs up the database file.
+    def _change_database_file(self, ver):
+        """Switches the sqlitedb file that we have open
+
+        This is called before doing a database upgrade.  This allows us to
+        keep the database file unmodified in case the upgrade fails.
 
         :param ver: the current version (as string)
         """
@@ -217,14 +235,24 @@ class LiveStorage:
         # close database
         self.close()
 
-        # copy file over
-        try:
-            shutil.copyfile(self.path, "%s_backup_%s" % (self.path, ver))
-        except IOError, e:
-            logging.exception('Error when backing up database')
+        save_name = self._find_unused_db_name("upgrading_database_%s" % ver)
+        path = os.path.join(os.path.dirname(self.path), save_name)
+        shutil.copyfile(self.path, path)
+        self.open_connection(path)
+        self._changed_db_path = path
 
-        # re-open database
+    def _change_database_file_back(self):
+        """Switches the sqlitedb file back to our regular one.
+
+        This works together with _change_database_file() to handle database
+        upgrades.  Once the upgrade is finished, this method copies the
+        database we were using to the normal place, and switches our sqlite
+        connection to use that file
+        """
+        self.close()
+        shutil.move(self._changed_db_path, self.path)
         self.open_connection()
+        del self._changed_db_path
 
     def _upgrade_database(self):
         self.startup_version = current_version = self._get_version()
@@ -242,11 +270,12 @@ class LiveStorage:
                 # need to pull the variable again here because
                 # _upgrade_20_database will have done an upgrade
                 current_version = self._get_version()
-                self._backup_database(current_version)
+                self._change_database_file(current_version)
                 databaseupgrade.new_style_upgrade(self.cursor,
                                                   current_version,
                                                   self._schema_version)
                 self._set_version()
+                self._change_database_file_back()
             finally:
                 dbupgradeprogress.upgrade_end()
         self.current_version = self._schema_version
@@ -266,13 +295,14 @@ class LiveStorage:
                 self.cursor.execute("DROP TABLE dtv_objects")
             else:
                 # Need to update an old-style database
-                self._backup_database("pre80")
+                self._change_database_file("pre80")
                 dbupgradeprogress.doing_20_upgrade()
 
                 if util.chatter:
                     logging.info("converting pre 2.1 database")
                 convert20database.convert(self.cursor)
                 self._set_version(80)
+                self._change_database_file_back()
 
     def _get_variable(self, name):
         self.cursor.execute("SELECT serialized_value FROM dtv_variables "
@@ -768,13 +798,17 @@ class LiveStorage:
 
     def save_invalid_db(self):
         dir = os.path.dirname(self.path)
-        save_name = "corrupt_database"
+        save_name = self._find_unused_db_name("corrupt_database")
+        os.rename(self.path, os.path.join(dir, save_name))
+
+    def _find_unused_db_name(self, save_name):
+        dir = os.path.dirname(self.path)
+        org_save_name = save_name
         i = 0
         while os.path.exists(os.path.join(dir, save_name)):
             i += 1
-            save_name = "corrupt_database.%d" % i
-
-        os.rename(self.path, os.path.join(dir, save_name))
+            save_name = "%s.%d" % (org_save_name, i)
+        return save_name
 
     def dumpDatabase(self):
         output = open(next_free_filename(os.path.join(config.get(prefs.SUPPORT_DIRECTORY), "database-dump.xml")), 'w')
