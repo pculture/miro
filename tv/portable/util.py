@@ -353,9 +353,10 @@ def copy_subtitle_file(sub_path, video_path):
     if sub_basename_root != video_basename_root:
         sub_basename = video_basename_root + sub_ext
     dest_path = os.path.join(os.path.dirname(video_path), sub_basename)
-    if os.path.exists(dest_path):
-        os.remove(dest_path)
-    shutil.copyfile(sub_path, dest_path)
+    if sub_path != dest_path:
+        if os.path.exists(dest_path):
+            os.remove(dest_path)
+        shutil.copyfile(sub_path, dest_path)
     return dest_path
 
 def format_size_for_user(nbytes, zero_string="", with_decimals=True,
