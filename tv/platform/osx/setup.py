@@ -306,7 +306,7 @@ class MiroBuild (py2app):
         
     def get_idletime_ext(self):
         idletime_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'idletime.c'))
-        idletime_link_args = ['-framework', 'CoreFoundation']
+        idletime_link_args = ['-framework', 'CoreFoundation', '-framework', 'IOKit']
         return Extension("miro.plat.idletime", sources=idletime_src, extra_link_args=idletime_link_args)
     
     def get_keychain_ext(self):
@@ -316,7 +316,7 @@ class MiroBuild (py2app):
     
     def get_qtcomp_ext(self):
         qtcomp_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'qtcomp.c'))
-        qtcomp_link_args = ['-framework', 'CoreFoundation', '-framework', 'Quicktime']
+        qtcomp_link_args = ['-framework', 'CoreFoundation', '-framework', 'CoreServices', '-framework', 'Quicktime']
         return Extension("miro.plat.qtcomp", sources=qtcomp_src, extra_link_args=qtcomp_link_args)
     
     def get_growl_ext(self):
