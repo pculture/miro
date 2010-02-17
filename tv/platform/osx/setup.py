@@ -316,7 +316,7 @@ class MiroBuild (py2app):
     
     def get_qtcomp_ext(self):
         qtcomp_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'qtcomp.c'))
-        qtcomp_link_args = ['-framework', 'CoreFoundation', '-framework', 'CoreServices', '-framework', 'Quicktime']
+        qtcomp_link_args = ['-framework', 'CoreFoundation', '-framework', 'CoreServices', '-framework', 'QuickTime']
         return Extension("miro.plat.qtcomp", sources=qtcomp_src, extra_link_args=qtcomp_link_args)
     
     def get_growl_ext(self):
@@ -421,7 +421,7 @@ class MiroBuild (py2app):
                     os.symlink(os.path.dirname(dest), fmwk)
 
     def copy_quicktime_components(self):
-        print 'Copying Quicktime components to application bundle'
+        print 'Copying QuickTime components to application bundle'
         extract_binaries('qtcomponents', self.cmpntRoot, self.force_update)
 
     def copy_portable_resources(self):

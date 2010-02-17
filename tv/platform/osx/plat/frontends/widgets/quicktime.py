@@ -53,7 +53,7 @@ script_codes.patch_iso_639_map()
 
 ###############################################################################
 
-qt_framework = pathForFramework("Quicktime.framework")
+qt_framework = pathForFramework("QuickTime.framework")
 qt_bundle = NSBundle.bundleWithPath_(qt_framework)
 loadBundleFunctions(qt_bundle, globals(), (('GetMediaLanguage', 's^^{}'),))
 
@@ -93,7 +93,7 @@ class WarmupProgressHandler(NSObject):
     def handleLoadStateForMovie_(self, movie):
         load_state = movie.attributeForKey_(QTMovieLoadStateAttribute).longValue()
         if load_state == QTMovieLoadStateComplete:
-            logging.info("Quicktime warm up complete")
+            logging.info("QuickTime warm up complete")
             NSNotificationCenter.defaultCenter().removeObserver_(self)
             NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
                 10, self, 'releaseWarmupMovie:', None, False)
@@ -107,7 +107,7 @@ warmup_handler = WarmupProgressHandler.alloc().init()
 warmup_movie = None
 
 def warm_up():
-    logging.info('Warming up Quicktime')
+    logging.info('Warming up QuickTime')
     rsrcPath = bundle.getBundleResourcePath()
 
     attributes = NSMutableDictionary.dictionary()
@@ -122,7 +122,7 @@ def warm_up():
         warmup_movie, error = QTMovie.movieWithAttributes_error_(attributes)
     
     if error is not None:
-        logging.warn("Quicktime Warm Up failed: %s" % error)
+        logging.warn("QuickTime Warm Up failed: %s" % error)
     else:
         warmup_handler.handleInitialLoadStateForMovie_(warmup_movie)
 

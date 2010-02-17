@@ -62,7 +62,7 @@ static PyObject* qtcomp_register(PyObject* self, PyObject* args)
 
 static PyMethodDef QTCompMethods[] = 
 {
-    { "register", qtcomp_register, METH_VARARGS, "Dynamically register the Quicktime component at the passed path." },
+    { "register", qtcomp_register, METH_VARARGS, "Dynamically register the QuickTime component at the passed path." },
     { NULL, NULL, 0, NULL }
 };
 

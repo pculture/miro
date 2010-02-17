@@ -42,7 +42,7 @@ from miro.plat.frontends.widgets import mediatypes
 
 # =============================================================================
 
-def registerQuicktimeComponents():
+def registerQuickTimeComponents():
     bundlePath = os.getenv('MIRO_BUNDLE_PATH')
     componentsDirectoryPath = os.path.join(bundlePath, 'Contents', 'Components')
     components = glob.glob(os.path.join(componentsDirectoryPath, '*.component'))
@@ -148,7 +148,7 @@ info = AppKit.NSBundle.mainBundle().infoDictionary()
 info["LSBackgroundOnly"] = "1"
 AppKit.NSApplicationLoad()
 
-registerQuicktimeComponents()
+registerQuickTimeComponents()
 
 pyobjc_version = objc.__version__
 pyobjc_version = pyobjc_version.split('.')
