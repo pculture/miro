@@ -633,6 +633,12 @@ class LiveStorage:
         except sqlite3.OperationalError, e:
             self._log_error(sql, values, many)
             failed = True
+            if is_update:
+                self._current_select_statement = None
+            else:
+                # Make sure we re-run our SELECT statement so that the call to
+                # fetchall() at the end of this method works. (#12885)
+                self._current_select_statement = (sql, values, many)
             self._handle_operational_error(e)
             if self._quitting_from_operational_error and not is_update:
                 # This is a very bad state to be in because code calling
@@ -672,8 +678,14 @@ class LiveStorage:
                               "".join(traceback.format_stack()))
 
     def _try_rerunning_transaction(self):
-        self.cursor.execute("BEGIN TRANSACTION")
-        for (sql, values, many) in self._statements_in_transaction:
+        if self._statements_in_transaction:
+            # We may have only been trying to execute SELECT statements.  If
+            # that's true, don't start a transaction. (#12885)
+            self.cursor.execute("BEGIN TRANSACTION")
+        to_run = self._statements_in_transaction[:]
+        if self._current_select_statement:
+            to_run.append(self._current_select_statement)
+        for (sql, values, many) in to_run:
             try:
                 self._time_execute(sql, values, many)
             except sqlite3.OperationalError, e:
