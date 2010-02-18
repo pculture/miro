@@ -208,11 +208,17 @@ class LiveStorage:
         title = _("%(appname)s database upgrade failed",
                   {"appname": config.get(prefs.SHORT_APP_NAME)})
         description = _(
-            "%(appname)s was unable to upgrade its database.\n\n"
-            "You can either quit or start with a empty database.\n\n"
-            "If your disk is full, try quitting, then freeing up some space "
-            "and restarting %(appname)s." %
-            {"appname": config.get(prefs.SHORT_APP_NAME)}
+            "We're sorry, %(appname)s was unable to upgrade your database "
+            "due to errors.\n\n"
+            "Check to see if your disk is full.  If it is full, then quit "
+            "%(appname)s, free up some space, and start %(appname)s "
+            "again.\n\n"
+            "If your disk is not full, help us understand the problem by "
+            "quitting, then reporting a bug at bugzilla.pculture.org\n\n"
+
+            "Finally, you can start fresh and your damaged database will be "
+            "removed, but you will have to re-add your feeds and media "
+            "files.", {"appname": config.get(prefs.SHORT_APP_NAME)}
             )
         d = dialogs.ChoiceDialog(title, description,
                 dialogs.BUTTON_QUIT, dialogs.BUTTON_START_FRESH)
