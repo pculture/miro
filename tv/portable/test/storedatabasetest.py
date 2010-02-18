@@ -8,6 +8,7 @@ import time
 from miro import app
 from miro import database
 from miro import databaseupgrade
+from miro import dialogs
 from miro import downloader
 from miro import item
 from miro import feed
@@ -15,6 +16,7 @@ from miro import folder
 from miro import frontendstate
 from miro import guide
 from miro import schema
+from miro import signals
 from miro import tabs
 from miro import theme
 import shutil
@@ -353,12 +355,19 @@ class DiskTest(FakeSchemaTest):
         self.allow_db_load_errors(False)
         self.assert_(os.path.exists(corrupt_path))
 
+    def start_fresh_on_error_dialog(self):
+        def dialog_handler(obj, dialog):
+            dialog.run_callback(dialogs.BUTTON_START_FRESH)
+        signals.system.connect('new-dialog', dialog_handler)
+
     def test_upgrade_error(self):
+        self.start_fresh_on_error_dialog()
         self.check_reload_error(version=2)
 
     def test_corrupt_database(self):
         app.db.close()
         open(self.save_path, 'wb').write("BOGUS DATA")
+        self.start_fresh_on_error_dialog()
         self.check_reload_error()
 
     def test_database_data_error(self):
