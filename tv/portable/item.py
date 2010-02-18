@@ -194,6 +194,8 @@ class FeedParserValues(object):
                     link = link['href']
                 except KeyError:
                     return u""
+            if link is None:
+                return u""
             if isinstance(link, unicode):
                 return link
             try:
