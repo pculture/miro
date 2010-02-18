@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-16 14:01-0500\n"
+"POT-Creation-Date: 2010-02-18 13:51-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1241,15 +1241,15 @@ msgstr ""
 msgid "Upgrading database"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:1130
+#: ../../portable/frontends/widgets/application.py:1131
 msgid "Message"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:1155
+#: ../../portable/frontends/widgets/application.py:1156
 msgid "Migrating Files"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:1165
+#: ../../portable/frontends/widgets/application.py:1166
 msgid "Migrating files"
 msgstr ""
 
@@ -2550,6 +2550,10 @@ msgstr ""
 msgid "Retry"
 msgstr ""
 
+#: ../../portable/dialogs.py:128
+msgid "Start Fresh"
+msgstr ""
+
 #: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"
 msgstr ""
@@ -2606,55 +2610,44 @@ msgid ""
 "must download the latest version of %(appname)s and run that."
 msgstr ""
 
-#: ../../portable/startup.py:200
-msgid "Insufficient disk space"
-msgstr ""
-
-#: ../../portable/startup.py:202
-#, python-format
-msgid ""
-"Not enough disk space to upgrade your database from the previous version of %"
-"(appname)s.  Please delete some files and try again."
-msgstr ""
-
-#: ../../portable/item.py:944
+#: ../../portable/item.py:946
 #, python-format
 msgid "%(count)d day"
 msgid_plural "%(count)d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/item.py:949
+#: ../../portable/item.py:951
 #, python-format
 msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/item.py:954
+#: ../../portable/item.py:956
 #, python-format
 msgid "%(count)d minute"
 msgid_plural "%(count)d minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/item.py:1121 ../../portable/messages.py:1092
+#: ../../portable/item.py:1123 ../../portable/messages.py:1092
 msgid "queued for download"
 msgstr ""
 
-#: ../../portable/item.py:1207
+#: ../../portable/item.py:1209
 msgid "no title"
 msgstr ""
 
-#: ../../portable/item.py:1246
+#: ../../portable/item.py:1248
 msgid "Contents appear in the library"
 msgstr ""
 
-#: ../../portable/item.py:1251
+#: ../../portable/item.py:1253
 msgid "Contents:"
 msgstr ""
 
-#: ../../portable/item.py:1489
+#: ../../portable/item.py:1491
 msgid "starting up..."
 msgstr ""
 
@@ -2699,27 +2692,47 @@ msgstr ""
 msgid "Example Playlist"
 msgstr ""
 
-#: ../../portable/storedatabase.py:232
+#: ../../portable/storedatabase.py:208
+#, python-format
+msgid "%(appname)s database upgrade failed"
+msgstr ""
+
+#: ../../portable/storedatabase.py:211
+#, python-format
+msgid ""
+"We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
+"\n"
+"Check to see if your disk is full.  If it is full, then quit %(appname)s, "
+"free up some space, and start %(appname)s again.\n"
+"\n"
+"If your disk is not full, help us understand the problem by quitting, then "
+"reporting a bug at bugzilla.pculture.org\n"
+"\n"
+"Finally, you can start fresh and your damaged database will be removed, but "
+"you will have to re-add your feeds and media files."
+msgstr ""
+
+#: ../../portable/storedatabase.py:267
 msgid "Database was created by a newer version of Miro "
 msgstr ""
 
-#: ../../portable/storedatabase.py:613
+#: ../../portable/storedatabase.py:656
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr ""
 
-#: ../../portable/storedatabase.py:615
+#: ../../portable/storedatabase.py:658
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 
-#: ../../portable/storedatabase.py:670
+#: ../../portable/storedatabase.py:719
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr ""
 
-#: ../../portable/storedatabase.py:673
+#: ../../portable/storedatabase.py:722
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -2737,22 +2750,22 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../../portable/util.py:374 ../../portable/util.py:376
+#: ../../portable/util.py:375 ../../portable/util.py:377
 #, python-format
 msgid "%(size)sGB"
 msgstr ""
 
-#: ../../portable/util.py:380 ../../portable/util.py:382
+#: ../../portable/util.py:381 ../../portable/util.py:383
 #, python-format
 msgid "%(size)sMB"
 msgstr ""
 
-#: ../../portable/util.py:386 ../../portable/util.py:388
+#: ../../portable/util.py:387 ../../portable/util.py:389
 #, python-format
 msgid "%(size)sKB"
 msgstr ""
 
-#: ../../portable/util.py:392 ../../portable/util.py:394
+#: ../../portable/util.py:393 ../../portable/util.py:395
 #, python-format
 msgid "%(size)sB"
 msgstr ""
