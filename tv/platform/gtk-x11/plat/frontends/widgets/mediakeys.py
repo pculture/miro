@@ -58,4 +58,4 @@ def get_media_key_handler():
     try:
         return MediaKeyHandler()
     except dbus.DBusException:
-        logging.exception("cannot load MediaKeyHandler")
+        logging.debug("cannot load MediaKeyHandler")
