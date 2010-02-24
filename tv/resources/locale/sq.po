@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2010-02-10 12:32-0500\n"
+"POT-Creation-Date: 2010-02-18 13:51-0500\n"
 "PO-Revision-Date: 2010-02-13 09:45+0000\n"
 "Last-Translator: Besnik <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <sq@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-02-16 18:57+0000\n"
+"X-Launchpad-Export-Date: 2010-02-24 15:37+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -543,24 +543,24 @@ msgid "Copy URL to clipboard"
 msgstr "Kopjoje URL-në te \"clipboard\"-i"
 
 #: ../../portable/frontends/widgets/tablist.py:576
-#: ../../portable/frontends/widgets/application.py:724
-msgid "Rename Site"
-msgstr "Riemërtoni \"Site\"-in"
+#: ../../portable/frontends/widgets/application.py:726
+msgid "Rename Website"
+msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:577
-msgid "Remove Site"
-msgstr "Hiqe \"Site\"-in"
+msgid "Remove Website"
+msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:581
-msgid "Remove Sites"
-msgstr "Hiqi \"Site\"-et"
+msgid "Remove Websites"
+msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:657
 msgid "Update Feeds In Folder"
 msgstr "Përditëso Prurjet Në Dosje"
 
 #: ../../portable/frontends/widgets/tablist.py:658
-#: ../../portable/frontends/widgets/application.py:705
+#: ../../portable/frontends/widgets/application.py:707
 msgid "Rename Feed Folder"
 msgstr "Riemërtoni Dosje Prurjesh"
 
@@ -592,12 +592,12 @@ msgid "Update Feeds Now"
 msgstr "Përditësoji Prurjet Tani"
 
 #: ../../portable/frontends/widgets/tablist.py:712
-#: ../../portable/frontends/widgets/application.py:720
+#: ../../portable/frontends/widgets/application.py:722
 msgid "Rename Playlist Folder"
 msgstr "Riemërto Dosje Luajlistash"
 
 #: ../../portable/frontends/widgets/tablist.py:718
-#: ../../portable/frontends/widgets/application.py:715
+#: ../../portable/frontends/widgets/application.py:717
 #: ../../portable/playlist.py:200
 msgid "Rename Playlist"
 msgstr "Riemërtoni Luajlistën"
@@ -958,18 +958,18 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/gtk/video.py:357
 #: ../../portable/frontends/widgets/menus.py:312
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:378
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:380
 msgid "None Available"
 msgstr "Asnjë i Passhëm"
 
 #: ../../portable/frontends/widgets/gtk/video.py:379
 #: ../../portable/frontends/widgets/gtk/window.py:267
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:367
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:369
 msgid "Disable Subtitles"
 msgstr "Çaktivizo Titrat"
 
 #: ../../portable/frontends/widgets/gtk/video.py:390
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:385
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:387
 msgid "Select a Subtitles file..."
 msgstr "Përzgjidhni Kartelë titrash..."
 
@@ -1070,7 +1070,7 @@ msgid "Open Files - Error"
 msgstr "Hap Kartela - Gabim"
 
 #: ../../portable/frontends/widgets/application.py:351
-#: ../../portable/frontends/widgets/application.py:632
+#: ../../portable/frontends/widgets/application.py:634
 #, python-format
 msgid "File %(filename)s does not exist."
 msgstr "Kartela %(filename)s nuk ekziston."
@@ -1172,121 +1172,117 @@ msgstr "Ruaje Objektin Si..."
 
 #: ../../portable/frontends/widgets/application.py:563
 #: ../../portable/frontends/widgets/menus.py:220
-msgid "Add Site"
-msgstr "Shto \"Site\""
+msgid "Add Website"
+msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:564
-msgid "Enter the URL of the site to add"
-msgstr "Jepni URL-në e \"site\"-it për shtim"
+msgid "Enter the URL of the website to add"
+msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:565
-msgid "Add Site - Invalid URL"
-msgstr "Shto \"Site\" - URL e Pavlefshme"
+msgid "Add Website - Invalid URL"
+msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:566
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
 "\n"
-"Enter the URL of the site to add"
+"Enter the URL of the website to add"
 msgstr ""
-"Vendndodhja që dhatë nuk është url e vlefshme.\n"
-"Ju lutem, kontrolloni URL-në dhe riprovoni.\n"
-"\n"
-"Jepni URL-në e \"site\"-it që duhet shtuar"
 
-#: ../../portable/frontends/widgets/application.py:622
+#: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
 msgstr "Importo Kartelë OPML"
 
-#: ../../portable/frontends/widgets/application.py:624
+#: ../../portable/frontends/widgets/application.py:626
 msgid "OPML Files"
 msgstr "Kartela OPML"
 
-#: ../../portable/frontends/widgets/application.py:631
+#: ../../portable/frontends/widgets/application.py:633
 msgid "Import OPML File - Error"
 msgstr "Importo Kartelë OPML - Gabim"
 
-#: ../../portable/frontends/widgets/application.py:637
+#: ../../portable/frontends/widgets/application.py:639
 msgid "Export OPML File"
 msgstr "Eksporto Kartelë OPML"
 
-#: ../../portable/frontends/widgets/application.py:661
+#: ../../portable/frontends/widgets/application.py:663
 msgid "Create Playlist"
 msgstr "Krijoni Luajlistë"
 
-#: ../../portable/frontends/widgets/application.py:662
+#: ../../portable/frontends/widgets/application.py:664
 msgid "Enter a name for the new playlist"
 msgstr "Jepni emër për luajlistën e re"
 
-#: ../../portable/frontends/widgets/application.py:683
+#: ../../portable/frontends/widgets/application.py:685
 msgid "Create Playlist Folder"
 msgstr "Krijoni Dosje Luajlistash"
 
-#: ../../portable/frontends/widgets/application.py:684
+#: ../../portable/frontends/widgets/application.py:686
 msgid "Enter a name for the new playlist folder"
 msgstr "Jepni emër për dosjen e re të luajlistave"
 
-#: ../../portable/frontends/widgets/application.py:706
+#: ../../portable/frontends/widgets/application.py:708
 #, python-format
 msgid "Enter a new name for the feed folder %(name)s"
 msgstr "Jepni emër të ri për dosjen e prurjeve %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:710
+#: ../../portable/frontends/widgets/application.py:712
 msgid "Rename Feed"
 msgstr "Riemërtoni Prurje"
 
-#: ../../portable/frontends/widgets/application.py:711
+#: ../../portable/frontends/widgets/application.py:713
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
 msgstr "Jepni emër të ri për prurjen %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:716
+#: ../../portable/frontends/widgets/application.py:718
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr "Jepni emër të ri për luajlistën %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:721
+#: ../../portable/frontends/widgets/application.py:723
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
 msgstr "Jepni emër të ri për dosjen e luajlistave %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:725
+#: ../../portable/frontends/widgets/application.py:727
 #, python-format
-msgid "Enter a new name for the site %(name)s"
-msgstr "Jepni emër  të ri për \"site\"-in %(name)s"
+msgid "Enter a new name for the website %(name)s"
+msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:749
+#: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
 msgstr[0] "Hiqe luajlistën"
 msgstr[1] "Hiqi luajlistat"
 
-#: ../../portable/frontends/widgets/application.py:751
+#: ../../portable/frontends/widgets/application.py:753
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
 msgstr[0] "Jeni i sigurt se doni të hiqet kjo luajlistë?"
 msgstr[1] "Jeni i sigurt se doni të hiqen këto %(count)s luajlista?"
 
-#: ../../portable/frontends/widgets/application.py:771
-msgid "Remove site"
-msgid_plural "Remove sites"
-msgstr[0] "Hiqe \"site\"-in"
-msgstr[1] "Hiqi \"site\"-et"
-
 #: ../../portable/frontends/widgets/application.py:773
-#, python-format
-msgid "Are you sure you want to remove this site?"
-msgid_plural "Are you sure you want to remove these %(count)s sites?"
-msgstr[0] "Are you sure you want to remove this site?"
-msgstr[1] "Jeni i sigurt se doni të hiqen këta %(count)s \"site\"-e?"
+msgid "Remove website"
+msgid_plural "Remove websites"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:803
+#: ../../portable/frontends/widgets/application.py:775
+#, python-format
+msgid "Are you sure you want to remove this website?"
+msgid_plural "Are you sure you want to remove these %(count)s websites?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:805
 msgid "Are you sure you want to quit?"
 msgstr "Jeni i sigurt se doni të dilni?"
 
-#: ../../portable/frontends/widgets/application.py:805
+#: ../../portable/frontends/widgets/application.py:807
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
@@ -1295,23 +1291,23 @@ msgstr[0] ""
 msgstr[1] ""
 "Keni %(count)d shkarkime në kryerje e sipër.  Të dilet, sido qoftë?"
 
-#: ../../portable/frontends/widgets/application.py:810
+#: ../../portable/frontends/widgets/application.py:812
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "Sinjalizomë kur përpiqem të dal me shkarkime në kryerje e sipër"
 
-#: ../../portable/frontends/widgets/application.py:995
+#: ../../portable/frontends/widgets/application.py:997
 msgid "Upgrading database"
 msgstr "Po përmirësohet baza e të dhënave"
 
-#: ../../portable/frontends/widgets/application.py:1128
+#: ../../portable/frontends/widgets/application.py:1131
 msgid "Message"
 msgstr "Mesazh"
 
-#: ../../portable/frontends/widgets/application.py:1153
+#: ../../portable/frontends/widgets/application.py:1156
 msgid "Migrating Files"
 msgstr "Po migrohen Kartelat"
 
-#: ../../portable/frontends/widgets/application.py:1163
+#: ../../portable/frontends/widgets/application.py:1166
 msgid "Migrating files"
 msgstr "Po migrohen kartelat"
 
@@ -1518,8 +1514,8 @@ msgid "_Remove Items"
 msgstr "_Hiqi Objektet"
 
 #: ../../portable/frontends/widgets/menus.py:203
-msgid "Re_name Item"
-msgstr "Ri_emërtoje Objektin"
+msgid "_Edit Item"
+msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:205
 msgid "Save Item _As"
@@ -1534,8 +1530,8 @@ msgid "Copy Item _URL"
 msgstr "Kopjo _URL Objekti"
 
 #: ../../portable/frontends/widgets/menus.py:213
-msgid "_Options"
-msgstr "_Mundësi"
+msgid "_Preferences"
+msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
@@ -1566,8 +1562,8 @@ msgid "Re_name Feed"
 msgstr "Ri_emërtoni Prurjen"
 
 #: ../../portable/frontends/widgets/menus.py:232
-msgid "Re_name Site"
-msgstr "Ri_emërtoni 'Site''-in"
+msgid "Re_name Website"
+msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
@@ -1590,12 +1586,12 @@ msgid "_Remove Folders"
 msgstr "_Hiqi Dosjet"
 
 #: ../../portable/frontends/widgets/menus.py:241
-msgid "_Remove Site"
-msgstr "_Hiqe \"Site\"-in"
+msgid "_Remove Website"
+msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:242
-msgid "_Remove Sites"
-msgstr "_Hiqi \"Site\"-et"
+msgid "_Remove Websites"
+msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
@@ -1917,10 +1913,10 @@ msgstr[1] "%(count)d Prurje të Përzgjedhura"
 
 #: ../../portable/frontends/widgets/displays.py:568
 #, python-format
-msgid "%(count)d Site Selected"
-msgid_plural "%(count)d Sites Selected"
-msgstr[0] "%(count)d \"Site\" i Përzgjedhur"
-msgstr[1] "%(count)d \"Site\"-e të Përzgjedhur"
+msgid "%(count)d Website Selected"
+msgid_plural "%(count)d Websites Selected"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
@@ -2652,6 +2648,10 @@ msgstr "Ndale Shikimin"
 msgid "Retry"
 msgstr "Riprovoni"
 
+#: ../../portable/dialogs.py:128
+msgid "Start Fresh"
+msgstr ""
+
 #: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"
 msgstr "I pajtuar te prurja e re:"
@@ -2715,58 +2715,44 @@ msgstr ""
 "%(appname)ss. Duhet të shkarkoni versionin më të fundit të %(appname)s dhe "
 "të xhironi atë."
 
-#: ../../portable/startup.py:200
-msgid "Insufficient disk space"
-msgstr "Hapësirë e pamjaftueshme në disk"
-
-#: ../../portable/startup.py:202
-#, python-format
-msgid ""
-"Not enough disk space to upgrade your database from the previous version of "
-"%(appname)s.  Please delete some files and try again."
-msgstr ""
-"Pa vend të mjaftueshëm në disk për përditësimin e bazës suaj të të dhënave "
-"nga versioni i mëparshëm i %(appname)ss. Ju lutem, fshini disa kartela dhe "
-"riprovoni."
-
-#: ../../portable/item.py:944
+#: ../../portable/item.py:946
 #, python-format
 msgid "%(count)d day"
 msgid_plural "%(count)d days"
 msgstr[0] "%(count)d ditë"
 msgstr[1] "%(count)d ditë"
 
-#: ../../portable/item.py:949
+#: ../../portable/item.py:951
 #, python-format
 msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
 msgstr[0] "%(count)d orë"
 msgstr[1] "%(count)d orë"
 
-#: ../../portable/item.py:954
+#: ../../portable/item.py:956
 #, python-format
 msgid "%(count)d minute"
 msgid_plural "%(count)d minutes"
 msgstr[0] "%(count)d minutë"
 msgstr[1] "%(count)d minuta"
 
-#: ../../portable/item.py:1121 ../../portable/messages.py:1092
+#: ../../portable/item.py:1123 ../../portable/messages.py:1092
 msgid "queued for download"
 msgstr "vënë në radhë për shkarkim"
 
-#: ../../portable/item.py:1207
+#: ../../portable/item.py:1209
 msgid "no title"
 msgstr "pa titull"
 
-#: ../../portable/item.py:1246
+#: ../../portable/item.py:1248
 msgid "Contents appear in the library"
 msgstr "Lënda shfaqet në bibliotekë"
 
-#: ../../portable/item.py:1251
+#: ../../portable/item.py:1253
 msgid "Contents:"
 msgstr "Lëndë:"
 
-#: ../../portable/item.py:1489
+#: ../../portable/item.py:1491
 msgid "starting up..."
 msgstr "po niset..."
 
@@ -2816,16 +2802,36 @@ msgstr "Kërko Në të Tëra"
 msgid "Example Playlist"
 msgstr "Shembull Luajliste"
 
-#: ../../portable/storedatabase.py:232
+#: ../../portable/storedatabase.py:208
+#, python-format
+msgid "%(appname)s database upgrade failed"
+msgstr ""
+
+#: ../../portable/storedatabase.py:211
+#, python-format
+msgid ""
+"We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
+"\n"
+"Check to see if your disk is full.  If it is full, then quit %(appname)s, "
+"free up some space, and start %(appname)s again.\n"
+"\n"
+"If your disk is not full, help us understand the problem by quitting, then "
+"reporting a bug at bugzilla.pculture.org\n"
+"\n"
+"Finally, you can start fresh and your damaged database will be removed, but "
+"you will have to re-add your feeds and media files."
+msgstr ""
+
+#: ../../portable/storedatabase.py:267
 msgid "Database was created by a newer version of Miro "
 msgstr "Baza e të dhënave qe krijuar për një version më të ri të Miros "
 
-#: ../../portable/storedatabase.py:613
+#: ../../portable/storedatabase.py:656
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "Baza e të dhënave të %(appname)ss u ruajt me sukses"
 
-#: ../../portable/storedatabase.py:615
+#: ../../portable/storedatabase.py:658
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -2833,12 +2839,12 @@ msgstr ""
 "Baza e të dhënave u ruajt me sukses. Tani nuk ka rrezik të humbasin të dhëna "
 "gjatë daljes."
 
-#: ../../portable/storedatabase.py:670
+#: ../../portable/storedatabase.py:719
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "Ruajtja e bazës së të dhënave %(appname)s dështoi"
 
-#: ../../portable/storedatabase.py:673
+#: ../../portable/storedatabase.py:722
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -2870,22 +2876,22 @@ msgstr ""
 "Gabim: %(error_text)s\n"
 "\n"
 
-#: ../../portable/util.py:374 ../../portable/util.py:376
+#: ../../portable/util.py:375 ../../portable/util.py:377
 #, python-format
 msgid "%(size)sGB"
 msgstr "%(size)sGB"
 
-#: ../../portable/util.py:380 ../../portable/util.py:382
+#: ../../portable/util.py:381 ../../portable/util.py:383
 #, python-format
 msgid "%(size)sMB"
 msgstr "%(size)sMB"
 
-#: ../../portable/util.py:386 ../../portable/util.py:388
+#: ../../portable/util.py:387 ../../portable/util.py:389
 #, python-format
 msgid "%(size)sKB"
 msgstr "%(size)sKB"
 
-#: ../../portable/util.py:392 ../../portable/util.py:394
+#: ../../portable/util.py:393 ../../portable/util.py:395
 #, python-format
 msgid "%(size)sB"
 msgstr "%(size)sB"

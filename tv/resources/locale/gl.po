@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2010-02-10 12:32-0500\n"
-"PO-Revision-Date: 2010-02-13 02:09+0000\n"
+"POT-Creation-Date: 2010-02-18 13:51-0500\n"
+"PO-Revision-Date: 2010-02-17 14:54+0000\n"
 "Last-Translator: Marcos X. <Unknown>\n"
 "Language-Team: Marcos Lans-Ciberirmandade.org <marcoslansgarza@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-02-16 18:57+0000\n"
+"X-Launchpad-Export-Date: 2010-02-24 15:37+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: Galician\n"
 
@@ -295,8 +295,8 @@ msgstr "Insira o nome do cartafol a engadir"
 #: ../../portable/frontends/widgets/removefeeds.py:49
 msgid "Remove Feed"
 msgid_plural "Remove Feeds"
-msgstr[0] "Eliminar fonte"
-msgstr[1] "Eliminar fontes"
+msgstr[0] "Eliminar a fonte"
+msgstr[1] "Eliminar as fontes"
 
 #: ../../portable/frontends/widgets/removefeeds.py:57
 msgid "Are you sure you want to remove this feed:"
@@ -495,7 +495,7 @@ msgstr "Axustes"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:643
 msgid "Remove feed"
-msgstr "Eliminar fonte"
+msgstr "Eliminar a fonte"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:719
 msgid "Unwatched"
@@ -545,16 +545,16 @@ msgid "Copy URL to clipboard"
 msgstr "Copiar a URL para o porta-retallos"
 
 #: ../../portable/frontends/widgets/tablist.py:576
-#: ../../portable/frontends/widgets/application.py:724
-msgid "Rename Site"
+#: ../../portable/frontends/widgets/application.py:726
+msgid "Rename Website"
 msgstr "Mudar o nome da web"
 
 #: ../../portable/frontends/widgets/tablist.py:577
-msgid "Remove Site"
+msgid "Remove Website"
 msgstr "Eliminar a web"
 
 #: ../../portable/frontends/widgets/tablist.py:581
-msgid "Remove Sites"
+msgid "Remove Websites"
 msgstr "Eliminar as webs"
 
 #: ../../portable/frontends/widgets/tablist.py:657
@@ -562,7 +562,7 @@ msgid "Update Feeds In Folder"
 msgstr "Actualizar as fontes do cartafol"
 
 #: ../../portable/frontends/widgets/tablist.py:658
-#: ../../portable/frontends/widgets/application.py:705
+#: ../../portable/frontends/widgets/application.py:707
 msgid "Rename Feed Folder"
 msgstr "Mudar o nome do cartafol de fontes"
 
@@ -594,12 +594,12 @@ msgid "Update Feeds Now"
 msgstr "Actualizar as fontes agora"
 
 #: ../../portable/frontends/widgets/tablist.py:712
-#: ../../portable/frontends/widgets/application.py:720
+#: ../../portable/frontends/widgets/application.py:722
 msgid "Rename Playlist Folder"
 msgstr "Mudar o nome do cartafol"
 
 #: ../../portable/frontends/widgets/tablist.py:718
-#: ../../portable/frontends/widgets/application.py:715
+#: ../../portable/frontends/widgets/application.py:717
 #: ../../portable/playlist.py:200
 msgid "Rename Playlist"
 msgstr "Mudar o nome da listaxe"
@@ -958,18 +958,18 @@ msgstr "Xanela externa"
 
 #: ../../portable/frontends/widgets/gtk/video.py:357
 #: ../../portable/frontends/widgets/menus.py:312
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:378
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:380
 msgid "None Available"
 msgstr "Non hai ningún dispoñible"
 
 #: ../../portable/frontends/widgets/gtk/video.py:379
 #: ../../portable/frontends/widgets/gtk/window.py:267
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:367
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:369
 msgid "Disable Subtitles"
 msgstr "Deshabilitar os subtítulos"
 
 #: ../../portable/frontends/widgets/gtk/video.py:390
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:385
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:387
 msgid "Select a Subtitles file..."
 msgstr "Seleccione uns subtítulos..."
 
@@ -1070,7 +1070,7 @@ msgid "Open Files - Error"
 msgstr "Abrir ficheiros - Erro"
 
 #: ../../portable/frontends/widgets/application.py:351
-#: ../../portable/frontends/widgets/application.py:632
+#: ../../portable/frontends/widgets/application.py:634
 #, python-format
 msgid "File %(filename)s does not exist."
 msgstr "O ficheiro %(filename)s non existe."
@@ -1172,15 +1172,15 @@ msgstr "Gardar o elemento como..."
 
 #: ../../portable/frontends/widgets/application.py:563
 #: ../../portable/frontends/widgets/menus.py:220
-msgid "Add Site"
+msgid "Add Website"
 msgstr "Engadir unha web"
 
 #: ../../portable/frontends/widgets/application.py:564
-msgid "Enter the URL of the site to add"
+msgid "Enter the URL of the website to add"
 msgstr "Insira a URL da web que quere engadir"
 
 #: ../../portable/frontends/widgets/application.py:565
-msgid "Add Site - Invalid URL"
+msgid "Add Website - Invalid URL"
 msgstr "Engadir unha web - URL incorrecta"
 
 #: ../../portable/frontends/widgets/application.py:566
@@ -1188,129 +1188,129 @@ msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
 "\n"
-"Enter the URL of the site to add"
+"Enter the URL of the website to add"
 msgstr ""
 "O enderezo URL inserido non é correcto.\n"
 "Comprobe a URL e ténteo outra vez.\n"
 "\n"
 "Insira a URL da web que quere engadir"
 
-#: ../../portable/frontends/widgets/application.py:622
+#: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
 msgstr "Importar un ficheiro OPML"
 
-#: ../../portable/frontends/widgets/application.py:624
+#: ../../portable/frontends/widgets/application.py:626
 msgid "OPML Files"
 msgstr "Ficheiros OPML"
 
-#: ../../portable/frontends/widgets/application.py:631
+#: ../../portable/frontends/widgets/application.py:633
 msgid "Import OPML File - Error"
 msgstr "Importar un  ficheiro OPML - Erro"
 
-#: ../../portable/frontends/widgets/application.py:637
+#: ../../portable/frontends/widgets/application.py:639
 msgid "Export OPML File"
 msgstr "Exportar un ficheiro OPML"
 
-#: ../../portable/frontends/widgets/application.py:661
+#: ../../portable/frontends/widgets/application.py:663
 msgid "Create Playlist"
 msgstr "Crear unha listaxe de reprodución"
 
-#: ../../portable/frontends/widgets/application.py:662
+#: ../../portable/frontends/widgets/application.py:664
 msgid "Enter a name for the new playlist"
 msgstr "Insira un nome para a nova listaxe de reprodución"
 
-#: ../../portable/frontends/widgets/application.py:683
+#: ../../portable/frontends/widgets/application.py:685
 msgid "Create Playlist Folder"
 msgstr "Crear un cartafol para a listaxe"
 
-#: ../../portable/frontends/widgets/application.py:684
+#: ../../portable/frontends/widgets/application.py:686
 msgid "Enter a name for the new playlist folder"
 msgstr "Insira un nome para o novo cartafol"
 
-#: ../../portable/frontends/widgets/application.py:706
+#: ../../portable/frontends/widgets/application.py:708
 #, python-format
 msgid "Enter a new name for the feed folder %(name)s"
 msgstr "Insira un novo nome para o cartafol de fontes %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:710
+#: ../../portable/frontends/widgets/application.py:712
 msgid "Rename Feed"
 msgstr "Mudar o nome da fonte"
 
-#: ../../portable/frontends/widgets/application.py:711
+#: ../../portable/frontends/widgets/application.py:713
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
 msgstr "Insira un nome novo para a fonte %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:716
+#: ../../portable/frontends/widgets/application.py:718
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr "Insira un nome novo para a listaxe de reprodución %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:721
+#: ../../portable/frontends/widgets/application.py:723
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
 msgstr ""
 "Insira un nome novo para o cartafol da listaxe de reprodución %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:725
+#: ../../portable/frontends/widgets/application.py:727
 #, python-format
-msgid "Enter a new name for the site %(name)s"
-msgstr "Insira un nome novo para a web %(name)s"
+msgid "Enter a new name for the website %(name)s"
+msgstr "Insira un nome para a web %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:749
+#: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
 msgstr[0] "Eliminar a listaxe de reprodución"
 msgstr[1] "Eliminar as listaxes de reprodución"
 
-#: ../../portable/frontends/widgets/application.py:751
+#: ../../portable/frontends/widgets/application.py:753
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
 msgstr[0] "Está certo de eliminar esta listaxe de reprodución?"
 msgstr[1] "Está certo de eliminar estas %(count)s listaxes de reprodución?"
 
-#: ../../portable/frontends/widgets/application.py:771
-msgid "Remove site"
-msgid_plural "Remove sites"
+#: ../../portable/frontends/widgets/application.py:773
+msgid "Remove website"
+msgid_plural "Remove websites"
 msgstr[0] "Eliminar a web"
 msgstr[1] "Eliminar as webs"
 
-#: ../../portable/frontends/widgets/application.py:773
+#: ../../portable/frontends/widgets/application.py:775
 #, python-format
-msgid "Are you sure you want to remove this site?"
-msgid_plural "Are you sure you want to remove these %(count)s sites?"
+msgid "Are you sure you want to remove this website?"
+msgid_plural "Are you sure you want to remove these %(count)s websites?"
 msgstr[0] "Está certo de eliminar esta web?"
 msgstr[1] "Está certo de eliminar estas %(count)s webs?"
 
-#: ../../portable/frontends/widgets/application.py:803
+#: ../../portable/frontends/widgets/application.py:805
 msgid "Are you sure you want to quit?"
 msgstr "Está certo de saír do programa?"
 
-#: ../../portable/frontends/widgets/application.py:805
+#: ../../portable/frontends/widgets/application.py:807
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] "Ten %(count)d descarga activa. Desexa pechar o Miro?"
 msgstr[1] "Ten %(count)d descargas activas. Desexa pechar o Miro?"
 
-#: ../../portable/frontends/widgets/application.py:810
+#: ../../portable/frontends/widgets/application.py:812
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "Avisarme cando tente pechar o Miro con descargas activas"
 
-#: ../../portable/frontends/widgets/application.py:995
+#: ../../portable/frontends/widgets/application.py:997
 msgid "Upgrading database"
 msgstr "A actualizar a base de datos"
 
-#: ../../portable/frontends/widgets/application.py:1128
+#: ../../portable/frontends/widgets/application.py:1131
 msgid "Message"
 msgstr "Mensaxe"
 
-#: ../../portable/frontends/widgets/application.py:1153
+#: ../../portable/frontends/widgets/application.py:1156
 msgid "Migrating Files"
 msgstr "A migrar ficheiros"
 
-#: ../../portable/frontends/widgets/application.py:1163
+#: ../../portable/frontends/widgets/application.py:1166
 msgid "Migrating files"
 msgstr "A migrar ficheiros"
 
@@ -1517,8 +1517,8 @@ msgid "_Remove Items"
 msgstr "_Eliminar os elementos"
 
 #: ../../portable/frontends/widgets/menus.py:203
-msgid "Re_name Item"
-msgstr "Mudar o _nome do elemento"
+msgid "_Edit Item"
+msgstr "_Editar o elemento"
 
 #: ../../portable/frontends/widgets/menus.py:205
 msgid "Save Item _As"
@@ -1533,8 +1533,8 @@ msgid "Copy Item _URL"
 msgstr "Copiar a _URL do elemento"
 
 #: ../../portable/frontends/widgets/menus.py:213
-msgid "_Options"
-msgstr "_Opcións"
+msgid "_Preferences"
+msgstr "_Preferencias"
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
@@ -1565,7 +1565,7 @@ msgid "Re_name Feed"
 msgstr "Mudar o _nome da fonte"
 
 #: ../../portable/frontends/widgets/menus.py:232
-msgid "Re_name Site"
+msgid "Re_name Website"
 msgstr "Mudar o _nome da web"
 
 #: ../../portable/frontends/widgets/menus.py:233
@@ -1589,12 +1589,12 @@ msgid "_Remove Folders"
 msgstr "Elimina_r os cartafoles"
 
 #: ../../portable/frontends/widgets/menus.py:241
-msgid "_Remove Site"
-msgstr "Elimina_r a web"
+msgid "_Remove Website"
+msgstr "Elimina_r web"
 
 #: ../../portable/frontends/widgets/menus.py:242
-msgid "_Remove Sites"
-msgstr "Elimina_r as webs"
+msgid "_Remove Websites"
+msgstr "Elimina_r  webs"
 
 #: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
@@ -1916,10 +1916,10 @@ msgstr[1] "%(count)d fontes seleccionadas"
 
 #: ../../portable/frontends/widgets/displays.py:568
 #, python-format
-msgid "%(count)d Site Selected"
-msgid_plural "%(count)d Sites Selected"
-msgstr[0] "%(count)d web seleccionada"
-msgstr[1] "%(count)d webs seleccionadas"
+msgid "%(count)d Website Selected"
+msgid_plural "%(count)d Websites Selected"
+msgstr[0] "Seleccionou %(count)d web"
+msgstr[1] "Seleccionou %(count)d webs"
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
@@ -2160,7 +2160,7 @@ msgstr "Restrinxir aos meus ficheiros persoais."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:187
 msgid "Search custom folders:"
-msgstr ""
+msgstr "Procurar nos cartafoles persoais:"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:198
 msgid "Choose directory to search for media files"
@@ -2651,6 +2651,10 @@ msgstr "Parar a reprodución"
 msgid "Retry"
 msgstr "Reintentar"
 
+#: ../../portable/dialogs.py:128
+msgid "Start Fresh"
+msgstr ""
+
 #: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"
 msgstr "Subscrito á nova fonte:"
@@ -2714,57 +2718,44 @@ msgstr ""
 "Ten unha base de datos gardada cunha versión máis nova do %(appname)s. Debe "
 "descargar a última versión do programa."
 
-#: ../../portable/startup.py:200
-msgid "Insufficient disk space"
-msgstr "Espazo insuficiente no disco"
-
-#: ../../portable/startup.py:202
-#, python-format
-msgid ""
-"Not enough disk space to upgrade your database from the previous version of "
-"%(appname)s.  Please delete some files and try again."
-msgstr ""
-"Non hai espazo dabondo no disco para actualizar a base de datos desde a "
-"versión anterior de %(appname)s. Borre algúns ficheiros e probe outra vez."
-
-#: ../../portable/item.py:944
+#: ../../portable/item.py:946
 #, python-format
 msgid "%(count)d day"
 msgid_plural "%(count)d days"
 msgstr[0] "%(count)d día"
 msgstr[1] "%(count)d días"
 
-#: ../../portable/item.py:949
+#: ../../portable/item.py:951
 #, python-format
 msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
 msgstr[0] "%(count)d hora"
 msgstr[1] "%(count)d horas"
 
-#: ../../portable/item.py:954
+#: ../../portable/item.py:956
 #, python-format
 msgid "%(count)d minute"
 msgid_plural "%(count)d minutes"
 msgstr[0] "%(count)d minuto"
 msgstr[1] "%(count)d minutos"
 
-#: ../../portable/item.py:1121 ../../portable/messages.py:1092
+#: ../../portable/item.py:1123 ../../portable/messages.py:1092
 msgid "queued for download"
 msgstr "agardando para descargar"
 
-#: ../../portable/item.py:1207
+#: ../../portable/item.py:1209
 msgid "no title"
 msgstr "sen título"
 
-#: ../../portable/item.py:1246
+#: ../../portable/item.py:1248
 msgid "Contents appear in the library"
 msgstr "Contidos que aparecen na biblioteca"
 
-#: ../../portable/item.py:1251
+#: ../../portable/item.py:1253
 msgid "Contents:"
 msgstr "Contidos:"
 
-#: ../../portable/item.py:1489
+#: ../../portable/item.py:1491
 msgid "starting up..."
 msgstr "a iniciar..."
 
@@ -2815,16 +2806,36 @@ msgstr "Procurar en todos"
 msgid "Example Playlist"
 msgstr "Exemplo de listaxe de reprodución"
 
-#: ../../portable/storedatabase.py:232
+#: ../../portable/storedatabase.py:208
+#, python-format
+msgid "%(appname)s database upgrade failed"
+msgstr ""
+
+#: ../../portable/storedatabase.py:211
+#, python-format
+msgid ""
+"We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
+"\n"
+"Check to see if your disk is full.  If it is full, then quit %(appname)s, "
+"free up some space, and start %(appname)s again.\n"
+"\n"
+"If your disk is not full, help us understand the problem by quitting, then "
+"reporting a bug at bugzilla.pculture.org\n"
+"\n"
+"Finally, you can start fresh and your damaged database will be removed, but "
+"you will have to re-add your feeds and media files."
+msgstr ""
+
+#: ../../portable/storedatabase.py:267
 msgid "Database was created by a newer version of Miro "
 msgstr "A base de datos foi creada cunha versión máis recente do Miro "
 
-#: ../../portable/storedatabase.py:613
+#: ../../portable/storedatabase.py:656
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "A base de datos de %(appname)s gardouse correctamente"
 
-#: ../../portable/storedatabase.py:615
+#: ../../portable/storedatabase.py:658
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -2832,12 +2843,12 @@ msgstr ""
 "A base de datos gardouse correctamente. Pode saír do programa de forma "
 "segura."
 
-#: ../../portable/storedatabase.py:670
+#: ../../portable/storedatabase.py:719
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "Produciuse un fallo ao gardar a base de datos de %(appname)s"
 
-#: ../../portable/storedatabase.py:673
+#: ../../portable/storedatabase.py:722
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -2868,22 +2879,22 @@ msgstr ""
 "Erro: %(error_text)s\n"
 "\n"
 
-#: ../../portable/util.py:374 ../../portable/util.py:376
+#: ../../portable/util.py:375 ../../portable/util.py:377
 #, python-format
 msgid "%(size)sGB"
 msgstr "%(size)sGB"
 
-#: ../../portable/util.py:380 ../../portable/util.py:382
+#: ../../portable/util.py:381 ../../portable/util.py:383
 #, python-format
 msgid "%(size)sMB"
 msgstr "%(size)sMB"
 
-#: ../../portable/util.py:386 ../../portable/util.py:388
+#: ../../portable/util.py:387 ../../portable/util.py:389
 #, python-format
 msgid "%(size)sKB"
 msgstr "%(size)sKB"
 
-#: ../../portable/util.py:392 ../../portable/util.py:394
+#: ../../portable/util.py:393 ../../portable/util.py:395
 #, python-format
 msgid "%(size)sB"
 msgstr "%(size)sB"
@@ -3000,12 +3011,12 @@ msgstr "Renderizador de vídeo:"
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:446
 #, python-format
 msgid "Track %(tracknumber)d"
-msgstr ""
+msgstr "Pista %(tracknumber)d"
 
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:456
 #, python-format
 msgid "Subtitle file %(tracknumber)d"
-msgstr ""
+msgstr "Subtítulo %(tracknumber)d"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:178
 msgid "Download Completed"

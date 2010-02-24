@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-10 12:32-0500\n"
+"POT-Creation-Date: 2010-02-18 13:51-0500\n"
 "PO-Revision-Date: 2009-06-10 19:45+0000\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-02-16 18:56+0000\n"
+"X-Launchpad-Export-Date: 2010-02-24 15:37+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -543,24 +543,24 @@ msgid "Copy URL to clipboard"
 msgstr "Kopier adresse til utklippstavle"
 
 #: ../../portable/frontends/widgets/tablist.py:576
-#: ../../portable/frontends/widgets/application.py:724
-msgid "Rename Site"
-msgstr "Endra namn på nettstad"
+#: ../../portable/frontends/widgets/application.py:726
+msgid "Rename Website"
+msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:577
-msgid "Remove Site"
-msgstr "Fjern nettstad"
+msgid "Remove Website"
+msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:581
-msgid "Remove Sites"
-msgstr "Fjern nettstader"
+msgid "Remove Websites"
+msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:657
 msgid "Update Feeds In Folder"
 msgstr "Oppdater kjelder i mappa"
 
 #: ../../portable/frontends/widgets/tablist.py:658
-#: ../../portable/frontends/widgets/application.py:705
+#: ../../portable/frontends/widgets/application.py:707
 msgid "Rename Feed Folder"
 msgstr "Endra namn på kjeldemappe"
 
@@ -592,12 +592,12 @@ msgid "Update Feeds Now"
 msgstr "Oppdater kjelder no"
 
 #: ../../portable/frontends/widgets/tablist.py:712
-#: ../../portable/frontends/widgets/application.py:720
+#: ../../portable/frontends/widgets/application.py:722
 msgid "Rename Playlist Folder"
 msgstr "Endra namn på spelelistemappe"
 
 #: ../../portable/frontends/widgets/tablist.py:718
-#: ../../portable/frontends/widgets/application.py:715
+#: ../../portable/frontends/widgets/application.py:717
 #: ../../portable/playlist.py:200
 msgid "Rename Playlist"
 msgstr "Endra namn på speleliste"
@@ -954,18 +954,18 @@ msgstr "Sprett ut"
 
 #: ../../portable/frontends/widgets/gtk/video.py:357
 #: ../../portable/frontends/widgets/menus.py:312
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:378
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:380
 msgid "None Available"
 msgstr ""
 
 #: ../../portable/frontends/widgets/gtk/video.py:379
 #: ../../portable/frontends/widgets/gtk/window.py:267
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:367
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:369
 msgid "Disable Subtitles"
 msgstr ""
 
 #: ../../portable/frontends/widgets/gtk/video.py:390
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:385
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:387
 msgid "Select a Subtitles file..."
 msgstr ""
 
@@ -1051,7 +1051,7 @@ msgid "Open Files - Error"
 msgstr "Feil ved opning av filer"
 
 #: ../../portable/frontends/widgets/application.py:351
-#: ../../portable/frontends/widgets/application.py:632
+#: ../../portable/frontends/widgets/application.py:634
 #, python-format
 msgid "File %(filename)s does not exist."
 msgstr "Fila «%(filename)s» finst ikkje."
@@ -1153,144 +1153,140 @@ msgstr "Lagra element som …"
 
 #: ../../portable/frontends/widgets/application.py:563
 #: ../../portable/frontends/widgets/menus.py:220
-msgid "Add Site"
-msgstr "Legg til nettstad"
+msgid "Add Website"
+msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:564
-msgid "Enter the URL of the site to add"
-msgstr "Skriv inn adressa til nettstaden du vil leggja til"
+msgid "Enter the URL of the website to add"
+msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:565
-msgid "Add Site - Invalid URL"
-msgstr "Legg til nettstad – ugyldig adresse"
+msgid "Add Website - Invalid URL"
+msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:566
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
 "\n"
-"Enter the URL of the site to add"
+"Enter the URL of the website to add"
 msgstr ""
-"Adressa du skreiv inn er ikkje gyldig.\n"
-"Kontroller adressa, og prøv så på nytt.\n"
-"\n"
-"Skriv inn adressa til nettstaden du vil leggja til."
 
-#: ../../portable/frontends/widgets/application.py:622
+#: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
 msgstr "Importer OPML-fil"
 
-#: ../../portable/frontends/widgets/application.py:624
+#: ../../portable/frontends/widgets/application.py:626
 msgid "OPML Files"
 msgstr "OPML-filer"
 
-#: ../../portable/frontends/widgets/application.py:631
+#: ../../portable/frontends/widgets/application.py:633
 msgid "Import OPML File - Error"
 msgstr "Importer OPML-fil – feil"
 
-#: ../../portable/frontends/widgets/application.py:637
+#: ../../portable/frontends/widgets/application.py:639
 msgid "Export OPML File"
 msgstr "Eksporter OPML-fil"
 
-#: ../../portable/frontends/widgets/application.py:661
+#: ../../portable/frontends/widgets/application.py:663
 msgid "Create Playlist"
 msgstr "Lag speleliste"
 
-#: ../../portable/frontends/widgets/application.py:662
+#: ../../portable/frontends/widgets/application.py:664
 msgid "Enter a name for the new playlist"
 msgstr "Skriv inn namn på den nye spelelista"
 
-#: ../../portable/frontends/widgets/application.py:683
+#: ../../portable/frontends/widgets/application.py:685
 msgid "Create Playlist Folder"
 msgstr "Lag spelelistemappe"
 
-#: ../../portable/frontends/widgets/application.py:684
+#: ../../portable/frontends/widgets/application.py:686
 msgid "Enter a name for the new playlist folder"
 msgstr "Skriv inn namn på den nye spelelistemappa"
 
-#: ../../portable/frontends/widgets/application.py:706
+#: ../../portable/frontends/widgets/application.py:708
 #, python-format
 msgid "Enter a new name for the feed folder %(name)s"
 msgstr "Skriv inn nytt namn på kjeldemappa «%(name)s»"
 
-#: ../../portable/frontends/widgets/application.py:710
+#: ../../portable/frontends/widgets/application.py:712
 msgid "Rename Feed"
 msgstr "Endra namn på kjelde"
 
-#: ../../portable/frontends/widgets/application.py:711
+#: ../../portable/frontends/widgets/application.py:713
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
 msgstr "Skriv inn nytt namn på kjelda «%(name)s»"
 
-#: ../../portable/frontends/widgets/application.py:716
+#: ../../portable/frontends/widgets/application.py:718
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr "Skriv inn nytt namn på spelelista «%(name)s»"
 
-#: ../../portable/frontends/widgets/application.py:721
+#: ../../portable/frontends/widgets/application.py:723
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
 msgstr "Skriv inn nytt namn på spelelistemappa «%(name)s»"
 
-#: ../../portable/frontends/widgets/application.py:725
+#: ../../portable/frontends/widgets/application.py:727
 #, python-format
-msgid "Enter a new name for the site %(name)s"
-msgstr "Skriv inn nytt namn på nettstaden «%(name)s»"
+msgid "Enter a new name for the website %(name)s"
+msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:749
+#: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
 msgstr[0] "Fjern speleliste"
 msgstr[1] "Fjern spelelister"
 
-#: ../../portable/frontends/widgets/application.py:751
+#: ../../portable/frontends/widgets/application.py:753
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
 msgstr[0] "Er du sikker på at du vil fjerna denne spelelista?"
 msgstr[1] "Er du sikker på at du vil fjerna desse %(count)s spelelistene?"
 
-#: ../../portable/frontends/widgets/application.py:771
-msgid "Remove site"
-msgid_plural "Remove sites"
-msgstr[0] "Fjern nettstaden"
-msgstr[1] "Fjern nettstadene"
-
 #: ../../portable/frontends/widgets/application.py:773
-#, python-format
-msgid "Are you sure you want to remove this site?"
-msgid_plural "Are you sure you want to remove these %(count)s sites?"
-msgstr[0] "Er du sikker på at du vil fjerna denne nettstaden?"
-msgstr[1] "Er du sikker på at du vil fjerna desse %(count)s nettstadene?"
+msgid "Remove website"
+msgid_plural "Remove websites"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:803
+#: ../../portable/frontends/widgets/application.py:775
+#, python-format
+msgid "Are you sure you want to remove this website?"
+msgid_plural "Are you sure you want to remove these %(count)s websites?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:805
 msgid "Are you sure you want to quit?"
 msgstr "Er du sikker på at du vil avslutta?"
 
-#: ../../portable/frontends/widgets/application.py:805
+#: ../../portable/frontends/widgets/application.py:807
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] "Du har %(count)d uferdig nedlasting. Vil du likevel avslutta?"
 msgstr[1] "Du har %(count)d uferdige nedlastingar. Vil du likevel avslutta?"
 
-#: ../../portable/frontends/widgets/application.py:810
+#: ../../portable/frontends/widgets/application.py:812
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "Åtvar ved forsøk på å avslutta med uferdige nedlastingar"
 
-#: ../../portable/frontends/widgets/application.py:995
+#: ../../portable/frontends/widgets/application.py:997
 msgid "Upgrading database"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:1128
+#: ../../portable/frontends/widgets/application.py:1131
 msgid "Message"
 msgstr "Melding"
 
-#: ../../portable/frontends/widgets/application.py:1153
+#: ../../portable/frontends/widgets/application.py:1156
 msgid "Migrating Files"
 msgstr "Flytting av filer"
 
-#: ../../portable/frontends/widgets/application.py:1163
+#: ../../portable/frontends/widgets/application.py:1166
 msgid "Migrating files"
 msgstr "Flytting av filer"
 
@@ -1494,8 +1490,8 @@ msgid "_Remove Items"
 msgstr "_Fjern element"
 
 #: ../../portable/frontends/widgets/menus.py:203
-msgid "Re_name Item"
-msgstr "_Endra namn på element"
+msgid "_Edit Item"
+msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:205
 msgid "Save Item _As"
@@ -1510,8 +1506,8 @@ msgid "Copy Item _URL"
 msgstr "Kopier _adresse"
 
 #: ../../portable/frontends/widgets/menus.py:213
-msgid "_Options"
-msgstr "_Innstillingar"
+msgid "_Preferences"
+msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
@@ -1542,7 +1538,7 @@ msgid "Re_name Feed"
 msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:232
-msgid "Re_name Site"
+msgid "Re_name Website"
 msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:233
@@ -1566,11 +1562,11 @@ msgid "_Remove Folders"
 msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:241
-msgid "_Remove Site"
+msgid "_Remove Website"
 msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:242
-msgid "_Remove Sites"
+msgid "_Remove Websites"
 msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:243
@@ -1893,10 +1889,10 @@ msgstr[1] "%(count)d kjelder valde"
 
 #: ../../portable/frontends/widgets/displays.py:568
 #, python-format
-msgid "%(count)d Site Selected"
-msgid_plural "%(count)d Sites Selected"
-msgstr[0] "%(count)d nettstad vald"
-msgstr[1] "%(count)d nettstader valde"
+msgid "%(count)d Website Selected"
+msgid_plural "%(count)d Websites Selected"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
@@ -2626,6 +2622,10 @@ msgstr "Stopp overvaking"
 msgid "Retry"
 msgstr ""
 
+#: ../../portable/dialogs.py:128
+msgid "Start Fresh"
+msgstr ""
+
 #: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"
 msgstr "Abonnerer på ny kjelde:"
@@ -2687,55 +2687,44 @@ msgstr ""
 "Du har ein database som vart lagra med ein nyare versjon av %(appname)s. Du "
 "må lasta ned ein nyare versjon av %(appname)s og køyra denne."
 
-#: ../../portable/startup.py:200
-msgid "Insufficient disk space"
-msgstr ""
-
-#: ../../portable/startup.py:202
-#, python-format
-msgid ""
-"Not enough disk space to upgrade your database from the previous version of "
-"%(appname)s.  Please delete some files and try again."
-msgstr ""
-
-#: ../../portable/item.py:944
+#: ../../portable/item.py:946
 #, python-format
 msgid "%(count)d day"
 msgid_plural "%(count)d days"
 msgstr[0] "%(count)d dag"
 msgstr[1] "%(count)d dagar"
 
-#: ../../portable/item.py:949
+#: ../../portable/item.py:951
 #, python-format
 msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
 msgstr[0] "%(count)d time"
 msgstr[1] "%(count)d timar"
 
-#: ../../portable/item.py:954
+#: ../../portable/item.py:956
 #, python-format
 msgid "%(count)d minute"
 msgid_plural "%(count)d minutes"
 msgstr[0] "%(count)d minutt"
 msgstr[1] "%(count)d minutt"
 
-#: ../../portable/item.py:1121 ../../portable/messages.py:1092
+#: ../../portable/item.py:1123 ../../portable/messages.py:1092
 msgid "queued for download"
 msgstr "i kø for nedlasting"
 
-#: ../../portable/item.py:1207
+#: ../../portable/item.py:1209
 msgid "no title"
 msgstr "namnlaus"
 
-#: ../../portable/item.py:1246
+#: ../../portable/item.py:1248
 msgid "Contents appear in the library"
 msgstr "Innhaldet vert vist i biblioteket"
 
-#: ../../portable/item.py:1251
+#: ../../portable/item.py:1253
 msgid "Contents:"
 msgstr "Innhald:"
 
-#: ../../portable/item.py:1489
+#: ../../portable/item.py:1491
 msgid "starting up..."
 msgstr "startar …"
 
@@ -2784,27 +2773,47 @@ msgstr "Søk i alle"
 msgid "Example Playlist"
 msgstr "Eksempelspeleliste"
 
-#: ../../portable/storedatabase.py:232
+#: ../../portable/storedatabase.py:208
+#, python-format
+msgid "%(appname)s database upgrade failed"
+msgstr ""
+
+#: ../../portable/storedatabase.py:211
+#, python-format
+msgid ""
+"We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
+"\n"
+"Check to see if your disk is full.  If it is full, then quit %(appname)s, "
+"free up some space, and start %(appname)s again.\n"
+"\n"
+"If your disk is not full, help us understand the problem by quitting, then "
+"reporting a bug at bugzilla.pculture.org\n"
+"\n"
+"Finally, you can start fresh and your damaged database will be removed, but "
+"you will have to re-add your feeds and media files."
+msgstr ""
+
+#: ../../portable/storedatabase.py:267
 msgid "Database was created by a newer version of Miro "
 msgstr ""
 
-#: ../../portable/storedatabase.py:613
+#: ../../portable/storedatabase.py:656
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "Lagring av %(appname)s-database fullførd"
 
-#: ../../portable/storedatabase.py:615
+#: ../../portable/storedatabase.py:658
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr "Databasen er lagra. Du kan no trygt avslutta utan å mista data."
 
-#: ../../portable/storedatabase.py:670
+#: ../../portable/storedatabase.py:719
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "Feil ved lagring av %(appname)s-database"
 
-#: ../../portable/storedatabase.py:673
+#: ../../portable/storedatabase.py:722
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -2822,22 +2831,22 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../../portable/util.py:374 ../../portable/util.py:376
+#: ../../portable/util.py:375 ../../portable/util.py:377
 #, python-format
 msgid "%(size)sGB"
 msgstr "%(size)s GB"
 
-#: ../../portable/util.py:380 ../../portable/util.py:382
+#: ../../portable/util.py:381 ../../portable/util.py:383
 #, python-format
 msgid "%(size)sMB"
 msgstr "%(size)s MB"
 
-#: ../../portable/util.py:386 ../../portable/util.py:388
+#: ../../portable/util.py:387 ../../portable/util.py:389
 #, python-format
 msgid "%(size)sKB"
 msgstr "%(size)s KB"
 
-#: ../../portable/util.py:392 ../../portable/util.py:394
+#: ../../portable/util.py:393 ../../portable/util.py:395
 #, python-format
 msgid "%(size)sB"
 msgstr "%(size)s B"
@@ -3112,6 +3121,16 @@ msgstr "%(appname)s-hjelp"
 #~ msgid "Enter the new name for the item"
 #~ msgstr "Skriv inn nytt namn på elementet"
 
+#~ msgid "Rename Site"
+#~ msgstr "Endra namn på nettstad"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "Skriv inn nytt namn på nettstaden «%(name)s»"
+
+#~ msgid "Remove Site"
+#~ msgstr "Fjern nettstad"
+
 #~ msgid "SITES"
 #~ msgstr "NETTSTADER"
 
@@ -3122,6 +3141,9 @@ msgstr "%(appname)s-hjelp"
 #~ msgid ""
 #~ "You are running a version of %(appname)s with a custom set of channels."
 #~ msgstr "Du køyrer ein versjon av %(appname)s med eit eigedefinert kanalsett."
+
+#~ msgid "Re_name Item"
+#~ msgstr "_Endra namn på element"
 
 #~ msgid "Add to Library"
 #~ msgstr "Legg til bibliotek"
@@ -3134,6 +3156,29 @@ msgstr "%(appname)s-hjelp"
 
 #~ msgid "Revert Item Name"
 #~ msgstr "Tilbakestill elementnamn"
+
+#~ msgid "_Options"
+#~ msgstr "_Innstillingar"
+
+#~ msgid "Add Site"
+#~ msgstr "Legg til nettstad"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Skriv inn adressa til nettstaden du vil leggja til"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Legg til nettstad – ugyldig adresse"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "Adressa du skreiv inn er ikkje gyldig.\n"
+#~ "Kontroller adressa, og prøv så på nytt.\n"
+#~ "\n"
+#~ "Skriv inn adressa til nettstaden du vil leggja til."
 
 #, python-format
 #~ msgid "Are you sure you want to remove %(name)s?"
@@ -3178,6 +3223,14 @@ msgstr "%(appname)s-hjelp"
 #~ "Nye endringar kan ha gått tapt."
 
 #, python-format
+#~| msgid "%(count)d Feed Selected"
+#~| msgid_plural "%(count)d Feeds Selected"
+#~ msgid "%(count)d Site Selected"
+#~ msgid_plural "%(count)d Sites Selected"
+#~ msgstr[0] "%(count)d nettstad vald"
+#~ msgstr[1] "%(count)d nettstader valde"
+
+#, python-format
 #~ msgid ""
 #~ "%(shortappname)s can't find the primary video directory located at:\n"
 #~ "\n"
@@ -3207,6 +3260,21 @@ msgstr "%(appname)s-hjelp"
 #~ "Du kan òg avslutta, kopla til den eksterne harddisken (eller retta problema "
 #~ "på anna vis), og så starta %(shortappname)s på nytt."
 
+#~| msgid "Remove item"
+#~| msgid_plural "Remove items"
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Fjern nettstaden"
+#~ msgstr[1] "Fjern nettstadene"
+
+#, python-format
+#~| msgid "Are you sure you want to remove this playlist?"
+#~| msgid_plural "Are you sure you want to remove these %(count)s playlists?"
+#~ msgid "Are you sure you want to remove this site?"
+#~ msgid_plural "Are you sure you want to remove these %(count)s sites?"
+#~ msgstr[0] "Er du sikker på at du vil fjerna denne nettstaden?"
+#~ msgstr[1] "Er du sikker på at du vil fjerna desse %(count)s nettstadene?"
+
 #~ msgid "Resume playing a video from the point it was last stopped."
 #~ msgstr "Hald fram avspeling av videoane frå der dei vart stoppa."
 
@@ -3215,6 +3283,10 @@ msgstr "%(appname)s-hjelp"
 
 #~ msgid "Stop after each video"
 #~ msgstr "Stopp etter kvar video"
+
+#~| msgid "Remove Site"
+#~ msgid "Remove Sites"
+#~ msgstr "Fjern nettstader"
 
 #~| msgid "View"
 #~ msgid "View:"

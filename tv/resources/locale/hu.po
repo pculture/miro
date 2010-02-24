@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2010-02-10 12:32-0500\n"
+"POT-Creation-Date: 2010-02-18 13:51-0500\n"
 "PO-Revision-Date: 2010-02-08 00:31+0000\n"
 "Last-Translator: NITSCH Zoltán <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-02-16 18:57+0000\n"
+"X-Launchpad-Export-Date: 2010-02-24 15:37+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -544,24 +544,24 @@ msgid "Copy URL to clipboard"
 msgstr "Hivatkozás másolása a vágólapra"
 
 #: ../../portable/frontends/widgets/tablist.py:576
-#: ../../portable/frontends/widgets/application.py:724
-msgid "Rename Site"
-msgstr "Oldal Átnevezése"
+#: ../../portable/frontends/widgets/application.py:726
+msgid "Rename Website"
+msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:577
-msgid "Remove Site"
-msgstr "Oldal Eltávolítása"
+msgid "Remove Website"
+msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:581
-msgid "Remove Sites"
-msgstr "Oldalak Eltávolítása"
+msgid "Remove Websites"
+msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:657
 msgid "Update Feeds In Folder"
 msgstr "Feedek Frissítése a Mappában"
 
 #: ../../portable/frontends/widgets/tablist.py:658
-#: ../../portable/frontends/widgets/application.py:705
+#: ../../portable/frontends/widgets/application.py:707
 msgid "Rename Feed Folder"
 msgstr "Feed Mappa Átnevezése"
 
@@ -593,12 +593,12 @@ msgid "Update Feeds Now"
 msgstr "Feedek Frissítése Most"
 
 #: ../../portable/frontends/widgets/tablist.py:712
-#: ../../portable/frontends/widgets/application.py:720
+#: ../../portable/frontends/widgets/application.py:722
 msgid "Rename Playlist Folder"
 msgstr "Lejátszólista mappa átnevezése"
 
 #: ../../portable/frontends/widgets/tablist.py:718
-#: ../../portable/frontends/widgets/application.py:715
+#: ../../portable/frontends/widgets/application.py:717
 #: ../../portable/playlist.py:200
 msgid "Rename Playlist"
 msgstr "Lejátszólista átnevezése"
@@ -954,18 +954,18 @@ msgstr "Kiugrás"
 
 #: ../../portable/frontends/widgets/gtk/video.py:357
 #: ../../portable/frontends/widgets/menus.py:312
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:378
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:380
 msgid "None Available"
 msgstr "Nem elérhető"
 
 #: ../../portable/frontends/widgets/gtk/video.py:379
 #: ../../portable/frontends/widgets/gtk/window.py:267
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:367
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:369
 msgid "Disable Subtitles"
 msgstr "Feliratok letiltása"
 
 #: ../../portable/frontends/widgets/gtk/video.py:390
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:385
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:387
 msgid "Select a Subtitles file..."
 msgstr "Feliratfájl kiválasztása..."
 
@@ -1065,7 +1065,7 @@ msgid "Open Files - Error"
 msgstr "Fájlok Megnyitása - Hiba"
 
 #: ../../portable/frontends/widgets/application.py:351
-#: ../../portable/frontends/widgets/application.py:632
+#: ../../portable/frontends/widgets/application.py:634
 #, python-format
 msgid "File %(filename)s does not exist."
 msgstr "A fájl nem létzeik: %(filename)s"
@@ -1165,97 +1165,93 @@ msgstr "Elem mentése másként..."
 
 #: ../../portable/frontends/widgets/application.py:563
 #: ../../portable/frontends/widgets/menus.py:220
-msgid "Add Site"
-msgstr "Oldal Hozzáadása"
+msgid "Add Website"
+msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:564
-msgid "Enter the URL of the site to add"
-msgstr "Add meg a hozzáadandó oldal címét"
+msgid "Enter the URL of the website to add"
+msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:565
-msgid "Add Site - Invalid URL"
-msgstr "Oldal Hozzáadása - Érvénytelen URL"
+msgid "Add Website - Invalid URL"
+msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:566
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
 "\n"
-"Enter the URL of the site to add"
+"Enter the URL of the website to add"
 msgstr ""
-"A megadott cím nem érvényes URL.\n"
-"Ellenőrizd a címet és próbáld újra!\n"
-"\n"
-"Add meg a hozzáadandó oldal címét"
 
-#: ../../portable/frontends/widgets/application.py:622
+#: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
 msgstr "OPML fájl importálása"
 
-#: ../../portable/frontends/widgets/application.py:624
+#: ../../portable/frontends/widgets/application.py:626
 msgid "OPML Files"
 msgstr "OPML Fájlok"
 
-#: ../../portable/frontends/widgets/application.py:631
+#: ../../portable/frontends/widgets/application.py:633
 msgid "Import OPML File - Error"
 msgstr "OPML Fájl Importálása - Hiba"
 
-#: ../../portable/frontends/widgets/application.py:637
+#: ../../portable/frontends/widgets/application.py:639
 msgid "Export OPML File"
 msgstr "Exportálás OPML-be"
 
-#: ../../portable/frontends/widgets/application.py:661
+#: ../../portable/frontends/widgets/application.py:663
 msgid "Create Playlist"
 msgstr "Lejátszólista létrehozása"
 
-#: ../../portable/frontends/widgets/application.py:662
+#: ../../portable/frontends/widgets/application.py:664
 msgid "Enter a name for the new playlist"
 msgstr "Adjon nevet az új lejátszólistának"
 
-#: ../../portable/frontends/widgets/application.py:683
+#: ../../portable/frontends/widgets/application.py:685
 msgid "Create Playlist Folder"
 msgstr "Lejátszólista Mappa létrehozása"
 
-#: ../../portable/frontends/widgets/application.py:684
+#: ../../portable/frontends/widgets/application.py:686
 msgid "Enter a name for the new playlist folder"
 msgstr "Adjon nevet az új lejátszólista mappának"
 
-#: ../../portable/frontends/widgets/application.py:706
+#: ../../portable/frontends/widgets/application.py:708
 #, python-format
 msgid "Enter a new name for the feed folder %(name)s"
 msgstr "Adj meg egy új nevet a feed mappának: %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:710
+#: ../../portable/frontends/widgets/application.py:712
 msgid "Rename Feed"
 msgstr "Feed Átnevezése"
 
-#: ../../portable/frontends/widgets/application.py:711
+#: ../../portable/frontends/widgets/application.py:713
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
 msgstr "Adj meg egy új nevet a feednek: %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:716
+#: ../../portable/frontends/widgets/application.py:718
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr "Adj meg egy új nevet a lejátszásilistának: %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:721
+#: ../../portable/frontends/widgets/application.py:723
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
 msgstr "Adj meg egy új nevet a lejátszásilista mappának: %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:725
+#: ../../portable/frontends/widgets/application.py:727
 #, python-format
-msgid "Enter a new name for the site %(name)s"
-msgstr "Adj meg egy új nevet az oldalnak: %(name)s"
+msgid "Enter a new name for the website %(name)s"
+msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:749
+#: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
 msgstr[0] "Lejátszásilista eltvávolítása"
 msgstr[1] "Lejátszásilisták eltvávolítása"
 
-#: ../../portable/frontends/widgets/application.py:751
+#: ../../portable/frontends/widgets/application.py:753
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
@@ -1263,47 +1259,47 @@ msgstr[0] "Biztosan el szeretnéd távolítani ezt a lejátszásilistát?"
 msgstr[1] ""
 "Biztosan el szeretnéd távolítani ezt a(z) %(count)s lejátszásilistát?"
 
-#: ../../portable/frontends/widgets/application.py:771
-msgid "Remove site"
-msgid_plural "Remove sites"
-msgstr[0] "Oldal eltávolítása"
-msgstr[1] "Oldalak eltávolítása"
-
 #: ../../portable/frontends/widgets/application.py:773
-#, python-format
-msgid "Are you sure you want to remove this site?"
-msgid_plural "Are you sure you want to remove these %(count)s sites?"
-msgstr[0] "Biztosan el szeretnéd távolítani ezt az oldalt?"
-msgstr[1] "Biztosan el szeretnéd távolítani ezt a(z) %(count)s oldalt?"
+msgid "Remove website"
+msgid_plural "Remove websites"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:803
+#: ../../portable/frontends/widgets/application.py:775
+#, python-format
+msgid "Are you sure you want to remove this website?"
+msgid_plural "Are you sure you want to remove these %(count)s websites?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:805
 msgid "Are you sure you want to quit?"
 msgstr "Biztosan ki szeretne lépni?"
 
-#: ../../portable/frontends/widgets/application.py:805
+#: ../../portable/frontends/widgets/application.py:807
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] "%(count)d folyamatban lévő letöltésed van. Biztosan kilépsz?"
 msgstr[1] "%(count)d folyamatban lévő letöltésed van. Biztosan kilépsz?"
 
-#: ../../portable/frontends/widgets/application.py:810
+#: ../../portable/frontends/widgets/application.py:812
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "Figyelmeztessen ha letöltés közben akarok kilépni"
 
-#: ../../portable/frontends/widgets/application.py:995
+#: ../../portable/frontends/widgets/application.py:997
 msgid "Upgrading database"
 msgstr "Adatbázi frissítése"
 
-#: ../../portable/frontends/widgets/application.py:1128
+#: ../../portable/frontends/widgets/application.py:1131
 msgid "Message"
 msgstr "Üzenet"
 
-#: ../../portable/frontends/widgets/application.py:1153
+#: ../../portable/frontends/widgets/application.py:1156
 msgid "Migrating Files"
 msgstr "Fájlok Költöztetése"
 
-#: ../../portable/frontends/widgets/application.py:1163
+#: ../../portable/frontends/widgets/application.py:1166
 msgid "Migrating files"
 msgstr "Fájlok költöztetése"
 
@@ -1510,8 +1506,8 @@ msgid "_Remove Items"
 msgstr "_Elemek Eltávolítása"
 
 #: ../../portable/frontends/widgets/menus.py:203
-msgid "Re_name Item"
-msgstr "Elemek Átnevezése"
+msgid "_Edit Item"
+msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:205
 msgid "Save Item _As"
@@ -1526,8 +1522,8 @@ msgid "Copy Item _URL"
 msgstr "Elem Címének Másolása"
 
 #: ../../portable/frontends/widgets/menus.py:213
-msgid "_Options"
-msgstr "Beállítás_ok"
+msgid "_Preferences"
+msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
@@ -1558,8 +1554,8 @@ msgid "Re_name Feed"
 msgstr "Hírforrás át_nevezése"
 
 #: ../../portable/frontends/widgets/menus.py:232
-msgid "Re_name Site"
-msgstr "Webhely át_nevezése"
+msgid "Re_name Website"
+msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
@@ -1582,12 +1578,12 @@ msgid "_Remove Folders"
 msgstr "Mappák el_távolítása"
 
 #: ../../portable/frontends/widgets/menus.py:241
-msgid "_Remove Site"
-msgstr "Webhely el_távolítása"
+msgid "_Remove Website"
+msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:242
-msgid "_Remove Sites"
-msgstr "Webhelyek el_távolítása"
+msgid "_Remove Websites"
+msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
@@ -1909,10 +1905,10 @@ msgstr[1] "%(count)d Feed Kijelölve"
 
 #: ../../portable/frontends/widgets/displays.py:568
 #, python-format
-msgid "%(count)d Site Selected"
-msgid_plural "%(count)d Sites Selected"
-msgstr[0] "%(count)d Oldal Kijelölve"
-msgstr[1] "%(count)d Oldal Kijelölve"
+msgid "%(count)d Website Selected"
+msgid_plural "%(count)d Websites Selected"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
@@ -2641,6 +2637,10 @@ msgstr "Megállítás"
 msgid "Retry"
 msgstr "Újra"
 
+#: ../../portable/dialogs.py:128
+msgid "Start Fresh"
+msgstr ""
+
 #: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"
 msgstr "Feliraktozott a feedre:"
@@ -2702,57 +2702,44 @@ msgstr ""
 "Az adatbázis a %(appname)s egy újabb verziójával volt elmentve. Le kell "
 "töltenie a %(appname)s legújabb verzióját a használatához."
 
-#: ../../portable/startup.py:200
-msgid "Insufficient disk space"
-msgstr "Nem elegendő lemezterület."
-
-#: ../../portable/startup.py:202
-#, python-format
-msgid ""
-"Not enough disk space to upgrade your database from the previous version of "
-"%(appname)s.  Please delete some files and try again."
-msgstr ""
-"Nincs elég hely az adatbázis frissítésére az %(appname)s programhoz. Kérem "
-"töröljön néhány fájlt és próbálja újra!"
-
-#: ../../portable/item.py:944
+#: ../../portable/item.py:946
 #, python-format
 msgid "%(count)d day"
 msgid_plural "%(count)d days"
 msgstr[0] "%(count)d nap"
 msgstr[1] "%(count)d nap"
 
-#: ../../portable/item.py:949
+#: ../../portable/item.py:951
 #, python-format
 msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
 msgstr[0] "%(count)d óra"
 msgstr[1] "%(count)d óra"
 
-#: ../../portable/item.py:954
+#: ../../portable/item.py:956
 #, python-format
 msgid "%(count)d minute"
 msgid_plural "%(count)d minutes"
 msgstr[0] "%(count)d perc"
 msgstr[1] "%(count)d perc"
 
-#: ../../portable/item.py:1121 ../../portable/messages.py:1092
+#: ../../portable/item.py:1123 ../../portable/messages.py:1092
 msgid "queued for download"
 msgstr "letöltésre várakozik"
 
-#: ../../portable/item.py:1207
+#: ../../portable/item.py:1209
 msgid "no title"
 msgstr "nincs cím"
 
-#: ../../portable/item.py:1246
+#: ../../portable/item.py:1248
 msgid "Contents appear in the library"
 msgstr "A tartalmak a gyűjteményben látszanak"
 
-#: ../../portable/item.py:1251
+#: ../../portable/item.py:1253
 msgid "Contents:"
 msgstr "Tartalom:"
 
-#: ../../portable/item.py:1489
+#: ../../portable/item.py:1491
 msgid "starting up..."
 msgstr "indítás..."
 
@@ -2801,27 +2788,47 @@ msgstr "Összes Keresése"
 msgid "Example Playlist"
 msgstr "Minta Lejátszási lista"
 
-#: ../../portable/storedatabase.py:232
+#: ../../portable/storedatabase.py:208
+#, python-format
+msgid "%(appname)s database upgrade failed"
+msgstr ""
+
+#: ../../portable/storedatabase.py:211
+#, python-format
+msgid ""
+"We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
+"\n"
+"Check to see if your disk is full.  If it is full, then quit %(appname)s, "
+"free up some space, and start %(appname)s again.\n"
+"\n"
+"If your disk is not full, help us understand the problem by quitting, then "
+"reporting a bug at bugzilla.pculture.org\n"
+"\n"
+"Finally, you can start fresh and your damaged database will be removed, but "
+"you will have to re-add your feeds and media files."
+msgstr ""
+
+#: ../../portable/storedatabase.py:267
 msgid "Database was created by a newer version of Miro "
 msgstr "Az adatbázis a Miro egy frissebb verziójával készült. "
 
-#: ../../portable/storedatabase.py:613
+#: ../../portable/storedatabase.py:656
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "%(appname)s adatbázisának mentése sikerült"
 
-#: ../../portable/storedatabase.py:615
+#: ../../portable/storedatabase.py:658
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr "Az adatbázis mentése befejeződött. Most már nyugodtan kiléphet."
 
-#: ../../portable/storedatabase.py:670
+#: ../../portable/storedatabase.py:719
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "%(appname)s adatbázisának mentése sikertelen"
 
-#: ../../portable/storedatabase.py:673
+#: ../../portable/storedatabase.py:722
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -2852,22 +2859,22 @@ msgstr ""
 "Hiba: %(error_text)s\n"
 "\n"
 
-#: ../../portable/util.py:374 ../../portable/util.py:376
+#: ../../portable/util.py:375 ../../portable/util.py:377
 #, python-format
 msgid "%(size)sGB"
 msgstr "%(size)s GB"
 
-#: ../../portable/util.py:380 ../../portable/util.py:382
+#: ../../portable/util.py:381 ../../portable/util.py:383
 #, python-format
 msgid "%(size)sMB"
 msgstr "%(size)s MB"
 
-#: ../../portable/util.py:386 ../../portable/util.py:388
+#: ../../portable/util.py:387 ../../portable/util.py:389
 #, python-format
 msgid "%(size)sKB"
 msgstr "%(size)s KB"
 
-#: ../../portable/util.py:392 ../../portable/util.py:394
+#: ../../portable/util.py:393 ../../portable/util.py:395
 #, python-format
 msgid "%(size)sB"
 msgstr "%(size)s B"

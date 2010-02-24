@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2010-02-10 12:32-0500\n"
-"PO-Revision-Date: 2010-02-06 15:36+0000\n"
-"Last-Translator: Yiğit Ateş <yigitates52@gmail.com>\n"
+"POT-Creation-Date: 2010-02-18 13:51-0500\n"
+"PO-Revision-Date: 2010-02-19 18:19+0000\n"
+"Last-Translator: boracasli <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2010-02-16 18:56+0000\n"
+"X-Launchpad-Export-Date: 2010-02-24 15:37+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/frontends/widgets/menus.py:280
@@ -29,7 +29,7 @@ msgstr "Hata. %(msg)s"
 
 #: ../../portable/httpclient.py:116 ../../portable/httpclient.py:122
 msgid "Can't connect"
-msgstr "Bağlantı kurulamadı"
+msgstr "Bağlanılamıyor"
 
 #: ../../portable/httpclient.py:117
 #, python-format
@@ -539,24 +539,24 @@ msgid "Copy URL to clipboard"
 msgstr "Adresi panoya kopyala"
 
 #: ../../portable/frontends/widgets/tablist.py:576
-#: ../../portable/frontends/widgets/application.py:724
-msgid "Rename Site"
-msgstr "Siteyi Yeniden Adlandır"
+#: ../../portable/frontends/widgets/application.py:726
+msgid "Rename Website"
+msgstr "Web Sitesini Yeniden Adlandır"
 
 #: ../../portable/frontends/widgets/tablist.py:577
-msgid "Remove Site"
-msgstr "Siteyi Sil"
+msgid "Remove Website"
+msgstr "Web Sitesini Kaldır"
 
 #: ../../portable/frontends/widgets/tablist.py:581
-msgid "Remove Sites"
-msgstr "Siteleri Sil"
+msgid "Remove Websites"
+msgstr "Web Sitelerini Kaldır"
 
 #: ../../portable/frontends/widgets/tablist.py:657
 msgid "Update Feeds In Folder"
 msgstr "Klasördeki beslemeleri güncelle"
 
 #: ../../portable/frontends/widgets/tablist.py:658
-#: ../../portable/frontends/widgets/application.py:705
+#: ../../portable/frontends/widgets/application.py:707
 msgid "Rename Feed Folder"
 msgstr "Besleme klasörünün adını değiştir"
 
@@ -588,12 +588,12 @@ msgid "Update Feeds Now"
 msgstr "Beslemeleri Şimdi Güncelle"
 
 #: ../../portable/frontends/widgets/tablist.py:712
-#: ../../portable/frontends/widgets/application.py:720
+#: ../../portable/frontends/widgets/application.py:722
 msgid "Rename Playlist Folder"
 msgstr "Çalma Listesi Dizin Adını Değiştir"
 
 #: ../../portable/frontends/widgets/tablist.py:718
-#: ../../portable/frontends/widgets/application.py:715
+#: ../../portable/frontends/widgets/application.py:717
 #: ../../portable/playlist.py:200
 msgid "Rename Playlist"
 msgstr "Çalma Listesini Yeniden Adlandır"
@@ -953,18 +953,18 @@ msgstr "Yeni Pencere"
 
 #: ../../portable/frontends/widgets/gtk/video.py:357
 #: ../../portable/frontends/widgets/menus.py:312
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:378
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:380
 msgid "None Available"
 msgstr "Mevcut Yok"
 
 #: ../../portable/frontends/widgets/gtk/video.py:379
 #: ../../portable/frontends/widgets/gtk/window.py:267
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:367
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:369
 msgid "Disable Subtitles"
 msgstr "Altyazıları Kapat"
 
 #: ../../portable/frontends/widgets/gtk/video.py:390
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:385
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:387
 msgid "Select a Subtitles file..."
 msgstr "Bir altyazı dosyası seçin..."
 
@@ -1030,6 +1030,20 @@ msgid ""
 "If you quit, then you can connect the drive or otherwise fix the problem and "
 "relaunch %(shortappname)s."
 msgstr ""
+"%(shortappname)s şu dizinde bulunan birincil video dizinini kullanamıyor:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"Bunun nedeni, dizinin şu anda bağlı olmayan bir harici sabit diskte "
+"yeralması, bu dizine %(shortappname)s'nun yazma izni olmaması veya ilgili "
+"patikada dizin olmayan birşey bulunması olabilir.\n"
+"\n"
+"Eğer devam ederseniz, birincil video dizini, bu sürücüde bir konuma "
+"sıfırlanacak. Eğer indirilmiş videolarınız varsa %(shortappname)s bunlar ile "
+"ilgili ayrıntı bilgilerini kaybedecektir.\n"
+"\n"
+"Eğer çıkarsanız, sürücüyü yeniden bağlayabilir veya ilgili problemi "
+"çözebilir ve %(shortappname)s'yu yeniden başlatabilirsiniz."
 
 #: ../../portable/frontends/widgets/application.py:330
 msgid "Error Revealing File"
@@ -1050,7 +1064,7 @@ msgid "Open Files - Error"
 msgstr "Dosyaları Aç - Hata"
 
 #: ../../portable/frontends/widgets/application.py:351
-#: ../../portable/frontends/widgets/application.py:632
+#: ../../portable/frontends/widgets/application.py:634
 #, python-format
 msgid "File %(filename)s does not exist."
 msgstr "%(filename)s adlı dosya bulunmuyor"
@@ -1146,96 +1160,96 @@ msgstr "Öğe/leri farklı kaydet.."
 
 #: ../../portable/frontends/widgets/application.py:563
 #: ../../portable/frontends/widgets/menus.py:220
-msgid "Add Site"
-msgstr "Siteyi ekle"
+msgid "Add Website"
+msgstr "Web Sitesi Ekle"
 
 #: ../../portable/frontends/widgets/application.py:564
-msgid "Enter the URL of the site to add"
-msgstr "Eklemek için Sitenin URL'sini girin"
+msgid "Enter the URL of the website to add"
+msgstr "Eklenecek Web Sitesinin URL adresini girin"
 
 #: ../../portable/frontends/widgets/application.py:565
-msgid "Add Site - Invalid URL"
-msgstr "Site ekle - Geçersiz URL"
+msgid "Add Website - Invalid URL"
+msgstr "Web Sitesi Ekle - Geçersiz URL"
 
 #: ../../portable/frontends/widgets/application.py:566
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
 "\n"
-"Enter the URL of the site to add"
+"Enter the URL of the website to add"
 msgstr ""
-"The address you entered is not a valid url.\n"
-"Please check the URL and try again.\n"
+"Girdiğiniz adres geçerli bir url değil.\n"
+"Lütfen kontrol edip tekrar deneyin.\n"
 "\n"
-"Enter the URL of the site to add"
+"Eklenecek Web Sitesinin URL adresini girin."
 
-#: ../../portable/frontends/widgets/application.py:622
+#: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
 msgstr "İçe OPML Dosyası Aktar"
 
-#: ../../portable/frontends/widgets/application.py:624
+#: ../../portable/frontends/widgets/application.py:626
 msgid "OPML Files"
 msgstr "OPML Dosyaları"
 
-#: ../../portable/frontends/widgets/application.py:631
+#: ../../portable/frontends/widgets/application.py:633
 msgid "Import OPML File - Error"
 msgstr "OPML Dosyası Aktarımı - Hata"
 
-#: ../../portable/frontends/widgets/application.py:637
+#: ../../portable/frontends/widgets/application.py:639
 msgid "Export OPML File"
 msgstr "Dışa OPML Dosyası Aktar"
 
-#: ../../portable/frontends/widgets/application.py:661
+#: ../../portable/frontends/widgets/application.py:663
 msgid "Create Playlist"
 msgstr "Çalma Listesi Oluştur"
 
-#: ../../portable/frontends/widgets/application.py:662
+#: ../../portable/frontends/widgets/application.py:664
 msgid "Enter a name for the new playlist"
 msgstr "Yeni Çalma Listesi İçin İsim Girin"
 
-#: ../../portable/frontends/widgets/application.py:683
+#: ../../portable/frontends/widgets/application.py:685
 msgid "Create Playlist Folder"
 msgstr "Çalma Listesi Dizini Oluştur"
 
-#: ../../portable/frontends/widgets/application.py:684
+#: ../../portable/frontends/widgets/application.py:686
 msgid "Enter a name for the new playlist folder"
 msgstr "Yeni çalma listesi dizini için bir isim girin"
 
-#: ../../portable/frontends/widgets/application.py:706
+#: ../../portable/frontends/widgets/application.py:708
 #, python-format
 msgid "Enter a new name for the feed folder %(name)s"
 msgstr "Besleme klasörü için yeni bir isim girin %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:710
+#: ../../portable/frontends/widgets/application.py:712
 msgid "Rename Feed"
 msgstr "Beslemenin adını değiştir"
 
-#: ../../portable/frontends/widgets/application.py:711
+#: ../../portable/frontends/widgets/application.py:713
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
 msgstr "Besleme için yeni bir isim girin %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:716
+#: ../../portable/frontends/widgets/application.py:718
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr "%(name)s Çalma Listesine yeni bir as veriniz"
 
-#: ../../portable/frontends/widgets/application.py:721
+#: ../../portable/frontends/widgets/application.py:723
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
 msgstr "%(name)s Çalma Listesi dosyasına yeni bir ad veriniz"
 
-#: ../../portable/frontends/widgets/application.py:725
+#: ../../portable/frontends/widgets/application.py:727
 #, python-format
-msgid "Enter a new name for the site %(name)s"
-msgstr "%(name)s Sitesine yeni bir ad veriniz"
+msgid "Enter a new name for the website %(name)s"
+msgstr "%(name)s Web Sitesi için yeni bir isim girin"
 
-#: ../../portable/frontends/widgets/application.py:749
+#: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
 msgstr[0] "Çalma listesini sil"
 
-#: ../../portable/frontends/widgets/application.py:751
+#: ../../portable/frontends/widgets/application.py:753
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
@@ -1243,46 +1257,46 @@ msgstr[0] ""
 "Bu çalma listesini kaldırmak istediğinizden emin misiniz?Bu %(count)s çalma "
 "listelerini kaldırmak istediğinizden emin misiniz?"
 
-#: ../../portable/frontends/widgets/application.py:771
-msgid "Remove site"
-msgid_plural "Remove sites"
-msgstr[0] "Siteyi Sil"
-
 #: ../../portable/frontends/widgets/application.py:773
-#, python-format
-msgid "Are you sure you want to remove this site?"
-msgid_plural "Are you sure you want to remove these %(count)s sites?"
-msgstr[0] ""
-"Bu siteyi kaldırmak istediğinizden emin misiniz?\r\n"
-"%(count)s siteyi kaldırmak istediğinizden emin misiniz?"
+msgid "Remove website"
+msgid_plural "Remove websites"
+msgstr[0] "Websitelerini Kaldır"
 
-#: ../../portable/frontends/widgets/application.py:803
+#: ../../portable/frontends/widgets/application.py:775
+#, python-format
+msgid "Are you sure you want to remove this website?"
+msgid_plural "Are you sure you want to remove these %(count)s websites?"
+msgstr[0] ""
+"Bu web sitesini kaldırmak istediğinizden emin misiniz?\r\n"
+"%(count)s web sitesini kaldırmak istediğinizden emin misiniz?"
+
+#: ../../portable/frontends/widgets/application.py:805
 msgid "Are you sure you want to quit?"
 msgstr "Çıkmak istediğinizden emin misiniz?"
 
-#: ../../portable/frontends/widgets/application.py:805
+#: ../../portable/frontends/widgets/application.py:807
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] "Devam eden %(count)d indirme var.Yinede çıkış yapılsınmı?"
 
-#: ../../portable/frontends/widgets/application.py:810
+#: ../../portable/frontends/widgets/application.py:812
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "İndirme sırasında programdan çıkmak istersem beni uyar."
 
-#: ../../portable/frontends/widgets/application.py:995
+#: ../../portable/frontends/widgets/application.py:997
 msgid "Upgrading database"
 msgstr "Veritabanı güncelleniyor"
 
-#: ../../portable/frontends/widgets/application.py:1128
+#: ../../portable/frontends/widgets/application.py:1131
 msgid "Message"
 msgstr "Mesaj"
 
-#: ../../portable/frontends/widgets/application.py:1153
+#: ../../portable/frontends/widgets/application.py:1156
 msgid "Migrating Files"
 msgstr "Dosyaları Yerdeğiştir"
 
-#: ../../portable/frontends/widgets/application.py:1163
+#: ../../portable/frontends/widgets/application.py:1166
 msgid "Migrating files"
 msgstr "Dosyaları Yerdeğiştir"
 
@@ -1489,8 +1503,8 @@ msgid "_Remove Items"
 msgstr "_Parçaları sil"
 
 #: ../../portable/frontends/widgets/menus.py:203
-msgid "Re_name Item"
-msgstr "Parça ismini de_ğiştir"
+msgid "_Edit Item"
+msgstr "Öğeyi _Düzenle"
 
 #: ../../portable/frontends/widgets/menus.py:205
 msgid "Save Item _As"
@@ -1505,8 +1519,8 @@ msgid "Copy Item _URL"
 msgstr "Parça _URL ni kopyala"
 
 #: ../../portable/frontends/widgets/menus.py:213
-msgid "_Options"
-msgstr "_Seçenekler"
+msgid "_Preferences"
+msgstr "_Tercihler"
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
@@ -1537,8 +1551,8 @@ msgid "Re_name Feed"
 msgstr "Akışı Yeniden_Adlandır"
 
 #: ../../portable/frontends/widgets/menus.py:232
-msgid "Re_name Site"
-msgstr "Siteyi Yeniden_Adlandır"
+msgid "Re_name Website"
+msgstr "Web Sitesini Ye_niden Adlandır"
 
 #: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
@@ -1561,12 +1575,12 @@ msgid "_Remove Folders"
 msgstr "_Dizinleri Kaldır"
 
 #: ../../portable/frontends/widgets/menus.py:241
-msgid "_Remove Site"
-msgstr "_Siteyi Kaldır"
+msgid "_Remove Website"
+msgstr "Web Sitesini _Kaldır"
 
 #: ../../portable/frontends/widgets/menus.py:242
-msgid "_Remove Sites"
-msgstr "_Siteleri Kaldır"
+msgid "_Remove Websites"
+msgstr "Web Sitelerini _Kaldır"
 
 #: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
@@ -1881,9 +1895,9 @@ msgstr[0] "%(count)d Besleme Seçildi"
 
 #: ../../portable/frontends/widgets/displays.py:568
 #, python-format
-msgid "%(count)d Site Selected"
-msgid_plural "%(count)d Sites Selected"
-msgstr[0] "%(count)d Site Seçildi"
+msgid "%(count)d Website Selected"
+msgid_plural "%(count)d Websites Selected"
+msgstr[0] "%(count)d Web Sitesi Seçildi"
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
@@ -2263,7 +2277,7 @@ msgid "%(num)d sec"
 msgid_plural "%(num)d secs"
 msgstr[0] ""
 "%(num)d saniye\r\n"
-"%(num)d saniyeler"
+"%(num)d saniye"
 
 #: ../../portable/displaytext.py:91
 #, python-format
@@ -2600,6 +2614,10 @@ msgstr "İzlemeyi durdur"
 msgid "Retry"
 msgstr "Tekrar dene"
 
+#: ../../portable/dialogs.py:128
+msgid "Start Fresh"
+msgstr ""
+
 #: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"
 msgstr "Yeni beslemeye abone olundu:"
@@ -2659,54 +2677,41 @@ msgstr ""
 "You have a database that was saved with a newer version of %(appname)s. You "
 "must download the latest version of %(appname)s and run that."
 
-#: ../../portable/startup.py:200
-msgid "Insufficient disk space"
-msgstr "Yetersiz disk alanı"
-
-#: ../../portable/startup.py:202
-#, python-format
-msgid ""
-"Not enough disk space to upgrade your database from the previous version of "
-"%(appname)s.  Please delete some files and try again."
-msgstr ""
-"%(appname)s veritabanınızın önceki sürümününden yükseltilebilmesi için "
-"yeterli disk alanı yok.  Lütfen bazı dosyalarınızı silip tekrar deneyin."
-
-#: ../../portable/item.py:944
+#: ../../portable/item.py:946
 #, python-format
 msgid "%(count)d day"
 msgid_plural "%(count)d days"
 msgstr[0] "%(count)d gün"
 
-#: ../../portable/item.py:949
+#: ../../portable/item.py:951
 #, python-format
 msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
 msgstr[0] "%(count)d saat"
 
-#: ../../portable/item.py:954
+#: ../../portable/item.py:956
 #, python-format
 msgid "%(count)d minute"
 msgid_plural "%(count)d minutes"
 msgstr[0] "%(count)d dakika"
 
-#: ../../portable/item.py:1121 ../../portable/messages.py:1092
+#: ../../portable/item.py:1123 ../../portable/messages.py:1092
 msgid "queued for download"
 msgstr "indirmek için sırada"
 
-#: ../../portable/item.py:1207
+#: ../../portable/item.py:1209
 msgid "no title"
 msgstr "başlık yok"
 
-#: ../../portable/item.py:1246
+#: ../../portable/item.py:1248
 msgid "Contents appear in the library"
 msgstr "İçerikler kütüphanede görünüyor."
 
-#: ../../portable/item.py:1251
+#: ../../portable/item.py:1253
 msgid "Contents:"
 msgstr "İçerikler:"
 
-#: ../../portable/item.py:1489
+#: ../../portable/item.py:1491
 msgid "starting up..."
 msgstr "başlatılıyor..."
 
@@ -2757,16 +2762,36 @@ msgstr "Tümünü Ara"
 msgid "Example Playlist"
 msgstr "Örnek Çalma Listesi"
 
-#: ../../portable/storedatabase.py:232
+#: ../../portable/storedatabase.py:208
+#, python-format
+msgid "%(appname)s database upgrade failed"
+msgstr ""
+
+#: ../../portable/storedatabase.py:211
+#, python-format
+msgid ""
+"We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
+"\n"
+"Check to see if your disk is full.  If it is full, then quit %(appname)s, "
+"free up some space, and start %(appname)s again.\n"
+"\n"
+"If your disk is not full, help us understand the problem by quitting, then "
+"reporting a bug at bugzilla.pculture.org\n"
+"\n"
+"Finally, you can start fresh and your damaged database will be removed, but "
+"you will have to re-add your feeds and media files."
+msgstr ""
+
+#: ../../portable/storedatabase.py:267
 msgid "Database was created by a newer version of Miro "
 msgstr "Veritabanı Miro'nun daha yeni bir sürümü tarafından oluşturulmuş "
 
-#: ../../portable/storedatabase.py:613
+#: ../../portable/storedatabase.py:656
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "%(appname)s veritabanı kaydı yapıldı"
 
-#: ../../portable/storedatabase.py:615
+#: ../../portable/storedatabase.py:658
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -2774,12 +2799,12 @@ msgstr ""
 "Veritabanı kaydı başarılı oldu. Güvenli bir şekilde veri kaybetmeden "
 "kaydedip çıkabilirsiniz."
 
-#: ../../portable/storedatabase.py:670
+#: ../../portable/storedatabase.py:719
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "%(appname)s veritabanı kaydı yapılamadı"
 
-#: ../../portable/storedatabase.py:673
+#: ../../portable/storedatabase.py:722
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -2796,23 +2821,37 @@ msgid ""
 "Error: %(error_text)s\n"
 "\n"
 msgstr ""
+"%(appname)s veritabanını kaydedemedi.\n"
+"\n"
+"Eğer sürücünüz doluysa, bir miktar boş alan açmanızı ve bir daha denemenizi "
+"öneririz. Eğer sürücünüz dolu değilse, bir daha denemek işe yarayabilir.\n"
+"\n"
+"Eğer yeniden denemek işe yaramadıysa, lütfen %(appname)s'dan çıkın ve "
+"yeniden başlatın. son değişiklikler kaybolabilir.\n"
+"\n"
+"Eğer indirme işlemi esnasında bu hatayı sıkça görüyorsanız, İndirme "
+"sekmesinde bulunan Seçenekler diyaloğundan eş zamanlı indirmelerin sayısını "
+"azaltmanızı öneririz.\n"
+"\n"
+"Hata: %(error_text)s\n"
+"\n"
 
-#: ../../portable/util.py:374 ../../portable/util.py:376
+#: ../../portable/util.py:375 ../../portable/util.py:377
 #, python-format
 msgid "%(size)sGB"
 msgstr "%(size)sGB"
 
-#: ../../portable/util.py:380 ../../portable/util.py:382
+#: ../../portable/util.py:381 ../../portable/util.py:383
 #, python-format
 msgid "%(size)sMB"
 msgstr "%(size)sMB"
 
-#: ../../portable/util.py:386 ../../portable/util.py:388
+#: ../../portable/util.py:387 ../../portable/util.py:389
 #, python-format
 msgid "%(size)sKB"
 msgstr "%(size)sKB"
 
-#: ../../portable/util.py:392 ../../portable/util.py:394
+#: ../../portable/util.py:393 ../../portable/util.py:395
 #, python-format
 msgid "%(size)sB"
 msgstr "%(size)sB"
@@ -2930,12 +2969,12 @@ msgstr "Video dönüştürücü:"
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:446
 #, python-format
 msgid "Track %(tracknumber)d"
-msgstr ""
+msgstr "Şarkı %(tracknumber)d"
 
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:456
 #, python-format
 msgid "Subtitle file %(tracknumber)d"
-msgstr ""
+msgstr "Altyazı dosyası %(tracknumber)d"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:178
 msgid "Download Completed"
@@ -3049,6 +3088,13 @@ msgstr "Pencere"
 msgid "%(appname)s Help"
 msgstr "%(appname)s Yardım"
 
+#~ msgid "Remove site"
+#~ msgid_plural "Remove sites"
+#~ msgstr[0] "Siteyi Sil"
+
+#~ msgid "Remove Sites"
+#~ msgstr "Siteleri Sil"
+
 #~ msgid "Revert Item Name"
 #~ msgstr "Öğe Adını gerial"
 
@@ -3085,6 +3131,36 @@ msgstr "%(appname)s Yardım"
 #~ msgid "Enter the new name for the item"
 #~ msgstr "Öğe için yeni ad giriniz"
 
+#~ msgid "Add Site"
+#~ msgstr "Siteyi ekle"
+
+#~ msgid "Enter the URL of the site to add"
+#~ msgstr "Eklemek için Sitenin URL'sini girin"
+
+#~ msgid "Add Site - Invalid URL"
+#~ msgstr "Site ekle - Geçersiz URL"
+
+#~ msgid ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+#~ msgstr ""
+#~ "The address you entered is not a valid url.\n"
+#~ "Please check the URL and try again.\n"
+#~ "\n"
+#~ "Enter the URL of the site to add"
+
+#~ msgid "Rename Site"
+#~ msgstr "Siteyi Yeniden Adlandır"
+
+#, python-format
+#~ msgid "Enter a new name for the site %(name)s"
+#~ msgstr "%(name)s Sitesine yeni bir ad veriniz"
+
+#~ msgid "Remove Site"
+#~ msgstr "Siteyi Sil"
+
 #~ msgid "SITES"
 #~ msgstr "SİTELER"
 
@@ -3096,6 +3172,12 @@ msgstr "%(appname)s Yardım"
 #~ "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
 #~ "[OK]"
 #~ msgstr "%(filename)s adlı torrent dosyası zarar görmüş, açılamıyor. [Tamam]"
+
+#~ msgid "Re_name Item"
+#~ msgstr "Parça ismini de_ğiştir"
+
+#~ msgid "_Options"
+#~ msgstr "_Seçenekler"
 
 #~ msgid "Cu_t"
 #~ msgstr "_Kes"
