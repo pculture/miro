@@ -44,8 +44,12 @@ renderers = []
 # database object
 db = None
 
+# command line and arguments for the thumbnailer
+movie_data_program_info = None
+
 
 # widget frontend adds these
+# --------------------------
 
 # application object
 widgetapp = None
@@ -68,3 +72,34 @@ search_manager = None
 
 # remembers inline search terms
 inline_search_memory = None
+
+# tracks channel/item updates from the backend
+info_updater = None
+
+# manages the menu system
+menu_manager = None
+
+# manages playback
+playback_manager = None
+
+# manages watched folders
+watched_folder_manager = None
+
+# keeps track of frontend states
+frontend_states_memory = None
+
+# gtk/windows video renderer
+video_renderer = None
+
+# gtk/windows audio renderer
+audio_renderer = None
+
+# gtk/windows item type sniffer
+get_item_type = None
+
+
+# cli frontend adds these
+# -----------------------
+
+# event handler
+cli_events = None
