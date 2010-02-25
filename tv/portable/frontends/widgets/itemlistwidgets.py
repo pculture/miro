@@ -796,6 +796,7 @@ class HeaderToolbar(widgetset.Background):
                     button.set_sort_state(SortBarButton.SORT_DOWN)
             else:
                 button.set_sort_state(SortBarButton.SORT_NONE)
+        self._ascending = ascending
 
     def _make_button(self, text, sort_key):
         button = SortBarButton(text)
