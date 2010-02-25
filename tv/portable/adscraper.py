@@ -54,12 +54,18 @@ def _process(data, fkey, default):
     return processed
 
 FEEDBURNER_AD_PATTERN = re.compile("""
-    &lt;p&gt;                                                               # <p>
-    &lt;a\shref="http://feeds\.feedburner\.com/~a/[^"]*"&gt;                # <a href="...">
-    &lt;img\ssrc="http://feeds\.feedburner\.com/~a/[^"]*"\sborder="0"&gt;   # <img src="..." border="0">
-    &lt;/img&gt;                                                            # </img>
-    &lt;/a&gt;                                                              # </a>
-    &lt;/p&gt;                                                              # </p>
+    # <p>
+    &lt;p&gt;
+    # <a href="...">
+    &lt;a\shref="http://feeds\.feedburner\.com/~a/[^"]*"&gt;
+    # <img src="..." border="0">
+    &lt;img\ssrc="http://feeds\.feedburner\.com/~a/[^"]*"\sborder="0"&gt;
+    # </img>
+    &lt;/img&gt;
+    # </a>
+    &lt;/a&gt;
+    # </p>
+    &lt;/p&gt;
     """, re.VERBOSE)
     
 def _try_purifying_feedburner(data):
