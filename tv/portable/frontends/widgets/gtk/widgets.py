@@ -60,7 +60,7 @@ class Window:
         self._widget.connect('delete-event', self.on_delete)
 
     def on_delete(self, widget, event):
-        app.application.quit()
+        app.widgetapp.quit()
         return True
 
     def close(self):
