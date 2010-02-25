@@ -2626,3 +2626,10 @@ def upgrade111(cursor):
             "ADD active_filters TEXT")
     cursor.execute("UPDATE widgets_frontend_state "
             "SET active_filters = '{}'")
+
+def upgrade112(cursor):
+    """Create the sort_states column."""
+    cursor.execute("ALTER TABLE widgets_frontend_state "
+            "ADD sort_states TEXT")
+    cursor.execute("UPDATE widgets_frontend_state "
+            "SET sort_states = '{}'")

@@ -63,6 +63,7 @@ from miro.frontends.widgets import addtoplaylistdialog
 from miro.frontends.widgets import removefeeds
 from miro.frontends.widgets import diagnostics
 from miro.frontends.widgets import crashdialog
+from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import prefpanel
 from miro.frontends.widgets import displays
@@ -1191,7 +1192,14 @@ class FrontendStatesStore(object):
     def query_sort_state(self, type, id):
         key = self._key(type, id)
         if key in self.sort_states:
-            return self.sort_states[key]
+            state = self.sort_states[key]
+            if state.startswith('-'):
+                sort_key = state[1:]
+                ascending = False
+            else:
+                sort_key = state
+                ascending = True
+            return itemlist.SORT_KEY_MAP[sort_key](ascending)
         return None
 
     def query_filters(self, type, id):
@@ -1202,7 +1210,13 @@ class FrontendStatesStore(object):
         self.save_state()
 
     def set_sort_state(self, type, id, sorter):
-        self.sort_states[self._key(type, id)] = sorter
+        # we have a ItemSort object and we need to create a string that will
+        # represent it.  Use the sort key, with '-' prepended if the sort is
+        # descending (for example: "date", "-name", "-size", ...)
+        state = sorter.KEY
+        if not sorter.is_ascending():
+            state = '-' + state
+        self.sort_states[self._key(type, id)] = state
         self.save_state()
 
     def set_list_view(self, type, id):
