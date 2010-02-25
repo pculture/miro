@@ -35,7 +35,7 @@ database.
 
 See bug #12419 for more info.
 
-.. note::
+.. Note::
 
     We should try hard not to let loops fill up the log file with too
     much junk, or infinitely.  Take a look at
@@ -65,8 +65,8 @@ def _log(priority, message, *args):
     try:
         description = unicode(message) % args
     except UnicodeError:
-        logging.warn("Unicode error when creating database log entry %s %s" % \
-                     (message, args))
+        logging.warn("Unicode error when creating database log entry %s %s",
+                     message, args)
         return
     entry = DBLogEntry(priority, description)
     logging.dblog(description)

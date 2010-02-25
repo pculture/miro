@@ -28,7 +28,7 @@
 
 """Responsible for upgrading old versions of the database.
 
-.. note::
+.. Note::
 
     For really old versions before the ``schema.py`` module, see
     ``olddatabaseupgrade.py``.

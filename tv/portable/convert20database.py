@@ -96,7 +96,7 @@ def _get_old_savables(cursor):
 
 def _upgrate_old_savables(cursor, savables):
     cursor.execute("SELECT serialized_value FROM dtv_variables "
-            "WHERE name=?", ("Democracy Version",))
+                   "WHERE name=?", ("Democracy Version",))
     row = cursor.fetchone()
     version = cPickle.loads(str(row[0]))
     databaseupgrade.upgrade(savables, version, schema_mod.VERSION)
@@ -113,12 +113,12 @@ def _create_db_schema(cursor):
     for schema in schema_mod.objectSchemas:
         table_name = schema.classString.replace('-', '_')
         cursor.execute("SELECT COUNT(*) FROM sqlite_master "
-                "WHERE name=? and type='table'", (table_name,))
+                       "WHERE name=? and type='table'", (table_name,))
         if cursor.fetchone()[0] > 0:
             logging.warn("dropping %s in 2.0 upgrade", table_name)
             cursor.execute("DROP TABLE %s " % table_name)
         cursor.execute("CREATE TABLE %s (%s)" %
-                (table_name, _calc_sqlite_types(schema)))
+                       (table_name, _calc_sqlite_types(schema)))
 
 def _calc_sqlite_types(object_schema):
     types = []
@@ -146,9 +146,9 @@ def _execute_insert_sql(cursor, savable):
             elif isinstance(schema_item, schema_mod.SchemaFilename):
                 value = filenameToUnicode(value)
         values.append(value)
-    sql = "REPLACE INTO %s (%s) VALUES(%s)" % (table_name,
-            ', '.join(column_names),
-            ', '.join('?' for i in xrange(len(column_names))))
+    sql = ("REPLACE INTO %s (%s) VALUES(%s)" %
+           (table_name, ', '.join(column_names),
+            ', '.join('?' for i in xrange(len(column_names)))))
     cursor.execute(sql, values)
 
 def _migrate_old_data(cursor, savable_objects):
@@ -189,18 +189,19 @@ class SavableObject:
     classString -- specifies the class this object was converted from.
     savedData -- dict that stores the data we've saved.
 
-    The SavableObject class is guaranteed to never change.  This means we can
-    always safely unpickle them.
+    The SavableObject class is guaranteed to never change.  This means
+    we can always safely unpickle them.
     """
 
-    # This is a complete hack to prevent problems if data is saved with a
-    # newer version of Miro and an older version of Miro tries to open it.
-    # Now adays the name of this module is "miro.storedatabase", but for older
-    # versions it's just "storedatabase".  Hacking the module name here
-    # changes where pickle tries to unpickle it from.
+    # This is a complete hack to prevent problems if data is saved
+    # with a newer version of Miro and an older version of Miro tries
+    # to open it.  Now adays the name of this module is
+    # "miro.storedatabase", but for older versions it's just
+    # "storedatabase".  Hacking the module name here changes where
+    # pickle tries to unpickle it from.
     #
-    # In both cases "storedatabase" works, because we try to unpickle it from
-    # inside the miro directory.
+    # In both cases "storedatabase" works, because we try to unpickle
+    # it from inside the miro directory.
     __module__ = 'storedatabase'
 
     def __init__(self, classString):

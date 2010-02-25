@@ -98,7 +98,8 @@ def _get_subs_from_rss_channel(root):
         else:
             link = channel.getElementsByTagName("link").pop()
             href = link.firstChild.data
-            return _get_subs_from_reflexive_auto_discovery(href, "application/rss+xml")
+            return _get_subs_from_reflexive_auto_discovery(
+                href, "application/rss+xml")
     except (IndexError, AttributeError):
         pass
 
@@ -112,7 +113,8 @@ def _get_subs_from_atom_feed(root):
             rel = link.getAttribute("rel")
             if rel == "alternate":
                 href = link.getAttribute("href")
-                return _get_subs_from_reflexive_auto_discovery(href, "application/atom+xml")
+                return _get_subs_from_reflexive_auto_discovery(
+                    href, "application/atom+xml")
     except (IndexError, AttributeError):
         pass
 
@@ -142,8 +144,6 @@ def _get_subs_from_reflexive_auto_discovery(url, ltype):
     except IOError:
         return []
 
-    if len(urls) == 0:
-        return []
     return [{'type': 'feed', 'url': url} for url in urls]
 
 ATOM_SPEC = "http://www.w3.org/2005/Atom"

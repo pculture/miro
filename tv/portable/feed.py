@@ -621,7 +621,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             self.get_folder().signal_change()
         self.signal_change()
 
-    def startManualDownload(self):
+    def start_manual_download(self):
         next_ = None
         for item in self.items:
             if item.is_pending_manual_download():
@@ -632,7 +632,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         if next_ is not None:
             next_.download(autodl=False)
 
-    def startAutoDownload(self):
+    def start_auto_download(self):
         next = None
         for item in self.items:
             if item.is_eligible_for_auto_download():

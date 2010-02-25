@@ -227,7 +227,7 @@ class ViewTracker(signals.SignalEmitter):
 
     def check_all_objects(self):
         new_ids = set(app.db.query_ids(self.klass, self.where,
-            self.values, joins=self.joins))
+                                       self.values, joins=self.joins))
         old_ids = self.current_ids
         self.current_ids = new_ids
         for id_ in new_ids.difference(old_ids):
@@ -271,8 +271,9 @@ class BulkSQLManager(object):
             self._update_view_trackers(to_insert, to_remove)
             if len(self.to_insert) == len(self.to_remove) == 0:
                 break
-            # inside _commit_sql() or _update_view_trackers(), we were asked
-            # to insert or remove more items, repeat the proccess again
+            # inside _commit_sql() or _update_view_trackers(), we were
+            # asked to insert or remove more items, repeat the
+            # proccess again
         else:
             raise AssertionError("Called _commit_sql 100 times and still "
                     "have items to commit.  Are we in a circular loop?")
@@ -302,7 +303,7 @@ class BulkSQLManager(object):
                 # already updated the view above
                 continue
             app.view_tracker_manager.bulk_remove_from_view_trackers(
-                    table_name, objects)
+                table_name, objects)
 
     def add_insert(self, obj):
         table_name = app.db.table_name(obj.__class__)
@@ -408,7 +409,7 @@ class DDBObject(signals.SignalEmitter):
 
     @classmethod
     def make_view(cls, where=None, values=None, order_by=None, joins=None,
-            limit=None):
+                  limit=None):
         if values is None:
             values = ()
         return View(cls, where, values, order_by, joins, limit)
@@ -524,14 +525,14 @@ class DDBObject(signals.SignalEmitter):
             # just ignore it.
             return
         if not self.id_exists():
-            msg = ("signal_change() called on non-existant object (id is %s)" \
-                       % self.id)
+            msg = ("signal_change() called on non-existant object (id is %s)"
+                   % self.id)
             raise DatabaseConstraintError, msg
         self.on_signal_change()
         self.check_constraints()
         if app.bulk_sql_manager.will_insert(self):
-            # Don't need to send an UPDATE SQL command, or check the view
-            # trackers in this case.  Both will be done when the
+            # Don't need to send an UPDATE SQL command, or check the
+            # view trackers in this case.  Both will be done when the
             # BulkSQLManager.finish() is called.
             return
         if needs_save:

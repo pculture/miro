@@ -125,9 +125,9 @@ class Downloader:
 
             for feed, count, dummy in candidate_feeds:
                 if self.is_auto:
-                    feed.startAutoDownload()
+                    feed.start_auto_download()
                 else:
-                    feed.startManualDownload()
+                    feed.start_manual_download()
                 self.feed_time[feed] = datetime.now()
                 if self.running_count >= self.MAX:
                     break

@@ -104,14 +104,15 @@ class Controller:
         def callback(result):
             self.sending_crash_report -= 1
             if result['status'] != 200 or result['body'] != 'OK':
-                logging.warning("Failed to submit crash report.  "
-                                "Server returned %r" % result)
+                logging.warning(
+                    "Failed to submit crash report.  Server returned %r",
+                    result)
             else:
                 logging.info("Crash report submitted successfully")
 
         def errback(error):
             self.sending_crash_report -= 1
-            logging.warning("Failed to submit crash report %r" % error)
+            logging.warning("Failed to submit crash report %r", error)
 
         backupfile = None
         if send_database:

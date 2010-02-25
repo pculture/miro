@@ -28,7 +28,7 @@
 
 """Sanity checks for the databases.
 
-.. note::
+.. Note::
 
     This module is deprecated: database sanity checking is done by the
     ``check_constraints`` method on DDBObjects.  This is a better way
@@ -117,7 +117,7 @@ class SingletonTest(SanityTest):
 
     This is a baseclass for the channle guide test, manual feed test, etc.
     """
-    singletonName = ""
+    singleton_name = ""
 
     def __init__(self):
         self.count = 0
@@ -129,13 +129,13 @@ class SingletonTest(SanityTest):
         if self.object_is_singleton(obj):
             self.count += 1
             if self.count > 1:
-                return "Extra %s in database" % self.singletonName
+                return "Extra %s in database" % self.singleton_name
 
     def finished(self):
         if self.count == 0:
             # For all our singletons (currently at least), we don't need to
             # create them here.  It'll happen when Miro is restarted.
-            # return "No %s in database" % self.singletonName
+            # return "No %s in database" % self.singleton_name
             pass
 
     def fix_if_possible(self, object_list):
@@ -153,12 +153,12 @@ class SingletonTest(SanityTest):
                         seen_object = True
 
 class ChannelGuideSingletonTest(SingletonTest):
-    singletonName = "Channel Guide"
+    singleton_name = "Channel Guide"
     def object_is_singleton(self, obj):
         return isinstance(obj, guide.ChannelGuide) and obj.url is None
 
 class ManualFeedSingletonTest(SingletonTest):
-    singletonName = "Manual Feed"
+    singleton_name = "Manual Feed"
     def object_is_singleton(self, obj):
         return (isinstance(obj, feed.Feed) and
                 isinstance(obj.actualFeed, feed.ManualFeedImpl))

@@ -77,7 +77,7 @@ def default_port(scheme):
 def parse_url(url, split_path=False):
     url = fix_file_urls(url)
     (scheme, host, path, params, query, fragment) = \
-        util.unicodify(list(urlparse(url)))
+             util.unicodify(list(urlparse(url)))
     # Filter invalid URLs with duplicated ports
     # (http://foo.bar:123:123/baz) which seem to be part of #441.
     if host.count(':') > 1:

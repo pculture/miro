@@ -82,8 +82,8 @@ def add_video(path, manual_feed=None):
         return
     if manual_feed is None:
         manual_feed = feed.Feed.get_manual_feed()
-    file_item = item.FileItem(path, feed_id=manual_feed.get_id(),
-            mark_seen=True)
+    file_item = item.FileItem(
+        path, feed_id=manual_feed.get_id(), mark_seen=True)
     if _command_line_videos is not None:
         _command_line_videos.add(file_item)
 
