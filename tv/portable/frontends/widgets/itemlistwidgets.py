@@ -830,8 +830,7 @@ class HeaderToolbar(widgetset.Background):
         context.stroke()
 
 class LibraryHeaderToolbar(HeaderToolbar):
-    def __init__(self, initial_filters, unwatched_label):
-        self.initial_filters = initial_filters
+    def __init__(self, unwatched_label):
         self.unwatched_label = unwatched_label
         HeaderToolbar.__init__(self)
 
@@ -848,9 +847,13 @@ class LibraryHeaderToolbar(HeaderToolbar):
         self.filter_switch.add_text_button('view-all', declarify(_('View|All')), self._on_view_all_clicked)
         self.filter_switch.add_text_button('view-unwatched', self.unwatched_label, self._on_toggle_unwatched_clicked)
         self.filter_switch.add_text_button('view-non-feed', _('Non Feed'), self._on_toggle_non_feed_clicked)
-        for filter in self.initial_filters:
-            self.filter_switch.set_active(filter)
+        self.filter_switch.set_active('view-all')
         self._hbox.pack_start(widgetutil.align_middle(self.filter_switch.make_widget(), left_pad=12))
+
+    def set_active_filters(self, filters):
+        filter_set = set(filters)
+        for filter in self.filter_switch.all_buttons():
+            self.filter_switch.set_active(filter, filter in filter_set)
 
 class SortBarButton(widgetset.CustomButton):
     SORT_NONE = 0

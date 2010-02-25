@@ -228,6 +228,7 @@ class ItemListDisplayMixin(object):
     def on_selected(self):
         app.item_list_controller_manager.controller_created(self.controller)
         self.controller.start_tracking()
+        self.restore_state()
 
     def on_activate(self):
         app.item_list_controller_manager.controller_displayed(self.controller)
@@ -239,8 +240,18 @@ class ItemListDisplayMixin(object):
 
     def cleanup(self):
         self.controller.stop_tracking()
-        self.controller.remember_state()
+        self.remember_state()
         app.item_list_controller_manager.controller_destroyed(self.controller)
+
+    def remember_state(self):
+        if self.controller.widget.in_list_view:
+            app.frontend_states_memory.set_list_view(self.type, self.id)
+        else:
+            app.frontend_states_memory.set_std_view(self.type, self.id)
+
+    def restore_state(self):
+        if app.frontend_states_memory.query_list_view(self.type, self.id):
+            self.widget.switch_to_list_view()
 
 class ItemListDisplay(ItemListDisplayMixin, TabDisplay):
     def __init__(self, tab_type, selected_tabs):
@@ -248,8 +259,6 @@ class ItemListDisplay(ItemListDisplayMixin, TabDisplay):
         tab = selected_tabs[0]
         self.controller = self.make_controller(tab)
         self.widget = self.controller.widget
-        if app.frontend_states_memory.query_list_view(tab_type, tab.id):
-            self.widget.switch_to_list_view()
         self.type = tab_type
         self.id = tab.id
 
@@ -320,7 +329,19 @@ class SearchDisplay(ItemListDisplay):
     def make_controller(self, tab):
         return itemlistcontroller.SearchController()
 
-class VideoItemsDisplay(ItemListDisplay):
+class AudioVideoItemsDisplay(ItemListDisplay):
+    def remember_state(self):
+        ItemListDisplay.remember_state(self)
+        filters = self.widget.toolbar.active_filters()
+        app.frontend_states_memory.set_filters(self.type, self.id, filters)
+
+    def restore_state(self):
+        initial_filters = app.frontend_states_memory.query_filters(self.type,
+                self.id)
+        if initial_filters:
+            self.widget.toolbar.set_active_filters(initial_filters)
+
+class VideoItemsDisplay(AudioVideoItemsDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
         return tab_type == 'library' and selected_tabs[0].id == 'videos'
@@ -328,7 +349,7 @@ class VideoItemsDisplay(ItemListDisplay):
     def make_controller(self, tab):
         return itemlistcontroller.VideoItemsController()
 
-class AudioItemsDisplay(ItemListDisplay):
+class AudioItemsDisplay(AudioVideoItemsDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
         return tab_type == 'library' and selected_tabs[0].id == 'audios'

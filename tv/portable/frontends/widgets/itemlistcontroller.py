@@ -139,12 +139,6 @@ class ItemListController(object):
             self.titlebar.set_search_text(search)
             self.set_search(search)
 
-    def remember_state(self):
-        if self.widget.in_list_view:
-            app.frontend_states_memory.set_list_view(self.type, self.id)
-        else:
-            app.frontend_states_memory.set_std_view(self.type, self.id)
-
     def get_selection(self):
         """Get the currently selected items.  Returns a list of ItemInfos."""
         item_view = self.current_item_view
@@ -506,12 +500,7 @@ class AudioVideoItemsController(SimpleItemListController):
                 display_download_info=False)
 
     def build_header_toolbar(self):
-        initial_filters = app.frontend_states_memory.query_filters(self.type,
-                self.id)
-        if not initial_filters:
-            initial_filters = set(['view-all'])
-        toolbar = itemlistwidgets.LibraryHeaderToolbar(initial_filters,
-                self.unwatched_label)
+        toolbar = itemlistwidgets.LibraryHeaderToolbar(self.unwatched_label)
         toolbar.connect_weak('view-all-clicked', self.on_view_all_clicked)
         toolbar.connect_weak('toggle-unwatched-clicked', self.on_toggle_unwatched)
         toolbar.connect_weak('toggle-non-feed-clicked', self.on_toggle_non_feed)
@@ -531,11 +520,6 @@ class AudioVideoItemsController(SimpleItemListController):
         self.widget.toolbar.toggle_non_feed_only()
         self.item_list.toggle_non_feed()
         self._toolbar_filter_changed()
-
-    def remember_state(self):
-        ItemListController.remember_state(self)
-        filters = self.widget.toolbar.active_filters()
-        app.frontend_states_memory.set_filters(self.type, self.id, filters)
 
 class VideoItemsController(AudioVideoItemsController):
     type = 'videos'
