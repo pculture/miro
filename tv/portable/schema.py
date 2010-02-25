@@ -670,6 +670,8 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
     table_name = 'widgets_frontend_state'
     fields = DDBObjectSchema.fields + [
         ('list_view_displays', SchemaList(SchemaBinary())),
+        ('active_filters', SchemaDict(SchemaBinary(),
+            SchemaList(SchemaBinary()))),
     ]
 
     @staticmethod
@@ -689,7 +691,7 @@ class DBLogEntrySchema(DDBObjectSchema):
     def handle_malformed_list_view_displays(row):
         return []
 
-VERSION = 110
+VERSION = 111
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema,

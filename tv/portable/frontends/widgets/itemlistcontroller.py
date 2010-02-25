@@ -100,7 +100,8 @@ class ItemListController(object):
         self.list_item_view.change_sort_indicator(sorter.KEY, sorter.is_ascending())
 
     def _init_widget(self):
-        self.widget = itemlistwidgets.ItemContainerWidget(self)
+        toolbar = self.build_header_toolbar()
+        self.widget = itemlistwidgets.ItemContainerWidget(toolbar)
         self.item_list = itemlist.ItemList()
         self.list_item_view = self.build_list_item_view()
         scroller = widgetset.Scroller(True, True)
@@ -108,10 +109,6 @@ class ItemListController(object):
         self.widget.list_view_vbox.pack_start(scroller, expand=True)
         self.widget.toolbar.connect_weak('sort-changed', self.on_sort_changed)
         self.list_item_view.connect_weak('sort-changed', self.on_sort_changed)
-        if self.type in ('videos', 'audios'):
-            self.widget.toolbar.connect_weak('view-all-clicked', self.on_view_all_clicked)
-            self.widget.toolbar.connect_weak('toggle-unwatched-clicked', self.on_toggle_unwatched)
-            self.widget.toolbar.connect_weak('toggle-non-feed-clicked', self.on_toggle_non_feed)
         self.build_widget()
         sorter = self.item_list.get_sort()
         if sorter is not None:
@@ -119,6 +116,9 @@ class ItemListController(object):
 
     def build_list_item_view(self):
         return itemlistwidgets.ListItemView(self.item_list)
+
+    def build_header_toolbar(self):
+        return itemlistwidgets.HeaderToolbar()
 
     def _init_item_views(self):
         self.context_menu_handler = self.make_context_menu_handler()
@@ -138,6 +138,12 @@ class ItemListController(object):
         if search != '':
             self.titlebar.set_search_text(search)
             self.set_search(search)
+
+    def remember_state(self):
+        if self.widget.in_list_view:
+            app.frontend_states_memory.set_list_view(self.type, self.id)
+        else:
+            app.frontend_states_memory.set_std_view(self.type, self.id)
 
     def get_selection(self):
         """Get the currently selected items.  Returns a list of ItemInfos."""
@@ -199,21 +205,6 @@ class ItemListController(object):
         for item_view in self.all_item_views():
             item_view.model_changed()
         self.check_for_empty_list()
-
-    def on_view_all_clicked(self, button):
-        self.widget.toolbar.switch_to_view_all()
-        self.item_list.view_all()
-        self._toolbar_filter_changed()
-
-    def on_toggle_unwatched(self, button):
-        self.widget.toolbar.toggle_unwatched_only()
-        self.item_list.toggle_unwatched_only()
-        self._toolbar_filter_changed()
-
-    def on_toggle_non_feed(self, button):
-        self.widget.toolbar.toggle_non_feed_only()
-        self.item_list.toggle_non_feed()
-        self._toolbar_filter_changed()
 
     def on_sort_changed(self, object, sort_key, ascending):
         sorter = itemlist.SORT_KEY_MAP[sort_key](ascending)
@@ -514,17 +505,51 @@ class AudioVideoItemsController(SimpleItemListController):
         return itemlistwidgets.ListItemView(self.item_list,
                 display_download_info=False)
 
+    def build_header_toolbar(self):
+        initial_filters = app.frontend_states_memory.query_filters(self.type,
+                self.id)
+        if not initial_filters:
+            initial_filters = set(['view-all'])
+        toolbar = itemlistwidgets.LibraryHeaderToolbar(initial_filters,
+                self.unwatched_label)
+        toolbar.connect_weak('view-all-clicked', self.on_view_all_clicked)
+        toolbar.connect_weak('toggle-unwatched-clicked', self.on_toggle_unwatched)
+        toolbar.connect_weak('toggle-non-feed-clicked', self.on_toggle_non_feed)
+        return toolbar
+
+    def on_view_all_clicked(self, button):
+        self.widget.toolbar.switch_to_view_all()
+        self.item_list.view_all()
+        self._toolbar_filter_changed()
+
+    def on_toggle_unwatched(self, button):
+        self.widget.toolbar.toggle_unwatched_only()
+        self.item_list.toggle_unwatched_only()
+        self._toolbar_filter_changed()
+
+    def on_toggle_non_feed(self, button):
+        self.widget.toolbar.toggle_non_feed_only()
+        self.item_list.toggle_non_feed()
+        self._toolbar_filter_changed()
+
+    def remember_state(self):
+        ItemListController.remember_state(self)
+        filters = self.widget.toolbar.active_filters()
+        app.frontend_states_memory.set_filters(self.type, self.id, filters)
+
 class VideoItemsController(AudioVideoItemsController):
     type = 'videos'
     id = None
     image_filename = 'icon-video_large.png'
     title = _("Video")
+    unwatched_label =  _('Unwatched')
 
 class AudioItemsController(AudioVideoItemsController):
     type = 'audios'
     id = None
     image_filename = 'icon-audio_large.png'
     title = _("Audio")
+    unwatched_label = _('Unplayed')
 
 class OtherItemsController(SimpleItemListController):
     type = 'others'

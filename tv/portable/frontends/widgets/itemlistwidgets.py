@@ -696,11 +696,9 @@ class HeaderToolbar(widgetset.Background):
     toggle-non-feed-clicked -- User toggled the non feed items only view
     """
 
-    def __init__(self, controller=None):
+    def __init__(self):
         widgetset.Background.__init__(self)
-        self.create_signal('sort-changed')
-        self.create_signal('list-view-clicked')
-        self.create_signal('normal-view-clicked')
+        self.create_signals()
         
         self._button_hbox = widgetset.HBox()
         self._button_hbox_container = widgetutil.HideableWidget(self._button_hbox)
@@ -714,26 +712,9 @@ class HeaderToolbar(widgetset.Background):
         self.view_switch.set_active('normal-view')
         self._hbox.pack_start(widgetutil.align_middle(self.view_switch.make_widget(), left_pad=12))
 
-        if controller is not None and controller.type in ('videos', 'audios'):
-            if controller.type == 'videos':
-                unwatched_label =  _('Unwatched')
-            elif controller.type == 'audios':
-                unwatched_label = _('Unplayed')
-            else:
-                raise ValueError("Unsupported controller type")
-            self.create_signal('view-all-clicked')
-            self.create_signal('toggle-unwatched-clicked')
-            self.create_signal('toggle-non-feed-clicked')
-            self.filter_switch = segmented.SegmentedButtonsRow(behavior='custom')
-            # this "All" is different than other "All"s in the codebase, so it
-            # needs to be clarified
-            self.filter_switch.add_text_button('view-all', declarify(_('View|All')), self._on_view_all_clicked)
-            self.filter_switch.add_text_button('view-unwatched', unwatched_label, self._on_toggle_unwatched_clicked)
-            self.filter_switch.add_text_button('view-non-feed', _('Non Feed'), self._on_toggle_non_feed_clicked)
-            self.filter_switch.set_active('view-all')
-            self._hbox.pack_start(widgetutil.align_middle(self.filter_switch.make_widget(), left_pad=12))
-
         self._hbox.pack_end(widgetutil.align_middle(self._button_hbox_container))
+        self.pack_hbox_extra()
+
         self.add(self._hbox)
 
         self._current_sort_key = 'date'
@@ -744,6 +725,17 @@ class HeaderToolbar(widgetset.Background):
         self._make_button(_('Size'), 'size')
         self._make_button(_('Time'), 'length')
         self._button_map['date'].set_sort_state(SortBarButton.SORT_DOWN)
+
+    def create_signals(self):
+        self.create_signal('sort-changed')
+        self.create_signal('list-view-clicked')
+        self.create_signal('normal-view-clicked')
+
+    def pack_hbox_extra(self):
+        pass
+
+    def active_filters(self):
+        return self.filter_switch.active_buttons()
 
     def _on_normal_clicked(self, button):
         self.emit('normal-view-clicked')
@@ -837,6 +829,29 @@ class HeaderToolbar(widgetset.Background):
         context.rel_line_to(context.width, 0)
         context.stroke()
 
+class LibraryHeaderToolbar(HeaderToolbar):
+    def __init__(self, initial_filters, unwatched_label):
+        self.initial_filters = initial_filters
+        self.unwatched_label = unwatched_label
+        HeaderToolbar.__init__(self)
+
+    def create_signals(self):
+        HeaderToolbar.create_signals(self)
+        self.create_signal('view-all-clicked')
+        self.create_signal('toggle-unwatched-clicked')
+        self.create_signal('toggle-non-feed-clicked')
+
+    def pack_hbox_extra(self):
+        self.filter_switch = segmented.SegmentedButtonsRow(behavior='custom')
+        # this "All" is different than other "All"s in the codebase, so it
+        # needs to be clarified
+        self.filter_switch.add_text_button('view-all', declarify(_('View|All')), self._on_view_all_clicked)
+        self.filter_switch.add_text_button('view-unwatched', self.unwatched_label, self._on_toggle_unwatched_clicked)
+        self.filter_switch.add_text_button('view-non-feed', _('Non Feed'), self._on_toggle_non_feed_clicked)
+        for filter in self.initial_filters:
+            self.filter_switch.set_active(filter)
+        self._hbox.pack_start(widgetutil.align_middle(self.filter_switch.make_widget(), left_pad=12))
+
 class SortBarButton(widgetset.CustomButton):
     SORT_NONE = 0
     SORT_UP = 1
@@ -929,14 +944,14 @@ class ItemContainerWidget(widgetset.VBox):
        toolbar -- HeaderToolbar for the widget
     """
 
-    def __init__(self, controller=None):
+    def __init__(self, toolbar):
         widgetset.VBox.__init__(self)
         self._list_view_displayed = False
         self.normal_view_vbox = widgetset.VBox()
         self.list_view_vbox = widgetset.VBox()
         self.titlebar_vbox = widgetset.VBox()
         self.list_empty_mode_vbox = widgetset.VBox()
-        self.toolbar = HeaderToolbar(controller)
+        self.toolbar = toolbar
         self.toolbar.connect('list-view-clicked', self.switch_to_list_view)
         self.toolbar.connect('normal-view-clicked', self.switch_to_normal_view)
         self.pack_start(self.titlebar_vbox)

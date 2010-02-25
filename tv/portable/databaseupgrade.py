@@ -2619,3 +2619,10 @@ def upgrade110(cursor):
     for row in cursor:
         cursor.execute("UPDATE feed SET last_viewed=? WHERE id=?",
                 (datetime.datetime.max, row[0]))
+
+def upgrade111(cursor):
+    """Create the active_filters column."""
+    cursor.execute("ALTER TABLE widgets_frontend_state "
+            "ADD active_filters TEXT")
+    cursor.execute("UPDATE widgets_frontend_state "
+            "SET active_filters = '{}'")

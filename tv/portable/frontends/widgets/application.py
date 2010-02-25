@@ -1180,6 +1180,7 @@ class FrontendStatesStore(object):
     def __init__(self, message):
         self.current_displays = set(message.list_view_displays)
         self.sort_states = message.sort_states
+        self.active_filters = message.active_filters
 
     def _key(self, type, id):
         return '%s:%s' % (type, id)
@@ -1193,17 +1194,26 @@ class FrontendStatesStore(object):
             return self.sort_states[key]
         return None
 
+    def query_filters(self, type, id):
+        return self.active_filters.get(self._key(type, id), [])
+
+    def set_filters(self, type, id, filters):
+        self.active_filters[self._key(type, id)] = filters
+        self.save_state()
+
     def set_sort_state(self, type, id, sorter):
         self.sort_states[self._key(type, id)] = sorter
-        m = messages.SaveFrontendState(list(self.current_displays), self.sort_states)
-        m.send_to_backend()
+        self.save_state()
 
     def set_list_view(self, type, id):
         self.current_displays.add(self._key(type, id))
-        m = messages.SaveFrontendState(list(self.current_displays), self.sort_states)
-        m.send_to_backend()
+        self.save_state()
 
     def set_std_view(self, type, id):
         self.current_displays.discard(self._key(type, id))
-        m = messages.SaveFrontendState(list(self.current_displays), self.sort_states)
+        self.save_state()
+
+    def save_state(self):
+        m = messages.SaveFrontendState(list(self.current_displays),
+                self.sort_states, self.active_filters)
         m.send_to_backend()

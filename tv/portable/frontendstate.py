@@ -35,6 +35,7 @@ class WidgetsFrontendState(DDBObject):
     def setup_new(self):
         self.list_view_displays = list()
         self.sort_states = dict()
+        self.active_filters = dict()
 
     def setup_restored(self):
         if not hasattr(self, 'sort_states'):

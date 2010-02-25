@@ -239,12 +239,8 @@ class ItemListDisplayMixin(object):
 
     def cleanup(self):
         self.controller.stop_tracking()
+        self.controller.remember_state()
         app.item_list_controller_manager.controller_destroyed(self.controller)
-        if self.widget.in_list_view:
-            app.frontend_states_memory.set_list_view(self.type, self.id)
-        else:
-            app.frontend_states_memory.set_std_view(self.type, self.id)
-
 
 class ItemListDisplay(ItemListDisplayMixin, TabDisplay):
     def __init__(self, tab_type, selected_tabs):

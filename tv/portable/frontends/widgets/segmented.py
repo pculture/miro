@@ -85,6 +85,10 @@ class SegmentedButtonsRow(object):
     
     def is_active(self, key):
         return self.buttons_map[key].active
+
+    def active_buttons(self):
+        return [key for key, button in self.buttons_map.items() \
+                if button.active]
     
     def set_active(self, key, active=True):
         # When using the radio behavior the passed active state is ignored and
