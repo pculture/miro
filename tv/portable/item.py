@@ -1040,7 +1040,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             self.signal_change()
             self.update_parent_seen()
             if markOtherItems and self.downloader:
-                for item in self.downloader.itemList:
+                for item in self.downloader.item_list:
                     if item != self:
                         item.mark_item_seen(False)
             self.recalc_feed_counts()
@@ -1067,7 +1067,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             self.signal_change()
             self.update_parent_seen()
             if markOtherItems and self.downloader:
-                for item in self.downloader.itemList:
+                for item in self.downloader.item_list:
                     if item != self:
                         item.mark_item_unseen(False)
             self.recalc_feed_counts()

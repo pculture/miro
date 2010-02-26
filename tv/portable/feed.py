@@ -2403,7 +2403,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
         if url is not None:
             dl = downloader.get_existing_downloader_by_url(url)
             if dl is not None:
-                for item in dl.itemList:
+                for item in dl.item_list:
                     if ((item.get_feed_url() == 'dtv:searchDownloads'
                          and item.get_url() == url)):
                         try:
