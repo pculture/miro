@@ -41,6 +41,7 @@ terms.
 import sys
 
 from miro import search
+from miro import signals
 from miro import util
 from miro.frontends.widgets import imagepool
 from miro.plat.utils import filenameToUnicode
@@ -291,7 +292,7 @@ class ItemListGroup(object):
         for sublist in self.item_lists:
             sublist.set_search_text(search_text)
 
-class ItemList(object):
+class ItemList(signals.SignalEmitter):
     """
     Attributes:
 
@@ -301,9 +302,14 @@ class ItemList(object):
         * counter used to change the progress throbber (integer)
 
     new_only -- Are we only displaying the new items?
+
+    Signals:
+      item-added(item, next_item): an item was added to the list
     """
 
     def __init__(self):
+        signals.SignalEmitter.__init__(self)
+        self.create_signal('item-added')
         self.model = widgetset.TableModel('object', 'boolean', 'integer')
         self._iter_map = {}
         self._sorter = None
@@ -396,6 +402,11 @@ class ItemList(object):
                     self._sorter.compare(self.model[pos][0], item_info) < 0):
                 pos = self.model.next_iter(pos)
             iter = self.model.insert_before(pos, item_info, False, 0)
+            if pos is not None:
+                next_item_info = self.model[pos][0]
+            else:
+                next_item_info = None
+            self.emit('item-added', item_info, next_item_info)
             self._iter_map[item_info.id] = iter
 
     def add_items(self, item_list, already_sorted=False):

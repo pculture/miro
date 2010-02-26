@@ -150,11 +150,7 @@ class PlaybackManager (signals.SignalEmitter):
             self.stop()
         self.playlist = []
         for info in item_infos:
-            if not info.is_container_item:
-                self.playlist.append(info)
-            else:
-                playlables = [i for i in info.children if i.is_playable]
-                self.playlist.extend(playlables)
+            self._append_item(info)
         self.position = 0
         self._calc_id_to_position()
         self.presentation_mode = presentation_mode
@@ -162,6 +158,18 @@ class PlaybackManager (signals.SignalEmitter):
         self._play_current()
         if self.presentation_mode != 'fit-to-bounds':
             self.fullscreen()
+
+    def append_item(self, item_info):
+        if not self.is_playing:
+            raise ValueError("Can't append items when not playing")
+        self._append_item(item_info)
+
+    def _append_item(self, item_info):
+        if not item_info.is_container_item:
+            self.playlist.append(item_info)
+        else:
+            playlables = [i for i in item_info.children if i.is_playable]
+            self.playlist.extend(playlables)
 
     def _start_tracking_items(self):
         id_list = [info.id for info in self.playlist]

@@ -98,6 +98,7 @@ class ItemListController(object):
         sorter = self.item_list_group.get_sort()
         self.widget.toolbar.change_sort_indicator(sorter.KEY, sorter.is_ascending())
         self.list_item_view.change_sort_indicator(sorter.KEY, sorter.is_ascending())
+        self._item_added_callback = self._playback_item_list = None
 
     def _init_widget(self):
         toolbar = self.build_header_toolbar()
@@ -146,11 +147,14 @@ class ItemListController(object):
             return []
         return [item_view.model[i][0] for i in item_view.get_selection()]
 
-    def get_selection_for_playing(self):
+    def _playback_item_view(self):
         if self.current_item_view is None:
-            item_view = self.default_item_view()
+            return self.default_item_view()
         else:
-            item_view = self.current_item_view
+            return self.current_item_view
+
+    def get_selection_for_playing(self):
+        item_view = self._playback_item_view()
         selection = self.get_selection()
         if len(selection) == 0:
             items = item_view.item_list.get_items()
@@ -166,14 +170,25 @@ class ItemListController(object):
         items = self.get_selection_for_playing()
         if len(items) > 0:
             self._play_item_list(items, presentation_mode)
+
+    def _on_new_item_during_playback(self, item_list, item_info, next_item_info):
+        app.playback_manager.append_item(item_info)
             
     def filter_playable_items(self, items):
         return [i for i in items if i.is_playable]
 
     def _play_item_list(self, items, presentation_mode='fit-to-bounds'):
         playable = self.filter_playable_items(items)
-        if len(playable) > 0:
-            app.playback_manager.start_with_items(playable, presentation_mode)
+        if len(playable) == 0:
+            return
+        if len(self.get_selection()) <= 1:
+            # User has 0 or 1 items selected, if more items get added to the
+            # item list, we should play them.
+            item_list = self._playback_item_view().item_list
+            self._item_added_callback = item_list.connect('item-added',
+                    self._on_new_item_during_playback)
+            self._playback_item_list = item_list
+        app.playback_manager.start_with_items(playable, presentation_mode)
 
     def set_search(self, search_text):
         """Set the search for all ItemViews managed by this controller.  """
@@ -296,7 +311,7 @@ class ItemListController(object):
             app.playback_manager.connect('selecting-file',
                 self._on_playback_change),
             app.playback_manager.connect('will-stop',
-                self._on_playback_change),
+                self._playback_will_stop),
         ]
 
     def stop_tracking(self):
@@ -314,6 +329,12 @@ class ItemListController(object):
         # which item gets the "currently playing" badge.
         for item_view in self.all_item_views():
             item_view.queue_redraw()
+
+    def _playback_will_stop(self, playback_manager):
+        self._on_playback_change(playback_manager)
+        if self._item_added_callback is not None:
+            self._playback_item_list.disconnect(self._item_added_callback)
+            self._playback_item_list = self._item_added_callback = None
 
     def handle_item_list(self, message):
         """Handle an ItemList message meant for this ItemContainer."""
