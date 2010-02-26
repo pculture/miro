@@ -89,7 +89,7 @@ def _build_header(channel):
     return v
 
 def _build_video_expires(channel, grid):
-    grid.pack_label(_("Auto-Expire Videos:"), grid.ALIGN_RIGHT)
+    grid.pack_label(_("Auto-Expire Items:"), grid.ALIGN_RIGHT)
 
     expire_options = [
         ("system", _("Watched %(expiration)s (Default)",
