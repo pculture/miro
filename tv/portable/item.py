@@ -59,7 +59,6 @@ from miro import eventloop
 from miro import prefs
 from miro.plat import resources
 from miro import util
-from miro import adscraper
 from miro import moviedata
 import logging
 from miro import filetypes
@@ -1261,9 +1260,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def get_description(self):
         """Returns the description of the video (unicode).
         """
-        raw_description = self.get_raw_description()
-
-        return unicode(adscraper.purify(raw_description))
+        return unicode(self.get_raw_description())
 
     def looks_like_torrent(self):
         """Returns true if we think this item is a torrent.  (For items that
