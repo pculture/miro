@@ -185,10 +185,10 @@ class WindowBase(signals.SignalEmitter):
 
         # make modifications to the menu structure here
 
-        # on gtk-x11, we don't have a CheckVersion option because
+        # on linux, we don't have a CheckVersion option because
         # we update with the package system.
         this_platform = config.get(prefs.APP_PLATFORM)
-        if this_platform == 'gtk-x11':
+        if this_platform == 'linux':
             video_menu = self.menu_structure.get("VideoMenu")
             video_menu.remove("CheckVersion")
 

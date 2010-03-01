@@ -22,7 +22,7 @@ clean:
 	-rm plat/frontends/widgets/mozprompt.h plat/frontends/widgets/mozprompt.c
 	-rm plat/frontends/widgets/pluginsdir.cpp
 	-rm plat/frontends/widgets/windowcreator.cpp
-	-rm ../../portable/frontends/widgets/gtk/pygtkhacks.c
+	-rm ../portable/frontends/widgets/gtk/pygtkhacks.c
 	-rm -rf tmp
 
 build:

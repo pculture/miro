@@ -58,5 +58,5 @@ from miro.test.filetypestest import *
 from miro import config
 from miro import prefs
 
-if config.get(prefs.APP_PLATFORM) == "gtk-x11":
+if config.get(prefs.APP_PLATFORM) == "linux":
     from miro.test.gtcachetest import *

@@ -93,9 +93,9 @@ def set_player_int(key, value): return _set_pref(key, 'set_int', value)
 def set_player_bool(key, value): return _set_pref(key, 'set_bool', value)
 
 def run_application(props_to_set):
-    GtkX11Application().run(props_to_set)
+    LinuxApplication().run(props_to_set)
 
-class GtkX11Application(Application):
+class LinuxApplication(Application):
     def run(self, props_to_set):
         gobject.set_application_name(config.get(prefs.SHORT_APP_NAME))
         os.environ["PULSE_PROP_media.role"] = "video"

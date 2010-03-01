@@ -147,7 +147,7 @@ from Pyrex.Distutils import build_ext
 def is_root_dir(d):
     """
     bdist_rpm and possibly other commands copies setup.py into a subdir of
-    platform/gtk-x11.  This makes it hard to find the root directory.  We work
+    linux.  This makes it hard to find the root directory.  We work
     our way up the path until our is_root_dir test passes.
     """
     return os.path.exists(os.path.join(d, "MIRO_ROOT"))
@@ -171,7 +171,7 @@ portable_xpcom_dir = os.path.join(portable_frontend_dir, 'widgets', 'gtk',
 dl_daemon_dir = os.path.join(portable_dir, 'dl_daemon')
 test_dir = os.path.join(portable_dir, 'test')
 resource_dir = os.path.join(root_dir, 'resources')
-platform_dir = os.path.join(root_dir, 'platform', 'gtk-x11')
+platform_dir = os.path.join(root_dir, 'linux')
 platform_package_dir = os.path.join(platform_dir, 'plat')
 platform_widgets_dir = os.path.join(platform_package_dir, 'frontends',
                                     'widgets')
@@ -451,15 +451,15 @@ mozilla_browser_options, mozilla_lib_path, xpcom_runtime_path, mozilla_runtime_p
 #### Xlib Extension ####
 xlib_ext = \
     Extension("miro.plat.xlibhelper",
-        [ os.path.join(platform_package_dir,'xlibhelper.pyx') ],
+        [os.path.join(platform_package_dir, 'xlibhelper.pyx')],
         library_dirs = ['/usr/X11R6/lib'],
         libraries = ['X11'],
     )
 
 pygtkhacks_ext = \
     Extension("miro.frontends.widgets.gtk.pygtkhacks",
-        [ os.path.join(portable_frontend_dir, 'widgets', 'gtk',
-            'pygtkhacks.pyx') ],
+        [os.path.join(portable_frontend_dir, 'widgets', 'gtk',
+                      'pygtkhacks.pyx')],
         **parse_pkg_config('pkg-config',
             'pygobject-2.0 gtk+-2.0 glib-2.0 gthread-2.0')
     )
@@ -595,7 +595,7 @@ class install_data(distutils.command.install_data.install_data):
         expand_file_contents(dest, APP_REVISION=revision,
                              APP_REVISION_NUM=revisionnum,
                              APP_REVISION_URL=revisionurl,
-                             APP_PLATFORM='gtk-x11',
+                             APP_PLATFORM='linux',
                              BUILD_MACHINE="%s@%s" % (getlogin(),
                                                       os.uname()[1]),
                              BUILD_TIME=str(time.time()),

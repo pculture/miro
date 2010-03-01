@@ -9,9 +9,10 @@ LAYOUT
 
   Portable code that's common to all platforms.
 
-* ``platform/gtk-x11``
+* ``linux/``
 
-  Linux platform specific code.
+  Linux platform specific code.  Probably works for other *nixes, too, but
+  they're not supported or tested.
 
 * ``platform/windows-xul``
 

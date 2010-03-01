@@ -28,8 +28,9 @@
 
 """miro.plat.config
 
-This module implements configuration persistence for the gtkx11 platform.
-Miro persists configuration preferences for gtkx11 platform to gconf.
+This module implements configuration persistence for the linux
+platform.  Miro persists configuration preferences for linux platform
+to gconf.
 
 Preferences are listed in miro.pref and also miro.plat.options.
 """

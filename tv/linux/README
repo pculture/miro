@@ -3,16 +3,16 @@ README
 ======
 
 :Author: Will Kahn-Greene <will.guaraldi at pculture dot org>
-:Date: January 14, 2010
+:Date: March 1, 2010
 
 
 Summary
 =======
 
-This is the GTK/X11 port of Miro.
+This is the Linux port of Miro.
 
 Instructions and build requirements are documented at
-https://develop.participatoryculture.org/trac/democracy/wiki/GTKX11BuildDocs
+https://develop.participatoryculture.org/trac/democracy/wiki/LinuxBuildDocs
 
 If you have problems, visit us on ``#miro-hackers`` on
 ``irc.freenode.net``.
@@ -27,8 +27,8 @@ To compile and run Miro in the current directory, do::
 
 If you have the required dependencies it should build Miro and run it.
 
-See https://develop.participatoryculture.org/projects/dtv/wiki/GTKX11BuildDocs
-for more information on building and executing the GTK-X11 platform code.
+See https://develop.participatoryculture.org/projects/dtv/wiki/LinuxBuildDocs
+for more information on building and executing the Linux platform code.
 The information at this URL is considered the authoritative source.
 
 To run Miro in "debug mode" (i.e. in gdb)::
@@ -66,13 +66,13 @@ To backup your preferences, do::
 Unittest instructions
 =====================
 
-Once you get ``./run.sh`` working, you can run the unittests on GTK-X11 
+Once you get ``./run.sh`` working, you can run the unittests on Linux
 platform.  Do the following::
 
    ./run.sh --unittest
 
 
-This will go through all the unittests on the GTK-X11 platform and spit out 
+This will go through all the unittests on the Linux platform and spit out 
 any errors to stdout and stderr.
 
 
