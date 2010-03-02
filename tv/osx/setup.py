@@ -53,11 +53,11 @@ if not os.path.exists(BKIT_DIR) or not os.path.isdir(BKIT_DIR):
     sys.exit(1)
 
 ROOT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
-ROOT_DIR = os.path.join(ROOT_DIR, '../..')
+ROOT_DIR = os.path.join(ROOT_DIR, '..')
 ROOT_DIR = os.path.normpath(ROOT_DIR)
 
 PORTABLE_DIR = os.path.join(ROOT_DIR, 'portable')
-PLATFORM_DIR = os.path.join(ROOT_DIR, 'platform', 'osx')
+PLATFORM_DIR = os.path.join(ROOT_DIR, 'osx')
 PLATFORM_PACKAGE_DIR = os.path.join(PLATFORM_DIR, 'plat')
 
 OS_INFO = os.uname()
@@ -141,7 +141,7 @@ class Config (object):
     
     def __init__(self, path, themePath=None):
         self.config = util.read_simple_config_file(path)
-        self.themeDir = os.path.join(ROOT_DIR, 'platform', 'osx', 'build', 'theme')
+        self.themeDir = os.path.join(ROOT_DIR, 'osx', 'build', 'theme')
         self.themeConfig = None
         if themePath is not None:
             self.extract_theme_content(themePath, self.themeDir)
@@ -181,7 +181,7 @@ class Config (object):
             if themeIconFile is not None:
                 iconFile = os.path.join(self.themeDir, themeIconFile)
         if iconFile is None:
-            iconFile = os.path.join(ROOT_DIR, 'platform', 'osx', '%s.icns' % self.config.get('shortAppName'))
+            iconFile = os.path.join(ROOT_DIR, 'osx', '%s.icns' % self.config.get('shortAppName'))
         return iconFile
         
     def get_data(self, mergeThemeData=True):
@@ -305,32 +305,32 @@ class MiroBuild (py2app):
         self.prsrcRoot = os.path.join(self.rsrcRoot, 'resources')
         
     def get_idletime_ext(self):
-        idletime_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'idletime.c'))
+        idletime_src = glob(os.path.join(ROOT_DIR, 'osx', 'modules', 'idletime.c'))
         idletime_link_args = ['-framework', 'CoreFoundation', '-framework', 'IOKit']
         return Extension("miro.plat.idletime", sources=idletime_src, extra_link_args=idletime_link_args)
     
     def get_keychain_ext(self):
-        keychain_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'keychain.c'))
+        keychain_src = glob(os.path.join(ROOT_DIR, 'osx', 'modules', 'keychain.c'))
         keychain_link_args = ['-framework', 'Security']
         return Extension("miro.plat.keychain", sources=keychain_src, extra_link_args=keychain_link_args)
     
     def get_qtcomp_ext(self):
-        qtcomp_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'qtcomp.c'))
+        qtcomp_src = glob(os.path.join(ROOT_DIR, 'osx', 'modules', 'qtcomp.c'))
         qtcomp_link_args = ['-framework', 'CoreFoundation', '-framework', 'CoreServices', '-framework', 'QuickTime']
         return Extension("miro.plat.qtcomp", sources=qtcomp_src, extra_link_args=qtcomp_link_args)
     
     def get_growl_ext(self):
-        growl_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', '_growl.c'))
+        growl_src = glob(os.path.join(ROOT_DIR, 'osx', 'modules', '_growl.c'))
         growl_link_args = ['-framework', 'CoreFoundation']
         return Extension("miro.plat._growl", sources=growl_src, extra_link_args=growl_link_args)
     
     def get_growl_image_ext(self):
-        growl_image_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', '_growlImage.m'))
+        growl_image_src = glob(os.path.join(ROOT_DIR, 'osx', 'modules', '_growlImage.m'))
         growl_image_link_args = ['-framework', 'Cocoa']
         return Extension("miro.plat._growlImage", sources=growl_image_src, extra_link_args=growl_image_link_args)
 
     def get_shading_ext(self):
-        shading_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'shading.m'))
+        shading_src = glob(os.path.join(ROOT_DIR, 'osx', 'modules', 'shading.m'))
         shading_link_args = ['-framework', 'ApplicationServices']
         return Extension("miro.plat.shading", sources=shading_src, extra_link_args=shading_link_args)
     
@@ -647,7 +647,7 @@ if __name__ == "__main__":
     # =========================================================================
 
     print 'Extracting frameworks to build directory...'
-    frameworks_path = os.path.join(ROOT_DIR, 'platform/osx/build/frameworks')
+    frameworks_path = os.path.join(ROOT_DIR, 'osx/build/frameworks')
     extract_binaries('frameworks', frameworks_path, True)
     frameworks = glob(os.path.join(frameworks_path, '*.framework'))
 

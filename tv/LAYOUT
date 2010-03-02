@@ -18,7 +18,7 @@ LAYOUT
 
   Windows platform specific code.
 
-* ``platform/osx``
+* ``osx/``
 
   OSX platform specific code
 

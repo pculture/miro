@@ -43,7 +43,7 @@ root = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])),
 
 # GCC3.3 on OS X 10.3.9 doesn't like ".."'s in the path
 root = os.path.normpath(root)
-sys.path[0:0]=['%s/platform/%s' % (root, platform), '%s/platform' % root, '%s/portable' % root,'%s/platform/%s/test' % (root, platform), '%s/portable/test' % root]
+sys.path[0:0]=['%s/%s' % (root, platform), root, '%s/portable' % root,'%s/%s/test' % (root, platform), '%s/portable/test' % root]
 
 # Only now may we import things from our own tree
 import vlchelper.info
