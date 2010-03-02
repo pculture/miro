@@ -124,7 +124,7 @@ class Application:
         app.item_list_controller_manager = \
                 itemlistcontroller.ItemListControllerManager()
         app.display_manager = displays.DisplayManager()
-        app.menu_manager = menus.MenuManager()
+        app.menu_manager = menus.MenuStateManager()
         app.playback_manager = playback.PlaybackManager()
         app.search_manager = search.SearchManager()
         app.inline_search_memory = search.InlineSearchMemory()

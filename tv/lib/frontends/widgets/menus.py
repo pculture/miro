@@ -543,7 +543,7 @@ def generate_action_groups(menu_structure):
                 action_groups.setdefault(grp, []).append(menu.action)
     return action_groups
 
-class MenuManager(signals.SignalEmitter):
+class MenuStateManager(signals.SignalEmitter):
     """Updates the menu based on the current selection.
 
     This includes enabling/disabling menu items, changing menu text
