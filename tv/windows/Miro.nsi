@@ -52,7 +52,7 @@ Var SIMPLE_INSTALL
 Var PUBLISHER
 Var PROJECT_URL
 
-; Runs in tv/platform/windows-xul/dist, so 4 ..s.
+; Runs in tv/windows/dist, so 4 ..s.
 !addplugindir ..\${CONFIG_BINARY_KIT}\NSIS-Plugins\
 
 !addincludedir ..\${CONFIG_BINARY_KIT}\NSIS-Plugins\

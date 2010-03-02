@@ -136,12 +136,12 @@ import re
 from Pyrex.Distutils import build_ext
 
 # The name of this platform.
-platform = 'windows-xul'
+platform = 'windows'
 
 # Find the top of the source tree and set search path
-root_dir = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), '..', '..')
+root_dir = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), '..')
 root_dir = os.path.normpath(os.path.abspath(root_dir))
-platform_dir = os.path.join(root_dir, 'platform', 'windows-xul')
+platform_dir = os.path.join(root_dir, 'windows')
 platform_package_dir = os.path.join(platform_dir, 'plat')
 widgets_dir = os.path.join(platform_package_dir, 'frontends', 'widgets')
 portable_dir = os.path.join(root_dir, 'portable')
@@ -314,7 +314,7 @@ class install_data(distutils.command.install_data.install_data):
             APP_REVISION=revision,
             APP_REVISION_NUM=revisionnum,
             APP_REVISION_URL=revisionurl,
-            APP_PLATFORM='windows-xul',
+            APP_PLATFORM='windows',
             BUILD_MACHINE="%s@%s" % (os.environ['username'],
                 socket.gethostname()),
             BUILD_TIME=str(time.time()))

@@ -957,7 +957,7 @@ def upgrade53(objectList):
 
 def upgrade54(objectList):
     changed = set()
-    if config.get(prefs.APP_PLATFORM) != "windows-xul":
+    if config.get(prefs.APP_PLATFORM) != "windows":
         return changed
     for o in objectList:
         if o.classString in ('item', 'file-item'):

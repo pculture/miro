@@ -11,16 +11,18 @@ LAYOUT
 
 * ``linux/``
 
-  Linux platform specific code.  Probably works for other *nixes, too, but
-  they're not supported or tested.
+  Linux platform specific code.
 
-* ``platform/windows-xul``
+  Probably works for other *nixes, too, but they're not supported or 
+  tested.  Contributions are more than welcome.
+
+* ``windows/``
 
   Windows platform specific code.
 
 * ``osx/``
 
-  OSX platform specific code
+  OSX platform specific code.
 
 * ``resources``
 
