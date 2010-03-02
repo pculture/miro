@@ -311,6 +311,21 @@ class VideoDetailsWidget(Background):
 
         outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
 
+        if app.playback_manager.is_fullscreen:
+            fullscreen_link = make_label(_("Exit fullscreen"),
+                                         self.handle_fullscreen)
+            outer_hbox.pack_start(_align_middle(fullscreen_link))
+            fullscreen_image = make_image_button('images/fullscreen_exit.png',
+                                                 self.handle_fullscreen)
+            outer_hbox.pack_start(_align_middle(fullscreen_image))
+        else:
+            fullscreen_link = make_label(_("Fullscreen"),
+                                         self.handle_fullscreen)
+            outer_hbox.pack_start(_align_middle(fullscreen_link))
+            fullscreen_image = make_image_button('images/fullscreen_enter.png',
+                                                 self.handle_fullscreen)
+            outer_hbox.pack_start(_align_middle(fullscreen_image))
+
         if app.playback_manager.detached_window is not None:
             popin_link = make_label(_("Pop-in"), self.handle_popin_popout)
             outer_hbox.pack_start(_align_middle(popin_link))
@@ -331,6 +346,9 @@ class VideoDetailsWidget(Background):
 
     def show(self):
         self._widget.show()
+
+    def handle_fullscreen(self, widget, event=None):
+        app.playback_manager.toggle_fullscreen()
 
     def handle_popin_popout(self, widget, event=None):
         if app.playback_manager.is_fullscreen:
@@ -546,6 +564,7 @@ class VideoPlayer(player.Player, VBox):
         self.screensaver_manager = screensaver.create_manager()
         if self.screensaver_manager is not None:
             self.screensaver_manager.disable()
+        self.rebuild_video_details()
         self._make_overlay()
         self.motion_handler = self.wrapped_widget_connect(
                 'motion-notify-event', self.on_mouse_motion)
@@ -635,6 +654,7 @@ class VideoPlayer(player.Player, VBox):
             self.screensaver_manager.enable()
             self.screensaver_manager = None
         app.widgetapp.window.menubar.show()
+        self.rebuild_video_details()
         self._video_details.show()
         self._destroy_overlay()
         _window().unfullscreen()

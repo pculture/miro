@@ -515,13 +515,13 @@ class PlaybackManager (signals.SignalEmitter):
             self.enter_fullscreen()
 
     def enter_fullscreen(self):
-        self.video_display.enter_fullscreen()
         self.is_fullscreen = True
+        self.video_display.enter_fullscreen()
     
     def exit_fullscreen(self):
+        self.is_fullscreen = False
         self.presentation_mode = 'fit-to-bounds'
         self.video_display.exit_fullscreen()
-        self.is_fullscreen = False
 
     def toggle_detached_mode(self):
         if self.is_fullscreen:
