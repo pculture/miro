@@ -2,7 +2,7 @@
 database related modules
 ========================
 
-Modules in the ``miro`` package namespace located in ``portable/`` in
+Modules in the ``miro`` package namespace located in ``lib/`` in
 the source tarball that contain storage or database related code.
 
 Miro's database is stored using sqlite in a file named ``sqlitedb``.

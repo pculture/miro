@@ -2,7 +2,7 @@
 utility modules
 ===============
 
-Modules in the ``miro`` package namespace located in ``portable/`` in
+Modules in the ``miro`` package namespace located in ``lib/`` in
 the source tarball that contain utility functions and classes.
 
 

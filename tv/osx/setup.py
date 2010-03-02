@@ -56,7 +56,7 @@ ROOT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
 ROOT_DIR = os.path.join(ROOT_DIR, '..')
 ROOT_DIR = os.path.normpath(ROOT_DIR)
 
-PORTABLE_DIR = os.path.join(ROOT_DIR, 'portable')
+PORTABLE_DIR = os.path.join(ROOT_DIR, 'lib')
 PLATFORM_DIR = os.path.join(ROOT_DIR, 'osx')
 PLATFORM_PACKAGE_DIR = os.path.join(PLATFORM_DIR, 'plat')
 
@@ -100,10 +100,10 @@ from distutils.cmd import Command
 from distutils.errors import DistutilsFileError
 
 # when we install the portable modules, they will be in the miro package, but
-# at this point, they are in a package named "portable", so let's hack it
+# at this point, they are in a package named "lib", so let's hack it
 sys.path.append(ROOT_DIR)
-import portable
-sys.modules['miro'] = portable
+import lib
+sys.modules['miro'] = lib
 
 from miro import util
 

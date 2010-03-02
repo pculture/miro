@@ -164,7 +164,7 @@ def get_root_dir():
     return root_dir
 
 root_dir = get_root_dir()
-portable_dir = os.path.join(root_dir, 'portable')
+portable_dir = os.path.join(root_dir, 'lib')
 portable_frontend_dir = os.path.join(portable_dir, 'frontends')
 portable_xpcom_dir = os.path.join(portable_frontend_dir, 'widgets', 'gtk',
                                   'xpcom')
@@ -180,10 +180,11 @@ platform_widgets_dir = os.path.join(platform_package_dir, 'frontends',
 # pick up portable and other packages
 sys.path.insert(0, root_dir)
 
-# later when we install the portable modules, they will be in the miro package,
-# but at this point, they are in a package named "portable", so let's hack it
-import portable
-sys.modules['miro'] = portable
+# later when we install the portable modules, they will be in the miro
+# package, but at this point, they are in a package named "lib", so
+# let's hack it
+import lib
+sys.modules['miro'] = lib
 import plat
 sys.modules['miro'].plat = plat
 

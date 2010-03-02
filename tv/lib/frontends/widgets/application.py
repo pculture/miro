@@ -970,8 +970,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
     """Handles frontend messages.
 
     There's a method to handle each frontend message type.  See
-    :mod:`miro.messages` (``portable/messages.py``) and
-    :mod:`miro.messagehandler` (``portable/messagehandler.py``) for
+    :mod:`miro.messages` (``lib/messages.py``) and
+    :mod:`miro.messagehandler` (``lib/messagehandler.py``) for
     more details.
     """
     def __init__(self):

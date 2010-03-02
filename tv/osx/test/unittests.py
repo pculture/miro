@@ -36,7 +36,7 @@ platform = 'osx'
 root = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])),
                     '..', '..', '..')
 root = os.path.normpath(root)
-sys.path[0:0]=['%s/%s' % (root, platform), root, '%s/portable' % root, '%s/portable/test' % root, '%s/%s/test' % (root, platform)]
+sys.path[0:0]=['%s/%s' % (root, platform), root, '%s/lib' % root, '%s/lib/test' % root, '%s/%s/test' % (root, platform)]
 
 import fasttypes
 from miro.databasetest import *

@@ -43,7 +43,7 @@ root = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])),
 
 # GCC3.3 on OS X 10.3.9 doesn't like ".."'s in the path
 root = os.path.normpath(root)
-sys.path[0:0]=['%s/%s' % (root, platform), root, '%s/portable' % root,'%s/%s/test' % (root, platform), '%s/portable/test' % root]
+sys.path[0:0]=['%s/%s' % (root, platform), root, '%s/lib' % root,'%s/%s/test' % (root, platform), '%s/lib/test' % root]
 
 # Only now may we import things from our own tree
 import vlchelper.info
@@ -65,9 +65,9 @@ setup(
     ),
     ext_modules=[
         #Add extra_compile_args to change the compile options
-        Extension("database",["%s/portable/database.pyx" % root]),
-        Extension("template",["%s/portable/template.pyx" % root]),
-        Extension("fasttypes",["%s/portable/fasttypes.cpp" % root],
+        Extension("database",["%s/lib/database.pyx" % root]),
+        Extension("template",["%s/lib/template.pyx" % root]),
+        Extension("fasttypes",["%s/lib/fasttypes.cpp" % root],
                   extra_objects=["/usr/local/lib/libboost_python-1_33.a"],
                   include_dirs=["/usr/local/include/boost-1_33/"])
         ],

@@ -5,7 +5,7 @@
 LAYOUT
 ======
 
-* ``portable``
+* ``lib/``
 
   Portable code that's common to all platforms.
 

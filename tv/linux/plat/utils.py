@@ -50,7 +50,7 @@ FilenameType = str
 # very easy.
 from os.path import samefile
 
-# this is used in portable/gtcache.py
+# this is used in lib/gtcache.py
 _locale_initialized = False
 
 def get_available_bytes_for_movies():

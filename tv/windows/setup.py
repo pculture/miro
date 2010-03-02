@@ -144,7 +144,7 @@ root_dir = os.path.normpath(os.path.abspath(root_dir))
 platform_dir = os.path.join(root_dir, 'windows')
 platform_package_dir = os.path.join(platform_dir, 'plat')
 widgets_dir = os.path.join(platform_package_dir, 'frontends', 'widgets')
-portable_dir = os.path.join(root_dir, 'portable')
+portable_dir = os.path.join(root_dir, 'lib')
 portable_widgets_dir = os.path.join(portable_dir, 'frontends', 'widgets')
 portable_xpcom_dir = os.path.join(portable_widgets_dir, 'gtk', 'xpcom')
 test_dir = os.path.join(root_dir, 'resources')
@@ -152,10 +152,10 @@ resources_dir = os.path.join(root_dir, 'resources')
 
 sys.path.insert(0, root_dir)
 # when we install the portable modules, they will be in the miro
-# package, but at this point, they are in a package named "portable",
+# package, but at this point, they are in a package named "lib",
 # so let's hack it
-import portable
-sys.modules['miro'] = portable
+import lib
+sys.modules['miro'] = lib
 
 from miro import util
 

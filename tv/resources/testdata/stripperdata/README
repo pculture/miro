@@ -2,6 +2,6 @@ What's here?
 ============
 
 These are test cases for the strippertest which is at
-tv/portable/test/strippertest.py).
+tv/lib/test/strippertest.py).
 
 See top of that file for format.

@@ -29,7 +29,7 @@
 """This module holds functions that extend the panels in the preferences
 panel with platform-specific options.
 
-See portable/frontends/widgets/prefpanel.py for more information.
+See lib/frontends/widgets/prefpanel.py for more information.
 """
 
 from miro.gtcache import gettext as _

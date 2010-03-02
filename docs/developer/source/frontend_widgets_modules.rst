@@ -7,7 +7,7 @@ portable widget frontend modules
 Miro's widget frontend is split between portable code and
 platform-specific code.
 
-The portable code is located in ``portable/frontends/widgets/`` and is
+The portable code is located in ``lib/frontends/widgets/`` and is
 in the ``miro.frontends.widgets`` package space.
 
 See the chapter on platform-specific widget frontend modules for
