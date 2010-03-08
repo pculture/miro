@@ -58,6 +58,24 @@ def activatePsyco():
 
 # =============================================================================
 
+def launchUnitTests():
+    sys.argv.remove('unittest')
+
+    import logging
+    logging.basicConfig(level=logging.CRITICAL)
+
+    from miro.plat.utils import initialize_locale
+    initialize_locale()
+    from miro import gtcache
+    gtcache.init()
+    import unittest
+    from miro import test
+
+    print 'Running Miro unit tests:'
+    unittest.main(module=test)
+    
+# =============================================================================
+
 def launchApplication():
     from miro.plat import migrateappname
     migrateappname.migrateSupport('Democracy', 'Miro')
@@ -153,8 +171,11 @@ def launchDownloaderDaemon():
 activatePsyco()
 
 # Launch player or downloader, depending on command line parameter
-if len(sys.argv) > 1 and sys.argv[1] == "download_daemon":
-    launchDownloaderDaemon()
+if len(sys.argv) > 1:
+    if sys.argv[1] == "download_daemon":
+        launchDownloaderDaemon()
+    elif sys.argv[1] == "unittest":
+        launchUnitTests()
 else:
     launchApplication()
 

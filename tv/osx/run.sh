@@ -54,8 +54,16 @@ PYTHON=$PYTHON_ROOT/bin/python$PYTHON_VERSION
 export VERSIONER_PYTHON_VERSION=$PYTHON_VERSION
 export VERSIONER_PYTHON_PREFER_32_BIT=yes
 
-if [ $OS_VERSION == "8" ]; then
-    $PYTHON setup.py py2app --dist-dir . -A "$@" && Miro.app/Contents/MacOS/Miro
+if [ "$1" == "unittest" ]; then
+    SETUP_PARAMS="--keep-tests"
+    RUN_PARAMS=$1
 else
-    $PYTHON setup.py py2app --dist-dir . -A "$@" && arch -`arch` Miro.app/Contents/MacOS/Miro
+    SETUP_PARAMS=$@
+    RUN_PARAMS=""
+fi
+
+if [ $OS_VERSION == "8" ]; then
+    $PYTHON setup.py py2app --dist-dir . -A $SETUP_PARAMS && Miro.app/Contents/MacOS/Miro $RUN_PARAMS
+else
+    $PYTHON setup.py py2app --dist-dir . -A $SETUP_PARAMS && arch -`arch` Miro.app/Contents/MacOS/Miro $RUN_PARAMS
 fi

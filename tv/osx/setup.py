@@ -207,13 +207,15 @@ class MiroBuild (py2app):
     description = "create the OS X Miro application"
     
     user_options = py2app.user_options + [
+        ("keep-tests",   "u", "keep the unit tests module"),
         ("make-dmg",     "d", "produce a disk image"),
         ("force-update", "f", "force resource update"),
         ("theme=",       "t", "theme file to use")]
 
-    boolean_options = py2app.boolean_options + ["make-dmg", "force-update"]
+    boolean_options = py2app.boolean_options + ["make-dmg", "force-update", "keep-tests"]
         
     def initialize_options(self):
+        self.keep_tests = False
         self.make_dmg = False
         self.force_update = False
         self.theme = None
@@ -279,6 +281,9 @@ class MiroBuild (py2app):
             'miro.plat.frontends',
             'miro.plat.frontends.widgets'
         ]
+
+        if self.keep_tests:
+            self.distribution.packages.append('miro.test')
 
         self.distribution.package_dir = {
             'miro': PORTABLE_DIR,
@@ -430,19 +435,25 @@ class MiroBuild (py2app):
         if self.force_update and os.path.exists(self.prsrcRoot):
             shutil.rmtree(self.prsrcRoot, True)
 
-        if os.path.exists(self.prsrcRoot):
-            print "    (all skipped, already bundled)"
-        else:
+        if not os.path.exists(self.prsrcRoot):
             os.mkdir(self.prsrcRoot)
-            for resource in ('searchengines', 'images'):
-                src = os.path.join(ROOT_DIR, 'resources', resource)
-                rsrcName = os.path.basename(src)
-                if os.path.isdir(src):
-                    dest = os.path.join(self.prsrcRoot, rsrcName)
-                    copy = shutil.copytree
-                else:
-                    dest = os.path.join(self.prsrcRoot, rsrcName)
-                    copy = shutil.copy
+
+        resources = ['searchengines', 'images']
+        if self.keep_tests:
+            resources.append('testdata')
+
+        for resource in resources:
+            src = os.path.join(ROOT_DIR, 'resources', resource)
+            rsrcName = os.path.basename(src)
+            if os.path.isdir(src):
+                dest = os.path.join(self.prsrcRoot, rsrcName)
+                copy = shutil.copytree
+            else:
+                dest = os.path.join(self.prsrcRoot, rsrcName)
+                copy = shutil.copy
+            if os.path.exists(dest):
+                print "    (%s skipped, already bundled)" % resource
+            else:
                 print "    %s" % dest
                 copy(src, dest)
 
@@ -536,9 +547,13 @@ class MiroBuild (py2app):
         pass
         # Check that we haven't left some turds in the application bundle.
         
+        excluded_folders = ['.svn']
+        if not self.keep_tests:
+            excluded_folders.append('test')
+        
         wipeList = list()
         for root, dirs, files in os.walk(os.path.join(self.dist_dir, '%s.app' % self.config.get('shortAppName'))):
-            for excluded in ('.svn', 'unittest'):
+            for excluded in excluded_folders:
                 if excluded in dirs:
                     dirs.remove(excluded)
                     wipeList.append(os.path.join(root, excluded))
