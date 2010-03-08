@@ -92,7 +92,7 @@ class MenuItem:
     >>> MenuItem(_("Cu_t"), "ClipboardCut", Shortcut("x", MOD))
     >>> MenuItem(_("_Update Feed"), "UpdateFeeds",
     ...          (Shortcut("r", MOD), Shortcut(F5)))
-    >>> MenuItem(_("_Play"), "PlayPauseVideo",
+    >>> MenuItem(_("_Play"), "PlayPauseItem",
     ...          play=_("_Play"), pause=_("_Pause"))
     """
     def __init__(self, label, action, shortcuts=None, groups=None,
@@ -189,7 +189,7 @@ def get_menu():
     need to make.
     """
     mbar = Menu("", "TopLevel", [
-            Menu(_("_Video"), "VideoMenu", [
+            Menu(_("_File"), "FileMenu", [
                     MenuItem(_("_Open"), "Open", Shortcut("o", MOD),
                              groups=["NonPlaying"]),
                     MenuItem(_("_Download Item"), "NewDownload",
@@ -278,17 +278,17 @@ def get_menu():
                     ]),
 
             Menu(_("P_layback"), "PlaybackMenu", [
-                    MenuItem(_("_Play"), "PlayPauseVideo",
+                    MenuItem(_("_Play"), "PlayPauseItem",
                              groups=["PlayPause"],
                              play=_("_Play"),
                              pause=_("_Pause")),
-                    MenuItem(_("_Stop"), "StopVideo", Shortcut("d", MOD),
+                    MenuItem(_("_Stop"), "StopItem", Shortcut("d", MOD),
                              groups=["Playing"]),
                     Separator(),
-                    MenuItem(_("_Next Video"), "NextVideo",
+                    MenuItem(_("_Next Item"), "NextItem",
                              Shortcut(RIGHT_ARROW, MOD),
                              groups=["Playing"]),
-                    MenuItem(_("_Previous Video"), "PreviousVideo",
+                    MenuItem(_("_Previous Item"), "PreviousItem",
                              Shortcut(LEFT_ARROW, MOD),
                              groups=["Playing"]),
                     Separator(),
@@ -355,7 +355,7 @@ def action_handler(name):
         return func
     return decorator
 
-# Video/File menu
+# File menu
 @action_handler("Open")
 def on_open():
     app.widgetapp.open_video()
@@ -459,20 +459,20 @@ def on_remove_playlists():
     app.widgetapp.remove_current_playlist()
 
 # Playback menu
-@action_handler("PlayPauseVideo")
-def on_play_pause_video():
+@action_handler("PlayPauseItem")
+def on_play_pause_item():
     app.widgetapp.on_play_clicked()
 
-@action_handler("StopVideo")
-def on_stop_video():
+@action_handler("StopItem")
+def on_stop_item():
     app.widgetapp.on_stop_clicked()
 
-@action_handler("NextVideo")
-def on_next_video():
+@action_handler("NextItem")
+def on_next_item():
     app.widgetapp.on_forward_clicked()
 
-@action_handler("PreviousVideo")
-def on_previous_video():
+@action_handler("PreviousItem")
+def on_previous_item():
     app.widgetapp.on_previous_clicked()
 
 @action_handler("FastForward")

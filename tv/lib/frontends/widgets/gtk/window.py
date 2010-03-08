@@ -61,10 +61,10 @@ STOCK_IDS = {
     "CopyItemURL": gtk.STOCK_COPY,
     "RemoveItems": gtk.STOCK_REMOVE,
     "Fullscreen": __get_fullscreen_stock_id(),
-    "StopVideo": gtk.STOCK_MEDIA_STOP,
-    "NextVideo": gtk.STOCK_MEDIA_NEXT,
-    "PreviousVideo": gtk.STOCK_MEDIA_PREVIOUS,
-    "PlayPauseVideo": gtk.STOCK_MEDIA_PLAY,
+    "StopItem": gtk.STOCK_MEDIA_STOP,
+    "NextItem": gtk.STOCK_MEDIA_NEXT,
+    "PreviousItem": gtk.STOCK_MEDIA_PREVIOUS,
+    "PlayPauseItem": gtk.STOCK_MEDIA_PLAY,
     "Open": gtk.STOCK_OPEN,
     "EditPreferences": gtk.STOCK_PREFERENCES,
     "Quit": gtk.STOCK_QUIT,
@@ -189,8 +189,8 @@ class WindowBase(signals.SignalEmitter):
         # we update with the package system.
         this_platform = config.get(prefs.APP_PLATFORM)
         if this_platform == 'linux':
-            video_menu = self.menu_structure.get("VideoMenu")
-            video_menu.remove("CheckVersion")
+            file_menu = self.menu_structure.get("FileMenu")
+            file_menu.remove("CheckVersion")
 
         # generate action groups after making all modifications
         mag = menus.generate_action_groups(self.menu_structure)
@@ -452,8 +452,8 @@ class MainWindow(Window):
         change_label("PlaylistsSelected", "RemovePlaylists", removePlaylists)
         change_label("PlayablesSelected", "RemoveItems", removeItems)
 
-        play_pause = self.menu_structure.get("PlayPauseVideo").state_labels[menu_manager.play_pause_state]
-        change_label("PlayPause", "PlayPauseVideo", play_pause)
+        play_pause = self.menu_structure.get("PlayPauseItem").state_labels[menu_manager.play_pause_state]
+        change_label("PlayPause", "PlayPauseItem", play_pause)
 
     def on_playback_change(self, playback_manager, *extra_args):
         self._ignore_on_subtitles_change = True

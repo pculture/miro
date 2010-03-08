@@ -146,7 +146,6 @@ def populate_menu():
     short_appname = config.get(prefs.SHORT_APP_NAME)
 
     menubar = menus.get_menu()
-    menubar.get("VideoMenu").label = _("_File")
 
     # Application menu
     miroMenuItems = [
@@ -176,7 +175,7 @@ def populate_menu():
     # File menu
     closeWinItem = menus.MenuItem(_("Close Window"), "CloseWindow", 
                                   menus.Shortcut("w", MOD))
-    menubar.get("VideoMenu").append(closeWinItem)
+    menubar.get("FileMenu").append(closeWinItem)
 
     # Edit menu
     editMenuItems = [
@@ -332,7 +331,7 @@ subtitles_menu_handler = SubtitleChangesHandler.alloc().init()
 def on_menu_change(menu_manager):
     main_menu = NSApp().mainMenu()
     play_pause_menu_item = main_menu.itemAtIndex_(5).submenu().itemAtIndex_(0)
-    play_pause = _menu_structure.get("PlayPauseVideo").state_labels[app.menu_manager.play_pause_state]
+    play_pause = _menu_structure.get("PlayPauseItem").state_labels[app.menu_manager.play_pause_state]
     play_pause_menu_item.setTitleWithMnemonic_(play_pause.replace("_", "&"))
 
 def on_playback_change(playback_manager):
