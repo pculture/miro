@@ -542,6 +542,16 @@ class AudioVideoItemsController(SimpleItemListController):
         self.item_list.toggle_non_feed()
         self._toolbar_filter_changed()
 
+    def set_item_filters(self, filters):
+        if 'view-all' in filters:
+            unwatched = False
+            non_feed = False
+        else:
+            unwatched = 'view-unwatched' in filters
+            non_feed = 'view-non-feed' in filters
+            self.item_list.set_filters(unwatched, non_feed)
+        self.widget.toolbar.set_active_filters(filters)
+
 class VideoItemsController(AudioVideoItemsController):
     type = 'videos'
     id = None

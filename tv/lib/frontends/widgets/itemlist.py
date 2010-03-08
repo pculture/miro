@@ -476,6 +476,11 @@ class ItemList(signals.SignalEmitter):
         self.non_feed_only = not self.non_feed_only
         self._recalculate_hidden_items()
 
+    def set_filters(self, unwatched, non_feed):
+        self.unwatched_only = unwatched
+        self.non_feed_only = non_feed
+        self._recalculate_hidden_items()
+
     def set_search_text(self, search_text):
         self._search_text = search_text
         self._recalculate_hidden_items()

@@ -339,7 +339,7 @@ class AudioVideoItemsDisplay(ItemListDisplay):
         initial_filters = app.frontend_states_memory.query_filters(self.type,
                 self.id)
         if initial_filters:
-            self.widget.toolbar.set_active_filters(initial_filters)
+            self.controller.set_item_filters(initial_filters)
 
 class VideoItemsDisplay(AudioVideoItemsDisplay):
     @staticmethod
