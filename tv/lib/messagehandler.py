@@ -209,7 +209,7 @@ class TabTracker(ViewTracker):
                 response.append(info)
                 if isinstance(obj, FolderBase):
                     current_folder_id = obj.id
-                    if obj.getExpanded():
+                    if obj.get_expanded():
                         response.expand_folder(obj.id)
                 else:
                     current_folder_id = None
@@ -696,7 +696,7 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warn("feed folder not found")
         else:
-            folder.setExpanded(message.expanded)
+            folder.set_expanded(message.expanded)
 
     def handle_update_feed(self, message):
         try:
@@ -712,7 +712,7 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warn("folder not found: %s" % id)
         else:
-            for feed in f.getChildrenView():
+            for feed in f.get_children_view():
                 feed.update()
 
     def handle_update_all_feeds(self, message):
@@ -967,7 +967,7 @@ class BackendMessageHandler(messages.MessageHandler):
         else:
             if not feed_.url.startswith("dtv:directoryfeed:"):
                 raise ValueError("%s is not a watched folder" % feed_)
-            feed_.setVisible(message.visible)
+            feed_.set_visible(message.visible)
 
     def handle_new_playlist(self, message):
         name = message.name

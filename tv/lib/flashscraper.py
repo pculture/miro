@@ -40,8 +40,8 @@ from urllib import unquote_plus
 from miro.util import check_u
 
 def is_maybe_flashscrapable(url):
-    """Returns whether or not the given url is possibly handled by one of
-    the flash url converters we have.
+    """Returns whether or not the given url is possibly handled by one
+    of the flash url converters we have.
 
     Example:
 
