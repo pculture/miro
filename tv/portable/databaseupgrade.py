@@ -102,7 +102,8 @@ def get_object_tables(cursor):
     """Returns a list of tables that store ``DDBObject`` subclasses.
     """
     cursor.execute("SELECT name FROM sqlite_master "
-            "WHERE type='table' and name != 'dtv_variables'")
+            "WHERE type='table' AND name != 'dtv_variables' AND "
+            "name NOT LIKE 'sqlite%'")
     return [row[0] for row in cursor]
 
 def get_next_id(cursor):
