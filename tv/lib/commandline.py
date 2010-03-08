@@ -66,7 +66,8 @@ _command_line_view = None
 def _item_exists_for_path(path):
     # in SQLite, LIKE is case insensitive, so we can use it to only look at
     # filenames that possibly will match
-    for item_ in item.Item.make_view('filename LIKE ?', (path,)):
+    for item_ in item.Item.make_view('filename LIKE ?',
+            (filenameToUnicode(path),)):
         if samefile(item_.filename, path):
             return item_
     return False
