@@ -206,7 +206,7 @@ class DownloaderDaemon(Daemon):
         if self.shutdown:
             return
         self.shutdown = True
-        eventloop.quit()
+        eventloop.shutdown()
         logging.warning ("downloader: connection closed -- quitting")
         from miro.dl_daemon import download
         download.shutDown()
@@ -297,4 +297,4 @@ class ControllerDaemon(Daemon):
         c.send()
         self.shutdown = True
         config.remove_change_callback(self.updateConfig)
-        self.shutdown_timeout_dc = eventloop.addTimeout(timeout, self.shutdown_timeout_cb, "Waiting for dl_daemon shutdown")
+        self.shutdown_timeout_dc = eventloop.add_timeout(timeout, self.shutdown_timeout_cb, "Waiting for dl_daemon shutdown")

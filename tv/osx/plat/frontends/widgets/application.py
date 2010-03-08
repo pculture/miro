@@ -377,7 +377,7 @@ class AppController(NSObject):
                 logging.info("System is going to sleep, suspending %d download(s)." % dlCount)
                 for dl in self.pausedDownloaders:
                     dl.pause()
-        dc = eventloop.addUrgentCall(lambda:pauseRunningDownloaders(), "Suspending downloaders for sleep")
+        dc = eventloop.add_urgent_call(lambda:pauseRunningDownloaders(), "Suspending downloaders for sleep")
         # Until we can get proper delayed call completion notification, we're
         # just going to wait a few seconds here :)
         time.sleep(3)
@@ -393,14 +393,14 @@ class AppController(NSObject):
                         dl.start()
                 finally:
                     self.pausedDownloaders = list()
-        eventloop.addUrgentCall(lambda:restartPausedDownloaders(), "Resuming downloaders after sleep")
+        eventloop.add_urgent_call(lambda:restartPausedDownloaders(), "Resuming downloaders after sleep")
 
     @signature('v@:@@')
     def openURL_withReplyEvent_(self, event, replyEvent):
         keyDirectObject = struct.unpack(">i", "----")[0]
         url = event.paramDescriptorForKeyword_(keyDirectObject).stringValue().encode('utf8')
 
-        eventloop.addIdle(lambda: commandline.parse_command_line_args([url]), "Open URL")
+        eventloop.add_idle(lambda: commandline.parse_command_line_args([url]), "Open URL")
 
     def validateUserInterfaceItem_(self, menuitem):
         action = menuitem.representedObject()

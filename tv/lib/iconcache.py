@@ -58,7 +58,7 @@ class IconCacheUpdater:
                    and item.url == item.dbItem.get_thumbnail_url()):
                 is_vital = False
         if self.runningCount < RUNNING_MAX:
-            eventloop.addIdle(item.request_icon, "Icon Request")
+            eventloop.add_idle(item.request_icon, "Icon Request")
             self.runningCount += 1
         else:
             if is_vital:
@@ -79,7 +79,7 @@ class IconCacheUpdater:
             self.runningCount -= 1
             return
 
-        eventloop.addIdle(item.request_icon, "Icon Request")
+        eventloop.add_idle(item.request_icon, "Icon Request")
 
     @eventloop.as_idle
     def clear_vital(self):
@@ -164,7 +164,7 @@ class IconCache(DDBObject):
             self.needsUpdate = False
             self.request_update(True)
         elif error is not None:
-            eventloop.addTimeout(3600, self.request_update, "Thumbnail request for %s" % url)
+            eventloop.add_timeout(3600, self.request_update, "Thumbnail request for %s" % url)
         iconCacheUpdater.update_finished()
 
     def update_icon_cache(self, url, info):

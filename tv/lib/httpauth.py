@@ -44,7 +44,7 @@ def find_http_auth(callback, host, path):
     auth = downloader.find_http_auth(host, path)
     if auth is not None:
         auth = formatAuthString(auth)
-    eventloop.addIdle(callback, "http auth callback", args=(auth,))
+    eventloop.add_idle(callback, "http auth callback", args=(auth,))
 
 def askForHTTPAuth(callback, url, realm, authScheme):
     """Ask the user for a username and password to login to a site.  Callback

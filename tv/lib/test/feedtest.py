@@ -105,7 +105,7 @@ class FeedTestCase(EventLoopTest):
     def update_feed(self, feed):
         feed.update()
         self.processThreads()
-        self.processIdles()
+        self.process_idles()
 
     def make_feed(self):
         feed = Feed(self.url)
@@ -374,14 +374,14 @@ class OldItemExpireTest(FeedTestCase):
         self.feed.actualFeed.clean_old_items()
         while self.feed.actualFeed.updating:
             self.processThreads()
-            self.processIdles()
+            self.process_idles()
             sleep(0.1)
         self.assertEquals(Item.make_view().count(), 6)            
         self.feed.setMaxOldItems(2)
         self.feed.actualFeed.clean_old_items()
         while self.feed.actualFeed.updating:
             self.processThreads()
-            self.processIdles()
+            self.process_idles()
             sleep(0.1)
         self.assertEquals(Item.make_view().count(), 4)
         self.check_guids(3, 4, 5, 6)
@@ -396,14 +396,14 @@ class OldItemExpireTest(FeedTestCase):
         self.feed.actualFeed.clean_old_items()
         while self.feed.actualFeed.updating:
             self.processThreads()
-            self.processIdles()
+            self.process_idles()
             sleep(0.1)
         self.assertEquals(Item.make_view().count(), 6)
         config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 2)
         self.feed.actualFeed.clean_old_items()
         while self.feed.actualFeed.updating:
             self.processThreads()
-            self.processIdles()
+            self.process_idles()
             sleep(0.1)
         self.assertEquals(Item.make_view().count(), 4)
         self.check_guids(3, 4, 5, 6)

@@ -125,5 +125,5 @@ def _check_validity():
 def _notify_listeners(key, value):
     from miro import eventloop
     for callback in _callbacks:
-        eventloop.addIdle(callback, 'config callback: %s' % callback,
-                          args=(key, value))
+        eventloop.add_idle(callback, 'config callback: %s' % callback,
+                           args=(key, value))

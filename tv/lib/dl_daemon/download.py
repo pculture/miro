@@ -345,7 +345,7 @@ class DownloadStatusUpdater:
         self.toUpdate = set()
 
     def startUpdates(self):
-        eventloop.addTimeout(self.UPDATE_CLIENT_INTERVAL, self.doUpdate,
+        eventloop.add_timeout(self.UPDATE_CLIENT_INTERVAL, self.doUpdate,
                 "Download status update")
 
     def doUpdate(self):
@@ -359,7 +359,7 @@ class DownloadStatusUpdater:
                 command.BatchUpdateDownloadStatus(daemon.lastDaemon, 
                         statuses).send()
         finally:
-            eventloop.addTimeout(self.UPDATE_CLIENT_INTERVAL, self.doUpdate,
+            eventloop.add_timeout(self.UPDATE_CLIENT_INTERVAL, self.doUpdate,
                     "Download status update")
 
     def queueUpdate(self, downloader):
@@ -527,7 +527,7 @@ class BGDownloader:
         self.retryCount = self.retryCount + 1
         if self.retryCount >= len(RETRY_TIMES):
             self.retryCount = len(RETRY_TIMES) - 1
-        self.retryDC = eventloop.addTimeout(RETRY_TIMES[self.retryCount], self.retryDownload, "Logarithmic retry")
+        self.retryDC = eventloop.add_timeout(RETRY_TIMES[self.retryCount], self.retryDownload, "Logarithmic retry")
         self.retryTime = datetime.datetime.now() + datetime.timedelta(seconds = RETRY_TIMES[self.retryCount])
         self.updateClient()
 

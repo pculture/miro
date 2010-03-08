@@ -135,7 +135,7 @@ def migrate_file(source, dest, callback, retry_after=10, retry_for=60):
                 # permission denied, assume this means it's open by another
                 # process on windows.
                 logging.info('Retrying migration')
-                eventloop.addTimeout(retry_after, migrate_file,
+                eventloop.add_timeout(retry_after, migrate_file,
                         "Migrate File Retry", args=(source, dest, callback,
                             retry_after, retry_for - retry_after))
     except TypeError, e:
@@ -181,7 +181,7 @@ def delete(path, retry_after=10, retry_for=60):
             # process on windows.
             deletes_in_progress.add(path)
             logging.info('Retrying delete')
-            eventloop.addTimeout(retry_after, delete,
+            eventloop.add_timeout(retry_after, delete,
                     "Delete File Retry", args=(path, retry_after,
                         retry_for - retry_after))
     else:

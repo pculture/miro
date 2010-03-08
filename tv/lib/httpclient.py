@@ -333,7 +333,7 @@ class AsyncSocket(object):
         self.lastClock = clock()
         if self.readTimeout is not None:
             return
-        self.readTimeout = eventloop.addTimeout(SOCKET_INITIAL_READ_TIMEOUT, self.onReadTimeout,
+        self.readTimeout = eventloop.add_timeout(SOCKET_INITIAL_READ_TIMEOUT, self.onReadTimeout,
                 "AsyncSocket.onReadTimeout")
 
     def stopReadTimeout(self):
@@ -368,8 +368,8 @@ class AsyncSocket(object):
                 trap_call(self, errback, ConnectionError('gaierror'))
                 return
             if rv in (0, errno.EINPROGRESS, errno.EWOULDBLOCK):
-                eventloop.addWriteCallback(self.socket, onWriteReady)
-                self.socketConnectTimeout = eventloop.addTimeout(
+                eventloop.add_write_callback(self.socket, onWriteReady)
+                self.socketConnectTimeout = eventloop.add_timeout(
                         SOCKET_CONNECT_TIMEOUT, onWriteTimeout,
                         "socket connect timeout")
             else:
@@ -379,7 +379,7 @@ class AsyncSocket(object):
                     msg = "Unknown connection error: %s" % rv
                 trap_call(self, errback, ConnectionError(msg))
         def onWriteReady():
-            eventloop.removeWriteCallback(self.socket)
+            eventloop.remove_write_callback(self.socket)
             self.socketConnectTimeout.cancel()
             rv = self.socket.getsockopt(socket.SOL_SOCKET, socket.SO_ERROR)
             if rv == 0:
@@ -389,15 +389,15 @@ class AsyncSocket(object):
                 trap_call(self, errback, ConnectionError(msg))
             self.connectionErrback = None
         def onWriteTimeout():
-            eventloop.removeWriteCallback(self.socket)
+            eventloop.remove_write_callback(self.socket)
             trap_call(self, errback, ConnectionTimeout(host))
             self.connectionErrback = None
-        eventloop.callInThread(onAddressLookup, handleGetHostByNameException,
+        eventloop.call_in_thread(onAddressLookup, handleGetHostByNameException,
                 socket.gethostbyname, "getHostByName - %s" % host, host)
 
     def acceptConnection(self, host, port, callback, errback):
         def finishAccept():
-            eventloop.removeReadCallback(self.socket)
+            eventloop.remove_read_callback(self.socket)
             (self.socket, addr) = self.socket.accept()
             trap_call(self, callback, self)
             self.connectionErrback = None
@@ -408,11 +408,11 @@ class AsyncSocket(object):
         self.socket.bind((host, port))
         (self.addr, self.port) = self.socket.getsockname()
         self.socket.listen(63)
-        eventloop.addReadCallback(self.socket, finishAccept)
+        eventloop.add_read_callback(self.socket, finishAccept)
 
     def closeConnection(self):
         if self.isOpen():
-            eventloop.stopHandlingSocket(self.socket)
+            eventloop.stop_handling_socket(self.socket)
             self.stopReadTimeout()
             self.socket.close()
             self.socket = None
@@ -434,7 +434,7 @@ class AsyncSocket(object):
         if not self.isOpen():
             raise ValueError("Socket not connected")
         self.toSend.append(_Packet(data, callback))
-        eventloop.addWriteCallback(self.socket, self.onWriteReady)
+        eventloop.add_write_callback(self.socket, self.onWriteReady)
 
     def startReading(self, readCallback):
         """Start reading from the socket.  When data becomes available it will
@@ -445,7 +445,7 @@ class AsyncSocket(object):
         if not self.isOpen():
             raise ValueError("Socket not connected")
         self.readCallback = readCallback
-        eventloop.addReadCallback(self.socket, self.onReadReady)
+        eventloop.add_read_callback(self.socket, self.onReadReady)
         self.startReadTimeout()
 
     def stopReading(self):
@@ -454,7 +454,7 @@ class AsyncSocket(object):
         if not self.isOpen():
             raise ValueError("Socket not connected")
         self.readCallback = None
-        eventloop.removeReadCallback(self.socket)
+        eventloop.remove_read_callback(self.socket)
         self.stopReadTimeout()
 
     def onReadTimeout(self):
@@ -464,7 +464,7 @@ class AsyncSocket(object):
             timeout = SOCKET_INITIAL_READ_TIMEOUT
 
         if clock() < self.lastClock + timeout:
-            self.readTimeout = eventloop.addTimeout(self.lastClock + timeout - clock(), self.onReadTimeout,
+            self.readTimeout = eventloop.add_timeout(self.lastClock + timeout - clock(), self.onReadTimeout,
                 "AsyncSocket.onReadTimeout")
         else:
             self.readTimeout = None
@@ -503,7 +503,7 @@ class AsyncSocket(object):
                     self.toSend[0].callback()
                 self.toSend = self.toSend[1:]
         if len(self.toSend) == 0:
-            eventloop.removeWriteCallback(self.socket)
+            eventloop.remove_write_callback(self.socket)
 
     def onReadReady(self):
         try:
@@ -550,7 +550,7 @@ class AsyncSSLStream(AsyncSocket):
     def openConnection(self, host, port, callback, errback, disableReadTimeout=None):
         def onSocketOpen(self):
             self.socket.setblocking(1)
-            eventloop.callInThread(onSSLOpen, handleSSLError, convert_to_ssl,
+            eventloop.call_in_thread(onSSLOpen, handleSSLError, convert_to_ssl,
                                    "AsyncSSL onSocketOpen()",
                                    self.socket)
         def onSSLOpen(ssl):
@@ -570,9 +570,9 @@ class AsyncSSLStream(AsyncSocket):
 
     def resumeNormalCallbacks(self):
         if self.readCallback is not None:
-            eventloop.addReadCallback(self.socket, self.onReadReady)
+            eventloop.add_read_callback(self.socket, self.onReadReady)
         if len(self.toSend) != 0:
-            eventloop.addWriteCallback(self.socket, self.onWriteReady)
+            eventloop.add_write_callback(self.socket, self.onWriteReady)
 
     def handleSocketError(self, code, msg, operation):
         if code in (socket.SSL_ERROR_WANT_READ, socket.SSL_ERROR_WANT_WRITE):
@@ -583,11 +583,11 @@ class AsyncSSLStream(AsyncSocket):
                 details="socket error for the wrong SSL operation")
                 self.closeConnection()
                 return
-            eventloop.stopHandlingSocket(self.socket)
+            eventloop.stop_handling_socket(self.socket)
             if code == socket.SSL_ERROR_WANT_READ:
-                eventloop.addReadCallback(self.socket, self.onReadReady)
+                eventloop.add_read_callback(self.socket, self.onReadReady)
             else:
-                eventloop.addWriteCallback(self.socket, self.onWriteReady)
+                eventloop.add_write_callback(self.socket, self.onWriteReady)
         elif code in (socket.SSL_ERROR_ZERO_RETURN, socket.SSL_ERROR_SSL,
                 socket.SSL_ERROR_SYSCALL, socket.SSL_ERROR_EOF):
             self.handleEarlyClose(operation)
@@ -628,7 +628,7 @@ class ProxiedAsyncSSLStream(AsyncSSLStream):
     def openConnection(self, host, port, callback, errback, disableReadTimeout):
         def onSocketOpen(self):
             self.socket.setblocking(1)
-            eventloop.callInThread(onSSLOpen, handleSSLError, lambda: openProxyConnection(self),
+            eventloop.call_in_thread(onSSLOpen, handleSSLError, lambda: openProxyConnection(self),
                                    "ProxiedAsyncSSL openProxyConnection()")
         def openProxyConnection(self):
             headers = {'User-Agent': user_agent(), "Host": host}
@@ -651,7 +651,7 @@ class ProxiedAsyncSSLStream(AsyncSSLStream):
                     data += self.socket.recv(1)
                 data = data.split("\r\n")
                 if -1 == data[0].find(' 200 '):
-                    eventloop.addIdle(lambda :handleSSLError(
+                    eventloop.add_idle(lambda :handleSSLError(
                         NetworkError(data[0])), "Network Error")
                 else:
                     return convert_to_ssl(self.socket)
@@ -1225,7 +1225,7 @@ class HTTPConnectionPool(object):
         self.activeConnectionCount = 0
         self.freeConnectionCount = 0
         self.connections = {}
-        eventloop.addTimeout(60, self.cleanupPool, 
+        eventloop.add_timeout(60, self.cleanupPool, 
             "Check HTTP Connection Timeouts")
 
     def _getServerConnections(self, scheme, host, port):
@@ -1413,13 +1413,13 @@ class HTTPConnectionPool(object):
         # This needs to be in an idle so that the connection is added
         # to the "active" list before the open callback happens --NN
         if req['proxy_host']:
-            eventloop.addIdle(lambda : conn.openConnection(req['proxy_host'],
+            eventloop.add_idle(lambda : conn.openConnection(req['proxy_host'],
                                                            req['proxy_port'],
                          openConnectionCallback, openConnectionErrback,
                          disableReadTimeout),
                           "Open connection %s" % str(self))
         else:
-            eventloop.addIdle(lambda : conn.openConnection(req['host'],
+            eventloop.add_idle(lambda : conn.openConnection(req['host'],
                                                            req['port'],
                          openConnectionCallback, openConnectionErrback,
                          disableReadTimeout),
@@ -1450,7 +1450,7 @@ class HTTPConnectionPool(object):
                 conn.closeConnection()
             if len(conns['free']) == len(conns['active']) == 0:
                 del self.connections[serverKey]
-        eventloop.addTimeout(60, self.cleanupPool, 
+        eventloop.add_timeout(60, self.cleanupPool, 
             "HTTP Connection Pool Cleanup")
 
 class HTTPClient(object):

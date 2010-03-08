@@ -70,7 +70,7 @@ def _handle_error(error):
     global check_in_progress
     check_in_progress = False
     logging.warn("HTTP error while checking for updates %s", error)
-    eventloop.addTimeout(86400, check_for_updates, "Check for updates")
+    eventloop.add_timeout(86400, check_for_updates, "Check for updates")
 
 def _handle_app_cast(data, up_to_date_callback):
     """Handle appcast data when it's correctly fetched
@@ -110,7 +110,7 @@ def _handle_app_cast(data, up_to_date_callback):
     finally:
         global check_in_progress
         check_in_progress = False
-        eventloop.addTimeout(86400, check_for_updates, "Check for updates")
+        eventloop.add_timeout(86400, check_for_updates, "Check for updates")
 
 def _get_item_for_latest(appcast):
     """Filter out non platform items, sort remaining from latest to

@@ -81,9 +81,7 @@ class DelayedCall(object):
                                self.name, end-start)
             try:
                 total = cumulative[self.name]
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
+            except (KeyError, AttributeError):
                 total = 0
             total += end - start
             cumulative[self.name] = total
@@ -98,14 +96,14 @@ class Scheduler(object):
     def __init__(self):
         self.heap = []
 
-    def addTimeout(self, delay, function, name, args=None, kwargs=None):
+    def add_timeout(self, delay, function, name, args=None, kwargs=None):
         if args is None:
             args = ()
         if kwargs is None:
             kwargs = {}
-        scheduledTime = clock() + delay
+        scheduled_time = clock() + delay
         dc = DelayedCall(function,  "timeout (%s)" % (name,), args, kwargs)
-        heapq.heappush(self.heap, (scheduledTime, dc))
+        heapq.heappush(self.heap, (scheduled_time, dc))
         return dc
 
     def next_timeout(self):
@@ -114,23 +112,24 @@ class Scheduler(object):
         else:
             return max(0, self.heap[0][0] - clock())
 
-    def hasPendingTimeout(self):
+    def has_pending_timeout(self):
         return len(self.heap) > 0 and self.heap[0][0] < clock()
 
     def process_next_timeout(self):
         time, dc = heapq.heappop(self.heap)
         return dc.dispatch()
 
-    def processTimeouts(self):
-        while self.hasPendingTimeout():
-            self.process_next_timeout()
+    # FIXME - never gets used
+    ## def processTimeouts(self):
+    ##     while self.has_pending_timeout():
+    ##         self.process_next_timeout()
 
 class CallQueue(object):
     def __init__(self):
         self.queue = Queue.Queue()
         self.quit_flag = False
 
-    def addIdle(self, function, name, args=None, kwargs=None):
+    def add_idle(self, function, name, args=None, kwargs=None):
         if args is None:
             args = ()
         if kwargs is None:
@@ -139,16 +138,17 @@ class CallQueue(object):
         self.queue.put(dc)
         return dc
 
-    def processNextIdle(self):
+    def process_next_idle(self):
         dc = self.queue.get()
         return dc.dispatch()
 
-    def hasPendingIdle(self):
+    def has_pending_idle(self):
         return not self.queue.empty()
 
-    def processIdles(self):
-        while self.hasPendingIdle() and not self.quit_flag:
-            self.processNextIdle()
+    def process_idles(self):
+        # Note: used for testing purposes
+        while self.has_pending_idle() and not self.quit_flag:
+            self.process_next_idle()
 
 class ThreadPool(object):
     """The thread pool is used to handle calls like gethostbyname()
@@ -158,12 +158,12 @@ class ThreadPool(object):
     """
     THREADS = 3
 
-    def __init__(self, eventLoop):
-        self.eventLoop = eventLoop
+    def __init__(self, event_loop):
+        self.event_loop = event_loop
         self.queue = Queue.Queue()
         self.threads = []
 
-    def initThreads(self):
+    def init_threads(self):
         while len(self.threads) < ThreadPool.THREADS:
             t = threading.Thread(name='ThreadPool - %d' % len(self.threads),
                                  target=self.thread_loop)
@@ -173,31 +173,31 @@ class ThreadPool(object):
 
     def thread_loop(self):
         while True:
-            nextItem = self.queue.get()
-            if nextItem == "QUIT":
+            next_item = self.queue.get()
+            if next_item == "QUIT":
                 break
             else:
-                callback, errback, func, name, args, kwargs, = nextItem
+                callback, errback, func, name, args, kwargs, = next_item
             try:
                 result = func(*args, **kwargs)
             except KeyboardInterrupt:
                 raise
-            except Exception, e:
+            except Exception, exc:
                 func = errback
                 name = 'Thread Pool Errback (%s)' % name
-                args = (e,)
+                args = (exc,)
             else:
                 func = callback
                 name = 'Thread Pool Callback (%s)' % name
                 args = (result,)
-            if not self.eventLoop.quitFlag:
-                self.eventLoop.idleQueue.addIdle(func, name, args=args)
-                self.eventLoop.wakeup()
+            if not self.event_loop.quit_flag:
+                self.event_loop.idle_queue.add_idle(func, name, args=args)
+                self.event_loop.wakeup()
 
-    def queueCall(self, callback, errback, function, name, *args, **kwargs):
+    def queue_call(self, callback, errback, function, name, *args, **kwargs):
         self.queue.put((callback, errback, function, name, args, kwargs))
 
-    def closeThreads(self):
+    def close_threads(self):
         for x in xrange(len(self.threads)):
             self.queue.put("QUIT")
         while len(self.threads) > 0:
@@ -218,46 +218,47 @@ class EventLoop(signals.SignalEmitter):
                                        'end-loop',
                                        'event-finished')
         self.scheduler = Scheduler()
-        self.idleQueue = CallQueue()
-        self.urgentQueue = CallQueue()
-        self.threadPool = ThreadPool(self)
-        self.readCallbacks = {}
-        self.writeCallbacks = {}
-        self.wakeSender, self.wakeReceiver = util.make_dummy_socket_pair()
-        self.addReadCallback(self.wakeReceiver, self._slurpWakerData)
-        self.quitFlag = False
-        self.clearRemovedCallbacks()
+        self.idle_queue = CallQueue()
+        self.urgent_queue = CallQueue()
+        self.threadpool = ThreadPool(self)
+        self.read_callbacks = {}
+        self.write_callbacks = {}
+        self.wake_sender, self.wake_receiver = util.make_dummy_socket_pair()
+        self.add_read_callback(self.wake_receiver, self._slurp_waker_data)
+        self.quit_flag = False
+        self.clear_removed_callbacks()
         self.loop_ready = threading.Event()
 
-    def clearRemovedCallbacks(self):
-        self.removedReadCallbacks = set()
-        self.removedWriteCallbacks = set()
+    def clear_removed_callbacks(self):
+        self.removed_read_callbacks = set()
+        self.removed_write_callbacks = set()
 
-    def _slurpWakerData(self):
-        self.wakeReceiver.recv(1024)
+    def _slurp_waker_data(self):
+        self.wake_receiver.recv(1024)
 
-    def addReadCallback(self, socket, callback):
-        self.readCallbacks[socket.fileno()] = callback
+    def add_read_callback(self, sock, callback):
+        self.read_callbacks[sock.fileno()] = callback
 
-    def removeReadCallback(self, socket):
-        del self.readCallbacks[socket.fileno()]
-        self.removedReadCallbacks.add(socket.fileno())
+    def remove_read_callback(self, sock):
+        del self.read_callbacks[sock.fileno()]
+        self.removed_read_callbacks.add(sock.fileno())
 
-    def addWriteCallback(self, socket, callback):
-        self.writeCallbacks[socket.fileno()] = callback
+    def add_write_callback(self, sock, callback):
+        self.write_callbacks[sock.fileno()] = callback
 
-    def removeWriteCallback(self, socket):
-        del self.writeCallbacks[socket.fileno()]
-        self.removedWriteCallbacks.add(socket.fileno())
+    def remove_write_callback(self, sock):
+        del self.write_callbacks[sock.fileno()]
+        self.removed_write_callbacks.add(sock.fileno())
 
     def wakeup(self):
         try:
-            self.wakeSender.send("b")
+            self.wake_sender.send("b")
         except socket.error, e:
             logging.warn("Error waking up eventloop (%s)", e)
 
-    def callInThread(self, callback, errback, function, name, *args, **kwargs):
-        self.threadPool.queueCall(callback, errback, function, name,
+    def call_in_thread(self, callback, errback, function, name,
+                       *args, **kwargs):
+        self.threadpool.queue_call(callback, errback, function, name,
                                   *args, **kwargs)
 
     def loop(self):
@@ -266,12 +267,12 @@ class EventLoop(signals.SignalEmitter):
         self.emit('thread-started', threading.currentThread())
         self.emit('thread-did-start')
 
-        while not self.quitFlag:
+        while not self.quit_flag:
             self.emit('begin-loop')
-            self.clearRemovedCallbacks()
+            self.clear_removed_callbacks()
             timeout = self.scheduler.next_timeout()
-            readfds = self.readCallbacks.keys()
-            writefds = self.writeCallbacks.keys()
+            readfds = self.read_callbacks.keys()
+            writefds = self.write_callbacks.keys()
             try:
                 readables, writeables, _ = select.select(readfds, writefds,
                                                          [], timeout)
@@ -280,26 +281,26 @@ class EventLoop(signals.SignalEmitter):
                     logging.warning ("eventloop: %s", detail)
                 else:
                     raise
-            if self.quitFlag:
+            if self.quit_flag:
                 break
             self._process_urgent_events()
-            for event in self.generateEvents(readables, writeables):
+            for event in self.generate_events(readables, writeables):
                 success = event()
                 self.emit('event-finished', success)
-                if self.quitFlag:
+                if self.quit_flag:
                     break
                 self._process_urgent_events()
-                if self.quitFlag:
+                if self.quit_flag:
                     break
             self.emit('end-loop')
 
     def _process_urgent_events(self):
-        queue = self.urgentQueue
-        while queue.hasPendingIdle() and not queue.quit_flag:
-            success = queue.processNextIdle()
+        queue = self.urgent_queue
+        while queue.has_pending_idle() and not queue.quit_flag:
+            success = queue.process_next_idle()
             self.emit('event-finished', success)
 
-    def generateEvents(self, readables, writeables):
+    def generate_events(self, readables, writeables):
         """Generator that creates the list of events that should be
         dealt with on this iteration of the event loop.  This includes
         all socket read/write callbacks, timeouts and idle calls.
@@ -307,21 +308,21 @@ class EventLoop(signals.SignalEmitter):
         "events" are implemented as functions that should be called
         with no arguments.
         """
-        for callback in self.generateCallbacks(writeables,
-                                               self.writeCallbacks,
-                                               self.removedWriteCallbacks):
+        for callback in self.generate_callbacks(writeables,
+                                               self.write_callbacks,
+                                               self.removed_write_callbacks):
             yield callback
-        for callback in self.generateCallbacks(readables,
-                                               self.readCallbacks,
-                                               self.removedReadCallbacks):
+        for callback in self.generate_callbacks(readables,
+                                               self.read_callbacks,
+                                               self.removed_read_callbacks):
             yield callback
-        while self.scheduler.hasPendingTimeout():
+        while self.scheduler.has_pending_timeout():
             yield self.scheduler.process_next_timeout
-        while self.idleQueue.hasPendingIdle():
-            yield self.idleQueue.processNextIdle
+        while self.idle_queue.has_pending_idle():
+            yield self.idle_queue.process_next_idle
 
-    def generateCallbacks(self, readyList, map_, removed):
-        for fd in readyList:
+    def generate_callbacks(self, ready_list, map_, removed):
+        for fd in ready_list:
             try:
                 function = map_[fd]
             except KeyError:
@@ -332,169 +333,175 @@ class EventLoop(signals.SignalEmitter):
                 if fd in removed:
                     continue
                 when = "While talking to the network"
-                def callbackEvent():
+                def callback_event():
                     success = trapcall.trap_call(when, function)
                     if not success:
                         del map_[fd]
                     return success
-                yield callbackEvent
+                yield callback_event
 
     def quit(self):
-        self.quitFlag = True
-        self.idleQueue.quit_flag = True
-        self.urgentQueue.quit_flag = True
+        self.quit_flag = True
+        self.idle_queue.quit_flag = True
+        self.urgent_queue.quit_flag = True
 
-_eventLoop = EventLoop()
+_eventloop = EventLoop()
 
-def addReadCallback(socket, callback):
+def add_read_callback(sock, callback):
     """Add a read callback.  When socket is ready for reading,
     callback will be called.  If there is already a read callback
     installed, it will be replaced.
     """
-    _eventLoop.addReadCallback(socket, callback)
+    _eventloop.add_read_callback(sock, callback)
 
-def removeReadCallback(socket):
+def remove_read_callback(sock):
     """Remove a read callback.  If there is not a read callback
     installed for socket, a KeyError will be thrown.
     """
-    _eventLoop.removeReadCallback(socket)
+    _eventloop.remove_read_callback(sock)
 
-def addWriteCallback(socket, callback):
+def add_write_callback(sock, callback):
     """Add a write callback.  When socket is ready for writing,
     callback will be called.  If there is already a write callback
     installed, it will be replaced.
     """
-    _eventLoop.addWriteCallback(socket, callback)
+    _eventloop.add_write_callback(sock, callback)
 
-def removeWriteCallback(socket):
+def remove_write_callback(sock):
     """Remove a write callback.  If there is not a write callback
     installed for socket, a KeyError will be thrown.
     """
-    _eventLoop.removeWriteCallback(socket)
+    _eventloop.remove_write_callback(sock)
 
-def stopHandlingSocket(socket):
+def stop_handling_socket(sock):
     """Convience function to that removes both the read and write
     callback for a socket if they exist.
     """
     try:
-        removeReadCallback(socket)
+        remove_read_callback(sock)
     except KeyError:
         pass
     try:
-        removeWriteCallback(socket)
+        remove_write_callback(sock)
     except KeyError:
         pass
 
-def addTimeout(delay, function, name, args=None, kwargs=None):
+def add_timeout(delay, function, name, args=None, kwargs=None):
     """Schedule a function to be called at some point in the future.
     Returns a ``DelayedCall`` object that can be used to cancel the
     call.
     """
-    dc = _eventLoop.scheduler.addTimeout(delay, function, name, args, kwargs)
+    dc = _eventloop.scheduler.add_timeout(delay, function, name, args, kwargs)
     return dc
 
-def addIdle(function, name, args=None, kwargs=None):
+def add_idle(function, name, args=None, kwargs=None):
     """Schedule a function to be called when we get some spare time.
     Returns a ``DelayedCall`` object that can be used to cancel the
     call.
     """
-    dc = _eventLoop.idleQueue.addIdle(function, name, args, kwargs)
-    _eventLoop.wakeup()
+    dc = _eventloop.idle_queue.add_idle(function, name, args, kwargs)
+    _eventloop.wakeup()
     return dc
 
-def addUrgentCall(function, name, args=None, kwargs=None):
+def add_urgent_call(function, name, args=None, kwargs=None):
     """Schedule a function to be called as soon as possible.  This
     method should be used for things like GUI actions, where the user
     is waiting on us.
     """
-    dc = _eventLoop.urgentQueue.addIdle(function, name, args, kwargs)
-    _eventLoop.wakeup()
+    dc = _eventloop.urgent_queue.add_idle(function, name, args, kwargs)
+    _eventloop.wakeup()
     return dc
 
-def callInThread(callback, errback, function, name, *args, **kwargs):
-    """Schedule a function to be called in a separate thread. Do not
-    put code that accesses the database or the UI here!
+def call_in_thread(callback, errback, function, name, *args, **kwargs):
+    """Schedule a function to be called in a separate thread.
+
+    .. Warning::
+
+       Do not put code that accesses the database or the UI here!
     """
-    _eventLoop.callInThread(callback, errback, function, name, *args, **kwargs)
+    _eventloop.call_in_thread(
+        callback, errback, function, name, *args, **kwargs)
 
 lt = None
 
 profile_file = None
 
 def startup():
-    threadPoolInit()
+    thread_pool_init()
 
     def profile_startup():
         import profile
-        def start_loop():
-            _eventLoop.loop()
-        profile.runctx('_eventLoop.loop()', globals(), locals(),
+        profile.runctx('_eventloop.loop()', globals(), locals(),
                        profile_file + ".event_loop")
 
     global lt
     if profile_file:
         lt = threading.Thread(target=profile_startup, name="Event Loop")
     else:
-        lt = threading.Thread(target=_eventLoop.loop, name="Event Loop")
+        lt = threading.Thread(target=_eventloop.loop, name="Event Loop")
     lt.setDaemon(False)
     lt.start()
-    _eventLoop.loop_ready.wait()
+    _eventloop.loop_ready.wait()
 
 def join():
     if lt is not None:
         lt.join()
 
-def quit():
-    threadPoolQuit()
-    _eventLoop.quit()
-    _eventLoop.wakeup()
+def shutdown():
+    """Shuts down the thread pool and eventloop.
+    """
+    thread_pool_quit()
+    _eventloop.quit()
+    _eventloop.wakeup()
 
 def connect(signal, callback):
-    _eventLoop.connect(signal, callback)
+    _eventloop.connect(signal, callback)
 
 def disconnect(signal, callback):
-    _eventLoop.disconnect(signal, callback)
+    _eventloop.disconnect(signal, callback)
 
-def resetEventLoop():
-    global _eventLoop
-    _eventLoop = EventLoop()
+# FIXME - never used
+## def resetEventLoop():
+##     global _eventloop
+##     _eventloop = EventLoop()
 
-def threadPoolQuit():
-    _eventLoop.threadPool.closeThreads()
+def thread_pool_quit():
+    _eventloop.threadpool.close_threads()
 
-def threadPoolInit():
-    _eventLoop.threadPool.initThreads()
+def thread_pool_init():
+    _eventloop.threadpool.init_threads()
 
 def as_idle(func):
     """Decorator to make a methods run as an idle function
 
-    Suppose you have 2 methods, foo and bar
+    Suppose you have 2 methods, foo and bar::
 
-    @as_idle
-    def foo():
-        # database operations
+        @as_idle
+        def foo():
+            # database operations
 
-    def bar():
-        # same database operations as foo
+        def bar():
+            # same database operations as foo
 
-    Then calling foo() is exactly the same as calling addIdle(bar).
+    Then calling ``foo()`` is exactly the same as calling
+    ``add_idle(bar)``.
     """
     def queuer(*args, **kwargs):
-        return addIdle(func, "%s() (using as_idle)" % func.__name__,
+        return add_idle(func, "%s() (using as_idle)" % func.__name__,
                        args=args, kwargs=kwargs)
     return queuer
 
 def as_urgent(func):
-    """Like ``as_idle``, but uses ``addUrgentCall()`` instead of
-    ``addIdle()``.
+    """Like ``as_idle``, but uses ``add_urgent_call()`` instead of
+    ``add_idle()``.
     """
     def queuer(*args, **kwargs):
-        return addUrgentCall(func, "%s() (using as_urgent)" % func.__name__,
-                             args=args, kwargs=kwargs)
+        return add_urgent_call(func, "%s() (using as_urgent)" % func.__name__,
+                               args=args, kwargs=kwargs)
     return queuer
 
 def idle_iterate(func, name, args=None, kwargs=None):
-    """Iterate over a generator function using addIdle for each
+    """Iterate over a generator function using add_idle for each
     iteration.
 
     This allows long running functions to be split up into distinct
@@ -517,19 +524,19 @@ def idle_iterate(func, name, args=None, kwargs=None):
         args = ()
     if kwargs is None:
         kwargs = {}
-    iter = func(*args, **kwargs)
-    addIdle(_idle_iterate_step, name, args=(iter, name))
+    iterator = func(*args, **kwargs)
+    add_idle(_idle_iterate_step, name, args=(iterator, name))
 
-def _idle_iterate_step(iter, name):
+def _idle_iterate_step(iterator, name):
     try:
-        rv = iter.next()
+        retval = iterator.next()
     except StopIteration:
         return
     else:
-        if rv is not None:
+        if retval is not None:
             logging.warn("idle_iterate yield value ignored: %s (%s)",
-                    rv, name)
-        addIdle(_idle_iterate_step, name, args=(iter, name))
+                         retval, name)
+        add_idle(_idle_iterate_step, name, args=(iterator, name))
 
 def idle_iterator(func):
     """Decorator to wrap a generator function in a ``idle_iterate()``

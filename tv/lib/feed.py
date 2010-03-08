@@ -272,10 +272,10 @@ class FeedImpl(DDBObject):
     def scheduleUpdateEvents(self, firstTriggerDelay):
         self.cancelUpdateEvents()
         if firstTriggerDelay >= 0:
-            self.scheduler = eventloop.addTimeout(firstTriggerDelay, self.update, "Feed update (%s)" % self.get_title())
+            self.scheduler = eventloop.add_timeout(firstTriggerDelay, self.update, "Feed update (%s)" % self.get_title())
         else:
             if self.updateFreq > 0:
-                self.scheduler = eventloop.addTimeout(self.updateFreq, self.update, "Feed update (%s)" % self.get_title())
+                self.scheduler = eventloop.add_timeout(self.updateFreq, self.update, "Feed update (%s)" % self.get_title())
 
     def cancelUpdateEvents(self):
         if hasattr(self, 'scheduler') and self.scheduler is not None:
@@ -547,7 +547,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             # Our initial FeedImpl was never updated, call
             # generateFeed again
             self.loading = True
-            eventloop.addIdle(lambda:self.generateFeed(True), "generateFeed")
+            eventloop.add_idle(lambda:self.generateFeed(True), "generateFeed")
         else:
             self.scheduleUpdateEvents(INITIAL_FEED_UPDATE_DELAY)
 
@@ -960,7 +960,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             d.run(callback)
             self.informOnError = False
         delay = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)
-        eventloop.addTimeout(delay, self.update, "update failed feed")
+        eventloop.add_timeout(delay, self.update, "update failed feed")
 
     def _generateFeedErrback(self, error, removeOnError):
         if not self.id_exists():
@@ -1614,7 +1614,7 @@ class RSSFeedImpl(RSSFeedImplBase):
 
     def call_feedparser(self, html):
         self.ufeed.confirm_db_thread()
-        eventloop.callInThread(self.feedparser_callback,
+        eventloop.call_in_thread(self.feedparser_callback,
                                self.feedparser_errback,
                                feedparser.parse,
                                "Feedparser callback - %s" % self.url, html)
@@ -1795,7 +1795,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
                 self.feedparser_errback(self, None, url)
                 raise
         else:
-            eventloop.callInThread(lambda parsed, url=url: self.feedparser_callback(parsed, url),
+            eventloop.call_in_thread(lambda parsed, url=url: self.feedparser_callback(parsed, url),
                                    lambda e, url=url: self.feedparser_errback(e, url),
                                    feedparser.parse, "Feedparser callback - %s" % url, html)
 
@@ -2637,7 +2637,7 @@ def expire_items():
         for feed in Feed.make_view():
             feed.expire_items()
     finally:
-        eventloop.addTimeout(300, expire_items, "Expire Items")
+        eventloop.add_timeout(300, expire_items, "Expire Items")
 
 def get_feed_by_url(url):
     try:

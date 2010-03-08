@@ -50,7 +50,7 @@ def run_in_event_loop(func):
                 return_hack.append(func(*args, **kwargs))
             finally:
                 event.set()
-        eventloop.addUrgentCall(runThenSet, 'run in event loop')
+        eventloop.add_urgent_call(runThenSet, 'run in event loop')
         event.wait()
         if return_hack:
             return return_hack[0]

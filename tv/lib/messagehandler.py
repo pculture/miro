@@ -131,7 +131,7 @@ class ViewTracker(object):
         # We don't send messages immediately so that if an object gets changed
         # multiple times, only one callback gets sent.
         if not self.changes_pending:
-            eventloop.addUrgentCall(self.send_messages, 'view tracker update' )
+            eventloop.add_urgent_call(self.send_messages, 'view tracker update' )
             self.changes_pending = True
 
     def add_callbacks(self):
@@ -497,7 +497,7 @@ class BackendMessageHandler(messages.MessageHandler):
     def call_handler(self, method, message):
         name = 'handling backend message: %s' % message
         logging.debug("handling backend %s", message)
-        eventloop.addUrgentCall(method, name, args=(message,))
+        eventloop.add_urgent_call(method, name, args=(message,))
 
     def folder_class_for_type(self, type):
         if type in ('feed', 'audio-feed'):
@@ -526,7 +526,7 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_frontend_started(self, message):
         # add a little bit more delay to let things simmer down a bit.  The
         # calls here are low-priority, so we can afford to wait a bit.
-        eventloop.addTimeout(2, self.frontend_startup_callback,
+        eventloop.add_timeout(2, self.frontend_startup_callback,
                 'frontend startup callback')
 
     def handle_query_search_info(self, message):
