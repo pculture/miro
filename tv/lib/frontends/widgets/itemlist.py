@@ -100,7 +100,7 @@ class DateSort(ItemSort):
 class NameSort(ItemSort):
     KEY = 'name'
     def sort_key(self, item):
-        return item.name
+        return item.name.lower()
 
 class LengthSort(ItemSort):
     KEY = 'length'
