@@ -776,7 +776,9 @@ class HTMLStripper(sgmllib.SGMLParser):
             return ("", [])
 
         s = s.replace("\r\n", "\n")
-        if s == "\n":
+
+        # if it's just white space, we skip all the work.
+        if s.isspace():
             return (u"", [])
 
         s = UNARY_RE.sub("<\\1 />", s)
