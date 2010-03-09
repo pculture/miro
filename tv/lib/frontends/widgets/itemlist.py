@@ -100,7 +100,9 @@ class DateSort(ItemSort):
 class NameSort(ItemSort):
     KEY = 'name'
     def sort_key(self, item):
-        return item.name.lower()
+        if item.name:
+            return item.name.lower()
+        return item.name
 
 class LengthSort(ItemSort):
     KEY = 'length'
@@ -120,6 +122,8 @@ class DescriptionSort(ItemSort):
 class FeedNameSort(ItemSort):
     KEY = 'feed-name'
     def sort_key(self, item):
+        if item.feed_name:
+            return item.feed_name.lower()
         return item.feed_name
 
 class StatusCircleSort(ItemSort):
