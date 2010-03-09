@@ -145,7 +145,8 @@ class StatusSort(ItemSort):
         elif item.downloaded and not item.video_watched:
             return 3 # unwatched
         elif item.expiration_date:
-            return 4 # expiring
+            # the tuple here creates a subsort on expiration_date
+            return (4, item.expiration_date) # expiring
         elif not item.item_viewed:
             return 0 # new
         else:
