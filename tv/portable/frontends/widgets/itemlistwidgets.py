@@ -808,7 +808,11 @@ class HeaderToolbar(widgetset.Background):
         if self._current_sort_key == sort_key:
             self._ascending = not self._ascending
         else:
-            self._ascending = False
+            # we want sort-by-name to default to alphabetical order
+            if sort_key == "name":
+                self._ascending = True
+            else:
+                self._ascending = False
             old_button = self._button_map[self._current_sort_key]
             old_button.set_sort_state(SortBarButton.SORT_NONE)
             self._current_sort_key = sort_key
