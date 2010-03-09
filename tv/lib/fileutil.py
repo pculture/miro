@@ -27,8 +27,8 @@
 # statement from all source files in the program, then also delete it here.
 
 
-"""Functions to handle moving/deleting files, especially on windows where file
-locking semantics can cause problems.
+"""Functions to handle moving/deleting files, especially on windows
+where file locking semantics can cause problems.
 """
 
 import logging
@@ -112,10 +112,10 @@ def abspath(path):
 
 
 def migrate_file(source, dest, callback, retry_after=10, retry_for=60):
-    """Try to migrate a file, if this works, callback is called.  If we fail
-    because the file is open, we retry migrating the file every so often (by
-    default every 10 seconds, stopping after 60 seconds).  This probably only
-    makes a difference on Windows.
+    """Try to migrate a file, if this works, callback is called.  If
+    we fail because the file is open, we retry migrating the file
+    every so often (by default every 10 seconds, stopping after 60
+    seconds).  This probably only makes a difference on Windows.
     """
     import eventloop
 
@@ -132,10 +132,10 @@ def migrate_file(source, dest, callback, retry_after=10, retry_for=60):
             pass
         if retry_for > 0:
             if e.errno == 13:
-                # permission denied, assume this means it's open by another
-                # process on windows.
+                # permission denied, assume this means it's open by
+                # another process on windows.
                 logging.info('Retrying migration')
-                eventloop.addTimeout(retry_after, migrate_file,
+                eventloop.add_timeout(retry_after, migrate_file,
                         "Migrate File Retry", args=(source, dest, callback,
                             retry_after, retry_for - retry_after))
     except TypeError, e:
@@ -160,9 +160,9 @@ class DeletesInProgressTracker(set):
 deletes_in_progress = DeletesInProgressTracker()
 
 def delete(path, retry_after=10, retry_for=60):
-    """Try to delete a file or directory.  If this fails because the file is
-    open, we retry deleting the file every so often This probably only makes a
-    difference on Windows.
+    """Try to delete a file or directory.  If this fails because the
+    file is open, we retry deleting the file every so often This
+    probably only makes a difference on Windows.
     """
 
     import eventloop
@@ -181,19 +181,20 @@ def delete(path, retry_after=10, retry_for=60):
             # process on windows.
             deletes_in_progress.add(path)
             logging.info('Retrying delete')
-            eventloop.addTimeout(retry_after, delete,
+            eventloop.add_timeout(retry_after, delete,
                     "Delete File Retry", args=(path, retry_after,
                         retry_for - retry_after))
     else:
         deletes_in_progress.discard(path)
 
 def miro_listdir(directory):
-    """Directory listing that's safe and convenient for finding new videos in
-    a directory.
+    """Directory listing that's safe and convenient for finding new
+    videos in a directory.
 
-    Returns the tuple (files, directories) where both elements are a list of
-    absolute pathnames.  OSErrors are silently ignored.  Hidden files aren't
-    returned.  Pathnames are run through os.path.normcase.
+    Returns the tuple (files, directories) where both elements are a
+    list of absolute pathnames.  OSErrors are silently ignored.
+    Hidden files aren't returned.  Pathnames are run through
+    os.path.normcase.
     """
     # FIXME - this doesn't look used anywhere
 
@@ -209,8 +210,8 @@ def miro_listdir(directory):
         return [], []
     for name in listing:
         if name[0] == '.' or name.lower() == 'thumbs.db':
-            # thumbs.db is a windows file that speeds up thumbnails.  We know
-            # it's not a movie file.
+            # thumbs.db is a windows file that speeds up thumbnails.
+            # We know it's not a movie file.
             continue
         expanded_path = os.path.join(expanded_directory, os.path.normcase(name))
         path = os.path.join(directory, os.path.normcase(name))
@@ -226,13 +227,13 @@ def miro_listdir(directory):
     return files, directories
 
 def miro_allfiles(directory):
-    """Directory listing that's safe and convenient for finding new videos in
-    a directory.
+    """Directory listing that's safe and convenient for finding new
+    videos in a directory.
 
     Returns a list of files consisting of absolute pathnames.
 
-    OSErrors are silently ignored.  Hidden files aren't returned.  Pathnames
-    are run through os.path.normcase.
+    OSErrors are silently ignored.  Hidden files aren't returned.
+    Pathnames are run through os.path.normcase.
     """
     files = []
     expanded_directory = expand_filename(directory)
@@ -247,8 +248,8 @@ def miro_allfiles(directory):
         name_lower = name.lower()
         if (name.startswith('.') or name_lower == 'thumbs.db' or
                 name_lower == "incomplete downloads"):
-            # thumbs.db is a windows file that speeds up thumbnails.  We know
-            # it's not a movie file.
+            # thumbs.db is a windows file that speeds up thumbnails.
+            # We know it's not a movie file.
             continue
         path = os.path.join(directory, os.path.normcase(name))
         expanded_path = os.path.join(expanded_directory, os.path.normcase(name))

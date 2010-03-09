@@ -272,10 +272,10 @@ class FeedImpl(DDBObject):
     def scheduleUpdateEvents(self, firstTriggerDelay):
         self.cancelUpdateEvents()
         if firstTriggerDelay >= 0:
-            self.scheduler = eventloop.addTimeout(firstTriggerDelay, self.update, "Feed update (%s)" % self.get_title())
+            self.scheduler = eventloop.add_timeout(firstTriggerDelay, self.update, "Feed update (%s)" % self.get_title())
         else:
             if self.updateFreq > 0:
-                self.scheduler = eventloop.addTimeout(self.updateFreq, self.update, "Feed update (%s)" % self.get_title())
+                self.scheduler = eventloop.add_timeout(self.updateFreq, self.update, "Feed update (%s)" % self.get_title())
 
     def cancelUpdateEvents(self):
         if hasattr(self, 'scheduler') and self.scheduler is not None:
@@ -547,7 +547,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             # Our initial FeedImpl was never updated, call
             # generateFeed again
             self.loading = True
-            eventloop.addIdle(lambda:self.generateFeed(True), "generateFeed")
+            eventloop.add_idle(lambda:self.generateFeed(True), "generateFeed")
         else:
             self.scheduleUpdateEvents(INITIAL_FEED_UPDATE_DELAY)
 
@@ -759,7 +759,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.confirm_db_thread()
         return self.visible
 
-    def setVisible(self, visible):
+    def set_visible(self, visible):
         if self.visible == visible:
             return
         self.visible = visible
@@ -859,22 +859,22 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             return None
 
-    def set_folder(self, newFolder, update_trackers=True):
+    def set_folder(self, new_folder, update_trackers=True):
         self.confirm_db_thread()
-        oldFolder = self.get_folder()
-        if newFolder is oldFolder:
+        old_folder = self.get_folder()
+        if new_folder is old_folder:
             return
-        if newFolder is not None:
-            self.folder_id = newFolder.get_id()
+        if new_folder is not None:
+            self.folder_id = new_folder.get_id()
         else:
             self.folder_id = None
         self.signal_change()
         if update_trackers:
             models.Item.update_folder_trackers()
-        if newFolder:
-            newFolder.signal_change(needs_save=False)
-        if oldFolder:
-            oldFolder.signal_change(needs_save=False)
+        if new_folder:
+            new_folder.signal_change(needs_save=False)
+        if old_folder:
+            old_folder.signal_change(needs_save=False)
 
     @staticmethod
     def bulk_set_folders(folder_assignments):
@@ -960,7 +960,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             d.run(callback)
             self.informOnError = False
         delay = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)
-        eventloop.addTimeout(delay, self.update, "update failed feed")
+        eventloop.add_timeout(delay, self.update, "update failed feed")
 
     def _generateFeedErrback(self, error, removeOnError):
         if not self.id_exists():
@@ -1228,24 +1228,25 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             return u"OFF"
 
-    def remove(self, moveItemsTo=None):
-        """Remove the feed.  If moveItemsTo is None (the default), the
-        items in this feed will be removed too.  If moveItemsTo is
-        given, the items in this feed will be moved to that feed.
-        """
+    def remove(self, move_items_to=None):
+        """Remove the feed.
 
+        If move_items_to is None (the default), the items in this feed
+        will be removed too.  If move_items_to is given, the items in
+        this feed will be moved to that feed.
+        """
         self.confirm_db_thread()
 
         if isinstance(self.actualFeed, DirectoryWatchFeedImpl):
-            moveItemsTo = None
+            move_items_to = None
         self.cancelUpdateEvents()
         if self.download is not None:
             self.download.cancel()
             self.download = None
         to_remove = []
         for item in self.items:
-            if moveItemsTo is not None and item.is_downloaded():
-                item.setFeed(moveItemsTo.get_id())
+            if move_items_to is not None and item.is_downloaded():
+                item.setFeed(move_items_to.get_id())
             else:
                 to_remove.append(item)
         app.bulk_sql_manager.start()
@@ -1294,10 +1295,10 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.confirm_db_thread()
         return resources.path(self.calcTablistThumbnail())
 
-    def hasDownloadedItems(self):
+    def has_downloaded_items(self):
         return self.num_downloaded() > 0
 
-    def hasDownloadingItems(self):
+    def has_downloading_items(self):
         return self.num_downloading() > 0
 
     def updateIcons(self):
@@ -1614,7 +1615,7 @@ class RSSFeedImpl(RSSFeedImplBase):
 
     def call_feedparser(self, html):
         self.ufeed.confirm_db_thread()
-        eventloop.callInThread(self.feedparser_callback,
+        eventloop.call_in_thread(self.feedparser_callback,
                                self.feedparser_errback,
                                feedparser.parse,
                                "Feedparser callback - %s" % self.url, html)
@@ -1795,7 +1796,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
                 self.feedparser_errback(self, None, url)
                 raise
         else:
-            eventloop.callInThread(lambda parsed, url=url: self.feedparser_callback(parsed, url),
+            eventloop.call_in_thread(lambda parsed, url=url: self.feedparser_callback(parsed, url),
                                    lambda e, url=url: self.feedparser_errback(e, url),
                                    feedparser.parse, "Feedparser callback - %s" % url, html)
 
@@ -2637,7 +2638,7 @@ def expire_items():
         for feed in Feed.make_view():
             feed.expire_items()
     finally:
-        eventloop.addTimeout(300, expire_items, "Expire Items")
+        eventloop.add_timeout(300, expire_items, "Expire Items")
 
 def get_feed_by_url(url):
     try:

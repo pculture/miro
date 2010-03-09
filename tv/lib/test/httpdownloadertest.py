@@ -31,7 +31,7 @@ class TestingDownloader(download.HTTPDownloader):
 
     def updateClient(self):
         self.lastStatus = self.getStatus()
-        self.test.addIdle(self.statusCallback, "status callback")
+        self.test.add_idle(self.statusCallback, "status callback")
 
 class HTTPDownloaderTest(EventLoopTest):
     def setUp(self):
@@ -98,7 +98,7 @@ class HTTPDownloaderTest(EventLoopTest):
         self.assertEquals(self.countConnections(), 0)
         def restart():
             self.downloader.start()
-        self.addTimeout(0.5, restart, 'restarter')
+        self.add_timeout(0.5, restart, 'restarter')
         self.downloader.statusCallback = self.stopOnFinished
         self.runEventLoop()
         self.assertEquals(self.downloader.currentSize, BIGTESTFILE["size"])
@@ -120,7 +120,7 @@ class HTTPDownloaderTest(EventLoopTest):
         self.assertEquals(self.countConnections(), 0)
         def restart():
             self.downloader.start()
-        self.addTimeout(0.5, restart, 'restarter')
+        self.add_timeout(0.5, restart, 'restarter')
         self.downloader.statusCallback = self.stopOnFinished
         self.runEventLoop()
         self.assertEquals(self.downloader.currentSize, BIGTESTFILE["size"])

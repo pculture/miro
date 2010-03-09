@@ -511,8 +511,8 @@ class ConnectionHandlerTest(EventLoopTest):
             if self.received.length == len(data):
                 self.stopEventLoop(False)
             else:
-                self.addTimeout(0.1, readData, 'test')
-        self.addTimeout(0.1, readData, 'test')
+                self.add_timeout(0.1, readData, 'test')
+        self.add_timeout(0.1, readData, 'test')
         self.runEventLoop()
         self.assert_(self.received.read() == data)
 
@@ -1008,12 +1008,12 @@ class HTTPClientTest(HTTPClientTestBase):
         req = TestingHTTPConnection()
         def stopEventLoop(conn):
             self.stopEventLoop(False)
-        self.addIdle(lambda: req.openConnection('pculture.org', 80,
+        self.add_idle(lambda: req.openConnection('pculture.org', 80,
                                                 stopEventLoop, self.errback),
                      "Open connection")
         self.runEventLoop()
         self.assert_(not self.errbackCalled)
-        self.addIdle(lambda: req.sendRequest(middleCallback,
+        self.add_idle(lambda: req.sendRequest(middleCallback,
                                              self.errback,
                                              "pculture.org",
                                              80,
@@ -1410,7 +1410,7 @@ class HTTPConnectionPoolTest(EventLoopTest):
 
     def add_request(self, url):
         return self.pool.addRequest(
-            lambda blah: self.addIdle(lambda :self.stopEventLoop(False),
+            lambda blah: self.add_idle(lambda :self.stopEventLoop(False),
                                       "Closing connection when request is done"),
             lambda error: 0, None, None, None, url, "GET", {})
 
@@ -1754,9 +1754,9 @@ class SocketCallbackTest(EventLoopTest):
 #         def goodCallback():
 #             self.goodCallbackCalled = True
 #         def callback():
-#             self.addWriteCallback(s2, badCallback)
-#         self.addWriteCallback(s1, callback)
-#         self.addWriteCallback(s2, goodCallback)
+#             self.add_write_callback(s2, badCallback)
+#         self.add_write_callback(s1, callback)
+#         self.add_write_callback(s2, goodCallback)
 #         self.assert_(self.goodCallbackCalled)
 #         self.assert_(not self.badCallbackCalled)
 
@@ -1772,13 +1772,13 @@ class SocketCallbackTest(EventLoopTest):
         def callback():
             self.count += 1
             if self.count == 1:
-                self.removeWriteCallback(s1)
-                self.addWriteCallback(s1, callback)
-                self.removeWriteCallback(s2)
-                self.addWriteCallback(s2, callback)
-        self.addWriteCallback(s1, callback)
-        self.addWriteCallback(s2, callback)
-        self.addIdle(lambda: self.stopEventLoop(False), 'stop event loop')
+                self.remove_write_callback(s1)
+                self.add_write_callback(s1, callback)
+                self.remove_write_callback(s2)
+                self.add_write_callback(s2, callback)
+        self.add_write_callback(s1, callback)
+        self.add_write_callback(s2, callback)
+        self.add_idle(lambda: self.stopEventLoop(False), 'stop event loop')
         self.runEventLoop()
         self.assertEquals(self.count, 1)
 

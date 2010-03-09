@@ -205,7 +205,7 @@ class MessageHandler(object):
             logging.warn("Error unpickling message (%r)" % data)
         else:
             args = commandline.parse_command_line_string(cmd_line)
-            eventloop.addIdle(parse_command_line_args, 
+            eventloop.add_idle(parse_command_line_args, 
                     'parse command line', args=(args[1:],))
             if (hasattr(app, "widgetapp") and app.widgetapp is not None and
                     app.widgetapp.window is not None):

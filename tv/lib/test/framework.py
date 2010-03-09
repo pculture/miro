@@ -99,7 +99,7 @@ class MiroTestCase(unittest.TestCase):
         app.db = None
         database.setup_managers()
         # Remove anything that may have been accidentally queued up
-        eventloop._eventLoop = eventloop.EventLoop()
+        eventloop._eventloop = eventloop.EventLoop()
         for filename in self.temp_files:
             try:
                 os.remove(filename)
@@ -157,63 +157,63 @@ class EventLoopTest(MiroTestCase):
 
     def stopEventLoop(self, abnormal = True):
         self.hadToStopEventLoop = abnormal
-        eventloop.quit()
+        eventloop.shutdown()
 
     def runPendingIdles(self):
-        idleQueue = eventloop._eventLoop.idleQueue
-        urgentQueue = eventloop._eventLoop.urgentQueue
-        while idleQueue.hasPendingIdle() or urgentQueue.hasPendingIdle():
-            if urgentQueue.hasPendingIdle():
-                urgentQueue.processIdles()
-            if idleQueue.hasPendingIdle():
-                idleQueue.processNextIdle()
+        idle_queue = eventloop._eventloop.idle_queue
+        urgent_queue = eventloop._eventloop.urgent_queue
+        while idle_queue.has_pending_idle() or urgent_queue.has_pending_idle():
+            if urgent_queue.has_pending_idle():
+                urgent_queue.process_idles()
+            if idle_queue.has_pending_idle():
+                idle_queue.process_next_idle()
 
     def runUrgentCalls(self):
-        urgentQueue = eventloop._eventLoop.urgentQueue
-        while urgentQueue.hasPendingIdle():
-            if urgentQueue.hasPendingIdle():
-                urgentQueue.processIdles()
+        urgent_queue = eventloop._eventloop.urgent_queue
+        while urgent_queue.has_pending_idle():
+            if urgent_queue.has_pending_idle():
+                urgent_queue.process_idles()
 
     def runEventLoop(self, timeout=10, timeoutNormal=False):
-        eventloop.threadPoolInit()
+        eventloop.thread_pool_init()
         try:
             self.hadToStopEventLoop = False
-            timeout = eventloop.addTimeout(timeout, self.stopEventLoop, 
+            timeout = eventloop.add_timeout(timeout, self.stopEventLoop, 
                                            "Stop test event loop")
-            eventloop._eventLoop.quitFlag = False
-            eventloop._eventLoop.loop()
+            eventloop._eventloop.quit_flag = False
+            eventloop._eventloop.loop()
             if self.hadToStopEventLoop and not timeoutNormal:
                 raise HadToStopEventLoop()
             else:
                 timeout.cancel()
         finally:
-            eventloop.threadPoolQuit()
+            eventloop.thread_pool_quit()
 
-    def addTimeout(self,delay, function, name, args=None, kwargs=None):
-        eventloop.addTimeout(delay, function, name, args, kwargs)
+    def add_timeout(self,delay, function, name, args=None, kwargs=None):
+        eventloop.add_timeout(delay, function, name, args, kwargs)
 
-    def addWriteCallback(self, socket, callback):
-        eventloop.addWriteCallback(socket, callback)
+    def add_write_callback(self, socket, callback):
+        eventloop.add_write_callback(socket, callback)
 
-    def removeWriteCallback(self, socket):
-        eventloop.removeWriteCallback(socket)
+    def remove_write_callback(self, socket):
+        eventloop.remove_write_callback(socket)
 
-    def addIdle(self, function, name, args=None, kwargs=None):
-        eventloop.addIdle(function, name, args=None, kwargs=None)
+    def add_idle(self, function, name, args=None, kwargs=None):
+        eventloop.add_idle(function, name, args=None, kwargs=None)
 
     def hasIdles(self):
-        return not (eventloop._eventLoop.idleQueue.queue.empty() and
-                    eventloop._eventLoop.urgentQueue.queue.empty())
+        return not (eventloop._eventloop.idle_queue.queue.empty() and
+                    eventloop._eventloop.urgent_queue.queue.empty())
 
     def processThreads(self):
-        eventloop._eventLoop.threadPool.initThreads()
-        while not eventloop._eventLoop.threadPool.queue.empty():
+        eventloop._eventloop.threadpool.init_threads()
+        while not eventloop._eventloop.threadpool.queue.empty():
             sleep(0.05)
-        eventloop._eventLoop.threadPool.closeThreads()
+        eventloop._eventloop.threadpool.close_threads()
 
-    def processIdles(self):
-        eventloop._eventLoop.idleQueue.processIdles()
-        eventloop._eventLoop.urgentQueue.processIdles()
+    def process_idles(self):
+        eventloop._eventloop.idle_queue.process_idles()
+        eventloop._eventloop.urgent_queue.process_idles()
 
 class DownloaderTestCase(EventLoopTest):
     def setUp(self):
@@ -221,6 +221,6 @@ class DownloaderTestCase(EventLoopTest):
         downloader.startup_downloader()
 
     def tearDown(self):
-        downloader.shutdown_downloader(eventloop.quit)
+        downloader.shutdown_downloader(eventloop.shutdown)
         self.runEventLoop()
         EventLoopTest.tearDown(self)

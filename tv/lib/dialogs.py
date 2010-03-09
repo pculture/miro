@@ -158,7 +158,7 @@ class Dialog(object):
         self.choice = choice
         self.event.set()
         if self.callback is not None:
-            eventloop.addUrgentCall(self.callback,
+            eventloop.add_urgent_call(self.callback,
                                     "%s callback" % self.__class__,
                                     args=(self,))
 

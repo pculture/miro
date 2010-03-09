@@ -68,7 +68,7 @@ class Controller:
 
     def downloader_shutdown(self):
         logging.info("Shutting down event loop")
-        eventloop.quit()
+        eventloop.shutdown()
         logging.info("Closing Database...")
         if app.db is not None:
             app.db.close()

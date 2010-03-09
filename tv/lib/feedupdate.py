@@ -28,8 +28,9 @@
 
 """feedupdate.py -- Handles updating feeds.
 
-Our basic strategy is to limit the number of feeds that are simultaniously
-updating at any given time.  Right now the limit is set to 3.
+Our basic strategy is to limit the number of feeds that are
+simultaniously updating at any given time.  Right now the limit is set
+to 3.
 """
 
 from miro import eventloop
@@ -46,7 +47,7 @@ class FeedUpdateQueue(object):
 
     def schedule_update(self, delay, feed, update_callback):
         name = "Feed update (%s)" % feed.get_title()
-        self.timeouts[feed.id] = eventloop.addTimeout(delay, self.do_update, 
+        self.timeouts[feed.id] = eventloop.add_timeout(delay, self.do_update, 
                 name, args=(feed, update_callback))
 
     def cancel_update(self, feed):
@@ -70,7 +71,7 @@ class FeedUpdateQueue(object):
 
     def run_update_queue(self):
         while (len(self.update_queue) > 0 and 
-                len(self.currently_updating) < MAX_UPDATES):
+               len(self.currently_updating) < MAX_UPDATES):
             feed, update_callback = self.update_queue.dequeue()
             if feed in self.currently_updating:
                 continue
@@ -87,7 +88,7 @@ def cancel_update(feed):
     global_update_queue.cancel_update(feed)
 
 def schedule_update(delay, feed, update_callback):
-    """Schedules a feed to be updated sometime around delay seconds in the
-    future.
+    """Schedules a feed to be updated sometime around delay seconds in
+    the future.
     """
     global_update_queue.schedule_update(delay, feed, update_callback)

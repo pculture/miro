@@ -111,7 +111,7 @@ def _movies_directory_gone_handler(callback):
     function.
     """
     logging.error("Movies directory is gone -- no handler installed!")
-    eventloop.addUrgentCall(callback, "continuing startup")
+    eventloop.add_urgent_call(callback, "continuing startup")
 
 def install_movies_directory_gone_handler(callback):
     global _movies_directory_gone_handler
@@ -122,7 +122,7 @@ def _first_time_handler(callback):
     using the ``install_first_time_handler`` function.
     """
     logging.error("First time -- no handler installed.")
-    eventloop.addUrgentCall(callback, "continuing startup")
+    eventloop.add_urgent_call(callback, "continuing startup")
 
 def install_first_time_handler(callback):
     global _first_time_handler
@@ -221,25 +221,25 @@ def finish_startup(obj, thread):
     install_message_handler()
     downloader.init_controller()
 
-    eventloop.addUrgentCall(check_firsttime, "check first time")
+    eventloop.add_urgent_call(check_firsttime, "check first time")
 
 @startup_function
 def check_firsttime():
     """Run the first time wizard if need be.
     """
-    callback = lambda: eventloop.addUrgentCall(check_movies_gone, "check movies gone")
+    callback = lambda: eventloop.add_urgent_call(check_movies_gone, "check movies gone")
     if is_first_time():
         logging.info("First time -- calling handler.")
         _first_time_handler(callback)
         return
 
-    eventloop.addUrgentCall(check_movies_gone, "check movies gone")
+    eventloop.add_urgent_call(check_movies_gone, "check movies gone")
 
 @startup_function
 def check_movies_gone():
     """Checks to see if the movies directory is gone.
     """
-    callback = lambda: eventloop.addUrgentCall(fix_movies_gone,
+    callback = lambda: eventloop.add_urgent_call(fix_movies_gone,
                                                "fix movies gone")
 
     if is_movies_directory_gone():
@@ -270,12 +270,12 @@ def check_movies_gone():
     except IOError:
         _movies_directory_gone_handler(callback)
         return
-    eventloop.addUrgentCall(finish_backend_startup, "reconnect downloaders")
+    eventloop.add_urgent_call(finish_backend_startup, "reconnect downloaders")
 
 @startup_function
 def fix_movies_gone():
     config.set(prefs.MOVIES_DIRECTORY, platformcfg.get(prefs.MOVIES_DIRECTORY))
-    eventloop.addUrgentCall(finish_backend_startup, "reconnect downloaders")
+    eventloop.add_urgent_call(finish_backend_startup, "reconnect downloaders")
 
 @startup_function
 def finish_backend_startup():
@@ -308,13 +308,13 @@ def on_frontend_started():
     yield None
     # Wait a bit before starting the downloader daemon.  It can cause a bunch
     # of disk/CPU load, so try to avoid it slowing other stuff down.
-    eventloop.addTimeout(5, downloader.startup_downloader,
+    eventloop.add_timeout(5, downloader.startup_downloader,
             "start downloader daemon")
     # ditto for feed updates
-    eventloop.addTimeout(30, feed.start_updates, "start feed updates")
+    eventloop.add_timeout(30, feed.start_updates, "start feed updates")
     # ditto for clearing stale icon cache files, except it's the very lowest
     # priority
-    eventloop.addTimeout(10, clear_icon_cache_orphans, "clear orphans")
+    eventloop.add_timeout(10, clear_icon_cache_orphans, "clear orphans")
 
 def setup_global_feeds():
     setup_global_feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)

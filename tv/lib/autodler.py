@@ -136,8 +136,8 @@ class Downloader:
     def start_downloads(self):
         if self.dc or self.paused:
             return
-        self.dc = eventloop.addIdle(self.start_downloads_idle,
-                                    "Start Downloads")
+        self.dc = eventloop.add_idle(self.start_downloads_idle,
+                                     "Start Downloads")
 
     def pending_on_add(self, tracker, obj):
         feed = obj.get_feed()
@@ -187,8 +187,8 @@ class Downloader:
     def resume(self):
         if self.paused:
             self.paused = False
-            eventloop.addTimeout(5, self.start_downloads,
-                                 "delayed start downloads")
+            eventloop.add_timeout(5, self.start_downloads,
+                                  "delayed start downloads")
 
 # these are both Downloader instances
 MANUAL_DOWNLOADER = None

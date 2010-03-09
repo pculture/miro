@@ -201,7 +201,7 @@ class RemoteDownloader(DDBObject):
         saved to disk.
         """
         if self._save_later_dc is None:
-            self._save_later_dc = eventloop.addTimeout(15,
+            self._save_later_dc = eventloop.add_timeout(15,
                     self._save_now, "Delayed RemoteDownloader save")
 
     def _save_now(self):
@@ -560,7 +560,7 @@ class RemoteDownloader(DDBObject):
              and 'retryTime' in self.status)):
             activity = self._calc_retry_time()
             if self._update_retry_time_dc is None:
-                self._update_retry_time_dc = eventloop.addTimeout(1,
+                self._update_retry_time_dc = eventloop.add_timeout(1,
                         self._update_retry_time, 'Updating retry time')
         if activity is None:
             return _("starting up")

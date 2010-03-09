@@ -31,7 +31,6 @@
 
 from miro import feed
 from miro import playlist
-from miro import util
 from miro.database import DDBObject, ObjectNotFoundError
 from miro.databasehelper import make_simple_get_set
 
@@ -44,34 +43,39 @@ class FolderBase(DDBObject):
 
     get_title, set_title = make_simple_get_set('title')
 
-    def getExpanded(self):
+    def get_expanded(self):
+        """Returns whether or not this folder is expanded in the ui.
+        """
         self.confirm_db_thread()
         return self.expanded
 
-    def setExpanded(self, newExpanded):
+    def set_expanded(self, new_expanded):
+        """Changes the expanded status for this folder in the ui.
+        """
         self.confirm_db_thread()
-        self.expanded = newExpanded
+        self.expanded = new_expanded
         self.signal_change()
-        for child in self.getChildrenView():
+        for child in self.get_children_view():
             child.signal_change(needs_save=False)
 
-    def remove(self, moveItemsTo=None):
+    def remove(self, move_items_to=None):
         """Remove this folder and children.
         """
         raise NotImplementedError()
 
-    # get_folder and set_folder are here so that channels/playlists and folders
-    # have a consistent API.  They don't do much since we don't allow nested
-    # folders.
+    # get_folder and set_folder are here so that channels/playlists
+    # and folders have a consistent API.  They don't do much since we
+    # don't allow nested folders.
     def get_folder(self):
         return None
 
-    def set_folder(self, newFolder, signal_items=False):
-        if newFolder is not None:
+    def set_folder(self, new_folder, signal_items=False):
+        if new_folder is not None:
             raise TypeError("Nested folders not allowed")
 
-    def getChildrenView(self):
-        """Return the children of this folder."""
+    def get_children_view(self):
+        """Return the children of this folder.
+        """
         raise NotImplementedError()
 
 class ChannelFolder(FolderBase):
@@ -79,59 +83,78 @@ class ChannelFolder(FolderBase):
         self.section = section
         FolderBase.setup_new(self, title)
 
-    def remove(self, moveItemsTo=None):
-        children = list(self.getChildrenView())
+    def remove(self, move_items_to=None):
+        """Removes this folder passing ``move_items_to`` to
+        :func:miro.feed.Feed.remove.
+        """
+        children = list(self.get_children_view())
         for child in children:
             if child.is_watched_folder():
-                child.setVisible(False) # just hide watched folders
+                child.set_visible(False) # just hide watched folders
                 child.set_folder(None)
             else:
-                child.remove(moveItemsTo)
+                child.remove(move_items_to)
         DDBObject.remove(self)
 
     @classmethod
     def video_view(cls):
+        """Returns all 'video' folders.
+        """
         return cls.make_view("section='video'")
 
     @classmethod
     def audio_view(cls):
+        """Returns all 'audio' folders.
+        """
         return cls.make_view("section='audio'")
 
     @classmethod
     def get_by_title(cls, title):
+        """Returns folder by title.
+        """
         return cls.make_view('title=?', (title,)).get_singleton()
 
-    def getChildrenView(self):
+    def get_children_view(self):
+        """Returns all children of this folder.
+        """
         return feed.Feed.folder_view(self.id)
 
-    def hasDownloadedItems(self):
-        for feed in self.getChildrenView():
-            if feed.hasDownloadedItems():
+    def has_downloaded_items(self):
+        """True if this folder has feeds with downloaded items.
+        """
+        for mem in self.get_children_view():
+            if mem.has_downloaded_items():
                 return True
         return False
 
-    def hasDownloadingItems(self):
-        for feed in self.getChildrenView():
-            if feed.hasDownloadingItems():
+    def has_downloading_items(self):
+        """True if this folder has feeds with downloading items.
+        """
+        for mem in self.get_children_view():
+            if mem.has_downloading_items():
                 return True
         return False
 
-    # Returns string with number of unwatched videos in feed
     def num_unwatched(self):
+        """Returns number of unwatched items in feed.
+        """
         unwatched = 0
-        for child in self.getChildrenView():
+        for child in self.get_children_view():
             unwatched += child.num_unwatched()
         return unwatched
 
-    # Returns string with number of available videos in feed
     def num_available(self):
+        """Returns number of available items in feed
+        """
         available = 0
-        for child in self.getChildrenView():
+        for child in self.get_children_view():
             available += child.num_available()
         return available
 
     def mark_as_viewed(self):
-        for child in self.getChildrenView():
+        """Marks all children as viewed.
+        """
+        for child in self.get_children_view():
             child.mark_as_viewed()
 
 class PlaylistFolderItemMap(playlist.PlaylistItemMap):
@@ -156,28 +179,28 @@ class PlaylistFolderItemMap(playlist.PlaylistItemMap):
     @classmethod
     def add_item_id(cls, playlist_id, item_id):
         view = cls.make_view('playlist_id=? AND item_id=?',
-                (playlist_id, item_id))
+                             (playlist_id, item_id))
         try:
-            map = view.get_singleton()
-            map.inc_count()
+            map_ = view.get_singleton()
+            map_.inc_count()
         except ObjectNotFoundError:
             cls(playlist_id, item_id)
 
     @classmethod
     def remove_item_id(cls, playlist_id, item_id):
         view = cls.make_view('playlist_id=? AND item_id=?',
-                (playlist_id, item_id))
-        map = view.get_singleton()
-        map.dec_count()
+                             (playlist_id, item_id))
+        map_ = view.get_singleton()
+        map_.dec_count()
 
 class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
     MapClass = PlaylistFolderItemMap
 
-    def remove(self, moveItemsTo=None):
-        children = list(self.getChildrenView())
+    def remove(self, move_items_to=None):
+        children = list(self.get_children_view())
         for child in children:
-            child.remove(moveItemsTo)
+            child.remove(move_items_to)
         DDBObject.remove(self)
 
-    def getChildrenView(self):
+    def get_children_view(self):
         return playlist.SavedPlaylist.folder_view(self.id)

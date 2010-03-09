@@ -131,7 +131,7 @@ class ViewTracker(object):
         # We don't send messages immediately so that if an object gets changed
         # multiple times, only one callback gets sent.
         if not self.changes_pending:
-            eventloop.addUrgentCall(self.send_messages, 'view tracker update' )
+            eventloop.add_urgent_call(self.send_messages, 'view tracker update' )
             self.changes_pending = True
 
     def add_callbacks(self):
@@ -209,7 +209,7 @@ class TabTracker(ViewTracker):
                 response.append(info)
                 if isinstance(obj, FolderBase):
                     current_folder_id = obj.id
-                    if obj.getExpanded():
+                    if obj.get_expanded():
                         response.expand_folder(obj.id)
                 else:
                     current_folder_id = None
@@ -497,7 +497,7 @@ class BackendMessageHandler(messages.MessageHandler):
     def call_handler(self, method, message):
         name = 'handling backend message: %s' % message
         logging.debug("handling backend %s", message)
-        eventloop.addUrgentCall(method, name, args=(message,))
+        eventloop.add_urgent_call(method, name, args=(message,))
 
     def folder_class_for_type(self, type):
         if type in ('feed', 'audio-feed'):
@@ -526,7 +526,7 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_frontend_started(self, message):
         # add a little bit more delay to let things simmer down a bit.  The
         # calls here are low-priority, so we can afford to wait a bit.
-        eventloop.addTimeout(2, self.frontend_startup_callback,
+        eventloop.add_timeout(2, self.frontend_startup_callback,
                 'frontend startup callback')
 
     def handle_query_search_info(self, message):
@@ -696,7 +696,7 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warn("feed folder not found")
         else:
-            folder.setExpanded(message.expanded)
+            folder.set_expanded(message.expanded)
 
     def handle_update_feed(self, message):
         try:
@@ -712,7 +712,7 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warn("folder not found: %s" % id)
         else:
-            for feed in f.getChildrenView():
+            for feed in f.get_children_view():
                 feed.update()
 
     def handle_update_all_feeds(self, message):
@@ -967,7 +967,7 @@ class BackendMessageHandler(messages.MessageHandler):
         else:
             if not feed_.url.startswith("dtv:directoryfeed:"):
                 raise ValueError("%s is not a watched folder" % feed_)
-            feed_.setVisible(message.visible)
+            feed_.set_visible(message.visible)
 
     def handle_new_playlist(self, message):
         name = message.name

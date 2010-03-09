@@ -206,12 +206,12 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
         dialogs.TextEntryDialog(title, description, dialogs.BUTTON_OK,
                 dialogs.BUTTON_CANCEL).run(callback)
 
-    # Accepting moveItemsTo, but forcing it to be false allows playlists to be
+    # Accepting move_items_to, but forcing it to be false allows playlists to be
     # used in the same context as folders in certain places, but still catches
     # logic problem. Maybe eventually, playlists and folders should derive
     # from the same parent --NN
-    def remove(self, moveItemsTo=None):
-        if moveItemsTo is not None:
-            raise StandardError("Cannot 'move' a playlist to %s" % repr(moveItemsTo))
+    def remove(self, move_items_to=None):
+        if move_items_to is not None:
+            raise StandardError("Cannot 'move' a playlist to %s" % repr(move_items_to))
         self._remove_ids_from_folder()
         database.DDBObject.remove(self)

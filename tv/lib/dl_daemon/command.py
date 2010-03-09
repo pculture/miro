@@ -51,7 +51,7 @@ class Command:
     def send(self, callback=None):
         if self.daemon.shutdown:
             return
-        eventloop.addIdle(lambda : self.daemon.send(self, callback), "sending command %s" % repr(self))
+        eventloop.add_idle(lambda : self.daemon.send(self, callback), "sending command %s" % repr(self))
 
     def setReturnValue(self, ret):
         self.orig = False
@@ -214,7 +214,7 @@ class GotHTTPAuthCommand(Command):
 class ShutDownCommand(Command):
     def response_sent(self):
         from miro import eventloop
-        eventloop.quit()
+        eventloop.shutdown()
         logging.info ("Shutdown complete")
 
     def action(self):
@@ -222,7 +222,7 @@ class ShutDownCommand(Command):
         from miro.dl_daemon import download
         download.shutDown()
         import threading
-        eventloop.threadPoolQuit()
+        eventloop.thread_pool_quit()
         for thread in threading.enumerate():
             if thread != threading.currentThread() and thread.getName() != "MainThread" and not thread.isDaemon():
                 thread.join()

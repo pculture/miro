@@ -92,16 +92,16 @@ class ControlGrid(object):
     pack_label() and end_line() methods.  Once everything is packed, use the
     make_table() method to create a Table widget.
 
-    For example:
+    For example::
 
-    grid = dialogwidgets.ControlGrid()
-    grid.pack(dialogwidgets.heading("My Heading", grid.ALIGN_LEFT, span=2)
-    grid.end_line(spacing=0)
-    grid.pack_label("Option 1")
-    grid.pack(my_option_menu_widget)
-    grid.end_line()
+        grid = dialogwidgets.ControlGrid()
+        grid.pack(dialogwidgets.heading('My Heading', grid.ALIGN_LEFT, span=2)
+        grid.end_line(spacing=0)
+        grid.pack_label('Option 1')
+        grid.pack(my_option_menu_widget)
+        grid.end_line()
 
-    vbox.pack(grid.make_table())
+        vbox.pack(grid.make_table())
     """
 
     ALIGN_LEFT = 0
