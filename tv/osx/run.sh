@@ -27,43 +27,18 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-
-OS_VERSION=$(uname -r | cut -d . -f 1)
-
-if [ $OS_VERSION == "8" ]; then
-    PYTHON_VERSION=2.4
-    PYTHON_ROOT=/Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION
-    #export MACOSX_DEPLOYMENT_TARGET=10.4
-elif [ $OS_VERSION == "9" ]; then
-    # PYTHON_VERSION=2.5
-    # PYTHON_ROOT=/System/Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION
-    # export MACOSX_DEPLOYMENT_TARGET=10.5
-
-    # OSX 10.5 is now finicky about things and needs to run with a real build.
-    # So we kick off brun.sh.
-    ./brun.sh
-    exit
-elif [ $OS_VERSION == "10" ]; then
-    PYTHON_VERSION=2.6
-    PYTHON_ROOT=/System/Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION
-    export MACOSX_DEPLOYMENT_TARGET=10.6
-fi
-
-PYTHON=$PYTHON_ROOT/bin/python$PYTHON_VERSION
-
-export VERSIONER_PYTHON_VERSION=$PYTHON_VERSION
-export VERSIONER_PYTHON_PREFER_32_BIT=yes
-
-if [ "$1" == "unittest" ]; then
+if [[ $@ == *unittest* ]]; then
     SETUP_PARAMS="--keep-tests"
-    RUN_PARAMS=$1
-else
-    SETUP_PARAMS=$@
-    RUN_PARAMS=""
+    RUN_PARAMS="unittest"
 fi
 
-if [ $OS_VERSION == "8" ]; then
-    $PYTHON setup.py py2app --dist-dir . -A $SETUP_PARAMS && Miro.app/Contents/MacOS/Miro $RUN_PARAMS
-else
-    $PYTHON setup.py py2app --dist-dir . -A $SETUP_PARAMS && arch -`arch` Miro.app/Contents/MacOS/Miro $RUN_PARAMS
+./build.sh --alias $SETUP_PARAMS
+
+if [ $? = 0 ]; then
+    OS_VERSION=$(uname -r | cut -d . -f 1)
+    if [ $OS_VERSION == "8" ]; then
+        Miro.app/Contents/MacOS/Miro $RUN_PARAMS
+    else
+        arch -`arch` Miro.app/Contents/MacOS/Miro $RUN_PARAMS
+    fi
 fi

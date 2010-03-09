@@ -56,6 +56,14 @@ PYTHON=$PYTHON_ROOT/bin/python$PYTHON_VERSION
 export VERSIONER_PYTHON_VERSION=$PYTHON_VERSION
 export VERSIONER_PYTHON_PREFER_32_BIT=yes
 
-$PYTHON setup.py py2app -O2 --dist-dir . --force-update "$@"
-
-echo Done.
+if [[ $@ == *--alias* ]]; then
+    if [ $OS_VERSION == "9" ]; then
+        # I would love to know why alias builds don't launch under OS X 10.5 
+        # anymore. In the meantime, perform only full builds on 10.5.
+        $PYTHON setup.py py2app --dist-dir . ${@//--alias/}
+    else
+        $PYTHON setup.py py2app --dist-dir . "$@"
+    fi
+else
+    $PYTHON setup.py py2app --dist-dir . -O2 --force-update "$@"
+fi
