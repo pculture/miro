@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-02-22 16:46+0000\n"
-"Last-Translator: Jani Uusitalo <jani@mummila.net>\n"
+"PO-Revision-Date: 2010-03-02 17:37+0000\n"
+"Last-Translator: Qwert <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-02-24 15:36+0000\n"
+"X-Launchpad-Export-Date: 2010-03-09 14:22+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -544,11 +544,11 @@ msgstr "Kopioi URL leikepöydälle"
 #: ../../portable/frontends/widgets/tablist.py:576
 #: ../../portable/frontends/widgets/application.py:726
 msgid "Rename Website"
-msgstr ""
+msgstr "Nimeä websivusto uudelleen"
 
 #: ../../portable/frontends/widgets/tablist.py:577
 msgid "Remove Website"
-msgstr ""
+msgstr "Poista websivusto"
 
 #: ../../portable/frontends/widgets/tablist.py:581
 msgid "Remove Websites"
@@ -1154,7 +1154,7 @@ msgstr "Tallenna kohde nimellä..."
 #: ../../portable/frontends/widgets/application.py:563
 #: ../../portable/frontends/widgets/menus.py:220
 msgid "Add Website"
-msgstr ""
+msgstr "Lisää websivusto"
 
 #: ../../portable/frontends/widgets/application.py:564
 msgid "Enter the URL of the website to add"

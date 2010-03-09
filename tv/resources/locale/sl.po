@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-02-13 12:11+0000\n"
-"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"PO-Revision-Date: 2010-02-25 22:19+0000\n"
+"Last-Translator: Ozbo <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
 "n%100==4 ? 3 : 0);\n"
-"X-Launchpad-Export-Date: 2010-02-24 15:36+0000\n"
+"X-Launchpad-Export-Date: 2010-03-09 14:21+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: SLOVENIA\n"
 "X-Poedit-Language: Slovenian\n"
@@ -362,7 +362,7 @@ msgstr[3] ""
 #: ../../portable/frontends/widgets/itemedit.py:136
 #: ../../portable/frontends/widgets/itemcontextmenu.py:107
 msgid "Edit Item"
-msgstr ""
+msgstr "Uredi predmet"
 
 #: ../../portable/frontends/widgets/itemedit.py:145
 msgid "Title:"
@@ -574,15 +574,15 @@ msgstr "Kopiraj URL v odložišče"
 #: ../../portable/frontends/widgets/tablist.py:576
 #: ../../portable/frontends/widgets/application.py:726
 msgid "Rename Website"
-msgstr ""
+msgstr "Preimenuj spletno stran"
 
 #: ../../portable/frontends/widgets/tablist.py:577
 msgid "Remove Website"
-msgstr ""
+msgstr "Odstrani spletno stran"
 
 #: ../../portable/frontends/widgets/tablist.py:581
 msgid "Remove Websites"
-msgstr ""
+msgstr "Odstrani spletne strani"
 
 #: ../../portable/frontends/widgets/tablist.py:657
 msgid "Update Feeds In Folder"
@@ -1203,15 +1203,15 @@ msgstr "Shrani predmet kot ..."
 #: ../../portable/frontends/widgets/application.py:563
 #: ../../portable/frontends/widgets/menus.py:220
 msgid "Add Website"
-msgstr ""
+msgstr "Dodaj spletno stran"
 
 #: ../../portable/frontends/widgets/application.py:564
 msgid "Enter the URL of the website to add"
-msgstr ""
+msgstr "Vnesi URL do spletne strani ki jo želite dodati"
 
 #: ../../portable/frontends/widgets/application.py:565
 msgid "Add Website - Invalid URL"
-msgstr ""
+msgstr "Dodaj spletno stran - napačen uRL"
 
 #: ../../portable/frontends/widgets/application.py:566
 msgid ""
@@ -1220,6 +1220,10 @@ msgid ""
 "\n"
 "Enter the URL of the website to add"
 msgstr ""
+"Vnešen URL  ni pravilen.\n"
+"Prosimo preverite url in poskusite ponovno\n"
+"\n"
+"Vnesite URL do spletne strani ki jo želite dodati"
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
@@ -1280,7 +1284,7 @@ msgstr "Vnesite novo ime za mapo seznama predvajanja %(name)s"
 #: ../../portable/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the website %(name)s"
-msgstr ""
+msgstr "Vnesite novo ime za spletno stran %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
@@ -1553,7 +1557,7 @@ msgstr "_Odstrani predmete"
 
 #: ../../portable/frontends/widgets/menus.py:203
 msgid "_Edit Item"
-msgstr ""
+msgstr "Ur_edi stvar"
 
 #: ../../portable/frontends/widgets/menus.py:205
 msgid "Save Item _As"
@@ -1569,7 +1573,7 @@ msgstr "Kopiraj _URL predmeta"
 
 #: ../../portable/frontends/widgets/menus.py:213
 msgid "_Preferences"
-msgstr ""
+msgstr "_Lastnosti"
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
@@ -1601,7 +1605,7 @@ msgstr "Prei_menuj vir"
 
 #: ../../portable/frontends/widgets/menus.py:232
 msgid "Re_name Website"
-msgstr ""
+msgstr "Pre_imenuj Spletno stran"
 
 #: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
@@ -1625,11 +1629,11 @@ msgstr "_Odstrani mape"
 
 #: ../../portable/frontends/widgets/menus.py:241
 msgid "_Remove Website"
-msgstr ""
+msgstr "_Odstrani spletno stran"
 
 #: ../../portable/frontends/widgets/menus.py:242
 msgid "_Remove Websites"
-msgstr ""
+msgstr "_Odstrani spletne strani"
 
 #: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
@@ -2897,7 +2901,7 @@ msgstr "Primer seznama predvajanja"
 #: ../../portable/storedatabase.py:208
 #, python-format
 msgid "%(appname)s database upgrade failed"
-msgstr ""
+msgstr "%(appname)s posodabljanje baze podatkov neuspešno"
 
 #: ../../portable/storedatabase.py:211
 #, python-format

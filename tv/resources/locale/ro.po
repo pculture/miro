@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-01-23 12:21+0000\n"
-"Last-Translator: dumbo28 <Unknown>\n"
+"PO-Revision-Date: 2010-03-05 23:25+0000\n"
+"Last-Translator: azimuthazazel <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1 ? 0: (((n % 100 > 19) || ((n % 100 "
 "== 0) && (n != 0))) ? 2: 1));\n"
-"X-Launchpad-Export-Date: 2010-02-24 15:37+0000\n"
+"X-Launchpad-Export-Date: 2010-03-09 14:21+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -139,11 +139,11 @@ msgstr "Eroare internă: Nepregătit pentru trimitere"
 
 #: ../../portable/frontends/widgets/playback.py:551
 msgid "Open Subtitles File..."
-msgstr ""
+msgstr "Deschide fişier subtitrare"
 
 #: ../../portable/frontends/widgets/playback.py:552
 msgid "Subtitle files"
-msgstr ""
+msgstr "Fișiere subtitrări"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -377,7 +377,7 @@ msgstr "Altele"
 
 #: ../../portable/frontends/widgets/itemedit.py:157
 msgid "Path:"
-msgstr ""
+msgstr "Cale acces:"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
@@ -556,15 +556,15 @@ msgstr "Copiază URLul"
 #: ../../portable/frontends/widgets/tablist.py:576
 #: ../../portable/frontends/widgets/application.py:726
 msgid "Rename Website"
-msgstr ""
+msgstr "Redenumire Pagina Web"
 
 #: ../../portable/frontends/widgets/tablist.py:577
 msgid "Remove Website"
-msgstr ""
+msgstr "Şterge Pagina Web"
 
 #: ../../portable/frontends/widgets/tablist.py:581
 msgid "Remove Websites"
-msgstr ""
+msgstr "Şterge Paginile Web"
 
 #: ../../portable/frontends/widgets/tablist.py:657
 msgid "Update Feeds In Folder"
@@ -980,7 +980,7 @@ msgstr "Dezactivează subtitrările"
 #: ../../portable/frontends/widgets/gtk/video.py:390
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:387
 msgid "Select a Subtitles file..."
-msgstr ""
+msgstr "Alege fişier subtitrare..."
 
 #: ../../portable/frontends/widgets/gtk/window.py:650
 msgid "All files"
@@ -1179,15 +1179,15 @@ msgstr "Salvează elementul ca..."
 #: ../../portable/frontends/widgets/application.py:563
 #: ../../portable/frontends/widgets/menus.py:220
 msgid "Add Website"
-msgstr ""
+msgstr "Adaugă Pagină Web"
 
 #: ../../portable/frontends/widgets/application.py:564
 msgid "Enter the URL of the website to add"
-msgstr ""
+msgstr "Scrie adresa URL a paginii web pe care vrei s-o adaugi"
 
 #: ../../portable/frontends/widgets/application.py:565
 msgid "Add Website - Invalid URL"
-msgstr ""
+msgstr "Adăugare pagină web - URL invalid"
 
 #: ../../portable/frontends/widgets/application.py:566
 msgid ""
@@ -1196,6 +1196,9 @@ msgid ""
 "\n"
 "Enter the URL of the website to add"
 msgstr ""
+"Adresa introdusă nu este URL valid.\n"
+"Verifică URL -ul si încearcă din nou.\n"
+"Introdu URL -ul paginii web pe care vrei s-o adaugi."
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
@@ -1276,8 +1279,8 @@ msgstr[2] "Sigur doriți să ștergeți aceste %(count)s de liste de redare?"
 #: ../../portable/frontends/widgets/application.py:773
 msgid "Remove website"
 msgid_plural "Remove websites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Şterge pagina web"
+msgstr[1] "Şterge paginile web"
 
 #: ../../portable/frontends/widgets/application.py:775
 #, python-format
@@ -1523,7 +1526,7 @@ msgstr "Ște_rge elementele"
 
 #: ../../portable/frontends/widgets/menus.py:203
 msgid "_Edit Item"
-msgstr ""
+msgstr "_Editare obiect"
 
 #: ../../portable/frontends/widgets/menus.py:205
 msgid "Save Item _As"
@@ -1539,7 +1542,7 @@ msgstr "Copiază _URLul elementului"
 
 #: ../../portable/frontends/widgets/menus.py:213
 msgid "_Preferences"
-msgstr ""
+msgstr "_Preferințe"
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"

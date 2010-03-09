@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-02-22 16:48+0000\n"
-"Last-Translator: Miguel de Dios <tres.14159@gmail.com>\n"
+"PO-Revision-Date: 2010-03-06 13:12+0000\n"
+"Last-Translator: gnuckx <gnuckx@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-02-24 15:37+0000\n"
+"X-Launchpad-Export-Date: 2010-03-09 14:21+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:136
@@ -43,7 +43,7 @@ msgstr "Error en la conexión: %(msg)s"
 
 #: ../../portable/httpclient.py:123
 msgid "SSL connection error"
-msgstr "Error de Conexión SSL"
+msgstr "Error de conexión SSL"
 
 #: ../../portable/httpclient.py:127
 msgid "HTTP error"
@@ -67,7 +67,7 @@ msgstr "CRLF esperado tuvo: %(character)r"
 #: ../../portable/httpclient.py:151
 #, python-format
 msgid "%(host)s closed connection"
-msgstr "conexión cerrada por %(host)s"
+msgstr "%(host)s cerró la conexión"
 
 #: ../../portable/httpclient.py:156 ../../portable/httpclient.py:185
 #: ../../portable/downloader.py:370
@@ -560,7 +560,7 @@ msgstr "Borrar sitio web"
 
 #: ../../portable/frontends/widgets/tablist.py:581
 msgid "Remove Websites"
-msgstr ""
+msgstr "Eliminar sitio web"
 
 #: ../../portable/frontends/widgets/tablist.py:657
 msgid "Update Feeds In Folder"
@@ -1180,11 +1180,11 @@ msgstr "Añadir sitio web"
 
 #: ../../portable/frontends/widgets/application.py:564
 msgid "Enter the URL of the website to add"
-msgstr ""
+msgstr "Introduzca la dirección URL de la sitio web para añadir"
 
 #: ../../portable/frontends/widgets/application.py:565
 msgid "Add Website - Invalid URL"
-msgstr ""
+msgstr "Añadir Sitio Web - URL no válida"
 
 #: ../../portable/frontends/widgets/application.py:566
 msgid ""
@@ -1193,6 +1193,10 @@ msgid ""
 "\n"
 "Enter the URL of the website to add"
 msgstr ""
+"La dirección que has introducido no es una URL válida.\n"
+"Por favor, compruebe la dirección y vuelva a intentarlo.\n"
+"\n"
+"Introduzca la dirección URL del sitio web para añadir"
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
@@ -1253,7 +1257,7 @@ msgstr "Escriba el nuevo nombre de la carpeta %(name)s"
 #: ../../portable/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the website %(name)s"
-msgstr ""
+msgstr "Introduzca un nombre nuevo para el sitio web %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
@@ -1272,15 +1276,15 @@ msgstr[1] ""
 #: ../../portable/frontends/widgets/application.py:773
 msgid "Remove website"
 msgid_plural "Remove websites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Eliminar sitio web"
+msgstr[1] "Eliminar sitios web"
 
 #: ../../portable/frontends/widgets/application.py:775
 #, python-format
 msgid "Are you sure you want to remove this website?"
 msgid_plural "Are you sure you want to remove these %(count)s websites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "¿Está seguro de que desea eliminar este sitio web?"
+msgstr[1] "¿Está seguro de que desea eliminar estos %(count)s sitios web?"
 
 #: ../../portable/frontends/widgets/application.py:805
 msgid "Are you sure you want to quit?"
@@ -1515,7 +1519,7 @@ msgstr "_Eliminar elementos..."
 
 #: ../../portable/frontends/widgets/menus.py:203
 msgid "_Edit Item"
-msgstr ""
+msgstr "_Editar Elemento"
 
 #: ../../portable/frontends/widgets/menus.py:205
 msgid "Save Item _As"
@@ -1531,7 +1535,7 @@ msgstr "Copiar _URL del elemento"
 
 #: ../../portable/frontends/widgets/menus.py:213
 msgid "_Preferences"
-msgstr ""
+msgstr "_Preferencias"
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
@@ -1563,7 +1567,7 @@ msgstr "Renombrar Fuente"
 
 #: ../../portable/frontends/widgets/menus.py:232
 msgid "Re_name Website"
-msgstr ""
+msgstr "Re_nombrar el sitio web"
 
 #: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
@@ -1587,11 +1591,11 @@ msgstr "Borrar Carpetas"
 
 #: ../../portable/frontends/widgets/menus.py:241
 msgid "_Remove Website"
-msgstr ""
+msgstr "_Eliminar sitio web"
 
 #: ../../portable/frontends/widgets/menus.py:242
 msgid "_Remove Websites"
-msgstr ""
+msgstr "_Eliminar sitios web"
 
 #: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
@@ -1915,8 +1919,8 @@ msgstr[1] "%(count)d canales seleccionados"
 #, python-format
 msgid "%(count)d Website Selected"
 msgid_plural "%(count)d Websites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d sitio web seleccionado"
+msgstr[1] "%(count)d sitios web seleccionados"
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
@@ -2650,7 +2654,7 @@ msgstr "Reintentar"
 
 #: ../../portable/dialogs.py:128
 msgid "Start Fresh"
-msgstr ""
+msgstr "Iniciar de nuevo"
 
 #: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"
@@ -2805,7 +2809,7 @@ msgstr "Ejemplo de lista de reproducción"
 #: ../../portable/storedatabase.py:208
 #, python-format
 msgid "%(appname)s database upgrade failed"
-msgstr ""
+msgstr "La actualización de la base de datos de %(appname)s ha fallado"
 
 #: ../../portable/storedatabase.py:211
 #, python-format
@@ -2821,6 +2825,17 @@ msgid ""
 "Finally, you can start fresh and your damaged database will be removed, but "
 "you will have to re-add your feeds and media files."
 msgstr ""
+"Lo sentimos, %(appname)s no pudo actualizar su base de datos debido a "
+"errores.\n"
+"\n"
+"Compruebe si el disco está lleno. Si es así, salga de %(appname)s , libere "
+"algo de espacio, y empieze %(appname)s de nuevo.\n"
+"\n"
+"Si el disco no está lleno, ayudenos a comprender el problema cerrando e "
+"informandonos del error en bugzilla.pculture.org\n"
+"\n"
+"Por último, puede empezar de nuevo y su base de datos dañada será eliminada, "
+"pero tendrá que volver a añadir sus feeds y archivos multimedia."
 
 #: ../../portable/storedatabase.py:267
 msgid "Database was created by a newer version of Miro "
@@ -3010,12 +3025,12 @@ msgstr "Renderizador de vídeo:"
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:446
 #, python-format
 msgid "Track %(tracknumber)d"
-msgstr ""
+msgstr "Pista %(tracknumber)d"
 
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:456
 #, python-format
 msgid "Subtitle file %(tracknumber)d"
-msgstr ""
+msgstr "Archivo de subtítulos %(tracknumber)d"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:178
 msgid "Download Completed"
@@ -3094,15 +3109,15 @@ msgstr "Presentar a mitad de tamaño"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:198
 msgid "Present Actual Size"
-msgstr "Presentar a tamaño real"
+msgstr "Presentar en tamaño real"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:201
 msgid "Present Double Size"
-msgstr "Presentar a tamaño doble"
+msgstr "Presentar en tamaño doble"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:208
 msgid "Present Video"
-msgstr "Presentar video"
+msgstr "Presentar vídeo"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:214
 msgid "Zoom"

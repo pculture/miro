@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-02-03 09:17+0000\n"
+"PO-Revision-Date: 2010-02-25 15:04+0000\n"
 "Last-Translator: ජීවන්ත ලේකම්වසම් <trueorcrazy@gmail.com>\n"
 "Language-Team: Sinhalese <si@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-02-24 15:37+0000\n"
+"X-Launchpad-Export-Date: 2010-03-09 14:21+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -72,12 +72,12 @@ msgstr "ගොනුව සොයාගැනීමට නොහැකි වි
 
 #: ../../portable/httpclient.py:157
 msgid "Got 404 status code"
-msgstr ""
+msgstr "404 තත්ව කේතය ලැබිණි"
 
 #: ../../portable/httpclient.py:159
 #, python-format
 msgid "Bad Status Code: %(code)s"
-msgstr ""
+msgstr "අයහපත් තත්ව කේතය : %(code)s"
 
 #: ../../portable/httpclient.py:164
 msgid "Authorization failed"
@@ -143,15 +143,15 @@ msgstr "අභ්‍යන්තර දෝෂයකි:  යැවීමට ස�
 
 #: ../../portable/frontends/widgets/playback.py:551
 msgid "Open Subtitles File..."
-msgstr ""
+msgstr "උපසිරස ගොනුව විවෘත කරන්න..."
 
 #: ../../portable/frontends/widgets/playback.py:552
 msgid "Subtitle files"
-msgstr ""
+msgstr "උපසිරස ගොනු"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
-msgstr ""
+msgstr "බාගත කල"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:137
 msgid "Full Feed"
@@ -161,24 +161,24 @@ msgstr ""
 #, python-format
 msgid "Show %(count)d More Item"
 msgid_plural "Show %(count)d More Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "තව අයිතම %(count)d ක් පෙන්වන්න"
+msgstr[1] "තව අයිතම %(count)d ක් පෙන්වන්න"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:232
 #: ../../portable/frontends/widgets/feedcontroller.py:259
 #, python-format
 msgid "%(count)d Downloading"
 msgid_plural "%(count)d Downloading"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d ක් බාගත වෙමින්"
+msgstr[1] "%(count)d ක් බාගත වෙමින්"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:243
 #: ../../portable/frontends/widgets/feedcontroller.py:255
 #, python-format
 msgid "%(count)d Item"
 msgid_plural "%(count)d Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "අයිතම %(count)d ක්"
+msgstr[1] "අයිතම %(count)d ක්"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:264
 #, python-format
@@ -186,27 +186,31 @@ msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
 "%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
 msgstr[0] ""
+"ධාවනය නොකරන ලද අයිතම නිසා බාගත කිරීම් %(count)d ක් පෝලිම් ගත කර ඇත (සැකසුම් "
+"බලන්න)"
 msgstr[1] ""
+"ධාවනය නොකරන ලද අයිතම නිසා බාගත කිරීම් %(count)d ක් පෝලිම් ගත කර ඇත (සැකසුම් "
+"බලන්න)"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:275
 #, python-format
 msgid "%(count)d Item Matches Search"
 msgid_plural "%(count)d Items Match Search"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "අයිතම %(count)d ක් සෙවුමට ගැලපේ"
+msgstr[1] "අයිතම %(count)d ක් සෙවුමට ගැලපේ"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:280
 msgid "All Items Match Search"
-msgstr ""
+msgstr "සියළු අයිතම සෙවුමට ගැලපේ"
 
 #: ../../portable/frontends/widgets/diagnostics.py:76
 #: ../../portable/frontends/widgets/gtk/trayicon.py:109
 msgid "Show"
-msgstr ""
+msgstr "පෙන්වන්න"
 
 #: ../../portable/frontends/widgets/diagnostics.py:83
 msgid "Movies location:"
-msgstr ""
+msgstr "සලරූ ස්ථානය:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:87
 msgid "Icon cache location:"
@@ -214,7 +218,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/diagnostics.py:91
 msgid "Log file location:"
-msgstr ""
+msgstr "ලොග් ගොනු ස්ථානය:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:95
 msgid "Downloader log file location:"
@@ -222,19 +226,19 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/diagnostics.py:99
 msgid "Database file location:"
-msgstr ""
+msgstr "දත්තගබඩා ගොනු ස්ථානය:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:106
 msgid "Space free on disk:"
-msgstr ""
+msgstr "තැටියේ හිස් ඉඩ:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:108
 msgid "Database size:"
-msgstr ""
+msgstr "දත්තගබඩා විශාලත්වය:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:110
 msgid "Total db objects in memory:"
-msgstr ""
+msgstr "මතකයේ ඇති සියලු දත්තගබඩා වස්තූන්:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:118
 #: ../../portable/frontends/widgets/menus.py:335
@@ -244,11 +248,11 @@ msgstr ""
 #: ../../portable/frontends/widgets/downloadscontroller.py:84
 #: ../../portable/frontends/widgets/prefpanel.py:656
 msgid "Downloads"
-msgstr ""
+msgstr "බාගත කිරීම්"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:93
 msgid "Single and external downloads"
-msgstr ""
+msgstr "තනි හා බාහිර බාගත කිරීම්"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:96
 msgid "Feed downloads"
@@ -260,11 +264,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/newfolder.py:60
 msgid "Folder name:"
-msgstr ""
+msgstr "බහලුම් නම:"
 
 #: ../../portable/frontends/widgets/newfolder.py:69
 msgid "Folder should go in this section:"
-msgstr ""
+msgstr "ගොනුව මෙම අංශයට යා යුතුය:"
 
 #: ../../portable/frontends/widgets/newfolder.py:71
 #: ../../portable/frontends/widgets/newfeed.py:72
@@ -285,7 +289,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/newfolder.py:110
 msgid "Enter the name of the folder to add"
-msgstr ""
+msgstr "එකතු කිරීම සඳහා බහලුමේ නම ඇතුළු කරන්න"
 
 #: ../../portable/frontends/widgets/removefeeds.py:49
 msgid "Remove Feed"
@@ -301,7 +305,7 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/removefeeds.py:84
 msgid "Keep items that have been downloaded in my library."
-msgstr ""
+msgstr "බාගත කරන ලද අයිතම මගේ පුස්තකාලයේ තබන්න."
 
 #: ../../portable/frontends/widgets/removefeeds.py:89
 #, python-format
@@ -328,11 +332,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemedit.py:145
 msgid "Title:"
-msgstr ""
+msgstr "මාතෘකාව:"
 
 #: ../../portable/frontends/widgets/itemedit.py:147
 msgid "Description:"
-msgstr ""
+msgstr "විස්තරය:"
 
 #: ../../portable/frontends/widgets/itemedit.py:149
 msgid "Media type:"
@@ -358,7 +362,7 @@ msgstr "වෙනත්"
 
 #: ../../portable/frontends/widgets/itemedit.py:157
 msgid "Path:"
-msgstr ""
+msgstr "මාර්‍ගය:"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
@@ -371,11 +375,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:179
 msgid "Save Search"
-msgstr ""
+msgstr "සෙවීම සුරකින්න"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:286
 msgid "Title"
-msgstr ""
+msgstr "මාතෘකාව"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:288
 msgid "Feed"
@@ -384,20 +388,20 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemlistwidgets.py:290
 #: ../../portable/frontends/widgets/itemlistwidgets.py:743
 msgid "Date"
-msgstr ""
+msgstr "දිනය"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:291
 msgid "Length"
-msgstr ""
+msgstr "දිග"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:292
 msgid "Status"
-msgstr ""
+msgstr "තත්ත්වය"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:293
 #: ../../portable/frontends/widgets/itemlistwidgets.py:744
 msgid "Size"
-msgstr ""
+msgstr "විශාලත්වය"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:295
 msgid "ETA"
@@ -405,7 +409,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:296
 msgid "Speed"
-msgstr ""
+msgstr "වේගය"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:432
 msgid "Save as a Feed"
@@ -417,15 +421,15 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:493
 msgid "Resume All"
-msgstr ""
+msgstr "සියල්ල නැවත අරඹන්න"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:500
 msgid "Cancel All"
-msgstr ""
+msgstr "සියල්ල අත්හිටුවන්න"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:507
 msgid "Download Settings"
-msgstr ""
+msgstr "බාගත සැකසුම්"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:553
 #, python-format
@@ -450,21 +454,21 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemlistwidgets.py:585
 #, python-format
 msgid "%(rate)s downloading"
-msgstr ""
+msgstr "%(rate)s කින් බාගත කරමින්"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:619
 msgid "Auto Download"
-msgstr ""
+msgstr "ස්වයංක්‍රීය බාගත කිරීම"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:624
 #: ../../portable/frontends/widgets/prefpanel.py:292
 msgid "All"
-msgstr ""
+msgstr "සියල්ල"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:624
 #: ../../portable/frontends/widgets/prefpanel.py:291
 msgid "New"
-msgstr ""
+msgstr "නව"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:624
 #: ../../portable/frontends/widgets/prefpanel.py:293
@@ -477,7 +481,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:637
 msgid "Settings"
-msgstr ""
+msgstr "සැකසුම්"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:643
 msgid "Remove feed"
@@ -485,17 +489,17 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:719
 msgid "Unwatched"
-msgstr ""
+msgstr "නොබැලූ"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:721
 #: ../../portable/frontends/widgets/style.py:255
 #: ../../portable/frontends/widgets/style.py:1171
 msgid "Unplayed"
-msgstr ""
+msgstr "ධාවනය නොකල"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:730
 msgid "View|All"
-msgstr ""
+msgstr "බලන්න|සියල්ල"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:732
 msgid "Non Feed"
@@ -503,19 +507,19 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:742
 msgid "Name"
-msgstr ""
+msgstr "නම"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:745
 msgid "Time"
-msgstr ""
+msgstr "වේලාව"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
-msgstr ""
+msgstr "ධාවන ලැයිස්තුවක් එක් කරන්න"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
 msgid "Add items to an existing playlist or a new one."
-msgstr ""
+msgstr "අයිතම, ඇනට ඇති ධාවන ලැයිස්තුවකට හෝ නව එකකට එක් කරන්න."
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
 msgid "Existing playlist:"
@@ -537,11 +541,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:577
 msgid "Remove Website"
-msgstr ""
+msgstr "වෙබ් අඩවිය ඉවත් කරන්න"
 
 #: ../../portable/frontends/widgets/tablist.py:581
 msgid "Remove Websites"
-msgstr ""
+msgstr "වෙබ් අඩවි ඉවත් කරන්න"
 
 #: ../../portable/frontends/widgets/tablist.py:657
 msgid "Update Feeds In Folder"
@@ -569,7 +573,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:667
 msgid "Rename"
-msgstr ""
+msgstr "නම වෙනස් කරන්න"
 
 #: ../../portable/frontends/widgets/tablist.py:669
 msgid "Revert Feed Name"
@@ -582,21 +586,21 @@ msgstr ""
 #: ../../portable/frontends/widgets/tablist.py:712
 #: ../../portable/frontends/widgets/application.py:722
 msgid "Rename Playlist Folder"
-msgstr ""
+msgstr "ධාවන ලැයිස්තු බහලුමේ නම වෙනස් කරන්න"
 
 #: ../../portable/frontends/widgets/tablist.py:718
 #: ../../portable/frontends/widgets/application.py:717
 #: ../../portable/playlist.py:200
 msgid "Rename Playlist"
-msgstr ""
+msgstr "ධාවන ලැයිස්තුවේ නම වෙනස් කරන්න"
 
 #: ../../portable/frontends/widgets/tablist.py:741
 msgid "LIBRARY"
-msgstr ""
+msgstr "පුස්තකාලය"
 
 #: ../../portable/frontends/widgets/tablist.py:743
 msgid "WEBSITES"
-msgstr ""
+msgstr "වෙබ් අඩවි"
 
 #: ../../portable/frontends/widgets/tablist.py:745
 msgid "VIDEO FEEDS"
@@ -608,7 +612,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:749
 msgid "PLAYLISTS"
-msgstr ""
+msgstr "ධාවන ලැයිස්තු"
 
 #: ../../portable/frontends/widgets/prefpanel.py:269
 #, python-format
@@ -617,19 +621,19 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:273
 msgid "Warn me if I attempt to quit with downloads in progress."
-msgstr ""
+msgstr "බාගත කිරීම සිදුවන අතරතුර මා පිටවීමට උත්සාහ කලොත් අනතුරු අඟවන්න."
 
 #: ../../portable/frontends/widgets/prefpanel.py:283
 msgid "Every day"
-msgstr ""
+msgstr "සෑම දිනකම"
 
 #: ../../portable/frontends/widgets/prefpanel.py:284
 msgid "Every hour"
-msgstr ""
+msgstr "සෑම පැයකම"
 
 #: ../../portable/frontends/widgets/prefpanel.py:285
 msgid "Every 30 minutes"
-msgstr ""
+msgstr "සෑම විනාඩි 30කටම"
 
 #: ../../portable/frontends/widgets/prefpanel.py:286
 msgid "Manually"
@@ -637,23 +641,23 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:299
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: ../../portable/frontends/widgets/prefpanel.py:300
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../../portable/frontends/widgets/prefpanel.py:301
 msgid "50"
-msgstr ""
+msgstr "50"
 
 #: ../../portable/frontends/widgets/prefpanel.py:302
 msgid "100"
-msgstr ""
+msgstr "100"
 
 #: ../../portable/frontends/widgets/prefpanel.py:303
 msgid "1000"
-msgstr ""
+msgstr "1000"
 
 #: ../../portable/frontends/widgets/prefpanel.py:309
 msgid "Default settings for new feeds:"
@@ -669,7 +673,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:322
 msgid "Auto download setting:"
-msgstr ""
+msgstr "ස්වයංක්‍රීය බාගත කිරීම වල සැකසුම්:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:328
 msgid "Remember this many old items:"
@@ -677,7 +681,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:329
 msgid "(in addition to the current contents)"
-msgstr ""
+msgstr "(වර්තමාන අන්තර්ගතයට අමතරව)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:342
 msgid "Maximum number of manual downloads at a time:"
@@ -685,7 +689,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:349
 msgid "Maximum number of auto-downloads at a time:"
-msgstr ""
+msgstr "යම් මොහතෙක ක්‍රියාත්මක උපරිම  ස්වයංක්‍රීය බාගත කිරීම් ගණන:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:359
 msgid "Bittorrent:"
@@ -698,7 +702,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/prefpanel.py:373
 #: ../../portable/frontends/widgets/prefpanel.py:384
 msgid "KB/s"
-msgstr ""
+msgstr "KB/තත්."
 
 #: ../../portable/frontends/widgets/prefpanel.py:376
 msgid "Limit downstream bandwidth to:"
@@ -731,20 +735,20 @@ msgstr ""
 #: ../../portable/frontends/widgets/prefpanel.py:439
 #: ../../portable/frontends/widgets/firsttimedialog.py:193
 msgid "Change"
-msgstr ""
+msgstr "වෙනස් කරන්න"
 
 #: ../../portable/frontends/widgets/prefpanel.py:444
 msgid "Choose Movies Directory"
-msgstr ""
+msgstr "සලරූ බහලුම තෝරන්න"
 
 #: ../../portable/frontends/widgets/prefpanel.py:457
 msgid "Directory not valid"
-msgstr ""
+msgstr "බහලුම වලංගු නැත"
 
 #: ../../portable/frontends/widgets/prefpanel.py:458
 #, python-format
 msgid "Directory '%s' could not be created.  "
-msgstr ""
+msgstr "'%s' බහලුම සෑදිය නොහැක.  "
 
 #: ../../portable/frontends/widgets/prefpanel.py:473
 msgid "Migrate existing movies?"
@@ -757,11 +761,14 @@ msgid ""
 "migrate your existing downloads there? (Currently downloading movies will "
 "not be moved until they finish.)"
 msgstr ""
+"සළරු බාගත කිරීමට ඔබ නව ගොනුවක් තෝරා ඇත. %(appname)s විසින් ඔබේ පවතින ඇති "
+"බාගත කිරීම් එයට සංක්‍රමණය කල යුතුද? (දැනට බාගත වෙමින් පවතින සළරු නිමවන තෙක් "
+"ගෙන නොයනු ඇත.)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:503
 #: ../../portable/dialogs.py:114
 msgid "Add"
-msgstr ""
+msgstr "එක් කරන්න"
 
 #: ../../portable/frontends/widgets/prefpanel.py:544
 msgid "Add Watched Folder"
@@ -769,7 +776,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:563
 msgid "Store downloads in this folder:"
-msgstr ""
+msgstr "බාගත කිරීම් මෙම බහලුමේ ගබඩා කරන්න:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:570
 msgid ""
@@ -784,27 +791,27 @@ msgstr ""
 #: ../../portable/frontends/widgets/prefpanel.py:592
 #: ../../portable/frontends/widgets/prefpanel.py:598
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: ../../portable/frontends/widgets/prefpanel.py:601
 msgid "1 day"
-msgstr ""
+msgstr "දින 1ක්"
 
 #: ../../portable/frontends/widgets/prefpanel.py:602
 msgid "3 days"
-msgstr ""
+msgstr "දින 3ක්"
 
 #: ../../portable/frontends/widgets/prefpanel.py:603
 msgid "6 days"
-msgstr ""
+msgstr "දින 6ක්"
 
 #: ../../portable/frontends/widgets/prefpanel.py:604
 msgid "10 days"
-msgstr ""
+msgstr "දින 10ක්"
 
 #: ../../portable/frontends/widgets/prefpanel.py:605
 msgid "1 month"
-msgstr ""
+msgstr "මාස 1ක්"
 
 #: ../../portable/frontends/widgets/prefpanel.py:606
 #: ../../portable/frontends/widgets/feedsettingspanel.py:55
@@ -843,7 +850,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:654
 msgid "General"
-msgstr ""
+msgstr "පොදු"
 
 #: ../../portable/frontends/widgets/prefpanel.py:655
 msgid "Feeds"
@@ -851,7 +858,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:657
 msgid "Folders"
-msgstr ""
+msgstr "බහලුම්"
 
 #: ../../portable/frontends/widgets/prefpanel.py:658
 msgid "Disk space"
@@ -863,7 +870,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:663
 msgid "Preferences"
-msgstr ""
+msgstr "අභිරුචියන්"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:89
 #, python-format
@@ -887,7 +894,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:107
 msgid "Hide"
-msgstr ""
+msgstr "සඟවන්න"
 
 #: ../../portable/frontends/widgets/gtk/video.py:278
 #: ../../portable/frontends/widgets/style.py:258
@@ -902,7 +909,7 @@ msgstr "තබාගන්න"
 
 #: ../../portable/frontends/widgets/gtk/video.py:282
 msgid "Subtitles"
-msgstr ""
+msgstr "උපසිරස"
 
 #: ../../portable/frontends/widgets/gtk/video.py:291
 #: ../../portable/frontends/widgets/itemcontextmenu.py:67
@@ -926,7 +933,7 @@ msgstr "ප්‍රතිචාර"
 
 #: ../../portable/frontends/widgets/gtk/video.py:307
 msgid "Permalink"
-msgstr ""
+msgstr "නිත්‍ය සබැඳුම"
 
 #: ../../portable/frontends/widgets/gtk/video.py:315
 msgid "Pop-in"
@@ -946,25 +953,25 @@ msgstr ""
 #: ../../portable/frontends/widgets/gtk/window.py:267
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:369
 msgid "Disable Subtitles"
-msgstr ""
+msgstr "උපසිරස අක්‍රීය කරන්න"
 
 #: ../../portable/frontends/widgets/gtk/video.py:390
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:387
 msgid "Select a Subtitles file..."
-msgstr ""
+msgstr "උපසිරස ගොනුවක් තොරන්න..."
 
 #: ../../portable/frontends/widgets/gtk/window.py:650
 msgid "All files"
-msgstr ""
+msgstr "සියලු ගොනු"
 
 #: ../../portable/frontends/widgets/gtk/window.py:682
 msgid "Choose"
-msgstr ""
+msgstr "තෝරන්න"
 
 #: ../../portable/frontends/widgets/gtk/window.py:699
 #, python-format
 msgid "About %(appname)s"
-msgstr ""
+msgstr "%(appname)s ගැන"
 
 #: ../../portable/frontends/widgets/gtk/window.py:715
 #, python-format
@@ -972,11 +979,13 @@ msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
 "%(trademark)s"
 msgstr ""
+"%(copyright)s. විස්තර සඳහා license.txt file බලන්න.\n"
+"%(trademark)s"
 
 #: ../../portable/frontends/widgets/gtk/window.py:754
 #: ../../portable/dialogs.py:94
 msgid "Close"
-msgstr ""
+msgstr "වසන්න"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:438
 #: ../../portable/frontends/widgets/statictabs.py:97
@@ -985,7 +994,7 @@ msgstr "වීඩියෝ සෙවුම"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:452
 msgid "No Results Found"
-msgstr ""
+msgstr "කිසිදු ප්‍රතිඵලයක් හමු නොවිනි"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:558
 msgid "Back to feed"
@@ -1021,30 +1030,30 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:331
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
-msgstr ""
+msgstr "%(filename)s ගොනුව පිටස්තර %(appname)s වෙතින් මකා දමා ඇත."
 
 #: ../../portable/frontends/widgets/application.py:339
 msgid "Open Files..."
-msgstr ""
+msgstr "ගොනු විවෘත කරන්න..."
 
 #: ../../portable/frontends/widgets/application.py:350
 #: ../../portable/frontends/widgets/application.py:355
 msgid "Open Files - Error"
-msgstr ""
+msgstr "ගොනු විවෘත කරන්න - දෝෂයකි"
 
 #: ../../portable/frontends/widgets/application.py:351
 #: ../../portable/frontends/widgets/application.py:634
 #, python-format
 msgid "File %(filename)s does not exist."
-msgstr ""
+msgstr "%(filename)s ගොනුව නොපවතී."
 
 #: ../../portable/frontends/widgets/application.py:356
 msgid "The following files do not exist:"
-msgstr ""
+msgstr "පහත ගොනු නොපවතී:"
 
 #: ../../portable/frontends/widgets/application.py:393
 msgid "New Download"
-msgstr ""
+msgstr "නව බාගත කිරීම"
 
 #: ../../portable/frontends/widgets/application.py:394
 msgid "Enter the URL of the item to download"
@@ -1052,7 +1061,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:395
 msgid "New Download - Invalid URL"
-msgstr ""
+msgstr "නව බාගත කිරීම - වලංගු නොවන URL"
 
 #: ../../portable/frontends/widgets/application.py:396
 msgid ""
@@ -1065,18 +1074,18 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:404
 #, python-format
 msgid "%(appname)s is up to date"
-msgstr ""
+msgstr "%(appname)s යාවත්කාලීනයි"
 
 #: ../../portable/frontends/widgets/application.py:406
 #, python-format
 msgid "%(appname)s is up to date!"
-msgstr ""
+msgstr "%(appname)s යාවත්කාලීනයි!"
 
 #: ../../portable/frontends/widgets/application.py:430
 msgid "Remove item"
 msgid_plural "Remove items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "අයිතමය ඉවත් කරන්න"
+msgstr[1] "අයිතම ඉවත් කරන්න"
 
 #: ../../portable/frontends/widgets/application.py:434
 msgid ""
@@ -1096,14 +1105,18 @@ msgid_plural ""
 "Some of these items are folders.  Delete/Removeing a folder will "
 "delete/remove it's contents"
 msgstr[0] ""
+"මෙම අයිතම වලින් එකක් බහලුමක්ය. බහලුමක් මකාදැමීමෙන්/ඉවත් කිරීමෙන් එහි "
+"අන්තර්ගතයද මකාදැමෙනු/ඉවත් කෙරෙනු ඇත"
 msgstr[1] ""
+"මෙම අයිතම වලින් සමහරක් බහලුම්ය. බහලුමක් මකාදැමීමෙන්/ඉවත් කිරීමෙන් එහි "
+"අන්තර්ගතයද මකාදැමෙනු/ඉවත් කෙරෙනු ඇත"
 
 #: ../../portable/frontends/widgets/application.py:459
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "අයිතමය මකාදැමීමට අවශ්‍ය බව ඔබට විශ්වාසද?"
+msgstr[1] "මුළු අයිතම %(count)d ක් මකාදැමීමට අවශ්‍ය බව ඔබට විශ්වාසද?"
 
 #: ../../portable/frontends/widgets/application.py:466
 msgid ""
@@ -1111,7 +1124,11 @@ msgid ""
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
 msgstr[0] ""
+"මෙම අයිතම වලින් එකක් බහලුමක්ය. බහලුමක් මකාදැමීමෙන් එහි අන්තර්ගතයද මකාදැමෙනු "
+"ඇත"
 msgstr[1] ""
+"මෙම අයිතම වලින් සමහරක් බහලුම්ය. බහලුමක් මකාදැමීමෙන් එහි අන්තර්ගතයද මකාදැමෙනු "
+"ඇත"
 
 #: ../../portable/frontends/widgets/application.py:510
 msgid "Save Item As..."
@@ -1120,7 +1137,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:563
 #: ../../portable/frontends/widgets/menus.py:220
 msgid "Add Website"
-msgstr ""
+msgstr "වෙබ් අඩවියක් එක් කරන්න"
 
 #: ../../portable/frontends/widgets/application.py:564
 msgid "Enter the URL of the website to add"

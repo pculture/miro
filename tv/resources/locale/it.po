@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: getdemocracy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-02-21 18:55+0000\n"
-"Last-Translator: Alessandro Bahgat Shehata <Unknown>\n"
+"PO-Revision-Date: 2010-03-08 11:41+0000\n"
+"Last-Translator: coldancient <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-02-24 15:37+0000\n"
+"X-Launchpad-Export-Date: 2010-03-09 14:21+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:127
@@ -33,7 +33,7 @@ msgstr "Ricevuto codice di stato 404"
 
 #: ../../portable/httpclient.py:170
 msgid "Pipeline request never started"
-msgstr "Richiesta di Pipeline non iniziata"
+msgstr "il flusso dati richiesto non si è mai avviato"
 
 #: ../../portable/httpclient.py:174
 msgid "Timeout"
@@ -60,7 +60,7 @@ msgstr "Errore: %(msg)s"
 
 #: ../../portable/httpclient.py:116 ../../portable/httpclient.py:122
 msgid "Can't connect"
-msgstr "Impossibile connettersi"
+msgstr "Non è possibile connettersi"
 
 #: ../../portable/httpclient.py:117
 #, python-format
@@ -84,7 +84,7 @@ msgstr "Errore nella Linea di Header: %(msg)s"
 #: ../../portable/httpclient.py:141
 #, python-format
 msgid "Bad Chunk size: %(msg)s"
-msgstr "Errore di dimensione del Chunk: %(msg)s"
+msgstr "Dimensione del frammento errata: %(msg)s"
 
 #: ../../portable/httpclient.py:146
 #, python-format
@@ -347,7 +347,7 @@ msgstr "Descrizione:"
 
 #: ../../portable/frontends/widgets/itemedit.py:149
 msgid "Media type:"
-msgstr ""
+msgstr "Tipo multimediale"
 
 #: ../../portable/frontends/widgets/itemedit.py:151
 #: ../../portable/frontends/widgets/itemlistcontroller.py:521
@@ -369,7 +369,7 @@ msgstr "Altro"
 
 #: ../../portable/frontends/widgets/itemedit.py:157
 msgid "Path:"
-msgstr ""
+msgstr "Percorso:"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
@@ -549,15 +549,15 @@ msgstr "Copia l'URL nella clipboard"
 #: ../../portable/frontends/widgets/tablist.py:576
 #: ../../portable/frontends/widgets/application.py:726
 msgid "Rename Website"
-msgstr ""
+msgstr "Rinomina il Sito Web"
 
 #: ../../portable/frontends/widgets/tablist.py:577
 msgid "Remove Website"
-msgstr ""
+msgstr "Rimuovi il Sito Web"
 
 #: ../../portable/frontends/widgets/tablist.py:581
 msgid "Remove Websites"
-msgstr ""
+msgstr "Rimuovi i Siti Web"
 
 #: ../../portable/frontends/widgets/tablist.py:657
 msgid "Update Feeds In Folder"
@@ -966,7 +966,7 @@ msgstr "Stacca"
 #: ../../portable/frontends/widgets/menus.py:312
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:380
 msgid "None Available"
-msgstr ""
+msgstr "Non disponibile"
 
 #: ../../portable/frontends/widgets/gtk/video.py:379
 #: ../../portable/frontends/widgets/gtk/window.py:267
@@ -1166,15 +1166,15 @@ msgstr "Salvare Elemento Come..."
 #: ../../portable/frontends/widgets/application.py:563
 #: ../../portable/frontends/widgets/menus.py:220
 msgid "Add Website"
-msgstr ""
+msgstr "Aggiungi un Sito Web"
 
 #: ../../portable/frontends/widgets/application.py:564
 msgid "Enter the URL of the website to add"
-msgstr ""
+msgstr "Scrivi l''indirizzo del Sito Web da aggiungere"
 
 #: ../../portable/frontends/widgets/application.py:565
 msgid "Add Website - Invalid URL"
-msgstr ""
+msgstr "Aggiungi un Sito Web - Indirizzo non valido"
 
 #: ../../portable/frontends/widgets/application.py:566
 msgid ""
@@ -1183,6 +1183,10 @@ msgid ""
 "\n"
 "Enter the URL of the website to add"
 msgstr ""
+"Lndirizzo che hai digitato non è un indirizzo web valido\n"
+"Per favore controllalo e prova di nuovo\n"
+"\n"
+"Digita l'indirizzo web del Sito Web da aggiungere"
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
@@ -1243,7 +1247,7 @@ msgstr "Immetti un nuovo nome per la cartella di playlist %(name)s"
 #: ../../portable/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the website %(name)s"
-msgstr ""
+msgstr "Digita un nuovo nomer per il Sito Web %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
@@ -1261,15 +1265,15 @@ msgstr[1] "Sei sicuro di voler rimuovere queste playlist?"
 #: ../../portable/frontends/widgets/application.py:773
 msgid "Remove website"
 msgid_plural "Remove websites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Rimuovi il Sito Web"
+msgstr[1] "Rimuovi i Siti Web"
 
 #: ../../portable/frontends/widgets/application.py:775
 #, python-format
 msgid "Are you sure you want to remove this website?"
 msgid_plural "Are you sure you want to remove these %(count)s websites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Sei sicuro di voler rimuovere questo Sito Web?"
+msgstr[1] "Sei sicuro di voler rimuovere questi Siti %(count)s Web?"
 
 #: ../../portable/frontends/widgets/application.py:805
 msgid "Are you sure you want to quit?"
@@ -1506,7 +1510,7 @@ msgstr "_Elimina Elementi..."
 
 #: ../../portable/frontends/widgets/menus.py:203
 msgid "_Edit Item"
-msgstr ""
+msgstr "_Modifica l'oggetto"
 
 #: ../../portable/frontends/widgets/menus.py:205
 msgid "Save Item _As"
@@ -1522,7 +1526,7 @@ msgstr "Copiare la _URL del Elemento"
 
 #: ../../portable/frontends/widgets/menus.py:213
 msgid "_Preferences"
-msgstr ""
+msgstr "_Preferenze"
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
@@ -1550,11 +1554,11 @@ msgstr "Ri_nomina"
 
 #: ../../portable/frontends/widgets/menus.py:231
 msgid "Re_name Feed"
-msgstr ""
+msgstr "Ri_nomina il Feed"
 
 #: ../../portable/frontends/widgets/menus.py:232
 msgid "Re_name Website"
-msgstr ""
+msgstr "Ri-nomina il Sito Web"
 
 #: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
@@ -1562,11 +1566,11 @@ msgstr "_Rimuovi"
 
 #: ../../portable/frontends/widgets/menus.py:237
 msgid "_Remove Feed"
-msgstr ""
+msgstr "_Rimuovi il Feed"
 
 #: ../../portable/frontends/widgets/menus.py:238
 msgid "_Remove Feeds"
-msgstr ""
+msgstr "_Rimuovi i Feed"
 
 #: ../../portable/frontends/widgets/menus.py:239
 msgid "_Remove Folder"
@@ -1574,15 +1578,15 @@ msgstr "_Rimuovi Cartella"
 
 #: ../../portable/frontends/widgets/menus.py:240
 msgid "_Remove Folders"
-msgstr ""
+msgstr "_Rimuovere le cartelle"
 
 #: ../../portable/frontends/widgets/menus.py:241
 msgid "_Remove Website"
-msgstr ""
+msgstr "_Rimuovi Sito Web"
 
 #: ../../portable/frontends/widgets/menus.py:242
 msgid "_Remove Websites"
-msgstr ""
+msgstr "_Rimuovi i Siti Web"
 
 #: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
@@ -1695,7 +1699,7 @@ msgstr "_Alternare Staccato/Collegato"
 
 #: ../../portable/frontends/widgets/menus.py:311
 msgid "S_ubtitles"
-msgstr ""
+msgstr "S_ottotitoli"
 
 #: ../../portable/frontends/widgets/menus.py:315
 msgid "Select a Subtitles File..."
@@ -1906,8 +1910,8 @@ msgstr[1] "%(count)d Feed Selezionati"
 #, python-format
 msgid "%(count)d Website Selected"
 msgid_plural "%(count)d Websites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Sito Web Selezionato"
+msgstr[1] "%(count)d Siti Web Selezionati"
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
@@ -2541,7 +2545,7 @@ msgstr "Ok"
 
 #: ../../portable/dialogs.py:93
 msgid "Apply"
-msgstr ""
+msgstr "Applica"
 
 #: ../../portable/dialogs.py:96
 msgid "Done"
@@ -2645,7 +2649,7 @@ msgstr "Riprova"
 
 #: ../../portable/dialogs.py:128
 msgid "Start Fresh"
-msgstr ""
+msgstr "Nuova sessione"
 
 #: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"
@@ -2800,7 +2804,7 @@ msgstr "Playlist di esempio"
 #: ../../portable/storedatabase.py:208
 #, python-format
 msgid "%(appname)s database upgrade failed"
-msgstr ""
+msgstr "aggiornamento del database di %(appname)s non riuscito"
 
 #: ../../portable/storedatabase.py:211
 #, python-format
@@ -2990,7 +2994,7 @@ msgstr "Renderizzatore video"
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:446
 #, python-format
 msgid "Track %(tracknumber)d"
-msgstr ""
+msgstr "Binario %(tracknumber)d"
 
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:456
 #, python-format

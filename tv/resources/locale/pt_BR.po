@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-02-10 12:04+0000\n"
-"Last-Translator: Lucas <lucas.rsilveira@gmail.com>\n"
+"PO-Revision-Date: 2010-02-27 18:11+0000\n"
+"Last-Translator: Igor Gomes <Unknown>\n"
 "Language-Team: Portuguese (Brazil) <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2010-02-24 15:37+0000\n"
+"X-Launchpad-Export-Date: 2010-03-09 14:22+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -545,15 +545,15 @@ msgstr "Copiar a URL para a área de transferência"
 #: ../../portable/frontends/widgets/tablist.py:576
 #: ../../portable/frontends/widgets/application.py:726
 msgid "Rename Website"
-msgstr ""
+msgstr "Renomear Website"
 
 #: ../../portable/frontends/widgets/tablist.py:577
 msgid "Remove Website"
-msgstr ""
+msgstr "Remover Website"
 
 #: ../../portable/frontends/widgets/tablist.py:581
 msgid "Remove Websites"
-msgstr ""
+msgstr "Remover Websites"
 
 #: ../../portable/frontends/widgets/tablist.py:657
 msgid "Update Feeds In Folder"
@@ -1170,15 +1170,15 @@ msgstr "Salvar item como..."
 #: ../../portable/frontends/widgets/application.py:563
 #: ../../portable/frontends/widgets/menus.py:220
 msgid "Add Website"
-msgstr ""
+msgstr "Adicionar Websites"
 
 #: ../../portable/frontends/widgets/application.py:564
 msgid "Enter the URL of the website to add"
-msgstr ""
+msgstr "Digite a URL do website para adicionar"
 
 #: ../../portable/frontends/widgets/application.py:565
 msgid "Add Website - Invalid URL"
-msgstr ""
+msgstr "Adicionar Website - URL Inválida"
 
 #: ../../portable/frontends/widgets/application.py:566
 msgid ""
@@ -1187,6 +1187,10 @@ msgid ""
 "\n"
 "Enter the URL of the website to add"
 msgstr ""
+"O endereço que você digitou não é uma URL válida.\n"
+"Por favor corrija a URL e tente novamente.\n"
+"\n"
+"Digite a URL do website para adicionar"
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
@@ -1247,7 +1251,7 @@ msgstr "Digite um novo nome para a pasta de lista de reprodução %(name)s"
 #: ../../portable/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the website %(name)s"
-msgstr ""
+msgstr "Digite um novo nome para o website %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
@@ -1265,15 +1269,15 @@ msgstr[1] "Você tem certeza que quer remover estas %(count)s playlists?"
 #: ../../portable/frontends/widgets/application.py:773
 msgid "Remove website"
 msgid_plural "Remove websites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Remover website"
+msgstr[1] "Remover websites"
 
 #: ../../portable/frontends/widgets/application.py:775
 #, python-format
 msgid "Are you sure you want to remove this website?"
 msgid_plural "Are you sure you want to remove these %(count)s websites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Você tem certeza que quer remover esse website?"
+msgstr[1] "Você tem certeza que quer remover esses %(count)s websites?"
 
 #: ../../portable/frontends/widgets/application.py:805
 msgid "Are you sure you want to quit?"
@@ -1510,7 +1514,7 @@ msgstr "_Remover Itens"
 
 #: ../../portable/frontends/widgets/menus.py:203
 msgid "_Edit Item"
-msgstr ""
+msgstr "_Editar Item"
 
 #: ../../portable/frontends/widgets/menus.py:205
 msgid "Save Item _As"
@@ -1526,7 +1530,7 @@ msgstr "Copiar _URL"
 
 #: ../../portable/frontends/widgets/menus.py:213
 msgid "_Preferences"
-msgstr ""
+msgstr "_Preferências"
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
@@ -1558,7 +1562,7 @@ msgstr "Renomear Feed"
 
 #: ../../portable/frontends/widgets/menus.py:232
 msgid "Re_name Website"
-msgstr ""
+msgstr "Re_nomear Website"
 
 #: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
@@ -1582,11 +1586,11 @@ msgstr "Remover diretórios"
 
 #: ../../portable/frontends/widgets/menus.py:241
 msgid "_Remove Website"
-msgstr ""
+msgstr "_Remover Website"
 
 #: ../../portable/frontends/widgets/menus.py:242
 msgid "_Remove Websites"
-msgstr ""
+msgstr "_Remover Websites"
 
 #: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
@@ -1910,8 +1914,8 @@ msgstr[1] "%(count)d Feeds Selecionados"
 #, python-format
 msgid "%(count)d Website Selected"
 msgid_plural "%(count)d Websites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Website Selecionado"
+msgstr[1] "%(count)d Websites Selecionados"
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
@@ -2646,7 +2650,7 @@ msgstr "Tentar Novamente"
 
 #: ../../portable/dialogs.py:128
 msgid "Start Fresh"
-msgstr ""
+msgstr "Iniciar do Zero"
 
 #: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"
@@ -2800,7 +2804,7 @@ msgstr "Exemplo de Lista de Reprodução"
 #: ../../portable/storedatabase.py:208
 #, python-format
 msgid "%(appname)s database upgrade failed"
-msgstr ""
+msgstr "Upgrade do banco de dados do %(appname)s falhou"
 
 #: ../../portable/storedatabase.py:211
 #, python-format
@@ -2816,6 +2820,15 @@ msgid ""
 "Finally, you can start fresh and your damaged database will be removed, but "
 "you will have to re-add your feeds and media files."
 msgstr ""
+"Desculpe-nos, o %(appname)s não conseguiu fazer o upgrade do seu banco de "
+"dados devido a erros.\n"
+"Verifique se o seu disco está cheio. Se estiver cheio, então feche o "
+"%(appname)s, libere algum espaço e inicie o %(appname)s novamente.\n"
+"Se o disco não estiver cheio, ajude-nos a entender o problema reportando o "
+"problema em bugzilla.pculture.org após fechar o programa.\n"
+"Finalmente, você pode criar um novo banco de dados e o anterior defeituoso "
+"será removido. Contudo, você terá que adicionar novamente os seus feeds e "
+"arquivos de vídeo e áudio."
 
 #: ../../portable/storedatabase.py:267
 msgid "Database was created by a newer version of Miro "
@@ -3006,12 +3019,12 @@ msgstr "Renderizador de vídeo:"
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:446
 #, python-format
 msgid "Track %(tracknumber)d"
-msgstr ""
+msgstr "Faixa %(tracknumber)d"
 
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:456
 #, python-format
 msgid "Subtitle file %(tracknumber)d"
-msgstr ""
+msgstr "Arquivo de legenda %(tracknumber)d"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:178
 msgid "Download Completed"

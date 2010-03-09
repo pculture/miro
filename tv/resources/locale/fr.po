@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: Democracy Player 0.8.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-02-21 22:52+0000\n"
-"Last-Translator: lucnam <Unknown>\n"
+"PO-Revision-Date: 2010-03-06 13:28+0000\n"
+"Last-Translator: gnuckx <gnuckx@gmail.com>\n"
 "Language-Team: French <kde-francophone@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2010-02-24 15:36+0000\n"
+"X-Launchpad-Export-Date: 2010-03-09 14:22+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: French\n"
 
@@ -555,7 +555,7 @@ msgstr "Renommer le site internet"
 
 #: ../../portable/frontends/widgets/tablist.py:577
 msgid "Remove Website"
-msgstr ""
+msgstr "Supprimer le site internet"
 
 #: ../../portable/frontends/widgets/tablist.py:581
 msgid "Remove Websites"
@@ -1543,7 +1543,7 @@ msgstr "Copier l'_URL de l'élément"
 
 #: ../../portable/frontends/widgets/menus.py:213
 msgid "_Preferences"
-msgstr ""
+msgstr "_Préférences"
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
@@ -2672,7 +2672,7 @@ msgstr "Réessayer"
 
 #: ../../portable/dialogs.py:128
 msgid "Start Fresh"
-msgstr ""
+msgstr "Commencer de Nouveau"
 
 #: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"

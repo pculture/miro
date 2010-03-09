@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: Democracy Player\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-02-19 19:41+0000\n"
-"Last-Translator: jakall <Unknown>\n"
+"PO-Revision-Date: 2010-03-06 20:00+0000\n"
+"Last-Translator: Lukasz Taczuk <Unknown>\n"
 "Language-Team: Piotr Szmitkowski <pszmitkowski@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-02-24 15:37+0000\n"
+"X-Launchpad-Export-Date: 2010-03-09 14:22+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-Language: Polish\n"
@@ -1259,7 +1259,7 @@ msgstr "Podaj nową nazwę folderu listy odtwarzania %(name)s"
 #: ../../portable/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the website %(name)s"
-msgstr ""
+msgstr "Podaj nową nazwę dla strony %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
@@ -1281,13 +1281,15 @@ msgid "Remove website"
 msgid_plural "Remove websites"
 msgstr[0] "Usuń stronę"
 msgstr[1] "Usuń strony"
+msgstr[2] "Usuń strony"
 
 #: ../../portable/frontends/widgets/application.py:775
 #, python-format
 msgid "Are you sure you want to remove this website?"
 msgid_plural "Are you sure you want to remove these %(count)s websites?"
 msgstr[0] "Jesteś pewny, że chcesz usunąć tą stronę?"
-msgstr[1] "Jesteś pewny, że chcesz usunąć te %(count)s stron(y)?"
+msgstr[1] "Jesteś pewny, że chcesz usunąć te %(count)s strony?"
+msgstr[2] "Jesteś pewny, że chcesz usunąć te %(count)s stron?"
 
 #: ../../portable/frontends/widgets/application.py:805
 msgid "Are you sure you want to quit?"
@@ -1525,7 +1527,7 @@ msgstr "_Usuń elementy"
 
 #: ../../portable/frontends/widgets/menus.py:203
 msgid "_Edit Item"
-msgstr ""
+msgstr "_Edytuj element"
 
 #: ../../portable/frontends/widgets/menus.py:205
 msgid "Save Item _As"
@@ -1541,7 +1543,7 @@ msgstr "_Kopiuj URL elementu"
 
 #: ../../portable/frontends/widgets/menus.py:213
 msgid "_Preferences"
-msgstr ""
+msgstr "P_referencje"
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
@@ -1577,7 +1579,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
-msgstr "Usuń"
+msgstr "U_suń"
 
 #: ../../portable/frontends/widgets/menus.py:237
 msgid "_Remove Feed"
@@ -1585,7 +1587,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:238
 msgid "_Remove Feeds"
-msgstr ""
+msgstr "U_suń kanał"
 
 #: ../../portable/frontends/widgets/menus.py:239
 msgid "_Remove Folder"
@@ -1593,11 +1595,11 @@ msgstr "U_suń folder"
 
 #: ../../portable/frontends/widgets/menus.py:240
 msgid "_Remove Folders"
-msgstr ""
+msgstr "U_suń kanały"
 
 #: ../../portable/frontends/widgets/menus.py:241
 msgid "_Remove Website"
-msgstr ""
+msgstr "U_suń stronę"
 
 #: ../../portable/frontends/widgets/menus.py:242
 msgid "_Remove Websites"

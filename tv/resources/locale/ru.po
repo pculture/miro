@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-02-11 11:15+0000\n"
-"Last-Translator: maggie_s <Unknown>\n"
+"PO-Revision-Date: 2010-03-04 12:29+0000\n"
+"Last-Translator: amlor <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-02-24 15:36+0000\n"
+"X-Launchpad-Export-Date: 2010-03-09 14:22+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -148,7 +148,7 @@ msgstr "Открыть файл с субтитрами..."
 
 #: ../../portable/frontends/widgets/playback.py:552
 msgid "Subtitle files"
-msgstr ""
+msgstr "Файлы субтитров"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -557,15 +557,15 @@ msgstr "Скопировать адрес в буфер"
 #: ../../portable/frontends/widgets/tablist.py:576
 #: ../../portable/frontends/widgets/application.py:726
 msgid "Rename Website"
-msgstr ""
+msgstr "Переименовать Веб-сайт"
 
 #: ../../portable/frontends/widgets/tablist.py:577
 msgid "Remove Website"
-msgstr ""
+msgstr "Удалить Веб-сайт"
 
 #: ../../portable/frontends/widgets/tablist.py:581
 msgid "Remove Websites"
-msgstr ""
+msgstr "Удалить Веб-сайты"
 
 #: ../../portable/frontends/widgets/tablist.py:657
 msgid "Update Feeds In Folder"
@@ -1194,15 +1194,15 @@ msgstr "Сохранить элемент как..."
 #: ../../portable/frontends/widgets/application.py:563
 #: ../../portable/frontends/widgets/menus.py:220
 msgid "Add Website"
-msgstr ""
+msgstr "Добавить Веб-сайт"
 
 #: ../../portable/frontends/widgets/application.py:564
 msgid "Enter the URL of the website to add"
-msgstr ""
+msgstr "Введите URL нового веб-сайта"
 
 #: ../../portable/frontends/widgets/application.py:565
 msgid "Add Website - Invalid URL"
-msgstr ""
+msgstr "Добавление веб-сайта - Неправильный URL"
 
 #: ../../portable/frontends/widgets/application.py:566
 msgid ""
@@ -1211,6 +1211,10 @@ msgid ""
 "\n"
 "Enter the URL of the website to add"
 msgstr ""
+"Введенный URL не верный.\n"
+"Пожалуйста, проверьте URL и попробуйте снова.\n"
+"\n"
+"Введите URL веб-сайта:"
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
@@ -1271,7 +1275,7 @@ msgstr "Введите новое имя папки списков воспро�
 #: ../../portable/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the website %(name)s"
-msgstr ""
+msgstr "Введите новое название веб-сайта %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
@@ -1291,8 +1295,8 @@ msgstr[2] "Вы точно хотите удалить эти %(count)s спис
 #: ../../portable/frontends/widgets/application.py:773
 msgid "Remove website"
 msgid_plural "Remove websites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Удалить веб-сайт"
+msgstr[1] "Удалить веб-сайты"
 
 #: ../../portable/frontends/widgets/application.py:775
 #, python-format
@@ -1536,7 +1540,7 @@ msgstr "_Убрать элементы"
 
 #: ../../portable/frontends/widgets/menus.py:203
 msgid "_Edit Item"
-msgstr ""
+msgstr "_Редактировать"
 
 #: ../../portable/frontends/widgets/menus.py:205
 msgid "Save Item _As"
@@ -1552,7 +1556,7 @@ msgstr "_Копировать URL элемента"
 
 #: ../../portable/frontends/widgets/menus.py:213
 msgid "_Preferences"
-msgstr ""
+msgstr "_Настройки"
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
@@ -1580,11 +1584,11 @@ msgstr "Пере_именовать"
 
 #: ../../portable/frontends/widgets/menus.py:231
 msgid "Re_name Feed"
-msgstr ""
+msgstr "Пере_именовать подписку"
 
 #: ../../portable/frontends/widgets/menus.py:232
 msgid "Re_name Website"
-msgstr ""
+msgstr "Пере_именовать веб-сайт"
 
 #: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
@@ -1592,11 +1596,11 @@ msgstr "_Удалить"
 
 #: ../../portable/frontends/widgets/menus.py:237
 msgid "_Remove Feed"
-msgstr ""
+msgstr "_Удалить подписку"
 
 #: ../../portable/frontends/widgets/menus.py:238
 msgid "_Remove Feeds"
-msgstr ""
+msgstr "_Удалить подписки"
 
 #: ../../portable/frontends/widgets/menus.py:239
 msgid "_Remove Folder"
@@ -1604,15 +1608,15 @@ msgstr "_Удалить папку"
 
 #: ../../portable/frontends/widgets/menus.py:240
 msgid "_Remove Folders"
-msgstr ""
+msgstr "_Удалить папки"
 
 #: ../../portable/frontends/widgets/menus.py:241
 msgid "_Remove Website"
-msgstr ""
+msgstr "_Удалить веб-сайт"
 
 #: ../../portable/frontends/widgets/menus.py:242
 msgid "_Remove Websites"
-msgstr ""
+msgstr "_Удалить веб-сайты"
 
 #: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
@@ -1729,7 +1733,7 @@ msgstr "С_убтитры"
 
 #: ../../portable/frontends/widgets/menus.py:315
 msgid "Select a Subtitles File..."
-msgstr ""
+msgstr "Выбрать файл с субтитрами..."
 
 #: ../../portable/frontends/widgets/menus.py:321
 #: ../../portable/frontends/widgets/menus.py:333
@@ -2699,7 +2703,7 @@ msgstr "Повторить"
 
 #: ../../portable/dialogs.py:128
 msgid "Start Fresh"
-msgstr ""
+msgstr "Начать заново"
 
 #: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"
@@ -2857,7 +2861,7 @@ msgstr "Пример плейлиста"
 #: ../../portable/storedatabase.py:208
 #, python-format
 msgid "%(appname)s database upgrade failed"
-msgstr ""
+msgstr "Апгрейд базы данных приложения %(appname)s завершился неудачно"
 
 #: ../../portable/storedatabase.py:211
 #, python-format

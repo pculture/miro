@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-01-23 04:00+0000\n"
-"Last-Translator: Patko2222 <Unknown>\n"
+"PO-Revision-Date: 2010-03-04 18:20+0000\n"
+"Last-Translator: milboy <Unknown>\n"
 "Language-Team: Slovak <sk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Launchpad-Export-Date: 2010-02-24 15:36+0000\n"
+"X-Launchpad-Export-Date: 2010-03-09 14:22+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -143,11 +143,11 @@ msgstr "Vnútorná chyba: nepripravený na odosielanie"
 
 #: ../../portable/frontends/widgets/playback.py:551
 msgid "Open Subtitles File..."
-msgstr ""
+msgstr "Otvoriť súbor s titulkami..."
 
 #: ../../portable/frontends/widgets/playback.py:552
 msgid "Subtitle files"
-msgstr ""
+msgstr "Súbory s titulkami"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -237,7 +237,7 @@ msgstr "Veľkosť databázy"
 
 #: ../../portable/frontends/widgets/diagnostics.py:110
 msgid "Total db objects in memory:"
-msgstr ""
+msgstr "V pamäti celkovo db objektov:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:118
 #: ../../portable/frontends/widgets/menus.py:335
@@ -329,19 +329,19 @@ msgstr[1] ""
 #: ../../portable/frontends/widgets/itemedit.py:136
 #: ../../portable/frontends/widgets/itemcontextmenu.py:107
 msgid "Edit Item"
-msgstr ""
+msgstr "Upraviť položku"
 
 #: ../../portable/frontends/widgets/itemedit.py:145
 msgid "Title:"
-msgstr ""
+msgstr "Názov:"
 
 #: ../../portable/frontends/widgets/itemedit.py:147
 msgid "Description:"
-msgstr ""
+msgstr "Popis:"
 
 #: ../../portable/frontends/widgets/itemedit.py:149
 msgid "Media type:"
-msgstr ""
+msgstr "Typ média:"
 
 #: ../../portable/frontends/widgets/itemedit.py:151
 #: ../../portable/frontends/widgets/itemlistcontroller.py:521
@@ -363,7 +363,7 @@ msgstr "Ostatné"
 
 #: ../../portable/frontends/widgets/itemedit.py:157
 msgid "Path:"
-msgstr ""
+msgstr "Umiestnenie:"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
@@ -539,15 +539,15 @@ msgstr "Kopírovať URL do schránky"
 #: ../../portable/frontends/widgets/tablist.py:576
 #: ../../portable/frontends/widgets/application.py:726
 msgid "Rename Website"
-msgstr ""
+msgstr "Premenovať webovú stránku"
 
 #: ../../portable/frontends/widgets/tablist.py:577
 msgid "Remove Website"
-msgstr ""
+msgstr "Odstrániť webovú stránku"
 
 #: ../../portable/frontends/widgets/tablist.py:581
 msgid "Remove Websites"
-msgstr ""
+msgstr "Odstrániť webové stránky"
 
 #: ../../portable/frontends/widgets/tablist.py:657
 msgid "Update Feeds In Folder"
@@ -602,7 +602,7 @@ msgstr "KNIŽNICA"
 
 #: ../../portable/frontends/widgets/tablist.py:743
 msgid "WEBSITES"
-msgstr ""
+msgstr "WEBOVÉ STRÁNKY"
 
 #: ../../portable/frontends/widgets/tablist.py:745
 msgid "VIDEO FEEDS"
@@ -745,12 +745,12 @@ msgstr "Zvol adresár pre filmy"
 
 #: ../../portable/frontends/widgets/prefpanel.py:457
 msgid "Directory not valid"
-msgstr ""
+msgstr "Adresár nie je platný"
 
 #: ../../portable/frontends/widgets/prefpanel.py:458
 #, python-format
 msgid "Directory '%s' could not be created.  "
-msgstr ""
+msgstr "Adresár '%s' sa nedá vytvoriť.  "
 
 #: ../../portable/frontends/widgets/prefpanel.py:473
 msgid "Migrate existing movies?"
@@ -829,7 +829,7 @@ msgstr "Štandardne vypršia video a audio súbory po:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:620
 msgid "Play media in Miro."
-msgstr ""
+msgstr "Prehrať mediálne súbory v Miro."
 
 #: ../../portable/frontends/widgets/prefpanel.py:621
 msgid "Always play videos in a separate window."
@@ -844,7 +844,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:624
 msgid "Automatically enable movie subtitles when available."
-msgstr ""
+msgstr "Automaticky povoliť titulky k filmu ak sú k dispozícii."
 
 #: ../../portable/frontends/widgets/prefpanel.py:627
 msgid "Play video and audio items one after another"
@@ -881,12 +881,12 @@ msgstr "Nastavenia"
 #: ../../portable/frontends/widgets/gtk/trayicon.py:89
 #, python-format
 msgid "Play Next Unplayed (%(unplayed)d)"
-msgstr ""
+msgstr "Prehrať daľší neprehraný (%(unplayed)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:93
 #, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
-msgstr ""
+msgstr "Prehrať všetky neprehrané (%(unplayed)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:96
 #, python-format
@@ -915,7 +915,7 @@ msgstr "Zachovať"
 
 #: ../../portable/frontends/widgets/gtk/video.py:282
 msgid "Subtitles"
-msgstr ""
+msgstr "Titulky"
 
 #: ../../portable/frontends/widgets/gtk/video.py:291
 #: ../../portable/frontends/widgets/itemcontextmenu.py:67
@@ -953,18 +953,18 @@ msgstr ""
 #: ../../portable/frontends/widgets/menus.py:312
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:380
 msgid "None Available"
-msgstr ""
+msgstr "Nie sú k dispozícii žiadne"
 
 #: ../../portable/frontends/widgets/gtk/video.py:379
 #: ../../portable/frontends/widgets/gtk/window.py:267
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:369
 msgid "Disable Subtitles"
-msgstr ""
+msgstr "Zakázať titulky"
 
 #: ../../portable/frontends/widgets/gtk/video.py:390
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:387
 msgid "Select a Subtitles file..."
-msgstr ""
+msgstr "Vybrať súbor s titulkami..."
 
 #: ../../portable/frontends/widgets/gtk/window.py:650
 msgid "All files"
@@ -1162,15 +1162,15 @@ msgstr "Ulož položku ako..."
 #: ../../portable/frontends/widgets/application.py:563
 #: ../../portable/frontends/widgets/menus.py:220
 msgid "Add Website"
-msgstr ""
+msgstr "Pridať webovú stránku"
 
 #: ../../portable/frontends/widgets/application.py:564
 msgid "Enter the URL of the website to add"
-msgstr ""
+msgstr "Zadajte adresu URL webovej stránky k pridaniu"
 
 #: ../../portable/frontends/widgets/application.py:565
 msgid "Add Website - Invalid URL"
-msgstr ""
+msgstr "Pridať webovú stránku - neplatná URL"
 
 #: ../../portable/frontends/widgets/application.py:566
 msgid ""
@@ -1179,6 +1179,10 @@ msgid ""
 "\n"
 "Enter the URL of the website to add"
 msgstr ""
+"Adresa, ktorú ste vložili nie je platnou url.\n"
+"Prosím skontrolujte URL a skúste znova.\n"
+"\n"
+"Zadajte adresu URL webovej stránky k pridaniu"
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
@@ -1239,7 +1243,7 @@ msgstr "Zadajte nový názov pre zložku playlistu %(name)s"
 #: ../../portable/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the website %(name)s"
-msgstr ""
+msgstr "Vložte nový názov pre webovú stránku %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
@@ -1259,8 +1263,9 @@ msgstr[2] "Ste si istý, že chcete vymazať týchto %(count)s playlistov ?"
 #: ../../portable/frontends/widgets/application.py:773
 msgid "Remove website"
 msgid_plural "Remove websites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Odstrániť webovú stránku"
+msgstr[1] "Odstrániť webové stránky"
+msgstr[2] "Odstrániť webových stránok"
 
 #: ../../portable/frontends/widgets/application.py:775
 #, python-format
@@ -1505,7 +1510,7 @@ msgstr "_Odstrániť položky"
 
 #: ../../portable/frontends/widgets/menus.py:203
 msgid "_Edit Item"
-msgstr ""
+msgstr "_Upraviť položku"
 
 #: ../../portable/frontends/widgets/menus.py:205
 msgid "Save Item _As"
@@ -1521,7 +1526,7 @@ msgstr "Kopírovať položku"
 
 #: ../../portable/frontends/widgets/menus.py:213
 msgid "_Preferences"
-msgstr ""
+msgstr "_Predvoľby"
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
@@ -1553,7 +1558,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:232
 msgid "Re_name Website"
-msgstr ""
+msgstr "_Premenovať webovú stránku"
 
 #: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
@@ -1573,15 +1578,15 @@ msgstr "Odstrániť priečinok"
 
 #: ../../portable/frontends/widgets/menus.py:240
 msgid "_Remove Folders"
-msgstr ""
+msgstr "_Odstrániť priečinky"
 
 #: ../../portable/frontends/widgets/menus.py:241
 msgid "_Remove Website"
-msgstr ""
+msgstr "_Odstrániť webovú stránku"
 
 #: ../../portable/frontends/widgets/menus.py:242
 msgid "_Remove Websites"
-msgstr ""
+msgstr "_Odstrániť webové stránky"
 
 #: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
@@ -1694,11 +1699,11 @@ msgstr "Zmeniť pripojené/odpojené"
 
 #: ../../portable/frontends/widgets/menus.py:311
 msgid "S_ubtitles"
-msgstr ""
+msgstr "_Titulky"
 
 #: ../../portable/frontends/widgets/menus.py:315
 msgid "Select a Subtitles File..."
-msgstr ""
+msgstr "Vybrať súbor s titulkami..."
 
 #: ../../portable/frontends/widgets/menus.py:321
 #: ../../portable/frontends/widgets/menus.py:333
@@ -1708,7 +1713,7 @@ msgstr "_Pomocník"
 #: ../../portable/frontends/widgets/menus.py:322
 #, python-format
 msgid "_About %(name)s"
-msgstr ""
+msgstr "_O %(name)s"
 
 #: ../../portable/frontends/widgets/menus.py:330
 msgid "_Donate"
@@ -1913,8 +1918,9 @@ msgstr[2] "%(count)d vybratých kanálov"
 #, python-format
 msgid "%(count)d Website Selected"
 msgid_plural "%(count)d Websites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Vybraná stránka"
+msgstr[1] "%(count)d Vybrané stránky"
+msgstr[2] "%(count)d Vybraných stránok"
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
@@ -2258,7 +2264,7 @@ msgstr "štartovanie"
 #: ../../portable/downloader.py:568
 #, python-format
 msgid "no connection - retrying in %s"
-msgstr ""
+msgstr "žiadne pripojenie - opakovanie za %s"
 
 #: ../../portable/displaytext.py:52
 #, python-format
@@ -2284,22 +2290,25 @@ msgstr "%(size)s b/s"
 #, python-format
 msgid "%(num).0f day"
 msgid_plural "%(num).0f days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f deň"
+msgstr[1] "%(num).0f dni"
+msgstr[2] "%(num).0f dní"
 
 #: ../../portable/displaytext.py:71
 #, python-format
 msgid "%(num).0f hr"
 msgid_plural "%(num).0f hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f hodina"
+msgstr[1] "%(num).0f hodiny"
+msgstr[2] "%(num).0f hodín"
 
 #: ../../portable/displaytext.py:74
 #, python-format
 msgid "%(num).0f min"
 msgid_plural "%(num).0f mins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f minúta"
+msgstr[1] "%(num).0f minúty"
+msgstr[2] "%(num).0f minút"
 
 #: ../../portable/displaytext.py:77
 #, python-format
@@ -2446,7 +2455,7 @@ msgstr "Táto URL už existuje ako externý download."
 #: ../../portable/singleclick.py:62
 #, python-format
 msgid "%(appname)s will begin downloading it now."
-msgstr ""
+msgstr "%(appname)s začne sťahovať teraz."
 
 #: ../../portable/singleclick.py:65
 msgid "It is downloading now."
@@ -2527,15 +2536,15 @@ msgstr ""
 
 #: ../../portable/dbupgradeprogress.py:60
 msgid "Upgrading Old Database"
-msgstr ""
+msgstr "Aktualizácia starej databázy"
 
 #: ../../portable/dbupgradeprogress.py:66
 msgid "Converting Old Database"
-msgstr ""
+msgstr "Konvertovanie starej databázy"
 
 #: ../../portable/dbupgradeprogress.py:78
 msgid "Upgrading Database"
-msgstr ""
+msgstr "Aktualizácia databázy"
 
 #: ../../portable/dialogs.py:92
 msgid "Ok"
@@ -2543,7 +2552,7 @@ msgstr "OK"
 
 #: ../../portable/dialogs.py:93
 msgid "Apply"
-msgstr ""
+msgstr "Použiť"
 
 #: ../../portable/dialogs.py:96
 msgid "Done"
@@ -2643,7 +2652,7 @@ msgstr "Zastaviť pozeranie"
 
 #: ../../portable/dialogs.py:127
 msgid "Retry"
-msgstr ""
+msgstr "Opakovať"
 
 #: ../../portable/dialogs.py:128
 msgid "Start Fresh"
@@ -2748,7 +2757,7 @@ msgstr ""
 
 #: ../../portable/item.py:1253
 msgid "Contents:"
-msgstr ""
+msgstr "Obsah:"
 
 #: ../../portable/item.py:1491
 msgid "starting up..."
@@ -2817,7 +2826,7 @@ msgstr ""
 
 #: ../../portable/storedatabase.py:267
 msgid "Database was created by a newer version of Miro "
-msgstr ""
+msgstr "Databáza bola vytvorená novšou verziou Miro "
 
 #: ../../portable/storedatabase.py:656
 #, python-format
@@ -2890,7 +2899,7 @@ msgstr "Zmenšiť do systémovej lišty bez prerušenia sťahovania"
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
 #, python-format
 msgid "Quit %(appname)s completely."
-msgstr ""
+msgstr "Ukončenie %(appname)s kompletné."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
 msgid "Update Available"
@@ -2899,7 +2908,7 @@ msgstr "K dispozícii je novšia verzia"
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
 #, python-format
 msgid "A new version of %(appname)s is available for download."
-msgstr ""
+msgstr "Nová verzia %(appname)s je k dispozícii ku stiahnutiu."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
@@ -2983,7 +2992,7 @@ msgstr ""
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:456
 #, python-format
 msgid "Subtitle file %(tracknumber)d"
-msgstr ""
+msgstr "Súbor s titulkami %(tracknumber)d"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:178
 msgid "Download Completed"
