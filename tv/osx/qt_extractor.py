@@ -42,16 +42,16 @@ from miro.plat.frontends.widgets import mediatypes
 
 # =============================================================================
 
-def registerQuickTimeComponents():
-    bundlePath = os.getenv('MIRO_BUNDLE_PATH')
-    componentsDirectoryPath = os.path.join(bundlePath, 'Contents', 'Components')
-    components = glob.glob(os.path.join(componentsDirectoryPath, '*.component'))
+def register_quicktime_components():
+    bundle_path = os.getenv('MIRO_BUNDLE_PATH')
+    components_directory_path = os.path.join(bundle_path, 'Contents', 'Components')
+    components = glob.glob(os.path.join(components_directory_path, '*.component'))
     for component in components:
         ok = qtcomp.register(component.encode('utf-8'))
 
 # =============================================================================
 
-def extractDuration(qtmovie):
+def extract_duration(qtmovie):
     try:
         qttime = qtmovie.duration()
         if utils.qttimescale(qttime) == 0:
@@ -64,13 +64,13 @@ def get_type(qtmovie):
     if qtmovie is None:
         return 'other'
 
-    allTracks = qtmovie.tracks()
-    if len(allTracks) == 0:
+    all_tracks = qtmovie.tracks()
+    if len(all_tracks) == 0:
         return 'other'
 
     has_audio = False
     has_video = False
-    for track in allTracks:
+    for track in all_tracks:
         media_type = track.attributeForKey_(QTKit.QTTrackMediaTypeAttribute)
         if media_type in mediatypes.AUDIO_MEDIA_TYPES:
             has_audio = True
@@ -87,7 +87,7 @@ def get_type(qtmovie):
 
 # -----------------------------------------------------------------------------
 
-def extractThumbnail(qtmovie, target, width=0, height=0):
+def extract_thumbnail(qtmovie, target, width=0, height=0):
     try:
         qttime = qtmovie.duration()
         qttime = utils.qttimevalue_set(qttime, int(utils.qttimevalue(qttime) * 0.5))
@@ -95,45 +95,44 @@ def extractThumbnail(qtmovie, target, width=0, height=0):
         if frame is objc.nil:
             return "Failure"
 
-        frameSize = frame.size()
-        if frameSize.width == 0 or frameSize.height == 0:
+        frame_size = frame.size()
+        if frame_size.width == 0 or frame_size.height == 0:
             return "Failure"
 
         if (width == 0) and (height == 0):
-            width = frameSize.width
-            height = frameSize.height
+            width = frame_size.width
+            height = frame_size.height
 
-        frameRatio = frameSize.width / frameSize.height
-        sourceSize = frame.size()
-        sourceRatio = sourceSize.width / sourceSize.height
-        destinationSize = Foundation.NSSize(width, height)
-        destinationRatio = destinationSize.width / destinationSize.height
+        source_size = frame.size()
+        source_ratio = source_size.width / source_size.height
+        destination_size = Foundation.NSSize(width, height)
+        destination_ratio = destination_size.width / destination_size.height
 
-        if sourceRatio > destinationRatio:
-            size = Foundation.NSSize(destinationSize.width, destinationSize.width / sourceRatio)
-            pos = Foundation.NSPoint(0, (destinationSize.height - size.height) / 2.0)
+        if source_ratio > destination_ratio:
+            size = Foundation.NSSize(destination_size.width, destination_size.width / source_ratio)
+            pos = Foundation.NSPoint(0, (destination_size.height - size.height) / 2.0)
         else:
-            size = Foundation.NSSize(destinationSize.height * sourceRatio, destinationSize.height)
-            pos = Foundation.NSPoint((destinationSize.width - size.width) / 2.0, 0)
+            size = Foundation.NSSize(destination_size.height * source_ratio, destination_size.height)
+            pos = Foundation.NSPoint((destination_size.width - size.width) / 2.0, 0)
 
-        destination = AppKit.NSImage.alloc().initWithSize_(destinationSize)
+        destination = AppKit.NSImage.alloc().initWithSize_(destination_size)
         try:
             destination.lockFocus()
             AppKit.NSGraphicsContext.currentContext().setImageInterpolation_(AppKit.NSImageInterpolationHigh)
             AppKit.NSColor.blackColor().set()
-            AppKit.NSRectFill(((0,0), destinationSize))
-            frame.drawInRect_fromRect_operation_fraction_((pos, size), ((0,0), sourceSize), AppKit.NSCompositeSourceOver, 1.0)
+            AppKit.NSRectFill(((0,0), destination_size))
+            frame.drawInRect_fromRect_operation_fraction_((pos, size), ((0,0), source_size), AppKit.NSCompositeSourceOver, 1.0)
         finally:
             destination.unlockFocus()
 
-        tiffData = destination.TIFFRepresentation()
-        imageRep = AppKit.NSBitmapImageRep.imageRepWithData_(tiffData)
+        tiff_data = destination.TIFFRepresentation()
+        image_rep = AppKit.NSBitmapImageRep.imageRepWithData_(tiff_data)
         properties = {AppKit.NSImageCompressionFactor: 0.8}
-        jpegData = imageRep.representationUsingType_properties_(AppKit.NSJPEGFileType, properties)
-        if jpegData is objc.nil:
+        jpeg_data = image_rep.representationUsingType_properties_(AppKit.NSJPEGFileType, properties)
+        if jpeg_data is objc.nil:
             return "Failure"
 
-        jpegData.writeToFile_atomically_(target, objc.YES)
+        jpeg_data.writeToFile_atomically_(target, objc.YES)
     except Exception, e:
         return "Failure"
 
@@ -141,30 +140,30 @@ def extractThumbnail(qtmovie, target, width=0, height=0):
 
 # =============================================================================
 
-moviePath = sys.argv[1].decode('utf-8')
-thumbPath = sys.argv[2].decode('utf-8')
+movie_path = sys.argv[1].decode('utf-8')
+thumb_path = sys.argv[2].decode('utf-8')
 
 info = AppKit.NSBundle.mainBundle().infoDictionary()
 info["LSBackgroundOnly"] = "1"
 AppKit.NSApplicationLoad()
 
-registerQuickTimeComponents()
+register_quicktime_components()
 
 pyobjc_version = objc.__version__
 pyobjc_version = pyobjc_version.split('.')
 pyobjc_version = int(pyobjc_version[0])
 
 if pyobjc_version == 2:
-    qtmovie, error = QTKit.QTMovie.movieWithFile_error_(moviePath, None)
+    qtmovie, error = QTKit.QTMovie.movieWithFile_error_(movie_path, None)
 else:
-    qtmovie, error = QTKit.QTMovie.movieWithFile_error_(moviePath)
+    qtmovie, error = QTKit.QTMovie.movieWithFile_error_(movie_path)
 if qtmovie is None or error is not objc.nil:
     sys.exit(0)
 
 movie_type = get_type(qtmovie)
 print "Miro-Movie-Data-Type: %s" % movie_type
 
-duration = extractDuration(qtmovie)
+duration = extract_duration(qtmovie)
 print "Miro-Movie-Data-Length: %s" % duration
 
 if movie_type == "video":
@@ -177,8 +176,8 @@ if movie_type == "video":
             break
         time.sleep(0.1)
 
-    thmbResult = extractThumbnail(qtmovie, thumbPath)
-    print "Miro-Movie-Data-Thumbnail: %s" % thmbResult
+    thmb_result = extract_thumbnail(qtmovie, thumb_path)
+    print "Miro-Movie-Data-Thumbnail: %s" % thmb_result
 else:
     print "Miro-Movie-Data-Thumbnail: Failure"
 

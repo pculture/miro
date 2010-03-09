@@ -43,7 +43,7 @@ import Foundation
 
 # =============================================================================
 
-def activatePsyco():
+def activate_psyco():
     # Get cpu type
     info = os.uname()
     cpu = info[-1]
@@ -58,7 +58,7 @@ def activatePsyco():
 
 # =============================================================================
 
-def launchUnitTests():
+def launch_unit_tests():
     sys.argv.remove('unittest')
 
     import logging
@@ -76,7 +76,7 @@ def launchUnitTests():
     
 # =============================================================================
 
-def launchApplication():
+def launch_application():
     from miro.plat import migrateappname
     migrateappname.migrateSupport('Democracy', 'Miro')
 
@@ -86,12 +86,12 @@ def launchApplication():
     from glob import glob
     theme = None
     bundle = Foundation.NSBundle.mainBundle()
-    bundlePath = bundle.bundlePath()
-    bundleThemeDirPath = os.path.join(bundlePath, "Contents", "Theme")
-    if os.path.exists(bundleThemeDirPath):
-        themeDirs = glob(os.path.join(bundleThemeDirPath, "*"))
-        themeDir = themeDirs[0]
-        if os.path.isdir(themeDir):
+    bundle_path = bundle.bundlePath()
+    bundle_theme_dir_path = os.path.join(bundle_path, "Contents", "Theme")
+    if os.path.exists(bundle_theme_dir_path):
+        theme_dirs = glob(os.path.join(bundle_theme_dir_path, "*"))
+        theme_dir = theme_dirs[0]
+        if os.path.isdir(theme_dir):
             theme = os.path.basename(themeDir)
 
     from miro import gtcache
@@ -115,9 +115,9 @@ def launchApplication():
             for s in self.streams:
                 s.flush()
 
-    logFile = config.get(prefs.LOG_PATHNAME)
-    if logFile:
-        h = open(logFile, "wt")
+    log_file = config.get(prefs.LOG_PATHNAME)
+    if log_file:
+        h = open(log_file, "wt")
         sys.stdout = AutoflushingTeeStream([h, sys.stdout])
         sys.stderr = AutoflushingTeeStream([h, sys.stderr])
 
@@ -128,7 +128,7 @@ def launchApplication():
 
 # =============================================================================
 
-def launchDownloaderDaemon():
+def launch_downloader_daemon():
     # Increase the maximum file descriptor count (to the max)
     # NOTE: the info logging is REQUIRED for some unknown reason, if it is not
     # done here, no further logging can be done in the daemon and it gets stuck.
@@ -168,14 +168,14 @@ def launchDownloaderDaemon():
 
 # Activate psyco, if we are running on an Intel Mac
 
-activatePsyco()
+activate_psyco()
 
 # Launch player or downloader, depending on command line parameter
 if len(sys.argv) > 1:
     if sys.argv[1] == "download_daemon":
-        launchDownloaderDaemon()
+        launch_downloader_daemon()
     elif sys.argv[1] == "unittest":
-        launchUnitTests()
+        launch_unit_tests()
 else:
-    launchApplication()
+    launch_application()
 
