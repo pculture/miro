@@ -170,12 +170,11 @@ def launch_downloader_daemon():
 
 activate_psyco()
 
-# Launch player or downloader, depending on command line parameter
-if len(sys.argv) > 1:
-    if sys.argv[1] == "download_daemon":
-        launch_downloader_daemon()
-    elif sys.argv[1] == "unittest":
-        launch_unit_tests()
+# Launch player or downloader, depending on command line parameter`
+if "download_daemon" in sys.argv:
+    launch_downloader_daemon()
+elif "unittest" in sys.argv:
+    launch_unit_tests()
 else:
     launch_application()
 
