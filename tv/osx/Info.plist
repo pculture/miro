@@ -333,5 +333,10 @@
 	    <key>VERSIONER_PYTHON_PREFER_32_BIT</key>
 	    <string>yes</string>
     </dict>
+    <key>LSArchitecturePriority</key>
+    <array>
+        <string>i386</string>
+        <string>ppc</string>
+    </array>
 </dict>
 </plist>
