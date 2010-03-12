@@ -487,13 +487,14 @@ class _WatchedFolderHelper(object):
         self._table = widgetset.TableView(app.watched_folder_manager.model)
         folder_cell_renderer = widgetset.CellRenderer()
         folder_cell_renderer.set_text_size(widgetconst.SIZE_SMALL)
-        folder_column = widgetset.TableColumn('folder',
-                folder_cell_renderer, value=1)
+        folder_column = widgetset.TableColumn(
+            _('folder'), folder_cell_renderer, value=1)
         folder_column.set_min_width(400)
         checkbox_cell_renderer = widgetset.CheckboxCellRenderer()
         checkbox_cell_renderer.set_control_size(widgetconst.SIZE_SMALL)
         checkbox_cell_renderer.connect('clicked', self._on_visible_clicked)
-        visible_column = widgetset.TableColumn('visible', checkbox_cell_renderer, value=2)
+        visible_column = widgetset.TableColumn(
+            _('visible'), checkbox_cell_renderer, value=2)
         visible_column.set_min_width(50)
         self._table.add_column(folder_column)
         self._table.add_column(visible_column)
