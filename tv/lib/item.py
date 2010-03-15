@@ -758,10 +758,19 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def on_signal_change(self):
         self.expiring = None
+        self._syncTitle()
         if hasattr(self, "_state"):
             del self._state
         if hasattr(self, "_size"):
             del self._size
+
+    def _syncTitle(self):
+        if (self.has_downloader() and 
+            self.downloader.get_type() == "bittorrent" and 
+            self.downloader.get_state() == "downloading"):
+            filename = os.path.basename(self.downloader.get_filename())
+            if self.title != filename:
+                self.set_title(filenameToUnicode(filename))
 
     def recalc_feed_counts(self):
         self.get_feed().recalc_counts()
