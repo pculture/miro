@@ -2696,7 +2696,7 @@ def upgrade115(cursor):
         query = _calc_query(url)
         print 'query: ', query
         new_url = u'dtv:savedsearch/all?q=%s' % query
-        new_title = unicode(_('%(engine)s search for %(query)s', 
+        new_title = unicode(_("%(engine)s for '%(query)s'",
                 {'engine': 'Search All', 'query': query}))
         cursor.execute("UPDATE saved_search_feed_impl SET url=?, title=? "
                 "WHERE id=?", (new_url, new_title, id))

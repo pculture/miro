@@ -721,7 +721,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
 
         title = self.actualFeed.get_title()
         if self.searchTerm is not None:
-            title = u"%s: %s" % (title, self.searchTerm)
+            title = u"%s for '%s'" % (title, self.searchTerm)
         return title
 
     def has_original_title(self):
@@ -1813,7 +1813,7 @@ class SavedSearchFeedImpl(RSSMultiFeedBase):
     def setup_new(self, url, ufeed):
         self.parse_url(url)
         info = searchengines.get_engine_for_name(self.engine)
-        title = to_uni(_('%(engine)s search for %(query)s', 
+        title = to_uni(_("%(engine)s for '%(query)s'",
                 {'engine': info.title, 'query': self.query}))
         RSSMultiFeedBase.setup_new(self, url, ufeed, title)
 
