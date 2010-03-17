@@ -34,7 +34,7 @@
     ``olddatabaseupgrade.py``.
 """
 
-from urlparse import urlparse, parse_qs
+from urlparse import urlparse
 import datetime
 import itertools
 import os
