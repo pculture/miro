@@ -142,18 +142,16 @@ class ThemeHistory(DDBObject):
                 c_folder.signal_change()
             for url, autodownload in defaultFolder[1]:
                 logging.info("adding feed %s in section %s" % (url, section))
-                try:
-                    d_feed = feed.Feed.get_by_url(default[0])
-                except ObjectNotFoundError:
+                d_feed = feed.lookup_feed(default[0])
+                if d_feed is None:
                     d_feed = feed.Feed(url, initiallyAutoDownloadable=autodownload)
                     d_feed.set_folder(c_folder)
                     d_feed.section = section
                     d_feed.signal_change()
         # feed
         else:
-            try:
-                d_feed = feed.Feed.get_by_url(default[0])
-            except ObjectNotFoundError:
+            d_feed = feed.lookup_feed(default[0])
+            if d_feed is None:
                 logging.info("adding feed %s in section %s" % (default, section))
                 d_feed = feed.Feed(default[0], initiallyAutoDownloadable=default[1])
                 d_feed.section = section

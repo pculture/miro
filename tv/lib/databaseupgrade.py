@@ -2634,3 +2634,24 @@ def upgrade112(cursor):
             "ADD sort_states PYTHONREPR")
     cursor.execute("UPDATE widgets_frontend_state "
             "SET sort_states = '{}'")
+
+def upgrade113(cursor):
+    """Change Feed URLs to not include search terms."""
+
+    cursor.execute("SELECT id, origURL FROM feed "
+            "WHERE origURL LIKE 'dtv:searchTerm:%'")
+    search_re = re.compile(r"^dtv:searchTerm:(.*)\?(.*)$")
+    for (id, url) in cursor.fetchall():
+        m = search_re.match(url)
+        url2 = m.group(1)
+        cursor.execute("UPDATE feed SET origURL=? WHERE id=?",
+                (url2, id))
+
+    cursor.execute("SELECT id, origURL FROM feed "
+            "WHERE origURL LIKE 'dtv:multi:%'")
+    for (id, url) in cursor.fetchall():
+        urls = url.split(',')
+        if not urls[-1].startswith('http'):
+            url2 = ','.join(urls[:-1])
+            cursor.execute("UPDATE feed SET origURL=? WHERE id=?",
+                    (url2, id))

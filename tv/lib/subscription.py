@@ -220,18 +220,14 @@ class Subscriber(object):
         url = feed_dict['url']
 
         search_term = feed_dict.get('search_term')
-        if search_term:
-            url = u"dtv:searchTerm:%s?%s" % (urlencode(url),
-                                             urlencode(search_term))
-
-        f = feed.get_feed_by_url(url)
+        f = feed.lookup_feed(url, search_term)
         if f is None:
             if parent_folder:
                 section = parent_folder.section
             else:
                 section = self._get_section(feed_dict)
 
-            f = feed.Feed(url, section=section)
+            f = feed.Feed(url, section=section, search_term=search_term)
             title = feed_dict.get('title')
             if title is not None and title != '':
                 f.set_title(title)

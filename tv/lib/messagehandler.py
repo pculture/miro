@@ -53,7 +53,7 @@ from miro import subscription
 from miro import tabs
 from miro import opml
 from miro import searchengines
-from miro.feed import Feed, get_feed_by_url
+from miro.feed import Feed, lookup_feed
 from miro.gtcache import gettext as _
 from miro.playlist import SavedPlaylist
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
@@ -491,7 +491,7 @@ class BackendMessageHandler(messages.MessageHandler):
         self.new_audio_count_tracker = None
         self.unwatched_count_tracker = None
         self.item_trackers = {}
-        search_feed = get_feed_by_url('dtv:search')
+        search_feed = Feed.get_search_feed()
         search_feed.connect('update-finished', self._search_update_finished)
 
     def call_handler(self, method, message):
@@ -530,7 +530,7 @@ class BackendMessageHandler(messages.MessageHandler):
                 'frontend startup callback')
 
     def handle_query_search_info(self, message):
-        search_feed = get_feed_by_url('dtv:search')
+        search_feed = Feed.get_search_feed()
         messages.CurrentSearchInfo(search_feed.lastEngine,
                 search_feed.lastQuery).send_to_frontend()
 
@@ -878,27 +878,20 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_new_feed(self, message):
         url = message.url
-        if not get_feed_by_url(url):
+        if not lookup_feed(url):
             Feed(url, section=message.section)
 
     def handle_new_feed_search_feed(self, message):
-        term = message.search_term
+        search_term = message.search_term
         channel_info = message.channel_info
         section = message.section
-        location = channel_info.base_href
-
-        if isinstance(term, unicode):
-            term = term.encode("utf-8")
-
-        if isinstance(location, unicode):
-            location = location.encode("utf-8")
+        url = channel_info.base_href
 
         if channel_info.search_term:
-            term = term + " " + channel_info.search_term
+            search_term = search_term + " " + channel_info.search_term
 
-        url = u"dtv:searchTerm:%s?%s" % (urlencode(location), urlencode(term))
-        if not get_feed_by_url(url):
-            Feed(url, section=section)
+        if not lookup_feed(url, search_term):
+            Feed(url, section=section, search_term=search_term)
 
     def handle_new_feed_search_engine(self, message):
         sei = message.search_engine_info
@@ -910,25 +903,18 @@ class BackendMessageHandler(messages.MessageHandler):
         if not url:
             return
 
-        if not get_feed_by_url(url):
+        if not lookup_feed(url):
             f = Feed(url, section=section)
 
     def handle_new_feed_search_url(self, message):
         url = message.url
-        term = message.search_term
+        search_term = message.search_term
         section = message.section
-
-        if isinstance(term, unicode):
-            term = term.encode("utf-8")
 
         normalized = feed.normalize_feed_url(url)
 
-        if isinstance(url, unicode):
-            url = url.encode("utf-8")
-
-        url = u"dtv:searchTerm:%s?%s" % (urlencode(normalized), urlencode(term))
-        if not get_feed_by_url(url):
-            Feed(url, section=section)
+        if not lookup_feed(url, search_term):
+            Feed(normalized, section=section, search_term=search_term)
 
     def handle_new_feed_folder(self, message):
         folder = ChannelFolder(message.name, message.section)
@@ -953,7 +939,7 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_new_watched_folder(self, message):
         url = u"dtv:directoryfeed:%s" % make_url_safe(message.path)
-        if not get_feed_by_url(url):
+        if not lookup_feed(url):
             feed.Feed(url)
         else:
             logging.info("Not adding duplicated watched folder: %s",
@@ -1053,8 +1039,8 @@ class BackendMessageHandler(messages.MessageHandler):
         searchengine_id = message.id
         terms = message.terms
 
-        search_feed = get_feed_by_url('dtv:search')
-        search_downloads_feed = get_feed_by_url('dtv:searchDownloads')
+        search_feed = Feed.get_search_feed()
+        search_downloads_feed = Feed.get_search_downloads_feed()
 
         search_feed.preserveDownloads(search_downloads_feed)
         if terms:

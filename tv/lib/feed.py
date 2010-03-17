@@ -131,7 +131,6 @@ def add_feed_from_web_page(url):
     grabURL(url, callback, errback)
 
 FILE_MATCH_RE = re.compile(r"^file://.")
-SEARCH_MATCH_RE = re.compile(r"^dtv:searchTerm:(.*)\?(.*)$")
 MULTI_MATCH_RE = re.compile(r"^dtv:multi:")
 
 def validate_feed_url(url):
@@ -141,9 +140,6 @@ def validate_feed_url(url):
     if is_url(url):
         return True
     if FILE_MATCH_RE.match(url) is not None:
-        return True
-    match = SEARCH_MATCH_RE.match(url)
-    if match is not None and validate_feed_url(urldecode(match.group(1))):
         return True
     match = MULTI_MATCH_RE.match(url)
     if match is not None:
@@ -155,12 +151,6 @@ def normalize_feed_url(url):
     # Valid URL are returned as-is
     if validate_feed_url(url):
         return url
-
-    searchTerm = None
-    m = re.match(r"^dtv:searchTerm:(.*)\?([^?]+)$", url)
-    if m is not None:
-        searchTerm = urldecode(m.group(2))
-        url = urldecode(m.group(1))
 
     originalURL = url
     url = url.strip()
@@ -182,10 +172,7 @@ def normalize_feed_url(url):
     if match is not None:
         url = url + "/"
 
-    if searchTerm is not None:
-        url = "dtv:searchTerm:%s?%s" % (urlencode(url), urlencode(searchTerm))
-    else:
-        url = quote_unicode_url(url)
+    url = quote_unicode_url(url)
 
     if not validate_feed_url(url):
         logging.info ("unable to normalize URL %s", originalURL)
@@ -320,15 +307,7 @@ class FeedImpl(DDBObject):
     def get_url(self):
         """Returns the URL of the feed
         """
-        try:
-            if self.ufeed.searchTerm is None:
-                return self.url
-            else:
-                return u"dtv:searchTerm:%s?%s" % (urlencode(self.url), urlencode(self.ufeed.searchTerm))
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            return u""
+        return self.url
 
     @returns_unicode
     def getBaseURL(self):
@@ -395,8 +374,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     """
     ICON_CACHE_VITAL = True
 
-    def setup_new(self, url,
-                 initiallyAutoDownloadable=None, section=u'video'):
+    def setup_new(self, url, initiallyAutoDownloadable=None,
+                 section=u'video', search_term=None):
         check_u(url)
         if initiallyAutoDownloadable == None:
             mode = config.get(prefs.CHANNEL_AUTO_DEFAULT)
@@ -435,7 +414,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.setup_new_icon_cache()
         self.informOnError = True
         self.folder_id = None
-        self.searchTerm = None
+        self.searchTerm = search_term
         self.userTitle = None
         self.visible = True
         self.setup_common()
@@ -479,12 +458,29 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         return cls.make_view('origURL=?', (url,)).get_singleton()
 
     @classmethod
+    def get_by_url_and_search(cls, url, searchTerm):
+        if searchTerm is not None:
+            view = cls.make_view('origURL=? AND searchTerm=?',
+                    (url, searchTerm))
+        else:
+            view = cls.make_view('origURL=? AND searchTerm IS NULL', (url,))
+        return view.get_singleton()
+
+    @classmethod
     def get_manual_feed(cls):
         return cls.get_by_url('dtv:manualFeed')
 
     @classmethod
     def get_directory_feed(cls):
         return cls.get_by_url('dtv:directoryfeed')
+
+    @classmethod
+    def get_search_feed(cls):
+        return cls.get_by_url('dtv:search')
+
+    @classmethod
+    def get_search_downloads_feed(cls):
+        return cls.get_by_url('dtv:searchDownloads')
 
     @classmethod
     def folder_view(cls, id):
@@ -904,24 +900,6 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             self.visible = False
         elif self.origURL.startswith(u"dtv:multi:"):
             newFeed = RSSMultiFeedImpl(self.origURL, self)
-        elif self.origURL.startswith(u"dtv:searchTerm:"):
-            url = self.origURL[len(u"dtv:searchTerm:"):]
-            (url, search) = url.rsplit("?", 1)
-            url = urldecode(url)
-            # search terms encoded as utf-8, but our URL attribute is then
-            # converted to unicode.  So we need to:
-            #  - convert the unicode to a raw string
-            #  - urldecode that string
-            #  - utf-8 decode the result.
-            search = urldecode(search.encode('ascii')).decode('utf-8')
-            self.searchTerm = search
-            if url.startswith(u"dtv:multi:"):
-                newFeed = RSSMultiFeedImpl(url, self)
-            else:
-                self.download = grabURL(url,
-                        lambda info:self._generateFeedCallback(info, removeOnError),
-                        lambda error:self._generateFeedErrback(error, removeOnError),
-                        defaultMimeType=u'application/rss+xml')
         else:
             self.download = grabURL(self.origURL,
                     lambda info:self._generateFeedCallback(info, removeOnError),
@@ -978,7 +956,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             return
         if info['updated-url'] != self.origURL and \
                 not self.origURL.startswith('dtv:'): # we got redirected
-            f = get_feed_by_url(info['updated-url'])
+            f = lookup_feed(info['updated-url'], self.searchTerm)
             if f is not None: # already have this feed, so delete us
                 self.remove()
                 return
@@ -1700,21 +1678,10 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         self.query = None
         self.splitURLs()
 
-    @returns_unicode
-    def get_title(self):
-        if self.query:
-            return unicode(_("Search All: %(text)s", {"text": self.query}))
-        return RSSFeedImplBase.get_title(self)
-
     def splitURLs(self):
         if self.url.startswith("dtv:multi:"):
             url = self.url[len("dtv:multi:"):]
-            urls = [urldecode (x) for x in url.split(",")]
-            self.urls = urls[:-1]
-            if u"http" in urls[-1]:
-                self.urls.append(urls[-1])
-            else:
-                self.query = urls[-1]
+            self.urls = [urldecode (x) for x in url.split(",")]
         else:
             self.urls = [self.url]
 
@@ -2609,9 +2576,9 @@ def expire_items():
     finally:
         eventloop.add_timeout(300, expire_items, "Expire Items")
 
-def get_feed_by_url(url):
+def lookup_feed(url, search_term=None):
     try:
-        return Feed.get_by_url(url)
+        return Feed.get_by_url_and_search(url, search_term)
     except ObjectNotFoundError:
         return None
 

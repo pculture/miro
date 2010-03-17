@@ -67,7 +67,7 @@ def check_url_exists(url):
                 text2 = _("It has already been downloaded.")
             dialogs.MessageBoxDialog(title, "%s  %s" % (text1, text2)).run()
             return True
-    existing_feed = feed.get_feed_by_url(url)
+    existing_feed = feed.lookup_feed(url)
     if existing_feed is not None:
         return True
     return False
@@ -201,7 +201,7 @@ def download_video(fp_dict):
     new_item.download()
 
 def filter_existing_feed_urls(urls):
-    return [u for u in urls if feed.get_feed_by_url(u) is None]
+    return [u for u in urls if feed.lookup_feed(u) is None]
 
 def add_feeds(urls, new_folder_name=None):
     if len(urls) > 0:
