@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-03-02 17:37+0000\n"
-"Last-Translator: Qwert <Unknown>\n"
+"PO-Revision-Date: 2010-03-13 13:40+0000\n"
+"Last-Translator: xaxa <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-03-09 14:22+0000\n"
+"X-Launchpad-Export-Date: 2010-03-17 19:17+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -552,7 +552,7 @@ msgstr "Poista websivusto"
 
 #: ../../portable/frontends/widgets/tablist.py:581
 msgid "Remove Websites"
-msgstr ""
+msgstr "Poista verkkosivustot"
 
 #: ../../portable/frontends/widgets/tablist.py:657
 msgid "Update Feeds In Folder"
@@ -1033,6 +1033,20 @@ msgid ""
 "If you quit, then you can connect the drive or otherwise fix the problem and "
 "relaunch %(shortappname)s."
 msgstr ""
+"%(shortappname)s ei pysty käyttämään ensisijaista videohakemistoa:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"Tämä voi johtua siitä, että hakemisto sijaitsee ulkoisella asemalla, jota ei "
+"ole liitetty, tai siitä, ettei %(shortappname)slla ole kirjoitusoikeuksia "
+"hakemistoon, tai sitten siitä, ettei kohdepolku viittaa hakemistoon.\n"
+"\n"
+"Mikäli haluat jatkaa, ensisijaiseksi videohakemistoksi asetetaan sijainti "
+"tällä asemalla. Tällöin %(shortappname)s menettää tiedot mahdollisesti jo "
+"lataamistasi videoista.\n"
+"\n"
+"Mikäli päätät sulkea ohjelman, voit kytkeä ulkoisen aseman tai korjata muun "
+"ongelman, minkä jälkeen voit käynnistää %(shortappname)sn uudestaan."
 
 #: ../../portable/frontends/widgets/application.py:330
 msgid "Error Revealing File"
@@ -1158,11 +1172,11 @@ msgstr "Lisää websivusto"
 
 #: ../../portable/frontends/widgets/application.py:564
 msgid "Enter the URL of the website to add"
-msgstr ""
+msgstr "Syötä lisättävän verkkosivuston osoite"
 
 #: ../../portable/frontends/widgets/application.py:565
 msgid "Add Website - Invalid URL"
-msgstr ""
+msgstr "Verkkosivuston lisääminen - virheellinen osoite"
 
 #: ../../portable/frontends/widgets/application.py:566
 msgid ""
@@ -1171,6 +1185,10 @@ msgid ""
 "\n"
 "Enter the URL of the website to add"
 msgstr ""
+"Syöttämäsi osoite on virheellinen.\n"
+"Tarkista osoite ja yritä uudelleen.\n"
+"\n"
+"Syötä lisättävän verkkosivuston osoite"
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
@@ -1231,7 +1249,7 @@ msgstr "Kirjoita soittolistakansion %(name)s uusi nimi"
 #: ../../portable/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the website %(name)s"
-msgstr ""
+msgstr "Anna uusi nimi verkkosivustolle %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
@@ -1249,15 +1267,15 @@ msgstr[1] "Oletko varma, että haluat poistaa nämä %(count)s soittolistaa?"
 #: ../../portable/frontends/widgets/application.py:773
 msgid "Remove website"
 msgid_plural "Remove websites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Poista verkkosivusto"
+msgstr[1] "Poista verkkosivustot"
 
 #: ../../portable/frontends/widgets/application.py:775
 #, python-format
 msgid "Are you sure you want to remove this website?"
 msgid_plural "Are you sure you want to remove these %(count)s websites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Haluatko varmasti poistaa tämän verkkosivuston?"
+msgstr[1] "Haluatko varmasti poistaa nämä %(count)s verkkosivustoa?"
 
 #: ../../portable/frontends/widgets/application.py:805
 msgid "Are you sure you want to quit?"
@@ -1366,7 +1384,7 @@ msgstr "Ladattu yhteensä"
 
 #: ../../portable/frontends/widgets/style.py:250
 msgid "Up/Down Ratio"
-msgstr ""
+msgstr "Lähetys/lataus-suhde"
 
 #: ../../portable/frontends/widgets/style.py:251
 #: ../../portable/frontends/widgets/style.py:1120
@@ -1513,7 +1531,7 @@ msgstr "Kopioi kohteen_URL"
 
 #: ../../portable/frontends/widgets/menus.py:213
 msgid "_Preferences"
-msgstr ""
+msgstr "_Asetukset"
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
@@ -1541,11 +1559,11 @@ msgstr "_Nimeä uudelleen"
 
 #: ../../portable/frontends/widgets/menus.py:231
 msgid "Re_name Feed"
-msgstr ""
+msgstr "_Nimeä syöte uudelleen"
 
 #: ../../portable/frontends/widgets/menus.py:232
 msgid "Re_name Website"
-msgstr ""
+msgstr "_Nimeä verkkosivusto uudelleen"
 
 #: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
@@ -1553,11 +1571,11 @@ msgstr "_Poista"
 
 #: ../../portable/frontends/widgets/menus.py:237
 msgid "_Remove Feed"
-msgstr ""
+msgstr "_Poista syöte"
 
 #: ../../portable/frontends/widgets/menus.py:238
 msgid "_Remove Feeds"
-msgstr ""
+msgstr "_Poista syötteet"
 
 #: ../../portable/frontends/widgets/menus.py:239
 msgid "_Remove Folder"
@@ -1565,15 +1583,15 @@ msgstr "_Poista kansio"
 
 #: ../../portable/frontends/widgets/menus.py:240
 msgid "_Remove Folders"
-msgstr ""
+msgstr "_Poista kansiot"
 
 #: ../../portable/frontends/widgets/menus.py:241
 msgid "_Remove Website"
-msgstr ""
+msgstr "_Poista verkkosivusto"
 
 #: ../../portable/frontends/widgets/menus.py:242
 msgid "_Remove Websites"
-msgstr ""
+msgstr "_Poista verkkosivustot"
 
 #: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
@@ -1897,8 +1915,8 @@ msgstr[1] "%(count)d syötettä valittu"
 #, python-format
 msgid "%(count)d Website Selected"
 msgid_plural "%(count)d Websites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d verkkosivusto valittu"
+msgstr[1] "%(count)d verkkosivustoa valittu"
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
@@ -2237,7 +2255,7 @@ msgstr "käynnistetään"
 #: ../../portable/downloader.py:568
 #, python-format
 msgid "no connection - retrying in %s"
-msgstr ""
+msgstr "Ei yhteyttä - yritetään uudelleen %s sekunnissa"
 
 #: ../../portable/displaytext.py:52
 #, python-format
@@ -2634,7 +2652,7 @@ msgstr "Yritä uudelleen"
 
 #: ../../portable/dialogs.py:128
 msgid "Start Fresh"
-msgstr ""
+msgstr "Aloita alusta"
 
 #: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"
@@ -2788,7 +2806,7 @@ msgstr "Esimerkkisoittolista"
 #: ../../portable/storedatabase.py:208
 #, python-format
 msgid "%(appname)s database upgrade failed"
-msgstr ""
+msgstr "%(appname)s-tietokannan päivitys epäonnistui"
 
 #: ../../portable/storedatabase.py:211
 #, python-format
@@ -2804,6 +2822,14 @@ msgid ""
 "Finally, you can start fresh and your damaged database will be removed, but "
 "you will have to re-add your feeds and media files."
 msgstr ""
+"Virheiden vuoksi %(appname)s ei valitettavasti kyennyt päivittämään "
+"tietokantaa.\n"
+"Tarkista, onko levy täynnä. Jos on, sulje %(appname)s, tee levylle vapaata "
+"tilaa ja käynnistä %(appname)s sen jälkeen uudelleen.\n"
+"Mikäli levy ei ole täynnä, voit auttaa vian löytämisessä sulkemalla ohjelman "
+"ja tekemällä vikailmoituksen bugzilla.pculture.org:ssa.\n"
+"Voit myös aloittaa alusta, jolloin viallinen tietokanta poistetaan, mutta "
+"joudut tällöin lisäämään syötteet ja tiedostot uudestaan."
 
 #: ../../portable/storedatabase.py:267
 msgid "Database was created by a newer version of Miro "
@@ -2844,6 +2870,16 @@ msgid ""
 "Error: %(error_text)s\n"
 "\n"
 msgstr ""
+"%(appname)s ei kyennyt tallentamaan tietokantaansa.\n"
+"Jos levysi on täynnä, suosittelemme vapauttamaan levytilaa ja yrittämään "
+"uudelleen. Jos levysi ei ole täynnä, on mahdollista että uudelleen "
+"yrittäminen toimii.\n"
+"Jos uudelleen yrittäminen ei toiminut, sulje %(appname)s ja käynnistä "
+"ohjelma uudelleen. Viimeaikaiset muutokset saattavat hävitä.\n"
+"Jos näet tämän virheen usein kun lataat, suosittelemme että vähennät "
+"samanaikaisia latauksia Asetukset valikosta Lataus välilehdestä.\n"
+"Virhe: %(error_text)s\n"
+"\n"
 
 #: ../../portable/util.py:375 ../../portable/util.py:377
 #, python-format
@@ -2978,7 +3014,7 @@ msgstr "Videon renderoija"
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:446
 #, python-format
 msgid "Track %(tracknumber)d"
-msgstr ""
+msgstr "Kappale %(tracknumber)d"
 
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:456
 #, python-format

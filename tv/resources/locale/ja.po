@@ -8,20 +8,20 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-02-17 23:15+0000\n"
-"Last-Translator: yuuuuu3 <Unknown>\n"
+"PO-Revision-Date: 2010-03-12 05:13+0000\n"
+"Last-Translator: cjk <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2010-03-09 14:22+0000\n"
+"X-Launchpad-Export-Date: 2010-03-17 19:17+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
 #, python-format
 msgid "Error: %(msg)s"
-msgstr ""
+msgstr "エラー: %(msg)s"
 
 #: ../../portable/httpclient.py:116 ../../portable/httpclient.py:122
 msgid "Can't connect"
@@ -53,7 +53,7 @@ msgstr ""
 #: ../../portable/httpclient.py:141
 #, python-format
 msgid "Bad Chunk size: %(msg)s"
-msgstr ""
+msgstr "悪い部分の大きさ: %(msg)s"
 
 #: ../../portable/httpclient.py:146
 #, python-format
@@ -63,7 +63,7 @@ msgstr ""
 #: ../../portable/httpclient.py:151
 #, python-format
 msgid "%(host)s closed connection"
-msgstr ""
+msgstr "%(host)s によって接続が切断されました"
 
 #: ../../portable/httpclient.py:156 ../../portable/httpclient.py:185
 #: ../../portable/downloader.py:370
@@ -169,8 +169,7 @@ msgstr[1] ""
 #, python-format
 msgid "%(count)d Downloading"
 msgid_plural "%(count)d Downloading"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d ダウンロード中"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:243
 #: ../../portable/frontends/widgets/feedcontroller.py:255
@@ -270,13 +269,13 @@ msgstr ""
 #: ../../portable/frontends/widgets/newfeed.py:72
 #: ../../portable/frontends/widgets/newsearchfeed.py:136
 msgid "video"
-msgstr ""
+msgstr "ビデオ"
 
 #: ../../portable/frontends/widgets/newfolder.py:72
 #: ../../portable/frontends/widgets/newfeed.py:73
 #: ../../portable/frontends/widgets/newsearchfeed.py:137
 msgid "audio"
-msgstr ""
+msgstr "音声"
 
 #: ../../portable/frontends/widgets/newfolder.py:107
 #: ../../portable/frontends/widgets/newfolder.py:109
@@ -367,7 +366,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/playlist.py:149
 msgid ""
 "To add an item, drag it onto the name of this playlist in the sidebar."
-msgstr ""
+msgstr "項目を追加するには、サイドバー内のプレイリスト名の上にドラッグしてください。"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:179
 msgid "Save Search"

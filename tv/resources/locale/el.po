@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-01-25 16:20+0000\n"
-"Last-Translator: George Kontis <giormatsis@gmail.com>\n"
+"PO-Revision-Date: 2010-03-14 22:20+0000\n"
+"Last-Translator: j0hn aka c7p <c7p.admin@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-03-09 14:21+0000\n"
+"X-Launchpad-Export-Date: 2010-03-17 19:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -143,11 +143,11 @@ msgstr "Εσωτερικό Σφάλμα: Δεν είναι έτοιμη η απ�
 
 #: ../../portable/frontends/widgets/playback.py:551
 msgid "Open Subtitles File..."
-msgstr ""
+msgstr "Άνοιγμα Αρχείου Υποτίτλων..."
 
 #: ../../portable/frontends/widgets/playback.py:552
 msgid "Subtitle files"
-msgstr ""
+msgstr "Αρχεία υποτίτλων"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -155,30 +155,30 @@ msgstr "Ληφθέντα"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:137
 msgid "Full Feed"
-msgstr ""
+msgstr "Πλήρης Ροή (Feed)"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:191
 #, python-format
 msgid "Show %(count)d More Item"
 msgid_plural "Show %(count)d More Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Εμφάνησε %(count)d Περισσότερο Αντικείμενο"
+msgstr[1] "Εμφάνησε %(count)d Περισσότερα Αντικείμενα"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:232
 #: ../../portable/frontends/widgets/feedcontroller.py:259
 #, python-format
 msgid "%(count)d Downloading"
 msgid_plural "%(count)d Downloading"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Κατεβαίνει"
+msgstr[1] "%(count)d Κατεβαίνουν"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:243
 #: ../../portable/frontends/widgets/feedcontroller.py:255
 #, python-format
 msgid "%(count)d Item"
 msgid_plural "%(count)d Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Αντικείμενο"
+msgstr[1] "%(count)d Αντικείμενα"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:264
 #, python-format
@@ -186,18 +186,22 @@ msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
 "%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
 msgstr[0] ""
+"%(count)d λήψη αρχείου μπήκε στην σειρά, επειδή υπάρχουν  αντικείμενα που "
+"δεν έχουν αναπαραχθεί (Δείτε τις Ρυθμίσεις)"
 msgstr[1] ""
+"%(count)d λήψεις αρχείων μπήκαν στην σειρά, επειδή υπάρχουν  αντικείμενα που "
+"δεν έχουν αναπαραχθεί (Δείτε τις Ρυθμίσεις)"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:275
 #, python-format
 msgid "%(count)d Item Matches Search"
 msgid_plural "%(count)d Items Match Search"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Αντικείμενο Ταιριάζει στα κριτήρια της Αναζήτησης"
+msgstr[1] "%(count)d Αντικείμενα Ταιριάζουν στα κριτήρια της Αναζήτησης"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:280
 msgid "All Items Match Search"
-msgstr ""
+msgstr "Όλα τα Αντικείμενα ταιριάζουν στα κριτήρια της αναζήτησης"
 
 #: ../../portable/frontends/widgets/diagnostics.py:76
 #: ../../portable/frontends/widgets/gtk/trayicon.py:109
@@ -210,7 +214,7 @@ msgstr "Τοποθεσία Ταινιών"
 
 #: ../../portable/frontends/widgets/diagnostics.py:87
 msgid "Icon cache location:"
-msgstr ""
+msgstr "Τοποθεσία αποθήκευσης εικονιδίων:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:91
 msgid "Log file location:"
@@ -234,7 +238,7 @@ msgstr "Μέγεθος βάσης δεδομένων"
 
 #: ../../portable/frontends/widgets/diagnostics.py:110
 msgid "Total db objects in memory:"
-msgstr ""
+msgstr "Σύνολο αντικείμενων db στην μνήμη:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:118
 #: ../../portable/frontends/widgets/menus.py:335
@@ -248,11 +252,11 @@ msgstr "Λήψεις"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:93
 msgid "Single and external downloads"
-msgstr ""
+msgstr "Ξεχωριστά και εξωτερικά αρχεία λήψης"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:96
 msgid "Feed downloads"
-msgstr ""
+msgstr "Λήψεις αρχείων ροής (feed)"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:100
 msgid "Seeding"
@@ -260,44 +264,45 @@ msgstr "Μοίρασμα"
 
 #: ../../portable/frontends/widgets/newfolder.py:60
 msgid "Folder name:"
-msgstr ""
+msgstr "Όνομα φακέλου:"
 
 #: ../../portable/frontends/widgets/newfolder.py:69
 msgid "Folder should go in this section:"
-msgstr ""
+msgstr "Ο φάκελος πρέπει να τοποθετηθεί σε αυτήν την ενότητα:"
 
 #: ../../portable/frontends/widgets/newfolder.py:71
 #: ../../portable/frontends/widgets/newfeed.py:72
 #: ../../portable/frontends/widgets/newsearchfeed.py:136
 msgid "video"
-msgstr ""
+msgstr "βίντεο"
 
 #: ../../portable/frontends/widgets/newfolder.py:72
 #: ../../portable/frontends/widgets/newfeed.py:73
 #: ../../portable/frontends/widgets/newsearchfeed.py:137
 msgid "audio"
-msgstr ""
+msgstr "ήχος"
 
 #: ../../portable/frontends/widgets/newfolder.py:107
 #: ../../portable/frontends/widgets/newfolder.py:109
 msgid "Create Feed Folder"
-msgstr ""
+msgstr "Δημιουργία Φακέλου Ροής (Feed)"
 
 #: ../../portable/frontends/widgets/newfolder.py:110
 msgid "Enter the name of the folder to add"
-msgstr ""
+msgstr "Πληκτρολογήστε το όνομα του φακέλου προς προσθήκη"
 
 #: ../../portable/frontends/widgets/removefeeds.py:49
 msgid "Remove Feed"
 msgid_plural "Remove Feeds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Αφαίρεση Ροής (Feed)"
+msgstr[1] "Αφαίρεση Ροών (Feeds)"
 
 #: ../../portable/frontends/widgets/removefeeds.py:57
 msgid "Are you sure you want to remove this feed:"
 msgid_plural "Are you sure you want to remove these feeds:"
-msgstr[0] ""
+msgstr[0] "Είστε σίγουρος ότι επιθυμείτε να αφαιρέσετε αυτήν την ροή (feed):"
 msgstr[1] ""
+"Είστε σίγουρος ότι επιθυμείτε να αφαιρέσετε αυτές τις ροές (feed):"
 
 #: ../../portable/frontends/widgets/removefeeds.py:84
 msgid "Keep items that have been downloaded in my library."
@@ -310,6 +315,10 @@ msgid ""
 "still appear in your library.  You can stop watching watched folders "
 "completely in the %(appname)s preference panel."
 msgstr ""
+"Οι φάκελοι που έχουν παρακολουθηθεί θα αφαιρεθούν από την αριστερή μπάρα "
+"αλλά τα περιεχόμενα τους θα συνεχίσουν να εμφανίζονται στην βιβλιοθήκη. "
+"Μπορείτε να σταματήσετε να βλέπετε αυτούς τους φακέλους τελείως από το  "
+"%(appname)s πάνελ προτιμήσεων."
 
 #: ../../portable/frontends/widgets/removefeeds.py:100
 msgid ""
@@ -319,24 +328,28 @@ msgid_plural ""
 "Are you sure you want to remove these feeds?  The downloads currently in "
 "progress will be canceled."
 msgstr[0] ""
+"Είστε σίγουρος ότι επιθυμείτε να αφαιρέσετε αυτήν την ροή (feed); Τα αρχεία "
+"προς λήψη που βρίσκονται εξέλιξη θα ακυρωθούν."
 msgstr[1] ""
+"Είστε σίγουρος ότι επιθυμείτε να αφαιρέσετε αυτές τις ροές (feeds); Τα "
+"αρχεία προς λήψη που βρίσκονται εξέλιξη θα ακυρωθούν."
 
 #: ../../portable/frontends/widgets/itemedit.py:136
 #: ../../portable/frontends/widgets/itemcontextmenu.py:107
 msgid "Edit Item"
-msgstr ""
+msgstr "Επεξεργασία Αντικειμένου"
 
 #: ../../portable/frontends/widgets/itemedit.py:145
 msgid "Title:"
-msgstr ""
+msgstr "Τίτλος:"
 
 #: ../../portable/frontends/widgets/itemedit.py:147
 msgid "Description:"
-msgstr ""
+msgstr "Περιγραφή:"
 
 #: ../../portable/frontends/widgets/itemedit.py:149
 msgid "Media type:"
-msgstr ""
+msgstr "Είδος πολυμέσου:"
 
 #: ../../portable/frontends/widgets/itemedit.py:151
 #: ../../portable/frontends/widgets/itemlistcontroller.py:521
@@ -358,16 +371,18 @@ msgstr "Προγράμματα"
 
 #: ../../portable/frontends/widgets/itemedit.py:157
 msgid "Path:"
-msgstr ""
+msgstr "Διαδρομή:"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
-msgstr ""
+msgstr "Η λίστα αναπαραγωγής είναι άδεια"
 
 #: ../../portable/frontends/widgets/playlist.py:149
 msgid ""
 "To add an item, drag it onto the name of this playlist in the sidebar."
 msgstr ""
+"Για να προσθέσετε ένα αντικείμενο, σύρτε το πάνω στο όνομα της λίστα "
+"αναπαραγωγής στην αριστερή μπάρα."
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:179
 msgid "Save Search"
@@ -375,11 +390,11 @@ msgstr "Αποθήκευση Αναζήτησης"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:286
 msgid "Title"
-msgstr ""
+msgstr "Τίτλος"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:288
 msgid "Feed"
-msgstr ""
+msgstr "Ροή (Feed)"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:290
 #: ../../portable/frontends/widgets/itemlistwidgets.py:743
@@ -392,7 +407,7 @@ msgstr "Διάρκεια"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:292
 msgid "Status"
-msgstr ""
+msgstr "Κατάσταση"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:293
 #: ../../portable/frontends/widgets/itemlistwidgets.py:744
@@ -401,11 +416,11 @@ msgstr "Μέγεθος"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:295
 msgid "ETA"
-msgstr ""
+msgstr "Εκτιμ. Χρ. Αναμονής"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:296
 msgid "Speed"
-msgstr ""
+msgstr "Ταχύτητα"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:432
 msgid "Save as a Feed"
@@ -431,6 +446,8 @@ msgstr "Ρυθμίσεις Λήψεων"
 #, python-format
 msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
 msgstr ""
+"%(available)s κάτω από τα όρια χώρου των λήψεων (%(amount)s ελευθερώστε χώρο "
+"στο δίσκο)"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:559
 #, python-format
@@ -460,7 +477,7 @@ msgstr "Αττόματη λήψη αρχείων"
 #: ../../portable/frontends/widgets/itemlistwidgets.py:624
 #: ../../portable/frontends/widgets/prefpanel.py:292
 msgid "All"
-msgstr ""
+msgstr "Όλα"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:624
 #: ../../portable/frontends/widgets/prefpanel.py:291
@@ -474,7 +491,7 @@ msgstr "Ανενεργό"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:631
 msgid "Share feed"
-msgstr ""
+msgstr "Μοιράστε την ροή (feed)"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:637
 msgid "Settings"
@@ -508,7 +525,7 @@ msgstr "Όνομα"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:745
 msgid "Time"
-msgstr ""
+msgstr "Ώρα"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
@@ -570,7 +587,7 @@ msgstr "Ενημέρωση Ροής Τώρα"
 
 #: ../../portable/frontends/widgets/tablist.py:667
 msgid "Rename"
-msgstr ""
+msgstr "Μετονομασία"
 
 #: ../../portable/frontends/widgets/tablist.py:669
 msgid "Revert Feed Name"
@@ -640,23 +657,23 @@ msgstr "Χειροκίνητα"
 
 #: ../../portable/frontends/widgets/prefpanel.py:299
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: ../../portable/frontends/widgets/prefpanel.py:300
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../../portable/frontends/widgets/prefpanel.py:301
 msgid "50"
-msgstr ""
+msgstr "50"
 
 #: ../../portable/frontends/widgets/prefpanel.py:302
 msgid "100"
-msgstr ""
+msgstr "100"
 
 #: ../../portable/frontends/widgets/prefpanel.py:303
 msgid "1000"
-msgstr ""
+msgstr "1000"
 
 #: ../../portable/frontends/widgets/prefpanel.py:309
 msgid "Default settings for new feeds:"

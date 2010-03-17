@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-03-07 21:54+0000\n"
+"PO-Revision-Date: 2010-03-12 20:05+0000\n"
 "Last-Translator: charmed94 <Unknown>\n"
 "Language-Team: Serbian <sr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-03-09 14:21+0000\n"
+"X-Launchpad-Export-Date: 2010-03-17 19:17+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:116 ../../portable/httpclient.py:122
@@ -1388,7 +1388,7 @@ msgstr "Врста датотеке"
 
 #: ../../portable/frontends/widgets/style.py:244
 msgid "Seeders"
-msgstr "Сејачи:"
+msgstr "Сејачи"
 
 #: ../../portable/frontends/widgets/style.py:245
 msgid "Leechers"
@@ -1412,7 +1412,7 @@ msgstr "Укупно преузето"
 
 #: ../../portable/frontends/widgets/style.py:250
 msgid "Up/Down Ratio"
-msgstr ""
+msgstr "Однос преузимања/давања"
 
 #: ../../portable/frontends/widgets/style.py:251
 #: ../../portable/frontends/widgets/style.py:1120
@@ -1430,7 +1430,7 @@ msgstr "Преузми торент"
 #: ../../portable/frontends/widgets/style.py:253
 #: ../../portable/dl_daemon/download.py:554
 msgid "Error"
-msgstr "Greška"
+msgstr "Грешка"
 
 #: ../../portable/frontends/widgets/style.py:254
 msgid "queued for autodownload"
@@ -1438,7 +1438,7 @@ msgstr "на чекању за аутоматско преузимање"
 
 #: ../../portable/frontends/widgets/style.py:256
 msgid "Currently Playing"
-msgstr "Тренутно се пушта"
+msgstr "Тренутно се репродукује"
 
 #: ../../portable/frontends/widgets/style.py:257
 #: ../../portable/frontends/widgets/style.py:1189
@@ -1447,16 +1447,16 @@ msgstr "Ново доступно"
 
 #: ../../portable/frontends/widgets/style.py:260
 msgid "Stop seeding"
-msgstr "Прекини сејање"
+msgstr "Обустави сејање"
 
 #: ../../portable/frontends/widgets/style.py:576
 #: ../../portable/frontends/widgets/style.py:1182
 msgid "paused"
-msgstr "паузиран"
+msgstr "паузирано"
 
 #: ../../portable/frontends/widgets/style.py:1052
 msgid "Remove from playlist"
-msgstr "Уклони са листе за репродуковање"
+msgstr "Уклони са списка нумера"
 
 #: ../../portable/frontends/widgets/dialogs.py:102
 msgid ""
@@ -1464,17 +1464,17 @@ msgid ""
 "can take a long time if you have a large number of items in Miro (it can "
 "even take more than 30 minutes)."
 msgstr ""
-"Миро надограђује вашу базу података довода и датотека. Овај јединствени "
-"процес може да траје дуго ако имате велики број ставки на Миру (може "
+"Миро надограђује Вашу базу података довода и датотека. Овај јединствени "
+"процес може да траје дуго ако имате велики број ставки на миру (може "
 "потрајати чак дуже од 30 минута)."
 
 #: ../../portable/frontends/widgets/rundialog.py:82
 msgid "Username:"
-msgstr "Korisničko ime:"
+msgstr "Корисничко име:"
 
 #: ../../portable/frontends/widgets/rundialog.py:86
 msgid "Password:"
-msgstr "Lozinka:"
+msgstr "Лозинка:"
 
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
@@ -1482,7 +1482,7 @@ msgstr "Миро водич"
 
 #: ../../portable/frontends/widgets/statictabs.py:121
 msgid "Downloading"
-msgstr "Преузимам"
+msgstr "Преузимање"
 
 #: ../../portable/frontends/widgets/newfeed.py:60
 #: ../../portable/frontends/widgets/newsearchfeed.py:99
@@ -1491,7 +1491,7 @@ msgstr "URL:"
 
 #: ../../portable/frontends/widgets/newfeed.py:70
 msgid "Feed should go in this section:"
-msgstr ""
+msgstr "Довод би требало бити у овој секцији:"
 
 #: ../../portable/frontends/widgets/newfeed.py:109
 msgid "Add Feed"
@@ -1499,11 +1499,11 @@ msgstr "Додај довод"
 
 #: ../../portable/frontends/widgets/newfeed.py:110
 msgid "Enter the URL of the feed to add"
-msgstr ""
+msgstr "Унеси адресу довода који желите да додате"
 
 #: ../../portable/frontends/widgets/newfeed.py:121
 msgid "Add Feed - Invalid URL"
-msgstr "Dodaj Feed - Neispravan URL"
+msgstr "Додај довод — Неисправна адреса"
 
 #: ../../portable/frontends/widgets/newfeed.py:122
 msgid ""
@@ -1512,10 +1512,10 @@ msgid ""
 "\n"
 "Enter the URL of the feed to add"
 msgstr ""
-"Адреса коју сте унели није валидна УРЛ адреса.\n"
-"Молимо проверите УРЛ адресу и покушајте поново.\n"
+"Адреса коју сте унели није исправна.\n"
+"Молимо, проверите адресу и покушајте поново.\n"
 "\n"
-"Унесите УРЛ или фид који желите да додате"
+"Унесите адресу довода који желите да додате"
 
 #: ../../portable/frontends/widgets/menus.py:192
 msgid "_Video"
@@ -1527,11 +1527,11 @@ msgstr "_Отвори"
 
 #: ../../portable/frontends/widgets/menus.py:195
 msgid "_Download Item"
-msgstr ""
+msgstr "_Преузми ставку"
 
 #: ../../portable/frontends/widgets/menus.py:197
 msgid "Check _Version"
-msgstr "Провери _Верзију"
+msgstr "Провери_издање"
 
 #: ../../portable/frontends/widgets/menus.py:199
 msgid "_Remove Item"
@@ -1543,39 +1543,39 @@ msgstr "_Уклони ставке"
 
 #: ../../portable/frontends/widgets/menus.py:203
 msgid "_Edit Item"
-msgstr ""
+msgstr "_Уреди ставку"
 
 #: ../../portable/frontends/widgets/menus.py:205
 msgid "Save Item _As"
-msgstr "Сачувај ставку _Као"
+msgstr "Сачувај ставку _као"
 
 #: ../../portable/frontends/widgets/menus.py:208
 msgid "Save Items _As"
-msgstr "Сачувај ставке _Као"
+msgstr "Сачувај ставке _као"
 
 #: ../../portable/frontends/widgets/menus.py:209
 msgid "Copy Item _URL"
-msgstr "Копирај ставку _URL"
+msgstr "Умножи адресу _ставке"
 
 #: ../../portable/frontends/widgets/menus.py:213
 msgid "_Preferences"
-msgstr ""
+msgstr "_Поставке"
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
-msgstr "_Završi"
+msgstr "_Изађи"
 
 #: ../../portable/frontends/widgets/menus.py:217
 msgid "_Sidebar"
-msgstr "Колона са стране"
+msgstr "_Бочна палета"
 
 #: ../../portable/frontends/widgets/menus.py:218
 msgid "Add _Feed"
-msgstr "Додај _Довод"
+msgstr "Додај _довод"
 
 #: ../../portable/frontends/widgets/menus.py:222
 msgid "New Searc_h Feed"
-msgstr ""
+msgstr "Нова претрага _довода"
 
 #: ../../portable/frontends/widgets/menus.py:224
 msgid "New _Folder"
@@ -1583,15 +1583,15 @@ msgstr "Нова _фасцикла"
 
 #: ../../portable/frontends/widgets/menus.py:228
 msgid "Re_name"
-msgstr "Пре_именуј"
+msgstr "_Преименуј"
 
 #: ../../portable/frontends/widgets/menus.py:231
 msgid "Re_name Feed"
-msgstr ""
+msgstr "_Преименуј довод"
 
 #: ../../portable/frontends/widgets/menus.py:232
 msgid "Re_name Website"
-msgstr ""
+msgstr "_Преименуј веб-сајт"
 
 #: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
@@ -1599,27 +1599,27 @@ msgstr "_Уклони"
 
 #: ../../portable/frontends/widgets/menus.py:237
 msgid "_Remove Feed"
-msgstr ""
+msgstr "_Уклони довод"
 
 #: ../../portable/frontends/widgets/menus.py:238
 msgid "_Remove Feeds"
-msgstr ""
+msgstr "_Уклони доводе"
 
 #: ../../portable/frontends/widgets/menus.py:239
 msgid "_Remove Folder"
-msgstr "_Уклони Фасциклу"
+msgstr "_Уклони фасциклу"
 
 #: ../../portable/frontends/widgets/menus.py:240
 msgid "_Remove Folders"
-msgstr ""
+msgstr "_Уклони фасцикле"
 
 #: ../../portable/frontends/widgets/menus.py:241
 msgid "_Remove Website"
-msgstr ""
+msgstr "_Уклони веб-сајт"
 
 #: ../../portable/frontends/widgets/menus.py:242
 msgid "_Remove Websites"
-msgstr ""
+msgstr "_Уклони веб-сајтове"
 
 #: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
@@ -1631,7 +1631,7 @@ msgstr "_Ажурирај доводе"
 
 #: ../../portable/frontends/widgets/menus.py:247
 msgid "Update _All Feeds"
-msgstr "Ажурирај _Све доводе"
+msgstr "Ажурирај _све доводе"
 
 #: ../../portable/frontends/widgets/menus.py:251
 msgid "_Import Feeds (OPML)"
@@ -1639,51 +1639,51 @@ msgstr "_Увези доводе (OPML)"
 
 #: ../../portable/frontends/widgets/menus.py:253
 msgid "E_xport Feeds (OPML)"
-msgstr ""
+msgstr "_Извези доводе (OPML)"
 
 #: ../../portable/frontends/widgets/menus.py:256
 msgid "_Share with a Friend"
-msgstr "_Подели са пријатељем"
+msgstr "_Подели с пријатељем"
 
 #: ../../portable/frontends/widgets/menus.py:258
 msgid "Copy URL"
-msgstr "Умножи УРЛ"
+msgstr "Умножи адресу"
 
 #: ../../portable/frontends/widgets/menus.py:262
 msgid "_Playlists"
-msgstr "_Листе за репродукцију"
+msgstr "_Списак нумера"
 
 #: ../../portable/frontends/widgets/menus.py:263
 msgid "New _Playlist"
-msgstr "Нова _Листа за репродукцију"
+msgstr "Нови _списак нумера"
 
 #: ../../portable/frontends/widgets/menus.py:266
 msgid "New Playlist Fol_der"
-msgstr ""
+msgstr "Нова фасцикла _списка нумера"
 
 #: ../../portable/frontends/widgets/menus.py:270
 msgid "Re_name Playlist"
-msgstr "Пре_именуј листу за репродукцију"
+msgstr "_Преименуј списак нумера"
 
 #: ../../portable/frontends/widgets/menus.py:272
 msgid "_Remove Playlist"
-msgstr "_Уклони листу за репродукцију"
+msgstr "_Уклони списак нумера"
 
 #: ../../portable/frontends/widgets/menus.py:275
 msgid "_Remove Playlists"
-msgstr "_Уклони листе за репродукцију"
+msgstr "_Уклони спискове нумера"
 
 #: ../../portable/frontends/widgets/menus.py:276
 msgid "_Remove Playlist Folders"
-msgstr "_Уклони фасцикле листа за репродукцију"
+msgstr "_Уклони фасцикле списка нумера"
 
 #: ../../portable/frontends/widgets/menus.py:277
 msgid "_Remove Playlist Folder"
-msgstr "_Уклони фасциклу листа за репродукцију"
+msgstr "_Уклони фасциклу списка нумера"
 
 #: ../../portable/frontends/widgets/menus.py:280
 msgid "P_layback"
-msgstr ""
+msgstr "_Списак нумера"
 
 #: ../../portable/frontends/widgets/menus.py:281
 #: ../../portable/frontends/widgets/menus.py:283
@@ -1700,43 +1700,43 @@ msgstr "_Заустави"
 
 #: ../../portable/frontends/widgets/menus.py:288
 msgid "_Next Video"
-msgstr "_Sledeći Video"
+msgstr "_Следећи видео"
 
 #: ../../portable/frontends/widgets/menus.py:291
 msgid "_Previous Video"
-msgstr "_Prethodni Video"
+msgstr "Претходни видео"
 
 #: ../../portable/frontends/widgets/menus.py:295
 msgid "Skip _Forward"
-msgstr "Прескочи _Унапред"
+msgstr "Прескочи _унапред"
 
 #: ../../portable/frontends/widgets/menus.py:297
 msgid "Skip _Back"
-msgstr "Прескочи _Назад"
+msgstr "Прескочи _назад"
 
 #: ../../portable/frontends/widgets/menus.py:300
 msgid "Volume _Up"
-msgstr "Јачина _Горе"
+msgstr "_Појачај"
 
 #: ../../portable/frontends/widgets/menus.py:302
 msgid "Volume _Down"
-msgstr "Јачина _Доле"
+msgstr "_Утишај"
 
 #: ../../portable/frontends/widgets/menus.py:305
 msgid "_Fullscreen"
-msgstr "_Пун екран"
+msgstr "_Цео екран"
 
 #: ../../portable/frontends/widgets/menus.py:308
 msgid "_Toggle Detached/Attached"
-msgstr ""
+msgstr "_Задржи издвојено/приложено"
 
 #: ../../portable/frontends/widgets/menus.py:311
 msgid "S_ubtitles"
-msgstr ""
+msgstr "_Преводи"
 
 #: ../../portable/frontends/widgets/menus.py:315
 msgid "Select a Subtitles File..."
-msgstr "Odaberi Prevod..."
+msgstr "Изабери превод..."
 
 #: ../../portable/frontends/widgets/menus.py:321
 #: ../../portable/frontends/widgets/menus.py:333
@@ -1750,7 +1750,7 @@ msgstr "_О %(name)s"
 
 #: ../../portable/frontends/widgets/menus.py:330
 msgid "_Donate"
-msgstr "_Donacije"
+msgstr "_Донирај"
 
 #: ../../portable/frontends/widgets/menus.py:337
 msgid "Report a _Bug"
@@ -1762,7 +1762,7 @@ msgstr "_Преведи"
 
 #: ../../portable/frontends/widgets/menus.py:341
 msgid "_Planet Miro"
-msgstr "_Планета Миро"
+msgstr "_Миро планета"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
 msgid "Remove From the Library"
@@ -1775,18 +1775,18 @@ msgstr "Пусти"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:103
 msgid "Play Just This Item"
-msgstr "Репродукуѕ само ову ставку"
+msgstr "Репродукуј само ову ставку"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:104
 #: ../../portable/frontends/widgets/displays.py:391
 #: ../../portable/frontends/widgets/displays.py:428
 msgid "Play Externally"
-msgstr "Пусти екстерно"
+msgstr "Пусти спољашње"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:105
 #: ../../portable/frontends/widgets/itemcontextmenu.py:198
 msgid "Add to Playlist"
-msgstr "Додај у листу за репродукцију"
+msgstr "Додај у списак нумера"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:205
@@ -1828,7 +1828,7 @@ msgstr "Лиценца"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:147
 msgid "File in Browser"
-msgstr "Датотека у Претраживачу"
+msgstr "Датотека у прегледачу"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:149
 #, python-format
@@ -1847,41 +1847,41 @@ msgstr "Приказ"
 #, python-format
 msgid "%(count)d Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
-msgstr[0] "%(count)d Preuzeta Stavka"
-msgstr[1] "%(count)d Preuzetih Stavki"
-msgstr[2] "%(count)d Preuzete Stavke"
+msgstr[0] "%(count)d преузета ставка"
+msgstr[1] "%(count)d преузетих ставки"
+msgstr[2] "%(count)d преузетих ставки"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:221
 #, python-format
 msgid "%(count)d Available Item"
 msgid_plural "%(count)d Available Items"
-msgstr[0] "%(count)d Dostupna Stavka"
-msgstr[1] "%(count)d Dostupnih Stavki"
-msgstr[2] "%(count)d Dostupne Stavke"
+msgstr[0] "%(count)d доступна ставка"
+msgstr[1] "%(count)d доступних ставки"
+msgstr[2] "%(count)d доступних ставки"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:234
 #, python-format
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
-msgstr[0] "%(count)d Stavka se Preuzima"
-msgstr[1] "%(count)d Stavke se Preuzimaju"
-msgstr[2] "%(count)d Stavki se Preuzimaju"
+msgstr[0] "%(count)d ставка се преузима"
+msgstr[1] "%(count)d ставке се преузимају"
+msgstr[2] "%(count)d ставке се преузимају"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:251
 #, python-format
 msgid "%(count)d Paused Item"
 msgid_plural "%(count)d Paused Items"
-msgstr[0] "%(count)d Zaustavljena Stavka"
-msgstr[1] "%(count)d Zaustavljenih Stavki"
-msgstr[2] "%(count)d Zaustavljene Stavke"
+msgstr[0] "%(count)d паузирана ставка"
+msgstr[1] "%(count)d паузиране ставке"
+msgstr[2] "%(count)d паузиране ставке"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:269
 msgid "Restart Upload"
-msgstr "Ponovi slanje"
+msgstr "Понови слање"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:283
 msgid "Remove From Playlist"
-msgstr "Уклони са плејлисте"
+msgstr "Уклони са списка нумера"
 
 #: ../../portable/frontends/widgets/displays.py:372
 #, python-format
@@ -1889,7 +1889,7 @@ msgid ""
 "%(appname)s can't play this file.  You may be able to open it with a "
 "different program"
 msgstr ""
-"%(appname)s не може да отвори ову датотеку.  Можда можете да је отворите у "
+"%(appname)s не може да отвори ову датотеку.  Покушајте да је отворите у "
 "другом програму"
 
 #: ../../portable/frontends/widgets/displays.py:382
@@ -1898,7 +1898,7 @@ msgstr "Назив датотеке:"
 
 #: ../../portable/frontends/widgets/displays.py:385
 msgid "File type:"
-msgstr "Тип датотеке"
+msgstr "Врста датотеке:"
 
 #: ../../portable/frontends/widgets/displays.py:393
 msgid "Skip"
@@ -1906,7 +1906,7 @@ msgstr "Прескочи"
 
 #: ../../portable/frontends/widgets/displays.py:430
 msgid "Open Externally"
-msgstr "Отвори екстерно"
+msgstr "Отвори спољашње"
 
 #: ../../portable/frontends/widgets/displays.py:536
 #, python-format
@@ -1921,24 +1921,24 @@ msgstr[2] "%(count)d изабраних фасцикли довода"
 msgid "(contains %(count)d feed)"
 msgid_plural "(contains %(count)d feeds)"
 msgstr[0] "(садржи %(count)d довод)"
-msgstr[1] "(садржи %(count)d fдовода)"
+msgstr[1] "(садржи %(count)d f довода)"
 msgstr[2] "(садржи %(count)d довода)"
 
 #: ../../portable/frontends/widgets/displays.py:547
 #, python-format
 msgid "%(count)d Playlist Folder Selected"
 msgid_plural "%(count)d Playlist Folders Selected"
-msgstr[0] "%(count)d изабрана фасцикла са листама за репродуковање"
-msgstr[1] "%(count)d изабраних фасцикли са листама за репродуковање"
-msgstr[2] "%(count)d изабраних фасцикли са листама за репродуковање"
+msgstr[0] "%(count)d изабрана фасцикла са списковима нумера"
+msgstr[1] "%(count)d изабраних фасцикли са списковима нумера"
+msgstr[2] "%(count)d изабраних фасцикли са списковима нумера"
 
 #: ../../portable/frontends/widgets/displays.py:552
 #, python-format
 msgid "(contains %(count)d playlist)"
 msgid_plural "(contains %(count)d playlist)"
-msgstr[0] "(садржи %(count)d листу за репродуковање)"
-msgstr[1] "(садржи %(count)d листи за репродуковање)"
-msgstr[2] "(садржи %(count)d листи за репродуковање)"
+msgstr[0] "(садржи %(count)d списак нумера)"
+msgstr[1] "(садржи %(count)d списак нумера)"
+msgstr[2] "(садржи %(count)d списак нумера)"
 
 #: ../../portable/frontends/widgets/displays.py:562
 #, python-format
@@ -1952,20 +1952,21 @@ msgstr[2] "%(count)d изабраних довода"
 #, python-format
 msgid "%(count)d Website Selected"
 msgid_plural "%(count)d Websites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d изабрани веб-сајт"
+msgstr[1] "%(count)d изабрана веб-сајта"
+msgstr[2] "%(count)d изабраних веб-сајтова"
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
 msgid "%(count)d Playlist Selected"
 msgid_plural "%(count)d Playlists Selected"
-msgstr[0] "%(count)d изабрана листа за репродѕкцију"
-msgstr[1] "%(count)d изабраних листи за репродукцију"
-msgstr[2] "%(count)d изабраних листи за репродукцију"
+msgstr[0] "%(count)d изабран списак нумера"
+msgstr[1] "%(count)d изабраних спискова нумера"
+msgstr[2] "%(count)d изабраних спискова нумера"
 
 #: ../../portable/frontends/widgets/displays.py:581
 msgid "Delete All"
-msgstr "Обриши све"
+msgstr "Избриши све"
 
 #: ../../portable/frontends/widgets/displays.py:585
 msgid "Put Into a New Folder"
@@ -1983,6 +1984,9 @@ msgid ""
 "\n"
 "%(url)s"
 msgstr ""
+"Веза је највероватније довод. Да ли желите да се претплатите?\n"
+"\n"
+"%(url)s"
 
 #: ../../portable/frontends/widgets/crashdialog.py:54
 #, python-format
@@ -1990,16 +1994,16 @@ msgid ""
 "%(appname)s has encountered an internal error.  You can help us track down "
 "this problem and fix it by submitting an error report."
 msgstr ""
-"%(appname)s се сусрео са интерном грешком.  Можете нам помоћи да пронађемо и "
-"поправимо овај проблем тако што ће те послати извештај о грешци"
+"%(appname)s се сусрео с унутрашњом грешком.  Можете нам помоћи да пронађемо "
+"и поправимо овај проблем тако што ће те послати извештај о грешци"
 
 #: ../../portable/frontends/widgets/crashdialog.py:66
 msgid ""
 "Include entire program database including all video and feed metadata with "
 "crash report"
 msgstr ""
-"Укључи комплетну базу података програма укључујући и све видео и фидове "
-"метадата уз извештај о квару"
+"Укључи комплетну базу података програма, укључујући и све видео снимке и "
+"доводе метадата уз извештај о квару"
 
 #: ../../portable/frontends/widgets/crashdialog.py:71
 msgid "Describe what you were doing when you got this error:"
@@ -2009,9 +2013,9 @@ msgstr "Опишите шта сте радили када сте добили �
 #, python-format
 msgid "%(count)d hour ago"
 msgid_plural "%(count)d hours ago"
-msgstr[0] "pre %(count)d sat"
-msgstr[1] "pre %(count)d sata"
-msgstr[2] "pre %(count)d sati"
+msgstr[0] "пре %(count)d ч."
+msgstr[1] "пре %(count)d ч."
+msgstr[2] "пре %(count)d ч."
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:64
 #, python-format
@@ -2025,9 +2029,9 @@ msgstr[2] "пре%(count)d дана"
 #, python-format
 msgid "%(count)d month ago"
 msgid_plural "%(count)d months ago"
-msgstr[0] "pre %(count)d mesec"
-msgstr[1] "pre %(count)d meseca"
-msgstr[2] "pre %(count)d meseci"
+msgstr[0] "пре %(count)d месец"
+msgstr[1] "пре %(count)d месеца"
+msgstr[2] "пре %(count)d месеци"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Videos:"
@@ -2040,98 +2044,98 @@ msgstr "Прегледано %(expiration)s (Подразумевано)"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
-msgstr "Pogledano juče"
+msgstr "Погледано јуче"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr "Pogledano pre 3 dana"
+msgstr "Погледано пре 3 дана"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
-msgstr "Pogledano pre 6 dana"
+msgstr "Погледано пре 6 дана"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:100
 msgid "Watched 10 days ago"
-msgstr "Pogledano pre 10 dana"
+msgstr "Погледано пре 10 дана"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
-msgstr "Pogledano pre mesec dana"
+msgstr "Погледнао пре месец дана"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
-msgstr "Zastarele stavke:"
+msgstr "Застареле ставке довода:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:139
 #, python-format
 msgid "Keep %(number)s (Default)"
-msgstr "Zadrži %(number)s (Default)"
+msgstr "Задржи %(number)s (Подразумевано)"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:141
 msgid "Keep 0"
-msgstr "Zadrži 0"
+msgstr "Задржи 0"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:142
 msgid "Keep 20"
-msgstr "Zadrži 20"
+msgstr "Задржи 20"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:143
 msgid "Keep 50"
-msgstr "Zadrži 50"
+msgstr "Задржи 50"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:144
 msgid "Keep 100"
-msgstr "Zadrži 100"
+msgstr "Задржи 100"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:145
 msgid "Keep 1000"
-msgstr "Zadrži 1000"
+msgstr "Задржи 1000"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
-msgstr "Ukloni Sve"
+msgstr "Уклони све"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
-msgstr "Stare stavke su uklonjene"
+msgstr "Старе ставке су уклоњене"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause Auto-Downloading when this many items are unplayed:"
-msgstr "Pauziraj automatsko preuzimanje kada je ovoliko stavki ne pogledano:"
+msgstr "Паузирај аутоматско преузимање када је оволико ставки непогледано:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
-msgstr "1 ne pogledana stavka"
+msgstr "Једна непогледана ставка"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:198
 msgid "3 unplayed items"
-msgstr "3 ne pogledane stavke"
+msgstr "3 непогледане ставке"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:199
 msgid "5 unplayed items"
-msgstr "5 ne pogledanih stavki"
+msgstr "5 непогледаних ставки"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:200
 msgid "10 unplayed items"
-msgstr "10 ne pogledanih stavki"
+msgstr "10 непогледаних ставки"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:201
 msgid "15 unplayed items"
-msgstr "15 ne pogledanih stavki"
+msgstr "15 непогледаних ставки"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:241
 msgid "Feed Settings"
-msgstr "Подешавање довода"
+msgstr "Поставке довода"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:64
 #, python-format
 msgid "%(name)s First Time Setup"
-msgstr "%(name)s подешавања по први пут"
+msgstr "%(name)s прве поставке"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:123
 #, python-format
 msgid "Welcome to the %(name)s First Time Setup"
-msgstr "Добродошли у %(name)s подешавања по први пут"
+msgstr "Добро дошли у %(name)s прве поставке"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:127
 #, python-format
@@ -2143,38 +2147,38 @@ msgid ""
 "This way, downloads in progress can finish downloading and new media files "
 "can be downloaded in the background, ready when you want to watch."
 msgstr ""
-"Nekoliko narednih prozora će Vam pomoći da podesite %(name)s kako bi najviše "
-"odgovarao vašim potrebama.\n"
+"Неколико наредних прозора ће Вам помоћи да подесите %(name)s како би највише "
+"одговарало Ваших потребама.\n"
 "\n"
-"Predlažemo da se %(name)s pokreće zajedno sa vašim računarom. Na ovaj način, "
-"započeta preuzimanja mogu da se završe i nove stavke mogu da se preuzimaju u "
-"pozadini, spremna za gledanje kada Vam odgovara."
+"Предлажемо да се %(name)s покреће заједно с Вашим рачунаром. На овај начин, "
+"започета преузимања могу да се заврше и нове ставке могу да се преузимају у "
+"позадини, спремне за репродуковање."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:139
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
-msgstr "Želite li da se %(name)s pokrene po pokretanju računara?"
+msgstr "Да ли желите да се %(name)s покреће уз рачунар?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:145
 #: ../../portable/frontends/widgets/firsttimedialog.py:179
 #: ../../portable/dialogs.py:97
 msgid "Yes"
-msgstr "Da"
+msgstr "Да"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:146
 #: ../../portable/frontends/widgets/firsttimedialog.py:178
 #: ../../portable/dialogs.py:98
 msgid "No"
-msgstr "Ne"
+msgstr "Не"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:154
 msgid "Next >"
-msgstr "Dalje >"
+msgstr "Напред >"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:164
 #, python-format
 msgid "Completing the %(name)s First Time Setup"
-msgstr "Podešavanje pri prvom pokretanju %(name)s kompletirano"
+msgstr "Подешавање при првом покретању %(name)s је завршено"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:168
 #, python-format
@@ -2184,34 +2188,34 @@ msgid ""
 "\n"
 "Would you like %(name)s to look for media files on your computer?"
 msgstr ""
-"%(name)s može da pronađe sve multimedijalne datoteke na Vašem računaru kako "
-"bi vam pomogao u organizaciji Vaše kolekcije.\n"
+"%(name)s може да пронађе све мултимедијалне датотеке на Вашем рачунару како "
+"би Вам помогао у организацији колекције.\n"
 "\n"
-"Želite li da %(name)s pronađe datoteke na Vašem računaru?"
+"Да ли желите да %(name)s пронађе датотеке на Вашем рачунару?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:186
 msgid "Restrict to all my personal files."
-msgstr "Ograniči na moje lične datoteke"
+msgstr "Ограничи на моје личне датотеке"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:187
 msgid "Search custom folders:"
-msgstr "Pretraži određene direktorijume"
+msgstr "Претражи одређене фасцикле:"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:198
 msgid "Choose directory to search for media files"
-msgstr "Izaberi direktorijum za pretragu"
+msgstr "Изабери фасцикле за претрагу"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:213
 #: ../../portable/frontends/widgets/firsttimedialog.py:292
 msgid "< Previous"
-msgstr "< Prethodna"
+msgstr "< Назад"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:227
 #: ../../portable/frontends/widgets/firsttimedialog.py:284
 #: ../../portable/feed.py:2335 ../../portable/feed.py:2444
 msgid "Search"
-msgstr "Pretraži"
+msgstr "Претражи"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:227
 #: ../../portable/frontends/widgets/firsttimedialog.py:295
@@ -2220,12 +2224,12 @@ msgstr "Заврши"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:275
 msgid "Searching for media files"
-msgstr "Тражење датотека медија"
+msgstr "Тражење датотека"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:285
 #: ../../portable/dialogs.py:95
 msgid "Cancel"
-msgstr "Prekinuti"
+msgstr "Откажи"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:323
 #, python-format
@@ -2233,14 +2237,15 @@ msgid "parsed %(count)s file"
 msgid_plural "parsed %(count)s files"
 msgstr[0] "рашчлањена %(count)s датотека"
 msgstr[1] "рашчлањено %(count)s датотека"
+msgstr[2] "рашчлањених %(count)s датотека"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:328
 #, python-format
 msgid "found %(count)s media file"
 msgid_plural "found %(count)s media files"
-msgstr[0] "пронађена %(count)s датотека медија"
-msgstr[1] "пронађено %(count)s датотека медија"
-msgstr[2] "пронађено %(count)s датотека медија"
+msgstr[0] "пронађено %(count)s медијума"
+msgstr[1] "пронађено %(count)s медијума"
+msgstr[2] "пронађено %(count)s медијума"
 
 #: ../../portable/frontends/widgets/browser.py:96
 msgid "Open in browser"
@@ -2252,15 +2257,15 @@ msgstr "Преузми овај видео"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:57
 msgid "New Search Feed"
-msgstr ""
+msgstr "Нова претрага довода"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:58
 msgid "A search feed contains items that match a search term."
-msgstr ""
+msgstr "Претрага довода садржи ставке које се поклапају с појамом претраге."
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:73
 msgid "Search for:"
-msgstr "Traži:"
+msgstr "Тражи:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:80
 msgid "In this:"
@@ -2276,7 +2281,7 @@ msgstr "Претраживач"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:133
 msgid "Add new feed to this section:"
-msgstr "Додај нови довод у овај одјел:"
+msgstr "Додај нови довод у ову секцију:"
 
 #: ../../portable/downloader.py:307
 msgid "activity"
@@ -2284,7 +2289,7 @@ msgstr "активност"
 
 #: ../../portable/downloader.py:371
 msgid "Flash URL Scraping Error"
-msgstr ""
+msgstr "Грешка у стругању адресе флеша"
 
 #: ../../portable/downloader.py:562
 msgid "starting up"
@@ -2293,7 +2298,7 @@ msgstr "се покреће"
 #: ../../portable/downloader.py:568
 #, python-format
 msgid "no connection - retrying in %s"
-msgstr "Nema konekcije - Ponovni pokušaj za %s"
+msgstr "Веза не постоји — Поновни покушај за %s"
 
 #: ../../portable/displaytext.py:52
 #, python-format
@@ -2319,22 +2324,25 @@ msgstr "%(size)s b/s"
 #, python-format
 msgid "%(num).0f day"
 msgid_plural "%(num).0f days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f дан"
+msgstr[1] "%(num).0f дана"
+msgstr[2] "%(num).0f дана"
 
 #: ../../portable/displaytext.py:71
 #, python-format
 msgid "%(num).0f hr"
 msgid_plural "%(num).0f hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f ч."
+msgstr[1] "%(num).0f ч."
+msgstr[2] "%(num).0f ч."
 
 #: ../../portable/displaytext.py:74
 #, python-format
 msgid "%(num).0f min"
 msgid_plural "%(num).0f mins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f минут"
+msgstr[1] "%(num).0f минута"
+msgstr[2] "%(num).0f минута"
 
 #: ../../portable/displaytext.py:77
 #, python-format
@@ -2376,9 +2384,9 @@ msgstr[2] "Истиче за %(count)d дана"
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
-msgstr[0] "Истиче за %(count)d сат"
-msgstr[1] "Истиче за %(count)d сата"
-msgstr[2] "Истиче за %(count)d сати"
+msgstr[0] "Истиче за %(count)d ч."
+msgstr[1] "Истиче за %(count)d ч."
+msgstr[2] "Истиче за %(count)d ч."
 
 #: ../../portable/displaytext.py:114
 #, python-format
@@ -2400,9 +2408,9 @@ msgstr[2] "Истиче: %(count)d дана"
 #, python-format
 msgid "Expires: %(count)d hour"
 msgid_plural "Expires: %(count)d hours"
-msgstr[0] "Истиче: %(count)d сат"
-msgstr[1] "Истиче: %(count)d сата"
-msgstr[2] "Истиче: %(count)d сати"
+msgstr[0] "Истиче: %(count)d ч."
+msgstr[1] "Истиче: %(count)d ч."
+msgstr[2] "Истиче: %(count)d ч."
 
 #: ../../portable/displaytext.py:132
 #, python-format
@@ -2420,7 +2428,7 @@ msgstr "%(dayofmonth)s, %(month)s, %(year)s"
 #: ../../portable/playlist.py:201
 #, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr "Упиши ново име за листу за репродукцију %s"
+msgstr "Унеси ново име за списак нумера %s"
 
 #: ../../portable/feed.py:949
 msgid "Error loading feed"
@@ -2429,7 +2437,7 @@ msgstr "Грешка у учитавању довода"
 #: ../../portable/feed.py:951
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
-msgstr ""
+msgstr "Учитавање довода код %(url)s (%(errordescription)s) није успело."
 
 #: ../../portable/feed.py:954
 msgid "Would you like to keep the feed?"
@@ -2456,11 +2464,19 @@ msgid ""
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
+"Овај канал није компатибилан са %(appname)s али чинимо све што је у нашој "
+"моћи да преузмемо те датотеке. Преузимање списка снимака може потрајати, а "
+"опис може изгледати смешно.\n"
+"\n"
+"Молимо, контактирајте издавача of %(url)s и питајте га ако би могао да "
+"понуди довод у формату који ће радити са %(appname)s.\n"
+"\n"
+"Do you want to try to load this channel anyway?"
 
 #: ../../portable/feed.py:1724
 #, python-format
 msgid "Search All: %(text)s"
-msgstr "претражи све: %(text)s"
+msgstr "Претражи све: %(text)s"
 
 #: ../../portable/feed.py:2306 ../../portable/feed.py:2459
 msgid "Local Files"
@@ -2468,7 +2484,7 @@ msgstr "Локалне датотеке"
 
 #: ../../portable/feed.py:2473
 msgid "Playing File"
-msgstr "Пушта се датотека"
+msgstr "Датотека се пушта"
 
 #: ../../portable/singleclick.py:55
 msgid "Download already exists"
@@ -2476,7 +2492,7 @@ msgstr "Преузимање већ постоји"
 
 #: ../../portable/singleclick.py:56
 msgid "That URL is already an external download."
-msgstr "Taj URL je već eksterno preuzimanje"
+msgstr "Та адреса је већ спољашно преузимање"
 
 #: ../../portable/singleclick.py:62
 #, python-format
@@ -2503,7 +2519,7 @@ msgstr "Датотека на %(url)s не личи на аудио, видео 
 
 #: ../../portable/singleclick.py:142
 msgid "Download Error"
-msgstr "Грешка у скидању"
+msgstr "Грешка у преузимању"
 
 #: ../../portable/singleclick.py:144
 #, python-format
@@ -2512,6 +2528,9 @@ msgid ""
 "\n"
 "URL: %(url)s"
 msgstr ""
+"%(appname)s није доступно за преузимање на овој адреси:\n"
+"\n"
+"URL: %(url)s"
 
 #: ../../portable/dl_daemon/download.py:643
 #, python-format
@@ -2521,30 +2540,30 @@ msgstr "Не може писати на %(filename)s"
 #: ../../portable/dl_daemon/download.py:668
 #: ../../portable/dl_daemon/download.py:885
 msgid "Not enough disk space"
-msgstr "Nedovoljno slobodnog prostora na disku"
+msgstr "Нема довољно простора на диску"
 
 #: ../../portable/dl_daemon/download.py:669
 #: ../../portable/dl_daemon/download.py:886
 #, python-format
 msgid "%(amount)s MB required to store this video"
-msgstr "%(amount)s MB потребно за чување овог видо снимка"
+msgstr "%(amount)s MB потребно за чување овог видео снимка"
 
 #: ../../portable/dl_daemon/download.py:684
 #, python-format
 msgid "Couldn't open %(filename)s for writing"
-msgstr "Greška kod otvaranja %(filename)s u cilju pisanja"
+msgstr "Грешка при отварању %(filename)s у циљу писања"
 
 #: ../../portable/dl_daemon/download.py:904
 msgid "BitTorrent failure"
-msgstr ""
+msgstr "Бит Торент није успело"
 
 #: ../../portable/dl_daemon/download.py:904
 msgid "BitTorrent failed to startup"
-msgstr "BitTorrent се не може покренути"
+msgstr "Бит Торент се не може покренути"
 
 #: ../../portable/dl_daemon/download.py:1101
 msgid "Corrupt Torrent"
-msgstr "neispravan torent"
+msgstr "Оштећен торент"
 
 #: ../../portable/dl_daemon/download.py:1102
 #, python-format
@@ -2553,7 +2572,7 @@ msgstr "Торент датотека на %(url)s није исправна"
 
 #: ../../portable/dl_daemon/download.py:1140
 msgid "Torrent file deleted"
-msgstr "Torent fajl obrisan"
+msgstr "Торент датотека је избрисана"
 
 #: ../../portable/dl_daemon/download.py:1141
 #, python-format
@@ -2574,11 +2593,11 @@ msgstr "Ажурирање базе података"
 
 #: ../../portable/dialogs.py:92
 msgid "Ok"
-msgstr "U redu"
+msgstr "У реду"
 
 #: ../../portable/dialogs.py:93
 msgid "Apply"
-msgstr "Primeni"
+msgstr "Примени"
 
 #: ../../portable/dialogs.py:96
 msgid "Done"
@@ -2586,7 +2605,7 @@ msgstr "Готово"
 
 #: ../../portable/dialogs.py:99
 msgid "Quit"
-msgstr "Završi"
+msgstr "Изађи"
 
 #: ../../portable/dialogs.py:100
 msgid "Continue"
@@ -2606,7 +2625,7 @@ msgstr "Пребаци"
 
 #: ../../portable/dialogs.py:104
 msgid "Don't Migrate"
-msgstr "Немој пребацити"
+msgstr "Не пребацуј"
 
 #: ../../portable/dialogs.py:106
 msgid "Remove Entry"
@@ -2614,11 +2633,11 @@ msgstr "Уклони унос"
 
 #: ../../portable/dialogs.py:107
 msgid "Delete File"
-msgstr "Обриши датотеку"
+msgstr "Избриши датотеку"
 
 #: ../../portable/dialogs.py:108
 msgid "Delete Files"
-msgstr "Обриши датотеке"
+msgstr "Избриши датотеке"
 
 #: ../../portable/dialogs.py:109
 msgid "Keep Videos"
@@ -2630,7 +2649,7 @@ msgstr "Избриши видео снимке"
 
 #: ../../portable/dialogs.py:111
 msgid "Create"
-msgstr "Kreiraj"
+msgstr "Направи"
 
 #: ../../portable/dialogs.py:112
 msgid "Create Feed"
@@ -2650,11 +2669,11 @@ msgstr "Не сада"
 
 #: ../../portable/dialogs.py:120
 msgid "Close to Tray"
-msgstr "Спусти у плато"
+msgstr "Спусти у системску палету"
 
 #: ../../portable/dialogs.py:121
 msgid "Launch Miro"
-msgstr "Покрени Миро"
+msgstr "Покрени миро"
 
 #: ../../portable/dialogs.py:122
 msgid "Download Anyway"
@@ -2678,11 +2697,11 @@ msgstr "Заустави гледање"
 
 #: ../../portable/dialogs.py:127
 msgid "Retry"
-msgstr "Pokušaj ponovo"
+msgstr "Покушај поново"
 
 #: ../../portable/dialogs.py:128
 msgid "Start Fresh"
-msgstr ""
+msgstr "Почни испочетка"
 
 #: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"
@@ -2690,34 +2709,36 @@ msgstr "Претплаћен на нови довод:"
 
 #: ../../portable/messagehandler.py:1337
 msgid "Subscribed to new feeds:"
-msgstr ""
+msgstr "Претплаћен на нове доводе:"
 
 #: ../../portable/opml.py:197
 msgid "OPML Import failed"
-msgstr "OPML увоз не успео"
+msgstr "OPML увоз није успео"
 
 #: ../../portable/opml.py:198
 msgid ""
 "The selected OPML file appears to be invalid.  Import was interrupted."
-msgstr "Izabrani OPML fajl je neispravan. Uvoz je prekinut."
+msgstr "Изабрана OPML датотека није исправна. Увоз је прекинут."
 
 #: ../../portable/opml.py:205
 msgid "OPML Import summary"
-msgstr ""
+msgstr "Кратак преглед OPML увоза"
 
 #: ../../portable/opml.py:206
 #, python-format
 msgid "Successfully imported %(count)d feed."
 msgid_plural "Successfully imported %(count)d feeds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Успешно је увезен %(count)d довод."
+msgstr[1] "Успешно су увезени %(count)d доводи."
+msgstr[2] "Успешно су увезени %(count)d доводи."
 
 #: ../../portable/opml.py:212
 #, python-format
 msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Прескочени %(count)d довод је већ присутан."
+msgstr[1] "Прескочени %(count)d доводи су већ присутни."
+msgstr[2] "Прескочени %(count)d доводи су већ присутни."
 
 #: ../../portable/startup.py:98
 msgid "Unknown Error"
@@ -2729,10 +2750,12 @@ msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
 "report at %(url)s."
 msgstr ""
+"Непозната грешка спречила је %(appname)s од покретања.  Молимо, пошаљите "
+"извештај квара на %(url)s."
 
 #: ../../portable/startup.py:191
 msgid "Database too new"
-msgstr "Baza podataka previše sveža"
+msgstr "База података је превише свежа"
 
 #: ../../portable/startup.py:193
 #, python-format
@@ -2740,8 +2763,8 @@ msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
 "must download the latest version of %(appname)s and run that."
 msgstr ""
-"Imate bazu podataka koja je snimljena novijom verzijom %(appname)s. Morate "
-"preuzeti poslednju verziju %(appname)s i pokrenuti to."
+"Имате базу података која је снимљена новијим издањем %(appname)s. Морате да "
+"преузмете последње издање %(appname)s и покренути га."
 
 #: ../../portable/item.py:946
 #, python-format
@@ -2755,9 +2778,9 @@ msgstr[2] "%(count)d дана"
 #, python-format
 msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
-msgstr[0] "%(count)d сат"
-msgstr[1] "%(count)d сата"
-msgstr[2] "%(count)d сати"
+msgstr[0] "%(count)d ч."
+msgstr[1] "%(count)d ч."
+msgstr[2] "%(count)d ч."
 
 #: ../../portable/item.py:956
 #, python-format
@@ -2785,7 +2808,7 @@ msgstr "Садржај:"
 
 #: ../../portable/item.py:1491
 msgid "starting up..."
-msgstr "покреће се..."
+msgstr "покретање..."
 
 #: ../../portable/commandline.py:114
 msgid "Subscription error"
@@ -2797,6 +2820,8 @@ msgid ""
 "This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
 "the publisher of this file."
 msgstr ""
+"Ова %(appname)s датотека довода је неисправног формата: %(url)s.  Молимо, "
+"обавестите издавача у вези с овом датотеком."
 
 #: ../../portable/commandline.py:135
 #, python-format
@@ -2804,11 +2829,13 @@ msgid ""
 "This %(appname)s feed file has the wrong content type: %(url)s. Please "
 "notify the publisher of this file."
 msgstr ""
+"Ова %(appname)s датотека довода садржи погрешан садржај: %(url)s. Молимо, "
+"обавестите издаваче у вези с овом датотеком."
 
 #: ../../portable/commandline.py:144
 #, python-format
 msgid "Could not download the %(appname)s feed file: %(url)s"
-msgstr ""
+msgstr "Не могу да преузмем %(appname)s датотеку довода: %(url)s"
 
 #: ../../portable/commandline.py:193
 msgid "Invalid Torrent"
@@ -2818,7 +2845,7 @@ msgstr "Неисправан торент"
 #, python-format
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
-msgstr "Torrent fajl %(filename)s je neispravan i ne može se otvoriti."
+msgstr "Торент датотека %(filename)s је оштећена и не може да се отвори."
 
 #: ../../portable/searchengines.py:179
 msgid "Search All"
@@ -2826,12 +2853,12 @@ msgstr "Претражи све"
 
 #: ../../portable/theme.py:191
 msgid "Example Playlist"
-msgstr "Пример листе за репродукцију"
+msgstr "Пример списка нумера"
 
 #: ../../portable/storedatabase.py:208
 #, python-format
 msgid "%(appname)s database upgrade failed"
-msgstr ""
+msgstr "%(appname)s ажурирање базе података није успело"
 
 #: ../../portable/storedatabase.py:211
 #, python-format
@@ -2847,28 +2874,38 @@ msgid ""
 "Finally, you can start fresh and your damaged database will be removed, but "
 "you will have to re-add your feeds and media files."
 msgstr ""
+"Извињавамо се, %(appname)s није успела да ажурира Вашу базу података.\n"
+"\n"
+"Проверите да ли Вам је тврди диск попуњен. Ако јесте, онда изађите из "
+"%(appname)s, ослободите се мало простора, и покрените %(appname)s поново.\n"
+"\n"
+"Ако Вам диск није попуњен, изађите из програма и пошаљите нам извештај квара "
+"на bugzilla.pculture.org\n"
+"\n"
+"Коначно, можете почети испочетка — оштећена база података ће бити избрисана, "
+"тако да ћете морати да поново додате Ваше доводе и медијуме."
 
 #: ../../portable/storedatabase.py:267
 msgid "Database was created by a newer version of Miro "
-msgstr "База података је направљена у новијој верзији Мира "
+msgstr "База података је направљена у новијем издању мира "
 
 #: ../../portable/storedatabase.py:656
 #, python-format
 msgid "%(appname)s database save succeeded"
-msgstr "%(appname)s чување базе података успело"
+msgstr "%(appname)s чување базе података је успело"
 
 #: ../../portable/storedatabase.py:658
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
-"База података је успешно сачувана. Сада је безбедно изаћ без губитка "
+"База података је успешно сачувана. Сада је безбедно изаћи без губитка "
 "података."
 
 #: ../../portable/storedatabase.py:719
 #, python-format
 msgid "%(appname)s database save failed"
-msgstr "%(appname)s чување базе података не успело"
+msgstr "%(appname)s чување базе података није успело"
 
 #: ../../portable/storedatabase.py:722
 #, python-format
@@ -2887,6 +2924,20 @@ msgid ""
 "Error: %(error_text)s\n"
 "\n"
 msgstr ""
+"%(appname)s није успела да сачува базу података.\n"
+"\n"
+"Ако Вам је тврди диск попуњен, предлажемо Вам да се ослободите простора и "
+"покушате поново. Ако Вам диск није попуњен, вероватно ће поново покретање "
+"решити проблем.\n"
+"\n"
+"Ако ни то није прорадило, затворите %(appname)s и рестартујте га.  Скорашње "
+"промене биће изгубљене.\n"
+"\n"
+"Ако често видите ову грешку током преузимања, предлажемо Вам да смањите број "
+"истовремених преузимања у прозорчету за опције, у језичку за преузимање.\n"
+"\n"
+"Грешка: %(error_text)s\n"
+"\n"
 
 #: ../../portable/util.py:375 ../../portable/util.py:377
 #, python-format
@@ -2911,7 +2962,7 @@ msgstr "%(size)sB"
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:39
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:48
 msgid "Enable tray icon"
-msgstr "Uključi ikonu u tray-u"
+msgstr "Омогући икону системске палете"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
 msgid "When I click the red close button:"
@@ -2919,7 +2970,7 @@ msgstr "Када притиснем црвено дугме за искључи�
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Close to tray so that downloads can continue."
-msgstr "Затвори у траку како би се преузимање наставило"
+msgstr "Затвори у системску палету како би се преузимање наставило"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
 #, python-format
@@ -2928,20 +2979,20 @@ msgstr "Сасвим искључи %(appname)s."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
 msgid "Update Available"
-msgstr "Dostupna je nadogradnja"
+msgstr "Доступне доградње"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
 #, python-format
 msgid "A new version of %(appname)s is available for download."
-msgstr "Нова верзија %(appname)s је доступна за преузимање."
+msgstr "Ново издање %(appname)s је доступно за преузимање."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
-msgstr "Da li želite da download-ujete sada."
+msgstr "Да ли желите да преузмете сада?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:133
 msgid "Close to tray?"
-msgstr "Затворити у траку?"
+msgstr "Затворити у системску палету?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:134
 #, python-format
@@ -2950,32 +3001,32 @@ msgid ""
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
 "Када притиснете црвено дугме за затварање, да ли желите да се %(appname)s "
-"спусти у системску траку или да се сасвим искључи? Ово подешавање можете "
-"променити касније у Опцијама."
+"спусти у системску палету или да се сасвим искључи? Ову поставку касније "
+"можете променити у опцијама."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:193
 msgid "Error Bombing Item"
-msgstr ""
+msgstr "Грешка у бомбардовању ставке"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:195
 msgid "Error Recommending Item"
-msgstr "Greška \"Preporučeni izbor\""
+msgstr "Грешка у препорученој ставци"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:197
 msgid "Error Opening Website"
-msgstr "Грешка у отварањѕ странице"
+msgstr "Грешка у отварању веб-сајта"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:202
 #, python-format
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr ""
-"Дошло је до грешке при отварању %(url)s. Молимо покушајте поново за неколико "
-"секунди."
+"Дошло је до грешке при отварању %(url)s. Молимо, покушајте поново за "
+"неколико секунди."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
-msgstr "Instaliraj Adobe Flash?"
+msgstr "Инсталирај Adobe Flash?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
 #, python-format
@@ -2983,12 +3034,12 @@ msgid ""
 "For the best %(appname)s experience, we suggest you install Adobe Flash.  "
 "Would you like to do this now?"
 msgstr ""
-"Za najbolje %(appname)s performanse, mi vam preporučujemo da instalirate "
-"Adobe Flash. Da li želite da to uradite sada?"
+"За најбоље %(appname)s перформансе, препоручујемо Вам да инсталирате Adobe "
+"Flash. Да ли желите да то урадите сада?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
-msgstr "Instalirej Adobe Flash"
+msgstr "Инсталирај Adobe Flash"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
 #, python-format
@@ -2999,7 +3050,7 @@ msgid ""
 "You should quit %(appname)s now and start it up again after Adobe Flash has "
 "been installed."
 msgstr ""
-"Ваш претраживач ће учитати интернет страницу на којој можете преузети и "
+"Ваш прегледач ће учитати Интернет страницу на којој можете преузети и "
 "инсталирати  Adobe Flash.\n"
 "\n"
 "Требало би да искључите %(appname)s и укључите поново након што је Adobe "
@@ -3007,21 +3058,23 @@ msgstr ""
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:56
 msgid "Renderer options:"
-msgstr "Opcije Renderovanja:"
+msgstr "Опције рендеровања"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:62
 #, python-format
 msgid "You must restart %(appname)s for renderer changes to take effect."
 msgstr ""
+"Морате да поново покренете %(appname)s да би поставке рендера ступиле на "
+"снагу."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:77
 msgid "Video renderer:"
-msgstr "Video renderovanje:"
+msgstr "Видео рендеровање:"
 
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:446
 #, python-format
 msgid "Track %(tracknumber)d"
-msgstr ""
+msgstr "Траг %(tracknumber)d"
 
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:456
 #, python-format
@@ -3030,12 +3083,12 @@ msgstr ""
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:178
 msgid "Download Completed"
-msgstr "Skidanje je kompletno"
+msgstr "Преузимање је завршено"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:179
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr "Skidanje videa '%s' je gotovo."
+msgstr "Преузимање видеа '%s' је завршено."
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:208
 msgid "Pop Out"
@@ -3051,7 +3104,7 @@ msgstr "_Датотека"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
 msgid "Services"
-msgstr "Servisi"
+msgstr "Сервиси"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
 #, python-format
@@ -3060,15 +3113,15 @@ msgstr "Сакриј %(appname)s"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:164
 msgid "Hide Others"
-msgstr "Sakrij ostale"
+msgstr "Сакриј остале"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:166
 msgid "Show All"
-msgstr "Prikaži sve"
+msgstr "Прикажи све"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
 msgid "Preferences..."
-msgstr "Podešavanja..."
+msgstr "Поставке..."
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:173
 #, python-format
@@ -3077,68 +3130,68 @@ msgstr "Затвори %(appname)s"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:177
 msgid "Close Window"
-msgstr "Zatvori prozor"
+msgstr "Затвори прозор"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
 msgid "Cut"
-msgstr "Izreži"
+msgstr "Исеци"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:184
 msgid "Copy"
-msgstr "Kopiraj"
+msgstr "Умножи"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
 msgid "Paste"
-msgstr "Nalepi"
+msgstr "Налепи"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:188
 msgid "Select All"
-msgstr "Odaberi sve"
+msgstr "Изабери све"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Edit"
-msgstr "Izmeni"
+msgstr "Измени"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:195
 msgid "Present Half Size"
-msgstr ""
+msgstr "Прикажи у половичној величини"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:198
 msgid "Present Actual Size"
-msgstr "Prikaži Pravu Veličinu"
+msgstr "Прикажи праву величину"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:201
 msgid "Present Double Size"
-msgstr "Prikaži Duplu Veličinu"
+msgstr "Прикажи дуплу величину"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:208
 msgid "Present Video"
-msgstr "Prikaži Video"
+msgstr "Прикажи видео"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:214
 msgid "Zoom"
-msgstr "Uveličavanje"
+msgstr "Увеличавање"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:215
 msgid "Minimize"
-msgstr "Umanji"
+msgstr "Умањи"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:217
 msgid "Main Window"
-msgstr "Glavni prozor"
+msgstr "Главни прозор"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:220
 msgid "Bring All to Front"
-msgstr "Prebaci sve napred"
+msgstr "Пребаци све напред"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:222
 msgid "Window"
-msgstr "Prozor"
+msgstr "Прозор"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:227
 #, python-format
 msgid "%(appname)s Help"
-msgstr "%(appname)s Помоћ"
+msgstr "%(appname)s помоћ"
 
 #~ msgid "By default, videos expire after:"
 #~ msgstr "Po pravilu, video ne radi posle:"

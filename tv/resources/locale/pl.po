@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Democracy Player\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-03-06 20:00+0000\n"
+"PO-Revision-Date: 2010-03-16 03:03+0000\n"
 "Last-Translator: Lukasz Taczuk <Unknown>\n"
 "Language-Team: Piotr Szmitkowski <pszmitkowski@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-03-09 14:22+0000\n"
+"X-Launchpad-Export-Date: 2010-03-17 19:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-Language: Polish\n"
@@ -1396,7 +1396,7 @@ msgstr "Pobrano ogółem"
 
 #: ../../portable/frontends/widgets/style.py:250
 msgid "Up/Down Ratio"
-msgstr ""
+msgstr "Stos. wysłano/pobrano"
 
 #: ../../portable/frontends/widgets/style.py:251
 #: ../../portable/frontends/widgets/style.py:1120
@@ -1571,11 +1571,11 @@ msgstr "Zmień _nazwę"
 
 #: ../../portable/frontends/widgets/menus.py:231
 msgid "Re_name Feed"
-msgstr ""
+msgstr "Zmień _nazwę kanału"
 
 #: ../../portable/frontends/widgets/menus.py:232
 msgid "Re_name Website"
-msgstr ""
+msgstr "Zmień _nazwę strony"
 
 #: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
@@ -1583,7 +1583,7 @@ msgstr "U_suń"
 
 #: ../../portable/frontends/widgets/menus.py:237
 msgid "_Remove Feed"
-msgstr ""
+msgstr "_Usuń kanał"
 
 #: ../../portable/frontends/widgets/menus.py:238
 msgid "_Remove Feeds"
@@ -1603,7 +1603,7 @@ msgstr "U_suń stronę"
 
 #: ../../portable/frontends/widgets/menus.py:242
 msgid "_Remove Websites"
-msgstr ""
+msgstr "_Usuń stronę"
 
 #: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
@@ -1936,8 +1936,9 @@ msgstr[2] "Wybrano %(count)d kanałów"
 #, python-format
 msgid "%(count)d Website Selected"
 msgid_plural "%(count)d Websites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Wybrano %(count)d stronę"
+msgstr[1] "Wybrano %(count)d strony"
+msgstr[2] "Wybrano %(count)d stron"
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
@@ -2031,7 +2032,7 @@ msgstr "obejrzane wczoraj"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr "Obejrzane 3 dni temu"
+msgstr "obejrzane 3 dni temu"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
@@ -2280,7 +2281,7 @@ msgstr "uruchamianie…"
 #: ../../portable/downloader.py:568
 #, python-format
 msgid "no connection - retrying in %s"
-msgstr ""
+msgstr "brak połączenia - ponowna próba za %s"
 
 #: ../../portable/displaytext.py:52
 #, python-format
@@ -2684,7 +2685,7 @@ msgstr "Powtórz"
 
 #: ../../portable/dialogs.py:128
 msgid "Start Fresh"
-msgstr ""
+msgstr "Uruchom na czysto"
 
 #: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"
@@ -2830,6 +2831,7 @@ msgstr "Nieprawidłowy torrent"
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
 msgstr ""
+"Torrent %(filename)s wygląda na uszkodzony i nie może zostać otwarty."
 
 #: ../../portable/searchengines.py:179
 msgid "Search All"
@@ -3029,12 +3031,12 @@ msgstr "Renderer wideo:"
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:446
 #, python-format
 msgid "Track %(tracknumber)d"
-msgstr ""
+msgstr "Ścieżka %(tracknumber)d"
 
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:456
 #, python-format
 msgid "Subtitle file %(tracknumber)d"
-msgstr ""
+msgstr "Plik napisów %(tracknumber)d"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:178
 msgid "Download Completed"

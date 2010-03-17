@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2009-06-10 19:45+0000\n"
-"Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
+"PO-Revision-Date: 2010-03-13 18:51+0000\n"
+"Last-Translator: magnusp <Unknown>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-03-09 14:21+0000\n"
+"X-Launchpad-Export-Date: 2010-03-17 19:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -144,11 +144,11 @@ msgstr "Intern feil: Ikkje klar til å senda"
 
 #: ../../portable/frontends/widgets/playback.py:551
 msgid "Open Subtitles File..."
-msgstr ""
+msgstr "Åpne fil med undertekster …"
 
 #: ../../portable/frontends/widgets/playback.py:552
 msgid "Subtitle files"
-msgstr ""
+msgstr "Filer med undertekster"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -334,19 +334,19 @@ msgstr[1] ""
 #: ../../portable/frontends/widgets/itemedit.py:136
 #: ../../portable/frontends/widgets/itemcontextmenu.py:107
 msgid "Edit Item"
-msgstr ""
+msgstr "Rediger element"
 
 #: ../../portable/frontends/widgets/itemedit.py:145
 msgid "Title:"
-msgstr ""
+msgstr "Tittel:"
 
 #: ../../portable/frontends/widgets/itemedit.py:147
 msgid "Description:"
-msgstr ""
+msgstr "Beskrivelse:"
 
 #: ../../portable/frontends/widgets/itemedit.py:149
 msgid "Media type:"
-msgstr ""
+msgstr "Medietype:"
 
 #: ../../portable/frontends/widgets/itemedit.py:151
 #: ../../portable/frontends/widgets/itemlistcontroller.py:521
@@ -368,7 +368,7 @@ msgstr "Anna"
 
 #: ../../portable/frontends/widgets/itemedit.py:157
 msgid "Path:"
-msgstr ""
+msgstr "Sti:"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
@@ -545,15 +545,15 @@ msgstr "Kopier adresse til utklippstavle"
 #: ../../portable/frontends/widgets/tablist.py:576
 #: ../../portable/frontends/widgets/application.py:726
 msgid "Rename Website"
-msgstr ""
+msgstr "Gi nettside nytt navn"
 
 #: ../../portable/frontends/widgets/tablist.py:577
 msgid "Remove Website"
-msgstr ""
+msgstr "Fjern nettside"
 
 #: ../../portable/frontends/widgets/tablist.py:581
 msgid "Remove Websites"
-msgstr ""
+msgstr "Fjern nettsider"
 
 #: ../../portable/frontends/widgets/tablist.py:657
 msgid "Update Feeds In Folder"
@@ -608,11 +608,11 @@ msgstr "BIBLIOTEK"
 
 #: ../../portable/frontends/widgets/tablist.py:743
 msgid "WEBSITES"
-msgstr ""
+msgstr "NETTSIDER"
 
 #: ../../portable/frontends/widgets/tablist.py:745
 msgid "VIDEO FEEDS"
-msgstr ""
+msgstr "VIDEOKILDER"
 
 #: ../../portable/frontends/widgets/tablist.py:747
 msgid "AUDIO FEEDS"
@@ -752,12 +752,12 @@ msgstr "Vel videomappe"
 
 #: ../../portable/frontends/widgets/prefpanel.py:457
 msgid "Directory not valid"
-msgstr ""
+msgstr "Ugyldig mappe"
 
 #: ../../portable/frontends/widgets/prefpanel.py:458
 #, python-format
 msgid "Directory '%s' could not be created.  "
-msgstr ""
+msgstr "Mappen «%s» kunne ikke opprettes.  "
 
 #: ../../portable/frontends/widgets/prefpanel.py:473
 msgid "Migrate existing movies?"
@@ -792,6 +792,8 @@ msgid ""
 "Watch for new video and audio items in these folders and include them in "
 "library:"
 msgstr ""
+"Se etter nye video- og lydelementer i disse mappene og legg de til i "
+"biblioteket:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:589
 msgid "Keep at least this much free space on my drive:"
@@ -830,11 +832,11 @@ msgstr "aldri"
 
 #: ../../portable/frontends/widgets/prefpanel.py:611
 msgid "By default, video and audio items expire after:"
-msgstr ""
+msgstr "Standard levetid for video- og lydelementer:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:620
 msgid "Play media in Miro."
-msgstr ""
+msgstr "Spill av media i Miro"
 
 #: ../../portable/frontends/widgets/prefpanel.py:621
 msgid "Always play videos in a separate window."
@@ -844,18 +846,19 @@ msgstr "Spel alltid videoane i eksterne vindauge."
 msgid ""
 "Resume playing a video or audio item from the point it was last stopped."
 msgstr ""
+"Fortsett avspilling av video- og lydelementer fra der de ble stoppet."
 
 #: ../../portable/frontends/widgets/prefpanel.py:624
 msgid "Automatically enable movie subtitles when available."
-msgstr ""
+msgstr "Aktiver automatisk visning av undertekster når de er tilgengelig"
 
 #: ../../portable/frontends/widgets/prefpanel.py:627
 msgid "Play video and audio items one after another"
-msgstr ""
+msgstr "Spill av video- og lydelementer fortløpende"
 
 #: ../../portable/frontends/widgets/prefpanel.py:628
 msgid "Stop after each video or audio item"
-msgstr ""
+msgstr "Stopp avspilling etter hvert video- eller lydelement"
 
 #: ../../portable/frontends/widgets/prefpanel.py:654
 msgid "General"
@@ -918,7 +921,7 @@ msgstr "Behald"
 
 #: ../../portable/frontends/widgets/gtk/video.py:282
 msgid "Subtitles"
-msgstr ""
+msgstr "Undertekster"
 
 #: ../../portable/frontends/widgets/gtk/video.py:291
 #: ../../portable/frontends/widgets/itemcontextmenu.py:67
@@ -962,12 +965,12 @@ msgstr ""
 #: ../../portable/frontends/widgets/gtk/window.py:267
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:369
 msgid "Disable Subtitles"
-msgstr ""
+msgstr "Deaktiver undertekster"
 
 #: ../../portable/frontends/widgets/gtk/video.py:390
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:387
 msgid "Select a Subtitles file..."
-msgstr ""
+msgstr "Velg en fil som inneholder undertekster …"
 
 #: ../../portable/frontends/widgets/gtk/window.py:650
 msgid "All files"
@@ -1031,6 +1034,20 @@ msgid ""
 "If you quit, then you can connect the drive or otherwise fix the problem and "
 "relaunch %(shortappname)s."
 msgstr ""
+"%(shortappname)s kan ikke bruke den primære videomappen i:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"Det er kanskje fordi den er lokalisert på en ekstern hardisk som ikke er "
+"koblet til, er en mappe som %(shortappname)s ikke har tilatelse til å skrive "
+"i, eller den oppgitte stien ikke peker på en mappe.\n"
+"\n"
+"Hvis du fortsetter vil stien til den primære videomappen endres. Om du har "
+"lastet ned noen videofiler til den forrige mappen, vil %(shortappname)s "
+"miste alle detaljer om disse videofilene.\n"
+"\n"
+"Hvis du velger å avslutte, kan du koble til igjen disken eller på annen måte "
+"løse problemet og starte %(shortappname)s på nytt."
 
 #: ../../portable/frontends/widgets/application.py:330
 msgid "Error Revealing File"
@@ -1154,15 +1171,15 @@ msgstr "Lagra element som …"
 #: ../../portable/frontends/widgets/application.py:563
 #: ../../portable/frontends/widgets/menus.py:220
 msgid "Add Website"
-msgstr ""
+msgstr "Legg til nettside"
 
 #: ../../portable/frontends/widgets/application.py:564
 msgid "Enter the URL of the website to add"
-msgstr ""
+msgstr "Skriv inn nettadressen til nettsiden du vil legge til"
 
 #: ../../portable/frontends/widgets/application.py:565
 msgid "Add Website - Invalid URL"
-msgstr ""
+msgstr "Legg til nettside - Ugyldig nettadresse"
 
 #: ../../portable/frontends/widgets/application.py:566
 msgid ""
@@ -1171,6 +1188,10 @@ msgid ""
 "\n"
 "Enter the URL of the website to add"
 msgstr ""
+"Adressen som du skrev inn er ikke en gyldig nettadresse.\n"
+"Sjekk om du har skrevet riktig og prøv igjen.\n"
+"\n"
+"Skriv inn nettadressen til nettsiden du vil legge til"
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
@@ -1231,7 +1252,7 @@ msgstr "Skriv inn nytt namn på spelelistemappa «%(name)s»"
 #: ../../portable/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the website %(name)s"
-msgstr ""
+msgstr "Skriv inn det nye navnet for nettsiden %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
@@ -1249,15 +1270,15 @@ msgstr[1] "Er du sikker på at du vil fjerna desse %(count)s spelelistene?"
 #: ../../portable/frontends/widgets/application.py:773
 msgid "Remove website"
 msgid_plural "Remove websites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Fjern nettside"
+msgstr[1] "Fjern nettsider"
 
 #: ../../portable/frontends/widgets/application.py:775
 #, python-format
 msgid "Are you sure you want to remove this website?"
 msgid_plural "Are you sure you want to remove these %(count)s websites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Er du sikker på at du vil fjerne denne nettsiden?"
+msgstr[1] "Er du sikker på at du vil fjerne disse %(count)s nettsidene?"
 
 #: ../../portable/frontends/widgets/application.py:805
 msgid "Are you sure you want to quit?"
@@ -1276,7 +1297,7 @@ msgstr "Åtvar ved forsøk på å avslutta med uferdige nedlastingar"
 
 #: ../../portable/frontends/widgets/application.py:997
 msgid "Upgrading database"
-msgstr ""
+msgstr "Oppgraderer database"
 
 #: ../../portable/frontends/widgets/application.py:1131
 msgid "Message"
@@ -1363,7 +1384,7 @@ msgstr "Nedlasta totalt"
 
 #: ../../portable/frontends/widgets/style.py:250
 msgid "Up/Down Ratio"
-msgstr ""
+msgstr "Opp- og nedlastingsforhold"
 
 #: ../../portable/frontends/widgets/style.py:251
 #: ../../portable/frontends/widgets/style.py:1120
@@ -1389,7 +1410,7 @@ msgstr "i kø for autonedlasting"
 
 #: ../../portable/frontends/widgets/style.py:256
 msgid "Currently Playing"
-msgstr ""
+msgstr "Spelast no"
 
 #: ../../portable/frontends/widgets/style.py:257
 #: ../../portable/frontends/widgets/style.py:1189
@@ -1415,6 +1436,9 @@ msgid ""
 "can take a long time if you have a large number of items in Miro (it can "
 "even take more than 30 minutes)."
 msgstr ""
+"Miro oppgraderer databasen over kilder og filer. Denne operasjonen kjøres en "
+"gang, og kan ta lang tid avhengig av antall elementer i databasen (det kan "
+"ta mer enn 30 minutter om du har veldig mange elementer)."
 
 #: ../../portable/frontends/widgets/rundialog.py:82
 msgid "Username:"
@@ -1491,7 +1515,7 @@ msgstr "_Fjern element"
 
 #: ../../portable/frontends/widgets/menus.py:203
 msgid "_Edit Item"
-msgstr ""
+msgstr "_Rediger element"
 
 #: ../../portable/frontends/widgets/menus.py:205
 msgid "Save Item _As"
@@ -1507,7 +1531,7 @@ msgstr "Kopier _adresse"
 
 #: ../../portable/frontends/widgets/menus.py:213
 msgid "_Preferences"
-msgstr ""
+msgstr "_Innstillinger"
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
@@ -1535,11 +1559,11 @@ msgstr "_Endra namn"
 
 #: ../../portable/frontends/widgets/menus.py:231
 msgid "Re_name Feed"
-msgstr ""
+msgstr "Gi kilden nytt _navn"
 
 #: ../../portable/frontends/widgets/menus.py:232
 msgid "Re_name Website"
-msgstr ""
+msgstr "Gi nettside nytt _navn"
 
 #: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
@@ -1547,11 +1571,11 @@ msgstr "_Fjern"
 
 #: ../../portable/frontends/widgets/menus.py:237
 msgid "_Remove Feed"
-msgstr ""
+msgstr "_Fjern kilde"
 
 #: ../../portable/frontends/widgets/menus.py:238
 msgid "_Remove Feeds"
-msgstr ""
+msgstr "_Fjern kilder"
 
 #: ../../portable/frontends/widgets/menus.py:239
 msgid "_Remove Folder"
@@ -1559,15 +1583,15 @@ msgstr "_Fjern mappe"
 
 #: ../../portable/frontends/widgets/menus.py:240
 msgid "_Remove Folders"
-msgstr ""
+msgstr "_Fjern mapper"
 
 #: ../../portable/frontends/widgets/menus.py:241
 msgid "_Remove Website"
-msgstr ""
+msgstr "_Fjern nettside"
 
 #: ../../portable/frontends/widgets/menus.py:242
 msgid "_Remove Websites"
-msgstr ""
+msgstr "_Fjern nettsider"
 
 #: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
@@ -1680,11 +1704,11 @@ msgstr "_Kopla frå/til"
 
 #: ../../portable/frontends/widgets/menus.py:311
 msgid "S_ubtitles"
-msgstr ""
+msgstr "_Undertekster"
 
 #: ../../portable/frontends/widgets/menus.py:315
 msgid "Select a Subtitles File..."
-msgstr ""
+msgstr "Velg fil som inneholder undertekster …"
 
 #: ../../portable/frontends/widgets/menus.py:321
 #: ../../portable/frontends/widgets/menus.py:333
@@ -1891,8 +1915,8 @@ msgstr[1] "%(count)d kjelder valde"
 #, python-format
 msgid "%(count)d Website Selected"
 msgid_plural "%(count)d Websites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d nettside er valgt"
+msgstr[1] "%(count)d nettsider er valgt"
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
@@ -1931,6 +1955,8 @@ msgid ""
 "%(appname)s has encountered an internal error.  You can help us track down "
 "this problem and fix it by submitting an error report."
 msgstr ""
+"%(appname)s støtte på ein intern feil. Du kan hjelpa oss med å finna og "
+"retta feilen ved å senda inn ein feilrapport."
 
 #: ../../portable/frontends/widgets/crashdialog.py:66
 msgid ""
@@ -2230,7 +2256,7 @@ msgstr "startar"
 #: ../../portable/downloader.py:568
 #, python-format
 msgid "no connection - retrying in %s"
-msgstr ""
+msgstr "Ingen forbindelse - prøver igjen om %s"
 
 #: ../../portable/displaytext.py:52
 #, python-format
@@ -2504,15 +2530,15 @@ msgstr "Torrent-fila vart sletta utanfor %(appname)s."
 
 #: ../../portable/dbupgradeprogress.py:60
 msgid "Upgrading Old Database"
-msgstr ""
+msgstr "Oppgraderer tidligere database"
 
 #: ../../portable/dbupgradeprogress.py:66
 msgid "Converting Old Database"
-msgstr ""
+msgstr "Konverterer tidligere database"
 
 #: ../../portable/dbupgradeprogress.py:78
 msgid "Upgrading Database"
-msgstr ""
+msgstr "Oppgraderer database"
 
 #: ../../portable/dialogs.py:92
 msgid "Ok"
@@ -2520,7 +2546,7 @@ msgstr "OK"
 
 #: ../../portable/dialogs.py:93
 msgid "Apply"
-msgstr ""
+msgstr "Bruk"
 
 #: ../../portable/dialogs.py:96
 msgid "Done"
@@ -2620,11 +2646,11 @@ msgstr "Stopp overvaking"
 
 #: ../../portable/dialogs.py:127
 msgid "Retry"
-msgstr ""
+msgstr "Prøv igjen"
 
 #: ../../portable/dialogs.py:128
 msgid "Start Fresh"
-msgstr ""
+msgstr "Start på nytt"
 
 #: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"
@@ -2764,6 +2790,7 @@ msgstr "Ugyldig Torrent-fil"
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
 msgstr ""
+"Torrentfilen %(filename)s ser ut til å være korrupt og kan ikke åpnes."
 
 #: ../../portable/searchengines.py:179
 msgid "Search All"
@@ -2776,7 +2803,7 @@ msgstr "Eksempelspeleliste"
 #: ../../portable/storedatabase.py:208
 #, python-format
 msgid "%(appname)s database upgrade failed"
-msgstr ""
+msgstr "%(appname)s databaseoppgradering mislyktes"
 
 #: ../../portable/storedatabase.py:211
 #, python-format
@@ -2792,10 +2819,21 @@ msgid ""
 "Finally, you can start fresh and your damaged database will be removed, but "
 "you will have to re-add your feeds and media files."
 msgstr ""
+"%(appname)s klarte dessverre ikke å oppgradere databasen på grunn av en "
+"feil.\n"
+"\n"
+"Sjekk om disken er full. Hvis den er full, avslutt %(appname)s,  slett "
+"unødvendige filer og start %(appname)s igjen.\n"
+"\n"
+"Hvis disken din ikke er full, kan du hjelp oss ved å avslutte programmet og "
+"rapportere feilen til bugzilla.pculture.org\n"
+"\n"
+"Du kan starte på nytt og slette den skadde databasen, men du må da legge til "
+"igjen alle kilder og filer på nytt."
 
 #: ../../portable/storedatabase.py:267
 msgid "Database was created by a newer version of Miro "
-msgstr ""
+msgstr "Databasen ble opprettet av en nyere versjon av Miro "
 
 #: ../../portable/storedatabase.py:656
 #, python-format
@@ -2830,6 +2868,20 @@ msgid ""
 "Error: %(error_text)s\n"
 "\n"
 msgstr ""
+"%(appname)s klarte ikke å lagre databasen.\n"
+"\n"
+"His disken din er full, bør du frigjøre plass og prøve igjen. Hvis disken "
+"din ikke er full, kan du prøve på nytt og se om det virker.\n"
+"\n"
+"Hvis det fortsatt ikke fungerer, avslutt %(appname)s og prøv igjen. De siste "
+"endringene kan gå tapt.\n"
+"\n"
+"Hvis denne feilen ofte inntreffer mens du laster ned, anbefaler vi at du "
+"reduserer antall samtidige nedlastinger i innstillingene på "
+"nedlastingsfanen.\n"
+"\n"
+"Error: %(error_text)s\n"
+"\n"
 
 #: ../../portable/util.py:375 ../../portable/util.py:377
 #, python-format
@@ -2965,12 +3017,12 @@ msgstr "Framvisar for videoar:"
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:446
 #, python-format
 msgid "Track %(tracknumber)d"
-msgstr ""
+msgstr "Spor %(tracknumber)d"
 
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:456
 #, python-format
 msgid "Subtitle file %(tracknumber)d"
-msgstr ""
+msgstr "Undertekst %(tracknumber)d"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:178
 msgid "Download Completed"

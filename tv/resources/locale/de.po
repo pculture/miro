@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-02-19 23:03+0000\n"
-"Last-Translator: Habi <david.haberthuer@gmail.com>\n"
+"PO-Revision-Date: 2010-03-09 22:54+0000\n"
+"Last-Translator: Rise-T <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-03-09 14:22+0000\n"
+"X-Launchpad-Export-Date: 2010-03-17 19:17+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -25,7 +25,7 @@ msgstr "Fehler: %(msg)s"
 
 #: ../../portable/httpclient.py:116 ../../portable/httpclient.py:122
 msgid "Can't connect"
-msgstr "Verbindung fehlgeschlagen"
+msgstr "Verbindung konnte nicht hergestellt werden"
 
 #: ../../portable/httpclient.py:117
 #, python-format
@@ -34,11 +34,11 @@ msgstr "Verbindungsfehler: %(msg)s"
 
 #: ../../portable/httpclient.py:123
 msgid "SSL connection error"
-msgstr "SSL-Verbindungsfehler"
+msgstr "SSL Verbindungsfehler"
 
 #: ../../portable/httpclient.py:127
 msgid "HTTP error"
-msgstr "HTTP-Fehler"
+msgstr "HTTP Fehler"
 
 #: ../../portable/httpclient.py:131
 #, python-format
@@ -2840,6 +2840,23 @@ msgid ""
 "Finally, you can start fresh and your damaged database will be removed, but "
 "you will have to re-add your feeds and media files."
 msgstr ""
+"Entschuldigung, %(appname)s konnte die Datenbank aufgrund eines Fehlers "
+"nicht aktualisieren.\n"
+"\n"
+"Überprüfen Sie bitte, ob auf Ihrer Festplatte ausreichend Speicherplatz "
+"vorhanden ist. Falls dies nicht der Fall sein sollte, beenden Sie bitte "
+"%(appname)s, stellen Sie eine ausreichende Menge an freiem Speicherplatz "
+"sicher (ggf. durch Löschung nicht benötigter Dateien) und starten Sie danach "
+"%(appname)s erneut.\n"
+"\n"
+"Falls auf Ihrer Festplatte jedoch genügend freier Speicherplatz zur "
+"Verfügung stehen sollte, können Sie uns bei der Suche nach der Ursache des "
+"Problems unterstützen, indem Sie %(appname)s beenden und auf der Webseite "
+"bugzilla.pculture.org eine Fehlermeldung erstellen.\n"
+"\n"
+"Weiterhin haben Sie die Möglichkeit, eine neue Datenbank zu erstellen und "
+"damit die beschädigte bisherige Datenbank zu entfernen. Dies hat aber leider "
+"zur Folge, dass Sie alle Ihre Feeds und Mediendateien neu hinzufügen müssen."
 
 #: ../../portable/storedatabase.py:267
 msgid "Database was created by a newer version of Miro "
