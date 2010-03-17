@@ -2655,3 +2655,8 @@ def upgrade113(cursor):
             url2 = ','.join(urls[:-1])
             cursor.execute("UPDATE feed SET origURL=? WHERE id=?",
                     (url2, id))
+
+def upgrade114(cursor):
+    """Remove the query column from rss_multi_feed_impl and subclasses."""
+    for table in ('rss_multi_feed_impl', 'search_feed_impl',):
+        remove_column(cursor, table, ('query',))

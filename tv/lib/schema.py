@@ -479,7 +479,6 @@ class RSSMultiFeedImplSchema(FeedImplSchema):
     fields = FeedImplSchema.fields + [
         ('etag', SchemaDict(SchemaString(),SchemaString(noneOk=True))),
         ('modified', SchemaDict(SchemaString(),SchemaString(noneOk=True))),
-        ('query', SchemaString(noneOk=True)),
     ]
 
     @staticmethod
@@ -693,7 +692,7 @@ class DBLogEntrySchema(DDBObjectSchema):
     def handle_malformed_list_view_displays(row):
         return []
 
-VERSION = 113
+VERSION = 114
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema,

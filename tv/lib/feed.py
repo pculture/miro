@@ -1675,7 +1675,6 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         self.modified = {}
         self.download_dc = {}
         self.updating = 0
-        self.query = None
         self.splitURLs()
 
     def splitURLs(self):
@@ -2252,7 +2251,6 @@ class SearchFeedImpl(RSSMultiFeedImpl):
         self.searching = False
         self.lastEngine = searchengines.get_search_engines()[0].name
         self.lastQuery = u''
-        self.query = u''
         self.setUpdateFrequency(-1)
         self.ufeed.autoDownloadable = False
         # keeps the items from being seen as 'newly available'
