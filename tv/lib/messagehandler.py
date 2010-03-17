@@ -531,8 +531,8 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_query_search_info(self, message):
         search_feed = Feed.get_search_feed()
-        messages.CurrentSearchInfo(search_feed.lastEngine,
-                search_feed.lastQuery).send_to_frontend()
+        messages.CurrentSearchInfo(search_feed.engine,
+                search_feed.query).send_to_frontend()
 
     def handle_track_channels(self, message):
         if not self.channel_tracker:
@@ -898,10 +898,7 @@ class BackendMessageHandler(messages.MessageHandler):
         term = message.search_term
         section = message.section
 
-        url = searchengines.get_request_url(sei.name, term)
-
-        if not url:
-            return
+        url = feed.make_search_url(sei.name, term)
 
         if not lookup_feed(url):
             f = Feed(url, section=section)
@@ -1042,15 +1039,14 @@ class BackendMessageHandler(messages.MessageHandler):
         search_feed = Feed.get_search_feed()
         search_downloads_feed = Feed.get_search_downloads_feed()
 
-        search_feed.preserveDownloads(search_downloads_feed)
+        search_feed.preserve_downloads(search_downloads_feed)
         if terms:
             search_feed.lookup(searchengine_id, terms)
         else:
-            search_feed.set_info(searchengine_id, u'')
-            search_feed.reset()
+            search_feed.reset(searchengine_id)
 
     def _search_update_finished(self, feed):
-        messages.SearchComplete(feed.lastEngine, feed.lastQuery,
+        messages.SearchComplete(feed.engine, feed.query,
                 feed.items.count()).send_to_frontend()
 
     def item_tracker_key(self, message):

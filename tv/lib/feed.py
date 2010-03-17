@@ -131,7 +131,7 @@ def add_feed_from_web_page(url):
     grabURL(url, callback, errback)
 
 FILE_MATCH_RE = re.compile(r"^file://.")
-MULTI_MATCH_RE = re.compile(r"^dtv:multi:")
+SEARCH_URL_MATCH_RE = re.compile('^dtv:savedsearch/(.*)\?q=(.*)')
 
 def validate_feed_url(url):
     """URL validitation and normalization
@@ -140,9 +140,6 @@ def validate_feed_url(url):
     if is_url(url):
         return True
     if FILE_MATCH_RE.match(url) is not None:
-        return True
-    match = MULTI_MATCH_RE.match(url)
-    if match is not None:
         return True
     return False
 
@@ -179,6 +176,11 @@ def normalize_feed_url(url):
         return originalURL
     else:
         return url
+
+def make_search_url(engine, term):
+    """Create a URL for a search feed.
+    """
+    return u'dtv:savedsearch/%s?q=%s' % (engine, term)
 
 def _config_change(key, value):
     """Handle configuration changes so we can update feed update frequencies
@@ -435,7 +437,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     def _get_actual_feed(self):
         # first try to load from actualFeed from the DB
         if self._actualFeed is None:
-            for klass in (FeedImpl, RSSFeedImpl, RSSMultiFeedImpl,
+            for klass in (FeedImpl, RSSFeedImpl, SavedSearchFeedImpl,
                     ScraperFeedImpl, SearchFeedImpl, DirectoryFeedImpl,
                     DirectoryWatchFeedImpl, SearchDownloadsFeedImpl,
                     ManualFeedImpl, SingleFeedImpl):
@@ -898,8 +900,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         elif self.origURL == u"dtv:singleFeed":
             newFeed = SingleFeedImpl(self)
             self.visible = False
-        elif self.origURL.startswith(u"dtv:multi:"):
-            newFeed = RSSMultiFeedImpl(self.origURL, self)
+        elif SEARCH_URL_MATCH_RE.match(self.origURL):
+            newFeed = SavedSearchFeedImpl(self.origURL, self)
         else:
             self.download = grabURL(self.origURL,
                     lambda info:self._generateFeedCallback(info, removeOnError),
@@ -1103,8 +1105,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             'hasLibrary', 'get_url', 'getBaseURL',
             'get_base_href', 'get_link', 'getLibraryLink',
             'get_thumbnail_url', 'get_license', 'url', 'title', 'created',
-            'thumbURL', 'lastEngine', 'lastQuery', 'dir',
-            'preserveDownloads', 'lookup', 'set_info', 'reset',
+            'thumbURL', 'dir', 'preserve_downloads', 'lookup', 'reset',
+            'engine', 'query',
             ):
         locals()[name] = attr_from_feed_impl(name)
 
@@ -1301,7 +1303,7 @@ class ThrottledUpdateFeedImpl(FeedImpl):
 
 class RSSFeedImplBase(ThrottledUpdateFeedImpl):
     """
-    Base class from which RSSFeedImpl and RSSMultiFeedImpl derive.
+    Base class from which RSSFeedImpl and SavedSearchFeedImpl derive.
     """
 
     def setup_new(self, url, ufeed, title):
@@ -1362,26 +1364,25 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             except KeyError:
                 pass
 
-        if not self.url.startswith("dtv:multi:"):
-            if channelTitle != None:
-                if YOUTUBE_URL_PATTERN.match(self.url):
-                    titleMatch = YOUTUBE_TITLE_PATTERN.match(channelTitle)
-                    if titleMatch:
-                        channelTitle = titleMatch.groups('name')[0]
+        if channelTitle != None and self._allow_feed_to_override_title():
+            if YOUTUBE_URL_PATTERN.match(self.url):
+                titleMatch = YOUTUBE_TITLE_PATTERN.match(channelTitle)
+                if titleMatch:
+                    channelTitle = titleMatch.groups('name')[0]
 
-                elif REVVER_URL_PATTERN.match(self.url):
-                    # as of 1/28/2010, Revver's feeds return
-                    # iso-8859-1 as the encoding, but IT LIES!  it's
-                    # really utf-8.  so we switch the encoding and
-                    # this fixes non-english characters in the title.
-                    # bug 12793.
-                    channelTitle = channelTitle.encode("iso-8859-1")
-                    channelTitle = channelTitle.decode("utf-8")
-                self.title = channelTitle
-            if (parsed.feed.has_key('image') and
-                    parsed.feed.image.has_key('url')):
-                self.thumbURL = parsed.feed.image.url
-                self.ufeed.icon_cache.request_update(is_vital=True)
+            elif REVVER_URL_PATTERN.match(self.url):
+                # as of 1/28/2010, Revver's feeds return
+                # iso-8859-1 as the encoding, but IT LIES!  it's
+                # really utf-8.  so we switch the encoding and
+                # this fixes non-english characters in the title.
+                # bug 12793.
+                channelTitle = channelTitle.encode("iso-8859-1")
+                channelTitle = channelTitle.decode("utf-8")
+            self.title = channelTitle
+        if (parsed.feed.has_key('image') and
+                parsed.feed.image.has_key('url')):
+            self.thumbURL = parsed.feed.image.url
+            self.ufeed.icon_cache.request_update(is_vital=True)
 
         items_byid = {}
         items_byURLTitle = {}
@@ -1432,6 +1433,14 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                             pass
             if new and fp_values.first_video_enclosure is not None:
                 self._handleNewEntry(entry, fp_values, channelTitle)
+
+    def _allow_feed_to_override_title(self):
+        """Should the feed be allowed to override the title for a search?
+
+        Subclasses can override this method to change our behavior when
+        parsing feed entries.
+        """
+        return True
 
     def update_finished(self):
         """
@@ -1668,32 +1677,43 @@ class RSSFeedImpl(RSSFeedImplBase):
         self.etag = None
         self.update()
 
-class RSSMultiFeedImpl(RSSFeedImplBase):
-    def setup_new(self, url, ufeed, title=None):
+class RSSMultiFeedBase(RSSFeedImplBase):
+    def setup_new(self, url, ufeed, title):
         RSSFeedImplBase.setup_new(self, url, ufeed, title)
         self.etag = {}
         self.modified = {}
         self.download_dc = {}
         self.updating = 0
-        self.splitURLs()
+        self.urls = self.calc_urls()
 
-    def splitURLs(self):
-        if self.url.startswith("dtv:multi:"):
-            url = self.url[len("dtv:multi:"):]
-            self.urls = [urldecode (x) for x in url.split(",")]
-        else:
-            self.urls = [self.url]
+    def setup_restored(self):
+        """Called by pickle during deserialization
+        """
+        RSSFeedImplBase.setup_restored(self)
+        self.download_dc = {}
+        self.updating = 0
+        self.urls = self.calc_urls()
 
-    def checkUpdateFinished(self):
+    def calc_urls(self):
+        """Calculate the list of URLs to parse.
+
+        Subclasses must define this method.
+        """
+        raise NotImplementedError()
+
+    def check_update_finished(self):
         if self.updating == 0:
             self.update_finished()
             self.scheduleUpdateEvents(-1)
+
+    def _allow_feed_to_override_title(self):
+        return False
 
     def feedparser_finished(self, url, needs_save=False):
         if not self.ufeed.id_exists():
             return
         self.updating -= 1
-        self.checkUpdateFinished()
+        self.check_update_finished()
         del self.download_dc[url]
 
     def feedparser_errback(self, e, url):
@@ -1759,7 +1779,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
                      self.ufeed, url, stringify(error))
         self.scheduleUpdateEvents(-1)
         self.updating -= 1
-        self.checkUpdateFinished()
+        self.check_update_finished()
         self.ufeed.signal_change(needs_save=False)
 
     def _updateCallback(self, info, url):
@@ -1768,7 +1788,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         if info.get('status') == 304:
             self.scheduleUpdateEvents(-1)
             self.updating -= 1
-            self.checkUpdateFinished()
+            self.check_update_finished()
             self.ufeed.signal_change()
             return
         html = info['body']
@@ -1791,24 +1811,39 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         self.call_feedparser (html, url)
 
     def onRemove(self):
-        for dc in self.download_dc.values():
-            if dc is not None:
-                dc.cancel()
-        self.download_dc = {}
+        self._cancel_all_downloads()
 
-    def setup_restored(self):
-        """Called by pickle during deserialization
-        """
-        FeedImpl.setup_restored(self)
+    def _cancel_all_downloads(self):
+        for dc in self.download_dc.values():
+            dc.cancel()
         self.download_dc = {}
         self.updating = 0
-        self.splitURLs()
+
 
     def clean_old_items(self):
         self.modified = {}
         self.etag = {}
         self.update()
 
+class SavedSearchFeedImpl(RSSMultiFeedBase):
+    def setup_new(self, url, ufeed):
+        self.parse_url(url)
+        info = searchengines.get_engine_for_name(self.engine)
+        title = to_uni(_('%(engine)s search for %(query)s', 
+                {'engine': info.title, 'query': self.query}))
+        RSSMultiFeedBase.setup_new(self, url, ufeed, title)
+
+    def setup_restored(self):
+        self.parse_url(self.url)
+        RSSMultiFeedBase.setup_restored(self)
+
+    def parse_url(self, url):
+        m = SEARCH_URL_MATCH_RE.match(url)
+        self.engine = m.group(1)
+        self.query = m.group(2)
+
+    def calc_urls(self):
+        return searchengines.get_request_urls(self.engine, self.query)
 
 class ScraperFeedImpl(ThrottledUpdateFeedImpl):
     """A feed based on un unformatted HTML or pre-enclosure RSS
@@ -2241,94 +2276,68 @@ class DirectoryFeedImpl(DirectoryScannerImplBase):
     def get_title(self):
         return _(u'Local Files')
 
-class SearchFeedImpl(RSSMultiFeedImpl):
+class SearchFeedImpl(RSSMultiFeedBase):
     """Search and Search Results feeds
     """
     def setup_new(self, ufeed):
-        RSSMultiFeedImpl.setup_new(self, url=u'', ufeed=ufeed,
-                                   title=u'dtv:search')
+        self.engine = searchengines.get_search_engines()[0].name
+        self.query = u''
+        RSSMultiFeedBase.setup_new(self, url=u'dtv:search', ufeed=ufeed,
+                                   title=_(u'Search'))
         self.initialUpdate = True
         self.searching = False
-        self.lastEngine = searchengines.get_search_engines()[0].name
-        self.lastQuery = u''
         self.setUpdateFrequency(-1)
         self.ufeed.autoDownloadable = False
         # keeps the items from being seen as 'newly available'
         self.ufeed.last_viewed = datetime.max
         self.ufeed.signal_change()
 
-    @returns_unicode
-    def quoteLastQuery(self):
-        return escape(self.lastQuery)
+    def calc_urls(self):
+        if self.engine and self.query:
+            return searchengines.get_request_urls(self.engine, self.query)
+        else:
+            return []
 
-    @returns_unicode
-    def get_url(self):
-        return u'dtv:search'
-
-    @returns_unicode
-    def get_title(self):
-        return _(u'Search')
-
-    @returns_unicode
-    def getStatus(self):
-        status = u'idle-empty'
-        if self.searching:
-            status =  u'searching'
-        elif len(self.items) > 0:
-            status =  u'idle-with-results'
-        elif self.url:
-            status = u'idle-no-results'
-        return status
-
-    def _reset_downloads(self):
-        for dc in self.download_dc.values():
-            dc.cancel()
-        self.download_dc = {}
-        self.updating = 0
-
-    def reset(self, url=u'', searchState=False):
+    def reset(self, set_engine=None):
         self.ufeed.confirm_db_thread()
         was_searching = self.searching
+        self._cancel_all_downloads()
+        self.initialUpdate = True
+        app.bulk_sql_manager.start()
         try:
-            self._reset_downloads()
-            self.initialUpdate = True
-            app.bulk_sql_manager.start()
-            try:
-                for item in self.items:
-                    item.remove()
-            finally:
-                app.bulk_sql_manager.finish()
-            self.url = url
-            self.splitURLs()
-            self.searching = searchState
-            self.etag = {}
-            self.modified = {}
-            self.title = self.url
-            self.ufeed.icon_cache.reset()
-            self.thumbURL = default_feed_icon_url()
-            self.ufeed.icon_cache.request_update(is_vital=True)
+            for item in self.items:
+                item.remove()
         finally:
-            self.ufeed.signal_change()
+            app.bulk_sql_manager.finish()
+        self.urls = []
+        self.searching = False
+        if set_engine is not None:
+            self.engine = set_engine
+        self.etag = {}
+        self.modified = {}
+        self.ufeed.icon_cache.reset()
+        self.thumbURL = default_feed_icon_url()
+        self.ufeed.icon_cache.request_update(is_vital=True)
         if was_searching:
             self.ufeed.emit('update-finished')
 
-    def preserveDownloads(self, downloadsFeed):
+    def preserve_downloads(self, downloads_feed):
         self.ufeed.confirm_db_thread()
         for item in self.items:
             if item.get_state() not in ('new', 'not-downloaded'):
-                item.setFeed(downloadsFeed.id)
+                item.setFeed(downloads_feed.id)
 
-    def set_info(self, engine, query):
-        self.lastEngine = engine
-        self.lastQuery = query
+    def set_engine(self, engine):
+        self.engine = engine
 
     def lookup(self, engine, query):
         check_u(engine)
         check_u(query)
-        url = searchengines.get_request_url(engine, query)
-        self.reset(url, True)
-        self.lastQuery = query
-        self.lastEngine = engine
+        self.reset()
+        self.searching = True
+        self.engine = engine
+        self.query = query
+        self.calc_urls()
         self.update()
         self.ufeed.signal_change()
 
@@ -2356,15 +2365,15 @@ class SearchFeedImpl(RSSMultiFeedImpl):
                             if not fp_values.compare_to_item(item):
                                 item.update_from_feed_parser_values(fp_values)
                             return
-        RSSMultiFeedImpl._handleNewEntry(self, entry, fp_values, channelTitle)
+        RSSMultiFeedBase._handleNewEntry(self, entry, fp_values, channelTitle)
 
     def update_finished(self):
         self.searching = False
-        RSSMultiFeedImpl.update_finished(self)
+        RSSMultiFeedBase.update_finished(self)
 
     def update(self):
-        if self.url is not None and self.url != u'':
-            RSSMultiFeedImpl.update(self)
+        if self.urls:
+            RSSMultiFeedBase.update(self)
         else:
             self.ufeed.emit('update-finished')
 
@@ -2582,7 +2591,7 @@ def lookup_feed(url, search_term=None):
 
 def remove_orphaned_feed_impls():
     removed_impls = []
-    for klass in (FeedImpl, RSSFeedImpl, RSSMultiFeedImpl,
+    for klass in (FeedImpl, RSSFeedImpl, SavedSearchFeedImpl,
             ScraperFeedImpl, SearchFeedImpl, DirectoryFeedImpl,
             DirectoryWatchFeedImpl, SearchDownloadsFeedImpl,):
         for feed_impl in klass.orphaned_view():

@@ -34,7 +34,7 @@
     ``olddatabaseupgrade.py``.
 """
 
-from urlparse import urlparse
+from urlparse import urlparse, parse_qs
 import datetime
 import itertools
 import os
@@ -43,6 +43,7 @@ import logging
 import time
 import urllib
 
+from miro.gtcache import gettext as _
 from miro import schema
 from miro import util
 import types
@@ -2660,3 +2661,55 @@ def upgrade114(cursor):
     """Remove the query column from rss_multi_feed_impl and subclasses."""
     for table in ('rss_multi_feed_impl', 'search_feed_impl',):
         remove_column(cursor, table, ('query',))
+
+def upgrade115(cursor):
+    """Upgrade search feed tables."""
+
+    # replace dtv:multi feeds with dtv:savedsearch feeds.
+    cursor.execute("CREATE TABLE saved_search_feed_impl "
+            "(id integer PRIMARY KEY, url text, ufeed_id integer, "
+            "title text, created timestamp, thumbURL text, "
+            "updateFreq integer, initialUpdate integer, etag pythonrepr, "
+            "modified pythonrepr)");
+    cursor.execute("INSERT INTO saved_search_feed_impl "
+            "(id, url, ufeed_id, title, created, thumbURL, updateFreq, "
+            "initialUpdate, etag, modified) "
+            "SELECT id, url, ufeed_id, title, created, thumbURL, "
+            "updateFreq, initialUpdate, etag, modified "
+            "FROM rss_multi_feed_impl");
+    cursor.execute("DROP TABLE rss_multi_feed_impl")
+    # fix the URL attribute
+    cursor.execute("SELECT id, ufeed_id, url FROM saved_search_feed_impl")
+    def _calc_query(multi_url):
+        url_list = multi_url[len("dtv:multi:"):]
+        url_list = [urllib.unquote (x) for x in url_list.split(",")]
+        revver_prefix = 'http://feeds.revver.com/2.0/mrss/qt/search/'
+        for url in url_list:
+            if url.startswith(revver_prefix):
+                query = url[len(revver_prefix):]
+                # the decoding gymnastics on the next line are what we're
+                # trying to avoid with this update.
+                return urllib.unquote(query.encode('ascii')).decode('utf-8')
+        return u'unknown'
+
+    for (id, ufeed_id, url) in cursor.fetchall():
+        query = _calc_query(url)
+        print 'query: ', query
+        new_url = u'dtv:savedsearch/all?q=%s' % query
+        new_title = unicode(_('%(engine)s search for %(query)s', 
+                {'engine': 'Search All', 'query': query}))
+        cursor.execute("UPDATE saved_search_feed_impl SET url=?, title=? "
+                "WHERE id=?", (new_url, new_title, id))
+        cursor.execute("UPDATE feed SET origURL=? WHERE id=?",
+                (new_url, ufeed_id))
+
+
+    # for the search feed, we just need to rename things a bit
+    remove_column(cursor, 'search_feed_impl', ('searching',))
+    cursor.execute("ALTER TABLE search_feed_impl ADD engine TEXT")
+    cursor.execute("ALTER TABLE search_feed_impl ADD query TEXT")
+    cursor.execute("SELECT id, lastEngine, lastQuery FROM search_feed_impl")
+    for (id, engine, query) in cursor.fetchall():
+        cursor.execute("UPDATE search_feed_impl SET engine=?, query=? "
+                "WHERE id=?", (engine, query, id))
+    remove_column(cursor, 'search_feed_impl', ('lastEngine', 'lastQuery'))

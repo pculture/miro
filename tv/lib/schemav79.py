@@ -286,35 +286,25 @@ class ObjectSchema(object):
 
     Member variables:
 
-    klass -- the python class that this schema is for
+    klass -- the python class
     classString -- a human readable string that represents objectClass
     fields -- list of  (name, SchemaItem) pairs.  One item for each attribute
         that should be stored to disk.
+
+    Note: klass is always None in this module.  We don't need it for what we
+    use the schema for, and we want to be able to delete old classes
     """
     pass
 
-from miro.database import DDBObject
-from miro.downloader import RemoteDownloader, HTTPAuthPassword
-from miro.feed import Feed, FeedImpl, RSSFeedImpl, RSSMultiFeedImpl, ScraperFeedImpl
-from miro.feed import SearchFeedImpl, DirectoryWatchFeedImpl, DirectoryFeedImpl, SearchDownloadsFeedImpl
-from miro.feed import ManualFeedImpl, SingleFeedImpl
-from miro.folder import ChannelFolder, PlaylistFolder
-from miro.guide import ChannelGuide
-from miro.item import Item, FileItem
-from miro.iconcache import IconCache
-from miro.playlist import SavedPlaylist
-from miro.tabs import TabOrder
-from miro.theme import ThemeHistory
-
 class DDBObjectSchema(ObjectSchema):
-    klass = DDBObject
+    klass = None
     classString = 'ddb-object'
     fields = [
         ('id', SchemaInt())
     ]
 
 class IconCacheSchema (DDBObjectSchema):
-    klass = IconCache
+    klass = None
     classString = 'icon-cache'
     fields = DDBObjectSchema.fields + [
         ('etag', SchemaString(noneOk=True)),
@@ -324,7 +314,7 @@ class IconCacheSchema (DDBObjectSchema):
         ]
 
 class ItemSchema(DDBObjectSchema):
-    klass = Item
+    klass = None
     classString = 'item'
     fields = DDBObjectSchema.fields + [
         ('feed_id', SchemaInt(noneOk=True)),
@@ -367,7 +357,7 @@ class ItemSchema(DDBObjectSchema):
     ]
 
 class FileItemSchema(ItemSchema):
-    klass = FileItem
+    klass = None
     classString = 'file-item'
     fields = ItemSchema.fields + [
         ('filename', SchemaFilename()),
@@ -377,7 +367,7 @@ class FileItemSchema(ItemSchema):
     ]
 
 class FeedSchema(DDBObjectSchema):
-    klass = Feed
+    klass = None
     classString = 'feed'
     fields = DDBObjectSchema.fields + [
         ('origURL', SchemaURL()),
@@ -401,7 +391,7 @@ class FeedSchema(DDBObjectSchema):
     ]
 
 class FeedImplSchema(DDBObjectSchema):
-    klass = FeedImpl
+    klass = None
     classString = 'field-impl'
     fields = DDBObjectSchema.fields + [
         ('url', SchemaURL()),
@@ -415,7 +405,7 @@ class FeedImplSchema(DDBObjectSchema):
     ]
 
 class RSSFeedImplSchema(FeedImplSchema):
-    klass = RSSFeedImpl
+    klass = None
     classString = 'rss-feed-impl'
     fields = FeedImplSchema.fields + [
         ('initialHTML', SchemaBinary(noneOk=True)),
@@ -424,7 +414,7 @@ class RSSFeedImplSchema(FeedImplSchema):
     ]
 
 class RSSMultiFeedImplSchema(FeedImplSchema):
-    klass = RSSMultiFeedImpl
+    klass = None
     classString = 'rss-multi-feed-impl'
     fields = FeedImplSchema.fields + [
         ('etag', SchemaDict(SchemaString(),SchemaString(noneOk=True))),
@@ -433,7 +423,7 @@ class RSSMultiFeedImplSchema(FeedImplSchema):
     ]
 
 class ScraperFeedImplSchema(FeedImplSchema):
-    klass = ScraperFeedImpl
+    klass = None
     classString = 'scraper-feed-impl'
     fields = FeedImplSchema.fields + [
         ('initialHTML', SchemaBinary(noneOk=True)),
@@ -442,7 +432,7 @@ class ScraperFeedImplSchema(FeedImplSchema):
     ]
 
 class SearchFeedImplSchema(RSSMultiFeedImplSchema):
-    klass = SearchFeedImpl
+    klass = None
     classString = 'search-feed-impl'
     fields = RSSMultiFeedImplSchema.fields + [
         ('searching', SchemaBool()),
@@ -451,7 +441,7 @@ class SearchFeedImplSchema(RSSMultiFeedImplSchema):
     ]
 
 class DirectoryWatchFeedImplSchema(FeedImplSchema):
-    klass = DirectoryWatchFeedImpl
+    klass = None
     classString = 'directory-watch-feed-impl'
     fields = FeedImplSchema.fields + [
         ('firstUpdate', SchemaBool()),
@@ -459,27 +449,27 @@ class DirectoryWatchFeedImplSchema(FeedImplSchema):
         ]
 
 class DirectoryFeedImplSchema(FeedImplSchema):
-    klass = DirectoryFeedImpl
+    klass = None
     classString = 'directory-feed-impl'
     # DirectoryFeedImpl doesn't have any addition fields over FeedImpl
 
 class SearchDownloadsFeedImplSchema(FeedImplSchema):
-    klass = SearchDownloadsFeedImpl
+    klass = None
     classString = 'search-downloads-feed-impl'
     # SearchDownloadsFeedImpl doesn't have any addition fields over FeedImpl
 
 class ManualFeedImplSchema(FeedImplSchema):
-    klass = ManualFeedImpl
+    klass = None
     classString = 'manual-feed-impl'
     # no addition fields over FeedImplSchema
 
 class SingleFeedImplSchema(FeedImplSchema):
-    klass = SingleFeedImpl
+    klass = None
     classString = 'single-feed-impl'
     # no addition fields over FeedImplSchema
 
 class RemoteDownloaderSchema(DDBObjectSchema):
-    klass = RemoteDownloader
+    klass = None
     classString = 'remote-downloader'
     fields = DDBObjectSchema.fields + [
         ('url', SchemaURL()),
@@ -492,7 +482,7 @@ class RemoteDownloaderSchema(DDBObjectSchema):
     ]
 
 class HTTPAuthPasswordSchema(DDBObjectSchema):
-    klass = HTTPAuthPassword
+    klass = None
     classString = 'http-auth-password'
     fields = DDBObjectSchema.fields + [
         ('username', SchemaString()),
@@ -504,7 +494,7 @@ class HTTPAuthPasswordSchema(DDBObjectSchema):
     ]
 
 class ChannelFolderSchema(DDBObjectSchema):
-    klass = ChannelFolder
+    klass = None
     classString = 'channel-folder'
     fields = DDBObjectSchema.fields + [
         ('expanded', SchemaBool()),
@@ -513,7 +503,7 @@ class ChannelFolderSchema(DDBObjectSchema):
     ]
 
 class PlaylistFolderSchema(DDBObjectSchema):
-    klass = PlaylistFolder
+    klass = None
     classString = 'playlist-folder'
     fields = DDBObjectSchema.fields + [
         ('expanded', SchemaBool()),
@@ -522,7 +512,7 @@ class PlaylistFolderSchema(DDBObjectSchema):
     ]
 
 class PlaylistSchema(DDBObjectSchema):
-    klass = SavedPlaylist
+    klass = None
     classString = 'playlist'
     fields = DDBObjectSchema.fields + [
         ('title', SchemaString()),
@@ -531,7 +521,7 @@ class PlaylistSchema(DDBObjectSchema):
     ]
 
 class TabOrderSchema(DDBObjectSchema):
-    klass = TabOrder
+    klass = None
     classString = 'taborder-order'
     fields = DDBObjectSchema.fields + [
         ('type', SchemaString()),
@@ -539,7 +529,7 @@ class TabOrderSchema(DDBObjectSchema):
     ]
 
 class ChannelGuideSchema(DDBObjectSchema):
-    klass = ChannelGuide
+    klass = None
     classString = 'channel-guide'
     fields = DDBObjectSchema.fields + [
         ('url', SchemaURL(noneOk=True)),
@@ -553,7 +543,7 @@ class ChannelGuideSchema(DDBObjectSchema):
     ]
 
 class ThemeHistorySchema(DDBObjectSchema):
-    klass = ThemeHistory
+    klass = None
     classString = 'theme-history'
     fields = DDBObjectSchema.fields + [
         ('lastTheme', SchemaString(noneOk=True)),
@@ -561,7 +551,7 @@ class ThemeHistorySchema(DDBObjectSchema):
     ]
 
 class WidgetsFrontendStateSchema(DDBObjectSchema):
-    klass = WidgetsFrontendState
+    klass = None
     classString = 'widgets-frontend-state'
     fields = DDBObjectSchema.fields + [
         ('list_view_displays', SchemaList(SchemaBinary())),

@@ -327,7 +327,7 @@ class MultiClassObjectSchema(ObjectSchema):
 from miro.database import DDBObject
 from miro.databaselog import DBLogEntry
 from miro.downloader import RemoteDownloader, HTTPAuthPassword
-from miro.feed import (Feed, FeedImpl, RSSFeedImpl, RSSMultiFeedImpl,
+from miro.feed import (Feed, FeedImpl, RSSFeedImpl, SavedSearchFeedImpl,
                        ScraperFeedImpl)
 from miro.feed import (SearchFeedImpl, DirectoryWatchFeedImpl,
                        DirectoryFeedImpl, SearchDownloadsFeedImpl)
@@ -473,9 +473,9 @@ class RSSFeedImplSchema(FeedImplSchema):
         ('modified', SchemaString(noneOk=True)),
     ]
 
-class RSSMultiFeedImplSchema(FeedImplSchema):
-    klass = RSSMultiFeedImpl
-    table_name = 'rss_multi_feed_impl'
+class SavedSearchFeedImplSchema(FeedImplSchema):
+    klass = SavedSearchFeedImpl
+    table_name = 'saved_search_feed_impl'
     fields = FeedImplSchema.fields + [
         ('etag', SchemaDict(SchemaString(),SchemaString(noneOk=True))),
         ('modified', SchemaDict(SchemaString(),SchemaString(noneOk=True))),
@@ -502,13 +502,12 @@ class ScraperFeedImplSchema(FeedImplSchema):
     def handle_malformed_linkHistory(row):
         return {}
 
-class SearchFeedImplSchema(RSSMultiFeedImplSchema):
+class SearchFeedImplSchema(SavedSearchFeedImplSchema):
     klass = SearchFeedImpl
     table_name = 'search_feed_impl'
-    fields = RSSMultiFeedImplSchema.fields + [
-        ('searching', SchemaBool()),
-        ('lastEngine', SchemaString()),
-        ('lastQuery', SchemaString()),
+    fields = SavedSearchFeedImplSchema.fields + [
+        ('engine', SchemaString()),
+        ('query', SchemaString()),
     ]
 
 class DirectoryWatchFeedImplSchema(FeedImplSchema):
@@ -692,10 +691,10 @@ class DBLogEntrySchema(DDBObjectSchema):
     def handle_malformed_list_view_displays(row):
         return []
 
-VERSION = 114
+VERSION = 115
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
-    FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema,
+    FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,
     ScraperFeedImplSchema,
     SearchFeedImplSchema, DirectoryFeedImplSchema, DirectoryWatchFeedImplSchema,
     SearchDownloadsFeedImplSchema, RemoteDownloaderSchema,

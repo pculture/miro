@@ -199,10 +199,16 @@ def create_engines():
                 new_engines.extend(_engines)
         _engines = new_engines
 
-@returns_unicode
-def get_request_url(engine_name, query, filter_adult_contents=True, limit=50):
-    """Returns the url for the given search engine, query,
-    filter_adult_contents, and limit.
+def get_request_urls(engine_name, query, filter_adult_contents=True, limit=50):
+    """Get a list of RSS feed URLs for a search.
+
+    Usually this will return a single URL, but in the case of the "all" engine
+    it will return multiple URLs.
+
+    :param engine_name: which engine to use, or "all" for all engines
+    :param query: search query
+    :param filter_adult_contents: Should we include "adult" results
+    :param limit: Limit the results to this number (per engine returned)
 
     There are two "magic" queries:
 
@@ -221,14 +227,14 @@ def get_request_url(engine_name, query, filter_adult_contents=True, limit=50):
         return u""
 
     if engine_name == u'all':
-        all_urls = [urlencode(engine.get_request_url(query, filter_adult_contents, limit)) 
-                    for engine in _engines if engine.name != u'all']
-        return "dtv:multi:" + ','.join(all_urls)
+        return [engine.get_request_url(query, filter_adult_contents, limit) \
+                for engine in _engines if engine.name != u'all']
 
     for engine in _engines:
         if engine.name == engine_name:
-            return engine.get_request_url(query, filter_adult_contents, limit)
-    return u""
+            url = engine.get_request_url(query, filter_adult_contents, limit)
+            return [url]
+    return []
 
 def get_search_engines():
     """Returns the list of :class:`SearchEngineInfo` instances.
