@@ -342,12 +342,6 @@ class FeedImpl(DDBObject):
             return u""
 
     @returns_unicode
-    def get_description(self):
-        """Returns the description of the feed
-        """
-        return u"<span />"
-
-    @returns_unicode
     def get_link(self):
         """Returns a link to a webpage associated with the feed
         """
@@ -1129,7 +1123,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     for name in ( 'setUpdateFrequency', 'scheduleUpdateEvents',
             'cancelUpdateEvents', 'update', 'isLoading',
             'hasLibrary', 'get_url', 'getBaseURL',
-            'get_base_href', 'get_description', 'get_link', 'getLibraryLink',
+            'get_base_href', 'get_link', 'getLibraryLink',
             'get_thumbnail_url', 'get_license', 'url', 'title', 'created',
             'thumbURL', 'lastEngine', 'lastQuery', 'dir',
             'preserveDownloads', 'lookup', 'set_info', 'reset',
@@ -1540,19 +1534,6 @@ class RSSFeedImpl(RSSFeedImplBase):
             return FeedImpl.get_base_href(self)
 
     @returns_unicode
-    def get_description(self):
-        """Returns the description of the feed
-        """
-        self.ufeed.confirm_db_thread()
-        try:
-            return xhtmlify(u'<span>' + unescape(self.parsed.feed.description) +
-                            u'</span>')
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            return u"<span />"
-
-    @returns_unicode
     def get_link(self):
         """Returns a link to a webpage associated with the feed
         """
@@ -1736,18 +1717,6 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
                 self.query = urls[-1]
         else:
             self.urls = [self.url]
-
-    @returns_unicode
-    def get_description(self):
-        """Returns the description of the feed
-        """
-        self.ufeed.confirm_db_thread()
-        try:
-            return u'<span>Search All</span>'
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            return u"<span />"
 
     def checkUpdateFinished(self):
         if self.updating == 0:
