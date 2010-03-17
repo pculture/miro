@@ -2276,6 +2276,10 @@ class SearchFeedImpl(RSSMultiFeedBase):
         self.ufeed.last_viewed = datetime.max
         self.ufeed.signal_change()
 
+    def setup_restored(self):
+        self.searching = False
+        RSSMultiFeedBase.setup_restored(self)
+
     def calc_urls(self):
         if self.engine and self.query:
             return searchengines.get_request_urls(self.engine, self.query)
@@ -2321,7 +2325,7 @@ class SearchFeedImpl(RSSMultiFeedBase):
         self.searching = True
         self.engine = engine
         self.query = query
-        self.calc_urls()
+        self.urls = self.calc_urls()
         self.update()
         self.ufeed.signal_change()
 
