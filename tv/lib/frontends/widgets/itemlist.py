@@ -155,16 +155,16 @@ class StatusSort(ItemSort):
     KEY = 'status'
     def sort_key(self, item):
         if item.state == 'downloading':
-            return 2 # downloading
+            return (2, ) # downloading
         elif item.downloaded and not item.video_watched:
-            return 3 # unwatched
+            return (3, ) # unwatched
         elif item.expiration_date:
             # the tuple here creates a subsort on expiration_date
             return (4, item.expiration_date) # expiring
         elif not item.item_viewed:
-            return 0 # new
+            return (0, ) # new
         else:
-            return 1 # other
+            return (1, ) # other
 
 class ETASort(ItemSort):
     KEY = 'eta'
