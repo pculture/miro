@@ -71,9 +71,6 @@ import logging
 from miro.clock import clock
 
 WHITESPACE_PATTERN = re.compile(r"^[ \t\r\n]*$")
-YOUTUBE_URL_PATTERN = re.compile(r"^https?://(?:(?:www|gdata).)?youtube.com(?:/.*)?$")
-YOUTUBE_TITLE_PATTERN = re.compile(r"(?:YouTube :: )?Videos (?:uploaded )?by (?P<name>\w*)")
-REVVER_URL_PATTERN = re.compile(r"^http://(?:(?:feeds|www).)?revver.com(?:/.*)?$")
 
 DEFAULT_FEED_ICON = "images/feedicon.png"
 DEFAULT_FEED_ICON_TABLIST = "images/icon-rss.png"
@@ -1365,19 +1362,6 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                 pass
 
         if channelTitle != None and self._allow_feed_to_override_title():
-            if YOUTUBE_URL_PATTERN.match(self.url):
-                titleMatch = YOUTUBE_TITLE_PATTERN.match(channelTitle)
-                if titleMatch:
-                    channelTitle = titleMatch.groups('name')[0]
-
-            elif REVVER_URL_PATTERN.match(self.url):
-                # as of 1/28/2010, Revver's feeds return
-                # iso-8859-1 as the encoding, but IT LIES!  it's
-                # really utf-8.  so we switch the encoding and
-                # this fixes non-english characters in the title.
-                # bug 12793.
-                channelTitle = channelTitle.encode("iso-8859-1")
-                channelTitle = channelTitle.decode("utf-8")
             self.title = channelTitle
         if (parsed.feed.has_key('image') and
                 parsed.feed.image.has_key('url')):
