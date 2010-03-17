@@ -2694,7 +2694,6 @@ def upgrade115(cursor):
 
     for (id, ufeed_id, url) in cursor.fetchall():
         query = _calc_query(url)
-        print 'query: ', query
         new_url = u'dtv:savedsearch/all?q=%s' % query
         new_title = unicode(_("%(engine)s for '%(query)s'",
                 {'engine': 'Search All', 'query': query}))
