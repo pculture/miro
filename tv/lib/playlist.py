@@ -29,8 +29,9 @@
 """``miro.playlist`` -- Miro playlist support.
 """
 
-from miro.gtcache import gettext as _
+import logging
 
+from miro.gtcache import gettext as _
 from miro import dialogs
 from miro import database
 from miro import models
@@ -215,3 +216,14 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
             raise StandardError("Cannot 'move' a playlist to %s" % repr(move_items_to))
         self._remove_ids_from_folder()
         database.DDBObject.remove(self)
+
+def fix_missing_item_ids():
+    for map in PlaylistItemMap.make_view("item_id NOT IN (SELECT id FROM item)"):
+        logging.warn("playlist item map %s refers to missing item (%s)",
+                map.id, map.item_id)
+        map.remove()
+    for map in PlaylistItemMap.make_view("playlist_id NOT IN "
+            "(SELECT id FROM playlist)"):
+        logging.warn("playlist item map %s refers to missing playlist (%s)",
+                map.id, map.playlist_id)
+        map.remove()

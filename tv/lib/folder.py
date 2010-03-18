@@ -29,6 +29,8 @@
 """``miro.folder`` -- Holds ``Folder`` class and related things.
 """
 
+import logging
+
 from miro import feed
 from miro import playlist
 from miro.database import DDBObject, ObjectNotFoundError
@@ -204,3 +206,15 @@ class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
 
     def get_children_view(self):
         return playlist.SavedPlaylist.folder_view(self.id)
+
+def fix_playlist_missing_item_ids():
+    for map in PlaylistFolderItemMap.make_view("item_id NOT IN "
+            "(SELECT id FROM item)"):
+        logging.warn("playlist folder item map %s refers to missing item (%s)",
+                map.id, map.item_id)
+        map.remove()
+    for map in PlaylistFolderItemMap.make_view("playlist_id NOT IN "
+            "(SELECT id FROM playlist_folder)"):
+        logging.warn("playlist folder item map %s refers to missing folder (%s)",
+                map.id, map.playlist_id)
+        map.remove()

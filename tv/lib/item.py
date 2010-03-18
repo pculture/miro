@@ -1987,7 +1987,3 @@ def move_orphaned_items():
         databaselog.info("Moved items to manual feed because their parent was "
                 "gone: %s", ', '.join(parentless_items))
 
-def fix_database_inconsistencies():
-    fix_non_container_parents()
-    move_orphaned_items()
-

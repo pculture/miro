@@ -60,10 +60,12 @@ from miro import guide
 from miro import iconcache
 from miro import item
 from miro import feed
+from miro import folder
 from miro import messages
 from miro import messagehandler
 from miro import models
 from miro import moviedata
+from miro import playlist
 from miro import prefs
 from miro.plat.utils import setup_logging
 from miro.plat import config as platformcfg
@@ -213,7 +215,7 @@ def finish_startup(obj, thread):
     searchengines.create_engines()
     setup_global_feeds()
     # call fix_database_inconsistencies() ASAP after the manual feed is set up
-    item.fix_database_inconsistencies()
+    fix_database_inconsistencies()
     logging.info("setup tabs...")
     setup_tabs()
     logging.info("setup theme...")
@@ -222,6 +224,12 @@ def finish_startup(obj, thread):
     downloader.init_controller()
 
     eventloop.add_urgent_call(check_firsttime, "check first time")
+
+def fix_database_inconsistencies():
+    item.fix_non_container_parents()
+    item.move_orphaned_items()
+    playlist.fix_missing_item_ids()
+    folder.fix_playlist_missing_item_ids()
 
 @startup_function
 def check_firsttime():
