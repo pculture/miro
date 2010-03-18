@@ -240,6 +240,13 @@ class NetworkBuffer(object):
     def _mergeChunks(self):
         self.chunks = [''.join(self.chunks)]
 
+    def has_data(self):
+        return self.length > 0
+
+    def discard_data(self):
+        self.chunks = []
+        self.length = 0
+
     def read(self, size=None):
         """Read at most size bytes from the data that has been added to the
         buffer.  """
@@ -717,6 +724,7 @@ class ConnectionHandler(object):
         if self.stream.isOpen():
             self.stream.closeConnection()
         self.changeState('closed')
+        self.buffer.discard_data()
 
     def sendData(self, data, callback=None):
         self.stream.sendData(data, callback)
@@ -845,6 +853,10 @@ class HTTPConnection(ConnectionHandler):
         if not self.canSendRequest():
             raise NetworkError(_("Unknown"), 
                     _("Internal Error: Not ready to send"))
+        if self.state == 'ready' and self.buffer.has_data():
+            logging.warning("Discarding extra data after request for %s",
+                    host)
+            self.buffer.discard_data()
 
         if headers is None:
             headers = {}
