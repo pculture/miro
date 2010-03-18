@@ -1950,6 +1950,20 @@ def update_incomplete_movie_data():
              item.screenshot is None or not item.media_type_checked)):
             item.check_media_file()
 
+def fix_non_container_parents():
+    """Make sure all items referenced by parent_id have isContainerItem set
+
+    Bug #12906 has a database where this was not so.
+    """
+    where_sql = ("(isContainerItem = 0 OR isContainerItem IS NULL) AND "
+            "id IN (SELECT parent_id FROM item)")
+    for item in Item.make_view(where_sql):
+        logging.warn("parent_id points to %s but isContainerItem == %r. "
+                "Setting isContainerItem to True", item.id,
+                item.isContainerItem)
+        item.isContainerItem = True
+        item.signal_change()
+
 def move_orphaned_items():
     manual_feed = models.Feed.get_manual_feed()
     feedless_items = []
@@ -1972,3 +1986,8 @@ def move_orphaned_items():
     if parentless_items:
         databaselog.info("Moved items to manual feed because their parent was "
                 "gone: %s", ', '.join(parentless_items))
+
+def fix_database_inconsistencies():
+    fix_non_container_parents()
+    move_orphaned_items()
+

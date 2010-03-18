@@ -212,8 +212,8 @@ def finish_startup(obj, thread):
 
     searchengines.create_engines()
     setup_global_feeds()
-    # call move_orphaned_items() ASAP after the manual feed is set up
-    item.move_orphaned_items()
+    # call fix_database_inconsistencies() ASAP after the manual feed is set up
+    item.fix_database_inconsistencies()
     logging.info("setup tabs...")
     setup_tabs()
     logging.info("setup theme...")
