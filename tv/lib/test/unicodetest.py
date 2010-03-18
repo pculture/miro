@@ -77,10 +77,6 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.assertEqual(type(my_feed.get_title()), unicode)
         self.assertEqual(u"Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d", my_feed.get_title())
 
-        # The description is the same, but surrounded by a <span>
-        self.assertEqual(type(my_feed.get_description()), unicode)
-        self.assertEqual(u"<span>Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</span>", my_feed.get_description())
-
         i = item.Item.make_view().get_singleton()
         self.assertEqual(type(i.get_title()), unicode)
         self.assertEqual(u"\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d",i.get_title())

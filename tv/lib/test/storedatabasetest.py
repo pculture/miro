@@ -528,7 +528,7 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
     # test corrupt SchemaReprContainer columns in real DDBObjects
     def setUp(self):
         StoreDatabaseTest.setUp(self)
-        self.feed = feed.Feed(u"dtv:multi:http://feed.org/,query")
+        self.feed = feed.Feed(u"dtv:savedsearch/all?q=dogs")
         self.item = item.Item(item.FeedParserValues({'title': u'item1'}),
                        feed_id=self.feed.id)
         self.downloader = downloader.RemoteDownloader(
@@ -565,12 +565,12 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
                 {'rate': 0, 'upRate': 0, 'eta': 0}, disk_value={})
 
     def test_corrupt_etag(self):
-        app.db.cursor.execute("UPDATE rss_multi_feed_impl "
+        app.db.cursor.execute("UPDATE saved_search_feed_impl "
                 "SET etag='{baddata' WHERE ufeed_id=?", (self.feed.id,))
         self.check_fixed_value(self.feed.actualFeed, 'etag', {})
 
     def test_corrupt_modified(self):
-        app.db.cursor.execute("UPDATE rss_multi_feed_impl "
+        app.db.cursor.execute("UPDATE saved_search_feed_impl "
                 "SET modified='{baddata' WHERE ufeed_id=?", (self.feed.id,))
         self.check_fixed_value(self.feed.actualFeed, 'modified', {})
 
