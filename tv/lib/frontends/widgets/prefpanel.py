@@ -62,6 +62,7 @@ from miro.frontends.widgets.widgetutil import build_control_line
 from miro.plat import resources
 from miro.plat.utils import filenameToUnicode
 from miro.gtcache import gettext as _
+from miro import gtcache
 
 # Note: we do an additional import from prefpanelset half way down the file.
 
@@ -274,6 +275,20 @@ class GeneralPanel(PanelBuilder):
         attach_boolean(warn_if_downloading_cbx, prefs.WARN_IF_DOWNLOADING_ON_QUIT)
         v.pack_start(warn_if_downloading_cbx)
 
+        # FIXME - need to automatically generate list of available languages
+        # in correct language
+        lang_options = gtcache.get_languages()
+        lang_options.insert(0, ("system", _("System default")))
+
+        lang_option_menu = widgetset.OptionMenu([op[1] for op in lang_options])
+        attach_combo(lang_option_menu, prefs.LANGUAGE,
+                     [op[0] for op in lang_options])
+        v.pack_start(widgetutil.align_left(
+            widgetutil.build_hbox((widgetset.Label(_("Language:")), lang_option_menu))))
+
+        v.pack_start(widgetutil.align_left(
+            dialogwidgets.note(_("(Changing the language requires you to restart Miro.)"))))
+        
         pack_extras(v, "general")
 
         return v

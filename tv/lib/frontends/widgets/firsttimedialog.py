@@ -39,6 +39,7 @@ from miro.frontends.widgets import prefpanel
 from miro.frontends.widgets import dialogs
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
+from miro import gtcache
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.utils import filenameToUnicode, FilenameType
 from miro.plat.resources import get_default_search_dir
@@ -77,15 +78,19 @@ class FirstTimeDialog(widgetset.Window):
         self._done_firsttime_callback = done_firsttime_callback
 
         self._page_box = widgetset.VBox()
-        self._pages = [self.build_first_page(),
-                self.build_second_page(),
-                self.build_search_page()]
+        self._pages = self.build_pages()
         self._page_index = -1
 
         self.set_content_widget(widgetutil.align_center(self._page_box,
                 top_pad=20, bottom_pad=20, left_pad=20, right_pad=20))
 
         self.on_close_handler = self.connect('will-close', self.on_close)
+
+    def build_pages(self):
+        return [self.build_first_page(),
+                self.build_second_page(),
+                self.build_third_page(),
+                self.build_search_page()]
 
     def run(self):
         self._switch_page(0)
@@ -100,7 +105,7 @@ class FirstTimeDialog(widgetset.Window):
         self.close()
         self._done_firsttime_callback()
 
-    def _switch_page(self, i):
+    def _switch_page(self, i, rebuild=False):
         if i == self._page_index:
             return
         if i < 0 or i > len(self._pages)-1:
@@ -108,11 +113,13 @@ class FirstTimeDialog(widgetset.Window):
 
         if self._page_index != -1:
             self._page_box.remove(self._pages[self._page_index])
+        if rebuild:
+            self._pages = self.build_pages()
         self._page_box.pack_start(self._pages[i], expand=True)
         self._page_index = i
 
-    def next_page(self):
-        self._switch_page(self._page_index + 1)
+    def next_page(self, rebuild=False):
+        self._switch_page(self._page_index + 1, rebuild)
 
     def prev_page(self):
         self._switch_page(self._page_index - 1)
@@ -120,13 +127,50 @@ class FirstTimeDialog(widgetset.Window):
     def build_first_page(self):
         v = widgetset.VBox(spacing=5)
 
-        v.pack_start(_build_title(_("Welcome to the %(name)s First Time Setup",
-                                  {'name': config.get(prefs.SHORT_APP_NAME)})))
+        v.pack_start(_build_title(_("Choose Language")))
 
         lab = widgetset.Label(_(
+            "Welcome to the %(name)s first time setup!\n"
+            "\n"
             "The next few screens will help you set up %(name)s so that it works best "
             "for you.\n"
             "\n"
+            "What language would you like Miro to be in?",
+            {'name': config.get(prefs.SHORT_APP_NAME)}))
+        lab.set_wrap(True)
+        lab.set_size_request(400, -1)
+        v.pack_start(widgetutil.align_left(lab))
+
+        gtcache.get_languages()
+
+        lang_options = gtcache.get_languages()
+        lang_options.insert(0, ("system", _("System default")))
+
+        lang_option_menu = widgetset.OptionMenu([op[1] for op in lang_options])
+
+        def next_clicked(w):
+            config.set(prefs.LANGUAGE, str(lang_options[lang_option_menu.get_selected()][0]))
+            gtcache.init()
+            self.next_page(rebuild=True)
+
+        h = widgetutil.build_hbox((widgetset.Label(_("Language:")), lang_option_menu))
+        v.pack_start(h)
+
+        v.pack_start(widgetset.Label(" "), expand=True)
+        
+        next_button = widgetset.Button(_("Next >"))
+        next_button.connect('clicked', next_clicked)
+
+        v.pack_start(widgetutil.align_right(next_button))
+        return v
+
+    def build_second_page(self):
+        v = widgetset.VBox(spacing=5)
+
+        v.pack_start(_build_title(_("%(name)s Startup",
+                                  {'name': config.get(prefs.SHORT_APP_NAME)})))
+
+        lab = widgetset.Label(_(
             "We recommend that you have %(name)s launch when your computer starts "
             "up.  This way, downloads in progress can finish downloading and new "
             "media files can be downloaded in the background, ready when you "
@@ -151,18 +195,21 @@ class FirstTimeDialog(widgetset.Window):
 
         v.pack_start(widgetset.Label(" "), expand=True)
 
-        next = widgetset.Button(_("Next >"))
-        next.connect('clicked', lambda x: self.next_page())
+        prev_button = widgetset.Button(_("< Previous"))
+        prev_button.connect('clicked', lambda x: self.prev_page())
 
-        v.pack_start(widgetutil.align_right(next))
+        next_button = widgetset.Button(_("Next >"))
+        next_button.connect('clicked', lambda x: self.next_page())
+
+        h = widgetutil.build_hbox((prev_button, next_button))
+        v.pack_start(widgetutil.align_right(h))
 
         return v
 
-    def build_second_page(self):
+    def build_third_page(self):
         v = widgetset.VBox(spacing=5)
 
-        v.pack_start(_build_title(_("Completing the %(name)s First Time Setup",
-                                  {'name': config.get(prefs.SHORT_APP_NAME)})))
+        v.pack_start(_build_title(_("Finding Files")))
 
         lab = widgetset.Label(_(
             "%(name)s can find all the media files on your computer to help you "

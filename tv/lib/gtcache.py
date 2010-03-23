@@ -29,6 +29,7 @@
 """``miro.gtcache`` -- Caching gettext functions.
 """
 
+import os
 import gettext as _gt
 import locale
 from miro import config
@@ -38,6 +39,36 @@ import miro.plat.utils
 _gtcache = None
 codeset = None # The default codeset of our locale (always lower case)
 
+def get_languages():
+    from miro import iso_639
+    
+    lang_paths = []
+
+    for path, dirs, files in os.walk(config.get(prefs.GETTEXT_PATHNAME)):
+        if "miro.mo" in files:
+            lang_paths.append(path)
+
+    codes = [path.split(os.sep)[-2] for path in lang_paths]
+    langs = []
+    for i, code in enumerate(codes):
+        if "_" in code:
+            code, country = code.split("_")
+            country = " (%s)" % country
+        else:
+            country = ""
+
+        lang = iso_639.find(code)
+        if lang is None:
+            lang = code
+        else:
+            lang = lang['name'] + country
+        langs.append((code, lang))
+    langs.sort(lambda x, y: cmp(x[1], y[1]))
+
+    langs.insert(0, ("en", "English"))
+    
+    return langs
+
 def init():
     import logging
     global _gtcache
@@ -46,19 +77,25 @@ def init():
     if not miro.plat.utils.locale_initialized():
         raise Exception, "locale not initialized"
 
+    language = config.get(prefs.LANGUAGE)
+
+    if language != "system":
+        import os
+        os.environ["LANGUAGE"] = language
+
     # try to set the locale to the platform default, but if that fails
     # log a message and set it to C.
     try:
         locale.setlocale(locale.LC_ALL, '')
     except locale.Error:
-        logging.warn("gtcache.init: setlocale failed.  setting locale to 'C'")
+        print "gtcache.init: setlocale failed.  setting locale to 'C'"
         locale.setlocale(locale.LC_ALL, 'C')
 
     # try to get the locale which might fail despite the above.  see bug #11783.
     try:
         codeset = locale.getlocale()[1]
     except ValueError:
-        logging.warn("gtcache.init: getlocale failed.  setting locale to 'C'")
+        print "gtcache.init: getlocale failed.  setting locale to 'C'"
         locale.setlocale(locale.LC_ALL, "C")
         codeset = locale.getlocale()[1]
 
