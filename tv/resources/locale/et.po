@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-01-16 21:38+0000\n"
+"PO-Revision-Date: 2010-03-19 12:40+0000\n"
 "Last-Translator: bushido <Unknown>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-03-17 19:17+0000\n"
+"X-Launchpad-Export-Date: 2010-03-23 16:08+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -143,11 +143,11 @@ msgstr "Sisemine viga: Pole saatmiseks valmis"
 
 #: ../../portable/frontends/widgets/playback.py:551
 msgid "Open Subtitles File..."
-msgstr ""
+msgstr "Ava subtiitrite fail..."
 
 #: ../../portable/frontends/widgets/playback.py:552
 msgid "Subtitle files"
-msgstr ""
+msgstr "Subtiitrifailid"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -331,19 +331,19 @@ msgstr[1] ""
 #: ../../portable/frontends/widgets/itemedit.py:136
 #: ../../portable/frontends/widgets/itemcontextmenu.py:107
 msgid "Edit Item"
-msgstr ""
+msgstr "Muuda elementi"
 
 #: ../../portable/frontends/widgets/itemedit.py:145
 msgid "Title:"
-msgstr ""
+msgstr "Pealkiri:"
 
 #: ../../portable/frontends/widgets/itemedit.py:147
 msgid "Description:"
-msgstr ""
+msgstr "Kirjeldus:"
 
 #: ../../portable/frontends/widgets/itemedit.py:149
 msgid "Media type:"
-msgstr ""
+msgstr "Meediatüüp:"
 
 #: ../../portable/frontends/widgets/itemedit.py:151
 #: ../../portable/frontends/widgets/itemlistcontroller.py:521
@@ -365,7 +365,7 @@ msgstr "Muu"
 
 #: ../../portable/frontends/widgets/itemedit.py:157
 msgid "Path:"
-msgstr ""
+msgstr "Asukoht:"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
@@ -541,15 +541,15 @@ msgstr "Kopeeri URL lõikepuhvrisse"
 #: ../../portable/frontends/widgets/tablist.py:576
 #: ../../portable/frontends/widgets/application.py:726
 msgid "Rename Website"
-msgstr ""
+msgstr "Nimeta veebilehekülg ümber"
 
 #: ../../portable/frontends/widgets/tablist.py:577
 msgid "Remove Website"
-msgstr ""
+msgstr "Eemalda veebisait"
 
 #: ../../portable/frontends/widgets/tablist.py:581
 msgid "Remove Websites"
-msgstr ""
+msgstr "Eemalda veebisaidid"
 
 #: ../../portable/frontends/widgets/tablist.py:657
 msgid "Update Feeds In Folder"
@@ -604,11 +604,11 @@ msgstr "LOEND"
 
 #: ../../portable/frontends/widgets/tablist.py:743
 msgid "WEBSITES"
-msgstr ""
+msgstr "VEEBISAIDID"
 
 #: ../../portable/frontends/widgets/tablist.py:745
 msgid "VIDEO FEEDS"
-msgstr ""
+msgstr "VIDEO VOOD"
 
 #: ../../portable/frontends/widgets/tablist.py:747
 msgid "AUDIO FEEDS"
@@ -747,12 +747,12 @@ msgstr "Vali filmide kaust"
 
 #: ../../portable/frontends/widgets/prefpanel.py:457
 msgid "Directory not valid"
-msgstr ""
+msgstr "Asukoht on vigane"
 
 #: ../../portable/frontends/widgets/prefpanel.py:458
 #, python-format
 msgid "Directory '%s' could not be created.  "
-msgstr ""
+msgstr "'%s' asukohta ei saadud luua.  "
 
 #: ../../portable/frontends/widgets/prefpanel.py:473
 msgid "Migrate existing movies?"
@@ -831,7 +831,7 @@ msgstr "Tavaliselt, video ja audio aegub peale:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:620
 msgid "Play media in Miro."
-msgstr ""
+msgstr "Mängi meediat Miros."
 
 #: ../../portable/frontends/widgets/prefpanel.py:621
 msgid "Always play videos in a separate window."
@@ -844,7 +844,7 @@ msgstr "Taasta video või audio mängimise samast kohast, kust ennem peatati."
 
 #: ../../portable/frontends/widgets/prefpanel.py:624
 msgid "Automatically enable movie subtitles when available."
-msgstr ""
+msgstr "Automaatselt võimalda filmidel subtiitrid, kui on need saadaval."
 
 #: ../../portable/frontends/widgets/prefpanel.py:627
 msgid "Play video and audio items one after another"
@@ -915,7 +915,7 @@ msgstr "Säilita"
 
 #: ../../portable/frontends/widgets/gtk/video.py:282
 msgid "Subtitles"
-msgstr ""
+msgstr "Subtiitrid"
 
 #: ../../portable/frontends/widgets/gtk/video.py:291
 #: ../../portable/frontends/widgets/itemcontextmenu.py:67
@@ -953,18 +953,18 @@ msgstr "Pop-väljas"
 #: ../../portable/frontends/widgets/menus.py:312
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:380
 msgid "None Available"
-msgstr ""
+msgstr "Pole saadaval ühtegi"
 
 #: ../../portable/frontends/widgets/gtk/video.py:379
 #: ../../portable/frontends/widgets/gtk/window.py:267
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:369
 msgid "Disable Subtitles"
-msgstr ""
+msgstr "Keela subtiitrid"
 
 #: ../../portable/frontends/widgets/gtk/video.py:390
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:387
 msgid "Select a Subtitles file..."
-msgstr ""
+msgstr "Vali subtiitri fail..."
 
 #: ../../portable/frontends/widgets/gtk/window.py:650
 msgid "All files"
@@ -1151,15 +1151,15 @@ msgstr "Salvesta element kui..."
 #: ../../portable/frontends/widgets/application.py:563
 #: ../../portable/frontends/widgets/menus.py:220
 msgid "Add Website"
-msgstr ""
+msgstr "Lisa veebisait"
 
 #: ../../portable/frontends/widgets/application.py:564
 msgid "Enter the URL of the website to add"
-msgstr ""
+msgstr "Sisesta veebisaidi URL selle lisamiseks"
 
 #: ../../portable/frontends/widgets/application.py:565
 msgid "Add Website - Invalid URL"
-msgstr ""
+msgstr "Lisa veebisait - Vigane URL"
 
 #: ../../portable/frontends/widgets/application.py:566
 msgid ""
@@ -1168,6 +1168,10 @@ msgid ""
 "\n"
 "Enter the URL of the website to add"
 msgstr ""
+"Aadress, mille sisestasid on vigane url.\n"
+"Palun kontrolli URL´i ja proovi uuesti.\n"
+"\n"
+"Sisesta veebisaidi URL, et lisada see"
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
@@ -1228,7 +1232,7 @@ msgstr "Sisesta uus nimi esitusloendi kaustale %(name)s"
 #: ../../portable/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the website %(name)s"
-msgstr ""
+msgstr "Sisesta uus nimi veebisaidile %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
@@ -1247,15 +1251,15 @@ msgstr[1] ""
 #: ../../portable/frontends/widgets/application.py:773
 msgid "Remove website"
 msgid_plural "Remove websites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Eemalda veebisait"
+msgstr[1] "Eemalda veebisaidid"
 
 #: ../../portable/frontends/widgets/application.py:775
 #, python-format
 msgid "Are you sure you want to remove this website?"
 msgid_plural "Are you sure you want to remove these %(count)s websites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Oled kindel, et tahad eemaldada selle veebisaidi?"
+msgstr[1] "Oled kindel, et tahad eemaldada need %(count)s veebisaidid?"
 
 #: ../../portable/frontends/widgets/application.py:805
 msgid "Are you sure you want to quit?"
@@ -1494,7 +1498,7 @@ msgstr "Eemalda ki_rjed"
 
 #: ../../portable/frontends/widgets/menus.py:203
 msgid "_Edit Item"
-msgstr ""
+msgstr "_Muuda kirjet"
 
 #: ../../portable/frontends/widgets/menus.py:205
 msgid "Save Item _As"
@@ -1510,7 +1514,7 @@ msgstr "Kopeeri kirje _URL"
 
 #: ../../portable/frontends/widgets/menus.py:213
 msgid "_Preferences"
-msgstr ""
+msgstr "_Eelistused"
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
@@ -1538,11 +1542,11 @@ msgstr "_Nimeta ümber"
 
 #: ../../portable/frontends/widgets/menus.py:231
 msgid "Re_name Feed"
-msgstr ""
+msgstr "Taas_nimeta Voog"
 
 #: ../../portable/frontends/widgets/menus.py:232
 msgid "Re_name Website"
-msgstr ""
+msgstr "Taas_nimeta Veebisait"
 
 #: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
@@ -1550,11 +1554,11 @@ msgstr "_Eemalda"
 
 #: ../../portable/frontends/widgets/menus.py:237
 msgid "_Remove Feed"
-msgstr ""
+msgstr "_Eemalda Voog"
 
 #: ../../portable/frontends/widgets/menus.py:238
 msgid "_Remove Feeds"
-msgstr ""
+msgstr "_Eemalda Vood"
 
 #: ../../portable/frontends/widgets/menus.py:239
 msgid "_Remove Folder"
@@ -1562,15 +1566,15 @@ msgstr "_Eemalda kaust"
 
 #: ../../portable/frontends/widgets/menus.py:240
 msgid "_Remove Folders"
-msgstr ""
+msgstr "_Eemalda kaustad"
 
 #: ../../portable/frontends/widgets/menus.py:241
 msgid "_Remove Website"
-msgstr ""
+msgstr "_Eemalda veebisait"
 
 #: ../../portable/frontends/widgets/menus.py:242
 msgid "_Remove Websites"
-msgstr ""
+msgstr "_Eemalda veebisaidid"
 
 #: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
@@ -1683,11 +1687,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:311
 msgid "S_ubtitles"
-msgstr ""
+msgstr "S_ubtiitrid"
 
 #: ../../portable/frontends/widgets/menus.py:315
 msgid "Select a Subtitles File..."
-msgstr ""
+msgstr "Vali subtiitri fail..."
 
 #: ../../portable/frontends/widgets/menus.py:321
 #: ../../portable/frontends/widgets/menus.py:333
@@ -1893,8 +1897,8 @@ msgstr[1] "%(count)d voogu valitud"
 #, python-format
 msgid "%(count)d Website Selected"
 msgid_plural "%(count)d Websites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Veebisait valitud"
+msgstr[1] "%(count)d Veebisaiti valitud"
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
@@ -2235,7 +2239,7 @@ msgstr "käivitumas"
 #: ../../portable/downloader.py:568
 #, python-format
 msgid "no connection - retrying in %s"
-msgstr ""
+msgstr "pole ühendust - taastatakse %s"
 
 #: ../../portable/displaytext.py:52
 #, python-format
@@ -2516,7 +2520,7 @@ msgstr "Ok"
 
 #: ../../portable/dialogs.py:93
 msgid "Apply"
-msgstr ""
+msgstr "Kinnita"
 
 #: ../../portable/dialogs.py:96
 msgid "Done"
@@ -2616,11 +2620,11 @@ msgstr "Peata vaatamine"
 
 #: ../../portable/dialogs.py:127
 msgid "Retry"
-msgstr ""
+msgstr "Korda"
 
 #: ../../portable/dialogs.py:128
 msgid "Start Fresh"
-msgstr ""
+msgstr "Alusta värskelt"
 
 #: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"
@@ -2760,6 +2764,7 @@ msgstr "Vigane torrent"
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
 msgstr ""
+"Torrentifail %(filename)s tundub olevat katkine ja seda pole võimalik avada."
 
 #: ../../portable/searchengines.py:179
 msgid "Search All"
@@ -2772,7 +2777,7 @@ msgstr "Esitusnimekirja näidis"
 #: ../../portable/storedatabase.py:208
 #, python-format
 msgid "%(appname)s database upgrade failed"
-msgstr ""
+msgstr "%(appname)s andmebaasi uuendamine luhtus"
 
 #: ../../portable/storedatabase.py:211
 #, python-format
@@ -2788,6 +2793,16 @@ msgid ""
 "Finally, you can start fresh and your damaged database will be removed, but "
 "you will have to re-add your feeds and media files."
 msgstr ""
+"Me vabandame, %(appname)s ei saadud uuendada andmebaasi vigade tõttu.\n"
+"\n"
+"Vaata ega su kõvaketas pole täis.  Kui on täis, siis välju %(appname)s, "
+"puhasta kõvaketast ja käivita  %(appname)s uuesti.\n"
+"\n"
+"Kui su kõvaketas pole täis, aita meil aru saada probleemist väljudes, siis "
+"raporteeida veast siin bugzilla.pculture.org\n"
+"\n"
+"Lõpuks, sa saad alustada uuesti ja sinu kahjustatud andmebaas eemaldatakse, "
+"aga sa pead uuesti lisama oma vood ja meediafailid.."
 
 #: ../../portable/storedatabase.py:267
 msgid "Database was created by a newer version of Miro "
@@ -2960,12 +2975,12 @@ msgstr "Video renderdaja:"
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:446
 #, python-format
 msgid "Track %(tracknumber)d"
-msgstr ""
+msgstr "Jälg %(tracknumber)d"
 
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:456
 #, python-format
 msgid "Subtitle file %(tracknumber)d"
-msgstr ""
+msgstr "Subtiitrifail %(tracknumber)d"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:178
 msgid "Download Completed"

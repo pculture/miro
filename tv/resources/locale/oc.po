@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-02-20 13:46+0000\n"
+"PO-Revision-Date: 2010-03-22 07:32+0000\n"
 "Last-Translator: Cédric VALMARY (Per Tot en òc) <cvalmary@yahoo.fr>\n"
 "Language-Team: Occitan (post 1500) <oc@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2010-03-17 19:17+0000\n"
+"X-Launchpad-Export-Date: 2010-03-23 16:08+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -511,7 +511,7 @@ msgstr "Nom"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:745
 msgid "Time"
-msgstr ""
+msgstr "Ora"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
@@ -537,11 +537,11 @@ msgstr "Copiar l'URL dins lo quichapapièrs"
 #: ../../portable/frontends/widgets/tablist.py:576
 #: ../../portable/frontends/widgets/application.py:726
 msgid "Rename Website"
-msgstr ""
+msgstr "Tornar nomenar lo site internet"
 
 #: ../../portable/frontends/widgets/tablist.py:577
 msgid "Remove Website"
-msgstr ""
+msgstr "Suprimir lo site internet"
 
 #: ../../portable/frontends/widgets/tablist.py:581
 msgid "Remove Websites"
@@ -851,7 +851,7 @@ msgstr "General"
 
 #: ../../portable/frontends/widgets/prefpanel.py:655
 msgid "Feeds"
-msgstr ""
+msgstr "Fluxes"
 
 #: ../../portable/frontends/widgets/prefpanel.py:657
 msgid "Folders"
@@ -906,7 +906,7 @@ msgstr "Gardar"
 
 #: ../../portable/frontends/widgets/gtk/video.py:282
 msgid "Subtitles"
-msgstr ""
+msgstr "Sostítols"
 
 #: ../../portable/frontends/widgets/gtk/video.py:291
 #: ../../portable/frontends/widgets/itemcontextmenu.py:67
@@ -934,11 +934,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/gtk/video.py:315
 msgid "Pop-in"
-msgstr ""
+msgstr "Entradas"
 
 #: ../../portable/frontends/widgets/gtk/video.py:321
 msgid "Pop-out"
-msgstr ""
+msgstr "Sortidas"
 
 #: ../../portable/frontends/widgets/gtk/video.py:357
 #: ../../portable/frontends/widgets/menus.py:312
@@ -959,11 +959,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/gtk/window.py:650
 msgid "All files"
-msgstr ""
+msgstr "Totes los fichièrs"
 
 #: ../../portable/frontends/widgets/gtk/window.py:682
 msgid "Choose"
-msgstr ""
+msgstr "Causir"
 
 #: ../../portable/frontends/widgets/gtk/window.py:699
 #, python-format
@@ -980,7 +980,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/gtk/window.py:754
 #: ../../portable/dialogs.py:94
 msgid "Close"
-msgstr ""
+msgstr "Tampar"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:438
 #: ../../portable/frontends/widgets/statictabs.py:97
@@ -1069,18 +1069,17 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:404
 #, python-format
 msgid "%(appname)s is up to date"
-msgstr ""
+msgstr "%(appname)s es a jorn"
 
 #: ../../portable/frontends/widgets/application.py:406
 #, python-format
 msgid "%(appname)s is up to date!"
-msgstr ""
+msgstr "%(appname)s es a jorn !"
 
 #: ../../portable/frontends/widgets/application.py:430
 msgid "Remove item"
 msgid_plural "Remove items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Suprimir aqueste element"
 
 #: ../../portable/frontends/widgets/application.py:434
 msgid ""
@@ -1250,7 +1249,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:1131
 msgid "Message"
-msgstr ""
+msgstr "Messatge"
 
 #: ../../portable/frontends/widgets/application.py:1156
 msgid "Migrating Files"
@@ -1266,7 +1265,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:233
 msgid "File name:"
-msgstr ""
+msgstr "Nom de fichièr :"
 
 #: ../../portable/frontends/widgets/style.py:234
 msgid "Show More"
@@ -1284,7 +1283,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:238
 #: ../../portable/frontends/widgets/displays.py:390
 msgid "Reveal File"
-msgstr ""
+msgstr "Afichar lo fichièr"
 
 #: ../../portable/frontends/widgets/style.py:239
 msgid "Display Contents"
@@ -1293,11 +1292,11 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:240
 #: ../../portable/frontends/widgets/itemcontextmenu.py:140
 msgid "Web Page"
-msgstr ""
+msgstr "Pagina web"
 
 #: ../../portable/frontends/widgets/style.py:241
 msgid "File URL"
-msgstr ""
+msgstr "URL del fichièr"
 
 #: ../../portable/frontends/widgets/style.py:242
 msgid "License Page"
@@ -1305,11 +1304,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:243
 msgid "File Type"
-msgstr ""
+msgstr "Tipe de fichièr"
 
 #: ../../portable/frontends/widgets/style.py:244
 msgid "Seeders"
-msgstr ""
+msgstr "Fonts"
 
 #: ../../portable/frontends/widgets/style.py:245
 msgid "Leechers"
@@ -1325,7 +1324,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:248
 msgid "Down Rate"
-msgstr ""
+msgstr "Velocitat de recepcion"
 
 #: ../../portable/frontends/widgets/style.py:249
 msgid "Down Total"
@@ -1373,7 +1372,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:576
 #: ../../portable/frontends/widgets/style.py:1182
 msgid "paused"
-msgstr ""
+msgstr "en pausa"
 
 #: ../../portable/frontends/widgets/style.py:1052
 msgid "Remove from playlist"
@@ -1396,7 +1395,7 @@ msgstr "Senhal:"
 
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
-msgstr ""
+msgstr "Guida de Miro"
 
 #: ../../portable/frontends/widgets/statictabs.py:121
 msgid "Downloading"
@@ -1413,7 +1412,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/newfeed.py:109
 msgid "Add Feed"
-msgstr ""
+msgstr "Apondre un flux"
 
 #: ../../portable/frontends/widgets/newfeed.py:110
 msgid "Enter the URL of the feed to add"
@@ -1473,7 +1472,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:213
 msgid "_Preferences"
-msgstr ""
+msgstr "_Preferéncias"
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
@@ -1481,7 +1480,7 @@ msgstr "_Quitar"
 
 #: ../../portable/frontends/widgets/menus.py:217
 msgid "_Sidebar"
-msgstr ""
+msgstr "Barra _laterala"
 
 #: ../../portable/frontends/widgets/menus.py:218
 msgid "Add _Feed"
@@ -1497,7 +1496,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:228
 msgid "Re_name"
-msgstr ""
+msgstr "Tornar _nomenar"
 
 #: ../../portable/frontends/widgets/menus.py:231
 msgid "Re_name Feed"
@@ -1509,7 +1508,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
-msgstr ""
+msgstr "_Suprimir"
 
 #: ../../portable/frontends/widgets/menus.py:237
 msgid "_Remove Feed"
@@ -1561,7 +1560,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:258
 msgid "Copy URL"
-msgstr ""
+msgstr "Copiar l'URL"
 
 #: ../../portable/frontends/widgets/menus.py:262
 msgid "_Playlists"
@@ -1597,7 +1596,7 @@ msgstr "Sup_rimir lo dorsièr de listas de lectura"
 
 #: ../../portable/frontends/widgets/menus.py:280
 msgid "P_layback"
-msgstr ""
+msgstr "_Lectura"
 
 #: ../../portable/frontends/widgets/menus.py:281
 #: ../../portable/frontends/widgets/menus.py:283
@@ -1622,7 +1621,7 @@ msgstr "Vidèo _precedenta"
 
 #: ../../portable/frontends/widgets/menus.py:295
 msgid "Skip _Forward"
-msgstr ""
+msgstr "_Avança rapida"
 
 #: ../../portable/frontends/widgets/menus.py:297
 msgid "Skip _Back"
@@ -1630,11 +1629,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:300
 msgid "Volume _Up"
-msgstr ""
+msgstr "_Augmentar lo volum"
 
 #: ../../portable/frontends/widgets/menus.py:302
 msgid "Volume _Down"
-msgstr ""
+msgstr "_Demesir lo volum"
 
 #: ../../portable/frontends/widgets/menus.py:305
 msgid "_Fullscreen"
@@ -1646,7 +1645,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:311
 msgid "S_ubtitles"
-msgstr ""
+msgstr "_Sostítols"
 
 #: ../../portable/frontends/widgets/menus.py:315
 msgid "Select a Subtitles File..."
@@ -1664,7 +1663,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:330
 msgid "_Donate"
-msgstr ""
+msgstr "_Far un don"
 
 #: ../../portable/frontends/widgets/menus.py:337
 msgid "Report a _Bug"
@@ -1676,7 +1675,7 @@ msgstr "_Traduire"
 
 #: ../../portable/frontends/widgets/menus.py:341
 msgid "_Planet Miro"
-msgstr ""
+msgstr "_Planet Miro"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
 msgid "Remove From the Library"
@@ -1738,7 +1737,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:144
 msgid "License"
-msgstr ""
+msgstr "Licéncia"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:147
 msgid "File in Browser"
@@ -1755,7 +1754,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:154
 msgid "View"
-msgstr ""
+msgstr "Afichatge"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:192
 #, python-format
@@ -1810,7 +1809,7 @@ msgstr "Tipe de fichièr :"
 
 #: ../../portable/frontends/widgets/displays.py:393
 msgid "Skip"
-msgstr ""
+msgstr "Ignorar"
 
 #: ../../portable/frontends/widgets/displays.py:430
 msgid "Open Externally"
@@ -1827,8 +1826,8 @@ msgstr[1] ""
 #, python-format
 msgid "(contains %(count)d feed)"
 msgid_plural "(contains %(count)d feeds)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(conten %(count)d flux)"
+msgstr[1] "(conten %(count)d fluxes)"
 
 #: ../../portable/frontends/widgets/displays.py:547
 #, python-format
@@ -1875,7 +1874,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/linkhandler.py:54
 msgid "Subscribe to Feed"
-msgstr ""
+msgstr "S'abonar al flux"
 
 #: ../../portable/frontends/widgets/linkhandler.py:56
 #, python-format
@@ -1964,27 +1963,27 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:141
 msgid "Keep 0"
-msgstr ""
+msgstr "Ne conservar 0"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:142
 msgid "Keep 20"
-msgstr ""
+msgstr "Ne conservar 20"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:143
 msgid "Keep 50"
-msgstr ""
+msgstr "Ne conservar 50"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:144
 msgid "Keep 100"
-msgstr ""
+msgstr "Ne conservar 100"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:145
 msgid "Keep 1000"
-msgstr ""
+msgstr "Ne conservar 1000"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
-msgstr ""
+msgstr "Suprimir tot"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
@@ -1996,27 +1995,27 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
-msgstr ""
+msgstr "1 element pas legit"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:198
 msgid "3 unplayed items"
-msgstr ""
+msgstr "3 elements pas legits"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:199
 msgid "5 unplayed items"
-msgstr ""
+msgstr "5 elements pas legits"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:200
 msgid "10 unplayed items"
-msgstr ""
+msgstr "10 elements pas legits"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:201
 msgid "15 unplayed items"
-msgstr ""
+msgstr "15 elements pas legits"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:241
 msgid "Feed Settings"
-msgstr ""
+msgstr "Configuracion dels fluxes"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:64
 #, python-format
@@ -2058,7 +2057,7 @@ msgstr "Non"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:154
 msgid "Next >"
-msgstr ""
+msgstr "Seguent >"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:164
 #, python-format
@@ -2089,7 +2088,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:213
 #: ../../portable/frontends/widgets/firsttimedialog.py:292
 msgid "< Previous"
-msgstr ""
+msgstr "< Precedent"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:227
@@ -2128,7 +2127,7 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/browser.py:96
 msgid "Open in browser"
-msgstr ""
+msgstr "Dobrir dins lo navigador web"
 
 #: ../../portable/frontends/widgets/browser.py:102
 msgid "Download this video"
@@ -2152,7 +2151,7 @@ msgstr "Dins aquò :"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:87
 msgid "Feed:"
-msgstr ""
+msgstr "Flux :"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:93
 msgid "Search engine:"
@@ -2182,22 +2181,22 @@ msgstr ""
 #: ../../portable/displaytext.py:52
 #, python-format
 msgid "%(size)s gb/s"
-msgstr ""
+msgstr "%(size)s Go/s"
 
 #: ../../portable/displaytext.py:55
 #, python-format
 msgid "%(size)s mb/s"
-msgstr ""
+msgstr "%(size)s Mo/s"
 
 #: ../../portable/displaytext.py:58
 #, python-format
 msgid "%(size)s kb/s"
-msgstr ""
+msgstr "%(size)s Ko/s"
 
 #: ../../portable/displaytext.py:61
 #, python-format
 msgid "%(size)s b/s"
-msgstr ""
+msgstr "%(size)s o/s"
 
 #: ../../portable/displaytext.py:68
 #, python-format
@@ -2210,42 +2209,42 @@ msgstr[1] ""
 #, python-format
 msgid "%(num).0f hr"
 msgid_plural "%(num).0f hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f h"
+msgstr[1] "%(num).0f h"
 
 #: ../../portable/displaytext.py:74
 #, python-format
 msgid "%(num).0f min"
 msgid_plural "%(num).0f mins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f min"
+msgstr[1] "%(num).0f min"
 
 #: ../../portable/displaytext.py:77
 #, python-format
 msgid "%(num)d sec"
 msgid_plural "%(num)d secs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)d s"
+msgstr[1] "%(num)d s"
 
 #: ../../portable/displaytext.py:91
 #, python-format
 msgid "%(size)s gb"
-msgstr ""
+msgstr "%(size)s Go"
 
 #: ../../portable/displaytext.py:94
 #, python-format
 msgid "%(size)s mb"
-msgstr ""
+msgstr "%(size)s Mo"
 
 #: ../../portable/displaytext.py:97
 #, python-format
 msgid "%(size)s kb"
-msgstr ""
+msgstr "%(size)s Ko"
 
 #: ../../portable/displaytext.py:99
 #, python-format
 msgid "%(size)s b"
-msgstr ""
+msgstr "%(size)s o"
 
 #: ../../portable/displaytext.py:104
 #, python-format
@@ -2455,11 +2454,11 @@ msgstr "Validar"
 
 #: ../../portable/dialogs.py:93
 msgid "Apply"
-msgstr ""
+msgstr "Aplicar"
 
 #: ../../portable/dialogs.py:96
 msgid "Done"
-msgstr ""
+msgstr "Acabat"
 
 #: ../../portable/dialogs.py:99
 msgid "Quit"
@@ -2467,7 +2466,7 @@ msgstr "Quitar"
 
 #: ../../portable/dialogs.py:100
 msgid "Continue"
-msgstr ""
+msgstr "Contunhar"
 
 #: ../../portable/dialogs.py:101
 msgid "Ignore"
@@ -2479,7 +2478,7 @@ msgstr ""
 
 #: ../../portable/dialogs.py:103
 msgid "Migrate"
-msgstr ""
+msgstr "Migrar"
 
 #: ../../portable/dialogs.py:104
 msgid "Don't Migrate"
@@ -2487,7 +2486,7 @@ msgstr ""
 
 #: ../../portable/dialogs.py:106
 msgid "Remove Entry"
-msgstr ""
+msgstr "Suprimir l'entrada"
 
 #: ../../portable/dialogs.py:107
 msgid "Delete File"
@@ -2515,7 +2514,7 @@ msgstr ""
 
 #: ../../portable/dialogs.py:113
 msgid "Create Folder"
-msgstr ""
+msgstr "Crear un dorsièr"
 
 #: ../../portable/dialogs.py:115
 msgid "Add Into New Folder"
@@ -2539,7 +2538,7 @@ msgstr "Telecargar ça que la"
 
 #: ../../portable/dialogs.py:123
 msgid "Open in External Browser"
-msgstr ""
+msgstr "Dobrir dins un navigador extèrne"
 
 #: ../../portable/dialogs.py:124
 msgid "Don't Install"
@@ -2547,7 +2546,7 @@ msgstr "Installar pas"
 
 #: ../../portable/dialogs.py:125
 msgid "Subscribe"
-msgstr ""
+msgstr "S'abonar"
 
 #: ../../portable/dialogs.py:126
 msgid "Stop Watching"
@@ -2555,7 +2554,7 @@ msgstr ""
 
 #: ../../portable/dialogs.py:127
 msgid "Retry"
-msgstr ""
+msgstr "Tornar ensajar"
 
 #: ../../portable/dialogs.py:128
 msgid "Start Fresh"
@@ -2653,11 +2652,11 @@ msgstr ""
 
 #: ../../portable/item.py:1253
 msgid "Contents:"
-msgstr ""
+msgstr "Contenguts :"
 
 #: ../../portable/item.py:1491
 msgid "starting up..."
-msgstr ""
+msgstr "aviada..."
 
 #: ../../portable/commandline.py:114
 msgid "Subscription error"
@@ -2761,22 +2760,22 @@ msgstr ""
 #: ../../portable/util.py:375 ../../portable/util.py:377
 #, python-format
 msgid "%(size)sGB"
-msgstr ""
+msgstr "%(size)sGo"
 
 #: ../../portable/util.py:381 ../../portable/util.py:383
 #, python-format
 msgid "%(size)sMB"
-msgstr ""
+msgstr "%(size)sMo"
 
 #: ../../portable/util.py:387 ../../portable/util.py:389
 #, python-format
 msgid "%(size)sKB"
-msgstr ""
+msgstr "%(size)sKo"
 
 #: ../../portable/util.py:393 ../../portable/util.py:395
 #, python-format
 msgid "%(size)sB"
-msgstr ""
+msgstr "%(size)so"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:39
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:48
@@ -2840,7 +2839,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
-msgstr ""
+msgstr "Installar Adobe Flash ?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
 #, python-format
@@ -2851,7 +2850,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
-msgstr ""
+msgstr "Installar Adobe Flash"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
 #, python-format
@@ -2943,19 +2942,19 @@ msgstr "Copar"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:184
 msgid "Copy"
-msgstr "Copias"
+msgstr "Copiar"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
 msgid "Paste"
-msgstr "Inserir"
+msgstr "Empegar"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:188
 msgid "Select All"
-msgstr "Tot seleccionar"
+msgstr "Seleccionar tot"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Edit"
-msgstr "Editar"
+msgstr "Modificar"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:195
 msgid "Present Half Size"
@@ -2996,4 +2995,4 @@ msgstr "Fenèstra"
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:227
 #, python-format
 msgid "%(appname)s Help"
-msgstr ""
+msgstr "Ajuda de %(appname)s"
