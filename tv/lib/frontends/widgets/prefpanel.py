@@ -284,7 +284,7 @@ class GeneralPanel(PanelBuilder):
         attach_combo(lang_option_menu, prefs.LANGUAGE,
                      [op[0] for op in lang_options])
         v.pack_start(widgetutil.align_left(
-            widgetutil.build_hbox((widgetset.Label(_("Language:")), lang_option_menu))))
+            widgetutil.build_control_line((widgetset.Label(_("Language:")), lang_option_menu))))
 
         v.pack_start(widgetutil.align_left(
             dialogwidgets.note(_("(Changing the language requires you to restart Miro.)"))))
