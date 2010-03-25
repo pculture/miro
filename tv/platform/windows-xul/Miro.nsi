@@ -26,8 +26,6 @@
 !define OLD_UNINSTALL_SHORTCUT1 "Uninstall Democracy Player.lnk"
 !define OLD_UNINSTALL_SHORTCUT2 "Uninstall Democracy.lnk"
 
-!define MIROBAR_EXE "askBarSetup-4.1.0.2.exe"
-
 Name "$APP_NAME"
 OutFile "${CONFIG_OUTPUT_FILE}"
 InstallDir "$PROGRAMFILES\${CONFIG_PUBLISHER}\${CONFIG_LONG_APP_NAME}"
@@ -79,10 +77,6 @@ Var PROJECT_URL
 !insertmacro un.WordFind
 !insertmacro un.GetParameters
 !insertmacro un.GetOptions
-
-ReserveFile "MiroBar-installer-page.ini"
-ReserveFile "ask_toolbar.bmp"
-ReserveFile "${MIROBAR_EXE}"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Pages                                                                     ;;
@@ -248,8 +242,6 @@ FunctionEnd
 
 ; Installation page
 !insertmacro MUI_PAGE_INSTFILES
-
-Page custom MiroBarInstall MiroBarInstallLeave
 
 ; Finish page
 !define MUI_FINISHPAGE_RUN
@@ -821,8 +813,6 @@ Function .onInit
   StrCpy $PUBLISHER "${CONFIG_PUBLISHER}"
   StrCpy $PROJECT_URL "${CONFIG_PROJECT_URL}"
 
-  !insertmacro MUI_INSTALLOPTIONS_EXTRACT "MiroBar-installer-page.ini"
-
   ; Check if we're reinstalling
   ${GetParameters} $R0
   ${GetOptions} "$R0" "/ADVANCED" $R1
@@ -1086,58 +1076,6 @@ DoneTorrentRegistration:
   !insertmacro checkExtensionHandled ".anx" ${SecRegisterAnx}
   !insertmacro checkExtensionHandled ".xvid" ${SecRegisterXvid}
   !insertmacro checkExtensionHandled ".3ivx" ${SecRegisterXvid}
-FunctionEnd
-
-Function CheckMiroBarInstall
-  ReadRegStr $0 HKCR "CLSID\{D4027C7F-154A-4066-A1AD-4243D8127440}" ""
-  StrCmp $0 "" 0 DontInstallBar
-  ReadRegStr $0 HKCR "CLSID\{F0D4B239-DA4B-4daf-81E4-DFEE4931A4AA}" ""
-  StrCmp $0 "" 0 DontInstallBar
-  ReadRegStr $0 HKCR "CLSID\{3041D03E-FD4B-44E0-B742-2D9B88305F98}" ""
-  StrCmp $0 "" 0 DontInstallBar
-  StrCmp "$THEME_NAME" "" 0 DontInstallBar
-InstallBar:
-  Push 1
-  Return
-DontInstallBar:
-  Push 0
-FunctionEnd
-
-Function MiroBarInstall
-  Call CheckMiroBarInstall
-  Pop $0
-  StrCmp $0 "1" ShowMiroBarDialog NoShowMiroBarDialog
-ShowMiroBarDialog:
-  !insertmacro MUI_INSTALLOPTIONS_EXTRACT "ask_toolbar.bmp"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "MiroBar-installer-page.ini" "Field 9" "Text" "$PLUGINSDIR\ask_toolbar.bmp"
-  !insertmacro MUI_HEADER_TEXT "Install the Ask Toolbar?" ""
-  !insertmacro MUI_INSTALLOPTIONS_DISPLAY "MiroBar-installer-page.ini"
-NoShowMiroBarDialog:
-FunctionEnd
-
-Function MiroBarInstallLeave
-  !insertmacro MUI_INSTALLOPTIONS_READ $R0 "MiroBar-installer-page.ini" "Settings" "State"
-  ; Address Bar Search
-  !insertmacro MUI_INSTALLOPTIONS_READ $R1 "MiroBar-installer-page.ini" "Field 2" "State"
-  !insertmacro MUI_INSTALLOPTIONS_READ $R2 "MiroBar-installer-page.ini" "Field 3" "State"
-  ; Homepage
-  !insertmacro MUI_INSTALLOPTIONS_READ $R3 "MiroBar-installer-page.ini" "Field 4" "State"
-  StrCmp $R0 "6" end
-  StrCmp $R2 "1" install
-  MessageBox MB_OK "If you want to install the Miro / Ask Toolbar, you must accept the terms of service."
-  Abort
-install:
-  !insertmacro MUI_INSTALLOPTIONS_EXTRACT "${MIROBAR_EXE}"
-  StrCmp $R1 "1" +3
-  StrCpy $R6 ""
-  Goto +2
-  StrCpy $R6 "/sa"
-  StrCmp $R3 "1" +3
-  StrCpy $R7 ""
-  Goto +2
-  StrCpy $R7 "/hpr"
-  Exec '"$PLUGINSDIR\${MIROBAR_EXE}" /tbr $R6 $R7 /verysilent toolbar=MRO'
-end:
 FunctionEnd
 
 Function .onInstSuccess
