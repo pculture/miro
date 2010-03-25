@@ -448,9 +448,6 @@ class bdist_nsis(Command):
         self.copy_file(os.path.join(platform_dir, 'Miro.nsi'), self.dist_dir)
         self.copy_file(self.install_icon, self.dist_dir)
         self.copy_file(self.install_image, self.dist_dir)
-        self.copy_file("MiroBar-installer-page.ini", self.dist_dir)
-        self.copy_file("askBarSetup-4.1.0.2.exe", self.dist_dir)
-        self.copy_file("ask_toolbar.bmp", self.dist_dir)
 
         nsis_vars = {}
         for our_name, nsis_name in [('appVersion', 'CONFIG_VERSION'),
