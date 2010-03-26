@@ -202,7 +202,6 @@ class LiveStorage:
     def upgrade_database(self):
         """Run any database upgrades that haven't been run."""
         try:
-            raise AssertionError("Ben's Phoney Error")
             self._upgrade_database()
         except (KeyError, SystemError,
                 databaseupgrade.DatabaseTooNewError):
