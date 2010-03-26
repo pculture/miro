@@ -33,15 +33,9 @@ GObject-like signal handling for Miro.
 
 import itertools
 import logging
-import threading
-import time
-import traceback
 import weakref
 
-from miro import config
-from miro import prefs
-import sys
-from miro import util
+from miro import crashreport
 
 class WeakMethodReference:
     """Used to handle weak references to a method.
@@ -237,95 +231,14 @@ class SystemSignals(SignalEmitter):
         self.emit('videos-added', view)
 
     def failed_exn(self, when, details=None):
-        self.failed(when, withExn=True, details=details)
+        self.failed(when, with_exception=True, details=details)
 
-    def failed(self, when, withExn=False, details=None):
+    def failed(self, when, with_exception=False, details=None):
         """Used to emit the error signal.  Formats a nice crash report."""
 
         logging.info ("failed() called; generating crash report.")
-        self.emit('error', self._format_crash_report(when, withExn, details))
+        self.emit('error', crashreport.format_crash_report(when,
+            with_exception, details))
 
-    def _format_crash_report(self, when, withExn, details):
-        header = ""
-        header += "App:        %s\n" % config.get(prefs.LONG_APP_NAME)
-        header += "Publisher:  %s\n" % config.get(prefs.PUBLISHER)
-        header += "Platform:   %s\n" % config.get(prefs.APP_PLATFORM)
-        header += "Python:     %s\n" % sys.version.replace("\r\n"," ").replace("\n"," ").replace("\r"," ")
-        header += "Py Path:    %s\n" % repr(sys.path)
-        header += "Version:    %s\n" % config.get(prefs.APP_VERSION)
-        header += "Serial:     %s\n" % config.get(prefs.APP_SERIAL)
-        header += "Revision:   %s\n" % config.get(prefs.APP_REVISION)
-        header += "Builder:    %s\n" % config.get(prefs.BUILD_MACHINE)
-        header += "Build Time: %s\n" % config.get(prefs.BUILD_TIME)
-        header += "Time:       %s\n" % time.asctime()
-        header += "When:       %s\n" % when
-        header += "\n"
-
-        if withExn:
-            header += "Exception\n---------\n"
-            header += ''.join(traceback.format_exception(*sys.exc_info()))
-            header += "\n"
-        if details:
-            header += "Details: %s\n" % (details, )
-        header += "Call stack\n----------\n"
-        try:
-            stack = util.get_nice_stack()
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            stack = traceback.extract_stack()
-        header += ''.join(traceback.format_list(stack))
-        header += "\n"
-
-        header += "Threads\n-------\n"
-        header += "Current: %s\n" % threading.currentThread().getName()
-        header += "Active:\n"
-        for t in threading.enumerate():
-            header += " - %s%s\n" % \
-                (t.getName(),
-                 t.isDaemon() and ' [Daemon]' or '')
-
-        # Combine the header with the logfile contents, if available, to
-        # make the dialog box crash message. {{{ and }}} are Trac
-        # Wiki-formatting markers that force a fixed-width font when the
-        # report is pasted into a ticket.
-        report = "{{{\n%s}}}\n" % header
-
-        def read_log(logFile, logName="Log"):
-            try:
-                f = open(logFile, "rt")
-                logContents = "%s\n---\n" % logName
-                logContents += f.read()
-                f.close()
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
-                logContents = ''
-            return logContents
-
-        logFile = config.get(prefs.LOG_PATHNAME)
-        downloaderLogFile = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
-        if logFile is None:
-            logContents = "No logfile available on this platform.\n"
-        else:
-            logContents = read_log(logFile)
-        if downloaderLogFile is not None:
-            if logContents is not None:
-                logContents += "\n" + read_log(downloaderLogFile, "Downloader Log")
-            else:
-                logContents = read_log(downloaderLogFile)
-
-        if logContents is not None:
-            report += "{{{\n%s}}}\n" % util.stringify(logContents)
-
-        # Dump the header for the report we just generated to the log, in
-        # case there are multiple failures or the user sends in the log
-        # instead of the report from the dialog box. (Note that we don't
-        # do this until we've already read the log into the dialog
-        # message.)
-        logging.info ("----- CRASH REPORT (DANGER CAN HAPPEN) -----")
-        logging.info (header)
-        logging.info ("----- END OF CRASH REPORT -----")
-        return report
 
 system = SystemSignals()

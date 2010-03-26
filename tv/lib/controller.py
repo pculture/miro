@@ -100,7 +100,8 @@ class Controller:
             signals.system.failed_exn("while shutting down")
             exit(1)
 
-    def send_bug_report(self, report, description, send_database):
+    def send_bug_report(self, report, description, send_database,
+            finished_callback=None):
         def callback(result):
             self.sending_crash_report -= 1
             if result['status'] != 200 or result['body'] != 'OK':
@@ -109,10 +110,14 @@ class Controller:
                     result)
             else:
                 logging.info("Crash report submitted successfully")
+            if finished_callback is not None:
+                finished_callback()
 
         def errback(error):
             self.sending_crash_report -= 1
             logging.warning("Failed to submit crash report %r", error)
+            if finished_callback is not None:
+                finished_callback()
 
         backupfile = None
         if send_database:

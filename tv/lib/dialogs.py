@@ -126,6 +126,8 @@ BUTTON_SUBSCRIBE = DialogButton(_("Subscribe"))
 BUTTON_STOP_WATCHING = DialogButton(_("Stop Watching"))
 BUTTON_RETRY = DialogButton(_("Retry"))
 BUTTON_START_FRESH = DialogButton(_("Start Fresh"))
+BUTTON_INCLUDE_DATABASE = DialogButton(_("Include Database"))
+BUTTON_DONT_INCLUDE_DATABASE = DialogButton(_("Don't Include Database"))
 
 class Dialog(object):
     """Abstract base class for dialogs.

@@ -62,6 +62,7 @@ except ImportError:
 
 from miro import app
 from miro import config
+from miro import crashreport
 from miro import convert20database
 from miro import databaseupgrade
 from miro import dbupgradeprogress
@@ -78,6 +79,11 @@ from miro.plat.utils import FilenameType, filenameToUnicode
 class UpgradeError(Exception):
     """While upgrading the database, we ran out of disk space."""
     pass
+
+class UpgradeErrorSendCrashReport(UpgradeError):
+    def __init__(self, report):
+        UpgradeError.__init__(self)
+        self.report = report
 
 # Which SQLITE type should we use to store SchemaItem subclasses?
 _sqlite_type_map = {
@@ -196,6 +202,7 @@ class LiveStorage:
     def upgrade_database(self):
         """Run any database upgrades that haven't been run."""
         try:
+            raise AssertionError("Ben's Phoney Error")
             self._upgrade_database()
         except (KeyError, SystemError,
                 databaseupgrade.DatabaseTooNewError):
@@ -214,18 +221,22 @@ class LiveStorage:
             "%(appname)s, free up some space, and start %(appname)s "
             "again.\n\n"
             "If your disk is not full, help us understand the problem by "
-            "quitting, then reporting a bug at bugzilla.pculture.org\n\n"
-
+            "reporting a bug to our crash database.\n\n"
             "Finally, you can start fresh and your damaged database will be "
             "removed, but you will have to re-add your feeds and media "
             "files.", {"appname": config.get(prefs.SHORT_APP_NAME)}
             )
-        d = dialogs.ChoiceDialog(title, description,
-                dialogs.BUTTON_QUIT, dialogs.BUTTON_START_FRESH)
+        d = dialogs.ThreeChoiceDialog(title, description,
+                dialogs.BUTTON_QUIT, dialogs.BUTTON_SUBMIT_REPORT,
+                dialogs.BUTTON_START_FRESH)
         choice = d.run_blocking()
         if choice == dialogs.BUTTON_START_FRESH:
             self._handle_load_error("Error upgrading database")
             self.startup_version = self.current_version = self._get_version()
+        elif choice == dialogs.BUTTON_SUBMIT_REPORT:
+            report = crashreport.format_crash_report("Upgrading Database",
+                    with_exception=True, details=None)
+            raise UpgradeErrorSendCrashReport(report)
         else:
             raise UpgradeError()
 

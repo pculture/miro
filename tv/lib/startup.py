@@ -49,10 +49,12 @@ from miro import autodler
 from miro import autoupdate
 from miro import config
 from miro import commandline
+from miro import crashreport
 from miro import controller
 from miro import database
 from miro import databaselog
 from miro import databaseupgrade
+from miro import dialogs
 from miro import downloader
 from miro import eventloop
 from miro import fileutil
@@ -198,6 +200,9 @@ def finish_startup(obj, thread):
             {"appname": config.get(prefs.SHORT_APP_NAME)},
         )
         raise StartupError(summary, description)
+    except storedatabase.UpgradeErrorSendCrashReport, e:
+        send_startup_crash_report(e.report)
+        return
     except storedatabase.UpgradeError:
         raise StartupError(None, None)
     database.initialize()
@@ -448,6 +453,25 @@ def clear_icon_cache_orphans():
             except OSError:
                 pass
         yield None
+
+def send_startup_crash_report(report):
+    logging.info("Startup failed, waiting to send crash report")
+    title = _("Submitting Crash Report")
+    description = _(
+        "%(appname)s will now submit a crash report to our crash "
+        "database\n\n"
+        "Do you want to include entire program database "
+        "including all video and feed metadata with crash report? "
+        "This will help us diagnose the issue.",
+        {"appname": config.get(prefs.SHORT_APP_NAME)})
+    d = dialogs.ChoiceDialog(title, description,
+            dialogs.BUTTON_INCLUDE_DATABASE,
+            dialogs.BUTTON_DONT_INCLUDE_DATABASE)
+    choice = d.run_blocking()
+    send_database = (choice == dialogs.BUTTON_INCLUDE_DATABASE)
+    def callback():
+        messages.StartupFailure(None, None).send_to_frontend()
+    app.controller.send_bug_report(report, '', send_database, callback)
 
 def reconnect_downloaders():
     for downloader_ in downloader.RemoteDownloader.orphaned_view():
