@@ -1335,11 +1335,14 @@ class BackendMessageHandler(messages.MessageHandler):
         to_migrate = list(downloader.RemoteDownloader.finished_view())
         migration_count = len(to_migrate)
         last_progress_time = 0
+        title = _('Migrating Files')
+        messages.ProgressDialogStart(title).send_to_frontend()
         for i, download in enumerate(to_migrate):
             current_time = time.time()
             if current_time > last_progress_time + 0.5:
-                m = messages.MigrationProgress(i, migration_count, False)
-                m.send_to_frontend()
+                text = '%s (%s/%s)' % (title, i, migration_count)
+                progress = float(i) / migration_count
+                messages.ProgressDialog(text, progress).send_to_frontend()
                 last_progress_time = current_time
             logging.info("migrating %s", download.get_filename())
             download.migrate(new_path)
@@ -1355,7 +1358,7 @@ class BackendMessageHandler(messages.MessageHandler):
             fileutil.rmdir(old_path)
         except OSError:
             pass
-        m = messages.MigrationProgress(migration_count, migration_count, True)
+        m = messages.ProgressDialogFinished()
         m.send_to_frontend()
 
     def handle_report_crash(self, message):

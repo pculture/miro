@@ -93,7 +93,10 @@ def startup_function(func):
         try:
             func(*args, **kwargs)
         except StartupError, e:
-            m = messages.StartupFailure(e.summary, e.description)
+            if e.summary is not None:
+                m = messages.StartupFailure(e.summary, e.description)
+            else:
+                m = messages.FrontendQuit()
             m.send_to_frontend()
         except (SystemExit, KeyboardInterrupt):
             raise
@@ -469,9 +472,7 @@ def send_startup_crash_report(report):
             dialogs.BUTTON_DONT_INCLUDE_DATABASE)
     choice = d.run_blocking()
     send_database = (choice == dialogs.BUTTON_INCLUDE_DATABASE)
-    def callback():
-        messages.StartupFailure(None, None).send_to_frontend()
-    app.controller.send_bug_report(report, '', send_database, callback)
+    app.controller.send_bug_report(report, '', send_database, quit_after=True)
 
 def reconnect_downloaders():
     for downloader_ in downloader.RemoteDownloader.orphaned_view():

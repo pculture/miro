@@ -42,8 +42,10 @@ from miro import app
 from miro import config
 from miro import downloader
 from miro import eventloop
+from miro.gtcache import gettext as _
 from miro import httpclient
 from miro import iconcache
+from miro import messages
 from miro import moviedata
 from miro import prefs
 from miro import signals
@@ -59,7 +61,8 @@ class Controller:
         self.frame = None
         self.guide = None
         self.idling_notifier = None
-        self.sending_crash_report = 0
+        self.bug_report_senders = set()
+        self._quit_after_bug_reports = False
 
     @eventloop.as_urgent
     def shutdown(self):
@@ -100,24 +103,58 @@ class Controller:
             signals.system.failed_exn("while shutting down")
             exit(1)
 
-    def send_bug_report(self, report, description, send_database,
-            finished_callback=None):
-        def callback(result):
-            self.sending_crash_report -= 1
-            if result['status'] != 200 or result['body'] != 'OK':
-                logging.warning(
-                    "Failed to submit crash report.  Server returned %r",
-                    result)
-            else:
-                logging.info("Crash report submitted successfully")
-            if finished_callback is not None:
-                finished_callback()
+    def is_sending_crash_report(self):
+        return len(self.bug_report_senders) > 0
 
-        def errback(error):
-            self.sending_crash_report -= 1
-            logging.warning("Failed to submit crash report %r", error)
-            if finished_callback is not None:
-                finished_callback()
+    def send_bug_report(self, report, description, send_database,
+            quit_after=False):
+        sender = BugReportSender(report, description, send_database)
+        self.bug_report_senders.add(sender)
+        sender.connect("finished", self._bug_report_sent)
+        if quit_after:
+            self._quit_after_bug_reports = True
+            eventloop.add_timeout(0.5, self._start_send_bug_report_progress,
+                    'bug report progress')
+
+    def _bug_report_sent(self, sender):
+        self.bug_report_senders.remove(sender)
+        if (self._quit_after_bug_reports and not
+                self.is_sending_crash_report()):
+            messages.ProgressDialogFinished().send_to_frontend()
+            messages.FrontendQuit().send_to_frontend()
+
+    def _start_send_bug_report_progress(self):
+        m = messages.ProgressDialogStart(_('Sending Crash Report'))
+        m.send_to_frontend()
+        self._send_bug_report_progress()
+
+    def _send_bug_report_progress(self):
+        current_sent = 0
+        total_to_send = 0
+        for sender in self.bug_report_senders:
+            sent, to_send = sender.progress()
+            if to_send == 0:
+                # this sender doesn't know it's total data, we can't calculate
+                # things.
+                current_sent = total_to_send = 0
+                break
+            else:
+                current_sent += sent
+                total_to_send += to_send
+        if total_to_send > 0:
+            progress = float(current_sent) / total_to_send
+        else:
+            progress = -1
+        text = '%s (%d%%)' % (_('Sending Crash Report'), progress * 100)
+        messages.ProgressDialog(text, progress).send_to_frontend()
+        eventloop.add_timeout(0.1, self._send_bug_report_progress,
+                'bug report progress')
+
+class BugReportSender(signals.SignalEmitter):
+    """Helper class that sends bug reports."""
+    def __init__(self, report, description, send_database):
+        signals.SignalEmitter.__init__(self)
+        self.create_signal('finished')
 
         backupfile = None
         if send_database:
@@ -146,11 +183,26 @@ class Controller:
                                }}
         else:
             post_files = None
-        self.sending_crash_report += 1
         logging.info("Sending crash report....")
-        httpclient.grabURL(BOGON_URL,
-                           callback, errback, method="POST",
+        self.client = httpclient.grabURL(BOGON_URL,
+                           self.callback, self.errback, method="POST",
                            postVariables=post_vars, postFiles=post_files)
+
+    def callback(self, result):
+        if result['status'] != 200 or result['body'] != 'OK':
+            logging.warning(
+                "Failed to submit crash report.  Server returned %r",
+                result)
+        else:
+            logging.info("Crash report submitted successfully")
+        self.emit("finished")
+
+    def errback(self, error):
+        logging.warning("Failed to submit crash report %r", error)
+        self.emit("finished")
+
+    def progress(self):
+        return self.client.sendingProgress()
 
     def _backup_support_dir(self):
         # backs up the support directories to a zip file

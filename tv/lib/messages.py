@@ -517,7 +517,7 @@ class ChangeMoviesDirectory(BackendMessage):
     """Change the current movies directory.
 
     If migrate is True, then the backend will send a series of
-    MigrationProgress messages while the migration happens.
+    ProgressDialog messages while the migration happens.
     """
     def __init__(self, path, migrate):
         self.path = path
@@ -1318,13 +1318,23 @@ class OpenInExternalBrowser(FrontendMessage):
     def __init__(self, url):
         self.url = url
 
-class MigrationProgress(FrontendMessage):
-    """Inform the frontend of progress while we migrate files.
+class ProgressDialogStart(FrontendMessage):
+    def __init__(self, title):
+        self.title = title
+
+class ProgressDialog(FrontendMessage):
+    """Inform the frontend of progress while we perform a long-running task.
+
+    :param progress: current progress for the task [0.0 - 1.0] or -1 if we
+        can't estimate the progress.  The frontend should show a throbber in
+        this case)
     """
-    def __init__(self, iteration, total_files, finished):
-        self.iteration = iteration
-        self.total_files = total_files
-        self.finished = finished
+    def __init__(self, description, progress):
+        self.description = description
+        self.progress = progress
+
+class ProgressDialogFinished(FrontendMessage):
+    pass
 
 class FeedlessDownloadStarted(FrontendMessage):
     """Inform the frontend that a new video started downloading because a

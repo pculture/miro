@@ -87,12 +87,13 @@ class ProgressDialog(MainDialog):
         height = self.vbox.get_size_request()[1] + 24
         self.set_extra_widget(self.vbox)
 
-    def update(self, description, current, total):
-        self.label.set_text("%s (%s/%s)" % (description, current, total))
-        if total > 0:
-            self.progress_bar.set_progress(float(current) / total)
+    def update(self, description, progress):
+        self.label.set_text(description)
+        if progress >= 0:
+            self.progress_bar.set_progress(progress)
+            self.progress_bar.stop_pulsing()
         else:
-            self.progress_bar.set_progress(0.0)
+            self.progress_bar.start_pulsing()
 
 class DBUpgradeProgressDialog(MainDialog):
     def __init__(self, title):

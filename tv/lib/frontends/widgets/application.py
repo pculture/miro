@@ -986,7 +986,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
                 config.get(prefs.OPEN_FOLDER_ON_STARTUP) is not None:
             self._pre_startup_messages.add('feed-tab-list')
             self._pre_startup_messages.add('audio-feed-tab-list')
-        self.migration_progress_dialog = None
+        self.progress_dialog = None
         self.dbupgrade_progress_dialog = None
 
     def handle_frontend_quit(self, message):
@@ -1010,9 +1010,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
         self.dbupgrade_progress_dialog = None
 
     def handle_startup_failure(self, message):
-        if message.summary:
-            dialogs.show_message(message.summary, message.description,
-                    dialogs.CRITICAL_MESSAGE)
+        dialogs.show_message(message.summary, message.description,
+                dialogs.CRITICAL_MESSAGE)
         app.widgetapp.do_quit()
 
     def handle_startup_success(self, message):
@@ -1149,23 +1148,18 @@ class WidgetsMessageHandler(messages.MessageHandler):
         app.frontend_states_memory = FrontendStatesStore(message)
         self._saw_pre_startup_message('frontend-state')
 
-    def handle_migration_progress(self, message):
-        if self.migration_progress_dialog is None:
-            if message.finished:
-                return
-            self.migration_progress_dialog = dialogs.ProgressDialog(
-                    _('Migrating Files'))
-            self.migration_progress_dialog.run()
-            # run() will return when we destroy the dialog because of a future
-            # message.
-            return
+    def handle_progress_dialog_start(self, message):
+        self.progress_dialog = dialogs.ProgressDialog(message.title)
+        self.progress_dialog.run()
+        # run() will return when we destroy the dialog because of a future
+        # message.
 
-        if message.finished:
-            self.migration_progress_dialog.destroy()
-            self.migration_progress_dialog = None
-        else:
-            self.migration_progress_dialog.update(_('Migrating files'),
-                    message.iteration, message.total_files)
+    def handle_progress_dialog(self, message):
+        self.progress_dialog.update(message.description, message.progress)
+
+    def handle_progress_dialog_finished(self, message):
+        self.progress_dialog.destroy()
+        self.progress_dialog = None
 
     def handle_feedless_download_started(self, message):
         library_tab_list = app.tab_list_manager.library_tab_list

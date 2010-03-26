@@ -65,7 +65,7 @@ from miro import signals
 from miro import trapcall
 from miro.plat.resources import get_osname
 
-PIPELINING_ENABLED = True
+PIPELINING_ENABLED = False
 SOCKET_READ_TIMEOUT = 60
 SOCKET_INITIAL_READ_TIMEOUT = 30
 SOCKET_CONNECT_TIMEOUT = 15
@@ -312,6 +312,7 @@ class AsyncSocket(object):
         and either socket.SHUT_RD or socket.SHUT_WR.
         """
         self.toSend = []
+        self.to_send_length = 0
         self.readSize = 4096
         self.socket = None
         self.readCallback = None
@@ -441,6 +442,7 @@ class AsyncSocket(object):
         if not self.isOpen():
             raise ValueError("Socket not connected")
         self.toSend.append(_Packet(data, callback))
+        self.to_send_length += len(data)
         eventloop.add_write_callback(self.socket, self.onWriteReady)
 
     def startReading(self, readCallback):
@@ -509,6 +511,7 @@ class AsyncSocket(object):
                 if self.toSend[0].callback:
                     self.toSend[0].callback()
                 self.toSend = self.toSend[1:]
+        self.to_send_length -= sent
         if len(self.toSend) == 0:
             eventloop.remove_write_callback(self.socket)
 
@@ -928,7 +931,17 @@ class HTTPConnection(ConnectionHandler):
         sendOut.append('\r\n')
         if data is not None:
             sendOut.append(data)
-        self.sendData(''.join(sendOut))
+        data_out = ''.join(sendOut)
+        self.total_data_to_send = len(data_out)
+        self.sendData(data_out)
+
+    def sendingProgress(self):
+        """Get a progress update on sending data out.
+
+        Returns the tuple (bytes sent, total_bytes)
+        """
+        sent = self.total_data_to_send - self.stream.to_send_length
+        return (sent, self.total_data_to_send)
 
     def onStatusData(self):
         line = self.buffer.readline()
@@ -1520,6 +1533,12 @@ class HTTPClient(object):
         if self.connection is not None:
             self.connection.closeConnection()
             self.connection = None
+
+    def sendingProgress(self):
+        if self.connection is not None:
+            return self.connection.sendingProgress()
+        else:
+            return (0, 0)
 
     def isValidCookie(self, cookie, scheme, host, port, path):
         return ((time.time() - cookie['received'] < cookie['Max-Age']) and
