@@ -119,11 +119,6 @@ class Scheduler(object):
         time, dc = heapq.heappop(self.heap)
         return dc.dispatch()
 
-    # FIXME - never gets used
-    ## def processTimeouts(self):
-    ##     while self.has_pending_timeout():
-    ##         self.process_next_timeout()
-
 class CallQueue(object):
     def __init__(self):
         self.queue = Queue.Queue()
@@ -459,11 +454,6 @@ def connect(signal, callback):
 
 def disconnect(signal, callback):
     _eventloop.disconnect(signal, callback)
-
-# FIXME - never used
-## def resetEventLoop():
-##     global _eventloop
-##     _eventloop = EventLoop()
 
 def thread_pool_quit():
     _eventloop.threadpool.close_threads()
