@@ -238,11 +238,11 @@ class Subscriber(object):
             expiry_time = feed_dict.get('expiry_time')
             if expiry_time is not None and expiry_time != '':
                 if expiry_time == 'system':
-                    f.setExpiration(u'system', 0)
+                    f.set_expiration(u'system', 0)
                 elif expiry_time == 'never':
-                    f.setExpiration(u'never', 0)
+                    f.set_expiration(u'never', 0)
                 else:
-                    f.setExpiration(u'feed', expiry_time)
+                    f.set_expiration(u'feed', expiry_time)
             if parent_folder is not None:
                 f.set_folder(parent_folder)
             return True

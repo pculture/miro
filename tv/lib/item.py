@@ -1167,7 +1167,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         return self.eligibleForAutoDownload
 
     def is_pending_auto_download(self):
-        return (self.get_feed().isAutoDownloadable() and
+        return (self.get_feed().is_autodownloadable() and
                 self.is_eligible_for_auto_download())
 
     @returns_unicode
@@ -1190,7 +1190,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return resources.path("images/thumb-default-folder.png")
         else:
             feed = self.get_feed()
-            if feed.thumbnailValid():
+            if feed.thumbnail_valid():
                 return feed.get_thumbnail_path()
             elif (self.get_filename()
                   and filetypes.is_audio_filename(self.get_filename())):

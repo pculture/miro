@@ -856,12 +856,12 @@ class ChannelInfo(object):
             self.search_term = None
         if not isinstance(channel_obj, ChannelFolder):
             self.has_original_title = channel_obj.has_original_title()
-            self.is_updating = channel_obj.isUpdating()
+            self.is_updating = channel_obj.is_updating()
             self.parent_id = channel_obj.folder_id
             self.url = channel_obj.get_url()
             self.thumbnail = channel_obj.get_thumbnail_path()
             self.base_href = channel_obj.get_base_href()
-            self.autodownload_mode = channel_obj.getAutoDownloadMode()
+            self.autodownload_mode = channel_obj.get_autodownload_mode()
             self.is_folder = False
             self.is_directory_feed = (self.url is not None and
                     self.url.startswith('dtv:directoryfeed'))

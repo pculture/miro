@@ -625,11 +625,11 @@ class BackendMessageHandler(messages.MessageHandler):
         try:
             channel = feed.Feed.get_by_id(channel_info.id)
             if expire_type == "never":
-                channel.setExpiration(u"never", 0)
+                channel.set_expiration(u"never", 0)
             elif expire_type == "system":
-                channel.setExpiration(u"system", expire_time)
+                channel.set_expiration(u"system", expire_time)
             else:
-                channel.setExpiration(u"feed", expire_time)
+                channel.set_expiration(u"feed", expire_time)
 
         except database.ObjectNotFoundError:
             logging.warning("handle_set_feed_expire: can't find feed by id %s", channel_info.id)
@@ -654,7 +654,7 @@ class BackendMessageHandler(messages.MessageHandler):
 
         try:
             channel = feed.Feed.get_by_id(channel_info.id)
-            channel.setMaxOldItems(max_old_items)
+            channel.set_max_old_items(max_old_items)
 
         except database.ObjectNotFoundError:
             logging.warning("handle_set_feed_max_new: can't find feed by id %s", channel_info.id)
@@ -717,7 +717,7 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_update_all_feeds(self, message):
         for f in feed.Feed.make_view():
-            f.scheduleUpdateEvents(0)
+            f.schedule_update_events(0)
 
     def handle_delete_feed(self, message):
         if message.is_folder:

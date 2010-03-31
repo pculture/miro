@@ -119,16 +119,16 @@ class Exporter(object):
             spacer = u'\t\t'
 
         # skip watched folders and other non-RSSFeedImpl derivatives
-        if not isinstance(thefeed.getActualFeed(), feed.RSSFeedImpl):
+        if not isinstance(thefeed.get_actual_feed(), feed.RSSFeedImpl):
             return
 
         extraArgs = []
 
-        search_term = thefeed.getSearchTerm()
+        search_term = thefeed.get_search_term()
         if search_term:
             extraArgs.append('miro:searchTerm=%s' % saxutils.quoteattr(search_term))
 
-        autoDownload = thefeed.getAutoDownloadMode()
+        autoDownload = thefeed.get_autodownload_mode()
         if autoDownload != 'new':
             extraArgs.append('miro:autoDownload=%s' % saxutils.quoteattr(autoDownload))
 
@@ -142,7 +142,7 @@ class Exporter(object):
         self.io.write(u'%s<outline type="rss" text=%s xmlUrl=%s miro:section=%s %s/>\n' % (
                 spacer,
                 saxutils.quoteattr(thefeed.get_title()),
-                saxutils.quoteattr(thefeed.getBaseURL()),
+                saxutils.quoteattr(thefeed.get_base_url()),
                 saxutils.quoteattr(thefeed.section),
                 extraArgs))
 

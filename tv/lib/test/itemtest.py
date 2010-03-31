@@ -95,7 +95,7 @@ class ExpiredViewTest(MiroTestCase):
         i2 = Item(fp_values_for_url(u'http://example.com/1/item2'),
                 feed_id=f1.id)
 
-        f1.setExpiration(u'never', 0)
+        f1.set_expiration(u'never', 0)
         i1.watchedTime = i2.watchedTime = datetime.now()
 
         for obj in (f1, i1, i2):
@@ -111,7 +111,7 @@ class ExpiredViewTest(MiroTestCase):
         i4 = Item(fp_values_for_url(u'http://example.com/2/item2'),
                 feed_id=f2.id)
 
-        f2.setExpiration(u'system', 0)
+        f2.set_expiration(u'system', 0)
         # system default is 6 days as set in setUp, so i3 should expire,
         # but i4 should not.
         i3.watchedTime = datetime.now() - timedelta(days=12)
@@ -130,7 +130,7 @@ class ExpiredViewTest(MiroTestCase):
         i6 = Item(fp_values_for_url(u'http://example.com/3/item2'),
                 feed_id=f3.id)
 
-        f3.setExpiration(u'feed', 24)
+        f3.set_expiration(u'feed', 24)
         i5.watchedTime = datetime.now() - timedelta(days=3)
         i6.watchedTime = datetime.now() - timedelta(hours=12)
 
