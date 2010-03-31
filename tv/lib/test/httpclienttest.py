@@ -755,6 +755,8 @@ class DumbHTTPClientTest(AsyncSocketTest):
         self.assertEquals(self.testRequest.willClose, True)
 
     def test_pipeline(self):
+        # pipelining is currently disabled
+        return
         self.assertEqual(self.testRequest.pipelinedRequest, None)
         self.testRequest.handleData(startResponse(
                 headers={'Content-Length': 128}))
@@ -776,6 +778,8 @@ class DumbHTTPClientTest(AsyncSocketTest):
         self.assertEquals(self.testRequest.status, None)
 
     def test_bad_pipeline(self):
+        # pipelining is currently disabled
+        return
         self.testRequest.handleData(startResponse())
         # no content length means we can't pipeline a request
         self.assertEquals(self.testRequest.canSendRequest(), False)
@@ -784,6 +788,8 @@ class DumbHTTPClientTest(AsyncSocketTest):
                           self.errback, "", 80)
 
     def test_pipeline_never_started(self):
+        # pipelining is currently disabled
+        return
         self.pipelineError = None
         self.testRequest.handleData(startResponse(
                 headers={'Content-Length': 128}))
@@ -796,6 +802,8 @@ class DumbHTTPClientTest(AsyncSocketTest):
                                 httpclient.PipelinedRequestNeverStarted))
 
     def test_pipeline_never_started2(self):
+        # pipelining is currently disabled
+        return
         self.pipelineError = None
         self.testRequest.handleData(startResponse(
                 headers={'Content-Length': 128}))
@@ -910,7 +918,6 @@ class DumbHTTPClientTest(AsyncSocketTest):
         self.testRequest.readyCallback = fakeReadyCallback
         self.testRequest.handleData(startResponse(
             headers={'Content-Length': 128}))
-        self.assertEquals(self.testRequest.canSendRequest(), True)
         self.testRequest.handleData('a' * 128)
         # At this point, our connection should have scheduled an idle
         # call to check if it should call fakeReadyCallback().  If
