@@ -384,7 +384,7 @@ class FeedImpl(DDBObject):
         pass
 
     def __str__(self):
-        return "%s - %s" % (self.__class__.__name__, self.get_title())
+        return "%s - %s" % (self.__class__.__name__, stringify(self.get_title()))
 
     def clean_old_items(self):
         """
@@ -1308,7 +1308,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             feed.icon_cache.request_update(True)
 
     def __str__(self):
-        return "Feed - %s" % self.get_title()
+        return "Feed - %s" % stringify(self.get_title())
 
 class ThrottledUpdateFeedImpl(FeedImpl):
     """Feed Impl that uses the feedupdate module to schedule it's
@@ -1652,7 +1652,7 @@ class RSSFeedImpl(RSSFeedImplBase):
         if not self.ufeed.id_exists():
             return
         logging.warn("WARNING: error in Feed.update for %s -- %s", 
-            stringify(self.ufeed), stringify(error))
+            self.ufeed, stringify(error))
         self.scheduleUpdateEvents(-1)
         self.updating = False
         self.ufeed.signal_change(needs_save=False)
@@ -1820,7 +1820,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         if not self.ufeed.id_exists():
             return
         logging.warn("WARNING: error in Feed.update for %s (%s) -- %s",
-                     stringify(self.ufeed), stringify(url), stringify(error))
+                     self.ufeed, stringify(url), stringify(error))
         self.scheduleUpdateEvents(-1)
         self.updating -= 1
         self.checkUpdateFinished()
