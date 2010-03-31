@@ -2712,3 +2712,21 @@ def upgrade115(cursor):
         cursor.execute("UPDATE search_feed_impl SET engine=?, query=? "
                 "WHERE id=?", (engine, query, id))
     remove_column(cursor, 'search_feed_impl', ('lastEngine', 'lastQuery'))
+
+def upgrade116(cursor):
+    """Convert filenames in the status container to unicode."""
+    cursor.execute("SELECT id, status FROM remote_downloader")
+    filename_fields = ('channelName', 'shortFilename', 'filename')
+    for row in cursor.fetchall():
+        id, status = row
+        status = eval(status, __builtins__,
+                {'datetime': datetime, 'time': time})
+        changed = False
+        for key in filename_fields:
+            value = status.get(key)
+            if value is not None and not isinstance(value, unicode):
+                status[key] = value.decode("utf-8")
+                changed = True
+        if changed:
+            cursor.execute("UPDATE remote_downloader SET status=? "
+                    "WHERE id=?", (repr(status), id))

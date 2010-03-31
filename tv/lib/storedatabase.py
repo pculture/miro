@@ -74,7 +74,7 @@ from miro import prefs
 from miro import util
 from miro.download_utils import next_free_filename
 from miro.gtcache import gettext as _
-from miro.plat.utils import FilenameType, filenameToUnicode
+from miro.plat.utils import FilenameType, filenameToUnicode, unicodeToFilename
 
 class UpgradeError(Exception):
     """While upgrading the database, we ran out of disk space."""
@@ -880,11 +880,14 @@ class SQLiteConverter(object):
                 schema.SchemaReprContainer,
                 schema.SchemaDict,
                 schema.SchemaList,
-                schema.SchemaStatusContainer,
                 )
         for schema_class in repr_types:
             self._to_sql_converters[schema_class] = repr
             self._from_sql_converters[schema_class] = self._convert_repr
+        self._to_sql_converters[schema.SchemaStatusContainer] = \
+                self._convert_status_to_sql
+        self._from_sql_converters[schema.SchemaStatusContainer] = \
+                self._convert_status
         # bools get stored as integers in sqlite
         self._from_sql_converters[schema.SchemaBool] = bool
         # filenames are always stored in sqlite as unicode
@@ -933,6 +936,23 @@ class SQLiteConverter(object):
 
     def _convert_repr(self, value):
         return eval(value, __builtins__, {'datetime': datetime, 'time': _TIME_MODULE_SHADOW})
+
+    def _convert_status(self, repr_value):
+        status_dict = self._convert_repr(repr_value)
+        filename_fields = schema.SchemaStatusContainer.filename_fields
+        for key in filename_fields:
+            value = status_dict.get(key)
+            if value is not None:
+                status_dict[key] = unicodeToFilename(value)
+        return status_dict
+
+    def _convert_status_to_sql(self, status_dict):
+        filename_fields = schema.SchemaStatusContainer.filename_fields
+        for key in filename_fields:
+            value = status_dict.get(key)
+            if value is not None:
+                status_dict[key] = filenameToUnicode(value)
+        return repr(status_dict)
 
 class TimeModuleShadow:
     """In Python 2.6, time.struct_time is a named tuple and evals poorly,

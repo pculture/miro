@@ -260,6 +260,9 @@ class SchemaStatusContainer(SchemaReprContainer):
     RemoteDownloaders.  It allows some values to be byte strings
     rather than unicode objects.
     """
+
+    filename_fields = ('channelName', 'shortFilename', 'filename')
+
     def validate(self, data):
         binary_fields = self._binary_fields()
         self.validateType(data, dict)
@@ -275,11 +278,10 @@ class SchemaStatusContainer(SchemaReprContainer):
                 self.validateType(value, str)
 
     def _binary_fields(self):
-        if FilenameType == unicode:
-            return ('metainfo', 'fastResumeData')
-        else:
-            return ('channelName', 'shortFilename', 'filename', 'metainfo',
-                    'fastResumeData')
+        rv = ('metainfo', 'fastResumeData')
+        if FilenameType != unicode:
+            rv += self.filename_fields
+        return rv
 
 class SchemaObject(SchemaItem):
     """SchemaObject type."""
@@ -691,7 +693,7 @@ class DBLogEntrySchema(DDBObjectSchema):
     def handle_malformed_list_view_displays(row):
         return []
 
-VERSION = 115
+VERSION = 116
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,
