@@ -635,9 +635,9 @@ class RemoteDownloader(DDBObject):
         called until state is "finished."
         """
         self.confirm_db_thread()
-        # FIXME - FilenameType('') is a bogus value, but looks like a
-        # filename.  should return None.
-        return self.status.get('filename', FilenameType(''))
+        # FIXME - '' is a bogus value, but looks like a filename.
+        # should return None.
+        return FilenameType(self.status.get('filename', ''))
 
     def setup_restored(self):
         self._save_later_dc = None
