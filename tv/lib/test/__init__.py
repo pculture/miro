@@ -52,6 +52,7 @@ from miro.test.iconcachetest import *
 from miro.test.databasetest import *
 from miro.test.itemtest import *
 from miro.test.filetypestest import *
+from miro.test.downloadertest import *
 
 # platform specific tests
 

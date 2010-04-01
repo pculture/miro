@@ -494,5 +494,6 @@ class FeedParserAttributesTestCase(FeedTestCase):
         self.save_then_restore_db()
         self.assertEquals(self.item.get_title(), "new title")
 
+
 if __name__ == "__main__":
     unittest.main()
