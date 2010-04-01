@@ -947,12 +947,13 @@ class SQLiteConverter(object):
         return status_dict
 
     def _convert_status_to_sql(self, status_dict):
+        to_save = status_dict.copy()
         filename_fields = schema.SchemaStatusContainer.filename_fields
         for key in filename_fields:
-            value = status_dict.get(key)
+            value = to_save.get(key)
             if value is not None:
-                status_dict[key] = filenameToUnicode(value)
-        return repr(status_dict)
+                to_save[key] = filenameToUnicode(value)
+        return repr(to_save)
 
 class TimeModuleShadow:
     """In Python 2.6, time.struct_time is a named tuple and evals poorly,
