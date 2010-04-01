@@ -1081,7 +1081,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         return property(getter)
 
     for name in ( 'set_update_frequency', 'schedule_update_events',
-            'cancel_update_events', 'update',
+            'cancel_update_events',
             'get_url', 'get_base_url',
             'get_base_href', 'get_link',
             'get_thumbnail_url', 'get_license', 'url', 'title', 'created',
