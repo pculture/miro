@@ -389,7 +389,9 @@ class MiroBuild (py2app):
         infoPlist['CFBundleDevelopmentRegion'] = 'en'
         infoPlist['CFBundleAllowMixedLocalizations'] = True
         infoPlist['CFBundleLocalizations'] = self.get_localizations_list()
-        infoPlist['PyExecutableName'] = os.path.join("@executable_path", "..", "Frameworks", "Python.framework", "Versions", PYTHON_VERSION, "bin", "python")
+        
+        if not self.alias:
+            infoPlist['PyExecutableName'] = os.path.join("@executable_path", "..", "Frameworks", "Python.framework", "Versions", PYTHON_VERSION, "bin", "python")
         
         self.plist = infoPlist
 
