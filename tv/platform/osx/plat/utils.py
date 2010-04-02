@@ -352,14 +352,16 @@ def exit(returnCode):
 
 def movie_data_program_info(moviePath, thumbnailPath):
     main_bundle = NSBundle.mainBundle()
-    py_exe_path = os.path.join(os.path.dirname(main_bundle.executablePath()), 'python')
     rsrc_path = main_bundle.resourcePath()
     script_path = os.path.join(rsrc_path, 'qt_extractor.py')
     options = main_bundle.infoDictionary().get('PyOptions')
     env = None
     if options['alias'] == 1:
+        py_exe_path = os.path.join(os.path.dirname(main_bundle.executablePath()), 'python')
         env = {'PYTHONPATH': ':'.join(sys.path), 'MIRO_BUNDLE_PATH': main_bundle.bundlePath()}
     else:
+        py_version = main_bundle.infoDictionary().get('PythonInfoDict').get('PythonShortVersion')
+        py_exe_path = os.path.join(main_bundle.privateFrameworksPath(), "Python.framework", "Versions", py_version, "bin", 'python')
         env = {'PYTHONHOME': rsrc_path, 'MIRO_BUNDLE_PATH': main_bundle.bundlePath()}
     return ((py_exe_path, script_path, moviePath, thumbnailPath), env)
 
