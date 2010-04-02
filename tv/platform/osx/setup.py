@@ -405,6 +405,12 @@ class MiroBuild (py2app):
         dst = os.path.join(dst_root, 'libtorrent.so')
         shutil.copy(src, dst)
 
+    def _get_app_root(self):
+        dist_app = os.path.join("dist", "Miro.app")
+        if os.path.exists(dist_app):
+            return dist_app
+        return "Miro.app"
+
     def relocate_python_executable(self):
         # In certain unknown circumstances, Mac OS will launch the embedded
         # python executable instead of the Miro executable when the application
@@ -418,8 +424,9 @@ class MiroBuild (py2app):
         # which is done in setup_info_plist above).
         
         print "Relocating python executable"
-        source = os.path.join("Miro.app", "Contents", "MacOS", "python")
-        target = os.path.join("Miro.app", "Contents", "Frameworks", "Python.framework", "Versions", PYTHON_VERSION, "bin")
+        app_root = self._get_app_root()
+        source = os.path.join(app_root, "Contents", "MacOS", "python")
+        target = os.path.join(app_root, "Contents", "Frameworks", "Python.framework", "Versions", PYTHON_VERSION, "bin")
         if not os.path.exists(target):
             os.mkdir(target)
         shutil.move(source, target)
@@ -433,11 +440,12 @@ class MiroBuild (py2app):
 
     def fix_install_names(self):
         py_install_name = os.path.join("@executable_path", "..", "Frameworks", "Python.framework", "Versions", PYTHON_VERSION, "Python")
+        app_root = self._get_app_root()
 
-        fasttypes_mod = os.path.join("Miro.app", "Contents", "Resources", "lib", "python%s" % PYTHON_VERSION, "lib-dynload", "miro", "fasttypes.so")
+        fasttypes_mod = os.path.join(app_root, "Contents", "Resources", "lib", "python%s" % PYTHON_VERSION, "lib-dynload", "miro", "fasttypes.so")
         os.system('install_name_tool -change %s %s %s' % (PYTHON_LIB, py_install_name, fasttypes_mod))
 
-        libtorrent_so = os.path.join("Miro.app", "Contents", "Resources", "lib", "python%s" % PYTHON_VERSION, "lib-dynload", "libtorrent.so")
+        libtorrent_so = os.path.join(app_root, "Contents", "Resources", "lib", "python%s" % PYTHON_VERSION, "lib-dynload", "libtorrent.so")
         os.system('install_name_tool -change %s %s %s' % (PYTHON_LIB, py_install_name, libtorrent_so))
 
     def fix_frameworks_alias(self):
