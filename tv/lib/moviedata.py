@@ -161,7 +161,7 @@ class MovieDataUpdater(signals.SignalEmitter):
                     break
                 signals.system.failed_exn(
                     "When running external movie data program")
-                self.update_finished(mdi.item, -1, None, mediatype)
+                self.update_finished(mdi.item, -1, None, None)
             self.emit('end-loop')
 
     def run_movie_data_program(self, command_line, env):
