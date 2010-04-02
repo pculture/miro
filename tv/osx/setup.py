@@ -366,8 +366,10 @@ class MiroBuild (py2app):
         self.copy_localization_files()
         if self.theme is not None:
             self.copy_theme_files()
-        if OS_VERSION >= 9 and not self.alias:
-            self.fix_install_names()
+        if not self.alias:
+            self.relocate_python_executable()
+            if OS_VERSION >= 9:
+                self.fix_install_names()
         
         self.clean_up_incomplete_lproj()
         self.clean_up_unwanted_data()
@@ -392,6 +394,7 @@ class MiroBuild (py2app):
         infoPlist['CFBundleDevelopmentRegion'] = 'en'
         infoPlist['CFBundleAllowMixedLocalizations'] = True
         infoPlist['CFBundleLocalizations'] = self.get_localizations_list()
+        infoPlist['PyExecutableName'] = os.path.join("@executable_path", "..", "Frameworks", "Python.framework", "Versions", PYTHON_VERSION, "bin", "python")
         
         self.plist = infoPlist
 
@@ -404,6 +407,32 @@ class MiroBuild (py2app):
             os.makedirs(dst_root)
         dst = os.path.join(dst_root, 'libtorrent.so')
         shutil.copy(src, dst)
+
+    def relocate_python_executable(self):
+        # In certain unknown circumstances, Mac OS will launch the embedded
+        # python executable instead of the Miro executable when the application
+        # is double clicked in the Finder, and since OS X LaunchServices pass
+        # a -psn_X_Y parameter representing the process serial number which
+        # python does not understand, bad things happen, as described in #13120.
+        # There is currently zero clue as to why this happens, but the workaround
+        # is simply to move the python executable to another location in the 
+        # application bundle, which prevents OS X to pick it as the main executable.
+        # (This also requires to add the PyExecutableName entry to the Info.plist, 
+        # which is done in setup_info_plist above).
+        
+        print "Relocating python executable"
+        source = os.path.join("Miro.app", "Contents", "MacOS", "python")
+        target = os.path.join("Miro.app", "Contents", "Frameworks", "Python.framework", "Versions", PYTHON_VERSION, "bin")
+        if not os.path.exists(target):
+            os.mkdir(target)
+        shutil.move(source, target)
+
+        # Note that we obviously also need to update the executable install name.
+        
+        py_exe = os.path.join(target, "python")
+        old_install_name = os.path.join("@executable_path", "..", "Frameworks", "Python.framework", "Versions", PYTHON_VERSION, "Python")
+        new_install_name = os.path.join("@executable_path", "..", "Python")
+        os.system('install_name_tool -change %s %s %s' % (old_install_name, new_install_name, py_exe))
 
     def fix_install_names(self):
         py_install_name = os.path.join("@executable_path", "..", "Frameworks", "Python.framework", "Versions", PYTHON_VERSION, "Python")
