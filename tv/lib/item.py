@@ -1735,7 +1735,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 self.set_filename(filenamePath)
 
     def __str__(self):
-        return "Item - %s" % self.get_title()
+        return "Item - %s" % stringify(self.get_title())
 
 class FileItem(Item):
     """An Item that exists as a local file

@@ -79,6 +79,7 @@ import threading
 
 from miro import eventloop
 from miro import signals
+from miro import util
 from miro.gtcache import gettext as _
 
 class DialogButton(object):
@@ -87,7 +88,7 @@ class DialogButton(object):
     def __eq__(self, other):
         return isinstance(other, DialogButton) and self.text == other.text
     def __str__(self):
-        return "DialogButton(%r)" % self.text
+        return "DialogButton(%r)" % util.stringify(self.text)
 
 BUTTON_OK = DialogButton(_("Ok"))
 BUTTON_APPLY = DialogButton(_("Apply"))

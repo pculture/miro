@@ -109,7 +109,8 @@ class NetworkError(Exception):
 
     def __str__(self):
         return "%s: %s -- %s" % (self.__class__,
-                self.getFriendlyDescription(), self.getLongDescription())
+                util.stringify(self.getFriendlyDescription()), 
+                util.stringify(self.getLongDescription()))
 
 class ConnectionError(NetworkError):
     def __init__(self, errorMessage):
