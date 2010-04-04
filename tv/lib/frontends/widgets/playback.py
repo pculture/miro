@@ -486,10 +486,10 @@ class PlaybackManager (signals.SignalEmitter):
         if isinstance(obj, widgetset.AudioPlayer):
             self.play_next_movie(False)
 
-    def play_next_movie(self, save_resume_time=True):
+    def play_next_item(self, save_resume_time=True):
         self.play_from_position(self.position + 1, save_resume_time)
 
-    def play_prev_movie(self, save_resume_time=True):
+    def play_prev_item(self, save_resume_time=True):
         self.play_from_position(self.position - 1, save_resume_time)
 
     def play_from_position(self, new_position, save_resume_time=True):

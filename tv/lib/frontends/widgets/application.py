@@ -266,10 +266,10 @@ class Application:
         app.playback_manager.stop()
 
     def on_forward_clicked(self, button=None):
-        app.playback_manager.play_next_movie()
+        app.playback_manager.play_next_item()
 
     def on_previous_clicked(self, button=None):
-        app.playback_manager.play_prev_movie()
+        app.playback_manager.play_prev_item()
 
     def on_skip_forward(self):
         app.playback_manager.skip_forward()
