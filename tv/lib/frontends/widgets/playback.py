@@ -489,7 +489,27 @@ class PlaybackManager (signals.SignalEmitter):
     def play_next_item(self, save_resume_time=True):
         self.play_from_position(self.position + 1, save_resume_time)
 
-    def play_prev_item(self, save_resume_time=True):
+    def play_prev_item(self, save_resume_time=True, from_user=False):
+        """
+        :param save_resume_time: whether or not to save the resume
+                                 time of the currently playing item
+                                 before switching to the previous
+                                 item.
+        :param from_user: whether or not play_prev_item is being
+                          called as a resume of the user pressing a
+                          'prev' button or menu item.
+        """
+        # if the user pressed a prev button or menu item and the
+        # current elapsed time is 3 seconds or greater, then we seek
+        # to the beginning of the item.
+        #
+        # otherwise, we move to the previous item in the play list.
+        if from_user:
+            current_time = self.player.get_elapsed_playback_time()
+            if current_time > 3:
+                self.seek_to(0)
+                return
+
         self.play_from_position(self.position - 1, save_resume_time)
 
     def play_from_position(self, new_position, save_resume_time=True):

@@ -341,7 +341,7 @@ class OverlayPalette (NSWindowController):
         app.playback_manager.toggle_detached_mode()
 
     def skipBackward_(self, sender):
-        app.playback_manager.play_prev_item()
+        app.playback_manager.play_prev_item(from_user=True)
 
     def fastBackward_(self, sender):
         self.fastSeek(-1)

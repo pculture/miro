@@ -269,7 +269,7 @@ class Application:
         app.playback_manager.play_next_item()
 
     def on_previous_clicked(self, button=None):
-        app.playback_manager.play_prev_item()
+        app.playback_manager.play_prev_item(from_user=True)
 
     def on_skip_forward(self):
         app.playback_manager.skip_forward()
