@@ -352,7 +352,7 @@ class PlaybackManager (signals.SignalEmitter):
 
     def on_movie_finished(self):
         self.update_current_resume_time(0)
-        self.play_next_movie(False)
+        self.play_next_item(False)
 
     def schedule_mark_as_watched(self, id_):
         self.mark_as_watched_timeout = timer.add(3, self.mark_as_watched, id_)
@@ -484,7 +484,7 @@ class PlaybackManager (signals.SignalEmitter):
     def _on_cant_play(self, obj):
         self.emit('cant-play-file')
         if isinstance(obj, widgetset.AudioPlayer):
-            self.play_next_movie(False)
+            self.play_next_item(False)
 
     def play_next_item(self, save_resume_time=True):
         self.play_from_position(self.position + 1, save_resume_time)

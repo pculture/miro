@@ -435,7 +435,7 @@ class CantPlayWidget(widgetset.SolidBackground):
         app.widgetapp.open_file(self.video_path)
 
     def _on_skip(self, button):
-        app.playback_manager.play_next_movie(False)
+        app.playback_manager.play_next_item(False)
 
     def set_video_path(self, video_path):
         self.video_path = video_path
