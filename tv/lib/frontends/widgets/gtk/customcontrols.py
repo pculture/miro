@@ -145,6 +145,18 @@ class CustomScaleMixin(CustomControlMixin):
             wrappermap.wrapper(self).emit('changed', self.get_value())
         wrappermap.wrapper(self).emit('released')
 
+    def do_scroll_event(self, event):
+        # FIXME: seems like there should be a better way to do this with
+        # super(), but I can't figure it out (BDK)
+        if self.is_horizontal():
+            gtk.HScale.do_scroll_event(self, event)
+        else:
+            gtk.VScale.do_scroll_event(self, event)
+        # Treat mouse scrolls as if the user clicked on the new position
+        wrappermap.wrapper(self).emit('pressed')
+        wrappermap.wrapper(self).emit('changed', self.get_value())
+        wrappermap.wrapper(self).emit('released')
+
 class CustomHScaleWidget(CustomScaleMixin, gtk.HScale):
     def __init__(self):
         CustomScaleMixin.__init__(self)
