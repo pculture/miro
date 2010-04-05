@@ -1192,9 +1192,10 @@ class HTTPConnection(ConnectionHandler):
         
     def handleClose(self, type):
         oldState = self.state
+        last_data = self.buffer.read()
         self.closeConnection()
         if oldState == 'response-body' and self.contentLength is None:
-            self.body = self.buffer.read()
+            self.body = last_data
             self.finishRequest()
         elif self.stream.timedOut:
             self.errback(ConnectionTimeout(self.host))
