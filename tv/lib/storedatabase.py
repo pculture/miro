@@ -74,7 +74,7 @@ from miro import prefs
 from miro import util
 from miro.download_utils import next_free_filename
 from miro.gtcache import gettext as _
-from miro.plat.utils import FilenameType, filenameToUnicode, unicodeToFilename
+from miro.plat.utils import FilenameType, filenameToUnicode
 
 class UpgradeError(Exception):
     """While upgrading the database, we ran out of disk space."""
@@ -943,7 +943,7 @@ class SQLiteConverter(object):
         for key in filename_fields:
             value = status_dict.get(key)
             if value is not None:
-                status_dict[key] = unicodeToFilename(value)
+                status_dict[key] = self._unicode_to_filename(value)
         return status_dict
 
     def _convert_status_to_sql(self, status_dict):
