@@ -143,6 +143,7 @@ class Renderer:
 
         logging.info("GStreamer audiosink: %s", audiosink)
 
+        self.supports_subtitles = True
         self.playbin = None
         self.bus = None
         self.watch_ids = []
@@ -331,11 +332,15 @@ class VideoRenderer(Renderer):
         Renderer.build_playbin(self)
         self.watch_ids.append(self.bus.connect('sync-message::element', self.on_sync_message))
         self.playbin.set_property("video-sink", self.videosink)
-        self.playbin.set_property("text-sink", self.textsink)
+        try:
+            self.playbin.set_property("text-sink", self.textsink)
+        except TypeError:
+            logging.warning("this platform has an old version of playbin2--no subtitle support.")
+            self.supports_subtitles = False
 
     def select_file(self, filename, callback, errback, sub_filename=""):
         Renderer.select_file(self, filename, callback, errback, sub_filename)
-        if sub_filename != "":
+        if sub_filename != "" and self.supports_subtitles:
             self.pick_subtitle_track = 0
 
     def on_sync_message(self, bus, message):
@@ -381,14 +386,14 @@ class VideoRenderer(Renderer):
 
     def finish_select_file(self):
         Renderer.finish_select_file(self)
-        if hasattr(self, "pick_subtitle_track"):
+        if hasattr(self, "pick_subtitle_track") and self.supports_subtitles:
             flags = self.playbin.get_property('flags')
             self.playbin.set_properties(flags=flags | GST_PLAY_FLAG_TEXT,
                                         current_text=0)
             del self.__dict__["pick_subtitle_track"]
             return
 
-        if config.get(prefs.ENABLE_SUBTITLES):
+        if config.get(prefs.ENABLE_SUBTITLES) and self.supports_subtitles:
             default_track = self.get_enabled_subtitle_track()
             if default_track is None:
                 tracks = self.get_subtitle_tracks()
@@ -398,6 +403,8 @@ class VideoRenderer(Renderer):
     def _get_subtitle_track_name(self, index):
         """Returns the language for the track at the specified index.
         """
+        if not self.supports_subtitles:
+            return None
         tag_list = self.playbin.emit("get-text-tags", index)
         lang = None
         if tag_list is not None and gst.TAG_LANGUAGE_CODE in tag_list:
@@ -412,6 +419,8 @@ class VideoRenderer(Renderer):
         """Returns the language for the file at the specified
         filename.
         """
+        if not self.supports_subtitles:
+            return None
         basename, ext = os.path.splitext(filename)
         movie_file, code = os.path.splitext(basename)
 
@@ -435,7 +444,7 @@ class VideoRenderer(Renderer):
         """Returns a dict of index -> (language, filename) for available
         tracks.
         """
-        if not self.playbin:
+        if not self.playbin or not self.supports_subtitles:
             return {}
 
         tracks = {}
@@ -463,16 +472,22 @@ class VideoRenderer(Renderer):
         """Returns a 2-tuple of (index, language) for available
         tracks.
         """
+        if not self.supports_subtitles:
+            return []
         tracks = [(index, filename)
                   for index, (filename, language) in self.get_subtitles().items()]
         return tracks
 
     def get_enabled_subtitle_track(self):
+        if not self.supports_subtitles:
+            return None
         if self.enabled_track is not None:
             return self.enabled_track
         return self.playbin.get_property("current-text")
 
     def enable_subtitle_track(self, track_index):
+        if not self.supports_subtitles:
+            return
         tracks = self.get_subtitles()
         if tracks.get(track_index) is None:
             return
@@ -499,11 +514,15 @@ class VideoRenderer(Renderer):
                                     current_text=track_index)
 
     def disable_subtitles(self):
+        if not self.supports_subtitles:
+            return
         flags = self.playbin.get_property('flags')
         self.playbin.set_property('flags', flags & ~GST_PLAY_FLAG_TEXT)
 
     def select_subtitle_file(self, iteminfo, sub_path,
                              handle_successful_select):
+        if not self.supports_subtitles:
+            return
         def handle_ok():
             handle_successful_select()
         def handle_err():
