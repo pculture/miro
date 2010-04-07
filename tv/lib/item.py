@@ -331,12 +331,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.split_item()
 
     def setup_restored(self):
-        # For unknown reason(s), some users still have databases with
-        # item objects missing the isContainerItem attribute even
-        # after a db upgrade (#8819).
-
-        if not hasattr(self, 'isContainerItem'):
-            self.isContainerItem = None
         self.setup_common()
         self.setup_links()
 
