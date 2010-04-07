@@ -1678,14 +1678,18 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             # In split_item() we found out that all our children were
             # deleted, so we were removed as well.  (#11979)
             return
+        eventloop.add_idle(self.check_deleted, 'checking item deleted')
+        if self.screenshot and not fileutil.exists(self.screenshot):
+            self.screenshot = None
+            self.signal_change()
+
+    def check_deleted(self):
+        if not self.id_exists():
+            return
         if (self.isContainerItem is not None and
                 not fileutil.exists(self.get_filename()) and
                 not hasattr(app, 'in_unit_tests')):
             self.expire()
-            return
-        if self.screenshot and not fileutil.exists(self.screenshot):
-            self.screenshot = None
-            self.signal_change()
 
     def _get_downloader(self):
         try:
