@@ -176,6 +176,9 @@ class EventLoopTest(MiroTestCase):
 
     def runEventLoop(self, timeout=10, timeoutNormal=False):
         eventloop.thread_pool_init()
+        eventloop._eventloop.quit_flag = False
+        eventloop._eventloop.idle_queue.quit_flag = False
+        eventloop._eventloop.urgent_queue.quit_flag = False
         try:
             self.hadToStopEventLoop = False
             timeout = eventloop.add_timeout(timeout, self.stopEventLoop, 
