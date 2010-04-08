@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-02-01 16:20+0000\n"
+"PO-Revision-Date: 2010-03-30 20:53+0000\n"
 "Last-Translator: duw <Unknown>\n"
 "Language-Team: Welsh <cy@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : (n != 8 || n != 11) ? "
 "2 : 3;\n"
-"X-Launchpad-Export-Date: 2010-03-23 16:08+0000\n"
+"X-Launchpad-Export-Date: 2010-04-08 19:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -144,11 +144,11 @@ msgstr "Gwall mewnol: Dim yn barod i yrru"
 
 #: ../../portable/frontends/widgets/playback.py:551
 msgid "Open Subtitles File..."
-msgstr ""
+msgstr "Agor Ffeil Is-deitlau..."
 
 #: ../../portable/frontends/widgets/playback.py:552
 msgid "Subtitle files"
-msgstr ""
+msgstr "Ffeiliau Is-deitlau"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -394,7 +394,7 @@ msgstr "Arall"
 
 #: ../../portable/frontends/widgets/itemedit.py:157
 msgid "Path:"
-msgstr ""
+msgstr "Llwybr:"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
@@ -574,15 +574,15 @@ msgstr "Copïwch yr URL i'r clipfwrdd"
 #: ../../portable/frontends/widgets/tablist.py:576
 #: ../../portable/frontends/widgets/application.py:726
 msgid "Rename Website"
-msgstr ""
+msgstr "Ailenwi Gwefan"
 
 #: ../../portable/frontends/widgets/tablist.py:577
 msgid "Remove Website"
-msgstr ""
+msgstr "Tynnu Gwefan"
 
 #: ../../portable/frontends/widgets/tablist.py:581
 msgid "Remove Websites"
-msgstr ""
+msgstr "Tynnu Gwefannau"
 
 #: ../../portable/frontends/widgets/tablist.py:657
 msgid "Update Feeds In Folder"
@@ -999,7 +999,7 @@ msgstr "Analluogi Is-deitlau"
 #: ../../portable/frontends/widgets/gtk/video.py:390
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:387
 msgid "Select a Subtitles file..."
-msgstr ""
+msgstr "Dewiswch ffeil is-deitlau"
 
 #: ../../portable/frontends/widgets/gtk/window.py:650
 msgid "All files"
@@ -1217,15 +1217,15 @@ msgstr "Cadwch yr Eitem Fel..."
 #: ../../portable/frontends/widgets/application.py:563
 #: ../../portable/frontends/widgets/menus.py:220
 msgid "Add Website"
-msgstr ""
+msgstr "Ychwanegwch Wefan"
 
 #: ../../portable/frontends/widgets/application.py:564
 msgid "Enter the URL of the website to add"
-msgstr ""
+msgstr "Rhowch URL y wefan i'w hychwanegu"
 
 #: ../../portable/frontends/widgets/application.py:565
 msgid "Add Website - Invalid URL"
-msgstr ""
+msgstr "Ychwanegu Gwefan - URL Annilys"
 
 #: ../../portable/frontends/widgets/application.py:566
 msgid ""
@@ -1234,6 +1234,10 @@ msgid ""
 "\n"
 "Enter the URL of the website to add"
 msgstr ""
+"Nid yw'r url hwn yn ddilys.\n"
+"Gwiriwch yr URL a cheisio eto.\n"
+"\n"
+"Rhowch URL y wefan i'w hychwanegu"
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
@@ -1294,7 +1298,7 @@ msgstr "Rhowch enw newydd am y ffolder rhestr chwarae %(name)s"
 #: ../../portable/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the website %(name)s"
-msgstr ""
+msgstr "Rhowch enw newydd i'r wefan %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
@@ -1316,15 +1320,19 @@ msgstr[3] "Ydych wir am dynnu'r rhestrau chwarae?"
 #: ../../portable/frontends/widgets/application.py:773
 msgid "Remove website"
 msgid_plural "Remove websites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tynnwch wefan"
+msgstr[1] "Tynnwch wefan"
+msgstr[2] "Tynnwch wefannau"
+msgstr[3] "Tynnwch wefannau"
 
 #: ../../portable/frontends/widgets/application.py:775
 #, python-format
 msgid "Are you sure you want to remove this website?"
 msgid_plural "Are you sure you want to remove these %(count)s websites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ydych wir am dynnu'r wefan?"
+msgstr[1] "Ydych wir am dynnu'r wefan?"
+msgstr[2] "Ydych wir am dynnu'r gwefannau?"
+msgstr[3] "Ydych wir am dynnu'r gwefannau?"
 
 #: ../../portable/frontends/widgets/application.py:805
 msgid "Are you sure you want to quit?"
@@ -1564,7 +1572,7 @@ msgstr "_Tynnu Eitemau"
 
 #: ../../portable/frontends/widgets/menus.py:203
 msgid "_Edit Item"
-msgstr ""
+msgstr "_Golygu Eitem"
 
 #: ../../portable/frontends/widgets/menus.py:205
 msgid "Save Item _As"
@@ -1580,7 +1588,7 @@ msgstr "Copïo Eitem_URL"
 
 #: ../../portable/frontends/widgets/menus.py:213
 msgid "_Preferences"
-msgstr ""
+msgstr "_Hoffterau"
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
@@ -1608,11 +1616,11 @@ msgstr "Aile_nwi"
 
 #: ../../portable/frontends/widgets/menus.py:231
 msgid "Re_name Feed"
-msgstr ""
+msgstr "Aile_nwi Ffrwd"
 
 #: ../../portable/frontends/widgets/menus.py:232
 msgid "Re_name Website"
-msgstr ""
+msgstr "Aile_nwi Gwefan"
 
 #: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
@@ -1620,11 +1628,11 @@ msgstr "_Tynnu"
 
 #: ../../portable/frontends/widgets/menus.py:237
 msgid "_Remove Feed"
-msgstr ""
+msgstr "_Tynnu Ffrwd"
 
 #: ../../portable/frontends/widgets/menus.py:238
 msgid "_Remove Feeds"
-msgstr ""
+msgstr "_Tynnu Ffrydiau"
 
 #: ../../portable/frontends/widgets/menus.py:239
 msgid "_Remove Folder"
@@ -1632,15 +1640,15 @@ msgstr "_Tynnu Folder"
 
 #: ../../portable/frontends/widgets/menus.py:240
 msgid "_Remove Folders"
-msgstr ""
+msgstr "_Tynnu Ffolderi"
 
 #: ../../portable/frontends/widgets/menus.py:241
 msgid "_Remove Website"
-msgstr ""
+msgstr "_Tynnu Gwefan"
 
 #: ../../portable/frontends/widgets/menus.py:242
 msgid "_Remove Websites"
-msgstr ""
+msgstr "_Tynnu Gwefannau"
 
 #: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
@@ -1757,7 +1765,7 @@ msgstr "_Isdeitlau"
 
 #: ../../portable/frontends/widgets/menus.py:315
 msgid "Select a Subtitles File..."
-msgstr ""
+msgstr "Dewiswch Ffeil Is-deitlau"
 
 #: ../../portable/frontends/widgets/menus.py:321
 #: ../../portable/frontends/widgets/menus.py:333
@@ -1982,8 +1990,10 @@ msgstr[3] "%(count)d Ffrwd wedi'u Dewis"
 #, python-format
 msgid "%(count)d Website Selected"
 msgid_plural "%(count)d Websites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Gwefan wedi'i Dewis"
+msgstr[1] "%(count)d Gwefan wedi'i Dewis"
+msgstr[2] "%(count)d Gwefan wedi'u Dewis"
+msgstr[3] "%(count)d Gwefan wedi'u Dewis"
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
@@ -2752,7 +2762,7 @@ msgstr "Ceisio eto"
 
 #: ../../portable/dialogs.py:128
 msgid "Start Fresh"
-msgstr ""
+msgstr "Dechrau o'r Newydd"
 
 #: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"
@@ -2907,6 +2917,7 @@ msgstr "Torrent Annilys"
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
 msgstr ""
+"Mae'n debyg bod y ffeil %(filename)s ar chwâl a does dim modd ei hagor."
 
 #: ../../portable/searchengines.py:179
 msgid "Search All"
@@ -2919,7 +2930,7 @@ msgstr "Rhestr Chwarae Enghreifftiol"
 #: ../../portable/storedatabase.py:208
 #, python-format
 msgid "%(appname)s database upgrade failed"
-msgstr ""
+msgstr "Diweddariad crofna ddata %(appname)s wedi methu"
 
 #: ../../portable/storedatabase.py:211
 #, python-format
@@ -2935,10 +2946,20 @@ msgid ""
 "Finally, you can start fresh and your damaged database will be removed, but "
 "you will have to re-add your feeds and media files."
 msgstr ""
+"Rydym yn ymddiheuro, roedd %(appname)s wedi methu â diweddaru'ch cronfa "
+"ddata oherwydd gwallau.\n"
+"\n"
+"Gwiriwch nid yw'ch disgen galed yn llawn. Os ydyw, ceuwch  %(appname)s, "
+"rhyddhau ychydig o le, ac ailddechrau %(appname)s.\n"
+"\n"
+"Os oes digon o le, ceuwch ac adroddwch y 'byg' ar bugzilla.pculture.org.\n"
+"\n"
+"Gallwch ddechrau o'r newydd a chaiff eich cronfa ddata ddiffygiol ei thynnu, "
+"OND bydd yn rhaid i chi ail-ychwanegu eich ffrydiau a'ch ffeiliau cyfrwng."
 
 #: ../../portable/storedatabase.py:267
 msgid "Database was created by a newer version of Miro "
-msgstr ""
+msgstr "Cafodd y gronfa ddata ei chreu gan fersiwn cynt o Miro "
 
 #: ../../portable/storedatabase.py:656
 #, python-format
@@ -2974,6 +2995,21 @@ msgid ""
 "Error: %(error_text)s\n"
 "\n"
 msgstr ""
+"Methodd %(appname)s â chadw ei gronfa ddata.\n"
+"\n"
+"Os ydy'r ddisgen galed yn llawn, gwnewch le arni a cheiswch eto. Os nac "
+"ydy'r ddisgen yn llawn, mae'n bosib efallai bydd ceisio eto yn gweithio beth "
+"bynnag.\n"
+"\n"
+"Os na weithiodd hwnna, ceuwch %(appname)s ac ailddechrau. Mae'n bosib bydd "
+"newidiadau diweddar yn cael ei golli.\n"
+"\n"
+"Os ydych yn gweld y gwall hwn yn aml wrth lawrlwytho, rydym yn awgrymu eich "
+"bod yn lleihau nifer y lawrlwythiadau cydamserol yn y deialog Opsiynau ar y "
+"tab Lawrlwytho.\n"
+"\n"
+"Gwall: %(error_text)s\n"
+"\n"
 
 #: ../../portable/util.py:375 ../../portable/util.py:377
 #, python-format
@@ -3107,12 +3143,12 @@ msgstr "Llunydd fideo:"
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:446
 #, python-format
 msgid "Track %(tracknumber)d"
-msgstr ""
+msgstr "Trac %(tracknumber)d"
 
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:456
 #, python-format
 msgid "Subtitle file %(tracknumber)d"
-msgstr ""
+msgstr "Ffeil Is-deitl %(tracknumber)d"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:178
 msgid "Download Completed"

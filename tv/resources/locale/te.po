@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-02-21 12:44+0000\n"
-"Last-Translator: చక్రవర్తి <Unknown>\n"
+"PO-Revision-Date: 2010-03-30 13:08+0000\n"
+"Last-Translator: వీవెన్ (Veeven) <Unknown>\n"
 "Language-Team: Telugu <te@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-03-23 16:09+0000\n"
+"X-Launchpad-Export-Date: 2010-04-08 19:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -358,7 +358,7 @@ msgstr "ఇతరములు"
 
 #: ../../portable/frontends/widgets/itemedit.py:157
 msgid "Path:"
-msgstr ""
+msgstr "త్రోవ:"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
@@ -421,7 +421,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:500
 msgid "Cancel All"
-msgstr ""
+msgstr "అన్నింటినీ రద్దుచేయి"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:507
 msgid "Download Settings"
@@ -940,7 +940,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/menus.py:312
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:380
 msgid "None Available"
-msgstr ""
+msgstr "ఏమీ అందుబాటులో లేవు"
 
 #: ../../portable/frontends/widgets/gtk/video.py:379
 #: ../../portable/frontends/widgets/gtk/window.py:267
@@ -1040,7 +1040,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:356
 msgid "The following files do not exist:"
-msgstr ""
+msgstr "ఈ క్రింది దస్త్రం లేనే లేదు:"
 
 #: ../../portable/frontends/widgets/application.py:393
 msgid "New Download"
@@ -1075,8 +1075,8 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:430
 msgid "Remove item"
 msgid_plural "Remove items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "అంశాన్ని తొలగించు"
+msgstr[1] "అంశాలని తొలగించు"
 
 #: ../../portable/frontends/widgets/application.py:434
 msgid ""
@@ -1258,7 +1258,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:232
 msgid "From"
-msgstr ""
+msgstr "నుండి"
 
 #: ../../portable/frontends/widgets/style.py:233
 msgid "File name:"
@@ -1266,11 +1266,11 @@ msgstr "ఫైలు పేరు:"
 
 #: ../../portable/frontends/widgets/style.py:234
 msgid "Show More"
-msgstr ""
+msgstr "మరిన్ని చూపించు"
 
 #: ../../portable/frontends/widgets/style.py:235
 msgid "Show Less"
-msgstr ""
+msgstr "తక్కుప చూపించు"
 
 #: ../../portable/frontends/widgets/style.py:238
 #, python-format
@@ -1297,7 +1297,7 @@ msgstr "ఫైలు URL"
 
 #: ../../portable/frontends/widgets/style.py:242
 msgid "License Page"
-msgstr ""
+msgstr "లైసెన్సు పుట"
 
 #: ../../portable/frontends/widgets/style.py:243
 msgid "File Type"
@@ -1469,11 +1469,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:213
 msgid "_Preferences"
-msgstr ""
+msgstr "_అభిరుచులు"
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
-msgstr ""
+msgstr "నిష్క్రమించు (_Q)"
 
 #: ../../portable/frontends/widgets/menus.py:217
 msgid "_Sidebar"
@@ -1778,8 +1778,8 @@ msgstr[1] ""
 #, python-format
 msgid "%(count)d Paused Item"
 msgid_plural "%(count)d Paused Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d నిలిపివేసిన అంశం"
+msgstr[1] "%(count)d నిలిపివేసిన అంశాలు"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:269
 msgid "Restart Upload"
@@ -1806,7 +1806,7 @@ msgstr "ఫైలు రకం:"
 
 #: ../../portable/frontends/widgets/displays.py:393
 msgid "Skip"
-msgstr ""
+msgstr "వదిలివేయి"
 
 #: ../../portable/frontends/widgets/displays.py:430
 msgid "Open Externally"
@@ -2124,7 +2124,7 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/browser.py:96
 msgid "Open in browser"
-msgstr ""
+msgstr "విహారిణిలో తెరువు"
 
 #: ../../portable/frontends/widgets/browser.py:102
 msgid "Download this video"
@@ -2148,7 +2148,7 @@ msgstr "దీనిలో:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:87
 msgid "Feed:"
-msgstr ""
+msgstr "ఫీడు:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:93
 msgid "Search engine:"
@@ -2288,7 +2288,7 @@ msgstr[1] ""
 #: ../../portable/displaytext.py:149
 #, python-format
 msgid "%(month)s %(dayofmonth)s, %(year)s"
-msgstr ""
+msgstr "%(month)s %(dayofmonth)s, %(year)s"
 
 #: ../../portable/playlist.py:201
 #, python-format
@@ -2362,7 +2362,7 @@ msgstr ""
 
 #: ../../portable/singleclick.py:67
 msgid "It has already been downloaded."
-msgstr ""
+msgstr "దీన్ని ఇప్పటికే దించుకొని ఉన్నారు."
 
 #: ../../portable/singleclick.py:99
 msgid "File Download"
@@ -2451,7 +2451,7 @@ msgstr "సరె"
 
 #: ../../portable/dialogs.py:93
 msgid "Apply"
-msgstr ""
+msgstr "ఆపాదించు"
 
 #: ../../portable/dialogs.py:96
 msgid "Done"
@@ -2543,7 +2543,7 @@ msgstr "స్థాపించకు"
 
 #: ../../portable/dialogs.py:125
 msgid "Subscribe"
-msgstr ""
+msgstr "చందాచేరు"
 
 #: ../../portable/dialogs.py:126
 msgid "Stop Watching"
@@ -2992,7 +2992,7 @@ msgstr "కిటికీ"
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:227
 #, python-format
 msgid "%(appname)s Help"
-msgstr ""
+msgstr "%(appname)s సహాయం"
 
 #~ msgid "SITES"
 #~ msgstr "సైట్లు"

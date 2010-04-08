@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-02-03 13:19+0000\n"
-"Last-Translator: eentje <rene@getzenned.nl>\n"
+"PO-Revision-Date: 2010-03-30 15:05+0000\n"
+"Last-Translator: Sander Akkermans <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-03-23 16:09+0000\n"
+"X-Launchpad-Export-Date: 2010-04-08 19:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:174
@@ -158,11 +158,11 @@ msgstr "Interne fout: niet gereed om te verzenden"
 
 #: ../../portable/frontends/widgets/playback.py:551
 msgid "Open Subtitles File..."
-msgstr ""
+msgstr "open ondertitels bestand"
 
 #: ../../portable/frontends/widgets/playback.py:552
 msgid "Subtitle files"
-msgstr ""
+msgstr "ondertitels bestand"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -283,7 +283,7 @@ msgstr "Naam:"
 
 #: ../../portable/frontends/widgets/newfolder.py:69
 msgid "Folder should go in this section:"
-msgstr ""
+msgstr "bestand moet verplaatst worden naar:"
 
 #: ../../portable/frontends/widgets/newfolder.py:71
 #: ../../portable/frontends/widgets/newfeed.py:72
@@ -384,7 +384,7 @@ msgstr "Overige"
 
 #: ../../portable/frontends/widgets/itemedit.py:157
 msgid "Path:"
-msgstr ""
+msgstr "Pad:"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
@@ -556,15 +556,15 @@ msgstr "Kopieer URL"
 #: ../../portable/frontends/widgets/tablist.py:576
 #: ../../portable/frontends/widgets/application.py:726
 msgid "Rename Website"
-msgstr ""
+msgstr "Hernoem website"
 
 #: ../../portable/frontends/widgets/tablist.py:577
 msgid "Remove Website"
-msgstr ""
+msgstr "Verwijder website"
 
 #: ../../portable/frontends/widgets/tablist.py:581
 msgid "Remove Websites"
-msgstr ""
+msgstr "Verwijder websites"
 
 #: ../../portable/frontends/widgets/tablist.py:657
 msgid "Update Feeds In Folder"
@@ -974,7 +974,7 @@ msgstr "Ondertitels uitschakelen"
 #: ../../portable/frontends/widgets/gtk/video.py:390
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:387
 msgid "Select a Subtitles file..."
-msgstr ""
+msgstr "Selecteer een ondertitel bestand"
 
 #: ../../portable/frontends/widgets/gtk/window.py:650
 msgid "All files"
@@ -1038,6 +1038,21 @@ msgid ""
 "If you quit, then you can connect the drive or otherwise fix the problem and "
 "relaunch %(shortappname)s."
 msgstr ""
+"%(shortappname)s kan geen gebruik maken van de primaire video map in:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"Dit kan de volgende oorzaken hebben: mogelijk bevindt het zich op een een "
+"externe schijf die niet is aangesloten, is het een map waarvoor "
+"%(shortappname)s geen schrijf-permissie heeft, of het is een map die niet in "
+"het path voorkomt.\n"
+"\n"
+"Als u verder gaat, dan zal de primaire video map worden gereset naar een "
+"locatie op deze schijf. Als u video's gedownload had, dan zal dit ertoe "
+"leiden dat %(shortappname)s alle details over die video's verliest.\n"
+"\n"
+"Als u stopt, dan kunt u de juiste schijf aansluiten of het probleem op een "
+"andere manier verhelpen en vervolgens %(shortappname)s opnieuw starten."
 
 #: ../../portable/frontends/widgets/application.py:330
 msgid "Error Revealing File"
@@ -1162,15 +1177,15 @@ msgstr "Bewaar als..."
 #: ../../portable/frontends/widgets/application.py:563
 #: ../../portable/frontends/widgets/menus.py:220
 msgid "Add Website"
-msgstr ""
+msgstr "Voeg website toe"
 
 #: ../../portable/frontends/widgets/application.py:564
 msgid "Enter the URL of the website to add"
-msgstr ""
+msgstr "Type url van website in om toe te voegen"
 
 #: ../../portable/frontends/widgets/application.py:565
 msgid "Add Website - Invalid URL"
-msgstr ""
+msgstr "Voeg website toe - ongeldige url"
 
 #: ../../portable/frontends/widgets/application.py:566
 msgid ""
@@ -1179,6 +1194,10 @@ msgid ""
 "\n"
 "Enter the URL of the website to add"
 msgstr ""
+"De url die is ingetypt is niet geldig\n"
+"Controleer de url en probeer nogmaals\n"
+"\n"
+"Type de url van een website om toe te voegen"
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
@@ -1239,7 +1258,7 @@ msgstr "Geef een nieuwe naam op voor de afspeellijstmap %(name)s"
 #: ../../portable/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the website %(name)s"
-msgstr ""
+msgstr "voer een nieuwe naam in voor de website %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
@@ -1258,15 +1277,15 @@ msgstr[1] ""
 #: ../../portable/frontends/widgets/application.py:773
 msgid "Remove website"
 msgid_plural "Remove websites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Verwijder website"
+msgstr[1] "Verwijder websites"
 
 #: ../../portable/frontends/widgets/application.py:775
 #, python-format
 msgid "Are you sure you want to remove this website?"
 msgid_plural "Are you sure you want to remove these %(count)s websites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Weet je zeker dat je deze website wil verwijderen?"
+msgstr[1] "Weet je zeker dat je deze websites %(count)s wil verwijderen?"
 
 #: ../../portable/frontends/widgets/application.py:805
 msgid "Are you sure you want to quit?"
@@ -1505,7 +1524,7 @@ msgstr "Items ve_rwijderen"
 
 #: ../../portable/frontends/widgets/menus.py:203
 msgid "_Edit Item"
-msgstr ""
+msgstr "_Item bewerken"
 
 #: ../../portable/frontends/widgets/menus.py:205
 msgid "Save Item _As"
@@ -1521,7 +1540,7 @@ msgstr "Kopieer _URL"
 
 #: ../../portable/frontends/widgets/menus.py:213
 msgid "_Preferences"
-msgstr ""
+msgstr "_voorkeuren"
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
@@ -1549,11 +1568,11 @@ msgstr "Her_noem"
 
 #: ../../portable/frontends/widgets/menus.py:231
 msgid "Re_name Feed"
-msgstr ""
+msgstr "Her_noem feed"
 
 #: ../../portable/frontends/widgets/menus.py:232
 msgid "Re_name Website"
-msgstr ""
+msgstr "Her_noem website"
 
 #: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
@@ -1561,11 +1580,11 @@ msgstr "Ve_rwijder"
 
 #: ../../portable/frontends/widgets/menus.py:237
 msgid "_Remove Feed"
-msgstr ""
+msgstr "_verwijder feed"
 
 #: ../../portable/frontends/widgets/menus.py:238
 msgid "_Remove Feeds"
-msgstr ""
+msgstr "_verwijder feeds"
 
 #: ../../portable/frontends/widgets/menus.py:239
 msgid "_Remove Folder"
@@ -1573,15 +1592,15 @@ msgstr "Ve_rwijder map"
 
 #: ../../portable/frontends/widgets/menus.py:240
 msgid "_Remove Folders"
-msgstr ""
+msgstr "_verwijder mappen"
 
 #: ../../portable/frontends/widgets/menus.py:241
 msgid "_Remove Website"
-msgstr ""
+msgstr "_verwijder website"
 
 #: ../../portable/frontends/widgets/menus.py:242
 msgid "_Remove Websites"
-msgstr ""
+msgstr "_verwijder websites"
 
 #: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
@@ -1698,7 +1717,7 @@ msgstr "_Ondertitels"
 
 #: ../../portable/frontends/widgets/menus.py:315
 msgid "Select a Subtitles File..."
-msgstr ""
+msgstr "Selecteer een ondertitel bestand"
 
 #: ../../portable/frontends/widgets/menus.py:321
 #: ../../portable/frontends/widgets/menus.py:333
@@ -1900,8 +1919,8 @@ msgstr[1] "%(count)d podcasts geselecteerd"
 #, python-format
 msgid "%(count)d Website Selected"
 msgid_plural "%(count)d Websites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d website geselecteerd"
+msgstr[1] "%(count)d websites geselecteerd"
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
@@ -2634,7 +2653,7 @@ msgstr "Probeer opnieuw"
 
 #: ../../portable/dialogs.py:128
 msgid "Start Fresh"
-msgstr ""
+msgstr "Start opnieuw"
 
 #: ../../portable/messagehandler.py:1334
 msgid "Subscribed to new feed:"
@@ -2790,7 +2809,7 @@ msgstr "Afspeellijstvoorbeeld"
 #: ../../portable/storedatabase.py:208
 #, python-format
 msgid "%(appname)s database upgrade failed"
-msgstr ""
+msgstr "%(appname)s database verbeteren mislukt"
 
 #: ../../portable/storedatabase.py:211
 #, python-format
@@ -2806,6 +2825,19 @@ msgid ""
 "Finally, you can start fresh and your damaged database will be removed, but "
 "you will have to re-add your feeds and media files."
 msgstr ""
+"Sorry, %(appname)s was niet mogelijk je database te upgraden als gevolg van "
+"een fout\n"
+"\n"
+"Controleer of je schijf vol is. Als dit het geval is, sluit %(appname)s, "
+"maak schijfruimte vrij en start %(appname)s opnieuw.\n"
+"\n"
+"Als je harde schijf niet vol is, help ons het probleem op te sporen, door "
+"het programma te sluiten en dan een fout te rapporteren aan "
+"bugzilla.pculture.org\n"
+"\n"
+"tenslotten kun je je beschadigde database opnieuw starten waardoor de "
+"beschadigde word verwijdered, maar alle media bestanden moeten opnieuw "
+"worden toegevoegd"
 
 #: ../../portable/storedatabase.py:267
 msgid "Database was created by a newer version of Miro "
@@ -2846,6 +2878,21 @@ msgid ""
 "Error: %(error_text)s\n"
 "\n"
 msgstr ""
+"%(appname)s kon de database niet opslaan.\n"
+"\n"
+"Als uw schijf vol is, raden wij aan wat ruimte vrij te maken en opnieuw "
+"proberen. Als uw schijf niet vol is, is het mogelijk dat opnieuw proberen "
+"zal werken.\n"
+"\n"
+"Mocht opnieuw proberen niet werken, stop dan alstublieft %(appname)s en "
+"herstart. Recente wijzigingen kunnen verloren gaan.\n"
+"\n"
+"Als u deze fout vaak tegenkomt tijdens het downloaden, raden wij u aan het "
+"aantal gelijktijdige downloads in het dialoogvenster Opties in het tabblad "
+"Download te verminderen. \n"
+"\n"
+"Error: %(error_text)s\n"
+"\n"
 
 #: ../../portable/util.py:375 ../../portable/util.py:377
 #, python-format
@@ -2870,7 +2917,7 @@ msgstr "%(size)sB"
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:39
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:48
 msgid "Enable tray icon"
-msgstr "Gebruik systeemvak"
+msgstr "Taakbalk pictogram gebruiken"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
 msgid "When I click the red close button:"
@@ -2892,7 +2939,7 @@ msgstr "Update Beschikbaar"
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
 #, python-format
 msgid "A new version of %(appname)s is available for download."
-msgstr "Een nieuwe versie van %(appname)s is beschikbaar om te downloaden."
+msgstr "Een nieuwe versie van %(appname)s is beschikbaar als download."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
@@ -2909,12 +2956,12 @@ msgid ""
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
 "Wanneer u op de rode sluiten knop klikt, wilt u dat %(appname)s naar de "
-"taakbalk verdwijnt, of dat %(appname)s afsluit? U kunt dit nog altijd "
-"wijzigen in de opties."
+"taakbalk verdwijnt, of dat %(appname)s afsluit? U kunt uw keuze nu later nog "
+"wijzigen in Opties."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:193
 msgid "Error Bombing Item"
-msgstr "Probleem 'bomben' item"
+msgstr "Fout bij 'Bomben' item"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:195
 msgid "Error Recommending Item"
@@ -2980,12 +3027,12 @@ msgstr "Video-renderer:"
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:446
 #, python-format
 msgid "Track %(tracknumber)d"
-msgstr ""
+msgstr "Traceer %(tracknumber)d"
 
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:456
 #, python-format
 msgid "Subtitle file %(tracknumber)d"
-msgstr ""
+msgstr "ondertitel bestand %(tracknumber)d"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:178
 msgid "Download Completed"
@@ -3032,7 +3079,7 @@ msgstr "Instellingen..."
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:173
 #, python-format
 msgid "Quit %(appname)s"
-msgstr "Stop %(appname)s"
+msgstr "Sluit %(appname)s"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:177
 msgid "Close Window"
@@ -3060,7 +3107,7 @@ msgstr "Bewerken"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:195
 msgid "Present Half Size"
-msgstr "Halve grootte"
+msgstr "Halve grootte weergeven"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:198
 msgid "Present Actual Size"
@@ -3072,7 +3119,7 @@ msgstr "Dubbele grootte weergeven"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:208
 msgid "Present Video"
-msgstr "Videogrootte"
+msgstr "Video weergeven"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:214
 msgid "Zoom"

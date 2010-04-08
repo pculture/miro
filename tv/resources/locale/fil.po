@@ -8,20 +8,20 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-03-19 06:59+0000\n"
+"PO-Revision-Date: 2010-04-07 09:36+0000\n"
 "Last-Translator: MJae Advincula <Unknown>\n"
 "Language-Team: Filipino <fil@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2010-03-23 16:08+0000\n"
+"X-Launchpad-Export-Date: 2010-04-08 19:45+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
 #, python-format
 msgid "Error: %(msg)s"
-msgstr ""
+msgstr "May Mali: %(msg)s"
 
 #: ../../portable/httpclient.py:116 ../../portable/httpclient.py:122
 msgid "Can't connect"
@@ -30,7 +30,7 @@ msgstr "Hindi maka-konek"
 #: ../../portable/httpclient.py:117
 #, python-format
 msgid "Connection Error: %(msg)s"
-msgstr ""
+msgstr "May Mali sa Koneksyon: %(msg)s"
 
 #: ../../portable/httpclient.py:123
 msgid "SSL connection error"
@@ -108,7 +108,7 @@ msgstr "Hindi tamang URL"
 #: ../../portable/httpclient.py:180
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr ""
+msgstr "\"%(url)s\" ay hindi tamang URL"
 
 #: ../../portable/httpclient.py:186
 #, python-format
@@ -126,7 +126,7 @@ msgstr ""
 
 #: ../../portable/httpclient.py:388
 msgid "Unknown Error code"
-msgstr ""
+msgstr "Hindi Kilalang Kamalian"
 
 #: ../../portable/httpclient.py:420
 msgid "Connection closed"
@@ -143,11 +143,11 @@ msgstr "Kamaliang Panloob: Hindi handang ipadala"
 
 #: ../../portable/frontends/widgets/playback.py:551
 msgid "Open Subtitles File..."
-msgstr ""
+msgstr "Magbukas ng Subtitles File..."
 
 #: ../../portable/frontends/widgets/playback.py:552
 msgid "Subtitle files"
-msgstr ""
+msgstr "Subtitle files"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -234,17 +234,17 @@ msgstr "Laki ng database:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:110
 msgid "Total db objects in memory:"
-msgstr ""
+msgstr "Kabuuang db ng mga bagay sa memorya:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:118
 #: ../../portable/frontends/widgets/menus.py:335
 msgid "Diagnostics"
-msgstr ""
+msgstr "Mga Diagnostic"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:84
 #: ../../portable/frontends/widgets/prefpanel.py:656
 msgid "Downloads"
-msgstr ""
+msgstr "Mga Download"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:93
 msgid "Single and external downloads"
@@ -310,6 +310,9 @@ msgid ""
 "still appear in your library.  You can stop watching watched folders "
 "completely in the %(appname)s preference panel."
 msgstr ""
+"Ang mga binabantayang folder ay tatangalin sa sidebar pero ang kanilang mga "
+"laman ay mananatili sa library. Maari mong itigil ang pagbabantay sa mga "
+"folder na ito sa %(appname)s preference panel."
 
 #: ../../portable/frontends/widgets/removefeeds.py:100
 msgid ""
@@ -358,7 +361,7 @@ msgstr "Iba pa"
 
 #: ../../portable/frontends/widgets/itemedit.py:157
 msgid "Path:"
-msgstr ""
+msgstr "Daan:"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
@@ -368,6 +371,8 @@ msgstr "Ang playlist na ito ay walang laman"
 msgid ""
 "To add an item, drag it onto the name of this playlist in the sidebar."
 msgstr ""
+"Upang magdagdag ng isang item, i-drag ito papunta sa pangalan ng playlist na "
+"ito sa sidebar."
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:179
 msgid "Save Search"
@@ -392,7 +397,7 @@ msgstr "Habâ"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:292
 msgid "Status"
-msgstr ""
+msgstr "Kalagayan"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:293
 #: ../../portable/frontends/widgets/itemlistwidgets.py:744
@@ -440,7 +445,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemlistwidgets.py:564
 #, python-format
 msgid "%(amount)s free on disk"
-msgstr ""
+msgstr "%(amount)s libre sa disk"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:583
 #, python-format
@@ -473,7 +478,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:631
 msgid "Share feed"
-msgstr ""
+msgstr "Ibahagi ang feed"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:637
 msgid "Settings"
@@ -481,7 +486,7 @@ msgstr "Mga Pagsasaayos"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:643
 msgid "Remove feed"
-msgstr ""
+msgstr "Alisin ang feed"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:719
 msgid "Unwatched"
@@ -516,10 +521,12 @@ msgstr "Magdagdag ng Playlist"
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
 msgid "Add items to an existing playlist or a new one."
 msgstr ""
+"Magdagdag ng mga item sa isang umiiral na playlist o ng isang bagong "
+"playlist."
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
 msgid "Existing playlist:"
-msgstr ""
+msgstr "Umiiral na playlist:"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
 msgid "New playlist:"
@@ -565,7 +572,7 @@ msgstr "Alisin"
 
 #: ../../portable/frontends/widgets/tablist.py:664
 msgid "Update Feed Now"
-msgstr ""
+msgstr "I-update ang Feed Ngayon Din"
 
 #: ../../portable/frontends/widgets/tablist.py:667
 msgid "Rename"
@@ -577,7 +584,7 @@ msgstr "Ibalik sa dati ang pangalan ng feed"
 
 #: ../../portable/frontends/widgets/tablist.py:676
 msgid "Update Feeds Now"
-msgstr ""
+msgstr "I-update ang mga Feed Ngayon Din"
 
 #: ../../portable/frontends/widgets/tablist.py:712
 #: ../../portable/frontends/widgets/application.py:722

@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-01-26 12:15+0000\n"
-"Last-Translator: Maria I <Unknown>\n"
+"PO-Revision-Date: 2010-03-28 12:08+0000\n"
+"Last-Translator: Bengt <Unknown>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-03-23 16:09+0000\n"
+"X-Launchpad-Export-Date: 2010-04-08 19:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:164
@@ -151,7 +151,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
-msgstr "Hämtad"
+msgstr "Nedladdad"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:137
 msgid "Full Feed"
@@ -367,7 +367,7 @@ msgstr "Annat"
 
 #: ../../portable/frontends/widgets/itemedit.py:157
 msgid "Path:"
-msgstr ""
+msgstr "Sökväg:"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
@@ -504,7 +504,7 @@ msgstr "Inte visad"
 #: ../../portable/frontends/widgets/style.py:255
 #: ../../portable/frontends/widgets/style.py:1171
 msgid "Unplayed"
-msgstr "Osedd"
+msgstr "Inte spelad"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:730
 msgid "View|All"
@@ -832,7 +832,7 @@ msgstr "aldrig"
 
 #: ../../portable/frontends/widgets/prefpanel.py:611
 msgid "By default, video and audio items expire after:"
-msgstr "Per standard, video- och ljudobjekt utgår efter:"
+msgstr "Per standard, video- och ljudobjekt  som utgår efter:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:620
 msgid "Play media in Miro."
@@ -1110,7 +1110,12 @@ msgid ""
 msgid_plural ""
 "Some of these items were not downloaded from a feed. Would you like to "
 "delete them or just remove them from the Library?"
-msgstr[0] "oteket?"
+msgstr[0] ""
+"En av dessa poster var inte hämtat från en kanal. Vill du tradera filerna "
+"eller bara ta bort den från biblioteket?\r\n"
+"\r\n"
+"Några av dessa poster är inte hämtade från en kanal. Vill du radera filerna "
+"eller bara ta bort dem från biblioteket?"
 msgstr[1] ""
 "Vissa av dessa objekt är inte nedladdade från en kanal. Vill du radera "
 "filerna eller bara ta bort dem ur biblioteket?"
@@ -1155,15 +1160,15 @@ msgstr "Spara objekt som..."
 #: ../../portable/frontends/widgets/application.py:563
 #: ../../portable/frontends/widgets/menus.py:220
 msgid "Add Website"
-msgstr ""
+msgstr "Lägg till Websida"
 
 #: ../../portable/frontends/widgets/application.py:564
 msgid "Enter the URL of the website to add"
-msgstr ""
+msgstr "Ange adressen till webbplatsen du vill lägga till"
 
 #: ../../portable/frontends/widgets/application.py:565
 msgid "Add Website - Invalid URL"
-msgstr ""
+msgstr "Lägg till Websida - felaktig URL"
 
 #: ../../portable/frontends/widgets/application.py:566
 msgid ""
@@ -1172,6 +1177,9 @@ msgid ""
 "\n"
 "Enter the URL of the website to add"
 msgstr ""
+"Adressen du angav är inte en giltig url\n"
+"\n"
+"Ange URL:en till Web-sidan du vill lägga till"
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
@@ -1250,15 +1258,14 @@ msgstr[1] "Är du säker på att du vill ta bort dessa %(count)s spellistor?"
 #: ../../portable/frontends/widgets/application.py:773
 msgid "Remove website"
 msgid_plural "Remove websites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Radera Web-sidor"
 
 #: ../../portable/frontends/widgets/application.py:775
 #, python-format
 msgid "Are you sure you want to remove this website?"
 msgid_plural "Are you sure you want to remove these %(count)s websites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Är du säker att du vill radera denna Website"
+msgstr[1] "Är du säkee att du vill radera dessa Web-sites"
 
 #: ../../portable/frontends/widgets/application.py:805
 msgid "Are you sure you want to quit?"
@@ -1361,7 +1368,7 @@ msgstr "Nedladdningshastighet"
 
 #: ../../portable/frontends/widgets/style.py:249
 msgid "Down Total"
-msgstr "Totalt ner"
+msgstr "Allt nedladdat"
 
 #: ../../portable/frontends/widgets/style.py:250
 msgid "Up/Down Ratio"
@@ -1378,7 +1385,7 @@ msgstr "Ladda ner"
 
 #: ../../portable/frontends/widgets/style.py:252
 msgid "Download Torrent"
-msgstr "Hämta ner torrent"
+msgstr "Ladda ner torrent"
 
 #: ../../portable/frontends/widgets/style.py:253
 #: ../../portable/dl_daemon/download.py:554
@@ -1396,7 +1403,7 @@ msgstr "Spelas just nu"
 #: ../../portable/frontends/widgets/style.py:257
 #: ../../portable/frontends/widgets/style.py:1189
 msgid "Newly Available"
-msgstr "Nyligen nedladdad"
+msgstr "Nytillkommen"
 
 #: ../../portable/frontends/widgets/style.py:260
 msgid "Stop seeding"
@@ -1516,7 +1523,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
-msgstr "A_vsluta"
+msgstr "_Avsluta"
 
 #: ../../portable/frontends/widgets/menus.py:217
 msgid "_Sidebar"
@@ -1536,15 +1543,15 @@ msgstr "Ny _mapp"
 
 #: ../../portable/frontends/widgets/menus.py:228
 msgid "Re_name"
-msgstr "Byt _namn"
+msgstr "_Döp om"
 
 #: ../../portable/frontends/widgets/menus.py:231
 msgid "Re_name Feed"
-msgstr ""
+msgstr "Döp om Kanal"
 
 #: ../../portable/frontends/widgets/menus.py:232
 msgid "Re_name Website"
-msgstr ""
+msgstr "Döp om Websiten"
 
 #: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
@@ -1552,11 +1559,11 @@ msgstr "_Ta bort"
 
 #: ../../portable/frontends/widgets/menus.py:237
 msgid "_Remove Feed"
-msgstr ""
+msgstr "_Radera Kanal"
 
 #: ../../portable/frontends/widgets/menus.py:238
 msgid "_Remove Feeds"
-msgstr ""
+msgstr "_Radera kanaler"
 
 #: ../../portable/frontends/widgets/menus.py:239
 msgid "_Remove Folder"
@@ -1564,15 +1571,15 @@ msgstr "_Ta bort mapp"
 
 #: ../../portable/frontends/widgets/menus.py:240
 msgid "_Remove Folders"
-msgstr ""
+msgstr "_Radera foldrar"
 
 #: ../../portable/frontends/widgets/menus.py:241
 msgid "_Remove Website"
-msgstr ""
+msgstr "_Radera Website"
 
 #: ../../portable/frontends/widgets/menus.py:242
 msgid "_Remove Websites"
-msgstr ""
+msgstr "_Radera Websites"
 
 #: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
@@ -1653,7 +1660,7 @@ msgstr "_Stoppa"
 
 #: ../../portable/frontends/widgets/menus.py:288
 msgid "_Next Video"
-msgstr "Nästa video"
+msgstr "_Nästa video"
 
 #: ../../portable/frontends/widgets/menus.py:291
 msgid "_Previous Video"
@@ -1685,7 +1692,7 @@ msgstr "_Växla frånkopplad/kopplad"
 
 #: ../../portable/frontends/widgets/menus.py:311
 msgid "S_ubtitles"
-msgstr ""
+msgstr "Underte_xter"
 
 #: ../../portable/frontends/widgets/menus.py:315
 msgid "Select a Subtitles File..."
@@ -1826,7 +1833,7 @@ msgstr[1] "%(count)d objekt pausade"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:269
 msgid "Restart Upload"
-msgstr "Starta om hämtning"
+msgstr "Starta om hämtningen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:283
 msgid "Remove From Playlist"
@@ -1896,8 +1903,8 @@ msgstr[1] "%(count)d kanaler markerade"
 #, python-format
 msgid "%(count)d Website Selected"
 msgid_plural "%(count)d Websites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Website valda"
+msgstr[1] "%(count)d Websites valda"
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
@@ -2004,7 +2011,7 @@ msgstr "Tittat på för 1 månad sedan"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
-msgstr "Gamla kanaler:"
+msgstr "Föråldrade"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:139
 #, python-format
@@ -2769,6 +2776,7 @@ msgstr "Ogiltig torrentfil"
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
 msgstr ""
+"Torrent filen %(filename)s ser ut att vara felaktig och kan inte öppnas."
 
 #: ../../portable/searchengines.py:179
 msgid "Search All"
@@ -2797,6 +2805,17 @@ msgid ""
 "Finally, you can start fresh and your damaged database will be removed, but "
 "you will have to re-add your feeds and media files."
 msgstr ""
+"Vi är ledsna, &(appname)s kunde inte uppgradera din databas pga "
+"felaktigheter.\n"
+"\n"
+"Kolla om din disk är full. Om den är full avsluta %(appname)s, frigör "
+"utrymme och försök %(appname)s på nytt.\n"
+"\n"
+"Om din hårddisk inte är full, hjälp oss att förstå genom att avsluta och "
+"rapportera en felaktighet på bugzilla.pculture.org\n"
+"\n"
+"Slutligen, kan börja på nytt och den skadade databasen kommer att tas bort, "
+"med du måste lägga tilldina kanaler ach media filer."
 
 #: ../../portable/storedatabase.py:267
 msgid "Database was created by a newer version of Miro "
@@ -2837,6 +2856,20 @@ msgid ""
 "Error: %(error_text)s\n"
 "\n"
 msgstr ""
+"%(appname)s kunde inte spara till databasen.\n"
+"\n"
+"din hårddisk är full, avsluta och starta om datorn. Senaste ändringarna går "
+"förlorade.\n"
+"\n"
+"om du ser detta felmeddelande ofta vid nedladdning, föreslår vi att du "
+"reducera antalet nedladdningar i alternativ dialogen på nedladdnings "
+"tabben.\n"
+"\n"
+"Fel: %(error_text)s\n"
+"\n"
+"Representerar radbrytning. Börja på ny rad på motsvarande position i "
+"översättningen.\n"
+"\n"
 
 #: ../../portable/util.py:375 ../../portable/util.py:377
 #, python-format
@@ -2971,12 +3004,12 @@ msgstr "Videorenderare:"
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:446
 #, python-format
 msgid "Track %(tracknumber)d"
-msgstr ""
+msgstr "Spår %(tracknumber)d"
 
 #: ../../platform/gtk-x11/plat/renderers/gstreamerrenderer.py:456
 #, python-format
 msgid "Subtitle file %(tracknumber)d"
-msgstr ""
+msgstr "Undertext fil %(tracknumber)d"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:178
 msgid "Download Completed"

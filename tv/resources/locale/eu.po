@@ -8,20 +8,20 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2009-09-21 22:57+0000\n"
-"Last-Translator: Mikel Pascual Aldabaldetreku <mikel.paskual@gmail.com>\n"
+"PO-Revision-Date: 2010-04-08 11:46+0000\n"
+"Last-Translator: Aiol <Unknown>\n"
 "Language-Team: Basque <eu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-03-23 16:08+0000\n"
+"X-Launchpad-Export-Date: 2010-04-08 19:45+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
 #, python-format
 msgid "Error: %(msg)s"
-msgstr ""
+msgstr "Errorea: %(msg)s"
 
 #: ../../portable/httpclient.py:116 ../../portable/httpclient.py:122
 msgid "Can't connect"
@@ -30,7 +30,7 @@ msgstr "Ezin konektatu"
 #: ../../portable/httpclient.py:117
 #, python-format
 msgid "Connection Error: %(msg)s"
-msgstr ""
+msgstr "Konexio errorea: %(msg)s"
 
 #: ../../portable/httpclient.py:123
 msgid "SSL connection error"
@@ -58,17 +58,17 @@ msgstr ""
 #: ../../portable/httpclient.py:146
 #, python-format
 msgid "Expected CRLF got: %(character)r"
-msgstr ""
+msgstr "CRLF espero zen baina %(character)r jaso da"
 
 #: ../../portable/httpclient.py:151
 #, python-format
 msgid "%(host)s closed connection"
-msgstr ""
+msgstr "%(host)s-ek konexioa itxi du"
 
 #: ../../portable/httpclient.py:156 ../../portable/httpclient.py:185
 #: ../../portable/downloader.py:370
 msgid "File not found"
-msgstr "Fitxategia ez da aurkitu"
+msgstr "Ez da fitxategia aurkitu"
 
 #: ../../portable/httpclient.py:157
 msgid "Got 404 status code"
@@ -86,7 +86,7 @@ msgstr "Baimenak huts egin du"
 #: ../../portable/httpclient.py:169
 #: ../../portable/frontends/widgets/crashdialog.py:48
 msgid "Internal Error"
-msgstr "Barneko errorea"
+msgstr "Barne-errorea"
 
 #: ../../portable/httpclient.py:170
 msgid "Pipeline request never started"
@@ -99,7 +99,7 @@ msgstr "Denbora-muga"
 #: ../../portable/httpclient.py:175
 #, python-format
 msgid "Connection to %(host)s timed out"
-msgstr ""
+msgstr "%(host)s-era konexioak denbora-muga gainditu du"
 
 #: ../../portable/httpclient.py:179
 msgid "Invalid URL"
@@ -108,12 +108,12 @@ msgstr "URL Baliogabea"
 #: ../../portable/httpclient.py:180
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr ""
+msgstr "\"%(url)s\" ez da baliozko URLa"
 
 #: ../../portable/httpclient.py:186
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
-msgstr ""
+msgstr "\"%(path)s\" fitxategiak ez du existitzen"
 
 #: ../../portable/httpclient.py:190
 msgid "Read error"
@@ -122,11 +122,11 @@ msgstr "Irakurketa errorea"
 #: ../../portable/httpclient.py:191
 #, python-format
 msgid "Error while reading from \"%(path)s\""
-msgstr ""
+msgstr "\"%(path)s\" irakurtzean errorea"
 
 #: ../../portable/httpclient.py:388
 msgid "Unknown Error code"
-msgstr ""
+msgstr "Errore kode ezezaguna"
 
 #: ../../portable/httpclient.py:420
 msgid "Connection closed"
@@ -139,15 +139,15 @@ msgstr "Ezezaguna"
 
 #: ../../portable/httpclient.py:847
 msgid "Internal Error: Not ready to send"
-msgstr ""
+msgstr "Barne-errorea: Bidaltzeko prest ez"
 
 #: ../../portable/frontends/widgets/playback.py:551
 msgid "Open Subtitles File..."
-msgstr ""
+msgstr "Azpititulu fitxategia ireki"
 
 #: ../../portable/frontends/widgets/playback.py:552
 msgid "Subtitle files"
-msgstr ""
+msgstr "Azpititulu fitxategiak"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -155,30 +155,30 @@ msgstr "Deskargatua"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:137
 msgid "Full Feed"
-msgstr ""
+msgstr "Jario osoa"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:191
 #, python-format
 msgid "Show %(count)d More Item"
 msgid_plural "Show %(count)d More Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d erakutsi. Elementu gehiago"
+msgstr[1] "%(count)d erakutsi. Elementu gehiago"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:232
 #: ../../portable/frontends/widgets/feedcontroller.py:259
 #, python-format
 msgid "%(count)d Downloading"
 msgid_plural "%(count)d Downloading"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d deskargatzen"
+msgstr[1] "%(count)d deskargatzen"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:243
 #: ../../portable/frontends/widgets/feedcontroller.py:255
 #, python-format
 msgid "%(count)d Item"
 msgid_plural "%(count)d Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Elementu %(count)d"
+msgstr[1] "%(count)d elementu"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:264
 #, python-format
@@ -186,27 +186,31 @@ msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
 "%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
 msgstr[0] ""
+"Deskarga %(count)d ilaratuta ikusgabeko elementuak direla eta. (Ikus "
+"ezarpenak)"
 msgstr[1] ""
+"%(count)d deskarga ilaratuta ikusgabeko elementuak direla eta. (Ikus "
+"ezarpenak)"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:275
 #, python-format
 msgid "%(count)d Item Matches Search"
 msgid_plural "%(count)d Items Match Search"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Elementu %(count)dek bilaketarekin bat egiten du"
+msgstr[1] "%(count)d elementuk bilaketarekin bat egiten dute"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:280
 msgid "All Items Match Search"
-msgstr ""
+msgstr "Elementu guztiek bilaketarekin bat egiten dute"
 
 #: ../../portable/frontends/widgets/diagnostics.py:76
 #: ../../portable/frontends/widgets/gtk/trayicon.py:109
 msgid "Show"
-msgstr ""
+msgstr "Erakutsi"
 
 #: ../../portable/frontends/widgets/diagnostics.py:83
 msgid "Movies location:"
-msgstr ""
+msgstr "Filmen kokalekua:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:87
 msgid "Icon cache location:"
@@ -214,7 +218,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/diagnostics.py:91
 msgid "Log file location:"
-msgstr ""
+msgstr "Log fitxategiaren kokalekua:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:95
 msgid "Downloader log file location:"
@@ -222,29 +226,29 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/diagnostics.py:99
 msgid "Database file location:"
-msgstr ""
+msgstr "Datu-basearen fitxategiaren kokalekua:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:106
 msgid "Space free on disk:"
-msgstr ""
+msgstr "Diskoan leku librea"
 
 #: ../../portable/frontends/widgets/diagnostics.py:108
 msgid "Database size:"
-msgstr ""
+msgstr "Data-basearen tamaina:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:110
 msgid "Total db objects in memory:"
-msgstr ""
+msgstr "Guztira db objektuak memorian:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:118
 #: ../../portable/frontends/widgets/menus.py:335
 msgid "Diagnostics"
-msgstr ""
+msgstr "Diagnostikoa"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:84
 #: ../../portable/frontends/widgets/prefpanel.py:656
 msgid "Downloads"
-msgstr ""
+msgstr "Deskargak"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:93
 msgid "Single and external downloads"
@@ -252,15 +256,15 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:96
 msgid "Feed downloads"
-msgstr ""
+msgstr "Jario deskargak"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:100
 msgid "Seeding"
-msgstr ""
+msgstr "Hazia jartzen"
 
 #: ../../portable/frontends/widgets/newfolder.py:60
 msgid "Folder name:"
-msgstr ""
+msgstr "Karpetaren izena:"
 
 #: ../../portable/frontends/widgets/newfolder.py:69
 msgid "Folder should go in this section:"
@@ -270,38 +274,38 @@ msgstr ""
 #: ../../portable/frontends/widgets/newfeed.py:72
 #: ../../portable/frontends/widgets/newsearchfeed.py:136
 msgid "video"
-msgstr ""
+msgstr "bideoa"
 
 #: ../../portable/frontends/widgets/newfolder.py:72
 #: ../../portable/frontends/widgets/newfeed.py:73
 #: ../../portable/frontends/widgets/newsearchfeed.py:137
 msgid "audio"
-msgstr ""
+msgstr "audioa"
 
 #: ../../portable/frontends/widgets/newfolder.py:107
 #: ../../portable/frontends/widgets/newfolder.py:109
 msgid "Create Feed Folder"
-msgstr ""
+msgstr "Sortu jario karpeta"
 
 #: ../../portable/frontends/widgets/newfolder.py:110
 msgid "Enter the name of the folder to add"
-msgstr ""
+msgstr "Sortutako karpetaren izena idatzi:"
 
 #: ../../portable/frontends/widgets/removefeeds.py:49
 msgid "Remove Feed"
 msgid_plural "Remove Feeds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Jarioa ezabatu"
+msgstr[1] "Jarioak ezabatu"
 
 #: ../../portable/frontends/widgets/removefeeds.py:57
 msgid "Are you sure you want to remove this feed:"
 msgid_plural "Are you sure you want to remove these feeds:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ziur jario hau ezabatu nahi duzula?"
+msgstr[1] "Ziur jario hauek ezabatu nahi dituzula?"
 
 #: ../../portable/frontends/widgets/removefeeds.py:84
 msgid "Keep items that have been downloaded in my library."
-msgstr ""
+msgstr "Nire liburutegira deskargatutako elementuak mantendu"
 
 #: ../../portable/frontends/widgets/removefeeds.py:89
 #, python-format
@@ -319,113 +323,119 @@ msgid_plural ""
 "Are you sure you want to remove these feeds?  The downloads currently in "
 "progress will be canceled."
 msgstr[0] ""
+"Ziur al zaude jario hau ezabatu nahi duzula? Uneko deskargak bertan behera "
+"utziko dira."
 msgstr[1] ""
+"Ziur al zaude jario hauek ezabatu nahi dituzula? Uneko deskargak bertan "
+"behera utziko dira."
 
 #: ../../portable/frontends/widgets/itemedit.py:136
 #: ../../portable/frontends/widgets/itemcontextmenu.py:107
 msgid "Edit Item"
-msgstr ""
+msgstr "Elementua editatu"
 
 #: ../../portable/frontends/widgets/itemedit.py:145
 msgid "Title:"
-msgstr ""
+msgstr "Izenburua:"
 
 #: ../../portable/frontends/widgets/itemedit.py:147
 msgid "Description:"
-msgstr ""
+msgstr "Deskribapena:"
 
 #: ../../portable/frontends/widgets/itemedit.py:149
 msgid "Media type:"
-msgstr ""
+msgstr "Media-mota:"
 
 #: ../../portable/frontends/widgets/itemedit.py:151
 #: ../../portable/frontends/widgets/itemlistcontroller.py:521
 #: ../../portable/frontends/widgets/statictabs.py:103
 msgid "Video"
-msgstr ""
+msgstr "Bideoa"
 
 #: ../../portable/frontends/widgets/itemedit.py:152
 #: ../../portable/frontends/widgets/itemlistcontroller.py:527
 #: ../../portable/frontends/widgets/statictabs.py:109
 msgid "Audio"
-msgstr ""
+msgstr "Audioa"
 
 #: ../../portable/frontends/widgets/itemedit.py:153
 #: ../../portable/frontends/widgets/itemlistcontroller.py:533
 #: ../../portable/frontends/widgets/statictabs.py:115
 msgid "Other"
-msgstr ""
+msgstr "Bestelakoak"
 
 #: ../../portable/frontends/widgets/itemedit.py:157
 msgid "Path:"
-msgstr ""
+msgstr "Kokalekua:"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
-msgstr ""
+msgstr "Erreproduzio-zerrenda hutsik dago"
 
 #: ../../portable/frontends/widgets/playlist.py:149
 msgid ""
 "To add an item, drag it onto the name of this playlist in the sidebar."
 msgstr ""
+"Elementu bat gehitzeko, arrastatu ezazu erreproduzio zerrendaren izena albo-"
+"panelera."
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:179
 msgid "Save Search"
-msgstr ""
+msgstr "Gorde bilaketa"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:286
 msgid "Title"
-msgstr ""
+msgstr "Izenburua"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:288
 msgid "Feed"
-msgstr ""
+msgstr "Jarioa"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:290
 #: ../../portable/frontends/widgets/itemlistwidgets.py:743
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:291
 msgid "Length"
-msgstr ""
+msgstr "Iraupena"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:292
 msgid "Status"
-msgstr ""
+msgstr "Egoera"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:293
 #: ../../portable/frontends/widgets/itemlistwidgets.py:744
 msgid "Size"
-msgstr ""
+msgstr "Tamaina"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:295
 msgid "ETA"
-msgstr ""
+msgstr "Falta den denbora"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:296
 msgid "Speed"
-msgstr ""
+msgstr "Abiadura"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:432
 msgid "Save as a Feed"
-msgstr ""
+msgstr "Jario bezala gorde"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:486
 msgid "Pause All"
-msgstr ""
+msgstr "Denak pausatu"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:493
 msgid "Resume All"
-msgstr ""
+msgstr "Denak berrabiarazi"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:500
 msgid "Cancel All"
-msgstr ""
+msgstr "Ezeztatu dena"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:507
 msgid "Download Settings"
-msgstr ""
+msgstr "Deskarga ezarpenak"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:553
 #, python-format
@@ -435,22 +445,22 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemlistwidgets.py:559
 #, python-format
 msgid "%(available)s free for downloads (%(amount)s free on disk)"
-msgstr ""
+msgstr "Deskargetarako %(available)s libre (Diskoan leku librea %(amount)s)"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:564
 #, python-format
 msgid "%(amount)s free on disk"
-msgstr ""
+msgstr "Leku librea diskoan %(amount)s"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:583
 #, python-format
 msgid "%(rate)s uploading"
-msgstr ""
+msgstr "%(rate)s igotzen"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:585
 #, python-format
 msgid "%(rate)s downloading"
-msgstr ""
+msgstr "%(rate)s deskargatzen"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:619
 msgid "Auto Download"
@@ -469,11 +479,11 @@ msgstr "Berria"
 #: ../../portable/frontends/widgets/itemlistwidgets.py:624
 #: ../../portable/frontends/widgets/prefpanel.py:293
 msgid "Off"
-msgstr ""
+msgstr "Itzalita"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:631
 msgid "Share feed"
-msgstr ""
+msgstr "Jarioa partekatu"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:637
 msgid "Settings"
@@ -481,7 +491,7 @@ msgstr "Ezarpenak"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:643
 msgid "Remove feed"
-msgstr ""
+msgstr "Jarioa ezabatu"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:719
 msgid "Unwatched"
@@ -491,31 +501,32 @@ msgstr "Ikusi gabea"
 #: ../../portable/frontends/widgets/style.py:255
 #: ../../portable/frontends/widgets/style.py:1171
 msgid "Unplayed"
-msgstr ""
+msgstr "Erreproduzitu gabea"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:730
 msgid "View|All"
-msgstr ""
+msgstr "Ikusi|Guztiak"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:732
 msgid "Non Feed"
-msgstr ""
+msgstr "Jarioa ez"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:742
 msgid "Name"
-msgstr ""
+msgstr "Izena"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:745
 msgid "Time"
-msgstr ""
+msgstr "Ordua"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
-msgstr ""
+msgstr "Erreproduzio-zerrenda bat gehitu"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
 msgid "Add items to an existing playlist or a new one."
 msgstr ""
+"Elementuak gehitu jadanik sortutako edo erreproduzio-zerrenda berri batera"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
 msgid "Existing playlist:"
@@ -523,7 +534,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
 msgid "New playlist:"
-msgstr ""
+msgstr "Erreproduzio-zerrenda berria:"
 
 #: ../../portable/frontends/widgets/tablist.py:575
 #: ../../portable/frontends/widgets/tablist.py:670
@@ -533,24 +544,24 @@ msgstr "Kopiatu URLa arbelera"
 #: ../../portable/frontends/widgets/tablist.py:576
 #: ../../portable/frontends/widgets/application.py:726
 msgid "Rename Website"
-msgstr ""
+msgstr "Webgunea berrizendatu"
 
 #: ../../portable/frontends/widgets/tablist.py:577
 msgid "Remove Website"
-msgstr ""
+msgstr "Webgunea ezabatu"
 
 #: ../../portable/frontends/widgets/tablist.py:581
 msgid "Remove Websites"
-msgstr ""
+msgstr "Webguneak ezabatu"
 
 #: ../../portable/frontends/widgets/tablist.py:657
 msgid "Update Feeds In Folder"
-msgstr ""
+msgstr "Karpetan dauden jarioak eguneratu"
 
 #: ../../portable/frontends/widgets/tablist.py:658
 #: ../../portable/frontends/widgets/application.py:707
 msgid "Rename Feed Folder"
-msgstr ""
+msgstr "Jarioen karpeta berrizendatu"
 
 #: ../../portable/frontends/widgets/tablist.py:659
 #: ../../portable/frontends/widgets/tablist.py:671
@@ -565,168 +576,168 @@ msgstr "Ezabatu"
 
 #: ../../portable/frontends/widgets/tablist.py:664
 msgid "Update Feed Now"
-msgstr ""
+msgstr "Eguneratu jarioa orain"
 
 #: ../../portable/frontends/widgets/tablist.py:667
 msgid "Rename"
-msgstr ""
+msgstr "Berrizendatu"
 
 #: ../../portable/frontends/widgets/tablist.py:669
 msgid "Revert Feed Name"
-msgstr ""
+msgstr "Jarioaren izena leheneratu"
 
 #: ../../portable/frontends/widgets/tablist.py:676
 msgid "Update Feeds Now"
-msgstr ""
+msgstr "Jarioak orain eguneratu"
 
 #: ../../portable/frontends/widgets/tablist.py:712
 #: ../../portable/frontends/widgets/application.py:722
 msgid "Rename Playlist Folder"
-msgstr "Zerrenden Karpetaren izena aldatu"
+msgstr "Erreproduzio-zerrenden karpeta berrizendatu"
 
 #: ../../portable/frontends/widgets/tablist.py:718
 #: ../../portable/frontends/widgets/application.py:717
 #: ../../portable/playlist.py:200
 msgid "Rename Playlist"
-msgstr "Zerrendaren izena aldatu"
+msgstr "Erreprodukzio-zerrendaren berrizendatu"
 
 #: ../../portable/frontends/widgets/tablist.py:741
 msgid "LIBRARY"
-msgstr ""
+msgstr "LIBURUTEGIA"
 
 #: ../../portable/frontends/widgets/tablist.py:743
 msgid "WEBSITES"
-msgstr ""
+msgstr "WEBGUNEAK"
 
 #: ../../portable/frontends/widgets/tablist.py:745
 msgid "VIDEO FEEDS"
-msgstr ""
+msgstr "BIDEO JARIOAK"
 
 #: ../../portable/frontends/widgets/tablist.py:747
 msgid "AUDIO FEEDS"
-msgstr ""
+msgstr "AUDIO JARIOAK"
 
 #: ../../portable/frontends/widgets/tablist.py:749
 msgid "PLAYLISTS"
-msgstr ""
+msgstr "ERREPRODUZIO-ZERRENDAK"
 
 #: ../../portable/frontends/widgets/prefpanel.py:269
 #, python-format
 msgid "Automatically run %(appname)s when I log in."
-msgstr ""
+msgstr "Saioa hasterakoan %(appname)s automatikoki egikaritu"
 
 #: ../../portable/frontends/widgets/prefpanel.py:273
 msgid "Warn me if I attempt to quit with downloads in progress."
-msgstr ""
+msgstr "Deskargak martxan dauden bitartean ixten saiatzean jakinarazi"
 
 #: ../../portable/frontends/widgets/prefpanel.py:283
 msgid "Every day"
-msgstr ""
+msgstr "Egunero"
 
 #: ../../portable/frontends/widgets/prefpanel.py:284
 msgid "Every hour"
-msgstr ""
+msgstr "Orduro"
 
 #: ../../portable/frontends/widgets/prefpanel.py:285
 msgid "Every 30 minutes"
-msgstr ""
+msgstr "30 minuturo"
 
 #: ../../portable/frontends/widgets/prefpanel.py:286
 msgid "Manually"
-msgstr ""
+msgstr "Eskuz"
 
 #: ../../portable/frontends/widgets/prefpanel.py:299
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: ../../portable/frontends/widgets/prefpanel.py:300
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../../portable/frontends/widgets/prefpanel.py:301
 msgid "50"
-msgstr ""
+msgstr "50"
 
 #: ../../portable/frontends/widgets/prefpanel.py:302
 msgid "100"
-msgstr ""
+msgstr "100"
 
 #: ../../portable/frontends/widgets/prefpanel.py:303
 msgid "1000"
-msgstr ""
+msgstr "1000"
 
 #: ../../portable/frontends/widgets/prefpanel.py:309
 msgid "Default settings for new feeds:"
-msgstr ""
+msgstr "Jario berrientzako lehenetsitako ezarpenak"
 
 #: ../../portable/frontends/widgets/prefpanel.py:313
 msgid "(These can be changed using the feed's settings button)"
-msgstr ""
+msgstr "(Jarioen ezarpen botoiarekin alda daitezke)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:317
 msgid "Check for new content:"
-msgstr ""
+msgstr "Eduki berria egiaztatu"
 
 #: ../../portable/frontends/widgets/prefpanel.py:322
 msgid "Auto download setting:"
-msgstr ""
+msgstr "Deskarga automatikoen ezarpenak:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:328
 msgid "Remember this many old items:"
-msgstr ""
+msgstr "Gogoratu beharreko elementu zahar kopurua:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:329
 msgid "(in addition to the current contents)"
-msgstr ""
+msgstr "(Oraingo edukiez gain)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:342
 msgid "Maximum number of manual downloads at a time:"
-msgstr ""
+msgstr "Aldibereko eskuzko deskargen gehienezko kopurua:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:349
 msgid "Maximum number of auto-downloads at a time:"
-msgstr ""
+msgstr "Aldibereko deskarga automatikoen gehienezko kopurua:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:359
 msgid "Bittorrent:"
-msgstr ""
+msgstr "Bittorrent:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:362
 msgid "Limit upstream bandwidth to:"
-msgstr ""
+msgstr "Igoera banda-zabaleraren muga:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:373
 #: ../../portable/frontends/widgets/prefpanel.py:384
 msgid "KB/s"
-msgstr ""
+msgstr "KB/s"
 
 #: ../../portable/frontends/widgets/prefpanel.py:376
 msgid "Limit downstream bandwidth to:"
-msgstr ""
+msgstr "Deskarga banda-zabaleraren muga:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:387
 msgid "Limit torrent connections to:"
-msgstr ""
+msgstr "Torrent konexio muga:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:404
 msgid "Starting port:"
-msgstr ""
+msgstr "Hasiera portua:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:408
 msgid "Ending port:"
-msgstr ""
+msgstr "Amaiera portua:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:414
 msgid "Automatically forward ports.  (UPNP)"
-msgstr ""
+msgstr "Automatikoki portuak birbidali. (UPNP)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:418
 msgid "Ignore unencrypted connections."
-msgstr ""
+msgstr "Enkriptatu gabeko konexioei ez ikusi."
 
 #: ../../portable/frontends/widgets/prefpanel.py:422
 msgid "Stop torrent uploads when this ratio is reached:"
-msgstr ""
+msgstr "Tasa honetara iristerakoan torrent igoerak gelditu:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:439
 #: ../../portable/frontends/widgets/firsttimedialog.py:193
@@ -735,16 +746,16 @@ msgstr "Aldatu"
 
 #: ../../portable/frontends/widgets/prefpanel.py:444
 msgid "Choose Movies Directory"
-msgstr ""
+msgstr "Filmen karpeta aukeratu"
 
 #: ../../portable/frontends/widgets/prefpanel.py:457
 msgid "Directory not valid"
-msgstr ""
+msgstr "Baliogabeko karpeta"
 
 #: ../../portable/frontends/widgets/prefpanel.py:458
 #, python-format
 msgid "Directory '%s' could not be created.  "
-msgstr ""
+msgstr "'%s' direktorioa ezin izan da sortu.  "
 
 #: ../../portable/frontends/widgets/prefpanel.py:473
 msgid "Migrate existing movies?"
@@ -757,6 +768,9 @@ msgid ""
 "migrate your existing downloads there? (Currently downloading movies will "
 "not be moved until they finish.)"
 msgstr ""
+"Filmak deskargatzeko karpeta berri bat aukeratu duzu. %(appname)s-ek jadanik "
+"deskargatutako filmak migratu behar al ditu? (Orain deskargatzen ari direnak "
+"ez dira bukatu arte migratuko)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:503
 #: ../../portable/dialogs.py:114
@@ -769,7 +783,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:563
 msgid "Store downloads in this folder:"
-msgstr ""
+msgstr "Deskargak karpeta honetan gorde:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:570
 msgid ""
@@ -779,12 +793,12 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:589
 msgid "Keep at least this much free space on my drive:"
-msgstr ""
+msgstr "Nire diskoan gutxienez ondorengo leku librea utzi:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:592
 #: ../../portable/frontends/widgets/prefpanel.py:598
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: ../../portable/frontends/widgets/prefpanel.py:601
 msgid "1 day"
@@ -818,11 +832,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:620
 msgid "Play media in Miro."
-msgstr ""
+msgstr "Multimedia Miron erreproduzitu."
 
 #: ../../portable/frontends/widgets/prefpanel.py:621
 msgid "Always play videos in a separate window."
-msgstr ""
+msgstr "Bideoak beti aparteko leiho batetan erreproduzitu."
 
 #: ../../portable/frontends/widgets/prefpanel.py:622
 msgid ""
@@ -831,15 +845,15 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:624
 msgid "Automatically enable movie subtitles when available."
-msgstr ""
+msgstr "Filmaren azpitutuluak erabilgarri daudenean automatikoki gaitu."
 
 #: ../../portable/frontends/widgets/prefpanel.py:627
 msgid "Play video and audio items one after another"
-msgstr ""
+msgstr "Bideo eta audio elementuak bata bestearen ondoren erreproduzitu"
 
 #: ../../portable/frontends/widgets/prefpanel.py:628
 msgid "Stop after each video or audio item"
-msgstr ""
+msgstr "Bideo edo audio elementu bakoitzaren ondoren gelditu"
 
 #: ../../portable/frontends/widgets/prefpanel.py:654
 msgid "General"
@@ -847,7 +861,7 @@ msgstr "Orokorra"
 
 #: ../../portable/frontends/widgets/prefpanel.py:655
 msgid "Feeds"
-msgstr ""
+msgstr "Jarioak"
 
 #: ../../portable/frontends/widgets/prefpanel.py:657
 msgid "Folders"
@@ -855,7 +869,7 @@ msgstr "Karpetak"
 
 #: ../../portable/frontends/widgets/prefpanel.py:658
 msgid "Disk space"
-msgstr ""
+msgstr "Diskoan leku librea"
 
 #: ../../portable/frontends/widgets/prefpanel.py:659
 msgid "Playback"
@@ -868,26 +882,26 @@ msgstr "Hobespenak"
 #: ../../portable/frontends/widgets/gtk/trayicon.py:89
 #, python-format
 msgid "Play Next Unplayed (%(unplayed)d)"
-msgstr ""
+msgstr "Ikusi gabeko azkena (%(unplayed)d) erreproduzitu"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:93
 #, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
-msgstr ""
+msgstr "Ikusi gabeko guztiak (%(unplayed)d) erreproduzitu"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:96
 #, python-format
 msgid "Pause All Downloads (%(downloading)d)"
-msgstr ""
+msgstr "Deskarga guztiak (%(downloading)d) pausarazi"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:99
 #, python-format
 msgid "Resume All Downloads (%(paused)d)"
-msgstr ""
+msgstr "Deskarga guztiei (%(paused)d) berrekin"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:107
 msgid "Hide"
-msgstr ""
+msgstr "Ezkutatu"
 
 #: ../../portable/frontends/widgets/gtk/video.py:278
 #: ../../portable/frontends/widgets/style.py:258
@@ -902,7 +916,7 @@ msgstr "Mantendu"
 
 #: ../../portable/frontends/widgets/gtk/video.py:282
 msgid "Subtitles"
-msgstr ""
+msgstr "Azpitituluak"
 
 #: ../../portable/frontends/widgets/gtk/video.py:291
 #: ../../portable/frontends/widgets/itemcontextmenu.py:67
@@ -916,17 +930,17 @@ msgstr "Ezabatu"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:157
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:121
 msgid "Share"
-msgstr ""
+msgstr "Partekatu"
 
 #: ../../portable/frontends/widgets/gtk/video.py:303
 #: ../../portable/frontends/widgets/style.py:236
 #: ../../portable/frontends/widgets/itemcontextmenu.py:142
 msgid "Comments"
-msgstr ""
+msgstr "Iruzkinak"
 
 #: ../../portable/frontends/widgets/gtk/video.py:307
 msgid "Permalink"
-msgstr ""
+msgstr "Permalink"
 
 #: ../../portable/frontends/widgets/gtk/video.py:315
 msgid "Pop-in"
@@ -940,31 +954,31 @@ msgstr ""
 #: ../../portable/frontends/widgets/menus.py:312
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:380
 msgid "None Available"
-msgstr ""
+msgstr "Bat ere ez erabilgarri"
 
 #: ../../portable/frontends/widgets/gtk/video.py:379
 #: ../../portable/frontends/widgets/gtk/window.py:267
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:369
 msgid "Disable Subtitles"
-msgstr ""
+msgstr "Azpitituluak ezgaitu"
 
 #: ../../portable/frontends/widgets/gtk/video.py:390
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:387
 msgid "Select a Subtitles file..."
-msgstr ""
+msgstr "Azpititulu fitxategia hautatu..."
 
 #: ../../portable/frontends/widgets/gtk/window.py:650
 msgid "All files"
-msgstr ""
+msgstr "Fitxategi guztiak"
 
 #: ../../portable/frontends/widgets/gtk/window.py:682
 msgid "Choose"
-msgstr ""
+msgstr "Hautatu"
 
 #: ../../portable/frontends/widgets/gtk/window.py:699
 #, python-format
 msgid "About %(appname)s"
-msgstr ""
+msgstr "%(appname)s(r)i buruz"
 
 #: ../../portable/frontends/widgets/gtk/window.py:715
 #, python-format
@@ -972,11 +986,13 @@ msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
 "%(trademark)s"
 msgstr ""
+"%(copyright)s. Ikus license.txt fitxategia xehetasun gehiagorako.\n"
+"%(trademark)s"
 
 #: ../../portable/frontends/widgets/gtk/window.py:754
 #: ../../portable/dialogs.py:94
 msgid "Close"
-msgstr ""
+msgstr "Itxi"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:438
 #: ../../portable/frontends/widgets/statictabs.py:97
@@ -985,15 +1001,15 @@ msgstr "Bideo Bilaketa"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:452
 msgid "No Results Found"
-msgstr ""
+msgstr "Bilaketak emaitzarik ez"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:558
 msgid "Back to feed"
-msgstr ""
+msgstr "Jariora itzuli"
 
 #: ../../portable/frontends/widgets/application.py:158
 msgid "Movies directory gone"
-msgstr ""
+msgstr "Filmen karpeta ez da aurkitu"
 
 #: ../../portable/frontends/widgets/application.py:160
 #, python-format
@@ -1021,38 +1037,38 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:331
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
-msgstr ""
+msgstr "%(filename)s fitxategia %(appname)s-(e)k ezabatu du."
 
 #: ../../portable/frontends/widgets/application.py:339
 msgid "Open Files..."
-msgstr ""
+msgstr "Fitxategiak ireki..."
 
 #: ../../portable/frontends/widgets/application.py:350
 #: ../../portable/frontends/widgets/application.py:355
 msgid "Open Files - Error"
-msgstr ""
+msgstr "Fitxategiak ireki - Errorea"
 
 #: ../../portable/frontends/widgets/application.py:351
 #: ../../portable/frontends/widgets/application.py:634
 #, python-format
 msgid "File %(filename)s does not exist."
-msgstr ""
+msgstr "%(filename)s fitxategia ez da existitzen."
 
 #: ../../portable/frontends/widgets/application.py:356
 msgid "The following files do not exist:"
-msgstr ""
+msgstr "Ondorengo fitxategiak ez dira existitzen:"
 
 #: ../../portable/frontends/widgets/application.py:393
 msgid "New Download"
-msgstr ""
+msgstr "Deskarga berria"
 
 #: ../../portable/frontends/widgets/application.py:394
 msgid "Enter the URL of the item to download"
-msgstr ""
+msgstr "Deskargatu beharreko elementuaren URLa idatzi"
 
 #: ../../portable/frontends/widgets/application.py:395
 msgid "New Download - Invalid URL"
-msgstr ""
+msgstr "Deskarga berria - Baliogabeko URLa"
 
 #: ../../portable/frontends/widgets/application.py:396
 msgid ""
@@ -1061,22 +1077,26 @@ msgid ""
 "\n"
 "Enter the URL of the item to download"
 msgstr ""
+"Idatzitako helbidea ez da baliozko URLa\n"
+"Mesedez egiaztatu ezazu URLa eta saia zaitez berriro.\n"
+"\n"
+"Idatzi ezazu deskargatu beharreko elementuaren URLa"
 
 #: ../../portable/frontends/widgets/application.py:404
 #, python-format
 msgid "%(appname)s is up to date"
-msgstr ""
+msgstr "%(appname)s eguneratuta dago"
 
 #: ../../portable/frontends/widgets/application.py:406
 #, python-format
 msgid "%(appname)s is up to date!"
-msgstr ""
+msgstr "%(appname)s eguneratuta dago!"
 
 #: ../../portable/frontends/widgets/application.py:430
 msgid "Remove item"
 msgid_plural "Remove items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Elementua kendu"
+msgstr[1] "Elementuak kendu"
 
 #: ../../portable/frontends/widgets/application.py:434
 msgid ""
@@ -1086,7 +1106,11 @@ msgid_plural ""
 "Some of these items were not downloaded from a feed. Would you like to "
 "delete them or just remove them from the Library?"
 msgstr[0] ""
+"Ondorengo elementuetako bat ez da jario batetik deskargatu. Elementu hau "
+"ezabatu edo liburutegian utzi nahi duzu?"
 msgstr[1] ""
+"Ondorengo elementuetako batzuk ez dira jario batetik deskargatu. Elementu "
+"hauek ezabatu edo liburutegian utzi nahi dituzu?"
 
 #: ../../portable/frontends/widgets/application.py:444
 msgid ""
@@ -1096,14 +1120,18 @@ msgid_plural ""
 "Some of these items are folders.  Delete/Removeing a folder will "
 "delete/remove it's contents"
 msgstr[0] ""
+"Elementu hauetako bat karpeta bat da. Karpeta bat ezabatzerakoan bere edukia "
+"ezabatuko da."
 msgstr[1] ""
+"Elementu hauetako batzuk karpetak dira. Karpetak ezabatzerakoan bere edukiak "
+"ezabatuko dira."
 
 #: ../../portable/frontends/widgets/application.py:459
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ziur elementua ezabatu nahi duzula?"
+msgstr[1] "Ziru zaude %(count)d elementu ezabatu nahi dituzula?"
 
 #: ../../portable/frontends/widgets/application.py:466
 msgid ""
@@ -1111,24 +1139,28 @@ msgid ""
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
 msgstr[0] ""
+"Elementu hauetako bat karpeta bat da. Ezabatzerakoan bere edukia ere "
+"ezabatuko da."
 msgstr[1] ""
+"Elementu hauetako batzuk karpetak dira. Ezabatzerakoan hauen edukiak ere "
+"ezabatuko dira."
 
 #: ../../portable/frontends/widgets/application.py:510
 msgid "Save Item As..."
-msgstr ""
+msgstr "Elementua gorde honela..."
 
 #: ../../portable/frontends/widgets/application.py:563
 #: ../../portable/frontends/widgets/menus.py:220
 msgid "Add Website"
-msgstr ""
+msgstr "Webgunea gehitu"
 
 #: ../../portable/frontends/widgets/application.py:564
 msgid "Enter the URL of the website to add"
-msgstr ""
+msgstr "Gehitu beharreko webgunearen URLa idatzi"
 
 #: ../../portable/frontends/widgets/application.py:565
 msgid "Add Website - Invalid URL"
-msgstr ""
+msgstr "Webgunea gehitu - Baliogabeko URLa"
 
 #: ../../portable/frontends/widgets/application.py:566
 msgid ""
@@ -1137,6 +1169,10 @@ msgid ""
 "\n"
 "Enter the URL of the website to add"
 msgstr ""
+"Idatzitako helbidea ez da baliozko URLa.\n"
+"Mesedez berrikusi ezazu URLa eta saia zaitez berriro.\n"
+"\n"
+"Gehitu beharreko webgunearen URLa idatzi:"
 
 #: ../../portable/frontends/widgets/application.py:624
 msgid "Import OPML File"
@@ -1148,11 +1184,11 @@ msgstr "OPML Fitxategia"
 
 #: ../../portable/frontends/widgets/application.py:633
 msgid "Import OPML File - Error"
-msgstr ""
+msgstr "OPML Fitxategia Inportatu - Errorea"
 
 #: ../../portable/frontends/widgets/application.py:639
 msgid "Export OPML File"
-msgstr "OPML Fitxategia Exportatu"
+msgstr "OPML Fitxategia Esportatu"
 
 #: ../../portable/frontends/widgets/application.py:663
 msgid "Create Playlist"
@@ -1160,7 +1196,7 @@ msgstr "Erreprodukzio zerrenda sortu"
 
 #: ../../portable/frontends/widgets/application.py:664
 msgid "Enter a name for the new playlist"
-msgstr "Erreprodukzio zerrendarako izen berria sartu"
+msgstr "Erreprodukzio zerrendarako izen berria idatzi"
 
 #: ../../portable/frontends/widgets/application.py:685
 msgid "Create Playlist Folder"
@@ -1173,31 +1209,31 @@ msgstr "Idatzi zerrenden karpeta berriaren izena"
 #: ../../portable/frontends/widgets/application.py:708
 #, python-format
 msgid "Enter a new name for the feed folder %(name)s"
-msgstr ""
+msgstr "Jarioen %(name)s karpetaren izen berria idatzi"
 
 #: ../../portable/frontends/widgets/application.py:712
 msgid "Rename Feed"
-msgstr ""
+msgstr "Jarioa berrizendatu"
 
 #: ../../portable/frontends/widgets/application.py:713
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
-msgstr ""
+msgstr "%(name)s jarioaren izen berria idatzi"
 
 #: ../../portable/frontends/widgets/application.py:718
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
-msgstr ""
+msgstr "%(name)s erreproduzio zerrendaren izen berria idatzi"
 
 #: ../../portable/frontends/widgets/application.py:723
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
-msgstr ""
+msgstr "%(name)s erreproduzio zerrenden karpetaren izen berria idatzi"
 
 #: ../../portable/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the website %(name)s"
-msgstr ""
+msgstr "%(name)s webgunearen izen berria idatzi"
 
 #: ../../portable/frontends/widgets/application.py:751
 msgid "Remove playlist"
@@ -1215,8 +1251,8 @@ msgstr[1] ""
 #: ../../portable/frontends/widgets/application.py:773
 msgid "Remove website"
 msgid_plural "Remove websites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Webgunea ezabatu"
+msgstr[1] "Webguneak ezabatu"
 
 #: ../../portable/frontends/widgets/application.py:775
 #, python-format
@@ -1233,44 +1269,44 @@ msgstr "Ziur zaude irten nahi duzula?"
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Deskarga %(count)d abian daukazu. Itxi hala ere?"
+msgstr[1] "%(count)d deskarga abian dituzu. Itxi ala ere?"
 
 #: ../../portable/frontends/widgets/application.py:812
 msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr ""
+msgstr "Deskargak martxan daudela atera nahi badut ni abisatu"
 
 #: ../../portable/frontends/widgets/application.py:997
 msgid "Upgrading database"
-msgstr ""
+msgstr "Datu-basea eguneratzen"
 
 #: ../../portable/frontends/widgets/application.py:1131
 msgid "Message"
-msgstr ""
+msgstr "Mezua"
 
 #: ../../portable/frontends/widgets/application.py:1156
 msgid "Migrating Files"
-msgstr ""
+msgstr "Fitxategiak migratzen"
 
 #: ../../portable/frontends/widgets/application.py:1166
 msgid "Migrating files"
-msgstr ""
+msgstr "Fitxategiak migratzen"
 
 #: ../../portable/frontends/widgets/style.py:232
 msgid "From"
-msgstr ""
+msgstr "Nondik"
 
 #: ../../portable/frontends/widgets/style.py:233
 msgid "File name:"
-msgstr ""
+msgstr "Fitxategiaren izena:"
 
 #: ../../portable/frontends/widgets/style.py:234
 msgid "Show More"
-msgstr ""
+msgstr "Gehiago erakutsi"
 
 #: ../../portable/frontends/widgets/style.py:235
 msgid "Show Less"
-msgstr ""
+msgstr "Gutxiago erakutsi"
 
 #: ../../portable/frontends/widgets/style.py:238
 #, python-format
@@ -1280,32 +1316,32 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:238
 #: ../../portable/frontends/widgets/displays.py:390
 msgid "Reveal File"
-msgstr ""
+msgstr "Errebelatu fitxategia"
 
 #: ../../portable/frontends/widgets/style.py:239
 msgid "Display Contents"
-msgstr ""
+msgstr "Edukia erakutsi"
 
 #: ../../portable/frontends/widgets/style.py:240
 #: ../../portable/frontends/widgets/itemcontextmenu.py:140
 msgid "Web Page"
-msgstr ""
+msgstr "Webgunea"
 
 #: ../../portable/frontends/widgets/style.py:241
 msgid "File URL"
-msgstr ""
+msgstr "Fitxategiaren URL helbidea"
 
 #: ../../portable/frontends/widgets/style.py:242
 msgid "License Page"
-msgstr ""
+msgstr "Lizentzia orria"
 
 #: ../../portable/frontends/widgets/style.py:243
 msgid "File Type"
-msgstr ""
+msgstr "Fitxategi-mota"
 
 #: ../../portable/frontends/widgets/style.py:244
 msgid "Seeders"
-msgstr ""
+msgstr "Haziak"
 
 #: ../../portable/frontends/widgets/style.py:245
 msgid "Leechers"
@@ -1313,15 +1349,15 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:246
 msgid "Upload Rate"
-msgstr ""
+msgstr "Partekatze-tasa"
 
 #: ../../portable/frontends/widgets/style.py:247
 msgid "Upload Total"
-msgstr ""
+msgstr "Guztira igota"
 
 #: ../../portable/frontends/widgets/style.py:248
 msgid "Down Rate"
-msgstr ""
+msgstr "Jeitsiera-tasa"
 
 #: ../../portable/frontends/widgets/style.py:249
 msgid "Down Total"
@@ -1329,7 +1365,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:250
 msgid "Up/Down Ratio"
-msgstr ""
+msgstr "Igoera/Jeitsiera tasa"
 
 #: ../../portable/frontends/widgets/style.py:251
 #: ../../portable/frontends/widgets/style.py:1120
@@ -1342,7 +1378,7 @@ msgstr "Deskargatu"
 
 #: ../../portable/frontends/widgets/style.py:252
 msgid "Download Torrent"
-msgstr ""
+msgstr "Torrent-a deskargatu"
 
 #: ../../portable/frontends/widgets/style.py:253
 #: ../../portable/dl_daemon/download.py:554
@@ -1351,29 +1387,29 @@ msgstr "Errorea"
 
 #: ../../portable/frontends/widgets/style.py:254
 msgid "queued for autodownload"
-msgstr ""
+msgstr "Deskarga automatikorako ilaratuta"
 
 #: ../../portable/frontends/widgets/style.py:256
 msgid "Currently Playing"
-msgstr ""
+msgstr "Orain erreproduzitzen"
 
 #: ../../portable/frontends/widgets/style.py:257
 #: ../../portable/frontends/widgets/style.py:1189
 msgid "Newly Available"
-msgstr ""
+msgstr "Berria"
 
 #: ../../portable/frontends/widgets/style.py:260
 msgid "Stop seeding"
-msgstr ""
+msgstr "Ereiten bukatu"
 
 #: ../../portable/frontends/widgets/style.py:576
 #: ../../portable/frontends/widgets/style.py:1182
 msgid "paused"
-msgstr ""
+msgstr "pausarazita"
 
 #: ../../portable/frontends/widgets/style.py:1052
 msgid "Remove from playlist"
-msgstr ""
+msgstr "Erreproduzio-zerrendatik kendu"
 
 #: ../../portable/frontends/widgets/dialogs.py:102
 msgid ""
@@ -1381,6 +1417,9 @@ msgid ""
 "can take a long time if you have a large number of items in Miro (it can "
 "even take more than 30 minutes)."
 msgstr ""
+"Miro zure jario eta fitxategien datu-basea eguneratzen ari da. Behin egin "
+"beharreko prozesu hau luzea izan daiteke Miron elementu asko izanez gero (30 "
+"minutu baino gehiago iraun dezake)."
 
 #: ../../portable/frontends/widgets/rundialog.py:82
 msgid "Username:"
@@ -1405,19 +1444,19 @@ msgstr "URL:"
 
 #: ../../portable/frontends/widgets/newfeed.py:70
 msgid "Feed should go in this section:"
-msgstr ""
+msgstr "Jarioa atal honetan joan beharko litzateke:"
 
 #: ../../portable/frontends/widgets/newfeed.py:109
 msgid "Add Feed"
-msgstr ""
+msgstr "Jario berria"
 
 #: ../../portable/frontends/widgets/newfeed.py:110
 msgid "Enter the URL of the feed to add"
-msgstr ""
+msgstr "Gehitu beharreko jarioaren URL helbidea idatzi"
 
 #: ../../portable/frontends/widgets/newfeed.py:121
 msgid "Add Feed - Invalid URL"
-msgstr ""
+msgstr "Jario berria - Baliogabeko URL helbidea"
 
 #: ../../portable/frontends/widgets/newfeed.py:122
 msgid ""
@@ -1426,6 +1465,10 @@ msgid ""
 "\n"
 "Enter the URL of the feed to add"
 msgstr ""
+"Idatzitako helbidea ez da baliozko URLa\n"
+"Mesedez egiazta ezazu URLa eta saia zaitez berriro\n"
+"\n"
+"Gehitu beharreko URLaren helbidea idatzi"
 
 #: ../../portable/frontends/widgets/menus.py:192
 msgid "_Video"
@@ -1437,39 +1480,39 @@ msgstr "_Ireki"
 
 #: ../../portable/frontends/widgets/menus.py:195
 msgid "_Download Item"
-msgstr ""
+msgstr "_Deskarga elementua"
 
 #: ../../portable/frontends/widgets/menus.py:197
 msgid "Check _Version"
-msgstr ""
+msgstr "_Bertsioa egiaztatu"
 
 #: ../../portable/frontends/widgets/menus.py:199
 msgid "_Remove Item"
-msgstr ""
+msgstr "Elementua _ezabatu"
 
 #: ../../portable/frontends/widgets/menus.py:202
 msgid "_Remove Items"
-msgstr ""
+msgstr "Elementuak _ezabatu"
 
 #: ../../portable/frontends/widgets/menus.py:203
 msgid "_Edit Item"
-msgstr ""
+msgstr "Elementua _editatu"
 
 #: ../../portable/frontends/widgets/menus.py:205
 msgid "Save Item _As"
-msgstr ""
+msgstr "Gorde elementua _honela"
 
 #: ../../portable/frontends/widgets/menus.py:208
 msgid "Save Items _As"
-msgstr ""
+msgstr "Gorde elementuak _honela"
 
 #: ../../portable/frontends/widgets/menus.py:209
 msgid "Copy Item _URL"
-msgstr ""
+msgstr "Elementuaren _URLa kopiatu"
 
 #: ../../portable/frontends/widgets/menus.py:213
 msgid "_Preferences"
-msgstr ""
+msgstr "_Hobespenak"
 
 #: ../../portable/frontends/widgets/menus.py:214
 msgid "_Quit"
@@ -1477,11 +1520,11 @@ msgstr "_Irten"
 
 #: ../../portable/frontends/widgets/menus.py:217
 msgid "_Sidebar"
-msgstr ""
+msgstr "_Albo-panela"
 
 #: ../../portable/frontends/widgets/menus.py:218
 msgid "Add _Feed"
-msgstr ""
+msgstr "_Jario berria"
 
 #: ../../portable/frontends/widgets/menus.py:222
 msgid "New Searc_h Feed"
@@ -1489,75 +1532,75 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:224
 msgid "New _Folder"
-msgstr ""
+msgstr "_Karpeta berria"
 
 #: ../../portable/frontends/widgets/menus.py:228
 msgid "Re_name"
-msgstr ""
+msgstr "Ber_izendatu"
 
 #: ../../portable/frontends/widgets/menus.py:231
 msgid "Re_name Feed"
-msgstr ""
+msgstr "Jarioa Ber_izendatu"
 
 #: ../../portable/frontends/widgets/menus.py:232
 msgid "Re_name Website"
-msgstr ""
+msgstr "Webgunea ber_izendatu"
 
 #: ../../portable/frontends/widgets/menus.py:233
 msgid "_Remove"
-msgstr ""
+msgstr "_Ezabatu"
 
 #: ../../portable/frontends/widgets/menus.py:237
 msgid "_Remove Feed"
-msgstr ""
+msgstr "Jarioa _ezabatu"
 
 #: ../../portable/frontends/widgets/menus.py:238
 msgid "_Remove Feeds"
-msgstr ""
+msgstr "Jarioak _ezabatu"
 
 #: ../../portable/frontends/widgets/menus.py:239
 msgid "_Remove Folder"
-msgstr ""
+msgstr "Karpeta _ezabatu"
 
 #: ../../portable/frontends/widgets/menus.py:240
 msgid "_Remove Folders"
-msgstr ""
+msgstr "Karpetak _ezabatu"
 
 #: ../../portable/frontends/widgets/menus.py:241
 msgid "_Remove Website"
-msgstr ""
+msgstr "Webgunea _ezabatu"
 
 #: ../../portable/frontends/widgets/menus.py:242
 msgid "_Remove Websites"
-msgstr ""
+msgstr "Webguneak _ezabatu"
 
 #: ../../portable/frontends/widgets/menus.py:243
 msgid "_Update Feed"
-msgstr ""
+msgstr "Jarioa _eguneratu"
 
 #: ../../portable/frontends/widgets/menus.py:246
 msgid "_Update Feeds"
-msgstr ""
+msgstr "Jarioak _eguneratu"
 
 #: ../../portable/frontends/widgets/menus.py:247
 msgid "Update _All Feeds"
-msgstr ""
+msgstr "Jario _guztiak eguneratu"
 
 #: ../../portable/frontends/widgets/menus.py:251
 msgid "_Import Feeds (OPML)"
-msgstr ""
+msgstr "Jarioak _inportatu  (OPML)"
 
 #: ../../portable/frontends/widgets/menus.py:253
 msgid "E_xport Feeds (OPML)"
-msgstr ""
+msgstr "Jarioak e_sportatu (OPML)"
 
 #: ../../portable/frontends/widgets/menus.py:256
 msgid "_Share with a Friend"
-msgstr ""
+msgstr "Lagun batekin _partekatu"
 
 #: ../../portable/frontends/widgets/menus.py:258
 msgid "Copy URL"
-msgstr ""
+msgstr "Kopiatu URLa"
 
 #: ../../portable/frontends/widgets/menus.py:262
 msgid "_Playlists"
@@ -1642,11 +1685,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/menus.py:311
 msgid "S_ubtitles"
-msgstr ""
+msgstr "A_zpitituluak"
 
 #: ../../portable/frontends/widgets/menus.py:315
 msgid "Select a Subtitles File..."
-msgstr ""
+msgstr "Azpititulu fitxategi bat hautatu"
 
 #: ../../portable/frontends/widgets/menus.py:321
 #: ../../portable/frontends/widgets/menus.py:333
@@ -1656,7 +1699,7 @@ msgstr "_Laguntza"
 #: ../../portable/frontends/widgets/menus.py:322
 #, python-format
 msgid "_About %(name)s"
-msgstr ""
+msgstr "%(name)s-ri _buruz"
 
 #: ../../portable/frontends/widgets/menus.py:330
 msgid "_Donate"
@@ -1664,15 +1707,15 @@ msgstr "_Dirulaguntza"
 
 #: ../../portable/frontends/widgets/menus.py:337
 msgid "Report a _Bug"
-msgstr ""
+msgstr "_Akats bat jakinarazi"
 
 #: ../../portable/frontends/widgets/menus.py:339
 msgid "_Translate"
-msgstr ""
+msgstr "_Itzuli"
 
 #: ../../portable/frontends/widgets/menus.py:341
 msgid "_Planet Miro"
-msgstr ""
+msgstr "Miro _planeta"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
 msgid "Remove From the Library"
@@ -1685,7 +1728,7 @@ msgstr "Jo"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:103
 msgid "Play Just This Item"
-msgstr ""
+msgstr "Elementu hau bakarrik erreproduzitu"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:104
 #: ../../portable/frontends/widgets/displays.py:391
@@ -1696,25 +1739,25 @@ msgstr "Kanpoan Erreproduzitu"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:105
 #: ../../portable/frontends/widgets/itemcontextmenu.py:198
 msgid "Add to Playlist"
-msgstr ""
+msgstr "Erreproduzio zerrendara gehitu"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:205
 msgid "Mark as Unplayed"
-msgstr ""
+msgstr "Errerproduzitu gabe bezala markatu"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:112
 #: ../../portable/frontends/widgets/itemcontextmenu.py:210
 msgid "Mark as Played"
-msgstr ""
+msgstr "Erreproduzitua bezala markatu"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:118
 msgid "Stop Seeding"
-msgstr ""
+msgstr "Ereiten gelditu"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:120
 msgid "Resume Seeding"
-msgstr ""
+msgstr "Ereiteari berrekin"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:123
 #: ../../portable/frontends/widgets/itemcontextmenu.py:245
@@ -1730,11 +1773,11 @@ msgstr "Deskarga Gelditu"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:130
 #: ../../portable/frontends/widgets/itemcontextmenu.py:259
 msgid "Resume Download"
-msgstr ""
+msgstr "Deskarga berrekin"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:144
 msgid "License"
-msgstr ""
+msgstr "Lizentzia"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:147
 msgid "File in Browser"
@@ -1747,39 +1790,39 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
 msgid "File on Disk"
-msgstr ""
+msgstr "Fitxategia diskan"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:154
 msgid "View"
-msgstr ""
+msgstr "Ikuspegia"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:192
 #, python-format
 msgid "%(count)d Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Deskargatutako elementu %(count)d"
+msgstr[1] "Deskargatutako %(count)d elementu"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:221
 #, python-format
 msgid "%(count)d Available Item"
 msgid_plural "%(count)d Available Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Elementu %(count)d erabilgarri"
+msgstr[1] "%(count)d elementu erabilgarri"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:234
 #, python-format
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Elementu %(count)d deskargatzen"
+msgstr[1] "%(count)d elementu deskargatzen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:251
 #, python-format
 msgid "%(count)d Paused Item"
 msgid_plural "%(count)d Paused Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Elementu %(count)d pausarazita"
+msgstr[1] "%(count)d elementu pausarazita"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:269
 msgid "Restart Upload"
@@ -1795,36 +1838,38 @@ msgid ""
 "%(appname)s can't play this file.  You may be able to open it with a "
 "different program"
 msgstr ""
+"%(appname)s-(e)k ezin du fitxategi hau erreproduzitu. Saia zaitez beste "
+"programa batekin irekitzen"
 
 #: ../../portable/frontends/widgets/displays.py:382
 msgid "Filename:"
-msgstr ""
+msgstr "Fitxategi-izena:"
 
 #: ../../portable/frontends/widgets/displays.py:385
 msgid "File type:"
-msgstr ""
+msgstr "Fitxategi-mota:"
 
 #: ../../portable/frontends/widgets/displays.py:393
 msgid "Skip"
-msgstr ""
+msgstr "Jaramonik ez"
 
 #: ../../portable/frontends/widgets/displays.py:430
 msgid "Open Externally"
-msgstr ""
+msgstr "Kanpoan ireki"
 
 #: ../../portable/frontends/widgets/displays.py:536
 #, python-format
 msgid "%(count)d Feed Folder Selected"
 msgid_plural "%(count)d Feed Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Jario karpeta %(count)d hautatuta"
+msgstr[1] "%(count)d jario karpeta hautatuta"
 
 #: ../../portable/frontends/widgets/displays.py:541
 #, python-format
 msgid "(contains %(count)d feed)"
 msgid_plural "(contains %(count)d feeds)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(barnean jario %(count)d)"
+msgstr[1] "(barnean %(count)d jario)"
 
 #: ../../portable/frontends/widgets/displays.py:547
 #, python-format
@@ -1844,34 +1889,34 @@ msgstr[1] ""
 #, python-format
 msgid "%(count)d Feed Selected"
 msgid_plural "%(count)d Feeds Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Jario %(count)d hautatuta"
+msgstr[1] "%(count)d jario hautatuta"
 
 #: ../../portable/frontends/widgets/displays.py:568
 #, python-format
 msgid "%(count)d Website Selected"
 msgid_plural "%(count)d Websites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Webgune %(count)d hautatuta"
+msgstr[1] "%(count)d webgune hautatuta"
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
 msgid "%(count)d Playlist Selected"
 msgid_plural "%(count)d Playlists Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Erreproduzio zerrenda %(count)d hautatuta"
+msgstr[1] "%(count)d erreproduzio zerrenda hautatuta"
 
 #: ../../portable/frontends/widgets/displays.py:581
 msgid "Delete All"
-msgstr ""
+msgstr "Ezabatu dena"
 
 #: ../../portable/frontends/widgets/displays.py:585
 msgid "Put Into a New Folder"
-msgstr ""
+msgstr "Karpeta berri batean jarri"
 
 #: ../../portable/frontends/widgets/linkhandler.py:54
 msgid "Subscribe to Feed"
-msgstr ""
+msgstr "Jariora harpidetu"
 
 #: ../../portable/frontends/widgets/linkhandler.py:56
 #, python-format
@@ -1881,6 +1926,9 @@ msgid ""
 "\n"
 "%(url)s"
 msgstr ""
+"Lotura hau jario bat dela dirudi. Zure harpidetzetara gehitu nahi duzu?\n"
+"\n"
+"%(url)s"
 
 #: ../../portable/frontends/widgets/crashdialog.py:54
 #, python-format
@@ -1894,31 +1942,33 @@ msgid ""
 "Include entire program database including all video and feed metadata with "
 "crash report"
 msgstr ""
+"Errore txotenari programaren datu-base guztia gehitu, bideo eta jarioen "
+"metadatuekin"
 
 #: ../../portable/frontends/widgets/crashdialog.py:71
 msgid "Describe what you were doing when you got this error:"
-msgstr ""
+msgstr "Errorea gertatu denean zer egiten ari zinen deskribatu:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:58
 #, python-format
 msgid "%(count)d hour ago"
 msgid_plural "%(count)d hours ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Orain dela ordu %(count)d"
+msgstr[1] "Orain dela %(count)d ordu"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:64
 #, python-format
 msgid "%(count)d day ago"
 msgid_plural "%(count)d days ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Orain dela egun %(count)d"
+msgstr[1] "Orain dela %(count)d egun"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:70
 #, python-format
 msgid "%(count)d month ago"
 msgid_plural "%(count)d months ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Orain dela hilabete %(count)d"
+msgstr[1] "Orain dela %(count)d hilabete"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Videos:"
@@ -1931,23 +1981,23 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
-msgstr ""
+msgstr "Orain dela egun 1 ikusita"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr ""
+msgstr "Orain dela 3 egun ikusita"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
-msgstr ""
+msgstr "Orain dela 6 egun ikusita"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:100
 msgid "Watched 10 days ago"
-msgstr ""
+msgstr "Orain dela 10 egun ikusita"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
-msgstr ""
+msgstr "Orain dela hilabete 1 ikusita"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
@@ -1956,73 +2006,74 @@ msgstr ""
 #: ../../portable/frontends/widgets/feedsettingspanel.py:139
 #, python-format
 msgid "Keep %(number)s (Default)"
-msgstr ""
+msgstr "Gorde %(number)s (Lehenetsita)"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:141
 msgid "Keep 0"
-msgstr ""
+msgstr "0 gorde"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:142
 msgid "Keep 20"
-msgstr ""
+msgstr "20 gorde"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:143
 msgid "Keep 50"
-msgstr ""
+msgstr "50 gorde"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:144
 msgid "Keep 100"
-msgstr ""
+msgstr "100 gorde"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:145
 msgid "Keep 1000"
-msgstr ""
+msgstr "1000 gorde"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
-msgstr ""
+msgstr "Ezabatu dena"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
-msgstr ""
+msgstr "Elementu zaharrak ezabatu egin dira."
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause Auto-Downloading when this many items are unplayed:"
 msgstr ""
+"Horrenbeste elementu ikusi gabe daudenean deskarga automatikoa pausarazi:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
-msgstr ""
+msgstr "Ikusi gabeko elementu 1"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:198
 msgid "3 unplayed items"
-msgstr ""
+msgstr "Ikusi gabeko 3 elementu"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:199
 msgid "5 unplayed items"
-msgstr ""
+msgstr "Ikusi gabeko 5 elementu"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:200
 msgid "10 unplayed items"
-msgstr ""
+msgstr "Ikusi gabeko 10 elementu"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:201
 msgid "15 unplayed items"
-msgstr ""
+msgstr "Ikusi gabeko 15 elementu"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:241
 msgid "Feed Settings"
-msgstr ""
+msgstr "Jarioen ezarpenak"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:64
 #, python-format
 msgid "%(name)s First Time Setup"
-msgstr ""
+msgstr "%(name)s lehen aldiko instalazioa"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:123
 #, python-format
 msgid "Welcome to the %(name)s First Time Setup"
-msgstr ""
+msgstr "Ongietorri %(name)s-(r)en lehen aldiko instalaziora"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:127
 #, python-format
@@ -2034,11 +2085,17 @@ msgid ""
 "This way, downloads in progress can finish downloading and new media files "
 "can be downloaded in the background, ready when you want to watch."
 msgstr ""
+"Hurrengo pantailek %(name)s zure beharrizanetara moldatzen lagunduko "
+"dizute.\n"
+"\n"
+"%(name)s zure konputagailuarekin batera abiaraztea gomendatzen dizugu. "
+"Horrela, burutu gabeko deskargak bukatu egingo dira eta multimedia fitxategi "
+"berriak atzeko planoan deskargatuko dira, zuk nahi duzunean ikusteko prest."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:139
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
-msgstr ""
+msgstr "%(name)s abioan exekutatzea nahi al duzu?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:145
 #: ../../portable/frontends/widgets/firsttimedialog.py:179
@@ -2054,7 +2111,7 @@ msgstr "Ez"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:154
 msgid "Next >"
-msgstr ""
+msgstr "Hurrengoa >"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:164
 #, python-format
@@ -2069,10 +2126,14 @@ msgid ""
 "\n"
 "Would you like %(name)s to look for media files on your computer?"
 msgstr ""
+"%(name)s-(e)k zure konputagailuan dauden multimedia fitxategi guztiak aurki "
+"ditzake zure liburutegia antolatzen laguntzeko.\n"
+"\n"
+"%(name)s-(e)k zure ordenagiluko multimedia fitxategiak bilatzea nahi al duzu?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:186
 msgid "Restrict to all my personal files."
-msgstr ""
+msgstr "Nere fitxategi pertsonal guztietara mugatu."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:187
 msgid "Search custom folders:"
@@ -2080,12 +2141,12 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:198
 msgid "Choose directory to search for media files"
-msgstr ""
+msgstr "Multimedia fitxategiak bilatzeko direktorioa hautatu"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:213
 #: ../../portable/frontends/widgets/firsttimedialog.py:292
 msgid "< Previous"
-msgstr ""
+msgstr "< Aurrekoa"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:227
@@ -2101,7 +2162,7 @@ msgstr "Amaituta"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:275
 msgid "Searching for media files"
-msgstr ""
+msgstr "Multimedia fitxategiak bilatzen"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:285
 #: ../../portable/dialogs.py:95
@@ -2119,16 +2180,16 @@ msgstr[1] ""
 #, python-format
 msgid "found %(count)s media file"
 msgid_plural "found %(count)s media files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Multimedia fitxategi %(count)s aurkituta"
+msgstr[1] "%(count)s multimedia fitxategi aurkituta"
 
 #: ../../portable/frontends/widgets/browser.py:96
 msgid "Open in browser"
-msgstr ""
+msgstr "Nabigatzailean ireki"
 
 #: ../../portable/frontends/widgets/browser.py:102
 msgid "Download this video"
-msgstr ""
+msgstr "Bideo hau deskargatu"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:57
 msgid "New Search Feed"
@@ -2144,23 +2205,23 @@ msgstr "Bilatu:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:80
 msgid "In this:"
-msgstr ""
+msgstr "Honetan:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:87
 msgid "Feed:"
-msgstr ""
+msgstr "Jarioa:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:93
 msgid "Search engine:"
-msgstr ""
+msgstr "Bilatzailea:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:133
 msgid "Add new feed to this section:"
-msgstr ""
+msgstr "Atal honi jario berri bat gehitu:"
 
 #: ../../portable/downloader.py:307
 msgid "activity"
-msgstr ""
+msgstr "jarduera"
 
 #: ../../portable/downloader.py:371
 msgid "Flash URL Scraping Error"
@@ -2183,112 +2244,112 @@ msgstr ""
 #: ../../portable/displaytext.py:55
 #, python-format
 msgid "%(size)s mb/s"
-msgstr ""
+msgstr "%(size)s mb/s"
 
 #: ../../portable/displaytext.py:58
 #, python-format
 msgid "%(size)s kb/s"
-msgstr ""
+msgstr "%(size)s kb/s"
 
 #: ../../portable/displaytext.py:61
 #, python-format
 msgid "%(size)s b/s"
-msgstr ""
+msgstr "%(size)s b/s"
 
 #: ../../portable/displaytext.py:68
 #, python-format
 msgid "%(num).0f day"
 msgid_plural "%(num).0f days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Egun %(num).0f"
+msgstr[1] "%(num).0f egun"
 
 #: ../../portable/displaytext.py:71
 #, python-format
 msgid "%(num).0f hr"
 msgid_plural "%(num).0f hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ordu %(num).0f"
+msgstr[1] "%(num).0f ordu"
 
 #: ../../portable/displaytext.py:74
 #, python-format
 msgid "%(num).0f min"
 msgid_plural "%(num).0f mins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Minutu %(num).0f"
+msgstr[1] "%(num).0f minutu"
 
 #: ../../portable/displaytext.py:77
 #, python-format
 msgid "%(num)d sec"
 msgid_plural "%(num)d secs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Segundo %(num)d"
+msgstr[1] "%(num)d segundo"
 
 #: ../../portable/displaytext.py:91
 #, python-format
 msgid "%(size)s gb"
-msgstr ""
+msgstr "%(size)s gb"
 
 #: ../../portable/displaytext.py:94
 #, python-format
 msgid "%(size)s mb"
-msgstr ""
+msgstr "%(size)s mb"
 
 #: ../../portable/displaytext.py:97
 #, python-format
 msgid "%(size)s kb"
-msgstr ""
+msgstr "%(size)s kb"
 
 #: ../../portable/displaytext.py:99
 #, python-format
 msgid "%(size)s b"
-msgstr ""
+msgstr "%(size)s b"
 
 #: ../../portable/displaytext.py:104
 #, python-format
 msgid "Expires in %(count)d day"
 msgid_plural "Expires in %(count)d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Egun %(count)d iraungitzeko"
+msgstr[1] "%(count)d egun iraungitzeko"
 
 #: ../../portable/displaytext.py:109
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ordu %(count)d iraungitzeko"
+msgstr[1] "%(count)d ordu iraungitzeko"
 
 #: ../../portable/displaytext.py:114
 #, python-format
 msgid "Expires in %(count)d minute"
 msgid_plural "Expires in %(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Minutu %(count)d iraungitzeko"
+msgstr[1] "%(count)d minutu iraungitzeko"
 
 #: ../../portable/displaytext.py:122
 #, python-format
 msgid "Expires: %(count)d day"
 msgid_plural "Expires: %(count)d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Egun %(count)d iraungitzeko"
+msgstr[1] "%(count)d egun iraungitzeko"
 
 #: ../../portable/displaytext.py:127
 #, python-format
 msgid "Expires: %(count)d hour"
 msgid_plural "Expires: %(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ordu %(count)d iraungitzeko"
+msgstr[1] "%(count)d ordu iraungitzeko"
 
 #: ../../portable/displaytext.py:132
 #, python-format
 msgid "Expires: %(count)d minute"
 msgid_plural "Expires: %(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Minutu %(count)d iraungitzeko"
+msgstr[1] "%(count)d minutu iraungitzeko"
 
 #: ../../portable/displaytext.py:149
 #, python-format
 msgid "%(month)s %(dayofmonth)s, %(year)s"
-msgstr ""
+msgstr "%(year)s-%(month)s-%(dayofmonth)s"
 
 #: ../../portable/playlist.py:201
 #, python-format
@@ -2297,25 +2358,26 @@ msgstr "Erreprodukzio zerrendarako izen berria sartu %s"
 
 #: ../../portable/feed.py:949
 msgid "Error loading feed"
-msgstr ""
+msgstr "Jarioa kargatzean hutsegitea"
 
 #: ../../portable/feed.py:951
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr ""
+"Ezin izan da %(url)s helbideko jarioa kargatu (%(errordescription)s)."
 
 #: ../../portable/feed.py:954
 msgid "Would you like to keep the feed?"
-msgstr ""
+msgstr "Jario hau gorde nahi al duzu?"
 
 #: ../../portable/feed.py:1076
 msgid "Bad content-type"
-msgstr ""
+msgstr "Eduki mota okerra"
 
 #: ../../portable/feed.py:1089
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
-msgstr ""
+msgstr "Kanala ez da %(appname)s-(r)ekin bateragarria"
 
 #: ../../portable/feed.py:1092
 #, python-format
@@ -2337,7 +2399,7 @@ msgstr ""
 
 #: ../../portable/feed.py:2306 ../../portable/feed.py:2459
 msgid "Local Files"
-msgstr ""
+msgstr "Lekuko Fitxategiak"
 
 #: ../../portable/feed.py:2473
 msgid "Playing File"
@@ -2349,7 +2411,7 @@ msgstr "Deskarga jadanik existitzen da"
 
 #: ../../portable/singleclick.py:56
 msgid "That URL is already an external download."
-msgstr ""
+msgstr "URL hori kanpoko deskarga bat da dagoeneko."
 
 #: ../../portable/singleclick.py:62
 #, python-format
@@ -2358,11 +2420,11 @@ msgstr ""
 
 #: ../../portable/singleclick.py:65
 msgid "It is downloading now."
-msgstr ""
+msgstr "Orain deskargatzen ari da."
 
 #: ../../portable/singleclick.py:67
 msgid "It has already been downloaded."
-msgstr ""
+msgstr "Deskargatuta dago dagoeneko."
 
 #: ../../portable/singleclick.py:99
 msgid "File Download"
@@ -2409,7 +2471,7 @@ msgstr ""
 
 #: ../../portable/dl_daemon/download.py:904
 msgid "BitTorrent failure"
-msgstr ""
+msgstr "BitTorrenten hutsegitea"
 
 #: ../../portable/dl_daemon/download.py:904
 msgid "BitTorrent failed to startup"
@@ -2519,19 +2581,19 @@ msgstr "Karpeta Berrian Gehitu"
 
 #: ../../portable/dialogs.py:119
 msgid "Not Now"
-msgstr ""
+msgstr "Orain Ez"
 
 #: ../../portable/dialogs.py:120
 msgid "Close to Tray"
-msgstr ""
+msgstr "Azpira Jetsi"
 
 #: ../../portable/dialogs.py:121
 msgid "Launch Miro"
-msgstr ""
+msgstr "Miro Abiatu"
 
 #: ../../portable/dialogs.py:122
 msgid "Download Anyway"
-msgstr ""
+msgstr "Edonola Deskargatu"
 
 #: ../../portable/dialogs.py:123
 msgid "Open in External Browser"
@@ -2576,7 +2638,7 @@ msgstr ""
 
 #: ../../portable/opml.py:205
 msgid "OPML Import summary"
-msgstr ""
+msgstr "OPML Inportazioaren laburpena"
 
 #: ../../portable/opml.py:206
 #, python-format
@@ -2807,7 +2869,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:133
 msgid "Close to tray?"
-msgstr ""
+msgstr "Azpira jetsi?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:134
 #, python-format
@@ -2884,7 +2946,7 @@ msgstr ""
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:178
 msgid "Download Completed"
-msgstr ""
+msgstr "Deskarga Osaturik"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:179
 #, python-format

@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-03-11 11:44+0000\n"
-"Last-Translator: MaXCoDeR <maxcod3r@gmail.com>\n"
+"PO-Revision-Date: 2010-03-25 08:52+0000\n"
+"Last-Translator: AHMET ATAŞ  <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2010-03-23 16:09+0000\n"
+"X-Launchpad-Export-Date: 2010-04-08 19:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/frontends/widgets/menus.py:280
@@ -94,7 +94,7 @@ msgstr "İç hata"
 
 #: ../../portable/httpclient.py:170
 msgid "Pipeline request never started"
-msgstr "Ardışık düzen isteği hiç başlatılmadı"
+msgstr "Sıralı istek hiç başlamadı"
 
 #: ../../portable/httpclient.py:174
 msgid "Timeout"
@@ -103,7 +103,7 @@ msgstr "Zaman Aşımı"
 #: ../../portable/httpclient.py:175
 #, python-format
 msgid "Connection to %(host)s timed out"
-msgstr "%(host)s Bağlantısı zaman aşımına uğradı"
+msgstr "%(host)s 'a Bağlanma zaman aşımına uğradı"
 
 #: ../../portable/httpclient.py:179
 msgid "Invalid URL"
@@ -126,7 +126,7 @@ msgstr "Okuma hatası"
 #: ../../portable/httpclient.py:191
 #, python-format
 msgid "Error while reading from \"%(path)s\""
-msgstr "Hata \"%(path)s\" dan okunamadı"
+msgstr "%(path)s Okuma hatası"
 
 #: ../../portable/httpclient.py:388
 msgid "Unknown Error code"
@@ -201,7 +201,7 @@ msgstr[0] "%(count)d öğe eşleşti"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:280
 msgid "All Items Match Search"
-msgstr "Tüm eşleşenleri ara"
+msgstr "Tüm öğeleri karşılaştır"
 
 #: ../../portable/frontends/widgets/diagnostics.py:76
 #: ../../portable/frontends/widgets/gtk/trayicon.py:109
@@ -210,11 +210,11 @@ msgstr "Göster"
 
 #: ../../portable/frontends/widgets/diagnostics.py:83
 msgid "Movies location:"
-msgstr "Filmelerin bulunduğu yer:"
+msgstr "Filmlerin yeri"
 
 #: ../../portable/frontends/widgets/diagnostics.py:87
 msgid "Icon cache location:"
-msgstr "İkon bellek yeri:"
+msgstr "Simge hafıza yeri"
 
 #: ../../portable/frontends/widgets/diagnostics.py:91
 msgid "Log file location:"
@@ -226,7 +226,7 @@ msgstr "İndiricinin Log dosyası yeri:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:99
 msgid "Database file location:"
-msgstr "Database dosyası yeri:"
+msgstr "Veritabanının yeri"
 
 #: ../../portable/frontends/widgets/diagnostics.py:106
 msgid "Space free on disk:"
@@ -248,7 +248,7 @@ msgstr "Tanılar"
 #: ../../portable/frontends/widgets/downloadscontroller.py:84
 #: ../../portable/frontends/widgets/prefpanel.py:656
 msgid "Downloads"
-msgstr "İndirmeler"
+msgstr "İndirilenler"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:93
 msgid "Single and external downloads"
@@ -260,7 +260,7 @@ msgstr "Besleme indirme"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:100
 msgid "Seeding"
-msgstr "Gönderiliyor"
+msgstr "Kaynak olunuyor"
 
 #: ../../portable/frontends/widgets/newfolder.py:60
 msgid "Folder name:"
@@ -289,12 +289,12 @@ msgstr "Besleme Klasörü oluştur"
 
 #: ../../portable/frontends/widgets/newfolder.py:110
 msgid "Enter the name of the folder to add"
-msgstr "Eklemek için Klasörün adını girin"
+msgstr "Eklenecek klasörün adını giriniz"
 
 #: ../../portable/frontends/widgets/removefeeds.py:49
 msgid "Remove Feed"
 msgid_plural "Remove Feeds"
-msgstr[0] "Beslemeyi Sil"
+msgstr[0] "Kaynağı Kaldır"
 
 #: ../../portable/frontends/widgets/removefeeds.py:57
 msgid "Are you sure you want to remove this feed:"
@@ -324,8 +324,8 @@ msgid_plural ""
 "Are you sure you want to remove these feeds?  The downloads currently in "
 "progress will be canceled."
 msgstr[0] ""
-"Are you sure you want to remove this feed?  The downloads currently in "
-"progress will be canceled."
+"Bu beslemeleri kaldırmak istediğinizden emin misiniz? Halen süren indirme "
+"işlemleri iptal edilecek."
 
 #: ../../portable/frontends/widgets/itemedit.py:136
 #: ../../portable/frontends/widgets/itemcontextmenu.py:107
@@ -348,7 +348,7 @@ msgstr "Ortam türü:"
 #: ../../portable/frontends/widgets/itemlistcontroller.py:521
 #: ../../portable/frontends/widgets/statictabs.py:103
 msgid "Video"
-msgstr "Görüntü"
+msgstr "Video"
 
 #: ../../portable/frontends/widgets/itemedit.py:152
 #: ../../portable/frontends/widgets/itemlistcontroller.py:527
@@ -364,7 +364,7 @@ msgstr "Diğer"
 
 #: ../../portable/frontends/widgets/itemedit.py:157
 msgid "Path:"
-msgstr "Konum:"
+msgstr "Yol:"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
@@ -396,7 +396,7 @@ msgstr "Tarih"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:291
 msgid "Length"
-msgstr "Süre"
+msgstr "Uzunluk"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:292
 msgid "Status"
@@ -409,7 +409,7 @@ msgstr "Boyut"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:295
 msgid "ETA"
-msgstr "ETA"
+msgstr "Kalan Süre"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:296
 msgid "Speed"
@@ -493,7 +493,7 @@ msgstr "Beslemeyi Sil"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:719
 msgid "Unwatched"
-msgstr "İzlenmedi"
+msgstr "Izlenmemiş"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:721
 #: ../../portable/frontends/widgets/style.py:255

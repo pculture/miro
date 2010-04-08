@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-03-23 16:08+0000\n"
+"X-Launchpad-Export-Date: 2010-04-08 19:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -34,7 +34,7 @@ msgstr ""
 
 #: ../../portable/httpclient.py:123
 msgid "SSL connection error"
-msgstr ""
+msgstr "SSL tengivilla"
 
 #: ../../portable/httpclient.py:127
 msgid "HTTP error"
@@ -68,7 +68,7 @@ msgstr ""
 #: ../../portable/httpclient.py:156 ../../portable/httpclient.py:185
 #: ../../portable/downloader.py:370
 msgid "File not found"
-msgstr ""
+msgstr "Skrá fannst ekki"
 
 #: ../../portable/httpclient.py:157
 msgid "Got 404 status code"
@@ -103,7 +103,7 @@ msgstr ""
 
 #: ../../portable/httpclient.py:179
 msgid "Invalid URL"
-msgstr ""
+msgstr "Ógilt URL"
 
 #: ../../portable/httpclient.py:180
 #, python-format
@@ -117,7 +117,7 @@ msgstr ""
 
 #: ../../portable/httpclient.py:190
 msgid "Read error"
-msgstr ""
+msgstr "Lesvilla"
 
 #: ../../portable/httpclient.py:191
 #, python-format
@@ -126,7 +126,7 @@ msgstr ""
 
 #: ../../portable/httpclient.py:388
 msgid "Unknown Error code"
-msgstr ""
+msgstr "Óþekktur villukóði"
 
 #: ../../portable/httpclient.py:420
 msgid "Connection closed"
@@ -135,7 +135,7 @@ msgstr ""
 #: ../../portable/httpclient.py:846 ../../portable/downloader.py:586
 #: ../../portable/downloader.py:594
 msgid "Unknown"
-msgstr ""
+msgstr "Óþekktur"
 
 #: ../../portable/httpclient.py:847
 msgid "Internal Error: Not ready to send"
@@ -922,7 +922,7 @@ msgstr "Deila"
 #: ../../portable/frontends/widgets/style.py:236
 #: ../../portable/frontends/widgets/itemcontextmenu.py:142
 msgid "Comments"
-msgstr ""
+msgstr "Ummæli"
 
 #: ../../portable/frontends/widgets/gtk/video.py:307
 msgid "Permalink"
@@ -1289,7 +1289,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:240
 #: ../../portable/frontends/widgets/itemcontextmenu.py:140
 msgid "Web Page"
-msgstr ""
+msgstr "Vefsíða"
 
 #: ../../portable/frontends/widgets/style.py:241
 msgid "File URL"
@@ -1392,11 +1392,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
-msgstr ""
+msgstr "Miro handbók"
 
 #: ../../portable/frontends/widgets/statictabs.py:121
 msgid "Downloading"
-msgstr ""
+msgstr "Hleð niður"
 
 #: ../../portable/frontends/widgets/newfeed.py:60
 #: ../../portable/frontends/widgets/newsearchfeed.py:99
@@ -1681,7 +1681,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemcontextmenu.py:100
 #: ../../portable/frontends/widgets/itemcontextmenu.py:197
 msgid "Play"
-msgstr ""
+msgstr "Spila"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:103
 msgid "Play Just This Item"

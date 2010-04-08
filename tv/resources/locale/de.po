@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-03-09 22:54+0000\n"
+"PO-Revision-Date: 2010-03-27 16:41+0000\n"
 "Last-Translator: Rise-T <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-03-23 16:08+0000\n"
+"X-Launchpad-Export-Date: 2010-04-08 19:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -25,7 +25,7 @@ msgstr "Fehler: %(msg)s"
 
 #: ../../portable/httpclient.py:116 ../../portable/httpclient.py:122
 msgid "Can't connect"
-msgstr "Verbindung konnte nicht hergestellt werden"
+msgstr "Verbindung konnte nicht hergestellt werden."
 
 #: ../../portable/httpclient.py:117
 #, python-format
@@ -799,8 +799,8 @@ msgid ""
 "Watch for new video and audio items in these folders and include them in "
 "library:"
 msgstr ""
-"Nach neuen Video- und Audioelementen in diesen Ordnern Ausschau halten und "
-"diese in die Medienbibliothek einbinden:"
+"Die folgenden Ordner hinsichtlich neuer Video- und Audiodateien beobachten "
+"und gefundene Dateien in die Medienbibliothek einbinden:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:589
 msgid "Keep at least this much free space on my drive:"
@@ -1042,22 +1042,24 @@ msgid ""
 "If you quit, then you can connect the drive or otherwise fix the problem and "
 "relaunch %(shortappname)s."
 msgstr ""
-"%(shortappname)s kann das primäre Videoverzeichnis in:\n"
+"%(shortappname)s kann das folgende primäre Video-Verzeichnis nicht "
+"benutzen:\n"
 "\n"
 "%(moviedirectory)s\n"
 "\n"
-"nicht benutzen. Der Grund dafür könnte seinm dass das Verzechnis auf einer "
-"externen Festplatte liegt und dieses Laufwerk nicht verbunden ist, oder dass "
-"es ein Verzeichnis ist, für dass %(shortappname)s keine Schreibberechtigung "
-"hat, oder dass an diesem Pfad kein Verzeichnis existiert.\n"
+"Mögliche Ursachen hierfür: a) das Verzeichnis liegt auf einer externen "
+"Laufwerk, das momentan nicht verbunden ist, b) %(shortappname)s hat keine "
+"Schreibrechte für das angegebene Verzeichnis, c) der angegebene Pfad führt "
+"nicht zu einem Verzeichnis.\n"
 "\n"
-"Wenn sie fortführen wird das primäre Videoverzeichnis auf ein Verzeichnis "
-"auf diesem Laufwerk zurückgesetzt. Wenn Sie Videos\n"
-"heruntergeladen haben, wird %(shortappname)s Informationen über diese Videos "
+"Wenn Sie hier fortfahren, wird das primäre Video-Verzeichnis auf ein "
+"Verzeichnis auf dem aktuellen Laufwerk zurückgesetzt. %(shortappname)s wird "
+"hierdurch Informationen über eventuell bereits heruntergeladene Videodateien "
 "verlieren.\n"
 "\n"
-"Wenn Sie das Programm beenden können Sie das Laufwerk verbinden oder das "
-"Problem anderweitig beheben und danach %(shortappname)s neustarten."
+"Wenn Sie das Programm beenden, können Sie das Laufwerk falls notwendig "
+"verbinden oder das Problem anderweitig beheben, und danach %(shortappname)s "
+"neu starten."
 
 #: ../../portable/frontends/widgets/application.py:330
 msgid "Error Revealing File"
@@ -1859,7 +1861,7 @@ msgstr[1] "%(count)d angehaltene Downloads"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:269
 msgid "Restart Upload"
-msgstr "Upload neu starten"
+msgstr "Hochladen neu starten"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:283
 msgid "Remove From Playlist"
@@ -2635,7 +2637,7 @@ msgstr "Nicht jetzt"
 
 #: ../../portable/dialogs.py:120
 msgid "Close to Tray"
-msgstr "In den Tray minimieren"
+msgstr "In den Infobereich minimieren."
 
 #: ../../portable/dialogs.py:121
 msgid "Launch Miro"
@@ -2899,17 +2901,17 @@ msgid ""
 msgstr ""
 "%(appname)s konnte die Datenbank nicht abspeichern.\n"
 "\n"
-"Wenn Ihre Festplatte voll ist empfehlen wir etwas Speicher freizugeben und "
-"es nochmal zu versuchen. Wenn Ihre Festplatte nicht voll ist, könnte ein "
-"erneuter Speicherversuch helfen.\n"
+"Wenn Ihre Festplatte voll ist, empfehlen wir etwas Speicher freizugeben und "
+"es danach noch einmal zu versuchen. Wenn Ihre Festplatte nicht voll ist, "
+"könnte ein erneuter Speicherversuch helfen.\n"
 "\n"
-"Wenn der erneute Versuch nicht funktioniert, beenden Sie bitte %(appname)s "
-"und starten die Anwendung neu. Kürzliche Änderungen könnten dabei verloren "
-"gehen.\n"
+"Wenn auch ein erneuter Versuch nicht zum Erfolg führt, beenden Sie bitte "
+"%(appname)s und starten die Anwendung neu. Kürzliche Änderungen können dabei "
+"verloren gehen.\n"
 "\n"
-"Wenn Sie diese Fehlermeldung oft während Downloads erhalten empfehlen wir "
-"die Anzahl gleichzeitiger Downloads im Einstellungs-Dialog unter dem Reiter "
-"Download zu reduzieren.\n"
+"Wenn Sie diese Fehlermeldung während des Herunterladens häufig erhalten, "
+"empfehlen wir die Anzahl gleichzeitiger Downloads im Menü \"Einstellungen\" "
+"unter dem Reiter \"Downloads\" zu reduzieren.\n"
 "\n"
 "Fehler: %(error_text)s\n"
 "\n"
@@ -2937,17 +2939,17 @@ msgstr "%(size)sB"
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:39
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:48
 msgid "Enable tray icon"
-msgstr "Tray-Icon aktivieren"
+msgstr "Symbol im Infobereich anzeigen."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
 msgid "When I click the red close button:"
-msgstr "Wenn ich auf den roten Schließen-Knopf klicke:"
+msgstr "Aktion beim Klicken auf die rote Schließen-Schaltfläche:"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Close to tray so that downloads can continue."
 msgstr ""
-"In den Tray minimieren, damit Downloads im Hintergrund fortgesetzt werden "
-"können."
+"In den Infobereich minimieren, damit Downloads im Hintergrund fortgesetzt "
+"werden können."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
 #, python-format
@@ -2969,7 +2971,7 @@ msgstr "Möchten Sie dieses Element jetzt herunterladen?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:133
 msgid "Close to tray?"
-msgstr "In den Tray minimieren?"
+msgstr "In den Infobereich minimieren?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:134
 #, python-format
@@ -2977,9 +2979,9 @@ msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
-"Wenn du den roten beenden Knopf drückst, würdest du %(appname)s gerne in die "
-"Symbolleiste verkleinern oder beenden?Du kannst diese Einstellung später "
-"über Optionen verändern."
+"Soll beim Klicken auf die rote Schließen-Schaltfläche %(appname)s in den "
+"Infobereich minimiert oder beendet werden? Die hier getroffene Auswahl kann "
+"später unter \"Einstellungen\" verändert werden."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:193
 msgid "Error Bombing Item"
@@ -3027,10 +3029,10 @@ msgid ""
 "You should quit %(appname)s now and start it up again after Adobe Flash has "
 "been installed."
 msgstr ""
-"Ihr Browser lädt nun die Internetseite auf der Sie Adobe Flash herunterladen "
-"und installieren können.\n"
+"Ihr Browser öffnet nun eine Internetseite, von der Sie Adobe Flash "
+"herunterladen und installieren können.\n"
 "\n"
-"Bitte beenden Sie %(appname)s und starten es erneut nachdem Adobe Flash "
+"Bitte beenden Sie %(appname)s und starten es erneut, nachdem Adobe Flash "
 "installiert wurde."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:56

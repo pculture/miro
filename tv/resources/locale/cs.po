@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-03-06 15:54+0000\n"
-"Last-Translator: escamilo <Unknown>\n"
+"PO-Revision-Date: 2010-04-05 16:28+0000\n"
+"Last-Translator: Roman Horník <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-03-23 16:09+0000\n"
+"X-Launchpad-Export-Date: 2010-04-08 19:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -1296,7 +1296,7 @@ msgid "Remove website"
 msgid_plural "Remove websites"
 msgstr[0] "Odebrat webovou stránku"
 msgstr[1] "Odebrat webové stránky"
-msgstr[2] "Odebrat webové stránky"
+msgstr[2] "Odebrat webových stránek"
 
 #: ../../portable/frontends/widgets/application.py:775
 #, python-format
@@ -1304,7 +1304,7 @@ msgid "Are you sure you want to remove this website?"
 msgid_plural "Are you sure you want to remove these %(count)s websites?"
 msgstr[0] "Jste si jisti, že chcete odebrat tuto stránku?"
 msgstr[1] "Jste si jisti, že chcete odebrat tyto stránky?"
-msgstr[2] "Jste si jisti, že chcete odebrat tyto stránky?"
+msgstr[2] "Jste si jisti, že chcete odebrat těchto %(count)s stránek?"
 
 #: ../../portable/frontends/widgets/application.py:805
 msgid "Are you sure you want to quit?"
@@ -1951,7 +1951,7 @@ msgstr[2] "Označeno %(count)d kanálů"
 #, python-format
 msgid "%(count)d Website Selected"
 msgid_plural "%(count)d Websites Selected"
-msgstr[0] "%(count)d webová stránky vybrána"
+msgstr[0] "%(count)d webová stránka vybrána"
 msgstr[1] "%(count)d webové stránky vybrány"
 msgstr[2] "%(count)d webových stránek vybráno"
 
@@ -2323,22 +2323,25 @@ msgstr "%(size)s b/s"
 #, python-format
 msgid "%(num).0f day"
 msgid_plural "%(num).0f days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f den"
+msgstr[1] "%(num).0f dny"
+msgstr[2] "%(num).0f dnů"
 
 #: ../../portable/displaytext.py:71
 #, python-format
 msgid "%(num).0f hr"
 msgid_plural "%(num).0f hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f hodina"
+msgstr[1] "%(num).0f hodiny"
+msgstr[2] "%(num).0f hodin"
 
 #: ../../portable/displaytext.py:74
 #, python-format
 msgid "%(num).0f min"
 msgid_plural "%(num).0f mins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f minuta"
+msgstr[1] "%(num).0f minuty"
+msgstr[2] "%(num).0f minut"
 
 #: ../../portable/displaytext.py:77
 #, python-format

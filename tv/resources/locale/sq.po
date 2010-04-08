@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-02-18 13:51-0500\n"
-"PO-Revision-Date: 2010-02-13 09:45+0000\n"
-"Last-Translator: Besnik <besnik@programeshqip.org>\n"
+"PO-Revision-Date: 2010-04-01 23:12+0000\n"
+"Last-Translator: Besnik Selimi <Unknown>\n"
 "Language-Team: Albanian <sq@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-03-23 16:09+0000\n"
+"X-Launchpad-Export-Date: 2010-04-08 19:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:101
@@ -260,7 +260,7 @@ msgstr "Shkarkime prurjeje"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:100
 msgid "Seeding"
-msgstr ""
+msgstr "Duke dërguar"
 
 #: ../../portable/frontends/widgets/newfolder.py:60
 msgid "Folder name:"
@@ -545,15 +545,15 @@ msgstr "Kopjoje URL-në te \"clipboard\"-i"
 #: ../../portable/frontends/widgets/tablist.py:576
 #: ../../portable/frontends/widgets/application.py:726
 msgid "Rename Website"
-msgstr ""
+msgstr "Ndrysho emrin e uebfaqes"
 
 #: ../../portable/frontends/widgets/tablist.py:577
 msgid "Remove Website"
-msgstr ""
+msgstr "Fshij uebfaqen"
 
 #: ../../portable/frontends/widgets/tablist.py:581
 msgid "Remove Websites"
-msgstr ""
+msgstr "Fshij uebfaqet"
 
 #: ../../portable/frontends/widgets/tablist.py:657
 msgid "Update Feeds In Folder"
@@ -1173,15 +1173,15 @@ msgstr "Ruaje Objektin Si..."
 #: ../../portable/frontends/widgets/application.py:563
 #: ../../portable/frontends/widgets/menus.py:220
 msgid "Add Website"
-msgstr ""
+msgstr "Shto një uebfaqe"
 
 #: ../../portable/frontends/widgets/application.py:564
 msgid "Enter the URL of the website to add"
-msgstr ""
+msgstr "Shkruaj URL adresën e faqes"
 
 #: ../../portable/frontends/widgets/application.py:565
 msgid "Add Website - Invalid URL"
-msgstr ""
+msgstr "Shto një faqe - URL i gabuar"
 
 #: ../../portable/frontends/widgets/application.py:566
 msgid ""
@@ -1268,8 +1268,8 @@ msgstr[1] "Jeni i sigurt se doni të hiqen këto %(count)s luajlista?"
 #: ../../portable/frontends/widgets/application.py:773
 msgid "Remove website"
 msgid_plural "Remove websites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Fshij uebfaqen"
+msgstr[1] "Fshij uebfaqet"
 
 #: ../../portable/frontends/widgets/application.py:775
 #, python-format
@@ -1335,7 +1335,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:238
 #: ../../portable/frontends/widgets/displays.py:390
 msgid "Reveal File"
-msgstr ""
+msgstr "Shfaq fajllin"
 
 #: ../../portable/frontends/widgets/style.py:239
 msgid "Display Contents"
@@ -1515,7 +1515,7 @@ msgstr "_Hiqi Objektet"
 
 #: ../../portable/frontends/widgets/menus.py:203
 msgid "_Edit Item"
-msgstr ""
+msgstr "_Ndrysho"
 
 #: ../../portable/frontends/widgets/menus.py:205
 msgid "Save Item _As"
