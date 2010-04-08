@@ -942,7 +942,7 @@ class SQLiteConverter(object):
         filename_fields = schema.SchemaStatusContainer.filename_fields
         for key in filename_fields:
             value = status_dict.get(key)
-            if value is not None:
+            if value is not None and FilenameType != unicode:
                 status_dict[key] = self._unicode_to_filename(value)
         return status_dict
 
