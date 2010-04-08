@@ -551,7 +551,8 @@ class VideoPlayer(player.Player, VBox):
                 'motion-notify-event', self.on_mouse_motion)
         self.videobox_motion_handler = self.overlay._window.connect(
                 'motion-notify-event', self.on_mouse_motion)
-        app.widgetapp.window.menubar.hide()
+        if not app.playback_manager.detached_window:
+            app.widgetapp.window.menubar.hide()
         self.schedule_hide_controls(self.HIDE_CONTROLS_TIMEOUT)
         # make sure all hide() calls go through, otherwise we get the wrong
         # size on windows (#10810)
