@@ -290,12 +290,12 @@ def gather_subtitle_files(movie_path):
     or in a subtitles directory that are associated with the video
     file.
 
-    >>> gather_subtitles_file('/tmp/foo.ogv")
+    >>> gather_subtitles_file('/tmp/foo.ogv')
     []
-    >>> gather_subtitle_files("/tmp/bar.ogv")
-    ["/tmp/bar.en.srt", "/tmp/bar.fr.srt"]
-    >>> gather_subtitle_files("/tmp/baz.ogv")
-    ["/tmp/subtitles/baz.en.sub", "/tmp/subtitles/baz.fr.sub"]
+    >>> gather_subtitle_files('/tmp/bar.ogv')
+    ['/tmp/bar.en.srt', '/tmp/bar.fr.srt']
+    >>> gather_subtitle_files('/tmp/baz.ogv')
+    ['/tmp/subtitles/baz.en.sub', '/tmp/subtitles/baz.fr.sub']
     """
     check_f(movie_path)
     subtitle_files = []
@@ -535,10 +535,10 @@ def stringify(unicode_str, handleerror="xmlcharrefreplace"):
     Windows platform.
 
     You can pass in a handleerror argument which defaults to
-    ``"xmlcharrefreplace"``.  This will increase the string size as it
+    ``'xmlcharrefreplace'``.  This will increase the string size as it
     converts unicode characters that don't have ascii equivalents into
     escape sequences.  If you don't want to increase the string
-    length, use ``"replace"`` which will use ? for unicode characters
+    length, use ``'replace'`` which will use ? for unicode characters
     that don't have ascii equivalents.
 
     .. note::
@@ -645,7 +645,8 @@ def cmp_enclosures(enc1, enc2):
 
 def get_first_video_enclosure(entry):
     """
-    Find the first "best" video enclosure in a feedparser entry.
+    Find the first *best* video enclosure in a feedparser entry.
+
     Returns the enclosure, or None if no video enclosure is found.
     """
     try:
@@ -865,7 +866,7 @@ class Matrix(object):
     indices, for example:
 
     >>> m = Matrix(5, 5)
-    >>> m[3, 4] = "foo"
+    >>> m[3, 4] = 'foo'
     >>> m
     None, None, None, None, None
     None, None, None, None, None
