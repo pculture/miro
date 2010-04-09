@@ -1678,7 +1678,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             # In split_item() we found out that all our children were
             # deleted, so we were removed as well.  (#11979)
             return
-        eventloop.add_idle(self.check_deleted, 'checking item deleted')
+        eventloop.addIdle(self.check_deleted, 'checking item deleted')
         if self.screenshot and not fileutil.exists(self.screenshot):
             self.screenshot = None
             self.signal_change()
