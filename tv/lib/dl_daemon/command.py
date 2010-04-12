@@ -136,7 +136,7 @@ class DuplicateTorrent(Command):
                     "restarting (dlid %s)", original_id)
             duplicate.restart()
             return
-        for item in duplicate.itemList:
+        for item in duplicate.item_list:
             item.set_downloader(original)
 
 class ShutDownResponseCommand(Command):
