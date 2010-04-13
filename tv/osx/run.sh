@@ -30,6 +30,8 @@
 if [[ $@ == *unittest* ]]; then
     SETUP_PARAMS="--keep-tests"
     RUN_PARAMS="unittest"
+else
+    SETUP_PARAMS=$@
 fi
 
 ./build.sh --alias $SETUP_PARAMS
