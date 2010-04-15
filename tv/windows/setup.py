@@ -248,7 +248,7 @@ data_files.append(('', [os.path.join(VLC_PATH, 'libvlccore.dll')]))
 data_files.append(('', [os.path.join(LIBTORRENT_PATH, 'libtorrent.pyd')]))
 
 # handle the resources subdirectories.
-for dir in ('searchengines', 'images'):
+for dir in ('searchengines', 'images', 'conversions'):
     dest_dir = os.path.join('resources', dir)
     source_dir = os.path.join(resources_dir, dir)
     data_files.extend(find_data_files(dest_dir, source_dir))
