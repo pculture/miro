@@ -65,11 +65,16 @@ def register_components():
     components = glob.glob(os.path.join(componentsDirectoryPath, '*.component'))
     for component in components:
         cmpName = os.path.basename(component)
-        ok = qtcomp.register(component.encode('utf-8'))
-        if ok:
-            logging.info('Successfully registered embedded component: %s' % cmpName)
+        stdloc1 = os.path.join("/", "Library", "Quicktime", cmpName)
+        stdloc2 = os.path.join("/", "Library", "Audio", "Plug-Ins", "Components", cmpName)
+        if not os.path.exists(stdloc1) and not os.path.exists(stdloc2):
+            ok = qtcomp.register(component.encode('utf-8'))
+            if ok:
+                logging.info('Successfully registered embedded component: %s' % cmpName)
+            else:
+                logging.warn('Error while registering embedded component: %s' % cmpName)
         else:
-            logging.warn('Error while registering embedded component: %s' % cmpName)
+            logging.info('Skipping embedded %s registration, already installed.' % cmpName)
 
 ###############################################################################
 

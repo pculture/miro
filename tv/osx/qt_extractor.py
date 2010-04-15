@@ -47,7 +47,11 @@ def register_quicktime_components():
     components_directory_path = os.path.join(bundle_path, 'Contents', 'Components')
     components = glob.glob(os.path.join(components_directory_path, '*.component'))
     for component in components:
-        ok = qtcomp.register(component.encode('utf-8'))
+        cmpName = os.path.basename(component)
+        stdloc1 = os.path.join("/", "Library", "Quicktime", cmpName)
+        stdloc2 = os.path.join("/", "Library", "Audio", "Plug-Ins", "Components", cmpName)
+        if not os.path.exists(stdloc1) and not os.path.exists(stdloc2):
+            ok = qtcomp.register(component.encode('utf-8'))
 
 # =============================================================================
 
