@@ -51,12 +51,16 @@ class Player(signals.SignalEmitter):
     def skip_forward(self):
         current = self.get_elapsed_playback_time()
         duration = self.get_total_playback_time()
+        if current is None or duration is None:
+            return
         pos = min(duration, current + 30.0)
         self.seek_to(pos / duration)
 
     def skip_backward(self):
         current = self.get_elapsed_playback_time()
         duration = self.get_total_playback_time()
+        if current is None or duration is None:
+            return
         pos = max(0, current - 15.0)
         self.seek_to(pos / duration)
 
