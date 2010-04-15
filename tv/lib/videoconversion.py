@@ -40,6 +40,7 @@ from ConfigParser import SafeConfigParser
 from miro import prefs
 from miro import config
 from miro import signals
+from miro import messages
 from miro.plat import utils
 from miro.plat import resources
 
@@ -135,12 +136,14 @@ class VideoConversionManager(signals.SignalEmitter):
         except Queue.Empty, e:
             pass
 
+        notify = False
         if len(self.running_tasks) < self.max_concurrent_tasks:
             try:
                 task = self.pending_tasks.get_nowait()
                 if not task.key in self.running_tasks:
                     self.running_tasks[task.key] = task
                     task.run()
+                    notify = True
             except Queue.Empty, e:
                 pass
 
@@ -148,8 +151,17 @@ class VideoConversionManager(signals.SignalEmitter):
             task = self.running_tasks[key]
             if task.is_finished():
                 self.running_tasks.pop(key)
-
+                notify = True
+        
+        if notify:
+            self._notify_running_tasks()
+            
         time.sleep(0.2)
+    
+    def _notify_running_tasks(self):
+        count = len(self.running_tasks)
+        message = messages.VideoConversionsCountChanged(count)
+        message.send_to_frontend()
     
     def _terminate(self):
         if self.pending_tasks.qsize() > 0:

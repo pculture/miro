@@ -1121,6 +1121,10 @@ class WidgetsMessageHandler(messages.MessageHandler):
         app.widgetapp.unwatched_count = message.count
         app.widgetapp.handle_unwatched_count_changed()
 
+    def handle_video_conversions_count_changed(self, message):
+        library_tab_list = app.tab_list_manager.library_tab_list
+        library_tab_list.update_conversions_count(message.count)
+
     def handle_play_movie(self, message):
         app.playback_manager.start_with_items(message.item_infos)
 

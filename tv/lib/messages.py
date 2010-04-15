@@ -1271,6 +1271,12 @@ class UnwatchedCountChanged(FrontendMessage):
     def __init__(self, count):
         self.count = count
 
+class VideoConversionsCountChanged(FrontendMessage):
+    """Informs the frontend that number of running conversions has changed.
+    """
+    def __init__(self, count):
+        self.count = count
+
 class MessageToUser(FrontendMessage):
     """Lets the backend send messages directly to the user.
     """
