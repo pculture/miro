@@ -67,6 +67,8 @@ class Controller:
 
     @eventloop.as_urgent
     def shutdown(self):
+        logging.info("Shutting down video conversions manager")
+        videoconversion.conversion_manager.shutdown()
         logging.info("Shutting down Downloader...")
         downloader.shutdown_downloader(self.downloader_shutdown)
 
@@ -88,8 +90,6 @@ class Controller:
             iconcache.iconCacheUpdater.shutdown()
             logging.info("Shutting down movie data updates")
             moviedata.movie_data_updater.shutdown()
-            logging.info("Shutting down video conversions manager")
-            videoconversion.conversion_manager.shutdown()
 
             if self.idling_notifier is not None:
                 logging.info("Shutting down IdleNotifier")
