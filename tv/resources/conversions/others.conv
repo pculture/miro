@@ -1,0 +1,23 @@
+[DEFAULT]
+name: Other Devices and Formats
+
+[Playstation Portable (PSP)]
+executable: ffmpeg
+extension: mp4
+parameters: -i {input} -b 512000 -ar 24000 -ab 64000 -f psp -r 29.97 -s 480x320 {output}
+
+[Theora]
+executable: ffmpeg2theora
+extension: ogv
+parameters: --videoquality 8 --audioquality 6 --frontend -o {output} {input}
+
+[MP4]
+extension: mp4
+executable: ffmpeg
+extension: mp4
+parameters: -i {input} -f mp4 -vcodec mpeg4 -sameq -r 20 {output}
+
+[MP3 (Audio only)]
+executable: ffmpeg
+extension: mp3
+parameters: -i {input} -f mp3 -y -acodec ac3 {output}

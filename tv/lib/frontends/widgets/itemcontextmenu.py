@@ -37,6 +37,7 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.plat import resources
 from miro.plat.frontends.widgets import file_navigator_name
+from miro.videoconversion import conversion_manager, VideoConversionCommand
 
 
 class ItemContextMenuHandler(object):
@@ -118,6 +119,18 @@ class ItemContextMenuHandler(object):
                 menu.append((_('Stop Seeding'), messages.StopUpload(item.id).send_to_backend))
             elif item.seeding_status == 'stopped':
                 menu.append((_('Resume Seeding'), messages.StartUpload(item.id).send_to_backend))
+
+            menu.append(None)
+
+            convert_menu = []
+            sections = conversion_manager.get_converters()
+            for index, section in enumerate(sections):
+                for converter in section[1]:
+                    command = VideoConversionCommand(item, converter)
+                    convert_menu.append((converter.name, command.launch))
+                if index+1 < len(sections):
+                    convert_menu.append(None)
+            menu.append((_('Convert to...'), convert_menu))
         elif item.download_info is not None and item.download_info.state != 'failed':
             menu = [
                     (_('Cancel Download'),
@@ -151,6 +164,7 @@ class ItemContextMenuHandler(object):
                 reveal_text = _('File on Disk')
             view_menu.append((reveal_text, lambda: app.widgetapp.check_then_reveal_file(item.video_path)))
 
+        menu.append(None)
         menu.append((_('View'), view_menu))
 
         if item.has_sharable_url:

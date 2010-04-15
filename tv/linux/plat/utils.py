@@ -270,3 +270,19 @@ def set_properties(props):
 def movie_data_program_info(movie_path, thumbnail_path):
     from miro import app
     return app.movie_data_program_info(movie_path, thumbnail_path)
+
+def get_logical_cpu_count():
+    try:
+        import multiprocessing
+        return multiprocessing.cpu_count()
+    except ImportError, e:
+        ncpus = os.sysconf("SC_NPROCESSORS_ONLN")
+        if isinstance(ncpus, int) and ncpus > 0:
+            return ncpus
+    return 1
+
+def get_ffmpeg_executable_path():
+    return None
+
+def get_ffmpeg2theora_executable_path():
+    return None

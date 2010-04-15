@@ -43,6 +43,7 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import browser
 from miro.frontends.widgets import downloadscontroller
+from miro.frontends.widgets import videoconversionscontroller
 from miro.frontends.widgets import feedcontroller
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import playlist
@@ -120,6 +121,7 @@ class DisplayManager(object):
                 AudioItemsDisplay,
                 OtherItemsDisplay,
                 DownloadingDisplay,
+                VideoConversionsDisplay,
                 GuideDisplay,
                 MultipleSelectionDisplay,
                 DummyDisplay,
@@ -372,6 +374,16 @@ class DownloadingDisplay(ItemListDisplay):
 
     def make_controller(self, tab):
         return downloadscontroller.DownloadsController()
+
+class VideoConversionsDisplay(TabDisplay):
+    @staticmethod
+    def should_display(tab_type, selected_tabs):
+        return tab_type == 'library' and selected_tabs[0].id == 'conversions'
+
+    def __init__(self, tab_type, selected_tabs):
+        Display.__init__(self)
+        self.controller = videoconversionscontroller.VideoConversionsController()
+        self.widget = self.controller.widget
 
 class FolderContentsDisplay(ItemListDisplayMixin, Display):
     def __init__(self, info):

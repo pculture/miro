@@ -367,6 +367,16 @@ def movie_data_program_info(moviePath, thumbnailPath):
 
 ###############################################################################
 
+def get_ffmpeg_executable_path():
+    bundle_path = NSBundle.mainBundle().bundlePath()
+    return os.path.join(bundle_path, "Contents", "Helpers", "ffmpeg")
+
+def get_ffmpeg2theora_executable_path():
+    bundle_path = NSBundle.mainBundle().bundlePath()
+    return os.path.join(bundle_path, "Contents", "Helpers", "ffmpeg2theora")
+    
+###############################################################################
+
 def qttime2secs(qttime):
     timeScale = qttimescale(qttime)
     if timeScale == 0:
@@ -394,3 +404,13 @@ def qttimevalue_set(qttime, value):
         return qttime
 
 ###############################################################################
+
+def get_logical_cpu_count():
+    try:
+        import multiprocessing
+        return multiprocessing.cpu_count()
+    except ImportError, e:
+        ncpus = os.sysconf("SC_NPROCESSORS_ONLN")
+        if isinstance(ncpus, int) and ncpus > 0:
+            return ncpus
+    return 1

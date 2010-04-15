@@ -323,3 +323,19 @@ def movie_data_program_info(movie_path, thumbnail_path):
     cmd_line = (exe_path, movie_path, thumbnail_path)
     env = None
     return (cmd_line, env)
+
+def get_logical_cpu_count():
+    try:
+        import multiprocessing
+        return multiprocessing.cpu_count()
+    except ImportError, e:
+        ncpus = int(os.environ["NUMBER_OF_PROCESSORS"]);
+        if ncpus > 0:
+            return ncpus
+    return 1
+
+def get_ffmpeg_executable_path():
+    return None
+
+def get_ffmpeg2theora_executable_path():
+    return None

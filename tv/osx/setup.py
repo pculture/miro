@@ -307,6 +307,7 @@ class MiroBuild (py2app):
         self.rsrcRoot = os.path.join(self.bundleRoot, 'Resources')
         self.fmwkRoot = os.path.join(self.bundleRoot, 'Frameworks')
         self.cmpntRoot = os.path.join(self.bundleRoot, 'Components')
+        self.helpersRoot = os.path.join(self.bundleRoot, 'Helpers')
         self.prsrcRoot = os.path.join(self.rsrcRoot, 'resources')
         
     def get_idletime_ext(self):
@@ -361,6 +362,7 @@ class MiroBuild (py2app):
         self.fix_frameworks_alias()
         self.precompile_site_pyc()
         self.copy_quicktime_components()
+        self.copy_conversion_helpers()
         self.copy_portable_resources()
         self.copy_config_file()
         self.copy_localization_files()
@@ -468,6 +470,10 @@ class MiroBuild (py2app):
         print 'Copying QuickTime components to application bundle'
         extract_binaries('qtcomponents', self.cmpntRoot, self.force_update)
 
+    def copy_conversion_helpers(self):
+        print 'Copying video conversion helpers to application bundle'
+        extract_binaries('helpers', self.helpersRoot, self.force_update)
+
     def copy_portable_resources(self):
         print "Copying portable resources to application bundle"
 
@@ -477,7 +483,7 @@ class MiroBuild (py2app):
         if not os.path.exists(self.prsrcRoot):
             os.mkdir(self.prsrcRoot)
 
-        resources = ['searchengines', 'images']
+        resources = ['searchengines', 'images', 'conversions']
         if self.keep_tests:
             resources.append('testdata')
 

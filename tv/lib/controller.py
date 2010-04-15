@@ -49,6 +49,7 @@ from miro import messages
 from miro import moviedata
 from miro import prefs
 from miro import signals
+from miro import videoconversion
 from miro.plat.utils import exit
 
 BOGON_URL = "http://participatoryculture.org/bogondeflector/index.php"
@@ -87,6 +88,8 @@ class Controller:
             iconcache.iconCacheUpdater.shutdown()
             logging.info("Shutting down movie data updates")
             moviedata.movie_data_updater.shutdown()
+            logging.info("Shutting down video conversions manager")
+            videoconversion.conversion_manager.shutdown()
 
             if self.idling_notifier is not None:
                 logging.info("Shutting down IdleNotifier")
