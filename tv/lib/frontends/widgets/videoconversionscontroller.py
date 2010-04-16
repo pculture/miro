@@ -65,7 +65,7 @@ class VideoConversionsController(object):
         reveal_button.set_color(widgetset.TOOLBAR_GRAY)
         reveal_button.connect('clicked', self.on_reveal)
 
-        toolbar = VideoConversionsToolbarBackground()
+        toolbar = itemlistwidgets.DisplayToolbar()
         hbox = widgetset.HBox()
         hbox.pack_start(widgetutil.pad(stop_all_button, top=8, bottom=8, left=8))
         hbox.pack_end(widgetutil.pad(reveal_button, top=8, bottom=8, right=8))
@@ -92,15 +92,6 @@ class VideoConversionsController(object):
 class VideoConversionsTitleBar(itemlistwidgets.ItemListTitlebar):
     def _build_titlebar_extra(self):
         pass
-
-
-class VideoConversionsToolbarBackground(widgetset.Background):
-    def draw(self, context, layout):
-        gradient = widgetset.Gradient(0, 0, 0, context.height)
-        gradient.set_start_color((0.90, 0.90, 0.90))
-        gradient.set_end_color((0.79, 0.79, 0.79))
-        context.rectangle(0, 0, context.width, context.height)
-        context.gradient_fill(gradient)
 
 
 class VideoConversionsTableModel(widgetset.TableModel):

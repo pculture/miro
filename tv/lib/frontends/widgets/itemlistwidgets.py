@@ -51,6 +51,7 @@ from miro.frontends.widgets import style
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import segmented
+from miro.frontends.widgets import separator
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.utils import get_available_bytes_for_movies
@@ -414,7 +415,17 @@ class HideableSection(widgetutil.HideableWidget):
         hbox.pack_start(widgetutil.pad(self.info_label, left=7))
         self.expander.set_label(hbox)
 
-class SearchToolbar(widgetset.Background):
+class DisplayToolbar(widgetset.Background):
+    def draw(self, context, layout):
+        if not context.style.use_custom_titlebar_background:
+            return
+        gradient = widgetset.Gradient(0, 0, 0, context.height)
+        gradient.set_start_color((0.90, 0.90, 0.90))
+        gradient.set_end_color((0.79, 0.79, 0.79))
+        context.rectangle(0, 0, context.width, context.height)
+        context.gradient_fill(gradient)
+
+class SearchToolbar(DisplayToolbar):
     """Toolbar for the search page.
 
     It's a hidable widget that contains the save search button.
@@ -426,7 +437,7 @@ class SearchToolbar(widgetset.Background):
     """
 
     def __init__(self):
-        widgetset.Background.__init__(self)
+        DisplayToolbar.__init__(self)
         hbox = widgetset.HBox()
         self.add(hbox)
         save_button = widgetset.Button(_('Save as a Feed'), style='smooth')
@@ -446,16 +457,7 @@ class SearchToolbar(widgetset.Background):
     def hide(self):
         self.hideable.hide()
 
-    def draw(self, context, layout):
-        if not context.style.use_custom_titlebar_background:
-            return
-        gradient = widgetset.Gradient(0, 0, 0, context.height)
-        gradient.set_start_color((0.90, 0.90, 0.90))
-        gradient.set_end_color((0.79, 0.79, 0.79))
-        context.rectangle(0, 0, context.width, context.height)
-        context.gradient_fill(gradient)
-
-class DownloadToolbar(widgetset.VBox):
+class DownloadToolbar(DisplayToolbar):
     """Widget that shows free space, pause/resume/... buttons for downloads,
     and other data.
 
@@ -468,7 +470,11 @@ class DownloadToolbar(widgetset.VBox):
     """
 
     def __init__(self):
-        widgetset.VBox.__init__(self)
+        DisplayToolbar.__init__(self)        
+        vbox = widgetset.VBox()
+
+        sep = separator.HSeparator((0.85, 0.85, 0.85), (0.95, 0.95, 0.95))
+        vbox.pack_start(sep)
 
         h = widgetset.HBox(spacing=10)
 
@@ -511,7 +517,7 @@ class DownloadToolbar(widgetset.VBox):
         h.pack_start(widgetutil.align_middle(settings_button, top_pad=5,
             bottom_pad=5, right_pad=16))
 
-        self.pack_start(h)
+        vbox.pack_start(h)
 
         h = widgetset.HBox(spacing=10)
 
@@ -529,7 +535,8 @@ class DownloadToolbar(widgetset.VBox):
         h.pack_start(widgetutil.align_left(self._second_label,
             bottom_pad=5))
 
-        self.pack_start(h)
+        vbox.pack_start(h)
+        self.add(vbox)
 
         config.add_change_callback(self.handle_config_change)
 
@@ -597,7 +604,7 @@ class DownloadToolbar(widgetset.VBox):
             self._first_label.set_text('')
             self._second_label.set_text('')
 
-class FeedToolbar(widgetset.Background):
+class FeedToolbar(DisplayToolbar):
     """Toolbar that appears below the title in a feed.
 
     signals:
@@ -609,7 +616,7 @@ class FeedToolbar(widgetset.Background):
     """
 
     def __init__(self):
-        widgetset.Background.__init__(self)
+        DisplayToolbar.__init__(self)
         self.create_signal('remove-feed')
         self.create_signal('show-settings')
         self.create_signal('share')
@@ -660,15 +667,6 @@ class FeedToolbar(widgetset.Background):
             self.autodownload_menu.child().set_selected(1)
         elif autodownload_mode == 'off':
             self.autodownload_menu.child().set_selected(2)
-
-    def draw(self, context, layout):
-        if not context.style.use_custom_titlebar_background:
-            return
-        gradient = widgetset.Gradient(0, 0, 0, context.height)
-        gradient.set_start_color((0.90, 0.90, 0.90))
-        gradient.set_end_color((0.79, 0.79, 0.79))
-        context.rectangle(0, 0, context.width, context.height)
-        context.gradient_fill(gradient)
 
     def _on_settings_clicked(self, button):
         self.emit('show-settings')
