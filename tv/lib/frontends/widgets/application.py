@@ -52,6 +52,7 @@ from miro import startup
 from miro import signals
 from miro import messages
 from miro import eventloop
+from miro import videoconversion
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import dialogs
@@ -517,6 +518,11 @@ class Application:
             return
 
         messages.SaveItemAs(selection[0].id, filename).send_to_backend()
+
+    def convert_items(self, converter):
+        selection = app.item_list_controller_manager.get_selection()
+        for item_info in selection:
+            videoconversion.VideoConversionCommand(item_info, converter).launch()
 
     def copy_item_url(self):
         selection = app.item_list_controller_manager.get_selection()

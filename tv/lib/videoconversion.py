@@ -290,9 +290,11 @@ class FFMpeg2TheoraConversionTask(VideoConversionTask):
 
 
 class VideoConverterInfo(object):
+    NON_WORD_CHARS = re.compile("[^a-zA-Z0-9]+")
 
     def __init__(self, name, config, defaults):
         self.name = name
+        self.identifier = self.NON_WORD_CHARS.sub("", name)
         self.executable = self._get_config_value(name, config, defaults, "executable")
         self.parameters = self._get_config_value(name, config, defaults, "parameters")
         self.extension = self._get_config_value(name, config, defaults, "extension")

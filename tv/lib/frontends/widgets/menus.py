@@ -32,6 +32,7 @@ from miro import app
 from miro import prefs
 from miro import signals
 from miro import config
+from miro import videoconversion
 
 from miro.gtcache import gettext as _
 from miro import config
@@ -210,6 +211,9 @@ def get_menu():
                              Shortcut("u", MOD),
                              groups=["PlayableSelected"]),
                     Separator(),
+                    Menu(_("Convert to..."), "ConvertMenu",
+                         _get_convert_menu()),
+                    Separator(),
                     MenuItem(_("_Preferences"), "EditPreferences"),
                     MenuItem(_("_Quit"), "Quit", Shortcut("q", MOD)),
                     ]),
@@ -341,6 +345,19 @@ def get_menu():
         help_menu.append(MenuItem(_("_Planet Miro"), "Planet"))
     return mbar
 
+def _get_convert_menu():
+    menu = list()
+    sections = videoconversion.conversion_manager.get_converters()
+    for index, section in enumerate(sections):
+        for converter in section[1]:
+            handler_name = make_convert_handler(converter)
+            item = MenuItem(converter.name, handler_name, 
+                            groups=["PlayablesSelected"])
+            menu.append(item)
+        if index+1 < len(sections):
+            menu.append(Separator())
+    return menu
+
 action_handlers = {}
 def lookup_handler(action_name):
     """For a given action name, get a callback to handle it.  Return
@@ -354,6 +371,12 @@ def action_handler(name):
         action_handlers[name] = func
         return func
     return decorator
+
+def make_convert_handler(converter):
+    handler_name = "ConvertItemTo" + converter.identifier
+    handler = lambda: on_convert(converter)
+    action_handlers[handler_name] = handler
+    return handler_name
 
 # File menu
 @action_handler("Open")
@@ -379,6 +402,9 @@ def on_rename_item():
 @action_handler("SaveItem")
 def on_save_item():
     app.widgetapp.save_item()
+
+def on_convert(converter):
+    app.widgetapp.convert_items(converter)
 
 @action_handler("CopyItemURL")
 def on_copy_item_url():

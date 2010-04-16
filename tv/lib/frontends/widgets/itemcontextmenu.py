@@ -122,14 +122,7 @@ class ItemContextMenuHandler(object):
 
             menu.append(None)
 
-            convert_menu = []
-            sections = conversion_manager.get_converters()
-            for index, section in enumerate(sections):
-                for converter in section[1]:
-                    command = VideoConversionCommand(item, converter)
-                    convert_menu.append((converter.name, command.launch))
-                if index+1 < len(sections):
-                    convert_menu.append(None)
+            convert_menu = self._make_convert_menu()
             menu.append((_('Convert to...'), convert_menu))
         elif item.download_info is not None and item.download_info.state != 'failed':
             menu = [
@@ -229,6 +222,11 @@ class ItemContextMenuHandler(object):
                             messages.KeepVideo(item.id).send_to_backend()
                 menu.append((_('Keep'), keep_videos))
 
+            menu.append(None)
+            convert_menu = self._make_convert_menu()
+            menu.append((_('Convert to...'), convert_menu))
+            
+
         if available:
             if len(menu) > 0:
                 menu.append(None)
@@ -283,6 +281,18 @@ class ItemContextMenuHandler(object):
             menu.append((_('Restart Upload'), restart_all))
 
         return menu
+    
+    def _make_convert_menu(self): #, item_info):
+        convert_menu = []
+        sections = conversion_manager.get_converters()
+        for index, section in enumerate(sections):
+            for converter in section[1]:
+                def convert(converter=converter):
+                    app.widgetapp.convert_items(converter)
+                convert_menu.append((converter.name, convert))
+            if index+1 < len(sections):
+                convert_menu.append(None)
+        return convert_menu
 
 class ItemContextMenuHandlerPlaylist(ItemContextMenuHandler):
     """Context menu handler for playlists."""
