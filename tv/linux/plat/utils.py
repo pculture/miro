@@ -282,7 +282,7 @@ def get_logical_cpu_count():
     return 1
 
 def get_ffmpeg_executable_path():
-    return None
+    return "/usr/bin/ffmpeg"
 
 def get_ffmpeg2theora_executable_path():
-    return None
+    return "/usr/bin/ffmpeg2theora"
