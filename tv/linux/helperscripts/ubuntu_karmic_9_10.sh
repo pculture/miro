@@ -17,4 +17,5 @@ aptitude install build-essential git-core pkg-config python-pyrex \
 aptitude install libtorrent-rasterbar5 python-libtorrent python-gtkmozembed \
     python-gst0.10 python-gconf \
     gstreamer0.10-ffmpeg gstreamer0.10-plugins-base gstreamer0.10-plugins-good \
-    gstreamer0.10-plugins-bad gstreamer0.10-plugins-ugly
+    gstreamer0.10-plugins-bad gstreamer0.10-plugins-ugly \
+    ffmpeg ffmpeg2theora
