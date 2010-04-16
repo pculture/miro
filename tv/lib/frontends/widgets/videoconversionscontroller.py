@@ -72,7 +72,7 @@ class VideoConversionsController(object):
         toolbar.add(hbox)
         self.widget.pack_start(toolbar)
         
-        self.model = VideoConversionsTableModel()
+        self.model = VideoConversionsTableModel('object')
         self.table = widgetset.TableView(self.model)
         self.table.set_show_headers(False)
 
