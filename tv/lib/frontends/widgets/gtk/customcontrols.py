@@ -113,6 +113,12 @@ class CustomScaleMixin(CustomControlMixin):
         # this comes from a mixin
         pass
 
+    def gtk_scale_class(self):
+        if self.is_horizontal():
+            return gtk.HScale
+        else:
+            return gtk.VScale
+
     def move_slider_to_mouse(self, x, y):
         if ((not 0 <= x < self.allocation.width) or
                 (not 0 <= y < self.allocation.height)):
@@ -146,16 +152,32 @@ class CustomScaleMixin(CustomControlMixin):
         wrappermap.wrapper(self).emit('released')
 
     def do_scroll_event(self, event):
-        # FIXME: seems like there should be a better way to do this with
-        # super(), but I can't figure it out (BDK)
         if self.is_horizontal():
-            gtk.HScale.do_scroll_event(self, event)
-        else:
-            gtk.VScale.do_scroll_event(self, event)
+            if event.direction == gtk.gdk.SCROLL_UP:
+                event.direction = gtk.gdk.SCROLL_DOWN
+            elif event.direction == gtk.gdk.SCROLL_DOWN:
+                event.direction = gtk.gdk.SCROLL_UP
+        self.gtk_scale_class().do_scroll_event(self, event)
         # Treat mouse scrolls as if the user clicked on the new position
         wrappermap.wrapper(self).emit('pressed')
         wrappermap.wrapper(self).emit('changed', self.get_value())
         wrappermap.wrapper(self).emit('released')
+
+    def do_move_slider(self, scroll):
+        if self.is_horizontal():
+            if scroll == gtk.SCROLL_STEP_UP:
+                scroll = gtk.SCROLL_STEP_DOWN
+            elif scroll == gtk.SCROLL_STEP_DOWN:
+                scroll = gtk.SCROLL_STEP_UP
+            elif scroll == gtk.SCROLL_PAGE_UP:
+                scroll = gtk.SCROLL_PAGE_DOWN
+            elif scroll == gtk.SCROLL_PAGE_DOWN:
+                scroll = gtk.SCROLL_PAGE_UP
+            elif scroll == gtk.SCROLL_START:
+                scroll = gtk.SCROLL_END
+            elif scroll == gtk.SCROLL_END:
+                scroll = gtk.SCROLL_START
+        return self.gtk_scale_class().do_move_slider(self, scroll)
 
 class CustomHScaleWidget(CustomScaleMixin, gtk.HScale):
     def __init__(self):
