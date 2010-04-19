@@ -301,7 +301,7 @@ def generate_miro(xpcom_path):
 
     f = open(os.path.join(platform_dir, "miro"), "w")
     if xpcom_path:
-        runtimelib = "MOZILLA_FIVE_HOME=%s LD_LIBRARY_PATH=%s " % (xpcom_path, xpcom_path)
+        runtimelib = "GRE_HOME=%s MOZILLA_FIVE_HOME=%s LD_LIBRARY_PATH=%s " % (xpcom_path, xpcom_path, xpcom_path)
 
     f.write( \
 """#!/bin/sh
