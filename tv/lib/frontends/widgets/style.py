@@ -35,6 +35,8 @@ import logging
 from miro import app
 from miro import util
 from miro import displaytext
+from miro import config
+from miro import prefs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import cellpack
 from miro.frontends.widgets import imagepool
@@ -507,6 +509,15 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         elif size:
             vbox.pack(cellpack.align_right(layout.textbox(size)))
 
+        if self.data.expiration_date and self.data.is_playable:
+            text = displaytext.expiration_date(self.data.expiration_date)
+            layout.set_text_color((0.4, 0.4, 0.4))
+            layout.set_font(0.75, family="Helvetica")
+            vbox.pack(cellpack.align_right(layout.textbox(text)))
+        else:
+            layout.set_font(0.75, family="Helvetica")
+            vbox.pack(layout.textbox(""))
+
         if not self.show_details:
             details_text = layout.textbox(self.SHOW_MORE_TEXT)
             details_image = cellpack.align_middle(widgetutil.make_surface('show-more-info'))
@@ -516,7 +527,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         hbox = cellpack.HBox(spacing=5)
         hbox.pack(details_text)
         hbox.pack(details_image)
-        vbox.pack_space(5)
+        vbox.pack_space(1)
         vbox.pack(cellpack.align_right(cellpack.Hotspot('details_toggle', hbox)))
 
         return cellpack.pad(vbox, right=8)
@@ -784,11 +795,16 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             emblem.set_callback(self.draw_emblem, emblem_color)
 
             stack.pack(cellpack.align_left(emblem))
-        elif self.data.expiration_date and self.data.is_playable:
+        elif (self.data.is_playable
+              and self.data.item_viewed
+              and self.data.resume_time > 0
+              and config.get(prefs.RESUME_VIDEOS_MODE)):
             layout.set_font(0.80, bold=True)
             layout.set_text_color((154.0 / 255.0, 174.0 / 255.0, 181.0 / 255.0))
 
-            text = displaytext.expiration_date(self.data.expiration_date)
+            # text = displaytext.expiration_date(self.data.expiration_date)
+            text = _("Resume at %(resumetime)s",
+                     {"resumetime": "%d:%02d" % divmod(self.data.resume_time, 60)})
             emblem_hbox.pack(cellpack.align_middle(layout.textbox(text)))
             emblem_color = (232.0 / 255.0, 240.0 / 255.0, 242.0 / 255.0)
             emblem = cellpack.Background(emblem_hbox, margin=(4, 4, 4, 4))
