@@ -72,7 +72,7 @@ class VideoConversionsController(object):
         toolbar.add(hbox)
         self.widget.pack_start(toolbar)
         
-        self.model = VideoConversionsTableModel('object')
+        self.model = VideoConversionsTableModel()
         self.table = widgetset.TableView(self.model)
         self.table.set_show_headers(False)
 
@@ -95,4 +95,5 @@ class VideoConversionsTitleBar(itemlistwidgets.ItemListTitlebar):
 
 
 class VideoConversionsTableModel(widgetset.TableModel):
-    pass
+    def __init__(self):
+        widgetset.TableModel.__init__(self, 'object')
