@@ -804,7 +804,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
             # text = displaytext.expiration_date(self.data.expiration_date)
             text = _("Resume at %(resumetime)s",
-                     {"resumetime": "%d:%02d" % divmod(self.data.resume_time, 60)})
+                     {"resumetime": displaytext.short_time_string(self.data.resume_time)})
             emblem_hbox.pack(cellpack.align_middle(layout.textbox(text)))
             emblem_color = (232.0 / 255.0, 240.0 / 255.0, 242.0 / 255.0)
             emblem = cellpack.Background(emblem_hbox, margin=(4, 4, 4, 4))

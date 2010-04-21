@@ -62,6 +62,15 @@ def download_rate(rate):
     else:
         return ""
 
+def short_time_string(secs):
+    """Takes an integer number of seconds and returns a string
+    of the form MM:SS.
+    """
+    try:
+        return "%d:%02d" % divmod(int(round(secs)), 60)
+    except TypeError:
+        return "0:00"
+
 def time_string(secs):
     if secs >= (60 * 60 * 24):
         t_dy = secs * 1.0 / (60 * 60 * 24)

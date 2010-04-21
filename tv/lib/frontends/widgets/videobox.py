@@ -31,6 +31,7 @@ video controls).
 """
 
 from miro import app
+from miro import displaytext
 from miro.frontends.widgets import style
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
@@ -38,9 +39,6 @@ from miro.frontends.widgets import imagebutton
 from miro.frontends.widgets.widgetconst import MAX_VOLUME
 from miro.plat.frontends.widgets import widgetset
 from miro.plat import resources
-
-def format_time(time):
-    return "%d:%02d" % divmod(int(round(time)), 60)
 
 class PlaybackControls(widgetset.HBox):
     def __init__(self):
@@ -215,7 +213,7 @@ class ProgressTime(widgetset.DrawingArea):
         if self.current_time is not None:
             layout.set_font(0.75)
             layout.set_text_color(widgetutil.WHITE)
-            text = layout.textbox(format_time(self.current_time))
+            text = layout.textbox(displaytext.short_time_string(self.current_time))
             width, height = text.get_size()
             text.draw(context, context.width-width, 0, width, height)
 
@@ -267,9 +265,9 @@ class ProgressTimeRemaining(widgetset.CustomButton):
         if self.current_time is None or self.duration is None:
             return
         elif self.display_remaining:
-            text = '-' + format_time(self.duration - self.current_time)
+            text = '-' + displaytext.short_time_string(self.duration - self.current_time)
         else:
-            text = format_time(self.duration)
+            text = displaytext.short_time_string(self.duration)
         layout.set_font(0.75)
         layout.set_text_color(widgetutil.WHITE)
         text = layout.textbox(text)
