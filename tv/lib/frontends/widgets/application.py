@@ -1131,6 +1131,26 @@ class WidgetsMessageHandler(messages.MessageHandler):
         library_tab_list = app.tab_list_manager.library_tab_list
         library_tab_list.update_conversions_count(message.count)
 
+    def handle_get_video_conversion_tasks_list(self, message):
+        current_display = app.display_manager.get_current_display()
+        if isinstance(current_display, displays.VideoConversionsDisplay):
+            current_display.controller.handle_task_list(message.running_tasks, message.pending_tasks)
+
+    def handle_video_conversion_task_created(self, message):
+        current_display = app.display_manager.get_current_display()
+        if isinstance(current_display, displays.VideoConversionsDisplay):
+            current_display.controller.handle_task_added(message.task)
+
+    def handle_video_conversion_task_progressed(self, message):
+        current_display = app.display_manager.get_current_display()
+        if isinstance(current_display, displays.VideoConversionsDisplay):
+            current_display.controller.handle_task_progress(message.task)
+    
+    def handle_video_conversion_task_completed(self, message):
+        current_display = app.display_manager.get_current_display()
+        if isinstance(current_display, displays.VideoConversionsDisplay):
+            current_display.controller.handle_task_completed(message.task)
+
     def handle_play_movie(self, message):
         app.playback_manager.start_with_items(message.item_infos)
 

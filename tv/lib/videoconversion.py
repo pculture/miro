@@ -55,9 +55,9 @@ class VideoConversionManager(signals.SignalEmitter):
                                              'end-loop')
         self.converters = list()
         self.task_loop = None
-        self.pending_messages = Queue.Queue(-1)
-        self.pending_tasks = Queue.Queue(-1)
-        self.running_tasks = dict()
+        self.message_queue = Queue.Queue(-1)
+        self.pending_tasks = list()
+        self.running_tasks = list()
         self.quit_flag = False
         self.max_concurrent_tasks = utils.get_logical_cpu_count()
     
@@ -84,7 +84,10 @@ class VideoConversionManager(signals.SignalEmitter):
             self.task_loop.join()
 
     def interrupt_all(self):
-        self.pending_messages.put("interrupt_all")
+        self.message_queue.put("interrupt_all")
+    
+    def fetch_tasks_list(self):
+        self.message_queue.put("get_tasks_list")
     
     def get_converters(self):
         return self.converters
@@ -93,7 +96,7 @@ class VideoConversionManager(signals.SignalEmitter):
         task = self._make_conversion_task(converter_info, item_info, target_folder)
         if task is not None and task.get_executable() is not None:
             self._check_task_loop()
-            self.pending_tasks.put(task)
+            self.pending_tasks.append(task)
     
     def get_default_target_folder(self):
         root = config.get(prefs.MOVIES_DIRECTORY)
@@ -129,48 +132,66 @@ class VideoConversionManager(signals.SignalEmitter):
     
     def _run_loop_cycle(self):
         try:
-            msg = self.pending_messages.get_nowait()
+            msg = self.message_queue.get_nowait()
             if msg == 'interrupt_all':
                 self._terminate()
                 return
+            elif msg == 'get_tasks_list':
+                self._notify_tasks_list()
         except Queue.Empty, e:
             pass
 
         notify = False
-        if len(self.running_tasks) < self.max_concurrent_tasks:
-            try:
-                task = self.pending_tasks.get_nowait()
-                if not task.key in self.running_tasks:
-                    self.running_tasks[task.key] = task
-                    task.run()
-                    notify = True
-            except Queue.Empty, e:
-                pass
+        if len(self.pending_tasks) > 0 and len(self.running_tasks) < self.max_concurrent_tasks:
+            task = self.pending_tasks.pop()
+            if not self._has_running_task(task.key):
+                self.running_tasks.append(task)
+                self._notify_task_added(task)
+                task.run()
+                notify = True
 
-        for key in self.running_tasks.keys():
-            task = self.running_tasks[key]
+        for task in list(self.running_tasks):
             if task.is_finished():
-                self.running_tasks.pop(key)
+                self._notify_task_completed(task)
+                self.running_tasks.remove(task)
                 notify = True
         
         if notify:
-            self._notify_running_tasks()
+            self._notify_tasks_count()
             
         time.sleep(0.2)
     
-    def _notify_running_tasks(self):
+    def _has_running_task(self, key):
+        for task in self.running_tasks:
+            if task.key == key:
+                return True
+        return False
+    
+    def _notify_tasks_list(self):
+        message = messages.GetVideoConversionTasksList(self.running_tasks, self.pending_tasks)
+        message.send_to_frontend()
+    
+    def _notify_task_added(self, task):
+        message = messages.VideoConversionTaskCreated(task)
+        message.send_to_frontend()
+
+    def _notify_task_completed(self, task):
+        message = messages.VideoConversionTaskCompleted(task)
+        message.send_to_frontend()
+    
+    def _notify_tasks_count(self):
         count = len(self.running_tasks)
         message = messages.VideoConversionsCountChanged(count)
         message.send_to_frontend()
     
     def _terminate(self):
-        if self.pending_tasks.qsize() > 0:
+        if len(self.pending_tasks) > 0:
             logging.debug("Clearing pending conversion tasks...")
-            while not self.pending_tasks.empty():
-                self.pending_tasks.get()
+            self.pending_tasks = list()
         if len(self.running_tasks) > 0:
             logging.debug("Interrupting running conversion tasks...")
-            for task in self.running_tasks.itervalues():
+            for task in list(self.running_tasks):
+                self.running_tasks.remove(task)
                 task.interrupt()
         self.quit_flag = True
     
@@ -178,6 +199,7 @@ class VideoConversionManager(signals.SignalEmitter):
 class VideoConversionTask(object):
 
     def __init__(self, converter_info, item_info, target_folder):
+        self.item_info = item_info
         self.converter_info = converter_info
         self.input_path = item_info.video_path
         self.output_path = self._build_output_path(self.input_path, target_folder)
@@ -199,7 +221,7 @@ class VideoConversionTask(object):
                 return self.converter_info.screen_size
             return param
         return map(substitute, self.converter_info.parameters.split())
-            
+        
     def _build_output_path(self, input_path, target_folder):
         basename = os.path.basename(input_path)
         basename, _ = os.path.splitext(basename)
@@ -207,10 +229,14 @@ class VideoConversionTask(object):
         return os.path.join(target_folder, target_name)
 
     def run(self):
+        self.progress = 0
         self.thread = threading.Thread(target=self._loop, name="Conversion Task")
         self.thread.setDaemon(True)
         self.thread.start()
         
+    def is_running(self):
+        return self.thread is not None
+
     def is_finished(self):
         return self.thread is not None and not self.thread.isAlive()
 
@@ -228,9 +254,16 @@ class VideoConversionTask(object):
             if line == "":
                 keep_going = False
             else:
+                old_progress = self.progress
                 self.progress = self.monitor_progress(line.strip())
                 if self.progress > 1.0:
                     self.progress = 1.0
+                if old_progress != self.progress:
+                    self._notify_progress()
+    
+    def _notify_progress(self):
+        message = messages.VideoConversionTaskProgressed(self)
+        message.send_to_frontend()
 
     def interrupt(self):
         utils.kill_process(self.process_handle.pid)
@@ -240,7 +273,7 @@ class VideoConversionTask(object):
 
 class FFMpegConversionTask(VideoConversionTask):
     DURATION_RE = re.compile('Duration: (\d\d):(\d\d):(\d\d)\.(\d\d), start:.*, bitrate:.*')
-    PROGRESS_RE = re.compile('frame=.* fps=.* q=.* L?size=.* time=(.*) bitrate=(.*) dup=.* drop=.*')
+    PROGRESS_RE = re.compile('frame=.* fps=.* q=.* L?size=.* time=(.*) bitrate=(.*)')
 
     def get_executable(self):
         return utils.get_ffmpeg_executable_path()

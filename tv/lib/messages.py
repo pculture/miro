@@ -1271,11 +1271,37 @@ class UnwatchedCountChanged(FrontendMessage):
     def __init__(self, count):
         self.count = count
 
+class GetVideoConversionTasksList(FrontendMessage):
+    """Send the current list of running and pending conversion tasks to the 
+       frontend.
+    """
+    def __init__(self, running_tasks, pending_tasks):
+        self.running_tasks = running_tasks
+        self.pending_tasks = pending_tasks
+
 class VideoConversionsCountChanged(FrontendMessage):
     """Informs the frontend that number of running conversions has changed.
     """
     def __init__(self, count):
         self.count = count
+
+class VideoConversionTaskCreated(FrontendMessage):
+    """Informs the frontend that a conversion task has been created.
+    """
+    def __init__(self, task):
+        self.task = task
+
+class VideoConversionTaskProgressed(FrontendMessage):
+    """Informs the frontend that a conversion task progressed.
+    """
+    def __init__(self, task):
+        self.task = task
+
+class VideoConversionTaskCompleted(FrontendMessage):
+    """Informs the frontend that a conversion task has been completed.
+    """
+    def __init__(self, task):
+        self.task = task
 
 class MessageToUser(FrontendMessage):
     """Lets the backend send messages directly to the user.
