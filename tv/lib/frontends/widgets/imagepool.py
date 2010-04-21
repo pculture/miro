@@ -156,6 +156,6 @@ class LazySurface(object):
         return self._surface.height
     height = property(get_height)
 
-    def draw(self, context, x, y, width, height):
+    def draw(self, context, x, y, width, height, fraction=1.0):
         self._ensure_surface()
-        self._surface.draw(context, x, y, width, height)
+        self._surface.draw(context, x, y, width, height, fraction)

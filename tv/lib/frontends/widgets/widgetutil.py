@@ -115,7 +115,7 @@ def circular_rect_negative(context, x, y, width, height):
     context.arc_negative(inner_x2, inner_y, radius, PI/2, -PI/2)
     context.rel_line_to(-inner_width, 0)
 
-def draw_rounded_icon(context, icon, x, y, width, height, inset=0):
+def draw_rounded_icon(context, icon, x, y, width, height, inset=0, fraction=1.0):
     """Draw an icon with the corners rounded.
     
     x, y, width, height define where the box is.
@@ -128,14 +128,26 @@ def draw_rounded_icon(context, icon, x, y, width, height, inset=0):
             height - inset*2, 3)
     context.clip()
     if icon.width != width or icon.height != height:
-        context.set_color((0, 0, 0))
-        round_rect(context, x, y, width, height, 3)
-        context.fill()
         icon_x = int((width - icon.width) / 2)
         icon_y = int((height - icon.height) / 2)
+        context.set_color((0, 0, 0), fraction)
+        if fraction < 1.0:
+            if icon_x > 0:
+                context.rectangle(x, y, icon_x, height)
+                context.fill()
+                context.rectangle(x+icon_x+icon.width, y, width-(icon_x+icon.width), height)
+                context.fill()
+            else:
+                context.rectangle(x, y, width, icon_y)
+                context.fill()
+                context.rectangle(x, y+icon_y+icon.height, width, height-(icon_y+icon.height))
+                context.fill()
+        else:
+            context.rectangle(x, y, width, height)
+            context.fill()
     else:
         icon_x = icon_y = 0
-    icon.draw(context, x + icon_x, y + icon_y, icon.width, icon.height)
+    icon.draw(context, x + icon_x, y + icon_y, icon.width, icon.height, fraction)
     context.restore()
 
 def align(widget, xalign=0, yalign=0, xscale=0, yscale=0, 
