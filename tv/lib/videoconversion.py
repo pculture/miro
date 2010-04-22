@@ -245,6 +245,8 @@ class VideoConversionTask(object):
         self.thread = None
         self.duration = None
         self.progress = 0
+        self.log_path = None
+        self.log_file = None
     
     def get_executable(self):
         raise NotImplementedError()
@@ -281,23 +283,55 @@ class VideoConversionTask(object):
     def _loop(self):
         executable = self.get_executable()
         args = self.get_parameters()
+        self._start_logging(executable, args)
+        
         self.process_handle = subprocess.Popen(args, executable=executable, 
                                                      bufsize=1, 
                                                      stdout=subprocess.PIPE,
                                                      stderr=subprocess.PIPE, 
                                                      close_fds=True)
-        keep_going = True
-        while keep_going:
-            line = self.readline()
-            if line == "":
-                keep_going = False
-            else:
-                old_progress = self.progress
-                self.progress = self.monitor_progress(line.strip())
-                if self.progress > 1.0:
-                    self.progress = 1.0
-                if old_progress != self.progress:
-                    self._notify_progress()
+
+        try:
+            keep_going = True
+            while keep_going:
+                line = self.readline()
+                self._log_progress(line)
+                if line == "":
+                    keep_going = False
+                else:
+                    old_progress = self.progress
+                    self.progress = self.monitor_progress(line.strip())
+                    if self.progress >= 1.0:
+                        self.progress = 1.0
+                    if old_progress != self.progress:
+                        self._notify_progress()
+        finally:
+            self._stop_logging(self.progress < 1.0)
+    
+    def _start_logging(self, executable, params):
+        log_folder = os.path.dirname(config.get(prefs.LOG_PATHNAME))
+        self.log_path = os.path.join(log_folder, "conversion-%d-to-%s-log" % (self.item_info.id, self.converter_info.identifier))
+        self.log_file = file(self.log_path, "w")
+        self._log_progress("STARTING CONVERSION\n")
+        self._log_progress("-> Item: %s\n" % self.item_info.name)
+        self._log_progress("-> Converter used: %s\n" % self.converter_info.name)
+        self._log_progress("-> Executable: %s\n" % executable)
+        self._log_progress("-> Parameters: %s\n" % ' '.join(params))
+        self._log_progress("\n")
+    
+    def _log_progress(self, line):
+        if not self.log_file.closed:
+            self.log_file.write(line)
+            self.log_file.flush()
+    
+    def _stop_logging(self, keep_file=False):
+        if not self.log_file.closed:
+            self.log_file.flush()
+            self.log_file.close()
+        self.log_file = None
+        if not keep_file:
+            os.remove(self.log_path)
+        self.log_path = None
     
     def _notify_progress(self):
         message = messages.VideoConversionTaskProgressed(self)
