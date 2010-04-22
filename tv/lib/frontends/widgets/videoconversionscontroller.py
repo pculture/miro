@@ -73,7 +73,8 @@ class VideoConversionsController(object):
         toolbar.add(hbox)
         self.widget.pack_start(toolbar)
         
-        self.model = VideoConversionsTableModel()
+        self.iter_map = dict()
+        self.model = widgetset.TableModel('object')
         self.table = VideoConversionTableView(self.model)
         self.table.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
         scroller = widgetset.Scroller(False, True)
@@ -99,25 +100,26 @@ class VideoConversionsController(object):
 
     def handle_task_list(self, running_tasks, pending_tasks):
         for task in running_tasks:
-            self.model.add_task(task)
+            self.iter_map[task.key] = self.model.append(task)
         for task in pending_tasks:
-            self.model.add_task(task)
+            self.iter_map[task.key] = self.model.append(task)
         self.table.model_changed()
 
     def handle_task_added(self, task):
-        self.model.add_task(task)
+        self.iter_map[task.key] = self.model.append(task)
         self.table.model_changed()
     
     def handle_task_canceled(self, task):
-        self.model.remove_task(task)
-        self.table.model_changed()
+        self.handle_task_completed(task)
     
     def handle_task_progress(self, task):
-        self.model.update_task(task)
+        itr = self.iter_map[task.key]
+        self.model.update_value(itr, 0, task)
         self.table.model_changed()
     
     def handle_task_completed(self, task):
-        self.model.remove_task(task)
+        itr = self.iter_map.pop(task.key)
+        self.model.remove(itr)
         self.table.model_changed()
 
 
@@ -141,34 +143,6 @@ class VideoConversionTableView(widgetset.TableView):
         self.allow_multiple_select(False)
         self.set_auto_resizes(True)
         self.set_background_color(widgetutil.WHITE)
-
-
-class VideoConversionsTableModel(widgetset.TableModel):
-
-    def __init__(self):
-        widgetset.TableModel.__init__(self, 'object')
-    
-    def add_task(self, task):
-        self.append(task)
-    
-    def update_task(self, task):
-        itr = self._find_task(task)
-        if itr is not None:
-            self.update(itr, task)
-    
-    def remove_task(self, task):
-        itr = self._find_task(task)
-        if itr is not None:
-            self.remove(itr)
-    
-    def _find_task(self, task):
-        itr = self.first_iter()
-        while itr != None:
-            row = itr.value()
-            if row[0].key == task.key:
-                return itr
-            itr = self.next_iter(itr)
-        return None
 
 
 class VideoConversionCellRenderer(widgetset.CustomCellRenderer):
