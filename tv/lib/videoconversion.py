@@ -180,6 +180,7 @@ class VideoConversionManager(signals.SignalEmitter):
                 task.interrupt()
                 self.running_tasks.remove(task)
                 self._notify_task_canceled(task)
+                self._notify_tasks_count()
 
             elif msg['message'] == 'cancel_all':
                 self._terminate()
