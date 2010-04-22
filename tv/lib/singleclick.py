@@ -49,6 +49,17 @@ from miro import prefs
 from miro import messages
 
 def check_url_exists(url):
+    """Checks to see if there's an item with this url already
+    downloaded.
+
+    In the case of the item existing in the manual feed, this pops up
+    a dialog box with the status of the item.
+
+    :param url: the url to check
+
+    :returns: True if there is already an item for that url downloaded
+        and False otherwise.
+    """
     manual_feed = feed.Feed.get_manual_feed()
     for i in manual_feed.items:
         if i.get_url() == url:
@@ -73,7 +84,8 @@ def check_url_exists(url):
     return False
 
 def _build_entry(url, content_type, additional=None):
-    """Returns a FeedParserDict.
+    """Given a url, content type and additional metadata, builds and
+    returns a FeedParserDict.
     """
     entry = {'updated_parsed': time.gmtime(time.time()),
              'enclosures': [{'url': url, 'type': unicode(content_type)}]}
@@ -96,9 +108,16 @@ def _build_entry(url, content_type, additional=None):
     return FeedParserDict(entry)
 
 def download_unknown_mime_type(url):
+    """Pops up a dialog box about how this is an unknown thing and
+    asks the user what the user wants to do with it.
+
+    :param url: the url to download
+    """
     title = _('File Download')
-    text = _('This file at %(url)s does not appear to be audio, video, or an RSS feed.',
-             {"url": url})
+    text = _(
+        'This file at %(url)s does not appear to be audio, video, or '
+        'an RSS feed.',
+        {"url": url})
     dialog = dialogs.ThreeChoiceDialog(title, text,
                                        dialogs.BUTTON_DOWNLOAD_ANYWAY,
                                        dialogs.BUTTON_OPEN_IN_EXTERNAL_BROWSER,
@@ -119,21 +138,25 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
     accordingly.
 
     If it can't figure out what it is, then it calls
-    handle_unknown_callback with the url of the thing it can't
+    ``handle_unknown_callback`` with the url of the thing it can't
     identify and thus doesn't know what to do with.
 
-    If ``handle_unknown_callback`` is None, then it uses the default
-    handler which is ``download_unknown_mime_type``.
+    :param url: The url to download.
+
+    :param handle_unknown_callback: The function to call if Miro can't
+        figure out what kind of thing is at the url.  If this is None,
+        then it uses the default ``download_unknown_mime_type``
+        handler.
+
+    :param metadata: dict holding additional metadata like title,
+        description, ...
     """
     if handle_unknown_callback == None:
         handle_unknown_callback = download_unknown_mime_type
 
-    if url.startswith('feed:'):
-        # hack so feed: acts as http:
-        url = "http:" + url[5:]
-    elif url.startswith('feeds:'):
-        # hack so feeds: acts as https:
-        url = "https:" + url[6:]
+    if url.startswith('feed:') or url.startswith('feeds:'):
+        # hack so feed(s): acts as http(s):
+        url = "http" + url[4:]
 
     if check_url_exists(url):
         return
@@ -150,13 +173,14 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
         dialogs.MessageBoxDialog(title, text).run()
 
     def callback_peek(data):
-        """Takes the data returned from a GET and peeks at it to see if it's a
-        feed despite the fact that it has the wrong content-type.
+        """Takes the data returned from a GET and peeks at it to see
+        if it's a feed despite the fact that it has the wrong
+        content-type.
         """
         if data["body"]:
             if filetypes.is_maybe_rss(data["body"]):
-                # FIXME - this is silly since we just did a GET and we do
-                # another one in add_feeds
+                # FIXME - this is silly since we just did a GET and we
+                # do another one in add_feeds
                 logging.info("%s is a feed--adding it." % url)
                 add_feeds([url])
                 return
@@ -164,26 +188,29 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
         handle_unknown_callback(url)
 
     def callback(headers):
-        """We need to figure out if the URL is a external video link, or a link to
-        a feed.
+        """We need to figure out if the URL is a external video link,
+        or a link to a feed.
         """
         if check_url_exists(url):
             return
 
         content_type = headers.get("content-type")
-        if content_type and filetypes.is_feed_content_type(content_type):
-            add_feeds([url])
-            return
+        if content_type:
+            if filetypes.is_feed_content_type(content_type):
+                add_feeds([url])
+                return
 
-        if content_type and flashscraper.is_maybe_flashscrapable(url):
-            entry = _build_entry(url, 'video/x-flv', additional=metadata)
-            download_video(entry)
-            return
+            if  flashscraper.is_maybe_flashscrapable(url):
+                entry = _build_entry(url, 'video/x-flv', additional=metadata)
+                download_video(entry)
+                return
 
-        if content_type and filetypes.is_maybe_feed_content_type(content_type):
-            logging.info("%s content type is %s.  going to peek to see if it's a feed...." % (url, content_type))
-            httpclient.grabURL(url, callback_peek, errback)
-            return
+            if filetypes.is_maybe_feed_content_type(content_type):
+                logging.info("%s content type is %s.  "
+                             "going to peek to see if it's a feed....",
+                             url, content_type)
+                httpclient.grabURL(url, callback_peek, errback)
+                return
 
         entry = _build_entry(url, content_type)
 
@@ -195,20 +222,41 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
     httpclient.grabHeaders(url, callback, errback)
 
 def download_video(fp_dict):
+    """Takes a feedparser dict, generates an item.Item, adds the item
+    to the manual feed, and sets the item to download.
+
+    :param fp_dict: feedparser dict specifying metadata for the item
+    """
     fp_values = item.FeedParserValues(fp_dict)
     manual_feed = feed.Feed.get_manual_feed()
     new_item = item.Item(fp_values, feed_id=manual_feed.get_id())
     new_item.download()
 
 def filter_existing_feed_urls(urls):
+    """Takes a list of feed urls and returns a list of urls that aren't
+    already being managed by Miro.
+
+    :param urls: list of urls to filter
+
+    :returns: list of urls not already in Miro
+    """
     return [u for u in urls if feed.lookup_feed(u) is None]
 
 def add_feeds(urls, new_folder_name=None):
-    if len(urls) > 0:
-        if new_folder_name is not None:
-            new_folder = folder.ChannelFolder(new_folder_name)
+    """Adds a list of feeds that aren't already added to Miro to
+    Miro.
 
-        for url in filter_existing_feed_urls(urls):
-            f = feed.Feed(url)
-            if new_folder_name is not None:
-                f.set_folder(new_folder)
+    :param urls: list of urls to be added
+    :param new_folder_name: if not None, the feeds will be added to
+        this folder when created.
+    """
+    if not urls:
+        return
+
+    if new_folder_name is not None:
+        new_folder = folder.ChannelFolder(new_folder_name)
+
+    for url in filter_existing_feed_urls(urls):
+        f = feed.Feed(url)
+        if new_folder_name is not None:
+            f.set_folder(new_folder)
