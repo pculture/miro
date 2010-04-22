@@ -128,6 +128,7 @@ class VideoConversionManager(signals.SignalEmitter):
     
     def _check_task_loop(self):
         if self.task_loop is None:
+            self.quit_flag = False
             self.task_loop = threading.Thread(target=self._loop, name="Conversion Loop")
             self.task_loop.setDaemon(True)
             self.task_loop.start()
@@ -142,6 +143,7 @@ class VideoConversionManager(signals.SignalEmitter):
             self.emit('end-loop')
             time.sleep(0.2)
         logging.debug("Conversions manager thread loop finished.")
+        self.task_loop = None
     
     def _run_loop_cycle(self):
         self._process_message_queue()
