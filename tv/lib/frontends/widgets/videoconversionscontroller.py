@@ -59,7 +59,7 @@ class VideoConversionsController(object):
         stop_all_button.set_size(widgetconst.SIZE_SMALL)
         stop_all_button.set_color(widgetset.TOOLBAR_GRAY)
         stop_all_button.disable()
-        stop_all_button.connect('clicked', self.on_interrupt_all)
+        stop_all_button.connect('clicked', self.on_cancel_all)
 
         reveal_button = widgetset.Button(_('Show Conversion Folder'), style='smooth')
         reveal_button.set_size(widgetconst.SIZE_SMALL)
@@ -83,8 +83,8 @@ class VideoConversionsController(object):
 
         conversion_manager.fetch_tasks_list()
     
-    def on_interrupt_all(self, object):
-        conversion_manager.interrupt_all()
+    def on_cancel_all(self, object):
+        conversion_manager.cancel_all()
 
     def on_reveal(self, object):
         path = conversion_manager.get_default_target_folder()
@@ -95,7 +95,7 @@ class VideoConversionsController(object):
         if name == 'cancel' and not task.is_running():
             conversion_manager.cancel_pending(task)
         elif name == 'interrupt' and task.is_running():
-            conversion_manager.interrupt(task)
+            conversion_manager.cancel_running(task)
 
     def handle_task_list(self, running_tasks, pending_tasks):
         for task in running_tasks:

@@ -80,13 +80,13 @@ class VideoConversionManager(signals.SignalEmitter):
     
     def shutdown(self):
         if self.task_loop is not None:
-            self.interrupt_all()
+            self.cancel_all()
             self.task_loop.join()
 
-    def interrupt_all(self):
-        self._enqueue_message("interrupt_all")
+    def cancel_all(self):
+        self._enqueue_message("cancel_all")
     
-    def interrupt(self, task):
+    def cancel_running(self, task):
         self._enqueue_message("cancel_running", task=task)
     
     def cancel_pending(self, task):
@@ -181,7 +181,7 @@ class VideoConversionManager(signals.SignalEmitter):
                 self.running_tasks.remove(task)
                 self._notify_task_canceled(task)
 
-            elif msg['message'] == 'interrupt_all':
+            elif msg['message'] == 'cancel_all':
                 self._terminate()
                 return
 
