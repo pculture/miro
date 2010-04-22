@@ -36,16 +36,13 @@ from urlparse import urlparse
 from miro import app
 from miro import flashscraper
 from miro import filetypes
-from miro import guide
 from miro import messages
 from miro import subscription
 from miro import util
 from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
-from miro.frontends.widgets import linkhandler
 from miro.frontends.widgets import imagebutton
-from miro.frontends.widgets import style
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import separator
@@ -97,13 +94,17 @@ class BrowserToolbar(widgetset.HBox):
         self.browser_open_button.set_size(widgetconst.SIZE_SMALL)
         self.browser_open_button.connect(
             'clicked', self._on_browser_open_activate)
-        self.pack_end(widgetutil.align_middle(self.browser_open_button, right_pad=4))
+        self.pack_end(widgetutil.align_middle(self.browser_open_button,
+                                              right_pad=4))
 
-        self.download_button = widgetset.Button(_("Download this video"), style="smooth")
+        self.download_button = widgetset.Button(_("Download this video"),
+                                                style="smooth")
         self.download_button.set_size(widgetconst.SIZE_SMALL)
-        self.download_button.connect('clicked', self._on_download_button_clicked)
+        self.download_button.connect('clicked',
+                                     self._on_download_button_clicked)
         self.download_button = widgetutil.HideableWidget(self.download_button)
-        self.pack_end(widgetutil.align_middle(self.download_button, right_pad=4))
+        self.pack_end(widgetutil.align_middle(self.download_button,
+                                              right_pad=4))
 
         self.loading_icon = widgetutil.HideableWidget(
                 widgetset.AnimatedImageDisplay(
@@ -142,8 +143,8 @@ class Browser(widgetset.Browser):
         self.navigate(url)
 
     def should_load_url(self, url, mimetype=None):
-        """Returns True if the Miro browser should handle the url and False
-        otherwise.
+        """Returns True if the Miro browser should handle the url and
+        False otherwise.
 
         Situations which should return false:
 
@@ -151,9 +152,9 @@ class Browser(widgetset.Browser):
         * other things?
         """
         if mimetype is not None:
-            logging.debug("got %s (%s)" % (url, mimetype))
+            logging.debug("got %s (%s)", url, mimetype)
         else:
-            logging.debug("got %s" % url)
+            logging.debug("got %s", url)
 
         if url in self.seen_cache:
             del self.seen_cache[url]
@@ -164,9 +165,12 @@ class Browser(widgetset.Browser):
             messages.SubscriptionLinkClicked(url).send_to_backend()
             return False
 
+        def unknown_callback(url):
+            call_on_ui_thread(self.handle_unknown_url, url)
+
         if filetypes.is_maybe_rss_url(url):
             logging.debug("miro wants to handle %s", url)
-            messages.DownloadURL(url, lambda x: call_on_ui_thread(self.handle_unknown_url, x)).send_to_backend()
+            messages.DownloadURL(url, unknown_callback).send_to_backend()
             return False
 
         # parse the path out of the url and run that through the filetypes
@@ -175,12 +179,12 @@ class Browser(widgetset.Browser):
         ret = urlparse(url)
         if filetypes.is_allowed_filename(ret[2]):
             logging.debug("miro wants to handle %s", url)
-            messages.DownloadURL(url, lambda x: call_on_ui_thread(self.handle_unknown_url, x)).send_to_backend()
+            messages.DownloadURL(url, unknown_callback).send_to_backend()
             return False
 
         if mimetype is not None and filetypes.is_allowed_mimetype(mimetype):
             logging.debug("miro wants to handle %s", url)
-            messages.DownloadURL(url, lambda x: call_on_ui_thread(self.handle_unknown_url, x)).send_to_backend()
+            messages.DownloadURL(url, unknown_callback).send_to_backend()
             return False
 
         return True

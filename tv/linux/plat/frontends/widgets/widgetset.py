@@ -106,7 +106,7 @@ class Browser(Widget):
     def can_go_back(self):
         return self._widget.can_go_back()
 
-    def should_load_url(self, url):
+    def should_load_url(self, url, mimetype=None):
         return True
 
     def navigate(self, url):
