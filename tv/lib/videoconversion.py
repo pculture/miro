@@ -37,6 +37,7 @@ import subprocess
 from glob import glob
 from ConfigParser import SafeConfigParser
 
+from miro import util
 from miro import prefs
 from miro import config
 from miro import signals
@@ -313,7 +314,7 @@ class VideoConversionTask(object):
         self.log_path = os.path.join(log_folder, "conversion-%d-to-%s-log" % (self.item_info.id, self.converter_info.identifier))
         self.log_file = file(self.log_path, "w")
         self._log_progress("STARTING CONVERSION\n")
-        self._log_progress("-> Item: %s\n" % self.item_info.name)
+        self._log_progress("-> Item: %s\n" % util.stringify(self.item_info.name))
         self._log_progress("-> Converter used: %s\n" % self.converter_info.name)
         self._log_progress("-> Executable: %s\n" % executable)
         self._log_progress("-> Parameters: %s\n" % ' '.join(params))
