@@ -75,6 +75,7 @@ class VideoConversionsController(object):
         
         self.model = VideoConversionsTableModel()
         self.table = VideoConversionTableView(self.model)
+        self.table.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
         scroller = widgetset.Scroller(False, True)
         scroller.add(self.table)
 
@@ -88,6 +89,13 @@ class VideoConversionsController(object):
     def on_reveal(self, object):
         path = conversion_manager.get_default_target_folder()
         app.widgetapp.reveal_file(path)
+        
+    def on_hotspot_clicked(self, table_view, name, itr):
+        task = table_view.model[itr][0]
+        if name == 'cancel' and not task.is_running():
+            conversion_manager.cancel_pending(task)
+        elif name == 'interrupt' and task.is_running():
+            conversion_manager.interrupt(task)
 
     def handle_task_list(self, running_tasks, pending_tasks):
         for task in running_tasks:
@@ -98,6 +106,10 @@ class VideoConversionsController(object):
 
     def handle_task_added(self, task):
         self.model.add_task(task)
+        self.table.model_changed()
+    
+    def handle_task_canceled(self, task):
+        self.model.remove_task(task)
         self.table.model_changed()
     
     def handle_task_progress(self, task):
@@ -152,8 +164,8 @@ class VideoConversionsTableModel(widgetset.TableModel):
     def _find_task(self, task):
         itr = self.first_iter()
         while itr != None:
-            row_task = itr.value()
-            if row_task[0].key == task.key:
+            row = itr.value()
+            if row[0].key == task.key:
                 return itr
             itr = self.next_iter(itr)
         return None

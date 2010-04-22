@@ -1141,6 +1141,11 @@ class WidgetsMessageHandler(messages.MessageHandler):
         if isinstance(current_display, displays.VideoConversionsDisplay):
             current_display.controller.handle_task_added(message.task)
 
+    def handle_video_conversion_task_canceled(self, message):
+        current_display = app.display_manager.get_current_display()
+        if isinstance(current_display, displays.VideoConversionsDisplay):
+            current_display.controller.handle_task_canceled(message.task)
+
     def handle_video_conversion_task_progressed(self, message):
         current_display = app.display_manager.get_current_display()
         if isinstance(current_display, displays.VideoConversionsDisplay):
