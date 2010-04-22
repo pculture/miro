@@ -189,7 +189,7 @@ class ThemeHistory(DDBObject):
                 playlist.SavedPlaylist(_(u"Example Playlist"))
 
         default_guides = [
-            (u"http://beta.legaltorrents.com/", u"LegalTorrents"),
+            (u"http://www.clearbits.net/", u"ClearBits"),
             (u"https://www.miroguide.com/audio/", u"Miro Audio Guide")
             ]
         for default in default_guides:
