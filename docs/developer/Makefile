@@ -23,7 +23,7 @@ setup:
 	-mkdir source/_static
 	-mkdir source/_templates
 
-	PYTHONPATH=${PYTHONPATH} ${PYTHON} ../../tv/platform/gtk-x11/setup.py \
+	PYTHONPATH=${PYTHONPATH} ${PYTHON} ../../tv/linux/setup.py \
 	    install --root=./dist --prefix=${PREFIX}
 
 help:
