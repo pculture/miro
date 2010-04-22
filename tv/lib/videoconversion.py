@@ -206,6 +206,10 @@ class VideoConversionManager(signals.SignalEmitter):
     def _notify_task_canceled(self, task):
         message = messages.VideoConversionTaskCanceled(task)
         message.send_to_frontend()
+    
+    def _notify_all_tasks_canceled(self):
+        message = messages.AllVideoConversionTaskCanceled()
+        message.send_to_frontend()
 
     def _notify_task_completed(self, task):
         message = messages.VideoConversionTaskCompleted(task)
@@ -225,6 +229,8 @@ class VideoConversionManager(signals.SignalEmitter):
             for task in list(self.running_tasks):
                 self.running_tasks.remove(task)
                 task.interrupt()
+        self._notify_all_tasks_canceled()
+        self._notify_tasks_count()
         self.quit_flag = True
     
 

@@ -1297,6 +1297,11 @@ class VideoConversionTaskCanceled(FrontendMessage):
     def __init__(self, task):
         self.task = task
 
+class AllVideoConversionTaskCanceled(FrontendMessage):
+    """Informs the frontend that all conversion tasks have been canceled.
+    """
+    pass
+
 class VideoConversionTaskProgressed(FrontendMessage):
     """Informs the frontend that a conversion task progressed.
     """

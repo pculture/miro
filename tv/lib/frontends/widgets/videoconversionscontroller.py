@@ -55,11 +55,11 @@ class VideoConversionsController(object):
         sep = separator.HSeparator((0.85, 0.85, 0.85), (0.95, 0.95, 0.95))
         self.widget.pack_start(sep)
 
-        stop_all_button = widgetset.Button(_('Stop All Conversions'), style='smooth')
-        stop_all_button.set_size(widgetconst.SIZE_SMALL)
-        stop_all_button.set_color(widgetset.TOOLBAR_GRAY)
-        stop_all_button.disable()
-        stop_all_button.connect('clicked', self.on_cancel_all)
+        self.stop_all_button = widgetset.Button(_('Stop All Conversions'), style='smooth')
+        self.stop_all_button.set_size(widgetconst.SIZE_SMALL)
+        self.stop_all_button.set_color(widgetset.TOOLBAR_GRAY)
+        self.stop_all_button.disable()
+        self.stop_all_button.connect('clicked', self.on_cancel_all)
 
         reveal_button = widgetset.Button(_('Show Conversion Folder'), style='smooth')
         reveal_button.set_size(widgetconst.SIZE_SMALL)
@@ -68,7 +68,7 @@ class VideoConversionsController(object):
 
         toolbar = itemlistwidgets.DisplayToolbar()
         hbox = widgetset.HBox()
-        hbox.pack_start(widgetutil.pad(stop_all_button, top=8, bottom=8, left=8))
+        hbox.pack_start(widgetutil.pad(self.stop_all_button, top=8, bottom=8, left=8))
         hbox.pack_end(widgetutil.pad(reveal_button, top=8, bottom=8, right=8))
         toolbar.add(hbox)
         self.widget.pack_start(toolbar)
@@ -104,13 +104,23 @@ class VideoConversionsController(object):
         for task in pending_tasks:
             self.iter_map[task.key] = self.model.append(task)
         self.table.model_changed()
+        self._update_buttons_state()
 
     def handle_task_added(self, task):
         self.iter_map[task.key] = self.model.append(task)
         self.table.model_changed()
+        self._update_buttons_state()
+    
+    def handle_all_tasks_canceled(self):
+        for key in self.iter_map.keys():
+            itr = self.iter_map.pop(key)
+            self.model.remove(itr)
+        self.table.model_changed()
+        self._update_buttons_state()
     
     def handle_task_canceled(self, task):
         self.handle_task_completed(task)
+        self._update_buttons_state()
     
     def handle_task_progress(self, task):
         itr = self.iter_map[task.key]
@@ -121,6 +131,13 @@ class VideoConversionsController(object):
         itr = self.iter_map.pop(task.key)
         self.model.remove(itr)
         self.table.model_changed()
+        self._update_buttons_state()
+    
+    def _update_buttons_state(self):
+        if len(self.iter_map) > 0:
+            self.stop_all_button.enable()
+        else:
+            self.stop_all_button.disable()
 
 
 class VideoConversionsTitleBar(itemlistwidgets.ItemListTitlebar):
