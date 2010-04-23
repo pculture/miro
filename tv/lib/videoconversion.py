@@ -37,6 +37,7 @@ import subprocess
 from glob import glob
 from ConfigParser import SafeConfigParser
 
+from miro import app
 from miro import util
 from miro import prefs
 from miro import config
@@ -83,6 +84,10 @@ class VideoConversionManager(signals.SignalEmitter):
         if self.task_loop is not None:
             self.cancel_all()
             self.task_loop.join()
+
+    def reveal_conversions_folder(self):
+        path = self.get_default_target_folder()
+        app.widgetapp.reveal_file(path)
 
     def cancel_all(self):
         self._enqueue_message("cancel_all")

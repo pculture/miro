@@ -356,6 +356,8 @@ def _get_convert_menu():
             menu.append(item)
         if index+1 < len(sections):
             menu.append(Separator())
+    menu.append(Separator())
+    menu.append(MenuItem(_("Show Conversion Folder"), "RevealConversionFolder"))
     return menu
 
 action_handlers = {}
@@ -405,6 +407,10 @@ def on_save_item():
 
 def on_convert(converter):
     app.widgetapp.convert_items(converter)
+
+@action_handler("RevealConversionFolder")
+def on_reveal_conversion_folder():
+    videoconversion.conversion_manager.reveal_conversions_folder()
 
 @action_handler("CopyItemURL")
 def on_copy_item_url():

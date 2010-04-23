@@ -26,7 +26,6 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from miro import app
 from miro.plat import resources
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import style
@@ -84,12 +83,11 @@ class VideoConversionsController(object):
 
         conversion_manager.fetch_tasks_list()
     
-    def on_cancel_all(self, object):
+    def on_cancel_all(self, obj):
         conversion_manager.cancel_all()
 
-    def on_reveal(self, object):
-        path = conversion_manager.get_default_target_folder()
-        app.widgetapp.reveal_file(path)
+    def on_reveal(self, obj):
+        conversion_manager.reveal_conversions_folder()
         
     def on_hotspot_clicked(self, table_view, name, itr):
         task = table_view.model[itr][0]

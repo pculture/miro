@@ -292,6 +292,9 @@ class ItemContextMenuHandler(object):
                 convert_menu.append((converter.name, convert))
             if index+1 < len(sections):
                 convert_menu.append(None)
+        convert_menu.append(None)
+        convert_menu.append((_("Show Conversion Folder"),
+                             conversion_manager.reveal_conversions_folder))
         return convert_menu
 
 class ItemContextMenuHandlerPlaylist(ItemContextMenuHandler):
