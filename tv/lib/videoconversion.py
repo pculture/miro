@@ -263,7 +263,7 @@ class VideoConversionTask(object):
             elif param == "{ssize}":
                 return self.converter_info.screen_size
             return param
-        return map(substitute, self.converter_info.parameters.split())
+        return [substitute(p) for p in self.converter_info.parameters.split()]
         
     def _build_output_path(self, input_path, target_folder, converter_info):
         basename = os.path.basename(input_path)
