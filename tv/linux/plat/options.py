@@ -40,25 +40,30 @@ gconf_name = None
 from miro.prefs import Pref
 
 class GTKPref(Pref):
-    def __init__(self, key, default, alias, help):
+    def __init__(self, key, default, alias, helptext):
         Pref.__init__(self, key, default, False, None, None)
         self.alias = alias
-        self.help = help
+        self.helptext = helptext
+
+FIRST_TIME = GTKPref(key="startupTasksDone",
+                     default=False,
+                     alias="firsttimestartup",
+                     helptext="If true, forces first time startup dialog to show.")
 
 USE_RENDERER = GTKPref(key="useRenderer",
                        default=u"gstreamer",
                        alias="renderer",
-                       help="Which renderer to use.  (gstreamer, ...)" )
+                       helptext="Which renderer to use.  (gstreamer, ...)" )
 
 GSTREAMER_IMAGESINK = GTKPref(key="DefaultGstreamerImagesink",
                               default="gconfvideosink",
                               alias="gstreamer-imagesink",
-                              help="Which GStreamer image sink to use for video.  (autovideosink, ximagesink, xvimagesink, gconfvideosink, ...)")
+                              helptext="Which GStreamer image sink to use for video.  (autovideosink, ximagesink, xvimagesink, gconfvideosink, ...)")
 
 GSTREAMER_AUDIOSINK = GTKPref(key="DefaultGstreamerAudiosink",
                               default="gconfaudiosink",
                               alias="gstreamer-audiosink",
-                              help="Which GStreamer sink to use for audio.  (autoaudiosink, osssink, alsasink, gconfaudiosink, ...)")
+                              helptext="Which GStreamer sink to use for audio.  (autoaudiosink, osssink, alsasink, gconfaudiosink, ...)")
 
 
 SHOW_TRAYICON = Pref(key="showTrayicon",

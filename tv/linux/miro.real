@@ -210,7 +210,7 @@ def startapp():
 
     for mem in parsed_options.set_prefs:
         p, val = get_keyval(mem)
-        props_to_set.append( (p, val) )
+        props_to_set.append((p, val))
 
     options.shouldSyncX = parsed_options.sync
     options.frontend = parsed_options.frontend
@@ -243,7 +243,7 @@ elif parsed_options.list_options:
 
     print "Options that can be set:"
     for p in options.PREFERENCES.values():
-        print "   %s\n      %s\n" % (p.alias, p.help)
+        print "   %s\n      %s\n" % (p.alias, p.helptext)
 
 elif parsed_options.profile:
     import sys
