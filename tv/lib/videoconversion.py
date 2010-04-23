@@ -298,7 +298,7 @@ class VideoConversionTask(object):
             keep_going = True
             while keep_going:
                 line = self.readline()
-                self._log_progress(line)
+                self._log_progress(line.strip())
                 if line == "":
                     keep_going = False
                 else:
@@ -315,16 +315,17 @@ class VideoConversionTask(object):
         log_folder = os.path.dirname(config.get(prefs.LOG_PATHNAME))
         self.log_path = os.path.join(log_folder, "conversion-%d-to-%s-log" % (self.item_info.id, self.converter_info.identifier))
         self.log_file = file(self.log_path, "w")
-        self._log_progress("STARTING CONVERSION\n")
-        self._log_progress("-> Item: %s\n" % util.stringify(self.item_info.name))
-        self._log_progress("-> Converter used: %s\n" % self.converter_info.name)
-        self._log_progress("-> Executable: %s\n" % executable)
-        self._log_progress("-> Parameters: %s\n" % ' '.join(params))
-        self._log_progress("\n")
+        self._log_progress("STARTING CONVERSION")
+        self._log_progress("-> Item: %s" % util.stringify(self.item_info.name))
+        self._log_progress("-> Converter used: %s" % self.converter_info.name)
+        self._log_progress("-> Executable: %s" % executable)
+        self._log_progress("-> Parameters: %s" % ' '.join(params))
+        self._log_progress("")
     
     def _log_progress(self, line):
         if not self.log_file.closed:
             self.log_file.write(line)
+            self.log_file.write("\n")
             self.log_file.flush()
     
     def _stop_logging(self, keep_file=False):
