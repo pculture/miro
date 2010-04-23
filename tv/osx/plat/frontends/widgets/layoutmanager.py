@@ -339,19 +339,23 @@ class StyledButton(object):
     BOTTOM_COLOR = (0.86, 0.86, 0.86)
     LINE_COLOR_TOP = (0.71, 0.71, 0.71)
     LINE_COLOR_BOTTOM = (0.45, 0.45, 0.45)
-    TEXT_COLOR = (0.4, 0.4, 0.4)
+    TEXT_COLOR = (0.19, 0.19, 0.19)
     DISABLED_COLOR = (0.86, 0.86, 0.86)
-    DISABLED_TEXT_COLOR = (0.5, 0.5, 0.5)
+    DISABLED_TEXT_COLOR = (0.43, 0.43, 0.43)
     ICON_PAD = 8
     
     def __init__(self, text, font, pressed, disabled=False):
-        attributes = NSMutableDictionary.alloc().init()
-        color = NSColor.colorWithDeviceRed_green_blue_alpha_(self.TEXT_COLOR[0], self.TEXT_COLOR[1], self.TEXT_COLOR[2], 1.0)
-        attributes.setObject_forKey_(color, NSForegroundColorAttributeName)
-        attributes.setObject_forKey_(font.nsfont, NSFontAttributeName)
-        self.title = NSAttributedString.alloc().initWithString_attributes_(text, attributes)
         self.pressed = pressed
         self.disabled = disabled
+        attributes = NSMutableDictionary.alloc().init()
+        attributes.setObject_forKey_(font.nsfont, NSFontAttributeName)
+        if self.disabled:
+            color = self.DISABLED_TEXT_COLOR
+        else:
+            color = self.TEXT_COLOR
+        nscolor = NSColor.colorWithDeviceRed_green_blue_alpha_(color[0], color[1], color[2], 1.0)
+        attributes.setObject_forKey_(nscolor, NSForegroundColorAttributeName)
+        self.title = NSAttributedString.alloc().initWithString_attributes_(text, attributes)
         self.image = None
 
     def set_icon(self, icon):
