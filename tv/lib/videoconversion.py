@@ -243,7 +243,7 @@ class VideoConversionTask(object):
         self.item_info = item_info
         self.converter_info = converter_info
         self.input_path = item_info.video_path
-        self.output_path = self._build_output_path(self.input_path, target_folder)
+        self.output_path = self._build_output_path(self.input_path, target_folder, converter_info)
         self.key = "%s->%s" % (self.input_path, self.output_path)
         self.thread = None
         self.duration = None
@@ -265,10 +265,10 @@ class VideoConversionTask(object):
             return param
         return map(substitute, self.converter_info.parameters.split())
         
-    def _build_output_path(self, input_path, target_folder):
+    def _build_output_path(self, input_path, target_folder, converter_info):
         basename = os.path.basename(input_path)
         basename, _ = os.path.splitext(basename)
-        target_name = "%s.%s" % (basename, self.converter_info.extension)
+        target_name = "%s.%s.%s" % (basename, self.converter_info.identifier, self.converter_info.extension)
         return os.path.join(target_folder, target_name)
 
     def run(self):
@@ -402,7 +402,7 @@ class VideoConverterInfo(object):
 
     def __init__(self, name, config, defaults):
         self.name = name
-        self.identifier = self.NON_WORD_CHARS.sub("", name)
+        self.identifier = self.NON_WORD_CHARS.sub("", name).lower()
         self.executable = self._get_config_value(name, config, defaults, "executable")
         self.parameters = self._get_config_value(name, config, defaults, "parameters")
         self.extension = self._get_config_value(name, config, defaults, "extension")
