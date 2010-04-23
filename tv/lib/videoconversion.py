@@ -301,17 +301,19 @@ class VideoConversionTask(object):
         try:
             keep_going = True
             while keep_going:
-                line = self.readline()
-                self._log_progress(line.strip())
-                if line == "":
+                if self.process_handle.poll() is not None:
                     keep_going = False
                 else:
-                    old_progress = self.progress
-                    self.progress = self.monitor_progress(line.strip())
-                    if self.progress >= 1.0:
-                        self.progress = 1.0
-                    if old_progress != self.progress:
-                        self._notify_progress()
+                    line = self.readline().strip()
+                    if len(line) > 0:
+                        self._log_progress(line)
+                        old_progress = self.progress
+                        self.progress = self.monitor_progress(line)
+                        if self.progress >= 1.0:
+                            self.progress = 1.0
+                            keep_going = False
+                        if old_progress != self.progress:
+                            self._notify_progress()
         finally:
             self._stop_logging(self.progress < 1.0)
     
@@ -378,8 +380,12 @@ class FFMpegConversionTask(VideoConversionTask):
     
 
 class FFMpeg2TheoraConversionTask(VideoConversionTask):
-    PROGRESS_RE = re.compile('\{"duration":(.*), "position":(.*), "audio_kbps":.*, "video_kbps":.*, "remaining":.*\}')
-    RESULT_RE = re.compile('\{"result": "(.*)"\}')
+    PROGRESS_RE1 = re.compile('\{"duration":(.*), "position":(.*), "audio_kbps":.*, "video_kbps":.*, "remaining":.*\}')
+    RESULT_RE1 = re.compile('\{"result": "(.*)"\}')
+
+    DURATION_RE2 = re.compile('f2t ;duration: (.*);')
+    PROGRESS_RE2 = re.compile('f2t ;position: (.*);')
+    RESULT_RE2 = re.compile('f2t ;result: (.*);')
 
     def get_executable(self):
         return utils.get_ffmpeg2theora_executable_path()
@@ -388,11 +394,26 @@ class FFMpeg2TheoraConversionTask(VideoConversionTask):
         return self.process_handle.stdout.readline()
 
     def monitor_progress(self, line):
-        match = self.PROGRESS_RE.match(line)
-        if match is not None:
+        if line.startswith('f2t'):
             if self.duration is None:
-                self.duration = float(match.group(1))
-            return float(match.group(2)) / self.duration
+                match = self.DURATION_RE2.match(line)
+                if match is not None:
+                    self.duration = float(match.group(1))
+            match = self.PROGRESS_RE2.match(line)
+            if match is not None:
+                return float(match.group(1)) / self.duration
+            match = self.RESULT_RE2.match(line)
+            if match is not None:
+                return 1.0
+        else:
+            match = self.PROGRESS_RE1.match(line)
+            if match is not None:
+                if self.duration is None:
+                    self.duration = float(match.group(1))
+                return float(match.group(2)) / self.duration
+            match = self.RESULT_RE.match(line)
+            if match is not None:
+                return 1.0
         return self.progress
 
 
