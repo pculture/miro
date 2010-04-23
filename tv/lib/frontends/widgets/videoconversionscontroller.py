@@ -123,15 +123,17 @@ class VideoConversionsController(object):
         self._update_buttons_state()
     
     def handle_task_progress(self, task):
-        itr = self.iter_map[task.key]
-        self.model.update_value(itr, 0, task)
-        self.table.model_changed()
+        if task.key in self.iter_map:
+            itr = self.iter_map[task.key]
+            self.model.update_value(itr, 0, task)
+            self.table.model_changed()
     
     def handle_task_completed(self, task):
-        itr = self.iter_map.pop(task.key)
-        self.model.remove(itr)
-        self.table.model_changed()
-        self._update_buttons_state()
+        if task.key in self.iter_map:
+            itr = self.iter_map.pop(task.key)
+            self.model.remove(itr)
+            self.table.model_changed()
+            self._update_buttons_state()
     
     def _update_buttons_state(self):
         if len(self.iter_map) > 0:
