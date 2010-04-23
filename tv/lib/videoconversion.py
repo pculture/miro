@@ -292,8 +292,8 @@ class VideoConversionTask(object):
             self._log_progress("Removing existing output file (%s)...\n" % self.output_path)
             os.remove(self.output_path)
         
-        self.process_handle = subprocess.Popen(args, executable=executable, 
-                                                     bufsize=1, 
+        args.insert(0, executable)
+        self.process_handle = subprocess.Popen(args, bufsize=1, 
                                                      stdout=subprocess.PIPE,
                                                      stderr=subprocess.PIPE, 
                                                      close_fds=True)
