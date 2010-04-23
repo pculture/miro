@@ -40,7 +40,7 @@ _gtcache = None
 codeset = None # The default codeset of our locale (always lower case)
 
 def get_languages():
-    from miro import iso_639
+    from miro import iso639
     
     lang_paths = []
 
@@ -57,7 +57,7 @@ def get_languages():
         else:
             country = ""
 
-        lang = iso_639.find(code)
+        lang = iso639.find(code)
         if lang is None:
             lang = code
         else:

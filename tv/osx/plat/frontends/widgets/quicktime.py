@@ -38,7 +38,7 @@ from miro import app
 from miro import prefs
 from miro import config
 from miro import player
-from miro import iso_639
+from miro import iso639
 from miro.plat import utils
 from miro.plat import bundle
 from miro.plat import qtcomp
@@ -49,7 +49,7 @@ from miro.util import copy_subtitle_file
 
 ###############################################################################
 
-script_codes.patch_iso_639_map()
+script_codes.patch_iso639_map()
 
 ###############################################################################
 
@@ -252,7 +252,7 @@ class Player(player.Player):
                     if lang == 32767:    # 32764 = langUndefined
                         name = display_name
                     else:
-                        lang_info = iso_639.find(lang, "script-code")
+                        lang_info = iso639.find(lang, "script-code")
                         if lang_info is None:
                             name = display_name
                         else:

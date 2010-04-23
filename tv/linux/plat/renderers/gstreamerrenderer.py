@@ -48,7 +48,7 @@ from miro import prefs
 from miro.util import gather_subtitle_files, copy_subtitle_file
 from miro.gtcache import gettext as _
 from miro.plat import options
-from miro import iso_639
+from miro import iso639
 
 from miro.frontends.widgets.gtk.threads import call_on_ui_thread
 
@@ -409,7 +409,7 @@ class VideoRenderer(Renderer):
         lang = None
         if tag_list is not None and gst.TAG_LANGUAGE_CODE in tag_list:
             code = tag_list[gst.TAG_LANGUAGE_CODE]
-            lang = iso_639.find(code)
+            lang = iso639.find(code)
         if lang is None:
             return None
         else:
@@ -434,7 +434,7 @@ class VideoRenderer(Renderer):
         if "." in code:
             code = code.replace(".", "")
 
-        lang = iso_639.find(code)
+        lang = iso639.find(code)
         if lang is None:
             return None
         else:

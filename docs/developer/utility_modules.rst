@@ -36,10 +36,10 @@ the source tarball that contain utility functions and classes.
 .. automodule:: miro.gtcache
    :members:
 
-``iso_639`` - iso 639 language short code to language name
+``iso639`` - iso 639 language short code to language name
 ==========================================================
 
-.. automodule:: miro.iso_639
+.. automodule:: miro.iso639
    :members:
 
 ``singleclick`` - helper functions for downloading and playback

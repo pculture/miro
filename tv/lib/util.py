@@ -333,7 +333,7 @@ def copy_subtitle_file(sub_path, video_path):
 
     Returns the path the subtitle file was copied to.
     """
-    from miro import iso_639
+    from miro import iso639
     
     sub_basename = os.path.basename(sub_path)
     match = re.match("(.*)(\....?)(\..*)", sub_basename)
@@ -341,7 +341,7 @@ def copy_subtitle_file(sub_path, video_path):
         sub_basename_root = match.group(1)
         sub_language = match.group(2)
         sub_ext = match.group(3)
-        if iso_639.find(sub_language[1:]) is not None:
+        if iso639.find(sub_language[1:]) is not None:
             sub_ext = sub_language + sub_ext
         else:
             sub_basename_root = sub_basename_root + sub_language
