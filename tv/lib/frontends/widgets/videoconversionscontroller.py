@@ -225,9 +225,9 @@ class VideoConversionCellRenderer(widgetset.CustomCellRenderer):
         hbox = cellpack.HBox()
         layout.set_font(1.0)
         layout.set_text_color(self.PENDING_TASK_TEXT_COLOR)
-        hbox.pack(cellpack.pad(layout.textbox("(Pending)"), right=8))
+        hbox.pack(cellpack.pad(layout.textbox(_("(Pending)")), right=8))
         layout.set_font(0.8)
-        cancel_button = layout.button("Cancel", self.hotspot=='cancel', style='webby')
+        cancel_button = layout.button(_("Cancel"), self.hotspot=='cancel', style='webby')
         hbox.pack(cellpack.Hotspot('cancel', cancel_button))
         return cellpack.pad(hbox, bottom=10)
 
