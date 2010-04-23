@@ -44,6 +44,10 @@ from miro import gtcache
 from miro.plat.utils import filenameToUnicode, FilenameType
 from miro.plat.resources import get_default_search_dir
 
+import os
+
+_SYSTEM_LANGUAGE = os.environ.get("LANGUAGE", "")
+
 def _get_user_media_directory():
     """Returns the user's media directory.
     """
@@ -117,6 +121,9 @@ class FirstTimeDialog(widgetset.Window):
         self._page_box.pack_start(self._pages[i], expand=True)
         self._page_index = i
 
+    def this_page(self, rebuild=False):
+        self._switch_page(self._page_index, rebuild)
+
     def next_page(self, rebuild=False):
         self._switch_page(self._page_index + 1, rebuild)
 
@@ -146,15 +153,34 @@ class FirstTimeDialog(widgetset.Window):
         lang_options.insert(0, ("system", _("System default")))
 
         lang_option_menu = widgetset.OptionMenu([op[1] for op in lang_options])
+        lang = config.get(prefs.LANGUAGE)
+        try:
+            lang_option_menu.set_selected([op[0] for op in lang_options].index(lang))
+        except ValueError:
+            lang_option_menu.set_selected(1)
+
+        def update_clicked(widget):
+            os.environ["LANGUAGE"] = _SYSTEM_LANGUAGE
+            config.set(prefs.LANGUAGE,
+                       str(lang_options[lang_option_menu.get_selected()][0]))
+            gtcache.init()
+            self.this_page(rebuild=True)
 
         def next_clicked(widget):
+            os.environ["LANGUAGE"] = _SYSTEM_LANGUAGE
             config.set(prefs.LANGUAGE,
                        str(lang_options[lang_option_menu.get_selected()][0]))
             gtcache.init()
             self.next_page(rebuild=True)
 
-        hbox = widgetutil.build_hbox((widgetset.Label(_("Language:")),
-                                      lang_option_menu))
+        update_button = widgetset.Button(_("Update"))
+        update_button.connect('clicked', update_clicked)
+
+        hbox = widgetset.HBox()
+        hbox.pack_start(widgetset.Label(_("Language:")), padding=0)
+        hbox.pack_start(lang_option_menu, padding=5)
+        hbox.pack_start(update_button, padding=5)
+
         vbox.pack_start(hbox)
 
         vbox.pack_start(widgetset.Label(" "), expand=True)
