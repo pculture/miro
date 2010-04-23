@@ -288,6 +288,10 @@ class VideoConversionTask(object):
         args = self.get_parameters()
         self._start_logging(executable, args)
         
+        if os.path.exists(self.output_path):
+            self._log_progress("Removing existing output file (%s)...\n" % self.output_path)
+            os.remove(self.output_path)
+        
         self.process_handle = subprocess.Popen(args, executable=executable, 
                                                      bufsize=1, 
                                                      stdout=subprocess.PIPE,
@@ -353,11 +357,6 @@ class FFMpegConversionTask(VideoConversionTask):
 
     def get_executable(self):
         return utils.get_ffmpeg_executable_path()
-
-    def get_parameters(self):
-        parameters = VideoConversionTask.get_parameters(self)
-        parameters.insert(0, "-y")
-        return parameters
 
     def readline(self):
         return self.process_handle.stderr.readline()
