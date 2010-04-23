@@ -147,8 +147,6 @@ class FirstTimeDialog(widgetset.Window):
         lab.set_size_request(400, -1)
         vbox.pack_start(widgetutil.align_left(lab))
 
-        gtcache.get_languages()
-
         lang_options = gtcache.get_languages()
         lang_options.insert(0, ("system", _("System default")))
 
