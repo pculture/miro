@@ -4,8 +4,8 @@ name: Other Devices and Formats
 [Playstation Portable (PSP)]
 executable: ffmpeg
 extension: mp4
-parameters: -i {input} -b 512000 -ar 24000 -ab 64000 -f psp -r 29.97 -s 480x320 {output}
-
+parameters: -i {input} -s 320x240 -b 512000 -ar 24000 -ab 64000 -f psp -r 29.97 {output}
+            
 [Theora]
 executable: ffmpeg2theora
 extension: ogv

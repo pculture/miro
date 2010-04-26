@@ -2,8 +2,9 @@
 name: Apple Devices
 executable: ffmpeg
 extension: mp4
-parameters: -i {input} -vcodec mpeg4 -b 1200k -mbd 2 -cmp 2 -subcmp 2 -r 20 -acodec aac -ab 96000 -s 480x320 {output}
-
+ssize: 480x320
+parameters: -i {input} -acodec aac -ab 160000 -vcodec mpeg4 -b 1200kb -mbd 2 -cmp 2 -subcmp 2 -s {ssize} -r 20 {output}
+            
 [iPhone]
 
 [iPod Touch]
@@ -11,3 +12,9 @@ parameters: -i {input} -vcodec mpeg4 -b 1200k -mbd 2 -cmp 2 -subcmp 2 -r 20 -aco
 [iPod Nano]
 
 [iPod Classic]
+
+[iPad]
+ssize: 1024x768
+
+[Apple Universal]
+ssize: 1280x720

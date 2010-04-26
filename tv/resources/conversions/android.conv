@@ -2,7 +2,7 @@
 name: Android Devices
 executable: ffmpeg
 extension: mp4
-parameters: -i {input} -f mp4 -vcodec mpeg4 -sameq -acodec aac -ab 48000 -r 18 -s {ssize} {output}
+parameters: -i {input} -f mp4 -vcodec mpeg4 -sameq -s {ssize} -acodec aac -ab 160000 -r 18 {output}
 
 [Nexus One]
 ssize: 800x400
