@@ -40,6 +40,12 @@ FIXME - need explanation here and probably a drawing of the architecture
 .. automodule:: miro.frontends.widgets.imagepool
    :members:
 
+``itemlistwidgets`` - Widgets used in the item list
+===================================================
+
+.. automodule:: miro.frontends.widgets.itemlistwidgets
+   :members:
+
 ``util`` - utility functions
 ============================
 

@@ -171,7 +171,7 @@ class ItemListTitlebar(widgetset.Background):
 class ChannelTitlebar(ItemListTitlebar):
     """Titlebar for a channel
 
-    :signal save-search (self, search_text) -- The current search
+    :signal save-search: (self, search_text) The current search
         should be saved as a search channel.
     """
 
