@@ -124,6 +124,10 @@ class StaticTabListBase(TabBlinkerMixin):
         iter = self.view.append_tab(tab)
         self.iter_map[tab.id] = iter
 
+    def remove(self, name):
+        iter = self.iter_map.pop(name)
+        self.view.model.remove(iter)
+
     def get_tab(self, name):
         return self.view.model[self.iter_map[name]][0]
 
@@ -151,14 +155,26 @@ class LibraryTabList(StaticTabListBase):
         self.view.allow_multiple_select(False)
         self.view.set_fixed_height(False)
         self.view.set_drag_dest(MediaTypeDropHandler())
+        self.auto_tabs = None
 
     def build_tabs(self):
         self.add(statictabs.VideoLibraryTab())
         self.add(statictabs.AudioLibraryTab())
         self.add(statictabs.OtherLibraryTab())
-        self.add(statictabs.DownloadsTab())
-        self.add(statictabs.VideoConversionsTab())
+        self.auto_tabs = {'downloading': statictabs.DownloadsTab(),
+                          'conversions': statictabs.VideoConversionsTab()}
         self.view.model_changed()
+
+    def show_auto_tab(self, name, count):
+        if count > 0 and name in self.auto_tabs:
+            try:
+                tab = self.get_tab(name)
+            except KeyError, e:
+                self.add(self.auto_tabs[name])
+    
+    def hide_auto_tab(self, name, count):
+        if count == 0 and name in self.auto_tabs:
+            self.remove(name)
 
     def update_download_count(self, count):
         self.update_count('downloading', 'downloading', count)
@@ -173,11 +189,17 @@ class LibraryTabList(StaticTabListBase):
         self.update_count('audios', 'unwatched', count)
     
     def update_count(self, key, attr, count):
-        iter = self.iter_map[key]
-        tab = self.view.model[iter][0]
-        setattr(tab, attr, count)
-        self.view.update_tab(iter, tab)
-        self.view.model_changed()
+        self.show_auto_tab(key, count)
+        try:
+            iter = self.iter_map[key]
+        except KeyError, e:
+            pass
+        else:
+            tab = self.view.model[iter][0]
+            setattr(tab, attr, count)
+            self.view.update_tab(iter, tab)
+            self.hide_auto_tab(key, count)
+            self.view.model_changed()
 
 class TabListDragHandler(object):
     def allowed_actions(self):
