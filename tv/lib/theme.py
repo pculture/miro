@@ -190,6 +190,7 @@ class ThemeHistory(DDBObject):
 
         default_guides = [
             (u"http://www.clearbits.net/", u"ClearBits"),
+            (u"http://www.youtorrent.com/", u"YouTorrent"),
             (u"https://www.miroguide.com/audio/", u"Miro Audio Guide")
             ]
         for default in default_guides:
