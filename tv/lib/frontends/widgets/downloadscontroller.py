@@ -26,15 +26,15 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Controller for Downloads tab."""
+"""Controller for Downloads tab.
+"""
 
 from miro.gtcache import gettext as _
 
 from miro.frontends.widgets import itemlistcontroller
-from miro.frontends.widgets.itemlistwidgets import (ItemView, HideableSection,
-                                                    ItemContainerWidget,
-                                                    DownloadToolbar,
-                                                    ItemListTitlebar)
+from miro.frontends.widgets.itemlistwidgets import (
+    ItemView, HideableSection, ItemContainerWidget, DownloadToolbar,
+    ItemListTitlebar)
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import itemlist
@@ -89,12 +89,14 @@ class DownloadsController(itemlistcontroller.ItemListController):
         return itemcontextmenu.ItemContextMenuHandler()
 
     def _make_item_views(self):
-        self.indydownloads_view = ItemView(itemlist.IndividualDownloadItemList())
-        self.indydownloads_section = HideableSection(_("Single and external downloads"), self.indydownloads_view)
+        self.indydownloads_view = ItemView(
+            itemlist.IndividualDownloadItemList())
+        self.indydownloads_section = HideableSection(
+            _("Single and external downloads"), self.indydownloads_view)
 
         self.downloads_view = ItemView(itemlist.ChannelDownloadItemList())
-        self.downloads_section = HideableSection(_("Feed downloads"),
-                                                 self.downloads_view)
+        self.downloads_section = HideableSection(
+            _("Feed downloads"), self.downloads_view)
 
         self.seeding_view = ItemView(itemlist.SeedingItemList())
         self.seeding_section = HideableSection(_("Seeding"), self.seeding_view)
@@ -150,8 +152,8 @@ class DownloadsController(itemlistcontroller.ItemListController):
         self._expand_lists_initially()
 
     def on_items_changed(self):
-        self.toolbar.update_rates(downloader.total_down_rate,
-                                  downloader.total_up_rate)
+        self.toolbar.update_rates(
+            downloader.total_down_rate, downloader.total_up_rate)
 
         if len(self.indydownloads_view.item_list.get_items()) > 0:
             self.indydownloads_section.show()
