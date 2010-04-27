@@ -28,25 +28,23 @@
 
 """itemlistwidgets.py -- Widgets to display lists of items
 
-itemlist, itemlistcontroller and itemlistwidgets work together using the MVC
-pattern.  itemlist handles the Model, itemlistwidgets handles the View and
-itemlistcontroller handles the Controller.
+itemlist, itemlistcontroller and itemlistwidgets work together using
+the MVC pattern.  itemlist handles the Model, itemlistwidgets handles
+the View and itemlistcontroller handles the Controller.
 
-The classes inside this module are meant to be as dumb as possible.  They
-should only worry themselves about how things are displayed.  The only thing
-they do in response to user input or other signals is to forward those signals
-on.  It's the job of ItemListController subclasses to handle the logic
-involved.
+The classes inside this module are meant to be as dumb as possible.
+They should only worry themselves about how things are displayed.  The
+only thing they do in response to user input or other signals is to
+forward those signals on.  It's the job of ItemListController
+subclasses to handle the logic involved.
 """
 
 from miro import app
 from miro import config
 from miro import prefs
 from miro import displaytext
-from miro import searchengines
 from miro.gtcache import gettext as _
 from miro.gtcache import declarify
-from miro.frontends.widgets import imagebutton
 from miro.frontends.widgets import style
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
@@ -65,7 +63,8 @@ class TitleDrawer(widgetset.DrawingArea):
     def draw(self, context, layout):
         layout.set_font(2.2, family="Helvetica")
         layout.set_text_color((0.31, 0.31, 0.31))
-        layout.set_text_shadow(widgetutil.Shadow((1,1,1), 1, (1.5,-1.5), 0.5))
+        layout.set_text_shadow(widgetutil.Shadow((1, 1, 1), 1,
+                                                 (1.5, -1.5), 0.5))
         textbox = layout.textbox(self.title)
         textbox.set_width(context.width)
         textbox.set_wrap_style('truncated-char')
@@ -90,7 +89,8 @@ class BoxedIconDrawer(widgetset.DrawingArea):
         return (41, 41)
 
     def draw(self, context, layout):
-        widgetutil.draw_rounded_icon(context, self.icon, 0, 0, 41, 41, inset=1)
+        widgetutil.draw_rounded_icon(context, self.icon, 0, 0, 41, 41,
+                                     inset=1)
         context.set_line_width(1)
         # Draw the black inner border
         context.set_color((0, 0, 0), 0.16)
@@ -102,11 +102,11 @@ class BoxedIconDrawer(widgetset.DrawingArea):
         context.stroke()
 
 class ItemListTitlebar(widgetset.Background):
-    """Titlebar for feeds, playlists and static tabs that display items.
+    """Titlebar for feeds, playlists and static tabs that display
+    items.
 
-    signals:
-      search-changed (self, search_text) -- The value in the search box
-          changed and the items listed should be filtered
+    :signal search-changed: (self, search_text) -- The value in the
+        search box changed and the items listed should be filtered
     """
     def __init__(self, title, icon, add_icon_box=False):
         widgetset.Background.__init__(self)
@@ -146,13 +146,14 @@ class ItemListTitlebar(widgetset.Background):
     def _build_titlebar_extra(self):
         """Builds the widget(s) to place to the right of the title.
 
-        By default we add a search box, but subclasses can override this.
+        By default we add a search box, but subclasses can override
+        this.
         """
-
         self.create_signal('search-changed')
         self.searchbox = widgetset.SearchTextEntry()
         self.searchbox.connect('changed', self._on_search_changed)
-        return widgetutil.align_middle(self.searchbox, right_pad=35, left_pad=15)
+        return widgetutil.align_middle(self.searchbox, right_pad=35,
+                                       left_pad=15)
 
     def _on_save_search(self, button):
         self.emit('save-search')
@@ -170,9 +171,8 @@ class ItemListTitlebar(widgetset.Background):
 class ChannelTitlebar(ItemListTitlebar):
     """Titlebar for a channel
 
-    signals:
-      save-search (self, search_text) -- The current search should be saved
-          as a search channel.
+    :signal save-search (self, search_text) -- The current search
+        should be saved as a search channel.
     """
 
     def _build_titlebar_extra(self):
@@ -182,8 +182,8 @@ class ChannelTitlebar(ItemListTitlebar):
         self.save_button = widgetutil.HideableWidget(
                 widgetutil.pad(button, right=10))
         return [
-                widgetutil.align_middle(self.save_button),
-                ItemListTitlebar._build_titlebar_extra(self),
+            widgetutil.align_middle(self.save_button),
+            ItemListTitlebar._build_titlebar_extra(self),
         ]
 
     def _on_save_search(self, button):
@@ -200,7 +200,8 @@ class SearchListTitlebar(ItemListTitlebar):
     """Titlebar for the search page.
     """
     def _on_search_activate(self, obj):
-        app.search_manager.set_search_info(obj.selected_engine(), obj.get_text())
+        app.search_manager.set_search_info(
+            obj.selected_engine(), obj.get_text())
         app.search_manager.perform_search()
 
     def get_engine(self):
@@ -217,14 +218,16 @@ class SearchListTitlebar(ItemListTitlebar):
 
         self.searchbox = widgetset.VideoSearchTextEntry()
         w, h = self.searchbox.get_size_request()
-        self.searchbox.set_size_request(w*2, h)
+        self.searchbox.set_size_request(w * 2, h)
         self.searchbox.connect('validate', self._on_search_activate)
         hbox.pack_start(widgetutil.align_middle(self.searchbox, 0, 0, 16, 16))
 
         return widgetutil.align_middle(hbox, right_pad=20)
 
 class ItemView(widgetset.TableView):
-    """TableView that displays a list of items using the standard view.  """
+    """TableView that displays a list of items using the standard
+    view.
+    """
 
     draws_selection = True
 
@@ -252,12 +255,12 @@ class ItemView(widgetset.TableView):
     def do_size_allocated(self, width, height):
         if width != self.renderer.total_width:
             self.renderer.total_width = width
-            # We want to resize the rows with show_details set to True,
-            # because they may have gotten taller/shorter based on the
-            # description getting less/more width.  However, if the user is
-            # quickly resizing the window, we don't want to flood the system.
-            # Use call_on_ui_thread, which amounts to waiting until the widget
-            # system is idle.
+            # We want to resize the rows with show_details set to
+            # True, because they may have gotten taller/shorter based
+            # on the description getting less/more width.  However, if
+            # the user is quickly resizing the window, we don't want
+            # to flood the system.  Use call_on_ui_thread, which
+            # amounts to waiting until the widget system is idle.
             if not self._recalculate_heights_queued:
                 self._recalculate_heights_queued = True
                 call_on_ui_thread(self._recalculate_show_details_heights)
@@ -265,8 +268,9 @@ class ItemView(widgetset.TableView):
     def _recalculate_show_details_heights(self):
         self._recalculate_heights_queued = False
         for iter in self.item_list.find_show_details_rows():
-            # We want to make this row's height get re-calculated, so we use a
-            # bit of a hack, we "update" the row to the value it currently has
+            # We want to make this row's height get re-calculated, so
+            # we use a bit of a hack, we "update" the row to the value
+            # it currently has
             row = self.item_list.model[iter]
             self.item_list.model.update(iter, *row)
 
@@ -294,7 +298,8 @@ class ListItemView(widgetset.TableView):
         self._make_column(_('Size'), style.SizeRenderer(), 'size')
         if display_download_info:
             self._make_column(_('ETA'), style.ETARenderer(), 'eta')
-            self._make_column(_('Speed'), style.DownloadRateRenderer(), 'rate')
+            self._make_column(_('Speed'), style.DownloadRateRenderer(),
+                              'rate')
         self.set_show_headers(True)
         self.set_columns_draggable(True)
         self.set_column_spacing(12)
@@ -330,8 +335,8 @@ class ListItemView(widgetset.TableView):
     def do_size_allocated(self, width, height):
         if not self._set_initial_widths:
             width -= 20 # allow some room for a scrollbar
-            # Set this immediately, because changing the widths of widgets
-            # below can invoke another size-allocate signal
+            # Set this immediately, because changing the widths of
+            # widgets below can invoke another size-allocate signal
             self._set_initial_widths = True
             # width_specs contains the info we need to give columns their
             # initial size.  It maps column names to
@@ -378,12 +383,12 @@ class ListItemView(widgetset.TableView):
         self._current_sort_column = new_sort_column
 
 class HideableSection(widgetutil.HideableWidget):
-    """Widget that contains an ItemView, along with an expander to show/hide
-    it.
+    """Widget that contains an ItemView, along with an expander to
+    show/hide it.
 
-    The label for a HideableSection expander is made up of 2 parts.  The header
-    is displayed first using a bold text, then the info is displayed using
-    normal font.
+    The label for a HideableSection expander is made up of 2 parts.
+    The header is displayed first using a bold text, then the info is
+    displayed using normal font.
     """
 
     def __init__(self, header_text, item_view):
@@ -430,10 +435,8 @@ class SearchToolbar(DisplayToolbar):
 
     It's a hidable widget that contains the save search button.
 
-    signals:
-
-       save-search (self) -- The current search should be saved as a search
-           channel.
+    :signal save-search (self) -- The current search should be saved
+        as a search channel.
     """
 
     def __init__(self):
@@ -443,7 +446,8 @@ class SearchToolbar(DisplayToolbar):
         save_button = widgetset.Button(_('Save as a Feed'), style='smooth')
         save_button.set_size(widgetconst.SIZE_SMALL)
         save_button.connect('clicked', self._on_save_clicked)
-        aligned = widgetutil.align_left(save_button, top_pad=5, left_pad=5, bottom_pad=5)
+        aligned = widgetutil.align_left(save_button, top_pad=5, left_pad=5,
+                                        bottom_pad=5)
         self.hideable = widgetutil.HideableWidget(aligned)
         hbox.pack_start(self.hideable)
         self.create_signal('save-search')
@@ -458,15 +462,13 @@ class SearchToolbar(DisplayToolbar):
         self.hideable.hide()
 
 class DownloadToolbar(DisplayToolbar):
-    """Widget that shows free space, pause/resume/... buttons for downloads,
-    and other data.
+    """Widget that shows free space, pause/resume/... buttons for
+    downloads, and other data.
 
-    signals:
-
-       pause-all -- All downloads should be paused
-       resume-all -- All downloads should be resumed
-       cancel-all -- All downloads should be canceled
-       settings -- The preferences panel downloads tab should be opened
+    :signal pause-all: All downloads should be paused
+    :signal resume-all: All downloads should be resumed
+    :signal cancel-all: All downloads should be canceled
+    :signal settings: The preferences panel downloads tab should be opened
     """
 
     def __init__(self):
@@ -510,7 +512,8 @@ class DownloadToolbar(DisplayToolbar):
         h.pack_start(widgetutil.align_middle(cancel_button, top_pad=5,
             bottom_pad=5))
 
-        settings_button = widgetset.Button(_('Download Settings'), style='smooth')
+        settings_button = widgetset.Button(_('Download Settings'),
+                                           style='smooth')
         settings_button.set_size(widgetconst.SIZE_SMALL)
         settings_button.set_color(widgetset.TOOLBAR_GRAY)
         settings_button.connect('clicked', self._on_settings_button_clicked)
@@ -541,7 +544,8 @@ class DownloadToolbar(DisplayToolbar):
         config.add_change_callback(self.handle_config_change)
 
     def handle_config_change(self, key, value):
-        if key == prefs.PRESERVE_X_GB_FREE.key or key == prefs.PRESERVE_DISK_SPACE.key:
+        if ((key == prefs.PRESERVE_X_GB_FREE.key
+             or key == prefs.PRESERVE_DISK_SPACE.key)):
             self.update_free_space()
 
     def update_free_space(self):
@@ -551,19 +555,21 @@ class DownloadToolbar(DisplayToolbar):
         """
         amount = get_available_bytes_for_movies()
         if config.get(prefs.PRESERVE_DISK_SPACE):
-            available = config.get(prefs.PRESERVE_X_GB_FREE) * (1024 * 1024 * 1024)
+            available = (config.get(prefs.PRESERVE_X_GB_FREE) * 1024 * 1024 * 1024)
             available = amount - available
 
             if available < 0:
                 available = available * -1.0
                 text = _(
-                    "%(available)s below downloads space limit (%(amount)s free on disk)",
+                    "%(available)s below downloads space limit (%(amount)s "
+                    "free on disk)",
                     {"amount": displaytext.size_string(amount),
                      "available": displaytext.size_string(available)}
                 )
             else:
                 text = _(
-                    "%(available)s free for downloads (%(amount)s free on disk)",
+                    "%(available)s free for downloads (%(amount)s free "
+                    "on disk)",
                     {"amount": displaytext.size_string(amount),
                      "available": displaytext.size_string(available)}
                 )
@@ -587,9 +593,11 @@ class DownloadToolbar(DisplayToolbar):
     def update_rates(self, down_bps, up_bps):
         text_up = text_down = ''
         if up_bps >= 10:
-            text_up = _("%(rate)s uploading", {"rate": displaytext.download_rate(up_bps)})
+            text_up = _("%(rate)s uploading",
+                        {"rate": displaytext.download_rate(up_bps)})
         if down_bps >= 10:
-            text_down = _("%(rate)s downloading", {"rate": displaytext.download_rate(down_bps)})
+            text_down = _("%(rate)s downloading",
+                          {"rate": displaytext.download_rate(down_bps)})
 
         if text_up and text_down:
             self._first_label.set_text(text_down)
@@ -607,12 +615,11 @@ class DownloadToolbar(DisplayToolbar):
 class FeedToolbar(DisplayToolbar):
     """Toolbar that appears below the title in a feed.
 
-    signals:
-       remove-feed (widget) -- The "remove feed" button was pressed
-       show-settings (widget) -- The show settings button was pressed
-       share (widget) -- The "share" button was pressed
-       auto-download-changed (widget, value) -- The auto-download setting was
-           changed by the user
+    :signal remove-feed: (widget) The 'remove feed' button was pressed
+    :signal show-settings: (widget) The show settings button was pressed
+    :signal share: (widget) The 'share' button was pressed
+    :signal auto-download-changed: (widget, value) The auto-download
+        setting was changed by the user
     """
 
     def __init__(self):
@@ -628,9 +635,12 @@ class FeedToolbar(DisplayToolbar):
         label.set_color(widgetset.TOOLBAR_GRAY)
         self.autodownload_label = widgetutil.HideableWidget(label)
 
-        self.autodownload_options = (("all", _("All")), ("new", _("New")), ("off", _("Off")))
+        self.autodownload_options = (("all", _("All")),
+                                     ("new", _("New")),
+                                     ("off", _("Off")))
 
-        autodownload_menu = widgetset.OptionMenu([o[1] for o in self.autodownload_options])
+        autodownload_menu = widgetset.OptionMenu(
+            [o[1] for o in self.autodownload_options])
         autodownload_menu.set_size(widgetconst.SIZE_SMALL)
         autodownload_menu.connect('changed', self._on_autodownload_changed)
         self.autodownload_menu = widgetutil.HideableWidget(autodownload_menu)
@@ -653,7 +663,8 @@ class FeedToolbar(DisplayToolbar):
         remove_button.connect('clicked', self._on_remove_clicked)
         self.remove_button = remove_button
 
-        hbox.pack_start(widgetutil.align_middle(self.autodownload_label, right_pad=2, left_pad=6))
+        hbox.pack_start(widgetutil.align_middle(self.autodownload_label,
+                                                right_pad=2, left_pad=6))
         hbox.pack_start(widgetutil.align_middle(self.autodownload_menu))
         hbox.pack_end(widgetutil.align_middle(self.remove_button))
         hbox.pack_end(widgetutil.align_middle(self.settings_button))
@@ -685,32 +696,42 @@ class HeaderToolbar(widgetset.Background):
 
     Signals:
 
-    sort-changed (widget, sort_key, ascending) -- User changed the sort.
-       sort_key will be one of 'name', 'date', 'size' or 'length'
-    list-view-clicked (widget) -- User requested to switch to list view
-    normal-view-clicked (widget) -- User requested to switch to normal view
-    view-all-clicked -- User requested to view all items
-    toggle-unwatched-clicked -- User toggled the unwatched/unplayed items only view
-    toggle-non-feed-clicked -- User toggled the non feed items only view
+    :signal sort-changed: (widget, sort_key, ascending) User changed
+        the sort.  sort_key will be one of 'name', 'date', 'size' or
+        'length'
+    :signal list-view-clicked: (widget) User requested to switch to
+        list view
+    :signal normal-view-clicked: (widget) User requested to switch to
+        normal view
+    :signal view-all-clicked: User requested to view all items
+    :signal toggle-unwatched-clicked: User toggled the
+        unwatched/unplayed items only view
+    :signal toggle-non-feed-clicked: User toggled the non feed items only view
     """
-
     def __init__(self):
         widgetset.Background.__init__(self)
         self.create_signals()
         
         self._button_hbox = widgetset.HBox()
-        self._button_hbox_container = widgetutil.HideableWidget(self._button_hbox)
+        self._button_hbox_container = widgetutil.HideableWidget(
+            self._button_hbox)
         self._button_hbox_container.show()
 
         self._hbox = widgetset.HBox()
  
         self.view_switch = segmented.SegmentedButtonsRow()
-        self.view_switch.add_image_button('normal-view', 'normal-view-button-icon', self._on_normal_clicked)
-        self.view_switch.add_image_button('list-view', 'list-view-button-icon', self._on_list_clicked)
+        self.view_switch.add_image_button('normal-view',
+                                          'normal-view-button-icon',
+                                          self._on_normal_clicked)
+        self.view_switch.add_image_button('list-view',
+                                          'list-view-button-icon',
+                                          self._on_list_clicked)
         self.view_switch.set_active('normal-view')
-        self._hbox.pack_start(widgetutil.align_middle(self.view_switch.make_widget(), left_pad=12))
+        self._hbox.pack_start(widgetutil.align_middle(
+            self.view_switch.make_widget(), left_pad=12))
 
-        self._hbox.pack_end(widgetutil.align_middle(self._button_hbox_container))
+        self._hbox.pack_end(widgetutil.align_middle(
+            self._button_hbox_container))
         self.pack_hbox_extra()
 
         self.add(self._hbox)
@@ -758,7 +779,8 @@ class HeaderToolbar(widgetset.Background):
         self.filter_switch.set_active('view-non-feed', False)
 
     def switch_to_view_all_if_necessary(self):
-        view_all = not self.filter_switch.is_active('view-unwatched') and not self.filter_switch.is_active('view-non-feed')
+        view_all = (not self.filter_switch.is_active('view-unwatched')
+                    and not self.filter_switch.is_active('view-non-feed'))
         self.filter_switch.set_active('view-all', view_all)
 
     def _on_toggle_unwatched_clicked(self, button):
@@ -846,11 +868,18 @@ class LibraryHeaderToolbar(HeaderToolbar):
         self.filter_switch = segmented.SegmentedButtonsRow(behavior='custom')
         # this "All" is different than other "All"s in the codebase, so it
         # needs to be clarified
-        self.filter_switch.add_text_button('view-all', declarify(_('View|All')), self._on_view_all_clicked)
-        self.filter_switch.add_text_button('view-unwatched', self.unwatched_label, self._on_toggle_unwatched_clicked)
-        self.filter_switch.add_text_button('view-non-feed', _('Non Feed'), self._on_toggle_non_feed_clicked)
+        self.filter_switch.add_text_button('view-all',
+                                           declarify(_('View|All')),
+                                           self._on_view_all_clicked)
+        self.filter_switch.add_text_button('view-unwatched',
+                                           self.unwatched_label,
+                                           self._on_toggle_unwatched_clicked)
+        self.filter_switch.add_text_button('view-non-feed',
+                                           _('Non Feed'),
+                                           self._on_toggle_non_feed_clicked)
         self.filter_switch.set_active('view-all')
-        self._hbox.pack_start(widgetutil.align_middle(self.filter_switch.make_widget(), left_pad=12))
+        self._hbox.pack_start(widgetutil.align_middle(
+            self.filter_switch.make_widget(), left_pad=12))
 
     def set_active_filters(self, filters):
         filter_set = set(filters)
@@ -877,12 +906,15 @@ class SortBarButton(widgetset.CustomButton):
         return text_size[0] + 36, text_size[1] + 6
 
     def draw(self, context, layout):
-        if self.state == 'hover' or self.state == 'pressed' or self._sort_state != self.SORT_NONE:
+        if ((self.state == 'hover'
+             or self.state == 'pressed'
+             or self._sort_state != self.SORT_NONE)):
             if self._sort_state != self.SORT_NONE:
                 context.set_color((0.29, 0.29, 0.29))
             else:
                 context.set_color((0.7, 0.7, 0.7))
-            widgetutil.round_rect(context, 0.5, 0.5, context.width - 2, context.height - 2, 8)
+            widgetutil.round_rect(context, 0.5, 0.5, context.width - 2,
+                                  context.height - 2, 8)
             context.fill()
         layout.set_font(0.8, bold=True)
         layout.set_text_color((1, 1, 1))
@@ -909,7 +941,8 @@ class SortBarButton(widgetset.CustomButton):
             context.fill()
 
 class ItemListBackground(widgetset.Background):
-    """Plain white background behind the item lists.  """
+    """Plain white background behind the item lists.
+    """
 
     def draw(self, context, layout):
         if context.style.use_custom_style:
@@ -937,16 +970,14 @@ class EmptyListDescription(widgetset.Alignment):
         self.add(self.label)
 
 class ItemContainerWidget(widgetset.VBox):
-    """A Widget for displaying objects that contain items (feeds, playlists,
-    folders, downloads tab, etc).
+    """A Widget for displaying objects that contain items (feeds,
+    playlists, folders, downloads tab, etc).
 
-    Attributes:
-
-       titlebar_vbox - VBox for the title bar
-       normal_view_vbox - VBox for normal view of the items
-       list_view_vbox - VBox for list view of the items
-       list_empty_mode_vbox - VBox for list empty mode
-       toolbar -- HeaderToolbar for the widget
+    :attribute titlebar_vbox: VBox for the title bar
+    :attribute normal_view_vbox: VBox for normal view of the items
+    :attribute list_view_vbox: VBox for list view of the items
+    :attribute list_empty_mode_vbox: VBox for list empty mode
+    :attribute toolbar: HeaderToolbar for the widget
     """
 
     def __init__(self, toolbar):
