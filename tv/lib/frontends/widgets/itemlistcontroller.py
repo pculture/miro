@@ -465,9 +465,18 @@ class SearchController(SimpleItemListController):
 
     def build_widget(self):
         SimpleItemListController.build_widget(self)
-        text = _('No Results Found')
+        text = _('No Results')
         self.widget.list_empty_mode_vbox.pack_start(
                 itemlistwidgets.EmptyListHeader(text))
+
+        text = _('To search for media on Internet media search sites, click '
+                 'on the search box above, type in search terms and hit '
+                 'the Enter key.  To switch search engines, click on the '
+                 'icon to the left of the search box above and select the '
+                 'search engine from the drop down.')
+        self.widget.list_empty_mode_vbox.pack_start(
+                itemlistwidgets.EmptyListDescription(text))
+
 
     def initialize_search(self):
         if app.search_manager.text != '':
@@ -476,7 +485,6 @@ class SearchController(SimpleItemListController):
 
     def on_initial_list(self):
         if ((not app.search_manager.searching
-             and app.search_manager.text != ''
              and self.item_list.get_count() == 0)):
             self.widget.set_list_empty_mode(True)
 

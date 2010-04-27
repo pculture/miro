@@ -967,6 +967,7 @@ class EmptyListDescription(widgetset.Alignment):
         widgetset.Alignment.__init__(self, xalign=0.5, xscale=0.0)
         self.label = widgetset.Label(text)
         self.label.set_color((0.8, 0.8, 0.8))
+        self.label.set_wrap(True)
         self.add(self.label)
 
 class ItemContainerWidget(widgetset.VBox):
