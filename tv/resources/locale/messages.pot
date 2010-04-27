@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-20 20:25-0400\n"
+"POT-Creation-Date: 2010-04-27 11:42-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -265,13 +265,13 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/newfolder.py:71
 #: ../../lib/frontends/widgets/newfeed.py:72
-#: ../../lib/frontends/widgets/newsearchfeed.py:136
+#: ../../lib/frontends/widgets/newsearchfeed.py:138
 msgid "video"
 msgstr ""
 
 #: ../../lib/frontends/widgets/newfolder.py:72
 #: ../../lib/frontends/widgets/newfeed.py:73
-#: ../../lib/frontends/widgets/newsearchfeed.py:137
+#: ../../lib/frontends/widgets/newsearchfeed.py:139
 msgid "audio"
 msgstr ""
 
@@ -503,95 +503,95 @@ msgstr ""
 msgid "Add items to an existing playlist or a new one."
 msgstr ""
 
-#: ../../lib/frontends/widgets/addtoplaylistdialog.py:76
+#: ../../lib/frontends/widgets/addtoplaylistdialog.py:77
 msgid "Existing playlist:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/addtoplaylistdialog.py:82
+#: ../../lib/frontends/widgets/addtoplaylistdialog.py:83
 msgid "New playlist:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:579
-#: ../../lib/frontends/widgets/tablist.py:674
+#: ../../lib/frontends/widgets/tablist.py:601
+#: ../../lib/frontends/widgets/tablist.py:696
 msgid "Copy URL to clipboard"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:580
+#: ../../lib/frontends/widgets/tablist.py:602
 #: ../../lib/frontends/widgets/application.py:733
 msgid "Rename Website"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:581
+#: ../../lib/frontends/widgets/tablist.py:603
 msgid "Remove Website"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:585
+#: ../../lib/frontends/widgets/tablist.py:607
 msgid "Remove Websites"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:661
+#: ../../lib/frontends/widgets/tablist.py:683
 msgid "Update Feeds In Folder"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:662
+#: ../../lib/frontends/widgets/tablist.py:684
 #: ../../lib/frontends/widgets/application.py:714
 msgid "Rename Feed Folder"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:663
-#: ../../lib/frontends/widgets/tablist.py:675
-#: ../../lib/frontends/widgets/tablist.py:681
-#: ../../lib/frontends/widgets/tablist.py:717
-#: ../../lib/frontends/widgets/tablist.py:723
-#: ../../lib/frontends/widgets/tablist.py:728
+#: ../../lib/frontends/widgets/tablist.py:685
+#: ../../lib/frontends/widgets/tablist.py:697
+#: ../../lib/frontends/widgets/tablist.py:703
+#: ../../lib/frontends/widgets/tablist.py:739
+#: ../../lib/frontends/widgets/tablist.py:745
+#: ../../lib/frontends/widgets/tablist.py:750
 #: ../../lib/frontends/widgets/prefpanel.py:522
 #: ../../lib/frontends/widgets/style.py:261 ../../lib/dialogs.py:119
 msgid "Remove"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:668
+#: ../../lib/frontends/widgets/tablist.py:690
 msgid "Update Feed Now"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:671
+#: ../../lib/frontends/widgets/tablist.py:693
 msgid "Rename"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:673
+#: ../../lib/frontends/widgets/tablist.py:695
 msgid "Revert Feed Name"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:680
+#: ../../lib/frontends/widgets/tablist.py:702
 msgid "Update Feeds Now"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:716
+#: ../../lib/frontends/widgets/tablist.py:738
 #: ../../lib/frontends/widgets/application.py:729
 msgid "Rename Playlist Folder"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:722
+#: ../../lib/frontends/widgets/tablist.py:744
 #: ../../lib/frontends/widgets/application.py:724 ../../lib/playlist.py:201
 msgid "Rename Playlist"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:745
+#: ../../lib/frontends/widgets/tablist.py:767
 msgid "LIBRARY"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:747
+#: ../../lib/frontends/widgets/tablist.py:769
 msgid "WEBSITES"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:749
+#: ../../lib/frontends/widgets/tablist.py:771
 msgid "VIDEO FEEDS"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:751
+#: ../../lib/frontends/widgets/tablist.py:773
 msgid "AUDIO FEEDS"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:753
+#: ../../lib/frontends/widgets/tablist.py:775
 msgid "PLAYLISTS"
 msgstr ""
 
@@ -605,12 +605,12 @@ msgid "Warn me if I attempt to quit with downloads in progress."
 msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:281
-#: ../../lib/frontends/widgets/firsttimedialog.py:147
+#: ../../lib/frontends/widgets/firsttimedialog.py:151
 msgid "System default"
 msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:287
-#: ../../lib/frontends/widgets/firsttimedialog.py:156
+#: ../../lib/frontends/widgets/firsttimedialog.py:178
 msgid "Language:"
 msgstr ""
 
@@ -728,7 +728,7 @@ msgid "Stop torrent uploads when this ratio is reached:"
 msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:454
-#: ../../lib/frontends/widgets/firsttimedialog.py:240
+#: ../../lib/frontends/widgets/firsttimedialog.py:269
 msgid "Change"
 msgstr ""
 
@@ -1265,7 +1265,7 @@ msgstr ""
 msgid "Upgrading database"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1141
+#: ../../lib/frontends/widgets/application.py:1171
 msgid "Message"
 msgstr ""
 
@@ -1402,7 +1402,18 @@ msgid "Stop All Conversions"
 msgstr ""
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:63
+#: ../../lib/frontends/widgets/menus.py:360
+#: ../../lib/frontends/widgets/itemcontextmenu.py:296
 msgid "Show Conversion Folder"
+msgstr ""
+
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:228
+msgid "(Pending)"
+msgstr ""
+
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:230
+#: ../../lib/frontends/widgets/firsttimedialog.py:363 ../../lib/dialogs.py:96
+msgid "Cancel"
 msgstr ""
 
 #: ../../lib/frontends/widgets/dialogs.py:103
@@ -1429,7 +1440,7 @@ msgid "Downloading"
 msgstr ""
 
 #: ../../lib/frontends/widgets/newfeed.py:60
-#: ../../lib/frontends/widgets/newsearchfeed.py:99
+#: ../../lib/frontends/widgets/newsearchfeed.py:101
 msgid "URL:"
 msgstr ""
 
@@ -1821,7 +1832,7 @@ msgstr[1] ""
 msgid "Restart Upload"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemcontextmenu.py:307
+#: ../../lib/frontends/widgets/itemcontextmenu.py:310
 msgid "Remove From Playlist"
 msgstr ""
 
@@ -2050,16 +2061,16 @@ msgstr ""
 msgid "Feed Settings"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:65
+#: ../../lib/frontends/widgets/firsttimedialog.py:68
 #, python-format
 msgid "%(name)s First Time Setup"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:130
+#: ../../lib/frontends/widgets/firsttimedialog.py:136
 msgid "Choose Language"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:133
+#: ../../lib/frontends/widgets/firsttimedialog.py:139
 #, python-format
 msgid ""
 "Welcome to the %(name)s first time setup!\n"
@@ -2070,17 +2081,21 @@ msgid ""
 "What language would you like Miro to be in?"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:161
-#: ../../lib/frontends/widgets/firsttimedialog.py:201
+#: ../../lib/frontends/widgets/firsttimedialog.py:174
+msgid "Update"
+msgstr ""
+
+#: ../../lib/frontends/widgets/firsttimedialog.py:186
+#: ../../lib/frontends/widgets/firsttimedialog.py:228
 msgid "Next >"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:170
+#: ../../lib/frontends/widgets/firsttimedialog.py:196
 #, python-format
 msgid "%(name)s Startup"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:174
+#: ../../lib/frontends/widgets/firsttimedialog.py:200
 #, python-format
 msgid ""
 "We recommend that you have %(name)s launch when your computer starts up.  "
@@ -2088,32 +2103,32 @@ msgid ""
 "can be downloaded in the background, ready when you want to watch."
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:183
+#: ../../lib/frontends/widgets/firsttimedialog.py:209
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:189
-#: ../../lib/frontends/widgets/firsttimedialog.py:226 ../../lib/dialogs.py:98
+#: ../../lib/frontends/widgets/firsttimedialog.py:215
+#: ../../lib/frontends/widgets/firsttimedialog.py:254 ../../lib/dialogs.py:98
 msgid "Yes"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:190
-#: ../../lib/frontends/widgets/firsttimedialog.py:225 ../../lib/dialogs.py:99
+#: ../../lib/frontends/widgets/firsttimedialog.py:216
+#: ../../lib/frontends/widgets/firsttimedialog.py:253 ../../lib/dialogs.py:99
 msgid "No"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:198
-#: ../../lib/frontends/widgets/firsttimedialog.py:260
-#: ../../lib/frontends/widgets/firsttimedialog.py:339
+#: ../../lib/frontends/widgets/firsttimedialog.py:225
+#: ../../lib/frontends/widgets/firsttimedialog.py:290
+#: ../../lib/frontends/widgets/firsttimedialog.py:370
 msgid "< Previous"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:212
+#: ../../lib/frontends/widgets/firsttimedialog.py:239
 msgid "Finding Files"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:215
+#: ../../lib/frontends/widgets/firsttimedialog.py:242
 #, python-format
 msgid ""
 "%(name)s can find all the media files on your computer to help you organize "
@@ -2122,85 +2137,81 @@ msgid ""
 "Would you like %(name)s to look for media files on your computer?"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:233
+#: ../../lib/frontends/widgets/firsttimedialog.py:262
 msgid "Restrict to all my personal files."
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:234
+#: ../../lib/frontends/widgets/firsttimedialog.py:263
 msgid "Search custom folders:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:245
+#: ../../lib/frontends/widgets/firsttimedialog.py:275
 msgid "Choose directory to search for media files"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:272
-#: ../../lib/frontends/widgets/firsttimedialog.py:274
-#: ../../lib/frontends/widgets/firsttimedialog.py:331 ../../lib/feed.py:2249
+#: ../../lib/frontends/widgets/firsttimedialog.py:302
+#: ../../lib/frontends/widgets/firsttimedialog.py:304
+#: ../../lib/frontends/widgets/firsttimedialog.py:362 ../../lib/feed.py:2249
 #: ../../lib/feed.py:2355
 msgid "Search"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:274
-#: ../../lib/frontends/widgets/firsttimedialog.py:342
+#: ../../lib/frontends/widgets/firsttimedialog.py:305
+#: ../../lib/frontends/widgets/firsttimedialog.py:373
 msgid "Finish"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:322
+#: ../../lib/frontends/widgets/firsttimedialog.py:353
 msgid "Searching for media files"
 msgstr ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:332 ../../lib/dialogs.py:96
-msgid "Cancel"
-msgstr ""
-
-#: ../../lib/frontends/widgets/firsttimedialog.py:370
+#: ../../lib/frontends/widgets/firsttimedialog.py:401
 #, python-format
 msgid "parsed %(count)s file"
 msgid_plural "parsed %(count)s files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/firsttimedialog.py:375
+#: ../../lib/frontends/widgets/firsttimedialog.py:406
 #, python-format
 msgid "found %(count)s media file"
 msgid_plural "found %(count)s media files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/browser.py:96
+#: ../../lib/frontends/widgets/browser.py:93
 msgid "Open in browser"
 msgstr ""
 
-#: ../../lib/frontends/widgets/browser.py:102
+#: ../../lib/frontends/widgets/browser.py:100
 msgid "Download this video"
 msgstr ""
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:57
+#: ../../lib/frontends/widgets/newsearchfeed.py:58
 msgid "New Search Feed"
 msgstr ""
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:58
+#: ../../lib/frontends/widgets/newsearchfeed.py:59
 msgid "A search feed contains items that match a search term."
 msgstr ""
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:73
+#: ../../lib/frontends/widgets/newsearchfeed.py:75
 msgid "Search for:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:80
+#: ../../lib/frontends/widgets/newsearchfeed.py:82
 msgid "In this:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:87
+#: ../../lib/frontends/widgets/newsearchfeed.py:89
 msgid "Feed:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:93
+#: ../../lib/frontends/widgets/newsearchfeed.py:95
 msgid "Search engine:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:133
+#: ../../lib/frontends/widgets/newsearchfeed.py:135
 msgid "Add new feed to this section:"
 msgstr ""
 
@@ -2389,42 +2400,42 @@ msgstr ""
 msgid "Playing File"
 msgstr ""
 
-#: ../../lib/singleclick.py:55
+#: ../../lib/singleclick.py:66
 msgid "Download already exists"
 msgstr ""
 
-#: ../../lib/singleclick.py:56
+#: ../../lib/singleclick.py:67
 msgid "That URL is already an external download."
 msgstr ""
 
-#: ../../lib/singleclick.py:62
+#: ../../lib/singleclick.py:73
 #, python-format
 msgid "%(appname)s will begin downloading it now."
 msgstr ""
 
-#: ../../lib/singleclick.py:65
+#: ../../lib/singleclick.py:76
 msgid "It is downloading now."
 msgstr ""
 
-#: ../../lib/singleclick.py:67
+#: ../../lib/singleclick.py:78
 msgid "It has already been downloaded."
 msgstr ""
 
-#: ../../lib/singleclick.py:99
+#: ../../lib/singleclick.py:116
 msgid "File Download"
 msgstr ""
 
-#: ../../lib/singleclick.py:100
+#: ../../lib/singleclick.py:118
 #, python-format
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 msgstr ""
 
-#: ../../lib/singleclick.py:142
+#: ../../lib/singleclick.py:165
 msgid "Download Error"
 msgstr ""
 
-#: ../../lib/singleclick.py:144
+#: ../../lib/singleclick.py:167
 #, python-format
 msgid ""
 "%(appname)s is not able to download a file at this URL:\n"
@@ -2826,22 +2837,22 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../../lib/util.py:375 ../../lib/util.py:377
+#: ../../lib/util.py:376 ../../lib/util.py:378
 #, python-format
 msgid "%(size)sGB"
 msgstr ""
 
-#: ../../lib/util.py:381 ../../lib/util.py:383
+#: ../../lib/util.py:382 ../../lib/util.py:384
 #, python-format
 msgid "%(size)sMB"
 msgstr ""
 
-#: ../../lib/util.py:387 ../../lib/util.py:389
+#: ../../lib/util.py:388 ../../lib/util.py:390
 #, python-format
 msgid "%(size)sKB"
 msgstr ""
 
-#: ../../lib/util.py:393 ../../lib/util.py:395
+#: ../../lib/util.py:394 ../../lib/util.py:396
 #, python-format
 msgid "%(size)sB"
 msgstr ""
