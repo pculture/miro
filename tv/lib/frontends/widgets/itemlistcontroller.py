@@ -28,12 +28,13 @@
 
 """itemlistcontroller.py -- Controllers for item lists.
 
-itemlist, itemlistcontroller and itemlistwidgets work together using the MVC
-pattern.  itemlist handles the Model, itemlistwidgets handles the View and
-itemlistcontroller handles the Controller.
+itemlist, itemlistcontroller and itemlistwidgets work together using
+the MVC pattern.  itemlist handles the Model, itemlistwidgets handles
+the View and itemlistcontroller handles the Controller.
 
-This module contains the ItemListController base class along with controllers
-that work for the static tabs which are pretty simple cases.
+This module contains the ItemListController base class along with
+controllers that work for the static tabs which are pretty simple
+cases.
 """
 
 import logging
@@ -77,13 +78,13 @@ class ItemListDragHandler(object):
 class ItemListController(object):
     """Base class for controllers that manage list of items.
     
-    Attributes:
-        widget -- Widget used to display this controller
+    :attribute widget: Widget used to display this controller
     """
     def __init__(self, type, id):
         """Construct a ItemListController.
 
-        type and id are the same as in the constructor to messages.TrackItems
+        type and id are the same as in the constructor to
+        messages.TrackItems
         """
         self.type = type
         self.id = id
@@ -96,8 +97,10 @@ class ItemListController(object):
         self._init_item_views()
         self.initialize_search()
         sorter = self.item_list_group.get_sort()
-        self.widget.toolbar.change_sort_indicator(sorter.KEY, sorter.is_ascending())
-        self.list_item_view.change_sort_indicator(sorter.KEY, sorter.is_ascending())
+        self.widget.toolbar.change_sort_indicator(
+            sorter.KEY, sorter.is_ascending())
+        self.list_item_view.change_sort_indicator(
+            sorter.KEY, sorter.is_ascending())
         self._item_added_callback = self._playback_item_list = None
 
     def _init_widget(self):
@@ -113,7 +116,8 @@ class ItemListController(object):
         self.build_widget()
         sorter = self.item_list.get_sort()
         if sorter is not None:
-            self.widget.toolbar.change_sort_indicator(sorter.KEY, sorter.is_ascending())
+            self.widget.toolbar.change_sort_indicator(
+                sorter.KEY, sorter.is_ascending())
 
     def build_list_item_view(self):
         return itemlistwidgets.ListItemView(self.item_list)
@@ -125,7 +129,8 @@ class ItemListController(object):
         self.context_menu_handler = self.make_context_menu_handler()
         context_callback = self.context_menu_handler.callback
         for item_view in self.all_item_views():
-            item_view.connect_weak('selection-changed', self.on_selection_changed)
+            item_view.connect_weak(
+                'selection-changed', self.on_selection_changed)
             item_view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
             item_view.connect_weak('key-press', self.on_key_press)
             item_view.connect_weak('row-double-clicked',
@@ -141,7 +146,9 @@ class ItemListController(object):
             self.set_search(search)
 
     def get_selection(self):
-        """Get the currently selected items.  Returns a list of ItemInfos."""
+        """Get the currently selected items.  Returns a list of
+        ItemInfos.
+        """
         item_view = self.current_item_view
         if item_view is None:
             return []
@@ -171,7 +178,8 @@ class ItemListController(object):
         if len(items) > 0:
             self._play_item_list(items, presentation_mode)
 
-    def _on_new_item_during_playback(self, item_list, item_info, next_item_info):
+    def _on_new_item_during_playback(self, item_list, item_info,
+                                     next_item_info):
         app.playback_manager.append_item(item_info)
             
     def filter_playable_items(self, items):
@@ -182,8 +190,8 @@ class ItemListController(object):
         if len(playable) == 0:
             return
         if len(self.get_selection()) <= 1:
-            # User has 0 or 1 items selected, if more items get added to the
-            # item list, we should play them.
+            # User has 0 or 1 items selected, if more items get added
+            # to the item list, we should play them.
             item_list = self._playback_item_view().item_list
             self._item_added_callback = item_list.connect('item-added',
                     self._on_new_item_during_playback)
@@ -191,7 +199,8 @@ class ItemListController(object):
         app.playback_manager.start_with_items(playable, presentation_mode)
 
     def set_search(self, search_text):
-        """Set the search for all ItemViews managed by this controller.  """
+        """Set the search for all ItemViews managed by this controller.
+        """
         self._search_text = search_text
         self.item_list_group.set_search_text(search_text)
         for item_view in self.all_item_views():
@@ -255,7 +264,8 @@ class ItemListController(object):
         elif name == 'delete':
             app.widgetapp.remove_items(selection=[item_info])
         elif name == 'remove':
-            messages.RemoveVideosFromPlaylist(itemview.playlist_id, [item_info.id]).send_to_backend()
+            messages.RemoveVideosFromPlaylist(
+                itemview.playlist_id, [item_info.id]).send_to_backend()
         elif name == 'details_toggle':
             itemview.model.update_value(iter, 1, not show_details)
             itemview.model_changed()
@@ -287,8 +297,8 @@ class ItemListController(object):
             app.playback_manager.play_pause()
 
     def on_selection_changed(self, item_view):
-        if (item_view is not self.current_item_view and
-                item_view.num_rows_selected() == 0):
+        if ((item_view is not self.current_item_view
+             and item_view.num_rows_selected() == 0)):
             # This is the result of us calling unselect_all() below
             return
 
@@ -325,8 +335,8 @@ class ItemListController(object):
             app.playback_manager.disconnect(handle)
 
     def _on_playback_change(self, playback_manager, *args):
-        # The currently playing item has changed, redraw the view to change
-        # which item gets the "currently playing" badge.
+        # The currently playing item has changed, redraw the view to
+        # change which item gets the "currently playing" badge.
         for item_view in self.all_item_views():
             item_view.queue_redraw()
 
@@ -465,15 +475,17 @@ class SearchController(SimpleItemListController):
         self.titlebar.set_search_engine(app.search_manager.engine)
 
     def on_initial_list(self):
-        if (not app.search_manager.searching and app.search_manager.text != ''
-                and self.item_list.get_count() == 0):
+        if ((not app.search_manager.searching
+             and app.search_manager.text != ''
+             and self.item_list.get_count() == 0)):
             self.widget.set_list_empty_mode(True)
 
     def on_items_changed(self):
-        # Don't check for an empty list here.  Since items don't get removed
-        # from the search feed, we don't need to do anything.  Also, it
-        # results in a false positive just after the search starts when the
-        # items from the last search get removed (#11255)
+        # Don't check for an empty list here.  Since items don't get
+        # removed from the search feed, we don't need to do anything.
+        # Also, it results in a false positive just after the search
+        # starts when the items from the last search get removed
+        # (#11255)
         pass
 
     def make_titlebar(self):
@@ -523,8 +535,10 @@ class AudioVideoItemsController(SimpleItemListController):
     def build_header_toolbar(self):
         toolbar = itemlistwidgets.LibraryHeaderToolbar(self.unwatched_label)
         toolbar.connect_weak('view-all-clicked', self.on_view_all_clicked)
-        toolbar.connect_weak('toggle-unwatched-clicked', self.on_toggle_unwatched)
-        toolbar.connect_weak('toggle-non-feed-clicked', self.on_toggle_non_feed)
+        toolbar.connect_weak('toggle-unwatched-clicked',
+                             self.on_toggle_unwatched)
+        toolbar.connect_weak('toggle-non-feed-clicked',
+                             self.on_toggle_non_feed)
         return toolbar
 
     def on_view_all_clicked(self, button):
@@ -615,11 +629,12 @@ class ItemListControllerManager(object):
 
     Attributes:
 
-    displayed -- Currently displayed ItemListController or None (this one is
-        currently being displayed in the right-hand side)
-    all_controllers -- Set of all ItemListControllers in use (these are
-        somewhere in the display stack, but not necessarily displayed
-        currently).
+    :attribute displayed: Currently displayed ItemListController or
+        None (this one is currently being displayed in the right-hand
+        side)
+    :attribute all_controllers: Set of all ItemListControllers in use
+        (these are somewhere in the display stack, but not necessarily
+        displayed currently).
     """
 
     def __init__(self):
@@ -652,7 +667,8 @@ class ItemListControllerManager(object):
             return self.displayed.get_selection()
 
     def get_current_playlist(self):
-        """Get the items that would be played if we started playback."""
+        """Get the items that would be played if we started playback.
+        """
         if self.displayed is not None:
             selection = self.displayed.get_selection_for_playing()
             return self.displayed.filter_playable_items(selection)
