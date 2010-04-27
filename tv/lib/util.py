@@ -36,6 +36,7 @@ import os
 import random
 import re
 import shutil
+import unicodedata
 try:
     from hashlib import sha1 as sha
 except ImportError:
@@ -944,15 +945,44 @@ def is_url(url):
         return True
     return False
 
+def _strip_accents(text):
+    nfkd_form = unicodedata.normalize('NFKD', unicode(text))
+    return u"".join([c for c in nfkd_form if not unicodedata.combining(c)])
+
+NUM_RE = re.compile('([0-9]+\.?[0-9]*)')
+
+def _trynum(text):
+    try:
+        return float(text)
+    except ValueError:
+        return _strip_accents(text)
+
+def name_sort_key(text):
+    """This is a sort key for names.  This handles sorting several
+    situations:
+
+    * names with accented characters.
+    * names with numbers in them.  ex. episode 1
+
+    Use it like this:
+
+    >>> listofnames.sort(key=lambda x: name_sort_key(x.name))
+    """
+    if text is None:
+        return text
+    return [_trynum(c) for c in NUM_RE.split(text.lower())]
+
 LOWER_TRANSLATE = string.maketrans(string.ascii_uppercase,
                                    string.ascii_lowercase)
 
 def ascii_lower(s):
-    """Converts a string to lower case, using a simple translations of ASCII
-    characters.
+    """Converts a string to lower case, using a simple translations of
+    ASCII characters.
 
-    This method is not locale-dependant, which is useful in some cases.
-    Normally s.lower() should be used though.
+    This method is not locale-dependant, which is useful in some
+    cases.  Normally s.lower() should be used though.
+
+    Note: This is not for ui stuff--this is for Python code-fu.
     """
     return s.translate(LOWER_TRANSLATE)
 

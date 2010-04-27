@@ -37,6 +37,7 @@ from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.dialogs import MainDialog
 from miro.dialogs import BUTTON_CANCEL, BUTTON_CREATE_FEED
+from miro import util
 
 from miro import app
 
@@ -60,6 +61,7 @@ def run_dialog():
     channels = app.tab_list_manager.feed_list.get_feeds()
     channels += app.tab_list_manager.audio_feed_list.get_feeds()
     channels = [ci for ci in channels if not ci.is_folder]
+    channels.sort(key=lambda x: util.name_sort_key(x.name))
 
     window = MainDialog(title, description)
     try:

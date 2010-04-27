@@ -101,18 +101,8 @@ class DateSort(ItemSort):
 
 class NameSort(ItemSort):
     KEY = 'name'
-    def _strip_accents(self, str):
-        nfkd_form = unicodedata.normalize('NFKD', unicode(str))
-        return u"".join([c for c in nfkd_form if not unicodedata.combining(c)])
-    def _trynum(self, str):
-        try:
-            return float(str)
-        except:
-            return self._strip_accents(str)
     def sort_key(self, item):
-        if item.name:
-            return [ self._trynum(c) for c in re.split('([0-9]+\.?[0-9]*)', item.name) ]
-        return item.name
+        return util.name_sort_key(item.name)
 
 class LengthSort(ItemSort):
     KEY = 'length'

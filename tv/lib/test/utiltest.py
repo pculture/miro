@@ -369,7 +369,6 @@ class MatrixTest(MiroTestCase):
         self.assertEquals(list(m.column(1)), [3, 4])
         self.assertEquals(list(m.column(2)), [5, 6])
 
-
     def test_rows(self):
         m = util.Matrix(3, 2)
         m[0, 0] = 1
@@ -516,3 +515,25 @@ class Test_copy_subtitle_file(MiroTestCase):
         expected = os.path.join(self.tempdir, "foo.srt")
         self.assert_(os.path.exists(expected))
         self.assertEqual(expected, ret)
+
+class Test_name_sort_key(MiroTestCase):
+    def test_simple(self):
+        for testcase in ((None, None),
+                         (u'', [u'']),
+                         (u'a', [u'a']),
+                         (u'a1a', [u'a', 1.0, u'a']),
+                         (u'Episode_100', [u'episode_', 100.0, u'']),
+                         (u'episode_1', [u'episode_', 1.0, u''])
+                         ):
+            self.assertEquals(util.name_sort_key(testcase[0]),
+                              testcase[1])
+
+    def test_sorting(self):
+        for inlist, outlist in (
+            ([], []),
+            (["b", "a", "c"], ["a", "b", "c"]),
+            (["a_12", "a_1", "a_100"], ["a_1", "a_12", "a_100"]),
+            (["A_12", "a_1", "A_100"], ["a_1", "A_12", "A_100"])
+            ):
+            inlist.sort(key=util.name_sort_key)
+            self.assertEquals(inlist, outlist)

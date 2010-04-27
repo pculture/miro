@@ -33,7 +33,7 @@ code for the "Add to Playlist" dialog.
 from miro.gtcache import gettext as _
 from miro import searchengines
 
-from miro.util import clamp_text
+from miro.util import clamp_text, name_sort_key
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.dialogs import MainDialog
@@ -59,6 +59,7 @@ def run_dialog():
 
     playlists = app.tab_list_manager.playlist_list.get_playlists()
     playlists = [pi for pi in playlists if not pi.is_folder]
+    playlists.sort(key=lambda x: name_sort_key(x.name))
 
     window = MainDialog(title, description)
     try:
