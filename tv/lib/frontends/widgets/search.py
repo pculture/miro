@@ -28,7 +28,9 @@
 
 """search.py -- Manages video searches.
 """
+
 import logging
+
 from miro import signals
 from miro import messages
 from miro import searchengines
@@ -36,16 +38,12 @@ from miro import searchengines
 class SearchManager(signals.SignalEmitter):
     """Keeps track of search terms.
 
-    Attributes:
+    :attribute engine: Last used search engine
+    :attribute text: Last search text
 
-      engine -- Last used search engine
-      text -- Last search text
-
-    Signals:
-      search-started (search_manager)
-      search-complete (search_manager, result_count)
+    :signal search-started: (search_manager)
+    :signal search-complete: (search_manager, result_count)
     """
-
     def __init__(self):
         signals.SignalEmitter.__init__(self)
         self.create_signal('search-started')
@@ -56,8 +54,8 @@ class SearchManager(signals.SignalEmitter):
 
     def set_search_info(self, engine, text):
         if not searchengines.get_engine_for_name(engine):
-            logging.warn(
-                'Manager asked to set engine to non-existent %s' % engine)
+            logging.warn('Manager asked to set engine to non-existent %s',
+                         engine)
             self.perform_search(searchengines.get_last_engine().name, '')
             return
         self.engine = engine
@@ -73,7 +71,8 @@ class SearchManager(signals.SignalEmitter):
         self.emit('search-started')
 
     def save_search(self):
-        m = messages.NewFeedSearchEngine(searchengines.get_engine_for_name(self.engine), self.text)
+        m = messages.NewFeedSearchEngine(
+            searchengines.get_engine_for_name(self.engine), self.text)
         m.send_to_backend()
 
     def handle_search_complete(self, message):
@@ -95,8 +94,9 @@ class InlineSearchMemory(object):
         return self._memory.get((type, id), '')
 
     def forget_search(self, type, id):
-        # We should call this when channels/playlists get deleted to free up
-        # the memory, but it's so small that it's not worth worrying about.
+        # We should call this when channels/playlists get deleted to
+        # free up the memory, but it's so small that it's not worth
+        # worrying about.
         try:
             del self._memory[(type, id)]
         except KeyError:
