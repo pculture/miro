@@ -337,5 +337,11 @@ def get_logical_cpu_count():
 def get_ffmpeg_executable_path():
     return None
 
+def customize_ffmpeg_parameters(default_parameters):
+    return default_parameters
+
 def get_ffmpeg2theora_executable_path():
     return None
+
+def customize_ffmpeg2theora_parameters(default_parameters):
+    return default_parameters

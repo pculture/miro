@@ -259,7 +259,7 @@ class VideoConversionTask(object):
     def get_executable(self):
         raise NotImplementedError()
     
-    def get_parameters(self):
+    def get_default_parameters(self):
         def substitute(param):
             if param == "{input}":
                 return self.input_path
@@ -269,6 +269,9 @@ class VideoConversionTask(object):
                 return self.converter_info.screen_size
             return param
         return [substitute(p) for p in self.converter_info.parameters.split()]
+    
+    def get_parameters(self):
+        raise NotImplementedError()
         
     def _build_output_path(self, input_path, target_folder, converter_info):
         basename = os.path.basename(input_path)
@@ -365,6 +368,10 @@ class FFMpegConversionTask(VideoConversionTask):
     def get_executable(self):
         return utils.get_ffmpeg_executable_path()
 
+    def get_parameters(self):
+        default_parameters = self.get_default_parameters()
+        return utils.customize_ffmpeg_parameters(default_parameters)
+
     def readline(self):
         return self.process_handle.stderr.readline()
 
@@ -398,6 +405,10 @@ class FFMpeg2TheoraConversionTask(VideoConversionTask):
 
     def get_executable(self):
         return utils.get_ffmpeg2theora_executable_path()
+
+    def get_parameters(self):
+        default_parameters = self.get_default_parameters()
+        return utils.customize_ffmpeg2theora_parameters(default_parameters)
 
     def readline(self):
         if self.platform == 'linux':

@@ -371,9 +371,15 @@ def get_ffmpeg_executable_path():
     bundle_path = NSBundle.mainBundle().bundlePath()
     return os.path.join(bundle_path, "Contents", "Helpers", "ffmpeg")
 
+def customize_ffmpeg_parameters(default_parameters):
+    return default_parameters
+
 def get_ffmpeg2theora_executable_path():
     bundle_path = NSBundle.mainBundle().bundlePath()
     return os.path.join(bundle_path, "Contents", "Helpers", "ffmpeg2theora")
+
+def customize_ffmpeg2theora_parameters(default_parameters):
+    return default_parameters
     
 ###############################################################################
 
