@@ -180,7 +180,7 @@ class FeedParserValues(object):
                 rv = self.entry.description
         except Exception:
             logging.exception("_calc_raw_description threw exception:")
-        if rv is None:
+        if not rv:
             return u''
         else:
             return rv
@@ -1257,7 +1257,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                          for child in self.getChildren())
             return u'<BR>\n'.join(lines)
         else:
-            return None
+            return u''
 
     @returns_unicode
     def get_description(self):
