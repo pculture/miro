@@ -232,5 +232,5 @@ def multipart_encode(post_vars, files):
             output.append(files[key]['handle'].read())
             output.append('\r\n')
             files[key]['handle'].close()
-    output.append('--%s--' % boundary)
+    output.append('--%s--\n' % boundary)
     return (''.join(output), boundary)
