@@ -59,6 +59,7 @@ from miro import downloader
 from miro import eventloop
 from miro import fileutil
 from miro import guide
+from miro import httpclient
 from miro import iconcache
 from miro import item
 from miro import feed
@@ -182,6 +183,9 @@ def startup():
     logging.info("Builder:    %s", config.get(prefs.BUILD_MACHINE))
     logging.info("Build Time: %s", config.get(prefs.BUILD_TIME))
     eventloop.connect('thread-started', finish_startup)
+    logging.info("Starting libCURL thread")
+    httpclient.init_libcurl()
+    httpclient.start_thread()
     logging.info("Starting event loop thread")
     eventloop.startup()
     if DEBUG_DB_MEM_USAGE:

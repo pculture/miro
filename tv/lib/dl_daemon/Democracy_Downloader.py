@@ -80,19 +80,11 @@ def launch():
 
     port = int(os.environ['DEMOCRACY_DOWNLOADER_PORT'])
     short_app_name = os.environ['DEMOCRACY_SHORT_APP_NAME']
+    httpclient.start_thread()
     server = daemon.DownloaderDaemon(port, short_app_name)
 
-    # remove the limits for the connection pool, we limit them
-    # ourselves in the downloader code.  Don't try to pipeline
-    # requests, it doesn't make sense when the download size is so
-    # large.
-    httpclient.HTTPConnectionPool.MAX_CONNECTIONS_PER_SERVER = sys.maxint
-    httpclient.HTTPConnectionPool.MAX_CONNECTIONS = sys.maxint
-    httpclient.PIPELINING_ENABLED = False
-    httpclient.SOCKET_READ_TIMEOUT = 300
-    httpclient.SOCKET_INITIAL_READ_TIMEOUT = 30
-
     download.downloadUpdater.startUpdates()
+    httpclient.init_libcurl()
     eventloop.startup()
 
     # Hack to init gettext after we can get config information

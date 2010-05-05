@@ -209,7 +209,7 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
                 logging.info("%s content type is %s.  "
                              "going to peek to see if it's a feed....",
                              url, content_type)
-                httpclient.grabURL(url, callback_peek, errback)
+                httpclient.grab_url(url, callback_peek, errback)
                 return
 
         entry = _build_entry(url, content_type)
@@ -219,7 +219,7 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
         else:
             handle_unknown_callback(url)
 
-    httpclient.grabHeaders(url, callback, errback)
+    httpclient.grab_headers(url, callback, errback)
 
 def download_video(fp_dict):
     """Takes a feedparser dict, generates an item.Item, adds the item

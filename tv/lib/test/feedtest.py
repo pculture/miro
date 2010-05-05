@@ -103,7 +103,13 @@ class FeedTestCase(EventLoopTest):
         handle.close()
 
     def update_feed(self, feed):
+        # Update the feed.  The calls to process_idles() are to wait for
+        # grab_url to send it's callback for the file: URL.
+        self.process_idles()
         feed.update()
+        self.process_idles()
+        # wait for the feed to pass the data through feedparser, and then it's
+        # FeedImpl
         self.processThreads()
         self.process_idles()
 

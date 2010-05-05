@@ -90,7 +90,7 @@ def _scrape_youtube_url(url, callback):
 
     try:
         url = u"http://www.youtube.com/get_video_info?video_id=%s&el=embedded&ps=default&eurl=" % videoID
-        httpclient.grabURL(url, lambda x: _youtube_callback_step2(x, videoID, callback),
+        httpclient.grab_url(url, lambda x: _youtube_callback_step2(x, videoID, callback),
                            lambda x: _youtube_errback(x, callback))
 
     except (SystemExit, KeyboardInterrupt):
@@ -116,7 +116,7 @@ def _youtube_get_first_successful(info, current_url, urls, callback):
     current_url, urls = urls[0], urls[1:]
 
     logging.debug("youtube download: trying %s", current_url)
-    httpclient.grabHeaders(current_url, lambda x: _youtube_get_first_successful(x, current_url, urls, callback),
+    httpclient.grab_headers(current_url, lambda x: _youtube_get_first_successful(x, current_url, urls, callback),
             lambda x: _youtube_errback(x, callback))
 
 def _youtube_callback_step2(info, videoID, callback):
@@ -138,7 +138,7 @@ def _youtube_callback_step2(info, videoID, callback):
         logging.debug("youtube download: trying %s", urls[0])
         # go through the urls we have until we find one that's successful or
         # 404 on all of them.
-        httpclient.grabHeaders(urls[0],
+        httpclient.grab_headers(urls[0],
                 lambda x: _youtube_get_first_successful(x, urls[0], urls[1:], callback),
                 lambda x: _youtube_errback(x, callback))
 
@@ -183,7 +183,7 @@ def _scrape_vmix_video_url(url, callback):
         ID = params['id'][0]
         l = params['l'][0]
         url = u"http://sdstage01.vmix.com/videos.php?type=%s&id=%s&l=%s" % (t, ID, l)
-        httpclient.grabURL(url, lambda x: _scrape_vmix_callback(x, callback),
+        httpclient.grab_url(url, lambda x: _scrape_vmix_callback(x, callback),
                            lambda x: _scrape_vmix_errback(x, callback))
 
     except (SystemExit, KeyboardInterrupt):
@@ -227,7 +227,7 @@ def _scrape_veohtv_video_url(url, callback):
         t = params['type'][0]
         permalinkId = params['permalinkId'][0]
         url = u'http://www.veoh.com/movieList.html?type=%s&permalinkId=%s&numResults=45' % (t, permalinkId)
-        httpclient.grabURL(url, lambda x: _scrape_veohtv_callback(x, callback),
+        httpclient.grab_url(url, lambda x: _scrape_veohtv_callback(x, callback),
                            lambda x: _scrape_veohtv_errback(x, callback))
     except (SystemExit, KeyboardInterrupt):
         raise
@@ -255,7 +255,7 @@ def _scrape_veohtv_errback(err, callback):
     callback(None)
 
 def _scrape_break_video_url(url, callback):
-    httpclient.grabHeaders(url, lambda x: _scrape_break_callback(x, callback),
+    httpclient.grab_headers(url, lambda x: _scrape_break_callback(x, callback),
                            lambda x: _scrape_break_errback(x, callback))
 
 def _scrape_break_callback(info, callback):
@@ -283,7 +283,7 @@ def _scrape_vimeo_video_url(url, callback):
     try:
         id_ = re.compile(r'http://([^/]+\.)?vimeo.com/(\d+)').match(url).group(2)
         url = u"http://www.vimeo.com/moogaloop/load/clip:%s" % id_
-        httpclient.grabURL(url, lambda x: _scrape_vimeo_callback(x, callback),
+        httpclient.grab_url(url, lambda x: _scrape_vimeo_callback(x, callback),
                            lambda x: _scrape_vimeo_errback(x, callback))
     except (SystemExit, KeyboardInterrupt):
         raise
@@ -295,7 +295,7 @@ def _scrape_vimeo_moogaloop_url(url, callback):
     try:
         id_ = re.compile(r'http://([^/]+\.)?vimeo.com/moogaloop.swf\?clip_id=(\d+)').match(url).group(2)
         url = u"http://www.vimeo.com/moogaloop/load/clip:%s" % id_
-        httpclient.grabURL(url, lambda x: _scrape_vimeo_callback(x, callback),
+        httpclient.grab_url(url, lambda x: _scrape_vimeo_callback(x, callback),
                            lambda x: _scrape_vimeo_errback(x, callback))
     except (SystemExit, KeyboardInterrupt):
         raise

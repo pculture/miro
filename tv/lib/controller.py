@@ -73,7 +73,10 @@ class Controller:
         downloader.shutdown_downloader(self.downloader_shutdown)
 
     def downloader_shutdown(self):
-        logging.info("Shutting down event loop")
+        logging.info("Shutting down libCURL thread")
+        httpclient.stop_thread()
+        httpclient.cleanup_libcurl()
+        logging.info("Shutting down event loop thread")
         eventloop.shutdown()
         logging.info("Closing Database...")
         if app.db is not None:
@@ -187,9 +190,9 @@ class BugReportSender(signals.SignalEmitter):
         else:
             post_files = None
         logging.info("Sending crash report....")
-        self.client = httpclient.grabURL(BOGON_URL,
-                           self.callback, self.errback, method="POST",
-                           postVariables=post_vars, postFiles=post_files)
+        self.client = httpclient.grab_url(BOGON_URL,
+                           self.callback, self.errback,
+                           post_vars=post_vars, post_files=post_files)
 
     def callback(self, result):
         if result['status'] != 200 or result['body'] != 'OK':
@@ -205,7 +208,8 @@ class BugReportSender(signals.SignalEmitter):
         self.emit("finished")
 
     def progress(self):
-        return self.client.sendingProgress()
+        progress = self.client.get_stats()
+        return progress.uploaded, progress.upload_total
 
     def _backup_support_dir(self):
         # backs up the support directories to a zip file

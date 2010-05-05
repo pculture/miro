@@ -177,7 +177,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
         self.client = None
 
     def download_guide(self):
-        self.client = httpclient.grabURL(self.get_url(), self.guide_downloaded, self.guide_error)
+        self.client = httpclient.grab_url(self.get_url(), self.guide_downloaded, self.guide_error)
 
     def get_favicon_path(self):
         """Returns the path to the favicon file.  It's either the favicon of

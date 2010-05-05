@@ -68,11 +68,10 @@ def launch_unit_tests():
     initialize_locale()
     from miro import gtcache
     gtcache.init()
-    import unittest
     from miro import test
 
     print 'Running Miro unit tests:'
-    unittest.main(module=test)
+    test.run_tests()
     
 # =============================================================================
 

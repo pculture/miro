@@ -245,8 +245,8 @@ class RemoteDownloader(DDBObject):
         self.signal_change()
 
     def get_content_type(self):
-        httpclient.grabHeaders(self.url, self.on_content_type,
-                               self.on_content_type_error)
+        httpclient.grab_headers(self.url, self.on_content_type,
+                self.on_content_type_error)
 
     @classmethod
     def initialize_daemon(cls):

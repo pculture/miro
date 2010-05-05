@@ -133,9 +133,8 @@ if '--unittest' in sys.argv:
     sys.argv.remove('--unittest')
     import logging
     logging.basicConfig(level=logging.CRITICAL)
-    import unittest
     from miro import test
-    unittest.main(module=test)
+    test.run_tests()
 
 def load_frontend(globals_, locals_, frontend):
     try:

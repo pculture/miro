@@ -385,11 +385,10 @@ class BGDownloader:
         self.startTime = clock()
         self.endTime = self.startTime
         self.shortFilename = filename_from_url(url)
-        self.pickInitialFilename()
+        self.pick_initial_filename()
         self.state = u"downloading"
         self.currentSize = 0
         self.totalSize = -1
-        self.blockTimes = []
         self.shortReasonFailed = self.reasonFailed = u"No Error"
         self.retryTime = None
         self.retryCount = -1
@@ -421,7 +420,7 @@ class BGDownloader:
         x = command.UpdateDownloadStatus(daemon.lastDaemon, self.getStatus())
         return x.send()
         
-    def pickInitialFilename(self, suffix=".part", torrent=False):
+    def pick_initial_filename(self, suffix=".part", torrent=False):
         """Pick a path to download to based on self.shortFilename.
 
         This method sets self.filename, as well as creates any leading paths
@@ -491,29 +490,10 @@ class BGDownloader:
     ##
     # Returns a float with the download rate in bytes per second
     def get_rate(self):
-        now = clock()
         if self.endTime != self.startTime:
             rate = self.currentSize/(self.endTime-self.startTime)
         else:
-            haltedSince = now
-            for time, size in reversed(self.blockTimes):
-                if size == self.currentSize:
-                    haltedSince = time
-                else:
-                    break
-            if now - haltedSince > self.HALTED_THRESHOLD:
-                rate = 0
-            else:
-                try:
-                    timespan = now - self.blockTimes[0][0]
-                    if timespan != 0:
-                        endSize = self.blockTimes[-1][1]
-                        startSize = self.blockTimes[0][1]
-                        rate = (endSize - startSize) / timespan
-                    else:
-                        rate = 0
-                except IndexError:
-                    rate = 0
+            rate = self.rate
         return rate
 
     def retryDownload(self):
@@ -547,7 +527,7 @@ class BGDownloader:
                 self.handleTemporaryError(error.getFriendlyDescription(),
                                           error.getLongDescription())
         else:
-            logging.info("WARNING: grabURL errback not called with NetworkError")
+            logging.info("WARNING: grab_url errback not called with NetworkError")
             self.handleError(str(error), str(error))
 
     def handleGenericError(self, longDescription):
@@ -568,8 +548,7 @@ class BGDownloader:
 
 
 class HTTPDownloader(BGDownloader):
-    UPDATE_CLIENT_WINDOW = 12
-    HALTED_THRESHOLD = 3 # how many secs until we consider a download halted
+    CHECK_STATS_TIMEOUT = 1.0
 
     def __init__(self, url = None, dlid = None, restore = None, expectedContentType = None):
         self.retryDC = None
@@ -582,13 +561,12 @@ class HTTPDownloader(BGDownloader):
                 restore = None
         if restore is not None:
             self.__dict__.update(restore)
-            self.blockTimes = []
             self.restartOnError = True
         else:
             BGDownloader.__init__(self, url, dlid)
             self.restartOnError = False
         self.client = None
-        self.filehandle = None
+        self.rate = 0
         if self.state == 'downloading':
             self.startDownload()
         elif self.state == 'offline':
@@ -596,32 +574,31 @@ class HTTPDownloader(BGDownloader):
         else:
             self.updateClient()
 
-    def resetBlockTimes(self):
-        self.blockTimes = [(clock(), self.currentSize)]
-
     def startNewDownload(self):
+        """Start a download, discarding any existing data"""
         self.currentSize = 0
         self.totalSize = -1
-        self.startDownload()
+        self.startDownload(resume=False)
 
-    def startDownload(self):
+    def startDownload(self, resume=True):
         if self.retryDC:
             self.retryDC.cancel()
             self.retryDC = None
-        if self.currentSize == 0:
-            headerCallback = self.onHeaders
-        else:
-            headerCallback = self.onHeadersRestart
-        self.client = httpclient.grabURL(self.url,
-                self.on_download_finished, self.onDownloadError,
-                headerCallback, self.onBodyData, start=self.currentSize)
-        self.resetBlockTimes()
+        self.client = httpclient.grab_url(self.url,
+                self.on_download_finished, self.on_download_error,
+                header_callback=self.on_headers, write_file=self.filename, resume=resume)
         self.updateClient()
+        eventloop.add_timeout(self.CHECK_STATS_TIMEOUT, self.update_stats,
+                'update http downloader stats')
 
-    def cancelRequest(self):
+    def destroy_client(self):
+        self.update_stats() # update the stats before we throw away the client.
+        self.client = None
+
+    def cancelRequest(self, remove_file=False):
         if self.client is not None:
-            self.client.cancel()
-            self.client = None
+            self.client.cancel(remove_file=remove_file)
+            self.destroy_client()
 
     def handleError(self, shortReason, reason):
         BGDownloader.handleError(self, shortReason, reason)
@@ -643,130 +620,38 @@ class HTTPDownloader(BGDownloader):
         text = (_("Could not write to %(filename)s") %
                 {"filename": stringify(self.filename)})
         self.handleGenericError(text)
-        if self.filehandle is not None:
-            try:
-                self.filehandle.close()
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
-                pass
-        try:
-            fileutil.remove(self.filename)
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            pass
 
-    def onHeaders(self, info):
-        if info['contentLength'] != None:
-            self.totalSize = info['contentLength']
-        if self.client.gotBadStatusCode:
-            error = httpclient.UnexpectedStatusCode(info['status'])
-            self.handleNetworkError(error)
-            return
+    def on_headers(self, info):
+        if 'total-size' in info:
+            self.totalSize = info['total-size']
         if not self.acceptDownloadSize(self.totalSize):
             self.handleError(_("Not enough disk space"),
                 _("%(amount)s MB required to store this video") %
                   {"amount": self.totalSize / (2 ** 20)})
             return
-        #We have a success
+        # We should successfully download the file.  Reset retryCount and
+        # accept defeat if we see an error.
         self.retryCount = -1
-        #Get the length of the file, then create it
-        self.shortFilename = clean_filename(info['filename'])
-        if self.expectedContentType is not None:
-            self.shortFilename = check_filename_extension(self.shortFilename, self.expectedContentType)
-        else:
-            self.shortFilename = check_filename_extension(self.shortFilename, info.get('content-type'))
-        self.pickInitialFilename()
-        try:
-            self.filehandle = fileutil.open_file(self.filename,"w+b")
-        except IOError:
-            self.handleGenericError(_("Couldn't open %(filename)s for writing") % {"filename": stringify(self.filename)})
-            return
-        if self.totalSize > 0:
-            try:
-                self.filehandle.seek(self.totalSize-1)
-                self.filehandle.write(' ')
-                self.filehandle.seek(0)
-            except IOError, error:
-                self.handleWriteError(error)
-                return
-        self.updateClient()
-
-    def onHeadersRestart(self, info):
         self.restartOnError = False
-        if info['status'] != 206 or 'content-range' not in info:
+        # update shortFilename based on the headers.  This will affect how we
+        # move the file once the download is finished
+        self.shortFilename = clean_filename(info['filename'])
+
+    def on_download_error(self, error):
+        if isinstance(error, httpclient.ResumeFailed):
+            # try starting from scratch
             self.currentSize = 0
             self.totalSize = -1
-            self.resetBlockTimes()
-            if not self.client.gotBadStatusCode:
-                self.onHeaders(info)
-            else:
-                self.cancelRequest()
-                self.startNewDownload()
-            return
-        try:
-            self.parseContentRange(info['content-range'])
-        except ValueError:
-            logging.info("WARNING, bad content-range: %r", info['content-range'])
-            logging.info("currentSize: %d totalSize: %d", self.currentSize,
-                          self.totalSize)
-            self.cancelRequest()
             self.startNewDownload()
-        else:
-            try:
-                self.filehandle = fileutil.open_file(self.filename,"r+b")
-                self.filehandle.seek(self.currentSize)
-            except IOError, e:
-                self.handleWriteError(e)
-            #We have a success
-            self.retryCount = -1
-        self.updateClient()
-
-    def parseContentRange(self, contentRange):
-        """Parse the content-range header from an http response.  If it's
-        badly formatted, or it's not what we were expecting based on the state
-        we restored to, raise a ValueError.
-        """
-
-        m = re.search('bytes\s+(\d+)-(\d+)/(\d+)', contentRange)
-        if m is None:
-            raise ValueError()
-        start = int(m.group(1))
-        end = int(m.group(2))
-        totalSize = int(m.group(3))
-        if start > self.currentSize or (end + 1 != totalSize):
-            # we only have the 1st <self.currentSize> bytes of the file, so
-            # we cant handle these responses
-            raise ValueError()
-        self.currentSize = start
-        self.totalSize = totalSize
-
-    def onDownloadError(self, error):
-        if self.restartOnError:
+        elif self.restartOnError:
             self.restartOnError = False
             self.startDownload()
         else:
-            self.client = None
+            self.destroy_client()
             self.handleNetworkError(error)
 
-    def onBodyData(self, data):
-        if self.state != 'downloading':
-            return
-        self.updateRateAndETA(len(data))
-        downloadUpdater.queueUpdate(self)
-        try:
-            self.filehandle.write(data)
-        except IOError, e:
-            self.handleWriteError(e)
-
     def on_download_finished(self, response):
-        self.client = None
-        try:
-            self.filehandle.close()
-        except Exception, e:
-            self.handleWriteError(e)
-            return
+        self.destroy_client()
         self.state = "finished"
         if self.totalSize == -1:
             self.totalSize = self.currentSize
@@ -775,7 +660,6 @@ class HTTPDownloader(BGDownloader):
             self.moveToMoviesDirectory()
         except IOError, e:
             self.handleWriteError(e)
-        self.resetBlockTimes()
         self.updateClient()
 
     def getStatus(self):
@@ -785,16 +669,15 @@ class HTTPDownloader(BGDownloader):
 
     ##
     # Update the download rate and eta based on receiving length bytes
-    def updateRateAndETA(self, length):
-        now = clock()
-        self.currentSize = self.currentSize + length
-        self.blockTimes.append((now,  self.currentSize))
-        window_start = now - self.UPDATE_CLIENT_WINDOW
-        i = 0
-        for i in xrange(len(self.blockTimes)):
-            if self.blockTimes[0][0] >= window_start:
-                break
-        self.blockTimes = self.blockTimes[i:]
+    def update_stats(self):
+        if self.client is None or self.state != 'downloading':
+            return
+        stats = self.client.get_stats()
+        self.currentSize = stats.downloaded + stats.initial_size
+        self.rate = stats.download_rate
+        eventloop.add_timeout(self.CHECK_STATS_TIMEOUT, self.update_stats,
+                'update http downloader stats')
+        downloadUpdater.queueUpdate(self)
 
     ##
     # Pauses the download.
@@ -808,28 +691,19 @@ class HTTPDownloader(BGDownloader):
     # Stops the download and removes the partially downloaded
     # file.
     def stop(self, delete):
-        if self.state == "downloading":
-            if self.filehandle is not None:
+        if self.state == 'finished':
+            if delete:
                 try:
-                    if not self.filehandle.closed:
-                        self.filehandle.close()
-                    fileutil.remove(self.filename)
-                except (SystemExit, KeyboardInterrupt):
-                    raise
-                except:
+                    if fileutil.isdir(self.filename):
+                        fileutil.rmtree(self.filename)
+                    else:
+                        fileutil.remove(self.filename)
+                except OSError:
                     pass
-        if delete:
-            try:
-                if fileutil.isdir(self.filename):
-                    fileutil.rmtree(self.filename)
-                else:
-                    fileutil.remove(self.filename)
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
-                pass
+        else:
+            # Cancel the request, don't keep around partially downloaded data
+            self.cancelRequest(remove_file=True)
         self.currentSize = 0
-        self.cancelRequest()
         self.state = "stopped"
         self.updateClient()
 
@@ -1093,7 +967,7 @@ class BTDownloader(BGDownloader):
                 self.handleCorruptTorrent()
                 return
             self.shortFilename = utf8_to_filename(name)
-            self.pickInitialFilename(suffix="", torrent=True)
+            self.pick_initial_filename(suffix="", torrent=True)
         self.updateClient()
         self._resumeTorrent()
 
@@ -1105,30 +979,21 @@ class BTDownloader(BGDownloader):
         self.metainfo = metainfo
         self.gotMetainfo()
 
-    def _cleanup_description_vars(self):
-        del self.description_chunks
-        del self.description_size
-        del self.description_client
-
-    def on_description_data(self, data):
-        self.description_chunks.append(data)
-        self.description_size += len(data)
-        if (self.description_size > MAX_TORRENT_SIZE or
-                self.description_chunks[0][0] != 'd'):
+    def check_description(self, data):
+        if len(data) > MAX_TORRENT_SIZE or data[0] != 'd':
             # Bailout if we get too much data or it doesn't begin with "d"
             # (see #12301 for details)
-            self.description_client.cancel()
-            self.handleCorruptTorrent()
-            self._cleanup_description_vars()
+            eventloop.add_idle('description check failed',
+                    self.handleCorruptTorrent)
+            return False
+        else:
+            return True
 
-    def onDescriptionDownload(self, info):
-        body = ''.join(self.description_chunks)
-        self.handleMetainfo(body)
-        self._cleanup_description_vars()
+    def on_metainfo_download(self, info):
+        self.handleMetainfo(info['body'])
 
-    def onDescriptionDownloadFailed(self, exception):
+    def on_metainfo_download_error(self, exception):
         self.handleNetworkError(exception)
-        self._cleanup_description_vars()
 
     def getMetainfo(self):
         if self.metainfo is None:
@@ -1151,12 +1016,10 @@ class BTDownloader(BGDownloader):
 
                 self.handleMetainfo(metainfo)
             else:
-                self.description_chunks = []
-                self.description_size = 0
-                self.description_client = httpclient.grabURL(self.get_url(),
-                        self.onDescriptionDownload,
-                        self.onDescriptionDownloadFailed,
-                        bodyDataCallback=self.on_description_data)
+                self.description_client = httpclient.grab_url(self.url,
+                        self.on_metainfo_download,
+                        self.on_metainfo_download_error,
+                        content_check_callback=self.check_description)
         else:
             self.gotMetainfo()
                 

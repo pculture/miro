@@ -148,7 +148,7 @@ def add_subscription_url(prefix, expected_content_type, url):
             )
         _complain_about_subscription_url(text)
 
-    httpclient.grabURL(real_url, callback, errback)
+    httpclient.grab_url(real_url, callback, errback)
 
 def set_command_line_args(args):
     _command_line_args.extend(args)

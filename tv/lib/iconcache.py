@@ -288,7 +288,7 @@ class IconCache(DDBObject):
             return
 
         # Last try, get the icon from HTTP.
-        httpclient.grabURL(url, lambda info: self.update_icon_cache(url, info),
+        httpclient.grab_url(url, lambda info: self.update_icon_cache(url, info),
                 lambda error: self.error_callback(url, error))
 
     def request_update(self, is_vital=False):

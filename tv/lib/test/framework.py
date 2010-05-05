@@ -7,15 +7,20 @@ import threading
 from miro import database
 from miro import eventloop
 from miro import app
+from miro import config
 from miro import downloader
+from miro import httpclient
 from miro import util
 from miro import databaseupgrade
+from miro import prefs
 from miro import searchengines
 from miro import signals
 from miro import storedatabase
 from miro import subscription
 from time import sleep
 from miro import models
+
+from miro.test import testhttpserver
 
 util.setup_logging()
 
@@ -90,13 +95,18 @@ class MiroTestCase(unittest.TestCase):
         util.chatter = False
         self.saw_error = False
         self.error_signal_okay = False
+        self.setup_downloader_log()
         signals.system.connect('error', self.handle_error)
         app.controller = DummyController()
         self.temp_files = []
+        self.httpserver = None
+        httpclient.start_thread()
 
     def tearDown(self):
         signals.system.disconnect_all()
         util.chatter = True
+        httpclient.stop_thread()
+        self.stop_http_server()
         # Remove any leftover database
         app.db.close()
         app.db = None
@@ -109,10 +119,40 @@ class MiroTestCase(unittest.TestCase):
             except OSError:
                 pass
 
+    def setup_downloader_log(self):
+        (handle, filename) = tempfile.mkstemp(".log")
+        fp = os.fdopen(handle, 'w')
+        fp.write("EMPTY DOWNLOADER LOG FOR TESTING\n")
+        fp.close()
+        config.set(prefs.DOWNLOADER_LOG_PATHNAME, filename)
+
     def make_temp_path(self):
         [handle, filename] = tempfile.mkstemp(".xml")
         self.temp_files.append(filename)
         return filename
+
+    def start_http_server(self):
+        self.stop_http_server()
+        self.httpserver = testhttpserver.HTTPServer()
+        self.httpserver.start()
+
+    def last_http_info(self, info_name):
+        return self.httpserver.last_info()[info_name]
+
+    def wait_for_libcurl_manager(self):
+        """wait for the libcurl thread to complete it's business"""
+        end_loop_event = threading.Event()
+        def on_end_loop(curl_manager):
+            end_loop_event.set()
+        handle = httpclient.curl_manager.connect('end-loop', on_end_loop)
+        httpclient.curl_manager.wakeup()
+        end_loop_event.wait()
+        httpclient.curl_manager.disconnect(handle)
+
+    def stop_http_server(self):
+        if self.httpserver:
+            self.httpserver.stop()
+            self.httpserver = None
 
     def reload_database(self, path=':memory:', schema_version=None,
                         object_schemas=None, upgrade=True):

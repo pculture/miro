@@ -219,9 +219,11 @@ class ShutDownCommand(Command):
 
     def action(self):
         starttime = time.time()
+        from miro import httpclient
         from miro.dl_daemon import download
         download.shutDown()
         import threading
+        httpclient.stop_thread()
         eventloop.thread_pool_quit()
         for thread in threading.enumerate():
             if thread != threading.currentThread() and thread.getName() != "MainThread" and not thread.isDaemon():

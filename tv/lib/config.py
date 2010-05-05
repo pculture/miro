@@ -64,7 +64,8 @@ def load(theme=None):
     try:
         app.configfile = AppConfig(theme)
         # Load the preferences
-        _data = platformcfg.load()
+        if not hasattr(app, 'in_unit_tests'):
+            _data = platformcfg.load()
         if _data is None:
             _data = dict()
 
@@ -79,7 +80,8 @@ def save():
     _lock.acquire()
     try:
         _check_validity()
-        platformcfg.save( _data )
+        if not hasattr(app, 'in_unit_tests'):
+            platformcfg.save( _data )
     finally:
         _lock.release()
 

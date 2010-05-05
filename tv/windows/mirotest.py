@@ -29,7 +29,6 @@
 """Miro test utility -- console application for running unit tests.
 """
 
-import unittest
 import sys
 import logging
 
@@ -45,7 +44,6 @@ from miro import test
 from miro.plat import resources
 
 sys.path.append(resources.appRoot())
-
-unittest.main(module=test)
+test.run_tests()
 
 

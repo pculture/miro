@@ -37,12 +37,13 @@ import tempfile
 from miro import config
 from miro import prefs
 from miro import eventloop
+from miro import httpclient
 from miro import util
 import logging
 from miro.plat.utils import launch_download_daemon, kill_process
 from miro import signals
 from miro import trapcall
-from miro.httpclient import ConnectionHandler
+from miro.net import ConnectionHandler
 
 SIZE_OF_INT = calcsize("I")
 
@@ -207,6 +208,7 @@ class DownloaderDaemon(Daemon):
             return
         self.shutdown = True
         eventloop.shutdown()
+        httpclient.cleanup_libcurl()
         logging.warning ("downloader: connection closed -- quitting")
         from miro.dl_daemon import download
         download.shutDown()

@@ -163,7 +163,7 @@ class Subscriber(object):
             if handler:
                 trackback = subscription.get('trackback')
                 if trackback:
-                    httpclient.grabURL(trackback, lambda x: None,
+                    httpclient.grab_url(trackback, lambda x: None,
                                        lambda x: None)
                 ret = handler(subscription, parent_folder)
                 if ret:

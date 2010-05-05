@@ -1,9 +1,11 @@
 import tempfile
 import os
 
+from miro import config
 from miro import downloader
 from miro import eventloop
 from miro import models
+from miro import prefs
 from miro.dl_daemon import command
 from miro.test.framework import MiroTestCase, EventLoopTest
 
@@ -16,6 +18,10 @@ class DownloaderTest(EventLoopTest):
         self.feed = models.Feed(self.url)
         downloader.init_controller()
         downloader.startup_downloader()
+        self.log_file = os.path.join(tempfile.tempdir, 'miro-download-unit-tests')
+        if os.path.exists(self.log_file):
+            os.remove(self.log_file) # start with a fresh log
+        config.set(prefs.DOWNLOADER_LOG_PATHNAME, self.log_file)
 
     def tearDown(self):
         downloader.shutdown_downloader()
@@ -54,3 +60,8 @@ class DownloaderTest(EventLoopTest):
         self.assertEquals(self.feed.items.count(), 1)
         list(self.feed.items)[0].expire()
 
+    def test_resume(self):
+        pass
+
+    def test_resume_fail(self):
+        pass

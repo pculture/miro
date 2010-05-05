@@ -40,7 +40,7 @@ from miro import eventloop
 from miro import feedparser
 from miro import signals
 
-from miro.httpclient import grabURL
+from miro.httpclient import grab_url
 
 check_in_progress = False
 
@@ -63,7 +63,7 @@ def check_for_updates(up_to_date_callback=None):
         update_handler = lambda data: _handle_app_cast(data,
                                                        up_to_date_callback)
         error_handler = _handle_error
-        grabURL(url, update_handler, error_handler)
+        grab_url(url, update_handler, error_handler)
 
 def _handle_error(error):
     """Error handler"""

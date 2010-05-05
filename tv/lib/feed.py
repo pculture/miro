@@ -44,7 +44,7 @@ import re
 import xml
 
 from miro.database import DDBObject, ObjectNotFoundError
-from miro.httpclient import grabURL
+from miro.httpclient import grab_url
 from miro import app
 from miro import autodler
 from miro import config
@@ -125,7 +125,7 @@ def add_feed_from_web_page(url):
             Feed(url)
     def errback(error):
         logging.warning ("unhandled error in add_feed_from_web_page: %s", error)
-    grabURL(url, callback, errback)
+    grab_url(url, callback, errback)
 
 FILE_MATCH_RE = re.compile(r"^file://.")
 SEARCH_URL_MATCH_RE = re.compile('^dtv:savedsearch/(.*)\?q=(.*)')
@@ -888,10 +888,10 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         elif SEARCH_URL_MATCH_RE.match(self.origURL):
             newFeed = SavedSearchFeedImpl(self.origURL, self)
         else:
-            self.download = grabURL(self.origURL,
+            self.download = grab_url(self.origURL,
                     lambda info: self._generate_feed_callback(info, removeOnError),
                     lambda error: self._generate_feed_errback(error, removeOnError),
-                    defaultMimeType=u'application/rss+xml')
+                    default_mime_type=u'application/rss+xml')
             logging.debug ("added async callback to create feed %s", self.origURL)
         if newFeed:
             self.finish_generate_feed(newFeed)
@@ -929,7 +929,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self._handle_feed_loading_error(error.getFriendlyDescription())
 
     def _generate_feed_callback(self, info, removeOnError):
-        """This is called by grabURL to generate a feed based on
+        """This is called by grab_url to generate a feed based on
         the type of data found at the given URL
         """
         # FIXME: This probably should be split up a bit. The logic is
@@ -1589,9 +1589,9 @@ class RSSFeedImpl(RSSFeedImplBase):
             except AttributeError:
                 modified = None
             logging.info("updating %s", self.url)
-            self.download = grabURL(self.url, self._update_callback,
+            self.download = grab_url(self.url, self._update_callback,
                     self._update_errback, etag=etag, modified=modified,
-                                    defaultMimeType=u'application/rss+xml')
+                                    default_mime_type=u'application/rss+xml')
 
     def _update_errback(self, error):
         if not self.ufeed.id_exists():
@@ -1741,12 +1741,12 @@ class RSSMultiFeedBase(RSSFeedImplBase):
         for url in self.urls:
             etag = self.etag.get(url)
             modified = self.modified.get(url)
-            self.download_dc[url] = grabURL(
+            self.download_dc[url] = grab_url(
                 url,
                 lambda x, url=url: self._update_callback(x, url),
                 lambda x, url=url: self._update_errback(x, url),
                 etag=etag, modified=modified,
-                defaultMimeType=u'application/rss+xml',)
+                default_mime_type=u'application/rss+xml',)
             self.updating += 1
 
     def _update_errback(self, error, url):
@@ -1888,8 +1888,8 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
             self.downloads.discard(download)
             logging.info("WARNING unhandled error for ScraperFeedImpl.get_html: %s", error)
             self.check_done()
-        download = grabURL(url, callback, errback, etag=etag,
-                modified=modified, defaultMimeType='text/html')
+        download = grab_url(url, callback, errback, etag=etag,
+                modified=modified, default_mime_type='text/html')
         self.downloads.add(download)
 
     def process_downloaded_html(self, info, urlList, depth, linkNumber,

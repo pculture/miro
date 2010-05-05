@@ -26,60 +26,38 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""httpclient.py 
+"""httpclient.py.
 
-Implements an HTTP client.  The main way that this module is used is the
-grabURL function that's an asynchronous version of our old grabURL.
+Implements a HTTP client using pylibcurl.
 
-A lot of the code here comes from inspection of the httplib standard module.
-Some of it was taken more-or-less directly from there.  I (Ben Dean-Kawamura)
-believe our clients follow the HTTP 1.1 spec completely, I used RFC2616 as a
-reference (http://www.w3.org/Protocols/rfc2616/rfc2616.html).
+The main ways this module used is grab_url() and grab_headers().  grab_url
+fetches a HTTP or HTTPS url, while grab_headers only fetches the headers.
 """
 
-import errno
 import logging
-import re
-import platform
-import socket
-import traceback
-from urlparse import urljoin
-from miro.gtcache import gettext as _
+import os
+import stat
+import threading
+import Queue
+from cStringIO import StringIO
 
-from base64 import b64encode
+import pycurl
 
-from miro.clock import clock
-
-from miro import httpauth
 from miro import config
-from miro import prefs
-from miro.download_utils import (clean_filename, parse_url, default_port, 
-                                 get_file_url_path, filename_from_url)
-from miro.xhtmltools import url_encode_dict, multipart_encode
+from miro import download_utils
 from miro import eventloop
-from miro import util
-import sys
-import time
-import urllib
+from miro import fileutil
+from miro import httpauth
+from miro import net
+from miro import prefs
 from miro import signals
-from miro import trapcall
+from miro import util
+from miro.gtcache import gettext as _
+from miro.xhtmltools import url_encode_dict, multipart_encode
 from miro.plat.resources import get_osname
+from miro.net import NetworkError, ConnectionError
 
-PIPELINING_ENABLED = False
-SOCKET_READ_TIMEOUT = 60
-SOCKET_INITIAL_READ_TIMEOUT = 30
-SOCKET_CONNECT_TIMEOUT = 15
-
-# socket.ssl is deprecated as of Python 2.6, so we use socket_ssl for
-# pre Python 2.6 and ssl.wrap_socket for Python 2.6 and later.
-try:
-    import ssl
-    ssl.wrap_socket
-    def convert_to_ssl(sock):
-        return ssl.wrap_socket(sock)
-except (ImportError, AttributeError):
-    def convert_to_ssl(sock):
-        return socket.ssl(sock)
+REDIRECTION_LIMIT = 10
 
 def user_agent():
     return "%s/%s (%s; %s)" % (config.get(prefs.SHORT_APP_NAME),
@@ -87,69 +65,40 @@ def user_agent():
             config.get(prefs.PROJECT_URL),
             get_osname())
 
-class NetworkError(Exception):
-    """Base class for all errors that will be passed to errbacks from get_url
-    and friends.  NetworkErrors can be display in 2 ways:
+def trap_call(when, function, *args, **kwargs):
+    """Version of trap_call for the libcurl thread.
 
-    getFriendlyDescription() -- short, newbie friendly description 
-    getLongDescription() -- detailed description
+    :retval the return value of the function, or the exception raised.
     """
-
-    def __init__(self, shortDescription, longDescription=None):
-        if longDescription is None:
-            longDescription = shortDescription
-        self.friendlyDescription = _("Error: %(msg)s", {"msg": shortDescription})
-        self.longDescription = longDescription
-
-    def getFriendlyDescription(self):
-        return self.friendlyDescription
-
-    def getLongDescription(self):
-        return self.longDescription
-
-    def __str__(self):
-        return "%s: %s -- %s" % (self.__class__,
-                util.stringify(self.getFriendlyDescription()), 
-                util.stringify(self.getLongDescription()))
-
-class ConnectionError(NetworkError):
-    def __init__(self, errorMessage):
-        self.friendlyDescription = _("Can't connect")
-        self.longDescription = _("Connection Error: %(msg)s",
-                                 {"msg": util.unicodify(errorMessage)})
-
-class SSLConnectionError(ConnectionError):
-    def __init__(self):
-        self.friendlyDescription = _("Can't connect")
-        self.longDescription = _("SSL connection error")
+    try:
+        return function(*args, **kwargs)
+    except (SystemExit, KeyboardInterrupt), e:
+        # If we just re-raise these, then we will just crash the libcurl
+        # thread.  Instead, we want to shutdown the eventloop.
+        logging.warn("saw %s in libcurl thread, quitting")
+        app.controller.shutdown()
+    except Exception, e:
+        logging.stacktrace("libcurl thread exception while %s" % when)
+        eventloop.add_idle("sending exception", signals.system.failed,
+                args=(when,))
+        return e
 
 class HTTPError(NetworkError):
     def __init__(self, longDescription):
         NetworkError.__init__(self, _("HTTP error"), longDescription)
 
-class BadStatusLine(HTTPError):
-    def __init__(self, line):
-        HTTPError.__init__(self, _("Bad Status Line: %(msg)s",
-                                   {"msg": util.unicodify(line)}))
-
-class BadHeaderLine(HTTPError):
-    def __init__(self, line):
-        HTTPError.__init__(self, _("Bad Header Line: %(msg)s",
-                                   {"msg": util.unicodify(line)}))
-
-class BadChunkSize(HTTPError):
-    def __init__(self, line):
-        HTTPError.__init__(self, _("Bad Chunk size: %(msg)s",
-                                   {"msg": util.unicodify(line)}))
-
-class CRLFExpected(HTTPError):
-    def __init__(self, crlf):
-        HTTPError.__init__(self, _("Expected CRLF got: %(character)r",
-                                   {"character": crlf}))
-
 class ServerClosedConnection(HTTPError):
     def __init__(self, host):
         HTTPError.__init__(self, _('%(host)s closed connection', {"host": host}))
+
+class ResumeFailed(HTTPError):
+    def __init__(self, host):
+        HTTPError.__init__(self, _('%(host)s doesn\'t support HTTP resume', {"host": host}))
+
+class TooManyRedirects(HTTPError):
+    def __init__(self, url):
+        HTTPError.__init__(self, _('HTTP Redirection limit hit for %(url)s',
+            {"url": url}))
 
 class UnexpectedStatusCode(HTTPError):
     def __init__(self, code):
@@ -160,20 +109,9 @@ class UnexpectedStatusCode(HTTPError):
             HTTPError.__init__(self, _("Bad Status Code: %(code)s",
                                        {"code": util.unicodify(code)}))
 
-class AuthorizationFailed(NetworkError):
+class AuthorizationFailed(HTTPError):
     def __init__(self):
-        NetworkError.__init__(self, _("Authorization failed"))
-
-class PipelinedRequestNeverStarted(NetworkError):
-    # User should never see this one
-    def __init__(self):
-        NetworkError.__init__(self, _("Internal Error"),
-                _("Pipeline request never started"))
-
-class ConnectionTimeout(NetworkError):
-    def __init__(self, host):
-        NetworkError.__init__(self, _('Timeout'),
-                _('Connection to %(host)s timed out', {"host": host}))
+        HTTPError.__init__(self, _("Authorization failed"))
 
 class MalformedURL(NetworkError):
     def __init__(self, url):
@@ -191,1638 +129,275 @@ class FileURLReadError(NetworkError):
         NetworkError.__init__(self, _('Read error'),
             _('Error while reading from "%(path)s"', {"path": path}))
 
-def trap_call(object, function, *args, **kwargs):
-    """Convenience function do a trapcall.trap_call, where when is
-    'While talking to the network'
+class WriteError(NetworkError):
+    """Error while writing a file with grab_url().  This is not strictly a
+    "network" error, but it works to have it in the exception hierarchy here.
     """
-    return trapcall.time_trap_call("Calling %s on %s" % (function, object), function, *args, **kwargs)
 
+    def __init__(self, path):
+        msg = _("Could not write to %(filename)s") % \
+            {"filename": util.stringify(self.filename)}
+        NetworkError.__init__(self, _('Write error'), msg)
 
-DATEINFUTURE = time.mktime((2030, 7, 12, 12, 0, 0, 4, 193, -1))
+class TransferOptions(object):
+    """Holds data about an upcoming transfer.
 
-def get_cookie_expiration_date(val):
-    """Tries a bunch of possible cookie expiration date formats
-    until it finds the magic one (or doesn't and returns 0).
+    This class stores transfer data like the URL, etag/modified, post data,
+    etc.  It's very similar to a libcurl handle, but built to work with Miro's
+    thread system.  I'm (BDK) pretty sure we could just build a libcurl
+    handle in any thread, but having this class means that we don't have to
+    worry about any potential threading issues with building a handle in one
+    thread, then using it in another.
     """
-    fmts = ( '%a, %d %b %Y %H:%M:%S %Z',
-             '%a, %d %b %y %H:%M:%S %Z',
-             '%a, %d-%b-%Y %H:%M:%S %Z',
-             '%a, %d-%b-%y %H:%M:%S %Z',
-             '%A, %d-%b-%y %H:%M:%S %Z' )
-    
-    for fmt in fmts:
+
+    def __init__(self, url, etag=None, modified=None, resume=False,
+            post_vars=None, post_files=None, write_file=None):
+        self.url = url
+        self.etag = etag
+        self.modified = modified
+        self.resume = resume
+        self.post_vars = post_vars
+        self.post_files = post_files
+        self.write_file = write_file
+        self.head_request = False
+        self.invalid_url = False
+        # _cancel_on_body_data is an internal attribute used for grab_headers.
+        self._cancel_on_body_data = False
+        self.parse_url()
+        self.post_length = 0
+
+    def parse_url(self):
+        self.scheme = self.host = _('Unknown')
+        if self.url is None:
+            self.invalid_url = True
+            return 
         try:
-            return time.mktime(time.strptime(val, fmt))
-        except OverflowError, oe:
-            # an overflow error means the cookie expiration is far in the
-            # future.  so we return a date that's not so far in the
-            # future.
-            return DATEINFUTURE
-        except ValueError, ve:
-            pass
-
-    logging.warning("DTV: Warning: Can't process cookie expiration: '%s'", val)
-    return 0
-
-
-class NetworkBuffer(object):
-    """Responsible for storing incomming network data and doing some basic
-    parsing of it.  I think this is about as fast as we can do things in pure
-    python, someday we may want to make it C...
-    """
-    def __init__(self):
-        self.chunks = []
-        self.length = 0
-
-    def addData(self, data):
-        self.chunks.append(data)
-        self.length += len(data)
-
-    def _mergeChunks(self):
-        self.chunks = [''.join(self.chunks)]
-
-    def has_data(self):
-        return self.length > 0
-
-    def discard_data(self):
-        self.chunks = []
-        self.length = 0
-
-    def read(self, size=None):
-        """Read at most size bytes from the data that has been added to the
-        buffer.  """
-
-        self._mergeChunks()
-        if size is not None:
-            rv = self.chunks[0][:size]
-            self.chunks[0] = self.chunks[0][len(rv):]
-        else:
-            rv = self.chunks[0]
-            self.chunks = []
-        self.length -= len(rv)
-        return rv
-
-    def readline(self):
-        """Like a file readline, with several difference:  
-        * If there isn't a full line ready to be read we return None.  
-        * Doesn't include the trailing line separator.
-        * Both "\r\n" and "\n" act as a line ender
-        """
-
-        self._mergeChunks()
-        split = self.chunks[0].split("\n", 1)
-        if len(split) == 2:
-            self.chunks[0] = split[1]
-            self.length = len(self.chunks[0])
-            if split[0].endswith("\r"):
-                return split[0][:-1]
-            else:
-                return split[0]
-        else:
-            return None
-
-    def unread(self, data):
-        """Put back read data.  This make is like the data was never read at
-        all.
-        """
-        self.chunks.insert(0, data)
-        self.length += len(data)
-
-    def getValue(self):
-        self._mergeChunks()
-        return self.chunks[0]
-
-class _Packet(object):
-    """A packet of data for the AsyncSocket class
-    """
-    def __init__(self, data, callback=None):
-        self.data = data
-        self.callback = callback
-
-class AsyncSocket(object):
-    """Socket class that uses our new fangled asynchronous eventloop
-    module.
-    """
-
-    MEMORY_ERROR_LIMIT = 5
-
-    def __init__(self, closeCallback=None):
-        """Create an AsyncSocket.  If closeCallback is given, it will be
-        called if we detect that the socket has been closed durring a
-        read/write operation.  The arguments will be the AsyncSocket object
-        and either socket.SHUT_RD or socket.SHUT_WR.
-        """
-        self.toSend = []
-        self.to_send_length = 0
-        self.readSize = 4096
-        self.socket = None
-        self.readCallback = None
-        self.closeCallback = closeCallback
-        self.readTimeout = None
-        self.timedOut = False
-        self.connectionErrback = None
-        self.disableReadTimeout = False
-        self.readSomeData = False
-        self.name = ""
-        self.lastClock = None
-        self.memoryErrors = 0
-
-    def __str__(self):
-        if self.name:
-            return "%s: %s" % (type(self).__name__, self.name)
-        else:
-            return "Unknown %s" % (type(self).__name__,)
-
-    # The complication in the timeout code is because creating and
-    # cancelling a timeout costs some memory (timeout is in memory
-    # until it goes off, even if cancelled.)
-    def startReadTimeout(self):
-        if self.disableReadTimeout:
+            self.url = self.url.encode("ascii")
+        except UnicodeError:
+            self.invalid_url = True
             return
-        self.lastClock = clock()
-        if self.readTimeout is not None:
+        scheme, host, port, path = download_utils.parse_url(self.url)
+        if scheme not in ['http', 'https'] or host == '' or path == '':
+            self.invalid_url = True
             return
-        self.readTimeout = eventloop.add_timeout(SOCKET_INITIAL_READ_TIMEOUT, self.onReadTimeout,
-                "AsyncSocket.onReadTimeout")
-
-    def stopReadTimeout(self):
-        if self.readTimeout is not None:
-            self.readTimeout.cancel()
-            self.readTimeout = None
-
-    def openConnection(self, host, port, callback, errback, disableReadTimeout=None):
-        """Open a connection.  On success, callback will be called with this
-        object.
-        """
-        if disableReadTimeout is not None:
-            self.disableReadTimeout = disableReadTimeout
-        self.name = "Outgoing %s:%s" % (host, port)
-
-        try:
-            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        except socket.error, e:
-            trap_call(self, errback, ConnectionError(e[1]))
-            return
-        self.socket.setblocking(0)
-        self.connectionErrback = errback
-        def handleGetHostByNameException(e):
-            trap_call(self, errback, ConnectionError(e[1] + " (host: %s)" % host))
-        def onAddressLookup(address):
-            if self.socket is None:
-                # the connection was closed while we were calling gethostbyname
-                return
-            try:
-                rv = self.socket.connect_ex((address, port))
-            except socket.gaierror:
-                trap_call(self, errback, ConnectionError('gaierror'))
-                return
-            if rv in (0, errno.EINPROGRESS, errno.EWOULDBLOCK):
-                eventloop.add_write_callback(self.socket, onWriteReady)
-                self.socketConnectTimeout = eventloop.add_timeout(
-                        SOCKET_CONNECT_TIMEOUT, onWriteTimeout,
-                        "socket connect timeout")
-            else:
-                try:
-                    msg = errno.errorcode[rv]
-                except KeyError:
-                    msg = "Unknown connection error: %s" % rv
-                trap_call(self, errback, ConnectionError(msg))
-        def onWriteReady():
-            eventloop.remove_write_callback(self.socket)
-            self.socketConnectTimeout.cancel()
-            rv = self.socket.getsockopt(socket.SOL_SOCKET, socket.SO_ERROR)
-            if rv == 0:
-                trap_call(self, callback, self)
-            else:
-                msg = errno.errorcode.get(rv, _('Unknown Error code'))
-                trap_call(self, errback, ConnectionError(msg))
-            self.connectionErrback = None
-        def onWriteTimeout():
-            eventloop.remove_write_callback(self.socket)
-            trap_call(self, errback, ConnectionTimeout(host))
-            self.connectionErrback = None
-        eventloop.call_in_thread(onAddressLookup, handleGetHostByNameException,
-                socket.gethostbyname, "getHostByName - %s" % host, host)
-
-    def acceptConnection(self, host, port, callback, errback):
-        def finishAccept():
-            eventloop.remove_read_callback(self.socket)
-            (self.socket, addr) = self.socket.accept()
-            trap_call(self, callback, self)
-            self.connectionErrback = None
-
-        self.name = "Incoming %s:%s" % (host, port)
-        self.connectionErrback = errback
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.bind((host, port))
-        (self.addr, self.port) = self.socket.getsockname()
-        self.socket.listen(63)
-        eventloop.add_read_callback(self.socket, finishAccept)
-
-    def closeConnection(self):
-        if self.isOpen():
-            eventloop.stop_handling_socket(self.socket)
-            self.stopReadTimeout()
-            self.socket.close()
-            self.socket = None
-            if self.connectionErrback is not None:
-                error = NetworkError(_("Connection closed"))
-                trap_call(self, self.connectionErrback, error)
-                self.connectionErrback = None
-
-    def isOpen(self):
-        return self.socket is not None
-
-    def sendData(self, data, callback=None):
-        """Send data out to the socket when it becomes ready.
-        
-        NOTE: currently we have no way of detecting when the data gets sent
-        out, or if errors happen.
-        """
-
-        if not self.isOpen():
-            raise ValueError("Socket not connected")
-        self.toSend.append(_Packet(data, callback))
-        self.to_send_length += len(data)
-        eventloop.add_write_callback(self.socket, self.onWriteReady)
-
-    def startReading(self, readCallback):
-        """Start reading from the socket.  When data becomes available it will
-        be passed to readCallback.  If there is already a read callback, it
-        will be replaced.
-        """
-
-        if not self.isOpen():
-            raise ValueError("Socket not connected")
-        self.readCallback = readCallback
-        eventloop.add_read_callback(self.socket, self.onReadReady)
-        self.startReadTimeout()
-
-    def stopReading(self):
-        """Stop reading from the socket."""
-
-        if not self.isOpen():
-            raise ValueError("Socket not connected")
-        self.readCallback = None
-        eventloop.remove_read_callback(self.socket)
-        self.stopReadTimeout()
-
-    def onReadTimeout(self):
-        if self.readSomeData:
-            timeout = SOCKET_READ_TIMEOUT
-        else:
-            timeout = SOCKET_INITIAL_READ_TIMEOUT
-
-        if clock() < self.lastClock + timeout:
-            self.readTimeout = eventloop.add_timeout(self.lastClock + timeout - clock(), self.onReadTimeout,
-                "AsyncSocket.onReadTimeout")
-        else:
-            self.readTimeout = None
-            self.timedOut = True
-            self.handleEarlyClose('read')
-
-    def handleSocketError(self, code, msg, operation):
-        if code in (errno.EWOULDBLOCK, errno.EINTR):
-            return
-
-        if operation == "write":
-            expectedErrors = (errno.EPIPE, errno.ECONNRESET)
-        else:
-            expectedErrors = (errno.ECONNREFUSED, errno.ECONNRESET)
-        if code not in expectedErrors:
-            logging.warning("WARNING, got unexpected error during %s", operation)
-            logging.warning("%s: %s", errno.errorcode.get(code), msg)
-        self.handleEarlyClose(operation)
-
-    def onWriteReady(self):
-        try:
-            if len(self.toSend) > 0:
-                sent = self.socket.send(self.toSend[0].data)
-            else:
-                sent = 0
-        except socket.error, (code, msg):
-            self.handleSocketError(code, msg, "write")
-        else:
-            self.handleSentData(sent)
-
-    def handleSentData(self, sent):
-        if len(self.toSend) > 0:
-            self.toSend[0].data = self.toSend[0].data[sent:]
-            if len(self.toSend[0].data) == 0:
-                if self.toSend[0].callback:
-                    self.toSend[0].callback()
-                self.toSend = self.toSend[1:]
-        self.to_send_length -= sent
-        if len(self.toSend) == 0:
-            eventloop.remove_write_callback(self.socket)
-
-    def onReadReady(self):
-        try:
-            data = self.socket.recv(self.readSize)
-        except socket.error, (code, msg):
-            self.handleSocketError(code, msg, "read")
-        except MemoryError:
-            # This happens because of a windows bug in the socket code (see
-            # #4373).  Let's hope that things clear themselves up next time we
-            # read.
-            self.memoryErrors += 1
-            if self.memoryErrors > self.MEMORY_ERROR_LIMIT:
-                logging.error("ERROR: Too many MemoryErrors on %s", self)
-                self.handleEarlyClose('read')
-            else:
-                logging.warning("WARNING: Memory error while reading from %s", self)
-        else:
-            self.memoryErrors = 0
-            self.handleReadData(data)
-
-    def handleReadData(self, data):
-        self.startReadTimeout()
-        if data == '':
-            if self.closeCallback:
-                trap_call(self, self.closeCallback, self, socket.SHUT_RD)
-        else:
-            self.readSomeData = True
-            trap_call(self, self.readCallback, data)
-
-    def handleEarlyClose(self, operation):
-        self.closeConnection()
-        if self.closeCallback:
-            if operation == 'read':
-                type = socket.SHUT_RD
-            else:
-                type = socket.SHUT_WR
-            trap_call(self, self.closeCallback, self, type)
-
-class AsyncSSLStream(AsyncSocket):
-    def __init__(self, closeCallback=None):
-        super(AsyncSSLStream, self).__init__(closeCallback)
-        self.interruptedOperation = None
-
-    def openConnection(self, host, port, callback, errback, disableReadTimeout=None):
-        def onSocketOpen(self):
-            self.socket.setblocking(1)
-            eventloop.call_in_thread(onSSLOpen, handleSSLError, convert_to_ssl,
-                                   "AsyncSSL onSocketOpen()",
-                                   self.socket)
-        def onSSLOpen(ssl):
-            if self.socket is None:
-                # the connection was closed while we were calling
-                # convert_to_ssl
-                return
-            self.socket.setblocking(0)
-            self.ssl = ssl
-            # finally we can call the actuall callback
-            callback(self)
-        def handleSSLError(error):
-            logging.error("handleSSLError: %r", error)
-            errback(SSLConnectionError())
-        super(AsyncSSLStream, self).openConnection(host, port, onSocketOpen,
-                errback, disableReadTimeout)
-
-    def resumeNormalCallbacks(self):
-        if self.readCallback is not None:
-            eventloop.add_read_callback(self.socket, self.onReadReady)
-        if len(self.toSend) != 0:
-            eventloop.add_write_callback(self.socket, self.onWriteReady)
-
-    def handleSocketError(self, code, msg, operation):
-        if code in (socket.SSL_ERROR_WANT_READ, socket.SSL_ERROR_WANT_WRITE):
-            if self.interruptedOperation is None:
-                self.interruptedOperation = operation
-            elif self.interruptedOperation != operation:
-                signals.system.failed("When talking to the network", 
-                details="socket error for the wrong SSL operation")
-                self.closeConnection()
-                return
-            eventloop.stop_handling_socket(self.socket)
-            if code == socket.SSL_ERROR_WANT_READ:
-                eventloop.add_read_callback(self.socket, self.onReadReady)
-            else:
-                eventloop.add_write_callback(self.socket, self.onWriteReady)
-        elif code in (socket.SSL_ERROR_ZERO_RETURN, socket.SSL_ERROR_SSL,
-                socket.SSL_ERROR_SYSCALL, socket.SSL_ERROR_EOF):
-            self.handleEarlyClose(operation)
-        else:
-            super(AsyncSSLStream, self).handleSocketError(code, msg,
-                    operation)
-
-    def onWriteReady(self):
-        if self.interruptedOperation == 'read':
-            return self.onReadReady()
-        try:
-            if len(self.toSend) > 0:
-                sent = self.ssl.write(self.toSend[0].data)
-            else:
-                sent = 0
-        except socket.error, (code, msg):
-            self.handleSocketError(code, msg, "write")
-        else:
-            if self.interruptedOperation == 'write':
-                self.resumeNormalCallbacks()
-                self.interruptedOperation = None
-            self.handleSentData(sent)
-
-    def onReadReady(self):
-        if self.interruptedOperation == 'write':
-            return self.onWriteReady()
-        try:
-            data = self.ssl.read(self.readSize)
-        except socket.error, (code, msg):
-            self.handleSocketError(code, msg, "read")
-        else:
-            if self.interruptedOperation == 'read':
-                self.resumeNormalCallbacks()
-                self.interruptedOperation = None
-            self.handleReadData(data)
-
-class ProxiedAsyncSSLStream(AsyncSSLStream):
-    def openConnection(self, host, port, callback, errback, disableReadTimeout):
-        def onSocketOpen(self):
-            self.socket.setblocking(1)
-            eventloop.call_in_thread(onSSLOpen, handleSSLError, lambda: openProxyConnection(self),
-                                   "ProxiedAsyncSSL openProxyConnection()")
-        def openProxyConnection(self):
-            headers = {'User-Agent': user_agent(), "Host": host}
-            if config.get(prefs.HTTP_PROXY_AUTHORIZATION_ACTIVE):
-                username = config.get(prefs.HTTP_PROXY_AUTHORIZATION_USERNAME)
-                password = config.get(prefs.HTTP_PROXY_AUTHORIZATION_PASSWORD)
-                authString = username+':'+password
-                authString = b64encode(authString)
-                headers['ProxyAuthorization'] = "Basic " + authString
-
-            connectString = "CONNECT %s:%d HTTP/1.1\r\n" % (host, port)
-            for header, value in headers.items():
-                connectString += ('%s: %s\r\n' % (header, value))
-            connectString += "\r\n"
-
-            try:
-                self.socket.send(connectString)
-                data = ""
-                while (data.find("\r\n\r\n") == -1):
-                    data += self.socket.recv(1)
-                data = data.split("\r\n")
-                if -1 == data[0].find(' 200 '):
-                    eventloop.add_idle(lambda :handleSSLError(
-                        NetworkError(data[0])), "Network Error")
-                else:
-                    return convert_to_ssl(self.socket)
-            except socket.error, (code, msg):
-                handleSSLError(msg)
-
-        def onSSLOpen(ssl):
-            if self.socket is None or ssl is None:
-                # the connection was closed while we were calling
-                # convert_to_ssl
-                return
-            self.socket.setblocking(0)
-            self.ssl = ssl
-            # finally we can call the actuall callback
-            callback(self)
-        def handleSSLError(error):
-            logging.error("handleSSLError: %r", error)
-            errback(SSLConnectionError())
-        proxy_host = config.get(prefs.HTTP_PROXY_HOST)
-        proxy_port = config.get(prefs.HTTP_PROXY_PORT)
-        AsyncSocket.openConnection(self, proxy_host, proxy_port, onSocketOpen,
-                errback, disableReadTimeout)
-    
-    
-class ConnectionHandler(object):
-    """Base class to handle asynchronous network streams.  It implements a
-    simple state machine to deal with incomming data.
-
-    Sending data: Use the sendData() method.
-
-    Reading Data: Add entries to the state dictionary, which maps strings to
-    methods.  The state methods will be called when there is data available,
-    which can be read from the buffer variable.  The states dictionary can
-    contain a None value, to signal that the handler isn't interested in
-    reading at that point.  Use changeState() to switch states.
-
-    Subclasses should override tho the handleClose() method to handle the
-    socket closing.
-    """
-
-    streamFactory = AsyncSocket
-
-    def __init__(self):
-        self.buffer = NetworkBuffer()
-        self.states = {'initializing': None, 'closed': None}
-        self.stream = self.streamFactory(closeCallback=self.closeCallback)
-        self.changeState('initializing')
-        self.name = ""
-
-    def __str__(self):
-        return "%s -- %s" % (self.__class__, self.state)
-
-    def openConnection(self, host, port, callback, errback, disableReadTimeout=None):
-        self.name = "Outgoing %s:%s" % (host, port)
+        self.scheme = scheme
         self.host = host
-        self.port = port
-        def callbackIntercept(asyncSocket):
-            if callback:
-                trap_call(self, callback, self)
-        self.stream.openConnection(host, port, callbackIntercept, errback, disableReadTimeout)
 
-    def closeConnection(self):
-        if self.stream.isOpen():
-            self.stream.closeConnection()
-        self.changeState('closed')
-        self.buffer.discard_data()
-
-    def sendData(self, data, callback=None):
-        self.stream.sendData(data, callback)
-
-    def changeState(self, newState):
-        self.readHandler = self.states[newState]
-        self.state = newState
-        self.updateReadCallback()
-
-    def updateReadCallback(self):
-        if self.readHandler is not None:
-            self.stream.startReading(self.handleData)
-        elif self.stream.isOpen():
-            try:
-                self.stream.stopReading()
-            except KeyError:
-                pass
-
-    def handleData(self, data):
-        self.buffer.addData(data)
-        lastState = self.state
-        self.readHandler()
-        # If we switch states, continue processing the buffer.  There may be
-        # extra data that the last read handler didn't read in
-        while self.readHandler is not None and lastState != self.state:
-            lastState = self.state
-            self.readHandler()
-
-    def closeCallback(self, stream, type):
-        self.handleClose(type)
-
-    def handleClose(self, type):
-        """Handle our stream becoming closed.  Type is either socket.SHUT_RD,
-        or socket.SHUT_WR.
+    def build_handle(self):
+        """Build a libCURL handle.  This should only be called inside the
+        LibCURLManager thread.
         """
-        raise NotImplementedError()
+        out_headers = {}
+        if self.etag is not None:
+            out_headers['etag'] = self.etag
+        if self.modified is not None:
+            out_headers['If-Modified-Since'] = self.modified
 
+        handle = self._init_handle()
+        self._setup_post(handle, out_headers)
+        self._setup_headers(handle, out_headers)
+        return handle
 
-class HTTPConnection(ConnectionHandler):
-    scheme = 'http'
+    def _init_handle(self):
+        handle = pycurl.Curl()
+        handle.setopt(pycurl.USERAGENT, user_agent())
+        handle.setopt(pycurl.FOLLOWLOCATION, 1)
+        handle.setopt(pycurl.MAXREDIRS, REDIRECTION_LIMIT)
+        handle.setopt(pycurl.NOPROGRESS, 1)
+        handle.setopt(pycurl.NOSIGNAL, 1)
+        handle.setopt(pycurl.CONNECTTIMEOUT, net.SOCKET_CONNECT_TIMEOUT)
+        handle.setopt(pycurl.TIMEOUT, net.SOCKET_READ_TIMEOUT)
+        handle.setopt(pycurl.URL, self.url)
+        if self.head_request:
+            handle.setopt(pycurl.NOBODY, 1)
+        return handle
 
-    def __init__(self, closeCallback=None, readyCallback=None):
-        super(HTTPConnection, self).__init__()
-        self.shortVersion = 0
-        self.states['ready'] = None
-        self.states['response-status'] = self.onStatusData
-        self.states['response-headers'] = self.onHeaderData
-        self.states['response-body'] = self.onBodyData
-        self.states['chunk-size'] = self.onChunkSizeData
-        self.states['chunk-data'] = self.onChunkData
-        self.states['chunk-crlf'] = self.onChunkCRLFData
-        self.states['chunk-trailer'] = self.onChunkTrailerData
-        self.changeState('ready')
-        self.idleSince = clock()
-        self.unparsedHeaderLine = ''
-        self.pipelinedRequest = None
-        self.closeCallback = closeCallback
-        self.readyCallback = readyCallback
-        self.requestsFinished = 0
-        self.bytesRead = 0
-        self.sentReadyCallback = False
-        self.headerCallback = self.bodyDataCallback = None
+    def _setup_headers(self, handle, out_headers):
+        headers = ['%s: %s' % (str(k), str(out_headers[k])) for k in out_headers]
+        handle.setopt(pycurl.HTTPHEADER, headers)
 
-    def handleData(self, data):
-        self.bytesRead += len(data)
-        super(HTTPConnection, self).handleData(data)
+    def _setup_post(self, handle, out_headers):
+        data = None
+        if self.post_files is not None:
+            (data, boundary) = multipart_encode(self.post_vars,
+                    self.post_files)
+            content_type = 'multipart/form-data; boundary=%s' % boundary
+            out_headers['content-type'] = content_type
+            out_headers['content-length'] = len(data)
+        elif self.post_vars is not None:
+            data = url_encode_dict(self.post_vars)
 
-    def closeConnection(self):
-        super(HTTPConnection, self).closeConnection()
-        if self.closeCallback is not None:
-            self.closeCallback(self)
-            self.closeCallback = None
-        self.checkPipelineNotStarted()
-
-    def checkPipelineNotStarted(self):
-        """Call this when the connection is closed by Democracy or the other
-        side.  It will check if we have an unstarted pipeline request and 
-        send it the PipelinedRequestNeverStarted error
-        """
-
-        if self.pipelinedRequest is not None:
-            errback = self.pipelinedRequest[1]
-            trap_call(self, errback, PipelinedRequestNeverStarted())
-            self.pipelinedRequest = None
-
-    def canSendRequest(self):
-        return (self.state == 'ready' or 
-                (self.state != 'closed' and self.pipelinedRequest is None and
-                    not self.willClose and PIPELINING_ENABLED))
-
-    def sendRequest(self, callback, errback, host, port,
-                    requestStartCallback=None, headerCallback=None,
-                    bodyDataCallback=None, method="GET", path='/',
-                    headers=None, postVariables=None, postFiles=None):
-        """Sending an HTTP Request.  callback will be called if the request
-        completes normally, errback will be called if there is a network
-        error.
-
-        Callback will be passed a dictionary that represents the HTTP
-        response,  it will have an entry for each header sent by the server as
-        well as as the following keys:
-            body, version, status, reason, method, path, host, port
-        They should be self explanatory, status and port will be integers, the
-        other items will be strings.
-
-        If requestStartCallback is given, it will be called just before the
-        we start receiving data for the request (this can be a while after
-        sending the request in the case of pipelined requests).  It will be
-        passed this connection object.
-
-        If headerCallback is given, it will be called when the headers are
-        read in.  It will be passed a response object whose body is set to
-        None.
-
-        If bodyDataCallback is given it will be called as we read in the data
-        for the body.  Also, the connection won't store the body in memory,
-        and the callback is called, it will be passed None for the body.
-
-        postVariables is a dictionary of variable names to values
-
-        postFiles is a dictionary of variable names to dictionaries
-        containing filename, mimetype, and handle attributes. Handle
-        should be an already open file handle.
-        """
-
-        if not self.canSendRequest():
-            raise NetworkError(_("Unknown"), 
-                    _("Internal Error: Not ready to send"))
-        if self.state == 'ready' and self.buffer.has_data():
-            logging.warning("Discarding extra data after request for %s",
-                    host)
-            self.buffer.discard_data()
-
-        if headers is None:
-            headers = {}
-        else:
-            headers = headers.copy()
-        headers['Host'] = host.encode('idna')
-        if port != default_port(self.scheme):
-            headers['Host'] += ':%d' % port
-        headers['Accept-Encoding'] = 'identity'
-
-        if (method == "POST" and postVariables is not None and
-                            len(postVariables) > 0 and postFiles is None):
-            postData = url_encode_dict(postVariables)
-            headers['Content-Type'] = 'application/x-www-form-urlencoded'
-            headers['Content-Length'] = '%d' % len(postData)
-        elif method == "POST" and postFiles is not None:
-            (postData, boundary) = multipart_encode(postVariables, postFiles)
-            headers['Content-Type'] = 'multipart/form-data; boundary=%s' % boundary
-            headers['Content-Length'] = '%d' % len(postData)
-        else:
-            postData = None
-
-        self.sendRequestData(method, path, headers, postData)
-        args = (callback, errback, requestStartCallback, headerCallback,
-                bodyDataCallback, method, path, headers)
-        if self.state == 'ready':
-            self.startNewRequest(*args)
-        else:
-            self.pipelinedRequest = args
-
-    def startNewRequest(self, callback, errback, requestStartCallback,
-            headerCallback, bodyDataCallback, method, path, headers):
-        """Called when we're ready to start processing a new request, either
-        because one has just been made, or because we've pipelined one, and
-        the previous request is done.
-        """
-
-        if requestStartCallback:
-            trap_call(self, requestStartCallback, self)
-            if self.state == 'closed':
-                return
-
-        self.callback = callback
-        self.errback = errback
-        self.headerCallback = headerCallback
-        self.bodyDataCallback = bodyDataCallback
-        self.method = method
-        self.path = path
-        self.requestHeaders = headers
-        self.headers = {}
-        self.contentLength = self.version = self.status = self.reason = None
-        self.bytesRead = 0
-        self.body = ''
-        self.willClose = True 
-        # Assume we will close, until we get the headers
-        self.chunked = False
-        self.chunks = []
-        self.idleSince = None
-        self.sentReadyCallback = False
-        self.changeState('response-status')
-
-    def sendRequestData(self, method, path, headers, data=None):
-        sendOut = []
-        path = path.encode("ascii", "replace")
-        path = urllib.quote(path, safe="-_.!~*'();/?:@&=+$,%#")
-        sendOut.append('%s %s HTTP/1.1\r\n' % (method, path))
-        for header, value in headers.items():
-            sendOut.append('%s: %s\r\n' % (header, value))
-        sendOut.append('\r\n')
         if data is not None:
-            sendOut.append(data)
-        data_out = ''.join(sendOut)
-        self.total_data_to_send = len(data_out)
-        self.sendData(data_out)
+            handle.setopt(pycurl.POSTFIELDS, data)
+            self.post_length = len(data)
 
-    def sendingProgress(self):
-        """Get a progress update on sending data out.
+class CurlTransfer(object):
+    """A in-progress CURL download.
 
-        Returns the tuple (bytes sent, total_bytes)
+    CurlTransfer objects are created in grab_url, then passed to the
+    LibCURLManager thread.  After that they shouldn't be accessed outside of
+    that thread, except with the get_info() method.
+    """
+
+    def __init__(self, options, callback, errback, header_callback=None,
+            content_check_callback=None):
+        """Create a CurlTransfer object.
+
+        :param options: TransferOptions object.  The object shouldn't be
+            modified after passing it in.
+        :param callback: function to call when the transfer succeeds
+        :param errback: function to call when the transfer fails
         """
-        sent = self.total_data_to_send - self.stream.to_send_length
-        return (sent, self.total_data_to_send)
+        self.options = options
+        self.headers = {}
+        self.buffer = StringIO()
+        self.saw_temporary_redirect = False
+        self.headers_finished = False
+        self.callback = callback
+        self.header_callback = header_callback
+        self.content_check_callback = content_check_callback
+        self._filehandle = None
+        self.errback = errback
+        self.resume_from = 0
 
-    def onStatusData(self):
-        line = self.buffer.readline()
-        if line is not None:
-            self.handleStatusLine(line)
-            if self.state == 'closed':
-                return
-            if self.shortVersion != 9:
-                self.changeState('response-headers')
-            else:
-                self.startBody()
+        self.stats = TransferStats()
+        self.lock = threading.Lock()
 
-    def onHeaderData(self):
-        while self.state == 'response-headers':
-            line = self.buffer.readline()
-            if line is None:
-                break
-            self.handleHeaderLine(line)
-        
-    def onBodyData(self):
-        if self.bodyDataCallback:
-            if self.contentLength is None:
-                data = self.buffer.read()
-            else:
-                bytesLeft = self.contentLength - self.bodyBytesRead
-                data = self.buffer.read(bytesLeft)
-            if data == '':
-                return
-            self.bodyBytesRead += len(data)
-            trap_call(self, self.bodyDataCallback, data)
-            if self.state == 'closed':
-                return 
-            if (self.contentLength is not None and 
-                    self.bodyBytesRead == self.contentLength):
-                self.finishRequest()
-        elif (self.contentLength is not None and 
-                self.buffer.length >= self.contentLength):
-            self.body = self.buffer.read(self.contentLength)
-            self.finishRequest()
+    def build_handle(self):
+        """Build a libCURL handle.  This should only be called inside the
+        LibCURLManager thread.
+        """
 
-    def onChunkSizeData(self):
-        line = self.buffer.readline()
-        if line is not None:
-            sizeString = line.split(';', 1)[0] # ignore chunk-extensions
+        self.handle = self.options.build_handle()
+        if self.options._cancel_on_body_data:
+            self.handle.setopt(pycurl.WRITEFUNCTION, self._write_func_abort)
+        elif self.options.write_file is not None:
+            self._open_file()
+            self.handle.setopt(pycurl.WRITEDATA, self._filehandle)
+        elif self.content_check_callback is not None:
+            self.handle.setopt(pycurl.WRITEFUNCTION, self._call_content_check)
+        else:
+            self.handle.setopt(pycurl.WRITEFUNCTION, self.buffer.write)
+        self.handle.setopt(pycurl.HEADERFUNCTION, self.header_func)
+
+    def _call_content_check(self, data):
+        self.buffer.write(data)
+        rv = trap_call('content check callback', self.content_check_callback,
+                self.buffer.getvalue())
+        if rv == False or isinstance(rv, Exception):
+            curl_manager.remove_transfer(self)
+
+    def _open_file(self):
+        if self.options.resume:
+            mode = 'ab'
             try:
-                self.chunkSize = int(sizeString, 16)
-            except ValueError:
-                self.handleError(BadChunkSize(line))
-                return
-            if self.chunkSize != 0:
-                self.chunkBytesRead = 0
-                self.changeState('chunk-data')
+                path = self.options.write_file
+                self.resume_from = os.stat(path)[stat.ST_SIZE]
+            except OSError:
+                # file doesn't exist, just skip resuming
+                pass
             else:
-                self.changeState('chunk-trailer')
-
-    def onChunkData(self):
-        if self.bodyDataCallback:
-            bytesLeft = self.chunkSize - self.chunkBytesRead
-            data = self.buffer.read(bytesLeft)
-            self.chunkBytesRead += len(data)
-            if data == '':
-                return
-            trap_call(self, self.bodyDataCallback, data)
-            if self.chunkBytesRead == self.chunkSize:
-                self.changeState('chunk-crlf')
-        elif self.buffer.length >= self.chunkSize:
-            self.chunks.append(self.buffer.read(self.chunkSize))
-            self.changeState('chunk-crlf')
-
-    def onChunkCRLFData(self):
-        if self.buffer.length >= 2:
-            crlf = self.buffer.read(2)
-            if crlf != "\r\n":
-                self.handleError(CRLFExpected(crlf))
-            else:
-                self.changeState('chunk-size')
-
-    def onChunkTrailerData(self):
-        # discard all trailers, we shouldn't have any
-        line = self.buffer.readline()
-        while line is not None:
-            if line == '':
-                self.finishRequest()
-                break
-            line = self.buffer.readline()
-
-    def handleStatusLine(self, line):
+                self.handle.setopt(pycurl.RESUME_FROM, self.resume_from)
+        else:
+            mode = 'wb'
         try:
-            (version, status, reason) = line.split(None, 2)
-        except ValueError:
-            try:
-                (version, status) = line.split(None, 1)
-                reason = ""
-            except ValueError:
-                # empty version will cause next test to fail and status
-                # will be treated as 0.9 response.
-                version = ""
-        if not version.startswith('HTTP/'):
-            # assume it's a Simple-Response from an 0.9 server
-            self.buffer.unread(line + '\r\n')
-            self.version = "HTTP/0.9"
-            self.status = 200
-            self.reason = ""
-            self.shortVersion = 9
-        else:
-            try:
-                status = int(status)
-                if status < 100 or status > 599:
-                    self.handleError(BadStatusLine(line))
-                    return
-            except ValueError:
-                self.handleError(BadStatusLine(line))
-                return
-            if version == 'HTTP/1.0':
-                self.shortVersion = 10
-            elif version.startswith('HTTP/1.'):
-                # use HTTP/1.1 code for HTTP/1.x where x>=1
-                self.shortVersion = 11
+            self._filehandle = fileutil.open_file(self.options.write_file, mode)
+        except IOError:
+            raise WriteError(self.filename)
+
+    def header_func(self, line):
+        line = line.strip()
+        if line.startswith("HTTP"):
+            curl_manager.call_after_perform(self.check_status_line)
+            return
+        if line == '':
+            if 'location' in self.headers:
+                # doing a redirect, clear out the headers
+                self.headers = {}
+            elif not self.headers_finished:
+                curl_manager.call_after_perform(self.on_headers_finished)
+                self.headers_finished = True
             else:
-                self.handleError(BadStatusLine(line))
-                return
-            self.version = version
-            self.status = status
-            self.reason = reason
-
-    def handleHeaderLine(self, line):
-        # "unfold" the continuation of a header
-        if len(line) > 0 and line[0] in (' ', '\t'):
-            self.unparsedHeaderLine += line
-        else:
-            # this line is not a continuation, so parse the last line
-            if self.unparsedHeaderLine != '':
-                if ':' in self.unparsedHeaderLine:
-                    self.parseHeader(self.unparsedHeaderLine)
-                else:
-                    msg = "HTTP header line without colon: %s" % \
-                            self.unparsedHeaderLine
-                    self.handleError(BadHeaderLine(msg))
-            if line == '':
-                if self.status != 100:
-                    self.startBody()
-                else:
-                    self.changeState('response-status')
-            self.unparsedHeaderLine = line
-
-    def parseHeader(self, line):
-        header, value = line.split(":", 1)
+                msg = "httpclient: saw multiple empty header lines"
+                logging.warning(msg, self.options.url)
+            return
+        elif self.headers_finished:
+            msg = "httpclient: saw content after empty header (%s)"
+            logging.warning(msg, self.options.url)
+            return
+        try:
+            header, value = line.split(":", 1)
+        except ValueError:
+            logging.debug("DTV: Warning: Bad Header from %s", self.options.url)
+            return
         value = value.strip()
         header = header.lstrip().lower()
         if value == '':
-            logging.debug("DTV: Warning: Bad Header from %s://%s:%s%s (%s)", self.scheme, self.host, self.port, self.path, line)
+            logging.debug("DTV: Warning: Bad Header from %s", self.options.url)
+
         if header not in self.headers:
             self.headers[header] = value
         else:
             self.headers[header] += (',%s' % value)
 
-    def startBody(self):
-        self.findExpectedLength()
-        self.checkChunked()
-        self.decideWillClose()
-        if self.headerCallback:
-            trap_call(self, self.headerCallback, self.makeResponse())
-        if self.state == 'closed':
-            return # maybe the header callback cancelled this request
-        if ((100 <= self.status <= 199) or self.status in (204, 301, 303, 304, 307) or
-                self.method == 'HEAD' or self.contentLength == 0):
-            self.finishRequest()
+    def on_headers_finished(self):
+        if self.header_callback:
+            eventloop.add_idle(self.header_callback,
+                    'httpclient header callback',
+                    args=(self._make_callback_info(),))
+
+    def check_status_line(self):
+        code = self.handle.getinfo(pycurl.RESPONSE_CODE)
+        if 300 <= code <= 399 and code != 301:
+            self.saw_temporary_redirect = True
+
+    def check_response_code(self, code):
+        expected_codes = set([200])
+        if self.options.resume:
+            expected_codes.add(206)
+        if self.options.etag or self.options.modified:
+            expected_codes.add(304)
+        return code in expected_codes
+
+    def _make_callback_info(self):
+        info = self.headers.copy()
+        info['status'] = self.handle.getinfo(pycurl.RESPONSE_CODE)
+        if 'content-length' in info:
+            # Use libcurl's content length rather than the raw header string
+            info['content-length'] = self.stats.download_total
+            info['total-size'] = self.stats.download_total + self.resume_from
+        info['original-url'] = self.options.url
+        info['redirected-url'] = self.handle.getinfo(pycurl.EFFECTIVE_URL)
+        info['filename'] = self.calc_filename(info['redirected-url'])
+        info['charset'] = self.calc_charset()
+        if self.saw_temporary_redirect:
+            info['updated-url'] = info['original-url']
         else:
-            if self.bodyDataCallback:
-                self.bodyBytesRead = 0
-            if not self.chunked:
-                self.changeState('response-body')
-            else:
-                self.changeState('chunk-size')
-        self.maybeSendReadyCallback()
+            info['updated-url'] = info['redirected-url']
+        return info
 
-    def checkChunked(self):
-        te = self.headers.get('transfer-encoding', '')
-        self.chunked = (te.lower() == 'chunked')
+    def _write_func_abort(self, bytes):
+        curl_manager.remove_transfer(self)
+        curl_manager.call_after_perform(self.on_finished)
 
-    def findExpectedLength(self):
-        self.contentLength = None
-        if self.status == 416:
+    def on_finished(self):
+        info = self._make_callback_info()
+        if self.options.write_file is None:
+            info['body'] = self.buffer.getvalue()
+        if self.check_response_code(info['status']):
+            self.call_callback(info)
+        else:
+            self.call_errback(UnexpectedStatusCode(info['status']))
+
+    def on_cancel(self, remove_file):
+        self._cleanup_filehandle()
+        if remove_file and self.options.write_file:
             try:
-                contentRange = self.headers['content-range']
-            except KeyError:
+                fileutil.remove(self.options.write_file)
+            except OSError:
                 pass
-            else:
-                m = re.search('bytes\s+\*/(\d+)', contentRange)
-                if m is not None:
-                    try:
-                        self.contentLength = int(m.group(1))
-                    except (ValueError, TypeError):
-                        pass
-        if (self.contentLength is None and 
-                self.headers.get('transfer-encoding') in ('identity', None)):
-            try:
-                self.contentLength = int(self.headers['content-length'])
-            except (ValueError, KeyError):
-                pass
-        if self.contentLength < 0:
-            self.contentLength = None
 
-    def decideWillClose(self):
-        if self.shortVersion != 11:
-            # Close all connections to HTTP/1.0 servers.
-            self.willClose = True
-        elif 'close' in self.headers.get('connection', '').lower():
-            self.willClose = True
-        elif not self.chunked and self.contentLength is None:
-            # if we aren't chunked and didn't get a content length, we have to
-            # assume the connection will close
-            self.willClose = True
-        else:
-            # HTTP/1.1 connections are assumed to stay open 
-            self.willClose = False
-
-    def finishRequest(self):
-        # calculate the response and and remember our callback.  They may
-        # change after we start a pielined response.
-        origCallback = self.callback 
-        if self.bodyDataCallback:
-            body = None
-        elif self.chunked:
-            body = ''.join(self.chunks)
-        else:
-            body = self.body
-        response = self.makeResponse(body)
-        if self.stream.isOpen():
-            if self.willClose:
-                self.closeConnection()
-                self.changeState('closed')
-            elif self.pipelinedRequest is not None:
-                req = self.pipelinedRequest
-                self.pipelinedRequest = None
-                self.startNewRequest(*req)
-            else:
-                self.changeState('ready')
-                self.idleSince = clock()
-        trap_call(self, origCallback, response)
-        self.requestsFinished += 1
-        self.maybeSendReadyCallback()
-
-    def makeResponse(self, body=None):
-        response = self.headers.copy()
-        response['body'] = body
-        for key in ('version', 'status', 'reason', 'method', 'path', 'host',
-                'port', 'contentLength'):
-            response[key] = getattr(self, key)
-        return response
-
-    # This needs to be in an idle so that the connection is added
-    # to the "active" list before the open callback happens --NN
-    @eventloop.as_idle
-    def maybeSendReadyCallback(self):
-        if (self.readyCallback and self.canSendRequest() and not
-                self.sentReadyCallback):
-            self.sentReadyCallback = True
-            self.readyCallback(self)
-        
-    def handleClose(self, type):
-        oldState = self.state
-        last_data = self.buffer.read()
-        self.closeConnection()
-        if oldState == 'response-body' and self.contentLength is None:
-            self.body = last_data
-            self.finishRequest()
-        elif self.stream.timedOut:
-            self.errback(ConnectionTimeout(self.host))
-        else:
-            self.errback(ServerClosedConnection(self.host))
-        self.checkPipelineNotStarted()
-
-    def handleError(self, error):
-        self.closeConnection()
-        trap_call(self, self.errback, error)
-
-class HTTPSConnection(HTTPConnection):
-    streamFactory = AsyncSSLStream
-    scheme = 'https'
-
-class ProxyHTTPSConnection(HTTPConnection):
-    streamFactory = ProxiedAsyncSSLStream
-    scheme = 'https'
-
-class HTTPConnectionPool(object):
-    """Handle a pool of HTTP connections.
-
-    We use the following stategy to handle new requests:
-    * If there is an connection on the server that's ready to send, use that.
-    * If we haven't hit our connection limits, create a new request
-    * When a connection becomes closed, we look for our last 
-
-    NOTE: "server" in this class means the combination of the scheme, hostname
-    and port.
-    """
-
-    HTTP_CONN = HTTPConnection
-    HTTPS_CONN = HTTPSConnection
-    PROXY_HTTPS_CONN = ProxyHTTPSConnection
-    MAX_CONNECTIONS_PER_SERVER = 2 
-    CONNECTION_TIMEOUT = 300
-    MAX_CONNECTIONS = 30
-
-    def __init__(self):
-        self.pendingRequests = []
-        self.activeConnectionCount = 0
-        self.freeConnectionCount = 0
-        self.connections = {}
-        eventloop.add_timeout(60, self.cleanupPool, 
-            "Check HTTP Connection Timeouts")
-
-    def _getServerConnections(self, scheme, host, port):
-        key = '%s:%s:%s' % (scheme, host, port)
-        try:
-            return self.connections[key]
-        except KeyError:
-            self.connections[key] = {'free': set(), 'active': set()}
-            return self.connections[key]
-
-    def _popPendingRequest(self):
-        """Try to choose a pending request to process.  If one is found,
-        remove it from the pendingRequests list and return it.  If not, return
-        None.
-        """
-
-        if self.activeConnectionCount >= self.MAX_CONNECTIONS:
-            return None
-        for i in xrange(len(self.pendingRequests)):
-            req = self.pendingRequests[i]
-            if req['proxy_host']:
-                conns = self._getServerConnections(req['scheme'],
-                                                   req['proxy_host'], 
-                                                   req['proxy_port'])
-            else:
-                conns = self._getServerConnections(req['scheme'], req['host'], 
-                                                   req['port'])
-
-            if (len(conns['free']) > 0 or 
-                    len(conns['active']) < self.MAX_CONNECTIONS_PER_SERVER):
-                # This doesn't mess up the xrange above since we return immediately.
-                del self.pendingRequests[i]
-                return req
-        return None
-
-    def _onConnectionClosed(self, conn):
-        conns = self._getServerConnections(conn.scheme, conn.host, conn.port)
-        if conn in conns['active']:
-            conns['active'].remove(conn)
-            self.activeConnectionCount -= 1
-        elif conn in conns['free']:
-            conns['free'].remove(conn)
-            self.freeConnectionCount -= 1
-        else:
-            logging.warning("_onConnectionClosed called with connection not "
-                            "in either queue")
-        self.runPendingRequests()
-
-    def _onConnectionReady(self, conn):
-        conns = self._getServerConnections(conn.scheme, conn.host, conn.port)
-        if conn in conns['active']:
-            conns['active'].remove(conn)
-            self.activeConnectionCount -= 1
-        else:
-            logging.warning("_onConnectionReady called with connection not "
-                            "in the active queue")
-        if conn not in conns['free']:
-            conns['free'].add(conn)
-            self.freeConnectionCount += 1
-        else:
-            logging.warning("_onConnectionReady called with connection already "
-                            "in the free queue")
-        self.runPendingRequests()
-
-    def addRequest(self, callback, errback, requestStartCallback,
-            headerCallback, bodyDataCallback, url, method, headers,
-            postVariables = None, postFiles = None):
-        """Add a request to be run.  The request will run immediately if we
-        have a free connection, otherwise it will be queued.
-        """
-        proxy_host = proxy_port = None
-        scheme, host, port, path = parse_url(url)
-        if scheme not in ['http', 'https'] or host == '' or path == '':
-            errback (MalformedURL(url))
-            return
-        # using proxy
-        # NOTE: The code for HTTPS over a proxy is in _makeNewConnection()
-        if scheme == 'http' and config.get(prefs.HTTP_PROXY_ACTIVE):
-            if config.get(prefs.HTTP_PROXY_HOST) and \
-                   config.get(prefs.HTTP_PROXY_PORT):
-                proxy_host = config.get(prefs.HTTP_PROXY_HOST)
-                proxy_port = config.get(prefs.HTTP_PROXY_PORT)
-                path = url
-                scheme = config.get(prefs.HTTP_PROXY_SCHEME)
-                if config.get(prefs.HTTP_PROXY_AUTHORIZATION_ACTIVE):
-                    username = config.get(prefs.HTTP_PROXY_AUTHORIZATION_USERNAME)
-                    password = config.get(prefs.HTTP_PROXY_AUTHORIZATION_PASSWORD)
-                    authString = username+':'+password
-                    authString = b64encode(authString)
-                    headers['ProxyAuthorization'] = "Basic " + authString
-        req = {
-            'callback' : callback,
-            'errback': errback,
-            'requestStartCallback': requestStartCallback,
-            'headerCallback': headerCallback,
-            'bodyDataCallback': bodyDataCallback,
-            'scheme': scheme,
-            'host': host,
-            'port': port,
-            'method': method,
-            'path': path,
-            'headers': headers,
-            'postVariables': postVariables,
-            'postFiles': postFiles,
-            'proxy_host': proxy_host,
-            'proxy_port': proxy_port,
-        }
-        self.pendingRequests.append(req)
-        self.runPendingRequests()
-
-    def runPendingRequests(self):
-        """Find pending requests have a free connection, otherwise it will be
-        queued.
-        """
-
-        while True:
-            req = self._popPendingRequest()
-            if req is None:
-                return
-            if req['proxy_host']:
-                conns = self._getServerConnections(req['scheme'],
-                                                   req['proxy_host'], 
-                                                   req['proxy_port'])
-            else:
-                conns = self._getServerConnections(req['scheme'], req['host'], 
-                                                   req['port'])
-            if len(conns['free']) > 0:
-                conn = conns['free'].pop()
-                self.freeConnectionCount -= 1
-                conn.sendRequest(req['callback'], req['errback'],
-                        req['host'], req['port'],
-                        req['requestStartCallback'], req['headerCallback'],
-                        req['bodyDataCallback'], req['method'], req['path'],
-                        req['headers'], req['postVariables'], req['postFiles'])
-            else:
-                conn = self._makeNewConnection(req)
-            conns['active'].add(conn)
-            self.activeConnectionCount += 1
-            connectionCount = (self.activeConnectionCount +
-                               self.freeConnectionCount)
-            if connectionCount > self.MAX_CONNECTIONS:
-                self._dropAFreeConnection()
-
-    def _makeNewConnection(self, req):
-        disableReadTimeout = req['postFiles'] is not None
-        def openConnectionCallback(conn):
-            conn.sendRequest(req['callback'], req['errback'],
-                             req['host'], req['port'],
-                    req['requestStartCallback'], req['headerCallback'],
-                    req['bodyDataCallback'], req['method'], req['path'],
-                    req['headers'], req['postVariables'], req['postFiles'])
-        def openConnectionErrback(error):
-            if req['proxy_host']:
-                conns = self._getServerConnections(req['scheme'],
-                                                   req['proxy_host'], 
-                                                   req['proxy_port'])
-            else:
-                conns = self._getServerConnections(req['scheme'], req['host'], 
-                                                   req['port'])
-            if conn in conns['active']:
-                conns['active'].remove(conn)
-                self.activeConnectionCount -= 1
-            req['errback'](error)
-
-        # using proxy
-        #
-        # NOTE: The code for HTTP over a proxy is in addRequest()
-        if req['scheme'] == 'https' and config.get(prefs.HTTP_PROXY_ACTIVE):
-            connect_scheme = 'proxied_https'
-        else:
-            connect_scheme = req['scheme']
-
-        if connect_scheme == 'http':
-            conn = self.HTTP_CONN(self._onConnectionClosed,
-                    self._onConnectionReady)
-        elif connect_scheme == 'https':
-            conn = self.HTTPS_CONN(self._onConnectionClosed,
-                    self._onConnectionReady)
-        elif connect_scheme == 'proxied_https':
-            conn = self.PROXY_HTTPS_CONN(self._onConnectionClosed,
-                    self._onConnectionReady)
-        else:
-            raise AssertionError ("Code shouldn't reach here. (connect scheme %s)" % connect_scheme)
-
-        # This needs to be in an idle so that the connection is added
-        # to the "active" list before the open callback happens --NN
-        if req['proxy_host']:
-            eventloop.add_idle(lambda : conn.openConnection(req['proxy_host'],
-                                                           req['proxy_port'],
-                         openConnectionCallback, openConnectionErrback,
-                         disableReadTimeout),
-                          "Open connection %s" % str(self))
-        else:
-            eventloop.add_idle(lambda : conn.openConnection(req['host'],
-                                                           req['port'],
-                         openConnectionCallback, openConnectionErrback,
-                         disableReadTimeout),
-                          "Open connection %s" % str(self))
-        return conn
-
-    def _dropAFreeConnection(self):
-        firstTime = sys.maxint
-        toDrop = None
-
-        for conns in self.connections.values():
-            for candidate in conns['free']:
-                if candidate.idleSince < firstTime:
-                    toDrop = candidate
-                    firstTime = candidate.idleSince
-        if toDrop is not None:
-            toDrop.closeConnection()
-
-    def cleanupPool(self):
-        for serverKey in self.connections.keys():
-            conns = self.connections[serverKey]
-            toRemove = []
-            for conn in conns['free']:
-                if (conn.idleSince is not None and 
-                        conn.idleSince + self.CONNECTION_TIMEOUT <= clock()):
-                    toRemove.append(conn)
-            for conn in toRemove:
-                conn.closeConnection()
-            if len(conns['free']) == len(conns['active']) == 0:
-                del self.connections[serverKey]
-        eventloop.add_timeout(60, self.cleanupPool, 
-            "HTTP Connection Pool Cleanup")
-
-class HTTPClient(object):
-    """High-level HTTP client object.  
-    
-    HTTPClients handle a single HTTP request, but may use several
-    HTTPConnections if the server returns back with a redirection status code,
-    asks for authorization, etc.  Connections are pooled using an
-    HTTPConnectionPool object.
-    """
-
-    connectionPool = HTTPConnectionPool() # class-wid connection pool
-    MAX_REDIRECTS = 10
-    MAX_AUTH_ATTEMPS = 5
-
-    def __init__(self, url, callback, errback, headerCallback=None,
-            bodyDataCallback=None, method="GET", start=0, etag=None,
-            modified=None, cookies=None, postVariables=None, postFiles=None):
-        if cookies == None:
-            cookies = {}
-        
-        self.url = url
-        self.callback = callback
-        self.errback = errback
-        self.headerCallback = headerCallback
-        self.bodyDataCallback = bodyDataCallback
-        self.method = method
-        self.start = start
-        self.etag = etag
-        self.modified = modified
-        self.cookies = cookies # A dictionary of cookie names to
-                               # dictionaries containing the keys
-                               # 'Value', 'Version', 'received',
-                               # 'Path', 'Domain', 'Port', 'Max-Age',
-                               # 'Discard', 'Secure', and optionally
-                               # one or more of the following:
-                               # 'Comment', 'CommentURL', 'origPath',
-                               # 'origDomain', 'origPort'
-        self.postVariables = postVariables
-        self.postFiles = postFiles
-        self.depth = 0
-        self.authAttempts = 0
-        self.updateURLOk = True
-        self.originalURL = self.updatedURL = self.redirectedURL = url
-        self.user_agent = user_agent()
-        self.connection = None
-        self.cancelled = False
-        self.initHeaders()
-
-    def __str__(self):
-        return "%s: %s" % (type(self).__name__, self.url)
-
-    def cancel(self):
-        self.cancelled = True
-        if self.connection is not None:
-            self.connection.closeConnection()
-            self.connection = None
-
-    def sendingProgress(self):
-        if self.connection is not None:
-            return self.connection.sendingProgress()
-        else:
-            return (0, 0)
-
-    def isValidCookie(self, cookie, scheme, host, port, path):
-        return ((time.time() - cookie['received'] < cookie['Max-Age']) and
-                (cookie['Version'] == '1') and
-                self.hostMatches(host, cookie['Domain']) and
-                path.startswith(cookie['Path']) and
-                self.portMatches(str(port), cookie['Port']) and
-                (scheme == 'https' or not cookie['Secure']))
-
-    def dropStaleCookies(self):
-        """Remove cookies that have expired or are invalid for this URL"""
-        scheme, host, port, path = parse_url(self.url)
-        temp = {}
-        for name in self.cookies:
-            if self.isValidCookie(self.cookies[name], scheme, host, port, path):
-                temp[name] = self.cookies[name]
-        self.cookies = temp
-
-    def hostMatches(self, host, host2):
-        host = host.lower()
-        host2 = host2.lower()
-        if host.find('.') == -1:
-            host = host+'.local'
-        if host2.find('.') == -1:
-            host2 = host2+'.local'
-        if host2.startswith('.'):
-            return host.endswith(host2)
-        else:
-            return host == host2
-
-    def portMatches(self, port, portlist):
-        if portlist is None:
-            return True
-        portlist = portlist.replace(',',' ').split()
-        return port in portlist
-
-    def initHeaders(self):
-        self.headers = {}
-        if self.start > 0:
-            self.headers["Range"] = "bytes="+str(self.start)+"-"
-        if not self.etag is None:
-            self.headers["If-None-Match"] = self.etag
-        if not self.modified is None:
-            self.headers["If-Modified-Since"] = self.modified
-        self.headers['User-Agent'] = self.user_agent
-        self.setCookieHeader()
-
-    def setCookieHeader(self):
-        self.dropStaleCookies()
-        if len(self.cookies) > 0:
-            header = "$Version=1"
-            for name in self.cookies:
-                header = '%s;%s=%s' % (header, name, self.cookies[name]['Value'])
-                if self.cookies[name].has_key('origPath'):
-                    header = '%s;$Path=%s' % \
-                                       (header, self.cookies[name]['origPath'])
-                if self.cookies[name].has_key('origDomain'):
-                    header = '%s;$Domain=%s' % \
-                                       (header, self.cookies[name]['origDomain'])
-                if self.cookies[name].has_key('origPort'):
-                    header = '%s;$Port=%s' % \
-                                       (header, self.cookies[name]['origPort'])
-            self.headers['Cookie'] = header
-
-    def startRequest(self):
-        self.cancelled = False
-        self.connection = None
-        self.willHandleResponse = False
-        self.gotBadStatusCode = False
-        if 'Authorization' not in self.headers:
-            scheme, host, port, path = parse_url(self.redirectedURL)
-            def callback(authHeader):
-                if self.cancelled:
-                    return
-                if authHeader is not None:
-                    self.headers["Authorization"] = authHeader
-                self.reallyStartRequest()
-            try:
-                httpauth.find_http_auth(callback, host.decode('ascii', 'replace'), path.decode('ascii', 'replace'))
-            except UnicodeDecodeError:
-                httpauth.find_http_auth(callback, host.decode('ascii', 'ignore'), path.decode('ascii', 'ignore'))
-        else:
-            self.reallyStartRequest()
-
-    def reallyStartRequest(self):
-        if self.bodyDataCallback is not None:
-            bodyDataCallback = self.onBodyData
-        else:
-            bodyDataCallback = None
-        self.connectionPool.addRequest(self.callbackIntercept,
-                self.errbackIntercept, self.onRequestStart, self.onHeaders,
-                bodyDataCallback,
-                self.url, self.method, self.headers, self.postVariables,
-                self.postFiles)
-
-    def statusCodeExpected(self, status):
-        expectedStatusCodes = set([200])
-        if self.start != 0:
-            expectedStatusCodes.add(206)
-        if self.etag is not None or self.modified is not None:
-            expectedStatusCodes.add(304)
-        return status in expectedStatusCodes
-
-    def callbackIntercept(self, response):
-        if self.cancelled:
-            logging.warning("WARNING: Callback on a cancelled request for %s", self.url)
-            traceback.print_stack()
-            return
-        if self.shouldRedirect(response):
-            self.handleRedirect(response)
-        elif self.shouldAuthorize(response):
-            # FIXME: We reuse the id here, but if the request is
-            # cancelled while the auth dialog is up, it won't actually
-            # get cancelled.
-            self.handleAuthorize(response)
-        else:
-            self.connection = None
-            if not self.gotBadStatusCode:
-                if self.callback:
-                    response = self.prepareResponse(response)
-                    trap_call(self, self.callback, response)
-            elif self.errback:
-                error = UnexpectedStatusCode(response['status'])
-                self.errbackIntercept(error)
-
-    def errbackIntercept(self, error):
-        if self.cancelled:
-            return
-        elif isinstance(error, PipelinedRequestNeverStarted):
-            # Connection closed before our pipelined request started.  RFC
-            # 2616 says we should retry
-            self.startRequest() 
-            # this should give us a new connection, since our last one closed
-        elif (isinstance(error, ServerClosedConnection) and
-                self.connection is not None and
-                self.connection.requestsFinished > 0 and 
-                self.connection.bytesRead == 0):
-            # Connection closed when trying to reuse an http connection.  We
-            # should retry with a fresh connection
-            self.startRequest()
-        else:
-            self.connection = None
-            trap_call(self, self.errback, error)
-
-    def onRequestStart(self, connection):
-        if self.cancelled:
-            connection.closeConnection()
-        else:
-            self.connection = connection
-
-    def onHeaders(self, response):
-        if self.shouldRedirect(response) or self.shouldAuthorize(response):
-            self.willHandleResponse = True
-        else:
-            if not self.statusCodeExpected(response['status']):
-                self.gotBadStatusCode = True
-            if self.headerCallback is not None:
-                response = self.prepareResponse(response)
-                if not trap_call(self, self.headerCallback, response):
-                    self.cancel()
-
-    def onBodyData(self, data):
-        if (not self.willHandleResponse and not self.gotBadStatusCode and 
-                self.bodyDataCallback):
-            if not trap_call(self, self.bodyDataCallback, data):
-                self.cancel()
-
-    def prepareResponse(self, response):
-        response['original-url'] = self.originalURL
-        response['updated-url'] = self.updatedURL
-        response['redirected-url'] = self.redirectedURL
-        response['filename'] = self.getFilenameFromResponse(response)
-        response['charset'] = self.getCharsetFromResponse(response)
-        try:
-            response['cookies'] = self.getCookiesFromResponse(response)
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            logging.error("ERROR in getCookiesFromResponse()")
-            traceback.print_exc()
-        return response
-
-    def getCookiesFromResponse(self, response):
-        """Generates a cookie dictionary from headers in response
-        """
-        def getAttrPair(attr):
-            result = attr.strip().split('=', 1)
-            if len(result) == 2:
-                (name, value) = result
-            else:
-                name = result[0]
-                value = ''
-            return (name, value)
-        cookies = {}
-        cookieStrings = []
-        if response.has_key('set-cookie') or response.has_key('set-cookie2'):
-            scheme, host, port, path = parse_url(self.redirectedURL)
-
-            # Split header into cookie strings, respecting commas in
-            # the middle of stuff
-            if response.has_key('set-cookie'):
-                cookieStrings.extend(response['set-cookie'].split(','))
-            if response.has_key('set-cookie2'):
-                cookieStrings.extend(response['set-cookie2'].split(','))
-            temp = []
-            for string in cookieStrings:
-                if (len(temp) > 0 and (
-                    (temp[-1].count('"')%2 == 1) or
-                    (string.find('=') == -1) or
-                    (string.find('=') > string.find(';')))):
-                    temp[-1] = '%s,%s' % (temp[-1], string)
-                else:
-                    temp.append(string)
-            cookieStrings = temp
-            
-            for string in cookieStrings:
-                # Strip whitespace from the cookie string and split
-                # into name-value pairs.
-                string = string.strip()
-                pairs = string.split(';')
-                temp = []
-                for pair in pairs:
-                    if (len(temp) > 0 and
-                        (temp[-1].count('"')%2 == 1)):
-                        temp[-1] = '%s;%s' % (temp[-1], pair)
-                    else:
-                        temp.append(pair)
-                pairs = temp
-
-                (name, value) = getAttrPair(pairs.pop(0))
-                cookie = {'Value' : value,
-                          'Version' : '1',
-                          'received' : time.time(),
-                          # Path is everything up until the last /
-                          'Path' : '/'.join(path.split('/')[:-1])+'/',
-                          'Domain' : host,
-                          'Port' : str(port),
-                          'Secure' : False}
-                for attr in pairs:
-                    attr = attr.strip()
-                    if attr.lower() == 'discard':
-                        cookie['Discard'] = True
-                    elif attr.lower() == 'secure':
-                        cookie['Secure'] = True
-                    elif attr.lower().startswith('version='):
-                        cookie['Version'] = getAttrPair(attr)[1]
-                    elif attr.lower().startswith('comment='):
-                        cookie['Comment'] = getAttrPair(attr)[1]
-                    elif attr.lower().startswith('commenturl='):
-                        cookie['CommentURL'] = getAttrPair(attr)[1]
-                    elif attr.lower().startswith('max-age='):
-                        cookie['Max-Age'] = getAttrPair(attr)[1]
-                    elif attr.lower().startswith('expires='):
-                        now = time.time()
-                        # FIXME: "expires" isn't very well defined and
-                        # this code will probably puke in certain cases
-                        cookieval = getAttrPair(attr)[1].strip()
-                        expires = get_cookie_expiration_date(cookieval)
-                        
-                        expires -= time.timezone
-                        if expires < now:
-                            cookie['Max-Age'] = 0
-                        else:
-                            cookie['Max-Age'] = int(expires - now)
-                    elif attr.lower().startswith('domain='):
-                        cookie['origDomain'] = getAttrPair(attr)[1]
-                        cookie['Domain'] = cookie['origDomain']
-                    elif attr.lower().startswith('port='):
-                        cookie['origPort'] = getAttrPair(attr)[1]
-                        cookie['Port'] = cookie['origPort']
-                    elif attr.lower().startswith('path='):
-                        cookie['origPath'] = getAttrPair(attr)[1]
-                        cookie['Path'] = cookie['origPath']
-                if not cookie.has_key('Discard'):
-                    cookie['Discard'] = not cookie.has_key('Max-Age')
-                if not cookie.has_key('Max-Age'):
-                    cookie['Max-Age'] = str(2**30)
-                if self.isValidCookie(cookie, scheme, host, port, path):
-                    cookies[name] = cookie
-        return cookies
-
-    def findValueFromHeader(self, header, targetName):
+    def find_value_from_header(self, header, target):
         """Finds a value from a response header that uses key=value pairs with
         the ';' char as a separator.  This is how content-disposition and
         content-type work.
@@ -1833,151 +408,349 @@ class HTTPClient(object):
             except ValueError:
                 pass
             else:
-                if name.strip().lower() == targetName.lower():
+                if name.strip().lower() == target.lower():
                     return value.strip().strip('"')
         return None
 
-    def getFilenameFromResponse(self, response):
+    def calc_charset(self):
         try:
-            disposition = response['content-disposition']
+            content_type = self.headers['content-type']
         except KeyError:
             pass
         else:
-            filename = self.findValueFromHeader(disposition, 'filename')
-            if filename is not None:
-                return clean_filename(filename)
-        return filename_from_url(util.unicodify(response['redirected-url']), clean=True)
-
-    def getCharsetFromResponse(self, response):
-        try:
-            contentType = response['content-type']
-        except KeyError:
-            pass
-        else:
-            charset = self.findValueFromHeader(contentType, 'charset')
+            charset = self.find_value_from_header(content_type, 'charset')
             if charset is not None:
                 return charset
         return 'iso-8859-1'
 
-    def shouldRedirect(self, response):
-        return (response['status'] in (301, 302, 303, 307) and 
-                self.depth < self.MAX_REDIRECTS and 
-                'location' in response)
-
-    def handleRedirect(self, response):
-        self.depth += 1
-        self.url = urljoin(self.url, response['location'])
-        self.redirectedURL = self.url
-        if response['status'] == 301 and self.updateURLOk:
-            self.updatedURL = self.url
-        else:
-            self.updateURLOk = False
-        if response['status'] == 303:
-            # "See Other" we must do a get request for the result
-            self.method = "GET"
-            self.postVariables = None
-        if 'Authorization' in self.headers:
-            del self.headers["Authorization"]
-        self.startRequest()
-
-    def shouldAuthorize(self, response):
-        return (response['status'] == 401 and 
-                self.authAttempts < self.MAX_AUTH_ATTEMPS and
-                'www-authenticate' in response)
-
-    def handleAuthorize(self, response):
-        match = re.search("(\w+)\s+realm\s*=\s*\"(.*?)\"$",
-            response['www-authenticate'])
-        if match is None:
-            trap_call(self, self.errback, AuthorizationFailed())
-            return
-        authScheme = unicode(match.expand("\\1"))
-        realm = unicode(match.expand("\\2"))
-        if authScheme.lower() != 'basic':
-            trap_call(self, self.errback, AuthorizationFailed())
-            return
-        def callback(authHeader):
-            if authHeader is not None:
-                self.headers["Authorization"] = authHeader
-                self.authAttempts += 1
-                self.startRequest()
-            else:
-                trap_call(self, self.errback, AuthorizationFailed())
-        httpauth.askForHTTPAuth(callback, self.url, realm, authScheme)
-
-# Grabs a URL in the background using the eventloop
-# defaultMimeType is used for file:// URLs
-def grabURL(url, callback, errback, headerCallback=None,
-        bodyDataCallback=None, method="GET", start=0, etag=None,
-        modified=None, cookies=None, postVariables=None, postFiles=None,
-        defaultMimeType='application/octet-stream', clientClass=HTTPClient):
-    if url is None:
-        errback(MalformedURL(url))
-    if cookies == None:
-        cookies = {}
-    if url.startswith("file://"):
-        path = get_file_url_path(url)
+    def calc_filename(self, redirected_url):
         try:
-            f = file(path)
-        except EnvironmentError:
-            errback(FileURLNotFoundError(path))
+            disposition = self.headers['content-disposition']
+        except KeyError:
+            pass
         else:
-            try:
-                data = f.read()
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
-                errback(FileURLReadError(path))
-            else:
-                callback({"body": data,
-                              "updated-url":url,
-                              "redirected-url":url,
-                              "content-type": defaultMimeType,
-                           })
-    else:
-        client = clientClass(url, callback, errback, headerCallback,
-                             bodyDataCallback, method, start, etag,
-                             modified, cookies, postVariables, postFiles)
-        client.startRequest()
-        return client
+            filename = self.find_value_from_header(disposition, 'filename')
+            if filename is not None:
+                return download_utils.clean_filename(filename)
+        return download_utils.filename_from_url(util.unicodify(redirected_url), 
+                clean=True)
 
-class HTTPHeaderGrabber(HTTPClient):
-    """Modified HTTPClient to get the headers for a URL.  It tries to do a
-    HEAD request, then falls back on doing a GET request, and closing the
-    connection right after the headers.
+    def on_error(self, code, handle):
+        if code == pycurl.E_URL_MALFORMAT:
+            error = MalformedURL(self.options.url)
+        elif code == pycurl.E_COULDNT_CONNECT:
+            error = ConnectionError(self.options.host)
+        elif code == pycurl.E_PARTIAL_FILE:
+            error = ServerClosedConnection(self.options.host)
+        elif code == pycurl.E_HTTP_RANGE_ERROR:
+            error = ResumeFailed(self.options.host)
+        elif code == pycurl.E_TOO_MANY_REDIRECTS:
+            error = TooManyRedirects(self.options.url)
+        else:
+            error = NetworkError(_("Unknown"), handle.errstr())
+        self.call_errback(error)
+
+    def call_callback(self, info):
+        self._cleanup_filehandle()
+        eventloop.add_idle(self.callback, 'curl transfer callback',
+                args=(info,))
+
+    def call_errback(self, error):
+        self._cleanup_filehandle()
+        eventloop.add_idle(self.errback, 'curl transfer errback',
+                args=(error,))
+
+    def _cleanup_filehandle(self):
+        if self._filehandle is not None:
+            self._filehandle.close()
+            self._filehandle = None
+
+    def build_stats(self):
+        stats = TransferStats()
+        getinfo = self.handle.getinfo # for easy typing
+
+        stats.downloaded = int(getinfo(pycurl.SIZE_DOWNLOAD))
+        stats.uploaded = int(getinfo(pycurl.SIZE_UPLOAD))
+        if 'content-length' in self.headers:
+            stats.download_total = int(getinfo(pycurl.CONTENT_LENGTH_DOWNLOAD))
+        stats.upload_total = self.options.post_length
+        stats.download_rate = int(getinfo(pycurl.SPEED_DOWNLOAD))
+        stats.upload_rate = int(getinfo(pycurl.SPEED_UPLOAD))
+        stats.initial_size = self.resume_from
+
+        return stats
+
+    def update_stats(self):
+        new_stats = self.build_stats()
+        self.lock.acquire()
+        try:
+            self.stats = new_stats
+        finally:
+            self.lock.release()
+
+    def get_stats(self):
+        self.lock.acquire()
+        try:
+            return self.stats
+        finally:
+            self.lock.release()
+
+class TransferStats(object):
+    """Holds data about a lib curl transfer.
+
+    Attributes:
+        downloaded -- current bytes downloaded
+        uploaded -- current bytes uploaded
+        download_total -- total bytes to download (or -1 if we don't know)
+        upload_total -- total bytes to upload (or -1 if we don't know)
+        download_rate -- download rate in bytes/second
+        upload_rate -- upload rate in bytes/second
+        initial_size -- bytes that we starting downloading from
+    """
+    def __init__(self):
+        self.downloaded = self.download_total = 0
+        self.uploaded = self.upload_total = -1
+        self.download_rate = self.upload_rate = 0
+        self.initial_size = 0
+
+class LibCURLManager(eventloop.SimpleEventLoop):
+    """Manage a set of CurlTransfers.
+
+    This class does a few things:
+
+      - Runs a thread for pycurl to use
+      - Manages the libcurl multi object
+      - Handles adding/removing CurlTransfers objects
     """
 
-    def __init__(self, url, callback, errback):
-        """HTTPHeaderGrabber support a lot less features than a real
-        HTTPClient, mostly this is because they don't make sense in this
-        context."""
-        HTTPClient.__init__(self, url, callback, errback)
-    
-    def startRequest(self):
-        self.method = "HEAD"
-        HTTPClient.startRequest(self)
+    def __init__(self):
+        eventloop.SimpleEventLoop.__init__(self)
+        self.multi = pycurl.CurlMulti()
+        self.transfer_map = {}
+        self.transfers_to_add = Queue.Queue()
+        self.transfers_to_remove = Queue.Queue()
+        self.after_perform_callbacks = []
 
-    def errbackIntercept(self, error):
-        if self.method == 'HEAD' and not self.cancelled:
-            self.method = "GET"
-            HTTPClient.startRequest(self)
+    def start(self):
+        self.thread = threading.Thread(target=self.loop,
+                name="LibCURL Event Loop")
+        self.thread.start()
+
+    def stop(self):
+        self.quit_flag = True
+        self.wakeup()
+        self.thread.join()
+
+    def add_transfer(self, transfer):
+        if transfer.options.invalid_url:
+            transfer.call_errback(MalformedURL(transfer.options.url))
+            return
+        self.transfers_to_add.put(transfer)
+        self.wakeup()
+
+    def remove_transfer(self, transfer, remove_file=False):
+        self.transfers_to_remove.put((transfer, remove_file))
+        self.wakeup()
+
+    def call_after_perform(self, callback):
+        self.after_perform_callbacks.append(callback)
+
+    def calc_fds(self):
+        return self.multi.fdset()
+
+    def calc_timeout(self):
+        timeout = self.multi.timeout()
+        if timeout < 0:
+            # libcurl documentation says this means to wait "not too long"
+            # Let's try 2 seconds
+            return 2.0
         else:
-            HTTPClient.errbackIntercept(self, error)
+            return timeout / 1000.0
 
-    def callbackIntercept(self, response):
-        # we send the callback for GET requests during the headers
-        if self.method != 'GET' or self.willHandleResponse:
-            HTTPClient.callbackIntercept(self, response)
+    def process_events(self, readfds, writefds, excfds):
+        self.process_queues()
+        while True:
+            rv, num_handles = self.multi.perform()
+            self.update_stats()
+            for callback in self.after_perform_callbacks:
+                trap_call('after perform callback', callback)
+            self.after_perform_callbacks = []
+            if rv != pycurl.E_CALL_MULTI_PERFORM:
+                break
+        self.process_queues()
+        self.check_finished()
 
-    def onHeaders(self, headers):
-        HTTPClient.onHeaders(self, headers)
-        if (self.method == 'GET' and not self.willHandleResponse):
-            headers['body'] = '' 
-            # make it match the behaviour of a HEAD request
-            self.callback(self.prepareResponse(headers))
-            self.cancel()
+    def update_stats(self):
+        for transfer in self.transfer_map.values():
+            transfer.update_stats()
 
-def grabHeaders(url, callback, errback,  clientClass=HTTPHeaderGrabber):
-    client = clientClass(url, callback, errback)
-    client.startRequest()
-    return client
+    def process_queues(self):
+        while True:
+            try:
+                transfer = self.transfers_to_add.get_nowait()
+            except Queue.Empty:
+                break
+            try:
+                transfer.build_handle()
+            except NetworkError, e:
+                transfer.call_errback(e)
+                continue
+            self.transfer_map[transfer.handle] = transfer
+            self.multi.add_handle(transfer.handle)
+
+        while True:
+            try:
+                transfer, remove_file = self.transfers_to_remove.get_nowait()
+            except Queue.Empty:
+                break
+            transfer.on_cancel(remove_file)
+            try:
+                del self.transfer_map[transfer.handle]
+            except KeyError:
+                continue
+            self.multi.remove_handle(transfer.handle)
+
+    def check_finished(self):
+        queued, finished, errors = self.multi.info_read()
+        for handle in finished:
+            self.pop_transfer(handle).on_finished()
+        for handle, code, message in errors:
+            self.pop_transfer(handle).on_error(code, handle)
+
+    def pop_transfer(self, handle):
+        transfer = self.transfer_map.pop(handle)
+        self.multi.remove_handle(handle)
+        return transfer
+
+class HTTPClient(object):
+    """HTTP client for a grab_url call.
+
+    Most of the work for grab_url() happens in the lib curl thread.  This
+    class provides an interface for code in the eventloop (and other threads)
+    to use.
+    """
+    def __init__(self, transfer):
+        self.transfer = transfer
+
+    def cancel(self, remove_file=False):
+        curl_manager.remove_transfer(self.transfer, remove_file)
+
+    def get_stats(self):
+        """Get the current download/upload stats
+
+        :returns: a TransferStats object
+        """
+
+        return self.transfer.get_stats()
+
+def grab_url(url, callback, errback, header_callback=None,
+        content_check_callback=None, write_file=None, etag=None, modified=None,
+        default_mime_type=None, resume=False, post_vars=None,
+        post_files=None):
+    """Quick way to download a network resource
+
+    grab_url is a simple interface to the HTTPClient class.
+
+    :param url: URL to download
+    :param callback: function to call on success
+    :param errback: function to call on error
+    :param header_callback: function to call after we recieve the headers
+    :param content_check_callback: function to call as we recieve content data
+        return False to cancel the transfer.  Note: this function runs in the
+        libcurl thread.  Be mindful of threading issues when accessing data
+    :param write_file: File path to write to
+    :param etag: etag header to send
+    :param modified: last-modified header to send
+    :param default_mime_type: mime type for file:// URLs
+    :param resume: if True and write_file is set, resume an interrupted HTTP
+         transfer
+    :param post_vars: dictionary of variables to send as POST data
+    :param post_files: files to send as POST data (see
+        xhtmltools.multipart_encode for the format)
+
+    The callback will be passed a dictionary that contains all the HTTP
+    headers, as well as the following keys:
+        'status': HTTP response code
+        'body': The request body (if write_file is not given)
+        'content-length': Length of the downloads as an int
+        'total-size': Total size of the download (this is different from
+            content-length because it includes the data we are resuming from)
+        'original-url': the URL passed to grab_url()
+        'redirected_url': the last URL we were redirected to
+        'updated': the URL that we should save in the database, this will be
+            either original-url or redirected-url depending on if we received
+            a permanent redirect or a temporary one.
+        'filename': Name of the file that we should use to save the data
+        'charset': Charset encoding of the data
+
+    :returns HTTPClient object
+    """
+    if url.startswith("file://"):
+        return _grab_file_url(url, callback, errback, default_mime_type)
+    else:
+        options = TransferOptions(url, etag, modified, resume, post_vars,
+                post_files, write_file)
+        transfer = CurlTransfer(options, callback, errback, header_callback,
+                content_check_callback)
+        curl_manager.add_transfer(transfer)
+        return HTTPClient(transfer)
+
+def _grab_file_url(url, callback, errback, default_mime_type):
+    path = download_utils.get_file_url_path(url)
+    try:
+        f = file(path)
+    except EnvironmentError:
+        eventloop.add_idle(errback, 'grab file url errback',
+                args=(FileURLNotFoundError(path),))
+    else:
+        try:
+            data = f.read()
+        except (SystemExit, KeyboardInterrupt):
+            raise
+        except:
+            eventloop.add_idle(errback, 'grab file url errback',
+                    args=(FileURLReadError(path),))
+        else:
+            info = {"body": data,
+                          "updated-url":url,
+                          "redirected-url":url,
+                          "content-type": default_mime_type,
+                          }
+            eventloop.add_idle(callback, 'grab file url callback',
+                    args=(info,))
+
+def _grab_headers_using_get(url, callback, errback):
+    options = TransferOptions(url)
+    options._cancel_on_body_data = True
+    transfer = CurlTransfer(options, callback, errback)
+    curl_manager.add_transfer(transfer)
+    return HTTPClient(transfer)
+
+def grab_headers(url, callback, errback):
+    """Quickly get the headers for a URL"""
+    def errback_intercept(error):
+        _grab_headers_using_get(url, callback, errback)
+
+    options = TransferOptions(url)
+    options.head_request = True
+    transfer = CurlTransfer(options, callback, errback_intercept)
+    curl_manager.add_transfer(transfer)
+    return HTTPClient(transfer)
+
+def init_libcurl():
+    pycurl.global_init(pycurl.GLOBAL_ALL)
+
+def cleanup_libcurl():
+    pycurl.global_cleanup()
+
+def start_thread():
+    global curl_manager
+
+    curl_manager = LibCURLManager()
+    curl_manager.start()
+
+def stop_thread():
+    global curl_manager
+
+    curl_manager.stop()
+    del curl_manager

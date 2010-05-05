@@ -35,6 +35,11 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         # a bit of a hack to avoid using eventloop
         dialog.callback(dialog)
 
+    def make_feed(self, url):
+        my_feed = feed.Feed(url)
+        self.process_idles()
+        return my_feed
+
     def force_feed_parser_callback(self, my_feed):
         # a hack to get the feed to update without eventloop
         feedimpl = my_feed.actualFeed
@@ -66,7 +71,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
         handle.close()
 
-        my_feed = feed.Feed(u"file://" + self.filename)
+        my_feed = self.make_feed(u"file://" + self.filename)
         self.force_feed_parser_callback(my_feed)
 
         self.is_proper_feed_parser_dict(my_feed.actualFeed.parsed)
@@ -93,7 +98,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
         self.choice = dialogs.BUTTON_YES
 
-        my_feed = feed.Feed(u"file://" + self.filename)
+        my_feed = self.make_feed(u"file://" + self.filename)
 
         my_feed.update()
         self.processThreads()
@@ -112,7 +117,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
         self.choice = dialogs.BUTTON_YES
 
-        my_feed = feed.Feed(u"file://" + self.filename)
+        my_feed = self.make_feed(u"file://" + self.filename)
         
         self.assertEqual(self.num_dialogs, 1)
         my_feed.update()
@@ -130,7 +135,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
         self.choice = dialogs.BUTTON_YES
 
-        my_feed = feed.Feed(u"file://" + self.filename)
+        my_feed = self.make_feed(u"file://" + self.filename)
         
         self.assertEqual(self.num_dialogs,1)
         my_feed.update()
@@ -148,7 +153,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
         self.choice = dialogs.BUTTON_YES
 
-        my_feed = feed.Feed(u"file://" + self.filename)
+        my_feed = self.make_feed(u"file://" + self.filename)
         
         self.assertEqual(self.num_dialogs,1)
         my_feed.update()
@@ -165,7 +170,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
         self.choice = dialogs.BUTTON_YES
 
-        my_feed = feed.Feed(u"file://" + self.filename)
+        my_feed = self.make_feed(u"file://" + self.filename)
         
         self.assertEqual(self.num_dialogs, 1)
         my_feed.update()
@@ -184,7 +189,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
         self.choice = dialogs.BUTTON_YES
 
-        my_feed = feed.Feed(u"file://" + self.filename)
+        my_feed = self.make_feed(u"file://" + self.filename)
         
         self.assertEqual(self.num_dialogs, 1)
         my_feed.update()
@@ -203,7 +208,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
         self.choice = dialogs.BUTTON_YES
 
-        my_feed = feed.Feed(u"file://" + self.filename)
+        my_feed = self.make_feed(u"file://" + self.filename)
         
         self.assertEqual(self.num_dialogs, 1)
         my_feed.update()
@@ -222,7 +227,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
         self.choice = dialogs.BUTTON_YES
 
-        my_feed = feed.Feed(u"file://" + self.filename)
+        my_feed = self.make_feed(u"file://" + self.filename)
         
         self.assertEqual(self.num_dialogs, 1)
         my_feed.update()
@@ -244,7 +249,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
         self.choice = dialogs.BUTTON_YES
 
-        my_feed = feed.Feed(u"file://" + self.filename)
+        my_feed = self.make_feed(u"file://" + self.filename)
         
         self.assertEqual(self.num_dialogs, 1)
         my_feed.update()
@@ -266,7 +271,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
         self.choice = dialogs.BUTTON_YES
 
-        my_feed = feed.Feed(u"file://" + self.filename)
+        my_feed = self.make_feed(u"file://" + self.filename)
         
         self.assertEqual(self.num_dialogs, 1)
         my_feed.update()
@@ -282,7 +287,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
     def test_democracy_now_bug(self):
         url = resources.url("testdata/democracy-now-unicode-bug.xml")
-        my_feed = feed.Feed(url)
+        my_feed = self.make_feed(url)
         self.force_feed_parser_callback(my_feed)
         for item in my_feed.items:
             u'booya' in item.get_title().lower()

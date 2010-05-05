@@ -37,6 +37,7 @@ from miro.test.storedatabasetest import *
 from miro.test.databasesanitytest import *
 from miro.test.subscriptiontest import *
 from miro.test.schedulertest import *
+from miro.test.networktest import *
 from miro.test.httpclienttest import *
 from miro.test.httpdownloadertest import *
 from miro.test.feedtest import *
@@ -54,6 +55,15 @@ from miro.test.itemtest import *
 from miro.test.filetypestest import *
 from miro.test.downloadertest import *
 
+def run_tests():
+    from miro import httpclient
+    from miro import test
+    # libcurl can only be initialized/cleaned up once per run, so this code
+    # can't go in the setUp/tearDown methosd.
+    httpclient.init_libcurl()
+    unittest.main(module=test)
+    httpclient.cleanup_libcurl()
+
 # platform specific tests
 
 from miro import config
@@ -61,3 +71,4 @@ from miro import prefs
 
 if config.get(prefs.APP_PLATFORM) == "linux":
     from miro.test.gtcachetest import *
+

@@ -204,32 +204,67 @@ class ThreadPool(object):
             except:
                 pass
 
-class EventLoop(signals.SignalEmitter):
+class SimpleEventLoop(signals.SignalEmitter):
     def __init__(self):
         signals.SignalEmitter.__init__(self, 'thread-will-start',
                                        'thread-started',
                                        'thread-did-start',
                                        'begin-loop',
-                                       'end-loop',
-                                       'event-finished')
+                                       'end-loop')
+        self.quit_flag = False
+        self.wake_sender, self.wake_receiver = util.make_dummy_socket_pair()
+        self.loop_ready = threading.Event()
+
+    def loop(self):
+        self.loop_ready.set()
+        self.emit('thread-will-start')
+        self.emit('thread-started', threading.currentThread())
+        self.emit('thread-did-start')
+
+        while not self.quit_flag:
+            self.emit('begin-loop')
+            timeout = self.calc_timeout()
+            readfds, writefds, excfds = self.calc_fds()
+            readfds.append(self.wake_receiver.fileno())
+            try:
+                read_fds_ready, write_fds_ready, exc_fds_ready = \
+                        select.select(readfds, writefds, excfds, timeout)
+            except select.error, (err, detail):
+                if err == errno.EINTR:
+                    logging.warning ("eventloop: %s", detail)
+                else:
+                    raise
+            if self.quit_flag:
+                break
+            if self.wake_receiver.fileno() in read_fds_ready:
+                self._slurp_waker_data()
+            self.process_events(read_fds_ready, write_fds_ready, exc_fds_ready)
+            self.emit('end-loop')
+
+    def wakeup(self):
+        try:
+            self.wake_sender.send("b")
+        except socket.error, e:
+            logging.warn("Error waking up eventloop (%s)", e)
+
+    def _slurp_waker_data(self):
+        self.wake_receiver.recv(1024)
+
+class EventLoop(SimpleEventLoop):
+    def __init__(self):
+        SimpleEventLoop.__init__(self)
+        self.create_signal('event-finished')
         self.scheduler = Scheduler()
         self.idle_queue = CallQueue()
         self.urgent_queue = CallQueue()
         self.threadpool = ThreadPool(self)
         self.read_callbacks = {}
         self.write_callbacks = {}
-        self.wake_sender, self.wake_receiver = util.make_dummy_socket_pair()
-        self.add_read_callback(self.wake_receiver, self._slurp_waker_data)
-        self.quit_flag = False
         self.clear_removed_callbacks()
-        self.loop_ready = threading.Event()
 
     def clear_removed_callbacks(self):
         self.removed_read_callbacks = set()
         self.removed_write_callbacks = set()
-
-    def _slurp_waker_data(self):
-        self.wake_receiver.recv(1024)
 
     def add_read_callback(self, sock, callback):
         self.read_callbacks[sock.fileno()] = callback
@@ -245,49 +280,30 @@ class EventLoop(signals.SignalEmitter):
         del self.write_callbacks[sock.fileno()]
         self.removed_write_callbacks.add(sock.fileno())
 
-    def wakeup(self):
-        try:
-            self.wake_sender.send("b")
-        except socket.error, e:
-            logging.warn("Error waking up eventloop (%s)", e)
-
     def call_in_thread(self, callback, errback, function, name,
                        *args, **kwargs):
         self.threadpool.queue_call(callback, errback, function, name,
                                   *args, **kwargs)
 
-    def loop(self):
-        self.loop_ready.set()
-        self.emit('thread-will-start')
-        self.emit('thread-started', threading.currentThread())
-        self.emit('thread-did-start')
-
-        while not self.quit_flag:
-            self.emit('begin-loop')
-            self.clear_removed_callbacks()
-            timeout = self.scheduler.next_timeout()
-            readfds = self.read_callbacks.keys()
-            writefds = self.write_callbacks.keys()
-            try:
-                readables, writeables, _ = select.select(readfds, writefds,
-                                                         [], timeout)
-            except select.error, (err, detail):
-                if err == errno.EINTR:
-                    logging.warning ("eventloop: %s", detail)
-                else:
-                    raise
+    def process_events(self, read_fds_ready, write_fds_ready, exc_fds_ready):
+        self._process_urgent_events()
+        for event in self.generate_events(read_fds_ready, write_fds_ready):
+            success = event()
+            self.emit('event-finished', success)
             if self.quit_flag:
                 break
             self._process_urgent_events()
-            for event in self.generate_events(readables, writeables):
-                success = event()
-                self.emit('event-finished', success)
-                if self.quit_flag:
-                    break
-                self._process_urgent_events()
-                if self.quit_flag:
-                    break
-            self.emit('end-loop')
+            if self.quit_flag:
+                break
+
+    def calc_fds(self):
+        return (self.read_callbacks.keys(), self.write_callbacks.keys(), [])
+
+    def calc_timeout(self):
+        return self.scheduler.next_timeout()
+
+    def do_begin_loop(self):
+        self.clear_removed_callbacks()
 
     def _process_urgent_events(self):
         queue = self.urgent_queue
@@ -295,7 +311,7 @@ class EventLoop(signals.SignalEmitter):
             success = queue.process_next_idle()
             self.emit('event-finished', success)
 
-    def generate_events(self, readables, writeables):
+    def generate_events(self, read_fds_ready, write_fds_ready):
         """Generator that creates the list of events that should be
         dealt with on this iteration of the event loop.  This includes
         all socket read/write callbacks, timeouts and idle calls.
@@ -303,11 +319,11 @@ class EventLoop(signals.SignalEmitter):
         "events" are implemented as functions that should be called
         with no arguments.
         """
-        for callback in self.generate_callbacks(writeables,
+        for callback in self.generate_callbacks(write_fds_ready,
                                                self.write_callbacks,
                                                self.removed_write_callbacks):
             yield callback
-        for callback in self.generate_callbacks(readables,
+        for callback in self.generate_callbacks(read_fds_ready,
                                                self.read_callbacks,
                                                self.removed_read_callbacks):
             yield callback
