@@ -554,7 +554,10 @@ class VideoPlayer(player.Player, VBox):
         self.renderer.set_rate(rate)
 
     def seek_to(self, position):
-        time = self.get_total_playback_time() * position
+        duration = self.get_total_playback_time()
+        if duration is None:
+            return
+        time = duration * position
         self.seek_to_time(time)
 
     def seek_to_time(self, time_pos):
