@@ -284,7 +284,14 @@ class ItemListController(object):
             app.display_manager.push_folder_contents_display(item_info)
         elif name.startswith('description-link:'):
             url = name.split(':', 1)[1]
-            base_href = widgetutil.get_feed_info(item_info.feed_id).base_href
+            try:
+                base_href = widgetutil.get_feed_info(item_info.feed_id).base_href
+            except ValueError:
+                logging.warn("Feed not present when clicking link (%s)",
+                        item_info.feed_id)
+                # Feed is not around anymore for some reason (#13310).
+                # Ignore the click.
+                return
             if subscription.is_subscribe_link(url):
                 messages.SubscriptionLinkClicked(url).send_to_backend()
             else:
