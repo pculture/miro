@@ -121,8 +121,8 @@ if gtk.check_version(2, 10, 0) == None:
                 popup_menu.append(item)
 
             popup_menu.show_all()
-            popup_menu.popup(None, None, gtk.status_icon_position_menu,
-                    button, activate_time, status_icon)
+            popup_menu.popup(None, None, None, button, activate_time,
+                    status_icon)
 
         def on_play_unwatched(self, widget):
             self._show_window()
