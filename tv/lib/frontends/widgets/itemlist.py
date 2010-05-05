@@ -451,7 +451,8 @@ class ItemList(signals.SignalEmitter):
         try:
             iter = self._iter_map.pop(id)
         except KeyError:
-            pass # The item isn't in our current list, just skip it
+            # The item is hidden
+            del self._hidden_items[id]
         else:
             self.model.remove(iter)
 
