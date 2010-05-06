@@ -26,51 +26,42 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Startup the Main Miro process."""
+"""miro_urlparse.py -- Replacement for urlparse than fixes #13210."""
 
-def startup():
-    theme = None
-    # Should have code to figure out the theme.
+import urlparse as sys_urlparse
 
-    from miro.plat import pipeipc
-    try:
-        pipe_server = pipeipc.Server()
-    except pipeipc.PipeExists:
-        pipeipc.send_command_line_args()
-        return
-    pipe_server.start_process()
+def _fix_returned_list(url, retval):
+    # this is the main work, we check that the return value components have
+    # the same type as the url
+    if isinstance(url, unicode):
+        return map(unicode, retval)
+    elif isinstance(url, str):
+        return map(str, retval)
+    return retval
 
+def _fix_returned_string(url, retval):
+    if isinstance(url, unicode):
+        return unicode(retval)
+    elif isinstance(url, str):
+        return str(retval)
+    return retval
+
+def urlparse(url, default_scheme="", allow_fragments=True):
+    return _fix_returned_list(url, sys_urlparse.urlparse(url, default_scheme,
+        allow_fragments))
+
+def urlsplit(url, default_scheme="", allow_fragments=True):
+    return _fix_returned_list(url, sys_urlparse.urlsplit(url, default_scheme,
+        allow_fragments))
+
+def urljoin(base, url, allow_fragments=True):
+    return _fix_returned_string(url, sys_urlparse.urljoin(base, url,
+        allow_fragments))
+
+def apply_monkey_patch():
+    # hack the sys.modules dict to use this module instead of the system
+    # urlparse (Note that we've already imported the system urlparse at the
+    # top of this module).
     from miro.plat import miro_urlparse
-    miro_urlparse.apply_monkey_patch()
-
-    from miro.plat import prelogger
-    prelogger.install()
-
-    from miro.plat.utils import initialize_locale
-    initialize_locale()
-
-    from miro import gtcache
-    gtcache.init()
-
-    from miro.plat import commandline
-    args = commandline.get_command_line()[1:]
-    if '--theme' in args:
-        index = args.index('--theme')
-        theme = args[index + 1]
-        del args[index:index+1]
-
-    from miro import startup
-    startup.initialize(theme)
-
-    from miro.plat import migrateappname
-    migrateappname.migrateSupport('Democracy', 'Miro')
-
-    from miro import commandline
-    commandline.set_command_line_args(args)
-
-    # Kick off the application
-    from miro.plat.frontends.widgets.application import WindowsApplication
-    WindowsApplication().run()
-    pipe_server.quit()
-
-startup()
+    import sys
+    sys.modules['urlparse'] = miro_urlparse
