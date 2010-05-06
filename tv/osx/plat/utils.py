@@ -58,12 +58,6 @@ _locale_initialized = False
 
 dlTask = None
 
-def get_pyobjc_major_version():
-    import objc
-    version = objc.__version__
-    version = version.split('.')
-    return int(version[0])
-
 ###############################################################################
 #### Helper method used to get the free space on the disk where downloaded ####
 #### movies are stored                                                     ####

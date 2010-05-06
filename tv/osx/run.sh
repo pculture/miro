@@ -37,10 +37,5 @@ fi
 ./build.sh --alias $SETUP_PARAMS
 
 if [ $? = 0 ]; then
-    OS_VERSION=$(uname -r | cut -d . -f 1)
-    if [ $OS_VERSION == "8" ]; then
-        Miro.app/Contents/MacOS/Miro $RUN_PARAMS
-    else
-        arch -`arch` Miro.app/Contents/MacOS/Miro $RUN_PARAMS
-    fi
+    Miro.app/Contents/MacOS/Miro $RUN_PARAMS
 fi

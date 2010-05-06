@@ -37,33 +37,26 @@ then
     exit 1
 fi
 
-if [ $OS_VERSION == "8" ]; then
-    PYTHON_VERSION=2.4
-    PYTHON_ROOT=/Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION
-    #export MACOSX_DEPLOYMENT_TARGET=10.4
-elif [ $OS_VERSION == "9" ]; then
-    PYTHON_VERSION=2.5
-    PYTHON_ROOT=/System/Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION
-    export MACOSX_DEPLOYMENT_TARGET=10.5
-elif [ $OS_VERSION == "10" ]; then
-    PYTHON_VERSION=2.6
-    PYTHON_ROOT=/System/Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION
-    export MACOSX_DEPLOYMENT_TARGET=10.6
+if [[ $OS_VERSION == "9" ]]; then
+    TARGET_OS_VERSION=10.5
+elif [[ $OS_VERSION == "10" ]]; then
+    TARGET_OS_VERSION=10.6
+else
+    echo "Building and running Miro is only supported on Mac OS X 10.5 and 10.6."
+    exit 1
 fi
 
+ROOT_DIR=$(pushd ../../ >/dev/null; pwd; popd >/dev/null)
+SBOX_DIR=$ROOT_DIR/sandbox
+
+PYTHON_VERSION=2.6
+PYTHON_ROOT=$SBOX_DIR/Frameworks/Python.framework/Versions/$PYTHON_VERSION
 PYTHON=$PYTHON_ROOT/bin/python$PYTHON_VERSION
 
-export VERSIONER_PYTHON_VERSION=$PYTHON_VERSION
-export VERSIONER_PYTHON_PREFER_32_BIT=yes
+export MACOSX_DEPLOYMENT_TARGET=$TARGET_OS_VERSION
 
 if [[ $@ == *--alias* ]]; then
-    if [ $OS_VERSION == "9" ]; then
-        # I would love to know why alias builds don't launch under OS X 10.5 
-        # anymore. In the meantime, perform only full builds on 10.5.
-        $PYTHON setup.py py2app --dist-dir . ${@//--alias/}
-    else
-        $PYTHON setup.py py2app --dist-dir . "$@"
-    fi
+    $PYTHON setup.py py2app --dist-dir . "$@"
 else
     $PYTHON setup.py py2app --dist-dir . -O2 --force-update "$@"
 fi

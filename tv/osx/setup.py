@@ -60,22 +60,12 @@ PORTABLE_DIR = os.path.join(ROOT_DIR, 'lib')
 PLATFORM_DIR = os.path.join(ROOT_DIR, 'osx')
 PLATFORM_PACKAGE_DIR = os.path.join(PLATFORM_DIR, 'plat')
 
-OS_INFO = os.uname()
-OS_VERSION = int(OS_INFO[2].split('.')[0])
 PYTHON_VERSION = sys.version[0:3]
 
-if OS_VERSION < 9:
-    SANDBOX_DIR = "/usr/local"
-    PYTHON_ROOT = os.path.join("/", "Library", "Frameworks", "Python.framework", "Versions", "Current")
-    PYTHON_LIB = os.path.join(PYTHON_ROOT, "Python")
-    PYTHON_SITE_DIR = os.path.join(PYTHON_ROOT, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages')
-else:
-    SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..')))
-    SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
-    PYTHON_ROOT = os.path.join("/", "System", "Library", "Frameworks", "Python.framework", "Versions", PYTHON_VERSION)
-    PYTHON_LIB = os.path.join(PYTHON_ROOT, "Python")
-    PYTHON_SITE_DIR = os.path.join(SANDBOX_DIR, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages')
-    sys.path.insert(0, PYTHON_SITE_DIR)
+SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..')))
+SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
+PYTHON_ROOT = os.path.join(SANDBOX_DIR, "Frameworks", "Python.framework", "Versions", PYTHON_VERSION)
+PYTHON_LIB = os.path.join(PYTHON_ROOT, "Python")
 
 # =============================================================================
 # Drop out if the current binary kit isn't downloaded.
@@ -83,10 +73,7 @@ else:
 
 if not os.path.exists(BKIT_DIR):
     print "Binary kit %s is not installed." % BKIT_DIR
-    if OS_VERSION < 9:
-        print "Run setup_sandbox_10.4.sh."
-    else:
-        print "Run setup_sandbox.sh."
+    print "Run setup_sandbox.sh."
     sys.exit(1)
 
 # =============================================================================
@@ -355,7 +342,6 @@ class MiroBuild (py2app):
         print "Building %s v%s (%s)" % (self.config.get('longAppName'), self.config.get('appVersion'), self.config.get('appRevision'))
         
         self.setup_info_plist()
-        self.copy_libtorrent_module()
 
         py2app.run(self)
         
@@ -370,8 +356,7 @@ class MiroBuild (py2app):
             self.copy_theme_files()
         if not self.alias:
             self.relocate_python_executable()
-            if OS_VERSION >= 9:
-                self.fix_install_names()
+            self.fix_install_names()
         
         self.clean_up_incomplete_lproj()
         self.clean_up_unwanted_data()
@@ -401,16 +386,6 @@ class MiroBuild (py2app):
             infoPlist['PyExecutableName'] = os.path.join("@executable_path", "..", "Frameworks", "Python.framework", "Versions", PYTHON_VERSION, "bin", "python")
         
         self.plist = infoPlist
-
-    def copy_libtorrent_module(self):
-        print 'Copying the libtorrent module to application bundle'
-        src = os.path.join(PYTHON_SITE_DIR, 'libtorrent.so')
-        plat = get_platform()
-        dst_root = os.path.join('build', 'bdist.%s' % plat , 'lib.%s-%s' % (plat, PYTHON_VERSION))
-        if not os.path.exists(dst_root):
-            os.makedirs(dst_root)
-        dst = os.path.join(dst_root, 'libtorrent.so')
-        shutil.copy(src, dst)
 
     def _get_app_root(self):
         dist_app = os.path.join("dist", "Miro.app")

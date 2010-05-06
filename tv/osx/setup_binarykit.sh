@@ -42,7 +42,6 @@ else
     tar -xzvf "${BINARYKIT}"
     rm "${BINARYKIT}"
     echo "Binary kit ${BINARYKIT} is installed."
-    echo "If you are on OSX 10.4: You must re-run setup_sandbox_10.4.sh."
-    echo "If you are on OSX 10.5 or 10.6: You must re-run setup_sandbox.sh."
+    echo "You must now re-run setup_sandbox.sh."
 fi
 

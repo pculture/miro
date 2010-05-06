@@ -148,10 +148,7 @@ class OSXApplication(Application):
     def open_file(self, fn):
         filename = filename_type_to_os_filename(fn)
         ws = NSWorkspace.sharedWorkspace()
-        if utils.get_pyobjc_major_version() == 2:
-            ok, externalApp, movieType = ws.getInfoForFile_application_type_(filename, None, None)
-        else:
-            ok, externalApp, movieType = ws.getInfoForFile_application_type_(filename)
+        ok, externalApp, movieType = ws.getInfoForFile_application_type_(filename, None, None)
         if ok:
             if externalApp == bundle.getBundlePath():
                 logging.warn('trying to play movie externally with ourselves.')

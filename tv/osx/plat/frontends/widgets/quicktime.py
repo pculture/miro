@@ -121,10 +121,7 @@ def warm_up():
     attributes['QTMovieDelegateAttribute'] = None
 
     global warmup_movie
-    if utils.get_pyobjc_major_version() == 2:
-        warmup_movie, error = QTMovie.movieWithAttributes_error_(attributes, None)
-    else:
-        warmup_movie, error = QTMovie.movieWithAttributes_error_(attributes)
+    warmup_movie, error = QTMovie.movieWithAttributes_error_(attributes, None)
     
     if error is not None:
         logging.warn("QuickTime Warm Up failed: %s" % error)
@@ -202,10 +199,7 @@ class Player(player.Player):
     def get_movie_from_file(self, path):
         osfilename = utils.filename_type_to_os_filename(path)
         url = NSURL.fileURLWithPath_(osfilename)
-        if utils.get_pyobjc_major_version() == 2:
-            qtmovie, error = QTMovie.movieWithURL_error_(url, None)
-        else:
-            qtmovie, error = QTMovie.movieWithURL_error_(url)
+        qtmovie, error = QTMovie.movieWithURL_error_(url, None)
         if qtmovie is None or error is not None:
             return None
         if not self.can_open_file(qtmovie):
