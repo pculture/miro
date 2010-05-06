@@ -95,7 +95,7 @@ class Browser(Scroller):
     url = property(get_current_url)
 
     def get_current_title(self):
-        return self._browser.get_title()
+        return self._browser.get_frame().get_title()
 
     def forward(self):
         if self._browser.can_go_forward():
