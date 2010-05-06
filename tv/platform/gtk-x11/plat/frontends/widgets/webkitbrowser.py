@@ -59,11 +59,19 @@ class WebKitEmbed(webkit.WebView):
     def __init__(self):
         webkit.WebView.__init__(self)
         settings = self.get_settings()
-        settings.set_property("enable-developer-extras", True)
 
+        # this disables all plugins -- Miro has problems with the
+        # adobe flash plugin and hangs when the plugin loads and starts
+        # doing things.
+        settings.set_property('enable-plugins', False)
+
+        # sets zoom to affect text and images
         self.set_full_content_zoom(True)
+
+        # webkit will keep track of history
         self.set_maintains_back_forward_list(True)
 
+        # fixes the user agent to include Miro bits
         agent = settings.get_property('user-agent')
         agent = fix_user_agent(agent)
         settings.set_property('user-agent', agent)
