@@ -28,6 +28,13 @@
 
 """Startup the Main Miro process."""
 
+def monkeypatch_urlparse():
+    # Use the version of urlparse from python 2.5.4, rather than 2.5.0.  This
+    # fixes #13210
+    from miro.plat import urlparse254
+    import sys
+    sys.modules['urlparse'] = urlparse254
+
 
 def startup():
     theme = None
@@ -40,6 +47,8 @@ def startup():
         pipeipc.send_command_line_args()
         return
     pipe_server.start_process()
+
+    monkeypatch_urlparse()
 
     from miro.plat import prelogger
     prelogger.install()
