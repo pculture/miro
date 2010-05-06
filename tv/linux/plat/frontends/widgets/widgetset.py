@@ -26,7 +26,6 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-import gtkmozembed
 import gtk
 import gobject
 
@@ -34,105 +33,93 @@ from miro import app
 # Most of our stuff comes from the portable code, except the video renderer
 # and the browser.
 from miro.frontends.widgets.gtk.widgetset import *
+from miro.frontends.widgets.gtk.weakconnect import weak_connect
 
 # We need to provide a Browser
-from miro.plat.frontends.widgets import mozprompt
-from miro.plat.frontends.widgets import httpobserver
-from miro.plat.frontends.widgets import windowcreator
-from miro.plat.frontends.widgets import pluginsdir
-xpcom_setup = False
+from miro.plat.frontends.widgets import webkitbrowser
 
 # Use the default font
 ITEM_TITLE_FONT = None
 ITEM_DESC_FONT  = None
 
-class MiroMozEmbed(gtkmozembed.MozEmbed):
-    def do_destroy(self):
-        # For some reason this hangs everything (#10700), so we just ignore it
-        # instead.  This probably will cause a memory leak if we create and
-        # destroy browser often, but we only destroy a browser on shutdown and
-        # if a site is deleted, which is not too often.
-        pass
-
-gobject.type_register(MiroMozEmbed)
-
-class Browser(Widget):
-    """Web browser widget.  """
-
-    def __init__(self):
+class BrowserShim(Widget):
+    def __init__(self, browser):
         Widget.__init__(self)
-        self.set_widget(MiroMozEmbed())
-        self.wrapped_widget_connect('open-uri', self.on_open_uri)
-        self.wrapped_widget_connect('realize', self.on_realize)
-        self.wrapped_widget_connect('net-start', self.on_net_start)
-        self.wrapped_widget_connect('net-stop', self.on_net_stop)
-        self._widget.set_size_request(200, 100)
+        self.set_widget(browser)
+
+class Browser(Scroller):
+    """Web browser widget.
+    """
+    def __init__(self):
+        Scroller.__init__(self, True, True)
+
+        self._browser = webkitbrowser.WebKitEmbed()
+        self.add(BrowserShim(self._browser))
+
+        self.wrapped_browser_connect('load-started', self.on_net_start)
+        self.wrapped_browser_connect('load-finished', self.on_net_stop)
+        self.wrapped_browser_connect(
+            'mime-type-policy-decision-requested', self.on_mime_type)
+
         # Seems like a reasonable min-size
+        self._widget.set_size_request(200, 100)
 
         self.create_signal('net-start')
         self.create_signal('net-stop')
 
-    def on_net_start(self, browser):
+        # FIXME - handle new windows
+
+    def wrapped_browser_connect(self, signal, method, *user_args):
+        """Connect to a signal of the widget we're wrapping.
+
+        We use a weak reference to ensures that we don't have circular
+        references between the wrapped widget and the wrapper widget.
+        """
+        return weak_connect(self._browser, signal, method, *user_args)
+
+    def on_net_start(self, view, frame):
         self.emit('net-start')
 
-    def on_net_stop(self, browser):
+    def on_net_stop(self, view, frame):
         self.emit('net-stop')
 
-    def on_open_uri(self, browser, uri):
-        if self.should_load_url(uri):
-            return False
-        else:
+    def on_mime_type(self, view, frame, request, mtype, policy_decision):
+        uri = request.get_uri()
+        if not self.should_load_url(uri, mtype):
+            policy_decision.ignore()
             return True
 
     def get_current_url(self):
-        return self._widget.get_location()
+        return self._browser.get_property("uri")
 
     url = property(get_current_url)
 
     def get_current_title(self):
-        return self._widget.get_title()
+        return self._browser.get_title()
 
     def forward(self):
-        if self._widget.can_go_forward():
-            self._widget.go_forward()
+        if self._browser.can_go_forward():
+            self._browser.go_forward()
 
     def back(self):
-        if self._widget.can_go_back():
-            self._widget.go_back()
+        if self._browser.can_go_back():
+            self._browser.go_back()
 
     def can_go_forward(self):
-        return self._widget.can_go_forward()
+        return self._browser.can_go_forward()
 
     def can_go_back(self):
-        return self._widget.can_go_back()
+        return self._browser.can_go_back()
 
     def should_load_url(self, url, mimetype=None):
+        """This gets overriden by frontends/widgets/browser.Browser."""
         return True
 
     def navigate(self, url):
-        self._widget.load_url(url)
-
-    def on_realize(self, widget):
-        if not xpcom_setup:
-            do_xpcom_setup()
+        self._browser.get_frame().load_uri(url)
 
     def reload(self):
-        self._widget.load_url(self.url)
+        self._browser.get_frame().load_uri(self.url)
 
     def stop(self):
-        self._widget.stop_load()
-
-
-class NewWindowMonitor:
-    def on_new_window(self, uri):
-        app.widgetapp.open_url(uri)
-_new_window_monitor = NewWindowMonitor()
-
-def do_xpcom_setup():
-    global xpcom_setup
-
-    mozprompt.stop_prompts()
-    httpobserver.start_http_observer()
-    xpcom_setup = True
-    windowcreator.install_window_creator(_new_window_monitor)
-    pluginsdir.setup_plugins_dir()
+        self._browser.stop_loading()
