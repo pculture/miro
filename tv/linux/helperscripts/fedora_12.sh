@@ -11,8 +11,14 @@
 # Last updated:    4/15/2010
 # Last updated by: Will Kahn-Greene
 
-yum groupinstall "Developer Tools" "Developer Libraries"
+yum groupinstall "Development Tools" "Development Libraries"
 
-yum install Pyrex gecko-devel-unstable pygtk2-devel
-
-yum install gnome-python2-gtkmozembed rb_libtorrent rb_libtorrent-python
+yum install \
+   Pyrex \
+   gecko-devel-unstable \
+   pygtk2-devel \
+   rb_libtorrent \
+   rb_libtorrent-python \
+   pywebkitgtk \
+   ffmpeg \
+   ffmpeg2theora
