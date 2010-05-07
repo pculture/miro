@@ -18,10 +18,6 @@ clean:
 	-rm -rf miro.1.gz miro.real.1.gz
 	-rm miro
 	-rm plat/xlibhelper.c 
-	-rm plat/frontends/widgets/httpobserver.c
-	-rm plat/frontends/widgets/mozprompt.h plat/frontends/widgets/mozprompt.c
-	-rm plat/frontends/widgets/pluginsdir.cpp
-	-rm plat/frontends/widgets/windowcreator.cpp
 	-rm ../lib/frontends/widgets/gtk/pygtkhacks.c
 	-rm -rf tmp
 

@@ -169,13 +169,13 @@ def get_command_output(cmd, warnOnStderr=True, warnOnReturnCode=True):
 
 def parse_pkg_config(command, components, options_dict = None):
     """Helper function to parse compiler/linker arguments from
-    pkg-config/mozilla-config and update include_dirs, library_dirs, etc.
+    pkg-config and update include_dirs, library_dirs, etc.
 
     We return a dict with the following keys, which match up with keyword
     arguments to the setup function: include_dirs, library_dirs, libraries,
     extra_compile_args.
 
-    Command is the command to run (pkg-config, mozilla-config, etc).
+    Command is the command to run (pkg-config, etc).
     Components is a string that lists the components to get options for.
 
     If options_dict is passed in, we add options to it, instead of starting
