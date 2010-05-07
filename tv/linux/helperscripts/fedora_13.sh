@@ -8,11 +8,24 @@
 #
 # This script must be run as root.
 
-# Last updated:    4/15/2010
+# Last updated:    5/7/2010
 # Last updated by: Will Kahn-Greene
 
-yum groupinstall "Developer Tools" "Developer Libraries"
+yum groupinstall "Development Tools" "Development Libraries"
 
-yum install Pyrex gecko-devel-unstable pygtk2-devel
-
-yum install gnome-python2-gtkmozembed rb_libtorrent rb_libtorrent-python
+yum install \
+   Pyrex \
+   python-devel \
+   pygtk2-devel \
+   gtk2-devel \
+   pygtk2 \
+   pygobject2 \
+   gtk2 \
+   gnome-python2-gconf \
+   dbus-python \
+   rb_libtorrent \
+   rb_libtorrent-python \
+   pywebkitgtk \
+   gstreamer-python \
+   ffmpeg \
+   ffmpeg2theora
