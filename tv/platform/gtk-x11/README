@@ -76,23 +76,6 @@ This will go through all the unittests on the GTK-X11 platform and spit out
 any errors to stdout and stderr.
 
 
-Problems with xulrunner
-=======================
-
-If you're having problems with compiling and running Miro with xulrunner
-on your system, then it's likely that the code in ``setup.py`` that guesses
-values for xulrunner paths and libraries isn't guessing correctly on your
-system.
-
-If this is the case, try setting the properties located at the top of the
-``setup.py`` file.
-
-Note that if you have xulrunner 1.8 and 1.9 installed on your system, you
-must use the same xulrunner that the gtkmozembed Python module is compiled
-against.  If you don't, when you go to run Miro, you'll get Symbol Undefined
-type errors.
-
-
 Problems with gstreamer
 =======================
 

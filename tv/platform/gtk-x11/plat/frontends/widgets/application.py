@@ -46,7 +46,6 @@ from miro import config
 from miro import prefs
 from miro.frontends.widgets.application import Application
 from miro.plat.frontends.widgets import threads
-# from miro.plat import mozsetup, renderers, options
 from miro.plat import renderers, options
 from miro.plat.utils import set_properties
 from miro.plat.config import gconf_lock
@@ -101,7 +100,6 @@ class GtkX11Application(Application):
         gobject.set_application_name(config.get(prefs.SHORT_APP_NAME))
         os.environ["PULSE_PROP_media.role"] = "video"
 
-        # threads.call_on_ui_thread(mozsetup.setup_mozilla_environment)
         gtk.gdk.threads_init()
         self.startup()
         set_properties(props_to_set)
