@@ -1,0 +1,20 @@
+========
+ README
+========
+
+These are helper scripts that are distribution/version specific to help
+you install the dependencies you need to run Miro from the source tarball
+or the git repository.
+
+These scripts are maintained by contributors--people like you!
+
+You're a better expert on how to install requirements on the 
+distribution/version that you use!  If you see errors in these scripts or 
+things that could be improved, let us know!  Patches are more than welcome.
+
+You can find us here:
+
+IRC:          #miro-hackers on freenode.net
+mailing list: http://mailman.pculture.org/listinfo/develop
+
+Or you can email me directly at will.guaraldi at pculture.net.
