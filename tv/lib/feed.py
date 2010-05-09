@@ -1429,7 +1429,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                 self.ufeed.mark_as_viewed()
             self.ufeed.signal_change()
 
-        self.ufeed.invalidate_counts()
+        self.ufeed.recalc_counts()
         self.truncate_old_items()
         del self.old_items
         self.signal_change()
@@ -1506,8 +1506,8 @@ class RSSFeedImpl(RSSFeedImplBase):
 
     def feedparser_finished(self):
         self.updating = False
-        self.ufeed.signal_change(needs_save=False)
         self.schedule_update_events(-1)
+        self.update_finished()
 
     def feedparser_errback(self, e):
         if not self.ufeed.id_exists():
@@ -1534,7 +1534,6 @@ class RSSFeedImpl(RSSFeedImplBase):
             updateFreq = 0
         self.set_update_frequency(updateFreq)
 
-        self.update_finished()
         self.feedparser_finished()
         end = clock()
         if end - start > 1.0:
