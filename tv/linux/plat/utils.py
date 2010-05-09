@@ -117,7 +117,19 @@ def setup_logging(inDownloader=False):
             level = logging.WARN
         logging.basicConfig(level=level,
                             format='%(asctime)s %(levelname)-8s %(message)s')
-        rotater = logging.handlers.RotatingFileHandler(config.get(prefs.LOG_PATHNAME), mode="w", maxBytes=100000, backupCount=5)
+        try:
+            rotater = logging.handlers.RotatingFileHandler(
+                config.get(prefs.LOG_PATHNAME), mode="w", maxBytes=100000,
+                backupCount=5)
+        except IOError:
+            # bug 13338.  sometimes there's a file there and it causes
+            # RotatingFileHandler to flip out when opening it.  so we
+            # delete it and then try again.
+            os.remove(config.get(prefs.LOG_PATHNAME))
+            rotater = logging.handlers.RotatingFileHandler(
+                config.get(prefs.LOG_PATHNAME), mode="w", maxBytes=100000,
+                backupCount=5)
+            
         formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
         rotater.setFormatter(formatter)
         logging.getLogger('').addHandler(rotater)
