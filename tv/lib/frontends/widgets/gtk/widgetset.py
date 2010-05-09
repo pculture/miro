@@ -35,8 +35,9 @@ from miro.frontends.widgets.gtk.controls import TextEntry, SecureTextEntry, \
      OptionMenu, Button
 from miro.frontends.widgets.gtk.searchentry import SearchTextEntry, \
      VideoSearchTextEntry
-from miro.frontends.widgets.gtk.customcontrols import CustomButton, \
-     ContinuousCustomButton, CustomSlider
+from miro.frontends.widgets.gtk.customcontrols import (
+    CustomButton, ContinuousCustomButton, CustomSlider, VolumeSlider,
+    VolumeMuter)
 from miro.frontends.widgets.gtk.drawing import ImageSurface, DrawingContext, \
      DrawingArea, Background, Gradient
 from miro.frontends.widgets.gtk.layout import HBox, VBox, Alignment, \

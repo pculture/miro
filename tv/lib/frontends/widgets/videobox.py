@@ -446,8 +446,14 @@ class VideoBox(style.LowerBox):
         style.LowerBox.__init__(self)
         self.controls = PlaybackControls()
         self.timeline = ProgressTimeline()
-        self.volume_muter = imagebutton.ImageButton('volume')
-        self.volume_slider = VolumeSlider()
+        if hasattr(widgetset, 'VolumeMuter'):
+            self.volume_muter = widgetset.VolumeMuter()
+        else:
+            self.volume_muter = imagebutton.ImageButton('volume')
+        if hasattr(widgetset, 'VolumeSlider'):
+            self.volume_slider = widgetset.VolumeSlider()
+        else:
+            self.volume_slider = VolumeSlider()
         self.time_slider = self.timeline.slider
 
         hbox = widgetset.HBox(spacing=20)

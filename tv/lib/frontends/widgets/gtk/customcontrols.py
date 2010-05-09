@@ -38,6 +38,7 @@ import gobject
 
 from miro.frontends.widgets.gtk import wrappermap
 from miro.frontends.widgets.gtk.base import Widget, Bin
+from miro.frontends.widgets.gtk.simple import Label
 from miro.frontends.widgets.gtk.drawing import CustomDrawingMixin, Drawable
 from miro.plat.frontends.widgets import timer
 
@@ -145,7 +146,7 @@ class CustomScaleMixin(CustomControlMixin):
         if event.button != self.drag_button:
             return
         self.in_drag = False
-        if (self.is_continuous and 
+        if (self.is_continuous and
                 (0 <= event.x < self.allocation.width) and
                 (0 <= event.y < self.allocation.height)):
             wrappermap.wrapper(self).emit('changed', self.get_value())
@@ -293,3 +294,51 @@ class CustomSlider(Drawable, Widget):
 
     def set_increments(self, increment, big_increment):
         self._widget.set_increments(increment, big_increment)
+
+def to_miro_volume(value):
+    """Convert from 0 to 1.0 to 0.0 to MAX_VOLUME.
+    """
+    if value == 0:
+        return 0.0
+    return value * 3.0
+
+def to_gtk_volume(value):
+    """Convert from 0.0 to MAX_VOLUME to 0 to 1.0.
+    """
+    if value > 0.0:
+        value = (value / 3.0)
+    return value
+
+class VolumeMuter(Label):
+    """Empty space that has a clicked signal so it can be dropped
+    in place of the VolumeMuter.
+    """
+    def __init__(self):
+        Label.__init__(self)
+        self.create_signal("clicked")
+
+class VolumeSlider(Widget):
+    """VolumeSlider that uses the gtk.VolumeButton().
+    """
+    def __init__(self):
+        Widget.__init__(self)
+        self.set_widget(gtk.VolumeButton())
+        self.wrapped_widget_connect('value-changed', self.on_value_changed)
+        self.wrapped_widget_connect('popdown', self.on_value_set)
+        self.create_signal('changed')
+        self.create_signal('released')
+
+    def on_value_changed(self, *args):
+        value = self.get_value()
+        self.emit('changed', value)
+
+    def on_value_set(self, *args):
+        self.emit('released')
+
+    def get_value(self):
+        value = self._widget.get_property('value')
+        return to_miro_volume(value)
+
+    def set_value(self, value):
+        value = to_gtk_volume(value)
+        self._widget.set_property('value', value)
