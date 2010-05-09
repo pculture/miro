@@ -33,7 +33,6 @@ import os.path
 import gobject
 import gtk
 
-from miro import config, prefs
 from miro import searchengines
 from miro.frontends.widgets.gtk import controls
 from miro.frontends.widgets.gtk import pygtkhacks
@@ -122,17 +121,7 @@ class GtkVideoSearchTextEntry(GtkSearchTextEntry):
             self._add_engine(engine)
 
     def _add_engine(self, engine):
-        icon_path = resources.path('images/search_icon_%s.png' % engine.name)
-        if config.get(prefs.THEME_NAME):
-            logging.debug('engine %s filename: %s' % (engine.name, engine.filename))
-            test_icon_path = resources.theme_path(config.get(prefs.THEME_NAME),
-                                                  'images/search_icon_%s.png' %
-                                                  engine.name)
-            if os.path.exists(test_icon_path):
-                # this search engine came from a theme; look up the icon in the
-                # theme directory instead
-                icon_path = test_icon_path
-
+        icon_path = searchengines.icon_path_for_engine(engine)
         pixbuf = gtk.gdk.pixbuf_new_from_file(icon_path)
         self._engine_to_pixbuf[engine.name] = pixbuf
         image = gtk.Image()

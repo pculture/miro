@@ -209,7 +209,7 @@ class FeedImpl(DDBObject):
         self.title = title
         self.created = datetime.now()
         self.updating = False
-        self.thumbURL = default_feed_icon_url()
+        self.thumbURL = None
         self.initialUpdate = True
         self.updateFreq = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)*60
 
@@ -269,6 +269,10 @@ class FeedImpl(DDBObject):
         """Subclasses should override this
         """
         self.schedule_update_events(-1)
+
+    def default_thumbnail_path(self):
+        """Get the path to our thumbnail when there isn't a downloaded icon"""
+        return default_feed_icon_path()
 
     @returns_unicode
     def get_title(self):
@@ -1219,11 +1223,12 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     def thumbnail_valid(self):
         return self.icon_cache and self.icon_cache.isValid()
 
-    def calc_thumbnail(self):
-        if self.thumbnail_valid():
-            return fileutil.expand_filename(self.icon_cache.get_filename())
-        else:
-            return default_feed_icon_path()
+    ## FIXME - this is only called in commented out functions 
+    ## def calc_thumbnail(self):
+    ##  if self.thumbnail_valid():
+    ##      return fileutil.expand_filename(self.icon_cache.get_filename())
+    ##  else:
+    ##      return default_feed_icon_path()
 
     def calc_tablist_thumbnail(self):
         if self.thumbnail_valid():
@@ -1240,7 +1245,10 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     @returns_filename
     def get_thumbnail_path(self):
         self.confirm_db_thread()
-        return resources.path(self.calc_thumbnail())
+        if self.thumbnail_valid():
+            return fileutil.expand_filename(self.icon_cache.get_filename())
+        else:
+            return self.actualFeed.default_thumbnail_path()
 
     ## FIXME - it looks like these never get called
     ## @returns_unicode
@@ -1352,7 +1360,8 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         if channelTitle != None and self._allow_feed_to_override_title():
             self.title = channelTitle
         if (parsed.feed.has_key('image') and
-                parsed.feed.image.has_key('url')):
+                parsed.feed.image.has_key('url') and
+                self._allow_feed_to_override_thumbnail()):
             self.thumbURL = parsed.feed.image.url
             self.ufeed.icon_cache.request_update(is_vital=True)
 
@@ -1407,7 +1416,15 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                 self._handle_new_entry(entry, fp_values, channelTitle)
 
     def _allow_feed_to_override_title(self):
-        """Should the feed be allowed to override the title for a search?
+        """Should the RSS feed override the default title?
+
+        Subclasses can override this method to change our behavior when
+        parsing feed entries.
+        """
+        return True
+
+    def _allow_feed_to_override_thumbnail(self):
+        """Should the RSS thumbnail override the default thumbnail?
 
         Subclasses can override this method to change our behavior when
         parsing feed entries.
@@ -1792,9 +1809,16 @@ class SavedSearchFeedImpl(RSSMultiFeedBase):
                 {'engine': info.title, 'query': self.query}))
         RSSMultiFeedBase.setup_new(self, url, ufeed, title)
 
+    def default_thumbnail_path(self):
+        info = searchengines.get_engine_for_name(self.engine)
+        return searchengines.icon_path_for_engine(info)
+
     def setup_restored(self):
         self.parse_url(self.url)
         RSSMultiFeedBase.setup_restored(self)
+
+    def _allow_feed_to_override_thumbnail(self):
+        return False
 
     def parse_url(self, url):
         m = SEARCH_URL_MATCH_RE.match(url)
@@ -2282,7 +2306,7 @@ class SearchFeedImpl(RSSMultiFeedBase):
         self.etag = {}
         self.modified = {}
         self.ufeed.icon_cache.reset()
-        self.thumbURL = default_feed_icon_url()
+        self.thumbURL = None
         self.ufeed.icon_cache.request_update(is_vital=True)
         if was_searching:
             self.ufeed.emit('update-finished')
