@@ -292,7 +292,7 @@ class CurlTransfer(object):
             mode = 'ab'
             try:
                 path = self.options.write_file
-                self.resume_from = os.stat(path)[stat.ST_SIZE]
+                self.resume_from = int(os.stat(path)[stat.ST_SIZE])
             except OSError:
                 # file doesn't exist, just skip resuming
                 pass

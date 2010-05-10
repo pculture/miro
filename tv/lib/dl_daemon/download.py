@@ -558,7 +558,7 @@ class HTTPDownloader(BGDownloader):
             if not isinstance(restore.get('totalSize', 0), int):
                 # Sometimes restoring old downloaders caused errors because
                 # their totalSize wasn't an int.  (see #3965)
-                restore = None
+                restore['totalSize'] = int(restore['totalSize'])
         if restore is not None:
             self.__dict__.update(restore)
             self.restartOnError = True
