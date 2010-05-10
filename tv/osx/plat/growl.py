@@ -14,7 +14,7 @@ __contributors__ = ["Ingmar J Stein (Growl Team)",
 import _growl
 import types
 import struct
-import md5
+import hashlib
 import socket
 
 GROWL_UDP_PORT=9887
@@ -129,7 +129,7 @@ class netgrowl:
 		return self.encodePassword(data)
 
 	def encodePassword(self, data):
-		checksum = md5.new()
+		checksum = hashlib.md5()
 		checksum.update(data)
 		if self.password:
 		   checksum.update(self.password)
@@ -173,11 +173,11 @@ class GrowlNotifier(object):
 	def __init__(self, applicationName=None, notifications=None, defaultNotifications=None, applicationIcon=None, hostname=None, password=None):
 		if applicationName:
 			self.applicationName = applicationName
-		assert(self.applicationName, 'An application name is required.')
+		assert self.applicationName, 'An application name is required.'
 
 		if notifications:
 			self.notifications = list(notifications)
-		assert(self.notifications, 'A sequence of one or more notification names is required.')
+		assert self.notifications, 'A sequence of one or more notification names is required.'
 
 		if defaultNotifications is not None:
 			self.defaultNotifications = list(defaultNotifications)
