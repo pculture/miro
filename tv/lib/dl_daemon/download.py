@@ -28,6 +28,7 @@
 
 import os
 import re
+import stat
 from threading import RLock
 from copy import copy
 import sys
@@ -584,6 +585,25 @@ class HTTPDownloader(BGDownloader):
         if self.retryDC:
             self.retryDC.cancel()
             self.retryDC = None
+        if resume:
+            # sanity check that the file we're resuming from is the right
+            # size.  In particular, before the libcurl change, we would
+            # preallocate the entire file, so we need to undo this.
+            file_size = os.stat(self.filename)[stat.ST_SIZE]
+            if file_size > self.currentSize:
+                # use logging.info rather than warn, since this is the usual
+                # case from upgrading from 3.0.x to 3.1
+                logging.info("File larger than currentSize: truncating.  "
+                        "url: %s, path: %s.", self.url, self.filename)
+                f = open(self.filename, "ab")
+                f.truncate(self.currentSize)
+                f.close()
+            elif file_size < self.currentSize:
+                # Data got deleted somehow.  Let's start over.
+                logging.warn("File doesn't contain enough data to resume.  "
+                        "url: %s, path: %s.", self.url, self.filename)
+                resume = False
+
         self.client = httpclient.grab_url(self.url,
                 self.on_download_finished, self.on_download_error,
                 header_callback=self.on_headers, write_file=self.filename, resume=resume)
