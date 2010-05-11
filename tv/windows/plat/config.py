@@ -118,14 +118,6 @@ def get(descriptor):
     elif descriptor == prefs.ICON_CACHE_DIRECTORY:
         return os.path.join(_getSupportDirectory(), 'icon-cache')
 
-    elif descriptor == prefs.DB_PATHNAME:
-        path = get(prefs.SUPPORT_DIRECTORY)
-        return os.path.join(path, 'tvdump')
-
-    elif descriptor == prefs.BSDDB_PATHNAME:
-        path = get(prefs.SUPPORT_DIRECTORY)
-        return os.path.join(path, 'database')
-
     elif descriptor == prefs.SQLITE_PATHNAME:
         path = get(prefs.SUPPORT_DIRECTORY)
         return os.path.join(path, 'sqlitedb')

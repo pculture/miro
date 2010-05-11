@@ -131,12 +131,6 @@ def get(descriptor):
     elif descriptor == prefs.ICON_CACHE_DIRECTORY:
         return _makeSupportFilePath('icon-cache')
     
-    elif descriptor == prefs.DB_PATHNAME:
-        return _makeSupportFilePath('tvdump')
-
-    elif descriptor == prefs.BSDDB_PATHNAME:
-        return _makeSupportFilePath('database')
-
     elif descriptor == prefs.SQLITE_PATHNAME:
         return _makeSupportFilePath('sqlitedb')
 

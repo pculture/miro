@@ -138,14 +138,6 @@ def get(descriptor):
     elif descriptor == prefs.ICON_CACHE_DIRECTORY:
         value = os.path.expanduser('~/.miro/icon-cache')
 
-    elif descriptor == prefs.DB_PATHNAME:
-        value = get(prefs.SUPPORT_DIRECTORY)
-        value = os.path.join(value, 'tvdump')
-
-    elif descriptor == prefs.BSDDB_PATHNAME:
-        value = get(prefs.SUPPORT_DIRECTORY)
-        value = os.path.join(value, 'database')
-
     elif descriptor == prefs.SQLITE_PATHNAME:
         value = get(prefs.SUPPORT_DIRECTORY)
         value = os.path.join(value, 'sqlitedb')
