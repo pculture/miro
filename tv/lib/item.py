@@ -369,7 +369,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def download_tab_view(cls):
         return cls.make_view("(item.pendingManualDL OR "
                 "(rd.state in ('downloading', 'paused', 'uploading', "
-                "'uploading-paused') OR "
+                "'uploading-paused', 'offline') OR "
                 "(rd.state == 'failed' AND "
                 "feed.origURL == 'dtv:manualFeed')) AND "
                 "rd.main_item_id=item.id)",
