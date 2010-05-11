@@ -586,23 +586,7 @@ class HTTPDownloader(BGDownloader):
             self.retryDC.cancel()
             self.retryDC = None
         if resume:
-            # sanity check that the file we're resuming from is the right
-            # size.  In particular, before the libcurl change, we would
-            # preallocate the entire file, so we need to undo this.
-            file_size = os.stat(self.filename)[stat.ST_SIZE]
-            if file_size > self.currentSize:
-                # use logging.info rather than warn, since this is the usual
-                # case from upgrading from 3.0.x to 3.1
-                logging.info("File larger than currentSize: truncating.  "
-                        "url: %s, path: %s.", self.url, self.filename)
-                f = open(self.filename, "ab")
-                f.truncate(self.currentSize)
-                f.close()
-            elif file_size < self.currentSize:
-                # Data got deleted somehow.  Let's start over.
-                logging.warn("File doesn't contain enough data to resume.  "
-                        "url: %s, path: %s.", self.url, self.filename)
-                resume = False
+            resume = self._resume_sanity_check()
 
         self.client = httpclient.grab_url(self.url,
                 self.on_download_finished, self.on_download_error,
@@ -610,6 +594,32 @@ class HTTPDownloader(BGDownloader):
         self.updateClient()
         eventloop.add_timeout(self.CHECK_STATS_TIMEOUT, self.update_stats,
                 'update http downloader stats')
+
+    def _resume_sanity_check(self):
+        """Do sanity checks to test if we should try HTTP Resume.
+
+        :returns: If we should still try HTTP resume
+        """
+        if not os.path.exists(self.filename):
+            return False
+        # sanity check that the file we're resuming from is the right
+        # size.  In particular, before the libcurl change, we would
+        # preallocate the entire file, so we need to undo this.
+        file_size = os.stat(self.filename)[stat.ST_SIZE]
+        if file_size > self.currentSize:
+            # use logging.info rather than warn, since this is the usual
+            # case from upgrading from 3.0.x to 3.1
+            logging.info("File larger than currentSize: truncating.  "
+                    "url: %s, path: %s.", self.url, self.filename)
+            f = open(self.filename, "ab")
+            f.truncate(self.currentSize)
+            f.close()
+        elif file_size < self.currentSize:
+            # Data got deleted somehow.  Let's start over.
+            logging.warn("File doesn't contain enough data to resume.  "
+                    "url: %s, path: %s.", self.url, self.filename)
+            return False
+        return True
 
     def destroy_client(self):
         self.update_stats() # update the stats before we throw away the client.
