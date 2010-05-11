@@ -578,6 +578,11 @@ class RemoteDownloader(DDBObject):
             self.signal_change(needs_save=False)
             self._update_retry_time_dc = None
 
+    def _cancel_retry_time_update(self):
+        if self._update_retry_time_dc:
+            self._update_retry_time_dc.cancel()
+            self._update_retry_time_dc = None
+
     @returns_unicode
     def get_reason_failed(self):
         """Returns the reason for the failure of this download.  This
@@ -827,7 +832,7 @@ class DownloadDaemonStarter(object):
                     callback=self._on_shutdown)
 
     def _on_shutdown(self):
-        ensure_downloaders_saved()
+        shutdown_downloader_objects()
         self.shutdown_callback()
         del self.shutdown_callback
 
@@ -897,11 +902,13 @@ def get_downloader_for_item(item):
     else:
         return RemoteDownloader(url, item, channelName=channelName)
 
-def ensure_downloaders_saved():
-    """Make sure any RemoteDownloaders with pending changes get saved.
+def shutdown_downloader_objects():
+    """Perform shutdown code for RemoteDownloaders.
 
-    For performance reasons, RemoteDownloader objects don't save to
-    disk every time their status dict is updated.
+    This means a couple things:
+      - Make sure any RemoteDownloaders with pending changes get saved.
+      - Cancel the update retry time callbacks
     """
     for downloader in RemoteDownloader.make_view():
         downloader._save_now()
+        downloader._cancel_retry_time_update()
