@@ -108,6 +108,7 @@ class UnexpectedStatusCode(HTTPError):
         else:
             HTTPError.__init__(self, _("Bad Status Code: %(code)s",
                                        {"code": util.unicodify(code)}))
+        self.code = code
 
 class AuthorizationFailed(HTTPError):
     def __init__(self):

@@ -100,24 +100,28 @@ def _scrape_youtube_url(url, callback):
         callback(None)
 
 def _youtube_get_first_successful(info, current_url, urls, callback):
-    status = info["status"]
+    if isinstance(info, httpclient.UnexpectedStatusCode):
+        if info.code != 404:
+            _youtube_errback(info, callback)
+            return
 
-    if status == 200:
-        if info.get("content-type"):
-            callback(current_url, unicode(info["content-type"]))
-        else:
-            callback(current_url)
+        if len(urls) == 0:
+            callback(None)
+            return
+
+        current_url, urls = urls[0], urls[1:]
+
+        logging.debug("youtube download: trying %s", current_url)
+        httpclient.grab_headers(
+            current_url,
+            lambda x: _youtube_get_first_successful(x, current_url, urls, callback),
+            lambda x: _youtube_get_first_successful(x, current_url, urls, callback))
         return
 
-    if len(urls) == 0:
-        callback(None)
-        return
-
-    current_url, urls = urls[0], urls[1:]
-
-    logging.debug("youtube download: trying %s", current_url)
-    httpclient.grab_headers(current_url, lambda x: _youtube_get_first_successful(x, current_url, urls, callback),
-            lambda x: _youtube_errback(x, callback))
+    if info.get("content-type"):
+        callback(current_url, unicode(info["content-type"]))
+    else:
+        callback(current_url)
 
 def _youtube_callback_step2(info, videoID, callback):
     try:
@@ -138,9 +142,10 @@ def _youtube_callback_step2(info, videoID, callback):
         logging.debug("youtube download: trying %s", urls[0])
         # go through the urls we have until we find one that's successful or
         # 404 on all of them.
-        httpclient.grab_headers(urls[0],
-                lambda x: _youtube_get_first_successful(x, urls[0], urls[1:], callback),
-                lambda x: _youtube_errback(x, callback))
+        httpclient.grab_headers(
+            urls[0],
+            lambda x: _youtube_get_first_successful(x, urls[0], urls[1:], callback),
+            lambda x: _youtube_get_first_successful(x, urls[0], urls[1:], callback))
 
     except:
         logging.exception("youtube_callback_step2: unable to scrape YouTube Video URL")
