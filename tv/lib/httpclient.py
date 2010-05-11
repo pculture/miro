@@ -206,7 +206,6 @@ class TransferOptions(object):
         handle.setopt(pycurl.NOPROGRESS, 1)
         handle.setopt(pycurl.NOSIGNAL, 1)
         handle.setopt(pycurl.CONNECTTIMEOUT, net.SOCKET_CONNECT_TIMEOUT)
-        handle.setopt(pycurl.TIMEOUT, net.SOCKET_READ_TIMEOUT)
         handle.setopt(pycurl.URL, self.url)
         if self.head_request:
             handle.setopt(pycurl.NOBODY, 1)
