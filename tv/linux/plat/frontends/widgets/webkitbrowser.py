@@ -38,6 +38,7 @@ http://code.google.com/p/pywebkitgtk/
 
 from miro import config, prefs
 
+import gtk
 import webkit
 
 def fix_user_agent(agent):
@@ -75,7 +76,36 @@ class WebKitEmbed(webkit.WebView):
         agent = fix_user_agent(agent)
         settings.set_property('user-agent', agent)
 
+        self.connect_after("populate-popup", self.handle_populate_popup)
+
     def get_frame(self):
         # our browser isn't tabbed, so we always get the main
         # frame and operate on that.
         return self.get_main_frame()
+
+    def handle_zoom_in(self, menu_item, view):
+        view.zoom_in()
+
+    def handle_zoom_out(self, menu_item, view):
+        view.zoom_out()
+
+    def handle_zoom_full(self, menu_item, view):
+        if not (view.get_zoom_level() == 1.0):
+            view.set_zoom_level(1.0)
+
+    def handle_populate_popup(self, view, menu):
+        # zoom buttons
+        zoom_in = gtk.ImageMenuItem(gtk.STOCK_ZOOM_IN)
+        zoom_in.connect('activate', self.handle_zoom_in, view)
+        menu.append(zoom_in)
+
+        zoom_out = gtk.ImageMenuItem(gtk.STOCK_ZOOM_OUT)
+        zoom_out.connect('activate', self.handle_zoom_out, view)
+        menu.append(zoom_out)
+
+        zoom_full = gtk.ImageMenuItem(gtk.STOCK_ZOOM_100)
+        zoom_full.connect('activate', self.handle_zoom_full, view)
+        menu.append(zoom_full)
+
+        menu.show_all()
+        return False
