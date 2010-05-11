@@ -155,7 +155,9 @@ class LibraryTabList(StaticTabListBase):
         self.view.allow_multiple_select(False)
         self.view.set_fixed_height(False)
         self.view.set_drag_dest(MediaTypeDropHandler())
+        self.view.connect('selection-changed', self.on_selection_changed)
         self.auto_tabs = None
+        self.auto_tabs_to_show = set()
 
     def build_tabs(self):
         self.add(statictabs.VideoLibraryTab())
@@ -165,16 +167,34 @@ class LibraryTabList(StaticTabListBase):
                           'conversions': statictabs.VideoConversionsTab()}
         self.view.model_changed()
 
-    def show_auto_tab(self, name, count):
-        if count > 0 and name in self.auto_tabs:
-            try:
-                tab = self.get_tab(name)
-            except KeyError, e:
-                self.add(self.auto_tabs[name])
+    def update_auto_tab_count(self, name, count):
+        if count > 0:
+            self.auto_tabs_to_show.add(name)
+            self.show_auto_tab(name)
+        else:
+            self.auto_tabs_to_show.discard(name)
+            self.remove_auto_tab_if_not_selected(name)
+
+    def show_auto_tab(self, name):
+        try:
+            tab = self.get_tab(name)
+        except KeyError, e:
+            self.add(self.auto_tabs[name])
     
-    def hide_auto_tab(self, name, count):
-        if count == 0 and name in self.auto_tabs:
-            self.remove(name)
+    def remove_auto_tab_if_not_selected(self, name):
+        if name not in self.iter_map:
+            return
+        # Don't remove the tab if it's currently selected.
+        for iter in self.view.get_selection():
+            info = self.view.model[iter][0]
+            if info.id == name:
+                return
+        self.remove(name)
+
+    def on_selection_changed(self, view):
+        for name in self.auto_tabs:
+            if name in self.iter_map and name not in self.auto_tabs_to_show:
+                self.remove_auto_tab_if_not_selected(name)
 
     def update_download_count(self, count, non_downloading_count):
         self.update_count('downloading', 'downloading', count, non_downloading_count)
@@ -189,7 +209,8 @@ class LibraryTabList(StaticTabListBase):
         self.update_count('audios', 'unwatched', count)
     
     def update_count(self, key, attr, count, other_count=0):
-        self.show_auto_tab(key, count+other_count)
+        if key in self.auto_tabs:
+            self.update_auto_tab_count(key, count+other_count)
         try:
             iter = self.iter_map[key]
         except KeyError, e:
@@ -198,7 +219,6 @@ class LibraryTabList(StaticTabListBase):
             tab = self.view.model[iter][0]
             setattr(tab, attr, count)
             self.view.update_tab(iter, tab)
-            self.hide_auto_tab(key, count+other_count)
             self.view.model_changed()
 
 class TabListDragHandler(object):
