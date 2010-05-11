@@ -255,7 +255,6 @@ class MiroBuild (py2app):
         self.distribution.ext_modules.append(self.get_qtcomp_ext())
         self.distribution.ext_modules.append(self.get_growl_ext())
         self.distribution.ext_modules.append(self.get_growl_image_ext())
-        self.distribution.ext_modules.append(self.get_shading_ext())
         self.distribution.ext_modules.append(self.get_fasttypes_ext())
 
         self.distribution.packages = [
@@ -321,11 +320,6 @@ class MiroBuild (py2app):
         growl_image_src = glob(os.path.join(ROOT_DIR, 'osx', 'modules', '_growlImage.m'))
         growl_image_link_args = ['-framework', 'Cocoa']
         return Extension("miro.plat._growlImage", sources=growl_image_src, extra_link_args=growl_image_link_args)
-
-    def get_shading_ext(self):
-        shading_src = glob(os.path.join(ROOT_DIR, 'osx', 'modules', 'shading.m'))
-        shading_link_args = ['-framework', 'ApplicationServices']
-        return Extension("miro.plat.shading", sources=shading_src, extra_link_args=shading_link_args)
     
     def get_fasttypes_ext(self):
         return Extension("miro.fasttypes", 

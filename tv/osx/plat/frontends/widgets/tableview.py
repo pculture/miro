@@ -38,7 +38,6 @@ from objc import YES, NO, nil
 
 from miro import signals
 from miro.frontends.widgets import widgetconst
-from miro.plat import shading
 from miro.plat.frontends.widgets import osxmenus
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets import tablemodel
@@ -461,7 +460,7 @@ class TableViewCommon(object):
                 rect.origin.x, rect.origin.y + rect.size.height)
         gradient.set_start_color(start_color)
         gradient.set_end_color(end_color)
-        shading.draw_axial(gradient)
+        gradient.draw()
         context.restoreGraphicsState()
 
     def canDragRowsWithIndexes_atPoint_(self, indexes, point):

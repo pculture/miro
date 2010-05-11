@@ -36,7 +36,6 @@ from Quartz import *
 from objc import YES, NO, nil
 
 from miro.plat import utils
-from miro.plat import shading
 
 class ImageSurface:
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
@@ -67,6 +66,11 @@ class ImageSurface:
 def convert_cocoa_color(color):
     rgb = color.colorUsingColorSpaceName_(NSDeviceRGBColorSpace)
     return (rgb.redComponent(), rgb.greenComponent(), rgb.blueComponent())
+
+def convert_widget_color(color, alpha=1.0):
+    return NSColor.colorWithDeviceRed_green_blue_alpha_(color[0], color[1], 
+                                                        color[2], alpha)
+    
 
 class DrawingStyle(object):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
@@ -135,16 +139,15 @@ class DrawingContext:
         rect = NSMakeRect(x, y, width, height)
         self.path.appendBezierPathWithRect_(rect)
 
-    def set_color(self, (red, green, blue), alpha=1.0):
-        self.color = NSColor.colorWithDeviceRed_green_blue_alpha_(red, green,
-                blue, alpha)
+    def set_color(self, color, alpha=1.0):
+        self.color = convert_widget_color(color, alpha)
         self.color.set()
         
     def set_shadow(self, color, opacity, offset, blur_radius):
         shadow = NSShadow.alloc().init()
         shadow.setShadowOffset_(offset)
         shadow.setShadowBlurRadius_(blur_radius)
-        shadow.setShadowColor_(NSColor.colorWithDeviceRed_green_blue_alpha_(color[0], color[1], color[2], opacity))
+        shadow.setShadowColor_(convert_widget_color(color, opacity))
         shadow.set()
 
     def set_line_width(self, width):
@@ -182,7 +185,7 @@ class DrawingContext:
         context = NSGraphicsContext.currentContext()
         context.saveGraphicsState()
         self.path.addClip()
-        shading.draw_axial(gradient)
+        gradient.draw()
         context.restoreGraphicsState()
 
 class Gradient(object):
@@ -197,6 +200,14 @@ class Gradient(object):
 
     def set_end_color(self, (red, green, blue)):
         self.end_color = (red, green, blue)
+        
+    def draw(self):
+        start_color = convert_widget_color(self.start_color)
+        end_color = convert_widget_color(self.end_color)
+        nsgradient = NSGradient.alloc().initWithStartingColor_endingColor_(start_color, end_color)
+        start_point = NSPoint(self.x1, self.y1)
+        end_point = NSPoint(self.x2, self.y2)
+        nsgradient.drawFromPoint_toPoint_options_(start_point, end_point, 0)
 
 class DrawingMixin(object):
     def calc_size_request(self):

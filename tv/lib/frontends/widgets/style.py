@@ -289,6 +289,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         self.cached_size = None
         self.cached_size_parameters = None
         self.display_channel = display_channel
+        self.show_details = False
+        self.selected = False
 
     def get_size(self, style, layout):
         if self.show_details:
@@ -1287,11 +1289,7 @@ class StateCircleRenderer(widgetset.CustomCellRenderer):
         y = int((context.height - self.height) / 2)
         icon.draw(context, x, y, self.width, self.height)
 
-class ProgressBarDrawer(cellpack.Packer):
-    """Helper object to draw the progress bar (which is actually quite
-    complicated.
-    """
-
+class ProgressBarColorSet(object):
     PROGRESS_BASE_TOP = (0.92, 0.53, 0.21)
     PROGRESS_BASE_BOTTOM = (0.90, 0.45, 0.08)
     BASE = (0.76, 0.76, 0.76)
@@ -1303,8 +1301,14 @@ class ProgressBarDrawer(cellpack.Packer):
     BORDER_GRADIENT_TOP = (0.58, 0.58, 0.58)
     BORDER_GRADIENT_BOTTOM = (0.68, 0.68, 0.68)
 
-    def __init__(self, progress_ratio):
+class ProgressBarDrawer(cellpack.Packer):
+    """Helper object to draw the progress bar (which is actually quite
+    complicated.
+    """
+
+    def __init__(self, progress_ratio, color_set):
         self.progress_ratio = progress_ratio
+        self.color_set = color_set
 
     def _layout(self, context, x, y, width, height):
         self.x, self.y, self.width, self.height = x, y, width, height
@@ -1328,15 +1332,14 @@ class ProgressBarDrawer(cellpack.Packer):
         self._outer_border(context)
         context.clip()
         # draw our rectangles
-        half_height = self.height / 2
         self._progress_top_rectangle(context)
-        context.set_color(self.PROGRESS_BASE_TOP)
+        context.set_color(self.color_set.PROGRESS_BASE_TOP)
         context.fill()
         self._progress_bottom_rectangle(context)
-        context.set_color(self.PROGRESS_BASE_BOTTOM)
+        context.set_color(self.color_set.PROGRESS_BASE_BOTTOM)
         context.fill()
         self._non_progress_rectangle(context)
-        context.set_color(self.BASE)
+        context.set_color(self.color_set.BASE)
         context.fill()
         # restore the old clipping region
         context.restore()
@@ -1353,17 +1356,17 @@ class ProgressBarDrawer(cellpack.Packer):
         context.clip()
         # Render the borders
         self._progress_top_rectangle(context)
-        context.set_color(self.PROGRESS_BORDER_TOP)
+        context.set_color(self.color_set.PROGRESS_BORDER_TOP)
         context.fill()
         self._progress_bottom_rectangle(context)
-        context.set_color(self.PROGRESS_BORDER_BOTTOM)
+        context.set_color(self.color_set.PROGRESS_BORDER_BOTTOM)
         context.fill()
         self._non_progress_rectangle(context)
-        gradient = widgetset.Gradient(0, 0, 0, self.height)
-        gradient.set_start_color(self.BORDER_GRADIENT_TOP)
-        gradient.set_end_color(self.BORDER_GRADIENT_BOTTOM)
+        gradient = widgetset.Gradient(self.x + self.progress_width, self.y, 
+                                      self.x + self.progress_width, self.y + self.height)
+        gradient.set_start_color(self.color_set.BORDER_GRADIENT_TOP)
+        gradient.set_end_color(self.color_set.BORDER_GRADIENT_BOTTOM)
         context.gradient_fill(gradient)
-        context.fill()
         # Restore the old clipping region
         context.restore()
         self._draw_progress_highlight(context)
@@ -1385,11 +1388,11 @@ class ProgressBarDrawer(cellpack.Packer):
             upper_height = self.height / 2
         top = self.y + (self.height / 2) - upper_height
         context.rectangle(self.x + self.progress_width-1, top, 1, upper_height)
-        context.set_color(self.PROGRESS_BORDER_TOP)
+        context.set_color(self.color_set.PROGRESS_BORDER_TOP)
         context.fill()
         context.rectangle(self.x + self.progress_width-1, top + upper_height,
                 1, upper_height)
-        context.set_color(self.PROGRESS_BORDER_BOTTOM)
+        context.set_color(self.color_set.PROGRESS_BORDER_BOTTOM)
         context.fill()
 
     def _draw_progress_highlight(self, context):
@@ -1412,7 +1415,7 @@ class ProgressBarDrawer(cellpack.Packer):
             x = min(left + width,
                     self.x + self.width - self.half_height - 0.5)
             context.line_to(x, top)
-        context.set_color(self.PROGRESS_BORDER_HIGHLIGHT)
+        context.set_color(self.color_set.PROGRESS_BORDER_HIGHLIGHT)
         context.stroke()
 
     def _outer_border(self, context):
@@ -1437,6 +1440,7 @@ class ProgressBarDrawer(cellpack.Packer):
 
 class ItemProgressBarDrawer(ProgressBarDrawer):
     def __init__(self, info):
+        ProgressBarDrawer.__init__(self, 0, ProgressBarColorSet)
         if info.download_info and info.size > 0.0:
             self.progress_ratio = (float(info.download_info.downloaded_size) /
                     info.size)

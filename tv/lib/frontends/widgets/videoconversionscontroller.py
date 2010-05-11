@@ -162,20 +162,33 @@ class VideoConversionTableView(widgetset.TableView):
         self.set_background_color(widgetutil.WHITE)
 
 
-class VideoConversionCellRenderer(widgetset.CustomCellRenderer):
-    THUMB_WIDTH = 70
-    THUMB_HEIGHT = 48
-    SEPARATOR_COLOR = (0.5, 0.5, 0.5)
-    RUNNING_TASK_TEXT_COLOR = (0.4, 0.4, 0.4)
+class ConversionProgressBarColorSet(object):
+    PROGRESS_BASE_TOP = (0.75, 0.28, 0.50)
+    PROGRESS_BASE_BOTTOM = (0.71, 0.16, 0.42)
+    BASE = (0.76, 0.76, 0.76)
+
+    PROGRESS_BORDER_TOP = (0.60, 0.23, 0.41)
+    PROGRESS_BORDER_BOTTOM = (0.53, 0.10, 0.31)
+    PROGRESS_BORDER_HIGHLIGHT = (0.88, 0.50, 0.68)
+
+    BORDER_GRADIENT_TOP = (0.58, 0.58, 0.58)
+    BORDER_GRADIENT_BOTTOM = (0.68, 0.68, 0.68)
+
+
+class VideoConversionCellRenderer(style.ItemRenderer):
+    THUMB_WIDTH = 120
+    THUMB_HEIGHT = 82
     PENDING_TASK_TEXT_COLOR = (0.8, 0.8, 0.8)
     INTERRUPT_BUTTON = imagepool.get_surface(resources.path('images/video-download-cancel.png'))
     THUMB_OVERLAY = imagepool.get_surface(resources.path('images/thumb-overlay.png'), (THUMB_WIDTH, THUMB_HEIGHT))
 
     def get_size(self, style, layout):
-        return 600, self.THUMB_HEIGHT + 13
+        return 600, self.THUMB_HEIGHT + 31
 
     def render(self, context, layout, selected, hotspot, hover):
         self.hotspot = hotspot
+        self.selected = selected
+        self.setup_style(context.style)
         packing = self._pack_all(layout)
         packing.render_layout(context)
 
@@ -188,11 +201,17 @@ class VideoConversionCellRenderer(widgetset.CustomCellRenderer):
         hotspot, x, y, width, height = hotspot_info
         return hotspot
 
+    def add_background(self, content):
+        inner = cellpack.Background(content, margin=(0, 12, 0, 12))
+        if self.use_custom_style:
+            inner.set_callback(self.draw_background)
+        return cellpack.Background(inner, margin=(8, 12, 4, 16))
+
     def _pack_all(self, layout):
-        hbox = cellpack.HBox(spacing=8)
+        hbox = cellpack.HBox()
         hbox.pack(self._pack_thumbnail(layout))
         hbox.pack(self._pack_info(layout), expand=True)
-        return cellpack.pad(hbox, left=8, right=8)
+        return self.add_background(hbox)
 
     def _pack_thumbnail(self, layout):
         thumb = cellpack.DrawingArea(self.THUMB_WIDTH, self.THUMB_HEIGHT, self._draw_thumbnail)
@@ -201,38 +220,53 @@ class VideoConversionCellRenderer(widgetset.CustomCellRenderer):
     def _pack_info(self, layout):
         vbox = cellpack.VBox()
         if self.data.is_running():
-            layout.set_text_color(self.RUNNING_TASK_TEXT_COLOR)
+            layout.set_text_color(self.ITEM_TITLE_COLOR)
         else:
             layout.set_text_color(self.PENDING_TASK_TEXT_COLOR)
         layout.set_font(1.1, bold=True)
         title = cellpack.ClippedTextLine(layout.textbox(self.data.item_info.name))
-        vbox.pack(cellpack.pad(title, top=10))
+        vbox.pack(cellpack.pad(title, top=12))
+
         if self.data.is_running():
-            vbox.pack_end(self._pack_progress(layout), expand=True)
+            vbox.pack(self._pack_progress(layout), expand=True)
         else:
-            vbox.pack_end(self._pack_pending_controls(layout), expand=False)
-        return vbox
+            vbox.pack(self._pack_pending_controls(layout), expand=False)
+
+        return cellpack.pad(vbox, left=10)
 
     def _pack_progress(self, layout):
+        vbox = cellpack.VBox()
+        
+        layout.set_font(0.8)
+        layout.set_text_color(self.ITEM_DESC_COLOR)
+        info_label = layout.textbox(_("Conversion to %s") % self.data.converter_info.name)
+        vbox.pack(cellpack.pad(info_label, top=4))
+        
         hbox = cellpack.HBox()
         hbox.pack(cellpack.align_middle(cellpack.align_center(self._progress_textbox(layout))), expand=True)
         hbox.pack(cellpack.pad(cellpack.align_right(cellpack.Hotspot('interrupt', self.INTERRUPT_BUTTON)), right=3))
         background = cellpack.Background(cellpack.align_middle(hbox), min_width=356, min_height=20)
-        background.set_callback(style.ProgressBarDrawer(self.data.progress).draw)
-        return cellpack.pad(background, top=13, bottom=10)
+        background.set_callback(style.ProgressBarDrawer(self.data.progress, ConversionProgressBarColorSet).draw)
+        
+        vbox.pack_end(cellpack.pad(background, bottom=12))
+        
+        return vbox
 
     def _pack_pending_controls(self, layout):
-        hbox = cellpack.HBox()
-        layout.set_font(1.0)
-        layout.set_text_color(self.PENDING_TASK_TEXT_COLOR)
-        hbox.pack(cellpack.pad(layout.textbox(_("(Pending)")), right=8))
+        vbox = cellpack.VBox()
+        
         layout.set_font(0.8)
+        layout.set_text_color(self.PENDING_TASK_TEXT_COLOR)
+        info_label = layout.textbox(_("Pending conversion to %s") % self.data.converter_info.name)
+        vbox.pack(cellpack.pad(info_label, top=4))
+        
         cancel_button = layout.button(_("Cancel"), self.hotspot=='cancel', style='webby')
-        hbox.pack(cellpack.Hotspot('cancel', cancel_button))
-        return cellpack.pad(hbox, bottom=10)
+        vbox.pack_end(cellpack.pad(cellpack.align_right(cellpack.Hotspot('cancel', cancel_button)), top=26))
+
+        return vbox
 
     def _progress_textbox(self, layout):
-        layout.set_font(0.80, bold=True)
+        layout.set_font(0.8, bold=True)
         layout.set_text_color((1.0, 1.0, 1.0))
         progress = int(self.data.progress * 100)
         return layout.textbox('%d%%' % (progress,))
