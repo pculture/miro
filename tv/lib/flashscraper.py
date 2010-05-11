@@ -53,18 +53,19 @@ def is_maybe_flashscrapable(url):
 def try_scraping_url(url, callback):
     check_u(url)
     scrape = _get_scrape_function_for(url)
+
     if scrape is not None:
-        scrape(url, lambda x, y=u"video/x-flv": _actual_url_callback(url, callback, x, y))
+        scrape(url, lambda newurl, contenttype=u"video/x-flv", title=None: _actual_url_callback(url, callback, newurl, contenttype, title))
     else:
         callback(url)
 
 # =============================================================================
 
 # The callback is wrapped in this for flv videos
-def _actual_url_callback(url, callback, newURL, contentType):
+def _actual_url_callback(url, callback, newURL, contentType, title):
     if newURL:
         check_u(newURL)
-    callback(newURL, contentType=contentType)
+    callback(newURL, contentType=contentType, title=title)
 
 def _get_scrape_function_for(url):
     check_u(url)
@@ -99,7 +100,7 @@ def _scrape_youtube_url(url, callback):
         logging.exception("youtube_callback: unable to scrape YouTube Video URL")
         callback(None)
 
-def _youtube_get_first_successful(info, current_url, urls, callback):
+def _youtube_get_first_successful(info, current_url, urls, callback, title):
     if isinstance(info, httpclient.UnexpectedStatusCode):
         if info.code != 404:
             _youtube_errback(info, callback)
@@ -114,14 +115,14 @@ def _youtube_get_first_successful(info, current_url, urls, callback):
         logging.debug("youtube download: trying %s", current_url)
         httpclient.grab_headers(
             current_url,
-            lambda x: _youtube_get_first_successful(x, current_url, urls, callback),
-            lambda x: _youtube_get_first_successful(x, current_url, urls, callback))
+            lambda x: _youtube_get_first_successful(x, current_url, urls, callback, title),
+            lambda x: _youtube_get_first_successful(x, current_url, urls, callback, title))
         return
 
     if info.get("content-type"):
-        callback(current_url, unicode(info["content-type"]))
+        callback(current_url, unicode(info["content-type"]), title=title)
     else:
-        callback(current_url)
+        callback(current_url, title=title)
 
 def _youtube_callback_step2(info, videoID, callback):
     try:
@@ -134,6 +135,8 @@ def _youtube_callback_step2(info, videoID, callback):
 
         token = params['token'][0]
 
+        title = unicode(params.get("title", ["No title"])[0])
+
         lodef_url = u"http://www.youtube.com/get_video?video_id=%s&t=%s&eurl=&el=embedded&ps=default" % (videoID, token)
         urls = [# lodef_url + u"&fmt=35",
                 lodef_url + u"&fmt=22",
@@ -144,8 +147,8 @@ def _youtube_callback_step2(info, videoID, callback):
         # 404 on all of them.
         httpclient.grab_headers(
             urls[0],
-            lambda x: _youtube_get_first_successful(x, urls[0], urls[1:], callback),
-            lambda x: _youtube_get_first_successful(x, urls[0], urls[1:], callback))
+            lambda x: _youtube_get_first_successful(x, urls[0], urls[1:], callback, title),
+            lambda x: _youtube_get_first_successful(x, urls[0], urls[1:], callback, title))
 
     except:
         logging.exception("youtube_callback_step2: unable to scrape YouTube Video URL")
