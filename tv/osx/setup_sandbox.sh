@@ -134,8 +134,8 @@ do
     cd $WORK_DIR/$pkg
     
     if [[ -e setup.cfg ]]; then
-        echo "[easy_install]\n" >> setup.cfg
-        echo "zip_ok = 0\n" >> setup.cfg
+        echo "[easy_install]" >> setup.cfg
+        echo "zip_ok = 0" >> setup.cfg
     fi
     
     $PYTHON setup.py install
