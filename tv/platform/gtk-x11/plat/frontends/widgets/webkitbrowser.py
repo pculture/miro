@@ -86,7 +86,6 @@ class WebKitEmbed(webkit.WebView):
             view.set_zoom_level(1.0)
 
     def handle_populate_popup(self, view, menu):
-        # zoom buttons
         zoom_in = gtk.ImageMenuItem(gtk.STOCK_ZOOM_IN)
         zoom_in.connect('activate', self.handle_zoom_in, view)
         menu.append(zoom_in)

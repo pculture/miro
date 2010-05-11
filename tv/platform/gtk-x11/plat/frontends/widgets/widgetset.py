@@ -42,27 +42,26 @@ from miro.plat.frontends.widgets import webkitbrowser
 ITEM_TITLE_FONT = None
 ITEM_DESC_FONT  = None
 
-class BrowserShim(Widget):
-    def __init__(self, browser):
-        Widget.__init__(self)
-        self.set_widget(browser)
+class ScrolledBrowser(gtk.ScrolledWindow):
+    def __init__(self):
+        gtk.ScrolledWindow.__init__(self)
+        self.browser = webkitbrowser.WebKitEmbed()
+        # self.add_with_viewport(self.browser)
+        self.add(self.browser)
+        self.show_all()
 
-class Browser(Scroller):
+class Browser(Widget):
     """Web browser widget.
     """
     def __init__(self):
-        Scroller.__init__(self, True, True)
-
-        self._browser = webkitbrowser.WebKitEmbed()
-        self.add(BrowserShim(self._browser))
+        Widget.__init__(self)
+        self.set_widget(ScrolledBrowser())
+        self._browser = self._widget.browser
 
         self.wrapped_browser_connect('load-started', self.on_net_start)
         self.wrapped_browser_connect('load-finished', self.on_net_stop)
         self.wrapped_browser_connect(
             'mime-type-policy-decision-requested', self.on_mime_type)
-
-        # Seems like a reasonable min-size
-        self._widget.set_size_request(200, 100)
 
         self.create_signal('net-start')
         self.create_signal('net-stop')
