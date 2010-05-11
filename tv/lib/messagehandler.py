@@ -446,7 +446,8 @@ class DownloadCountTracker(CountTracker):
         return item.Item.only_downloading_view()
 
     def make_message(self, count):
-        return messages.DownloadCountChanged(count)
+        non_downloading_count = item.Item.download_tab_view().count() - count
+        return messages.DownloadCountChanged(count, non_downloading_count)
 
 class PausedCountTracker(CountTracker):
     def get_view(self):

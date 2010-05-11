@@ -1110,7 +1110,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def handle_download_count_changed(self, message):
         app.widgetapp.download_count = message.count
         library_tab_list = app.tab_list_manager.library_tab_list
-        library_tab_list.update_download_count(message.count)
+        library_tab_list.update_download_count(message.count, 
+                                               message.non_downloading_count)
 
     def handle_paused_count_changed(self, message):
         app.widgetapp.paused_count = message.count

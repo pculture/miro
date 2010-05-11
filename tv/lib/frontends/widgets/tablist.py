@@ -176,8 +176,8 @@ class LibraryTabList(StaticTabListBase):
         if count == 0 and name in self.auto_tabs:
             self.remove(name)
 
-    def update_download_count(self, count):
-        self.update_count('downloading', 'downloading', count)
+    def update_download_count(self, count, non_downloading_count):
+        self.update_count('downloading', 'downloading', count, non_downloading_count)
 
     def update_conversions_count(self, count):
         self.update_count('conversions', 'downloading', count)
@@ -188,8 +188,8 @@ class LibraryTabList(StaticTabListBase):
     def update_new_audio_count(self, count):
         self.update_count('audios', 'unwatched', count)
     
-    def update_count(self, key, attr, count):
-        self.show_auto_tab(key, count)
+    def update_count(self, key, attr, count, other_count=0):
+        self.show_auto_tab(key, count+other_count)
         try:
             iter = self.iter_map[key]
         except KeyError, e:
@@ -198,7 +198,7 @@ class LibraryTabList(StaticTabListBase):
             tab = self.view.model[iter][0]
             setattr(tab, attr, count)
             self.view.update_tab(iter, tab)
-            self.hide_auto_tab(key, count)
+            self.hide_auto_tab(key, count+other_count)
             self.view.model_changed()
 
 class TabListDragHandler(object):

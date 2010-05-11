@@ -1241,10 +1241,12 @@ class CurrentSearchInfo(FrontendMessage):
         self.text = text
 
 class DownloadCountChanged(FrontendMessage):
-    """Informs the frontend that number of downloads has changed.
+    """Informs the frontend that number of downloads has changed. Includes the
+    number of non downloading items which should be displayed.
     """
-    def __init__(self, count):
+    def __init__(self, count, non_downloading_count):
         self.count = count
+        self.non_downloading_count = non_downloading_count
 
 class PausedCountChanged(FrontendMessage):
     """Informs the frontend that number of paused downloading items
