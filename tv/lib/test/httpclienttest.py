@@ -215,12 +215,13 @@ class HTTPClientTest(HTTPClientTestBase):
 
     def test_upload_progress(self):
         # upload a 100k file
-        data = '0' * (100 * 1024)
+        data = '0' * (1000 * 1024)
         f1 = {'filename': 'testing.txt',
                     'mimetype': 'text/plain',
                     'handle': StringIO(data),
         }
         self.event_loop_timeout = 5
+        TIMEOUT = 0.001
         progress_stats = []
 
         self.last_uploaded = None
@@ -230,7 +231,9 @@ class HTTPClientTest(HTTPClientTestBase):
             progress = self.client.get_stats()
             if progress.upload_total == -1:
                 # client didn't know the total upload at this point.
-                self.assertEquals(progress.uploaded, 0)
+                self.assertEquals(progress.uploaded, -1)
+                eventloop.add_timeout(TIMEOUT, check_upload_progress,
+                        'upload progress timeout')
                 return
             self.saw_total = True
 
@@ -244,10 +247,10 @@ class HTTPClientTest(HTTPClientTestBase):
                 self.assertEquals(progress.upload_total, self.last_total)
             self.last_total = progress.upload_total
 
-            eventloop.add_timeout(0.5, check_upload_progress,
+            eventloop.add_timeout(TIMEOUT, check_upload_progress,
                     'upload progress timeout')
 
-        eventloop.add_timeout(0.5, check_upload_progress,
+        eventloop.add_timeout(TIMEOUT, check_upload_progress,
                 'upload progress timeout')
         self.grab_url(self.httpserver.build_url('test.txt'),
                 post_files={'file1': f1})
