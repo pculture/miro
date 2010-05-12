@@ -29,8 +29,9 @@
 
 # Includes all PyUnit unit tests
 
-from miro.test.unicodetest import *
+import unittest
 
+from miro.test.unicodetest import *
 from miro.test.datastructurestest import *
 from miro.test.schematest import *
 from miro.test.storedatabasetest import *

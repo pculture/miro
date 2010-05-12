@@ -14,6 +14,7 @@ import shutil
 import socket
 import threading
 
+from miro.plat import utils
 from miro.plat import resources
 
 class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
@@ -211,12 +212,14 @@ class HTTPServer(threading.Thread):
         self.httpserver.shutting_down = False
 
     def run(self):
+        utils.begin_thread_loop(self)
         # try to find an open port
         for port in xrange(22200, 22300):
             if self._try_port(port):
                 self.port = port
                 break
         else:
+            utils.finish_thread_loop(self)
             raise AssertionError("Can't find an open port")
         self.httpserver = BaseHTTPServer.HTTPServer(('', self.port),
                 MiroHTTPRequestHandler)
@@ -231,7 +234,9 @@ class HTTPServer(threading.Thread):
             self.httpserver.serve_forever()
         except socket.error:
             if not self.shutting_down:
+                utils.finish_thread_loop(self)
                 raise
+        utils.finish_thread_loop(self)
 
     def stop(self):
         self.shutting_down = True
@@ -239,7 +244,10 @@ class HTTPServer(threading.Thread):
         if hasattr(self.httpserver, 'current_request_handler'):
             self.httpserver.current_request_handler.connection.close()
             self.httpserver.current_request_handler.finish()
-        self.httpserver.socket.close()
+        if hasattr(self.httpserver, 'shutdown'):
+            self.httpserver.shutdown()
+        else:
+            self.socket.close()
         self.join()
 
     def _try_port(self, port):

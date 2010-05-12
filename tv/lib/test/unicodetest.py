@@ -1,4 +1,3 @@
-import unittest
 from tempfile import mkstemp
 from time import sleep
 import time

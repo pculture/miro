@@ -417,3 +417,13 @@ def get_logical_cpu_count():
         except:
             return int(os.popen2("sysctl -n hw.ncpu")[1].read())
     return 1
+
+###############################################################################
+
+def begin_thread_loop(context_object):
+    if hasattr(context_object, 'autorelease_pool'):
+        finish_thread_loop(context_object)
+    context_object.autorelease_pool = NSAutoreleasePool.alloc().init()
+
+def finish_thread_loop(context_object):
+    del context_object.autorelease_pool

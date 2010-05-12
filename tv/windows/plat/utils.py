@@ -345,3 +345,9 @@ def get_ffmpeg2theora_executable_path():
 
 def customize_ffmpeg2theora_parameters(default_parameters):
     return default_parameters
+
+def begin_thread_loop(context_object):
+    pass
+
+def finish_thread_loop(context_object):
+    pass
