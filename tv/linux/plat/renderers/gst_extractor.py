@@ -26,6 +26,9 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import sys
+import os
+
 import pygtk
 import gtk
 import gobject
@@ -34,8 +37,6 @@ import pygst
 pygst.require('0.10')
 import gst
 import gst.interfaces
-
-import sys
 
 class Extractor:
     def __init__(self, filename, thumbnail_filename, callback):
@@ -69,8 +70,8 @@ class Extractor:
     def on_bus_message(self, bus, message):
         if message.src == self.pipeline:
             if message.type == gst.MESSAGE_STATE_CHANGED:
-                prev, new, pending = message.parse_state_changed()
-                if new == gst.STATE_PAUSED:
+                prev, new_, pending = message.parse_state_changed()
+                if new_ == gst.STATE_PAUSED:
                     gobject.idle_add(self.paused_reached)
 
             elif message.type == gst.MESSAGE_ERROR:
@@ -78,13 +79,22 @@ class Extractor:
 
         elif message.src == self.thumbnail_pipeline:
             if message.type == gst.MESSAGE_STATE_CHANGED:
-                prev, new, pending = message.parse_state_changed()
-                if new == gst.STATE_PAUSED:
+                prev, new_, pending = message.parse_state_changed()
+                if new_ == gst.STATE_PAUSED:
+                    for sink in self.thumbnail_pipeline.sinks():
+                        name = sink.get_name()
+                        factoryname = sink.get_factory().get_name()
+                        if factoryname == "fakesink":
+                            pad = sink.get_pad("sink")
+                            self.buffer_probes[name] = pad.add_buffer_probe(
+                                self.buffer_probe_handler, name)
+
                     seek_result = self.thumbnail_pipeline.seek(
                         1.0, gst.FORMAT_TIME,
                         gst.SEEK_FLAG_FLUSH | gst.SEEK_FLAG_ACCURATE,
-                        gst.SEEK_TYPE_SET, self.duration / 2,
+                        gst.SEEK_TYPE_SET, min(self.duration / 2, 20 * gst.SECOND),
                         gst.SEEK_TYPE_NONE, 0)
+
                     if not seek_result:
                         self.disconnect()
                         self.done()
@@ -125,7 +135,8 @@ class Extractor:
         if current_audio == 0:
             self.saw_audio_tag = True
 
-        if self.saw_video_tag == False and self.saw_audio_tag == True:
+        if not self.saw_video_tag and self.saw_audio_tag:
+            # audio only
             self.audio_only = True
             self.duration = self.get_duration(self.pipeline)
             self.success = True
@@ -133,7 +144,8 @@ class Extractor:
             self.done()
             return False
 
-        if self.saw_video_tag == False and self.saw_audio_tag == False:
+        if not self.saw_video_tag and not self.saw_audio_tag:
+            # no audio and no video
             self.audio_only = False
             self.disconnect()
             self.done()
@@ -148,21 +160,12 @@ class Extractor:
             'ffmpegcolorspace ! video/x-raw-rgb,depth=24,bpp=24 ! '
             'fakesink signal-handoffs=True' % self.filename)
 
-        for sink in self.thumbnail_pipeline.sinks():
-            name = sink.get_name()
-            factoryname = sink.get_factory().get_name()
-            if factoryname == "fakesink":
-                pad = sink.get_pad("sink")
-                self.buffer_probes[name] = pad.add_buffer_probe(
-                    self.buffer_probe_handler, name)
-
         self.thumbnail_bus = self.thumbnail_pipeline.get_bus()
         self.thumbnail_bus.add_signal_watch()
         self.thumbnail_watch_id = self.thumbnail_bus.connect(
             "message", self.on_bus_message)
 
         self.thumbnail_pipeline.set_state(gst.STATE_PAUSED)
-
         return False
 
     def error_occurred(self):
@@ -247,13 +250,16 @@ def handle_result(duration, success, media_type):
     sys.exit(0)
 
 def main(argv):
-    if len(argv) < 3:
-        print "Syntax: gst_extractor.py <filename> <thumbnail>"
-        sys.exit(1)
-
     if "--verbose" in argv:
         make_verbose()
         argv.remove("--verbose")
+
+    if len(argv) < 2:
+        print "Syntax: gst_extractor.py <media-file> <path-to-thumbnail>"
+        sys.exit(1)
+
+    if len(argv) < 3:
+        argv.append(os.path.join(os.path.dirname(__file__), "thumbnail.png"))
 
     extractor = Extractor(argv[1], argv[2], handle_result)
     gtk.gdk.threads_init()
