@@ -119,7 +119,7 @@ def get(descriptor):
     value = descriptor.default
 
     if descriptor == prefs.MOVIES_DIRECTORY:
-        value = os.path.expanduser('~/Movies/Miro')
+        value = os.path.expanduser('~/Videos/Miro')
 
     elif descriptor == prefs.NON_VIDEO_DIRECTORY:
         value = os.path.expanduser('~/Desktop')

@@ -53,15 +53,15 @@ def upgrade():
 
     old_file = os.path.join(autostart_dir, "democracyplayer.desktop")
     destination = os.path.join(autostart_dir, "miro.desktop")
-    if os.path.exists(old_file):
-        if not os.path.exists(destination):
-            try:
-                if not os.path.exists(autostart_dir):
-                    os.makedirs(autostart_dir)
-                shutil.copy(resources.share_path('applications/miro.desktop'), destination)
-                os.remove(old_file)
-            except OSError:
-                pass
+    if os.path.exists(old_file) and not os.path.exists(destination):
+        try:
+            if not os.path.exists(autostart_dir):
+                os.makedirs(autostart_dir)
+            shutil.copy(resources.share_path('applications/miro.desktop'),
+                        destination)
+            os.remove(old_file)
+        except OSError:
+            pass
 
     # gconf settings
     client = gconf.client_get_default()
@@ -74,12 +74,22 @@ def upgrade():
             subdir_dst = dst + '/' + subdir.split('/')[-1]
             _copy_gconf(subdir, subdir_dst)
 
-    if client.dir_exists("/apps/democracy/player") and not client.dir_exists("/apps/miro"):
+    if ((client.dir_exists("/apps/democracy/player")
+         and not client.dir_exists("/apps/miro"))):
         _copy_gconf("/apps/democracy/player", "/apps/miro")
         client.recursive_unset("/apps/democracy", 1)
-        if client.get("/apps/miro/MoviesDirectory") is None:
-            value = os.path.expanduser('~/Movies/Democracy')
-            client.set_string("/apps/miro/MoviesDirectory", value)
 
-            if not os.path.exists(value):
-                os.makedirs(value)
+    # set the MoviesDirectory based on the possibilities that we've
+    # had over the years and what exists on the user's system.
+    # this codifies it in the user's gconf so that when we change
+    # it in future, then the user isn't affected.
+    from miro.plat import options
+    if options.gconf_name is None:
+        options.gconf_name = "miro"
+    key = "/apps/%s/MoviesDirectory" % options.gconf_name
+    if client.get(key) is None:
+        for mem in ["~/Videos/Miro", "~/Movies/Miro", "~/Movies/Democracy"]:
+            mem = os.path.expanduser(mem)
+            if os.path.exists(mem):
+                client.set_string(key, mem)
+                break
