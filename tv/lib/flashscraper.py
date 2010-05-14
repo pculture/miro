@@ -55,23 +55,24 @@ def try_scraping_url(url, callback):
     scrape = _get_scrape_function_for(url)
 
     if scrape is not None:
-        scrape(url, lambda newurl, contenttype=u"video/x-flv", title=None: _actual_url_callback(url, callback, newurl, contenttype, title))
+        scrape(url,
+               lambda newurl, content_type=u"video/x-flv", title=None: _actual_url_callback(url, callback, newurl, content_type, title))
     else:
         callback(url)
 
 # =============================================================================
 
 # The callback is wrapped in this for flv videos
-def _actual_url_callback(url, callback, newURL, contentType, title):
-    if newURL:
-        check_u(newURL)
-    callback(newURL, contentType=contentType, title=title)
+def _actual_url_callback(url, callback, new_url, content_type, title):
+    if new_url:
+        check_u(new_url)
+    callback(new_url, contentType=content_type, title=title)
 
 def _get_scrape_function_for(url):
     check_u(url)
-    for scrapeInfo in scraperInfoMap:
-        if scrapeInfo['pattern'].match(url) is not None:
-            return scrapeInfo['func']
+    for scrape_info in SCRAPER_INFO_MAP:
+        if scrape_info['pattern'].match(url) is not None:
+            return scrape_info['func']
     return None
 
 def _scrape_youtube_url(url, callback):
@@ -81,18 +82,20 @@ def _scrape_youtube_url(url, callback):
     params = cgi.parse_qs(components[3])
 
     if components[2] == u'/watch' and 'v' in params:
-        videoID = params['v'][0]
+        video_id = params['v'][0]
     elif components[2].startswith('/v/'):
-        videoID = re.compile(r'/v/([\w-]+)').match(components[2]).group(1)
+        video_id = re.compile(r'/v/([\w-]+)').match(components[2]).group(1)
     else:
         logging.warning('_scrape_youtube_url: unable to scrape YouTube Video URL')
         callback(None)
         return
 
     try:
-        url = u"http://www.youtube.com/get_video_info?video_id=%s&el=embedded&ps=default&eurl=" % videoID
-        httpclient.grab_url(url, lambda x: _youtube_callback_step2(x, videoID, callback),
-                           lambda x: _youtube_errback(x, callback))
+        url = u"http://www.youtube.com/get_video_info?video_id=%s&el=embedded&ps=default&eurl=" % video_id
+        httpclient.grab_url(
+            url,
+            lambda x: _youtube_callback_step2(x, video_id, callback),
+            lambda x: _youtube_errback(x, callback))
 
     except (SystemExit, KeyboardInterrupt):
         raise
@@ -124,12 +127,13 @@ def _youtube_get_first_successful(info, current_url, urls, callback, title):
     else:
         callback(current_url, title=title)
 
-def _youtube_callback_step2(info, videoID, callback):
+def _youtube_callback_step2(info, video_id, callback):
     try:
         body = info['body']
         params = cgi.parse_qs(body)
         if params.get("status", [""])[0] == "fail":
-            logging.info("youtube download failed because: %s", params.get("reason", ["unknown"])[0])
+            logging.info("youtube download failed because: %s",
+                         params.get("reason", ["unknown"])[0])
             callback(None)
             return
 
@@ -137,7 +141,7 @@ def _youtube_callback_step2(info, videoID, callback):
 
         title = unicode(params.get("title", ["No title"])[0])
 
-        lodef_url = u"http://www.youtube.com/get_video?video_id=%s&t=%s&eurl=&el=embedded&ps=default" % (videoID, token)
+        lodef_url = u"http://www.youtube.com/get_video?video_id=%s&t=%s&eurl=&el=embedded&ps=default" % (video_id, token)
         urls = [# lodef_url + u"&fmt=35",
                 lodef_url + u"&fmt=22",
                 lodef_url + u"&fmt=18",
@@ -150,54 +154,58 @@ def _youtube_callback_step2(info, videoID, callback):
             lambda x: _youtube_get_first_successful(x, urls[0], urls[1:], callback, title),
             lambda x: _youtube_get_first_successful(x, urls[0], urls[1:], callback, title))
 
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
-        logging.exception("youtube_callback_step2: unable to scrape YouTube Video URL")
+        logging.exception("youtube_callback_step2: unable to scrape YouTube URL")
         callback(None)
 
 def _youtube_errback(err, callback):
-    logging.warning("youtube_errback: network error scraping YouTube video url %s", err)
+    logging.warning("youtube_errback: network error scraping YouTube url %s", err)
     callback(None)
 
 def _scrape_google_video_url(url, callback):
     try:
         components = urlparse.urlsplit(url)
         params = cgi.parse_qs(components[3])
-        docId = params['docId'][0]
-        url = u"http://video.google.com/videofile/%s.flv?docid=%s&itag=5" % (docId, docId)
+        doc_id = params['docId'][0]
+        url = (u"http://video.google.com/videofile/%s.flv?docid=%s&itag=5" %
+               (doc_id, doc_id))
         callback(url)
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        logging.warning("unable to scrape Google Video URL: %s" % url)
+        logging.warning("unable to scrape Google Video URL: %s", url)
         callback(None)
 
 def _scrape_lulu_video_url(url, callback):
     try:
         components = urlparse.urlsplit(url)
         params = cgi.parse_qs(components[3])
-        url = unquote_plus(params['file'][0]).decode('ascii','replace')
+        url = unquote_plus(params['file'][0]).decode('ascii', 'replace')
         callback(url)
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        logging.warning("unable to scrape LuLu.tv Video URL: %s" % url)
+        logging.warning("unable to scrape LuLu.tv Video URL: %s", url)
         callback(None)
 
 def _scrape_vmix_video_url(url, callback):
     try:
         components = urlparse.urlsplit(url)
         params = cgi.parse_qs(components[3])
-        t = params['type'][0]
-        ID = params['id'][0]
+        type_ = params['type'][0]
+        id_ = params['id'][0]
         l = params['l'][0]
-        url = u"http://sdstage01.vmix.com/videos.php?type=%s&id=%s&l=%s" % (t, ID, l)
+        url = (u"http://sdstage01.vmix.com/videos.php?type=%s&id=%s&l=%s" %
+               (type_, id_, l))
         httpclient.grab_url(url, lambda x: _scrape_vmix_callback(x, callback),
                            lambda x: _scrape_vmix_errback(x, callback))
 
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        logging.warning("unable to scrape VMix Video URL: %s" % url)
+        logging.warning("unable to scrape VMix Video URL: %s", url)
         callback(None)
 
 def _scrape_vmix_callback(info, callback):
@@ -208,7 +216,8 @@ def _scrape_vmix_callback(info, callback):
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        logging.warning("unsable to scrape XML for VMix Video URL %s" % info['redirected-url'])
+        logging.warning("unsable to scrape XML for VMix Video URL %s",
+                        info['redirected-url'])
         callback(None)
 
 def _scrape_vmix_errback(err, callback):
@@ -225,7 +234,7 @@ def _scrape_vsocial_video_url(url, callback):
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        logging.warning("unable to scrape VSocial URL: %s" % url)
+        logging.warning("unable to scrape VSocial URL: %s", url)
         callback(None)
 
 def _scrape_veohtv_video_url(url, callback):
@@ -233,29 +242,30 @@ def _scrape_veohtv_video_url(url, callback):
         components = urlparse.urlsplit(url)
         params = cgi.parse_qs(components[3])
         t = params['type'][0]
-        permalinkId = params['permalinkId'][0]
-        url = u'http://www.veoh.com/movieList.html?type=%s&permalinkId=%s&numResults=45' % (t, permalinkId)
+        permalink_id = params['permalinkId'][0]
+        url = u'http://www.veoh.com/movieList.html?type=%s&permalinkId=%s&numResults=45' % (t, permalink_id)
         httpclient.grab_url(url, lambda x: _scrape_veohtv_callback(x, callback),
                            lambda x: _scrape_veohtv_errback(x, callback))
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        logging.warning("unable to scrape Veoh URL: %s" % url)
+        logging.warning("unable to scrape Veoh URL: %s", url)
         callback(None)
 
 def _scrape_veohtv_callback(info, callback):
     url = info['redirected-url']
     try:
         params = cgi.parse_qs(info['body'])
-        fileHash = params['previewHashLow'][0]
-        if fileHash.endswith(","):
-            fileHash = fileHash[:-1]
-        url = u'http://ll-previews.veoh.com/previews/get.jsp?fileHash=%s' % fileHash
+        file_hash = params['previewHashLow'][0]
+        if file_hash.endswith(","):
+            file_hash = file_hash[:-1]
+        url = (u'http://ll-previews.veoh.com/previews/get.jsp?fileHash=%s' %
+               file_hash)
         callback(url)
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        logging.warning("unable to scrape Veoh URL data: %s" % url)
+        logging.warning("unable to scrape Veoh URL data: %s", url)
         callback(None)
 
 def _scrape_veohtv_errback(err, callback):
@@ -276,7 +286,7 @@ def _scrape_break_callback(info, callback):
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        logging.warning("unable to scrape Break URL: %s" % url)
+        logging.warning("unable to scrape Break URL: %s", url)
         callback(None)
 
 def _scrape_break_errback(info, callback):
@@ -284,47 +294,58 @@ def _scrape_break_errback(info, callback):
     callback(None)
 
 def _scrape_green_peace_video_url(url, callback):
-    logging.warning("unable to scrape Green peace Video URL %s" % url)
+    logging.warning("unable to scrape Green peace Video URL %s", url)
     callback(None)
+
+VIMEO_RE = re.compile(r'http://([^/]+\.)?vimeo.com/(\d+)')
 
 def _scrape_vimeo_video_url(url, callback):
     try:
-        id_ = re.compile(r'http://([^/]+\.)?vimeo.com/(\d+)').match(url).group(2)
+        id_ = VIMEO_RE.match(url).group(2)
         url = u"http://www.vimeo.com/moogaloop/load/clip:%s" % id_
-        httpclient.grab_url(url, lambda x: _scrape_vimeo_callback(x, callback),
-                           lambda x: _scrape_vimeo_errback(x, callback))
+        httpclient.grab_url(
+            url,
+            lambda x: _scrape_vimeo_callback(x, callback),
+            lambda x: _scrape_vimeo_errback(x, callback))
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        logging.warning("Unable to scrape vimeo.com video URL: %s" % url)
+        logging.warning("Unable to scrape vimeo.com video URL: %s", url)
         callback(None)
+
+MEGALOOP_RE = re.compile(r'http://([^/]+\.)?vimeo.com/moogaloop.swf\?clip_id=(\d+)')
 
 def _scrape_vimeo_moogaloop_url(url, callback):
     try:
-        id_ = re.compile(r'http://([^/]+\.)?vimeo.com/moogaloop.swf\?clip_id=(\d+)').match(url).group(2)
+        id_ = MEGALOOP_RE.match(url).group(2)
         url = u"http://www.vimeo.com/moogaloop/load/clip:%s" % id_
-        httpclient.grab_url(url, lambda x: _scrape_vimeo_callback(x, callback),
-                           lambda x: _scrape_vimeo_errback(x, callback))
+        httpclient.grab_url(
+            url,
+            lambda x: _scrape_vimeo_callback(x, callback),
+            lambda x: _scrape_vimeo_errback(x, callback))
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        logging.warning("Unable to scrape vimeo.com moogaloop URL: %s" % url)
+        logging.warning("Unable to scrape vimeo.com moogaloop URL: %s", url)
         callback(None)
+
+VIMEO_CLIP_RE = re.compile(r'http://www.vimeo.com/moogaloop/load/clip:(\d+)')
 
 def _scrape_vimeo_callback(info, callback):
     url = info['redirected-url']
     try:
         doc = minidom.parseString(info['body'])
-        id_ = re.compile(r'http://www.vimeo.com/moogaloop/load/clip:(\d+)').match(url).group(1)
+        id_ = VIMEO_CLIP_RE.match(url).group(1)
         req_sig = doc.getElementsByTagName('request_signature').item(0).firstChild.data.decode('ascii', 'replace')
         req_sig_expires = doc.getElementsByTagName('request_signature_expires').item(0).firstChild.data.decode('ascii', 'replace')
-        url = u"http://www.vimeo.com/moogaloop/play/clip:%s/%s/%s/?q=sd" % (id_, req_sig, req_sig_expires)
+        url = (u"http://www.vimeo.com/moogaloop/play/clip:%s/%s/%s/?q=sd" %
+               (id_, req_sig, req_sig_expires))
         # TODO: HD support
         callback(url)
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        logging.warning("Unable to scrape XML for vimeo.com video URL: %s" % url)
+        logging.warning("Unable to scrape XML for vimeo.com video URL: %s", url)
         callback(None)
 
 def _scrape_vimeo_errback(err, callback):
@@ -333,7 +354,7 @@ def _scrape_vimeo_errback(err, callback):
 
 # =============================================================================
 
-scraperInfoMap = [
+SCRAPER_INFO_MAP = [
     {'pattern': re.compile(r'http://([^/]+\.)?youtube.com/(watch|v)'), 'func': _scrape_youtube_url},
     {'pattern': re.compile(r'http://video.google.com/googleplayer.swf'), 'func': _scrape_google_video_url},
     {'pattern': re.compile(r'http://([^/]+\.)?lulu.tv/wp-content/flash_play/flvplayer'), 'func': _scrape_lulu_video_url},
