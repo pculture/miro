@@ -8,7 +8,7 @@
 #
 # This script must be run with sudo.
 
-# Last updated:    5/5/2010
+# Last updated:    5/14/2010
 # Last updated by: Will Kahn-Greene
 
 aptitude install \
@@ -21,6 +21,8 @@ aptitude install \
 aptitude install \
     libtorrent-rasterbar5 \
     python-libtorrent \
+    libwebkit-1.0-2 \
+    python-webkit \
     python-gst0.10 \
     python-gconf \
     gstreamer0.10-ffmpeg \
