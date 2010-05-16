@@ -25,6 +25,7 @@ aptitude install \
     python-webkit \
     python-gst0.10 \
     python-gconf \
+    python-pycurl \
     gstreamer0.10-ffmpeg \
     gstreamer0.10-plugins-base \
     gstreamer0.10-plugins-good \
