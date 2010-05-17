@@ -119,6 +119,12 @@ class MalformedURL(NetworkError):
         NetworkError.__init__(self, _('Invalid URL'),
                 _('"%(url)s" is not a valid URL', {"url": url}))
 
+class UnknownHostError(NetworkError):
+    """A file: URL doesn't exist"""
+    def __init__(self, host):
+        NetworkError.__init__(self, _('Unknow Host'),
+            _('The domainname "%(host)s" couldn\'t be found', {"host": host}))
+
 class FileURLNotFoundError(NetworkError):
     """A file: URL doesn't exist"""
     def __init__(self, path):
@@ -437,7 +443,7 @@ class CurlTransfer(object):
                 clean=True)
 
     def on_error(self, code, handle):
-        if code == pycurl.E_URL_MALFORMAT:
+        if code in (pycurl.E_URL_MALFORMAT, pycurl.E_UNSUPPORTED_PROTOCOL):
             error = MalformedURL(self.options.url)
         elif code == pycurl.E_COULDNT_CONNECT:
             error = ConnectionError(self.options.host)
@@ -447,8 +453,10 @@ class CurlTransfer(object):
             error = ResumeFailed(self.options.host)
         elif code == pycurl.E_TOO_MANY_REDIRECTS:
             error = TooManyRedirects(self.options.url)
+        elif code == pycurl.E_COULDNT_RESOLVE_HOST:
+            error = UnknownHostError(self.options.host)
         else:
-            error = NetworkError(_("Unknown"), handle.errstr())
+            error = NetworkError(_("Unknown"), unicode(handle.errstr()))
         self.call_errback(error)
 
     def call_callback(self, info):

@@ -1,6 +1,7 @@
 import rfc822
 import tempfile
 import os
+import pycurl
 import urllib
 from cStringIO import StringIO
 
@@ -456,3 +457,35 @@ class NetworkErrorTest(HTTPClientTestBase):
             httpclient.UnexpectedStatusCode))
         self.assertEquals(self.grab_url_error.friendlyDescription,
                 "File not found")
+
+    def test_bad_domain_name(self):
+        self.grab_url('http://unknowndomainname/')
+        self.check_errback_called()
+        self.assert_(isinstance(self.grab_url_error,
+            httpclient.UnknownHostError))
+
+    def test_unknown_error(self):
+        # This is a bit of a weird test.  We want to test the generic libcurl
+        # error handle.  However, that code is only a fallback for libcurl
+        # error codes that we don't know how to handle.  If we know a way to
+        # produce that, then we should fix that code and add a handler for
+        # that case.
+        #
+        # To test things, we manually call CurlTransfer.on_error(), which is
+        # the method responsible for dealing with libcurl errors.
+        class BogusLibcurlHandle:
+            def errstr(self):
+                return 'libcurl error'
+        bogus_transfer = httpclient.CurlTransfer(None, self.grab_url_callback,
+                self.grab_url_errback)
+        bogus_transfer.on_error(123456, BogusLibcurlHandle())
+        self.runPendingIdles()
+
+        # Check that we saw a NetworkError and that the description strings
+        # are unicode (#13359)
+        self.check_errback_called()
+        self.assert_(isinstance(self.grab_url_error,
+            httpclient.NetworkError))
+        self.assert_(isinstance(self.grab_url_error.longDescription, unicode))
+        self.assert_(isinstance(self.grab_url_error.friendlyDescription,
+            unicode))
