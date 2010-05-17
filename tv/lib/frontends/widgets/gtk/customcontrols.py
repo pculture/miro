@@ -41,6 +41,7 @@ from miro.frontends.widgets.gtk.base import Widget, Bin
 from miro.frontends.widgets.gtk.simple import Label
 from miro.frontends.widgets.gtk.drawing import CustomDrawingMixin, Drawable
 from miro.plat.frontends.widgets import timer
+from miro.frontends.widgets import widgetconst
 
 class CustomControlMixin(CustomDrawingMixin):
     def do_expose_event(self, event):
@@ -300,13 +301,13 @@ def to_miro_volume(value):
     """
     if value == 0:
         return 0.0
-    return value * 3.0
+    return value * widgetconst.MAX_VOLUME
 
 def to_gtk_volume(value):
     """Convert from 0.0 to MAX_VOLUME to 0 to 1.0.
     """
     if value > 0.0:
-        value = (value / 3.0)
+        value = (value / widgetconst.MAX_VOLUME)
     return value
 
 class VolumeMuter(Label):
