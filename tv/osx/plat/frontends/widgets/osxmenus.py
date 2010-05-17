@@ -219,7 +219,7 @@ def populate_menu():
         menus.MenuItem(_("Bring All to Front"), "BringAllToFront"),
     ]
     windowMenu = menus.Menu(_("Window"), "Window", windowMenuItems)
-    menubar.insert(5, windowMenu)
+    menubar.insert(6, windowMenu)
 
     # Help Menu
     helpItem = menubar.get("Help")
