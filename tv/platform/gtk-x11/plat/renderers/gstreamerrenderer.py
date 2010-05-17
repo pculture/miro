@@ -125,23 +125,24 @@ class Renderer:
         self.rate = 1.0
         self.select_callbacks = None
 
-        audiosink = config.get(options.GSTREAMER_AUDIOSINK)
+        audiosink_name = config.get(options.GSTREAMER_AUDIOSINK)
         try:
-            self.audiosink = gst.element_factory_make(audiosink, "audiosink")
+            gst.element_factory_make(audiosink_name, "audiosink")
 
         except gst.ElementNotFoundError:
             logging.info("gstreamerrenderer: ElementNotFoundError '%s'",
-                         audiosink)
-            audiosink = "autoaudiosink"
-            self.audiosink = gst.element_factory_make(audiosink, "audiosink")
+                         audiosink_name)
+            audiosink_name = "autoaudiosink"
+            gst.element_factory_make(audiosink_name, "audiosink")
 
         except Exception, e:
             logging.info("gstreamerrenderer: Exception thrown '%s'" % e)
             logging.exception("sink exception")
-            audiosink = "alsasink"
-            self.audiosink = gst.element_factory_make(audiosink, "audiosink")
+            audiosink_name = "alsasink"
+            gst.element_factory_make(audiosink_name, "audiosink")
 
-        logging.info("GStreamer audiosink: %s", audiosink)
+        self.audiosink_name = audiosink_name
+        logging.info("GStreamer audiosink: %s", audiosink_name)
 
         self.supports_subtitles = True
         self.playbin = None
@@ -155,6 +156,8 @@ class Renderer:
         self.bus.enable_sync_message_emission()
 
         self.watch_ids.append(self.bus.connect("message", self.on_bus_message))
+        self.audiosink = gst.element_factory_make(
+            self.audiosink_name, "audiosink")
         self.playbin.set_property("audio-sink", self.audiosink)
 
     def destroy_playbin(self):
@@ -165,6 +168,7 @@ class Renderer:
         self.watch_ids = []
         self.bus = None
         self.playbin = None
+        self.audiosink = None
 
     def on_bus_message(self, bus, message):
         """receives message posted on the GstBus"""
@@ -309,34 +313,45 @@ class VideoRenderer(Renderer):
     def __init__(self):
         Renderer.__init__(self)
 
-        videosink = config.get(options.GSTREAMER_IMAGESINK)
+        videosink_name = config.get(options.GSTREAMER_IMAGESINK)
         try:
-            self.videosink = gst.element_factory_make(videosink, "videosink")
+            gst.element_factory_make(videosink_name, "videosink")
 
         except gst.ElementNotFoundError:
             logging.info("gstreamerrenderer: ElementNotFoundError '%s'",
-                         videosink)
-            videosink = "xvimagesink"
-            self.videosink = gst.element_factory_make(videosink, "videosink")
+                         videosink_name)
+            videosink_name = "xvimagesink"
+            gst.element_factory_make(videosink_name, "videosink")
 
         except Exception, e:
             logging.info("gstreamerrenderer: Exception thrown '%s'" % e)
             logging.exception("sink exception")
-            videosink = "ximagesink"
-            self.videosink = gst.element_factory_make(videosink, "videosink")
+            videosink_name = "ximagesink"
+            gst.element_factory_make(videosink_name, "videosink")
 
-        logging.info("GStreamer videosink: %s", videosink)
-        self.textsink = gst.element_factory_make("textoverlay", "textsink")
+        logging.info("GStreamer videosink: %s", videosink_name)
+        self.videosink_name = videosink_name
+
+        self.textsink_name = "textoverlay"
 
     def build_playbin(self):
         Renderer.build_playbin(self)
         self.watch_ids.append(self.bus.connect('sync-message::element', self.on_sync_message))
+        self.videosink = gst.element_factory_make(
+            self.videosink_name, "videosink")
         self.playbin.set_property("video-sink", self.videosink)
         try:
+            self.textsink = gst.element_factory_make(
+                self.textsink_name, "textsink")
             self.playbin.set_property("text-sink", self.textsink)
         except TypeError:
             logging.warning("this platform has an old version of playbin2--no subtitle support.")
             self.supports_subtitles = False
+
+    def destroy_playbin(self):
+        Renderer.destroy_playbin(self)
+        self.videosink = None
+        self.textsink = None
 
     def select_file(self, filename, callback, errback, sub_filename=""):
         Renderer.select_file(self, filename, callback, errback, sub_filename)
