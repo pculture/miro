@@ -71,10 +71,17 @@ class GconfDict:
     def get(self, key, default=None):
         if not isinstance(key, str):
             raise TypeError()
+
+        if "MIRO_%s" % key.upper() in os.environ:
+            return os.environ["MIRO_%s" % key.upper()]
+
         fullkey = _gconf_key(key)
         return _get_gconf(fullkey, default)
 
     def __contains__(self, key):
+        if "MIRO_%s" % key.upper() in os.environ:
+            return True
+
         gconf_lock.acquire()
         try:
             fullkey = _gconf_key(key)
@@ -90,6 +97,9 @@ class GconfDict:
             return rv
 
     def __setitem__(self, key, value):
+        if "MIRO_%s" % key.upper() in os.environ:
+            return
+
         gconf_lock.acquire()
         try:
             if not isinstance(key, str):
