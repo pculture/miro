@@ -54,7 +54,18 @@ from miro.test.iconcachetest import *
 from miro.test.databasetest import *
 from miro.test.itemtest import *
 from miro.test.filetypestest import *
-from miro.test.downloadertest import *
+
+# platform specific tests
+
+from miro import config
+from miro import prefs
+
+if config.get(prefs.APP_PLATFORM) == "linux":
+    from miro.test.gtcachetest import *
+    from miro.test.downloadertest import *
+elif config.get(prefs.APP_PLATFORM) == "osx":
+    from miro.test.sparkletest import *
+
 
 def run_tests():
     from miro import httpclient
@@ -64,14 +75,3 @@ def run_tests():
     httpclient.init_libcurl()
     unittest.main(module=test)
     httpclient.cleanup_libcurl()
-
-# platform specific tests
-
-from miro import config
-from miro import prefs
-
-if config.get(prefs.APP_PLATFORM) == "linux":
-    from miro.test.gtcachetest import *
-
-if config.get(prefs.APP_PLATFORM) == "osx":
-    from miro.test.sparkletest import *

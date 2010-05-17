@@ -77,6 +77,7 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         """Serve a HEAD request."""
         if not self.server.allow_head:
             self.send_error(405, "Method not allowed")
+            return
 
         self.server.last_info = {
                 'headers': self.headers,

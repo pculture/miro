@@ -224,14 +224,14 @@ class EventLoopTest(MiroTestCase):
         eventloop._eventloop.urgent_queue.quit_flag = False
         try:
             self.hadToStopEventLoop = False
-            timeout = eventloop.add_timeout(timeout, self.stopEventLoop, 
+            timeout_handle = eventloop.add_timeout(timeout, self.stopEventLoop, 
                                            "Stop test event loop")
             eventloop._eventloop.quit_flag = False
             eventloop._eventloop.loop()
             if self.hadToStopEventLoop and not timeoutNormal:
                 raise HadToStopEventLoop()
             else:
-                timeout.cancel()
+                timeout_handle.cancel()
         finally:
             eventloop.thread_pool_quit()
 

@@ -224,6 +224,7 @@ class TransferOptions(object):
             content_type = 'multipart/form-data; boundary=%s' % boundary
             out_headers['content-type'] = content_type
             out_headers['content-length'] = len(data)
+            out_headers['expect'] = ''
         elif self.post_vars is not None:
             data = url_encode_dict(self.post_vars)
 
