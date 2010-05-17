@@ -26,6 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import os
 import objc
 import logging
 import Foundation
@@ -91,6 +92,10 @@ def handleNewUpdate(latest):
       to prevent it to be automatically released by the Python garbage collector
       and therefore cause bad crashes).
     """
+    if not _host_supported(latest):
+        logging.info("Update available but host system not supported.")
+        return
+    
     dictionary = dict()
     _transfer(latest, 'title',            dictionary)
     _transfer(latest, 'pubdate',          dictionary, 'pubDate')
@@ -119,6 +124,30 @@ def handleNewUpdate(latest):
         alerter = SUUpdateAlert.alloc().initWithAppcastItem_(suItem)
         alerter.setDelegate_(updater)
         alerter.showWindow_(updater)
+
+
+def _get_minimum_system_version(info):
+    try:
+        minimum = [int(i) for i in info['minimumsystemversion'].split('.')]
+        if len(minimum) == 2:
+            minimum.append(0)
+        return minimum
+    except KeyError, e:
+        return [0, 0, 0]
+
+def _get_host_version():
+    version = [int(i) for i in os.uname()[2].split('.')]
+    version[0] = version[0] - 4
+    version.insert(0, 10)
+    return version
+
+def _test_host_version(host_version, minimum_version):
+    return host_version >= minimum_version
+
+def _host_supported(info):
+    host_version = _get_host_version()
+    minimum_version = _get_minimum_system_version(info)
+    return _test_host_version(host_version, minimum_version)
 
 
 def _transfer(source, skey, dest, dkey=None):

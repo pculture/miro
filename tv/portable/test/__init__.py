@@ -60,3 +60,6 @@ from miro import prefs
 
 if config.get(prefs.APP_PLATFORM) == "gtk-x11":
     from miro.test.gtcachetest import *
+
+if config.get(prefs.APP_PLATFORM) == "osx":
+    from miro.test.sparkletest import *
