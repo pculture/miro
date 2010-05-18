@@ -52,7 +52,7 @@ SDK_DIR="/Developer/SDKs/MacOSX$TARGET_OS_VERSION.sdk"
 
 ROOT_DIR=$(pushd ../../ >/dev/null; pwd; popd >/dev/null)
 BKIT_DIR=$(pwd)/miro-binary-kit-osx-$BKIT_VERSION/sandbox
-SBOX_DIR=$ROOT_DIR/sandbox
+SBOX_DIR=$ROOT_DIR/sandbox_$BKIT_VERSION
 WORK_DIR=$SBOX_DIR/pkg
 
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:$SBOX_DIR

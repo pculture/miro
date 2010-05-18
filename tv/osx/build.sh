@@ -31,8 +31,7 @@
 OS_VERSION=$(uname -r | cut -d . -f 1)
 BKIT_VERSION="$(cat binary_kit_version)"
 
-if [ ! -d "miro-binary-kit-osx-${BKIT_VERSION}" ]
-then
+if [ ! -d "miro-binary-kit-osx-${BKIT_VERSION}" ]; then
     echo "Binary kit miro-binary-kit-osx-${BKIT_VERSION} is not installed.  Run setup_binarykit.sh then rebuild the sandbox."
     exit 1
 fi
@@ -47,7 +46,13 @@ else
 fi
 
 ROOT_DIR=$(pushd ../../ >/dev/null; pwd; popd >/dev/null)
-SBOX_DIR=$ROOT_DIR/sandbox
+SBOX_DIR=$ROOT_DIR/sandbox_$BKIT_VERSION
+
+if [ ! -d $SBOX_DIR ]; then
+    echo "Miro sandbox not found at $SBOX_DIR"
+    echo "Run setup_sandbox.sh to build it."
+    exit 1
+fi
 
 PYTHON_VERSION=2.6
 PYTHON_ROOT=$SBOX_DIR/Frameworks/Python.framework/Versions/$PYTHON_VERSION

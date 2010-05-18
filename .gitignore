@@ -24,4 +24,4 @@ tv/lib/frontends/widgets/gtk/pygtkhacks.c
 *~
 
 .DS_Store
-sandbox/*
+sandbox_*

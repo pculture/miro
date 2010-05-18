@@ -63,7 +63,7 @@ PLATFORM_PACKAGE_DIR = os.path.join(PLATFORM_DIR, 'plat')
 PYTHON_VERSION = sys.version[0:3]
 
 SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..')))
-SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
+SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox_%s' % BINARY_KIT_VERSION)
 PYTHON_ROOT = os.path.join(SANDBOX_DIR, "Frameworks", "Python.framework", "Versions", PYTHON_VERSION)
 PYTHON_LIB = os.path.join(PYTHON_ROOT, "Python")
 
