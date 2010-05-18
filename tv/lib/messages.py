@@ -1016,7 +1016,7 @@ class ItemInfo(object):
         self.is_container_item = item.isContainerItem
         self.is_playable = item.is_playable()
         if item.isContainerItem:
-            self.children = [ItemInfo(i) for i in item.getChildren()]
+            self.children = [ItemInfo(i) for i in item.get_children()]
         else:
             self.children = []
         self.file_type = item.file_type

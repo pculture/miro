@@ -38,7 +38,8 @@ from miro import models
 from miro.databasehelper import make_simple_get_set
 
 class PlaylistItemMap(database.DDBObject):
-    """Single row in the map that associates playlists with their child items.
+    """Single row in the map that associates playlists with their
+    child items.
     """
 
     def setup_new(self, playlist_id, item_id):
@@ -67,8 +68,8 @@ class PlaylistItemMap(database.DDBObject):
         cls.delete('playlist_id=? AND item_id=?', (playlist_id, item_id))
 
 class PlaylistMixin:
-    """Class that handles basic playlist functionality.  PlaylistMixin is used
-    by both SavedPlaylist and folder.PlaylistFolder.
+    """Class that handles basic playlist functionality.  PlaylistMixin
+    is used by both SavedPlaylist and folder.PlaylistFolder.
     """
 
     MapClass = None # subclasses must override this
@@ -115,21 +116,21 @@ class PlaylistMixin:
         return view.count() > 0
 
     def reorder(self, new_order):
-        """reorder items in the playlist.  new_order should contain a list of
-        ids one for each item in the playlist.
+        """reorder items in the playlist.  new_order should contain a
+        list of ids one for each item in the playlist.
         """
         for i, item_id in enumerate(new_order):
-            map = self.MapClass.make_view('playlist_id=? AND item_id=?',
+            map_ = self.MapClass.make_view('playlist_id=? AND item_id=?',
                     (self.id, item_id)).get_singleton()
-            map.position = i
-            map.signal_change()
+            map_.position = i
+            map_.signal_change()
 
 class SavedPlaylist(database.DDBObject, PlaylistMixin):
     """An ordered list of videos that the user has saved.
 
-    This class is called SavedPlaylist to distinguish it from app.Playlist,
-    which is a temporary playlist that holds the videos we're playing right
-    now.
+    This class is called SavedPlaylist to distinguish it from
+    app.Playlist, which is a temporary playlist that holds the videos
+    we're playing right now.
     """
     MapClass = PlaylistItemMap
 
@@ -137,12 +138,12 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
         self.title = title
         self.folder_id = None
         if item_ids is not None:
-            for id in item_ids:
-                self.add_id(id)
+            for id_ in item_ids:
+                self.add_id(id_)
 
     @classmethod
-    def folder_view(cls, id):
-        return cls.make_view('folder_id=?', (id,))
+    def folder_view(cls, id_):
+        return cls.make_view('folder_id=?', (id_,))
 
     @classmethod
     def get_by_title(cls, title):
@@ -167,17 +168,17 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
     def _remove_ids_from_folder(self):
         folder = self.get_folder()
         if folder is not None:
-            for map in PlaylistItemMap.playlist_view(self.id):
+            for map_ in PlaylistItemMap.playlist_view(self.id):
                 try:
-                    folder.remove_id(map.item_id)
+                    folder.remove_id(map_.item_id)
                 except database.ObjectNotFoundError:
                     continue
 
     def _add_ids_to_folder(self):
         folder = self.get_folder()
         if folder is not None:
-            for map in PlaylistItemMap.playlist_view(self.id):
-                folder.add_id(map.item_id)
+            for map_ in PlaylistItemMap.playlist_view(self.id):
+                folder.add_id(map_.item_id)
 
     def set_folder(self, new_folder, update_trackers=True):
         self.confirm_db_thread()
@@ -199,7 +200,8 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
 
     def rename(self):
         title = _("Rename Playlist")
-        description = _("Enter a new name for the playlist %s" % self.get_title())
+        description = _("Enter a new name for the playlist %s",
+                        self.get_title())
 
         def callback(dialog):
             if self.id_exists() and dialog.choice == dialogs.BUTTON_OK:
@@ -207,23 +209,25 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
         dialogs.TextEntryDialog(title, description, dialogs.BUTTON_OK,
                 dialogs.BUTTON_CANCEL).run(callback)
 
-    # Accepting move_items_to, but forcing it to be false allows playlists to be
-    # used in the same context as folders in certain places, but still catches
-    # logic problem. Maybe eventually, playlists and folders should derive
-    # from the same parent --NN
+    # Accepting move_items_to, but forcing it to be false allows
+    # playlists to be used in the same context as folders in certain
+    # places, but still catches logic problem. Maybe eventually,
+    # playlists and folders should derive from the same parent --NN
     def remove(self, move_items_to=None):
         if move_items_to is not None:
-            raise StandardError("Cannot 'move' a playlist to %s" % repr(move_items_to))
+            raise StandardError("Cannot 'move' a playlist to %r" %
+                                move_items_to)
         self._remove_ids_from_folder()
         database.DDBObject.remove(self)
 
 def fix_missing_item_ids():
-    for map in PlaylistItemMap.make_view("item_id NOT IN (SELECT id FROM item)"):
+    for map_ in PlaylistItemMap.make_view("item_id NOT IN "
+                                          "(SELECT id FROM item)"):
         logging.warn("playlist item map %s refers to missing item (%s)",
-                map.id, map.item_id)
-        map.remove()
-    for map in PlaylistItemMap.make_view("playlist_id NOT IN "
-            "(SELECT id FROM playlist)"):
+                     map_.id, map_.item_id)
+        map_.remove()
+    for map_ in PlaylistItemMap.make_view("playlist_id NOT IN "
+                                          "(SELECT id FROM playlist)"):
         logging.warn("playlist item map %s refers to missing playlist (%s)",
-                map.id, map.playlist_id)
-        map.remove()
+                     map_.id, map_.playlist_id)
+        map_.remove()

@@ -263,7 +263,8 @@ class FeedParserValues(object):
                             format += u' AUDIO'
                         if format.startswith(u'X-'):
                             format = format[2:]
-                        return u'.%s' % MIME_SUBSITUTIONS.get(format, format).lower()
+                        return (u'.%s' %
+                                MIME_SUBSITUTIONS.get(format, format).lower())
 
             if extension in KNOWN_MIME_SUBTYPES:
                 return u'.%s' % extension
@@ -507,9 +508,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def playlist_folder_view(cls, playlist_folder_id):
-        return cls.make_view("pim.playlist_id=?", (playlist_folder_id,),
-                joins={'playlist_folder_item_map AS pim': 'item.id=pim.item_id'},
-                order_by='pim.position')
+        return cls.make_view(
+            "pim.playlist_id=?", (playlist_folder_id,),
+            joins={'playlist_folder_item_map AS pim': 'item.id=pim.item_id'},
+            order_by='pim.position')
 
     @classmethod
     def search_item_view(cls):
@@ -518,13 +520,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def watchable_video_view(cls):
-        return cls.make_view("not isContainerItem AND "
-                "(deleted IS NULL or not deleted) AND "
-                "(is_file_item OR rd.main_item_id=item.id) AND "
-                "(feed.origURL IS NULL OR feed.origURL!= 'dtv:singleFeed') AND "
-                "item.file_type='video'",
-                joins={'feed': 'item.feed_id=feed.id',
-                    'remote_downloader as rd': 'item.downloader_id=rd.id'})
+        return cls.make_view(
+            "not isContainerItem AND "
+            "(deleted IS NULL or not deleted) AND "
+            "(is_file_item OR rd.main_item_id=item.id) AND "
+            "(feed.origURL IS NULL OR feed.origURL!= 'dtv:singleFeed') AND "
+            "item.file_type='video'",
+            joins={'feed': 'item.feed_id=feed.id',
+                   'remote_downloader as rd': 'item.downloader_id=rd.id'})
 
     @classmethod
     def watchable_audio_view(cls):
@@ -538,12 +541,13 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def watchable_other_view(cls):
-        return cls.make_view("(deleted IS NULL OR not deleted) AND "
-                "(is_file_item OR rd.id IS NOT NULL) AND "
-                "(parent_id IS NOT NULL or feed.origURL != 'dtv:singleFeed') AND "
-                "item.file_type='other'",
-                joins={'feed': 'item.feed_id=feed.id',
-                    'remote_downloader as rd': 'rd.main_item_id=item.id'})
+        return cls.make_view(
+            "(deleted IS NULL OR not deleted) AND "
+            "(is_file_item OR rd.id IS NOT NULL) AND "
+            "(parent_id IS NOT NULL or feed.origURL != 'dtv:singleFeed') AND "
+            "item.file_type='other'",
+            joins={'feed': 'item.feed_id=feed.id',
+                   'remote_downloader as rd': 'rd.main_item_id=item.id'})
 
     @classmethod
     def feed_expiring_view(cls, feed_id, watched_before):
@@ -582,8 +586,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def update_folder_trackers(cls):
-        """Update each view tracker that care's about the item's folder (both
-        playlist and channel folders).
+        """Update each view tracker that care's about the item's
+        folder (both playlist and channel folders).
         """
 
         for tracker in app.view_tracker_manager.trackers_for_ddb_class(cls):
@@ -602,9 +606,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.has_downloader() and self.downloader.is_finished():
             self.set_filename(self.downloader.get_filename())
 
-    getSelected, setSelected = make_simple_get_set(u'selected',
-            change_needs_save=False)
-    getActive, setActive = make_simple_get_set(u'active', change_needs_save=False)
+    getSelected, setSelected = make_simple_get_set(
+        u'selected', change_needs_save=False)
+    getActive, setActive = make_simple_get_set(
+        u'active', change_needs_save=False)
 
     def _find_child_paths(self):
         """If this item points to a directory, return the set all files
@@ -640,7 +645,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             # re-downloading
             return False
         child_paths = self._find_child_paths()
-        for child in self.getChildren():
+        for child in self.get_children():
             child_paths.discard(child.get_filename())
         self._make_new_children(child_paths)
         if child_paths:
@@ -697,17 +702,17 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 return u'audio'
         return u'other'
 
-    def matches_search(self, searchString):
-        if searchString is None:
+    def matches_search(self, search_string):
+        if search_string is None:
             return True
-        searchString = searchString.lower()
+        search_string = search_string.lower()
         title = self.get_title() or u''
         desc = self.get_raw_description() or u''
         if self.get_filename():
             filename = filenameToUnicode(self.get_filename())
         else:
             filename = u''
-        if search.match(searchString, [title.lower(), desc.lower(),
+        if search.match(search_string, [title.lower(), desc.lower(),
                                        filename.lower()]):
             return True
         else:
@@ -726,7 +731,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             try:
                 obj = models.Feed.get_by_id(self.feed_id)
             except ObjectNotFoundError:
-                raise DatabaseConstraintError("my feed (%s) is not in database" % self.feed_id)
+                raise DatabaseConstraintError(
+                    "my feed (%s) is not in database" % self.feed_id)
             else:
                 if not isinstance(obj, models.Feed):
                     msg = "feed_id points to a %s instance" % obj.__class__
@@ -735,7 +741,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             try:
                 obj = Item.get_by_id(self.parent_id)
             except ObjectNotFoundError:
-                raise DatabaseConstraintError("my parent (%s) is not in database" % self.parent_id)
+                raise DatabaseConstraintError(
+                    "my parent (%s) is not in database" % self.parent_id)
             else:
                 if not isinstance(obj, Item):
                     msg = "parent_id points to a %s instance" % obj.__class__
@@ -746,22 +753,23 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                     msg = "parent_id is not a containerItem"
                     raise DatabaseConstraintError(msg)
         if self.parent_id is None and self.feed_id is None:
-            raise DatabaseConstraintError ("feed_id and parent_id both None")
+            raise DatabaseConstraintError("feed_id and parent_id both None")
         if self.parent_id is not None and self.feed_id is not None:
-            raise DatabaseConstraintError ("feed_id and parent_id both not None")
+            raise DatabaseConstraintError(
+                "feed_id and parent_id both not None")
 
     def on_signal_change(self):
         self.expiring = None
-        self._syncTitle()
+        self._sync_title()
         if hasattr(self, "_state"):
             del self._state
         if hasattr(self, "_size"):
             del self._size
 
-    def _syncTitle(self):
-        if (self.has_downloader() and 
-            self.downloader.get_type() == "bittorrent" and 
-            self.downloader.get_state() == "downloading"):
+    def _sync_title(self):
+        if ((self.has_downloader()
+             and self.downloader.get_type() == "bittorrent"
+             and self.downloader.get_state() == "downloading")):
             filename = os.path.basename(self.downloader.get_filename())
             if self.title != filename:
                 self.set_title(filenameToUnicode(filename))
@@ -840,14 +848,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 return None
         return None
 
-    def getChildren(self):
+    def get_children(self):
         if self.isContainerItem:
             return Item.children_view(self.id)
         else:
             raise ValueError("%s is not a container item" % self)
 
     def children_signal_change(self):
-        for child in self.getChildren():
+        for child in self.get_children():
             child.signal_change(needs_save=False)
 
     def is_playable(self):
@@ -858,7 +866,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             return self.file_type in ('audio', 'video')
 
-    def setFeed(self, feed_id):
+    def set_feed(self, feed_id):
         """Moves this item to another feed.
         """
         self.feed_id = feed_id
@@ -866,7 +874,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if hasattr(self, "_feed"):
             del self._feed
         if self.isContainerItem:
-            for item in self.getChildren():
+            for item in self.get_children():
                 if hasattr(item, "_feed"):
                     del item._feed
                 item.signal_change()
@@ -889,7 +897,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.is_external():
             if self.is_downloaded():
                 if self.isContainerItem:
-                    for item in self.getChildren():
+                    for item in self.get_children():
                         item.make_deleted()
                 elif self.get_filename():
                     FileItem(self.get_filename(), feed_id=self.feed_id,
@@ -940,27 +948,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             if self.isContainerItem:
                 self.children_signal_change()
 
-    @returns_unicode
-    def getString(self, when):
-        """Get the expiration time a string to display to the user."""
-        offset = when - datetime.now()
-        if offset.days > 0:
-            result = ngettext("%(count)d day",
-                              "%(count)d days",
-                              offset.days,
-                              {"count": offset.days})
-        elif offset.seconds > 3600:
-            result = ngettext("%(count)d hour",
-                              "%(count)d hours",
-                              ceil(offset.seconds/3600.0),
-                              {"count": ceil(offset.seconds/3600.0)})
-        else:
-            result = ngettext("%(count)d minute",
-                              "%(count)d minutes",
-                              ceil(offset.seconds/60.0),
-                              {"count": ceil(offset.seconds/60.0)})
-        return result
-
     def get_expiration_time(self):
         """Returns the time when this item should expire.
 
@@ -977,10 +964,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return None
         else:
             if ufeed.expire == u"feed":
-                expireTime = ufeed.expireTime
+                expire_time = ufeed.expireTime
             elif ufeed.expire == u"system":
-                expireTime = timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS))
-            return self.get_watched_time() + expireTime
+                expire_time = timedelta(
+                    days=config.get(prefs.EXPIRE_AFTER_X_DAYS))
+            return self.get_watched_time() + expire_time
 
     def get_watched_time(self):
         """Returns the most recent watched time of this item or any
@@ -993,13 +981,13 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return None
         if self.isContainerItem and self.watchedTime == None:
             self.watchedTime = datetime.min
-            for item in self.getChildren():
-                childTime = item.get_watched_time()
-                if childTime is None:
+            for item in self.get_children():
+                child_time = item.get_watched_time()
+                if child_time is None:
                     self.watchedTime = None
                     return None
-                if childTime > self.watchedTime:
-                    self.watchedTime = childTime
+                if child_time > self.watchedTime:
+                    self.watchedTime = child_time
             self.signal_change()
         return self.watchedTime
 
@@ -1028,12 +1016,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.confirm_db_thread()
         return self.seen
 
-    def mark_item_seen(self, markOtherItems=True):
+    def mark_item_seen(self, mark_other_items=True):
         """Marks the item as seen.
         """
         self.confirm_db_thread()
         if self.isContainerItem:
-            for child in self.getChildren():
+            for child in self.get_children():
                 child.seen = True
                 child.signal_change()
         if self.seen == False:
@@ -1042,7 +1030,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 self.watchedTime = datetime.now()
             self.signal_change()
             self.update_parent_seen()
-            if markOtherItems and self.downloader:
+            if mark_other_items and self.downloader:
                 for item in self.downloader.item_list:
                     if item != self:
                         item.mark_item_seen(False)
@@ -1058,10 +1046,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 parent.seen = new_seen
                 parent.signal_change()
 
-    def mark_item_unseen(self, markOtherItems=True):
+    def mark_item_unseen(self, mark_other_items=True):
         self.confirm_db_thread()
         if self.isContainerItem:
-            for item in self.getChildren():
+            for item in self.get_children():
                 item.seen = False
                 item.signal_change()
         if self.seen:
@@ -1069,7 +1057,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             self.watchedTime = None
             self.signal_change()
             self.update_parent_seen()
-            if markOtherItems and self.downloader:
+            if mark_other_items and self.downloader:
                 for item in self.downloader.item_list:
                     if item != self:
                         item.mark_item_unseen(False)
@@ -1132,7 +1120,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         dler = downloader.get_downloader_for_item(self)
         if dler is not None:
             self.set_downloader(dler)
-            self.downloader.set_channel_name(unicodeToFilename(self.get_channel_title(True)))
+            self.downloader.set_channel_name(
+                unicodeToFilename(self.get_channel_title(True)))
             if self.downloader.is_finished():
                 self.on_download_finished()
             else:
@@ -1254,7 +1243,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         elif self.is_external() and self.is_downloaded_torrent():
             lines = [_('Contents:')]
             lines.extend(filenameToUnicode(child.offsetPath)
-                         for child in self.getChildren())
+                         for child in self.get_children())
             return u'<BR>\n'.join(lines)
         else:
             return u''
@@ -1286,19 +1275,20 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
            'stopped' - Part of a torrent that we've stopped seeding
         """
 
-        downloader = self.downloader
-        if downloader is None and self.has_parent():
-            downloader = self.get_parent().downloader
-        if downloader is None or downloader.get_type() != u'bittorrent':
+        downloader_ = self.downloader
+        if downloader_ is None and self.has_parent():
+            downloader_ = self.get_parent().downloader
+        if downloader_ is None or downloader_.get_type() != u'bittorrent':
             return None
-        if downloader.get_state() == 'uploading':
+        if downloader_.get_state() == 'uploading':
             return 'seeding'
         else:
             return 'stopped'
 
     def is_transferring(self):
         return (self.downloader
-                and self.downloader.get_state() in (u'uploading', u'downloading'))
+                and self.downloader.get_state() in (u'uploading',
+                                                    u'downloading'))
 
     def delete_files(self):
         """Stops downloading the item.
@@ -1307,7 +1297,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.has_downloader():
             self.set_downloader(None)
         if self.isContainerItem:
-            for item in self.getChildren():
+            for item in self.get_children():
                 item.delete_files()
                 item.remove()
         self.delete_subtitle_files()
@@ -1510,7 +1500,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         return secs
 
     @returns_unicode
-    def get_format(self, emptyForUnknown=True):
+    def get_format(self, empty_for_unknown=True):
         """Returns string with the format of the video.
         """
         if self.looks_like_torrent():
@@ -1522,17 +1512,18 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 mtype, subtype = self.downloader.contentType.split('/', 1)
                 mtype = mtype.lower()
                 if mtype in KNOWN_MIME_TYPES:
-                    format = subtype.split(';')[0].upper()
+                    format_ = subtype.split(';')[0].upper()
                     if mtype == u'audio':
-                        format += u' AUDIO'
-                    if format.startswith(u'X-'):
-                        format = format[2:]
-                    return u'.%s' % MIME_SUBSITUTIONS.get(format, format).lower()
+                        format_ += u' AUDIO'
+                    if format_.startswith(u'X-'):
+                        format_ = format_[2:]
+                    return (u'.%s' %
+                            MIME_SUBSITUTIONS.get(format_, format_).lower())
 
         if self.enclosure_format is not None:
             return self.enclosure_format
 
-        if emptyForUnknown:
+        if empty_for_unknown:
             return u""
         return u"unknown"
 
@@ -1618,16 +1609,16 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         for dup in view:
             dup.remove()
 
-    def set_downloader(self, downloader):
+    def set_downloader(self, new_downloader):
         if self.has_downloader():
-            if downloader is self.downloader:
+            if new_downloader is self.downloader:
                 return
             self.downloader.remove_item(self)
-        self._downloader = downloader
-        if downloader is not None:
-            self.downloader_id = downloader.id
+        self._downloader = new_downloader
+        if new_downloader is not None:
+            self.downloader_id = new_downloader.id
             self.was_downloaded = True
-            downloader.add_item(self)
+            new_downloader.add_item(self)
         else:
             self.downloader_id = None
         self.signal_change()
@@ -1659,7 +1650,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def migrate_children(self, newdir):
         if self.isContainerItem:
-            for item in self.getChildren():
+            for item in self.get_children():
                 item.migrate(newdir)
 
     def remove(self):
@@ -1667,7 +1658,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             self.set_downloader(None)
         self.remove_icon_cache()
         if self.isContainerItem:
-            for item in self.getChildren():
+            for item in self.get_children():
                 item.remove()
         self._remove_from_playlists()
         DDBObject.remove(self)
@@ -1710,27 +1701,28 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         from: /path/to/movies/foobar.mp4/foobar.mp4
         to:   /path/to/movies/foobar.mp4
         """
-        filenamePath = self.get_filename()
-        if filenamePath is None:
+        filename_path = self.get_filename()
+        if filename_path is None:
             return
-        if fileutil.isdir(filenamePath):
-            enclosedFile = os.path.join(filenamePath,
-                                        os.path.basename(filenamePath))
-            if fileutil.exists(enclosedFile):
-                logging.info("Migrating incorrect torrent download: %s" % enclosedFile)
+        if fileutil.isdir(filename_path):
+            enclosed_file = os.path.join(filename_path,
+                                        os.path.basename(filename_path))
+            if fileutil.exists(enclosed_file):
+                logging.info("Migrating incorrect torrent download: %s",
+                             enclosed_file)
                 try:
-                    temp = filenamePath + ".tmp"
-                    fileutil.move(enclosedFile, temp)
-                    for turd in os.listdir(fileutil.expand_filename(filenamePath)):
+                    temp = filename_path + ".tmp"
+                    fileutil.move(enclosed_file, temp)
+                    for turd in os.listdir(fileutil.expand_filename(filename_path)):
                         os.remove(turd)
-                    fileutil.rmdir(filenamePath)
-                    fileutil.rename(temp, filenamePath)
+                    fileutil.rmdir(filename_path)
+                    fileutil.rename(temp, filename_path)
                 except (SystemExit, KeyboardInterrupt):
                     raise
                 except:
                     logging.warn("fix_incorrect_torrent_subdir error:\n%s",
                                  traceback.format_exc())
-                self.set_filename(filenamePath)
+                self.set_filename(filename_path)
 
     def __str__(self):
         return "Item - %s" % stringify(self.get_title())
@@ -1846,7 +1838,7 @@ class FileItem(Item):
                 self.remove()
             else:
                 self.make_deleted()
-        if old_parent is not None and old_parent.getChildren().count() == 0:
+        if old_parent is not None and old_parent.get_children().count() == 0:
             old_parent.expire()
 
     def make_deleted(self):
@@ -1864,7 +1856,7 @@ class FileItem(Item):
                 dler.stop_upload()
                 dler.child_deleted = True
                 dler.signal_change()
-                for sibling in self.get_parent().getChildren():
+                for sibling in self.get_parent().get_children():
                     sibling.signal_change(needs_save=False)
         try:
             if fileutil.isfile(self.filename):
@@ -1883,7 +1875,8 @@ class FileItem(Item):
     def _update_release_date(self):
         # This should be called whenever we get a new entry
         try:
-            self.releaseDateObj = datetime.fromtimestamp(fileutil.getmtime(self.filename))
+            self.releaseDateObj = datetime.fromtimestamp(
+                fileutil.getmtime(self.filename))
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
@@ -1895,7 +1888,7 @@ class FileItem(Item):
         else:
             return self.releaseDateObj
 
-    def migrate(self, newDir):
+    def migrate(self, newdir):
         self.confirm_db_thread()
         if self.parent_id:
             parent = self.get_parent()
@@ -1908,28 +1901,30 @@ class FileItem(Item):
 can't migrate download because we don't have a shortFilename!
 filename was %s""", stringify(self.filename))
             return
-        newFilename = os.path.join(newDir, self.shortFilename)
-        if self.filename == newFilename:
+        new_filename = os.path.join(newdir, self.shortFilename)
+        if self.filename == new_filename:
             return
         if fileutil.exists(self.filename):
-            newFilename = next_free_filename(newFilename)
+            new_filename = next_free_filename(new_filename)
             def callback():
-                self.filename = newFilename
+                self.filename = new_filename
                 self.signal_change()
-            fileutil.migrate_file(self.filename, newFilename, callback)
-        elif fileutil.exists(newFilename):
-            self.filename = newFilename
+            fileutil.migrate_file(self.filename, new_filename, callback)
+        elif fileutil.exists(new_filename):
+            self.filename = new_filename
             self.signal_change()
-        self.migrate_children(newDir)
+        self.migrate_children(newdir)
 
     def setup_links(self):
         if self.shortFilename is None:
             if self.parent_id is None:
-                self.shortFilename = clean_filename(os.path.basename(self.filename))
+                self.shortFilename = clean_filename(
+                    os.path.basename(self.filename))
             else:
                 parent_file = self.get_parent().get_filename()
                 if self.filename.startswith(parent_file):
-                    self.shortFilename = clean_filename(self.filename[len(parent_file):])
+                    self.shortFilename = clean_filename(
+                        self.filename[len(parent_file):])
                 else:
                     logging.warn("%s is not a subdirectory of %s",
                             self.filename, parent_file)
@@ -1969,13 +1964,13 @@ def move_orphaned_items():
 
     for item in Item.orphaned_from_feed_view():
         logging.warn("No feed for Item: %s.  Moving to manual", item.id)
-        item.setFeed(manual_feed.id)
+        item.set_feed(manual_feed.id)
         feedless_items.append('%s: %s' % (item.id, item.url))
 
     for item in Item.orphaned_from_parent_view():
         logging.warn("No parent for Item: %s.  Moving to manual", item.id)
         item.parent_id = None
-        item.setFeed(manual_feed.id)
+        item.set_feed(manual_feed.id)
         parentless_items.append('%s: %s' % (item.id, item.url))
 
     if feedless_items:

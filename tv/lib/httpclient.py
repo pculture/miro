@@ -89,11 +89,13 @@ class HTTPError(NetworkError):
 
 class ServerClosedConnection(HTTPError):
     def __init__(self, host):
-        HTTPError.__init__(self, _('%(host)s closed connection', {"host": host}))
+        HTTPError.__init__(self, _('%(host)s closed connection',
+                                   {"host": host}))
 
 class ResumeFailed(HTTPError):
     def __init__(self, host):
-        HTTPError.__init__(self, _('%(host)s doesn\'t support HTTP resume', {"host": host}))
+        HTTPError.__init__(self, _('%(host)s doesn\'t support HTTP resume',
+                                   {"host": host}))
 
 class TooManyRedirects(HTTPError):
     def __init__(self, url):
@@ -219,7 +221,8 @@ class TransferOptions(object):
         return handle
 
     def _setup_headers(self, handle, out_headers):
-        headers = ['%s: %s' % (str(k), str(out_headers[k])) for k in out_headers]
+        headers = ['%s: %s' % (str(k), str(out_headers[k]))
+                   for k in out_headers]
         handle.setopt(pycurl.HTTPHEADER, headers)
 
     def _setup_post(self, handle, out_headers):
@@ -383,7 +386,7 @@ class CurlTransfer(object):
             info['updated-url'] = info['redirected-url']
         return info
 
-    def _write_func_abort(self, bytes):
+    def _write_func_abort(self, bytes_):
         curl_manager.remove_transfer(self)
         curl_manager.call_after_perform(self.on_finished)
 
@@ -754,12 +757,10 @@ def cleanup_libcurl():
 
 def start_thread():
     global curl_manager
-
     curl_manager = LibCURLManager()
     curl_manager.start()
 
 def stop_thread():
     global curl_manager
-
     curl_manager.stop()
     del curl_manager

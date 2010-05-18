@@ -23,7 +23,7 @@ class ContainerItemTest(MiroTestCase):
         self._make_fake_item("dean.avi")
         self._make_fake_item("npr.txt")
         self.container_item = FileItem(self.tempdir, self.feed.id)
-        for child in self.container_item.getChildren():
+        for child in self.container_item.get_children():
             if child.filename.endswith("avi"):
                 child.file_type = u'video'
             else:
@@ -44,7 +44,7 @@ class ItemSeenTest(ContainerItemTest):
     def test_seen_attribute(self):
         # parents should be consider "seen" when all of their
         # audio/video children are marked seen.
-        children = list(self.container_item.getChildren())
+        children = list(self.container_item.get_children())
         media_children = [i for i in children if i.is_playable()]
         other_children = [i for i in children if not i.is_playable()]
         self.assertEquals(len(media_children), 2)
@@ -61,7 +61,7 @@ class ItemSeenTest(ContainerItemTest):
 
 class ChildRemoveTest(ContainerItemTest):
     def test_expire_all_children(self):
-        children = list(self.container_item.getChildren())
+        children = list(self.container_item.get_children())
         for child in children[1:]:
             child.expire()
             self.assert_(self.container_item.id_exists())

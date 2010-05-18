@@ -1207,7 +1207,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         to_remove = []
         for item in self.items:
             if move_items_to is not None and item.is_downloaded():
-                item.setFeed(move_items_to.get_id())
+                item.set_feed(move_items_to.get_id())
             else:
                 to_remove.append(item)
         app.bulk_sql_manager.start()
@@ -2315,7 +2315,7 @@ class SearchFeedImpl(RSSMultiFeedBase):
         self.ufeed.confirm_db_thread()
         for item in self.items:
             if item.get_state() not in ('new', 'not-downloaded'):
-                item.setFeed(downloads_feed.id)
+                item.set_feed(downloads_feed.id)
 
     def set_engine(self, engine):
         self.engine = engine
@@ -2342,7 +2342,7 @@ class SearchFeedImpl(RSSMultiFeedBase):
                          and item.get_url() == url)):
                         try:
                             if entry["id"] == item.get_rss_id():
-                                item.setFeed(self.ufeed.id)
+                                item.set_feed(self.ufeed.id)
                                 if not fp_values.compare_to_item(item):
                                     item.update_from_feed_parser_values(fp_values)
                                 return
@@ -2351,7 +2351,7 @@ class SearchFeedImpl(RSSMultiFeedBase):
                         title = entry.get("title")
                         oldtitle = item.entry_title
                         if title == oldtitle:
-                            item.setFeed(self.ufeed.id)
+                            item.set_feed(self.ufeed.id)
                             if not fp_values.compare_to_item(item):
                                 item.update_from_feed_parser_values(fp_values)
                             return
