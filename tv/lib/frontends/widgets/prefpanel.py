@@ -275,6 +275,10 @@ class GeneralPanel(PanelBuilder):
         attach_boolean(warn_if_downloading_cbx, prefs.WARN_IF_DOWNLOADING_ON_QUIT)
         v.pack_start(warn_if_downloading_cbx)
 
+        warn_if_converting_cbx = widgetset.Checkbox(_("Warn me if I attempt to quit with conversions in progress."))
+        attach_boolean(warn_if_converting_cbx, prefs.WARN_IF_CONVERTING_ON_QUIT)
+        v.pack_start(warn_if_converting_cbx)
+
         # FIXME - need to automatically generate list of available languages
         # in correct language
         lang_options = gtcache.get_languages()

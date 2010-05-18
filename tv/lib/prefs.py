@@ -90,6 +90,7 @@ DETACHED_WINDOW_FRAME       = Pref(key='detachedWindowFrame',   default=None,  p
 RESUME_VIDEOS_MODE          = Pref(key='resumeVideosMode',      default=True,  platformSpecific=False)
 PLAY_IN_MIRO                = Pref(key='playInMiro',            default=True,  platformSpecific=False)
 WARN_IF_DOWNLOADING_ON_QUIT = Pref(key='warnIfDownloadingOnQuit', default=True, platformSpecific=False)
+WARN_IF_CONVERTING_ON_QUIT  = Pref(key='warnIfConvertingOnQuit', default=True, platformSpecific=False)
 TRUNCATE_CHANNEL_AFTER_X_ITEMS = Pref(key='TruncateChannelAFterXItems',  default=1000, platformSpecific=False)
 MAX_OLD_ITEMS_DEFAULT       = Pref(key='maxOldItemsDefault',    default=20,    platformSpecific=False)
 USE_UPNP                    = Pref(key='useUpnp',               default=True,  platformSpecific=False)

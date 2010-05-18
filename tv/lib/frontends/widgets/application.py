@@ -74,7 +74,7 @@ from miro.frontends.widgets import playback
 from miro.frontends.widgets import search
 from miro.frontends.widgets import rundialog
 from miro.frontends.widgets import watchedfolders
-from miro.frontends.widgets import quitwhiledownloading
+from miro.frontends.widgets import quitconfirmation
 from miro.frontends.widgets import firsttimedialog
 from miro.frontends.widgets.widgetconst import MAX_VOLUME
 from miro.frontends.widgets.window import MiroWindow
@@ -807,8 +807,14 @@ class Application:
         self.quit()
 
     def quit(self):
+        ok1 = self._confirm_quit_if_downloading()
+        ok2 = self._confirm_quit_if_converting()
+        if ok1 and ok2:
+            self.do_quit()
+
+    def _confirm_quit_if_downloading(self):
         if config.get(prefs.WARN_IF_DOWNLOADING_ON_QUIT) and self.download_count > 0:
-            ret = quitwhiledownloading.rundialog(
+            ret = quitconfirmation.rundialog(
                 _("Are you sure you want to quit?"),
                 ngettext(
                     "You have %(count)d download in progress.  Quit anyway?",
@@ -816,12 +822,30 @@ class Application:
                     self.download_count,
                     {"count": self.download_count}
                 ),
-                _("Warn me when I attempt to quit with downloads in progress")
+                _("Warn me when I attempt to quit with downloads in progress"),
+                prefs.WARN_IF_DOWNLOADING_ON_QUIT
             )
-            if ret:
-                self.do_quit()
-        else:
-            self.do_quit()
+            return ret
+        return True
+    
+    def _confirm_quit_if_converting(self):
+        running_count = len(videoconversion.conversion_manager.running_tasks)
+        pending_count = len(videoconversion.conversion_manager.pending_tasks)
+        conversions_count = running_count + pending_count
+        if config.get(prefs.WARN_IF_CONVERTING_ON_QUIT) and conversions_count > 0:
+            ret = quitconfirmation.rundialog(
+                _("Are you sure you want to quit?"),
+                ngettext(
+                    "You have %(count)d conversion in progress.  Quit anyway?",
+                    "You have %(count)d conversions in progress or pending.  Quit anyway?",
+                    conversions_count,
+                    {"count": conversions_count}
+                ),
+                _("Warn me when I attempt to quit with conversions in progress"),
+                prefs.WARN_IF_CONVERTING_ON_QUIT
+            )
+            return ret
+        return True
 
     def do_quit(self):
         if self.window is not None:
