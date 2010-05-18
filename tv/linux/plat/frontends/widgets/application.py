@@ -45,7 +45,7 @@ from miro import app
 from miro import config
 from miro import prefs
 from miro.frontends.widgets.application import Application
-from miro.plat.frontends.widgets import threads
+# from miro.plat.frontends.widgets import threads
 from miro.plat import renderers, options
 from miro.plat.utils import set_properties
 from miro.plat.config import gconf_lock
@@ -127,24 +127,27 @@ class LinuxApplication(Application):
             self.update_autostart(value)
 
     def _set_default_icon(self):
-        # set the icon so that it doesn't flash when the window is realized in
-        # Application.build_window().
+        # set the icon so that it doesn't flash when the window is
+        # realized in Application.build_window().
         # if this isn't a themed Miro, then we use the default icon set
-        icopath = resources.share_path("icons/hicolor/24x24/apps/miro.png")
-        if config.get(prefs.THEME_NAME) != prefs.THEME_NAME.default and config.get(options.WINDOWS_ICON):
-            themeIcoPath = resources.theme_path(config.get(prefs.THEME_NAME),
-                                                config.get(options.WINDOWS_ICON))
-            if os.path.exists(themeIcoPath):
-                icopath = themeIcoPath
-                gtk.window_set_default_icon_from_file(icopath)
+        ico_path = resources.share_path("icons/hicolor/24x24/apps/miro.png")
+        if ((config.get(prefs.THEME_NAME) != prefs.THEME_NAME.default
+             and config.get(options.WINDOWS_ICON))):
+            theme_ico_path = resources.theme_path(
+                config.get(prefs.THEME_NAME),
+                config.get(options.WINDOWS_ICON))
+            if os.path.exists(theme_ico_path):
+                ico_path = theme_ico_path
+                gtk.window_set_default_icon_from_file(ico_path)
         else:
-            gtk.icon_theme_get_default().append_search_path(resources.share_path('icons'))
+            gtk.icon_theme_get_default().append_search_path(
+                resources.share_path('icons'))
             gtk.window_set_default_icon_name("miro")
 
-        return icopath
+        return ico_path
 
     def build_window(self):
-        icopath = self._set_default_icon()
+        self._set_default_icon()
         Application.build_window(self)
         self.window.connect('save-dimensions', self.set_main_window_dimensions)
         self.window.connect('save-maximized', self.set_main_window_maximized)
@@ -180,7 +183,8 @@ class LinuxApplication(Application):
                 shutil.copy(resources.share_path('applications/miro.desktop'),
                             destination)
             except OSError:
-                logging.exception("Problems creating or populating autostart dir.")
+                logging.exception("Problems creating or populating "
+                                  "autostart dir.")
 
         else:
             if not os.path.exists(destination):
@@ -204,8 +208,8 @@ class LinuxApplication(Application):
     def get_clipboard_text(self):
         """Pulls text from the clipboard and returns it.
 
-        This text is not filtered/transformed in any way--that's the job of
-        the caller.
+        This text is not filtered/transformed in any way--that's the
+        job of the caller.
         """
         text = gtk.Clipboard(selection="PRIMARY").wait_for_text()
         if text is None:
