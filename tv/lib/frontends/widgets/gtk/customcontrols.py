@@ -325,12 +325,15 @@ class VolumeSlider(Widget):
         Widget.__init__(self)
         self.set_widget(gtk.VolumeButton())
         self.wrapped_widget_connect('value-changed', self.on_value_changed)
+        self._widget.get_popup().connect("hide", self.on_hide)
         self.create_signal('changed')
         self.create_signal('released')
 
     def on_value_changed(self, *args):
         value = self.get_value()
         self.emit('changed', value)
+
+    def on_hide(self, *args):
         self.emit('released')
 
     def get_value(self):
