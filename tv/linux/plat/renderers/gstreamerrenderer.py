@@ -50,6 +50,7 @@ from miro.gtcache import gettext as _
 from miro.plat import options
 from miro import iso639
 
+from miro.frontends.widgets.widgetconst import MAX_VOLUME
 from miro.frontends.widgets.gtk.threads import call_on_ui_thread
 
 def to_seconds(t):
@@ -268,7 +269,7 @@ class Renderer:
             self.destroy_playbin()
 
     def set_volume(self, level):
-        self.playbin.set_property("volume", level)
+        self.playbin.set_property("volume", level / MAX_VOLUME)
 
     def play(self):
         self.playbin.set_state(gst.STATE_PLAYING)
