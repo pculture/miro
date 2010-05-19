@@ -75,13 +75,13 @@ def get_subscriptions_from_query(subscription_type, query):
         match = re.match(r'^url(\d+)$', key)
         if match:
             subscription = {'type': subscription_type,
-                            'url': unicode(value[0], 'utf8')}
+                            'url': value[0].decode('utf-8', 'replace')}
             subscriptions.append(subscription)
             url_id = match.group(1)
             for key2 in ADDITIONAL_KEYS:
                 if '%s%s' % (key2, url_id) in parsed_query:
                     key3 = "%s%s" % (key2, url_id)
-                    value = unicode(parsed_query[key3][0], "utf-8")
+                    value = parsed_query[key3][0].decode("utf-8", 'replace')
                     if key2 == 'type':
                         subscription['mime_type'] = value
                     else:
