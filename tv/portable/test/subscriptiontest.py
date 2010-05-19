@@ -305,6 +305,30 @@ class Testfind_subscribe_links(MiroTestCase):
                                   'http://www.myblog.com/rss',
                                   'http://www.yourblog.com/atom'])
 
+    def test_description(self):
+        # Test queries with invalid encodings (#13390)
+        url = ('http://subscribe.getdemocracy.com/' + \
+               '?url1=http%3A//www.myblog.com/rss' + \
+               '&description1=My+Blog')
+
+        feeds = subscription.find_subscribe_links(url)
+        self.assertEquals(feeds, [
+            {'url': u'http://www.myblog.com/rss', 'type': 'feed',
+                'description': u'My Blog'}]
+        )
+
+    def test_query_encoded_wrong(self):
+        # Test queries with invalid encodings (#13390)
+        url = ('http://subscribe.getdemocracy.com/' + \
+               '?url1=http%3A//www.myblog.com/rss' + \
+               '&description1=My%A0Blog') # %A0 is not correct here
+
+        feeds = subscription.find_subscribe_links(url)
+        self.assertEquals(feeds, [
+            {'url': u'http://www.myblog.com/rss', 'type': 'feed',
+                'description': u'My\ufffdBlog'}] # fffd is the ? character
+        )
+
     def test_site_links(self):
         url = ('http://subscribe.getdemocracy.com/site.php' +
                '?url1=http%3A//www.mychannelguide.com/')
