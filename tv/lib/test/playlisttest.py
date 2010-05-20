@@ -170,10 +170,12 @@ class Upgrade88TestCase(MiroTestCase):
             pass
         MiroTestCase.tearDown(self)
 
-    # FIXME - this test fails on Windows.  I'm pretty sure we need
-    # a Windows-specific predbupgrade88 because the databases are
-    # platform specific.
     def test_live_storage_converts(self):
+        # FIXME - this test fails on Windows.  I'm pretty sure we need
+        # a Windows-specific predbupgrade88 because the databases are
+        # platform specific.
+        if self.on_windows():
+            self.assert_(False, "test_live_storage_converts fails on windows")
         # run upgrade 88
         old_db_path = resources.path("testdata/olddatabase.predbupgrade88")
         shutil.copyfile(old_db_path, self.tmp_path)

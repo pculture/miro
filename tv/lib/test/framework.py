@@ -83,6 +83,7 @@ class MiroTestCase(unittest.TestCase):
         # reload config now that in_unit_tests is set.  This prevents us from
         # saving config data to disk.
         config.load()
+        self.platform = config.get(prefs.APP_PLATFORM)
         database.set_thread(threading.currentThread())
         database.setup_managers()
         self.raise_db_load_errors = True
@@ -101,6 +102,15 @@ class MiroTestCase(unittest.TestCase):
         self.temp_files = []
         self.httpserver = None
         httpclient.start_thread()
+
+    def on_windows(self):
+        return self.platform == "windows"
+
+    def on_linux(self):
+        return self.platform == "linux"
+
+    def on_osx(self):
+        return self.platform == "osx"
 
     def tearDown(self):
         signals.system.disconnect_all()

@@ -180,6 +180,12 @@ class DBUpgradeTest(StoreDatabaseTest):
         StoreDatabaseTest.tearDown(self)
 
     def test_indexes_same(self):
+        # FIXME - this fails on windows because it's using a non-Windows
+        # database
+        if self.on_windows():
+            self.assert_(False, "test_indexes_same fails on windows")
+        signals.system.connect('new-dialog', dialog_handler)
+
         self.remove_database()
         self.reload_database()
         app.db.cursor.execute("SELECT name FROM sqlite_master "
@@ -194,6 +200,10 @@ class DBUpgradeTest(StoreDatabaseTest):
         self.assertEquals(upgraded_db_indexes, blank_db_indexes)
 
     def test_schema_same(self):
+        # FIXME - this fails on windows because it's using a non-Windows
+        # database
+        if self.on_windows():
+            self.assert_(False, "test_schema_same fails on windows")
         self.remove_database()
         self.reload_database()
         blank_column_types = self._get_column_types()
