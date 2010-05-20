@@ -203,6 +203,13 @@ class MiroTestCase(unittest.TestCase):
     def assertSameSet(self, list1, list2):
         self.assertEquals(set(list1), set(list2))
 
+    def assertDictEquals(self, dict1, dict2):
+        self.assertSameSet(dict1.keys(), dict2.keys())
+        for k in dict1:
+            if not dict1[k] == dict2[k]:
+                raise AssertionError("Values differ for key %s: %s -- %s",
+                        k, dict1[k], dict2[k])
+
 class EventLoopTest(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)

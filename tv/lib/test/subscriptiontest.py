@@ -305,17 +305,32 @@ class Testfind_subscribe_links(MiroTestCase):
                                   'http://www.myblog.com/rss',
                                   'http://www.yourblog.com/atom'])
 
-    def test_description(self):
-        # Test queries with invalid encodings (#13390)
-        url = ('http://subscribe.getdemocracy.com/' + \
-               '?url1=http%3A//www.myblog.com/rss' + \
-               '&description1=My+Blog')
-
+    def test_extra_keys(self):
+        url = ('http://subscribe.getdemocracy.com/'
+               '?url1=http%3A//www.myblog.com/rss'
+               '&description1=My+Blog'
+                '&title1=My+Item'
+                '&length1=12345'
+                '&type1=video/mp4'
+                '&thumbnail1=http%3A//pculture.org/image.jpeg'
+                '&feed1=http%3A//pculture.org/feed.xml'
+                '&link1=http%3A//pculture.org/page.html'
+                '&trackback1=http%3A//pculture.org/trackpack.cgi'
+                '&section1=audio')
         feeds = subscription.find_subscribe_links(url)
-        self.assertEquals(feeds, [
+        self.assertEquals(len(feeds), 1)
+        self.assertDictEquals(feeds[0],
             {'url': u'http://www.myblog.com/rss', 'type': 'feed',
-                'description': u'My Blog'}]
-        )
+                'description': u'My Blog',
+                'title': u'My Item',
+                'length': u'12345',
+                'mime_type': 'video/mp4',
+                'thumbnail': 'http://pculture.org/image.jpeg',
+                'feed': 'http://pculture.org/feed.xml',
+                'link': 'http://pculture.org/page.html',
+                'trackback': 'http://pculture.org/trackpack.cgi',
+                'section': u'audio',
+        })
 
     def test_query_encoded_wrong(self):
         # Test queries with invalid encodings (#13390)
