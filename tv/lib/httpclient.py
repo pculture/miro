@@ -38,6 +38,7 @@ import logging
 import os
 import stat
 import threading
+import urllib
 import Queue
 from cStringIO import StringIO
 
@@ -655,6 +656,14 @@ class HTTPClient(object):
 
         return self.transfer.get_stats()
 
+
+def sanitize_url(url):
+    """Fix poorly constructed URLs.
+
+    The main use case for this is to replace " " characters with "%20"
+    """
+    return urllib.quote(url, safe="-_.!~*'();/?:@&=+$,%#")
+
 def grab_url(url, callback, errback, header_callback=None,
         content_check_callback=None, write_file=None, etag=None, modified=None,
         default_mime_type=None, resume=False, post_vars=None,
@@ -697,6 +706,7 @@ def grab_url(url, callback, errback, header_callback=None,
 
     :returns HTTPClient object
     """
+    url = sanitize_url(url)
     if url.startswith("file://"):
         return _grab_file_url(url, callback, errback, default_mime_type)
     else:
@@ -743,6 +753,7 @@ def grab_headers(url, callback, errback):
     def errback_intercept(error):
         _grab_headers_using_get(url, callback, errback)
 
+    url = sanitize_url(url)
     options = TransferOptions(url)
     options.head_request = True
     transfer = CurlTransfer(options, callback, errback_intercept)

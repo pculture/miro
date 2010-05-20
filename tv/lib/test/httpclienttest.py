@@ -60,6 +60,14 @@ class HTTPClientTest(HTTPClientTestBase):
         self.grab_url("file://" + path)
         self.assertEquals(self.grab_url_info['body'], TEST_BODY)
 
+    def test_simple_get_url_with_spaces(self):
+        self.grab_url(self.httpserver.build_url('test%20with%20spaces.txt'))
+        self.assertEquals(self.grab_url_info['body'], TEST_BODY)
+        # Having spaces in the URL is not legal, but could happen in the wild.
+        # We should work around buggy feeds.
+        self.grab_url(self.httpserver.build_url('test with spaces.txt'))
+        self.assertEquals(self.grab_url_info['body'], TEST_BODY)
+
     def test_unicode_url(self):
         self.grab_url(unicode(self.httpserver.build_url('test.txt')))
         self.assertEquals(self.grab_url_info['body'], TEST_BODY)
