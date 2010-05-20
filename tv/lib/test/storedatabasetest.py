@@ -184,8 +184,6 @@ class DBUpgradeTest(StoreDatabaseTest):
         # database
         if self.on_windows():
             self.assert_(False, "test_indexes_same fails on windows")
-        signals.system.connect('new-dialog', dialog_handler)
-
         self.remove_database()
         self.reload_database()
         app.db.cursor.execute("SELECT name FROM sqlite_master "
