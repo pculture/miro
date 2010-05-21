@@ -1,7 +1,7 @@
 import os
-import os.path
 import tempfile
 import shutil
+import unittest
 
 from miro.test.framework import MiroTestCase
 from miro import download_utils
@@ -29,9 +29,9 @@ class FakeStream:
     def flush(self):
         pass
 
-class AutoFlushingStreamTest(MiroTestCase):
+class AutoFlushingStreamTest(unittest.TestCase):
     def setUp(self):
-        MiroTestCase.setUp(self)
+        unittest.TestCase.setUp(self)
         self.stream = FakeStream()
         self.afs = util.AutoFlushingStream(self.stream)
 
@@ -43,13 +43,15 @@ class AutoFlushingStreamTest(MiroTestCase):
     def test_unicode_write(self):
         self.afs.write(u'\xf8')
 
-class LoggingStreamTest(MiroTestCase):
+class LoggingStreamTest(unittest.TestCase):
     def setUp(self):
-        MiroTestCase.setUp(self)
+        unittest.TestCase.setUp(self)
         self.warnings = []
         self.errors = []
-        self.stdout = util.AutoLoggingStream(self.warn_callback, '(from stdout) ')
-        self.stderr = util.AutoLoggingStream(self.err_callback, '(from stderr) ')
+        self.stdout = util.AutoLoggingStream(
+            self.warn_callback, '(from stdout) ')
+        self.stderr = util.AutoLoggingStream(
+            self.err_callback, '(from stderr) ')
 
     def _check_data(self, data):
         """Check that write is always called with a string object
@@ -82,9 +84,9 @@ class LoggingStreamTest(MiroTestCase):
         self.assertEquals(len(self.warnings), 1)
         self.assertEquals(self.warnings[0], '(from stdout) \\xf8')
 
-class UtilTest(MiroTestCase):
+class UtilTest(unittest.TestCase):
     def setUp(self):
-        MiroTestCase.setUp(self)
+        unittest.TestCase.setUp(self)
         self.filesize_elements = [
             {'href': u'http://example.org/1.ogg',
              'type': u'video/ogg',
@@ -241,7 +243,8 @@ class UtilTest(MiroTestCase):
         # get their "selected" results
         selected_filesize = util.get_first_video_enclosure(filesizes_entry)
         selected_type = util.get_first_video_enclosure(types_entry)
-        selected_combination = util.get_first_video_enclosure(combinations_entry)
+        selected_combination = util.get_first_video_enclosure(
+            combinations_entry)
 
         # now make sure they returned what we expected..
         self.assertEqual(selected_filesize['href'], u'http://example.org/4.ogg')
@@ -249,7 +252,7 @@ class UtilTest(MiroTestCase):
         self.assertEqual(selected_combination['href'],
                          u'http://example.org/1.ogg')
 
-class DownloadUtilsTest(MiroTestCase):
+class DownloadUtilsTest(unittest.TestCase):
     def check_clean_filename(self, filename, test_against):
         self.assertEquals(download_utils.clean_filename(filename),
                           test_against)
@@ -268,53 +271,49 @@ class DownloadUtilsTest(MiroTestCase):
         self.check_clean_filename(long_filename + long_extension,
                                   long_filename[:50] + long_extension[:50])
 
-class Test_simple_config_file(MiroTestCase):
+class Test_simple_config_file(unittest.TestCase):
+    def setUp(self):
+        unittest.TestCase.setUp(self)
+        self.tempdir = tempfile.mkdtemp()
+        if not os.path.exists(self.tempdir):
+            os.makedirs(self.tempdir)
+
+    def tearDown(self):
+        unittest.TestCase.tearDown(self)
+        shutil.rmtree(self.tempdir, ignore_errors=True)
+
     def test_read_simple_config_file(self):
-        t = tempfile.gettempprefix()
-        fn = os.path.join(t, "temp.config")
+        fn = os.path.join(self.tempdir, "temp.config")
 
-        if not os.path.exists(os.path.dirname(fn)):
-            os.makedirs(os.path.dirname(fn))
-
-        try:
-            f = open(fn, "w")
-            f.write("""
+        f = open(fn, "w")
+        f.write("""
 a = b
 c = dSSS
 
 E = F
 """.strip().replace("S", " "))
-            f.close()
+        f.close()
 
-            cfg = util.read_simple_config_file(fn)
-            self.assertEquals(cfg["a"], "b")
-            self.assertEquals(cfg["c"], "d   ")
-            self.assertEquals(cfg["E"], "F")
-            self.assertEquals(cfg.get("G"), None)
-        finally:
-            os.remove(fn)
+        cfg = util.read_simple_config_file(fn)
+        self.assertEquals(cfg["a"], "b")
+        self.assertEquals(cfg["c"], "d   ")
+        self.assertEquals(cfg["E"], "F")
+        self.assertEquals(cfg.get("G"), None)
 
     def test_write_simple_config_file(self):
-        t = tempfile.gettempprefix()
-        fn = os.path.join(t, "temp.config")
+        fn = os.path.join(self.tempdir, "temp.config")
 
-        if not os.path.exists(os.path.dirname(fn)):
-            os.makedirs(os.path.dirname(fn))
+        cfg = {"a": "b",
+               "c": "d",
+               "E": "F   "}
+        util.write_simple_config_file(fn, cfg)
 
-        try:
-            cfg = {"a": "b",
-                   "c": "d",
-                   "E": "F   "}
-            util.write_simple_config_file(fn, cfg)
+        cfg2 = util.read_simple_config_file(fn)
+        self.assertEquals(cfg2["a"], cfg["a"])
+        self.assertEquals(cfg2["c"], cfg["c"])
+        self.assertEquals(cfg2["E"], cfg["E"])
 
-            cfg2 = util.read_simple_config_file(fn)
-            self.assertEquals(cfg2["a"], cfg["a"])
-            self.assertEquals(cfg2["c"], cfg["c"])
-            self.assertEquals(cfg2["E"], cfg["E"])
-        finally:
-            os.remove(fn)
-
-class MatrixTest(MiroTestCase):
+class MatrixTest(unittest.TestCase):
     def test_matrix_init(self):
         m = util.Matrix(1, 2)
         self.assertEquals(list(m), [None, None])
@@ -391,13 +390,13 @@ class MatrixTest(MiroTestCase):
         self.assertEquals(m[0,0], 1)
         self.assertEquals(m[0,1], None)
 
-class Test_gather_subtitles_files(MiroTestCase):
+class Test_gather_subtitles_files(unittest.TestCase):
     def setUp(self):
-        MiroTestCase.setUp(self)
+        unittest.TestCase.setUp(self)
         self.tempdir = tempfile.mkdtemp()
 
     def tearDown(self):
-        MiroTestCase.tearDown(self)
+        unittest.TestCase.tearDown(self)
         shutil.rmtree(self.tempdir, ignore_errors=True)
 
     def create_files(self, movie_file, sub_files=None):
@@ -423,25 +422,25 @@ class Test_gather_subtitles_files(MiroTestCase):
     def test_no_directory(self):
         # tests the case where the foofeed directory doesn't exist
         movie_file = os.path.join(self.tempdir, "foofeed", "foo.mov")
-        self.assertEquals([],
-                          util.gather_subtitle_files(FilenameType(movie_file)))
+        self.assertEquals(
+            [], util.gather_subtitle_files(FilenameType(movie_file)))
 
     def test_no_subtitle_files(self):
         movie_file, sub_files = self.create_files("foo.mov")
-        self.assertEquals(sub_files,
-                          util.gather_subtitle_files(FilenameType(movie_file)))
+        self.assertEquals(
+            sub_files, util.gather_subtitle_files(FilenameType(movie_file)))
 
     def test_single_file(self):
         movie_file, sub_files = self.create_files(
             "foo.mov", ["foo.en.srt"])
-        self.assertEquals(sub_files,
-                          util.gather_subtitle_files(FilenameType(movie_file)))
+        self.assertEquals(
+            sub_files, util.gather_subtitle_files(FilenameType(movie_file)))
 
     def test_multiple_files(self):
         movie_file, sub_files = self.create_files(
             "foo.mov", ["foo.en.srt", "foo.fr.srt", "foo.es.srt"])
-        self.assertEquals(sub_files,
-                          util.gather_subtitle_files(FilenameType(movie_file)))
+        self.assertEquals(
+            sub_files, util.gather_subtitle_files(FilenameType(movie_file)))
 
     def test_lots_of_files(self):
         movie_file, sub_files = self.create_files(
@@ -449,29 +448,30 @@ class Test_gather_subtitles_files(MiroTestCase):
 
         # weed out the non-srt files so we can test correctly
         sub_files = [mem for mem in sub_files if mem.endswith(".srt")]
-        self.assertEquals(sub_files,
-                          util.gather_subtitle_files(FilenameType(movie_file)))
+        self.assertEquals(
+            sub_files, util.gather_subtitle_files(FilenameType(movie_file)))
 
     def test_subtitles_dir(self):
         movie_file, sub_files = self.create_files(
-            "foo.mov", ["subtitles/foo.en.srt", "subtitles/foo.fr.srt"])
-        self.assertEquals(sub_files,
-                          util.gather_subtitle_files(FilenameType(movie_file)))
+            "foo.mov", [os.path.join("subtitles", "foo.en.srt"),
+                        os.path.join("subtitles", "foo.fr.srt")])
+        self.assertEquals(
+            sub_files, util.gather_subtitle_files(FilenameType(movie_file)))
 
     def test_filename_possibilities(self):
         movie_file, sub_files = self.create_files(
             "foo.mov", ["foo.en.srt", "foo.en.sub", "foo.srt", "foo.sub"])
 
-        self.assertEquals(sub_files,
-                          util.gather_subtitle_files(FilenameType(movie_file)))
+        self.assertEquals(
+            sub_files, util.gather_subtitle_files(FilenameType(movie_file)))
 
-class Test_copy_subtitle_file(MiroTestCase):
+class Test_copy_subtitle_file(unittest.TestCase):
     def setUp(self):
-        MiroTestCase.setUp(self)
+        unittest.TestCase.setUp(self)
         self.tempdir = tempfile.mkdtemp()
 
     def tearDown(self):
-        MiroTestCase.tearDown(self)
+        unittest.TestCase.tearDown(self)
         shutil.rmtree(self.tempdir, ignore_errors=True)
 
     def create_files(self, files):
@@ -516,7 +516,7 @@ class Test_copy_subtitle_file(MiroTestCase):
         self.assert_(os.path.exists(expected))
         self.assertEqual(expected, ret)
 
-class Test_name_sort_key(MiroTestCase):
+class Test_name_sort_key(unittest.TestCase):
     def test_simple(self):
         for testcase in ((None, None),
                          (u'', [u'']),

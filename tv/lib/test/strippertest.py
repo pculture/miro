@@ -20,8 +20,9 @@ import os
 from miro.test.framework import MiroTestCase
 from miro import util
 from miro.plat import resources
+import unittest
 
-class HTMLStripperTest(MiroTestCase):
+class HTMLStripperTest(unittest.TestCase):
     def test_garbage(self):
         stripper = util.HTMLStripper()
 
@@ -49,7 +50,7 @@ class HTMLStripperTest(MiroTestCase):
     def test_stripper_data(self):
         stripper = util.HTMLStripper()
 
-        testdir = resources.path("testdata/stripperdata")
+        testdir = resources.path(os.path.join("testdata", "stripperdata"))
         tests = [m for m in os.listdir(testdir) if m.endswith(".in")]
 
         for mem in tests:
@@ -58,27 +59,18 @@ class HTMLStripperTest(MiroTestCase):
                 continue
 
             f = open(mem, "r")
-            input = f.read()
+            input_ = f.read()
             f.close()
 
-            input = input.decode("utf-8")
-            output = stripper.strip(input)
+            input_ = input_.decode("utf-8")
+            output = stripper.strip(input_)
 
             expected = os.path.splitext(mem)[0] + ".expected"
             if not os.path.isfile(expected):
-                print "%s not found." % expected
-                print "Input:"
-                print "%s" % repr(input)
-                print "Output:"
-                print "%s" % repr(output)
-                self.assertEquals(0, 1)
+                self.assertEquals(0, 1, "%s not found." % expected)
             else:
                 f = open(expected, "r")
                 data = f.read().strip()
                 f.close()
-                try:
-                    self.assertEquals(repr(output), data)
-                except AssertionError:
-                    print "Output:"
-                    print "%s" % repr(output)
-                    raise
+                self.assertEquals(
+                    repr(output), data, "output: %s" % repr(output))

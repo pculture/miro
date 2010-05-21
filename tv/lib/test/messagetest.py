@@ -40,12 +40,12 @@ class MessageHandlerTest(MiroTestCase):
         MiroTestCase.tearDown(self)
         messages.BackendMessage.reset_handler()
 
-    def testMessageMap(self):
+    def test_message_map(self):
         handler = messages.MessageHandler()
         self.assertEquals(handler.calc_message_handler_name(MessageOne),
                 'handle_message_one')
 
-    def testHandler(self):
+    def test_handler(self):
         self.assertEquals(self.message_one_count, 0)
         MessageOne().send_to_backend()
         self.assertEquals(self.message_one_count, 1)
@@ -369,7 +369,7 @@ class FeedItemTrackTest(TrackerTest):
         self.runUrgentCalls()
 
     def make_item(self, url):
-        entry =_build_entry(url, 'video/x-unknown')
+        entry = _build_entry(url, 'video/x-unknown')
         item_ = Item(FeedParserValues(entry), feed_id=self.feed.id)
         self.items.append(item_)
 

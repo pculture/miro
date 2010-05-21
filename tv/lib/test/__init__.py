@@ -27,7 +27,16 @@
 # statement from all source files in the program, then also delete it here.
 
 
-# Includes all PyUnit unit tests
+"""Includes all the unit tests, sets up the environment, and sets
+up the testsuite.
+"""
+
+# We do this for Windows where urlparse in Python 2.5 sux0rz.
+try:
+    from miro.plat import miro_urlparse
+    miro_urlparse.apply_monkey_patch()
+except ImportError:
+    pass
 
 import unittest
 
