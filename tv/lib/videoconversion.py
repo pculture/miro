@@ -64,6 +64,7 @@ class VideoConversionManager(signals.SignalEmitter):
         self.max_concurrent_tasks = utils.get_logical_cpu_count()
     
     def load_converters(self):
+        platform = config.get(prefs.APP_PLATFORM)
         groups = glob(resources.path('conversions/*.conv'))
         for group_definition in groups:
             parser = SafeConfigParser()
@@ -75,7 +76,8 @@ class VideoConversionManager(signals.SignalEmitter):
                 group_converters = list()
                 for section in sections:
                     converter_info = VideoConverterInfo(section, parser, defaults)
-                    group_converters.append(converter_info)
+                    if converter_info.platforms is None or platform in converter_info.platforms:
+                        group_converters.append(converter_info)
                 self.converters.append((defaults['name'], group_converters))
             finally:
                 definition_file.close()
@@ -373,7 +375,15 @@ class FFMpegConversionTask(VideoConversionTask):
         return utils.customize_ffmpeg_parameters(default_parameters)
 
     def readline(self):
-        return self.process_handle.stderr.readline()
+        chars = []
+        keep_reading = True
+        while keep_reading:
+            c = self.process_handle.stderr.read(1)
+            if c in ["", "\r", "\n"]:
+                keep_reading = False
+            else:
+                chars.append(c)
+        return "".join(chars)
 
     def monitor_progress(self, line):
         if self.duration is None:
@@ -450,6 +460,7 @@ class VideoConverterInfo(object):
         self.parameters = self._get_config_value(name, config, defaults, "parameters")
         self.extension = self._get_config_value(name, config, defaults, "extension")
         self.screen_size = self._get_config_value(name, config, defaults, "ssize")
+        self.platforms = self._get_config_value(name, config, {'only_on': None}, "only_on")
 
     def _get_config_value(self, section, config, defaults, key):
         try:
