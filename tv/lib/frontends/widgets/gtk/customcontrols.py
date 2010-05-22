@@ -310,36 +310,41 @@ def to_gtk_volume(value):
         value = (value / widgetconst.MAX_VOLUME)
     return value
 
-class VolumeMuter(Label):
-    """Empty space that has a clicked signal so it can be dropped
-    in place of the VolumeMuter.
-    """
-    def __init__(self):
-        Label.__init__(self)
-        self.create_signal("clicked")
+if hasattr(gtk.VolumeButton, "get_popup"):
+    # FIXME - Miro on Windows has an old version of gtk (2.16) and
+    # doesn't have the get_popup method.  Once we upgrade and
+    # fix that, we can take out the hasattr check.
 
-class VolumeSlider(Widget):
-    """VolumeSlider that uses the gtk.VolumeButton().
-    """
-    def __init__(self):
-        Widget.__init__(self)
-        self.set_widget(gtk.VolumeButton())
-        self.wrapped_widget_connect('value-changed', self.on_value_changed)
-        self._widget.get_popup().connect("hide", self.on_hide)
-        self.create_signal('changed')
-        self.create_signal('released')
+    class VolumeMuter(Label):
+        """Empty space that has a clicked signal so it can be dropped
+        in place of the VolumeMuter.
+        """
+        def __init__(self):
+            Label.__init__(self)
+            self.create_signal("clicked")
 
-    def on_value_changed(self, *args):
-        value = self.get_value()
-        self.emit('changed', value)
+    class VolumeSlider(Widget):
+        """VolumeSlider that uses the gtk.VolumeButton().
+        """
+        def __init__(self):
+            Widget.__init__(self)
+            self.set_widget(gtk.VolumeButton())
+            self.wrapped_widget_connect('value-changed', self.on_value_changed)
+            self._widget.get_popup().connect("hide", self.on_hide)
+            self.create_signal('changed')
+            self.create_signal('released')
 
-    def on_hide(self, *args):
-        self.emit('released')
+        def on_value_changed(self, *args):
+            value = self.get_value()
+            self.emit('changed', value)
 
-    def get_value(self):
-        value = self._widget.get_property('value')
-        return to_miro_volume(value)
+        def on_hide(self, *args):
+            self.emit('released')
 
-    def set_value(self, value):
-        value = to_gtk_volume(value)
-        self._widget.set_property('value', value)
+        def get_value(self):
+            value = self._widget.get_property('value')
+            return to_miro_volume(value)
+
+        def set_value(self, value):
+            value = to_gtk_volume(value)
+            self._widget.set_property('value', value)
