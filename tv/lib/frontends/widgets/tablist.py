@@ -195,6 +195,7 @@ class LibraryTabList(StaticTabListBase):
         for name in self.auto_tabs:
             if name in self.iter_map and name not in self.auto_tabs_to_show:
                 self.remove_auto_tab_if_not_selected(name)
+                self.view.model_changed()
 
     def update_download_count(self, count, non_downloading_count):
         self.update_count('downloading', 'downloading', count, non_downloading_count)
@@ -219,7 +220,7 @@ class LibraryTabList(StaticTabListBase):
             tab = self.view.model[iter][0]
             setattr(tab, attr, count)
             self.view.update_tab(iter, tab)
-            self.view.model_changed()
+        self.view.model_changed()
 
 class TabListDragHandler(object):
     def allowed_actions(self):
