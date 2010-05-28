@@ -390,6 +390,7 @@ class ItemSchema(MultiClassObjectSchema):
         ('icon_cache_id', SchemaInt(noneOk=True)),
         ('downloadedTime', SchemaDateTime(noneOk=True)),
         ('watchedTime', SchemaDateTime(noneOk=True)),
+        ('subtitle_encoding', SchemaString(noneOk=True)),
         ('isContainerItem', SchemaBool(noneOk=True)),
         ('releaseDateObj', SchemaDateTime()),
         ('eligibleForAutoDownload', SchemaBool()),
@@ -693,7 +694,7 @@ class DBLogEntrySchema(DDBObjectSchema):
     def handle_malformed_list_view_displays(row):
         return []
 
-VERSION = 116
+VERSION = 117
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,

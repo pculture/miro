@@ -430,6 +430,8 @@ class PlaybackManager (signals.SignalEmitter):
         else:
             self.prepare_attached_playback()
         self.is_playing_audio = False
+        app.menu_manager.select_subtitle_encoding(item_info.subtitle_encoding)
+        self.initial_subtitle_encoding = item_info.subtitle_encoding
 
     def _build_audio_player(self, item_info, volume):
         self.player = widgetset.AudioPlayer()
@@ -479,6 +481,7 @@ class PlaybackManager (signals.SignalEmitter):
     def _on_ready_to_play(self, obj):
         self.open_successful = True
         self.schedule_mark_as_watched(self.playlist[self.position].id)
+        self.player.select_subtitle_encoding(self.initial_subtitle_encoding)
         self.play()
 
     def _on_cant_play(self, obj):
@@ -584,6 +587,13 @@ class PlaybackManager (signals.SignalEmitter):
             return
 
         self.player.select_subtitle_file(filename, after_successful_select)
+
+    def select_subtitle_encoding(self, encoding):
+        if self.is_playing:
+            item_info = self.playlist[self.position]
+            self.player.select_subtitle_encoding(encoding)
+            messages.SetItemSubtitleEncoding(item_info.id,
+                    encoding).send_to_backend()
 
 class DetachedWindow(widgetset.Window):
     def __init__(self, title, rect):

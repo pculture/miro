@@ -390,6 +390,13 @@ class MarkItemUnwatched(BackendMessage):
     def __init__(self, id):
         self.id = id
 
+class SetItemSubtitleEncoding(BackendMessage):
+    """Mark an item as watched.
+    """
+    def __init__(self, id, encoding):
+        self.id = id
+        self.encoding = encoding
+
 class SetItemResumeTime(BackendMessage):
     """Set an item resume time.
     """
@@ -953,6 +960,7 @@ class ItemInfo(object):
     :param video_watched: has the user watched the video for the item?
     :param video_path: the file path to the video for this item (or None)
     :param file_type: type of the downloaded file (video/audio/other)
+    :param subtitle_encoding: encoding for subtitle display
     :param media_type_checked: has the movie data util checked file_type?
     :param seeding_status: Torrent seeding status ('seeding', 'stopped',
                            or None)
@@ -1020,6 +1028,7 @@ class ItemInfo(object):
         else:
             self.children = []
         self.file_type = item.file_type
+        self.subtitle_encoding = item.subtitle_encoding
         self.media_type_checked = item.media_type_checked
         self.seeding_status = item.torrent_seeding_status()
         self.mime_type = item.enclosure_type

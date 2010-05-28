@@ -313,6 +313,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.channelTitle = None
         self.downloader_id = None
         self.was_downloaded = False
+        self.subtitle_encoding = None
         self.setup_new_icon_cache()
         # Initalize FileItem attributes to None
         self.deleted = self.shortFilename = self.offsetPath = None
@@ -679,6 +680,16 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.signal_change()
         return True
 
+    def set_subtitle_encoding(self, encoding):
+        if encoding is not None:
+            self.subtitle_encoding = unicode(encoding)
+            config_value = encoding
+        else:
+            self.subtitle_encoding = None
+            config_value = ''
+        config.set(prefs.SUBTITLE_ENCODING, config_value)
+        self.signal_change()
+
     def set_filename(self, filename):
         self.filename = filename
         if not self.media_type_checked:
@@ -1022,6 +1033,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 child.signal_change()
         if self.seen == False:
             self.seen = True
+            if self.subtitle_encoding is None:
+                config_value = config.get(prefs.SUBTITLE_ENCODING)
+                if config_value:
+                    self.subtitle_encoding = unicode(config_value)
             if self.watchedTime is None:
                 self.watchedTime = datetime.now()
             self.signal_change()

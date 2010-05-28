@@ -2730,3 +2730,8 @@ def upgrade116(cursor):
         if changed:
             cursor.execute("UPDATE remote_downloader SET status=? "
                     "WHERE id=?", (repr(status), id))
+
+def upgrade117(cursor):
+    """Add the subtitle_encoding column to items."""
+
+    cursor.execute("ALTER TABLE item ADD subtitle_encoding TEXT")

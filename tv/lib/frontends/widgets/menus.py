@@ -76,8 +76,7 @@ class Shortcut:
         self.modifiers = modifiers
 
 class MenuItem:
-    """A menu item is a single item in the menu that can be clicked
-    on that has an action.
+    """Single item in the menu that can be clicked on that has an action.
 
     :param label: The label it has (must be internationalized)
     :param action: The action string for this menu item.
@@ -97,7 +96,7 @@ class MenuItem:
     ...          play=_("_Play"), pause=_("_Pause"))
     """
     def __init__(self, label, action, shortcuts=None, groups=None,
-                 **state_labels):
+            **state_labels):
         self.label = label
         self.action = action
         if shortcuts is None:
@@ -109,6 +108,17 @@ class MenuItem:
             groups = ["AlwaysOn"]
         self.groups = groups
         self.state_labels = state_labels
+
+class RadioMenuItem(MenuItem):
+    """MenuItem that has a radio button is grouped with other RadioMenuItems.
+
+    :param radio_group: identifier for the group that this menu item is in.
+    """
+    def __init__(self, label, action, radio_group, shortcuts=None,
+            groups=None, **state_labels):
+        MenuItem.__init__(self, label, action, shortcuts, groups,
+                **state_labels)
+        self.radio_group = radio_group
 
 class Separator:
     """This denotes a separator in the menu.
@@ -359,6 +369,46 @@ def _get_convert_menu():
     menu.append(MenuItem(_("Show Conversion Folder"), "RevealConversionFolder"))
     return menu
 
+
+def add_subtitle_encoding_menu(menubar, category_label, *encodings):
+    """Helper method to set up the subtitles encoding menu.
+
+    This method should be called for each category of subtitle encodings (East
+    Asian, Western European, Unicode, etc).  Pass it the list of encodings for
+    that category.
+
+    :param category_label: human-readable name for the category
+    :param encodings: list of (label, encoding) tuples.  label is a
+        human-readable name, and encoding is a value that we can pass to
+        VideoDisplay.select_subtitle_encoding()
+    """
+    subtitles_menu = menubar.get("PlaybackMenu").get("SubtitlesMenu")
+    try:
+        encoding_menu = subtitles_menu.get("SubtitleEncodingMenu")
+    except ValueError:
+        # first time calling this function, we need to set up the menu.
+        encoding_menu = Menu(_("_Encoding"),
+                "SubtitleEncodingMenu", [], groups=['PlayingVideo'])
+        subtitles_menu.append(encoding_menu)
+        default_item = RadioMenuItem(_('Default (UTF-8)'),
+                "SubtitleEncodingDefault", 'subtitle-encoding',
+                groups=['PlayingVideo'])
+        encoding_menu.append(default_item)
+        app.menu_manager.subtitle_encoding_enabled = True
+
+    category_menu = Menu(category_label,
+            "SubtitleEncodingCat%s" % encoding_menu.count(), [],
+            groups=['PlayingVideo'])
+    encoding_menu.append(category_menu)
+
+    for encoding, name in encodings:
+        label = '%s (%s)' % (name, encoding)
+        action_name = 'SubtitleEncoding-%s' % encoding
+        action_handler = make_action_handler(action_name,
+                on_subtitle_encoding, encoding)
+        category_menu.append(RadioMenuItem(label, action_handler,
+            'subtitle-encoding', groups=["PlayingVideo"]))
+
 action_handlers = {}
 def lookup_handler(action_name):
     """For a given action name, get a callback to handle it.  Return
@@ -373,11 +423,13 @@ def action_handler(name):
         return func
     return decorator
 
+def make_action_handler(action_name, callback, *args):
+    action_handlers[action_name] = lambda: callback(*args)
+    return action_name
+
 def make_convert_handler(converter):
-    handler_name = "ConvertItemTo" + converter.identifier
-    handler = lambda: on_convert(converter)
-    action_handlers[handler_name] = handler
-    return handler_name
+    action_name = "ConvertItemTo" + converter.identifier
+    return make_action_handler(action_name, on_convert, converter)
 
 # File menu
 @action_handler("Open")
@@ -534,6 +586,13 @@ def on_toggle_detach():
 def on_subtitles_select():
     app.playback_manager.open_subtitle_file()
 
+def on_subtitle_encoding(converter):
+    app.playback_manager.select_subtitle_encoding(converter)
+
+@action_handler("SubtitleEncodingDefault")
+def on_subtitle_encoding_default():
+    app.playback_manager.select_subtitle_encoding(None)
+
 # Help menu
 @action_handler("About")
 def on_about():
@@ -589,9 +648,11 @@ class MenuStateManager(signals.SignalEmitter):
     def __init__(self):
         signals.SignalEmitter.__init__(self)
         self.create_signal('enabled-changed')
+        self.create_signal('radio-group-changed')
         self.enabled_groups = set(['AlwaysOn'])
         self.states = {}
         self.play_pause_state = "play"
+        self.subtitle_encoding_enabled = False
 
     def reset(self):
         self.states = { "feed": [], "feeds": [],
@@ -695,6 +756,14 @@ class MenuStateManager(signals.SignalEmitter):
             app.menu_manager._handle_site_selection(selected_tabs)
         else:
             raise ValueError("Unknown tab list type: %s" % selection_type)
+
+    def select_subtitle_encoding(self, encoding):
+        if self.subtitle_encoding_enabled:
+            if encoding is None:
+                action_name = 'SubtitleEncodingDefault'
+            else:
+                action_name = 'SubtitleEncoding-%s' % encoding
+            self.emit('radio-group-changed', 'subtitle-encoding', action_name)
 
     def _update_menus_for_selected_items(self):
         """Update the menu items based on the current item list

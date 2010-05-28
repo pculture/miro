@@ -50,6 +50,7 @@ from miro.gtcache import gettext as _
 from miro.plat import options
 from miro import iso639
 
+from miro.frontends.widgets import menus
 from miro.frontends.widgets.widgetconst import MAX_VOLUME
 from miro.frontends.widgets.gtk.threads import call_on_ui_thread
 
@@ -539,7 +540,9 @@ class VideoRenderer(Renderer):
                              handle_successful_select):
         if not self.supports_subtitles:
             return
+        subtitle_encoding = self.playbin.get_property("subtitle-encoding")
         def handle_ok():
+            self.playbin.set_property("subtitle-encoding", subtitle_encoding)
             handle_successful_select()
         def handle_err():
             app.playback_manager.stop()
@@ -547,6 +550,96 @@ class VideoRenderer(Renderer):
         if sub_path not in filenames:
             sub_path = copy_subtitle_file(sub_path, iteminfo.video_path)
         self.select_file(iteminfo, handle_ok, handle_err, sub_path)
+
+    def setup_subtitle_encoding_menu(self, menubar):
+        menus.add_subtitle_encoding_menu(menubar, _('Eastern European'),
+                ("ISO-8859-4", _("Baltic")),
+                ("ISO-8859-13", _("Baltic")),
+                ("WINDOWS-1257", _("Baltic")),
+                ("MAC_CROATIAN", _("Croatian")),
+                ("ISO-8859-5", _("Cyrillic")),
+                ("IBM855", _("Cyrillic")),
+                ("ISO-IR-111", _("Cyrillic")),
+                ("KOI8-R", _("Cyrillic")),
+                ("MAC-CYRILLIC", _("Cyrillic")),
+                ("WINDOWS-1251", _("Cyrillic")),
+                ("CP866", _("Cyrillic/Russian")),
+                ("MAC_UKRAINIAN", _("Cyrillic/Ukrainian")),
+                ("KOI8-U", _("Cyrillic/Ukrainian")),
+                ("ISO-8859-2", ("Central European")),
+                ("IBM852", _("Central European")),
+                ("MAC_CE", _("Central European")),
+                ("WINDOWS-1250", _("Central European")),
+                ("ISO-8859-16", _("Romanian")),
+                ("MAC_ROMANIAN", _("Romanian")),
+        )
+        menus.add_subtitle_encoding_menu(menubar, _('Western European'),
+                ("ISO-8859-14", _("Celtic")),
+                ("ISO-8859-7", _("Greek")),
+                ("MAC_GREEK", _("Greek")),
+                ("WINDOWS-1253", _("Greek")),
+                ("MAC_ICELANDIC", _("Icelandic")),
+                ("ISO-8859-10", _("Nordic")),
+                ("ISO-8859-3", _("South European")),
+                ("ISO-8859-1", _("Western")),
+                ("ISO-8859-15", _("Western")),
+                ("IBM850", _("Western")),
+                ("MAC_ROMAN", _("Western")),
+                ("WINDOWS-1252", _("Western")),
+        )
+        menus.add_subtitle_encoding_menu(menubar, _('East Asian'),
+                ("GB18030", _("Chinese Simplified")),
+                ("GB2312", _("Chinese Simplified")),
+                ("GBK", _("Chinese Simplified")),
+                ("HZ", _("Chinese Simplified")),
+                ("BIG5", _("Chinese Traditional")),
+                ("BIG5-HKSCS", _("Chinese Traditional")),
+                ("EUC-TW", _("Chinese Traditional")),
+                ("EUC-JP", _("Japanese")),
+                ("ISO2022JP", _("Japanese")),
+                ("SHIFT-JIS", _("Japanese")),
+                ("EUC-KR", _("Korean")),
+                ("ISO2022KR", _("Korean")),
+                ("JOHAB", _("Korean")),
+                ("UHC", _("Korean")),
+        )
+        menus.add_subtitle_encoding_menu(menubar, _('SE and SW Asian'),
+                ("ARMSCII-8", _("Armenian")),
+                ("GEORGIAN-PS", _("Georgian")),
+                ("MAC_GUJARATI", _("Gujarati")),
+                ("MAC_GURMUKHI", _("Gurmukhi")),
+                ("MAC_DEVANAGARI", _("Hindi")),
+                ("TIS-620", _("Thai")),
+                ("ISO-8859-9", _("Turkish")),
+                ("IBM857", _("Turkish")),
+                ("MAC_TURKISH", _("Turkish")),
+                ("WINDOWS-1254", _("Turkish")),
+                ("TCVN", _("Vietnamese")),
+                ("VISCII", _("Vietnamese")),
+                ("WINDOWS-1258", _("Vietnamese")),
+        )
+        menus.add_subtitle_encoding_menu(menubar, _('Middle Eastern'),
+                ("ISO-8859-6", _("Arabic")),
+                ("IBM864", _("Arabic")),
+                ("MAC_ARABIC", _("Arabic")),
+                ("WINDOWS-1256", _("Arabic")),
+                ("ISO-8859-8-I", _("Hebrew")),
+                ("IBM862", _("Hebrew")),
+                ("MAC_HEBREW", _("Hebrew")),
+                ("WINDOWS-1255", _("Hebrew")),
+                ("ISO-8859-8", _("Hebrew Visual")),
+                ("MAC_FARSI", _("Persian")),
+        )
+        menus.add_subtitle_encoding_menu(menubar, _('Unicode'),
+                ("UTF-7", _("Unicode")),
+                ("UTF-8", _("Unicode")),
+                ("UTF-16", _("Unicode")),
+                ("UCS-2", _("Unicode")),
+                ("UCS-4", _("Unicode")),
+        )
+
+    def select_subtitle_encoding(self, encoding):
+        self.playbin.set_property("subtitle-encoding", encoding)
 
 def movie_data_program_info(movie_path, thumbnail_path):
     extractor_path = os.path.join(os.path.split(__file__)[0],

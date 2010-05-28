@@ -672,3 +672,5 @@ class VideoPlayer(player.Player, VBox):
             sub_path,
             handle_successful_select)
         
+    def select_subtitle_encoding(self, encoding):
+        app.video_renderer.select_subtitle_encoding(encoding)

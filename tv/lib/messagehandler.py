@@ -602,6 +602,13 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warning("handle_mark_item_unwatched: can't find item by id %s", message.id)
 
+    def handle_set_item_subtitle_encoding(self, message):
+        try:
+            item_ = item.Item.get_by_id(message.id)
+            item_.set_subtitle_encoding(message.encoding)
+        except database.ObjectNotFoundError:
+            logging.warning("handle_change_subtitle_encoding: can't find item by id %s", message.id)
+
     def handle_set_item_resume_time(self, message):
         try:
             item_ = item.Item.get_by_id(message.id)

@@ -192,6 +192,12 @@ class WindowBase(signals.SignalEmitter):
             file_menu = self.menu_structure.get("FileMenu")
             file_menu.remove("CheckVersion")
 
+        # If the renderer supports it, create a the subtitle encodings menu
+        try:
+            app.video_renderer.setup_subtitle_encoding_menu(self.menu_structure)
+        except AttributeError:
+            pass
+
         # generate action groups after making all modifications
         mag = menus.generate_action_groups(self.menu_structure)
         self.menu_action_groups = mag
@@ -216,9 +222,26 @@ class WindowBase(signals.SignalEmitter):
         outstream.write('</ui>')
         self.ui_manager.add_ui_from_string(outstream.getvalue())
 
-    def make_action(self, action, label, shortcuts=None, groups=None):
+    def make_action(self, action, label, groups, shortcuts=None):
         gtk_action = gtk.Action(action, label, None, get_stock_id(action))
-        callback = menus.lookup_handler(action)
+        self.setup_action(gtk_action, groups, shortcuts)
+
+    def make_radio_action(self, action, radio_group, label, groups,
+            shortcuts):
+        gtk_action = gtk.RadioAction(action, label, None,
+                get_stock_id(action), 0)
+        self.setup_action(gtk_action, groups, shortcuts)
+        try:
+            root_action = self.radio_group_actions[radio_group]
+        except KeyError:
+            # gtk_action is the first action for the group.
+            self.radio_group_actions[radio_group] = gtk_action
+        else:
+            # There was already a gtk_action for this group
+            gtk_action.set_group(root_action)
+
+    def setup_action(self, gtk_action, groups, shortcuts):
+        callback = menus.lookup_handler(gtk_action.get_name())
         if callback is not None:
             gtk_action.connect("activate", self.on_activate, callback)
         action_group_name = groups[0]
@@ -229,8 +252,8 @@ class WindowBase(signals.SignalEmitter):
             action_group.add_action_with_accel(gtk_action,
                                                get_accel_string(shortcuts[0]))
             for shortcut in shortcuts[1:]:
-                extra_action = gtk.Action(action + str(id(shortcut)), '',
-                                          None, None)
+                shortcut_name = gtk_action.get_name() + str(id(shortcut))
+                extra_action = gtk.Action(shortcut_name, None, None, None)
                 extra_action.set_visible(False)
                 if callback is not None:
                     extra_action.connect('activate', self.on_activate,
@@ -248,6 +271,8 @@ class WindowBase(signals.SignalEmitter):
 
     def make_actions(self):
         self.action_groups = {}
+        self.radio_group_actions = {}
+
         for name in self.menu_action_groups.keys():
             self.action_groups[name] = gtk.ActionGroup(name)
 
@@ -257,11 +282,14 @@ class WindowBase(signals.SignalEmitter):
             if isinstance(mem, menus.Separator):
                 continue
             if isinstance(mem, menus.Menu):
-                self.make_action(mem.action, mem.label,
-                                 groups=mem.groups)
+                self.make_action(mem.action, mem.label, mem.groups)
+            elif isinstance(mem, menus.RadioMenuItem):
+                self.make_radio_action(mem.action, mem.radio_group, mem.label,
+                        mem.groups, mem.shortcuts)
             elif isinstance(mem, menus.MenuItem):
-                self.make_action(mem.action, mem.label, mem.shortcuts,
-                                 mem.groups)
+                self.make_action(mem.action, mem.label, mem.groups,
+                        mem.shortcuts)
+
 
         # make a bunch of SubtitleTrack# actions
         self.make_check_action("SubtitlesDisabled", _("Disable Subtitles"),
@@ -380,6 +408,7 @@ class MainWindow(Window):
         self.create_signal('save-dimensions')
         self.create_signal('save-maximized')
         app.menu_manager.connect('enabled-changed', self.on_menu_change)
+        app.menu_manager.connect('radio-group-changed', self.on_radio_change)
         app.playback_manager.connect('did-start-playing', self.on_playback_change)
         app.playback_manager.connect('will-play', self.on_playback_change)
         app.playback_manager.connect('did-stop', self.on_playback_change)
@@ -454,6 +483,13 @@ class MainWindow(Window):
 
         play_pause = self.menu_structure.get("PlayPauseItem").state_labels[menu_manager.play_pause_state]
         change_label("PlayPause", "PlayPauseItem", play_pause)
+
+    def on_radio_change(self, menu_manager, radio_group, value):
+        root_action = self.radio_group_actions[radio_group]
+        for action in root_action.get_group():
+            if action.get_name() == value:
+                action.set_active(True)
+                return
 
     def on_playback_change(self, playback_manager, *extra_args):
         self._ignore_on_subtitles_change = True

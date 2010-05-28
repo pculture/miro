@@ -98,6 +98,7 @@ BT_ENC_REQ                  = Pref(key='BitTorrentEncReq',      default=False, p
 CHANNEL_AUTO_DEFAULT        = Pref(key='ChannelAutoDefault',    default=u"new", platformSpecific=False)
 FLASH_REQUEST_COUNT         = Pref(key='flashRequestCount',     default=0,     platformSpecific=False)
 ENABLE_SUBTITLES            = Pref(key='enableSubtitles',       default=False, platformSpecific=False)
+SUBTITLE_ENCODING            = Pref(key='subtitleEncoding',       default=None,  platformSpecific=False)
 # language setting: "system" uses system default; all other languages are overrides
 LANGUAGE                    = Pref(key='language',              default="system", platformSpecific=False)
 

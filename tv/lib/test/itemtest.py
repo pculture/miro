@@ -165,3 +165,40 @@ class ItemRemoveTest(MiroTestCase):
 
         item.remove()
         self.assert_(not downloader.id_exists())
+
+class SubtitleEncodingTest(MiroTestCase):
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.feed = Feed(u'http://example.com/1')
+        self.item1 = Item(fp_values_for_url(u'http://example.com/1/item1'),
+                feed_id=self.feed.id)
+        self.item2 = Item(fp_values_for_url(u'http://example.com/1/item2'),
+                feed_id=self.feed.id)
+
+    def test_default(self):
+        self.assertEquals(self.item1.subtitle_encoding, None)
+
+    def test_set(self):
+        self.item1.set_subtitle_encoding('latin-1')
+        self.assertEquals(self.item1.subtitle_encoding, 'latin-1')
+
+    def test_set_on_watched(self):
+        # The 1st time an item is marked watched, we should remember the
+        # subtitle encoding.
+        self.item1.set_subtitle_encoding('latin-9')
+        self.assertEquals(self.item2.subtitle_encoding, None)
+        self.item2.mark_item_seen()
+        self.assertEquals(self.item2.subtitle_encoding, 'latin-9')
+        # Test the value isn't re-set the next time it's marked watched
+        self.item1.set_subtitle_encoding('latin-5')
+        self.item2.mark_item_seen()
+        self.assertEquals(self.item2.subtitle_encoding, 'latin-9')
+
+    def test_set_none(self):
+        # Test an item is marked seen when the subtitle encoding is None)
+        self.item1.mark_item_seen()
+        self.assertEquals(self.item2.subtitle_encoding, None)
+        self.item2.set_subtitle_encoding('latin-7')
+        self.item2.mark_item_seen()
+        self.item1.mark_item_seen()
+        self.assertEquals(self.item1.subtitle_encoding, None)

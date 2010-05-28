@@ -70,6 +70,8 @@ def load(theme=None):
         # Load the preferences
         if not hasattr(app, 'in_unit_tests'):
             _data = platformcfg.load()
+        else:
+            _data = dict() # always reload config in the unit tests
         if _data is None:
             _data = dict()
 
