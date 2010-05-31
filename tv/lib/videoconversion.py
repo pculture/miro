@@ -38,6 +38,7 @@ from glob import glob
 from ConfigParser import SafeConfigParser
 
 from miro import app
+from miro import eventloop
 from miro import util
 from miro import prefs
 from miro import config
@@ -242,7 +243,10 @@ class VideoConversionManager(signals.SignalEmitter):
         self._notify_all_tasks_canceled()
         self._notify_tasks_count()
         self.quit_flag = True
-    
+
+def _remove_file(path):
+    if os.path.exists(path):
+        os.remove(path)
 
 class VideoConversionTask(object):
 
@@ -301,13 +305,22 @@ class VideoConversionTask(object):
         if os.path.exists(self.output_path):
             self._log_progress("Removing existing output file (%s)...\n" % self.output_path)
             os.remove(self.output_path)
-        
-        args.insert(0, executable)
-        self.process_handle = subprocess.Popen(args, bufsize=1, 
-                                                     stdout=subprocess.PIPE,
-                                                     stderr=subprocess.PIPE, 
-                                                     close_fds=True)
 
+        args.insert(0, executable)
+
+        kwargs = {"bufsize": 1,
+                  "stdout": subprocess.PIPE,
+                  "stderr": subprocess.PIPE}
+        if os.name != 'nt':
+            # close_fds is not available on Windows in Python 2.5.
+            kwargs["close_fds"] = True
+        elif os.name == 'nt':
+            # this prevents a window from popping up
+            startupinfo = subprocess.STARTUPINFO()
+            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            kwargs["startupinfo"] = startupinfo
+        self.process_handle = subprocess.Popen(args, **kwargs)
+            
         try:
             keep_going = True
             while keep_going:
@@ -350,7 +363,8 @@ class VideoConversionTask(object):
             self.log_file.close()
         self.log_file = None
         if not keep_file:
-            os.remove(self.log_path)
+            eventloop.add_timeout(0.5, _remove_file, "removing file",
+                                  args=(self.log_path,))
         self.log_path = None
     
     def _notify_progress(self):
@@ -360,7 +374,8 @@ class VideoConversionTask(object):
     def interrupt(self):
         utils.kill_process(self.process_handle.pid)
         if os.path.exists(self.output_path) and self.progress < 1.0:
-            os.remove(self.output_path)
+            eventloop.add_timeout(0.5, os.remove, "removing output_path",
+                                  (self.output_path,))
 
 
 class FFMpegConversionTask(VideoConversionTask):

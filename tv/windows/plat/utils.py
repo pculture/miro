@@ -335,13 +335,13 @@ def get_logical_cpu_count():
     return 1
 
 def get_ffmpeg_executable_path():
-    return None
+    return '%s' % os.path.join(resources.appRoot(), "ffmpeg.exe")
 
 def customize_ffmpeg_parameters(default_parameters):
     return default_parameters
 
 def get_ffmpeg2theora_executable_path():
-    return None
+    return '%s' % os.path.join(resources.appRoot(), "ffmpeg2theora.exe")
 
 def customize_ffmpeg2theora_parameters(default_parameters):
     return default_parameters
