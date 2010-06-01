@@ -123,10 +123,6 @@ def urlencode(data):
         data = str(data)
     return unicode(quote(data))
 
-def urldecode(data):
-    """Gets a string from a URL"""
-    return unquote(data)
-
 def xhtmlify(data, add_top_tags=False, filter_font_tags=False):
     """Returns XHTMLified version of HTML document"""
     x = XHTMLifier()

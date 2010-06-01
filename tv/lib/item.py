@@ -32,23 +32,19 @@
 from datetime import datetime, timedelta
 from itertools import chain
 from miro.gtcache import gettext as _
-from miro.gtcache import ngettext
-from math import ceil
-from xml.sax.saxutils import unescape
 from miro.util import (check_u, returns_unicode, check_f, returns_filename,
                        quote_unicode_url, stringify, get_first_video_enclosure,
                        entity_replace)
-from miro.plat.utils import FilenameType, filename_to_unicode, unicode_to_filename
+from miro.plat.utils import filename_to_unicode, unicode_to_filename
 import locale
 import os.path
 import traceback
 
 from miro.download_utils import clean_filename, next_free_filename
 from miro.feedparser import FeedParserDict
-from miro.feedparserutil import normalize_feedparser_dict
 
-from miro.database import DDBObject, ObjectNotFoundError, ViewTracker
-from miro.database import DatabaseConstraintError
+from miro.database import (DDBObject, ObjectNotFoundError,
+                           DatabaseConstraintError)
 from miro.databasehelper import make_simple_get_set
 from miro import app
 from miro import iconcache
@@ -631,7 +627,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             offsetPath = path[len(filename_root):]
             while offsetPath[0] in ('/', '\\'):
                 offsetPath = offsetPath[1:]
-            FileItem (path, parent_id=self.id, offsetPath=offsetPath)
+            FileItem(path, parent_id=self.id, offsetPath=offsetPath)
 
     def find_new_children(self):
         """If this feed is a container item, walk through its

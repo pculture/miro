@@ -38,7 +38,7 @@ from miro.gtcache import gettext as _
 from miro.feedparser import FeedParserDict
 from urlparse import urljoin
 from miro.xhtmltools import (unescape, xhtmlify, fix_xml_header,
-                             fix_html_header, urlencode, urldecode)
+                             fix_html_header, urlencode)
 import os
 import re
 import xml

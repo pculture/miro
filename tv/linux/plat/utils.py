@@ -66,18 +66,6 @@ def get_available_bytes_for_movies():
     statinfo = os.statvfs(movie_dir)
     return statinfo.f_frsize * statinfo.f_bavail
 
-UI_THREAD = None
-
-def set_ui_thread():
-    global UI_THREAD
-    UI_THREAD = threading.currentThread()
-
-def confirm_ui_thread():
-    if UI_THREAD is not None and UI_THREAD != threading.currentThread():
-        import traceback
-        print "ui function called from thread %s" % threading.currentThread()
-        traceback.print_stack()
-
 def locale_initialized():
     return _locale_initialized
 

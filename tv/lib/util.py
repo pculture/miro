@@ -403,12 +403,6 @@ def clamp_text(text, max_length=20):
     else:
         return text
 
-def print_mem_usage(message):
-    pass
-# Uncomment for memory usage printouts on Linux.
-#    print message
-#    os.system("ps huwwwp %d" % (os.getpid(),))
-
 def db_mem_usage_test():
     from miro import models
     from miro.database import DDBObject
