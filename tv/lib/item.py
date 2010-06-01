@@ -1055,6 +1055,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.seen:
             self.seen = False
             self.watchedTime = None
+            self.resumeTime = 0
             self.signal_change()
             self.update_parent_seen()
             if mark_other_items and self.downloader:
