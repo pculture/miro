@@ -73,7 +73,7 @@ def get_available_bytes_for_movies():
         except IOError:
             del pool
             return -1
-    info = fm.fileSystemAttributesAtPath_(filenameToUnicode(movies_dir))
+    info = fm.fileSystemAttributesAtPath_(filename_to_unicode(movies_dir))
     if info:
         available = info[NSFileSystemFreeSize]
     else:
@@ -105,8 +105,8 @@ def initialize_locale():
     _locale_initialized = True
     del pool
 
-def setup_logging (inDownloader=False):
-    if inDownloader:
+def setup_logging (in_downloader=False):
+    if in_downloader:
         level = logging.INFO
         logging.basicConfig(level=level, format='%(levelname)-8s %(message)s')
         handler = logging.StreamHandler(sys.stdout)
@@ -134,9 +134,9 @@ def utf8_to_filename(filename):
 # valid byte representation of it attempting to preserve extensions
 #
 # This is not guaranteed to give the same results every time it is run,
-# not is it garanteed to reverse the results of filenameToUnicode
+# not is it garanteed to reverse the results of filename_to_unicode
 @returns_binary
-def unicodeToFilename(filename, path = None):
+def unicode_to_filename(filename, path = None):
     check_u(filename)
     if path:
         check_b(path)
@@ -175,9 +175,9 @@ def shortenFilename(filename):
 # Given a filename in raw bytes, return the unicode representation
 #
 # Since this is not guaranteed to give the same results every time it is run,
-# not is it garanteed to reverse the results of unicodeToFilename
+# not is it garanteed to reverse the results of unicode_to_filename
 @returns_unicode
-def filenameToUnicode(filename, path = None):
+def filename_to_unicode(filename, path = None):
     if path:
         check_b(path)
     check_b(filename)

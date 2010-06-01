@@ -37,7 +37,7 @@ from miro import filetypes
 from miro import util
 
 from miro.util import check_f, check_u, returns_filename
-from miro.plat.utils import unicodeToFilename, unmake_url_safe
+from miro.plat.utils import unicode_to_filename, unmake_url_safe
 from miro.fileutil import expand_filename
 
 URI_PATTERN = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
@@ -170,7 +170,7 @@ def filename_from_url(url, clean=False):
         match = URI_PATTERN.match(url)
         if match is None:
             # This code path will never be executed.
-            return unicodeToFilename(url)
+            return unicode_to_filename(url)
         filename = match.group(2)
         query = match.group(4)
         if not filename:
@@ -186,11 +186,11 @@ def filename_from_url(url, clean=False):
         if clean:
             return clean_filename(ret)
         else:
-            return unicodeToFilename(ret)
+            return unicode_to_filename(ret)
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        return unicodeToFilename(u'unknown')
+        return unicode_to_filename(u'unknown')
 
 @returns_filename
 def clean_filename(filename):
@@ -200,16 +200,16 @@ def clean_filename(filename):
     for char in ( ':', '?', '<', '>', '|', '*', '\\', '/', '"', '\'', '%'):
         filename = filename.replace(char, '')
     if len(filename) == 0:
-        return unicodeToFilename(u'_')
+        return unicode_to_filename(u'_')
     if len(filename) > MAX_FILENAME_LENGTH:
         base, ext = os.path.splitext(filename)
         ext = ext[:MAX_FILENAME_EXTENSION_LENGTH]
         base = base[:MAX_FILENAME_LENGTH-len(ext)]
         filename = base + ext
     if type(filename) == str:
-        return unicodeToFilename(filename.decode('ascii', 'replace'))
+        return unicode_to_filename(filename.decode('ascii', 'replace'))
     else:
-        return unicodeToFilename(filename)
+        return unicode_to_filename(filename)
 
 def filter_directory_name(name):
     """Filter out all non alpha-numeric characters from a future directory

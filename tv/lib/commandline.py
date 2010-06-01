@@ -54,7 +54,7 @@ from miro import item
 from miro import httpclient
 from miro import download_utils
 from miro.util import get_torrent_info_hash
-from miro.plat.utils import samefile, filenameToUnicode
+from miro.plat.utils import samefile, filename_to_unicode
 from miro import singleclick
 from miro import opml
 
@@ -67,7 +67,7 @@ def _item_exists_for_path(path):
     # in SQLite, LIKE is case insensitive, so we can use it to only look at
     # filenames that possibly will match
     for item_ in item.Item.make_view('filename LIKE ?',
-            (filenameToUnicode(path),)):
+            (filename_to_unicode(path),)):
         if samefile(item_.filename, path):
             return item_
     return False
@@ -184,7 +184,7 @@ def parse_command_line_args(args):
               or arg.startswith('https:')
               or arg.startswith('feed:')
               or arg.startswith('feeds:')):
-            singleclick.add_download(filenameToUnicode(arg))
+            singleclick.add_download(filename_to_unicode(arg))
         elif os.path.exists(arg):
             ext = os.path.splitext(arg)[1].lower()
             if ext in ('.torrent', '.tor'):

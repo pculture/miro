@@ -39,8 +39,7 @@ import locale
 import urllib
 import sys
 import time
-from miro.util import (returns_unicode, returns_binary, check_u, check_b,
-                       call_command)
+from miro.util import returns_unicode, returns_binary, check_u, check_b
 import miro
 from miro.plat import options
 
@@ -57,36 +56,24 @@ def get_available_bytes_for_movies():
     """Helper method used to get the free space on the disk where downloaded
     movies are stored
     """
-    d = config.get(prefs.MOVIES_DIRECTORY)
+    movie_dir = config.get(prefs.MOVIES_DIRECTORY)
 
-    if not os.path.exists(d):
+    if not os.path.exists(movie_dir):
         # FIXME - this is a bogus value.  need to "do the right thing"
         # here.
         return 0
 
-    statinfo = os.statvfs(d)
+    statinfo = os.statvfs(movie_dir)
     return statinfo.f_frsize * statinfo.f_bavail
 
-backend_thread = None
-
-def set_backend_thread():
-    global backend_thread
-    backend_thread = threading.currentThread()
-
-def confirm_backend_thread():
-    if backend_thread is not None and backend_thread != threading.currentThread():
-        import traceback
-        print "backend function called from thread %s" % threading.currentThread()
-        traceback.print_stack()
-
-ui_thread = None
+UI_THREAD = None
 
 def set_ui_thread():
-    global ui_thread
-    ui_thread = threading.currentThread()
+    global UI_THREAD
+    UI_THREAD = threading.currentThread()
 
 def confirm_ui_thread():
-    if ui_thread is not None and ui_thread != threading.currentThread():
+    if UI_THREAD is not None and UI_THREAD != threading.currentThread():
         import traceback
         print "ui function called from thread %s" % threading.currentThread()
         traceback.print_stack()
@@ -99,8 +86,8 @@ def initialize_locale():
     global _locale_initialized
     _locale_initialized = True
 
-def setup_logging(inDownloader=False):
-    if inDownloader:
+def setup_logging(in_downloader=False):
+    if in_downloader:
         if os.environ.get('MIRO_FRONTEND') == 'cli':
             level = logging.WARN
         else:
@@ -142,16 +129,19 @@ def utf8_to_filename(filename):
     return filename
 
 @returns_binary
-def unicodeToFilename(filename, path=None):
-    """Takes in a unicode string representation of a filename (NOT a file
-    path) and creates a valid byte representation of it attempting to preserve
-    extensions.
+def unicode_to_filename(filename, path=None):
+    """Takes in a unicode string representation of a filename (NOT a
+    file path) and creates a valid byte representation of it
+    attempting to preserve extensions.
 
-    Note: This is not guaranteed to give the same results every time it is run,
-    nor is it guaranteed to reverse the results of filenameToUnicode.
+    .. Note::
+
+       This is not guaranteed to give the same results every time it
+       is run, nor is it guaranteed to reverse the results of
+       filename_to_unicode.
     """
     @returns_unicode
-    def shortenFilename(filename):
+    def shorten_fn(filename):
         check_u(filename)
         first, last = os.path.splitext(filename)
 
@@ -173,7 +163,7 @@ def unicodeToFilename(filename, path=None):
     for mem in ("/", "\000", "\\", ":", "*", "?", "\"", "<", ">", "|", "&"):
         filename = filename.replace(mem, "_")
 
-    def encodef(filename):
+    def encode_fn(filename):
         try:
             return filename.encode(locale.getpreferredencoding())
         except (SystemExit, KeyboardInterrupt):
@@ -181,20 +171,23 @@ def unicodeToFilename(filename, path=None):
         except:
             return filename.encode('ascii', 'replace')
 
-    new_filename = encodef(filename)
+    new_filename = encode_fn(filename)
 
     while len(new_filename) > max_len:
-        filename = shortenFilename(filename)
-        new_filename = encodef(filename)
+        filename = shorten_fn(filename)
+        new_filename = encode_fn(filename)
 
     return new_filename
 
 @returns_unicode
-def filenameToUnicode(filename, path=None):
+def filename_to_unicode(filename, path=None):
     """Given a filename in raw bytes, return the unicode representation
 
-    Note: This is not guaranteed to give the same results every time it is run,
-    not is it guaranteed to reverse the results of unicodeToFilename.
+    .. Note::
+
+       This is not guaranteed to give the same results every time it
+       is run, not is it guaranteed to reverse the results of
+       unicode_to_filename.
     """
     if path:
         check_b(path)
@@ -216,7 +209,8 @@ def make_url_safe(s, safe='/'):
         return urllib.quote(s, safe=safe).decode('ascii')
 
     try:
-        return urllib.quote(s.encode(locale.getpreferredencoding()), safe=safe).decode('ascii')
+        return urllib.quote(s.encode(locale.getpreferredencoding()),
+                            safe=safe).decode('ascii')
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
@@ -224,7 +218,7 @@ def make_url_safe(s, safe='/'):
 
 @returns_binary
 def unmake_url_safe(s):
-    """Undoes make_url_safe (assuming it was passed a filenameType)
+    """Undoes make_url_safe (assuming it was passed a FilenameType)
     """
     # unquote the byte string
     check_u(s)
@@ -245,7 +239,7 @@ def kill_process(pid):
     if pid_is_running(pid):
         try:
             os.kill(pid, signal.SIGTERM)
-            for i in xrange(100):
+            for i in range(100):
                 time.sleep(.01)
                 if not pid_is_running(pid):
                     return
@@ -275,9 +269,9 @@ def exit(return_code):
     sys.exit(return_code)
 
 def set_properties(props):
-    for p, val in props:
-        logging.info("Setting preference: %s -> %s", p.alias, val)
-        config.set(p, val)
+    for pref, val in props:
+        logging.info("Setting preference: %s -> %s", pref.alias, val)
+        config.set(pref, val)
 
 def movie_data_program_info(movie_path, thumbnail_path):
     from miro import app
@@ -287,7 +281,7 @@ def get_logical_cpu_count():
     try:
         import multiprocessing
         return multiprocessing.cpu_count()
-    except ImportError, e:
+    except ImportError:
         ncpus = os.sysconf("SC_NPROCESSORS_ONLN")
         if isinstance(ncpus, int) and ncpus > 0:
             return ncpus

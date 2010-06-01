@@ -43,32 +43,28 @@ import os
 import urllib
 import platform
 
-resource_root = os.path.abspath(os.environ.get('MIRO_RESOURCE_ROOT',
-                                               '/usr/share/miro/resources/'))
-share_root = os.path.abspath(os.environ.get('MIRO_SHARE_ROOT', '/usr/share/'))
+RESOURCE_ROOT = os.path.abspath(
+    os.environ.get('MIRO_RESOURCE_ROOT', '/usr/share/miro/resources/'))
+SHARE_ROOT = os.path.abspath(
+    os.environ.get('MIRO_SHARE_ROOT', '/usr/share/'))
 
 def root():
-    return resource_root
+    return RESOURCE_ROOT
 
 def path(relative_path):
     """Find the full path to a resource data file. 'relative_path' is
     expected to be supplied in Unix format, with forward-slashes as
     separators.
     """
-    return os.path.join(resource_root, relative_path)
+    return os.path.join(RESOURCE_ROOT, relative_path)
 
 def share_path(relative_path):
-    return os.path.join(share_root, relative_path)
+    return os.path.join(SHARE_ROOT, relative_path)
 
 def url(relative_path):
     """As path(), but return a file: URL instead.
     """
     return u'file://%s' % urllib.quote(path(relative_path))
-
-def absoluteUrl(absolute_path):
-    """Like url, but without adding the resource directory.
-    """
-    return u"file://%s" % urllib.quote(absolute_path)
 
 def theme_path(theme, relative_path):
     return os.path.join('/usr/share/miro/themes', theme, relative_path)
@@ -77,9 +73,9 @@ def check_kde():
     return os.environ.get("KDE_FULL_SESSION", None) != None
 
 def open_url(url):
-    # We could use Python's webbrowser.open() here, but
-    # unfortunately, it doesn't have the same semantics under UNIX
-    # as under other OSes. Sometimes it blocks, sometimes it doesn't.
+    # We could use Python's webbrowser.open() here, but unfortunately,
+    # it doesn't have the same semantics under UNIX as under other
+    # OSes. Sometimes it blocks, sometimes it doesn't.
     if check_kde():
         os.spawnlp(os.P_NOWAIT, "kfmclient", "kfmclient", "exec", url)
     else:
@@ -87,7 +83,8 @@ def open_url(url):
 
 def open_file(filename):
     if check_kde():
-        os.spawnlp(os.P_NOWAIT, "kfmclient", "kfmclient", "exec", "file://" + filename)
+        os.spawnlp(os.P_NOWAIT, "kfmclient", "kfmclient",
+                   "exec", "file://" + filename)
     else:
         os.spawnlp(os.P_NOWAIT, "gnome-open", "gnome-open", filename)
 
@@ -104,8 +101,8 @@ def get_autostart_dir():
     autostart_dir = os.path.expanduser(autostart_dir)
     return autostart_dir
 
-def _clean_piece(s):
-    return s.replace(";", " ")
+def _clean_piece(piece):
+    return piece.replace(";", " ")
 
 def get_osname():
     """Composes and returns the osname section of the user agent.

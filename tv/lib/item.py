@@ -38,7 +38,7 @@ from xml.sax.saxutils import unescape
 from miro.util import (check_u, returns_unicode, check_f, returns_filename,
                        quote_unicode_url, stringify, get_first_video_enclosure,
                        entity_replace)
-from miro.plat.utils import FilenameType, filenameToUnicode, unicodeToFilename
+from miro.plat.utils import FilenameType, filename_to_unicode, unicode_to_filename
 import locale
 import os.path
 import traceback
@@ -709,7 +709,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         title = self.get_title() or u''
         desc = self.get_raw_description() or u''
         if self.get_filename():
-            filename = filenameToUnicode(self.get_filename())
+            filename = filename_to_unicode(self.get_filename())
         else:
             filename = u''
         if search.match(search_string, [title.lower(), desc.lower(),
@@ -772,7 +772,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
              and self.downloader.get_state() == "downloading")):
             filename = os.path.basename(self.downloader.get_filename())
             if self.title != filename:
-                self.set_title(filenameToUnicode(filename))
+                self.set_title(filename_to_unicode(filename))
 
     def recalc_feed_counts(self):
         self.get_feed().recalc_counts()
@@ -1121,7 +1121,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if dler is not None:
             self.set_downloader(dler)
             self.downloader.set_channel_name(
-                unicodeToFilename(self.get_channel_title(True)))
+                unicode_to_filename(self.get_channel_title(True)))
             if self.downloader.is_finished():
                 self.on_download_finished()
             else:
@@ -1194,7 +1194,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.is_external() and self.is_downloaded_torrent():
             if self.get_filename() is not None:
                 basename = os.path.basename(self.get_filename())
-                return filenameToUnicode(basename + os.path.sep)
+                return filename_to_unicode(basename + os.path.sep)
         if self.entry_title is not None:
             return self.entry_title
         return _('no title')
@@ -1242,7 +1242,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 return self.raw_descrption
         elif self.is_external() and self.is_downloaded_torrent():
             lines = [_('Contents:')]
-            lines.extend(filenameToUnicode(child.offsetPath)
+            lines.extend(filename_to_unicode(child.offsetPath)
                          for child in self.get_children())
             return u'<BR>\n'.join(lines)
         else:
@@ -1605,7 +1605,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         FileItems that duplicate existing Items.  See #12253 for details.
         """
         view = Item.make_view('is_file_item AND filename=? AND id !=?',
-                (filenameToUnicode(self.filename), self.id))
+                (filename_to_unicode(self.filename), self.id))
         for dup in view:
             dup.remove()
 
@@ -1933,7 +1933,7 @@ filename was %s""", stringify(self.filename))
 
 def fp_values_for_file(filename):
     return FeedParserValues(FeedParserDict({
-            'title': filenameToUnicode(os.path.basename(filename)),
+            'title': filename_to_unicode(os.path.basename(filename)),
             'enclosures': [{'url': resources.url(filename)}]
             }))
 

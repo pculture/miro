@@ -45,11 +45,6 @@ def path(relative_path):
 def url(relative_path):
     return u"file://" + urllib.quote(path(relative_path))
 
-def absoluteUrl(absolute_path):
-    """Like url, but without adding the resource directory.
-    """
-    return u"file://" + urllib.quote(absolute_path)
-
 def theme_path(theme, relative_path):
     return os.path.join(bundle.getBundlePath(), "Contents", "Theme", theme,
             relative_path)

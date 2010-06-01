@@ -60,7 +60,7 @@ from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import dialogwidgets
 from miro.frontends.widgets.widgetutil import build_control_line
 from miro.plat import resources
-from miro.plat.utils import filenameToUnicode
+from miro.plat.utils import filename_to_unicode
 from miro.gtcache import gettext as _
 from miro import gtcache
 
@@ -481,11 +481,11 @@ class _MovieDirectoryHelper(object):
                 return
             logging.info("Created directory.  It's valid.")
             self.path = d
-            self.label.set_text(filenameToUnicode(d))
+            self.label.set_text(filename_to_unicode(d))
 
     def set_initial_path(self):
         self.path = self.initial_path = config.get(prefs.MOVIES_DIRECTORY)
-        self.label.set_text(filenameToUnicode(self.path))
+        self.label.set_text(filename_to_unicode(self.path))
 
     def on_window_closed(self):
         if self.path != self.initial_path:

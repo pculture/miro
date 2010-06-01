@@ -74,7 +74,7 @@ from miro import prefs
 from miro import util
 from miro.download_utils import next_free_filename
 from miro.gtcache import gettext as _
-from miro.plat.utils import FilenameType, filenameToUnicode
+from miro.plat.utils import FilenameType, filename_to_unicode
 
 class UpgradeError(Exception):
     """While upgrading the database, we ran out of disk space."""
@@ -892,7 +892,7 @@ class SQLiteConverter(object):
         self._from_sql_converters[schema.SchemaBool] = bool
         # filenames are always stored in sqlite as unicode
         if FilenameType != unicode:
-            self._to_sql_converters[schema.SchemaFilename] = filenameToUnicode
+            self._to_sql_converters[schema.SchemaFilename] = filename_to_unicode
             self._from_sql_converters[schema.SchemaFilename] = \
                     self._unicode_to_filename
         # make sure SchemaBinary is always restored as a byte-string
@@ -952,7 +952,7 @@ class SQLiteConverter(object):
         for key in filename_fields:
             value = to_save.get(key)
             if value is not None:
-                to_save[key] = filenameToUnicode(value)
+                to_save[key] = filename_to_unicode(value)
         return repr(to_save)
 
 class TimeModuleShadow:

@@ -54,7 +54,7 @@ from miro import dbupgradeprogress
 from miro import feedparser
 from miro import schemav79 as schema_mod
 from miro import util
-from miro.plat.utils import filenameToUnicode
+from miro.plat.utils import filename_to_unicode
 
 def _loads(str):
     """Version of cPickle.loads() that can handle the SavableObject class."""
@@ -144,7 +144,7 @@ def _execute_insert_sql(cursor, savable):
             elif isinstance(schema_item, schema_mod.SchemaTimeDelta):
                 value = repr(value)
             elif isinstance(schema_item, schema_mod.SchemaFilename):
-                value = filenameToUnicode(value)
+                value = filename_to_unicode(value)
         values.append(value)
     sql = ("REPLACE INTO %s (%s) VALUES(%s)" %
            (table_name, ', '.join(column_names),

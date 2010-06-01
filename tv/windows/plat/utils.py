@@ -45,7 +45,7 @@ import subprocess
 import sys
 import urllib
 from miro.util import returns_unicode, check_u
-from miro.util import call_command, AutoLoggingStream
+from miro.util import AutoLoggingStream
 from miro import fileutil
 
 _locale_initialized = False
@@ -167,12 +167,12 @@ class ApatheticRotatingFileHandler(RotatingFileHandler):
         pass
 
 _loggingSetup = False
-def setup_logging(inDownloader=False):
+def setup_logging(in_downloader=False):
     global _loggingSetup
     if _loggingSetup:
         return
 
-    if inDownloader:
+    if in_downloader:
         logging.basicConfig(level=logging.INFO,
                 format='%(asctime)s %(levelname)-8s %(message)s',
                 stream=sys.stderr)
@@ -200,12 +200,12 @@ def utf8_to_filename(filename):
     return filename.decode('utf-8', 'replace')
 
 @returns_unicode
-def unicodeToFilename(filename, path=None):
+def unicode_to_filename(filename, path=None):
     """Takes in a unicode string representation of a filename and creates a
     valid byte representation of it attempting to preserve extensions
 
     This is not guaranteed to give the same results every time it is run,
-    not is it garanteed to reverse the results of filenameToUnicode
+    not is it garanteed to reverse the results of filename_to_unicode
     """
     @returns_unicode
     def shortenFilename(filename):
@@ -244,11 +244,12 @@ def unicodeToFilename(filename, path=None):
     return newFilename
 
 @returns_unicode
-def filenameToUnicode(filename, path=None):
+def filename_to_unicode(filename, path=None):
     """Given a filename in raw bytes, return the unicode representation
 
-    Since this is not guaranteed to give the same results every time it is run,
-    not is it garanteed to reverse the results of unicodeToFilename
+    Since this is not guaranteed to give the same results every time
+    it is run, not is it garanteed to reverse the results of
+    unicode_to_filename
     """
     if path:
         check_u(path)

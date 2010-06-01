@@ -41,7 +41,7 @@ from miro.frontends.widgets import dialogs
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro import gtcache
-from miro.plat.utils import filenameToUnicode, FilenameType
+from miro.plat.utils import filename_to_unicode, FilenameType
 from miro.plat.resources import get_default_search_dir
 
 import os
@@ -276,7 +276,7 @@ class FirstTimeDialog(widgetset.Window):
                 initial_directory=_get_user_media_directory(),
                 transient_for=self)
             if dir_:
-                search_entry.set_text(filenameToUnicode(dir_))
+                search_entry.set_text(filename_to_unicode(dir_))
                 self.search_directory = dir_
             else:
                 self.search_directory = _get_user_media_directory()

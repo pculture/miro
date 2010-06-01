@@ -90,7 +90,7 @@ class XScreenSaverManager(object):
         gobject.source_remove(self.timer)
         self.timer = None
 
-managers = [
+MANAGERS = [
     GnomeScreenSaverManager(),
     XScreenSaverManager(),
     # TODO: make a KDE3 version?
@@ -98,7 +98,7 @@ managers = [
 
 def create_manager():
     """Return an object that can disable/enable the screensaver."""
-    for manager in managers:
+    for manager in MANAGERS:
         if manager.should_use():
             return manager
     return None

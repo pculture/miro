@@ -46,7 +46,7 @@ from miro import eventloop
 from miro import httpclient
 from miro import models
 from miro import prefs
-from miro.plat.utils import samefile, FilenameType, unicodeToFilename
+from miro.plat.utils import samefile, FilenameType, unicode_to_filename
 from miro import flashscraper
 from miro import fileutil
 
@@ -890,7 +890,7 @@ def get_downloader_for_item(item):
     existing = get_existing_downloader_by_url(url)
     if existing:
         return existing
-    channelName = unicodeToFilename(item.get_channel_title(True))
+    channelName = unicode_to_filename(item.get_channel_title(True))
     if not channelName:
         channelName = None
     if url.startswith(u'file://'):

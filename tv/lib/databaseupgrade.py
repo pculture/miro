@@ -2210,7 +2210,7 @@ def upgrade88(cursor):
 def upgrade89(cursor):
     """Set videoFilename column for downloaded items."""
     import datetime
-    from miro.plat.utils import filenameToUnicode
+    from miro.plat.utils import filename_to_unicode
 
     # for Items, calculate from the downloader
     for row in cursor.execute("SELECT id, downloader_id FROM item "
@@ -2246,7 +2246,7 @@ def upgrade89(cursor):
         filename = status.get('filename')
         if (state in ('stopped', 'finished', 'uploading', 'uploading-paused')
                 and filename):
-            filename = filenameToUnicode(filename)
+            filename = filename_to_unicode(filename)
             cursor.execute("UPDATE item SET videoFilename=? WHERE id=?",
                 (filename, item_id))
     # for FileItems, just copy from filename
@@ -2361,7 +2361,7 @@ def upgrade98(cursor):
 def upgrade99(cursor):
     """Set the filename attribute for downloaded Item objects
     """
-    from miro.plat.utils import filenameToUnicode
+    from miro.plat.utils import filename_to_unicode
     cursor.execute("SELECT id, status from remote_downloader "
             "WHERE state in ('stopped', 'finished', 'uploading', "
             "'uploading-paused')")
@@ -2371,7 +2371,7 @@ def upgrade99(cursor):
                 {'datetime': datetime, 'time': time})
         filename = status.get('filename')
         if filename:
-            filename = filenameToUnicode(filename)
+            filename = filename_to_unicode(filename)
             cursor.execute("UPDATE item SET filename=? WHERE downloader_id=?",
                     (filename, downloader_id))
 

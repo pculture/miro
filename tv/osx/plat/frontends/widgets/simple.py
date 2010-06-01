@@ -32,7 +32,7 @@ from AppKit import *
 from Foundation import *
 from objc import YES, NO, nil
 
-from miro.plat.utils import filenameToUnicode
+from miro.plat.utils import filename_to_unicode
 from miro.frontends.widgets import widgetconst
 from miro.plat.frontends.widgets.base import Widget, SimpleBin, FlippedView
 
@@ -41,7 +41,7 @@ from miro.plat.frontends.widgets.base import Widget, SimpleBin, FlippedView
 class Image(object):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, path):
-        self.nsimage = NSImage.alloc().initByReferencingFile_(filenameToUnicode(path))
+        self.nsimage = NSImage.alloc().initByReferencingFile_(filename_to_unicode(path))
         self.width = self.nsimage.size().width
         self.height = self.nsimage.size().height
 
@@ -81,7 +81,7 @@ class ImageDisplay(Widget):
 class AnimatedImageDisplay(Widget):
     def __init__(self, path):
         Widget.__init__(self)
-        self.nsimage = NSImage.alloc().initByReferencingFile_(filenameToUnicode(path))
+        self.nsimage = NSImage.alloc().initByReferencingFile_(filename_to_unicode(path))
         self.view = NSImageView.alloc().init()
         self.view.setImage_(self.nsimage)
 

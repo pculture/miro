@@ -46,7 +46,7 @@ from miro import search
 from miro import signals
 from miro import util
 from miro.frontends.widgets import imagepool
-from miro.plat.utils import filenameToUnicode
+from miro.plat.utils import filename_to_unicode
 from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
 
@@ -56,7 +56,7 @@ def item_matches_search(item_info, search_text):
         return True
     match_against = [item_info.name, item_info.description]
     if item_info.video_path is not None:
-        match_against.append(filenameToUnicode(item_info.video_path))
+        match_against.append(filename_to_unicode(item_info.video_path))
     return search.match(search_text, match_against)
 
 class ItemSort(object):

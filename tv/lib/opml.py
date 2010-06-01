@@ -48,7 +48,7 @@ from miro import tabs
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.xhtmltools import urlencode
-from miro.plat.utils import filenameToUnicode
+from miro.plat.utils import filename_to_unicode
 
 class Exporter(object):
     def __init__(self):
@@ -65,7 +65,7 @@ class Exporter(object):
         self.io.write(u'      xmlns:miro="http://getmiro.com/opml/subscriptions">\n')
         self.io.write(u'<head>\n')
         self.io.write(u'\t<title>%s</title>\n' %
-                filenameToUnicode(os.path.basename(pathname)))
+                filename_to_unicode(os.path.basename(pathname)))
         self.io.write(u'\t<dateCreated>%s</dateCreated>\n' % now.ctime())
         self.io.write(u'\t<docs>http://www.opml.org/spec2</docs>\n')
         self.io.write(u'</head>\n')

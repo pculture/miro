@@ -63,7 +63,7 @@ from miro.util import (returns_unicode, returns_filename, unicodify, check_u,
                        check_f, quote_unicode_url, escape, to_uni,
                        is_url, stringify)
 from miro import fileutil
-from miro.plat.utils import filenameToUnicode, make_url_safe, unmake_url_safe
+from miro.plat.utils import filename_to_unicode, make_url_safe, unmake_url_safe
 from miro import filetypes
 from miro.item import FeedParserValues
 from miro import searchengines
@@ -647,57 +647,16 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
                     item.isContainerItem):
                 item.signal_change(needs_save=False)
 
-    ## FIXME - this doesn't get used
-    ## def getNewItems(self):
-    ##     """Returns the number of new items with the feed
-    ##     """
-    ##     self.confirm_db_thread()
-    ##     count = 0
-    ##     for item in self.items:
-    ##         try:
-    ##             if item.get_state() == u'newly-downloaded':
-    ##                 count += 1
-    ##         except (SystemExit, KeyboardInterrupt):
-    ##             raise
-    ##         except:
-    ##             pass
-    ##     return count
-
-
-    ## FIXME - this doesn't get used
-    ## def setInlineSearchTerm(self, term):
-    ##     self.inlineSearchTerm = term
-
     def get_id(self):
         return DDBObject.get_id(self)
-
-    ## FIXME - this doesn't get used
-    ## def hasError(self):
-    ##     self.confirm_db_thread()
-    ##     return self.errorState
-
-    ## FIXME - this doesn't get used
-    ## @returns_unicode
-    ## def getOriginalURL(self):
-    ##     self.confirm_db_thread()
-    ##     return self.origURL
 
     @returns_unicode
     def get_search_term(self):
         self.confirm_db_thread()
         return self.searchTerm
 
-    ## FIXME - this doesn't get used
-    ## @returns_unicode
-    ## def getError(self):
-    ##     return u"Could not load feed"
-
     def is_updating(self):
         return self.loading or (self.actualFeed and self.actualFeed.updating)
-
-    ## FIXME - this doesn't get used
-    ## def isScraped(self):
-    ##     return isinstance(self.actualFeed, ScraperFeedImpl)
 
     @returns_unicode
     def get_title(self):
@@ -719,21 +678,6 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def revert_title(self):
         self.set_title(None)
-
-    ## FIXME - this doesn't get used
-    ## @returns_unicode
-    ## def setBaseTitle(self, title):
-    ##     """Set the baseTitle.
-    ##     """
-    ##     self.baseTitle = title
-    ##     self.signal_change()
-
-    ## FIXME - this doesn't get used
-    ## def isVisible(self):
-    ##     """Returns true iff feed should be visible
-    ##     """
-    ##     self.confirm_db_thread()
-    ##     return self.visible
 
     def set_visible(self, visible):
         if self.visible == visible:
@@ -766,14 +710,6 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             raise ValueError("Bad auto-download mode: %s" % mode)
         self.signal_change()
         self.signal_items()
-
-    ## FIXME - doesn't get used
-    ## def getCurrentAutoDownloadableItems(self):
-    ##     auto = set()
-    ##     for item in self.items:
-    ##         if item.is_pending_auto_download():
-    ##             auto.add(item)
-    ##     return auto
 
     def set_expiration(self, type_, time_):
         """Sets the expiration attributes. Valid types are u'system',
@@ -1101,16 +1037,6 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.confirm_db_thread()
         return self.expire
 
-    ## FIXME - doesn't get used
-    ## def getMaxFallBehind(self):
-    ##     """Returns "unlimited" or the maximum number of items this
-    ##     feed can fall behind
-    ##     """
-    ##     self.confirm_db_thread()
-    ##     if self.fallBehind < 0:
-    ##         return u"unlimited"
-    ##     else:
-    ##         return self.fallBehind
 
     def get_max_new(self):
         """Returns "unlimited" or the maximum number of items this
@@ -1147,47 +1073,11 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             return (self.expireTime.days * 24 +
                     self.expireTime.seconds / 3600)
 
-    ## FIXME - not used
-    ## def getExpireDays(self):
-    ##     """Returns the number of days until a video expires
-    ##     """
-    ##     self.confirm_db_thread()
-    ##     try:
-    ##         return self.expireTime.days
-    ##     except (SystemExit, KeyboardInterrupt):
-    ##         raise
-    ##     except:
-    ##         return timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS)).days
-
-    ## def getExpireHours(self):
-    ##     """Returns the number of hours until a video expires
-    ##     """
-    ##     self.confirm_db_thread()
-    ##     try:
-    ##         return int(self.expireTime.seconds/3600)
-    ##     except (SystemExit, KeyboardInterrupt):
-    ##         raise
-    ##     except:
-    ##         return int(timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS)).seconds/3600)
-
-    ## def getExpires(self):
-    ##     expireAfterSetting = config.get(prefs.EXPIRE_AFTER_X_DAYS)
-    ##     return (self.expireTime is None or self.expire == 'never' or
-    ##             (self.expire == 'system' and expireAfterSetting <= 0))
-
     def is_autodownloadable(self):
         """Returns true iff item is autodownloadable
         """
         self.confirm_db_thread()
         return self.autoDownloadable
-
-    ## FIXME - not used
-    ## def autoDownloadStatus(self):
-    ##     status = self.is_autodownloadable()
-    ##     if status:
-    ##         return u"ON"
-    ##     else:
-    ##         return u"OFF"
 
     def remove(self, move_items_to=None):
         """Remove the feed.
@@ -1223,24 +1113,11 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     def thumbnail_valid(self):
         return self.icon_cache and self.icon_cache.isValid()
 
-    ## FIXME - this is only called in commented out functions 
-    ## def calc_thumbnail(self):
-    ##  if self.thumbnail_valid():
-    ##      return fileutil.expand_filename(self.icon_cache.get_filename())
-    ##  else:
-    ##      return default_feed_icon_path()
-
     def calc_tablist_thumbnail(self):
         if self.thumbnail_valid():
             return fileutil.expand_filename(self.icon_cache.get_filename())
         else:
             return default_tablist_feed_icon_path()
-
-    ## FIXME - it looks like this never gets called
-    ## @returns_unicode
-    ## def get_thumbnail(self):
-    ##     self.confirm_db_thread()
-    ##     return resources.absoluteUrl(self.calc_thumbnail())
 
     @returns_filename
     def get_thumbnail_path(self):
@@ -1250,30 +1127,11 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             return self.actualFeed.default_thumbnail_path()
 
-    ## FIXME - it looks like these never get called
-    ## @returns_unicode
-    ## def getTablistThumbnail(self):
-    ##     self.confirm_db_thread()
-    ##     return resources.absoluteUrl(self.calc_tablist_thumbnail())
-
-    ## @returns_filename
-    ## def getTablistThumbnailPath(self):
-    ##     self.confirm_db_thread()
-    ##     return resources.path(self.calc_tablist_thumbnail())
-
     def has_downloaded_items(self):
         return self.num_downloaded() > 0
 
     def has_downloading_items(self):
         return self.num_downloading() > 0
-
-    ## FIXME - this never gets called
-    ## def updateIcons(self):
-    ##     iconcache.iconCacheUpdater.clear_vital()
-    ##     for item in self.items:
-    ##         item.icon_cache.request_update(True)
-    ##     for feed in Feed.make_view():
-    ##         feed.icon_cache.request_update(True)
 
     def __str__(self):
         return "Feed - %s" % stringify(self.get_title())
@@ -1848,11 +1706,6 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         self.set_update_frequency(360)
         self.schedule_update_events(0)
 
-    ## FIXME - not used
-    ## @returns_unicode
-    ## def getMimeType(self, link):
-    ##     raise StandardError, "ScraperFeedImpl.getMimeType not implemented"
-
     def save_cache_history(self):
         """This puts all of the caching information in tempHistory into the
         linkHistory. This should be called at the end of an updated so that
@@ -2187,7 +2040,7 @@ class DirectoryScannerImplBase(FeedImpl):
             all_files = fileutil.miro_allfiles(scan_dir)
             for file_ in all_files:
                 file_ = os.path.normcase(file_)
-                ufile = filenameToUnicode(file_)
+                ufile = filename_to_unicode(file_)
                 if (file_ not in known_files and
                         filetypes.is_media_filename(ufile)):
                     to_add.append(file_)
@@ -2212,7 +2065,7 @@ class DirectoryWatchFeedImpl(DirectoryScannerImplBase):
         title = directory
         if title[-1] == '/':
             title = title[:-1]
-        title = filenameToUnicode(os.path.basename(title)) + "/"
+        title = filename_to_unicode(os.path.basename(title)) + "/"
 
         FeedImpl.setup_new(self, url=url, ufeed=ufeed, title=title)
         self.dir = directory
