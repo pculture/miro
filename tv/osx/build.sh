@@ -36,10 +36,8 @@ if [ ! -d "miro-binary-kit-osx-${BKIT_VERSION}" ]; then
     exit 1
 fi
 
-if [[ $OS_VERSION == "9" ]]; then
+if [[ $OS_VERSION == "9" ]] || [[ $OS_VERSION == "10" ]]; then
     TARGET_OS_VERSION=10.5
-elif [[ $OS_VERSION == "10" ]]; then
-    TARGET_OS_VERSION=10.6
 else
     echo "Building and running Miro is only supported on Mac OS X 10.5 and 10.6."
     exit 1

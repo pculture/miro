@@ -36,10 +36,8 @@ BKIT_VERSION="$(cat binary_kit_version)"
 # =============================================================================
 
 OS_VERSION=$(uname -r | cut -d . -f 1)
-if [[ $OS_VERSION == "9" ]]; then
+if [[ $OS_VERSION == "9" ]] || [[ $OS_VERSION == "10" ]]; then
     TARGET_OS_VERSION=10.5
-elif [[ $OS_VERSION == "10" ]]; then
-    TARGET_OS_VERSION=10.6
 else
     echo "## This script can only be used under Mac OS X 10.5 and 10.6."
     exit 1
@@ -55,8 +53,11 @@ BKIT_DIR=$(pwd)/miro-binary-kit-osx-$BKIT_VERSION/sandbox
 SBOX_DIR=$ROOT_DIR/sandbox_$BKIT_VERSION
 WORK_DIR=$SBOX_DIR/pkg
 
-export PATH=/bin:/sbin:/usr/bin:/usr/sbin:$SBOX_DIR
-export MACOSX_DEPLOYMENT_TARGET=$TARGET_OS_VERSION
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:$SBOX_DIR
+MACOSX_DEPLOYMENT_TARGET=$TARGET_OS_VERSION
+
+export PATH
+export MACOSX_DEPLOYMENT_TARGET
 
 if [[ -e $SBOX_DIR ]]; then
     echo "!! Deleting existing sandbox!"
@@ -82,6 +83,7 @@ cd $WORK_DIR/Python-2.6.5
             --enable-universalsdk=$SDK_DIR \
             --with-universal-archs=32-bit
 
+patch -p0 < $BKIT_DIR/patches/Python-2.6.5/setup.py.patch
 make frameworkinstall
 
 PYTHON_ROOT=$SBOX_DIR/Frameworks/Python.framework/Versions/$PYTHON_VERSION
@@ -136,6 +138,12 @@ do
     if [[ -e setup.cfg ]]; then
         echo "[easy_install]" >> setup.cfg
         echo "zip_ok = 0" >> setup.cfg
+    fi
+    
+    if [[ -e $BKIT_DIR/patches/$pkg ]]; then
+        for patch_file in $BKIT_DIR/patches/$pkg/*.patch; do
+            patch -p0 < $patch_file
+        done
     fi
     
     $PYTHON setup.py install
