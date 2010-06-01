@@ -50,7 +50,7 @@ from miro import moviedata
 from miro import prefs
 from miro import signals
 from miro import videoconversion
-from miro.plat.utils import exit
+from miro.plat.utils import exit_miro
 
 BOGON_URL = "http://participatoryculture.org/bogondeflector/index.php"
 
@@ -107,7 +107,7 @@ class Controller:
             raise
         except:
             signals.system.failed_exn("while shutting down")
-            exit(1)
+            exit_miro(1)
 
     def is_sending_crash_report(self):
         return len(self.bug_report_senders) > 0

@@ -313,11 +313,11 @@ def launch_download_daemon(oldpid, env):
             stdin=subprocess.PIPE,
             startupinfo=startupinfo)
 
-def exit(returnCode):
-    """Python's sys.exit isn't sufficient in a Windows application. It's not
-    clear why.
+def exit_miro(return_code):
+    """Python's sys.exit isn't sufficient in a Windows
+    application. It's not clear why.
     """
-    ctypes.windll.kernel32.ExitProcess(returnCode)
+    ctypes.windll.kernel32.ExitProcess(return_code)
 
 def movie_data_program_info(movie_path, thumbnail_path):
     exe_path = os.path.join(resources.appRoot(), 'Miro_MovieData.exe')

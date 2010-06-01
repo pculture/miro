@@ -54,7 +54,12 @@ _locale_initialized = False
 
 def get_available_bytes_for_movies():
     """Helper method used to get the free space on the disk where downloaded
-    movies are stored
+    movies are stored.
+
+    If it errors out, returns 0.
+
+    :returns: free disk space on drive for MOVIES_DIRECTORY as an int
+    Returns an integer
     """
     movie_dir = config.get(prefs.MOVIES_DIRECTORY)
 
@@ -67,14 +72,26 @@ def get_available_bytes_for_movies():
     return statinfo.f_frsize * statinfo.f_bavail
 
 def locale_initialized():
+    """Returns whether or not the locale has been initialized.
+
+    :returns: True or False regarding whether initialize_locale has been
+        called.
+    """
     return _locale_initialized
 
 def initialize_locale():
+    """Initializes the locale.
+    """
     # gettext understands *NIX locales, so we don't have to do anything
     global _locale_initialized
     _locale_initialized = True
 
 def setup_logging(in_downloader=False):
+    """Sets up logging using the Python logging module.
+
+    :param in_downloader: True if this is being called from the
+        downloader daemon, False otherwise.
+    """
     if in_downloader:
         if os.environ.get('MIRO_FRONTEND') == 'cli':
             level = logging.WARN
@@ -112,6 +129,8 @@ def setup_logging(in_downloader=False):
 
 @returns_binary
 def utf8_to_filename(filename):
+    """Converts a utf-8 encoded string to a FilenameType.
+    """
     if not isinstance(filename, str):
         raise ValueError("filename is not a str")
     return filename
@@ -212,7 +231,7 @@ def unmake_url_safe(s):
     check_u(s)
     return urllib.unquote(s.encode('ascii'))
 
-def pid_is_running(pid):
+def _pid_is_running(pid):
     if pid is None:
         return False
     try:
@@ -222,14 +241,16 @@ def pid_is_running(pid):
         return err.errno == errno.EPERM
 
 def kill_process(pid):
+    """Kills the process with the given pid.
+    """
     if pid is None:
         return
-    if pid_is_running(pid):
+    if _pid_is_running(pid):
         try:
             os.kill(pid, signal.SIGTERM)
             for i in range(100):
                 time.sleep(.01)
-                if not pid_is_running(pid):
+                if not _pid_is_running(pid):
                     return
             os.kill(pid, signal.SIGKILL)
         except (SystemExit, KeyboardInterrupt):
@@ -238,8 +259,13 @@ def kill_process(pid):
             logging.exception("error killing download daemon")
 
 def launch_download_daemon(oldpid, env):
+    """Launches the download daemon.
+
+    :param oldpid: the pid of the previous download daemon
+    :param env: the environment to launch the daemon in
+    """
     # Use UNIX style kill
-    if oldpid is not None and pid_is_running(oldpid):
+    if oldpid is not None and _pid_is_running(oldpid):
         kill_process(oldpid)
 
     environ = os.environ.copy()
@@ -253,19 +279,44 @@ def launch_download_daemon(oldpid, env):
     script = os.path.join(dl_daemon_path, 'Democracy_Downloader.py')
     os.spawnle(os.P_NOWAIT, sys.executable, sys.executable, script, environ)
 
-def exit(return_code):
+def exit_miro(return_code):
+    """Exits Miro.
+    """
     sys.exit(return_code)
 
 def set_properties(props):
+    """Sets a bunch of command-line specified properites.
+
+    Linux only.
+
+    :param props: a list of pref/value tuples
+    """
     for pref, val in props:
         logging.info("Setting preference: %s -> %s", pref.alias, val)
         config.set(pref, val)
 
 def movie_data_program_info(movie_path, thumbnail_path):
+    """Returns the necessary information for Miro to run the media
+    item info extractor program.
+
+    The media item info extractor program takes a media item path and
+    a path for where the thumbnail should go (if there is one) and
+    returns information about the media item.
+
+    Due to legacy reasons, this is called ``movie_data_program_info``,
+    but it applies to audio items as well as video items.
+
+    :returns: tuple of ``((python, script-path, movie-path, thumbnail-path),
+        environment)``.  Environment is either a dict or None.
+    """
     from miro import app
     return app.movie_data_program_info(movie_path, thumbnail_path)
 
 def get_logical_cpu_count():
+    """Returns the logical number of cpus on this machine.
+
+    :returns: int
+    """
     try:
         import multiprocessing
         return multiprocessing.cpu_count()
@@ -276,15 +327,41 @@ def get_logical_cpu_count():
     return 1
 
 def get_ffmpeg_executable_path():
+    """Returns the location of the ffmpeg binary.
+
+    :returns: string
+    """
     return "/usr/bin/ffmpeg"
 
 def customize_ffmpeg_parameters(default_parameters):
+    """Takes a list of parameters and modifies it based on
+    platform-specific issues.  Returns the newly modified list of
+    parameters.
+
+    :param default_parameters: list of parameters to modify
+
+    :returns: list of modified parameters that will get passed to
+        ffmpeg
+    """
     return default_parameters
 
 def get_ffmpeg2theora_executable_path():
+    """Returns the location of the ffmpeg2theora binary.
+
+    :returns: string
+    """
     return "/usr/bin/ffmpeg2theora"
 
 def customize_ffmpeg2theora_parameters(default_parameters):
+    """Takes a list of parameters and modifies it based on
+    platform-specific issues.  Returns the newly modified list of
+    parameters.
+
+    :param default_parameters: list of parameters to modify
+
+    :returns: list of modified parameters that will get passed to
+        ffmpeg2theora
+    """
     return default_parameters
 
 def begin_thread_loop(context_object):

@@ -339,12 +339,12 @@ def ensureDownloadDaemonIsTerminated():
         dlTask.waitUntilExit()
     dlTask = None
 
-def exit(returnCode):
+def exit_miro(return_code):
     NSApplication.sharedApplication().stop_(nil)
 
 ###############################################################################
 
-def movie_data_program_info(moviePath, thumbnailPath):
+def movie_data_program_info(movie_path, thumbnail_path):
     main_bundle = NSBundle.mainBundle()
     rsrc_path = main_bundle.resourcePath()
     script_path = os.path.join(rsrc_path, 'qt_extractor.py')
@@ -357,7 +357,7 @@ def movie_data_program_info(moviePath, thumbnailPath):
         py_version = main_bundle.infoDictionary().get('PythonInfoDict').get('PythonShortVersion')
         py_exe_path = os.path.join(main_bundle.privateFrameworksPath(), "Python.framework", "Versions", py_version, "bin", 'python')
         env = {'PYTHONHOME': rsrc_path, 'MIRO_BUNDLE_PATH': main_bundle.bundlePath()}
-    return ((py_exe_path, script_path, moviePath, thumbnailPath), env)
+    return ((py_exe_path, script_path, movie_path, thumbnail_path), env)
 
 ###############################################################################
 
