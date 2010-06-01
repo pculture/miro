@@ -41,6 +41,10 @@ _data = None
 _lock = RLock()
 _callbacks = set()
 
+# these settings override existing ones, don't get persisted, and are
+# great for testing.
+TEMPORARY_SETTINGS = {}
+
 def add_change_callback(callback):
     """Attaches change notification callback functions.
 
@@ -90,7 +94,9 @@ def get(descriptor, use_theme_data=True):
     try:
         _check_validity()
 
-        if _data is not None and descriptor.key in _data:
+        if descriptor.key in TEMPORARY_SETTINGS:
+            return TEMPORARY_SETTINGS[descriptor.key]
+        elif _data is not None and descriptor.key in _data:
             value = _data[descriptor.key]
             if ((descriptor.possible_values is not None
                  and not value in descriptor.possible_values)):
@@ -109,14 +115,20 @@ def get(descriptor, use_theme_data=True):
     finally:
         _lock.release()
 
-def set(descriptor, value):
+def set(descriptor, value, temporary=False):
     _lock.acquire()
     logging.debug("Setting %s to %s", descriptor.key, value)
     try:
         _check_validity()
-        if descriptor.key not in _data or _data[descriptor.key] != value:
-            _data[descriptor.key] = value
-            _notify_listeners(descriptor.key, value)
+        if temporary:
+            if ((descriptor.key not in TEMPORARY_SETTINGS
+                 or TEMPORARY_SETTINGS[descriptor.key] != value)):
+                TEMPORARY_SETTINGS[descriptor.key] = value
+                _notify_listeners(descriptor.key, value)
+        else:
+            if descriptor.key not in _data or _data[descriptor.key] != value:
+                _data[descriptor.key] = value
+                _notify_listeners(descriptor.key, value)
     finally:
         _lock.release()
 
