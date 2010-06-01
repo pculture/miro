@@ -10,18 +10,25 @@ from miro.dl_daemon import command
 from miro.test.framework import MiroTestCase, EventLoopTest
 
 class DownloaderTest(EventLoopTest):
-    # Test feeds that download things
-
+    """Test feeds that download things.
+    """
     def setUp(self):
         EventLoopTest.setUp(self)
         self.url = u'http://pculture.org/feeds_test/unittest-feed-1.rss'
         self.feed = models.Feed(self.url)
         downloader.init_controller()
         downloader.startup_downloader()
-        self.log_file = os.path.join(tempfile.tempdir, 'miro-download-unit-tests')
+        self.log_file = os.path.join(
+            tempfile.tempdir, 'miro-download-unit-tests')
         if os.path.exists(self.log_file):
-            os.remove(self.log_file) # start with a fresh log
-        config.set(prefs.DOWNLOADER_LOG_PATHNAME, self.log_file)
+            # start with a fresh log
+            os.remove(self.log_file)
+        config.set(prefs.MOVIES_DIRECTORY,
+                   os.path.join(tempfile.tempdir, 'movies-dir'),
+                   temporary=True)
+        config.set(prefs.DOWNLOADER_LOG_PATHNAME,
+                   self.log_file,
+                   temporary=True)
 
     def tearDown(self):
         downloader.shutdown_downloader()
@@ -61,7 +68,9 @@ class DownloaderTest(EventLoopTest):
         list(self.feed.items)[0].expire()
 
     def test_resume(self):
+        # FIXME - implement this
         pass
 
     def test_resume_fail(self):
+        # FIXME - implement this
         pass
