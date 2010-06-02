@@ -412,10 +412,11 @@ class VideoRenderer(Renderer):
 
         if config.get(prefs.ENABLE_SUBTITLES) and self.supports_subtitles:
             default_track = self.get_enabled_subtitle_track()
-            if default_track is None:
+            if default_track in (None, -1):
                 tracks = self.get_subtitle_tracks()
                 if len(tracks) > 0:
-                    self.enable_subtitle_track(0)
+                    index = tracks[0][0]
+                    self.enable_subtitle_track(index)
 
     def _get_subtitle_track_name(self, index):
         """Returns the language for the track at the specified index.
