@@ -21,6 +21,7 @@ Contents:
    translating
    searchengine_modules
    utility_modules
+   platform_modules
    backend_modules
    database_modules
    frontend_widgets_modules
