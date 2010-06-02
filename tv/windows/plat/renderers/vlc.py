@@ -36,15 +36,30 @@ import logging
 import gtk
 import gobject
 
+from miro.gtcache import gettext as _
 from miro.plat import resources
 from miro import app
 from miro import config
 from miro import prefs
+from miro.frontends.widgets import menus
 from miro.frontends.widgets.widgetconst import MAX_VOLUME
 from miro.util import copy_subtitle_file
 
 # load the DLL
 libvlc = ctypes.cdll.libvlc
+libvlccore = ctypes.cdll.libvlccore
+
+# Pick out functions that start with "__".  It's very awkward to use them
+# inside classes.
+vlc_object_release = libvlccore.__vlc_object_release
+
+config_GetInt = libvlccore.__config_GetInt
+config_PutInt = libvlccore.__config_PutInt
+config_GetFloat = libvlccore.__config_GetFloat
+config_PutFloat = libvlccore.__config_PutFloat
+config_GetPsz = libvlccore.__config_GetPsz
+config_PutPsz = libvlccore.__config_PutPsz
+
 
 # set up the function signatures
 libvlc_MediaStateChanged = 5
@@ -283,6 +298,7 @@ class VLCRenderer:
         self.vlc = libvlc.libvlc_new(len(vlc_args),
                 make_string_list(vlc_args), self.exc.ref())
         self.exc.check()
+        self.vlc_instance = libvlc.libvlc_get_vlc_instance(self.vlc)
         self.media_player = libvlc.libvlc_media_player_new(self.vlc,
                 self.exc.ref())
         self.exc.check()
@@ -306,6 +322,7 @@ class VLCRenderer:
         logging.info("shutting down VLC")
         self.reset()
         libvlc.libvlc_media_player_release(self.media_player)
+        vlc_object_release(self.vlc_instance)
         libvlc.libvlc_release(self.vlc)
         _sniffer.shutdown()
 
@@ -657,6 +674,72 @@ class VLCRenderer:
         self._change_subtitle_timout = None
         self.setup_subtitle_info()
         self.enable_subtitle_track(1)
+
+    def select_subtitle_encoding(self, encoding):
+        if self.media_playing is None:
+            return
+        if encoding is None:
+            encoding = ''
+        config_PutPsz(self.vlc_instance,
+                ctypes.c_char_p('subsdec-encoding'),
+                ctypes.c_char_p(encoding))
+
+    def setup_subtitle_encoding_menu(self, menubar):
+        menus.add_subtitle_encoding_menu(menubar, _('Eastern European'),
+            ("ISO-8859-9", _("Baltic")),
+            ("Windows-1254", _("Baltic")),
+            ("Windows-1252", _("Eastern European")),
+            ("ISO-8859-2", _("Eastern European")),
+            ("ISO-8859-3", _("Russian")),
+            ("Windows-874", _("South-Eastern European")),
+            ("ISO-8859-10", _("Ukrainian")),
+        )
+
+        menus.add_subtitle_encoding_menu(menubar, _('Western European'),
+            ("ISO-8859-11", _("Celtic")),
+            ("ISO-8859-15", _("Western European")),
+            ("Windows-1250", _("Esperanto")),
+            ("KOI8-U", _("Greek")),
+            ("ISO-8859-6", _("Greek")),
+        )
+
+        menus.add_subtitle_encoding_menu(menubar, _('East Asian'),
+            ("GB18030", _("Universal, Chinese")),
+            ("ISO-8859-13", _("Simplified Chinese")),
+            ("Windows-1257", _("Simplified Chinese Unix")),
+            ("ISO-8859-14", _("Japanese")),
+            ("ISO-8859-16", _("Japanese Unix")),
+            ("ISO-2022-CN-EXT", _("Japanese")),
+            ("EUC-CN", _("Korean")),
+            ("ISO-2022-JP-2", _("Korean")),
+            ("EUC-JP", _("Traditional Chinese")),
+            ("Shift_JIS", _("Traditional Chinese Unix")),
+            ("CP949", _("Hong-Kong Supplementary")),
+        )
+
+        menus.add_subtitle_encoding_menu(menubar, _('SE and SW Asian'),
+            ("Windows-1253", _("Turkish")),
+            ("ISO-8859-8", _("Turkish")),
+            ("Windows-1255", _("Thai")),
+            ("ISO-2022-KR", _("Vietnamese")),
+            ("Big5", _("Vietnamese")),
+        )
+
+        menus.add_subtitle_encoding_menu(menubar, _('Middle Eastern'),
+            ("Windows-1251", _("Arabic")),
+            ("KOI8-R", _("Arabic")),
+            ("Windows-1256", _("Hebrew")),
+            ("ISO-8859-7", _("Hebrew")),
+        )
+
+        menus.add_subtitle_encoding_menu(menubar, _('Unicode'),
+            ("UTF-8", _("Universal")),
+            ("UTF-16", _("Universal")),
+            ("UTF-16BE", _("Universal")),
+            ("UTF-16LE", _("Universal")),
+        )
+
+
 
 _sniffer = VLCSniffer()
 
