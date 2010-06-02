@@ -360,7 +360,7 @@ def _get_convert_menu():
     for index, section in enumerate(sections):
         for converter in section[1]:
             handler_name = make_convert_handler(converter)
-            item = MenuItem(converter.name, handler_name, 
+            item = MenuItem(converter.name, handler_name,
                             groups=["PlayablesSelected"])
             menu.append(item)
         if index+1 < len(sections):
@@ -391,7 +391,7 @@ def add_subtitle_encoding_menu(menubar, category_label, *encodings):
                 "SubtitleEncodingMenu", [], groups=['PlayingVideo'])
         subtitles_menu.append(encoding_menu)
         default_item = RadioMenuItem(_('Default (UTF-8)'),
-                "SubtitleEncodingDefault", 'subtitle-encoding',
+                "SubtitleEncoding-Default", 'subtitle-encoding',
                 groups=['PlayingVideo'])
         encoding_menu.append(default_item)
         app.menu_manager.subtitle_encoding_enabled = True
@@ -403,18 +403,33 @@ def add_subtitle_encoding_menu(menubar, category_label, *encodings):
 
     for encoding, name in encodings:
         label = '%s (%s)' % (name, encoding)
-        action_name = 'SubtitleEncoding-%s' % encoding
-        action_handler = make_action_handler(action_name,
-                on_subtitle_encoding, encoding)
-        category_menu.append(RadioMenuItem(label, action_handler,
+        category_menu.append(RadioMenuItem(label,
+            'SubtitleEncoding-%s' % encoding,
             'subtitle-encoding', groups=["PlayingVideo"]))
 
 action_handlers = {}
+group_action_handlers = {}
 def lookup_handler(action_name):
     """For a given action name, get a callback to handle it.  Return
     None if no callback is found.
     """
-    return action_handlers.get(action_name)
+    
+    retval = _lookup_group_handler(action_name)
+    if retval is None:
+        retval = action_handlers.get(action_name)
+    return retval
+
+def _lookup_group_handler(action_name):
+    try:
+        group_name, callback_arg = action_name.split('-', 1)
+    except ValueError:
+        return None # split return tuple of length 1
+    try:
+        group_handler = group_action_handlers[group_name]
+    except KeyError:
+        return None
+    else:
+        return lambda: group_handler(callback_arg)
 
 def action_handler(name):
     """Decorator for functions that handle menu actions."""
@@ -423,13 +438,14 @@ def action_handler(name):
         return func
     return decorator
 
-def make_action_handler(action_name, callback, *args):
-    action_handlers[action_name] = lambda: callback(*args)
-    return action_name
+def group_action_handler(action_prefix):
+    def decorator(func):
+        group_action_handlers[action_prefix] = func
+        return func
+    return decorator
 
 def make_convert_handler(converter):
-    action_name = "ConvertItemTo" + converter.identifier
-    return make_action_handler(action_name, on_convert, converter)
+    return "ConvertItemTo-" + converter.identifier
 
 # File menu
 @action_handler("Open")
@@ -456,8 +472,11 @@ def on_rename_item():
 def on_save_item():
     app.widgetapp.save_item()
 
-def on_convert(converter):
-    app.widgetapp.convert_items(converter)
+@group_action_handler("ConvertItemTo")
+def on_convert(converter_id):
+    app.widgetapp.convert_items(
+            videoconversion.conversion_manager.lookup_converter(
+                converter_id))
 
 @action_handler("RevealConversionFolder")
 def on_reveal_conversion_folder():
@@ -586,12 +605,12 @@ def on_toggle_detach():
 def on_subtitles_select():
     app.playback_manager.open_subtitle_file()
 
+@group_action_handler("SubtitleEncoding")
 def on_subtitle_encoding(converter):
-    app.playback_manager.select_subtitle_encoding(converter)
-
-@action_handler("SubtitleEncodingDefault")
-def on_subtitle_encoding_default():
-    app.playback_manager.select_subtitle_encoding(None)
+    if converter == 'Default':
+        app.playback_manager.select_subtitle_encoding(None)
+    else:
+        app.playback_manager.select_subtitle_encoding(converter)
 
 # Help menu
 @action_handler("About")
@@ -760,7 +779,7 @@ class MenuStateManager(signals.SignalEmitter):
     def select_subtitle_encoding(self, encoding):
         if self.subtitle_encoding_enabled:
             if encoding is None:
-                action_name = 'SubtitleEncodingDefault'
+                action_name = 'SubtitleEncoding-Default'
             else:
                 action_name = 'SubtitleEncoding-%s' % encoding
             self.emit('radio-group-changed', 'subtitle-encoding', action_name)

@@ -57,6 +57,7 @@ class VideoConversionManager(signals.SignalEmitter):
                                              'begin-loop',
                                              'end-loop')
         self.converters = list()
+        self.converter_map = dict()
         self.task_loop = None
         self.message_queue = Queue.Queue(-1)
         self.pending_tasks = list()
@@ -78,10 +79,15 @@ class VideoConversionManager(signals.SignalEmitter):
                 for section in sections:
                     converter_info = VideoConverterInfo(section, parser, defaults)
                     if converter_info.platforms is None or platform in converter_info.platforms:
+                        self.converter_map[converter_info.identifier] = \
+                                converter_info
                         group_converters.append(converter_info)
                 self.converters.append((defaults['name'], group_converters))
             finally:
                 definition_file.close()
+
+    def lookup_converter(self, converter_id):
+        return self.converter_map[converter_id]
     
     def shutdown(self):
         if self.task_loop is not None:
