@@ -316,15 +316,11 @@ class VideoConversionTask(object):
 
         kwargs = {"bufsize": 1,
                   "stdout": subprocess.PIPE,
-                  "stderr": subprocess.PIPE}
+                  "stderr": subprocess.PIPE,
+                  "startupinfo": util.no_console_startupinfo()}
         if os.name != 'nt':
             # close_fds is not available on Windows in Python 2.5.
             kwargs["close_fds"] = True
-        elif os.name == 'nt':
-            # this prevents a window from popping up
-            startupinfo = subprocess.STARTUPINFO()
-            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            kwargs["startupinfo"] = startupinfo
         self.process_handle = subprocess.Popen(args, **kwargs)
             
         try:
