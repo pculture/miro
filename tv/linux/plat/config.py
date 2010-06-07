@@ -154,11 +154,11 @@ def get(descriptor):
 
     elif descriptor == prefs.LOG_PATHNAME:
         value = get(prefs.SUPPORT_DIRECTORY)
-        value = os.path.join(value, 'miro-log')
+        value = os.path.join(value, 'miro.log')
     
     elif descriptor == prefs.DOWNLOADER_LOG_PATHNAME:
         value = get(prefs.SUPPORT_DIRECTORY)
-        value = os.path.join(value, 'miro-downloader-log')
+        value = os.path.join(value, 'miro-downloader.log')
 
     elif descriptor == prefs.HTTP_PROXY_ACTIVE:
         return _get_gconf("/system/http_proxy/use_http_proxy")
