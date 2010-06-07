@@ -319,6 +319,13 @@ class WindowBase(signals.SignalEmitter):
         else:
             app.video_renderer.enable_subtitle_track(track_index)
 
+    def select_subtitle_radio(self, track_index):
+        self._ignore_on_subtitles_change = True
+        action_group = self.action_groups["AlwaysOn"]
+        action = action_group.get_action("SubtitlesDisabled")
+        action.set_property('current-value', track_index)
+        delattr(self, "_ignore_on_subtitles_change")
+
     def on_activate(self, action, callback):
         callback()
 
