@@ -196,8 +196,13 @@ class Renderer:
         elif message.type == gst.MESSAGE_EOS:
             app.playback_manager.on_movie_finished()
 
-    def select_file(self, iteminfo, callback, errback, sub_filename=""):
+    def select_file(self, iteminfo, callback, errback):
         """starts playing the specified file"""
+        self._setup_item(iteminfo)
+        self.select_callbacks = (callback, errback)
+        self.playbin.set_state(gst.STATE_PAUSED)
+
+    def _setup_item(self, iteminfo):
         self.stop()
         self.destroy_playbin()
         self.build_playbin()
@@ -205,13 +210,7 @@ class Renderer:
 
         self.iteminfo = iteminfo
 
-        self.select_callbacks = (callback, errback)
         self.playbin.set_property("uri", "file://%s" % iteminfo.video_path)
-        if sub_filename:
-            self.playbin.set_property("suburi", "file://%s" % sub_filename)
-        else:
-            self.playbin.set_property("suburi", None)
-        self.playbin.set_state(gst.STATE_PAUSED)
 
     def finish_select_file(self):
         pass
@@ -355,10 +354,31 @@ class VideoRenderer(Renderer):
         self.videosink = None
         self.textsink = None
 
-    def select_file(self, filename, callback, errback, sub_filename=""):
-        Renderer.select_file(self, filename, callback, errback, sub_filename)
-        if sub_filename != "" and self.supports_subtitles:
-            self.pick_subtitle_track = 0
+    def select_file(self, iteminfo, callback, errback, sub_filename=""):
+        self._setup_item(iteminfo)
+        self._setup_initial_subtitles(sub_filename)
+        self.select_callbacks = (callback, errback)
+        self.playbin.set_state(gst.STATE_PAUSED)
+
+    def _setup_initial_subtitles(self, sub_filename):
+        sub_index = -1
+        if (config.get(prefs.ENABLE_SUBTITLES) and self.supports_subtitles
+                and not sub_filename):
+            tracks = self.get_subtitles()
+            if 100 in tracks: # Select default sidecar file
+                sub_filename = tracks[100][1]
+                sub_index = 0
+                self.enabled_track = 100
+            elif 0 in tracks: # Select default embedded subtitle track
+                sub_index = 0
+                self.enabled_track = 0
+
+        if sub_filename:
+            self.playbin.set_property("suburi", "file://%s" % sub_filename)
+        if sub_index > -1:
+            flags = self.playbin.get_property('flags')
+            self.playbin.set_properties(flags=flags | GST_PLAY_FLAG_TEXT,
+                                        current_text=sub_index)
 
     def on_sync_message(self, bus, message):
         if message.structure is None:
@@ -400,24 +420,6 @@ class VideoRenderer(Renderer):
     def exit_fullscreen(self):
         """Handle when the video window exits fullscreen mode."""
         logging.debug("haven't implemented exit_fullscreen method yet!")
-
-    def finish_select_file(self):
-        Renderer.finish_select_file(self)
-        if hasattr(self, "pick_subtitle_track") and self.supports_subtitles:
-            flags = self.playbin.get_property('flags')
-            self.playbin.set_properties(flags=flags | GST_PLAY_FLAG_TEXT,
-                                        current_text=0)
-            del self.__dict__["pick_subtitle_track"]
-            return
-
-        if config.get(prefs.ENABLE_SUBTITLES) and self.supports_subtitles:
-            default_track = self.get_enabled_subtitle_track()
-            if default_track in (None, -1):
-                tracks = self.get_subtitle_tracks()
-                if len(tracks) > 0:
-                    index = tracks[0][0]
-                    self.enable_subtitle_track(index)
-                    app.widgetapp.window.select_subtitle_radio(index)
 
     def _get_subtitle_track_name(self, index):
         """Returns the language for the track at the specified index.
@@ -468,12 +470,14 @@ class VideoRenderer(Renderer):
 
         tracks = {}
 
-        for track_index in range(self.playbin.get_property("n-text")):
-            track_name = self._get_subtitle_track_name(track_index)
-            if track_name is None:
-                track_name = _("Track %(tracknumber)d",
-                               {"tracknumber": track_index})
-            tracks[track_index] = (track_name, None)
+        if self.playbin.get_property("suburi") is None:
+            # Don't list subtitle tracks that we're getting from an SRT file
+            for track_index in range(self.playbin.get_property("n-text")):
+                track_name = self._get_subtitle_track_name(track_index)
+                if track_name is None:
+                    track_name = _("Track %(tracknumber)d",
+                                   {"tracknumber": track_index})
+                tracks[track_index] = (track_name, None)
 
         files = gather_subtitle_files(self.iteminfo.video_path)
 
