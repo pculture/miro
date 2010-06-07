@@ -111,6 +111,13 @@ class LinuxApplication(Application):
         langs = ("LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG")
         langs = [(l, os.environ.get(l)) for l in langs if os.environ.get(l)]
         logging.info("Language:          %s", langs)
+        try:
+            import libtorrent
+            logging.info("libtorrent:        %s", libtorrent.version)
+        except AttributeError:
+            logging.info("libtorrent:        unknown version")
+        except ImportError:
+            logging.exception("libtorrent won't load")
         renderers.init_renderer()
         self.mediakeyhandler = mediakeys.get_media_key_handler()
         gtk.main()
