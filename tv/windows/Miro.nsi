@@ -330,6 +330,9 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
   Delete   "${directory}\uninstall.exe"
   Delete   "${directory}\library.zip"
   Delete   "${directory}\moviedata_util.py"
+  Delete   "${directory}\ffmpeg.exe"
+  Delete   "${directory}\ffmpeg2theora.exe"
+  Delete   "${directory}\libx264hq.ffpreset"
 
   RMDir /r "${directory}\etc"
   RMDir /r "${directory}\lib"
@@ -618,6 +621,9 @@ unzipok:
   File  "*.pyd"
   File  "w9xpopen.exe"
   File  "library.zip"
+  File  "ffmpeg.exe"
+  File  "ffmpeg2theora.exe"
+  File  "libx264hq.ffpreset"
   File  /r etc
   File  /r lib
   File  /r share

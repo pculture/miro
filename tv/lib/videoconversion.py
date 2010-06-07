@@ -317,12 +317,13 @@ class VideoConversionTask(object):
         kwargs = {"bufsize": 1,
                   "stdout": subprocess.PIPE,
                   "stderr": subprocess.PIPE,
+                  "stdin": subprocess.PIPE,
                   "startupinfo": util.no_console_startupinfo()}
         if os.name != 'nt':
             # close_fds is not available on Windows in Python 2.5.
             kwargs["close_fds"] = True
         self.process_handle = subprocess.Popen(args, **kwargs)
-            
+
         try:
             keep_going = True
             while keep_going:
