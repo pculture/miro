@@ -30,7 +30,9 @@ import os
 import re
 import time
 import Queue
+import shutil
 import logging
+import tempfile
 import threading
 import subprocess
 
@@ -260,8 +262,8 @@ class VideoConversionTask(object):
         self.item_info = item_info
         self.converter_info = converter_info
         self.input_path = item_info.video_path
-        self.output_path = self._build_output_path(self.input_path, target_folder, converter_info)
-        self.key = "%s->%s" % (self.input_path, self.output_path)
+        self.final_output_path, self.temp_output_path = self._build_output_paths(self.input_path, target_folder, converter_info)
+        self.key = "%s->%s" % (self.input_path, self.final_output_path)
         self.thread = None
         self.duration = None
         self.progress = 0
@@ -276,7 +278,7 @@ class VideoConversionTask(object):
             if param == "{input}":
                 return self.input_path
             elif param == "{output}":
-                return self.output_path
+                return self.temp_output_path
             elif param == "{ssize}":
                 return self.converter_info.screen_size
             return param
@@ -285,11 +287,12 @@ class VideoConversionTask(object):
     def get_parameters(self):
         raise NotImplementedError()
         
-    def _build_output_path(self, input_path, target_folder, converter_info):
+    def _build_output_paths(self, input_path, target_folder, converter_info):
         basename = os.path.basename(input_path)
         basename, _ = os.path.splitext(basename)
         target_name = "%s.%s.%s" % (basename, self.converter_info.identifier, self.converter_info.extension)
-        return os.path.join(target_folder, target_name)
+        temp_dir = tempfile.mkdtemp("miro-conversion")
+        return os.path.join(target_folder, target_name), os.path.join(temp_dir, target_name)
 
     def run(self):
         self.progress = 0
@@ -308,9 +311,9 @@ class VideoConversionTask(object):
         args = self.get_parameters()
         self._start_logging(executable, args)
         
-        if os.path.exists(self.output_path):
-            self._log_progress("Removing existing output file (%s)...\n" % self.output_path)
-            os.remove(self.output_path)
+        if os.path.exists(self.final_output_path):
+            self._log_progress("Removing existing output file (%s)...\n" % self.final_output_path)
+            os.remove(self.final_output_path)
 
         args.insert(0, executable)
 
@@ -338,10 +341,15 @@ class VideoConversionTask(object):
                         if self.progress >= 1.0:
                             self.progress = 1.0
                             keep_going = False
+                            eventloop.add_timeout(0.5, self._stage_file, "staging file")
                         if old_progress != self.progress:
                             self._notify_progress()
         finally:
             self._stop_logging(self.progress < 1.0)
+    
+    def _stage_file(self):
+        shutil.move(self.temp_output_path, self.final_output_path)
+        shutil.rmtree(os.path.dirname(self.temp_output_path))
     
     def _start_logging(self, executable, params):
         log_folder = os.path.dirname(config.get(prefs.LOG_PATHNAME))
@@ -376,9 +384,9 @@ class VideoConversionTask(object):
 
     def interrupt(self):
         utils.kill_process(self.process_handle.pid)
-        if os.path.exists(self.output_path) and self.progress < 1.0:
-            eventloop.add_timeout(0.5, os.remove, "removing output_path",
-                                  (self.output_path,))
+        if os.path.exists(self.temp_output_path) and self.progress < 1.0:
+            eventloop.add_timeout(0.5, os.remove, "removing temp_output_path",
+                                  (self.temp_output_path,))
 
 
 class FFMpegConversionTask(VideoConversionTask):
