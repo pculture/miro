@@ -105,8 +105,9 @@ class VideoConversionsController(object):
         self._update_buttons_state()
 
     def handle_task_added(self, task):
-        self.iter_map[task.key] = self.model.append(task)
-        self.table.model_changed()
+        if task.key not in self.iter_map:
+            self.iter_map[task.key] = self.model.append(task)
+            self.table.model_changed()
         self._update_buttons_state()
     
     def handle_all_tasks_canceled(self):
