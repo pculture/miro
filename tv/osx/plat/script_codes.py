@@ -26,15 +26,11 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from miro import iso639
-
-def patch_iso639_map():
-    for code in OSX_SCRIPT_CODES_LIST:
-        key = code[1]
-        if key is not None:
-            lang = iso639.find(key)
-            if lang is not None:
-                lang["script-code"] = code[0]
+def map_to_two_letters_code(code):
+    for pair in OSX_SCRIPT_CODES_LIST:
+        if pair[0] == code and pair[1] is not None:
+            return pair[1]
+    return None
 
 OSX_SCRIPT_CODES_LIST = [
     (0,   "en"),  # English

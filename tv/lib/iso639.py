@@ -48,8 +48,10 @@ def find(value, key=None):
 
     :returns: the language dict
     """
+    if value is None:
+        return None
     parts = None
-    if hasattr(value, '__iter__') and "_" in value:
+    if "_" in value:
         parts = value.split("_")
         value = parts[0]
     if key is None:

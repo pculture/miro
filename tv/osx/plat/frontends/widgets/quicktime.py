@@ -49,10 +49,6 @@ from miro.util import copy_subtitle_file
 
 ###############################################################################
 
-script_codes.patch_iso639_map()
-
-###############################################################################
-
 qt_framework = pathForFramework("QuickTime.framework")
 qt_bundle = NSBundle.bundleWithPath_(qt_framework)
 loadBundleFunctions(qt_bundle, globals(), (('GetMediaLanguage', 's^^{}'),))
@@ -246,7 +242,8 @@ class Player(player.Player):
                     if lang == 32767:    # 32764 = langUndefined
                         name = display_name
                     else:
-                        lang_info = iso639.find(lang, "script-code")
+                        lang_code = script_codes.map_to_two_letters_code(lang)
+                        lang_info = iso639.find(lang_code)
                         if lang_info is None:
                             name = display_name
                         else:
