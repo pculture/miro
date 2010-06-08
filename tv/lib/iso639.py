@@ -49,7 +49,7 @@ def find(value, key=None):
     :returns: the language dict
     """
     parts = None
-    if "_" in value:
+    if hasattr(value, '__iter__') and "_" in value:
         parts = value.split("_")
         value = parts[0]
     if key is None:
