@@ -32,9 +32,6 @@ broswer.
 
 import logging
 
-ctypedef unsigned short wchar_t
-ctypedef int size_t
-
 cdef extern from "Python.h":
     ctypedef struct PyObject
     PyObject* PyObject_CallMethod(PyObject *o, char* name, char* format, ...)
@@ -63,7 +60,7 @@ cdef extern from "MiroBrowserEmbed.h":
         nsresult (*destroy)()
         nsresult (*loadURI)(char* uri)
         nsresult (*getCurrentURI)(char ** uri)
-        nsresult (*getCurrentTitle)(wchar_t ** title)
+        nsresult (*getCurrentTitle)(char ** title, int* length)
         nsresult (*resize)(int x, int y, int width, int height)
         nsresult (*focus)()
         int (*canGoBack)()
@@ -104,9 +101,6 @@ cdef extern from "pythread.h":
     ctypedef struct PyThreadState
     PyThreadState *PyEval_SaveThread()
     void PyEval_RestoreThread(PyThreadState *_save)
-
-cdef extern from "string.h":
-    size_t wcslen(wchar_t *str)
 
 cdef public log_warning(char* str) with gil:
     logging.warn(str)
@@ -235,18 +229,14 @@ cdef class XULRunnerBrowser:
 
     def get_current_title(self):
         cdef nsresult rv
-        cdef wchar_t *title
-        cdef size_t title_size
+        cdef char *title
+        cdef int length
 
-        rv = self.browser.getCurrentTitle(&title);
+        rv = self.browser.getCurrentTitle(&title, &length);
 
         self._check_result('MiroBrowserEmbed.get_current_title', rv);
 
-        # using wcslen has safety issues, but since we're using it on
-        # something that comes from XPCOM, i think we're ok
-        title_size = (wcslen(title) + 1) * 2;
-
-        return PyString_FromStringAndSize(<char *> title, title_size)
+        return PyString_FromStringAndSize(title, length);
 
     def focus(self):
         cdef nsresult rv

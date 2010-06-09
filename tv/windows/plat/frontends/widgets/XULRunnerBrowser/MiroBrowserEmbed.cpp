@@ -56,6 +56,7 @@
 #include "FixFocus.h"
 
 #include <stdio.h>
+#include <string.h>
 
 MiroBrowserEmbed::MiroBrowserEmbed()
 {
@@ -171,7 +172,7 @@ nsresult MiroBrowserEmbed::getCurrentURI(char ** uri)
     return NS_OK;
 }
 
-nsresult MiroBrowserEmbed::getCurrentTitle(wchar_t ** aTitle)
+nsresult MiroBrowserEmbed::getCurrentTitle(char ** aTitle, int* length)
 {
     nsresult rv;
     nsISHistory *history;
@@ -191,7 +192,8 @@ nsresult MiroBrowserEmbed::getCurrentTitle(wchar_t ** aTitle)
     rv = historyentry->GetTitle(&title);
     NS_ENSURE_SUCCESS(rv, rv);
 
-    *aTitle = title;
+    *aTitle = (char *)title;
+    *length = (wcslen(title) + 1) * 2;
     return NS_OK;
 }
 

@@ -101,8 +101,10 @@ public:
     nsresult loadURI(const char* uri);
     // Gets the current uri from mWebNavigator
     nsresult getCurrentURI(char ** uri);
-    // Gets the current title from a long chain of things
-    nsresult getCurrentTitle(wchar_t ** aTitle);
+    // Gets the current title from a long chain of things.  aTitle is a utf-16
+    // encoding string.  length inputs the length of the string (in
+    // bytes)
+    nsresult getCurrentTitle(char ** aTitle, int* length);
     // Call when the parent window changes size
     nsresult resize(int x, int y, int width, int height);
     // Give the browser keyboard focus
