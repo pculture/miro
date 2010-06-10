@@ -24,11 +24,9 @@ class DownloaderTest(EventLoopTest):
             # start with a fresh log
             os.remove(self.log_file)
         config.set(prefs.MOVIES_DIRECTORY,
-                   os.path.join(tempfile.tempdir, 'movies-dir'),
-                   temporary=True)
+                   os.path.join(tempfile.tempdir, 'movies-dir'))
         config.set(prefs.DOWNLOADER_LOG_PATHNAME,
-                   self.log_file,
-                   temporary=True)
+                   self.log_file)
 
     def tearDown(self):
         downloader.shutdown_downloader()

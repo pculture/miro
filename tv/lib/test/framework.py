@@ -80,9 +80,11 @@ class MiroTestCase(unittest.TestCase):
     def setUp(self):
         models.initialize()
         app.in_unit_tests = True
-        # reload config now that in_unit_tests is set.  This prevents us from
-        # saving config data to disk.
+        # reload config
         config.load()
+        # initialize and make config settings temporary so changes
+        # never get persisted to disk.
+        config.init_temporary()
         self.platform = config.get(prefs.APP_PLATFORM)
         database.set_thread(threading.currentThread())
         database.setup_managers()

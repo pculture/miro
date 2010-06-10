@@ -41,9 +41,21 @@ _data = None
 _lock = RLock()
 _callbacks = set()
 
-# these settings override existing ones, don't get persisted, and are
+# These settings override existing ones, don't get persisted, and are
 # great for testing.
-TEMPORARY_SETTINGS = {}
+#
+# If this is None, then we're not in Temporary mode.
+#
+# If this is {}, then we're in Temporary mode and any config.set
+# changes won't persist to the config settings.
+TEMPORARY_SETTINGS = None
+
+def init_temporary():
+    """This initializes temporary mode where all configuration
+    set calls are temporary.
+    """
+    global TEMPORARY_SETTINGS
+    TEMPORARY_SETTINGS = {}
 
 def add_change_callback(callback):
     """Attaches change notification callback functions.
@@ -96,7 +108,7 @@ def get(descriptor, use_theme_data=True):
     try:
         _check_validity()
 
-        if descriptor.key in TEMPORARY_SETTINGS:
+        if TEMPORARY_SETTINGS and descriptor.key in TEMPORARY_SETTINGS:
             return TEMPORARY_SETTINGS[descriptor.key]
         elif _data is not None and descriptor.key in _data:
             value = _data[descriptor.key]
@@ -117,14 +129,13 @@ def get(descriptor, use_theme_data=True):
     finally:
         _lock.release()
 
-def set(descriptor, value, temporary=False):
+def set(descriptor, value):
     _lock.acquire()
     logging.debug("Setting %s to %s", descriptor.key, value)
     try:
         _check_validity()
-        if temporary:
-            if ((descriptor.key not in TEMPORARY_SETTINGS
-                 or TEMPORARY_SETTINGS[descriptor.key] != value)):
+        if TEMPORARY_SETTINGS is not None:
+            if TEMPORARY_SETTINGS.get(descriptor.key, "FAKE VALUE") != value:
                 TEMPORARY_SETTINGS[descriptor.key] = value
                 _notify_listeners(descriptor.key, value)
         else:
