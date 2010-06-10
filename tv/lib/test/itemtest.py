@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import os
-import tempfile
 import shutil
+import tempfile
 
 from miro import config, prefs
 from miro.feed import Feed
@@ -18,11 +18,11 @@ class ContainerItemTest(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
         self.feed = Feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
-        self.tempdir = FilenameType(tempfile.mkdtemp())
+        self.mytempdir = FilenameType(tempfile.mkdtemp(dir=self.tempdir))
         self._make_fake_item("pcf.avi")
         self._make_fake_item("dean.avi")
         self._make_fake_item("npr.txt")
-        self.container_item = FileItem(self.tempdir, self.feed.id)
+        self.container_item = FileItem(self.mytempdir, self.feed.id)
         for child in self.container_item.get_children():
             if child.filename.endswith("avi"):
                 child.file_type = u'video'
@@ -32,11 +32,11 @@ class ContainerItemTest(MiroTestCase):
             child.signal_change()
 
     def tearDown(self):
-        shutil.rmtree(self.tempdir, ignore_errors=True)
+        shutil.rmtree(self.mytempdir, ignore_errors=True)
         MiroTestCase.tearDown(self)
 
     def _make_fake_item(self, filename):
-        f = open(os.path.join(self.tempdir, filename), 'wb')
+        f = open(os.path.join(self.mytempdir, filename), 'wb')
         f.write("FAKE DATA")
         f.close()
 

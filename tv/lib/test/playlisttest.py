@@ -1,5 +1,4 @@
 import shutil
-import tempfile
 import os
 
 from miro.feed import Feed
@@ -161,7 +160,7 @@ class PlaylistFolderTestCase(PlaylistTestBase):
 class Upgrade88TestCase(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
-        self.tmp_path = tempfile.mktemp()
+        self.tmp_path = self.make_temp_path()
 
     def tearDown(self):
         try:

@@ -1,5 +1,4 @@
 import rfc822
-import tempfile
 import os
 import pycurl
 import urllib
@@ -316,7 +315,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assert_(self.saw_error)
 
     def test_write_file(self):
-        filename = tempfile.mktemp('.txt')
+        filename = self.make_temp_path(".txt")
         self.grab_url(self.httpserver.build_url('test.txt'),
                 write_file=filename)
         self.assert_('body' not in self.grab_url_info)
@@ -329,7 +328,7 @@ class HTTPClientTest(HTTPClientTestBase):
         fp.close()
 
     def test_write_file_resume(self):
-        filename = tempfile.mktemp('.txt')
+        filename = self.make_temp_path(".txt")
         self._write_partial_file(filename)
         self.grab_url(self.httpserver.build_url('test.txt'),
                 write_file=filename, resume=True)
@@ -337,7 +336,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self.check_header('Range', 'bytes=5-')
 
     def test_write_file_no_resume(self):
-        filename = tempfile.mktemp('.txt')
+        filename = self.make_temp_path(".txt")
         self._write_partial_file(filename)
         self.grab_url(self.httpserver.build_url('test.txt'),
                 write_file=filename, resume=False)
@@ -347,14 +346,14 @@ class HTTPClientTest(HTTPClientTestBase):
     def test_write_file_failed_resume(self):
         self.httpserver.disable_resume()
         self.expecting_errback = True
-        filename = tempfile.mktemp('.txt')
+        filename = self.make_temp_path(".txt")
         self._write_partial_file(filename)
         self.grab_url(self.httpserver.build_url('test.txt'),
                 write_file=filename, resume=True)
         self.assert_(isinstance(self.grab_url_error, httpclient.ResumeFailed))
 
     def test_resume_sizes(self):
-        filename = tempfile.mktemp('.txt')
+        filename = self.make_temp_path(".txt")
         self._write_partial_file(filename)
         def on_headers(headers):
             self.headers = headers
@@ -371,13 +370,13 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assertEquals(self.client.get_stats().initial_size, initial_size)
 
     def test_resume_no_file(self):
-        filename = tempfile.mktemp('.txt')
+        filename = self.make_temp_path(".txt")
         self.grab_url(self.httpserver.build_url('test.txt'),
                 write_file=filename, resume=True)
         self.assertEquals(open(filename).read(), TEST_BODY)
  
     def test_cancel(self):
-        filename = tempfile.mktemp('.txt')
+        filename = self.make_temp_path(".txt")
         self.httpserver.pause_after(5)
         def cancel_after_5_bytes():
             if self.client.get_stats().downloaded == 5:
@@ -396,7 +395,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assert_(os.path.exists(filename))
 
     def test_remove_file(self):
-        filename = tempfile.mktemp('.txt')
+        filename = self.make_temp_path(".txt")
         self.httpserver.pause_after(5)
         def cancel_after_5_bytes():
             if self.client.get_stats().downloaded == 5:

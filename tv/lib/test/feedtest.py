@@ -1,6 +1,5 @@
 import os
 import unittest
-from tempfile import mkstemp, gettempdir
 from datetime import datetime
 from time import sleep
 
@@ -423,7 +422,7 @@ class FeedParserAttributesTestCase(FeedTestCase):
     """
     def setUp(self):
         FeedTestCase.setUp(self)
-        self.tempdb = os.path.join(gettempdir(), 'democracy-temp-db')
+        self.tempdb = os.path.join(self.tempdir, 'democracy-temp-db')
         if os.path.exists(self.tempdb):
             os.remove(self.tempdb)
         self.reload_database(self.tempdb)

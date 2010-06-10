@@ -77,10 +77,16 @@ elif config.get(prefs.APP_PLATFORM) == "osx":
 
 
 def run_tests():
+    import sys
     from miro import httpclient
     from miro import test
     # libcurl can only be initialized/cleaned up once per run, so this code
     # can't go in the setUp/tearDown methosd.
     httpclient.init_libcurl()
-    unittest.main(module=test)
+    if "--verbose" in sys.argv:
+        verbosity = 2
+    else:
+        verbosity = 1
+    unittest.main(
+        module=test, testRunner=unittest.TextTestRunner(verbosity=verbosity))
     httpclient.cleanup_libcurl()

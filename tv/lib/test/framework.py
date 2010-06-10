@@ -3,6 +3,7 @@ import logging
 import unittest
 import tempfile
 import threading
+import shutil
 
 from miro import database
 from miro import eventloop
@@ -78,12 +79,14 @@ class DummyController:
 
 class MiroTestCase(unittest.TestCase):
     def setUp(self):
+        self.tempdir = tempfile.mkdtemp()
+        if not os.path.exists(self.tempdir):
+            os.makedirs(self.tempdir)
+        self.setup_downloader_log()
         models.initialize()
         app.in_unit_tests = True
-        # reload config
+        # reload config and initialize it to temprary
         config.load()
-        # initialize and make config settings temporary so changes
-        # never get persisted to disk.
         config.init_temporary()
         self.platform = config.get(prefs.APP_PLATFORM)
         database.set_thread(threading.currentThread())
@@ -98,10 +101,8 @@ class MiroTestCase(unittest.TestCase):
         util.chatter = False
         self.saw_error = False
         self.error_signal_okay = False
-        self.setup_downloader_log()
         signals.system.connect('error', self.handle_error)
         app.controller = DummyController()
-        self.temp_files = []
         self.httpserver = None
         httpclient.start_thread()
 
@@ -119,28 +120,27 @@ class MiroTestCase(unittest.TestCase):
         util.chatter = True
         httpclient.stop_thread()
         self.stop_http_server()
+
         # Remove any leftover database
         app.db.close()
         app.db = None
         database.setup_managers()
+
         # Remove anything that may have been accidentally queued up
         eventloop._eventloop = eventloop.EventLoop()
-        for filename in self.temp_files:
-            try:
-                os.remove(filename)
-            except OSError:
-                pass
+
+        # Remove tempdir
+        shutil.rmtree(self.tempdir, ignore_errors=True)
 
     def setup_downloader_log(self):
-        (handle, filename) = tempfile.mkstemp(".log")
-        fp = os.fdopen(handle, 'w')
+        handle, filename = tempfile.mkstemp(".log", dir=self.tempdir)
+        fp = os.fdopen(handle, "w")
         fp.write("EMPTY DOWNLOADER LOG FOR TESTING\n")
         fp.close()
         config.set(prefs.DOWNLOADER_LOG_PATHNAME, filename)
 
-    def make_temp_path(self):
-        [handle, filename] = tempfile.mkstemp(".xml")
-        self.temp_files.append(filename)
+    def make_temp_path(self, extension=".xml"):
+        handle, filename = tempfile.mkstemp(extension, dir=self.tempdir)
         return filename
 
     def start_http_server(self):

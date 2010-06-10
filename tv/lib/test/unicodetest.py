@@ -1,4 +1,3 @@
-from tempfile import mkstemp
 from time import sleep
 import time
 import types
@@ -64,7 +63,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
                           isinstance(parsed, types.NoneType)))
 
     def test_valid_utf_feed(self):
-        handle, self.filename = mkstemp(".xml")
+        self.filename = self.make_temp_path(".xml")
         handle = open(self.filename, "wb")
         handle.write(u'<?xml version="1.0"?>\n<rss version="2.0">\n   <channel>\n <title>Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</title>\n      <description>Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</description>\n      <language>zh-zh</language>\n     <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>\n      <generator>Weblog Editor 2.0</generator>\n      <managingEditor>editor@example.com</managingEditor>\n      <webMaster>webmaster@example.com</webMaster>\n      <item>\n\n         <title>\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</title>\n     <link>http://participatoryculture.org/boguslink</link>\n         <description>\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</description>\n        <enclosure url="file://crap" length="0" type="video/mpeg"/>\n         <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>\n      </item>\n   </channel>\n</rss>'.encode('utf-8'))
 
@@ -90,7 +89,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
     # This is a latin1 feed that claims to be UTF-8
     def test_invalid_latin1_feed(self):
-        handle, self.filename = mkstemp(".xml")
+        self.filename = self.make_temp_path(".xml")
         handle = open(self.filename, "wb")
         handle.write('<?xml version="1.0"?>\n<rss version="2.0">\n   <channel>\n      <title>H\xe4ppy Birthday</title>\n      <description>H\xe4ppy Birthday</description>\n <language>zh-zh</language>\n      <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>\n      <generator>Weblog Editor 2.0</generator>\n      <managingEditor>editor@example.com</managingEditor>\n      <webMaster>webmaster@example.com</webMaster>\n      <item>\n         <title>H\xe4ppy Birthday</title>\n         <link>http://participatoryculture.org/boguslink</link>\n         <description>H\xe4ppy Birthday</description>\n         <enclosure url="file://crap" length="0" type="video/mpeg"/>\n         <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>\n      </item>\n   </channel>\n</rss>')
         handle.close()
@@ -109,7 +108,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
     # This is latin1 HTML that claims to be Latin 1
     def test_latin1_html(self):
-        handle, self.filename = mkstemp(".html")
+        self.filename = self.make_temp_path(".html")
         handle = open(self.filename, "wb")
         handle.write('<?xml version="1.0" encoding="iso-8859-1"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n  <title>H\xe4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov">H\xe4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
@@ -127,7 +126,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
     # This is latin1 HTML that claims to be UTF-8
     def test_invalid_latin1_html(self):
-        handle, self.filename = mkstemp(".html")
+        self.filename = self.make_temp_path(".html")
         handle = open(self.filename, "wb")
         handle.write('<?xml version="1.0" encoding="utf-8"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n      <title>H\xe4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov">H\xe4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
@@ -145,7 +144,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
     # This is utf-8 HTML that claims to be utf-8
     def test_utf8_html(self):
-        handle, self.filename = mkstemp(".html")
+        self.filename = self.make_temp_path(".html")
         handle = open(self.filename, "wb")
         handle.write('<?xml version="1.0" encoding="utf-8"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n      <title>H\xc3\xa4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov">H\xc3\xa4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
@@ -162,7 +161,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.assertEqual(my_item.get_title(), u"H\xe4ppy Birthday")
 
     def test_utf8_html_links(self):
-        handle, self.filename = mkstemp(".html")
+        self.filename = self.make_temp_path(".html")
         handle = open(self.filename, "wb")
         handle.write('<?xml version="1.0" encoding="utf-8"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n      <title>H\xc3\xa4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/H\xc3\xa4ppy.mov">H\xc3\xa4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
@@ -181,7 +180,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
             self.assertEqual(str(my_url), my_url)
 
     def test_latin1_html_links(self):
-        handle, self.filename = mkstemp(".html")
+        self.filename = self.make_temp_path(".html")
         handle = open(self.filename, "wb")
         handle.write('<?xml version="1.0" encoding="iso-8859-1"?>\n<html>\n   <head>\n <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n   <title>H\xe4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/H\xe4ppy.mov">H\xe4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
@@ -200,7 +199,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
             self.assertEqual(str(my_url), my_url)
 
     def test_invalid_latin1_html_links(self):
-        handle, self.filename = mkstemp(".html")
+        self.filename = self.make_temp_path(".html")
         handle = open(self.filename, "wb")
         handle.write('<?xml version="1.0" encoding="iso-8859-1"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n      <title>H\xc3\xa4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/H\xc3\xa4ppy.mov">H\xc3\xa4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
@@ -219,7 +218,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
             self.assertEqual(str(my_url), my_url)
 
     def test_utf8_html_thumbs(self):
-        handle, self.filename = mkstemp(".html")
+        self.filename = self.make_temp_path(".html")
         handle = open(self.filename, "wb")
         handle.write('<?xml version="1.0" encoding="utf-8"?>\n<html>\n   <head>\n <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n      <title>H\xc3\xa4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov"><img src="http://www.wccatv.com/files/video/H\xc3\xa4ppy.png"/>H\xc3\xa4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
@@ -241,7 +240,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
             self.assertEqual(str(thumb), thumb)
 
     def test_latin1_html_thumbs(self):
-        handle, self.filename = mkstemp(".html")
+        self.filename = self.make_temp_path(".html")
         handle = open(self.filename, "wb")
         handle.write('<?xml version="1.0" encoding="iso-8859-1"?>\n<html>\n   <head>\n  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n    <title>H\xe4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov"><img src="http://www.wccatv.com/files/video/H\xe4ppy.png"/>H\xe4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
@@ -263,7 +262,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
             self.assertEqual(str(thumb), thumb)
 
     def test_invalid_latin1_html_thumbs(self):
-        handle, self.filename = mkstemp(".html")
+        self.filename = self.make_temp_path(".html")
         handle = open(self.filename, "wb")
         handle.write('<?xml version="1.0" encoding="iso-8859-1"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n <title>H\xc3\xa4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov"><img src="http://www.wccatv.com/files/video/H\xc3\xa4ppy.png"/>H\xc3\xa4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()

@@ -1,5 +1,4 @@
 import os
-import tempfile
 import threading
 
 from miro import util # This adds logging.timing
@@ -8,9 +7,6 @@ from miro import httpclient
 from miro.test.framework import EventLoopTest
 from miro.plat import resources
 from miro.dl_daemon import download
-
-def testing_next_free_filename(filename):
-    return tempfile.mktemp()
 
 class TestingDownloader(download.HTTPDownloader):
     # update stats really often to make sure that we can do things like pause
@@ -41,7 +37,7 @@ class HTTPDownloaderTest(EventLoopTest):
     def setUp(self):
         EventLoopTest.setUp(self)
         download.chatter = False
-        download.next_free_filename = testing_next_free_filename
+        download.next_free_filename = lambda x: self.make_temp_path()
         download._downloads = {}
         self.start_http_server()
         # screen-redirect is a 302 redirect to linux-screen.jpg, which is a
@@ -55,9 +51,9 @@ class HTTPDownloaderTest(EventLoopTest):
         self.download_size = 45572
 
     def tearDown(self):
+        EventLoopTest.tearDown(self)
         download.next_free_filename = download_utils.next_free_filename
         download.chatter = True
-        EventLoopTest.tearDown(self)
 
     def stopOnFinished(self):
         if self.downloader.state == "finished":

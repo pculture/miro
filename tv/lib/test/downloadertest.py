@@ -1,4 +1,3 @@
-import tempfile
 import os
 
 from miro import config
@@ -18,15 +17,12 @@ class DownloaderTest(EventLoopTest):
         self.feed = models.Feed(self.url)
         downloader.init_controller()
         downloader.startup_downloader()
-        self.log_file = os.path.join(
-            tempfile.tempdir, 'miro-download-unit-tests')
-        if os.path.exists(self.log_file):
-            # start with a fresh log
-            os.remove(self.log_file)
-        config.set(prefs.MOVIES_DIRECTORY,
-                   os.path.join(tempfile.tempdir, 'movies-dir'))
-        config.set(prefs.DOWNLOADER_LOG_PATHNAME,
-                   self.log_file)
+        self.log_file = os.path.join(self.tempdir, 'miro-download-unit-tests')
+        config.set(prefs.DOWNLOADER_LOG_PATHNAME, self.log_file)
+        self.movies_dir = os.path.join(self.tempdir, 'movies-dir')
+        if not os.path.exists(self.movies_dir):
+            os.makedirs(self.movies_dir)
+        config.set(prefs.MOVIES_DIRECTORY, self.movies_dir)
 
     def tearDown(self):
         downloader.shutdown_downloader()

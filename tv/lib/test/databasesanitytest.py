@@ -3,7 +3,6 @@ because we don't do that much sanity checking.
 """
 
 import os
-import tempfile
 import unittest
 
 from miro import iconcache
@@ -19,7 +18,7 @@ from miro.test.framework import MiroTestCase
 class SanityCheckingTest(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
-        self.save_path = tempfile.mktemp()
+        self.save_path = self.make_temp_path()
 
     def tearDown(self):
         try:

@@ -1,6 +1,5 @@
 from datetime import datetime
 import os
-import tempfile
 import unittest
 from glob import glob
 import time
@@ -130,7 +129,7 @@ class StoreDatabaseTest(EventLoopTest):
 
     def setUp(self):
         EventLoopTest.setUp(self)
-        self.save_path = tempfile.mktemp()
+        self.save_path = self.make_temp_path()
         self.remove_database()
         self.reload_test_database()
 
@@ -170,7 +169,7 @@ class EmptyDBTest(StoreDatabaseTest):
 class DBUpgradeTest(StoreDatabaseTest):
     def setUp(self):
         StoreDatabaseTest.setUp(self)
-        self.save_path2 = tempfile.mktemp()
+        self.save_path2 = self.make_temp_path()
 
     def tearDown(self):
         try:
