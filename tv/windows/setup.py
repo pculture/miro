@@ -77,14 +77,13 @@ OPENSSL_INCLUDE_PATH = os.path.join(BINARY_KIT_ROOT, 'openssl', 'include')
 OPENSSL_LIB_PATH = os.path.join(BINARY_KIT_ROOT, 'openssl', 'lib')
 OPENSSL_LIBRARIES = ['ssleay32', 'libeay32']
 
-GTK_ROOT_PATH = os.path.join(BINARY_KIT_ROOT, 'gtk+-bundle_2.16.6-20091215_win32')
+GTK_ROOT_PATH = os.path.join(BINARY_KIT_ROOT, 'gtk+-bundle_2.20.0-20100406_win32')
 GTK_INCLUDE_PATH = os.path.join(GTK_ROOT_PATH, 'include')
 GTK_LIB_PATH = os.path.join(GTK_ROOT_PATH, 'lib')
 GTK_BIN_PATH = os.path.join(GTK_ROOT_PATH, 'bin')
 GTK_INCLUDE_DIRS = [
     os.path.join(GTK_INCLUDE_PATH, 'atk-1.0'),
     os.path.join(GTK_INCLUDE_PATH, 'gtk-2.0'),
-    os.path.join(GTK_INCLUDE_PATH, 'glib-2.0'),
     os.path.join(GTK_INCLUDE_PATH, 'glib-2.0'),
     os.path.join(GTK_INCLUDE_PATH, 'pango-1.0'),
     os.path.join(GTK_INCLUDE_PATH, 'cairo'),
@@ -94,10 +93,7 @@ GTK_INCLUDE_DIRS = [
 
 PYGOBJECT_INCLUDE_DIR = os.path.join(BINARY_KIT_ROOT, 'pygobject')
 
-# Path to the Mozilla "xulrunner-sdk" distribution. We include a build
-# in the Binary Kit to save you a minute or two, but if you want to be
-# more up-to-date, nightlies are available from Mozilla at:
-# http://ftp.mozilla.org/pub/mozilla.org/xulrunner/nightly/latest-trunk/
+# path to the Mozilla "xulrunner-sdk" distribution.
 XULRUNNER_SDK_PATH = os.path.join(BINARY_KIT_ROOT, 'xulrunner-sdk')
 XULRUNNER_SDK_BIN_PATH = os.path.join(XULRUNNER_SDK_PATH, 'bin')
 
@@ -121,7 +117,7 @@ def find_data_files(dest_path_base, source_path):
 
 # Name of python binary, so we can build the download daemon in
 # another process. (Can we get this from Python itself?)
-PYTHON_BINARY="python"
+PYTHON_BINARY = "python"
 
 ###############################################################################
 ## End of configuration. No user-servicable parts inside                     ##
@@ -194,6 +190,9 @@ xulrunnerbrowser_ext = Extension(
         ("XP_WIN", 1), 
         ("XPCOM_GLUE", 1),
         ("PCF_USING_XULRUNNER19", 1),
+        ],
+    extra_compile_args=[
+        "/Zc:wchar_t-"
         ],
     library_dirs=[
         os.path.join(XULRUNNER_SDK_PATH, 'lib'),
@@ -273,7 +272,8 @@ def copy_locale_files():
         dest = os.path.join(locale_temp_dir, lang, "LC_MESSAGES", "miro.mo")
         locale_files.append((source, dest))
 
-    dir_util.create_tree(os.path.dirname(__file__), [dst for src, dst in locale_files])
+    dir_util.create_tree(os.path.dirname(__file__),
+                         [dst for src, dst in locale_files])
 
     for source, dest in locale_files:
         file_util.copy_file(source, dest, update=True, verbose=True)
@@ -345,11 +345,11 @@ class install_data(distutils.command.install_data.install_data):
         self.install_app_config()
         self.install_gdk_pixbuf_loaders()
 
-# We want to make sure we include msvcp71.dll in the dist directory.
+# We want to make sure we include msvcp90.dll in the dist directory.
 # Recipe taken from
 # http://www.py2exe.org/index.cgi/OverridingCriteraForIncludingDlls
 DLLS_TO_INCLUDE = [
-    'msvcp71.dll',
+    'msvcp90.dll',
 ]
 origIsSystemDLL = py2exe.build_exe.isSystemDLL
 def isSystemDLL(pathname):
@@ -612,7 +612,7 @@ if __name__ == "__main__":
                 'packages': [
                     'encodings',
                     ],
-                'includes': 'cairo, pango, pangocairo, atk, gobject, libtorrent',
+                'includes': 'cairo, pango, pangocairo, atk, gobject, gio, libtorrent',
                 },
             },
         )
