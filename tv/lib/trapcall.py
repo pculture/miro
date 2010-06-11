@@ -68,9 +68,7 @@ def time_trap_call(when, function, *args, **kwargs):
     if TRACK_CUMULATIVE:
         try:
             total = cumulative[when]
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except KeyError:
             total = 0
         total += end - start
         cumulative[when] = total

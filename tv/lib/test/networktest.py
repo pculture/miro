@@ -27,7 +27,7 @@ class TestingConnectionHandler(net.ConnectionHandler):
         self.barData += data
         self.test.stopEventLoop(False)
 
-    def handleClose(self, type):
+    def handle_close(self, type):
         self.gotHandleClose = True
         self.closeType = type
         self.test.stopEventLoop(False)
@@ -225,8 +225,8 @@ class FakeStream:
     def stopReadTimeout(self):
         pass
 
-    def openConnection(self, host, port, callback, errback,
-                       disabledReadTimeout=None):
+    def open_connection(self, host, port, callback, errback,
+                        disabledReadTimeout=None):
         self.name = "Outgoing %s:%s" % (host, port)
         self.output = ''
         self.host = host
@@ -239,13 +239,13 @@ class FakeStream:
     def acceptConnection(self, host, port, callback, errback):
         errback()
 
-    def closeConnection(self):
+    def close_connection(self):
         self.open = False
 
     def isOpen(self):
         return self.open
 
-    def sendData(self, data, callback = None):
+    def send_data(self, data, callback = None):
         if not self.isOpen():
             raise ValueError("Socket not connected")
         self.output += data
@@ -342,7 +342,7 @@ class WeirdCloseConnectionTest(AsyncSocketTest):
     def test_close_during_open_connection(self):
         """
         Test opening a connection, then closing the HTTPConnection
-        before it happens.  The openConnection callback shouldn't be
+        before it happens.  The open_connection callback shouldn't be
         called.
 
         Open a socket on localhost and try to connect to that, this
@@ -355,8 +355,8 @@ class WeirdCloseConnectionTest(AsyncSocketTest):
         host, port = sock.getsockname()
         try:
             conn = net.AsyncSocket()
-            conn.openConnection(host, port, self.callback, self.errback)
-            conn.closeConnection()
+            conn.open_connection(host, port, self.callback, self.errback)
+            conn.close_connection()
             self.runEventLoop(timeout=1, timeoutNormal=True)
             self.assert_(not self.callbackCalled)
             self.assert_(self.errbackCalled)
@@ -366,7 +366,7 @@ class WeirdCloseConnectionTest(AsyncSocketTest):
     def test_close_during_accept_connection(self):
         """
         Test opening a connection, then closing the HTTPConnection
-        before it happens.  The openConnection callback shouldn't be
+        before it happens.  The open_connection callback shouldn't be
         called.
 
         Open a socket on localhost and try to connect to that, this
@@ -378,7 +378,7 @@ class WeirdCloseConnectionTest(AsyncSocketTest):
             conn = net.AsyncSocket()
             conn.acceptConnection('127.0.0.1', 0, self.callback, self.errback)
             sock.connect((conn.addr, conn.port))
-            conn.closeConnection()
+            conn.close_connection()
             self.runEventLoop(timeout=1, timeoutNormal=True)
             self.assert_(not self.callbackCalled)
             self.assert_(self.errbackCalled)
@@ -396,7 +396,7 @@ class ConnectionHandlerTest(EventLoopTest):
         self.connectionHandler = TestingConnectionHandler(self)
         def stopEventLoop(conn):
             self.stopEventLoop(False)
-        self.connectionHandler.openConnection(address[0], address[1],
+        self.connectionHandler.open_connection(address[0], address[1],
                 stopEventLoop, stopEventLoop)
         self.runEventLoop()
         self.remoteSocket, address = server.accept()
@@ -404,7 +404,7 @@ class ConnectionHandlerTest(EventLoopTest):
 
     def test_send(self):
         data = 'abcabc' * 1024  * 64
-        self.connectionHandler.sendData(data)
+        self.connectionHandler.send_data(data)
         self.received = net.NetworkBuffer()
         def readData():
             try:
@@ -439,10 +439,10 @@ class ConnectionHandlerTest(EventLoopTest):
         self.assertEquals(self.connectionHandler.fooData, 'abcghi')
 
     def test_close(self):
-        self.connectionHandler.closeConnection()
+        self.connectionHandler.close_connection()
         self.assert_(not self.connectionHandler.stream.isOpen())
         # second close shouldn't throw any exceptions
-        self.connectionHandler.closeConnection()
+        self.connectionHandler.close_connection()
 
     def test_remote_close(self):
         self.connectionHandler.changeState('foo')
@@ -457,7 +457,7 @@ class ConnectionHandlerTest(EventLoopTest):
         # Note: we have to send enough data so that the OS won't
         # buffer the entire send call.  Otherwise we may miss that the
         # socket has closed.
-        self.connectionHandler.sendData("A" * 1024 * 1024)
+        self.connectionHandler.send_data("A" * 1024 * 1024)
         self.runEventLoop(timeout=1)
         self.assertEquals(self.connectionHandler.gotHandleClose, True)
 

@@ -66,9 +66,9 @@ def launch():
     initialize_locale()
 
     if os.environ.get('DEMOCRACY_DOWNLOADER_FIRST_LAUNCH') != '1':
-        logging.info ("*** Starting new downloader log ***")
+        logging.info("Starting new downloader log")
     else:
-        logging.info ("*** Launching Downloader Daemon ****")
+        logging.info("Launching Downloader Daemon")
 
     # Start of normal imports
     import threading
@@ -92,7 +92,7 @@ def launch():
     # See corresponding hack in gtcache.py
     from miro import gtcache
     gtcache.init()
-    logging.info ("*** Daemon ready ***")
+    logging.info("Daemon ready")
 
 if __name__ == "__main__":
     launch()

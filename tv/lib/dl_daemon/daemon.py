@@ -29,16 +29,12 @@
 from miro.dl_daemon import command
 import os
 import cPickle
-import socket
-import traceback
-from time import sleep
 from struct import pack, unpack, calcsize
 import tempfile
 from miro import config
 from miro import prefs
 from miro import eventloop
 from miro import httpclient
-from miro import util
 import logging
 from miro.plat.utils import launch_download_daemon, kill_process
 from miro import signals
@@ -53,19 +49,22 @@ class DaemonError(Exception):
     """
     pass
 
-firstDaemonLaunch = '1'
-def startDownloadDaemon(oldpid, port):
-    global firstDaemonLaunch
+FIRST_DAEMON_LAUNCH = '1'
 
-    daemonEnv = {
+def start_download_daemon(oldpid, port):
+    global FIRST_DAEMON_LAUNCH
+
+    daemon_env = {
         'DEMOCRACY_DOWNLOADER_PORT' : str(port),
-        'DEMOCRACY_DOWNLOADER_FIRST_LAUNCH' : firstDaemonLaunch,
+        'DEMOCRACY_DOWNLOADER_FIRST_LAUNCH' : FIRST_DAEMON_LAUNCH,
         'DEMOCRACY_SHORT_APP_NAME' : config.get(prefs.SHORT_APP_NAME),
     }
-    launch_download_daemon(oldpid, daemonEnv)
-    firstDaemonLaunch = '0'
+    launch_download_daemon(oldpid, daemon_env)
+    FIRST_DAEMON_LAUNCH = '0'
 
-def getDataFile(short_app_name):
+def get_data_filename(short_app_name):
+    """Generates and returns the name of the file that stores the pid.
+    """
     if hasattr(os, "getuid"):
         uid = os.getuid()
     elif "USERNAME" in os.environ:
@@ -81,42 +80,40 @@ def getDataFile(short_app_name):
     return os.path.join(tempfile.gettempdir(),
             ('%s_Download_Daemon_%s.txt' % (short_app_name, uid)))
 
-pidfile = None
-def writePid(short_app_name, pid):
+PIDFILE = None
+
+def write_pid(short_app_name, pid):
     """Write out our pid.
 
-    This method locks the pid file until the downloader exits.  On windows
-    this is achieved by keeping the file open.  On Unix/OS X, we use the
-    fcntl.lockf() function.
-    """
+    This method locks the pid file until the downloader exits.
 
-    global pidfile
+    On windows this is achieved by keeping the file open.
+
+    On Linux/OS X, we use the fcntl.lockf() function.
+    """
+    global PIDFILE
     # NOTE: we want to open the file in a mode the standard open() doesn't
     # support.  We want to create the file if nessecary, but not truncate it
     # if it's already around.  We can't truncate it because on unix we haven't
     # locked the file yet.
-    fd = os.open(getDataFile(short_app_name), os.O_WRONLY | os.O_CREAT)
-    pidfile = os.fdopen(fd, 'w')
-    try:
+    fd = os.open(get_data_filename(short_app_name), os.O_WRONLY | os.O_CREAT)
+    PIDFILE = os.fdopen(fd, 'w')
+    if os.name != "nt":
         import fcntl
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
-        pass
-    else:
-        fcntl.lockf(pidfile, fcntl.LOCK_EX | fcntl.LOCK_NB)
-    pidfile.write("%s\n" % pid)
-    pidfile.flush()
+        fcntl.lockf(PIDFILE, fcntl.LOCK_EX | fcntl.LOCK_NB)
+
+    PIDFILE.write("%s\n" % pid)
+    PIDFILE.flush()
     # NOTE: There may be extra data after the line we write left around from
-    # previous writes to the pid file.  This is fine since readPid() only reads
+    # previous writes to the pid file.  This is fine since read_pid() only reads
     # the 1st line.
     #
     # NOTE 2: we purposely don't close the file, to achieve locking on
     # windows.
 
-def readPid(short_app_name):
+def read_pid(short_app_name):
     try:
-        f = open(getDataFile(short_app_name), "r")
+        f = open(get_data_filename(short_app_name), "r")
     except IOError:
         return None
     try:
@@ -127,89 +124,89 @@ def readPid(short_app_name):
     finally:
         f.close()
 
-lastDaemon = None
+LAST_DAEMON = None
 
 class Daemon(ConnectionHandler):
     def __init__(self):
         ConnectionHandler.__init__(self)
-        global lastDaemon
-        lastDaemon = self
-        self.waitingCommands = {}
-        self.returnValues = {}
+        global LAST_DAEMON
+        LAST_DAEMON = self
         self.size = 0
-        self.states['ready'] = self.onSize
-        self.states['command'] = self.onCommand
-        self.queuedCommands = []
+        self.states['ready'] = self.on_size
+        self.states['command'] = self.on_command
+        self.queued_commands = []
         self.shutdown = False
-        self.stream.disableReadTimeout = True
         # disable read timeouts for the downloader daemon communication.  Our
         # normal state is to wait for long periods of time for without seeing
         # any data.
+        self.stream.disable_read_timeout = True
 
-    def onError(self, error):
-        """Call this when an error occurs.  It forces the
-        daemon to close its connection.
+    def on_error(self, error):
+        """Call this when an error occurs.  It forces the daemon to
+        close its connection.
         """
-        logging.warning ("socket error in daemon, closing my socket")
-        self.closeConnection()
+        logging.warning("socket error in daemon, closing my socket")
+        self.close_connection()
         raise error
 
-    def onConnection(self, socket):
+    def on_connection(self, socket):
         self.changeState('ready')
-        for (comm, callback) in self.queuedCommands:
+        for (comm, callback) in self.queued_commands:
             self.send(comm, callback)
-        self.queuedCommands = []
+        self.queued_commands = []
 
-    def onSize(self):
+    def on_size(self):
         if self.buffer.length >= SIZE_OF_INT:
             (self.size,) = unpack("I", self.buffer.read(SIZE_OF_INT))
             self.changeState('command')
 
-    def onCommand(self):
+    def on_command(self):
         if self.buffer.length >= self.size:
             try:
                 comm = cPickle.loads(self.buffer.read(self.size))
             except (SystemExit, KeyboardInterrupt):
                 raise
             except:
-                logging.exception ("WARNING: error unpickling command.")
+                logging.exception("WARNING: error unpickling command.")
             else:
-                self.processCommand(comm)
+                self.process_command(comm)
             self.changeState('ready')
 
-    def processCommand(self, comm):
-        trapcall.time_trap_call("Running: %s" % (comm,), self.runCommand, comm)
+    def process_command(self, comm):
+        trapcall.time_trap_call("Running: %s" % comm, self.run_command, comm)
 
-    def runCommand(self, comm):
+    def run_command(self, comm):
+        logging.debug("run command: %r", comm)
         comm.setDaemon(self)
         comm.action()
 
     def send(self, comm, callback = None):
         if self.state == 'initializing':
-            self.queuedCommands.append((comm, callback))
+            self.queued_commands.append((comm, callback))
         else:
             raw = cPickle.dumps(comm, cPickle.HIGHEST_PROTOCOL)
-            self.sendData(pack("I",len(raw)) + raw, callback)
+            self.send_data(pack("I", len(raw)) + raw, callback)
 
 class DownloaderDaemon(Daemon):
     def __init__(self, port, short_app_name):
         # before anything else, write out our PID 
-        writePid(short_app_name, os.getpid())
+        write_pid(short_app_name, os.getpid())
         # connect to the controller and start our listen loop
         Daemon.__init__(self)
-        self.openConnection('127.0.0.1', port, self.onConnection, self.onError)
-        signals.system.connect('error', self.handleError)
+        self.open_connection('127.0.0.1', port, self.on_connection,
+                             self.on_error)
+        signals.system.connect('error', self.handle_error)
 
-    def handleError(self, obj, report):
+    def handle_error(self, obj, report):
         command.DownloaderErrorCommand(self, report).send()
 
-    def handleClose(self, type):
+    def handle_close(self, type_):
         if self.shutdown:
             return
         self.shutdown = True
         eventloop.shutdown()
         httpclient.cleanup_libcurl()
-        logging.warning ("downloader: connection closed -- quitting")
+        logging.warning("downloader: connection closed -- quitting")
         from miro.dl_daemon import download
         download.shutDown()
         import threading
@@ -220,70 +217,72 @@ class DownloaderDaemon(Daemon):
 class ControllerDaemon(Daemon):
     def __init__(self):
         Daemon.__init__(self)
-        self.stream.acceptConnection('127.0.0.1', 0, self.onConnection, self.onError)
+        self.stream.acceptConnection('127.0.0.1', 0,
+                                     self.on_connection, self.on_error)
         self.port = self.stream.port
         data = {}
-        remoteConfigItems = [prefs.LIMIT_UPSTREAM,
-                   prefs.UPSTREAM_LIMIT_IN_KBS,
-		   prefs.LIMIT_DOWNSTREAM_BT,
-		   prefs.DOWNSTREAM_BT_LIMIT_IN_KBS,
-                   prefs.BT_MIN_PORT,
-                   prefs.BT_MAX_PORT,
-                   prefs.USE_UPNP,
-                   prefs.BT_ENC_REQ,
-                   prefs.MOVIES_DIRECTORY,
-                   prefs.PRESERVE_DISK_SPACE,
-                   prefs.PRESERVE_X_GB_FREE,
-                   prefs.SUPPORT_DIRECTORY,
-                   prefs.SHORT_APP_NAME,
-                   prefs.LONG_APP_NAME,
-                   prefs.APP_PLATFORM,
-                   prefs.APP_VERSION,
-                   prefs.APP_SERIAL,
-                   prefs.APP_REVISION,
-                   prefs.PUBLISHER,
-                   prefs.PROJECT_URL,
-                   prefs.DOWNLOADER_LOG_PATHNAME,
-                   prefs.LOG_PATHNAME,
-                   prefs.GETTEXT_PATHNAME,
-                   prefs.LIMIT_UPLOAD_RATIO,
-                   prefs.UPLOAD_RATIO,
-                   prefs.LIMIT_CONNECTIONS_BT,
-                   prefs.CONNECTION_LIMIT_BT_NUM,
-                ]
+        remote_config_items = [
+            prefs.LIMIT_UPSTREAM,
+            prefs.UPSTREAM_LIMIT_IN_KBS,
+            prefs.LIMIT_DOWNSTREAM_BT,
+            prefs.DOWNSTREAM_BT_LIMIT_IN_KBS,
+            prefs.BT_MIN_PORT,
+            prefs.BT_MAX_PORT,
+            prefs.USE_UPNP,
+            prefs.BT_ENC_REQ,
+            prefs.MOVIES_DIRECTORY,
+            prefs.PRESERVE_DISK_SPACE,
+            prefs.PRESERVE_X_GB_FREE,
+            prefs.SUPPORT_DIRECTORY,
+            prefs.SHORT_APP_NAME,
+            prefs.LONG_APP_NAME,
+            prefs.APP_PLATFORM,
+            prefs.APP_VERSION,
+            prefs.APP_SERIAL,
+            prefs.APP_REVISION,
+            prefs.PUBLISHER,
+            prefs.PROJECT_URL,
+            prefs.DOWNLOADER_LOG_PATHNAME,
+            prefs.LOG_PATHNAME,
+            prefs.GETTEXT_PATHNAME,
+            prefs.LIMIT_UPLOAD_RATIO,
+            prefs.UPLOAD_RATIO,
+            prefs.LIMIT_CONNECTIONS_BT,
+            prefs.CONNECTION_LIMIT_BT_NUM,
+            ]
 
-        for desc in remoteConfigItems:
+        for desc in remote_config_items:
             data[desc.key] = config.get(desc)
         c = command.InitialConfigCommand(self, data)
         c.send()
-        config.add_change_callback(self.updateConfig)
+        config.add_change_callback(self.update_config)
 
     def start_downloader_daemon(self):
-        startDownloadDaemon(self.read_pid(), self.port)
+        start_download_daemon(self.read_pid(), self.port)
 
-    def updateConfig (self, key, value):
+    def update_config(self, key, value):
         if not self.shutdown:
-            c = command.UpdateConfigCommand (self, key, value)
+            c = command.UpdateConfigCommand(self, key, value)
             c.send()
 
     def read_pid(self):
         short_app_name = config.get(prefs.SHORT_APP_NAME)
-        return readPid(short_app_name)
+        return read_pid(short_app_name)
             
-    def handleClose(self, type):
+    def handle_close(self, type_):
         if not self.shutdown:
-            logging.warning ("Downloader Daemon died")
+            logging.warning("Downloader Daemon died")
             # FIXME: replace with code to recover here, but for now,
             # stop sending.
             self.shutdown = True
-            config.remove_change_callback(self.updateConfig)
+            config.remove_change_callback(self.update_config)
 
     def shutdown_timeout_cb(self):
-        logging.warning ("killing download daemon")
+        logging.warning("killing download daemon")
         kill_process(self.read_pid())
-        self.shutdownResponse()
+        self.shutdown_response()
 
-    def shutdownResponse(self):
+    def shutdown_response(self):
         if self.shutdown_callback:
             self.shutdown_callback()
         self.shutdown_timeout_dc.cancel()
@@ -298,5 +297,6 @@ class ControllerDaemon(Daemon):
         c = command.ShutDownCommand(self)
         c.send()
         self.shutdown = True
-        config.remove_change_callback(self.updateConfig)
-        self.shutdown_timeout_dc = eventloop.add_timeout(timeout, self.shutdown_timeout_cb, "Waiting for dl_daemon shutdown")
+        config.remove_change_callback(self.update_config)
+        self.shutdown_timeout_dc = eventloop.add_timeout(
+            timeout, self.shutdown_timeout_cb, "Waiting for dl_daemon shutdown")

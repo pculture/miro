@@ -292,6 +292,7 @@ def launch_download_daemon(oldpid, env):
     for key, value in env.items():
         os.environ[key] = value
     os.environ['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
+    os.environ['MIRO_APP_VERSION'] = config.get(prefs.APP_VERSION)
     # Start the downloader.  We use the subprocess module to turn off
     # the console.  One slightly awkward thing is that the current
     # process might not have a valid stdin/stdout/stderr, so we create

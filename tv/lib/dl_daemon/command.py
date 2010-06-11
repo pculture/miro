@@ -32,14 +32,14 @@ import random
 from miro import eventloop
 import logging
 
-DAEMONIC_THREAD_TIMEOUT = 2
 # amount of time to wait for daemonic threads to quit.  Right now, the only
 # thing we use Daemonic threads for is to send HTTP requests to BitTorrent
 # trackers.
+DAEMONIC_THREAD_TIMEOUT = 2
 
 class Command:
     def __init__(self, daemon, *args, **kws):
-        self.id = "cmd%08d" % random.randint(0,99999999)
+        self.id = "cmd%08d" % random.randint(0, 99999999)
         self.orig = True
         self.args = args
         self.kws = kws
@@ -141,7 +141,7 @@ class DuplicateTorrent(Command):
 
 class ShutDownResponseCommand(Command):
     def action(self):
-        self.daemon.shutdownResponse()
+        self.daemon.shutdown_response()
 
 #############################################################################
 #  App to Downloader commands                                               #

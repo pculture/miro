@@ -204,7 +204,7 @@ class AsyncSocket(object):
         self.readTimeout = None
         self.timedOut = False
         self.connectionErrback = None
-        self.disableReadTimeout = False
+        self.disable_read_timeout = False
         self.readSomeData = False
         self.name = ""
         self.lastClock = None
@@ -220,7 +220,7 @@ class AsyncSocket(object):
     # cancelling a timeout costs some memory (timeout is in memory
     # until it goes off, even if cancelled.)
     def startReadTimeout(self):
-        if self.disableReadTimeout:
+        if self.disable_read_timeout:
             return
         self.lastClock = clock()
         if self.readTimeout is not None:
@@ -233,12 +233,13 @@ class AsyncSocket(object):
             self.readTimeout.cancel()
             self.readTimeout = None
 
-    def openConnection(self, host, port, callback, errback, disableReadTimeout=None):
+    def open_connection(self, host, port, callback, errback,
+                        disable_read_timeout=None):
         """Open a connection.  On success, callback will be called with this
         object.
         """
-        if disableReadTimeout is not None:
-            self.disableReadTimeout = disableReadTimeout
+        if disable_read_timeout is not None:
+            self.disable_read_timeout = disable_read_timeout
         self.name = "Outgoing %s:%s" % (host, port)
 
         try:
@@ -302,7 +303,7 @@ class AsyncSocket(object):
         self.socket.listen(63)
         eventloop.add_read_callback(self.socket, finishAccept)
 
-    def closeConnection(self):
+    def close_connection(self):
         if self.isOpen():
             eventloop.stop_handling_socket(self.socket)
             self.stopReadTimeout()
@@ -316,7 +317,7 @@ class AsyncSocket(object):
     def isOpen(self):
         return self.socket is not None
 
-    def sendData(self, data, callback=None):
+    def send_data(self, data, callback=None):
         """Send data out to the socket when it becomes ready.
         
         NOTE: currently we have no way of detecting when the data gets sent
@@ -428,7 +429,7 @@ class AsyncSocket(object):
             trap_call(self, self.readCallback, data)
 
     def handleEarlyClose(self, operation):
-        self.closeConnection()
+        self.close_connection()
         if self.closeCallback:
             if operation == 'read':
                 type = socket.SHUT_RD
@@ -441,7 +442,8 @@ class AsyncSSLStream(AsyncSocket):
         super(AsyncSSLStream, self).__init__(closeCallback)
         self.interruptedOperation = None
 
-    def openConnection(self, host, port, callback, errback, disableReadTimeout=None):
+    def open_connection(self, host, port, callback, errback,
+                        disable_read_timeout=None):
         def onSocketOpen(self):
             self.socket.setblocking(1)
             eventloop.call_in_thread(onSSLOpen, handleSSLError, convert_to_ssl,
@@ -459,8 +461,8 @@ class AsyncSSLStream(AsyncSocket):
         def handleSSLError(error):
             logging.error("handleSSLError: %r", error)
             errback(SSLConnectionError())
-        super(AsyncSSLStream, self).openConnection(host, port, onSocketOpen,
-                errback, disableReadTimeout)
+        super(AsyncSSLStream, self).open_connection(host, port, onSocketOpen,
+                errback, disable_read_timeout)
 
     def resumeNormalCallbacks(self):
         if self.readCallback is not None:
@@ -475,7 +477,7 @@ class AsyncSSLStream(AsyncSocket):
             elif self.interruptedOperation != operation:
                 signals.system.failed("When talking to the network", 
                 details="socket error for the wrong SSL operation")
-                self.closeConnection()
+                self.close_connection()
                 return
             eventloop.stop_handling_socket(self.socket)
             if code == socket.SSL_ERROR_WANT_READ:
@@ -522,7 +524,7 @@ class ConnectionHandler(object):
     """Base class to handle asynchronous network streams.  It implements a
     simple state machine to deal with incomming data.
 
-    Sending data: Use the sendData() method.
+    Sending data: Use the send_data() method.
 
     Reading Data: Add entries to the state dictionary, which maps strings to
     methods.  The state methods will be called when there is data available,
@@ -530,39 +532,40 @@ class ConnectionHandler(object):
     contain a None value, to signal that the handler isn't interested in
     reading at that point.  Use changeState() to switch states.
 
-    Subclasses should override the handleClose() method to handle the
+    Subclasses should override the handle_close() method to handle the
     socket closing.
     """
-
-    streamFactory = AsyncSocket
+    stream_factory = AsyncSocket
 
     def __init__(self):
         self.buffer = NetworkBuffer()
         self.states = {'initializing': None, 'closed': None}
-        self.stream = self.streamFactory(closeCallback=self.closeCallback)
+        self.stream = self.stream_factory(closeCallback=self.closeCallback)
         self.changeState('initializing')
         self.name = ""
 
     def __str__(self):
         return "%s -- %s" % (self.__class__, self.state)
 
-    def openConnection(self, host, port, callback, errback, disableReadTimeout=None):
+    def open_connection(self, host, port, callback, errback,
+                        disable_read_timeout=None):
         self.name = "Outgoing %s:%s" % (host, port)
         self.host = host
         self.port = port
         def callbackIntercept(asyncSocket):
             if callback:
                 trap_call(self, callback, self)
-        self.stream.openConnection(host, port, callbackIntercept, errback, disableReadTimeout)
+        self.stream.open_connection(host, port, callbackIntercept, errback,
+                                    disable_read_timeout)
 
-    def closeConnection(self):
+    def close_connection(self):
         if self.stream.isOpen():
-            self.stream.closeConnection()
+            self.stream.close_connection()
         self.changeState('closed')
         self.buffer.discard_data()
 
-    def sendData(self, data, callback=None):
-        self.stream.sendData(data, callback)
+    def send_data(self, data, callback=None):
+        self.stream.send_data(data, callback)
 
     def changeState(self, newState):
         self.readHandler = self.states[newState]
@@ -589,9 +592,9 @@ class ConnectionHandler(object):
             self.readHandler()
 
     def closeCallback(self, stream, type):
-        self.handleClose(type)
+        self.handle_close(type)
 
-    def handleClose(self, type):
+    def handle_close(self, type):
         """Handle our stream becoming closed.  Type is either socket.SHUT_RD,
         or socket.SHUT_WR.
         """

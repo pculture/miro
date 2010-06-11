@@ -287,6 +287,7 @@ def launch_download_daemon(oldpid, env):
 
     env['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
     env['VERSIONER_PYTHON_PREFER_32_BIT'] = "yes"
+    env["MIRO_APP_VERSION"] = config.get(prefs.APP_VERSION)
     env.update(os.environ)
 
     exe = NSBundle.mainBundle().executablePath()

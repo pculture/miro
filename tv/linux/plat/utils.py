@@ -93,13 +93,18 @@ def setup_logging(in_downloader=False):
         downloader daemon, False otherwise.
     """
     if in_downloader:
-        if os.environ.get('MIRO_FRONTEND') == 'cli':
+        if os.environ.get('MIRO_APP_VERSION', "").endswith("git"):
+            level = logging.DEBUG
+        elif os.environ.get('MIRO_FRONTEND') == 'cli':
             level = logging.WARN
         else:
             level = logging.INFO
         logging.basicConfig(level=level,
                             format='%(asctime)s %(levelname)-8s %(message)s',
                             stream=sys.stdout)
+        pathname = os.environ.get("DEMOCRACY_DOWNLOADER_LOG")
+        if not pathname:
+            return
     else:
         if config.get(prefs.APP_VERSION).endswith("git"):
             level = logging.DEBUG
@@ -109,23 +114,25 @@ def setup_logging(in_downloader=False):
             level = logging.WARN
         logging.basicConfig(level=level,
                             format='%(asctime)s %(levelname)-8s %(message)s')
-        try:
-            rotater = logging.handlers.RotatingFileHandler(
-                config.get(prefs.LOG_PATHNAME), mode="w", maxBytes=100000,
-                backupCount=5)
-        except IOError:
-            # bug 13338.  sometimes there's a file there and it causes
-            # RotatingFileHandler to flip out when opening it.  so we
-            # delete it and then try again.
-            os.remove(config.get(prefs.LOG_PATHNAME))
-            rotater = logging.handlers.RotatingFileHandler(
-                config.get(prefs.LOG_PATHNAME), mode="w", maxBytes=100000,
-                backupCount=5)
+        pathname = config.get(prefs.LOG_PATHNAME)
+
+    try:
+        rotater = logging.handlers.RotatingFileHandler(
+            pathname, mode="w", maxBytes=100000,
+            backupCount=5)
+    except IOError:
+        # bug 13338.  sometimes there's a file there and it causes
+        # RotatingFileHandler to flip out when opening it.  so we
+        # delete it and then try again.
+        os.remove(pathname)
+        rotater = logging.handlers.RotatingFileHandler(
+            pathname, mode="w", maxBytes=100000,
+            backupCount=5)
             
-        formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
-        rotater.setFormatter(formatter)
-        logging.getLogger('').addHandler(rotater)
-        rotater.doRollover()
+    formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
+    rotater.setFormatter(formatter)
+    logging.getLogger('').addHandler(rotater)
+    rotater.doRollover()
 
 @returns_binary
 def utf8_to_filename(filename):
@@ -271,6 +278,7 @@ def launch_download_daemon(oldpid, env):
     environ = os.environ.copy()
     environ['MIRO_FRONTEND'] = options.frontend
     environ['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
+    environ['MIRO_APP_VERSION'] = config.get(prefs.APP_VERSION)
     environ.update(env)
     miro_path = os.path.dirname(miro.__file__)
     dl_daemon_path = os.path.join(miro_path, 'dl_daemon')

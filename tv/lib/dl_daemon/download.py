@@ -103,7 +103,7 @@ def startDownload(dlid):
         download = _downloads[dlid]
     except KeyError:  # There is no download with this id
         err= u"in startDownload(): no downloader with id %s" % dlid
-        c = command.DownloaderErrorCommand(daemon.lastDaemon, err)
+        c = command.DownloaderErrorCommand(daemon.LAST_DAEMON, err)
         c.send()
         return True
     return download.start()
@@ -198,7 +198,7 @@ def restoreDownloader(downloader):
         dl = BTDownloader(restore = downloader)
     else:
         err = u"in restoreDownloader(): unknown dlerType: %s" % dlerType
-        c = command.DownloaderErrorCommand(daemon.lastDaemon, err)
+        c = command.DownloaderErrorCommand(daemon.LAST_DAEMON, err)
         c.send()
         return
 
@@ -357,7 +357,7 @@ class DownloadStatusUpdater:
                 statuses.append(downloader.getStatus())
             self.toUpdate = set()
             if statuses:
-                command.BatchUpdateDownloadStatus(daemon.lastDaemon, 
+                command.BatchUpdateDownloadStatus(daemon.LAST_DAEMON, 
                         statuses).send()
         finally:
             eventloop.add_timeout(self.UPDATE_CLIENT_INTERVAL, self.doUpdate,
@@ -418,7 +418,7 @@ class BGDownloader:
             'channelName': self.channelName}
 
     def updateClient(self):
-        x = command.UpdateDownloadStatus(daemon.lastDaemon, self.getStatus())
+        x = command.UpdateDownloadStatus(daemon.LAST_DAEMON, self.getStatus())
         return x.send()
         
     def pick_initial_filename(self, suffix=".part", torrent=False):
@@ -783,7 +783,7 @@ class BTDownloader(BGDownloader):
             torrent_info = lt.torrent_info(lt.bdecode(self.metainfo))
             duplicate = torrentSession.find_duplicate_torrent(torrent_info)
             if duplicate is not None:
-                c = command.DuplicateTorrent(daemon.lastDaemon,
+                c = command.DuplicateTorrent(daemon.LAST_DAEMON,
                         duplicate.dlid, self.dlid)
                 c.send()
                 return
