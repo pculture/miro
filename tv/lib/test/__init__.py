@@ -31,13 +31,6 @@
 up the testsuite.
 """
 
-# We do this for Windows where urlparse in Python 2.5 sux0rz.
-try:
-    from miro.plat import miro_urlparse
-    miro_urlparse.apply_monkey_patch()
-except ImportError:
-    pass
-
 from miro import config
 from miro import prefs
 
