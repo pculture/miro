@@ -129,7 +129,7 @@ class StoreDatabaseTest(EventLoopTest):
 
     def setUp(self):
         EventLoopTest.setUp(self)
-        self.save_path = self.make_temp_path()
+        self.save_path = FilenameType(self.make_temp_path(extension=".db"))
         self.remove_database()
         self.reload_test_database()
 
@@ -138,10 +138,8 @@ class StoreDatabaseTest(EventLoopTest):
                 object_schemas=self.OBJECT_SCHEMAS)
 
     def remove_database(self):
-        try:
+        if os.path.exists(self.save_path):
             os.unlink(self.save_path)
-        except OSError:
-            pass
 
     def tearDown(self):
         self.remove_database()
