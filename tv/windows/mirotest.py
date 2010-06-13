@@ -38,7 +38,7 @@ utils.initialize_locale()
 from miro import gtcache
 gtcache.init()
 
-if "--verbose" not in sys.argv:
+if "-v" not in sys.argv:
     logging.basicConfig(level=logging.CRITICAL)
 
 from miro import test

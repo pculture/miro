@@ -49,7 +49,7 @@ upgrade.upgrade()
 
 usage = "usage: %prog [options] [torrent files] [video files]"
 parser = optparse.OptionParser(usage=usage)
-parser.add_option('-v', '--version',
+parser.add_option('--version',
                   dest='version', action='store_true',
                   help='Print version info.')
 parser.set_defaults(version=False)
@@ -85,10 +85,10 @@ group.add_option('--unittest',
                   dest='unittest', action='store_true',
                   help='Run unittests instead of launching the program.')
 parser.set_defaults(unittest=False)
-group.add_option('--verbose',
-                  dest='unittestverbose', action='store_true',
-                  help='When running unit tests, run them verbosely.')
-parser.set_defaults(unittestverbose=False)
+group.add_option('-v',
+                  dest='unittest_verbose', action='store_true',
+                  help='Run unittests in verbose mode.')
+parser.set_defaults(unittest_verbose=False)
 group.add_option('--profile',
                   metavar='<FILE>',
                   help='Write profiling information to FILE.')

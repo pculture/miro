@@ -83,10 +83,5 @@ def run_tests():
     # libcurl can only be initialized/cleaned up once per run, so this code
     # can't go in the setUp/tearDown methosd.
     httpclient.init_libcurl()
-    if "--verbose" in sys.argv:
-        verbosity = 2
-    else:
-        verbosity = 1
-    unittest.main(
-        module=test, testRunner=unittest.TextTestRunner(verbosity=verbosity))
+    unittest.main(module=test)
     httpclient.cleanup_libcurl()
