@@ -138,6 +138,16 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             code = 302
             location_header = self.build_url("linux-screen.jpg")
             path = self.translate_path('redirect.html')
+        elif self.path == '/protected.txt':
+            path = self.translate_path('test.txt')
+            auth = "user:password".encode("base64")[:-1]
+            # use [:-1] to cut off the trailing newline
+            if (self.headers.get('authorization') == "Basic %s" % auth):
+                code = 200
+            else:
+                code = 401
+                headers_to_send.append(('WWW-Authenticate',
+                    'Basic realm="Secure Area"'))
         elif 'range' in self.headers and self.server.allow_resume:
             range = self.headers['range']
             if range.startswith("bytes="):

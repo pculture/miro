@@ -4,8 +4,10 @@ import pycurl
 import urllib
 from cStringIO import StringIO
 
+from miro import dialogs
 from miro import eventloop
 from miro import httpclient
+from miro import signals
 from miro.plat import resources
 from miro.test.framework import EventLoopTest
 
@@ -411,6 +413,52 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assertEquals(self.grab_url_error, None)
         self.wait_for_libcurl_manager()
         self.assert_(not os.path.exists(filename))
+
+class HTTPAuthTest(HTTPClientTestBase):
+    def setUp(self):
+        HTTPClientTestBase.setUp(self)
+        self.callback_handle = None
+        self.setup_cancel()
+
+    def setup_answer(self, username, password, button=dialogs.BUTTON_OK):
+        def handler(obj, dialog):
+            dialog.run_callback(button, unicode(username),
+                    unicode(password))
+        if self.callback_handle:
+            signals.system.disconnect(self.callback_handle)
+        self.callback_handle = signals.system.connect('new-dialog', handler)
+
+    def setup_cancel(self):
+        self.setup_answer('', '', dialogs.BUTTON_CANCEL)
+
+    def check_auth_errback_called(self):
+        self.check_errback_called()
+        self.assert_(isinstance(self.grab_url_error,
+            httpclient.AuthorizationFailed))
+
+    def test_auth_failed(self):
+        self.expecting_errback = True
+        self.setup_cancel()
+        self.grab_url(self.httpserver.build_url('protected.txt'))
+        self.check_auth_errback_called()
+
+        self.setup_answer("wronguser", "wrongpass")
+        self.grab_url(self.httpserver.build_url('protected.txt'))
+        self.check_auth_errback_called()
+
+    def test_auth_correct(self):
+        self.setup_answer("user", "password")
+        self.grab_url(self.httpserver.build_url('protected.txt'))
+
+    def test_auth_memory(self):
+        self.setup_answer("user", "password")
+        self.grab_url(self.httpserver.build_url('protected.txt'))
+        self.setup_cancel()
+        # this shouldn't matter because we should have the auth saved in the DB
+        self.grab_url(self.httpserver.build_url('protected.txt'))
+
+    def test_max_attemps(self):
+        pass
 
 class BadURLTest(HTTPClientTestBase):
     def setUp(self):

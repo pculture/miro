@@ -34,29 +34,34 @@ from miro import models
 def formatAuthString(auth):
     return "%s %s" % (auth.get_auth_scheme(), auth.get_auth_token())
 
-def find_http_auth(callback, host, path):
-    """Find an HTTPAuthPassword object stored in the database.  Callback will
-    be called with a string to use for the Authorization header or None if we
-    can't find anything in the DB.
+def find_http_auth(host, path):
+    """Find an HTTPAuthPassword object stored in the database
+
+    This method searches the database for already entered passwords.
+
+    :returns: will a string to use for the Authorization header or None
     """
     from miro import downloader
 
     auth = downloader.find_http_auth(host, path)
     if auth is not None:
         auth = formatAuthString(auth)
-    eventloop.add_idle(callback, "http auth callback", args=(auth,))
+    return auth
 
-def askForHTTPAuth(callback, url, realm, authScheme):
-    """Ask the user for a username and password to login to a site.  Callback
-    will be called with a string to use for the Authorization header or None
-    if the user clicks cancel.
+def ask_for_http_auth(callback, url, realm, auth_scheme):
+    """Ask the user for a username and password to login to a site.
+
+    :param callback: will be called with a auth string to use, or None
+    :param url: URL for the request
+    :param realm: Realm to use for HTTP auth
+    :param auth_scheme: HTTP authorization scheme to use
     """
 
     scheme, host, port, path = parse_url(url)
     def handleLoginResponse(dialog):
         if dialog.choice == dialogs.BUTTON_OK:
             auth = models.HTTPAuthPassword(dialog.username,
-                    dialog.password, host, realm, path, authScheme)
+                    dialog.password, host, realm, path, auth_scheme)
             callback(formatAuthString(auth))
         else:
             callback(None)
