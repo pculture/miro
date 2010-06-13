@@ -29,7 +29,7 @@
 
 if [[ $@ == *unittest* ]]; then
     SETUP_PARAMS="--keep-tests"
-    RUN_PARAMS="unittest"
+    RUN_PARAMS=$@
 else
     SETUP_PARAMS=$@
 fi

@@ -4,7 +4,7 @@ README
 
 :Authors: Will Kahn-Greene <will.guaraldi at pculture dot org>
           Luc Heinrich <luc at pculture do org>
-:Date: June 9th, 2008
+:Date: June 13th, 2010
 
 
 Summary
@@ -19,7 +19,9 @@ https://develop.participatoryculture.org/trac/democracy/wiki/OSXBuildDocs
 Setup build environment
 =======================
 
-Run ``setup_sandbox.sh`` if you're using Mac OSX 10.5 or 10.6.
+Run ``setup_binary_kit.sh`` then ``setup_sandbox.sh``.
+
+This works for OSX 10.5 and 10.6.
 
 Building and running Miro on Mac OS X 10.4 or earlier is not supported.
 
@@ -49,3 +51,15 @@ distribute.
 To build a ``.dmg`` file, do::
 
    ./build.sh --make-dmg
+
+
+Running tests
+=============
+
+To run unittests on OSX, do::
+
+   ./run.sh unittest
+
+To run unittests verbosely, do::
+
+   ./run.sh unittest -v
