@@ -60,7 +60,7 @@ from miro.plat.resources import get_osname
 from miro.net import NetworkError, ConnectionError
 
 REDIRECTION_LIMIT = 10
-MAX_AUTH_ATTEMPS = 5
+MAX_AUTH_ATTEMPTS = 5
 
 def user_agent():
     return "%s/%s (%s; %s)" % (config.get(prefs.SHORT_APP_NAME),
@@ -267,7 +267,7 @@ class CurlTransfer(object):
         self.header_callback = header_callback
         self.content_check_callback = content_check_callback
         self.errback = errback
-        self.http_auth_attemps = 0
+        self.http_auth_attempts = 0
 
         self.stats = TransferStats()
         self.lock = threading.Lock()
@@ -413,8 +413,8 @@ class CurlTransfer(object):
             self.call_errback(UnexpectedStatusCode(info['status']))
 
     def handle_http_auth(self):
-        self.http_auth_attemps += 1
-        if self.http_auth_attemps > MAX_AUTH_ATTEMPS:
+        self.http_auth_attempts += 1
+        if self.http_auth_attempts > MAX_AUTH_ATTEMPTS:
             self.call_errback(AuthorizationFailed())
             return
         try:

@@ -457,7 +457,8 @@ class HTTPAuthTest(HTTPClientTestBase):
         # this shouldn't matter because we should have the auth saved in the DB
         self.grab_url(self.httpserver.build_url('protected.txt'))
 
-    def test_max_attemps(self):
+    def test_max_attempts(self):
+        # FIXME - implement
         pass
 
 class BadURLTest(HTTPClientTestBase):
