@@ -46,13 +46,13 @@ def launch():
     import os
     from miro import util
     import logging
-    logPath = os.environ.get('DEMOCRACY_DOWNLOADER_LOG')
-    if logPath is not None:
+    log_path = os.environ.get('DEMOCRACY_DOWNLOADER_LOG')
+    if log_path is not None:
         if os.environ.get('DEMOCRACY_DOWNLOADER_FIRST_LAUNCH') == '1':
-            logMode = 'w'
+            log_mode = 'w'
         else:
-            logMode = 'a'
-        log = open(logPath, logMode)
+            log_mode = 'a'
+        log = open(log_path, log_mode)
         sys.stdout = sys.stderr = log
 
     sys.stdout = util.AutoFlushingStream(sys.stdout)
@@ -83,7 +83,7 @@ def launch():
     httpclient.start_thread()
     server = daemon.DownloaderDaemon(port, short_app_name)
 
-    download.downloadUpdater.startUpdates()
+    download.DOWNLOAD_UPDATER.start_updates()
     httpclient.init_libcurl()
     eventloop.startup()
 

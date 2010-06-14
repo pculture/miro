@@ -25,10 +25,10 @@ class TestingDownloader(download.HTTPDownloader):
 
     def update_stats(self):
         download.HTTPDownloader.update_stats(self)
-        self.lastStatus = self.getStatus()
+        self.lastStatus = self.get_status()
         self.test.add_idle(self.statusCallback, "status callback")
 
-    def updateClient(self):
+    def update_client(self):
         # This normally sends info through the DownoaderDaemon, but that
         # doesn't exist.
         pass
@@ -147,14 +147,14 @@ class HTTPDownloaderTest(EventLoopTest):
         self.downloader2 = TestingDownloader(self, restore=restore)
         restoreSize = restore['currentSize']
         self.restarted = False
-        def startNewDownloadIntercept():
+        def start_new_download_intercept():
             self.restarted = True
             self.stopEventLoop(False)
-        def statusCallback():
+        def status_callback():
             if self.downloader2.state == 'finished':
                 self.stopEventLoop(False)
-        self.downloader2.startNewDownload = startNewDownloadIntercept
-        self.downloader2.statusCallback = statusCallback
+        self.downloader2.start_new_download = start_new_download_intercept
+        self.downloader2.statusCallback = status_callback
         self.httpserver.pause_after(-1)
         self.runEventLoop()
         self.assert_(not self.restarted)

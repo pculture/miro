@@ -43,7 +43,7 @@ def add_change_callback(callback):
 def remove_change_callback(callback):
     __callbacks.discard(callback)
 
-def setDictionary(d):
+def set_dictionary(d):
     global _data
     #print "set initial remote config %s" % repr(d)
     _dataLock.acquire()
@@ -54,7 +54,7 @@ def setDictionary(d):
     prefs.APP_SERIAL.key = 'appSerial-%s' % d[prefs.APP_PLATFORM.key]
     _ready.set()
 
-def updateDictionary (key, value):
+def update_dictionary(key, value):
     _dataLock.acquire()
     try:
         _data[key] = value

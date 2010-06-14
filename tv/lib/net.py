@@ -530,7 +530,7 @@ class ConnectionHandler(object):
     methods.  The state methods will be called when there is data available,
     which can be read from the buffer variable.  The states dictionary can
     contain a None value, to signal that the handler isn't interested in
-    reading at that point.  Use changeState() to switch states.
+    reading at that point.  Use change_state() to switch states.
 
     Subclasses should override the handle_close() method to handle the
     socket closing.
@@ -541,7 +541,7 @@ class ConnectionHandler(object):
         self.buffer = NetworkBuffer()
         self.states = {'initializing': None, 'closed': None}
         self.stream = self.stream_factory(closeCallback=self.closeCallback)
-        self.changeState('initializing')
+        self.change_state('initializing')
         self.name = ""
 
     def __str__(self):
@@ -561,13 +561,13 @@ class ConnectionHandler(object):
     def close_connection(self):
         if self.stream.isOpen():
             self.stream.close_connection()
-        self.changeState('closed')
+        self.change_state('closed')
         self.buffer.discard_data()
 
     def send_data(self, data, callback=None):
         self.stream.send_data(data, callback)
 
-    def changeState(self, newState):
+    def change_state(self, newState):
         self.readHandler = self.states[newState]
         self.state = newState
         self.updateReadCallback()

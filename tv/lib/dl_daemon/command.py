@@ -27,45 +27,43 @@
 # statement from all source files in the program, then also delete it here.
 
 import time
-
 import random
-from miro import eventloop
+import threading
 import logging
 
-# amount of time to wait for daemonic threads to quit.  Right now, the only
-# thing we use Daemonic threads for is to send HTTP requests to BitTorrent
-# trackers.
+from miro import eventloop
+
+# Amount of time to wait for daemonic threads to quit.  Right now, the
+# only thing we use Daemonic threads for is to send HTTP requests to
+# BitTorrent trackers.
 DAEMONIC_THREAD_TIMEOUT = 2
 
-class Command:
+class Command(object):
     def __init__(self, daemon, *args, **kws):
-        self.id = "cmd%08d" % random.randint(0, 99999999)
+        self.command_id = "cmd%08d" % random.randint(0, 99999999)
         self.orig = True
         self.args = args
         self.kws = kws
         self.daemon = daemon
 
-    def setDaemon(self, daemon):
+    def set_daemon(self, daemon):
         self.daemon = daemon
 
     def send(self, callback=None):
         if self.daemon.shutdown:
             return
-        eventloop.add_idle(lambda : self.daemon.send(self, callback), "sending command %s" % repr(self))
-
-    def setReturnValue(self, ret):
-        self.orig = False
-        self.ret = ret
-
-    def getReturnValue(self):
-        return self.ret
+        eventloop.add_idle(lambda : self.daemon.send(self, callback),
+                           "sending command %r" % self)
 
     def action(self):
-        logging.warning ("no action defined for command %s", self.id)
-        #for overriding
+        # for overriding
+        logging.warning("no action defined for command %s", self.command_id)
 
     def __getstate__(self):
-        out = {"id":self.id, "args":self.args, "kws":self.kws, "orig":self.orig}
+        out = {"id": self.command_id,
+               "args": self.args,
+               "kws": self.kws,
+               "orig": self.orig}
         try:
             out["ret"] = self.ret
         except AttributeError:
@@ -73,7 +71,7 @@ class Command:
         return out
 
     def __setstate__(self, data):
-        self.id = data["id"]
+        self.command_id = data["id"]
         self.kws = data["kws"]
         self.args = data["args"]
         self.orig = data["orig"]
@@ -88,18 +86,18 @@ class Command:
 class FindHTTPAuthCommand(Command):
     def action(self):
         from miro import httpauth
-        id, args = self.args[0], self.args[1:]
-        def callback(authHeader):
-            c = GotHTTPAuthCommand(self.daemon, id, authHeader)
+        id_, args = self.args[0], self.args[1:]
+        def callback(auth_header):
+            c = GotHTTPAuthCommand(self.daemon, id_, auth_header)
             c.send()
         httpauth.find_http_auth(callback, *args)
 
 class AskForHTTPAuthCommand(Command):
     def action(self):
         from miro import httpauth
-        id, args = self.args[0], self.args[1:]
-        def callback(authHeader):
-            c = GotHTTPAuthCommand(self.daemon, id, authHeader)
+        id_, args = self.args[0], self.args[1:]
+        def callback(auth_header):
+            c = GotHTTPAuthCommand(self.daemon, id_, auth_header)
             c.send()
         httpauth.askForHTTPAuth(callback, *args)
 
@@ -120,8 +118,9 @@ class DownloaderErrorCommand(Command):
         signals.system.failed("In Downloader process", details=self.args[0])
 
 class DuplicateTorrent(Command):
-    # The downloader daemon detected that one download was for the same
-    # torrent as another one.
+    """The downloader daemon detected that one download was for the same
+    torrent as another one.
+    """
     def action(self):
         original_id, duplicate_id = self.args[0], self.args[1]
         from miro import downloader
@@ -150,33 +149,33 @@ class InitialConfigCommand(Command):
     def action(self):
         from miro import config
         from miro.dl_daemon import download
-        config.setDictionary(*self.args, **self.kws)
-        download.configReceived()
+        config.set_dictionary(*self.args, **self.kws)
+        download.config_received()
 
 class UpdateConfigCommand(Command):
     def action(self):
         from miro import config
-        config.updateDictionary(*self.args, **self.kws)
+        config.update_dictionary(*self.args, **self.kws)
 
 class StartNewDownloadCommand(Command):
     def action(self):
         from miro.dl_daemon import download
-        return download.startNewDownload(*self.args, **self.kws)
+        return download.start_new_download(*self.args, **self.kws)
 
 class StartDownloadCommand(Command):
     def action(self):
         from miro.dl_daemon import download
-        return download.startDownload(*self.args, **self.kws)
+        return download.start_download(*self.args, **self.kws)
 
 class PauseDownloadCommand(Command):
     def action(self):
         from miro.dl_daemon import download
-        return download.pauseDownload(*self.args, **self.kws)
+        return download.pause_download(*self.args, **self.kws)
 
 class StopDownloadCommand(Command):
     def action(self):
         from miro.dl_daemon import download
-        return download.stopDownload(*self.args, **self.kws)
+        return download.stop_download(*self.args, **self.kws)
 
 class StopUploadCommand(Command):
     def action(self):
@@ -191,42 +190,42 @@ class PauseUploadCommand(Command):
 class GetDownloadStatusCommand(Command):
     def action(self):
         from miro.dl_daemon import download
-        return download.getDownloadStatus(*self.args, **self.kws)
+        return download.get_download_status(*self.args, **self.kws)
 
 class RestoreDownloaderCommand(Command):
     def action(self):
         from miro.dl_daemon import download
-        return download.restoreDownloader(*self.args, **self.kws)
+        return download.restore_downloader(*self.args, **self.kws)
 
 class MigrateDownloadCommand(Command):
     def action(self):
         from miro.dl_daemon import download
-        return download.migrateDownload(*self.args, **self.kws)
+        return download.migrate_download(*self.args, **self.kws)
 
 class GotHTTPAuthCommand(Command):
     def action(self):
-        id, authHeader = self.args
-        from miro import httpauth 
+        id_, auth_header = self.args
+        from miro import httpauth
         # note since we're in the downloader process here, httpauth is
         # dl_daemon/private/httpauth.py
-        httpauth.handleHTTPAuthResponse(id, authHeader)
+        httpauth.handle_http_auth_response(id_, auth_header)
 
 class ShutDownCommand(Command):
     def response_sent(self):
-        from miro import eventloop
         eventloop.shutdown()
-        logging.info ("Shutdown complete")
+        logging.info("Shutdown complete")
 
     def action(self):
         starttime = time.time()
         from miro import httpclient
         from miro.dl_daemon import download
-        download.shutDown()
-        import threading
+        download.shutdown()
         httpclient.stop_thread()
         eventloop.thread_pool_quit()
         for thread in threading.enumerate():
-            if thread != threading.currentThread() and thread.getName() != "MainThread" and not thread.isDaemon():
+            if ((thread != threading.currentThread()
+                 and thread.getName() != "MainThread"
+                 and not thread.isDaemon())):
                 thread.join()
         endtime = starttime + DAEMONIC_THREAD_TIMEOUT
         for thread in threading.enumerate():

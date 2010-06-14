@@ -32,19 +32,18 @@ import stat
 from threading import RLock
 from copy import copy
 import sys
+import datetime
+import logging
 
 from miro.gtcache import gettext as _
 
 import libtorrent as lt
 from miro.clock import clock
-from miro.download_utils import (clean_filename, next_free_filename, 
-                                 check_filename_extension, 
-                                 filter_directory_name,
-                                 filename_from_url, get_file_url_path)
+from miro.download_utils import (
+    clean_filename, next_free_filename, check_filename_extension,
+    filter_directory_name, filename_from_url, get_file_url_path)
 from miro import eventloop
 from miro import httpclient
-import datetime
-import logging
 from miro import fileutil
 
 from miro import config
@@ -61,10 +60,10 @@ _downloads = {}
 
 _lock = RLock()
 
-def configReceived():
-    torrentSession.startup()
+def config_received():
+    TORRENT_SESSION.startup()
 
-def createDownloader(url, contentType, dlid):
+def create_downloader(url, contentType, dlid):
     check_u(url)
     check_u(contentType)
     if contentType == u'application/x-bittorrent':
@@ -72,141 +71,138 @@ def createDownloader(url, contentType, dlid):
     else:
         return HTTPDownloader(url, dlid, expectedContentType=contentType)
 
-# Creates a new downloader object. Returns id on success, None on failure
-def startNewDownload(url, dlid, contentType, channelName):
+def start_new_download(url, dlid, contentType, channelName):
+    """Creates a new downloader object.
+
+    Returns id on success, None on failure.
+    """
     check_u(url)
     check_u(contentType)
     if channelName:
         check_f(channelName)
-    dl = createDownloader(url, contentType, dlid)
+    dl = create_downloader(url, contentType, dlid)
     dl.channelName = channelName
     _downloads[dlid] = dl
 
-def pauseDownload(dlid):
+def pause_download(dlid):
     try:
         download = _downloads[dlid]
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except: # There is no download with this id
+    except KeyError:
+        # There is no download with this id
         return True
     return download.pause()
 
 def info_hash_to_long(info_hash):
-    # the info_hash() method from libtorrent returns a "big_number" object.
-    # This doesn't hash very well: different instances with the same value
-    # will have different hashes.  So we need to convert them to long objects,
-    # though this weird process
+    """The info_hash() method from libtorrent returns a "big_number" object.
+    This doesn't hash very well: different instances with the same value
+    will have different hashes.  So we need to convert them to long objects,
+    though this weird process.
+    """
     return long(str(info_hash), 16)
 
-def startDownload(dlid):
+def start_download(dlid):
     try:
         download = _downloads[dlid]
-    except KeyError:  # There is no download with this id
-        err= u"in startDownload(): no downloader with id %s" % dlid
+    except KeyError:
+        # There is no download with this id
+        err = u"in start_download(): no downloader with id %s" % dlid
         c = command.DownloaderErrorCommand(daemon.LAST_DAEMON, err)
         c.send()
         return True
     return download.start()
 
-def stopDownload(dlid, delete):
+def stop_download(dlid, delete):
+    _lock.acquire()
     try:
-        _lock.acquire()
-        try:
-            download = _downloads[dlid]
-            del _downloads[dlid]
-        finally:
-            _lock.release()
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except: # There is no download with this id
+        download = _downloads[dlid]
+        del _downloads[dlid]
+    except KeyError:
+        # There is no download with this id
         return True
+    finally:
+        _lock.release()
+
     return download.stop(delete)
 
 def stop_upload(dlid):
+    _lock.acquire()
     try:
-        _lock.acquire()
-        try:
-            download = _downloads[dlid]
-            if download.state not in (u"uploading", u"uploading-paused"):
-                return
-            del _downloads[dlid]
-        finally:
-            _lock.release()
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except: # There is no download with this id
+        download = _downloads[dlid]
+        if download.state not in (u"uploading", u"uploading-paused"):
+            return
+        del _downloads[dlid]
+    except KeyError:
+        # There is no download with this id
         return
+    finally:
+        _lock.release()
     return download.stop_upload()
 
 def pause_upload(dlid):
+    _lock.acquire()
     try:
-        _lock.acquire()
-        try:
-            download = _downloads[dlid]
-            if download.state != u"uploading":
-                return
-            del _downloads[dlid]
-        finally:
-            _lock.release()
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except: # There is no download with this id
+        download = _downloads[dlid]
+        if download.state != u"uploading":
+            return
+        del _downloads[dlid]
+    except KeyError:
+        # There is no download with this id
         return
+    finally:
+        _lock.release()
     return download.pause_upload()
 
-def migrateDownload(dlid, directory):
+def migrate_download(dlid, directory):
     check_f(directory)
     try:
         download = _downloads[dlid]
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except: # There is no download with this id
-        pass
-    else:
-        if download.state in (u"finished", u"uploading", u"uploading-paused"):
-            download.moveToDirectory(directory)
+    except KeyError:
+        # There is no download with this id
+        return
 
-def getDownloadStatus(dlids = None):
+    if download.state in (u"finished", u"uploading", u"uploading-paused"):
+        download.move_to_directory(directory)
+
+def get_download_status(dlids=None):
     statuses = {}
     for key in _downloads.keys():
-        if (dlids is None) or (dlids == key) or (key in dlids):
+        if dlids is None or dlids == key or key in dlids:
             try:
-                statuses[key] = _downloads[key].getStatus()
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
+                statuses[key] = _downloads[key].get_status()
+            except KeyError:
                 pass
     return statuses
 
-def shutDown():
+def shutdown():
     logging.info("Shutting down downloaders...")
     for dlid in _downloads:
         _downloads[dlid].shutdown()
-    torrentSession.shutdown()
+    TORRENT_SESSION.shutdown()
 
-def restoreDownloader(downloader):
+def restore_downloader(downloader):
     if downloader['dlid'] in _downloads:
         logging.warn("Not restarting active downloader: %s",
                 downloader['dlid'])
         return
 
     downloader = copy(downloader)
-    dlerType = downloader.get('dlerType')
-    if dlerType == u'HTTP':
-        dl = HTTPDownloader(restore = downloader)
-    elif dlerType == u'BitTorrent':
-        dl = BTDownloader(restore = downloader)
+    dler_type = downloader.get('dlerType')
+    if dler_type == u'HTTP':
+        dl = HTTPDownloader(restore=downloader)
+    elif dler_type == u'BitTorrent':
+        dl = BTDownloader(restore=downloader)
     else:
-        err = u"in restoreDownloader(): unknown dlerType: %s" % dlerType
+        err = u"in restore_downloader(): unknown dlerType: %s" % dler_type
         c = command.DownloaderErrorCommand(daemon.LAST_DAEMON, err)
         c.send()
         return
 
     _downloads[downloader['dlid']] = dl
 
-class TorrentSession:
-    """Contains the bittorrent session and handles updating all running bittorrents"""
-
+class TorrentSession(object):
+    """Contains the bittorrent session and handles updating all
+    running bittorrents.
+    """
     def __init__(self):
         self.torrents = set()
         self.info_hash_to_downloader = {}
@@ -219,53 +215,56 @@ class TorrentSession:
         fingerprint = lt.fingerprint("MR", 1, 1, 0, 0)
         self.session = lt.session(fingerprint)
         self.listen()
-        self.setUpnp()
-        self.setUploadLimit()
-        self.setDownloadLimit()
-        self.setEncryption()
-        config.add_change_callback(self.configChanged)
+        self.set_upnp()
+        self.set_upload_limit()
+        self.set_download_limit()
+        self.set_encryption()
+        config.add_change_callback(self.config_changed)
 
     def listen(self):
-        self.session.listen_on(config.get(prefs.BT_MIN_PORT), config.get(prefs.BT_MAX_PORT))
+        self.session.listen_on(config.get(prefs.BT_MIN_PORT),
+                               config.get(prefs.BT_MAX_PORT))
 
-    def setUpnp(self):
-        useUpnp = config.get(prefs.USE_UPNP)
-        if useUpnp != self.pnp_on:
-            self.pnp_on = useUpnp
-            if useUpnp:
-                self.session.start_upnp()
-            else:
-                self.session.stop_upnp()
+    def set_upnp(self):
+        use_upnp = config.get(prefs.USE_UPNP)
+        if use_upnp == self.pnp_on:
+            return
+        self.pnp_on = use_upnp
+        if use_upnp:
+            self.session.start_upnp()
+        else:
+            self.session.stop_upnp()
 
-    def setUploadLimit(self):
+    def set_upload_limit(self):
         limit = -1
         if config.get(prefs.LIMIT_UPSTREAM):
             limit = config.get(prefs.UPSTREAM_LIMIT_IN_KBS)
             limit = limit * (2 ** 10)
             if limit > sys.maxint:
-                limit = sys.maxint # avoid OverflowErrors by keeping the value
-                                   # an integer
+                # avoid OverflowErrors by keeping the value an integer
+                limit = sys.maxint
         self.session.set_upload_rate_limit(limit)
 
-    def setDownloadLimit(self):
+    def set_download_limit(self):
         limit = -1
         if config.get(prefs.LIMIT_DOWNSTREAM_BT):
             limit = config.get(prefs.DOWNSTREAM_BT_LIMIT_IN_KBS)
             limit = limit * (2 ** 10)
             if limit > sys.maxint:
-                limit = sys.maxint # avoid OverflowErrors by keeping the value
-                                   # an integer
+                # avoid OverflowErrors by keeping the value an integer
+                limit = sys.maxint
         self.session.set_download_rate_limit(limit)
 
-    def setConnectionLimit(self):
+    def set_connection_limit(self):
         limit = -1
         if config.get(prefs.LIMIT_CONNECTIONS_BT):
             limit = config.get(prefs.CONNECTION_LIMIT_BT_NUM)
             if limit > 65536:
-                limit = 65536 # there are only 2**16 TCP port numbers
+                # there are only 2**16 TCP port numbers
+                limit = 65536
         self.session.set_max_connections(limit)
 
-    def setEncryption(self):
+    def set_encryption(self):
         if self.pe_set is None:
             self.pe_set = lt.pe_settings()
         enc_req = config.get(prefs.BT_ENC_REQ)
@@ -280,9 +279,9 @@ class TorrentSession:
             self.session.set_pe_settings(self.pe_set)
 
     def shutdown(self):
-        config.remove_change_callback(self.configChanged)
+        config.remove_change_callback(self.config_changed)
 
-    def configChanged(self, key, value):
+    def config_changed(self, key, value):
         if key == prefs.BT_MIN_PORT.key:
             if value > self.session.listen_port():
                 self.listen()
@@ -290,15 +289,18 @@ class TorrentSession:
             if value < self.session.listen_port():
                 self.listen()
         elif key == prefs.USE_UPNP.key:
-            self.setUpnp()
-        elif key in (prefs.LIMIT_UPSTREAM.key, prefs.UPSTREAM_LIMIT_IN_KBS.key):
-            self.setUploadLimit()
-        elif key in (prefs.LIMIT_DOWNSTREAM_BT.key, prefs.DOWNSTREAM_BT_LIMIT_IN_KBS.key):
-            self.setDownloadLimit()
+            self.set_upnp()
+        elif key in (prefs.LIMIT_UPSTREAM.key,
+                     prefs.UPSTREAM_LIMIT_IN_KBS.key):
+            self.set_upload_limit()
+        elif key in (prefs.LIMIT_DOWNSTREAM_BT.key,
+                     prefs.DOWNSTREAM_BT_LIMIT_IN_KBS.key):
+            self.set_download_limit()
         elif key == prefs.BT_ENC_REQ.key:
-            self.setEncryption()
-        elif key in (prefs.LIMIT_CONNECTIONS_BT.key, prefs.CONNECTION_LIMIT_BT_NUM.key):
-            self.setConnectionLimit()
+            self.set_encryption()
+        elif key in (prefs.LIMIT_CONNECTIONS_BT.key,
+                     prefs.CONNECTION_LIMIT_BT_NUM.key):
+            self.set_connection_limit()
 
     def find_duplicate_torrent(self, torrent_info):
         info_hash = info_hash_to_long(torrent_info.info_hash())
@@ -315,58 +317,61 @@ class TorrentSession:
             info_hash = info_hash_to_long(downloader.torrent.info_hash())
             del self.info_hash_to_downloader[info_hash]
 
-    def updateTorrents(self):
-        # Copy this set into a list in case any of the torrents gets removed during the iteration.
+    def update_torrents(self):
+        # Copy this set into a list in case any of the torrents gets
+        # removed during the iteration.
         for torrent in [x for x in self.torrents]:
             torrent.update_status()
 
-torrentSession = TorrentSession()
+TORRENT_SESSION = TorrentSession()
 
-class DownloadStatusUpdater:
+class DownloadStatusUpdater(object):
     """Handles updating status for all in progress downloaders.
 
-    On OS X and gtk if the user is on the downloads page and has a bunch of
-    downloads going, this can be a fairly CPU intensive task.
+    On OS X and gtk if the user is on the downloads page and has a
+    bunch of downloads going, this can be a fairly CPU intensive task.
     DownloadStatusUpdaters mitigate this in 2 ways.
 
-    1) DownloadStatusUpdater objects batch all status updates into one big
-    update which takes much less CPU.  
-    
-    2) The update don't happen fairly infrequently (currently every 5 seconds).
-    
-    Because updates happen infrequently, DownloadStatusUpdaters should only be
-    used for progress updates, not events like downloads starting/finishing.
-    For those just call updateClient() since they are more urgent, and don't
-    happen often enough to cause CPU problems.
+    1. DownloadStatusUpdater objects batch all status updates into one
+       big update which takes much less CPU.
+
+    2. The update don't happen fairly infrequently (currently every 5
+       seconds).
+
+    Because updates happen infrequently, DownloadStatusUpdaters should
+    only be used for progress updates, not events like downloads
+    starting/finishing.  For those just call update_client() since they
+    are more urgent, and don't happen often enough to cause CPU
+    problems.
     """
 
     UPDATE_CLIENT_INTERVAL = 1
 
     def __init__(self):
-        self.toUpdate = set()
+        self.to_update = set()
 
-    def startUpdates(self):
-        eventloop.add_timeout(self.UPDATE_CLIENT_INTERVAL, self.doUpdate,
+    def start_updates(self):
+        eventloop.add_timeout(self.UPDATE_CLIENT_INTERVAL, self.do_update,
                 "Download status update")
 
-    def doUpdate(self):
+    def do_update(self):
         try:
-            torrentSession.updateTorrents()
+            TORRENT_SESSION.update_torrents()
             statuses = []
-            for downloader in self.toUpdate:
-                statuses.append(downloader.getStatus())
-            self.toUpdate = set()
+            for downloader in self.to_update:
+                statuses.append(downloader.get_status())
+            self.to_update = set()
             if statuses:
-                command.BatchUpdateDownloadStatus(daemon.LAST_DAEMON, 
+                command.BatchUpdateDownloadStatus(daemon.LAST_DAEMON,
                         statuses).send()
         finally:
-            eventloop.add_timeout(self.UPDATE_CLIENT_INTERVAL, self.doUpdate,
+            eventloop.add_timeout(self.UPDATE_CLIENT_INTERVAL, self.do_update,
                     "Download status update")
 
-    def queueUpdate(self, downloader):
-        self.toUpdate.add(downloader)
+    def queue_update(self, downloader):
+        self.to_update.add(downloader)
 
-downloadUpdater = DownloadStatusUpdater()
+DOWNLOAD_UPDATER = DownloadStatusUpdater()
 
 RETRY_TIMES = (
     60,
@@ -379,7 +384,7 @@ RETRY_TIMES = (
     24 * 60 * 60
     )
 
-class BGDownloader:
+class BGDownloader(object):
     def __init__(self, url, dlid):
         self.dlid = dlid
         self.url = url
@@ -397,7 +402,7 @@ class BGDownloader:
     def get_url(self):
         return self.url
 
-    def getStatus(self):
+    def get_status(self):
         return {'dlid': self.dlid,
             'url': self.url,
             'state': self.state,
@@ -417,64 +422,67 @@ class BGDownloader:
             'retryCount': self.retryCount,
             'channelName': self.channelName}
 
-    def updateClient(self):
-        x = command.UpdateDownloadStatus(daemon.LAST_DAEMON, self.getStatus())
+    def update_client(self):
+        x = command.UpdateDownloadStatus(daemon.LAST_DAEMON, self.get_status())
         return x.send()
-        
+
     def pick_initial_filename(self, suffix=".part", torrent=False):
         """Pick a path to download to based on self.shortFilename.
 
-        This method sets self.filename, as well as creates any leading paths
-        needed to start downloading there.
+        This method sets self.filename, as well as creates any leading
+        paths needed to start downloading there.
 
-        If the torrent flag is true, then the filename we're working with
-        is utf-8 and shouldn't be transformed in any way.
+        If the torrent flag is true, then the filename we're working
+        with is utf-8 and shouldn't be transformed in any way.
 
-        If the torrent flag is false, then the filename we're working with
-        is ascii and needs to be transformed into something sane.  (default)
+        If the torrent flag is false, then the filename we're working
+        with is ascii and needs to be transformed into something sane.
+        (default)
         """
-
-        downloadDir = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
-                'Incomplete Downloads')
+        download_dir = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
+                                    'Incomplete Downloads')
         # Create the download directory if it doesn't already exist.
-        if not os.path.exists(downloadDir):
-            fileutil.makedirs(downloadDir)
+        if not os.path.exists(download_dir):
+            fileutil.makedirs(download_dir)
         filename = self.shortFilename + suffix
         if not torrent:
             # this is an ascii filename and needs to be fixed
             filename = clean_filename(filename)
-        self.filename = next_free_filename(os.path.join(downloadDir, filename))
+        self.filename = next_free_filename(
+            os.path.join(download_dir, filename))
 
-    def moveToMoviesDirectory(self):
-        """Move our downloaded file from the Incomplete Downloads directory to
-        the movies directory.
+    def move_to_movies_directory(self):
+        """Move our downloaded file from the Incomplete Downloads
+        directory to the movies directory.
         """
         if chatter:
-            logging.info("moveToMoviesDirectory: filename is %s", self.filename)
-        self.moveToDirectory(config.get(prefs.MOVIES_DIRECTORY))
+            logging.info("move_to_movies_directory: filename is %s",
+                         self.filename)
+        self.move_to_directory(config.get(prefs.MOVIES_DIRECTORY))
 
-    def moveToDirectory(self, directory):
+    def move_to_directory(self, directory):
         check_f(directory)
         if self.channelName:
-            channelName = filter_directory_name(self.channelName)
+            channel_name = filter_directory_name(self.channelName)
             # bug 10769: shutil and windows has problems with long
             # filenames, so we clip the directory name.
-            if len(channelName) > 80:
-                channelName = channelName[:80]
-            directory = os.path.join(directory, channelName)
-            try:
-                fileutil.makedirs(directory)
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
-                pass
+            if len(channel_name) > 80:
+                channel_name = channel_name[:80]
+            directory = os.path.join(directory, channel_name)
+            if not os.path.exists(directory):
+                try:
+                    fileutil.makedirs(directory)
+                except (SystemExit, KeyboardInterrupt):
+                    raise
+                except:
+                    pass
         newfilename = os.path.join(directory, self.shortFilename)
         if newfilename == self.filename:
             return
         newfilename = next_free_filename(newfilename)
         def callback():
             self.filename = newfilename
-            self.updateClient()
+            self.update_client()
         fileutil.migrate_file(self.filename, newfilename, callback)
 
     def get_eta(self):
@@ -488,77 +496,79 @@ class BGDownloader:
         else:
             return 0
 
-    ##
-    # Returns a float with the download rate in bytes per second
     def get_rate(self):
+        """Returns a float with the download rate in bytes per second
+        """
         if self.endTime != self.startTime:
-            rate = self.currentSize/(self.endTime-self.startTime)
+            rate = self.currentSize / (self.endTime - self.startTime)
         else:
             rate = self.rate
         return rate
 
-    def retryDownload(self):
+    def retry_download(self):
         self.retryDC = None
         self.start()
 
-    def handleTemporaryError(self, shortReason, reason):
+    def handle_temporary_error(self, shortReason, reason):
         self.state = u"offline"
         self.reasonFailed = reason
         self.shortReasonFailed = shortReason
         self.retryCount = self.retryCount + 1
         if self.retryCount >= len(RETRY_TIMES):
             self.retryCount = len(RETRY_TIMES) - 1
-        self.retryDC = eventloop.add_timeout(RETRY_TIMES[self.retryCount], self.retryDownload, "Logarithmic retry")
+        self.retryDC = eventloop.add_timeout(RETRY_TIMES[self.retryCount], self.retry_download, "Logarithmic retry")
         self.retryTime = datetime.datetime.now() + datetime.timedelta(seconds = RETRY_TIMES[self.retryCount])
-        self.updateClient()
+        self.update_client()
 
-    def handleError(self, shortReason, reason):
+    def handle_error(self, shortReason, reason):
         self.state = u"failed"
         self.reasonFailed = reason
         self.shortReasonFailed = shortReason
-        self.updateClient()
+        self.update_client()
 
-    def handleNetworkError(self, error):
+    def handle_network_error(self, error):
         if isinstance(error, httpclient.NetworkError):
-            if (isinstance(error, httpclient.MalformedURL) or 
-                    isinstance(error, httpclient.UnexpectedStatusCode)):
-                self.handleError(error.getFriendlyDescription(),
-                                 error.getLongDescription())
+            if ((isinstance(error, httpclient.MalformedURL)
+                 or isinstance(error, httpclient.UnexpectedStatusCode))):
+                self.handle_error(error.getFriendlyDescription(),
+                                  error.getLongDescription())
             else:
-                self.handleTemporaryError(error.getFriendlyDescription(),
-                                          error.getLongDescription())
+                self.handle_temporary_error(error.getFriendlyDescription(),
+                                            error.getLongDescription())
         else:
-            logging.info("WARNING: grab_url errback not called with NetworkError")
-            self.handleError(str(error), str(error))
+            logging.info("WARNING: grab_url errback not called with "
+                         "NetworkError")
+            self.handle_error(str(error), str(error))
 
-    def handleGenericError(self, longDescription):
-        self.handleError(_("Error"), longDescription)
+    def handle_generic_error(self, longDescription):
+        self.handle_error(_("Error"), longDescription)
 
-    ##
-    # Checks the download file size to see if we can accept it based on the 
-    # user disk space preservation preference
-    def acceptDownloadSize(self, size):
+    def accept_download_size(self, size):
+        """Checks the download file size to see if we can accept it
+        based on the user disk space preservation preference
+        """
         accept = True
         if config.get(prefs.PRESERVE_DISK_SPACE):
             if size < 0:
                 size = 0
-            preserved = config.get(prefs.PRESERVE_X_GB_FREE) * 1024 * 1024 * 1024
+            preserved = (config.get(prefs.PRESERVE_X_GB_FREE) *
+                         1024 * 1024 * 1024)
             available = get_available_bytes_for_movies() - preserved
             accept = (size <= available)
         return accept
 
-
 class HTTPDownloader(BGDownloader):
     CHECK_STATS_TIMEOUT = 1.0
 
-    def __init__(self, url = None, dlid = None, restore = None, expectedContentType = None):
+    def __init__(self, url=None, dlid=None, restore=None,
+                 expectedContentType=None):
         self.retryDC = None
         self.channelName = None
         self.expectedContentType = expectedContentType
         if restore is not None:
             if not isinstance(restore.get('totalSize', 0), int):
-                # Sometimes restoring old downloaders caused errors because
-                # their totalSize wasn't an int.  (see #3965)
+                # Sometimes restoring old downloaders caused errors
+                # because their totalSize wasn't an int.  (see #3965)
                 restore['totalSize'] = int(restore['totalSize'])
         if restore is not None:
             self.__dict__.update(restore)
@@ -569,29 +579,30 @@ class HTTPDownloader(BGDownloader):
         self.client = None
         self.rate = 0
         if self.state == 'downloading':
-            self.startDownload()
+            self.start_download()
         elif self.state == 'offline':
             self.start()
         else:
-            self.updateClient()
+            self.update_client()
 
-    def startNewDownload(self):
+    def start_new_download(self):
         """Start a download, discarding any existing data"""
         self.currentSize = 0
         self.totalSize = -1
-        self.startDownload(resume=False)
+        self.start_download(resume=False)
 
-    def startDownload(self, resume=True):
+    def start_download(self, resume=True):
         if self.retryDC:
             self.retryDC.cancel()
             self.retryDC = None
         if resume:
             resume = self._resume_sanity_check()
 
-        self.client = httpclient.grab_url(self.url,
-                self.on_download_finished, self.on_download_error,
-                header_callback=self.on_headers, write_file=self.filename, resume=resume)
-        self.updateClient()
+        self.client = httpclient.grab_url(
+            self.url, self.on_download_finished, self.on_download_error,
+            header_callback=self.on_headers, write_file=self.filename,
+            resume=resume)
+        self.update_client()
         eventloop.add_timeout(self.CHECK_STATS_TIMEOUT, self.update_stats,
                 'update http downloader stats')
 
@@ -607,8 +618,8 @@ class HTTPDownloader(BGDownloader):
         # preallocate the entire file, so we need to undo this.
         file_size = os.stat(self.filename)[stat.ST_SIZE]
         if file_size > self.currentSize:
-            # use logging.info rather than warn, since this is the usual
-            # case from upgrading from 3.0.x to 3.1
+            # use logging.info rather than warn, since this is the
+            # usual case from upgrading from 3.0.x to 3.1
             logging.info("File larger than currentSize: truncating.  "
                     "url: %s, path: %s.", self.url, self.filename)
             f = open(self.filename, "ab")
@@ -622,49 +633,50 @@ class HTTPDownloader(BGDownloader):
         return True
 
     def destroy_client(self):
-        self.update_stats() # update the stats before we throw away the client.
+        """update the stats before we throw away the client.
+        """
+        self.update_stats()
         self.client = None
 
-    def cancelRequest(self, remove_file=False):
+    def cancel_request(self, remove_file=False):
         if self.client is not None:
             self.client.cancel(remove_file=remove_file)
             self.destroy_client()
 
-    def handleError(self, shortReason, reason):
-        BGDownloader.handleError(self, shortReason, reason)
-        self.cancelRequest()
-        try:
-            fileutil.remove(self.filename)
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            pass
+    def handle_error(self, shortReason, reason):
+        BGDownloader.handle_error(self, shortReason, reason)
+        self.cancel_request()
+        if os.path.exists(self.filename):
+            try:
+                fileutil.remove(self.filename)
+            except OSError:
+                pass
         self.currentSize = 0
         self.totalSize = -1
 
-    def handleTemporaryError(self, shortReason, reason):
-        BGDownloader.handleTemporaryError(self, shortReason, reason)
-        self.cancelRequest()
+    def handle_temporary_error(self, shortReason, reason):
+        BGDownloader.handle_temporary_error(self, shortReason, reason)
+        self.cancel_request()
 
-    def handleWriteError(self, error):
+    def handle_write_error(self, error):
         text = (_("Could not write to %(filename)s") %
                 {"filename": stringify(self.filename)})
-        self.handleGenericError(text)
+        self.handle_generic_error(text)
 
     def on_headers(self, info):
         if 'total-size' in info:
             self.totalSize = info['total-size']
-        if not self.acceptDownloadSize(self.totalSize):
-            self.handleError(_("Not enough disk space"),
+        if not self.accept_download_size(self.totalSize):
+            self.handle_error(_("Not enough disk space"),
                 _("%(amount)s MB required to store this video") %
                   {"amount": self.totalSize / (2 ** 20)})
             return
-        # We should successfully download the file.  Reset retryCount and
-        # accept defeat if we see an error.
+        # We should successfully download the file.  Reset retryCount
+        # and accept defeat if we see an error.
         self.retryCount = -1
         self.restartOnError = False
-        # update shortFilename based on the headers.  This will affect how we
-        # move the file once the download is finished
+        # update shortFilename based on the headers.  This will affect
+        # how we move the file once the download is finished
         self.shortFilename = clean_filename(info['filename'])
 
     def on_download_error(self, error):
@@ -672,13 +684,13 @@ class HTTPDownloader(BGDownloader):
             # try starting from scratch
             self.currentSize = 0
             self.totalSize = -1
-            self.startNewDownload()
+            self.start_new_download()
         elif self.restartOnError:
             self.restartOnError = False
-            self.startDownload()
+            self.start_download()
         else:
             self.destroy_client()
-            self.handleNetworkError(error)
+            self.handle_network_error(error)
 
     def on_download_finished(self, response):
         self.destroy_client()
@@ -687,19 +699,20 @@ class HTTPDownloader(BGDownloader):
             self.totalSize = self.currentSize
         self.endTime = clock()
         try:
-            self.moveToMoviesDirectory()
+            self.move_to_movies_directory()
         except IOError, e:
-            self.handleWriteError(e)
-        self.updateClient()
+            self.handle_write_error(e)
+        self.update_client()
 
-    def getStatus(self):
-        data = BGDownloader.getStatus(self)
+    def get_status(self):
+        data = BGDownloader.get_status(self)
         data['dlerType'] = 'HTTP'
         return data
 
-    ##
-    # Update the download rate and eta based on receiving length bytes
     def update_stats(self):
+        """Update the download rate and eta based on receiving length
+        bytes.
+        """
         if self.client is None or self.state != 'downloading':
             return
         stats = self.client.get_stats()
@@ -707,20 +720,20 @@ class HTTPDownloader(BGDownloader):
         self.rate = stats.download_rate
         eventloop.add_timeout(self.CHECK_STATS_TIMEOUT, self.update_stats,
                 'update http downloader stats')
-        downloadUpdater.queueUpdate(self)
+        DOWNLOAD_UPDATER.queue_update(self)
 
-    ##
-    # Pauses the download.
     def pause(self):
+        """Pauses the download.
+        """
         if self.state != "stopped":
-            self.cancelRequest()
+            self.cancel_request()
             self.state = "paused"
-            self.updateClient()
+            self.update_client()
 
-    ##
-    # Stops the download and removes the partially downloaded
-    # file.
     def stop(self, delete):
+        """Stops the download and removes the partially downloaded
+        file.
+        """
         if self.state == 'finished':
             if delete:
                 try:
@@ -731,32 +744,33 @@ class HTTPDownloader(BGDownloader):
                 except OSError:
                     pass
         else:
-            # Cancel the request, don't keep around partially downloaded data
-            self.cancelRequest(remove_file=True)
+            # Cancel the request, don't keep around partially
+            # downloaded data
+            self.cancel_request(remove_file=True)
         self.currentSize = 0
         self.state = "stopped"
-        self.updateClient()
+        self.update_client()
 
     def stop_upload(self):
         # HTTP downloads never upload.
         pass
 
-    ##
-    # Continues a paused or stopped download thread
     def start(self):
+        """Continues a paused or stopped download thread.
+        """
         if self.state in ('paused', 'stopped', 'offline'):
             self.state = "downloading"
-            self.startDownload()
+            self.start_download()
 
     def shutdown(self):
-        self.cancelRequest()
-        self.updateClient()
+        self.cancel_request()
+        self.update_client()
 
 class BTDownloader(BGDownloader):
     # update fast resume every 5 minutes
     FAST_RESUME_UPDATE_INTERVAL = 60 * 5
 
-    def __init__(self, url = None, item = None, restore = None):
+    def __init__(self, url=None, item=None, restore=None):
         self.metainfo = None
         self.torrent = None
         self.rate = self.eta = 0
@@ -772,16 +786,16 @@ class BTDownloader(BGDownloader):
         self.last_fast_resume_update = clock()
         if restore is not None:
             self.firstTime = False
-            self.restoreState(restore)
+            self.restore_state(restore)
         else:
             self.firstTime = True
             BGDownloader.__init__(self,url,item)
             self.run_downloader()
 
-    def _startTorrent(self):
+    def _start_torrent(self):
         try:
             torrent_info = lt.torrent_info(lt.bdecode(self.metainfo))
-            duplicate = torrentSession.find_duplicate_torrent(torrent_info)
+            duplicate = TORRENT_SESSION.find_duplicate_torrent(torrent_info)
             if duplicate is not None:
                 c = command.DuplicateTorrent(daemon.LAST_DAEMON,
                         duplicate.dlid, self.dlid)
@@ -789,47 +803,59 @@ class BTDownloader(BGDownloader):
                 return
             self.totalSize = torrent_info.total_size()
 
-            if self.firstTime and not self.acceptDownloadSize(self.totalSize):
-                self.handleError(_("Not enough disk space"),
-                                 _("%(amount)s MB required to store this video") % {"amount": self.totalSize / (2 ** 20)})
+            if self.firstTime and not self.accept_download_size(self.totalSize):
+                self.handle_error(
+                    _("Not enough disk space"),
+                    _("%(amount)s MB required to store this video",
+                      {"amount": self.totalSize / (2 ** 20)})
+                    )
                 return
 
             save_path = os.path.dirname(fileutil.expand_filename(self.filename))
             if self.fastResumeData:
-                self.torrent = torrentSession.session.add_torrent(torrent_info, save_path, lt.bdecode(self.fastResumeData), lt.storage_mode_t.storage_mode_allocate)
+                self.torrent = TORRENT_SESSION.session.add_torrent(
+                    torrent_info, save_path, lt.bdecode(self.fastResumeData),
+                    lt.storage_mode_t.storage_mode_allocate)
                 self.torrent.resume()
             else:
-                self.torrent = torrentSession.session.add_torrent(torrent_info, save_path, None, lt.storage_mode_t.storage_mode_allocate)
+                self.torrent = TORRENT_SESSION.session.add_torrent(
+                    torrent_info, save_path, None,
+                    lt.storage_mode_t.storage_mode_allocate)
             try:
                 if (lt.version_major, lt.version_minor) > (0, 13):
-                    logging.debug("libtorrent version is (%d, %d), setting auto_managed to False", lt.version_major, lt.version_minor)
+                    logging.debug(
+                        "libtorrent version is (%d, %d), setting "
+                        "auto_managed to False", lt.version_major,
+                        lt.version_minor)
                     self.torrent.auto_managed(False)
             except AttributeError:
-                logging.warning("libtorrent module doesn't have version_major or version_minor")
+                logging.warning("libtorrent module doesn't have "
+                                "version_major or version_minor")
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
-            self.handleError(_('BitTorrent failure'), _('BitTorrent failed to startup'))
-            logging.exception("Exception thrown in _startTorrent")
+            self.handle_error(_('BitTorrent failure'),
+                              _('BitTorrent failed to startup'))
+            logging.exception("Exception thrown in _start_torrent")
         else:
-            torrentSession.add_torrent(self)
+            TORRENT_SESSION.add_torrent(self)
 
-    def _shutdownTorrent(self):
+    def _shutdown_torrent(self):
         try:
-            torrentSession.remove_torrent(self)
+            TORRENT_SESSION.remove_torrent(self)
             if self.torrent is not None:
                 self.torrent.pause()
                 self.update_fast_resume_data()
-                torrentSession.session.remove_torrent(self.torrent, 0)
+                TORRENT_SESSION.session.remove_torrent(self.torrent, 0)
                 self.torrent = None
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
             logging.exception("Error shutting down torrent")
 
-    def _pauseTorrent(self):
+    def _pause_torrent(self):
         try:
-            torrentSession.remove_torrent(self)
+            TORRENT_SESSION.remove_torrent(self)
             if self.torrent is not None:
                 self.torrent.pause()
         except (SystemExit, KeyboardInterrupt):
@@ -837,22 +863,23 @@ class BTDownloader(BGDownloader):
         except:
             logging.exception("Error pausing torrent")
 
-    def _resumeTorrent(self):
-        if self.torrent is not None:
-            try:
-                self.torrent.resume()
-                torrentSession.add_torrent(self)
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
-                logging.exception("Error resuming torrent")
-        else:
-            self._startTorrent()
+    def _resume_torrent(self):
+        if self.torrent is None:
+            self._start_torrent()
+            return
+
+        try:
+            self.torrent.resume()
+            TORRENT_SESSION.add_torrent(self)
+        except (SystemExit, KeyboardInterrupt):
+            raise
+        except:
+            logging.exception("Error resuming torrent")
 
     def update_status(self):
         """
         activity -- string specifying what's currently happening or None for
-                normal operations.  
+                normal operations.
         upRate -- upload rate in B/s
         downRate -- download rate in B/s
         upTotal -- total MB uploaded
@@ -861,7 +888,6 @@ class BTDownloader(BGDownloader):
         timeEst -- estimated completion time, in seconds.
         totalSize -- total size of the torrent in bytes
         """
-
         status = self.torrent.status()
         self.totalSize = status.total_wanted
         self.rate = status.download_payload_rate
@@ -870,7 +896,8 @@ class BTDownloader(BGDownloader):
         self.seeders = status.num_complete
         self.leechers = status.num_incomplete
         try:
-            self.eta = (status.total_wanted - status.total_wanted_done) / float(status.download_payload_rate)
+            self.eta = ((status.total_wanted - status.total_wanted_done) /
+                        float(status.download_payload_rate))
         except ZeroDivisionError:
             self.eta = 0
         if status.state == lt.torrent_status.states.queued_for_checking:
@@ -882,17 +909,19 @@ class BTDownloader(BGDownloader):
         else:
             self.activity = None
         self.currentSize = status.total_wanted_done
-        if self.state == "downloading" and status.state == lt.torrent_status.states.seeding:
-            self.moveToMoviesDirectory()
+        if ((self.state == "downloading"
+             and status.state == lt.torrent_status.states.seeding)):
+            self.move_to_movies_directory()
             self.state = "uploading"
             self.endTime = clock()
-            self.updateClient()
+            self.update_client()
         else:
-            downloadUpdater.queueUpdate(self)
+            DOWNLOAD_UPDATER.queue_update(self)
 
         if config.get(prefs.LIMIT_UPLOAD_RATIO):
             if status.state == lt.torrent_status.states.seeding:
-                if float(self.uploaded)/self.totalSize > config.get(prefs.UPLOAD_RATIO):
+                if ((float(self.uploaded) / self.totalSize >
+                     config.get(prefs.UPLOAD_RATIO))):
                     self.stop_upload()
 
         if self.should_update_fast_resume_data():
@@ -906,23 +935,23 @@ class BTDownloader(BGDownloader):
         self.last_fast_resume_update = clock()
         self.fastResumeData = lt.bencode(self.torrent.write_resume_data())
 
-    def handleError(self, shortReason, reason):
-        self._shutdownTorrent()
-        BGDownloader.handleError(self, shortReason, reason)
+    def handle_error(self, shortReason, reason):
+        self._shutdown_torrent()
+        BGDownloader.handle_error(self, shortReason, reason)
 
-    def handleTemporaryError(self, shortReason, reason):
-        self._shutdownTorrent()
-        BGDownloader.handleTemporaryError(self, shortReason, reason)
+    def handle_temporary_error(self, shortReason, reason):
+        self._shutdown_torrent()
+        BGDownloader.handle_temporary_error(self, shortReason, reason)
 
-    def moveToDirectory(self, directory):
+    def move_to_directory(self, directory):
         if self.state in ('uploading', 'downloading'):
-            self._shutdownTorrent()
-            BGDownloader.moveToDirectory(self, directory)
-            self._resumeTorrent()
+            self._shutdown_torrent()
+            BGDownloader.move_to_directory(self, directory)
+            self._resume_torrent()
         else:
-            BGDownloader.moveToDirectory(self, directory)
+            BGDownloader.move_to_directory(self, directory)
 
-    def restoreState(self, data):
+    def restore_state(self, data):
         self.__dict__.update(data)
         self.rate = self.eta = 0
         self.upRate = 0
@@ -932,8 +961,8 @@ class BTDownloader(BGDownloader):
         elif self.state == 'offline':
             self.start()
 
-    def getStatus(self):
-        data = BGDownloader.getStatus(self)
+    def get_status(self):
+        data = BGDownloader.get_status(self)
         data['upRate'] = self.upRate
         data['uploaded'] = self.uploaded
         data['metainfo'] = self.metainfo
@@ -949,37 +978,35 @@ class BTDownloader(BGDownloader):
 
     def get_eta(self):
         return self.eta
-        
+
     def pause(self):
         self.state = "paused"
         self.restarting = True
-        self._pauseTorrent()
-        self.updateClient()
+        self._pause_torrent()
+        self.update_client()
 
     def stop(self, delete):
         self.state = "stopped"
-        self._shutdownTorrent()
-        self.updateClient()
+        self._shutdown_torrent()
+        self.update_client()
         if delete:
             try:
                 if fileutil.isdir(self.filename):
                     fileutil.rmtree(self.filename)
                 else:
                     fileutil.remove(self.filename)
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
+            except OSError:
                 pass
 
     def stop_upload(self):
         self.state = "finished"
-        self._shutdownTorrent()
-        self.updateClient()
+        self._shutdown_torrent()
+        self.update_client()
 
     def pause_upload(self):
         self.state = "uploading-paused"
-        self._shutdownTorrent()
-        self.updateClient()
+        self._shutdown_torrent()
+        self.update_client()
 
     def start(self):
         if self.state not in ('paused', 'stopped', 'offline'):
@@ -989,14 +1016,14 @@ class BTDownloader(BGDownloader):
         if self.retryDC:
             self.retryDC.cancel()
             self.retryDC = None
-        self.updateClient()
-        self.getMetainfo()
+        self.update_client()
+        self.get_metainfo()
 
     def shutdown(self):
-        self._shutdownTorrent()
-        self.updateClient()
+        self._shutdown_torrent()
+        self.update_client()
 
-    def gotMetainfo(self):
+    def got_metainfo(self):
         # FIXME: If the client is stopped before a BT download gets
         #        its metadata, we never run this. It's not a huge deal
         #        because it only affects the incomplete filename
@@ -1009,45 +1036,48 @@ class BTDownloader(BGDownloader):
                     raise RuntimeError()
                 name = metainfo['info']['name']
             except RuntimeError:
-                self.handleCorruptTorrent()
+                self.handle_corrupt_torrent()
                 return
             self.shortFilename = utf8_to_filename(name)
             self.pick_initial_filename(suffix="", torrent=True)
-        self.updateClient()
-        self._resumeTorrent()
+        self.update_client()
+        self._resume_torrent()
 
-    def handleCorruptTorrent(self):
-        self.handleError(_("Corrupt Torrent"),
-                         _("The torrent file at %(url)s was not valid") % {"url": stringify(self.url)})
+    def handle_corrupt_torrent(self):
+        self.handle_error(
+            _("Corrupt Torrent"),
+            _("The torrent file at %(url)s was not valid",
+              {"url": stringify(self.url)})
+            )
 
-    def handleMetainfo(self, metainfo):
+    def handle_metainfo(self, metainfo):
         self.metainfo = metainfo
-        self.gotMetainfo()
+        self.got_metainfo()
 
     def check_description(self, data):
         if len(data) > MAX_TORRENT_SIZE or data[0] != 'd':
-            # Bailout if we get too much data or it doesn't begin with "d"
-            # (see #12301 for details)
+            # Bailout if we get too much data or it doesn't begin with
+            # "d" (see #12301 for details)
             eventloop.add_idle('description check failed',
-                    self.handleCorruptTorrent)
+                    self.handle_corrupt_torrent)
             return False
         else:
             return True
 
     def on_metainfo_download(self, info):
-        self.handleMetainfo(info['body'])
+        self.handle_metainfo(info['body'])
 
     def on_metainfo_download_error(self, exception):
-        self.handleNetworkError(exception)
+        self.handle_network_error(exception)
 
-    def getMetainfo(self):
+    def get_metainfo(self):
         if self.metainfo is None:
             if self.url.startswith('file://'):
                 path = get_file_url_path(self.url)
                 try:
                     metainfoFile = open(path, 'rb')
                 except IOError:
-                    self.handleError(_("Torrent file deleted"),
+                    self.handle_error(_("Torrent file deleted"),
                                      _("The torrent file for this item was deleted "
                                        "outside of %(appname)s.",
                                        {"appname": config.get(prefs.SHORT_APP_NAME)}
@@ -1059,16 +1089,16 @@ class BTDownloader(BGDownloader):
                 finally:
                     metainfoFile.close()
 
-                self.handleMetainfo(metainfo)
+                self.handle_metainfo(metainfo)
             else:
                 self.description_client = httpclient.grab_url(self.url,
                         self.on_metainfo_download,
                         self.on_metainfo_download_error,
                         content_check_callback=self.check_description)
         else:
-            self.gotMetainfo()
-                
+            self.got_metainfo()
+
     def run_downloader(self, done=False):
         self.restarting = done
-        self.updateClient()
-        self.getMetainfo()
+        self.update_client()
+        self.get_metainfo()

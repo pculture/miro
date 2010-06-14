@@ -34,8 +34,8 @@ from miro import eventloop
 requestIdGenerator = itertools.count()
 waitingHTTPAuthCallbacks = {}
 
-def handleHTTPAuthResponse(id, authHeader):
-    callback = waitingHTTPAuthCallbacks.pop(id)
+def handle_http_auth_response(id_, authHeader):
+    callback = waitingHTTPAuthCallbacks.pop(id_)
     callback(authHeader)
 
 def find_http_auth(callback, host, path):

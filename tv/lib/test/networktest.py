@@ -421,20 +421,20 @@ class ConnectionHandlerTest(EventLoopTest):
         self.assert_(self.received.read() == data)
 
     def test_read(self):
-        self.connectionHandler.changeState('foo')
+        self.connectionHandler.change_state('foo')
         self.remoteSocket.send('abc')
         self.runEventLoop(timeout=1)
         self.assertEquals(self.connectionHandler.fooData, 'abc')
-        self.connectionHandler.changeState('bar')
+        self.connectionHandler.change_state('bar')
         self.remoteSocket.send('def')
         self.runEventLoop(timeout=1)
         self.assertEquals(self.connectionHandler.barData, 'def')
         self.remoteSocket.send('ghi')
-        self.connectionHandler.changeState('noread')
+        self.connectionHandler.change_state('noread')
         self.runEventLoop(timeout=0.1, timeoutNormal=True)
         self.assertEquals(self.connectionHandler.fooData, 'abc')
         self.assertEquals(self.connectionHandler.barData, 'def')
-        self.connectionHandler.changeState('foo')
+        self.connectionHandler.change_state('foo')
         self.runEventLoop(timeout=1)
         self.assertEquals(self.connectionHandler.fooData, 'abcghi')
 
@@ -445,7 +445,7 @@ class ConnectionHandlerTest(EventLoopTest):
         self.connectionHandler.close_connection()
 
     def test_remote_close(self):
-        self.connectionHandler.changeState('foo')
+        self.connectionHandler.change_state('foo')
         self.remoteSocket.shutdown(socket.SHUT_WR)
         self.runEventLoop()
         self.assertEquals(self.connectionHandler.gotHandleClose, True)

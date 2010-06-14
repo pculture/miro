@@ -76,7 +76,7 @@ def get_data_filename(short_app_name):
         # FIXME - can we do something better here on Windows
         # platforms?
         uid = "unknown"
-       
+
     return os.path.join(tempfile.gettempdir(),
             ('%s_Download_Daemon_%s.txt' % (short_app_name, uid)))
 
@@ -150,7 +150,7 @@ class Daemon(ConnectionHandler):
         raise error
 
     def on_connection(self, socket):
-        self.changeState('ready')
+        self.change_state('ready')
         for (comm, callback) in self.queued_commands:
             self.send(comm, callback)
         self.queued_commands = []
@@ -158,26 +158,24 @@ class Daemon(ConnectionHandler):
     def on_size(self):
         if self.buffer.length >= SIZE_OF_INT:
             (self.size,) = unpack("I", self.buffer.read(SIZE_OF_INT))
-            self.changeState('command')
+            self.change_state('command')
 
     def on_command(self):
         if self.buffer.length >= self.size:
             try:
                 comm = cPickle.loads(self.buffer.read(self.size))
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
+            except cPickle.UnpicklingError:
                 logging.exception("WARNING: error unpickling command.")
             else:
                 self.process_command(comm)
-            self.changeState('ready')
+            self.change_state('ready')
 
     def process_command(self, comm):
         trapcall.time_trap_call("Running: %s" % comm, self.run_command, comm)
 
     def run_command(self, comm):
         logging.debug("run command: %r", comm)
-        comm.setDaemon(self)
+        comm.set_daemon(self)
         comm.action()
 
     def send(self, comm, callback = None):
@@ -189,7 +187,7 @@ class Daemon(ConnectionHandler):
 
 class DownloaderDaemon(Daemon):
     def __init__(self, port, short_app_name):
-        # before anything else, write out our PID 
+        # before anything else, write out our PID
         write_pid(short_app_name, os.getpid())
         # connect to the controller and start our listen loop
         Daemon.__init__(self)
@@ -208,7 +206,7 @@ class DownloaderDaemon(Daemon):
         httpclient.cleanup_libcurl()
         logging.warning("downloader: connection closed -- quitting")
         from miro.dl_daemon import download
-        download.shutDown()
+        download.shutdown()
         import threading
         for thread in threading.enumerate():
             if thread != threading.currentThread() and not thread.isDaemon():
@@ -256,6 +254,8 @@ class ControllerDaemon(Daemon):
         c = command.InitialConfigCommand(self, data)
         c.send()
         config.add_change_callback(self.update_config)
+        self.shutdown_callback = None
+        self.shutdown_timeout_dc = None
 
     def start_downloader_daemon(self):
         start_download_daemon(self.read_pid(), self.port)
@@ -268,7 +268,7 @@ class ControllerDaemon(Daemon):
     def read_pid(self):
         short_app_name = config.get(prefs.SHORT_APP_NAME)
         return read_pid(short_app_name)
-            
+
     def handle_close(self, type_):
         if not self.shutdown:
             logging.warning("Downloader Daemon died")
@@ -285,13 +285,14 @@ class ControllerDaemon(Daemon):
     def shutdown_response(self):
         if self.shutdown_callback:
             self.shutdown_callback()
-        self.shutdown_timeout_dc.cancel()
+        if self.shutdown_timeout_dc:
+            self.shutdown_timeout_dc.cancel()
 
-    def shutdown_downloader_daemon(self, timeout=5, callback = None):
-        """Send the downloader daemon the shutdown command.  If it doesn't
-        reply before timeout expires, kill it.  (The reply is not sent until
-        the downloader daemon has one remaining thread and that thread will
-        immediately exit).
+    def shutdown_downloader_daemon(self, timeout=5, callback=None):
+        """Send the downloader daemon the shutdown command.  If it
+        doesn't reply before timeout expires, kill it.  (The reply is
+        not sent until the downloader daemon has one remaining thread
+        and that thread will immediately exit).
         """
         self.shutdown_callback = callback
         c = command.ShutDownCommand(self)
