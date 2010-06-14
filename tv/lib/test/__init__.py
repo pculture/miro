@@ -38,6 +38,11 @@ try:
 except ImportError:
     pass
 
+from miro import config
+from miro import prefs
+
+config.init_temporary()
+
 import unittest
 
 from miro.test.unicodetest import *
@@ -66,15 +71,11 @@ from miro.test.filetypestest import *
 
 # platform specific tests
 
-from miro import config
-from miro import prefs
-
 if config.get(prefs.APP_PLATFORM) == "linux":
     from miro.test.gtcachetest import *
     from miro.test.downloadertest import *
 elif config.get(prefs.APP_PLATFORM) == "osx":
     from miro.test.sparkletest import *
-
 
 def run_tests():
     import sys
