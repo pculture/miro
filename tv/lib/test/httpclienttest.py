@@ -51,6 +51,10 @@ class HTTPClientTestBase(EventLoopTest):
         self.assertNotEquals(self.grab_url_error, None)
         self.assertEquals(self.grab_url_info, None)
 
+    def check_nothing_called(self):
+        self.assertEquals(self.grab_url_error, None)
+        self.assertEquals(self.grab_url_info, None)
+
 class HTTPClientTest(HTTPClientTestBase):
     def test_simple_get(self):
         self.grab_url(self.httpserver.build_url('test.txt'))
@@ -420,10 +424,13 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.callback_handle = None
         self.setup_cancel()
         self.dialogs_seen = 0
+        self.dialog_callback = None
 
     def setup_answer(self, username, password, button=dialogs.BUTTON_OK):
         def handler(obj, dialog):
             self.dialogs_seen += 1
+            if self.dialog_callback:
+                self.dialog_callback()
             dialog.run_callback(button, unicode(username),
                     unicode(password))
         if self.callback_handle:
@@ -464,6 +471,41 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.setup_answer("wronguser", "wrongpass")
         self.grab_url(self.httpserver.build_url('protected.txt'))
         self.assertEquals(self.dialogs_seen, httpclient.MAX_AUTH_ATTEMPTS)
+
+    def test_quick_cancel(self):
+        # Try canceling before find_http_auth returns and make sure things
+        # work.
+        self.setup_answer("user", "password")
+        url = self.httpserver.build_url('protected.txt')
+        self.grab_url_error = self.grab_url_info = None
+        self.client = httpclient.grab_url(url, self.grab_url_callback,
+                self.grab_url_errback)
+        # at this point, our client should be finding the HTTP auth.  It
+        # shouldn't have started transfering data.
+        self.assertEquals(len(httpclient.curl_manager.transfer_map), 0)
+        self.client.cancel()
+        self.expecting_errback = True
+        eventloop.add_timeout(0.2, self.stopEventLoop, 'stopping event loop',
+                args=(False,))
+        self.runEventLoop(timeout=self.event_loop_timeout)
+        # make sure that the callback/errback weren't called and nothing is
+        # transfering
+        self.check_nothing_called()
+        self.assertEquals(len(httpclient.curl_manager.transfer_map), 0)
+
+    def test_cancel_while_waiting(self):
+        # Try canceling while we're waiting for the user to put in the
+        def on_dialog():
+            self.client.cancel()
+            eventloop.add_timeout(0.2, self.stopEventLoop,
+                    'stopping event loop', args=(False,))
+        self.dialog_callback = on_dialog
+        self.setup_answer("user", "password")
+        self.grab_url(self.httpserver.build_url('protected.txt'))
+        # make sure that the callback/errback weren't called and nothing is
+        # transfering
+        self.check_nothing_called()
+        self.assertEquals(len(httpclient.curl_manager.transfer_map), 0)
 
 class BadURLTest(HTTPClientTestBase):
     def setUp(self):

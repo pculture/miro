@@ -268,22 +268,73 @@ class CurlTransfer(object):
         self.content_check_callback = content_check_callback
         self.errback = errback
         self.http_auth_attempts = 0
+        self.canceled = False
 
         self.stats = TransferStats()
         self.lock = threading.Lock()
 
     def _reset_transfer_data(self):
         self.headers = {}
+        self.handle = None
         self.buffer = StringIO()
         self.saw_temporary_redirect = False
         self.headers_finished = False
         self._filehandle = None
         self.resume_from = 0
         self.out_headers = {}
-        auth = httpauth.find_http_auth(unicode(self.options.host),
+
+    def start(self):
+        if self.options.invalid_url:
+            self.call_errback(MalformedURL(self.options.url))
+            return
+        httpauth.find_http_auth(self._find_http_auth_callback,
+                unicode(self.options.host),
                 unicode(self.options.path))
+
+    def cancel(self, remove_file):
+        curl_manager.remove_transfer(self, remove_file)
+        self.canceled = True
+
+    def handle_http_auth(self):
+        self.http_auth_attempts += 1
+        if self.http_auth_attempts > MAX_AUTH_ATTEMPTS:
+            self.call_errback(AuthorizationFailed())
+            return
+        try:
+            auth_header = self.headers['www-authenticate']
+        except KeyError:
+            self.call_errback(AuthorizationFailed())
+            return
+
+        match = re.search("(\w+)\s+realm\s*=\s*\"(.*?)\"$", auth_header)
+        if match is None:
+            self.call_errback(AuthorizationFailed())
+            return
+
+        scheme = unicode(match.expand("\\1"))
+        realm = unicode(match.expand("\\2"))
+        httpauth.ask_for_http_auth(self._ask_for_http_auth_callback,
+                self.options.url, realm, scheme)
+
+    def _ask_for_http_auth_callback(self, auth):
+        if self.canceled:
+            return
+        if auth is None:
+            self.call_errback(AuthorizationFailed())
+        else:
+            self._reset_transfer_data()
+            self._set_http_auth(auth)
+            curl_manager.add_transfer(self)
+
+    def _find_http_auth_callback(self, auth):
+        if self.canceled:
+            return
         if auth is not None:
-            self.out_headers['Authorization'] = auth
+            self._set_http_auth(auth)
+        curl_manager.add_transfer(self)
+
+    def _set_http_auth(self, auth):
+        self.out_headers['Authorization'] = auth
 
     def build_handle(self):
         """Build a libCURL handle.  This should only be called inside the
@@ -411,36 +462,6 @@ class CurlTransfer(object):
             self.handle_http_auth()
         else:
             self.call_errback(UnexpectedStatusCode(info['status']))
-
-    def handle_http_auth(self):
-        self.http_auth_attempts += 1
-        if self.http_auth_attempts > MAX_AUTH_ATTEMPTS:
-            self.call_errback(AuthorizationFailed())
-            return
-        try:
-            auth_header = self.headers['www-authenticate']
-        except KeyError:
-            self.call_errback(AuthorizationFailed())
-            return
-
-        match = re.search("(\w+)\s+realm\s*=\s*\"(.*?)\"$", auth_header)
-        if match is None:
-            self.call_errback(AuthorizationFailed())
-            return
-
-        scheme = unicode(match.expand("\\1"))
-        realm = unicode(match.expand("\\2"))
-        httpauth.ask_for_http_auth(self.on_http_auth, self.options.url,
-                realm, scheme)
-
-    def on_http_auth(self, auth):
-        if auth is None:
-            self.call_errback(AuthorizationFailed())
-        else:
-            # Just restart the transfer, we should find the HTTP Auth when we
-            # call httpauth.find_http_auth()
-            self._reset_transfer_data()
-            curl_manager.add_transfer(self)
 
     def on_cancel(self, remove_file):
         self._cleanup_filehandle()
@@ -583,7 +604,6 @@ class LibCURLManager(eventloop.SimpleEventLoop):
         self.multi = pycurl.CurlMulti()
         self.transfer_map = {}
         self.transfers_to_add = Queue.Queue()
-        self.transfers_to_restart = Queue.Queue()
         self.transfers_to_remove = Queue.Queue()
         self.after_perform_callbacks = []
 
@@ -597,15 +617,15 @@ class LibCURLManager(eventloop.SimpleEventLoop):
         self.wakeup()
         self.thread.join()
 
-    def add_transfer(self, transfer):
-        if transfer.options.invalid_url:
-            transfer.call_errback(MalformedURL(transfer.options.url))
-            return
-        self.transfers_to_add.put(transfer)
-        self.wakeup()
+    def loop(self):
+        eventloop.SimpleEventLoop.loop(self)
+        for transfer in self.transfer_map.values():
+            self.multi.remove_handle(transfer.handle)
+            transfer.handle.close()
+        self.multi.close()
 
-    def restart_transfer(self):
-        self.transfers_to_restart.put(transfer)
+    def add_transfer(self, transfer):
+        self.transfers_to_add.put(transfer)
         self.wakeup()
 
     def remove_transfer(self, transfer, remove_file=False):
@@ -693,7 +713,7 @@ class HTTPClient(object):
         self.transfer = transfer
 
     def cancel(self, remove_file=False):
-        curl_manager.remove_transfer(self.transfer, remove_file)
+        self.transfer.cancel(remove_file)
 
     def get_stats(self):
         """Get the current download/upload stats
@@ -761,7 +781,7 @@ def grab_url(url, callback, errback, header_callback=None,
                 post_files, write_file)
         transfer = CurlTransfer(options, callback, errback, header_callback,
                 content_check_callback)
-        curl_manager.add_transfer(transfer)
+        transfer.start()
         return HTTPClient(transfer)
 
 def _grab_file_url(url, callback, errback, default_mime_type):
@@ -792,7 +812,7 @@ def _grab_headers_using_get(url, callback, errback):
     options = TransferOptions(url)
     options._cancel_on_body_data = True
     transfer = CurlTransfer(options, callback, errback)
-    curl_manager.add_transfer(transfer)
+    transfer.start()
     return HTTPClient(transfer)
 
 def grab_headers(url, callback, errback):
@@ -804,7 +824,7 @@ def grab_headers(url, callback, errback):
     options = TransferOptions(url)
     options.head_request = True
     transfer = CurlTransfer(options, callback, errback_intercept)
-    curl_manager.add_transfer(transfer)
+    transfer.start()
     return HTTPClient(transfer)
 
 def init_libcurl():

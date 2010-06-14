@@ -34,19 +34,25 @@ from miro import models
 def formatAuthString(auth):
     return "%s %s" % (auth.get_auth_scheme(), auth.get_auth_token())
 
-def find_http_auth(host, path):
+def find_http_auth(callback, host, path):
     """Find an HTTPAuthPassword object stored in the database
 
-    This method searches the database for already entered passwords.
+    This method searches the database for already entered passwords.  It
+    will find a string to use for the Authorization header or None.
 
-    :returns: will a string to use for the Authorization header or None
+    We use a callback to return the data because that's how we have to do it
+    inside the downloader daemon (see dl_daemon/private/httpauth.py).
+
+    :param callback: function to callback when we find the auth data
+    :param host: host to search against
+    :param path: path to search against
     """
     from miro import downloader
 
     auth = downloader.find_http_auth(host, path)
     if auth is not None:
         auth = formatAuthString(auth)
-    return auth
+    eventloop.add_idle(callback, 'find_http_auth callback', args=(auth,))
 
 def ask_for_http_auth(callback, url, realm, auth_scheme):
     """Ask the user for a username and password to login to a site.
