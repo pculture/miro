@@ -86,3 +86,5 @@ def run_tests():
     httpclient.init_libcurl()
     unittest.main(module=test)
     httpclient.cleanup_libcurl()
+    from miro.test import framework
+    framework.clean_up_temp_files()

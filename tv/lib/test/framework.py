@@ -77,6 +77,11 @@ class DummyController:
     def get_global_feed(self, url):
         return DummyGlobalFeed()
 
+FILES_TO_CLEAN_UP = []
+def clean_up_temp_files():
+    for mem in FILES_TO_CLEAN_UP:
+        shutil.rmtree(mem, ignore_errors=True)
+
 class MiroTestCase(unittest.TestCase):
     def setUp(self):
         self.tempdir = tempfile.mkdtemp()
@@ -130,7 +135,11 @@ class MiroTestCase(unittest.TestCase):
         eventloop._eventloop = eventloop.EventLoop()
 
         # Remove tempdir
-        shutil.rmtree(self.tempdir, ignore_errors=True)
+        shutil.rmtree(self.tempdir, onerror=self._on_rmtree_error)
+
+    def _on_rmtree_error(self, func, path, excinfo):
+        global FILES_TO_CLEAN_UP
+        FILES_TO_CLEAN_UP.append(path)
 
     def setup_downloader_log(self):
         handle, filename = tempfile.mkstemp(".log", dir=self.tempdir)
