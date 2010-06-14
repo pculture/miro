@@ -189,12 +189,12 @@ class TransferOptions(object):
             self.invalid_url = True
             return
         scheme, host, port, path = download_utils.parse_url(self.url)
-        if scheme not in ['http', 'https'] or host == '' or path == '':
-            self.invalid_url = True
-            return
         self.scheme = scheme
         self.host = host
         self.path = path
+        if scheme not in ['http', 'https'] or host == '' or path == '':
+            self.invalid_url = True
+            return
 
     def build_handle(self, out_headers):
         """Build a libCURL handle.  This should only be called inside the

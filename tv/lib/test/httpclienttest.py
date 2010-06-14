@@ -419,9 +419,11 @@ class HTTPAuthTest(HTTPClientTestBase):
         HTTPClientTestBase.setUp(self)
         self.callback_handle = None
         self.setup_cancel()
+        self.dialogs_seen = 0
 
     def setup_answer(self, username, password, button=dialogs.BUTTON_OK):
         def handler(obj, dialog):
+            self.dialogs_seen += 1
             dialog.run_callback(button, unicode(username),
                     unicode(password))
         if self.callback_handle:
@@ -458,8 +460,10 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.grab_url(self.httpserver.build_url('protected.txt'))
 
     def test_max_attempts(self):
-        # FIXME - implement
-        pass
+        self.expecting_errback = True
+        self.setup_answer("wronguser", "wrongpass")
+        self.grab_url(self.httpserver.build_url('protected.txt'))
+        self.assertEquals(self.dialogs_seen, httpclient.MAX_AUTH_ATTEMPTS)
 
 class BadURLTest(HTTPClientTestBase):
     def setUp(self):
@@ -532,8 +536,9 @@ class NetworkErrorTest(HTTPClientTestBase):
         class BogusLibcurlHandle:
             def errstr(self):
                 return 'libcurl error'
-        bogus_transfer = httpclient.CurlTransfer(None, self.grab_url_callback,
-                self.grab_url_errback)
+        options = httpclient.TransferOptions("http://example.com/")
+        bogus_transfer = httpclient.CurlTransfer(options,
+                self.grab_url_callback, self.grab_url_errback)
         bogus_transfer.on_error(123456, BogusLibcurlHandle())
         self.runPendingIdles()
 
