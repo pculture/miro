@@ -70,5 +70,9 @@ def startup():
     WindowsApplication().run()
     pipe_server.quit()
 
+    # sys.exit isn't sufficient--need to really end the process
+    from miro.plat.utils import exit_miro
+    exit_miro(0)
+
 if __name__ == "__main__":
     startup()
