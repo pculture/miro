@@ -354,6 +354,8 @@ class TableViewDelegate(NSObject):
 class VariableHeightTableViewDelegate(TableViewDelegate):
     def tableView_heightOfRow_(self, table_view, row):
         iter = table_view.dataSource().model.iter_for_row(table_view, row)
+        if iter is None:
+            return 12
         return calc_row_height(table_view, iter.value().values)
 
 class OutlineViewDelegate(NSObject):
