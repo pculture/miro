@@ -60,7 +60,7 @@ from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import dialogwidgets
 from miro.frontends.widgets.widgetutil import build_control_line
 from miro.plat import resources
-from miro.plat.utils import filename_to_unicode
+from miro.plat.utils import filename_to_unicode, get_logical_cpu_count
 from miro.gtcache import gettext as _
 from miro import gtcache
 
@@ -670,6 +670,31 @@ class PlaybackPanel(PanelBuilder):
         return v
 
 
+class ConversionsPanel(PanelBuilder):
+    def build_widget(self):
+        grid = dialogwidgets.ControlGrid()
+        
+        count = get_logical_cpu_count()
+        max_concurrent = []
+        for i in range(0, count):
+            max_concurrent.append((i+1, str(i+1)))
+        max_concurrent_menu = widgetset.OptionMenu([op[1] for op in max_concurrent])
+        attach_combo(max_concurrent_menu, prefs.MAX_CONCURRENT_CONVERSIONS, 
+            [op[0] for op in max_concurrent])
+
+        if count == 1:
+            max_concurrent_menu.disable()
+
+        grid.pack(dialogwidgets.label_with_note(
+            _("Allow this many concurrent conversions:"),
+            _("(changing this will not apply to currently running conversions)")),
+            dialogwidgets.ControlGrid.ALIGN_RIGHT)
+        grid.pack(max_concurrent_menu)
+        grid.end_line(spacing=4)
+
+        return grid.make_table()
+
+
 # Add the initial panels
 add_panel("general", _("General"), GeneralPanel, 'images/pref-tab-general.png')
 add_panel("feeds", _("Feeds"), FeedsPanel, 'images/pref-tab-feeds.png')
@@ -677,6 +702,7 @@ add_panel("downloads", _("Downloads"), DownloadsPanel, 'images/pref-tab-download
 add_panel("folders", _("Folders"), FoldersPanel, 'images/pref-tab-folders.png')
 add_panel("disk_space", _("Disk space"), DiskSpacePanel, 'images/pref-tab-disk-space.png')
 add_panel("playback", _("Playback"), PlaybackPanel, 'images/pref-tab-playback.png')
+add_panel("conversions", _("Conversions"), ConversionsPanel, 'image/pref-tab-conversions.png')
 
 class PreferencesWindow(widgetset.PreferencesWindow):
     def __init__(self):

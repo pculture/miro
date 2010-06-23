@@ -65,7 +65,6 @@ class VideoConversionManager(signals.SignalEmitter):
         self.pending_tasks = list()
         self.running_tasks = list()
         self.quit_flag = False
-        self.max_concurrent_tasks = utils.get_logical_cpu_count()
     
     def load_converters(self):
         platform = config.get(prefs.APP_PLATFORM)
@@ -165,7 +164,8 @@ class VideoConversionManager(signals.SignalEmitter):
         self._process_message_queue()
         
         notify_count = False
-        if len(self.pending_tasks) > 0 and len(self.running_tasks) < self.max_concurrent_tasks:
+        max_concurrent_tasks = int(config.get(prefs.MAX_CONCURRENT_CONVERSIONS))
+        if len(self.pending_tasks) > 0 and len(self.running_tasks) < max_concurrent_tasks:
             task = self.pending_tasks.pop()
             if not self._has_running_task(task.key):
                 self.running_tasks.append(task)
