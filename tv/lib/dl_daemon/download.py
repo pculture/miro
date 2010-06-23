@@ -61,6 +61,8 @@ _downloads = {}
 _lock = RLock()
 
 def config_received():
+    logging.info("libtorrent version is (%d, %d)",
+                 lt.version_major, lt.version_minor)
     TORRENT_SESSION.startup()
 
 def create_downloader(url, contentType, dlid):
@@ -177,6 +179,7 @@ def shutdown():
     logging.info("Shutting down downloaders...")
     for dlid in _downloads:
         _downloads[dlid].shutdown()
+    logging.info("Shutting down torrent session...")
     TORRENT_SESSION.shutdown()
 
 def restore_downloader(downloader):
@@ -598,6 +601,8 @@ class HTTPDownloader(BGDownloader):
         if resume:
             resume = self._resume_sanity_check()
 
+        logging.info("start_download: %s", self.url)
+
         self.client = httpclient.grab_url(
             self.url, self.on_download_finished, self.on_download_error,
             header_callback=self.on_headers, write_file=self.filename,
@@ -824,9 +829,7 @@ class BTDownloader(BGDownloader):
             try:
                 if (lt.version_major, lt.version_minor) > (0, 13):
                     logging.debug(
-                        "libtorrent version is (%d, %d), setting "
-                        "auto_managed to False", lt.version_major,
-                        lt.version_minor)
+                        "setting libtorrent auto_managed to False")
                     self.torrent.auto_managed(False)
             except AttributeError:
                 logging.warning("libtorrent module doesn't have "

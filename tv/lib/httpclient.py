@@ -608,6 +608,7 @@ class LibCURLManager(eventloop.SimpleEventLoop):
         self.after_perform_callbacks = []
 
     def start(self):
+        logging.info("pycurl: %s", pycurl.version)
         self.thread = threading.Thread(target=self.loop,
                 name="LibCURL Event Loop")
         self.thread.start()

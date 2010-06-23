@@ -87,15 +87,15 @@ def write_pid(short_app_name, pid):
 
     This method locks the pid file until the downloader exits.
 
-    On windows this is achieved by keeping the file open.
+    On Windows this is achieved by keeping the file open.
 
     On Linux/OS X, we use the fcntl.lockf() function.
     """
     global PIDFILE
-    # NOTE: we want to open the file in a mode the standard open() doesn't
-    # support.  We want to create the file if nessecary, but not truncate it
-    # if it's already around.  We can't truncate it because on unix we haven't
-    # locked the file yet.
+    # NOTE: we want to open the file in a mode the standard open()
+    # doesn't support.  We want to create the file if nessecary, but
+    # not truncate it if it's already around.  We can't truncate it
+    # because on unix we haven't locked the file yet.
     fd = os.open(get_data_filename(short_app_name), os.O_WRONLY | os.O_CREAT)
     PIDFILE = os.fdopen(fd, 'w')
     if os.name != "nt":
@@ -104,9 +104,9 @@ def write_pid(short_app_name, pid):
 
     PIDFILE.write("%s\n" % pid)
     PIDFILE.flush()
-    # NOTE: There may be extra data after the line we write left around from
-    # previous writes to the pid file.  This is fine since read_pid() only reads
-    # the 1st line.
+    # NOTE: There may be extra data after the line we write left
+    # around from previous writes to the pid file.  This is fine since
+    # read_pid() only reads the 1st line.
     #
     # NOTE 2: we purposely don't close the file, to achieve locking on
     # windows.
@@ -114,13 +114,9 @@ def write_pid(short_app_name, pid):
 def read_pid(short_app_name):
     try:
         f = open(get_data_filename(short_app_name), "r")
-    except IOError:
+        return int(f.readline())
+    except (IOError, ValueError):
         return None
-    try:
-        try:
-            return int(f.readline())
-        except ValueError:
-            return None
     finally:
         f.close()
 
@@ -136,9 +132,9 @@ class Daemon(ConnectionHandler):
         self.states['command'] = self.on_command
         self.queued_commands = []
         self.shutdown = False
-        # disable read timeouts for the downloader daemon communication.  Our
-        # normal state is to wait for long periods of time for without seeing
-        # any data.
+        # disable read timeouts for the downloader daemon
+        # communication.  Our normal state is to wait for long periods
+        # of time for without seeing any data.
         self.stream.disable_read_timeout = True
 
     def on_error(self, error):
@@ -196,15 +192,17 @@ class DownloaderDaemon(Daemon):
         signals.system.connect('error', self.handle_error)
 
     def handle_error(self, obj, report):
+        logging.error("Error: %s (%r) %s", obj, obj, report)
         command.DownloaderErrorCommand(self, report).send()
 
     def handle_close(self, type_):
         if self.shutdown:
             return
+        logging.info("downloader: quitting")
         self.shutdown = True
         eventloop.shutdown()
+        logging.info("Cleaning up libcurl")
         httpclient.cleanup_libcurl()
-        logging.warning("downloader: connection closed -- quitting")
         from miro.dl_daemon import download
         download.shutdown()
         import threading
@@ -271,7 +269,7 @@ class ControllerDaemon(Daemon):
 
     def handle_close(self, type_):
         if not self.shutdown:
-            logging.warning("Downloader Daemon died")
+            logging.error("Downloader daemon died")
             # FIXME: replace with code to recover here, but for now,
             # stop sending.
             self.shutdown = True
