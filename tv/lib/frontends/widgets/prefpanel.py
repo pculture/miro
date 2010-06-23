@@ -702,7 +702,7 @@ add_panel("downloads", _("Downloads"), DownloadsPanel, 'images/pref-tab-download
 add_panel("folders", _("Folders"), FoldersPanel, 'images/pref-tab-folders.png')
 add_panel("disk_space", _("Disk space"), DiskSpacePanel, 'images/pref-tab-disk-space.png')
 add_panel("playback", _("Playback"), PlaybackPanel, 'images/pref-tab-playback.png')
-add_panel("conversions", _("Conversions"), ConversionsPanel, 'image/pref-tab-conversions.png')
+add_panel("conversions", _("Conversions"), ConversionsPanel, 'images/pref-tab-conversions.png')
 
 class PreferencesWindow(widgetset.PreferencesWindow):
     def __init__(self):
