@@ -42,21 +42,13 @@ def launch():
     # Make all output flush immediately.
     # Don't add extra import statements here.  If there's a problem importing
     # something we want to see the error in the log.
+    import logging
     import sys
     import os
     from miro import util
-    import logging
-    log_path = os.environ.get('DEMOCRACY_DOWNLOADER_LOG')
-    if log_path is not None:
-        if os.environ.get('DEMOCRACY_DOWNLOADER_FIRST_LAUNCH') == '1':
-            log_mode = 'w'
-        else:
-            log_mode = 'a'
-        log = open(log_path, log_mode)
-        sys.stdout = sys.stderr = log
 
     sys.stdout = util.AutoFlushingStream(sys.stdout)
-    sys.stderr = util.AutoFlushingStream(sys.stderr)
+    sys.stderr = sys.stdout
 
     override_modules()
 

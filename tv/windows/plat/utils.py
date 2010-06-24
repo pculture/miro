@@ -153,6 +153,10 @@ class ApatheticRotatingFileHandler(RotatingFileHandler):
         except WindowsError:
             if not self.stream or self.stream.closed:
                 self.stream = open(self.baseFilename, "a")
+            try:
+                RotatingFileHandler.doRollover(self)
+            except WindowsError:
+                pass
 
     def shouldRollover(self, record):
         # if doRollover doesn't work, then we don't want to find ourselves
@@ -173,23 +177,41 @@ def setup_logging(in_downloader=False):
         return
 
     if in_downloader:
-        logging.basicConfig(level=logging.INFO,
-                format='%(asctime)s %(levelname)-8s %(message)s',
-                stream=sys.stderr)
-    else:
-        logger = logging.getLogger('')
-        logger.setLevel(logging.DEBUG)
+        if os.environ.get('MIRO_APP_VERSION', "").endswith("git"):
+            level = logging.DEBUG
+        else:
+            level = logging.INFO
+        logging.basicConfig(level=level,
+                            stream=sys.stderr)
+        pathname = os.environ.get("DEMOCRACY_DOWNLOADER_LOG")
+        if not pathname:
+            _loggingSetup = True
+            return
 
-        rotater = ApatheticRotatingFileHandler(config.get(prefs.LOG_PATHNAME), mode="a", maxBytes=100000, backupCount=5)
-        rotater.setLevel(logging.DEBUG)
-        formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
-        rotater.setFormatter(formatter)
-        logger.addHandler(rotater)
-        rotater.doRollover()
+    else:
+        level = logging.DEBUG
+        pathname = config.get(prefs.LOG_PATHNAME)
+        logging.basicConfig(level=level,
+                            stream=sys.stdout)
+
+    logger = logging.getLogger('')
+    # logger.setLevel(level)
+    rotater = ApatheticRotatingFileHandler(
+        pathname, mode="a", maxBytes=100000, backupCount=5)
+    rotater.setLevel(level)
+    formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
+    rotater.setFormatter(formatter)
+    logger.addHandler(rotater)
+    rotater.doRollover()
+    try:
         for record in prelogger.remove():
             logger.handle(record)
-        sys.stdout = AutoLoggingStream(logging.warn, '(from stdout) ')
-        sys.stderr = AutoLoggingStream(logging.error, '(from stderr) ')
+    except ValueError:
+        logging.info("No records from prelogger.")
+    sys.stdout = AutoLoggingStream(logging.warn, '(from stdout) ')
+    sys.stderr = AutoLoggingStream(logging.error, '(from stderr) ')
+
+    logging.info("Logging set up to %s at level %s", pathname, level)
 
     _loggingSetup = True
 
