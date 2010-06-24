@@ -117,8 +117,6 @@ def read_pid(short_app_name):
         return int(f.readline())
     except (IOError, ValueError):
         return None
-    finally:
-        f.close()
 
 LAST_DAEMON = None
 
