@@ -28,5 +28,8 @@ wget "http://ftp.gnome.org/pub/GNOME/binaries/win32/pygtk/2.16/pygtk-2.16.0.win3
 echo "Fetching PyGobject 2.20.0"
 wget "http://ftp.acc.umu.se/pub/GNOME/binaries/win32/pygobject/2.20/pygobject-2.20.0.win32-py2.6.exe"
 
-echo "PyCairo 1.8.6"
+echo "Fetching PyCairo 1.8.6"
 wget "http://ftp.acc.umu.se/pub/GNOME/binaries/win32/pycairo/1.8/pycairo-1.8.6.win32-py2.6.exe"
+
+echo "Fetching PyCurl 7.19.0.win32-py2.6"
+wget "http://www.lfd.uci.edu/~gohlke/pythonlibs/pycurl-ssl-7.19.0.win32-py2.6.exe"

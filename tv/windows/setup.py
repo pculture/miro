@@ -99,7 +99,6 @@ XULRUNNER_SDK_BIN_PATH = os.path.join(XULRUNNER_SDK_PATH, 'bin')
 
 VLC_PATH = os.path.join(BINARY_KIT_ROOT, 'libvlc')
 LIBTORRENT_PATH = os.path.join(BINARY_KIT_ROOT, 'libtorrent')
-PYCURL_PATH = os.path.join(BINARY_KIT_ROOT, 'pycurl')
 
 FFMPEG_PATH = os.path.join(BINARY_KIT_ROOT, 'ffmpeg')
 
@@ -158,10 +157,9 @@ sys.modules['miro'] = lib
 
 from miro import util
 
-# put the libtorrent and pycurl extensions on the path, so py2exe can find the
-# .pyd files
+# put the libtorrent extension on the path, so py2exe can find the
+# .pyd file
 sys.path.insert(0, LIBTORRENT_PATH)
-sys.path.insert(0, PYCURL_PATH)
 
 #### Extensions ####
 
