@@ -92,5 +92,11 @@ def launch():
     gtcache.init()
     logging.info("Daemon ready")
 
+    import libtorrent
+    logging.info("libtorrent:  %s", libtorrent.version)
+
+    import pycurl
+    logging.info("pycurl:      %s", pycurl.version)
+
 if __name__ == "__main__":
     launch()
