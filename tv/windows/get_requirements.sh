@@ -32,4 +32,6 @@ echo "Fetching PyCairo 1.8.6"
 wget "http://ftp.acc.umu.se/pub/GNOME/binaries/win32/pycairo/1.8/pycairo-1.8.6.win32-py2.6.exe"
 
 echo "Fetching PyCurl 7.19.0.win32-py2.6"
-wget "http://www.lfd.uci.edu/~gohlke/pythonlibs/pycurl-ssl-7.19.0.win32-py2.6.exe"
+echo "This comes from http://www.lfd.uci.edu/~gohlke/pythonlibs/ "
+echo "but they don't allow wget, so we fake the user-agent."
+wget -U "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.0rc3) Gecko/20020523" "http://www.lfd.uci.edu/~gohlke/pythonlibs/pycurl-ssl-7.19.0.win32-py2.6.exe"
