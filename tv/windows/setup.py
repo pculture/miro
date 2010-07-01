@@ -102,6 +102,8 @@ LIBTORRENT_PATH = os.path.join(BINARY_KIT_ROOT, 'libtorrent')
 
 FFMPEG_PATH = os.path.join(BINARY_KIT_ROOT, 'ffmpeg')
 
+VCREDIST_PATH = os.path.join(BINARY_KIT_ROOT, 'vc90redist')
+
 def find_data_files(dest_path_base, source_path):
     retval = []
     for path, dirs, files in os.walk(source_path):
@@ -250,6 +252,7 @@ data_files.append(('', [os.path.join(VLC_PATH, 'libvlc.dll')]))
 data_files.append(('', [os.path.join(VLC_PATH, 'libvlccore.dll')]))
 data_files.append(('', [os.path.join(LIBTORRENT_PATH, 'libtorrent.pyd')]))
 data_files.append(('', iglob(os.path.join(FFMPEG_PATH, '*'))))
+data_files.append(('', iglob(os.path.join(VCREDIST_PATH, '*'))))
 
 # handle the resources subdirectories.
 for dir in ('searchengines', 'images', 'conversions'):
