@@ -157,8 +157,9 @@ class OverlayPalette (NSWindowController):
         self.shareButton.setEnabled_(item_info.has_sharable_url)
         self.adjustContent(video_window, False)
         self.update_(nil)
-        self.suspendAutoHiding()
-        self.reveal(video_window)
+        if NSApplication.sharedApplication().isActive() and video_window.isVisible():
+            self.suspendAutoHiding()
+            self.reveal(video_window)
 
     def on_items_changed(self, changed):
         for item_info in changed:
