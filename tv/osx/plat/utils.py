@@ -97,10 +97,9 @@ def initialize_locale():
 
     if os.environ.get("MIRO_LANG"):
         os.environ["LANGUAGE"] = os.environ["MIRO_LANG"]
-        os.environ["LANG"] = locale.normalize(os.environ["MIRO_LANG"])
+        os.environ["LANG"] = os.environ["MIRO_LANG"]
     else:
         os.environ["LANGUAGE"] = ':'.join(languages)
-        os.environ["LANG"] = locale.normalize(languages[0])
 
     _locale_initialized = True
     del pool
