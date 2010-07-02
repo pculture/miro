@@ -142,6 +142,7 @@ class OverlayPalette (NSWindowController):
         self.volumeSlider.cursor = NSImage.imageNamed_(u'fs-volume-slider')
         self.volumeSlider.sliderWasClicked = self.volumeSliderWasClicked
         self.volumeSlider.sliderWasDragged = self.volumeSliderWasDragged
+        self.volumeSlider.sliderWasReleased = self.volumeSliderWasReleased
         self.volumeSlider.setShowCursor_(True)
 
     def setup(self, item_info, renderer, video_window):
@@ -405,6 +406,10 @@ class OverlayPalette (NSWindowController):
 
     def volumeSliderWasClicked(self, slider):
         self.volumeSliderWasDragged(slider)
+        
+    def volumeSliderWasReleased(self, slider):
+        volume = slider.floatValue() * MAX_VOLUME
+        app.widgetapp.on_volume_value_set(volume)
 
     def video_will_play(self, obj, duration):
         self.playPauseButton.setImage_(NSImage.imageNamed_(u'fs-button-pause'))

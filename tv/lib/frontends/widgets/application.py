@@ -251,7 +251,10 @@ class Application:
         self.on_volume_set(slider)
 
     def on_volume_set(self, slider):
-        config.set(prefs.VOLUME_LEVEL, slider.get_value())
+        self.on_volume_value_set(slider.get_value())
+    
+    def on_volume_value_set(self, value):
+        config.set(prefs.VOLUME_LEVEL, value)
         config.save()
 
     def on_play_clicked(self, button=None):
