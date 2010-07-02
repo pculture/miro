@@ -964,10 +964,12 @@ class EmptyListHeader(widgetset.Alignment):
 class EmptyListDescription(widgetset.Alignment):
     """Label for descriptions of empty item lists."""
     def __init__(self, text):
-        widgetset.Alignment.__init__(self, xalign=0.5, xscale=0.0)
+        widgetset.Alignment.__init__(self, xalign=0.5, xscale=0.5)
+        self.set_padding(18)
         self.label = widgetset.Label(text)
         self.label.set_color((0.8, 0.8, 0.8))
         self.label.set_wrap(True)
+        self.label.set_size_request(250, -1)
         self.add(self.label)
 
 class ItemContainerWidget(widgetset.VBox):
