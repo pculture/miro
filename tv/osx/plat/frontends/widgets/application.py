@@ -435,6 +435,13 @@ class AppController(NSObject):
                 logging.warn("No handler for %s" % action)
     
     def present_movie(self, mode):
+        # Make sure that the video window is not minimized and is the key window.
+        # (based on a patch by Geoffrey Lee, see #13545 and #13546)
+        if app.playback_manager.detached_window is None:
+            app.widgetapp.window.nswindow.makeKeyAndOrderFront_(nil)
+        else:
+            app.playback_manager.detached_window.nswindow.makeKeyAndOrderFront_(nil)
+        # We can now safely switch to presentation mode.
         if app.playback_manager.is_playing:
             app.playback_manager.set_presentation_mode(mode)
         else:
