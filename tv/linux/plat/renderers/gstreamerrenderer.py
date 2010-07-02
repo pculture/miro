@@ -26,6 +26,12 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+"""
+Note: This is documented in docs/developer/linux_renderer.rst.
+
+Please keep the docs up to date in regards to the API.
+"""
+
 import sys
 import logging
 import os
@@ -492,8 +498,8 @@ class VideoRenderer(Renderer):
         return tracks
 
     def get_subtitle_tracks(self):
-        """Returns a 2-tuple of (index, language) for available
-        tracks.
+        """Returns a list of 2-tuple of (index, language) for
+        available tracks.
         """
         if not self.supports_subtitles:
             return []

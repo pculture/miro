@@ -26,6 +26,7 @@ Contents:
    database_modules
    frontend_widgets_modules
    frontend_platform_widgets_modules
+   linux_renderer
 
 Indices and tables
 ==================
