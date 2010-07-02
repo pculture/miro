@@ -22,7 +22,7 @@ IRC
 
 Mailing list
 
-    http://participatoryculture.org/mailman/listinfo/develop
+    http://mailman.pculture.org/listinfo/develop
 
 Development web-site
 
