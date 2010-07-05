@@ -211,7 +211,7 @@ class FeedImpl(DDBObject):
         self.updating = False
         self.thumbURL = None
         self.initialUpdate = True
-        self.updateFreq = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)*60
+        self.updateFreq = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN) * 60
 
     @classmethod
     def orphaned_view(cls):
@@ -1156,7 +1156,6 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
     """
     Base class from which RSSFeedImpl and SavedSearchFeedImpl derive.
     """
-
     def setup_new(self, url, ufeed, title):
         FeedImpl.setup_new(self, url, ufeed, title)
         self.schedule_update_events(0)
@@ -1305,8 +1304,9 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             self.ufeed.signal_change()
 
         self.ufeed.recalc_counts()
-        self.truncate_old_items()
-        del self.old_items
+        if hasattr(self, "old_items"):
+            self.truncate_old_items()
+            del self.old_items
         self.signal_change()
 
     def truncate_old_items(self):
