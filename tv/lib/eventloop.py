@@ -41,6 +41,7 @@ import socket
 import heapq
 import Queue
 import logging
+import traceback
 from miro import trapcall
 from miro import signals
 from miro import util
@@ -178,6 +179,9 @@ class ThreadPool(object):
             except KeyboardInterrupt:
                 raise
             except Exception, exc:
+                logging.debug(">>> thread_loop: %s %s %s %s\n%s",
+                              func, name, args, kwargs,
+                              "".join(traceback.format_exc()))
                 func = errback
                 name = 'Thread Pool Errback (%s)' % name
                 args = (exc,)
