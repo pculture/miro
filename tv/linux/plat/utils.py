@@ -341,17 +341,23 @@ def get_ffmpeg_executable_path():
     """
     return "/usr/bin/ffmpeg"
 
-def customize_ffmpeg_parameters(default_parameters):
+def customize_ffmpeg_parameters(params):
     """Takes a list of parameters and modifies it based on
     platform-specific issues.  Returns the newly modified list of
     parameters.
 
-    :param default_parameters: list of parameters to modify
+    :param params: list of parameters to modify
 
     :returns: list of modified parameters that will get passed to
         ffmpeg
     """
-    return default_parameters
+    # on Linux, we have libfaac0, so we need to pass libfaac instead
+    # of aac for the -acodec if it's there.
+    if "-acodec" in params:
+        ind = params.index("-acodec")
+        if params[ind+1] == "aac":
+            params[ind+1] = "libfaac"
+    return params
 
 def get_ffmpeg2theora_executable_path():
     """Returns the location of the ffmpeg2theora binary.
