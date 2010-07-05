@@ -310,16 +310,27 @@ class ListItemView(widgetset.TableView):
         self.allow_multiple_select(True)
 
     def get_tooltip(self, iter, column):
-        if self._sort_name_to_column['name'] is not column:
-            return None
-        info = self.item_list.model[iter][0]
-        if info.description_text:
-            text = info.description_text
-            if len(text) > 1000:
-                text = text[:994] + ' [...]'
-            return text
-        else:
-            return None
+        if column == self._sort_name_to_column['name']:
+            info = self.item_list.model[iter][0]
+            if info.description_text:
+                text = info.description_text
+                if len(text) > 1000:
+                    text = text[:994] + ' [...]'
+                return text
+
+        elif column == self._sort_name_to_column['state']:
+            info = self.item_list.model[iter][0]
+            # this logic is replicated in style.StateCircleRenderer
+            # with text from style.StatusRenderer
+            if info.state == 'downloading':
+                return _("Downloading")
+            elif (info.downloaded and info.is_playable
+                  and not info.video_watched):
+                return _("Unplayed")
+            elif (not info.item_viewed and not info.expiration_date
+                  and not info.is_external):
+                return _("Newly Available")
+        return None
 
     def _make_column(self, header, renderer, sort_name, resizable=True):
         column = widgetset.TableColumn(header, renderer, info=0)
