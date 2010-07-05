@@ -38,7 +38,7 @@ from miro import feedparser
 # values from feedparser dicts that don't have to convert in
 # normalize_feedparser_dict()
 SIMPLE_FEEDPARSER_VALUES = (int, long, str, unicode, bool, NoneType,
-                            datetime, struct_time )
+                            datetime, struct_time)
 
 def normalize_feedparser_dict(fp_dict):
     """Convert FeedParserDicts to simple dictionaries."""
@@ -48,9 +48,10 @@ def normalize_feedparser_dict(fp_dict):
         if isinstance(value, feedparser.FeedParserDict):
             value = normalize_feedparser_dict(value)
         elif isinstance(value, dict):
-            value = dict((_convert_if_feedparser_dict(k),
-                _convert_if_feedparser_dict(v)) for (k, v) in
-                value.items())
+            value = dict(
+                (_convert_if_feedparser_dict(k),
+                 _convert_if_feedparser_dict(v))
+                for (k, v) in value.items())
         elif isinstance(value, list):
             value = [_convert_if_feedparser_dict(o) for o in value]
         elif isinstance(value, tuple):
@@ -58,12 +59,14 @@ def normalize_feedparser_dict(fp_dict):
         else:
             if not value.__class__ in SIMPLE_FEEDPARSER_VALUES:
                 raise ValueError("Can't normalize: %r (%s)" %
-                        (value, value.__class__))
+                                 (value, value.__class__))
         retval[key] = value
     return retval
 
 def _convert_if_feedparser_dict(obj):
+    """If it's a FeedParserDict, returns the converted dict.  Otherwise
+    returns the argument.
+    """
     if isinstance(obj, feedparser.FeedParserDict):
         return normalize_feedparser_dict(obj)
-    else:
-        return obj
+    return obj
