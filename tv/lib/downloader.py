@@ -239,14 +239,16 @@ class RemoteDownloader(DDBObject):
         if not self.id_exists():
             return
 
-        self.status['state'] = u"failed"
-        self.status['shortReasonFailed'] = error.getFriendlyDescription()
-        self.status['reasonFailed'] = error.getLongDescription()
-        self.signal_change()
+        # we can't get a content type.  it's possible that this is a
+        # retryable error so we're going to set the contentType to
+        # None and run the downloader.  it'll handle HTTP errors
+        # better than we will.
+        self.contentType = None
+        self.run_downloader()
 
     def get_content_type(self):
         httpclient.grab_headers(self.url, self.on_content_type,
-                self.on_content_type_error)
+                                self.on_content_type_error)
 
     @classmethod
     def initialize_daemon(cls):

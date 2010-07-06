@@ -95,6 +95,12 @@ class ServerClosedConnection(HTTPError):
         HTTPError.__init__(self, _('%(host)s closed connection',
                                    {"host": host}))
 
+class PossiblyTemporaryError(HTTPError):
+    def __init__(self, status):
+        self.friendlyDescription = _("Host returned %(status)s",
+                                     {"status": status})
+        self.longDescription = _("Please retry later")
+
 class ResumeFailed(HTTPError):
     def __init__(self, host):
         HTTPError.__init__(self, _('%(host)s doesn\'t support HTTP resume',
@@ -103,7 +109,7 @@ class ResumeFailed(HTTPError):
 class TooManyRedirects(HTTPError):
     def __init__(self, url):
         HTTPError.__init__(self, _('HTTP Redirection limit hit for %(url)s',
-            {"url": url}))
+                                   {"url": url}))
 
 class UnexpectedStatusCode(HTTPError):
     def __init__(self, code):
@@ -111,7 +117,7 @@ class UnexpectedStatusCode(HTTPError):
             self.friendlyDescription = _("File not found")
             self.longDescription = _("Got 404 status code")
         else:
-            HTTPError.__init__(self, _("Bad Status Code: %(code)s",
+            HTTPError.__init__(self, _("Host returned bad status code: %(code)s",
                                        {"code": util.unicodify(code)}))
         self.code = code
 
@@ -400,12 +406,12 @@ class CurlTransfer(object):
         try:
             header, value = line.split(":", 1)
         except ValueError:
-            logging.debug("DTV: Warning: Bad Header from %s", self.options.url)
+            logging.debug("Bad header from %s: no :", self.options.url, line)
             return
         value = value.strip()
         header = header.lstrip().lower()
         if value == '':
-            logging.debug("DTV: Warning: Bad Header from %s", self.options.url)
+            logging.debug("Bad header from %s: empty value", self.options.url)
 
         if header not in self.headers:
             self.headers[header] = value
@@ -460,6 +466,9 @@ class CurlTransfer(object):
             self.call_callback(info)
         elif info['status'] == 401:
             self.handle_http_auth()
+        elif info['status'] >= 500 and info['status'] < 600:
+            logging.info("possibly temporary error")
+            self.call_errback(PossiblyTemporaryError(info['status']))
         else:
             self.call_errback(UnexpectedStatusCode(info['status']))
 
@@ -534,7 +543,7 @@ class CurlTransfer(object):
     def call_errback(self, error):
         self._cleanup_filehandle()
         eventloop.add_idle(self.errback, 'curl transfer errback',
-                args=(error,))
+                           args=(error,))
 
     def _cleanup_filehandle(self):
         if self._filehandle is not None:

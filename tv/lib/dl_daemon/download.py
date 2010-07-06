@@ -519,8 +519,11 @@ class BGDownloader(object):
         self.retryCount = self.retryCount + 1
         if self.retryCount >= len(RETRY_TIMES):
             self.retryCount = len(RETRY_TIMES) - 1
-        self.retryDC = eventloop.add_timeout(RETRY_TIMES[self.retryCount], self.retry_download, "Logarithmic retry")
-        self.retryTime = datetime.datetime.now() + datetime.timedelta(seconds = RETRY_TIMES[self.retryCount])
+        self.retryDC = eventloop.add_timeout(RETRY_TIMES[self.retryCount],
+                                             self.retry_download, "Logarithmic retry")
+        now = datetime.datetime.now()
+        self.retryTime = now + datetime.timedelta(seconds=RETRY_TIMES[self.retryCount])
+        logging.info("Temporary error.  retrying at %s %s", self.retryTime, self.retryCount)
         self.update_client()
 
     def handle_error(self, shortReason, reason):
