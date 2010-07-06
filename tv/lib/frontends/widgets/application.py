@@ -288,7 +288,8 @@ class Application:
         app.playback_manager.set_playback_rate(-3.0)
 
     def on_stop_fast_playback(self, button):
-        app.playback_manager.set_playback_rate(1.0)
+        rate = 0.0 if app.playback_manager.is_paused else 1.0
+        app.playback_manager.set_playback_rate(rate)
 
     def on_fullscreen_clicked(self, button=None):
         app.playback_manager.fullscreen()

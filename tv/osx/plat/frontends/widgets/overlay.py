@@ -383,7 +383,7 @@ class OverlayPalette (NSWindowController):
         self.progressSlider.setFloatValue_(elapsed / total)
             
     def progressSliderWasClicked(self, slider):
-        if app.playback_manager.is_playing:
+        if app.playback_manager.is_playing and not app.playback_manager.is_paused:
             self.wasPlaying = True
             self.renderer.pause()
         app.playback_manager.seek_to(slider.floatValue())
