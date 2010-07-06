@@ -330,6 +330,23 @@ class PlaybackManager (signals.SignalEmitter):
         m = messages.SetItemResumeTime(item_info.id, resume_time)
         m.send_to_backend()
 
+    def fast_forward(self):
+        self.player.play()
+        self.set_playback_rate(3.0)
+        self.notify_update()
+        
+    def fast_backward(self):
+        self.player.play()
+        self.set_playback_rate(-3.0)
+        self.notify_update()
+
+    def stop_fast_playback(self):
+        if self.is_playing:
+            self.set_playback_rate(1.0)
+            if self.is_paused:
+                self.player.pause()
+            self.notify_update()
+
     def set_playback_rate(self, rate):
         if self.is_playing:
             self.player.set_playback_rate(rate)

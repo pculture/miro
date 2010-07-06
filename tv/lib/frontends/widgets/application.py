@@ -282,13 +282,13 @@ class Application:
         app.playback_manager.skip_backward()
 
     def on_fast_forward(self, button=None):
-        app.playback_manager.set_playback_rate(3.0)
+        app.playback_manager.fast_forward()
 
     def on_fast_backward(self, button=None):
-        app.playback_manager.set_playback_rate(-3.0)
+        app.playback_manager.fast_backward()
 
     def on_stop_fast_playback(self, button):
-        app.playback_manager.set_playback_rate(1.0)
+        app.playback_manager.stop_fast_playback()
 
     def on_fullscreen_clicked(self, button=None):
         app.playback_manager.fullscreen()
