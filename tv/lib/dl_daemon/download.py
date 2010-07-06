@@ -514,6 +514,8 @@ class BGDownloader(object):
 
     def handle_temporary_error(self, shortReason, reason):
         self.state = u"offline"
+        self.endTime = self.startTime = 0
+        self.rate = 0
         self.reasonFailed = reason
         self.shortReasonFailed = shortReason
         self.retryCount = self.retryCount + 1
