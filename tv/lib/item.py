@@ -774,7 +774,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             del self._size
 
     def _sync_title(self):
-        if ((self.has_downloader()
+        # for torrents that aren't from a feed, we use the filename
+        # as the title.
+        if ((self.is_external()
+             and self.has_downloader()
              and self.downloader.get_type() == "bittorrent"
              and self.downloader.get_state() == "downloading")):
             filename = os.path.basename(self.downloader.get_filename())
