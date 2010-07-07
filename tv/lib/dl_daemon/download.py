@@ -510,7 +510,8 @@ class BGDownloader(object):
 
     def retry_download(self):
         self.retryDC = None
-        self.start()
+        self.state = "downloading"
+        self.start_new_download()
 
     def handle_temporary_error(self, shortReason, reason):
         self.state = u"offline"
