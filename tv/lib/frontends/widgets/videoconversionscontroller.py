@@ -93,6 +93,10 @@ class VideoConversionsController(object):
         task = table_view.model[itr][0]
         if name == 'cancel' and not task.is_running():
             conversion_manager.cancel_pending(task)
+        elif name == 'open-log' and task.is_failed():
+            conversion_manager.open_log(task)
+        elif name == 'clear-failed' and task.is_failed():
+            conversion_manager.clear_failed_task(task)
         elif name == 'interrupt' and task.is_running():
             conversion_manager.cancel_running(task)
 
@@ -180,6 +184,7 @@ class VideoConversionCellRenderer(style.ItemRenderer):
     THUMB_WIDTH = 120
     THUMB_HEIGHT = 82
     PENDING_TASK_TEXT_COLOR = (0.8, 0.8, 0.8)
+    FAILED_TASK_TEXT_COLOR = (0.8, 0.0, 0.0)
     INTERRUPT_BUTTON = imagepool.get_surface(resources.path('images/video-download-cancel.png'))
     THUMB_OVERLAY = imagepool.get_surface(resources.path('images/thumb-overlay.png'), (THUMB_WIDTH, THUMB_HEIGHT))
 
@@ -228,7 +233,9 @@ class VideoConversionCellRenderer(style.ItemRenderer):
         title = cellpack.ClippedTextLine(layout.textbox(self.data.item_info.name))
         vbox.pack(cellpack.pad(title, top=12))
 
-        if self.data.is_running():
+        if self.data.is_failed():
+            vbox.pack(self._pack_failure_info(layout), expand=True)
+        elif self.data.is_running():
             vbox.pack(self._pack_progress(layout), expand=True)
         else:
             vbox.pack(self._pack_pending_controls(layout), expand=False)
@@ -251,6 +258,27 @@ class VideoConversionCellRenderer(style.ItemRenderer):
         
         vbox.pack_end(cellpack.pad(background, bottom=12))
         
+        return vbox
+
+    def _pack_failure_info(self, layout):
+        vbox = cellpack.VBox()
+
+        layout.set_font(0.8)
+        layout.set_text_color(self.ITEM_DESC_COLOR)
+        info_label1 = layout.textbox(_("Conversion to %s") % self.data.converter_info.name)
+        vbox.pack(cellpack.pad(info_label1, top=4))
+        layout.set_font(0.8, bold=True)
+        layout.set_text_color(self.FAILED_TASK_TEXT_COLOR)
+        info_label2 = layout.textbox(_("FAILED!"))
+        vbox.pack(cellpack.pad(info_label2, top=4))
+        
+        hbox = cellpack.HBox()
+        open_log_button = layout.button(_("Open log"), self.hotspot=='open-log', style='webby')
+        hbox.pack(cellpack.Hotspot('open-log', open_log_button))
+        clear_button = layout.button(_("Clear"), self.hotspot=='clear-failed', style='webby')
+        hbox.pack(cellpack.pad(cellpack.Hotspot('clear-failed', clear_button), left=8))
+        vbox.pack_end(cellpack.pad(cellpack.align_right(hbox), bottom=12))
+
         return vbox
 
     def _pack_pending_controls(self, layout):

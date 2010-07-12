@@ -200,8 +200,8 @@ class LibraryTabList(StaticTabListBase):
     def update_download_count(self, count, non_downloading_count):
         self.update_count('downloading', 'downloading', count, non_downloading_count)
 
-    def update_conversions_count(self, count):
-        self.update_count('conversions', 'downloading', count)
+    def update_conversions_count(self, running_count, failed_count):
+        self.update_count('conversions', 'downloading', running_count, failed_count)
 
     def update_new_video_count(self, count):
         self.update_count('videos', 'unwatched', count)

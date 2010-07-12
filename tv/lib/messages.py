@@ -1293,8 +1293,9 @@ class GetVideoConversionTasksList(FrontendMessage):
 class VideoConversionsCountChanged(FrontendMessage):
     """Informs the frontend that number of running conversions has changed.
     """
-    def __init__(self, count):
-        self.count = count
+    def __init__(self, running_count, failed_count):
+        self.running_count = running_count
+        self.failed_count = failed_count
 
 class VideoConversionTaskCreated(FrontendMessage):
     """Informs the frontend that a conversion task has been created.

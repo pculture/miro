@@ -108,6 +108,13 @@ class VideoConversionManager(signals.SignalEmitter):
     def cancel_pending(self, task):
         self._enqueue_message("cancel_pending", task=task)
     
+    def open_log(self, task):
+        if task.log_path is not None:
+            app.widgetapp.open_file(task.log_path)
+    
+    def clear_failed_task(self, task):
+        self._enqueue_message("cancel_running", task=task)
+    
     def fetch_tasks_list(self):
         self._enqueue_message("get_tasks_list")
     
@@ -165,7 +172,7 @@ class VideoConversionManager(signals.SignalEmitter):
         
         notify_count = False
         max_concurrent_tasks = int(config.get(prefs.MAX_CONCURRENT_CONVERSIONS))
-        if len(self.pending_tasks) > 0 and len(self.running_tasks) < max_concurrent_tasks:
+        if self._pending_tasks_count() > 0 and self._running_tasks_count() < max_concurrent_tasks:
             task = self.pending_tasks.pop()
             if not self._has_running_task(task.key):
                 self.running_tasks.append(task)
@@ -174,7 +181,7 @@ class VideoConversionManager(signals.SignalEmitter):
                 notify_count = True
 
         for task in list(self.running_tasks):
-            if task.is_finished():
+            if task.is_finished() and not task.is_failed():
                 self._notify_task_completed(task)
                 self.running_tasks.remove(task)
                 notify_count = True
@@ -208,6 +215,15 @@ class VideoConversionManager(signals.SignalEmitter):
         except Queue.Empty, e:
             pass
     
+    def _pending_tasks_count(self):
+        return len(self.pending_tasks)
+    
+    def _running_tasks_count(self):
+        return len([t for t in self.running_tasks if not t.is_failed()])
+        
+    def _failed_tasks_count(self):
+        return len([t for t in self.running_tasks if t.is_failed()])
+    
     def _has_running_task(self, key):
         for task in self.running_tasks:
             if task.key == key:
@@ -235,8 +251,9 @@ class VideoConversionManager(signals.SignalEmitter):
         message.send_to_frontend()
     
     def _notify_tasks_count(self):
-        count = len(self.running_tasks)
-        message = messages.VideoConversionsCountChanged(count)
+        running_count = self._running_tasks_count()
+        failed_count = self._failed_tasks_count()
+        message = messages.VideoConversionsCountChanged(running_count, failed_count)
         message.send_to_frontend()
     
     def _terminate(self):
@@ -269,6 +286,7 @@ class VideoConversionTask(object):
         self.progress = 0
         self.log_path = None
         self.log_file = None
+        self.process_handle = None
     
     def get_executable(self):
         raise NotImplementedError()
@@ -305,6 +323,9 @@ class VideoConversionTask(object):
 
     def is_finished(self):
         return self.thread is not None and not self.thread.isAlive()
+        
+    def is_failed(self):
+        return self.process_handle is not None and self.process_handle.returncode > 0
 
     def _loop(self):
         executable = self.get_executable()
@@ -346,6 +367,8 @@ class VideoConversionTask(object):
                             self._notify_progress()
         finally:
             self._stop_logging(self.progress < 1.0)
+            if self.is_failed():
+                conversion_manager._notify_tasks_count()
     
     def _stage_file(self):
         shutil.move(self.temp_output_path, self.final_output_path)
@@ -376,7 +399,7 @@ class VideoConversionTask(object):
         if not keep_file:
             eventloop.add_timeout(0.5, _remove_file, "removing file",
                                   args=(self.log_path,))
-        self.log_path = None
+            self.log_path = None
     
     def _notify_progress(self):
         message = messages.VideoConversionTaskProgressed(self)
