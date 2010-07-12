@@ -832,8 +832,8 @@ class Application:
         return True
     
     def _confirm_quit_if_converting(self):
-        running_count = len(videoconversion.conversion_manager.running_tasks)
-        pending_count = len(videoconversion.conversion_manager.pending_tasks)
+        running_count = videoconversion.conversion_manager.running_tasks_count()
+        pending_count = videoconversion.conversion_manager.pending_tasks_count()
         conversions_count = running_count + pending_count
         if config.get(prefs.WARN_IF_CONVERTING_ON_QUIT) and conversions_count > 0:
             ret = quitconfirmation.rundialog(

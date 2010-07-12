@@ -172,7 +172,7 @@ class VideoConversionManager(signals.SignalEmitter):
         
         notify_count = False
         max_concurrent_tasks = int(config.get(prefs.MAX_CONCURRENT_CONVERSIONS))
-        if self._pending_tasks_count() > 0 and self._running_tasks_count() < max_concurrent_tasks:
+        if self.pending_tasks_count() > 0 and self.running_tasks_count() < max_concurrent_tasks:
             task = self.pending_tasks.pop()
             if not self._has_running_task(task.key):
                 self.running_tasks.append(task)
@@ -215,13 +215,13 @@ class VideoConversionManager(signals.SignalEmitter):
         except Queue.Empty, e:
             pass
     
-    def _pending_tasks_count(self):
+    def pending_tasks_count(self):
         return len(self.pending_tasks)
     
-    def _running_tasks_count(self):
+    def running_tasks_count(self):
         return len([t for t in self.running_tasks if not t.is_failed()])
         
-    def _failed_tasks_count(self):
+    def failed_tasks_count(self):
         return len([t for t in self.running_tasks if t.is_failed()])
     
     def _has_running_task(self, key):
@@ -251,8 +251,8 @@ class VideoConversionManager(signals.SignalEmitter):
         message.send_to_frontend()
     
     def _notify_tasks_count(self):
-        running_count = self._running_tasks_count()
-        failed_count = self._failed_tasks_count()
+        running_count = self.running_tasks_count()
+        failed_count = self.failed_tasks_count()
         message = messages.VideoConversionsCountChanged(running_count, failed_count)
         message.send_to_frontend()
     
