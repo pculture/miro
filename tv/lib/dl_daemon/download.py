@@ -508,8 +508,7 @@ class BGDownloader(object):
 
     def retry_download(self):
         self.retryDC = None
-        self.state = "downloading"
-        self.start_new_download()
+        self.start(resume=False)
 
     def handle_temporary_error(self, shortReason, reason):
         self.state = u"offline"
@@ -766,12 +765,12 @@ class HTTPDownloader(BGDownloader):
         # HTTP downloads never upload.
         pass
 
-    def start(self):
+    def start(self, resume=False):
         """Continues a paused or stopped download thread.
         """
         if self.state in ('paused', 'stopped', 'offline'):
             self.state = "downloading"
-            self.start_download()
+            self.start_download(resume=resume)
 
     def shutdown(self):
         self.cancel_request()
@@ -1017,7 +1016,9 @@ class BTDownloader(BGDownloader):
         self._shutdown_torrent()
         self.update_client()
 
-    def start(self):
+    def start(self, resume=False):
+        # for BT downloads, resume doesn't mean anything, so we
+        # ignore it.
         if self.state not in ('paused', 'stopped', 'offline'):
             return
 
