@@ -36,6 +36,15 @@ show up in the Miro logs.  The logs are located in ``~/.miro``.
 Definitely worth looking here first for issues.
 
 
+Implementing a renderer
+=======================
+
+1. implement the API
+2. when your renderer hits an end-of-stream event, make sure it calls
+   ``app.playback_manager.on_movie_finished()``
+3. the xid comes from 
+
+
 API
 ===
 
@@ -156,9 +165,12 @@ API
 
    .. method:: set_widget(widget)
 
-      Called to set the widget for video rendering.  The widget will
-      have a ``persistent_window`` property which points to a
-      gtk.DrawingArea derivative.
+      Called to set the widget for video rendering.  
+
+      ``widget.persistent_window.xid`` holds the xid to display video
+      to.
+
+      ``widget.persistent_window`` is a gtk.DrawingArea derivative.
 
       :param widget: The window for showing video.
 
