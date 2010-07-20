@@ -118,6 +118,11 @@ class LinuxApplication(Application):
             logging.info("libtorrent:        unknown version")
         except ImportError:
             logging.exception("libtorrent won't load")
+        try:
+            import pycurl
+            logging.info("pycurl:            %s", pycurl.version)
+        except ImportError:
+            logging.exception("pycurl won't load")
         renderers.init_renderer()
         self.mediakeyhandler = mediakeys.get_media_key_handler()
         gtk.main()

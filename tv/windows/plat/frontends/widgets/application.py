@@ -62,7 +62,18 @@ class WindowsApplication(Application):
         logging.info("Gtk+ version:      %s", gtk.gtk_version)
         logging.info("PyGObject version: %s", gtk.ver)
         logging.info("PyGtk version:     %s", gtk.pygtk_version)
-
+        try:
+            import libtorrent
+            logging.info("libtorrent:        %s", libtorrent.version)
+        except AttributeError:
+            logging.info("libtorrent:        unknown version")
+        except ImportError:
+            logging.exception("libtorrent won't load")
+        try:
+            import pycurl
+            logging.info("pycurl:            %s", pycurl.version)
+        except ImportError:
+            logging.exception("pycurl won't load")
         app.video_renderer = app.audio_renderer = VLCRenderer()
         app.get_item_type = get_item_type
         self.initXULRunner()

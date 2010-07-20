@@ -87,6 +87,12 @@ def launch():
     httpclient.init_libcurl()
     eventloop.startup()
 
+    import libtorrent
+    logging.info("libtorrent: %s", libtorrent.version)
+
+    import pycurl
+    logging.info("pycurl:     %s", pycurl.version)
+
     # Hack to init gettext after we can get config information
     #
     # See corresponding hack in gtcache.py

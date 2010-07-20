@@ -61,8 +61,6 @@ _downloads = {}
 _lock = RLock()
 
 def config_received():
-    logging.info("libtorrent version is (%d, %d)",
-                 lt.version_major, lt.version_minor)
     TORRENT_SESSION.startup()
 
 def create_downloader(url, contentType, dlid):

@@ -73,6 +73,18 @@ class OSXApplication(Application):
         self.gotQuit = False
 
     def run(self):
+        try:
+            import libtorrent
+            logging.info("libtorrent:        %s", libtorrent.version)
+        except AttributeError:
+            logging.info("libtorrent:        unknown version")
+        except ImportError:
+            logging.exception("libtorrent won't load")
+        try:
+            import pycurl
+            logging.info("pycurl:            %s", pycurl.version)
+        except ImportError:
+            logging.exception("pycurl won't load")
         self.app_controller = AppController.alloc().initWithApp_(self)
         NSApplication.sharedApplication().setDelegate_(self.app_controller)
         NSApplicationMain(sys.argv)        
