@@ -130,7 +130,7 @@ def make_string_list(args):
 
 STOPPED, PAUSED, PLAYING = range(3)
 
-class VLCSniffer:
+class VLCSniffer(object):
     def __init__(self):
         plugin_dir = os.path.join(resources.appRoot(), 'vlc-plugins')
         self.exc = VLCException()
@@ -283,7 +283,7 @@ class VLCSniffer:
         libvlc.libvlc_media_player_pause(self.media_player, self.exc.ref())
         self.exc.check()
 
-class VLCRenderer:
+class VLCRenderer(object):
     def __init__(self):
         logging.info("Initializing VLC")
         plugin_dir = os.path.join(resources.appRoot(), 'vlc-plugins')
