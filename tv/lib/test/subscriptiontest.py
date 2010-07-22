@@ -133,51 +133,12 @@ REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM = u"""\
 </html>
 """ % SAMPLE_ATOM_SUBSCRIPTION_URL_1
 
-# -----------------------------------------------------------------------------
-
-OPML_FLAT = u"""\
-<?xml version="1.0" encoding="utf-8"?>
-<opml version="1.0">
-    <head>
-        <title>Sample OPML Flat Subscription List</title>
-    </head>
-    <body>
-        <outline text="Sample Dummy RSS Feed 1" type="rss" xmlUrl="%s" />
-        <outline text="Sample Dummy Atom Feed 1" type="rss" xmlUrl="%s" />
-        <outline text="Sample Dummy RSS Feed 2" type="rss" xmlUrl="%s" />
-        <outline text="Sample Dummy Atom Feed 2" type="rss" xmlUrl="%s" />
-    </body>
-</opml>
-""" % (SAMPLE_RSS_SUBSCRIPTION_URL_1, SAMPLE_ATOM_SUBSCRIPTION_URL_1, SAMPLE_RSS_SUBSCRIPTION_URL_2, SAMPLE_ATOM_SUBSCRIPTION_URL_2)
-
-OPML_NESTED = u"""\
-<?xml version="1.0" encoding="utf-8"?>
-<opml version="1.0">
-    <head>
-        <title>Sample OPML Flat Subscription List</title>
-    </head>
-    <body>
-        <outline text="folder 1">
-            <outline text="Sample Dummy RSS Feed 1" type="rss" xmlUrl="%s" />
-            <outline text="folder1-1">
-                <outline text="Sample Dummy Atom Feed 1" type="rss" xmlUrl="%s" />
-            </outline>
-        </outline>
-        <outline text="folder 2">
-            <outline text="folder2-1">
-                <outline text="Sample Dummy RSS Feed 2" type="rss" xmlUrl="%s" />
-            </outline>
-            <outline text="Sample Dummy Atom Feed 2" type="rss" xmlUrl="%s" />
-        </outline>
-    </body>
-</opml>
-""" % (SAMPLE_RSS_SUBSCRIPTION_URL_1, SAMPLE_ATOM_SUBSCRIPTION_URL_1, SAMPLE_RSS_SUBSCRIPTION_URL_2, SAMPLE_ATOM_SUBSCRIPTION_URL_2)
 
 # =============================================================================
 # Test case
 # =============================================================================
 
-class TestSubscription (MiroTestCase):
+class TestSubscription(MiroTestCase):
     autodiscover.REFLEXIVE_AUTO_DISCOVERY_OPENER = open
 
     def assertDiscovered(self, subscriptions, url):
@@ -226,26 +187,6 @@ class TestSubscription (MiroTestCase):
             self.assertDiscovered(subscriptions, SAMPLE_ATOM_SUBSCRIPTION_URL_1)
         finally:
             os.remove(REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM_FILENAME)
-
-    def test_flat_opml_subscriptions(self):
-        subscriptions = autodiscover.parse_content(OPML_FLAT)
-        self.assertEquals(len(subscriptions), 4)
-        for feed in subscriptions:
-            self.assertEquals(feed['type'], 'feed')
-        self.assert_(subscriptions[0]['url'] == SAMPLE_RSS_SUBSCRIPTION_URL_1)
-        self.assert_(subscriptions[1]['url'] == SAMPLE_ATOM_SUBSCRIPTION_URL_1)
-        self.assert_(subscriptions[2]['url'] == SAMPLE_RSS_SUBSCRIPTION_URL_2)
-        self.assert_(subscriptions[3]['url'] == SAMPLE_ATOM_SUBSCRIPTION_URL_2)
-
-    def test_nested_opml_subscriptions(self):
-        subscriptions = autodiscover.parse_content(OPML_NESTED)
-        self.assertEquals(len(subscriptions), 4)
-        for feed in subscriptions:
-            self.assertEquals(feed['type'], 'feed')
-        self.assert_(subscriptions[0]['url'] == SAMPLE_RSS_SUBSCRIPTION_URL_1)
-        self.assert_(subscriptions[1]['url'] == SAMPLE_ATOM_SUBSCRIPTION_URL_1)
-        self.assert_(subscriptions[2]['url'] == SAMPLE_RSS_SUBSCRIPTION_URL_2)
-        self.assert_(subscriptions[3]['url'] == SAMPLE_ATOM_SUBSCRIPTION_URL_2)
 
 class Testfind_subscribe_links(MiroTestCase):
     def test_garbage(self):

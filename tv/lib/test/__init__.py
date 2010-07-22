@@ -51,6 +51,7 @@ from miro.test.schematest import *
 from miro.test.storedatabasetest import *
 from miro.test.databasesanitytest import *
 from miro.test.subscriptiontest import *
+from miro.test.opmltest import *
 from miro.test.schedulertest import *
 from miro.test.networktest import *
 from miro.test.httpclienttest import *
