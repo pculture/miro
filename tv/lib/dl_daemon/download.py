@@ -1068,8 +1068,8 @@ class BTDownloader(BGDownloader):
         if len(data) > MAX_TORRENT_SIZE or data[0] != 'd':
             # Bailout if we get too much data or it doesn't begin with
             # "d" (see #12301 for details)
-            eventloop.add_idle('description check failed',
-                    self.handle_corrupt_torrent)
+            eventloop.add_idle(self.handle_corrupt_torrent,
+                               'description check failed')
             return False
         else:
             return True
