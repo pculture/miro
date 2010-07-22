@@ -58,6 +58,13 @@ def flatten(subscriptions):
     return list(_flat(subscriptions))
 
 def parse_file(path):
+    """Opens the file at path, parses it into a list of subscriptions,
+    and returns the list of subscriptions.  Each subscription is a
+    dict.
+
+    :param path: absolute path of the file to parse
+    :returns: list of subscriptions or None
+    """
     try:
         subscription_file = open(path, "r")
         content = subscription_file.read()
@@ -67,6 +74,12 @@ def parse_file(path):
         pass
 
 def parse_content(content):
+    """Parses content into a list of subscriptions, and returns the
+    list of subscriptions.  Each subscription is a dict.
+
+    :param content: utf-8 encoded string to parse
+    :returns: list of subscriptions or None
+    """
     try:
         dom = xml.dom.minidom.parseString(content)
     except (ExpatError, TypeError):
@@ -84,8 +97,6 @@ def parse_content(content):
         elif root.nodeName == "opml":
             subscriptions = opml.Importer().import_content(content)
             return flatten(subscriptions)
-        else:
-            return None
     finally:
         dom.unlink()
 
