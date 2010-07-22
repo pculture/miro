@@ -231,7 +231,7 @@ class Subscriber(object):
             title = feed_dict.get('title')
             if title is not None and title != '':
                 f.set_title(title)
-            auto_download_mode = feed_dict.get('auto_download')
+            auto_download_mode = feed_dict.get('auto_download_mode')
             if ((auto_download_mode is not None
                  and auto_download_mode in ['all', 'new', 'off'])):
                 f.set_auto_download_mode(auto_download_mode)
