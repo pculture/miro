@@ -34,9 +34,9 @@ import logging
 from miro import signals
 
 def trap_call(when, function, *args, **kwargs):
-    """Make a call to a function, but trap any exceptions and convert them int
-    error signals.  Return True if the function successfully completed, False
-    if it threw an exception
+    """Make a call to a function, but trap any exceptions and convert
+    them into error signals.  Return True if the function successfully
+    completed, False if it threw an exception
     """
     try:
         function(*args, **kwargs)
@@ -44,6 +44,7 @@ def trap_call(when, function, *args, **kwargs):
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
+        logging.debug("trap_call exception: %s %s %s", function, args, kwargs)
         signals.system.failed_exn(when)
         return False
 
