@@ -346,17 +346,14 @@ class OverlayPalette (NSWindowController):
         app.playback_manager.play_prev_item(from_user=True)
 
     def fastBackward_(self, sender):
-        self.fastSeek(-1)
+        app.playback_manager.fast_backward()
+        self.suspendAutoHiding()
 
     def skipForward_(self, sender):
         app.playback_manager.play_next_item()
 
     def fastForward_(self, sender):
-        self.fastSeek(1)
-
-    def fastSeek(self, direction):
-        rate = 3 * direction
-        app.playback_manager.set_playback_rate(rate)
+        app.playback_manager.fast_forward()
         self.suspendAutoHiding()
 
     def stopSeeking(self):
@@ -596,10 +593,15 @@ class SkipSeekButtonCell (NSButtonCell):
         self = super(SkipSeekButtonCell, self).init()
         self.primaryAction = action
         self.direction = direction
+        self.updateTimer = nil
         self.seekTimer = nil
         self.seekDelay = delay
         self.allowSkipping = True
         self.allowSeeking = True
+        if direction == -1:
+            self.fast_seek_func = app.playback_manager.fast_backward
+        else:
+            self.fast_seek_func = app.playback_manager.fast_forward
         return self
     
     def setAllowsFastSeeking(self, allow):
@@ -610,6 +612,8 @@ class SkipSeekButtonCell (NSButtonCell):
     
     def trackMouse_inRect_ofView_untilMouseUp_(self, event, frame, control, untilMouseUp):
         if self.allowSeeking:
+            self.updateTimer = NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_(0.5, self, 'updateSeekProgress:', nil, YES)
+            NSRunLoop.currentRunLoop().addTimer_forMode_(self.updateTimer, NSEventTrackingRunLoopMode)
             if self.seekDelay > 0.0:
                 self.seekTimer = NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_(self.seekDelay, self, 'fastSeek:', nil, NO)
                 NSRunLoop.currentRunLoop().addTimer_forMode_(self.seekTimer, NSEventTrackingRunLoopMode)
@@ -623,12 +627,19 @@ class SkipSeekButtonCell (NSButtonCell):
             control.sendAction_to_(self.primaryAction, self.target())
         else:
             self.target().stopSeeking()
+            if self.updateTimer is not nil:
+                self.updateTimer.invalidate()
+                self.updateTimer = nil
             
         return mouseIsUp
 
     def fastSeek_(self, timer):
-        self.target().fastSeek(self.direction)
+        self.target().suspendAutoHiding()
+        self.fast_seek_func()
         self.resetSeekTimer()
+    
+    def updateSeekProgress_(self, timer):
+        app.playback_manager.notify_update()
     
     def resetSeekTimer(self):
         if self.seekTimer is not nil:
