@@ -256,7 +256,6 @@ class PlaybackManager (signals.SignalEmitter):
         if start_at > 0:
             self.player.play_from_time(start_at)
         elif (config.get(prefs.RESUME_VIDEOS_MODE)
-               and resume_time > 10
                and not self.is_paused):
             self.player.play_from_time(resume_time)
         else:
@@ -325,6 +324,11 @@ class PlaybackManager (signals.SignalEmitter):
                 if resume_time > min(item_info.duration * 0.95,
                         item_info.duration - 30):
                     resume_time = 0
+            if resume_time < 3:
+                # if we're in the first three seconds, don't save the
+                # resume time.
+                # Note: this should match mark_as_watched time.
+                resume_time = 0
         else:
             resume_time = 0
         m = messages.SetItemResumeTime(item_info.id, resume_time)
@@ -372,6 +376,8 @@ class PlaybackManager (signals.SignalEmitter):
         self.play_next_item(False)
 
     def schedule_mark_as_watched(self, id_):
+        # Note: mark_as_watched time should match the minimum resume
+        # time in update_current_resume_time.
         self.mark_as_watched_timeout = timer.add(3, self.mark_as_watched, id_)
 
     def cancel_mark_as_watched(self):
