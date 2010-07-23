@@ -1629,6 +1629,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             if new_downloader is self.downloader:
                 return
             self.downloader.remove_item(self)
+        # Note: this is the attribute--not the property!
         self._downloader = new_downloader
         if new_downloader is not None:
             self.downloader_id = new_downloader.id
