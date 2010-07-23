@@ -341,6 +341,8 @@ class VideoRenderer(Renderer):
 
         self.textsink_name = "textoverlay"
 
+        self.output_widget = None
+
     def build_playbin(self):
         Renderer.build_playbin(self)
         self.watch_ids.append(self.bus.connect('sync-message::element', self.on_sync_message))
@@ -393,12 +395,12 @@ class VideoRenderer(Renderer):
         if message_name == 'prepare-xwindow-id':
             imagesink = message.src
             imagesink.set_property('force-aspect-ratio', True)
-            imagesink.set_xwindow_id(self.widget.persistent_window.xid)
+            imagesink.set_xwindow_id(self.output_widget.persistent_window.xid)
 
     def set_widget(self, widget):
         widget.connect("destroy", self.on_destroy)
         widget.connect("expose-event", self.on_expose)
-        self.widget = widget
+        self.output_widget = widget
         self.gc = widget.persistent_window.new_gc()
         self.gc.foreground = gtk.gdk.color_parse("black")
 
