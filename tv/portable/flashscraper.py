@@ -99,26 +99,6 @@ def _scrape_youtube_url(url, callback):
         logging.exception("youtube_callback: unable to scrape YouTube Video URL")
         callback(None)
 
-def _youtube_get_first_successful(info, current_url, urls, callback):
-    status = info["status"]
-
-    if status == 200:
-        if info.get("content-type"):
-            callback(current_url, unicode(info["content-type"]))
-        else:
-            callback(current_url)
-        return
-
-    if len(urls) == 0:
-        callback(None)
-        return
-
-    current_url, urls = urls[0], urls[1:]
-
-    logging.debug("youtube download: trying %s", current_url)
-    httpclient.grabHeaders(current_url, lambda x: _youtube_get_first_successful(x, current_url, urls, callback),
-            lambda x: _youtube_errback(x, callback))
-
 def _youtube_callback_step2(info, videoID, callback):
     try:
         body = info['body']
@@ -128,19 +108,25 @@ def _youtube_callback_step2(info, videoID, callback):
             callback(None)
             return
 
-        token = params['token'][0]
+        # fmt_url_map is a comma separated list of pipe separated
+        # pairs of fmt, url
+        fmt_url_map = params["fmt_url_map"][0].split(",")
+        fmt_url_map = dict([mem.split("|") for mem in fmt_url_map])
 
-        lodef_url = u"http://www.youtube.com/get_video?video_id=%s&t=%s&eurl=&el=embedded&ps=default" % (videoID, token)
-        urls = [# lodef_url + u"&fmt=35",
-                lodef_url + u"&fmt=22",
-                lodef_url + u"&fmt=18",
-                lodef_url]
-        logging.debug("youtube download: trying %s", urls[0])
-        # go through the urls we have until we find one that's successful or
-        # 404 on all of them.
-        httpclient.grabHeaders(urls[0],
-                lambda x: _youtube_get_first_successful(x, urls[0], urls[1:], callback),
-                lambda x: _youtube_errback(x, callback))
+        title = unicode(params.get("title", ["No title"])[0])
+
+        # http://en.wikipedia.org/wiki/YouTube#Quality_and_codecs
+        for fmt, content_type in [("22", u"video/mp4"),
+                                  ("18", u"video/mp4"),
+                                  ("5", u"video/x-flv")]:
+            if fmt in fmt_url_map:
+                new_url = fmt_url_map[fmt]
+                logging.debug("youtube download: trying %s", new_url)
+
+                callback(unicode(new_url), content_type)
+                return
+
+        _youtube_errback(info, callback)
 
     except:
         logging.exception("youtube_callback_step2: unable to scrape YouTube Video URL")
