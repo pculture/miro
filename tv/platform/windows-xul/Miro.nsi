@@ -26,8 +26,6 @@
 !define OLD_UNINSTALL_SHORTCUT1 "Uninstall Democracy Player.lnk"
 !define OLD_UNINSTALL_SHORTCUT2 "Uninstall Democracy.lnk"
 
-!define MIROBAR_EXE "askBarSetup-4.1.0.2.exe"
-
 Name "$APP_NAME"
 OutFile "${CONFIG_OUTPUT_FILE}"
 InstallDir "$PROGRAMFILES\${CONFIG_PUBLISHER}\${CONFIG_LONG_APP_NAME}"
@@ -51,6 +49,12 @@ Var ADVANCED
 Var SIMPLE_INSTALL
 Var PUBLISHER
 Var PROJECT_URL
+Var ZUGO_HOMEPAGE
+Var ZUGO_TOOLBAR
+Var ZUGO_DEFAULT_SEARCH
+Var ZUGO_FLAGS
+Var ZUGO_COUNTRY
+Var ZUGO_PROVIDER
 
 ; Runs in tv/platform/windows-xul/dist, so 4 ..s.
 !addplugindir ..\${CONFIG_BINARY_KIT}\NSIS-Plugins\
@@ -80,9 +84,9 @@ Var PROJECT_URL
 !insertmacro un.GetParameters
 !insertmacro un.GetOptions
 
-ReserveFile "MiroBar-installer-page.ini"
-ReserveFile "ask_toolbar.bmp"
-ReserveFile "${MIROBAR_EXE}"
+!ifdef MIROBAR_EXE
+  ReserveFile "${MIROBAR_EXE}"
+!endif
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Pages                                                                     ;;
@@ -105,23 +109,31 @@ Function add_radio_buttons
 abort:
   Abort
 start:
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Settings" "NumFields" "5"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Settings" "NumFields" "13"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Settings" "NextButtonText" "Next >"
 
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 2" "Top" "20"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 2" "Bottom" "38"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 2" "Right" "325"
 
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 3" "Text" ""
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 3" "Top" "45"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 3" "Bottom" "65"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 3" "Right" "325"
+
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 11" "Type"   "label"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 11" "Text"   "Installation Type"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 11" "Left"   "120"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 11" "Right"  "315"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 11" "Top"    "65"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 11" "Bottom" "75"
 
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Type"   "radiobutton"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Text"   "Easy Install"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Left"   "120"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Right"  "315"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Top"    "75"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Bottom" "85"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Flags"  "NOTIFY"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Top"    "80"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Bottom" "90"
 
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Type"   "radiobutton"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Text"   "Custom Install"
@@ -129,79 +141,132 @@ start:
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Right"  "315"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Top"    "90"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Bottom" "100"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Flags"  "NOTIFY"
 
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 13" "Type"   "label"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 13" "Text"   "Options: installation directory and file-type associations."
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 13" "Left"   "132"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 13" "Right"  "315"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 13" "Top"    "100"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 13" "Bottom" "115"
+
+  !ifdef MIROBAR_EXE
+
+  StrCmp "$THEME_NAME" "" 0 after_zugo
+
+  StrCmp $ZUGO_COUNTRY "US" +2
+  StrCpy $ZUGO_PROVIDER "Ask"
+
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Type"   "label"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Text"   "Included Components"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Left"   "120"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Right"  "315"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Top"    "120"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Bottom" "130"
+
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 7" "Type"   "checkbox"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 7" "Text"   "$APP_NAME core (required)"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 7" "Left"   "120"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 7" "Right"  "315"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 7" "Top"    "135"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 7" "Bottom" "145"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 7" "State"  "1"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 7" "Flags"  "DISABLED"
+
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Type"   "checkbox"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Text"   "$APP_NAME Start Homepage (by $ZUGO_PROVIDER)"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Left"   "120"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Right"  "315"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Top"    "145"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Bottom" "155"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "State"  "0"
+  StrCmp $ZUGO_HOMEPAGE "1" 0 +2 ; don't set it by default
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "State"  "1"
+
+!ifdef MOZILLA_INSTALLER
+  StrCmp $ZUGO_COUNTRY "US" 0 no_toolbar
+!endif
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Type"   "checkbox"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Text"   "$ZUGO_PROVIDER Search Toolbar"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Left"   "120"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Right"  "315"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Top"    "165"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Bottom" "175"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "State"  "0"
+  StrCmp $ZUGO_TOOLBAR "" +2 ; set it by defaykt
+  StrCmp $ZUGO_TOOLBAR "0" +2
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "State"  "1"
+
+no_toolbar:
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "Type"   "checkbox"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "Text"   "Set $ZUGO_PROVIDER as default search engine"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "Left"   "120"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "Right"  "315"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "Top"    "155"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "Bottom" "165"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "State"  "0"
+  StrCmp $ZUGO_DEFAULT_SEARCH "1" 0 +2 ; don't set it by default
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "State"  "1"
+
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 12" "Type"   "label"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 12" "Text"   "These optional search components help support our non-profit work and can be uninstalled at any time."
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 12" "Left"   "132"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 12" "Right"  "315"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 12" "Top"    "175"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 12" "Bottom" "190"
+
+after_zugo:
+!endif
   StrCmp $SIMPLE_INSTALL "1" simple custom
 
   custom:
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "State"  "0"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "State"  "1"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Settings" "NextButtonText" "Next >"
+
   goto end
 
   simple:
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "State"  "1"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "State"  "0"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Settings" "NextButtonText" "Next >"
   goto end
 
   end:
 FunctionEnd
 
 Function fix_background_color
+
   Push $0
+  StrCpy $R1 1203
+  loop:
+    GetDlgItem $0 $MUI_HWND $R1
+    SetCtlColors $0 "" 0xFFFFFF
+    IntOp $R1 $R1 + 1
+    IntCmp $R1 1213 done
+    Goto loop
+  done:
 
-  GetDlgItem $0 $MUI_HWND 1203
-  SetCtlColors $0 "" 0xFFFFFF
-  GetDlgItem $0 $MUI_HWND 1204
-  SetCtlColors $0 "" 0xFFFFFF
+  CreateFont $R1 "Arial" "10" "600" ; bold
+  GetDlgItem $0 $MUI_HWND 1205
+  SendMessage $0 ${WM_SETFONT} $R1 0
+  GetDlgItem $0 $MUI_HWND 1210
+  SendMessage $0 ${WM_SETFONT} $R1 0
 
-  StrCmp $SIMPLE_INSTALL "1" simple custom
-
-  simple:
-  GetDlgItem $0 $HWNDPARENT 1
-  SendMessage $0 ${WM_SETTEXT} 0 "STR:Next >"
-  goto end
-
-  custom:
-  GetDlgItem $0 $HWNDPARENT 1
-  SendMessage $0 ${WM_SETTEXT} 0 "STR:Next >"
-  goto end
-
-  end:
-
+  CreateFont $R1 "Arial" "7" "0" ; small
+  GetDlgItem $0 $MUI_HWND 1211
+  SendMessage $0 ${WM_SETFONT} $R1 0
+  GetDlgItem $0 $MUI_HWND 1212
+  SendMessage $0 ${WM_SETFONT} $R1 0
   Pop $0
 FunctionEnd
 
-Var STATE
 Function check_radio_buttons
-  Push $0
   ReadINIStr $SIMPLE_INSTALL "$PLUGINSDIR\ioSpecial.ini" "Field 4" "State"
-  ReadINIStr $STATE "$PLUGINSDIR\ioSpecial.ini" "Settings" "State"
-  StrCmp $STATE "4" set
-  StrCmp $STATE "5" set
-
-  next_clicked:
-  goto end
-
-  set:
-  StrCmp $SIMPLE_INSTALL "1" simple custom
-
-  simple:
-  GetDlgItem $0 $HWNDPARENT 1
-  SendMessage $0 ${WM_SETTEXT} 0 "STR:Next >"
-  goto end_set
-
-  custom:
-  GetDlgItem $0 $HWNDPARENT 1
-  SendMessage $0 ${WM_SETTEXT} 0 "STR:Next >"
-  goto end_set
-
-  end_set:
-  Abort
-
-  end:
-  Pop $0
+  ReadINIStr $ZUGO_HOMEPAGE "$PLUGINSDIR\ioSpecial.ini" "Field 8" "State"
+  ReadINIStr $ZUGO_TOOLBAR "$PLUGINSDIR\ioSpecial.ini" "Field 9" "State"
+  ReadINIStr $ZUGO_DEFAULT_SEARCH "$PLUGINSDIR\ioSpecial.ini" "Field 10" "State"
+  StrCmp "$ZUGO_HOMEPAGE$ZUGO_TOOLBAR$ZUGO_DEFAULT_SEARCH" "000" 0 end
+  MessageBox MB_YESNO|MB_USERICON|MB_TOPMOST "Help Support Miro!$\r$\n$\r$\nMiro is a non-profit organization, making free and open software for a better internet.  To afford to keep Miro available, we rely on partnerships with search engines.$\r$\n$\r$\nBy trying a Miro search bar, you can support our open mission; we get a bit of revenue for each install.$\r$\n$\r$\nWould you be willing to try this optional search bar? You can uninstall it at any time." IDNO end
+  StrCpy $ZUGO_TOOLBAR "1"
+end:
 FunctionEnd
 
 Function skip_if_simple_or_reinstall
@@ -249,10 +314,11 @@ FunctionEnd
 ; Installation page
 !insertmacro MUI_PAGE_INSTFILES
 
-Page custom MiroBarInstall MiroBarInstallLeave
 
 ; Finish page
 !define MUI_FINISHPAGE_RUN
+!define MUI_FINISHPAGE_TITLE "$APP_NAME has been installed!"
+!define MUI_FINISHPAGE_TEXT "$APP_NAME is a non-profit project and is free and open-source software.  Thanks for supporting an open internet!"
 !define MUI_FINISHPAGE_TITLE_3LINES
 !define MUI_FINISHPAGE_RUN_TEXT "Run $APP_NAME"
 !define MUI_FINISHPAGE_RUN_FUNCTION "LaunchLink"
@@ -263,8 +329,8 @@ Page custom MiroBarInstall MiroBarInstallLeave
 !define MUI_PAGE_CUSTOMFUNCTION_PRE "skip_if_advanced"
 !define MUI_PAGE_CUSTOMFUNCTION_LEAVE "dont_leave_early"
 Function dont_leave_early
-  ReadINIStr $STATE "$PLUGINSDIR\ioSpecial.ini" "Settings" "State"
-  StrCmp $STATE "4" dont_leave
+  ReadINIStr $R0 "$PLUGINSDIR\ioSpecial.ini" "Settings" "State"
+  StrCmp $R0 "4" dont_leave
   goto end
   dont_leave:
   Abort
@@ -632,7 +698,6 @@ unzipok:
   File  /r resources
   File  /r xulrunner
   File  /r vlc-plugins
-
 !endif
 
 install_theme:
@@ -820,8 +885,7 @@ Function .onInit
   StrCpy $SIMPLE_INSTALL "1"
   StrCpy $PUBLISHER "${CONFIG_PUBLISHER}"
   StrCpy $PROJECT_URL "${CONFIG_PROJECT_URL}"
-
-  !insertmacro MUI_INSTALLOPTIONS_EXTRACT "MiroBar-installer-page.ini"
+  StrCpy $ZUGO_PROVIDER "Bing"
 
   ; Check if we're reinstalling
   ${GetParameters} $R0
@@ -832,7 +896,21 @@ Function .onInit
   ${GetOptions} "$R0" "/reinstall" $R1
   IfErrors +2 0
   StrCpy $REINSTALL "1"
+  ${GetOptions} "$R0" "/FORCEUS" $R1
+  IfErrors +4 0
+  StrCpy $ZUGO_COUNTRY "US"
+  StrCpy $ZUGO_FLAGS "/FORCEUS"
   ClearErrors
+
+  ; get the country Zugo thinks we're in
+  StrCmp $ZUGO_COUNTRY "US" +8
+  NSISdl::download_quiet /TIMEOUT=10000 /NOIEPROXY "http://track.zugo.com/getCountry/" "$PLUGINSDIR\getCountry" /END ; requires content length to be set!
+  Pop $R0 ; pop the request status
+  ClearErrors
+  FileOpen $0 $PLUGINSDIR\getCountry r
+  IfErrors +3
+  FileRead $0 $ZUGO_COUNTRY
+  FileClose $0
 
   GetTempFileName $TACKED_ON_FILE
   Delete "$TACKED_ON_FILE"  ; The above macro creates the file
@@ -955,30 +1033,11 @@ NotOldDownloaderRunning:
   ; Is the app already installed? Bail if so.
   ReadRegStr $R0 HKLM "${INST_KEY}" "InstallDir"
   StrCmp $R0 "" NotCurrentInstalled
-
-prompt_for_uninstall:
-  ; Should we uninstall the old one?
-  StrCmp $REINSTALL 1 UninstallCurrent 0
-  StrCmp $ADVANCED "1" UninstallCurrent 0
-  MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
-  "It looks like you already have a copy of $APP_NAME $\n\
-installed.  Do you want to continue and overwrite it?" \
-       /SD IDOK IDOK UninstallCurrent
-  Quit
-UninstallCurrent:
   !insertmacro uninstall $R0
 NotCurrentInstalled:
   ; Is the app already installed? Bail if so.
   ReadRegStr $R0 HKLM "${OLD_INST_KEY}" "InstallDir"
   StrCmp $R0 "" NotOldInstalled
-
-  ; Should we uninstall the old one?
-  MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
-  "It looks like you already have a copy of Democracy Player $\n\
-installed.  Do you want to continue and overwrite it?" \
-       /SD IDOK IDOK UninstallOld
-  Quit
-UninstallOld:
   !insertmacro uninstall $R0
 
   SetShellVarContext current
@@ -1022,15 +1081,7 @@ NotOldInstalled:
   ; Check for uninstall.exe.  That filename should be constant for all
   ; versions and themes.
 
-  IfFileExists "$INSTDIR\uninstall.exe" RegLessVersionInstalled StartInstall
-
-RegLessVersionInstalled:
-  MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
-  "It looks like you already have a copy of $APP_NAME $\n\
-installed.  Do you want to continue and overwrite it?" \
-       /SD IDOK IDOK UninstallNoReg
-  Quit
-UninstallNoReg:
+  IfFileExists "$INSTDIR\uninstall.exe" 0 StartInstall
   !insertmacro uninstall $INSTDIR
 
 StartInstall:
@@ -1088,69 +1139,39 @@ DoneTorrentRegistration:
   !insertmacro checkExtensionHandled ".3ivx" ${SecRegisterXvid}
 FunctionEnd
 
-Function CheckMiroBarInstall
-  ReadRegStr $0 HKCR "CLSID\{D4027C7F-154A-4066-A1AD-4243D8127440}" ""
-  StrCmp $0 "" 0 DontInstallBar
-  ReadRegStr $0 HKCR "CLSID\{F0D4B239-DA4B-4daf-81E4-DFEE4931A4AA}" ""
-  StrCmp $0 "" 0 DontInstallBar
-  ReadRegStr $0 HKCR "CLSID\{3041D03E-FD4B-44E0-B742-2D9B88305F98}" ""
-  StrCmp $0 "" 0 DontInstallBar
-  StrCmp "$THEME_NAME" "" 0 DontInstallBar
-InstallBar:
-  Push 1
-  Return
-DontInstallBar:
-  Push 0
-FunctionEnd
-
-Function MiroBarInstall
-  Call CheckMiroBarInstall
-  Pop $0
-  StrCmp $0 "1" ShowMiroBarDialog NoShowMiroBarDialog
-ShowMiroBarDialog:
-  !insertmacro MUI_INSTALLOPTIONS_EXTRACT "ask_toolbar.bmp"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "MiroBar-installer-page.ini" "Field 9" "Text" "$PLUGINSDIR\ask_toolbar.bmp"
-  !insertmacro MUI_HEADER_TEXT "Install the Ask Toolbar?" ""
-  !insertmacro MUI_INSTALLOPTIONS_DISPLAY "MiroBar-installer-page.ini"
-NoShowMiroBarDialog:
-FunctionEnd
-
-Function MiroBarInstallLeave
-  !insertmacro MUI_INSTALLOPTIONS_READ $R0 "MiroBar-installer-page.ini" "Settings" "State"
-  ; Address Bar Search
-  !insertmacro MUI_INSTALLOPTIONS_READ $R1 "MiroBar-installer-page.ini" "Field 2" "State"
-  !insertmacro MUI_INSTALLOPTIONS_READ $R2 "MiroBar-installer-page.ini" "Field 3" "State"
-  ; Homepage
-  !insertmacro MUI_INSTALLOPTIONS_READ $R3 "MiroBar-installer-page.ini" "Field 4" "State"
-  StrCmp $R0 "6" end
-  StrCmp $R2 "1" install
-  MessageBox MB_OK "If you want to install the Miro / Ask Toolbar, you must accept the terms of service."
-  Abort
-install:
-  !insertmacro MUI_INSTALLOPTIONS_EXTRACT "${MIROBAR_EXE}"
-  StrCmp $R1 "1" +3
-  StrCpy $R6 ""
-  Goto +2
-  StrCpy $R6 "/sa"
-  StrCmp $R3 "1" +3
-  StrCpy $R7 ""
-  Goto +2
-  StrCpy $R7 "/hpr"
-  Exec '"$PLUGINSDIR\${MIROBAR_EXE}" /tbr $R6 $R7 /verysilent toolbar=MRO'
-end:
-FunctionEnd
-
 Function .onInstSuccess
   StrCmp $THEME_NAME "" 0 end
   StrCmp $REINSTALL "1" end
 end:
 FunctionEnd
 
+!ifdef MIROBAR_EXE
 Function .onGUIEnd
-  StrCmp $THEME_NAME "" 0 end
-  StrCmp $REINSTALL "1" end
+
+StrCmp "$ZUGO_HOMEPAGE$ZUGO_TOOLBAR$ZUGO_DEFAULT_SEARCH" "000" end
+StrCmp "$ZUGO_HOMEPAGE$ZUGO_TOOLBAR$ZUGO_DEFAULT_SEARCH" "" end
+
+!insertmacro MUI_INSTALLOPTIONS_EXTRACT "${MIROBAR_EXE}"
+
+StrCpy $R1 "0"
+StrCmp "$ZUGO_HOMEPAGE" "0" zugo_toolbar
+StrCpy $ZUGO_FLAGS $ZUGO_FLAGS /DEFAULTSTART"
+IntOp $R1 $R1 | 1
+zugo_toolbar:
+StrCmp "$ZUGO_TOOLBAR" "0" zugo_search
+StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /TOOLBAR"
+IntOp $R1 $R1 | 2
+zugo_search:
+StrCmp "$ZUGO_DEFAULT_SEARCH" "0" zugo_install
+StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /DEFAULT_SEARCH"
+IntOp $R1 $R1 | 4
+
+zugo_install:
+Exec "$PLUGINSDIR\${MIROBAR_EXE} $ZUGO_FLAGS /FINISHURL='http://www.getmiro.com/welcome/?$R1'"
+
 end:
 FunctionEnd
+!endif
 
 Section -Post
   WriteUninstaller "$INSTDIR\uninstall.exe"
