@@ -108,6 +108,9 @@ class VideoConversionManager(signals.SignalEmitter):
     def cancel_pending(self, task):
         self._enqueue_message("cancel_pending", task=task)
     
+    def schedule_staging(self, source, destination):
+        self._enqueue_message("stage_conversion", source=source, destination=destination)
+    
     def open_log(self, task):
         if task.log_path is not None:
             app.widgetapp.open_file(task.log_path)
@@ -182,6 +185,7 @@ class VideoConversionManager(signals.SignalEmitter):
 
         for task in list(self.running_tasks):
             if task.is_finished() and not task.is_failed():
+                self.schedule_staging(task.temp_output_path, task.final_output_path)
                 self._notify_task_completed(task)
                 self.running_tasks.remove(task)
                 notify_count = True
@@ -211,6 +215,10 @@ class VideoConversionManager(signals.SignalEmitter):
             elif msg['message'] == 'cancel_all':
                 self._terminate()
                 return
+                
+            elif msg['message'] == 'stage_conversion':
+                shutil.move(msg['source'], msg['destination'])
+                shutil.rmtree(os.path.dirname(msg['source']))
 
         except Queue.Empty, e:
             pass
@@ -325,7 +333,7 @@ class VideoConversionTask(object):
         return self.thread is not None and not self.thread.isAlive()
         
     def is_failed(self):
-        return self.process_handle is not None and self.process_handle.returncode > 0
+        return self.process_handle is not None and self.process_handle.returncode != 0
 
     def _loop(self):
         executable = self.get_executable()
@@ -362,17 +370,12 @@ class VideoConversionTask(object):
                         if self.progress >= 1.0:
                             self.progress = 1.0
                             keep_going = False
-                            eventloop.add_timeout(0.5, self._stage_file, "staging file")
                         if old_progress != self.progress:
                             self._notify_progress()
         finally:
             self._stop_logging(self.progress < 1.0)
             if self.is_failed():
                 conversion_manager._notify_tasks_count()
-    
-    def _stage_file(self):
-        shutil.move(self.temp_output_path, self.final_output_path)
-        shutil.rmtree(os.path.dirname(self.temp_output_path))
     
     def _start_logging(self, executable, params):
         log_folder = os.path.dirname(config.get(prefs.LOG_PATHNAME))
