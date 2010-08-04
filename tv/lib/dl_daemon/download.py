@@ -704,13 +704,19 @@ class HTTPDownloader(BGDownloader):
     def on_download_finished(self, response):
         self.destroy_client()
         self.state = "finished"
-        if self.totalSize == -1:
-            self.totalSize = self.currentSize
         self.endTime = clock()
-        try:
-            self.move_to_movies_directory()
-        except IOError, e:
-            self.handle_write_error(e)
+        # bug 14131 -- if there's nothing here, treat it like a temporary
+        # error
+        if self.currentSize == 0:
+            self.handle_network_error(httpclient.PossiblyTemporaryError(_("no content")))
+
+        else:
+            if self.totalSize == -1:
+                self.totalSize = self.currentSize
+            try:
+                self.move_to_movies_directory()
+            except IOError, e:
+                self.handle_write_error(e)
         self.update_client()
 
     def get_status(self):
