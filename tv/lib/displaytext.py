@@ -49,16 +49,16 @@ def strftime_to_unicode(nbytes):
 def download_rate(rate):
     if rate >= (1 << 30):
         value = "%1.1f" % (rate / float(1 << 30))
-        return _("%(size)s gb/s", {"size": value})
+        return _("%(size)s GB/s", {"size": value})
     elif rate >= (1 << 20):
         value = "%1.1f" % (rate / float(1 << 20))
-        return _("%(size)s mb/s", {"size": value})
+        return _("%(size)s MB/s", {"size": value})
     elif rate >= (1 << 10):
         value = "%1.1f" % (rate / float(1 << 10))
-        return _("%(size)s kb/s", {"size": value})
+        return _("%(size)s kB/s", {"size": value})
     elif rate > 0:
         value = "%1.1f" % rate
-        return _("%(size)s b/s", {"size": value})
+        return _("%(size)s B/s", {"size": value})
     else:
         return ""
 
