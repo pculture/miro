@@ -333,7 +333,9 @@ class VideoConversionTask(object):
         return self.thread is not None and not self.thread.isAlive()
         
     def is_failed(self):
-        return self.process_handle is not None and self.process_handle.returncode != 0
+        return (self.process_handle is not None and 
+                self.process_handle.returncode is not None and 
+                self.process_handle.returncode != 0)
 
     def _loop(self):
         executable = self.get_executable()
@@ -416,8 +418,9 @@ class VideoConversionTask(object):
 
 
 class FFMpegConversionTask(VideoConversionTask):
-    DURATION_RE = re.compile('Duration: (\d\d):(\d\d):(\d\d)\.(\d\d), start:.*, bitrate:.*')
-    PROGRESS_RE = re.compile('frame=.* fps=.* q=.* L?size=.* time=(.*) bitrate=(.*)')
+    DURATION_RE = re.compile('Duration: (\d\d):(\d\d):(\d\d)\.(\d\d)(, start:.*)?(, bitrate:.*)?')
+    PROGRESS_RE = re.compile('frame=.* fps=.* q=.* size=.* time=(.*) bitrate=(.*)')
+    LAST_PROGRESS_RE = re.compile('frame=.* fps=.* q=.* Lsize=.* time=(.*) bitrate=(.*)')
 
     def get_executable(self):
         return utils.get_ffmpeg_executable_path()
@@ -450,6 +453,9 @@ class FFMpegConversionTask(VideoConversionTask):
             match = self.PROGRESS_RE.match(line)
             if match is not None:
                 return float(match.group(1)) / self.duration
+            match = self.LAST_PROGRESS_RE.match(line)
+            if match is not None:
+                return 1.0
         return self.progress
     
 
