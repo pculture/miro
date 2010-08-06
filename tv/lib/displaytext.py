@@ -97,15 +97,15 @@ def size_string(nbytes):
     # probably ditch one of them.
     if nbytes >= (1 << 30):
         value = "%.1f" % (nbytes / float(1 << 30))
-        return _("%(size)s gb", {"size": value})
+        return _("%(size)s GB", {"size": value})
     elif nbytes >= (1 << 20):
         value = "%.1f" % (nbytes / float(1 << 20))
-        return _("%(size)s mb", {"size": value})
+        return _("%(size)s MB", {"size": value})
     elif nbytes >= (1 << 10):
         value = "%.1f" % (nbytes / float(1 << 10))
-        return _("%(size)s kb", {"size": value})
+        return _("%(size)s KB", {"size": value})
     else:
-        return _("%(size)s b", {"size": nbytes})
+        return _("%(size)s B", {"size": nbytes})
 
 def expiration_date(exp_date):
     offset = exp_date - datetime.datetime.now()
