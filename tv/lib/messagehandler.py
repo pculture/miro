@@ -443,11 +443,15 @@ class CountTracker(object):
 
 class DownloadCountTracker(CountTracker):
     def get_view(self):
-        return item.Item.only_downloading_view()
+        return item.Item.download_tab_view()
 
-    def make_message(self, count):
-        non_downloading_count = item.Item.download_tab_view().count() - count
-        return messages.DownloadCountChanged(count, non_downloading_count)
+    def make_message(self, total_count):
+        # total_count includes non-downloading items like seeding torrents.
+        # We need to split this into separate counts for the frontend
+        downloading_count = item.Item.only_downloading_view().count()
+        non_downloading_count = total_count - downloading_count
+        return messages.DownloadCountChanged(downloading_count,
+                non_downloading_count)
 
 class PausedCountTracker(CountTracker):
     def get_view(self):
