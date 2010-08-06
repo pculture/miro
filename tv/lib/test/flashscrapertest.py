@@ -33,4 +33,4 @@ class YouTubeScraper(FlashScraperBase):
             u"http://www.youtube.com/watch?v=3DTKMp24c0s",
             self.scrape_callback)
         self.run_event_loop()
-        print self._response
+        # print self._response
