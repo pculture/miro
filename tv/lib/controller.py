@@ -121,6 +121,17 @@ class Controller:
             self._quit_after_bug_reports = True
             eventloop.add_timeout(0.5, self._start_send_bug_report_progress,
                     'bug report progress')
+        else:
+            eventloop.add_timeout(0.5, self._log_bug_report_progress,
+                    'log bug report progress', args=(sender,))
+
+    def _log_bug_report_progress(self, sender):
+        current, total = sender.progress()
+        if current < total:
+            logging.info("Crash report progress: %0.1f",
+                    current * 100.0 / total)
+            eventloop.add_timeout(1.0, self._log_bug_report_progress,
+                    'log bug report progress', args=(sender,))
 
     def _bug_report_sent(self, sender):
         self.bug_report_senders.remove(sender)
