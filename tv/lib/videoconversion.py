@@ -418,9 +418,9 @@ class VideoConversionTask(object):
 
 
 class FFMpegConversionTask(VideoConversionTask):
-    DURATION_RE = re.compile('Duration: (\d\d):(\d\d):(\d\d)\.(\d\d)(, start:.*)?(, bitrate:.*)?')
-    PROGRESS_RE = re.compile('frame=.* fps=.* q=.* size=.* time=(.*) bitrate=(.*)')
-    LAST_PROGRESS_RE = re.compile('frame=.* fps=.* q=.* Lsize=.* time=(.*) bitrate=(.*)')
+    DURATION_RE = re.compile(r'Duration: (\d\d):(\d\d):(\d\d)\.(\d\d)(, start:.*)?(, bitrate:.*)?')
+    PROGRESS_RE = re.compile(r'frame=.* fps=.* q=.* size=.* time=(.*) bitrate=(.*)')
+    LAST_PROGRESS_RE = re.compile(r'frame=.* fps=.* q=.* Lsize=.* time=(.*) bitrate=(.*)')
 
     def get_executable(self):
         return utils.get_ffmpeg_executable_path()
@@ -460,12 +460,12 @@ class FFMpegConversionTask(VideoConversionTask):
     
 
 class FFMpeg2TheoraConversionTask(VideoConversionTask):
-    PROGRESS_RE1 = re.compile('\{"duration":(.*), "position":(.*), "audio_kbps":.*, "video_kbps":.*, "remaining":.*\}')
-    RESULT_RE1 = re.compile('\{"result": "(.*)"\}')
+    PROGRESS_RE1 = re.compile(r'\{"duration":(.*), "position":(.*), "audio_kbps":.*, "video_kbps":.*, "remaining":.*\}')
+    RESULT_RE1 = re.compile(r'\{"result": "(.*)"\}')
 
-    DURATION_RE2 = re.compile('f2t ;duration: ([^;]*);')
-    PROGRESS_RE2 = re.compile('f2t ;position: ([^;]*);')
-    RESULT_RE2 = re.compile('f2t ;result: ([^;]*);')
+    DURATION_RE2 = re.compile(r'f2t ;duration: ([^;]*);')
+    PROGRESS_RE2 = re.compile(r'f2t ;position: ([^;]*);')
+    RESULT_RE2 = re.compile(r'f2t ;result: ([^;]*);')
 
     def __init__(self, converter_info, item_info, target_folder):
         VideoConversionTask.__init__(self, converter_info, item_info, target_folder)
@@ -509,7 +509,7 @@ class FFMpeg2TheoraConversionTask(VideoConversionTask):
 
 
 class VideoConverterInfo(object):
-    NON_WORD_CHARS = re.compile("[^a-zA-Z0-9]+")
+    NON_WORD_CHARS = re.compile(r"[^a-zA-Z0-9]+")
 
     def __init__(self, name, config, defaults):
         self.name = name
