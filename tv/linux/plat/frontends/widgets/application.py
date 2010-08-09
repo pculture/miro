@@ -164,6 +164,7 @@ class LinuxApplication(Application):
         self.window.connect('save-dimensions', self.set_main_window_dimensions)
         self.window.connect('save-maximized', self.set_main_window_maximized)
 
+        # handle maximized
         maximized = self.get_main_window_maximized()
         if maximized != None:
             if maximized:
@@ -171,6 +172,7 @@ class LinuxApplication(Application):
             else:
                 self.window._window.unmaximize()
 
+        # handle the trayicon
         if trayicon.trayicon_is_supported:
             self.trayicon = trayicon.Trayicon('miro')
             if config.get(options.SHOW_TRAYICON):
@@ -178,6 +180,10 @@ class LinuxApplication(Application):
             else:
                 self.trayicon.set_visible(False)
             config.add_change_callback(self.on_pref_changed)
+
+        # check x, y to make sure the window is visible and fix it
+        # if not
+        self.window.check_position_and_fix()
 
     def quit_ui(self):
         gtk.main_quit()

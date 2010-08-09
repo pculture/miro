@@ -404,6 +404,29 @@ class Window(WindowBase):
         size = self._window.get_size()
         return widgets.Rect(pos[0], pos[1], size[0], size[1])
 
+    def check_position_and_fix(self):
+        """This pulls the geometry of the monitor of the screen this
+        window is on as well as the position of the window.
+
+        It then makes sure that the position y is greater than the
+        monitor geometry y.  This makes sure that the titlebar of
+        the window is showing.
+        """
+        gtkwindow = self._window
+        gdkwindow = gtkwindow.window
+        screen = gtkwindow.get_screen()
+
+        monitor = screen.get_monitor_at_window(gdkwindow)
+        monitor_geom = screen.get_monitor_geometry(monitor)
+        frame_extents = gdkwindow.get_frame_extents()
+        position = gtkwindow.get_position()
+
+        # if the frame is not visible, then we move the window so that
+        # it is
+        if frame_extents.y < monitor_geom.y:
+            gtkwindow.move(position[0],
+                           monitor_geom.y + (position[1] - frame_extents.y))
+
 class MainWindow(Window):
     def __init__(self, title, rect):
         Window.__init__(self, title, rect)

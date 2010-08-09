@@ -138,6 +138,10 @@ class WindowsApplication(Application):
         else:
             logging.info("trayicon is not supported.")
 
+        # check x, y to make sure the window is visible and fix it if
+        # not
+        self.window.check_position_and_fix()
+
     def on_close(self):
         if config.get(prefs.MINIMIZE_TO_TRAY_ASK_ON_CLOSE):
             ret = dialogs.show_choice_dialog(
@@ -228,8 +232,6 @@ class WindowsApplication(Application):
         max_width = gtk.gdk.screen_width()
         max_height = gtk.gdk.screen_height()
         rect = widgets.Rect.from_string(config.get(options.WINDOW_DIMENSIONS))
-        rect.x = max(min(rect.x, max_width - 20), 0)
-        rect.y = max(min(rect.y, max_height - 20), 0)
         rect.width = max(min(rect.width, max_width), 800)
         rect.height = max(min(rect.height, max_height - 20), 480)
         return rect
