@@ -651,6 +651,10 @@ class HTTPDownloader(BGDownloader):
         if self.client is not None:
             self.client.cancel(remove_file=remove_file)
             self.destroy_client()
+        # if it's in a retrying state, we want to nix that, too
+        if self.retryDC:
+            self.retryDC.cancel()
+            self.retryDC = None
 
     def handle_error(self, shortReason, reason):
         BGDownloader.handle_error(self, shortReason, reason)

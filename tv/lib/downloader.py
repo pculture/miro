@@ -394,7 +394,8 @@ class RemoteDownloader(DDBObject):
         """Stops the download and removes the partially downloaded
         file.
         """
-        if self.get_state() in [u'downloading', u'uploading', u'paused']:
+        if self.get_state() in [u'downloading', u'uploading', u'paused',
+                                u'offline']:
             if _downloads.has_key(self.dlid):
                 c = command.StopDownloadCommand(RemoteDownloader.dldaemon,
                                                 self.dlid, delete)
