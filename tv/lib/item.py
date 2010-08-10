@@ -91,7 +91,7 @@ class FeedParserValues(object):
             'rss_id': entry.get('id'),
             'entry_title': self._calc_title(),
             'thumbnail_url': self._calc_thumbnail_url(),
-            'raw_descrption': self._calc_raw_description(),
+            'entry_description': self._calc_raw_description(),
             'link': self._calc_link(),
             'payment_link': self._calc_payment_link(),
             'comments_link': self._calc_comments_link(),
@@ -301,6 +301,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.watchedTime = None
         self.pendingReason = u""
         self.title = u""
+        self.description = u""
         fp_values.update_item(self)
         self.expired = False
         self.keep = False
@@ -714,7 +715,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return True
         search_string = search_string.lower()
         title = self.get_title() or u''
-        desc = self.get_raw_description() or u''
+        desc = self.get_description() or u''
         if self.get_filename():
             filename = filename_to_unicode(self.get_filename())
         else:
@@ -1221,7 +1222,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def set_description(self, desc):
         self.confirm_db_thread()
-        self.raw_descrption = desc
+        self.description = desc
         self.signal_change()
 
     def set_channel_title(self, title):
@@ -1246,28 +1247,31 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return u''
 
     @returns_unicode
-    def get_raw_description(self):
-        """Returns the raw description of the video (unicode).
+    def get_description(self):
+        """Returns the description of the video (unicode).
+
+        If the item is a torrent, then it adds some additional text.
         """
-        if self.raw_descrption:
+        if self.description:
             if self.is_downloaded_torrent():
-                return (_('Contents appear in the library') + '<BR>' +
-                        self.raw_descrption)
+                return (unicode(self.description) + u'<BR>' +
+                        _('Contents appear in the library'))
             else:
-                return self.raw_descrption
-        elif self.is_external() and self.is_downloaded_torrent():
+                return unicode(self.description)
+
+        if self.entry_description:
+            if self.is_downloaded_torrent():
+                return (unicode(self.entry_description) + u'<BR>' +
+                        _('Contents appear in the library'))
+            else:
+                return unicode(self.entry_description)
+        if self.is_external() and self.is_downloaded_torrent():
             lines = [_('Contents:')]
             lines.extend(filename_to_unicode(child.offsetPath)
                          for child in self.get_children())
             return u'<BR>\n'.join(lines)
-        else:
-            return u''
 
-    @returns_unicode
-    def get_description(self):
-        """Returns the description of the video (unicode).
-        """
-        return unicode(self.get_raw_description())
+        return u''
 
     def looks_like_torrent(self):
         """Returns true if we think this item is a torrent.  (For items that

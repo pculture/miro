@@ -477,7 +477,7 @@ class FeedParserAttributesTestCase(FeedTestCase):
         self.assertEquals(self.item.get_rss_id(), entry.id)
         self.assertEquals(self.item.get_thumbnail_url(), entry.thumbnail['url'])
         self.assertEquals(self.item.get_title(), entry.title)
-        self.assertEquals(self.item.get_raw_description(), entry.description)
+        self.assertEquals(self.item.get_description(), entry.description)
         self.assertEquals(self.item.get_link(), entry.link)
         self.assertEquals(self.item.get_payment_link(), entry.payment_url)
         self.assertEquals(self.item.get_license(), entry.license)

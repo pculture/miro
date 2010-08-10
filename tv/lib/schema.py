@@ -382,7 +382,8 @@ class ItemSchema(MultiClassObjectSchema):
         ('autoDownloaded', SchemaBool()),
         ('pendingManualDL', SchemaBool()),
         ('pendingReason', SchemaString()),
-        ('title', SchemaString()),
+        ('title', SchemaString(noneOk=True)),
+        ('description', SchemaString(noneOk=True)),
         ('expired', SchemaBool()),
         ('keep', SchemaBool()),
         ('creationTime', SchemaDateTime()),
@@ -403,8 +404,7 @@ class ItemSchema(MultiClassObjectSchema):
         ('rss_id', SchemaString(noneOk=True)),
         ('thumbnail_url', SchemaURL(noneOk=True)),
         ('entry_title', SchemaString(noneOk=True)),
-        # FIXME - this is spelled wrong!!!
-        ('raw_descrption', SchemaString(noneOk=False)),
+        ('entry_description', SchemaString(noneOk=False)),
         ('link', SchemaURL(noneOk=False)),
         ('payment_link', SchemaURL(noneOk=False)),
         ('comments_link', SchemaURL(noneOk=False)),
@@ -694,7 +694,7 @@ class DBLogEntrySchema(DDBObjectSchema):
     def handle_malformed_list_view_displays(row):
         return []
 
-VERSION = 117
+VERSION = 118
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,

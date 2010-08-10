@@ -99,6 +99,57 @@ def remove_column(cursor, table, column_names):
     for sql in index_sql:
         cursor.execute(sql)
 
+def rename_column(cursor, table, from_column, to_column):
+    """Renames a column in a SQLITE table.
+
+    .. Note::
+
+       This does **NOT** handle renaming the column in an index.
+
+       If you're going to rename columns that are involved in indexes,
+       you'll need to add that feature.
+
+    .. Note::
+
+       Don't rename the id column--that would be bad.
+
+    :param table: the table to remove the columns from
+    :param from_column: the old name
+    :param to_column: the new name
+    """
+    cursor.execute("PRAGMA table_info('%s')" % table)
+    old_columns = []
+    new_columns = []
+    columns_with_type = []
+    for column_info in cursor.fetchall():
+        column = column_info[1]
+        col_type = column_info[2]
+        old_columns.append(column)
+        if column == from_column:
+            column = to_column
+        new_columns.append(column)
+        if column == 'id':
+            col_type += ' PRIMARY KEY'
+        columns_with_type.append("%s %s" % (column, col_type))
+
+    # Note: This does not fix indexes that use the old column name.
+    cursor.execute("PRAGMA index_list('%s')" % table)
+    index_sql = []
+    for index_info in cursor.fetchall():
+        name = index_info[1]
+        cursor.execute("SELECT sql FROM sqlite_master "
+                       "WHERE name=? and type='index'", (name,))
+        index_sql.append(cursor.fetchone()[0])
+
+    cursor.execute("ALTER TABLE %s RENAME TO old_%s" % (table, table))
+    cursor.execute("CREATE TABLE %s (%s)" %
+                   (table, ', '.join(columns_with_type)))
+    cursor.execute("INSERT INTO %s(%s) SELECT %s FROM old_%s" %
+                   (table, ', '.join(new_columns), ', '.join(old_columns), table))
+    cursor.execute("DROP TABLE old_%s" % table)
+    for sql in index_sql:
+        cursor.execute(sql)
+
 def get_object_tables(cursor):
     """Returns a list of tables that store ``DDBObject`` subclasses.
     """
@@ -2735,3 +2786,10 @@ def upgrade117(cursor):
     """Add the subtitle_encoding column to items."""
 
     cursor.execute("ALTER TABLE item ADD subtitle_encoding TEXT")
+
+def upgrade118(cursor):
+    """Changes raw_descrption (it's mispelled) to entry_description
+    and add the description column.
+    """
+    rename_column(cursor, "item", "raw_descrption", "entry_description")
+    cursor.execute("ALTER TABLE item ADD description TEXT")
