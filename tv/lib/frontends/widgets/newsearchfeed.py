@@ -87,7 +87,8 @@ def run_dialog():
             rbg = widgetset.RadioButtonGroup()
 
             channel_rb = widgetset.RadioButton(_("Feed:"), rbg)
-            channel_option = widgetset.OptionMenu([ci.name for ci in channels])
+            channel_option = widgetset.OptionMenu(
+                [ci.name + u" - " + ci.url for ci in channels])
             channel_option.set_size_request(250, -1)
             choice_table.pack(channel_rb, 0, 0)
             choice_table.pack(channel_option, 1, 0)
