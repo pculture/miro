@@ -57,7 +57,7 @@ from miro import util
 from miro.gtcache import gettext as _
 from miro.xhtmltools import url_encode_dict, multipart_encode
 from miro.plat.resources import get_osname
-from miro.net import NetworkError, ConnectionError
+from miro.net import NetworkError, ConnectionError, ConnectionTimeout
 
 REDIRECTION_LIMIT = 10
 MAX_AUTH_ATTEMPTS = 5
@@ -224,6 +224,10 @@ class TransferOptions(object):
         handle.setopt(pycurl.NOPROGRESS, 1)
         handle.setopt(pycurl.NOSIGNAL, 1)
         handle.setopt(pycurl.CONNECTTIMEOUT, net.SOCKET_CONNECT_TIMEOUT)
+        # The following 2 settings makes it so that if we don't receive any
+        # data after SOCKET_READ_TIMEOUT, the transfer ends in an error
+        handle.setopt(pycurl.LOW_SPEED_LIMIT, 1)
+        handle.setopt(pycurl.LOW_SPEED_TIME, net.SOCKET_READ_TIMEOUT)
         handle.setopt(pycurl.URL, self.url)
         if self.head_request:
             handle.setopt(pycurl.NOBODY, 1)
@@ -531,7 +535,10 @@ class CurlTransfer(object):
             error = TooManyRedirects(self.options.url)
         elif code == pycurl.E_COULDNT_RESOLVE_HOST:
             error = UnknownHostError(self.options.host)
+        elif code == pycurl.E_OPERATION_TIMEOUTED:
+            error = ConnectionTimeout(self.options.host)
         else:
+            logging.warn("Unknown network error.  Code: %s", code)
             error = NetworkError(_("Unknown"), unicode(handle.errstr()))
         self.call_errback(error)
 
