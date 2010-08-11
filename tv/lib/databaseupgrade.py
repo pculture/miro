@@ -2776,7 +2776,19 @@ def upgrade116(cursor):
         for key in filename_fields:
             value = status.get(key)
             if value is not None and not isinstance(value, unicode):
-                status[key] = value.decode("utf-8")
+                try:
+                    status[key] = value.decode("utf-8")
+                except UnicodeError:
+                    # for channelNames with bad unicode, try some kludges to
+                    # get things working.  (#14003)
+                    if key != 'channelName':
+                        raise
+                    try:
+                        # kludge 1: latin-1 charset
+                        status[key] = value.decode("iso-8859-1")
+                    except UnicodeError:
+                        # kludge 2: replace bad values
+                        status[key] = value.decode("utf-8", 'replace')
                 changed = True
         if changed:
             cursor.execute("UPDATE remote_downloader SET status=? "
