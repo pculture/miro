@@ -536,8 +536,9 @@ class BGDownloader(object):
 
     def handle_network_error(self, error):
         if isinstance(error, httpclient.NetworkError):
-            if ((isinstance(error, httpclient.MalformedURL)
-                 or isinstance(error, httpclient.UnexpectedStatusCode))):
+            if (isinstance(error, httpclient.MalformedURL)
+                 or isinstance(error, httpclient.UnknownHostError)
+                 or isinstance(error, httpclient.UnexpectedStatusCode)):
                 self.handle_error(error.getFriendlyDescription(),
                                   error.getLongDescription())
             else:
