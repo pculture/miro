@@ -775,7 +775,7 @@ class HTTPDownloader(BGDownloader):
         # HTTP downloads never upload.
         pass
 
-    def start(self, resume=False):
+    def start(self, resume=True):
         """Continues a paused or stopped download thread.
         """
         if self.state in ('paused', 'stopped', 'offline'):
@@ -1026,7 +1026,7 @@ class BTDownloader(BGDownloader):
         self._shutdown_torrent()
         self.update_client()
 
-    def start(self, resume=False):
+    def start(self, resume=True):
         # for BT downloads, resume doesn't mean anything, so we
         # ignore it.
         if self.state not in ('paused', 'stopped', 'offline'):
