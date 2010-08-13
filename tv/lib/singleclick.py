@@ -166,8 +166,13 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
         text = _(
             "%(appname)s is not able to download a file at this URL:\n"
             "\n"
-            "URL: %(url)s",
-            {"url": url, "appname": config.get(prefs.SHORT_APP_NAME)}
+            "URL: %(url)s\n"
+            "\n"
+            "Error: %(error)s (%(errordesc)s)",
+            {"url": url,
+             "appname": config.get(prefs.SHORT_APP_NAME),
+             "error": error.getFriendlyDescription(),
+             "errordesc": error.getLongDescription()}
         )
         logging.info("can't download '%s'", url)
         dialogs.MessageBoxDialog(title, text).run()

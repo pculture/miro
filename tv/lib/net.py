@@ -69,7 +69,6 @@ class NetworkError(Exception):
     getFriendlyDescription() -- short, newbie friendly description 
     getLongDescription() -- detailed description
     """
-
     def __init__(self, shortDescription, longDescription=None):
         if longDescription is None:
             longDescription = shortDescription
