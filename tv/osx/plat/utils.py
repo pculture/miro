@@ -106,22 +106,23 @@ def initialize_locale():
 
 def setup_logging (in_downloader=False):
     if in_downloader:
+        log_name = os.environ.get("DEMOCRACY_DOWNLOADER_LOG")
         level = logging.INFO
-        logging.basicConfig(level=level, format='%(levelname)-8s %(message)s')
-        handler = logging.StreamHandler(sys.stdout)
-        logging.getLogger('').addHandler(handler)
-        logging.getLogger('').setLevel(level)
     else:
-        level = logging.WARN
+        log_name = config.get(prefs.LOG_PATHNAME)
         if config.get(prefs.APP_VERSION).endswith("git"):
             level = logging.DEBUG
-        logging.basicConfig(level=level, format='%(levelname)-8s %(message)s')
-        rotater = logging.handlers.RotatingFileHandler(config.get(prefs.LOG_PATHNAME), mode="w", maxBytes=100000, backupCount=5)
-        formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
-        rotater.setFormatter(formatter)
-        logging.getLogger('').addHandler(rotater)
-        logging.getLogger('').setLevel(level)
-        rotater.doRollover()
+        else:
+            level = logging.WARN
+
+    logging.basicConfig(level=level, format='%(levelname)-8s %(message)s')
+    rotater = logging.handlers.RotatingFileHandler(
+        log_name, mode="w", maxBytes=100000, backupCount=5)
+    formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
+    rotater.setFormatter(formatter)
+    logging.getLogger('').addHandler(rotater)
+    logging.getLogger('').setLevel(level)
+    rotater.doRollover()
 
 @returns_binary
 def utf8_to_filename(filename):
