@@ -11,12 +11,6 @@ executable: ffmpeg2theora
 extension: ogv
 parameters: --videoquality 8 --audioquality 6 --frontend -o {output} {input}
 
-[WebM (VP8)]
-only_on: osx
-executable: ffmpeg
-extension: webm
-parameters: -i {input} -f webm -vcodec libvpx_vp8 -acodec libvorbis -ab 160000 -sameq {output}
-
 [MP4]
 extension: mp4
 executable: ffmpeg
