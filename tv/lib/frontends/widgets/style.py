@@ -395,7 +395,9 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             title.set_width(main_width)
             vbox.pack(title)
 
-        if self.display_channel and self.data.feed_name is not None:
+        if ((not self.data.is_external
+             and self.display_channel
+             and self.data.feed_name is not None)):
             vbox.pack_space(1)
             hbox = cellpack.HBox()
             hbox.pack(cellpack.align_middle(self.channel_title_icon))
