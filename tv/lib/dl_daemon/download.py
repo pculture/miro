@@ -541,6 +541,7 @@ class BGDownloader(object):
                  or isinstance(error, httpclient.UnexpectedStatusCode)):
                 self.handle_error(error.getFriendlyDescription(),
                                   error.getLongDescription())
+                self.retryTime = -1 # reset retryTime
             else:
                 self.handle_temporary_error(error.getFriendlyDescription(),
                                             error.getLongDescription())
@@ -669,8 +670,8 @@ class HTTPDownloader(BGDownloader):
         self.totalSize = -1
 
     def handle_temporary_error(self, shortReason, reason):
-        BGDownloader.handle_temporary_error(self, shortReason, reason)
         self.cancel_request()
+        BGDownloader.handle_temporary_error(self, shortReason, reason)
 
     def handle_write_error(self, error):
         text = (_("Could not write to %(filename)s") %
@@ -687,7 +688,6 @@ class HTTPDownloader(BGDownloader):
             return
         # We should successfully download the file.  Reset retryCount
         # and accept defeat if we see an error.
-        self.retryCount = -1
         self.restartOnError = False
         # update shortFilename based on the headers.  This will affect
         # how we move the file once the download is finished

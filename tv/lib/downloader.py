@@ -575,9 +575,12 @@ class RemoteDownloader(DDBObject):
         return activity
 
     def _calc_retry_time(self):
-        retry_delta = self.status['retryTime'] - datetime.datetime.now()
-        time_str = displaytext.time_string(retry_delta.seconds)
-        return _('no connection - retrying in %s') % time_str
+        if self.status['retryTime'] > datetime.datetime.now():
+            retry_delta = self.status['retryTime'] - datetime.datetime.now()
+            time_str = displaytext.time_string(retry_delta.seconds)
+            return _('no connection - retrying in %s') % time_str
+        else:
+            return _('no connection - retrying soon')
 
     def _update_retry_time(self):
         if self.id_exists():
