@@ -118,7 +118,11 @@ def _youtube_callback_step2(info, video_id, callback):
         fmt_url_map = params["fmt_url_map"][0].split(",")
         fmt_url_map = dict([mem.split("|") for mem in fmt_url_map])
 
-        title = unicode(params.get("title", ["No title"])[0])
+        title = params.get("title", ["No title"])[0]
+        try:
+            title = title.decode("utf-8")
+        except UnicodeDecodeError:
+            title = title.decode("ascii", "ignore")
 
         # http://en.wikipedia.org/wiki/YouTube#Quality_and_codecs
         for fmt, content_type in [("22", u"video/mp4"),
