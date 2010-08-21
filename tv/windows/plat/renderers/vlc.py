@@ -462,6 +462,7 @@ class VLCRenderer(object):
         finally:
             libvlc.libvlc_media_release(media)
         self.media_playing = media
+        self.setup_subtitle_font()
         # We want to load the media to test if we can play it.  The
         # best way that I can see to do that is to play it, then pause
         # once we see it's opened in the event_callack method.
@@ -583,6 +584,13 @@ class VLCRenderer(object):
                     self.enable_subtitle_track(1)
         else:
             self.disable_subtitles()
+
+    def setup_subtitle_font(self):
+        font_path = config.get(prefs.SUBTITLE_FONT)
+        config_PutPsz(self.vlc_instance,
+                ctypes.c_char_p('freetype-font'),
+                ctypes.c_char_p(font_path))
+        logging.info("Setting VLC subtitle font: %s", font_path)
         
     def get_subtitle_tracks(self):
         return self.subtitle_info
@@ -683,6 +691,7 @@ class VLCRenderer(object):
         config_PutPsz(self.vlc_instance,
                 ctypes.c_char_p('subsdec-encoding'),
                 ctypes.c_char_p(encoding))
+        logging.info("Setting VLC subtitle encoding: %s", encoding)
 
     def setup_subtitle_encoding_menu(self, menubar):
         menus.add_subtitle_encoding_menu(menubar, _('Eastern European'),

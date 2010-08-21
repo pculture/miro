@@ -29,8 +29,10 @@
 from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import widgetset
 from miro.plat import options
-from miro.frontends.widgets.prefpanel import attach_boolean, attach_radio
-from miro.frontends.widgets.widgetutil import align_left
+from miro.plat import fontinfo
+from miro.frontends.widgets.prefpanel import attach_boolean, attach_radio, \
+        attach_combo
+from miro.frontends.widgets import widgetutil
 from miro import config
 from miro import prefs
 
@@ -41,16 +43,30 @@ def _general_panel():
     extras.append(show_cbx)
 
     lab = widgetset.Label(_("When I click the red close button:"))
-    extras.append(align_left(lab))
+    extras.append(widgetutil.align_left(lab))
     rbg = widgetset.RadioButtonGroup()
     rad_close = widgetset.RadioButton(_("Close to tray so that downloads can continue."), rbg)
     rad_quit = widgetset.RadioButton(_("Quit %(appname)s completely.", {'appname': config.get(prefs.SHORT_APP_NAME)}), rbg)
 
     attach_radio([(rad_close, True), (rad_quit, False)], prefs.MINIMIZE_TO_TRAY)
-    extras.append(align_left(rad_close, left_pad=20))
-    extras.append(align_left(rad_quit, left_pad=20))
+    extras.append(widgetutil.align_left(rad_close, left_pad=20))
+    extras.append(widgetutil.align_left(rad_quit, left_pad=20))
+    return extras
+
+def _playback_panel():
+    extras = []
+    font_infos = [(_('System Default'), None)]
+    font_infos.extend(fontinfo.get_all_font_info())
+    subtitle_font_menu = widgetset.OptionMenu(
+            [name for (name, path) in font_infos])
+    attach_combo(subtitle_font_menu, prefs.SUBTITLE_FONT,
+            [path for (name, path) in font_infos])
+    lab = widgetset.Label(_("Subtitle font:"))
+    extras.append(widgetutil.build_control_line((lab, subtitle_font_menu)))
     return extras
 
 def get_platform_specific(panel_name):
     if panel_name == "general":
         return _general_panel()
+    elif panel_name == "playback":
+        return _playback_panel()

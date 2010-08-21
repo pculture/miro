@@ -49,6 +49,9 @@ def startup():
     from miro import gtcache
     gtcache.init()
 
+    from miro.plat import fontinfo
+    fontinfo.init()
+
     from miro.plat import commandline
     args = commandline.get_command_line()[1:]
     if '--theme' in args:
