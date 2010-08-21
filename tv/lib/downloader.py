@@ -435,6 +435,8 @@ class RemoteDownloader(DDBObject):
         """Continues a paused, stopped, or failed download thread
         """
         if self.get_state() == u'failed':
+            # For failed downloads, don't trust the redirected URL (#14232)
+            self.url = self.origURL
             if _downloads.has_key (self.dlid):
                 del _downloads[self.dlid]
             self.dlid = generate_dlid()
