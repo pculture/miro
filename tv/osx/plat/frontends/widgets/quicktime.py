@@ -296,6 +296,10 @@ class Player(player.Player):
         copy_subtitle_file(sub_path, self.item_info.video_path)
         self.set_item(self.item_info, handle_ok, handle_err, True)
 
+    def select_subtitle_encoding(self, encoding):
+        # FIXME - set the subtitle encoding in quicktime
+        pass
+
     def set_volume(self, volume):
         if self.movie:
             self.movie.setVolume_(volume)
