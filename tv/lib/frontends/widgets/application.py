@@ -1043,11 +1043,20 @@ class WidgetsMessageHandler(messages.MessageHandler):
         self.dbupgrade_progress_dialog = None
 
     def handle_startup_failure(self, message):
+        if hasattr(self, "_startup_failure_mode"):
+            return
+        self._startup_failure_mode = True
+
         dialogs.show_message(message.summary, message.description,
                 dialogs.CRITICAL_MESSAGE)
         app.widgetapp.do_quit()
 
     def handle_startup_database_failure(self, message):
+        if hasattr(self, "_database_failure_mode"):
+            logging.info("already in db failure mode--skipping")
+            return
+        self._database_failure_mode = True
+
         ret = dialogs.show_choice_dialog(
             message.summary, message.description,
             choices=[dialogs.BUTTON_QUIT, dialogs.BUTTON_START_FRESH])

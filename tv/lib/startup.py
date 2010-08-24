@@ -102,46 +102,55 @@ def startup_function(func):
             m.send_to_frontend()
         except (SystemExit, KeyboardInterrupt):
             raise
-        except (database.DatabaseException,
-                database.DatabaseStandardError,
-                storedatabase.sqlite3.OperationalError), dexc:
-            # somewhere in one of the startup functions, Miro kicked up
-            # a database-related problem.  we don't know where it happend,
-            # so we can't just start fresh and keep going.  instead
-            # we have to start fresh, shut miro down, and on the next
-            # run, maybe miro will work.
-            msg = dexc.message
-            if not msg:
-                msg = str(dexc)
-            logging.exception("Database error on startup:")
-            m = messages.StartupDatabaseFailure(
-                _("Database Error"),
-                _("We're sorry, %(appname)s was unable to start up due "
-                  "to a problem with the database:\n\n"
-                  "Error: %(error)s\n\n"
-                  "It's possible that your database file is corrupted and "
-                  "cannot be used.\n\n"
-                  "You can start fresh and your damaged database will be "
-                  "removed, but you will have to re-add your feeds and media "
-                  "files.  If you want to do this, press the Start Fresh "
-                  "button.\n\n"
-                  "To help us fix problems like this in the future, please "
-                  "file a bug report at %(url)s.",
-                  {"appname": config.get(prefs.SHORT_APP_NAME),
-                   "url": config.get(prefs.BUG_REPORT_URL),
-                   "error": msg}
-                  ))
-            m.send_to_frontend()
-        except:
-            logging.warn("Unknown startup error: %s", traceback.format_exc())
-            m = messages.StartupFailure(_("Unknown Error"),
-                    _(
-                        "An unknown error prevented %(appname)s from startup.  Please "
-                        "file a bug report at %(url)s.",
-                        {"appname": config.get(prefs.SHORT_APP_NAME),
-                         "url": config.get(prefs.BUG_REPORT_URL)}
-                    ))
-            m.send_to_frontend()
+        except Exception, exc:
+            # we do this so that we only kick up the database error
+            # if it's a database-related exception AND the app has a
+            # db attribute
+            if ((isinstance(exc, (database.DatabaseException,
+                                  database.DatabaseStandardError,
+                                  storedatabase.sqlite3.OperationalError))
+                 and app.db is not None)):
+
+                # somewhere in one of the startup functions, Miro
+                # kicked up a database-related problem.  we don't know
+                # where it happend, so we can't just start fresh and
+                # keep going.  instead we have to start fresh, shut
+                # miro down, and on the next run, maybe miro will
+                # work.
+                msg = exc.message
+                if not msg:
+                    msg = str(exc)
+                logging.exception("Database error on startup:")
+                m = messages.StartupDatabaseFailure(
+                    _("Database Error"),
+                    _("We're sorry, %(appname)s was unable to start up due "
+                      "to a problem with the database:\n\n"
+                      "Error: %(error)s\n\n"
+                      "It's possible that your database file is corrupted and "
+                      "cannot be used.\n\n"
+                      "You can start fresh and your damaged database will be "
+                      "removed, but you will have to re-add your feeds and "
+                      "media files.  If you want to do this, press the "
+                      "Start Fresh button and restart %(appname)s.\n\n"
+                      "To help us fix problems like this in the future, "
+                      "please file a bug report at %(url)s.",
+                      {"appname": config.get(prefs.SHORT_APP_NAME),
+                       "url": config.get(prefs.BUG_REPORT_URL),
+                       "error": msg}
+                      ))
+                m.send_to_frontend()
+
+            else:
+                logging.warn(
+                    "Unknown startup error: %s", traceback.format_exc())
+                m = messages.StartupFailure(
+                    _("Unknown Error"),
+                    _("An unknown error prevented %(appname)s from startup.  "
+                      "Please file a bug report at %(url)s.",
+                      {"appname": config.get(prefs.SHORT_APP_NAME),
+                       "url": config.get(prefs.BUG_REPORT_URL)}
+                      ))
+                m.send_to_frontend()
     return wrapped
 
 def _movies_directory_gone_handler(callback):
