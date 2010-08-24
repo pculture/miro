@@ -541,7 +541,7 @@ class BGDownloader(object):
                  or isinstance(error, httpclient.UnexpectedStatusCode)):
                 self.handle_error(error.getFriendlyDescription(),
                                   error.getLongDescription())
-                self.retryTime = -1 # reset retryTime
+                self.retryCount = -1 # reset retryCount
             else:
                 self.handle_temporary_error(error.getFriendlyDescription(),
                                             error.getLongDescription())
