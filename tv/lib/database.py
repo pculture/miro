@@ -35,43 +35,52 @@ import threading
 from miro import app
 from miro import signals
 
-class DatabaseConstraintError(Exception):
+class DatabaseException(Exception):
+    """Superclass for classes that subclass Exception and are all
+    Database related.
+    """
+    pass
+
+class DatabaseConstraintError(DatabaseException):
     """Raised when a DDBObject fails its constraint checking during
     signal_change().
     """
     pass
 
-class DatabaseConsistencyError(Exception):
+class DatabaseConsistencyError(DatabaseException):
     """Raised when the database encounters an internal consistency
     issue.
     """
     pass
 
-class DatabaseThreadError(Exception):
+class DatabaseThreadError(DatabaseException):
     """Raised when the database encounters an internal consistency
     issue.
     """
     pass
 
-class DatabaseVersionError(StandardError):
+class DatabaseStandardError(StandardError):
+    pass
+
+class DatabaseVersionError(DatabaseStandardError):
     """Raised when an attempt is made to restore a database newer than
     the one we support
     """
     pass
 
-class ObjectNotFoundError(StandardError):
+class ObjectNotFoundError(DatabaseStandardError):
     """Raised when an attempt is made to lookup an object that doesn't
     exist
     """
     pass
 
-class TooManyObjects(StandardError):
+class TooManyObjects(DatabaseStandardError):
     """Raised when an attempt is made to lookup a singleton and
     multiple rows match the query.
     """
     pass
 
-class NotRootDBError(StandardError):
+class NotRootDBError(DatabaseStandardError):
     """Raised when an attempt is made to call a function that's only
     allowed to be called from the root database.
     """

@@ -810,6 +810,15 @@ class LiveStorage:
                 types.append('%s %s PRIMARY KEY' % (name, type))
         return ', '.join(types)
 
+    def reset_database(self):
+        """Saves the current database then starts fresh with an empty
+        database.
+        """
+        self.connection.close()
+        self.save_invalid_db()
+        self.open_connection()
+        self._init_database()
+
     def _handle_load_error(self, message):
         """Handle errors happening when we try to load the database.  Our
         basic strategy is to log the error, save the current database then
@@ -819,10 +828,7 @@ class LiveStorage:
             raise
         if util.chatter:
             logging.exception(message)
-        self.connection.close()
-        self.save_invalid_db()
-        self.open_connection()
-        self._init_database()
+        self.reset_database()
 
     def save_invalid_db(self):
         dir = os.path.dirname(self.path)

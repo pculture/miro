@@ -820,6 +820,18 @@ class StartupFailure(FrontendMessage):
         self.summary = summary
         self.description = description
 
+class StartupDatabaseFailure(FrontendMessage):
+    """The startup process failed due to a database error.  The
+    frontend should inform the user that this happened and quit.
+
+    Attributes:
+    :param summary: Short, user-friendly, summary of the problem.
+    :param description: Longer explanation of the problem.
+    """
+    def __init__(self, summary, description):
+        self.summary = summary
+        self.description = description
+
 class ChannelInfo(object):
     """Tracks the state of a channel
 

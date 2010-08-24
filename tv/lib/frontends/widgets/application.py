@@ -1047,6 +1047,24 @@ class WidgetsMessageHandler(messages.MessageHandler):
                 dialogs.CRITICAL_MESSAGE)
         app.widgetapp.do_quit()
 
+    def handle_startup_database_failure(self, message):
+        ret = dialogs.show_choice_dialog(
+            message.summary, message.description,
+            choices=[dialogs.BUTTON_QUIT, dialogs.BUTTON_START_FRESH])
+        if ret == dialogs.BUTTON_START_FRESH:
+            def start_fresh():
+                try:
+                    app.db.reset_database()
+                except Exception:
+                    logging.exception(
+                        "gah!  exception in the "
+                        "handle_startup_database_failure section")
+                app.widgetapp.do_quit()
+            eventloop.add_urgent_call(start_fresh, "start fresh and quit")
+
+        else:
+            app.widgetapp.do_quit()
+
     def handle_startup_success(self, message):
         app.widgetapp.startup_ui()
 
