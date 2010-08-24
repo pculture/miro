@@ -210,7 +210,14 @@ class LiveStorage:
             logging.exception('error when upgrading database: %s', e)
             self._handle_upgrade_error()
 
+    def _backup_failed_upgrade_db(self):
+        save_name = self._find_unused_db_name("failed_upgrade_database")
+        path = os.path.join(os.path.dirname(self.path), save_name)
+        shutil.copyfile(self.path, path)
+        logging.warn("upgrade failed. Backing up database to %s", path)
+
     def _handle_upgrade_error(self):
+        self._backup_failed_upgrade_db()
         title = _("%(appname)s database upgrade failed",
                   {"appname": config.get(prefs.SHORT_APP_NAME)})
         description = _(
