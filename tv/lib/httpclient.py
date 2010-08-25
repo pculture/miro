@@ -110,6 +110,12 @@ class TooManyRedirects(HTTPError):
     def __init__(self, url):
         HTTPError.__init__(self, _('HTTP Redirection limit hit for %(url)s',
                                    {"url": url}))
+class ProxyAuthenticationError(HTTPError):
+    def __init__(self):
+        HTTPError.__init__(self,
+                _('Authorization failed for proxy: %(host)s:%(port)s',
+                               {"host": config.get(prefs.HTTP_PROXY_HOST),
+                               "port": config.get(prefs.HTTP_PROXY_PORT)}))
 
 class UnexpectedStatusCode(HTTPError):
     def __init__(self, code):
@@ -231,7 +237,27 @@ class TransferOptions(object):
         handle.setopt(pycurl.URL, self.url)
         if self.head_request:
             handle.setopt(pycurl.NOBODY, 1)
+        self._setup_proxy(handle)
         return handle
+
+    def _setup_proxy(self, handle):
+        if not config.get(prefs.HTTP_PROXY_ACTIVE):
+            return
+
+        # FIXME honor prefs.HTTP_PROXY_SCHEME
+        handle.setopt(pycurl.PROXY, str(config.get(prefs.HTTP_PROXY_HOST)))
+        handle.setopt(pycurl.PROXYPORT, config.get(prefs.HTTP_PROXY_PORT))
+
+        ignore_hosts = config.get(prefs.HTTP_PROXY_IGNORE_HOSTS)
+        if ignore_hosts:
+            handle.setopt(pycurl.NOPROXY, ','.join(
+                str(h) for h in ignore_hosts))
+
+        if config.get(prefs.HTTP_PROXY_AUTHORIZATION_ACTIVE):
+            handle.setopt(curl.PROXYUSERPWD, '%s:%s' % (
+                str(config.get(prefs.HTTP_PROXY_AUTHORIZATION_USERNAME)),
+                str(config.get(prefs.HTTP_PROXY_AUTHORIZATION_PASSWORD))))
+
 
     def _setup_headers(self, handle, out_headers):
         headers = ['%s: %s' % (str(k), str(out_headers[k]))
@@ -473,6 +499,9 @@ class CurlTransfer(object):
         elif info['status'] >= 500 and info['status'] < 600:
             logging.info("possibly temporary error")
             self.call_errback(PossiblyTemporaryError(info['status']))
+        elif info['status'] == 407:
+            # FIXME: should ask user for their auth here
+            self.call_errback(ProxyAuthenticationError())
         else:
             self.call_errback(UnexpectedStatusCode(info['status']))
 

@@ -178,8 +178,8 @@ def get(descriptor):
     elif descriptor == prefs.HTTP_PROXY_PORT:
         return proxy_info.port
     elif descriptor == prefs.HTTP_PROXY_IGNORE_HOSTS:
-        return poxy_info.ignore_hosts
-    # Proxy authorization isn't suppored on windows, so the following keps are
+        return proxy_info.ignore_hosts
+    # Proxy authorization isn't suppored on windows, so the following keys are
     # ignored:
     # 
     # HTTP_PROXY_AUTHORIZATION_ACTIVE
