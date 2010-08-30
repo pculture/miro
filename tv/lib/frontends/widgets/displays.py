@@ -515,7 +515,8 @@ class VideoDisplay(Display):
     def _prepare_remove_renderer(self):
         if self.in_fullscreen:
             self.exit_fullscreen()
-        self.renderer.stop()
+        if self.renderer:
+            self.renderer.stop()
 
     def cleanup(self):
         if self._showing_renderer:
