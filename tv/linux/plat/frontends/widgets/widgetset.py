@@ -115,7 +115,7 @@ class Browser(Widget):
         return True
 
     def navigate(self, url):
-        if self.url:
+        if url:
             self._browser.get_frame().load_uri(url)
 
     def reload(self):
