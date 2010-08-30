@@ -248,6 +248,8 @@ class Player(player.Player):
                             name = display_name
                         else:
                             name = lang_info["name"]
+                    if name != display_name:
+                        name = "%s (%s)" % (name, display_name)
                     is_enabled = track.attributeForKey_(QTTrackEnabledAttribute) == 1
                     track_id = track.attributeForKey_(QTTrackIDAttribute)
                     tracks.append((track_id, name, is_enabled))
