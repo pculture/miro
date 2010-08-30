@@ -6,6 +6,7 @@ from cStringIO import StringIO
 
 from miro import dialogs
 from miro import eventloop
+from miro import httpauth
 from miro import httpclient
 from miro import signals
 from miro.plat import resources
@@ -448,35 +449,78 @@ class HTTPAuthTest(HTTPClientTestBase):
     def test_auth_failed(self):
         self.expecting_errback = True
         self.setup_cancel()
-        self.grab_url(self.httpserver.build_url('protected.txt'))
+        self.grab_url(self.httpserver.build_url('protected/index.txt'))
         self.check_auth_errback_called()
 
         self.setup_answer("wronguser", "wrongpass")
-        self.grab_url(self.httpserver.build_url('protected.txt'))
+        self.grab_url(self.httpserver.build_url('protected/index.txt'))
         self.check_auth_errback_called()
 
     def test_auth_correct(self):
         self.setup_answer("user", "password")
-        self.grab_url(self.httpserver.build_url('protected.txt'))
+        self.grab_url(self.httpserver.build_url('protected/index.txt'))
+        self.assertEquals(self.dialogs_seen, 1)
 
     def test_auth_memory(self):
         self.setup_answer("user", "password")
-        self.grab_url(self.httpserver.build_url('protected.txt'))
+        self.grab_url(self.httpserver.build_url('protected/index.txt'))
+        self.assertEquals(self.dialogs_seen, 1)
+        # We shouldn't see another dialog for the same URL
+        self.grab_url(self.httpserver.build_url('protected/index.txt'))
+        self.assertEquals(self.dialogs_seen, 1)
+        # ditto for ones in the same directory
+        self.grab_url(self.httpserver.build_url('protected/index2.txt'))
+        self.assertEquals(self.dialogs_seen, 1)
+        # Even for ones in a subdirectory
+        self.grab_url(self.httpserver.build_url('protected/foo/index2.txt'))
+        self.assertEquals(self.dialogs_seen, 1)
+        # But ones outside the subdirectory should require new auth
+        self.grab_url(self.httpserver.build_url('protected2/index.txt'))
+        self.assertEquals(self.dialogs_seen, 2)
+
+    def test_digest_auth_failed(self):
+        self.expecting_errback = True
         self.setup_cancel()
-        # this shouldn't matter because we should have the auth saved in the DB
-        self.grab_url(self.httpserver.build_url('protected.txt'))
+        self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
+        self.check_auth_errback_called()
+
+        self.setup_answer("wronguser", "wrongpass")
+        self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
+        self.check_auth_errback_called()
+
+    def test_digest_auth_correct(self):
+        self.setup_answer("user", "password")
+        self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
+        self.assertEquals(self.dialogs_seen, 1)
+
+    def test_digest_auth_memory(self):
+        self.setup_answer("user", "password")
+        self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
+        self.assertEquals(self.dialogs_seen, 1)
+        # We shouldn't see another dialog for the same URL
+        self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
+        self.assertEquals(self.dialogs_seen, 1)
+        # ditto for ones in the same directory
+        self.grab_url(self.httpserver.build_url('digest-protected/index2.txt'))
+        self.assertEquals(self.dialogs_seen, 1)
+        # Even for ones in a subdirectory
+        self.grab_url(self.httpserver.build_url('digest-protected/foo/index2.txt'))
+        self.assertEquals(self.dialogs_seen, 1)
+        # But ones outside the subdirectory should require new auth
+        self.grab_url(self.httpserver.build_url('digest-protected2/index.txt'))
+        self.assertEquals(self.dialogs_seen, 2)
 
     def test_max_attempts(self):
         self.expecting_errback = True
         self.setup_answer("wronguser", "wrongpass")
-        self.grab_url(self.httpserver.build_url('protected.txt'))
+        self.grab_url(self.httpserver.build_url('protected/index.txt'))
         self.assertEquals(self.dialogs_seen, httpclient.MAX_AUTH_ATTEMPTS)
 
     def test_quick_cancel(self):
         # Try canceling before find_http_auth returns and make sure things
         # work.
         self.setup_answer("user", "password")
-        url = self.httpserver.build_url('protected.txt')
+        url = self.httpserver.build_url('protected/index.txt')
         self.grab_url_error = self.grab_url_info = None
         self.client = httpclient.grab_url(url, self.grab_url_callback,
                 self.grab_url_errback)
@@ -501,11 +545,105 @@ class HTTPAuthTest(HTTPClientTestBase):
                     'stopping event loop', args=(False,))
         self.dialog_callback = on_dialog
         self.setup_answer("user", "password")
-        self.grab_url(self.httpserver.build_url('protected.txt'))
+        self.grab_url(self.httpserver.build_url('protected/index.txt'))
         # make sure that the callback/errback weren't called and nothing is
         # transfering
         self.check_nothing_called()
         self.assertEquals(len(httpclient.curl_manager.transfer_map), 0)
+
+class HTTPAuthBackendTest(EventLoopTest):
+    # Test using the  httpauth module directly.  We can do test certain things
+    # here that we can't in HTTPAuthTest, for example hostnames other than
+    # localhost
+
+    def setUp(self):
+        self.dialogs_seen = 0
+        signals.system.connect('new-dialog', self.handle_dialog)
+        EventLoopTest.setUp(self)
+
+    def handle_dialog(self, obj, dialog):
+        self.dialogs_seen += 1
+        dialog.run_callback(dialogs.BUTTON_OK, u'user', u'password')
+
+    def callback(self, auth):
+        self.callback_data = auth
+        self.stopEventLoop(abnormal=False)
+
+    def find_http_auth(self, url):
+        httpauth.find_http_auth(self.callback, url)
+        self.runEventLoop(timeout=0.1)
+        return self.callback_data
+
+    def ask_for_http_auth(self, url, auth_header):
+        httpauth.ask_for_http_auth(self.callback, url, auth_header)
+        self.runEventLoop(timeout=0.1)
+        return self.callback_data
+
+    def test_simple(self):
+        url = 'http://example.com/foo.html'
+        header = 'Basic realm="Protected Space"'
+        self.assertEquals(self.find_http_auth(url), None)
+        auth = self.ask_for_http_auth(url, header)
+        self.assertEquals(auth.username, 'user')
+        self.assertEquals(auth.password, 'password')
+        self.assertEquals(auth.authScheme, 'basic')
+
+    def test_basic_reuse(self):
+        header = 'Basic realm="Protected Space"'
+        url = 'http://example.com/foo/test.html'
+        # we should re-use the auth credentials for urls in the same directory
+        url2 = 'http://example.com/foo/test2.html'
+        url3 = 'http://example.com/foo/bar/test2.html'
+        # but not for ones outside
+        url4 = 'http://example.com/test.html'
+        url5 = 'http://example2.com/foo/test.html'
+        auth = self.ask_for_http_auth(url, header)
+        self.assertEquals(self.find_http_auth(url), auth)
+        self.assertEquals(self.find_http_auth(url2), auth)
+        self.assertEquals(self.find_http_auth(url3), auth)
+        self.assertEquals(self.find_http_auth(url4), None)
+        self.assertEquals(self.find_http_auth(url5), None)
+
+    def test_digest_reuse(self):
+        header = 'Digest realm="Protected Space",nonce="123"'
+        url = 'http://example.com/foo/test.html'
+        # we should re-use the auth credentials for urls in the same server
+        url2 = 'http://example.com/foo/test2.html'
+        url3 = 'http://example.com/foo/bar/test2.html'
+        url4 = 'http://example.com/test.html'
+        # but not for ones outside
+        url5 = 'http://example2.com/foo/test.html'
+        auth = self.ask_for_http_auth(url, header)
+        self.assertEquals(self.find_http_auth(url), auth)
+        self.assertEquals(self.find_http_auth(url2), auth)
+        self.assertEquals(self.find_http_auth(url3), auth)
+        self.assertEquals(self.find_http_auth(url4), auth)
+        self.assertEquals(self.find_http_auth(url5), None)
+
+    def test_digest_reuse_with_domain(self):
+        header = ('Digest realm="Protected Space",nonce="123",'
+                'domain="/metoo,http://metoo.com/,http://example2.com/meetoo')
+        url = 'http://example.com/foo/test.html'
+        # we should re-use the auth credentials for urls specified in domain
+        url2 = 'http://example.com/meetoo/'
+        url3 = 'http://example.com/meetoo/index.html/'
+        url4 = 'http://meetoo.com/'
+        url5 = 'http://example2.com/meetoo/'
+        # but not for ones outside
+        url6 = 'http://example.com/notmeetoo/index.html/'
+        url7 = 'http://notmeetoo.com/'
+        url8 = 'http://example2.com/notmeetoo/'
+
+        auth = self.ask_for_http_auth(url, header)
+        self.assertEquals(self.find_http_auth(url), auth)
+        self.assertEquals(self.find_http_auth(url2), auth)
+        self.assertEquals(self.find_http_auth(url3), auth)
+        self.assertEquals(self.find_http_auth(url4), auth)
+        self.assertEquals(self.find_http_auth(url5), auth)
+
+        self.assertEquals(self.find_http_auth(url6), auth)
+        self.assertEquals(self.find_http_auth(url7), auth)
+        self.assertEquals(self.find_http_auth(url8), auth)
 
 class BadURLTest(HTTPClientTestBase):
     def setUp(self):

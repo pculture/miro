@@ -90,8 +90,8 @@ class HTTPAuthPassword(DDBObject):
         self.password = password
         self.host = host
         self.realm = realm
-        self.path = os.path.dirname(path)
-        self.authScheme = authScheme
+        self.path = os.path.dirname(path) + "/"
+        self.authScheme = authScheme.lower()
 
     def get_auth_token(self):
         auth_string = u':'

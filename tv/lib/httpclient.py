@@ -36,7 +36,6 @@ fetches a HTTP or HTTPS url, while grab_headers only fetches the headers.
 
 import logging
 import os
-import re
 import stat
 import threading
 import urllib
@@ -318,14 +317,14 @@ class CurlTransfer(object):
         self._filehandle = None
         self.resume_from = 0
         self.out_headers = {}
+        self.http_auth_info = self.http_auth_scheme = None
 
     def start(self):
         if self.options.invalid_url:
             self.call_errback(MalformedURL(self.options.url))
             return
         httpauth.find_http_auth(self._find_http_auth_callback,
-                unicode(self.options.host),
-                unicode(self.options.path))
+                self.options.url)
 
     def cancel(self, remove_file):
         curl_manager.remove_transfer(self, remove_file)
@@ -341,16 +340,12 @@ class CurlTransfer(object):
         except KeyError:
             self.call_errback(AuthorizationFailed())
             return
-
-        match = re.search("(\w+)\s+realm\s*=\s*\"(.*?)\"$", auth_header)
-        if match is None:
+        try:
+            httpauth.ask_for_http_auth(self._ask_for_http_auth_callback,
+                    self.options.url, auth_header)
+        except ValueError, e:
+            logging.warn("ValueError when parsing auth header: %s", e)
             self.call_errback(AuthorizationFailed())
-            return
-
-        scheme = unicode(match.expand("\\1"))
-        realm = unicode(match.expand("\\2"))
-        httpauth.ask_for_http_auth(self._ask_for_http_auth_callback,
-                self.options.url, realm, scheme)
 
     def _ask_for_http_auth_callback(self, auth):
         if self.canceled:
@@ -370,13 +365,23 @@ class CurlTransfer(object):
         curl_manager.add_transfer(self)
 
     def _set_http_auth(self, auth):
-        self.out_headers['Authorization'] = auth
+        if auth.authScheme == 'basic':
+            self.http_auth_scheme = pycurl.HTTPAUTH_BASIC
+        elif auth.authScheme == 'digest':
+            self.http_auth_scheme = pycurl.HTTPAUTH_DIGEST
+        else:
+            logging.warn("Unknown HTTP Auth scheme: %s", auth.authScheme)
+            return
+        self.http_auth_info = str("%s:%s" % (auth.username, auth.password))
 
     def build_handle(self):
         """Build a libCURL handle.  This should only be called inside the
         LibCURLManager thread.
         """
         self.handle = self.options.build_handle(self.out_headers)
+        if self.http_auth_info:
+            self.handle.setopt(pycurl.USERPWD, self.http_auth_info)
+            self.handle.setopt(pycurl.HTTPAUTH, self.http_auth_scheme)
         if self.options._cancel_on_body_data:
             self.handle.setopt(pycurl.WRITEFUNCTION, self._write_func_abort)
         elif self.options.write_file is not None:

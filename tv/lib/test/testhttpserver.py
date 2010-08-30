@@ -5,6 +5,7 @@ The code here is based off of the standard SimpleHTTPServer code.
 
 
 import BaseHTTPServer
+import hashlib
 import cgi
 import os
 import posixpath
@@ -17,6 +18,9 @@ import threading
 from miro.plat import utils
 from miro.plat import resources
 
+def md5(d):
+    return hashlib.md5(d).hexdigest()
+
 class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     server_version = "MiroTestHTTP/1.0"
     handlers_created = 0
@@ -27,6 +31,10 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         MiroHTTPRequestHandler.handlers_created += 1
         self.server.current_request_handler = self
         self.connection.settimeout(5.0)
+        self.digest_nonce = "dcd98b7102dd2f0e8b11d0f600bfb0c093"
+        self.realm = 'Secure Area'
+        self.user = 'user'
+        self.password = 'password'
 
     def handle(self):
         try:
@@ -138,16 +146,50 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             code = 302
             location_header = self.build_url("linux-screen.jpg")
             path = self.translate_path('redirect.html')
-        elif self.path == '/protected.txt':
+        elif self.path.startswith("/protected"):
+            # URLs that start with "protected" are password protected.  The
+            # data is always just test.txt
             path = self.translate_path('test.txt')
-            auth = "user:password".encode("base64")[:-1]
+            auth = (self.user + ":" + self.password).encode("base64")[:-1]
             # use [:-1] to cut off the trailing newline
             if (self.headers.get('authorization') == "Basic %s" % auth):
                 code = 200
             else:
                 code = 401
                 headers_to_send.append(('WWW-Authenticate',
-                    'Basic realm="Secure Area"'))
+                    'Basic realm="%s"' % self.realm))
+        elif self.path.startswith("/digest-protected"):
+            # Same as protected, but for digest auth
+            # Implementation based on the RFC example
+            # http://www.ietf.org/rfc/rfc2069.txt
+            # We use RFC 2069 instead of RFC 2617 because it's easier to
+            # implement
+
+            path = self.translate_path('test.txt')
+            # use [:-1] to cut off the trailing newline
+
+            client_auth = self.headers.get('authorization')
+            if client_auth is not None:
+                client_auth = set(s.strip() for s in client_auth.split(','))
+            correct_auth_response = set([
+                'username="%s"' % self.user,
+                 'realm="%s"' % self.realm,
+                 'nonce="%s"' % self.digest_nonce,
+                 'uri="%s"' % self.path,
+                 'response="%s"' % self.calc_digest_response(),
+                 'opaque="5ccc069c403ebaf9f0171e9517f40e41"'])
+
+            if self.parse_client_digest_auth() == correct_auth_response:
+                code = 200
+            else:
+                code = 401
+                headers_to_send.append(('WWW-Authenticate',
+                    'Digest '
+                    'realm="%s", '
+                    'nonce="%s", '
+                    'opaque="5ccc069c403ebaf9f0171e9517f40e41"' %
+                    (self.realm, self.digest_nonce)))
+
         elif 'range' in self.headers and self.server.allow_resume:
             range = self.headers['range']
             if range.startswith("bytes="):
@@ -187,6 +229,21 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.send_header(key, value)
         self.end_headers()
         return f
+
+    def parse_client_digest_auth(self):
+        try:
+            client_auth = self.headers['authorization']
+        except KeyError:
+            return None
+        if not client_auth.lower().startswith("digest "):
+            return None
+        client_auth = client_auth[len("digest "):]
+        return set(s.strip() for s in client_auth.split(','))
+
+    def calc_digest_response(self):
+        secret = '%s:%s:%s' % (self.user, self.realm, self.password)
+        data = 'GET:' + self.path
+        return md5(md5(secret) + ":" + self.digest_nonce + ":" + md5(data))
 
     def build_url(self, path):
         return 'http://localhost:%s/%s' % (self.server.port, path)
