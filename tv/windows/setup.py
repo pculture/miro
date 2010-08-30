@@ -103,7 +103,6 @@ LIBTORRENT_PATH = os.path.join(BINARY_KIT_ROOT, 'libtorrent')
 
 FFMPEG_PATH = os.path.join(BINARY_KIT_ROOT, 'ffmpeg')
 
-VCREDIST71_PATH = os.path.join(BINARY_KIT_ROOT, 'vc71redist')
 VCREDIST90_PATH = os.path.join(BINARY_KIT_ROOT, 'vc90redist')
 
 def find_data_files(dest_path_base, source_path):
@@ -254,7 +253,6 @@ data_files.append(('', [os.path.join(VLC_PATH, 'libvlc.dll')]))
 data_files.append(('', [os.path.join(VLC_PATH, 'libvlccore.dll')]))
 data_files.append(('', [os.path.join(LIBTORRENT_PATH, 'libtorrent.pyd')]))
 data_files.append(('', iglob(os.path.join(FFMPEG_PATH, '*'))))
-data_files.append(('', iglob(os.path.join(VCREDIST71_PATH, '*'))))
 data_files.append(('', iglob(os.path.join(VCREDIST90_PATH, '*'))))
 
 # handle the resources subdirectories.
@@ -358,7 +356,7 @@ DLLS_TO_INCLUDE = [
 origIsSystemDLL = py2exe.build_exe.isSystemDLL
 def isSystemDLL(pathname):
     if os.path.basename(pathname).lower() in DLLS_TO_INCLUDE:
-        return False
+        return True
     else:
         return origIsSystemDLL(pathname)
 py2exe.build_exe.isSystemDLL = isSystemDLL
