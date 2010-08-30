@@ -52,7 +52,7 @@ from miro import signals
 from miro import videoconversion
 from miro.plat.utils import exit_miro
 
-BOGON_URL = "http://participatoryculture.org/bogondeflector/index.php"
+BOGON_URL = "http://bogondeflector.pculture.org/index.php"
 
 class Controller:
     """The main application app.controller object, binding model to
