@@ -115,10 +115,12 @@ class Browser(Widget):
         return True
 
     def navigate(self, url):
-        self._browser.get_frame().load_uri(url)
+        if self.url:
+            self._browser.get_frame().load_uri(url)
 
     def reload(self):
-        self._browser.get_frame().load_uri(self.url)
+        if self.url:
+            self._browser.get_frame().load_uri(self.url)
 
     def stop(self):
         self._browser.stop_loading()
