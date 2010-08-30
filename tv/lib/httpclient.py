@@ -880,10 +880,11 @@ def cleanup_libcurl():
 
 def start_thread():
     global curl_manager
-    curl_manager = LibCURLManager()
     curl_manager.start()
 
 def stop_thread():
     global curl_manager
     curl_manager.stop()
     del curl_manager
+
+curl_manager = LibCURLManager()

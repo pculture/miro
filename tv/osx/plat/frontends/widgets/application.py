@@ -49,6 +49,7 @@ from miro import messages
 from miro import filetypes
 from miro import eventloop
 from miro import moviedata
+from miro import httpclient
 from miro import commandline
 from miro.frontends.widgets import menus
 from miro.frontends.widgets.application import Application
@@ -97,6 +98,8 @@ class OSXApplication(Application):
         eventloop.connect('end-loop', self.endLoop)
         moviedata.movie_data_updater.connect('begin-loop', self.beginLoop)
         moviedata.movie_data_updater.connect('end-loop', self.endLoop)
+        httpclient.curl_manager.connect('begin-loop', self.beginLoop)
+        httpclient.curl_manager.connect('end-loop', self.beginLoop)
         config.add_change_callback(self.on_pref_changed)
 
     def startup_ui(self):
