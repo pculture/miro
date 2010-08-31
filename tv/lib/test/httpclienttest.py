@@ -506,9 +506,9 @@ class HTTPAuthTest(HTTPClientTestBase):
         # Even for ones in a subdirectory
         self.grab_url(self.httpserver.build_url('digest-protected/foo/index2.txt'))
         self.assertEquals(self.dialogs_seen, 1)
-        # But ones outside the subdirectory should require new auth
+        # Or even for ones outside the directory (only true for digest auth)
         self.grab_url(self.httpserver.build_url('digest-protected2/index.txt'))
-        self.assertEquals(self.dialogs_seen, 2)
+        self.assertEquals(self.dialogs_seen, 1)
 
     def test_max_attempts(self):
         self.expecting_errback = True
@@ -551,10 +551,30 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.check_nothing_called()
         self.assertEquals(len(httpclient.curl_manager.transfer_map), 0)
 
+    def test_store(self):
+        self.setup_answer("user", "password")
+        self.grab_url(self.httpserver.build_url('protected/index.txt'))
+        self.assertEquals(self.dialogs_seen, 1)
+        # write out the data
+        store_path = self.make_temp_path('.json')
+        httpauth.write_to_file(store_path)
+        # reset the data, check that we get a new dialog
+        httpauth.init()
+        self.grab_url(self.httpserver.build_url('protected/index.txt'))
+        self.assertEquals(self.dialogs_seen, 2)
+        # reset the data, then restore from file.  We shouldn't get a new
+        # dialog this time
+        httpauth.init()
+        httpauth.restore_from_file(store_path)
+        self.grab_url(self.httpserver.build_url('protected/index.txt'))
+        self.assertEquals(self.dialogs_seen, 2)
+
 class HTTPAuthBackendTest(EventLoopTest):
-    # Test using the  httpauth module directly.  We can do test certain things
-    # here that we can't in HTTPAuthTest, for example hostnames other than
-    # localhost
+    """ Test using the  httpauth module directly.
+
+    We can do test certain things here that we can't in HTTPAuthTest, for
+    example hostnames other than localhost
+    """
 
     def setUp(self):
         self.dialogs_seen = 0
@@ -586,7 +606,7 @@ class HTTPAuthBackendTest(EventLoopTest):
         auth = self.ask_for_http_auth(url, header)
         self.assertEquals(auth.username, 'user')
         self.assertEquals(auth.password, 'password')
-        self.assertEquals(auth.authScheme, 'basic')
+        self.assertEquals(auth.scheme, 'basic')
 
     def test_basic_reuse(self):
         header = 'Basic realm="Protected Space"'
@@ -607,7 +627,7 @@ class HTTPAuthBackendTest(EventLoopTest):
     def test_digest_reuse(self):
         header = 'Digest realm="Protected Space",nonce="123"'
         url = 'http://example.com/foo/test.html'
-        # we should re-use the auth credentials for urls in the same server
+        # we should re-use the auth credentials for all urls in the same server
         url2 = 'http://example.com/foo/test2.html'
         url3 = 'http://example.com/foo/bar/test2.html'
         url4 = 'http://example.com/test.html'
@@ -622,17 +642,17 @@ class HTTPAuthBackendTest(EventLoopTest):
 
     def test_digest_reuse_with_domain(self):
         header = ('Digest realm="Protected Space",nonce="123",'
-                'domain="/metoo,http://metoo.com/,http://example2.com/meetoo')
+                'domain="/metoo,http://metoo.com/,http://example2.com/metoo"')
         url = 'http://example.com/foo/test.html'
         # we should re-use the auth credentials for urls specified in domain
-        url2 = 'http://example.com/meetoo/'
-        url3 = 'http://example.com/meetoo/index.html/'
-        url4 = 'http://meetoo.com/'
-        url5 = 'http://example2.com/meetoo/'
+        url2 = 'http://example.com/metoo/'
+        url3 = 'http://example.com/metoo/index.html/'
+        url4 = 'http://metoo.com/'
+        url5 = 'http://example2.com/metoo/'
         # but not for ones outside
-        url6 = 'http://example.com/notmeetoo/index.html/'
-        url7 = 'http://notmeetoo.com/'
-        url8 = 'http://example2.com/notmeetoo/'
+        url6 = 'http://example.com/notmetoo/index.html/'
+        url7 = 'http://notmetoo.com/'
+        url8 = 'http://example2.com/notmetoo/'
 
         auth = self.ask_for_http_auth(url, header)
         self.assertEquals(self.find_http_auth(url), auth)
@@ -641,9 +661,32 @@ class HTTPAuthBackendTest(EventLoopTest):
         self.assertEquals(self.find_http_auth(url4), auth)
         self.assertEquals(self.find_http_auth(url5), auth)
 
-        self.assertEquals(self.find_http_auth(url6), auth)
-        self.assertEquals(self.find_http_auth(url7), auth)
-        self.assertEquals(self.find_http_auth(url8), auth)
+        self.assertEquals(self.find_http_auth(url6), None)
+        self.assertEquals(self.find_http_auth(url7), None)
+        self.assertEquals(self.find_http_auth(url8), None)
+
+class HTTPAuthBackendTestDLDaemonVersion(HTTPAuthBackendTest):
+    """Same tests as HTTPAuthBackendTest, using dl_daemon.private.httpauth
+    """
+    def setUp(self):
+        class FakeDLDaemon(object):
+            def __init__(self):
+                self.shutdown = False
+
+            def send(self, command, callback):
+                command.action()
+
+        from miro.dl_daemon import daemon
+        from miro.dl_daemon import command
+        daemon.LAST_DAEMON = FakeDLDaemon()
+        from miro.dl_daemon.private import httpauth
+        globals()['httpauth'] = httpauth
+        HTTPAuthBackendTest.setUp(self)
+
+    def tearDown(self):
+        from miro import httpauth
+        globals()['httpauth'] = httpauth
+        HTTPAuthBackendTest.tearDown(self)
 
 class BadURLTest(HTTPClientTestBase):
     def setUp(self):

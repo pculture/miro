@@ -10,6 +10,7 @@ from miro import eventloop
 from miro import app
 from miro import config
 from miro import downloader
+from miro import httpauth
 from miro import httpclient
 from miro import util
 from miro import databaseupgrade
@@ -109,6 +110,7 @@ class MiroTestCase(unittest.TestCase):
         signals.system.connect('error', self.handle_error)
         app.controller = DummyController()
         self.httpserver = None
+        httpauth.init()
         httpclient.start_thread()
 
     def on_windows(self):

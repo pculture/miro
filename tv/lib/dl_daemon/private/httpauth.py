@@ -38,17 +38,17 @@ def handle_http_auth_response(id_, authHeader):
     callback = waitingHTTPAuthCallbacks.pop(id_)
     callback(authHeader)
 
-def find_http_auth(callback, host, path):
+def find_http_auth(callback, url):
     id_ = requestIdGenerator.next()
     waitingHTTPAuthCallbacks[id_] = callback
     from miro.dl_daemon import daemon
-    c = command.FindHTTPAuthCommand(daemon.LAST_DAEMON, id_, host, path)
+    c = command.FindHTTPAuthCommand(daemon.LAST_DAEMON, id_, url)
     c.send()
 
-def askForHTTPAuth(callback, host, path, authScheme):
+def ask_for_http_auth(callback, url, auth_header):
     id_ = requestIdGenerator.next()
     waitingHTTPAuthCallbacks[id_] = callback
     from miro.dl_daemon import daemon
-    c = command.AskForHTTPAuthCommand(daemon.LAST_DAEMON, id_, host, path,
-            authScheme)
+    c = command.AskForHTTPAuthCommand(daemon.LAST_DAEMON, id_, url,
+            auth_header)
     c.send()

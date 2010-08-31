@@ -40,14 +40,14 @@ around this, this module waits to import things until initialize() is called.
 """
 
 def initialize():
-    global RemoteDownloader, HTTPAuthPassword, Feed, FeedImpl, RSSFeedImpl
+    global RemoteDownloader, Feed, FeedImpl, RSSFeedImpl
     global SavedSearchFeedImpl, ScraperFeedImpl, SearchFeedImpl
     global DirectoryWatchFeedImpl, DirectoryFeedImpl, SearchDownloadsFeedImpl
     global ManualFeedImpl, SingleFeedImpl, ChannelFolder, PlaylistFolder
     global PlaylistFolderItemMap, ChannelGuide, Item, FileItem, IconCache
     global SavedPlaylist, PlaylistItemMap, TabOrder, ThemeHistory
 
-    from miro.downloader import RemoteDownloader, HTTPAuthPassword
+    from miro.downloader import RemoteDownloader
     from miro.feed import Feed, FeedImpl, RSSFeedImpl, SavedSearchFeedImpl, \
             ScraperFeedImpl, SearchFeedImpl, DirectoryWatchFeedImpl, \
             DirectoryFeedImpl, SearchDownloadsFeedImpl, ManualFeedImpl, \

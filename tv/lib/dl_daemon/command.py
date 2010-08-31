@@ -99,7 +99,7 @@ class AskForHTTPAuthCommand(Command):
         def callback(auth_header):
             c = GotHTTPAuthCommand(self.daemon, id_, auth_header)
             c.send()
-        httpauth.askForHTTPAuth(callback, *args)
+        httpauth.ask_for_http_auth(callback, *args)
 
 class UpdateDownloadStatus(Command):
     def action(self):
@@ -205,9 +205,7 @@ class MigrateDownloadCommand(Command):
 class GotHTTPAuthCommand(Command):
     def action(self):
         id_, auth_header = self.args
-        from miro import httpauth
-        # note since we're in the downloader process here, httpauth is
-        # dl_daemon/private/httpauth.py
+        from miro.dl_daemon.private import httpauth
         httpauth.handle_http_auth_response(id_, auth_header)
 
 class ShutDownCommand(Command):

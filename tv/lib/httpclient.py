@@ -365,12 +365,12 @@ class CurlTransfer(object):
         curl_manager.add_transfer(self)
 
     def _set_http_auth(self, auth):
-        if auth.authScheme == 'basic':
+        if auth.scheme == 'basic':
             self.http_auth_scheme = pycurl.HTTPAUTH_BASIC
-        elif auth.authScheme == 'digest':
+        elif auth.scheme == 'digest':
             self.http_auth_scheme = pycurl.HTTPAUTH_DIGEST
         else:
-            logging.warn("Unknown HTTP Auth scheme: %s", auth.authScheme)
+            logging.warn("Unknown HTTP Auth scheme: %s", auth.scheme)
             return
         self.http_auth_info = str("%s:%s" % (auth.username, auth.password))
 

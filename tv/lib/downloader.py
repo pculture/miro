@@ -55,54 +55,6 @@ daemon_starter = None
 # a hash of download ids that the server knows about.
 _downloads = {}
 
-def find_http_auth(host, path, realm=None, scheme=None):
-    """Returns an HTTP auth object corresponding to the given host, path or
-    None if it doesn't exist
-    """
-    check_u(host)
-    check_u(path)
-    if realm:
-        check_u(realm)
-    if scheme:
-        check_u(scheme)
-    # print "Trying to find HTTPAuth with host %s, path %s, realm %s, and scheme %s" %(host,path,realm,scheme)
-    for obj in HTTPAuthPassword.make_view():
-        if ((obj.host == host and path.startswith(obj.path)
-             and (realm is None or obj.realm == realm)
-             and (scheme is None or obj.authScheme == scheme))):
-            return obj
-    return None
-
-class HTTPAuthPassword(DDBObject):
-    def setup_new(self, username, password, host, realm, path,
-                  authScheme=u"Basic"):
-        check_u(username)
-        check_u(password)
-        check_u(host)
-        check_u(realm)
-        check_u(path)
-        check_u(authScheme)
-        old_auth = find_http_auth(host, path, realm, authScheme)
-        while not old_auth is None:
-            old_auth.remove()
-            old_auth = find_http_auth(host, path, realm, authScheme)
-        self.username = username
-        self.password = password
-        self.host = host
-        self.realm = realm
-        self.path = os.path.dirname(path) + "/"
-        self.authScheme = authScheme.lower()
-
-    def get_auth_token(self):
-        auth_string = u':'
-        self.confirm_db_thread()
-        auth_string = self.username + u':' + self.password
-        return b64encode(auth_string)
-
-    def get_auth_scheme(self):
-        self.confirm_db_thread()
-        return self.authScheme
-
 total_up_rate = 0
 total_down_rate = 0
 

@@ -2805,3 +2805,8 @@ def upgrade118(cursor):
     """
     rename_column(cursor, "item", "raw_descrption", "entry_description")
     cursor.execute("ALTER TABLE item ADD description TEXT")
+
+def upgrade119(cursor):
+    """Drop the http_auth_password table from the database
+    """
+    cursor.execute("DROP TABLE http_auth_password")

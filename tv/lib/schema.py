@@ -328,7 +328,7 @@ class MultiClassObjectSchema(ObjectSchema):
 
 from miro.database import DDBObject
 from miro.databaselog import DBLogEntry
-from miro.downloader import RemoteDownloader, HTTPAuthPassword
+from miro.downloader import RemoteDownloader
 from miro.feed import (Feed, FeedImpl, RSSFeedImpl, SavedSearchFeedImpl,
                        ScraperFeedImpl)
 from miro.feed import (SearchFeedImpl, DirectoryWatchFeedImpl,
@@ -568,18 +568,6 @@ class RemoteDownloaderSchema(DDBObjectSchema):
     def handle_malformed_status(row):
         return {}
 
-class HTTPAuthPasswordSchema(DDBObjectSchema):
-    klass = HTTPAuthPassword
-    table_name = 'http_auth_password'
-    fields = DDBObjectSchema.fields + [
-        ('username', SchemaString()),
-        ('password', SchemaString()),
-        ('host', SchemaString()),
-        ('realm', SchemaString()),
-        ('path', SchemaString()),
-        ('authScheme', SchemaString()),
-    ]
-
 class ChannelFolderSchema(DDBObjectSchema):
     klass = ChannelFolder
     table_name = 'channel_folder'
@@ -694,14 +682,14 @@ class DBLogEntrySchema(DDBObjectSchema):
     def handle_malformed_list_view_displays(row):
         return []
 
-VERSION = 118
+VERSION = 119
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,
     ScraperFeedImplSchema,
     SearchFeedImplSchema, DirectoryFeedImplSchema, DirectoryWatchFeedImplSchema,
     SearchDownloadsFeedImplSchema, RemoteDownloaderSchema,
-    HTTPAuthPasswordSchema, ChannelGuideSchema, ManualFeedImplSchema,
+    ChannelGuideSchema, ManualFeedImplSchema,
     SingleFeedImplSchema,
     PlaylistSchema, ChannelFolderSchema, PlaylistFolderSchema,
     PlaylistItemMapSchema, PlaylistFolderItemMapSchema,
