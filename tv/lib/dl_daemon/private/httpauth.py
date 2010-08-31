@@ -45,10 +45,10 @@ def find_http_auth(callback, url):
     c = command.FindHTTPAuthCommand(daemon.LAST_DAEMON, id_, url)
     c.send()
 
-def ask_for_http_auth(callback, url, auth_header):
+def ask_for_http_auth(callback, url, auth_header, location):
     id_ = requestIdGenerator.next()
     waitingHTTPAuthCallbacks[id_] = callback
     from miro.dl_daemon import daemon
     c = command.AskForHTTPAuthCommand(daemon.LAST_DAEMON, id_, url,
-            auth_header)
+            auth_header, location)
     c.send()

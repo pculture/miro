@@ -174,12 +174,43 @@ def find_http_auth(callback, url):
     auth = password_list.find(url)
     eventloop.add_idle(callback, 'find_http_auth callback', args=(auth,))
 
-def ask_for_http_auth(callback, url, auth_header):
+class CallbackTracker(object):
+    """Used internally to track callbacks for dialogs for ask_for_http_auth().
+
+    This class allows us to to only pop up one dialog for each auth request.
+    """
+    def __init__(self):
+        self.callback_map = {}
+
+    def has_callback(self, url, realm):
+        key = (url, realm)
+        return key in self.callback_map
+
+    def add_callback(self, callback, url, realm):
+        key = (url, realm)
+        callbacks = self.callback_map.setdefault(key, [])
+        callbacks.append(callback)
+
+    def run_callbacks(self, url, realm, username, password, auth_header):
+        key = (url, realm)
+        auth = password_list.add(username, password, url, auth_header)
+        for callback in self.callback_map[key]:
+            callback(auth)
+        del self.callback_map[key]
+
+    def run_canceled_callbacks(self, url, realm):
+        key = (url, realm)
+        for callback in self.callback_map[key]:
+            callback(None)
+        del self.callback_map[key]
+
+def ask_for_http_auth(callback, url, auth_header, location):
     """Ask the user for a username and password to login to a site.
 
     :param callback: will be called with a HTTPAuthPassword to use, or None
     :param url: URL for the request
     :param auth_header: www-authenticate header we got from the server
+    :param location: human readable text of what's requesting authorization
     """
     global password_list
 
@@ -193,15 +224,28 @@ def ask_for_http_auth(callback, url, auth_header):
 
     def handleLoginResponse(dialog):
         if dialog.choice == dialogs.BUTTON_OK:
-            callback(password_list.add(dialog.username, dialog.password, url,
-                    auth_header))
+            callback_tracker.run_callbacks(url, realm, dialog.username,
+                    dialog.password, auth_header)
         else:
-            callback(None)
-    dialogs.HTTPAuthDialog(url, realm).run(handleLoginResponse)
+            callback_tracker.run_canceled_callbacks(url, realm)
+
+    run_dialog = (not callback_tracker.has_callback(url, realm))
+    callback_tracker.add_callback(callback, url, realm)
+    if run_dialog:
+        dialogs.HTTPAuthDialog(location, realm).run(handleLoginResponse)
+
+def _auth_dialog_callback(dialog):
+    if dialog.choice == dialogs.BUTTON_OK:
+        callback(password_list.add(dialog.username, dialog.password, url,
+                auth_header))
+    else:
+        callback(None)
 
 def init():
     global password_list
+    global callback_tracker
     password_list = HTTPPasswordList()
+    callback_tracker = CallbackTracker()
 
 def _default_password_file():
     support_dir = config.get(prefs.SUPPORT_DIRECTORY)

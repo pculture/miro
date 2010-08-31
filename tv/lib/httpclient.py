@@ -109,7 +109,8 @@ class TooManyRedirects(HTTPError):
     def __init__(self, url):
         HTTPError.__init__(self, _('HTTP Redirection limit hit for %(url)s',
                                    {"url": url}))
-class ProxyAuthenticationError(HTTPError):
+
+class ProxyAuthorizationFailed(HTTPError):
     def __init__(self):
         HTTPError.__init__(self,
                 _('Authorization failed for proxy: %(host)s:%(port)s',
@@ -253,7 +254,7 @@ class TransferOptions(object):
                 str(h) for h in ignore_hosts))
 
         if config.get(prefs.HTTP_PROXY_AUTHORIZATION_ACTIVE):
-            handle.setopt(curl.PROXYUSERPWD, '%s:%s' % (
+            handle.setopt(pycurl.PROXYUSERPWD, '%s:%s' % (
                 str(config.get(prefs.HTTP_PROXY_AUTHORIZATION_USERNAME)),
                 str(config.get(prefs.HTTP_PROXY_AUTHORIZATION_PASSWORD))))
 
@@ -302,7 +303,8 @@ class CurlTransfer(object):
         self.header_callback = header_callback
         self.content_check_callback = content_check_callback
         self.errback = errback
-        self.http_auth_attempts = 0
+        self.auth_attempts = { 'http': 0, 'proxy': 0 }
+        self.current_auth_type = None
         self.canceled = False
 
         self.stats = TransferStats()
@@ -331,30 +333,58 @@ class CurlTransfer(object):
         self.canceled = True
 
     def handle_http_auth(self):
-        self.http_auth_attempts += 1
-        if self.http_auth_attempts > MAX_AUTH_ATTEMPTS:
+        url = self.options.url
+        location = "Website %(url)s" % {'url': url}
+        self._handle_auth('http', 'www-authenticate', url, location)
+
+    def handle_proxy_auth(self):
+        url = config.get(prefs.HTTP_PROXY_HOST)
+        location = "Proxy %(url)s" % {'url': url}
+        self._handle_auth('proxy', 'proxy-authenticate', url, location)
+
+    def handle_auth_failure(self):
+        if self.current_auth_type == 'http':
             self.call_errback(AuthorizationFailed())
+        elif self.current_auth_type == 'proxy':
+            self.call_errback(ProxyAuthorizationFailed())
+        else:
+            logging.warn("Unknown current_auth_type: %s",
+                    self.current_auth_type)
+            self.call_errback(AuthorizationFailed())
+
+    def _handle_auth(self, auth_type, header_key, url, location):
+        self.current_auth_type = auth_type
+        self.auth_attempts[auth_type] += 1
+        if self.auth_attempts[auth_type] > MAX_AUTH_ATTEMPTS:
+            self.handle_auth_failure()
             return
         try:
-            auth_header = self.headers['www-authenticate']
+            auth_header = self.headers[header_key]
         except KeyError:
-            self.call_errback(AuthorizationFailed())
+            self.handle_auth_failure()
             return
         try:
             httpauth.ask_for_http_auth(self._ask_for_http_auth_callback,
-                    self.options.url, auth_header)
+                    url, auth_header, location)
         except ValueError, e:
             logging.warn("ValueError when parsing auth header: %s", e)
-            self.call_errback(AuthorizationFailed())
+            self.handle_auth_failure()
 
     def _ask_for_http_auth_callback(self, auth):
         if self.canceled:
             return
         if auth is None:
-            self.call_errback(AuthorizationFailed())
+            self.handle_auth_failure()
         else:
             self._reset_transfer_data()
-            self._set_http_auth(auth)
+            if self.current_auth_type == 'http':
+                self._set_http_auth(auth)
+            else:
+                config.set(prefs.HTTP_PROXY_AUTHORIZATION_ACTIVE, True)
+                config.set(prefs.HTTP_PROXY_AUTHORIZATION_USERNAME,
+                        str(auth.username))
+                config.set(prefs.HTTP_PROXY_AUTHORIZATION_PASSWORD,
+                        str(auth.password))
             curl_manager.add_transfer(self)
 
     def _find_http_auth_callback(self, auth):
@@ -501,12 +531,11 @@ class CurlTransfer(object):
             self.call_callback(info)
         elif info['status'] == 401:
             self.handle_http_auth()
+        elif info['status'] == 407:
+            self.handle_proxy_auth()
         elif info['status'] >= 500 and info['status'] < 600:
             logging.info("possibly temporary error")
             self.call_errback(PossiblyTemporaryError(info['status']))
-        elif info['status'] == 407:
-            # FIXME: should ask user for their auth here
-            self.call_errback(ProxyAuthenticationError())
         else:
             self.call_errback(UnexpectedStatusCode(info['status']))
 

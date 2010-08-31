@@ -206,9 +206,10 @@ class HTTPAuthDialog(Dialog):
 
     The buttons are always BUTTON_OK and BUTTON_CANCEL.
     """
-    def __init__(self, url, realm, prefill_user=None, prefill_password=None):
-        desc = 'location %s requires a username and password for "%s".' % \
-            (url, realm)
+    def __init__(self, location, realm, prefill_user=None,
+            prefill_password=None):
+        desc = ('%(location)s requires a username and password for '
+                '"%(realm)s".' % {'location': location, 'realm': realm})
         super(HTTPAuthDialog, self).__init__("Login Required", desc,
                                              (BUTTON_OK, BUTTON_CANCEL))
         self.prefill_user = prefill_user

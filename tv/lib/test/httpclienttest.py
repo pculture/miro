@@ -595,7 +595,8 @@ class HTTPAuthBackendTest(EventLoopTest):
         return self.callback_data
 
     def ask_for_http_auth(self, url, auth_header):
-        httpauth.ask_for_http_auth(self.callback, url, auth_header)
+        httpauth.ask_for_http_auth(self.callback, url, auth_header,
+                "My Location")
         self.runEventLoop(timeout=0.1)
         return self.callback_data
 
