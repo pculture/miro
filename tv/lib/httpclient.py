@@ -878,12 +878,21 @@ def init_libcurl():
 def cleanup_libcurl():
     pycurl.global_cleanup()
 
+# ON_START_HOOKS and register_on_start allow front-ends to connect
+# to signals on the CurlManager after it's been created.
+ON_START_HOOKS = []
+
+def register_on_start(fun):
+    ON_START_HOOKS.append(fun)
+
 # FIXME - this is a singleton global and the name should be all-caps
 curl_manager = None
 
 def start_thread():
     global curl_manager
     curl_manager = LibCURLManager()
+    for mem in ON_START_HOOKS:
+        mem(curl_manager)
     curl_manager.start()
 
 def stop_thread():
