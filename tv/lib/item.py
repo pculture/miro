@@ -168,18 +168,21 @@ class FeedParserValues(object):
             return None
 
     def _calc_raw_description(self):
+        """Check the enclosure to see if it has a description first.
+        If not, then grab the description from the entry.
+
+        Both first_video_enclosure and entry are FeedParserDicts,
+        which does some fancy footwork with normalizing feed entry
+        data.
+        """
         rv = None
-        try:
-            if hasattr(self.first_video_enclosure, "text"):
-                rv = self.first_video_enclosure["text"]
-            elif hasattr(self.entry, "description"):
-                rv = self.entry.description
-        except Exception:
-            logging.exception("_calc_raw_description threw exception:")
+        if self.first_video_enclosure:
+            rv = self.first_video_enclosure.get("text", None)
+        if not rv and self.entry:
+            rv = self.entry.get("description", None)
         if not rv:
             return u''
-        else:
-            return rv
+        return rv
 
     def _calc_link(self):
         if hasattr(self.entry, "link"):

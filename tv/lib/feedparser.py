@@ -201,6 +201,8 @@ class FeedParserDict(UserDict):
     # See storedatabase.py for more info.
     __module__ = 'feedparser'
 
+    # values of keymap are in order of preference.  for example,
+    # in description, summary is preferred to subtitle.
     keymap = {'channel': 'feed',
               'items': 'entries',
               'guid': 'id',
@@ -208,7 +210,7 @@ class FeedParserDict(UserDict):
               'image': 'thumbnail',
               'date': 'updated',
               'date_parsed': 'updated_parsed',
-              'description': ('subtitle', 'summary'),
+              'description': ('summary', 'subtitle'),
               'url': ('href',),
               'modified': 'updated',
               'modified_parsed': 'updated_parsed',
