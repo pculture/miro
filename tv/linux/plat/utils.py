@@ -99,6 +99,8 @@ def setup_logging(in_downloader=False):
             level = logging.WARN
         else:
             level = logging.INFO
+        if 'MIRO_IN_UNIT_TESTS' in os.environ:
+            level = logging.WARN
         logging.basicConfig(level=level,
                             format='%(asctime)s %(levelname)-8s %(message)s',
                             stream=sys.stdout)
@@ -279,6 +281,8 @@ def launch_download_daemon(oldpid, env):
     environ['MIRO_FRONTEND'] = options.frontend
     environ['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
     environ['MIRO_APP_VERSION'] = config.get(prefs.APP_VERSION)
+    if hasattr(miro.app, 'in_unit_tests'):
+        environ['MIRO_IN_UNIT_TESTS'] = '1'
     environ.update(env)
     miro_path = os.path.dirname(miro.__file__)
     dl_daemon_path = os.path.join(miro_path, 'dl_daemon')
