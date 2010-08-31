@@ -600,6 +600,12 @@ class CurlTransfer(object):
             error = UnknownHostError(self.options.host)
         elif code == pycurl.E_OPERATION_TIMEOUTED:
             error = ConnectionTimeout(self.options.host)
+        elif (code == pycurl.E_RECV_ERROR and
+                'Received HTTP code 407 from proxy after CONNECT' in 
+                handle.errstr()):
+            # Hack for proxy authentication errors with HTTPS
+            self.handle_proxy_auth()
+            return
         else:
             logging.warn("Unknown network error.  Code: %s", code)
             error = NetworkError(_("Unknown"), unicode(handle.errstr()))
