@@ -101,7 +101,6 @@ class Exporter(object):
         self.io.write(u'<body>\n')
 
         for obj in media_tabs:
-            print "handling %r" % obj
             if isinstance(obj, folder.ChannelFolder):
                 self._open_folder_entry(obj)
             elif isinstance(obj, feed.Feed):
