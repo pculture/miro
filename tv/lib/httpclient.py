@@ -426,7 +426,7 @@ class CurlTransfer(object):
                 curl_manager.call_after_perform(self.on_headers_finished)
                 self.headers_finished = True
             else:
-                msg = "httpclient: saw multiple empty header lines"
+                msg = "httpclient: saw multiple empty header lines (%s)"
                 logging.warning(msg, self.options.url)
             return
         elif self.headers_finished:
