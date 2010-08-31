@@ -93,14 +93,14 @@ def setup_logging(in_downloader=False):
         downloader daemon, False otherwise.
     """
     if in_downloader:
-        if os.environ.get('MIRO_APP_VERSION', "").endswith("git"):
+        if 'MIRO_IN_UNIT_TESTS' in os.environ:
+            level = logging.WARN
+        elif os.environ.get('MIRO_APP_VERSION', "").endswith("git"):
             level = logging.DEBUG
         elif os.environ.get('MIRO_FRONTEND') == 'cli':
             level = logging.WARN
         else:
             level = logging.INFO
-        if 'MIRO_IN_UNIT_TESTS' in os.environ:
-            level = logging.WARN
         logging.basicConfig(level=level,
                             format='%(asctime)s %(levelname)-8s %(message)s',
                             stream=sys.stdout)
