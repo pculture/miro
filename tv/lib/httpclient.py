@@ -878,13 +878,16 @@ def init_libcurl():
 def cleanup_libcurl():
     pycurl.global_cleanup()
 
+# FIXME - this is a singleton global and the name should be all-caps
+curl_manager = None
+
 def start_thread():
     global curl_manager
+    curl_manager = LibCURLManager()
     curl_manager.start()
 
 def stop_thread():
     global curl_manager
     curl_manager.stop()
-    del curl_manager
+    curl_manager = None
 
-curl_manager = LibCURLManager()
