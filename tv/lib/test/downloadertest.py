@@ -25,7 +25,9 @@ class DownloaderTest(EventLoopTest):
         config.set(prefs.MOVIES_DIRECTORY, self.movies_dir)
 
     def tearDown(self):
-        downloader.shutdown_downloader()
+        downloader.shutdown_downloader(
+                lambda: self.stopEventLoop(abnormal=False))
+        self.runEventLoop()
         downloader.daemon_starter = None
         EventLoopTest.tearDown(self)
 
