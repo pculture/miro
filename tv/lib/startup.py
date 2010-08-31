@@ -265,7 +265,7 @@ def finish_startup(obj, thread):
         mem_usage_test_event.set()
 
     logging.info("Loading video converters...")
-    videoconversion.conversion_manager.load_converters()
+    videoconversion.conversion_manager.startup()
     searchengines.create_engines()
     setup_global_feeds()
     # call fix_database_inconsistencies() ASAP after the manual feed is set up

@@ -37,7 +37,7 @@ import threading
 import subprocess
 
 from glob import glob
-from ConfigParser import SafeConfigParser
+from ConfigParser import SafeConfigParser, NoOptionError
 
 from miro import app
 from miro import eventloop
@@ -50,23 +50,50 @@ from miro.plat import utils
 from miro.plat import resources
 
 
-class VideoConversionManager(signals.SignalEmitter):
+class VideoConverterInfo(object):
+    """Holds the data for a specific conversion that allows us to
+    convert to this target.
+    """
+    NON_WORD_CHARS = re.compile(r"[^a-zA-Z0-9]+")
 
+    def __init__(self, name, parser):
+        self.name = name
+        self.identifier = self.NON_WORD_CHARS.sub("", name).lower()
+        self.executable = self._get_config_value(name, parser, "executable", {})
+        self.parameters = self._get_config_value(name, parser, "parameters", {})
+        self.extension = self._get_config_value(name, parser, "extension", {})
+        self.screen_size = self._get_config_value(name, parser, "ssize", {})
+        self.platforms = self._get_config_value(name, parser, "only_on", {'only_on': None})
+
+    def _get_config_value(self, section, parser, key, defaults):
+        try:
+            return parser.get(section, key)
+        except NoOptionError:
+            return defaults.get(key)
+
+class ConverterManager(object):
+    """Manages converter .conv files which define the various conversions
+    that Miro knows how to do.
+
+    Conversion definition files are defined in
+    ``resources/conversions/`` in files ending with ``.conv``.  Files
+    are in classic config file format with a [DEFAULT] section and a
+    section for each conversion possibility.
+
+    See ``resources/conversions/`` for examples.
+    """
     def __init__(self):
-        signals.SignalEmitter.__init__(self, 'thread-will-start',
-                                             'thread-started',
-                                             'thread-did-start',
-                                             'begin-loop',
-                                             'end-loop')
-        self.converters = list()
-        self.converter_map = dict()
-        self.task_loop = None
-        self.message_queue = Queue.Queue(-1)
-        self.pending_tasks = list()
-        self.running_tasks = list()
-        self.quit_flag = False
-    
+        # list of (group, list of VideoConverterInfo items) items
+        self.converters = []
+
+        # maps converter_id to VideoConverterInfo object
+        self.converter_map = {}
+
     def load_converters(self):
+        """Loads converters from resources/conversions/*.conv files
+        and populates ``self.converters`` and ``self.converter_map``
+        structures.
+        """
         platform = config.get(prefs.APP_PLATFORM)
         groups = glob(resources.path('conversions/*.conv'))
         for group_definition in groups:
@@ -78,18 +105,43 @@ class VideoConversionManager(signals.SignalEmitter):
                 sections = parser.sections()
                 group_converters = list()
                 for section in sections:
-                    converter_info = VideoConverterInfo(section, parser, defaults)
-                    if converter_info.platforms is None or platform in converter_info.platforms:
-                        self.converter_map[converter_info.identifier] = \
-                                converter_info
+                    converter_info = VideoConverterInfo(section, parser)
+                    if ((converter_info.platforms is None
+                         or platform in converter_info.platforms)):
+                        ident = converter_info.identifier
+                        self.converter_map[ident] = converter_info
                         group_converters.append(converter_info)
                 self.converters.append((defaults['name'], group_converters))
             finally:
                 definition_file.close()
 
+        logging.info("** converters: %s", self.converters)
+        logging.info("** converter_map: %s", self.converter_map)
+
     def lookup_converter(self, converter_id):
         return self.converter_map[converter_id]
-    
+
+    def get_converters(self):
+        return self.converters
+
+class VideoConversionManager(signals.SignalEmitter):
+
+    def __init__(self):
+        signals.SignalEmitter.__init__(self, 'thread-will-start',
+                                             'thread-started',
+                                             'thread-did-start',
+                                             'begin-loop',
+                                             'end-loop')
+        self.converters = ConverterManager()
+        self.task_loop = None
+        self.message_queue = Queue.Queue(-1)
+        self.pending_tasks = list()
+        self.running_tasks = list()
+        self.quit_flag = False
+
+    def startup(self):
+        self.converters.load_converters()
+
     def shutdown(self):
         if self.task_loop is not None:
             self.cancel_all()
@@ -122,8 +174,11 @@ class VideoConversionManager(signals.SignalEmitter):
         self._enqueue_message("get_tasks_list")
     
     def get_converters(self):
-        return self.converters
+        return self.converters.get_converters()
     
+    def lookup_converter(self, converter_id):
+        return self.converters.lookup_converter(converter_id)
+
     def start_conversion(self, converter_info, item_info, target_folder=None):
         task = self._make_conversion_task(converter_info, item_info, target_folder)
         if task is not None and task.get_executable() is not None:
@@ -175,7 +230,8 @@ class VideoConversionManager(signals.SignalEmitter):
         
         notify_count = False
         max_concurrent_tasks = int(config.get(prefs.MAX_CONCURRENT_CONVERSIONS))
-        if self.pending_tasks_count() > 0 and self.running_tasks_count() < max_concurrent_tasks:
+        if ((self.pending_tasks_count() > 0
+             and self.running_tasks_count() < max_concurrent_tasks)):
             task = self.pending_tasks.pop()
             if not self._has_running_task(task.key):
                 self.running_tasks.append(task)
@@ -508,32 +564,13 @@ class FFMpeg2TheoraConversionTask(VideoConversionTask):
 
 
 
-class VideoConverterInfo(object):
-    NON_WORD_CHARS = re.compile(r"[^a-zA-Z0-9]+")
-
-    def __init__(self, name, config, defaults):
-        self.name = name
-        self.identifier = self.NON_WORD_CHARS.sub("", name).lower()
-        self.executable = self._get_config_value(name, config, defaults, "executable")
-        self.parameters = self._get_config_value(name, config, defaults, "parameters")
-        self.extension = self._get_config_value(name, config, defaults, "extension")
-        self.screen_size = self._get_config_value(name, config, defaults, "ssize")
-        self.platforms = self._get_config_value(name, config, {'only_on': None}, "only_on")
-
-    def _get_config_value(self, section, config, defaults, key):
-        try:
-            return config.get(section, key)
-        except:
-            return defaults.get(key)
-
-
 class VideoConversionCommand(object):
     def __init__(self, item_info, converter):
         self.item_info = item_info
         self.converter = converter
+
     def launch(self):
         conversion_manager.start_conversion(self.converter, self.item_info)
-
 
 conversion_manager = VideoConversionManager()
 
