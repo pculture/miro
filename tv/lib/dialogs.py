@@ -208,9 +208,11 @@ class HTTPAuthDialog(Dialog):
     """
     def __init__(self, location, realm, prefill_user=None,
             prefill_password=None):
-        desc = ('%(location)s requires a username and password for '
-                '"%(realm)s".' % {'location': location, 'realm': realm})
-        super(HTTPAuthDialog, self).__init__("Login Required", desc,
+        desc = _(
+            '%(authtype)s %(url)s requires a username and password for '
+            '"%(realm)s".',
+            {'authtype': location[0], 'url': location[1], 'realm': realm})
+        super(HTTPAuthDialog, self).__init__(_("Login Required"), desc,
                                              (BUTTON_OK, BUTTON_CANCEL))
         self.prefill_user = prefill_user
         self.prefill_password = prefill_password

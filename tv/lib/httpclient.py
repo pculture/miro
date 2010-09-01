@@ -303,7 +303,7 @@ class CurlTransfer(object):
         self.header_callback = header_callback
         self.content_check_callback = content_check_callback
         self.errback = errback
-        self.auth_attempts = { 'http': 0, 'proxy': 0 }
+        self.auth_attempts = {'http': 0, 'proxy': 0}
         self.current_auth_type = None
         self.canceled = False
 
@@ -334,12 +334,12 @@ class CurlTransfer(object):
 
     def handle_http_auth(self):
         url = self.options.url
-        location = "Website %(url)s" % {'url': url}
+        location = (_("Website"), url)
         self._handle_auth('http', 'www-authenticate', url, location)
 
     def handle_proxy_auth(self):
         url = config.get(prefs.HTTP_PROXY_HOST)
-        location = "Proxy %(url)s" % {'url': url}
+        location = (_("Proxy"), url)
         self._handle_auth('proxy', 'proxy-authenticate', url, location)
 
     def handle_auth_failure(self):
