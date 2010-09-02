@@ -37,7 +37,7 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.plat import resources
 from miro.plat.frontends.widgets import file_navigator_name
-from miro.videoconversion import conversion_manager, VideoConversionCommand
+from miro.videoconversion import conversion_manager
 
 
 class ItemContextMenuHandler(object):
@@ -282,12 +282,12 @@ class ItemContextMenuHandler(object):
 
         return menu
     
-    def _make_convert_menu(self): #, item_info):
+    def _make_convert_menu(self):
         convert_menu = []
         sections = conversion_manager.get_converters()
         for index, section in enumerate(sections):
             for converter in section[1]:
-                def convert(converter=converter):
+                def convert(converter=converter.identifier):
                     app.widgetapp.convert_items(converter)
                 convert_menu.append((converter.name, convert))
             if index+1 < len(sections):

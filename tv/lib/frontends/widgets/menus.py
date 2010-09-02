@@ -474,9 +474,7 @@ def on_save_item():
 
 @group_action_handler("ConvertItemTo")
 def on_convert(converter_id):
-    app.widgetapp.convert_items(
-            videoconversion.conversion_manager.lookup_converter(
-                converter_id))
+    app.widgetapp.convert_items(converter_id)
 
 @action_handler("RevealConversionFolder")
 def on_reveal_conversion_folder():

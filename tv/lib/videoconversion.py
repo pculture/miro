@@ -117,13 +117,20 @@ class ConverterManager(object):
                 definition_file.close()
 
     def lookup_converter(self, converter_id):
+        """Looks up and returns a VideoConverterInfo object by id.
+
+        :param converter_id: the id of the converter to lookup
+
+        :returns: VideoConverterInfo
+
+        :raises KeyError: if the converter doesn't exist
+        """
         return self.converter_map[converter_id]
 
     def get_converters(self):
         return self.converters
 
 class VideoConversionManager(signals.SignalEmitter):
-
     def __init__(self):
         signals.SignalEmitter.__init__(self, 'thread-will-start',
                                              'thread-started',
@@ -177,7 +184,8 @@ class VideoConversionManager(signals.SignalEmitter):
     def lookup_converter(self, converter_id):
         return self.converters.lookup_converter(converter_id)
 
-    def start_conversion(self, converter_info, item_info, target_folder=None):
+    def start_conversion(self, converter_id, item_info, target_folder=None):
+        converter_info = self.converters.lookup_converter(converter_id)
         task = self._make_conversion_task(converter_info, item_info, target_folder)
         if task is not None and task.get_executable() is not None:
             self._check_task_loop()
@@ -336,7 +344,6 @@ def _remove_file(path):
         os.remove(path)
 
 class VideoConversionTask(object):
-
     def __init__(self, converter_info, item_info, target_folder):
         self.item_info = item_info
         self.converter_info = converter_info
@@ -470,7 +477,6 @@ class VideoConversionTask(object):
             eventloop.add_timeout(0.5, os.remove, "removing temp_output_path",
                                   (self.temp_output_path,))
 
-
 class FFMpegConversionTask(VideoConversionTask):
     DURATION_RE = re.compile(r'Duration: (\d\d):(\d\d):(\d\d)\.(\d\d)(, start:.*)?(, bitrate:.*)?')
     PROGRESS_RE = re.compile(r'frame=.* fps=.* q=.* size=.* time=(.*) bitrate=(.*)')
@@ -511,7 +517,6 @@ class FFMpegConversionTask(VideoConversionTask):
             if match is not None:
                 return 1.0
         return self.progress
-    
 
 class FFMpeg2TheoraConversionTask(VideoConversionTask):
     PROGRESS_RE1 = re.compile(r'\{"duration":(.*), "position":(.*), "audio_kbps":.*, "video_kbps":.*, "remaining":.*\}')
@@ -560,15 +565,11 @@ class FFMpeg2TheoraConversionTask(VideoConversionTask):
                 return 1.0
         return self.progress
 
-
-
-class VideoConversionCommand(object):
-    def __init__(self, item_info, converter):
-        self.item_info = item_info
-        self.converter = converter
-
-    def launch(self):
-        conversion_manager.start_conversion(self.converter, self.item_info)
+def convert(converter_id, item_info):
+    """Given a converter and an item, this starts the conversion
+    for that item.
+    """
+    conversion_manager.start_conversion(converter_id, item_info)
 
 conversion_manager = VideoConversionManager()
 

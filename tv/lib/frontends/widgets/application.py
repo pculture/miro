@@ -522,10 +522,10 @@ class Application:
 
         messages.SaveItemAs(selection[0].id, filename).send_to_backend()
 
-    def convert_items(self, converter):
+    def convert_items(self, converter_id):
         selection = app.item_list_controller_manager.get_selection()
         for item_info in selection:
-            videoconversion.VideoConversionCommand(item_info, converter).launch()
+            videoconversion.convert(converter_id, item_info)
 
     def copy_item_url(self):
         selection = app.item_list_controller_manager.get_selection()
