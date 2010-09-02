@@ -33,49 +33,65 @@ hopefully sane defaults.
 
 # these have no related prefs
 shouldSyncX = False
-frontend = 'html'
 themeName = None
 gconf_name = None
 
 from miro.prefs import Pref
 
-class GTKPref(Pref):
+class LinuxPref(Pref):
     def __init__(self, key, default, alias, helptext):
         Pref.__init__(self, key, default, False, None, None)
         self.alias = alias
         self.helptext = helptext
 
-FIRST_TIME = GTKPref(key="startupTasksDone",
-                     default=False,
-                     alias="firsttimestartup",
-                     helptext="If true, forces first time startup dialog to show.")
+FFMPEG_BINARY = LinuxPref(
+    key="ffmpegBinary",
+    default="/usr/bin/ffmpeg",
+    alias="ffmpeg",
+    helptext="Absolute path for ffmpeg binary.")
 
-USE_RENDERER = GTKPref(key="useRenderer",
-                       default=u"gstreamer",
-                       alias="renderer",
-                       helptext="Which renderer to use.  (gstreamer, ...)" )
+FFMPEG2THEORA_BINARY = LinuxPref(
+    key="ffmpeg2TheoraBinary",
+    default="/usr/bin/ffmpeg2theora",
+    alias="ffmpeg2theora",
+    helptext="Absolute path for ffmpeg2theora binary.")
 
-GSTREAMER_IMAGESINK = GTKPref(key="DefaultGstreamerImagesink",
-                              default="gconfvideosink",
-                              alias="gstreamer-imagesink",
-                              helptext="Which GStreamer image sink to use for video.  (autovideosink, ximagesink, xvimagesink, gconfvideosink, ...)")
+FIRST_TIME = LinuxPref(
+    key="startupTasksDone",
+    default=False,
+    alias="firsttimestartup",
+    helptext="If true, forces first time startup dialog to show.")
 
-GSTREAMER_AUDIOSINK = GTKPref(key="DefaultGstreamerAudiosink",
-                              default="gconfaudiosink",
-                              alias="gstreamer-audiosink",
-                              helptext="Which GStreamer sink to use for audio.  (autoaudiosink, osssink, alsasink, gconfaudiosink, ...)")
+USE_RENDERER = LinuxPref(
+    key="useRenderer",
+    default=u"gstreamer",
+    alias="renderer",
+    helptext="Which renderer to use.  (gstreamer, ...)" )
+
+GSTREAMER_IMAGESINK = LinuxPref(
+    key="DefaultGstreamerImagesink",
+    default="gconfvideosink",
+    alias="gstreamer-imagesink",
+    helptext="Which GStreamer image sink to use for video.  (autovideosink, ximagesink, xvimagesink, gconfvideosink, ...)")
+
+GSTREAMER_AUDIOSINK = LinuxPref(
+    key="DefaultGstreamerAudiosink",
+    default="gconfaudiosink",
+    alias="gstreamer-audiosink",
+    helptext="Which GStreamer sink to use for audio.  (autoaudiosink, osssink, alsasink, gconfaudiosink, ...)")
 
 
-SHOW_TRAYICON = Pref(key="showTrayicon",
-                     default=True,
-                     platformSpecific=False)
+SHOW_TRAYICON = Pref(
+    key="showTrayicon",
+    default=True,
+    platformSpecific=False)
 
-WINDOWS_ICON = Pref(key='windowsIcon',
-                    default=None,
-                    # this is platform specific, but if we set this to
-                    # True then it won't look up the value in the
-                    # theme's app.config file
-                    platformSpecific=False)
+WINDOWS_ICON = Pref(
+    key='windowsIcon',
+    default=None,
+    # this is platform specific, but if we set this to True then it
+    # won't look up the value in the theme's app.config file
+    platformSpecific=False)
 
 # build a lookup for preferences by alias
 PREFERENCES = {}

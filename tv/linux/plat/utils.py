@@ -343,7 +343,7 @@ def get_ffmpeg_executable_path():
 
     :returns: string
     """
-    return "/usr/bin/ffmpeg"
+    return config.get(options.FFMPEG_BINARY)
 
 def customize_ffmpeg_parameters(params):
     """Takes a list of parameters and modifies it based on
@@ -362,7 +362,6 @@ def customize_ffmpeg_parameters(params):
         if params[ind+1] == "aac":
             params[ind+1] = "libfaac"
 
-    logging.info("** customize_ffmpeg_parameters: %s", params)
     return params
 
 def get_ffmpeg2theora_executable_path():
@@ -370,7 +369,7 @@ def get_ffmpeg2theora_executable_path():
 
     :returns: string
     """
-    return "/usr/bin/ffmpeg2theora"
+    return config.get(options.FFMPEG2THEORA_BINARY)
 
 def customize_ffmpeg2theora_parameters(params):
     """Takes a list of parameters and modifies it based on
@@ -382,7 +381,6 @@ def customize_ffmpeg2theora_parameters(params):
     :returns: list of modified parameters that will get passed to
         ffmpeg2theora
     """
-    logging.info("** customize_ffmpeg2theora_parameters: %s", params)
     return params
 
 def begin_thread_loop(context_object):
