@@ -6,7 +6,7 @@ from miro import eventloop
 from miro import models
 from miro import prefs
 from miro.dl_daemon import command
-from miro.test.framework import MiroTestCase, EventLoopTest
+from miro.test.framework import MiroTestCase, EventLoopTest, uses_httpclient
 
 class DownloaderTest(EventLoopTest):
     """Test feeds that download things.
@@ -55,18 +55,20 @@ class DownloaderTest(EventLoopTest):
         i.download()
         self.run_eventloop_until_download()
 
+    @uses_httpclient
     def test_download(self):
         self.download_item()
 
+    @uses_httpclient
     def test_delete(self):
         self.download_item()
         self.assertEquals(self.feed.items.count(), 1)
         list(self.feed.items)[0].expire()
 
-    def test_resume(self):
-        # FIXME - implement this
-        pass
+    ## def test_resume(self):
+    ##     # FIXME - implement this
+    ##     pass
 
-    def test_resume_fail(self):
-        # FIXME - implement this
-        pass
+    ## def test_resume_fail(self):
+    ##     # FIXME - implement this
+    ##     pass

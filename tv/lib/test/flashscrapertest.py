@@ -1,6 +1,6 @@
 from miro import flashscraper
 
-from miro.test.framework import EventLoopTest
+from miro.test.framework import EventLoopTest, uses_httpclient
 
 class FlashScraperBase(EventLoopTest):
     def setUp(self):
@@ -28,6 +28,7 @@ class YouTubeScraper(FlashScraperBase):
         self._response = (new_url, contentType, title)
         self.stopEventLoop(abnormal=False)
 
+    @uses_httpclient
     def test_scrape(self):
         flashscraper.try_scraping_url(
             u"http://www.youtube.com/watch?v=3DTKMp24c0s",

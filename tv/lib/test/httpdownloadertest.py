@@ -4,7 +4,7 @@ import threading
 from miro import util # This adds logging.timing
 from miro import download_utils
 from miro import httpclient
-from miro.test.framework import EventLoopTest
+from miro.test.framework import EventLoopTest, uses_httpclient
 from miro.plat import resources
 from miro.dl_daemon import download
 
@@ -74,14 +74,16 @@ class HTTPDownloaderTest(EventLoopTest):
 #        self.runEventLoop(timeout=120)
 #        self.assertEquals(self.failed, None)
 #
-    def testDownload(self):
+    @uses_httpclient
+    def test_download(self):
         self.downloader = TestingDownloader(self, self.download_url, "ID1")
         self.downloader.statusCallback = self.stopOnFinished
         self.runEventLoop()
         self.assertEquals(self.getDownloadedData(),
                 open(self.download_path).read())
 
-    def testStop(self):
+    @uses_httpclient
+    def test_stop(self):
         # nice large download so that we have time to interrupt it
         self.downloader = TestingDownloader(self, self.download_url, "ID1")
         def stopOnData():
@@ -106,7 +108,8 @@ class HTTPDownloaderTest(EventLoopTest):
         self.assertEquals(self.downloader.currentSize, self.download_size)
         self.assertEquals(self.downloader.totalSize, self.download_size)
 
-    def testPause(self):
+    @uses_httpclient
+    def test_pause(self):
         self.downloader = TestingDownloader(self, self.download_url, "ID1")
         def pauseOnData():
             if (self.downloader.state == 'downloading' and 
@@ -129,7 +132,8 @@ class HTTPDownloaderTest(EventLoopTest):
         self.assertEquals(self.downloader.currentSize, self.download_size)
         self.assertEquals(self.downloader.totalSize, self.download_size)
 
-    def testRestore(self):
+    @uses_httpclient
+    def test_restore(self):
         self.downloader = TestingDownloader(self, self.download_url, "ID1")
         def pauseInMiddle():
             if (self.downloader.state == 'downloading' and

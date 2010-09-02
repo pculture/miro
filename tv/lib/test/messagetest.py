@@ -11,7 +11,7 @@ from miro.tabs import TabOrder
 from miro import messages
 from miro import messagehandler
 
-from miro.test.framework import MiroTestCase, EventLoopTest
+from miro.test.framework import MiroTestCase, EventLoopTest, uses_httpclient
 
 class MessageOne(messages.BackendMessage):
     pass
@@ -149,6 +149,7 @@ class GuideTrackTest(TrackerTest):
         self.check_message_count(2)
         self.check_changed_message(1, added=[g])
 
+    @uses_httpclient
     def test_removed(self):
         self.guide1.remove()
         self.runUrgentCalls()
@@ -161,6 +162,7 @@ class GuideTrackTest(TrackerTest):
         self.check_message_count(2)
         self.check_changed_message(1, changed=[self.guide1])
 
+    @uses_httpclient
     def test_stop(self):
         self.check_message_count(1)
         messages.StopTrackingGuides().send_to_backend()
@@ -309,6 +311,7 @@ class FeedTrackTest(TrackerTest):
         # the feeds were added
         self.check_changed_message(2, added=[f1, f2, f3, f4, f5])
 
+    @uses_httpclient
     def test_removed(self):
         self.feed2.remove()
         self.runUrgentCalls()
@@ -321,6 +324,7 @@ class FeedTrackTest(TrackerTest):
         self.check_message_count(3)
         self.check_changed_message(2, changed=[self.feed1])
 
+    @uses_httpclient
     def test_reduce_number_of_messages(self):
         f1 = Feed(u'http://example.com/3')
         f1.remove()
@@ -333,6 +337,7 @@ class FeedTrackTest(TrackerTest):
         self.check_message_count(3)
         self.check_changed_message(2, added=[f2])
 
+    @uses_httpclient
     def test_stop(self):
         self.check_message_count(2)
         messages.StopTrackingChannels().send_to_backend()

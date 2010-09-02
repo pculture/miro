@@ -83,6 +83,23 @@ def clean_up_temp_files():
     for mem in FILES_TO_CLEAN_UP:
         shutil.rmtree(mem, ignore_errors=True)
 
+def uses_httpclient(fun):
+    """Decorator for tests that use the httpclient.
+
+    .. Note::
+
+       Make sure that one test method doesn't call another test_
+       method that also uses httpclient.  This decorator doesn't
+       nest.
+    """
+    def _uses_httpclient(*args, **kwargs):
+        httpclient.start_thread()
+        try:
+            return fun(*args, **kwargs)
+        finally:
+            httpclient.stop_thread()
+    return _uses_httpclient
+
 class MiroTestCase(unittest.TestCase):
     def setUp(self):
         self.tempdir = tempfile.mkdtemp()
@@ -111,7 +128,6 @@ class MiroTestCase(unittest.TestCase):
         app.controller = DummyController()
         self.httpserver = None
         httpauth.init()
-        httpclient.start_thread()
 
     def on_windows(self):
         return self.platform == "windows"
@@ -125,7 +141,6 @@ class MiroTestCase(unittest.TestCase):
     def tearDown(self):
         signals.system.disconnect_all()
         util.chatter = True
-        httpclient.stop_thread()
         self.stop_http_server()
 
         # Remove any leftover database

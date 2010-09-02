@@ -6,7 +6,7 @@ from miro import item
 from miro import feed
 from miro import guide
 
-from miro.test.framework import EventLoopTest
+from miro.test.framework import EventLoopTest, uses_httpclient
 
 class IconCacheTest(EventLoopTest):
     def setUp(self):
@@ -15,10 +15,10 @@ class IconCacheTest(EventLoopTest):
         self.item = item.Item(item.FeedParserValues({}), feed_id=self.feed.id)
         self.guide = guide.ChannelGuide(u'http://example.com/guide/')
 
+    @uses_httpclient
     def test_ddbobject_removed(self):
-        """Test that we remove our IconCache DDBObject when it's
-        container is removed.
-        """
+        # Test that we remove our IconCache DDBObject when it's
+        # container is removed.
         feed_icon_cache = self.feed.icon_cache
         item_icon_cache = self.item.icon_cache
         guide_icon_cache = self.guide.icon_cache

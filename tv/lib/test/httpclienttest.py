@@ -10,7 +10,7 @@ from miro import httpauth
 from miro import httpclient
 from miro import signals
 from miro.plat import resources
-from miro.test.framework import EventLoopTest
+from miro.test.framework import EventLoopTest, uses_httpclient
 
 TEST_PATH = 'test.txt'
 TEST_BODY = 'Miro HTTP Test\n'
@@ -57,15 +57,18 @@ class HTTPClientTestBase(EventLoopTest):
         self.assertEquals(self.grab_url_info, None)
 
 class HTTPClientTest(HTTPClientTestBase):
+    @uses_httpclient
     def test_simple_get(self):
         self.grab_url(self.httpserver.build_url('test.txt'))
         self.assertEquals(self.grab_url_info['body'], TEST_BODY)
 
+    @uses_httpclient
     def test_file_get(self):
         path = resources.path("testdata/httpserver/test.txt")
         self.grab_url("file://" + path)
         self.assertEquals(self.grab_url_info['body'], TEST_BODY)
 
+    @uses_httpclient
     def test_simple_get_url_with_spaces(self):
         self.grab_url(self.httpserver.build_url('test%20with%20spaces.txt'))
         self.assertEquals(self.grab_url_info['body'], TEST_BODY)
@@ -74,6 +77,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self.grab_url(self.httpserver.build_url('test with spaces.txt'))
         self.assertEquals(self.grab_url_info['body'], TEST_BODY)
 
+    @uses_httpclient
     def test_unicode_url(self):
         self.grab_url(unicode(self.httpserver.build_url('test.txt')))
         self.assertEquals(self.grab_url_info['body'], TEST_BODY)
@@ -84,12 +88,14 @@ class HTTPClientTest(HTTPClientTestBase):
     def check_header_not_present(self, key):
         self.assert_(key not in self.last_http_info('headers'))
 
+    @uses_httpclient
     def test_etag(self):
         self.grab_url(self.httpserver.build_url('test.txt'))
         self.check_header_not_present('etag')
         self.grab_url(self.httpserver.build_url('test.txt'), etag='abcdef')
         self.check_header('etag', 'abcdef')
 
+    @uses_httpclient
     def test_modified(self):
         m_str = 'Wed, 24 Mar 2010 01:31:03 GMT'
         self.grab_url(self.httpserver.build_url('test.txt'))
@@ -97,11 +103,13 @@ class HTTPClientTest(HTTPClientTestBase):
         self.grab_url(self.httpserver.build_url('test.txt'), modified=m_str)
         self.check_header('if-modified-since', m_str)
 
+    @uses_httpclient
     def test_unicode_values(self):
         self.grab_url(self.httpserver.build_url('test.txt'),
             modified= u'Wed, 24 Mar 2010 01:31:03 GMT',
             etag=u'abcdef')
 
+    @uses_httpclient
     def test_post_vars(self):
         self.grab_url(self.httpserver.build_url('test.txt'), post_vars={'abc': '123', 'foo': 'bar'})
         self.assertEqual(self.last_http_info('method'), 'POST')
@@ -110,6 +118,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assertEquals(post_data.getvalue('abc'), '123')
         self.assertEquals(post_data.getvalue('foo'), 'bar')
 
+    @uses_httpclient
     def test_post_files(self):
         f1 = {'filename': 'testing.txt',
                     'mimetype': 'text/plain',
@@ -122,7 +131,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self.grab_url(self.httpserver.build_url('test.txt'), post_vars={'abc': '123'},
                 post_files={'file1': f1, 'file2': f2})
 
-    def test_head(self):
+    def _test_head_common(self):
         url = self.httpserver.build_url('test.txt')
         self.grab_url(url)
         get_info = self.grab_url_info
@@ -139,10 +148,16 @@ class HTTPClientTest(HTTPClientTestBase):
                     raise AssertionError("values differ for key %s: %r, %r"
                             % (k, get_info[k], head_info[k]))
 
+    @uses_httpclient
+    def test_head(self):
+        self._test_head_common()
+
+    @uses_httpclient
     def test_head_get_fallback(self):
         self.httpserver.disable_head_requests()
-        self.test_head()
+        self._test_head_common()
 
+    @uses_httpclient
     def test_info(self):
         self.httpserver.add_header('x-foo', 'bar')
         self.grab_url(self.httpserver.build_url('test.txt'))
@@ -151,6 +166,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assertEquals(self.grab_url_info['content-length'],
                 len(open(path).read()))
 
+    @uses_httpclient
     def test_info_header_callback(self):
         self.httpserver.add_header('x-foo', 'bar')
 
@@ -172,6 +188,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assertEquals(info['redirected-url'],
                 self.httpserver.build_url(redirected))
 
+    @uses_httpclient
     def test_redirect(self):
         self.grab_url(self.httpserver.build_url('temp-redirect'))
         self.check_redirects('temp-redirect', 'temp-redirect', 'test.txt')
@@ -189,6 +206,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self.check_redirects('temp-then-perm-redirect',
                 'temp-then-perm-redirect', 'test.txt')
 
+    @uses_httpclient
     def test_redirect_headers(self):
         # check that we get the headers from the redirected URL, not the
         # original one
@@ -198,6 +216,7 @@ class HTTPClientTest(HTTPClientTestBase):
                 header_callback=header_callback)
         self.assertEquals(self.headers['content-length'], len(TEST_BODY))
 
+    @uses_httpclient
     def test_circular_redirect_headers(self):
         def header_callback(headers):
             self.headers = headers
@@ -208,6 +227,7 @@ class HTTPClientTest(HTTPClientTestBase):
             httpclient.TooManyRedirects))
         self.assert_(not hasattr(self, 'headers'))
 
+    @uses_httpclient
     def test_filename(self):
         self.grab_url(self.httpserver.build_url("test.txt"))
         self.assertEqual(self.grab_url_info['filename'], 'test.txt')
@@ -220,6 +240,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self.grab_url(self.httpserver.build_url("test.txt"))
         self.assertEqual(self.grab_url_info['filename'], 'myfile.txt')
 
+    @uses_httpclient
     def test_charset(self):
         self.grab_url(self.httpserver.build_url("test.txt"))
         self.assertEquals(self.grab_url_info['charset'], 'iso-8859-1')
@@ -228,6 +249,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self.grab_url(self.httpserver.build_url("test.txt"))
         self.assertEquals(self.grab_url_info['charset'], 'UTF-8')
 
+    @uses_httpclient
     def test_upload_progress(self):
         # upload a 100k file
         data = '0' * (1000 * 1024)
@@ -275,6 +297,7 @@ class HTTPClientTest(HTTPClientTestBase):
         # there probably could be more tests but I'm not sure how to implement
         # them.
 
+    @uses_httpclient
     def test_content_checker(self):
         def check_content(data):
             return True
@@ -283,6 +306,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assertEquals(self.grab_url_error, None)
         self.assertEquals(self.grab_url_info['body'], TEST_BODY)
 
+    @uses_httpclient
     def test_content_checker_cancel(self):
         self.httpserver.pause_after(5)
         self.check_content_data = None
@@ -301,6 +325,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assertEquals(self.grab_url_error, None)
         self.assertEquals(self.check_content_data, 'Miro ')
 
+    @uses_httpclient
     def test_content_checker_exception(self):
         self.httpserver.pause_after(5)
         self.check_content_data = None
@@ -321,6 +346,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assertEquals(self.check_content_data, 'Miro ')
         self.assert_(self.saw_error)
 
+    @uses_httpclient
     def test_write_file(self):
         filename = self.make_temp_path(".txt")
         self.grab_url(self.httpserver.build_url('test.txt'),
@@ -334,6 +360,7 @@ class HTTPClientTest(HTTPClientTestBase):
         fp.write("Miro ")
         fp.close()
 
+    @uses_httpclient
     def test_write_file_resume(self):
         filename = self.make_temp_path(".txt")
         self._write_partial_file(filename)
@@ -342,6 +369,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assertEquals(open(filename).read(), TEST_BODY)
         self.check_header('Range', 'bytes=5-')
 
+    @uses_httpclient
     def test_write_file_no_resume(self):
         filename = self.make_temp_path(".txt")
         self._write_partial_file(filename)
@@ -350,6 +378,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assertEquals(open(filename).read(), TEST_BODY)
         self.check_header_not_present('Range')
 
+    @uses_httpclient
     def test_write_file_failed_resume(self):
         self.httpserver.disable_resume()
         self.expecting_errback = True
@@ -359,6 +388,7 @@ class HTTPClientTest(HTTPClientTestBase):
                 write_file=filename, resume=True)
         self.assert_(isinstance(self.grab_url_error, httpclient.ResumeFailed))
 
+    @uses_httpclient
     def test_resume_sizes(self):
         filename = self.make_temp_path(".txt")
         self._write_partial_file(filename)
@@ -376,12 +406,14 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assertEquals(self.client.get_stats().downloaded, download_size)
         self.assertEquals(self.client.get_stats().initial_size, initial_size)
 
+    @uses_httpclient
     def test_resume_no_file(self):
         filename = self.make_temp_path(".txt")
         self.grab_url(self.httpserver.build_url('test.txt'),
                 write_file=filename, resume=True)
         self.assertEquals(open(filename).read(), TEST_BODY)
  
+    @uses_httpclient
     def test_cancel(self):
         filename = self.make_temp_path(".txt")
         self.httpserver.pause_after(5)
@@ -401,6 +433,7 @@ class HTTPClientTest(HTTPClientTestBase):
         # We shouldn't delete the file
         self.assert_(os.path.exists(filename))
 
+    @uses_httpclient
     def test_remove_file(self):
         filename = self.make_temp_path(".txt")
         self.httpserver.pause_after(5)
@@ -446,6 +479,7 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.assert_(isinstance(self.grab_url_error,
             httpclient.AuthorizationFailed))
 
+    @uses_httpclient
     def test_auth_failed(self):
         self.expecting_errback = True
         self.setup_cancel()
@@ -456,11 +490,13 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.grab_url(self.httpserver.build_url('protected/index.txt'))
         self.check_auth_errback_called()
 
+    @uses_httpclient
     def test_auth_correct(self):
         self.setup_answer("user", "password")
         self.grab_url(self.httpserver.build_url('protected/index.txt'))
         self.assertEquals(self.dialogs_seen, 1)
 
+    @uses_httpclient
     def test_auth_memory(self):
         self.setup_answer("user", "password")
         self.grab_url(self.httpserver.build_url('protected/index.txt'))
@@ -478,6 +514,7 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.grab_url(self.httpserver.build_url('protected2/index.txt'))
         self.assertEquals(self.dialogs_seen, 2)
 
+    @uses_httpclient
     def test_digest_auth_failed(self):
         self.expecting_errback = True
         self.setup_cancel()
@@ -488,11 +525,13 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
         self.check_auth_errback_called()
 
+    @uses_httpclient
     def test_digest_auth_correct(self):
         self.setup_answer("user", "password")
         self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
         self.assertEquals(self.dialogs_seen, 1)
 
+    @uses_httpclient
     def test_digest_auth_memory(self):
         self.setup_answer("user", "password")
         self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
@@ -510,12 +549,14 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.grab_url(self.httpserver.build_url('digest-protected2/index.txt'))
         self.assertEquals(self.dialogs_seen, 1)
 
+    @uses_httpclient
     def test_max_attempts(self):
         self.expecting_errback = True
         self.setup_answer("wronguser", "wrongpass")
         self.grab_url(self.httpserver.build_url('protected/index.txt'))
         self.assertEquals(self.dialogs_seen, httpclient.MAX_AUTH_ATTEMPTS)
 
+    @uses_httpclient
     def test_quick_cancel(self):
         # Try canceling before find_http_auth returns and make sure things
         # work.
@@ -537,6 +578,7 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.check_nothing_called()
         self.assertEquals(len(httpclient.curl_manager.transfer_map), 0)
 
+    @uses_httpclient
     def test_cancel_while_waiting(self):
         # Try canceling while we're waiting for the user to put in the
         def on_dialog():
@@ -551,6 +593,7 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.check_nothing_called()
         self.assertEquals(len(httpclient.curl_manager.transfer_map), 0)
 
+    @uses_httpclient
     def test_store(self):
         self.setup_answer("user", "password")
         self.grab_url(self.httpserver.build_url('protected/index.txt'))
@@ -600,6 +643,7 @@ class HTTPAuthBackendTest(EventLoopTest):
         self.runEventLoop(timeout=0.1)
         return self.callback_data
 
+    @uses_httpclient
     def test_simple(self):
         url = 'http://example.com/foo.html'
         header = 'Basic realm="Protected Space"'
@@ -609,6 +653,7 @@ class HTTPAuthBackendTest(EventLoopTest):
         self.assertEquals(auth.password, 'password')
         self.assertEquals(auth.scheme, 'basic')
 
+    @uses_httpclient
     def test_basic_reuse(self):
         header = 'Basic realm="Protected Space"'
         url = 'http://example.com/foo/test.html'
@@ -625,6 +670,7 @@ class HTTPAuthBackendTest(EventLoopTest):
         self.assertEquals(self.find_http_auth(url4), None)
         self.assertEquals(self.find_http_auth(url5), None)
 
+    @uses_httpclient
     def test_digest_reuse(self):
         header = 'Digest realm="Protected Space",nonce="123"'
         url = 'http://example.com/foo/test.html'
@@ -641,6 +687,7 @@ class HTTPAuthBackendTest(EventLoopTest):
         self.assertEquals(self.find_http_auth(url4), auth)
         self.assertEquals(self.find_http_auth(url5), None)
 
+    @uses_httpclient
     def test_digest_reuse_with_domain(self):
         header = ('Digest realm="Protected Space",nonce="123",'
                 'domain="/metoo,http://metoo.com/,http://example2.com/metoo"')
@@ -694,21 +741,25 @@ class BadURLTest(HTTPClientTestBase):
         HTTPClientTestBase.setUp(self)
         self.expecting_errback = True
 
+    @uses_httpclient
     def test_scheme(self):
         self.grab_url('pculture.org/normalpage.txt')
         self.check_errback_called()
         self.assert_(isinstance(self.grab_url_error, httpclient.MalformedURL))
 
+    @uses_httpclient
     def test_slashes(self):
         self.grab_url('http:jigsaw.w3.org/HTTP/')
         self.check_errback_called()
         self.assert_(isinstance(self.grab_url_error, httpclient.MalformedURL))
 
+    @uses_httpclient
     def test_host(self):
         self.grab_url('http:///HTTP/')
         self.check_errback_called()
         self.assert_(isinstance(self.grab_url_error, httpclient.MalformedURL))
 
+    @uses_httpclient
     def test_other_scheme(self):
         self.grab_url('rtsp://jigsaw.w3.org/')
         self.check_errback_called()
@@ -719,12 +770,14 @@ class NetworkErrorTest(HTTPClientTestBase):
         HTTPClientTestBase.setUp(self)
         self.expecting_errback = True
 
+    @uses_httpclient
     def test_connect_error(self):
         self.grab_url('http://255.255.255.255/')
         self.check_errback_called()
         self.assert_(isinstance(self.grab_url_error,
             httpclient.ConnectionError))
 
+    @uses_httpclient
     def test_closed_connection_error(self):
         self.httpserver.add_header('content-length', 100000)
         self.httpserver.close_connection()
@@ -733,6 +786,7 @@ class NetworkErrorTest(HTTPClientTestBase):
         self.assert_(isinstance(self.grab_url_error,
             httpclient.ServerClosedConnection))
 
+    @uses_httpclient
     def test_404_error(self):
         self.expecting_errback = True
         url = self.httpserver.build_url('badfile.txt')
@@ -742,12 +796,14 @@ class NetworkErrorTest(HTTPClientTestBase):
         self.assertEquals(self.grab_url_error.friendlyDescription,
                 "File not found")
 
+    @uses_httpclient
     def test_bad_domain_name(self):
         self.grab_url('http://unknowndomainname/')
         self.check_errback_called()
         self.assert_(isinstance(self.grab_url_error,
             httpclient.UnknownHostError))
 
+    @uses_httpclient
     def test_unknown_error(self):
         # This is a bit of a weird test.  We want to test the generic libcurl
         # error handle.  However, that code is only a fallback for libcurl
