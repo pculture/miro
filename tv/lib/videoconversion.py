@@ -89,13 +89,14 @@ class ConverterManager(object):
         # maps converter_id to VideoConverterInfo object
         self.converter_map = {}
 
-    def load_converters(self):
-        """Loads converters from resources/conversions/*.conv files
-        and populates ``self.converters`` and ``self.converter_map``
-        structures.
+    def load_converters(self, path):
+        """Loads converters from conv files in path and and populates
+        ``self.converters`` and ``self.converter_map`` structures.
+
+        :param path: a glob-bable path like ``/foo/bar/baz/*.conv``
         """
         platform = config.get(prefs.APP_PLATFORM)
-        groups = glob(resources.path('conversions/*.conv'))
+        groups = glob(path)
         for group_definition in groups:
             parser = SafeConfigParser()
             definition_file = open(group_definition)
@@ -114,9 +115,6 @@ class ConverterManager(object):
                 self.converters.append((defaults['name'], group_converters))
             finally:
                 definition_file.close()
-
-        logging.info("** converters: %s", self.converters)
-        logging.info("** converter_map: %s", self.converter_map)
 
     def lookup_converter(self, converter_id):
         return self.converter_map[converter_id]
@@ -140,7 +138,7 @@ class VideoConversionManager(signals.SignalEmitter):
         self.quit_flag = False
 
     def startup(self):
-        self.converters.load_converters()
+        self.converters.load_converters(resources.path('conversions/*.conv'))
 
     def shutdown(self):
         if self.task_loop is not None:
