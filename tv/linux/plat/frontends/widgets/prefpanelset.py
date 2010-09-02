@@ -36,7 +36,8 @@ from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import dialogwidgets
 from miro.frontends.widgets.widgetutil import align_left
-from miro.frontends.widgets.prefpanel import attach_boolean, attach_radio, attach_combo
+from miro.frontends.widgets.prefpanel import (
+    attach_boolean, attach_radio, attach_combo)
 
 from miro.plat import renderers
 from miro.plat import options 
@@ -59,9 +60,10 @@ def _playback_panel():
 
     grid = dialogwidgets.ControlGrid()
 
-    note = dialogwidgets.note(_("You must restart %(appname)s for renderer "
-                                "changes to take effect.",
-                                {"appname": config.get(prefs.SHORT_APP_NAME)}))
+    note = dialogwidgets.note(
+        _("You must restart %(appname)s for renderer "
+          "changes to take effect.",
+          {"appname": config.get(prefs.SHORT_APP_NAME)}))
     grid.pack(align_left(note, bottom_pad=12), grid.ALIGN_LEFT, span=2)
 
     grid.end_line(spacing=12)
