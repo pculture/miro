@@ -355,8 +355,8 @@ def customize_ffmpeg_parameters(params):
     :returns: list of modified parameters that will get passed to
         ffmpeg
     """
-    # on Linux, we have libfaac0, so we need to pass libfaac instead
-    # of aac for the -acodec if it's there.
+    # on Linux, we need to pass libfaac instead of aac for the -acodec
+    # if it's there.
     if "-acodec" in params:
         ind = params.index("-acodec")
         if params[ind+1] == "aac":
