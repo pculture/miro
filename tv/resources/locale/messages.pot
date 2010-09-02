@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-06 08:29-0400\n"
+"POT-Creation-Date: 2010-09-02 10:36-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,8 +25,8 @@ msgstr ""
 
 #: ../../osx/plat/frontends/widgets/overlay.py:125 ../../lib/dialogs.py:117
 #: ../../lib/frontends/widgets/style.py:260
-#: ../../lib/frontends/widgets/style.py:1068
-#: ../../lib/frontends/widgets/style.py:1235
+#: ../../lib/frontends/widgets/style.py:1070
+#: ../../lib/frontends/widgets/style.py:1237
 #: ../../lib/frontends/widgets/itemcontextmenu.py:116
 #: ../../lib/frontends/widgets/itemcontextmenu.py:223
 #: ../../lib/frontends/widgets/gtk/video.py:278
@@ -48,11 +48,11 @@ msgstr ""
 msgid "Pop In"
 msgstr ""
 
-#: ../../osx/plat/frontends/widgets/application.py:188
+#: ../../osx/plat/frontends/widgets/application.py:193
 msgid "Download Completed"
 msgstr ""
 
-#: ../../osx/plat/frontends/widgets/application.py:189
+#: ../../osx/plat/frontends/widgets/application.py:194
 #, python-format
 msgid "Download of video '%s' is finished."
 msgstr ""
@@ -165,87 +165,87 @@ msgstr ""
 msgid "Select a Subtitles file..."
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:688
-#: ../../windows/plat/renderers/vlc.py:691
-#: ../../windows/plat/renderers/vlc.py:692
+#: ../../windows/plat/renderers/vlc.py:697
+#: ../../windows/plat/renderers/vlc.py:700
+#: ../../windows/plat/renderers/vlc.py:701
 #: ../../linux/plat/renderers/gstreamerrenderer.py:569
 msgid "Eastern European"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:689
-#: ../../windows/plat/renderers/vlc.py:690
+#: ../../windows/plat/renderers/vlc.py:698
+#: ../../windows/plat/renderers/vlc.py:699
 #: ../../linux/plat/renderers/gstreamerrenderer.py:570
 #: ../../linux/plat/renderers/gstreamerrenderer.py:571
 #: ../../linux/plat/renderers/gstreamerrenderer.py:572
 msgid "Baltic"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:693
+#: ../../windows/plat/renderers/vlc.py:702
 msgid "Russian"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:694
+#: ../../windows/plat/renderers/vlc.py:703
 msgid "South-Eastern European"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:695
+#: ../../windows/plat/renderers/vlc.py:704
 msgid "Ukrainian"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:698
-#: ../../windows/plat/renderers/vlc.py:700
+#: ../../windows/plat/renderers/vlc.py:707
+#: ../../windows/plat/renderers/vlc.py:709
 #: ../../linux/plat/renderers/gstreamerrenderer.py:590
 msgid "Western European"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:699
+#: ../../windows/plat/renderers/vlc.py:708
 #: ../../linux/plat/renderers/gstreamerrenderer.py:591
 msgid "Celtic"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:701
+#: ../../windows/plat/renderers/vlc.py:710
 msgid "Esperanto"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:702
-#: ../../windows/plat/renderers/vlc.py:703
+#: ../../windows/plat/renderers/vlc.py:711
+#: ../../windows/plat/renderers/vlc.py:712
 #: ../../linux/plat/renderers/gstreamerrenderer.py:592
 #: ../../linux/plat/renderers/gstreamerrenderer.py:593
 #: ../../linux/plat/renderers/gstreamerrenderer.py:594
 msgid "Greek"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:706
+#: ../../windows/plat/renderers/vlc.py:715
 #: ../../linux/plat/renderers/gstreamerrenderer.py:604
 msgid "East Asian"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:707
-msgid "Universal, Chinese"
+#: ../../windows/plat/renderers/vlc.py:716
+msgid "Universal Chinese"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:708
+#: ../../windows/plat/renderers/vlc.py:717
 msgid "Simplified Chinese"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:709
+#: ../../windows/plat/renderers/vlc.py:718
 msgid "Simplified Chinese Unix"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:710
-#: ../../windows/plat/renderers/vlc.py:712
+#: ../../windows/plat/renderers/vlc.py:719
+#: ../../windows/plat/renderers/vlc.py:721
 #: ../../linux/plat/renderers/gstreamerrenderer.py:612
 #: ../../linux/plat/renderers/gstreamerrenderer.py:613
 #: ../../linux/plat/renderers/gstreamerrenderer.py:614
 msgid "Japanese"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:711
+#: ../../windows/plat/renderers/vlc.py:720
 msgid "Japanese Unix"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:713
-#: ../../windows/plat/renderers/vlc.py:714
+#: ../../windows/plat/renderers/vlc.py:722
+#: ../../windows/plat/renderers/vlc.py:723
 #: ../../linux/plat/renderers/gstreamerrenderer.py:615
 #: ../../linux/plat/renderers/gstreamerrenderer.py:616
 #: ../../linux/plat/renderers/gstreamerrenderer.py:617
@@ -253,25 +253,25 @@ msgstr ""
 msgid "Korean"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:715
+#: ../../windows/plat/renderers/vlc.py:724
 msgid "Traditional Chinese"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:716
+#: ../../windows/plat/renderers/vlc.py:725
 msgid "Traditional Chinese Unix"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:717
+#: ../../windows/plat/renderers/vlc.py:726
 msgid "Hong-Kong Supplementary"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:720
+#: ../../windows/plat/renderers/vlc.py:729
 #: ../../linux/plat/renderers/gstreamerrenderer.py:620
 msgid "SE and SW Asian"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:721
-#: ../../windows/plat/renderers/vlc.py:722
+#: ../../windows/plat/renderers/vlc.py:730
+#: ../../windows/plat/renderers/vlc.py:731
 #: ../../linux/plat/renderers/gstreamerrenderer.py:627
 #: ../../linux/plat/renderers/gstreamerrenderer.py:628
 #: ../../linux/plat/renderers/gstreamerrenderer.py:629
@@ -279,26 +279,26 @@ msgstr ""
 msgid "Turkish"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:723
+#: ../../windows/plat/renderers/vlc.py:732
 #: ../../linux/plat/renderers/gstreamerrenderer.py:626
 msgid "Thai"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:724
-#: ../../windows/plat/renderers/vlc.py:725
+#: ../../windows/plat/renderers/vlc.py:733
+#: ../../windows/plat/renderers/vlc.py:734
 #: ../../linux/plat/renderers/gstreamerrenderer.py:631
 #: ../../linux/plat/renderers/gstreamerrenderer.py:632
 #: ../../linux/plat/renderers/gstreamerrenderer.py:633
 msgid "Vietnamese"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:728
+#: ../../windows/plat/renderers/vlc.py:737
 #: ../../linux/plat/renderers/gstreamerrenderer.py:635
 msgid "Middle Eastern"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:729
-#: ../../windows/plat/renderers/vlc.py:730
+#: ../../windows/plat/renderers/vlc.py:738
+#: ../../windows/plat/renderers/vlc.py:739
 #: ../../linux/plat/renderers/gstreamerrenderer.py:636
 #: ../../linux/plat/renderers/gstreamerrenderer.py:637
 #: ../../linux/plat/renderers/gstreamerrenderer.py:638
@@ -306,8 +306,8 @@ msgstr ""
 msgid "Arabic"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:731
-#: ../../windows/plat/renderers/vlc.py:732
+#: ../../windows/plat/renderers/vlc.py:740
+#: ../../windows/plat/renderers/vlc.py:741
 #: ../../linux/plat/renderers/gstreamerrenderer.py:640
 #: ../../linux/plat/renderers/gstreamerrenderer.py:641
 #: ../../linux/plat/renderers/gstreamerrenderer.py:642
@@ -315,7 +315,7 @@ msgstr ""
 msgid "Hebrew"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:735
+#: ../../windows/plat/renderers/vlc.py:744
 #: ../../linux/plat/renderers/gstreamerrenderer.py:647
 #: ../../linux/plat/renderers/gstreamerrenderer.py:648
 #: ../../linux/plat/renderers/gstreamerrenderer.py:649
@@ -325,55 +325,63 @@ msgstr ""
 msgid "Unicode"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:736
-#: ../../windows/plat/renderers/vlc.py:737
-#: ../../windows/plat/renderers/vlc.py:738
-#: ../../windows/plat/renderers/vlc.py:739
+#: ../../windows/plat/renderers/vlc.py:745
+#: ../../windows/plat/renderers/vlc.py:746
+#: ../../windows/plat/renderers/vlc.py:747
+#: ../../windows/plat/renderers/vlc.py:748
 msgid "Universal"
 msgstr ""
 
-#: ../../windows/plat/frontends/widgets/prefpanelset.py:39
+#: ../../windows/plat/frontends/widgets/prefpanelset.py:41
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:48
 msgid "Enable tray icon"
 msgstr ""
 
-#: ../../windows/plat/frontends/widgets/prefpanelset.py:43
+#: ../../windows/plat/frontends/widgets/prefpanelset.py:45
 msgid "When I click the red close button:"
 msgstr ""
 
-#: ../../windows/plat/frontends/widgets/prefpanelset.py:46
+#: ../../windows/plat/frontends/widgets/prefpanelset.py:48
 msgid "Close to tray so that downloads can continue."
 msgstr ""
 
-#: ../../windows/plat/frontends/widgets/prefpanelset.py:47
+#: ../../windows/plat/frontends/widgets/prefpanelset.py:49
 #, python-format
 msgid "Quit %(appname)s completely."
 msgstr ""
 
-#: ../../windows/plat/frontends/widgets/application.py:144
+#: ../../windows/plat/frontends/widgets/prefpanelset.py:58
+msgid "System Default"
+msgstr ""
+
+#: ../../windows/plat/frontends/widgets/prefpanelset.py:64
+msgid "Subtitle font:"
+msgstr ""
+
+#: ../../windows/plat/frontends/widgets/application.py:148
 msgid "Close to tray?"
 msgstr ""
 
-#: ../../windows/plat/frontends/widgets/application.py:145
+#: ../../windows/plat/frontends/widgets/application.py:149
 #, python-format
 msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
 
-#: ../../windows/plat/frontends/widgets/application.py:204
+#: ../../windows/plat/frontends/widgets/application.py:208
 msgid "Error Bombing Item"
 msgstr ""
 
-#: ../../windows/plat/frontends/widgets/application.py:206
+#: ../../windows/plat/frontends/widgets/application.py:210
 msgid "Error Recommending Item"
 msgstr ""
 
-#: ../../windows/plat/frontends/widgets/application.py:208
+#: ../../windows/plat/frontends/widgets/application.py:212
 msgid "Error Opening Website"
 msgstr ""
 
-#: ../../windows/plat/frontends/widgets/application.py:213
+#: ../../windows/plat/frontends/widgets/application.py:217
 #, python-format
 msgid "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr ""
@@ -545,33 +553,55 @@ msgstr ""
 msgid "Upgrading Database"
 msgstr ""
 
-#: ../../lib/startup.py:107
+#: ../../lib/startup.py:126
+msgid "Database Error"
+msgstr ""
+
+#: ../../lib/startup.py:127
+#, python-format
+msgid ""
+"We're sorry, %(appname)s was unable to start up due to a problem with the "
+"database:\n"
+"\n"
+"Error: %(error)s\n"
+"\n"
+"It's possible that your database file is corrupted and cannot be used.\n"
+"\n"
+"You can start fresh and your damaged database will be removed, but you will "
+"have to re-add your feeds and media files.  If you want to do this, press "
+"the Start Fresh button and restart %(appname)s.\n"
+"\n"
+"To help us fix problems like this in the future, please file a bug report at "
+"%(url)s."
+msgstr ""
+
+#: ../../lib/startup.py:148
 msgid "Unknown Error"
 msgstr ""
 
-#: ../../lib/startup.py:109
+#: ../../lib/startup.py:149
 #, python-format
 msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
 "report at %(url)s."
 msgstr ""
 
-#: ../../lib/startup.py:203
+#: ../../lib/startup.py:246
 msgid "Database too new"
 msgstr ""
 
-#: ../../lib/startup.py:205
+#: ../../lib/startup.py:248
 #, python-format
 msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
 "must download the latest version of %(appname)s and run that."
 msgstr ""
 
-#: ../../lib/startup.py:469
+#: ../../lib/startup.py:512
 msgid "Submitting Crash Report"
 msgstr ""
 
-#: ../../lib/startup.py:471
+#: ../../lib/startup.py:514
 #, python-format
 msgid ""
 "%(appname)s will now submit a crash report to our crash database\n"
@@ -615,7 +645,7 @@ msgid ""
 "Do you want to try to load this channel anyway?"
 msgstr ""
 
-#: ../../lib/feed.py:1666 ../../lib/databaseupgrade.py:2698
+#: ../../lib/feed.py:1666 ../../lib/databaseupgrade.py:2749
 #, python-format
 msgid "%(engine)s for '%(query)s'"
 msgstr ""
@@ -635,30 +665,34 @@ msgstr ""
 msgid "Playing File"
 msgstr ""
 
-#: ../../lib/downloader.py:309
+#: ../../lib/downloader.py:261
 msgid "activity"
 msgstr ""
 
-#: ../../lib/downloader.py:377 ../../lib/httpclient.py:117
-#: ../../lib/httpclient.py:142
+#: ../../lib/downloader.py:329 ../../lib/httpclient.py:123
+#: ../../lib/httpclient.py:148
 msgid "File not found"
 msgstr ""
 
-#: ../../lib/downloader.py:378
+#: ../../lib/downloader.py:330
 msgid "Flash URL Scraping Error"
 msgstr ""
 
-#: ../../lib/downloader.py:573
+#: ../../lib/downloader.py:528
 msgid "starting up"
 msgstr ""
 
-#: ../../lib/downloader.py:579
+#: ../../lib/downloader.py:535
 #, python-format
 msgid "no connection - retrying in %s"
 msgstr ""
 
-#: ../../lib/downloader.py:603 ../../lib/downloader.py:611
-#: ../../lib/httpclient.py:188 ../../lib/httpclient.py:535
+#: ../../lib/downloader.py:537
+msgid "no connection - retrying soon"
+msgstr ""
+
+#: ../../lib/downloader.py:561 ../../lib/downloader.py:569
+#: ../../lib/httpclient.py:194 ../../lib/httpclient.py:610
 msgid "Unknown"
 msgstr ""
 
@@ -702,29 +736,31 @@ msgstr ""
 msgid ""
 "%(appname)s is not able to download a file at this URL:\n"
 "\n"
-"URL: %(url)s"
+"URL: %(url)s\n"
+"\n"
+"Error: %(error)s (%(errordesc)s)"
 msgstr ""
 
-#: ../../lib/opml.py:224
+#: ../../lib/opml.py:223
 msgid "OPML Import failed"
 msgstr ""
 
-#: ../../lib/opml.py:226
+#: ../../lib/opml.py:225
 msgid "The selected OPML file appears to be invalid.  Import was interrupted."
 msgstr ""
 
-#: ../../lib/opml.py:234
+#: ../../lib/opml.py:233
 msgid "OPML Import summary"
 msgstr ""
 
-#: ../../lib/opml.py:235
+#: ../../lib/opml.py:234
 #, python-format
 msgid "Successfully imported %(count)d feed."
 msgid_plural "Successfully imported %(count)d feeds."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/opml.py:241
+#: ../../lib/opml.py:240
 #, python-format
 msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
@@ -796,7 +832,7 @@ msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
 msgstr ""
 
-#: ../../lib/messages.py:1102 ../../lib/item.py:1128
+#: ../../lib/messages.py:1114 ../../lib/item.py:1132
 msgid "queued for download"
 msgstr ""
 
@@ -808,7 +844,7 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
-#: ../../lib/dialogs.py:95 ../../lib/frontends/widgets/gtk/window.py:797
+#: ../../lib/dialogs.py:95 ../../lib/frontends/widgets/gtk/window.py:820
 msgid "Close"
 msgstr ""
 
@@ -856,8 +892,8 @@ msgid "Don't Migrate"
 msgstr ""
 
 #: ../../lib/dialogs.py:106 ../../lib/frontends/widgets/style.py:253
-#: ../../lib/frontends/widgets/style.py:1138
-#: ../../lib/frontends/widgets/style.py:1149
+#: ../../lib/frontends/widgets/style.py:1140
+#: ../../lib/frontends/widgets/style.py:1151
 #: ../../lib/frontends/widgets/itemcontextmenu.py:140
 #: ../../lib/frontends/widgets/itemcontextmenu.py:241
 msgid "Download"
@@ -962,12 +998,22 @@ msgstr ""
 msgid "Don't Include Database"
 msgstr ""
 
-#: ../../lib/storedatabase.py:214
+#: ../../lib/dialogs.py:212
+#, python-format
+msgid ""
+"%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
+msgstr ""
+
+#: ../../lib/dialogs.py:215
+msgid "Login Required"
+msgstr ""
+
+#: ../../lib/storedatabase.py:221
 #, python-format
 msgid "%(appname)s database upgrade failed"
 msgstr ""
 
-#: ../../lib/storedatabase.py:217
+#: ../../lib/storedatabase.py:224
 #, python-format
 msgid ""
 "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
@@ -982,27 +1028,27 @@ msgid ""
 "you will have to re-add your feeds and media files."
 msgstr ""
 
-#: ../../lib/storedatabase.py:277
+#: ../../lib/storedatabase.py:284
 msgid "Database was created by a newer version of Miro "
 msgstr ""
 
-#: ../../lib/storedatabase.py:666
+#: ../../lib/storedatabase.py:673
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr ""
 
-#: ../../lib/storedatabase.py:668
+#: ../../lib/storedatabase.py:675
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 
-#: ../../lib/storedatabase.py:729
+#: ../../lib/storedatabase.py:736
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr ""
 
-#: ../../lib/storedatabase.py:732
+#: ../../lib/storedatabase.py:739
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -1020,23 +1066,23 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../../lib/item.py:1215
+#: ../../lib/item.py:1219
 msgid "no title"
 msgstr ""
 
-#: ../../lib/item.py:1254
+#: ../../lib/item.py:1261 ../../lib/item.py:1268
 msgid "Contents appear in the library"
 msgstr ""
 
-#: ../../lib/item.py:1259
+#: ../../lib/item.py:1272
 msgid "Contents:"
 msgstr ""
 
-#: ../../lib/item.py:1496
+#: ../../lib/item.py:1503
 msgid "starting up..."
 msgstr ""
 
-#: ../../lib/controller.py:144 ../../lib/controller.py:165
+#: ../../lib/controller.py:147 ../../lib/controller.py:168
 msgid "Sending Crash Report"
 msgstr ""
 
@@ -1241,7 +1287,7 @@ msgid "Download Torrent"
 msgstr ""
 
 #: ../../lib/frontends/widgets/style.py:255
-#: ../../lib/dl_daemon/download.py:552
+#: ../../lib/dl_daemon/download.py:555
 msgid "Error"
 msgstr ""
 
@@ -1250,7 +1296,7 @@ msgid "queued for autodownload"
 msgstr ""
 
 #: ../../lib/frontends/widgets/style.py:257
-#: ../../lib/frontends/widgets/style.py:1189
+#: ../../lib/frontends/widgets/style.py:1191
 #: ../../lib/frontends/widgets/itemlistwidgets.py:329
 #: ../../lib/frontends/widgets/itemlistcontroller.py:596
 msgid "Unplayed"
@@ -1261,7 +1307,7 @@ msgid "Currently Playing"
 msgstr ""
 
 #: ../../lib/frontends/widgets/style.py:259
-#: ../../lib/frontends/widgets/style.py:1207
+#: ../../lib/frontends/widgets/style.py:1209
 #: ../../lib/frontends/widgets/itemlistwidgets.py:332
 msgid "Newly Available"
 msgstr ""
@@ -1270,17 +1316,17 @@ msgstr ""
 msgid "Stop seeding"
 msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:589
-#: ../../lib/frontends/widgets/style.py:1200
+#: ../../lib/frontends/widgets/style.py:591
+#: ../../lib/frontends/widgets/style.py:1202
 msgid "paused"
 msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:808
+#: ../../lib/frontends/widgets/style.py:810
 #, python-format
 msgid "Resume at %(resumetime)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:1070
+#: ../../lib/frontends/widgets/style.py:1072
 msgid "Remove from playlist"
 msgstr ""
 
@@ -1304,26 +1350,26 @@ msgstr ""
 msgid "Feed:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:95
+#: ../../lib/frontends/widgets/newsearchfeed.py:96
 msgid "Search engine:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:101
+#: ../../lib/frontends/widgets/newsearchfeed.py:102
 #: ../../lib/frontends/widgets/newfeed.py:60
 msgid "URL:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:135
+#: ../../lib/frontends/widgets/newsearchfeed.py:136
 msgid "Add new feed to this section:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:138
+#: ../../lib/frontends/widgets/newsearchfeed.py:139
 #: ../../lib/frontends/widgets/newfeed.py:72
 #: ../../lib/frontends/widgets/newfolder.py:71
 msgid "video"
 msgstr ""
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:139
+#: ../../lib/frontends/widgets/newsearchfeed.py:140
 #: ../../lib/frontends/widgets/newfeed.py:73
 #: ../../lib/frontends/widgets/newfolder.py:72
 msgid "audio"
@@ -2028,7 +2074,7 @@ msgstr ""
 msgid "Upgrading database"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1199
+#: ../../lib/frontends/widgets/application.py:1226
 msgid "Message"
 msgstr ""
 
@@ -2365,60 +2411,60 @@ msgstr ""
 msgid "Open Externally"
 msgstr ""
 
-#: ../../lib/frontends/widgets/displays.py:565
+#: ../../lib/frontends/widgets/displays.py:566
 #, python-format
 msgid "%(count)d Feed Folder Selected"
 msgid_plural "%(count)d Feed Folders Selected"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/displays.py:570
+#: ../../lib/frontends/widgets/displays.py:571
 #, python-format
 msgid "(contains %(count)d feed)"
 msgid_plural "(contains %(count)d feeds)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/displays.py:576
+#: ../../lib/frontends/widgets/displays.py:577
 #, python-format
 msgid "%(count)d Playlist Folder Selected"
 msgid_plural "%(count)d Playlist Folders Selected"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/displays.py:581
+#: ../../lib/frontends/widgets/displays.py:582
 #, python-format
 msgid "(contains %(count)d playlist)"
 msgid_plural "(contains %(count)d playlist)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/displays.py:591
+#: ../../lib/frontends/widgets/displays.py:592
 #, python-format
 msgid "%(count)d Feed Selected"
 msgid_plural "%(count)d Feeds Selected"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/displays.py:597
+#: ../../lib/frontends/widgets/displays.py:598
 #, python-format
 msgid "%(count)d Website Selected"
 msgid_plural "%(count)d Websites Selected"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/displays.py:603
+#: ../../lib/frontends/widgets/displays.py:604
 #, python-format
 msgid "%(count)d Playlist Selected"
 msgid_plural "%(count)d Playlists Selected"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/displays.py:610
+#: ../../lib/frontends/widgets/displays.py:611
 msgid "Delete All"
 msgstr ""
 
-#: ../../lib/frontends/widgets/displays.py:614
+#: ../../lib/frontends/widgets/displays.py:615
 msgid "Put Into a New Folder"
 msgstr ""
 
@@ -2634,7 +2680,7 @@ msgstr ""
 msgid "New playlist:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/dialogs.py:103
+#: ../../lib/frontends/widgets/dialogs.py:105
 msgid ""
 "Miro is upgrading your database of feeds and files.  This one-time process "
 "can take a long time if you have a large number of items in Miro (it can "
@@ -3145,20 +3191,20 @@ msgstr ""
 msgid "Preferences"
 msgstr ""
 
-#: ../../lib/frontends/widgets/gtk/window.py:693
+#: ../../lib/frontends/widgets/gtk/window.py:716
 msgid "All files"
 msgstr ""
 
-#: ../../lib/frontends/widgets/gtk/window.py:725
+#: ../../lib/frontends/widgets/gtk/window.py:748
 msgid "Choose"
 msgstr ""
 
-#: ../../lib/frontends/widgets/gtk/window.py:742
+#: ../../lib/frontends/widgets/gtk/window.py:765
 #, python-format
 msgid "About %(appname)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/gtk/window.py:758
+#: ../../lib/frontends/widgets/gtk/window.py:781
 #, python-format
 msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
@@ -3218,158 +3264,171 @@ msgstr ""
 msgid "Enter a new name for the playlist %s"
 msgstr ""
 
-#: ../../lib/httpclient.py:91
+#: ../../lib/httpclient.py:90
 msgid "HTTP error"
 msgstr ""
 
-#: ../../lib/httpclient.py:95
+#: ../../lib/httpclient.py:94
 #, python-format
 msgid "%(host)s closed connection"
 msgstr ""
 
-#: ../../lib/httpclient.py:100
+#: ../../lib/httpclient.py:99
 #, python-format
 msgid "Host returned %(status)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:102
+#: ../../lib/httpclient.py:101
 msgid "Please retry later"
 msgstr ""
 
-#: ../../lib/httpclient.py:106
+#: ../../lib/httpclient.py:105
 #, python-format
 msgid "%(host)s doesn't support HTTP resume"
 msgstr ""
 
-#: ../../lib/httpclient.py:111
+#: ../../lib/httpclient.py:110
 #, python-format
 msgid "HTTP Redirection limit hit for %(url)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:118
+#: ../../lib/httpclient.py:116
+#, python-format
+msgid "Authorization failed for proxy: %(host)s:%(port)s"
+msgstr ""
+
+#: ../../lib/httpclient.py:124
 msgid "Got 404 status code"
 msgstr ""
 
-#: ../../lib/httpclient.py:120
+#: ../../lib/httpclient.py:126
 #, python-format
 msgid "Host returned bad status code: %(code)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:126
+#: ../../lib/httpclient.py:132
 msgid "Authorization failed"
 msgstr ""
 
-#: ../../lib/httpclient.py:130
-msgid "Invalid URL"
-msgstr ""
-
-#: ../../lib/httpclient.py:131
-#, python-format
-msgid "\"%(url)s\" is not a valid URL"
-msgstr ""
-
 #: ../../lib/httpclient.py:136
-msgid "Unknow Host"
+msgid "Invalid URL"
 msgstr ""
 
 #: ../../lib/httpclient.py:137
 #, python-format
-msgid "The domainname \"%(host)s\" couldn't be found"
+msgid "\"%(url)s\" is not a valid URL"
+msgstr ""
+
+#: ../../lib/httpclient.py:142
+msgid "Unknow Host"
 msgstr ""
 
 #: ../../lib/httpclient.py:143
 #, python-format
+msgid "The domainname \"%(host)s\" couldn't be found"
+msgstr ""
+
+#: ../../lib/httpclient.py:149
+#, python-format
 msgid "The file \"%(path)s\" doesn't exist"
 msgstr ""
 
-#: ../../lib/httpclient.py:147
+#: ../../lib/httpclient.py:153
 msgid "Read error"
 msgstr ""
 
-#: ../../lib/httpclient.py:148
+#: ../../lib/httpclient.py:154
 #, python-format
 msgid "Error while reading from \"%(path)s\""
 msgstr ""
 
-#: ../../lib/httpclient.py:156 ../../lib/dl_daemon/download.py:671
+#: ../../lib/httpclient.py:162 ../../lib/dl_daemon/download.py:678
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:158
+#: ../../lib/httpclient.py:164
 msgid "Write error"
 msgstr ""
 
-#: ../../lib/net.py:76
+#: ../../lib/httpclient.py:337
+msgid "Website"
+msgstr ""
+
+#: ../../lib/httpclient.py:342
+msgid "Proxy"
+msgstr ""
+
+#: ../../lib/net.py:75
 #, python-format
 msgid "Error: %(msg)s"
 msgstr ""
 
-#: ../../lib/net.py:92 ../../lib/net.py:98
+#: ../../lib/net.py:91 ../../lib/net.py:97
 msgid "Can't connect"
 msgstr ""
 
-#: ../../lib/net.py:93
+#: ../../lib/net.py:92
 #, python-format
 msgid "Connection Error: %(msg)s"
 msgstr ""
 
-#: ../../lib/net.py:99
+#: ../../lib/net.py:98
 msgid "SSL connection error"
 msgstr ""
 
-#: ../../lib/net.py:103
+#: ../../lib/net.py:102
 msgid "Timeout"
 msgstr ""
 
-#: ../../lib/net.py:104
+#: ../../lib/net.py:103
 #, python-format
 msgid "Connection to %(host)s timed out"
 msgstr ""
 
-#: ../../lib/net.py:281
+#: ../../lib/net.py:280
 msgid "Unknown Error code"
 msgstr ""
 
-#: ../../lib/net.py:313
+#: ../../lib/net.py:312
 msgid "Connection closed"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:679 ../../lib/dl_daemon/download.py:823
+#: ../../lib/dl_daemon/download.py:686 ../../lib/dl_daemon/download.py:829
 msgid "Not enough disk space"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:680 ../../lib/dl_daemon/download.py:824
+#: ../../lib/dl_daemon/download.py:687 ../../lib/dl_daemon/download.py:830
 #, python-format
 msgid "%(amount)s MB required to store this video"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:711
+#: ../../lib/dl_daemon/download.py:717
 msgid "no content"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:850
+#: ../../lib/dl_daemon/download.py:856
 msgid "BitTorrent failure"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:851
+#: ../../lib/dl_daemon/download.py:857
 msgid "BitTorrent failed to startup"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:1063
+#: ../../lib/dl_daemon/download.py:1069
 msgid "Corrupt Torrent"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:1064
+#: ../../lib/dl_daemon/download.py:1070
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:1095
+#: ../../lib/dl_daemon/download.py:1101
 msgid "Torrent file deleted"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:1096
+#: ../../lib/dl_daemon/download.py:1102
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr ""
