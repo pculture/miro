@@ -361,6 +361,8 @@ def customize_ffmpeg_parameters(params):
         ind = params.index("-acodec")
         if params[ind+1] == "aac":
             params[ind+1] = "libfaac"
+
+    logging.info("** customize_ffmpeg_parameters: %s", params)
     return params
 
 def get_ffmpeg2theora_executable_path():
@@ -370,20 +372,23 @@ def get_ffmpeg2theora_executable_path():
     """
     return "/usr/bin/ffmpeg2theora"
 
-def customize_ffmpeg2theora_parameters(default_parameters):
+def customize_ffmpeg2theora_parameters(params):
     """Takes a list of parameters and modifies it based on
     platform-specific issues.  Returns the newly modified list of
     parameters.
 
-    :param default_parameters: list of parameters to modify
+    :param params: list of parameters to modify
 
     :returns: list of modified parameters that will get passed to
         ffmpeg2theora
     """
-    return default_parameters
+    logging.info("** customize_ffmpeg2theora_parameters: %s", params)
+    return params
 
 def begin_thread_loop(context_object):
+    # used for testing
     pass
 
 def finish_thread_loop(context_object):
+    # used for testing
     pass

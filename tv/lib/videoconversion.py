@@ -343,12 +343,39 @@ def _remove_file(path):
     if os.path.exists(path):
         os.remove(path)
 
+def build_output_paths(input_path, target_folder, converter_info):
+    basename = os.path.basename(input_path)
+    basename, _ = os.path.splitext(basename)
+    target_name = "%s.%s.%s" % (basename, converter_info.identifier, converter_info.extension)
+    temp_dir = tempfile.mkdtemp("miro-conversion")
+    return os.path.join(target_folder, target_name), os.path.join(temp_dir, target_name)
+
+def build_parameters(input_path, output_path, converter_info):
+    """Performs the substitutions on the converter_info parameters
+    and returns a list of arguments.
+
+    :param input_path: absolute path of the file to convert
+    :param output_path: absolute path of output file
+    :param converter_info: VideoConverterInfo object
+
+    :returns: list of arguments
+    """
+    def substitute(param):
+        if param == "{input}":
+            return input_path
+        elif param == "{output}":
+            return output_path
+        elif param == "{ssize}":
+            return converter_info.screen_size
+        return param
+    return [substitute(p) for p in converter_info.parameters.split()]
+
 class VideoConversionTask(object):
     def __init__(self, converter_info, item_info, target_folder):
         self.item_info = item_info
         self.converter_info = converter_info
         self.input_path = item_info.video_path
-        self.final_output_path, self.temp_output_path = self._build_output_paths(self.input_path, target_folder, converter_info)
+        self.final_output_path, self.temp_output_path = build_output_paths(self.input_path, target_folder, converter_info)
         self.key = "%s->%s" % (self.input_path, self.final_output_path)
         self.thread = None
         self.duration = None
@@ -360,27 +387,9 @@ class VideoConversionTask(object):
     def get_executable(self):
         raise NotImplementedError()
     
-    def get_default_parameters(self):
-        def substitute(param):
-            if param == "{input}":
-                return self.input_path
-            elif param == "{output}":
-                return self.temp_output_path
-            elif param == "{ssize}":
-                return self.converter_info.screen_size
-            return param
-        return [substitute(p) for p in self.converter_info.parameters.split()]
-    
     def get_parameters(self):
         raise NotImplementedError()
         
-    def _build_output_paths(self, input_path, target_folder, converter_info):
-        basename = os.path.basename(input_path)
-        basename, _ = os.path.splitext(basename)
-        target_name = "%s.%s.%s" % (basename, self.converter_info.identifier, self.converter_info.extension)
-        temp_dir = tempfile.mkdtemp("miro-conversion")
-        return os.path.join(target_folder, target_name), os.path.join(temp_dir, target_name)
-
     def run(self):
         self.progress = 0
         self.thread = threading.Thread(target=self._loop, name="Conversion Task")
@@ -486,7 +495,8 @@ class FFMpegConversionTask(VideoConversionTask):
         return utils.get_ffmpeg_executable_path()
 
     def get_parameters(self):
-        default_parameters = self.get_default_parameters()
+        default_parameters = build_parameters(
+            self.input_path, self.temp_output_path, self.converter_info)
         return utils.customize_ffmpeg_parameters(default_parameters)
 
     def readline(self):
@@ -534,7 +544,8 @@ class FFMpeg2TheoraConversionTask(VideoConversionTask):
         return utils.get_ffmpeg2theora_executable_path()
 
     def get_parameters(self):
-        default_parameters = self.get_default_parameters()
+        default_parameters = build_parameters(
+            self.input_path, self.temp_output_path, self.converter_info)
         return utils.customize_ffmpeg2theora_parameters(default_parameters)
 
     def readline(self):

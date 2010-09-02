@@ -85,6 +85,10 @@ group.add_option('--unittest',
                   dest='unittest', action='store_true',
                   help='Run unittests instead of launching the program.')
 parser.set_defaults(unittest=False)
+group.add_option('--convert',
+                  dest='convert', action='store_true',
+                  help='Command line conversion.')
+parser.set_defaults(unittest=False)
 group.add_option('-v',
                   dest='unittest_verbose', action='store_true',
                   help='Run unittests in verbose mode.')
@@ -139,7 +143,14 @@ if '--unittest' in sys.argv:
     logging.basicConfig(level=logging.CRITICAL)
     from miro import test
     test.run_tests()
-
+    sys.exit(0)
+    
+if '--convert' in sys.argv:
+    sys.argv.remove('--convert')
+    from miro.plat import clconverter
+    clconverter.convert(sys.argv[1:])
+    sys.exit(0)
+    
 def load_frontend(globals_, locals_, frontend):
     try:
         _temp = __import__(frontend, globals_, locals_, ['application'], -1)
