@@ -383,6 +383,7 @@ class VideoConversionTask(object):
         self.log_path = None
         self.log_file = None
         self.process_handle = None
+        self.error = None
     
     def get_executable(self):
         raise NotImplementedError()
@@ -403,9 +404,10 @@ class VideoConversionTask(object):
         return self.thread is not None and not self.thread.isAlive()
         
     def is_failed(self):
-        return (self.process_handle is not None and 
-                self.process_handle.returncode is not None and 
-                self.process_handle.returncode != 0)
+        return (self.error or
+                (self.process_handle is not None and 
+                 self.process_handle.returncode is not None and 
+                 self.process_handle.returncode != 0))
 
     def _loop(self):
         executable = self.get_executable()
@@ -518,7 +520,10 @@ class FFMpegConversionTask(VideoConversionTask):
                 minutes = match.group(2)
                 seconds = match.group(3)
                 frames = match.group(4)
-                self.duration = int(hours) * 60 * 60 + int(minutes) * 60 + int(seconds)
+                self.duration = (
+                    (int(hours) * 60 * 60) +
+                    (int(minutes) * 60) +
+                    int(seconds))
         else:
             match = self.PROGRESS_RE.match(line)
             if match is not None:
@@ -526,13 +531,16 @@ class FFMpegConversionTask(VideoConversionTask):
             match = self.LAST_PROGRESS_RE.match(line)
             if match is not None:
                 return 1.0
+            if line.startswith("Unknown"):
+                self.error = line
         return self.progress
 
 class FFMpeg2TheoraConversionTask(VideoConversionTask):
+    DURATION_RE = re.compile(r'f2t ;duration: ([^;]*);')
+
     PROGRESS_RE1 = re.compile(r'\{"duration":(.*), "position":(.*), "audio_kbps":.*, "video_kbps":.*, "remaining":.*\}')
     RESULT_RE1 = re.compile(r'\{"result": "(.*)"\}')
 
-    DURATION_RE2 = re.compile(r'f2t ;duration: ([^;]*);')
     PROGRESS_RE2 = re.compile(r'f2t ;position: ([^;]*);')
     RESULT_RE2 = re.compile(r'f2t ;result: ([^;]*);')
 
@@ -556,7 +564,7 @@ class FFMpeg2TheoraConversionTask(VideoConversionTask):
     def monitor_progress(self, line):
         if line.startswith('f2t'):
             if self.duration is None:
-                match = self.DURATION_RE2.match(line)
+                match = self.DURATION_RE.match(line)
                 if match is not None:
                     self.duration = float(match.group(1))
             match = self.PROGRESS_RE2.match(line)

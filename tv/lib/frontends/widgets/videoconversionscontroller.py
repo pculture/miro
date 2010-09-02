@@ -234,7 +234,7 @@ class VideoConversionCellRenderer(style.ItemRenderer):
         vbox.pack(cellpack.pad(title, top=12))
 
         if self.data.is_failed():
-            vbox.pack(self._pack_failure_info(layout), expand=True)
+            vbox.pack(self._pack_failure_info(layout, self.data), expand=True)
         elif self.data.is_running():
             vbox.pack(self._pack_progress(layout), expand=True)
         else:
@@ -260,7 +260,7 @@ class VideoConversionCellRenderer(style.ItemRenderer):
         
         return vbox
 
-    def _pack_failure_info(self, layout):
+    def _pack_failure_info(self, layout, data):
         vbox = cellpack.VBox()
 
         layout.set_font(0.8)
@@ -269,7 +269,8 @@ class VideoConversionCellRenderer(style.ItemRenderer):
         vbox.pack(cellpack.pad(info_label1, top=4))
         layout.set_font(0.8, bold=True)
         layout.set_text_color(self.FAILED_TASK_TEXT_COLOR)
-        info_label2 = layout.textbox(_("FAILED!"))
+        info_label2 = layout.textbox(
+            _("Failed: %(error)s", {"error": data.error}))
         vbox.pack(cellpack.pad(info_label2, top=4))
         
         hbox = cellpack.HBox()
