@@ -26,10 +26,13 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import sys
+import time
 import os
 import pygtk
 pygtk.require("2.0")
 import gtk
+import gobject
 from miro.gtcache import gettext as _
 
 from miro import app
@@ -58,6 +61,9 @@ if gtk.check_version(2, 10, 0) == None:
             self._hid_pref_panel = False
             self.connect("activate", self.on_click)
             self.connect("popup-menu", self.on_popup_menu)
+
+            # this is only used on win32
+            self.popup_menu = None
 
         def make_popup_menu_items(self):
             menu_items = []
@@ -120,9 +126,36 @@ if gtk.check_version(2, 10, 0) == None:
                     item.connect('activate', callback)
                 popup_menu.append(item)
 
+            if sys.platform == "win32":
+                # bug #13870.  on windows, the popup menu doesn't go away
+                # when it loses focus, so we do this goofy stuff.
+                self.using_menu = None
+                popup_menu.connect('enter-notify-event', self.on_menu_enter)
+                popup_menu.connect('leave-notify-event', self.on_menu_leave)
+                gobject.timeout_add(500, self.check_using_menu)
+                self.popup_menu = popup_menu
+
             popup_menu.show_all()
-            popup_menu.popup(None, None, None, button, activate_time,
-                    status_icon)
+            popup_menu.popup(
+                None, None, None, button, activate_time, status_icon)
+
+        def on_menu_enter(self, widget, event):
+            self.using_menu = None
+
+        def on_menu_leave(self, widget, event):
+            self.using_menu = event.time + 1
+
+        def check_using_menu(self, data=None):
+            # this gets called by gobject timeout on Window.  so
+            # return True to keep the timer going and False to make it
+            # stop.
+            if ((self.popup_menu is not None 
+                 and self.using_menu is not None 
+                 and self.using_menu < time.time())):
+                self.popup_menu.popdown()
+                self.popup_menu = None
+                return False
+            return True
 
         def on_play_unwatched(self, widget):
             self._show_window()
