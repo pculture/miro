@@ -144,7 +144,7 @@ def attach_integer(widget, descriptor, check_function=None):
             if check_function != None:
                 if not check_function(widget, v):
                     return
-            config.set(descriptor, int(widget.get_text().strip()))
+            config.set(descriptor, v)
         except ValueError, ve:
             pass
 
@@ -169,7 +169,7 @@ def attach_float(widget, descriptor, check_function=None):
             if check_function != None:
                 if not check_function(widget, v):
                     return
-            config.set(descriptor, float(widget.get_text().strip()))
+            config.set(descriptor, v)
         except ValueError, ve:
             pass
 
@@ -184,6 +184,27 @@ def attach_float(widget, descriptor, check_function=None):
         text = "0"
     widget.set_text(text)
     widget.connect('changed', float_changed)
+
+def attach_text(widget, descriptor, check_function=None):
+    """This is for text entry preferences.
+
+    It allows for a check_function which takes a widget and a value
+    and returns True if the value is ok, False if not.
+
+    widget - widget
+    descriptor - prefs preference
+    check_function - function with signature ``widget * int -> boolean``
+        that checks the value for appropriateness
+    """
+    def text_changed(widget):
+        v = widget.get_text().strip()
+        if check_function != None:
+            if not check_function(widget, v):
+                return
+        config.set(descriptor, v)
+
+    widget.set_text(config.get(descriptor))
+    widget.connect('changed', text_changed)
 
 def attach_combo(widget, descriptor, values):
     """This is for preferences implemented as an option menu where there
@@ -669,9 +690,10 @@ class PlaybackPanel(PanelBuilder):
 
         return v
 
-
 class ConversionsPanel(PanelBuilder):
     def build_widget(self):
+        vbox = widgetset.VBox()
+
         grid = dialogwidgets.ControlGrid()
         
         count = get_logical_cpu_count()
@@ -691,8 +713,11 @@ class ConversionsPanel(PanelBuilder):
             dialogwidgets.ControlGrid.ALIGN_RIGHT)
         grid.pack(max_concurrent_menu)
         grid.end_line(spacing=4)
+        vbox.pack_start(widgetutil.align_left(grid.make_table()))
 
-        return grid.make_table()
+        pack_extras(vbox, "conversions")
+
+        return vbox
 
 
 # Add the initial panels

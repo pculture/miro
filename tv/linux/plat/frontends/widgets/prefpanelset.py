@@ -37,7 +37,7 @@ from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import dialogwidgets
 from miro.frontends.widgets.widgetutil import align_left
 from miro.frontends.widgets.prefpanel import (
-    attach_boolean, attach_radio, attach_combo)
+    attach_boolean, attach_radio, attach_combo, attach_text)
 
 from miro.plat import renderers
 from miro.plat import options 
@@ -85,9 +85,38 @@ def _playback_panel():
 
     return extras
 
+def _conversions_panel():
+    extras = []
+
+    lab = widgetset.Label(_("Binaries to use:"))
+    lab.set_bold(True)
+    extras.append(align_left(lab))
+
+    grid = dialogwidgets.ControlGrid()
+
+    grid.pack_label(_("ffmpeg binary path:"), grid.ALIGN_RIGHT)
+    ffmpeg_binary = widgetset.TextEntry()
+    attach_text(ffmpeg_binary, options.FFMPEG_BINARY)
+    grid.pack(ffmpeg_binary)
+
+    grid.end_line(spacing=4)
+
+    grid.pack_label(_("ffmpeg2theora binary path:"), grid.ALIGN_RIGHT)
+    ffmpeg2theora_binary = widgetset.TextEntry()
+    attach_text(ffmpeg2theora_binary, options.FFMPEG2THEORA_BINARY)
+    grid.pack(ffmpeg2theora_binary)
+
+    grid.end_line(spacing=4)
+
+    extras.append(align_left(grid.make_table()))
+
+    return extras
+
 def get_platform_specific(panel_name):
     if panel_name == "general":
         return _general_panel()
     elif panel_name == "playback":
         if len(renderers.get_renderer_list()) > 1:
             return _playback_panel()
+    elif panel_name == "conversions":
+        return _conversions_panel()
