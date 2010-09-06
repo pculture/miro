@@ -20,4 +20,4 @@ parameters: -i {input} -f mp4 -vcodec mpeg4 -sameq -r 20 {output}
 [MP3 (Audio only)]
 executable: ffmpeg
 extension: mp3
-parameters: -i {input} -f mp3 -acodec ac3 {output}
+parameters: -i {input} -f mp3 {output}
