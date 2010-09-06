@@ -233,7 +233,7 @@ class BugReportSender(signals.SignalEmitter):
 
         support_dir = config.get(prefs.SUPPORT_DIRECTORY)
         try:
-            uniqfn = "%012databasebackup.zip" % randrange(0, 999999999999)
+            uniqfn = "%012ddatabasebackup.zip" % randrange(0, 999999999999)
             tempfilename = os.path.join(tempfile.gettempdir(), uniqfn)
             zipfile = ZipFile(tempfilename, "w")
             iconcache_dir = config.get(prefs.ICON_CACHE_DIRECTORY)
