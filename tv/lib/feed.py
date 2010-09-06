@@ -1854,7 +1854,6 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
 
     def on_remove(self):
         for download in self.downloads:
-            logging.info("canceling download: %s", download.url)
             download.cancel()
         self.downloads = set()
 
