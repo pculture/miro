@@ -41,14 +41,16 @@ from ConfigParser import SafeConfigParser, NoOptionError
 
 from miro import app
 from miro import eventloop
+from miro import item
+from miro import models
 from miro import util
 from miro import prefs
 from miro import config
 from miro import signals
 from miro import messages
+from miro.gtcache import gettext as _
 from miro.plat import utils
 from miro.plat import resources
-
 
 class VideoConverterInfo(object):
     """Holds the data for a specific conversion that allows us to
@@ -165,8 +167,8 @@ class VideoConversionManager(signals.SignalEmitter):
     def cancel_pending(self, task):
         self._enqueue_message("cancel_pending", task=task)
     
-    def schedule_staging(self, source, destination):
-        self._enqueue_message("stage_conversion", source=source, destination=destination)
+    def schedule_staging(self, task):
+        self._enqueue_message("stage_conversion", task=task)
     
     def open_log(self, task):
         if task.log_path is not None:
@@ -247,7 +249,7 @@ class VideoConversionManager(signals.SignalEmitter):
 
         for task in list(self.running_tasks):
             if task.is_finished() and not task.is_failed():
-                self.schedule_staging(task.temp_output_path, task.final_output_path)
+                self.schedule_staging(task)
                 self._notify_task_completed(task)
                 self.running_tasks.remove(task)
                 notify_count = True
@@ -279,8 +281,17 @@ class VideoConversionManager(signals.SignalEmitter):
                 return
                 
             elif msg['message'] == 'stage_conversion':
-                shutil.move(msg['source'], msg['destination'])
-                shutil.rmtree(os.path.dirname(msg['source']))
+                task = msg['task']
+                source = task.temp_output_path
+                destination = task.final_output_path
+                source_info = task.item_info
+                conversion_name = task.converter_info.name
+
+                shutil.move(source, destination)
+                shutil.rmtree(os.path.dirname(source))
+                eventloop.add_idle(_create_item_for_conversion,
+                        'create new item for conversion',
+                        args=(destination, source_info, conversion_name))
 
         except Queue.Empty, e:
             pass
@@ -589,6 +600,21 @@ def convert(converter_id, item_info):
     for that item.
     """
     conversion_manager.start_conversion(converter_id, item_info)
+
+def _create_item_for_conversion(filename, source_info, conversion_name):
+    """Make a new FileItem for a converted file."""
+
+    # Note: We are adding things to the database.  This function should only
+    # get called in the event loop.
+
+    name = (_('%(original_name)s (Converted to %(format)s)') %
+            {'original_name': source_info.name, 'format': conversion_name})
+
+    fp_values = item.fp_values_for_file(filename, name,
+            source_info.description)
+    manual_feed = models.Feed.get_manual_feed()
+    new_item = models.FileItem(filename, feed_id=manual_feed.id,
+            fp_values=fp_values)
 
 conversion_manager = VideoConversionManager()
 

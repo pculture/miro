@@ -327,7 +327,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         # a page. 0 is the topmost, 1 is the next, and so on
         self.linkNumber = linkNumber
         self.creationTime = datetime.now()
-        self._update_release_date()
         self._look_for_downloader()
         self.setup_common()
         self.split_item()
@@ -732,10 +731,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def _remove_from_playlists(self):
         models.PlaylistItemMap.remove_item_from_playlists(self)
         models.PlaylistFolderItemMap.remove_item_from_playlists(self)
-
-    def _update_release_date(self):
-        # FeedParserValues sets up the releaseDateObj attribute
-        pass
 
     def check_constraints(self):
         if self.feed_id is not None:
@@ -1585,7 +1580,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def update_from_feed_parser_values(self, fp_values):
         fp_values.update_item(self)
         self.icon_cache.request_update()
-        self._update_release_date()
         self.signal_change()
 
     def on_download_finished(self):
@@ -1895,15 +1889,10 @@ class FileItem(Item):
         self.deleted = False
         self.signal_change()
 
-    def _update_release_date(self):
-        # This should be called whenever we get a new entry
-        try:
-            self.releaseDateObj = datetime.fromtimestamp(
-                fileutil.getmtime(self.filename))
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            self.releaseDateObj = datetime.min
+    def set_filename(self, filename):
+        Item.set_filename(self, filename)
+        self.releaseDateObj = datetime.fromtimestamp(
+            fileutil.getmtime(filename))
 
     def get_release_date_obj(self):
         if self.parent_id:
@@ -1951,14 +1940,19 @@ filename was %s""", stringify(self.filename))
                 else:
                     logging.warn("%s is not a subdirectory of %s",
                             self.filename, parent_file)
-        self._update_release_date()
         Item.setup_links(self)
 
-def fp_values_for_file(filename):
-    return FeedParserValues(FeedParserDict({
-            'title': filename_to_unicode(os.path.basename(filename)),
+def fp_values_for_file(filename, title=None, description=None):
+    data = {
             'enclosures': [{'url': resources.url(filename)}]
-            }))
+    }
+    if title is None:
+        data['title'] = filename_to_unicode(os.path.basename(filename)),
+    else:
+        data['title'] = title
+    if description is not None:
+        data['description'] = description
+    return FeedParserValues(FeedParserDict(data))
 
 def update_incomplete_movie_data():
     for item in chain(Item.downloaded_view(), Item.file_items_view()):
