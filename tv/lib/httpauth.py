@@ -26,6 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import base64
 import json
 import logging
 import os
@@ -122,7 +123,8 @@ class HTTPPasswordList(object):
         })
         try:
             f = open(path, 'wt')
-            json.dump(dump_data, f, indent=4)
+            data = json.dumps(dump_data, indent=4)
+            f.write(base64.b64encode(data))
             f.close()
         except IOError, e:
             logging.warn("Error writing out HTTP Passwords: %s", e)
@@ -132,7 +134,8 @@ class HTTPPasswordList(object):
             return
         try:
             f = open(path, 'rt')
-            dump_data = json.load(f)
+            data = f.read()
+            dump_data = json.loads(base64.b64decode(data))
         except Exception, e:
             logging.warn("Error reading in HTTP Passwords: %s", e)
         else:

@@ -247,6 +247,9 @@ class BugReportSender(signals.SignalEmitter):
                            and relativeroot[0] in ['/', '\\']):
                         relativeroot = relativeroot[1:]
                     for fn in files:
+                        if fn == 'httpauth':
+                            # don't send http passwords over the internet
+                            continue
                         path = os.path.join(root, fn)
                         if not os.path.islink(path):
                             relpath = os.path.join(relativeroot, fn)
