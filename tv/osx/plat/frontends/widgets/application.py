@@ -364,7 +364,7 @@ class AppController(NSObject):
         if app.widgetapp is not None and app.widgetapp.window is not None:
             mainWindow = app.widgetapp.window.nswindow
             if mainWindow is not None:
-                if not flag:
+                if not app.widgetapp.window.nswindow.isVisible():
                     app.widgetapp.window.nswindow.makeKeyAndOrderFront_(nil)
                 if mainWindow.isMiniaturized():
                     mainWindow.deminiaturize_(appl)            
