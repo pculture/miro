@@ -1086,10 +1086,7 @@ class TableView(Widget):
 
     def set_drag_source(self, drag_source):
         self.drag_source = drag_source
-        if drag_source is None:
-            self.data_source.setDragSource_(None)
-        else:
-            self.data_source.setDragSource_(drag_source)
+        self.data_source.setDragSource_(drag_source)
 
     def set_drag_dest(self, drag_dest):
         self.drag_dest = drag_dest
