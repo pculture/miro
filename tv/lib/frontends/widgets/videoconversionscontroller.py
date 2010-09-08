@@ -26,6 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+from miro import app
 from miro.plat import resources
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import style
@@ -65,10 +66,17 @@ class VideoConversionsController(object):
         reveal_button.set_color(widgetset.TOOLBAR_GRAY)
         reveal_button.connect('clicked', self.on_reveal)
 
+        self.clear_finished_button = widgetset.Button(
+                _('Clear Finished Conversions'), style='smooth')
+        self.clear_finished_button.set_size(widgetconst.SIZE_SMALL)
+        self.clear_finished_button.set_color(widgetset.TOOLBAR_GRAY)
+        self.clear_finished_button.connect('clicked', self.on_clear_finished)
+
         toolbar = itemlistwidgets.DisplayToolbar()
         hbox = widgetset.HBox()
         hbox.pack_start(widgetutil.pad(self.stop_all_button, top=8, bottom=8, left=8))
         hbox.pack_end(widgetutil.pad(reveal_button, top=8, bottom=8, right=8))
+        hbox.pack_end(widgetutil.pad(self.clear_finished_button, top=8, bottom=8, right=8))
         toolbar.add(hbox)
         self.widget.pack_start(toolbar)
         
@@ -88,6 +96,9 @@ class VideoConversionsController(object):
 
     def on_reveal(self, obj):
         conversion_manager.reveal_conversions_folder()
+
+    def on_clear_finished(self, obj):
+        conversion_manager.clear_finished_conversions()
         
     def on_hotspot_clicked(self, table_view, name, itr):
         task = table_view.model[itr][0]
@@ -97,13 +108,19 @@ class VideoConversionsController(object):
             conversion_manager.open_log(task)
         elif name == 'clear-failed' and task.is_failed():
             conversion_manager.clear_failed_task(task)
+        elif name == 'clear-finished' and task.is_finished():
+            conversion_manager.clear_finished_task(task)
         elif name == 'interrupt' and task.is_running():
             conversion_manager.cancel_running(task)
+        elif name == 'reveal' and task.is_finished():
+            app.widgetapp.reveal_file(task.final_output_path)
 
-    def handle_task_list(self, running_tasks, pending_tasks):
+    def handle_task_list(self, running_tasks, pending_tasks, finished_tasks):
         for task in running_tasks:
             self.iter_map[task.key] = self.model.append(task)
         for task in pending_tasks:
+            self.iter_map[task.key] = self.model.append(task)
+        for task in finished_tasks:
             self.iter_map[task.key] = self.model.append(task)
         self.table.model_changed()
         self._update_buttons_state()
@@ -122,8 +139,11 @@ class VideoConversionsController(object):
         self._update_buttons_state()
     
     def handle_task_canceled(self, task):
-        self.handle_task_completed(task)
-        self._update_buttons_state()
+        if task.key in self.iter_map:
+            itr = self.iter_map.pop(task.key)
+            self.model.remove(itr)
+            self.table.model_changed()
+            self._update_buttons_state()
     
     def handle_task_progress(self, task):
         if task.key in self.iter_map:
@@ -133,16 +153,28 @@ class VideoConversionsController(object):
     
     def handle_task_completed(self, task):
         if task.key in self.iter_map:
-            itr = self.iter_map.pop(task.key)
-            self.model.remove(itr)
+            itr = self.iter_map[task.key]
+            self.model.update_value(itr, 0, task)
             self.table.model_changed()
             self._update_buttons_state()
     
     def _update_buttons_state(self):
-        if len(self.iter_map) > 0:
+        finished_count = not_finished_count = 0
+        for row in self.model:
+            if row[0].is_finished():
+                finished_count += 1
+            else:
+                not_finished_count += 1
+
+        if not_finished_count > 0:
             self.stop_all_button.enable()
         else:
             self.stop_all_button.disable()
+
+        if finished_count > 0:
+            self.clear_finished_button.enable()
+        else:
+            self.clear_finished_button.disable()
 
 
 class VideoConversionsTitleBar(itemlistwidgets.ItemListTitlebar):
@@ -185,6 +217,7 @@ class VideoConversionCellRenderer(style.ItemRenderer):
     THUMB_HEIGHT = 82
     PENDING_TASK_TEXT_COLOR = (0.8, 0.8, 0.8)
     FAILED_TASK_TEXT_COLOR = (0.8, 0.0, 0.0)
+    FINISHED_TASK_TEXT_COLOR = (0.0, 0.8, 0.0)
     INTERRUPT_BUTTON = imagepool.get_surface(resources.path('images/video-download-cancel.png'))
     THUMB_OVERLAY = imagepool.get_surface(resources.path('images/thumb-overlay.png'), (THUMB_WIDTH, THUMB_HEIGHT))
 
@@ -225,7 +258,7 @@ class VideoConversionCellRenderer(style.ItemRenderer):
 
     def _pack_info(self, layout):
         vbox = cellpack.VBox()
-        if self.data.is_running():
+        if self.data.is_running() or self.data.is_finished():
             layout.set_text_color(self.ITEM_TITLE_COLOR)
         else:
             layout.set_text_color(self.PENDING_TASK_TEXT_COLOR)
@@ -237,6 +270,8 @@ class VideoConversionCellRenderer(style.ItemRenderer):
             vbox.pack(self._pack_failure_info(layout, self.data), expand=True)
         elif self.data.is_running():
             vbox.pack(self._pack_progress(layout), expand=True)
+        elif self.data.is_finished():
+            vbox.pack(self._pack_finished_info(layout), expand=True)
         else:
             vbox.pack(self._pack_pending_controls(layout), expand=False)
 
@@ -278,6 +313,30 @@ class VideoConversionCellRenderer(style.ItemRenderer):
         hbox.pack(cellpack.Hotspot('open-log', open_log_button))
         clear_button = layout.button(_("Clear"), self.hotspot=='clear-failed', style='webby')
         hbox.pack(cellpack.pad(cellpack.Hotspot('clear-failed', clear_button), left=8))
+        vbox.pack_end(cellpack.pad(cellpack.align_right(hbox), bottom=12))
+
+        return vbox
+
+    def _pack_finished_info(self, layout):
+        vbox = cellpack.VBox()
+
+        layout.set_font(0.8)
+        layout.set_text_color(self.ITEM_DESC_COLOR)
+        info_label1 = layout.textbox(_("Conversion to %s") % self.data.converter_info.name)
+        vbox.pack(cellpack.pad(info_label1, top=4))
+        layout.set_font(0.8, bold=True)
+        layout.set_text_color(self.FINISHED_TASK_TEXT_COLOR)
+        info_label2 = layout.textbox(_("Completed"))
+        vbox.pack(cellpack.pad(info_label2, top=4))
+
+        hbox = cellpack.HBox()
+        reveal_button = layout.button(self.REVEAL_IN_TEXT,
+                self.hotspot=='reveal', style='webby')
+        hbox.pack(cellpack.Hotspot('reveal', reveal_button))
+
+        clear_button = layout.button(_("Clear"), self.hotspot=='clear-finished', style='webby')
+        hbox.pack(cellpack.pad(cellpack.Hotspot('clear-finished', clear_button), left=8))
+
         vbox.pack_end(cellpack.pad(cellpack.align_right(hbox), bottom=12))
 
         return vbox

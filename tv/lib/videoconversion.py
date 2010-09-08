@@ -144,6 +144,7 @@ class VideoConversionManager(signals.SignalEmitter):
         self.message_queue = Queue.Queue(-1)
         self.pending_tasks = list()
         self.running_tasks = list()
+        self.finished_tasks = list()
         self.quit_flag = False
 
     def startup(self):
@@ -166,6 +167,9 @@ class VideoConversionManager(signals.SignalEmitter):
     
     def cancel_pending(self, task):
         self._enqueue_message("cancel_pending", task=task)
+
+    def clear_finished_conversions(self):
+        self._enqueue_message("clear_all_finished")
     
     def schedule_staging(self, task):
         self._enqueue_message("stage_conversion", task=task)
@@ -176,6 +180,9 @@ class VideoConversionManager(signals.SignalEmitter):
     
     def clear_failed_task(self, task):
         self._enqueue_message("cancel_running", task=task)
+
+    def clear_finished_task(self, task):
+        self._enqueue_message("clear_finished", task=task)
     
     def fetch_tasks_list(self):
         self._enqueue_message("get_tasks_list")
@@ -248,10 +255,11 @@ class VideoConversionManager(signals.SignalEmitter):
                 notify_count = True
 
         for task in list(self.running_tasks):
-            if task.is_finished() and not task.is_failed():
+            if task.is_finished():
                 self.schedule_staging(task)
                 self._notify_task_completed(task)
                 self.running_tasks.remove(task)
+                self.finished_tasks.append(task)
                 notify_count = True
         
         if notify_count:
@@ -273,6 +281,18 @@ class VideoConversionManager(signals.SignalEmitter):
                 task = msg['task']
                 task.interrupt()
                 self.running_tasks.remove(task)
+                self._notify_task_canceled(task)
+                self._notify_tasks_count()
+
+            elif msg['message'] == 'clear_all_finished':
+                for task in self.finished_tasks:
+                    self._notify_task_canceled(task)
+                self.finished_tasks = []
+                self._notify_tasks_count()
+
+            elif msg['message'] == 'clear_finished':
+                task = msg['task']
+                self.finished_tasks.remove(task)
                 self._notify_task_canceled(task)
                 self._notify_tasks_count()
 
@@ -304,6 +324,9 @@ class VideoConversionManager(signals.SignalEmitter):
         
     def failed_tasks_count(self):
         return len([t for t in self.running_tasks if t.is_failed()])
+
+    def finished_tasks_count(self):
+        return len(self.finished_tasks)
     
     def _has_running_task(self, key):
         for task in self.running_tasks:
@@ -312,7 +335,8 @@ class VideoConversionManager(signals.SignalEmitter):
         return False
     
     def _notify_tasks_list(self):
-        message = messages.GetVideoConversionTasksList(self.running_tasks, self.pending_tasks)
+        message = messages.GetVideoConversionTasksList(self.running_tasks,
+                self.pending_tasks, self.finished_tasks)
         message.send_to_frontend()
     
     def _notify_task_added(self, task):
@@ -333,8 +357,10 @@ class VideoConversionManager(signals.SignalEmitter):
     
     def _notify_tasks_count(self):
         running_count = self.running_tasks_count()
-        failed_count = self.failed_tasks_count()
-        message = messages.VideoConversionsCountChanged(running_count, failed_count)
+        other_count = (self.failed_tasks_count() + self.pending_tasks_count() +
+                self.finished_tasks_count())
+        message = messages.VideoConversionsCountChanged(running_count,
+                other_count)
         message.send_to_frontend()
     
     def _terminate(self):
@@ -409,11 +435,14 @@ class VideoConversionTask(object):
         self.thread.start()
         
     def is_running(self):
-        return self.thread is not None
+        return self.thread is not None and self.thread.isAlive()
+
+    def done_running(self):
+        return self.thread is not None and not self.thread.isAlive()
 
     def is_finished(self):
-        return self.thread is not None and not self.thread.isAlive()
-        
+        return self.done_running() and not self.is_failed()
+
     def is_failed(self):
         return (self.error or
                 (self.process_handle is not None and 

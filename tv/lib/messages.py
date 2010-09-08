@@ -1298,16 +1298,17 @@ class GetVideoConversionTasksList(FrontendMessage):
     """Send the current list of running and pending conversion tasks to the 
        frontend.
     """
-    def __init__(self, running_tasks, pending_tasks):
+    def __init__(self, running_tasks, pending_tasks, finished_tasks):
         self.running_tasks = running_tasks
         self.pending_tasks = pending_tasks
+        self.finished_tasks = finished_tasks
 
 class VideoConversionsCountChanged(FrontendMessage):
     """Informs the frontend that number of running conversions has changed.
     """
-    def __init__(self, running_count, failed_count):
+    def __init__(self, running_count, other_count):
         self.running_count = running_count
-        self.failed_count = failed_count
+        self.other_count = other_count
 
 class VideoConversionTaskCreated(FrontendMessage):
     """Informs the frontend that a conversion task has been created.
