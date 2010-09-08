@@ -433,6 +433,9 @@ class VideoConversionTask(object):
         self.thread = threading.Thread(target=self._loop, name="Conversion Task")
         self.thread.setDaemon(True)
         self.thread.start()
+
+    def is_pending(self):
+        return self.thread is None
         
     def is_running(self):
         return self.thread is not None and self.thread.isAlive()

@@ -187,7 +187,7 @@ class VideoConversionTableView(widgetset.TableView):
         widgetset.TableView.__init__(self, model)
         self.set_show_headers(False)
 
-        self.renderer = VideoConversionCellRenderer()        
+        self.renderer = VideoConversionCellRenderer()
         self.column = widgetset.TableColumn('conversion', self.renderer, data=0)
         self.column.set_min_width(600)
         self.add_column(self.column)
@@ -197,7 +197,6 @@ class VideoConversionTableView(widgetset.TableView):
         self.allow_multiple_select(False)
         self.set_auto_resizes(True)
         self.set_background_color(widgetutil.WHITE)
-
 
 class ConversionProgressBarColorSet(object):
     PROGRESS_BASE_TOP = (0.75, 0.28, 0.50)
@@ -210,7 +209,6 @@ class ConversionProgressBarColorSet(object):
 
     BORDER_GRADIENT_TOP = (0.58, 0.58, 0.58)
     BORDER_GRADIENT_BOTTOM = (0.68, 0.68, 0.68)
-
 
 class VideoConversionCellRenderer(style.ItemRenderer):
     THUMB_WIDTH = 120
@@ -266,6 +264,15 @@ class VideoConversionCellRenderer(style.ItemRenderer):
         title = cellpack.ClippedTextLine(layout.textbox(self.data.item_info.name))
         vbox.pack(cellpack.pad(title, top=12))
 
+        layout.set_font(0.8)
+        if self.data.is_pending():
+            layout.set_text_color(self.PENDING_TASK_TEXT_COLOR)
+        else:
+            layout.set_text_color(self.ITEM_DESC_COLOR)
+        info_label = layout.textbox(_("Conversion to %s") %
+                self.data.converter_info.name)
+        vbox.pack(cellpack.pad(info_label, top=4))
+
         if self.data.is_failed():
             vbox.pack(self._pack_failure_info(layout, self.data), expand=True)
         elif self.data.is_running():
@@ -273,17 +280,12 @@ class VideoConversionCellRenderer(style.ItemRenderer):
         elif self.data.is_finished():
             vbox.pack(self._pack_finished_info(layout), expand=True)
         else:
-            vbox.pack(self._pack_pending_controls(layout), expand=False)
+            vbox.pack(self._pack_pending_controls(layout), expand=True)
 
         return cellpack.pad(vbox, left=10)
 
     def _pack_progress(self, layout):
         vbox = cellpack.VBox()
-        
-        layout.set_font(0.8)
-        layout.set_text_color(self.ITEM_DESC_COLOR)
-        info_label = layout.textbox(_("Conversion to %s") % self.data.converter_info.name)
-        vbox.pack(cellpack.pad(info_label, top=4))
         
         hbox = cellpack.HBox()
         hbox.pack(cellpack.align_middle(cellpack.align_center(self._progress_textbox(layout))), expand=True)
@@ -298,10 +300,6 @@ class VideoConversionCellRenderer(style.ItemRenderer):
     def _pack_failure_info(self, layout, data):
         vbox = cellpack.VBox()
 
-        layout.set_font(0.8)
-        layout.set_text_color(self.ITEM_DESC_COLOR)
-        info_label1 = layout.textbox(_("Conversion to %s") % self.data.converter_info.name)
-        vbox.pack(cellpack.pad(info_label1, top=4))
         layout.set_font(0.8, bold=True)
         layout.set_text_color(self.FAILED_TASK_TEXT_COLOR)
         info_label2 = layout.textbox(
@@ -320,14 +318,10 @@ class VideoConversionCellRenderer(style.ItemRenderer):
     def _pack_finished_info(self, layout):
         vbox = cellpack.VBox()
 
-        layout.set_font(0.8)
-        layout.set_text_color(self.ITEM_DESC_COLOR)
-        info_label1 = layout.textbox(_("Conversion to %s") % self.data.converter_info.name)
-        vbox.pack(cellpack.pad(info_label1, top=4))
         layout.set_font(0.8, bold=True)
         layout.set_text_color(self.FINISHED_TASK_TEXT_COLOR)
-        info_label2 = layout.textbox(_("Completed"))
-        vbox.pack(cellpack.pad(info_label2, top=4))
+        label = layout.textbox(_("Completed"))
+        vbox.pack(cellpack.pad(label, top=4))
 
         hbox = cellpack.HBox()
         reveal_button = layout.button(self.REVEAL_IN_TEXT,
@@ -344,13 +338,9 @@ class VideoConversionCellRenderer(style.ItemRenderer):
     def _pack_pending_controls(self, layout):
         vbox = cellpack.VBox()
         
-        layout.set_font(0.8)
-        layout.set_text_color(self.PENDING_TASK_TEXT_COLOR)
-        info_label = layout.textbox(_("Pending conversion to %s") % self.data.converter_info.name)
-        vbox.pack(cellpack.pad(info_label, top=4))
-        
         cancel_button = layout.button(_("Cancel"), self.hotspot=='cancel', style='webby')
-        vbox.pack_end(cellpack.pad(cellpack.align_right(cellpack.Hotspot('cancel', cancel_button)), top=26))
+        vbox.pack_end(cellpack.pad(cellpack.align_right(cellpack.Hotspot('cancel',
+            cancel_button)), bottom=12))
 
         return vbox
 
