@@ -55,7 +55,10 @@ class GtkSearchTextEntry(gtk.EventBox):
         self.entry.connect('focus-out-event', self._entry_focus_change)
 
         icon_path = resources.path('images/search_icon_all.png')
-        self.pixbuf = gtk.gdk.pixbuf_new_from_file(icon_path)
+        self.engine_pixbuf = gtk.gdk.pixbuf_new_from_file(icon_path)
+
+        icon_path = resources.path('images/clear-image.png')
+        self.clear_pixbuf = gtk.gdk.pixbuf_new_from_file(icon_path)
 
     def _align_entry(self):
         # Make it so we handle the inner border of the entry ourselves.
@@ -70,7 +73,7 @@ class GtkSearchTextEntry(gtk.EventBox):
         # Since icons are 16x16, this gives us 26px padding on the left
         # and a minimum height of 28px
         pygtkhacks.set_entry_border(self.entry, 0, 0, 0, 0)
-        self.alignment.set_padding(3, 3, 26, 4)
+        self.alignment.set_padding(3, 3, 26, 28)
         self.min_height = 24
 
     def do_size_request(self, requesition):
@@ -82,20 +85,37 @@ class GtkSearchTextEntry(gtk.EventBox):
         # Redraw our border to reflect the focus change.
         self.queue_draw()
 
-    def _icon_position(self):
-        x = 6
-        y = (self.allocation.height - 16) / 2
-        return x, y
+    def _clear_icon_position(self):
+        return (self.allocation.width - 20, ((self.allocation.height - 16) / 2))
+
+    def _engine_icon_position(self):
+        return (6, ((self.allocation.height - 16) / 2))
 
     def do_expose_event(self, event):
         gtk.EventBox.do_expose_event(self, event)
         self.entry.style.paint_shadow(event.window, gtk.STATE_NORMAL,
                 gtk.SHADOW_IN, event.area, self.entry, "entry",
                 0, 0, self.allocation.width, self.allocation.height)
-        x, y = self._icon_position()
+
+        x, y = self._clear_icon_position()
         exposed = event.area.intersect(gtk.gdk.Rectangle(x, y, 16, 16))
-        event.window.draw_pixbuf(None, self.pixbuf, exposed.x-x, exposed.y-y,
-                exposed.x, exposed.y, exposed.width, exposed.height)
+        event.window.draw_pixbuf(
+            None, self.clear_pixbuf, exposed.x-x, exposed.y-y,
+            exposed.x, exposed.y, exposed.width, exposed.height)
+
+        x, y = self._engine_icon_position()
+        exposed = event.area.intersect(gtk.gdk.Rectangle(x, y, 16, 16))
+        event.window.draw_pixbuf(
+            None, self.engine_pixbuf, exposed.x-x, exposed.y-y,
+            exposed.x, exposed.y, exposed.width, exposed.height)
+
+    def _event_inside_clear_icon(self, event):
+        x, y = self._clear_icon_position()
+        return (x <= event.x < x + 16) and (y <= event.y < y + 16)
+
+    def do_button_press_event(self, event):
+        if self._event_inside_clear_icon(event):
+            self.set_text("")
 
     # Forward a bunch of method calls to our gtk.Entry widget
     def get_text(self): return self.entry.get_text()
@@ -136,20 +156,22 @@ class GtkVideoSearchTextEntry(GtkSearchTextEntry):
         self.select_engine(engine_name)
 
     def select_engine(self, engine_name):
-        self.pixbuf = self._engine_to_pixbuf[engine_name]
+        self.engine_pixbuf = self._engine_to_pixbuf[engine_name]
         self._engine = engine_name
         self.queue_draw()
 
     def selected_engine(self):
         return self._engine
 
-    def _event_inside_icon(self, event):
-        x, y = self._icon_position()
+    def _event_inside_engine_icon(self, event):
+        x, y = self._engine_icon_position()
         return (x <= event.x < x + 16) and (y <= event.y < y + 16)
 
     def do_button_press_event(self, event):
-        if self._event_inside_icon(event):
+        if self._event_inside_engine_icon(event):
             self.menu.popup(None, None, None, event.button, event.time)
+            return
+        return GtkSearchTextEntry.do_button_press_event(self, event)
 
 gobject.type_register(GtkVideoSearchTextEntry)
 
