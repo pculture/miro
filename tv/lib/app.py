@@ -35,18 +35,8 @@ objects get set in startup.py, but some get set in frontend code as well.
 # handles high-level control of Miro
 controller = None
 
-# handles selected objects
-selection = None
-
-# list of active renderers
-renderers = []
-
 # database object
 db = None
-
-# command line and arguments for the thumbnailer
-movie_data_program_info = None
-
 
 # widget frontend adds these
 # --------------------------

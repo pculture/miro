@@ -56,13 +56,9 @@ from miro.plat.utils import exit_miro
 BOGON_URL = "http://bogondeflector.pculture.org/index.php"
 
 class Controller:
-    """The main application app.controller object, binding model to
-    view.
+    """High-level controller object for the backend.
     """
     def __init__(self):
-        self.frame = None
-        self.guide = None
-        self.idling_notifier = None
         self.bug_report_senders = set()
         self._quit_after_bug_reports = False
 
@@ -96,10 +92,6 @@ class Controller:
             iconcache.iconCacheUpdater.shutdown()
             logging.info("Shutting down movie data updates")
             moviedata.movie_data_updater.shutdown()
-
-            if self.idling_notifier is not None:
-                logging.info("Shutting down IdleNotifier")
-                self.idling_notifier.join()
 
             logging.info("Done shutting down.")
             logging.info("Remaining threads are:")
