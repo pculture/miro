@@ -1190,7 +1190,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
         library_tab_list.update_conversions_count(message.running_count,
                 message.other_count)
 
-    def handle_get_video_conversion_tasks_list(self, message):
+    def handle_video_conversion_tasks_list(self, message):
         current_display = app.display_manager.get_current_display()
         if isinstance(current_display, displays.VideoConversionsDisplay):
             current_display.controller.handle_task_list(message.running_tasks,

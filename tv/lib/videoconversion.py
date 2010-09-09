@@ -176,23 +176,23 @@ class VideoConversionManager(signals.SignalEmitter):
     def cancel_all(self):
         self._enqueue_message("cancel_all")
     
-    def cancel_running(self, task):
-        self._enqueue_message("cancel_running", task=task)
+    def cancel_running(self, key):
+        self._enqueue_message("cancel_running", key=key)
     
-    def cancel_pending(self, task):
-        self._enqueue_message("cancel_pending", task=task)
+    def cancel_pending(self, key):
+        self._enqueue_message("cancel_pending", key=key)
 
     def clear_finished_conversions(self):
         self._enqueue_message("clear_all_finished")
     
-    def schedule_staging(self, task):
-        self._enqueue_message("stage_conversion", task=task)
+    def schedule_staging(self, key):
+        self._enqueue_message("stage_conversion", key=key)
     
-    def clear_failed_task(self, task):
-        self._enqueue_message("cancel_running", task=task)
+    def clear_failed_task(self, key):
+        self._enqueue_message("cancel_running", key=key)
 
-    def clear_finished_task(self, task):
-        self._enqueue_message("clear_finished", task=task)
+    def clear_finished_task(self, key):
+        self._enqueue_message("clear_finished", key=key)
     
     def fetch_tasks_list(self):
         self._enqueue_message("get_tasks_list")
@@ -259,7 +259,7 @@ class VideoConversionManager(signals.SignalEmitter):
 
         for task in list(self.running_tasks):
             if task.is_finished():
-                self.schedule_staging(task)
+                self.schedule_staging(task.key)
                 self._notify_task_completed(task)
                 self.running_tasks.remove(task)
                 self.finished_tasks.append(task)
@@ -276,12 +276,20 @@ class VideoConversionManager(signals.SignalEmitter):
                 self._notify_tasks_list()
 
             elif msg['message'] == 'cancel_pending':
-                task = msg['task']
+                try:
+                    task = self._lookup_task(msg['key'])
+                except KeyError:
+                    logging.warn("Couldn't find task for key %s", msg['key'])
+                    return
                 self.pending_tasks.remove(task)
                 self._notify_task_canceled(task)
 
             elif msg['message'] == 'cancel_running':
-                task = msg['task']
+                try:
+                    task = self._lookup_task(msg['key'])
+                except KeyError:
+                    logging.warn("Couldn't find task for key %s", msg['key'])
+                    return
                 task.interrupt()
                 self.running_tasks.remove(task)
                 self._notify_task_canceled(task)
@@ -294,7 +302,11 @@ class VideoConversionManager(signals.SignalEmitter):
                 self._notify_tasks_count()
 
             elif msg['message'] == 'clear_finished':
-                task = msg['task']
+                try:
+                    task = self._lookup_task(msg['key'])
+                except KeyError:
+                    logging.warn("Couldn't find task for key %s", msg['key'])
+                    return
                 self.finished_tasks.remove(task)
                 self._notify_task_canceled(task)
                 self._notify_tasks_count()
@@ -304,7 +316,11 @@ class VideoConversionManager(signals.SignalEmitter):
                 return
                 
             elif msg['message'] == 'stage_conversion':
-                task = msg['task']
+                try:
+                    task = self._lookup_task(msg['key'])
+                except KeyError:
+                    logging.warn("Couldn't find task for key %s", msg['key'])
+                    return
                 source = task.temp_output_path
                 destination = task.final_output_path
                 source_info = task.item_info
@@ -329,24 +345,45 @@ class VideoConversionManager(signals.SignalEmitter):
 
     def finished_tasks_count(self):
         return len(self.finished_tasks)
+
+    def _lookup_task(self, key):
+        # linear search here is inefficient, but with < 100 conversions should
+        # be fine
+        for task in self.running_tasks:
+            if task.key == key:
+                return task
+        for task in self.pending_tasks:
+            if task.key == key:
+                return task
+        for task in self.finished_tasks:
+            if task.key == key:
+                return task
+        raise KeyError("%s not found" % key)
     
     def _has_running_task(self, key):
         for task in self.running_tasks:
             if task.key == key:
                 return True
         return False
+
+    def _make_task_infos(self, task_list):
+        return [messages.VideoConversionTaskInfo(t) for t in task_list]
     
     def _notify_tasks_list(self):
-        message = messages.GetVideoConversionTasksList(self.running_tasks,
-                self.pending_tasks, self.finished_tasks)
+        message = messages.VideoConversionTasksList(
+                self._make_task_infos(self.running_tasks),
+                self._make_task_infos(self.pending_tasks),
+                self._make_task_infos(self.finished_tasks))
         message.send_to_frontend()
     
     def _notify_task_added(self, task):
-        message = messages.VideoConversionTaskCreated(task)
+        info = messages.VideoConversionTaskInfo(task)
+        message = messages.VideoConversionTaskCreated(info)
         message.send_to_frontend()
 
     def _notify_task_canceled(self, task):
-        message = messages.VideoConversionTaskCanceled(task)
+        info = messages.VideoConversionTaskInfo(task)
+        message = messages.VideoConversionTaskCanceled(info)
         message.send_to_frontend()
     
     def _notify_all_tasks_canceled(self):
@@ -354,7 +391,8 @@ class VideoConversionManager(signals.SignalEmitter):
         message.send_to_frontend()
 
     def _notify_task_completed(self, task):
-        message = messages.VideoConversionTaskCompleted(task)
+        info = messages.VideoConversionTaskInfo(task)
+        message = messages.VideoConversionTaskCompleted(info)
         message.send_to_frontend()
     
     def _notify_tasks_count(self):
@@ -539,7 +577,8 @@ class VideoConversionTask(object):
             self.log_path = None
     
     def _notify_progress(self):
-        message = messages.VideoConversionTaskProgressed(self)
+        info = messages.VideoConversionTaskInfo(self)
+        message = messages.VideoConversionTaskProgressed(info)
         message.send_to_frontend()
 
     def interrupt(self):

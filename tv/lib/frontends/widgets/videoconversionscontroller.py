@@ -106,21 +106,21 @@ class VideoConversionsController(object):
         
     def on_hotspot_clicked(self, table_view, name, itr):
         task = table_view.model[itr][0]
-        if name == 'cancel' and not task.is_running():
-            conversion_manager.cancel_pending(task)
-        elif name == 'open-log' and task.is_failed():
+        if name == 'cancel' and task.state == 'pending':
+            conversion_manager.cancel_pending(task.key)
+        elif name == 'open-log' and task.state == 'failed':
             if task.log_path is not None:
                 app.widgetapp.open_file(task.log_path)
-        elif name == 'troubleshoot' and task.is_failed():
+        elif name == 'troubleshoot' and task.state == 'failed':
             app.widgetapp.open_url(config.get(prefs.TROUBLESHOOT_URL))
-        elif name == 'clear-failed' and task.is_failed():
-            conversion_manager.clear_failed_task(task)
-        elif name == 'clear-finished' and task.is_finished():
-            conversion_manager.clear_finished_task(task)
-        elif name == 'interrupt' and task.is_running():
-            conversion_manager.cancel_running(task)
-        elif name == 'reveal' and task.is_finished():
-            app.widgetapp.reveal_file(task.final_output_path)
+        elif name == 'clear-failed' and task.state == 'failed':
+            conversion_manager.clear_failed_task(task.key)
+        elif name == 'clear-finished' and task.state == 'finished':
+            conversion_manager.clear_finished_task(task.key)
+        elif name == 'interrupt' and task.state == 'running':
+            conversion_manager.cancel_running(task.key)
+        elif name == 'reveal' and task.state == 'finished':
+            app.widgetapp.reveal_file(task.output_path)
 
     def handle_task_list(self, running_tasks, pending_tasks, finished_tasks):
         for task in running_tasks:
@@ -168,7 +168,7 @@ class VideoConversionsController(object):
     def _update_buttons_state(self):
         finished_count = not_finished_count = 0
         for row in self.model:
-            if row[0].is_finished():
+            if row[0].state == 'finished':
                 finished_count += 1
             else:
                 not_finished_count += 1
@@ -263,29 +263,29 @@ class VideoConversionCellRenderer(style.ItemRenderer):
 
     def _pack_info(self, layout):
         vbox = cellpack.VBox()
-        if self.data.is_running() or self.data.is_finished():
-            layout.set_text_color(self.ITEM_TITLE_COLOR)
-        else:
+        if self.data.state == 'pending':
             layout.set_text_color(self.PENDING_TASK_TEXT_COLOR)
+        else:
+            layout.set_text_color(self.ITEM_TITLE_COLOR)
         layout.set_font(1.1, bold=True)
-        title = cellpack.ClippedTextLine(layout.textbox(self.data.item_info.name))
+        title = cellpack.ClippedTextLine(layout.textbox(self.data.item_name))
         vbox.pack(cellpack.pad(title, top=12))
 
         layout.set_font(0.8)
-        if self.data.is_pending():
+        if self.data.state == 'pending':
             layout.set_text_color(self.PENDING_TASK_TEXT_COLOR)
         else:
             layout.set_text_color(self.ITEM_DESC_COLOR)
         info_label = layout.textbox(
             _("Conversion to %(format)s",
-              {"format": self.data.converter_info.name}))
+              {"format": self.data.item_name}))
         vbox.pack(cellpack.pad(info_label, top=4))
 
-        if self.data.is_failed():
-            vbox.pack(self._pack_failure_info(layout, self.data), expand=True)
-        elif self.data.is_running():
+        if self.data.state == 'failed':
+            vbox.pack(self._pack_failure_info(layout), expand=True)
+        elif self.data.state == 'running':
             vbox.pack(self._pack_progress(layout), expand=True)
-        elif self.data.is_finished():
+        elif self.data.state == 'finished':
             vbox.pack(self._pack_finished_info(layout), expand=True)
         else:
             vbox.pack(self._pack_pending_controls(layout), expand=True)
@@ -305,13 +305,13 @@ class VideoConversionCellRenderer(style.ItemRenderer):
         
         return vbox
 
-    def _pack_failure_info(self, layout, data):
+    def _pack_failure_info(self, layout):
         vbox = cellpack.VBox()
 
         layout.set_font(0.8, bold=True)
         layout.set_text_color(self.FAILED_TASK_TEXT_COLOR)
         info_label2 = layout.textbox(
-            _("Failed: %(error)s", {"error": data.error}))
+            _("Failed: %(error)s", {"error": self.data.error}))
         vbox.pack(cellpack.pad(info_label2, top=4))
         
         # this resets the font so that the buttons aren't bold
@@ -369,8 +369,8 @@ class VideoConversionCellRenderer(style.ItemRenderer):
 
     def _draw_thumbnail(self, context, x, y, width, height):
         fraction = 1.0
-        if not self.data.is_running():
+        if not self.data.state == 'running':
             fraction = 0.4
-        icon = imagepool.get_surface(self.data.item_info.thumbnail, (width, height))
+        icon = imagepool.get_surface(self.data.item_thumbnail, (width, height))
         widgetutil.draw_rounded_icon(context, icon, x, y, width, height, fraction=fraction)
         self.THUMB_OVERLAY.draw(context, x, y, width, height, fraction=fraction)

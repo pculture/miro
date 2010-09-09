@@ -1300,7 +1300,40 @@ class UnwatchedCountChanged(FrontendMessage):
     def __init__(self, count):
         self.count = count
 
-class GetVideoConversionTasksList(FrontendMessage):
+class VideoConversionTaskInfo(object):
+    """Tracks the state of an conversion task.
+
+    :param key: id for the conversion task
+    :param state: current state of the conversion.  One of: "pending",
+        "running", "failed", or "finished"
+    :param progress: how far the conversion task is
+    :param error: user-friendly string for describing conversion errors (if any)
+    :param output_path: path to the converted video (or None)
+    :param log_path: path to the log file for the conversion
+    :param item_name: name of the item being converted
+    :param item_thumbnail: thumbnail for the item being converted
+    """
+
+    def __init__(self, task):
+        self.key = task.key
+        if task.is_finished():
+            self.state = 'finished'
+            self.output_path = task.final_output_path
+        else:
+            self.output_path = None
+            if task.is_failed():
+                self.state = 'failed'
+            elif task.is_running():
+                self.state = "running"
+            else:
+                self.state = "pending"
+        self.log_path = task.log_path
+        self.progress = task.progress
+        self.error = task.error
+        self.item_name = task.item_info.name
+        self.item_thumbnail = task.item_info.thumbnail
+
+class VideoConversionTasksList(FrontendMessage):
     """Send the current list of running and pending conversion tasks to the 
        frontend.
     """
