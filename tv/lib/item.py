@@ -1947,7 +1947,7 @@ def fp_values_for_file(filename, title=None, description=None):
             'enclosures': [{'url': resources.url(filename)}]
     }
     if title is None:
-        data['title'] = filename_to_unicode(os.path.basename(filename)),
+        data['title'] = filename_to_unicode(os.path.basename(filename))
     else:
         data['title'] = title
     if description is not None:

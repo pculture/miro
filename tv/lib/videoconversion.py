@@ -306,9 +306,8 @@ class VideoConversionManager(signals.SignalEmitter):
 
                 shutil.move(source, destination)
                 shutil.rmtree(os.path.dirname(source))
-                eventloop.add_idle(_create_item_for_conversion,
-                        'create new item for conversion',
-                        args=(destination, source_info, conversion_name))
+                _create_item_for_conversion(destination, source_info,
+                        conversion_name)
 
         except Queue.Empty, e:
             pass
@@ -630,13 +629,14 @@ def convert(converter_id, item_info):
     """
     conversion_manager.start_conversion(converter_id, item_info)
 
+@eventloop.as_idle
 def _create_item_for_conversion(filename, source_info, conversion_name):
     """Make a new FileItem for a converted file."""
 
     # Note: We are adding things to the database.  This function should only
     # get called in the event loop.
 
-    name = (_('%(original_name)s (Converted to %(format)s)') %
+    name = _('%(original_name)s (Converted to %(format)s)',
             {'original_name': source_info.name, 'format': conversion_name})
 
     fp_values = item.fp_values_for_file(filename, name,
