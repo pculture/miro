@@ -52,6 +52,18 @@ from miro.gtcache import gettext as _
 from miro.plat import utils
 from miro.plat import resources
 
+def get_conversions_folder():
+    """Get the folder for video conversions.
+
+    This method is safe to call from the frontend thread.
+    """
+
+    root = config.get(prefs.MOVIES_DIRECTORY)
+    target_folder = os.path.join(root, "Converted")
+    if not os.path.exists(target_folder):
+        os.mkdir(target_folder)
+    return target_folder
+
 class VideoConverterInfo(object):
     """Holds the data for a specific conversion that allows us to
     convert to this target.
@@ -155,10 +167,6 @@ class VideoConversionManager(signals.SignalEmitter):
             self.cancel_all()
             self.task_loop.join()
 
-    def reveal_conversions_folder(self):
-        path = self.get_default_target_folder()
-        app.widgetapp.reveal_file(path)
-
     def cancel_all(self):
         self._enqueue_message("cancel_all")
     
@@ -173,10 +181,6 @@ class VideoConversionManager(signals.SignalEmitter):
     
     def schedule_staging(self, task):
         self._enqueue_message("stage_conversion", task=task)
-    
-    def open_log(self, task):
-        if task.log_path is not None:
-            app.widgetapp.open_file(task.log_path)
     
     def clear_failed_task(self, task):
         self._enqueue_message("cancel_running", task=task)
@@ -200,13 +204,6 @@ class VideoConversionManager(signals.SignalEmitter):
             self._check_task_loop()
             self.pending_tasks.append(task)
     
-    def get_default_target_folder(self):
-        root = config.get(prefs.MOVIES_DIRECTORY)
-        target_folder = os.path.join(root, "Converted")
-        if not os.path.exists(target_folder):
-            os.mkdir(target_folder)
-        return target_folder
-        
     def _enqueue_message(self, message, **kw):
         msg = {'message': message}
         msg.update(kw)
@@ -214,7 +211,7 @@ class VideoConversionManager(signals.SignalEmitter):
         
     def _make_conversion_task(self, converter_info, item_info, target_folder):
         if target_folder is None:
-            target_folder = self.get_default_target_folder()
+            target_folder = get_conversions_folder()
         if converter_info.executable == 'ffmpeg':
             return FFMpegConversionTask(converter_info, item_info, target_folder)
         elif converter_info.executable == 'ffmpeg2theora':

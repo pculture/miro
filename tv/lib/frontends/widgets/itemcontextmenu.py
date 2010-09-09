@@ -294,7 +294,7 @@ class ItemContextMenuHandler(object):
                 convert_menu.append(None)
         convert_menu.append(None)
         convert_menu.append((_("Show Conversion Folder"),
-                             conversion_manager.reveal_conversions_folder))
+                             app.widgetapp.reveal_conversions_folder))
         return convert_menu
 
 class ItemContextMenuHandlerPlaylist(ItemContextMenuHandler):

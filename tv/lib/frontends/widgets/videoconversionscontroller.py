@@ -64,7 +64,7 @@ class VideoConversionsController(object):
         reveal_button = widgetset.Button(_('Show Conversion Folder'), style='smooth')
         reveal_button.set_size(widgetconst.SIZE_SMALL)
         reveal_button.set_color(widgetset.TOOLBAR_GRAY)
-        reveal_button.connect('clicked', self.on_reveal)
+        reveal_button.connect('clicked', self.on_reveal_conversions_folder)
 
         self.clear_finished_button = widgetset.Button(
                 _('Clear Finished Conversions'), style='smooth')
@@ -94,8 +94,8 @@ class VideoConversionsController(object):
     def on_cancel_all(self, obj):
         conversion_manager.cancel_all()
 
-    def on_reveal(self, obj):
-        conversion_manager.reveal_conversions_folder()
+    def on_reveal_conversions_folder(self, obj):
+        app.widgetapp.reveal_conversions_folder()
 
     def on_clear_finished(self, obj):
         conversion_manager.clear_finished_conversions()
@@ -105,7 +105,8 @@ class VideoConversionsController(object):
         if name == 'cancel' and not task.is_running():
             conversion_manager.cancel_pending(task)
         elif name == 'open-log' and task.is_failed():
-            conversion_manager.open_log(task)
+            if task.log_path is not None:
+                app.widgetapp.open_file(task.log_path)
         elif name == 'clear-failed' and task.is_failed():
             conversion_manager.clear_failed_task(task)
         elif name == 'clear-finished' and task.is_finished():

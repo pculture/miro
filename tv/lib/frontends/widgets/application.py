@@ -340,6 +340,9 @@ class Application:
         else:
             self.reveal_file(filename)
 
+    def reveal_conversions_folder(self):
+        self.reveal_file(videoconversion.get_conversions_folder())
+
     def open_video(self):
         title = _('Open Files...')
         filenames = dialogs.ask_for_open_pathname(title, select_multiple=True)

@@ -478,7 +478,7 @@ def on_convert(converter_id):
 
 @action_handler("RevealConversionFolder")
 def on_reveal_conversion_folder():
-    videoconversion.conversion_manager.reveal_conversions_folder()
+    app.widgetapp.reveal_conversions_folder()
 
 @action_handler("CopyItemURL")
 def on_copy_item_url():
