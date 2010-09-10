@@ -38,6 +38,10 @@ controller = None
 # database object
 db = None
 
+# command line arguments for thumbnailer (linux)
+movie_data_program_info = None
+
+
 # widget frontend adds these
 # --------------------------
 
@@ -52,10 +56,6 @@ tab_list_manager = None
 
 # manages ItemListControllers
 item_list_controller_manager = None
-
-# video rendering object (or None if the platform code can't initialize a
-# suitable renderer)
-renderer = None
 
 # manages search state
 search_manager = None
