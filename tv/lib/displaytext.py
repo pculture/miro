@@ -80,7 +80,7 @@ def time_string(secs):
         return ngettext('%(num).0f hr', '%(num).0f hrs', t_hr, {"num": t_hr})
     if secs >= 60:
         t_min = secs * 1.0 / 60
-        return ngettext('%(num).0f min', '%(num).0f mins', t_min,
+        return ngettext('%(num).0f min', '%(num).0f mins', int(t_min),
                         {"num": t_min})
 
     return ngettext('%(num)d sec', '%(num)d secs', secs, {"num": secs})
