@@ -35,6 +35,7 @@ import logging
 import tempfile
 import threading
 import subprocess
+import time
 
 from glob import glob
 from ConfigParser import SafeConfigParser, NoOptionError
@@ -417,6 +418,7 @@ class VideoConversionTask(object):
         self.log_file = None
         self.process_handle = None
         self.error = None
+        self.start_time = time.time()
     
     def get_executable(self):
         raise NotImplementedError()
@@ -429,6 +431,20 @@ class VideoConversionTask(object):
         self.thread = threading.Thread(target=self._loop, name="Conversion Task")
         self.thread.setDaemon(True)
         self.thread.start()
+
+    def get_eta(self):
+        """Calculates the eta for this conversion to be completed.
+
+        :returns: None if progress is <= 0, otherwise returns number
+            of seconds until this is complete
+        """
+        if self.progress <= 0:
+            return None
+
+        progress = self.progress * 100
+        duration = time.time() - self.start_time
+        time_per_percent = duration / progress
+        return int(time_per_percent * (100 - progress))
 
     def is_pending(self):
         return self.thread is None

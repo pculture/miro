@@ -27,6 +27,7 @@
 # statement from all source files in the program, then also delete it here.
 
 from miro import app
+from miro import displaytext
 from miro.plat import resources
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import style
@@ -270,8 +271,9 @@ class VideoConversionCellRenderer(style.ItemRenderer):
             layout.set_text_color(self.PENDING_TASK_TEXT_COLOR)
         else:
             layout.set_text_color(self.ITEM_DESC_COLOR)
-        info_label = layout.textbox(_("Conversion to %s") %
-                self.data.converter_info.name)
+        info_label = layout.textbox(
+            _("Conversion to %(format)s",
+              {"format": self.data.converter_info.name}))
         vbox.pack(cellpack.pad(info_label, top=4))
 
         if self.data.is_failed():
@@ -349,7 +351,12 @@ class VideoConversionCellRenderer(style.ItemRenderer):
         layout.set_font(0.8, bold=True)
         layout.set_text_color((1.0, 1.0, 1.0))
         progress = int(self.data.progress * 100)
-        return layout.textbox('%d%%' % (progress,))
+        parts = ["%d%%" % progress]
+        eta = self.data.get_eta()
+        if eta:
+            parts.append(displaytext.time_string(eta))
+        
+        return layout.textbox(' - '.join(parts))
 
     def _draw_thumbnail(self, context, x, y, width, height):
         fraction = 1.0
