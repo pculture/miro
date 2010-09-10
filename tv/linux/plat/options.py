@@ -33,6 +33,7 @@ hopefully sane defaults.
 
 # these have no related prefs
 shouldSyncX = False
+frontend = 'html'
 themeName = None
 gconf_name = None
 
