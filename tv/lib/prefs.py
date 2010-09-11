@@ -150,6 +150,8 @@ AUTOUPDATE_URL    = Pref(key='AutoupdateURL',   default=default_autoupdate,
                          platformSpecific=False)
 DONATE_URL        = Pref(key='DonateURL', default=u"http://www.getmiro.com/donate/",
                          platformSpecific=False)
+TROUBLESHOOT_URL  = Pref(key='TroubleshootURL', default=u"http://www.getmiro.com/userguide/troubleshooting.html",
+                         platformSpecific=False)
 HELP_URL          = Pref(key='HelpURL', default=u"http://www.getmiro.com/help/",
                          platformSpecific=False)
 BUG_REPORT_URL    = Pref(key='ReportURL', default=u"http://www.getmiro.com/bug.html",

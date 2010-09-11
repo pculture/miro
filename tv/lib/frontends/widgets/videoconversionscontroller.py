@@ -28,6 +28,9 @@
 
 from miro import app
 from miro import displaytext
+from miro import config
+from miro import prefs
+
 from miro.plat import resources
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import style
@@ -108,6 +111,8 @@ class VideoConversionsController(object):
         elif name == 'open-log' and task.is_failed():
             if task.log_path is not None:
                 app.widgetapp.open_file(task.log_path)
+        elif name == 'troubleshoot' and task.is_failed():
+            app.widgetapp.open_url(config.get(prefs.TROUBLESHOOT_URL))
         elif name == 'clear-failed' and task.is_failed():
             conversion_manager.clear_failed_task(task)
         elif name == 'clear-finished' and task.is_finished():
@@ -312,8 +317,10 @@ class VideoConversionCellRenderer(style.ItemRenderer):
         # this resets the font so that the buttons aren't bold
         layout.set_font(0.8)
         hbox = cellpack.HBox()
+        troubleshoot_button = layout.button(_("Troubleshoot"), self.hotspot=='troubleshoot', style='webby')
+        hbox.pack(cellpack.Hotspot('troubleshoot', troubleshoot_button))
         open_log_button = layout.button(_("Open log"), self.hotspot=='open-log', style='webby')
-        hbox.pack(cellpack.Hotspot('open-log', open_log_button))
+        hbox.pack(cellpack.pad(cellpack.Hotspot('open-log', open_log_button), left=8))
         clear_button = layout.button(_("Clear"), self.hotspot=='clear-failed', style='webby')
         hbox.pack(cellpack.pad(cellpack.Hotspot('clear-failed', clear_button), left=8))
         vbox.pack_end(cellpack.pad(cellpack.align_right(hbox), bottom=12))
