@@ -1098,6 +1098,14 @@ class BackendMessageHandler(messages.MessageHandler):
         else:
             item_tracker.unlink()
 
+    def handle_cancel_auto_download(self, message):
+        try:
+            item_ = item.Item.get_by_id(message.id)
+        except database.ObjectNotFoundError:
+            logging.warn("CancelAutoDownload: Item not found -- %s", message.id)
+        else:
+            item_.cancel_auto_download()
+
     def handle_start_download(self, message):
         try:
             item_ = item.Item.get_by_id(message.id)

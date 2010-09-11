@@ -595,6 +595,12 @@ class Search(BackendMessage):
         self.id = searchengine_id
         self.terms = terms
 
+class CancelAutoDownload(BackendMessage):
+    """Cancels the autodownload for an item.
+    """
+    def __init__(self, id):
+        self.id = id
+
 class StartDownload(BackendMessage):
     """Start downloading an item.
     """

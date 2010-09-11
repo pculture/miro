@@ -282,6 +282,8 @@ class ItemListController(object):
             app.widgetapp.check_then_reveal_file(item_info.video_path)
         elif name == 'show_contents':
             app.display_manager.push_folder_contents_display(item_info)
+        elif name == 'cancel_auto_download':
+            messages.CancelAutoDownload(item_info.id).send_to_backend()
         elif name.startswith('description-link:'):
             url = name.split(':', 1)[1]
             try:

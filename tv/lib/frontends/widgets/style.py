@@ -253,7 +253,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     DOWNLOAD_TEXT = _("Download")
     DOWNLOAD_TORRENT_TEXT = _("Download Torrent")
     ERROR_TEXT = _("Error")
-    QUEUED_TEXT = _("queued for autodownload")
+    CANCEL_AUTO_DOWNLOAD = _("Cancel")
+    QUEUED_TEXT = _("Queued for Autodownload")
     UNPLAYED_TEXT = _("Unplayed")
     CURRENTLY_PLAYING_TEXT = _("Currently Playing")
     NEWLY_AVAILABLE_TEXT = _("Newly Available")
@@ -734,6 +735,12 @@ class ItemRenderer(widgetset.CustomCellRenderer):
                 button = self._make_button(layout, self.REVEAL_IN_TEXT,
                         'show_local_file')
             main_hbox.pack(cellpack.align_middle(button))
+
+        elif self.data.pending_auto_dl:
+            text = self.CANCEL_AUTO_DOWNLOAD
+            hotspot = self._make_button(layout, text, 'cancel_auto_download')
+            main_hbox.pack(cellpack.align_middle(cellpack.align_middle(hotspot)))
+
         else:
             if self.data.mime_type == 'application/x-bittorrent':
                 text = self.DOWNLOAD_TORRENT_TEXT
@@ -766,11 +773,14 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             stack.pack(cellpack.align_left(emblem))
 
         elif self.data.pending_auto_dl:
-            emblem_hbox.pack_space(2)
-            layout.set_font(0.80, bold=True)
+            # emblem_hbox.pack(cellpack.align_middle(self.alert_image))
             emblem_hbox.pack(cellpack.align_middle(layout.textbox(self.QUEUED_TEXT)))
 
-            stack.pack(cellpack.align_left(emblem_hbox))
+            emblem_color = (1.0, 252.0 / 255.0, 183.0 / 255.0)
+            emblem = cellpack.Background(emblem_hbox, margin=(4, 20, 4, 4))
+            emblem.set_callback(self.draw_emblem, emblem_color)
+
+            stack.pack(cellpack.align_left(emblem))
 
         elif (self.data.downloaded and app.playback_manager.get_playing_item() and
                 app.playback_manager.get_playing_item().id == self.data.id):

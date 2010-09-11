@@ -1154,6 +1154,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.confirm_db_thread()
         return self.pendingManualDL
 
+    def cancel_auto_download(self):
+        # FIXME - this is cheating and abusing the was_downloaded flag
+        self.was_downloaded = True
+        self.signal_change()
+        self.recalc_feed_counts()
+
     def is_eligible_for_auto_download(self):
         self.confirm_db_thread()
         if self.was_downloaded:
