@@ -309,6 +309,8 @@ class VideoConversionCellRenderer(style.ItemRenderer):
             _("Failed: %(error)s", {"error": data.error}))
         vbox.pack(cellpack.pad(info_label2, top=4))
         
+        # this resets the font so that the buttons aren't bold
+        layout.set_font(0.8)
         hbox = cellpack.HBox()
         open_log_button = layout.button(_("Open log"), self.hotspot=='open-log', style='webby')
         hbox.pack(cellpack.Hotspot('open-log', open_log_button))
