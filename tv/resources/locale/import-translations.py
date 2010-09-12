@@ -41,9 +41,11 @@ It's just a utility script.  If you find it needs additional bits,
 let us know.
 """
 
+import subprocess
 import glob
 import os.path
 import os
+import glob
 
 def get_files():
     return [mem for mem in os.listdir(".") if mem.endswith(".po")]
@@ -96,6 +98,16 @@ def build_catalogs():
         os.system("msgfmt %s -o %s" % (pofile, mofile))
 
 if __name__ == "__main__":
+    print "Extracting files...."
+    subprocess.call(["tar", "-xzvf", "launchpad-export.tar.gz"])
+    args = glob.glob("./democracyplayer/*")
+    if args:
+        args.insert(0, "mv")
+        args.append(".")
+        print "Moving files from democracyplayer/ to here...."
+        subprocess.call(args)
+        print "Removing empty democracyplayer directory...."
+        subprocess.call(["rm", "-rf", "democracyplayer"])
     print "FIXING NAMES...."
     fix_names()
     print "FIXING #| issues...."
