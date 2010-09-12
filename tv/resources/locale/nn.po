@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-06 08:29-0400\n"
+"POT-Creation-Date: 2010-09-10 17:34-0400\n"
 "PO-Revision-Date: 2010-03-28 02:00+0000\n"
 "Last-Translator: Bjørn I. <Unknown>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-09-02 14:41+0000\n"
+"X-Launchpad-Export-Date: 2010-09-12 12:52+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
@@ -27,8 +27,8 @@ msgstr "Del"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:125 ../../lib/dialogs.py:117
 #: ../../lib/frontends/widgets/style.py:260
-#: ../../lib/frontends/widgets/style.py:1068
-#: ../../lib/frontends/widgets/style.py:1235
+#: ../../lib/frontends/widgets/style.py:1070
+#: ../../lib/frontends/widgets/style.py:1237
 #: ../../lib/frontends/widgets/itemcontextmenu.py:116
 #: ../../lib/frontends/widgets/itemcontextmenu.py:223
 #: ../../lib/frontends/widgets/gtk/video.py:278
@@ -50,11 +50,11 @@ msgstr "Sprett ut"
 msgid "Pop In"
 msgstr "Sprett inn"
 
-#: ../../osx/plat/frontends/widgets/application.py:188
+#: ../../osx/plat/frontends/widgets/application.py:193
 msgid "Download Completed"
 msgstr "Nedlasting fullførd"
 
-#: ../../osx/plat/frontends/widgets/application.py:189
+#: ../../osx/plat/frontends/widgets/application.py:194
 #, python-format
 msgid "Download of video '%s' is finished."
 msgstr "Nedlastinga av videoen «%s» er fullførd."
@@ -167,87 +167,87 @@ msgstr "Ingen tilgjengeleg"
 msgid "Select a Subtitles file..."
 msgstr "Vel ei undertekstfil …"
 
-#: ../../windows/plat/renderers/vlc.py:688
-#: ../../windows/plat/renderers/vlc.py:691
-#: ../../windows/plat/renderers/vlc.py:692
+#: ../../windows/plat/renderers/vlc.py:697
+#: ../../windows/plat/renderers/vlc.py:700
+#: ../../windows/plat/renderers/vlc.py:701
 #: ../../linux/plat/renderers/gstreamerrenderer.py:569
 msgid "Eastern European"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:689
-#: ../../windows/plat/renderers/vlc.py:690
+#: ../../windows/plat/renderers/vlc.py:698
+#: ../../windows/plat/renderers/vlc.py:699
 #: ../../linux/plat/renderers/gstreamerrenderer.py:570
 #: ../../linux/plat/renderers/gstreamerrenderer.py:571
 #: ../../linux/plat/renderers/gstreamerrenderer.py:572
 msgid "Baltic"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:693
+#: ../../windows/plat/renderers/vlc.py:702
 msgid "Russian"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:694
+#: ../../windows/plat/renderers/vlc.py:703
 msgid "South-Eastern European"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:695
+#: ../../windows/plat/renderers/vlc.py:704
 msgid "Ukrainian"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:698
-#: ../../windows/plat/renderers/vlc.py:700
+#: ../../windows/plat/renderers/vlc.py:707
+#: ../../windows/plat/renderers/vlc.py:709
 #: ../../linux/plat/renderers/gstreamerrenderer.py:590
 msgid "Western European"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:699
+#: ../../windows/plat/renderers/vlc.py:708
 #: ../../linux/plat/renderers/gstreamerrenderer.py:591
 msgid "Celtic"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:701
+#: ../../windows/plat/renderers/vlc.py:710
 msgid "Esperanto"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:702
-#: ../../windows/plat/renderers/vlc.py:703
+#: ../../windows/plat/renderers/vlc.py:711
+#: ../../windows/plat/renderers/vlc.py:712
 #: ../../linux/plat/renderers/gstreamerrenderer.py:592
 #: ../../linux/plat/renderers/gstreamerrenderer.py:593
 #: ../../linux/plat/renderers/gstreamerrenderer.py:594
 msgid "Greek"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:706
+#: ../../windows/plat/renderers/vlc.py:715
 #: ../../linux/plat/renderers/gstreamerrenderer.py:604
 msgid "East Asian"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:707
-msgid "Universal, Chinese"
+#: ../../windows/plat/renderers/vlc.py:716
+msgid "Universal Chinese"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:708
+#: ../../windows/plat/renderers/vlc.py:717
 msgid "Simplified Chinese"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:709
+#: ../../windows/plat/renderers/vlc.py:718
 msgid "Simplified Chinese Unix"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:710
-#: ../../windows/plat/renderers/vlc.py:712
+#: ../../windows/plat/renderers/vlc.py:719
+#: ../../windows/plat/renderers/vlc.py:721
 #: ../../linux/plat/renderers/gstreamerrenderer.py:612
 #: ../../linux/plat/renderers/gstreamerrenderer.py:613
 #: ../../linux/plat/renderers/gstreamerrenderer.py:614
 msgid "Japanese"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:711
+#: ../../windows/plat/renderers/vlc.py:720
 msgid "Japanese Unix"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:713
-#: ../../windows/plat/renderers/vlc.py:714
+#: ../../windows/plat/renderers/vlc.py:722
+#: ../../windows/plat/renderers/vlc.py:723
 #: ../../linux/plat/renderers/gstreamerrenderer.py:615
 #: ../../linux/plat/renderers/gstreamerrenderer.py:616
 #: ../../linux/plat/renderers/gstreamerrenderer.py:617
@@ -255,25 +255,25 @@ msgstr ""
 msgid "Korean"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:715
+#: ../../windows/plat/renderers/vlc.py:724
 msgid "Traditional Chinese"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:716
+#: ../../windows/plat/renderers/vlc.py:725
 msgid "Traditional Chinese Unix"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:717
+#: ../../windows/plat/renderers/vlc.py:726
 msgid "Hong-Kong Supplementary"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:720
+#: ../../windows/plat/renderers/vlc.py:729
 #: ../../linux/plat/renderers/gstreamerrenderer.py:620
 msgid "SE and SW Asian"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:721
-#: ../../windows/plat/renderers/vlc.py:722
+#: ../../windows/plat/renderers/vlc.py:730
+#: ../../windows/plat/renderers/vlc.py:731
 #: ../../linux/plat/renderers/gstreamerrenderer.py:627
 #: ../../linux/plat/renderers/gstreamerrenderer.py:628
 #: ../../linux/plat/renderers/gstreamerrenderer.py:629
@@ -281,26 +281,26 @@ msgstr ""
 msgid "Turkish"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:723
+#: ../../windows/plat/renderers/vlc.py:732
 #: ../../linux/plat/renderers/gstreamerrenderer.py:626
 msgid "Thai"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:724
-#: ../../windows/plat/renderers/vlc.py:725
+#: ../../windows/plat/renderers/vlc.py:733
+#: ../../windows/plat/renderers/vlc.py:734
 #: ../../linux/plat/renderers/gstreamerrenderer.py:631
 #: ../../linux/plat/renderers/gstreamerrenderer.py:632
 #: ../../linux/plat/renderers/gstreamerrenderer.py:633
 msgid "Vietnamese"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:728
+#: ../../windows/plat/renderers/vlc.py:737
 #: ../../linux/plat/renderers/gstreamerrenderer.py:635
 msgid "Middle Eastern"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:729
-#: ../../windows/plat/renderers/vlc.py:730
+#: ../../windows/plat/renderers/vlc.py:738
+#: ../../windows/plat/renderers/vlc.py:739
 #: ../../linux/plat/renderers/gstreamerrenderer.py:636
 #: ../../linux/plat/renderers/gstreamerrenderer.py:637
 #: ../../linux/plat/renderers/gstreamerrenderer.py:638
@@ -308,8 +308,8 @@ msgstr ""
 msgid "Arabic"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:731
-#: ../../windows/plat/renderers/vlc.py:732
+#: ../../windows/plat/renderers/vlc.py:740
+#: ../../windows/plat/renderers/vlc.py:741
 #: ../../linux/plat/renderers/gstreamerrenderer.py:640
 #: ../../linux/plat/renderers/gstreamerrenderer.py:641
 #: ../../linux/plat/renderers/gstreamerrenderer.py:642
@@ -317,7 +317,7 @@ msgstr ""
 msgid "Hebrew"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:735
+#: ../../windows/plat/renderers/vlc.py:744
 #: ../../linux/plat/renderers/gstreamerrenderer.py:647
 #: ../../linux/plat/renderers/gstreamerrenderer.py:648
 #: ../../linux/plat/renderers/gstreamerrenderer.py:649
@@ -327,36 +327,44 @@ msgstr ""
 msgid "Unicode"
 msgstr ""
 
-#: ../../windows/plat/renderers/vlc.py:736
-#: ../../windows/plat/renderers/vlc.py:737
-#: ../../windows/plat/renderers/vlc.py:738
-#: ../../windows/plat/renderers/vlc.py:739
+#: ../../windows/plat/renderers/vlc.py:745
+#: ../../windows/plat/renderers/vlc.py:746
+#: ../../windows/plat/renderers/vlc.py:747
+#: ../../windows/plat/renderers/vlc.py:748
 msgid "Universal"
 msgstr ""
 
-#: ../../windows/plat/frontends/widgets/prefpanelset.py:39
-#: ../../linux/plat/frontends/widgets/prefpanelset.py:48
+#: ../../windows/plat/frontends/widgets/prefpanelset.py:41
+#: ../../linux/plat/frontends/widgets/prefpanelset.py:49
 msgid "Enable tray icon"
 msgstr "Vis ikon i systemtrauet."
 
-#: ../../windows/plat/frontends/widgets/prefpanelset.py:43
+#: ../../windows/plat/frontends/widgets/prefpanelset.py:45
 msgid "When I click the red close button:"
 msgstr "Når eg trykkjer på den raude lukk-knappen:"
 
-#: ../../windows/plat/frontends/widgets/prefpanelset.py:46
+#: ../../windows/plat/frontends/widgets/prefpanelset.py:48
 msgid "Close to tray so that downloads can continue."
 msgstr "Minimer til systemtrauet, slik at nedlastingane kan halda fram."
 
-#: ../../windows/plat/frontends/widgets/prefpanelset.py:47
+#: ../../windows/plat/frontends/widgets/prefpanelset.py:49
 #, python-format
 msgid "Quit %(appname)s completely."
 msgstr "Avslutt %(appname)s fullstendig."
 
-#: ../../windows/plat/frontends/widgets/application.py:144
+#: ../../windows/plat/frontends/widgets/prefpanelset.py:58
+msgid "System Default"
+msgstr ""
+
+#: ../../windows/plat/frontends/widgets/prefpanelset.py:64
+msgid "Subtitle font:"
+msgstr ""
+
+#: ../../windows/plat/frontends/widgets/application.py:148
 msgid "Close to tray?"
 msgstr "Minimer til systemtrau?"
 
-#: ../../windows/plat/frontends/widgets/application.py:145
+#: ../../windows/plat/frontends/widgets/application.py:149
 #, python-format
 msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
@@ -366,19 +374,19 @@ msgstr ""
 "minimerast til eit ikon i systemtrauet, eller avslutta heilt? Du kan endra "
 "denne innstillinga seinare under «Innstillingar»."
 
-#: ../../windows/plat/frontends/widgets/application.py:204
+#: ../../windows/plat/frontends/widgets/application.py:208
 msgid "Error Bombing Item"
 msgstr "Feil ved bombing"
 
-#: ../../windows/plat/frontends/widgets/application.py:206
+#: ../../windows/plat/frontends/widgets/application.py:210
 msgid "Error Recommending Item"
 msgstr "Feil ved anbefaling"
 
-#: ../../windows/plat/frontends/widgets/application.py:208
+#: ../../windows/plat/frontends/widgets/application.py:212
 msgid "Error Opening Website"
 msgstr "Feil ved opning av nettside"
 
-#: ../../windows/plat/frontends/widgets/application.py:213
+#: ../../windows/plat/frontends/widgets/application.py:217
 #, python-format
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
@@ -534,20 +542,32 @@ msgstr ""
 msgid "Persian"
 msgstr ""
 
-#: ../../linux/plat/frontends/widgets/prefpanelset.py:56
+#: ../../linux/plat/frontends/widgets/prefpanelset.py:57
 msgid "Renderer options:"
 msgstr "Framvisarval:"
 
-#: ../../linux/plat/frontends/widgets/prefpanelset.py:62
+#: ../../linux/plat/frontends/widgets/prefpanelset.py:64
 #, python-format
 msgid "You must restart %(appname)s for renderer changes to take effect."
 msgstr ""
 "Du må starta %(appname)s på nytt for at endringa av framvisaren skal tre i "
 "kraft."
 
-#: ../../linux/plat/frontends/widgets/prefpanelset.py:77
+#: ../../linux/plat/frontends/widgets/prefpanelset.py:79
 msgid "Video renderer:"
 msgstr "Framvisar for videoar:"
+
+#: ../../linux/plat/frontends/widgets/prefpanelset.py:91
+msgid "Binaries to use:"
+msgstr ""
+
+#: ../../linux/plat/frontends/widgets/prefpanelset.py:97
+msgid "ffmpeg binary path:"
+msgstr ""
+
+#: ../../linux/plat/frontends/widgets/prefpanelset.py:104
+msgid "ffmpeg2theora binary path:"
+msgstr ""
 
 #: ../../lib/dbupgradeprogress.py:60
 msgid "Upgrading Old Database"
@@ -561,11 +581,33 @@ msgstr "Konverterer gammal database"
 msgid "Upgrading Database"
 msgstr "Oppgraderer databasen"
 
-#: ../../lib/startup.py:107
+#: ../../lib/startup.py:126
+msgid "Database Error"
+msgstr ""
+
+#: ../../lib/startup.py:127
+#, python-format
+msgid ""
+"We're sorry, %(appname)s was unable to start up due to a problem with the "
+"database:\n"
+"\n"
+"Error: %(error)s\n"
+"\n"
+"It's possible that your database file is corrupted and cannot be used.\n"
+"\n"
+"You can start fresh and your damaged database will be removed, but you will "
+"have to re-add your feeds and media files.  If you want to do this, press "
+"the Start Fresh button and restart %(appname)s.\n"
+"\n"
+"To help us fix problems like this in the future, please file a bug report at "
+"%(url)s."
+msgstr ""
+
+#: ../../lib/startup.py:148
 msgid "Unknown Error"
 msgstr "Ukjend feil"
 
-#: ../../lib/startup.py:109
+#: ../../lib/startup.py:149
 #, python-format
 msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
@@ -573,11 +615,11 @@ msgid ""
 msgstr ""
 "Ein ukjend feil hindra %(appname)s å starta. Meld frå om feilen på %(url)s."
 
-#: ../../lib/startup.py:203
+#: ../../lib/startup.py:246
 msgid "Database too new"
 msgstr "Databasen er for ny"
 
-#: ../../lib/startup.py:205
+#: ../../lib/startup.py:248
 #, python-format
 msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
@@ -586,11 +628,11 @@ msgstr ""
 "Du har ein database som vart lagra med ein nyare versjon av %(appname)s. Du "
 "må lasta ned ein nyare versjon av %(appname)s og køyra denne."
 
-#: ../../lib/startup.py:469
+#: ../../lib/startup.py:512
 msgid "Submitting Crash Report"
 msgstr ""
 
-#: ../../lib/startup.py:471
+#: ../../lib/startup.py:514
 #, python-format
 msgid ""
 "%(appname)s will now submit a crash report to our crash database\n"
@@ -642,50 +684,54 @@ msgstr ""
 "\n"
 "Vil du prøva å leggja til kanalen likevel?"
 
-#: ../../lib/feed.py:1666 ../../lib/databaseupgrade.py:2698
+#: ../../lib/feed.py:1666 ../../lib/databaseupgrade.py:2749
 #, python-format
 msgid "%(engine)s for '%(query)s'"
 msgstr ""
 
-#: ../../lib/feed.py:2116 ../../lib/feed.py:2246
+#: ../../lib/feed.py:2115 ../../lib/feed.py:2245
 msgid "Local Files"
 msgstr "Lokale filer"
 
-#: ../../lib/feed.py:2125 ../../lib/feed.py:2231
+#: ../../lib/feed.py:2124 ../../lib/feed.py:2230
 #: ../../lib/frontends/widgets/firsttimedialog.py:302
 #: ../../lib/frontends/widgets/firsttimedialog.py:304
 #: ../../lib/frontends/widgets/firsttimedialog.py:362
 msgid "Search"
 msgstr "Søk"
 
-#: ../../lib/feed.py:2260
+#: ../../lib/feed.py:2259
 msgid "Playing File"
 msgstr "Spelar fil"
 
-#: ../../lib/downloader.py:309
+#: ../../lib/downloader.py:261
 msgid "activity"
 msgstr "aktivitet"
 
-#: ../../lib/downloader.py:377 ../../lib/httpclient.py:117
-#: ../../lib/httpclient.py:142
+#: ../../lib/downloader.py:329 ../../lib/httpclient.py:123
+#: ../../lib/httpclient.py:148
 msgid "File not found"
 msgstr "Fann ikkje fil"
 
-#: ../../lib/downloader.py:378
+#: ../../lib/downloader.py:330
 msgid "Flash URL Scraping Error"
 msgstr "Feil ved henting av adresse til Flash-videofil"
 
-#: ../../lib/downloader.py:573
+#: ../../lib/downloader.py:528
 msgid "starting up"
 msgstr "startar"
 
-#: ../../lib/downloader.py:579
+#: ../../lib/downloader.py:535
 #, python-format
 msgid "no connection - retrying in %s"
 msgstr "Ikkje noko samband - prøver igjen om %s"
 
-#: ../../lib/downloader.py:603 ../../lib/downloader.py:611
-#: ../../lib/httpclient.py:188 ../../lib/httpclient.py:535
+#: ../../lib/downloader.py:537
+msgid "no connection - retrying soon"
+msgstr ""
+
+#: ../../lib/downloader.py:561 ../../lib/downloader.py:569
+#: ../../lib/httpclient.py:194 ../../lib/httpclient.py:610
 msgid "Unknown"
 msgstr "Ukjend"
 
@@ -730,34 +776,33 @@ msgstr "Feil ved nedlasting"
 msgid ""
 "%(appname)s is not able to download a file at this URL:\n"
 "\n"
-"URL: %(url)s"
-msgstr ""
-"%(appname)s klarte ikkje lasta ned fila på denne adressa:\n"
+"URL: %(url)s\n"
 "\n"
-"%(url)s"
+"Error: %(error)s (%(errordesc)s)"
+msgstr ""
 
-#: ../../lib/opml.py:224
+#: ../../lib/opml.py:223
 msgid "OPML Import failed"
 msgstr "Feil ved OPML-import"
 
-#: ../../lib/opml.py:226
+#: ../../lib/opml.py:225
 msgid ""
 "The selected OPML file appears to be invalid.  Import was interrupted."
 msgstr ""
 "Den valde OPML-fila ser ut til å vera ugyldig. Importeringa vart avbroten."
 
-#: ../../lib/opml.py:234
+#: ../../lib/opml.py:233
 msgid "OPML Import summary"
 msgstr "Samandrag av OPML-import"
 
-#: ../../lib/opml.py:235
+#: ../../lib/opml.py:234
 #, python-format
 msgid "Successfully imported %(count)d feed."
 msgid_plural "Successfully imported %(count)d feeds."
 msgstr[0] "%(count)d kjelde vart importert."
 msgstr[1] "%(count)d kjelder vart importerte."
 
-#: ../../lib/opml.py:241
+#: ../../lib/opml.py:240
 #, python-format
 msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
@@ -834,7 +879,12 @@ msgid ""
 msgstr ""
 "Torrentfila %(filename)s ser ut til å vera korrupt og kan ikkje opnast."
 
-#: ../../lib/messages.py:1102 ../../lib/item.py:1128
+#: ../../lib/videoconversion.py:655
+#, python-format
+msgid "%(original_name)s (Converted to %(format)s)"
+msgstr ""
+
+#: ../../lib/messages.py:1114 ../../lib/item.py:1127
 msgid "queued for download"
 msgstr "i kø for nedlasting"
 
@@ -846,12 +896,12 @@ msgstr "OK"
 msgid "Apply"
 msgstr "Bruk"
 
-#: ../../lib/dialogs.py:95 ../../lib/frontends/widgets/gtk/window.py:797
+#: ../../lib/dialogs.py:95 ../../lib/frontends/widgets/gtk/window.py:820
 msgid "Close"
 msgstr "Lukk"
 
 #: ../../lib/dialogs.py:96 ../../lib/frontends/widgets/firsttimedialog.py:363
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:292
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:344
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -894,8 +944,8 @@ msgid "Don't Migrate"
 msgstr "Ikkje flytt"
 
 #: ../../lib/dialogs.py:106 ../../lib/frontends/widgets/style.py:253
-#: ../../lib/frontends/widgets/style.py:1138
-#: ../../lib/frontends/widgets/style.py:1149
+#: ../../lib/frontends/widgets/style.py:1140
+#: ../../lib/frontends/widgets/style.py:1151
 #: ../../lib/frontends/widgets/itemcontextmenu.py:140
 #: ../../lib/frontends/widgets/itemcontextmenu.py:241
 msgid "Download"
@@ -933,7 +983,7 @@ msgstr "Legg til kjelde"
 msgid "Create Folder"
 msgstr "Lag mappe"
 
-#: ../../lib/dialogs.py:115 ../../lib/frontends/widgets/prefpanel.py:523
+#: ../../lib/dialogs.py:115 ../../lib/frontends/widgets/prefpanel.py:544
 msgid "Add"
 msgstr "Legg til"
 
@@ -948,7 +998,7 @@ msgstr "Legg til i ny mappe"
 #: ../../lib/frontends/widgets/tablist.py:760
 #: ../../lib/frontends/widgets/tablist.py:766
 #: ../../lib/frontends/widgets/tablist.py:771
-#: ../../lib/frontends/widgets/prefpanel.py:526
+#: ../../lib/frontends/widgets/prefpanel.py:547
 msgid "Remove"
 msgstr "Fjern"
 
@@ -1000,12 +1050,22 @@ msgstr ""
 msgid "Don't Include Database"
 msgstr ""
 
-#: ../../lib/storedatabase.py:214
+#: ../../lib/dialogs.py:212
+#, python-format
+msgid ""
+"%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
+msgstr ""
+
+#: ../../lib/dialogs.py:215
+msgid "Login Required"
+msgstr ""
+
+#: ../../lib/storedatabase.py:221
 #, python-format
 msgid "%(appname)s database upgrade failed"
 msgstr "Mislykka databaseoppgradering av %(appname)s"
 
-#: ../../lib/storedatabase.py:217
+#: ../../lib/storedatabase.py:224
 #, python-format
 msgid ""
 "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
@@ -1020,27 +1080,27 @@ msgid ""
 "you will have to re-add your feeds and media files."
 msgstr ""
 
-#: ../../lib/storedatabase.py:277
+#: ../../lib/storedatabase.py:284
 msgid "Database was created by a newer version of Miro "
 msgstr "Databasen oppretta av ein nyare versjon av Miro "
 
-#: ../../lib/storedatabase.py:666
+#: ../../lib/storedatabase.py:673
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "Lagring av %(appname)s-database fullførd"
 
-#: ../../lib/storedatabase.py:668
+#: ../../lib/storedatabase.py:675
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr "Databasen er lagra. Du kan no trygt avslutta utan å mista data."
 
-#: ../../lib/storedatabase.py:729
+#: ../../lib/storedatabase.py:736
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "Feil ved lagring av %(appname)s-database"
 
-#: ../../lib/storedatabase.py:732
+#: ../../lib/storedatabase.py:739
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -1072,23 +1132,23 @@ msgstr ""
 "Feil: %(error_text)s\n"
 "\n"
 
-#: ../../lib/item.py:1215
+#: ../../lib/item.py:1214
 msgid "no title"
 msgstr "namnlaus"
 
-#: ../../lib/item.py:1254
+#: ../../lib/item.py:1256 ../../lib/item.py:1263
 msgid "Contents appear in the library"
 msgstr "Innhaldet vert vist i biblioteket"
 
-#: ../../lib/item.py:1259
+#: ../../lib/item.py:1267
 msgid "Contents:"
 msgstr "Innhald:"
 
-#: ../../lib/item.py:1496
+#: ../../lib/item.py:1498
 msgid "starting up..."
 msgstr "startar …"
 
-#: ../../lib/controller.py:144 ../../lib/controller.py:165
+#: ../../lib/controller.py:139 ../../lib/controller.py:160
 msgid "Sending Crash Report"
 msgstr ""
 
@@ -1119,90 +1179,90 @@ msgid_plural "%(num).0f days"
 msgstr[0] "%(num).0f dag"
 msgstr[1] "%(num).0f dagar"
 
-#: ../../lib/displaytext.py:80
+#: ../../lib/displaytext.py:81
 #, python-format
 msgid "%(num).0f hr"
 msgid_plural "%(num).0f hrs"
 msgstr[0] "%(num).0f time"
 msgstr[1] "%(num).0f timar"
 
-#: ../../lib/displaytext.py:83
+#: ../../lib/displaytext.py:85
 #, python-format
 msgid "%(num).0f min"
 msgid_plural "%(num).0f mins"
 msgstr[0] "%(num).0f minutt"
 msgstr[1] "%(num).0f minutt"
 
-#: ../../lib/displaytext.py:86
+#: ../../lib/displaytext.py:88
 #, python-format
 msgid "%(num)d sec"
 msgid_plural "%(num)d secs"
 msgstr[0] "%(num)d sekund"
 msgstr[1] "%(num)d sekund"
 
-#: ../../lib/displaytext.py:100
+#: ../../lib/displaytext.py:102
 #, python-format
 msgid "%(size)s GB"
 msgstr ""
 
-#: ../../lib/displaytext.py:103
+#: ../../lib/displaytext.py:105
 #, python-format
 msgid "%(size)s MB"
 msgstr ""
 
-#: ../../lib/displaytext.py:106
+#: ../../lib/displaytext.py:108
 #, python-format
 msgid "%(size)s KB"
 msgstr ""
 
-#: ../../lib/displaytext.py:108
+#: ../../lib/displaytext.py:110
 #, python-format
 msgid "%(size)s B"
 msgstr ""
 
-#: ../../lib/displaytext.py:113
+#: ../../lib/displaytext.py:115
 #, python-format
 msgid "Expires in %(count)d day"
 msgid_plural "Expires in %(count)d days"
 msgstr[0] "Utgår om %(count)d dag"
 msgstr[1] "Utgår om %(count)d dagar"
 
-#: ../../lib/displaytext.py:118
+#: ../../lib/displaytext.py:120
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
 msgstr[0] "Utgår om %(count)d time"
 msgstr[1] "Utgår om %(count)d timar"
 
-#: ../../lib/displaytext.py:123
+#: ../../lib/displaytext.py:125
 #, python-format
 msgid "Expires in %(count)d minute"
 msgid_plural "Expires in %(count)d minutes"
 msgstr[0] "Utgår om %(count)d minutt"
 msgstr[1] "Utgår om %(count)d minutt"
 
-#: ../../lib/displaytext.py:131
+#: ../../lib/displaytext.py:133
 #, python-format
 msgid "Expires: %(count)d day"
 msgid_plural "Expires: %(count)d days"
 msgstr[0] "Utgår: %(count)d dag"
 msgstr[1] "Utgår: %(count)d dagar"
 
-#: ../../lib/displaytext.py:136
+#: ../../lib/displaytext.py:138
 #, python-format
 msgid "Expires: %(count)d hour"
 msgid_plural "Expires: %(count)d hours"
 msgstr[0] "Utgår: %(count)d time"
 msgstr[1] "Utgår: %(count)d timar"
 
-#: ../../lib/displaytext.py:141
+#: ../../lib/displaytext.py:143
 #, python-format
 msgid "Expires: %(count)d minute"
 msgid_plural "Expires: %(count)d minutes"
 msgstr[0] "Utgår: %(count)d minutt"
 msgstr[1] "Utgår: %(count)d minutt"
 
-#: ../../lib/displaytext.py:158
+#: ../../lib/displaytext.py:160
 #, python-format
 msgid "%(month)s %(dayofmonth)s, %(year)s"
 msgstr "%(dayofmonth)s. %(month)s %(year)s"
@@ -1293,7 +1353,7 @@ msgid "Download Torrent"
 msgstr "Last ned Torrent-fil"
 
 #: ../../lib/frontends/widgets/style.py:255
-#: ../../lib/dl_daemon/download.py:552
+#: ../../lib/dl_daemon/download.py:555
 msgid "Error"
 msgstr "Feil"
 
@@ -1302,7 +1362,7 @@ msgid "queued for autodownload"
 msgstr "i kø for autonedlasting"
 
 #: ../../lib/frontends/widgets/style.py:257
-#: ../../lib/frontends/widgets/style.py:1189
+#: ../../lib/frontends/widgets/style.py:1191
 #: ../../lib/frontends/widgets/itemlistwidgets.py:329
 #: ../../lib/frontends/widgets/itemlistcontroller.py:596
 msgid "Unplayed"
@@ -1313,7 +1373,7 @@ msgid "Currently Playing"
 msgstr "Spelast no"
 
 #: ../../lib/frontends/widgets/style.py:259
-#: ../../lib/frontends/widgets/style.py:1207
+#: ../../lib/frontends/widgets/style.py:1209
 #: ../../lib/frontends/widgets/itemlistwidgets.py:332
 msgid "Newly Available"
 msgstr "Nyleg tilgjengeleg"
@@ -1322,17 +1382,17 @@ msgstr "Nyleg tilgjengeleg"
 msgid "Stop seeding"
 msgstr "Stopp sending"
 
-#: ../../lib/frontends/widgets/style.py:589
-#: ../../lib/frontends/widgets/style.py:1200
+#: ../../lib/frontends/widgets/style.py:591
+#: ../../lib/frontends/widgets/style.py:1202
 msgid "paused"
 msgstr "pause"
 
-#: ../../lib/frontends/widgets/style.py:808
+#: ../../lib/frontends/widgets/style.py:810
 #, python-format
 msgid "Resume at %(resumetime)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:1070
+#: ../../lib/frontends/widgets/style.py:1072
 msgid "Remove from playlist"
 msgstr "Fjern frå speleliste"
 
@@ -1356,26 +1416,26 @@ msgstr "I denne:"
 msgid "Feed:"
 msgstr "Kjelde:"
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:95
+#: ../../lib/frontends/widgets/newsearchfeed.py:96
 msgid "Search engine:"
 msgstr "Søkjemotor:"
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:101
+#: ../../lib/frontends/widgets/newsearchfeed.py:102
 #: ../../lib/frontends/widgets/newfeed.py:60
 msgid "URL:"
 msgstr "Adresse:"
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:135
+#: ../../lib/frontends/widgets/newsearchfeed.py:136
 msgid "Add new feed to this section:"
 msgstr "Legg kjelda i denne kategorien:"
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:138
+#: ../../lib/frontends/widgets/newsearchfeed.py:139
 #: ../../lib/frontends/widgets/newfeed.py:72
 #: ../../lib/frontends/widgets/newfolder.py:71
 msgid "video"
 msgstr "video"
 
-#: ../../lib/frontends/widgets/newsearchfeed.py:139
+#: ../../lib/frontends/widgets/newsearchfeed.py:140
 #: ../../lib/frontends/widgets/newfeed.py:73
 #: ../../lib/frontends/widgets/newfolder.py:72
 msgid "audio"
@@ -1450,7 +1510,7 @@ msgid "Add _Feed"
 msgstr "Legg til _kjelde"
 
 #: ../../lib/frontends/widgets/menus.py:233
-#: ../../lib/frontends/widgets/application.py:573
+#: ../../lib/frontends/widgets/application.py:576
 msgid "Add Website"
 msgstr "Legg til nettside"
 
@@ -1651,7 +1711,7 @@ msgid "_Planet Miro"
 msgstr "_Planet Miro"
 
 #: ../../lib/frontends/widgets/menus.py:369
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:63
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:65
 #: ../../lib/frontends/widgets/itemcontextmenu.py:296
 msgid "Show Conversion Folder"
 msgstr ""
@@ -1758,17 +1818,17 @@ msgid "Auto Download"
 msgstr "Last ned automatisk"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:649
-#: ../../lib/frontends/widgets/prefpanel.py:311
+#: ../../lib/frontends/widgets/prefpanel.py:332
 msgid "All"
 msgstr "Alle"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:650
-#: ../../lib/frontends/widgets/prefpanel.py:310
+#: ../../lib/frontends/widgets/prefpanel.py:331
 msgid "New"
 msgstr "Nye"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:651
-#: ../../lib/frontends/widgets/prefpanel.py:312
+#: ../../lib/frontends/widgets/prefpanel.py:333
 msgid "Off"
 msgstr "Ingen"
 
@@ -1846,38 +1906,38 @@ msgstr "Feil ved vising av fil"
 msgid "The file %(filename)s was deleted from outside %(appname)s."
 msgstr "Fila «%(filename)s» vart sletta utanfrå %(appname)s."
 
-#: ../../lib/frontends/widgets/application.py:344
+#: ../../lib/frontends/widgets/application.py:347
 msgid "Open Files..."
 msgstr "Opna filer …"
 
-#: ../../lib/frontends/widgets/application.py:355
-#: ../../lib/frontends/widgets/application.py:360
+#: ../../lib/frontends/widgets/application.py:358
+#: ../../lib/frontends/widgets/application.py:363
 msgid "Open Files - Error"
 msgstr "Feil ved opning av filer"
 
-#: ../../lib/frontends/widgets/application.py:356
-#: ../../lib/frontends/widgets/application.py:644
+#: ../../lib/frontends/widgets/application.py:359
+#: ../../lib/frontends/widgets/application.py:647
 #, python-format
 msgid "File %(filename)s does not exist."
 msgstr "Fila «%(filename)s» finst ikkje."
 
-#: ../../lib/frontends/widgets/application.py:361
+#: ../../lib/frontends/widgets/application.py:364
 msgid "The following files do not exist:"
 msgstr "Desse filene finst ikkje:"
 
-#: ../../lib/frontends/widgets/application.py:398
+#: ../../lib/frontends/widgets/application.py:401
 msgid "New Download"
 msgstr "Ny nedlasting"
 
-#: ../../lib/frontends/widgets/application.py:399
+#: ../../lib/frontends/widgets/application.py:402
 msgid "Enter the URL of the item to download"
 msgstr "Skriv inn adressa til elementet du vil lasta ned"
 
-#: ../../lib/frontends/widgets/application.py:400
+#: ../../lib/frontends/widgets/application.py:403
 msgid "New Download - Invalid URL"
 msgstr "Ny nedlasting – ugyldig adresse"
 
-#: ../../lib/frontends/widgets/application.py:401
+#: ../../lib/frontends/widgets/application.py:404
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -1889,23 +1949,23 @@ msgstr ""
 "\n"
 "Skriv inn adressa til elementet du vil lasta ned."
 
-#: ../../lib/frontends/widgets/application.py:409
+#: ../../lib/frontends/widgets/application.py:412
 #, python-format
 msgid "%(appname)s is up to date"
 msgstr "%(appname)s er i nyaste versjon"
 
-#: ../../lib/frontends/widgets/application.py:411
+#: ../../lib/frontends/widgets/application.py:414
 #, python-format
 msgid "%(appname)s is up to date!"
 msgstr "%(appname)s er i nyaste versjon."
 
-#: ../../lib/frontends/widgets/application.py:435
+#: ../../lib/frontends/widgets/application.py:438
 msgid "Remove item"
 msgid_plural "Remove items"
 msgstr[0] "Fjern elementet"
 msgstr[1] "Fjern elementa"
 
-#: ../../lib/frontends/widgets/application.py:439
+#: ../../lib/frontends/widgets/application.py:442
 msgid ""
 "One of these items was not downloaded from a feed. Would you like to delete "
 "it or just remove it from the Library?"
@@ -1919,7 +1979,7 @@ msgstr[1] ""
 "Eitt eller fleire av desse elementa vart ikkje lasta ned frå ei kjelde. Vil "
 "du sletta filene, eller berre fjerna oppføringane frå biblioteket?"
 
-#: ../../lib/frontends/widgets/application.py:449
+#: ../../lib/frontends/widgets/application.py:452
 msgid ""
 "One of these items is a folder.  Delete/Removeing a folder will "
 "delete/remove it's contents"
@@ -1933,14 +1993,14 @@ msgstr[1] ""
 "Nokre av desse elementa er mapper. Når du fjernar/slettar ei mappe, vert òg "
 "alt innhaldet i mappa fjerna/sletta."
 
-#: ../../lib/frontends/widgets/application.py:464
+#: ../../lib/frontends/widgets/application.py:467
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
 msgstr[0] "Er du sikker på at du vil fjerna dette elementet?"
 msgstr[1] "Er du sikker på at du vil fjerna alle %(count)d elementa?"
 
-#: ../../lib/frontends/widgets/application.py:471
+#: ../../lib/frontends/widgets/application.py:474
 msgid ""
 "One of these items is a folder.  Deleting a folder will delete it's contents"
 msgid_plural ""
@@ -1952,19 +2012,19 @@ msgstr[1] ""
 "Nokre av desse elementa er mapper. Når du slettar ei mappe, vert òg alt "
 "innhaldet i mappa sletta."
 
-#: ../../lib/frontends/widgets/application.py:515
+#: ../../lib/frontends/widgets/application.py:518
 msgid "Save Item As..."
 msgstr "Lagra element som …"
 
-#: ../../lib/frontends/widgets/application.py:574
+#: ../../lib/frontends/widgets/application.py:577
 msgid "Enter the URL of the website to add"
 msgstr "Skriv inn adressa til nettsida du vil leggja til"
 
-#: ../../lib/frontends/widgets/application.py:575
+#: ../../lib/frontends/widgets/application.py:578
 msgid "Add Website - Invalid URL"
 msgstr "Legg til nettside - Ugyldig nettadresse"
 
-#: ../../lib/frontends/widgets/application.py:576
+#: ../../lib/frontends/widgets/application.py:579
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -1975,130 +2035,130 @@ msgstr ""
 "Kontroller adressa og prøv igjen.\n"
 "Skriv inn adressa til nettsida du vil leggja til"
 
-#: ../../lib/frontends/widgets/application.py:634
+#: ../../lib/frontends/widgets/application.py:637
 msgid "Import OPML File"
 msgstr "Importer OPML-fil"
 
-#: ../../lib/frontends/widgets/application.py:636
+#: ../../lib/frontends/widgets/application.py:639
 msgid "OPML Files"
 msgstr "OPML-filer"
 
-#: ../../lib/frontends/widgets/application.py:643
+#: ../../lib/frontends/widgets/application.py:646
 msgid "Import OPML File - Error"
 msgstr "Importer OPML-fil – feil"
 
-#: ../../lib/frontends/widgets/application.py:649
+#: ../../lib/frontends/widgets/application.py:652
 msgid "Export OPML File"
 msgstr "Eksporter OPML-fil"
 
-#: ../../lib/frontends/widgets/application.py:673
+#: ../../lib/frontends/widgets/application.py:676
 msgid "Create Playlist"
 msgstr "Lag speleliste"
 
-#: ../../lib/frontends/widgets/application.py:674
+#: ../../lib/frontends/widgets/application.py:677
 msgid "Enter a name for the new playlist"
 msgstr "Skriv inn namn på den nye spelelista"
 
-#: ../../lib/frontends/widgets/application.py:695
+#: ../../lib/frontends/widgets/application.py:698
 msgid "Create Playlist Folder"
 msgstr "Lag spelelistemappe"
 
-#: ../../lib/frontends/widgets/application.py:696
+#: ../../lib/frontends/widgets/application.py:699
 msgid "Enter a name for the new playlist folder"
 msgstr "Skriv inn namn på den nye spelelistemappa"
 
-#: ../../lib/frontends/widgets/application.py:717
+#: ../../lib/frontends/widgets/application.py:720
 #: ../../lib/frontends/widgets/tablist.py:705
 msgid "Rename Feed Folder"
 msgstr "Endra namn på kjeldemappe"
 
-#: ../../lib/frontends/widgets/application.py:718
+#: ../../lib/frontends/widgets/application.py:721
 #, python-format
 msgid "Enter a new name for the feed folder %(name)s"
 msgstr "Skriv inn nytt namn på kjeldemappa «%(name)s»"
 
-#: ../../lib/frontends/widgets/application.py:722
+#: ../../lib/frontends/widgets/application.py:725
 msgid "Rename Feed"
 msgstr "Endra namn på kjelde"
 
-#: ../../lib/frontends/widgets/application.py:723
+#: ../../lib/frontends/widgets/application.py:726
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
 msgstr "Skriv inn nytt namn på kjelda «%(name)s»"
 
-#: ../../lib/frontends/widgets/application.py:727
+#: ../../lib/frontends/widgets/application.py:730
 #: ../../lib/frontends/widgets/tablist.py:765 ../../lib/playlist.py:202
 msgid "Rename Playlist"
 msgstr "Endra namn på speleliste"
 
-#: ../../lib/frontends/widgets/application.py:728
+#: ../../lib/frontends/widgets/application.py:731
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr "Skriv inn nytt namn på spelelista «%(name)s»"
 
-#: ../../lib/frontends/widgets/application.py:732
+#: ../../lib/frontends/widgets/application.py:735
 #: ../../lib/frontends/widgets/tablist.py:759
 msgid "Rename Playlist Folder"
 msgstr "Endra namn på spelelistemappe"
 
-#: ../../lib/frontends/widgets/application.py:733
+#: ../../lib/frontends/widgets/application.py:736
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
 msgstr "Skriv inn nytt namn på spelelistemappa «%(name)s»"
 
-#: ../../lib/frontends/widgets/application.py:736
+#: ../../lib/frontends/widgets/application.py:739
 #: ../../lib/frontends/widgets/tablist.py:623
 msgid "Rename Website"
 msgstr "Byt namn på nettsida"
 
-#: ../../lib/frontends/widgets/application.py:737
+#: ../../lib/frontends/widgets/application.py:740
 #, python-format
 msgid "Enter a new name for the website %(name)s"
 msgstr "Skriv inn nytt namn for nettsida %(name)s"
 
-#: ../../lib/frontends/widgets/application.py:761
+#: ../../lib/frontends/widgets/application.py:764
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
 msgstr[0] "Fjern speleliste"
 msgstr[1] "Fjern spelelister"
 
-#: ../../lib/frontends/widgets/application.py:763
+#: ../../lib/frontends/widgets/application.py:766
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
 msgstr[0] "Er du sikker på at du vil fjerna denne spelelista?"
 msgstr[1] "Er du sikker på at du vil fjerna desse %(count)s spelelistene?"
 
-#: ../../lib/frontends/widgets/application.py:783
+#: ../../lib/frontends/widgets/application.py:786
 msgid "Remove website"
 msgid_plural "Remove websites"
 msgstr[0] "Fjern nettside"
 msgstr[1] "Fjern nettsider"
 
-#: ../../lib/frontends/widgets/application.py:785
+#: ../../lib/frontends/widgets/application.py:788
 #, python-format
 msgid "Are you sure you want to remove this website?"
 msgid_plural "Are you sure you want to remove these %(count)s websites?"
 msgstr[0] "Er du sikker på at du vil fjerna denne nettsida?"
 msgstr[1] "Er du sikker på at du vil fjerna desse %(count)s nettsidene?"
 
-#: ../../lib/frontends/widgets/application.py:821
-#: ../../lib/frontends/widgets/application.py:840
+#: ../../lib/frontends/widgets/application.py:824
+#: ../../lib/frontends/widgets/application.py:843
 msgid "Are you sure you want to quit?"
 msgstr "Er du sikker på at du vil avslutta?"
 
-#: ../../lib/frontends/widgets/application.py:823
+#: ../../lib/frontends/widgets/application.py:826
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] "Du har %(count)d uferdig nedlasting. Vil du likevel avslutta?"
 msgstr[1] "Du har %(count)d uferdige nedlastingar. Vil du likevel avslutta?"
 
-#: ../../lib/frontends/widgets/application.py:828
+#: ../../lib/frontends/widgets/application.py:831
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "Åtvar ved forsøk på å avslutta med uferdige nedlastingar"
 
-#: ../../lib/frontends/widgets/application.py:842
+#: ../../lib/frontends/widgets/application.py:845
 #, python-format
 msgid "You have %(count)d conversion in progress.  Quit anyway?"
 msgid_plural ""
@@ -2106,15 +2166,15 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:847
+#: ../../lib/frontends/widgets/application.py:850
 msgid "Warn me when I attempt to quit with conversions in progress"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1031
+#: ../../lib/frontends/widgets/application.py:1034
 msgid "Upgrading database"
 msgstr "Oppgraderer databasen"
 
-#: ../../lib/frontends/widgets/application.py:1199
+#: ../../lib/frontends/widgets/application.py:1231
 msgid "Message"
 msgstr "Melding"
 
@@ -2139,7 +2199,7 @@ msgid ""
 msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:151
-#: ../../lib/frontends/widgets/prefpanel.py:285
+#: ../../lib/frontends/widgets/prefpanel.py:306
 msgid "System default"
 msgstr ""
 
@@ -2148,7 +2208,7 @@ msgid "Update"
 msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:178
-#: ../../lib/frontends/widgets/prefpanel.py:291
+#: ../../lib/frontends/widgets/prefpanel.py:312
 msgid "Language:"
 msgstr ""
 
@@ -2209,7 +2269,7 @@ msgid "Search custom folders:"
 msgstr "Søk i sjølvvalde mapper:"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:269
-#: ../../lib/frontends/widgets/prefpanel.py:458
+#: ../../lib/frontends/widgets/prefpanel.py:479
 msgid "Change"
 msgstr "Endra"
 
@@ -2242,7 +2302,7 @@ msgstr[1] "fann %(count)s mediefiler"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:55
 #: ../../lib/frontends/widgets/feedsettingspanel.py:102
-#: ../../lib/frontends/widgets/prefpanel.py:626
+#: ../../lib/frontends/widgets/prefpanel.py:647
 msgid "never"
 msgstr "aldri"
 
@@ -2463,60 +2523,60 @@ msgstr "Hopp over"
 msgid "Open Externally"
 msgstr "Opna i anna program"
 
-#: ../../lib/frontends/widgets/displays.py:565
+#: ../../lib/frontends/widgets/displays.py:566
 #, python-format
 msgid "%(count)d Feed Folder Selected"
 msgid_plural "%(count)d Feed Folders Selected"
 msgstr[0] "%(count)d kjeldemappe vald"
 msgstr[1] "%(count)d kjeldemapper valde"
 
-#: ../../lib/frontends/widgets/displays.py:570
+#: ../../lib/frontends/widgets/displays.py:571
 #, python-format
 msgid "(contains %(count)d feed)"
 msgid_plural "(contains %(count)d feeds)"
 msgstr[0] "(inneheld %(count)d kjelde)"
 msgstr[1] "(inneheld %(count)d kjelder)"
 
-#: ../../lib/frontends/widgets/displays.py:576
+#: ../../lib/frontends/widgets/displays.py:577
 #, python-format
 msgid "%(count)d Playlist Folder Selected"
 msgid_plural "%(count)d Playlist Folders Selected"
 msgstr[0] "%(count)d spelelistemappe vald"
 msgstr[1] "%(count)d spelelistemapper valde"
 
-#: ../../lib/frontends/widgets/displays.py:581
+#: ../../lib/frontends/widgets/displays.py:582
 #, python-format
 msgid "(contains %(count)d playlist)"
 msgid_plural "(contains %(count)d playlist)"
 msgstr[0] "(inneheld %(count)d speleliste)"
 msgstr[1] "(inneheld %(count)d spelelister)"
 
-#: ../../lib/frontends/widgets/displays.py:591
+#: ../../lib/frontends/widgets/displays.py:592
 #, python-format
 msgid "%(count)d Feed Selected"
 msgid_plural "%(count)d Feeds Selected"
 msgstr[0] "%(count)d kjelde vald"
 msgstr[1] "%(count)d kjelder valde"
 
-#: ../../lib/frontends/widgets/displays.py:597
+#: ../../lib/frontends/widgets/displays.py:598
 #, python-format
 msgid "%(count)d Website Selected"
 msgid_plural "%(count)d Websites Selected"
 msgstr[0] "%(count)d nettside valt"
 msgstr[1] "%(count)d nettsider er valt"
 
-#: ../../lib/frontends/widgets/displays.py:603
+#: ../../lib/frontends/widgets/displays.py:604
 #, python-format
 msgid "%(count)d Playlist Selected"
 msgid_plural "%(count)d Playlists Selected"
 msgstr[0] "%(count)d speleliste vald"
 msgstr[1] "%(count)d spelelister valde"
 
-#: ../../lib/frontends/widgets/displays.py:610
+#: ../../lib/frontends/widgets/displays.py:611
 msgid "Delete All"
 msgstr "Slett alle"
 
-#: ../../lib/frontends/widgets/displays.py:614
+#: ../../lib/frontends/widgets/displays.py:615
 msgid "Put Into a New Folder"
 msgstr "Legg i ny mappe"
 
@@ -2541,41 +2601,45 @@ msgstr "Medietype:"
 msgid "Path:"
 msgstr "Sti:"
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:51
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:53
 #: ../../lib/frontends/widgets/statictabs.py:126
-#: ../../lib/frontends/widgets/prefpanel.py:705
+#: ../../lib/frontends/widgets/prefpanel.py:730
 msgid "Conversions"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:57
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:59
 msgid "Stop All Conversions"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:250
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:268
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:71
+msgid "Clear Finished Conversions"
+msgstr ""
+
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:275
 #, python-format
-msgid "Conversion to %s"
+msgid "Conversion to %(format)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:272
-msgid "FAILED!"
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:309
+#, python-format
+msgid "Failed: %(error)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:276
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:313
 msgid "Open log"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:278
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:315
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:334
 msgid "Clear"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:289
-#, python-format
-msgid "Pending conversion to %s"
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:326
+msgid "Completed"
 msgstr ""
 
 #: ../../lib/frontends/widgets/downloadscontroller.py:84
-#: ../../lib/frontends/widgets/prefpanel.py:701
+#: ../../lib/frontends/widgets/prefpanel.py:726
 msgid "Downloads"
 msgstr "Nedlastingar"
 
@@ -2743,7 +2807,7 @@ msgstr "Gammal speleliste:"
 msgid "New playlist:"
 msgstr "Ny speleliste:"
 
-#: ../../lib/frontends/widgets/dialogs.py:103
+#: ../../lib/frontends/widgets/dialogs.py:105
 msgid ""
 "Miro is upgrading your database of feeds and files.  This one-time process "
 "can take a long time if you have a large number of items in Miro (it can "
@@ -2753,7 +2817,7 @@ msgstr ""
 "er avhengig av talet på element i Miro  (det kan ta meir enn 30 minutt)."
 
 #: ../../lib/frontends/widgets/diagnostics.py:76
-#: ../../lib/frontends/widgets/gtk/trayicon.py:109
+#: ../../lib/frontends/widgets/gtk/trayicon.py:115
 msgid "Show"
 msgstr "Vis"
 
@@ -3001,151 +3065,151 @@ msgstr ""
 msgid "Miro Guide"
 msgstr "Miro-gaid"
 
-#: ../../lib/frontends/widgets/prefpanel.py:270
+#: ../../lib/frontends/widgets/prefpanel.py:291
 #, python-format
 msgid "Automatically run %(appname)s when I log in."
 msgstr "Køyr automatisk %(appname)s ved innlogging."
 
-#: ../../lib/frontends/widgets/prefpanel.py:274
+#: ../../lib/frontends/widgets/prefpanel.py:295
 msgid "Warn me if I attempt to quit with downloads in progress."
 msgstr "Åtvar ved forsøk på å avslutta med uferdige nedlastingar."
 
-#: ../../lib/frontends/widgets/prefpanel.py:278
+#: ../../lib/frontends/widgets/prefpanel.py:299
 msgid "Warn me if I attempt to quit with conversions in progress."
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:294
+#: ../../lib/frontends/widgets/prefpanel.py:315
 msgid "(Changing the language requires you to restart Miro.)"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:302
+#: ../../lib/frontends/widgets/prefpanel.py:323
 msgid "Every day"
 msgstr "Kvar dag"
 
-#: ../../lib/frontends/widgets/prefpanel.py:303
+#: ../../lib/frontends/widgets/prefpanel.py:324
 msgid "Every hour"
 msgstr "Kvar time"
 
-#: ../../lib/frontends/widgets/prefpanel.py:304
+#: ../../lib/frontends/widgets/prefpanel.py:325
 msgid "Every 30 minutes"
 msgstr "Kvar halvtime"
 
-#: ../../lib/frontends/widgets/prefpanel.py:305
+#: ../../lib/frontends/widgets/prefpanel.py:326
 msgid "Manually"
 msgstr "Manuelt"
 
-#: ../../lib/frontends/widgets/prefpanel.py:318
+#: ../../lib/frontends/widgets/prefpanel.py:339
 msgid "0"
 msgstr "0"
 
-#: ../../lib/frontends/widgets/prefpanel.py:319
+#: ../../lib/frontends/widgets/prefpanel.py:340
 msgid "20"
 msgstr "20"
 
-#: ../../lib/frontends/widgets/prefpanel.py:320
+#: ../../lib/frontends/widgets/prefpanel.py:341
 msgid "50"
 msgstr "50"
 
-#: ../../lib/frontends/widgets/prefpanel.py:321
+#: ../../lib/frontends/widgets/prefpanel.py:342
 msgid "100"
 msgstr "100"
 
-#: ../../lib/frontends/widgets/prefpanel.py:322
+#: ../../lib/frontends/widgets/prefpanel.py:343
 msgid "1000"
 msgstr "1000"
 
-#: ../../lib/frontends/widgets/prefpanel.py:328
+#: ../../lib/frontends/widgets/prefpanel.py:349
 msgid "Default settings for new feeds:"
 msgstr "Standardinnstillingar for nye kjelder:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:332
+#: ../../lib/frontends/widgets/prefpanel.py:353
 msgid "(These can be changed using the feed's settings button)"
 msgstr ""
 "(Du kan endra desse innstillingane med «Innstillingar»-knappen til kjelda.)"
 
-#: ../../lib/frontends/widgets/prefpanel.py:336
+#: ../../lib/frontends/widgets/prefpanel.py:357
 msgid "Check for new content:"
 msgstr "Sjå etter nytt innhald:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:341
+#: ../../lib/frontends/widgets/prefpanel.py:362
 msgid "Auto download setting:"
 msgstr "Last ned automatisk:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:347
+#: ../../lib/frontends/widgets/prefpanel.py:368
 msgid "Remember this many old items:"
 msgstr "Hugs så mange gamle element:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:348
+#: ../../lib/frontends/widgets/prefpanel.py:369
 msgid "(in addition to the current contents)"
 msgstr "(i tillegg til det gjeldande innhaldet)"
 
-#: ../../lib/frontends/widgets/prefpanel.py:361
+#: ../../lib/frontends/widgets/prefpanel.py:382
 msgid "Maximum number of manual downloads at a time:"
 msgstr "Øvre grense på manuelle nedlastingar på éin gong:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:368
+#: ../../lib/frontends/widgets/prefpanel.py:389
 msgid "Maximum number of auto-downloads at a time:"
 msgstr "Øvre grense på automatiske nedlastingar på éin gong:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:378
+#: ../../lib/frontends/widgets/prefpanel.py:399
 msgid "Bittorrent:"
 msgstr "BitTorrent"
 
-#: ../../lib/frontends/widgets/prefpanel.py:381
+#: ../../lib/frontends/widgets/prefpanel.py:402
 msgid "Limit upstream bandwidth to:"
 msgstr "Avgrens bandbreidd for opplasting til:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:392
-#: ../../lib/frontends/widgets/prefpanel.py:403
+#: ../../lib/frontends/widgets/prefpanel.py:413
+#: ../../lib/frontends/widgets/prefpanel.py:424
 msgid "KB/s"
 msgstr "KB/s"
 
-#: ../../lib/frontends/widgets/prefpanel.py:395
+#: ../../lib/frontends/widgets/prefpanel.py:416
 msgid "Limit downstream bandwidth to:"
 msgstr "Avgrens bandbreidd for nedlasting til:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:406
+#: ../../lib/frontends/widgets/prefpanel.py:427
 msgid "Limit torrent connections to:"
 msgstr "Avgrens Torrent-samband til:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:423
+#: ../../lib/frontends/widgets/prefpanel.py:444
 msgid "Starting port:"
 msgstr "Første port:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:427
+#: ../../lib/frontends/widgets/prefpanel.py:448
 msgid "Ending port:"
 msgstr "Siste port:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:433
+#: ../../lib/frontends/widgets/prefpanel.py:454
 msgid "Automatically forward ports.  (UPNP)"
 msgstr "Vidaresend automatisk portar (UPNP)."
 
-#: ../../lib/frontends/widgets/prefpanel.py:437
+#: ../../lib/frontends/widgets/prefpanel.py:458
 msgid "Ignore unencrypted connections."
 msgstr "Ignorer ukrypterte samband."
 
-#: ../../lib/frontends/widgets/prefpanel.py:441
+#: ../../lib/frontends/widgets/prefpanel.py:462
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr "Stopp Torrent-opplastingar når dette forholdet er nådd:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:463
+#: ../../lib/frontends/widgets/prefpanel.py:484
 msgid "Choose Movies Directory"
 msgstr "Vel videomappe"
 
-#: ../../lib/frontends/widgets/prefpanel.py:476
+#: ../../lib/frontends/widgets/prefpanel.py:497
 msgid "Directory not valid"
 msgstr "Ugyldig mappe"
 
-#: ../../lib/frontends/widgets/prefpanel.py:477
+#: ../../lib/frontends/widgets/prefpanel.py:498
 #, python-format
 msgid "Directory '%s' could not be created.  "
 msgstr "Klarte ikkje å oppretta mappa «%s».  "
 
-#: ../../lib/frontends/widgets/prefpanel.py:492
+#: ../../lib/frontends/widgets/prefpanel.py:513
 msgid "Migrate existing movies?"
 msgstr "Flytta lagra videoar?"
 
-#: ../../lib/frontends/widgets/prefpanel.py:493
+#: ../../lib/frontends/widgets/prefpanel.py:514
 #, python-format
 msgid ""
 "You've selected a new folder to download movies to.  Should %(appname)s "
@@ -3156,23 +3220,23 @@ msgstr ""
 "flytta ferdige nedlastingar der? (Filmar som er i ferd med å lastast ned "
 "vert ikkje flytta før dei er ferdig nedlasta.)"
 
-#: ../../lib/frontends/widgets/prefpanel.py:510
+#: ../../lib/frontends/widgets/prefpanel.py:531
 msgid "folder"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:516
+#: ../../lib/frontends/widgets/prefpanel.py:537
 msgid "visible"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:564
+#: ../../lib/frontends/widgets/prefpanel.py:585
 msgid "Add Watched Folder"
 msgstr "Legg til overvaka mappe"
 
-#: ../../lib/frontends/widgets/prefpanel.py:583
+#: ../../lib/frontends/widgets/prefpanel.py:604
 msgid "Store downloads in this folder:"
 msgstr "Lagra nedlastingar i denne mappa:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:590
+#: ../../lib/frontends/widgets/prefpanel.py:611
 msgid ""
 "Watch for new video and audio items in these folders and include them in "
 "library:"
@@ -3180,111 +3244,111 @@ msgstr ""
 "Sjå etter nye video- og lydelement i desse mappene og legg dei til i "
 "biblioteket:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:609
+#: ../../lib/frontends/widgets/prefpanel.py:630
 msgid "Keep at least this much free space on my drive:"
 msgstr "Ha alltid minst så mykje ledig plass att på disken:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:612
-#: ../../lib/frontends/widgets/prefpanel.py:618
+#: ../../lib/frontends/widgets/prefpanel.py:633
+#: ../../lib/frontends/widgets/prefpanel.py:639
 msgid "GB"
 msgstr "GB"
 
-#: ../../lib/frontends/widgets/prefpanel.py:621
+#: ../../lib/frontends/widgets/prefpanel.py:642
 msgid "1 day"
 msgstr "1 dag"
 
-#: ../../lib/frontends/widgets/prefpanel.py:622
+#: ../../lib/frontends/widgets/prefpanel.py:643
 msgid "3 days"
 msgstr "3 dagar"
 
-#: ../../lib/frontends/widgets/prefpanel.py:623
+#: ../../lib/frontends/widgets/prefpanel.py:644
 msgid "6 days"
 msgstr "6 dagar"
 
-#: ../../lib/frontends/widgets/prefpanel.py:624
+#: ../../lib/frontends/widgets/prefpanel.py:645
 msgid "10 days"
 msgstr "10 dagar"
 
-#: ../../lib/frontends/widgets/prefpanel.py:625
+#: ../../lib/frontends/widgets/prefpanel.py:646
 msgid "1 month"
 msgstr "1 månad"
 
-#: ../../lib/frontends/widgets/prefpanel.py:631
+#: ../../lib/frontends/widgets/prefpanel.py:652
 msgid "By default, video and audio items expire after:"
 msgstr "Som standard går video- og lydelement ut etter:"
 
-#: ../../lib/frontends/widgets/prefpanel.py:640
+#: ../../lib/frontends/widgets/prefpanel.py:661
 msgid "Play media in Miro."
 msgstr "Spel av media i Miro."
 
-#: ../../lib/frontends/widgets/prefpanel.py:641
+#: ../../lib/frontends/widgets/prefpanel.py:662
 msgid "Always play videos in a separate window."
 msgstr "Spel alltid videoane i eksterne vindauge."
 
-#: ../../lib/frontends/widgets/prefpanel.py:642
+#: ../../lib/frontends/widgets/prefpanel.py:663
 msgid ""
 "Resume playing a video or audio item from the point it was last stopped."
 msgstr ""
 "Hald fram med avspeling av av video- eller lydelement frå der du stoppa."
 
-#: ../../lib/frontends/widgets/prefpanel.py:644
+#: ../../lib/frontends/widgets/prefpanel.py:665
 msgid "Automatically enable movie subtitles when available."
 msgstr "Slå automatisk på underteksting når dei er tilgjengelege."
 
-#: ../../lib/frontends/widgets/prefpanel.py:647
+#: ../../lib/frontends/widgets/prefpanel.py:668
 msgid "Play video and audio items one after another"
 msgstr "Spel av video- og lydelement etter kvarandre"
 
-#: ../../lib/frontends/widgets/prefpanel.py:648
+#: ../../lib/frontends/widgets/prefpanel.py:669
 msgid "Stop after each video or audio item"
 msgstr "Stopp etter kvart video- eller lydelement"
 
-#: ../../lib/frontends/widgets/prefpanel.py:689
+#: ../../lib/frontends/widgets/prefpanel.py:711
 msgid "Allow this many concurrent conversions:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:690
+#: ../../lib/frontends/widgets/prefpanel.py:712
 msgid "(changing this will not apply to currently running conversions)"
 msgstr ""
 
-#: ../../lib/frontends/widgets/prefpanel.py:699
+#: ../../lib/frontends/widgets/prefpanel.py:724
 msgid "General"
 msgstr "Generelt"
 
-#: ../../lib/frontends/widgets/prefpanel.py:700
+#: ../../lib/frontends/widgets/prefpanel.py:725
 msgid "Feeds"
 msgstr "Kjelder"
 
-#: ../../lib/frontends/widgets/prefpanel.py:702
+#: ../../lib/frontends/widgets/prefpanel.py:727
 msgid "Folders"
 msgstr "Mapper"
 
-#: ../../lib/frontends/widgets/prefpanel.py:703
+#: ../../lib/frontends/widgets/prefpanel.py:728
 msgid "Disk space"
 msgstr "Diskplass"
 
-#: ../../lib/frontends/widgets/prefpanel.py:704
+#: ../../lib/frontends/widgets/prefpanel.py:729
 msgid "Playback"
 msgstr "Avspeling"
 
-#: ../../lib/frontends/widgets/prefpanel.py:709
+#: ../../lib/frontends/widgets/prefpanel.py:734
 msgid "Preferences"
 msgstr "Innstillingar"
 
-#: ../../lib/frontends/widgets/gtk/window.py:693
+#: ../../lib/frontends/widgets/gtk/window.py:716
 msgid "All files"
 msgstr "Alle filer"
 
-#: ../../lib/frontends/widgets/gtk/window.py:725
+#: ../../lib/frontends/widgets/gtk/window.py:748
 msgid "Choose"
 msgstr "Vel"
 
-#: ../../lib/frontends/widgets/gtk/window.py:742
+#: ../../lib/frontends/widgets/gtk/window.py:765
 #, python-format
 msgid "About %(appname)s"
 msgstr "Om %(appname)s"
 
-#: ../../lib/frontends/widgets/gtk/window.py:758
+#: ../../lib/frontends/widgets/gtk/window.py:781
 #, python-format
 msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
@@ -3293,27 +3357,27 @@ msgstr ""
 "%(copyright)s. Sjå fila «license.txt» for meir informasjon.\n"
 "%(trademark)s"
 
-#: ../../lib/frontends/widgets/gtk/trayicon.py:89
+#: ../../lib/frontends/widgets/gtk/trayicon.py:95
 #, python-format
 msgid "Play Next Unplayed (%(unplayed)d)"
 msgstr "Spel neste uspela (%(unplayed)d)"
 
-#: ../../lib/frontends/widgets/gtk/trayicon.py:93
+#: ../../lib/frontends/widgets/gtk/trayicon.py:99
 #, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
 msgstr "Spel alle uspela (%(unplayed)d)"
 
-#: ../../lib/frontends/widgets/gtk/trayicon.py:96
+#: ../../lib/frontends/widgets/gtk/trayicon.py:102
 #, python-format
 msgid "Pause All Downloads (%(downloading)d)"
 msgstr "Stopp alle nedlastingar mellombels (%(downloading)d)"
 
-#: ../../lib/frontends/widgets/gtk/trayicon.py:99
+#: ../../lib/frontends/widgets/gtk/trayicon.py:105
 #, python-format
 msgid "Resume All Downloads (%(paused)d)"
 msgstr "Hald fram med alle nedlastingar (%(paused)d)"
 
-#: ../../lib/frontends/widgets/gtk/trayicon.py:107
+#: ../../lib/frontends/widgets/gtk/trayicon.py:113
 msgid "Hide"
 msgstr "Gøym"
 
@@ -3346,158 +3410,171 @@ msgstr "Sprett ut"
 msgid "Enter a new name for the playlist %s"
 msgstr "Skriv inn nytt namn på spelelista «%s»"
 
-#: ../../lib/httpclient.py:91
+#: ../../lib/httpclient.py:90
 msgid "HTTP error"
 msgstr "HTTP-feil"
 
-#: ../../lib/httpclient.py:95
+#: ../../lib/httpclient.py:94
 #, python-format
 msgid "%(host)s closed connection"
 msgstr "%(host)s avbraut sambandet"
 
-#: ../../lib/httpclient.py:100
+#: ../../lib/httpclient.py:99
 #, python-format
 msgid "Host returned %(status)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:102
+#: ../../lib/httpclient.py:101
 msgid "Please retry later"
 msgstr ""
 
-#: ../../lib/httpclient.py:106
+#: ../../lib/httpclient.py:105
 #, python-format
 msgid "%(host)s doesn't support HTTP resume"
 msgstr ""
 
-#: ../../lib/httpclient.py:111
+#: ../../lib/httpclient.py:110
 #, python-format
 msgid "HTTP Redirection limit hit for %(url)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:118
+#: ../../lib/httpclient.py:116
+#, python-format
+msgid "Authorization failed for proxy: %(host)s:%(port)s"
+msgstr ""
+
+#: ../../lib/httpclient.py:124
 msgid "Got 404 status code"
 msgstr "Fekk statuskoden 404"
 
-#: ../../lib/httpclient.py:120
+#: ../../lib/httpclient.py:126
 #, python-format
 msgid "Host returned bad status code: %(code)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:126
+#: ../../lib/httpclient.py:132
 msgid "Authorization failed"
 msgstr "Feil ved godkjenning"
 
-#: ../../lib/httpclient.py:130
+#: ../../lib/httpclient.py:136
 msgid "Invalid URL"
 msgstr "Ugyldig adresse"
 
-#: ../../lib/httpclient.py:131
+#: ../../lib/httpclient.py:137
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
 msgstr "«%(url)s» er ikkje ei gyldig adresse"
 
-#: ../../lib/httpclient.py:136
+#: ../../lib/httpclient.py:142
 msgid "Unknow Host"
-msgstr ""
-
-#: ../../lib/httpclient.py:137
-#, python-format
-msgid "The domainname \"%(host)s\" couldn't be found"
 msgstr ""
 
 #: ../../lib/httpclient.py:143
 #, python-format
+msgid "The domainname \"%(host)s\" couldn't be found"
+msgstr ""
+
+#: ../../lib/httpclient.py:149
+#, python-format
 msgid "The file \"%(path)s\" doesn't exist"
 msgstr "Fila «%(path)s» finst ikkje"
 
-#: ../../lib/httpclient.py:147
+#: ../../lib/httpclient.py:153
 msgid "Read error"
 msgstr "Lesefeil"
 
-#: ../../lib/httpclient.py:148
+#: ../../lib/httpclient.py:154
 #, python-format
 msgid "Error while reading from \"%(path)s\""
 msgstr "Feil ved lesing frå «%(path)s»"
 
-#: ../../lib/httpclient.py:156 ../../lib/dl_daemon/download.py:671
+#: ../../lib/httpclient.py:162 ../../lib/dl_daemon/download.py:678
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr "Klarte ikkje skriva til %(filename)s"
 
-#: ../../lib/httpclient.py:158
+#: ../../lib/httpclient.py:164
 msgid "Write error"
 msgstr ""
 
-#: ../../lib/net.py:76
+#: ../../lib/httpclient.py:337
+msgid "Website"
+msgstr ""
+
+#: ../../lib/httpclient.py:342
+msgid "Proxy"
+msgstr ""
+
+#: ../../lib/net.py:75
 #, python-format
 msgid "Error: %(msg)s"
 msgstr "Feil: %(msg)s"
 
-#: ../../lib/net.py:92 ../../lib/net.py:98
+#: ../../lib/net.py:91 ../../lib/net.py:97
 msgid "Can't connect"
 msgstr "Kan ikkje kopla til"
 
-#: ../../lib/net.py:93
+#: ../../lib/net.py:92
 #, python-format
 msgid "Connection Error: %(msg)s"
 msgstr "Tilkoplingsfeil: %(msg)s"
 
-#: ../../lib/net.py:99
+#: ../../lib/net.py:98
 msgid "SSL connection error"
 msgstr "Feil ved SSL-tilkopling"
 
-#: ../../lib/net.py:103
+#: ../../lib/net.py:102
 msgid "Timeout"
 msgstr "Tidsavbrot"
 
-#: ../../lib/net.py:104
+#: ../../lib/net.py:103
 #, python-format
 msgid "Connection to %(host)s timed out"
 msgstr "Sambandet til %(host)s vart tidsavbrote"
 
-#: ../../lib/net.py:281
+#: ../../lib/net.py:280
 msgid "Unknown Error code"
 msgstr "Ukjend feilkode"
 
-#: ../../lib/net.py:313
+#: ../../lib/net.py:312
 msgid "Connection closed"
 msgstr "Sambandet stengt"
 
-#: ../../lib/dl_daemon/download.py:679 ../../lib/dl_daemon/download.py:823
+#: ../../lib/dl_daemon/download.py:686 ../../lib/dl_daemon/download.py:829
 msgid "Not enough disk space"
 msgstr "Ikkje nok diskplass"
 
-#: ../../lib/dl_daemon/download.py:680 ../../lib/dl_daemon/download.py:824
+#: ../../lib/dl_daemon/download.py:687 ../../lib/dl_daemon/download.py:830
 #, python-format
 msgid "%(amount)s MB required to store this video"
 msgstr "%(amount)s MB nødvendig for å lagra videoen"
 
-#: ../../lib/dl_daemon/download.py:711
+#: ../../lib/dl_daemon/download.py:717
 msgid "no content"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:850
+#: ../../lib/dl_daemon/download.py:856
 msgid "BitTorrent failure"
 msgstr "BitTorrent-feil"
 
-#: ../../lib/dl_daemon/download.py:851
+#: ../../lib/dl_daemon/download.py:857
 msgid "BitTorrent failed to startup"
 msgstr "Feil ved BitTorrent-start"
 
-#: ../../lib/dl_daemon/download.py:1063
+#: ../../lib/dl_daemon/download.py:1069
 msgid "Corrupt Torrent"
 msgstr "Ugyldig Torrent-fil"
 
-#: ../../lib/dl_daemon/download.py:1064
+#: ../../lib/dl_daemon/download.py:1070
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr "Torrent-fila på %(url)s var ikkje gyldig"
 
-#: ../../lib/dl_daemon/download.py:1095
+#: ../../lib/dl_daemon/download.py:1101
 msgid "Torrent file deleted"
 msgstr "Torrent-fil sletta"
 
-#: ../../lib/dl_daemon/download.py:1096
+#: ../../lib/dl_daemon/download.py:1102
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr "Torrent-fila vart sletta utanfor %(appname)s."
@@ -3852,6 +3929,20 @@ msgstr "Søk i alle"
 #~| msgid "View"
 #~ msgid "View:"
 #~ msgstr "Vis:"
+
+#, python-format
+#~| msgid ""
+#~| "Miro is not able to download a file at this URL:\n"
+#~| "\n"
+#~| "URL: %(url)s"
+#~ msgid ""
+#~ "%(appname)s is not able to download a file at this URL:\n"
+#~ "\n"
+#~ "URL: %(url)s"
+#~ msgstr ""
+#~ "%(appname)s klarte ikkje lasta ned fila på denne adressa:\n"
+#~ "\n"
+#~ "%(url)s"
 
 #~ msgid ""
 #~ "A new version of %(appname)s is available for download.\n"
