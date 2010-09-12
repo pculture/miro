@@ -29,13 +29,15 @@
 # statement from all source files in the program, then also delete it here.
 
 """
-This script is for importing a Launchpad export of .po files.
-It handles both the "full export" case and individual .po files.
-It:
+This script is for importing a Launchpad export of .po files.  It
+handles both the **full export** case and individual .po files.  It:
 
- * fixes the filenames to what Miro uses,
- * fixes some bugs we've seen in some of the translations, and
- * calls msgfmt on the .po files creating .mo files
+* extracts files form launchpad-export.tar.gz,
+* moves files from democracyplayer/* directory to the current one,
+* fixes the filenames to what Miro uses,
+* fixes some bugs we've seen in some of the translations,
+* calls msgfmt on the .po files creating .mo files, and
+* cleans up afterwards
 
 It's just a utility script.  If you find it needs additional bits,
 let us know.
@@ -46,6 +48,7 @@ import glob
 import os.path
 import os
 import glob
+import sys
 
 def get_files():
     return [mem for mem in os.listdir(".") if mem.endswith(".po")]
@@ -97,7 +100,12 @@ def build_catalogs():
         mofile = "%s.mo" % pofile[:-3]
         os.system("msgfmt %s -o %s" % (pofile, mofile))
 
-if __name__ == "__main__":
+def main(args):
+    if not os.path.exists("./launchpad-export.tar.gz"):
+        print "launchpad-export.tar.gz file not found."
+        print "Aborting."
+        return
+
     print "Extracting files...."
     subprocess.call(["tar", "-xzvf", "launchpad-export.tar.gz"])
     args = glob.glob("./democracyplayer/*")
@@ -116,3 +124,9 @@ if __name__ == "__main__":
     fix_ro_plurals()
     print "BUILDING .mo FILES...."
     build_catalogs()
+
+    print "Removing cruft...."
+    subprocess.call(["rm", "-rf", "democracyplayer", "launchpad-export.tar.gz", "democracyplayer.pot"])
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
