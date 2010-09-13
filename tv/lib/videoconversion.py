@@ -281,8 +281,12 @@ class VideoConversionManager(signals.SignalEmitter):
                 except KeyError:
                     logging.warn("Couldn't find task for key %s", msg['key'])
                     return
-                self.pending_tasks.remove(task)
-                self._notify_task_canceled(task)
+                try:
+                    self.pending_tasks.remove(task)
+                except ValueError:
+                    logging.warn("Task not in pending list: %s", msg['key'])
+                else:
+                    self._notify_task_canceled(task)
 
             elif msg['message'] == 'cancel_running':
                 try:
