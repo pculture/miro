@@ -253,7 +253,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     DOWNLOAD_TEXT = _("Download")
     DOWNLOAD_TORRENT_TEXT = _("Download Torrent")
     ERROR_TEXT = _("Error")
-    CANCEL_AUTO_DOWNLOAD = _("Cancel")
+    CANCEL_TEXT = _("Cancel")
     QUEUED_TEXT = _("Queued for Autodownload")
     UNPLAYED_TEXT = _("Unplayed")
     CURRENTLY_PLAYING_TEXT = _("Currently Playing")
@@ -737,8 +737,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             main_hbox.pack(cellpack.align_middle(button))
 
         elif self.data.pending_auto_dl:
-            text = self.CANCEL_AUTO_DOWNLOAD
-            hotspot = self._make_button(layout, text, 'cancel_auto_download')
+            hotspot = self._make_button(
+                layout, self.CANCEL_TEXT, 'cancel_auto_download')
             main_hbox.pack(cellpack.align_middle(cellpack.align_middle(hotspot)))
 
         else:
