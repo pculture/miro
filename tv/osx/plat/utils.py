@@ -147,14 +147,15 @@ def unicode_to_filename(filename, path = None):
     # nextFilename
     MAX_LEN = os.statvfs(path)[statvfs.F_NAMEMAX]-5
 
-    filename.replace('/','_').replace("\000","_").replace("\\","_").replace(":","_").replace("*","_").replace("?","_").replace("\"","_").replace("<","_").replace(">","_").replace("|","_")
+    for mem in ("/", "\000", "\\", ":", "*", "?", "\"", "<", ">", "|", "&"):
+        filename = filename.replace(mem, "_")
 
-    newFilename = filename.encode('utf-8','replace')
-    while len(newFilename) > MAX_LEN:
+    new_filename = filename.encode('utf-8','replace')
+    while len(new_filename) > MAX_LEN:
         filename = shortenFilename(filename)
-        newFilename = filename.encode('utf-8','replace')
+        new_filename = filename.encode('utf-8','replace')
 
-    return newFilename
+    return new_filename
 
 @returns_unicode
 def shortenFilename(filename):

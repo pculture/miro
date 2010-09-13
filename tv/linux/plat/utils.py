@@ -144,6 +144,24 @@ def utf8_to_filename(filename):
         raise ValueError("filename is not a str")
     return filename
 
+@returns_unicode
+def shorten_fn(filename):
+    check_u(filename)
+    first, last = os.path.splitext(filename)
+
+    if first:
+        return u"".join([first[:-1], last])
+
+    return unicode(last[:-1])
+
+def encode_fn(filename):
+    try:
+        return filename.encode(locale.getpreferredencoding())
+    except (SystemExit, KeyboardInterrupt):
+        raise
+    except:
+        return filename.encode('ascii', 'replace')
+
 @returns_binary
 def unicode_to_filename(filename, path=None):
     """Takes in a unicode string representation of a filename (NOT a
@@ -156,36 +174,18 @@ def unicode_to_filename(filename, path=None):
        is run, nor is it guaranteed to reverse the results of
        filename_to_unicode.
     """
-    @returns_unicode
-    def shorten_fn(filename):
-        check_u(filename)
-        first, last = os.path.splitext(filename)
-
-        if first:
-            return u"".join([first[:-1], last])
-
-        return unicode(last[:-1])
-
     check_u(filename)
     if path:
         check_b(path)
     else:
         path = os.getcwd()
 
-    # Keep this a little shorter than the max length, so we can run
-    # nextFilename
-    max_len = os.statvfs(path)[statvfs.F_NAMEMAX]-5
+    # keep this a little shorter than the max length, so we can
+    # add a number to the end
+    max_len = os.statvfs(path)[statvfs.F_NAMEMAX] - 5
 
     for mem in ("/", "\000", "\\", ":", "*", "?", "\"", "<", ">", "|", "&"):
         filename = filename.replace(mem, "_")
-
-    def encode_fn(filename):
-        try:
-            return filename.encode(locale.getpreferredencoding())
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            return filename.encode('ascii', 'replace')
 
     new_filename = encode_fn(filename)
 
