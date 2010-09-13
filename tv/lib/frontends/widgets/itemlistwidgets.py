@@ -489,7 +489,7 @@ class DownloadToolbar(DisplayToolbar):
         sep = separator.HSeparator((0.85, 0.85, 0.85), (0.95, 0.95, 0.95))
         vbox.pack_start(sep)
 
-        h = widgetset.HBox(spacing=10)
+        h = widgetset.HBox(spacing=5)
 
         self._free_disk_label = widgetset.Label("")
         self._free_disk_label.set_size(widgetconst.SIZE_SMALL)
