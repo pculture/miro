@@ -73,12 +73,15 @@ class VideoConverterInfo(object):
 
     def __init__(self, name, parser):
         self.name = name
+        self.mediatype = self._get_config_value(name, parser, "mediatype", {})
         self.identifier = self.NON_WORD_CHARS.sub("", name).lower()
         self.executable = self._get_config_value(name, parser, "executable", {})
         self.parameters = self._get_config_value(name, parser, "parameters", {})
         self.extension = self._get_config_value(name, parser, "extension", {})
         self.screen_size = self._get_config_value(name, parser, "ssize", {})
         self.platforms = self._get_config_value(name, parser, "only_on", {'only_on': None})
+        self.displayname = _("%(name)s (%(mediatype)s)",
+                             {"name": self.name, "mediatype": self.mediatype})
 
     def _get_config_value(self, section, parser, key, defaults):
         try:
@@ -112,6 +115,7 @@ class ConverterManager(object):
         """
         platform = config.get(prefs.APP_PLATFORM)
         groups = glob(path)
+        groups.sort()
         for group_definition in groups:
             parser = SafeConfigParser()
             definition_file = open(group_definition)
@@ -127,6 +131,7 @@ class ConverterManager(object):
                         ident = converter_info.identifier
                         self.converter_map[ident] = converter_info
                         group_converters.append(converter_info)
+                group_converters.sort(lambda a, b: cmp(a.name, b.name))
                 self.converters.append((defaults['name'], group_converters))
             finally:
                 definition_file.close()

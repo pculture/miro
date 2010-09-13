@@ -289,7 +289,7 @@ class ItemContextMenuHandler(object):
             for converter in section[1]:
                 def convert(converter=converter.identifier):
                     app.widgetapp.convert_items(converter)
-                convert_menu.append((converter.name, convert))
+                convert_menu.append((converter.displayname, convert))
             if index+1 < len(sections):
                 convert_menu.append(None)
         convert_menu.append(None)

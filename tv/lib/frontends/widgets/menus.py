@@ -360,7 +360,7 @@ def _get_convert_menu():
     for index, section in enumerate(sections):
         for converter in section[1]:
             handler_name = make_convert_handler(converter)
-            item = MenuItem(converter.name, handler_name,
+            item = MenuItem(converter.displayname, handler_name,
                             groups=["PlayablesSelected"])
             menu.append(item)
         if index+1 < len(sections):

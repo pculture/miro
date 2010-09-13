@@ -4,6 +4,7 @@ executable: ffmpeg
 extension: mp4
 ssize: 480x320
 parameters: -i {input} -acodec aac -ab 160000 -vcodec mpeg4 -b 1200kb -mbd 2 -cmp 2 -subcmp 2 -s {ssize} -r 20 {output}
+mediatype: video
             
 [iPhone]
 

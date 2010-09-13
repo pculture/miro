@@ -5,19 +5,30 @@ name: Other Devices and Formats
 executable: ffmpeg
 extension: mp4
 parameters: -i {input} -s 320x240 -b 512000 -ar 24000 -ab 64000 -f psp -r 29.97 {output}
+mediatype: video
             
-[Theora]
-executable: ffmpeg2theora
-extension: ogv
-parameters: --videoquality 8 --audioquality 6 --frontend -o {output} {input}
-
 [MP4]
 extension: mp4
 executable: ffmpeg
 extension: mp4
 parameters: -i {input} -f mp4 -vcodec mpeg4 -sameq -r 20 {output}
+mediatype: video
 
-[MP3 (Audio only)]
+[MP3]
 executable: ffmpeg
 extension: mp3
 parameters: -i {input} -f mp3 {output}
+mediatype: audio
+
+[Ogg Theora]
+executable: ffmpeg2theora
+extension: ogv
+parameters: --videoquality 8 --audioquality 6 --frontend -o {output} {input}
+mediatype: video
+
+[Ogg Vorbis]
+executable: ffmpeg
+extension: ogg
+parameters: -i {input} -vn -acodec vorbis -aq 60 {output}
+mediatype: audio
+
