@@ -736,11 +736,6 @@ class ItemRenderer(widgetset.CustomCellRenderer):
                         'show_local_file')
             main_hbox.pack(cellpack.align_middle(button))
 
-        elif self.data.pending_auto_dl:
-            hotspot = self._make_button(
-                layout, self.CANCEL_TEXT, 'cancel_auto_download')
-            main_hbox.pack(cellpack.align_middle(cellpack.align_middle(hotspot)))
-
         else:
             if self.data.mime_type == 'application/x-bittorrent':
                 text = self.DOWNLOAD_TORRENT_TEXT
@@ -749,6 +744,13 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             hotspot = self._make_button(layout, text, 'download',
                     icon=self.download_arrow)
             main_hbox.pack(cellpack.align_middle(cellpack.align_middle(hotspot)))
+
+            # if it's pending autodownload, we add a cancel button to
+            # cancel the autodownload
+            if self.data.pending_auto_dl:
+                hotspot = self._make_button(
+                    layout, self.CANCEL_TEXT, 'cancel_auto_download')
+                main_hbox.pack(cellpack.align_middle(cellpack.align_middle(hotspot)))
 
         # If we are going to display an emblem (unwatched, expiring, etc).
         # Then pack it now on to the stack, so the buttons and other things
