@@ -353,7 +353,7 @@ class VideoConversionCellRenderer(style.ItemRenderer):
         layout.set_text_color((1.0, 1.0, 1.0))
         progress = int(self.data.progress * 100)
         parts = ["%d%%" % progress]
-        eta = self.data.get_eta()
+        eta = self.data.eta
         if eta:
             parts.append(displaytext.time_string(eta))
         

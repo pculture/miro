@@ -1332,6 +1332,7 @@ class VideoConversionTaskInfo(object):
         self.error = task.error
         self.item_name = task.item_info.name
         self.item_thumbnail = task.item_info.thumbnail
+        self.eta = task.get_eta()
 
 class VideoConversionTasksList(FrontendMessage):
     """Send the current list of running and pending conversion tasks to the 
