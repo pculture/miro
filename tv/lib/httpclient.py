@@ -320,6 +320,7 @@ class CurlTransfer(object):
         self._filehandle = None
         self.resume_from = 0
         self.out_headers = {}
+        self.status_code = None
         self.http_auth_info = self.http_auth_scheme = None
 
     def start(self):
@@ -495,6 +496,7 @@ class CurlTransfer(object):
         code = self.handle.getinfo(pycurl.RESPONSE_CODE)
         if 300 <= code <= 399 and code != 301:
             self.saw_temporary_redirect = True
+        self.status_code = code
 
     def check_response_code(self, code):
         expected_codes = set([200])
@@ -635,14 +637,11 @@ class CurlTransfer(object):
             stats.download_total = int(getinfo(pycurl.CONTENT_LENGTH_DOWNLOAD))
         stats.upload_total = self.options.post_length
 
-        if self.current_auth_type is None:
-            stats.downloaded = int(getinfo(pycurl.SIZE_DOWNLOAD))
-            stats.uploaded = int(getinfo(pycurl.SIZE_UPLOAD))
-            stats.download_rate = int(getinfo(pycurl.SPEED_DOWNLOAD))
-            stats.upload_rate = int(getinfo(pycurl.SPEED_UPLOAD))
-        else:
-            stats.downloaded = stats.uploaded = 0
-            stats.download_rate = stats.upload_rate = 0
+        stats.downloaded = int(getinfo(pycurl.SIZE_DOWNLOAD))
+        stats.uploaded = int(getinfo(pycurl.SIZE_UPLOAD))
+        stats.download_rate = int(getinfo(pycurl.SPEED_DOWNLOAD))
+        stats.upload_rate = int(getinfo(pycurl.SPEED_UPLOAD))
+        stats.status_code = self.status_code
         stats.initial_size = self.resume_from
 
         return stats
@@ -666,6 +665,7 @@ class TransferStats(object):
     """Holds data about a lib curl transfer.
 
     Attributes:
+        status_code -- HTTP status code (or None if we haven't seen one yet)
         downloaded -- current bytes downloaded
         uploaded -- current bytes uploaded
         download_total -- total bytes to download (or -1 if we don't know)

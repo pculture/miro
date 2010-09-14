@@ -738,8 +738,11 @@ class HTTPDownloader(BGDownloader):
         if self.client is None or self.state != 'downloading':
             return
         stats = self.client.get_stats()
-        self.currentSize = stats.downloaded + stats.initial_size
-        self.rate = stats.download_rate
+        if stats.status_code in (200, 206):
+            self.currentSize = stats.downloaded + stats.initial_size
+            self.rate = stats.download_rate
+        else:
+            self.currentSize = self.rate = 0
         eventloop.add_timeout(self.CHECK_STATS_TIMEOUT, self.update_stats,
                 'update http downloader stats')
         DOWNLOAD_UPDATER.queue_update(self)
