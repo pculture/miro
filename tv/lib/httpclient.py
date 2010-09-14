@@ -635,7 +635,7 @@ class CurlTransfer(object):
             stats.download_total = int(getinfo(pycurl.CONTENT_LENGTH_DOWNLOAD))
         stats.upload_total = self.options.post_length
 
-        if self.current_auth_type is not None:
+        if self.current_auth_type is None:
             stats.downloaded = int(getinfo(pycurl.SIZE_DOWNLOAD))
             stats.uploaded = int(getinfo(pycurl.SIZE_UPLOAD))
             stats.download_rate = int(getinfo(pycurl.SPEED_DOWNLOAD))
