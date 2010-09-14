@@ -77,6 +77,7 @@ class ClickableLabel(Widget):
         self.wrapped_widget_connect('button-release-event', self.on_click)
         self.wrapped_widget_connect('enter-notify-event', self.on_enter_notify)
         self.wrapped_widget_connect('leave-notify-event', self.on_leave_notify)
+        self.wrapped_widget_connect('unmap', self.on_unmap)
         self.create_signal('clicked')
 
     def on_click(self, widget, event):
@@ -87,6 +88,10 @@ class ClickableLabel(Widget):
         self._widget.window.set_cursor(gtk.gdk.Cursor(gtk.gdk.HAND1))
 
     def on_leave_notify(self, widget, event):
+        if self._widget.window:
+            self._widget.window.set_cursor(None)
+
+    def on_unmap(self, widget):
         if self._widget.window:
             self._widget.window.set_cursor(None)
 
