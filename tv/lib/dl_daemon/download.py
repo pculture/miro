@@ -538,7 +538,8 @@ class BGDownloader(object):
         if isinstance(error, httpclient.NetworkError):
             if (isinstance(error, httpclient.MalformedURL)
                  or isinstance(error, httpclient.UnknownHostError)
-                 or isinstance(error, httpclient.ProxyAuthenticationError)
+                 or isinstance(error, httpclient.AuthorizationFailed)
+                 or isinstance(error, httpclient.ProxyAuthorizationFailed)
                  or isinstance(error, httpclient.UnexpectedStatusCode)):
                 self.handle_error(error.getFriendlyDescription(),
                                   error.getLongDescription())

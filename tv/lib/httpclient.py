@@ -130,6 +130,7 @@ class UnexpectedStatusCode(HTTPError):
 class AuthorizationFailed(HTTPError):
     def __init__(self):
         HTTPError.__init__(self, _("Authorization failed"))
+        self.friendlyDescription = _("Authorization failed")
 
 class MalformedURL(NetworkError):
     def __init__(self, url):
@@ -304,7 +305,6 @@ class CurlTransfer(object):
         self.content_check_callback = content_check_callback
         self.errback = errback
         self.auth_attempts = {'http': 0, 'proxy': 0}
-        self.current_auth_type = None
         self.canceled = False
 
         self.stats = TransferStats()
@@ -313,6 +313,7 @@ class CurlTransfer(object):
     def _reset_transfer_data(self):
         self.headers = {}
         self.handle = None
+        self.current_auth_type = None
         self.buffer = StringIO()
         self.saw_temporary_redirect = False
         self.headers_finished = False
@@ -376,8 +377,9 @@ class CurlTransfer(object):
         if auth is None:
             self.handle_auth_failure()
         else:
+            auth_type = self.current_auth_type
             self._reset_transfer_data()
-            if self.current_auth_type == 'http':
+            if auth_type == 'http':
                 self._set_http_auth(auth)
             else:
                 config.set(prefs.HTTP_PROXY_AUTHORIZATION_ACTIVE, True)
@@ -629,13 +631,18 @@ class CurlTransfer(object):
         stats = TransferStats()
         getinfo = self.handle.getinfo # for easy typing
 
-        stats.downloaded = int(getinfo(pycurl.SIZE_DOWNLOAD))
-        stats.uploaded = int(getinfo(pycurl.SIZE_UPLOAD))
         if 'content-length' in self.headers:
             stats.download_total = int(getinfo(pycurl.CONTENT_LENGTH_DOWNLOAD))
         stats.upload_total = self.options.post_length
-        stats.download_rate = int(getinfo(pycurl.SPEED_DOWNLOAD))
-        stats.upload_rate = int(getinfo(pycurl.SPEED_UPLOAD))
+
+        if self.current_auth_type is not None:
+            stats.downloaded = int(getinfo(pycurl.SIZE_DOWNLOAD))
+            stats.uploaded = int(getinfo(pycurl.SIZE_UPLOAD))
+            stats.download_rate = int(getinfo(pycurl.SPEED_DOWNLOAD))
+            stats.upload_rate = int(getinfo(pycurl.SPEED_UPLOAD))
+        else:
+            stats.downloaded = stats.uploaded = 0
+            stats.download_rate = stats.upload_rate = 0
         stats.initial_size = self.resume_from
 
         return stats
