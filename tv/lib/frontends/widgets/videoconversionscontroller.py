@@ -106,8 +106,8 @@ class VideoConversionsController(object):
         
     def on_hotspot_clicked(self, table_view, name, itr):
         task = table_view.model[itr][0]
-        if name == 'cancel' and task.state == 'pending':
-            conversion_manager.cancel_pending(task.key)
+        if name == 'cancel' or name == 'interrupt':
+            conversion_manager.cancel(task.key)
         elif name == 'open-log' and task.state == 'failed':
             if task.log_path is not None:
                 app.widgetapp.open_file(task.log_path)
@@ -117,8 +117,6 @@ class VideoConversionsController(object):
             conversion_manager.clear_failed_task(task.key)
         elif name == 'clear-finished' and task.state == 'finished':
             conversion_manager.clear_finished_task(task.key)
-        elif name == 'interrupt' and task.state == 'running':
-            conversion_manager.cancel_running(task.key)
         elif name == 'reveal' and task.state == 'finished':
             app.widgetapp.reveal_file(task.output_path)
 
@@ -138,27 +136,21 @@ class VideoConversionsController(object):
             self.table.model_changed()
         self._update_buttons_state()
     
-    def handle_all_tasks_canceled(self):
+    def handle_all_tasks_removed(self):
         for key in self.iter_map.keys():
             itr = self.iter_map.pop(key)
             self.model.remove(itr)
         self.table.model_changed()
         self._update_buttons_state()
     
-    def handle_task_canceled(self, task):
+    def handle_task_removed(self, task):
         if task.key in self.iter_map:
             itr = self.iter_map.pop(task.key)
             self.model.remove(itr)
             self.table.model_changed()
             self._update_buttons_state()
     
-    def handle_task_progress(self, task):
-        if task.key in self.iter_map:
-            itr = self.iter_map[task.key]
-            self.model.update_value(itr, 0, task)
-            self.table.model_changed()
-    
-    def handle_task_completed(self, task):
+    def handle_task_changed(self, task):
         if task.key in self.iter_map:
             itr = self.iter_map[task.key]
             self.model.update_value(itr, 0, task)

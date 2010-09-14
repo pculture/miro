@@ -1355,25 +1355,22 @@ class VideoConversionTaskCreated(FrontendMessage):
     def __init__(self, task):
         self.task = task
 
-class VideoConversionTaskCanceled(FrontendMessage):
-    """Informs the frontend that a conversion task has been canceled.
+class VideoConversionTaskRemoved(FrontendMessage):
+    """Informs the frontend that a conversion task has been removed.
     """
     def __init__(self, task):
         self.task = task
 
-class AllVideoConversionTaskCanceled(FrontendMessage):
-    """Informs the frontend that all conversion tasks have been canceled.
+class AllVideoConversionTaskRemoved(FrontendMessage):
+    """Informs the frontend that all conversion tasks have been removed.
     """
     pass
 
-class VideoConversionTaskProgressed(FrontendMessage):
-    """Informs the frontend that a conversion task progressed.
-    """
-    def __init__(self, task):
-        self.task = task
+class VideoConversionTaskChanged(FrontendMessage):
+    """Informs the frontend that a conversion task has changed.
 
-class VideoConversionTaskCompleted(FrontendMessage):
-    """Informs the frontend that a conversion task has been completed.
+    This is sent when a conversion task changes state, or when a running task
+    changes it's progress.
     """
     def __init__(self, task):
         self.task = task

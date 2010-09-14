@@ -176,11 +176,8 @@ class VideoConversionManager(signals.SignalEmitter):
     def cancel_all(self):
         self._enqueue_message("cancel_all")
     
-    def cancel_running(self, key):
-        self._enqueue_message("cancel_running", key=key)
-    
-    def cancel_pending(self, key):
-        self._enqueue_message("cancel_pending", key=key)
+    def cancel(self, key):
+        self._enqueue_message("cancel", key=key)
 
     def clear_finished_conversions(self):
         self._enqueue_message("clear_all_finished")
@@ -209,6 +206,7 @@ class VideoConversionManager(signals.SignalEmitter):
         if task is not None and task.get_executable() is not None:
             self._check_task_loop()
             self.pending_tasks.append(task)
+            self._notify_task_added(task)
     
     def _enqueue_message(self, message, **kw):
         msg = {'message': message}
@@ -253,17 +251,18 @@ class VideoConversionManager(signals.SignalEmitter):
             task = self.pending_tasks.pop()
             if not self._has_running_task(task.key):
                 self.running_tasks.append(task)
-                self._notify_task_added(task)
                 task.run()
+                self._notify_task_changed(task)
                 notify_count = True
 
         for task in list(self.running_tasks):
-            if task.is_finished():
-                self.schedule_staging(task.key)
-                self._notify_task_completed(task)
+            if task.done_running():
+                self._notify_task_changed(task)
                 self.running_tasks.remove(task)
                 self.finished_tasks.append(task)
                 notify_count = True
+                if task.is_finished():
+                    self.schedule_staging(task.key)
         
         if notify_count:
             self._notify_tasks_count()
@@ -275,33 +274,30 @@ class VideoConversionManager(signals.SignalEmitter):
             if msg['message'] == 'get_tasks_list':
                 self._notify_tasks_list()
 
-            elif msg['message'] == 'cancel_pending':
+            elif msg['message'] == 'cancel':
                 try:
                     task = self._lookup_task(msg['key'])
                 except KeyError:
                     logging.warn("Couldn't find task for key %s", msg['key'])
                     return
-                try:
-                    self.pending_tasks.remove(task)
-                except ValueError:
-                    logging.warn("Task not in pending list: %s", msg['key'])
+                if task.is_pending():
+                    task_list = self.pending_tasks
+                elif task.is_running():
+                    task_list = self.running_tasks
                 else:
-                    self._notify_task_canceled(task)
-
-            elif msg['message'] == 'cancel_running':
+                    task_list = self.finished_tasks
                 try:
-                    task = self._lookup_task(msg['key'])
-                except KeyError:
-                    logging.warn("Couldn't find task for key %s", msg['key'])
-                    return
-                task.interrupt()
-                self.running_tasks.remove(task)
-                self._notify_task_canceled(task)
-                self._notify_tasks_count()
+                    task_list.remove(task)
+                except ValueError:
+                    logging.warn("Task not in list: %s (state: %s)",
+                            msg['key'], task.state)
+                else:
+                    self._notify_task_removed(task)
+                    self._notify_tasks_count()
 
             elif msg['message'] == 'clear_all_finished':
                 for task in self.finished_tasks:
-                    self._notify_task_canceled(task)
+                    self._notify_task_removed(task)
                 self.finished_tasks = []
                 self._notify_tasks_count()
 
@@ -312,7 +308,7 @@ class VideoConversionManager(signals.SignalEmitter):
                     logging.warn("Couldn't find task for key %s", msg['key'])
                     return
                 self.finished_tasks.remove(task)
-                self._notify_task_canceled(task)
+                self._notify_task_removed(task)
                 self._notify_tasks_count()
 
             elif msg['message'] == 'cancel_all':
@@ -385,18 +381,18 @@ class VideoConversionManager(signals.SignalEmitter):
         message = messages.VideoConversionTaskCreated(info)
         message.send_to_frontend()
 
-    def _notify_task_canceled(self, task):
+    def _notify_task_removed(self, task):
         info = messages.VideoConversionTaskInfo(task)
-        message = messages.VideoConversionTaskCanceled(info)
+        message = messages.VideoConversionTaskRemoved(info)
         message.send_to_frontend()
     
-    def _notify_all_tasks_canceled(self):
-        message = messages.AllVideoConversionTaskCanceled()
+    def _notify_all_tasks_removed(self):
+        message = messages.AllVideoConversionTaskRemoved()
         message.send_to_frontend()
 
-    def _notify_task_completed(self, task):
+    def _notify_task_changed(self, task):
         info = messages.VideoConversionTaskInfo(task)
-        message = messages.VideoConversionTaskCompleted(info)
+        message = messages.VideoConversionTaskChanged(info)
         message.send_to_frontend()
     
     def _notify_tasks_count(self):
@@ -416,7 +412,7 @@ class VideoConversionManager(signals.SignalEmitter):
             for task in list(self.running_tasks):
                 self.running_tasks.remove(task)
                 task.interrupt()
-        self._notify_all_tasks_canceled()
+        self._notify_all_tasks_removed()
         self._notify_tasks_count()
         self.quit_flag = True
 
@@ -582,7 +578,7 @@ class VideoConversionTask(object):
     
     def _notify_progress(self):
         info = messages.VideoConversionTaskInfo(self)
-        message = messages.VideoConversionTaskProgressed(info)
+        message = messages.VideoConversionTaskChanged(info)
         message.send_to_frontend()
 
     def interrupt(self):

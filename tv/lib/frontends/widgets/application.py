@@ -1201,26 +1201,21 @@ class WidgetsMessageHandler(messages.MessageHandler):
         if isinstance(current_display, displays.VideoConversionsDisplay):
             current_display.controller.handle_task_added(message.task)
 
-    def handle_video_conversion_task_canceled(self, message):
+    def handle_video_conversion_task_removed(self, message):
         current_display = app.display_manager.get_current_display()
         if isinstance(current_display, displays.VideoConversionsDisplay):
-            current_display.controller.handle_task_canceled(message.task)
+            current_display.controller.handle_task_removed(message.task)
 
-    def handle_all_video_conversion_task_canceled(self, message):
+    def handle_all_video_conversion_task_removed(self, message):
         current_display = app.display_manager.get_current_display()
         if isinstance(current_display, displays.VideoConversionsDisplay):
-            current_display.controller.handle_all_tasks_canceled()
+            current_display.controller.handle_all_tasks_removed()
 
-    def handle_video_conversion_task_progressed(self, message):
+    def handle_video_conversion_task_changed(self, message):
         current_display = app.display_manager.get_current_display()
         if isinstance(current_display, displays.VideoConversionsDisplay):
-            current_display.controller.handle_task_progress(message.task)
+            current_display.controller.handle_task_changed(message.task)
     
-    def handle_video_conversion_task_completed(self, message):
-        current_display = app.display_manager.get_current_display()
-        if isinstance(current_display, displays.VideoConversionsDisplay):
-            current_display.controller.handle_task_completed(message.task)
-
     def handle_play_movie(self, message):
         app.playback_manager.start_with_items(message.item_infos)
 
