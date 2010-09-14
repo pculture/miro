@@ -250,6 +250,8 @@ class PlaybackManager (signals.SignalEmitter):
             self.stop()
 
     def play(self, start_at=0):
+        if not self.player:
+            return
         duration = self.player.get_total_playback_time()
         self.emit('will-play', duration)
         resume_time = self.playlist[self.position].resume_time
