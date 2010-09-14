@@ -363,6 +363,23 @@ class ItemList(signals.SignalEmitter):
         for row in rows:
             self._iter_map[row[0].id] = self.model.append(*row)
 
+    def _resort_item(self, info):
+        """Put an item into it's correct position using the current sort."""
+        itr = self._iter_map[info.id]
+        row = tuple(self.model[itr])
+        self.model.remove(itr)
+
+        itr = self.model.first_iter()
+        while itr is not None:
+            current_info = self.model[itr][0]
+            if(self._sorter.compare(info, current_info) < 1):
+                new_itr = self.model.insert_before(itr, *row)
+                break
+            itr = self.model.next_iter(itr)
+        else:
+            new_itr = self.model.append(*row)
+        self._iter_map[info.id] = new_itr
+
     def filter(self, item_info):
         """Can be overrided by subclasses to filter out items from the list.
         """
@@ -458,7 +475,12 @@ class ItemList(signals.SignalEmitter):
 
     def update_item(self, info):
         iter = self._iter_map[info.id]
+        old_item = self.model[iter][0]
         self.model.update_value(iter, 0, info)
+        if self._sorter.compare(info, old_item):
+            # If we've changed the sort value of the item, then we need to
+            # re-sort the list (#12003).
+            self._resort_item(info)
 
     def remove_items(self, id_list):
         for id in id_list:
