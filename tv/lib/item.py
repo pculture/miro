@@ -1904,6 +1904,8 @@ class FileItem(Item):
             self.releaseDateObj = datetime.fromtimestamp(
                 fileutil.getmtime(self.filename))
         except OSError:
+            logging.warn("Error setting release date:\n%s",
+                    traceback.format_exc())
             self.releaseDateObj = datetime.now()
 
     def get_release_date_obj(self):
