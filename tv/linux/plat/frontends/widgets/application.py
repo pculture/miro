@@ -54,6 +54,7 @@ from miro.plat import resources
 from miro.plat.frontends.widgets import mediakeys
 
 from miro.frontends.widgets.gtk.widgetset import Rect
+from miro.frontends.widgets.gtk import webkitgtkhacks
 
 import logging
 import sys
@@ -101,6 +102,7 @@ class LinuxApplication(Application):
         os.environ["PULSE_PROP_media.role"] = "video"
 
         gtk.gdk.threads_init()
+        self._setup_webkit()
         self.startup()
         set_properties(props_to_set)
 
@@ -127,6 +129,11 @@ class LinuxApplication(Application):
         self.mediakeyhandler = mediakeys.get_media_key_handler()
         gtk.main()
         app.controller.on_shutdown()
+
+    def _setup_webkit(self):
+        support_dir = config.get(prefs.SUPPORT_DIRECTORY)
+        cookie_path = os.path.join(support_dir, 'cookies.txt')
+        webkitgtkhacks.setup_cookie_storage(cookie_path)
 
     def on_pref_changed(self, key, value):
         """Any time a preference changes, this gets notified so that we

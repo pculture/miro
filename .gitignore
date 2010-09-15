@@ -19,6 +19,7 @@ tv/osx/Miro.app
 tv/osx/build
 tv/osx/miro-binary-kit-osx-*
 tv/lib/frontends/widgets/gtk/pygtkhacks.c
+tv/lib/frontends/widgets/gtk/webkitgtkhacks.c
 
 *pyc
 *~

@@ -266,6 +266,14 @@ pygtkhacks_ext = \
             'pygobject-2.0 gtk+-2.0 glib-2.0 gthread-2.0')
     )
 
+webkitgtkhacks_ext = \
+    Extension("miro.frontends.widgets.gtk.webkitgtkhacks",
+        [os.path.join(portable_frontend_dir, 'widgets', 'gtk',
+                      'webkitgtkhacks.pyx')],
+        **parse_pkg_config('pkg-config',
+            'gtk+-2.0 webkit-1.0')
+    )
+
 #### Build the data_files list ####
 def listfiles(path):
     return [f for f in glob(os.path.join(path, '*')) if os.path.isfile(f)]
@@ -471,6 +479,7 @@ class clean(Command):
 ext_modules = []
 ext_modules.append(xlib_ext)
 ext_modules.append(pygtkhacks_ext)
+ext_modules.append(webkitgtkhacks_ext)
 
 #### Run setup ####
 setup(name='miro',
