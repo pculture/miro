@@ -641,7 +641,7 @@ class FeedToolbar(DisplayToolbar):
         self.create_signal('auto-download-changed')
         hbox = widgetset.HBox(spacing=5)
 
-        label = widgetset.Label(_('Auto Download'))
+        label = widgetset.Label(_('Auto-download'))
         label.set_size(widgetconst.SIZE_SMALL)
         label.set_color(widgetset.TOOLBAR_GRAY)
         self.autodownload_label = widgetutil.HideableWidget(label)

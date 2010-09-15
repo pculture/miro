@@ -190,7 +190,7 @@ def _build_remember_items(channel, grid):
     grid.pack(widgetutil.build_hbox((lab, )), grid.ALIGN_LEFT)
 
 def _build_auto_download(channel, grid):
-    auto_download_cbx = widgetset.Checkbox(_("Pause Auto-Downloading when this many items are unplayed:"))
+    auto_download_cbx = widgetset.Checkbox(_("Pause auto-downloading when this many items are unplayed:"))
     grid.pack(auto_download_cbx, grid.ALIGN_RIGHT)
 
     max_new_options = [

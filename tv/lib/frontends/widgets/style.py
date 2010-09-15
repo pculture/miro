@@ -254,7 +254,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     DOWNLOAD_TORRENT_TEXT = _("Download Torrent")
     ERROR_TEXT = _("Error")
     CANCEL_TEXT = _("Cancel")
-    QUEUED_TEXT = _("Queued for Autodownload")
+    QUEUED_TEXT = _("Queued for Auto-download")
     UNPLAYED_TEXT = _("Unplayed")
     CURRENTLY_PLAYING_TEXT = _("Currently Playing")
     NEWLY_AVAILABLE_TEXT = _("Newly Available")

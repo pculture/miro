@@ -359,7 +359,7 @@ class FeedsPanel(PanelBuilder):
         grid.pack(cc_option_menu)
         grid.end_line(spacing=4)
 
-        grid.pack_label(_("Auto download setting:"),
+        grid.pack_label(_("Auto-download setting:"),
                 dialogwidgets.ControlGrid.ALIGN_RIGHT)
         grid.pack(ad_option_menu)
         grid.end_line(spacing=4)
