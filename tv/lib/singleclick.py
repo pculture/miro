@@ -175,7 +175,14 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
              "errordesc": error.getLongDescription()}
         )
         logging.info("can't download '%s'", url)
-        dialogs.MessageBoxDialog(title, text).run()
+        if not isinstance(error, httpclient.PossiblyTemporaryError):
+            dialogs.MessageBoxDialog(title, text).run()
+        else:
+            def callback(dialog):
+                if dialog.choice == dialogs.BUTTON_RETRY:
+                    httpclient.grab_headers(url, callback, errback)
+            dialogs.ChoiceDialog(title, text, dialogs.BUTTON_RETRY,
+                    dialogs.BUTTON_CANCEL).run(callback)
 
     def callback_peek(data):
         """Takes the data returned from a GET and peeks at it to see
