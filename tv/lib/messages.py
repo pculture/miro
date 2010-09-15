@@ -1313,7 +1313,6 @@ class VideoConversionTaskInfo(object):
     :param item_name: name of the item being converted
     :param item_thumbnail: thumbnail for the item being converted
     """
-
     def __init__(self, task):
         self.key = task.key
         if task.is_finished():
@@ -1333,6 +1332,7 @@ class VideoConversionTaskInfo(object):
         self.item_name = task.item_info.name
         self.item_thumbnail = task.item_info.thumbnail
         self.eta = task.get_eta()
+        self.target = task.converter_info.displayname
 
 class VideoConversionTasksList(FrontendMessage):
     """Send the current list of running and pending conversion tasks to the 

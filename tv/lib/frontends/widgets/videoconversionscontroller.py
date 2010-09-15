@@ -270,7 +270,7 @@ class VideoConversionCellRenderer(style.ItemRenderer):
             layout.set_text_color(self.ITEM_DESC_COLOR)
         info_label = layout.textbox(
             _("Conversion to %(format)s",
-              {"format": self.data.item_name}))
+              {"format": self.data.target}))
         vbox.pack(cellpack.pad(info_label, top=4))
 
         if self.data.state == 'failed':
