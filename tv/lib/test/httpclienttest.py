@@ -124,12 +124,16 @@ class HTTPClientTest(HTTPClientTestBase):
                     'mimetype': 'text/plain',
                     'handle': StringIO('contents#1'),
         }
-        f2 = {'filename': 'index.html',
-                    'mimetype': 'text/html',
-                    'handle': StringIO('404 not found'),
+        f2 = {'filename': 'nulldata.dat',
+                    'mimetype': 'application/unknown',
+                    'handle': StringIO('abc\0\0def')
         }
         self.grab_url(self.httpserver.build_url('test.txt'), post_vars={'abc': '123'},
                 post_files={'file1': f1, 'file2': f2})
+        post_data = self.last_http_info('post_data')
+        self.assertEquals(post_data.getvalue('abc'), '123')
+        self.assertEquals(post_data.getvalue('file1'), 'contents#1')
+        self.assertEquals(post_data.getvalue('file2'), 'abc\0\0def')
 
     def _test_head_common(self):
         url = self.httpserver.build_url('test.txt')
