@@ -124,13 +124,15 @@ def _youtube_callback_step2(info, video_id, callback):
         except UnicodeDecodeError:
             title = title.decode("ascii", "ignore")
 
+        logging.debug("fmt_url_map keys: %s", fmt_url_map.keys())
+
         # http://en.wikipedia.org/wiki/YouTube#Quality_and_codecs
         for fmt, content_type in [("22", u"video/mp4"),
                                   ("18", u"video/mp4"),
                                   ("5", u"video/x-flv")]:
             if fmt in fmt_url_map:
                 new_url = fmt_url_map[fmt]
-                logging.debug("youtube download: trying %s", new_url)
+                logging.debug("youtube download: trying %s %s", fmt, new_url)
 
                 callback(
                     unicode(new_url), content_type=content_type,
