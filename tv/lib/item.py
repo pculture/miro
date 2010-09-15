@@ -1764,6 +1764,7 @@ class FileItem(Item):
         check_f(filename)
         filename = fileutil.abspath(filename)
         self.set_filename(filename)
+        self.set_release_date()
         self.deleted = deleted
         self.offsetPath = offsetPath
         self.shortFilename = clean_filename(os.path.basename(self.filename))
@@ -1897,8 +1898,13 @@ class FileItem(Item):
 
     def set_filename(self, filename):
         Item.set_filename(self, filename)
-        self.releaseDateObj = datetime.fromtimestamp(
-            fileutil.getmtime(filename))
+
+    def set_release_date(self):
+        try:
+            self.releaseDateObj = datetime.fromtimestamp(
+                fileutil.getmtime(self.filename))
+        except OSError:
+            self.releaseDateObj = datetime.now()
 
     def get_release_date_obj(self):
         if self.parent_id:
