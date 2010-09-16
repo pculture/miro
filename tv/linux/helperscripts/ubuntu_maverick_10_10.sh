@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # This script installs dependencies for building and running Miro on
-# Ubuntu 10.10 (Maverick Meerkat) alpha 3.
+# Ubuntu 10.10 (Maverick Meerkat) beta.
 #
 # You run this sript AT YOUR OWN RISK.  Read through the whole thing
 # before running it!
 #
 # This script must be run with sudo.
 
-# Last updated:    8/16/2010
+# Last updated:    9/16/2010
 # Last updated by: Will Kahn-Greene
 
 aptitude install \
@@ -16,7 +16,9 @@ aptitude install \
     git-core \
     pkg-config \
     python-pyrex \
-    python-gtk2-dev
+    python-gtk2-dev \
+    libwebkit-dev \
+    libsoup2.4-dev
 
 aptitude install \
     libtorrent-rasterbar6 \

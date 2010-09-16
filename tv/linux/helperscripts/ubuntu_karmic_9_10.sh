@@ -8,7 +8,7 @@
 #
 # This script must be run with sudo.
 
-# Last updated:    5/5/2010
+# Last updated:    9/16/2010
 # Last updated by: Will Kahn-Greene
 
 aptitude install \
