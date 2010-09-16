@@ -679,6 +679,7 @@ class TransferStats(object):
         self.uploaded = self.upload_total = -1
         self.download_rate = self.upload_rate = 0
         self.initial_size = 0
+        self.status_code = None
 
 class LibCURLManager(eventloop.SimpleEventLoop):
     """Manage a set of CurlTransfers.
