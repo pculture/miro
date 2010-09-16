@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-10 17:34-0400\n"
+"POT-Creation-Date: 2010-09-16 14:05-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,24 +19,24 @@ msgstr ""
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
-#: ../../lib/frontends/widgets/gtk/video.py:297
+#: ../../lib/frontends/widgets/gtk/video.py:302
 msgid "Share"
 msgstr ""
 
 #: ../../osx/plat/frontends/widgets/overlay.py:125 ../../lib/dialogs.py:117
-#: ../../lib/frontends/widgets/style.py:260
-#: ../../lib/frontends/widgets/style.py:1070
-#: ../../lib/frontends/widgets/style.py:1237
+#: ../../lib/frontends/widgets/style.py:261
+#: ../../lib/frontends/widgets/style.py:1082
+#: ../../lib/frontends/widgets/style.py:1249
 #: ../../lib/frontends/widgets/itemcontextmenu.py:116
 #: ../../lib/frontends/widgets/itemcontextmenu.py:223
-#: ../../lib/frontends/widgets/gtk/video.py:278
+#: ../../lib/frontends/widgets/gtk/video.py:283
 msgid "Keep"
 msgstr ""
 
 #: ../../osx/plat/frontends/widgets/overlay.py:129
 #: ../../osx/plat/frontends/widgets/osxmenus.py:185 ../../lib/dialogs.py:118
 #: ../../lib/frontends/widgets/itemcontextmenu.py:68
-#: ../../lib/frontends/widgets/gtk/video.py:291
+#: ../../lib/frontends/widgets/gtk/video.py:296
 msgid "Delete"
 msgstr ""
 
@@ -150,18 +150,18 @@ msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:368
 #: ../../lib/frontends/widgets/gtk/window.py:295
-#: ../../lib/frontends/widgets/gtk/video.py:397
+#: ../../lib/frontends/widgets/gtk/video.py:402
 msgid "Disable Subtitles"
 msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:379
 #: ../../lib/frontends/widgets/menus.py:325
-#: ../../lib/frontends/widgets/gtk/video.py:375
+#: ../../lib/frontends/widgets/gtk/video.py:380
 msgid "None Available"
 msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:386
-#: ../../lib/frontends/widgets/gtk/video.py:408
+#: ../../lib/frontends/widgets/gtk/video.py:413
 msgid "Select a Subtitles file..."
 msgstr ""
 
@@ -682,7 +682,7 @@ msgid "activity"
 msgstr ""
 
 #: ../../lib/downloader.py:329 ../../lib/httpclient.py:123
-#: ../../lib/httpclient.py:148
+#: ../../lib/httpclient.py:149
 msgid "File not found"
 msgstr ""
 
@@ -704,7 +704,7 @@ msgid "no connection - retrying soon"
 msgstr ""
 
 #: ../../lib/downloader.py:561 ../../lib/downloader.py:569
-#: ../../lib/httpclient.py:194 ../../lib/httpclient.py:610
+#: ../../lib/httpclient.py:195 ../../lib/httpclient.py:614
 msgid "Unknown"
 msgstr ""
 
@@ -799,15 +799,15 @@ msgstr ""
 msgid "%(size)sB"
 msgstr ""
 
-#: ../../lib/messagehandler.py:1328
+#: ../../lib/messagehandler.py:1336
 msgid "Subscribed to new feed:"
 msgstr ""
 
-#: ../../lib/messagehandler.py:1331
+#: ../../lib/messagehandler.py:1339
 msgid "Subscribed to new feeds:"
 msgstr ""
 
-#: ../../lib/messagehandler.py:1350
+#: ../../lib/messagehandler.py:1358
 msgid "Migrating Files"
 msgstr ""
 
@@ -844,12 +844,17 @@ msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
 msgstr ""
 
-#: ../../lib/videoconversion.py:655
+#: ../../lib/videoconversion.py:83
+#, python-format
+msgid "%(name)s (%(mediatype)s)"
+msgstr ""
+
+#: ../../lib/videoconversion.py:708
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
 msgstr ""
 
-#: ../../lib/messages.py:1114 ../../lib/item.py:1127
+#: ../../lib/messages.py:1120 ../../lib/item.py:1127
 msgid "queued for download"
 msgstr ""
 
@@ -865,8 +870,9 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: ../../lib/dialogs.py:96 ../../lib/frontends/widgets/firsttimedialog.py:363
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:344
+#: ../../lib/dialogs.py:96 ../../lib/frontends/widgets/style.py:256
+#: ../../lib/frontends/widgets/firsttimedialog.py:363
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:345
 msgid "Cancel"
 msgstr ""
 
@@ -909,8 +915,8 @@ msgid "Don't Migrate"
 msgstr ""
 
 #: ../../lib/dialogs.py:106 ../../lib/frontends/widgets/style.py:253
-#: ../../lib/frontends/widgets/style.py:1140
-#: ../../lib/frontends/widgets/style.py:1151
+#: ../../lib/frontends/widgets/style.py:1152
+#: ../../lib/frontends/widgets/style.py:1163
 #: ../../lib/frontends/widgets/itemcontextmenu.py:140
 #: ../../lib/frontends/widgets/itemcontextmenu.py:241
 msgid "Download"
@@ -956,7 +962,7 @@ msgstr ""
 msgid "Add Into New Folder"
 msgstr ""
 
-#: ../../lib/dialogs.py:119 ../../lib/frontends/widgets/style.py:261
+#: ../../lib/dialogs.py:119 ../../lib/frontends/widgets/style.py:262
 #: ../../lib/frontends/widgets/tablist.py:706
 #: ../../lib/frontends/widgets/tablist.py:718
 #: ../../lib/frontends/widgets/tablist.py:724
@@ -1083,19 +1089,19 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../../lib/item.py:1214
+#: ../../lib/item.py:1220
 msgid "no title"
 msgstr ""
 
-#: ../../lib/item.py:1256 ../../lib/item.py:1263
+#: ../../lib/item.py:1262 ../../lib/item.py:1269
 msgid "Contents appear in the library"
 msgstr ""
 
-#: ../../lib/item.py:1267
+#: ../../lib/item.py:1273
 msgid "Contents:"
 msgstr ""
 
-#: ../../lib/item.py:1498
+#: ../../lib/item.py:1504
 msgid "starting up..."
 msgstr ""
 
@@ -1236,7 +1242,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/style.py:238
 #: ../../lib/frontends/widgets/itemcontextmenu.py:148
-#: ../../lib/frontends/widgets/gtk/video.py:303
+#: ../../lib/frontends/widgets/gtk/video.py:308
 msgid "Comments"
 msgstr ""
 
@@ -1304,46 +1310,46 @@ msgid "Download Torrent"
 msgstr ""
 
 #: ../../lib/frontends/widgets/style.py:255
-#: ../../lib/dl_daemon/download.py:555
+#: ../../lib/dl_daemon/download.py:556
 msgid "Error"
 msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:256
-msgid "queued for autodownload"
-msgstr ""
-
 #: ../../lib/frontends/widgets/style.py:257
-#: ../../lib/frontends/widgets/style.py:1191
-#: ../../lib/frontends/widgets/itemlistwidgets.py:329
-#: ../../lib/frontends/widgets/itemlistcontroller.py:596
-msgid "Unplayed"
+msgid "Queued for Auto-download"
 msgstr ""
 
 #: ../../lib/frontends/widgets/style.py:258
-msgid "Currently Playing"
+#: ../../lib/frontends/widgets/style.py:1203
+#: ../../lib/frontends/widgets/itemlistwidgets.py:329
+#: ../../lib/frontends/widgets/itemlistcontroller.py:598
+msgid "Unplayed"
 msgstr ""
 
 #: ../../lib/frontends/widgets/style.py:259
-#: ../../lib/frontends/widgets/style.py:1209
+msgid "Currently Playing"
+msgstr ""
+
+#: ../../lib/frontends/widgets/style.py:260
+#: ../../lib/frontends/widgets/style.py:1221
 #: ../../lib/frontends/widgets/itemlistwidgets.py:332
 msgid "Newly Available"
 msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:262
+#: ../../lib/frontends/widgets/style.py:263
 msgid "Stop seeding"
 msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:591
-#: ../../lib/frontends/widgets/style.py:1202
+#: ../../lib/frontends/widgets/style.py:592
+#: ../../lib/frontends/widgets/style.py:1214
 msgid "paused"
 msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:810
+#: ../../lib/frontends/widgets/style.py:822
 #, python-format
 msgid "Resume at %(resumetime)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:1072
+#: ../../lib/frontends/widgets/style.py:1084
 msgid "Remove from playlist"
 msgstr ""
 
@@ -1392,11 +1398,11 @@ msgstr ""
 msgid "audio"
 msgstr ""
 
-#: ../../lib/frontends/widgets/playback.py:606
+#: ../../lib/frontends/widgets/playback.py:608
 msgid "Open Subtitles File..."
 msgstr ""
 
-#: ../../lib/frontends/widgets/playback.py:607
+#: ../../lib/frontends/widgets/playback.py:609
 msgid "Subtitle files"
 msgstr ""
 
@@ -1662,7 +1668,7 @@ msgid "_Planet Miro"
 msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:369
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:65
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:68
 #: ../../lib/frontends/widgets/itemcontextmenu.py:296
 msgid "Show Conversion Folder"
 msgstr ""
@@ -1764,7 +1770,7 @@ msgid "%(rate)s downloading"
 msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:644
-msgid "Auto Download"
+msgid "Auto-download"
 msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:649
@@ -2091,7 +2097,7 @@ msgstr ""
 msgid "Upgrading database"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1231
+#: ../../lib/frontends/widgets/application.py:1226
 msgid "Message"
 msgstr ""
 
@@ -2305,7 +2311,7 @@ msgid "Old items have been removed."
 msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:193
-msgid "Pause Auto-Downloading when this many items are unplayed:"
+msgid "Pause auto-downloading when this many items are unplayed:"
 msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:197
@@ -2332,16 +2338,16 @@ msgstr ""
 msgid "Feed Settings"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:461
+#: ../../lib/frontends/widgets/itemlistcontroller.py:463
 #: ../../lib/frontends/widgets/statictabs.py:97
 msgid "Video Search"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:475
+#: ../../lib/frontends/widgets/itemlistcontroller.py:477
 msgid "No Results"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:479
+#: ../../lib/frontends/widgets/itemlistcontroller.py:481
 msgid ""
 "To search for media on Internet media search sites, click on the search box "
 "above, type in search terms and hit the Enter key.  To switch search "
@@ -2349,29 +2355,29 @@ msgid ""
 "the search engine from the drop down."
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:588
+#: ../../lib/frontends/widgets/itemlistcontroller.py:590
 #: ../../lib/frontends/widgets/itemedit.py:151
 #: ../../lib/frontends/widgets/statictabs.py:103
 msgid "Video"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:589
+#: ../../lib/frontends/widgets/itemlistcontroller.py:591
 msgid "Unwatched"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:595
+#: ../../lib/frontends/widgets/itemlistcontroller.py:597
 #: ../../lib/frontends/widgets/itemedit.py:152
 #: ../../lib/frontends/widgets/statictabs.py:109
 msgid "Audio"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:602
+#: ../../lib/frontends/widgets/itemlistcontroller.py:604
 #: ../../lib/frontends/widgets/itemedit.py:153
 #: ../../lib/frontends/widgets/statictabs.py:115
 msgid "Other"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:634
+#: ../../lib/frontends/widgets/itemlistcontroller.py:636
 msgid "Back to feed"
 msgstr ""
 
@@ -2506,40 +2512,44 @@ msgstr ""
 msgid "Path:"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:53
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:56
 #: ../../lib/frontends/widgets/statictabs.py:126
 #: ../../lib/frontends/widgets/prefpanel.py:730
 msgid "Conversions"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:59
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:62
 msgid "Stop All Conversions"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:71
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:74
 msgid "Clear Finished Conversions"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:275
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:272
 #, python-format
 msgid "Conversion to %(format)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:309
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:306
 #, python-format
 msgid "Failed: %(error)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:313
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:312
+msgid "Troubleshoot"
+msgstr ""
+
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:314
 msgid "Open log"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:315
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:334
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:316
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:335
 msgid "Clear"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:326
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:327
 msgid "Completed"
 msgstr ""
 
@@ -3015,7 +3025,7 @@ msgid "Check for new content:"
 msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:362
-msgid "Auto download setting:"
+msgid "Auto-download setting:"
 msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:368
@@ -3256,27 +3266,27 @@ msgstr ""
 msgid "Hide"
 msgstr ""
 
-#: ../../lib/frontends/widgets/gtk/video.py:282
+#: ../../lib/frontends/widgets/gtk/video.py:287
 msgid "Subtitles"
 msgstr ""
 
-#: ../../lib/frontends/widgets/gtk/video.py:307
+#: ../../lib/frontends/widgets/gtk/video.py:312
 msgid "Permalink"
 msgstr ""
 
-#: ../../lib/frontends/widgets/gtk/video.py:315
+#: ../../lib/frontends/widgets/gtk/video.py:320
 msgid "Exit fullscreen"
 msgstr ""
 
-#: ../../lib/frontends/widgets/gtk/video.py:322
+#: ../../lib/frontends/widgets/gtk/video.py:327
 msgid "Fullscreen"
 msgstr ""
 
-#: ../../lib/frontends/widgets/gtk/video.py:330
+#: ../../lib/frontends/widgets/gtk/video.py:335
 msgid "Pop-in"
 msgstr ""
 
-#: ../../lib/frontends/widgets/gtk/video.py:336
+#: ../../lib/frontends/widgets/gtk/video.py:341
 msgid "Pop-out"
 msgstr ""
 
@@ -3327,56 +3337,56 @@ msgstr ""
 msgid "Host returned bad status code: %(code)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:132
+#: ../../lib/httpclient.py:132 ../../lib/httpclient.py:133
 msgid "Authorization failed"
 msgstr ""
 
-#: ../../lib/httpclient.py:136
+#: ../../lib/httpclient.py:137
 msgid "Invalid URL"
 msgstr ""
 
-#: ../../lib/httpclient.py:137
+#: ../../lib/httpclient.py:138
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
 msgstr ""
 
-#: ../../lib/httpclient.py:142
+#: ../../lib/httpclient.py:143
 msgid "Unknow Host"
 msgstr ""
 
-#: ../../lib/httpclient.py:143
+#: ../../lib/httpclient.py:144
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
 msgstr ""
 
-#: ../../lib/httpclient.py:149
+#: ../../lib/httpclient.py:150
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
 msgstr ""
 
-#: ../../lib/httpclient.py:153
+#: ../../lib/httpclient.py:154
 msgid "Read error"
 msgstr ""
 
-#: ../../lib/httpclient.py:154
+#: ../../lib/httpclient.py:155
 #, python-format
 msgid "Error while reading from \"%(path)s\""
 msgstr ""
 
-#: ../../lib/httpclient.py:162 ../../lib/dl_daemon/download.py:678
+#: ../../lib/httpclient.py:163 ../../lib/dl_daemon/download.py:679
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:164
+#: ../../lib/httpclient.py:165
 msgid "Write error"
 msgstr ""
 
-#: ../../lib/httpclient.py:337
+#: ../../lib/httpclient.py:339
 msgid "Website"
 msgstr ""
 
-#: ../../lib/httpclient.py:342
+#: ../../lib/httpclient.py:344
 msgid "Proxy"
 msgstr ""
 
@@ -3415,41 +3425,41 @@ msgstr ""
 msgid "Connection closed"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:686 ../../lib/dl_daemon/download.py:829
+#: ../../lib/dl_daemon/download.py:687 ../../lib/dl_daemon/download.py:833
 msgid "Not enough disk space"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:687 ../../lib/dl_daemon/download.py:830
+#: ../../lib/dl_daemon/download.py:688 ../../lib/dl_daemon/download.py:834
 #, python-format
 msgid "%(amount)s MB required to store this video"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:717
+#: ../../lib/dl_daemon/download.py:718
 msgid "no content"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:856
+#: ../../lib/dl_daemon/download.py:860
 msgid "BitTorrent failure"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:857
+#: ../../lib/dl_daemon/download.py:861
 msgid "BitTorrent failed to startup"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:1069
+#: ../../lib/dl_daemon/download.py:1073
 msgid "Corrupt Torrent"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:1070
+#: ../../lib/dl_daemon/download.py:1074
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:1101
+#: ../../lib/dl_daemon/download.py:1105
 msgid "Torrent file deleted"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:1102
+#: ../../lib/dl_daemon/download.py:1106
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr ""
