@@ -304,7 +304,7 @@ class VideoConversionCellRenderer(style.ItemRenderer):
         layout.set_text_color(self.FAILED_TASK_TEXT_COLOR)
         info_label2 = layout.textbox(
             _("Failed: %(error)s", {"error": self.data.error}))
-        vbox.pack(cellpack.pad(info_label2, top=4))
+        vbox.pack(cellpack.pad(cellpack.TruncatedTextLine(info_label2), top=4))
         
         # this resets the font so that the buttons aren't bold
         layout.set_font(0.8)

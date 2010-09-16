@@ -639,7 +639,7 @@ class FFMpegConversionTask(VideoConversionTask):
             match = self.LAST_PROGRESS_RE.match(line)
             if match is not None:
                 return 1.0
-            if line.startswith("Unknown"):
+            if line.startswith(("Unknown", "Error")):
                 self.error = line
         return self.progress
 
