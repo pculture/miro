@@ -168,7 +168,10 @@ class Daemon(ConnectionHandler):
         trapcall.time_trap_call("Running: %s" % comm, self.run_command, comm)
 
     def run_command(self, comm):
-        logging.debug("run command: %r", comm)
+        # FIXME - need a way to enable this on the command line for
+        # easier debugging
+        if not comm.spammy:
+            logging.debug("run command: %r", comm)
         comm.set_daemon(self)
         comm.action()
 

@@ -39,6 +39,7 @@ from miro import eventloop
 DAEMONIC_THREAD_TIMEOUT = 2
 
 class Command(object):
+    spammy = False
     def __init__(self, daemon, *args, **kws):
         self.command_id = "cmd%08d" % random.randint(0, 99999999)
         self.orig = True
@@ -107,6 +108,7 @@ class UpdateDownloadStatus(Command):
         return RemoteDownloader.update_status(*self.args, **self.kws)
 
 class BatchUpdateDownloadStatus(Command):
+    spammy = True
     def action(self):
         from miro.downloader import RemoteDownloader
         for status in self.args[0]:
