@@ -16,7 +16,9 @@ aptitude install \
     git-core \
     pkg-config \
     python-pyrex \
-    python-gtk2-dev
+    python-gtk2-dev \
+    libwebkit-dev \
+    libsoup2.4-dev
 
 aptitude install \
     libtorrent-rasterbar5 \
