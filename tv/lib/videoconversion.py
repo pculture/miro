@@ -186,7 +186,7 @@ class VideoConversionManager(signals.SignalEmitter):
         self._enqueue_message("stage_conversion", key=key)
     
     def clear_failed_task(self, key):
-        self._enqueue_message("cancel_running", key=key)
+        self._enqueue_message("cancel", key=key)
 
     def clear_finished_task(self, key):
         self._enqueue_message("clear_finished", key=key)
