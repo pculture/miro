@@ -57,6 +57,11 @@ def open_helper(d):
         app.widgetapp.reveal_file(d)
     return _open_handler
 
+def delete_backups(widget):
+    app.widgetapp.delete_backup_databases()
+    widget.set_text(_("%(databasecount)s: Delete",
+                      {"databasecount": len(app.db.get_backup_databases())}))
+
 def get_database_size():
     path = config.get(prefs.SQLITE_PATHNAME)
     if path and os.path.isfile(path):
@@ -79,37 +84,6 @@ SHOW = _("Show")
 # 
 # Note for data that changes over time, stick the calculation in a lambda so
 # that the diagnostics dialog shows the most recent calculation.
-ITEMS = [
-    {"label": _("Movies location:"),
-     "data": config.get(prefs.MOVIES_DIRECTORY),
-     "button_face": SHOW,
-     "button_fun": open_helper(config.get(prefs.MOVIES_DIRECTORY))},
-    {"label": _("Icon cache location:"),
-     "data": config.get(prefs.ICON_CACHE_DIRECTORY),
-     "button_face": SHOW,
-     "button_fun": open_helper(config.get(prefs.ICON_CACHE_DIRECTORY))},
-    {"label": _("Log file location:"),
-     "data": config.get(prefs.LOG_PATHNAME),
-     "button_face": SHOW,
-     "button_fun": open_helper(config.get(prefs.LOG_PATHNAME))},
-    {"label": _("Downloader log file location:"),
-     "data": config.get(prefs.DOWNLOADER_LOG_PATHNAME),
-     "button_face": SHOW,
-     "button_fun": open_helper(config.get(prefs.DOWNLOADER_LOG_PATHNAME))},
-    {"label": _("Database file location:"),
-     "data": config.get(prefs.SQLITE_PATHNAME),
-     "button_face": SHOW,
-     "button_fun": open_helper(config.get(prefs.SQLITE_PATHNAME))},
-
-    SEPARATOR,
-
-    {"label": _("Space free on disk:"),
-     "data": lambda: util.format_size_for_user(get_available_bytes_for_movies(), "0B", False)},
-    {"label": _("Database size:"),
-     "data": lambda: util.format_size_for_user(get_database_size(), "0B", False)},
-    {"label": _("Total db objects in memory:"),
-     "data": lambda: "%d" % get_database_object_count()}
-    ]
 
 def run_dialog():
     """Displays a diagnostics windows that tells a user how Miro is set
@@ -117,9 +91,49 @@ def run_dialog():
     """
     window = MainDialog(_("Diagnostics"))
     try:
-        t = widgetset.Table(3, len(ITEMS))
+        items = [
+            {"label": _("Movies location:"),
+             "data": config.get(prefs.MOVIES_DIRECTORY),
+             "button_face": SHOW,
+             "button_fun": open_helper(config.get(prefs.MOVIES_DIRECTORY))},
+            {"label": _("Icon cache location:"),
+             "data": config.get(prefs.ICON_CACHE_DIRECTORY),
+             "button_face": SHOW,
+             "button_fun": open_helper(config.get(prefs.ICON_CACHE_DIRECTORY))},
+            {"label": _("Log file location:"),
+             "data": config.get(prefs.LOG_PATHNAME),
+             "button_face": SHOW,
+             "button_fun": open_helper(config.get(prefs.LOG_PATHNAME))},
+            {"label": _("Downloader log file location:"),
+             "data": config.get(prefs.DOWNLOADER_LOG_PATHNAME),
+             "button_face": SHOW,
+             "button_fun": open_helper(config.get(prefs.DOWNLOADER_LOG_PATHNAME))},
+            {"label": _("Database file location:"),
+             "data": config.get(prefs.SQLITE_PATHNAME),
+             "button_face": SHOW,
+             "button_fun": open_helper(config.get(prefs.SQLITE_PATHNAME))},
+
+            SEPARATOR,
+
+            {"label": _("Space free on disk:"),
+             "data": lambda: util.format_size_for_user(get_available_bytes_for_movies(), "0B", False)},
+            {"label": _("Database size:"),
+             "data": lambda: util.format_size_for_user(get_database_size(), "0B", False)},
+            {"label": _("Total db objects in memory:"),
+             "data": lambda: "%d" % get_database_object_count()},
+
+            SEPARATOR,
+
+            {"label": _("Total db backups:"),
+             "data": "",
+             "button_face": _("%(databasecount)s: Delete",
+                              {"databasecount": len(app.db.get_backup_databases())}),
+             "button_fun": delete_backups}
+            ]
+
+        t = widgetset.Table(3, len(items))
         t.set_column_spacing(10)
-        for row_num, item in enumerate(ITEMS):
+        for row_num, item in enumerate(items):
             if item is SEPARATOR:
                 t.pack(widgetset.Label(""), 0, row_num)
                 continue

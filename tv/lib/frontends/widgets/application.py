@@ -81,6 +81,7 @@ from miro.frontends.widgets.window import MiroWindow
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.frontends.widgets.widgetset import Rect
 from miro.plat.utils import FilenameType
+from miro import fileutil
 
 class Application:
     """This class holds the portable application code.  Each platform
@@ -327,6 +328,11 @@ class Application:
             query_string = "&".join(["%s=%s" % (key, urllib.quote(val)) for key, val in share_items.items()])
             share_url = "%s/feed/?%s" % (config.get(prefs.SHARE_URL), query_string)
             self.open_url(share_url)
+
+    def delete_backup_databases(self):
+        dbs = app.db.get_backup_databases()
+        for mem in dbs:
+            fileutil.remove(mem)
 
     def check_then_reveal_file(self, filename):
         if not os.path.exists(filename):

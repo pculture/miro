@@ -45,6 +45,7 @@ The hope is that it will be human readable.  We use the type
 ``pythonrepr`` to label these columns.
 """
 
+import glob
 import shutil
 import cPickle
 import itertools
@@ -68,6 +69,7 @@ from miro import databaseupgrade
 from miro import dbupgradeprogress
 from miro import dialogs
 from miro import eventloop
+from miro import fileutil
 from miro import messages
 from miro import schema
 from miro import prefs
@@ -199,6 +201,31 @@ class LiveStorage:
                 logging.info("... Vacuuming failed with DatabaseError: %s", sdbe)
         self.connection.close()
 
+    def get_backup_directory(self):
+        """This returns the backup directory path.
+
+        It has the side effect of creating the directory, too, if it
+        doesn't already exist.  If the dbbackups directory doesn't exist
+        and it can't build a new one, then it returns the directory the
+        database is in.
+        """
+        path = os.path.join(os.path.dirname(self.path), "dbbackups")
+        if not os.path.exists(path):
+            try:
+                fileutil.makedirs(path)
+            except OSError:
+                # if we can't make the backups dir, we just stick it in
+                # the same directory
+                path = os.path.dirname(self.path)
+        return path
+
+    backup_filename_prefix = "sqlitedb_backup"
+
+    def get_backup_databases(self):
+        return glob.glob(os.path.join(
+            self.get_backup_directory(),
+            LiveStorage.backup_filename_prefix + "*"))
+
     def upgrade_database(self):
         """Run any database upgrades that haven't been run."""
         try:
@@ -211,7 +238,7 @@ class LiveStorage:
             self._handle_upgrade_error()
 
     def _backup_failed_upgrade_db(self):
-        save_name = self._find_unused_db_name("failed_upgrade_database")
+        save_name = self._find_unused_db_name(self.path, "failed_upgrade_database")
         path = os.path.join(os.path.dirname(self.path), save_name)
         shutil.copyfile(self.path, path)
         logging.warn("upgrade failed. Backing up database to %s", path)
@@ -249,8 +276,12 @@ class LiveStorage:
     def _change_database_file(self, ver):
         """Switches the sqlitedb file that we have open
 
-        This is called before doing a database upgrade.  This allows us to
-        keep the database file unmodified in case the upgrade fails.
+        This is called before doing a database upgrade.  This allows
+        us to keep the database file unmodified in case the upgrade
+        fails.
+
+        It also creates a backup in the backups/ directory of the
+        database.
 
         :param ver: the current version (as string)
         """
@@ -258,11 +289,20 @@ class LiveStorage:
         # close database
         self.close()
 
-        save_name = self._find_unused_db_name("upgrading_database_%s" % ver)
-        path = os.path.join(os.path.dirname(self.path), save_name)
-        shutil.copyfile(self.path, path)
-        self.open_connection(path)
-        self._changed_db_path = path
+        # copy the db to a backup file for posterity
+        target_path = self.get_backup_directory()
+        save_name = self._find_unused_db_name(
+            target_path, "%s_%s" % (LiveStorage.backup_filename_prefix, ver))
+        shutil.copyfile(self.path, os.path.join(target_path, save_name))
+
+        # copy the db to the file we're going to operate on
+        target_path = os.path.dirname(self.path)
+        save_name = self._find_unused_db_name(
+            target_path, "upgrading_database_%s" % ver)
+        shutil.copyfile(self.path, os.path.join(target_path, save_name))
+
+        self._changed_db_path = os.path.join(target_path, save_name)
+        self.open_connection(self._changed_db_path)
 
     def _change_database_file_back(self):
         """Switches the sqlitedb file back to our regular one.
@@ -838,15 +878,15 @@ class LiveStorage:
         self.reset_database()
 
     def save_invalid_db(self):
-        dir = os.path.dirname(self.path)
-        save_name = self._find_unused_db_name("corrupt_database")
-        os.rename(self.path, os.path.join(dir, save_name))
+        target_path = os.path.dirname(self.path)
+        save_name = self._find_unused_db_name(
+            target_path, "corrupt_database")
+        os.rename(self.path, os.path.join(target_path, save_name))
 
-    def _find_unused_db_name(self, save_name):
-        dir = os.path.dirname(self.path)
+    def _find_unused_db_name(self, target_path, save_name):
         org_save_name = save_name
         i = 0
-        while os.path.exists(os.path.join(dir, save_name)):
+        while os.path.exists(os.path.join(target_path, save_name)):
             i += 1
             save_name = "%s.%d" % (org_save_name, i)
         return save_name
