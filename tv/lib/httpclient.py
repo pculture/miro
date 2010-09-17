@@ -44,6 +44,10 @@ from cStringIO import StringIO
 
 import pycurl
 
+# if pycurl bindings don't have NOPROXY, we insert it
+if not hasattr(pycurl, "NOPROXY"):
+    pycurl.NOPROXY = 177
+
 from miro import config
 from miro import download_utils
 from miro import eventloop
