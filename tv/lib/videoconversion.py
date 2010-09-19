@@ -416,9 +416,18 @@ class VideoConversionManager(signals.SignalEmitter):
         self._notify_tasks_count()
         self.quit_flag = True
 
-def _remove_file(path):
-    if os.path.exists(path):
-        os.remove(path)
+def _remove_file(path, attempt=0):
+    try:
+        if os.path.exists(path):
+            os.remove(path)
+    except Exception, e:
+        # FIXME - need a way to catch Windows errors which only exist
+        # on Windows
+        logging.debug("_remove_file: %s kicked up while removing %s",
+                      e, self.log_path)
+        if attempt <= 3:
+            eventloop.add_timeout(1.0, _remove_file, "removing file",
+                                  args=(self.log_path, attempt + 1))
 
 def build_output_paths(item_info, target_folder, converter_info):
     """Returns final_output_path and temp_output_path.
@@ -598,7 +607,7 @@ class VideoConversionTask(object):
             self.log_file.close()
         self.log_file = None
         if not keep_file:
-            eventloop.add_timeout(0.5, _remove_file, "removing file",
+            eventloop.add_timeout(1.0, _remove_file, "removing file",
                                   args=(self.log_path,))
             self.log_path = None
     
