@@ -237,7 +237,7 @@ class VideoConversionManager(signals.SignalEmitter):
             self.emit('begin-loop')
             self._run_loop_cycle()
             self.emit('end-loop')
-            time.sleep(0.2)
+            time.sleep(0.5)
         logging.debug("Conversions manager thread loop finished.")
         self.task_loop = None
     
