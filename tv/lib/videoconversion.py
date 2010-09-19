@@ -424,7 +424,7 @@ def build_output_paths(item_info, target_folder, converter_info):
     """Returns final_output_path and temp_output_path.
     """
     input_path = item_info.video_path
-    temp_dir = tempfile.mkdtemp("miro-conversion")
+    temp_dir = utils.FilenameType(tempfile.mkdtemp("miro-conversion"))
     title = utils.unicode_to_filename(item_info.name, temp_dir)
     if not title or not title.strip():
         title = os.path.basename(input_path)
