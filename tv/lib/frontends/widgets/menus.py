@@ -225,8 +225,6 @@ def get_menu():
                     MenuItem(_("_Quit"), "Quit", Shortcut("q", MOD)),
                     ]),
 
-            Menu(_("Convert"), "ConvertMenu", _get_convert_menu()),
-
             Menu(_("_Sidebar"), "SidebarMenu", [
                     MenuItem(_("Add _Feed"), "NewFeed", Shortcut("n", MOD),
                              groups=["NonPlaying"]),
@@ -330,6 +328,8 @@ def get_menu():
                                      groups=["PlayingVideo"])
                             ]),
                     ]),
+
+            Menu(_("Convert"), "ConvertMenu", _get_convert_menu()),
 
             Menu(_("_Help"), "HelpMenu", [
                     MenuItem(_("_About %(name)s",

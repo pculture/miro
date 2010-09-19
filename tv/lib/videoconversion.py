@@ -74,7 +74,7 @@ class VideoConverterInfo(object):
     def __init__(self, name, parser):
         self.name = name
         self.mediatype = self._get_config_value(name, parser, "mediatype", {})
-        self.identifier = self.NON_WORD_CHARS.sub("", name).lower()
+        self.identifier = VideoConverterInfo.NON_WORD_CHARS.sub("", name).lower()
         self.executable = self._get_config_value(name, parser, "executable", {})
         self.parameters = self._get_config_value(name, parser, "parameters", {})
         self.extension = self._get_config_value(name, parser, "extension", {})
