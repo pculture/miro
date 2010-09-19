@@ -2103,9 +2103,15 @@ class DirectoryFeedImpl(DirectoryScannerImplBase):
         pass
 
     def _add_known_files(self, known_files):
+        # prevents files in Incomplete Downloads and Conversions from being
+        # turned into FileItems.
         movies_dir = config.get(prefs.MOVIES_DIRECTORY)
+
         incomplete_dir = os.path.join(movies_dir, "Incomplete Downloads")
         known_files.add(os.path.normcase(incomplete_dir))
+
+        conversions_dir = os.path.join(movies_dir, "Conversions")
+        known_files.add(os.path.normcase(conversions_dir))
 
     def _scan_dir(self):
         return config.get(prefs.MOVIES_DIRECTORY)
