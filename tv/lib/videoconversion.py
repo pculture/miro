@@ -542,17 +542,34 @@ class VideoConversionTask(object):
             while keep_going:
                 if self.process_handle.poll() is not None:
                     keep_going = False
-                else:
+                    # slurp the rest of the output in case there was
+                    # an error
                     line = self.readline().strip()
-                    if len(line) > 0:
-                        self._log_progress(line)
-                        old_progress = self.progress
-                        self.progress = self.monitor_progress(line)
-                        if self.progress >= 1.0:
-                            self.progress = 1.0
-                            keep_going = False
-                        if old_progress != self.progress:
-                            self._notify_progress()
+                    while line:
+                        error = self.check_for_errors(line)
+                        if error:
+                            self.error = error
+                            break
+                    break
+
+                old_progress = self.progress
+                line = self.readline().strip()
+
+                error = self.check_for_errors(line)
+                if error:
+                    keep_going = False
+                    self.error = error
+                    break
+
+                self._log_progress(line)
+                self.progress = self.monitor_progress(line)
+                if self.progress >= 1.0:
+                    self.progress = 1.0
+                    keep_going = False
+                    break
+
+                if old_progress != self.progress:
+                    self._notify_progress()
         finally:
             self._stop_logging(self.progress < 1.0)
             if self.is_failed():
@@ -620,6 +637,10 @@ class FFMpegConversionTask(VideoConversionTask):
                 chars.append(c)
         return "".join(chars)
 
+    def check_for_errors(self, line):
+        if line.startswith(("Unknown", "Error")):
+            return line
+
     def monitor_progress(self, line):
         if self.duration is None:
             match = self.DURATION_RE.match(line)
@@ -639,8 +660,6 @@ class FFMpegConversionTask(VideoConversionTask):
             match = self.LAST_PROGRESS_RE.match(line)
             if match is not None:
                 return 1.0
-            if line.startswith(("Unknown", "Error")):
-                self.error = line
         return self.progress
 
 class FFMpeg2TheoraConversionTask(VideoConversionTask):
@@ -668,6 +687,9 @@ class FFMpeg2TheoraConversionTask(VideoConversionTask):
         if self.platform == 'linux':
             return self.process_handle.stderr.readline()
         return self.process_handle.stdout.readline()
+
+    def check_for_errors(self, line):
+        return
 
     def monitor_progress(self, line):
         if line.startswith('f2t'):
