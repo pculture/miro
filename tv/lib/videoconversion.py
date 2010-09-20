@@ -290,8 +290,7 @@ class VideoConversionManager(signals.SignalEmitter):
                 try:
                     task_list.remove(task)
                 except ValueError:
-                    logging.warn("Task not in list: %s (state: %s)",
-                            msg['key'], task.state)
+                    logging.warn("Task not in list: %s", msg['key'])
                 else:
                     self._notify_task_removed(task)
                     self._notify_tasks_count()
