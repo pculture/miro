@@ -425,10 +425,10 @@ def _remove_file(path, attempt=0):
         # FIXME - need a way to catch Windows errors which only exist
         # on Windows
         logging.debug("_remove_file: %s kicked up while removing %s",
-                      e, self.log_path)
+                      e, path)
         if attempt <= 3:
             eventloop.add_timeout(1.0, _remove_file, "removing file",
-                                  args=(self.log_path, attempt + 1))
+                                  args=(path, attempt + 1))
 
 def build_output_paths(item_info, target_folder, converter_info):
     """Returns final_output_path and temp_output_path.
