@@ -323,7 +323,7 @@ class VideoConversionManager(signals.SignalEmitter):
                     logging.warn("Couldn't find task for key %s", msg['key'])
                     return
                 source = task.temp_output_path
-                destination = task.final_output_path
+                destination = next_free_filename(task.final_output_path)
                 source_info = task.item_info
                 conversion_name = task.converter_info.name
 
@@ -443,7 +443,7 @@ def build_output_paths(item_info, target_folder, converter_info):
     target_name = "%s.%s.%s" % (title, converter_info.identifier,
                                 converter_info.extension)
     full_target_name = os.path.join(target_folder, target_name)
-    return (next_free_filename(full_target_name), # final_output_path
+    return (full_target_name,                      # final_output_path
             os.path.join(temp_dir, target_name))   # temporary output path
 
 def build_parameters(input_path, output_path, converter_info):
@@ -531,12 +531,6 @@ class VideoConversionTask(object):
         executable = self.get_executable()
         args = self.get_parameters()
         self._start_logging(executable, args)
-        
-        if os.path.exists(self.final_output_path):
-            # XXX do we still need this, since the final_output_path should be
-            # unique?
-            self._log_progress("Removing existing output file (%s)...\n" % self.final_output_path)
-            os.remove(self.final_output_path)
 
         args.insert(0, executable)
 
