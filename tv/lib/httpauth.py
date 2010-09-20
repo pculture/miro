@@ -90,6 +90,18 @@ class HTTPAuthPassword(object):
 
                     self.domain_list.append(d)
 
+    def update_auth(self, username, password):
+        self.username = username
+        self.password = password
+
+    def overlaps(self, other_pw):
+        """Test if this password's domain overlaps with anothers.
+
+        'domain' here means the set of URLs that the auth info works for.
+        """
+        return (self.should_use_for_request(other_pw.url) or
+                other_pw.should_use_for_request(self.url))
+
     def should_use_for_request(self, url):
         request_parts = urlparse.urlparse(url)
         if url == self.url:
@@ -144,9 +156,51 @@ class HTTPPasswordList(object):
                         d['auth_header'])
 
     def add(self, user, password, url, auth_header):
-        pw = HTTPAuthPassword(user, password, url, auth_header)
-        self.passwords.append(pw)
-        return pw
+        new_pw = HTTPAuthPassword(user, password, url, auth_header)
+
+        # Actually adding the auth is a bit tricky, because we want to remove
+        # any old, quite possibly bad, passwords.
+
+        found_index = self._find_overlapped_password(new_pw)
+        if found_index < 0:
+            # We didn't find any old password to replace, add the new password
+            # to the end of the list and we're done
+            self.passwords.append(new_pw)
+            return new_pw
+        else:
+            # We found an old password to replace.  Try to pick the best
+            # password to use
+            #
+            # The assumption here is that one of the passwords has a domain
+            # that completes encloses the others.  This should be true for any
+            # sane auth system.
+            old_pw = self.passwords[found_index]
+            if old_pw.should_use_for_request(new_pw.url):
+                # old password covers the new password's URL, update the old
+                old_pw.update_auth(new_pw.username, new_pw.password)
+                final_pw = old_pw
+            else:
+                # new password cover's the old password's URL, replace the old
+                self.passwords[found_index] = new_pw
+                final_pw = new_pw
+            # for good measure, delete any extra passwords that cover the same
+            # URL
+            for i in reversed(xrange(found_index+1, len(self.passwords))):
+                if final_pw.should_use_for_request(self.passwords[i].url):
+                    del self.passwords[i]
+            return final_pw
+
+    def _find_overlapped_password(self, new_pw):
+        """Find a password in our current list whose domain overlaps a new
+        password.
+
+        :returns: the index of the first password where this is True, or -1
+        """
+
+        for i in xrange(len(self.passwords)):
+            if new_pw.overlaps(self.passwords[i]):
+                return i
+        return -1
 
     def find(self, url):
         for p in self.passwords:

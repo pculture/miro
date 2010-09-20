@@ -536,6 +536,30 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.assertEquals(self.dialogs_seen, 1)
 
     @uses_httpclient
+    def test_auth_overwrite(self):
+        "Test that new passwords overwrite old ones"
+        self.expecting_errback = True
+        self.assertEquals(len(httpauth.password_list.passwords), 0)
+        self.setup_answer("user", "wrongpass")
+        self.grab_url(self.httpserver.build_url('protected/index.txt'))
+        self.setup_answer("user", "wrongpass2")
+        self.grab_url(self.httpserver.build_url('protected/index.txt'))
+        self.setup_answer("user", "wrongpass3")
+        self.grab_url(self.httpserver.build_url('protected/index.txt'))
+        self.assertEquals(len(httpauth.password_list.passwords), 1)
+        # same test, but for digest the digest auth covers the old password,
+        # so it should replace it
+        self.setup_answer("user", "wrongpass")
+        self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
+        self.setup_answer("user", "wrongpass2")
+        self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
+        self.setup_answer("user", "wrongpass3")
+        self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
+        self.assertEquals(len(httpauth.password_list.passwords), 1)
+        self.assertEquals(httpauth.password_list.passwords[0].scheme,
+                'digest')
+
+    @uses_httpclient
     def test_digest_auth_memory(self):
         self.setup_answer("user", "password")
         self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
