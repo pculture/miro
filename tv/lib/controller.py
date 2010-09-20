@@ -229,24 +229,25 @@ class BugReportSender(signals.SignalEmitter):
             tempfilename = os.path.join(tempfile.gettempdir(), uniqfn)
             zipfile = ZipFile(tempfilename, "w")
             iconcache_dir = config.get(prefs.ICON_CACHE_DIRECTORY)
+            iconcache_dir = os.path.normpath(iconcache_dir)
 
             for root, dummy, files in os.walk(support_dir):
-                if (((os.path.normpath(root) != os.path.normpath(iconcache_dir))
-                     and not os.path.islink(root))):
-
-                    relativeroot = root[len(support_dir):]
-                    while (len(relativeroot) > 0 
-                           and relativeroot[0] in ['/', '\\']):
-                        relativeroot = relativeroot[1:]
-                    for fn in files:
-                        if fn == 'httpauth':
-                            # don't send http passwords over the internet
-                            continue
-                        path = os.path.join(root, fn)
-                        if not os.path.islink(path):
-                            relpath = os.path.join(relativeroot, fn)
-                            relpath = relpath.encode('ascii', 'replace')
-                            zipfile.write(path, relpath)
+                if (os.path.normpath(root).startswith(iconcache_dir)
+                        or os.path.islink(root)):
+                    continue
+                relativeroot = root[len(support_dir):]
+                while (len(relativeroot) > 0
+                       and relativeroot[0] in ['/', '\\']):
+                    relativeroot = relativeroot[1:]
+                for fn in files:
+                    if fn == 'httpauth':
+                        # don't send http passwords over the internet
+                        continue
+                    path = os.path.join(root, fn)
+                    if not os.path.islink(path):
+                        relpath = os.path.join(relativeroot, fn)
+                        relpath = relpath.encode('ascii', 'replace')
+                        zipfile.write(path, relpath)
             zipfile.close()
             logging.info("Support directory backed up to %s" % tempfilename)
             return tempfilename
