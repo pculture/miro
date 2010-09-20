@@ -4,6 +4,7 @@ import unittest
 import tempfile
 import threading
 import shutil
+import functools
 
 from miro import database
 from miro import eventloop
@@ -98,7 +99,7 @@ def uses_httpclient(fun):
             return fun(*args, **kwargs)
         finally:
             httpclient.stop_thread()
-    return _uses_httpclient
+    return functools.update_wrapper(_uses_httpclient, fun)
 
 class MiroTestCase(unittest.TestCase):
     def setUp(self):
