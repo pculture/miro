@@ -1361,14 +1361,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         # The user should be able to restart or cancel them (put them
         # into the stopped state).
         if (self.downloader is None  or
-                self.downloader.get_state() == u'failed'):
+                self.downloader.get_state() in (u'failed', u'stopped')):
             if self.pendingManualDL:
                 self._state = u'downloading'
             elif self.expired:
                 self._state = u'expired'
             elif (self.get_viewed() or
                     (self.downloader and
-                        self.downloader.get_state() == u'failed')):
+                        self.downloader.get_state() in (u'failed', u'stopped'))):
                 self._state = u'not-downloaded'
             else:
                 self._state = u'new'

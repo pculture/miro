@@ -191,6 +191,13 @@ class RemoteDownloader(DDBObject):
         if not self.id_exists():
             return
 
+        if isinstance(error, httpclient.AuthorizationCanceled):
+            # user canceled out of the authorization request, so stop the
+            # download.
+            self.status['state'] = u'stopped'
+            self.signal_change()
+            return
+
         # we can't get a content type.  it's possible that this is a
         # retryable error so we're going to set the contentType to
         # None and run the downloader.  it'll handle HTTP errors

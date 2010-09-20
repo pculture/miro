@@ -136,6 +136,11 @@ class AuthorizationFailed(HTTPError):
         HTTPError.__init__(self, _("Authorization failed"))
         self.friendlyDescription = _("Authorization failed")
 
+class AuthorizationCanceled(HTTPError):
+    def __init__(self):
+        HTTPError.__init__(self, _("Authorization canceled"))
+        self.friendlyDescription = _("Authorization canceled by user")
+
 class MalformedURL(NetworkError):
     def __init__(self, url):
         NetworkError.__init__(self, _('Invalid URL'),
@@ -380,7 +385,7 @@ class CurlTransfer(object):
         if self.canceled:
             return
         if auth is None:
-            self.handle_auth_failure()
+            self.call_errback(AuthorizationCanceled())
         else:
             auth_type = self.current_auth_type
             self._reset_transfer_data()
@@ -914,6 +919,9 @@ def _grab_headers_using_get(url, callback, errback):
 def grab_headers(url, callback, errback):
     """Quickly get the headers for a URL"""
     def errback_intercept(error):
+        if isinstance(error, AuthorizationCanceled):
+            # don't bother asking again
+            return errback(error)
         _grab_headers_using_get(url, callback, errback)
 
     url = sanitize_url(url)

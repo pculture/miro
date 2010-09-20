@@ -701,6 +701,9 @@ class HTTPDownloader(BGDownloader):
             self.currentSize = 0
             self.totalSize = -1
             self.start_new_download()
+        elif isinstance(error, httpclient.AuthorizationCanceled):
+            self.destroy_client()
+            self.stop(False)
         elif self.restartOnError:
             self.restartOnError = False
             self.start_download()

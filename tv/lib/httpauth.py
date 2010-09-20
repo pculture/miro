@@ -237,13 +237,6 @@ def ask_for_http_auth(callback, url, auth_header, location):
     if run_dialog:
         dialogs.HTTPAuthDialog(location, realm).run(handleLoginResponse)
 
-def _auth_dialog_callback(dialog):
-    if dialog.choice == dialogs.BUTTON_OK:
-        callback(password_list.add(dialog.username, dialog.password, url,
-                auth_header))
-    else:
-        callback(None)
-
 def init():
     global password_list
     global callback_tracker
