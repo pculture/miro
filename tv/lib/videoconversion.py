@@ -41,6 +41,7 @@ from glob import glob
 from ConfigParser import SafeConfigParser, NoOptionError
 
 from miro import app
+from miro.download_utils import next_free_filename
 from miro import eventloop
 from miro import item
 from miro import models
@@ -441,8 +442,9 @@ def build_output_paths(item_info, target_folder, converter_info):
 
     target_name = "%s.%s.%s" % (title, converter_info.identifier,
                                 converter_info.extension)
-    return (os.path.join(target_folder, target_name),
-            os.path.join(temp_dir, target_name))
+    full_target_name = os.path.join(target_folder, target_name)
+    return (next_free_filename(full_target_name), # final_output_path
+            os.path.join(temp_dir, target_name))   # temporary output path
 
 def build_parameters(input_path, output_path, converter_info):
     """Performs the substitutions on the converter_info parameters
@@ -531,6 +533,8 @@ class VideoConversionTask(object):
         self._start_logging(executable, args)
         
         if os.path.exists(self.final_output_path):
+            # XXX do we still need this, since the final_output_path should be
+            # unique?
             self._log_progress("Removing existing output file (%s)...\n" % self.final_output_path)
             os.remove(self.final_output_path)
 
