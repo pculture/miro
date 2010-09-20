@@ -26,7 +26,12 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-import gtk
+try:
+    import gtk
+except RuntimeError:
+    print "You do not appear to have a working display."
+    import sys
+    sys.exit(1)
 import gobject
 import os
 import gconf

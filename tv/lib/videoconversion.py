@@ -290,8 +290,7 @@ class VideoConversionManager(signals.SignalEmitter):
                 try:
                     task_list.remove(task)
                 except ValueError:
-                    logging.warn("Task not in list: %s (state: %s)",
-                            msg['key'], task.state)
+                    logging.warn("Task not in list: %s", msg['key'])
                 else:
                     self._notify_task_removed(task)
                     self._notify_tasks_count()
@@ -425,10 +424,10 @@ def _remove_file(path, attempt=0):
         # FIXME - need a way to catch Windows errors which only exist
         # on Windows
         logging.debug("_remove_file: %s kicked up while removing %s",
-                      e, self.log_path)
+                      e, path)
         if attempt <= 3:
             eventloop.add_timeout(1.0, _remove_file, "removing file",
-                                  args=(self.log_path, attempt + 1))
+                                  args=(path, attempt + 1))
 
 def build_output_paths(item_info, target_folder, converter_info):
     """Returns final_output_path and temp_output_path.
