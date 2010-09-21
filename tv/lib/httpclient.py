@@ -256,7 +256,8 @@ class TransferOptions(object):
 
         # FIXME honor prefs.HTTP_PROXY_SCHEME
         handle.setopt(pycurl.PROXY, str(config.get(prefs.HTTP_PROXY_HOST)))
-        handle.setopt(pycurl.PROXYPORT, config.get(prefs.HTTP_PROXY_PORT))
+        handle.setopt(pycurl.PROXYPORT,
+                int(config.get(prefs.HTTP_PROXY_PORT)))
 
         ignore_hosts = config.get(prefs.HTTP_PROXY_IGNORE_HOSTS)
         if ignore_hosts:
