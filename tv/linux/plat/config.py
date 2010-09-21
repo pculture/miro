@@ -36,6 +36,7 @@ Preferences are listed in miro.pref and also miro.plat.options.
 """
 
 import os
+import logging
 from miro import prefs
 import gconf
 import threading
@@ -50,19 +51,29 @@ def _gconf_key(key):
         options.gconf_name = "miro"
     return '/apps/%s/%s' % (options.gconf_name, key)
 
+def _convert_gconf_value(value):
+    if value.type == gconf.VALUE_STRING:
+        return value.get_string()
+    if value.type == gconf.VALUE_INT:
+        return value.get_int()
+    if value.type == gconf.VALUE_BOOL:
+        return value.get_bool()
+    if value.type == gconf.VALUE_FLOAT:
+        return value.get_float()
+    if value.type == gconf.VALUE_LIST:
+        return [_convert_gconf_value(v) for v in value.get_list()]
+    raise TypeError("unknown gconf type %s" % value.type)
+
 def _get_gconf(fullkey, default=None):
     gconf_lock.acquire()
     try:
         value = client.get(fullkey)
         if value != None:
-            if value.type == gconf.VALUE_STRING:
-                return value.get_string()
-            if value.type == gconf.VALUE_INT:
-                return value.get_int()
-            if value.type == gconf.VALUE_BOOL:
-                return value.get_bool()
-            if value.type == gconf.VALUE_FLOAT:
-                return value.get_float()
+            try:
+                return _convert_gconf_value(value)
+            except TypeError, e:
+                logging.warn("type error while getting gconf value %s: %s",
+                        fullkey, str(e))
         return default
     finally:
         gconf_lock.release()
