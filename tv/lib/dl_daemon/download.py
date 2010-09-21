@@ -280,6 +280,7 @@ class TorrentSession(object):
             self.session.set_pe_settings(self.pe_set)
 
     def shutdown(self):
+        self.session.stop_upnp()
         config.remove_change_callback(self.config_changed)
 
     def config_changed(self, key, value):
