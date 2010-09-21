@@ -431,19 +431,25 @@ def _remove_file(path, attempt=0):
 
 def build_output_paths(item_info, target_folder, converter_info):
     """Returns final_output_path and temp_output_path.
+
+    We base the temp path on temp filenames.
+    We base the final path on the item title.
     """
     input_path = item_info.video_path
     temp_dir = utils.FilenameType(tempfile.mkdtemp("miro-conversion"))
+    basename = os.path.basename(input_path)
+
     title = utils.unicode_to_filename(item_info.name, temp_dir)
     if not title or not title.strip():
-        title = os.path.basename(input_path)
-        title, ext = os.path.splitext(title)
+        title = basename
 
     target_name = "%s.%s.%s" % (title, converter_info.identifier,
                                 converter_info.extension)
-    full_target_name = os.path.join(target_folder, target_name)
-    return (full_target_name,                      # final_output_path
-            os.path.join(temp_dir, target_name))   # temporary output path
+    final_path = utils.FilenameType(os.path.join(target_folder, target_name))
+
+    temp_path = os.path.join(temp_dir, basename)
+
+    return (final_path, temp_path)
 
 def build_parameters(input_path, output_path, converter_info):
     """Performs the substitutions on the converter_info parameters
@@ -472,6 +478,10 @@ class VideoConversionTask(object):
         self.input_path = item_info.video_path
         self.final_output_path, self.temp_output_path = build_output_paths(
             item_info, target_folder, converter_info)
+
+        logging.info("temp_output_path: %s", self.temp_output_path)
+        logging.info("final_output_path: %s", self.final_output_path)
+
         self.key = "%s->%s" % (self.input_path, self.final_output_path)
         self.thread = None
         self.duration = None
