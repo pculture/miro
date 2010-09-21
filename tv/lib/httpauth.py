@@ -188,8 +188,8 @@ class HTTPPasswordList(object):
         :returns: the index of the first password where this is True, or -1
         """
 
-        for i in xrange(len(self.passwords)):
-            if pw.same_realm(self.passwords[i]):
+        for i, other_pw in enumerate(self.passwords):
+            if pw.same_realm(other_pw):
                 return i
         return -1
 
