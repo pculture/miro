@@ -547,8 +547,8 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.setup_answer("user", "wrongpass3")
         self.grab_url(self.httpserver.build_url('protected/index.txt'))
         self.assertEquals(len(httpauth.password_list.passwords), 1)
-        # same test, but for digest the digest auth covers the old password,
-        # so it should replace it
+        # same test, but for digest.  The digest auth covers the basic auth
+        # and more, so it should replace it
         self.setup_answer("user", "wrongpass")
         self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
         self.setup_answer("user", "wrongpass2")
