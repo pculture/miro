@@ -554,17 +554,22 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.setup_answer("user", "wrongpass3")
         self.grab_url(self.httpserver.build_url('protected/index.txt'))
         self.assertEquals(len(httpauth.password_list.passwords), 1)
-        # same test, but for digest.  The digest auth covers the basic auth
-        # and more, so it should replace it
+        # same test, but for digest.
         self.setup_answer("user", "wrongpass")
         self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
         self.setup_answer("user", "wrongpass2")
         self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
         self.setup_answer("user", "wrongpass3")
         self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
-        self.assertEquals(len(httpauth.password_list.passwords), 1)
-        self.assertEquals(httpauth.password_list.passwords[0].scheme,
-                'digest')
+        self.assertEquals(len(httpauth.password_list.passwords), 2)
+        # Test that passwords for the directory overwrite the ones for a file
+        # with basic auth
+        self.setup_answer("user", "wrongpass3")
+        self.grab_url(self.httpserver.build_url('protected/'))
+        self.assertEquals(len(httpauth.password_list.passwords), 2)
+        self.assertEquals(httpauth.password_list.passwords[0].url,
+                self.httpserver.build_url('protected/'))
+
 
     @uses_httpclient
     def test_digest_auth_memory(self):

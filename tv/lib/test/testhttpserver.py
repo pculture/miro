@@ -173,7 +173,7 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 client_auth = set(s.strip() for s in client_auth.split(','))
             correct_auth_response = set([
                 'username="%s"' % self.user,
-                 'realm="%s"' % self.realm,
+                 'realm="digest-%s"' % self.realm,
                  'nonce="%s"' % self.digest_nonce,
                  'uri="%s"' % self.path,
                  'response="%s"' % self.calc_digest_response(),
@@ -185,7 +185,7 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 code = 401
                 headers_to_send.append(('WWW-Authenticate',
                     'Digest '
-                    'realm="%s", '
+                    'realm="digest-%s", '
                     'nonce="%s", '
                     'opaque="5ccc069c403ebaf9f0171e9517f40e41"' %
                     (self.realm, self.digest_nonce)))
@@ -241,7 +241,7 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         return set(s.strip() for s in client_auth.split(','))
 
     def calc_digest_response(self):
-        secret = '%s:%s:%s' % (self.user, self.realm, self.password)
+        secret = '%s:digest-%s:%s' % (self.user, self.realm, self.password)
         data = 'GET:' + self.path
         return md5(md5(secret) + ":" + self.digest_nonce + ":" + md5(data))
 
