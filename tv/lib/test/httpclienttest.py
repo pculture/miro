@@ -483,12 +483,17 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.assert_(isinstance(self.grab_url_error,
             httpclient.AuthorizationFailed))
 
+    def check_auth_canceled(self):
+        self.check_errback_called()
+        self.assert_(isinstance(self.grab_url_error,
+            httpclient.AuthorizationCanceled))
+
     @uses_httpclient
     def test_auth_failed(self):
         self.expecting_errback = True
         self.setup_cancel()
         self.grab_url(self.httpserver.build_url('protected/index.txt'))
-        self.check_auth_errback_called()
+        self.check_auth_canceled()
 
         self.setup_answer("wronguser", "wrongpass")
         self.grab_url(self.httpserver.build_url('protected/index.txt'))
@@ -523,7 +528,7 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.expecting_errback = True
         self.setup_cancel()
         self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
-        self.check_auth_errback_called()
+        self.check_auth_canceled()
 
         self.setup_answer("wronguser", "wrongpass")
         self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
