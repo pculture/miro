@@ -7,37 +7,37 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2010-09-10 17:34-0400\n"
-"PO-Revision-Date: 2010-08-02 02:04+0000\n"
-"Last-Translator: AlexWang <Unknown>\n"
+"POT-Creation-Date: 2010-09-18 11:10-0400\n"
+"PO-Revision-Date: 2010-09-20 10:49+0000\n"
+"Last-Translator: Jon Paul Holden <Unknown>\n"
 "Language-Team: Chinese (China) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2010-09-12 12:52+0000\n"
+"X-Launchpad-Export-Date: 2010-09-21 18:57+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
-#: ../../lib/frontends/widgets/gtk/video.py:297
+#: ../../lib/frontends/widgets/gtk/video.py:302
 msgid "Share"
 msgstr "分享"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:125 ../../lib/dialogs.py:117
-#: ../../lib/frontends/widgets/style.py:260
-#: ../../lib/frontends/widgets/style.py:1070
-#: ../../lib/frontends/widgets/style.py:1237
+#: ../../lib/frontends/widgets/style.py:261
+#: ../../lib/frontends/widgets/style.py:1082
+#: ../../lib/frontends/widgets/style.py:1249
 #: ../../lib/frontends/widgets/itemcontextmenu.py:116
 #: ../../lib/frontends/widgets/itemcontextmenu.py:223
-#: ../../lib/frontends/widgets/gtk/video.py:278
+#: ../../lib/frontends/widgets/gtk/video.py:283
 msgid "Keep"
 msgstr "保留"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:129
 #: ../../osx/plat/frontends/widgets/osxmenus.py:185 ../../lib/dialogs.py:118
 #: ../../lib/frontends/widgets/itemcontextmenu.py:68
-#: ../../lib/frontends/widgets/gtk/video.py:291
+#: ../../lib/frontends/widgets/gtk/video.py:296
 msgid "Delete"
 msgstr "删除"
 
@@ -151,18 +151,18 @@ msgstr "%(appname)s 帮助"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:368
 #: ../../lib/frontends/widgets/gtk/window.py:295
-#: ../../lib/frontends/widgets/gtk/video.py:397
+#: ../../lib/frontends/widgets/gtk/video.py:402
 msgid "Disable Subtitles"
 msgstr "禁用字幕"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:379
 #: ../../lib/frontends/widgets/menus.py:325
-#: ../../lib/frontends/widgets/gtk/video.py:375
+#: ../../lib/frontends/widgets/gtk/video.py:380
 msgid "None Available"
-msgstr ""
+msgstr "无可用"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:386
-#: ../../lib/frontends/widgets/gtk/video.py:408
+#: ../../lib/frontends/widgets/gtk/video.py:413
 msgid "Select a Subtitles file..."
 msgstr "选择一个字幕文件"
 
@@ -171,7 +171,7 @@ msgstr "选择一个字幕文件"
 #: ../../windows/plat/renderers/vlc.py:701
 #: ../../linux/plat/renderers/gstreamerrenderer.py:569
 msgid "Eastern European"
-msgstr ""
+msgstr "东欧"
 
 #: ../../windows/plat/renderers/vlc.py:698
 #: ../../windows/plat/renderers/vlc.py:699
@@ -187,7 +187,7 @@ msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:703
 msgid "South-Eastern European"
-msgstr ""
+msgstr "东南欧"
 
 #: ../../windows/plat/renderers/vlc.py:704
 msgid "Ukrainian"
@@ -231,7 +231,7 @@ msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:718
 msgid "Simplified Chinese Unix"
-msgstr ""
+msgstr "简体中文版的Unix"
 
 #: ../../windows/plat/renderers/vlc.py:719
 #: ../../windows/plat/renderers/vlc.py:721
@@ -243,7 +243,7 @@ msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:720
 msgid "Japanese Unix"
-msgstr ""
+msgstr "日本的Unix"
 
 #: ../../windows/plat/renderers/vlc.py:722
 #: ../../windows/plat/renderers/vlc.py:723
@@ -357,7 +357,7 @@ msgstr ""
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:64
 msgid "Subtitle font:"
-msgstr ""
+msgstr "字幕字体"
 
 #: ../../windows/plat/frontends/widgets/application.py:148
 msgid "Close to tray?"
@@ -690,8 +690,8 @@ msgstr "播放文件"
 msgid "activity"
 msgstr "活跃度"
 
-#: ../../lib/downloader.py:329 ../../lib/httpclient.py:123
-#: ../../lib/httpclient.py:148
+#: ../../lib/downloader.py:329 ../../lib/httpclient.py:127
+#: ../../lib/httpclient.py:153
 msgid "File not found"
 msgstr "没有找到文件"
 
@@ -713,7 +713,7 @@ msgid "no connection - retrying soon"
 msgstr ""
 
 #: ../../lib/downloader.py:561 ../../lib/downloader.py:569
-#: ../../lib/httpclient.py:194 ../../lib/httpclient.py:610
+#: ../../lib/httpclient.py:199 ../../lib/httpclient.py:618
 msgid "Unknown"
 msgstr "未知"
 
@@ -807,15 +807,15 @@ msgstr "%(size)sKB"
 msgid "%(size)sB"
 msgstr "%(size)sB"
 
-#: ../../lib/messagehandler.py:1328
+#: ../../lib/messagehandler.py:1336
 msgid "Subscribed to new feed:"
 msgstr "订阅新的源:"
 
-#: ../../lib/messagehandler.py:1331
+#: ../../lib/messagehandler.py:1339
 msgid "Subscribed to new feeds:"
 msgstr "订阅新的源:"
 
-#: ../../lib/messagehandler.py:1350
+#: ../../lib/messagehandler.py:1358
 msgid "Migrating Files"
 msgstr "迁移文件"
 
@@ -852,12 +852,17 @@ msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
 msgstr "torrent文件 %(filename)s 似乎已经损坏并不能打开。"
 
-#: ../../lib/videoconversion.py:655
+#: ../../lib/videoconversion.py:83
+#, python-format
+msgid "%(name)s (%(mediatype)s)"
+msgstr ""
+
+#: ../../lib/videoconversion.py:708
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
 msgstr ""
 
-#: ../../lib/messages.py:1114 ../../lib/item.py:1127
+#: ../../lib/messages.py:1120 ../../lib/item.py:1127
 msgid "queued for download"
 msgstr "排入下载队列"
 
@@ -873,8 +878,9 @@ msgstr "应用"
 msgid "Close"
 msgstr "关闭"
 
-#: ../../lib/dialogs.py:96 ../../lib/frontends/widgets/firsttimedialog.py:363
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:344
+#: ../../lib/dialogs.py:96 ../../lib/frontends/widgets/style.py:256
+#: ../../lib/frontends/widgets/firsttimedialog.py:363
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:345
 msgid "Cancel"
 msgstr "取消"
 
@@ -917,8 +923,8 @@ msgid "Don't Migrate"
 msgstr "不要迁移"
 
 #: ../../lib/dialogs.py:106 ../../lib/frontends/widgets/style.py:253
-#: ../../lib/frontends/widgets/style.py:1140
-#: ../../lib/frontends/widgets/style.py:1151
+#: ../../lib/frontends/widgets/style.py:1152
+#: ../../lib/frontends/widgets/style.py:1163
 #: ../../lib/frontends/widgets/itemcontextmenu.py:140
 #: ../../lib/frontends/widgets/itemcontextmenu.py:241
 msgid "Download"
@@ -964,7 +970,7 @@ msgstr "添加"
 msgid "Add Into New Folder"
 msgstr "添加进新文件夹"
 
-#: ../../lib/dialogs.py:119 ../../lib/frontends/widgets/style.py:261
+#: ../../lib/dialogs.py:119 ../../lib/frontends/widgets/style.py:262
 #: ../../lib/frontends/widgets/tablist.py:706
 #: ../../lib/frontends/widgets/tablist.py:718
 #: ../../lib/frontends/widgets/tablist.py:724
@@ -1033,12 +1039,12 @@ msgstr ""
 msgid "Login Required"
 msgstr ""
 
-#: ../../lib/storedatabase.py:221
+#: ../../lib/storedatabase.py:248
 #, python-format
 msgid "%(appname)s database upgrade failed"
 msgstr ""
 
-#: ../../lib/storedatabase.py:224
+#: ../../lib/storedatabase.py:251
 #, python-format
 msgid ""
 "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
@@ -1053,27 +1059,27 @@ msgid ""
 "you will have to re-add your feeds and media files."
 msgstr ""
 
-#: ../../lib/storedatabase.py:284
+#: ../../lib/storedatabase.py:324
 msgid "Database was created by a newer version of Miro "
 msgstr "新版Miro已完成创建数据库 "
 
-#: ../../lib/storedatabase.py:673
+#: ../../lib/storedatabase.py:713
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "%(appname)s 成功保存数据"
 
-#: ../../lib/storedatabase.py:675
+#: ../../lib/storedatabase.py:715
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr "数据库内容已成功保存。可以安全退出程序，不会丢失任何数据。"
 
-#: ../../lib/storedatabase.py:736
+#: ../../lib/storedatabase.py:776
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "%(appname)s 保存数据失败"
 
-#: ../../lib/storedatabase.py:739
+#: ../../lib/storedatabase.py:779
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -1101,19 +1107,19 @@ msgstr ""
 "错误： %(error_text)s\n"
 "\n"
 
-#: ../../lib/item.py:1214
+#: ../../lib/item.py:1220
 msgid "no title"
 msgstr "无标题"
 
-#: ../../lib/item.py:1256 ../../lib/item.py:1263
+#: ../../lib/item.py:1262 ../../lib/item.py:1269
 msgid "Contents appear in the library"
 msgstr "在本地资源库的内容"
 
-#: ../../lib/item.py:1267
+#: ../../lib/item.py:1273
 msgid "Contents:"
 msgstr "内容："
 
-#: ../../lib/item.py:1498
+#: ../../lib/item.py:1504
 msgid "starting up..."
 msgstr "启动中..."
 
@@ -1244,7 +1250,7 @@ msgstr "显示更少"
 
 #: ../../lib/frontends/widgets/style.py:238
 #: ../../lib/frontends/widgets/itemcontextmenu.py:148
-#: ../../lib/frontends/widgets/gtk/video.py:303
+#: ../../lib/frontends/widgets/gtk/video.py:308
 msgid "Comments"
 msgstr "评论"
 
@@ -1312,46 +1318,46 @@ msgid "Download Torrent"
 msgstr "下载 BT 种子"
 
 #: ../../lib/frontends/widgets/style.py:255
-#: ../../lib/dl_daemon/download.py:555
+#: ../../lib/dl_daemon/download.py:556
 msgid "Error"
 msgstr "错误"
 
-#: ../../lib/frontends/widgets/style.py:256
-msgid "queued for autodownload"
-msgstr "排入自动下载队列"
-
 #: ../../lib/frontends/widgets/style.py:257
-#: ../../lib/frontends/widgets/style.py:1191
+msgid "Queued for Auto-download"
+msgstr ""
+
+#: ../../lib/frontends/widgets/style.py:258
+#: ../../lib/frontends/widgets/style.py:1203
 #: ../../lib/frontends/widgets/itemlistwidgets.py:329
-#: ../../lib/frontends/widgets/itemlistcontroller.py:596
+#: ../../lib/frontends/widgets/itemlistcontroller.py:598
 msgid "Unplayed"
 msgstr "尚未播放"
 
-#: ../../lib/frontends/widgets/style.py:258
+#: ../../lib/frontends/widgets/style.py:259
 msgid "Currently Playing"
 msgstr "正在播放"
 
-#: ../../lib/frontends/widgets/style.py:259
-#: ../../lib/frontends/widgets/style.py:1209
+#: ../../lib/frontends/widgets/style.py:260
+#: ../../lib/frontends/widgets/style.py:1221
 #: ../../lib/frontends/widgets/itemlistwidgets.py:332
 msgid "Newly Available"
 msgstr "最新可用"
 
-#: ../../lib/frontends/widgets/style.py:262
+#: ../../lib/frontends/widgets/style.py:263
 msgid "Stop seeding"
 msgstr "停止做种"
 
-#: ../../lib/frontends/widgets/style.py:591
-#: ../../lib/frontends/widgets/style.py:1202
+#: ../../lib/frontends/widgets/style.py:592
+#: ../../lib/frontends/widgets/style.py:1214
 msgid "paused"
 msgstr "已暂停"
 
-#: ../../lib/frontends/widgets/style.py:810
+#: ../../lib/frontends/widgets/style.py:822
 #, python-format
 msgid "Resume at %(resumetime)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:1072
+#: ../../lib/frontends/widgets/style.py:1084
 msgid "Remove from playlist"
 msgstr "从播放列表中删除"
 
@@ -1400,11 +1406,11 @@ msgstr "视频"
 msgid "audio"
 msgstr "音频"
 
-#: ../../lib/frontends/widgets/playback.py:606
+#: ../../lib/frontends/widgets/playback.py:608
 msgid "Open Subtitles File..."
 msgstr "打开字幕文件"
 
-#: ../../lib/frontends/widgets/playback.py:607
+#: ../../lib/frontends/widgets/playback.py:609
 msgid "Subtitle files"
 msgstr ""
 
@@ -1469,7 +1475,7 @@ msgid "Add _Feed"
 msgstr "添加订阅源(_F)"
 
 #: ../../lib/frontends/widgets/menus.py:233
-#: ../../lib/frontends/widgets/application.py:576
+#: ../../lib/frontends/widgets/application.py:582
 msgid "Add Website"
 msgstr "添加站点"
 
@@ -1653,7 +1659,7 @@ msgid "_Donate"
 msgstr "捐助(_D)"
 
 #: ../../lib/frontends/widgets/menus.py:348
-#: ../../lib/frontends/widgets/diagnostics.py:118
+#: ../../lib/frontends/widgets/diagnostics.py:92
 msgid "Diagnostics"
 msgstr "诊断调试"
 
@@ -1670,7 +1676,7 @@ msgid "_Planet Miro"
 msgstr "_Planet Miro"
 
 #: ../../lib/frontends/widgets/menus.py:369
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:65
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:68
 #: ../../lib/frontends/widgets/itemcontextmenu.py:296
 msgid "Show Conversion Folder"
 msgstr ""
@@ -1772,8 +1778,8 @@ msgid "%(rate)s downloading"
 msgstr "%(rate)s 下载中"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:644
-msgid "Auto Download"
-msgstr "添加到下载"
+msgid "Auto-download"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:649
 #: ../../lib/frontends/widgets/prefpanel.py:332
@@ -1818,11 +1824,11 @@ msgstr "查看|全部"
 msgid "Non Feed"
 msgstr "无订阅源"
 
-#: ../../lib/frontends/widgets/application.py:160
+#: ../../lib/frontends/widgets/application.py:161
 msgid "Movies directory gone"
 msgstr "影视文件夹不存在"
 
-#: ../../lib/frontends/widgets/application.py:162
+#: ../../lib/frontends/widgets/application.py:163
 #, python-format
 msgid ""
 "%(shortappname)s can't use the primary video directory located at:\n"
@@ -1841,47 +1847,47 @@ msgid ""
 "relaunch %(shortappname)s."
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:335
+#: ../../lib/frontends/widgets/application.py:341
 msgid "Error Revealing File"
 msgstr "显示文件出错"
 
-#: ../../lib/frontends/widgets/application.py:336
+#: ../../lib/frontends/widgets/application.py:342
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
 msgstr "文件%(filename)s从%(appname)s外被删除。"
 
-#: ../../lib/frontends/widgets/application.py:347
+#: ../../lib/frontends/widgets/application.py:353
 msgid "Open Files..."
 msgstr "打开文件"
 
-#: ../../lib/frontends/widgets/application.py:358
-#: ../../lib/frontends/widgets/application.py:363
+#: ../../lib/frontends/widgets/application.py:364
+#: ../../lib/frontends/widgets/application.py:369
 msgid "Open Files - Error"
 msgstr "打开文件-错误"
 
-#: ../../lib/frontends/widgets/application.py:359
-#: ../../lib/frontends/widgets/application.py:647
+#: ../../lib/frontends/widgets/application.py:365
+#: ../../lib/frontends/widgets/application.py:653
 #, python-format
 msgid "File %(filename)s does not exist."
 msgstr "文件 %(filename)s 不存在."
 
-#: ../../lib/frontends/widgets/application.py:364
+#: ../../lib/frontends/widgets/application.py:370
 msgid "The following files do not exist:"
 msgstr "以下的文件不存在"
 
-#: ../../lib/frontends/widgets/application.py:401
+#: ../../lib/frontends/widgets/application.py:407
 msgid "New Download"
 msgstr "新增下载"
 
-#: ../../lib/frontends/widgets/application.py:402
+#: ../../lib/frontends/widgets/application.py:408
 msgid "Enter the URL of the item to download"
 msgstr "输入下载文件的URL"
 
-#: ../../lib/frontends/widgets/application.py:403
+#: ../../lib/frontends/widgets/application.py:409
 msgid "New Download - Invalid URL"
 msgstr "新增下载 - 无效链接"
 
-#: ../../lib/frontends/widgets/application.py:404
+#: ../../lib/frontends/widgets/application.py:410
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -1893,22 +1899,22 @@ msgstr ""
 "\n"
 "输入下载文件的URL"
 
-#: ../../lib/frontends/widgets/application.py:412
+#: ../../lib/frontends/widgets/application.py:418
 #, python-format
 msgid "%(appname)s is up to date"
 msgstr "%(appname)s已是最新版本"
 
-#: ../../lib/frontends/widgets/application.py:414
+#: ../../lib/frontends/widgets/application.py:420
 #, python-format
 msgid "%(appname)s is up to date!"
 msgstr "%(appname)s已是最新版本！"
 
-#: ../../lib/frontends/widgets/application.py:438
+#: ../../lib/frontends/widgets/application.py:444
 msgid "Remove item"
 msgid_plural "Remove items"
 msgstr[0] "删除项目"
 
-#: ../../lib/frontends/widgets/application.py:442
+#: ../../lib/frontends/widgets/application.py:448
 msgid ""
 "One of these items was not downloaded from a feed. Would you like to delete "
 "it or just remove it from the Library?"
@@ -1919,7 +1925,7 @@ msgstr[0] ""
 "一个文件没有从Feed里下载。您想要删除文件，还是仅从媒体库里删除。\r\n"
 "多个文件没有从Feed里下载。您想要删除文件，还是仅从媒体库里删除。"
 
-#: ../../lib/frontends/widgets/application.py:452
+#: ../../lib/frontends/widgets/application.py:458
 msgid ""
 "One of these items is a folder.  Delete/Removeing a folder will "
 "delete/remove it's contents"
@@ -1928,7 +1934,7 @@ msgid_plural ""
 "delete/remove it's contents"
 msgstr[0] "所选项目中含有目录，删除目录将删除它所包含的所有项目"
 
-#: ../../lib/frontends/widgets/application.py:467
+#: ../../lib/frontends/widgets/application.py:473
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
@@ -1936,26 +1942,26 @@ msgstr[0] ""
 "确定删除文件？\r\n"
 "确定删除所有%(count)d 个文件？"
 
-#: ../../lib/frontends/widgets/application.py:474
+#: ../../lib/frontends/widgets/application.py:480
 msgid ""
 "One of these items is a folder.  Deleting a folder will delete it's contents"
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
 msgstr[0] "所选项目中含有目录，删除目录将删除它所包含的所有项目"
 
-#: ../../lib/frontends/widgets/application.py:518
+#: ../../lib/frontends/widgets/application.py:524
 msgid "Save Item As..."
 msgstr "另存为..."
 
-#: ../../lib/frontends/widgets/application.py:577
+#: ../../lib/frontends/widgets/application.py:583
 msgid "Enter the URL of the website to add"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:578
+#: ../../lib/frontends/widgets/application.py:584
 msgid "Add Website - Invalid URL"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:579
+#: ../../lib/frontends/widgets/application.py:585
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -1963,93 +1969,93 @@ msgid ""
 "Enter the URL of the website to add"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:637
+#: ../../lib/frontends/widgets/application.py:643
 msgid "Import OPML File"
 msgstr "导入 OPML 文档"
 
-#: ../../lib/frontends/widgets/application.py:639
+#: ../../lib/frontends/widgets/application.py:645
 msgid "OPML Files"
 msgstr "OPML 文档"
 
-#: ../../lib/frontends/widgets/application.py:646
+#: ../../lib/frontends/widgets/application.py:652
 msgid "Import OPML File - Error"
 msgstr "导入OPML文件 - 错误"
 
-#: ../../lib/frontends/widgets/application.py:652
+#: ../../lib/frontends/widgets/application.py:658
 msgid "Export OPML File"
 msgstr "导出OPML文件"
 
-#: ../../lib/frontends/widgets/application.py:676
+#: ../../lib/frontends/widgets/application.py:682
 msgid "Create Playlist"
 msgstr "创建播放列表"
 
-#: ../../lib/frontends/widgets/application.py:677
+#: ../../lib/frontends/widgets/application.py:683
 msgid "Enter a name for the new playlist"
 msgstr "输入新播放列表的名字"
 
-#: ../../lib/frontends/widgets/application.py:698
+#: ../../lib/frontends/widgets/application.py:704
 msgid "Create Playlist Folder"
 msgstr "创建播放列表夹"
 
-#: ../../lib/frontends/widgets/application.py:699
+#: ../../lib/frontends/widgets/application.py:705
 msgid "Enter a name for the new playlist folder"
 msgstr "为播放列表夹输入新名字"
 
-#: ../../lib/frontends/widgets/application.py:720
+#: ../../lib/frontends/widgets/application.py:726
 #: ../../lib/frontends/widgets/tablist.py:705
 msgid "Rename Feed Folder"
 msgstr "重命名Feed文件夹"
 
-#: ../../lib/frontends/widgets/application.py:721
+#: ../../lib/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the feed folder %(name)s"
 msgstr "为feed文件夹 %(name)s 输入新的名称"
 
-#: ../../lib/frontends/widgets/application.py:725
+#: ../../lib/frontends/widgets/application.py:731
 msgid "Rename Feed"
 msgstr "重命名Feed"
 
-#: ../../lib/frontends/widgets/application.py:726
+#: ../../lib/frontends/widgets/application.py:732
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
 msgstr "为feed %(name)s 输入新的名称"
 
-#: ../../lib/frontends/widgets/application.py:730
+#: ../../lib/frontends/widgets/application.py:736
 #: ../../lib/frontends/widgets/tablist.py:765 ../../lib/playlist.py:202
 msgid "Rename Playlist"
 msgstr "重命名播放列表"
 
-#: ../../lib/frontends/widgets/application.py:731
+#: ../../lib/frontends/widgets/application.py:737
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr "为播放列表 %(name)s 输入新的名称"
 
-#: ../../lib/frontends/widgets/application.py:735
+#: ../../lib/frontends/widgets/application.py:741
 #: ../../lib/frontends/widgets/tablist.py:759
 msgid "Rename Playlist Folder"
 msgstr "重命名播放列表夹"
 
-#: ../../lib/frontends/widgets/application.py:736
+#: ../../lib/frontends/widgets/application.py:742
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
 msgstr "为播放列表文件夹 %(name)s 输入新的名称"
 
-#: ../../lib/frontends/widgets/application.py:739
+#: ../../lib/frontends/widgets/application.py:745
 #: ../../lib/frontends/widgets/tablist.py:623
 msgid "Rename Website"
 msgstr "重命名站点"
 
-#: ../../lib/frontends/widgets/application.py:740
+#: ../../lib/frontends/widgets/application.py:746
 #, python-format
 msgid "Enter a new name for the website %(name)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:764
+#: ../../lib/frontends/widgets/application.py:770
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
 msgstr[0] "移除播放列表"
 
-#: ../../lib/frontends/widgets/application.py:766
+#: ../../lib/frontends/widgets/application.py:772
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
@@ -2057,25 +2063,25 @@ msgstr[0] ""
 "确定删除播放列表？\r\n"
 "确定删除%(count)s个播放列表？"
 
-#: ../../lib/frontends/widgets/application.py:786
+#: ../../lib/frontends/widgets/application.py:792
 msgid "Remove website"
 msgid_plural "Remove websites"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:788
+#: ../../lib/frontends/widgets/application.py:794
 #, python-format
 msgid "Are you sure you want to remove this website?"
 msgid_plural "Are you sure you want to remove these %(count)s websites?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:824
-#: ../../lib/frontends/widgets/application.py:843
+#: ../../lib/frontends/widgets/application.py:830
+#: ../../lib/frontends/widgets/application.py:849
 msgid "Are you sure you want to quit?"
 msgstr "您确定要退出吗？"
 
-#: ../../lib/frontends/widgets/application.py:826
+#: ../../lib/frontends/widgets/application.py:832
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
@@ -2083,11 +2089,11 @@ msgstr[0] ""
 "%(count)d个文件下载中，确定退出?\r\n"
 "%(count)d个文件下载中，确定退出?"
 
-#: ../../lib/frontends/widgets/application.py:831
+#: ../../lib/frontends/widgets/application.py:837
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "当尝试退出时，如还有下载任务正在执行请提醒我。"
 
-#: ../../lib/frontends/widgets/application.py:845
+#: ../../lib/frontends/widgets/application.py:851
 #, python-format
 msgid "You have %(count)d conversion in progress.  Quit anyway?"
 msgid_plural ""
@@ -2095,15 +2101,15 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:850
+#: ../../lib/frontends/widgets/application.py:856
 msgid "Warn me when I attempt to quit with conversions in progress"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1034
+#: ../../lib/frontends/widgets/application.py:1040
 msgid "Upgrading database"
 msgstr "正在升级数据库"
 
-#: ../../lib/frontends/widgets/application.py:1231
+#: ../../lib/frontends/widgets/application.py:1232
 msgid "Message"
 msgstr "信息"
 
@@ -2315,8 +2321,8 @@ msgid "Old items have been removed."
 msgstr "旧项已被删除."
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:193
-msgid "Pause Auto-Downloading when this many items are unplayed:"
-msgstr "在如下数量的项未播放之前暂停自动下载"
+msgid "Pause auto-downloading when this many items are unplayed:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
@@ -2342,16 +2348,16 @@ msgstr "15 个未播放项"
 msgid "Feed Settings"
 msgstr "订阅源设置"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:461
+#: ../../lib/frontends/widgets/itemlistcontroller.py:463
 #: ../../lib/frontends/widgets/statictabs.py:97
 msgid "Video Search"
 msgstr "视频搜索"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:475
+#: ../../lib/frontends/widgets/itemlistcontroller.py:477
 msgid "No Results"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:479
+#: ../../lib/frontends/widgets/itemlistcontroller.py:481
 msgid ""
 "To search for media on Internet media search sites, click on the search box "
 "above, type in search terms and hit the Enter key.  To switch search "
@@ -2359,29 +2365,29 @@ msgid ""
 "the search engine from the drop down."
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:588
+#: ../../lib/frontends/widgets/itemlistcontroller.py:590
 #: ../../lib/frontends/widgets/itemedit.py:151
 #: ../../lib/frontends/widgets/statictabs.py:103
 msgid "Video"
 msgstr "视频"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:589
+#: ../../lib/frontends/widgets/itemlistcontroller.py:591
 msgid "Unwatched"
 msgstr "没有观看过"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:595
+#: ../../lib/frontends/widgets/itemlistcontroller.py:597
 #: ../../lib/frontends/widgets/itemedit.py:152
 #: ../../lib/frontends/widgets/statictabs.py:109
 msgid "Audio"
 msgstr "声音"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:602
+#: ../../lib/frontends/widgets/itemlistcontroller.py:604
 #: ../../lib/frontends/widgets/itemedit.py:153
 #: ../../lib/frontends/widgets/statictabs.py:115
 msgid "Other"
 msgstr "其它"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:634
+#: ../../lib/frontends/widgets/itemlistcontroller.py:636
 msgid "Back to feed"
 msgstr "回到种子列表"
 
@@ -2524,40 +2530,44 @@ msgstr "媒体类型："
 msgid "Path:"
 msgstr "路径:"
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:53
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:56
 #: ../../lib/frontends/widgets/statictabs.py:126
 #: ../../lib/frontends/widgets/prefpanel.py:730
 msgid "Conversions"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:59
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:62
 msgid "Stop All Conversions"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:71
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:74
 msgid "Clear Finished Conversions"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:275
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:272
 #, python-format
 msgid "Conversion to %(format)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:309
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:306
 #, python-format
 msgid "Failed: %(error)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:313
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:312
+msgid "Troubleshoot"
+msgstr ""
+
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:314
 msgid "Open log"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:315
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:334
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:316
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:335
 msgid "Clear"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:326
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:327
 msgid "Completed"
 msgstr ""
 
@@ -2728,42 +2738,52 @@ msgid ""
 "even take more than 30 minutes)."
 msgstr "Miro正在升级您的订阅和下载文件的数据库。升级只做一次更新，如果您本地有大量内容，可能需要超过三十分钟，请耐心等待。"
 
-#: ../../lib/frontends/widgets/diagnostics.py:76
+#: ../../lib/frontends/widgets/diagnostics.py:62
+#: ../../lib/frontends/widgets/diagnostics.py:129
+#, python-format
+msgid "%(databasecount)s: Delete"
+msgstr ""
+
+#: ../../lib/frontends/widgets/diagnostics.py:81
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
 msgid "Show"
 msgstr "显示"
 
-#: ../../lib/frontends/widgets/diagnostics.py:83
+#: ../../lib/frontends/widgets/diagnostics.py:95
 msgid "Movies location:"
 msgstr "电影位置:"
 
-#: ../../lib/frontends/widgets/diagnostics.py:87
+#: ../../lib/frontends/widgets/diagnostics.py:99
 msgid "Icon cache location:"
 msgstr "图标缓存位置:"
 
-#: ../../lib/frontends/widgets/diagnostics.py:91
+#: ../../lib/frontends/widgets/diagnostics.py:103
 msgid "Log file location:"
 msgstr "日志文件位置:"
 
-#: ../../lib/frontends/widgets/diagnostics.py:95
+#: ../../lib/frontends/widgets/diagnostics.py:107
 msgid "Downloader log file location:"
 msgstr "下载程序日志文件位置:"
 
-#: ../../lib/frontends/widgets/diagnostics.py:99
+#: ../../lib/frontends/widgets/diagnostics.py:111
 msgid "Database file location:"
 msgstr "数据库文件位置:"
 
-#: ../../lib/frontends/widgets/diagnostics.py:106
+#: ../../lib/frontends/widgets/diagnostics.py:118
 msgid "Space free on disk:"
 msgstr "剩余磁盘空间:"
 
-#: ../../lib/frontends/widgets/diagnostics.py:108
+#: ../../lib/frontends/widgets/diagnostics.py:120
 msgid "Database size:"
 msgstr "数据库大小"
 
-#: ../../lib/frontends/widgets/diagnostics.py:110
+#: ../../lib/frontends/widgets/diagnostics.py:122
 msgid "Total db objects in memory:"
 msgstr "内存中数据库对象总数"
+
+#: ../../lib/frontends/widgets/diagnostics.py:127
+msgid "Total db backups:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/browser.py:93
 msgid "Open in browser"
@@ -2979,7 +2999,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:315
 msgid "(Changing the language requires you to restart Miro.)"
-msgstr ""
+msgstr "（改变语言要求您重新启动米罗。）"
 
 #: ../../lib/frontends/widgets/prefpanel.py:323
 msgid "Every day"
@@ -3030,8 +3050,8 @@ msgid "Check for new content:"
 msgstr "检查新内容:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:362
-msgid "Auto download setting:"
-msgstr "自动下载设置:"
+msgid "Auto-download setting:"
+msgstr "自动下载设置"
 
 #: ../../lib/frontends/widgets/prefpanel.py:368
 msgid "Remember this many old items:"
@@ -3201,7 +3221,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:712
 msgid "(changing this will not apply to currently running conversions)"
-msgstr ""
+msgstr "（改变这并不适用于当前正在运行的转换）"
 
 #: ../../lib/frontends/widgets/prefpanel.py:724
 msgid "General"
@@ -3273,27 +3293,27 @@ msgstr "继续所有下载(%(paused)d)"
 msgid "Hide"
 msgstr "隐藏"
 
-#: ../../lib/frontends/widgets/gtk/video.py:282
+#: ../../lib/frontends/widgets/gtk/video.py:287
 msgid "Subtitles"
 msgstr "字幕"
 
-#: ../../lib/frontends/widgets/gtk/video.py:307
+#: ../../lib/frontends/widgets/gtk/video.py:312
 msgid "Permalink"
 msgstr "永久链接"
 
-#: ../../lib/frontends/widgets/gtk/video.py:315
+#: ../../lib/frontends/widgets/gtk/video.py:320
 msgid "Exit fullscreen"
 msgstr ""
 
-#: ../../lib/frontends/widgets/gtk/video.py:322
+#: ../../lib/frontends/widgets/gtk/video.py:327
 msgid "Fullscreen"
 msgstr ""
 
-#: ../../lib/frontends/widgets/gtk/video.py:330
+#: ../../lib/frontends/widgets/gtk/video.py:335
 msgid "Pop-in"
 msgstr "并入主窗口"
 
-#: ../../lib/frontends/widgets/gtk/video.py:336
+#: ../../lib/frontends/widgets/gtk/video.py:341
 msgid "Pop-out"
 msgstr "脱离主窗口"
 
@@ -3302,98 +3322,98 @@ msgstr "脱离主窗口"
 msgid "Enter a new name for the playlist %s"
 msgstr "输入播放列表%s的新名字"
 
-#: ../../lib/httpclient.py:90
+#: ../../lib/httpclient.py:94
 msgid "HTTP error"
 msgstr "HTTP 错误"
 
-#: ../../lib/httpclient.py:94
+#: ../../lib/httpclient.py:98
 #, python-format
 msgid "%(host)s closed connection"
 msgstr "%(host)s 断开了连接"
 
-#: ../../lib/httpclient.py:99
+#: ../../lib/httpclient.py:103
 #, python-format
 msgid "Host returned %(status)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:101
-msgid "Please retry later"
-msgstr ""
-
 #: ../../lib/httpclient.py:105
+msgid "Please retry later"
+msgstr "请稍后重试"
+
+#: ../../lib/httpclient.py:109
 #, python-format
 msgid "%(host)s doesn't support HTTP resume"
 msgstr ""
 
-#: ../../lib/httpclient.py:110
+#: ../../lib/httpclient.py:114
 #, python-format
 msgid "HTTP Redirection limit hit for %(url)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:116
+#: ../../lib/httpclient.py:120
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:124
+#: ../../lib/httpclient.py:128
 msgid "Got 404 status code"
 msgstr "404 - 请求页面未找到"
 
-#: ../../lib/httpclient.py:126
+#: ../../lib/httpclient.py:130
 #, python-format
 msgid "Host returned bad status code: %(code)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:132
+#: ../../lib/httpclient.py:136 ../../lib/httpclient.py:137
 msgid "Authorization failed"
 msgstr "验证(授权)失败"
 
-#: ../../lib/httpclient.py:136
+#: ../../lib/httpclient.py:141
 msgid "Invalid URL"
 msgstr "无效的URL地址"
 
-#: ../../lib/httpclient.py:137
+#: ../../lib/httpclient.py:142
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
 msgstr "\"%(url)s\"不是一个有效的地址"
 
-#: ../../lib/httpclient.py:142
+#: ../../lib/httpclient.py:147
 msgid "Unknow Host"
 msgstr ""
 
-#: ../../lib/httpclient.py:143
+#: ../../lib/httpclient.py:148
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
 msgstr ""
 
-#: ../../lib/httpclient.py:149
+#: ../../lib/httpclient.py:154
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
 msgstr "文件“%(path)s”不存在"
 
-#: ../../lib/httpclient.py:153
+#: ../../lib/httpclient.py:158
 msgid "Read error"
 msgstr "读取错误"
 
-#: ../../lib/httpclient.py:154
+#: ../../lib/httpclient.py:159
 #, python-format
 msgid "Error while reading from \"%(path)s\""
 msgstr "读取“%(path)s”时发生错误"
 
-#: ../../lib/httpclient.py:162 ../../lib/dl_daemon/download.py:678
+#: ../../lib/httpclient.py:167 ../../lib/dl_daemon/download.py:679
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr "无法写入 %(filename)s"
 
-#: ../../lib/httpclient.py:164
+#: ../../lib/httpclient.py:169
 msgid "Write error"
 msgstr ""
 
-#: ../../lib/httpclient.py:337
+#: ../../lib/httpclient.py:343
 msgid "Website"
 msgstr ""
 
-#: ../../lib/httpclient.py:342
+#: ../../lib/httpclient.py:348
 msgid "Proxy"
 msgstr ""
 
@@ -3432,41 +3452,41 @@ msgstr "未知错误代码"
 msgid "Connection closed"
 msgstr "连接已关闭"
 
-#: ../../lib/dl_daemon/download.py:686 ../../lib/dl_daemon/download.py:829
+#: ../../lib/dl_daemon/download.py:687 ../../lib/dl_daemon/download.py:833
 msgid "Not enough disk space"
 msgstr "可用磁盘空间不足"
 
-#: ../../lib/dl_daemon/download.py:687 ../../lib/dl_daemon/download.py:830
+#: ../../lib/dl_daemon/download.py:688 ../../lib/dl_daemon/download.py:834
 #, python-format
 msgid "%(amount)s MB required to store this video"
 msgstr "需要 %(amount)s M 以保存视频"
 
-#: ../../lib/dl_daemon/download.py:717
+#: ../../lib/dl_daemon/download.py:718
 msgid "no content"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:856
+#: ../../lib/dl_daemon/download.py:860
 msgid "BitTorrent failure"
 msgstr "BT下载错误"
 
-#: ../../lib/dl_daemon/download.py:857
+#: ../../lib/dl_daemon/download.py:861
 msgid "BitTorrent failed to startup"
 msgstr "BT启动失败"
 
-#: ../../lib/dl_daemon/download.py:1069
+#: ../../lib/dl_daemon/download.py:1073
 msgid "Corrupt Torrent"
 msgstr "BT 种子损坏"
 
-#: ../../lib/dl_daemon/download.py:1070
+#: ../../lib/dl_daemon/download.py:1074
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr "%(url)s 的 BT 文件是无效的"
 
-#: ../../lib/dl_daemon/download.py:1101
+#: ../../lib/dl_daemon/download.py:1105
 msgid "Torrent file deleted"
 msgstr "BT 种子已删除"
 
-#: ../../lib/dl_daemon/download.py:1102
+#: ../../lib/dl_daemon/download.py:1106
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr "此文件的种子已通过%(appname)s之外的途径被删除。"

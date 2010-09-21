@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2010-09-10 17:34-0400\n"
+"POT-Creation-Date: 2010-09-18 11:10-0400\n"
 "PO-Revision-Date: 2010-07-30 03:07+0000\n"
 "Last-Translator: umast3 <uma1uma@gmail.com>\n"
 "Language-Team: Telugu <te@li.org>\n"
@@ -15,29 +15,29 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-09-12 12:52+0000\n"
+"X-Launchpad-Export-Date: 2010-09-21 18:57+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
-#: ../../lib/frontends/widgets/gtk/video.py:297
+#: ../../lib/frontends/widgets/gtk/video.py:302
 msgid "Share"
 msgstr "పంచుకోండి"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:125 ../../lib/dialogs.py:117
-#: ../../lib/frontends/widgets/style.py:260
-#: ../../lib/frontends/widgets/style.py:1070
-#: ../../lib/frontends/widgets/style.py:1237
+#: ../../lib/frontends/widgets/style.py:261
+#: ../../lib/frontends/widgets/style.py:1082
+#: ../../lib/frontends/widgets/style.py:1249
 #: ../../lib/frontends/widgets/itemcontextmenu.py:116
 #: ../../lib/frontends/widgets/itemcontextmenu.py:223
-#: ../../lib/frontends/widgets/gtk/video.py:278
+#: ../../lib/frontends/widgets/gtk/video.py:283
 msgid "Keep"
 msgstr "ఉంచు"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:129
 #: ../../osx/plat/frontends/widgets/osxmenus.py:185 ../../lib/dialogs.py:118
 #: ../../lib/frontends/widgets/itemcontextmenu.py:68
-#: ../../lib/frontends/widgets/gtk/video.py:291
+#: ../../lib/frontends/widgets/gtk/video.py:296
 msgid "Delete"
 msgstr "తొలగించు"
 
@@ -151,18 +151,18 @@ msgstr "%(appname)s సహాయం"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:368
 #: ../../lib/frontends/widgets/gtk/window.py:295
-#: ../../lib/frontends/widgets/gtk/video.py:397
+#: ../../lib/frontends/widgets/gtk/video.py:402
 msgid "Disable Subtitles"
 msgstr "ఉపటైటిళ్ళను అశక్తం చెయ్యి"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:379
 #: ../../lib/frontends/widgets/menus.py:325
-#: ../../lib/frontends/widgets/gtk/video.py:375
+#: ../../lib/frontends/widgets/gtk/video.py:380
 msgid "None Available"
 msgstr "ఏమీ అందుబాటులో లేవు"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:386
-#: ../../lib/frontends/widgets/gtk/video.py:408
+#: ../../lib/frontends/widgets/gtk/video.py:413
 msgid "Select a Subtitles file..."
 msgstr "ఉపటైటిళ్ళ ఫైలును ఎంచుకో.."
 
@@ -709,8 +709,8 @@ msgstr "ఫైలును ప్లే చేస్తున్నాం"
 msgid "activity"
 msgstr "కలాపం"
 
-#: ../../lib/downloader.py:329 ../../lib/httpclient.py:123
-#: ../../lib/httpclient.py:148
+#: ../../lib/downloader.py:329 ../../lib/httpclient.py:127
+#: ../../lib/httpclient.py:153
 msgid "File not found"
 msgstr "ఫైలు కనుబడలేదు"
 
@@ -732,7 +732,7 @@ msgid "no connection - retrying soon"
 msgstr ""
 
 #: ../../lib/downloader.py:561 ../../lib/downloader.py:569
-#: ../../lib/httpclient.py:194 ../../lib/httpclient.py:610
+#: ../../lib/httpclient.py:199 ../../lib/httpclient.py:618
 msgid "Unknown"
 msgstr "అపరిచితం"
 
@@ -831,15 +831,15 @@ msgstr "%(size)sకిబై"
 msgid "%(size)sB"
 msgstr "%(size)sబై"
 
-#: ../../lib/messagehandler.py:1328
+#: ../../lib/messagehandler.py:1336
 msgid "Subscribed to new feed:"
 msgstr "కొత్త ఫీడుకు చందా చేర్చాం:"
 
-#: ../../lib/messagehandler.py:1331
+#: ../../lib/messagehandler.py:1339
 msgid "Subscribed to new feeds:"
 msgstr "కొత్త ఫీడులకు చందా చేర్చాం:"
 
-#: ../../lib/messagehandler.py:1350
+#: ../../lib/messagehandler.py:1358
 msgid "Migrating Files"
 msgstr "ఫైళ్ళను వలస పంపుతున్నాం"
 
@@ -880,12 +880,17 @@ msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
 msgstr "%(filename)s టోరెంటు ఫైలు చెడిపోయినట్టుగా ఉంది, తెరవలేకపోతున్నాం."
 
-#: ../../lib/videoconversion.py:655
+#: ../../lib/videoconversion.py:83
+#, python-format
+msgid "%(name)s (%(mediatype)s)"
+msgstr ""
+
+#: ../../lib/videoconversion.py:708
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
 msgstr ""
 
-#: ../../lib/messages.py:1114 ../../lib/item.py:1127
+#: ../../lib/messages.py:1120 ../../lib/item.py:1127
 msgid "queued for download"
 msgstr "దింపుకోలు క్యూలో ఉంది"
 
@@ -901,8 +906,9 @@ msgstr "ఆపాదించు"
 msgid "Close"
 msgstr "మూసివేయి"
 
-#: ../../lib/dialogs.py:96 ../../lib/frontends/widgets/firsttimedialog.py:363
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:344
+#: ../../lib/dialogs.py:96 ../../lib/frontends/widgets/style.py:256
+#: ../../lib/frontends/widgets/firsttimedialog.py:363
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:345
 msgid "Cancel"
 msgstr "వద్దు"
 
@@ -945,8 +951,8 @@ msgid "Don't Migrate"
 msgstr "వలసపంపవద్దు"
 
 #: ../../lib/dialogs.py:106 ../../lib/frontends/widgets/style.py:253
-#: ../../lib/frontends/widgets/style.py:1140
-#: ../../lib/frontends/widgets/style.py:1151
+#: ../../lib/frontends/widgets/style.py:1152
+#: ../../lib/frontends/widgets/style.py:1163
 #: ../../lib/frontends/widgets/itemcontextmenu.py:140
 #: ../../lib/frontends/widgets/itemcontextmenu.py:241
 msgid "Download"
@@ -992,7 +998,7 @@ msgstr "చేర్చు"
 msgid "Add Into New Folder"
 msgstr "కొత్త సంచీలో చేర్చు"
 
-#: ../../lib/dialogs.py:119 ../../lib/frontends/widgets/style.py:261
+#: ../../lib/dialogs.py:119 ../../lib/frontends/widgets/style.py:262
 #: ../../lib/frontends/widgets/tablist.py:706
 #: ../../lib/frontends/widgets/tablist.py:718
 #: ../../lib/frontends/widgets/tablist.py:724
@@ -1061,12 +1067,12 @@ msgstr ""
 msgid "Login Required"
 msgstr ""
 
-#: ../../lib/storedatabase.py:221
+#: ../../lib/storedatabase.py:248
 #, python-format
 msgid "%(appname)s database upgrade failed"
 msgstr "%(appname)s డేటాబేసు ఉన్నతీకరణ విఫలమైంది"
 
-#: ../../lib/storedatabase.py:224
+#: ../../lib/storedatabase.py:251
 #, python-format
 msgid ""
 "We're sorry, %(appname)s was unable to upgrade your database due to errors.\n"
@@ -1089,28 +1095,28 @@ msgstr ""
 "తీసేస్తాం. కానీ మీరు మి వడ్డనలు, మీడియా ఫైళ్ళను తిరిగి చేర్చుకోవాల్సి "
 "ఉంటుంది."
 
-#: ../../lib/storedatabase.py:284
+#: ../../lib/storedatabase.py:324
 msgid "Database was created by a newer version of Miro "
 msgstr "డేటాబేసు Miro కొత్త కూర్పుతొ తయారుచేసారు "
 
-#: ../../lib/storedatabase.py:673
+#: ../../lib/storedatabase.py:713
 #, python-format
 msgid "%(appname)s database save succeeded"
 msgstr "%(appname)s దేటాబేసును భద్రపరచడం జయప్రదమైంది"
 
-#: ../../lib/storedatabase.py:675
+#: ../../lib/storedatabase.py:715
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 "డేటాబేసును జయప్రదంగా భద్రపరచాం. ఇక మీరు నిష్క్రమించవచ్చు, డేటా ఏమీ పోదు."
 
-#: ../../lib/storedatabase.py:736
+#: ../../lib/storedatabase.py:776
 #, python-format
 msgid "%(appname)s database save failed"
 msgstr "%(appname)s డేటాబేస భద్రపరచడం విఫలమైంది"
 
-#: ../../lib/storedatabase.py:739
+#: ../../lib/storedatabase.py:779
 #, python-format
 msgid ""
 "%(appname)s was unable to save its database.\n"
@@ -1141,19 +1147,19 @@ msgstr ""
 "లోపం: %(error_text)s\n"
 "\n"
 
-#: ../../lib/item.py:1214
+#: ../../lib/item.py:1220
 msgid "no title"
 msgstr "శీర్షిక లేదు"
 
-#: ../../lib/item.py:1256 ../../lib/item.py:1263
+#: ../../lib/item.py:1262 ../../lib/item.py:1269
 msgid "Contents appear in the library"
 msgstr "ఈ కంటెంటులు లైబ్రరీలో ఉన్నాయి"
 
-#: ../../lib/item.py:1267
+#: ../../lib/item.py:1273
 msgid "Contents:"
 msgstr "కంటెంటులు:"
 
-#: ../../lib/item.py:1498
+#: ../../lib/item.py:1504
 msgid "starting up..."
 msgstr "మొదలవుతోంది..."
 
@@ -1294,7 +1300,7 @@ msgstr "తక్కుప చూపించు"
 
 #: ../../lib/frontends/widgets/style.py:238
 #: ../../lib/frontends/widgets/itemcontextmenu.py:148
-#: ../../lib/frontends/widgets/gtk/video.py:303
+#: ../../lib/frontends/widgets/gtk/video.py:308
 msgid "Comments"
 msgstr "వ్యాఖ్యలు"
 
@@ -1362,46 +1368,46 @@ msgid "Download Torrent"
 msgstr "టోరెంటును దించు"
 
 #: ../../lib/frontends/widgets/style.py:255
-#: ../../lib/dl_daemon/download.py:555
+#: ../../lib/dl_daemon/download.py:556
 msgid "Error"
 msgstr "పొరపాటు"
 
-#: ../../lib/frontends/widgets/style.py:256
-msgid "queued for autodownload"
-msgstr "ఆటోదింపుకోలు క్యూలో ఉంది"
-
 #: ../../lib/frontends/widgets/style.py:257
-#: ../../lib/frontends/widgets/style.py:1191
+msgid "Queued for Auto-download"
+msgstr ""
+
+#: ../../lib/frontends/widgets/style.py:258
+#: ../../lib/frontends/widgets/style.py:1203
 #: ../../lib/frontends/widgets/itemlistwidgets.py:329
-#: ../../lib/frontends/widgets/itemlistcontroller.py:596
+#: ../../lib/frontends/widgets/itemlistcontroller.py:598
 msgid "Unplayed"
 msgstr "ప్లేచెయ్యనివి"
 
-#: ../../lib/frontends/widgets/style.py:258
+#: ../../lib/frontends/widgets/style.py:259
 msgid "Currently Playing"
 msgstr "ప్రస్తుతం ప్లే అవుతున్నవి"
 
-#: ../../lib/frontends/widgets/style.py:259
-#: ../../lib/frontends/widgets/style.py:1209
+#: ../../lib/frontends/widgets/style.py:260
+#: ../../lib/frontends/widgets/style.py:1221
 #: ../../lib/frontends/widgets/itemlistwidgets.py:332
 msgid "Newly Available"
 msgstr "కొత్తవి"
 
-#: ../../lib/frontends/widgets/style.py:262
+#: ../../lib/frontends/widgets/style.py:263
 msgid "Stop seeding"
 msgstr ""
 
-#: ../../lib/frontends/widgets/style.py:591
-#: ../../lib/frontends/widgets/style.py:1202
+#: ../../lib/frontends/widgets/style.py:592
+#: ../../lib/frontends/widgets/style.py:1214
 msgid "paused"
 msgstr "ఆపి ఉంచినవి"
 
-#: ../../lib/frontends/widgets/style.py:810
+#: ../../lib/frontends/widgets/style.py:822
 #, python-format
 msgid "Resume at %(resumetime)s"
 msgstr "%(resumetime)s కు తిరిగి కొనసాగించు"
 
-#: ../../lib/frontends/widgets/style.py:1072
+#: ../../lib/frontends/widgets/style.py:1084
 msgid "Remove from playlist"
 msgstr "ప్లేలిస్టు నుంచి తీసెయ్యి"
 
@@ -1450,11 +1456,11 @@ msgstr "వీడియో"
 msgid "audio"
 msgstr "ఆడియో"
 
-#: ../../lib/frontends/widgets/playback.py:606
+#: ../../lib/frontends/widgets/playback.py:608
 msgid "Open Subtitles File..."
 msgstr "ఉపశీర్షికల ఫైలు తెరువు.."
 
-#: ../../lib/frontends/widgets/playback.py:607
+#: ../../lib/frontends/widgets/playback.py:609
 msgid "Subtitle files"
 msgstr "ఉపశీర్షిక దస్త్రాలు"
 
@@ -1519,7 +1525,7 @@ msgid "Add _Feed"
 msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:233
-#: ../../lib/frontends/widgets/application.py:576
+#: ../../lib/frontends/widgets/application.py:582
 msgid "Add Website"
 msgstr "వెబ్‍సైటును చేర్చు"
 
@@ -1703,7 +1709,7 @@ msgid "_Donate"
 msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:348
-#: ../../lib/frontends/widgets/diagnostics.py:118
+#: ../../lib/frontends/widgets/diagnostics.py:92
 msgid "Diagnostics"
 msgstr ""
 
@@ -1720,7 +1726,7 @@ msgid "_Planet Miro"
 msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:369
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:65
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:68
 #: ../../lib/frontends/widgets/itemcontextmenu.py:296
 msgid "Show Conversion Folder"
 msgstr "అంతరీకరణాల ఫోల్డరును చూపించు"
@@ -1825,8 +1831,8 @@ msgid "%(rate)s downloading"
 msgstr "%(rate)s న దింపుతున్నాం"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:644
-msgid "Auto Download"
-msgstr "ఆటో దింపుకోలు"
+msgid "Auto-download"
+msgstr ""
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:649
 #: ../../lib/frontends/widgets/prefpanel.py:332
@@ -1871,11 +1877,11 @@ msgstr "చూపించు|అన్నీ"
 msgid "Non Feed"
 msgstr "వడ్డన కాని"
 
-#: ../../lib/frontends/widgets/application.py:160
+#: ../../lib/frontends/widgets/application.py:161
 msgid "Movies directory gone"
 msgstr "మూవీల డైరెక్టరీ పోయింది"
 
-#: ../../lib/frontends/widgets/application.py:162
+#: ../../lib/frontends/widgets/application.py:163
 #, python-format
 msgid ""
 "%(shortappname)s can't use the primary video directory located at:\n"
@@ -1908,47 +1914,47 @@ msgstr ""
 "వదిలి వెళ్ళిపోతే, ఆ డ్రైవును తిరిగి కనెక్టు చెయ్యవచ్చు. లేదా, వేరే సమస్య "
 "ఏదైనా ఉంటే, దాన్ని సరిచేసి ఆనక %(shortappname)s ను తిరిగి నడపవచ్చు."
 
-#: ../../lib/frontends/widgets/application.py:335
+#: ../../lib/frontends/widgets/application.py:341
 msgid "Error Revealing File"
 msgstr "ఫైలును చూపించడంలో లోపం"
 
-#: ../../lib/frontends/widgets/application.py:336
+#: ../../lib/frontends/widgets/application.py:342
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
 msgstr "%(filename)s, %(appname)s కు బయట తొలగించబడింది."
 
-#: ../../lib/frontends/widgets/application.py:347
+#: ../../lib/frontends/widgets/application.py:353
 msgid "Open Files..."
 msgstr "ఫైళ్ళను తెరువు..."
 
-#: ../../lib/frontends/widgets/application.py:358
-#: ../../lib/frontends/widgets/application.py:363
+#: ../../lib/frontends/widgets/application.py:364
+#: ../../lib/frontends/widgets/application.py:369
 msgid "Open Files - Error"
 msgstr "ఫైళ్ళను తరవడం - లోపం"
 
-#: ../../lib/frontends/widgets/application.py:359
-#: ../../lib/frontends/widgets/application.py:647
+#: ../../lib/frontends/widgets/application.py:365
+#: ../../lib/frontends/widgets/application.py:653
 #, python-format
 msgid "File %(filename)s does not exist."
 msgstr "%(filename)s ఫైలు లేదు."
 
-#: ../../lib/frontends/widgets/application.py:364
+#: ../../lib/frontends/widgets/application.py:370
 msgid "The following files do not exist:"
 msgstr "ఈ క్రింది దస్త్రం లేనే లేదు:"
 
-#: ../../lib/frontends/widgets/application.py:401
+#: ../../lib/frontends/widgets/application.py:407
 msgid "New Download"
 msgstr "కొత్త దిగుమతి"
 
-#: ../../lib/frontends/widgets/application.py:402
+#: ../../lib/frontends/widgets/application.py:408
 msgid "Enter the URL of the item to download"
 msgstr "దించుకోవాల్సిన ఐటము URL ను ఇవ్వండి"
 
-#: ../../lib/frontends/widgets/application.py:403
+#: ../../lib/frontends/widgets/application.py:409
 msgid "New Download - Invalid URL"
 msgstr "కొత్త దింపుకోలు - సరైన URL కాదు"
 
-#: ../../lib/frontends/widgets/application.py:404
+#: ../../lib/frontends/widgets/application.py:410
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -1960,23 +1966,23 @@ msgstr ""
 "\n"
 "దించుకోవాల్సిన ఐటము URL ఇవ్వండి"
 
-#: ../../lib/frontends/widgets/application.py:412
+#: ../../lib/frontends/widgets/application.py:418
 #, python-format
 msgid "%(appname)s is up to date"
 msgstr "%(appname)s తాజాగా ఉంది"
 
-#: ../../lib/frontends/widgets/application.py:414
+#: ../../lib/frontends/widgets/application.py:420
 #, python-format
 msgid "%(appname)s is up to date!"
 msgstr "%(appname)s తాజాగా ఉంది!"
 
-#: ../../lib/frontends/widgets/application.py:438
+#: ../../lib/frontends/widgets/application.py:444
 msgid "Remove item"
 msgid_plural "Remove items"
 msgstr[0] "అంశాన్ని తొలగించు"
 msgstr[1] "అంశాలని తొలగించు"
 
-#: ../../lib/frontends/widgets/application.py:442
+#: ../../lib/frontends/widgets/application.py:448
 msgid ""
 "One of these items was not downloaded from a feed. Would you like to delete "
 "it or just remove it from the Library?"
@@ -1990,7 +1996,7 @@ msgstr[1] ""
 "ఈ ఐటములలో కొన్ని వడ్డన నుండి దించుకున్నవి కాదు. వాటిని తొలగిస్తారా లేక "
 "లైబ్రరీ నుంచి తీసేసి ఊరుకుంటారా?"
 
-#: ../../lib/frontends/widgets/application.py:452
+#: ../../lib/frontends/widgets/application.py:458
 msgid ""
 "One of these items is a folder.  Delete/Removeing a folder will "
 "delete/remove it's contents"
@@ -2004,14 +2010,14 @@ msgstr[1] ""
 "ఈ ఐటములలో కొన్ని ఫోల్డర్లు.  ఫోల్డరును తొలగిస్తే/తీసేస్తే అందులోని కంటెంటులు "
 "కూడా తొలగించబడతాయి/తీసెయ్యబడతాయి"
 
-#: ../../lib/frontends/widgets/application.py:467
+#: ../../lib/frontends/widgets/application.py:473
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
 msgstr[0] "ఈ ఐటమును తొలగించాలనే నిశ్చయించుకున్నారా?"
 msgstr[1] "మొత్తం %(count)d ఐటములనూ తొలగించాలనే నిశ్చయించుకున్నారా?"
 
-#: ../../lib/frontends/widgets/application.py:474
+#: ../../lib/frontends/widgets/application.py:480
 msgid ""
 "One of these items is a folder.  Deleting a folder will delete it's contents"
 msgid_plural ""
@@ -2023,19 +2029,19 @@ msgstr[1] ""
 "ఈ ఐటములలో కొన్ని ఫోల్డర్లు.  ఫోల్డరును తొలగిస్తే అందులోని కంటెంటులు కూడా "
 "తొలగించబడతాయి"
 
-#: ../../lib/frontends/widgets/application.py:518
+#: ../../lib/frontends/widgets/application.py:524
 msgid "Save Item As..."
 msgstr "ఐటమును ఇలా భద్రపరచు..."
 
-#: ../../lib/frontends/widgets/application.py:577
+#: ../../lib/frontends/widgets/application.py:583
 msgid "Enter the URL of the website to add"
 msgstr "చేర్చాల్సిన వెబ్‍సైటు URL ఇవ్వండి"
 
-#: ../../lib/frontends/widgets/application.py:578
+#: ../../lib/frontends/widgets/application.py:584
 msgid "Add Website - Invalid URL"
 msgstr "వెబ్‍సైటును చేర్చు - సరైన URL కాదు"
 
-#: ../../lib/frontends/widgets/application.py:579
+#: ../../lib/frontends/widgets/application.py:585
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -2047,130 +2053,130 @@ msgstr ""
 "\n"
 "చేర్చాలసిన వెబ్‍సైటు URL ఇవ్వండి"
 
-#: ../../lib/frontends/widgets/application.py:637
+#: ../../lib/frontends/widgets/application.py:643
 msgid "Import OPML File"
 msgstr "OPML ఫైలు దిగుమతి"
 
-#: ../../lib/frontends/widgets/application.py:639
+#: ../../lib/frontends/widgets/application.py:645
 msgid "OPML Files"
 msgstr "OPML ఫైళ్ళు"
 
-#: ../../lib/frontends/widgets/application.py:646
+#: ../../lib/frontends/widgets/application.py:652
 msgid "Import OPML File - Error"
 msgstr "OPML ఫైలు దిగుమతి - లోపం"
 
-#: ../../lib/frontends/widgets/application.py:652
+#: ../../lib/frontends/widgets/application.py:658
 msgid "Export OPML File"
 msgstr "OPML ఫైలు ఎగుమతి"
 
-#: ../../lib/frontends/widgets/application.py:676
+#: ../../lib/frontends/widgets/application.py:682
 msgid "Create Playlist"
 msgstr "ప్లేలిస్టు సృష్టించు"
 
-#: ../../lib/frontends/widgets/application.py:677
+#: ../../lib/frontends/widgets/application.py:683
 msgid "Enter a name for the new playlist"
 msgstr "కొత్త ప్లేలిస్టుకు పేరు ఇవ్వండి"
 
-#: ../../lib/frontends/widgets/application.py:698
+#: ../../lib/frontends/widgets/application.py:704
 msgid "Create Playlist Folder"
 msgstr "ప్లేలిస్టు ఫోల్డరు సృష్టించు"
 
-#: ../../lib/frontends/widgets/application.py:699
+#: ../../lib/frontends/widgets/application.py:705
 msgid "Enter a name for the new playlist folder"
 msgstr "కొత్త ప్లేలిస్టు ఫోల్డరుకు పేరు ఇవ్వండి"
 
-#: ../../lib/frontends/widgets/application.py:720
+#: ../../lib/frontends/widgets/application.py:726
 #: ../../lib/frontends/widgets/tablist.py:705
 msgid "Rename Feed Folder"
 msgstr "వడ్డన ఫోల్డరు పేరుమార్చు"
 
-#: ../../lib/frontends/widgets/application.py:721
+#: ../../lib/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the feed folder %(name)s"
 msgstr "%(name)s వడ్డన ఫోల్డరుకు కొత్త పేరు ఇవ్వండి"
 
-#: ../../lib/frontends/widgets/application.py:725
+#: ../../lib/frontends/widgets/application.py:731
 msgid "Rename Feed"
 msgstr "వద్దన పేరుమార్చు"
 
-#: ../../lib/frontends/widgets/application.py:726
+#: ../../lib/frontends/widgets/application.py:732
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
 msgstr "%(name)s వడ్డనకు కొత్త పేరు ఇవ్వండి"
 
-#: ../../lib/frontends/widgets/application.py:730
+#: ../../lib/frontends/widgets/application.py:736
 #: ../../lib/frontends/widgets/tablist.py:765 ../../lib/playlist.py:202
 msgid "Rename Playlist"
 msgstr "ప్లేలిస్టు పేరుమార్చు"
 
-#: ../../lib/frontends/widgets/application.py:731
+#: ../../lib/frontends/widgets/application.py:737
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr "%(name)s ప్లేలిస్టుకు కొత్త పేరు ఇవ్వండి"
 
-#: ../../lib/frontends/widgets/application.py:735
+#: ../../lib/frontends/widgets/application.py:741
 #: ../../lib/frontends/widgets/tablist.py:759
 msgid "Rename Playlist Folder"
 msgstr "ప్లేలిస్టు ఫోల్డరు పేరుమార్చు"
 
-#: ../../lib/frontends/widgets/application.py:736
+#: ../../lib/frontends/widgets/application.py:742
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
 msgstr "%(name)s ప్లేలిస్టు ఫోల్డరుకు కొత్త పేరు ఇవ్వండి"
 
-#: ../../lib/frontends/widgets/application.py:739
+#: ../../lib/frontends/widgets/application.py:745
 #: ../../lib/frontends/widgets/tablist.py:623
 msgid "Rename Website"
 msgstr "వెబ్‍సైటు పేరు మార్చు"
 
-#: ../../lib/frontends/widgets/application.py:740
+#: ../../lib/frontends/widgets/application.py:746
 #, python-format
 msgid "Enter a new name for the website %(name)s"
 msgstr "%(name)s వెబ్‍సైటుకు కొత్త పేరు ఇవ్వండి"
 
-#: ../../lib/frontends/widgets/application.py:764
+#: ../../lib/frontends/widgets/application.py:770
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
 msgstr[0] "ప్లేలిస్టును తీసెయ్యి"
 msgstr[1] "ప్లేలిస్టులను తీసెయ్యి"
 
-#: ../../lib/frontends/widgets/application.py:766
+#: ../../lib/frontends/widgets/application.py:772
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
 msgstr[0] "ఈ ప్లేలిస్టును తీసెయ్యాలనే నిశ్చయించుకున్నారా?"
 msgstr[1] "ఈ %(count)s ప్లేలిస్టులనూ తీసెయ్యాలనే నిశ్చయించుకున్నారా?"
 
-#: ../../lib/frontends/widgets/application.py:786
+#: ../../lib/frontends/widgets/application.py:792
 msgid "Remove website"
 msgid_plural "Remove websites"
 msgstr[0] "వెబ్‍సైటును తీసెయ్యి"
 msgstr[1] "వెబ్‍సైటులను తీసెయ్యి"
 
-#: ../../lib/frontends/widgets/application.py:788
+#: ../../lib/frontends/widgets/application.py:794
 #, python-format
 msgid "Are you sure you want to remove this website?"
 msgid_plural "Are you sure you want to remove these %(count)s websites?"
 msgstr[0] "ఈ వెబ్‍సైటును తీసెయ్యాలనే నిశ్చయించుకున్నారా?"
 msgstr[1] "ఈ %(count)s వెబ్‍సైటులనూ తీసెయ్యాలనే నిశ్చయించుకున్నారా?"
 
-#: ../../lib/frontends/widgets/application.py:824
-#: ../../lib/frontends/widgets/application.py:843
+#: ../../lib/frontends/widgets/application.py:830
+#: ../../lib/frontends/widgets/application.py:849
 msgid "Are you sure you want to quit?"
 msgstr "మీరు నిజంగా త్యజించదల్చుకున్నారా?"
 
-#: ../../lib/frontends/widgets/application.py:826
+#: ../../lib/frontends/widgets/application.py:832
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] "%(count)d దింపుకోలు జరుగుతూ ఉన్నది. అయినా సరే వెళ్ళిపోతారా?"
 msgstr[1] "%(count)d దింపుకోళ్ళు జరుగుతూ ఉన్నాయి. అయినా సరే వెళ్ళిపోతారా?"
 
-#: ../../lib/frontends/widgets/application.py:831
+#: ../../lib/frontends/widgets/application.py:837
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "దింపుకోళ్ళు జరుగుతూ ఉండగా నేను వెళ్ళిపోవాలని ప్రయత్నిస్తే హెచ్చరించు"
 
-#: ../../lib/frontends/widgets/application.py:845
+#: ../../lib/frontends/widgets/application.py:851
 #, python-format
 msgid "You have %(count)d conversion in progress.  Quit anyway?"
 msgid_plural ""
@@ -2178,15 +2184,15 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/application.py:850
+#: ../../lib/frontends/widgets/application.py:856
 msgid "Warn me when I attempt to quit with conversions in progress"
 msgstr ""
 
-#: ../../lib/frontends/widgets/application.py:1034
+#: ../../lib/frontends/widgets/application.py:1040
 msgid "Upgrading database"
 msgstr "డేటాబేసును ఉన్నతీకరిస్తున్నాం"
 
-#: ../../lib/frontends/widgets/application.py:1231
+#: ../../lib/frontends/widgets/application.py:1232
 msgid "Message"
 msgstr "సందేశం"
 
@@ -2413,7 +2419,7 @@ msgid "Old items have been removed."
 msgstr "పాత ఐటములను తీసేసాం."
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:193
-msgid "Pause Auto-Downloading when this many items are unplayed:"
+msgid "Pause auto-downloading when this many items are unplayed:"
 msgstr ""
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:197
@@ -2440,16 +2446,16 @@ msgstr "15 ప్లే చెయ్యని ఐటములు"
 msgid "Feed Settings"
 msgstr "ఫీడు అమరికలు"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:461
+#: ../../lib/frontends/widgets/itemlistcontroller.py:463
 #: ../../lib/frontends/widgets/statictabs.py:97
 msgid "Video Search"
 msgstr "వీడియో వెతుకులాట"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:475
+#: ../../lib/frontends/widgets/itemlistcontroller.py:477
 msgid "No Results"
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:479
+#: ../../lib/frontends/widgets/itemlistcontroller.py:481
 msgid ""
 "To search for media on Internet media search sites, click on the search box "
 "above, type in search terms and hit the Enter key.  To switch search "
@@ -2457,29 +2463,29 @@ msgid ""
 "the search engine from the drop down."
 msgstr ""
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:588
+#: ../../lib/frontends/widgets/itemlistcontroller.py:590
 #: ../../lib/frontends/widgets/itemedit.py:151
 #: ../../lib/frontends/widgets/statictabs.py:103
 msgid "Video"
 msgstr "వీడియో"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:589
+#: ../../lib/frontends/widgets/itemlistcontroller.py:591
 msgid "Unwatched"
 msgstr "వీక్షణలో లేనివి"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:595
+#: ../../lib/frontends/widgets/itemlistcontroller.py:597
 #: ../../lib/frontends/widgets/itemedit.py:152
 #: ../../lib/frontends/widgets/statictabs.py:109
 msgid "Audio"
 msgstr "ఆడియో"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:602
+#: ../../lib/frontends/widgets/itemlistcontroller.py:604
 #: ../../lib/frontends/widgets/itemedit.py:153
 #: ../../lib/frontends/widgets/statictabs.py:115
 msgid "Other"
 msgstr "ఇతరములు"
 
-#: ../../lib/frontends/widgets/itemlistcontroller.py:634
+#: ../../lib/frontends/widgets/itemlistcontroller.py:636
 msgid "Back to feed"
 msgstr "తిరిగి వడ్దనకు"
 
@@ -2619,40 +2625,44 @@ msgstr "మాధ్యమ రకం:"
 msgid "Path:"
 msgstr "త్రోవ:"
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:53
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:56
 #: ../../lib/frontends/widgets/statictabs.py:126
 #: ../../lib/frontends/widgets/prefpanel.py:730
 msgid "Conversions"
 msgstr "అంతరీకరణాలు"
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:59
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:62
 msgid "Stop All Conversions"
 msgstr "అంతరీకరణాలన్నిటినీ ఆపు"
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:71
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:74
 msgid "Clear Finished Conversions"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:275
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:272
 #, python-format
 msgid "Conversion to %(format)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:309
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:306
 #, python-format
 msgid "Failed: %(error)s"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:313
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:312
+msgid "Troubleshoot"
+msgstr ""
+
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:314
 msgid "Open log"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:315
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:334
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:316
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:335
 msgid "Clear"
 msgstr ""
 
-#: ../../lib/frontends/widgets/videoconversionscontroller.py:326
+#: ../../lib/frontends/widgets/videoconversionscontroller.py:327
 msgid "Completed"
 msgstr ""
 
@@ -2835,42 +2845,52 @@ msgstr ""
 "ప్రాసెసు. Miro లో బోలెడు ఫైళ్ళు ఉంటే, ఈ పనికి చాలా సమయం పట్టొచ్చు. (30 "
 "నిమిషాల కంటే ఎక్కువ సమయం పట్టొచ్చు)"
 
-#: ../../lib/frontends/widgets/diagnostics.py:76
+#: ../../lib/frontends/widgets/diagnostics.py:62
+#: ../../lib/frontends/widgets/diagnostics.py:129
+#, python-format
+msgid "%(databasecount)s: Delete"
+msgstr ""
+
+#: ../../lib/frontends/widgets/diagnostics.py:81
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
 msgid "Show"
 msgstr "చూపించు"
 
-#: ../../lib/frontends/widgets/diagnostics.py:83
+#: ../../lib/frontends/widgets/diagnostics.py:95
 msgid "Movies location:"
 msgstr "మోవీల స్థానం:"
 
-#: ../../lib/frontends/widgets/diagnostics.py:87
+#: ../../lib/frontends/widgets/diagnostics.py:99
 msgid "Icon cache location:"
 msgstr "ఐకను కాషె స్థానం:"
 
-#: ../../lib/frontends/widgets/diagnostics.py:91
+#: ../../lib/frontends/widgets/diagnostics.py:103
 msgid "Log file location:"
 msgstr "లాగ్ ఫైలు స్థానం:"
 
-#: ../../lib/frontends/widgets/diagnostics.py:95
+#: ../../lib/frontends/widgets/diagnostics.py:107
 msgid "Downloader log file location:"
 msgstr "దింపుకోలుదారు లాగ్ ఫైలు స్థానం:"
 
-#: ../../lib/frontends/widgets/diagnostics.py:99
+#: ../../lib/frontends/widgets/diagnostics.py:111
 msgid "Database file location:"
 msgstr "డేటాబేసు ఫైలు స్థానం:"
 
-#: ../../lib/frontends/widgets/diagnostics.py:106
+#: ../../lib/frontends/widgets/diagnostics.py:118
 msgid "Space free on disk:"
 msgstr "డిస్కుపై ఖాళీగా ఉన్న జాగా:"
 
-#: ../../lib/frontends/widgets/diagnostics.py:108
+#: ../../lib/frontends/widgets/diagnostics.py:120
 msgid "Database size:"
 msgstr "డాటాబేసు పరిమాణం:"
 
-#: ../../lib/frontends/widgets/diagnostics.py:110
+#: ../../lib/frontends/widgets/diagnostics.py:122
 msgid "Total db objects in memory:"
 msgstr "మెమొరీలో ఉన్న మొత్తం db ఆబ్జెక్టులు"
+
+#: ../../lib/frontends/widgets/diagnostics.py:127
+msgid "Total db backups:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/browser.py:93
 msgid "Open in browser"
@@ -3150,8 +3170,8 @@ msgid "Check for new content:"
 msgstr "కొత్త కంటెంటు కోసం వెతుకు:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:362
-msgid "Auto download setting:"
-msgstr "ఆటో దింపుకోలు సెట్టింగు:"
+msgid "Auto-download setting:"
+msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:368
 msgid "Remember this many old items:"
@@ -3398,27 +3418,27 @@ msgstr "దింపుకోళ్ళన్నిటినీ కొనసా�
 msgid "Hide"
 msgstr "దాచు"
 
-#: ../../lib/frontends/widgets/gtk/video.py:282
+#: ../../lib/frontends/widgets/gtk/video.py:287
 msgid "Subtitles"
 msgstr "ఉపశీర్షికలు"
 
-#: ../../lib/frontends/widgets/gtk/video.py:307
+#: ../../lib/frontends/widgets/gtk/video.py:312
 msgid "Permalink"
 msgstr "స్థిరలింకు"
 
-#: ../../lib/frontends/widgets/gtk/video.py:315
+#: ../../lib/frontends/widgets/gtk/video.py:320
 msgid "Exit fullscreen"
 msgstr "నిండుతెరనుండి నిష్క్రమించు"
 
-#: ../../lib/frontends/widgets/gtk/video.py:322
+#: ../../lib/frontends/widgets/gtk/video.py:327
 msgid "Fullscreen"
 msgstr "నిండుతెర"
 
-#: ../../lib/frontends/widgets/gtk/video.py:330
+#: ../../lib/frontends/widgets/gtk/video.py:335
 msgid "Pop-in"
 msgstr "చొచ్చుకువచ్చు"
 
-#: ../../lib/frontends/widgets/gtk/video.py:336
+#: ../../lib/frontends/widgets/gtk/video.py:341
 msgid "Pop-out"
 msgstr "ఉబికివచ్చు"
 
@@ -3427,98 +3447,98 @@ msgstr "ఉబికివచ్చు"
 msgid "Enter a new name for the playlist %s"
 msgstr "ప్లేలిస్టు %s కు కొత్త పేరు ఇవ్వండి"
 
-#: ../../lib/httpclient.py:90
+#: ../../lib/httpclient.py:94
 msgid "HTTP error"
 msgstr "HTTP పొరపాటు"
 
-#: ../../lib/httpclient.py:94
+#: ../../lib/httpclient.py:98
 #, python-format
 msgid "%(host)s closed connection"
 msgstr "%(host)s కనెక్షన్ను మూసేసింది"
 
-#: ../../lib/httpclient.py:99
+#: ../../lib/httpclient.py:103
 #, python-format
 msgid "Host returned %(status)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:101
+#: ../../lib/httpclient.py:105
 msgid "Please retry later"
 msgstr ""
 
-#: ../../lib/httpclient.py:105
+#: ../../lib/httpclient.py:109
 #, python-format
 msgid "%(host)s doesn't support HTTP resume"
 msgstr ""
 
-#: ../../lib/httpclient.py:110
+#: ../../lib/httpclient.py:114
 #, python-format
 msgid "HTTP Redirection limit hit for %(url)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:116
+#: ../../lib/httpclient.py:120
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:124
+#: ../../lib/httpclient.py:128
 msgid "Got 404 status code"
 msgstr "404 స్టేటస్ కోడు వచ్చింది"
 
-#: ../../lib/httpclient.py:126
+#: ../../lib/httpclient.py:130
 #, python-format
 msgid "Host returned bad status code: %(code)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:132
+#: ../../lib/httpclient.py:136 ../../lib/httpclient.py:137
 msgid "Authorization failed"
 msgstr "అధీకరణ విఫలమైంది"
 
-#: ../../lib/httpclient.py:136
+#: ../../lib/httpclient.py:141
 msgid "Invalid URL"
 msgstr "తప్పుడు URL"
 
-#: ../../lib/httpclient.py:137
+#: ../../lib/httpclient.py:142
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
 msgstr "\"%(url)s\" సరైన URL కాదు"
 
-#: ../../lib/httpclient.py:142
+#: ../../lib/httpclient.py:147
 msgid "Unknow Host"
 msgstr ""
 
-#: ../../lib/httpclient.py:143
+#: ../../lib/httpclient.py:148
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
 msgstr ""
 
-#: ../../lib/httpclient.py:149
+#: ../../lib/httpclient.py:154
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
 msgstr "\"%(path)s\" ఫైలు అసలు లేదు"
 
-#: ../../lib/httpclient.py:153
+#: ../../lib/httpclient.py:158
 msgid "Read error"
 msgstr "రీడ్ చేయడంలో పొరపాటు"
 
-#: ../../lib/httpclient.py:154
+#: ../../lib/httpclient.py:159
 #, python-format
 msgid "Error while reading from \"%(path)s\""
 msgstr "\"%(path)s\" వద్ద చదవడంలో లోపం దొర్లింది"
 
-#: ../../lib/httpclient.py:162 ../../lib/dl_daemon/download.py:678
+#: ../../lib/httpclient.py:167 ../../lib/dl_daemon/download.py:679
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr "%(filename)s లో రాయలేకపోయాం"
 
-#: ../../lib/httpclient.py:164
+#: ../../lib/httpclient.py:169
 msgid "Write error"
 msgstr ""
 
-#: ../../lib/httpclient.py:337
+#: ../../lib/httpclient.py:343
 msgid "Website"
 msgstr ""
 
-#: ../../lib/httpclient.py:342
+#: ../../lib/httpclient.py:348
 msgid "Proxy"
 msgstr ""
 
@@ -3557,41 +3577,41 @@ msgstr "తెలియని లోపపు కోడు"
 msgid "Connection closed"
 msgstr "కనెక్షన్ మూసివేయబడినది"
 
-#: ../../lib/dl_daemon/download.py:686 ../../lib/dl_daemon/download.py:829
+#: ../../lib/dl_daemon/download.py:687 ../../lib/dl_daemon/download.py:833
 msgid "Not enough disk space"
 msgstr "చాలినంత డిస్కు జాగా లేదు"
 
-#: ../../lib/dl_daemon/download.py:687 ../../lib/dl_daemon/download.py:830
+#: ../../lib/dl_daemon/download.py:688 ../../lib/dl_daemon/download.py:834
 #, python-format
 msgid "%(amount)s MB required to store this video"
 msgstr "ఈ వీడియోను దాచాలంటే %(amount)s MB కావాలి"
 
-#: ../../lib/dl_daemon/download.py:717
+#: ../../lib/dl_daemon/download.py:718
 msgid "no content"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:856
+#: ../../lib/dl_daemon/download.py:860
 msgid "BitTorrent failure"
 msgstr "BitTorrent వైఫల్యం"
 
-#: ../../lib/dl_daemon/download.py:857
+#: ../../lib/dl_daemon/download.py:861
 msgid "BitTorrent failed to startup"
 msgstr "BitTorrent మొదలవడం విఫలమైమ్ది"
 
-#: ../../lib/dl_daemon/download.py:1069
+#: ../../lib/dl_daemon/download.py:1073
 msgid "Corrupt Torrent"
 msgstr "చెడిపోయిన టోరెంటు"
 
-#: ../../lib/dl_daemon/download.py:1070
+#: ../../lib/dl_daemon/download.py:1074
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr "%(url)s వద్ద ఉన్న టోరెంటు ఫైలు సరైనది కాదు"
 
-#: ../../lib/dl_daemon/download.py:1101
+#: ../../lib/dl_daemon/download.py:1105
 msgid "Torrent file deleted"
 msgstr "టోరెంటు ఫైలు తొలగించబడింది"
 
-#: ../../lib/dl_daemon/download.py:1102
+#: ../../lib/dl_daemon/download.py:1106
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr "ఈ ఐటము యొక్క టోరెంటు ఫైలు %(appname)s కు బయట తొలగించబడింది."
