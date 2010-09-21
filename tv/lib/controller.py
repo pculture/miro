@@ -243,6 +243,11 @@ class BugReportSender(signals.SignalEmitter):
                     if fn == 'httpauth':
                         # don't send http passwords over the internet
                         continue
+                    if fn == 'preferences.bin':
+                        # On windows, don't send the config file.  Other
+                        # platforms don't handle config the same way, so we
+                        # don't need to worry about them
+                        continue
                     path = os.path.join(root, fn)
                     if not os.path.islink(path):
                         relpath = os.path.join(relativeroot, fn)
