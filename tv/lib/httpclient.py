@@ -44,10 +44,6 @@ from cStringIO import StringIO
 
 import pycurl
 
-# if pycurl bindings don't have NOPROXY, we insert it
-if not hasattr(pycurl, "NOPROXY"):
-    pycurl.NOPROXY = 177
-
 from miro import config
 from miro import download_utils
 from miro import eventloop
@@ -64,6 +60,8 @@ from miro.net import NetworkError, ConnectionError, ConnectionTimeout
 
 REDIRECTION_LIMIT = 10
 MAX_AUTH_ATTEMPTS = 5
+
+_logged_noproxy_error = False
 
 def user_agent():
     return "%s/%s (%s; %s)" % (config.get(prefs.SHORT_APP_NAME),
@@ -261,8 +259,14 @@ class TransferOptions(object):
 
         ignore_hosts = config.get(prefs.HTTP_PROXY_IGNORE_HOSTS)
         if ignore_hosts:
-            handle.setopt(pycurl.NOPROXY, ','.join(
-                str(h) for h in ignore_hosts))
+            try:
+                handle.setopt(pycurl.NOPROXY, ','.join(
+                    str(h) for h in ignore_hosts))
+            except AttributeError:
+                global _logged_noproxy_error
+                if not _logged_noproxy_error:
+                    logging.warn("pycurl.NOPROXY doesn't exist")
+                    _logged_noproxy_error = True
 
         if config.get(prefs.HTTP_PROXY_AUTHORIZATION_ACTIVE):
             handle.setopt(pycurl.PROXYUSERPWD, '%s:%s' % (
