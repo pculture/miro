@@ -463,6 +463,8 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.setup_cancel()
         self.dialogs_seen = 0
         self.dialog_callback = None
+        # we need a longer timeout because auth attempts need extra roundtrips
+        self.event_loop_timeout = 1.0
 
     def setup_answer(self, username, password, button=dialogs.BUTTON_OK):
         def handler(obj, dialog):
