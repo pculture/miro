@@ -44,8 +44,17 @@ import optparse
 import pygtk
 pygtk.require('2.0')
 
+import glib
 from miro.plat import upgrade
-upgrade.upgrade()
+try:
+    upgrade.upgrade()
+except glib.GError, ge:
+    # this handles when the user tries to run Miro but gconf isn't
+    # started or something along those lines.  ge has the full
+    # message, so we print that out.
+    print "Gconf error."
+    print str(ge)
+    sys.exit(1)
 
 usage = "usage: %prog [options] [torrent files] [video files]"
 parser = optparse.OptionParser(usage=usage)
