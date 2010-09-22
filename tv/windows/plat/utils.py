@@ -255,7 +255,7 @@ def unicode_to_filename(filename, path=None):
     # nextFilename
     MAX_LEN = 200
     
-    badchars = ('/', '\000', '\\', ':', '*', '?', '"', '<', '>', '|')
+    badchars = ('/', '\000', '\\', ':', '*', '?', '"', '<', '>', '|', "\n", "\r")
     for mem in badchars:
         filename.replace(mem, "_")
 

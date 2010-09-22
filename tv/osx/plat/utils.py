@@ -147,7 +147,7 @@ def unicode_to_filename(filename, path = None):
     # nextFilename
     MAX_LEN = os.statvfs(path)[statvfs.F_NAMEMAX]-5
 
-    for mem in ("/", "\000", "\\", ":", "*", "?", "\"", "<", ">", "|", "&"):
+    for mem in ("/", "\000", "\\", ":", "*", "?", "\"", "<", ">", "|", "&", "\r", "\n"):
         filename = filename.replace(mem, "_")
 
     new_filename = filename.encode('utf-8','replace')
