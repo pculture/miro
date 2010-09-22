@@ -79,17 +79,31 @@ def upgrade():
         _copy_gconf("/apps/democracy/player", "/apps/miro")
         client.recursive_unset("/apps/democracy", 1)
 
-    # set the MoviesDirectory based on the possibilities that we've
-    # had over the years and what exists on the user's system.
-    # this codifies it in the user's gconf so that when we change
-    # it in future, then the user isn't affected.
+    # Set the MoviesDirectory and NonVideoDirectory based on the
+    # possibilities that we've had over the years and what exists on
+    # the user's system.  This codifies it in the user's gconf so that
+    # when we change it in future, then the user isn't affected.
     from miro.plat import options
     if options.gconf_name is None:
         options.gconf_name = "miro"
     key = "/apps/%s/MoviesDirectory" % options.gconf_name
     if client.get(key) is None:
-        for mem in ["~/Videos/Miro", "~/Movies/Miro", "~/Movies/Democracy"]:
+        for mem in ["~/.miro/Movies",    # packages
+                    "~/Videos/Miro",
+                    "~/Movies/Miro",     # pre 3.5
+                    "~/Movies/Democracy" # democracy player
+                    ]:
             mem = os.path.expanduser(mem)
             if os.path.exists(mem):
                 client.set_string(key, mem)
                 break
+
+    key = "/apps/%s/NonVideoDirectory" % options.gconf_name
+    if client.get(key) is None:
+        for mem in ["~/.miro/Nonvideo"   # packages
+                    ]:
+            mem = os.path.expanduser(mem)
+            if os.path.exists(mem):
+                client.set_string(key, mem)
+                break
+
