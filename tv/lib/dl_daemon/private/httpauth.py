@@ -31,19 +31,26 @@ import itertools
 from miro.dl_daemon import command
 from miro import eventloop
 
+# Hack: we import from miro.httpauth here even though this module is about to
+# replace it.  This works because the timing of how we override modules
+from miro.httpauthtools import HTTPAuthPassword, HTTPPasswordList
+
 requestIdGenerator = itertools.count()
 waitingHTTPAuthCallbacks = {}
+
+password_list = HTTPPasswordList()
 
 def handle_http_auth_response(id_, authHeader):
     callback = waitingHTTPAuthCallbacks.pop(id_)
     callback(authHeader)
 
-def find_http_auth(callback, url):
-    id_ = requestIdGenerator.next()
-    waitingHTTPAuthCallbacks[id_] = callback
-    from miro.dl_daemon import daemon
-    c = command.FindHTTPAuthCommand(daemon.LAST_DAEMON, id_, url)
-    c.send()
+def find_http_auth(url):
+    global password_list
+    return password_list.find(url)
+
+def update_passwords(passwords):
+    global password_list
+    password_list.replace_passwords(passwords)
 
 def ask_for_http_auth(callback, url, auth_header, location):
     id_ = requestIdGenerator.next()

@@ -670,11 +670,6 @@ class HTTPAuthBackendTest(EventLoopTest):
         self.callback_data = auth
         self.stopEventLoop(abnormal=False)
 
-    def find_http_auth(self, url):
-        httpauth.find_http_auth(self.callback, url)
-        self.runEventLoop(timeout=0.1)
-        return self.callback_data
-
     def ask_for_http_auth(self, url, auth_header):
         httpauth.ask_for_http_auth(self.callback, url, auth_header,
                 "My Location")
@@ -685,7 +680,7 @@ class HTTPAuthBackendTest(EventLoopTest):
     def test_simple(self):
         url = 'http://example.com/foo.html'
         header = 'Basic realm="Protected Space"'
-        self.assertEquals(self.find_http_auth(url), None)
+        self.assertEquals(httpauth.find_http_auth(url), None)
         auth = self.ask_for_http_auth(url, header)
         self.assertEquals(auth.username, 'user')
         self.assertEquals(auth.password, 'password')
@@ -702,11 +697,11 @@ class HTTPAuthBackendTest(EventLoopTest):
         url4 = 'http://example.com/test.html'
         url5 = 'http://example2.com/foo/test.html'
         auth = self.ask_for_http_auth(url, header)
-        self.assertEquals(self.find_http_auth(url), auth)
-        self.assertEquals(self.find_http_auth(url2), auth)
-        self.assertEquals(self.find_http_auth(url3), auth)
-        self.assertEquals(self.find_http_auth(url4), None)
-        self.assertEquals(self.find_http_auth(url5), None)
+        self.assertEquals(httpauth.find_http_auth(url), auth)
+        self.assertEquals(httpauth.find_http_auth(url2), auth)
+        self.assertEquals(httpauth.find_http_auth(url3), auth)
+        self.assertEquals(httpauth.find_http_auth(url4), None)
+        self.assertEquals(httpauth.find_http_auth(url5), None)
 
     @uses_httpclient
     def test_digest_reuse(self):
@@ -719,11 +714,11 @@ class HTTPAuthBackendTest(EventLoopTest):
         # but not for ones outside
         url5 = 'http://example2.com/foo/test.html'
         auth = self.ask_for_http_auth(url, header)
-        self.assertEquals(self.find_http_auth(url), auth)
-        self.assertEquals(self.find_http_auth(url2), auth)
-        self.assertEquals(self.find_http_auth(url3), auth)
-        self.assertEquals(self.find_http_auth(url4), auth)
-        self.assertEquals(self.find_http_auth(url5), None)
+        self.assertEquals(httpauth.find_http_auth(url), auth)
+        self.assertEquals(httpauth.find_http_auth(url2), auth)
+        self.assertEquals(httpauth.find_http_auth(url3), auth)
+        self.assertEquals(httpauth.find_http_auth(url4), auth)
+        self.assertEquals(httpauth.find_http_auth(url5), None)
 
     @uses_httpclient
     def test_digest_reuse_with_domain(self):
@@ -741,38 +736,61 @@ class HTTPAuthBackendTest(EventLoopTest):
         url8 = 'http://example2.com/notmetoo/'
 
         auth = self.ask_for_http_auth(url, header)
-        self.assertEquals(self.find_http_auth(url), auth)
-        self.assertEquals(self.find_http_auth(url2), auth)
-        self.assertEquals(self.find_http_auth(url3), auth)
-        self.assertEquals(self.find_http_auth(url4), auth)
-        self.assertEquals(self.find_http_auth(url5), auth)
+        self.assertEquals(httpauth.find_http_auth(url), auth)
+        self.assertEquals(httpauth.find_http_auth(url2), auth)
+        self.assertEquals(httpauth.find_http_auth(url3), auth)
+        self.assertEquals(httpauth.find_http_auth(url4), auth)
+        self.assertEquals(httpauth.find_http_auth(url5), auth)
 
-        self.assertEquals(self.find_http_auth(url6), None)
-        self.assertEquals(self.find_http_auth(url7), None)
-        self.assertEquals(self.find_http_auth(url8), None)
+        self.assertEquals(httpauth.find_http_auth(url6), None)
+        self.assertEquals(httpauth.find_http_auth(url7), None)
+        self.assertEquals(httpauth.find_http_auth(url8), None)
 
 class HTTPAuthBackendTestDLDaemonVersion(HTTPAuthBackendTest):
     """Same tests as HTTPAuthBackendTest, using dl_daemon.private.httpauth
     """
     def setUp(self):
-        class FakeDLDaemon(object):
+        HTTPAuthBackendTest.setUp(self)
+
+        # seed http auth with some initial data
+        url = 'http://oldserver.com/foo.html'
+        header = 'Basic realm="Old Protected Space"'
+        self.ask_for_http_auth(url, header)
+
+        from miro.dl_daemon import daemon
+        from miro.dl_daemon import command
+
+        class FakeDaemon(daemon.ControllerDaemon):
             def __init__(self):
                 self.shutdown = False
+                self._setup_httpauth()
 
             def send(self, command, callback):
                 command.action()
 
-        from miro.dl_daemon import daemon
-        from miro.dl_daemon import command
-        daemon.LAST_DAEMON = FakeDLDaemon()
         from miro.dl_daemon.private import httpauth
-        globals()['httpauth'] = httpauth
-        HTTPAuthBackendTest.setUp(self)
+        httpauth.update_passwords([])
+        daemon.LAST_DAEMON = FakeDaemon()
+        # make sure the UpdatePasswords command gets sent now
+        self.runPendingIdles()
 
     def tearDown(self):
         from miro import httpauth
+        from miro.dl_daemon import daemon
         globals()['httpauth'] = httpauth
+        daemon.LAST_DAEMON._remove_httpauth_callback()
         HTTPAuthBackendTest.tearDown(self)
+
+    def test_initial_list(self):
+        """Test that the initial auth data gets sent to the daemon.  """
+
+        # this was setup before the daemon started, we should not need to
+        # re-enter it.
+        url = 'http://oldserver.com/foo.html'
+        auth = httpauth.find_http_auth(url)
+        self.assertNotEquals(auth, None)
+        self.assertEquals(auth.username, 'user')
+        self.assertEquals(auth.password, 'password')
 
 class BadURLTest(HTTPClientTestBase):
     def setUp(self):

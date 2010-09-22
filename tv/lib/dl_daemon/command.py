@@ -159,6 +159,11 @@ class UpdateConfigCommand(Command):
         from miro import config
         config.update_dictionary(*self.args, **self.kws)
 
+class UpdateHTTPPasswordsCommand(Command):
+    def action(self):
+        from miro.dl_daemon.private import httpauth
+        httpauth.update_passwords(*self.args)
+
 class StartNewDownloadCommand(Command):
     def action(self):
         from miro.dl_daemon import download

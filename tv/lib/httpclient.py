@@ -44,6 +44,7 @@ from cStringIO import StringIO
 
 import pycurl
 
+from miro import app
 from miro import config
 from miro import download_utils
 from miro import eventloop
@@ -341,8 +342,17 @@ class CurlTransfer(object):
         if self.options.invalid_url:
             self.call_errback(MalformedURL(self.options.url))
             return
-        httpauth.find_http_auth(self._find_http_auth_callback,
-                self.options.url)
+        auth = httpauth.find_http_auth(self.options.url)
+        if auth is not None:
+            self._set_http_auth(auth)
+        try:
+            curl_manager.add_transfer(self)
+        except AttributeError:
+            if hasattr(app, 'in_unit_tests'):
+                # this is okay for unittests that create feeds, but don't
+                # expect to download their contents
+                return
+            raise
 
     def cancel(self, remove_file):
         curl_manager.remove_transfer(self, remove_file)
@@ -403,13 +413,6 @@ class CurlTransfer(object):
                 config.set(prefs.HTTP_PROXY_AUTHORIZATION_PASSWORD,
                         str(auth.password))
             curl_manager.add_transfer(self)
-
-    def _find_http_auth_callback(self, auth):
-        if self.canceled:
-            return
-        if auth is not None:
-            self._set_http_auth(auth)
-        curl_manager.add_transfer(self)
 
     def _set_http_auth(self, auth):
         if auth.scheme == 'basic':
@@ -963,4 +966,3 @@ def stop_thread():
     global curl_manager
     curl_manager.stop()
     curl_manager = None
-

@@ -34,6 +34,7 @@ import tempfile
 from miro import config
 from miro import prefs
 from miro import eventloop
+from miro import httpauth
 from miro import httpclient
 import logging
 from miro.plat.utils import launch_download_daemon, kill_process
@@ -217,7 +218,15 @@ class ControllerDaemon(Daemon):
         self.stream.acceptConnection('127.0.0.1', 0,
                                      self.on_connection, self.on_error)
         self.port = self.stream.port
-        data = {}
+        self._setup_config()
+        self._setup_httpauth()
+        self.shutdown_callback = None
+        self.shutdown_timeout_dc = None
+
+    def start_downloader_daemon(self):
+        start_download_daemon(self.read_pid(), self.port)
+
+    def _setup_config(self):
         remote_config_items = [
             prefs.LIMIT_UPSTREAM,
             prefs.UPSTREAM_LIMIT_IN_KBS,
@@ -248,21 +257,33 @@ class ControllerDaemon(Daemon):
             prefs.CONNECTION_LIMIT_BT_NUM,
             ]
 
+        data = {}
         for desc in remote_config_items:
             data[desc.key] = config.get(desc)
         c = command.InitialConfigCommand(self, data)
         c.send()
         config.add_change_callback(self.update_config)
-        self.shutdown_callback = None
-        self.shutdown_timeout_dc = None
 
-    def start_downloader_daemon(self):
-        start_download_daemon(self.read_pid(), self.port)
+    def _remove_config_callback(self):
+        config.remove_change_callback(self.update_config)
 
     def update_config(self, key, value):
         if not self.shutdown:
             c = command.UpdateConfigCommand(self, key, value)
             c.send()
+
+    def _setup_httpauth(self):
+        c = command.UpdateHTTPPasswordsCommand(self, httpauth.all_passwords())
+        c.send()
+        self.http_auth_callback_handle = httpauth.add_change_callback(
+                self.update_http_auth)
+
+    def _remove_httpauth_callback(self):
+        httpauth.remove_change_callback(self.http_auth_callback_handle)
+
+    def update_http_auth(self, passwords):
+        c = command.UpdateHTTPPasswordsCommand(self, passwords)
+        c.send()
 
     def read_pid(self):
         short_app_name = config.get(prefs.SHORT_APP_NAME)
@@ -274,7 +295,8 @@ class ControllerDaemon(Daemon):
             # FIXME: replace with code to recover here, but for now,
             # stop sending.
             self.shutdown = True
-            config.remove_change_callback(self.update_config)
+            self._remove_config_callback()
+            self._remove_httpauth_callback()
 
     def shutdown_timeout_cb(self):
         logging.warning("killing download daemon")
