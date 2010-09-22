@@ -439,8 +439,8 @@ def build_output_paths(item_info, target_folder, converter_info):
     temp_dir = utils.FilenameType(tempfile.mkdtemp("miro-conversion"))
     basename = os.path.basename(input_path)
 
-    title = utils.unicode_to_filename(item_info.name, temp_dir)
-    if not title or not title.strip():
+    title = utils.unicode_to_filename(item_info.name, temp_dir).strip()
+    if not title:
         title = basename
 
     target_name = "%s.%s.%s" % (title, converter_info.identifier,
