@@ -21,7 +21,7 @@ class HTTPClientTestBase(EventLoopTest):
         self.start_http_server()
         self.grab_url_info = self.grab_url_error = None
         self.expecting_errback = False
-        self.event_loop_timeout = 0.5
+        self.event_loop_timeout = 1.0
 
     def grab_url_callback(self, info):
         self.grab_url_info = info
@@ -463,8 +463,6 @@ class HTTPAuthTest(HTTPClientTestBase):
         self.setup_cancel()
         self.dialogs_seen = 0
         self.dialog_callback = None
-        # we need a longer timeout because auth attempts need extra roundtrips
-        self.event_loop_timeout = 1.0
 
     def setup_answer(self, username, password, button=dialogs.BUTTON_OK):
         def handler(obj, dialog):
