@@ -64,7 +64,13 @@ and other files::
 Preferences
 ===========
 
-Miro stores preferences in gconf.  To wipe out all preferences, do::
+Miro stores configuration preferences in gconf.
+
+To see gconf preferences, do::
+
+   gconftool-2 -R /apps/miro
+
+To wipe out all preferences, do::
 
    gconftool-2 --recursive-unset /apps/miro
 
