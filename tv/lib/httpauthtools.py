@@ -54,6 +54,11 @@ def decode_auth_header(auth_header):
     return (scheme, realm, domain)
 
 class HTTPAuthPassword(object):
+    """Stored HTTP auth password.
+
+    This objects should not be modified because they are shared between the
+    main thread and the libcurl thread.
+    """
     def __init__(self, username, password, url, auth_header):
         self.username = username
         self.password = password
@@ -93,20 +98,24 @@ class HTTPAuthPassword(object):
 
                     self.domain_list.append(d)
 
-    def update_auth(self, username, password):
-        self.username = username
-        self.password = password
-
     def same_realm(self, other_pw):
         return self.realm == other_pw.realm
 
-    def should_use_for_request(self, url):
+    def should_use_for_request(self, url, realm):
         request_parts = urlparse.urlparse(url)
         if url == self.url:
             return True
         if self.scheme == 'basic':
-            return (self.urlparts.netloc == request_parts.netloc and
-                    request_parts.path.startswith(self.url_dir))
+            if realm is None:
+                # without a realm we can re-use passwords if they start with
+                # the same directory
+                return (self.urlparts.netloc == request_parts.netloc and
+                        request_parts.path.startswith(self.url_dir))
+            else:
+                # with a realm, we can re-use passwords if they match the
+                # realm + domain name
+                return (self.realm == realm and
+                        self.urlparts.netloc == request_parts.netloc)
         elif self.scheme == 'digest':
             if self.domain is None:
                 return self.urlparts.netloc == request_parts.netloc
@@ -178,27 +187,24 @@ class HTTPPasswordList(signals.SignalEmitter):
             # We didn't find any old password to replace, add the new password
             # to the end of the list and we're done
             self.passwords.append(new_pw)
-            final_pw = new_pw
         else:
-            # We found an old password to replace.  Try to pick the best
-            # password to use.  This will be the password with the shortest
-            # URL.  For domain auth it shouldn't matter, but for basic auth,
-            # the shortest URL will match the most URLs in the future
+            # We found an old password to replace.  But maybe the old one will
+            # match more URLs in the future.  Try to pick the one closest to
+            # the root URL.  For domain auth it shouldn't matter, but for
+            # basic auth, this may result in less round-trips.
             old_pw = self.passwords[found_index]
-            if len(old_pw.url) < len(new_pw.url):
-                # old password has the largest domain, update that
-                old_pw.update_auth(new_pw.username, new_pw.password)
-                final_pw = old_pw
-            else:
-                # new password has the largest domain, replace the old
-                self.passwords[found_index] = new_pw
-                final_pw = new_pw
+            if (old_pw.urlparts.path.count('/') <
+                    new_pw.urlparts.path.count('/')):
+                # old password should cover more URLs, steal it's URL
+                new_pw = HTTPAuthPassword(user, password, old_pw.url,
+                        auth_header)
+            self.passwords[found_index] = new_pw
             # for good measure, delete any extra passwords with the same realm
             for i in reversed(xrange(found_index+1, len(self.passwords))):
-                if final_pw.same_realm(self.passwords[i]):
+                if new_pw.same_realm(self.passwords[i]):
                     del self.passwords[i]
         self.emit("passwords-updated", self.passwords)
-        return final_pw
+        return new_pw
 
     def _find_password_with_realm(self, pw):
         """Find a password in our current list with the same realm as pw
@@ -211,9 +217,9 @@ class HTTPPasswordList(signals.SignalEmitter):
                 return i
         return -1
 
-    def find(self, url):
+    def find(self, url, realm=None):
         for p in self.passwords:
-            if p.should_use_for_request(url):
+            if p.should_use_for_request(url, realm):
                 return p
         return None
 

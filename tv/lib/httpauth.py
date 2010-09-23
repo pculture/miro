@@ -34,16 +34,22 @@ from miro import prefs
 
 from miro.httpauthtools import HTTPPasswordList, decode_auth_header
 
-def find_http_auth(url):
+def find_http_auth(url, auth_header=None):
     """Find an HTTPAuthPassword object stored in the database
 
     This method searches the database for already entered passwords.  It
     will find a string to use for the Authorization header or None.
 
     :param url: request URL
+    :param auth_header: optional www-authenticate header to use to search for.
+        This allows us to better match basic auth passwords
     """
     global password_list
-    return password_list.find(url)
+    if auth_header is not None:
+        auth_scheme, realm, domain = decode_auth_header(auth_header)
+    else:
+        realm = None
+    return password_list.find(url, realm)
 
 class CallbackTracker(object):
     """Used internally to track callbacks for dialogs for ask_for_http_auth().
@@ -104,6 +110,10 @@ def ask_for_http_auth(callback, url, auth_header, location):
     callback_tracker.add_callback(callback, url, realm)
     if run_dialog:
         dialogs.HTTPAuthDialog(location, realm).run(handleLoginResponse)
+
+def remove(auth):
+    global password_list
+    password_list.remove(auth)
 
 def init():
     global password_list

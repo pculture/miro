@@ -255,7 +255,6 @@ class TransferOptions(object):
         if self.head_request:
             handle.setopt(pycurl.NOBODY, 1)
         self._setup_proxy(handle)
-        self._setup_auth(handle)
         return handle
 
     def _setup_proxy(self, handle):
@@ -277,33 +276,6 @@ class TransferOptions(object):
                 if not _logged_noproxy_error:
                     logging.warn("pycurl.NOPROXY doesn't exist")
                     _logged_noproxy_error = True
-
-    def _setup_auth(self, handle):
-        auth = httpauth.find_http_auth(self.url)
-        if auth is not None:
-            if auth.scheme == 'basic':
-                handle.setopt(pycurl.HTTPAUTH, pycurl.HTTPAUTH_BASIC)
-            elif auth.scheme == 'digest':
-                handle.setopt(pycurl.HTTPAUTH, pycurl.HTTPAUTH_DIGEST)
-            else:
-                logging.warn("Unknown HTTP Auth scheme: %s", auth.scheme)
-                return
-            handle.setopt(pycurl.USERPWD,
-                    str("%s:%s" % (auth.username, auth.password)))
-        self._setup_proxy_auth(handle)
-
-    def _setup_proxy_auth(self, handle):
-        # first try passwords stored by miro
-        auth = httpauth.find_http_auth(_proxy_auth_url())
-        if auth is not None:
-            user_pwd = '%s:%s' % (auth.username, auth.password)
-            handle.setopt(pycurl.PROXYUSERPWD, user_pwd)
-        else:
-            # fallback on system auth info
-            if config.get(prefs.HTTP_PROXY_AUTHORIZATION_ACTIVE):
-                handle.setopt(pycurl.PROXYUSERPWD, '%s:%s' % (
-                    str(config.get(prefs.HTTP_PROXY_AUTHORIZATION_USERNAME)),
-                    str(config.get(prefs.HTTP_PROXY_AUTHORIZATION_PASSWORD))))
 
     def _setup_headers(self, handle, out_headers):
         headers = ['%s: %s' % (str(k), str(out_headers[k]))
@@ -353,6 +325,7 @@ class CurlTransfer(object):
         self.canceled = False
 
         self.stats = TransferStats()
+        self._lookup_auth()
         self.lock = threading.Lock()
 
     def _reset_transfer_data(self):
@@ -404,9 +377,18 @@ class CurlTransfer(object):
                     self.current_auth_type)
             self.call_errback(AuthorizationFailed())
 
+    @eventloop.as_idle
     def _handle_auth(self, auth_type, header_key, url, location):
+        # this method needs to run in the eventloop because it uses the
+        # httpauth module.  At this point the transfer is removed from
+        # curl_manager's, so we don't have to worry about accessing our
+        # attributes.
         self.current_auth_type = auth_type
         self.auth_attempts[auth_type] += 1
+        if auth_type == 'http' and self.http_auth is not None:
+            httpauth.remove(self.http_auth)
+        elif auth_type == 'proxy' and self.proxy_auth is not None:
+            httpauth.remove(self.proxy_auth)
         if self.auth_attempts[auth_type] > MAX_AUTH_ATTEMPTS:
             self.handle_auth_failure()
             return
@@ -415,6 +397,15 @@ class CurlTransfer(object):
         except KeyError:
             self.handle_auth_failure()
             return
+        if auth_type == 'http':
+            # now that we have the www-authenticate header, try again to find
+            # an existing password
+            existing_auth = httpauth.find_http_auth(url, auth_header)
+            if existing_auth is not None:
+                self.http_auth = existing_auth
+                self._reset_transfer_data()
+                curl_manager.add_transfer(self)
+                return
         try:
             httpauth.ask_for_http_auth(self._ask_for_http_auth_callback,
                     url, auth_header, location)
@@ -428,8 +419,10 @@ class CurlTransfer(object):
         if auth is None:
             self.call_errback(AuthorizationCanceled())
         else:
-            # We don't need to do anything with the auth itself, the next time
-            # we call httpauth.find_http_auth, it will be there
+            if self.current_auth_type == 'http':
+                self.http_auth = auth
+            else:
+                self.proxy_auth = auth
             self._reset_transfer_data()
             curl_manager.add_transfer(self)
 
@@ -438,6 +431,8 @@ class CurlTransfer(object):
         LibCURLManager thread.
         """
         self.handle = self.options.build_handle(self.out_headers)
+        self._setup_http_auth()
+        self._setup_proxy_auth()
         if self.options._cancel_on_body_data:
             self.handle.setopt(pycurl.WRITEFUNCTION, self._write_func_abort)
         elif self.options.write_file is not None:
@@ -448,6 +443,43 @@ class CurlTransfer(object):
         else:
             self.handle.setopt(pycurl.WRITEFUNCTION, self.buffer.write)
         self.handle.setopt(pycurl.HEADERFUNCTION, self.header_func)
+
+    def _lookup_auth(self):
+        """Lookup existing HTTP passwords to use.
+
+        We need to do this before we are running in the libcurl thread because
+        we access the httpauth module.
+        """
+        self.http_auth = httpauth.find_http_auth(self.options.url)
+        self.proxy_auth = httpauth.find_http_auth(_proxy_auth_url())
+
+    def _setup_http_auth(self):
+        if self.http_auth is not None:
+            if self.http_auth.scheme == 'basic':
+                self.handle.setopt(pycurl.HTTPAUTH, pycurl.HTTPAUTH_BASIC)
+            elif self.http_auth.scheme == 'digest':
+                self.handle.setopt(pycurl.HTTPAUTH, pycurl.HTTPAUTH_DIGEST)
+            else:
+                logging.warn("Unknown HTTP Auth scheme: %s",
+                        self.http_auth.scheme)
+                return
+            self.handle.setopt(pycurl.USERPWD,
+                    str("%s:%s" % (self.http_auth.username,
+                        self.http_auth.password)))
+
+    def _setup_proxy_auth(self):
+        # first try passwords stored by miro.  proxy_auth was setup in
+        # _lookup_auth()
+        if self.proxy_auth is not None:
+            user_pwd = '%s:%s' % (self.proxy_auth.username,
+                    self.proxy_auth.password)
+            self.handle.setopt(pycurl.PROXYUSERPWD, user_pwd)
+        else:
+            # fallback on system auth info
+            if config.get(prefs.HTTP_PROXY_AUTHORIZATION_ACTIVE):
+                self.handle.setopt(pycurl.PROXYUSERPWD, '%s:%s' % (
+                    str(config.get(prefs.HTTP_PROXY_AUTHORIZATION_USERNAME)),
+                    str(config.get(prefs.HTTP_PROXY_AUTHORIZATION_PASSWORD))))
 
     def _call_content_check(self, data):
         self.buffer.write(data)

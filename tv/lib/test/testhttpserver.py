@@ -32,8 +32,6 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         self.server.current_request_handler = self
         self.connection.settimeout(5.0)
         self.digest_nonce = "dcd98b7102dd2f0e8b11d0f600bfb0c093"
-        self.user = 'user'
-        self.password = 'password'
 
     def handle(self):
         try:
@@ -146,17 +144,19 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             location_header = self.build_url("linux-screen.jpg")
             path = self.translate_path('redirect.html')
         elif (self.path.startswith("/protected/") or
-                self.path.startswith("/protected2/")):
-            # URLs that start with "protected/" or "protected2" are password
-            # protected.  The data is always just test.txt
+                self.path.startswith("/protected2/") or
+                self.path.startswith("/protected3/")):
+            # are password protected.  The data is always just test.txt
             path = self.translate_path('test.txt')
-            auth = (self.user + ":" + self.password).encode("base64")[:-1]
+            auth = 'Basic ' + ('user:password'.encode("base64")[:-1])
+            auth2 = 'Basic ' + ('user2:password2'.encode("base64")[:-1])
             # use [:-1] to cut off the trailing newline
-            if self.path.startswith("/protected/"):
+            if (self.path.startswith("/protected/") or
+                    self.path.startswith("/protected2/")):
                 realm = "Secure Area"
             else:
                 realm = "Secure Area2"
-            if (self.headers.get('authorization') == "Basic %s" % auth):
+            if self.headers.get('authorization') in (auth, auth2):
                 code = 200
             else:
                 code = 401
@@ -176,7 +176,7 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             if client_auth is not None:
                 client_auth = set(s.strip() for s in client_auth.split(','))
             correct_auth_response = set([
-                'username="%s"' % self.user,
+                'username="user"',
                  'realm="Secure Area Digest"',
                  'nonce="%s"' % self.digest_nonce,
                  'uri="%s"' % self.path,
@@ -245,7 +245,7 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         return set(s.strip() for s in client_auth.split(','))
 
     def calc_digest_response(self):
-        secret = '%s:Secure Area Digest:%s' % (self.user, self.password)
+        secret = 'user:Secure Area Digest:password'
         data = 'GET:' + self.path
         return md5(md5(secret) + ":" + self.digest_nonce + ":" + md5(data))
 

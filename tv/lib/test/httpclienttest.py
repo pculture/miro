@@ -519,8 +519,18 @@ class HTTPAuthTest(HTTPClientTestBase):
         # Even for ones in a subdirectory
         self.grab_url(self.httpserver.build_url('protected/foo/index2.txt'))
         self.assertEquals(self.dialogs_seen, 1)
-        # But ones outside the subdirectory should require new auth
+        # Now time to test the internals of re-using HTTP auth for things
+        # outside the subdirectory.  This is complicated because if things are
+        # outside the subdirectory, then we can re-use the auth only if the
+        # realm is the same.
+
+        # This one is outside the subdirectory, but it's www-authenticate
+        # header returns the same realm.  We shouldn't need a new dialog.
         self.grab_url(self.httpserver.build_url('protected2/index.txt'))
+        self.assertEquals(self.dialogs_seen, 1)
+        # This one is outside the subdirectory, and it's in a different realm.
+        # We should see a new dialog
+        self.grab_url(self.httpserver.build_url('protected3/index.txt'))
         self.assertEquals(self.dialogs_seen, 2)
 
     @uses_httpclient
@@ -545,29 +555,11 @@ class HTTPAuthTest(HTTPClientTestBase):
         "Test that new passwords overwrite old ones"
         self.expecting_errback = True
         self.assertEquals(len(httpauth.password_list.passwords), 0)
-        self.setup_answer("user", "wrongpass")
-        self.grab_url(self.httpserver.build_url('protected/index.txt'))
-        self.setup_answer("user", "wrongpass2")
-        self.grab_url(self.httpserver.build_url('protected/index.txt'))
-        self.setup_answer("user", "wrongpass3")
-        self.grab_url(self.httpserver.build_url('protected/index.txt'))
+        self.setup_answer("user", "password")
+        self.grab_url(self.httpserver.build_url('protected/subdir/index.txt'))
+        self.setup_answer("user2", "password2")
+        self.grab_url(self.httpserver.build_url('protected/subdir/index.txt'))
         self.assertEquals(len(httpauth.password_list.passwords), 1)
-        # same test, but for digest.
-        self.setup_answer("user", "wrongpass")
-        self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
-        self.setup_answer("user", "wrongpass2")
-        self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
-        self.setup_answer("user", "wrongpass3")
-        self.grab_url(self.httpserver.build_url('digest-protected/index.txt'))
-        self.assertEquals(len(httpauth.password_list.passwords), 2)
-        # Test that passwords for the directory overwrite the ones for a file
-        # with basic auth
-        self.setup_answer("user", "wrongpass3")
-        self.grab_url(self.httpserver.build_url('protected/'))
-        self.assertEquals(len(httpauth.password_list.passwords), 2)
-        self.assertEquals(httpauth.password_list.passwords[0].url,
-                self.httpserver.build_url('protected/'))
-
 
     @uses_httpclient
     def test_digest_auth_memory(self):
