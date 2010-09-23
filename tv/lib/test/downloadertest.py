@@ -11,8 +11,7 @@ from miro.test.framework import MiroTestCase, EventLoopTest, uses_httpclient
 class DownloaderTest(EventLoopTest):
     """Test feeds that download things.
     """
-    def setUp(self):
-        EventLoopTest.setUp(self)
+    def setup_state(self):
         self.url = u'http://pculture.org/feeds_test/unittest-feed-1.rss'
         self.feed = models.Feed(self.url)
         downloader.init_controller()
@@ -57,10 +56,12 @@ class DownloaderTest(EventLoopTest):
 
     @uses_httpclient
     def test_download(self):
+        self.setup_state()
         self.download_item()
 
     @uses_httpclient
     def test_delete(self):
+        self.setup_state()
         self.download_item()
         self.assertEquals(self.feed.items.count(), 1)
         list(self.feed.items)[0].expire()

@@ -87,8 +87,19 @@ def clean_up_temp_files():
 def uses_httpclient(fun):
     """Decorator for tests that use the httpclient.
     """
-    fun._uses_httpclient = True
-    return fun
+    def _uses_httpclient(*args, **kwargs):
+        # if there's already a curl_manager, then this is probably
+        # being called in a nested context, so this iteration is not
+        # in charge of starting and stopping the httpclient
+        if httpclient.curl_manager:
+            return fun(*args, **kwargs)
+
+        httpclient.start_thread()
+        try:
+            return fun(*args, **kwargs)
+        finally:
+            httpclient.stop_thread()
+    return functools.update_wrapper(_uses_httpclient, fun)
 
 class MiroTestCase(unittest.TestCase):
     def setUp(self):
@@ -118,12 +129,6 @@ class MiroTestCase(unittest.TestCase):
         app.controller = DummyController()
         self.httpserver = None
         httpauth.init()
-        if self._current_test_uses_httpclient():
-            httpclient.start_thread()
-
-    def _current_test_uses_httpclient(self):
-        testMethod = getattr(self, self._testMethodName)
-        return hasattr(testMethod, '_uses_httpclient')
 
     def on_windows(self):
         return self.platform == "windows"
@@ -135,9 +140,6 @@ class MiroTestCase(unittest.TestCase):
         return self.platform == "osx"
 
     def tearDown(self):
-        if self._current_test_uses_httpclient():
-            httpclient.stop_thread()
-
         signals.system.disconnect_all()
         util.chatter = True
         self.stop_http_server()
