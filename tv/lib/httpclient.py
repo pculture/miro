@@ -471,8 +471,8 @@ class CurlTransfer(object):
         # first try passwords stored by miro.  proxy_auth was setup in
         # _lookup_auth()
         if self.proxy_auth is not None:
-            user_pwd = '%s:%s' % (self.proxy_auth.username,
-                    self.proxy_auth.password)
+            user_pwd = str('%s:%s' % (self.proxy_auth.username,
+                    self.proxy_auth.password))
             self.handle.setopt(pycurl.PROXYUSERPWD, user_pwd)
         else:
             # fallback on system auth info
