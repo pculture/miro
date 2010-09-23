@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-18 11:10-0400\n"
-"PO-Revision-Date: 2010-09-05 22:43+0000\n"
-"Last-Translator: Yaron <sh.yaron@gmail.com>\n"
+"PO-Revision-Date: 2010-09-21 21:42+0000\n"
+"Last-Translator: Ameer Massalha <Unknown>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-09-21 18:57+0000\n"
+"X-Launchpad-Export-Date: 2010-09-23 15:57+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:182
@@ -75,7 +75,7 @@ msgstr "השאיר"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:68
 #: ../../lib/frontends/widgets/gtk/video.py:296
 msgid "Delete"
-msgstr "מחק"
+msgstr "הסר"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:210
 msgid "Pop Out"
@@ -92,11 +92,11 @@ msgstr "ההורדה הושלמה"
 #: ../../osx/plat/frontends/widgets/application.py:194
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr "ההורדה של הוידאו '%s'  הושלמה."
+msgstr "הורדת הסרט '%s' הושלמה"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:159
 msgid "Services"
-msgstr "שרותים"
+msgstr "שירותים"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:161
 #, python-format
@@ -105,7 +105,7 @@ msgstr "הסתר %(appname)s"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:163
 msgid "Hide Others"
-msgstr "הסתר אחרים"
+msgstr "הסתרת אחרים"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:165
 msgid "Show All"
@@ -142,7 +142,7 @@ msgstr "בחר הכל"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:189
 msgid "Edit"
-msgstr "ערוך"
+msgstr "עריכה"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:194
 msgid "Present Half Size"
@@ -150,7 +150,7 @@ msgstr "הצג במחצית הגודל"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:197
 msgid "Present Actual Size"
-msgstr "הצג בגודל ממשי"
+msgstr "הצג בגודל אמיתי"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:200
 msgid "Present Double Size"
@@ -158,11 +158,11 @@ msgstr "הצג בגודל כפול"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:207
 msgid "Present Video"
-msgstr "הצג וידאו"
+msgstr "וידאו נוכחי"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:213
 msgid "Zoom"
-msgstr "זום"
+msgstr "הגדל"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:214
 msgid "Minimize"
@@ -189,13 +189,13 @@ msgstr "%(appname)s עזרה"
 #: ../../lib/frontends/widgets/gtk/window.py:295
 #: ../../lib/frontends/widgets/gtk/video.py:402
 msgid "Disable Subtitles"
-msgstr "הסתר כתוביות"
+msgstr "נטרל כתוביות"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:379
 #: ../../lib/frontends/widgets/menus.py:325
 #: ../../lib/frontends/widgets/gtk/video.py:380
 msgid "None Available"
-msgstr "אין כאלו זמינים"
+msgstr "לא זמין"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:386
 #: ../../lib/frontends/widgets/gtk/video.py:413
@@ -238,11 +238,11 @@ msgstr "מערב אירופאי"
 #: ../../windows/plat/renderers/vlc.py:708
 #: ../../linux/plat/renderers/gstreamerrenderer.py:591
 msgid "Celtic"
-msgstr "קלטית"
+msgstr "קלטי"
 
 #: ../../windows/plat/renderers/vlc.py:710
 msgid "Esperanto"
-msgstr "אספרנטו"
+msgstr "אספרנטית"
 
 #: ../../windows/plat/renderers/vlc.py:711
 #: ../../windows/plat/renderers/vlc.py:712
@@ -367,7 +367,7 @@ msgstr "יוניקוד"
 #: ../../windows/plat/renderers/vlc.py:747
 #: ../../windows/plat/renderers/vlc.py:748
 msgid "Universal"
-msgstr "אוניברסלי"
+msgstr "כללי"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:41
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:49
@@ -3537,19 +3537,19 @@ msgstr "אין די מקום בדיסק"
 #: ../../lib/dl_daemon/download.py:688 ../../lib/dl_daemon/download.py:834
 #, python-format
 msgid "%(amount)s MB required to store this video"
-msgstr "%(amount)s מ\"ב דרושים לאחסון הווידאו הזה"
+msgstr "%(amount)s מ\"ב דרושים לשמירת הוידאו"
 
 #: ../../lib/dl_daemon/download.py:718
 msgid "no content"
-msgstr ""
+msgstr "אין תכנים"
 
 #: ../../lib/dl_daemon/download.py:860
 msgid "BitTorrent failure"
-msgstr "כישלון ביטורנט"
+msgstr "ביטורנט נכשל"
 
 #: ../../lib/dl_daemon/download.py:861
 msgid "BitTorrent failed to startup"
-msgstr "ביטורנט נכשל לעלות"
+msgstr "כישלון בהעלאת ביטורנט"
 
 #: ../../lib/dl_daemon/download.py:1073
 msgid "Corrupt Torrent"
@@ -3562,7 +3562,7 @@ msgstr "קובץ הטורנט ב %(url)s אינו תקין"
 
 #: ../../lib/dl_daemon/download.py:1105
 msgid "Torrent file deleted"
-msgstr "קובץ שטף נמחק"
+msgstr "קובץ הטורנט נמחק"
 
 #: ../../lib/dl_daemon/download.py:1106
 #, python-format

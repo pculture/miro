@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: Democracy Player 0.8.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-18 11:10-0400\n"
-"PO-Revision-Date: 2010-09-20 16:53+0000\n"
-"Last-Translator: Val-libre <Unknown>\n"
+"PO-Revision-Date: 2010-09-22 03:13+0000\n"
+"Last-Translator: Bruno Veilleux <Unknown>\n"
 "Language-Team: French <kde-francophone@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2010-09-21 18:56+0000\n"
+"X-Launchpad-Export-Date: 2010-09-23 15:57+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: French\n"
 
@@ -565,15 +565,15 @@ msgstr "Moteur de rendu vidéo :"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:91
 msgid "Binaries to use:"
-msgstr ""
+msgstr "Binaires à utiliser :"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:97
 msgid "ffmpeg binary path:"
-msgstr ""
+msgstr "Chemin vers le binaire ffmpeg :"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:104
 msgid "ffmpeg2theora binary path:"
-msgstr ""
+msgstr "Chemin vers le binaire ffmpeg2theora :"
 
 #: ../../lib/dbupgradeprogress.py:60
 msgid "Upgrading Old Database"
@@ -608,6 +608,21 @@ msgid ""
 "To help us fix problems like this in the future, please file a bug report at "
 "%(url)s."
 msgstr ""
+"Nous sommes désolés, %(appname)s a été incapable de démarrer en raison d'un "
+"problème avec la base de données :\n"
+"\n"
+"Erreur : %(error)s\n"
+"\n"
+"Il est possible que votre fichier de base de données soit corrompu et ne "
+"puisse pas être utilisé.\n"
+"\n"
+"Vous pouvez recommencer à zéro et votre base de données endommagée sera "
+"retirée, mais vous devrez ajouter vos fichiers de flux et médias à nouveau. "
+"Si c'est ce que vous souhaitez faire, appuyez sur le bouton Recommencer à "
+"zéro et redémarrez %(appname)s.\n"
+"\n"
+"Pour nous aider à corriger des problèmes tels que celui-ci à l'avenir, "
+"veuillez remplir un rapport de bogue au %(url)s."
 
 #: ../../lib/startup.py:148
 msgid "Unknown Error"
@@ -745,7 +760,7 @@ msgstr "Pas de connexion - nouvel essai dans %s"
 
 #: ../../lib/downloader.py:537
 msgid "no connection - retrying soon"
-msgstr ""
+msgstr "Pas de connexion. Nouvelle tentative bientôt."
 
 #: ../../lib/downloader.py:561 ../../lib/downloader.py:569
 #: ../../lib/httpclient.py:199 ../../lib/httpclient.py:618
@@ -798,6 +813,11 @@ msgid ""
 "\n"
 "Error: %(error)s (%(errordesc)s)"
 msgstr ""
+"%(appname)s est incapable de télécharger un fichier à cette adresse :\n"
+"\n"
+"URL : %(url)s\n"
+"\n"
+"Erreur : %(error)s (%(errordesc)s)"
 
 #: ../../lib/opml.py:223
 msgid "OPML Import failed"
@@ -902,12 +922,12 @@ msgstr ""
 #: ../../lib/videoconversion.py:83
 #, python-format
 msgid "%(name)s (%(mediatype)s)"
-msgstr ""
+msgstr "%(name)s (%(mediatype)s)"
 
 #: ../../lib/videoconversion.py:708
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
-msgstr ""
+msgstr "%(original_name)s (converti en %(format)s)"
 
 #: ../../lib/messages.py:1120 ../../lib/item.py:1127
 msgid "queued for download"
@@ -1081,6 +1101,8 @@ msgstr "Ne pas Inclure la base de donnée"
 msgid ""
 "%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
 msgstr ""
+"%(authtype)s %(url)s nécessite un nom d'utilisateur et un mot de passe pour "
+"« %(realm)s »."
 
 #: ../../lib/dialogs.py:215
 msgid "Login Required"
@@ -1401,7 +1423,7 @@ msgstr "Erreur"
 
 #: ../../lib/frontends/widgets/style.py:257
 msgid "Queued for Auto-download"
-msgstr ""
+msgstr "Mis en attente pour téléchargement automatique"
 
 #: ../../lib/frontends/widgets/style.py:258
 #: ../../lib/frontends/widgets/style.py:1203
@@ -1862,7 +1884,7 @@ msgstr "Flux descendant %(rate)s"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:644
 msgid "Auto-download"
-msgstr ""
+msgstr "Téléchargement automatique"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:649
 #: ../../lib/frontends/widgets/prefpanel.py:332
@@ -2456,6 +2478,8 @@ msgstr "Les anciens éléments ont été supprimés"
 #: ../../lib/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause auto-downloading when this many items are unplayed:"
 msgstr ""
+"Suspendre le téléchargement automatique lorsque ce nombre d'éléments est non "
+"lu :"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
@@ -2678,12 +2702,12 @@ msgstr "Arrêter toutes les conversions"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:74
 msgid "Clear Finished Conversions"
-msgstr ""
+msgstr "Effacer les conversions terminées"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:272
 #, python-format
 msgid "Conversion to %(format)s"
-msgstr ""
+msgstr "Conversion en %(format)s"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:306
 #, python-format
@@ -2692,7 +2716,7 @@ msgstr "Échecs: %(error)s"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:312
 msgid "Troubleshoot"
-msgstr ""
+msgstr "Résolution de problèmes"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:314
 msgid "Open log"
@@ -2705,7 +2729,7 @@ msgstr "Effacer"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:327
 msgid "Completed"
-msgstr ""
+msgstr "Terminé"
 
 #: ../../lib/frontends/widgets/downloadscontroller.py:84
 #: ../../lib/frontends/widgets/prefpanel.py:726
@@ -2934,7 +2958,7 @@ msgstr "Nombre total d'objets de la base de données en mémoire :"
 
 #: ../../lib/frontends/widgets/diagnostics.py:127
 msgid "Total db backups:"
-msgstr ""
+msgstr "Sauvegardes de bdd totales :"
 
 #: ../../lib/frontends/widgets/browser.py:93
 msgid "Open in browser"
@@ -3222,7 +3246,7 @@ msgstr "Vérifier les nouveaux contenus :"
 
 #: ../../lib/frontends/widgets/prefpanel.py:362
 msgid "Auto-download setting:"
-msgstr ""
+msgstr "Réglages du téléchargement automatique :"
 
 #: ../../lib/frontends/widgets/prefpanel.py:368
 msgid "Remember this many old items:"
@@ -3532,7 +3556,7 @@ msgstr "La limite des redirections HTTP a été atteinte pour %(url)s"
 #: ../../lib/httpclient.py:120
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
-msgstr ""
+msgstr "Autorisation ratée pour le proxy : %(host)s : %(port)s"
 
 #: ../../lib/httpclient.py:128
 msgid "Got 404 status code"
@@ -3594,7 +3618,7 @@ msgstr "Site Internet"
 
 #: ../../lib/httpclient.py:348
 msgid "Proxy"
-msgstr ""
+msgstr "Proxy"
 
 #: ../../lib/net.py:91 ../../lib/net.py:97
 msgid "Can't connect"
