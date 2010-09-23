@@ -56,7 +56,7 @@ def decode_auth_header(auth_header):
 class HTTPAuthPassword(object):
     """Stored HTTP auth password.
 
-    This objects should not be modified because they are shared between the
+    These objects should not be modified because they are shared between the
     main thread and the libcurl thread.
     """
     def __init__(self, username, password, url, auth_header):
@@ -191,7 +191,7 @@ class HTTPPasswordList(signals.SignalEmitter):
             # We found an old password to replace.  But maybe the old one will
             # match more URLs in the future.  Try to pick the one closest to
             # the root URL.  For domain auth it shouldn't matter, but for
-            # basic auth, this may result in less round-trips.
+            # basic auth, this may result in fewer round-trips.
             old_pw = self.passwords[found_index]
             if (old_pw.urlparts.path.count('/') <
                     new_pw.urlparts.path.count('/')):
