@@ -32,7 +32,6 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         self.server.current_request_handler = self
         self.connection.settimeout(5.0)
         self.digest_nonce = "dcd98b7102dd2f0e8b11d0f600bfb0c093"
-        self.realm = 'Secure Area'
         self.user = 'user'
         self.password = 'password'
 
@@ -146,18 +145,23 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             code = 302
             location_header = self.build_url("linux-screen.jpg")
             path = self.translate_path('redirect.html')
-        elif self.path.startswith("/protected"):
-            # URLs that start with "protected" are password protected.  The
-            # data is always just test.txt
+        elif (self.path.startswith("/protected/") or
+                self.path.startswith("/protected2/")):
+            # URLs that start with "protected/" or "protected2" are password
+            # protected.  The data is always just test.txt
             path = self.translate_path('test.txt')
             auth = (self.user + ":" + self.password).encode("base64")[:-1]
             # use [:-1] to cut off the trailing newline
+            if self.path.startswith("/protected/"):
+                realm = "Secure Area"
+            else:
+                realm = "Secure Area2"
             if (self.headers.get('authorization') == "Basic %s" % auth):
                 code = 200
             else:
                 code = 401
                 headers_to_send.append(('WWW-Authenticate',
-                    'Basic realm="%s"' % self.realm))
+                    'Basic realm="%s"' % realm))
         elif self.path.startswith("/digest-protected"):
             # Same as protected, but for digest auth
             # Implementation based on the RFC example
@@ -173,7 +177,7 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 client_auth = set(s.strip() for s in client_auth.split(','))
             correct_auth_response = set([
                 'username="%s"' % self.user,
-                 'realm="digest-%s"' % self.realm,
+                 'realm="Secure Area Digest"',
                  'nonce="%s"' % self.digest_nonce,
                  'uri="%s"' % self.path,
                  'response="%s"' % self.calc_digest_response(),
@@ -185,10 +189,10 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 code = 401
                 headers_to_send.append(('WWW-Authenticate',
                     'Digest '
-                    'realm="digest-%s", '
+                    'realm="Secure Area Digest", '
                     'nonce="%s", '
                     'opaque="5ccc069c403ebaf9f0171e9517f40e41"' %
-                    (self.realm, self.digest_nonce)))
+                    self.digest_nonce))
 
         elif 'range' in self.headers and self.server.allow_resume:
             range = self.headers['range']
@@ -241,7 +245,7 @@ class MiroHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         return set(s.strip() for s in client_auth.split(','))
 
     def calc_digest_response(self):
-        secret = '%s:digest-%s:%s' % (self.user, self.realm, self.password)
+        secret = '%s:Secure Area Digest:%s' % (self.user, self.password)
         data = 'GET:' + self.path
         return md5(md5(secret) + ":" + self.digest_nonce + ":" + md5(data))
 
