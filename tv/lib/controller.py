@@ -157,7 +157,8 @@ class Controller:
             progress = float(current_sent) / total_to_send
         else:
             progress = -1
-        text = '%s (%d%%)' % (_('Sending Crash Report'), progress * 100)
+        text = _('Sending Crash Report (%(progress)d%%)',
+                 {"progress": progress * 100})
         messages.ProgressDialog(text, progress).send_to_frontend()
         eventloop.add_timeout(0.1, self._send_bug_report_progress,
                 'bug report progress')
@@ -254,7 +255,8 @@ class BugReportSender(signals.SignalEmitter):
                         relpath = relpath.encode('ascii', 'replace')
                         zipfile.write(path, relpath)
             zipfile.close()
-            logging.info("Support directory backed up to %s" % tempfilename)
+            logging.info("Support directory backed up to %s (%d bytes)",
+                         tempfilename, os.path.getsize(tempfilename))
             return tempfilename
         finally:
             app.db.open_connection()
