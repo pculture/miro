@@ -422,6 +422,7 @@ class TabListDropHandler(object):
         send_new_order()
         source_tablist.doing_change = False
         dest_tablist.doing_change = False
+        app.tab_list_manager.handle_moved_tabs_to_list(dest_tablist)
         return True
 
 class FeedListDropHandler(TabListDropHandler):

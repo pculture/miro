@@ -79,6 +79,15 @@ class TabListManager(object):
         app.display_manager.select_display_for_tabs(self.selected_tab_list,
                 self.selected_tabs)
 
+    def handle_moved_tabs_to_list(self, tab_list):
+        """Handle tabs being moved between tab lists.
+
+        tab_list is the tab list that the tabs were moved to
+        """
+        if tab_list is not self.selected_tab_list:
+            self.selected_tab_list = tab_list
+            self.update_selected_tabs()
+
     def which_tablist_has_id(self, feed_id):
         """
         Find out whether the video feed list or the audio feed list has this id
