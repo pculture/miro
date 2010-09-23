@@ -152,9 +152,16 @@ start:
   !ifdef MIROBAR_EXE
 
   StrCmp "$THEME_NAME" "" 0 after_zugo
+!ifdef MOZILLA_INSTALLER
+  StrCmp $ZUGO_COUNTRY "US" 0 after_zugo
+!endif
 
+  StrCmp "$ZUGO_TOOLBAR$ZUGO_DEFAULT_SEARCH$ZUGO_HOMEPAGE" "" 0 +10
+  StrCpy $ZUGO_TOOLBAR "0"
+  StrCpy $ZUGO_DEFAULT_SEARCH "0"
+  StrCpy $ZUGO_HOMEPAGE "1"
   StrCmp $ZUGO_COUNTRY "US" +2
-  StrCpy $ZUGO_PROVIDER "Ask"
+  StrCpy $ZUGO_PROVIDER "Yahoo"
 
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Type"   "label"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Text"   "Included Components"
@@ -179,12 +186,10 @@ start:
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Top"    "145"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Bottom" "155"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "State"  "0"
-  StrCmp $ZUGO_HOMEPAGE "1" 0 +2 ; don't set it by default
+  StrCmp $ZUGO_HOMEPAGE "0" +2
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "State"  "1"
 
-!ifdef MOZILLA_INSTALLER
   StrCmp $ZUGO_COUNTRY "US" 0 no_toolbar
-!endif
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Type"   "checkbox"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Text"   "$ZUGO_PROVIDER Search Toolbar"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Left"   "120"
@@ -192,7 +197,6 @@ start:
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Top"    "165"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Bottom" "175"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "State"  "0"
-  StrCmp $ZUGO_TOOLBAR "" +2 ; set it by defaykt
   StrCmp $ZUGO_TOOLBAR "0" +2
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "State"  "1"
 
@@ -204,7 +208,7 @@ no_toolbar:
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "Top"    "155"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "Bottom" "165"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "State"  "0"
-  StrCmp $ZUGO_DEFAULT_SEARCH "1" 0 +2 ; don't set it by default
+  StrCmp $ZUGO_DEFAULT_SEARCH "0" +2
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "State"  "1"
 
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 12" "Type"   "label"
@@ -261,11 +265,12 @@ FunctionEnd
 Function check_radio_buttons
   ReadINIStr $SIMPLE_INSTALL "$PLUGINSDIR\ioSpecial.ini" "Field 4" "State"
   ReadINIStr $ZUGO_HOMEPAGE "$PLUGINSDIR\ioSpecial.ini" "Field 8" "State"
+  StrCmp $ZUGO_COUNTRY "US" 0 +2 ; skip toolbar options if we're international
   ReadINIStr $ZUGO_TOOLBAR "$PLUGINSDIR\ioSpecial.ini" "Field 9" "State"
   ReadINIStr $ZUGO_DEFAULT_SEARCH "$PLUGINSDIR\ioSpecial.ini" "Field 10" "State"
   StrCmp "$ZUGO_HOMEPAGE$ZUGO_TOOLBAR$ZUGO_DEFAULT_SEARCH" "000" 0 end
-  MessageBox MB_YESNO|MB_USERICON|MB_TOPMOST "Help Support Miro!$\r$\n$\r$\nMiro is a non-profit organization, making free and open software for a better internet.  To afford to keep Miro available, we rely on partnerships with search engines.$\r$\n$\r$\nBy trying a Miro search bar, you can support our open mission; we get a bit of revenue for each install.$\r$\n$\r$\nWould you be willing to try this optional search bar? You can uninstall it at any time." IDNO end
-  StrCpy $ZUGO_TOOLBAR "1"
+  MessageBox MB_YESNO|MB_USERICON|MB_TOPMOST "Help Support Miro!$\r$\n$\r$\nMiro is a non-profit organization, making free and open software for a better internet.  To afford to keep Miro available, we rely on partnerships with search engines.$\r$\n$\r$\nBy trying a Miro start page, you can support our open mission; we get a bit of revenue for each install.$\r$\n$\r$\nWould you be willing to try this optional start page? You can uninstall it at any time." IDNO end
+  StrCpy $ZUGO_HOMEPAGE "1"
 end:
 FunctionEnd
 
@@ -901,9 +906,14 @@ Function .onInit
   StrCpy $ZUGO_COUNTRY "US"
   StrCpy $ZUGO_FLAGS "/FORCEUS"
   ClearErrors
+  ${GetOptions} "$R0" "/FORCESW" $R1
+  IfErrors +3 0
+  StrCpy $ZUGO_COUNTRY "SW"
+  ClearErrors
+ 
 
   ; get the country Zugo thinks we're in
-  StrCmp $ZUGO_COUNTRY "US" +8
+  StrCmp $ZUGO_COUNTRY "" 0 +8
   NSISdl::download_quiet /TIMEOUT=10000 /NOIEPROXY "http://track.zugo.com/getCountry/" "$PLUGINSDIR\getCountry" /END ; requires content length to be set!
   Pop $R0 ; pop the request status
   ClearErrors
@@ -1142,12 +1152,7 @@ FunctionEnd
 Function .onInstSuccess
   StrCmp $THEME_NAME "" 0 end
   StrCmp $REINSTALL "1" end
-end:
-FunctionEnd
-
 !ifdef MIROBAR_EXE
-Function .onGUIEnd
-
 StrCmp "$ZUGO_HOMEPAGE$ZUGO_TOOLBAR$ZUGO_DEFAULT_SEARCH" "000" end
 StrCmp "$ZUGO_HOMEPAGE$ZUGO_TOOLBAR$ZUGO_DEFAULT_SEARCH" "" end
 
@@ -1155,7 +1160,7 @@ StrCmp "$ZUGO_HOMEPAGE$ZUGO_TOOLBAR$ZUGO_DEFAULT_SEARCH" "" end
 
 StrCpy $R1 "0"
 StrCmp "$ZUGO_HOMEPAGE" "0" zugo_toolbar
-StrCpy $ZUGO_FLAGS $ZUGO_FLAGS /DEFAULTSTART"
+StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /DEFAULTSTART"
 IntOp $R1 $R1 | 1
 zugo_toolbar:
 StrCmp "$ZUGO_TOOLBAR" "0" zugo_search
@@ -1163,15 +1168,16 @@ StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /TOOLBAR"
 IntOp $R1 $R1 | 2
 zugo_search:
 StrCmp "$ZUGO_DEFAULT_SEARCH" "0" zugo_install
-StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /DEFAULT_SEARCH"
+StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /DEFAULTSEARCH"
 IntOp $R1 $R1 | 4
 
 zugo_install:
+;MessageBox MB_OK "$PLUGINSDIR\${MIROBAR_EXE} $ZUGO_FLAGS /FINISHURL='http://www.getmiro.com/welcome/?$R1'"
 Exec "$PLUGINSDIR\${MIROBAR_EXE} $ZUGO_FLAGS /FINISHURL='http://www.getmiro.com/welcome/?$R1'"
+!endif
 
 end:
 FunctionEnd
-!endif
 
 Section -Post
   WriteUninstaller "$INSTDIR\uninstall.exe"
