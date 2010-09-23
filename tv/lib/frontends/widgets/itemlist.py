@@ -159,7 +159,7 @@ class StatusSort(ItemSort):
 class ETASort(ItemSort):
     KEY = 'eta'
     def sort_key(self, item):
-        if item.state in ('downloading', 'paused'):
+        if item.state == 'downloading':
             eta = item.download_info.eta
             if eta > 0:
                 return eta
@@ -171,7 +171,7 @@ class ETASort(ItemSort):
 class DownloadRateSort(ItemSort):
     KEY = 'rate'
     def sort_key(self, item):
-        if item.state in ('downloading', 'paused'):
+        if item.state == 'downloading':
             return item.download_info.rate
         elif not self._reverse:
             return sys.maxint
@@ -307,6 +307,9 @@ class ItemList(signals.SignalEmitter):
         * counter used to change the progress throbber (integer)
 
     new_only -- Are we only displaying the new items?
+    unwatched_only -- Are we only displaying the unwatched items?
+    non_feed_only -- Are we only displaying file items?
+    resort_on_update -- Should we re-sort the list when items change?
 
     Signals:
       item-added(item, next_item): an item was added to the list
@@ -322,6 +325,7 @@ class ItemList(signals.SignalEmitter):
         self.new_only = False
         self.unwatched_only = False
         self.non_feed_only = False
+        self.resort_on_update = False
         self._hidden_items = {}
         # maps ids -> items that should be in this list, but are filtered out
         # for some reason
@@ -477,7 +481,7 @@ class ItemList(signals.SignalEmitter):
         iter = self._iter_map[info.id]
         old_item = self.model[iter][0]
         self.model.update_value(iter, 0, info)
-        if self._sorter.compare(info, old_item):
+        if self.resort_on_update and self._sorter.compare(info, old_item):
             # If we've changed the sort value of the item, then we need to
             # re-sort the list (#12003).
             self._resort_item(info)

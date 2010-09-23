@@ -48,6 +48,8 @@ from miro.plat.frontends.widgets import widgetset
 class DownloadsController(itemlistcontroller.ItemListController):
     def __init__(self):
         itemlistcontroller.ItemListController.__init__(self, 'downloads', None)
+        for item_list in self.item_list_group.item_lists:
+            item_list.resort_on_update = True
 
     def build_widget(self):
         self._make_item_views()
