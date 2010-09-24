@@ -694,6 +694,13 @@ class HTTPAuthBackendTest(EventLoopTest):
         self.assertEquals(httpauth.find_http_auth(url3), auth)
         self.assertEquals(httpauth.find_http_auth(url4), None)
         self.assertEquals(httpauth.find_http_auth(url5), None)
+        # however, if we know the www-authenticate header (and thus the
+        # realm), then we can re-use the credentials
+        self.assertEquals(httpauth.find_http_auth(url4, header), auth)
+        # but not if the realm is different or the root url
+        self.assertEquals(httpauth.find_http_auth(url5, header), None)
+        self.assertEquals(httpauth.find_http_auth(url5,
+            'Basic realm="Other Protected Space"'), None)
 
     @uses_httpclient
     def test_digest_reuse(self):
@@ -763,6 +770,7 @@ class HTTPAuthBackendTestDLDaemonVersion(HTTPAuthBackendTest):
         from miro.dl_daemon.private import httpauth
         httpauth.update_passwords([])
         daemon.LAST_DAEMON = FakeDaemon()
+        globals()['httpauth'] = httpauth
         # make sure the UpdatePasswords command gets sent now
         self.runPendingIdles()
 
