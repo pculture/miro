@@ -79,6 +79,7 @@ from miro import util
 from miro import searchengines
 from miro import storedatabase
 from miro import videoconversion
+from miro import devices
 
 DEBUG_DB_MEM_USAGE = False
 mem_usage_test_event = threading.Event()
@@ -270,6 +271,7 @@ def finish_startup(obj, thread):
 
     logging.info("Loading video converters...")
     videoconversion.conversion_manager.startup()
+    devices.device_manager.startup()
     searchengines.create_engines()
     setup_global_feeds()
     # call fix_database_inconsistencies() ASAP after the manual feed is set up

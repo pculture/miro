@@ -303,6 +303,11 @@ class StopTrackingWatchedFolders(BackendMessage):
     """
     pass
 
+class TrackDevices(BackendMessage):
+    """Start tracking devices.
+    """
+    pass
+
 class SetFeedExpire(BackendMessage):
     """Sets the expiration for a feed.
     """
@@ -783,6 +788,13 @@ class QueryFrontendState(BackendMessage):
     """Ask for a CurrentFrontendState message to be sent back.
     """
     pass
+
+class DeviceSyncMedia(BackendMessage):
+    """Ask the backend to sync media to the given device.
+    """
+    def __init__(self, device, item_ids):
+        self.device = device
+        self.item_ids = item_ids
 
 # Frontend Messages
 
@@ -1375,6 +1387,25 @@ class VideoConversionTaskChanged(FrontendMessage):
     """
     def __init__(self, task):
         self.task = task
+
+class DeviceInfo(object):
+    """Tracks the state of an attached device.
+    """
+    def __init__(self, id, device_info, mount):
+        self.id = id
+        self.mount = mount
+
+        self.name = device_info.name
+        self.video_conversion = device_info.video_conversion
+        self.video_path = device_info.video_path
+        self.audio_conversion = device_info.audio_conversion
+        self.audio_path = device_info.audio_path
+
+class DeviceChanged(FrontendMessage):
+    """Informs the frontend that a device has changed state.
+    """
+    def __init__(self, device):
+        self.device = device
 
 class MessageToUser(FrontendMessage):
     """Lets the backend send messages directly to the user.

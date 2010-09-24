@@ -473,6 +473,30 @@ class PlaylistListDropHandler(TabListDropHandler):
         return TabListDropHandler.accept_drop(self, table_view, model, type,
                 source_actions, parent, position, data)
 
+class DeviceDropHandler(object):
+    def __init__(self, tablist):
+        self.tablist = tablist
+
+    def allowed_actions(self):
+        return widgetset.DRAG_ACTION_COPY
+
+    def allowed_types(self):
+        return ('downloaded-item',)
+
+    def validate_drop(self, widget, model, type, source_actions, parent,
+                      position):
+        if position == -1 and parent and type in self.allowed_types():
+            device = model[parent][0]
+            if device.mount:
+                return widgetset.DRAG_ACTION_COPY
+        return widgetset.DRAG_ACTION_NONE
+
+    def accept_drop(self, widget, model, type, source_actions, parent,
+                    position, data):
+        video_ids = [int(id) for id in data.split('-')]
+        device = model[parent][0]
+        messages.DeviceSyncMedia(device, video_ids).send_to_backend()
+
 class PlaylistListDragHandler(TabListDragHandler):
     item_type = 'playlist'
     folder_type = 'playlist-with-folder'
@@ -592,6 +616,29 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
 
     def on_delete_key_pressed(self):
         """For subclasses to override."""
+        pass
+
+
+class DevicesList(TabList):
+    type = 'device'
+
+    ALLOW_MULTIPLE = False
+
+    def __init__(self):
+        TabList.__init__(self)
+        self.view.set_drag_dest(DeviceDropHandler(self))
+        self.devices = {}
+
+    def init_info(self, info):
+        thumb_path = resources.path('images/phone.png')
+        info.icon = imagepool.get_surface(thumb_path)
+        info.unwatched = info.available = 0
+        self.devices[info.id] = info
+
+    def on_delete_key_pressed(self):
+        pass
+
+    def on_context_menu(self, table_view):
         pass
 
 class SiteList(TabList):
@@ -787,6 +834,8 @@ class TabListBox(widgetset.Scroller):
         vbox.pack_start(tlm.static_tab_list.view)
         vbox.pack_start(self.build_header(_('LIBRARY')))
         vbox.pack_start(tlm.library_tab_list.view)
+        vbox.pack_start(self.build_header(_('DEVICES')))
+        vbox.pack_start(tlm.devices_list.view)
         vbox.pack_start(self.build_header(_('WEBSITES')))
         vbox.pack_start(tlm.site_list.view)
         vbox.pack_start(self.build_header(_('VIDEO FEEDS')))

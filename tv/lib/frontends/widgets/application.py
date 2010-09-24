@@ -223,6 +223,7 @@ class Application:
         messages.TrackNewVideoCount().send_to_backend()
         messages.TrackNewAudioCount().send_to_backend()
         messages.TrackUnwatchedCount().send_to_backend()
+        messages.TrackDevices().send_to_backend()
 
     def get_main_window_dimensions(self):
         """Override this to provide platform-specific Main Window dimensions.
@@ -1113,6 +1114,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
             return app.tab_list_manager.playlist_list
         elif message.type == 'guide':
             return app.tab_list_manager.site_list
+        elif message.type == 'devices':
+            return app.tab_list_manager.devices_list
         else:
             raise ValueError("Unknown Type: %s" % message.type)
 
@@ -1221,7 +1224,13 @@ class WidgetsMessageHandler(messages.MessageHandler):
         current_display = app.display_manager.get_current_display()
         if isinstance(current_display, displays.VideoConversionsDisplay):
             current_display.controller.handle_task_changed(message.task)
-    
+
+    def handle_device_changed(self, message):
+        current_display = app.display_manager.get_current_display()
+        if isinstance(current_display, displays.DeviceDisplay):
+            # XXX if we're in the device display, do something
+            current_display.controller.handle_device_changed(message.device)
+
     def handle_play_movie(self, message):
         app.playback_manager.start_with_items(message.item_infos)
 

@@ -1,0 +1,6 @@
+[HTC Android Phone]
+name: Android Phone
+video_conversion: hero
+video_path: Video
+audio_conversion: mp3
+audio_path: Music

@@ -46,6 +46,7 @@ from miro.frontends.widgets import downloadscontroller
 from miro.frontends.widgets import videoconversionscontroller
 from miro.frontends.widgets import feedcontroller
 from miro.frontends.widgets import itemlistcontroller
+from miro.frontends.widgets import devicecontroller
 from miro.frontends.widgets import playlist
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
@@ -124,6 +125,7 @@ class DisplayManager(object):
                 VideoConversionsDisplay,
                 GuideDisplay,
                 MultipleSelectionDisplay,
+                DeviceDisplay,
                 DummyDisplay,
         ]
         self.display_stack = []
@@ -203,6 +205,17 @@ class GuideDisplay(TabDisplay):
     def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
         self.widget = selected_tabs[0].browser
+
+class DeviceDisplay(TabDisplay):
+    @staticmethod
+    def should_display(tab_type, selected_tabs):
+        return tab_type == 'device' and len(selected_tabs) == 1
+
+    def __init__(self, tab_type, selected_tabs):
+        Display.__init__(self)
+        device = selected_tabs[0]
+        self.controller = devicecontroller.DeviceController(device)
+        self.widget = self.controller.widget
 
 class SiteDisplay(TabDisplay):
     _open_sites = {} # maps site ids -> BrowserNav objects for them

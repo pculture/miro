@@ -52,7 +52,8 @@ from miro import singleclick
 from miro import subscription
 from miro import tabs
 from miro import opml
-from miro import searchengines
+from miro import videoconversion
+from miro import devices
 from miro.feed import Feed, lookup_feed
 from miro.gtcache import gettext as _
 from miro.playlist import SavedPlaylist
@@ -581,6 +582,9 @@ class BackendMessageHandler(messages.MessageHandler):
         if self.playlist_tracker:
             self.playlist_tracker.unlink()
             self.playlist_tracker = None
+
+    def handle_track_devices(self, message):
+        devices.device_manager.start_tracking()
 
     def handle_mark_feed_seen(self, message):
         try:
@@ -1403,3 +1407,29 @@ class BackendMessageHandler(messages.MessageHandler):
         m =messages.CurrentFrontendState(state.list_view_displays,
                 state.sort_states, state.active_filters)
         m.send_to_frontend()
+
+    def handle_device_sync_media(self, message):
+        try:
+            item_infos = [messages.ItemInfo(item.Item.get_by_id(id))
+                          for id in message.item_ids]
+        except database.ObjectNotFoundError:
+            logging.warn("EditItem: Items not found -- %s", message.item_ids)
+            return
+
+        start_conversion = videoconversion.conversion_manager.start_conversion
+
+        audio_items = [info for info in item_infos
+                       if info.file_type == 'audio']
+        audio_target_folder = os.path.join(message.device.mount,
+                                           message.device.audio_path)
+        for item_info in audio_items:
+            start_conversion(message.device.audio_conversion, item_info,
+                             audio_target_folder)
+
+        video_items = [info for info in item_infos
+                       if info.file_type == 'video']
+        video_target_folder = os.path.join(message.device.mount,
+                                           message.device.video_path)
+        for item_info in video_items:
+            start_conversion(message.device.video_conversion, item_info,
+                             video_target_folder)
