@@ -1423,8 +1423,19 @@ class BackendMessageHandler(messages.MessageHandler):
         audio_target_folder = os.path.join(message.device.mount,
                                            message.device.audio_path)
         for item_info in audio_items:
-            start_conversion(message.device.audio_conversion, item_info,
-                             audio_target_folder)
+            if item_info.mime_type in message.device.audio_types:
+                # don't convert video the device supports
+                try:
+                    shutil.copyfile(item_info.video_path,
+                                    os.path.join(
+                            audio_target_folder,
+                            os.path.basename(item_info.video_path)))
+                except IOError:
+                    # FIXME - we should pass the error back to the frontend
+                    pass
+            else:
+                start_conversion(message.device.audio_conversion, item_info,
+                                 audio_target_folder)
 
         video_items = [info for info in item_infos
                        if info.file_type == 'video']

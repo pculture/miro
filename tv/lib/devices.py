@@ -13,6 +13,7 @@ class DeviceInfo(object):
         self.video_path = parser.get(name, 'video_path')
         self.audio_conversion = parser.get(name, 'audio_conversion')
         self.audio_path = parser.get(name, 'audio_path')
+        self.audio_types = parser.get(name, 'audio_types').split()
 
 class DeviceManager(object):
     def __init__(self):

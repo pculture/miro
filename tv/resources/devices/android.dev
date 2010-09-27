@@ -4,3 +4,4 @@ video_conversion: hero
 video_path: Video
 audio_conversion: mp3
 audio_path: Music
+audio_types: audio/mpeg audio/x-ms-wma audio/mp4a-latm

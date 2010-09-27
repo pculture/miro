@@ -1400,6 +1400,7 @@ class DeviceInfo(object):
         self.video_path = device_info.video_path
         self.audio_conversion = device_info.audio_conversion
         self.audio_path = device_info.audio_path
+        self.audio_types = device_info.audio_types
 
 class DeviceChanged(FrontendMessage):
     """Informs the frontend that a device has changed state.
