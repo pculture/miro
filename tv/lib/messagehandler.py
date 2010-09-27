@@ -53,7 +53,6 @@ from miro import subscription
 from miro import tabs
 from miro import opml
 from miro import videoconversion
-from miro import devices
 from miro.feed import Feed, lookup_feed
 from miro.gtcache import gettext as _
 from miro.playlist import SavedPlaylist
@@ -61,6 +60,7 @@ from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 from miro.xhtmltools import urlencode
 
 from miro.plat.utils import make_url_safe
+from miro.plat import devicetracker
 
 import shutil
 
@@ -584,7 +584,7 @@ class BackendMessageHandler(messages.MessageHandler):
             self.playlist_tracker = None
 
     def handle_track_devices(self, message):
-        devices.device_manager.start_tracking()
+        devicetracker.tracker.start_tracking()
 
     def handle_mark_feed_seen(self, message):
         try:
