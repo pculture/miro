@@ -442,6 +442,15 @@ class CountTracker(object):
         self.tracker.unlink()
 
 class DownloadCountTracker(CountTracker):
+    def __init__(self):
+        CountTracker.__init__(self)
+        # we need to also track the only_downloading_view since if something
+        # gets added/removed from that the total count stays the same, but the
+        # downloading count changes (#14677)
+        self.other_tracker = item.Item.only_downloading_view().make_tracker()
+        self.other_tracker.connect('added', self.on_count_changed)
+        self.other_tracker.connect('removed', self.on_count_changed)
+
     def get_view(self):
         return item.Item.download_tab_view()
 
@@ -452,6 +461,10 @@ class DownloadCountTracker(CountTracker):
         non_downloading_count = total_count - downloading_count
         return messages.DownloadCountChanged(downloading_count,
                 non_downloading_count)
+
+    def stop_tracking(self):
+        CountTracker.stop_tracking()
+        self.other_tracker.unlink()
 
 class PausedCountTracker(CountTracker):
     def get_view(self):
