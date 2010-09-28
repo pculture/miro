@@ -1391,16 +1391,14 @@ class VideoConversionTaskChanged(FrontendMessage):
 class DeviceInfo(object):
     """Tracks the state of an attached device.
     """
-    def __init__(self, id, device_info, mount):
+    def __init__(self, id, device_info, mount, size=None, remaining=None):
         self.id = id
         self.mount = mount
+        self.size = size
+        self.remaining = remaining
 
-        self.name = device_info.name
-        self.video_conversion = device_info.video_conversion
-        self.video_path = device_info.video_path
-        self.audio_conversion = device_info.audio_conversion
-        self.audio_path = device_info.audio_path
-        self.audio_types = device_info.audio_types
+        self.__dict__.update(device_info.__dict__) # copy all the device info
+                                                   # into this object
 
 class DeviceChanged(FrontendMessage):
     """Informs the frontend that a device has changed state.

@@ -26,42 +26,110 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Controller for Downloads tab.
+"""Controller for Devices tab.
 """
 
-from miro.gtcache import gettext as _
+from miro import displaytext
 
-from miro.frontends.widgets import itemlistcontroller
-from miro.frontends.widgets.itemlistwidgets import (
-    ItemView, HideableSection, ItemContainerWidget, DownloadToolbar,
-    ItemListTitlebar)
-from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import imagepool
-from miro.frontends.widgets import itemlist
-from miro.frontends.widgets import prefpanel
+from miro.frontends.widgets import itemlistwidgets
+from miro.frontends.widgets import widgetutil
 
-from miro import messages
-from miro import downloader
 from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
 
+class DeviceTitlebar(itemlistwidgets.ItemListTitlebar):
+    def _build_titlebar_extra(self):
+        pass
+
+class SizeWidget(widgetset.HBox):
+    def __init__(self, size=None, remaining=None):
+        widgetset.HBox.__init__(self)
+        self.progress = widgetset.ProgressBar()
+        self.progress.set_size_request(500, -1)
+        self.text = widgetset.Label()
+        self.pack_start(self.progress, padding=20)
+        self.pack_start(self.text)
+        self.set_size(size, remaining)
+
+    def set_size(self, size, remaining):
+        self.size = size
+        self.remaining = remaining
+        if size and remaining:
+            self.progress.set_progress(1 - float(remaining) / size)
+            self.text.set_text('%s free' % displaytext.size_string(
+                    remaining))
+        else:
+            self.progress.set_progress(0)
+            self.text.set_text('not mounted')
+
+class DeviceMountedView(widgetset.VBox):
+    def __init__(self):
+        widgetset.VBox.__init__(self)
+        label = widgetset.Label("To copy media onto the device, drag it onto \
+the sidebar.")
+        label.set_size(1.5)
+        self.pack_start(widgetutil.align_center(label, top_pad=50))
+        self.device_size = SizeWidget()
+        alignment = widgetset.Alignment(0.5, 1, 0, 0, bottom_pad=15,
+                                        right_pad=20)
+        alignment.add(self.device_size)
+        self.pack_end(alignment)
+
+    def set_device(self, device):
+        self.device_size.set_size(device.size, device.remaining)
+
+class DeviceUnmountedView(widgetset.VBox):
+    def __init__(self):
+        widgetset.VBox.__init__(self)
+        label = widgetset.Label()
+        label.set_text('This phone is not yet mounted.')
+        label.set_bold(True)
+        label.set_size(1.5)
+        self.pack_start(widgetutil.align_center(label, left_pad=20, top_pad=50,
+                                              bottom_pad=20))
+        self.device_text = widgetset.Label()
+        self.device_text.set_size(1.5)
+        self.device_text.set_wrap(True)
+        self.pack_start(widgetutil.align_center(self.device_text, left_pad=20))
+
+
+    def set_device(self, device):
+        self.device_text.set_text(device.mount_instructions.replace('\n',
+                                                                    '\n\n'))
+
+
+class DeviceWidget(widgetset.VBox):
+    def __init__(self, device):
+        widgetset.VBox.__init__(self)
+        self.titlebar_vbox = widgetset.VBox()
+        self.titlebar_vbox.pack_start(self.make_titlebar(device))
+        self.device_view = widgetset.Background()
+        self.pack_start(self.titlebar_vbox)
+        self.pack_start(self.device_view, expand=True)
+        self.mounted_view = DeviceMountedView()
+        self.unmounted_view = DeviceUnmountedView()
+        self.set_device(device)
+
+
+    def set_device(self, device):
+        if device.mount:
+            self.mounted_view.set_device(device)
+            self.device_view.set_child(self.mounted_view)
+        else:
+            self.unmounted_view.set_device(device)
+            self.device_view.set_child(self.unmounted_view)
+
+    @staticmethod
+    def make_titlebar(device):
+        image_path = resources.path("images/phone-large.png")
+        icon = imagepool.get(image_path)
+        return DeviceTitlebar(device.name, icon)
+
+
 class DeviceController(object):
     def __init__(self, device):
-        alignment = widgetset.Alignment(xalign=0.5, yalign=0.0)
-        self.widget = alignment
-
-        self._set_device(device)
-
-    def _set_device(self, device):
-        self.device = device
-        text = 'Device: %s' % device.name
-        if not device.mount:
-            text = '%s\n(not mounted)' % text
-        label = widgetset.Label(text)
-        label.set_size(3)
-        label.set_bold(True)
-        label.set_color((0.0, 0.0, 0.0))
-        self.widget.set_child(label)
+        self.widget = DeviceWidget(device)
 
     def handle_device_changed(self, device):
-        self._set_device(device)
+        self.widget.set_device(device)

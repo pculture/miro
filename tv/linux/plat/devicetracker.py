@@ -1,5 +1,5 @@
 import logging
-import time
+import os
 
 import gio
 
@@ -24,14 +24,18 @@ class DeviceTracker(object):
         name = drive.get_name()
         device_info = devices.device_manager.get_device(name)
         id = drive.get_identifier('unix-device')
-        mount_path = None
+        mount_path = size = remaining = None
         volumes = drive.get_volumes()
         if volumes:
             volume = drive.get_volumes()[0]
             mount = volume.get_mount()
             if mount:
                 mount_path = mount.get_root().get_path()
-        return messages.DeviceInfo(id, device_info, mount_path)
+                statinfo = os.statvfs(mount_path)
+                size = statinfo.f_frsize * statinfo.f_blocks
+                remaining = statinfo.f_frsize * statinfo.f_bavail
+        return messages.DeviceInfo(id, device_info, mount_path,
+                                   size, remaining)
 
     def _drive_connected(self, volume_monitor, drive):
         try:

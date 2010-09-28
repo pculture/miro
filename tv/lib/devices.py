@@ -14,6 +14,8 @@ class DeviceInfo(object):
         self.audio_conversion = parser.get(name, 'audio_conversion')
         self.audio_path = parser.get(name, 'audio_path')
         self.audio_types = parser.get(name, 'audio_types').split()
+        self.mount_instructions = parser.get(
+            name, 'mount_instructions').replace('\\n', '\n')
 
 class DeviceManager(object):
     def __init__(self):

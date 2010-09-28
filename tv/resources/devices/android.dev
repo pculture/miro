@@ -5,3 +5,4 @@ video_path: Video
 audio_conversion: mp3
 audio_path: Music
 audio_types: audio/mpeg audio/x-ms-wma audio/mp4a-latm
+mount_instructions=Your phone must be in 'USB storage mode' in order for Miro to sync files to it.\nTo mount your phone, select 'Turn on USB storage' from the notifications.
