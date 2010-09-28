@@ -98,8 +98,16 @@ class HTTPAuthPassword(object):
 
                     self.domain_list.append(d)
 
-    def same_realm(self, other_pw):
-        return self.realm == other_pw.realm
+    def same_protection_space(self, other_pw):
+        if self.scheme != other_pw.scheme:
+            # HMM, I guess it's possible for a HTTP auth and a digest auth to
+            # cover the same protection space, but that's definitely an edge
+            # case.  We still want to return False here because it's useful to
+            # store both pws.
+            return False
+        if self.realm != other_pw.realm:
+            return False
+        return self.should_use_for_request(other_pw.url, other_pw.realm)
 
     def should_use_for_request(self, url, realm):
         request_parts = urlparse.urlparse(url)
@@ -182,7 +190,7 @@ class HTTPPasswordList(signals.SignalEmitter):
         # Actually adding the auth is a bit tricky, because we want to remove
         # any old, quite possibly bad, passwords.
 
-        found_index = self._find_password_with_realm(new_pw)
+        found_index = self._find_password_with_protection_space(new_pw)
         if found_index < 0:
             # We didn't find any old password to replace, add the new password
             # to the end of the list and we're done
@@ -201,19 +209,22 @@ class HTTPPasswordList(signals.SignalEmitter):
             self.passwords[found_index] = new_pw
             # for good measure, delete any extra passwords with the same realm
             for i in reversed(xrange(found_index+1, len(self.passwords))):
-                if new_pw.same_realm(self.passwords[i]):
+                if new_pw.same_protection_space(self.passwords[i]):
                     del self.passwords[i]
         self.emit("passwords-updated", self.passwords)
         return new_pw
 
-    def _find_password_with_realm(self, pw):
-        """Find a password in our current list with the same realm as pw
+    def _find_password_with_protection_space(self, pw):
+        """Find a password for the same protection space as pw
+
+        "protection space" means the set of URLs where the password is valid
+        for.  Check out RFC 2617 for details
 
         :returns: the index of the first password where this is True, or -1
         """
 
         for i, other_pw in enumerate(self.passwords):
-            if pw.same_realm(other_pw):
+            if pw.same_protection_space(other_pw):
                 return i
         return -1
 

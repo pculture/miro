@@ -700,6 +700,24 @@ class HTTPAuthBackendTest(EventLoopTest):
         self.assertEquals(httpauth.find_http_auth(url5,
             'Basic realm="Other Protected Space"'), None)
 
+    def test_basic_two_domains_same_realm(self):
+        # test that if two domains have the same realm, we don't allow 1
+        # password to overwrite the other #14613
+        header = 'Basic realm="Protected Space"'
+        url = 'http://example.com/foo/test.html'
+        url2 = 'http://example2.com/foo/test.html'
+        self.assertEquals(len(httpauth.password_list.passwords), 0)
+        self.ask_for_http_auth(url, header)
+        self.assertEquals(len(httpauth.password_list.passwords), 1)
+        self.ask_for_http_auth(url2, header)
+        self.assertEquals(len(httpauth.password_list.passwords), 2)
+        # same thing with digest auth
+        header = 'Digest realm="Protected Space",nonce="123"'
+        self.ask_for_http_auth(url, header)
+        self.assertEquals(len(httpauth.password_list.passwords), 3)
+        self.ask_for_http_auth(url2, header)
+        self.assertEquals(len(httpauth.password_list.passwords), 4)
+
     def test_digest_reuse(self):
         header = 'Digest realm="Protected Space",nonce="123"'
         url = 'http://example.com/foo/test.html'
