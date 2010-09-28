@@ -668,7 +668,6 @@ class HTTPAuthBackendTest(EventLoopTest):
         self.runEventLoop(timeout=0.1)
         return self.callback_data
 
-    @uses_httpclient
     def test_simple(self):
         url = 'http://example.com/foo.html'
         header = 'Basic realm="Protected Space"'
@@ -678,7 +677,6 @@ class HTTPAuthBackendTest(EventLoopTest):
         self.assertEquals(auth.password, 'password')
         self.assertEquals(auth.scheme, 'basic')
 
-    @uses_httpclient
     def test_basic_reuse(self):
         header = 'Basic realm="Protected Space"'
         url = 'http://example.com/foo/test.html'
@@ -702,7 +700,6 @@ class HTTPAuthBackendTest(EventLoopTest):
         self.assertEquals(httpauth.find_http_auth(url5,
             'Basic realm="Other Protected Space"'), None)
 
-    @uses_httpclient
     def test_digest_reuse(self):
         header = 'Digest realm="Protected Space",nonce="123"'
         url = 'http://example.com/foo/test.html'
@@ -719,7 +716,6 @@ class HTTPAuthBackendTest(EventLoopTest):
         self.assertEquals(httpauth.find_http_auth(url4), auth)
         self.assertEquals(httpauth.find_http_auth(url5), None)
 
-    @uses_httpclient
     def test_digest_reuse_with_domain(self):
         header = ('Digest realm="Protected Space",nonce="123",'
                 'domain="/metoo,http://metoo.com/,http://example2.com/metoo"')
