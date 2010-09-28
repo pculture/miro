@@ -916,7 +916,8 @@ class BackendMessageHandler(messages.MessageHandler):
             search_term = search_term + " " + channel_info.search_term
 
         if not lookup_feed(url, search_term):
-            Feed(url, section=section, search_term=search_term)
+            Feed(url, section=section, search_term=search_term,
+                    title=channel_info.name)
 
     def handle_new_feed_search_engine(self, message):
         sei = message.search_engine_info
