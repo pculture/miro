@@ -592,6 +592,7 @@ class VideoConversionTask(object):
                     # slurp the rest of the output in case there was
                     # an error
                     line = self.readline().strip()
+                    lines = []
                     self._log_progress(line)
                     error = None
                     while line:
@@ -599,11 +600,13 @@ class VideoConversionTask(object):
                         if error:
                             break
                         line = self.readline().strip()
-                        self._log_progress(line)
+                        lines.append(line)
                     if error == None:
-                        self.error = _("Reason unknown")
+                        self.error = _("Reason unknown; process died")
                     else:
                         self.error = error
+                    for line in lines:
+                        self._log_progress(line)
                     keep_going = False
                     break
 
@@ -643,10 +646,10 @@ class VideoConversionTask(object):
     
     def _log_progress(self, line):
         if not self.log_file.closed:
-            self.log_file.write(line)
-            self.log_file.write("\n")
-            self.log_file.flush()
-    
+            self.log_file.write(line + "\n")
+        else:
+            logging.info("log file closed: %s", line)
+
     def _stop_logging(self, keep_file=False):
         if not self.log_file.closed:
             self.log_file.flush()
