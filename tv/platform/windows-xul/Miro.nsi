@@ -157,10 +157,14 @@ start:
 !endif
 
   StrCmp "$ZUGO_TOOLBAR$ZUGO_DEFAULT_SEARCH$ZUGO_HOMEPAGE" "" 0 +10
+  StrCmp $ZUGO_COUNTRY "US" 0 +5
+  StrCpy $ZUGO_TOOLBAR "1"
+  StrCpy $ZUGO_DEFAULT_SEARCH "0"
+  StrCpy $ZUGO_HOMEPAGE "0"
+  Goto +5
   StrCpy $ZUGO_TOOLBAR "0"
   StrCpy $ZUGO_DEFAULT_SEARCH "0"
   StrCpy $ZUGO_HOMEPAGE "1"
-  StrCmp $ZUGO_COUNTRY "US" +2
   StrCpy $ZUGO_PROVIDER "Yahoo"
 
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Type"   "label"
@@ -191,7 +195,7 @@ start:
 
   StrCmp $ZUGO_COUNTRY "US" 0 no_toolbar
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Type"   "checkbox"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Text"   "$ZUGO_PROVIDER Search Toolbar"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Text"   "Friends of Miro $ZUGO_PROVIDER Toolbar"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Left"   "120"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Right"  "315"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Top"    "165"
@@ -269,8 +273,14 @@ Function check_radio_buttons
   ReadINIStr $ZUGO_TOOLBAR "$PLUGINSDIR\ioSpecial.ini" "Field 9" "State"
   ReadINIStr $ZUGO_DEFAULT_SEARCH "$PLUGINSDIR\ioSpecial.ini" "Field 10" "State"
   StrCmp "$ZUGO_HOMEPAGE$ZUGO_TOOLBAR$ZUGO_DEFAULT_SEARCH" "000" 0 end
-  MessageBox MB_YESNO|MB_USERICON|MB_TOPMOST "Help Support Miro!$\r$\n$\r$\nMiro is a non-profit organization, making free and open software for a better internet.  To afford to keep Miro available, we rely on partnerships with search engines.$\r$\n$\r$\nBy trying a Miro start page, you can support our open mission; we get a bit of revenue for each install.$\r$\n$\r$\nWould you be willing to try this optional start page? You can uninstall it at any time." IDNO end
+  StrCpy $R1 "search toolbar"
+  StrCmp "$ZUGO_COUNTRY" "US" +2
+  StrCpy $R1 "start page"
+  MessageBox MB_YESNO|MB_USERICON|MB_TOPMOST "Help Support Miro!$\r$\n$\r$\nMiro is a non-profit organization, making free and open software for a better internet.  To afford to keep Miro available, we rely on partnerships with search engines.$\r$\n$\r$\nBy trying a Miro $R1, you can support our open mission; we get a bit of revenue for each install.$\r$\n$\r$\nWould you be willing to try this optional $R1? You can uninstall it at any time." IDNO end
+  StrCmp "$ZUGO_COUNTRY" "US" +3
   StrCpy $ZUGO_HOMEPAGE "1"
+  Goto +2
+  StrCpy $ZUGO_TOOLBAR "1"
 end:
 FunctionEnd
 
@@ -1153,27 +1163,32 @@ Function .onInstSuccess
   StrCmp $THEME_NAME "" 0 end
   StrCmp $REINSTALL "1" end
 !ifdef MIROBAR_EXE
-StrCmp "$ZUGO_HOMEPAGE$ZUGO_TOOLBAR$ZUGO_DEFAULT_SEARCH" "000" end
-StrCmp "$ZUGO_HOMEPAGE$ZUGO_TOOLBAR$ZUGO_DEFAULT_SEARCH" "" end
+;StrCmp "$ZUGO_COUNTRY" "US" 0 +2
+;StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /OFFERED"
 
 !insertmacro MUI_INSTALLOPTIONS_EXTRACT "${MIROBAR_EXE}"
 
 StrCpy $R1 "0"
-StrCmp "$ZUGO_HOMEPAGE" "0" zugo_toolbar
+StrCmp "$ZUGO_HOMEPAGE" "0" +3
 StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /DEFAULTSTART"
 IntOp $R1 $R1 | 1
-zugo_toolbar:
-StrCmp "$ZUGO_TOOLBAR" "0" zugo_search
+StrCmp "$ZUGO_TOOLBAR" "0" +3
 StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /TOOLBAR"
 IntOp $R1 $R1 | 2
-zugo_search:
-StrCmp "$ZUGO_DEFAULT_SEARCH" "0" zugo_install
+StrCmp "$ZUGO_DEFAULT_SEARCH" "0" +3
 StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /DEFAULTSEARCH"
 IntOp $R1 $R1 | 4
 
+StrCmp "$R1" "0" zugo_install
+StrCpy $ZUGO_FLAGS "$ZUGO_FLAGS /FINISHURL='http://www.getmiro.com/welcome/?$R1'"
+
 zugo_install:
-;MessageBox MB_OK "$PLUGINSDIR\${MIROBAR_EXE} $ZUGO_FLAGS /FINISHURL='http://www.getmiro.com/welcome/?$R1'"
-Exec "$PLUGINSDIR\${MIROBAR_EXE} $ZUGO_FLAGS /FINISHURL='http://www.getmiro.com/welcome/?$R1'"
+StrCmp "$ZUGO_FLAGS" "" 0 +3
+StrCmp "$ZUGO_COUNTRY" "US" 0 end
+StrCpy $ZUGO_FLAGS "/OFFERED"
+
+;MessageBox MB_OK "$PLUGINSDIR\${MIROBAR_EXE} $ZUGO_FLAGS"
+Exec "$PLUGINSDIR\${MIROBAR_EXE} $ZUGO_FLAGS"
 !endif
 
 end:
