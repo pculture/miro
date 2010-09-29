@@ -648,7 +648,7 @@ class VideoConversionTask(object):
 
 class FFMpegConversionTask(VideoConversionTask):
     DURATION_RE = re.compile(r'Duration: (\d\d):(\d\d):(\d\d)\.(\d\d)(, start:.*)?(, bitrate:.*)?')
-    PROGRESS_RE = re.compile(r'frame=.* fps=.* q=.* size=.* time=(.*) bitrate=(.*)')
+    PROGRESS_RE = re.compile(r'(?:frame=.* fps=.* q=.* )?size=.* time=(.*) bitrate=(.*)')
     LAST_PROGRESS_RE = re.compile(r'frame=.* fps=.* q=.* Lsize=.* time=(.*) bitrate=(.*)')
 
     def get_executable(self):
