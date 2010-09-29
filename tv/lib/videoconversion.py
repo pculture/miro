@@ -623,7 +623,7 @@ class VideoConversionTask(object):
     
     def _start_logging(self, executable, params):
         log_folder = os.path.dirname(config.get(prefs.LOG_PATHNAME))
-        self.log_path = os.path.join(log_folder, "conversion-%d-to-%s-log" % (self.item_info.id, self.converter_info.identifier))
+        self.log_path = os.path.join(log_folder, "conversion-%d-to-%s.log" % (self.item_info.id, self.converter_info.identifier))
         self.log_file = file(self.log_path, "w")
         self._log_progress("STARTING CONVERSION")
         self._log_progress("-> Item: %s" % util.stringify(self.item_info.name))
