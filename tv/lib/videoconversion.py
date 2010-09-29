@@ -588,12 +588,14 @@ class VideoConversionTask(object):
                     # slurp the rest of the output in case there was
                     # an error
                     line = self.readline().strip()
+                    self._log_progress(line)
                     error = None
                     while line:
                         error = self.check_for_errors(line)
                         if error:
                             break
                         line = self.readline().strip()
+                        self._log_progress(line)
                     self.error = error
                     keep_going = False
                     break
