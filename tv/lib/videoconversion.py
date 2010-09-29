@@ -334,11 +334,15 @@ class VideoConversionManager(signals.SignalEmitter):
                 source_info = task.item_info
                 conversion_name = task.converter_info.name
 
-                shutil.move(source, destination)
-                shutil.rmtree(os.path.dirname(source))
-                _create_item_for_conversion(destination, source_info,
-                        conversion_name)
-                clean_up(task.temp_output_path, file_and_directory=True)
+                if os.path.exists(source):
+                    shutil.move(source, destination)
+                    shutil.rmtree(os.path.dirname(source))
+                    _create_item_for_conversion(destination, source_info,
+                                                conversion_name)
+                    clean_up(task.temp_output_path, file_and_directory=True)
+                else:
+                    task.error = _("Reason unknown")
+                    self._notify_tasks_count()
 
         except Queue.Empty, e:
             pass
@@ -596,12 +600,16 @@ class VideoConversionTask(object):
                             break
                         line = self.readline().strip()
                         self._log_progress(line)
-                    self.error = error
+                    if error == None:
+                        self.error = _("Reason unknown")
+                    else:
+                        self.error = error
                     keep_going = False
                     break
 
                 old_progress = self.progress
                 line = self.readline().strip()
+                self._log_progress(line)
 
                 error = self.check_for_errors(line)
                 if error:
@@ -609,7 +617,6 @@ class VideoConversionTask(object):
                     keep_going = False
                     break
 
-                self._log_progress(line)
                 self.progress = self.monitor_progress(line)
                 if self.progress >= 1.0:
                     self.progress = 1.0
