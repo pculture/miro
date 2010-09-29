@@ -577,7 +577,7 @@ class VideoConversionTask(object):
 
         kwargs = {"bufsize": 1,
                   "stdout": subprocess.PIPE,
-                  "stderr": subprocess.PIPE,
+                  "stderr": subprocess.STDOUT,
                   "stdin": subprocess.PIPE,
                   "startupinfo": util.no_console_startupinfo()}
         if os.name != 'nt':
@@ -586,44 +586,20 @@ class VideoConversionTask(object):
         self.process_handle = subprocess.Popen(args, **kwargs)
 
         try:
-            keep_going = True
-            while keep_going:
-                if self.process_handle.poll() is not None:
-                    # slurp the rest of the output in case there was
-                    # an error
-                    line = self.readline().strip()
-                    lines = []
-                    self._log_progress(line)
-                    error = None
-                    while line:
-                        error = self.check_for_errors(line)
-                        if error:
-                            break
-                        line = self.readline().strip()
-                        lines.append(line)
-                    if error == None:
-                        self.error = _("Reason unknown; process died")
-                    else:
-                        self.error = error
-                    for line in lines:
-                        self._log_progress(line)
-                    keep_going = False
-                    break
-
+            for line in self.readlines():
                 old_progress = self.progress
-                line = self.readline().strip()
+
+                line = line.strip()
                 self._log_progress(line)
 
                 error = self.check_for_errors(line)
                 if error:
                     self.error = error
-                    keep_going = False
                     break
 
                 self.progress = self.monitor_progress(line)
                 if self.progress >= 1.0:
                     self.progress = 1.0
-                    keep_going = False
                     break
 
                 if old_progress != self.progress:
@@ -648,7 +624,7 @@ class VideoConversionTask(object):
         if not self.log_file.closed:
             self.log_file.write(line + "\n")
         else:
-            logging.info("log file closed: %s", line)
+            logging.debug("conversion file closed: %s", line)
 
     def _stop_logging(self, keep_file=False):
         if not self.log_file.closed:
@@ -683,16 +659,16 @@ class FFMpegConversionTask(VideoConversionTask):
             self.input_path, self.temp_output_path, self.converter_info)
         return utils.customize_ffmpeg_parameters(default_parameters)
 
-    def readline(self):
+    def readlines(self):
         chars = []
-        keep_reading = True
-        while keep_reading:
-            c = self.process_handle.stderr.read(1)
+        c = self.process_handle.stdout.read(1)
+        while c:
             if c in ["", "\r", "\n"]:
-                keep_reading = False
+                yield "".join(chars)
+                chars = []
             else:
                 chars.append(c)
-        return "".join(chars)
+            c = self.process_handle.stdout.read(1)
 
     def check_for_errors(self, line):
         if line.startswith(("Unknown", "Error")):
@@ -740,10 +716,11 @@ class FFMpeg2TheoraConversionTask(VideoConversionTask):
             self.input_path, self.temp_output_path, self.converter_info)
         return utils.customize_ffmpeg2theora_parameters(default_parameters)
 
-    def readline(self):
-        if self.platform == 'linux':
-            return self.process_handle.stderr.readline()
-        return self.process_handle.stdout.readline()
+    def readlines(self):
+        line = self.process_handle.stdout.readline()
+        while line:
+            yield line
+            line = self.process_handle.stdout.readline()
 
     def check_for_errors(self, line):
         return
