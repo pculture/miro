@@ -478,11 +478,13 @@ def clean_up(temp_file, file_and_directory=False, attempts=0):
     if os.path.exists(temp_file):
         try:
             os.remove(temp_file)
-        except (OSError, IOError, WindowsError):
-            logging.debug("clean_up: %s kicked up while removing %s", e,
-                          temp_file)
-            eventloop.add_timeout(1.0, clean_up, "conversion clean_up attempt",
-                                  (clean_up, temp_file, file_and_directory, attempts+1))
+        except (OSError, IOError, WindowsError), e:
+            logging.debug("clean_up: %s kicked up while removing %s", 
+                          e, temp_file)
+            timeout = 1.0 * attempts
+            eventloop.add_timeout(
+                timeout, clean_up, "conversion clean_up attempt",
+                (temp_file, file_and_directory, attempts+1))
 
     if file_and_directory:
         path = os.path.dirname(temp_file)
@@ -490,13 +492,16 @@ def clean_up(temp_file, file_and_directory=False, attempts=0):
             try:
                 os.rmdir(path)
             except (OSError, IOError, WindowsError), e:
-                logging.debug("clean_up: %s kicked up while removing %s", e, path)
-                eventloop.add_timeout(1.0, clean_up, "conversion clean_up attempt",
-                                      (clean_up, temp_file, file_and_directory, attempts+1))
+                logging.debug("clean_up: %s kicked up while removing %s", 
+                              e, path)
+                timeout = 1.0 * attempts
+                eventloop.add_timeout(
+                    timeout, clean_up, "conversion clean_up attempt",
+                    (temp_file, file_and_directory, attempts+1))
 
 class VideoConversionTask(object):
     def __init__(self, converter_info, item_info, target_folder):
-        self.temp_dir = tempfile.mkdtemp("miro-conversion")
+        self.temp_dir = utils.FilenameType(tempfile.mkdtemp("miro-conversion"))
         self.item_info = item_info
         self.converter_info = converter_info
         self.input_path = item_info.video_path
