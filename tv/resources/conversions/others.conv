@@ -29,6 +29,6 @@ mediatype: video
 [Ogg Vorbis]
 executable: ffmpeg
 extension: ogg
-parameters: -i {input} -vn -acodec vorbis -aq 60 {output}
+parameters: -i {input} -f ogg -vn -acodec vorbis -aq 60 {output}
 mediatype: audio
 
