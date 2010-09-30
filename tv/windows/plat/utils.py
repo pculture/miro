@@ -361,14 +361,32 @@ def get_logical_cpu_count():
 def get_ffmpeg_executable_path():
     return os.path.join(resources.appRoot(), "ffmpeg.exe")
 
-def customize_ffmpeg_parameters(default_parameters):
-    return default_parameters
+def customize_ffmpeg_parameters(params):
+    from miro.plat.specialfolders import get_short_path_name
+    # look for -i input
+    ind = params.index("-i")
+    if ind != -1 and len(params) > ind + 2:
+        params[ind+1] = get_short_path_name(params[ind+1])
+
+    # FIXME - assumes the last item is {output}
+    # look at last item output
+    params[-1] = get_short_path_name(params[-1])
+    return params
 
 def get_ffmpeg2theora_executable_path():
     return os.path.join(resources.appRoot(), "ffmpeg2theora.exe")
 
-def customize_ffmpeg2theora_parameters(default_parameters):
-    return default_parameters
+def customize_ffmpeg2theora_parameters(params):
+    from miro.plat.specialfolders import get_short_path_name
+    # look for -o output
+    ind = params.index("-o")
+    if ind != -1 and len(params) > ind + 2:
+        params[ind+1] = get_short_path_name(params[ind+1])
+
+    # FIXME - assumes the last item is {input}
+    # look at last item input
+    params[-1] = get_short_path_name(params[-1])
+    return params
 
 def begin_thread_loop(context_object):
     pass
