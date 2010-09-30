@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-18 11:10-0400\n"
-"PO-Revision-Date: 2010-08-08 09:54+0000\n"
-"Last-Translator: A S Alam <aalam@users.sf.net>\n"
+"PO-Revision-Date: 2010-09-30 05:48+0000\n"
+"Last-Translator: Mandeep <Unknown>\n"
 "Language-Team: Punjabi <pa@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-09-23 15:57+0000\n"
+"X-Launchpad-Export-Date: 2010-09-30 16:13+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
@@ -3311,7 +3311,7 @@ msgstr ""
 
 #: ../../lib/httpclient.py:94
 msgid "HTTP error"
-msgstr ""
+msgstr "HTTP ਦੀ ਗਲਤੀ"
 
 #: ../../lib/httpclient.py:98
 #, python-format
@@ -3411,16 +3411,16 @@ msgstr ""
 
 #: ../../lib/net.py:91 ../../lib/net.py:97
 msgid "Can't connect"
-msgstr ""
+msgstr "ਨਹੀ ਜੁੜ ਪਾਇਆ"
 
 #: ../../lib/net.py:92
 #, python-format
 msgid "Connection Error: %(msg)s"
-msgstr ""
+msgstr "ਕੁਨੈਕਸ਼ਨ ਗਲਤੀ: %(msg)s"
 
 #: ../../lib/net.py:98
 msgid "SSL connection error"
-msgstr ""
+msgstr "SSL ਕੁਨੈਕਸ਼ਨ ਗਲਤੀ"
 
 #: ../../lib/net.py:102
 msgid "Timeout"
