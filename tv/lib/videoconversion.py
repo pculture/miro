@@ -341,7 +341,7 @@ class VideoConversionManager(signals.SignalEmitter):
                                                 conversion_name)
                     clean_up(task.temp_output_path, file_and_directory=True)
                 else:
-                    task.error = _("Reason unknown")
+                    task.error = _("Reason unknown--check log")
                     self._notify_tasks_count()
 
         except Queue.Empty, e:
