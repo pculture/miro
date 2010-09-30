@@ -641,10 +641,11 @@ class VideoConversionTask(object):
         message.send_to_frontend()
 
     def interrupt(self):
-        logging.info("killing conversion task %d", self.process_handle.pid)
-        utils.kill_process(self.process_handle.pid)
-        if os.path.exists(self.temp_output_path) and self.progress < 1.0:
-            clean_up(self.temp_output_path, file_and_directory=True)
+        if hasattr(self.process_handle, "pid"):
+            logging.info("killing conversion task %d", self.process_handle.pid)
+            utils.kill_process(self.process_handle.pid)
+            if os.path.exists(self.temp_output_path) and self.progress < 1.0:
+                clean_up(self.temp_output_path, file_and_directory=True)
 
 class FFMpegConversionTask(VideoConversionTask):
     DURATION_RE = re.compile(r'Duration: (\d\d):(\d\d):(\d\d)\.(\d\d)(, start:.*)?(, bitrate:.*)?')
