@@ -165,7 +165,10 @@ def load_frontend(globals_, locals_, frontend):
         _temp = __import__(frontend, globals_, locals_, ['application'], -1)
         return _temp.application
     except ImportError, ie:
-        print "ImportError on %s: %s" % (frontend, ie)
+        # this is goofy, but to quell messages that happen when
+        # trying to find which package the frontend is in
+        if "No module" not in str(ie):
+            print "ImportError on %s: %s" % (frontend, ie)
         return None
     
 def startup(props_to_set):
