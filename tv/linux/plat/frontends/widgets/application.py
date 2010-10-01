@@ -98,7 +98,9 @@ def set_bool(key, value): return _set_pref('window/' + key, 'set_bool', value)
 def set_player_int(key, value): return _set_pref(key, 'set_int', value)
 def set_player_bool(key, value): return _set_pref(key, 'set_bool', value)
 
-def run_application(props_to_set):
+def run_application(props_to_set, theme):
+    from miro import startup
+    startup.initialize(theme)
     LinuxApplication().run(props_to_set)
 
 class LinuxApplication(Application):

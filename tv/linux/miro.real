@@ -172,9 +172,6 @@ def load_frontend(globals_, locals_, frontend):
         return None
     
 def startup(props_to_set):
-    from miro import startup
-    startup.initialize(parsed_options.theme)
-
     frontend = parsed_options.frontend
     goodchars = string.letters + "."
     for c in frontend:
@@ -195,7 +192,7 @@ def startup(props_to_set):
     else:
         raise ValueError("Cannot load frontend: %s" % frontend)
 
-    application.run_application(props_to_set)
+    application.run_application(props_to_set, parsed_options.theme)
 
 def get_keyval(keyval):
     key, val = keyval.split("=")

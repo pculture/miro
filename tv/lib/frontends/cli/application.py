@@ -26,15 +26,55 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import logging
+import platform
+
+from miro import config
+from miro import prefs
 from miro import app
 from miro import startup
+from miro import controller
 from miro.frontends.cli.util import print_text, print_box
 from miro.frontends.cli.events import EventHandler
 from miro.frontends.cli.interpreter import MiroInterpreter
 
-def run_application(props_to_set):
+def setup_logging():
+    pathname = config.get(prefs.LOG_PATHNAME)
+    try:
+        rotater = logging.handlers.RotatingFileHandler(
+            pathname, mode="w", maxBytes=100000,
+            backupCount=5)
+    except IOError:
+        # bug 13338.  sometimes there's a file there and it causes
+        # RotatingFileHandler to flip out when opening it.  so we
+        # delete it and then try again.
+        os.remove(pathname)
+        rotater = logging.handlers.RotatingFileHandler(
+            pathname, mode="w", maxBytes=100000,
+            backupCount=5)
+
+    rotater.setLevel(logging.WARN)
+    formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
+    rotater.setFormatter(formatter)
+    logging.getLogger('').addHandler(rotater)
+    rotater.doRollover()
+
+    from miro import util
+    util.setup_logging()
+
+def run_application(props_to_set, theme):
+    setup_logging()
+    app.controller = controller.Controller()
+    config.load(theme)
+
     # FIXME - ignoring props_to_set
-    print
+    print "Starting up %s" % config.get(prefs.LONG_APP_NAME)
+    print "Version:    %s" % config.get(prefs.APP_VERSION)
+    print "OS:         %s %s %s" % (platform.system(), platform.release(), platform.machine())
+    print "Revision:   %s" % config.get(prefs.APP_REVISION)
+    print "Builder:    %s" % config.get(prefs.BUILD_MACHINE)
+    print "Build Time: %s" % config.get(prefs.BUILD_TIME)
+
     print
     app.cli_events = EventHandler()
     app.cli_events.connect_to_signals()
