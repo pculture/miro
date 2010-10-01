@@ -798,13 +798,13 @@ class AboutDialog(Dialog):
         adopters_buffer.set_text(adopters_data)
         iter = adopters_buffer.get_start_iter()
         adopters_buffer.insert(iter,
-                               'Thanks to the following people who have adopted '
-                               'lines of Miro code to help support development! '
-                               'To adopt a line, visit the ')
+            'Thank you to the following people who have adopted '
+            'lines of Miro code to help support development! '
+            'To help fund continued Miro development, visit the ')
         adopt_link_tag = adopters_buffer.create_tag(
             foreground='blue', underline=pango.UNDERLINE_SINGLE)
         adopt_link_tag.connect('event', self.on_adopt_link_event)
-        adopters_buffer.insert_with_tags(iter, 'Miro Adoption Center',
+        adopters_buffer.insert_with_tags(iter, 'donation page',
                                          adopt_link_tag)
         adopters_buffer.insert(iter, '.\n\n')
         adopters_view = gtk.TextView(adopters_buffer)
@@ -822,7 +822,7 @@ class AboutDialog(Dialog):
 
     def on_adopt_link_event(self, texttag, widget, event, iter):
         if event.type == gtk.gdk.BUTTON_PRESS:
-            resources.open_url('https://www.getmiro.com/adopt/')
+            resources.open_url('http://getmiro.com/donate/')
 
 type_map = {
     0: gtk.MESSAGE_WARNING,
