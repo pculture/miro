@@ -26,8 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""miro.extensionapi -- Extension manager that loads and manages
-extensions and the API for extensions.
+"""miro.extensionmanager -- Extension manager that loads and manages
+extensions.
 """
 
 import traceback
@@ -37,9 +37,19 @@ import sys
 import ConfigParser
 import glob
 
-def get_extensions(extension_directory):
+class Extension:
+    def __init__(self):
+        self.loadpriority = 50
+        self.name = "Unknown"
+        self.version = "0.0"
+        self.ext_module = None
+
+    def __repr__(self):
+        return "%s (%s)" % (self.name, self.version)
+
+def get_extensions(ext_dir):
     """Finds all ``.miroext`` files in extension directories.  Pulls
-    the following information from the ``.miro-extension`` files:
+    the following information from the ``.miroext`` files:
 
     * main.name (string)
     * main.version (string)
@@ -49,60 +59,59 @@ def get_extensions(extension_directory):
     # go through all the extension directories and get a listing of
     # files.  we're looking for files ending with .miroext
     extensions = []
-    dirs = [os.path.join(extension_directory, m) 
-            for m in os.listdir(extension_directory)]
-    for d in dirs:
-        if not os.path.isdir(d):
+    files = os.listdir(ext_dir)
+    files = [os.path.join(ext_dir, m) for m in files
+             if m.endswith(".miroext")]
+
+    for f in files:
+        if not os.path.isfile(f):
+            logging.debug("%s is not a file; skipping", f)
             continue
 
-        for mem in glob.glob("%s/*.miroext"):
-            cf = ConfigParser.RawConfigParser()
-            try:
-                fn = os.path.join(d, mem)
-                cf.read(fn)
-                extpri = cf.getint("extension", "loadpriority")
-                name = cf.get("main", "name")
-                version = cf.get("main", "version")
-                extname = "%s %s" % (name, version)
-                extmod = cf.get("extension", "module")
-
-                extensions.append((extpri, extname, extmod))
-            except (ConfigParser.NoSectionError, 
-                    ConfigParser.NoOptionError, 
-                    ConfigParser.ParsingError), err:
-                logging.warning("Extension file %s is malformed.\n%s", 
-                                fn, traceback.format_exc())
+        cf = ConfigParser.RawConfigParser()
+        try:
+            cf.read(f)
+            e = Extension()
+            e.loadpriority = cf.getint("extension", "loadpriority")
+            e.name = cf.get("main", "name")
+            e.version = cf.get("main", "version")
+            e.ext_module = cf.get("extension", "module")
+            
+            extensions.append(e)
+        except (ConfigParser.NoSectionError, 
+                ConfigParser.NoOptionError, 
+                ConfigParser.ParsingError), err:
+            logging.warning("Extension file %s is malformed.\n%s", 
+                            f, traceback.format_exc())
 
     return extensions
 
-class ExtensionManager:
-    def __init__(self, extension_directories):
-        self.extension_directories = extension_directories
+class ExtensionManager(object):
+    def __init__(self, ext_dirs):
+        self.ext_dirs = ext_dirs
 
     def load_extensions(self):
         extensions = []
-        for d in self.extension_directories:
+        for d in self.ext_dirs:
             logging.info("Loading extensions in %s", d)
             exts = get_extensions(d)
             if exts:
-                sys.path.append(d)
+                sys.path.insert(0, d)
                 extensions.extend(exts)
 
-        # this sorts the extensions by load priority
-        extensions.sort()
+        # this sorts all of the extensions collected by load priority
+        extensions.sort(key=lambda ext: ext.loadpriority)
 
         for mem in extensions:
-            logging.debug("** loading extension %s", mem[1])
+            logging.info("extension manager: loading: %r", mem)
             try:
-                __import__(mem[2])
+                __import__(mem.ext_module)
             except ImportError, ie:
-                logging.error("Extension %s failed to import\n%s", 
-                              mem[1], traceback.format_exc())
+                logging.exception("Extension %r failed to import", mem)
                 continue
 
             try:
-                initialize = getattr(sys.modules[mem[2]], "initialize")
+                initialize = getattr(sys.modules[mem.ext_module], "initialize")
                 initialize()
-            except StandardException, e:
-                logging.error("Extension %s failed to initialize\n%s", 
-                              mem[1], traceback.format_exc())
+            except StandardError, e:
+                logging.exception("Extension %r failed to initialize", mem)

@@ -1208,6 +1208,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_startup_success(self, message):
         app.widgetapp.startup_ui()
+        signals.system.emit('startup-success')
 
     def _saw_pre_startup_message(self, name):
         if name not in self._pre_startup_messages:

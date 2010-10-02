@@ -96,6 +96,7 @@ def initialize_locale():
     global _locale_initialized
     _locale_initialized = True
 
+FORMAT = "%(asctime)s %(levelname)-8s %(name)s: %(message)s"
 def setup_logging(in_downloader=False):
     """Sets up logging using the Python logging module.
 
@@ -109,9 +110,7 @@ def setup_logging(in_downloader=False):
             level = logging.DEBUG
         else:
             level = logging.INFO
-        logging.basicConfig(level=level,
-                            format='%(asctime)s %(levelname)-8s %(message)s',
-                            stream=sys.stdout)
+        logging.basicConfig(level=level, format=FORMAT, stream=sys.stdout)
         pathname = os.environ.get("DEMOCRACY_DOWNLOADER_LOG")
         if not pathname:
             return
@@ -121,7 +120,7 @@ def setup_logging(in_downloader=False):
         else:
             level = logging.INFO
         logging.basicConfig(level=level,
-                            format='%(asctime)s %(levelname)-8s %(message)s')
+                            format=FORMAT)
         pathname = app.config.get(prefs.LOG_PATHNAME)
 
     try:
@@ -137,7 +136,7 @@ def setup_logging(in_downloader=False):
             pathname, mode="w", maxBytes=100000,
             backupCount=5)
             
-    formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
+    formatter = logging.Formatter(FORMAT)
     rotater.setFormatter(formatter)
     logging.getLogger('').addHandler(rotater)
     rotater.doRollover()

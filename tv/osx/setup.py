@@ -501,6 +501,34 @@ class MiroBuild (py2app):
                 print "    %s" % dest
                 copy(src, dest)
 
+    def copy_extensions(self):
+        print "Copying extensions to application bundle"
+
+        if self.force_update and os.path.exists(self.prsrcRoot):
+            shutil.rmtree(self.prsrcRoot, True)
+
+        if not os.path.exists(self.prsrcRoot):
+            os.mkdir(self.prsrcRoot)
+
+        resources = ['searchengines', 'images', 'conversions']
+        if self.keep_tests:
+            resources.append('testdata')
+
+        for resource in resources:
+            src = os.path.join(ROOT_DIR, 'resources', resource)
+            rsrcName = os.path.basename(src)
+            if os.path.isdir(src):
+                dest = os.path.join(self.prsrcRoot, rsrcName)
+                copy = shutil.copytree
+            else:
+                dest = os.path.join(self.prsrcRoot, rsrcName)
+                copy = shutil.copy
+            if os.path.exists(dest):
+                print "    (%s skipped, already bundled)" % resource
+            else:
+                print "    %s" % dest
+                copy(src, dest)
+
     def copy_config_file(self):
         print "Copying config file to application bundle"
         shutil.move(self.appConfigPath, os.path.join(self.prsrcRoot, 'app.config'))

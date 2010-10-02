@@ -154,6 +154,7 @@ portable_widgets_dir = os.path.join(portable_dir, 'frontends', 'widgets')
 portable_xpcom_dir = os.path.join(portable_widgets_dir, 'gtk', 'xpcom')
 test_dir = os.path.join(root_dir, 'resources')
 resources_dir = os.path.join(root_dir, 'resources')
+extensions_dir = os.path.join(root_dir, 'extensions')
 
 sys.path.insert(0, root_dir)
 # when we install the portable modules, they will be in the miro
@@ -277,6 +278,8 @@ for dir in ('searchengines', 'images', 'conversions', 'devices'):
     data_files.extend(find_data_files(dest_dir, source_dir))
 
 data_files.append(('resources', [os.path.join(root_dir, 'CREDITS')]))
+
+data_files.extend(find_data_files("extensions", extensions_dir))
 
 locale_temp_dir = os.path.join(os.path.dirname(__file__), "build", "locale")
 
@@ -609,7 +612,6 @@ if __name__ == "__main__":
             'miro.frontends',
             'miro.frontends.widgets',
             'miro.frontends.widgets.gtk',
-            'miro.extensions',
             'miro.test',
             'miro.plat',
             'miro.plat.renderers',

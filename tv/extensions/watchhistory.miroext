@@ -1,0 +1,7 @@
+[main]
+name = Watch History
+version = core
+
+[extension]
+loadpriority = 50
+module = watchhistory
