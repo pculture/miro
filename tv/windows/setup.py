@@ -609,6 +609,7 @@ if __name__ == "__main__":
             'miro.frontends',
             'miro.frontends.widgets',
             'miro.frontends.widgets.gtk',
+            'miro.extensions',
             'miro.test',
             'miro.plat',
             'miro.plat.renderers',

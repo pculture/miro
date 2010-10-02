@@ -33,3 +33,5 @@ if appstore_edition():
     AUTOUPDATE = False
 else:
     AUTOUPDATE = True
+FRONTEND = "None"
+PLATFORMNAME = "osx"

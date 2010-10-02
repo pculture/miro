@@ -280,6 +280,7 @@ class MiroBuild (py2app):
             'miro.frontends.profilewidgets',
             'miro.frontends.shell',
             'miro.frontends.widgets',
+            'miro.extensions',
             'miro.plat',
             'miro.plat.frontends',
             'miro.plat.frontends.widgets'

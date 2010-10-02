@@ -28,3 +28,5 @@
 # statement from all source files in the program, then also delete it here.
 
 AUTOUPDATE = False
+FRONTEND = "None"
+PLATFORMNAME = "linux"

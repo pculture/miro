@@ -1,6 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
-# Participatory Culture Foundation
+# Copyright (C) 2010 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,7 +25,4 @@
 # but you are not obligated to do so. If you do not wish to do so, delete
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
-
-AUTOUPDATE = True
-FRONTEND = "widgets"
-PLATFORMNAME = "windows"
+pass

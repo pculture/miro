@@ -51,6 +51,7 @@ from miro import autoupdate
 from miro import commandline
 from miro import crashreport
 from miro import controller
+from miro import extensionapi
 from miro import database
 from miro import databaselog
 from miro import databaseupgrade
@@ -72,6 +73,7 @@ from miro import models
 from miro import moviedata
 from miro import playlist
 from miro import prefs
+import miro.plat.resources
 from miro.plat.utils import setup_logging
 from miro.plat import config as platformcfg
 from miro import tabs
@@ -84,6 +86,7 @@ from miro import conversions
 from miro import devices
 from miro.plat import devicetracker
 
+import miro.extensions
 
 DEBUG_DB_MEM_USAGE = False
 mem_usage_test_event = threading.Event()
@@ -242,6 +245,17 @@ def startup():
     eventloop.startup()
     if DEBUG_DB_MEM_USAGE:
         mem_usage_test_event.wait()
+
+    app.hook_manager = extensionapi.HookManager()
+    load_extensions()
+
+@startup_function
+def load_extensions():
+    ext_dirs = miro.plat.resources.extension_roots()
+    core_extensions = os.path.dirname(miro.extensions.__file__)
+    ext_dirs.insert(0, core_extensions)
+    app.extension_manager = extensionapi.ExtensionManager(ext_dirs)
+    app.extension_manager.load_extensions()
 
 @startup_function
 def finish_startup(obj, thread):

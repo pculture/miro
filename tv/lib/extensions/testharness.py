@@ -1,6 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
-# Participatory Culture Foundation
+# Copyright (C) 2010 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,6 +26,37 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-AUTOUPDATE = True
-FRONTEND = "widgets"
-PLATFORMNAME = "windows"
+"""Test harness for core extensions.
+"""
+
+import os
+import unittest
+import sys
+import logging
+
+def get_test_suites():
+    """
+    Goes through all core extensions and returns a suite of their tests.
+    """
+    from miro import extensionmanager
+
+    pwd = os.path.dirname(__file__)
+    extensions = extensionmanager.get_extensions(pwd)
+    extensions.sort()
+
+    suites = []
+
+    for mem in extensions:
+        try:
+            __import__(mem[2])
+        except ImportError:
+            logging.exception("import error with %s", mem[1])
+            continue
+
+        try:
+            testsuite = getattr(sys.modules[mem[2]], "testsuite")
+            suites.append(testsuite())
+        except Exception:
+            logging.exception("testsuite failed for %s", mem[1])
+
+    return suites

@@ -52,6 +52,9 @@ SHARE_ROOT = os.path.abspath(
 def root():
     return RESOURCE_ROOT
 
+def extension_roots():
+    return []
+
 def path(relative_path):
     """Find the full path to a resource data file. 'relative_path' is
     expected to be supplied in Unix format, with forward-slashes as

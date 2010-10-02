@@ -45,6 +45,9 @@ def app_root():
 def root():
     return os.path.join(app_root(), 'resources')
 
+def extension_roots():
+    return []
+
 def share_path(path):
     return os.path.join(root(), path)
 
