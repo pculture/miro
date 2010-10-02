@@ -5,6 +5,9 @@ extension: mp4
 parameters: -i {input} -f mp4 -vcodec mpeg4 -sameq -s {ssize} -acodec aac -ab 160000 -r 18 {output}
 mediatype: video
 
+[G2]
+ssize: 800x480
+
 [Nexus One]
 ssize: 800x400
 
