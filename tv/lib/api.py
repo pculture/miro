@@ -29,7 +29,10 @@
 """miro.api -- API for extensions.
 """
 
-__all__ = ["signals", "get_support_directory"]
+__all__ = [
+    "signals",
+    "get_support_directory"
+    ]
 
 from miro import signals
 

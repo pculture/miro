@@ -36,6 +36,8 @@ import os
 import sys
 import ConfigParser
 import glob
+from miro import config
+from miro import prefs
 
 class Extension:
     def __init__(self):
@@ -56,6 +58,10 @@ def get_extensions(ext_dir):
     * extension.module (string)
     * extension.loadpriority (int)
     """
+    if not os.path.isdir(ext_dir):
+        # skip directories that don't exist
+        return []
+
     # go through all the extension directories and get a listing of
     # files.  we're looking for files ending with .miroext
     extensions = []
@@ -93,11 +99,21 @@ class ExtensionManager(object):
     def load_extensions(self):
         extensions = []
         for d in self.ext_dirs:
+            try:
+                d = d % {
+                    "supportdir": config.get(prefs.SUPPORT_DIRECTORY)
+                    }
+            except KeyError:
+                logging.exception("bad extension directory '%s'", d)
+                continue
+
             logging.info("Loading extensions in %s", d)
             exts = get_extensions(d)
             if exts:
                 sys.path.insert(0, d)
                 extensions.extend(exts)
+
+        print sys.path
 
         # this sorts all of the extensions collected by load priority
         extensions.sort(key=lambda ext: ext.loadpriority)

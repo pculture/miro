@@ -53,7 +53,7 @@ def root():
     return RESOURCE_ROOT
 
 def extension_roots():
-    return [os.path.join(root(), 'extensions')]
+    return [os.path.join(root(), 'extensions'), "%(supportdir)s/extensions"]
 
 def path(relative_path):
     """Find the full path to a resource data file. 'relative_path' is
