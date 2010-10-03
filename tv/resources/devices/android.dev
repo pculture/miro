@@ -1,8 +1,17 @@
-[HTC Android Phone]
-name: Android Phone
+[DEFAULT]
+vendor_id: 0bb4
+audio_conversion: mp3
+audio_types: audio/mpeg audio/x-ms-wma audio/mp4a-latm audio/3gpp audio/mp4 audio/aac audio/vnd.rn-realaudio audio/x-midi audio/x-wav application/ogg
+mount_instructions=Your phone must be in 'USB storage mode' in order for Miro to sync files to it.\nTo mount your phone, select 'Turn on USB storage' from the notifications.
+
+[Android Phone]
+product_id: 0c01 0c02 0c13
 video_conversion: hero
 video_path: Video
-audio_conversion: mp3
 audio_path: Music
-audio_types: audio/mpeg audio/x-ms-wma audio/mp4a-latm
-mount_instructions=Your phone must be in 'USB storage mode' in order for Miro to sync files to it.\nTo mount your phone, select 'Turn on USB storage' from the notifications.
+
+[T-Mobile G2]
+product_id: 0c91
+video_conversion: g2
+video_path: media/video
+audio_path: media/audio
