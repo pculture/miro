@@ -1436,6 +1436,10 @@ class BackendMessageHandler(messages.MessageHandler):
                        if info.file_type == 'audio']
         audio_target_folder = os.path.join(message.device.mount,
                                            message.device.audio_path)
+        try:
+            os.makedirs(audio_target_folder)
+        except OSError:
+            pass
         for item_info in audio_items:
             if item_info.mime_type in message.device.audio_types:
                 # don't convert video the device supports
@@ -1455,6 +1459,10 @@ class BackendMessageHandler(messages.MessageHandler):
                        if info.file_type == 'video']
         video_target_folder = os.path.join(message.device.mount,
                                            message.device.video_path)
+        try:
+            os.makedirs(video_target_folder)
+        except OSError:
+            pass
         for item_info in video_items:
             start_conversion(message.device.video_conversion, item_info,
                              video_target_folder)
