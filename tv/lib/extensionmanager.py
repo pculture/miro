@@ -113,8 +113,6 @@ class ExtensionManager(object):
                 sys.path.insert(0, d)
                 extensions.extend(exts)
 
-        print sys.path
-
         # this sorts all of the extensions collected by load priority
         extensions.sort(key=lambda ext: ext.loadpriority)
 
