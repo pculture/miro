@@ -10,34 +10,36 @@ from miro import messages
 
 class DeviceTracker(object):
     def __init__(self):
-        self._usb_info_cache = {}
         self._disconnecting = {}
 
     def start_tracking(self):
         volume_monitor = gio.volume_monitor_get()
         volume_monitor.connect('drive-connected', self._drive_connected)
         volume_monitor.connect('drive-changed', self._drive_changed)
+        volume_monitor.connect('mount-added', self._mount_added)
         volume_monitor.connect('drive-disconnected', self._drive_disconnected)
 
         for drive in volume_monitor.get_connected_drives():
             self._drive_connected(volume_monitor, drive)
 
     def _get_usb_info(self, id):
-        if id not in self._usb_info_cache:
-            udev_info = subprocess.Popen(
-                ['udevadm', 'info', '--name', id,
-                 '--query', 'property'],
-                stdout=subprocess.PIPE).communicate()[0]
-            d = dict(line.split('=', 1) for
-                     line in udev_info.split('\n') if line)
-            self._usb_info_cache[id] = (int(d['ID_VENDOR_ID'], 16),
-                                        int(d['ID_MODEL_ID'], 16))
-        return self._usb_info_cache[id]
+        udev_info = subprocess.Popen(
+            ['udevadm', 'info', '--name', id,
+             '--query', 'property'],
+            stdout=subprocess.PIPE).communicate()[0]
+        info = dict(line.split('=', 1) for
+                    line in udev_info.split('\n') if line)
+        return {
+            'vendor': int(info['ID_VENDOR_ID'], 16),
+            'product': int(info['ID_MODEL_ID'], 16),
+            'serial': info['ID_SERIAL']
+            }
 
     def _get_device_info(self, drive):
         id = drive.get_identifier('unix-device')
+        usb_info = self._get_usb_info(id)
         device_info = devices.device_manager.get_device(
-            *self._get_usb_info(id))
+            usb_info['vendor'], usb_info['product'])
         mount_path = size = remaining = None
         volumes = drive.get_volumes()
         if volumes:
@@ -48,7 +50,7 @@ class DeviceTracker(object):
                 statinfo = os.statvfs(mount_path)
                 size = statinfo.f_frsize * statinfo.f_blocks
                 remaining = statinfo.f_frsize * statinfo.f_bavail
-        return messages.DeviceInfo(id, device_info, mount_path,
+        return messages.DeviceInfo(usb_info['serial'], device_info, mount_path,
                                    size, remaining)
 
     def _drive_connected(self, volume_monitor, drive):
@@ -71,6 +73,9 @@ class DeviceTracker(object):
         except KeyError:
             return
         devices.device_changed(info)
+
+    def _mount_added(self, volume_monitor, mount):
+        self._drive_changed(volume_monitor, mount.get_drive())
 
     def _drive_disconnected(self, volume_monitor, drive):
         try:
