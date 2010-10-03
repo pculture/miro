@@ -54,10 +54,6 @@ from miro.gtcache import gettext as _
 from miro.plat import utils
 from miro.plat import resources
 
-import sys
-if not sys.platform == "win32":
-    WindowsError = IOError
-
 def get_conversions_folder():
     """Get the folder for video conversions.
 
@@ -482,7 +478,7 @@ def clean_up(temp_file, file_and_directory=False, attempts=0):
     if os.path.exists(temp_file):
         try:
             os.remove(temp_file)
-        except (OSError, IOError, WindowsError), e:
+        except EnvironmentError, e:
             logging.debug("clean_up: %s kicked up while removing %s", 
                           e, temp_file)
             timeout = 1.0 * attempts
@@ -495,7 +491,7 @@ def clean_up(temp_file, file_and_directory=False, attempts=0):
         if os.path.exists(path):
             try:
                 os.rmdir(path)
-            except (OSError, IOError, WindowsError), e:
+            except EnvironmentError, e:
                 logging.debug("clean_up: %s kicked up while removing %s", 
                               e, path)
                 timeout = 1.0 * attempts
@@ -578,11 +574,7 @@ class VideoConversionTask(object):
         kwargs = {"bufsize": 1,
                   "stdout": subprocess.PIPE,
                   "stderr": subprocess.STDOUT,
-                  "stdin": subprocess.PIPE,
                   "startupinfo": util.no_console_startupinfo()}
-        if os.name != 'nt':
-            # close_fds is not available on Windows in Python 2.5.
-            kwargs["close_fds"] = True
         self.process_handle = subprocess.Popen(args, **kwargs)
 
         try:
