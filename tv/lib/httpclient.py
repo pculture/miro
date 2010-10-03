@@ -296,6 +296,9 @@ class TransferOptions(object):
 
         if data is not None:
             handle.setopt(pycurl.POSTFIELDS, data)
+            # Bind the post data to a instance varible so that it doesn't get
+            # garbage collected while libcurl is reading it (#14631)
+            self.post_data = data
             self.post_length = len(data)
 
 class CurlTransfer(object):

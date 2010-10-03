@@ -146,10 +146,8 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
             parser = GuideHTMLParser(self.updated_url)
             parser.feed(info["body"])
             parser.close()
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except HTMLParseError:
-            pass
+        except (HTMLParseError, UnicodeDecodeError), parser_error:
+            logging.debug("Ignoring error when parsing guide %s: %s", self.updated_url, parser_error)
 
         if parser:
             if parser.title:

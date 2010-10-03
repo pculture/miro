@@ -1224,8 +1224,7 @@ class StatusRenderer(ListViewRenderer):
             self.text = ''
 
     def layout(self, layout):
-        if (self.info.state in ('downloading', 'paused') and
-                self.info.download_info.rate > 0):
+        if self.info.state in ('downloading', 'paused'):
             return self.pack_progress_bar(layout)
         else:
             return ListViewRenderer.layout(self, layout)

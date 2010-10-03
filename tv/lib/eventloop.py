@@ -291,6 +291,8 @@ class EventLoop(SimpleEventLoop):
 
     def process_events(self, read_fds_ready, write_fds_ready, exc_fds_ready):
         self._process_urgent_events()
+        if self.quit_flag:
+            return
         for event in self.generate_events(read_fds_ready, write_fds_ready):
             success = event()
             self.emit('event-finished', success)

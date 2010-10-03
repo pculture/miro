@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-18 11:10-0400\n"
-"PO-Revision-Date: 2010-08-24 12:24+0000\n"
+"PO-Revision-Date: 2010-09-27 15:23+0000\n"
 "Last-Translator: gert7 <Unknown>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-09-23 15:56+0000\n"
+"X-Launchpad-Export-Date: 2010-09-30 16:13+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
@@ -278,12 +278,12 @@ msgstr "SE ja SW Aasia"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:629
 #: ../../linux/plat/renderers/gstreamerrenderer.py:630
 msgid "Turkish"
-msgstr ""
+msgstr "Türgi"
 
 #: ../../windows/plat/renderers/vlc.py:732
 #: ../../linux/plat/renderers/gstreamerrenderer.py:626
 msgid "Thai"
-msgstr ""
+msgstr "Tai"
 
 #: ../../windows/plat/renderers/vlc.py:733
 #: ../../windows/plat/renderers/vlc.py:734
@@ -291,12 +291,12 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:632
 #: ../../linux/plat/renderers/gstreamerrenderer.py:633
 msgid "Vietnamese"
-msgstr ""
+msgstr "Vietnami"
 
 #: ../../windows/plat/renderers/vlc.py:737
 #: ../../linux/plat/renderers/gstreamerrenderer.py:635
 msgid "Middle Eastern"
-msgstr ""
+msgstr "Lähis-Ida"
 
 #: ../../windows/plat/renderers/vlc.py:738
 #: ../../windows/plat/renderers/vlc.py:739
@@ -305,7 +305,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:638
 #: ../../linux/plat/renderers/gstreamerrenderer.py:639
 msgid "Arabic"
-msgstr ""
+msgstr "Araabia"
 
 #: ../../windows/plat/renderers/vlc.py:740
 #: ../../windows/plat/renderers/vlc.py:741
@@ -314,7 +314,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:642
 #: ../../linux/plat/renderers/gstreamerrenderer.py:643
 msgid "Hebrew"
-msgstr ""
+msgstr "Heebrea"
 
 #: ../../windows/plat/renderers/vlc.py:744
 #: ../../linux/plat/renderers/gstreamerrenderer.py:647
@@ -324,14 +324,14 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:651
 #: ../../linux/plat/renderers/gstreamerrenderer.py:652
 msgid "Unicode"
-msgstr ""
+msgstr "Unicode"
 
 #: ../../windows/plat/renderers/vlc.py:745
 #: ../../windows/plat/renderers/vlc.py:746
 #: ../../windows/plat/renderers/vlc.py:747
 #: ../../windows/plat/renderers/vlc.py:748
 msgid "Universal"
-msgstr ""
+msgstr "Universaalne"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:41
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:49
@@ -353,7 +353,7 @@ msgstr "Välju %(appname)s on terviklik."
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:58
 msgid "System Default"
-msgstr ""
+msgstr "Süsteemi vaikeväärtus"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:64
 msgid "Subtitle font:"
@@ -448,7 +448,7 @@ msgstr "Subtiitrifail %(tracknumber)d"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:573
 msgid "Croatian"
-msgstr ""
+msgstr "Horvaatia"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:574
 #: ../../linux/plat/renderers/gstreamerrenderer.py:575
@@ -457,7 +457,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:578
 #: ../../linux/plat/renderers/gstreamerrenderer.py:579
 msgid "Cyrillic"
-msgstr ""
+msgstr "Kirillitsa"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:580
 msgid "Cyrillic/Russian"
@@ -580,7 +580,7 @@ msgstr "Andmbaasi uuendamine"
 
 #: ../../lib/startup.py:126
 msgid "Database Error"
-msgstr ""
+msgstr "Andmebaasi viga"
 
 #: ../../lib/startup.py:127
 #, python-format

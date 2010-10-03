@@ -32,6 +32,8 @@ import ctypes
 import os
 from miro import u3info
 
+GetShortPathName = ctypes.windll.kernel32.GetShortPathNameW
+
 _specialFolderCSIDLs = {
     'AppData': 0x001a,
     "My Music": 0x000d,
@@ -43,6 +45,17 @@ _specialFolderCSIDLs = {
     "System": 0x0025
 }
 
+def get_short_path_name(name):
+    """Given a path, returns the shortened path name.
+    """
+    buf = ctypes.c_wchar_p(name)
+    buf2 = ctypes.create_unicode_buffer(1024) 
+
+    if GetShortPathName(buf, buf2, 1024):
+        return buf2.value
+    else:
+        return buf.value
+
 def get_special_folder(name):
     """Get the location of a special folder.  name should be one of the
     following: 'AppData', 'My Music', 'My Pictures', 'My Videos', 
@@ -53,7 +66,6 @@ def get_special_folder(name):
     buf = ctypes.create_unicode_buffer(260)
     buf2 = ctypes.create_unicode_buffer(1024) 
     SHGetSpecialFolderPath = ctypes.windll.shell32.SHGetSpecialFolderPathW
-    GetShortPathName = ctypes.windll.kernel32.GetShortPathNameW
     csidl = _specialFolderCSIDLs[name]
     if SHGetSpecialFolderPath(None, buf, csidl, False):
         if GetShortPathName(buf, buf2, 1024):

@@ -668,7 +668,6 @@ class HTTPAuthBackendTest(EventLoopTest):
         self.runEventLoop(timeout=0.1)
         return self.callback_data
 
-    @uses_httpclient
     def test_simple(self):
         url = 'http://example.com/foo.html'
         header = 'Basic realm="Protected Space"'
@@ -678,7 +677,6 @@ class HTTPAuthBackendTest(EventLoopTest):
         self.assertEquals(auth.password, 'password')
         self.assertEquals(auth.scheme, 'basic')
 
-    @uses_httpclient
     def test_basic_reuse(self):
         header = 'Basic realm="Protected Space"'
         url = 'http://example.com/foo/test.html'
@@ -694,8 +692,32 @@ class HTTPAuthBackendTest(EventLoopTest):
         self.assertEquals(httpauth.find_http_auth(url3), auth)
         self.assertEquals(httpauth.find_http_auth(url4), None)
         self.assertEquals(httpauth.find_http_auth(url5), None)
+        # however, if we know the www-authenticate header (and thus the
+        # realm), then we can re-use the credentials
+        self.assertEquals(httpauth.find_http_auth(url4, header), auth)
+        # but not if the realm is different or the root url
+        self.assertEquals(httpauth.find_http_auth(url5, header), None)
+        self.assertEquals(httpauth.find_http_auth(url5,
+            'Basic realm="Other Protected Space"'), None)
 
-    @uses_httpclient
+    def test_basic_two_domains_same_realm(self):
+        # test that if two domains have the same realm, we don't allow 1
+        # password to overwrite the other #14613
+        header = 'Basic realm="Protected Space"'
+        url = 'http://example.com/foo/test.html'
+        url2 = 'http://example2.com/foo/test.html'
+        self.assertEquals(len(httpauth.password_list.passwords), 0)
+        self.ask_for_http_auth(url, header)
+        self.assertEquals(len(httpauth.password_list.passwords), 1)
+        self.ask_for_http_auth(url2, header)
+        self.assertEquals(len(httpauth.password_list.passwords), 2)
+        # same thing with digest auth
+        header = 'Digest realm="Protected Space",nonce="123"'
+        self.ask_for_http_auth(url, header)
+        self.assertEquals(len(httpauth.password_list.passwords), 3)
+        self.ask_for_http_auth(url2, header)
+        self.assertEquals(len(httpauth.password_list.passwords), 4)
+
     def test_digest_reuse(self):
         header = 'Digest realm="Protected Space",nonce="123"'
         url = 'http://example.com/foo/test.html'
@@ -712,7 +734,6 @@ class HTTPAuthBackendTest(EventLoopTest):
         self.assertEquals(httpauth.find_http_auth(url4), auth)
         self.assertEquals(httpauth.find_http_auth(url5), None)
 
-    @uses_httpclient
     def test_digest_reuse_with_domain(self):
         header = ('Digest realm="Protected Space",nonce="123",'
                 'domain="/metoo,http://metoo.com/,http://example2.com/metoo"')
@@ -763,6 +784,7 @@ class HTTPAuthBackendTestDLDaemonVersion(HTTPAuthBackendTest):
         from miro.dl_daemon.private import httpauth
         httpauth.update_passwords([])
         daemon.LAST_DAEMON = FakeDaemon()
+        globals()['httpauth'] = httpauth
         # make sure the UpdatePasswords command gets sent now
         self.runPendingIdles()
 

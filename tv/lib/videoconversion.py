@@ -54,6 +54,10 @@ from miro.gtcache import gettext as _
 from miro.plat import utils
 from miro.plat import resources
 
+import sys
+if not sys.platform == "win32":
+    WindowsError = IOError
+
 def get_conversions_folder():
     """Get the folder for video conversions.
 
@@ -204,7 +208,10 @@ class VideoConversionManager(signals.SignalEmitter):
     def start_conversion(self, converter_id, item_info, target_folder=None):
         converter_info = self.converters.lookup_converter(converter_id)
         task = self._make_conversion_task(converter_info, item_info, target_folder)
-        if task is not None and task.get_executable() is not None:
+        if ((task is not None
+             and task.get_executable() is not None
+             and not self._has_running_task(task.key)
+             and not self._has_finished_task(task.key))):
             self._check_task_loop()
             self.pending_tasks.append(task)
             self._notify_task_added(task)
@@ -294,6 +301,7 @@ class VideoConversionManager(signals.SignalEmitter):
                 else:
                     self._notify_task_removed(task)
                     self._notify_tasks_count()
+                task.interrupt()
 
             elif msg['message'] == 'clear_all_finished':
                 for task in self.finished_tasks:
@@ -326,10 +334,15 @@ class VideoConversionManager(signals.SignalEmitter):
                 source_info = task.item_info
                 conversion_name = task.converter_info.name
 
-                shutil.move(source, destination)
-                shutil.rmtree(os.path.dirname(source))
-                _create_item_for_conversion(destination, source_info,
-                        conversion_name)
+                if os.path.exists(source):
+                    shutil.move(source, destination)
+                    shutil.rmtree(os.path.dirname(source))
+                    _create_item_for_conversion(destination, source_info,
+                                                conversion_name)
+                    clean_up(task.temp_output_path, file_and_directory=True)
+                else:
+                    task.error = _("Reason unknown--check log")
+                    self._notify_tasks_count()
 
         except Queue.Empty, e:
             pass
@@ -362,6 +375,12 @@ class VideoConversionManager(signals.SignalEmitter):
     
     def _has_running_task(self, key):
         for task in self.running_tasks:
+            if task.key == key:
+                return True
+        return False
+
+    def _has_finished_task(self, key):
+        for task in self.finished_tasks:
             if task.key == key:
                 return True
         return False
@@ -416,27 +435,13 @@ class VideoConversionManager(signals.SignalEmitter):
         self._notify_tasks_count()
         self.quit_flag = True
 
-def _remove_file(path, attempt=0):
-    try:
-        if os.path.exists(path):
-            os.remove(path)
-    except Exception, e:
-        # FIXME - need a way to catch Windows errors which only exist
-        # on Windows
-        logging.debug("_remove_file: %s kicked up while removing %s",
-                      e, path)
-        if attempt <= 3:
-            eventloop.add_timeout(1.0, _remove_file, "removing file",
-                                  args=(path, attempt + 1))
-
-def build_output_paths(item_info, target_folder, converter_info):
+def build_output_paths(item_info, temp_dir, target_folder, converter_info):
     """Returns final_output_path and temp_output_path.
 
     We base the temp path on temp filenames.
     We base the final path on the item title.
     """
     input_path = item_info.video_path
-    temp_dir = utils.FilenameType(tempfile.mkdtemp("miro-conversion"))
     basename = os.path.basename(input_path)
 
     title = utils.unicode_to_filename(item_info.name, temp_dir).strip()
@@ -471,16 +476,43 @@ def build_parameters(input_path, output_path, converter_info):
         return param
     return [substitute(p) for p in converter_info.parameters.split()]
 
+def clean_up(temp_file, file_and_directory=False, attempts=0):
+    if attempts > 5:
+        return
+    if os.path.exists(temp_file):
+        try:
+            os.remove(temp_file)
+        except (OSError, IOError, WindowsError), e:
+            logging.debug("clean_up: %s kicked up while removing %s", 
+                          e, temp_file)
+            timeout = 1.0 * attempts
+            eventloop.add_timeout(
+                timeout, clean_up, "conversion clean_up attempt",
+                (temp_file, file_and_directory, attempts+1))
+
+    if file_and_directory:
+        path = os.path.dirname(temp_file)
+        if os.path.exists(path):
+            try:
+                os.rmdir(path)
+            except (OSError, IOError, WindowsError), e:
+                logging.debug("clean_up: %s kicked up while removing %s", 
+                              e, path)
+                timeout = 1.0 * attempts
+                eventloop.add_timeout(
+                    timeout, clean_up, "conversion clean_up attempt",
+                    (temp_file, file_and_directory, attempts+1))
+
 class VideoConversionTask(object):
     def __init__(self, converter_info, item_info, target_folder):
+        self.temp_dir = utils.FilenameType(tempfile.mkdtemp("miro-conversion"))
         self.item_info = item_info
         self.converter_info = converter_info
         self.input_path = item_info.video_path
         self.final_output_path, self.temp_output_path = build_output_paths(
-            item_info, target_folder, converter_info)
+            item_info, self.temp_dir, target_folder, converter_info)
 
-        logging.info("temp_output_path: %s", self.temp_output_path)
-        logging.info("final_output_path: %s", self.final_output_path)
+        logging.debug("temp_output_path: %s  final_output_path: %s", self.temp_output_path, self.final_output_path)
 
         self.key = "%s->%s" % (self.input_path, self.final_output_path)
         self.thread = None
@@ -545,7 +577,7 @@ class VideoConversionTask(object):
 
         kwargs = {"bufsize": 1,
                   "stdout": subprocess.PIPE,
-                  "stderr": subprocess.PIPE,
+                  "stderr": subprocess.STDOUT,
                   "stdin": subprocess.PIPE,
                   "startupinfo": util.no_console_startupinfo()}
         if os.name != 'nt':
@@ -554,34 +586,20 @@ class VideoConversionTask(object):
         self.process_handle = subprocess.Popen(args, **kwargs)
 
         try:
-            keep_going = True
-            while keep_going:
-                if self.process_handle.poll() is not None:
-                    keep_going = False
-                    # slurp the rest of the output in case there was
-                    # an error
-                    line = self.readline().strip()
-                    while line:
-                        error = self.check_for_errors(line)
-                        if error:
-                            self.error = error
-                            break
-                    break
-
+            for line in self.readlines():
                 old_progress = self.progress
-                line = self.readline().strip()
+
+                line = line.strip()
+                self._log_progress(line)
 
                 error = self.check_for_errors(line)
                 if error:
-                    keep_going = False
                     self.error = error
                     break
 
-                self._log_progress(line)
                 self.progress = self.monitor_progress(line)
                 if self.progress >= 1.0:
                     self.progress = 1.0
-                    keep_going = False
                     break
 
                 if old_progress != self.progress:
@@ -593,7 +611,7 @@ class VideoConversionTask(object):
     
     def _start_logging(self, executable, params):
         log_folder = os.path.dirname(config.get(prefs.LOG_PATHNAME))
-        self.log_path = os.path.join(log_folder, "conversion-%d-to-%s-log" % (self.item_info.id, self.converter_info.identifier))
+        self.log_path = os.path.join(log_folder, "conversion-%d-to-%s.log" % (self.item_info.id, self.converter_info.identifier))
         self.log_file = file(self.log_path, "w")
         self._log_progress("STARTING CONVERSION")
         self._log_progress("-> Item: %s" % util.stringify(self.item_info.name))
@@ -604,18 +622,17 @@ class VideoConversionTask(object):
     
     def _log_progress(self, line):
         if not self.log_file.closed:
-            self.log_file.write(line)
-            self.log_file.write("\n")
-            self.log_file.flush()
-    
+            self.log_file.write(line + "\n")
+        else:
+            logging.debug("conversion file closed: %s", line)
+
     def _stop_logging(self, keep_file=False):
         if not self.log_file.closed:
             self.log_file.flush()
             self.log_file.close()
         self.log_file = None
         if not keep_file:
-            eventloop.add_timeout(1.0, _remove_file, "removing file",
-                                  args=(self.log_path,))
+            clean_up(self.log_path)
             self.log_path = None
     
     def _notify_progress(self):
@@ -624,14 +641,15 @@ class VideoConversionTask(object):
         message.send_to_frontend()
 
     def interrupt(self):
-        utils.kill_process(self.process_handle.pid)
-        if os.path.exists(self.temp_output_path) and self.progress < 1.0:
-            eventloop.add_timeout(0.5, os.remove, "removing temp_output_path",
-                                  (self.temp_output_path,))
+        if hasattr(self.process_handle, "pid"):
+            logging.info("killing conversion task %d", self.process_handle.pid)
+            utils.kill_process(self.process_handle.pid)
+            if os.path.exists(self.temp_output_path) and self.progress < 1.0:
+                clean_up(self.temp_output_path, file_and_directory=True)
 
 class FFMpegConversionTask(VideoConversionTask):
     DURATION_RE = re.compile(r'Duration: (\d\d):(\d\d):(\d\d)\.(\d\d)(, start:.*)?(, bitrate:.*)?')
-    PROGRESS_RE = re.compile(r'frame=.* fps=.* q=.* size=.* time=(.*) bitrate=(.*)')
+    PROGRESS_RE = re.compile(r'(?:frame=.* fps=.* q=.* )?size=.* time=(.*) bitrate=(.*)')
     LAST_PROGRESS_RE = re.compile(r'frame=.* fps=.* q=.* Lsize=.* time=(.*) bitrate=(.*)')
 
     def get_executable(self):
@@ -642,16 +660,16 @@ class FFMpegConversionTask(VideoConversionTask):
             self.input_path, self.temp_output_path, self.converter_info)
         return utils.customize_ffmpeg_parameters(default_parameters)
 
-    def readline(self):
+    def readlines(self):
         chars = []
-        keep_reading = True
-        while keep_reading:
-            c = self.process_handle.stderr.read(1)
+        c = self.process_handle.stdout.read(1)
+        while c:
             if c in ["", "\r", "\n"]:
-                keep_reading = False
+                yield "".join(chars)
+                chars = []
             else:
                 chars.append(c)
-        return "".join(chars)
+            c = self.process_handle.stdout.read(1)
 
     def check_for_errors(self, line):
         if line.startswith(("Unknown", "Error")):
@@ -699,10 +717,11 @@ class FFMpeg2TheoraConversionTask(VideoConversionTask):
             self.input_path, self.temp_output_path, self.converter_info)
         return utils.customize_ffmpeg2theora_parameters(default_parameters)
 
-    def readline(self):
-        if self.platform == 'linux':
-            return self.process_handle.stderr.readline()
-        return self.process_handle.stdout.readline()
+    def readlines(self):
+        line = self.process_handle.stdout.readline()
+        while line:
+            yield line
+            line = self.process_handle.stdout.readline()
 
     def check_for_errors(self, line):
         return

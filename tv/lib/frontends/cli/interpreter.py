@@ -69,6 +69,9 @@ class MiroInterpreter(cmd.Cmd):
         self.tab = None
         self.init_database_objects()
 
+    def emptyline(self):
+        print "Type \"help\" for help."
+
     @run_in_event_loop
     def init_database_objects(self):
         self.video_feed_tabs = tabs.TabOrder.video_feed_order()
@@ -122,7 +125,7 @@ class MiroInterpreter(cmd.Cmd):
         commands = [m for m in dir(self) if m.startswith("do_")]
         for mem in commands:
             docstring = getattr(self, mem).__doc__
-            print "    ", docstring
+            print "  ", docstring.strip()
 
     def do_quit(self, line):
         """quit -- Quits Miro cli."""
@@ -143,7 +146,7 @@ class MiroInterpreter(cmd.Cmd):
                 self.tab.type = "feed"
                 self.tab_changed()
                 return
-        print "Error: %s not found" % line
+        print "Error: %s not found." % line
 
     @run_in_event_loop
     def do_rmfeed(self, line):
@@ -156,7 +159,7 @@ class MiroInterpreter(cmd.Cmd):
             if tab.get_title() == line:
                 tab.remove()
                 return
-        print "Error: %s not found" % line
+        print "Error: %s not found." % line
 
     @run_in_event_loop
     def complete_feed(self, text, line, begidx, endidx):
@@ -213,7 +216,7 @@ class MiroInterpreter(cmd.Cmd):
     def do_play(self, line):
         """play <name> -- Plays an item by name in an external player."""
         if self.selection_type is None:
-            print "Error: No feed/playlist selected"
+            print "Error: No feed/playlist selected."
             return
         item = self._find_item(line)
         if item is None:
@@ -238,13 +241,13 @@ class MiroInterpreter(cmd.Cmd):
                 self.tab = tab
                 self.tab_changed()
                 return
-        print "Error: %s not found" % line
+        print "Error: %s not found." % line
 
     @run_in_event_loop
     def do_items(self, line):
         """items -- Lists the items in the feed/playlist/tab selected."""
         if self.selection_type is None:
-            print "Error: No tab/feed/playlist selected"
+            print "Error: No tab/feed/playlist selected."
             return
         elif self.selection_type == 'feed':
             feed = self.tab
@@ -313,7 +316,7 @@ class MiroInterpreter(cmd.Cmd):
     def do_stop(self, line):
         """stop <name> -- Stops download by name."""
         if self.selection_type is None:
-            print "Error: No feed/playlist selected"
+            print "Error: No feed/playlist selected."
             return
         item = self._find_item(line)
         if item is None:
@@ -333,7 +336,7 @@ class MiroInterpreter(cmd.Cmd):
     def do_download(self, line):
         """download <name> -- Downloads an item by name in the feed/playlist selected."""
         if self.selection_type is None:
-            print "Error: No feed/playlist selected"
+            print "Error: No feed/playlist selected."
             return
         item = self._find_item(line)
         if item is None:
@@ -355,7 +358,7 @@ class MiroInterpreter(cmd.Cmd):
     def do_pause(self, line):
         """pause <name> -- Pauses a download by name."""
         if self.selection_type is None:
-            print "Error: No feed/playlist selected"
+            print "Error: No feed/playlist selected."
             return
         item = self._find_item(line)
         if item is None:
@@ -375,7 +378,7 @@ class MiroInterpreter(cmd.Cmd):
     def do_resume(self, line):
         """resume <name> -- Resumes a download by name."""
         if self.selection_type is None:
-            print "Error: No feed/playlist selected"
+            print "Error: No feed/playlist selected."
             return
         item = self._find_item(line)
         if item is None:
@@ -395,7 +398,7 @@ class MiroInterpreter(cmd.Cmd):
     def do_rm(self, line):
         """rm <name> -- Removes an item by name in the feed/playlist selected."""
         if self.selection_type is None:
-            print "Error: No feed/playlist selected"
+            print "Error: No feed/playlist selected."
             return
         item = self._find_item(line)
         if item is None:

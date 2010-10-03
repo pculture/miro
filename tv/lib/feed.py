@@ -353,7 +353,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     ICON_CACHE_VITAL = True
 
     def setup_new(self, url, initiallyAutoDownloadable=None,
-                 section=u'video', search_term=None):
+                 section=u'video', search_term=None, title=None):
         check_u(url)
         if initiallyAutoDownloadable == None:
             mode = config.get(prefs.CHANNEL_AUTO_DEFAULT)
@@ -388,7 +388,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.errorState = False
         self.loading = True
         self._actualFeed = None
-        self._set_feed_impl(FeedImpl(url, self))
+        self._set_feed_impl(FeedImpl(url, self, title))
         self.setup_new_icon_cache()
         self.informOnError = True
         self.folder_id = None
@@ -890,6 +890,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         # Some smarty pants serve RSS feeds with a text/html content-type...
         # So let's do some really simple sniffing first.
         apparentlyRSS = filetypes.is_maybe_rss(info['body'])
+        old_title = self.actualFeed.title
 
         # Definitely an HTML feed
         if (((contentType.startswith(u'text/html') or
@@ -913,7 +914,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             else:
                 xmldata = html
             self.finish_generate_feed(RSSFeedImpl(unicodify(info['updated-url']),
-                initialHTML=xmldata,etag=etag,modified=modified, ufeed=self))
+                initialHTML=xmldata,etag=etag,modified=modified, ufeed=self,
+                title=old_title))
             # If it's not HTML, we can't be sure what it is.
             #
             # If we get generic XML, it's probably RSS, but it still could
@@ -965,7 +967,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
                 self.finish_generate_feed(RSSFeedImpl(
                     unicodify(info['updated-url']),
                     initialHTML=xmldata, etag=etag, modified=modified,
-                    ufeed=self))
+                    ufeed=self, title=old_title))
         else:
             self._handle_feed_loading_error(_("Bad content-type"))
 

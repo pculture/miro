@@ -97,8 +97,6 @@ def setup_logging(in_downloader=False):
             level = logging.WARN
         elif os.environ.get('MIRO_APP_VERSION', "").endswith("git"):
             level = logging.DEBUG
-        elif os.environ.get('MIRO_FRONTEND') == 'cli':
-            level = logging.WARN
         else:
             level = logging.INFO
         logging.basicConfig(level=level,
@@ -110,10 +108,8 @@ def setup_logging(in_downloader=False):
     else:
         if config.get(prefs.APP_VERSION).endswith("git"):
             level = logging.DEBUG
-        elif options.frontend != 'cli':
-            level = logging.INFO
         else:
-            level = logging.WARN
+            level = logging.INFO
         logging.basicConfig(level=level,
                             format='%(asctime)s %(levelname)-8s %(message)s')
         pathname = config.get(prefs.LOG_PATHNAME)
@@ -184,7 +180,7 @@ def unicode_to_filename(filename, path=None):
     # add a number to the end
     max_len = os.statvfs(path)[statvfs.F_NAMEMAX] - 5
 
-    for mem in ("/", "\000", "\\", ":", "*", "?", "\"", "<", ">", "|", "&", "\r", "\n"):
+    for mem in ("/", "\000", "\\", ":", "*", "?", "\"", "'", "<", ">", "|", "&", "\r", "\n"):
         filename = filename.replace(mem, "_")
 
     new_filename = encode_fn(filename)

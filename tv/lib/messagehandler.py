@@ -443,6 +443,15 @@ class CountTracker(object):
         self.tracker.unlink()
 
 class DownloadCountTracker(CountTracker):
+    def __init__(self):
+        CountTracker.__init__(self)
+        # we need to also track the only_downloading_view since if something
+        # gets added/removed from that the total count stays the same, but the
+        # downloading count changes (#14677)
+        self.other_tracker = item.Item.only_downloading_view().make_tracker()
+        self.other_tracker.connect('added', self.on_count_changed)
+        self.other_tracker.connect('removed', self.on_count_changed)
+
     def get_view(self):
         return item.Item.download_tab_view()
 
@@ -453,6 +462,10 @@ class DownloadCountTracker(CountTracker):
         non_downloading_count = total_count - downloading_count
         return messages.DownloadCountChanged(downloading_count,
                 non_downloading_count)
+
+    def stop_tracking(self):
+        CountTracker.stop_tracking()
+        self.other_tracker.unlink()
 
 class PausedCountTracker(CountTracker):
     def get_view(self):
@@ -907,7 +920,8 @@ class BackendMessageHandler(messages.MessageHandler):
             search_term = search_term + " " + channel_info.search_term
 
         if not lookup_feed(url, search_term):
-            Feed(url, section=section, search_term=search_term)
+            Feed(url, section=section, search_term=search_term,
+                    title=channel_info.name)
 
     def handle_new_feed_search_engine(self, message):
         sei = message.search_engine_info

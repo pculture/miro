@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-18 11:10-0400\n"
-"PO-Revision-Date: 2010-08-22 11:19+0000\n"
-"Last-Translator: Housamz <Unknown>\n"
+"PO-Revision-Date: 2010-09-28 10:06+0000\n"
+"Last-Translator: محمد سامح الشرنوبي <sharnoby3@gmail.com>\n"
 "Language-Team: Arabic <ar@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n % 100 >= "
 "3 && n % 100 <= 10 ? 3 : n % 100 >= 11 && n % 100 <= 99 ? 4 : 5;\n"
-"X-Launchpad-Export-Date: 2010-09-23 15:57+0000\n"
+"X-Launchpad-Export-Date: 2010-09-30 16:13+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
@@ -33,14 +33,14 @@ msgstr "شارك"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:223
 #: ../../lib/frontends/widgets/gtk/video.py:283
 msgid "Keep"
-msgstr "إبقاء"
+msgstr "أبق"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:129
 #: ../../osx/plat/frontends/widgets/osxmenus.py:185 ../../lib/dialogs.py:118
 #: ../../lib/frontends/widgets/itemcontextmenu.py:68
 #: ../../lib/frontends/widgets/gtk/video.py:296
 msgid "Delete"
-msgstr "إحذف"
+msgstr "احذف"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:210
 msgid "Pop Out"
@@ -57,7 +57,7 @@ msgstr "تم التحمبل"
 #: ../../osx/plat/frontends/widgets/application.py:194
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr "إنتهى '%s' من تنزيل المرئية."
+msgstr "انتهى تنزيل الفيديو '%s'"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:159
 msgid "Services"
@@ -224,7 +224,7 @@ msgstr "شرق آسيوي"
 
 #: ../../windows/plat/renderers/vlc.py:716
 msgid "Universal Chinese"
-msgstr ""
+msgstr "الصينية العالمية"
 
 #: ../../windows/plat/renderers/vlc.py:717
 msgid "Simplified Chinese"
@@ -270,7 +270,7 @@ msgstr ""
 #: ../../windows/plat/renderers/vlc.py:729
 #: ../../linux/plat/renderers/gstreamerrenderer.py:620
 msgid "SE and SW Asian"
-msgstr ""
+msgstr "آسيوي جنوبي شرقي وجنوبي غربي"
 
 #: ../../windows/plat/renderers/vlc.py:730
 #: ../../windows/plat/renderers/vlc.py:731
@@ -297,7 +297,7 @@ msgstr "الفيتنامية"
 #: ../../windows/plat/renderers/vlc.py:737
 #: ../../linux/plat/renderers/gstreamerrenderer.py:635
 msgid "Middle Eastern"
-msgstr ""
+msgstr "شرق أوسطي"
 
 #: ../../windows/plat/renderers/vlc.py:738
 #: ../../windows/plat/renderers/vlc.py:739
@@ -306,7 +306,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:638
 #: ../../linux/plat/renderers/gstreamerrenderer.py:639
 msgid "Arabic"
-msgstr ""
+msgstr "العربية"
 
 #: ../../windows/plat/renderers/vlc.py:740
 #: ../../windows/plat/renderers/vlc.py:741
@@ -315,7 +315,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:642
 #: ../../linux/plat/renderers/gstreamerrenderer.py:643
 msgid "Hebrew"
-msgstr ""
+msgstr "العبريّة"
 
 #: ../../windows/plat/renderers/vlc.py:744
 #: ../../linux/plat/renderers/gstreamerrenderer.py:647
@@ -325,14 +325,14 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:651
 #: ../../linux/plat/renderers/gstreamerrenderer.py:652
 msgid "Unicode"
-msgstr ""
+msgstr "Unicode"
 
 #: ../../windows/plat/renderers/vlc.py:745
 #: ../../windows/plat/renderers/vlc.py:746
 #: ../../windows/plat/renderers/vlc.py:747
 #: ../../windows/plat/renderers/vlc.py:748
 msgid "Universal"
-msgstr ""
+msgstr "عالمي"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:41
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:49
@@ -350,15 +350,15 @@ msgstr "إغلاق إلى الشريط ليستمر hgjpldg"
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:49
 #, python-format
 msgid "Quit %(appname)s completely."
-msgstr ""
+msgstr "الخروج نهائيا من %(appname)s"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:58
 msgid "System Default"
-msgstr ""
+msgstr "إفتراضي النظام"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:64
 msgid "Subtitle font:"
-msgstr ""
+msgstr "خط الترجمة"
 
 #: ../../windows/plat/frontends/widgets/application.py:148
 msgid "Close to tray?"
@@ -370,6 +370,8 @@ msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
+"عندما تضغط زر الخروج الأحمر, هل تريد تصغير %(appname)s بجانب الساعة أو "
+"الخروج؟ يمكنك تغيير ذلك فيما بعد من الخيارات"
 
 #: ../../windows/plat/frontends/widgets/application.py:208
 msgid "Error Bombing Item"
@@ -387,7 +389,7 @@ msgstr "خطأ في فتح موقع الشبكة"
 #, python-format
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
-msgstr ""
+msgstr "حدث خطأ أثناء فتح %(url)s. من فضلك أعد المحاولة في خلال ثواني"
 
 #: ../../windows/plat/frontends/widgets/update.py:148
 msgid "Update Available"
@@ -396,7 +398,7 @@ msgstr "التحديث متوفّر"
 #: ../../windows/plat/frontends/widgets/update.py:152
 #, python-format
 msgid "A new version of %(appname)s is available for download."
-msgstr ""
+msgstr "هناك نسخة جديدة من %(appname)s متاحة للتحميل"
 
 #: ../../windows/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
@@ -412,6 +414,8 @@ msgid ""
 "For the best %(appname)s experience, we suggest you install Adobe Flash.  "
 "Would you like to do this now?"
 msgstr ""
+"لأفضل استخدام لـ %(appname)s , نقترح تنصيب Adobe Flash . هل تريد فعل ذلك "
+"الآن؟"
 
 #: ../../windows/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
@@ -430,16 +434,16 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:486
 #, python-format
 msgid "Track %(tracknumber)d"
-msgstr ""
+msgstr "تتبّع %(tracknumber)d"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:496
 #, python-format
 msgid "Subtitle file %(tracknumber)d"
-msgstr ""
+msgstr "ملف الترجمة %(tracknumber)d"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:573
 msgid "Croatian"
-msgstr ""
+msgstr "الكرواتية"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:574
 #: ../../linux/plat/renderers/gstreamerrenderer.py:575
@@ -448,39 +452,39 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:578
 #: ../../linux/plat/renderers/gstreamerrenderer.py:579
 msgid "Cyrillic"
-msgstr ""
+msgstr "السّريليّة"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:580
 msgid "Cyrillic/Russian"
-msgstr ""
+msgstr "سيريلي/روسي"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:581
 #: ../../linux/plat/renderers/gstreamerrenderer.py:582
 msgid "Cyrillic/Ukrainian"
-msgstr ""
+msgstr "سيريلي/أكراني"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:584
 #: ../../linux/plat/renderers/gstreamerrenderer.py:585
 #: ../../linux/plat/renderers/gstreamerrenderer.py:586
 msgid "Central European"
-msgstr ""
+msgstr "وسط أوروبي"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:587
 #: ../../linux/plat/renderers/gstreamerrenderer.py:588
 msgid "Romanian"
-msgstr ""
+msgstr "روماني"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:595
 msgid "Icelandic"
-msgstr ""
+msgstr "آيسلاندي"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:596
 msgid "Nordic"
-msgstr ""
+msgstr "شمالي"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:597
 msgid "South European"
-msgstr ""
+msgstr "جنوب اوروبي"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:598
 #: ../../linux/plat/renderers/gstreamerrenderer.py:599
@@ -488,61 +492,61 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:601
 #: ../../linux/plat/renderers/gstreamerrenderer.py:602
 msgid "Western"
-msgstr ""
+msgstr "غربي"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:605
 #: ../../linux/plat/renderers/gstreamerrenderer.py:606
 #: ../../linux/plat/renderers/gstreamerrenderer.py:607
 #: ../../linux/plat/renderers/gstreamerrenderer.py:608
 msgid "Chinese Simplified"
-msgstr ""
+msgstr "صيني مبسّط"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:609
 #: ../../linux/plat/renderers/gstreamerrenderer.py:610
 #: ../../linux/plat/renderers/gstreamerrenderer.py:611
 msgid "Chinese Traditional"
-msgstr ""
+msgstr "صيني تقليدي"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:621
 msgid "Armenian"
-msgstr ""
+msgstr "أرميني"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:622
 msgid "Georgian"
-msgstr ""
+msgstr "جيورجي"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:623
 msgid "Gujarati"
-msgstr ""
+msgstr "جوجارتي"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:624
 msgid "Gurmukhi"
-msgstr ""
+msgstr "جورموخي"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:625
 msgid "Hindi"
-msgstr ""
+msgstr "هندي"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:644
 msgid "Hebrew Visual"
-msgstr ""
+msgstr "عبري مرئي"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:645
 msgid "Persian"
-msgstr ""
+msgstr "فارسي"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:57
 msgid "Renderer options:"
-msgstr ""
+msgstr "خيارات العرض"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:64
 #, python-format
 msgid "You must restart %(appname)s for renderer changes to take effect."
-msgstr ""
+msgstr "يجب اعادة تشغيل %(appname)s لاحداث التغييرات في عارض الفيديو"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:79
 msgid "Video renderer:"
-msgstr ""
+msgstr "عارض الفيديو"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:91
 msgid "Binaries to use:"
@@ -558,19 +562,19 @@ msgstr ""
 
 #: ../../lib/dbupgradeprogress.py:60
 msgid "Upgrading Old Database"
-msgstr ""
+msgstr "جاري تحديث قاعدة البيانات القديمة"
 
 #: ../../lib/dbupgradeprogress.py:66
 msgid "Converting Old Database"
-msgstr ""
+msgstr "اري تحويل قاعدة بيانات قديمة"
 
 #: ../../lib/dbupgradeprogress.py:78
 msgid "Upgrading Database"
-msgstr ""
+msgstr "جاري تحديث قاعدة البيانات"
 
 #: ../../lib/startup.py:126
 msgid "Database Error"
-msgstr ""
+msgstr "خطأ في قاعدة البيانات"
 
 #: ../../lib/startup.py:127
 #, python-format
@@ -600,6 +604,8 @@ msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
 "report at %(url)s."
 msgstr ""
+"خطأ غير معروف منع %(appname)s من البدأ. من فضلك قم بالابلاغ عن الخطأ هنا "
+"%(url)s"
 
 #: ../../lib/startup.py:246
 msgid "Database too new"
@@ -611,10 +617,12 @@ msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
 "must download the latest version of %(appname)s and run that."
 msgstr ""
+"لديك قاعدة بيانات محفوظة عن طريق نسخة جديدة من %(appname)s. يجب تنزيل أحدث "
+"نسخة من %(appname)s وتشغيله"
 
 #: ../../lib/startup.py:512
 msgid "Submitting Crash Report"
-msgstr ""
+msgstr "جاري ارسال تقرير عن انهيار البرنامج"
 
 #: ../../lib/startup.py:514
 #, python-format
@@ -633,6 +641,7 @@ msgstr "خطأ في تحميل التلقيم"
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr ""
+"لا يمكن تحميل المقتطفات (feed) في %(url)s بسبب الخطأ (%(errordescription)s)"
 
 #: ../../lib/feed.py:849
 msgid "Would you like to keep the feed?"
@@ -645,7 +654,7 @@ msgstr "نوع المحتوى غير صالح"
 #: ../../lib/feed.py:983
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
-msgstr ""
+msgstr "القناة غير متوافقة مع %(appname)s"
 
 #: ../../lib/feed.py:986
 #, python-format
@@ -700,11 +709,11 @@ msgstr "جاري البدأ"
 #: ../../lib/downloader.py:535
 #, python-format
 msgid "no connection - retrying in %s"
-msgstr ""
+msgstr "لا يوجد اتصال - سيتم اعادة المحاولة في خلال %s"
 
 #: ../../lib/downloader.py:537
 msgid "no connection - retrying soon"
-msgstr ""
+msgstr "لا يوجد اتصال - سيتم اعادة المحاولة قريبا"
 
 #: ../../lib/downloader.py:561 ../../lib/downloader.py:569
 #: ../../lib/httpclient.py:199 ../../lib/httpclient.py:618
@@ -722,7 +731,7 @@ msgstr "ذلك العنوان موجود كتحميل خارجي"
 #: ../../lib/singleclick.py:73
 #, python-format
 msgid "%(appname)s will begin downloading it now."
-msgstr ""
+msgstr "سيبدأ %(appname)s التنزيل الآن"
 
 #: ../../lib/singleclick.py:76
 msgid "It is downloading now."
@@ -741,6 +750,8 @@ msgstr "تحميل ملف"
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 msgstr ""
+"الملف الموجود في %(url)s ليس ملف صوتي أو فيديو أو مقتطفات الأخبار أر اس اس "
+"(RSS feed)"
 
 #: ../../lib/singleclick.py:165
 msgid "Download Error"
@@ -763,7 +774,7 @@ msgstr "فشل إستيراد الOPML"
 #: ../../lib/opml.py:225
 msgid ""
 "The selected OPML file appears to be invalid.  Import was interrupted."
-msgstr ""
+msgstr "ملف ال OPML الذي تم اختياره غير صالح. تم الغاء الاستيراد."
 
 #: ../../lib/opml.py:233
 msgid "OPML Import summary"
@@ -786,30 +797,30 @@ msgstr[1] ""
 #: ../../lib/util.py:376 ../../lib/util.py:378
 #, python-format
 msgid "%(size)sGB"
-msgstr ""
+msgstr "%(size)s جيجا بايت"
 
 #: ../../lib/util.py:382 ../../lib/util.py:384
 #, python-format
 msgid "%(size)sMB"
-msgstr ""
+msgstr "%(size)s ميجا بايت"
 
 #: ../../lib/util.py:388 ../../lib/util.py:390
 #, python-format
 msgid "%(size)sKB"
-msgstr ""
+msgstr "%(size)s كيلو بايت"
 
 #: ../../lib/util.py:394 ../../lib/util.py:396
 #, python-format
 msgid "%(size)sB"
-msgstr ""
+msgstr "%(size)s بايت"
 
 #: ../../lib/messagehandler.py:1336
 msgid "Subscribed to new feed:"
-msgstr ""
+msgstr "تم التسجيل في مقتطف الأخبار (feed) الجديد:"
 
 #: ../../lib/messagehandler.py:1339
 msgid "Subscribed to new feeds:"
-msgstr ""
+msgstr "تم التسجيل في مقتطفات الأخبار (feeds) الجديدة:"
 
 #: ../../lib/messagehandler.py:1358
 msgid "Migrating Files"
@@ -846,7 +857,7 @@ msgstr "تورنت غير صالح"
 #, python-format
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
-msgstr ""
+msgstr "ملف التورنت %(filename)s غير صالح ولا يمكن فتحه."
 
 #: ../../lib/videoconversion.py:83
 #, python-format
@@ -856,7 +867,7 @@ msgstr ""
 #: ../../lib/videoconversion.py:708
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
-msgstr ""
+msgstr "تم تحويل %(original_name)s إلى %(format)s"
 
 #: ../../lib/messages.py:1120 ../../lib/item.py:1127
 msgid "queued for download"
@@ -868,7 +879,7 @@ msgstr "موافق"
 
 #: ../../lib/dialogs.py:94
 msgid "Apply"
-msgstr ""
+msgstr "تطبيق"
 
 #: ../../lib/dialogs.py:95 ../../lib/frontends/widgets/gtk/window.py:820
 msgid "Close"
@@ -1011,19 +1022,19 @@ msgstr "إيقاف المشاهدة"
 
 #: ../../lib/dialogs.py:128
 msgid "Retry"
-msgstr ""
+msgstr "إعادة المحاولة"
 
 #: ../../lib/dialogs.py:129
 msgid "Start Fresh"
-msgstr ""
+msgstr "ابدأ من جديد"
 
 #: ../../lib/dialogs.py:130
 msgid "Include Database"
-msgstr ""
+msgstr "بقاعدة البيانات"
 
 #: ../../lib/dialogs.py:131
 msgid "Don't Include Database"
-msgstr ""
+msgstr "بدون قاعدة البيانات"
 
 #: ../../lib/dialogs.py:212
 #, python-format
@@ -1033,12 +1044,12 @@ msgstr ""
 
 #: ../../lib/dialogs.py:215
 msgid "Login Required"
-msgstr ""
+msgstr "مطلوب تسجيل الدخول"
 
 #: ../../lib/storedatabase.py:248
 #, python-format
 msgid "%(appname)s database upgrade failed"
-msgstr ""
+msgstr "تحديث قاعدة بيانات %(appname)s فشل"
 
 #: ../../lib/storedatabase.py:251
 #, python-format
@@ -1057,7 +1068,7 @@ msgstr ""
 
 #: ../../lib/storedatabase.py:324
 msgid "Database was created by a newer version of Miro "
-msgstr ""
+msgstr "تم انشاء قاعدة البيانات هذه بنسخة أحدث من برنامج ميرو "
 
 #: ../../lib/storedatabase.py:713
 #, python-format

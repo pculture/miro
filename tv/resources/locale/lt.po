@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-18 11:10-0400\n"
-"PO-Revision-Date: 2010-09-13 15:30+0000\n"
-"Last-Translator: Rytis Slatkevičius <rytis.s@gmail.com>\n"
+"PO-Revision-Date: 2010-09-24 19:17+0000\n"
+"Last-Translator: Aistis J. Vitkauskas <Unknown>\n"
 "Language-Team: Lithuanian <lt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "(n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-09-23 15:57+0000\n"
+"X-Launchpad-Export-Date: 2010-09-30 16:13+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
@@ -192,13 +192,13 @@ msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:704
 msgid "Ukrainian"
-msgstr ""
+msgstr "Ukrainiečių"
 
 #: ../../windows/plat/renderers/vlc.py:707
 #: ../../windows/plat/renderers/vlc.py:709
 #: ../../linux/plat/renderers/gstreamerrenderer.py:590
 msgid "Western European"
-msgstr ""
+msgstr "Vakarų Europos"
 
 #: ../../windows/plat/renderers/vlc.py:708
 #: ../../linux/plat/renderers/gstreamerrenderer.py:591
@@ -220,19 +220,19 @@ msgstr "Graikų"
 #: ../../windows/plat/renderers/vlc.py:715
 #: ../../linux/plat/renderers/gstreamerrenderer.py:604
 msgid "East Asian"
-msgstr ""
+msgstr "Rytų azijos"
 
 #: ../../windows/plat/renderers/vlc.py:716
 msgid "Universal Chinese"
-msgstr ""
+msgstr "Universali kinų kalba"
 
 #: ../../windows/plat/renderers/vlc.py:717
 msgid "Simplified Chinese"
-msgstr ""
+msgstr "Supaprastinta kinų kalba"
 
 #: ../../windows/plat/renderers/vlc.py:718
 msgid "Simplified Chinese Unix"
-msgstr ""
+msgstr "Supaprastinta kinų (Unix) kalba"
 
 #: ../../windows/plat/renderers/vlc.py:719
 #: ../../windows/plat/renderers/vlc.py:721
@@ -240,11 +240,11 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:613
 #: ../../linux/plat/renderers/gstreamerrenderer.py:614
 msgid "Japanese"
-msgstr ""
+msgstr "Japonų"
 
 #: ../../windows/plat/renderers/vlc.py:720
 msgid "Japanese Unix"
-msgstr ""
+msgstr "Japonų (Unix)"
 
 #: ../../windows/plat/renderers/vlc.py:722
 #: ../../windows/plat/renderers/vlc.py:723
@@ -253,15 +253,15 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:617
 #: ../../linux/plat/renderers/gstreamerrenderer.py:618
 msgid "Korean"
-msgstr ""
+msgstr "Korėjiečių"
 
 #: ../../windows/plat/renderers/vlc.py:724
 msgid "Traditional Chinese"
-msgstr ""
+msgstr "Tradicinė kinų kalba"
 
 #: ../../windows/plat/renderers/vlc.py:725
 msgid "Traditional Chinese Unix"
-msgstr ""
+msgstr "Tradicinė kinų (Unix) kalba"
 
 #: ../../windows/plat/renderers/vlc.py:726
 msgid "Hong-Kong Supplementary"
@@ -279,7 +279,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:629
 #: ../../linux/plat/renderers/gstreamerrenderer.py:630
 msgid "Turkish"
-msgstr ""
+msgstr "Turkų"
 
 #: ../../windows/plat/renderers/vlc.py:732
 #: ../../linux/plat/renderers/gstreamerrenderer.py:626
@@ -370,6 +370,9 @@ msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
+"Kai jūs paspaudžiate raudonąjį išjungimo mygtuką, norite, jog jūsų "
+"%(appname)s būtų užvertas ar sumažintas? Jūs galite pakeisti šį nustatymą "
+"vėliau Nustatymų skiltyje."
 
 #: ../../windows/plat/frontends/widgets/application.py:208
 msgid "Error Bombing Item"
@@ -428,6 +431,10 @@ msgid ""
 "You should quit %(appname)s now and start it up again after Adobe Flash has "
 "been installed."
 msgstr ""
+"Jums atvers svetainę, kurioje galėsite atsisiųsti  ir įdiegti Adobe Flash "
+"programą į savo kietąjį diską.\n"
+"Jums derėtų išjungti %(appname)s ir palaukti, kol bus baigtas  Adobe Flash "
+"diegimas."
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:486
 #, python-format
@@ -437,7 +444,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:496
 #, python-format
 msgid "Subtitle file %(tracknumber)d"
-msgstr ""
+msgstr "Subtitrų failas %(tracknumber)d"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:573
 msgid "Croatian"
@@ -620,7 +627,7 @@ msgstr ""
 
 #: ../../lib/startup.py:512
 msgid "Submitting Crash Report"
-msgstr ""
+msgstr "Siunčiamas nulūžimo pranešimas"
 
 #: ../../lib/startup.py:514
 #, python-format

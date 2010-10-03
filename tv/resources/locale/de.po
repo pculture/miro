@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-18 11:10-0400\n"
-"PO-Revision-Date: 2010-09-22 21:26+0000\n"
-"Last-Translator: Thomas-Karl Pietrowski <Unknown>\n"
+"PO-Revision-Date: 2010-09-27 19:57+0000\n"
+"Last-Translator: Habi <david.haberthuer@gmail.com>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-09-23 15:56+0000\n"
+"X-Launchpad-Export-Date: 2010-09-30 16:13+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
@@ -179,7 +179,7 @@ msgstr "Osteuropäisch"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:571
 #: ../../linux/plat/renderers/gstreamerrenderer.py:572
 msgid "Baltic"
-msgstr ""
+msgstr "Baltisch"
 
 #: ../../windows/plat/renderers/vlc.py:702
 msgid "Russian"
@@ -187,7 +187,7 @@ msgstr "Russisch"
 
 #: ../../windows/plat/renderers/vlc.py:703
 msgid "South-Eastern European"
-msgstr ""
+msgstr "Süd-Ost-Europa"
 
 #: ../../windows/plat/renderers/vlc.py:704
 msgid "Ukrainian"
@@ -206,7 +206,7 @@ msgstr "Keltisch"
 
 #: ../../windows/plat/renderers/vlc.py:710
 msgid "Esperanto"
-msgstr ""
+msgstr "Esperanto"
 
 #: ../../windows/plat/renderers/vlc.py:711
 #: ../../windows/plat/renderers/vlc.py:712
@@ -223,7 +223,7 @@ msgstr "Ostasiatisch"
 
 #: ../../windows/plat/renderers/vlc.py:716
 msgid "Universal Chinese"
-msgstr ""
+msgstr "Chinesisch"
 
 #: ../../windows/plat/renderers/vlc.py:717
 msgid "Simplified Chinese"
@@ -243,7 +243,7 @@ msgstr "Japanisch"
 
 #: ../../windows/plat/renderers/vlc.py:720
 msgid "Japanese Unix"
-msgstr ""
+msgstr "Japanisch"
 
 #: ../../windows/plat/renderers/vlc.py:722
 #: ../../windows/plat/renderers/vlc.py:723
@@ -264,12 +264,12 @@ msgstr "Traditionelles Chinesisch Unix"
 
 #: ../../windows/plat/renderers/vlc.py:726
 msgid "Hong-Kong Supplementary"
-msgstr ""
+msgstr "Hong-Kong (zusätzlich)"
 
 #: ../../windows/plat/renderers/vlc.py:729
 #: ../../linux/plat/renderers/gstreamerrenderer.py:620
 msgid "SE and SW Asian"
-msgstr ""
+msgstr "Südost- und Südwest-Asiatisch"
 
 #: ../../windows/plat/renderers/vlc.py:730
 #: ../../windows/plat/renderers/vlc.py:731
@@ -381,7 +381,7 @@ msgstr "Fehler beim \"Bomben\" der Datei"
 
 #: ../../windows/plat/frontends/widgets/application.py:210
 msgid "Error Recommending Item"
-msgstr "Fehler beim Weiterempfehlen der Datei"
+msgstr "Fehler beim Weiterempfehlen des Objektes"
 
 #: ../../windows/plat/frontends/widgets/application.py:212
 msgid "Error Opening Website"
@@ -489,7 +489,7 @@ msgstr "Isländisch"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:596
 msgid "Nordic"
-msgstr ""
+msgstr "Nordisch"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:597
 msgid "South European"
@@ -508,41 +508,41 @@ msgstr "Westlich"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:607
 #: ../../linux/plat/renderers/gstreamerrenderer.py:608
 msgid "Chinese Simplified"
-msgstr ""
+msgstr "Chinesisch (vereinfacht)"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:609
 #: ../../linux/plat/renderers/gstreamerrenderer.py:610
 #: ../../linux/plat/renderers/gstreamerrenderer.py:611
 msgid "Chinese Traditional"
-msgstr ""
+msgstr "Chinesisch (traditionell)"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:621
 msgid "Armenian"
-msgstr ""
+msgstr "Armenisch"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:622
 msgid "Georgian"
-msgstr ""
+msgstr "Georgisch"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:623
 msgid "Gujarati"
-msgstr ""
+msgstr "Gujarati"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:624
 msgid "Gurmukhi"
-msgstr ""
+msgstr "Gurmukhisch"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:625
 msgid "Hindi"
-msgstr ""
+msgstr "Hindi"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:644
 msgid "Hebrew Visual"
-msgstr ""
+msgstr "Hebräisch (visuell)"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:645
 msgid "Persian"
-msgstr ""
+msgstr "Persisch"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:57
 msgid "Renderer options:"
@@ -561,15 +561,15 @@ msgstr "Video-Wiedergabeeinstellungen"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:91
 msgid "Binaries to use:"
-msgstr ""
+msgstr "Programme verwenden..."
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:97
 msgid "ffmpeg binary path:"
-msgstr ""
+msgstr "ffmpeg Pfad"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:104
 msgid "ffmpeg2theora binary path:"
-msgstr ""
+msgstr "ffmpeg2theora Pfad"
 
 #: ../../lib/dbupgradeprogress.py:60
 msgid "Upgrading Old Database"
@@ -585,7 +585,7 @@ msgstr "Aktualisiere Datenbank"
 
 #: ../../lib/startup.py:126
 msgid "Database Error"
-msgstr ""
+msgstr "Datenbankfehler"
 
 #: ../../lib/startup.py:127
 #, python-format
@@ -604,6 +604,17 @@ msgid ""
 "To help us fix problems like this in the future, please file a bug report at "
 "%(url)s."
 msgstr ""
+"Entschuldigung, %(appname)s konnte aufgrund eines Problemes mit der "
+"Datenbank nicht gestartet werden:\n"
+"Fehler: %(error)s\n"
+"Möglicherweise ist die Datenbank beschädigt und kann nicht mehr verwendet "
+"werden.\n"
+"Bei einem kompletten Neustart von %(appname)s wird die beschädigte Datenbank "
+"entfernt. Alle Feeds und Medien-Dateien müssen aber neu hinzugefügt werden. "
+"Falls dies gewünscht ist, bitte den Neustart-Button drücken und %(appname)s "
+"neu starten.\n"
+"Um solche Probleme in Zukunft zu vermeiden, bitten wir dich, unter %(url)s "
+"einen Fehlerbericht zu erstellen. Danke!"
 
 #: ../../lib/startup.py:148
 msgid "Unknown Error"
@@ -711,7 +722,7 @@ msgstr "Suchen"
 
 #: ../../lib/feed.py:2259
 msgid "Playing File"
-msgstr "Datei wird abgespielt"
+msgstr "Datei abspielen"
 
 #: ../../lib/downloader.py:261
 msgid "activity"
@@ -737,12 +748,12 @@ msgstr "Keine Verbindung - versuche erneut in %s"
 
 #: ../../lib/downloader.py:537
 msgid "no connection - retrying soon"
-msgstr ""
+msgstr "Keine Verbindung. Erneuter Verbindungs-Versuch in Kürze."
 
 #: ../../lib/downloader.py:561 ../../lib/downloader.py:569
 #: ../../lib/httpclient.py:199 ../../lib/httpclient.py:618
 msgid "Unknown"
-msgstr "unbekannt"
+msgstr "Unbekannt"
 
 #: ../../lib/singleclick.py:66
 msgid "Download already exists"
@@ -790,6 +801,8 @@ msgid ""
 "\n"
 "Error: %(error)s (%(errordesc)s)"
 msgstr ""
+"%(appname)s kann die Datei unte %(url)s nicht herunterladen.\n"
+"Fehler: %(error)s (%(errordesc)s)"
 
 #: ../../lib/opml.py:223
 msgid "OPML Import failed"
@@ -804,7 +817,7 @@ msgstr ""
 
 #: ../../lib/opml.py:233
 msgid "OPML Import summary"
-msgstr "Zusammenfassung des OPML-Imports"
+msgstr "OPML Import Zusammenfassung"
 
 #: ../../lib/opml.py:234
 #, python-format
@@ -881,7 +894,7 @@ msgstr "Der Feed-Download von %(appname)s ist nicht möglich: %(url)s"
 
 #: ../../lib/commandline.py:194
 msgid "Invalid Torrent"
-msgstr "Ungültiger Torrent"
+msgstr "Ungültige Torrentdatei"
 
 #: ../../lib/commandline.py:196
 #, python-format
@@ -894,12 +907,12 @@ msgstr ""
 #: ../../lib/videoconversion.py:83
 #, python-format
 msgid "%(name)s (%(mediatype)s)"
-msgstr ""
+msgstr "%(name)s (%(mediatype)s)"
 
 #: ../../lib/videoconversion.py:708
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
-msgstr ""
+msgstr "%(original_name)s (Konvertiert zu %(format)s)"
 
 #: ../../lib/messages.py:1120 ../../lib/item.py:1127
 msgid "queued for download"
@@ -1073,10 +1086,12 @@ msgstr "Datenbank nicht miteinbeziehen"
 msgid ""
 "%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
 msgstr ""
+"%(authtype)s %(url)s benötigt einen Benutzernamen und Passwort für "
+"\"%(realm)s\"."
 
 #: ../../lib/dialogs.py:215
 msgid "Login Required"
-msgstr ""
+msgstr "Einloggen notwendig"
 
 #: ../../lib/storedatabase.py:248
 #, python-format
@@ -1187,22 +1202,22 @@ msgstr "Fehlerbericht wird übermittelt"
 #: ../../lib/displaytext.py:52
 #, python-format
 msgid "%(size)s GB/s"
-msgstr ""
+msgstr "%(size)s GB/s"
 
 #: ../../lib/displaytext.py:55
 #, python-format
 msgid "%(size)s MB/s"
-msgstr ""
+msgstr "%(size)s MB/s"
 
 #: ../../lib/displaytext.py:58
 #, python-format
 msgid "%(size)s kB/s"
-msgstr ""
+msgstr "%(size)s kB/s"
 
 #: ../../lib/displaytext.py:61
 #, python-format
 msgid "%(size)s B/s"
-msgstr ""
+msgstr "%(size)s B/s"
 
 #: ../../lib/displaytext.py:77
 #, python-format
@@ -1235,22 +1250,22 @@ msgstr[1] "%(num)d s"
 #: ../../lib/displaytext.py:102
 #, python-format
 msgid "%(size)s GB"
-msgstr ""
+msgstr "%(size)s GB"
 
 #: ../../lib/displaytext.py:105
 #, python-format
 msgid "%(size)s MB"
-msgstr ""
+msgstr "%(size)s MB"
 
 #: ../../lib/displaytext.py:108
 #, python-format
 msgid "%(size)s KB"
-msgstr ""
+msgstr "%(size)s KB"
 
 #: ../../lib/displaytext.py:110
 #, python-format
 msgid "%(size)s B"
-msgstr ""
+msgstr "%(size)s B"
 
 #: ../../lib/displaytext.py:115
 #, python-format
@@ -1391,7 +1406,7 @@ msgstr "Fehler"
 
 #: ../../lib/frontends/widgets/style.py:257
 msgid "Queued for Auto-download"
-msgstr ""
+msgstr "In der Warteschleife für automatischen Download"
 
 #: ../../lib/frontends/widgets/style.py:258
 #: ../../lib/frontends/widgets/style.py:1203
@@ -1495,7 +1510,7 @@ msgstr "_Herunterladen"
 
 #: ../../lib/frontends/widgets/menus.py:208
 msgid "Check _Version"
-msgstr "Nach Updates suchen"
+msgstr "auf Updates _überprüfen"
 
 #: ../../lib/frontends/widgets/menus.py:210
 msgid "_Remove Item"
@@ -1531,7 +1546,7 @@ msgstr "_Beenden"
 
 #: ../../lib/frontends/widgets/menus.py:228
 msgid "Convert"
-msgstr ""
+msgstr "Konvertieren"
 
 #: ../../lib/frontends/widgets/menus.py:230
 msgid "_Sidebar"
@@ -1632,7 +1647,7 @@ msgstr "Neue _Wiedergabeliste"
 
 #: ../../lib/frontends/widgets/menus.py:279
 msgid "New Playlist Fol_der"
-msgstr "Neuer _Ordner für Wiedergabelisten"
+msgstr "Neuer Or_dner für Wiedergabelisten"
 
 #: ../../lib/frontends/widgets/menus.py:283
 msgid "Re_name Playlist"
@@ -1648,11 +1663,11 @@ msgstr "Wiedergabelisten  _löschen"
 
 #: ../../lib/frontends/widgets/menus.py:289
 msgid "_Remove Playlist Folders"
-msgstr "Ordner für Wiedergabelisten _löschen"
+msgstr "_Ordner für Wiedergabelisten löschen"
 
 #: ../../lib/frontends/widgets/menus.py:290
 msgid "_Remove Playlist Folder"
-msgstr "Ordner für Wiedergabeliste _löschen"
+msgstr "_Ordner für Wiedergabeliste löschen"
 
 #: ../../lib/frontends/widgets/menus.py:293
 msgid "P_layback"
@@ -1750,11 +1765,11 @@ msgstr "Zeige Konvertierungsordner"
 
 #: ../../lib/frontends/widgets/menus.py:390
 msgid "_Encoding"
-msgstr ""
+msgstr "_Zeichenkodierungen"
 
 #: ../../lib/frontends/widgets/menus.py:393
 msgid "Default (UTF-8)"
-msgstr ""
+msgstr "Standard (UTF-8)"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:180
 msgid "Save Search"
@@ -1849,7 +1864,7 @@ msgstr "%(rate)s Downloadgeschwindigkeit"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:644
 msgid "Auto-download"
-msgstr ""
+msgstr "Automatischer Download"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:649
 #: ../../lib/frontends/widgets/prefpanel.py:332
@@ -1864,7 +1879,7 @@ msgstr "neu"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:651
 #: ../../lib/frontends/widgets/prefpanel.py:333
 msgid "Off"
-msgstr "Deaktiviert"
+msgstr "Aus"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:659
 msgid "Share feed"
@@ -1872,7 +1887,7 @@ msgstr "Feed mit anderen teilen"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:665
 msgid "Settings"
-msgstr "Einstellungen"
+msgstr "Optionen"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:671
 msgid "Remove feed"
@@ -2077,7 +2092,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:643
 msgid "Import OPML File"
-msgstr "OPML-Import"
+msgstr "Importiere OPML Datei"
 
 #: ../../lib/frontends/widgets/application.py:645
 msgid "OPML Files"
@@ -2089,7 +2104,7 @@ msgstr "Fehler beim Importieren der OPML Datei"
 
 #: ../../lib/frontends/widgets/application.py:658
 msgid "Export OPML File"
-msgstr "OPML-Export"
+msgstr "Exportiere OPML Datei"
 
 #: ../../lib/frontends/widgets/application.py:682
 msgid "Create Playlist"
@@ -2097,11 +2112,11 @@ msgstr "Wiedergabeliste erstellen"
 
 #: ../../lib/frontends/widgets/application.py:683
 msgid "Enter a name for the new playlist"
-msgstr "Geben Sie einen Namen für die neue Wiedergabeliste ein"
+msgstr "Name für die neue Wiedergabeliste eingeben"
 
 #: ../../lib/frontends/widgets/application.py:704
 msgid "Create Playlist Folder"
-msgstr "Ordner für Wiedergabelisten erstellen"
+msgstr "Ordner für Wiedergabeliste erstellen"
 
 #: ../../lib/frontends/widgets/application.py:705
 msgid "Enter a name for the new playlist folder"
@@ -2207,12 +2222,13 @@ msgstr ""
 msgid "You have %(count)d conversion in progress.  Quit anyway?"
 msgid_plural ""
 "You have %(count)d conversions in progress or pending.  Quit anyway?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Konversionen laufen noch. Trotzdem beenden?"
+msgstr[1] "%(count)d Konversionen laufen oder warten noch. Trotzdem beenden?"
 
 #: ../../lib/frontends/widgets/application.py:856
 msgid "Warn me when I attempt to quit with conversions in progress"
 msgstr ""
+"Warnung, wenn das Programm mit noch laufenden Konversionen beendet wird"
 
 #: ../../lib/frontends/widgets/application.py:1040
 msgid "Upgrading database"
@@ -2268,7 +2284,7 @@ msgstr "Weiter >"
 #: ../../lib/frontends/widgets/firsttimedialog.py:196
 #, python-format
 msgid "%(name)s Startup"
-msgstr ""
+msgstr "%(name)s Start"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:200
 #, python-format
@@ -2277,6 +2293,10 @@ msgid ""
 "This way, downloads in progress can finish downloading and new media files "
 "can be downloaded in the background, ready when you want to watch."
 msgstr ""
+"Wir empfehlen, dass %(name)s beim Start des Rechners ebenfalls gestartet "
+"wird. So werden laufende Downloads beendet und neue Mediendateien werden "
+"automatisch im Hintergrund heruntergeladen, so dass sie dann zum anschauen "
+"bereit sind, wenn du bereit bist."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:209
 #, python-format
@@ -2442,6 +2462,7 @@ msgstr "Ältere Objekte wurden entfernt"
 #: ../../lib/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause auto-downloading when this many items are unplayed:"
 msgstr ""
+"Automatischer Download pausieren, wenn noch so viele Dateien ungespielt sind:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
@@ -2474,7 +2495,7 @@ msgstr "Videosuche"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:477
 msgid "No Results"
-msgstr ""
+msgstr "Keine Ergebnisse"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:481
 msgid ""
@@ -2483,6 +2504,10 @@ msgid ""
 "engines, click on the icon to the left of the search box above and select "
 "the search engine from the drop down."
 msgstr ""
+"Um Mediendateien auf Internet-Medien-Suchmaschinen zu suchen, auf das "
+"Suchfeld oben klicken, den Suchbegriff eingeben und mit der Entertaste "
+"bestätigen. Um die Suchmaschinen zu wechseln, auf das Icon links vom "
+"Suchfeld klicken und die Suchmaschine aus der Dropdown-Liste auswählen."
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:590
 #: ../../lib/frontends/widgets/itemedit.py:151
@@ -2658,34 +2683,34 @@ msgstr "Stoppe alle Konvertierungen"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:74
 msgid "Clear Finished Conversions"
-msgstr ""
+msgstr "Beendete Konversionen entfernen."
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:272
 #, python-format
 msgid "Conversion to %(format)s"
-msgstr ""
+msgstr "Nach %(format)s konvertieren"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:306
 #, python-format
 msgid "Failed: %(error)s"
-msgstr ""
+msgstr "Fehlgeschlagen: %(error)s"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:312
 msgid "Troubleshoot"
-msgstr ""
+msgstr "Fehler suchen"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:314
 msgid "Open log"
-msgstr ""
+msgstr "Log-Datei öffnen"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:316
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:335
 msgid "Clear"
-msgstr ""
+msgstr "Löschen"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:327
 msgid "Completed"
-msgstr ""
+msgstr "Abgeschlossen"
 
 #: ../../lib/frontends/widgets/downloadscontroller.py:84
 #: ../../lib/frontends/widgets/prefpanel.py:726
@@ -2871,12 +2896,12 @@ msgstr ""
 #: ../../lib/frontends/widgets/diagnostics.py:129
 #, python-format
 msgid "%(databasecount)s: Delete"
-msgstr ""
+msgstr "%(databasecount)s: Löschen"
 
 #: ../../lib/frontends/widgets/diagnostics.py:81
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
 msgid "Show"
-msgstr "Ansicht"
+msgstr "Anzeigen"
 
 #: ../../lib/frontends/widgets/diagnostics.py:95
 msgid "Movies location:"
@@ -2912,7 +2937,7 @@ msgstr "Anzahl der Datenbankobjekte im Speicher:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:127
 msgid "Total db backups:"
-msgstr ""
+msgstr "Gesamte DB-Backups:"
 
 #: ../../lib/frontends/widgets/browser.py:93
 msgid "Open in browser"
@@ -3141,7 +3166,7 @@ msgstr "Warnen wenn das Programm beendet wird während Downloads aktiv sind."
 
 #: ../../lib/frontends/widgets/prefpanel.py:299
 msgid "Warn me if I attempt to quit with conversions in progress."
-msgstr ""
+msgstr "Warnung bei Beenden, falls noch Konversionen laufen."
 
 #: ../../lib/frontends/widgets/prefpanel.py:315
 msgid "(Changing the language requires you to restart Miro.)"
@@ -3200,7 +3225,7 @@ msgstr "Auf neue Inhalte prüfen:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:362
 msgid "Auto-download setting:"
-msgstr ""
+msgstr "Einstellungen Auto-Download:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:368
 msgid "Remember this many old items:"
@@ -3302,7 +3327,7 @@ msgstr "Überwachten Ordner hinzufügen"
 
 #: ../../lib/frontends/widgets/prefpanel.py:604
 msgid "Store downloads in this folder:"
-msgstr "Downloads in diesem Ordner speichern:"
+msgstr "Verzeichnis für Downloads:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:611
 msgid ""
@@ -3374,11 +3399,11 @@ msgstr "Nach jedem Video- oder Audioelement anhalten"
 
 #: ../../lib/frontends/widgets/prefpanel.py:711
 msgid "Allow this many concurrent conversions:"
-msgstr ""
+msgstr "Soviele gleichzeitige Konversionen zulassen:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:712
 msgid "(changing this will not apply to currently running conversions)"
-msgstr ""
+msgstr "(Änderung beeinflusst die momentan laufenden Konversionen nicht)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:724
 msgid "General"
@@ -3491,26 +3516,26 @@ msgstr "Verbindung durch %(host)s getrennt"
 #: ../../lib/httpclient.py:103
 #, python-format
 msgid "Host returned %(status)s"
-msgstr ""
+msgstr "Server antwortete mit %(status)s"
 
 #: ../../lib/httpclient.py:105
 msgid "Please retry later"
-msgstr ""
+msgstr "Bitte später versuchen"
 
 #: ../../lib/httpclient.py:109
 #, python-format
 msgid "%(host)s doesn't support HTTP resume"
-msgstr ""
+msgstr "%(host)s unterstützt \"HTTP resume\" nicht"
 
 #: ../../lib/httpclient.py:114
 #, python-format
 msgid "HTTP Redirection limit hit for %(url)s"
-msgstr ""
+msgstr "HTTP Weiterleitungs-Limite für %(url)s erreicht"
 
 #: ../../lib/httpclient.py:120
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
-msgstr ""
+msgstr "Authorisation für Proxy %(host)s:%(port)s gescheitert."
 
 #: ../../lib/httpclient.py:128
 msgid "Got 404 status code"
@@ -3519,7 +3544,7 @@ msgstr "HTTP: Fehler 404 - Datei nicht gefunden."
 #: ../../lib/httpclient.py:130
 #, python-format
 msgid "Host returned bad status code: %(code)s"
-msgstr ""
+msgstr "Server hat mit falschem Status Code %(code)s geantwortet."
 
 #: ../../lib/httpclient.py:136 ../../lib/httpclient.py:137
 msgid "Authorization failed"
@@ -3527,7 +3552,7 @@ msgstr "Autorisierung fehlgeschlagen"
 
 #: ../../lib/httpclient.py:141
 msgid "Invalid URL"
-msgstr "Ungültige Adresse (URL)"
+msgstr "Ungültige URL"
 
 #: ../../lib/httpclient.py:142
 #, python-format
@@ -3536,12 +3561,12 @@ msgstr "\"%(url)s\" ist keine gültige Adresse (URL)"
 
 #: ../../lib/httpclient.py:147
 msgid "Unknow Host"
-msgstr ""
+msgstr "Unbekannter Server."
 
 #: ../../lib/httpclient.py:148
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
-msgstr ""
+msgstr "Der Domänenname \"%(host)s\" konnte nicht gefunden werden"
 
 #: ../../lib/httpclient.py:154
 #, python-format
@@ -3564,15 +3589,15 @@ msgstr "In die Datei %(filename)s konnte nicht geschrieben werden"
 
 #: ../../lib/httpclient.py:169
 msgid "Write error"
-msgstr ""
+msgstr "Schreibfehler"
 
 #: ../../lib/httpclient.py:343
 msgid "Website"
-msgstr ""
+msgstr "Webseite"
 
 #: ../../lib/httpclient.py:348
 msgid "Proxy"
-msgstr ""
+msgstr "Proxy"
 
 #: ../../lib/net.py:75
 #, python-format
@@ -3620,7 +3645,7 @@ msgstr "Es werden %(amount)s MB benötigt, um dieses Video zu speichern"
 
 #: ../../lib/dl_daemon/download.py:718
 msgid "no content"
-msgstr ""
+msgstr "Kein Inhalt"
 
 #: ../../lib/dl_daemon/download.py:860
 msgid "BitTorrent failure"

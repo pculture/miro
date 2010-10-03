@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-18 11:10-0400\n"
-"PO-Revision-Date: 2010-09-13 01:38+0000\n"
+"PO-Revision-Date: 2010-09-29 18:46+0000\n"
 "Last-Translator: Rancher <Unknown>\n"
 "Language-Team: Serbian <sr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,18 +16,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-09-23 15:57+0000\n"
+"X-Launchpad-Export-Date: 2010-09-30 16:13+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "Language: sr\n"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:463
 #: ../../lib/frontends/widgets/statictabs.py:97
 msgid "Video Search"
-msgstr "Видео претраживање"
+msgstr "Претрага"
 
 #: ../../lib/net.py:91 ../../lib/net.py:97
 msgid "Can't connect"
-msgstr "Не могу да се повежем"
+msgstr "Повезивање није успело."
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
 #: ../../lib/frontends/widgets/itemcontextmenu.py:164
@@ -62,12 +62,12 @@ msgstr "Ускочи"
 
 #: ../../osx/plat/frontends/widgets/application.py:193
 msgid "Download Completed"
-msgstr "Преузимање је завршено"
+msgstr "Преузимање је завршено."
 
 #: ../../osx/plat/frontends/widgets/application.py:194
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr "Преузимање „%s“ видео снимка је завршено."
+msgstr "Преузимање „%s“ видео записа је завршено."
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:159
 msgid "Services"
@@ -109,7 +109,7 @@ msgstr "Умножи"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:184
 msgid "Paste"
-msgstr "Налепи"
+msgstr "Убаци"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:187
 msgid "Select All"
@@ -125,11 +125,11 @@ msgstr "Прикажи у половичној величини"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:197
 msgid "Present Actual Size"
-msgstr "Прикажи праву величину"
+msgstr "Прикажи у правој величини"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:200
 msgid "Present Double Size"
-msgstr "Прикажи дуплирану величину"
+msgstr "Прикажи у дуплираној величини"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:207
 msgid "Present Video"
@@ -175,7 +175,7 @@ msgstr "Нема доступних"
 #: ../../osx/plat/frontends/widgets/osxmenus.py:386
 #: ../../lib/frontends/widgets/gtk/video.py:413
 msgid "Select a Subtitles file..."
-msgstr "Изаберите титл..."
+msgstr "Изабери титл..."
 
 #: ../../windows/plat/renderers/vlc.py:697
 #: ../../windows/plat/renderers/vlc.py:700
@@ -347,24 +347,24 @@ msgstr "Универзално"
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:41
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:49
 msgid "Enable tray icon"
-msgstr "Омогући иконицу у системској траци"
+msgstr "Иконица у системској палети"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:45
 msgid "When I click the red close button:"
-msgstr "Када притиснем црвено дугме за излазак:"
+msgstr "Када кликнем на црвено дугме за излазак:"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:48
 msgid "Close to tray so that downloads can continue."
-msgstr "Спусти у системску траку како би се преузимање наставило."
+msgstr "спусти у системску палету"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:49
 #, python-format
 msgid "Quit %(appname)s completely."
-msgstr "У потпуности искључи %(appname)s."
+msgstr "у целости искључи %(appname)s"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:58
 msgid "System Default"
-msgstr "Подразумеване поставке"
+msgstr "Подразумевано"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:64
 msgid "Subtitle font:"
@@ -372,7 +372,7 @@ msgstr "Фонт титла:"
 
 #: ../../windows/plat/frontends/widgets/application.py:148
 msgid "Close to tray?"
-msgstr "Спустити у системску траку?"
+msgstr "Спустити у системску палету?"
 
 #: ../../windows/plat/frontends/widgets/application.py:149
 #, python-format
@@ -380,21 +380,21 @@ msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
-"Када притиснете црвено дугме за затварање, да ли желите да се %(appname)s "
-"спусти у системску траку или да се у потпуности искључи? Ову поставку можете "
+"Када кликнете на црвено дугме за затварање, да ли желите да се %(appname)s "
+"спусти у системску палету или да се у целости искључи? Ову поставку можете "
 "касније променити у опцијама."
 
 #: ../../windows/plat/frontends/widgets/application.py:208
 msgid "Error Bombing Item"
-msgstr "Грешка у бомбардовању ставке"
+msgstr "Грешка у бомбардовању ставке."
 
 #: ../../windows/plat/frontends/widgets/application.py:210
 msgid "Error Recommending Item"
-msgstr "Грешка у препоручивању ставке"
+msgstr "Грешка у препоручивању ставке."
 
 #: ../../windows/plat/frontends/widgets/application.py:212
 msgid "Error Opening Website"
-msgstr "Грешка у отварању веб-сајта"
+msgstr "Грешка у отварању интернет странице."
 
 #: ../../windows/plat/frontends/widgets/application.py:217
 #, python-format
@@ -406,12 +406,12 @@ msgstr ""
 
 #: ../../windows/plat/frontends/widgets/update.py:148
 msgid "Update Available"
-msgstr "Доступна је доградња"
+msgstr "Доступна је доградња."
 
 #: ../../windows/plat/frontends/widgets/update.py:152
 #, python-format
 msgid "A new version of %(appname)s is available for download."
-msgstr "Ново издање %(appname)s је доступно за преузимање."
+msgstr "Ново издање програма %(appname)s је доступно за преузимање."
 
 #: ../../windows/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
@@ -613,6 +613,19 @@ msgid ""
 "To help us fix problems like this in the future, please file a bug report at "
 "%(url)s."
 msgstr ""
+"Жао нам је, %(appname)s није покренут због проблема с базом података:\n"
+"\n"
+"Грешка: %(error)s\n"
+"\n"
+"Могуће да је датотека базе података оштећена и више није за употребу.\n"
+"\n"
+"Можете почети из почетка. Оштећена база података ће бити уклоњена, стога "
+"ћете морати да поново додате доводе и медија датотеке.  Ако сте се "
+"определили на ово, кликните на дугме „Почни из почетка“ и поново покрените "
+"%(appname)s.\n"
+"\n"
+"Да бисте нам помогли да исправимо овакве грешке у будућности, попуните "
+"извештај о грешци на %(url)s."
 
 #: ../../lib/startup.py:148
 msgid "Unknown Error"
@@ -624,12 +637,12 @@ msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
 "report at %(url)s."
 msgstr ""
-"Непозната грешка је спречила %(appname)s покретање.  Молимо, пошаљите "
-"извештај о квару на %(url)s."
+"Непозната грешка је спречила покретање %(appname)s програма. Пошаљите "
+"извештај о грешци на %(url)s."
 
 #: ../../lib/startup.py:246
 msgid "Database too new"
-msgstr "База података је превише свежа"
+msgstr "База података је превише нова."
 
 #: ../../lib/startup.py:248
 #, python-format
@@ -638,11 +651,11 @@ msgid ""
 "must download the latest version of %(appname)s and run that."
 msgstr ""
 "Имате базу података која је снимљена новијим издањем %(appname)s. Морате да "
-"преузмете последње издање %(appname)s и покренути га."
+"преузмете последње издање програма %(appname)s и покренете га."
 
 #: ../../lib/startup.py:512
 msgid "Submitting Crash Report"
-msgstr "Подношење грешке"
+msgstr "Слање грешке"
 
 #: ../../lib/startup.py:514
 #, python-format
@@ -654,12 +667,12 @@ msgid ""
 msgstr ""
 "%(appname)s ће сада послати грешку у нашу базу података.\n"
 "\n"
-"Да ли желите да укључите целу базу података програма са свим снимцима и "
+"Желите ли да укључите целу базу података програма са свим снимцима и "
 "доводима? Ово ће нам помоћи да пронађемо проблем."
 
 #: ../../lib/feed.py:844
 msgid "Error loading feed"
-msgstr "Грешка у учитавању довода"
+msgstr "Грешка у учитавању довода."
 
 #: ../../lib/feed.py:846
 #, python-format
@@ -668,7 +681,7 @@ msgstr "Учитавање довода код %(url)s (%(errordescription)s) н
 
 #: ../../lib/feed.py:849
 msgid "Would you like to keep the feed?"
-msgstr "Да ли желите да задржите овај довод?"
+msgstr "Желите ли да задржите овај довод?"
 
 #: ../../lib/feed.py:970
 msgid "Bad content-type"
@@ -677,7 +690,7 @@ msgstr "Лош тип садржаја"
 #: ../../lib/feed.py:983
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
-msgstr "Канал није компатибилан са %(appname)s"
+msgstr "Канал није сагласан са %(appname)s."
 
 #: ../../lib/feed.py:986
 #, python-format
@@ -691,19 +704,19 @@ msgid ""
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
-"Овај канал није компатибилан са %(appname)s али чинимо све што је у нашој "
-"моћи да преузмемо те датотеке. Преузимање списка снимака може потрајати, а "
-"опис може изгледати смешно.\n"
+"Овај канал није сагласан с програмом %(appname)s, али чинимо све што је у "
+"нашој моћи да преузмемо те датотеке. Добављање списка снимака може "
+"потрајати, а опис може изгледати смешно.\n"
 "\n"
-"Молимо, контактирајте издавача of %(url)s и питајте га ако би могао да "
-"понуди довод у формату који ће радити са %(appname)s.\n"
+"Контактирајте издавача %(url)s и питајте га ако би могао да понуди довод у "
+"формату који је сагласан с програмом %(appname)s.\n"
 "\n"
-"Да ли желите да покушате да ипак учитате овај канал?"
+"Желите ли да покушате да учитате канал?"
 
 #: ../../lib/feed.py:1666 ../../lib/databaseupgrade.py:2749
 #, python-format
 msgid "%(engine)s for '%(query)s'"
-msgstr "%(engine)s за '%(query)s'"
+msgstr "%(engine)s за „%(query)s“"
 
 #: ../../lib/feed.py:2115 ../../lib/feed.py:2245
 msgid "Local Files"
@@ -718,7 +731,7 @@ msgstr "Претражи"
 
 #: ../../lib/feed.py:2259
 msgid "Playing File"
-msgstr "Датотека се пушта"
+msgstr "Репродукује се"
 
 #: ../../lib/downloader.py:261
 msgid "activity"
@@ -727,24 +740,24 @@ msgstr "активност"
 #: ../../lib/downloader.py:329 ../../lib/httpclient.py:127
 #: ../../lib/httpclient.py:153
 msgid "File not found"
-msgstr "Датотека није пронађена"
+msgstr "Датотека није пронађена."
 
 #: ../../lib/downloader.py:330
 msgid "Flash URL Scraping Error"
-msgstr "Грешка у стругању адресе флеша"
+msgstr "Грешка у гребању адресе флеш датотеке."
 
 #: ../../lib/downloader.py:528
 msgid "starting up"
-msgstr "се покреће"
+msgstr "Покретање..."
 
 #: ../../lib/downloader.py:535
 #, python-format
 msgid "no connection - retrying in %s"
-msgstr "Веза не постоји — Поновни покушај за %s"
+msgstr "Веза не постоји — поновни покушај за %s"
 
 #: ../../lib/downloader.py:537
 msgid "no connection - retrying soon"
-msgstr ""
+msgstr "Веза није успостављена."
 
 #: ../../lib/downloader.py:561 ../../lib/downloader.py:569
 #: ../../lib/httpclient.py:199 ../../lib/httpclient.py:618
@@ -753,16 +766,16 @@ msgstr "Непознато"
 
 #: ../../lib/singleclick.py:66
 msgid "Download already exists"
-msgstr "Преузимање већ постоји"
+msgstr "Преузимање већ постоји."
 
 #: ../../lib/singleclick.py:67
 msgid "That URL is already an external download."
-msgstr "Та адреса је већ спољашно преузимање"
+msgstr "Та адреса је спољашње преузимање."
 
 #: ../../lib/singleclick.py:73
 #, python-format
 msgid "%(appname)s will begin downloading it now."
-msgstr "%(appname)s ће почети са преузимањем сада."
+msgstr "%(appname)s ће сада почети с преузимањем."
 
 #: ../../lib/singleclick.py:76
 msgid "It is downloading now."
@@ -780,11 +793,12 @@ msgstr "Преузимање датотеке"
 #, python-format
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or an RSS feed."
-msgstr "Датотека на %(url)s не личи на аудио, видео или .RSS довод."
+msgstr ""
+"Датотека на %(url)s не личи на аудио или видео запис, нити на RSS довод."
 
 #: ../../lib/singleclick.py:165
 msgid "Download Error"
-msgstr "Грешка у преузимању"
+msgstr "Грешка у преузимању."
 
 #: ../../lib/singleclick.py:167
 #, python-format
@@ -795,10 +809,15 @@ msgid ""
 "\n"
 "Error: %(error)s (%(errordesc)s)"
 msgstr ""
+"%(appname)s не може да преузме датотеку на овој адреси:\n"
+"\n"
+"Адреса: %(url)s\n"
+"\n"
+"Грешка: %(error)s (%(errordesc)s)"
 
 #: ../../lib/opml.py:223
 msgid "OPML Import failed"
-msgstr "OPML увоз није успео"
+msgstr "Увоз OPML датотеке није успео."
 
 #: ../../lib/opml.py:225
 msgid ""
@@ -813,9 +832,9 @@ msgstr "Кратак преглед OPML увоза"
 #, python-format
 msgid "Successfully imported %(count)d feed."
 msgid_plural "Successfully imported %(count)d feeds."
-msgstr[0] "Успешно је увежен %(count)d довод."
-msgstr[1] "Успешно су увежена %(count)d довода."
-msgstr[2] "Успешно је увежено %(count)d довода."
+msgstr[0] "Увезен је %(count)d довод."
+msgstr[1] "Увезена су %(count)d довода."
+msgstr[2] "Увезено је %(count)d довода."
 
 #: ../../lib/opml.py:240
 #, python-format
@@ -847,11 +866,11 @@ msgstr "%(size)sB"
 
 #: ../../lib/messagehandler.py:1336
 msgid "Subscribed to new feed:"
-msgstr "Претплаћен на нови довод:"
+msgstr "Пријављен на нови довод:"
 
 #: ../../lib/messagehandler.py:1339
 msgid "Subscribed to new feeds:"
-msgstr "Претплаћен на нове доводе:"
+msgstr "Пријављен на нове доводе:"
 
 #: ../../lib/messagehandler.py:1358
 msgid "Migrating Files"
@@ -859,7 +878,7 @@ msgstr "Померање датотека"
 
 #: ../../lib/commandline.py:115
 msgid "Subscription error"
-msgstr "Грешка у претплати"
+msgstr "Грешка у пријави."
 
 #: ../../lib/commandline.py:125
 #, python-format
@@ -867,8 +886,8 @@ msgid ""
 "This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
 "the publisher of this file."
 msgstr ""
-"Ова %(appname)s датотека довода је неисправног формата: %(url)s.  Молим "
-"обавестите издавача о овој датотеци."
+"%(appname)s датотека довода је неисправног формата: %(url)s. Обавестите "
+"издавача о овој датотеци."
 
 #: ../../lib/commandline.py:136
 #, python-format
@@ -876,13 +895,13 @@ msgid ""
 "This %(appname)s feed file has the wrong content type: %(url)s. Please "
 "notify the publisher of this file."
 msgstr ""
-"Ова %(appname)s датотека довода садржи погрешан садржај: %(url)s. Молим "
-"обавестите издавача о овој датотеци."
+"%(appname)s датотека довода садржи неисправан садржај: %(url)s. Обавестите "
+"издавача о овој датотеци."
 
 #: ../../lib/commandline.py:145
 #, python-format
 msgid "Could not download the %(appname)s feed file: %(url)s"
-msgstr "Не могу да преузмем %(appname)s датотеку довода: %(url)s"
+msgstr "Преузимање %(appname)s датотеке довода није успело: %(url)s"
 
 #: ../../lib/commandline.py:194
 msgid "Invalid Torrent"
@@ -892,18 +911,17 @@ msgstr "Неисправан торент"
 #, python-format
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
-msgstr ""
-"Торент датотека %(filename)s  изгледа да је оштећена и не може бити отворена."
+msgstr "Торент датотека %(filename)s је оштећена и не може бити отворена."
 
 #: ../../lib/videoconversion.py:83
 #, python-format
 msgid "%(name)s (%(mediatype)s)"
-msgstr ""
+msgstr "%(name)s (%(mediatype)s)"
 
 #: ../../lib/videoconversion.py:708
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
-msgstr ""
+msgstr "%(original_name)s (претворено у %(format)s)"
 
 #: ../../lib/messages.py:1120 ../../lib/item.py:1127
 msgid "queued for download"
@@ -943,7 +961,7 @@ msgstr "Не"
 
 #: ../../lib/dialogs.py:100
 msgid "Quit"
-msgstr "Изађи"
+msgstr "Излаз"
 
 #: ../../lib/dialogs.py:101
 msgid "Continue"
@@ -951,7 +969,7 @@ msgstr "Настави"
 
 #: ../../lib/dialogs.py:102
 msgid "Ignore"
-msgstr "Игнориши"
+msgstr "Занемари"
 
 #: ../../lib/dialogs.py:103
 msgid "Submit Crash Report"
@@ -987,11 +1005,11 @@ msgstr "Избриши датотеке"
 
 #: ../../lib/dialogs.py:110
 msgid "Keep Videos"
-msgstr "Задржи видео снимке"
+msgstr "Задржи видео записе"
 
 #: ../../lib/dialogs.py:111
 msgid "Delete Videos"
-msgstr "Избриши видео снимке"
+msgstr "Избриши видео записе"
 
 #: ../../lib/dialogs.py:112
 msgid "Create"
@@ -1030,7 +1048,7 @@ msgstr "Не сада"
 
 #: ../../lib/dialogs.py:121
 msgid "Close to Tray"
-msgstr "Спусти на системску палету"
+msgstr "Спусти у системску палету"
 
 #: ../../lib/dialogs.py:122
 msgid "Launch Miro"
@@ -1050,7 +1068,7 @@ msgstr "Не инсталирај"
 
 #: ../../lib/dialogs.py:126
 msgid "Subscribe"
-msgstr "Претплати се"
+msgstr "Пријави ме"
 
 #: ../../lib/dialogs.py:127
 msgid "Stop Watching"
@@ -1062,7 +1080,7 @@ msgstr "Покушај поново"
 
 #: ../../lib/dialogs.py:129
 msgid "Start Fresh"
-msgstr "Почни испочетка"
+msgstr "Почни из почетка"
 
 #: ../../lib/dialogs.py:130
 msgid "Include Database"
@@ -1077,15 +1095,16 @@ msgstr "Не укључуј базу података"
 msgid ""
 "%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
 msgstr ""
+"%(authtype)s %(url)s захтева корисничко име и лозинку за „%(realm)s“."
 
 #: ../../lib/dialogs.py:215
 msgid "Login Required"
-msgstr ""
+msgstr "Потребно је да се пријавите."
 
 #: ../../lib/storedatabase.py:248
 #, python-format
 msgid "%(appname)s database upgrade failed"
-msgstr "%(appname)s ажурирање базе података није успело"
+msgstr "%(appname)s ажурирање базе података није успело."
 
 #: ../../lib/storedatabase.py:251
 #, python-format
@@ -1101,26 +1120,25 @@ msgid ""
 "Finally, you can start fresh and your damaged database will be removed, but "
 "you will have to re-add your feeds and media files."
 msgstr ""
-"Жао нам је, али %(appname)s није могао ажурирати Вашу базу података због "
-"грешака.\n"
+"Жао нам је, %(appname)s није могао да ажурира базу података због грешака.\n"
 "\n"
-"Проверите да ли Вам је диск пун. Ако јесте, онда затворите %(appname)s, "
-"ослободите мало простора и поново покрените %(appname)s.\n"
+"Проверите да ли имате довољно простора на диску. Ако немате, онда затворите "
+"%(appname)s, ослободите мало простора и поново покрените %(appname)s.\n"
 "\n"
-"Ако Вам диск није пун, помозите нам да пронађемо проблем тако што ћете нам "
+"Ако диск није пун, помозите нам да пронађемо проблем тако што ћете нам "
 "послати извештај о грешци.\n"
 "\n"
-"И на крају, можете почети испочетка, јер ће Ваша оштећена база података бити "
-"уклоњена, али ћете морати да поново додате своје доводе и медијуме."
+"Можете почети и из почетка. Оштећена база података ће бити уклоњена, стога "
+"ћете морати да поново додате доводе и медија датотеке."
 
 #: ../../lib/storedatabase.py:324
 msgid "Database was created by a newer version of Miro "
-msgstr "База података је направљена новијом верзијом Мира "
+msgstr "База података је направљена новијим издањем програма. "
 
 #: ../../lib/storedatabase.py:713
 #, python-format
 msgid "%(appname)s database save succeeded"
-msgstr "%(appname)s чување базе података је успело"
+msgstr "%(appname)s чување базе података је успело."
 
 #: ../../lib/storedatabase.py:715
 msgid ""
@@ -1133,7 +1151,7 @@ msgstr ""
 #: ../../lib/storedatabase.py:776
 #, python-format
 msgid "%(appname)s database save failed"
-msgstr "%(appname)s чување базе података није успело"
+msgstr "%(appname)s чување базе података није успело."
 
 #: ../../lib/storedatabase.py:779
 #, python-format
@@ -1154,16 +1172,15 @@ msgid ""
 msgstr ""
 "%(appname)s није успео да сачува базу података.\n"
 "\n"
-"Ако Вам је тврди диск попуњен, предлажемо Вам да ослободите нешто простора и "
-"покушате поново. Ако Вам диск није попуњен, вероватно ће поново покретање "
-"решити проблем.\n"
+"Ако немате довољно простора на тврдом диску, предлажемо Вам да ослободите "
+"нешто простора и покушате поново. Ако диск није попуњен, вероватно ће "
+"поновно покретање решити проблем.\n"
 "\n"
-"Ако ни поновни покушај није уродио плодом, затворите %(appname)s и "
-"рестартујте га.  Скорашње промене могу бити изгубљене.\n"
+"Ако ни то не реши проблем, затворите %(appname)s и поново га покрените. "
+"Скорашње промене могу бити изгубљене.\n"
 "\n"
 "Ако се ова грешка појављује често током преузимања, предлажемо Вам да "
-"смањите број истовремених преузимања у прозорчету за опције, у језичку за "
-"преузимање.\n"
+"смањите број истовремених пријема.\n"
 "\n"
 "Грешка: %(error_text)s\n"
 "\n"
@@ -1191,22 +1208,22 @@ msgstr "Слање грешке"
 #: ../../lib/displaytext.py:52
 #, python-format
 msgid "%(size)s GB/s"
-msgstr ""
+msgstr "%(size)s GB/с"
 
 #: ../../lib/displaytext.py:55
 #, python-format
 msgid "%(size)s MB/s"
-msgstr ""
+msgstr "%(size)s MB/с"
 
 #: ../../lib/displaytext.py:58
 #, python-format
 msgid "%(size)s kB/s"
-msgstr ""
+msgstr "%(size)s kB/с"
 
 #: ../../lib/displaytext.py:61
 #, python-format
 msgid "%(size)s B/s"
-msgstr ""
+msgstr "%(size)s B/с"
 
 #: ../../lib/displaytext.py:77
 #, python-format
@@ -1243,22 +1260,22 @@ msgstr[2] "%(num)d секунди"
 #: ../../lib/displaytext.py:102
 #, python-format
 msgid "%(size)s GB"
-msgstr ""
+msgstr "%(size)s GB"
 
 #: ../../lib/displaytext.py:105
 #, python-format
 msgid "%(size)s MB"
-msgstr ""
+msgstr "%(size)s MB"
 
 #: ../../lib/displaytext.py:108
 #, python-format
 msgid "%(size)s KB"
-msgstr ""
+msgstr "%(size)s KB"
 
 #: ../../lib/displaytext.py:110
 #, python-format
 msgid "%(size)s B"
-msgstr ""
+msgstr "%(size)s B"
 
 #: ../../lib/displaytext.py:115
 #, python-format
@@ -1288,30 +1305,30 @@ msgstr[2] "Истиче за %(count)d минута"
 #, python-format
 msgid "Expires: %(count)d day"
 msgid_plural "Expires: %(count)d days"
-msgstr[0] "Истиче: %(count)d дан"
-msgstr[1] "Истиче: %(count)d дана"
-msgstr[2] "Истиче: %(count)d дана"
+msgstr[0] "Истиче за %(count)d дан"
+msgstr[1] "Истиче за %(count)d дана"
+msgstr[2] "Истиче за %(count)d дана"
 
 #: ../../lib/displaytext.py:138
 #, python-format
 msgid "Expires: %(count)d hour"
 msgid_plural "Expires: %(count)d hours"
-msgstr[0] "Истиче: %(count)d сат"
-msgstr[1] "Истиче: %(count)d сата"
-msgstr[2] "Истиче: %(count)d сати"
+msgstr[0] "Истиче за %(count)d сат"
+msgstr[1] "Истиче за %(count)d сата"
+msgstr[2] "Истиче за %(count)d сати"
 
 #: ../../lib/displaytext.py:143
 #, python-format
 msgid "Expires: %(count)d minute"
 msgid_plural "Expires: %(count)d minutes"
-msgstr[0] "Истиче: %(count)d минут"
-msgstr[1] "Истиче: %(count)d минута"
-msgstr[2] "Истиче: %(count)d минута"
+msgstr[0] "Истиче за %(count)d минут"
+msgstr[1] "Истиче за %(count)d минута"
+msgstr[2] "Истиче за %(count)d минута"
 
 #: ../../lib/displaytext.py:160
 #, python-format
 msgid "%(month)s %(dayofmonth)s, %(year)s"
-msgstr "%(dayofmonth)s, %(month)s, %(year)s"
+msgstr "%(dayofmonth)s. %(month)s %(year)s."
 
 #: ../../lib/frontends/widgets/style.py:234
 msgid "From"
@@ -1338,12 +1355,12 @@ msgstr "Коментари"
 #: ../../lib/frontends/widgets/style.py:240
 #, python-format
 msgid "Reveal in %(progname)s"
-msgstr "Открити у %(progname)s"
+msgstr "Прикажи у %(progname)s-у"
 
 #: ../../lib/frontends/widgets/style.py:240
 #: ../../lib/frontends/widgets/displays.py:419
 msgid "Reveal File"
-msgstr "Открити датотеку"
+msgstr "Прикажи датотеку"
 
 #: ../../lib/frontends/widgets/style.py:241
 msgid "Display Contents"
@@ -1352,7 +1369,7 @@ msgstr "Прикажи садржај"
 #: ../../lib/frontends/widgets/style.py:242
 #: ../../lib/frontends/widgets/itemcontextmenu.py:146
 msgid "Web Page"
-msgstr "Веб-страница"
+msgstr "Интернет страница"
 
 #: ../../lib/frontends/widgets/style.py:243
 msgid "File URL"
@@ -1376,7 +1393,7 @@ msgstr "Пијавице"
 
 #: ../../lib/frontends/widgets/style.py:248
 msgid "Upload Rate"
-msgstr "Однос слања"
+msgstr "Брзина слања"
 
 #: ../../lib/frontends/widgets/style.py:249
 msgid "Upload Total"
@@ -1384,7 +1401,7 @@ msgstr "Укупно послато"
 
 #: ../../lib/frontends/widgets/style.py:250
 msgid "Down Rate"
-msgstr "Однос преузимања"
+msgstr "Брзина преузимања"
 
 #: ../../lib/frontends/widgets/style.py:251
 msgid "Down Total"
@@ -1392,7 +1409,7 @@ msgstr "Укупно преузето"
 
 #: ../../lib/frontends/widgets/style.py:252
 msgid "Up/Down Ratio"
-msgstr "Однос преузимања/слања"
+msgstr "Однос преузимања и слања"
 
 #: ../../lib/frontends/widgets/style.py:254
 msgid "Download Torrent"
@@ -1405,7 +1422,7 @@ msgstr "Грешка"
 
 #: ../../lib/frontends/widgets/style.py:257
 msgid "Queued for Auto-download"
-msgstr ""
+msgstr "На чекању за аутоматско преузимање"
 
 #: ../../lib/frontends/widgets/style.py:258
 #: ../../lib/frontends/widgets/style.py:1203
@@ -1426,7 +1443,7 @@ msgstr "Ново доступно"
 
 #: ../../lib/frontends/widgets/style.py:263
 msgid "Stop seeding"
-msgstr "Обустави сејање"
+msgstr "Заустави слање"
 
 #: ../../lib/frontends/widgets/style.py:592
 #: ../../lib/frontends/widgets/style.py:1214
@@ -1448,7 +1465,8 @@ msgstr "Нова претрага довода"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:59
 msgid "A search feed contains items that match a search term."
-msgstr "Претрага довода садржи ставке које се поклапају с појавом претраге."
+msgstr ""
+"Претрага довода садржи ставке које се поклапају с кључним речима претраге."
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:75
 msgid "Search for:"
@@ -1456,7 +1474,7 @@ msgstr "Тражи:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:82
 msgid "In this:"
-msgstr "У овоме:"
+msgstr "Овде:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:89
 msgid "Feed:"
@@ -1464,16 +1482,16 @@ msgstr "Довод:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:96
 msgid "Search engine:"
-msgstr "Претраживач"
+msgstr "Претраживач:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:102
 #: ../../lib/frontends/widgets/newfeed.py:60
 msgid "URL:"
-msgstr "URL:"
+msgstr "Адреса:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:136
 msgid "Add new feed to this section:"
-msgstr "Додај нови довод у ову секцију:"
+msgstr "Смести довод у следећи одељак:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:139
 #: ../../lib/frontends/widgets/newfeed.py:72
@@ -1489,11 +1507,11 @@ msgstr "аудио"
 
 #: ../../lib/frontends/widgets/playback.py:608
 msgid "Open Subtitles File..."
-msgstr "Отвори превод..."
+msgstr "Отварање титла..."
 
 #: ../../lib/frontends/widgets/playback.py:609
 msgid "Subtitle files"
-msgstr "Преводи"
+msgstr "Титлови"
 
 #: ../../lib/frontends/widgets/menus.py:203
 msgid "_File"
@@ -1509,7 +1527,7 @@ msgstr "_Преузми ставку"
 
 #: ../../lib/frontends/widgets/menus.py:208
 msgid "Check _Version"
-msgstr "Провери_издање"
+msgstr "Провери _издање"
 
 #: ../../lib/frontends/widgets/menus.py:210
 msgid "_Remove Item"
@@ -1521,11 +1539,11 @@ msgstr "_Уклони ставке"
 
 #: ../../lib/frontends/widgets/menus.py:214
 msgid "_Edit Item"
-msgstr "_Уреди ставку"
+msgstr "У_реди ставку"
 
 #: ../../lib/frontends/widgets/menus.py:216
 msgid "Save Item _As"
-msgstr "Сачувај ставку _као"
+msgstr "_Сачувај ставку као"
 
 #: ../../lib/frontends/widgets/menus.py:219
 msgid "Save Items _As"
@@ -1537,15 +1555,15 @@ msgstr "Умножи адресу _ставке"
 
 #: ../../lib/frontends/widgets/menus.py:224
 msgid "_Preferences"
-msgstr "_Поставке"
+msgstr "П_оставке"
 
 #: ../../lib/frontends/widgets/menus.py:225
 msgid "_Quit"
-msgstr "_Изађи"
+msgstr "И_злаз"
 
 #: ../../lib/frontends/widgets/menus.py:228
 msgid "Convert"
-msgstr ""
+msgstr "_Претварање"
 
 #: ../../lib/frontends/widgets/menus.py:230
 msgid "_Sidebar"
@@ -1558,11 +1576,11 @@ msgstr "Додај _довод"
 #: ../../lib/frontends/widgets/menus.py:233
 #: ../../lib/frontends/widgets/application.py:582
 msgid "Add Website"
-msgstr "Додај веб-сајт"
+msgstr "Додај интернет страницу"
 
 #: ../../lib/frontends/widgets/menus.py:235
 msgid "New Searc_h Feed"
-msgstr "Нова претрага _довода"
+msgstr "_Нова претрага довода"
 
 #: ../../lib/frontends/widgets/menus.py:237
 msgid "New _Folder"
@@ -1578,7 +1596,7 @@ msgstr "_Преименуј довод"
 
 #: ../../lib/frontends/widgets/menus.py:245
 msgid "Re_name Website"
-msgstr "_Преименуј веб-сајт"
+msgstr "_Преименуј интернет страницу"
 
 #: ../../lib/frontends/widgets/menus.py:246
 msgid "_Remove"
@@ -1602,11 +1620,11 @@ msgstr "_Уклони фасцикле"
 
 #: ../../lib/frontends/widgets/menus.py:254
 msgid "_Remove Website"
-msgstr "_Уклони веб-сајт"
+msgstr "_Уклони интернет страницу"
 
 #: ../../lib/frontends/widgets/menus.py:255
 msgid "_Remove Websites"
-msgstr "_Уклони веб-сајтове"
+msgstr "_Уклони интернет странице"
 
 #: ../../lib/frontends/widgets/menus.py:256
 msgid "_Update Feed"
@@ -1630,7 +1648,7 @@ msgstr "_Извези доводе (OPML)"
 
 #: ../../lib/frontends/widgets/menus.py:269
 msgid "_Share with a Friend"
-msgstr "_Подели с пријатељем"
+msgstr "По_дели с пријатељем"
 
 #: ../../lib/frontends/widgets/menus.py:271
 msgid "Copy URL"
@@ -1642,11 +1660,11 @@ msgstr "_Списак нумера"
 
 #: ../../lib/frontends/widgets/menus.py:276
 msgid "New _Playlist"
-msgstr "Нови _списак нумера"
+msgstr "_Нови списак нумера"
 
 #: ../../lib/frontends/widgets/menus.py:279
 msgid "New Playlist Fol_der"
-msgstr "Нова фасцикла _списка нумера"
+msgstr "Нова _фасцикла за спискове нумера"
 
 #: ../../lib/frontends/widgets/menus.py:283
 msgid "Re_name Playlist"
@@ -1662,20 +1680,20 @@ msgstr "_Уклони спискове нумера"
 
 #: ../../lib/frontends/widgets/menus.py:289
 msgid "_Remove Playlist Folders"
-msgstr "_Уклони фасцикле списка нумера"
+msgstr "_Уклони фасцикле за спискове нумера"
 
 #: ../../lib/frontends/widgets/menus.py:290
 msgid "_Remove Playlist Folder"
-msgstr "_Уклони фасциклу списка нумера"
+msgstr "_Уклони фасциклу за спискове нумера"
 
 #: ../../lib/frontends/widgets/menus.py:293
 msgid "P_layback"
-msgstr "_Списак нумера"
+msgstr "_Репродукција"
 
 #: ../../lib/frontends/widgets/menus.py:294
 #: ../../lib/frontends/widgets/menus.py:296
 msgid "_Play"
-msgstr "_Пусти"
+msgstr "_Репродукуј"
 
 #: ../../lib/frontends/widgets/menus.py:297
 msgid "_Pause"
@@ -1695,15 +1713,15 @@ msgstr "_Претходна ставка"
 
 #: ../../lib/frontends/widgets/menus.py:308
 msgid "Skip _Forward"
-msgstr "Прескочи _унапред"
+msgstr "Прескочи _напред"
 
 #: ../../lib/frontends/widgets/menus.py:310
 msgid "Skip _Back"
-msgstr "Прескочи _назад"
+msgstr "Прескочи на_зад"
 
 #: ../../lib/frontends/widgets/menus.py:313
 msgid "Volume _Up"
-msgstr "_Појачај"
+msgstr "По_јачај"
 
 #: ../../lib/frontends/widgets/menus.py:315
 msgid "Volume _Down"
@@ -1719,11 +1737,11 @@ msgstr "_Задржи издвојено/приложено"
 
 #: ../../lib/frontends/widgets/menus.py:324
 msgid "S_ubtitles"
-msgstr "_Преводи"
+msgstr "_Титлови"
 
 #: ../../lib/frontends/widgets/menus.py:328
 msgid "Select a Subtitles File..."
-msgstr "Изабери превод..."
+msgstr "Изабери титл..."
 
 #: ../../lib/frontends/widgets/menus.py:334
 #: ../../lib/frontends/widgets/menus.py:346
@@ -1733,16 +1751,16 @@ msgstr "_Помоћ"
 #: ../../lib/frontends/widgets/menus.py:335
 #, python-format
 msgid "_About %(name)s"
-msgstr "_О %(name)s"
+msgstr "_О %(name)s програму"
 
 #: ../../lib/frontends/widgets/menus.py:343
 msgid "_Donate"
-msgstr "_Донирај"
+msgstr "П_риложи"
 
 #: ../../lib/frontends/widgets/menus.py:348
 #: ../../lib/frontends/widgets/diagnostics.py:92
 msgid "Diagnostics"
-msgstr "Дијагностике"
+msgstr "_Дијагностике"
 
 #: ../../lib/frontends/widgets/menus.py:350
 msgid "Report a _Bug"
@@ -1760,15 +1778,15 @@ msgstr "_Миро планета"
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:68
 #: ../../lib/frontends/widgets/itemcontextmenu.py:296
 msgid "Show Conversion Folder"
-msgstr "Прикажи фасциклу за конверзије"
+msgstr "Прикажи фасциклу за претварања"
 
 #: ../../lib/frontends/widgets/menus.py:390
 msgid "_Encoding"
-msgstr ""
+msgstr "_Кодни распоред"
 
 #: ../../lib/frontends/widgets/menus.py:393
 msgid "Default (UTF-8)"
-msgstr ""
+msgstr "Подразумевано (UTF-8)"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:180
 msgid "Save Search"
@@ -1831,7 +1849,7 @@ msgstr "Откажи све"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:526
 msgid "Download Settings"
-msgstr "Поставке преузимања"
+msgstr "Поставке пријема"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:575
 #, python-format
@@ -1844,41 +1862,42 @@ msgstr ""
 #, python-format
 msgid "%(available)s free for downloads (%(amount)s free on disk)"
 msgstr ""
-"%(available)s слободно за преузимање (%(amount)s слободног простора на диску)"
+"%(available)s је слободно за преузимање (%(amount)s слободног простора на "
+"диску)"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:588
 #, python-format
 msgid "%(amount)s free on disk"
-msgstr "%(amount)s слободно на диску"
+msgstr "%(amount)s слободног простора на диску"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:607
 #, python-format
 msgid "%(rate)s uploading"
-msgstr "%(rate)s слања"
+msgstr "%(rate)s брзина отпремања"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:610
 #, python-format
 msgid "%(rate)s downloading"
-msgstr "%(rate)s преузимања"
+msgstr "%(rate)s брзина преузимања"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:644
 msgid "Auto-download"
-msgstr ""
+msgstr "Аутоматско преузимање"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:649
 #: ../../lib/frontends/widgets/prefpanel.py:332
 msgid "All"
-msgstr "Све"
+msgstr "све"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:650
 #: ../../lib/frontends/widgets/prefpanel.py:331
 msgid "New"
-msgstr "Ново"
+msgstr "ново"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:651
 #: ../../lib/frontends/widgets/prefpanel.py:333
 msgid "Off"
-msgstr "Искључено"
+msgstr "онемогућено"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:659
 msgid "Share feed"
@@ -1890,11 +1909,11 @@ msgstr "Поставке"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:671
 msgid "Remove feed"
-msgstr "Уклони довод"
+msgstr "Уклањање довода"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:753
 msgid "Name"
-msgstr "Име"
+msgstr "Назив"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:756
 msgid "Time"
@@ -1902,7 +1921,7 @@ msgstr "Време"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:883
 msgid "View|All"
-msgstr "Види све"
+msgstr "Погледај све"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:889
 msgid "Non Feed"
@@ -1910,7 +1929,7 @@ msgstr "Без довода"
 
 #: ../../lib/frontends/widgets/application.py:161
 msgid "Movies directory gone"
-msgstr "Фасцикла с филмовима није доступна"
+msgstr "Фасцикла с филмовима није доступна."
 
 #: ../../lib/frontends/widgets/application.py:163
 #, python-format
@@ -1930,39 +1949,39 @@ msgid ""
 "If you quit, then you can connect the drive or otherwise fix the problem and "
 "relaunch %(shortappname)s."
 msgstr ""
-"%(shortappname)s не може да користи фасциклу примарног видеа који се налази "
-"у:\n"
+"%(shortappname)s не може да користи примарну фасциклу за видео запис који се "
+"налази у:\n"
 "\n"
 "%(moviedirectory)s\n"
 "\n"
-"Разлог томе може бити што се видео налази на спољашњем уређају који није "
-"прикључен, налази се у фасцикли која %(shortappname)s нема дозволу за "
-"писање, или на тој путањи уопште и није фасцикла.\n"
+"Узрок томе може бити то што се видео датотека налази на спољашњем уређају "
+"који није прикључен, налази се у фасцикли која %(shortappname)s нема дозволу "
+"за писање, или на тој путањи се уопште и не налази фасцикла.\n"
 "\n"
-"Уколико наставите, фасцикла примарног видеа биће ресетована у локацију на "
-"овом уређају. Ако сте имали преузете видео снимке, ово ће довести "
-"%(shortappname)s до губитка детаља о тим снимцима.\n"
+"Уколико наставите, примарна фасцикла видео записа биће измењена с локацијом "
+"на овом уређају. Уколико сте имали преузете видео снимке, то ће довести "
+"%(shortappname)s до губитка података о тим снимцима.\n"
 "\n"
-"Уколико изађете, можете поново повезати уређај, у супротном, решите се овог "
+"Ако изађете, можете поново повезати уређај. У супротном, решите се овог "
 "проблема и поново покрените %(shortappname)s."
 
 #: ../../lib/frontends/widgets/application.py:341
 msgid "Error Revealing File"
-msgstr "Грешка у откривању датотеке"
+msgstr "Грешка у приказивању датотеке."
 
 #: ../../lib/frontends/widgets/application.py:342
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
-msgstr "Датотека %(filename)s је избрисана изван %(appname)s."
+msgstr "Датотека %(filename)s је избрисана изван %(appname)s програма."
 
 #: ../../lib/frontends/widgets/application.py:353
 msgid "Open Files..."
-msgstr "Отвори датотеке..."
+msgstr "Отварање датотека..."
 
 #: ../../lib/frontends/widgets/application.py:364
 #: ../../lib/frontends/widgets/application.py:369
 msgid "Open Files - Error"
-msgstr "Грешка у отварању датотека"
+msgstr "Грешка у отварању датотека."
 
 #: ../../lib/frontends/widgets/application.py:365
 #: ../../lib/frontends/widgets/application.py:653
@@ -1984,7 +2003,7 @@ msgstr "Унесите адресу ставке за преузимање"
 
 #: ../../lib/frontends/widgets/application.py:409
 msgid "New Download - Invalid URL"
-msgstr "Ново преузимање — Неисправна адреса"
+msgstr "Ново преузимање — неисправна адреса"
 
 #: ../../lib/frontends/widgets/application.py:410
 msgid ""
@@ -1994,19 +2013,19 @@ msgid ""
 "Enter the URL of the item to download"
 msgstr ""
 "Адреса коју сте унели није исправна.\n"
-"Молимо, проверите адресу и покушајте поново.\n"
+"Проверите је и покушајте поново.\n"
 "\n"
-"Унесите адресу ставке за преузимање"
+"Унесите адресу ставке коју желите да преузмете."
 
 #: ../../lib/frontends/widgets/application.py:418
 #, python-format
 msgid "%(appname)s is up to date"
-msgstr "%(appname)s је ажурирано"
+msgstr "%(appname)s је ажуран"
 
 #: ../../lib/frontends/widgets/application.py:420
 #, python-format
 msgid "%(appname)s is up to date!"
-msgstr "%(appname)s је ажурирано!"
+msgstr "Користите најновије издање програма %(appname)s."
 
 #: ../../lib/frontends/widgets/application.py:444
 msgid "Remove item"
@@ -2023,14 +2042,14 @@ msgid_plural ""
 "Some of these items were not downloaded from a feed. Would you like to "
 "delete them or just remove them from the Library?"
 msgstr[0] ""
-"Једна од ових ставки није преузета са довода. Да ли желите да је избришете "
-"или само уклоните из библиотеке?"
+"Једна од ових ставки није преузета с довода. Желите ли да је избришете или "
+"само уклоните из библиотеке?"
 msgstr[1] ""
-"Неке од ових ставки нису преузете са довода. Да ли желите да их избришете "
-"или само уклоните из библиотеке?"
+"Неке од ових ставки нису преузете с довода. Желите ли да их избришете или "
+"само уклоните из библиотеке?"
 msgstr[2] ""
-"Неке од ових ставки нису преузете са довода. Да ли желите да их избришете "
-"или само уклоните из библиотеке?"
+"Неке од ових ставки нису преузете с довода. Желите ли да их избришете или "
+"само уклоните из библиотеке?"
 
 #: ../../lib/frontends/widgets/application.py:458
 msgid ""
@@ -2040,22 +2059,19 @@ msgid_plural ""
 "Some of these items are folders.  Delete/Removeing a folder will "
 "delete/remove it's contents"
 msgstr[0] ""
-"Једна од ових ставки је фасцикла. Брисањем/уклањањем фасцикле "
-"бришете/уклањате њен садржај"
+"Једна од ових ставки је фасцикла. Брисањем фасцикле уклонићете њен садржај."
 msgstr[1] ""
-"Неке од ових ставки су фасцикле. Брисањем/уклањањем фасцикли "
-"бришете/уклањате њихов садржај"
+"Неке од ових ставки су фасцикле. Брисањем фасцикле уклонићете њен садржај."
 msgstr[2] ""
-"Неке од ових ставки су фасцикле. Брисањем/уклањањем фасцикли "
-"бришете/уклањате њихов садржај"
+"Неке од ових ставки су фасцикле. Брисањем фасцикле уклонићете њен садржај."
 
 #: ../../lib/frontends/widgets/application.py:473
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
-msgstr[0] "Да ли сте сигурни да желите да избришете ову ставку?"
-msgstr[1] "Да ли сте сигурни да желите да избришете ове %(count)d ставке?"
-msgstr[2] "Да ли сте сигурни да желите да избришете ових %(count)d ставки?"
+msgstr[0] "Желите ли да избришете ову ставку?"
+msgstr[1] "Желите ли да избришете ове ставке?"
+msgstr[2] "Желите ли да избришете ове ставке?"
 
 #: ../../lib/frontends/widgets/application.py:480
 msgid ""
@@ -2063,11 +2079,11 @@ msgid ""
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
 msgstr[0] ""
-"Једна од ових ставки је фасцикла. Брисањем фасцикле избрисаћете њен садржај"
+"Једна од ових ставки је фасцикла. Брисањем фасцикле уклонићете њен садржај."
 msgstr[1] ""
-"Неке од ових ставки су фасцикле. Брисањем фасцикле избрисаћете њен садржај"
+"Неке од ових ставки су фасцикле. Брисањем фасцикле уклонићете њен садржај."
 msgstr[2] ""
-"Неке од ових ставки су фасцикле. Брисањем фасцикле избрисаћете њен садржај"
+"Неке од ових ставки су фасцикле. Брисањем фасцикле уклонићете њен садржај."
 
 #: ../../lib/frontends/widgets/application.py:524
 msgid "Save Item As..."
@@ -2075,11 +2091,11 @@ msgstr "Сачувај ставку као..."
 
 #: ../../lib/frontends/widgets/application.py:583
 msgid "Enter the URL of the website to add"
-msgstr "Унесите адресу веб-сајта"
+msgstr "Унесите адресу интернет странице"
 
 #: ../../lib/frontends/widgets/application.py:584
 msgid "Add Website - Invalid URL"
-msgstr "Додај веб-сајт — Неисправна адреса"
+msgstr "Додавање интернет странице — неисправна адреса"
 
 #: ../../lib/frontends/widgets/application.py:585
 msgid ""
@@ -2089,13 +2105,13 @@ msgid ""
 "Enter the URL of the website to add"
 msgstr ""
 "Адреса коју сте унели није исправна.\n"
-"Молимо, проверите адресу и покушајте поново.\n"
+"Проверите је и покушајте поново.\n"
 "\n"
-"Унесите адресу веб-сајта коу ћете додати"
+"Унесите адресу интернет странице коју желите да додате."
 
 #: ../../lib/frontends/widgets/application.py:643
 msgid "Import OPML File"
-msgstr "Увези OPML датотеку"
+msgstr "Увоз OPML датотеке"
 
 #: ../../lib/frontends/widgets/application.py:645
 msgid "OPML Files"
@@ -2103,7 +2119,7 @@ msgstr "OPML датотеке"
 
 #: ../../lib/frontends/widgets/application.py:652
 msgid "Import OPML File - Error"
-msgstr "Грешка при увожењу OPML датотеке"
+msgstr "Грешка при увожењу OPML датотеке."
 
 #: ../../lib/frontends/widgets/application.py:658
 msgid "Export OPML File"
@@ -2111,68 +2127,68 @@ msgstr "Извоз OPML датотеке"
 
 #: ../../lib/frontends/widgets/application.py:682
 msgid "Create Playlist"
-msgstr "Направи списак нумера"
+msgstr "Прављење списка нумера"
 
 #: ../../lib/frontends/widgets/application.py:683
 msgid "Enter a name for the new playlist"
-msgstr "Упиши име новог списка нумера"
+msgstr "Унесите назив новог списка нумера"
 
 #: ../../lib/frontends/widgets/application.py:704
 msgid "Create Playlist Folder"
-msgstr "Направи фасциклу за списак нумера"
+msgstr "Прављење фасцикле за спискове нумера"
 
 #: ../../lib/frontends/widgets/application.py:705
 msgid "Enter a name for the new playlist folder"
-msgstr "Унеси назив нове фасцикле за списак нумера"
+msgstr "Унесите назив нове фасцикле за списак нумера"
 
 #: ../../lib/frontends/widgets/application.py:726
 #: ../../lib/frontends/widgets/tablist.py:705
 msgid "Rename Feed Folder"
-msgstr "Преименуј фасциклу довода"
+msgstr "Преименовање фасцикле довода"
 
 #: ../../lib/frontends/widgets/application.py:727
 #, python-format
 msgid "Enter a new name for the feed folder %(name)s"
-msgstr "Унеси нови назив за фасциклу довода %(name)s"
+msgstr "Унесите нови назив за фасциклу %(name)s довода"
 
 #: ../../lib/frontends/widgets/application.py:731
 msgid "Rename Feed"
-msgstr "Преименуј довод"
+msgstr "Преименовање довода"
 
 #: ../../lib/frontends/widgets/application.py:732
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
-msgstr "Унеси нови назив за довод %(name)s"
+msgstr "Унесите нови назив за %(name)s довод"
 
 #: ../../lib/frontends/widgets/application.py:736
 #: ../../lib/frontends/widgets/tablist.py:765 ../../lib/playlist.py:202
 msgid "Rename Playlist"
-msgstr "Преименуј списак нумера"
+msgstr "Преименовање списка нумера"
 
 #: ../../lib/frontends/widgets/application.py:737
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
-msgstr "Унеси нови назив за списак нумера %(name)s"
+msgstr "Унесите нови назив за %(name)s списак нумера"
 
 #: ../../lib/frontends/widgets/application.py:741
 #: ../../lib/frontends/widgets/tablist.py:759
 msgid "Rename Playlist Folder"
-msgstr "Преименуј фасциклу са списком нумера"
+msgstr "Преименовање фасцикле са списком нумера"
 
 #: ../../lib/frontends/widgets/application.py:742
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
-msgstr "Унеси нови назив фасцикле за списак нумера %(name)s"
+msgstr "Унесите нови назив фасцикле за %(name)s списак нумера"
 
 #: ../../lib/frontends/widgets/application.py:745
 #: ../../lib/frontends/widgets/tablist.py:623
 msgid "Rename Website"
-msgstr "Преименуј веб-сајт"
+msgstr "Преименовање интернет странице"
 
 #: ../../lib/frontends/widgets/application.py:746
 #, python-format
 msgid "Enter a new name for the website %(name)s"
-msgstr "Унеси нови назив за веб-сајт %(name)s"
+msgstr "Унесите нови назив %(name)s интернет странице"
 
 #: ../../lib/frontends/widgets/application.py:770
 msgid "Remove playlist"
@@ -2185,37 +2201,37 @@ msgstr[2] "Уклони спискове нумера"
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
-msgstr[0] "Да ли сте сигурни да желите да уклоните овај списак нумера?"
-msgstr[1] "Да ли сте сигурни да желите да уклоните ове спискове нумера?"
-msgstr[2] "Да ли сте сигурни да желите да уклоните ове спискове нумера?"
+msgstr[0] "Желите ли да уклоните овај списак нумера?"
+msgstr[1] "Желите ли да уклоните ове спискове нумера?"
+msgstr[2] "Желите ли да уклоните ове спискове нумера?"
 
 #: ../../lib/frontends/widgets/application.py:792
 msgid "Remove website"
 msgid_plural "Remove websites"
-msgstr[0] "Уклони веб-сајт"
-msgstr[1] "Уклони веб-сајтове"
-msgstr[2] "Уклони веб-сајтове"
+msgstr[0] "Уклони интернет страницу"
+msgstr[1] "Уклони интернет странице"
+msgstr[2] "Уклони интернет странице"
 
 #: ../../lib/frontends/widgets/application.py:794
 #, python-format
 msgid "Are you sure you want to remove this website?"
 msgid_plural "Are you sure you want to remove these %(count)s websites?"
-msgstr[0] "Да ли сте сигурни да желите да уклоните овај веб-сајт?"
-msgstr[1] "Да ли сте сигурни да желите да уклоните ове веб-сајтове?"
-msgstr[2] "Да ли сте сигурни да желите да уклоните ове веб-сајтове?"
+msgstr[0] "Желите ли да уклоните ову интернет страницу?"
+msgstr[1] "Желите ли да уклоните ове интернет странице?"
+msgstr[2] "Желите ли да уклоните ове интернет странице?"
 
 #: ../../lib/frontends/widgets/application.py:830
 #: ../../lib/frontends/widgets/application.py:849
 msgid "Are you sure you want to quit?"
-msgstr "Да ли сте сигурни да желите да изађете?"
+msgstr "Желите ли да изађете?"
 
 #: ../../lib/frontends/widgets/application.py:832
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
-msgstr[0] "Имате %(count)d преузимање у току.  Ипак прекинути?"
-msgstr[1] "Имате %(count)d преузимања у току. Ипак прекинути?"
-msgstr[2] "Имате %(count)d преузимања у току. Ипак прекинути?"
+msgstr[0] "%(count)d преузимање је у току. Желите ли да прекинете?"
+msgstr[1] "%(count)d преузимања су у току. Желите ли да прекинете?"
+msgstr[2] "%(count)d преузимања је у току. Желите ли да прекинете?"
 
 #: ../../lib/frontends/widgets/application.py:837
 msgid "Warn me when I attempt to quit with downloads in progress"
@@ -2226,16 +2242,19 @@ msgstr "Упозори ме када покушам да изађем док ј�
 msgid "You have %(count)d conversion in progress.  Quit anyway?"
 msgid_plural ""
 "You have %(count)d conversions in progress or pending.  Quit anyway?"
-msgstr[0] ""
+msgstr[0] "%(count)d претварање је у току. Желите ли да прекинете?"
 msgstr[1] ""
+"%(count)d претварања су у току или чекају на ред. Желите ли да прекинете?"
+msgstr[2] ""
+"%(count)d преузимања је у току или чекају на ред. Желите ли да прекинете?"
 
 #: ../../lib/frontends/widgets/application.py:856
 msgid "Warn me when I attempt to quit with conversions in progress"
-msgstr ""
+msgstr "Упозори ме када покушам да изађем док је претварање у току"
 
 #: ../../lib/frontends/widgets/application.py:1040
 msgid "Upgrading database"
-msgstr "Надоградња базе података"
+msgstr "Доградња базе података"
 
 #: ../../lib/frontends/widgets/application.py:1232
 msgid "Message"
@@ -2244,7 +2263,7 @@ msgstr "Порука"
 #: ../../lib/frontends/widgets/firsttimedialog.py:68
 #, python-format
 msgid "%(name)s First Time Setup"
-msgstr "%(name)s прве поставке"
+msgstr "%(name)s прво подешавање"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:136
 msgid "Choose Language"
@@ -2260,11 +2279,12 @@ msgid ""
 "\n"
 "What language would you like Miro to be in?"
 msgstr ""
-"Добро дошли у %(name)s поставке!\n"
+"Добро дошли у %(name)s водич за подешавање!\n"
 "\n"
-"Следећих неколико корака ће Вам помоћи да подесите %(name)s за најбољи рад.\n"
+"У следећих неколико корака помоћи ћемо Вам да подесите %(name)s за најбољи "
+"могући рад.\n"
 "\n"
-"На ком језику желите да користите Миро?"
+"На ком језику желите да користите програм?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:151
 #: ../../lib/frontends/widgets/prefpanel.py:306
@@ -2297,14 +2317,13 @@ msgid ""
 "This way, downloads in progress can finish downloading and new media files "
 "can be downloaded in the background, ready when you want to watch."
 msgstr ""
-"Препоручујемо Вам да се %(name)s покреће заједно с рачунаром. На тај начин "
-"ће сва преузимања моћи да се наставе и нови медијуми се могу преузимати у "
-"позадини, спремни за гледање."
+"Препоручујемо Вам да се %(name)s покреће са системом. На тај начин ће сва "
+"преузимања моћи да се наставе и нови медијуми се могу преузимати у позадини."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:209
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
-msgstr "Да ли желите да се %(name)s покреће уз рачунар?"
+msgstr "Желите ли да покрећете %(name)s са системом?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:225
 #: ../../lib/frontends/widgets/firsttimedialog.py:290
@@ -2324,18 +2343,18 @@ msgid ""
 "\n"
 "Would you like %(name)s to look for media files on your computer?"
 msgstr ""
-"%(name)s може да пронађе све мултимедијалне датотеке на Вашем рачунару како "
-"би Вам помогао у организацији колекције.\n"
+"%(name)s може да пронађе све мултимедијалне датотеке на рачунару како би Вам "
+"помогао у организацији колекције.\n"
 "\n"
-"Да ли желите да %(name)s пронађе датотеке на Вашем рачунару?"
+"Желите ли да %(name)s пронађе датотеке на рачунару?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:262
 msgid "Restrict to all my personal files."
-msgstr "Ограничи на моје личне датотеке"
+msgstr "Ограничи на моје личне датотеке."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:263
 msgid "Search custom folders:"
-msgstr "Претражи одређене фасцикле:"
+msgstr "Претражи прилагођене фасцикле:"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:269
 #: ../../lib/frontends/widgets/prefpanel.py:479
@@ -2349,7 +2368,7 @@ msgstr "Изабери фасцикле за претрагу"
 #: ../../lib/frontends/widgets/firsttimedialog.py:305
 #: ../../lib/frontends/widgets/firsttimedialog.py:373
 msgid "Finish"
-msgstr "Заврши"
+msgstr "Крај"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:353
 msgid "Searching for media files"
@@ -2359,17 +2378,17 @@ msgstr "Тражење датотека"
 #, python-format
 msgid "parsed %(count)s file"
 msgid_plural "parsed %(count)s files"
-msgstr[0] "рашчлањена %(count)s датотека"
-msgstr[1] "рашчлањене %(count)s датотеке"
-msgstr[2] "рашчлањено %(count)s датотека"
+msgstr[0] "рашчлањена је %(count)s датотека"
+msgstr[1] "рашчлањене су %(count)s датотеке"
+msgstr[2] "рашчлањено је %(count)s датотека"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:406
 #, python-format
 msgid "found %(count)s media file"
 msgid_plural "found %(count)s media files"
-msgstr[0] "пронађен %(count)s фајл медијума"
-msgstr[1] "пронађена %(count)s фајла медијума"
-msgstr[2] "пронађено %(count)s фајлова медијума"
+msgstr[0] "пронађена је %(count)s медијска датотека"
+msgstr[1] "пронађене су %(count)s медијске датотеке"
+msgstr[2] "пронађено је %(count)s медијских датотека"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:55
 #: ../../lib/frontends/widgets/feedsettingspanel.py:102
@@ -2408,27 +2427,27 @@ msgstr "Ставке које истичу:"
 #: ../../lib/frontends/widgets/feedsettingspanel.py:95
 #, python-format
 msgid "Watched %(expiration)s (Default)"
-msgstr "Прегледано %(expiration)s (Подразумевано)"
+msgstr "погледано %(expiration)s (подразумевано)"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
-msgstr "Погледано јуче"
+msgstr "погледано јуче"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr "Погледано пре 3 дана"
+msgstr "погледано пре три дана"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
-msgstr "Погледано пре 6 дана"
+msgstr "погледано пре шест дана"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:100
 msgid "Watched 10 days ago"
-msgstr "Погледано пре 10 дана"
+msgstr "погледано пре десет дана"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
-msgstr "Погледнао пре месец дана"
+msgstr "погледано пре месец дана"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
@@ -2437,27 +2456,27 @@ msgstr "Застареле ставке довода:"
 #: ../../lib/frontends/widgets/feedsettingspanel.py:139
 #, python-format
 msgid "Keep %(number)s (Default)"
-msgstr "Задржи %(number)s (Подразумевано)"
+msgstr "задржи %(number)s (подразумевано)"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:141
 msgid "Keep 0"
-msgstr "Задржи 0"
+msgstr "задржи 0"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:142
 msgid "Keep 20"
-msgstr "Задржи 20"
+msgstr "задржи 20"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:143
 msgid "Keep 50"
-msgstr "Задржи 50"
+msgstr "задржи 50"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:144
 msgid "Keep 100"
-msgstr "Задржи 100"
+msgstr "задржи 100"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:145
 msgid "Keep 1000"
-msgstr "Задржи 1000"
+msgstr "задржи 1000"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
@@ -2465,31 +2484,31 @@ msgstr "Уклони све"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
-msgstr "Старе ставке су уклоњене"
+msgstr "Старе ставке су уклоњене."
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause auto-downloading when this many items are unplayed:"
-msgstr ""
+msgstr "Паузирај аутоматско преузимање када постоји:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
-msgstr "Једна непогледана ставка"
+msgstr "1 нерепродукована ставка"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:198
 msgid "3 unplayed items"
-msgstr "3 непогледане ставке"
+msgstr "3 нерепродуковане ставке"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:199
 msgid "5 unplayed items"
-msgstr "5 непогледаних ставки"
+msgstr "5 нерепродукованих ставки"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:200
 msgid "10 unplayed items"
-msgstr "10 непогледаних ставки"
+msgstr "10 нерепродукованих ставки"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:201
 msgid "15 unplayed items"
-msgstr "15 непогледаних ставки"
+msgstr "15 нерепродукованих ставки"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:241
 msgid "Feed Settings"
@@ -2497,7 +2516,7 @@ msgstr "Поставке довода"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:477
 msgid "No Results"
-msgstr ""
+msgstr "Нема резултата"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:481
 msgid ""
@@ -2506,12 +2525,16 @@ msgid ""
 "engines, click on the icon to the left of the search box above and select "
 "the search engine from the drop down."
 msgstr ""
+"Да бисте пронашли одређене медијске датотеке, кликните на поље за претрагу "
+"изнад, унесите кључне речи и притисните тастер Enter. Ако желите да "
+"промените претраживач, кликните на иконицу с леве стране поља за претрагу и "
+"изаберите претраживач који желите из падајућег менија."
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:590
 #: ../../lib/frontends/widgets/itemedit.py:151
 #: ../../lib/frontends/widgets/statictabs.py:103
 msgid "Video"
-msgstr "Видео"
+msgstr "Видео запис"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:591
 msgid "Unwatched"
@@ -2521,7 +2544,7 @@ msgstr "Негледано"
 #: ../../lib/frontends/widgets/itemedit.py:152
 #: ../../lib/frontends/widgets/statictabs.py:109
 msgid "Audio"
-msgstr "Аудио"
+msgstr "Аудио запис"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:604
 #: ../../lib/frontends/widgets/itemedit.py:153
@@ -2535,19 +2558,19 @@ msgstr "Назад на довод"
 
 #: ../../lib/frontends/widgets/newfeed.py:70
 msgid "Feed should go in this section:"
-msgstr "Довод би требало бити у овој секцији:"
+msgstr "Смести довод у следећи одељак:"
 
 #: ../../lib/frontends/widgets/newfeed.py:109
 msgid "Add Feed"
-msgstr "Додај довод"
+msgstr "Додавање довода"
 
 #: ../../lib/frontends/widgets/newfeed.py:110
 msgid "Enter the URL of the feed to add"
-msgstr "Унеси адресу довода који желите да додате"
+msgstr "Унесите адресу довода који желите да додате"
 
 #: ../../lib/frontends/widgets/newfeed.py:121
 msgid "Add Feed - Invalid URL"
-msgstr "Додај довод — Неисправна адреса"
+msgstr "Додавање довода — неисправна адреса"
 
 #: ../../lib/frontends/widgets/newfeed.py:122
 msgid ""
@@ -2557,9 +2580,9 @@ msgid ""
 "Enter the URL of the feed to add"
 msgstr ""
 "Адреса коју сте унели није исправна.\n"
-"Молимо, проверите адресу и покушајте поново.\n"
+"Проверите је и покушајте поново.\n"
 "\n"
-"Унесите адресу довода који желите да додате"
+"Унесите адресу довода који желите да додате."
 
 #: ../../lib/frontends/widgets/displays.py:401
 #, python-format
@@ -2567,8 +2590,8 @@ msgid ""
 "%(appname)s can't play this file.  You may be able to open it with a "
 "different program"
 msgstr ""
-"%(appname)s не може да отвори ову датотеку.  Покушајте да је отворите у "
-"другом програму"
+"%(appname)s не може да отвори ову датотеку. Покушајте да је отворите у "
+"другом програму."
 
 #: ../../lib/frontends/widgets/displays.py:411
 msgid "Filename:"
@@ -2582,7 +2605,7 @@ msgstr "Врста датотеке:"
 #: ../../lib/frontends/widgets/displays.py:457
 #: ../../lib/frontends/widgets/itemcontextmenu.py:105
 msgid "Play Externally"
-msgstr "Пусти спољашње"
+msgstr "Репродукуј спољашње"
 
 #: ../../lib/frontends/widgets/displays.py:422
 msgid "Skip"
@@ -2596,9 +2619,9 @@ msgstr "Отвори спољашње"
 #, python-format
 msgid "%(count)d Feed Folder Selected"
 msgid_plural "%(count)d Feed Folders Selected"
-msgstr[0] "%(count)d изабрана фасцикла довода"
-msgstr[1] "%(count)d изабране фасцикле довода"
-msgstr[2] "%(count)d изабраних фасцикли довода"
+msgstr[0] "Изабрана је %(count)d фасцикла за доводе"
+msgstr[1] "Изабране су %(count)d фасцикле за доводе"
+msgstr[2] "Изабрано је %(count)d фасцикли за доводе"
 
 #: ../../lib/frontends/widgets/displays.py:571
 #, python-format
@@ -2612,9 +2635,9 @@ msgstr[2] "(садржи %(count)d довода)"
 #, python-format
 msgid "%(count)d Playlist Folder Selected"
 msgid_plural "%(count)d Playlist Folders Selected"
-msgstr[0] "%(count)d изабрана фасцикла са списком нумера"
-msgstr[1] "%(count)d изабране фасцикле са списковима нумера"
-msgstr[2] "%(count)d изабраних фасцикли са списковима нумера"
+msgstr[0] "Изабрана је %(count)d фасцикла са списком нумера"
+msgstr[1] "Изабране су %(count)d фасцикле са списком нумера"
+msgstr[2] "Изабрано је %(count)d фасцикли са списком нумера"
 
 #: ../../lib/frontends/widgets/displays.py:582
 #, python-format
@@ -2628,25 +2651,25 @@ msgstr[2] "(садржи %(count)d спискова нумера)"
 #, python-format
 msgid "%(count)d Feed Selected"
 msgid_plural "%(count)d Feeds Selected"
-msgstr[0] "%(count)d изабрани довод"
-msgstr[1] "%(count)d изабрана довода"
-msgstr[2] "%(count)d изабраних довода"
+msgstr[0] "Изабран је %(count)d довод"
+msgstr[1] "Изабрана су %(count)d довода"
+msgstr[2] "Изабрано је %(count)d довода"
 
 #: ../../lib/frontends/widgets/displays.py:598
 #, python-format
 msgid "%(count)d Website Selected"
 msgid_plural "%(count)d Websites Selected"
-msgstr[0] "%(count)d изабрани веб-сајт"
-msgstr[1] "%(count)d изабрана веб-сајта"
-msgstr[2] "%(count)d изабраних веб-сајтова"
+msgstr[0] "Изабрана је %(count)d интернет страница"
+msgstr[1] "Изабране су %(count)d интернет странице"
+msgstr[2] "Изабрано је %(count)d интернет страница"
 
 #: ../../lib/frontends/widgets/displays.py:604
 #, python-format
 msgid "%(count)d Playlist Selected"
 msgid_plural "%(count)d Playlists Selected"
-msgstr[0] "%(count)d изабран списак нумера"
-msgstr[1] "%(count)d изабрана списка нумера"
-msgstr[2] "%(count)d изабраних спискова нумера"
+msgstr[0] "Изабран је %(count)d списак нумера"
+msgstr[1] "Изабрана су %(count)d списка нумера"
+msgstr[2] "Изабрано је %(count)d спискова нумера"
 
 #: ../../lib/frontends/widgets/displays.py:611
 msgid "Delete All"
@@ -2671,7 +2694,7 @@ msgstr "Опис:"
 
 #: ../../lib/frontends/widgets/itemedit.py:149
 msgid "Media type:"
-msgstr "Врста медијума:"
+msgstr "Врста медијске датотеке:"
 
 #: ../../lib/frontends/widgets/itemedit.py:157
 msgid "Path:"
@@ -2681,59 +2704,59 @@ msgstr "Путања:"
 #: ../../lib/frontends/widgets/statictabs.py:126
 #: ../../lib/frontends/widgets/prefpanel.py:730
 msgid "Conversions"
-msgstr "Конверзије"
+msgstr "Претварања"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:62
 msgid "Stop All Conversions"
-msgstr "Заустави све конверзије"
+msgstr "Заустави сва претварања"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:74
 msgid "Clear Finished Conversions"
-msgstr ""
+msgstr "Очисти завршена претварања"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:272
 #, python-format
 msgid "Conversion to %(format)s"
-msgstr ""
+msgstr "Претварање у %(format)s"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:306
 #, python-format
 msgid "Failed: %(error)s"
-msgstr ""
+msgstr "Неуспело: %(error)s"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:312
 msgid "Troubleshoot"
-msgstr ""
+msgstr "Решавање проблема"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:314
 msgid "Open log"
-msgstr ""
+msgstr "Отвори извештај"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:316
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:335
 msgid "Clear"
-msgstr ""
+msgstr "Очисти"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:327
 msgid "Completed"
-msgstr ""
+msgstr "Завршено"
 
 #: ../../lib/frontends/widgets/downloadscontroller.py:84
 #: ../../lib/frontends/widgets/prefpanel.py:726
 msgid "Downloads"
-msgstr "Преузимања"
+msgstr "Пријеми"
 
 #: ../../lib/frontends/widgets/downloadscontroller.py:95
 msgid "Single and external downloads"
-msgstr "Индивидуална и спољашња преузимања"
+msgstr "Појединачна и спољашња преузимања"
 
 #: ../../lib/frontends/widgets/downloadscontroller.py:99
 msgid "Feed downloads"
-msgstr "Преузимања довода"
+msgstr "Пријеми путем довода"
 
 #: ../../lib/frontends/widgets/downloadscontroller.py:102
 msgid "Seeding"
-msgstr "Сејање"
+msgstr "Слање"
 
 #: ../../lib/frontends/widgets/crashdialog.py:48
 msgid "Internal Error"
@@ -2753,8 +2776,8 @@ msgid ""
 "Include entire program database including all video and feed metadata with "
 "crash report"
 msgstr ""
-"Обухвати комплетну базу података програма, укључујући и све видео снимке и "
-"доводе метаподатака уз извештај о квару"
+"Обухвати целу базу података, укључујући и све видео снимке и доводе уз "
+"извештај о грешци."
 
 #: ../../lib/frontends/widgets/crashdialog.py:71
 msgid "Describe what you were doing when you got this error:"
@@ -2770,13 +2793,13 @@ msgstr[2] "Уклони доводе"
 #: ../../lib/frontends/widgets/removefeeds.py:57
 msgid "Are you sure you want to remove this feed:"
 msgid_plural "Are you sure you want to remove these feeds:"
-msgstr[0] "Да ли сте сигурни да желите да уклоните овај довод:"
-msgstr[1] "Да ли сте сигурни да желите да уклоните ове доводе:"
-msgstr[2] "Да ли сте сигурни да желите да уклоните ове доводе:"
+msgstr[0] "Желите ли да уклоните овај довод?"
+msgstr[1] "Желите ли да уклоните ове доводе?"
+msgstr[2] "Желите ли да уклоните ове доводе?"
 
 #: ../../lib/frontends/widgets/removefeeds.py:84
 msgid "Keep items that have been downloaded in my library."
-msgstr "Задржи преузете ставке у мојој библиотеци."
+msgstr "Задржи преузете ставке у библиотеци."
 
 #: ../../lib/frontends/widgets/removefeeds.py:89
 #, python-format
@@ -2785,9 +2808,9 @@ msgid ""
 "still appear in your library.  You can stop watching watched folders "
 "completely in the %(appname)s preference panel."
 msgstr ""
-"Посматране фасцикле ће бити уклоњене из споредне колоне, али ће се њихов "
-"садржај и даље појављивати у библиотеци.  Можете у потпуности престати да "
-"гледате посматране фасцикле у %(appname)s панелу за подешавања."
+"Надгледане фасцикле ће бити уклоњене из бочне палете, али ће се њихов "
+"садржај и даље појављивати у библиотеци. Надгледане фасцикле можете "
+"онемогућити у %(appname)s панелу за подешавање."
 
 #: ../../lib/frontends/widgets/removefeeds.py:100
 msgid ""
@@ -2797,27 +2820,24 @@ msgid_plural ""
 "Are you sure you want to remove these feeds?  The downloads currently in "
 "progress will be canceled."
 msgstr[0] ""
-"Да ли сте сигурни да желите да уклоните овај довод?  Преузимања која су "
-"тренутно у току биће обустављена."
+"Желите ли да уклоните овај довод? Преузимања која су у току биће обустављена."
 msgstr[1] ""
-"Да ли сте сигурни да желите да уклоните ове доводе?  Преузимања која су "
-"тренутно у току биће обустављена."
+"Желите ли да уклоните ове доводе? Преузимања која су у току биће обустављена."
 msgstr[2] ""
-"Да ли сте сигурни да желите да уклоните ове доводе?  Преузимања која су "
-"тренутно у току биће обустављена."
+"Желите ли да уклоните ове доводе? Преузимања која су у току биће обустављена."
 
 #: ../../lib/frontends/widgets/tablist.py:622
 #: ../../lib/frontends/widgets/tablist.py:717
 msgid "Copy URL to clipboard"
-msgstr "Умножи адресу у бележницу"
+msgstr "Умножи адресу"
 
 #: ../../lib/frontends/widgets/tablist.py:624
 msgid "Remove Website"
-msgstr "Уклони веб-сајт"
+msgstr "Уклони интернет страницу"
 
 #: ../../lib/frontends/widgets/tablist.py:628
 msgid "Remove Websites"
-msgstr "Уклони веб-сајтове"
+msgstr "Уклони интернет странице"
 
 #: ../../lib/frontends/widgets/tablist.py:704
 msgid "Update Feeds In Folder"
@@ -2833,7 +2853,7 @@ msgstr "Преименуј"
 
 #: ../../lib/frontends/widgets/tablist.py:716
 msgid "Revert Feed Name"
-msgstr "Врати име довода"
+msgstr "Поврати назив довода"
 
 #: ../../lib/frontends/widgets/tablist.py:723
 msgid "Update Feeds Now"
@@ -2845,7 +2865,7 @@ msgstr "БИБЛИОТЕКА"
 
 #: ../../lib/frontends/widgets/tablist.py:790
 msgid "WEBSITES"
-msgstr "ВЕБ-СТРАНИЦЕ"
+msgstr "ИНТЕРНЕТ СТРАНИЦЕ"
 
 #: ../../lib/frontends/widgets/tablist.py:792
 msgid "VIDEO FEEDS"
@@ -2865,32 +2885,32 @@ msgstr "Назив фасцикле:"
 
 #: ../../lib/frontends/widgets/newfolder.py:69
 msgid "Folder should go in this section:"
-msgstr "Фасцикла би требало да иде у ову секцију:"
+msgstr "Смести фасциклу у следећи одељак:"
 
 #: ../../lib/frontends/widgets/newfolder.py:107
 #: ../../lib/frontends/widgets/newfolder.py:109
 msgid "Create Feed Folder"
-msgstr "Направи фасциклу довода"
+msgstr "Прављење фасцикле за доводе"
 
 #: ../../lib/frontends/widgets/newfolder.py:110
 msgid "Enter the name of the folder to add"
-msgstr "Упиши име фасцикле за додавање"
+msgstr "Унесите назив фасцикле за додавање"
 
 #: ../../lib/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
-msgstr "Додај у списак нумера"
+msgstr "Додај списак нумера"
 
 #: ../../lib/frontends/widgets/addtoplaylistdialog.py:58
 msgid "Add items to an existing playlist or a new one."
-msgstr "Додај у постојећи или нови списак нумера"
+msgstr "Додај у постојећи или нови списак нумера."
 
 #: ../../lib/frontends/widgets/addtoplaylistdialog.py:77
 msgid "Existing playlist:"
-msgstr "Постојећи списак нумера"
+msgstr "Постојећи списак нумера:"
 
 #: ../../lib/frontends/widgets/addtoplaylistdialog.py:83
 msgid "New playlist:"
-msgstr "Нови списак нумера"
+msgstr "Нови списак нумера:"
 
 #: ../../lib/frontends/widgets/dialogs.py:105
 msgid ""
@@ -2898,15 +2918,14 @@ msgid ""
 "can take a long time if you have a large number of items in Miro (it can "
 "even take more than 30 minutes)."
 msgstr ""
-"Миро надограђује Вашу базу података довода и датотека. Овај јединствени "
-"процес може да траје дуго ако имате велики број ставки у Миру (може "
-"потрајати чак дуже од 30 минута)."
+"Миро дограђује базу довода и датотека. Ова радња може да траје дуго ако "
+"имате велики број ставки у програму (некад и дуже од 30 минута)."
 
 #: ../../lib/frontends/widgets/diagnostics.py:62
 #: ../../lib/frontends/widgets/diagnostics.py:129
 #, python-format
 msgid "%(databasecount)s: Delete"
-msgstr ""
+msgstr "%(databasecount)s: избриши"
 
 #: ../../lib/frontends/widgets/diagnostics.py:81
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
@@ -2915,23 +2934,23 @@ msgstr "Прикажи"
 
 #: ../../lib/frontends/widgets/diagnostics.py:95
 msgid "Movies location:"
-msgstr "Локација филмова:"
+msgstr "Путања филмова:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:99
 msgid "Icon cache location:"
-msgstr "Локација икона:"
+msgstr "Путања иконица:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:103
 msgid "Log file location:"
-msgstr "Локација извештаја:"
+msgstr "Путања извештаја:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:107
 msgid "Downloader log file location:"
-msgstr "Локација извештаја програма за преузимање:"
+msgstr "Путања извештаја програма за преузимање:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:111
 msgid "Database file location:"
-msgstr "Локација датотеке базе података:"
+msgstr "Путања датотеке базе података:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:118
 msgid "Space free on disk:"
@@ -2943,11 +2962,11 @@ msgstr "Величина базе података:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:122
 msgid "Total db objects in memory:"
-msgstr "Укупан број објеката б.п. у меморији:"
+msgstr "Укупан број објеката у бази података:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:127
 msgid "Total db backups:"
-msgstr ""
+msgstr "Укупно резерви базе података:"
 
 #: ../../lib/frontends/widgets/browser.py:93
 msgid "Open in browser"
@@ -2955,7 +2974,7 @@ msgstr "Отвори у прегледачу"
 
 #: ../../lib/frontends/widgets/browser.py:100
 msgid "Download this video"
-msgstr "Преузми овај видео"
+msgstr "Преузми овај видео запис"
 
 #: ../../lib/frontends/widgets/rundialog.py:82
 msgid "Username:"
@@ -2972,7 +2991,7 @@ msgstr "Уклони из библиотеке"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:101
 #: ../../lib/frontends/widgets/itemcontextmenu.py:204
 msgid "Play"
-msgstr "Пусти"
+msgstr "Репродукуј"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:104
 msgid "Play Just This Item"
@@ -2995,7 +3014,7 @@ msgstr "Означи као репродуковано"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:119
 msgid "Stop Seeding"
-msgstr "Прекини слање"
+msgstr "Заустави слање"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:121
 msgid "Resume Seeding"
@@ -3033,7 +3052,7 @@ msgstr "Датотека у прегледачу"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:155
 #, python-format
 msgid "File in %(progname)s"
-msgstr "Датотека у %(progname)s"
+msgstr "Датотека у %(progname)s програму"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:157
 msgid "File on Disk"
@@ -3047,37 +3066,37 @@ msgstr "Приказ"
 #, python-format
 msgid "%(count)d Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
-msgstr[0] "%(count)d преузета ставка"
-msgstr[1] "%(count)d преузете ставке"
-msgstr[2] "%(count)d преузетих ставки"
+msgstr[0] "%(count)d преузета ставка."
+msgstr[1] "%(count)d преузете ставке."
+msgstr[2] "%(count)d преузетих ставки."
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:233
 #, python-format
 msgid "%(count)d Available Item"
 msgid_plural "%(count)d Available Items"
-msgstr[0] "%(count)d доступна ставка"
-msgstr[1] "%(count)d доступне ставке"
-msgstr[2] "%(count)d доступних ставки"
+msgstr[0] "%(count)d доступна ставка."
+msgstr[1] "%(count)d доступне ставке."
+msgstr[2] "%(count)d доступних ставки."
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:246
 #, python-format
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
-msgstr[0] "%(count)d ставка преузимања"
-msgstr[1] "%(count)d ставке преузимања"
-msgstr[2] "%(count)d ставки преузимања"
+msgstr[0] "Преузима се %(count)d ставка."
+msgstr[1] "Преузимају се %(count)d ставке."
+msgstr[2] "Преузима се %(count)d ставки."
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:263
 #, python-format
 msgid "%(count)d Paused Item"
 msgid_plural "%(count)d Paused Items"
-msgstr[0] "%(count)d паузирана ставка"
-msgstr[1] "%(count)d паузиране ставке"
-msgstr[2] "%(count)d паузираних ставки"
+msgstr[0] "%(count)d паузирана ставка."
+msgstr[1] "%(count)d паузиране ставке."
+msgstr[2] "%(count)d паузираних ставки."
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:281
 msgid "Restart Upload"
-msgstr "Понови слање"
+msgstr "Поново покрени слање"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:310
 msgid "Remove From Playlist"
@@ -3095,27 +3114,27 @@ msgstr "Пун довод"
 #, python-format
 msgid "Show %(count)d More Item"
 msgid_plural "Show %(count)d More Items"
-msgstr[0] "Прикажи још %(count)d ставку"
-msgstr[1] "Прикажи још %(count)d ставке"
-msgstr[2] "Прикажи још %(count)d ставки"
+msgstr[0] "Прикажи још %(count)d ставку."
+msgstr[1] "Прикажи још %(count)d ставке."
+msgstr[2] "Прикажи још %(count)d ставки."
 
 #: ../../lib/frontends/widgets/feedcontroller.py:232
 #: ../../lib/frontends/widgets/feedcontroller.py:259
 #, python-format
 msgid "%(count)d Downloading"
 msgid_plural "%(count)d Downloading"
-msgstr[0] "%(count)d преузимање"
-msgstr[1] "%(count)d преузимања"
-msgstr[2] "%(count)d преузимања"
+msgstr[0] "%(count)d ставка се преузима."
+msgstr[1] "%(count)d ставке се преузимају."
+msgstr[2] "%(count)d ставки се преузима."
 
 #: ../../lib/frontends/widgets/feedcontroller.py:243
 #: ../../lib/frontends/widgets/feedcontroller.py:255
 #, python-format
 msgid "%(count)d Item"
 msgid_plural "%(count)d Items"
-msgstr[0] "%(count)d ставка"
-msgstr[1] "%(count)d ставке"
-msgstr[2] "%(count)d ставки"
+msgstr[0] "%(count)d ставка."
+msgstr[1] "%(count)d ставке."
+msgstr[2] "%(count)d ставки."
 
 #: ../../lib/frontends/widgets/feedcontroller.py:264
 #, python-format
@@ -3123,40 +3142,41 @@ msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
 "%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
 msgstr[0] ""
-"%(count)d преузимање је стављено у ред због непуштених ставки (Погледајте "
-"поставке)"
+"%(count)d пријем је стављен у ред за чекање због нерепродукованих ставки "
+"(погледајте поставке)"
 msgstr[1] ""
-"%(count)d преузимања су стављена у ред због непуштених ставки (Погледајте "
-"поставке)"
+"%(count)d пријема је стављено у ред за чекање због нерепродукованих ставки "
+"(погледајте поставке)"
 msgstr[2] ""
-"%(count)d преузимања су стављена у ред због непуштених ставки (Погледајте "
-"поставке)"
+"%(count)d пријема је стављено у ред за чекање због нерепродукованих ставки "
+"(погледајте поставке)"
 
 #: ../../lib/frontends/widgets/feedcontroller.py:275
 #, python-format
 msgid "%(count)d Item Matches Search"
 msgid_plural "%(count)d Items Match Search"
-msgstr[0] "%(count)d ставка се подударају с претрагом"
-msgstr[1] "%(count)d ставке се подударају с претрагом"
-msgstr[2] "%(count)d ставке се подударају с претрагом"
+msgstr[0] "%(count)d ставка се подудара с претрагом."
+msgstr[1] "%(count)d ставке се подударају с претрагом."
+msgstr[2] "%(count)d ставки се подудара с претрагом."
 
 #: ../../lib/frontends/widgets/feedcontroller.py:280
 msgid "All Items Match Search"
-msgstr "Све ставке се подударају с претрагом"
+msgstr "Све ставке се подударају с претрагом."
 
 #: ../../lib/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
-msgstr "Овај списак нумера је празан"
+msgstr "Овај списак нумера је празан."
 
 #: ../../lib/frontends/widgets/playlist.py:149
 msgid ""
 "To add an item, drag it onto the name of this playlist in the sidebar."
 msgstr ""
-"Да додате ставку, превуците је на назив списка нумера у споредној колони."
+"Да бисте додали ставку, превуците је на назив списка нумера у споредној "
+"колони."
 
 #: ../../lib/frontends/widgets/linkhandler.py:54
 msgid "Subscribe to Feed"
-msgstr "Претплати се на довод"
+msgstr "Пријави ме на довод"
 
 #: ../../lib/frontends/widgets/linkhandler.py:56
 #, python-format
@@ -3166,8 +3186,7 @@ msgid ""
 "\n"
 "%(url)s"
 msgstr ""
-"Овај линк изгледа као да је довод.  Да ли желите да га додате у ваше "
-"претплате?\n"
+"Ова веза изгледа као довод. Желите ли да га додате у своје пријаве?\n"
 "\n"
 "%(url)s"
 
@@ -3178,35 +3197,35 @@ msgstr "Миро водич"
 #: ../../lib/frontends/widgets/prefpanel.py:291
 #, python-format
 msgid "Automatically run %(appname)s when I log in."
-msgstr "Аутоматски покрени %(appname)s када се пријавим."
+msgstr "Аутоматски покрени %(appname)s када се пријавим"
 
 #: ../../lib/frontends/widgets/prefpanel.py:295
 msgid "Warn me if I attempt to quit with downloads in progress."
-msgstr "Упозори ме ако покушам да изађем док је преузимање у току."
+msgstr "Упозори ме када покушам да изађем док је преузимање у току"
 
 #: ../../lib/frontends/widgets/prefpanel.py:299
 msgid "Warn me if I attempt to quit with conversions in progress."
-msgstr ""
+msgstr "Упозори ме када покушам да изађем док је претварање у току"
 
 #: ../../lib/frontends/widgets/prefpanel.py:315
 msgid "(Changing the language requires you to restart Miro.)"
-msgstr "(Промена језика захтева да поново покренете Миро.)"
+msgstr "(промена језика захтева поновно покретање програма.)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:323
 msgid "Every day"
-msgstr "Сваки дан"
+msgstr "сваки дан"
 
 #: ../../lib/frontends/widgets/prefpanel.py:324
 msgid "Every hour"
-msgstr "Сваки сат"
+msgstr "сваки сат"
 
 #: ../../lib/frontends/widgets/prefpanel.py:325
 msgid "Every 30 minutes"
-msgstr "Сваких 30 минута"
+msgstr "сваких 30 минута"
 
 #: ../../lib/frontends/widgets/prefpanel.py:326
 msgid "Manually"
-msgstr "Ручно"
+msgstr "ручно"
 
 #: ../../lib/frontends/widgets/prefpanel.py:339
 msgid "0"
@@ -3234,7 +3253,7 @@ msgstr "Подразумеване поставке за нове доводе:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:353
 msgid "(These can be changed using the feed's settings button)"
-msgstr "(Ово може бити промењено коришћењем дугмета за подешавање довода)"
+msgstr "(ово се може променити коришћењем дугмета за подешавање довода)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:357
 msgid "Check for new content:"
@@ -3242,27 +3261,27 @@ msgstr "Провери нове садржаје:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:362
 msgid "Auto-download setting:"
-msgstr ""
+msgstr "Поставке аутоматског преузимања:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:368
 msgid "Remember this many old items:"
-msgstr "Памти оволико старих ставки:"
+msgstr "Број ставки за памћење:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:369
 msgid "(in addition to the current contents)"
-msgstr "(као додатак тренутном садржају)"
+msgstr "(као додатак текућем садржају)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:382
 msgid "Maximum number of manual downloads at a time:"
-msgstr "Максималан број ручних преузимања одједном:"
+msgstr "Највећа вредност ручних преузимања одједном:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:389
 msgid "Maximum number of auto-downloads at a time:"
-msgstr "Максималан број аутоматских преузимања одједном:"
+msgstr "Највећа вредност аутоматских преузимања одједном:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:399
 msgid "Bittorrent:"
-msgstr "Бит торент:"
+msgstr "BitTorrent:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:402
 msgid "Limit upstream bandwidth to:"
@@ -3271,7 +3290,7 @@ msgstr "Ограничи узводни проток на:"
 #: ../../lib/frontends/widgets/prefpanel.py:413
 #: ../../lib/frontends/widgets/prefpanel.py:424
 msgid "KB/s"
-msgstr "KB/s"
+msgstr "kB/с"
 
 #: ../../lib/frontends/widgets/prefpanel.py:416
 msgid "Limit downstream bandwidth to:"
@@ -3291,32 +3310,32 @@ msgstr "Завршни улаз:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:454
 msgid "Automatically forward ports.  (UPNP)"
-msgstr "Аутоматски проследи улазе. (UPNP)"
+msgstr "Аутоматски проследи улазе (UPNP)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:458
 msgid "Ignore unencrypted connections."
-msgstr "Занемари нешифроване везе."
+msgstr "Занемари нешифроване везе"
 
 #: ../../lib/frontends/widgets/prefpanel.py:462
 msgid "Stop torrent uploads when this ratio is reached:"
-msgstr "Заустави слање торента када се достигне следећи однос:"
+msgstr "Заустави слање када је стечен овај однос:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:484
 msgid "Choose Movies Directory"
-msgstr "Изабери фасциклу за филмове"
+msgstr "Избор фасцикле за филмове"
 
 #: ../../lib/frontends/widgets/prefpanel.py:497
 msgid "Directory not valid"
-msgstr "Фасцикла је погрешна"
+msgstr "Фасцикла је неисправна."
 
 #: ../../lib/frontends/widgets/prefpanel.py:498
 #, python-format
 msgid "Directory '%s' could not be created.  "
-msgstr "Фасцикла '%s' не може да се направи.  "
+msgstr "Фасцикла „%s“ се не може направити.  "
 
 #: ../../lib/frontends/widgets/prefpanel.py:513
 msgid "Migrate existing movies?"
-msgstr "Преселити постојеће филмове?"
+msgstr "Преместити постојеће филмове?"
 
 #: ../../lib/frontends/widgets/prefpanel.py:514
 #, python-format
@@ -3325,9 +3344,9 @@ msgid ""
 "migrate your existing downloads there? (Currently downloading movies will "
 "not be moved until they finish.)"
 msgstr ""
-"Изабрали сте нову фасциклу за преузимање филмова.  Да ли %(appname)s треба "
-"да пресели постојећа преузимања тамо? (Филмови који се тренутно преузимају "
-"неће бити премештени док се преузимање не заврши.)"
+"Изабрали сте нову фасциклу за пријем филмова. Желите ли да %(appname)s "
+"премести постојеће пријеме тамо? (филмови који се тренутно преузимају неће "
+"бити премештени док се пријем не заврши.)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:531
 msgid "folder"
@@ -3339,18 +3358,18 @@ msgstr "видљиво"
 
 #: ../../lib/frontends/widgets/prefpanel.py:585
 msgid "Add Watched Folder"
-msgstr "Додај посматрану фасциклу"
+msgstr "Додавање надгледане фасцикле"
 
 #: ../../lib/frontends/widgets/prefpanel.py:604
 msgid "Store downloads in this folder:"
-msgstr "Чувај преузимања у овој фасцикли:"
+msgstr "Фасцикла за чување пријема:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:611
 msgid ""
 "Watch for new video and audio items in these folders and include them in "
 "library:"
 msgstr ""
-"Надгледај нове видео и аудио ставке у овим фасциклама и укључи их у "
+"Надгледај нове аудио и видео записе у овим фасциклама и укључи их у "
 "библиотеку:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:630
@@ -3364,60 +3383,60 @@ msgstr "GB"
 
 #: ../../lib/frontends/widgets/prefpanel.py:642
 msgid "1 day"
-msgstr "1 дан"
+msgstr "један дан"
 
 #: ../../lib/frontends/widgets/prefpanel.py:643
 msgid "3 days"
-msgstr "3 дана"
+msgstr "три дана"
 
 #: ../../lib/frontends/widgets/prefpanel.py:644
 msgid "6 days"
-msgstr "6 дана"
+msgstr "шест дана"
 
 #: ../../lib/frontends/widgets/prefpanel.py:645
 msgid "10 days"
-msgstr "10 дана"
+msgstr "десет дана"
 
 #: ../../lib/frontends/widgets/prefpanel.py:646
 msgid "1 month"
-msgstr "Месец дана"
+msgstr "месец дана"
 
 #: ../../lib/frontends/widgets/prefpanel.py:652
 msgid "By default, video and audio items expire after:"
-msgstr "Подразумевано, видео и аудио ставке истичу након:"
+msgstr "Аудио и видео записи истичу након:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:661
 msgid "Play media in Miro."
-msgstr "Репродукуј медиј у Миру."
+msgstr "Репродукуј медијске датотеке у Миру"
 
 #: ../../lib/frontends/widgets/prefpanel.py:662
 msgid "Always play videos in a separate window."
-msgstr "Увек пуштај видео снимке у одвојеним прозорима."
+msgstr "Увек репродукуј видео записе у одвојеним прозорима"
 
 #: ../../lib/frontends/widgets/prefpanel.py:663
 msgid ""
 "Resume playing a video or audio item from the point it was last stopped."
-msgstr "Настави видео или аудио ставку од момента на коме је заустављено."
+msgstr "Настави видео или аудио запис на положају на коме је заустављено"
 
 #: ../../lib/frontends/widgets/prefpanel.py:665
 msgid "Automatically enable movie subtitles when available."
-msgstr "Аутоматски омогући превод када је доступан."
+msgstr "Аутоматски омогући титл када је доступан"
 
 #: ../../lib/frontends/widgets/prefpanel.py:668
 msgid "Play video and audio items one after another"
-msgstr "Пусти видео и аудио ставке једну за другом"
+msgstr "Репродукуј аудио и видео записе једно за другим"
 
 #: ../../lib/frontends/widgets/prefpanel.py:669
 msgid "Stop after each video or audio item"
-msgstr "Заустави након сваке репродуковане видео или аудио датотеке"
+msgstr "Заустави након сваког репродукованог аудио или видео записа"
 
 #: ../../lib/frontends/widgets/prefpanel.py:711
 msgid "Allow this many concurrent conversions:"
-msgstr ""
+msgstr "Број истовремених претварања:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:712
 msgid "(changing this will not apply to currently running conversions)"
-msgstr ""
+msgstr "(промена ове вредности неће утицати на покренута претварања)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:724
 msgid "General"
@@ -3437,7 +3456,7 @@ msgstr "Простор на диску"
 
 #: ../../lib/frontends/widgets/prefpanel.py:729
 msgid "Playback"
-msgstr "Репродуковање"
+msgstr "Репродукција"
 
 #: ../../lib/frontends/widgets/prefpanel.py:734
 msgid "Preferences"
@@ -3454,7 +3473,7 @@ msgstr "Изабери"
 #: ../../lib/frontends/widgets/gtk/window.py:765
 #, python-format
 msgid "About %(appname)s"
-msgstr "О %(appname)s"
+msgstr "О %(appname)s програму"
 
 #: ../../lib/frontends/widgets/gtk/window.py:781
 #, python-format
@@ -3462,7 +3481,7 @@ msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
 "%(trademark)s"
 msgstr ""
-"%(copyright)s.  Види license.txt датотеку за више информација.\n"
+"%(copyright)s.  Погледајте license.txt датотеку за више информација.\n"
 "%(trademark)s"
 
 #: ../../lib/frontends/widgets/gtk/trayicon.py:95
@@ -3491,11 +3510,11 @@ msgstr "Сакриј"
 
 #: ../../lib/frontends/widgets/gtk/video.py:287
 msgid "Subtitles"
-msgstr "Преводи"
+msgstr "Титлови"
 
 #: ../../lib/frontends/widgets/gtk/video.py:312
 msgid "Permalink"
-msgstr "Пермалинк"
+msgstr "Стална веза"
 
 #: ../../lib/frontends/widgets/gtk/video.py:320
 msgid "Exit fullscreen"
@@ -3507,16 +3526,16 @@ msgstr "Цео екран"
 
 #: ../../lib/frontends/widgets/gtk/video.py:335
 msgid "Pop-in"
-msgstr "Ускочити"
+msgstr "Ускочи"
 
 #: ../../lib/frontends/widgets/gtk/video.py:341
 msgid "Pop-out"
-msgstr "Искочити"
+msgstr "Искочи"
 
 #: ../../lib/playlist.py:203
 #, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr "Унеси ново име за списак нумера %s"
+msgstr "Унесите нови назив за %s списак нумера"
 
 #: ../../lib/httpclient.py:94
 msgid "HTTP error"
@@ -3525,44 +3544,44 @@ msgstr "HTTP грешка"
 #: ../../lib/httpclient.py:98
 #, python-format
 msgid "%(host)s closed connection"
-msgstr "%(host)s је прекинуо везу"
+msgstr "%(host)s је прекинуо везу."
 
 #: ../../lib/httpclient.py:103
 #, python-format
 msgid "Host returned %(status)s"
-msgstr ""
+msgstr "Домаћин је вратио %(status)s."
 
 #: ../../lib/httpclient.py:105
 msgid "Please retry later"
-msgstr ""
+msgstr "Покушајте касније."
 
 #: ../../lib/httpclient.py:109
 #, python-format
 msgid "%(host)s doesn't support HTTP resume"
-msgstr ""
+msgstr "%(host)s не подржава HTTP настављање."
 
 #: ../../lib/httpclient.py:114
 #, python-format
 msgid "HTTP Redirection limit hit for %(url)s"
-msgstr ""
+msgstr "HTTP ограничење преусмеравања за %(url)s."
 
 #: ../../lib/httpclient.py:120
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
-msgstr ""
+msgstr "Потврда идентита није успела за посредник: %(host)s:%(port)s."
 
 #: ../../lib/httpclient.py:128
 msgid "Got 404 status code"
-msgstr "Добих кôд стања 404"
+msgstr "Грешка 404"
 
 #: ../../lib/httpclient.py:130
 #, python-format
 msgid "Host returned bad status code: %(code)s"
-msgstr ""
+msgstr "Домаћин је вратио лош статусни кôд: %(code)s."
 
 #: ../../lib/httpclient.py:136 ../../lib/httpclient.py:137
 msgid "Authorization failed"
-msgstr "Ауторизација није успела"
+msgstr "Потврда идентитета није успела."
 
 #: ../../lib/httpclient.py:141
 msgid "Invalid URL"
@@ -3571,47 +3590,47 @@ msgstr "Неисправна адреса"
 #: ../../lib/httpclient.py:142
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr "\"%(url)s\" није исправна адреса"
+msgstr "„%(url)s“ није исправна адреса."
 
 #: ../../lib/httpclient.py:147
 msgid "Unknow Host"
-msgstr ""
+msgstr "Непознат домаћин"
 
 #: ../../lib/httpclient.py:148
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
-msgstr ""
+msgstr "Домен „%(host)s“ није пронађен."
 
 #: ../../lib/httpclient.py:154
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
-msgstr "Датотека \"%(path)s\" не постоји"
+msgstr "Датотека „%(path)s“ не постоји."
 
 #: ../../lib/httpclient.py:158
 msgid "Read error"
-msgstr "Грешка при читању"
+msgstr "Грешка при читању."
 
 #: ../../lib/httpclient.py:159
 #, python-format
 msgid "Error while reading from \"%(path)s\""
-msgstr "Грешка при читању из  \"%(path)s\""
+msgstr "Грешка при читању из  „%(path)s“."
 
 #: ../../lib/httpclient.py:167 ../../lib/dl_daemon/download.py:679
 #, python-format
 msgid "Could not write to %(filename)s"
-msgstr "Не може писати на %(filename)s"
+msgstr "Писање није могуће на %(filename)s."
 
 #: ../../lib/httpclient.py:169
 msgid "Write error"
-msgstr ""
+msgstr "Грешка при упису."
 
 #: ../../lib/httpclient.py:343
 msgid "Website"
-msgstr ""
+msgstr "Интернет страница"
 
 #: ../../lib/httpclient.py:348
 msgid "Proxy"
-msgstr ""
+msgstr "Посредник"
 
 #: ../../lib/net.py:75
 #, python-format
@@ -3621,67 +3640,68 @@ msgstr "Грешка: %(msg)s"
 #: ../../lib/net.py:92
 #, python-format
 msgid "Connection Error: %(msg)s"
-msgstr "Грешка приликом повезивања: %(msg)s"
+msgstr "Грешка при повезивању: %(msg)s"
 
 #: ../../lib/net.py:98
 msgid "SSL connection error"
-msgstr "Грешка SSL везе"
+msgstr "Грешка SSL везе."
 
 #: ../../lib/net.py:102
 msgid "Timeout"
-msgstr "Време је истекло"
+msgstr "Време је истекло."
 
 #: ../../lib/net.py:103
 #, python-format
 msgid "Connection to %(host)s timed out"
-msgstr "Време за везу са %(host)s је истекло"
+msgstr "Време за везу са %(host)s је истекло."
 
 #: ../../lib/net.py:280
 msgid "Unknown Error code"
-msgstr "Непознат кôд грешке"
+msgstr "Непознат кôд грешке."
 
 #: ../../lib/net.py:312
 msgid "Connection closed"
-msgstr "Веза је затворена"
+msgstr "Веза је затворена."
 
 #: ../../lib/dl_daemon/download.py:687 ../../lib/dl_daemon/download.py:833
 msgid "Not enough disk space"
-msgstr "Нема довољно простора на диску"
+msgstr "Нема довољно простора на диску."
 
 #: ../../lib/dl_daemon/download.py:688 ../../lib/dl_daemon/download.py:834
 #, python-format
 msgid "%(amount)s MB required to store this video"
-msgstr "%(amount)s MB потребно за чување овог видео снимка"
+msgstr "Потребно је %(amount)sMB за чување овог видео снимка."
 
 #: ../../lib/dl_daemon/download.py:718
 msgid "no content"
-msgstr ""
+msgstr "нема садржаја"
 
 #: ../../lib/dl_daemon/download.py:860
 msgid "BitTorrent failure"
-msgstr "Неуспех Бит Торента"
+msgstr "BitTorrent грешка"
 
 #: ../../lib/dl_daemon/download.py:861
 msgid "BitTorrent failed to startup"
-msgstr "Бит Торент није успео да се покрене"
+msgstr "BitTorrent није успео да се покрене."
 
 #: ../../lib/dl_daemon/download.py:1073
 msgid "Corrupt Torrent"
-msgstr "Оштећен торент"
+msgstr "Торент је оштећен."
 
 #: ../../lib/dl_daemon/download.py:1074
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
-msgstr "Торент датотека на %(url)s није исправна"
+msgstr "Торент датотека на %(url)s није исправна."
 
 #: ../../lib/dl_daemon/download.py:1105
 msgid "Torrent file deleted"
-msgstr "Торент датотека је избрисана"
+msgstr "Торент датотека је избрисана."
 
 #: ../../lib/dl_daemon/download.py:1106
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
-msgstr "Торент датотека за ову ставку је избрисана изван %(appname)s."
+msgstr ""
+"Торент датотека за ову ставку је избрисана изван %(appname)s програма."
 
 #: ../../lib/theme.py:189
 msgid "Example Playlist"

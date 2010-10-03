@@ -33,7 +33,8 @@ from miro import eventloop
 
 # Hack: we import from miro.httpauth here even though this module is about to
 # replace it.  This works because the timing of how we override modules
-from miro.httpauthtools import HTTPAuthPassword, HTTPPasswordList
+from miro.httpauthtools import (HTTPAuthPassword, HTTPPasswordList,
+        decode_auth_header)
 
 requestIdGenerator = itertools.count()
 waitingHTTPAuthCallbacks = {}
@@ -44,9 +45,13 @@ def handle_http_auth_response(id_, authHeader):
     callback = waitingHTTPAuthCallbacks.pop(id_)
     callback(authHeader)
 
-def find_http_auth(url):
+def find_http_auth(url, auth_header=None):
     global password_list
-    return password_list.find(url)
+    if auth_header is not None:
+        auth_scheme, realm, domain = decode_auth_header(auth_header)
+    else:
+        realm = None
+    return password_list.find(url, realm)
 
 def update_passwords(passwords):
     global password_list
