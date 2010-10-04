@@ -87,7 +87,6 @@ class DeviceTracker(object):
 
     def _drive_disconnected_timeout(self, info):
         del self._disconnecting[info.id]
-        del self._usb_info_cache[info.id]
         devices.device_disconnected(info)
 
 tracker = DeviceTracker()
