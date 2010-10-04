@@ -1396,7 +1396,8 @@ class ProgressBarDrawer(cellpack.Packer):
             a = radius - self.progress_width
             upper_height = math.floor(math.sqrt(radius**2 - a**2))
         elif self.progress_end == 'right':
-            a = self.width - self.progress_width
+            end_circle_start = self.width - radius
+            a = self.progress_width - end_circle_start
             upper_height = math.floor(math.sqrt(radius**2 - a**2))
         else:
             upper_height = self.height / 2
