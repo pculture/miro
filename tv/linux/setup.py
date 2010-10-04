@@ -302,6 +302,8 @@ for mem in ["24", "48", "72", "128"]:
 # add ADOPTERS file, the desktop file, mime data, and man page
 data_files += [
     ('/usr/share/miro/resources',
+     [os.path.join(root_dir, 'CREDITS')]),
+    ('/usr/share/miro/resources',
      [os.path.join(root_dir, 'ADOPTERS')]),
     ('/usr/share/pixmaps',
      glob(os.path.join(platform_dir, 'miro.xpm'))),

@@ -788,10 +788,19 @@ class AboutDialog(Dialog):
         self.packing_vbox.pack_start(copyright_label)
         self.packing_vbox.pack_start(gtk.Label(config.get(prefs.PROJECT_URL)))
 
-        # this removes the newlines in the description so it wraps correctly
-        adopters_data = file(resources.path('ADOPTERS'), 'r').read()
+        # get adopters, remove newlines, and wrap it
+        adopters_data = open(resources.path('ADOPTERS'), 'r').read()
         first_double_newline = adopters_data.find('\n\n')
         adopters_data = adopters_data[first_double_newline+2:-1].replace('\n', ', ')
+
+        # get contributors, remove newlines and wrap it
+        contributors = open(resources.path('CREDITS'), 'r').readlines()
+        contributors = [c[2:].strip() for c in contributors if c.startswith("* ")]
+        contributors = ", ".join(contributors)
+
+        contributors = "\n\nThank you to all the people who contributed to Miro 3.5:\n\n" + contributors
+
+        adopters_data = adopters_data + contributors
 
         # show the adopters
         adopters_buffer = gtk.TextBuffer()
