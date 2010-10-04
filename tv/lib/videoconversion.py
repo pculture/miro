@@ -574,7 +574,11 @@ class VideoConversionTask(object):
         kwargs = {"bufsize": 1,
                   "stdout": subprocess.PIPE,
                   "stderr": subprocess.STDOUT,
+                  "stdin": subprocess.PIPE,
                   "startupinfo": util.no_console_startupinfo()}
+        if os.name != "nt":
+            kwargs["close_fds"] = True
+
         self.process_handle = subprocess.Popen(args, **kwargs)
 
         try:
