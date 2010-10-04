@@ -25,6 +25,10 @@ Stefan Magdlinski (board)
 Matt Bret (designer)
 Morgan Knutson (designer)
 
+Vince Stehle (advocate)
+Seth Bindernagel (advocate)
+David Moore (advocate)
+
 Rappaport Family Foundation (funder)
 Mitch Kapor Foundation (funder)
 Surdna Foundation (funder)
