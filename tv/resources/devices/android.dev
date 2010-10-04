@@ -3,6 +3,8 @@ vendor_id: 0bb4
 audio_conversion: mp3
 audio_types: audio/mpeg audio/x-ms-wma audio/mp4a-latm audio/3gpp audio/mp4 audio/aac audio/vnd.rn-realaudio audio/x-midi audio/x-wav application/ogg
 mount_instructions=Your phone must be in 'USB storage mode' in order for Miro to sync files to it.\nTo mount your phone, select 'Turn on USB storage' from the notifications.
+video_path: Miro
+audio_path: Miro
 
 [Android Phone]
 product_id: 0c01 0c02 0c13
@@ -13,5 +15,13 @@ audio_path: Music
 [T-Mobile G2]
 product_id: 0ff9
 video_conversion: g2
-video_path: Miro
-audio_path: Miro
+
+[Nexus One]
+vendor_id: 18d1
+product_id: 4e11
+video_conversion: nexusone
+
+[Motorola Droid]
+vendor_id: 22b8
+product_id: 41db
+video_conversion: droid
