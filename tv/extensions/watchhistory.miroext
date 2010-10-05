@@ -1,7 +1,6 @@
-[main]
+[extension]
 name = Watch History
 version = core
-
-[extension]
-loadpriority = 50
+enabled_by_default = True
+load_priority = 50
 module = watchhistory
