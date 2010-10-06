@@ -262,6 +262,7 @@ for dir in ('searchengines', 'images', 'conversions'):
     data_files.extend(find_data_files(dest_dir, source_dir))
 
 data_files.append(('resources', [os.path.join(root_dir, 'ADOPTERS')]))
+data_files.append(('resources', [os.path.join(root_dir, 'CREDITS')]))
 
 locale_temp_dir = os.path.join(os.path.dirname(__file__), "build", "locale")
 
