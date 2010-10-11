@@ -36,7 +36,63 @@ __all__ = [
 
 from miro import signals
 
+class ExtensionException(StandardError):
+    pass
+
+class PlatformNotSupported(ExtensionException):
+    """Raise this in ``load`` when the extension doesn't support the
+    platform Miro is currently running on.
+    """
+    pass
+
+class FrontendNotSupported(ExtensionException):
+    """Raise this in ``load`` when the extension doesn't support the
+    frontend Miro is using.
+    """
+    pass
+
+def get_platform():
+    """Returns the name of the platform Miro is currently running on.
+    This can be used to prevent extensions from loading on platforms
+    they don't support.
+
+    Example:
+
+    >>> if api.get_platform() not in ['linux', 'windows']:
+    ...     raise api.PlatformNotSupported('Linux and Windows only.')
+    ...
+    """
+    try:
+        from miro import plat
+    except ImportError:
+        return "unknown"
+    try:
+        return plat.PLATFORMNAME.lower()
+    except AttributeError:
+        return "unknown"
+
+def get_frontend():
+    """Returns the name of the frontend Miro is currently using.  This
+    can be used to prevent extensions from loading for frontends they
+    don't support.
+
+    Example:
+
+    >>> if api.get_frontend() not in ['cli']:
+    ...     raise api.FrontendNotSupported('cli only')
+    ...
+    """
+    try:
+        from miro import plat
+    except ImportError:
+        return "unknown"
+    try:
+        return plat.FRONTEND.lower()
+    except AttributeError:
+        return "unknown"
+
 def get_support_directory():
     from miro import config, prefs
     return config.get(prefs.SUPPORT_DIRECTORY)
+
 
