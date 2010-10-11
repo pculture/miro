@@ -2227,6 +2227,10 @@ class SearchFeedImpl(RSSMultiFeedBase):
         else:
             self.ufeed.emit('update-finished')
 
+    @returns_unicode
+    def get_title(self):
+        return _(u'Search')
+
 class SearchDownloadsFeedImpl(FeedImpl):
     def setup_new(self, ufeed):
         FeedImpl.setup_new(self, url=u'dtv:searchDownloads', ufeed=ufeed,
