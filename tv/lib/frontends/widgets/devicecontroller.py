@@ -30,6 +30,7 @@
 """
 
 from miro import displaytext
+from miro import messages
 
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import itemlistwidgets
@@ -79,25 +80,43 @@ the sidebar.")
     def set_device(self, device):
         self.device_size.set_size(device.size, device.remaining)
 
-class DeviceUnmountedView(widgetset.VBox):
+class UnknownDeviceView(widgetset.VBox):
     def __init__(self):
         widgetset.VBox.__init__(self)
         label = widgetset.Label()
-        label.set_text('This phone is not yet mounted.')
+        label.set_text("We're not exactly sure what kind of phone this is.")
         label.set_bold(True)
         label.set_size(1.5)
         self.pack_start(widgetutil.align_center(label, left_pad=20, top_pad=50,
                                               bottom_pad=20))
-        self.device_text = widgetset.Label()
-        self.device_text.set_size(1.5)
-        self.device_text.set_wrap(True)
-        self.pack_start(widgetutil.align_center(self.device_text, left_pad=20))
 
+        self.device_choices = widgetset.VBox()
+        self.pack_start(widgetutil.align_center(self.device_choices,
+                                                left_pad=20, top_pad=50,
+                                                bottom_pad=20))
 
     def set_device(self, device):
-        self.device_text.set_text(device.mount_instructions.replace('\n',
-                                                                    '\n\n'))
+        for child in self.device_choices.children:
+            self.device_choices.remove(child)
 
+        self.device = device
+        possible_devices = sorted(device.info.devices)
+        rbg = widgetset.RadioButtonGroup()
+
+        buttons_to_device_name = {}
+        for device_name in possible_devices:
+            button = widgetset.RadioButton(device_name, rbg)
+            self.device_choices.pack_start(button)
+            buttons_to_device_name[button] = device_name
+
+        def _clicked(*args):
+            messages.SetDeviceType(
+                self.device,
+                buttons_to_device_name[rbg.get_selected()]).send_to_backend()
+
+        select = widgetset.Button('This is my device')
+        select.connect('clicked', _clicked)
+        self.device_choices.pack_start(widgetutil.pad(select, top=40))
 
 class DeviceWidget(widgetset.VBox):
     def __init__(self, device):
@@ -108,17 +127,17 @@ class DeviceWidget(widgetset.VBox):
         self.pack_start(self.titlebar_vbox)
         self.pack_start(self.device_view, expand=True)
         self.mounted_view = DeviceMountedView()
-        self.unmounted_view = DeviceUnmountedView()
+        self.unknown_view = UnknownDeviceView()
         self.set_device(device)
 
 
     def set_device(self, device):
-        if device.mount:
+        if not device.info.has_multiple_devices:
             self.mounted_view.set_device(device)
             self.device_view.set_child(self.mounted_view)
         else:
-            self.unmounted_view.set_device(device)
-            self.device_view.set_child(self.unmounted_view)
+            self.unknown_view.set_device(device)
+            self.device_view.set_child(self.unknown_view)
 
     @staticmethod
     def make_titlebar(device):

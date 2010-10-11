@@ -789,6 +789,14 @@ class QueryFrontendState(BackendMessage):
     """
     pass
 
+class SetDeviceType(BackendMessage):
+    """
+    Tell the backend which specific type of device we're dealing with.
+    """
+    def __init__(self, device, name):
+        self.device = device
+        self.name = name
+
 class DeviceSyncMedia(BackendMessage):
     """Ask the backend to sync media to the given device.
     """
@@ -1317,7 +1325,7 @@ class VideoConversionTaskInfo(object):
 
     :param key: id for the conversion task
     :param state: current state of the conversion.  One of: "pending",
-        "running", "failed", or "finished"
+        "running", "failed", or "finished"de
     :param progress: how far the conversion task is
     :param error: user-friendly string for describing conversion errors (if any)
     :param output_path: path to the converted video (or None)
@@ -1391,14 +1399,14 @@ class VideoConversionTaskChanged(FrontendMessage):
 class DeviceInfo(object):
     """Tracks the state of an attached device.
     """
-    def __init__(self, id, device_info, mount, size=None, remaining=None):
+    def __init__(self, id, device_info, mount, database, size, remaining):
         self.id = id
         self.mount = mount
+        self.database = database
         self.size = size
         self.remaining = remaining
-
-        self.__dict__.update(device_info.__dict__) # copy all the device info
-                                                   # into this object
+        self.info = device_info
+        self.name = device_info.name
 
 class DeviceChanged(FrontendMessage):
     """Informs the frontend that a device has changed state.

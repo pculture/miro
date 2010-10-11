@@ -1422,6 +1422,9 @@ class BackendMessageHandler(messages.MessageHandler):
                 state.sort_states, state.active_filters)
         m.send_to_frontend()
 
+    def handle_set_device_type(self, message):
+        devicetracker.tracker.set_device_type(message.device, message.name)
+
     def handle_device_sync_media(self, message):
         try:
             item_infos = [messages.ItemInfo(item.Item.get_by_id(id))

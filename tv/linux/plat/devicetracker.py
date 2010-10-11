@@ -1,6 +1,6 @@
+import json
 import logging
 import os
-import subprocess
 
 import gio
 
@@ -22,36 +22,38 @@ class DeviceTracker(object):
         for drive in volume_monitor.get_connected_drives():
             self._drive_connected(volume_monitor, drive)
 
-    def _get_usb_info(self, id):
-        udev_info = subprocess.Popen(
-            ['udevadm', 'info', '--name', id,
-             '--query', 'property'],
-            stdout=subprocess.PIPE).communicate()[0]
-        info = dict(line.split('=', 1) for
-                    line in udev_info.split('\n') if line)
-        return {
-            'vendor': int(info['ID_VENDOR_ID'], 16),
-            'product': int(info['ID_MODEL_ID'], 16),
-            'serial': info['ID_SERIAL']
-            }
+    @staticmethod
+    def _load_database(mount):
+        file_name = os.path.join(mount, '.mirodb')
+        if not os.path.exists(file_name):
+            return {}
+        return json.load(file(os.path.join(mount, '.mirodb')))
+
+    @staticmethod
+    def _write_database(mount, database):
+        json.dump(database, file(os.path.join(mount, '.mirodb'), 'w'))
 
     def _get_device_info(self, drive):
-        id = drive.get_identifier('unix-device')
-        usb_info = self._get_usb_info(id)
-        device_info = devices.device_manager.get_device(
-            usb_info['vendor'], usb_info['product'])
-        mount_path = size = remaining = None
+        print drive
         volumes = drive.get_volumes()
-        if volumes:
-            volume = drive.get_volumes()[0]
-            mount = volume.get_mount()
-            if mount:
-                mount_path = mount.get_root().get_path()
-                statinfo = os.statvfs(mount_path)
-                size = statinfo.f_frsize * statinfo.f_blocks
-                remaining = statinfo.f_frsize * statinfo.f_bavail
-        return messages.DeviceInfo(usb_info['serial'], device_info, mount_path,
-                                   size, remaining)
+        if not volumes:
+            raise KeyError
+        volume = volumes[0]
+        uuid = volume.get_identifier('uuid')
+        mount = volume.get_mount()
+        mount_path = mount.get_root().get_path()
+        statinfo = os.statvfs(mount_path)
+        size = statinfo.f_frsize * statinfo.f_blocks
+        remaining = statinfo.f_frsize * statinfo.f_bavail
+
+        database = self._load_database(mount_path)
+
+        device_info = devices.device_manager.get_device(
+            drive.get_name(),
+            database.get('device_name', None))
+
+        return messages.DeviceInfo(uuid, device_info, mount_path,
+                                   database, size, remaining)
 
     def _drive_connected(self, volume_monitor, drive):
         try:
@@ -88,5 +90,13 @@ class DeviceTracker(object):
     def _drive_disconnected_timeout(self, info):
         del self._disconnecting[info.id]
         devices.device_disconnected(info)
+
+    def set_device_type(self, device, name):
+        device.database['device_name'] = name
+        self._write_database(device.mount, device.database)
+        info = messages.DeviceInfo(
+            device.id, device.info.devices[name], device.mount,
+            device.database, device.size, device.remaining)
+        devices.device_changed(info)
 
 tracker = DeviceTracker()
