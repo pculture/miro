@@ -6,11 +6,11 @@ from miro import messages
 from miro.plat import resources
 
 class DeviceInfo(object):
+    has_multiple_devices = False
+
     def __init__(self, section, parser):
         self.name = section
-        self.vendor_id = int(self._get(section, parser, 'vendor_id'), 16)
-        self.product_id = [int(id, 16) for id in
-                           self._get(section, parser, 'product_id').split()]
+        self.device_name = self._get(section, parser, 'name')
         self.video_conversion = self._get(section, parser, 'video_conversion')
         self.video_path = self._get(section, parser, 'video_path')
         self.audio_conversion = self._get(section, parser, 'audio_conversion')
@@ -28,9 +28,37 @@ class DeviceInfo(object):
             return parser.get('DEFAULT', name)
         except KeyError:
             return None
+
+class MultipleDeviceInfo(object):
+    has_multiple_devices = True
+
+    def __init__(self, *args):
+        self.device_name = self.name = args[0].device_name
+        self.devices = {}
+        for info in args:
+            self.add_device(info)
+
+    def add_device(self, info):
+        self.devices[info.name] = info
+
+    def get_device(self, name):
+        return self.devices[name]
+
 class DeviceManager(object):
     def __init__(self):
         self.device_map = {}
+        self.known_devices = {}
+
+    def _add_device(self, info):
+        device_name = info.device_name
+        if device_name in self.device_map:
+            existing = self.device_map[device_name]
+            if isinstance(existing, MultipleDeviceInfo):
+                existing.add_device(info)
+                return
+            else:
+                info = MultipleDeviceInfo(existing, info)
+        self.device_map[device_name] = info
 
     def startup(self):
         # load devices
@@ -40,11 +68,15 @@ class DeviceManager(object):
             parser.readfp(open(device_desc))
             for section in parser.sections():
                 info = DeviceInfo(section, parser)
-                for product_id in info.product_id:
-                    self.device_map[(info.vendor_id, product_id)] = info
+                self._add_device(info)
 
-    def get_device(self, vendor_id, product_id):
-        return self.device_map[(vendor_id, product_id)]
+    def get_device(self, device_name, device_type=None):
+        info = self.device_map[device_name]
+        if not info.has_multiple_devices:
+            return info
+        if device_type is not None and device_type in info.devices:
+            return info.devices[device_type]
+        return info
 
 device_manager = DeviceManager()
 
