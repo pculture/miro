@@ -52,16 +52,23 @@ def get_languages():
     langs = []
     for i, code in enumerate(codes):
         if "_" in code:
-            code, country = code.split("_")
+            langcode, country = code.split("_")
             country = " (%s)" % country
         else:
+            langcode = code
             country = ""
 
-        lang = iso639.find(code)
+        lang = iso639.find(langcode)
         if lang is None:
             lang = code
         else:
             lang = lang['name'] + country
+        # XXX
+        # note that this isn't completely correct, technically
+        # it is <lang>_<region>.<encoding> (e.g. zh_TW.Big5).  But in 2010
+        # the system is usually smart enough to figure this out.  The
+        # language stuff needs a closer look-at.  (technically, the "country"
+        # variable used here is incorrect too, it's actually 'region').
         langs.append((code, lang))
     langs.sort(lambda x, y: cmp(x[1], y[1]))
 

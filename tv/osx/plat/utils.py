@@ -95,6 +95,44 @@ def initialize_locale():
     except:
         pass
 
+    # XXX: FIXME - fixup the language environment variables.  Mac OS X returns
+    # a list of these, mostly which we can use in setting the environment but
+    # not always.  We do a manual fixup, for these edge cases there is no
+    # 1:1 mapping and we do a best guess so we should try to find a better way
+    # to do this.
+    #
+    # TODO:
+    # some have Latn/Cyrl variants and I am not sure what to do here.  Seems
+    # it is okay to just drop the variant and things will be okay.
+    # es (Spanish) has a 419 variant, what's this?
+    # Some may have iso639 codes only, what to do here? (not sure if this
+    # list is complete)
+    # nap - Neapolitan
+    # gsw - Swiss German
+    # scn - Sicilian
+    # haw - Hawaiian
+    # kok - Konkani
+    # chr - Cherokee
+    # tlh - Klingon (why??)
+    def rewritelang(lang):
+        # rewrite Chinese.
+        if lang == 'zh-Hant':
+            return 'zh_TW'
+        if lang == 'zh-Hans':
+            return 'zh_CN'
+        # rewrite special case for Spanish.
+        if '419' in lang:
+            lang = 'es'
+        # Rewrite cyrl/latn.
+        if 'Cyrl' in lang or 'Latn' in lang:
+            lang = lang[:2]
+        # iso639 codes only - what to do here?
+        if len(lang) == 3:
+            pass
+        # generic rewrite: e.g. fr-CA -> fr_CA
+        return lang.replace('-', '_')
+
+    languages = [rewritelang(x) for x in languages]
     if os.environ.get("MIRO_LANG"):
         os.environ["LANGUAGE"] = os.environ["MIRO_LANG"]
         os.environ["LANG"] = os.environ["MIRO_LANG"]
