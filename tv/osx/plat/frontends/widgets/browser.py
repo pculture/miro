@@ -64,12 +64,25 @@ class Browser(Widget):
         self.view.setUIDelegate_(self.delegate)
 
     def remove_viewport(self):
-        Widget.remove_viewport(self)
+        self._hack_remove_viewport()
         self.view.setPolicyDelegate_(nil)
         self.view.setResourceLoadDelegate_(nil)
         self.view.setFrameLoadDelegate_(nil)
         self.view.setUIDelegate_(nil)
-        
+
+    def _hack_remove_viewport(self):
+        # This was stolen from Widget.remove_viewport() and modified just move
+        # the viewport to a hidden spot.
+        # This works, but it's pretty ugly.  Let's fix for 4.0
+        if self.viewport is not None:
+            offscreen_rect = NSRect((-5000, -5000), self.view.frame().size)
+            self.viewport.reposition(offscreen_rect)
+            # When we re-show the view, miro will just position it back to the
+            # correct place.  Therefore, don't remove from wrappermap because
+            # miro won't call wrappermap.add() back
+            #if self.CREATES_VIEW:
+                #wrappermap.remove(self.view)
+
     def calc_size_request(self):
         return (200, 100) # Seems like a reasonable minimum size
 
