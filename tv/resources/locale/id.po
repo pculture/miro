@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2010-09-18 11:10-0400\n"
-"PO-Revision-Date: 2010-04-02 16:41+0000\n"
-"Last-Translator: M. Khari Secario <Unknown>\n"
+"POT-Creation-Date: 2010-09-30 12:19-0400\n"
+"PO-Revision-Date: 2010-10-06 04:38+0000\n"
+"Last-Translator: Danang Hartadi <Unknown>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2010-09-30 16:13+0000\n"
+"X-Launchpad-Export-Date: 2010-10-13 16:10+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
@@ -27,7 +27,7 @@ msgstr "Berbagi"
 #: ../../osx/plat/frontends/widgets/overlay.py:125 ../../lib/dialogs.py:117
 #: ../../lib/frontends/widgets/style.py:261
 #: ../../lib/frontends/widgets/style.py:1082
-#: ../../lib/frontends/widgets/style.py:1249
+#: ../../lib/frontends/widgets/style.py:1248
 #: ../../lib/frontends/widgets/itemcontextmenu.py:116
 #: ../../lib/frontends/widgets/itemcontextmenu.py:223
 #: ../../lib/frontends/widgets/gtk/video.py:283
@@ -156,7 +156,7 @@ msgid "Disable Subtitles"
 msgstr "Hilangkan subtitle"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:379
-#: ../../lib/frontends/widgets/menus.py:325
+#: ../../lib/frontends/widgets/menus.py:323
 #: ../../lib/frontends/widgets/gtk/video.py:380
 msgid "None Available"
 msgstr "Tidak ada yang tersedia"
@@ -171,7 +171,7 @@ msgstr "Pilih berkas subtitle"
 #: ../../windows/plat/renderers/vlc.py:701
 #: ../../linux/plat/renderers/gstreamerrenderer.py:569
 msgid "Eastern European"
-msgstr ""
+msgstr "Eropa Timur"
 
 #: ../../windows/plat/renderers/vlc.py:698
 #: ../../windows/plat/renderers/vlc.py:699
@@ -179,34 +179,34 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:571
 #: ../../linux/plat/renderers/gstreamerrenderer.py:572
 msgid "Baltic"
-msgstr ""
+msgstr "Baltik"
 
 #: ../../windows/plat/renderers/vlc.py:702
 msgid "Russian"
-msgstr ""
+msgstr "Rusia"
 
 #: ../../windows/plat/renderers/vlc.py:703
 msgid "South-Eastern European"
-msgstr ""
+msgstr "Eropa Tenggara"
 
 #: ../../windows/plat/renderers/vlc.py:704
 msgid "Ukrainian"
-msgstr ""
+msgstr "Ukraina"
 
 #: ../../windows/plat/renderers/vlc.py:707
 #: ../../windows/plat/renderers/vlc.py:709
 #: ../../linux/plat/renderers/gstreamerrenderer.py:590
 msgid "Western European"
-msgstr ""
+msgstr "Eropa Barat"
 
 #: ../../windows/plat/renderers/vlc.py:708
 #: ../../linux/plat/renderers/gstreamerrenderer.py:591
 msgid "Celtic"
-msgstr ""
+msgstr "Celtik"
 
 #: ../../windows/plat/renderers/vlc.py:710
 msgid "Esperanto"
-msgstr ""
+msgstr "Esperanto"
 
 #: ../../windows/plat/renderers/vlc.py:711
 #: ../../windows/plat/renderers/vlc.py:712
@@ -214,24 +214,24 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:593
 #: ../../linux/plat/renderers/gstreamerrenderer.py:594
 msgid "Greek"
-msgstr ""
+msgstr "Yunani"
 
 #: ../../windows/plat/renderers/vlc.py:715
 #: ../../linux/plat/renderers/gstreamerrenderer.py:604
 msgid "East Asian"
-msgstr ""
+msgstr "Asia Timur"
 
 #: ../../windows/plat/renderers/vlc.py:716
 msgid "Universal Chinese"
-msgstr ""
+msgstr "Cina Universal"
 
 #: ../../windows/plat/renderers/vlc.py:717
 msgid "Simplified Chinese"
-msgstr ""
+msgstr "Cina Sederhana"
 
 #: ../../windows/plat/renderers/vlc.py:718
 msgid "Simplified Chinese Unix"
-msgstr ""
+msgstr "Unix Cina Sederhana"
 
 #: ../../windows/plat/renderers/vlc.py:719
 #: ../../windows/plat/renderers/vlc.py:721
@@ -239,11 +239,11 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:613
 #: ../../linux/plat/renderers/gstreamerrenderer.py:614
 msgid "Japanese"
-msgstr ""
+msgstr "Jepang"
 
 #: ../../windows/plat/renderers/vlc.py:720
 msgid "Japanese Unix"
-msgstr ""
+msgstr "Unix Jepang"
 
 #: ../../windows/plat/renderers/vlc.py:722
 #: ../../windows/plat/renderers/vlc.py:723
@@ -252,24 +252,24 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:617
 #: ../../linux/plat/renderers/gstreamerrenderer.py:618
 msgid "Korean"
-msgstr ""
+msgstr "Korea"
 
 #: ../../windows/plat/renderers/vlc.py:724
 msgid "Traditional Chinese"
-msgstr ""
+msgstr "Cina Tradisional"
 
 #: ../../windows/plat/renderers/vlc.py:725
 msgid "Traditional Chinese Unix"
-msgstr ""
+msgstr "Unix Cina Tradisional"
 
 #: ../../windows/plat/renderers/vlc.py:726
 msgid "Hong-Kong Supplementary"
-msgstr ""
+msgstr "Tambahan Hong-Kong"
 
 #: ../../windows/plat/renderers/vlc.py:729
 #: ../../linux/plat/renderers/gstreamerrenderer.py:620
 msgid "SE and SW Asian"
-msgstr ""
+msgstr "Asia Tenggara dan Barat Laut"
 
 #: ../../windows/plat/renderers/vlc.py:730
 #: ../../windows/plat/renderers/vlc.py:731
@@ -278,12 +278,12 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:629
 #: ../../linux/plat/renderers/gstreamerrenderer.py:630
 msgid "Turkish"
-msgstr ""
+msgstr "Turki"
 
 #: ../../windows/plat/renderers/vlc.py:732
 #: ../../linux/plat/renderers/gstreamerrenderer.py:626
 msgid "Thai"
-msgstr ""
+msgstr "Thailand"
 
 #: ../../windows/plat/renderers/vlc.py:733
 #: ../../windows/plat/renderers/vlc.py:734
@@ -291,12 +291,12 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:632
 #: ../../linux/plat/renderers/gstreamerrenderer.py:633
 msgid "Vietnamese"
-msgstr ""
+msgstr "Vietnam"
 
 #: ../../windows/plat/renderers/vlc.py:737
 #: ../../linux/plat/renderers/gstreamerrenderer.py:635
 msgid "Middle Eastern"
-msgstr ""
+msgstr "Timur Tengah"
 
 #: ../../windows/plat/renderers/vlc.py:738
 #: ../../windows/plat/renderers/vlc.py:739
@@ -305,7 +305,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:638
 #: ../../linux/plat/renderers/gstreamerrenderer.py:639
 msgid "Arabic"
-msgstr ""
+msgstr "Arab"
 
 #: ../../windows/plat/renderers/vlc.py:740
 #: ../../windows/plat/renderers/vlc.py:741
@@ -314,7 +314,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:642
 #: ../../linux/plat/renderers/gstreamerrenderer.py:643
 msgid "Hebrew"
-msgstr ""
+msgstr "Ibrani"
 
 #: ../../windows/plat/renderers/vlc.py:744
 #: ../../linux/plat/renderers/gstreamerrenderer.py:647
@@ -324,14 +324,14 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:651
 #: ../../linux/plat/renderers/gstreamerrenderer.py:652
 msgid "Unicode"
-msgstr ""
+msgstr "Unicode"
 
 #: ../../windows/plat/renderers/vlc.py:745
 #: ../../windows/plat/renderers/vlc.py:746
 #: ../../windows/plat/renderers/vlc.py:747
 #: ../../windows/plat/renderers/vlc.py:748
 msgid "Universal"
-msgstr ""
+msgstr "Universal"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:41
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:49
@@ -353,11 +353,11 @@ msgstr "Keluar %(appname)s sepenuhnya."
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:58
 msgid "System Default"
-msgstr ""
+msgstr "Default Sistem"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:64
 msgid "Subtitle font:"
-msgstr ""
+msgstr "Huruf subjudul:"
 
 #: ../../windows/plat/frontends/widgets/application.py:148
 msgid "Close to tray?"
@@ -449,7 +449,7 @@ msgstr "Berkas terjemahan %(tracknumber)d"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:573
 msgid "Croatian"
-msgstr ""
+msgstr "Kroasia"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:574
 #: ../../linux/plat/renderers/gstreamerrenderer.py:575
@@ -458,39 +458,39 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:578
 #: ../../linux/plat/renderers/gstreamerrenderer.py:579
 msgid "Cyrillic"
-msgstr ""
+msgstr "Cyrillic"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:580
 msgid "Cyrillic/Russian"
-msgstr ""
+msgstr "Cyrillic/Rusia"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:581
 #: ../../linux/plat/renderers/gstreamerrenderer.py:582
 msgid "Cyrillic/Ukrainian"
-msgstr ""
+msgstr "Cyrillic/Ukraina"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:584
 #: ../../linux/plat/renderers/gstreamerrenderer.py:585
 #: ../../linux/plat/renderers/gstreamerrenderer.py:586
 msgid "Central European"
-msgstr ""
+msgstr "Eropa Tengah"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:587
 #: ../../linux/plat/renderers/gstreamerrenderer.py:588
 msgid "Romanian"
-msgstr ""
+msgstr "Rumania"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:595
 msgid "Icelandic"
-msgstr ""
+msgstr "Islandia"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:596
 msgid "Nordic"
-msgstr ""
+msgstr "Nordic"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:597
 msgid "South European"
-msgstr ""
+msgstr "Eropa Selatan"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:598
 #: ../../linux/plat/renderers/gstreamerrenderer.py:599
@@ -498,48 +498,48 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:601
 #: ../../linux/plat/renderers/gstreamerrenderer.py:602
 msgid "Western"
-msgstr ""
+msgstr "Eropa Barat"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:605
 #: ../../linux/plat/renderers/gstreamerrenderer.py:606
 #: ../../linux/plat/renderers/gstreamerrenderer.py:607
 #: ../../linux/plat/renderers/gstreamerrenderer.py:608
 msgid "Chinese Simplified"
-msgstr ""
+msgstr "Cina Sederhana"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:609
 #: ../../linux/plat/renderers/gstreamerrenderer.py:610
 #: ../../linux/plat/renderers/gstreamerrenderer.py:611
 msgid "Chinese Traditional"
-msgstr ""
+msgstr "Cina Tradisional"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:621
 msgid "Armenian"
-msgstr ""
+msgstr "Armenia"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:622
 msgid "Georgian"
-msgstr ""
+msgstr "Georgia"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:623
 msgid "Gujarati"
-msgstr ""
+msgstr "Gujarati"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:624
 msgid "Gurmukhi"
-msgstr ""
+msgstr "Gurmukhi"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:625
 msgid "Hindi"
-msgstr ""
+msgstr "Hindi"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:644
 msgid "Hebrew Visual"
-msgstr ""
+msgstr "Visual Ibrani"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:645
 msgid "Persian"
-msgstr ""
+msgstr "Persia"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:57
 msgid "Renderer options:"
@@ -558,15 +558,15 @@ msgstr "Renderer video:"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:91
 msgid "Binaries to use:"
-msgstr ""
+msgstr "Binari untuk digunakan:"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:97
 msgid "ffmpeg binary path:"
-msgstr ""
+msgstr "path biner ffmpeg:"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:104
 msgid "ffmpeg2theora binary path:"
-msgstr ""
+msgstr "path biner ffmpeg2theora:"
 
 #: ../../lib/dbupgradeprogress.py:60
 msgid "Upgrading Old Database"
@@ -582,7 +582,7 @@ msgstr "Memperbaharui database"
 
 #: ../../lib/startup.py:126
 msgid "Database Error"
-msgstr ""
+msgstr "Kesalahan Database"
 
 #: ../../lib/startup.py:127
 #, python-format
@@ -601,6 +601,18 @@ msgid ""
 "To help us fix problems like this in the future, please file a bug report at "
 "%(url)s."
 msgstr ""
+"Maaf, %(appname)s tidak bisa dimulai karena sebuah masalah dengan database:\n"
+"\n"
+"Kesalahan: %(error)s\n"
+"\n"
+"Mungkin file database anda korup dan tidak bisa digunakan\n"
+"\n"
+"Anda bisa memulai dengan yang baru dan database rusak anda akan dipindahkan, "
+"tapi adan harus menambahkan kembali feeds dan file media anda. Jika anda "
+"ingin melakukannya, tekan tombol Start Fresh dan mulai kembali %(appname)s.\n"
+"\n"
+"Untuk membantu kami memperbaiki masalah seperti ini di masa depan, silakan "
+"laporkan file bug di %(url)s."
 
 #: ../../lib/startup.py:148
 msgid "Unknown Error"
@@ -630,7 +642,7 @@ msgstr ""
 
 #: ../../lib/startup.py:512
 msgid "Submitting Crash Report"
-msgstr ""
+msgstr "Menyerahkan Laporan Crash"
 
 #: ../../lib/startup.py:514
 #, python-format
@@ -640,6 +652,11 @@ msgid ""
 "Do you want to include entire program database including all video and feed "
 "metadata with crash report? This will help us diagnose the issue."
 msgstr ""
+"%(appname)s sekarang akan menyerahkan laporan crash ke database kami\n"
+"\n"
+"Apakah anda ingin menyertakan seluruh database program termasuk semua "
+"metadata video dan feed bersama laporan crash? Hal ini akan membantu kami "
+"mendiagnosa masalah."
 
 #: ../../lib/feed.py:844
 msgid "Error loading feed"
@@ -654,16 +671,16 @@ msgstr "Tidak dapat mengambil feed dari %(url)s (%(errordescription)s)."
 msgid "Would you like to keep the feed?"
 msgstr "Apakah Anda ingin menyimpan feed tersebut?"
 
-#: ../../lib/feed.py:970
+#: ../../lib/feed.py:972
 msgid "Bad content-type"
 msgstr "Tipe konten kurang bagus"
 
-#: ../../lib/feed.py:983
+#: ../../lib/feed.py:985
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
 msgstr "Saluran tidak didukung oleh %(appname)s"
 
-#: ../../lib/feed.py:986
+#: ../../lib/feed.py:988
 #, python-format
 msgid ""
 "This channel is not compatible with %(appname)s but we'll try our best to "
@@ -684,54 +701,54 @@ msgstr ""
 "\n"
 "Apakah anda tetap ingin membuka saluran ini?"
 
-#: ../../lib/feed.py:1666 ../../lib/databaseupgrade.py:2749
+#: ../../lib/feed.py:1668 ../../lib/databaseupgrade.py:2749
 #, python-format
 msgid "%(engine)s for '%(query)s'"
-msgstr ""
+msgstr "%(engine)s untuk '%(query)s'"
 
-#: ../../lib/feed.py:2115 ../../lib/feed.py:2245
+#: ../../lib/feed.py:2123 ../../lib/feed.py:2253
 msgid "Local Files"
 msgstr "Berkas Lokal"
 
-#: ../../lib/feed.py:2124 ../../lib/feed.py:2230
+#: ../../lib/feed.py:2132 ../../lib/feed.py:2238
 #: ../../lib/frontends/widgets/firsttimedialog.py:302
 #: ../../lib/frontends/widgets/firsttimedialog.py:304
 #: ../../lib/frontends/widgets/firsttimedialog.py:362
 msgid "Search"
 msgstr "Cari"
 
-#: ../../lib/feed.py:2259
+#: ../../lib/feed.py:2267
 msgid "Playing File"
 msgstr "Memainkan Berkas"
 
-#: ../../lib/downloader.py:261
+#: ../../lib/downloader.py:268
 msgid "activity"
 msgstr "aktivitas"
 
-#: ../../lib/downloader.py:329 ../../lib/httpclient.py:127
-#: ../../lib/httpclient.py:153
+#: ../../lib/downloader.py:336 ../../lib/httpclient.py:134
+#: ../../lib/httpclient.py:165
 msgid "File not found"
 msgstr "Berkas tidak ditemukan"
 
-#: ../../lib/downloader.py:330
+#: ../../lib/downloader.py:337
 msgid "Flash URL Scraping Error"
 msgstr "Eror Terpotongnya URL Flash"
 
-#: ../../lib/downloader.py:528
+#: ../../lib/downloader.py:535
 msgid "starting up"
 msgstr "Memulai"
 
-#: ../../lib/downloader.py:535
+#: ../../lib/downloader.py:542
 #, python-format
 msgid "no connection - retrying in %s"
 msgstr "tidak ada sambungan - mencoba dalam %s"
 
-#: ../../lib/downloader.py:537
+#: ../../lib/downloader.py:544
 msgid "no connection - retrying soon"
-msgstr ""
+msgstr "tidak ada koneksi - segera mencoba lagi"
 
-#: ../../lib/downloader.py:561 ../../lib/downloader.py:569
-#: ../../lib/httpclient.py:199 ../../lib/httpclient.py:618
+#: ../../lib/downloader.py:568 ../../lib/downloader.py:576
+#: ../../lib/httpclient.py:211 ../../lib/httpclient.py:672
 msgid "Unknown"
 msgstr "Tidak dikenal"
 
@@ -781,6 +798,11 @@ msgid ""
 "\n"
 "Error: %(error)s (%(errordesc)s)"
 msgstr ""
+"%(appname)s tidak bisa mengunduh sebuah file pada URL berikut:\n"
+"\n"
+"URL: %(url)s\n"
+"\n"
+"Kesalahan: %(error)s (%(errordesc)s)"
 
 #: ../../lib/opml.py:223
 msgid "OPML Import failed"
@@ -827,15 +849,15 @@ msgstr "%(size)sKB"
 msgid "%(size)sB"
 msgstr "%(size)sB"
 
-#: ../../lib/messagehandler.py:1336
+#: ../../lib/messagehandler.py:1350
 msgid "Subscribed to new feed:"
 msgstr "Berlangganan feed baru:"
 
-#: ../../lib/messagehandler.py:1339
+#: ../../lib/messagehandler.py:1353
 msgid "Subscribed to new feeds:"
 msgstr "Berlangganan feed baru:"
 
-#: ../../lib/messagehandler.py:1358
+#: ../../lib/messagehandler.py:1372
 msgid "Migrating Files"
 msgstr "Memindahkan Berkas"
 
@@ -877,15 +899,19 @@ msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
 msgstr "Berkas torrent %(filename)s nampaknya rusak dan tidak bisa dibuka."
 
-#: ../../lib/videoconversion.py:83
+#: ../../lib/videoconversion.py:88
 #, python-format
 msgid "%(name)s (%(mediatype)s)"
-msgstr ""
+msgstr "%(name)s (%(mediatype)s)"
 
-#: ../../lib/videoconversion.py:708
+#: ../../lib/videoconversion.py:344
+msgid "Reason unknown"
+msgstr "Alasan tidak diketahui"
+
+#: ../../lib/videoconversion.py:764
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
-msgstr ""
+msgstr "%(original_name)s (Dikonversi menjadi %(format)s)"
 
 #: ../../lib/messages.py:1120 ../../lib/item.py:1127
 msgid "queued for download"
@@ -996,12 +1022,12 @@ msgid "Add Into New Folder"
 msgstr "Tambah ke Folder Baru"
 
 #: ../../lib/dialogs.py:119 ../../lib/frontends/widgets/style.py:262
-#: ../../lib/frontends/widgets/tablist.py:706
-#: ../../lib/frontends/widgets/tablist.py:718
-#: ../../lib/frontends/widgets/tablist.py:724
-#: ../../lib/frontends/widgets/tablist.py:760
-#: ../../lib/frontends/widgets/tablist.py:766
-#: ../../lib/frontends/widgets/tablist.py:771
+#: ../../lib/frontends/widgets/tablist.py:707
+#: ../../lib/frontends/widgets/tablist.py:719
+#: ../../lib/frontends/widgets/tablist.py:725
+#: ../../lib/frontends/widgets/tablist.py:761
+#: ../../lib/frontends/widgets/tablist.py:767
+#: ../../lib/frontends/widgets/tablist.py:772
 #: ../../lib/frontends/widgets/prefpanel.py:547
 msgid "Remove"
 msgstr "Hapus"
@@ -1048,21 +1074,23 @@ msgstr "Memulai Baru"
 
 #: ../../lib/dialogs.py:130
 msgid "Include Database"
-msgstr ""
+msgstr "Meliputi Database"
 
 #: ../../lib/dialogs.py:131
 msgid "Don't Include Database"
-msgstr ""
+msgstr "Tidak Termasuk Database"
 
 #: ../../lib/dialogs.py:212
 #, python-format
 msgid ""
 "%(authtype)s %(url)s requires a username and password for \"%(realm)s\"."
 msgstr ""
+"%(authtype)s %(url)s memerlukan nama pengguna dan kata sandi untuk "
+"\"%(realm)s\"."
 
 #: ../../lib/dialogs.py:215
 msgid "Login Required"
-msgstr ""
+msgstr "Login Dibutuhkan"
 
 #: ../../lib/storedatabase.py:248
 #, python-format
@@ -1083,6 +1111,16 @@ msgid ""
 "Finally, you can start fresh and your damaged database will be removed, but "
 "you will have to re-add your feeds and media files."
 msgstr ""
+"Maaf, %(appname)s tidak bisa meng-upgrade database anda karena kesalahan.\n"
+"\n"
+"Periksa apakah disk anda penuh. Jika penuh, tutup %(appname)s, bebaskan "
+"beberapa ruang, dan mulai %(appname)s lagi.\n"
+"\n"
+"Jika disk anda tidak penuh, bantu kami mengetahui masalahnya dengan "
+"melaporkan bug ke crash database kami.\n"
+"\n"
+"Terakhir, anda bisa memulai baru dan database rusak anda akan dipindahkan, "
+"tapi anda harus menambahkan ulang feeds dan file media anda."
 
 #: ../../lib/storedatabase.py:324
 msgid "Database was created by a newer version of Miro "
@@ -1155,111 +1193,116 @@ msgstr "Isi:"
 msgid "starting up..."
 msgstr "memulai..."
 
-#: ../../lib/controller.py:139 ../../lib/controller.py:160
+#: ../../lib/controller.py:139
 msgid "Sending Crash Report"
-msgstr ""
+msgstr "Mengirim Laporan Crash"
 
-#: ../../lib/displaytext.py:52
+#: ../../lib/controller.py:160
 #, python-format
-msgid "%(size)s GB/s"
-msgstr ""
-
-#: ../../lib/displaytext.py:55
-#, python-format
-msgid "%(size)s MB/s"
-msgstr ""
-
-#: ../../lib/displaytext.py:58
-#, python-format
-msgid "%(size)s kB/s"
-msgstr ""
+msgid "Sending Crash Report (%(progress)d%%)"
+msgstr "Mengirim Laporan Crash (%(progress)d%%)"
 
 #: ../../lib/displaytext.py:61
 #, python-format
-msgid "%(size)s B/s"
-msgstr ""
+msgid "%(size)s GB/s"
+msgstr "%(size)s GB/s"
 
-#: ../../lib/displaytext.py:77
+#: ../../lib/displaytext.py:64
+#, python-format
+msgid "%(size)s MB/s"
+msgstr "%(size)s MB/s"
+
+#: ../../lib/displaytext.py:67
+#, python-format
+msgid "%(size)s kB/s"
+msgstr "%(size)s kb/s"
+
+#: ../../lib/displaytext.py:70
+#, python-format
+msgid "%(size)s B/s"
+msgstr "%(size)s B/s"
+
+#: ../../lib/displaytext.py:86
 #, python-format
 msgid "%(num).0f day"
 msgid_plural "%(num).0f days"
 msgstr[0] "%(num).0f hari"
 
-#: ../../lib/displaytext.py:81
+#: ../../lib/displaytext.py:90
 #, python-format
 msgid "%(num).0f hr"
 msgid_plural "%(num).0f hrs"
 msgstr[0] "%(num).0f jam"
 
-#: ../../lib/displaytext.py:85
+#: ../../lib/displaytext.py:94
 #, python-format
 msgid "%(num).0f min"
 msgid_plural "%(num).0f mins"
 msgstr[0] "%(num).0f menit"
 
-#: ../../lib/displaytext.py:88
+#: ../../lib/displaytext.py:97
 #, python-format
 msgid "%(num)d sec"
 msgid_plural "%(num)d secs"
 msgstr[0] "%(num)d detik"
 
-#: ../../lib/displaytext.py:102
+#: ../../lib/displaytext.py:111
 #, python-format
 msgid "%(size)s GB"
-msgstr ""
+msgstr "%(size)s GB"
 
-#: ../../lib/displaytext.py:105
+#: ../../lib/displaytext.py:114
 #, python-format
 msgid "%(size)s MB"
-msgstr ""
+msgstr "%(size)s MB"
 
-#: ../../lib/displaytext.py:108
+#: ../../lib/displaytext.py:117
 #, python-format
 msgid "%(size)s KB"
-msgstr ""
+msgstr "%(size)s KB"
 
-#: ../../lib/displaytext.py:110
+#: ../../lib/displaytext.py:119
 #, python-format
 msgid "%(size)s B"
-msgstr ""
+msgstr "%(size)s B"
 
-#: ../../lib/displaytext.py:115
+#: ../../lib/displaytext.py:124
 #, python-format
 msgid "Expires in %(count)d day"
 msgid_plural "Expires in %(count)d days"
 msgstr[0] "Kadaluarsa dalam %(count)d hari"
 
-#: ../../lib/displaytext.py:120
+#: ../../lib/displaytext.py:129
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
 msgstr[0] "Kadaluarsa dalam %(count)d jam"
 
-#: ../../lib/displaytext.py:125
+#: ../../lib/displaytext.py:134
 #, python-format
 msgid "Expires in %(count)d minute"
 msgid_plural "Expires in %(count)d minutes"
 msgstr[0] "Kadaluarsa dalam %(count)d menit"
 
-#: ../../lib/displaytext.py:133
+#: ../../lib/displaytext.py:142
 #, python-format
 msgid "Expires: %(count)d day"
 msgid_plural "Expires: %(count)d days"
 msgstr[0] "Kadaluarsa: %(count)d hari"
 
-#: ../../lib/displaytext.py:138
+#: ../../lib/displaytext.py:147
 #, python-format
 msgid "Expires: %(count)d hour"
 msgid_plural "Expires: %(count)d hours"
 msgstr[0] "Kadaluarsa: %(count)d jam"
 
-#: ../../lib/displaytext.py:143
+#: ../../lib/displaytext.py:152
 #, python-format
 msgid "Expires: %(count)d minute"
 msgid_plural "Expires: %(count)d minutes"
 msgstr[0] "Kadaluarsa: %(count)d menit"
 
-#: ../../lib/displaytext.py:160
+#: ../../lib/displaytext.py:169
 #, python-format
 msgid "%(month)s %(dayofmonth)s, %(year)s"
 msgstr "%(month)s %(dayofmonth)s, %(year)s"
@@ -1350,13 +1393,13 @@ msgid "Download Torrent"
 msgstr "Unduh Torrent"
 
 #: ../../lib/frontends/widgets/style.py:255
-#: ../../lib/dl_daemon/download.py:556
+#: ../../lib/dl_daemon/download.py:557
 msgid "Error"
 msgstr "Kesalahan"
 
 #: ../../lib/frontends/widgets/style.py:257
 msgid "Queued for Auto-download"
-msgstr ""
+msgstr "Diantrikan untuk Download-otomatis"
 
 #: ../../lib/frontends/widgets/style.py:258
 #: ../../lib/frontends/widgets/style.py:1203
@@ -1387,7 +1430,7 @@ msgstr "Tahan"
 #: ../../lib/frontends/widgets/style.py:822
 #, python-format
 msgid "Resume at %(resumetime)s"
-msgstr ""
+msgstr "Dilanjutkan pada %(resumetime)s"
 
 #: ../../lib/frontends/widgets/style.py:1084
 msgid "Remove from playlist"
@@ -1495,186 +1538,186 @@ msgid "_Quit"
 msgstr "_Keluar"
 
 #: ../../lib/frontends/widgets/menus.py:228
-msgid "Convert"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:230
 msgid "_Sidebar"
 msgstr "_Menusamping"
 
-#: ../../lib/frontends/widgets/menus.py:231
+#: ../../lib/frontends/widgets/menus.py:229
 msgid "Add _Feed"
 msgstr "Tambahkan _Feed"
 
-#: ../../lib/frontends/widgets/menus.py:233
+#: ../../lib/frontends/widgets/menus.py:231
 #: ../../lib/frontends/widgets/application.py:582
 msgid "Add Website"
 msgstr "Tambahkan Situs"
 
-#: ../../lib/frontends/widgets/menus.py:235
+#: ../../lib/frontends/widgets/menus.py:233
 msgid "New Searc_h Feed"
 msgstr "Pencarian Feed Baru"
 
-#: ../../lib/frontends/widgets/menus.py:237
+#: ../../lib/frontends/widgets/menus.py:235
 msgid "New _Folder"
 msgstr "Folder _Baru"
 
-#: ../../lib/frontends/widgets/menus.py:241
+#: ../../lib/frontends/widgets/menus.py:239
 msgid "Re_name"
 msgstr "Ubah_nama"
 
-#: ../../lib/frontends/widgets/menus.py:244
+#: ../../lib/frontends/widgets/menus.py:242
 msgid "Re_name Feed"
 msgstr "Ubah_nama Feed"
 
-#: ../../lib/frontends/widgets/menus.py:245
+#: ../../lib/frontends/widgets/menus.py:243
 msgid "Re_name Website"
 msgstr "Ubah_nama Situs"
 
-#: ../../lib/frontends/widgets/menus.py:246
+#: ../../lib/frontends/widgets/menus.py:244
 msgid "_Remove"
 msgstr "_Hapus"
 
-#: ../../lib/frontends/widgets/menus.py:250
+#: ../../lib/frontends/widgets/menus.py:248
 msgid "_Remove Feed"
 msgstr "_Hapus Feed"
 
-#: ../../lib/frontends/widgets/menus.py:251
+#: ../../lib/frontends/widgets/menus.py:249
 msgid "_Remove Feeds"
 msgstr "_Hapus Feed"
 
-#: ../../lib/frontends/widgets/menus.py:252
+#: ../../lib/frontends/widgets/menus.py:250
 msgid "_Remove Folder"
 msgstr "_Hapus Folder"
 
-#: ../../lib/frontends/widgets/menus.py:253
+#: ../../lib/frontends/widgets/menus.py:251
 msgid "_Remove Folders"
 msgstr "_Hapus Folder"
 
-#: ../../lib/frontends/widgets/menus.py:254
+#: ../../lib/frontends/widgets/menus.py:252
 msgid "_Remove Website"
 msgstr "_Hapus Situs"
 
-#: ../../lib/frontends/widgets/menus.py:255
+#: ../../lib/frontends/widgets/menus.py:253
 msgid "_Remove Websites"
 msgstr "_Hapus Situs"
 
-#: ../../lib/frontends/widgets/menus.py:256
+#: ../../lib/frontends/widgets/menus.py:254
 msgid "_Update Feed"
 msgstr "_Perbaharui Feed"
 
-#: ../../lib/frontends/widgets/menus.py:259
+#: ../../lib/frontends/widgets/menus.py:257
 msgid "_Update Feeds"
 msgstr "_Perbaharui Feed"
 
-#: ../../lib/frontends/widgets/menus.py:260
+#: ../../lib/frontends/widgets/menus.py:258
 msgid "Update _All Feeds"
 msgstr "_Perbaharui Semua Feed"
 
-#: ../../lib/frontends/widgets/menus.py:264
+#: ../../lib/frontends/widgets/menus.py:262
 msgid "_Import Feeds (OPML)"
 msgstr "_Impor Feed (OPML)"
 
-#: ../../lib/frontends/widgets/menus.py:266
+#: ../../lib/frontends/widgets/menus.py:264
 msgid "E_xport Feeds (OPML)"
 msgstr "_Ekspor Feed (OPML)"
 
-#: ../../lib/frontends/widgets/menus.py:269
+#: ../../lib/frontends/widgets/menus.py:267
 msgid "_Share with a Friend"
 msgstr "_Bagikan pada Teman"
 
-#: ../../lib/frontends/widgets/menus.py:271
+#: ../../lib/frontends/widgets/menus.py:269
 msgid "Copy URL"
 msgstr "Salin URL"
 
-#: ../../lib/frontends/widgets/menus.py:275
+#: ../../lib/frontends/widgets/menus.py:273
 msgid "_Playlists"
 msgstr "_Playlist"
 
-#: ../../lib/frontends/widgets/menus.py:276
+#: ../../lib/frontends/widgets/menus.py:274
 msgid "New _Playlist"
 msgstr "_Playlist Baru"
 
-#: ../../lib/frontends/widgets/menus.py:279
+#: ../../lib/frontends/widgets/menus.py:277
 msgid "New Playlist Fol_der"
 msgstr "Playlist Fol_der Baru"
 
-#: ../../lib/frontends/widgets/menus.py:283
+#: ../../lib/frontends/widgets/menus.py:281
 msgid "Re_name Playlist"
 msgstr "Ganti _nama Playlist"
 
-#: ../../lib/frontends/widgets/menus.py:285
+#: ../../lib/frontends/widgets/menus.py:283
 msgid "_Remove Playlist"
 msgstr "_Hapus Playlist"
 
-#: ../../lib/frontends/widgets/menus.py:288
+#: ../../lib/frontends/widgets/menus.py:286
 msgid "_Remove Playlists"
 msgstr "_Hapus Playlist"
 
-#: ../../lib/frontends/widgets/menus.py:289
+#: ../../lib/frontends/widgets/menus.py:287
 msgid "_Remove Playlist Folders"
 msgstr "_Hapus Folder Playlist"
 
-#: ../../lib/frontends/widgets/menus.py:290
+#: ../../lib/frontends/widgets/menus.py:288
 msgid "_Remove Playlist Folder"
 msgstr "_Hapus Folder Playlist"
 
-#: ../../lib/frontends/widgets/menus.py:293
+#: ../../lib/frontends/widgets/menus.py:291
 msgid "P_layback"
 msgstr "_Mainkankembali"
 
+#: ../../lib/frontends/widgets/menus.py:292
 #: ../../lib/frontends/widgets/menus.py:294
-#: ../../lib/frontends/widgets/menus.py:296
 msgid "_Play"
 msgstr "_Mainkan"
 
-#: ../../lib/frontends/widgets/menus.py:297
+#: ../../lib/frontends/widgets/menus.py:295
 msgid "_Pause"
 msgstr "_Pause"
 
-#: ../../lib/frontends/widgets/menus.py:298
+#: ../../lib/frontends/widgets/menus.py:296
 msgid "_Stop"
 msgstr "_Stop"
 
-#: ../../lib/frontends/widgets/menus.py:301
+#: ../../lib/frontends/widgets/menus.py:299
 msgid "_Next Item"
-msgstr ""
+msgstr "Item Sela_njutnya"
 
-#: ../../lib/frontends/widgets/menus.py:304
+#: ../../lib/frontends/widgets/menus.py:302
 msgid "_Previous Item"
-msgstr ""
+msgstr "Item Se_belumnya"
 
-#: ../../lib/frontends/widgets/menus.py:308
+#: ../../lib/frontends/widgets/menus.py:306
 msgid "Skip _Forward"
 msgstr "_Maju"
 
-#: ../../lib/frontends/widgets/menus.py:310
+#: ../../lib/frontends/widgets/menus.py:308
 msgid "Skip _Back"
 msgstr "_Mundur"
 
-#: ../../lib/frontends/widgets/menus.py:313
+#: ../../lib/frontends/widgets/menus.py:311
 msgid "Volume _Up"
 msgstr "_Perbesar Suara"
 
-#: ../../lib/frontends/widgets/menus.py:315
+#: ../../lib/frontends/widgets/menus.py:313
 msgid "Volume _Down"
 msgstr "_Pelankan Suara"
 
-#: ../../lib/frontends/widgets/menus.py:318
+#: ../../lib/frontends/widgets/menus.py:316
 msgid "_Fullscreen"
 msgstr "_Layar Penuh"
 
-#: ../../lib/frontends/widgets/menus.py:321
+#: ../../lib/frontends/widgets/menus.py:319
 msgid "_Toggle Detached/Attached"
 msgstr "Melepaskan/Memasang _Toogle"
 
-#: ../../lib/frontends/widgets/menus.py:324
+#: ../../lib/frontends/widgets/menus.py:322
 msgid "S_ubtitles"
 msgstr "_Terjemahan"
 
-#: ../../lib/frontends/widgets/menus.py:328
+#: ../../lib/frontends/widgets/menus.py:326
 msgid "Select a Subtitles File..."
 msgstr "Pilih Berkas Terjemahan"
+
+#: ../../lib/frontends/widgets/menus.py:332
+msgid "Convert"
+msgstr "Konversi"
 
 #: ../../lib/frontends/widgets/menus.py:334
 #: ../../lib/frontends/widgets/menus.py:346
@@ -1711,15 +1754,15 @@ msgstr "_Planet Miro"
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:68
 #: ../../lib/frontends/widgets/itemcontextmenu.py:296
 msgid "Show Conversion Folder"
-msgstr ""
+msgstr "Tunjukkan Map Konversi"
 
 #: ../../lib/frontends/widgets/menus.py:390
 msgid "_Encoding"
-msgstr ""
+msgstr "_Enkoding"
 
 #: ../../lib/frontends/widgets/menus.py:393
 msgid "Default (UTF-8)"
-msgstr ""
+msgstr "Default (UTF-8)"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:180
 msgid "Save Search"
@@ -1814,7 +1857,7 @@ msgstr "%(rate)s mengunduh"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:644
 msgid "Auto-download"
-msgstr ""
+msgstr "Mengunduh-otomatis"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:649
 #: ../../lib/frontends/widgets/prefpanel.py:332
@@ -2060,7 +2103,7 @@ msgid "Enter a name for the new playlist folder"
 msgstr "Masukkan nama untuk folder playlist baru"
 
 #: ../../lib/frontends/widgets/application.py:726
-#: ../../lib/frontends/widgets/tablist.py:705
+#: ../../lib/frontends/widgets/tablist.py:706
 msgid "Rename Feed Folder"
 msgstr "Ubah nama Folder feed"
 
@@ -2079,7 +2122,7 @@ msgid "Enter a new name for the feed %(name)s"
 msgstr "Masukkan nama baru untuk feed %(name)s"
 
 #: ../../lib/frontends/widgets/application.py:736
-#: ../../lib/frontends/widgets/tablist.py:765 ../../lib/playlist.py:202
+#: ../../lib/frontends/widgets/tablist.py:766 ../../lib/playlist.py:202
 msgid "Rename Playlist"
 msgstr "Ganti Nama Playlist"
 
@@ -2089,7 +2132,7 @@ msgid "Enter a new name for the playlist %(name)s"
 msgstr "Masukkan nama baru untuk daftarmain %(name)s"
 
 #: ../../lib/frontends/widgets/application.py:741
-#: ../../lib/frontends/widgets/tablist.py:759
+#: ../../lib/frontends/widgets/tablist.py:760
 msgid "Rename Playlist Folder"
 msgstr "Ganti Nama Folder Playlist"
 
@@ -2099,7 +2142,7 @@ msgid "Enter a new name for the playlist folder %(name)s"
 msgstr "Masukkan nama baru untuk folder daftarmain %(name)s"
 
 #: ../../lib/frontends/widgets/application.py:745
-#: ../../lib/frontends/widgets/tablist.py:623
+#: ../../lib/frontends/widgets/tablist.py:624
 msgid "Rename Website"
 msgstr "Mengganti nama situs"
 
@@ -2153,11 +2196,13 @@ msgid "You have %(count)d conversion in progress.  Quit anyway?"
 msgid_plural ""
 "You have %(count)d conversions in progress or pending.  Quit anyway?"
 msgstr[0] ""
-msgstr[1] ""
+"Anda memiliki %(count)d konversi yang sedang berjalan. Berhenti saja?"
 
 #: ../../lib/frontends/widgets/application.py:856
 msgid "Warn me when I attempt to quit with conversions in progress"
 msgstr ""
+"Peringatkan saya ketika saya mencoba untuk berhenti ketika masih ada proses "
+"konversi"
 
 #: ../../lib/frontends/widgets/application.py:1040
 msgid "Upgrading database"
@@ -2174,7 +2219,7 @@ msgstr "%(name)s Pengaturan Pertama Kali"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:136
 msgid "Choose Language"
-msgstr ""
+msgstr "Pilih Bahasa"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:139
 #, python-format
@@ -2186,20 +2231,26 @@ msgid ""
 "\n"
 "What language would you like Miro to be in?"
 msgstr ""
+"Selamat datang di setup %(name)s pertama kali\n"
+"\n"
+"Beberapa layar berikut akan membantu anda mengatur %(name)s sehingga akan "
+"bekerja dengan baik untuk anda.\n"
+"\n"
+"Bahasa apa yang ingin anda gunakan?"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:151
 #: ../../lib/frontends/widgets/prefpanel.py:306
 msgid "System default"
-msgstr ""
+msgstr "Default sistem"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:174
 msgid "Update"
-msgstr ""
+msgstr "Pembaharuan"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:178
 #: ../../lib/frontends/widgets/prefpanel.py:312
 msgid "Language:"
-msgstr ""
+msgstr "Bahasa:"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:186
 #: ../../lib/frontends/widgets/firsttimedialog.py:228
@@ -2209,7 +2260,7 @@ msgstr "Selanjutnya >"
 #: ../../lib/frontends/widgets/firsttimedialog.py:196
 #, python-format
 msgid "%(name)s Startup"
-msgstr ""
+msgstr "%(name)s Startup"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:200
 #, python-format
@@ -2218,6 +2269,10 @@ msgid ""
 "This way, downloads in progress can finish downloading and new media files "
 "can be downloaded in the background, ready when you want to watch."
 msgstr ""
+"Kami menyarankan anda menjalankan %(name)s ketika komputer anda dimulai. "
+"Dengan begitu, unduhan yang tengah berjalan dapat terselesaikan dan file "
+"media baru dapat diunduh di latarbelakang, siap ketika anda ingin "
+"menontonnya."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:209
 #, python-format
@@ -2233,7 +2288,7 @@ msgstr "< Sebelumnya"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:239
 msgid "Finding Files"
-msgstr ""
+msgstr "Menemukan File"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:242
 #, python-format
@@ -2312,7 +2367,7 @@ msgstr[0] "%(count)d bulan yang lalu"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Items:"
-msgstr ""
+msgstr "Item Kadaluarsa-Otomatis:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:95
 #, python-format
@@ -2378,7 +2433,7 @@ msgstr "Berkas lama telah dihapus"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause auto-downloading when this many items are unplayed:"
-msgstr ""
+msgstr "Jeda unduhan-otomatis ketika item sejumlah ini belum dimainkan:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
@@ -2411,7 +2466,7 @@ msgstr "Pencarian Video"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:477
 msgid "No Results"
-msgstr ""
+msgstr "Tidak Ada Hasil"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:481
 msgid ""
@@ -2420,6 +2475,10 @@ msgid ""
 "engines, click on the icon to the left of the search box above and select "
 "the search engine from the drop down."
 msgstr ""
+"Untuk mencari media di situs pencarian media Internet, klik pada boks "
+"pencarian di atas, ketikkan kata kunci pencarian dan tekan tombol Enter. "
+"Untuk mengganti mesin pencari, klik pada ikon di kiri boks pencarian dan "
+"pilih mesin pencari dari menu drop down."
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:590
 #: ../../lib/frontends/widgets/itemedit.py:151
@@ -2581,57 +2640,57 @@ msgstr "Lokasi:"
 #: ../../lib/frontends/widgets/statictabs.py:126
 #: ../../lib/frontends/widgets/prefpanel.py:730
 msgid "Conversions"
-msgstr ""
+msgstr "Konversi"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:62
 msgid "Stop All Conversions"
-msgstr ""
+msgstr "Hentikan Semua Konversi"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:74
 msgid "Clear Finished Conversions"
-msgstr ""
+msgstr "Bersihkan Konversi Terselesaikan"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:272
 #, python-format
 msgid "Conversion to %(format)s"
-msgstr ""
+msgstr "Konversi ke %(format)s"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:306
 #, python-format
 msgid "Failed: %(error)s"
-msgstr ""
+msgstr "Gagal: %(error)s"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:312
 msgid "Troubleshoot"
-msgstr ""
+msgstr "Pemecahan Masalah"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:314
 msgid "Open log"
-msgstr ""
+msgstr "Buka Catatan"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:316
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:335
 msgid "Clear"
-msgstr ""
+msgstr "Bersihkan"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:327
 msgid "Completed"
-msgstr ""
+msgstr "Selesai"
 
-#: ../../lib/frontends/widgets/downloadscontroller.py:84
+#: ../../lib/frontends/widgets/downloadscontroller.py:86
 #: ../../lib/frontends/widgets/prefpanel.py:726
 msgid "Downloads"
 msgstr "Unduhan"
 
-#: ../../lib/frontends/widgets/downloadscontroller.py:95
+#: ../../lib/frontends/widgets/downloadscontroller.py:97
 msgid "Single and external downloads"
 msgstr "Unduhan luar dan satuan"
 
-#: ../../lib/frontends/widgets/downloadscontroller.py:99
+#: ../../lib/frontends/widgets/downloadscontroller.py:101
 msgid "Feed downloads"
 msgstr "Unduhan Feed"
 
-#: ../../lib/frontends/widgets/downloadscontroller.py:102
+#: ../../lib/frontends/widgets/downloadscontroller.py:104
 msgid "Seeding"
 msgstr "Memberikan"
 
@@ -2697,56 +2756,56 @@ msgstr[0] ""
 "Apa anda yakin ingin menghapus feed ini? Unduhan yang sedang berjalan akan "
 "dibatalkan."
 
-#: ../../lib/frontends/widgets/tablist.py:622
-#: ../../lib/frontends/widgets/tablist.py:717
+#: ../../lib/frontends/widgets/tablist.py:623
+#: ../../lib/frontends/widgets/tablist.py:718
 msgid "Copy URL to clipboard"
 msgstr "Salin URL ke papan klip"
 
-#: ../../lib/frontends/widgets/tablist.py:624
+#: ../../lib/frontends/widgets/tablist.py:625
 msgid "Remove Website"
 msgstr "Hapus situs"
 
-#: ../../lib/frontends/widgets/tablist.py:628
+#: ../../lib/frontends/widgets/tablist.py:629
 msgid "Remove Websites"
 msgstr "Hapus situs"
 
-#: ../../lib/frontends/widgets/tablist.py:704
+#: ../../lib/frontends/widgets/tablist.py:705
 msgid "Update Feeds In Folder"
 msgstr "Perbaharui Feed dalam Folder"
 
-#: ../../lib/frontends/widgets/tablist.py:711
+#: ../../lib/frontends/widgets/tablist.py:712
 msgid "Update Feed Now"
 msgstr "Perbaharui feed sekarang"
 
-#: ../../lib/frontends/widgets/tablist.py:714
+#: ../../lib/frontends/widgets/tablist.py:715
 msgid "Rename"
 msgstr "Ubah nama"
 
-#: ../../lib/frontends/widgets/tablist.py:716
+#: ../../lib/frontends/widgets/tablist.py:717
 msgid "Revert Feed Name"
 msgstr "Kembalikan nama feed"
 
-#: ../../lib/frontends/widgets/tablist.py:723
+#: ../../lib/frontends/widgets/tablist.py:724
 msgid "Update Feeds Now"
 msgstr "Perbaharui feed sekarang"
 
-#: ../../lib/frontends/widgets/tablist.py:788
+#: ../../lib/frontends/widgets/tablist.py:789
 msgid "LIBRARY"
 msgstr "PUSTAKA"
 
-#: ../../lib/frontends/widgets/tablist.py:790
+#: ../../lib/frontends/widgets/tablist.py:791
 msgid "WEBSITES"
 msgstr "SITUS"
 
-#: ../../lib/frontends/widgets/tablist.py:792
+#: ../../lib/frontends/widgets/tablist.py:793
 msgid "VIDEO FEEDS"
 msgstr "FEED VIDEO"
 
-#: ../../lib/frontends/widgets/tablist.py:794
+#: ../../lib/frontends/widgets/tablist.py:795
 msgid "AUDIO FEEDS"
 msgstr "FEED SUARA"
 
-#: ../../lib/frontends/widgets/tablist.py:796
+#: ../../lib/frontends/widgets/tablist.py:797
 msgid "PLAYLISTS"
 msgstr "DAFTARMAIN"
 
@@ -2797,7 +2856,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/diagnostics.py:129
 #, python-format
 msgid "%(databasecount)s: Delete"
-msgstr ""
+msgstr "%(databasecount)s: Dihapus"
 
 #: ../../lib/frontends/widgets/diagnostics.py:81
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
@@ -2838,7 +2897,7 @@ msgstr "Jumlah obyek db pada memori:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:127
 msgid "Total db backups:"
-msgstr ""
+msgstr "Total db cadangan:"
 
 #: ../../lib/frontends/widgets/browser.py:93
 msgid "Open in browser"
@@ -2895,7 +2954,7 @@ msgstr "Lanjutkan Seeding"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:126
 #: ../../lib/frontends/widgets/itemcontextmenu.py:227
 msgid "Convert to..."
-msgstr ""
+msgstr "Konversi ke:"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:129
 #: ../../lib/frontends/widgets/itemcontextmenu.py:257
@@ -3057,10 +3116,11 @@ msgstr ""
 #: ../../lib/frontends/widgets/prefpanel.py:299
 msgid "Warn me if I attempt to quit with conversions in progress."
 msgstr ""
+"Peringatkan saya jika saya mencoba berhenti ketika ada proses konversi"
 
 #: ../../lib/frontends/widgets/prefpanel.py:315
 msgid "(Changing the language requires you to restart Miro.)"
-msgstr ""
+msgstr "(Mengubah bahasa memerlukan anda untuk memulai Miro kembali.)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:323
 msgid "Every day"
@@ -3112,7 +3172,7 @@ msgstr "Periksa untuk konten baru:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:362
 msgid "Auto-download setting:"
-msgstr ""
+msgstr "Pengaturan unduhan-otomatis:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:368
 msgid "Remember this many old items:"
@@ -3201,11 +3261,11 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:531
 msgid "folder"
-msgstr ""
+msgstr "folder"
 
 #: ../../lib/frontends/widgets/prefpanel.py:537
 msgid "visible"
-msgstr ""
+msgstr "terlihat"
 
 #: ../../lib/frontends/widgets/prefpanel.py:585
 msgid "Add Watched Folder"
@@ -3284,11 +3344,12 @@ msgstr "Selalu berhenti setelah memainkan tiap berkas video atau suara"
 
 #: ../../lib/frontends/widgets/prefpanel.py:711
 msgid "Allow this many concurrent conversions:"
-msgstr ""
+msgstr "Izinkan konversi bersamaan sejumlah ini:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:712
 msgid "(changing this will not apply to currently running conversions)"
 msgstr ""
+"(mengubah ini tidak akan diterapkan pada konversi yang saat ini berjalan)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:724
 msgid "General"
@@ -3370,11 +3431,11 @@ msgstr "Tautan Permanen"
 
 #: ../../lib/frontends/widgets/gtk/video.py:320
 msgid "Exit fullscreen"
-msgstr ""
+msgstr "Keluar fullscreen"
 
 #: ../../lib/frontends/widgets/gtk/video.py:327
 msgid "Fullscreen"
-msgstr ""
+msgstr "Layar Penuh"
 
 #: ../../lib/frontends/widgets/gtk/video.py:335
 msgid "Pop-in"
@@ -3389,100 +3450,108 @@ msgstr "pop-out"
 msgid "Enter a new name for the playlist %s"
 msgstr "Masukkan nama baru untuk playlist %s"
 
-#: ../../lib/httpclient.py:94
+#: ../../lib/httpclient.py:101
 msgid "HTTP error"
 msgstr "Kesalahan HTTP"
 
-#: ../../lib/httpclient.py:98
+#: ../../lib/httpclient.py:105
 #, python-format
 msgid "%(host)s closed connection"
 msgstr "%(host)s menutup koneksi"
 
-#: ../../lib/httpclient.py:103
+#: ../../lib/httpclient.py:110
 #, python-format
 msgid "Host returned %(status)s"
-msgstr ""
+msgstr "Host mengembalikan %(status)s"
 
-#: ../../lib/httpclient.py:105
+#: ../../lib/httpclient.py:112
 msgid "Please retry later"
-msgstr ""
+msgstr "Silakan coba lagi nanti"
 
-#: ../../lib/httpclient.py:109
+#: ../../lib/httpclient.py:116
 #, python-format
 msgid "%(host)s doesn't support HTTP resume"
-msgstr ""
+msgstr "%(host)s tidak mensupport resume HTTP"
 
-#: ../../lib/httpclient.py:114
+#: ../../lib/httpclient.py:121
 #, python-format
 msgid "HTTP Redirection limit hit for %(url)s"
-msgstr ""
+msgstr "Batas hit pengalihan HTTP untuk %(url)s"
 
-#: ../../lib/httpclient.py:120
+#: ../../lib/httpclient.py:127
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
-msgstr ""
+msgstr "Otorisasi gagal untuk proksi: %(host)s:%(port)s"
 
-#: ../../lib/httpclient.py:128
+#: ../../lib/httpclient.py:135
 msgid "Got 404 status code"
 msgstr "Mendapatkan kode status 404"
 
-#: ../../lib/httpclient.py:130
+#: ../../lib/httpclient.py:137
 #, python-format
 msgid "Host returned bad status code: %(code)s"
-msgstr ""
+msgstr "Host mengembalikan kode status buruk: %(code)s"
 
-#: ../../lib/httpclient.py:136 ../../lib/httpclient.py:137
+#: ../../lib/httpclient.py:143 ../../lib/httpclient.py:144
 msgid "Authorization failed"
 msgstr "Otorisasi gagal"
 
-#: ../../lib/httpclient.py:141
+#: ../../lib/httpclient.py:148
+msgid "Authorization canceled"
+msgstr "Otorisasi dibatalkan"
+
+#: ../../lib/httpclient.py:149
+msgid "Authorization canceled by user"
+msgstr "Otorisasi dibatalkan oleh pengguna"
+
+#: ../../lib/httpclient.py:153
 msgid "Invalid URL"
 msgstr "URL Tidak Valid"
 
-#: ../../lib/httpclient.py:142
+#: ../../lib/httpclient.py:154
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
 msgstr "%(url)s\" bukan merupakan URL yang sah"
 
-#: ../../lib/httpclient.py:147
+#: ../../lib/httpclient.py:159
 msgid "Unknow Host"
-msgstr ""
+msgstr "Host tidak diketahui"
 
-#: ../../lib/httpclient.py:148
+#: ../../lib/httpclient.py:160
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
-msgstr ""
+msgstr "Nama domain \"%(host)s\" tidak ditemukan"
 
-#: ../../lib/httpclient.py:154
+#: ../../lib/httpclient.py:166
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
 msgstr "Berkas \"%(path)s\"  tidak ada"
 
-#: ../../lib/httpclient.py:158
+#: ../../lib/httpclient.py:170
 msgid "Read error"
 msgstr "Eror saat membaca"
 
-#: ../../lib/httpclient.py:159
+#: ../../lib/httpclient.py:171
 #, python-format
 msgid "Error while reading from \"%(path)s\""
 msgstr "Eror saat membaca dari \"%(path)s\""
 
-#: ../../lib/httpclient.py:167 ../../lib/dl_daemon/download.py:679
+#: ../../lib/httpclient.py:179 ../../lib/dl_daemon/download.py:680
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr "Tidak dapat menuliskan %(filename)s"
 
-#: ../../lib/httpclient.py:169
+#: ../../lib/httpclient.py:181
 msgid "Write error"
-msgstr ""
+msgstr "Kesalahan penulisan"
 
-#: ../../lib/httpclient.py:343
+#: ../../lib/httpclient.py:365
 msgid "Website"
-msgstr ""
+msgstr "Situs Web"
 
-#: ../../lib/httpclient.py:348
+#: ../../lib/httpclient.py:370
 msgid "Proxy"
-msgstr ""
+msgstr "Proksi"
 
 #: ../../lib/net.py:75
 #, python-format
@@ -3519,41 +3588,41 @@ msgstr "Kode kesalahan tidak dikenal"
 msgid "Connection closed"
 msgstr "Sambungan terputus"
 
-#: ../../lib/dl_daemon/download.py:687 ../../lib/dl_daemon/download.py:833
+#: ../../lib/dl_daemon/download.py:688 ../../lib/dl_daemon/download.py:837
 msgid "Not enough disk space"
 msgstr "Ruang disk tidak cukup"
 
-#: ../../lib/dl_daemon/download.py:688 ../../lib/dl_daemon/download.py:834
+#: ../../lib/dl_daemon/download.py:689 ../../lib/dl_daemon/download.py:838
 #, python-format
 msgid "%(amount)s MB required to store this video"
 msgstr "%(amount)s MB dibutuhkan untuk menyimpan video ini"
 
-#: ../../lib/dl_daemon/download.py:718
+#: ../../lib/dl_daemon/download.py:722
 msgid "no content"
-msgstr ""
+msgstr "tidak ada isi"
 
-#: ../../lib/dl_daemon/download.py:860
+#: ../../lib/dl_daemon/download.py:864
 msgid "BitTorrent failure"
 msgstr "Kegagalan BitTorrent"
 
-#: ../../lib/dl_daemon/download.py:861
+#: ../../lib/dl_daemon/download.py:865
 msgid "BitTorrent failed to startup"
 msgstr "BitTorrent gagal dijalankan"
 
-#: ../../lib/dl_daemon/download.py:1073
+#: ../../lib/dl_daemon/download.py:1077
 msgid "Corrupt Torrent"
 msgstr "Torrent Rusak"
 
-#: ../../lib/dl_daemon/download.py:1074
+#: ../../lib/dl_daemon/download.py:1078
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr "Berkas torrent pada %(url)s tidak benar"
 
-#: ../../lib/dl_daemon/download.py:1105
+#: ../../lib/dl_daemon/download.py:1109
 msgid "Torrent file deleted"
 msgstr "Berkas Torrent dihapus"
 
-#: ../../lib/dl_daemon/download.py:1106
+#: ../../lib/dl_daemon/download.py:1110
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr "Berkas torrent untuk item ini sudah dihapus dari luar %(appname)s."

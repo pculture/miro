@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2010-09-18 11:10-0400\n"
+"POT-Creation-Date: 2010-09-30 12:19-0400\n"
 "PO-Revision-Date: 2010-08-21 13:43+0000\n"
 "Last-Translator: Valkane <balinjera@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-09-30 16:12+0000\n"
+"X-Launchpad-Export-Date: 2010-10-13 16:10+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
@@ -28,7 +28,7 @@ msgstr "Dijeli"
 #: ../../osx/plat/frontends/widgets/overlay.py:125 ../../lib/dialogs.py:117
 #: ../../lib/frontends/widgets/style.py:261
 #: ../../lib/frontends/widgets/style.py:1082
-#: ../../lib/frontends/widgets/style.py:1249
+#: ../../lib/frontends/widgets/style.py:1248
 #: ../../lib/frontends/widgets/itemcontextmenu.py:116
 #: ../../lib/frontends/widgets/itemcontextmenu.py:223
 #: ../../lib/frontends/widgets/gtk/video.py:283
@@ -157,7 +157,7 @@ msgid "Disable Subtitles"
 msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:379
-#: ../../lib/frontends/widgets/menus.py:325
+#: ../../lib/frontends/widgets/menus.py:323
 #: ../../lib/frontends/widgets/gtk/video.py:380
 msgid "None Available"
 msgstr ""
@@ -644,16 +644,16 @@ msgstr ""
 msgid "Would you like to keep the feed?"
 msgstr "Želite li zadržati napajanje ?"
 
-#: ../../lib/feed.py:970
+#: ../../lib/feed.py:972
 msgid "Bad content-type"
 msgstr "Loša vrsta sadržaja"
 
-#: ../../lib/feed.py:983
+#: ../../lib/feed.py:985
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
 msgstr "Kanal nije kompatibilan s %(appname)s"
 
-#: ../../lib/feed.py:986
+#: ../../lib/feed.py:988
 #, python-format
 msgid ""
 "This channel is not compatible with %(appname)s but we'll try our best to "
@@ -671,54 +671,54 @@ msgstr ""
 "postaviti vezu u formatu koji će raditi sa %(appname)s.\n"
 "Želite li i dalje učitati ovaj kanal?"
 
-#: ../../lib/feed.py:1666 ../../lib/databaseupgrade.py:2749
+#: ../../lib/feed.py:1668 ../../lib/databaseupgrade.py:2749
 #, python-format
 msgid "%(engine)s for '%(query)s'"
 msgstr ""
 
-#: ../../lib/feed.py:2115 ../../lib/feed.py:2245
+#: ../../lib/feed.py:2123 ../../lib/feed.py:2253
 msgid "Local Files"
 msgstr "Lokalne datoteke"
 
-#: ../../lib/feed.py:2124 ../../lib/feed.py:2230
+#: ../../lib/feed.py:2132 ../../lib/feed.py:2238
 #: ../../lib/frontends/widgets/firsttimedialog.py:302
 #: ../../lib/frontends/widgets/firsttimedialog.py:304
 #: ../../lib/frontends/widgets/firsttimedialog.py:362
 msgid "Search"
 msgstr "Pretraživanje"
 
-#: ../../lib/feed.py:2259
+#: ../../lib/feed.py:2267
 msgid "Playing File"
 msgstr "Čitanje u tijeku"
 
-#: ../../lib/downloader.py:261
+#: ../../lib/downloader.py:268
 msgid "activity"
 msgstr "Aktivnost"
 
-#: ../../lib/downloader.py:329 ../../lib/httpclient.py:127
-#: ../../lib/httpclient.py:153
+#: ../../lib/downloader.py:336 ../../lib/httpclient.py:134
+#: ../../lib/httpclient.py:165
 msgid "File not found"
 msgstr "Datoteka nije pronađena"
 
-#: ../../lib/downloader.py:330
+#: ../../lib/downloader.py:337
 msgid "Flash URL Scraping Error"
 msgstr "Greška na preuzimanju URL flash-a"
 
-#: ../../lib/downloader.py:528
+#: ../../lib/downloader.py:535
 msgid "starting up"
 msgstr "Početak"
 
-#: ../../lib/downloader.py:535
+#: ../../lib/downloader.py:542
 #, python-format
 msgid "no connection - retrying in %s"
 msgstr ""
 
-#: ../../lib/downloader.py:537
+#: ../../lib/downloader.py:544
 msgid "no connection - retrying soon"
 msgstr ""
 
-#: ../../lib/downloader.py:561 ../../lib/downloader.py:569
-#: ../../lib/httpclient.py:199 ../../lib/httpclient.py:618
+#: ../../lib/downloader.py:568 ../../lib/downloader.py:576
+#: ../../lib/httpclient.py:211 ../../lib/httpclient.py:672
 msgid "Unknown"
 msgstr "Nepoznato"
 
@@ -816,15 +816,15 @@ msgstr "Veličina u %(size)sKB"
 msgid "%(size)sB"
 msgstr "Veličina u %(size)sB"
 
-#: ../../lib/messagehandler.py:1336
+#: ../../lib/messagehandler.py:1350
 msgid "Subscribed to new feed:"
 msgstr "Pretplati se na novu vezu:"
 
-#: ../../lib/messagehandler.py:1339
+#: ../../lib/messagehandler.py:1353
 msgid "Subscribed to new feeds:"
 msgstr "Pretplati se na nove veze:"
 
-#: ../../lib/messagehandler.py:1358
+#: ../../lib/messagehandler.py:1372
 msgid "Migrating Files"
 msgstr "Prenositi datoteke"
 
@@ -861,12 +861,16 @@ msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
 msgstr ""
 
-#: ../../lib/videoconversion.py:83
+#: ../../lib/videoconversion.py:88
 #, python-format
 msgid "%(name)s (%(mediatype)s)"
 msgstr ""
 
-#: ../../lib/videoconversion.py:708
+#: ../../lib/videoconversion.py:344
+msgid "Reason unknown"
+msgstr ""
+
+#: ../../lib/videoconversion.py:764
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
 msgstr ""
@@ -980,12 +984,12 @@ msgid "Add Into New Folder"
 msgstr "Dodati u novu mapu"
 
 #: ../../lib/dialogs.py:119 ../../lib/frontends/widgets/style.py:262
-#: ../../lib/frontends/widgets/tablist.py:706
-#: ../../lib/frontends/widgets/tablist.py:718
-#: ../../lib/frontends/widgets/tablist.py:724
-#: ../../lib/frontends/widgets/tablist.py:760
-#: ../../lib/frontends/widgets/tablist.py:766
-#: ../../lib/frontends/widgets/tablist.py:771
+#: ../../lib/frontends/widgets/tablist.py:707
+#: ../../lib/frontends/widgets/tablist.py:719
+#: ../../lib/frontends/widgets/tablist.py:725
+#: ../../lib/frontends/widgets/tablist.py:761
+#: ../../lib/frontends/widgets/tablist.py:767
+#: ../../lib/frontends/widgets/tablist.py:772
 #: ../../lib/frontends/widgets/prefpanel.py:547
 msgid "Remove"
 msgstr "Ukloniti"
@@ -1124,52 +1128,57 @@ msgstr "Sadržaj:"
 msgid "starting up..."
 msgstr "Započeti..."
 
-#: ../../lib/controller.py:139 ../../lib/controller.py:160
+#: ../../lib/controller.py:139
 msgid "Sending Crash Report"
 msgstr ""
 
-#: ../../lib/displaytext.py:52
+#: ../../lib/controller.py:160
 #, python-format
-msgid "%(size)s GB/s"
-msgstr ""
-
-#: ../../lib/displaytext.py:55
-#, python-format
-msgid "%(size)s MB/s"
-msgstr ""
-
-#: ../../lib/displaytext.py:58
-#, python-format
-msgid "%(size)s kB/s"
+msgid "Sending Crash Report (%(progress)d%%)"
 msgstr ""
 
 #: ../../lib/displaytext.py:61
 #, python-format
+msgid "%(size)s GB/s"
+msgstr ""
+
+#: ../../lib/displaytext.py:64
+#, python-format
+msgid "%(size)s MB/s"
+msgstr ""
+
+#: ../../lib/displaytext.py:67
+#, python-format
+msgid "%(size)s kB/s"
+msgstr ""
+
+#: ../../lib/displaytext.py:70
+#, python-format
 msgid "%(size)s B/s"
 msgstr ""
 
-#: ../../lib/displaytext.py:77
+#: ../../lib/displaytext.py:86
 #, python-format
 msgid "%(num).0f day"
 msgid_plural "%(num).0f days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/displaytext.py:81
+#: ../../lib/displaytext.py:90
 #, python-format
 msgid "%(num).0f hr"
 msgid_plural "%(num).0f hrs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/displaytext.py:85
+#: ../../lib/displaytext.py:94
 #, python-format
 msgid "%(num).0f min"
 msgid_plural "%(num).0f mins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/displaytext.py:88
+#: ../../lib/displaytext.py:97
 #, python-format
 msgid "%(num)d sec"
 msgid_plural "%(num)d secs"
@@ -1177,27 +1186,27 @@ msgstr[0] "%(num)d sekundu"
 msgstr[1] "%(num)d sekunda"
 msgstr[2] "%(num)d sekunda"
 
-#: ../../lib/displaytext.py:102
+#: ../../lib/displaytext.py:111
 #, python-format
 msgid "%(size)s GB"
 msgstr ""
 
-#: ../../lib/displaytext.py:105
+#: ../../lib/displaytext.py:114
 #, python-format
 msgid "%(size)s MB"
 msgstr ""
 
-#: ../../lib/displaytext.py:108
+#: ../../lib/displaytext.py:117
 #, python-format
 msgid "%(size)s KB"
 msgstr ""
 
-#: ../../lib/displaytext.py:110
+#: ../../lib/displaytext.py:119
 #, python-format
 msgid "%(size)s B"
 msgstr ""
 
-#: ../../lib/displaytext.py:115
+#: ../../lib/displaytext.py:124
 #, python-format
 msgid "Expires in %(count)d day"
 msgid_plural "Expires in %(count)d days"
@@ -1205,7 +1214,7 @@ msgstr[0] "Istječe za %(count)d dan"
 msgstr[1] "Istječe za %(count)d dana"
 msgstr[2] "Istječe za %(count)d dana"
 
-#: ../../lib/displaytext.py:120
+#: ../../lib/displaytext.py:129
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
@@ -1213,7 +1222,7 @@ msgstr[0] "Istječe za %(count)d sat"
 msgstr[1] "Istječe za %(count)d sati"
 msgstr[2] "Istječe za %(count)d sati"
 
-#: ../../lib/displaytext.py:125
+#: ../../lib/displaytext.py:134
 #, python-format
 msgid "Expires in %(count)d minute"
 msgid_plural "Expires in %(count)d minutes"
@@ -1221,7 +1230,7 @@ msgstr[0] "Istječe za %(count)d minutu"
 msgstr[1] "Istječe za %(count)d minuta"
 msgstr[2] "Istječe za %(count)d minuta"
 
-#: ../../lib/displaytext.py:133
+#: ../../lib/displaytext.py:142
 #, python-format
 msgid "Expires: %(count)d day"
 msgid_plural "Expires: %(count)d days"
@@ -1229,7 +1238,7 @@ msgstr[0] "Istječe za %(count)d dan"
 msgstr[1] "Istječe za %(count)d dana"
 msgstr[2] "Istječe za %(count)d dana"
 
-#: ../../lib/displaytext.py:138
+#: ../../lib/displaytext.py:147
 #, python-format
 msgid "Expires: %(count)d hour"
 msgid_plural "Expires: %(count)d hours"
@@ -1237,7 +1246,7 @@ msgstr[0] "Ističe za %(count)d sat"
 msgstr[1] "Ističe za %(count)d sati"
 msgstr[2] "Ističe za %(count)d sati"
 
-#: ../../lib/displaytext.py:143
+#: ../../lib/displaytext.py:152
 #, python-format
 msgid "Expires: %(count)d minute"
 msgid_plural "Expires: %(count)d minutes"
@@ -1245,7 +1254,7 @@ msgstr[0] "Ističe za %(count)d minutu"
 msgstr[1] "Ističe za %(count)d minuta"
 msgstr[2] "Ističe za %(count)d minuta"
 
-#: ../../lib/displaytext.py:160
+#: ../../lib/displaytext.py:169
 #, python-format
 msgid "%(month)s %(dayofmonth)s, %(year)s"
 msgstr ""
@@ -1336,7 +1345,7 @@ msgid "Download Torrent"
 msgstr "Skinuti Torrent"
 
 #: ../../lib/frontends/widgets/style.py:255
-#: ../../lib/dl_daemon/download.py:556
+#: ../../lib/dl_daemon/download.py:557
 msgid "Error"
 msgstr "Greška"
 
@@ -1481,185 +1490,185 @@ msgid "_Quit"
 msgstr "_Izađi"
 
 #: ../../lib/frontends/widgets/menus.py:228
-msgid "Convert"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:230
 msgid "_Sidebar"
 msgstr "_Bočna vrpca"
 
-#: ../../lib/frontends/widgets/menus.py:231
+#: ../../lib/frontends/widgets/menus.py:229
 msgid "Add _Feed"
 msgstr "Dodaj _Vezu"
 
-#: ../../lib/frontends/widgets/menus.py:233
+#: ../../lib/frontends/widgets/menus.py:231
 #: ../../lib/frontends/widgets/application.py:582
 msgid "Add Website"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:235
+#: ../../lib/frontends/widgets/menus.py:233
 msgid "New Searc_h Feed"
 msgstr "Novo traženj_e veze"
 
-#: ../../lib/frontends/widgets/menus.py:237
+#: ../../lib/frontends/widgets/menus.py:235
 msgid "New _Folder"
 msgstr "Nova _Mapa"
 
-#: ../../lib/frontends/widgets/menus.py:241
+#: ../../lib/frontends/widgets/menus.py:239
 msgid "Re_name"
 msgstr "Pre_imenuj"
 
-#: ../../lib/frontends/widgets/menus.py:244
+#: ../../lib/frontends/widgets/menus.py:242
 msgid "Re_name Feed"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:245
+#: ../../lib/frontends/widgets/menus.py:243
 msgid "Re_name Website"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:246
+#: ../../lib/frontends/widgets/menus.py:244
 msgid "_Remove"
 msgstr "_Ukloniti"
 
-#: ../../lib/frontends/widgets/menus.py:250
+#: ../../lib/frontends/widgets/menus.py:248
 msgid "_Remove Feed"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:251
+#: ../../lib/frontends/widgets/menus.py:249
 msgid "_Remove Feeds"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:252
+#: ../../lib/frontends/widgets/menus.py:250
 msgid "_Remove Folder"
 msgstr "_Ukloniti mapu"
 
-#: ../../lib/frontends/widgets/menus.py:253
+#: ../../lib/frontends/widgets/menus.py:251
 msgid "_Remove Folders"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:254
+#: ../../lib/frontends/widgets/menus.py:252
 msgid "_Remove Website"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:255
+#: ../../lib/frontends/widgets/menus.py:253
 msgid "_Remove Websites"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:256
+#: ../../lib/frontends/widgets/menus.py:254
 msgid "_Update Feed"
 msgstr "_Obnoviti vezu"
 
-#: ../../lib/frontends/widgets/menus.py:259
+#: ../../lib/frontends/widgets/menus.py:257
 msgid "_Update Feeds"
 msgstr "_Obnoviti veze"
 
-#: ../../lib/frontends/widgets/menus.py:260
+#: ../../lib/frontends/widgets/menus.py:258
 msgid "Update _All Feeds"
 msgstr "Obnoviti _sve veze"
 
-#: ../../lib/frontends/widgets/menus.py:264
+#: ../../lib/frontends/widgets/menus.py:262
 msgid "_Import Feeds (OPML)"
 msgstr "_Preuzeti veze (OPML)"
 
-#: ../../lib/frontends/widgets/menus.py:266
+#: ../../lib/frontends/widgets/menus.py:264
 msgid "E_xport Feeds (OPML)"
 msgstr "O_tpremiti veze (OPML)"
 
-#: ../../lib/frontends/widgets/menus.py:269
+#: ../../lib/frontends/widgets/menus.py:267
 msgid "_Share with a Friend"
 msgstr "_Podijeliti s prijateljem"
 
-#: ../../lib/frontends/widgets/menus.py:271
+#: ../../lib/frontends/widgets/menus.py:269
 msgid "Copy URL"
 msgstr "Kopirati URL"
 
-#: ../../lib/frontends/widgets/menus.py:275
+#: ../../lib/frontends/widgets/menus.py:273
 msgid "_Playlists"
 msgstr "_Playliste"
 
-#: ../../lib/frontends/widgets/menus.py:276
+#: ../../lib/frontends/widgets/menus.py:274
 msgid "New _Playlist"
 msgstr "Novi _popis izvođenja"
 
-#: ../../lib/frontends/widgets/menus.py:279
+#: ../../lib/frontends/widgets/menus.py:277
 msgid "New Playlist Fol_der"
 msgstr "Nova mapa play_liste"
 
-#: ../../lib/frontends/widgets/menus.py:283
+#: ../../lib/frontends/widgets/menus.py:281
 msgid "Re_name Playlist"
 msgstr "Pre_imenovati playlistu"
 
-#: ../../lib/frontends/widgets/menus.py:285
+#: ../../lib/frontends/widgets/menus.py:283
 msgid "_Remove Playlist"
 msgstr "_Izbrisati playlistu"
 
-#: ../../lib/frontends/widgets/menus.py:288
+#: ../../lib/frontends/widgets/menus.py:286
 msgid "_Remove Playlists"
 msgstr "_Izbrisati playliste"
 
-#: ../../lib/frontends/widgets/menus.py:289
+#: ../../lib/frontends/widgets/menus.py:287
 msgid "_Remove Playlist Folders"
 msgstr "Izbrisati mape za playliste"
 
-#: ../../lib/frontends/widgets/menus.py:290
+#: ../../lib/frontends/widgets/menus.py:288
 msgid "_Remove Playlist Folder"
 msgstr "_Izbrisati mapu playliste"
 
-#: ../../lib/frontends/widgets/menus.py:293
+#: ../../lib/frontends/widgets/menus.py:291
 msgid "P_layback"
 msgstr "Č_itanje"
 
+#: ../../lib/frontends/widgets/menus.py:292
 #: ../../lib/frontends/widgets/menus.py:294
-#: ../../lib/frontends/widgets/menus.py:296
 msgid "_Play"
 msgstr "_Učitati"
 
-#: ../../lib/frontends/widgets/menus.py:297
+#: ../../lib/frontends/widgets/menus.py:295
 msgid "_Pause"
 msgstr "_Pauzirati"
 
-#: ../../lib/frontends/widgets/menus.py:298
+#: ../../lib/frontends/widgets/menus.py:296
 msgid "_Stop"
 msgstr "_Zaustaviti"
 
-#: ../../lib/frontends/widgets/menus.py:301
+#: ../../lib/frontends/widgets/menus.py:299
 msgid "_Next Item"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:304
+#: ../../lib/frontends/widgets/menus.py:302
 msgid "_Previous Item"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:308
+#: ../../lib/frontends/widgets/menus.py:306
 msgid "Skip _Forward"
 msgstr "Brzo _preskakanje"
 
-#: ../../lib/frontends/widgets/menus.py:310
+#: ../../lib/frontends/widgets/menus.py:308
 msgid "Skip _Back"
 msgstr "_Brzi povratak"
 
-#: ../../lib/frontends/widgets/menus.py:313
+#: ../../lib/frontends/widgets/menus.py:311
 msgid "Volume _Up"
 msgstr "_Pojačati jakost zvuka"
 
-#: ../../lib/frontends/widgets/menus.py:315
+#: ../../lib/frontends/widgets/menus.py:313
 msgid "Volume _Down"
 msgstr "_Smanjiti jakost zvuka"
 
-#: ../../lib/frontends/widgets/menus.py:318
+#: ../../lib/frontends/widgets/menus.py:316
 msgid "_Fullscreen"
 msgstr "_Cijeli zaslon"
 
-#: ../../lib/frontends/widgets/menus.py:321
+#: ../../lib/frontends/widgets/menus.py:319
 msgid "_Toggle Detached/Attached"
 msgstr "P_rikriti otkačno/prikačeno"
 
-#: ../../lib/frontends/widgets/menus.py:324
+#: ../../lib/frontends/widgets/menus.py:322
 msgid "S_ubtitles"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:328
+#: ../../lib/frontends/widgets/menus.py:326
 msgid "Select a Subtitles File..."
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:332
+msgid "Convert"
 msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:334
@@ -2032,7 +2041,7 @@ msgid "Enter a name for the new playlist folder"
 msgstr "Stavite ime za novu mapu playliste"
 
 #: ../../lib/frontends/widgets/application.py:726
-#: ../../lib/frontends/widgets/tablist.py:705
+#: ../../lib/frontends/widgets/tablist.py:706
 msgid "Rename Feed Folder"
 msgstr "Preimenovati mapu veza"
 
@@ -2051,7 +2060,7 @@ msgid "Enter a new name for the feed %(name)s"
 msgstr "Unesi novi naziv veze %(name)s"
 
 #: ../../lib/frontends/widgets/application.py:736
-#: ../../lib/frontends/widgets/tablist.py:765 ../../lib/playlist.py:202
+#: ../../lib/frontends/widgets/tablist.py:766 ../../lib/playlist.py:202
 msgid "Rename Playlist"
 msgstr "Preimenovati playlistu"
 
@@ -2061,7 +2070,7 @@ msgid "Enter a new name for the playlist %(name)s"
 msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:741
-#: ../../lib/frontends/widgets/tablist.py:759
+#: ../../lib/frontends/widgets/tablist.py:760
 msgid "Rename Playlist Folder"
 msgstr "Preimenuj mapu popisa izvođenja"
 
@@ -2071,7 +2080,7 @@ msgid "Enter a new name for the playlist folder %(name)s"
 msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:745
-#: ../../lib/frontends/widgets/tablist.py:623
+#: ../../lib/frontends/widgets/tablist.py:624
 msgid "Rename Website"
 msgstr ""
 
@@ -2611,20 +2620,20 @@ msgstr ""
 msgid "Completed"
 msgstr ""
 
-#: ../../lib/frontends/widgets/downloadscontroller.py:84
+#: ../../lib/frontends/widgets/downloadscontroller.py:86
 #: ../../lib/frontends/widgets/prefpanel.py:726
 msgid "Downloads"
 msgstr "Preuzimanja"
 
-#: ../../lib/frontends/widgets/downloadscontroller.py:95
+#: ../../lib/frontends/widgets/downloadscontroller.py:97
 msgid "Single and external downloads"
 msgstr "Pojedinačna i vanska preuzimanja"
 
-#: ../../lib/frontends/widgets/downloadscontroller.py:99
+#: ../../lib/frontends/widgets/downloadscontroller.py:101
 msgid "Feed downloads"
 msgstr ""
 
-#: ../../lib/frontends/widgets/downloadscontroller.py:102
+#: ../../lib/frontends/widgets/downloadscontroller.py:104
 msgid "Seeding"
 msgstr ""
 
@@ -2687,56 +2696,56 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/frontends/widgets/tablist.py:622
-#: ../../lib/frontends/widgets/tablist.py:717
+#: ../../lib/frontends/widgets/tablist.py:623
+#: ../../lib/frontends/widgets/tablist.py:718
 msgid "Copy URL to clipboard"
 msgstr "Kopirati internet adresu na papiru"
 
-#: ../../lib/frontends/widgets/tablist.py:624
+#: ../../lib/frontends/widgets/tablist.py:625
 msgid "Remove Website"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:628
+#: ../../lib/frontends/widgets/tablist.py:629
 msgid "Remove Websites"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:704
+#: ../../lib/frontends/widgets/tablist.py:705
 msgid "Update Feeds In Folder"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:711
+#: ../../lib/frontends/widgets/tablist.py:712
 msgid "Update Feed Now"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:714
+#: ../../lib/frontends/widgets/tablist.py:715
 msgid "Rename"
 msgstr "Promijeni ime"
 
-#: ../../lib/frontends/widgets/tablist.py:716
+#: ../../lib/frontends/widgets/tablist.py:717
 msgid "Revert Feed Name"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:723
+#: ../../lib/frontends/widgets/tablist.py:724
 msgid "Update Feeds Now"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:788
+#: ../../lib/frontends/widgets/tablist.py:789
 msgid "LIBRARY"
 msgstr "BIBLIOTEKA"
 
-#: ../../lib/frontends/widgets/tablist.py:790
+#: ../../lib/frontends/widgets/tablist.py:791
 msgid "WEBSITES"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:792
+#: ../../lib/frontends/widgets/tablist.py:793
 msgid "VIDEO FEEDS"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:794
+#: ../../lib/frontends/widgets/tablist.py:795
 msgid "AUDIO FEEDS"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:796
+#: ../../lib/frontends/widgets/tablist.py:797
 msgid "PLAYLISTS"
 msgstr "LISTE IZVOĐENJA"
 
@@ -3377,98 +3386,106 @@ msgstr ""
 msgid "Enter a new name for the playlist %s"
 msgstr "Unesite novi naziv za popis izvođenja %s"
 
-#: ../../lib/httpclient.py:94
+#: ../../lib/httpclient.py:101
 msgid "HTTP error"
 msgstr "HTTP greška"
 
-#: ../../lib/httpclient.py:98
+#: ../../lib/httpclient.py:105
 #, python-format
 msgid "%(host)s closed connection"
 msgstr "%(host)s je prekinuo vezu"
 
-#: ../../lib/httpclient.py:103
+#: ../../lib/httpclient.py:110
 #, python-format
 msgid "Host returned %(status)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:105
+#: ../../lib/httpclient.py:112
 msgid "Please retry later"
 msgstr ""
 
-#: ../../lib/httpclient.py:109
+#: ../../lib/httpclient.py:116
 #, python-format
 msgid "%(host)s doesn't support HTTP resume"
 msgstr ""
 
-#: ../../lib/httpclient.py:114
+#: ../../lib/httpclient.py:121
 #, python-format
 msgid "HTTP Redirection limit hit for %(url)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:120
+#: ../../lib/httpclient.py:127
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:128
+#: ../../lib/httpclient.py:135
 msgid "Got 404 status code"
 msgstr "Pogreska 404 statusnog koda"
 
-#: ../../lib/httpclient.py:130
+#: ../../lib/httpclient.py:137
 #, python-format
 msgid "Host returned bad status code: %(code)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:136 ../../lib/httpclient.py:137
+#: ../../lib/httpclient.py:143 ../../lib/httpclient.py:144
 msgid "Authorization failed"
 msgstr "Autorizacija nije uspjela"
 
-#: ../../lib/httpclient.py:141
+#: ../../lib/httpclient.py:148
+msgid "Authorization canceled"
+msgstr ""
+
+#: ../../lib/httpclient.py:149
+msgid "Authorization canceled by user"
+msgstr ""
+
+#: ../../lib/httpclient.py:153
 msgid "Invalid URL"
 msgstr "Neispravan URL"
 
-#: ../../lib/httpclient.py:142
+#: ../../lib/httpclient.py:154
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
 msgstr "\"%(url)s\" nije valjan URL"
 
-#: ../../lib/httpclient.py:147
+#: ../../lib/httpclient.py:159
 msgid "Unknow Host"
 msgstr ""
 
-#: ../../lib/httpclient.py:148
+#: ../../lib/httpclient.py:160
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
 msgstr ""
 
-#: ../../lib/httpclient.py:154
+#: ../../lib/httpclient.py:166
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
 msgstr "Datoteka \"%(path)s\" nije pronađena"
 
-#: ../../lib/httpclient.py:158
+#: ../../lib/httpclient.py:170
 msgid "Read error"
 msgstr "Greška pri čitanju"
 
-#: ../../lib/httpclient.py:159
+#: ../../lib/httpclient.py:171
 #, python-format
 msgid "Error while reading from \"%(path)s\""
 msgstr "Greška pri čitanju iz \"%(path)s\""
 
-#: ../../lib/httpclient.py:167 ../../lib/dl_daemon/download.py:679
+#: ../../lib/httpclient.py:179 ../../lib/dl_daemon/download.py:680
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr "Ne može pisati u %(filename)s datoteku"
 
-#: ../../lib/httpclient.py:169
+#: ../../lib/httpclient.py:181
 msgid "Write error"
 msgstr ""
 
-#: ../../lib/httpclient.py:343
+#: ../../lib/httpclient.py:365
 msgid "Website"
 msgstr ""
 
-#: ../../lib/httpclient.py:348
+#: ../../lib/httpclient.py:370
 msgid "Proxy"
 msgstr ""
 
@@ -3507,41 +3524,41 @@ msgstr "Nepoznati kod greške"
 msgid "Connection closed"
 msgstr "Veza je prekinuta"
 
-#: ../../lib/dl_daemon/download.py:687 ../../lib/dl_daemon/download.py:833
+#: ../../lib/dl_daemon/download.py:688 ../../lib/dl_daemon/download.py:837
 msgid "Not enough disk space"
 msgstr "Nedovoljno prostora na disku"
 
-#: ../../lib/dl_daemon/download.py:688 ../../lib/dl_daemon/download.py:834
+#: ../../lib/dl_daemon/download.py:689 ../../lib/dl_daemon/download.py:838
 #, python-format
 msgid "%(amount)s MB required to store this video"
 msgstr "Za pohraniti ovaj video potrebno je %(amount)s MB"
 
-#: ../../lib/dl_daemon/download.py:718
+#: ../../lib/dl_daemon/download.py:722
 msgid "no content"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:860
+#: ../../lib/dl_daemon/download.py:864
 msgid "BitTorrent failure"
 msgstr "Greška BitTorrent-a"
 
-#: ../../lib/dl_daemon/download.py:861
+#: ../../lib/dl_daemon/download.py:865
 msgid "BitTorrent failed to startup"
 msgstr "Pogreška na pokretanju BitTorrent"
 
-#: ../../lib/dl_daemon/download.py:1073
+#: ../../lib/dl_daemon/download.py:1077
 msgid "Corrupt Torrent"
 msgstr "Prekinut Torrent"
 
-#: ../../lib/dl_daemon/download.py:1074
+#: ../../lib/dl_daemon/download.py:1078
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr "Torrent datoteka na %(url)s nije bila ispravna"
 
-#: ../../lib/dl_daemon/download.py:1105
+#: ../../lib/dl_daemon/download.py:1109
 msgid "Torrent file deleted"
 msgstr "Torrent datoteka izbrisana"
 
-#: ../../lib/dl_daemon/download.py:1106
+#: ../../lib/dl_daemon/download.py:1110
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr ""

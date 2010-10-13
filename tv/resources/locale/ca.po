@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2010-09-18 11:10-0400\n"
+"POT-Creation-Date: 2010-09-30 12:19-0400\n"
 "PO-Revision-Date: 2010-09-07 10:58+0000\n"
 "Last-Translator: Aljullu <aljullu@gmail.com>\n"
 "Language-Team: Catalan <ca@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-09-30 16:13+0000\n"
+"X-Launchpad-Export-Date: 2010-10-13 16:09+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
@@ -27,7 +27,7 @@ msgstr "Comparteix"
 #: ../../osx/plat/frontends/widgets/overlay.py:125 ../../lib/dialogs.py:117
 #: ../../lib/frontends/widgets/style.py:261
 #: ../../lib/frontends/widgets/style.py:1082
-#: ../../lib/frontends/widgets/style.py:1249
+#: ../../lib/frontends/widgets/style.py:1248
 #: ../../lib/frontends/widgets/itemcontextmenu.py:116
 #: ../../lib/frontends/widgets/itemcontextmenu.py:223
 #: ../../lib/frontends/widgets/gtk/video.py:283
@@ -156,7 +156,7 @@ msgid "Disable Subtitles"
 msgstr "Desactiva els subtítols"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:379
-#: ../../lib/frontends/widgets/menus.py:325
+#: ../../lib/frontends/widgets/menus.py:323
 #: ../../lib/frontends/widgets/gtk/video.py:380
 msgid "None Available"
 msgstr "Cap disponible"
@@ -666,16 +666,16 @@ msgstr ""
 msgid "Would you like to keep the feed?"
 msgstr "Voleu conservar el canal?"
 
-#: ../../lib/feed.py:970
+#: ../../lib/feed.py:972
 msgid "Bad content-type"
 msgstr "Contingut erroni"
 
-#: ../../lib/feed.py:983
+#: ../../lib/feed.py:985
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
 msgstr "El canal no és compatible amb el %(appname)s"
 
-#: ../../lib/feed.py:986
+#: ../../lib/feed.py:988
 #, python-format
 msgid ""
 "This channel is not compatible with %(appname)s but we'll try our best to "
@@ -688,54 +688,54 @@ msgid ""
 "Do you want to try to load this channel anyway?"
 msgstr ""
 
-#: ../../lib/feed.py:1666 ../../lib/databaseupgrade.py:2749
+#: ../../lib/feed.py:1668 ../../lib/databaseupgrade.py:2749
 #, python-format
 msgid "%(engine)s for '%(query)s'"
 msgstr ""
 
-#: ../../lib/feed.py:2115 ../../lib/feed.py:2245
+#: ../../lib/feed.py:2123 ../../lib/feed.py:2253
 msgid "Local Files"
 msgstr "Fitxers locals"
 
-#: ../../lib/feed.py:2124 ../../lib/feed.py:2230
+#: ../../lib/feed.py:2132 ../../lib/feed.py:2238
 #: ../../lib/frontends/widgets/firsttimedialog.py:302
 #: ../../lib/frontends/widgets/firsttimedialog.py:304
 #: ../../lib/frontends/widgets/firsttimedialog.py:362
 msgid "Search"
 msgstr "Cerca"
 
-#: ../../lib/feed.py:2259
+#: ../../lib/feed.py:2267
 msgid "Playing File"
 msgstr "Reproduint fitxer"
 
-#: ../../lib/downloader.py:261
+#: ../../lib/downloader.py:268
 msgid "activity"
 msgstr "activitat"
 
-#: ../../lib/downloader.py:329 ../../lib/httpclient.py:127
-#: ../../lib/httpclient.py:153
+#: ../../lib/downloader.py:336 ../../lib/httpclient.py:134
+#: ../../lib/httpclient.py:165
 msgid "File not found"
 msgstr "Arxiu no trobat"
 
-#: ../../lib/downloader.py:330
+#: ../../lib/downloader.py:337
 msgid "Flash URL Scraping Error"
 msgstr "Error en l'adreça Flash"
 
-#: ../../lib/downloader.py:528
+#: ../../lib/downloader.py:535
 msgid "starting up"
 msgstr "començant"
 
-#: ../../lib/downloader.py:535
+#: ../../lib/downloader.py:542
 #, python-format
 msgid "no connection - retrying in %s"
 msgstr ""
 
-#: ../../lib/downloader.py:537
+#: ../../lib/downloader.py:544
 msgid "no connection - retrying soon"
 msgstr ""
 
-#: ../../lib/downloader.py:561 ../../lib/downloader.py:569
-#: ../../lib/httpclient.py:199 ../../lib/httpclient.py:618
+#: ../../lib/downloader.py:568 ../../lib/downloader.py:576
+#: ../../lib/httpclient.py:211 ../../lib/httpclient.py:672
 msgid "Unknown"
 msgstr "Desconegut"
 
@@ -833,15 +833,15 @@ msgstr "%(size)sKB"
 msgid "%(size)sB"
 msgstr "%(size)sBytes"
 
-#: ../../lib/messagehandler.py:1336
+#: ../../lib/messagehandler.py:1350
 msgid "Subscribed to new feed:"
 msgstr "Subscrit a un canal nou:"
 
-#: ../../lib/messagehandler.py:1339
+#: ../../lib/messagehandler.py:1353
 msgid "Subscribed to new feeds:"
 msgstr "Subscrit als canals nous:"
 
-#: ../../lib/messagehandler.py:1358
+#: ../../lib/messagehandler.py:1372
 msgid "Migrating Files"
 msgstr ""
 
@@ -878,12 +878,16 @@ msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened."
 msgstr ""
 
-#: ../../lib/videoconversion.py:83
+#: ../../lib/videoconversion.py:88
 #, python-format
 msgid "%(name)s (%(mediatype)s)"
 msgstr ""
 
-#: ../../lib/videoconversion.py:708
+#: ../../lib/videoconversion.py:344
+msgid "Reason unknown"
+msgstr ""
+
+#: ../../lib/videoconversion.py:764
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
 msgstr ""
@@ -997,12 +1001,12 @@ msgid "Add Into New Folder"
 msgstr "Afegeix dins d'una Carpeta nova"
 
 #: ../../lib/dialogs.py:119 ../../lib/frontends/widgets/style.py:262
-#: ../../lib/frontends/widgets/tablist.py:706
-#: ../../lib/frontends/widgets/tablist.py:718
-#: ../../lib/frontends/widgets/tablist.py:724
-#: ../../lib/frontends/widgets/tablist.py:760
-#: ../../lib/frontends/widgets/tablist.py:766
-#: ../../lib/frontends/widgets/tablist.py:771
+#: ../../lib/frontends/widgets/tablist.py:707
+#: ../../lib/frontends/widgets/tablist.py:719
+#: ../../lib/frontends/widgets/tablist.py:725
+#: ../../lib/frontends/widgets/tablist.py:761
+#: ../../lib/frontends/widgets/tablist.py:767
+#: ../../lib/frontends/widgets/tablist.py:772
 #: ../../lib/frontends/widgets/prefpanel.py:547
 msgid "Remove"
 msgstr "Elimina"
@@ -1141,121 +1145,126 @@ msgstr ""
 msgid "starting up..."
 msgstr "començant..."
 
-#: ../../lib/controller.py:139 ../../lib/controller.py:160
+#: ../../lib/controller.py:139
 msgid "Sending Crash Report"
 msgstr ""
 
-#: ../../lib/displaytext.py:52
+#: ../../lib/controller.py:160
 #, python-format
-msgid "%(size)s GB/s"
-msgstr ""
-
-#: ../../lib/displaytext.py:55
-#, python-format
-msgid "%(size)s MB/s"
-msgstr ""
-
-#: ../../lib/displaytext.py:58
-#, python-format
-msgid "%(size)s kB/s"
+msgid "Sending Crash Report (%(progress)d%%)"
 msgstr ""
 
 #: ../../lib/displaytext.py:61
 #, python-format
+msgid "%(size)s GB/s"
+msgstr ""
+
+#: ../../lib/displaytext.py:64
+#, python-format
+msgid "%(size)s MB/s"
+msgstr ""
+
+#: ../../lib/displaytext.py:67
+#, python-format
+msgid "%(size)s kB/s"
+msgstr ""
+
+#: ../../lib/displaytext.py:70
+#, python-format
 msgid "%(size)s B/s"
 msgstr ""
 
-#: ../../lib/displaytext.py:77
+#: ../../lib/displaytext.py:86
 #, python-format
 msgid "%(num).0f day"
 msgid_plural "%(num).0f days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/displaytext.py:81
+#: ../../lib/displaytext.py:90
 #, python-format
 msgid "%(num).0f hr"
 msgid_plural "%(num).0f hrs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/displaytext.py:85
+#: ../../lib/displaytext.py:94
 #, python-format
 msgid "%(num).0f min"
 msgid_plural "%(num).0f mins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/displaytext.py:88
+#: ../../lib/displaytext.py:97
 #, python-format
 msgid "%(num)d sec"
 msgid_plural "%(num)d secs"
 msgstr[0] "%(num)d segon"
 msgstr[1] "%(num)d segons"
 
-#: ../../lib/displaytext.py:102
+#: ../../lib/displaytext.py:111
 #, python-format
 msgid "%(size)s GB"
 msgstr ""
 
-#: ../../lib/displaytext.py:105
+#: ../../lib/displaytext.py:114
 #, python-format
 msgid "%(size)s MB"
 msgstr ""
 
-#: ../../lib/displaytext.py:108
+#: ../../lib/displaytext.py:117
 #, python-format
 msgid "%(size)s KB"
 msgstr ""
 
-#: ../../lib/displaytext.py:110
+#: ../../lib/displaytext.py:119
 #, python-format
 msgid "%(size)s B"
 msgstr ""
 
-#: ../../lib/displaytext.py:115
+#: ../../lib/displaytext.py:124
 #, python-format
 msgid "Expires in %(count)d day"
 msgid_plural "Expires in %(count)d days"
 msgstr[0] "Venç en %(count) dia"
 msgstr[1] "Venç en %(count) dies"
 
-#: ../../lib/displaytext.py:120
+#: ../../lib/displaytext.py:129
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
 msgstr[0] "Venç en %(count) hora"
 msgstr[1] "Venç en %(count) hores"
 
-#: ../../lib/displaytext.py:125
+#: ../../lib/displaytext.py:134
 #, python-format
 msgid "Expires in %(count)d minute"
 msgid_plural "Expires in %(count)d minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/displaytext.py:133
+#: ../../lib/displaytext.py:142
 #, python-format
 msgid "Expires: %(count)d day"
 msgid_plural "Expires: %(count)d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/displaytext.py:138
+#: ../../lib/displaytext.py:147
 #, python-format
 msgid "Expires: %(count)d hour"
 msgid_plural "Expires: %(count)d hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/displaytext.py:143
+#: ../../lib/displaytext.py:152
 #, python-format
 msgid "Expires: %(count)d minute"
 msgid_plural "Expires: %(count)d minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../lib/displaytext.py:160
+#: ../../lib/displaytext.py:169
 #, python-format
 msgid "%(month)s %(dayofmonth)s, %(year)s"
 msgstr ""
@@ -1346,7 +1355,7 @@ msgid "Download Torrent"
 msgstr "Descarrega elTtorrent"
 
 #: ../../lib/frontends/widgets/style.py:255
-#: ../../lib/dl_daemon/download.py:556
+#: ../../lib/dl_daemon/download.py:557
 msgid "Error"
 msgstr "Error"
 
@@ -1491,185 +1500,185 @@ msgid "_Quit"
 msgstr "_Surt"
 
 #: ../../lib/frontends/widgets/menus.py:228
-msgid "Convert"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:230
 msgid "_Sidebar"
 msgstr "_Barra lateral"
 
-#: ../../lib/frontends/widgets/menus.py:231
+#: ../../lib/frontends/widgets/menus.py:229
 msgid "Add _Feed"
 msgstr "A_fegeix un canal"
 
-#: ../../lib/frontends/widgets/menus.py:233
+#: ../../lib/frontends/widgets/menus.py:231
 #: ../../lib/frontends/widgets/application.py:582
 msgid "Add Website"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:235
+#: ../../lib/frontends/widgets/menus.py:233
 msgid "New Searc_h Feed"
 msgstr "Crea un cana_l de cerca"
 
-#: ../../lib/frontends/widgets/menus.py:237
+#: ../../lib/frontends/widgets/menus.py:235
 msgid "New _Folder"
 msgstr "_Carpeta nova"
 
-#: ../../lib/frontends/widgets/menus.py:241
+#: ../../lib/frontends/widgets/menus.py:239
 msgid "Re_name"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:244
+#: ../../lib/frontends/widgets/menus.py:242
 msgid "Re_name Feed"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:245
+#: ../../lib/frontends/widgets/menus.py:243
 msgid "Re_name Website"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:246
+#: ../../lib/frontends/widgets/menus.py:244
 msgid "_Remove"
 msgstr "Sup_rimeix"
 
-#: ../../lib/frontends/widgets/menus.py:250
+#: ../../lib/frontends/widgets/menus.py:248
 msgid "_Remove Feed"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:251
+#: ../../lib/frontends/widgets/menus.py:249
 msgid "_Remove Feeds"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:252
+#: ../../lib/frontends/widgets/menus.py:250
 msgid "_Remove Folder"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:253
+#: ../../lib/frontends/widgets/menus.py:251
 msgid "_Remove Folders"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:254
+#: ../../lib/frontends/widgets/menus.py:252
 msgid "_Remove Website"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:255
+#: ../../lib/frontends/widgets/menus.py:253
 msgid "_Remove Websites"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:256
+#: ../../lib/frontends/widgets/menus.py:254
 msgid "_Update Feed"
 msgstr "Act_ualitza el canal"
 
-#: ../../lib/frontends/widgets/menus.py:259
+#: ../../lib/frontends/widgets/menus.py:257
 msgid "_Update Feeds"
 msgstr "Act_ualitza els canals"
 
-#: ../../lib/frontends/widgets/menus.py:260
+#: ../../lib/frontends/widgets/menus.py:258
 msgid "Update _All Feeds"
 msgstr "_Actualitza tots els canals"
 
-#: ../../lib/frontends/widgets/menus.py:264
+#: ../../lib/frontends/widgets/menus.py:262
 msgid "_Import Feeds (OPML)"
 msgstr "_Importa canals (OPML)"
 
-#: ../../lib/frontends/widgets/menus.py:266
+#: ../../lib/frontends/widgets/menus.py:264
 msgid "E_xport Feeds (OPML)"
 msgstr "E_xporta canals (OPML)"
 
-#: ../../lib/frontends/widgets/menus.py:269
+#: ../../lib/frontends/widgets/menus.py:267
 msgid "_Share with a Friend"
 msgstr "_Comparteix-ho amb un amic"
 
-#: ../../lib/frontends/widgets/menus.py:271
+#: ../../lib/frontends/widgets/menus.py:269
 msgid "Copy URL"
 msgstr "Copia l'URL"
 
-#: ../../lib/frontends/widgets/menus.py:275
+#: ../../lib/frontends/widgets/menus.py:273
 msgid "_Playlists"
 msgstr "_Repertoris"
 
-#: ../../lib/frontends/widgets/menus.py:276
+#: ../../lib/frontends/widgets/menus.py:274
 msgid "New _Playlist"
 msgstr "Crea un _repertori"
 
-#: ../../lib/frontends/widgets/menus.py:279
+#: ../../lib/frontends/widgets/menus.py:277
 msgid "New Playlist Fol_der"
 msgstr "Carpeta de re_pertoris nova"
 
-#: ../../lib/frontends/widgets/menus.py:283
+#: ../../lib/frontends/widgets/menus.py:281
 msgid "Re_name Playlist"
 msgstr "Canvia nom del repertori"
 
-#: ../../lib/frontends/widgets/menus.py:285
+#: ../../lib/frontends/widgets/menus.py:283
 msgid "_Remove Playlist"
 msgstr "_Elimina repertori"
 
-#: ../../lib/frontends/widgets/menus.py:288
+#: ../../lib/frontends/widgets/menus.py:286
 msgid "_Remove Playlists"
 msgstr "_Elimina repertoris"
 
-#: ../../lib/frontends/widgets/menus.py:289
+#: ../../lib/frontends/widgets/menus.py:287
 msgid "_Remove Playlist Folders"
 msgstr "_Elimina carpetes de repertori"
 
-#: ../../lib/frontends/widgets/menus.py:290
+#: ../../lib/frontends/widgets/menus.py:288
 msgid "_Remove Playlist Folder"
 msgstr "_Elimina carpeta de repertoris"
 
-#: ../../lib/frontends/widgets/menus.py:293
+#: ../../lib/frontends/widgets/menus.py:291
 msgid "P_layback"
 msgstr "Reproducció"
 
+#: ../../lib/frontends/widgets/menus.py:292
 #: ../../lib/frontends/widgets/menus.py:294
-#: ../../lib/frontends/widgets/menus.py:296
 msgid "_Play"
 msgstr "Re_produeix"
 
-#: ../../lib/frontends/widgets/menus.py:297
+#: ../../lib/frontends/widgets/menus.py:295
 msgid "_Pause"
 msgstr "Fes una _pausa"
 
-#: ../../lib/frontends/widgets/menus.py:298
+#: ../../lib/frontends/widgets/menus.py:296
 msgid "_Stop"
 msgstr "At_ura"
 
-#: ../../lib/frontends/widgets/menus.py:301
+#: ../../lib/frontends/widgets/menus.py:299
 msgid "_Next Item"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:304
+#: ../../lib/frontends/widgets/menus.py:302
 msgid "_Previous Item"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:308
+#: ../../lib/frontends/widgets/menus.py:306
 msgid "Skip _Forward"
 msgstr "Salta en_davant"
 
-#: ../../lib/frontends/widgets/menus.py:310
+#: ../../lib/frontends/widgets/menus.py:308
 msgid "Skip _Back"
 msgstr "Salta _enrere"
 
-#: ../../lib/frontends/widgets/menus.py:313
+#: ../../lib/frontends/widgets/menus.py:311
 msgid "Volume _Up"
 msgstr "_Apuja el volum"
 
-#: ../../lib/frontends/widgets/menus.py:315
+#: ../../lib/frontends/widgets/menus.py:313
 msgid "Volume _Down"
 msgstr "A_baixa el volum"
 
-#: ../../lib/frontends/widgets/menus.py:318
+#: ../../lib/frontends/widgets/menus.py:316
 msgid "_Fullscreen"
 msgstr "_Pantalla completa"
 
-#: ../../lib/frontends/widgets/menus.py:321
+#: ../../lib/frontends/widgets/menus.py:319
 msgid "_Toggle Detached/Attached"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:324
+#: ../../lib/frontends/widgets/menus.py:322
 msgid "S_ubtitles"
 msgstr ""
 
-#: ../../lib/frontends/widgets/menus.py:328
+#: ../../lib/frontends/widgets/menus.py:326
 msgid "Select a Subtitles File..."
+msgstr ""
+
+#: ../../lib/frontends/widgets/menus.py:332
+msgid "Convert"
 msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:334
@@ -2027,7 +2036,7 @@ msgid "Enter a name for the new playlist folder"
 msgstr "Introduiu un nom per a la carpeta de repertoris"
 
 #: ../../lib/frontends/widgets/application.py:726
-#: ../../lib/frontends/widgets/tablist.py:705
+#: ../../lib/frontends/widgets/tablist.py:706
 msgid "Rename Feed Folder"
 msgstr ""
 
@@ -2046,7 +2055,7 @@ msgid "Enter a new name for the feed %(name)s"
 msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:736
-#: ../../lib/frontends/widgets/tablist.py:765 ../../lib/playlist.py:202
+#: ../../lib/frontends/widgets/tablist.py:766 ../../lib/playlist.py:202
 msgid "Rename Playlist"
 msgstr "Canvia el nom del repertori"
 
@@ -2056,7 +2065,7 @@ msgid "Enter a new name for the playlist %(name)s"
 msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:741
-#: ../../lib/frontends/widgets/tablist.py:759
+#: ../../lib/frontends/widgets/tablist.py:760
 msgid "Rename Playlist Folder"
 msgstr "Canvia nom de la  carpeta de repertoris"
 
@@ -2066,7 +2075,7 @@ msgid "Enter a new name for the playlist folder %(name)s"
 msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:745
-#: ../../lib/frontends/widgets/tablist.py:623
+#: ../../lib/frontends/widgets/tablist.py:624
 msgid "Rename Website"
 msgstr "Canviar el nom al lloc web"
 
@@ -2591,20 +2600,20 @@ msgstr ""
 msgid "Completed"
 msgstr ""
 
-#: ../../lib/frontends/widgets/downloadscontroller.py:84
+#: ../../lib/frontends/widgets/downloadscontroller.py:86
 #: ../../lib/frontends/widgets/prefpanel.py:726
 msgid "Downloads"
 msgstr "Baixades"
 
-#: ../../lib/frontends/widgets/downloadscontroller.py:95
+#: ../../lib/frontends/widgets/downloadscontroller.py:97
 msgid "Single and external downloads"
 msgstr "Baixades senzilles i externes"
 
-#: ../../lib/frontends/widgets/downloadscontroller.py:99
+#: ../../lib/frontends/widgets/downloadscontroller.py:101
 msgid "Feed downloads"
 msgstr "Baixades del canal"
 
-#: ../../lib/frontends/widgets/downloadscontroller.py:102
+#: ../../lib/frontends/widgets/downloadscontroller.py:104
 msgid "Seeding"
 msgstr "Sembrant"
 
@@ -2668,56 +2677,56 @@ msgstr[0] ""
 "Estas segur que vols eliminar aquest canal? Les descarregues en curs seran "
 "abortades"
 
-#: ../../lib/frontends/widgets/tablist.py:622
-#: ../../lib/frontends/widgets/tablist.py:717
+#: ../../lib/frontends/widgets/tablist.py:623
+#: ../../lib/frontends/widgets/tablist.py:718
 msgid "Copy URL to clipboard"
 msgstr "Copia la URL al bloc de notes"
 
-#: ../../lib/frontends/widgets/tablist.py:624
+#: ../../lib/frontends/widgets/tablist.py:625
 msgid "Remove Website"
 msgstr "Eliminar lloc web"
 
-#: ../../lib/frontends/widgets/tablist.py:628
+#: ../../lib/frontends/widgets/tablist.py:629
 msgid "Remove Websites"
 msgstr "Eliminar llocs web"
 
-#: ../../lib/frontends/widgets/tablist.py:704
+#: ../../lib/frontends/widgets/tablist.py:705
 msgid "Update Feeds In Folder"
 msgstr "Actualitzar canals de la carpeta"
 
-#: ../../lib/frontends/widgets/tablist.py:711
+#: ../../lib/frontends/widgets/tablist.py:712
 msgid "Update Feed Now"
 msgstr "Actualitzar Canal Ara"
 
-#: ../../lib/frontends/widgets/tablist.py:714
+#: ../../lib/frontends/widgets/tablist.py:715
 msgid "Rename"
 msgstr "Reanomena"
 
-#: ../../lib/frontends/widgets/tablist.py:716
+#: ../../lib/frontends/widgets/tablist.py:717
 msgid "Revert Feed Name"
 msgstr ""
 
-#: ../../lib/frontends/widgets/tablist.py:723
+#: ../../lib/frontends/widgets/tablist.py:724
 msgid "Update Feeds Now"
 msgstr "Actualitzar Canals Ara"
 
-#: ../../lib/frontends/widgets/tablist.py:788
+#: ../../lib/frontends/widgets/tablist.py:789
 msgid "LIBRARY"
 msgstr "BIBLIOTECA"
 
-#: ../../lib/frontends/widgets/tablist.py:790
+#: ../../lib/frontends/widgets/tablist.py:791
 msgid "WEBSITES"
 msgstr "LLOCS WEB"
 
-#: ../../lib/frontends/widgets/tablist.py:792
+#: ../../lib/frontends/widgets/tablist.py:793
 msgid "VIDEO FEEDS"
 msgstr "CANALS DE VIDEO"
 
-#: ../../lib/frontends/widgets/tablist.py:794
+#: ../../lib/frontends/widgets/tablist.py:795
 msgid "AUDIO FEEDS"
 msgstr "CANALS D'AUDIO"
 
-#: ../../lib/frontends/widgets/tablist.py:796
+#: ../../lib/frontends/widgets/tablist.py:797
 msgid "PLAYLISTS"
 msgstr "LLISTES DE REPRODUCCIÓ"
 
@@ -3357,98 +3366,106 @@ msgstr ""
 msgid "Enter a new name for the playlist %s"
 msgstr "Introduiu un nom nou per el repertori %s"
 
-#: ../../lib/httpclient.py:94
+#: ../../lib/httpclient.py:101
 msgid "HTTP error"
 msgstr "S'ha produït un error en l'HTTP"
 
-#: ../../lib/httpclient.py:98
+#: ../../lib/httpclient.py:105
 #, python-format
 msgid "%(host)s closed connection"
 msgstr "%(host)s ha tancat la connexió"
 
-#: ../../lib/httpclient.py:103
+#: ../../lib/httpclient.py:110
 #, python-format
 msgid "Host returned %(status)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:105
+#: ../../lib/httpclient.py:112
 msgid "Please retry later"
 msgstr ""
 
-#: ../../lib/httpclient.py:109
+#: ../../lib/httpclient.py:116
 #, python-format
 msgid "%(host)s doesn't support HTTP resume"
 msgstr ""
 
-#: ../../lib/httpclient.py:114
+#: ../../lib/httpclient.py:121
 #, python-format
 msgid "HTTP Redirection limit hit for %(url)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:120
+#: ../../lib/httpclient.py:127
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:128
+#: ../../lib/httpclient.py:135
 msgid "Got 404 status code"
 msgstr "Teniu un codi d'estat 404"
 
-#: ../../lib/httpclient.py:130
+#: ../../lib/httpclient.py:137
 #, python-format
 msgid "Host returned bad status code: %(code)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:136 ../../lib/httpclient.py:137
+#: ../../lib/httpclient.py:143 ../../lib/httpclient.py:144
 msgid "Authorization failed"
 msgstr "Autorització fallida"
 
-#: ../../lib/httpclient.py:141
+#: ../../lib/httpclient.py:148
+msgid "Authorization canceled"
+msgstr ""
+
+#: ../../lib/httpclient.py:149
+msgid "Authorization canceled by user"
+msgstr ""
+
+#: ../../lib/httpclient.py:153
 msgid "Invalid URL"
 msgstr "URL no vàlida"
 
-#: ../../lib/httpclient.py:142
+#: ../../lib/httpclient.py:154
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
 msgstr "\"%(url)s\" no és una URL vàlida"
 
-#: ../../lib/httpclient.py:147
+#: ../../lib/httpclient.py:159
 msgid "Unknow Host"
 msgstr ""
 
-#: ../../lib/httpclient.py:148
+#: ../../lib/httpclient.py:160
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
 msgstr ""
 
-#: ../../lib/httpclient.py:154
+#: ../../lib/httpclient.py:166
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
 msgstr "L'arxiu \"%(path)s no existeix"
 
-#: ../../lib/httpclient.py:158
+#: ../../lib/httpclient.py:170
 msgid "Read error"
 msgstr "S'ha produït un error de lectura"
 
-#: ../../lib/httpclient.py:159
+#: ../../lib/httpclient.py:171
 #, python-format
 msgid "Error while reading from \"%(path)s\""
 msgstr "S'ha produït un error en llegir el «%(path)s»"
 
-#: ../../lib/httpclient.py:167 ../../lib/dl_daemon/download.py:679
+#: ../../lib/httpclient.py:179 ../../lib/dl_daemon/download.py:680
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:169
+#: ../../lib/httpclient.py:181
 msgid "Write error"
 msgstr ""
 
-#: ../../lib/httpclient.py:343
+#: ../../lib/httpclient.py:365
 msgid "Website"
 msgstr ""
 
-#: ../../lib/httpclient.py:348
+#: ../../lib/httpclient.py:370
 msgid "Proxy"
 msgstr ""
 
@@ -3487,41 +3504,41 @@ msgstr "Codi d'error desconegut"
 msgid "Connection closed"
 msgstr "S'ha tancat la connexió"
 
-#: ../../lib/dl_daemon/download.py:687 ../../lib/dl_daemon/download.py:833
+#: ../../lib/dl_daemon/download.py:688 ../../lib/dl_daemon/download.py:837
 msgid "Not enough disk space"
 msgstr "No hi ha espai suficient en el disc dur"
 
-#: ../../lib/dl_daemon/download.py:688 ../../lib/dl_daemon/download.py:834
+#: ../../lib/dl_daemon/download.py:689 ../../lib/dl_daemon/download.py:838
 #, python-format
 msgid "%(amount)s MB required to store this video"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:718
+#: ../../lib/dl_daemon/download.py:722
 msgid "no content"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:860
+#: ../../lib/dl_daemon/download.py:864
 msgid "BitTorrent failure"
 msgstr "BitTorrent ha fallat"
 
-#: ../../lib/dl_daemon/download.py:861
+#: ../../lib/dl_daemon/download.py:865
 msgid "BitTorrent failed to startup"
 msgstr "BitTorrent ha fallat al iniciar"
 
-#: ../../lib/dl_daemon/download.py:1073
+#: ../../lib/dl_daemon/download.py:1077
 msgid "Corrupt Torrent"
 msgstr "Torrent corrupte"
 
-#: ../../lib/dl_daemon/download.py:1074
+#: ../../lib/dl_daemon/download.py:1078
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:1105
+#: ../../lib/dl_daemon/download.py:1109
 msgid "Torrent file deleted"
 msgstr "Arxiu torrent eliminat"
 
-#: ../../lib/dl_daemon/download.py:1106
+#: ../../lib/dl_daemon/download.py:1110
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr ""

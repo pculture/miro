@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2010-09-18 11:10-0400\n"
-"PO-Revision-Date: 2010-07-18 12:33+0000\n"
+"POT-Creation-Date: 2010-09-30 12:19-0400\n"
+"PO-Revision-Date: 2010-10-05 21:43+0000\n"
 "Last-Translator: duw <Unknown>\n"
 "Language-Team: Welsh <cy@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : (n != 8 && n != 11) ? "
 "2 : 3;\n"
-"X-Launchpad-Export-Date: 2010-09-30 16:13+0000\n"
+"X-Launchpad-Export-Date: 2010-10-13 16:09+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
@@ -28,7 +28,7 @@ msgstr "Rhannu"
 #: ../../osx/plat/frontends/widgets/overlay.py:125 ../../lib/dialogs.py:117
 #: ../../lib/frontends/widgets/style.py:261
 #: ../../lib/frontends/widgets/style.py:1082
-#: ../../lib/frontends/widgets/style.py:1249
+#: ../../lib/frontends/widgets/style.py:1248
 #: ../../lib/frontends/widgets/itemcontextmenu.py:116
 #: ../../lib/frontends/widgets/itemcontextmenu.py:223
 #: ../../lib/frontends/widgets/gtk/video.py:283
@@ -157,7 +157,7 @@ msgid "Disable Subtitles"
 msgstr "Analluogi Is-deitlau"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:379
-#: ../../lib/frontends/widgets/menus.py:325
+#: ../../lib/frontends/widgets/menus.py:323
 #: ../../lib/frontends/widgets/gtk/video.py:380
 msgid "None Available"
 msgstr "Dim ar Gael"
@@ -172,7 +172,7 @@ msgstr "Dewiswch ffeil is-deitlau"
 #: ../../windows/plat/renderers/vlc.py:701
 #: ../../linux/plat/renderers/gstreamerrenderer.py:569
 msgid "Eastern European"
-msgstr ""
+msgstr "Ewropeaidd Dwyreiniol"
 
 #: ../../windows/plat/renderers/vlc.py:698
 #: ../../windows/plat/renderers/vlc.py:699
@@ -180,34 +180,34 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:571
 #: ../../linux/plat/renderers/gstreamerrenderer.py:572
 msgid "Baltic"
-msgstr ""
+msgstr "Balteg"
 
 #: ../../windows/plat/renderers/vlc.py:702
 msgid "Russian"
-msgstr ""
+msgstr "Rwseg"
 
 #: ../../windows/plat/renderers/vlc.py:703
 msgid "South-Eastern European"
-msgstr ""
+msgstr "Ewropeaidd De-Ddwyreiniol"
 
 #: ../../windows/plat/renderers/vlc.py:704
 msgid "Ukrainian"
-msgstr ""
+msgstr "Wcreineg"
 
 #: ../../windows/plat/renderers/vlc.py:707
 #: ../../windows/plat/renderers/vlc.py:709
 #: ../../linux/plat/renderers/gstreamerrenderer.py:590
 msgid "Western European"
-msgstr ""
+msgstr "Ewropeaidd Gorllewinol"
 
 #: ../../windows/plat/renderers/vlc.py:708
 #: ../../linux/plat/renderers/gstreamerrenderer.py:591
 msgid "Celtic"
-msgstr ""
+msgstr "Celtaidd"
 
 #: ../../windows/plat/renderers/vlc.py:710
 msgid "Esperanto"
-msgstr ""
+msgstr "Esperanto"
 
 #: ../../windows/plat/renderers/vlc.py:711
 #: ../../windows/plat/renderers/vlc.py:712
@@ -215,24 +215,24 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:593
 #: ../../linux/plat/renderers/gstreamerrenderer.py:594
 msgid "Greek"
-msgstr ""
+msgstr "Groegeg"
 
 #: ../../windows/plat/renderers/vlc.py:715
 #: ../../linux/plat/renderers/gstreamerrenderer.py:604
 msgid "East Asian"
-msgstr ""
+msgstr "Asiaidd Dwyreiniol"
 
 #: ../../windows/plat/renderers/vlc.py:716
 msgid "Universal Chinese"
-msgstr ""
+msgstr "Tsieinëeg Gyffredinol"
 
 #: ../../windows/plat/renderers/vlc.py:717
 msgid "Simplified Chinese"
-msgstr ""
+msgstr "Tsieinëeg Syml"
 
 #: ../../windows/plat/renderers/vlc.py:718
 msgid "Simplified Chinese Unix"
-msgstr ""
+msgstr "Unix Tsieinëeg Syml"
 
 #: ../../windows/plat/renderers/vlc.py:719
 #: ../../windows/plat/renderers/vlc.py:721
@@ -240,11 +240,11 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:613
 #: ../../linux/plat/renderers/gstreamerrenderer.py:614
 msgid "Japanese"
-msgstr ""
+msgstr "Siapaneg"
 
 #: ../../windows/plat/renderers/vlc.py:720
 msgid "Japanese Unix"
-msgstr ""
+msgstr "Unix Siapaneg"
 
 #: ../../windows/plat/renderers/vlc.py:722
 #: ../../windows/plat/renderers/vlc.py:723
@@ -253,24 +253,24 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:617
 #: ../../linux/plat/renderers/gstreamerrenderer.py:618
 msgid "Korean"
-msgstr ""
+msgstr "Corëeg"
 
 #: ../../windows/plat/renderers/vlc.py:724
 msgid "Traditional Chinese"
-msgstr ""
+msgstr "Tsieinëeg Draddodiadol"
 
 #: ../../windows/plat/renderers/vlc.py:725
 msgid "Traditional Chinese Unix"
-msgstr ""
+msgstr "Unix Tsieinëeg Draddodiadol"
 
 #: ../../windows/plat/renderers/vlc.py:726
 msgid "Hong-Kong Supplementary"
-msgstr ""
+msgstr "Hong-kong Atodol"
 
 #: ../../windows/plat/renderers/vlc.py:729
 #: ../../linux/plat/renderers/gstreamerrenderer.py:620
 msgid "SE and SW Asian"
-msgstr ""
+msgstr "Asiaidd DDn a DGn"
 
 #: ../../windows/plat/renderers/vlc.py:730
 #: ../../windows/plat/renderers/vlc.py:731
@@ -279,12 +279,12 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:629
 #: ../../linux/plat/renderers/gstreamerrenderer.py:630
 msgid "Turkish"
-msgstr ""
+msgstr "Twrceg"
 
 #: ../../windows/plat/renderers/vlc.py:732
 #: ../../linux/plat/renderers/gstreamerrenderer.py:626
 msgid "Thai"
-msgstr ""
+msgstr "Tai"
 
 #: ../../windows/plat/renderers/vlc.py:733
 #: ../../windows/plat/renderers/vlc.py:734
@@ -292,12 +292,12 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:632
 #: ../../linux/plat/renderers/gstreamerrenderer.py:633
 msgid "Vietnamese"
-msgstr ""
+msgstr "Fietnameg"
 
 #: ../../windows/plat/renderers/vlc.py:737
 #: ../../linux/plat/renderers/gstreamerrenderer.py:635
 msgid "Middle Eastern"
-msgstr ""
+msgstr "Dwyrain Canol"
 
 #: ../../windows/plat/renderers/vlc.py:738
 #: ../../windows/plat/renderers/vlc.py:739
@@ -306,7 +306,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:638
 #: ../../linux/plat/renderers/gstreamerrenderer.py:639
 msgid "Arabic"
-msgstr ""
+msgstr "Arabeg"
 
 #: ../../windows/plat/renderers/vlc.py:740
 #: ../../windows/plat/renderers/vlc.py:741
@@ -315,7 +315,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:642
 #: ../../linux/plat/renderers/gstreamerrenderer.py:643
 msgid "Hebrew"
-msgstr ""
+msgstr "Hebraeg"
 
 #: ../../windows/plat/renderers/vlc.py:744
 #: ../../linux/plat/renderers/gstreamerrenderer.py:647
@@ -325,14 +325,14 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:651
 #: ../../linux/plat/renderers/gstreamerrenderer.py:652
 msgid "Unicode"
-msgstr ""
+msgstr "Unicode"
 
 #: ../../windows/plat/renderers/vlc.py:745
 #: ../../windows/plat/renderers/vlc.py:746
 #: ../../windows/plat/renderers/vlc.py:747
 #: ../../windows/plat/renderers/vlc.py:748
 msgid "Universal"
-msgstr ""
+msgstr "Cyffredinol"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:41
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:49
@@ -354,11 +354,11 @@ msgstr "Gadael %(appname)s yn gyfan gwbl."
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:58
 msgid "System Default"
-msgstr ""
+msgstr "Diofyn System"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:64
 msgid "Subtitle font:"
-msgstr ""
+msgstr "Ffont isdeitl"
 
 #: ../../windows/plat/frontends/widgets/application.py:148
 msgid "Close to tray?"
@@ -448,7 +448,7 @@ msgstr "Ffeil Is-deitl %(tracknumber)d"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:573
 msgid "Croatian"
-msgstr ""
+msgstr "Croateg"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:574
 #: ../../linux/plat/renderers/gstreamerrenderer.py:575
@@ -457,39 +457,39 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:578
 #: ../../linux/plat/renderers/gstreamerrenderer.py:579
 msgid "Cyrillic"
-msgstr ""
+msgstr "Syrilig"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:580
 msgid "Cyrillic/Russian"
-msgstr ""
+msgstr "Syrilig/Rwseg"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:581
 #: ../../linux/plat/renderers/gstreamerrenderer.py:582
 msgid "Cyrillic/Ukrainian"
-msgstr ""
+msgstr "Syrilig/Wrcreineg"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:584
 #: ../../linux/plat/renderers/gstreamerrenderer.py:585
 #: ../../linux/plat/renderers/gstreamerrenderer.py:586
 msgid "Central European"
-msgstr ""
+msgstr "Canol Ewropeaidd"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:587
 #: ../../linux/plat/renderers/gstreamerrenderer.py:588
 msgid "Romanian"
-msgstr ""
+msgstr "Rwmaneg"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:595
 msgid "Icelandic"
-msgstr ""
+msgstr "Islandeg"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:596
 msgid "Nordic"
-msgstr ""
+msgstr "Nordig"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:597
 msgid "South European"
-msgstr ""
+msgstr "De Ewropeaidd"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:598
 #: ../../linux/plat/renderers/gstreamerrenderer.py:599
@@ -497,48 +497,48 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:601
 #: ../../linux/plat/renderers/gstreamerrenderer.py:602
 msgid "Western"
-msgstr ""
+msgstr "Gorllewinol"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:605
 #: ../../linux/plat/renderers/gstreamerrenderer.py:606
 #: ../../linux/plat/renderers/gstreamerrenderer.py:607
 #: ../../linux/plat/renderers/gstreamerrenderer.py:608
 msgid "Chinese Simplified"
-msgstr ""
+msgstr "Tsieinëeg Syml"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:609
 #: ../../linux/plat/renderers/gstreamerrenderer.py:610
 #: ../../linux/plat/renderers/gstreamerrenderer.py:611
 msgid "Chinese Traditional"
-msgstr ""
+msgstr "Tsieinëeg Draddodiadol"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:621
 msgid "Armenian"
-msgstr ""
+msgstr "Armeneg"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:622
 msgid "Georgian"
-msgstr ""
+msgstr "Georgeg"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:623
 msgid "Gujarati"
-msgstr ""
+msgstr "Gwjarati"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:624
 msgid "Gurmukhi"
-msgstr ""
+msgstr "Gwrmwci"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:625
 msgid "Hindi"
-msgstr ""
+msgstr "Hindi"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:644
 msgid "Hebrew Visual"
-msgstr ""
+msgstr "Hebraeg Gweledol"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:645
 msgid "Persian"
-msgstr ""
+msgstr "Perseg"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:57
 msgid "Renderer options:"
@@ -557,15 +557,15 @@ msgstr "Llunydd fideo:"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:91
 msgid "Binaries to use:"
-msgstr ""
+msgstr "Ffeiliau deuaidd i'w defnyddio:"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:97
 msgid "ffmpeg binary path:"
-msgstr ""
+msgstr "llwybr deuol ffmpeg:"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:104
 msgid "ffmpeg2theora binary path:"
-msgstr ""
+msgstr "llwybr deuol ffmpeg2theora:"
 
 #: ../../lib/dbupgradeprogress.py:60
 msgid "Upgrading Old Database"
@@ -581,7 +581,7 @@ msgstr "Uwchraddio Cronfa Ddata"
 
 #: ../../lib/startup.py:126
 msgid "Database Error"
-msgstr ""
+msgstr "Gwall Cronfa Ddata"
 
 #: ../../lib/startup.py:127
 #, python-format
@@ -659,16 +659,16 @@ msgstr "Methwyd â llwytho'r ffrwd ar %(url)s (%(errordescription)s)."
 msgid "Would you like to keep the feed?"
 msgstr "Hoffech gadw'r ffrwd?"
 
-#: ../../lib/feed.py:970
+#: ../../lib/feed.py:972
 msgid "Bad content-type"
 msgstr "Math-cynnwys gwael"
 
-#: ../../lib/feed.py:983
+#: ../../lib/feed.py:985
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
 msgstr "Nid yw'r sianel yn gytûn â  %(appname)s"
 
-#: ../../lib/feed.py:986
+#: ../../lib/feed.py:988
 #, python-format
 msgid ""
 "This channel is not compatible with %(appname)s but we'll try our best to "
@@ -689,54 +689,54 @@ msgstr ""
 "\n"
 "Ydych am geisio â llwytho'r sianel beth bynnag?"
 
-#: ../../lib/feed.py:1666 ../../lib/databaseupgrade.py:2749
+#: ../../lib/feed.py:1668 ../../lib/databaseupgrade.py:2749
 #, python-format
 msgid "%(engine)s for '%(query)s'"
 msgstr "%(engine)s am '%(query)s'"
 
-#: ../../lib/feed.py:2115 ../../lib/feed.py:2245
+#: ../../lib/feed.py:2123 ../../lib/feed.py:2253
 msgid "Local Files"
 msgstr "Ffeiliau Lleol"
 
-#: ../../lib/feed.py:2124 ../../lib/feed.py:2230
+#: ../../lib/feed.py:2132 ../../lib/feed.py:2238
 #: ../../lib/frontends/widgets/firsttimedialog.py:302
 #: ../../lib/frontends/widgets/firsttimedialog.py:304
 #: ../../lib/frontends/widgets/firsttimedialog.py:362
 msgid "Search"
 msgstr "Chwilio"
 
-#: ../../lib/feed.py:2259
+#: ../../lib/feed.py:2267
 msgid "Playing File"
 msgstr "Chwarae Ffeil"
 
-#: ../../lib/downloader.py:261
+#: ../../lib/downloader.py:268
 msgid "activity"
 msgstr "bywiogrwydd"
 
-#: ../../lib/downloader.py:329 ../../lib/httpclient.py:127
-#: ../../lib/httpclient.py:153
+#: ../../lib/downloader.py:336 ../../lib/httpclient.py:134
+#: ../../lib/httpclient.py:165
 msgid "File not found"
 msgstr "Heb ffeindio ffeil"
 
-#: ../../lib/downloader.py:330
+#: ../../lib/downloader.py:337
 msgid "Flash URL Scraping Error"
 msgstr "Gwall Flash URL Scraping"
 
-#: ../../lib/downloader.py:528
+#: ../../lib/downloader.py:535
 msgid "starting up"
 msgstr "yn dechrau"
 
-#: ../../lib/downloader.py:535
+#: ../../lib/downloader.py:542
 #, python-format
 msgid "no connection - retrying in %s"
 msgstr "dim cysylltiad - ceisio eto ymhen %s"
 
-#: ../../lib/downloader.py:537
+#: ../../lib/downloader.py:544
 msgid "no connection - retrying soon"
 msgstr ""
 
-#: ../../lib/downloader.py:561 ../../lib/downloader.py:569
-#: ../../lib/httpclient.py:199 ../../lib/httpclient.py:618
+#: ../../lib/downloader.py:568 ../../lib/downloader.py:576
+#: ../../lib/httpclient.py:211 ../../lib/httpclient.py:672
 msgid "Unknown"
 msgstr "Anhysbys"
 
@@ -840,15 +840,15 @@ msgstr "%(size)sKB"
 msgid "%(size)sB"
 msgstr "%(size)sB"
 
-#: ../../lib/messagehandler.py:1336
+#: ../../lib/messagehandler.py:1350
 msgid "Subscribed to new feed:"
 msgstr "Tanysgrifiwyd i ffrwd newydd:"
 
-#: ../../lib/messagehandler.py:1339
+#: ../../lib/messagehandler.py:1353
 msgid "Subscribed to new feeds:"
 msgstr "Tanysgrifiwyd i ffrydau newydd:"
 
-#: ../../lib/messagehandler.py:1358
+#: ../../lib/messagehandler.py:1372
 msgid "Migrating Files"
 msgstr "Mudo Ffeiliau"
 
@@ -892,12 +892,16 @@ msgid ""
 msgstr ""
 "Mae'n debyg bod y ffeil %(filename)s ar chwâl a does dim modd ei hagor."
 
-#: ../../lib/videoconversion.py:83
+#: ../../lib/videoconversion.py:88
 #, python-format
 msgid "%(name)s (%(mediatype)s)"
 msgstr ""
 
-#: ../../lib/videoconversion.py:708
+#: ../../lib/videoconversion.py:344
+msgid "Reason unknown"
+msgstr ""
+
+#: ../../lib/videoconversion.py:764
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
 msgstr ""
@@ -1011,12 +1015,12 @@ msgid "Add Into New Folder"
 msgstr "Ychwanegu i Ffolder Newydd"
 
 #: ../../lib/dialogs.py:119 ../../lib/frontends/widgets/style.py:262
-#: ../../lib/frontends/widgets/tablist.py:706
-#: ../../lib/frontends/widgets/tablist.py:718
-#: ../../lib/frontends/widgets/tablist.py:724
-#: ../../lib/frontends/widgets/tablist.py:760
-#: ../../lib/frontends/widgets/tablist.py:766
-#: ../../lib/frontends/widgets/tablist.py:771
+#: ../../lib/frontends/widgets/tablist.py:707
+#: ../../lib/frontends/widgets/tablist.py:719
+#: ../../lib/frontends/widgets/tablist.py:725
+#: ../../lib/frontends/widgets/tablist.py:761
+#: ../../lib/frontends/widgets/tablist.py:767
+#: ../../lib/frontends/widgets/tablist.py:772
 #: ../../lib/frontends/widgets/prefpanel.py:547
 msgid "Remove"
 msgstr "Tynnu"
@@ -1179,31 +1183,36 @@ msgstr "Cynnwys:"
 msgid "starting up..."
 msgstr "yn dechrau..."
 
-#: ../../lib/controller.py:139 ../../lib/controller.py:160
+#: ../../lib/controller.py:139
 msgid "Sending Crash Report"
 msgstr "Gyrru Adroddiad Chwalfa"
 
-#: ../../lib/displaytext.py:52
+#: ../../lib/controller.py:160
 #, python-format
-msgid "%(size)s GB/s"
-msgstr ""
-
-#: ../../lib/displaytext.py:55
-#, python-format
-msgid "%(size)s MB/s"
-msgstr ""
-
-#: ../../lib/displaytext.py:58
-#, python-format
-msgid "%(size)s kB/s"
+msgid "Sending Crash Report (%(progress)d%%)"
 msgstr ""
 
 #: ../../lib/displaytext.py:61
 #, python-format
+msgid "%(size)s GB/s"
+msgstr ""
+
+#: ../../lib/displaytext.py:64
+#, python-format
+msgid "%(size)s MB/s"
+msgstr ""
+
+#: ../../lib/displaytext.py:67
+#, python-format
+msgid "%(size)s kB/s"
+msgstr ""
+
+#: ../../lib/displaytext.py:70
+#, python-format
 msgid "%(size)s B/s"
 msgstr ""
 
-#: ../../lib/displaytext.py:77
+#: ../../lib/displaytext.py:86
 #, python-format
 msgid "%(num).0f day"
 msgid_plural "%(num).0f days"
@@ -1212,7 +1221,7 @@ msgstr[1] "%(num).0f diwrnod"
 msgstr[2] "%(num).0f diwrnod"
 msgstr[3] "%(num).0f diwrnod"
 
-#: ../../lib/displaytext.py:81
+#: ../../lib/displaytext.py:90
 #, python-format
 msgid "%(num).0f hr"
 msgid_plural "%(num).0f hrs"
@@ -1221,7 +1230,7 @@ msgstr[1] "%(num).0f awr"
 msgstr[2] "%(num).0f awr"
 msgstr[3] "%(num).0f awr"
 
-#: ../../lib/displaytext.py:85
+#: ../../lib/displaytext.py:94
 #, python-format
 msgid "%(num).0f min"
 msgid_plural "%(num).0f mins"
@@ -1230,7 +1239,7 @@ msgstr[1] "%(num).0f munud"
 msgstr[2] "%(num).0f munud"
 msgstr[3] "%(num).0f munud"
 
-#: ../../lib/displaytext.py:88
+#: ../../lib/displaytext.py:97
 #, python-format
 msgid "%(num)d sec"
 msgid_plural "%(num)d secs"
@@ -1239,27 +1248,27 @@ msgstr[1] "%(num)d eil"
 msgstr[2] "%(num)d eil"
 msgstr[3] "%(num)d eil"
 
-#: ../../lib/displaytext.py:102
+#: ../../lib/displaytext.py:111
 #, python-format
 msgid "%(size)s GB"
 msgstr ""
 
-#: ../../lib/displaytext.py:105
+#: ../../lib/displaytext.py:114
 #, python-format
 msgid "%(size)s MB"
 msgstr ""
 
-#: ../../lib/displaytext.py:108
+#: ../../lib/displaytext.py:117
 #, python-format
 msgid "%(size)s KB"
 msgstr ""
 
-#: ../../lib/displaytext.py:110
+#: ../../lib/displaytext.py:119
 #, python-format
 msgid "%(size)s B"
 msgstr ""
 
-#: ../../lib/displaytext.py:115
+#: ../../lib/displaytext.py:124
 #, python-format
 msgid "Expires in %(count)d day"
 msgid_plural "Expires in %(count)d days"
@@ -1268,7 +1277,7 @@ msgstr[1] "Terfynu ymhen %(count)d diwrnod"
 msgstr[2] "Terfynu ymhen %(count)d diwrnod"
 msgstr[3] "Terfynu ymhen %(count)d diwrnod"
 
-#: ../../lib/displaytext.py:120
+#: ../../lib/displaytext.py:129
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
@@ -1277,7 +1286,7 @@ msgstr[1] "Terfynu ymhen %(count)d awr"
 msgstr[2] "Terfynu ymhen %(count)d awr"
 msgstr[3] "Terfynu ymhen %(count)d awr"
 
-#: ../../lib/displaytext.py:125
+#: ../../lib/displaytext.py:134
 #, python-format
 msgid "Expires in %(count)d minute"
 msgid_plural "Expires in %(count)d minutes"
@@ -1286,7 +1295,7 @@ msgstr[1] "Terfynu ymhen %(count)d munud"
 msgstr[2] "Terfynu ymhen %(count)d munud"
 msgstr[3] "Terfynu ymhen %(count)d munud"
 
-#: ../../lib/displaytext.py:133
+#: ../../lib/displaytext.py:142
 #, python-format
 msgid "Expires: %(count)d day"
 msgid_plural "Expires: %(count)d days"
@@ -1295,7 +1304,7 @@ msgstr[1] "Terfynu: %(count)d diwrnod"
 msgstr[2] "Terfynu: %(count)d diwrnod"
 msgstr[3] "Terfynu: %(count)d diwrnod"
 
-#: ../../lib/displaytext.py:138
+#: ../../lib/displaytext.py:147
 #, python-format
 msgid "Expires: %(count)d hour"
 msgid_plural "Expires: %(count)d hours"
@@ -1304,7 +1313,7 @@ msgstr[1] "Terfynu: %(count)d awr"
 msgstr[2] "Terfynu: %(count)d awr"
 msgstr[3] "Terfynu: %(count)d awr"
 
-#: ../../lib/displaytext.py:143
+#: ../../lib/displaytext.py:152
 #, python-format
 msgid "Expires: %(count)d minute"
 msgid_plural "Expires: %(count)d minutes"
@@ -1313,7 +1322,7 @@ msgstr[1] "Terfynu: %(count)d munud"
 msgstr[2] "Terfynu: %(count)d munud"
 msgstr[3] "Terfynu: %(count)d munud"
 
-#: ../../lib/displaytext.py:160
+#: ../../lib/displaytext.py:169
 #, python-format
 msgid "%(month)s %(dayofmonth)s, %(year)s"
 msgstr "%(month)s %(dayofmonth)s, %(year)s"
@@ -1404,7 +1413,7 @@ msgid "Download Torrent"
 msgstr "Lawrlwytho Torrent"
 
 #: ../../lib/frontends/widgets/style.py:255
-#: ../../lib/dl_daemon/download.py:556
+#: ../../lib/dl_daemon/download.py:557
 msgid "Error"
 msgstr "Gwall"
 
@@ -1549,186 +1558,186 @@ msgid "_Quit"
 msgstr "_Cau"
 
 #: ../../lib/frontends/widgets/menus.py:228
-msgid "Convert"
-msgstr ""
-
-#: ../../lib/frontends/widgets/menus.py:230
 msgid "_Sidebar"
 msgstr "_BarOchr"
 
-#: ../../lib/frontends/widgets/menus.py:231
+#: ../../lib/frontends/widgets/menus.py:229
 msgid "Add _Feed"
 msgstr "Ychwanegu_Ffrwd"
 
-#: ../../lib/frontends/widgets/menus.py:233
+#: ../../lib/frontends/widgets/menus.py:231
 #: ../../lib/frontends/widgets/application.py:582
 msgid "Add Website"
 msgstr "Ychwanegwch Wefan"
 
-#: ../../lib/frontends/widgets/menus.py:235
+#: ../../lib/frontends/widgets/menus.py:233
 msgid "New Searc_h Feed"
 msgstr "C_hwiliad Ffrwd Newydd"
 
-#: ../../lib/frontends/widgets/menus.py:237
+#: ../../lib/frontends/widgets/menus.py:235
 msgid "New _Folder"
 msgstr "_Ffolder Newydd"
 
-#: ../../lib/frontends/widgets/menus.py:241
+#: ../../lib/frontends/widgets/menus.py:239
 msgid "Re_name"
 msgstr "Aile_nwi"
 
-#: ../../lib/frontends/widgets/menus.py:244
+#: ../../lib/frontends/widgets/menus.py:242
 msgid "Re_name Feed"
 msgstr "Aile_nwi Ffrwd"
 
-#: ../../lib/frontends/widgets/menus.py:245
+#: ../../lib/frontends/widgets/menus.py:243
 msgid "Re_name Website"
 msgstr "Aile_nwi Gwefan"
 
-#: ../../lib/frontends/widgets/menus.py:246
+#: ../../lib/frontends/widgets/menus.py:244
 msgid "_Remove"
 msgstr "_Tynnu"
 
-#: ../../lib/frontends/widgets/menus.py:250
+#: ../../lib/frontends/widgets/menus.py:248
 msgid "_Remove Feed"
 msgstr "_Tynnu Ffrwd"
 
-#: ../../lib/frontends/widgets/menus.py:251
+#: ../../lib/frontends/widgets/menus.py:249
 msgid "_Remove Feeds"
 msgstr "_Tynnu Ffrydiau"
 
-#: ../../lib/frontends/widgets/menus.py:252
+#: ../../lib/frontends/widgets/menus.py:250
 msgid "_Remove Folder"
 msgstr "_Tynnu Folder"
 
-#: ../../lib/frontends/widgets/menus.py:253
+#: ../../lib/frontends/widgets/menus.py:251
 msgid "_Remove Folders"
 msgstr "_Tynnu Ffolderi"
 
-#: ../../lib/frontends/widgets/menus.py:254
+#: ../../lib/frontends/widgets/menus.py:252
 msgid "_Remove Website"
 msgstr "_Tynnu Gwefan"
 
-#: ../../lib/frontends/widgets/menus.py:255
+#: ../../lib/frontends/widgets/menus.py:253
 msgid "_Remove Websites"
 msgstr "_Tynnu Gwefannau"
 
-#: ../../lib/frontends/widgets/menus.py:256
+#: ../../lib/frontends/widgets/menus.py:254
 msgid "_Update Feed"
 msgstr "_Diweddaru Ffrwd"
 
-#: ../../lib/frontends/widgets/menus.py:259
+#: ../../lib/frontends/widgets/menus.py:257
 msgid "_Update Feeds"
 msgstr "_Diweddaru Ffrydau"
 
-#: ../../lib/frontends/widgets/menus.py:260
+#: ../../lib/frontends/widgets/menus.py:258
 msgid "Update _All Feeds"
 msgstr "Diweddaru _Pob Ffrwd"
 
-#: ../../lib/frontends/widgets/menus.py:264
+#: ../../lib/frontends/widgets/menus.py:262
 msgid "_Import Feeds (OPML)"
 msgstr "_Mewnforio Ffrydau (OPML)"
 
-#: ../../lib/frontends/widgets/menus.py:266
+#: ../../lib/frontends/widgets/menus.py:264
 msgid "E_xport Feeds (OPML)"
 msgstr "_Allforio Ffrydau (OPML)"
 
-#: ../../lib/frontends/widgets/menus.py:269
+#: ../../lib/frontends/widgets/menus.py:267
 msgid "_Share with a Friend"
 msgstr "_Rhannu gyda Chyfaill"
 
-#: ../../lib/frontends/widgets/menus.py:271
+#: ../../lib/frontends/widgets/menus.py:269
 msgid "Copy URL"
 msgstr "Copïo URL"
 
-#: ../../lib/frontends/widgets/menus.py:275
+#: ../../lib/frontends/widgets/menus.py:273
 msgid "_Playlists"
 msgstr "_Rhestri Chwarae"
 
-#: ../../lib/frontends/widgets/menus.py:276
+#: ../../lib/frontends/widgets/menus.py:274
 msgid "New _Playlist"
 msgstr "Rhest_Chwarae Newydd"
 
-#: ../../lib/frontends/widgets/menus.py:279
+#: ../../lib/frontends/widgets/menus.py:277
 msgid "New Playlist Fol_der"
 msgstr "Ffol_der Rhestr Chwarae Newydd"
 
-#: ../../lib/frontends/widgets/menus.py:283
+#: ../../lib/frontends/widgets/menus.py:281
 msgid "Re_name Playlist"
 msgstr "Ail_enwi Rhestr Chwarae"
 
-#: ../../lib/frontends/widgets/menus.py:285
+#: ../../lib/frontends/widgets/menus.py:283
 msgid "_Remove Playlist"
 msgstr "_Dileu Rhestr Chwarae"
 
-#: ../../lib/frontends/widgets/menus.py:288
+#: ../../lib/frontends/widgets/menus.py:286
 msgid "_Remove Playlists"
 msgstr "_Dileu Rhestri Chwarae"
 
-#: ../../lib/frontends/widgets/menus.py:289
+#: ../../lib/frontends/widgets/menus.py:287
 msgid "_Remove Playlist Folders"
 msgstr "_Dileu Ffolderi Rhestr Chwarae"
 
-#: ../../lib/frontends/widgets/menus.py:290
+#: ../../lib/frontends/widgets/menus.py:288
 msgid "_Remove Playlist Folder"
 msgstr "_Dileu Ffolder Rhestr Chwarae"
 
-#: ../../lib/frontends/widgets/menus.py:293
+#: ../../lib/frontends/widgets/menus.py:291
 msgid "P_layback"
 msgstr "C_hwarae yn ôl"
 
+#: ../../lib/frontends/widgets/menus.py:292
 #: ../../lib/frontends/widgets/menus.py:294
-#: ../../lib/frontends/widgets/menus.py:296
 msgid "_Play"
 msgstr "_Chwarae"
 
-#: ../../lib/frontends/widgets/menus.py:297
+#: ../../lib/frontends/widgets/menus.py:295
 msgid "_Pause"
 msgstr "_Seibio"
 
-#: ../../lib/frontends/widgets/menus.py:298
+#: ../../lib/frontends/widgets/menus.py:296
 msgid "_Stop"
 msgstr "_Stopio"
 
-#: ../../lib/frontends/widgets/menus.py:301
+#: ../../lib/frontends/widgets/menus.py:299
 msgid "_Next Item"
 msgstr "_Eitem Nesaf"
 
-#: ../../lib/frontends/widgets/menus.py:304
+#: ../../lib/frontends/widgets/menus.py:302
 msgid "_Previous Item"
 msgstr "_Eitem Cynt"
 
-#: ../../lib/frontends/widgets/menus.py:308
+#: ../../lib/frontends/widgets/menus.py:306
 msgid "Skip _Forward"
 msgstr "Neidio _Ymlaen"
 
-#: ../../lib/frontends/widgets/menus.py:310
+#: ../../lib/frontends/widgets/menus.py:308
 msgid "Skip _Back"
 msgstr "Neidio yn Ôl"
 
-#: ../../lib/frontends/widgets/menus.py:313
+#: ../../lib/frontends/widgets/menus.py:311
 msgid "Volume _Up"
 msgstr "Lefel Sain i _Fyny"
 
-#: ../../lib/frontends/widgets/menus.py:315
+#: ../../lib/frontends/widgets/menus.py:313
 msgid "Volume _Down"
 msgstr "Lefel Sain i _Lawr"
 
-#: ../../lib/frontends/widgets/menus.py:318
+#: ../../lib/frontends/widgets/menus.py:316
 msgid "_Fullscreen"
 msgstr "_Sgrin lawn"
 
-#: ../../lib/frontends/widgets/menus.py:321
+#: ../../lib/frontends/widgets/menus.py:319
 msgid "_Toggle Detached/Attached"
 msgstr "_Togl Dadgysylltu/Cysylltu"
 
-#: ../../lib/frontends/widgets/menus.py:324
+#: ../../lib/frontends/widgets/menus.py:322
 msgid "S_ubtitles"
 msgstr "_Isdeitlau"
 
-#: ../../lib/frontends/widgets/menus.py:328
+#: ../../lib/frontends/widgets/menus.py:326
 msgid "Select a Subtitles File..."
 msgstr "Dewiswch Ffeil Is-deitlau"
+
+#: ../../lib/frontends/widgets/menus.py:332
+msgid "Convert"
+msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:334
 #: ../../lib/frontends/widgets/menus.py:346
@@ -2139,7 +2148,7 @@ msgid "Enter a name for the new playlist folder"
 msgstr "Rhowch enw newydd am ffolder y rhestr chwarae"
 
 #: ../../lib/frontends/widgets/application.py:726
-#: ../../lib/frontends/widgets/tablist.py:705
+#: ../../lib/frontends/widgets/tablist.py:706
 msgid "Rename Feed Folder"
 msgstr "Ailenwi'r Ffolder Ffrwd"
 
@@ -2158,7 +2167,7 @@ msgid "Enter a new name for the feed %(name)s"
 msgstr "Rhowch enw newydd am y ffrwd %(name)s"
 
 #: ../../lib/frontends/widgets/application.py:736
-#: ../../lib/frontends/widgets/tablist.py:765 ../../lib/playlist.py:202
+#: ../../lib/frontends/widgets/tablist.py:766 ../../lib/playlist.py:202
 msgid "Rename Playlist"
 msgstr "Ailenwi'r Rhestr Chwarae"
 
@@ -2168,7 +2177,7 @@ msgid "Enter a new name for the playlist %(name)s"
 msgstr "Rhowch enw newydd am y rhestr chwarae %(name)s"
 
 #: ../../lib/frontends/widgets/application.py:741
-#: ../../lib/frontends/widgets/tablist.py:759
+#: ../../lib/frontends/widgets/tablist.py:760
 msgid "Rename Playlist Folder"
 msgstr "Ailenwi Ffolder Rhestr Chwarae"
 
@@ -2178,7 +2187,7 @@ msgid "Enter a new name for the playlist folder %(name)s"
 msgstr "Rhowch enw newydd am y ffolder rhestr chwarae %(name)s"
 
 #: ../../lib/frontends/widgets/application.py:745
-#: ../../lib/frontends/widgets/tablist.py:623
+#: ../../lib/frontends/widgets/tablist.py:624
 msgid "Rename Website"
 msgstr "Ailenwi Gwefan"
 
@@ -2754,20 +2763,20 @@ msgstr ""
 msgid "Completed"
 msgstr ""
 
-#: ../../lib/frontends/widgets/downloadscontroller.py:84
+#: ../../lib/frontends/widgets/downloadscontroller.py:86
 #: ../../lib/frontends/widgets/prefpanel.py:726
 msgid "Downloads"
 msgstr "Lawrlwythiadau"
 
-#: ../../lib/frontends/widgets/downloadscontroller.py:95
+#: ../../lib/frontends/widgets/downloadscontroller.py:97
 msgid "Single and external downloads"
 msgstr "Lawrlwythiadau sengl ac allanol"
 
-#: ../../lib/frontends/widgets/downloadscontroller.py:99
+#: ../../lib/frontends/widgets/downloadscontroller.py:101
 msgid "Feed downloads"
 msgstr "Lawrlwythiadau rhad ac am ddim"
 
-#: ../../lib/frontends/widgets/downloadscontroller.py:102
+#: ../../lib/frontends/widgets/downloadscontroller.py:104
 msgid "Seeding"
 msgstr "Hadu"
 
@@ -2848,56 +2857,56 @@ msgstr[3] ""
 "Ydych wir am dynnu'r ffrydiau hyn? Caiff y lawrlwythiadau sydd dal yn parhau "
 "eu diddymu."
 
-#: ../../lib/frontends/widgets/tablist.py:622
-#: ../../lib/frontends/widgets/tablist.py:717
+#: ../../lib/frontends/widgets/tablist.py:623
+#: ../../lib/frontends/widgets/tablist.py:718
 msgid "Copy URL to clipboard"
 msgstr "Copïwch yr URL i'r clipfwrdd"
 
-#: ../../lib/frontends/widgets/tablist.py:624
+#: ../../lib/frontends/widgets/tablist.py:625
 msgid "Remove Website"
 msgstr "Tynnu Gwefan"
 
-#: ../../lib/frontends/widgets/tablist.py:628
+#: ../../lib/frontends/widgets/tablist.py:629
 msgid "Remove Websites"
 msgstr "Tynnu Gwefannau"
 
-#: ../../lib/frontends/widgets/tablist.py:704
+#: ../../lib/frontends/widgets/tablist.py:705
 msgid "Update Feeds In Folder"
 msgstr "Diweddarwch Ffrydiau mewn Ffolder"
 
-#: ../../lib/frontends/widgets/tablist.py:711
+#: ../../lib/frontends/widgets/tablist.py:712
 msgid "Update Feed Now"
 msgstr "Diweddarwch Ffrwd Nawr"
 
-#: ../../lib/frontends/widgets/tablist.py:714
+#: ../../lib/frontends/widgets/tablist.py:715
 msgid "Rename"
 msgstr "Ailenwi"
 
-#: ../../lib/frontends/widgets/tablist.py:716
+#: ../../lib/frontends/widgets/tablist.py:717
 msgid "Revert Feed Name"
 msgstr "Troi Nôl i'r Enw Ffrwd Cynt"
 
-#: ../../lib/frontends/widgets/tablist.py:723
+#: ../../lib/frontends/widgets/tablist.py:724
 msgid "Update Feeds Now"
 msgstr "Diweddarwch Ffrydiau Nawr"
 
-#: ../../lib/frontends/widgets/tablist.py:788
+#: ../../lib/frontends/widgets/tablist.py:789
 msgid "LIBRARY"
 msgstr "LLYFRGELL"
 
-#: ../../lib/frontends/widgets/tablist.py:790
+#: ../../lib/frontends/widgets/tablist.py:791
 msgid "WEBSITES"
 msgstr "GWEFANNAU"
 
-#: ../../lib/frontends/widgets/tablist.py:792
+#: ../../lib/frontends/widgets/tablist.py:793
 msgid "VIDEO FEEDS"
 msgstr "FFRYDIAU FIDEO"
 
-#: ../../lib/frontends/widgets/tablist.py:794
+#: ../../lib/frontends/widgets/tablist.py:795
 msgid "AUDIO FEEDS"
 msgstr "FFRYDIAU CLYWEDOL"
 
-#: ../../lib/frontends/widgets/tablist.py:796
+#: ../../lib/frontends/widgets/tablist.py:797
 msgid "PLAYLISTS"
 msgstr "RHESTRAU CHWARAE"
 
@@ -3574,98 +3583,106 @@ msgstr "Pop-allan"
 msgid "Enter a new name for the playlist %s"
 msgstr "Rhowch enw newydd i'r rhestr chwarae %s"
 
-#: ../../lib/httpclient.py:94
+#: ../../lib/httpclient.py:101
 msgid "HTTP error"
 msgstr "Gwall HTTP"
 
-#: ../../lib/httpclient.py:98
+#: ../../lib/httpclient.py:105
 #, python-format
 msgid "%(host)s closed connection"
 msgstr "%(host)s wedi cau'r cysylltiad"
 
-#: ../../lib/httpclient.py:103
+#: ../../lib/httpclient.py:110
 #, python-format
 msgid "Host returned %(status)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:105
+#: ../../lib/httpclient.py:112
 msgid "Please retry later"
 msgstr ""
 
-#: ../../lib/httpclient.py:109
+#: ../../lib/httpclient.py:116
 #, python-format
 msgid "%(host)s doesn't support HTTP resume"
 msgstr ""
 
-#: ../../lib/httpclient.py:114
+#: ../../lib/httpclient.py:121
 #, python-format
 msgid "HTTP Redirection limit hit for %(url)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:120
+#: ../../lib/httpclient.py:127
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:128
+#: ../../lib/httpclient.py:135
 msgid "Got 404 status code"
 msgstr "Derbyniwyd cod statws 404"
 
-#: ../../lib/httpclient.py:130
+#: ../../lib/httpclient.py:137
 #, python-format
 msgid "Host returned bad status code: %(code)s"
 msgstr ""
 
-#: ../../lib/httpclient.py:136 ../../lib/httpclient.py:137
+#: ../../lib/httpclient.py:143 ../../lib/httpclient.py:144
 msgid "Authorization failed"
 msgstr "Awrdurdodi wedi methu"
 
-#: ../../lib/httpclient.py:141
+#: ../../lib/httpclient.py:148
+msgid "Authorization canceled"
+msgstr ""
+
+#: ../../lib/httpclient.py:149
+msgid "Authorization canceled by user"
+msgstr ""
+
+#: ../../lib/httpclient.py:153
 msgid "Invalid URL"
 msgstr "URL Annilys"
 
-#: ../../lib/httpclient.py:142
+#: ../../lib/httpclient.py:154
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
 msgstr "Nid yw \"%(url)s\" yn URL dilys"
 
-#: ../../lib/httpclient.py:147
+#: ../../lib/httpclient.py:159
 msgid "Unknow Host"
 msgstr ""
 
-#: ../../lib/httpclient.py:148
+#: ../../lib/httpclient.py:160
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
 msgstr ""
 
-#: ../../lib/httpclient.py:154
+#: ../../lib/httpclient.py:166
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
 msgstr "Nid yw'r ffeil \"%(path)s\" yn bodoli"
 
-#: ../../lib/httpclient.py:158
+#: ../../lib/httpclient.py:170
 msgid "Read error"
 msgstr "Gwall darllen"
 
-#: ../../lib/httpclient.py:159
+#: ../../lib/httpclient.py:171
 #, python-format
 msgid "Error while reading from \"%(path)s\""
 msgstr "Gwall wrth ddarllen o \"%(path)s\""
 
-#: ../../lib/httpclient.py:167 ../../lib/dl_daemon/download.py:679
+#: ../../lib/httpclient.py:179 ../../lib/dl_daemon/download.py:680
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr "Methu ag ysgrifennu i %(filename)s"
 
-#: ../../lib/httpclient.py:169
+#: ../../lib/httpclient.py:181
 msgid "Write error"
 msgstr ""
 
-#: ../../lib/httpclient.py:343
+#: ../../lib/httpclient.py:365
 msgid "Website"
 msgstr ""
 
-#: ../../lib/httpclient.py:348
+#: ../../lib/httpclient.py:370
 msgid "Proxy"
 msgstr ""
 
@@ -3704,41 +3721,41 @@ msgstr "Gwall Cod Anhysbys"
 msgid "Connection closed"
 msgstr "Ceuwyd y cysylltiad"
 
-#: ../../lib/dl_daemon/download.py:687 ../../lib/dl_daemon/download.py:833
+#: ../../lib/dl_daemon/download.py:688 ../../lib/dl_daemon/download.py:837
 msgid "Not enough disk space"
 msgstr "Dim digon o le ar ddisg"
 
-#: ../../lib/dl_daemon/download.py:688 ../../lib/dl_daemon/download.py:834
+#: ../../lib/dl_daemon/download.py:689 ../../lib/dl_daemon/download.py:838
 #, python-format
 msgid "%(amount)s MB required to store this video"
 msgstr "Angen %(amount)s MB i storio'r fideo hwn"
 
-#: ../../lib/dl_daemon/download.py:718
+#: ../../lib/dl_daemon/download.py:722
 msgid "no content"
 msgstr ""
 
-#: ../../lib/dl_daemon/download.py:860
+#: ../../lib/dl_daemon/download.py:864
 msgid "BitTorrent failure"
 msgstr "Methiant BitTorrent"
 
-#: ../../lib/dl_daemon/download.py:861
+#: ../../lib/dl_daemon/download.py:865
 msgid "BitTorrent failed to startup"
 msgstr "BitTorrent wedi methu wrth ddechrau"
 
-#: ../../lib/dl_daemon/download.py:1073
+#: ../../lib/dl_daemon/download.py:1077
 msgid "Corrupt Torrent"
 msgstr "Torrent wedi llygru"
 
-#: ../../lib/dl_daemon/download.py:1074
+#: ../../lib/dl_daemon/download.py:1078
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
 msgstr "Ffeil torrent ar %(url)s yn annilys"
 
-#: ../../lib/dl_daemon/download.py:1105
+#: ../../lib/dl_daemon/download.py:1109
 msgid "Torrent file deleted"
 msgstr "Wedi dileu ffeil Torrent"
 
-#: ../../lib/dl_daemon/download.py:1106
+#: ../../lib/dl_daemon/download.py:1110
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
 msgstr ""
