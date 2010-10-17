@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-09-28 06:38+0000\n"
-"Last-Translator: Jani Uusitalo <jani@mummila.net>\n"
+"PO-Revision-Date: 2010-10-15 05:08+0000\n"
+"Last-Translator: Tomi Juntunen <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-10-13 16:09+0000\n"
+"X-Launchpad-Export-Date: 2010-10-17 13:57+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
@@ -896,7 +896,7 @@ msgstr ""
 #: ../../lib/videoconversion.py:764
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
-msgstr ""
+msgstr "%(original_name)s (muunnettu %(format)s -muotoon)"
 
 #: ../../lib/messages.py:1120 ../../lib/item.py:1127
 msgid "queued for download"
@@ -1073,7 +1073,7 @@ msgstr ""
 
 #: ../../lib/dialogs.py:215
 msgid "Login Required"
-msgstr ""
+msgstr "Sisäänkirjautuminen vaaditaan"
 
 #: ../../lib/storedatabase.py:248
 #, python-format
@@ -2656,7 +2656,7 @@ msgstr "Pysäytä kaikki muunnokset"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:74
 msgid "Clear Finished Conversions"
-msgstr ""
+msgstr "Tyhjennä valmiit muunnokset"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:272
 #, python-format
@@ -2868,7 +2868,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/diagnostics.py:129
 #, python-format
 msgid "%(databasecount)s: Delete"
-msgstr ""
+msgstr "%(databasecount)s: Poista"
 
 #: ../../lib/frontends/widgets/diagnostics.py:81
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
@@ -2909,7 +2909,7 @@ msgstr "Tietokanta-objekteja muistissa kaikkiaan:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:127
 msgid "Total db backups:"
-msgstr ""
+msgstr "Tietokantojen varmuuskopioita yhteensä:"
 
 #: ../../lib/frontends/widgets/browser.py:93
 msgid "Open in browser"
@@ -3490,17 +3490,17 @@ msgstr "Yritä myöhemmin uudestaan"
 #: ../../lib/httpclient.py:116
 #, python-format
 msgid "%(host)s doesn't support HTTP resume"
-msgstr ""
+msgstr "%(host)s ei tue HTTP-protokollalla latauksen jatkamista"
 
 #: ../../lib/httpclient.py:121
 #, python-format
 msgid "HTTP Redirection limit hit for %(url)s"
-msgstr ""
+msgstr "HTTP-uudelleenohjauksien yläraja tuli vastaan osoitteessa %(url)s"
 
 #: ../../lib/httpclient.py:127
 #, python-format
 msgid "Authorization failed for proxy: %(host)s:%(port)s"
-msgstr ""
+msgstr "Tunnistautuminen välityspalvelimelle %(host)s:%(port)s epäonnistui"
 
 #: ../../lib/httpclient.py:135
 msgid "Got 404 status code"
@@ -3509,7 +3509,7 @@ msgstr "Vastaanotettiin 404-virheilmoitus"
 #: ../../lib/httpclient.py:137
 #, python-format
 msgid "Host returned bad status code: %(code)s"
-msgstr ""
+msgstr "Palvelin vastasi virhekoodilla: %(code)s"
 
 #: ../../lib/httpclient.py:143 ../../lib/httpclient.py:144
 msgid "Authorization failed"
@@ -3534,12 +3534,12 @@ msgstr "\"%(url)s\" ei ole kelvollinen URL"
 
 #: ../../lib/httpclient.py:159
 msgid "Unknow Host"
-msgstr ""
+msgstr "Tuntematon palvelin"
 
 #: ../../lib/httpclient.py:160
 #, python-format
 msgid "The domainname \"%(host)s\" couldn't be found"
-msgstr ""
+msgstr "Palvelinta \"%(host)s\" ei löytynyt"
 
 #: ../../lib/httpclient.py:166
 #, python-format
