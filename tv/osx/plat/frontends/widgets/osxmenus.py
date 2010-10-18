@@ -156,7 +156,7 @@ def populate_menu():
         menus.Separator(),
         extract_menu_item(menubar, "EditPreferences"),
         menus.Separator(),
-        menus.MenuItem(_("Services"), "ServicesMenu"),
+        menus.Menu(_("Services"), "ServicesMenu", []),
         menus.Separator(),
         menus.MenuItem(_("Hide %(appname)s", {"appname": short_appname}),
                        "HideMiro", menus.Shortcut("h", MOD)),
@@ -230,6 +230,8 @@ def populate_menu():
     main_menu = NSApp().mainMenu()
     appMenu = main_menu.itemAtIndex_(0).submenu()
     populate_single_menu(appMenu, miroMenu)
+    servicesMenuItem = appMenu.itemWithTitle_(_("Services"))
+    NSApp().setServicesMenu_(servicesMenuItem)
 
     for menu in menubar.menuitems:
         nsmenu = NSMenu.alloc().init()
