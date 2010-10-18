@@ -34,7 +34,6 @@ import os
 import os.path
 
 from miro import app
-from miro import config
 from miro.plat import options
 
 def get_renderer_list():
@@ -72,7 +71,7 @@ def init_renderer():
        Renderer modules have to be ``xxxxrenderer`` and ``xxxx`` shows up in
        the preferences.
     """
-    r = config.get(options.USE_RENDERER)
+    r = app.config.get(options.USE_RENDERER)
     try:
         set_renderer("%srenderer" % r)
         return

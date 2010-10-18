@@ -37,6 +37,7 @@ import os.path
 import time
 from miro.feedparser import FeedParserDict
 
+from miro import app
 from miro import dialogs
 from miro import item
 from miro import feed
@@ -44,7 +45,6 @@ from miro import filetypes
 from miro import flashscraper
 from miro import folder
 from miro import httpclient
-from miro import config
 from miro import prefs
 from miro import messages
 
@@ -71,7 +71,7 @@ def check_url_exists(url):
             if download_state in ('paused', 'stopped', 'failed'):
                 i.download()
                 text2 = _("%(appname)s will begin downloading it now.",
-                          {"appname": config.get(prefs.SHORT_APP_NAME)})
+                          {"appname": app.config.get(prefs.SHORT_APP_NAME)})
             elif download_state == 'downloading':
                 text2 = _("It is downloading now.")
             else:
@@ -170,7 +170,7 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
             "\n"
             "Error: %(error)s (%(errordesc)s)",
             {"url": url,
-             "appname": config.get(prefs.SHORT_APP_NAME),
+             "appname": app.config.get(prefs.SHORT_APP_NAME),
              "error": error.getFriendlyDescription(),
              "errordesc": error.getLongDescription()}
         )

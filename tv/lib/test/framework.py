@@ -6,10 +6,10 @@ import threading
 import shutil
 import functools
 
-from miro import database
-from miro import eventloop
 from miro import app
 from miro import config
+from miro import database
+from miro import eventloop
 from miro import downloader
 from miro import httpauth
 from miro import httpclient
@@ -110,9 +110,8 @@ class MiroTestCase(unittest.TestCase):
         models.initialize()
         app.in_unit_tests = True
         # reload config and initialize it to temprary
-        config.load()
-        config.init_temporary()
-        self.platform = config.get(prefs.APP_PLATFORM)
+        config.load_temporary()
+        self.platform = app.config.get(prefs.APP_PLATFORM)
         database.set_thread(threading.currentThread())
         database.setup_managers()
         self.raise_db_load_errors = True
@@ -164,7 +163,7 @@ class MiroTestCase(unittest.TestCase):
         fp = os.fdopen(handle, "w")
         fp.write("EMPTY DOWNLOADER LOG FOR TESTING\n")
         fp.close()
-        config.set(prefs.DOWNLOADER_LOG_PATHNAME, filename)
+        app.config.set(prefs.DOWNLOADER_LOG_PATHNAME, filename)
 
     def make_temp_path(self, extension=".xml"):
         handle, filename = tempfile.mkstemp(extension, dir=self.tempdir)

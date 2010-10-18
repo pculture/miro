@@ -36,7 +36,7 @@ from miro.database import DDBObject, ObjectNotFoundError
 from miro.download_utils import next_free_filename, get_file_url_path
 from miro.util import unicodify
 from miro.plat.utils import unicode_to_filename
-from miro import config
+from miro import app
 from miro import prefs
 from miro import fileutil
 import random
@@ -192,7 +192,7 @@ class IconCache(DDBObject):
             if self.filename and not fileutil.access(self.filename, os.R_OK | os.W_OK):
                 self.filename = None
 
-            cachedir = config.get(prefs.ICON_CACHE_DIRECTORY)
+            cachedir = app.config.get(prefs.ICON_CACHE_DIRECTORY)
             try:
                 fileutil.makedirs(cachedir)
             except OSError:

@@ -66,8 +66,8 @@ def launch_unit_tests():
 
     from miro.plat.utils import initialize_locale
     initialize_locale()
-    from miro import gtcache
-    gtcache.init()
+    from miro import bootstrap
+    bootstrap.bootstrap()
     from miro import test
 
     print 'Running Miro unit tests:'
@@ -93,13 +93,13 @@ def launch_application():
         if os.path.isdir(theme_dir):
             theme = os.path.basename(themeDir)
 
-    from miro import gtcache
-    gtcache.init()
+    from miro import bootstrap
+    bootstrap.bootstrap()
 
     from miro import startup
     startup.initialize(theme)
 
-    from miro import config
+    from miro import app
     from miro import prefs
 
     # Tee output off to a log file
@@ -114,7 +114,7 @@ def launch_application():
             for s in self.streams:
                 s.flush()
 
-    log_file = config.get(prefs.LOG_PATHNAME)
+    log_file = app.config.get(prefs.LOG_PATHNAME)
     if log_file:
         h = open(log_file, "wt")
         sys.stdout = AutoflushingTeeStream([h, sys.stdout])

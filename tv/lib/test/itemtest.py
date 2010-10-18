@@ -3,7 +3,8 @@ import os
 import shutil
 import tempfile
 
-from miro import config, prefs
+from miro import app
+from miro import prefs
 from miro.feed import Feed
 from miro.item import Item, FileItem, FeedParserValues
 from miro.downloader import RemoteDownloader
@@ -80,12 +81,12 @@ class ChildRemoveTest(ContainerItemTest):
 class ExpiredViewTest(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
-        self._expire_after_x_days_value = config.get(prefs.EXPIRE_AFTER_X_DAYS)
-        config.set(prefs.EXPIRE_AFTER_X_DAYS, 6)
+        self._expire_after_x_days_value = app.config.get(prefs.EXPIRE_AFTER_X_DAYS)
+        app.config.set(prefs.EXPIRE_AFTER_X_DAYS, 6)
 
     def tearDown(self):
         MiroTestCase.tearDown(self)
-        config.set(prefs.EXPIRE_AFTER_X_DAYS, self._expire_after_x_days_value)
+        app.config.set(prefs.EXPIRE_AFTER_X_DAYS, self._expire_after_x_days_value)
 
     def test_expired_view_1(self):
         f1 = Feed(u'http://example.com/1')

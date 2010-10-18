@@ -29,10 +29,10 @@
 """Defines the first time dialog and all behavior.
 """
 
+from miro import app
 from miro import prefs
 from miro import util
 from miro import messages
-from miro import config
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import threads
 from miro.frontends.widgets import widgetutil
@@ -66,7 +66,7 @@ class FirstTimeDialog(widgetset.Window):
     def __init__(self, done_firsttime_callback):
         widgetset.Window.__init__(
             self, _("%(name)s First Time Setup",
-                    {'name': config.get(prefs.SHORT_APP_NAME)}),
+                    {'name': app.config.get(prefs.SHORT_APP_NAME)}),
             widgetset.Rect(100, 100, 475, 500))
 
         # the directory panel 3 searches for files in
@@ -142,7 +142,7 @@ class FirstTimeDialog(widgetset.Window):
             "it works best for you.\n"
             "\n"
             "What language would you like Miro to be in?",
-            {'name': config.get(prefs.SHORT_APP_NAME)}))
+            {'name': app.config.get(prefs.SHORT_APP_NAME)}))
         lab.set_wrap(True)
         lab.set_size_request(400, -1)
         vbox.pack_start(widgetutil.align_left(lab))
@@ -151,7 +151,7 @@ class FirstTimeDialog(widgetset.Window):
         lang_options.insert(0, ("system", _("System default")))
 
         lang_option_menu = widgetset.OptionMenu([op[1] for op in lang_options])
-        lang = config.get(prefs.LANGUAGE)
+        lang = app.config.get(prefs.LANGUAGE)
         try:
             lang_option_menu.set_selected([op[0] for op in lang_options].index(lang))
         except ValueError:
@@ -159,14 +159,14 @@ class FirstTimeDialog(widgetset.Window):
 
         def update_clicked(widget):
             os.environ["LANGUAGE"] = _SYSTEM_LANGUAGE
-            config.set(prefs.LANGUAGE,
+            app.config.set(prefs.LANGUAGE,
                        str(lang_options[lang_option_menu.get_selected()][0]))
             gtcache.init()
             self.this_page(rebuild=True)
 
         def next_clicked(widget):
             os.environ["LANGUAGE"] = _SYSTEM_LANGUAGE
-            config.set(prefs.LANGUAGE,
+            app.config.set(prefs.LANGUAGE,
                        str(lang_options[lang_option_menu.get_selected()][0]))
             gtcache.init()
             self.next_page(rebuild=True)
@@ -194,20 +194,20 @@ class FirstTimeDialog(widgetset.Window):
 
         vbox.pack_start(_build_title(
             _("%(name)s Startup",
-              {'name': config.get(prefs.SHORT_APP_NAME)})))
+              {'name': app.config.get(prefs.SHORT_APP_NAME)})))
 
         lab = widgetset.Label(_(
             "We recommend that you have %(name)s launch when your computer "
             "starts up.  This way, downloads in progress can finish "
             "downloading and new media files can be downloaded in the "
             "background, ready when you want to watch.",
-            {'name': config.get(prefs.SHORT_APP_NAME)}))
+            {'name': app.config.get(prefs.SHORT_APP_NAME)}))
         lab.set_wrap(True)
         lab.set_size_request(400, -1)
         vbox.pack_start(widgetutil.align_left(lab))
 
         lab = widgetset.Label(_("Would you like to run %(name)s on startup?",
-                              {'name': config.get(prefs.SHORT_APP_NAME)}))
+                              {'name': app.config.get(prefs.SHORT_APP_NAME)}))
         lab.set_bold(True)
         vbox.pack_start(widgetutil.align_left(lab))
 
@@ -244,7 +244,7 @@ class FirstTimeDialog(widgetset.Window):
             "\n"
             "Would you like %(name)s to look for media files on your "
             "computer?",
-            {'name': config.get(prefs.SHORT_APP_NAME)}))
+            {'name': app.config.get(prefs.SHORT_APP_NAME)}))
         lab.set_size_request(400, -1)
         lab.set_wrap(True)
         vbox.pack_start(widgetutil.align_left(lab))

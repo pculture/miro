@@ -37,7 +37,6 @@ import Queue
 import logging
 
 from miro import app
-from miro import config
 from miro import prefs
 from miro import signals
 from miro import util
@@ -57,7 +56,7 @@ THUMBNAIL_SUCCESS_RE = re.compile("Miro-Movie-Data-Thumbnail: Success")
 TRY_AGAIN_RE = re.compile("Miro-Try-Again: True")
 
 def thumbnail_directory():
-    dir_ = os.path.join(config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
+    dir_ = os.path.join(app.config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
     try:
         fileutil.makedirs(dir_)
     except (KeyboardInterrupt, SystemExit):

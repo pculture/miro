@@ -30,7 +30,6 @@ import os
 import logging
 
 from miro import app
-from miro import config
 from miro import prefs
 from miro.gtcache import gettext as _
 from miro.plat import specialfolders
@@ -47,7 +46,7 @@ def _is_flash_installed():
             'Macromed', 'Flash', 'flashplayer.xpt'))
 
 def check_flash_install():
-    request_count = config.get(prefs.FLASH_REQUEST_COUNT)
+    request_count = app.config.get(prefs.FLASH_REQUEST_COUNT)
     if _is_flash_installed() or request_count > 0:
         return
 
@@ -55,7 +54,7 @@ def check_flash_install():
     description = _(
         "For the best %(appname)s experience, we suggest you install Adobe Flash.  Would you "
         "like to do this now?",
-        {"appname": config.get(prefs.SHORT_APP_NAME)}
+        {"appname": app.config.get(prefs.SHORT_APP_NAME)}
     )
 
     ret = dialogs.show_choice_dialog(title, description,
@@ -73,9 +72,9 @@ def check_flash_install():
             "\n"
             "You should quit %(appname)s now and start it up again after Adobe Flash has "
             "been installed.",
-            {"appname": config.get(prefs.SHORT_APP_NAME)}
+            {"appname": app.config.get(prefs.SHORT_APP_NAME)}
         )
         dialogs.show_message(title, description)
 
     else:
-        config.set(prefs.FLASH_REQUEST_COUNT, 1)
+        app.config.set(prefs.FLASH_REQUEST_COUNT, 1)

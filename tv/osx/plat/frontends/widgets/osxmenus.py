@@ -35,7 +35,8 @@ from objc import nil, NO, YES
 from AppKit import *
 from Foundation import *
 
-from miro import app, config, prefs
+from miro import app
+from miro import prefs
 
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import menus
@@ -143,7 +144,7 @@ def extract_menu_item(menu_structure, action):
 
 _menu_structure = None
 def populate_menu():
-    short_appname = config.get(prefs.SHORT_APP_NAME)
+    short_appname = app.config.get(prefs.SHORT_APP_NAME)
 
     menubar = menus.get_menu()
 

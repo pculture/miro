@@ -32,7 +32,7 @@
 import os
 import gettext as _gt
 import locale
-from miro import config
+from miro import app
 from miro import prefs
 import miro.plat.utils
 
@@ -44,7 +44,7 @@ def get_languages():
     
     lang_paths = []
 
-    for path, dirs, files in os.walk(config.get(prefs.GETTEXT_PATHNAME)):
+    for path, dirs, files in os.walk(app.config.get(prefs.GETTEXT_PATHNAME)):
         if "miro.mo" in files:
             lang_paths.append(path)
 
@@ -84,7 +84,7 @@ def init():
     if not miro.plat.utils.locale_initialized():
         raise Exception, "locale not initialized"
 
-    language = config.get(prefs.LANGUAGE)
+    language = app.config.get(prefs.LANGUAGE)
 
     if language != "system":
         import os
@@ -109,7 +109,7 @@ def init():
     if codeset is not None:
         codeset = codeset.lower()
 
-    _gt.bindtextdomain("miro", config.get(prefs.GETTEXT_PATHNAME))
+    _gt.bindtextdomain("miro", app.config.get(prefs.GETTEXT_PATHNAME))
     _gt.textdomain("miro")
     _gt.bind_textdomain_codeset("miro", "UTF-8")
 

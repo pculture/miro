@@ -31,7 +31,6 @@
 
 from miro import app
 from miro import prefs
-from miro import config
 
 from miro.frontends.widgets import tablist
 from miro.frontends.widgets import videobox
@@ -84,7 +83,7 @@ class MiroWindow(widgetset.MainWindow):
         self.connect("active-change", self.on_active_change)
 
         try:
-            left_width = int(config.get(prefs.LEFT_VIEW_SIZE))
+            left_width = int(app.config.get(prefs.LEFT_VIEW_SIZE))
             if left_width is None or left_width == "":
                 left_width = 200
         except:

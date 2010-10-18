@@ -2,7 +2,9 @@ import os
 
 from miro.test.framework import MiroTestCase, EventLoopTest
 
-from miro import videoconversion, config, prefs
+from miro import app
+from miro import prefs
+from miro import videoconversion
 
 class ConverterManagerTest(MiroTestCase):
     def build_config_file(self, filename, data):
@@ -53,11 +55,11 @@ class ConverterManagerTest(MiroTestCase):
             "[Target1]\n"
             "extension: mp4\n"
             "parameters: -i {input}\n"
-            "only_on: %(platform)s\n" % {"platform": config.get(prefs.APP_PLATFORM)}
+            "only_on: %(platform)s\n" % {"platform": app.config.get(prefs.APP_PLATFORM)}
             )
         cm = videoconversion.ConverterManager()
         cm.load_converters(os.path.join(self.tempdir, "*.conv"))
         
         self.assertEqual(len(cm.get_converters()), 1)
         converter = cm.lookup_converter("target1")
-        self.assertEqual(converter.platforms, config.get(prefs.APP_PLATFORM))
+        self.assertEqual(converter.platforms, app.config.get(prefs.APP_PLATFORM))

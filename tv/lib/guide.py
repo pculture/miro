@@ -38,7 +38,7 @@ from urlparse import urlparse, urljoin
 from miro.plat import resources
 from miro.database import DDBObject, ObjectNotFoundError
 from miro.util import returns_unicode, check_u
-from miro import config
+from miro import app
 from miro import prefs
 from miro import httpclient
 from miro import iconcache
@@ -77,7 +77,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def site_view(cls):
-        default_url = config.get(prefs.CHANNEL_GUIDE_URL)
+        default_url = app.config.get(prefs.CHANNEL_GUIDE_URL)
         return cls.make_view('url != ?', (default_url,))
 
     @classmethod
@@ -100,7 +100,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
     def get_first_url(self):
         # FIXME - this is only used by get_last_visited_url
         if self.is_default():
-            return config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL)
+            return app.config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL)
         else:
             return self.url
 
@@ -119,7 +119,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
                 return self.get_url()
 
     def is_default(self):
-        return self.url == config.get(prefs.CHANNEL_GUIDE_URL)
+        return self.url == app.config.get(prefs.CHANNEL_GUIDE_URL)
 
     def get_folder(self):
         return None

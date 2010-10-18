@@ -35,7 +35,6 @@ import logging
 from miro import app
 from miro import util
 from miro import displaytext
-from miro import config
 from miro import prefs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import cellpack
@@ -814,7 +813,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         elif (self.data.is_playable
               and self.data.item_viewed
               and self.data.resume_time > 0
-              and config.get(prefs.RESUME_VIDEOS_MODE)):
+              and app.config.get(prefs.RESUME_VIDEOS_MODE)):
             layout.set_font(0.80, bold=True)
             layout.set_text_color((154.0 / 255.0, 174.0 / 255.0, 181.0 / 255.0))
 

@@ -129,8 +129,8 @@ options.gconf_name = parsed_options.gconf_name
 from miro.plat import utils
 utils.initialize_locale()
 
-from miro import gtcache
-gtcache.init()
+from miro import bootstrap
+bootstrap.bootstrap()
 
 # This fixes some/all problems with Python 2.6 support but should be
 # re-addressed when we have a system with Python 2.6 to test with.
@@ -141,7 +141,7 @@ if sys.version_info[0] == 2 and sys.version_info[1] > 5:
     sys.modules['feedparser'] = miro.feedparser
     sys.modules['storedatabase'] = miro.storedatabase
 
-from miro import config
+from miro import app
 from miro import prefs
 from miro import commandline
 
@@ -225,7 +225,7 @@ def get_keyval(keyval):
 
 def startapp():
     # Create miro directories in the user's home
-    support_dir = config.get(prefs.SUPPORT_DIRECTORY)
+    support_dir = app.config.get(prefs.SUPPORT_DIRECTORY)
     if not os.path.exists(support_dir):
         os.makedirs(support_dir)
 
@@ -256,7 +256,7 @@ Miro comes with ABSOLUTELY NO WARRANTY.
 
 This is free software, and you are welcome to redistribute it under certain
 conditions.  See license.txt for details.
-""" % config.get(prefs.APP_VERSION)
+""" % app.config.get(prefs.APP_VERSION)
 
 if parsed_options.version:
     print_version()

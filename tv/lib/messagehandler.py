@@ -36,7 +36,6 @@ import os
 
 from miro import app
 from miro import autoupdate
-from miro import config
 from miro import database
 from miro import downloader
 from miro import eventloop
@@ -1359,8 +1358,8 @@ class BackendMessageHandler(messages.MessageHandler):
             messages.FeedlessDownloadStarted().send_to_frontend()
 
     def handle_change_movies_directory(self, message):
-        old_path = config.get(prefs.MOVIES_DIRECTORY)
-        config.set(prefs.MOVIES_DIRECTORY, message.path)
+        old_path = app.config.get(prefs.MOVIES_DIRECTORY)
+        app.config.set(prefs.MOVIES_DIRECTORY, message.path)
         if message.migrate:
             self._migrate(old_path, message.path)
         messages.UpdateFeed(feed.Feed.get_directory_feed().id).send_to_backend()

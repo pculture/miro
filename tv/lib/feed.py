@@ -47,7 +47,6 @@ from miro.database import DDBObject, ObjectNotFoundError
 from miro.httpclient import grab_url
 from miro import app
 from miro import autodler
-from miro import config
 from miro import iconcache
 from miro import databaselog
 from miro import dialogs
@@ -179,7 +178,7 @@ def make_search_url(engine, term):
     """
     return u'dtv:savedsearch/%s?q=%s' % (engine, term)
 
-def _config_change(key, value):
+def _on_config_change(obj, key, value):
     """Handle configuration changes so we can update feed update frequencies
     """
     if key is prefs.CHECK_CHANNELS_EVERY_X_MN.key:
@@ -190,8 +189,6 @@ def _config_change(key, value):
             except (AttributeError, KeyError):
                 pass
             feed.set_update_frequency(update_freq)
-
-config.add_change_callback(_config_change)
 
 # Wait X seconds before updating the feeds at startup
 INITIAL_FEED_UPDATE_DELAY = 5.0
@@ -211,7 +208,7 @@ class FeedImpl(DDBObject):
         self.updating = False
         self.thumbURL = None
         self.initialUpdate = True
-        self.updateFreq = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN) * 60
+        self.updateFreq = app.config.get(prefs.CHECK_CHANNELS_EVERY_X_MN) * 60
 
     @classmethod
     def orphaned_view(cls):
@@ -246,7 +243,7 @@ class FeedImpl(DDBObject):
             self.cancel_update_events()
             self.updateFreq = -1
         else:
-            new_freq = max(config.get(prefs.CHECK_CHANNELS_EVERY_X_MN), frequency) * 60
+            new_freq = max(app.config.get(prefs.CHECK_CHANNELS_EVERY_X_MN), frequency) * 60
             if new_freq != self.updateFreq:
                 self.updateFreq = new_freq
                 self.schedule_update_events(-1)
@@ -356,7 +353,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
                  section=u'video', search_term=None, title=None):
         check_u(url)
         if initiallyAutoDownloadable == None:
-            mode = config.get(prefs.CHANNEL_AUTO_DEFAULT)
+            mode = app.config.get(prefs.CHANNEL_AUTO_DEFAULT)
             # note that this is somewhat duplicated in
             # set_auto_download_mode
             if mode == u'all':
@@ -618,7 +615,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.expire == u'never':
             return []
         elif self.expire == u'system':
-            expire_after_x_days = config.get(prefs.EXPIRE_AFTER_X_DAYS)
+            expire_after_x_days = app.config.get(prefs.EXPIRE_AFTER_X_DAYS)
             if expire_after_x_days == -1:
                 return []
             delta = timedelta(days=expire_after_x_days)
@@ -854,7 +851,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
                     self.remove()
             d.run(callback)
             self.informOnError = False
-        delay = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)
+        delay = app.config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)
         eventloop.add_timeout(delay, self.update, "update failed feed")
 
     def _generate_feed_errback(self, error, removeOnError):
@@ -983,7 +980,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def ask_for_scrape(self, info, initialHTML, charset):
         title = _("Channel is not compatible with %(appname)s",
-                  {"appname": config.get(prefs.SHORT_APP_NAME)})
+                  {"appname": app.config.get(prefs.SHORT_APP_NAME)})
         description = _(
             "This channel is not compatible with %(appname)s "
             "but we'll try our best to grab the files.  It may take extra time "
@@ -994,7 +991,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             "\n"
             "Do you want to try to load this channel anyway?",
             {"url": info["updated-url"],
-             "appname": config.get(prefs.SHORT_APP_NAME)}
+             "appname": app.config.get(prefs.SHORT_APP_NAME)}
         )
         dialog = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_YES,
                 dialogs.BUTTON_NO)
@@ -1067,7 +1064,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         WARNING: 'system' and 'never' expiration types return 0
         """
         self.confirm_db_thread()
-        expireAfterSetting = config.get(prefs.EXPIRE_AFTER_X_DAYS)
+        expireAfterSetting = app.config.get(prefs.EXPIRE_AFTER_X_DAYS)
         if ((self.expireTime is None or self.expire == 'never'
              or (self.expire == 'system' and expireAfterSetting <= 0))):
             return 0
@@ -1320,11 +1317,11 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         """
         limit = self.ufeed.get_max_old_items()
         if limit == u"system":
-            limit = config.get(prefs.MAX_OLD_ITEMS_DEFAULT)
+            limit = app.config.get(prefs.MAX_OLD_ITEMS_DEFAULT)
 
         item_count = self.items.count()
-        if item_count > config.get(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS):
-            truncate = item_count - config.get(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS)
+        if item_count > app.config.get(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS):
+            truncate = item_count - app.config.get(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS)
             if truncate > len(self.old_items):
                 truncate = 0
             limit = min(limit, truncate)
@@ -2107,7 +2104,7 @@ class DirectoryFeedImpl(DirectoryScannerImplBase):
     def _add_known_files(self, known_files):
         # prevents files in Incomplete Downloads and Conversions from being
         # turned into FileItems.
-        movies_dir = config.get(prefs.MOVIES_DIRECTORY)
+        movies_dir = app.config.get(prefs.MOVIES_DIRECTORY)
 
         incomplete_dir = os.path.join(movies_dir, "Incomplete Downloads")
         known_files.add(os.path.normcase(incomplete_dir))
@@ -2116,7 +2113,7 @@ class DirectoryFeedImpl(DirectoryScannerImplBase):
         known_files.add(os.path.normcase(conversions_dir))
 
     def _scan_dir(self):
-        return config.get(prefs.MOVIES_DIRECTORY)
+        return app.config.get(prefs.MOVIES_DIRECTORY)
 
     @returns_unicode
     def get_title(self):
@@ -2459,7 +2456,9 @@ def remove_orphaned_feed_impls():
 restored_feeds = []
 def start_updates():
     global restored_feeds
-    if config.get(prefs.CHECK_CHANNELS_EVERY_X_MN) == -1:
+    app.backend_config_watcher.connect("changed", _on_config_change)
+
+    if app.config.get(prefs.CHECK_CHANNELS_EVERY_X_MN) == -1:
         return
     for feed in restored_feeds:
         if feed.id_exists():

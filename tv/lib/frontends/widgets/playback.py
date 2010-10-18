@@ -31,7 +31,6 @@ import os
 
 from miro import app
 from miro import prefs
-from miro import config
 from miro import signals
 from miro import messages
 from miro import filetypes
@@ -200,7 +199,7 @@ class PlaybackManager (signals.SignalEmitter):
     
     def prepare_detached_playback(self):
         self.emit('will-play-detached')
-        detached_window_frame = config.get(prefs.DETACHED_WINDOW_FRAME)
+        detached_window_frame = app.config.get(prefs.DETACHED_WINDOW_FRAME)
         if detached_window_frame is None:
             detached_window_frame = widgetset.Rect(0, 0, 800, 600)
         else:
@@ -216,8 +215,8 @@ class PlaybackManager (signals.SignalEmitter):
         # this prevents negative x and y values from getting saved
         coords = str(self.detached_window.get_frame())
         coords = ",".join([str(max(0, int(c))) for c in coords.split(",")])
-        config.set(prefs.DETACHED_WINDOW_FRAME, coords)
-        config.save()
+        app.config.set(prefs.DETACHED_WINDOW_FRAME, coords)
+        app.config.save()
         self.align.remove()
         self.align = None
         self.detached_window.close(False)
@@ -257,7 +256,7 @@ class PlaybackManager (signals.SignalEmitter):
         resume_time = self.playlist[self.position].resume_time
         if start_at > 0:
             self.player.play_from_time(start_at)
-        elif (config.get(prefs.RESUME_VIDEOS_MODE)
+        elif (app.config.get(prefs.RESUME_VIDEOS_MODE)
                and not self.is_paused):
             self.player.play_from_time(resume_time)
         else:
@@ -318,7 +317,7 @@ class PlaybackManager (signals.SignalEmitter):
         if not self.open_successful or self.player is None:
             return
         item_info = self.playlist[self.position]
-        if config.get(prefs.RESUME_VIDEOS_MODE):
+        if app.config.get(prefs.RESUME_VIDEOS_MODE):
             if resume_time == -1:
                 resume_time = self.player.get_elapsed_playback_time()
                 # if we are 95% of the way into the movie and less than 30
@@ -450,7 +449,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.video_display.connect('removed', self.on_display_removed)
         self.video_display.connect('cant-play', self._on_cant_play)
         self.video_display.connect('ready-to-play', self._on_ready_to_play)
-        if config.get(prefs.PLAY_DETACHED):
+        if app.config.get(prefs.PLAY_DETACHED):
             self.prepare_detached_playback()
         else:
             self.prepare_attached_playback()
@@ -466,7 +465,7 @@ class PlaybackManager (signals.SignalEmitter):
 
     def _select_current(self):
         item_info = self.playlist[self.position]
-        if not config.get(prefs.PLAY_IN_MIRO):
+        if not app.config.get(prefs.PLAY_IN_MIRO):
             if self.is_playing:
                 self.player.stop()
                 self.player = None
@@ -480,7 +479,7 @@ class PlaybackManager (signals.SignalEmitter):
             messages.MarkItemWatched(item_info.id).send_to_backend()
             return
 
-        volume = config.get(prefs.VOLUME_LEVEL)
+        volume = app.config.get(prefs.VOLUME_LEVEL)
         self.emit('selecting-file', item_info)
         self.open_successful = False
         self._setup_player(item_info, volume)
@@ -544,7 +543,7 @@ class PlaybackManager (signals.SignalEmitter):
     def play_from_position(self, new_position, save_resume_time=True):
         self.cancel_update_timer()
         self.cancel_mark_as_watched()
-        if config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
+        if app.config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
             self.stop(save_resume_time)
         else:
             if save_resume_time:

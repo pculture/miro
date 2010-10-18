@@ -100,6 +100,7 @@ class Application:
         self.download_count = 0
         self.paused_count = 0
         self.unwatched_count = 0
+        app.frontend_config_watcher = config.ConfigWatcher(call_on_ui_thread)
 
     def startup(self):
         """Connects to signals, installs handlers, and calls :meth:`startup`
@@ -133,11 +134,17 @@ class Application:
         app.tab_list_manager = tablistmanager.TabListManager()
         self.ui_initialized = True
 
-        self.window = MiroWindow(config.get(prefs.LONG_APP_NAME),
+        self.window = MiroWindow(app.config.get(prefs.LONG_APP_NAME),
                                  self.get_main_window_dimensions())
         self.window.connect_weak('key-press', self.on_key_press)
         self._window_show_callback = self.window.connect_weak('show',
                 self.on_window_show)
+
+    def on_config_changed(self, obj, key, value):
+        """Any time a preference changes, this gets notified so that we
+        can adjust things.
+        """
+        raise NotImplementedError()
 
     def on_window_show(self, window):
         m = messages.FrontendStarted()
@@ -177,8 +184,8 @@ class Application:
             "\n"
             "If you quit, then you can connect the drive or otherwise "
             "fix the problem and relaunch %(shortappname)s.",
-            {"shortappname": config.get(prefs.SHORT_APP_NAME),
-             "moviedirectory": config.get(prefs.MOVIES_DIRECTORY)}
+            {"shortappname": app.config.get(prefs.SHORT_APP_NAME),
+             "moviedirectory": app.config.get(prefs.MOVIES_DIRECTORY)}
         )
         ret = dialogs.show_choice_dialog(title, description,
                 [dialogs.BUTTON_CONTINUE, dialogs.BUTTON_QUIT])
@@ -203,7 +210,7 @@ class Application:
         app.tab_list_manager.site_list.model_changed()
         app.tab_list_manager.handle_startup_selection()
         videobox = self.window.videobox
-        videobox.volume_slider.set_value(config.get(prefs.VOLUME_LEVEL))
+        videobox.volume_slider.set_value(app.config.get(prefs.VOLUME_LEVEL))
         videobox.volume_slider.connect('changed', self.on_volume_change)
         videobox.volume_slider.connect('released', self.on_volume_set)
         videobox.volume_muter.connect('clicked', self.on_volume_mute)
@@ -255,8 +262,8 @@ class Application:
         self.on_volume_value_set(slider.get_value())
     
     def on_volume_value_set(self, value):
-        config.set(prefs.VOLUME_LEVEL, value)
-        config.save()
+        app.config.set(prefs.VOLUME_LEVEL, value)
+        app.config.save()
 
     def on_play_clicked(self, button=None):
         if app.playback_manager.is_playing:
@@ -317,7 +324,7 @@ class Application:
         if item.feed_url:
             share_items["feed_url"] = item.feed_url
         query_string = "&".join(["%s=%s" % (key, urllib.quote(val)) for key, val in share_items.items()])
-        share_url = "%s/item/?%s" % (config.get(prefs.SHARE_URL), query_string)
+        share_url = "%s/item/?%s" % (app.config.get(prefs.SHARE_URL), query_string)
         self.open_url(share_url)
 
     def share_feed(self):
@@ -326,7 +333,7 @@ class Application:
             ci = channel_infos[0]
             share_items = {"feed_url": ci.base_href}
             query_string = "&".join(["%s=%s" % (key, urllib.quote(val)) for key, val in share_items.items()])
-            share_url = "%s/feed/?%s" % (config.get(prefs.SHARE_URL), query_string)
+            share_url = "%s/feed/?%s" % (app.config.get(prefs.SHARE_URL), query_string)
             self.open_url(share_url)
 
     def delete_backup_databases(self):
@@ -341,7 +348,7 @@ class Application:
                 _("Error Revealing File"),
                 _("The file %(filename)s was deleted from outside %(appname)s.",
                   {"filename": basename,
-                   "appname": config.get(prefs.SHORT_APP_NAME)}),
+                   "appname": app.config.get(prefs.SHORT_APP_NAME)}),
                 dialogs.WARNING_MESSAGE)
         else:
             self.reveal_file(filename)
@@ -416,9 +423,9 @@ class Application:
         # the frontend to open a dialog
         def up_to_date_callback():
             messages.MessageToUser(_("%(appname)s is up to date",
-                                     {'appname': config.get(prefs.SHORT_APP_NAME)}),
+                                     {'appname': app.config.get(prefs.SHORT_APP_NAME)}),
                                    _("%(appname)s is up to date!",
-                                     {'appname': config.get(prefs.SHORT_APP_NAME)})).send_to_frontend()
+                                     {'appname': app.config.get(prefs.SHORT_APP_NAME)})).send_to_frontend()
 
         messages.CheckVersion(up_to_date_callback).send_to_backend()
 
@@ -656,7 +663,7 @@ class Application:
 
     def export_feeds(self):
         title = _('Export OPML File')
-        slug = config.get(prefs.SHORT_APP_NAME).lower()
+        slug = app.config.get(prefs.SHORT_APP_NAME).lower()
         slug = slug.replace(' ', '_').replace('-', '_')
         filepath = dialogs.ask_for_save_pathname(title, "%s_subscriptions.opml" % slug)
 
@@ -825,7 +832,7 @@ class Application:
             self.do_quit()
 
     def _confirm_quit_if_downloading(self):
-        if config.get(prefs.WARN_IF_DOWNLOADING_ON_QUIT) and self.download_count > 0:
+        if app.config.get(prefs.WARN_IF_DOWNLOADING_ON_QUIT) and self.download_count > 0:
             ret = quitconfirmation.rundialog(
                 _("Are you sure you want to quit?"),
                 ngettext(
@@ -844,7 +851,7 @@ class Application:
         running_count = videoconversion.conversion_manager.running_tasks_count()
         pending_count = videoconversion.conversion_manager.pending_tasks_count()
         conversions_count = running_count + pending_count
-        if config.get(prefs.WARN_IF_CONVERTING_ON_QUIT) and conversions_count > 0:
+        if app.config.get(prefs.WARN_IF_CONVERTING_ON_QUIT) and conversions_count > 0:
             ret = quitconfirmation.rundialog(
                 _("Are you sure you want to quit?"),
                 ngettext(
@@ -876,6 +883,7 @@ class Application:
         signals.system.connect('update-available', self.handle_update_available)
         signals.system.connect('new-dialog', self.handle_dialog)
         signals.system.connect('shutdown', self.on_backend_shutdown)
+        app.frontend_config_watcher.connect("changed", self.on_config_changed)
     
     def handle_unwatched_count_changed(self):
         pass
@@ -1024,10 +1032,12 @@ class WidgetsMessageHandler(messages.MessageHandler):
             'search-info',
             'frontend-state',
         ])
-        if config.get(prefs.OPEN_CHANNEL_ON_STARTUP) is not None or \
-                config.get(prefs.OPEN_FOLDER_ON_STARTUP) is not None:
-            self._pre_startup_messages.add('feed-tab-list')
-            self._pre_startup_messages.add('audio-feed-tab-list')
+        if app.config.get(prefs.OPEN_CHANNEL_ON_STARTUP) is not None or \
+                app.config.get(prefs.OPEN_FOLDER_ON_STARTUP) is not None:
+                    self.library_filters = {
+                            'video': 'all',
+                            'audio': 'unwatched'
+                    }
         self.progress_dialog = None
         self.dbupgrade_progress_dialog = None
 

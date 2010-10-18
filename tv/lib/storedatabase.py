@@ -62,7 +62,6 @@ except ImportError:
     from pysqlite2 import dbapi2 as sqlite3
 
 from miro import app
-from miro import config
 from miro import crashreport
 from miro import convert20database
 from miro import databaseupgrade
@@ -128,7 +127,7 @@ class LiveStorage:
     """
     def __init__(self, path=None, object_schemas=None, schema_version=None):
         if path is None:
-            path = config.get(prefs.SQLITE_PATHNAME)
+            path = app.config.get(prefs.SQLITE_PATHNAME)
         if object_schemas is None:
             object_schemas = schema.object_schemas
         if schema_version is None:
@@ -246,7 +245,7 @@ class LiveStorage:
     def _handle_upgrade_error(self):
         self._backup_failed_upgrade_db()
         title = _("%(appname)s database upgrade failed",
-                  {"appname": config.get(prefs.SHORT_APP_NAME)})
+                  {"appname": app.config.get(prefs.SHORT_APP_NAME)})
         description = _(
             "We're sorry, %(appname)s was unable to upgrade your database "
             "due to errors.\n\n"
@@ -257,7 +256,7 @@ class LiveStorage:
             "reporting a bug to our crash database.\n\n"
             "Finally, you can start fresh and your damaged database will be "
             "removed, but you will have to re-add your feeds and media "
-            "files.", {"appname": config.get(prefs.SHORT_APP_NAME)}
+            "files.", {"appname": app.config.get(prefs.SHORT_APP_NAME)}
             )
         d = dialogs.ThreeChoiceDialog(title, description,
                 dialogs.BUTTON_QUIT, dialogs.BUTTON_SUBMIT_REPORT,
@@ -711,7 +710,7 @@ class LiveStorage:
 
         if failed and not self._quitting_from_operational_error:
             title = _("%(appname)s database save succeeded",
-                      {"appname": config.get(prefs.SHORT_APP_NAME)})
+                      {"appname": app.config.get(prefs.SHORT_APP_NAME)})
             description = _("The database has been successfully saved. "
                     "It is now safe to quit without losing any data.")
             dialogs.MessageBoxDialog(title, description).run()
@@ -774,7 +773,7 @@ class LiveStorage:
 
     def _show_save_error_dialog(self, error_text):
         title = _("%(appname)s database save failed",
-                  {"appname": config.get(prefs.SHORT_APP_NAME)})
+                  {"appname": app.config.get(prefs.SHORT_APP_NAME)})
         description = _(
             "%(appname)s was unable to save its database.\n\n"
             "If your disk is full, we suggest freeing up some space and "
@@ -786,7 +785,7 @@ class LiveStorage:
             "you reduce the number of simultaneous downloads in the Options "
             "dialog in the Download tab.\n\n"
             "Error: %(error_text)s\n\n",
-            {"appname": config.get(prefs.SHORT_APP_NAME),
+            {"appname": app.config.get(prefs.SHORT_APP_NAME),
              "error_text": error_text}
             )
         d = dialogs.ChoiceDialog(title, description,
@@ -892,7 +891,7 @@ class LiveStorage:
         return save_name
 
     def dumpDatabase(self):
-        output = open(next_free_filename(os.path.join(config.get(prefs.SUPPORT_DIRECTORY), "database-dump.xml")), 'w')
+        output = open(next_free_filename(os.path.join(app.config.get(prefs.SUPPORT_DIRECTORY), "database-dump.xml")), 'w')
         def indent(level):
             output.write('    ' * level)
         def output_object(table_name, values):

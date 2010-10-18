@@ -26,52 +26,23 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from threading import Event, Lock
-from miro import prefs
-import miro.plat.config
+"""Very low-level bootstrap call.
 
-_data = {}
-_dataLock = Lock()
+This module is contains the code that should be run as soon as possible when
+miro starts up.  The bootstrap() method, does sets up things that other modules
+except such as gettext/gtcache and the config system.
 
-_ready = Event()
+"""
+from miro import config
+from miro import eventloop
+from miro import gtcache
 
-__callbacks = set()
+def bootstrap():
+    """Run this as soon as possible when starting up miro.
 
-def add_change_callback(callback):
-    __callbacks.add(callback)
-
-def remove_change_callback(callback):
-    __callbacks.discard(callback)
-
-def set_dictionary(d):
-    global _data
-    #print "set initial remote config %s" % repr(d)
-    _dataLock.acquire()
-    try:
-        _data = d
-    finally:
-        _dataLock.release()
-    prefs.APP_SERIAL.key = 'appSerial-%s' % d[prefs.APP_PLATFORM.key]
-    _ready.set()
-
-def update_dictionary(key, value):
-    _dataLock.acquire()
-    try:
-        _data[key] = value
-    finally:
-        _dataLock.release()
-    for callback in __callbacks:
-        callback(key, value)
-
-def get(descriptor):
-    _ready.wait()
-    _dataLock.acquire()
-    try:
-        if descriptor.key in _data:
-            return _data[descriptor.key]
-        elif descriptor.platformSpecific:
-            return miro.plat.config.get(descriptor)
-        else:
-            return descriptor.default
-    finally:
-        _dataLock.release()
+    This method sets up gtcache and the app.config object.  Later on, we will
+    replace this app.config with one that's theme aware.
+    """
+    config.load()
+    gtcache.init()
+    eventloop.setup_config_watcher()

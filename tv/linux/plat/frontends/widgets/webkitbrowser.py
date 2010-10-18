@@ -36,7 +36,8 @@ Documentation for PyWebKitGTK:
 http://code.google.com/p/pywebkitgtk/
 """
 
-from miro import config, prefs
+from miro import app
+from miro import prefs
 
 import gtk
 import webkit
@@ -50,9 +51,9 @@ def fix_user_agent(agent):
     bits.
     """
     agent = agent.split(" ")[:-1]
-    agent.append("%s/%s (%s)" % (config.get(prefs.SHORT_APP_NAME),
-                                 config.get(prefs.APP_VERSION),
-                                 config.get(prefs.PROJECT_URL)))
+    agent.append("%s/%s (%s)" % (app.config.get(prefs.SHORT_APP_NAME),
+                                 app.config.get(prefs.APP_VERSION),
+                                 app.config.get(prefs.PROJECT_URL)))
     return " ".join(agent)
 
 class WebKitEmbed(webkit.WebView):

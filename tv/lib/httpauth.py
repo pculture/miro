@@ -28,7 +28,7 @@
 
 import os
 
-from miro import config
+from miro import app
 from miro import dialogs
 from miro import prefs
 
@@ -125,7 +125,7 @@ def init():
     callback_tracker = CallbackTracker()
 
 def _default_password_file():
-    support_dir = config.get(prefs.SUPPORT_DIRECTORY)
+    support_dir = app.config.get(prefs.SUPPORT_DIRECTORY)
     return os.path.join(support_dir, 'httpauth')
 
 def restore_from_file(path=None):

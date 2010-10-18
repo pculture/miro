@@ -31,10 +31,11 @@
 up the testsuite.
 """
 
-from miro import config
+from miro import app
 from miro import prefs
+from miro import config
 
-config.init_temporary()
+config.load_temporary()
 
 import unittest
 
@@ -67,10 +68,10 @@ from miro.test.filetypestest import *
 
 # platform specific tests
 
-if config.get(prefs.APP_PLATFORM) == "linux":
+if app.config.get(prefs.APP_PLATFORM) == "linux":
     from miro.test.gtcachetest import *
     from miro.test.downloadertest import *
-elif config.get(prefs.APP_PLATFORM) == "osx":
+elif app.config.get(prefs.APP_PLATFORM) == "osx":
     from miro.test.sparkletest import *
 
 def run_tests():

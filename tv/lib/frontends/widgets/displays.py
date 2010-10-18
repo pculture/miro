@@ -36,7 +36,6 @@ import os
 from miro import app
 from miro import messages
 from miro import signals
-from miro import config
 from miro import prefs
 from miro import filetypes
 from miro.gtcache import gettext as _
@@ -400,7 +399,7 @@ class CantPlayWidget(widgetset.SolidBackground):
         label = widgetset.Label(_(
             "%(appname)s can't play this file.  You may "
             "be able to open it with a different program",
-            {"appname": config.get(prefs.SHORT_APP_NAME)}
+            {"appname": app.config.get(prefs.SHORT_APP_NAME)}
             ))
         label.set_color((1, 1, 1))
         vbox.pack_start(label)

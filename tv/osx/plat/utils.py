@@ -43,8 +43,8 @@ from objc import NO, YES, nil
 from Foundation import *
 from AppKit import *
 
+from miro import app
 from miro import prefs
-from miro import config
 from miro.util import returns_unicode, returns_binary, check_u, check_b
 from miro.plat.filenames import (os_filename_to_filename_type,
                                  filename_type_to_os_filename, FilenameType)
@@ -66,7 +66,7 @@ dlTask = None
 def get_available_bytes_for_movies():
     pool = NSAutoreleasePool.alloc().init()
     fm = NSFileManager.defaultManager()
-    movies_dir = config.get(prefs.MOVIES_DIRECTORY)
+    movies_dir = app.config.get(prefs.MOVIES_DIRECTORY)
     if not os.path.exists(movies_dir):
         try:
             os.makedirs(movies_dir)
@@ -147,8 +147,8 @@ def setup_logging (in_downloader=False):
         log_name = os.environ.get("DEMOCRACY_DOWNLOADER_LOG")
         level = logging.INFO
     else:
-        log_name = config.get(prefs.LOG_PATHNAME)
-        if config.get(prefs.APP_VERSION).endswith("git"):
+        log_name = app.config.get(prefs.LOG_PATHNAME)
+        if app.config.get(prefs.APP_VERSION).endswith("git"):
             level = logging.DEBUG
         else:
             level = logging.WARN
@@ -324,9 +324,9 @@ def kill_process(pid):
 def launch_download_daemon(oldpid, env):
     kill_process(oldpid)
 
-    env['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
+    env['DEMOCRACY_DOWNLOADER_LOG'] = app.config.get(prefs.DOWNLOADER_LOG_PATHNAME)
     env['VERSIONER_PYTHON_PREFER_32_BIT'] = "yes"
-    env["MIRO_APP_VERSION"] = config.get(prefs.APP_VERSION)
+    env["MIRO_APP_VERSION"] = app.config.get(prefs.APP_VERSION)
     env.update(os.environ)
 
     exe = NSBundle.mainBundle().executablePath()

@@ -31,7 +31,7 @@ import os
 import cPickle
 from struct import pack, unpack, calcsize
 import tempfile
-from miro import config
+from miro import app
 from miro import prefs
 from miro import eventloop
 from miro import httpauth
@@ -58,7 +58,7 @@ def start_download_daemon(oldpid, port):
     daemon_env = {
         'DEMOCRACY_DOWNLOADER_PORT' : str(port),
         'DEMOCRACY_DOWNLOADER_FIRST_LAUNCH' : FIRST_DAEMON_LAUNCH,
-        'DEMOCRACY_SHORT_APP_NAME' : config.get(prefs.SHORT_APP_NAME),
+        'DEMOCRACY_SHORT_APP_NAME' : app.config.get(prefs.SHORT_APP_NAME),
     }
     launch_download_daemon(oldpid, daemon_env)
     FIRST_DAEMON_LAUNCH = '0'
@@ -259,15 +259,16 @@ class ControllerDaemon(Daemon):
 
         data = {}
         for desc in remote_config_items:
-            data[desc.key] = config.get(desc)
+            data[desc.key] = app.config.get(desc)
         c = command.InitialConfigCommand(self, data)
         c.send()
-        config.add_change_callback(self.update_config)
+        self.callback_handle = app.backend_config_watcher.connect("changed",
+                self.on_config_change)
 
     def _remove_config_callback(self):
-        config.remove_change_callback(self.update_config)
+        app.backend_config_watcher.disconnect(self.callback_handle)
 
-    def update_config(self, key, value):
+    def on_config_change(self, obj, key, value):
         if not self.shutdown:
             c = command.UpdateConfigCommand(self, key, value)
             c.send()
@@ -286,7 +287,7 @@ class ControllerDaemon(Daemon):
         c.send()
 
     def read_pid(self):
-        short_app_name = config.get(prefs.SHORT_APP_NAME)
+        short_app_name = app.config.get(prefs.SHORT_APP_NAME)
         return read_pid(short_app_name)
 
     def handle_close(self, type_):
@@ -319,6 +320,6 @@ class ControllerDaemon(Daemon):
         c = command.ShutDownCommand(self)
         c.send()
         self.shutdown = True
-        config.remove_change_callback(self.update_config)
+        self._remove_config_callback()
         self.shutdown_timeout_dc = eventloop.add_timeout(
             timeout, self.shutdown_timeout_cb, "Waiting for dl_daemon shutdown")

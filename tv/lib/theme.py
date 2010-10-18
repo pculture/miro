@@ -31,7 +31,7 @@
 
 from miro.gtcache import gettext as _
 import logging
-from miro import config
+from miro import app
 from miro import prefs
 import os
 from miro.eventloop import as_urgent
@@ -51,7 +51,7 @@ class ThemeHistory(DDBObject):
     def setup_new(self):
         self.lastTheme = None
         self.pastThemes = []
-        self.theme = config.get(prefs.THEME_NAME)
+        self.theme = app.config.get(prefs.THEME_NAME)
         if self.theme is not None:
             self.theme = unicode(self.theme)
         # if we don't have a theme, self.theme will be None
@@ -62,7 +62,7 @@ class ThemeHistory(DDBObject):
     # whole database is loaded because we're checking to see if objects
     # are present.  So, we call it when we access the object in app.py
     def check_new_theme(self):
-        self.theme = config.get(prefs.THEME_NAME)
+        self.theme = app.config.get(prefs.THEME_NAME)
         if self.theme is not None:
             self.theme = unicode(self.theme)
         if self.theme not in self.pastThemes:
@@ -76,7 +76,7 @@ class ThemeHistory(DDBObject):
     @as_urgent
     def on_theme_change(self):
         if self.theme is None: # vanilla Miro
-            guide_url = config.get(prefs.CHANNEL_GUIDE_URL)
+            guide_url = app.config.get(prefs.CHANNEL_GUIDE_URL)
             if guide.get_guide_by_url(guide_url) is None:
                 # This happens when the DB is initialized with a theme that
                 # doesn't have it's own set of default channels; None is
@@ -85,28 +85,28 @@ class ThemeHistory(DDBObject):
                 # that we need to add the Miro Guide to the DB ourselves.
                 logging.warn('Installing default guide after switch to vanilla Miro')
                 guide.ChannelGuide(guide_url,
-                                   unicode(config.get(
+                                   unicode(app.config.get(
                             prefs.CHANNEL_GUIDE_ALLOWED_URLS)).split())
         self.signal_change()
 
     def on_first_run(self):
         logging.info("Spawning Miro Guide...")
-        guide_url = unicode(config.get(prefs.CHANNEL_GUIDE_URL))
+        guide_url = unicode(app.config.get(prefs.CHANNEL_GUIDE_URL))
         if guide.get_guide_by_url(guide_url) is None:
-            allowed_urls = config.get(prefs.CHANNEL_GUIDE_ALLOWED_URLS)
+            allowed_urls = app.config.get(prefs.CHANNEL_GUIDE_ALLOWED_URLS)
             guide.ChannelGuide(guide_url, unicode(allowed_urls).split())
 
         if self.theme is not None:
             # we have a theme
-            new_guides = unicode(config.get(prefs.ADDITIONAL_CHANNEL_GUIDES)).split()
+            new_guides = unicode(app.config.get(prefs.ADDITIONAL_CHANNEL_GUIDES)).split()
             for temp_guide in new_guides:
                 if guide.get_guide_by_url(temp_guide) is None:
                     guide.ChannelGuide(temp_guide)
-            if (((config.get(prefs.DEFAULT_CHANNELS_FILE) is not None)
-                 and (config.get(prefs.THEME_NAME) is not None))):
+            if (((app.config.get(prefs.DEFAULT_CHANNELS_FILE) is not None)
+                 and (app.config.get(prefs.THEME_NAME) is not None))):
                 importer = opml.Importer()
-                filepath = resources.theme_path(config.get(prefs.THEME_NAME), 
-                    config.get(prefs.DEFAULT_CHANNELS_FILE))
+                filepath = resources.theme_path(app.config.get(prefs.THEME_NAME), 
+                    app.config.get(prefs.DEFAULT_CHANNELS_FILE))
                 if os.path.exists(filepath):
                     importer.import_subscriptions(filepath,
                                                   show_summary=False)

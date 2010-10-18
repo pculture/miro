@@ -50,7 +50,6 @@ from miro import app
 from miro import iconcache
 from miro import databaselog
 from miro import downloader
-from miro import config
 from miro import eventloop
 from miro import prefs
 from miro.plat import resources
@@ -671,7 +670,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 self._make_new_children(child_paths)
             else:
                 if not self.get_feed_url().startswith ("dtv:directoryfeed"):
-                    target_dir = config.get(prefs.NON_VIDEO_DIRECTORY)
+                    target_dir = app.config.get(prefs.NON_VIDEO_DIRECTORY)
                     if not filename_root.startswith(target_dir):
                         if isinstance(self, FileItem):
                             self.migrate (target_dir)
@@ -690,7 +689,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             self.subtitle_encoding = None
             config_value = ''
-        config.set(prefs.SUBTITLE_ENCODING, config_value)
+        app.config.set(prefs.SUBTITLE_ENCODING, config_value)
         self.signal_change()
 
     def set_filename(self, filename):
@@ -969,14 +968,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return None
         ufeed = self.get_feed()
         if ufeed.expire == u'never' or (ufeed.expire == u'system'
-                and config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
+                and app.config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
             return None
         else:
             if ufeed.expire == u"feed":
                 expire_time = ufeed.expireTime
             elif ufeed.expire == u"system":
                 expire_time = timedelta(
-                    days=config.get(prefs.EXPIRE_AFTER_X_DAYS))
+                    days=app.config.get(prefs.EXPIRE_AFTER_X_DAYS))
             return self.get_watched_time() + expire_time
 
     def get_watched_time(self):
@@ -1011,7 +1010,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 if ufeed.expire == u'never':
                     self.expiring = False
                 elif (ufeed.expire == u'system'
-                      and config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
+                      and app.config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
                     self.expiring = False
                 else:
                     self.expiring = True
@@ -1036,7 +1035,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.seen == False:
             self.seen = True
             if self.subtitle_encoding is None:
-                config_value = config.get(prefs.SUBTITLE_ENCODING)
+                config_value = app.config.get(prefs.SUBTITLE_ENCODING)
                 if config_value:
                     self.subtitle_encoding = unicode(config_value)
             if self.watchedTime is None:
@@ -1122,7 +1121,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.was_downloaded = True
 
         if ((not autodl) and
-                manual_dl_count >= config.get(prefs.MAX_MANUAL_DOWNLOADS)):
+                manual_dl_count >= app.config.get(prefs.MAX_MANUAL_DOWNLOADS)):
             self.pendingManualDL = True
             self.pendingReason = _("queued for download")
             self.signal_change()

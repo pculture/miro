@@ -32,7 +32,7 @@ Holds utility methods that are platform-specific.
 
 import ctypes
 import _winreg
-from miro import config
+from miro import app
 from miro import prefs
 import os
 import logging
@@ -64,7 +64,7 @@ def getLongPathName(path):
         return buf.value
 
 def get_available_bytes_for_movies():
-    moviesDir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))
+    moviesDir = fileutil.expand_filename(app.config.get(prefs.MOVIES_DIRECTORY))
     freeSpace = ctypes.c_ulonglong(0)
     availableSpace = ctypes.c_ulonglong(0)
     totalSpace = ctypes.c_ulonglong(0)
@@ -190,7 +190,7 @@ def setup_logging(in_downloader=False):
 
     else:
         level = logging.DEBUG
-        pathname = config.get(prefs.LOG_PATHNAME)
+        pathname = app.config.get(prefs.LOG_PATHNAME)
         logging.basicConfig(level=level,
                             stream=sys.stdout)
 
@@ -313,8 +313,8 @@ def launch_download_daemon(oldpid, env):
     kill_process(oldpid)
     for key, value in env.items():
         os.environ[key] = value
-    os.environ['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
-    os.environ['MIRO_APP_VERSION'] = config.get(prefs.APP_VERSION)
+    os.environ['DEMOCRACY_DOWNLOADER_LOG'] = app.config.get(prefs.DOWNLOADER_LOG_PATHNAME)
+    os.environ['MIRO_APP_VERSION'] = app.config.get(prefs.APP_VERSION)
     # Start the downloader.  We use the subprocess module to turn off
     # the console.  One slightly awkward thing is that the current
     # process might not have a valid stdin/stdout/stderr, so we create

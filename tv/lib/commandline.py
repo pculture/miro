@@ -43,7 +43,6 @@ from miro.gtcache import gettext as _
 import os.path
 import logging
 from miro import app
-from miro import config
 from miro import prefs
 from miro import messages
 from miro import dialogs
@@ -124,7 +123,7 @@ def add_subscription_url(prefix, expected_content_type, url):
                 text = _(
                     "This %(appname)s feed file has an invalid format: "
                     "%(url)s.  Please notify the publisher of this file.",
-                    {"appname": config.get(prefs.SHORT_APP_NAME),
+                    {"appname": app.config.get(prefs.SHORT_APP_NAME),
                      "url": real_url}
                     )
                 _complain_about_subscription_url(text)
@@ -135,7 +134,7 @@ def add_subscription_url(prefix, expected_content_type, url):
             text = _(
                 "This %(appname)s feed file has the wrong content type: "
                 "%(url)s. Please notify the publisher of this file.",
-                {"appname": config.get(prefs.SHORT_APP_NAME),
+                {"appname": app.config.get(prefs.SHORT_APP_NAME),
                  "url": real_url}
                 )
             _complain_about_subscription_url(text)
@@ -143,7 +142,7 @@ def add_subscription_url(prefix, expected_content_type, url):
     def errback(error):
         text = _(
             "Could not download the %(appname)s feed file: %(url)s",
-            {"appname": config.get(prefs.SHORT_APP_NAME),
+            {"appname": app.config.get(prefs.SHORT_APP_NAME),
              "url": real_url}
             )
         _complain_about_subscription_url(text)
@@ -217,7 +216,7 @@ def parse_command_line_args(args):
     # this fixes bug 12362 where if the user has his/her system set up
     # to use Miro to play videos and Miro goes to play a video
     # externally, then it causes an infinite loop and dies.
-    if added_videos and config.get(prefs.PLAY_IN_MIRO):
+    if added_videos and app.config.get(prefs.PLAY_IN_MIRO):
         item_infos = [messages.ItemInfo(i) for i in _command_line_videos]
         messages.PlayMovie(item_infos).send_to_frontend()
 

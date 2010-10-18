@@ -47,7 +47,6 @@ else:
     PYNOTIFY_SUPPORT = True
 
 from miro import app
-from miro import config
 from miro import prefs
 from miro.frontends.widgets.application import Application
 # from miro.plat.frontends.widgets import threads
@@ -105,7 +104,7 @@ def run_application(props_to_set, theme):
 
 class LinuxApplication(Application):
     def run(self, props_to_set):
-        gobject.set_application_name(config.get(prefs.SHORT_APP_NAME))
+        gobject.set_application_name(app.config.get(prefs.SHORT_APP_NAME))
         os.environ["PULSE_PROP_media.role"] = "video"
 
         gtk.gdk.threads_init()
@@ -138,11 +137,11 @@ class LinuxApplication(Application):
         app.controller.on_shutdown()
 
     def _setup_webkit(self):
-        support_dir = config.get(prefs.SUPPORT_DIRECTORY)
+        support_dir = app.config.get(prefs.SUPPORT_DIRECTORY)
         cookie_path = os.path.join(support_dir, 'cookies.txt')
         webkitgtkhacks.setup_cookie_storage(cookie_path)
 
-    def on_pref_changed(self, key, value):
+    def on_config_changed(self, obj, key, value):
         """Any time a preference changes, this gets notified so that we
         can adjust things.
         """
@@ -157,11 +156,11 @@ class LinuxApplication(Application):
         # realized in Application.build_window().
         # if this isn't a themed Miro, then we use the default icon set
         ico_path = resources.share_path("icons/hicolor/24x24/apps/miro.png")
-        if ((config.get(prefs.THEME_NAME) != prefs.THEME_NAME.default
-             and config.get(options.WINDOWS_ICON))):
+        if ((app.config.get(prefs.THEME_NAME) != prefs.THEME_NAME.default
+             and app.config.get(options.WINDOWS_ICON))):
             theme_ico_path = resources.theme_path(
-                config.get(prefs.THEME_NAME),
-                config.get(options.WINDOWS_ICON))
+                app.config.get(prefs.THEME_NAME),
+                app.config.get(options.WINDOWS_ICON))
             if os.path.exists(theme_ico_path):
                 ico_path = theme_ico_path
                 gtk.window_set_default_icon_from_file(ico_path)
@@ -189,11 +188,10 @@ class LinuxApplication(Application):
         # handle the trayicon
         if trayicon.trayicon_is_supported:
             self.trayicon = trayicon.Trayicon('miro')
-            if config.get(options.SHOW_TRAYICON):
+            if app.config.get(options.SHOW_TRAYICON):
                 self.trayicon.set_visible(True)
             else:
                 self.trayicon.set_visible(False)
-            config.add_change_callback(self.on_pref_changed)
 
         # check x, y to make sure the window is visible and fix it
         # if not
@@ -283,7 +281,7 @@ class LinuxApplication(Application):
         notification = pynotify.Notification(title, body)
         if (attach_trayicon
                 and trayicon.trayicon_is_supported
-                and config.get(options.SHOW_TRAYICON)):
+                and app.config.get(options.SHOW_TRAYICON)):
             notification.attach_to_status_icon(self.trayicon)
         if timeout:
             notification.set_timeout(timeout)

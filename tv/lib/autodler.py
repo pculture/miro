@@ -26,8 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+from miro import app
 from miro import models
-from miro import config
 from miro import prefs
 from miro import eventloop
 from datetime import datetime
@@ -59,11 +59,11 @@ class Downloader:
         if is_auto:
             pending_items = models.Item.auto_pending_view()
             running_items = models.Item.auto_downloads_view()
-            self.MAX = config.get(prefs.DOWNLOADS_TARGET)
+            self.MAX = app.config.get(prefs.DOWNLOADS_TARGET)
         else:
             pending_items = models.Item.manual_pending_view()
             running_items = models.Item.manual_downloads_view()
-            self.MAX = config.get(prefs.MAX_MANUAL_DOWNLOADS)
+            self.MAX = app.config.get(prefs.MAX_MANUAL_DOWNLOADS)
 
         for item in pending_items:
             self.pending_on_add(None, item)
@@ -90,9 +90,9 @@ class Downloader:
 
     def update_max_downloads(self):
         if self.is_auto:
-            newmax = config.get(prefs.DOWNLOADS_TARGET)
+            newmax = app.config.get(prefs.DOWNLOADS_TARGET)
         else:
-            newmax = config.get(prefs.MAX_MANUAL_DOWNLOADS)
+            newmax = app.config.get(prefs.MAX_MANUAL_DOWNLOADS)
         if newmax != self.MAX:
             self.MAX = newmax
             self.start_downloads()
@@ -200,10 +200,10 @@ def start_downloader():
     MANUAL_DOWNLOADER = Downloader(False)
     AUTO_DOWNLOADER = Downloader(True)
 
-def _update_prefs(key, value):
+def _on_config_change(obj, key, value):
     if key == prefs.DOWNLOADS_TARGET.key:
         AUTO_DOWNLOADER.update_max_downloads()
     elif key == prefs.MAX_MANUAL_DOWNLOADS.key:
         MANUAL_DOWNLOADER.update_max_downloads()
 
-config.add_change_callback(_update_prefs)
+app.backend_config_watcher.connect("changed", _on_config_change)

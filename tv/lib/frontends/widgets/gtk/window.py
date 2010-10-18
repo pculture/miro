@@ -35,7 +35,6 @@ import gobject
 import gtk
 
 from miro import app
-from miro import config
 from miro import prefs
 from miro import signals
 from miro import dialogs
@@ -187,7 +186,7 @@ class WindowBase(signals.SignalEmitter):
 
         # on linux, we don't have a CheckVersion option because
         # we update with the package system.
-        this_platform = config.get(prefs.APP_PLATFORM)
+        this_platform = app.config.get(prefs.APP_PLATFORM)
         if this_platform == 'linux':
             file_menu = self.menu_structure.get("FileMenu")
             file_menu.remove("CheckVersion")
@@ -763,30 +762,30 @@ class AboutDialog(Dialog):
     def __init__(self):
         Dialog.__init__(self,
                         _("About %(appname)s") % {
-                'appname': config.get(prefs.SHORT_APP_NAME)})
+                'appname': app.config.get(prefs.SHORT_APP_NAME)})
         icon_pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(
                 resources.share_path('icons/hicolor/128x128/apps/miro.png'),
                 48, 48)
         self.packing_vbox.pack_start(gtk.image_new_from_pixbuf(icon_pixbuf))
-        if config.get(prefs.APP_REVISION_NUM):
+        if app.config.get(prefs.APP_REVISION_NUM):
             version = "%s (%s)" % (
-                config.get(prefs.APP_VERSION),
-                config.get(prefs.APP_REVISION_NUM))
+                app.config.get(prefs.APP_VERSION),
+                app.config.get(prefs.APP_REVISION_NUM))
         else:
-            version = "%s" % config.get(prefs.APP_VERSION)
+            version = "%s" % app.config.get(prefs.APP_VERSION)
         name_label = gtk.Label('<span size="xx-large" weight="bold">%s %s</span>' % (
-                config.get(prefs.SHORT_APP_NAME), version))
+                app.config.get(prefs.SHORT_APP_NAME), version))
         name_label.set_use_markup(True)
         self.packing_vbox.pack_start(name_label)
         copyright_text = _('%(copyright)s.  See license.txt file for details.\n'
                            '%(trademark)s') % (
-            {"copyright": config.get(prefs.COPYRIGHT),
-             "trademark": config.get(prefs.TRADEMARK)})
+            {"copyright": app.config.get(prefs.COPYRIGHT),
+             "trademark": app.config.get(prefs.TRADEMARK)})
         copyright_label = gtk.Label('<small>%s</small>' % copyright_text)
         copyright_label.set_use_markup(True)
         copyright_label.set_justify(gtk.JUSTIFY_CENTER)
         self.packing_vbox.pack_start(copyright_label)
-        self.packing_vbox.pack_start(gtk.Label(config.get(prefs.PROJECT_URL)))
+        self.packing_vbox.pack_start(gtk.Label(app.config.get(prefs.PROJECT_URL)))
 
         # get adopters, remove newlines, and wrap it
         adopters_data = open(resources.path('ADOPTERS'), 'r').read()

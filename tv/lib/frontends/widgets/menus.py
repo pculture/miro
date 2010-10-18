@@ -31,12 +31,9 @@
 from miro import app
 from miro import prefs
 from miro import signals
-from miro import config
 from miro import videoconversion
 
 from miro.gtcache import gettext as _
-from miro import config
-from miro import prefs
 
 (CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW,
  DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, ESCAPE,
@@ -333,24 +330,24 @@ def get_menu():
 
             Menu(_("_Help"), "HelpMenu", [
                     MenuItem(_("_About %(name)s",
-                               {'name': config.get(prefs.SHORT_APP_NAME)}),
+                               {'name': app.config.get(prefs.SHORT_APP_NAME)}),
                              "About")
                     ])
             ])
 
     help_menu = mbar.get("HelpMenu")
-    if config.get(prefs.DONATE_URL):
+    if app.config.get(prefs.DONATE_URL):
         help_menu.append(MenuItem(_("_Donate"), "Donate"))
 
-    if config.get(prefs.HELP_URL):
+    if app.config.get(prefs.HELP_URL):
         help_menu.append(MenuItem(_("_Help"), "Help", Shortcut(F1)))
     help_menu.append(Separator())
     help_menu.append(MenuItem(_("Diagnostics"), "Diagnostics"))
-    if config.get(prefs.BUG_REPORT_URL):
+    if app.config.get(prefs.BUG_REPORT_URL):
         help_menu.append(MenuItem(_("Report a _Bug"), "ReportBug"))
-    if config.get(prefs.TRANSLATE_URL):
+    if app.config.get(prefs.TRANSLATE_URL):
         help_menu.append(MenuItem(_("_Translate"), "Translate"))
-    if config.get(prefs.PLANET_URL):
+    if app.config.get(prefs.PLANET_URL):
         help_menu.append(MenuItem(_("_Planet Miro"), "Planet"))
     return mbar
 
@@ -617,11 +614,11 @@ def on_about():
 
 @action_handler("Donate")
 def on_donate():
-    app.widgetapp.open_url(config.get(prefs.DONATE_URL))
+    app.widgetapp.open_url(app.config.get(prefs.DONATE_URL))
 
 @action_handler("Help")
 def on_help():
-    app.widgetapp.open_url(config.get(prefs.HELP_URL))
+    app.widgetapp.open_url(app.config.get(prefs.HELP_URL))
 
 @action_handler("Diagnostics")
 def on_diagnostics():
@@ -629,15 +626,15 @@ def on_diagnostics():
 
 @action_handler("ReportBug")
 def on_report_bug():
-    app.widgetapp.open_url(config.get(prefs.BUG_REPORT_URL))
+    app.widgetapp.open_url(app.config.get(prefs.BUG_REPORT_URL))
 
 @action_handler("Translate")
 def on_translate():
-    app.widgetapp.open_url(config.get(prefs.TRANSLATE_URL))
+    app.widgetapp.open_url(app.config.get(prefs.TRANSLATE_URL))
 
 @action_handler("Planet")
 def on_planet():
-    app.widgetapp.open_url(config.get(prefs.PLANET_URL))
+    app.widgetapp.open_url(app.config.get(prefs.PLANET_URL))
 
 def generate_action_groups(menu_structure):
     """Takes a menu structure and returns a map of action group name to

@@ -46,7 +46,7 @@ import urlparse
 from miro.gtcache import gettext as _
 from miro.folder import ChannelFolder, PlaylistFolder
 from miro.plat import resources
-from miro import config
+from miro import app
 from miro import feed
 from miro import guide
 from miro import prefs
@@ -1149,7 +1149,7 @@ class GuideList(FrontendMessage):
             # for it to have a default channel guide persisted, but when you
             # set the channel guide via the DTV_CHANNELGUIDE_URL, then there's
             # no default guide.  So we generate one here.  Bug #11027.
-            cg = guide.ChannelGuide(util.to_uni(config.get(prefs.CHANNEL_GUIDE_URL)))
+            cg = guide.ChannelGuide(util.to_uni(app.config.get(prefs.CHANNEL_GUIDE_URL)))
             cg_info = GuideInfo(cg)
             self.default_guide = [cg_info]
         elif len(self.default_guide) > 1:

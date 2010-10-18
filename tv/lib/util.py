@@ -263,10 +263,10 @@ def gather_media_files(path):
     path -- absolute file path to search
     """
     from miro import prefs
-    from miro import config
+    from miro import app
     parsed = 0
     found = []
-    short_app_name = config.get(prefs.SHORT_APP_NAME)
+    short_app_name = app.config.get(prefs.SHORT_APP_NAME)
     for root, dirs, files in os.walk(path):
         for f in files:
             parsed = parsed + 1

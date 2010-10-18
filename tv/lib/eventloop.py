@@ -42,6 +42,8 @@ import heapq
 import Queue
 import logging
 import traceback
+from miro import app
+from miro import config
 from miro import trapcall
 from miro import signals
 from miro import util
@@ -459,6 +461,10 @@ def startup():
     lt.setDaemon(False)
     lt.start()
     _eventloop.loop_ready.wait()
+
+def setup_config_watcher():
+    app.backend_config_watcher = config.ConfigWatcher(
+            lambda func, *args: add_idle(func, "config callback", args=args))
 
 def join():
     if lt is not None:

@@ -37,7 +37,6 @@ from miro.gtcache import gettext as _
 
 from miro import app
 from miro import messages
-from miro import config
 from miro import prefs
 from miro.frontends.widgets import prefpanel
 from miro.frontends.widgets.gtk import window as window_mod
@@ -91,7 +90,7 @@ if gtk.check_version(2, 10, 0) == None:
                         menu_items.append((None, None))
                         break
 
-            if config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
+            if app.config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
                 menu_items.append((_("Play Next Unplayed (%(unplayed)d)",
                                 {"unplayed": app.widgetapp.unwatched_count}),
                         self.on_play_unwatched))

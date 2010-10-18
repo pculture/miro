@@ -44,6 +44,9 @@ db = None
 # command line arguments for thumbnailer (linux)
 movie_data_program_info = None
 
+# configuration data
+config = None
+
 # widget frontend adds these
 # --------------------------
 

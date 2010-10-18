@@ -45,7 +45,6 @@ from cStringIO import StringIO
 import pycurl
 
 from miro import app
-from miro import config
 from miro import download_utils
 from miro import eventloop
 from miro import fileutil
@@ -65,9 +64,9 @@ MAX_AUTH_ATTEMPTS = 5
 _logged_noproxy_error = False
 
 def user_agent():
-    return "%s/%s (%s; %s)" % (config.get(prefs.SHORT_APP_NAME),
-            config.get(prefs.APP_VERSION),
-            config.get(prefs.PROJECT_URL),
+    return "%s/%s (%s; %s)" % (app.config.get(prefs.SHORT_APP_NAME),
+            app.config.get(prefs.APP_VERSION),
+            app.config.get(prefs.PROJECT_URL),
             get_osname())
 
 def _proxy_auth_url():
@@ -75,8 +74,8 @@ def _proxy_auth_url():
 
     # we hack things by using a "proxy" scheme.  This keeps it separate from
     # regular HTTP passwords
-    return 'proxy://%s:%s/' % (config.get(prefs.HTTP_PROXY_HOST),
-            config.get(prefs.HTTP_PROXY_PORT))
+    return 'proxy://%s:%s/' % (app.config.get(prefs.HTTP_PROXY_HOST),
+            app.config.get(prefs.HTTP_PROXY_PORT))
 
 def trap_call(when, function, *args, **kwargs):
     """Version of trap_call for the libcurl thread.
@@ -125,8 +124,8 @@ class ProxyAuthorizationFailed(HTTPError):
     def __init__(self):
         HTTPError.__init__(self,
                 _('Authorization failed for proxy: %(host)s:%(port)s',
-                               {"host": config.get(prefs.HTTP_PROXY_HOST),
-                               "port": config.get(prefs.HTTP_PROXY_PORT)}))
+                               {"host": app.config.get(prefs.HTTP_PROXY_HOST),
+                               "port": app.config.get(prefs.HTTP_PROXY_PORT)}))
 
 class UnexpectedStatusCode(HTTPError):
     def __init__(self, code):
@@ -258,15 +257,15 @@ class TransferOptions(object):
         return handle
 
     def _setup_proxy(self, handle):
-        if not config.get(prefs.HTTP_PROXY_ACTIVE):
+        if not app.config.get(prefs.HTTP_PROXY_ACTIVE):
             return
 
         # FIXME honor prefs.HTTP_PROXY_SCHEME
-        handle.setopt(pycurl.PROXY, str(config.get(prefs.HTTP_PROXY_HOST)))
+        handle.setopt(pycurl.PROXY, str(app.config.get(prefs.HTTP_PROXY_HOST)))
         handle.setopt(pycurl.PROXYPORT,
-                int(config.get(prefs.HTTP_PROXY_PORT)))
+                int(app.config.get(prefs.HTTP_PROXY_PORT)))
 
-        ignore_hosts = config.get(prefs.HTTP_PROXY_IGNORE_HOSTS)
+        ignore_hosts = app.config.get(prefs.HTTP_PROXY_IGNORE_HOSTS)
         if ignore_hosts:
             try:
                 handle.setopt(pycurl.NOPROXY, ','.join(
@@ -479,10 +478,10 @@ class CurlTransfer(object):
             self.handle.setopt(pycurl.PROXYUSERPWD, user_pwd)
         else:
             # fallback on system auth info
-            if config.get(prefs.HTTP_PROXY_AUTHORIZATION_ACTIVE):
+            if app.config.get(prefs.HTTP_PROXY_AUTHORIZATION_ACTIVE):
                 self.handle.setopt(pycurl.PROXYUSERPWD, '%s:%s' % (
-                    str(config.get(prefs.HTTP_PROXY_AUTHORIZATION_USERNAME)),
-                    str(config.get(prefs.HTTP_PROXY_AUTHORIZATION_PASSWORD))))
+                    str(app.config.get(prefs.HTTP_PROXY_AUTHORIZATION_USERNAME)),
+                    str(app.config.get(prefs.HTTP_PROXY_AUTHORIZATION_PASSWORD))))
 
     def _call_content_check(self, data):
         self.buffer.write(data)

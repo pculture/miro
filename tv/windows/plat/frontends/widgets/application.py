@@ -38,7 +38,6 @@ import gtk
 
 from miro.gtcache import gettext as _
 from miro import app
-from miro import config
 from miro import eventloop
 from miro import prefs
 from miro.frontends.widgets import dialogs
@@ -92,7 +91,7 @@ class WindowsApplication(Application):
         xulrunnerbrowser.shutdown()
         app.controller.on_shutdown()
 
-    def on_pref_changed(self, key, value):
+    def on_config_changed(self, obj, key, value):
         """Any time a preference changes, this gets notified so that we
         can adjust things.
         """
@@ -106,9 +105,9 @@ class WindowsApplication(Application):
         # we set the icon first (if available) so that it doesn't flash
         # on when the window is realized in Application.build_window()
         icopath = os.path.join(resources.appRoot(), "Miro.ico")
-        if config.get(prefs.THEME_NAME) and config.get(options.WINDOWS_ICON):
-            themeIcoPath = resources.theme_path(config.get(prefs.THEME_NAME),
-                                                config.get(options.WINDOWS_ICON))
+        if app.config.get(prefs.THEME_NAME) and app.config.get(options.WINDOWS_ICON):
+            themeIcoPath = resources.theme_path(app.config.get(prefs.THEME_NAME),
+                                                app.config.get(options.WINDOWS_ICON))
             if os.path.exists(themeIcoPath):
                 icopath = themeIcoPath
                 gtk.window_set_default_icon_from_file(icopath)
@@ -127,11 +126,9 @@ class WindowsApplication(Application):
             else:
                 self.window._window.unmaximize()
 
-        config.add_change_callback(self.on_pref_changed)
-
         if trayicon.trayicon_is_supported:
             self.trayicon = trayicon.Trayicon(icopath)
-            if config.get(options.SHOW_TRAYICON):
+            if app.config.get(options.SHOW_TRAYICON):
                 self.trayicon.set_visible(True)
             else:
                 self.trayicon.set_visible(False)
@@ -143,21 +140,21 @@ class WindowsApplication(Application):
         self.window.check_position_and_fix()
 
     def on_close(self):
-        if config.get(prefs.MINIMIZE_TO_TRAY_ASK_ON_CLOSE):
+        if app.config.get(prefs.MINIMIZE_TO_TRAY_ASK_ON_CLOSE):
             ret = dialogs.show_choice_dialog(
                 _("Close to tray?"),
                 _("When you click the red close button, would you like %(appname)s to "
                   "close to the system tray or quit?  You can change this "
                   "setting later in the Options.",
-                  {"appname": config.get(prefs.SHORT_APP_NAME)}),
+                  {"appname": app.config.get(prefs.SHORT_APP_NAME)}),
                 (dialogs.BUTTON_QUIT, dialogs.BUTTON_CLOSE_TO_TRAY))
-            config.set(prefs.MINIMIZE_TO_TRAY_ASK_ON_CLOSE, False)
+            app.config.set(prefs.MINIMIZE_TO_TRAY_ASK_ON_CLOSE, False)
             if ret == dialogs.BUTTON_CLOSE_TO_TRAY:
-                config.set(prefs.MINIMIZE_TO_TRAY, True)
+                app.config.set(prefs.MINIMIZE_TO_TRAY, True)
             else:
-                config.set(prefs.MINIMIZE_TO_TRAY, False)
+                app.config.set(prefs.MINIMIZE_TO_TRAY, False)
 
-        if config.get(prefs.MINIMIZE_TO_TRAY):
+        if app.config.get(prefs.MINIMIZE_TO_TRAY):
             self.trayicon.on_click(None)
         else:
             self.quit()
@@ -180,8 +177,9 @@ class WindowsApplication(Application):
         app_dir = os.path.dirname(sys.executable)
         xul_dir = os.path.join(app_dir, 'xulrunner')
         xulrunnerbrowser.initialize(xul_dir, app_dir)
-        xulrunnerbrowser.setup_user_agent(config.get(prefs.LONG_APP_NAME),
-                config.get(prefs.APP_VERSION), config.get(prefs.PROJECT_URL))
+        xulrunnerbrowser.setup_user_agent(app.config.get(prefs.LONG_APP_NAME),
+                app.config.get(prefs.APP_VERSION),
+                app.config.get(prefs.PROJECT_URL))
         xulrunnerbrowser.install_window_creator(self)
 
     def on_new_window(self, uri):
@@ -202,9 +200,9 @@ class WindowsApplication(Application):
         except:
             logging.warn("Error opening URL: %r\n%s", url,
                     traceback.format_exc())
-            recommendURL = config.get(prefs.RECOMMEND_URL)
+            recommendURL = app.config.get(prefs.RECOMMEND_URL)
 
-            if url.startswith(config.get(prefs.VIDEOBOMB_URL)):
+            if url.startswith(app.config.get(prefs.VIDEOBOMB_URL)):
                 title = _('Error Bombing Item')
             elif url.startswith(recommendURL):
                 title = _('Error Recommending Item')
@@ -231,19 +229,19 @@ class WindowsApplication(Application):
     def get_main_window_dimensions(self):
         max_width = gtk.gdk.screen_width()
         max_height = gtk.gdk.screen_height()
-        rect = widgets.Rect.from_string(config.get(options.WINDOW_DIMENSIONS))
+        rect = widgets.Rect.from_string(app.config.get(options.WINDOW_DIMENSIONS))
         rect.width = max(min(rect.width, max_width), 800)
         rect.height = max(min(rect.height, max_height - 20), 480)
         return rect
 
     def get_main_window_maximized(self):
-        return config.get(options.WINDOW_MAXIMIZED)
+        return app.config.get(options.WINDOW_MAXIMIZED)
 
     def set_main_window_dimensions(self, window, x, y, width, height):
-        config.set(options.WINDOW_DIMENSIONS, "%s,%s,%s,%s" % (x, y, width, height))
+        app.config.set(options.WINDOW_DIMENSIONS, "%s,%s,%s,%s" % (x, y, width, height))
 
     def set_main_window_maximized(self, window, maximized):
-        config.set(options.WINDOW_MAXIMIZED, maximized)
+        app.config.set(options.WINDOW_MAXIMIZED, maximized)
 
     def send_notification(self, title, body,
                           timeout=5000, attach_trayicon=True):
@@ -268,17 +266,17 @@ class WindowsApplication(Application):
             # versions work
             filename = os.path.join(resources.root(), "..", "Miro.exe")
             filename = os.path.normpath(filename)
-            themeName = config.get(prefs.THEME_NAME)
+            themeName = app.config.get(prefs.THEME_NAME)
             if themeName is not None:
                 themeName = themeName.replace("\\", "\\\\").replace('"', '\\"')
                 filename = "%s --theme \"%s\"" % (filename, themeName)
 
-            _winreg.SetValueEx(folder, config.get(prefs.LONG_APP_NAME), 0,
+            _winreg.SetValueEx(folder, app.config.get(prefs.LONG_APP_NAME), 0,
                                _winreg.REG_SZ, filename)
 
         else:
             try:
-                _winreg.DeleteValue(folder, config.get(prefs.LONG_APP_NAME))
+                _winreg.DeleteValue(folder, app.config.get(prefs.LONG_APP_NAME))
             except WindowsError, e:
                 if e.errno == 2:
                     # registry key doesn't exist, user must have deleted it

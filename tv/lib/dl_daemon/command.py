@@ -31,6 +31,7 @@ import random
 import threading
 import logging
 
+from miro import app
 from miro import eventloop
 
 # Amount of time to wait for daemonic threads to quit.  Right now, the
@@ -149,15 +150,13 @@ class ShutDownResponseCommand(Command):
 #############################################################################
 class InitialConfigCommand(Command):
     def action(self):
-        from miro import config
-        from miro.dl_daemon import download
-        config.set_dictionary(*self.args, **self.kws)
-        download.config_received()
+        app.config.set_dictionary(*self.args, **self.kws)
+        from miro.dl_daemon import Democracy_Downloader
+        Democracy_Downloader.finish_startup_after_config()
 
 class UpdateConfigCommand(Command):
     def action(self):
-        from miro import config
-        config.update_dictionary(*self.args, **self.kws)
+        app.config.set_key(*self.args, **self.kws)
 
 class UpdateHTTPPasswordsCommand(Command):
     def action(self):

@@ -29,9 +29,8 @@
 import logging
 import platform
 
-from miro import config
-from miro import prefs
 from miro import app
+from miro import prefs
 from miro import startup
 from miro import controller
 from miro.frontends.cli.util import print_text, print_box
@@ -39,7 +38,7 @@ from miro.frontends.cli.events import EventHandler
 from miro.frontends.cli.interpreter import MiroInterpreter
 
 def setup_logging():
-    pathname = config.get(prefs.LOG_PATHNAME)
+    pathname = app.config.get(prefs.LOG_PATHNAME)
     try:
         rotater = logging.handlers.RotatingFileHandler(
             pathname, mode="w", maxBytes=100000,
@@ -65,15 +64,15 @@ def setup_logging():
 def run_application(props_to_set, theme):
     setup_logging()
     app.controller = controller.Controller()
-    config.load(theme)
+    app.config.load(theme)
 
     # FIXME - ignoring props_to_set
-    print "Starting up %s" % config.get(prefs.LONG_APP_NAME)
-    print "Version:    %s" % config.get(prefs.APP_VERSION)
+    print "Starting up %s" % app.config.get(prefs.LONG_APP_NAME)
+    print "Version:    %s" % app.config.get(prefs.APP_VERSION)
     print "OS:         %s %s %s" % (platform.system(), platform.release(), platform.machine())
-    print "Revision:   %s" % config.get(prefs.APP_REVISION)
-    print "Builder:    %s" % config.get(prefs.BUILD_MACHINE)
-    print "Build Time: %s" % config.get(prefs.BUILD_TIME)
+    print "Revision:   %s" % app.config.get(prefs.APP_REVISION)
+    print "Builder:    %s" % app.config.get(prefs.BUILD_MACHINE)
+    print "Build Time: %s" % app.config.get(prefs.BUILD_TIME)
 
     print
     app.cli_events = EventHandler()

@@ -46,10 +46,11 @@ from miro import eventloop
 from miro import httpclient
 from miro import fileutil
 
-from miro import config
+from miro import app
 from miro import prefs
 
-from miro.dl_daemon import command, daemon
+from miro.dl_daemon import command
+from miro.dl_daemon import daemon
 from miro.util import check_f, check_u, stringify, MAX_TORRENT_SIZE
 from miro.plat.utils import get_available_bytes_for_movies, utf8_to_filename
 
@@ -59,9 +60,6 @@ chatter = True
 _downloads = {}
 
 _lock = RLock()
-
-def config_received():
-    TORRENT_SESSION.startup()
 
 def create_downloader(url, contentType, dlid):
     check_u(url)
@@ -173,6 +171,11 @@ def get_download_status(dlids=None):
                 pass
     return statuses
 
+def startup():
+    logging.info("Starting downloaders")
+    DOWNLOAD_UPDATER.start_updates()
+    TORRENT_SESSION.startup()
+
 def shutdown():
     logging.info("Shutting down downloaders...")
     for dlid in _downloads:
@@ -220,14 +223,15 @@ class TorrentSession(object):
         self.set_upload_limit()
         self.set_download_limit()
         self.set_encryption()
-        config.add_change_callback(self.config_changed)
+        self.callback_handle = app.downloader_config_watcher.connect('changed',
+                self.on_config_changed)
 
     def listen(self):
-        self.session.listen_on(config.get(prefs.BT_MIN_PORT),
-                               config.get(prefs.BT_MAX_PORT))
+        self.session.listen_on(app.config.get(prefs.BT_MIN_PORT),
+                               app.config.get(prefs.BT_MAX_PORT))
 
     def set_upnp(self):
-        use_upnp = config.get(prefs.USE_UPNP)
+        use_upnp = app.config.get(prefs.USE_UPNP)
         if use_upnp == self.pnp_on:
             return
         self.pnp_on = use_upnp
@@ -238,8 +242,8 @@ class TorrentSession(object):
 
     def set_upload_limit(self):
         limit = -1
-        if config.get(prefs.LIMIT_UPSTREAM):
-            limit = config.get(prefs.UPSTREAM_LIMIT_IN_KBS)
+        if app.config.get(prefs.LIMIT_UPSTREAM):
+            limit = app.config.get(prefs.UPSTREAM_LIMIT_IN_KBS)
             limit = limit * (2 ** 10)
             if limit > sys.maxint:
                 # avoid OverflowErrors by keeping the value an integer
@@ -248,8 +252,8 @@ class TorrentSession(object):
 
     def set_download_limit(self):
         limit = -1
-        if config.get(prefs.LIMIT_DOWNSTREAM_BT):
-            limit = config.get(prefs.DOWNSTREAM_BT_LIMIT_IN_KBS)
+        if app.config.get(prefs.LIMIT_DOWNSTREAM_BT):
+            limit = app.config.get(prefs.DOWNSTREAM_BT_LIMIT_IN_KBS)
             limit = limit * (2 ** 10)
             if limit > sys.maxint:
                 # avoid OverflowErrors by keeping the value an integer
@@ -258,8 +262,8 @@ class TorrentSession(object):
 
     def set_connection_limit(self):
         limit = -1
-        if config.get(prefs.LIMIT_CONNECTIONS_BT):
-            limit = config.get(prefs.CONNECTION_LIMIT_BT_NUM)
+        if app.config.get(prefs.LIMIT_CONNECTIONS_BT):
+            limit = app.config.get(prefs.CONNECTION_LIMIT_BT_NUM)
             if limit > 65536:
                 # there are only 2**16 TCP port numbers
                 limit = 65536
@@ -268,7 +272,7 @@ class TorrentSession(object):
     def set_encryption(self):
         if self.pe_set is None:
             self.pe_set = lt.pe_settings()
-        enc_req = config.get(prefs.BT_ENC_REQ)
+        enc_req = app.config.get(prefs.BT_ENC_REQ)
         if enc_req != self.enc_req:
             self.enc_req = enc_req
             if enc_req:
@@ -281,9 +285,9 @@ class TorrentSession(object):
 
     def shutdown(self):
         self.session.stop_upnp()
-        config.remove_change_callback(self.config_changed)
+        app.downloader_config_watcher.disconnect(self.callback_handle)
 
-    def config_changed(self, key, value):
+    def on_config_changed(self, obj, key, value):
         if key == prefs.BT_MIN_PORT.key:
             if value > self.session.listen_port():
                 self.listen()
@@ -441,7 +445,7 @@ class BGDownloader(object):
         with is ascii and needs to be transformed into something sane.
         (default)
         """
-        download_dir = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
+        download_dir = os.path.join(app.config.get(prefs.MOVIES_DIRECTORY),
                                     'Incomplete Downloads')
         # Create the download directory if it doesn't already exist.
         if not os.path.exists(download_dir):
@@ -460,7 +464,7 @@ class BGDownloader(object):
         if chatter:
             logging.info("move_to_movies_directory: filename is %s",
                          self.filename)
-        self.move_to_directory(config.get(prefs.MOVIES_DIRECTORY))
+        self.move_to_directory(app.config.get(prefs.MOVIES_DIRECTORY))
 
     def move_to_directory(self, directory):
         check_f(directory)
@@ -561,10 +565,10 @@ class BGDownloader(object):
         based on the user disk space preservation preference
         """
         accept = True
-        if config.get(prefs.PRESERVE_DISK_SPACE):
+        if app.config.get(prefs.PRESERVE_DISK_SPACE):
             if size < 0:
                 size = 0
-            preserved = (config.get(prefs.PRESERVE_X_GB_FREE) *
+            preserved = (app.config.get(prefs.PRESERVE_X_GB_FREE) *
                          1024 * 1024 * 1024)
             available = get_available_bytes_for_movies() - preserved
             accept = (size <= available)
@@ -945,10 +949,10 @@ class BTDownloader(BGDownloader):
         else:
             DOWNLOAD_UPDATER.queue_update(self)
 
-        if config.get(prefs.LIMIT_UPLOAD_RATIO):
+        if app.config.get(prefs.LIMIT_UPLOAD_RATIO):
             if status.state == lt.torrent_status.states.seeding:
                 if ((float(self.uploaded) / self.totalSize >
-                     config.get(prefs.UPLOAD_RATIO))):
+                     app.config.get(prefs.UPLOAD_RATIO))):
                     self.stop_upload()
 
         if self.should_update_fast_resume_data():
@@ -1109,7 +1113,7 @@ class BTDownloader(BGDownloader):
                     self.handle_error(_("Torrent file deleted"),
                                      _("The torrent file for this item was deleted "
                                        "outside of %(appname)s.",
-                                       {"appname": config.get(prefs.SHORT_APP_NAME)}
+                                       {"appname": app.config.get(prefs.SHORT_APP_NAME)}
                                        ))
 
                     return

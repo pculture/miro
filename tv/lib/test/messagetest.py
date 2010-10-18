@@ -1,4 +1,4 @@
-from miro import config
+from miro import app
 from miro import prefs
 
 from miro.feed import Feed
@@ -70,7 +70,7 @@ class TrackerTest(EventLoopTest):
         self.playlistTabOrder = TabOrder(u'playlist')
         # Adding a guide ensures that if we remove all our
         # channel/playlist tabs the selection code won't go crazy.
-        self.guide = ChannelGuide(config.get(prefs.CHANNEL_GUIDE_URL))
+        self.guide = ChannelGuide(app.config.get(prefs.CHANNEL_GUIDE_URL))
 
     def tearDown(self):
         EventLoopTest.tearDown(self)

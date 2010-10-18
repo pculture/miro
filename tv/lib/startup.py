@@ -38,6 +38,7 @@ FIXME
 from miro.gtcache import gettext as _
 import logging
 import os
+import config
 import traceback
 import threading
 import platform
@@ -47,7 +48,6 @@ from miro.clock import clock
 from miro import app
 from miro import autodler
 from miro import autoupdate
-from miro import config
 from miro import commandline
 from miro import crashreport
 from miro import controller
@@ -135,8 +135,8 @@ def startup_function(func):
                       "Start Fresh button and restart %(appname)s.\n\n"
                       "To help us fix problems like this in the future, "
                       "please file a bug report at %(url)s.",
-                      {"appname": config.get(prefs.SHORT_APP_NAME),
-                       "url": config.get(prefs.BUG_REPORT_URL),
+                      {"appname": app.config.get(prefs.SHORT_APP_NAME),
+                       "url": app.config.get(prefs.BUG_REPORT_URL),
                        "error": msg}
                       ))
                 m.send_to_frontend()
@@ -148,8 +148,8 @@ def startup_function(func):
                     _("Unknown Error"),
                     _("An unknown error prevented %(appname)s from startup.  "
                       "Please file a bug report at %(url)s.",
-                      {"appname": config.get(prefs.SHORT_APP_NAME),
-                       "url": config.get(prefs.BUG_REPORT_URL)}
+                      {"appname": app.config.get(prefs.SHORT_APP_NAME),
+                       "url": app.config.get(prefs.BUG_REPORT_URL)}
                       ))
                 m.send_to_frontend()
     return wrapped
@@ -199,7 +199,7 @@ def initialize(themeName):
     # this is portable general
     util.setup_logging()
     app.controller = controller.Controller()
-    config.load(themeName)
+    config.set_theme(themeName)
 
 def startup():
     """Startup Miro.
@@ -216,12 +216,12 @@ def startup():
 
     initialize() must be called before startup().
     """
-    logging.info("Starting up %s", config.get(prefs.LONG_APP_NAME))
-    logging.info("Version:    %s", config.get(prefs.APP_VERSION))
+    logging.info("Starting up %s", app.config.get(prefs.LONG_APP_NAME))
+    logging.info("Version:    %s", app.config.get(prefs.APP_VERSION))
     logging.info("OS:         %s %s %s", platform.system(), platform.release(), platform.machine())
-    logging.info("Revision:   %s", config.get(prefs.APP_REVISION))
-    logging.info("Builder:    %s", config.get(prefs.BUILD_MACHINE))
-    logging.info("Build Time: %s", config.get(prefs.BUILD_TIME))
+    logging.info("Revision:   %s", app.config.get(prefs.APP_REVISION))
+    logging.info("Builder:    %s", app.config.get(prefs.BUILD_MACHINE))
+    logging.info("Build Time: %s", app.config.get(prefs.BUILD_TIME))
     eventloop.connect('thread-started', finish_startup)
     logging.info("Reading HTTP Password list")
     httpauth.init()
@@ -248,7 +248,7 @@ def finish_startup(obj, thread):
             "You have a database that was saved with a newer version of "
             "%(appname)s. You must download the latest version of "
             "%(appname)s and run that.",
-            {"appname": config.get(prefs.SHORT_APP_NAME)},
+            {"appname": app.config.get(prefs.SHORT_APP_NAME)},
         )
         raise StartupError(summary, description)
     except storedatabase.UpgradeErrorSendCrashReport, e:
@@ -313,7 +313,7 @@ def check_movies_gone():
         _movies_directory_gone_handler(callback)
         return
 
-    movies_dir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))
+    movies_dir = fileutil.expand_filename(app.config.get(prefs.MOVIES_DIRECTORY))
     # if the directory doesn't exist, create it.
     if not os.path.exists(movies_dir):
         try:
@@ -340,7 +340,7 @@ def check_movies_gone():
 
 @startup_function
 def fix_movies_gone():
-    config.set(prefs.MOVIES_DIRECTORY, platformcfg.get(prefs.MOVIES_DIRECTORY))
+    app.config.set(prefs.MOVIES_DIRECTORY, platformcfg.get(prefs.MOVIES_DIRECTORY))
     eventloop.add_urgent_call(finish_backend_startup, "reconnect downloaders")
 
 @startup_function
@@ -409,17 +409,17 @@ def is_first_time():
 
     Returns True if yes, False if no.
     """
-    return not config.get(prefs.STARTUP_TASKS_DONE)
+    return not app.config.get(prefs.STARTUP_TASKS_DONE)
 
 def mark_first_time():
-    config.set(prefs.STARTUP_TASKS_DONE, True)
+    app.config.set(prefs.STARTUP_TASKS_DONE, True)
 
 def is_movies_directory_gone():
     """Checks to see if the MOVIES_DIRECTORY exists.
 
     Returns True if yes, False if no.
     """
-    movies_dir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))
+    movies_dir = fileutil.expand_filename(app.config.get(prefs.MOVIES_DIRECTORY))
     if not movies_dir.endswith(os.path.sep):
         movies_dir += os.path.sep
     logging.info("Checking movies directory %r...", movies_dir)
@@ -481,7 +481,7 @@ def clear_icon_cache_orphans():
     # delete files in the icon cache directory that don't belong to IconCache
     # objects.
 
-    cachedir = fileutil.expand_filename(config.get(prefs.ICON_CACHE_DIRECTORY))
+    cachedir = fileutil.expand_filename(app.config.get(prefs.ICON_CACHE_DIRECTORY))
     if not os.path.isdir(cachedir):
         return
 
@@ -516,7 +516,7 @@ def send_startup_crash_report(report):
         "Do you want to include entire program database "
         "including all video and feed metadata with crash report? "
         "This will help us diagnose the issue.",
-        {"appname": config.get(prefs.SHORT_APP_NAME)})
+        {"appname": app.config.get(prefs.SHORT_APP_NAME)})
     d = dialogs.ChoiceDialog(title, description,
             dialogs.BUTTON_INCLUDE_DATABASE,
             dialogs.BUTTON_DONT_INCLUDE_DATABASE)

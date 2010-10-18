@@ -39,7 +39,6 @@ import gobject
 from miro.gtcache import gettext as _
 from miro.plat import resources
 from miro import app
-from miro import config
 from miro import prefs
 from miro.frontends.widgets import menus
 from miro.frontends.widgets.widgetconst import MAX_VOLUME
@@ -575,7 +574,7 @@ class VLCRenderer(object):
 
     def setup_subtitles(self):
         self.setup_subtitle_info()
-        if config.get(prefs.ENABLE_SUBTITLES):
+        if app.config.get(prefs.ENABLE_SUBTITLES):
             track_index = self.get_enabled_subtitle_track()
             if track_index == 0:
                 count = libvlc.libvlc_video_get_spu_count(
@@ -586,7 +585,7 @@ class VLCRenderer(object):
             self.disable_subtitles()
 
     def setup_subtitle_font(self):
-        font_path = config.get(prefs.SUBTITLE_FONT)
+        font_path = app.config.get(prefs.SUBTITLE_FONT)
         config_PutPsz(self.vlc_instance,
                 ctypes.c_char_p('freetype-font'),
                 ctypes.c_char_p(font_path))

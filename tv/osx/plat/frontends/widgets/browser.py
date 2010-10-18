@@ -37,8 +37,8 @@ from WebKit import *
 from objc import YES, NO, nil
 from PyObjCTools import AppHelper
 
+from miro import app
 from miro import prefs
-from miro import config
 from miro.plat.frontends.widgets.base import Widget
 
 class Browser(Widget):
@@ -52,9 +52,9 @@ class Browser(Widget):
         self.view = MiroWebView.alloc().initWithFrame_(NSRect((0,0), self.calc_size_request()))
         self.view.setMaintainsBackForwardList_(YES)
         self.view.setApplicationNameForUserAgent_("%s/%s (%s)" % \
-                                      (config.get(prefs.SHORT_APP_NAME),
-                                       config.get(prefs.APP_VERSION),
-                                       config.get(prefs.PROJECT_URL),))
+                                      (app.config.get(prefs.SHORT_APP_NAME),
+                                       app.config.get(prefs.APP_VERSION),
+                                       app.config.get(prefs.PROJECT_URL),))
 
     def _set_webkit_delegates(self, delegate):
         self.view.setPolicyDelegate_(delegate)
@@ -168,8 +168,8 @@ class BrowserDelegate (NSObject):
             if request is nil:
                 request = frame.dataSource().request()
             url = request.URL()            
-            allowed = [config.get(prefs.CHANNEL_GUIDE_URL), 
-                       config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL)]
+            allowed = [app.config.get(prefs.CHANNEL_GUIDE_URL), 
+                       app.config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL)]
             if url.absoluteString() in allowed:
                 # The [NSURLRequest setAllowsAnyHTTPSCertificate:forHost:] selector is
                 # not documented anywhere, so I assume it is not public. It is however 
