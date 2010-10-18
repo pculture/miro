@@ -57,6 +57,7 @@ from miro.plat.config import gconf_lock
 from miro.frontends.widgets.gtk import trayicon
 from miro.plat import resources
 from miro.plat.frontends.widgets import mediakeys
+from miro.plat.frontends.widgets.threads import call_on_ui_thread
 
 from miro.frontends.widgets.gtk.widgetset import Rect
 from miro.frontends.widgets.gtk import webkitgtkhacks
@@ -145,7 +146,13 @@ class LinuxApplication(Application):
     def on_pref_changed(self, key, value):
         """Any time a preference changes, this gets notified so that we
         can adjust things.
+
+        The callback happens on the backend thread, use call_on_ui_thread() to
+        move the call to the frontend thread.
         """
+        call_on_ui_thread(self._on_pref_changed, key, value)
+
+    def _on_pref_changed(self, key, value):
         if key == options.SHOW_TRAYICON.key:
             self.trayicon.set_visible(value)
 

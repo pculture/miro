@@ -121,6 +121,14 @@ class OSXApplication(Application):
         self.app_controller.finish_startup()
         
     def on_pref_changed(self, key, value):
+        """Any time a preference changes, this gets notified so that we
+        can adjust things
+
+        The callback happens on the backend thread, use call_on_ui_thread() to
+        move the call to the frontend thread.
+        """
+
+    def _on_pref_changed(self, key, value):
         if key == prefs.RUN_AT_STARTUP.key:
             self.set_launch_at_startup(bool(value))
 
