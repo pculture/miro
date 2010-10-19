@@ -47,6 +47,14 @@ movie_data_program_info = None
 # configuration data
 config = None
 
+# low-level parser for the "app.config" file
+configfile = None
+
+# signal emiters for when config data changes
+backend_config_watcher = None
+frontend_config_watcher = None
+downloader_config_watcher = None
+
 # widget frontend adds these
 # --------------------------
 
