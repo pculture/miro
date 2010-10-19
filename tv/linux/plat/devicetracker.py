@@ -34,25 +34,25 @@ class DeviceTracker(object):
         json.dump(database, file(os.path.join(mount, '.mirodb'), 'w'))
 
     def _get_device_info(self, drive):
-        print drive
+        id_ = drive.get_identifier('unix-device')
         volumes = drive.get_volumes()
-        if not volumes:
-            raise KeyError
-        volume = volumes[0]
-        uuid = volume.get_identifier('uuid')
-        mount = volume.get_mount()
-        mount_path = mount.get_root().get_path()
-        statinfo = os.statvfs(mount_path)
-        size = statinfo.f_frsize * statinfo.f_blocks
-        remaining = statinfo.f_frsize * statinfo.f_bavail
-
-        database = self._load_database(mount_path)
+        mount_path = size = remaining = None
+        database = {}
+        if volumes:
+            volume = volumes[0]
+            mount = volume.get_mount()
+            if mount:
+                mount_path = mount.get_root().get_path()
+                statinfo = os.statvfs(mount_path)
+                size = statinfo.f_frsize * statinfo.f_blocks
+                remaining = statinfo.f_frsize * statinfo.f_bavail
+                database = self._load_database(mount_path)
 
         device_info = devices.device_manager.get_device(
             drive.get_name(),
             database.get('device_name', None))
 
-        return messages.DeviceInfo(uuid, device_info, mount_path,
+        return messages.DeviceInfo(id_, device_info, mount_path,
                                    database, size, remaining)
 
     def _drive_connected(self, volume_monitor, drive):
