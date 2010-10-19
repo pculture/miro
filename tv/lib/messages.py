@@ -804,6 +804,12 @@ class DeviceSyncMedia(BackendMessage):
         self.device = device
         self.item_ids = item_ids
 
+class DeviceEject(BackendMessage):
+    """Ask the backend to eject the given device.
+    """
+    def __init__(self, device):
+        self.device = device
+
 # Frontend Messages
 
 class FrontendQuit(FrontendMessage):

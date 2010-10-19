@@ -10,6 +10,7 @@ from miro import messages
 
 class DeviceTracker(object):
     def __init__(self):
+        self._unix_device_to_drive = {}
         self._disconnecting = {}
 
     def start_tracking(self):
@@ -35,9 +36,9 @@ class DeviceTracker(object):
 
     def _get_device_info(self, drive):
         id_ = drive.get_identifier('unix-device')
-        volumes = drive.get_volumes()
         mount_path = size = remaining = None
         database = {}
+        volumes = drive.get_volumes()
         if volumes:
             volume = volumes[0]
             mount = volume.get_mount()
@@ -51,6 +52,8 @@ class DeviceTracker(object):
         device_info = devices.device_manager.get_device(
             drive.get_name(),
             database.get('device_name', None))
+
+        self._unix_device_to_drive[id_] = drive
 
         return messages.DeviceInfo(id_, device_info, mount_path,
                                    database, size, remaining)
@@ -89,6 +92,10 @@ class DeviceTracker(object):
 
     def _drive_disconnected_timeout(self, info):
         del self._disconnecting[info.id]
+        try:
+            del self._unix_device_to_drive[info.id]
+        except KeyError:
+            pass
         devices.device_disconnected(info)
 
     def set_device_type(self, device, name):
@@ -98,5 +105,16 @@ class DeviceTracker(object):
             device.id, device.info.devices[name], device.mount,
             device.database, device.size, device.remaining)
         devices.device_changed(info)
+
+    def eject(self, device):
+        if device.id not in self._unix_device_to_drive:
+            return
+        drive = self._unix_device_to_drive[device.id]
+        drive.eject(self._eject_callback,
+                    gio.MOUNT_UNMOUNT_NONE, None, None)
+
+    def _eject_callback(self, drive, result, user_info):
+        if not drive.eject_finish(result):
+            logging.warn('eject failed for %r' % drive)
 
 tracker = DeviceTracker()

@@ -111,6 +111,34 @@ class TabBlinkerMixin(object):
         if id in self.iter_map:
             self.view.unblink_tab(self.iter_map[id])
 
+class TabUpdaterMixin(object):
+    def __init__(self):
+        self.updating_animations = {}
+
+    def start_updating(self, id_):
+        if id_ in self.updating_animations:
+            return
+        timer_id = timer.add(0, self.pulse_updating_animation, id_)
+        self.updating_animations[id_] = timer_id
+
+    def stop_updating(self, id_):
+        if id_ not in self.updating_animations:
+            return
+        self.view.stop_updating_image(self.iter_map[id_])
+        timer_id = self.updating_animations.pop(id_)
+        timer.cancel(timer_id)
+
+    def pulse_updating_animation(self, id_):
+        try:
+            iter = self.iter_map[id_]
+        except KeyError:
+            # feed was removed
+            del self.updating_animations[id_]
+            return
+        self.view.pulse_updating_image(iter)
+        timer_id = timer.add(0.1, self.pulse_updating_animation, id_)
+        self.updating_animations[id_] = timer_id
+
 class StaticTabListBase(TabBlinkerMixin):
 
     def __init__(self):
@@ -513,10 +541,12 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
 
     ALLOW_MULTIPLE = True
 
+    render_class = style.TabRenderer
+
     def __init__(self):
         signals.SignalEmitter.__init__(self)
         self.create_signal('tab-name-changed')
-        self.view = TabListView(style.TabRenderer())
+        self.view = TabListView(self.render_class())
         self.view.allow_multiple_select(self.ALLOW_MULTIPLE)
         self.view.connect_weak('key-press', self.on_key_press)
         self.view.connect('row-expanded', self.on_row_expanded_change, True)
@@ -620,13 +650,17 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
         pass
 
 
-class DevicesList(TabList):
+class DevicesList(TabList, TabUpdaterMixin):
     type = 'device'
 
     ALLOW_MULTIPLE = False
 
+    render_class = style.DeviceTabRenderer
+
     def __init__(self):
         TabList.__init__(self)
+        TabUpdaterMixin.__init__(self)
+        self.view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
         self.view.set_drag_dest(DeviceDropHandler(self))
         self.devices = {}
 
@@ -635,6 +669,11 @@ class DevicesList(TabList):
         info.icon = imagepool.get_surface(thumb_path)
         info.unwatched = info.available = 0
         self.devices[info.id] = info
+
+    def on_hotspot_clicked(self, view, hotspot, iter):
+        if hotspot == 'eject-device':
+            info = view.model[iter][0]
+            messages.DeviceEject(info).send_to_backend()
 
     def on_delete_key_pressed(self):
         pass
@@ -690,13 +729,13 @@ class NestedTabList(TabList):
         else:
             return self.make_multiple_context_menu()
 
-class FeedList(NestedTabList):
+class FeedList(NestedTabList, TabUpdaterMixin):
     type = 'feed'
 
     def __init__(self):
         TabList.__init__(self)
+        TabUpdaterMixin.__init__(self)
         self.setup_dnd()
-        self.updating_animations = {}
 
     def setup_dnd(self):
         self.view.set_drag_source(FeedListDragHandler())
@@ -705,36 +744,12 @@ class FeedList(NestedTabList):
     def on_delete_key_pressed(self):
         app.widgetapp.remove_current_feed()
 
-    def feed_is_updating(self, info):
-        if info.id in self.updating_animations:
-            return
-        timer_id = timer.add(0, self.pulse_updating_animation, info.id)
-        self.updating_animations[info.id] = timer_id
-
-    def feed_not_updating(self, info):
-        if info.id not in self.updating_animations:
-            return
-        self.view.stop_updating_image(self.iter_map[info.id])
-        timer_id = self.updating_animations.pop(info.id)
-        timer.cancel(timer_id)
-
-    def pulse_updating_animation(self, id):
-        try:
-            iter = self.iter_map[id]
-        except KeyError:
-            # feed was removed
-            del self.updating_animations[id]
-            return
-        self.view.pulse_updating_image(iter)
-        timer_id = timer.add(0.1, self.pulse_updating_animation, id)
-        self.updating_animations[id] = timer_id
-
     def init_info(self, info):
         info.icon = imagepool.get_surface(info.tab_icon, size=(16, 16))
         if info.is_updating:
-            self.feed_is_updating(info)
+            self.start_updating(info.id)
         else:
-            self.feed_not_updating(info)
+            self.stop_updating(info.id)
 
     def get_feeds(self):
         infos = [self.view.model[i][0] for i in self.iter_map.values()]
