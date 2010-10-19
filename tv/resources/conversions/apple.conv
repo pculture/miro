@@ -14,7 +14,10 @@ mediatype: video
 
 [iPod Classic]
 
-[iPad / iPhone G4]
+[iPhone 4 / iPod Touch 4]
+ssize: 640x480
+
+[iPad]
 ssize: 640x480
 
 [Apple Universal]
