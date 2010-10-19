@@ -35,6 +35,7 @@ from urlparse import urlparse
 import _winreg
 
 import gtk
+import win32gui
 
 from miro.gtcache import gettext as _
 from miro import app
@@ -141,6 +142,7 @@ class WindowsApplication(Application):
         # check x, y to make sure the window is visible and fix it if
         # not
         self.window.check_position_and_fix()
+
 
     def on_close(self):
         if config.get(prefs.MINIMIZE_TO_TRAY_ASK_ON_CLOSE):

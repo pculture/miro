@@ -1,4 +1,6 @@
 [DEFAULT]
+vendor_id: 0bb4
+product_id: 0ff9
 name: HTC Android Phone
 audio_conversion: mp3
 audio_types: audio/mpeg audio/x-ms-wma audio/mp4a-latm audio/3gpp audio/mp4 audio/aac audio/vnd.rn-realaudio audio/x-midi audio/x-wav application/ogg
@@ -15,9 +17,13 @@ audio_path: Music
 video_conversion: g2
 
 [Nexus One]
+vendor_id: 18d1
+product_id: 4e11
 name: Google_ Inc.Nexus_One
 video_conversion: nexusone
 
 [Motorola Droid]
+vendor_id: 22b8
+product_id: 41db
 name: Motorola A855
 video_conversion: droid

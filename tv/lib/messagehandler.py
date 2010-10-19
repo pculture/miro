@@ -1438,7 +1438,7 @@ class BackendMessageHandler(messages.MessageHandler):
         audio_items = [info for info in item_infos
                        if info.file_type == 'audio']
         audio_target_folder = os.path.join(message.device.mount,
-                                           message.device.audio_path)
+                                           message.device.info.audio_path)
         try:
             os.makedirs(audio_target_folder)
         except OSError:
@@ -1461,11 +1461,11 @@ class BackendMessageHandler(messages.MessageHandler):
         video_items = [info for info in item_infos
                        if info.file_type == 'video']
         video_target_folder = os.path.join(message.device.mount,
-                                           message.device.video_path)
+                                           message.device.info.video_path)
         try:
             os.makedirs(video_target_folder)
         except OSError:
             pass
         for item_info in video_items:
-            start_conversion(message.device.video_conversion, item_info,
+            start_conversion(message.device.info.video_conversion, item_info,
                              video_target_folder)

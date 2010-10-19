@@ -118,6 +118,25 @@ class UnknownDeviceView(widgetset.VBox):
         select.connect('clicked', _clicked)
         self.device_choices.pack_start(widgetutil.pad(select, top=40))
 
+class DeviceUnmountedView(widgetset.VBox):
+    def __init__(self):
+        widgetset.VBox.__init__(self)
+        label = widgetset.Label()
+        label.set_text('This phone is not yet mounted.')
+        label.set_bold(True)
+        label.set_size(1.5)
+        self.pack_start(widgetutil.align_center(label, left_pad=20, top_pad=50,
+                                              bottom_pad=20))
+        self.device_text = widgetset.Label()
+        self.device_text.set_size(1.5)
+        self.device_text.set_wrap(True)
+        self.pack_start(widgetutil.align_center(self.device_text, left_pad=20))
+
+
+    def set_device(self, device):
+        self.device_text.set_text(device.info.mount_instructions.replace('\n',
+                                                                         '\n\n'))
+
 class DeviceWidget(widgetset.VBox):
     def __init__(self, device):
         widgetset.VBox.__init__(self)
@@ -126,13 +145,16 @@ class DeviceWidget(widgetset.VBox):
         self.device_view = widgetset.Background()
         self.pack_start(self.titlebar_vbox)
         self.pack_start(self.device_view, expand=True)
+        self.unmounted_view = DeviceUnmountedView()
         self.mounted_view = DeviceMountedView()
         self.unknown_view = UnknownDeviceView()
         self.set_device(device)
 
-
     def set_device(self, device):
-        if not device.info.has_multiple_devices:
+        if not device.mount:
+            self.unmounted_view.set_device(device)
+            self.device_view.set_child(self.unmounted_view)
+        elif not device.info.has_multiple_devices:
             self.mounted_view.set_device(device)
             self.device_view.set_child(self.mounted_view)
         else:
