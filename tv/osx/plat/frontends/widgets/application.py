@@ -127,6 +127,7 @@ class OSXApplication(Application):
         The callback happens on the backend thread, use call_on_ui_thread() to
         move the call to the frontend thread.
         """
+        self._on_pref_changed(key, value)
 
     def _on_pref_changed(self, key, value):
         if key == prefs.RUN_AT_STARTUP.key:
