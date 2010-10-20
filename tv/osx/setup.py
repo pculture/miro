@@ -452,7 +452,7 @@ class MiroBuild (py2app):
         if not os.path.exists(self.prsrcRoot):
             os.mkdir(self.prsrcRoot)
 
-        resources = ['searchengines', 'images', 'conversions']
+        resources = ['searchengines', 'images', 'conversions', 'devices']
         if self.keep_tests:
             resources.append('testdata')
 

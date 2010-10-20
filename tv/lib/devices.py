@@ -1,4 +1,6 @@
 from glob import glob
+import json
+import os
 from ConfigParser import SafeConfigParser
 
 from miro import messages
@@ -75,7 +77,6 @@ class DeviceManager(object):
             for section in parser.sections():
                 info = DeviceInfo(section, parser)
                 self._add_device(info)
-        print self.device_by_id
 
     @staticmethod
     def _get_device_from_info(info, device_type):
@@ -92,9 +93,18 @@ class DeviceManager(object):
     def get_device_by_id(self, vendor_id, product_id, device_type=None):
         info = self.device_by_id[(vendor_id, product_id)]
         return self._get_device_from_info(info, device_type)
-        
+
 
 device_manager = DeviceManager()
+
+def load_database(mount):
+    file_name = os.path.join(mount, '.mirodb')
+    if not os.path.exists(file_name):
+        return {}
+    return json.load(file(os.path.join(mount, '.mirodb')))
+
+def write_database(mount, database):
+    json.dump(database, file(os.path.join(mount, '.mirodb'), 'w'))
 
 def device_connected(info):
     message = messages.TabsChanged('devices',

@@ -151,6 +151,7 @@ class DeviceWidget(widgetset.VBox):
         self.set_device(device)
 
     def set_device(self, device):
+        self.device_view.remove()
         if not device.mount:
             self.unmounted_view.set_device(device)
             self.device_view.set_child(self.unmounted_view)

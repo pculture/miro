@@ -38,6 +38,7 @@ from miro import app
 from miro import autoupdate
 from miro import config
 from miro import database
+from miro import devices
 from miro import downloader
 from miro import eventloop
 from miro import feed
@@ -1423,7 +1424,15 @@ class BackendMessageHandler(messages.MessageHandler):
         m.send_to_frontend()
 
     def handle_set_device_type(self, message):
-        devicetracker.tracker.set_device_type(message.device, message.name)
+        message.device.database['device_name'] = message.name
+        devices.write_database(message.device.mount, message.device.database)
+        info = messages.DeviceInfo(message.device.id,
+                                   message.device.info.devices[message.name],
+                                   message.device.mount,
+                                   message.device.database,
+                                   message.device.size,
+                                   message.device.remaining)
+        devices.device_changed(info)
 
     def handle_device_sync_media(self, message):
         try:

@@ -13,6 +13,9 @@ video_conversion: hero
 video_path: Video
 audio_path: Music
 
+[T-Mobile G1]
+video_conversion: dreamg1
+
 [T-Mobile G2]
 video_conversion: g2
 
