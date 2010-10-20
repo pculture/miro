@@ -208,6 +208,29 @@ class StaticTabRenderer(TabRenderer):
             self.pack_bubble(hbox, layout, self.data.downloading,
                     DOWNLOADING_COLOR)
 
+class DeviceTabRenderer(TabRenderer):
+
+    def pack_bubbles(self, hbox, layout):
+        self.hbox = None
+        if self.updating_frame > -1:
+            return TabRenderer.pack_bubbles(self, hbox, layout)
+        if self.data.mount:
+            eject_image = widgetutil.make_surface('icon-eject')
+            hotspot = cellpack.Hotspot('eject-device', eject_image)
+            alignment = cellpack.Alignment(hotspot, yalign=0.5, yscale=0.0,
+                                           xalign=0.0, xscale=0.0, min_width=20)
+            hbox.pack(alignment)
+            self.hbox = hbox
+
+    def hotspot_test(self, style, layout, x, y, width, height):
+        if self.hbox is None:
+            return None
+        hotspot_info = self.hbox.find_hotspot(x, y, width, height)
+        if hotspot_info is None:
+            return None
+        else:
+            return hotspot_info[0]
+
 class FakeDownloadInfo(object):
     # Fake download info object used to size items
     def __init__(self):

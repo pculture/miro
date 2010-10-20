@@ -1434,6 +1434,9 @@ class BackendMessageHandler(messages.MessageHandler):
                                    message.device.remaining)
         devices.device_changed(info)
 
+    def handle_device_eject(self, message):
+        devicetracker.tracker.eject(message.device)
+
     def handle_device_sync_media(self, message):
         try:
             item_infos = [messages.ItemInfo(item.Item.get_by_id(id))
