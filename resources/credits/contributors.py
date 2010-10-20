@@ -37,7 +37,9 @@ import os
 
 import bugzillalib
 
-USAGE = "Usage: contributors.py <git-prev-rev> <git-rev> <bugzilla-milestone> [<output-file>]"
+BADNAMES = ("build", "miro")
+
+USAGE = "Usage: contributors.py <git-prev-rev> <git-rev> <bugzilla-milestone>"
 
 HELP = """
 arguments:
@@ -52,10 +54,6 @@ arguments:
 
    bugzilla-milestone
       The Bugzilla milestone for all bugs in this release.
-
-   output-file
-      If not specified, this defaults to stdout.  If it is specified, then
-      the list of contributors is saved to the file at this path.
 """
 
 def execute(line):
@@ -94,6 +92,9 @@ def get_git_authors(prevrev, rev):
     return git_authors
 
 def get_name(item):
+    """This pulls the name out and makes sure it returns a utf-8 encoded
+    str.
+    """
     name = ""
     if "name" in item.attrib:
         name = item.attrib["name"].strip()
@@ -101,6 +102,8 @@ def get_name(item):
         name = item.text.strip()
     if not name:
         name = "unknown"
+    if isinstance(name, unicode):
+        name = name.encode("utf-8")
     return name
 
 def get_bugzilla_reporters(milestone):
@@ -163,7 +166,11 @@ def get_additional_contributors(fn):
     addtl = {}
 
     for mem in lines:
-        mem = (clean_up_name(mem), "addtl")
+        work = "addtl"
+        if "(" in mem:
+            work = mem[mem.find("(")+1:mem.find(")")]
+            mem = mem[:mem.find("(")].strip()
+        mem = (clean_up_name(mem), work)
         addtl[mem] = 1
     return addtl
 
@@ -177,9 +184,12 @@ html_escape_table = {
 
 def html_escape(text):
     """Produce entities within text."""
-    return "".join(html_escape_table.get(c,c) for c in text)
+    return "".join(html_escape_table.get(c, c) for c in text)
 
 def name_to_key(name, kind):
+    if isinstance(name, unicode):
+        logging.warning("name_to_key: %s is unicode", name)
+        name = name.encode("utf-8")
     if kind == "funder":
         return name
     name = name.split(" ")
@@ -226,18 +236,21 @@ def main(argv):
     everyone = everyone.keys()
     everyone.sort(key=lambda k: name_to_key(*k).lower())
 
+    # remove bad names
+    everyone = [e for e in everyone if e[0] not in BADNAMES]
+
     # FIXME should do a pass of uniquifying the list here
 
     output_file = open("for_credits", "w")
     for mem in everyone:
-        output_file.write("* %s\n" % mem[0].encode("utf-8"))
+        output_file.write("* %s\n" % mem[0])
     output_file.close()
 
     output_file = open("for_osx_credits_html", "w")
     for mem in everyone[:-1]:
-        mem = html_escape(mem[0].encode("utf-8"))
+        mem = html_escape(mem[0])
         output_file.write("%s,\n" % mem)
-    output_file.write("and %s.\n" % html_escape(everyone[-1][0].encode("utf-8")))
+    output_file.write("and %s.\n" % html_escape(everyone[-1][0]))
     output_file.close()
 
     return 0

@@ -53,3 +53,6 @@ julalex (qa)
 valeryanka (qa)
 sveta.andriyenko (qa)
 ebaklan (qa)
+
+David Haberthür (translations, 3.5)
+Lukas Blakk (testing)
