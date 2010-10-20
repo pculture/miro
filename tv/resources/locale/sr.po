@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-10-02 23:51+0000\n"
+"PO-Revision-Date: 2010-10-18 19:56+0000\n"
 "Last-Translator: Rancher <Unknown>\n"
 "Language-Team: Serbian <sr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-10-17 13:57+0000\n"
+"X-Launchpad-Export-Date: 2010-10-20 16:53+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "Language: sr\n"
 
@@ -1432,7 +1432,7 @@ msgstr "Грешка"
 
 #: ../../lib/frontends/widgets/style.py:257
 msgid "Queued for Auto-download"
-msgstr "На чекању за аутоматско преузимање"
+msgstr "На чекању за самостално преузимање"
 
 #: ../../lib/frontends/widgets/style.py:258
 #: ../../lib/frontends/widgets/style.py:1203
@@ -2277,7 +2277,7 @@ msgstr "%(name)s прво подешавање"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:136
 msgid "Choose Language"
-msgstr "Изабери језик"
+msgstr "Избор језика"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:139
 #, python-format
@@ -2303,7 +2303,7 @@ msgstr "Подразумевано"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:174
 msgid "Update"
-msgstr "Ажурирање"
+msgstr "Ажурирај"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:178
 #: ../../lib/frontends/widgets/prefpanel.py:312
@@ -2360,7 +2360,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:262
 msgid "Restrict to all my personal files."
-msgstr "Ограничи на моје личне датотеке."
+msgstr "Ограничи на моје личне датотеке"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:263
 msgid "Search custom folders:"
@@ -2373,7 +2373,7 @@ msgstr "Промени"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:275
 msgid "Choose directory to search for media files"
-msgstr "Изабери фасцикле за претрагу"
+msgstr "Избор фасцикле за претрагу мултимедије"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:305
 #: ../../lib/frontends/widgets/firsttimedialog.py:373
@@ -2498,7 +2498,7 @@ msgstr "Старе ставке су уклоњене."
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause auto-downloading when this many items are unplayed:"
-msgstr "Паузирај аутоматско преузимање када постоји:"
+msgstr "Паузирај самостално преузимање када постоји:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
@@ -3207,7 +3207,7 @@ msgstr "Миро водич"
 #: ../../lib/frontends/widgets/prefpanel.py:291
 #, python-format
 msgid "Automatically run %(appname)s when I log in."
-msgstr "Аутоматски покрени %(appname)s када се пријавим"
+msgstr "Самостално покрени %(appname)s када се пријавим"
 
 #: ../../lib/frontends/widgets/prefpanel.py:295
 msgid "Warn me if I attempt to quit with downloads in progress."
@@ -3271,7 +3271,7 @@ msgstr "Провери нове садржаје:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:362
 msgid "Auto-download setting:"
-msgstr "Поставке аутоматског преузимања:"
+msgstr "Поставке самосталног преузимања:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:368
 msgid "Remember this many old items:"
@@ -3287,7 +3287,7 @@ msgstr "Највећа вредност ручних преузимања одј
 
 #: ../../lib/frontends/widgets/prefpanel.py:389
 msgid "Maximum number of auto-downloads at a time:"
-msgstr "Највећа вредност аутоматских преузимања одједном:"
+msgstr "Највећа вредност самосталних преузимања одједном:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:399
 msgid "Bittorrent:"
@@ -3320,7 +3320,7 @@ msgstr "Завршни улаз:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:454
 msgid "Automatically forward ports.  (UPNP)"
-msgstr "Аутоматски проследи улазе (UPNP)"
+msgstr "Самостално проследи улазе (UPNP)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:458
 msgid "Ignore unencrypted connections."
@@ -3430,7 +3430,7 @@ msgstr "Настави видео или аудио запис на положа
 
 #: ../../lib/frontends/widgets/prefpanel.py:665
 msgid "Automatically enable movie subtitles when available."
-msgstr "Аутоматски омогући титл када је доступан"
+msgstr "Самостално учитај титл када је доступан"
 
 #: ../../lib/frontends/widgets/prefpanel.py:668
 msgid "Play video and audio items one after another"

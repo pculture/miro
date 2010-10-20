@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-10-14 15:11+0000\n"
+"PO-Revision-Date: 2010-10-18 18:18+0000\n"
 "Last-Translator: Ivan Y <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-10-17 13:57+0000\n"
+"X-Launchpad-Export-Date: 2010-10-20 16:53+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
@@ -3580,11 +3580,11 @@ msgstr "Неудачная попытка авторизации"
 
 #: ../../lib/httpclient.py:148
 msgid "Authorization canceled"
-msgstr ""
+msgstr "Авторизация отменена"
 
 #: ../../lib/httpclient.py:149
 msgid "Authorization canceled by user"
-msgstr ""
+msgstr "Авторизация отменена пользователем"
 
 #: ../../lib/httpclient.py:153
 msgid "Invalid URL"
