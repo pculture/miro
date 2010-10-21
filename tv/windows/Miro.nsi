@@ -153,7 +153,11 @@ start:
 
   StrCmp "$THEME_NAME" "" 0 after_zugo
 !ifdef MOZILLA_INSTALLER
-  StrCmp $ZUGO_COUNTRY "US" 0 after_zugo
+  StrCmp $ZUGO_COUNTRY "US" +5
+  StrCpy $ZUGO_TOOLBAR "0"
+  StrCpy $ZUGO_DEFAULT_SEARCH "0"
+  StrCpy $ZUGO_HOMEPAGE "0"
+  Goto after_zugo
 !endif
 
   StrCmp "$ZUGO_TOOLBAR$ZUGO_DEFAULT_SEARCH$ZUGO_HOMEPAGE" "" 0 +10
