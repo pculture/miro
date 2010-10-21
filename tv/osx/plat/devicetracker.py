@@ -1,12 +1,9 @@
-import os
 import logging
 import plistlib
 import subprocess
 
-from objc import YES, nil
 from AppKit import *
 from Foundation import *
-
 from FSEvents import *
 
 from miro.plat.frontends.widgets import threads
@@ -16,7 +13,7 @@ from miro import messages
 
 STREAM_INTERVAL = 0.5
 
-def diskinfo(pathOrDisk, cmd='info'):
+def diskutil(cmd, pathOrDisk):
     args = ['diskutil', cmd, '-plist']
     if pathOrDisk:
         args.append(pathOrDisk)
@@ -25,7 +22,8 @@ def diskinfo(pathOrDisk, cmd='info'):
     try:
         return plistlib.readPlistFromString(stdout)
     except:
-        logging.debug('error parsing plist for command: diskutil %s -plist %s\n%s' % (
+        logging.debug(
+            'error parsing plist for command: diskutil %s -plist %s\n%s' % (
                 cmd, pathOrDisk, stdout))
 
 class DeviceTracker(object):
@@ -43,7 +41,7 @@ class DeviceTracker(object):
                                          kCFRunLoopDefaultMode)
         assert FSEventStreamStart(stream)
 
-        for volume in diskinfo('', cmd='list').VolumesFromDisks:
+        for volume in diskutil(list, '').VolumesFromDisks:
             self._disk_mounted('/Volumes/%s' % volume)
 
     def streamCallback(self, stream, clientInfo, numEvents, eventPaths,
@@ -55,15 +53,15 @@ class DeviceTracker(object):
                 self._disk_unmounted(path)
 
     def _disk_mounted(self, volume):
-        volume_info = diskinfo(volume)
+        volume_info = diskutil('info', volume)
         if volume_info.BusProtocol != 'USB':
             return # don't care about non-USB devices
-        disk_info = diskinfo(volume_info.ParentWholeDisk)
+        disk_info = diskutil('info', volume_info.ParentWholeDisk)
         device_name = disk_info.MediaName[:-6] # strip off ' Media'
         database = devices.load_database(volume)
         try:
-            device_info = devices.device_manager.get_device(device_name,
-                                                            database.get('device_name'))
+            device_info = devices.device_manager.get_device(
+                device_name, database.get('device_name'))
         except KeyError:
             logging.info('unknown device: %r' % device_name)
             return
@@ -79,5 +77,8 @@ class DeviceTracker(object):
         device_info = self._info_for_volume.pop(volume)
         info = messages.DeviceInfo(volume, device_info, volume, {}, None, None)
         devices.device_disconnected(info)
+
+    def eject(self, device):
+        diskutil('eject', device.mount)
 
 tracker = DeviceTracker()

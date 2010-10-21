@@ -1,4 +1,3 @@
-import json
 import logging
 import os
 
@@ -23,17 +22,6 @@ class DeviceTracker(object):
         for drive in volume_monitor.get_connected_drives():
             self._drive_connected(volume_monitor, drive)
 
-    @staticmethod
-    def _load_database(mount):
-        file_name = os.path.join(mount, '.mirodb')
-        if not os.path.exists(file_name):
-            return {}
-        return json.load(file(os.path.join(mount, '.mirodb')))
-
-    @staticmethod
-    def _write_database(mount, database):
-        json.dump(database, file(os.path.join(mount, '.mirodb'), 'w'))
-
     def _get_device_info(self, drive):
         id_ = drive.get_identifier('unix-device')
         mount_path = size = remaining = None
@@ -47,7 +35,7 @@ class DeviceTracker(object):
                 statinfo = os.statvfs(mount_path)
                 size = statinfo.f_frsize * statinfo.f_blocks
                 remaining = statinfo.f_frsize * statinfo.f_bavail
-                database = self._load_database(mount_path)
+                database = devices.load_database(mount_path)
 
         device_info = devices.device_manager.get_device(
             drive.get_name(),
@@ -97,14 +85,6 @@ class DeviceTracker(object):
         except KeyError:
             pass
         devices.device_disconnected(info)
-
-    def set_device_type(self, device, name):
-        device.database['device_name'] = name
-        self._write_database(device.mount, device.database)
-        info = messages.DeviceInfo(
-            device.id, device.info.devices[name], device.mount,
-            device.database, device.size, device.remaining)
-        devices.device_changed(info)
 
     def eject(self, device):
         if device.id not in self._unix_device_to_drive:

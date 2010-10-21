@@ -1,7 +1,5 @@
-import json
 import logging
 import os
-import time
 
 import ctypes
 
@@ -12,14 +10,16 @@ from miro import devices
 from miro import messages
 
 GWL_WNDPROC = -4
-WndProcType = ctypes.WINFUNCTYPE(ctypes.c_long, ctypes.c_int, ctypes.c_uint, ctypes.c_int, ctypes.c_int)
+WndProcType = ctypes.WINFUNCTYPE(ctypes.c_long, ctypes.c_int, ctypes.c_uint,
+                                 ctypes.c_int, ctypes.c_int)
 
 class DeviceTracker(object):
     def __init__(self):
         self._connected = {}
 
     def start_tracking(self):
-	self._wndprocWrapped = WndProcType(self._wndproc) # keep it around to avoid GC
+	self._wndprocWrapped = WndProcType(self._wndproc) # keep it around to
+                                                          # avoid GC
         self._oldwndproc = ctypes.windll.user32.SetWindowLongW(
 		app.widgetapp.window._window.window.handle,
 		GWL_WNDPROC, self._wndprocWrapped)
@@ -31,7 +31,8 @@ class DeviceTracker(object):
             #previousChange, self._lastChange = self._lastChange, time.time()
             #if self._lastChange - previousChange > 0.25:
             self._devicesChanged()
-        return ctypes.windll.user32.CallWindowProcW(self._oldwndproc, hwnd, msg, wparam, lparam)
+        return ctypes.windll.user32.CallWindowProcW(self._oldwndproc, hwnd,
+                                                    msg, wparam, lparam)
 
     def _devicesChanged(self):
         # re-poll the devices, and figure out what, if anything, is different
@@ -48,22 +49,12 @@ class DeviceTracker(object):
                 device = self._connected.pop(vol)
 		self._device_disconnected(device)
 
-    @staticmethod
-    def _load_database(mount):
-        file_name = os.path.join(mount, '.mirodb')
-        if not os.path.exists(file_name):
-            return {}
-        return json.load(file(os.path.join(mount, '.mirodb')))
-
-    @staticmethod
-    def _write_database(mount, database):
-        json.dump(database, file(os.path.join(mount, '.mirodb'), 'w'))
-
     def _get_device_info(self, device):
         mount = device['mount']
-	database = self._load_database(mount)
+	database = devices.load_database(mount)
         device_info = devices.device_manager.get_device_by_id(
-	    device['vendor_id'], device['product_id'], database.get('device_name'))
+	    device['vendor_id'], device['product_id'],
+            database.get('device_name'))
         if not os.path.exists(mount):
             mount = size = remaining = None
 	else:
@@ -71,12 +62,13 @@ class DeviceTracker(object):
             total = ctypes.wintypes.LARGE_INTEGER()
             ctypes.windll.kernel32.GetDiskFreeSpaceExW(unicode(mount),
                                                        ctypes.byref(available),
-						       ctypes.byref(total), None)
+						       ctypes.byref(total),
+                                                       None)
 	    remaining = available.value
 	    size = total.value
         return messages.DeviceInfo(device['volume'], device_info, mount,
 				   database, size, remaining)
-        
+
     def _check_device_mount(self, device):
         if device['volume'] not in self._connected:
             # device was removed
@@ -89,8 +81,8 @@ class DeviceTracker(object):
     def _device_connected(self, device):
         try:
            info = self._get_device_info(device)
-	except KeyError:        
-            print 'unknown device connected: %r' % (device,)
+	except KeyError:
+            logging.debug('unknown device connected: %r' % (device,))
             return
         if not info.mount:
             # we don't get notified :( so poll instead
@@ -110,13 +102,5 @@ class DeviceTracker(object):
         except KeyError:
             return
         devices.device_disconnected(info)
-
-    def set_device_type(self, device, name):
-        device.database['device_name'] = name
-        self._write_database(device.mount, device.database)
-        info = messages.DeviceInfo(
-            device.id, device.info.devices[name], device.mount,
-            device.database, device.size, device.remaining)
-        devices.device_changed(info)
 
 tracker = DeviceTracker()

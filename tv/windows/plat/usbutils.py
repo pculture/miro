@@ -76,7 +76,6 @@ def getDeviceInterface(i, device=None):
         return
     else:
         print ctypes.GetLastError(), ctypes.windll.FormatError()
-        
 
 def getDeviceInterfaceDetail(interface):
     detail = None
@@ -112,13 +111,15 @@ def getDeviceID(devInst):
 
 def getVolumeName(mount_point):
     buffer = ctypes.create_unicode_buffer(50)
-    kernel32.GetVolumeNameForVolumeMountPointW(mount_point, ctypes.byref(buffer), 50)
+    kernel32.GetVolumeNameForVolumeMountPointW(mount_point,
+                                               ctypes.byref(buffer), 50)
     return buffer.value
 
 def getPathName(volume):
     buffer = ctypes.create_unicode_buffer(255)
     length = ctypes.wintypes.DWORD(0)
-    kernel32.GetVolumePathNamesForVolumeNameW(volume, ctypes.byref(buffer), 255, ctypes.byref(length))
+    kernel32.GetVolumePathNamesForVolumeNameW(volume, ctypes.byref(buffer),
+                                              255, ctypes.byref(length))
     return buffer.value
 
 def connectedDevices():
@@ -135,7 +136,8 @@ def connectedDevices():
             continue
         volumeName = getVolumeName(path + '\\')
         driveName = getPathName(volumeName)
-        # parent's parent device ID looks like USB\VID_0BB4&PID_0FF9\HT09NR210732
+        # parent's parent device ID looks like
+        # USB\VID_0BB4&PID_0FF9\HT09NR210732
         _, ids, serial = getDeviceID(getParent(deviceParent)).split('\\', 2)
         vendor_id, product_id = [int(id[-4:], 16) for id in ids.split('&')]
         yield {
