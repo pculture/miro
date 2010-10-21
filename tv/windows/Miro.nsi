@@ -272,6 +272,9 @@ FunctionEnd
 
 Function check_radio_buttons
   ReadINIStr $SIMPLE_INSTALL "$PLUGINSDIR\ioSpecial.ini" "Field 4" "State"
+!ifdef MOZILLA_INSTALLER
+  StrCmp $ZUGO_COUNTRY "US" 0 end
+!endif
   ReadINIStr $ZUGO_HOMEPAGE "$PLUGINSDIR\ioSpecial.ini" "Field 8" "State"
   StrCmp $ZUGO_COUNTRY "US" 0 +2 ; skip toolbar options if we're international
   ReadINIStr $ZUGO_TOOLBAR "$PLUGINSDIR\ioSpecial.ini" "Field 9" "State"
