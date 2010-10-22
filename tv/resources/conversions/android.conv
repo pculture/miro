@@ -1,8 +1,8 @@
 [DEFAULT]
 name: Android Devices
 executable: ffmpeg
-extension: mp4
-parameters: -i {input} -f mp4 -vcodec mpeg4 -sameq -s {ssize} -acodec aac -ab 160000 -r 18 {output}
+extension: m4v
+parameters: -i {input} -vcodec libx264 -vpre slow -vpre ipod640 -sameq -s {ssize} -acodec aac -ab 160000 -r 18 {output}
 mediatype: video
 
 [G2]
