@@ -191,11 +191,12 @@
 			<array>
 				<string>ogg</string>
 				<string>ogm</string>
+				<string>ogv</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string></string>
 			<key>CFBundleTypeName</key>
-			<string>OGG Vorbis File</string>
+			<string>OGG Media File</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 		</dict>
