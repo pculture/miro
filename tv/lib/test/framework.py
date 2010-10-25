@@ -167,6 +167,7 @@ class MiroTestCase(unittest.TestCase):
 
     def make_temp_path(self, extension=".xml"):
         handle, filename = tempfile.mkstemp(extension, dir=self.tempdir)
+        os.close(handle)
         return filename
 
     def start_http_server(self):

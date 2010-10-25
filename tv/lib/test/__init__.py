@@ -74,6 +74,27 @@ if app.config.get(prefs.APP_PLATFORM) == "linux":
 elif app.config.get(prefs.APP_PLATFORM) == "osx":
     from miro.test.sparkletest import *
 
+class MiroTestLoader(unittest.TestLoader):
+    def loadTestsFromNames(self, names, module):
+        self._check_for_performance_tests(names, module)
+        return unittest.TestLoader.loadTestsFromNames(self, names, module)
+
+    def _check_for_performance_tests(self, names, module):
+        # Only run the performance tests if they are specifically listed in
+        # arguments.
+        from miro import test as my_module
+        if module is my_module:
+            for name in names:
+                if 'performancetest' in name:
+                    self._add_performance_tests()
+                    break
+
+    def _add_performance_tests(self):
+        from miro.test import performancetest
+        for name in dir(performancetest):
+            obj = getattr(performancetest, name)
+            globals()[name] = obj
+
 def run_tests():
     import sys
     from miro import httpclient
@@ -81,7 +102,7 @@ def run_tests():
     # libcurl can only be initialized/cleaned up once per run, so this code
     # can't go in the setUp/tearDown methosd.
     httpclient.init_libcurl()
-    unittest.main(module=test)
+    unittest.main(module=test, testLoader=MiroTestLoader())
     httpclient.cleanup_libcurl()
     from miro.test import framework
     framework.clean_up_temp_files()
