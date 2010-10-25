@@ -264,6 +264,8 @@ def gather_media_files(path):
     """
     from miro import prefs
     from miro import app
+    from miro.plat.utils import dirfilt
+
     parsed = 0
     found = []
     short_app_name = app.config.get(prefs.SHORT_APP_NAME)
@@ -275,6 +277,14 @@ def gather_media_files(path):
 
         if short_app_name in dirs:
             dirs.remove(short_app_name)
+
+        # Filter out naughty directories on a platform-specific basis
+        # that we never want to be parsing.  This is mainly useful on 
+        # Mac OS X where we do not want to descend into file packages.  A bit
+        # of a wart, long term solution is to write our own os.walk() shim 
+        # that is platform aware cleanly but right now it's not worth the 
+        # effort.
+        dirfilt(root, dirs)
 
         if parsed > 1000:
             adjusted_parsed = int(parsed / 100.0) * 100

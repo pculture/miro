@@ -51,6 +51,11 @@ from miro import fileutil
 _locale_initialized = False
 FilenameType = unicode
 
+# dirfilt: platform hook to filter out any directories that should not be
+# descended into, root and dirs corresponds as per os.walk().
+def dirfilt(root, dirs):
+    pass
+
 def samefile(path1, path2):
     return getLongPathName(path1) == getLongPathName(path2)
 
