@@ -58,19 +58,20 @@ _locale_initialized = False
 
 dlTask = None
 
-# dirfilt: platform hook to filter out any directories that should not
-# be descended into, root and dirs corresponds as per os.walk().
-#
-# Really this is only used on Mac OS X.
-#
-# Platform hook for determining whether we have hit a file package.
 def dirfilt(root, dirs):
-    # Make a copy, can't iterate the list and delete at the same time.
-    dirp = [d for d in dirs]
-    workspace = NSWorkspace.sharedWorkspace()
+    """
+    Platform hook to filter out any directories that should not be
+    descended into, root and dirs corresponds as per os.dirwalk() and
+    same semantics for these objects apply.
+    """
+    removelist = []
+    ws = NSWorkspace.sharedWorkspace()
     for d in dirp:
-        if workspace.isFilePackageAtPath_(os.path.join(root, d)):
-            dirs.remove(d)
+        if ws.isFilePackageAtPath_(os.path.join(root, d)):
+            removelist.append(d)
+    for x in removelist:
+        dirs.remove(x)
+    return dirs
 
 ###############################################################################
 #### Helper method used to get the free space on the disk where downloaded ####

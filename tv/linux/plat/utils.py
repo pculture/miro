@@ -52,10 +52,12 @@ from os.path import samefile
 # this is used in lib/gtcache.py
 _locale_initialized = False
 
-# dirfilt: platform hook to filter out any directories that should not be
-# descended into, root and dirs corresponds as per os.walk().
 def dirfilt(root, dirs):
-    pass
+    """
+    Platform hook to filter out any directories that should not be
+    descended into, root and dirs corresponds as per os.walk().
+    """
+    return dirs
 
 def get_available_bytes_for_movies():
     """Helper method used to get the free space on the disk where downloaded
