@@ -664,11 +664,33 @@ class DevicesList(TabList, TabUpdaterMixin):
         self.view.set_drag_dest(DeviceDropHandler(self))
         self.devices = {}
 
+    def _fake_info(self, info, name):
+        new_data = {
+            'fake': True,
+            'tab_type': name.lower(),
+            'id': '%s-%s' % (info.id, name),
+            'name': name,
+            'icon': imagepool.get_surface(
+                resources.path('images/icon-%s.png' % name.lower())),
+            'padding': 10
+            }
+        di = messages.DeviceInfo.__new__(messages.DeviceInfo)
+        di.__dict__ = info.__dict__.copy()
+        di.__dict__.update(new_data)
+        return di
+
+    def add(self, info):
+        TabList.add(self, info)
+        if info.mount:
+            TabList.add(self, self._fake_info(info, 'Video'))
+            TabList.add(self, self._fake_info(info, 'Audio'))
+
     def init_info(self, info):
-        thumb_path = resources.path('images/phone.png')
-        info.icon = imagepool.get_surface(thumb_path)
         info.unwatched = info.available = 0
-        self.devices[info.id] = info
+        if not getattr(info, 'fake', False):
+            thumb_path = resources.path('images/phone.png')
+            info.icon = imagepool.get_surface(thumb_path)
+            self.devices[info.id] = info
 
     def on_hotspot_clicked(self, view, hotspot, iter):
         if hotspot == 'eject-device':

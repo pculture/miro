@@ -33,8 +33,11 @@ from miro import displaytext
 from miro import messages
 
 from miro.frontends.widgets import imagepool
+from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistwidgets
+from miro.frontends.widgets import segmented
 from miro.frontends.widgets import widgetutil
+from miro.gtcache import gettext as _
 
 from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
@@ -42,6 +45,12 @@ from miro.plat.frontends.widgets import widgetset
 class DeviceTitlebar(itemlistwidgets.ItemListTitlebar):
     def _build_titlebar_extra(self):
         pass
+
+class DeviceTabButtonSegment(segmented.TextButtonSegment):
+
+    MARGIN = 20
+    COLOR = (1, 1, 1)
+    TEXT_COLOR = {True: COLOR, False: COLOR}
 
 class SizeWidget(widgetset.HBox):
     def __init__(self, size=None, remaining=None):
@@ -67,18 +76,93 @@ class SizeWidget(widgetset.HBox):
 class DeviceMountedView(widgetset.VBox):
     def __init__(self):
         widgetset.VBox.__init__(self)
+
+        self.button_row = segmented.SegmentedButtonsRow()
+        for name in ('Main', 'Video', 'Audio', 'Playlists'):
+            button = DeviceTabButtonSegment(name.lower(), name,
+                                            self._tab_clicked)
+            self.button_row.add_button(name.lower(), button)
+
+        self.button_row.set_active('main')
+        self.pack_start(widgetutil.align_center(self.button_row.make_widget()))
+
+        self.tabs = {}
+        self.tab_container = widgetset.SolidBackground((1, 1, 1))
+        self.pack_start(self.tab_container, expand=True)
+
+        vbox = widgetset.VBox()
         label = widgetset.Label("To copy media onto the device, drag it onto \
 the sidebar.")
         label.set_size(1.5)
-        self.pack_start(widgetutil.align_center(label, top_pad=50))
+        vbox.pack_start(widgetutil.align_center(label, top_pad=50))
         self.device_size = SizeWidget()
         alignment = widgetset.Alignment(0.5, 1, 0, 0, bottom_pad=15,
                                         right_pad=20)
         alignment.add(self.device_size)
-        self.pack_end(alignment)
+        vbox.pack_end(alignment)
+
+        self.add_tab('main', vbox)
+
+    def add_tab(self, key, widget):
+        if not self.tabs:
+            self.tab_container.set_child(widget)
+        self.tabs[key] = widget
 
     def set_device(self, device):
         self.device_size.set_size(device.size, device.remaining)
+
+    def _tab_clicked(self, button):
+        print 'device tab clicked', button.title
+        self.button_row.set_active(button.key)
+
+class DeviceItemList(itemlist.ItemList):
+
+    def filter(self, item_info):
+        return True
+
+class DeviceMediaView(itemlistwidgets.ItemContainerWidget):
+    def __init__(self, type):
+        itemlistwidgets.ItemContainerWidget.__init__(
+            self,
+            itemlistwidgets.HeaderToolbar())
+        self.type = type
+        self.item_list = DeviceItemList()
+        self.list_item_view = itemlistwidgets.ListItemView(self.item_list)
+        scroller = widgetset.Scroller(True, True)
+        scroller.add(self.list_item_view)
+        self.list_view_vbox.pack_start(scroller, expand=True)
+        self.toolbar.connect_weak('sort-changed', self.on_sort_changed)
+        self.list_item_view.connect_weak('sort-changed', self.on_sort_changed)
+
+    def set_device(self, device):
+        self.device = device
+        if self.type == 'videos':
+            self.title = _("Video on %s") % device.name
+        else:
+            self.title = _("Audio on %s") % device.name
+        sort = device.database.get('%s_sort_state' % self.type)
+        if sort:
+            self.on_sort_changed(self, *sort)
+        else:
+            self.item_list.set_sort(itemlist.DateSort(False))
+        #items = device.database.get(self.type, [])
+        #if items:
+        #    self.item_list.add_items([
+        #            self._build_info(m) for m in items])
+
+    def _build_info(self, media):
+        i = messages.ItemInfo.__new__(messages.ItemInfo)
+        i.__dict__ = media.copy()
+        return i
+
+    def on_sort_changed(self, obj, sort_key, ascending):
+        sorter = itemlist.SORT_KEY_MAP[sort_key](ascending)
+        self.item_list.set_sort(sorter)
+        self.list_item_view.model_changed()
+        self.toolbar.change_sort_indicator(sort_key, ascending)
+        self.list_item_view.change_sort_indicator(sort_key, ascending)
+        self.device.database['%s_sort_state' % self.type] = (sort_key,
+                                                             ascending)
 
 class UnknownDeviceView(widgetset.VBox):
     def __init__(self):
@@ -134,8 +218,8 @@ class DeviceUnmountedView(widgetset.VBox):
 
 
     def set_device(self, device):
-        self.device_text.set_text(device.info.mount_instructions.replace('\n',
-                                                                         '\n\n'))
+        self.device_text.set_text(
+            device.info.mount_instructions.replace('\n', '\n\n'))
 
 class DeviceWidget(widgetset.VBox):
     def __init__(self, device):
@@ -145,28 +229,33 @@ class DeviceWidget(widgetset.VBox):
         self.device_view = widgetset.Background()
         self.pack_start(self.titlebar_vbox)
         self.pack_start(self.device_view, expand=True)
-        self.unmounted_view = DeviceUnmountedView()
-        self.mounted_view = DeviceMountedView()
-        self.unknown_view = UnknownDeviceView()
         self.set_device(device)
 
     def set_device(self, device):
         self.device_view.remove()
         if not device.mount:
-            self.unmounted_view.set_device(device)
-            self.device_view.set_child(self.unmounted_view)
+            view = DeviceUnmountedView()
         elif not device.info.has_multiple_devices:
-            self.mounted_view.set_device(device)
-            self.device_view.set_child(self.mounted_view)
+            if hasattr(device, 'tab_type'):
+                view = DeviceMediaView(device.tab_type)
+            else:
+                view = DeviceMountedView()
         else:
-            self.unknown_view.set_device(device)
-            self.device_view.set_child(self.unknown_view)
+            view = UnknownDeviceView()
+        view.set_device(device)
+        self.device_view.set_child(view)
 
     @staticmethod
     def make_titlebar(device):
-        image_path = resources.path("images/phone-large.png")
+        if hasattr(device, 'tab_type'):
+            image_path = resources.path(
+                'images/icon-%s_large.png' % device.tab_type)
+            name = '%s on %s' % (device.name, device.info.name)
+        else:
+            image_path = resources.path("images/phone-large.png")
+            name = device.name
         icon = imagepool.get(image_path)
-        return DeviceTitlebar(device.name, icon)
+        return DeviceTitlebar(name, icon)
 
 
 class DeviceController(object):
