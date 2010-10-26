@@ -125,6 +125,10 @@ class View(object):
         return app.db.query(self.klass, self.where, self.values,
                             self.order_by, self.joins, self.limit)
 
+    def id_iter(self):
+        return app.db.query_ids(self.klass, self.where, self.values,
+                self.order_by, self.joins, self.limit)
+
     def count(self):
         return app.db.query_count(self.klass, self.where, self.values,
                                   self.joins, self.limit)
@@ -138,10 +142,11 @@ class View(object):
         else:
             raise TooManyObjects("Too many results returned")
 
-    def make_tracker(self):
+    def make_tracker(self, current_ids=None):
         if self.limit is not None:
             raise ValueError("tracking views with limits not supported")
-        return ViewTracker(self.klass, self.where, self.values, self.joins)
+        return ViewTracker(self.klass, self.where, self.values, self.joins,
+                current_ids)
 
 class ViewTrackerManager(object):
     def __init__(self):
@@ -181,7 +186,7 @@ class ViewTrackerManager(object):
             tracker.remove_object(obj)
 
 class ViewTracker(signals.SignalEmitter):
-    def __init__(self, klass, where, values, joins):
+    def __init__(self, klass, where, values, joins, current_ids):
         signals.SignalEmitter.__init__(self, 'added', 'removed', 'changed')
         self.klass = klass
         self.where = where
@@ -189,8 +194,11 @@ class ViewTracker(signals.SignalEmitter):
             raise TypeError("values must be a tuple")
         self.values = values
         self.joins = joins
-        self.current_ids = set(app.db.query_ids(klass, where, values,
-            joins=joins))
+        if current_ids is None:
+            self.current_ids = set(app.db.query_ids(klass, where, values,
+                joins=joins))
+        else:
+            self.current_ids = current_ids
         self.table_name = app.db.table_name(klass)
         vt_manager = app.view_tracker_manager
         vt_manager.trackers_for_table(self.table_name).add(self)
@@ -441,7 +449,7 @@ class DDBObject(signals.SignalEmitter):
 
     @classmethod
     def select(cls, columns, where=None, values=None, convert=True):
-        return app.db.select(cls, columns, where, values, convert)
+        return app.db.select(cls, columns, where, values, convert=convert)
 
     def setup_new(self):
         """Initialize a newly created object."""

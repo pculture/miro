@@ -1,3 +1,5 @@
+import cPickle
+
 from miro import app
 from miro import prefs
 
@@ -8,6 +10,7 @@ from miro.playlist import SavedPlaylist
 from miro.folder import PlaylistFolder, ChannelFolder
 from miro.singleclick import _build_entry
 from miro.tabs import TabOrder
+from miro import iteminfocache
 from miro import messages
 from miro import messagehandler
 
@@ -528,3 +531,54 @@ class PlaylistItemTrackTest(TrackerTest):
         self.make_item(u'http://example.com/4')
         self.runUrgentCalls()
         self.assertEquals(len(self.test_handler.messages), 1)
+
+
+class ItemInfoCacheTest(FeedItemTrackTest):
+    # this class runs the exact same tests as FeedItemTrackTest, but using
+    # values read from the item_info_cache file
+    def setUp(self):
+        FeedItemTrackTest.setUp(self)
+        app.db.finish_transaction()
+        app.item_info_cache.save()
+        app.item_info_cache = iteminfocache.ItemInfoCache()
+
+class ItemInfoCacheErrorTest(MiroTestCase):
+    # Test errors when loading the Item info cache
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.items = []
+        self.feed = Feed(u'dtv:manualFeed')
+        self.make_item(u'http://example.com/')
+        self.make_item(u'http://example.com/2')
+
+    def make_item(self, url):
+        entry = _build_entry(url, 'video/x-unknown')
+        item_ = Item(FeedParserValues(entry), feed_id=self.feed.id)
+        self.items.append(item_)
+
+    def test_failsafe_load(self):
+        # Make sure current data is saved
+        app.db.finish_transaction()
+        app.item_info_cache.save()
+        # insert bogus values into the db
+        app.db.cursor.execute("UPDATE item_info_cache SET pickle='BOGUS'")
+        # this should fallback to the failsafe values
+        app.item_info_cache = iteminfocache.ItemInfoCache()
+        for item in self.items:
+            cache_info = app.item_info_cache.id_to_info[item.id]
+            real_info = messages.ItemInfo(item)
+            self.assertEquals(cache_info.__dict__, real_info.__dict__)
+        # it should also delete all data from the item cache table
+        app.db.cursor.execute("SELECT COUNT(*) FROM item_info_cache")
+        self.assertEquals(app.db.cursor.fetchone()[0], 0)
+        # Next call to save() should fix the data
+        app.db.finish_transaction()
+        app.item_info_cache.save()
+        app.db.cursor.execute("SELECT COUNT(*) FROM item_info_cache")
+        self.assertEquals(app.db.cursor.fetchone()[0], len(self.items))
+        for item in self.items:
+            app.db.cursor.execute("SELECT pickle FROM item_info_cache "
+                    "WHERE id=%s" % item.id)
+            db_info = cPickle.loads(str(app.db.cursor.fetchone()[0]))
+            real_info = messages.ItemInfo(item)
+            self.assertEquals(db_info.__dict__, real_info.__dict__)

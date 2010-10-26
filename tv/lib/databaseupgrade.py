@@ -2810,3 +2810,8 @@ def upgrade119(cursor):
     """Drop the http_auth_password table from the database
     """
     cursor.execute("DROP TABLE http_auth_password")
+
+def upgrade120(cursor):
+    """Create the item_info_cache table"""
+    cursor.execute("CREATE TABLE item_info_cache"
+            "(id INTEGER PRIMARY KEY, pickle BLOB)")

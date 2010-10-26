@@ -63,6 +63,7 @@ from miro import httpauth
 from miro import httpclient
 from miro import iconcache
 from miro import item
+from miro import iteminfocache
 from miro import feed
 from miro import folder
 from miro import messages
@@ -267,6 +268,7 @@ def finish_startup(obj, thread):
     if DEBUG_DB_MEM_USAGE:
         util.db_mem_usage_test()
         mem_usage_test_event.set()
+    app.item_info_cache = iteminfocache.ItemInfoCache()
 
     logging.info("Loading video converters...")
     videoconversion.conversion_manager.startup()

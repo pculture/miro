@@ -29,7 +29,6 @@
 """``miro.messagehandler``` -- Backend message handler
 """
 
-from copy import copy
 import logging
 import time
 import os
@@ -105,7 +104,7 @@ class ViewTracker(object):
 
     def _make_new_info(self, obj):
         info = self.InfoClass(obj)
-        self._last_sent_info[obj.id] = copy(info)
+        self._last_sent_info[obj.id] = info
         return info
 
     def _make_added_list(self, added):
@@ -117,7 +116,7 @@ class ViewTracker(object):
             info = self.InfoClass(obj)
             if obj.id not in self._last_sent_info or info.__dict__ != self._last_sent_info[obj.id].__dict__:
                 retval.append(info)
-                self._last_sent_info[obj.id] = copy(info)
+                self._last_sent_info[obj.id] = info
         return retval
 
     def _make_removed_list(self, removed):
@@ -279,17 +278,41 @@ class ItemTrackerBase(ViewTracker):
     InfoClass = messages.ItemInfo
 
     def __init__(self):
+        self.initial_list = self.fetch_infos()
+        self.sent_a_list = False
         ViewTracker.__init__(self)
+        for info in self.initial_list:
+            self._last_sent_info[info.id] = info
+
+    def fetch_infos(self):
+        # need to send a copy of the info to the frontend, we don't want it
+        # modifying the data in item_info_cache
+        return app.item_info_cache.fetch_infos(self.view)
 
     def make_changed_message(self, added, changed, removed):
         return messages.ItemsChanged(self.type, self.id,
                 added, changed, removed)
 
+    def add_callbacks(self):
+        initial_ids = set(info.id for info in self.initial_list)
+        tracker = self.view.make_tracker(initial_ids)
+        tracker.connect('added', self.on_object_added)
+        tracker.connect('removed', self.on_object_removed)
+        tracker.connect('changed', self.on_object_changed)
+        self.trackers.append(tracker)
+
     def get_object_views(self):
         return [self.view]
 
     def send_initial_list(self):
-        infos = self._make_added_list(self.view)
+        if not self.sent_a_list:
+            # first call, get the infos we already fetch in the constructor
+            infos = self.initial_list
+            del self.initial_list # no need to keep these around anymore
+            self.sent_a_list = True
+        else:
+            # second (or more) call, regenerate the infos
+            infos = self.fetch_infos()
         messages.ItemList(self.type, self.id, infos).send_to_frontend()
 
 class FeedItemTracker(ItemTrackerBase):
@@ -456,7 +479,7 @@ class DownloadCountTracker(CountTracker):
     def make_message(self, total_count):
         # total_count includes non-downloading items like seeding torrents.
         # We need to split this into separate counts for the frontend
-        downloading_count = item.Item.only_downloading_view().count()
+        downloading_count = len(self.other_tracker)
         non_downloading_count = total_count - downloading_count
         return messages.DownloadCountChanged(downloading_count,
                 non_downloading_count)

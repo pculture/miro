@@ -330,6 +330,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self._look_for_downloader()
         self.setup_common()
         self.split_item()
+        app.item_info_cache.item_created(self)
 
     def setup_restored(self):
         self.setup_common()
@@ -341,6 +342,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.expiring = None
         self.showMoreInfo = False
         self.updating_movie_info = False
+
+    def signal_change(self, needs_save=True):
+        app.item_info_cache.item_changed(self)
+        DDBObject.signal_change(self, needs_save)
 
     @classmethod
     def auto_pending_view(cls):
@@ -1684,6 +1689,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             for item in self.get_children():
                 item.remove()
         self._remove_from_playlists()
+        app.item_info_cache.item_removed(self)
         DDBObject.remove(self)
 
     def setup_links(self):

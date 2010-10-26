@@ -76,6 +76,11 @@ class Controller:
         httpauth.write_to_file()
         logging.info("Shutting down event loop thread")
         eventloop.shutdown()
+        logging.info("Saving cached ItemInfo objects")
+        logging.info("Commiting DB changes")
+        app.db.finish_transaction()
+        if app.item_info_cache is not None:
+            app.item_info_cache.save()
         logging.info("Closing Database...")
         if app.db is not None:
             app.db.close()

@@ -41,6 +41,9 @@ renderers = []
 # database object
 db = None
 
+# stores ItemInfo objects so we can quickly fetch them
+item_info_cache = None
+
 # command line arguments for thumbnailer (linux)
 movie_data_program_info = None
 

@@ -11,7 +11,7 @@ from miro.test.framework import EventLoopTest
 from miro.test import messagetest
 from miro.plat.utils import FilenameType
 
-class TrackItemTest(EventLoopTest):
+class PerformanceTest(EventLoopTest):
     def setUp(self):
         print 'setting up'
         EventLoopTest.setUp(self)
@@ -39,20 +39,30 @@ class TrackItemTest(EventLoopTest):
         app.bulk_sql_manager.finish()
         self.reload_database(save_path)
 
-    def test_track_items(self):
-        print 'running tests'
-        cProfile.runctx("self._timed_code()", globals(), locals(),
+    def _run_test(self, code):
+        print 'testing performance for %s' % code
+        cProfile.runctx(code, globals(), locals(),
                 self.stats_path)
         stats = pstats.Stats(self.stats_path)
         print '*' * 20 + "first run" + "*" * 20
         stats.strip_dirs().sort_stats("cumulative").print_stats(0.2)
 
-        cProfile.runctx("self._timed_code()", globals(), locals(),
+        cProfile.runctx(code, globals(), locals(),
                 self.stats_path)
         stats = pstats.Stats(self.stats_path)
         print '*' * 20 + "second run" + "*" * 20
         stats.strip_dirs().sort_stats("cumulative").print_stats(0.2)
 
-    def _timed_code(self):
+    def test_track_items(self):
+        self._run_test("self.track_items()")
+
+    def test_track_item_count(self):
+        self._run_test("self.track_item_count()")
+
+    def track_items(self):
         messages.TrackItems('feed', self.feed.id).send_to_backend()
+        self.runUrgentCalls()
+
+    def track_item_count(self):
+        messages.TrackNewVideoCount().send_to_backend()
         self.runUrgentCalls()

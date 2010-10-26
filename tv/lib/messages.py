@@ -1080,6 +1080,20 @@ class ItemInfo(object):
             else:
                 self.up_down_ratio = self.up_total * 1.0 / self.down_total
 
+    def __getstate__(self):
+        # called when we pickle data.  Don't save attributes assigned by the
+        # frontend.
+        # FIXME: really the frontend shouldn't be modifying ItemInfo objects.
+        # I plan to fix how we set up icon, description_links, etc. when I do
+        # an optimization pass on the frontend side of things.
+        pickle_data = self.__dict__.copy()
+        for key in ('icon', 'description_text', 'description_links'):
+            try:
+                del pickle_data[key]
+            except KeyError:
+                pass
+        return pickle_data
+
 class DownloadInfo(object):
     """Tracks the download state of an item.
 

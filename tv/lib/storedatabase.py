@@ -69,6 +69,7 @@ from miro import dbupgradeprogress
 from miro import dialogs
 from miro import eventloop
 from miro import fileutil
+from miro import iteminfocache
 from miro import messages
 from miro import schema
 from miro import prefs
@@ -366,13 +367,15 @@ class LiveStorage:
                 self._set_version(80)
                 self._change_database_file_back()
 
-    def _get_variable(self, name):
+    def get_variable(self, name):
         self.cursor.execute("SELECT serialized_value FROM dtv_variables "
                 "WHERE name=?", (name,))
         row = self.cursor.fetchone()
+        if row is None:
+            raise KeyError(name)
         return cPickle.loads(str(row[0]))
 
-    def _set_variable(self, name, value):
+    def set_variable(self, name, value):
         # we only store one variable and it's easier to deal with if we store
         # it using ASCII-base protocol.
         db_value = buffer(cPickle.dumps(value, 0))
@@ -547,7 +550,17 @@ class LiveStorage:
 
     def query(self, klass, where, values=None, order_by=None, joins=None,
             limit=None):
-        for id in self.query_ids(klass, where, values, order_by, joins, limit):
+        id_list = list(self.query_ids(klass, where, values, order_by, joins,
+            limit))
+        unrestored_ids = set(id_list).difference(self._ids_loaded)
+        if unrestored_ids:
+            # restore any objects that we don't already have in memory.
+            schema = self._schema_map[klass]
+            self._restore_objects(schema, unrestored_ids)
+            # sometimes objects will call remove() in setup_restored().
+            # We need to filter those out.
+            id_list = [id for id in id_list if id in self._object_map]
+        for id in id_list:
             yield self._object_map[id]
 
     def query_ids(self, klass, where, values=None, order_by=None, joins=None,
@@ -558,18 +571,7 @@ class LiveStorage:
         sql.write(self._get_query_bottom(schema.table_name, where, joins,
             order_by, limit))
         self.cursor.execute(sql.getvalue(), values)
-        rv = [row[0] for row in self.cursor.fetchall()]
-        unrestored_ids = set(rv).difference(self._ids_loaded)
-        if unrestored_ids:
-            # restore any objects that we don't already have in memory.
-            # query() calls query_ids() and expects that for all the object
-            # ids returned, it can look them up in self._object_map
-            self._restore_objects(schema, unrestored_ids)
-
-            # sometimes objects will call remove() in setup_restored().
-            # We need to filter those out.
-            rv = [id for id in rv if id in self._object_map]
-        return rv
+        return (row[0] for row in self.cursor.fetchall())
 
     def _restore_objects(self, schema, id_set):
         column_names = ['%s.%s' % (schema.table_name, f[0])
@@ -643,12 +645,13 @@ class LiveStorage:
             sql.write('\nWHERE %s' % where)
         self._execute(sql.getvalue(), values, is_update=True)
 
-    def select(self, klass, columns, where, values, convert=True):
+    def select(self, klass, columns, where, values, joins=None, limit=None,
+            convert=True):
         schema = self._schema_map[klass]
         sql = StringIO()
         sql.write('SELECT %s ' % ', '.join(columns))
-        sql.write(self._get_query_bottom(schema.table_name, where, None, None,
-            None))
+        sql.write(self._get_query_bottom(schema.table_name, where, joins, None,
+            limit))
         results = self._execute(sql.getvalue(), values)
         if not convert:
             return results
@@ -831,17 +834,18 @@ class LiveStorage:
                 self.cursor.execute("CREATE INDEX %s ON %s (%s)" %
                         (name, schema.table_name, ', '.join(columns)))
         self._create_variables_table()
+        self.cursor.execute(iteminfocache.create_sql())
         self._set_version()
 
     def _get_version(self):
-        return self._get_variable(VERSION_KEY)
+        return self.get_variable(VERSION_KEY)
 
     def _set_version(self, version=None):
         """Set the database version to the current schema version."""
 
         if version is None:
             version = self._schema_version
-        self._set_variable(VERSION_KEY, version)
+        self.set_variable(VERSION_KEY, version)
 
     def _calc_sqlite_types(self, object_schema):
         """What datatype should we use for the attributes of an object schema?

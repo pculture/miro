@@ -13,6 +13,7 @@ from miro import eventloop
 from miro import downloader
 from miro import httpauth
 from miro import httpclient
+from miro import iteminfocache
 from miro import util
 from miro import databaseupgrade
 from miro import prefs
@@ -117,6 +118,7 @@ class MiroTestCase(unittest.TestCase):
         self.raise_db_load_errors = True
         app.db = None
         self.reload_database()
+        app.item_info_cache = iteminfocache.ItemInfoCache()
         searchengines._engines = [
             searchengines.SearchEngineInfo(u"all", u"Search All", u"", -1)
             ]
