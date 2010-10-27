@@ -229,7 +229,7 @@ def shortenFilename(filename):
 # Given a filename in raw bytes, return the unicode representation
 #
 # Since this is not guaranteed to give the same results every time it is run,
-# not is it garanteed to reverse the results of unicode_to_filename
+# not is it guaranteed to reverse the results of unicode_to_filename.
 @returns_unicode
 def filename_to_unicode(filename, path = None):
     if path:
