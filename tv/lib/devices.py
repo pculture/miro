@@ -98,13 +98,13 @@ class DeviceManager(object):
 device_manager = DeviceManager()
 
 def load_database(mount):
-    file_name = os.path.join(mount, '.mirodb')
+    file_name = os.path.join(mount, '.miro', 'json')
     if not os.path.exists(file_name):
         return {}
-    return json.load(file(os.path.join(mount, '.mirodb')))
+    return json.load(file(file_name))
 
 def write_database(mount, database):
-    json.dump(database, file(os.path.join(mount, '.mirodb'), 'w'))
+    json.dump(database, file(os.path.join(mount, '.miro' 'json'), 'w'))
 
 def device_connected(info):
     message = messages.TabsChanged('devices',
