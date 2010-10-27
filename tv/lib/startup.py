@@ -327,13 +327,7 @@ def check_movies_gone():
             return
 
     # make sure the directory is writeable
-    try:
-        fn = os.path.join(movies_dir, "testfile")
-        f = open(fn, "w")
-        f.write("test")
-        f.close()
-        os.remove(fn)
-    except IOError:
+    if not os.access(movies_dir, os.W_OK):
         _movies_directory_gone_handler(callback)
         return
     eventloop.add_urgent_call(finish_backend_startup, "reconnect downloaders")

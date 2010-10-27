@@ -489,11 +489,8 @@ class _MovieDirectoryHelper(object):
             try:
                 if not os.path.exists(d):
                     os.makedirs(d)
-                fn = os.path.join(d, "testfile")
-                f = open(fn, "w")
-                f.write("test")
-                f.close()
-                os.remove(fn)
+                if not os.access(d, os.W_OK):
+                    raise IOError    # Pretend we got an IOError.
             except (OSError, IOError):
                 dialogs.show_message(_("Directory not valid"),
                                      _("Directory '%s' could not be created.  " +
