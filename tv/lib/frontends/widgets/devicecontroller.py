@@ -224,14 +224,15 @@ class DeviceUnmountedView(widgetset.VBox):
 class DeviceWidget(widgetset.VBox):
     def __init__(self, device):
         widgetset.VBox.__init__(self)
-        self.titlebar_vbox = widgetset.VBox()
-        self.titlebar_vbox.pack_start(self.make_titlebar(device))
+        self.titlebar_view = widgetset.Background()
         self.device_view = widgetset.Background()
-        self.pack_start(self.titlebar_vbox)
+        self.pack_start(self.titlebar_view)
         self.pack_start(self.device_view, expand=True)
         self.set_device(device)
 
     def set_device(self, device):
+        self.titlebar_view.remove()
+        self.titlebar_view.set_child(self.make_titlebar(device))
         self.device_view.remove()
         if not device.mount:
             view = DeviceUnmountedView()
