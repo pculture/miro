@@ -52,7 +52,8 @@ def send_new_order():
             
     message = messages.TabsReordered()
     append_items(app.tab_list_manager.feed_list.view.model, u'feed')
-    append_items(app.tab_list_manager.audio_feed_list.view.model, u'audio-feed')
+    append_items(app.tab_list_manager.audio_feed_list.view.model,
+                 u'audio-feed')
     append_items(app.tab_list_manager.playlist_list.view.model, u'playlist')
     message.send_to_backend()
 
@@ -226,10 +227,12 @@ class LibraryTabList(StaticTabListBase):
                 self.view.model_changed()
 
     def update_download_count(self, count, non_downloading_count):
-        self.update_count('downloading', 'downloading', count, non_downloading_count)
+        self.update_count('downloading', 'downloading', count,
+                          non_downloading_count)
 
     def update_conversions_count(self, running_count, other_count):
-        self.update_count('conversions', 'downloading', running_count, other_count)
+        self.update_count('conversions', 'downloading', running_count,
+                          other_count)
 
     def update_new_video_count(self, count):
         self.update_count('videos', 'unwatched', count)
@@ -419,7 +422,8 @@ class TabListDropHandler(object):
         dest_tablist.view.unselect_all()
         dragged_ids = set([int(id) for id in data.split('-')])
         expanded_rows = [id for id in dragged_ids if \
-                source_tablist.view.is_row_expanded(source_tablist.iter_map[id])]
+                source_tablist.view.is_row_expanded(
+                source_tablist.iter_map[id])]
         reorderer = TabDnDReorder()
         try:
             new_iters = reorderer.reorder(
@@ -798,7 +802,8 @@ class FeedList(NestedTabList, TabUpdaterMixin):
 
         menu.append((_('Rename'), app.widgetapp.rename_something))
         if not obj.has_original_title:
-            menu.append((_('Revert Feed Name'), app.widgetapp.revert_feed_name))
+            menu.append((_('Revert Feed Name'),
+                         app.widgetapp.revert_feed_name))
         menu.append((_('Copy URL to clipboard'), app.widgetapp.copy_feed_url))
         menu.append((_('Remove'), app.widgetapp.remove_current_feed))
         return menu
