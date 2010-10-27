@@ -28,6 +28,7 @@
 
 import sys
 import os
+import urllib
 
 import pygtk
 import gtk
@@ -64,7 +65,7 @@ class Extractor:
         self.bus.add_signal_watch()
         self.watch_id = self.bus.connect("message", self.on_bus_message)
 
-        self.pipeline.set_property("uri", "file://%s" % filename)
+        self.pipeline.set_property("uri", "file://%s" % urllib.quote(filename))
         self.pipeline.set_state(gst.STATE_PAUSED)
 
     def on_bus_message(self, bus, message):
