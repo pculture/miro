@@ -32,7 +32,11 @@ import urllib
 from miro.plat import bundle
 
 def root():
-    return os.path.join(bundle.getBundleResourcePath(), u'resources')
+    # XXX sigh.
+    # Unicode kludge.  This wouldn't be a problem once we switch to Python 3.
+    path = str(bytearray(os.path.join(bundle.getBundleResourcePath(),
+      u'resources'), 'utf-8'))
+    return path
 
 # Find the full path to a resource data file. 'relative_path' is
 # expected to be supplied in Unix format, with forward-slashes as
@@ -48,8 +52,11 @@ def url(relative_path):
     return u"file://" + urllib.quote(path(relative_path))
 
 def theme_path(theme, relative_path):
-    return os.path.join(bundle.getBundlePath(), "Contents", "Theme", theme,
+    # XXX sigh.
+    # Unicode kludge.  This wouldn't be a problem once we switch to Python 3.
+    path = os.path.join(bundle.getBundlePath(), "Contents", "Theme", theme,
             relative_path)
+    return str(bytearray(path, 'utf-8'))
 
 def get_osname():
     osname = '%s %s %s' % (platform.system(), platform.release(),
