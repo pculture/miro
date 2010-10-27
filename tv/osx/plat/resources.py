@@ -39,7 +39,9 @@ def root():
 # separators. The output, though, uses the native platform separator.
 def path(relative_path):
     rsrcpath = os.path.join(root(), relative_path)
-    return str(os.path.abspath(rsrcpath))
+    # XXX sigh.
+    # Unicode kludge.  This wouldn't be a problem once we switch to Python 3.
+    return str(bytearray(os.path.abspath(rsrcpath), 'utf-8'))
 
 # As path(), but return a file: URL instead.
 def url(relative_path):
