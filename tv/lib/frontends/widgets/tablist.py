@@ -668,6 +668,10 @@ class DevicesList(TabList, TabUpdaterMixin):
         self.view.set_drag_dest(DeviceDropHandler(self))
         self.devices = {}
 
+    def on_row_expanded_change(self, view, iter, expanded):
+        # don't bother doing anything
+        pass
+
     def _fake_info(self, info, name):
         new_data = {
             'fake': True,
@@ -675,19 +679,34 @@ class DevicesList(TabList, TabUpdaterMixin):
             'id': '%s-%s' % (info.id, name),
             'name': name,
             'icon': imagepool.get_surface(
-                resources.path('images/icon-%s.png' % name.lower())),
-            'padding': 10
+                resources.path('images/icon-%s.png' % name.lower()))
             }
         di = messages.DeviceInfo.__new__(messages.DeviceInfo)
         di.__dict__ = info.__dict__.copy()
         di.__dict__.update(new_data)
         return di
 
+    def _add_fake_tabs(self, info):
+        TabList.add(self, self._fake_info(info, 'Video'), info.id)
+        TabList.add(self, self._fake_info(info, 'Audio'), info.id)
+        self.set_folder_expanded(info.id, True)
+
     def add(self, info):
         TabList.add(self, info)
         if info.mount:
-            TabList.add(self, self._fake_info(info, 'Video'))
-            TabList.add(self, self._fake_info(info, 'Audio'))
+            self._add_fake_tabs(info)
+
+    def update(self, info):
+        if info.mount and not self.get_child_count(info.id):
+            self._add_fake_tabs(info)
+        elif not info.mount and self.get_child_count(info.id):
+            parent_iter = self.iter_map[info.id]
+            model = self.view.model
+            iter = model.child_iter(parent_iter)
+            while iter is not None:
+                model.remove(iter)
+                iter = model.next_iter(iter)
+        TabList.update(self, info)
 
     def init_info(self, info):
         info.unwatched = info.available = 0

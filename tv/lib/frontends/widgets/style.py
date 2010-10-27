@@ -140,7 +140,7 @@ class TabRenderer(widgetset.CustomCellRenderer):
         if hasattr(self.data, "id") and (self.data.id == 'guide' or self.data.id == 'search'):
             hbox.pack_space(6)
         else:
-            hbox.pack_space(2 + getattr(self.data, 'padding', 0))
+            hbox.pack_space(2)
         alignment = cellpack.Alignment(self.data.icon, yalign=0.5, yscale=0.0,
                 xalign=0.5, xscale=0.0, min_width=16)
         hbox.pack(alignment)
