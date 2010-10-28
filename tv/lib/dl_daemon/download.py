@@ -1072,7 +1072,14 @@ class BTDownloader(BGDownloader):
                 self.handle_corrupt_torrent()
                 return
             self.shortFilename = utf8_to_filename(name)
-            self.pick_initial_filename(suffix="", torrent=True)
+            try:
+                self.pick_initial_filename(suffix="", torrent=True)
+            # Somewhere deep it calls makedirs() which can throw exceptions.
+            #
+            # Not sure if this is correct but if we throw a runtime error
+            # like above it can't hurt anyone.
+            except (OSError, IOError):
+                raise RuntimeError
         self.update_client()
         self._resume_torrent()
 
