@@ -55,6 +55,7 @@ Var ZUGO_DEFAULT_SEARCH
 Var ZUGO_FLAGS
 Var ZUGO_COUNTRY
 Var ZUGO_PROVIDER
+Var ZUGO_TERMS
 
 ; Runs in tv/windows/dist, so 4 ..s.
 !addplugindir ..\${CONFIG_BINARY_KIT}\NSIS-Plugins\
@@ -109,45 +110,45 @@ Function add_radio_buttons
 abort:
   Abort
 start:
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Settings" "NumFields" "13"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Settings" "NumFields" "14"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Settings" "NextButtonText" "Next >"
 
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 2" "Top" "20"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 2" "Bottom" "38"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 2" "Top" "10"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 2" "Bottom" "28"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 2" "Right" "325"
 
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 3" "Text" ""
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 3" "Top" "45"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 3" "Bottom" "65"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 3" "Top" "35"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 3" "Bottom" "55"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 3" "Right" "325"
 
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 11" "Type"   "label"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 11" "Text"   "Installation Type"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 11" "Left"   "120"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 11" "Right"  "315"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 11" "Top"    "65"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 11" "Bottom" "75"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 11" "Top"    "55"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 11" "Bottom" "65"
 
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Type"   "radiobutton"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Text"   "Easy Install"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Left"   "120"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Right"  "315"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Top"    "80"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Bottom" "90"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Top"    "70"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Bottom" "80"
 
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Type"   "radiobutton"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Text"   "Custom Install"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Left"   "120"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Right"  "315"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Top"    "90"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Bottom" "100"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Top"    "80"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Bottom" "90"
 
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 13" "Type"   "label"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 13" "Text"   "Options: installation directory and file-type associations."
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 13" "Left"   "132"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 13" "Right"  "315"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 13" "Top"    "100"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 13" "Bottom" "115"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 13" "Top"    "90"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 13" "Bottom" "105"
 
   !ifdef MIROBAR_EXE
 
@@ -163,27 +164,28 @@ start:
   StrCmp "$ZUGO_TOOLBAR$ZUGO_DEFAULT_SEARCH$ZUGO_HOMEPAGE" "" 0 +10
   StrCmp $ZUGO_COUNTRY "US" 0 +5
   StrCpy $ZUGO_TOOLBAR "1"
-  StrCpy $ZUGO_DEFAULT_SEARCH "0"
-  StrCpy $ZUGO_HOMEPAGE "0"
-  Goto +5
+  StrCpy $ZUGO_DEFAULT_SEARCH "1"
+  StrCpy $ZUGO_HOMEPAGE "1"
+  Goto +6
   StrCpy $ZUGO_TOOLBAR "0"
   StrCpy $ZUGO_DEFAULT_SEARCH "0"
   StrCpy $ZUGO_HOMEPAGE "1"
   StrCpy $ZUGO_PROVIDER "Yahoo"
+  StrCpy $ZUGO_TERMS "http://www.mirostart.com/terms/yahoo/"
 
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Type"   "label"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Text"   "Included Components"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Left"   "120"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Right"  "315"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Top"    "120"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Bottom" "130"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Top"    "110"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 6" "Bottom" "120"
 
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 7" "Type"   "checkbox"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 7" "Text"   "$APP_NAME core (required)"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 7" "Left"   "120"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 7" "Right"  "315"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 7" "Top"    "135"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 7" "Bottom" "145"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 7" "Top"    "125"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 7" "Bottom" "135"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 7" "State"  "1"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 7" "Flags"  "DISABLED"
 
@@ -191,19 +193,19 @@ start:
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Text"   "$APP_NAME Start Homepage (by $ZUGO_PROVIDER)"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Left"   "120"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Right"  "315"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Top"    "145"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Bottom" "155"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Top"    "135"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "Bottom" "145"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "State"  "0"
   StrCmp $ZUGO_HOMEPAGE "0" +2
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 8" "State"  "1"
 
   StrCmp $ZUGO_COUNTRY "US" 0 no_toolbar
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Type"   "checkbox"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Text"   "Friends of Miro $ZUGO_PROVIDER Toolbar"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Text"   "Friends of Miro $ZUGO_PROVIDER Search Toolbar"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Left"   "120"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Right"  "315"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Top"    "165"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Bottom" "175"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Top"    "155"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "Bottom" "165"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "State"  "0"
   StrCmp $ZUGO_TOOLBAR "0" +2
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 9" "State"  "1"
@@ -213,8 +215,8 @@ no_toolbar:
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "Text"   "Set $ZUGO_PROVIDER as default search engine"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "Left"   "120"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "Right"  "315"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "Top"    "155"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "Bottom" "165"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "Top"    "145"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "Bottom" "155"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "State"  "0"
   StrCmp $ZUGO_DEFAULT_SEARCH "0" +2
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 10" "State"  "1"
@@ -223,8 +225,18 @@ no_toolbar:
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 12" "Text"   "These optional search components help support our non-profit work and can be uninstalled at any time."
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 12" "Left"   "132"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 12" "Right"  "315"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 12" "Top"    "175"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 12" "Bottom" "190"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 12" "Top"    "165"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 12" "Bottom" "180"
+
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 14" "Type"   "link"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 14" "Text"   "Terms and Conditions"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 14" "Left"   "132"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 14" "Right"  "315"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 14" "Top"    "185"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 14" "Bottom" "195"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 14" "State"  "$ZUGO_TERMS"
+
+
 
 after_zugo:
 !endif
@@ -252,7 +264,7 @@ Function fix_background_color
     GetDlgItem $0 $MUI_HWND $R1
     SetCtlColors $0 "" 0xFFFFFF
     IntOp $R1 $R1 + 1
-    IntCmp $R1 1213 done
+    IntCmp $R1 1214 done
     Goto loop
   done:
 
@@ -267,6 +279,11 @@ Function fix_background_color
   SendMessage $0 ${WM_SETFONT} $R1 0
   GetDlgItem $0 $MUI_HWND 1212
   SendMessage $0 ${WM_SETFONT} $R1 0
+
+  CreateFont $R1 "Arial" "7" "0" /UNDERLINE
+  GetDlgItem $0 $MUI_HWND 1213
+  SendMessage $0 ${WM_SETFONT} $R1 0
+  SetCtlColors $0 0x0000FF 0xFFFFFF
   Pop $0
 FunctionEnd
 
@@ -914,6 +931,7 @@ Function .onInit
   StrCpy $PUBLISHER "${CONFIG_PUBLISHER}"
   StrCpy $PROJECT_URL "${CONFIG_PROJECT_URL}"
   StrCpy $ZUGO_PROVIDER "Bing"
+  StrCpy $ZUGO_TERMS "http://www.mirostart.com/terms/bing/"
 
   ; Check if we're reinstalling
   ${GetParameters} $R0
