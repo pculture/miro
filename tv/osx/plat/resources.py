@@ -34,18 +34,19 @@ from miro.plat import bundle
 def root():
     # XXX sigh.
     # Unicode kludge.  This wouldn't be a problem once we switch to Python 3.
-    path = str(bytearray(os.path.join(bundle.getBundleResourcePath(),
-      u'resources'), 'utf-8'))
-    return path
+    path = os.path.join(bundle.getBundleResourcePath(), u'resources')
+    return path.encode('utf-8')
 
 # Find the full path to a resource data file. 'relative_path' is
 # expected to be supplied in Unix format, with forward-slashes as
 # separators. The output, though, uses the native platform separator.
 def path(relative_path):
-    rsrcpath = os.path.join(root(), relative_path)
     # XXX sigh.
     # Unicode kludge.  This wouldn't be a problem once we switch to Python 3.
-    return str(bytearray(os.path.abspath(rsrcpath), 'utf-8'))
+    if isinstance(relative_path, unicode):
+        relative_path = relative_path.encode('utf-8')
+    rsrcpath = os.path.join(root(), relative_path)
+    return os.path.abspath(rsrcpath)
 
 # As path(), but return a file: URL instead.
 def url(relative_path):
@@ -54,9 +55,14 @@ def url(relative_path):
 def theme_path(theme, relative_path):
     # XXX sigh.
     # Unicode kludge.  This wouldn't be a problem once we switch to Python 3.
-    path = os.path.join(bundle.getBundlePath(), "Contents", "Theme", theme,
+    bundlePath = bundle.getBundlePath().encode('utf-8')
+    if isinstance(theme, unicode):
+        theme = theme.encode('utf-8')
+    if isinstance(relative_path, unicode):
+        relative_path = relative_path.encode('utf-8')
+    path = os.path.join(bundlePath, "Contents", "Theme", theme,
             relative_path)
-    return str(bytearray(path, 'utf-8'))
+    return path
 
 def get_osname():
     osname = '%s %s %s' % (platform.system(), platform.release(),

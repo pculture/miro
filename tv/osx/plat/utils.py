@@ -417,14 +417,14 @@ def movie_data_program_info(movie_path, thumbnail_path):
     # Unicode kludge.  This wouldn't be a problem once we switch to Python 3.
     # Only need to do conversion on the py_exe_path and script_path - 
     # movie_path and thumbnail_path are Python 2 strings.
-    py_exe_path = str(bytearray(py_exe_path, 'utf-8'))
-    script_path = str(bytearray(script_path, 'utf-8'))
+    py_exe_path = py_exe_path.encode('utf-8')
+    script_path = script_path.encode('utf-8')
     # ... et tu, environment variables.
     for k in env.keys():
         try:
             check_b(env[k])
         except:
-            env[k] = str(bytearray(env[k], 'utf-8'))
+            env[k] = env[k].encode('utf-8')
     return ((py_exe_path, script_path, movie_path, thumbnail_path), env)
 
 ###############################################################################
@@ -434,7 +434,7 @@ def get_ffmpeg_executable_path():
     # XXX Unicode kludge.  This wouldn't be a problem once we switch to 
     # Python 3.
     path = os.path.join(bundle_path, "Contents", "Helpers", "ffmpeg")
-    return str(bytearray(path, 'utf-8'))
+    return path.encode('utf-8')
 
 def customize_ffmpeg_parameters(default_parameters):
     return default_parameters
@@ -443,7 +443,7 @@ def get_ffmpeg2theora_executable_path():
     bundle_path = NSBundle.mainBundle().bundlePath()
     # Unicode kludge.  This wouldn't be a problem once we switch to Python 3.
     path = os.path.join(bundle_path, "Contents", "Helpers", "ffmpeg2theora")
-    return str(bytearray(path, 'utf-8'))
+    return path.encode('utf-8')
 
 def customize_ffmpeg2theora_parameters(default_parameters):
     return default_parameters
