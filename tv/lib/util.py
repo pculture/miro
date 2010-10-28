@@ -689,7 +689,7 @@ def _to_utf8_bytes(s, encoding=None):
         result = s.encode('utf-8')
     elif not isinstance(s, str):
         s = str(s)
-    if result is None and encoding is not None:
+    if result is None and encoding is not None and not encoding == '':
         # If we knew the encoding of the s, try that.
         try:
             decoded = s.decode(encoding, 'replace')
