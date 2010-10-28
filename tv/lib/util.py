@@ -693,7 +693,7 @@ def _to_utf8_bytes(s, encoding=None):
         # If we knew the encoding of the s, try that.
         try:
             decoded = s.decode(encoding, 'replace')
-        except UnicodeDecodeError:
+        except (UnicodeDecodeError, LookupError):
             pass
         else:
             result = decoded.encode('utf-8')
