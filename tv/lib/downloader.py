@@ -866,7 +866,7 @@ def get_downloader_for_item(item):
             get_torrent_info_hash(path)
         except ValueError:
             raise ValueError("Don't know how to handle %s" % url)
-        except IOError:
+        except (OSError, IOError):
             return None
         else:
             return RemoteDownloader(url, item, u'application/x-bittorrent',

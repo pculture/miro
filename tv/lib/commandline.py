@@ -198,6 +198,16 @@ def parse_command_line_args(args):
                         )
                     dialogs.MessageBoxDialog(title, msg).run()
                     continue
+                except (IOError, OSError):
+                    title = _("File Error")
+                    msg = _(
+                        "The torrent file %(filename)s could not be opened. "
+                        "Please ensure it exists and you have permission to "
+                        "access this file.",
+                        {"filename": os.path.basename(arg)}
+                        )
+                    dialogs.MessageBoxDialog(title, msg).run()
+                    continue
                 add_torrent(arg, torrent_infohash)
                 added_downloads = True
             elif ext in ('.rss', '.rdf', '.atom', '.ato'):
