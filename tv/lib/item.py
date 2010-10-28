@@ -159,11 +159,12 @@ class FeedParserValues(object):
             return None
         if isinstance(thumb, str):
             return thumb
-        elif isinstance(thumb, unicode):
-            return thumb.decode('ascii', 'replace')
         try:
+            if isinstance(thumb, unicode):
+                return thumb.encode('utf-8')
+            # We can't get the type??  What to do ....
             return thumb["url"].decode('ascii', 'replace')
-        except (KeyError, AttributeError):
+        except (KeyError, AttributeError, UnicodeEncodeError, UnicodeDecodeError):
             return None
 
     def _calc_raw_description(self):
