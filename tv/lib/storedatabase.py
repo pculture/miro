@@ -559,9 +559,9 @@ class LiveStorage:
             self._restore_objects(schema, unrestored_ids)
             # sometimes objects will call remove() in setup_restored().
             # We need to filter those out.
-            id_list = [id for id in id_list if id in self._object_map]
-        for id in id_list:
-            yield self._object_map[id]
+            id_list = [id_ for id_ in id_list if id_ in self._object_map]
+        for id_ in id_list:
+            yield self._object_map[id_]
 
     def query_ids(self, klass, where, values=None, order_by=None, joins=None,
             limit=None):
