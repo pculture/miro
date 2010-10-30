@@ -349,6 +349,10 @@ def get_menu():
         help_menu.append(MenuItem(_("_Translate"), "Translate"))
     if app.config.get(prefs.PLANET_URL):
         help_menu.append(MenuItem(_("_Planet Miro"), "Planet"))
+    if '-git' in app.config.get(prefs.APP_VERSION):
+        # Devel build, add menu items
+        help_menu.append(Separator())
+        help_menu.append(MenuItem(_("Profile Message"), "ProfileMessage"))
     return mbar
 
 def _get_convert_menu():
@@ -635,6 +639,10 @@ def on_translate():
 @action_handler("Planet")
 def on_planet():
     app.widgetapp.open_url(app.config.get(prefs.PLANET_URL))
+
+@action_handler("ProfileMessage")
+def on_planet():
+    app.widgetapp.setup_profile_message()
 
 def generate_action_groups(menu_structure):
     """Takes a menu structure and returns a map of action group name to

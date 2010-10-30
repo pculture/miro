@@ -40,6 +40,7 @@ It also holds:
 * :class:`FrontendStatesStore` -- stores state of the frontend
 """
 
+import cProfile
 import os
 import logging
 import urllib
@@ -821,6 +822,33 @@ class Application:
     def diagnostics(self):
         diagnostics.run_dialog()
 
+    def setup_profile_message(self):
+        """Devel method: save profile time for a frontend message."""
+
+        # NOTE: strings are purposefully untranslated.  Should we spend
+        # translator time these strings?
+        message_choices = []
+        message_labels = []
+        for name in dir(messages):
+            obj = getattr(messages, name)
+            if (type(obj) is type and
+                    issubclass(obj, messages.FrontendMessage) and
+                    obj is not messages.FrontendMessage):
+                message_choices.append(obj)
+                message_labels.append(name)
+            
+        index = dialogs.ask_for_choice(
+                ("Select Message to Profile"),
+                ("The next time the the message is handled, Miro will "
+                    "write out profile timing data for it."),
+                message_labels)
+        message_obj = message_choices[index]
+        message_label = message_labels[index]
+        title = _("Select File to write Profile to")
+        path = dialogs.ask_for_save_pathname(title,
+                'miro-profile-%s.prof' % message_label.lower())
+        self.message_handler.profile_next_message(message_obj, path)
+
     def on_close(self):
         """This is called when the close button is pressed."""
         self.quit()
@@ -1040,6 +1068,10 @@ class WidgetsMessageHandler(messages.MessageHandler):
                     }
         self.progress_dialog = None
         self.dbupgrade_progress_dialog = None
+        self._profile_info = None
+
+    def profile_next_message(self, message_obj, path):
+        self._profile_info = (message_obj, path)
 
     def handle_frontend_quit(self, message):
         app.widgetapp.do_quit()
@@ -1108,7 +1140,16 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def call_handler(self, method, message):
         # uncomment this next line if you need frontend messages
         # logging.debug("handling frontend %s", message)
-        call_on_ui_thread(method, message)
+        if (self._profile_info is not None and
+                isinstance(message, self._profile_info[0])):
+            call_on_ui_thread(self.profile_message, method, message)
+        else:
+            call_on_ui_thread(method, message)
+
+    def profile_message(self, method, message):
+        cProfile.runctx('method(message)',
+                globals(), locals(), self._profile_info[1])
+        self._profile_info = None
 
     def handle_current_search_info(self, message):
         app.search_manager.set_search_info(message.engine, message.text)
