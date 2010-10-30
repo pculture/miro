@@ -32,6 +32,7 @@ This module contains self-contained utility functions.  It shouldn't import
 any other Miro modules.
 """
 
+import itertools
 import os
 import random
 import re
@@ -1006,9 +1007,12 @@ class Cache(object):
     def __init__(self, size):
         self.size = size
         self.dict = {}
+        self.counter = itertools.count()
+        self.access_times = {}
 
     def get(self, key):
-        try:
+        if key in self.dict:
+            self.access_times[key] = self.counter.next()
             return self.dict[key]
         except KeyError:
             value = self.create_new_value(key)
@@ -1018,18 +1022,18 @@ class Cache(object):
     def set(self, key, value):
         if len(self.dict) == self.size:
             self.shrink_size()
+        self.access_times[key] = self.counter.next()
         self.dict[key] = value
 
     def shrink_size(self):
-        # shrink size "randomly", based off of hash value
-        it = self.dict.iteritems()
+        # shrink by LRU
+        to_sort = [(time, key) for (key, time) in self.dict.iteritems()]
+        to_sort.sort()
         new_dict = {}
-        while True:
-            try:
-                # delete every other key
-                key, value = it.next()
-                new_dict[key] = value
-                it.next()
-            except StopIteration:
-                break
+        new_access_times = {}
+        latest_times = to_sort[len(self.dict) // 2:]
+        for (time, key) in latest_times:
+            new_dict[key] = self.dict[key]
+            new_access_times[key] = time
         self.dict = new_dict
+        sself.access_times = new_access_times
