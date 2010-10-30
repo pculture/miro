@@ -1006,6 +1006,12 @@ class ItemInfo(object):
     :param down_total: (Torrent only) total amount we've downloaded
     :param up_down_ratio: (Torrent only) ratio of uploaded to downloaded
     """
+
+    # bump this whenever you change the ItemInfo class, or change on of the
+    # functions that ItemInfo uses to get it's attributes (for example
+    # Item.get_description())
+    VERSION = 0
+
     def __init__(self, item):
         self.name = item.get_title()
         self.id = item.id

@@ -66,20 +66,23 @@ class ItemInfoCache(object):
         did_failsafe_load = False
         try:
             self._quick_load()
-        except StandardError, e:
+        except (StandardError, cPickle.UnpicklingError), e:
             logging.warn("Error loading item info cache: %s", e)
         if self.id_to_info is None:
             self._failsafe_load()
             # the current data is suspect, delete it
             app.db.cursor.execute("DELETE FROM item_info_cache")
             did_failsafe_load = True
-        app.db.set_variable(self.VERSION_KEY, schema.VERSION)
+        app.db.set_variable(self.VERSION_KEY, self.version())
         self._reset_changes()
         self._save_dc = None
         if did_failsafe_load:
             # Need to save the cache data we just created
             self._infos_added = self.id_to_info.copy()
             self.schedule_save_to_db()
+
+    def version(self):
+        return "%s-%s" % (schema.VERSION, messages.ItemInfo.VERSION)
 
     def _info_to_blob(self, info):
         return buffer(cPickle.dumps(info))
@@ -93,7 +96,7 @@ class ItemInfoCache(object):
         This is much faster than _failsafe_load(), but could result in errors.
         """
         saved_db_version = app.db.get_variable(self.VERSION_KEY)
-        if saved_db_version == schema.VERSION:
+        if saved_db_version == self.version():
             quick_load_values = {}
             app.db.cursor.execute("SELECT id, pickle FROM item_info_cache")
             for row in app.db.cursor:

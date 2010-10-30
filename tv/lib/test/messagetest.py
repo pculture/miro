@@ -582,3 +582,13 @@ class ItemInfoCacheErrorTest(MiroTestCase):
             db_info = cPickle.loads(str(app.db.cursor.fetchone()[0]))
             real_info = messages.ItemInfo(item)
             self.assertEquals(db_info.__dict__, real_info.__dict__)
+
+    def test_item_info_version(self):
+        app.db.finish_transaction()
+        app.item_info_cache.save()
+        messages.ItemInfo.VERSION += 1
+        # We should delete the old cache data because ItemInfoCache.VERSION
+        # has changed
+        app.item_info_cache = iteminfocache.ItemInfoCache()
+        app.db.cursor.execute("SELECT COUNT(*) FROM item_info_cache")
+        self.assertEquals(app.db.cursor.fetchone()[0], 0)
