@@ -422,6 +422,16 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
+    def next_100_incomplete_movie_data_view(cls):
+        return cls.make_view("(is_file_item OR (rd.state in ('finished', "
+                "'uploading', 'uploading-paused'))) AND "
+                '(duration IS NULL OR '
+                'screenshot IS NULL OR '
+                'NOT item.media_type_checked)',
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
+                limit=100)
+
+    @classmethod
     def unique_new_video_view(cls):
         return cls.make_view("NOT item.seen AND "
                 "item.file_type='video' AND "
@@ -1974,11 +1984,16 @@ def fp_values_for_file(filename, title=None, description=None):
         data['description'] = description
     return FeedParserValues(FeedParserDict(data))
 
+@eventloop.idle_iterator
 def update_incomplete_movie_data():
-    for item in chain(Item.downloaded_view(), Item.file_items_view()):
-        if ((item.duration is None or item.duration == -1 or
-             item.screenshot is None or not item.media_type_checked)):
-            item.check_media_file()
+    while True:
+        chunk = list(Item.next_100_incomplete_movie_data_view())
+        if not chunk:
+            break
+        else:
+            for item in chunk:
+                item.check_media_file()
+        yield None
 
 def fix_non_container_parents():
     """Make sure all items referenced by parent_id have isContainerItem set

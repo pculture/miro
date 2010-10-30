@@ -359,24 +359,19 @@ def on_frontend_started():
     yield None
     feed.expire_items()
     yield None
-    logging.info("Starting movie data updates")
-    item.update_incomplete_movie_data()
-    yield None
     moviedata.movie_data_updater.start_thread()
     yield None
     commandline.startup()
     yield None
     autoupdate.check_for_updates()
     yield None
-    # Wait a bit before starting the downloader daemon.  It can cause a bunch
-    # of disk/CPU load, so try to avoid it slowing other stuff down.
+    # Delay running high CPU/IO operations for a bit
     eventloop.add_timeout(5, downloader.startup_downloader,
             "start downloader daemon")
-    # ditto for feed updates
     eventloop.add_timeout(30, feed.start_updates, "start feed updates")
-    # ditto for clearing stale icon cache files, except it's the very lowest
-    # priority
-    eventloop.add_timeout(10, clear_icon_cache_orphans, "clear orphans")
+    eventloop.add_timeout(60, item.update_incomplete_movie_data,
+            "update movie data")
+    eventloop.add_timeout(90, clear_icon_cache_orphans, "clear orphans")
 
 def setup_global_feeds():
     setup_global_feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
