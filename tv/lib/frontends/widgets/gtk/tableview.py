@@ -1081,6 +1081,12 @@ class TableModel(object):
     def __init__(self, *column_types):
         self._model = self.MODEL_CLASS(*self.map_types(column_types))
         self._column_types = column_types
+        if 'image' in self._column_types:
+            self.convert_row_for_gtk = self.convert_row_for_gtk_slow
+            self.convert_value_for_gtk = self.convert_value_for_gtk_slow
+        else:
+            self.convert_row_for_gtk = self.convert_row_for_gtk_fast
+            self.convert_value_for_gtk = self.convert_value_for_gtk_fast
 
     def map_types(self, miro_column_types):
         type_map = {
@@ -1097,23 +1103,34 @@ class TableModel(object):
         except KeyError, e:
             raise ValueError("Unknown column type: %s" % e[0])
 
-    def convert_value_for_gtk(self, column_value):
+    # If we store image data, we need to do some work to convert row data to
+    # send to GTK
+    def convert_value_for_gtk_slow(self, column_value):
         if isinstance(column_value, Image):
             return column_value.pixbuf
         else:
             return column_value
 
-    def convert_for_gtk(self, column_values):
+    def convert_row_for_gtk_slow(self, column_values):
         return tuple(self.convert_value_for_gtk(c) for c in column_values)
 
+
+    # If we don't store image data, we can don't need to do any work to
+    # convert row data to gtk
+    def convert_value_for_gtk_fast(self, value):
+        return value
+
+    def convert_row_for_gtk_fast(self, column_values):
+        return column_values
+
     def append(self, *column_values):
-        return self._model.append(self.convert_for_gtk(column_values))
+        return self._model.append(self.convert_row_for_gtk(column_values))
 
     def update_value(self, iter, index, value):
         self._model.set(iter, index, self.convert_value_for_gtk(value))
 
     def update(self, iter, *column_values):
-        self._model[iter] = self.convert_for_gtk(column_values)
+        self._model[iter] = self.convert_value_for_gtk(column_values)
 
     def remove(self, iter):
         if self._model.remove(iter):
@@ -1122,7 +1139,7 @@ class TableModel(object):
             return None
 
     def insert_before(self, iter, *column_values):
-        row = self.convert_value_for_gtk(column_values)
+        row = self.convert_row_for_gtk(column_values)
         return self._model.insert_before(iter, row)
 
     def first_iter(self):
@@ -1148,15 +1165,15 @@ class TreeTableModel(TableModel):
     MODEL_CLASS = gtk.TreeStore
 
     def append(self, *column_values):
-        return self._model.append(None, self.convert_for_gtk(column_values))
+        return self._model.append(None, self.convert_row_for_gtk(column_values))
 
     def insert_before(self, iter, *column_values):
         parent = self._model.iter_parent(iter)
-        row = self.convert_for_gtk(column_values)
+        row = self.convert_row_for_gtk(column_values)
         return self._model.insert_before(parent, iter, row)
 
     def append_child(self, iter, *column_values):
-        return self._model.append(iter, self.convert_for_gtk(column_values))
+        return self._model.append(iter, self.convert_row_for_gtk(column_values))
 
     def child_iter(self, iter):
         return self._model.iter_children(iter)

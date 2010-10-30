@@ -261,6 +261,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     REMOVE_TEXT = _("Remove")
     STOP_SEEDING_TEXT = _("Stop seeding")
 
+    html_stripper = util.HTMLStripper()
+
     def __init__(self, display_channel=True):
         widgetset.CustomCellRenderer.__init__(self)
         self.separator = imagepool.get_surface(resources.path(
@@ -368,8 +370,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     def make_description(self, layout):
         layout.set_font(0.85, family=widgetset.ITEM_DESC_FONT)
         layout.set_text_color(self.ITEM_DESC_COLOR)
-        text = self.data.description_text
-        links = self.data.description_links
+        text, links = self.html_stripper.strip(self.data.description)
         textbox = layout.textbox("")
         pos = 0
         for start, end, url in links:
@@ -1042,7 +1043,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         context.restore()
 
     def draw_thumbnail(self, context, x, y, width, height):
-        widgetutil.draw_rounded_icon(context, self.data.icon, x, y, 154, 105)
+        icon = imagepool.get_surface(self.data.thumbnail, (154, 105))
+        widgetutil.draw_rounded_icon(context, icon, x, y, 154, 105)
         self.thumb_overlay.draw(context, x, y, 154, 105)
 
     def _thumbnail_bubble_path(self, context, x, y, radius, inner_width):

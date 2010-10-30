@@ -1001,3 +1001,35 @@ class DebuggingTimer:
 
     def log_total_time(self):
         logging.timing("total time: %0.3f", clock() - self.start_time)
+
+class Cache(object):
+    def __init__(self, size):
+        self.size = size
+        self.dict = {}
+
+    def get(self, key):
+        try:
+            return self.dict[key]
+        except KeyError:
+            value = self.create_new_value(key)
+            self.set(key, value)
+            return value
+
+    def set(self, key, value):
+        if len(self.dict) == self.size:
+            self.shrink_size()
+        self.dict[key] = value
+
+    def shrink_size(self):
+        # shrink size "randomly", based off of hash value
+        it = self.dict.iteritems()
+        new_dict = {}
+        while True:
+            try:
+                # delete every other key
+                key, value = it.next()
+                new_dict[key] = value
+                it.next()
+            except StopIteration:
+                break
+        self.dict = new_dict

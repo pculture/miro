@@ -30,23 +30,17 @@
 filenames.
 
 imagepool handles creating Image and ImageSurface objects for image
-filenames.  It remembers images that have been created, and doesn't
-create duplicate Image/ImageSurface objects for a single path.
+filenames.  It caches Image/ImageSurface objecsts so to avoid re-creating
+them.
 """
 
 import logging
 import traceback
 import weakref
 
+from miro import util
 from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
-
-# path_to_image and path_to_surface maps (path, size) tuples to
-# Image/ImageSurface objects.
-# Uses weak references so that once the Image/ImageSurface is not being used
-# it will be deleted.
-path_to_image = weakref.WeakValueDictionary()
-path_to_surface = weakref.WeakValueDictionary()
 
 broken_image = widgetset.Image(resources.path('images/broken-image.gif'))
 
@@ -75,6 +69,28 @@ def scaled_size(image, size):
         width = int(round(float(size[1]) / image.height * image.width))
         return width, size[1]
 
+CACHE_SIZE = 2000 # number of objects to keep in memory
+
+class ImagePool(util.Cache):
+    def create_new_value(self, (path, size)):
+        try:
+            image = widgetset.Image(path)
+        except StandardError:
+            logging.warn("error loading image %s:\n%s", path,
+                    traceback.format_exc())
+            image = broken_image
+        if size is not None:
+            image = image.resize(*scaled_size(image, size))
+        return image
+
+class ImageSurfacePool(util.Cache):
+    def create_new_value(self, (path, size)):
+        image = _imagepool.get((path, size))
+        return widgetset.ImageSurface(image)
+
+_imagepool = ImagePool(CACHE_SIZE)
+_image_surface_pool = ImageSurfacePool(CACHE_SIZE)
+
 def get(path, size=None):
     """Returns an Image for path.
 
@@ -84,22 +100,7 @@ def get(path, size=None):
                  scaled image; if size is not specified, then this
                  returns the default sized image
     """
-    try:
-        return path_to_image[(path, size)]
-    except KeyError:
-        try:
-            image = widgetset.Image(path)
-        except StandardError:
-            logging.warn("error loading image %s:\n%s", path,
-                    traceback.format_exc())
-            image = broken_image
-        if size is not None:
-            image = image.resize(*scaled_size(image, size))
-            path_to_image[(path, size)] = image
-        else:
-            path_to_image[(path, None)] = image
-            path_to_image[(path, (image.width, image.height))] = image
-        return image
+    return _imagepool.get((path, size))
 
 def get_surface(path, size=None):
     """Returns an ImageSurface for path.
@@ -110,15 +111,7 @@ def get_surface(path, size=None):
                  scaled image; if size is not specified, then this
                  returns the default sized image
     """
-    try:
-        return path_to_surface[(path, size)]
-    except KeyError:
-        image = get(path, size)
-        surface = widgetset.ImageSurface(image)
-        path_to_surface[(path, size)] = surface
-        if size is None:
-            path_to_surface[(path, (image.width, image.height))] = surface
-        return surface
+    return _image_surface_pool.get((path, size))
 
 class LazySurface(object):
     """Lazily loaded ImageSurface.  

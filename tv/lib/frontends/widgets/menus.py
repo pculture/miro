@@ -808,7 +808,7 @@ class MenuStateManager(signals.SignalEmitter):
             else:
                 self.states["plural"].append("RemoveItems")
 
-        if len(app.item_list_controller_manager.get_current_playlist()) > 0:
+        if app.item_list_controller_manager.can_play_items():
             self.enabled_groups.add('PlayPause')
             app.widgetapp.window.videobox.handle_new_selection(True)
         else:
