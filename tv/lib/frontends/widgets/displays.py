@@ -361,6 +361,7 @@ class AudioVideoItemsDisplay(ItemListDisplay):
                 self.id)
         if initial_filters:
             self.controller.set_item_filters(initial_filters)
+        ItemListDisplay.restore_state(self)
 
     @classmethod
     def should_display(cls, tab_type, selected_tabs):
