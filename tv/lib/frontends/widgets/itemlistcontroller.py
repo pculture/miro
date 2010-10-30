@@ -225,6 +225,8 @@ class ItemListController(object):
         self.check_for_empty_list()
 
     def on_sort_changed(self, object, sort_key, ascending):
+        for item_view in self.all_item_views():
+            item_view.start_bulk_change()
         sorter = itemlist.SORT_KEY_MAP[sort_key](ascending)
         for item_list in self.item_list_group.item_lists:
             item_list.set_sort(sorter)
@@ -357,6 +359,8 @@ class ItemListController(object):
 
     def handle_item_list(self, message):
         """Handle an ItemList message meant for this ItemContainer."""
+        for item_view in self.all_item_views():
+            item_view.start_bulk_change()
         self.item_list_group.add_items(message.items)
         for item_view in self.all_item_views():
             item_view.model_changed()
@@ -364,6 +368,8 @@ class ItemListController(object):
 
     def handle_items_changed(self, message):
         """Handle an ItemsChanged message meant for this ItemContainer."""
+        for item_view in self.all_item_views():
+            item_view.start_bulk_change()
         self.item_list_group.remove_items(message.removed)
         self.item_list_group.update_items(message.changed)
         self.item_list_group.add_items(message.added)

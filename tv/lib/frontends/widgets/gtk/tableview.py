@@ -510,6 +510,7 @@ class TableView(Widget):
         self.context_menu_callback = self.drag_source = self.drag_dest = None
         self.hotspot_tracker = None
         self.hover_info = None
+        self.in_bulk_change = False
         self.handled_last_button_press = False
         self.delaying_press = False
         self.ignore_selection_changed = False
@@ -534,14 +535,25 @@ class TableView(Widget):
                 self.on_drag_data_received)
         self.wrapped_widget_connect('unrealize', self.on_unrealize)
         weak_connect(self.selection, 'changed', self.on_selection_changed)
-        weak_connect(self.model._model, 'row-inserted', self.on_row_inserted)
-        weak_connect(self.model._model, 'row-deleted', self.on_row_deleted)
-        weak_connect(self.model._model, 'row-changed', self.on_row_changed)
+        self._connect_hotspot_signals()
         self.layout_manager = LayoutManager(self._widget)
         if hasattr(self, 'get_tooltip'):
             self._widget.set_property('has-tooltip', True)
             self.wrapped_widget_connect('query-tooltip', self.on_tooltip)
             self._last_tooltip_place = None
+
+    def _connect_hotspot_signals(self):
+        self._hotspot_callback_handles = []
+        self._hotspot_callback_handles.append(weak_connect(self.model._model,
+            'row-inserted', self.on_row_inserted))
+        self._hotspot_callback_handles.append(weak_connect(self.model._model,
+            'row-deleted', self.on_row_deleted))
+        self._hotspot_callback_handles.append(weak_connect(self.model._model,
+            'row-changed', self.on_row_changed))
+
+    def _disconnect_hotspot_signals(self):
+        for handle in self._hotspot_callback_handles:
+            self.model._model.disconnect(handle)
 
     def set_gradient_highlight(self, gradient):
         # This is just an OS X thing.
@@ -1043,8 +1055,21 @@ class TableView(Widget):
                 return True
         return False
 
+    def start_bulk_change(self):
+        self._widget.freeze_child_notify()
+        self._widget.set_model(None)
+        self._disconnect_hotspot_signals()
+        self.in_bulk_change = True
+
     def model_changed(self):
-        pass # This gets automatically handled in GTK
+        if self.in_bulk_change:
+            self._widget.set_model(self.model._model)
+            self._widget.thaw_child_notify()
+            self._connect_hotspot_signals()
+            if self.hotspot_tracker:
+                self.hotspot_tracker.redraw_cell()
+                self.hotspot_tracker.update_hit()
+            self.in_bulk_change = False
 
     def get_left_offset(self):
         return self._widget.get_left_offset()
