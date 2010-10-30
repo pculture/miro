@@ -342,6 +342,7 @@ class AudioVideoItemsDisplay(ItemListDisplay):
                 self.id)
         if initial_filters:
             self.controller.set_item_filters(initial_filters)
+        ItemListDisplay.restore_state(self)
 
 class VideoItemsDisplay(AudioVideoItemsDisplay):
     @staticmethod
