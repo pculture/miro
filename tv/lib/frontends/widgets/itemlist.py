@@ -343,7 +343,7 @@ class ItemList(signals.SignalEmitter):
 
     def get_items(self, start_id=None):
         """Get a list of ItemInfo objects in this list"""
-        return list(self.iter_items, start_id)
+        return list(self.iter_items(start_id))
 
     def iter_items(self, start_id=None):
         """Iterate through ItemInfo objects in this list"""
