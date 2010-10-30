@@ -370,7 +370,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     def make_description(self, layout):
         layout.set_font(0.85, family=widgetset.ITEM_DESC_FONT)
         layout.set_text_color(self.ITEM_DESC_COLOR)
-        text, links = self.html_stripper.strip(self.data.description)
+        text, links = ItemRenderer.html_stripper.strip(self.data.description)
         textbox = layout.textbox("")
         pos = 0
         for start, end, url in links:

@@ -641,7 +641,7 @@ def on_planet():
     app.widgetapp.open_url(app.config.get(prefs.PLANET_URL))
 
 @action_handler("ProfileMessage")
-def on_planet():
+def on_profile_message():
     app.widgetapp.setup_profile_message()
 
 def generate_action_groups(menu_structure):
