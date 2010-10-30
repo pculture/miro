@@ -368,9 +368,16 @@ class PlaybackManager (signals.SignalEmitter):
 
     def seek_to(self, progress):
         self.player.seek_to(progress)
-        total = self.player.get_total_playback_time()
-        if total is not None:
-            self.emit('playback-did-progress', progress * total, total)
+        # Sigh.  We could seek past the end and require a stop, which
+        # calls stop and destroys the player.  After we come back,
+        # the player is no longer valid and we crash.  There's probably
+        # a better way to fix this.
+        try:
+            total = self.player.get_total_playback_time()
+            if total is not None:
+                self.emit('playback-did-progress', progress * total, total)
+        except:
+            pass
 
     def on_movie_finished(self):
         self.update_current_resume_time(0)
