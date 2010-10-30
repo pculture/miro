@@ -57,7 +57,8 @@ from miro import models
 from miro import schema
 
 class ItemInfoCache(object):
-    SAVE_INTERVAL = 30 # how often should we save cache data to the DB?
+    # how often should we save cache data to the DB? (in seconds)
+    SAVE_INTERVAL = 30
     VERSION_KEY = 'item_info_cache_db_version'
 
     def __init__(self):
@@ -65,7 +66,7 @@ class ItemInfoCache(object):
         did_failsafe_load = False
         try:
             self._quick_load()
-        except Exception, e:
+        except StandardError, e:
             logging.warn("Error loading item info cache: %s", e)
         if self.id_to_info is None:
             self._failsafe_load()
