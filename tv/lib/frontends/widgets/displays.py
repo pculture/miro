@@ -110,14 +110,13 @@ class DisplayManager(object):
     when the playback is finished.
     """
     def __init__(self):
-        self.display_classes = [
+        # displays that we construct when the user clicks on them
+        self.on_demand_display_classes = [
                 AudioFeedDisplay,
                 FeedDisplay,
                 PlaylistDisplay,
                 SiteDisplay,
                 SearchDisplay,
-                VideoItemsDisplay,
-                AudioItemsDisplay,
                 OtherItemsDisplay,
                 DownloadingDisplay,
                 VideoConversionsDisplay,
@@ -125,9 +124,17 @@ class DisplayManager(object):
                 MultipleSelectionDisplay,
                 DummyDisplay,
         ]
+        # displays that we keep alive all the time
+        self.permanent_displays = set()
+        self.add_permanent_display(VideoItemsDisplay())
+        self.add_permanent_display(AudioItemsDisplay())
         self.display_stack = []
         self.selected_tab_list = self.selected_tabs = None
         app.info_updater.connect('sites-removed', SiteDisplay.on_sites_removed)
+
+    def add_permanent_display(self, display):
+        self.permanent_displays.add(display)
+        display.on_selected()
 
     def get_current_display(self):
         try:
@@ -149,7 +156,11 @@ class DisplayManager(object):
         self.selected_tabs = selected_tabs
         tab_type = selected_tab_list.type
 
-        for klass in self.display_classes:
+        for display in self.permanent_displays:
+            if display.should_display(tab_type, selected_tabs):
+                self.select_display(display)
+                return
+        for klass in self.on_demand_display_classes:
             if klass.should_display(tab_type, selected_tabs):
                 self.select_display(klass(tab_type, selected_tabs))
                 return
@@ -172,7 +183,8 @@ class DisplayManager(object):
         if len(self.display_stack) > 0:
             self.current_display.on_deactivate()
         self.display_stack.append(display)
-        display.on_selected()
+        if display not in self.permanent_displays:
+            display.on_selected()
         display.on_activate()
         app.widgetapp.window.set_main_area(display.widget)
 
@@ -188,7 +200,8 @@ class DisplayManager(object):
 
     def _unselect_display(self, display):
         display.on_deactivate()
-        display.cleanup()
+        if display not in self.permanent_displays:
+            display.cleanup()
         display.emit("removed")
 
     def push_folder_contents_display(self, folder_info):
@@ -238,10 +251,10 @@ class ItemListDisplayMixin(object):
     def on_deactivate(self):
         app.item_list_controller_manager.controller_no_longer_displayed(
                 self.controller)
+        self.remember_state()
 
     def cleanup(self):
         self.controller.stop_tracking()
-        self.remember_state()
         app.item_list_controller_manager.controller_destroyed(self.controller)
 
     def remember_state(self):
@@ -331,6 +344,13 @@ class SearchDisplay(ItemListDisplay):
         return itemlistcontroller.SearchController()
 
 class AudioVideoItemsDisplay(ItemListDisplay):
+    def __init__(self):
+        Display.__init__(self)
+        self.controller = self.make_controller()
+        self.widget = self.controller.widget
+        self.type = 'library'
+        self.id = self.__class__.tab_id
+
     def remember_state(self):
         ItemListDisplay.remember_state(self)
         filters = self.widget.toolbar.active_filters()
@@ -342,20 +362,20 @@ class AudioVideoItemsDisplay(ItemListDisplay):
         if initial_filters:
             self.controller.set_item_filters(initial_filters)
 
-class VideoItemsDisplay(AudioVideoItemsDisplay):
-    @staticmethod
-    def should_display(tab_type, selected_tabs):
-        return tab_type == 'library' and selected_tabs[0].id == 'videos'
+    @classmethod
+    def should_display(cls, tab_type, selected_tabs):
+        return tab_type == 'library' and selected_tabs[0].id == cls.tab_id
 
-    def make_controller(self, tab):
+class VideoItemsDisplay(AudioVideoItemsDisplay):
+    tab_id = 'videos'
+
+    def make_controller(self):
         return itemlistcontroller.VideoItemsController()
 
 class AudioItemsDisplay(AudioVideoItemsDisplay):
-    @staticmethod
-    def should_display(tab_type, selected_tabs):
-        return tab_type == 'library' and selected_tabs[0].id == 'audios'
+    tab_id = 'audios'
 
-    def make_controller(self, tab):
+    def make_controller(self):
         return itemlistcontroller.AudioItemsController()
 
 class OtherItemsDisplay(ItemListDisplay):

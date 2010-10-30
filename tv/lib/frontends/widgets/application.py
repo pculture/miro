@@ -127,7 +127,6 @@ class Application:
 
         app.item_list_controller_manager = \
                 itemlistcontroller.ItemListControllerManager()
-        app.display_manager = displays.DisplayManager()
         app.menu_manager = menus.MenuStateManager()
         app.playback_manager = playback.PlaybackManager()
         app.search_manager = search.SearchManager()
@@ -205,6 +204,7 @@ class Application:
         firsttimedialog.FirstTimeDialog(continue_callback).run()
 
     def build_window(self):
+        app.display_manager = displays.DisplayManager()
         app.tab_list_manager.populate_tab_list()
         for info in self.message_handler.initial_guides:
             app.tab_list_manager.site_list.add(info)
