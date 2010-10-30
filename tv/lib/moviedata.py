@@ -107,7 +107,8 @@ class MovieDataInfo(object):
 
 class MovieDataUpdater(signals.SignalEmitter):
     def __init__ (self):
-        signals.SignalEmitter.__init__(self, 'begin-loop', 'end-loop')
+        signals.SignalEmitter.__init__(self, 'begin-loop', 'end-loop',
+                'queue-empty')
         self.in_shutdown = False
         self.queue = Queue.Queue()
         self.thread = None
@@ -121,6 +122,8 @@ class MovieDataUpdater(signals.SignalEmitter):
     def thread_loop(self):
         while not self.in_shutdown:
             self.emit('begin-loop')
+            if self.queue.empty():
+                self.emit('queue-empty')
             mdi = self.queue.get(block=True)
             if mdi is None or mdi.program_info is None:
                 # shutdown() was called or there's no moviedata

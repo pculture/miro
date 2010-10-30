@@ -1014,7 +1014,7 @@ class Cache(object):
         if key in self.dict:
             self.access_times[key] = self.counter.next()
             return self.dict[key]
-        except KeyError:
+        else:
             value = self.create_new_value(key)
             self.set(key, value)
             return value

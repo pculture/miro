@@ -422,14 +422,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
-    def next_100_incomplete_movie_data_view(cls):
+    def next_10_incomplete_movie_data_view(cls):
         return cls.make_view("(is_file_item OR (rd.state in ('finished', "
                 "'uploading', 'uploading-paused'))) AND "
                 '(duration IS NULL OR '
                 'screenshot IS NULL OR '
                 'NOT item.media_type_checked)',
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
-                limit=100)
+                limit=10)
 
     @classmethod
     def unique_new_video_view(cls):
@@ -1984,16 +1984,33 @@ def fp_values_for_file(filename, title=None, description=None):
         data['description'] = description
     return FeedParserValues(FeedParserDict(data))
 
-@eventloop.idle_iterator
 def update_incomplete_movie_data():
-    while True:
-        chunk = list(Item.next_100_incomplete_movie_data_view())
-        if not chunk:
-            break
-        else:
+    IncompleteMovieDataUpdator()
+    # this will stay around because it connects to the movie data updater's
+    # signal.  Once it disconnects from the signal, we clean it up
+
+class IncompleteMovieDataUpdator(object):
+    def __init__(self):
+        self.do_some_updates()
+        self.done = False
+        self.handle = moviedata.movie_data_updater.connect('queue-empty',
+                self.on_queue_empty)
+
+    def do_some_updates(self):
+        chunk = list(Item.next_10_incomplete_movie_data_view())
+        if chunk:
             for item in chunk:
+                print 'checking: ', item
                 item.check_media_file()
-        yield None
+        else:
+            self.done = True
+
+    def on_queue_empty(self, movie_data_updator):
+        if self.done:
+            movie_data_updator.disconnect(self.handle)
+        else:
+            eventloop.add_idle(self.do_some_updates,
+                    'update incomplete movie data')
 
 def fix_non_container_parents():
     """Make sure all items referenced by parent_id have isContainerItem set
