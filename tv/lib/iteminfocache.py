@@ -163,14 +163,14 @@ class ItemInfoCache(object):
         app.db.cursor.execute("DELETE FROM item_info_cache "
                 "WHERE id IN (%s)" % id_list)
 
-    def fetch_infos(self, view):
+    def iter_infos(self, view):
         """Given a view for Item objects, return the ItemInfos for each result
 
         This method is optimized to avoid constructing Item objects.
         """
         if view.klass not in (models.Item, models.FileItem):
             raise ValueError("view is not for Item")
-        return [self.id_to_info[id_] for id_ in view.id_iter()]
+        return (self.id_to_info[id_] for id_ in view.id_iter())
 
     def item_created(self, item):
         info = messages.ItemInfo(item)
