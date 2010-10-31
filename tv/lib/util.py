@@ -1027,12 +1027,12 @@ class Cache(object):
 
     def shrink_size(self):
         # shrink by LRU
-        to_sort = [(time, key) for (key, time) in self.dict.iteritems()]
-        to_sort.sort()
+        to_sort = self.access_times.items()
+        to_sort.sort(key=lambda m: m[1])
         new_dict = {}
         new_access_times = {}
         latest_times = to_sort[len(self.dict) // 2:]
-        for (time, key) in latest_times:
+        for (key, time) in latest_times:
             new_dict[key] = self.dict[key]
             new_access_times[key] = time
         self.dict = new_dict
