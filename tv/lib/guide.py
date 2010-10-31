@@ -139,6 +139,8 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
         self.signal_change(needs_save=True)
 
     def guide_downloaded(self, info):
+        if not self.id_exists():
+            return
         self.client = None
         self.updated_url = unicode(info["updated-url"])
         parser = None
@@ -170,6 +172,8 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
         self.signal_change()
 
     def guide_error(self, error):
+        if not self.id_exists():
+            return
         # FIXME - this should display some kind of error page to the user
         logging.warn("Error downloading guide: %s", error)
         self.client = None
