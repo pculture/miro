@@ -347,8 +347,8 @@ class DataSourceBase(NSObject):
         if not drag_data:
             return NO
         pasteboard.declareTypes_owner_(drag_data.keys(), self)
-        for type, value in drag_data.items():
-            pasteboard.setString_forType_(value, type)
+        for typ, value in drag_data.items():
+            pasteboard.setString_forType_(value, typ)
         return YES
 
     def calcType_(self, drag_info):
@@ -361,10 +361,10 @@ class DataSourceBase(NSObject):
 
     def validateDrop_dragInfo_parentIter_position_(self, view, drag_info, 
             parent, position):
-        type = self.calcType_(drag_info)
-        if type:
+        typ = self.calcType_(drag_info)
+        if typ:
             wrapper = wrappermap.wrapper(view)
-            return self.drag_dest.validate_drop(wrapper, self.model, type,
+            return self.drag_dest.validate_drop(wrapper, self.model, typ,
                     drag_info.draggingSourceOperationMask(), parent,
                     position)
         else:
@@ -372,11 +372,11 @@ class DataSourceBase(NSObject):
 
     def acceptDrop_dragInfo_parentIter_position_(self, view, drag_info,
             parent, position):
-        type = self.calcType_(drag_info)
-        if type:
-            data = drag_info.draggingPasteboard().stringForType_(type)
+        typ = self.calcType_(drag_info)
+        if typ:
+            data = drag_info.draggingPasteboard().stringForType_(typ)
             wrapper = wrappermap.wrapper(view)
-            return self.drag_dest.accept_drop(wrapper, self.model, type, 
+            return self.drag_dest.accept_drop(wrapper, self.model, typ, 
                     drag_info.draggingSourceOperationMask(), parent,
                     position, data)
         else:

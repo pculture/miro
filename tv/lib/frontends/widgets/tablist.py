@@ -43,10 +43,10 @@ from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import timer
 
 def send_new_order():
-    def append_items(sequence, type):
+    def append_items(sequence, typ):
         for row in sequence:
             info = row[0]
-            message.append(info, type)
+            message.append(info, typ)
             for child in row.iterchildren():
                 message.append_child(info.id, child[0])
             
@@ -230,12 +230,12 @@ class TabListDragHandler(object):
         return (self.item_type, self.folder_type)
 
     def begin_drag(self, tableview, rows):
-        type = self.item_type
+        typ = self.item_type
         for r in rows:
             if r[0].is_folder:
-                type = self.folder_type
+                typ = self.folder_type
                 break
-        return { type: '-'.join(str(r[0].id) for r in rows)}
+        return { typ: '-'.join(str(r[0].id) for r in rows)}
 
 class TabDnDReorder(object):
     """Handles re-ordering tabs for doing drag and drop
@@ -320,16 +320,16 @@ class MediaTypeDropHandler(object):
     def allowed_actions(self):
         return widgetset.DRAG_ACTION_COPY
 
-    def validate_drop(self, table_view, model, type, source_actions, parent,
+    def validate_drop(self, table_view, model, typ, source_actions, parent,
             position):
-        if (type == 'downloaded-item' and parent is not None
+        if (typ == 'downloaded-item' and parent is not None
             and position == -1):
             return widgetset.DRAG_ACTION_COPY
         return widgetset.DRAG_ACTION_NONE
 
-    def accept_drop(self, table_view, model, type, source_actions, parent,
+    def accept_drop(self, table_view, model, typ, source_actions, parent,
             position, data):
-        if type == 'downloaded-item':
+        if typ == 'downloaded-item':
             if parent is not None and position == -1:
                 video_ids = [int(id) for id in data.split('-')]
                 media_type = model[parent][0].media_type
@@ -350,7 +350,7 @@ class TabListDropHandler(object):
     def allowed_types(self):
         return self.item_types + self.folder_types
 
-    def validate_drop(self, table_view, model, type, source_actions, parent,
+    def validate_drop(self, table_view, model, typ, source_actions, parent,
             position):
         if parent is None:
             is_folder = False
@@ -364,21 +364,21 @@ class TabListDropHandler(object):
         if position == -1 and not is_folder:
             # Only folders can be dropped on
             return widgetset.DRAG_ACTION_NONE
-        if (type in self.folder_types and
+        if (typ in self.folder_types and
                 ((position == -1 and is_folder) or parent is not None)):
             # Don't allow folders to be dropped in other folders
             return widgetset.DRAG_ACTION_NONE
-        elif type not in self.item_types + self.folder_types:
+        elif typ not in self.item_types + self.folder_types:
             return widgetset.DRAG_ACTION_NONE
         return widgetset.DRAG_ACTION_MOVE
 
-    def accept_drop(self, table_view, model, type, source_actions, parent,
+    def accept_drop(self, table_view, model, typ, source_actions, parent,
             position, data):
-        if (type in ('feed', 'feed-with-folder')
+        if (typ in ('feed', 'feed-with-folder')
                 and self.tablist == app.tab_list_manager.audio_feed_list):
             source_tablist = app.tab_list_manager.feed_list
             dest_tablist = self.tablist
-        elif (type in ('audio-feed', 'audio-feed-with-folder')
+        elif (typ in ('audio-feed', 'audio-feed-with-folder')
                 and self.tablist == app.tab_list_manager.feed_list):
             source_tablist = app.tab_list_manager.audio_feed_list
             dest_tablist = self.tablist
@@ -448,20 +448,20 @@ class PlaylistListDropHandler(TabListDropHandler):
     def allowed_types(self):
         return TabListDropHandler.allowed_types(self) + ('downloaded-item',)
 
-    def validate_drop(self, table_view, model, type, source_actions, parent,
+    def validate_drop(self, table_view, model, typ, source_actions, parent,
             position):
-        if type == 'downloaded-item':
+        if typ == 'downloaded-item':
             if (parent is not None and position == -1 and
                     not model[parent][0].is_folder):
                 return widgetset.DRAG_ACTION_COPY
             else:
                 return widgetset.DRAG_ACTION_NONE
-        return TabListDropHandler.validate_drop(self, table_view, model, type,
+        return TabListDropHandler.validate_drop(self, table_view, model, typ,
                 source_actions, parent, position)
 
-    def accept_drop(self, table_view, model, type, source_actions, parent,
+    def accept_drop(self, table_view, model, typ, source_actions, parent,
             position, data):
-        if type == 'downloaded-item':
+        if typ == 'downloaded-item':
             if parent is not None and position == -1:
                 playlist_id = model[parent][0].id
                 video_ids = [int(id) for id in data.split('-')]
@@ -471,7 +471,7 @@ class PlaylistListDropHandler(TabListDropHandler):
             # We shouldn't get here, because don't allow it in validate_drop.
             # Return False just in case
             return False
-        return TabListDropHandler.accept_drop(self, table_view, model, type,
+        return TabListDropHandler.accept_drop(self, table_view, model, typ,
                 source_actions, parent, position, data)
 
 class PlaylistListDragHandler(TabListDragHandler):
