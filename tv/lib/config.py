@@ -154,6 +154,11 @@ class DownloaderConfig(ConfigurationBase):
 
 class TemporaryConfiguration(Configuration):
     """Configuration class for the unit tests"""
+    def __init__(self):
+        Configuration.__init__(self)
+        # make _data a plain dict.  On linux, we don't want this to be a
+        # GConfDict, which auto-saves changes
+        self._data = {}
 
     def save(self):
         pass
