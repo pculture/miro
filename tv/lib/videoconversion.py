@@ -132,7 +132,7 @@ class ConverterManager(object):
                         ident = converter_info.identifier
                         self.converter_map[ident] = converter_info
                         group_converters.append(converter_info)
-                group_converters.sort(lambda a, b: cmp(a.name, b.name))
+                group_converters.sort(key=lambda x: x.name)
                 self.converters.append((defaults['name'], group_converters))
             finally:
                 definition_file.close()

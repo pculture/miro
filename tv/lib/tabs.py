@@ -53,9 +53,9 @@ class TabOrder(database.DDBObject):
         self.type = type
         self.tab_ids = []
         self._setup_views()
-        decorated = [(t.get_title().lower(), t) for t in self.id_to_tab.values()]
-        decorated.sort()
-        for sortkey, tab in decorated:
+        to_sort = self.id_to_tab.values()
+        to_sort.sort(key=lambda x: x.get_title().lower())
+        for tab in to_sort:
             self.tab_ids.append(tab.id)
 
     def setup_restored(self):

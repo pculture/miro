@@ -70,7 +70,7 @@ def get_languages():
         # language stuff needs a closer look-at.  (technically, the "country"
         # variable used here is incorrect too, it's actually 'region').
         langs.append((code, lang))
-    langs.sort(lambda x, y: cmp(x[1], y[1]))
+    langs.sort(key=lambda x: x[1])
 
     langs.insert(0, ("en", "English"))
     
