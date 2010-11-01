@@ -510,6 +510,7 @@ class TableView(Widget):
         self.context_menu_callback = self.drag_source = self.drag_dest = None
         self.hotspot_tracker = None
         self.hover_info = None
+        self.in_bulk_change = False
         self.handled_last_button_press = False
         self.delaying_press = False
         self.ignore_selection_changed = False
@@ -534,14 +535,25 @@ class TableView(Widget):
                 self.on_drag_data_received)
         self.wrapped_widget_connect('unrealize', self.on_unrealize)
         weak_connect(self.selection, 'changed', self.on_selection_changed)
-        weak_connect(self.model._model, 'row-inserted', self.on_row_inserted)
-        weak_connect(self.model._model, 'row-deleted', self.on_row_deleted)
-        weak_connect(self.model._model, 'row-changed', self.on_row_changed)
+        self._connect_hotspot_signals()
         self.layout_manager = LayoutManager(self._widget)
         if hasattr(self, 'get_tooltip'):
             self._widget.set_property('has-tooltip', True)
             self.wrapped_widget_connect('query-tooltip', self.on_tooltip)
             self._last_tooltip_place = None
+
+    def _connect_hotspot_signals(self):
+        self._hotspot_callback_handles = []
+        self._hotspot_callback_handles.append(weak_connect(self.model._model,
+            'row-inserted', self.on_row_inserted))
+        self._hotspot_callback_handles.append(weak_connect(self.model._model,
+            'row-deleted', self.on_row_deleted))
+        self._hotspot_callback_handles.append(weak_connect(self.model._model,
+            'row-changed', self.on_row_changed))
+
+    def _disconnect_hotspot_signals(self):
+        for handle in self._hotspot_callback_handles:
+            self.model._model.disconnect(handle)
 
     def set_gradient_highlight(self, gradient):
         # This is just an OS X thing.
@@ -1043,8 +1055,21 @@ class TableView(Widget):
                 return True
         return False
 
+    def start_bulk_change(self):
+        self._widget.freeze_child_notify()
+        self._widget.set_model(None)
+        self._disconnect_hotspot_signals()
+        self.in_bulk_change = True
+
     def model_changed(self):
-        pass # This gets automatically handled in GTK
+        if self.in_bulk_change:
+            self._widget.set_model(self.model._model)
+            self._widget.thaw_child_notify()
+            self._connect_hotspot_signals()
+            if self.hotspot_tracker:
+                self.hotspot_tracker.redraw_cell()
+                self.hotspot_tracker.update_hit()
+            self.in_bulk_change = False
 
     def get_left_offset(self):
         return self._widget.get_left_offset()
@@ -1056,6 +1081,12 @@ class TableModel(object):
     def __init__(self, *column_types):
         self._model = self.MODEL_CLASS(*self.map_types(column_types))
         self._column_types = column_types
+        if 'image' in self._column_types:
+            self.convert_row_for_gtk = self.convert_row_for_gtk_slow
+            self.convert_value_for_gtk = self.convert_value_for_gtk_slow
+        else:
+            self.convert_row_for_gtk = self.convert_row_for_gtk_fast
+            self.convert_value_for_gtk = self.convert_value_for_gtk_fast
 
     def map_types(self, miro_column_types):
         type_map = {
@@ -1072,23 +1103,34 @@ class TableModel(object):
         except KeyError, e:
             raise ValueError("Unknown column type: %s" % e[0])
 
-    def convert_value_for_gtk(self, column_value):
+    # If we store image data, we need to do some work to convert row data to
+    # send to GTK
+    def convert_value_for_gtk_slow(self, column_value):
         if isinstance(column_value, Image):
             return column_value.pixbuf
         else:
             return column_value
 
-    def convert_for_gtk(self, column_values):
+    def convert_row_for_gtk_slow(self, column_values):
         return tuple(self.convert_value_for_gtk(c) for c in column_values)
 
+
+    # If we don't store image data, we can don't need to do any work to
+    # convert row data to gtk
+    def convert_value_for_gtk_fast(self, value):
+        return value
+
+    def convert_row_for_gtk_fast(self, column_values):
+        return column_values
+
     def append(self, *column_values):
-        return self._model.append(self.convert_for_gtk(column_values))
+        return self._model.append(self.convert_row_for_gtk(column_values))
 
     def update_value(self, iter, index, value):
         self._model.set(iter, index, self.convert_value_for_gtk(value))
 
     def update(self, iter, *column_values):
-        self._model[iter] = self.convert_for_gtk(column_values)
+        self._model[iter] = self.convert_value_for_gtk(column_values)
 
     def remove(self, iter):
         if self._model.remove(iter):
@@ -1097,7 +1139,7 @@ class TableModel(object):
             return None
 
     def insert_before(self, iter, *column_values):
-        row = self.convert_value_for_gtk(column_values)
+        row = self.convert_row_for_gtk(column_values)
         return self._model.insert_before(iter, row)
 
     def first_iter(self):
@@ -1123,15 +1165,15 @@ class TreeTableModel(TableModel):
     MODEL_CLASS = gtk.TreeStore
 
     def append(self, *column_values):
-        return self._model.append(None, self.convert_for_gtk(column_values))
+        return self._model.append(None, self.convert_row_for_gtk(column_values))
 
     def insert_before(self, iter, *column_values):
         parent = self._model.iter_parent(iter)
-        row = self.convert_for_gtk(column_values)
+        row = self.convert_row_for_gtk(column_values)
         return self._model.insert_before(parent, iter, row)
 
     def append_child(self, iter, *column_values):
-        return self._model.append(iter, self.convert_for_gtk(column_values))
+        return self._model.append(iter, self.convert_row_for_gtk(column_values))
 
     def child_iter(self, iter):
         return self._model.iter_children(iter)

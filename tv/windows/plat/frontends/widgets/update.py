@@ -36,7 +36,8 @@ from miro.plat.frontends.widgets import xulrunnerbrowser
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import dialogs, widgetutil
 from miro.gtcache import gettext as _
-from miro import app, config, prefs
+from miro import app
+from miro import prefs
 
 class UpdateAvailableBrowserWidget(gtk.DrawingArea):
     # this is partially duplicated from browser.py
@@ -150,7 +151,7 @@ class UpdateAvailableDialog(dialogs.MainDialog):
         label = widgetset.Label()
         label.set_text(
             _('A new version of %(appname)s is available for download.',
-              {"appname": config.get(prefs.SHORT_APP_NAME)}))
+              {"appname": app.config.get(prefs.SHORT_APP_NAME)}))
         label2 = widgetset.Label()
         label2.set_text(
             _('Do you want to download it now?'))

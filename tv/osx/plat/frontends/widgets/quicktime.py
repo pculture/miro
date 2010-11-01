@@ -36,7 +36,6 @@ from QTKit import *
 
 from miro import app
 from miro import prefs
-from miro import config
 from miro import player
 from miro import iso639
 from miro.plat import utils
@@ -222,7 +221,7 @@ class Player(player.Player):
         return can_open
 
     def setup_subtitles(self, force_subtitles):
-        if config.get(prefs.ENABLE_SUBTITLES) or force_subtitles:
+        if app.config.get(prefs.ENABLE_SUBTITLES) or force_subtitles:
             enabled_tracks = self.get_all_enabled_subtitle_tracks()
             if len(enabled_tracks) == 0:
                 tracks = self.get_subtitle_tracks()

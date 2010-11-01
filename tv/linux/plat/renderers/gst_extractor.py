@@ -103,6 +103,9 @@ class Extractor:
             elif message.type == gst.MESSAGE_ERROR:
                 gobject.idle_add(self.error_occurred)
 
+        elif message.type == gst.MESSAGE_ERROR:
+            gobject.idle_add(self.error_occurred)
+
     def done(self):
         if self.saw_video_tag:
             media_type = 'video'

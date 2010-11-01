@@ -101,7 +101,7 @@ class ItemListController(object):
             sorter.KEY, sorter.is_ascending())
         self.list_item_view.change_sort_indicator(
             sorter.KEY, sorter.is_ascending())
-        self._item_added_callback = self._playback_item_list = None
+        self._items_added_callback = self._playback_item_list = None
 
     def _init_widget(self):
         toolbar = self.build_header_toolbar()
@@ -161,16 +161,18 @@ class ItemListController(object):
             return self.current_item_view
 
     def get_selection_for_playing(self):
+        return list(self.iter_selection_for_playing())
+
+    def iter_selection_for_playing(self):
         item_view = self._playback_item_view()
         selection = self.get_selection()
         if len(selection) == 0:
-            items = item_view.item_list.get_items()
+            return item_view.item_list.iter_items()
         elif len(selection) == 1:
             id = selection[0].id
-            items = item_view.item_list.get_items(start_id=id)
+            return item_view.item_list.iter_items(start_id=id)
         else:
-            items = selection
-        return items
+            return iter(selection)
         
     def play_selection(self, presentation_mode='fit-to-bounds'):
         """Play the currently selected items."""
@@ -178,9 +180,9 @@ class ItemListController(object):
         if len(items) > 0:
             self._play_item_list(items, presentation_mode)
 
-    def _on_new_item_during_playback(self, item_list, item_info,
-                                     next_item_info):
-        app.playback_manager.append_item(item_info)
+    def _on_items_added_during_playback(self, item_list, new_items):
+        for item_info in item_list:
+            app.playback_manager.append_item(item_info)
             
     def filter_playable_items(self, items):
         return [i for i in items if i.is_playable]
@@ -193,8 +195,8 @@ class ItemListController(object):
             # User has 0 or 1 items selected, if more items get added
             # to the item list, we should play them.
             item_list = self._playback_item_view().item_list
-            self._item_added_callback = item_list.connect('item-added',
-                    self._on_new_item_during_playback)
+            self._items_added_callback = item_list.connect('items-added',
+                    self._on_items_added_during_playback)
             self._playback_item_list = item_list
         app.playback_manager.start_with_items(playable, presentation_mode)
 
@@ -225,6 +227,8 @@ class ItemListController(object):
         self.check_for_empty_list()
 
     def on_sort_changed(self, object, sort_key, ascending):
+        for item_view in self.all_item_views():
+            item_view.start_bulk_change()
         sorter = itemlist.SORT_KEY_MAP[sort_key](ascending)
         for item_list in self.item_list_group.item_lists:
             item_list.set_sort(sorter)
@@ -351,12 +355,14 @@ class ItemListController(object):
 
     def _playback_will_stop(self, playback_manager):
         self._on_playback_change(playback_manager)
-        if self._item_added_callback is not None:
-            self._playback_item_list.disconnect(self._item_added_callback)
-            self._playback_item_list = self._item_added_callback = None
+        if self._items_added_callback is not None:
+            self._playback_item_list.disconnect(self._items_added_callback)
+            self._playback_item_list = self._items_added_callback = None
 
     def handle_item_list(self, message):
         """Handle an ItemList message meant for this ItemContainer."""
+        for item_view in self.all_item_views():
+            item_view.start_bulk_change()
         self.item_list_group.add_items(message.items)
         for item_view in self.all_item_views():
             item_view.model_changed()
@@ -364,6 +370,8 @@ class ItemListController(object):
 
     def handle_items_changed(self, message):
         """Handle an ItemsChanged message meant for this ItemContainer."""
+        for item_view in self.all_item_views():
+            item_view.start_bulk_change()
         self.item_list_group.remove_items(message.removed)
         self.item_list_group.update_items(message.changed)
         self.item_list_group.add_items(message.added)
@@ -691,3 +699,11 @@ class ItemListControllerManager(object):
             return self.displayed.filter_playable_items(selection)
         else:
             return []
+
+    def can_play_items(self):
+        """Can we play any items currently?"""
+        if self.displayed is not None:
+            for info in self.displayed.iter_selection_for_playing():
+                if info.is_playable:
+                    return True
+        return False

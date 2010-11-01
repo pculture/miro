@@ -35,7 +35,6 @@ import logging
 from miro import app
 from miro import util
 from miro import displaytext
-from miro import config
 from miro import prefs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import cellpack
@@ -287,6 +286,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     REMOVE_TEXT = _("Remove")
     STOP_SEEDING_TEXT = _("Stop seeding")
 
+    html_stripper = util.HTMLStripper()
+
     def __init__(self, display_channel=True):
         widgetset.CustomCellRenderer.__init__(self)
         self.separator = imagepool.get_surface(resources.path(
@@ -394,8 +395,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     def make_description(self, layout):
         layout.set_font(0.85, family=widgetset.ITEM_DESC_FONT)
         layout.set_text_color(self.ITEM_DESC_COLOR)
-        text = self.data.description_text
-        links = self.data.description_links
+        text, links = ItemRenderer.html_stripper.strip(self.data.description)
         textbox = layout.textbox("")
         pos = 0
         for start, end, url in links:
@@ -839,7 +839,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         elif (self.data.is_playable
               and self.data.item_viewed
               and self.data.resume_time > 0
-              and config.get(prefs.RESUME_VIDEOS_MODE)):
+              and app.config.get(prefs.RESUME_VIDEOS_MODE)):
             layout.set_font(0.80, bold=True)
             layout.set_text_color((154.0 / 255.0, 174.0 / 255.0, 181.0 / 255.0))
 
@@ -1068,7 +1068,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         context.restore()
 
     def draw_thumbnail(self, context, x, y, width, height):
-        widgetutil.draw_rounded_icon(context, self.data.icon, x, y, 154, 105)
+        icon = imagepool.get_surface(self.data.thumbnail, (154, 105))
+        widgetutil.draw_rounded_icon(context, icon, x, y, 154, 105)
         self.thumb_overlay.draw(context, x, y, 154, 105)
 
     def _thumbnail_bubble_path(self, context, x, y, radius, inner_width):
@@ -1421,7 +1422,8 @@ class ProgressBarDrawer(cellpack.Packer):
             a = radius - self.progress_width
             upper_height = math.floor(math.sqrt(radius**2 - a**2))
         elif self.progress_end == 'right':
-            a = self.width - self.progress_width
+            end_circle_start = self.width - radius
+            a = self.progress_width - end_circle_start
             upper_height = math.floor(math.sqrt(radius**2 - a**2))
         else:
             upper_height = self.height / 2

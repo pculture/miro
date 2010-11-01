@@ -28,7 +28,6 @@
 
 from miro import app
 from miro import displaytext
-from miro import config
 from miro import prefs
 
 from miro.plat import resources
@@ -112,7 +111,7 @@ class VideoConversionsController(object):
             if task.log_path is not None:
                 app.widgetapp.open_file(task.log_path)
         elif name == 'troubleshoot' and task.state == 'failed':
-            app.widgetapp.open_url(config.get(prefs.TROUBLESHOOT_URL))
+            app.widgetapp.open_url(app.config.get(prefs.TROUBLESHOOT_URL))
         elif name == 'clear-failed' and task.state == 'failed':
             conversion_manager.clear_failed_task(task.key)
         elif name == 'clear-finished' and task.state == 'finished':

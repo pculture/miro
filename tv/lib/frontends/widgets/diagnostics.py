@@ -46,7 +46,6 @@ from miro.frontends.widgets.dialogs import MainDialog
 from miro.dialogs import BUTTON_OK
 
 from miro import app
-from miro import config
 from miro import prefs
 from miro import util
 
@@ -63,7 +62,7 @@ def delete_backups(widget):
                       {"databasecount": len(app.db.get_backup_databases())}))
 
 def get_database_size():
-    path = config.get(prefs.SQLITE_PATHNAME)
+    path = app.config.get(prefs.SQLITE_PATHNAME)
     if path and os.path.isfile(path):
         try:
             return os.stat(path)[stat.ST_SIZE]
@@ -93,25 +92,25 @@ def run_dialog():
     try:
         items = [
             {"label": _("Movies location:"),
-             "data": config.get(prefs.MOVIES_DIRECTORY),
+             "data": app.config.get(prefs.MOVIES_DIRECTORY),
              "button_face": SHOW,
-             "button_fun": open_helper(config.get(prefs.MOVIES_DIRECTORY))},
+             "button_fun": open_helper(app.config.get(prefs.MOVIES_DIRECTORY))},
             {"label": _("Icon cache location:"),
-             "data": config.get(prefs.ICON_CACHE_DIRECTORY),
+             "data": app.config.get(prefs.ICON_CACHE_DIRECTORY),
              "button_face": SHOW,
-             "button_fun": open_helper(config.get(prefs.ICON_CACHE_DIRECTORY))},
+             "button_fun": open_helper(app.config.get(prefs.ICON_CACHE_DIRECTORY))},
             {"label": _("Log file location:"),
-             "data": config.get(prefs.LOG_PATHNAME),
+             "data": app.config.get(prefs.LOG_PATHNAME),
              "button_face": SHOW,
-             "button_fun": open_helper(config.get(prefs.LOG_PATHNAME))},
+             "button_fun": open_helper(app.config.get(prefs.LOG_PATHNAME))},
             {"label": _("Downloader log file location:"),
-             "data": config.get(prefs.DOWNLOADER_LOG_PATHNAME),
+             "data": app.config.get(prefs.DOWNLOADER_LOG_PATHNAME),
              "button_face": SHOW,
-             "button_fun": open_helper(config.get(prefs.DOWNLOADER_LOG_PATHNAME))},
+             "button_fun": open_helper(app.config.get(prefs.DOWNLOADER_LOG_PATHNAME))},
             {"label": _("Database file location:"),
-             "data": config.get(prefs.SQLITE_PATHNAME),
+             "data": app.config.get(prefs.SQLITE_PATHNAME),
              "button_face": SHOW,
-             "button_fun": open_helper(config.get(prefs.SQLITE_PATHNAME))},
+             "button_fun": open_helper(app.config.get(prefs.SQLITE_PATHNAME))},
 
             SEPARATOR,
 

@@ -30,7 +30,6 @@ from miro import util
 import os
 import os.path
 from miro import app
-from miro import config
 from miro import prefs
 from miro.plat import resources
 from miro.plat.specialfolders import baseMoviesDirectory, appDataDirectory
@@ -88,6 +87,6 @@ def migrateVideos(oldAppName, newAppName):
     if migratedSupport:
         oldDefault = os.path.join(baseMoviesDirectory, oldAppName)
         newDefault = os.path.join(baseMoviesDirectory, newAppName)
-        videoDir = config.get(prefs.MOVIES_DIRECTORY)
+        videoDir = app.config.get(prefs.MOVIES_DIRECTORY)
         if videoDir == newDefault:
             app.controller.changeMoviesDirectory(newDefault, True)

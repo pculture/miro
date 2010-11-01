@@ -178,6 +178,28 @@ def ask_for_string(title, description, initial_text=None, transient_for=None):
     finally:
         window.destroy()
 
+def ask_for_choice(title, description, choices):
+    """Ask the user to enter a string in a TextEntry box.
+
+    :param title: title for the window
+    :param description: textual description with newlines
+    :param choices: list of labels for choices
+    Returns the index of the value chosen, or None if the user clicked cancel
+    """
+    window = MainDialog(title, description)
+    try:
+        window.add_button(BUTTON_OK.text)
+        window.add_button(BUTTON_CANCEL.text)
+        menu = widgetset.OptionMenu(choices)
+        window.set_extra_widget(menu)
+        response = window.run()
+        if response == 0:
+            return menu.get_selected()
+        else:
+            return None
+    finally:
+        window.destroy()
+
 def ask_for_open_pathname(title, initial_filename=None, filters=[],
         transient_for=None, select_multiple=False):
     """Returns the file pathname or None.

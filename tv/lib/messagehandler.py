@@ -29,14 +29,13 @@
 """``miro.messagehandler``` -- Backend message handler
 """
 
-from copy import copy
+import itertools
 import logging
 import time
 import os
 
 from miro import app
 from miro import autoupdate
-from miro import config
 from miro import database
 from miro import devices
 from miro import downloader
@@ -108,7 +107,7 @@ class ViewTracker(object):
 
     def _make_new_info(self, obj):
         info = self.InfoClass(obj)
-        self._last_sent_info[obj.id] = copy(info)
+        self._last_sent_info[obj.id] = info
         return info
 
     def _make_added_list(self, added):
@@ -121,7 +120,7 @@ class ViewTracker(object):
             if obj.id not in self._last_sent_info or \
                     info.__dict__ != self._last_sent_info[obj.id].__dict__:
                 retval.append(info)
-                self._last_sent_info[obj.id] = copy(info)
+                self._last_sent_info[obj.id] = info
         return retval
 
     def _make_removed_list(self, removed):
@@ -284,17 +283,48 @@ class ItemTrackerBase(ViewTracker):
     InfoClass = messages.ItemInfo
 
     def __init__(self):
+        self.fetch_initial_infos()
+        self.sent_a_list = False
         ViewTracker.__init__(self)
+        for info_list in self.initial_infos.itervalues():
+            for info in info_list:
+                self._last_sent_info[info.id] = info
+
+    def fetch_initial_infos(self):
+        self.initial_infos = {}
+        for view in self.get_object_views():
+            info_list = list(app.item_info_cache.iter_infos(view))
+            self.initial_infos[view] = info_list
 
     def make_changed_message(self, added, changed, removed):
         return messages.ItemsChanged(self.type, self.id,
                 added, changed, removed)
 
+    def add_callbacks(self):
+        for view, info_list in self.initial_infos.iteritems():
+            initial_ids = set(info.id for info in info_list)
+            tracker = view.make_tracker(initial_ids)
+            tracker.connect('added', self.on_object_added)
+            tracker.connect('removed', self.on_object_removed)
+            tracker.connect('changed', self.on_object_changed)
+            self.trackers.append(tracker)
+
     def get_object_views(self):
         return [self.view]
 
     def send_initial_list(self):
-        infos = self._make_added_list(self.view)
+        if not self.sent_a_list:
+            # first call, get the infos we already fetch in the constructor
+            infos = []
+            for info_list in self.initial_infos.itervalues():
+                infos.extend(info_list)
+            del self.initial_infos # no need to keep these around anymore
+            self.sent_a_list = True
+        else:
+            # second (or more) call, regenerate the infos
+            infos = list(itertools.chain(
+                app.item_info_cache.iter_infos(view) for view in
+                self.get_object_views()))
         messages.ItemList(self.type, self.id, infos).send_to_frontend()
 
 class FeedItemTracker(ItemTrackerBase):
@@ -486,7 +516,7 @@ class DownloadCountTracker(CountTracker):
     def make_message(self, total_count):
         # total_count includes non-downloading items like seeding torrents.
         # We need to split this into separate counts for the frontend
-        downloading_count = item.Item.only_downloading_view().count()
+        downloading_count = len(self.other_tracker)
         non_downloading_count = total_count - downloading_count
         return messages.DownloadCountChanged(downloading_count,
                 non_downloading_count)
@@ -1417,8 +1447,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             messages.FeedlessDownloadStarted().send_to_frontend()
 
     def handle_change_movies_directory(self, message):
-        old_path = config.get(prefs.MOVIES_DIRECTORY)
-        config.set(prefs.MOVIES_DIRECTORY, message.path)
+        old_path = app.config.get(prefs.MOVIES_DIRECTORY)
+        app.config.set(prefs.MOVIES_DIRECTORY, message.path)
         if message.migrate:
             self._migrate(old_path, message.path)
         message = messages.UpdateFeed(feed.Feed.get_directory_feed().id)

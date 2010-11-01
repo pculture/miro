@@ -40,7 +40,6 @@ subclasses to handle the logic involved.
 """
 
 from miro import app
-from miro import config
 from miro import prefs
 from miro import displaytext
 from miro.gtcache import gettext as _
@@ -552,9 +551,9 @@ class DownloadToolbar(DisplayToolbar):
         vbox.pack_start(h)
         self.add(vbox)
 
-        config.add_change_callback(self.handle_config_change)
+        app.frontend_config_watcher.connect('changed', self.on_config_change)
 
-    def handle_config_change(self, key, value):
+    def on_config_change(self, obj, key, value):
         if ((key == prefs.PRESERVE_X_GB_FREE.key
              or key == prefs.PRESERVE_DISK_SPACE.key)):
             self.update_free_space()
@@ -565,8 +564,8 @@ class DownloadToolbar(DisplayToolbar):
         amount -- the total number of bytes free.
         """
         amount = get_available_bytes_for_movies()
-        if config.get(prefs.PRESERVE_DISK_SPACE):
-            available = (config.get(prefs.PRESERVE_X_GB_FREE) * 1024 * 1024 * 1024)
+        if app.config.get(prefs.PRESERVE_DISK_SPACE):
+            available = (app.config.get(prefs.PRESERVE_X_GB_FREE) * 1024 * 1024 * 1024)
             available = amount - available
 
             if available < 0:

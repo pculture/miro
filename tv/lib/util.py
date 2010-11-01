@@ -32,6 +32,7 @@ This module contains self-contained utility functions.  It shouldn't import
 any other Miro modules.
 """
 
+import itertools
 import os
 import random
 import re
@@ -263,10 +264,12 @@ def gather_media_files(path):
     path -- absolute file path to search
     """
     from miro import prefs
-    from miro import config
+    from miro import app
+    from miro.plat.utils import dirfilt
+
     parsed = 0
     found = []
-    short_app_name = config.get(prefs.SHORT_APP_NAME)
+    short_app_name = app.config.get(prefs.SHORT_APP_NAME)
     for root, dirs, files in os.walk(path):
         for f in files:
             parsed = parsed + 1
@@ -275,6 +278,14 @@ def gather_media_files(path):
 
         if short_app_name in dirs:
             dirs.remove(short_app_name)
+
+        # Filter out naughty directories on a platform-specific basis
+        # that we never want to be parsing.  This is mainly useful on 
+        # Mac OS X where we do not want to descend into file packages.  A bit
+        # of a wart, long term solution is to write our own os.walk() shim 
+        # that is platform aware cleanly but right now it's not worth the 
+        # effort.
+        dirfilt(root, dirs)
 
         if parsed > 1000:
             adjusted_parsed = int(parsed / 100.0) * 100
@@ -679,11 +690,11 @@ def _to_utf8_bytes(s, encoding=None):
         result = s.encode('utf-8')
     elif not isinstance(s, str):
         s = str(s)
-    if result is None and encoding is not None:
+    if result is None and encoding is not None and not encoding == '':
         # If we knew the encoding of the s, try that.
         try:
             decoded = s.decode(encoding, 'replace')
-        except UnicodeDecodeError:
+        except (UnicodeDecodeError, LookupError):
             pass
         else:
             result = decoded.encode('utf-8')
@@ -991,3 +1002,38 @@ class DebuggingTimer:
 
     def log_total_time(self):
         logging.timing("total time: %0.3f", clock() - self.start_time)
+
+class Cache(object):
+    def __init__(self, size):
+        self.size = size
+        self.dict = {}
+        self.counter = itertools.count()
+        self.access_times = {}
+
+    def get(self, key):
+        if key in self.dict:
+            self.access_times[key] = self.counter.next()
+            return self.dict[key]
+        else:
+            value = self.create_new_value(key)
+            self.set(key, value)
+            return value
+
+    def set(self, key, value):
+        if len(self.dict) == self.size:
+            self.shrink_size()
+        self.access_times[key] = self.counter.next()
+        self.dict[key] = value
+
+    def shrink_size(self):
+        # shrink by LRU
+        to_sort = self.access_times.items()
+        to_sort.sort(key=lambda m: m[1])
+        new_dict = {}
+        new_access_times = {}
+        latest_times = to_sort[len(self.dict) // 2:]
+        for (key, time) in latest_times:
+            new_dict[key] = self.dict[key]
+            new_access_times[key] = time
+        self.dict = new_dict
+        sself.access_times = new_access_times

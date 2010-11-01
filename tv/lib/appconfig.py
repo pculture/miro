@@ -31,9 +31,6 @@ holding the values of ``app.config``.
 
 If Miro is using a theme, then the theme's app.config value overrides
 the default one.
-
-Most uses of AppConfig will come from the global variable
-``app.configfile``.  This is setup in ``config.load()``.
 """
 
 import logging

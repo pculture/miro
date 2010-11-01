@@ -50,7 +50,6 @@ import sys
 import os
 
 from miro import app
-from miro import config
 from miro import messages
 from miro import prefs
 from miro.plat.frontends.widgets import widgetset
@@ -98,14 +97,14 @@ def attach_boolean(widget, descriptor, sensitive_widget=None):
         or None
     """
     def boolean_changed(widget):
-        config.set(descriptor, widget.get_checked())
+        app.config.set(descriptor, widget.get_checked())
         if sensitive_widget != None:
             if widget.get_checked():
                 [sw.enable() for sw in sensitive_widget]
             else:
                 [sw.disable() for sw in sensitive_widget]
 
-    widget.set_checked(config.get(descriptor))
+    widget.set_checked(app.config.get(descriptor))
     if sensitive_widget != None:
         if widget.get_checked():
             [sw.enable() for sw in sensitive_widget]
@@ -118,9 +117,9 @@ def attach_radio(widget_values, descriptor):
     def radio_changed(widget):
         for w, v in widget_values:
             if widget is w:
-                config.set(descriptor, v)
+                app.config.set(descriptor, v)
 
-    pref_value = config.get(descriptor)
+    pref_value = app.config.get(descriptor)
     for w, v in widget_values:
         w.connect('clicked', radio_changed)
         if v == pref_value:
@@ -144,11 +143,11 @@ def attach_integer(widget, descriptor, check_function=None):
             if check_function != None:
                 if not check_function(widget, v):
                     return
-            config.set(descriptor, v)
+            app.config.set(descriptor, v)
         except ValueError, ve:
             pass
 
-    widget.set_text(str(config.get(descriptor)))
+    widget.set_text(str(app.config.get(descriptor)))
     widget.connect('changed', integer_changed)
 
 def attach_float(widget, descriptor, check_function=None):
@@ -169,13 +168,13 @@ def attach_float(widget, descriptor, check_function=None):
             if check_function != None:
                 if not check_function(widget, v):
                     return
-            config.set(descriptor, v)
+            app.config.set(descriptor, v)
         except ValueError, ve:
             pass
 
     # strip off trailing 0s and if there's a . at the end, strip that
     # off, too.
-    text = "%.3f" % config.get(descriptor)
+    text = "%.3f" % app.config.get(descriptor)
     while text.endswith("0"):
         text = text[:-1]
     if text.endswith("."):
@@ -201,9 +200,9 @@ def attach_text(widget, descriptor, check_function=None):
         if check_function != None:
             if not check_function(widget, v):
                 return
-        config.set(descriptor, v)
+        app.config.set(descriptor, v)
 
-    widget.set_text(config.get(descriptor))
+    widget.set_text(app.config.get(descriptor))
     widget.connect('changed', text_changed)
 
 def attach_combo(widget, descriptor, values):
@@ -215,9 +214,9 @@ def attach_combo(widget, descriptor, values):
     values - the list of all possible values as strings
     """
     def combo_changed(widget, index):
-        config.set(descriptor, values[index])
+        app.config.set(descriptor, values[index])
 
-    value = config.get(descriptor)
+    value = app.config.get(descriptor)
     try:
         widget.set_selected(values.index(value))
     except ValueError:
@@ -288,7 +287,9 @@ class GeneralPanel(PanelBuilder):
     def build_widget(self):
         v = widgetset.VBox(8)
 
-        run_at_startup_cbx = widgetset.Checkbox(_("Automatically run %(appname)s when I log in.", {'appname': config.get(prefs.SHORT_APP_NAME)}))
+        run_at_startup_cbx = widgetset.Checkbox(_(
+            "Automatically run %(appname)s when I log in.",
+            {'appname': app.config.get(prefs.SHORT_APP_NAME)}))
         attach_boolean(run_at_startup_cbx, prefs.RUN_AT_STARTUP)
         v.pack_start(run_at_startup_cbx)
 
@@ -482,17 +483,14 @@ class _MovieDirectoryHelper(object):
 
     def _on_button_clicked(self, button):
         d = dialogs.ask_for_directory(_("Choose Movies Directory"),
-                                      initial_directory=config.get(prefs.MOVIES_DIRECTORY),
+                                      initial_directory=app.config.get(prefs.MOVIES_DIRECTORY),
                                       transient_for=_pref_window)
         if d is not None:
             try:
                 if not os.path.exists(d):
                     os.makedirs(d)
-                fn = os.path.join(d, "testfile")
-                f = open(fn, "w")
-                f.write("test")
-                f.close()
-                os.remove(fn)
+                if not os.access(d, os.W_OK):
+                    raise IOError    # Pretend we got an IOError.
             except (OSError, IOError):
                 dialogs.show_message(_("Directory not valid"),
                                      _("Directory '%s' could not be created.  " +
@@ -505,7 +503,7 @@ class _MovieDirectoryHelper(object):
             self.label.set_text(filename_to_unicode(d))
 
     def set_initial_path(self):
-        self.path = self.initial_path = config.get(prefs.MOVIES_DIRECTORY)
+        self.path = self.initial_path = app.config.get(prefs.MOVIES_DIRECTORY)
         self.label.set_text(filename_to_unicode(self.path))
 
     def on_window_closed(self):
@@ -514,7 +512,7 @@ class _MovieDirectoryHelper(object):
             description = _("You've selected a new folder to download movies "
                     "to.  Should %(appname)s migrate your existing downloads there? "
                     "(Currently downloading movies will not be moved until "
-                    "they finish.)", {'appname': config.get(prefs.SHORT_APP_NAME)})
+                    "they finish.)", {'appname': app.config.get(prefs.SHORT_APP_NAME)})
             response = dialogs.show_choice_dialog(title, description, 
                     (dialogs.BUTTON_MIGRATE, dialogs.BUTTON_DONT_MIGRATE),
                     transient_for=_pref_window)
@@ -583,7 +581,7 @@ class _WatchedFolderHelper(object):
 
     def _add_clicked(self, button):
         dir = dialogs.ask_for_directory(_("Add Watched Folder"),
-                initial_directory=config.get(prefs.MOVIES_DIRECTORY),
+                initial_directory=app.config.get(prefs.MOVIES_DIRECTORY),
                 transient_for=_pref_window)
         if dir is not None:
             app.watched_folder_manager.add(dir)
@@ -604,7 +602,7 @@ class FoldersPanel(PanelBuilder):
         grid.pack_label(_('Store downloads in this folder:'), span=2)
         grid.end_line(spacing=0)
         movies_directory_label = widgetset.Label(
-                config.get(prefs.MOVIES_DIRECTORY))
+                app.config.get(prefs.MOVIES_DIRECTORY))
         grid.pack(self.movie_dir_helper.label, grid.ALIGN_LEFT, pad_left=12)
         grid.pack(self.movie_dir_helper.button)
         grid.end_line(spacing=18)
@@ -616,6 +614,9 @@ class FoldersPanel(PanelBuilder):
         return grid.make_table()
 
     def on_window_open(self):
+
+        def query_lib(self, type):
+            return self.library[type]
         self.watched_folder_helper.connect_signals()
         self.movie_dir_helper.set_initial_path()
 
@@ -632,6 +633,9 @@ class DiskSpacePanel(PanelBuilder):
         limit.set_width(6)
         note = widgetset.Label(_('GB'))
         attach_boolean(cbx, prefs.PRESERVE_DISK_SPACE, (limit,))
+
+        def set_library_filter(self, type, filter):
+            self.library[type] = filter
         attach_float(limit, prefs.PRESERVE_X_GB_FREE, create_float_checker(min=0.0))
 
         grid.pack(cbx)

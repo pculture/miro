@@ -47,16 +47,12 @@ from miro import item
 from miro import models
 from miro import util
 from miro import prefs
-from miro import config
+from miro import app
 from miro import signals
 from miro import messages
 from miro.gtcache import gettext as _
 from miro.plat import utils
 from miro.plat import resources
-
-import sys
-if not sys.platform == "win32":
-    WindowsError = IOError
 
 def get_conversions_folder():
     """Get the folder for video conversions.
@@ -64,7 +60,7 @@ def get_conversions_folder():
     This method is safe to call from the frontend thread.
     """
 
-    root = config.get(prefs.MOVIES_DIRECTORY)
+    root = app.config.get(prefs.MOVIES_DIRECTORY)
     target_folder = os.path.join(root, "Converted")
     if not os.path.exists(target_folder):
         os.mkdir(target_folder)
@@ -118,7 +114,7 @@ class ConverterManager(object):
 
         :param path: a glob-bable path like ``/foo/bar/baz/*.conv``
         """
-        platform = config.get(prefs.APP_PLATFORM)
+        platform = app.config.get(prefs.APP_PLATFORM)
         groups = glob(path)
         groups.sort()
         for group_definition in groups:
@@ -136,7 +132,7 @@ class ConverterManager(object):
                         ident = converter_info.identifier
                         self.converter_map[ident] = converter_info
                         group_converters.append(converter_info)
-                group_converters.sort(lambda a, b: cmp(a.name, b.name))
+                group_converters.sort(key=lambda x: x.name)
                 self.converters.append((defaults['name'], group_converters))
             finally:
                 definition_file.close()
@@ -253,7 +249,7 @@ class VideoConversionManager(signals.SignalEmitter):
         self._process_message_queue()
         
         notify_count = False
-        max_concurrent_tasks = int(config.get(prefs.MAX_CONCURRENT_CONVERSIONS))
+        max_concurrent_tasks = int(app.config.get(prefs.MAX_CONCURRENT_CONVERSIONS))
         if ((self.pending_tasks_count() > 0
              and self.running_tasks_count() < max_concurrent_tasks)):
             task = self.pending_tasks.pop()
@@ -482,7 +478,7 @@ def clean_up(temp_file, file_and_directory=False, attempts=0):
     if os.path.exists(temp_file):
         try:
             os.remove(temp_file)
-        except (OSError, IOError, WindowsError), e:
+        except EnvironmentError, e:
             logging.debug("clean_up: %s kicked up while removing %s", 
                           e, temp_file)
             timeout = 1.0 * attempts
@@ -495,7 +491,7 @@ def clean_up(temp_file, file_and_directory=False, attempts=0):
         if os.path.exists(path):
             try:
                 os.rmdir(path)
-            except (OSError, IOError, WindowsError), e:
+            except EnvironmentError, e:
                 logging.debug("clean_up: %s kicked up while removing %s", 
                               e, path)
                 timeout = 1.0 * attempts
@@ -580,9 +576,9 @@ class VideoConversionTask(object):
                   "stderr": subprocess.STDOUT,
                   "stdin": subprocess.PIPE,
                   "startupinfo": util.no_console_startupinfo()}
-        if os.name != 'nt':
-            # close_fds is not available on Windows in Python 2.5.
+        if os.name != "nt":
             kwargs["close_fds"] = True
+
         self.process_handle = subprocess.Popen(args, **kwargs)
 
         try:
@@ -610,7 +606,7 @@ class VideoConversionTask(object):
                 conversion_manager._notify_tasks_count()
     
     def _start_logging(self, executable, params):
-        log_folder = os.path.dirname(config.get(prefs.LOG_PATHNAME))
+        log_folder = os.path.dirname(app.config.get(prefs.LOG_PATHNAME))
         self.log_path = os.path.join(log_folder, "conversion-%d-to-%s.log" % (self.item_info.id, self.converter_info.identifier))
         self.log_file = file(self.log_path, "w")
         self._log_progress("STARTING CONVERSION")
@@ -707,7 +703,7 @@ class FFMpeg2TheoraConversionTask(VideoConversionTask):
 
     def __init__(self, converter_info, item_info, target_folder):
         VideoConversionTask.__init__(self, converter_info, item_info, target_folder)
-        self.platform = config.get(prefs.APP_PLATFORM)
+        self.platform = app.config.get(prefs.APP_PLATFORM)
 
     def get_executable(self):
         return utils.get_ffmpeg2theora_executable_path()

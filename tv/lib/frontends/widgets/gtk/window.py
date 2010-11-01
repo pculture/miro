@@ -35,7 +35,6 @@ import gobject
 import gtk
 
 from miro import app
-from miro import config
 from miro import prefs
 from miro import signals
 from miro import dialogs
@@ -187,7 +186,7 @@ class WindowBase(signals.SignalEmitter):
 
         # on linux, we don't have a CheckVersion option because
         # we update with the package system.
-        this_platform = config.get(prefs.APP_PLATFORM)
+        this_platform = app.config.get(prefs.APP_PLATFORM)
         if this_platform == 'linux':
             file_menu = self.menu_structure.get("FileMenu")
             file_menu.remove("CheckVersion")
@@ -763,48 +762,57 @@ class AboutDialog(Dialog):
     def __init__(self):
         Dialog.__init__(self,
                         _("About %(appname)s") % {
-                'appname': config.get(prefs.SHORT_APP_NAME)})
+                'appname': app.config.get(prefs.SHORT_APP_NAME)})
         icon_pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(
                 resources.share_path('icons/hicolor/128x128/apps/miro.png'),
                 48, 48)
         self.packing_vbox.pack_start(gtk.image_new_from_pixbuf(icon_pixbuf))
-        if config.get(prefs.APP_REVISION_NUM):
+        if app.config.get(prefs.APP_REVISION_NUM):
             version = "%s (%s)" % (
-                config.get(prefs.APP_VERSION),
-                config.get(prefs.APP_REVISION_NUM))
+                app.config.get(prefs.APP_VERSION),
+                app.config.get(prefs.APP_REVISION_NUM))
         else:
-            version = "%s" % config.get(prefs.APP_VERSION)
+            version = "%s" % app.config.get(prefs.APP_VERSION)
         name_label = gtk.Label('<span size="xx-large" weight="bold">%s %s</span>' % (
-                config.get(prefs.SHORT_APP_NAME), version))
+                app.config.get(prefs.SHORT_APP_NAME), version))
         name_label.set_use_markup(True)
         self.packing_vbox.pack_start(name_label)
         copyright_text = _('%(copyright)s.  See license.txt file for details.\n'
                            '%(trademark)s') % (
-            {"copyright": config.get(prefs.COPYRIGHT),
-             "trademark": config.get(prefs.TRADEMARK)})
+            {"copyright": app.config.get(prefs.COPYRIGHT),
+             "trademark": app.config.get(prefs.TRADEMARK)})
         copyright_label = gtk.Label('<small>%s</small>' % copyright_text)
         copyright_label.set_use_markup(True)
         copyright_label.set_justify(gtk.JUSTIFY_CENTER)
         self.packing_vbox.pack_start(copyright_label)
-        self.packing_vbox.pack_start(gtk.Label(config.get(prefs.PROJECT_URL)))
+        self.packing_vbox.pack_start(gtk.Label(app.config.get(prefs.PROJECT_URL)))
 
-        # this removes the newlines in the description so it wraps correctly
-        adopters_data = file(resources.path('ADOPTERS'), 'r').read()
+        # get adopters, remove newlines, and wrap it
+        adopters_data = open(resources.path('ADOPTERS'), 'r').read()
         first_double_newline = adopters_data.find('\n\n')
         adopters_data = adopters_data[first_double_newline+2:-1].replace('\n', ', ')
+
+        # get contributors, remove newlines and wrap it
+        contributors = open(resources.path('CREDITS'), 'r').readlines()
+        contributors = [c[2:].strip() for c in contributors if c.startswith("* ")]
+        contributors = ", ".join(contributors)
+
+        contributors = "\n\nThank you to all the people who contributed to Miro 3.5:\n\n" + contributors
+
+        adopters_data = adopters_data + contributors
 
         # show the adopters
         adopters_buffer = gtk.TextBuffer()
         adopters_buffer.set_text(adopters_data)
         iter = adopters_buffer.get_start_iter()
         adopters_buffer.insert(iter,
-                               'Thanks to the following people who have adopted '
-                               'lines of Miro code to help support development! '
-                               'To adopt a line, visit the ')
+            'Thank you to the following people who have adopted '
+            'lines of Miro code to help support development! '
+            'To help fund continued Miro development, visit the ')
         adopt_link_tag = adopters_buffer.create_tag(
             foreground='blue', underline=pango.UNDERLINE_SINGLE)
         adopt_link_tag.connect('event', self.on_adopt_link_event)
-        adopters_buffer.insert_with_tags(iter, 'Miro Adoption Center',
+        adopters_buffer.insert_with_tags(iter, 'donation page',
                                          adopt_link_tag)
         adopters_buffer.insert(iter, '.\n\n')
         adopters_view = gtk.TextView(adopters_buffer)
@@ -822,7 +830,7 @@ class AboutDialog(Dialog):
 
     def on_adopt_link_event(self, texttag, widget, event, iter):
         if event.type == gtk.gdk.BUTTON_PRESS:
-            resources.open_url('https://www.getmiro.com/adopt/')
+            resources.open_url('http://getmiro.com/donate/')
 
 type_map = {
     0: gtk.MESSAGE_WARNING,

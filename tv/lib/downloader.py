@@ -39,7 +39,7 @@ from miro.download_utils import (next_free_filename, get_file_url_path,
                                  filter_directory_name)
 from miro.util import (get_torrent_info_hash, returns_unicode, check_u,
                        returns_filename, unicodify, check_f, to_uni)
-from miro import config
+from miro import app
 from miro import dialogs
 from miro import displaytext
 from miro import eventloop
@@ -286,8 +286,8 @@ class RemoteDownloader(DDBObject):
 
             if ((self.get_state() == u'uploading'
                  and not self.manualUpload
-                 and (config.get(prefs.LIMIT_UPLOAD_RATIO)
-                      and self.get_upload_ratio() > config.get(prefs.UPLOAD_RATIO)))):
+                 and (app.config.get(prefs.LIMIT_UPLOAD_RATIO)
+                      and self.get_upload_ratio() > app.config.get(prefs.UPLOAD_RATIO)))):
                 self.stop_upload()
 
             self.signal_change(needs_signal_item=needs_signal_item,
@@ -380,7 +380,7 @@ class RemoteDownloader(DDBObject):
         parent = os.path.join(fileutil.expand_filename(filename),
                               os.path.pardir)
         parent = os.path.normpath(parent)
-        moviesDir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))
+        moviesDir = fileutil.expand_filename(app.config.get(prefs.MOVIES_DIRECTORY))
         if ((os.path.exists(parent) and os.path.exists(moviesDir)
              and not samefile(parent, moviesDir)
              and len(os.listdir(parent)) == 0)):
@@ -655,8 +655,8 @@ class RemoteDownloader(DDBObject):
             self.restart()
         if self.get_state() in (u'uploading'):
             if ((self.manualUpload
-                 or (config.get(prefs.LIMIT_UPLOAD_RATIO)
-                     and self.get_upload_ratio() < config.get(prefs.UPLOAD_RATIO)))):
+                 or (app.config.get(prefs.LIMIT_UPLOAD_RATIO)
+                     and self.get_upload_ratio() < app.config.get(prefs.UPLOAD_RATIO)))):
                 self.restart()
             else:
                 self.stop_upload()
@@ -734,7 +734,7 @@ class RemoteDownloader(DDBObject):
         self.signal_change()
 
 def cleanup_incomplete_downloads():
-    download_dir = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
+    download_dir = os.path.join(app.config.get(prefs.MOVIES_DIRECTORY),
                                 'Incomplete Downloads')
     if not fileutil.exists(download_dir):
         return
@@ -763,19 +763,19 @@ def cleanup_incomplete_downloads():
                 pass
 
 def kill_uploaders(*args):
-    torrent_limit = config.get(prefs.UPSTREAM_TORRENT_LIMIT)
+    torrent_limit = app.config.get(prefs.UPSTREAM_TORRENT_LIMIT)
     auto_uploads = list(RemoteDownloader.auto_uploader_view())
     for dler in auto_uploads[torrent_limit:]:
         dler.stop_upload()
 
-def config_change_uploaders(key, value):
+def _on_config_change(obj, key, value):
     if key == prefs.UPSTREAM_TORRENT_LIMIT.key:
         kill_uploaders()
 
 def limit_uploaders():
     tracker = RemoteDownloader.auto_uploader_view().make_tracker()
     tracker.connect('added', kill_uploaders)
-    config.add_change_callback(config_change_uploaders)
+    app.backend_config_watcher.connect("changed", _on_config_change)
     kill_uploaders()
 
 class DownloadDaemonStarter(object):
@@ -866,7 +866,7 @@ def get_downloader_for_item(item):
             get_torrent_info_hash(path)
         except ValueError:
             raise ValueError("Don't know how to handle %s" % url)
-        except IOError:
+        except (OSError, IOError):
             return None
         else:
             return RemoteDownloader(url, item, u'application/x-bittorrent',

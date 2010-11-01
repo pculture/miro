@@ -46,8 +46,8 @@ def startup():
     from miro.plat.utils import initialize_locale
     initialize_locale()
 
-    from miro import gtcache
-    gtcache.init()
+    from miro import bootstrap
+    bootstrap.bootstrap()
 
     from miro.plat import fontinfo
     fontinfo.init()

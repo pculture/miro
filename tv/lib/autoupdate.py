@@ -34,8 +34,8 @@ Call ``check_for_updates``.
 
 import logging
 
+from miro import app
 from miro import prefs
-from miro import config
 from miro import eventloop
 from miro import feedparser
 from miro import signals
@@ -59,7 +59,7 @@ def check_for_updates(up_to_date_callback=None):
     if not check_in_progress:
         check_in_progress = True
         logging.info("Checking for updates...")
-        url = config.get(prefs.AUTOUPDATE_URL)
+        url = app.config.get(prefs.AUTOUPDATE_URL)
         update_handler = lambda data: _handle_app_cast(data,
                                                        up_to_date_callback)
         error_handler = _handle_error
@@ -87,7 +87,7 @@ def _handle_app_cast(data, up_to_date_callback):
             # this will go through the finally clause below
             return
 
-        serial = int(config.get(prefs.APP_SERIAL))
+        serial = int(app.config.get(prefs.APP_SERIAL))
         up_to_date = (serial >= _get_item_serial(latest))
 
         if not up_to_date:
@@ -116,7 +116,7 @@ def _get_item_for_latest(appcast):
     If there are no entries for this platform (this happens with
     Linux), then this returns None.
     """
-    platform = config.get(prefs.APP_PLATFORM)
+    platform = app.config.get(prefs.APP_PLATFORM)
     rejected_items = []
 
     for item in appcast['entries']:

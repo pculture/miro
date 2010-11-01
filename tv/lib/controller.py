@@ -39,7 +39,6 @@ from random import randrange
 from zipfile import ZipFile
 
 from miro import app
-from miro import config
 from miro import downloader
 from miro import eventloop
 from miro.gtcache import gettext as _
@@ -77,6 +76,11 @@ class Controller:
         httpauth.write_to_file()
         logging.info("Shutting down event loop thread")
         eventloop.shutdown()
+        logging.info("Saving cached ItemInfo objects")
+        logging.info("Commiting DB changes")
+        app.db.finish_transaction()
+        if app.item_info_cache is not None:
+            app.item_info_cache.save()
         logging.info("Closing Database...")
         if app.db is not None:
             app.db.close()
@@ -86,7 +90,7 @@ class Controller:
         try:
             eventloop.join()
             logging.info("Saving preferences...")
-            config.save()
+            app.config.save()
 
             logging.info("Shutting down icon cache updates")
             iconcache.iconCacheUpdater.shutdown()
@@ -186,7 +190,7 @@ class BugReportSender(signals.SignalEmitter):
             description = description.decode(locale.getpreferredencoding())
         description = description.encode("utf-8", "ignore")
         post_vars = {"description": description,
-                     "app_name": config.get(prefs.LONG_APP_NAME),
+                     "app_name": app.config.get(prefs.LONG_APP_NAME),
                      "log": report}
         if backupfile:
             post_files = {"databasebackup":
@@ -224,12 +228,12 @@ class BugReportSender(signals.SignalEmitter):
         logging.info("Attempting to back up support directory")
         app.db.close()
 
-        support_dir = config.get(prefs.SUPPORT_DIRECTORY)
+        support_dir = app.config.get(prefs.SUPPORT_DIRECTORY)
         try:
             uniqfn = "%012ddatabasebackup.zip" % randrange(0, 999999999999)
             tempfilename = os.path.join(tempfile.gettempdir(), uniqfn)
             zipfile = ZipFile(tempfilename, "w")
-            iconcache_dir = config.get(prefs.ICON_CACHE_DIRECTORY)
+            iconcache_dir = app.config.get(prefs.ICON_CACHE_DIRECTORY)
             iconcache_dir = os.path.normpath(iconcache_dir)
 
             for root, dummy, files in os.walk(support_dir):

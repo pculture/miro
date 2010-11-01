@@ -46,12 +46,12 @@ _debug = 0
 # If you are embedding feedparser in a larger application, you should
 # change this to your application name and URL.
 USER_AGENT = "UniversalFeedParser/%s +http://feedparser.org/" % __version__
-from miro import config
+from miro import app
 from miro import prefs
 USER_AGENT += " %s/%s (%s)" % \
-    (config.get(prefs.SHORT_APP_NAME),
-     config.get(prefs.APP_VERSION),
-     config.get(prefs.PROJECT_URL))
+    (app.config.get(prefs.SHORT_APP_NAME),
+     app.config.get(prefs.APP_VERSION),
+     app.config.get(prefs.PROJECT_URL))
 
 # HTTP "Accept" header to send to servers when downloading feeds.  If you don't
 # want to send an Accept header, set this to None.

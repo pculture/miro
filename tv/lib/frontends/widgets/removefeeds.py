@@ -30,7 +30,10 @@
 
 import logging
 
-from miro import config, prefs, messages, util
+from miro import app
+from miro import prefs
+from miro import messages
+from miro import util
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.dialogs import MainDialog
@@ -89,7 +92,7 @@ def run_dialog(channel_infos, downloaded_items, downloading_items, has_watched_f
                     "Watched folders will be removed from the sidebar but their contents will "
                     "still appear in your library.  You can stop watching watched folders completely "
                     "in the %(appname)s preference panel.",
-                    {"appname": config.get(prefs.SHORT_APP_NAME)}
+                    {"appname": app.config.get(prefs.SHORT_APP_NAME)}
                 ))
                 lab.set_wrap(True)
                 lab.set_size_request(390, -1)

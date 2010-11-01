@@ -50,7 +50,6 @@ from miro import app
 from miro import iconcache
 from miro import databaselog
 from miro import downloader
-from miro import config
 from miro import eventloop
 from miro import prefs
 from miro.plat import resources
@@ -160,11 +159,12 @@ class FeedParserValues(object):
             return None
         if isinstance(thumb, str):
             return thumb
-        elif isinstance(thumb, unicode):
-            return thumb.decode('ascii', 'replace')
         try:
+            if isinstance(thumb, unicode):
+                return thumb.encode('utf-8')
+            # We can't get the type??  What to do ....
             return thumb["url"].decode('ascii', 'replace')
-        except (KeyError, AttributeError):
+        except (KeyError, AttributeError, UnicodeEncodeError, UnicodeDecodeError):
             return None
 
     def _calc_raw_description(self):
@@ -330,6 +330,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self._look_for_downloader()
         self.setup_common()
         self.split_item()
+        app.item_info_cache.item_created(self)
 
     def setup_restored(self):
         self.setup_common()
@@ -341,6 +342,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.expiring = None
         self.showMoreInfo = False
         self.updating_movie_info = False
+
+    def signal_change(self, needs_save=True):
+        app.item_info_cache.item_changed(self)
+        DDBObject.signal_change(self, needs_save)
 
     @classmethod
     def auto_pending_view(cls):
@@ -415,6 +420,16 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         return cls.make_view("rd.state in ('finished', 'uploading', "
                 "'uploading-paused')",
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
+
+    @classmethod
+    def next_10_incomplete_movie_data_view(cls):
+        return cls.make_view("(is_file_item OR (rd.state in ('finished', "
+                "'uploading', 'uploading-paused'))) AND "
+                '(duration IS NULL OR '
+                'screenshot IS NULL OR '
+                'NOT item.media_type_checked)',
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
+                limit=10)
 
     @classmethod
     def unique_new_video_view(cls):
@@ -673,7 +688,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 self._make_new_children(child_paths)
             else:
                 if not self.get_feed_url().startswith ("dtv:directoryfeed"):
-                    target_dir = config.get(prefs.NON_VIDEO_DIRECTORY)
+                    target_dir = app.config.get(prefs.NON_VIDEO_DIRECTORY)
                     if not filename_root.startswith(target_dir):
                         if isinstance(self, FileItem):
                             self.migrate (target_dir)
@@ -692,7 +707,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             self.subtitle_encoding = None
             config_value = ''
-        config.set(prefs.SUBTITLE_ENCODING, config_value)
+        app.config.set(prefs.SUBTITLE_ENCODING, config_value)
         self.signal_change()
 
     def set_filename(self, filename):
@@ -971,14 +986,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return None
         ufeed = self.get_feed()
         if ufeed.expire == u'never' or (ufeed.expire == u'system'
-                and config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
+                and app.config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
             return None
         else:
             if ufeed.expire == u"feed":
                 expire_time = ufeed.expireTime
             elif ufeed.expire == u"system":
                 expire_time = timedelta(
-                    days=config.get(prefs.EXPIRE_AFTER_X_DAYS))
+                    days=app.config.get(prefs.EXPIRE_AFTER_X_DAYS))
             return self.get_watched_time() + expire_time
 
     def get_watched_time(self):
@@ -1013,7 +1028,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 if ufeed.expire == u'never':
                     self.expiring = False
                 elif (ufeed.expire == u'system'
-                      and config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
+                      and app.config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
                     self.expiring = False
                 else:
                     self.expiring = True
@@ -1038,7 +1053,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.seen == False:
             self.seen = True
             if self.subtitle_encoding is None:
-                config_value = config.get(prefs.SUBTITLE_ENCODING)
+                config_value = app.config.get(prefs.SUBTITLE_ENCODING)
                 if config_value:
                     self.subtitle_encoding = unicode(config_value)
             if self.watchedTime is None:
@@ -1124,7 +1139,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.was_downloaded = True
 
         if ((not autodl) and
-                manual_dl_count >= config.get(prefs.MAX_MANUAL_DOWNLOADS)):
+                manual_dl_count >= app.config.get(prefs.MAX_MANUAL_DOWNLOADS)):
             self.pendingManualDL = True
             self.pendingReason = _("queued for download")
             self.signal_change()
@@ -1687,6 +1702,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             for item in self.get_children():
                 item.remove()
         self._remove_from_playlists()
+        app.item_info_cache.item_removed(self)
         DDBObject.remove(self)
 
     def setup_links(self):
@@ -2116,10 +2132,32 @@ def fp_values_for_file(filename, title=None, description=None):
     return FeedParserValues(FeedParserDict(data))
 
 def update_incomplete_movie_data():
-    for item in chain(Item.downloaded_view(), Item.file_items_view()):
-        if ((item.duration is None or item.duration == -1 or
-             item.screenshot is None or not item.media_type_checked)):
-            item.check_media_file()
+    IncompleteMovieDataUpdator()
+    # this will stay around because it connects to the movie data updater's
+    # signal.  Once it disconnects from the signal, we clean it up
+
+class IncompleteMovieDataUpdator(object):
+    def __init__(self):
+        self.do_some_updates()
+        self.done = False
+        self.handle = moviedata.movie_data_updater.connect('queue-empty',
+                self.on_queue_empty)
+
+    def do_some_updates(self):
+        chunk = list(Item.next_10_incomplete_movie_data_view())
+        if chunk:
+            for item in chunk:
+                print 'checking: ', item
+                item.check_media_file()
+        else:
+            self.done = True
+
+    def on_queue_empty(self, movie_data_updator):
+        if self.done:
+            movie_data_updator.disconnect(self.handle)
+        else:
+            eventloop.add_idle(self.do_some_updates,
+                    'update incomplete movie data')
 
 def fix_non_container_parents():
     """Make sure all items referenced by parent_id have isContainerItem set

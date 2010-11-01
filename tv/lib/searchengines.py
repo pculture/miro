@@ -37,7 +37,6 @@ from miro.plat import resources
 from miro.plat.utils import unicode_to_filename
 import os
 from miro import app
-from miro import config
 from miro import prefs
 import logging
 from miro.gtcache import gettext as _
@@ -168,23 +167,22 @@ def create_engines():
     _delete_engines()
     engines = _search_for_search_engines(resources.path("searchengines"))
     engines_dir = os.path.join(
-        config.get(prefs.SUPPORT_DIRECTORY), "searchengines")
+        app.config.get(prefs.SUPPORT_DIRECTORY), "searchengines")
     engines.update(_search_for_search_engines(engines_dir))
-    if config.get(prefs.THEME_NAME):
-        theme_engines_dir = resources.theme_path(config.get(prefs.THEME_NAME),
+    if app.config.get(prefs.THEME_NAME):
+        theme_engines_dir = resources.theme_path(app.config.get(prefs.THEME_NAME),
                                                  'searchengines')
         engines.update(_search_for_search_engines(theme_engines_dir))
     for fn in engines.itervalues():
         _load_search_engine(fn)
 
     _engines.append(SearchEngineInfo(u"all", _("Search All"), u"", -1))
-    _engines.sort(lambda a, b: cmp((a.sort_order, a.name, a.title), 
-                                   (b.sort_order, b.name, b.title)))
+    _engines.sort(key=lambda x: (x.sort_order, x.name, x.title))
 
     # SEARCH_ORDERING is a comma-separated list of search engine names to
     # include.  An * as the last engine includes the rest of the engines.
-    if config.get(prefs.SEARCH_ORDERING):
-        search_names = config.get(prefs.SEARCH_ORDERING).split(',')
+    if app.config.get(prefs.SEARCH_ORDERING):
+        search_names = app.config.get(prefs.SEARCH_ORDERING).split(',')
         new_engines = []
         if '*' in search_names and '*' in search_names[:-1]:
             raise RuntimeError('wildcard search ordering must be at the end')
@@ -255,7 +253,7 @@ def get_last_engine():
     """Checks the preferences and returns the SearchEngine object of
     that name or ``None``.
     """
-    e = config.get(prefs.LAST_SEARCH_ENGINE)
+    e = app.config.get(prefs.LAST_SEARCH_ENGINE)
     engine = get_engine_for_name(e)
     if engine:
         return engine
@@ -270,14 +268,14 @@ def set_last_engine(engine):
     engine = str(engine)
     if not get_engine_for_name(engine):
         engine = str(get_search_engines()[0].name)
-    config.set(prefs.LAST_SEARCH_ENGINE, engine)
+    app.config.set(prefs.LAST_SEARCH_ENGINE, engine)
 
 def icon_path_for_engine(engine):
     engine_name = unicode_to_filename(engine.name)
     icon_path = resources.path('images/search_icon_%s.png' % engine_name)
-    if config.get(prefs.THEME_NAME):
+    if app.config.get(prefs.THEME_NAME):
         logging.debug('engine %s filename: %s' % (engine.name, engine.filename))
-        test_icon_path = resources.theme_path(config.get(prefs.THEME_NAME),
+        test_icon_path = resources.theme_path(app.config.get(prefs.THEME_NAME),
                                               'images/search_icon_%s.png' %
                                               engine_name)
         if os.path.exists(test_icon_path):

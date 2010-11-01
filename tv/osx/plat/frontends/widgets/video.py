@@ -197,7 +197,7 @@ class VideoPlayer (Widget, quicktime.Player):
     def pause(self):
         threads.warn_if_not_on_main_thread('VideoPlayer.pause')
         self.video_view.pause_(nil)
-        self.prevent_system_sleep(True)
+        self.prevent_system_sleep(False)
 
     def stop(self, will_play_another=False):
         threads.warn_if_not_on_main_thread('VideoPlayer.stop')

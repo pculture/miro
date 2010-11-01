@@ -36,7 +36,7 @@ def migrateSupport(oldAppName, newAppName):
 
     from AppKit import NSBundle
 
-    prefsPath = os.path.expanduser('~/Library/Preferences')
+    prefsPath = os.path.expanduser('~/Library/Preferences').decode('utf-8')
     newDomain = NSBundle.mainBundle().bundleIdentifier()
     newPrefs = '%s.plist' % os.path.join(prefsPath, newDomain)
     oldDomain = newDomain.replace(newAppName, oldAppName)
@@ -71,9 +71,8 @@ def migrateVideos(oldAppName, newAppName):
         oldDefault = os.path.join(moviesRootFolder, oldAppName)
         newDefault = os.path.join(moviesRootFolder, newAppName)
         
-        from miro import config
+        from miro import app
         from miro import prefs
-        videoDir = config.get(prefs.MOVIES_DIRECTORY)
+        videoDir = app.config.get(prefs.MOVIES_DIRECTORY)
         if videoDir == newDefault:
-            from miro import app
             app.controller.changeMoviesDirectory(newDefault, True)

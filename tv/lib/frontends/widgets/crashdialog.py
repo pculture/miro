@@ -31,8 +31,8 @@ crash dialog.
 """
 
 import logging
+from miro import app
 from miro import messages
-from miro import config
 from miro import prefs
 
 from miro.gtcache import gettext as _
@@ -54,7 +54,7 @@ def run_dialog(obj, report):
                 "%(appname)s has encountered an internal error.  You can "
                 "help us track down this problem and fix it by submitting "
                 "an error report.",
-                {"appname": config.get(prefs.SHORT_APP_NAME)}
+                {"appname": app.config.get(prefs.SHORT_APP_NAME)}
                 ))
 
             lab.set_wrap(True)

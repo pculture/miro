@@ -334,7 +334,7 @@ static int LinkedList_init(LinkedListObject *self)
     return 0;
 }
 
-static int LinkedList_len(LinkedListObject *self)
+static Py_ssize_t LinkedList_len(LinkedListObject *self)
 {
     return self->count;
 }
@@ -421,7 +421,7 @@ static PyObject *LinkedList_lastIter(LinkedListObject* self, PyObject *obj)
 }
 
 static PyMappingMethods LinkedListMappingMethods = {
-    LinkedList_len,
+    (lenfunc)LinkedList_len,
     (binaryfunc)LinkedList_get,
     (objobjargproc)LinkedList_set,
 };

@@ -150,6 +150,18 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>gvi</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string></string>
+			<key>CFBundleTypeName</key>
+			<string>Google Video</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>wmv</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
@@ -191,11 +203,12 @@
 			<array>
 				<string>ogg</string>
 				<string>ogm</string>
+				<string>ogv</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string></string>
 			<key>CFBundleTypeName</key>
-			<string>OGG Vorbis File</string>
+			<string>OGG Media File</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 		</dict>
@@ -258,6 +271,33 @@
 			<string></string>
 			<key>CFBundleTypeName</key>
 			<string>Matroska Audio</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>rmvb</string>
+				<string>rm</string>
+				<string>ram</string>
+				<string>ra</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string></string>
+			<key>CFBundleTypeName</key>
+			<string>RealMedia</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>divx</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string></string>
+			<key>CFBundleTypeName</key>
+			<string>DivX Video</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 		</dict>

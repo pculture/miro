@@ -3,7 +3,7 @@ import unittest
 from datetime import datetime
 from time import sleep
 
-from miro import config
+from miro import app
 from miro import feedparser
 from miro import prefs
 from miro import dialogs
@@ -241,8 +241,8 @@ class MultiFeedExpireTest(FeedTestCase):
 
         self.write_files(5, 10) # 5 feeds containing 10 identical items
         self.feed = self.make_feed()
-        config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 4)
-        config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 5)
+        app.config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 4)
+        app.config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 5)
         self.rewrite_files(1) # now only 5 items in each feed
         self.update_feed(self.feed)
 
@@ -297,8 +297,8 @@ class OldItemExpireTest(FeedTestCase):
         self.counter = 0
         self.write_new_feed()
         self.feed = self.make_feed()
-        config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 4)
-        config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 20)
+        app.config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 4)
+        app.config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 20)
 
     def write_new_feed(self, entryCount=2):
         # make a feed with a new item and parse it
@@ -358,19 +358,19 @@ class OldItemExpireTest(FeedTestCase):
         self.check_guids(1, 2, 5, 6)
 
     def test_overflow_still_in_feed(self):
-        config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 0)
+        app.config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 0)
         self.parse_new_feed(6)
         self.check_guids(3, 4, 5, 6, 7, 8)
 
     def test_overflow_with_replacement(self):
         # Keep item with guid-2 in the feed.
-        config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 0)
+        app.config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 0)
         self.counter = 1
         self.parse_new_feed(5)
         self.check_guids(2, 3, 4, 5, 6)
 
     def test_overflow_with_max_old_items(self):
-        config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 1000) # don't bother
+        app.config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 1000) # don't bother
         self.assertEqual(Item.make_view().count(), 2)
         self.parse_new_feed()
         self.assertEquals(Item.make_view().count(), 4)
@@ -392,19 +392,19 @@ class OldItemExpireTest(FeedTestCase):
         self.check_guids(3, 4, 5, 6)
 
     def test_overflow_with_global_max_old_items(self):
-        config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 1000) # don't bother
+        app.config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 1000) # don't bother
         self.assertEqual(Item.make_view().count(), 2)
         self.parse_new_feed()
         self.assertEquals(Item.make_view().count(), 4)
         self.parse_new_feed()
-        config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 4)
+        app.config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 4)
         self.feed.actualFeed.clean_old_items()
         while self.feed.actualFeed.updating:
             self.processThreads()
             self.process_idles()
             sleep(0.1)
         self.assertEquals(Item.make_view().count(), 6)
-        config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 2)
+        app.config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 2)
         self.feed.actualFeed.clean_old_items()
         while self.feed.actualFeed.updating:
             self.processThreads()

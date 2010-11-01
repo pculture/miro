@@ -47,7 +47,7 @@ from miro.gtcache import gettext as _
 from miro import schema
 from miro import util
 import types
-from miro import config
+from miro import app
 from miro import dbupgradeprogress
 from miro import prefs
 
@@ -1010,7 +1010,7 @@ def upgrade53(objectList):
 
 def upgrade54(objectList):
     changed = set()
-    if config.get(prefs.APP_PLATFORM) != "windows":
+    if app.config.get(prefs.APP_PLATFORM) != "windows":
         return changed
     for o in objectList:
         if o.classString in ('item', 'file-item'):
@@ -1113,10 +1113,10 @@ def upgrade64(objectList):
     changed = set()
     for o in objectList:
         if o.classString == 'channel-guide':
-            if o.savedData['url'] == config.get(prefs.CHANNEL_GUIDE_URL):
+            if o.savedData['url'] == app.config.get(prefs.CHANNEL_GUIDE_URL):
                 allowedURLs = unicode(
-                    config.get(prefs.CHANNEL_GUIDE_ALLOWED_URLS)).split()
-                allowedURLs.append(config.get(
+                    app.config.get(prefs.CHANNEL_GUIDE_ALLOWED_URLS)).split()
+                allowedURLs.append(app.config.get(
                         prefs.CHANNEL_GUIDE_FIRST_TIME_URL))
                 o.savedData['allowedURLs'] = allowedURLs
             else:
@@ -2449,7 +2449,7 @@ def upgrade100(cursor):
     already have it and isn't using a theme.
     """
     # if the user is using a theme, we don't do anything
-    if not config.get(prefs.THEME_NAME) == prefs.THEME_NAME.default:
+    if not app.config.get(prefs.THEME_NAME) == prefs.THEME_NAME.default:
         return
 
     audio_guide_url = u'https://www.miroguide.com/audio/'
@@ -2810,3 +2810,8 @@ def upgrade119(cursor):
     """Drop the http_auth_password table from the database
     """
     cursor.execute("DROP TABLE http_auth_password")
+
+def upgrade120(cursor):
+    """Create the item_info_cache table"""
+    cursor.execute("CREATE TABLE item_info_cache"
+            "(id INTEGER PRIMARY KEY, pickle BLOB)")

@@ -37,8 +37,8 @@ from WebKit import *
 from objc import YES, NO, nil
 from PyObjCTools import AppHelper
 
+from miro import app
 from miro import prefs
-from miro import config
 from miro.plat.frontends.widgets.base import Widget
 
 class Browser(Widget):
@@ -52,24 +52,43 @@ class Browser(Widget):
         self.view = MiroWebView.alloc().initWithFrame_(NSRect((0,0), self.calc_size_request()))
         self.view.setMaintainsBackForwardList_(YES)
         self.view.setApplicationNameForUserAgent_("%s/%s (%s)" % \
-                                      (config.get(prefs.SHORT_APP_NAME),
-                                       config.get(prefs.APP_VERSION),
-                                       config.get(prefs.PROJECT_URL),))
+                                      (app.config.get(prefs.SHORT_APP_NAME),
+                                       app.config.get(prefs.APP_VERSION),
+                                       app.config.get(prefs.PROJECT_URL),))
+
+    def _set_webkit_delegates(self, delegate):
+        self.view.setPolicyDelegate_(delegate)
+        self.view.setResourceLoadDelegate_(delegate)
+        self.view.setFrameLoadDelegate_(delegate)
+        self.view.setUIDelegate_(delegate)
+
 
     def viewport_created(self):
         Widget.viewport_created(self)
-        self.view.setPolicyDelegate_(self.delegate)
-        self.view.setResourceLoadDelegate_(self.delegate)
-        self.view.setFrameLoadDelegate_(self.delegate)
-        self.view.setUIDelegate_(self.delegate)
+        self._set_webkit_delegates(self.delegate)
 
     def remove_viewport(self):
-        Widget.remove_viewport(self)
-        self.view.setPolicyDelegate_(nil)
-        self.view.setResourceLoadDelegate_(nil)
-        self.view.setFrameLoadDelegate_(nil)
-        self.view.setUIDelegate_(nil)
-        
+        self._hack_remove_viewport()
+        self._set_webkit_delegates(nil)
+
+    def _hack_remove_viewport(self):
+        # This was stolen from Widget.remove_viewport() and modified just move
+        # the viewport to a hidden spot.
+        # This works, but it's pretty ugly.  Let's fix for 4.0
+        if self.viewport is not None:
+            offscreen_rect = NSRect((-5000, -5000), self.view.frame().size)
+            self.viewport.reposition(offscreen_rect)
+            # When we re-show the view, miro will just position it back to the
+            # correct place.  Therefore, don't remove from wrappermap because
+            # miro won't call wrappermap.add() back
+            #if self.CREATES_VIEW:
+                #wrappermap.remove(self.view)
+
+    def viewport_repositioned(self):
+        # gets called when we need to re-show our view after
+        # _hack_remove_viewport()
+        self._set_webkit_delegates(self.delegate)
+
     def calc_size_request(self):
         return (200, 100) # Seems like a reasonable minimum size
 
@@ -149,8 +168,8 @@ class BrowserDelegate (NSObject):
             if request is nil:
                 request = frame.dataSource().request()
             url = request.URL()            
-            allowed = [config.get(prefs.CHANNEL_GUIDE_URL), 
-                       config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL)]
+            allowed = [app.config.get(prefs.CHANNEL_GUIDE_URL), 
+                       app.config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL)]
             if url.absoluteString() in allowed:
                 # The [NSURLRequest setAllowsAnyHTTPSCertificate:forHost:] selector is
                 # not documented anywhere, so I assume it is not public. It is however 

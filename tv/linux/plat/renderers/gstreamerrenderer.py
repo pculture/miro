@@ -49,7 +49,6 @@ import gtk
 GST_PLAY_FLAG_TEXT          = (1 << 2)
 
 from miro import app
-from miro import config
 from miro import prefs
 from miro.util import gather_subtitle_files, copy_subtitle_file
 from miro.gtcache import gettext as _
@@ -133,7 +132,7 @@ class Renderer:
         self.rate = 1.0
         self.select_callbacks = None
 
-        audiosink_name = config.get(options.GSTREAMER_AUDIOSINK)
+        audiosink_name = app.config.get(options.GSTREAMER_AUDIOSINK)
         try:
             gst.element_factory_make(audiosink_name, "audiosink")
 
@@ -320,7 +319,7 @@ class VideoRenderer(Renderer):
     def __init__(self):
         Renderer.__init__(self)
 
-        videosink_name = config.get(options.GSTREAMER_IMAGESINK)
+        videosink_name = app.config.get(options.GSTREAMER_IMAGESINK)
         try:
             gst.element_factory_make(videosink_name, "videosink")
 
@@ -370,7 +369,7 @@ class VideoRenderer(Renderer):
 
     def _setup_initial_subtitles(self, sub_filename):
         sub_index = -1
-        if (config.get(prefs.ENABLE_SUBTITLES) and self.supports_subtitles
+        if (app.config.get(prefs.ENABLE_SUBTITLES) and self.supports_subtitles
                 and not sub_filename):
             tracks = self.get_subtitles()
             if 100 in tracks: # Select default sidecar file

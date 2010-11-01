@@ -43,7 +43,6 @@ from ExceptionHandling import NSExceptionHandler, NSLogAndHandleEveryExceptionMa
 
 from miro import app
 from miro import prefs
-from miro import config
 from miro import downloader
 from miro import messages
 from miro import filetypes
@@ -102,7 +101,6 @@ class OSXApplication(Application):
             lambda cm: cm.connect('begin-loop', self.beginLoop))
         httpclient.register_on_start(
             lambda cm: cm.connect('end-loop', self.endLoop))
-        config.add_change_callback(self.on_pref_changed)
 
     def startup_ui(self):
         migrateappname.migrateVideos('Democracy', 'Miro')
@@ -120,7 +118,7 @@ class OSXApplication(Application):
         Application.on_window_show(self, window)
         self.app_controller.finish_startup()
         
-    def on_pref_changed(self, key, value):
+    def on_config_changed(self, obj, key, value):
         if key == prefs.RUN_AT_STARTUP.key:
             self.set_launch_at_startup(bool(value))
 
@@ -135,9 +133,9 @@ class OSXApplication(Application):
         if self.window is not None:
             windowFrame = self.window.nswindow.frame()
             windowFrame.size.height -= 22
-            config.set(prefs.LEFT_VIEW_SIZE, self.window.splitter.get_left_width())
-            config.set(prefs.MAIN_WINDOW_FRAME, NSStringFromRect(windowFrame))
-            config.save()
+            app.config.set(prefs.LEFT_VIEW_SIZE, self.window.splitter.get_left_width())
+            app.config.set(prefs.MAIN_WINDOW_FRAME, NSStringFromRect(windowFrame))
+            app.config.save()
         Application.do_quit(self)
 
     def quit_ui(self):
@@ -177,7 +175,7 @@ class OSXApplication(Application):
             logging.warn("movie %s could not be externally opened" % fn)
     
     def get_main_window_dimensions(self):
-        windowFrame = config.get(prefs.MAIN_WINDOW_FRAME)
+        windowFrame = app.config.get(prefs.MAIN_WINDOW_FRAME)
         if windowFrame is None:
             windowFrame = (0,0,800,600)
         else:
@@ -279,7 +277,7 @@ class AppController(NSObject):
         return self
 
     def setup_growl_notifier(self):
-        app_name = config.get(prefs.LONG_APP_NAME)
+        app_name = app.config.get(prefs.LONG_APP_NAME)
         notifications = [GROWL_GENERIC_NOTIFICATION, GROWL_DOWNLOAD_COMPLETE_NOTIFICATION]
         self.growl_notifier = growl.GrowlNotifier(app_name, notifications)
         self.growl_notifier.register()

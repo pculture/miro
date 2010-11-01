@@ -43,8 +43,8 @@ from objc import NO, YES, nil
 from Foundation import *
 from AppKit import *
 
+from miro import app
 from miro import prefs
-from miro import config
 from miro.util import returns_unicode, returns_binary, check_u, check_b
 from miro.plat.filenames import (os_filename_to_filename_type,
                                  filename_type_to_os_filename, FilenameType)
@@ -58,6 +58,21 @@ _locale_initialized = False
 
 dlTask = None
 
+def dirfilt(root, dirs):
+    """
+    Platform hook to filter out any directories that should not be
+    descended into, root and dirs corresponds as per os.dirwalk() and
+    same semantics for these objects apply.
+    """
+    removelist = []
+    ws = NSWorkspace.sharedWorkspace()
+    for d in dirp:
+        if ws.isFilePackageAtPath_(os.path.join(root, d)):
+            removelist.append(d)
+    for x in removelist:
+        dirs.remove(x)
+    return dirs
+
 ###############################################################################
 #### Helper method used to get the free space on the disk where downloaded ####
 #### movies are stored                                                     ####
@@ -66,7 +81,7 @@ dlTask = None
 def get_available_bytes_for_movies():
     pool = NSAutoreleasePool.alloc().init()
     fm = NSFileManager.defaultManager()
-    movies_dir = config.get(prefs.MOVIES_DIRECTORY)
+    movies_dir = app.config.get(prefs.MOVIES_DIRECTORY)
     if not os.path.exists(movies_dir):
         try:
             os.makedirs(movies_dir)
@@ -95,6 +110,44 @@ def initialize_locale():
     except:
         pass
 
+    # XXX: FIXME - fixup the language environment variables.  Mac OS X returns
+    # a list of these, mostly which we can use in setting the environment but
+    # not always.  We do a manual fixup, for these edge cases there is no
+    # 1:1 mapping and we do a best guess so we should try to find a better way
+    # to do this.
+    #
+    # TODO:
+    # some have Latn/Cyrl variants and I am not sure what to do here.  Seems
+    # it is okay to just drop the variant and things will be okay.
+    # es (Spanish) has a 419 variant, what's this?
+    # Some may have iso639 codes only, what to do here? (not sure if this
+    # list is complete)
+    # nap - Neapolitan
+    # gsw - Swiss German
+    # scn - Sicilian
+    # haw - Hawaiian
+    # kok - Konkani
+    # chr - Cherokee
+    # tlh - Klingon (why??)
+    def rewritelang(lang):
+        # rewrite Chinese.
+        if lang == 'zh-Hant':
+            return 'zh_TW'
+        if lang == 'zh-Hans':
+            return 'zh_CN'
+        # rewrite special case for Spanish.
+        if '419' in lang:
+            lang = 'es'
+        # Rewrite cyrl/latn.
+        if 'Cyrl' in lang or 'Latn' in lang:
+            lang = lang[:2]
+        # iso639 codes only - what to do here?
+        if len(lang) == 3:
+            pass
+        # generic rewrite: e.g. fr-CA -> fr_CA
+        return lang.replace('-', '_')
+
+    languages = [rewritelang(x) for x in languages]
     if os.environ.get("MIRO_LANG"):
         os.environ["LANGUAGE"] = os.environ["MIRO_LANG"]
         os.environ["LANG"] = os.environ["MIRO_LANG"]
@@ -109,8 +162,8 @@ def setup_logging (in_downloader=False):
         log_name = os.environ.get("DEMOCRACY_DOWNLOADER_LOG")
         level = logging.INFO
     else:
-        log_name = config.get(prefs.LOG_PATHNAME)
-        if config.get(prefs.APP_VERSION).endswith("git"):
+        log_name = app.config.get(prefs.LOG_PATHNAME)
+        if app.config.get(prefs.APP_VERSION).endswith("git"):
             level = logging.DEBUG
         else:
             level = logging.WARN
@@ -134,7 +187,7 @@ def utf8_to_filename(filename):
 # valid byte representation of it attempting to preserve extensions
 #
 # This is not guaranteed to give the same results every time it is run,
-# not is it garanteed to reverse the results of filename_to_unicode
+# not is it guaranteed to reverse the results of filename_to_unicode
 @returns_binary
 def unicode_to_filename(filename, path = None):
     check_u(filename)
@@ -176,13 +229,13 @@ def shortenFilename(filename):
 # Given a filename in raw bytes, return the unicode representation
 #
 # Since this is not guaranteed to give the same results every time it is run,
-# not is it garanteed to reverse the results of unicode_to_filename
+# not is it guaranteed to reverse the results of unicode_to_filename.
 @returns_unicode
 def filename_to_unicode(filename, path = None):
     if path:
         check_b(path)
     check_b(filename)
-    return filename.decode('utf-8','replace')
+    return filename.decode('utf-8', 'replace')
 
 @returns_unicode
 def make_url_safe(string, safe='/'):
@@ -286,9 +339,9 @@ def kill_process(pid):
 def launch_download_daemon(oldpid, env):
     kill_process(oldpid)
 
-    env['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
+    env['DEMOCRACY_DOWNLOADER_LOG'] = app.config.get(prefs.DOWNLOADER_LOG_PATHNAME)
     env['VERSIONER_PYTHON_PREFER_32_BIT'] = "yes"
-    env["MIRO_APP_VERSION"] = config.get(prefs.APP_VERSION)
+    env["MIRO_APP_VERSION"] = app.config.get(prefs.APP_VERSION)
     env.update(os.environ)
 
     exe = NSBundle.mainBundle().executablePath()
@@ -348,6 +401,7 @@ def exit_miro(return_code):
 
 def movie_data_program_info(movie_path, thumbnail_path):
     main_bundle = NSBundle.mainBundle()
+    bundle_path = main_bundle.bundlePath()
     rsrc_path = main_bundle.resourcePath()
     script_path = os.path.join(rsrc_path, 'qt_extractor.py')
     options = main_bundle.infoDictionary().get('PyOptions')
@@ -359,20 +413,37 @@ def movie_data_program_info(movie_path, thumbnail_path):
         py_version = main_bundle.infoDictionary().get('PythonInfoDict').get('PythonShortVersion')
         py_exe_path = os.path.join(main_bundle.privateFrameworksPath(), "Python.framework", "Versions", py_version, "bin", 'python')
         env = {'PYTHONHOME': rsrc_path, 'MIRO_BUNDLE_PATH': main_bundle.bundlePath()}
+    # XXX
+    # Unicode kludge.  This wouldn't be a problem once we switch to Python 3.
+    # Only need to do conversion on the py_exe_path and script_path - 
+    # movie_path and thumbnail_path are Python 2 strings.
+    py_exe_path = py_exe_path.encode('utf-8')
+    script_path = script_path.encode('utf-8')
+    # ... et tu, environment variables.
+    for k in env.keys():
+        try:
+            check_b(env[k])
+        except:
+            env[k] = env[k].encode('utf-8')
     return ((py_exe_path, script_path, movie_path, thumbnail_path), env)
 
 ###############################################################################
 
 def get_ffmpeg_executable_path():
     bundle_path = NSBundle.mainBundle().bundlePath()
-    return os.path.join(bundle_path, "Contents", "Helpers", "ffmpeg")
+    # XXX Unicode kludge.  This wouldn't be a problem once we switch to 
+    # Python 3.
+    path = os.path.join(bundle_path, "Contents", "Helpers", "ffmpeg")
+    return path.encode('utf-8')
 
 def customize_ffmpeg_parameters(default_parameters):
     return default_parameters
 
 def get_ffmpeg2theora_executable_path():
     bundle_path = NSBundle.mainBundle().bundlePath()
-    return os.path.join(bundle_path, "Contents", "Helpers", "ffmpeg2theora")
+    # Unicode kludge.  This wouldn't be a problem once we switch to Python 3.
+    path = os.path.join(bundle_path, "Contents", "Helpers", "ffmpeg2theora")
+    return path.encode('utf-8')
 
 def customize_ffmpeg2theora_parameters(default_parameters):
     return default_parameters

@@ -31,8 +31,8 @@ import objc
 import logging
 import Foundation
 
+from miro import app
 from miro import prefs
-from miro import config
 from miro.plat.frontends.widgets.threads import on_ui_thread
 
 ###############################################################################
@@ -50,18 +50,18 @@ class MiroUpdater (SUUpdater):
         alert.release()
 
         if choice == 0:    # SUInstallUpdateChoice
-            config.set(SUSkippedVersionPref, '')
+            app.config.set(SUSkippedVersionPref, '')
             self.beginDownload()
 
         elif choice == 1:  # SURemindMeLaterChoice
             objc.setInstanceVariable(self, 'updateInProgress', objc.NO, True)
-            config.set(SUSkippedVersionPref, '')
+            app.config.set(SUSkippedVersionPref, '')
             self.scheduleCheckWithInterval_(30 * 60)
 
         elif choice == 2:  # SUSkipThisVersionChoice
             objc.setInstanceVariable(self, 'updateInProgress', objc.NO, True)
             suItem = objc.getInstanceVariable(updater, 'updateItem')
-            config.set(SUSkippedVersionPref, suItem.fileVersion())
+            app.config.set(SUSkippedVersionPref, suItem.fileVersion())
 
 ###############################################################################
 
@@ -112,7 +112,7 @@ def handleNewUpdate(latest):
     dictionary['enclosure'] = suEnclosure
 
     suItem = SUAppcastItem.alloc().initWithDictionary_(dictionary)
-    skipped_version = config.get(SUSkippedVersionPref)
+    skipped_version = app.config.get(SUSkippedVersionPref)
     
     if suItem.fileVersion() == skipped_version:
         logging.info("Skipping update by user request")

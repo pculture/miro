@@ -34,22 +34,22 @@ import threading
 import time
 import traceback
 
-from miro import config
+from miro import app
 from miro import prefs
 from miro import util
 
 def format_crash_report(when, with_exception, details):
     header = ""
-    header += "App:        %s\n" % config.get(prefs.LONG_APP_NAME)
-    header += "Publisher:  %s\n" % config.get(prefs.PUBLISHER)
-    header += "Platform:   %s\n" % config.get(prefs.APP_PLATFORM)
+    header += "App:        %s\n" % app.config.get(prefs.LONG_APP_NAME)
+    header += "Publisher:  %s\n" % app.config.get(prefs.PUBLISHER)
+    header += "Platform:   %s\n" % app.config.get(prefs.APP_PLATFORM)
     header += "Python:     %s\n" % sys.version.replace("\r\n"," ").replace("\n"," ").replace("\r"," ")
     header += "Py Path:    %s\n" % repr(sys.path)
-    header += "Version:    %s\n" % config.get(prefs.APP_VERSION)
-    header += "Serial:     %s\n" % config.get(prefs.APP_SERIAL)
-    header += "Revision:   %s\n" % config.get(prefs.APP_REVISION)
-    header += "Builder:    %s\n" % config.get(prefs.BUILD_MACHINE)
-    header += "Build Time: %s\n" % config.get(prefs.BUILD_TIME)
+    header += "Version:    %s\n" % app.config.get(prefs.APP_VERSION)
+    header += "Serial:     %s\n" % app.config.get(prefs.APP_SERIAL)
+    header += "Revision:   %s\n" % app.config.get(prefs.APP_REVISION)
+    header += "Builder:    %s\n" % app.config.get(prefs.BUILD_MACHINE)
+    header += "Build Time: %s\n" % app.config.get(prefs.BUILD_TIME)
     header += "Time:       %s\n" % time.asctime()
     header += "When:       %s\n" % when
     header += "\n"
@@ -96,8 +96,8 @@ def format_crash_report(when, with_exception, details):
             logContents = ''
         return logContents
 
-    logFile = config.get(prefs.LOG_PATHNAME)
-    downloaderLogFile = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
+    logFile = app.config.get(prefs.LOG_PATHNAME)
+    downloaderLogFile = app.config.get(prefs.DOWNLOADER_LOG_PATHNAME)
     if logFile is None:
         logContents = "No logfile available on this platform.\n"
     else:

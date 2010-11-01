@@ -33,10 +33,10 @@ Bundle information accessors
 from Foundation import NSBundle
 
 def getBundleIdentifier():
-    return unicode(NSBundle.mainBundle().bundleIdentifier())
+    return NSBundle.mainBundle().bundleIdentifier()
 
 def getBundlePath():
-    return unicode(NSBundle.mainBundle().bundlePath())
+    return NSBundle.mainBundle().bundlePath()
 
 def getBundleResourcePath():
-    return unicode(NSBundle.mainBundle().resourcePath())
+    return NSBundle.mainBundle().resourcePath()

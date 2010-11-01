@@ -41,8 +41,27 @@ renderers = []
 # database object
 db = None
 
+# stores ItemInfo objects so we can quickly fetch them
+item_info_cache = None
+
 # command line arguments for thumbnailer (linux)
 movie_data_program_info = None
+
+# configuration data
+config = None
+
+# low-level parser for the "app.config" file
+configfile = None
+
+# signal emiters for when config data changes
+backend_config_watcher = None
+frontend_config_watcher = None
+downloader_config_watcher = None
+
+# debugmode adds a bunch of computation that's useful for development
+# and debugging.  initalized to None; set to True/False depending on
+# mode
+debugmode = None
 
 # widget frontend adds these
 # --------------------------

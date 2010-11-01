@@ -62,7 +62,6 @@ except ImportError:
     from pysqlite2 import dbapi2 as sqlite3
 
 from miro import app
-from miro import config
 from miro import crashreport
 from miro import convert20database
 from miro import databaseupgrade
@@ -70,6 +69,7 @@ from miro import dbupgradeprogress
 from miro import dialogs
 from miro import eventloop
 from miro import fileutil
+from miro import iteminfocache
 from miro import messages
 from miro import schema
 from miro import prefs
@@ -128,7 +128,7 @@ class LiveStorage:
     """
     def __init__(self, path=None, object_schemas=None, schema_version=None):
         if path is None:
-            path = config.get(prefs.SQLITE_PATHNAME)
+            path = app.config.get(prefs.SQLITE_PATHNAME)
         if object_schemas is None:
             object_schemas = schema.object_schemas
         if schema_version is None:
@@ -246,7 +246,7 @@ class LiveStorage:
     def _handle_upgrade_error(self):
         self._backup_failed_upgrade_db()
         title = _("%(appname)s database upgrade failed",
-                  {"appname": config.get(prefs.SHORT_APP_NAME)})
+                  {"appname": app.config.get(prefs.SHORT_APP_NAME)})
         description = _(
             "We're sorry, %(appname)s was unable to upgrade your database "
             "due to errors.\n\n"
@@ -257,7 +257,7 @@ class LiveStorage:
             "reporting a bug to our crash database.\n\n"
             "Finally, you can start fresh and your damaged database will be "
             "removed, but you will have to re-add your feeds and media "
-            "files.", {"appname": config.get(prefs.SHORT_APP_NAME)}
+            "files.", {"appname": app.config.get(prefs.SHORT_APP_NAME)}
             )
         d = dialogs.ThreeChoiceDialog(title, description,
                 dialogs.BUTTON_QUIT, dialogs.BUTTON_SUBMIT_REPORT,
@@ -367,13 +367,15 @@ class LiveStorage:
                 self._set_version(80)
                 self._change_database_file_back()
 
-    def _get_variable(self, name):
+    def get_variable(self, name):
         self.cursor.execute("SELECT serialized_value FROM dtv_variables "
                 "WHERE name=?", (name,))
         row = self.cursor.fetchone()
+        if row is None:
+            raise KeyError(name)
         return cPickle.loads(str(row[0]))
 
-    def _set_variable(self, name, value):
+    def set_variable(self, name, value):
         # we only store one variable and it's easier to deal with if we store
         # it using ASCII-base protocol.
         db_value = buffer(cPickle.dumps(value, 0))
@@ -548,8 +550,18 @@ class LiveStorage:
 
     def query(self, klass, where, values=None, order_by=None, joins=None,
             limit=None):
-        for id in self.query_ids(klass, where, values, order_by, joins, limit):
-            yield self._object_map[id]
+        id_list = list(self.query_ids(klass, where, values, order_by, joins,
+            limit))
+        unrestored_ids = set(id_list).difference(self._ids_loaded)
+        if unrestored_ids:
+            # restore any objects that we don't already have in memory.
+            schema = self._schema_map[klass]
+            self._restore_objects(schema, unrestored_ids)
+            # sometimes objects will call remove() in setup_restored().
+            # We need to filter those out.
+            id_list = [id_ for id_ in id_list if id_ in self._object_map]
+        for id_ in id_list:
+            yield self._object_map[id_]
 
     def query_ids(self, klass, where, values=None, order_by=None, joins=None,
             limit=None):
@@ -559,18 +571,7 @@ class LiveStorage:
         sql.write(self._get_query_bottom(schema.table_name, where, joins,
             order_by, limit))
         self.cursor.execute(sql.getvalue(), values)
-        rv = [row[0] for row in self.cursor.fetchall()]
-        unrestored_ids = set(rv).difference(self._ids_loaded)
-        if unrestored_ids:
-            # restore any objects that we don't already have in memory.
-            # query() calls query_ids() and expects that for all the object
-            # ids returned, it can look them up in self._object_map
-            self._restore_objects(schema, unrestored_ids)
-
-            # sometimes objects will call remove() in setup_restored().
-            # We need to filter those out.
-            rv = [id for id in rv if id in self._object_map]
-        return rv
+        return (row[0] for row in self.cursor.fetchall())
 
     def _restore_objects(self, schema, id_set):
         column_names = ['%s.%s' % (schema.table_name, f[0])
@@ -644,12 +645,13 @@ class LiveStorage:
             sql.write('\nWHERE %s' % where)
         self._execute(sql.getvalue(), values, is_update=True)
 
-    def select(self, klass, columns, where, values, convert=True):
+    def select(self, klass, columns, where, values, joins=None, limit=None,
+            convert=True):
         schema = self._schema_map[klass]
         sql = StringIO()
         sql.write('SELECT %s ' % ', '.join(columns))
-        sql.write(self._get_query_bottom(schema.table_name, where, None, None,
-            None))
+        sql.write(self._get_query_bottom(schema.table_name, where, joins, None,
+            limit))
         results = self._execute(sql.getvalue(), values)
         if not convert:
             return results
@@ -711,7 +713,7 @@ class LiveStorage:
 
         if failed and not self._quitting_from_operational_error:
             title = _("%(appname)s database save succeeded",
-                      {"appname": config.get(prefs.SHORT_APP_NAME)})
+                      {"appname": app.config.get(prefs.SHORT_APP_NAME)})
             description = _("The database has been successfully saved. "
                     "It is now safe to quit without losing any data.")
             dialogs.MessageBoxDialog(title, description).run()
@@ -774,7 +776,7 @@ class LiveStorage:
 
     def _show_save_error_dialog(self, error_text):
         title = _("%(appname)s database save failed",
-                  {"appname": config.get(prefs.SHORT_APP_NAME)})
+                  {"appname": app.config.get(prefs.SHORT_APP_NAME)})
         description = _(
             "%(appname)s was unable to save its database.\n\n"
             "If your disk is full, we suggest freeing up some space and "
@@ -786,7 +788,7 @@ class LiveStorage:
             "you reduce the number of simultaneous downloads in the Options "
             "dialog in the Download tab.\n\n"
             "Error: %(error_text)s\n\n",
-            {"appname": config.get(prefs.SHORT_APP_NAME),
+            {"appname": app.config.get(prefs.SHORT_APP_NAME),
              "error_text": error_text}
             )
         d = dialogs.ChoiceDialog(title, description,
@@ -832,17 +834,18 @@ class LiveStorage:
                 self.cursor.execute("CREATE INDEX %s ON %s (%s)" %
                         (name, schema.table_name, ', '.join(columns)))
         self._create_variables_table()
+        self.cursor.execute(iteminfocache.create_sql())
         self._set_version()
 
     def _get_version(self):
-        return self._get_variable(VERSION_KEY)
+        return self.get_variable(VERSION_KEY)
 
     def _set_version(self, version=None):
         """Set the database version to the current schema version."""
 
         if version is None:
             version = self._schema_version
-        self._set_variable(VERSION_KEY, version)
+        self.set_variable(VERSION_KEY, version)
 
     def _calc_sqlite_types(self, object_schema):
         """What datatype should we use for the attributes of an object schema?
@@ -892,7 +895,7 @@ class LiveStorage:
         return save_name
 
     def dumpDatabase(self):
-        output = open(next_free_filename(os.path.join(config.get(prefs.SUPPORT_DIRECTORY), "database-dump.xml")), 'w')
+        output = open(next_free_filename(os.path.join(app.config.get(prefs.SUPPORT_DIRECTORY), "database-dump.xml")), 'w')
         def indent(level):
             output.write('    ' * level)
         def output_object(table_name, values):

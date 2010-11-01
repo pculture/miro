@@ -31,7 +31,7 @@ import signal
 import os
 import statvfs
 import threading
-from miro import config
+from miro import app
 from miro import prefs
 import logging
 import logging.handlers
@@ -52,6 +52,13 @@ from os.path import samefile
 # this is used in lib/gtcache.py
 _locale_initialized = False
 
+def dirfilt(root, dirs):
+    """
+    Platform hook to filter out any directories that should not be
+    descended into, root and dirs corresponds as per os.walk().
+    """
+    return dirs
+
 def get_available_bytes_for_movies():
     """Helper method used to get the free space on the disk where downloaded
     movies are stored.
@@ -61,7 +68,7 @@ def get_available_bytes_for_movies():
     :returns: free disk space on drive for MOVIES_DIRECTORY as an int
     Returns an integer
     """
-    movie_dir = config.get(prefs.MOVIES_DIRECTORY)
+    movie_dir = app.config.get(prefs.MOVIES_DIRECTORY)
 
     if not os.path.exists(movie_dir):
         # FIXME - this is a bogus value.  need to "do the right thing"
@@ -95,7 +102,7 @@ def setup_logging(in_downloader=False):
     if in_downloader:
         if 'MIRO_IN_UNIT_TESTS' in os.environ:
             level = logging.WARN
-        elif os.environ.get('MIRO_APP_VERSION', "").endswith("git"):
+        elif os.environ.get('MIRO_DEBUGMODE', "") == "True":
             level = logging.DEBUG
         else:
             level = logging.INFO
@@ -106,13 +113,13 @@ def setup_logging(in_downloader=False):
         if not pathname:
             return
     else:
-        if config.get(prefs.APP_VERSION).endswith("git"):
+        if app.debugmode:
             level = logging.DEBUG
         else:
             level = logging.INFO
         logging.basicConfig(level=level,
                             format='%(asctime)s %(levelname)-8s %(message)s')
-        pathname = config.get(prefs.LOG_PATHNAME)
+        pathname = app.config.get(prefs.LOG_PATHNAME)
 
     try:
         rotater = logging.handlers.RotatingFileHandler(
@@ -275,8 +282,9 @@ def launch_download_daemon(oldpid, env):
 
     environ = os.environ.copy()
     environ['MIRO_FRONTEND'] = options.frontend
-    environ['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
-    environ['MIRO_APP_VERSION'] = config.get(prefs.APP_VERSION)
+    environ['DEMOCRACY_DOWNLOADER_LOG'] = app.config.get(prefs.DOWNLOADER_LOG_PATHNAME)
+    environ['MIRO_APP_VERSION'] = app.config.get(prefs.APP_VERSION)
+    environ['MIRO_DEBUGMODE'] = str(app.debugmode)
     if hasattr(miro.app, 'in_unit_tests'):
         environ['MIRO_IN_UNIT_TESTS'] = '1'
     environ.update(env)
@@ -301,7 +309,7 @@ def set_properties(props):
     """
     for pref, val in props:
         logging.info("Setting preference: %s -> %s", pref.alias, val)
-        config.set(pref, val)
+        app.config.set(pref, val)
 
 def movie_data_program_info(movie_path, thumbnail_path):
     """Returns the necessary information for Miro to run the media
@@ -339,7 +347,7 @@ def get_ffmpeg_executable_path():
 
     :returns: string
     """
-    return config.get(options.FFMPEG_BINARY)
+    return app.config.get(options.FFMPEG_BINARY)
 
 def customize_ffmpeg_parameters(params):
     """Takes a list of parameters and modifies it based on
@@ -365,7 +373,7 @@ def get_ffmpeg2theora_executable_path():
 
     :returns: string
     """
-    return config.get(options.FFMPEG2THEORA_BINARY)
+    return app.config.get(options.FFMPEG2THEORA_BINARY)
 
 def customize_ffmpeg2theora_parameters(params):
     """Takes a list of parameters and modifies it based on

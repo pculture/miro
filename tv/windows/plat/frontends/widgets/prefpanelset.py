@@ -33,7 +33,7 @@ from miro.plat import fontinfo
 from miro.frontends.widgets.prefpanel import attach_boolean, attach_radio, \
         attach_combo
 from miro.frontends.widgets import widgetutil
-from miro import config
+from miro import app
 from miro import prefs
 
 def _general_panel():
@@ -46,7 +46,8 @@ def _general_panel():
     extras.append(widgetutil.align_left(lab))
     rbg = widgetset.RadioButtonGroup()
     rad_close = widgetset.RadioButton(_("Close to tray so that downloads can continue."), rbg)
-    rad_quit = widgetset.RadioButton(_("Quit %(appname)s completely.", {'appname': config.get(prefs.SHORT_APP_NAME)}), rbg)
+    rad_quit = widgetset.RadioButton(_("Quit %(appname)s completely.",
+        {'appname': app.config.get(prefs.SHORT_APP_NAME)}), rbg)
 
     attach_radio([(rad_close, True), (rad_quit, False)], prefs.MINIMIZE_TO_TRAY)
     extras.append(widgetutil.align_left(rad_close, left_pad=20))

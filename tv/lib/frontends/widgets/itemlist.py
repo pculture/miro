@@ -225,7 +225,6 @@ class ItemListGroup(object):
         else:
             self.set_sort(sorter)
         self._throbber_timeouts = {}
-        self.html_stripper = util.HTMLStripper()
 
     def _throbber_timeout(self, id):
         for item_list in self.item_lists:
@@ -238,9 +237,6 @@ class ItemListGroup(object):
 
     def _setup_info(self, info):
         """Initialize a newly received ItemInfo."""
-        info.icon = imagepool.LazySurface(info.thumbnail, (154, 105))
-        info.description_text, info.description_links = \
-                self.html_stripper.strip(info.description)
         download_info = info.download_info
         if (download_info is not None and
                 not download_info.finished and
@@ -312,12 +308,12 @@ class ItemList(signals.SignalEmitter):
     resort_on_update -- Should we re-sort the list when items change?
 
     Signals:
-      item-added(item, next_item): an item was added to the list
+      items-added(new_items): items were added to the list
     """
 
     def __init__(self):
         signals.SignalEmitter.__init__(self)
-        self.create_signal('item-added')
+        self.create_signal('items-added')
         self.model = widgetset.TableModel('object', 'boolean', 'integer')
         self._iter_map = {}
         self._sorter = None
@@ -347,15 +343,18 @@ class ItemList(signals.SignalEmitter):
 
     def get_items(self, start_id=None):
         """Get a list of ItemInfo objects in this list"""
+        return list(self.iter_items(start_id))
+
+    def iter_items(self, start_id=None):
+        """Iterate through ItemInfo objects in this list"""
         if start_id is None:
-            return [row[0] for row in self.model]
+            for row in self.model:
+                yield row[0]
         else:
             iter = self._iter_map[start_id]
-            retval = []
             while iter is not None:
-                retval.append(self.model[iter][0])
+                yield self.model[iter][0]
                 iter = self.model.next_iter(iter)
-            return retval
 
     def _resort_items(self):
         rows = []
@@ -432,7 +431,6 @@ class ItemList(signals.SignalEmitter):
                 next_item_info = self.model[pos][0]
             else:
                 next_item_info = None
-            self.emit('item-added', item_info, next_item_info)
             self._iter_map[item_info.id] = iter
 
     def add_items(self, item_list, already_sorted=False):
@@ -445,6 +443,7 @@ class ItemList(signals.SignalEmitter):
         if not already_sorted:
             self._sorter.sort_items(to_add)
         self._insert_sorted_items(to_add)
+        self.emit('items-added', to_add)
 
     def update_items(self, changed_items, already_sorted=False):
         to_add = []
@@ -467,6 +466,7 @@ class ItemList(signals.SignalEmitter):
         if not already_sorted:
             self._sorter.sort_items(to_add)
         self._insert_sorted_items(to_add)
+        self.emit('items-added', to_add)
 
     def remove_item(self, id):
         try:

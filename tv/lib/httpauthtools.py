@@ -73,6 +73,9 @@ class HTTPAuthPassword(object):
         self.url_dir = os.path.dirname(self.urlparts.path) + "/"
         self.calc_domain_list()
 
+    def __repr__(self):
+        return "<miro.httpauthtools.HTTPAuthPassword %s %s %s>" % (self.scheme, self.domain, self.realm)
+
     def calc_domain_list(self):
         if self.domain is None:
             self.domain_list = None
@@ -151,6 +154,9 @@ class HTTPPasswordList(signals.SignalEmitter):
         signals.SignalEmitter.__init__(self)
         self.create_signal("passwords-updated")
         self.passwords = []
+
+    def __repr__(self):
+        return "<miro.httpauthtools.HTTPPasswordList [%r]>" % self.passwords
 
     def write_to_file(self, path):
         dump_data = []
@@ -244,6 +250,5 @@ class HTTPPasswordList(signals.SignalEmitter):
 
     def replace_passwords(self, passwords):
         """Replace the entire password list"""
-
         self.passwords = passwords
 

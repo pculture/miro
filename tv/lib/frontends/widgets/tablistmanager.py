@@ -29,7 +29,6 @@
 """Manages the tab lists from a high level perspective."""
 
 from miro import app
-from miro import config
 from miro import prefs
 
 from miro.frontends.widgets import tablist
@@ -112,22 +111,22 @@ class TabListManager(object):
 
 
     def select_startup_default(self):
-        if config.get(prefs.OPEN_CHANNEL_ON_STARTUP) is not None:
+        if app.config.get(prefs.OPEN_CHANNEL_ON_STARTUP) is not None:
             # try regular feeds first, followed by audio feeds
             for tab_list in self.feed_list, self.audio_feed_list:
                 info = tab_list.find_feed_with_url(
-                    config.get(prefs.OPEN_CHANNEL_ON_STARTUP))
+                    app.config.get(prefs.OPEN_CHANNEL_ON_STARTUP))
                 if info is not None:
                     self._select_from_tab_list(
                         tab_list,
                         tab_list.iter_map[info.id])
                     return
 
-        if config.get(prefs.OPEN_FOLDER_ON_STARTUP) is not None:
+        if app.config.get(prefs.OPEN_FOLDER_ON_STARTUP) is not None:
             for tab_list in self.feed_list, self.audio_feed_list:
                 for iter in tab_list.iter_map.values():
                     info = tab_list.view.model[iter][0]
-                    if info.is_folder and info.name == config.get(
+                    if info.is_folder and info.name == app.config.get(
                         prefs.OPEN_FOLDER_ON_STARTUP):
                         self._select_from_tab_list(tab_list, iter)
                         return

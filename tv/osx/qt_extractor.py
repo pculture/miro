@@ -162,6 +162,9 @@ if pyobjc_version == 2:
 else:
     qtmovie, error = QTKit.QTMovie.movieWithFile_error_(movie_path)
 if qtmovie is None or error is not objc.nil:
+    print "Miro-Movie-Data-Length: -1"
+    print "Miro-Movie-Data-Thumbnail: Failure"
+    print "Miro-Movie-Data-Type: other"
     sys.exit(0)
 
 movie_type = get_type(qtmovie)

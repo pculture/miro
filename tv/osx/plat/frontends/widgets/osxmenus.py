@@ -35,7 +35,8 @@ from objc import nil, NO, YES
 from AppKit import *
 from Foundation import *
 
-from miro import app, config, prefs
+from miro import app
+from miro import prefs
 
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import menus
@@ -143,7 +144,7 @@ def extract_menu_item(menu_structure, action):
 
 _menu_structure = None
 def populate_menu():
-    short_appname = config.get(prefs.SHORT_APP_NAME)
+    short_appname = app.config.get(prefs.SHORT_APP_NAME)
 
     menubar = menus.get_menu()
 
@@ -156,7 +157,7 @@ def populate_menu():
         menus.Separator(),
         extract_menu_item(menubar, "EditPreferences"),
         menus.Separator(),
-        menus.MenuItem(_("Services"), "ServicesMenu"),
+        menus.Menu(_("Services"), "ServicesMenu", []),
         menus.Separator(),
         menus.MenuItem(_("Hide %(appname)s", {"appname": short_appname}),
                        "HideMiro", menus.Shortcut("h", MOD)),
@@ -228,8 +229,11 @@ def populate_menu():
 
     # Now populate the main menu bar
     main_menu = NSApp().mainMenu()
+    # XXX: should be using the tag to prevent interface and locale breakages
     appMenu = main_menu.itemAtIndex_(0).submenu()
     populate_single_menu(appMenu, miroMenu)
+    servicesMenuItem = appMenu.itemWithTitle_(_("Services"))
+    NSApp().setServicesMenu_(servicesMenuItem)
 
     for menu in menubar.menuitems:
         nsmenu = NSMenu.alloc().init()
@@ -330,13 +334,17 @@ subtitles_menu_handler = SubtitleChangesHandler.alloc().init()
 
 def on_menu_change(menu_manager):
     main_menu = NSApp().mainMenu()
-    play_pause_menu_item = main_menu.itemAtIndex_(6).submenu().itemAtIndex_(0)
+    # XXX Flaky: we should be using the tag to prevent interface and language
+    # XXX breakages.
+    play_pause_menu_item = main_menu.itemAtIndex_(5).submenu().itemAtIndex_(0)
     play_pause = _menu_structure.get("PlayPauseItem").state_labels[app.menu_manager.play_pause_state]
     play_pause_menu_item.setTitleWithMnemonic_(play_pause.replace("_", "&"))
 
 def on_playback_change(playback_manager):
     main_menu = NSApp().mainMenu()
-    subtitles_menu_root = main_menu.itemAtIndex_(6).submenu().itemAtIndex_(15)
+    # XXX Flaky: we should be using the tag to prevent interface and language
+    # XXX breakages.
+    subtitles_menu_root = main_menu.itemAtIndex_(5).submenu().itemAtIndex_(15)
     subtitles_menu = NSMenu.alloc().init()
     subtitles_menu.setAutoenablesItems_(NO)
     subtitles_tracks = None

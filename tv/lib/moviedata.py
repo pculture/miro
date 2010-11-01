@@ -37,7 +37,6 @@ import Queue
 import logging
 
 from miro import app
-from miro import config
 from miro import prefs
 from miro import signals
 from miro import util
@@ -57,7 +56,7 @@ THUMBNAIL_SUCCESS_RE = re.compile("Miro-Movie-Data-Thumbnail: Success")
 TRY_AGAIN_RE = re.compile("Miro-Try-Again: True")
 
 def thumbnail_directory():
-    dir_ = os.path.join(config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
+    dir_ = os.path.join(app.config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
     try:
         fileutil.makedirs(dir_)
     except (KeyboardInterrupt, SystemExit):
@@ -108,7 +107,8 @@ class MovieDataInfo(object):
 
 class MovieDataUpdater(signals.SignalEmitter):
     def __init__ (self):
-        signals.SignalEmitter.__init__(self, 'begin-loop', 'end-loop')
+        signals.SignalEmitter.__init__(self, 'begin-loop', 'end-loop',
+                'queue-empty')
         self.in_shutdown = False
         self.queue = Queue.Queue()
         self.thread = None
@@ -122,6 +122,8 @@ class MovieDataUpdater(signals.SignalEmitter):
     def thread_loop(self):
         while not self.in_shutdown:
             self.emit('begin-loop')
+            if self.queue.empty():
+                self.emit('queue-empty')
             mdi = self.queue.get(block=True)
             if mdi is None or mdi.program_info is None:
                 # shutdown() was called or there's no moviedata

@@ -31,7 +31,8 @@
 import logging
 
 from miro import app
-from miro import config, prefs, messages
+from miro import messages
+from miro import prefs
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import widgetconst
@@ -49,7 +50,7 @@ from miro.util import clamp_text, returns_unicode
 def get_formatted_default_expiration():
     """Returns the 'system' expiration delay as a formatted string
     """
-    expiration = float(config.get(prefs.EXPIRE_AFTER_X_DAYS))
+    expiration = float(app.config.get(prefs.EXPIRE_AFTER_X_DAYS))
     formatted_expiration = u''
     if expiration < 0:
         formatted_expiration = _('never')
@@ -120,7 +121,7 @@ def _build_video_expires(channel, grid):
 
         if value == "system":
             expire_type = "system"
-            expire_time = config.get(prefs.EXPIRE_AFTER_X_DAYS)
+            expire_time = app.config.get(prefs.EXPIRE_AFTER_X_DAYS)
         elif value == "never":
             expire_type = "never"
             expire_time = 0
@@ -137,7 +138,7 @@ def _build_remember_items(channel, grid):
     grid.pack_label(_("Outdated Feed Items:"), grid.ALIGN_RIGHT)
     older_options = [
         ("-1", _("Keep %(number)s (Default)",
-                 {"number": config.get(prefs.MAX_OLD_ITEMS_DEFAULT)})),
+                 {"number": app.config.get(prefs.MAX_OLD_ITEMS_DEFAULT)})),
         ("0", _("Keep 0")),
         ("20", _("Keep 20")),
         ("50", _("Keep 50")),

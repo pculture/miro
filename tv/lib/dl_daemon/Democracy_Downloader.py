@@ -29,12 +29,16 @@
 """Miro download daemon - background process
 """
 
+import logging
+
+config_loaded = False
+from miro import app
+from miro import config
+
 def override_modules():
     import miro
-    import miro.dl_daemon.private.config
     import miro.dl_daemon.private.httpauth
     import miro.dl_daemon.private.resources
-    miro.config = miro.dl_daemon.private.config
     miro.httpauth = miro.dl_daemon.private.httpauth
     miro.resources = miro.dl_daemon.private.resources
 
@@ -61,42 +65,49 @@ def launch():
         logging.info("Starting new downloader log")
     else:
         logging.info("Launching Downloader Daemon")
+    log_versions()
 
     # Start of normal imports
     import threading
 
     from miro.dl_daemon import daemon
-    from miro.dl_daemon import download
-    from miro import eventloop
     from miro import httpclient
 
     port = int(os.environ['DEMOCRACY_DOWNLOADER_PORT'])
     short_app_name = os.environ['DEMOCRACY_SHORT_APP_NAME']
     httpclient.start_thread()
     server = daemon.DownloaderDaemon(port, short_app_name)
-
-    download.DOWNLOAD_UPDATER.start_updates()
-    httpclient.init_libcurl()
+    # setup config for the downloader
+    from miro import eventloop
+    config.load(config.DownloaderConfig())
+    app.downloader_config_watcher = config.ConfigWatcher(
+            lambda foo, *args: eventloop.add_idle(foo, "config watcher",
+                args=args))
+    # start things up
     eventloop.startup()
 
+def finish_startup_after_config():
+    """Finish startup tasks once we have config setup.
+
+    Called from command.InitialConfigCommand.
+    """
+
+    from miro import gtcache
+    gtcache.init()
+
+    from miro import httpclient
+    from miro.dl_daemon import download
+    download.startup()
+    httpclient.init_libcurl()
+
+    logging.info("Daemon ready")
+
+def log_versions():
     import libtorrent
     logging.info("libtorrent: %s", libtorrent.version)
 
     import pycurl
     logging.info("pycurl:     %s", pycurl.version)
-
-    # Hack to init gettext after we can get config information
-    #
-    # See corresponding hack in gtcache.py
-    from miro import gtcache
-    gtcache.init()
-    logging.info("Daemon ready")
-
-    import libtorrent
-    logging.info("libtorrent:  %s", libtorrent.version)
-
-    import pycurl
-    logging.info("pycurl:      %s", pycurl.version)
 
 if __name__ == "__main__":
     launch()
