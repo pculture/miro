@@ -36,7 +36,8 @@ import os
 import sys
 import ConfigParser
 import glob
-from miro import config
+from miro import app
+# from miro import config
 from miro import prefs
 from miro import messages
 from miro import signals
@@ -107,8 +108,8 @@ def get_extensions(ext_dir):
 class ExtensionManager(object):
     def __init__(self, ext_dirs):
         self.ext_dirs = ext_dirs
-        self.enabled_extensions = config.get(prefs.ENABLED_EXTENSIONS)
-        self.disabled_extensions = config.get(prefs.DISABLED_EXTENSIONS)
+        self.enabled_extensions = app.config.get(prefs.ENABLED_EXTENSIONS)
+        self.disabled_extensions = app.config.get(prefs.DISABLED_EXTENSIONS)
         self.extensions = []
 
     def get_extension_by_name(self, name):
@@ -136,11 +137,11 @@ class ExtensionManager(object):
     def enable_extension(self, ext):
         if ext.name in self.disabled_extensions:
             self.disabled_extensions.remove(ext.name)
-            config.set(prefs.DISABLED_EXTENSIONS, self.disabled_extensions)
+            app.config.set(prefs.DISABLED_EXTENSIONS, self.disabled_extensions)
 
         if ext.name not in self.enabled_extensions:
             self.enabled_extensions.append(ext.name)
-            config.set(prefs.ENABLED_EXTENSIONS, self.enabled_extensions)
+            app.config.set(prefs.ENABLED_EXTENSIONS, self.enabled_extensions)
 
     def import_extension(self, ext):
         """Imports an extension.
@@ -165,11 +166,11 @@ class ExtensionManager(object):
     def disable_extension(self, ext):
         if ext.name not in self.disabled_extensions:
             self.disabled_extensions.append(ext.name)
-            config.set(prefs.DISABLED_EXTENSIONS, self.disabled_extensions)
+            app.config.set(prefs.DISABLED_EXTENSIONS, self.disabled_extensions)
 
         if ext.name in self.enabled_extensions:
             self.enabled_extensions.remove(ext.name)
-            config.set(prefs.ENABLED_EXTENSIONS, self.enabled_extensions)
+            app.config.set(prefs.ENABLED_EXTENSIONS, self.enabled_extensions)
 
     def unload_extension(self, ext):
         """Unloads an extension by calling the ``unload`` function.
@@ -191,7 +192,7 @@ class ExtensionManager(object):
         for d in self.ext_dirs:
             try:
                 d = d % {
-                    "supportdir": config.get(prefs.SUPPORT_DIRECTORY)
+                    "supportdir": app.config.get(prefs.SUPPORT_DIRECTORY)
                     }
             except KeyError:
                 logging.exception("bad extension directory '%s'", d)

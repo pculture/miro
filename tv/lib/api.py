@@ -92,7 +92,7 @@ def get_frontend():
         return "unknown"
 
 def get_support_directory():
-    from miro import config, prefs
-    return config.get(prefs.SUPPORT_DIRECTORY)
+    from miro import app, prefs
+    return app.config.get(prefs.SUPPORT_DIRECTORY)
 
 
