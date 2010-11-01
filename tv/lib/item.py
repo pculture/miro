@@ -449,9 +449,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def visible_folder_view(cls, folder_id):
-        return cls.make_view('folder_id=? AND (deleted IS NULL or not deleted)',
-                (folder_id,),
-                joins={'feed': 'item.feed_id=feed.id'})
+        return cls.make_view(
+            'folder_id=? AND (deleted IS NULL or not deleted)',
+            (folder_id,),
+            joins={'feed': 'item.feed_id=feed.id'})
 
     @classmethod
     def folder_contents_view(cls, folder_id):
@@ -531,13 +532,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def watchable_audio_view(cls):
-        return cls.make_view("not isContainerItem AND "
-                "(deleted IS NULL or not deleted) AND "
-                "(is_file_item OR rd.main_item_id=item.id) AND "
-                "(feed.origURL IS NULL OR feed.origURL!= 'dtv:singleFeed') AND "
-                "item.file_type='audio'",
-                joins={'feed': 'item.feed_id=feed.id',
-                    'remote_downloader as rd': 'item.downloader_id=rd.id'})
+        return cls.make_view(
+            "not isContainerItem AND "
+            "(deleted IS NULL or not deleted) AND "
+            "(is_file_item OR rd.main_item_id=item.id) AND "
+            "(feed.origURL IS NULL OR feed.origURL!= 'dtv:singleFeed') AND "
+            "item.file_type='audio'",
+            joins={'feed': 'item.feed_id=feed.id',
+                   'remote_downloader as rd': 'item.downloader_id=rd.id'})
 
     @classmethod
     def watchable_other_view(cls):
@@ -1368,7 +1370,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 self._state = u'expired'
             elif (self.get_viewed() or
                     (self.downloader and
-                        self.downloader.get_state() in (u'failed', u'stopped'))):
+                        self.downloader.get_state() in (u'failed',
+                                                        u'stopped'))):
                 self._state = u'not-downloaded'
             else:
                 self._state = u'new'
@@ -1736,7 +1739,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 try:
                     temp = filename_path + ".tmp"
                     fileutil.move(enclosed_file, temp)
-                    for turd in os.listdir(fileutil.expand_filename(filename_path)):
+                    for turd in os.listdir(fileutil.expand_filename(
+                            filename_path)):
                         os.remove(turd)
                     fileutil.rmdir(filename_path)
                     fileutil.rename(temp, filename_path)
