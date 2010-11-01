@@ -217,6 +217,12 @@ class DeviceDisplay(TabDisplay):
         self.controller = devicecontroller.DeviceController(device)
         self.widget = self.controller.widget
 
+    def on_selected(self):
+        self.controller.start_tracking()
+
+    def cleanup(self):
+        self.controller.stop_tracking()
+
 class SiteDisplay(TabDisplay):
     _open_sites = {} # maps site ids -> BrowserNav objects for them
 

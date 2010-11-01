@@ -666,7 +666,6 @@ class DevicesList(TabList, TabUpdaterMixin):
         TabUpdaterMixin.__init__(self)
         self.view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
         self.view.set_drag_dest(DeviceDropHandler(self))
-        self.devices = {}
 
     def on_row_expanded_change(self, view, iter, expanded):
         # don't bother doing anything
@@ -676,7 +675,7 @@ class DevicesList(TabList, TabUpdaterMixin):
         new_data = {
             'fake': True,
             'tab_type': name.lower(),
-            'id': '%s-%s' % (info.id, name),
+            'id': '%s-%s' % (info.id, name.lower()),
             'name': name,
             'icon': imagepool.get_surface(
                 resources.path('images/icon-%s.png' % name.lower()))
@@ -713,7 +712,6 @@ class DevicesList(TabList, TabUpdaterMixin):
         if not getattr(info, 'fake', False):
             thumb_path = resources.path('images/phone.png')
             info.icon = imagepool.get_surface(thumb_path)
-            self.devices[info.id] = info
 
     def on_hotspot_clicked(self, view, hotspot, iter):
         if hotspot == 'eject-device':

@@ -1956,6 +1956,149 @@ filename was %s""", stringify(self.filename))
                             self.filename, parent_file)
         Item.setup_links(self)
 
+class DeviceItem(object):
+    """
+    An item which lives on a device.  There's a separate, per-device JSON
+    database, so this implements the necessary Item logic for those files.
+    """
+    def __init__(self, **kwargs):
+        for required in ('video_path', 'file_type', 'device'):
+            if required not in kwargs:
+                raise TypeError('DeviceItem must be given a "%s" argument'
+                                % required)
+        self.name = self.file_format = self.size = None
+        self.id = self.release_date = self.feed_name = self.feed_id = None
+        self.keep = self.media_type_checked = True
+        self.updating_movie_info = self.isContainerItem = False
+        self.url = self.payment_link = None
+        self.comments_link = self.permalink = self.file_url = None
+        self.license = self.downloader = self.release_date = None
+        self.duration = self.screenshot = None
+        self.resumeTime = self.duration = 0
+        self.subtitle_encoding = self.enclosure_type = None
+        self.description = u''
+        self.__dict__.update(kwargs)
+
+        if self.name is None:
+            self.name = os.path.basename(self.video_path)
+        if self.file_format is None:
+            self.file_format = os.path.splitext(self.video_path)[1]
+        if self.size is None:
+            self.size = os.path.getsize(self.get_filename())
+
+    def get_title(self):
+        return self.name or u''
+
+    def get_source(self):
+        return self.device.name
+
+    @staticmethod
+    def get_feed_url():
+        return None
+
+    def get_description(self):
+        return self.description
+
+    @staticmethod
+    def get_state():
+        return u'saved'
+
+    @staticmethod
+    def get_viewed():
+        return True
+
+    @staticmethod
+    def is_downloaded():
+        return True
+
+    @staticmethod
+    def is_external():
+        return True
+
+    @staticmethod
+    def get_release_date_obj():
+        return None
+
+    @staticmethod
+    def get_seen():
+        return True
+
+    @staticmethod
+    def is_playable():
+        return True
+
+    @staticmethod
+    def looks_like_torrent():
+        return False
+
+    @staticmethod
+    def torrent_seeding_status():
+        return None
+
+    def get_size(self):
+        return self.size
+
+    def get_duration_value(self):
+        return self.duration
+
+    def get_url(self):
+        return self.url
+
+    def get_link(self):
+        return self.permalink
+
+    def get_comments_link(self):
+        return self.comments_link
+
+    def get_payment_link(self):
+        return self.payment_link
+
+    def has_shareable_url(self):
+        return bool(self.get_url)
+
+    @staticmethod
+    def show_save_button():
+        return False
+
+    @staticmethod
+    def is_pending_manual_download():
+        return False
+
+    @staticmethod
+    def is_pending_auto_download():
+        return False
+
+    def get_filename(self):
+        return os.path.join(self.device.mount, self.video_path)
+
+    def get_thumbnail(self):
+        if self.screenshot:
+            return os.path.join(self.device.mount, self.screenshot)
+        elif self.file_type == 'audio':
+            return resources.path("images/thumb-default-audio.png")
+        else:
+            return resources.path("images/thumb-default-video.png")
+
+    @staticmethod
+    def get_thumbnail_url():
+        return u''
+
+    def get_format(self):
+        return self.file_format
+
+    def get_license(self):
+        return self.license
+
+    def signal_change(self):
+        pass
+
+    def to_dict(self):
+        data = {}
+        for k, v in self.__dict:
+            if v is not None and k != 'device':
+                data[k] = v
+        return data
+
 def fp_values_for_file(filename, title=None, description=None):
     data = {
             'enclosures': [{'url': resources.url(filename)}]

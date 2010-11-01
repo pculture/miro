@@ -389,6 +389,28 @@ class FolderItemsTracker(ItemTrackerBase):
         self.id = folder_id
         ItemTrackerBase.__init__(self)
 
+class DeviceItemTracker(object):
+    type = 'device'
+    def __init__(self, device):
+        self.device = device
+        self.id = device.id
+
+    def send_initial_list(self):
+        if '-' not in self.id:
+            return
+        real_id, item_type = self.id.rsplit('-', 1)
+        if item_type not in ('video', 'audio'):
+            return
+        items = [item.DeviceItem(device=self.device, file_type=item_type,
+                                 **args)
+                 for args in self.device.database[item_type]]
+        infos = [messages.ItemInfo(i) for i in items]
+
+        messages.ItemList(self.type, self.id, infos).send_to_frontend()
+
+    def unlink(self):
+        pass
+
 def make_item_tracker(message):
     if message.type == 'downloads':
         return DownloadingItemsTracker()
@@ -418,6 +440,8 @@ def make_item_tracker(message):
             return PlaylistFolderItemTracker(playlist)
     elif message.type == 'manual':
         return ManualItemTracker(message.id, message.ids_to_track)
+    elif message.type == 'device':
+        return DeviceItemTracker(message.id)
     else:
         logging.warn("Unknown TrackItems type: %s", message.type)
 

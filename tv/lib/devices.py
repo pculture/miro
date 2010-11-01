@@ -1,11 +1,14 @@
 from glob import glob
 import json
-import os
+import os, os.path
 from ConfigParser import SafeConfigParser
 
+from miro import fileutil
+from miro import filetypes
 from miro import messages
 
 from miro.plat import resources
+from miro.plat.utils import filename_to_unicode
 
 class DeviceInfo(object):
     has_multiple_devices = False
@@ -107,6 +110,8 @@ def write_database(mount, database):
     json.dump(database, file(os.path.join(mount, '.miro' 'json'), 'w'))
 
 def device_connected(info):
+    if info.mount:
+        scan_device_for_files(info)
     message = messages.TabsChanged('devices',
                                    [info],
                                    [],
@@ -114,6 +119,8 @@ def device_connected(info):
     message.send_to_frontend()
 
 def device_changed(info):
+    if info.mount:
+        scan_device_for_files(info)
     message = messages.TabsChanged('devices',
                                    [],
                                    [info],
@@ -128,3 +135,34 @@ def device_disconnected(info):
                                   [],
                                   [info.id])
     message.send_to_frontend()
+
+def scan_device_for_files(device):
+    new_items = {'video': [], 'audio': []}
+    known_files = set()
+    def _exists(item):
+        return os.path.exists(os.path.join(device.mount,
+                                           item['video_path']))
+    for item_type in ('video', 'audio'):
+        for device_item in device.database.get(item_type, []):
+            if _exists(device_item):
+                new_items[item_type].append(device_item)
+                known_files.add(os.path.normcase(device_item['video_path']))
+
+    for filename in fileutil.miro_allfiles(device.mount):
+        filename = os.path.normcase(filename)
+        if filename in known_files: continue
+        ufilename = filename_to_unicode(filename)
+        if filetypes.is_video_filename(ufilename):
+            item_type = 'video'
+        elif filetypes.is_audio_filename(ufilename):
+            item_type = 'audio'
+        else:
+            continue
+        new_items[item_type].append({
+                'video_path': filename[len(device.mount)+1:]
+                })
+
+    for item_type in ('video', 'audio'):
+        device.database[item_type] = new_items[item_type]
+
+    write_database(device.mount, device.database)

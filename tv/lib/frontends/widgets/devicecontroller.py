@@ -28,9 +28,12 @@
 
 """Controller for Devices tab.
 """
+import datetime
 
+from miro import app
 from miro import displaytext
 from miro import messages
+from miro import util
 
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import itemlist
@@ -112,13 +115,36 @@ the sidebar.")
         self.device_size.set_size(device.size, device.remaining)
 
     def _tab_clicked(self, button):
-        print 'device tab clicked', button.title
         self.button_row.set_active(button.key)
 
 class DeviceItemList(itemlist.ItemList):
 
     def filter(self, item_info):
         return True
+
+class DeviceItemInfo(object):
+    is_playable = True
+    video_watched = True
+    expiration_date = None
+    item_viewed = True
+    downloaded = True
+    downloader = download_info = None
+    is_container_item = False
+    pending_auto_dl = pending_manual_dl = False
+    state = "downloaded"
+    stripper = util.HTMLStripper()
+
+    def __init__(self, d):
+        self.__dict__.update(d)
+        for field in ('release_date',):
+            val = getattr(self, field)
+            if val is not None:
+                setattr(self, field, datetime.datetime.fromtimestamp(val))
+        self.video_path = self.video_path.encode('utf8')
+        self.description_text, self.description_links = self.stripper.strip(
+            self.description)
+        image_path = resources.path('images/thumb-default-video.png')
+        self.icon = imagepool.get_surface(image_path)
 
 class DeviceMediaView(itemlistwidgets.ItemContainerWidget):
     def __init__(self, type):
@@ -127,12 +153,24 @@ class DeviceMediaView(itemlistwidgets.ItemContainerWidget):
             itemlistwidgets.HeaderToolbar())
         self.type = type
         self.item_list = DeviceItemList()
+        self.item_view = itemlistwidgets.ItemView(self.item_list)
         self.list_item_view = itemlistwidgets.ListItemView(self.item_list)
+        self.item_list_group = itemlist.ItemListGroup([self.item_list], None)
+        scroller = widgetset.Scroller(False, True)
+        scroller.add(self.item_view)
+        self.normal_view_vbox.pack_start(scroller, expand=True)
         scroller = widgetset.Scroller(True, True)
         scroller.add(self.list_item_view)
         self.list_view_vbox.pack_start(scroller, expand=True)
         self.toolbar.connect_weak('sort-changed', self.on_sort_changed)
         self.list_item_view.connect_weak('sort-changed', self.on_sort_changed)
+        for view in self.all_item_views():
+            view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
+            view.connect_weak('key-press', self.on_key_press)
+            view.connect_weak('row-double-clicked', self.on_row_double_clicked)
+
+    def all_item_views(self):
+        return self.item_view, self.list_item_view
 
     def set_device(self, device):
         self.device = device
@@ -144,25 +182,71 @@ class DeviceMediaView(itemlistwidgets.ItemContainerWidget):
         if sort:
             self.on_sort_changed(self, *sort)
         else:
-            self.item_list.set_sort(itemlist.DateSort(False))
-        #items = device.database.get(self.type, [])
-        #if items:
-        #    self.item_list.add_items([
-        #            self._build_info(m) for m in items])
-
-    def _build_info(self, media):
-        i = messages.ItemInfo.__new__(messages.ItemInfo)
-        i.__dict__ = media.copy()
-        return i
+            self.item_list_group.set_sort(itemlist.DateSort(False))
+       # items = device.database.get(self.type, [])
+       # if items:
+       #     self.item_list.add_items([
+       #             DeviceItemInfo(m) for m in items])
 
     def on_sort_changed(self, obj, sort_key, ascending):
         sorter = itemlist.SORT_KEY_MAP[sort_key](ascending)
-        self.item_list.set_sort(sorter)
+        self.item_list_group.set_sort(sorter)
         self.list_item_view.model_changed()
         self.toolbar.change_sort_indicator(sort_key, ascending)
         self.list_item_view.change_sort_indicator(sort_key, ascending)
         self.device.database['%s_sort_state' % self.type] = (sort_key,
                                                              ascending)
+
+    def on_hotspot_clicked(self, itemview, name, iter):
+        # mostly copied from itemlistcontroller.py
+        item_info = itemview.model[iter][0]
+        show_details = itemview.model[iter][1]
+        if name == 'delete':
+            app.widgetapp.remove_items(selection=[item_info])
+        elif name == 'details_toggle':
+            itemview.model.update_value(iter, 1, not show_details)
+            itemview.model_changed()
+            itemview.invalidate_size_request()
+        elif name == 'visit_webpage':
+            app.widgetapp.open_url(item_info.permalink)
+        elif name == 'visit_comments':
+            app.widgetapp.open_url(item_info.commentslink)
+        elif name == 'visit_filelink':
+            app.widgetapp.open_url(item_info.file_url)
+        elif name == 'visit_license':
+            app.widgetapp.open_url(item_info.license)
+        elif name == 'show_local_file':
+            app.widgetapp.check_then_reveal_file(item_info.video_path)
+        elif name == 'show_contents':
+            app.display_manager.push_folder_contents_display(item_info)
+        elif name.startswith('description-link:'):
+            url = name.split(':', 1)[1]
+            try:
+                base_href = widgetutil.get_feed_info(
+                    item_info.feed_id).base_href
+            except ValueError:
+                logging.warn("Feed not present when clicking link (%s)",
+                        item_info.feed_id)
+                # Feed is not around anymore for some reason (#13310).
+                # Ignore the click.
+                return
+            if subscription.is_subscribe_link(url):
+                messages.SubscriptionLinkClicked(url).send_to_backend()
+            else:
+                app.widgetapp.open_url(urljoin(base_href, url))
+        elif name in ('play', 'thumbnail-play'):
+            id = item_info.id
+            items = itemview.item_list.get_items(start_id=id)
+            self._play_item_list(items)
+        elif name == 'play_pause':
+            app.playback_manager.play_pause()
+
+    def on_key_press(self, view, key, mods):
+        pass
+
+    def on_row_double_clicked(self, view, iter):
+        info = view.model[iter][0]
+        print 'double clicked', info
 
 class UnknownDeviceView(widgetset.VBox):
     def __init__(self):
@@ -261,7 +345,35 @@ class DeviceWidget(widgetset.VBox):
 
 class DeviceController(object):
     def __init__(self, device):
+        self.device = device
         self.widget = DeviceWidget(device)
 
     def handle_device_changed(self, device):
         self.widget.set_device(device)
+
+    def _item_list_group(self):
+        return self.widget.device_view.child.item_list_group
+
+    def handle_item_list(self, message):
+        item_list_group = self._item_list_group()
+        item_list_group.add_items(message.items)
+
+    def handle_items_changed(self, message):
+        item_list_group = self._item_list_group()
+        item_list_group.remove_items(message.removed)
+        item_list_group.update_items(message.changed)
+        item_list_group.add_items(message.added)
+
+    def start_tracking(self):
+        app.info_updater.item_list_callbacks.add('device', self.device.id,
+                self.handle_item_list)
+        app.info_updater.item_changed_callbacks.add('device', self.device.id,
+                self.handle_items_changed)
+        messages.TrackItems('device', self.device).send_to_backend()
+
+    def stop_tracking(self):
+        app.info_updater.item_list_callbacks.remove('device', self.device.id,
+                self.handle_item_list)
+        app.info_updater.item_changed_callbacks.remove(
+            'device',self.device.id, self.handle_items_changed)
+        messages.StopTrackingItems('device', self.device).send_to_backend()
