@@ -1,4 +1,5 @@
 import cPickle
+import functools
 
 from miro import app
 from miro import prefs
@@ -535,7 +536,21 @@ class PlaylistItemTrackTest(TrackerTest):
 
 class ItemInfoCacheTest(FeedItemTrackTest):
     # this class runs the exact same tests as FeedItemTrackTest, but using
-    # values read from the item_info_cache file
+    # values read from the item_info_cache file.  Also, we check to make sure
+    # that item_info_cache.save() after the test doesn't raise an exception.
+    def __init__(self, testMethodName='runTest'):
+        # little hack to call app.item_info_cache.save() at the end of our test
+        # method
+        FeedItemTrackTest.__init__(self, testMethodName)
+        org_test_method = getattr(self, self._testMethodName)
+        def wrapper():
+            org_test_method()
+            app.db.finish_transaction()
+            app.item_info_cache.save()
+        test_with_save_at_end = functools.update_wrapper(wrapper,
+                org_test_method)
+        setattr(self, self._testMethodName, test_with_save_at_end)
+
     def setUp(self):
         FeedItemTrackTest.setUp(self)
         app.db.finish_transaction()

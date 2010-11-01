@@ -159,7 +159,7 @@ class ItemInfoCache(object):
     def _run_deletes(self):
         if not self._infos_deleted:
             return
-        id_list = ', '.join(self._infos_deleted)
+        id_list = ', '.join(str(id_) for id_ in self._infos_deleted)
         app.db.cursor.execute("DELETE FROM item_info_cache "
                 "WHERE id IN (%s)" % id_list)
 

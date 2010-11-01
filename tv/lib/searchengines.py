@@ -177,8 +177,7 @@ def create_engines():
         _load_search_engine(fn)
 
     _engines.append(SearchEngineInfo(u"all", _("Search All"), u"", -1))
-    _engines.sort(lambda a, b: cmp((a.sort_order, a.name, a.title), 
-                                   (b.sort_order, b.name, b.title)))
+    _engines.sort(key=lambda x: (x.sort_order, x.name, x.title))
 
     # SEARCH_ORDERING is a comma-separated list of search engine names to
     # include.  An * as the last engine includes the rest of the engines.

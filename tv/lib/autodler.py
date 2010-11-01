@@ -32,9 +32,6 @@ from miro import prefs
 from miro import eventloop
 from datetime import datetime
 
-def pending_sort(a, b):
-    return cmp((a[1], a[2]), (b[1], b[2]))
-
 def _key_for_feed(feed):
     """Get the key to use for feed_pending_count and
     feed_running_count dicts.  Normally this is the feed URL, but
@@ -121,7 +118,7 @@ class Downloader:
                 candidate_feeds.append((feed,
                                         self.feed_running_count.get(key, 0),
                                         self.feed_time.get(feed, datetime.min)))
-            candidate_feeds.sort(pending_sort)
+            candidate_feeds.sort(key=lambda x: (x[1], x[2]))
 
             for feed, count, dummy in candidate_feeds:
                 if self.is_auto:
