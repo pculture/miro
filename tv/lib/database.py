@@ -267,10 +267,15 @@ class BulkSQLManager(object):
         self.to_remove = {}
         self.pending_inserts = set()
 
+        self.last_call = None
+
     def start(self):
         if self.active:
-            raise ValueError("BulkSQLManager.start() called twice")
+            raise ValueError(
+                "BulkSQLManager.start() called twice (previous: %s)",
+                self.last_call)
         self.active = True
+        self.last_call = "".join(traceback.format_stack())
 
     def finish(self):
         if not self.active:
