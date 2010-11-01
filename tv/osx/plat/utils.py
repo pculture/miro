@@ -187,7 +187,7 @@ def utf8_to_filename(filename):
 # valid byte representation of it attempting to preserve extensions
 #
 # This is not guaranteed to give the same results every time it is run,
-# not is it garanteed to reverse the results of filename_to_unicode
+# not is it guaranteed to reverse the results of filename_to_unicode
 @returns_binary
 def unicode_to_filename(filename, path = None):
     check_u(filename)
