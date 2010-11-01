@@ -349,7 +349,7 @@ def get_menu():
         help_menu.append(MenuItem(_("_Translate"), "Translate"))
     if app.config.get(prefs.PLANET_URL):
         help_menu.append(MenuItem(_("_Planet Miro"), "Planet"))
-    if '-git' in app.config.get(prefs.APP_VERSION):
+    if app.debugmode:
         # Devel build, add menu items
         help_menu.append(Separator())
         help_menu.append(MenuItem(_("Profile Message"), "ProfileMessage"))

@@ -102,7 +102,7 @@ def setup_logging(in_downloader=False):
     if in_downloader:
         if 'MIRO_IN_UNIT_TESTS' in os.environ:
             level = logging.WARN
-        elif os.environ.get('MIRO_APP_VERSION', "").endswith("git"):
+        elif os.environ.get('MIRO_DEBUGMODE', "") == "True":
             level = logging.DEBUG
         else:
             level = logging.INFO
@@ -113,7 +113,7 @@ def setup_logging(in_downloader=False):
         if not pathname:
             return
     else:
-        if app.config.get(prefs.APP_VERSION).endswith("git"):
+        if app.debugmode:
             level = logging.DEBUG
         else:
             level = logging.INFO
@@ -284,6 +284,7 @@ def launch_download_daemon(oldpid, env):
     environ['MIRO_FRONTEND'] = options.frontend
     environ['DEMOCRACY_DOWNLOADER_LOG'] = app.config.get(prefs.DOWNLOADER_LOG_PATHNAME)
     environ['MIRO_APP_VERSION'] = app.config.get(prefs.APP_VERSION)
+    environ['MIRO_DEBUGMODE'] = str(app.debugmode)
     if hasattr(miro.app, 'in_unit_tests'):
         environ['MIRO_IN_UNIT_TESTS'] = '1'
     environ.update(env)

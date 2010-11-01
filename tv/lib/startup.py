@@ -195,6 +195,10 @@ def initialize(themeName):
     """Initialize Miro.  This sets up things like logging and the config
     system and should be called as early as possible.
     """
+    # set debugmode if it hasn't already been set
+    if app.debugmode == None:
+        app.debugmode = app.config.get(prefs.APP_VERSION).endswith("-git")
+
     # this is platform specific
     setup_logging()
     # this is portable general
@@ -223,6 +227,7 @@ def startup():
     logging.info("Revision:   %s", app.config.get(prefs.APP_REVISION))
     logging.info("Builder:    %s", app.config.get(prefs.BUILD_MACHINE))
     logging.info("Build Time: %s", app.config.get(prefs.BUILD_TIME))
+    logging.info("Debugmode:  %s", app.debugmode)
     eventloop.connect('thread-started', finish_startup)
     logging.info("Reading HTTP Password list")
     httpauth.init()

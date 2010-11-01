@@ -87,36 +87,41 @@ parser.set_defaults(set_prefs=[])
 parser.add_option_group(group)
 
 group = optparse.OptionGroup(parser, "Debugging options")
+group.add_option('--gdb',
+                 action='store_true',
+                 help='Runs Miro under gdb.')
 group.add_option('--debug',
-                  action="store_true",
-                  help='Starts Miro in a gdb session for better debugging.')
+                 dest='debugmode',
+                 metavar='<YESNO>',
+                 help='Puts Miro in debug mode for easier debugging.')
+parser.set_defaults(debugmode="")
 group.add_option('--unittest',
-                  dest='unittest', action='store_true',
-                  help='Run unittests instead of launching the program.')
+                 dest='unittest', action='store_true',
+                 help='Run unittests instead of launching the program.')
 parser.set_defaults(unittest=False)
 group.add_option('--convert',
-                  dest='convert', action='store_true',
-                  help='Command line conversion.')
+                 dest='convert', action='store_true',
+                 help='Command line conversion.')
 parser.set_defaults(unittest=False)
 group.add_option('-v',
-                  dest='unittest_verbose', action='store_true',
-                  help='Run unittests in verbose mode.')
+                 dest='unittest_verbose', action='store_true',
+                 help='Run unittests in verbose mode.')
 parser.set_defaults(unittest_verbose=False)
 group.add_option('--profile',
-                  metavar='<FILE>',
-                  help='Write profiling information to FILE.')
+                 metavar='<FILE>',
+                 help='Write profiling information to FILE.')
 group.add_option('--bias',
-                  metavar='<BIAS>', type=float,
-                  help='Set profiling bias to BIAS.')
+                 metavar='<BIAS>', type=float,
+                 help='Set profiling bias to BIAS.')
 parser.set_defaults(bias=None)
 group.add_option('--sync',
-                  action="store_true",
-                  help='Use X synchronously.')
+                 action="store_true",
+                 help='Use X synchronously.')
 parser.set_defaults(sync=False)
 group.add_option('--gconf-name',
-                  dest='gconf_name',
-                  metavar='<NAME>',
-                  help='Use a different name for gconf values than "miro"')
+                 dest='gconf_name',
+                 metavar='<NAME>',
+                 help='Use a different name for gconf values than "miro"')
 parser.set_defaults(gconf_name='miro')
 parser.add_option_group(group)
 
@@ -224,7 +229,14 @@ def get_keyval(keyval):
     return p, val
 
 def startapp():
-    # Create miro directories in the user's home
+    # set debugmode
+    if parsed_options.debugmode:
+        if parsed_options.debugmode.lower() in ("y", "yes"):
+            app.debugmode = True
+        else:
+            app.debugmode = False
+
+    # create miro directories in the user's home
     support_dir = app.config.get(prefs.SUPPORT_DIRECTORY)
     if not os.path.exists(support_dir):
         os.makedirs(support_dir)
