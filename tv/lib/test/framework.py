@@ -209,6 +209,7 @@ class MiroTestCase(unittest.TestCase):
 
     def clear_ddb_object_cache(self):
         app.db._ids_loaded = set()
+        app.db._object_map = {}
 
     def setup_new_database(self, path, schema_version, object_schemas):
         app.db = storedatabase.LiveStorage(path,
