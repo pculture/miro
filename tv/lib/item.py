@@ -34,7 +34,8 @@ from miro.gtcache import gettext as _
 from miro.util import (check_u, returns_unicode, check_f, returns_filename,
                        quote_unicode_url, stringify, get_first_video_enclosure,
                        entity_replace)
-from miro.plat.utils import filename_to_unicode, unicode_to_filename
+from miro.plat.utils import (filename_to_unicode, unicode_to_filename,
+                             utf8_to_filename)
 import locale
 import os.path
 import shutil
@@ -2011,11 +2012,13 @@ class DeviceItem(object):
         if self.duration is None: # -1 is unknown
             moviedata.movie_data_updater.request_update(self)
 
+    @returns_unicode
     def get_title(self):
         return self.name or u''
 
+    @returns_unicode
     def get_source(self):
-        return self.device.name
+        return self.device.info.name
 
     @staticmethod
     def id_exists():
@@ -2025,6 +2028,7 @@ class DeviceItem(object):
     def get_feed_url():
         return None
 
+    @returns_unicode
     def get_description(self):
         return self.description
 
@@ -2071,15 +2075,19 @@ class DeviceItem(object):
             return 0
         return self.duration / 1000
 
+    @returns_unicode
     def get_url(self):
         return self.url
 
+    @returns_unicode
     def get_link(self):
         return self.permalink
 
+    @returns_unicode
     def get_comments_link(self):
         return self.comments_link
 
+    @returns_unicode
     def get_payment_link(self):
         return self.payment_link
 
@@ -2098,12 +2106,17 @@ class DeviceItem(object):
     def is_pending_auto_download():
         return False
 
+    @returns_filename
     def get_filename(self):
-        return os.path.join(self.device.mount, self.video_path)
+        return utf8_to_filename(os.path.join(self.device.mount,
+                                             self.video_path).encode('utf8'))
 
+    @returns_filename
     def get_thumbnail(self):
         if self.screenshot:
-            return os.path.join(self.device.mount, self.screenshot)
+            return utf8_to_filename(
+                os.path.join(self.device.mount,
+                             self.screenshot).encode('utf8'))
         elif self.file_type == 'audio':
             return resources.path("images/thumb-default-audio.png")
         else:
@@ -2113,9 +2126,11 @@ class DeviceItem(object):
     def get_thumbnail_url():
         return u''
 
+    @returns_unicode
     def get_format(self):
         return self.file_format
 
+    @returns_unicode
     def get_license(self):
         return self.license
 
@@ -2134,7 +2149,7 @@ class DeviceItem(object):
 
         from miro import devices
         devices.write_database(self.device.mount, self.device.database)
-        
+
         from miro import messages
         message = messages.ItemsChanged('device', self.device.id,
                                         [], [messages.ItemInfo(self)], [])

@@ -14,7 +14,7 @@ class DeviceInfo(object):
     has_multiple_devices = False
 
     def __init__(self, section, parser):
-        self.name = section
+        self.name = section.decode('utf8')
         self.device_name = self._get(section, parser, 'name')
         self.vendor_id = int(self._get(section, parser, 'vendor_id'), 16)
         self.product_id = int(self._get(section, parser, 'product_id'), 16)
@@ -24,7 +24,8 @@ class DeviceInfo(object):
         self.audio_path = self._get(section, parser, 'audio_path')
         self.audio_types = self._get(section, parser, 'audio_types').split()
         self.mount_instructions = self._get(
-            section, parser, 'mount_instructions').replace('\\n', '\n')
+            section, parser, 'mount_instructions').decode('utf8').replace(
+            '\\n', '\n')
 
     def _get(self, section, parser, name):
         try:
