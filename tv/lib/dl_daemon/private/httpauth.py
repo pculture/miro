@@ -58,6 +58,9 @@ def update_passwords(passwords):
     password_list.replace_passwords(passwords)
 
 def ask_for_http_auth(callback, url, auth_header, location):
+    # call decode_auth_header, which will raise ValueError if auth_header is
+    # invalid
+    decode_auth_header(auth_header)
     id_ = requestIdGenerator.next()
     waitingHTTPAuthCallbacks[id_] = callback
     from miro.dl_daemon import daemon

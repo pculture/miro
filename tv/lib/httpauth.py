@@ -92,12 +92,6 @@ def ask_for_http_auth(callback, url, auth_header, location):
     global password_list
 
     auth_scheme, realm, domain = decode_auth_header(auth_header)
-    if auth_scheme is None:
-        raise ValueError("Scheme not present in auth header: %s" %
-                auth_header)
-    if realm is None:
-        raise ValueError("Realm not present in auth header: %s" %
-                auth_header)
 
     def handleLoginResponse(dialog):
         if dialog.choice == dialogs.BUTTON_OK:
