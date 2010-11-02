@@ -42,6 +42,7 @@ subclasses to handle the logic involved.
 from miro import app
 from miro import prefs
 from miro import displaytext
+from miro import util
 from miro.gtcache import gettext as _
 from miro.gtcache import declarify
 from miro.frontends.widgets import style
@@ -307,12 +308,13 @@ class ListItemView(widgetset.TableView):
         self.set_alternate_row_backgrounds(True)
         self.set_fixed_height(True)
         self.allow_multiple_select(True)
+        self.html_stripper = util.HTMLStripper()
 
     def get_tooltip(self, iter, column):
         if column == self._sort_name_to_column['name']:
             info = self.item_list.model[iter][0]
-            if info.description_text:
-                text = info.description_text
+            text, links = self.html_stripper.strip(info.description)
+            if text:
                 if len(text) > 1000:
                     text = text[:994] + ' [...]'
                 return text
