@@ -30,7 +30,6 @@
 """
 
 from datetime import datetime, timedelta
-from itertools import chain
 from miro.gtcache import gettext as _
 from miro.util import (check_u, returns_unicode, check_f, returns_filename,
                        quote_unicode_url, stringify, get_first_video_enclosure,
@@ -165,7 +164,8 @@ class FeedParserValues(object):
                 return thumb.encode('utf-8')
             # We can't get the type??  What to do ....
             return thumb["url"].decode('ascii', 'replace')
-        except (KeyError, AttributeError, UnicodeEncodeError, UnicodeDecodeError):
+        except (KeyError, AttributeError, UnicodeEncodeError,
+                UnicodeDecodeError):
             return None
 
     def _calc_raw_description(self):
