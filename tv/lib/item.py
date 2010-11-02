@@ -2000,7 +2000,6 @@ class IncompleteMovieDataUpdator(object):
         chunk = list(Item.next_10_incomplete_movie_data_view())
         if chunk:
             for item in chunk:
-                print 'checking: ', item
                 item.check_media_file()
         else:
             self.done = True
