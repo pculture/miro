@@ -38,6 +38,7 @@ from miro.util import (check_u, returns_unicode, check_f, returns_filename,
 from miro.plat.utils import filename_to_unicode, unicode_to_filename
 import locale
 import os.path
+import shutil
 import traceback
 
 from miro.download_utils import clean_filename, next_free_filename
@@ -1994,7 +1995,7 @@ class DeviceItem(object):
         self.comments_link = self.permalink = self.file_url = None
         self.license = self.downloader = self.release_date = None
         self.duration = self.screenshot = None
-        self.resumeTime = self.duration = 0
+        self.resumeTime = 0
         self.subtitle_encoding = self.enclosure_type = None
         self.description = u''
         self.__dict__.update(kwargs)
@@ -2005,12 +2006,20 @@ class DeviceItem(object):
             self.file_format = os.path.splitext(self.video_path)[1]
         if self.size is None:
             self.size = os.path.getsize(self.get_filename())
+        if self.release_date is None:
+            self.release_date = os.path.getctime(self.get_filename())
+        if self.duration is None: # -1 is unknown
+            moviedata.movie_data_updater.request_update(self)
 
     def get_title(self):
         return self.name or u''
 
     def get_source(self):
         return self.device.name
+
+    @staticmethod
+    def id_exists():
+        return True
 
     @staticmethod
     def get_feed_url():
@@ -2035,9 +2044,8 @@ class DeviceItem(object):
     def is_external():
         return True
 
-    @staticmethod
-    def get_release_date_obj():
-        return None
+    def get_release_date_obj(self):
+        return datetime.fromtimestamp(self.release_date)
 
     @staticmethod
     def get_seen():
@@ -2059,7 +2067,9 @@ class DeviceItem(object):
         return self.size
 
     def get_duration_value(self):
-        return self.duration
+        if self.duration in (-1, None):
+            return 0
+        return self.duration / 1000
 
     def get_url(self):
         return self.url
@@ -2110,12 +2120,30 @@ class DeviceItem(object):
         return self.license
 
     def signal_change(self):
-        pass
+        if self.screenshot and self.screenshot.startswith(
+            moviedata.thumbnail_directory()):
+            # migrate the screenshot onto the device
+            basename = os.path.basename(self.screenshot)
+            shutil.move(self.screenshot,
+                        os.path.join(self.device.mount, '.miro', basename))
+            self.screenshot = os.path.join('.miro', basename)
+
+        for index, data in enumerate(self.device.database[self.file_type]):
+            if data['video_path'] == self.video_path:
+                self.device.database[self.file_type][index] = self.to_dict()
+
+        from miro import devices
+        devices.write_database(self.device.mount, self.device.database)
+        
+        from miro import messages
+        message = messages.ItemsChanged('device', self.device.id,
+                                        [], [messages.ItemInfo(self)], [])
+        message.send_to_frontend()
 
     def to_dict(self):
         data = {}
-        for k, v in self.__dict:
-            if v is not None and k != 'device':
+        for k, v in self.__dict__.items():
+            if v is not None and k not in ('device', 'file_type'):
                 data[k] = v
         return data
 
