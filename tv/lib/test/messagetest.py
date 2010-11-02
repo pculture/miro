@@ -604,7 +604,6 @@ class ItemInfoCacheErrorTest(MiroTestCase):
         app.db.finish_transaction()
         app.item_info_cache.save()
         self.clear_ddb_object_cache()
-        app.db._ids_loaded = set()
         # insert bogus values into the db
         app.db.cursor.execute("UPDATE item_info_cache SET pickle='BOGUS'")
         app.item_info_cache = None
@@ -612,15 +611,40 @@ class ItemInfoCacheErrorTest(MiroTestCase):
         # ensure that Item calls signal_change in setup_restored
         old_setup_restored = Item.setup_restored
         def new_setup_restored(self):
-            old_setup_restored(self)
             self.title = u'new title2'
             self.signal_change()
+            old_setup_restored(self)
         Item.setup_restored = new_setup_restored
         try:
             # load up item_info_cache
             self.setup_new_item_info_cache()
         finally:
             Item.setup_restored = old_setup_restored
+        cached_info = self.get_info_from_item_info_cache(self.items[0].id)
+        self.assertEquals(cached_info.name, 'new title2')
+
+    def test_change_in_setup_restored(self):
+        # Test Items changing themselve is setup_restored after we've loaded
+        # the item info cache.
+
+        self.clear_ddb_object_cache()
+        # ensure that Item calls signal_change in setup_restored
+        old_setup_restored = Item.setup_restored
+        def new_setup_restored(self):
+            self.title = u'new title2'
+            self.signal_change()
+            old_setup_restored(self)
+        Item.setup_restored = new_setup_restored
+        try:
+            # Causes the items to be loaded from the db
+            list(Item.feed_view(self.feed.id))
+        finally:
+            Item.setup_restored = old_setup_restored
+        cached_info = self.get_info_from_item_info_cache(self.items[0].id)
+        self.assertEquals(cached_info.name, 'new title2')
+
+    def get_info_from_item_info_cache(self, id):
+        return app.item_info_cache.id_to_info[id]
 
     def test_item_info_version(self):
         app.db.finish_transaction()
