@@ -274,6 +274,7 @@ def finish_startup(obj, thread):
         util.db_mem_usage_test()
         mem_usage_test_event.set()
     app.item_info_cache = iteminfocache.ItemInfoCache()
+    app.item_info_cache.load()
 
     logging.info("Loading video converters...")
     videoconversion.conversion_manager.startup()

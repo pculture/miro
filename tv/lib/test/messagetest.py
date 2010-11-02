@@ -533,7 +533,6 @@ class PlaylistItemTrackTest(TrackerTest):
         self.runUrgentCalls()
         self.assertEquals(len(self.test_handler.messages), 1)
 
-
 class ItemInfoCacheTest(FeedItemTrackTest):
     # this class runs the exact same tests as FeedItemTrackTest, but using
     # values read from the item_info_cache file.  Also, we check to make sure
@@ -555,7 +554,7 @@ class ItemInfoCacheTest(FeedItemTrackTest):
         FeedItemTrackTest.setUp(self)
         app.db.finish_transaction()
         app.item_info_cache.save()
-        app.item_info_cache = iteminfocache.ItemInfoCache()
+        self.setup_new_item_info_cache()
 
 class ItemInfoCacheErrorTest(MiroTestCase):
     # Test errors when loading the Item info cache
@@ -578,7 +577,7 @@ class ItemInfoCacheErrorTest(MiroTestCase):
         # insert bogus values into the db
         app.db.cursor.execute("UPDATE item_info_cache SET pickle='BOGUS'")
         # this should fallback to the failsafe values
-        app.item_info_cache = iteminfocache.ItemInfoCache()
+        self.setup_new_item_info_cache()
         for item in self.items:
             cache_info = app.item_info_cache.id_to_info[item.id]
             real_info = messages.ItemInfo(item)
@@ -598,12 +597,37 @@ class ItemInfoCacheErrorTest(MiroTestCase):
             real_info = messages.ItemInfo(item)
             self.assertEquals(db_info.__dict__, real_info.__dict__)
 
+    def test_failsafe_load_item_change(self):
+        # Test Items calling signal_change() when we do a failsafe load
+
+        # setup some stuff so that we will do a failsafe load
+        app.db.finish_transaction()
+        app.item_info_cache.save()
+        self.clear_ddb_object_cache()
+        app.db._ids_loaded = set()
+        # insert bogus values into the db
+        app.db.cursor.execute("UPDATE item_info_cache SET pickle='BOGUS'")
+        app.item_info_cache = None
+
+        # ensure that Item calls signal_change in setup_restored
+        old_setup_restored = Item.setup_restored
+        def new_setup_restored(self):
+            old_setup_restored(self)
+            self.title = u'new title2'
+            self.signal_change()
+        Item.setup_restored = new_setup_restored
+        try:
+            # load up item_info_cache
+            self.setup_new_item_info_cache()
+        finally:
+            Item.setup_restored = old_setup_restored
+
     def test_item_info_version(self):
         app.db.finish_transaction()
         app.item_info_cache.save()
         messages.ItemInfo.VERSION += 1
         # We should delete the old cache data because ItemInfoCache.VERSION
         # has changed
-        app.item_info_cache = iteminfocache.ItemInfoCache()
+        self.setup_new_item_info_cache()
         app.db.cursor.execute("SELECT COUNT(*) FROM item_info_cache")
         self.assertEquals(app.db.cursor.fetchone()[0], 0)
