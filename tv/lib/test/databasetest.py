@@ -120,6 +120,10 @@ class ViewTrackerTest(DatabaseTestCase):
         self.assertEquals(self.remove_callbacks, [])
         self.assertEquals(self.change_callbacks, [])
 
+    def test_check_all_item_not_loaded(self):
+        tracker = self.view.make_tracker()
+        self.clear_ddb_object_cache()
+        tracker.check_all_objects()
 
 class TestDDBObject(database.DDBObject):
     def setup_new(self, testcase, remove=False):

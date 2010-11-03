@@ -63,6 +63,9 @@ class ItemInfoCache(object):
 
     def __init__(self):
         self.id_to_info = None
+        self.loaded = False
+
+    def load(self):
         did_failsafe_load = False
         try:
             self._quick_load()
@@ -80,6 +83,7 @@ class ItemInfoCache(object):
             # Need to save the cache data we just created
             self._infos_added = self.id_to_info.copy()
             self.schedule_save_to_db()
+        self.loaded = True
 
     def version(self):
         return "%s-%s" % (schema.VERSION, messages.ItemInfo.VERSION)
@@ -173,12 +177,20 @@ class ItemInfoCache(object):
         return (self.id_to_info[id_] for id_ in view.id_iter())
 
     def item_created(self, item):
+        if not self.loaded:
+            # New item created in Item.setup_restored(), while we were doing a
+            # failsafe load
+            return
         info = messages.ItemInfo(item)
         self.id_to_info[item.id] = info
         self._infos_added[item.id] = info
         self.schedule_save_to_db()
 
     def item_changed(self, item):
+        if not self.loaded:
+            # signal_change() called in Item.setup_restored(), while we were
+            # doing a failsafe load
+            return
         info = messages.ItemInfo(item)
         self.id_to_info[item.id] = info
         if item.id in self._infos_added:
@@ -189,6 +201,10 @@ class ItemInfoCache(object):
         self.schedule_save_to_db()
 
     def item_removed(self, item):
+        if not self.loaded:
+            # Item.remove() called in Item.setup_restored() while we were
+            # doing a failsafe load
+            return
         del self.id_to_info[item.id]
 
         if item.id in self._infos_added:

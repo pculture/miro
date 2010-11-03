@@ -118,7 +118,7 @@ class MiroTestCase(unittest.TestCase):
         self.raise_db_load_errors = True
         app.db = None
         self.reload_database()
-        app.item_info_cache = iteminfocache.ItemInfoCache()
+        self.setup_new_item_info_cache()
         searchengines._engines = [
             searchengines.SearchEngineInfo(u"all", u"Search All", u"", -1)
             ]
@@ -195,6 +195,10 @@ class MiroTestCase(unittest.TestCase):
             self.httpserver.stop()
             self.httpserver = None
 
+    def setup_new_item_info_cache(self):
+        app.item_info_cache = iteminfocache.ItemInfoCache()
+        app.item_info_cache.load()
+
     def reload_database(self, path=':memory:', schema_version=None,
                         object_schemas=None, upgrade=True):
         self.shutdown_database()
@@ -202,6 +206,10 @@ class MiroTestCase(unittest.TestCase):
         if upgrade:
             app.db.upgrade_database()
             database.update_last_id()
+
+    def clear_ddb_object_cache(self):
+        app.db._ids_loaded = set()
+        app.db._object_map = {}
 
     def setup_new_database(self, path, schema_version, object_schemas):
         app.db = storedatabase.LiveStorage(path,

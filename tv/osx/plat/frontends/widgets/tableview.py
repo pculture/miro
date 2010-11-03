@@ -936,6 +936,13 @@ class TableView(Widget):
                     index_set.addIndex_(self.row_for_iter(iter))
                 self.tableview.noteHeightOfRowsWithIndexesChanged_(index_set)
                 self.tableview.recalcTrackingRects()
+            # Could get here during shutdown.  Case for example is we
+            # got stuck in a contextual menu and quit was called.  In this
+            # this case try but don't worry if it doesn't work.
+            try:
+                self.invalidate_size_request()
+            except:
+                pass
         else:
             return
         self.height_changed = self.selection_removed = self.reload_needed = False

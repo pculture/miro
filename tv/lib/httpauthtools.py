@@ -51,6 +51,12 @@ def decode_auth_header(auth_header):
     scheme = match_group_1("^(\w+) ")
     realm = match_group_1("realm\s*=\s*\"(.*?)\"")
     domain = match_group_1("domain\s*=\s*\"(.*?)\"")
+    if scheme is None:
+        raise ValueError("Scheme not present in auth header: %s" %
+                auth_header)
+    if realm is None:
+        raise ValueError("Realm not present in auth header: %s" %
+                auth_header)
     return (scheme, realm, domain)
 
 class HTTPAuthPassword(object):

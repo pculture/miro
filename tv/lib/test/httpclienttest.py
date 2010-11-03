@@ -677,6 +677,13 @@ class HTTPAuthBackendTest(EventLoopTest):
         self.assertEquals(auth.password, 'password')
         self.assertEquals(auth.scheme, 'basic')
 
+    def test_bad_auth_header(self):
+        # See #14973 for an example of this in the wild
+        url = 'http://example.com/foo.html'
+        header = '' # blank header should definitely raise an error
+        self.assertRaises(ValueError, httpauth.ask_for_http_auth,
+                self.callback, url, header, 'My Location')
+
     def test_basic_reuse(self):
         header = 'Basic realm="Protected Space"'
         url = 'http://example.com/foo/test.html'

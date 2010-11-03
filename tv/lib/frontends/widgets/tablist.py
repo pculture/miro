@@ -791,6 +791,19 @@ class FeedList(NestedTabList, TabUpdaterMixin):
     def on_delete_key_pressed(self):
         app.widgetapp.remove_current_feed()
 
+    def start_updating(self, id_):
+        # Lock down drag and drop while we are updating feeds.
+        # The spinning wheel is constantly updating the cell value, between 
+        # validating the cell value for the drag and drop and the actual drop
+        # the cell value most likely changes, and some GUI toolkits may get
+        # confused.
+        self.view.set_drag_source(None)
+        TabUpdaterMixin.start_updating(self, id_)
+
+    def stop_updating(self, id_):
+        self.view.set_drag_source(FeedListDragHandler())
+        TabUpdaterMixin.stop_updating(self, id_)
+
     def init_info(self, info):
         info.icon = imagepool.get_surface(info.tab_icon, size=(16, 16))
         if info.is_updating:

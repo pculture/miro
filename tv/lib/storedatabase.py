@@ -552,16 +552,25 @@ class LiveStorage:
             limit=None):
         id_list = list(self.query_ids(klass, where, values, order_by, joins,
             limit))
-        unrestored_ids = set(id_list).difference(self._ids_loaded)
-        if unrestored_ids:
-            # restore any objects that we don't already have in memory.
-            schema = self._schema_map[klass]
-            self._restore_objects(schema, unrestored_ids)
+        if self.ensure_objects_loaded(klass, id_list):
             # sometimes objects will call remove() in setup_restored().
             # We need to filter those out.
             id_list = [id_ for id_ in id_list if id_ in self._object_map]
         for id_ in id_list:
             yield self._object_map[id_]
+
+    def ensure_objects_loaded(self, klass, id_list):
+        """Ensure that a list of ids are loaded into memory.
+
+        :returns: True iff we needed to load objects
+        """
+        unrestored_ids = set(id_list).difference(self._ids_loaded)
+        if unrestored_ids:
+            # restore any objects that we don't already have in memory.
+            schema = self._schema_map[klass]
+            self._restore_objects(schema, unrestored_ids)
+            return True
+        return False
 
     def query_ids(self, klass, where, values=None, order_by=None, joins=None,
             limit=None):

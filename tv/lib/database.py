@@ -247,6 +247,8 @@ class ViewTracker(signals.SignalEmitter):
                                        self.values, joins=self.joins))
         old_ids = self.current_ids
         self.current_ids = new_ids
+        app.db.ensure_objects_loaded(self.klass, new_ids)
+        app.db.ensure_objects_loaded(self.klass, old_ids)
         for id_ in new_ids.difference(old_ids):
             self.emit('added', app.db.get_obj_by_id(id_))
         for id_ in old_ids.difference(new_ids):

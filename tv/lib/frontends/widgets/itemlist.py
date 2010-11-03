@@ -356,6 +356,9 @@ class ItemList(signals.SignalEmitter):
                 yield self.model[iter][0]
                 iter = self.model.next_iter(iter)
 
+    def __iter__(self):
+        return self.iter_items()
+
     def _resort_items(self):
         rows = []
         iter = self.model.first_iter()
