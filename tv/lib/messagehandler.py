@@ -1529,39 +1529,4 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             logging.warn("EditItem: Items not found -- %s", message.item_ids)
             return
 
-        start_conversion = videoconversion.conversion_manager.start_conversion
-
-        audio_items = [info for info in item_infos
-                       if info.file_type == 'audio']
-        audio_target_folder = os.path.join(message.device.mount,
-                                           message.device.info.audio_path)
-        try:
-            os.makedirs(audio_target_folder)
-        except OSError:
-            pass
-        for item_info in audio_items:
-            if item_info.mime_type in message.device.audio_types:
-                # don't convert video the device supports
-                try:
-                    shutil.copyfile(item_info.video_path,
-                                    os.path.join(
-                            audio_target_folder,
-                            os.path.basename(item_info.video_path)))
-                except IOError:
-                    # FIXME - we should pass the error back to the frontend
-                    pass
-            else:
-                start_conversion(message.device.audio_conversion, item_info,
-                                 audio_target_folder)
-
-        video_items = [info for info in item_infos
-                       if info.file_type == 'video']
-        video_target_folder = os.path.join(message.device.mount,
-                                           message.device.info.video_path)
-        try:
-            os.makedirs(video_target_folder)
-        except OSError:
-            pass
-        for item_info in video_items:
-            start_conversion(message.device.info.video_conversion, item_info,
-                             video_target_folder)
+        devices.DeviceSyncManager(message.device, item_infos).start()

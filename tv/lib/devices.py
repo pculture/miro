@@ -1,11 +1,15 @@
 from glob import glob
 import json
 import os, os.path
+import shutil
+import time
 from ConfigParser import SafeConfigParser
 
+from miro import item
 from miro import fileutil
 from miro import filetypes
 from miro import messages
+from miro import videoconversion
 
 from miro.plat import resources
 from miro.plat.utils import filename_to_unicode
@@ -100,6 +104,158 @@ class DeviceManager(object):
 
 
 device_manager = DeviceManager()
+
+class DeviceSyncManager(object):
+    """
+    Represents a list of ItemInfos to sync to a device.
+    """
+    def __init__(self, device, item_infos):
+        self.device = device
+        self.item_infos = item_infos
+        self.signal_handles = []
+        self.waiting = set()
+
+    def start(self):
+        """
+        Start syncing to the device.
+        """
+        self.device.is_updating = True # start the spinner
+        messages.TabsChanged('devices', [], [self.device],
+                             []).send_to_frontend()
+
+        audio_target_folder = os.path.join(self.device.mount,
+                                           self.device.info.audio_path)
+        try:
+            os.makedirs(audio_target_folder)
+        except OSError:
+            pass
+
+        video_target_folder = os.path.join(self.device.mount,
+                                           self.device.info.video_path)
+        try:
+            os.makedirs(audio_target_folder)
+        except OSError:
+            pass
+
+        for info in self.item_infos:
+            if self._exists(info):
+                continue # don't recopy stuff
+            if info.file_type == 'audio':
+                if info.mime_type in self.device.info.audio_types:
+                    final_path = os.path.join(audio_target_folder,
+                                              os.path.basename(
+                            info.video_path))
+                    try:
+                        shutil.copy(info.video_path, final_path)
+                    except IOError:
+                        # FIXME - we should pass the error back to the frontend
+                        pass
+                    else:
+                        self._add_item(final_path, info)
+                else:
+                    self.start_conversion(self.device.info.audio_conversion,
+                                          info,
+                                          audio_target_folder)
+            elif info.file_type == 'video':
+                self.start_conversion(self.device.info.video_conversion,
+                                      info,
+                                      video_target_folder)
+
+        self._check_finished()
+
+    def start_conversion(self, conversion, info, target):
+        conversion_manager = videoconversion.conversion_manager
+        start_conversion = conversion_manager.start_conversion
+
+        if not self.waiting:
+            for signal, callback in (
+                ('task-done', self._conversion_done_callback),
+                ('task-removed', self._conversion_removed_callback),
+                ('all-tasks-removed', self._conversion_removed_callback)):
+                self.signal_handles.append(conversion_manager.connect(
+                        signal, callback))
+
+        self.waiting.add(info)
+        start_conversion(conversion, info, target)
+
+    def _exists(self, item_info):
+        if item_info.file_type not in self.device.database:
+            return False
+        for existing in self.device.database[item_info.file_type]:
+            if item_info.file_url and \
+                    existing.get('url') == item_info.file_url:
+                return True
+            elif (item_info.name, item_info.description, item_info.size,
+                  item_info.duration) == \
+                  (existing.get('name'), existing.get('description'),
+                   existing.get('size'), existing.get('duration')):
+                  # if a bunch of qualities are the same, we'll call it close
+                  # enough
+                  return True
+        return False
+
+    def _conversion_removed_callback(self, conversion_manager, task=None):
+        if task is not None:
+            try:
+                self.waiting.remove(task)
+            except KeyError:
+                pass
+        else: # remove all tasks
+            self.waiting = set()
+        self._check_finished()
+
+    def _conversion_done_callback(self, conversion_manager, task):
+        try:
+            self.waiting.remove(task.item_info)
+        except KeyError:
+            pass # missing for some reason
+        else:
+            if task.is_finished(): # successful!
+                self._add_item(task.final_output_path, task.item_info)
+        self._check_finished()
+
+    def _add_item(self, final_path, item_info):
+        device_item = item.DeviceItem(
+            device=self.device,
+            file_type=item_info.file_type,
+            video_path=final_path[len(self.device.mount)+1:],
+            name=item_info.name,
+            feed_name=item_info.feed_name,
+            feed_url=item_info.feed_url,
+            description=item_info.description,
+            release_date=time.mktime(item_info.release_date.timetuple()),
+            size=item_info.size,
+            duration=item_info.duration * 1000,
+            permalink=item_info.permalink,
+            commentslink=item_info.commentslink,
+            payment_link=item_info.payment_link,
+            screenshot=item_info.thumbnail,
+            thumbnail_url=item_info.thumbnail_url,
+            file_format=item_info.file_format,
+            license=item_info.license,
+            url=item_info.file_url,
+            media_type_checked=item_info.media_type_checked,
+            mime_type=item_info.mime_type)
+        device_item._migrate_thumbnail()
+        database = self.device.database
+        database.setdefault(device_item.file_type, [])
+        database[device_item.file_type].append(device_item.to_dict())
+        messages.ItemsChanged('device', '%s-%s' % (self.device.id,
+                                                   device_item.file_type),
+                              [messages.ItemInfo(device_item)], # added
+                              [], []).send_to_frontend() # changed, removed
+
+    def _check_finished(self):
+        if not self.waiting:
+            # finished!
+            write_database(self.device.mount, self.device.database)
+            for handle in self.signal_handles:
+                videoconversion.conversion_manager.disconnect(handle)
+            self.signal_handles = None
+            self.device.is_updating = False # stop the spinner
+            messages.TabsChanged('devices', [], [self.device],
+                                 []).send_to_frontend()
+
 
 def load_database(mount):
     file_name = os.path.join(mount, '.miro', 'json')
