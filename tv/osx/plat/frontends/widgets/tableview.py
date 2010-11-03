@@ -936,6 +936,7 @@ class TableView(Widget):
                     index_set.addIndex_(self.row_for_iter(iter))
                 self.tableview.noteHeightOfRowsWithIndexesChanged_(index_set)
                 self.tableview.recalcTrackingRects()
+            self.invalidate_size_request()
         else:
             return
         self.height_changed = self.selection_removed = self.reload_needed = False
