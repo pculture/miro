@@ -520,7 +520,7 @@ class DeviceDropHandler(object):
                       position):
         if position == -1 and parent and type in self.allowed_types():
             device = model[parent][0]
-            if device.mount:
+            if device.mount and not getattr(device, 'fake', False):
                 return widgetset.DRAG_ACTION_COPY
         return widgetset.DRAG_ACTION_NONE
 
@@ -712,6 +712,10 @@ class DevicesList(TabList, TabUpdaterMixin):
         if not getattr(info, 'fake', False):
             thumb_path = resources.path('images/phone.png')
             info.icon = imagepool.get_surface(thumb_path)
+            if getattr(info, 'is_updating', False):
+                self.start_updating(info.id)
+            else:
+                self.stop_updating(info.id)
 
     def on_hotspot_clicked(self, view, hotspot, iter):
         if hotspot == 'eject-device':
