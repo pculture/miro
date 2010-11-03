@@ -226,7 +226,10 @@ class DeviceDisplay(TabDisplay):
     def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
         device = selected_tabs[0]
-        self.controller = devicecontroller.DeviceController(device)
+        if getattr(device, 'fake', False):
+            self.controller = devicecontroller.DeviceItemController(device)
+        else:
+            self.controller = devicecontroller.DeviceController(device)
         self.widget = self.controller.widget
 
     def on_selected(self):
