@@ -157,7 +157,11 @@ class VideoConversionManager(signals.SignalEmitter):
                                              'thread-started',
                                              'thread-did-start',
                                              'begin-loop',
-                                             'end-loop')
+                                             'end-loop',
+                                             'task-done',
+                                             'task-removed',
+                                             'all-tasks-removed',
+                                       )
         self.converters = ConverterManager()
         self.task_loop = None
         self.message_queue = Queue.Queue(-1)
@@ -397,15 +401,19 @@ class VideoConversionManager(signals.SignalEmitter):
         message.send_to_frontend()
 
     def _notify_task_removed(self, task):
+        self.emit('task-removed', task)
         info = messages.VideoConversionTaskInfo(task)
         message = messages.VideoConversionTaskRemoved(info)
         message.send_to_frontend()
     
     def _notify_all_tasks_removed(self):
+        self.emit('all-tasks-removed')
         message = messages.AllVideoConversionTaskRemoved()
         message.send_to_frontend()
 
     def _notify_task_changed(self, task):
+        if task.done_running():
+            self.emit('task-done', task)
         info = messages.VideoConversionTaskInfo(task)
         message = messages.VideoConversionTaskChanged(info)
         message.send_to_frontend()
