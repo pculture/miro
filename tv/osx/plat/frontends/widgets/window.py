@@ -129,6 +129,9 @@ class Window(signals.SignalEmitter):
     def is_active(self):
         return self.nswindow.isMainWindow()
 
+    def is_visible(self):
+        return self.nswindow.isVisible()
+
     def show(self):
         if self not in alive_windows:
             raise ValueError("Window destroyed")
