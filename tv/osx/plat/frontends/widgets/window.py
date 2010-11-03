@@ -73,7 +73,7 @@ class MiroWindow(NSWindow):
         return NSWindow.sendEvent_(self, event)
 
 class Window(signals.SignalEmitter):
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPIfor a description of the API for this class."""
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, title, rect):
         signals.SignalEmitter.__init__(self)
         self.create_signal('active-change')
