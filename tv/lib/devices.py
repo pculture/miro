@@ -151,8 +151,8 @@ def scan_device_for_files(device):
 
     for filename in fileutil.miro_allfiles(device.mount):
         short_filename = filename[len(device.mount)+1:]
-        if os.path.normcase(short_filename) in known_files: continue
-        ufilename = filename_to_unicode(filename)
+        ufilename = filename_to_unicode(short_filename)
+        if os.path.normcase(ufilename) in known_files: continue
         if filetypes.is_video_filename(ufilename):
             item_type = 'video'
         elif filetypes.is_audio_filename(ufilename):
@@ -160,7 +160,7 @@ def scan_device_for_files(device):
         else:
             continue
         new_items[item_type].append({
-                'video_path': short_filename
+                'video_path': ufilename
                 })
 
     for item_type in ('video', 'audio'):
