@@ -1989,28 +1989,32 @@ class DeviceItem(object):
                 raise TypeError('DeviceItem must be given a "%s" argument'
                                 % required)
         self.name = self.file_format = self.size = None
-        self.id = self.release_date = self.feed_name = self.feed_id = None
+        self.release_date = self.feed_name = self.feed_id = None
         self.keep = self.media_type_checked = True
         self.updating_movie_info = self.isContainerItem = False
         self.url = self.payment_link = None
         self.comments_link = self.permalink = self.file_url = None
         self.license = self.downloader = self.release_date = None
-        self.duration = self.screenshot = None
+        self.duration = self.screenshot = self.thumbnail_url = None
         self.resumeTime = 0
         self.subtitle_encoding = self.enclosure_type = None
         self.description = u''
         self.__dict__.update(kwargs)
 
+        if isinstance(self.video_path, unicode):
+            self.video_path = utf8_to_filename(self.video_path.encode('utf8'))
         if self.name is None:
-            self.name = os.path.basename(self.video_path)
+            self.name = filename_to_unicode(os.path.basename(self.video_path))
         if self.file_format is None:
-            self.file_format = os.path.splitext(self.video_path)[1]
+            self.file_format = filename_to_unicode(
+                os.path.splitext(self.video_path)[1])
         if self.size is None:
             self.size = os.path.getsize(self.get_filename())
         if self.release_date is None:
             self.release_date = os.path.getctime(self.get_filename())
         if self.duration is None: # -1 is unknown
             moviedata.movie_data_updater.request_update(self)
+        self.id = self.get_filename()
 
     @returns_unicode
     def get_title(self):
@@ -2018,6 +2022,8 @@ class DeviceItem(object):
 
     @returns_unicode
     def get_source(self):
+        if self.feed_name is not None:
+            return self.feed_name
         return self.device.info.name
 
     @staticmethod
@@ -2122,9 +2128,9 @@ class DeviceItem(object):
         else:
             return resources.path("images/thumb-default-video.png")
 
-    @staticmethod
-    def get_thumbnail_url():
-        return u''
+    @returns_unicode
+    def get_thumbnail_url(self):
+        return self.thumbnail_url or u''
 
     @returns_unicode
     def get_format(self):
@@ -2134,7 +2140,7 @@ class DeviceItem(object):
     def get_license(self):
         return self.license
 
-    def signal_change(self):
+    def _migrate_thumbnail(self):
         if self.screenshot and self.screenshot.startswith(
             moviedata.thumbnail_directory()):
             # migrate the screenshot onto the device
@@ -2143,6 +2149,8 @@ class DeviceItem(object):
                         os.path.join(self.device.mount, '.miro', basename))
             self.screenshot = os.path.join('.miro', basename)
 
+    def signal_change(self):
+        self._migrate_thumbnail()
         for index, data in enumerate(self.device.database[self.file_type]):
             if data['video_path'] == self.video_path:
                 self.device.database[self.file_type][index] = self.to_dict()
@@ -2159,6 +2167,8 @@ class DeviceItem(object):
         data = {}
         for k, v in self.__dict__.items():
             if v is not None and k not in ('device', 'file_type'):
+                if k in ('video_path', 'screenshot'):
+                    v = filename_to_unicode(v)
                 data[k] = v
         return data
 
