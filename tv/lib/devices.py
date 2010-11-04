@@ -220,7 +220,7 @@ class DeviceSyncManager(object):
         device_item = item.DeviceItem(
             device=self.device,
             file_type=item_info.file_type,
-            video_path=final_path[len(self.device.mount)+1:],
+            video_path=final_path[len(self.device.mount):],
             name=item_info.name,
             feed_name=item_info.feed_name,
             feed_url=item_info.feed_url,
@@ -309,7 +309,7 @@ def scan_device_for_files(device):
                 known_files.add(os.path.normcase(device_item['video_path']))
 
     for filename in fileutil.miro_allfiles(device.mount):
-        short_filename = filename[len(device.mount)+1:]
+        short_filename = filename[len(device.mount):]
         ufilename = filename_to_unicode(short_filename)
         if os.path.normcase(ufilename) in known_files: continue
         if filetypes.is_video_filename(ufilename):

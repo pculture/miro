@@ -32,6 +32,9 @@ class DeviceTracker(object):
             mount = volume.get_mount()
             if mount:
                 mount_path = mount.get_root().get_path()
+                if mount_path[-1] != os.path.sep:
+                    mount_path = mount_path + os.path.sep # make sure it ends
+                                                          # with a /
                 statinfo = os.statvfs(mount_path)
                 size = statinfo.f_frsize * statinfo.f_blocks
                 remaining = statinfo.f_frsize * statinfo.f_bavail
