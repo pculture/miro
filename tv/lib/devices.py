@@ -111,6 +111,7 @@ class DeviceSyncManager(object):
     """
     def __init__(self, device, item_infos):
         self.device = device
+        self.was_updating = False
         self.item_infos = item_infos
         self.signal_handles = []
         self.waiting = set()
@@ -119,6 +120,7 @@ class DeviceSyncManager(object):
         """
         Start syncing to the device.
         """
+        self.was_updating = getattr(self.device, 'is_updating', False)
         self.device.is_updating = True # start the spinner
         messages.TabsChanged('devices', [], [self.device],
                              []).send_to_frontend()
@@ -252,9 +254,10 @@ class DeviceSyncManager(object):
             for handle in self.signal_handles:
                 videoconversion.conversion_manager.disconnect(handle)
             self.signal_handles = None
-            self.device.is_updating = False # stop the spinner
-            messages.TabsChanged('devices', [], [self.device],
-                                 []).send_to_frontend()
+            if not self.was_updating:
+                self.device.is_updating = False # stop the spinner
+                messages.TabsChanged('devices', [], [self.device],
+                                     []).send_to_frontend()
 
 
 def load_database(mount):
