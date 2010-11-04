@@ -73,10 +73,11 @@ def launch():
     from miro.dl_daemon import daemon
     from miro import httpclient
 
+    addr = os.environ['DEMOCRACY_DOWNLOADER_ADDR']
     port = int(os.environ['DEMOCRACY_DOWNLOADER_PORT'])
     short_app_name = os.environ['DEMOCRACY_SHORT_APP_NAME']
     httpclient.start_thread()
-    server = daemon.DownloaderDaemon(port, short_app_name)
+    server = daemon.DownloaderDaemon(addr, port, short_app_name)
     # setup config for the downloader
     from miro import eventloop
     config.load(config.DownloaderConfig())

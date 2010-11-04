@@ -217,11 +217,15 @@ def make_dummy_socket_pair():
     port = 0
     while 1:
         try:
-            dummy_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            dummy_server.bind(("127.0.0.1", port))
+            if socket.has_ipv6:
+                dummy_server = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+                dummy_server.bind(("::1", port))
+            else:
+                dummy_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                dummy_server.bind(("127.0.0.1", port))
             dummy_server.listen(1)
             server_address = dummy_server.getsockname()
-            first = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            first = socket.socket(dummy_server.family, socket.SOCK_STREAM)
             first.connect(server_address)
             second, address = dummy_server.accept()
             dummy_server.close()

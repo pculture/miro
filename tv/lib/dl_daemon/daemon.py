@@ -52,10 +52,11 @@ class DaemonError(Exception):
 
 FIRST_DAEMON_LAUNCH = '1'
 
-def start_download_daemon(oldpid, port):
+def start_download_daemon(oldpid, addr, port):
     global FIRST_DAEMON_LAUNCH
 
     daemon_env = {
+        'DEMOCRACY_DOWNLOADER_ADDR' : str(addr),
         'DEMOCRACY_DOWNLOADER_PORT' : str(port),
         'DEMOCRACY_DOWNLOADER_FIRST_LAUNCH' : FIRST_DAEMON_LAUNCH,
         'DEMOCRACY_SHORT_APP_NAME' : app.config.get(prefs.SHORT_APP_NAME),
@@ -184,12 +185,12 @@ class Daemon(ConnectionHandler):
             self.send_data(pack("I", len(raw)) + raw, callback)
 
 class DownloaderDaemon(Daemon):
-    def __init__(self, port, short_app_name):
+    def __init__(self, host, port, short_app_name):
         # before anything else, write out our PID
         write_pid(short_app_name, os.getpid())
         # connect to the controller and start our listen loop
         Daemon.__init__(self)
-        self.open_connection('127.0.0.1', port, self.on_connection,
+        self.open_connection(host, port, self.on_connection,
                              self.on_error)
         signals.system.connect('error', self.handle_error)
 
@@ -214,9 +215,19 @@ class DownloaderDaemon(Daemon):
 
 class ControllerDaemon(Daemon):
     def __init__(self):
+        import socket
         Daemon.__init__(self)
-        self.stream.acceptConnection('127.0.0.1', 0,
-                                     self.on_connection, self.on_error)
+        if socket.has_ipv6:
+            try:
+                self.stream.acceptConnection(socket.AF_INET6, '::1', 0,
+                                             self.on_connection, self.on_error)
+            except StandardError:
+                self.stream.acceptConnection(socket.AF_INET, '127.0.0.1', 0,
+                                             self.on_connection, self.on_error)
+        else:
+            self.stream.acceptConnection(socket.AF_INET, '127.0.0.1', 0,
+                                         self.on_connection, self.on_error)
+        self.addr = self.stream.addr
         self.port = self.stream.port
         self._setup_config()
         self._setup_httpauth()
@@ -224,7 +235,7 @@ class ControllerDaemon(Daemon):
         self.shutdown_timeout_dc = None
 
     def start_downloader_daemon(self):
-        start_download_daemon(self.read_pid(), self.port)
+        start_download_daemon(self.read_pid(), self.addr, self.port)
 
     def _setup_config(self):
         remote_config_items = [
