@@ -103,4 +103,10 @@ class DeviceTracker(object):
             return
         devices.device_disconnected(info)
 
+    def eject(self, info):
+        if info.id not in self._connected:
+            return
+        usb_info = self._connected[info.id]
+        usbutils.deviceEject(usb_info['devInst'])
+
 tracker = DeviceTracker()

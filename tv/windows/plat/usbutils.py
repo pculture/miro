@@ -16,6 +16,7 @@ SetupDiGetDeviceInterfaceDetail = setupapi.SetupDiGetDeviceInterfaceDetailW
 
 CM_Get_Parent = setupapi.CM_Get_Parent
 CM_Get_Device_ID = setupapi.CM_Get_Device_IDW
+CM_Request_Device_Eject = setupapi.CM_Request_Device_EjectW
 
 class GUID(ctypes.Structure):
     _fields_ = [("Data1", ctypes.c_ulong),
@@ -99,6 +100,10 @@ def getDeviceInterfaceDetail(interface):
             return
     return detail.DevicePath, device
 
+def deviceEject(devInst):
+    CM_Request_Device_Eject(devInst, None, None, 0, 0)
+
+
 def getParent(devInst):
     parent = ctypes.wintypes.DWORD(0)
     CM_Get_Parent(ctypes.byref(parent), devInst, 0)
@@ -145,6 +150,7 @@ def connectedDevices():
                 'mount': driveName,
                 'vendor_id': vendor_id,
                 'product_id': product_id,
-                'serial': serial
+                'serial': serial,
+                'devInst': getParent(deviceParent)
                 }
 
