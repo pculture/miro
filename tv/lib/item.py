@@ -2141,8 +2141,8 @@ class DeviceItem(object):
         return self.license
 
     def _migrate_thumbnail(self):
-        if self.screenshot and self.screenshot.startswith(
-            moviedata.thumbnail_directory()):
+        if self.screenshot and self.screenshot.startswith(app.config.get(
+            prefs.ICON_CACHE_DIRECTORY)):
             # migrate the screenshot onto the device
             basename = os.path.basename(self.screenshot)
             shutil.move(self.screenshot,
@@ -2166,7 +2166,7 @@ class DeviceItem(object):
     def to_dict(self):
         data = {}
         for k, v in self.__dict__.items():
-            if v is not None and k not in ('device', 'file_type'):
+            if v is not None and k not in ('device', 'file_type', 'id'):
                 if k in ('video_path', 'screenshot'):
                     v = filename_to_unicode(v)
                 data[k] = v
