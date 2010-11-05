@@ -241,35 +241,53 @@ class AsyncSocket(object):
             self.disable_read_timeout = disable_read_timeout
         self.name = "Outgoing %s:%s" % (host, port)
 
-        try:
-            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        except socket.error, e:
-            trap_call(self, errback, ConnectionError(e[1]))
-            return
-        self.socket.setblocking(0)
         self.connectionErrback = errback
-        def handleGetHostByNameException(e):
+        def handleGetAddrInfoException(e):
             trap_call(self, errback, ConnectionError(e[1] + " (host: %s)" % host))
-        def onAddressLookup(address):
-            if self.socket is None:
-                # the connection was closed while we were calling gethostbyname
-                return
+        def createSocketHandle(family):
             try:
-                rv = self.socket.connect_ex((address, port))
-            except socket.gaierror:
-                trap_call(self, errback, ConnectionError('gaierror'))
+                self.socket = socket.socket(family, socket.SOCK_STREAM)
+            except socket.error, e:
+                trap_call(self, errback, ConnectionError(e[1]))
                 return
-            if rv in (0, errno.EINPROGRESS, errno.EWOULDBLOCK):
-                eventloop.add_write_callback(self.socket, onWriteReady)
-                self.socketConnectTimeout = eventloop.add_timeout(
-                        SOCKET_CONNECT_TIMEOUT, onWriteTimeout,
-                        "socket connect timeout")
-            else:
+
+            self.socket.setblocking(0)
+            return self.socket
+        def onAddressLookup(addresses):
+            connected = 0;
+            msgs = []
+            for entry in addresses:
+                address = entry[4][0]
+                try:
+                    if socket.has_ipv6 and entry[0] == socket.AF_INET6:
+                        if createSocketHandle(socket.AF_INET6) == None:
+                            continue
+                        rv = self.socket.connect_ex((address, port))
+                    elif entry[0] == socket.AF_INET:
+                        if createSocketHandle(socket.AF_INET) == None:
+                            continue
+                        rv = self.socket.connect_ex((address, port))
+
+                except socket.gaierror:
+                    trap_call(self, errback, ConnectionError('gaierror'))
+                    return
+                if rv in (0, errno.EINPROGRESS, errno.EWOULDBLOCK):
+                    eventloop.add_write_callback(self.socket, onWriteReady)
+                    self.socketConnectTimeout = eventloop.add_timeout(
+                             SOCKET_CONNECT_TIMEOUT, onWriteTimeout,
+                            "socket connect timeout")
+                    connected = 1;
+                    break;
+
                 try:
                     msg = errno.errorcode[rv]
                 except KeyError:
                     msg = "Unknown connection error: %s" % rv
-                trap_call(self, errback, ConnectionError(msg))
+                msgs.append("Host %s: %s" % msg)
+
+            if connected == 0:
+                fullmsg = "Connection failed: %s" % string.join(msgs);
+                trap_call(self, errback, ConnectionError(fullmsg))
         def onWriteReady():
             eventloop.remove_write_callback(self.socket)
             self.socketConnectTimeout.cancel()
@@ -284,10 +302,10 @@ class AsyncSocket(object):
             eventloop.remove_write_callback(self.socket)
             trap_call(self, errback, ConnectionTimeout(host))
             self.connectionErrback = None
-        eventloop.call_in_thread(onAddressLookup, handleGetHostByNameException,
-                socket.gethostbyname, "getHostByName - %s" % host, host)
+        eventloop.call_in_thread(onAddressLookup, handleGetAddrInfoException,
+                socket.getaddrinfo, "getAddrInfo - %s:%s" % (host, port), host, port)
 
-    def acceptConnection(self, host, port, callback, errback):
+    def acceptConnection(self, family, host, port, callback, errback):
         def finishAccept():
             eventloop.remove_read_callback(self.socket)
             (self.socket, addr) = self.socket.accept()
@@ -296,9 +314,18 @@ class AsyncSocket(object):
 
         self.name = "Incoming %s:%s" % (host, port)
         self.connectionErrback = errback
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.bind((host, port))
-        (self.addr, self.port) = self.socket.getsockname()
+
+        try:
+            self.socket = socket.socket(family, socket.SOCK_STREAM)
+            self.socket.bind((host, port))
+        except socket.error, e:
+            trap_call(self, errback, ConnectionError(e[1]))
+            return
+
+        if self.socket.family == socket.AF_INET:
+            (self.addr, self.port) = self.socket.getsockname()
+        else:
+            (self.addr, self.port, self.flowinfo, self.scopeid) = self.socket.getsockname()
         self.socket.listen(63)
         eventloop.add_read_callback(self.socket, finishAccept)
 

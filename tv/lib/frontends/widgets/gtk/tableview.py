@@ -750,6 +750,11 @@ class TableView(Widget):
     def set_context_menu_callback(self, callback):
         self.context_menu_callback = callback
 
+    # GTK is really good and it is safe to operate on table even when
+    # cells may be constantly changing in flux.
+    def set_volatile(self, volatile):
+        return
+
     def set_drag_source(self, drag_source):
         self.drag_source = drag_source
         # No need to call enable_model_drag_source() here, we handle it

@@ -898,6 +898,8 @@ class Application:
     def do_quit(self):
         if self.window is not None:
             self.window.close()
+        if prefpanel.is_window_shown():
+            prefpanel.hide_window()
         if self.ui_initialized:
             if app.playback_manager.is_playing:
                 app.playback_manager.stop()

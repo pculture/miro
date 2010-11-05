@@ -251,6 +251,7 @@ class CustomTableCell(NSCell):
         self = super(CustomTableCell, self).init()
         self.layout_manager = LayoutManager()
         self.hotspot = None
+        self.default_drawing_style = DrawingStyle()
         return self
 
     def highlightColorWithFrame_inView_(self, frame, view):
@@ -258,9 +259,9 @@ class CustomTableCell(NSCell):
 
     def calcHeight_(self, view):
         self.layout_manager.reset()
-        style = self.make_drawing_style(None, view)
         self.set_wrapper_data()
-        cell_size = self.wrapper.get_size(style, self.layout_manager)
+        cell_size = self.wrapper.get_size(self.default_drawing_style,
+                self.layout_manager)
         return cell_size[1]
 
     def make_drawing_style(self, frame, view):
@@ -291,8 +292,7 @@ class CustomTableCell(NSCell):
         self.value_dict = value_dict
 
     def set_wrapper_data(self):
-        for name, value in self.value_dict.items():
-            setattr(self.wrapper, name, value)
+        self.wrapper.__dict__.update(self.value_dict)
 
 class CustomCellRenderer(object):
     def __init__(self):
@@ -409,11 +409,11 @@ class TableViewCommon(object):
         self.column_index_map[column] = len(self.tableColumns())
         self.SuperClass.addTableColumn_(self, column)
 
-    def removeTableColumn(self, column):
+    def removeTableColumn_(self, column):
         del self.column_index_map[column]
         for after_index in xrange(index+1, len(self.tableColumns())):
             self.column_index_map[column_list[after_index]] -= 1
-        self.SuperClass.removeTableColumn(self, column)
+        self.SuperClass.removeTableColumn_(self, column)
 
     def moveColumn_toColumn_(self, src, dest):
         # Need to switch the TableColumn objects too
@@ -936,12 +936,18 @@ class TableView(Widget):
                     index_set.addIndex_(self.row_for_iter(iter))
                 self.tableview.noteHeightOfRowsWithIndexesChanged_(index_set)
                 self.tableview.recalcTrackingRects()
+            # FIXME
             # Could get here during shutdown.  Case for example is we
-            # got stuck in a contextual menu and quit was called.  In this
-            # this case try but don't worry if it doesn't work.
+            # got stuck in a contextual menu and quit was called.  For
+            # some reason when that happens it thinks the tabs have changed
+            # (even during shutdown) and wants to update the tableview.  I
+            # think updating it is probably bogus and updating it is an
+            # error but let's just try and then continue if it didn't work.
+            #
+            # I really don't like this try ... except ... block here.
             try:
                 self.invalidate_size_request()
-            except:
+            except AttributeError:
                 pass
         else:
             return
@@ -1094,6 +1100,14 @@ class TableView(Widget):
 
     def set_context_menu_callback(self, callback):
         self.context_menu_callback = callback
+
+    # disable the drag when the cells are constantly updating.  Mac OS X
+    # deals badly with this..
+    def set_volatile(self, volatile):
+        if volatile:
+            self.data_source.setDragSource_(None)
+        else:
+            self.data_source.setDragSource_(self.drag_source)
 
     def set_drag_source(self, drag_source):
         self.drag_source = drag_source

@@ -117,12 +117,21 @@ class TabUpdaterMixin(object):
         self.updating_animations = {}
 
     def start_updating(self, id_):
+        # The spinning wheel is constantly updating the cell value, between 
+        # validating the cell value for the drag and drop and the actual drop
+        # the cell value most likely changes, and some GUI toolkits may get
+        # confused.
+        #
+        # We'll let the underlying platform code figure out what's the best
+        # thing to do here.
+        self.view.set_volatile(True)
         if id_ in self.updating_animations:
             return
         timer_id = timer.add(0, self.pulse_updating_animation, id_)
         self.updating_animations[id_] = timer_id
 
     def stop_updating(self, id_):
+        self.view.set_volatile(False)
         if id_ not in self.updating_animations:
             return
         self.view.stop_updating_image(self.iter_map[id_])
@@ -790,19 +799,6 @@ class FeedList(NestedTabList, TabUpdaterMixin):
 
     def on_delete_key_pressed(self):
         app.widgetapp.remove_current_feed()
-
-    def start_updating(self, id_):
-        # Lock down drag and drop while we are updating feeds.
-        # The spinning wheel is constantly updating the cell value, between 
-        # validating the cell value for the drag and drop and the actual drop
-        # the cell value most likely changes, and some GUI toolkits may get
-        # confused.
-        self.view.set_drag_source(None)
-        TabUpdaterMixin.start_updating(self, id_)
-
-    def stop_updating(self, id_):
-        self.view.set_drag_source(FeedListDragHandler())
-        TabUpdaterMixin.stop_updating(self, id_)
 
     def init_info(self, info):
         info.icon = imagepool.get_surface(info.tab_icon, size=(16, 16))
