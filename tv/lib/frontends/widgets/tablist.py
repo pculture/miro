@@ -659,19 +659,23 @@ class FeedList(NestedTabList):
         app.widgetapp.remove_current_feed()
 
     def feed_is_updating(self, info):
-        # Lock down drag and drop while we are updating feeds.
+        # Tell the tableview that the table may be volatile.
+        #
         # The spinning wheel is constantly updating the cell value, between 
         # validating the cell value for the drag and drop and the actual drop
         # the cell value most likely changes, and some GUI toolkits may get
         # confused.
-        self.view.set_drag_source(None)
+        #
+        # We'll let the underlying platform code figure out what's the best
+        # thing to do here.
+        self.view.set_volatile(True)
         if info.id in self.updating_animations:
             return
         timer_id = timer.add(0, self.pulse_updating_animation, info.id)
         self.updating_animations[info.id] = timer_id
 
     def feed_not_updating(self, info):
-        self.view.set_drag_source(FeedListDragHandler())
+        self.view.set_volatile(False)
         if info.id not in self.updating_animations:
             return
         self.view.stop_updating_image(self.iter_map[info.id])

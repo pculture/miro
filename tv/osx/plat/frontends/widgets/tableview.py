@@ -1101,6 +1101,14 @@ class TableView(Widget):
     def set_context_menu_callback(self, callback):
         self.context_menu_callback = callback
 
+    # disable the drag when the cells are constantly updating.  Mac OS X
+    # deals badly with this..
+    def set_volatile(self, volatile):
+        if volatile:
+            self.data_source.setDragSource_(None)
+        else:
+            self.data_source.setDragSource_(self.drag_source)
+
     def set_drag_source(self, drag_source):
         self.drag_source = drag_source
         self.data_source.setDragSource_(drag_source)
