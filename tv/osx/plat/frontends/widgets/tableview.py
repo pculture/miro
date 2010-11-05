@@ -409,11 +409,11 @@ class TableViewCommon(object):
         self.column_index_map[column] = len(self.tableColumns())
         self.SuperClass.addTableColumn_(self, column)
 
-    def removeTableColumn(self, column):
+    def removeTableColumn_(self, column):
         del self.column_index_map[column]
         for after_index in xrange(index+1, len(self.tableColumns())):
             self.column_index_map[column_list[after_index]] -= 1
-        self.SuperClass.removeTableColumn(self, column)
+        self.SuperClass.removeTableColumn_(self, column)
 
     def moveColumn_toColumn_(self, src, dest):
         # Need to switch the TableColumn objects too
