@@ -292,6 +292,8 @@ class Box(Packer):
             if child_pos <= pos < child_pos + child_length:
                 x, y = self._translate(child_pos, 0)
                 width, height = self._translate(child_length, total_breadth)
+                if isinstance(packing, WhitespacePacking):
+                    return None
                 return packing.child, x, y, width, height
             elif child_pos > pos:
                 break
