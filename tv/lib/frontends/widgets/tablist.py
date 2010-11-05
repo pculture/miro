@@ -710,10 +710,11 @@ class DevicesList(TabList, TabUpdaterMixin):
         elif not info.mount and self.get_child_count(info.id):
             parent_iter = self.iter_map[info.id]
             model = self.view.model
-            iter = model.child_iter(parent_iter)
-            while iter is not None:
+            next_iter = model.child_iter(parent_iter)
+            while next_iter is not None:
+                iter = next_iter
+                next_iter = model.next_iter(next_iter)
                 model.remove(iter)
-                iter = model.next_iter(iter)
         TabList.update(self, info)
 
     def init_info(self, info):

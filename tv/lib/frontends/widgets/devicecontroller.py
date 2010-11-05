@@ -236,6 +236,10 @@ class DeviceController(object):
         self.device = device
         self.widget = DeviceWidget(device)
 
+    def handle_device_changed(self, device):
+        self.device = device
+        self.widget.set_device(device)
+
     def start_tracking(self):
         pass
 
