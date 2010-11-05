@@ -251,6 +251,7 @@ class CustomTableCell(NSCell):
         self = super(CustomTableCell, self).init()
         self.layout_manager = LayoutManager()
         self.hotspot = None
+        self.default_drawing_style = DrawingStyle()
         return self
 
     def highlightColorWithFrame_inView_(self, frame, view):
@@ -258,9 +259,9 @@ class CustomTableCell(NSCell):
 
     def calcHeight_(self, view):
         self.layout_manager.reset()
-        style = self.make_drawing_style(None, view)
         self.set_wrapper_data()
-        cell_size = self.wrapper.get_size(style, self.layout_manager)
+        cell_size = self.wrapper.get_size(self.default_drawing_style,
+                self.layout_manager)
         return cell_size[1]
 
     def make_drawing_style(self, frame, view):
@@ -291,8 +292,7 @@ class CustomTableCell(NSCell):
         self.value_dict = value_dict
 
     def set_wrapper_data(self):
-        for name, value in self.value_dict.items():
-            setattr(self.wrapper, name, value)
+        self.wrapper.__dict__.update(self.value_dict)
 
 class CustomCellRenderer(object):
     def __init__(self):
