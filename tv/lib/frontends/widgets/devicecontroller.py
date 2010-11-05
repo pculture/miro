@@ -80,14 +80,15 @@ class DeviceMountedView(widgetset.VBox):
     def __init__(self):
         widgetset.VBox.__init__(self)
 
-        self.button_row = segmented.SegmentedButtonsRow()
-        for name in ('Main', 'Video', 'Audio', 'Playlists'):
-            button = DeviceTabButtonSegment(name.lower(), name,
-                                            self._tab_clicked)
-            self.button_row.add_button(name.lower(), button)
-
-        self.button_row.set_active('main')
-        self.pack_start(widgetutil.align_center(self.button_row.make_widget()))
+        # self.button_row = segmented.SegmentedButtonsRow()
+        # for name in ('Main', 'Video', 'Audio', 'Playlists'):
+        #     button = DeviceTabButtonSegment(name.lower(), name,
+        #                                     self._tab_clicked)
+        #     self.button_row.add_button(name.lower(), button)
+        #
+        # self.button_row.set_active('main')
+        # self.pack_start(widgetutil.align_center(
+        #                 self.button_row.make_widget()))
 
         self.tabs = {}
         self.tab_container = widgetset.SolidBackground((1, 1, 1))
