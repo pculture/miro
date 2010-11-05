@@ -936,12 +936,18 @@ class TableView(Widget):
                     index_set.addIndex_(self.row_for_iter(iter))
                 self.tableview.noteHeightOfRowsWithIndexesChanged_(index_set)
                 self.tableview.recalcTrackingRects()
+            # FIXME
             # Could get here during shutdown.  Case for example is we
-            # got stuck in a contextual menu and quit was called.  In this
-            # this case try but don't worry if it doesn't work.
+            # got stuck in a contextual menu and quit was called.  For
+            # some reason when that happens it thinks the tabs have changed
+            # (even during shutdown) and wants to update the tableview.  I
+            # think updating it is probably bogus and updating it is an
+            # error but let's just try and then continue if it didn't work.
+            #
+            # I really don't like this try ... except ... block here.
             try:
                 self.invalidate_size_request()
-            except:
+            except AttributeError:
                 pass
         else:
             return
