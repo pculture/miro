@@ -35,6 +35,7 @@ import traceback
 import threading
 import Queue
 import logging
+import mutagen
 
 from miro import app
 from miro import prefs
@@ -157,6 +158,10 @@ class MovieDataUpdater(signals.SignalEmitter):
                     screenshot = FilenameType("")
                 logging.debug("moviedata: %s %s %s", duration, screenshot, 
                               mediatype)
+
+                if (mediatype == 'audio'):
+                    mdi.item.metadata = self.read_metadata(mdi.item)
+
                 self.update_finished(mdi.item, duration, screenshot, mediatype)
             except StandardError:
                 if self.in_shutdown:
@@ -185,6 +190,25 @@ class MovieDataUpdater(signals.SignalEmitter):
                 self.kill_process(pipe.pid)
             return ''
         return pipe.stdout.read()
+
+    def read_metadata(self, item):
+       meta = mutagen.File(item.filename).__dict__
+       tags = None
+       if '_DictProxy__dict' in meta['tags'].__dict__:
+           tags = meta['tags'].__dict__['_DictProxy__dict']
+       else:
+           tags = meta['tags']
+       info = meta['info'].__dict__
+       data = {}
+       discard = ('MCDI', 'APIC')
+       for key, value in tags.items():
+           if not key.split(':')[0] in discard:
+               data[str(key)] = str(value)
+       for key, value in info.items():
+           data['info_', key] = str(value)
+#       if data == {}:
+#           data = None
+       return data
 
     def kill_process(self, pid):
         try:
