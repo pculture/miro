@@ -479,6 +479,11 @@ class DownloadStatusToolbar(DisplayToolbar):
     def __init__(self):
         DisplayToolbar.__init__(self)
 
+        v = widgetset.VBox()
+
+        sep = separator.HSeparator((0.85, 0.85, 0.85), (0.95, 0.95, 0.95))
+        v.pack_start(sep)
+
         h = widgetset.HBox(spacing=5)
 
         self._free_disk_label = widgetset.Label("")
@@ -501,7 +506,8 @@ class DownloadStatusToolbar(DisplayToolbar):
         h.pack_start(widgetutil.align_right(self._second_label,
             top_pad=10, bottom_pad=10, right_pad=20, left_pad=10))
 
-        self.add(h)
+        v.pack_start(h)
+        self.add(v)
 
         app.frontend_config_watcher.connect('changed', self.on_config_change)
 
