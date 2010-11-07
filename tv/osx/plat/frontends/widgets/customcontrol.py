@@ -208,7 +208,7 @@ class CustomSliderView(NSSlider):
 CustomSliderView.setCellClass_(CustomSliderCell)
 
 class CustomButton(drawing.DrawingMixin, Widget):
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
+    """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self):
         Widget.__init__(self)
         self.create_signal('clicked')
@@ -228,7 +228,7 @@ class CustomButton(drawing.DrawingMixin, Widget):
         Widget.remove_viewport(self)
 
 class ContinuousCustomButton(CustomButton):
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
+    """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self):
         CustomButton.__init__(self)
         self.create_signal('held-down')
@@ -240,7 +240,7 @@ class ContinuousCustomButton(CustomButton):
         self.view.cell().setPeriodicDelay_interval_(initial, repeat)
 
 class CustomSlider(drawing.DrawingMixin, Widget):
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
+    """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self):
         Widget.__init__(self)
         self.create_signal('pressed')

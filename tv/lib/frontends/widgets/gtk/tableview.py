@@ -57,7 +57,7 @@ def rect_contains_point(rect, x, y):
 
 class CellRenderer(object):
     """Simple Cell Renderer
-    https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView"""
+    https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
     def __init__(self):
         self._renderer = gtk.CellRendererText()
 
@@ -80,7 +80,7 @@ class CellRenderer(object):
 
 class ImageCellRenderer(object):
     """Cell Renderer for images
-    https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView"""
+    https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
     def __init__(self):
         self._renderer = gtk.CellRendererPixbuf()
 
@@ -98,7 +98,7 @@ gobject.type_register(GTKCheckboxCellRenderer)
 
 class CheckboxCellRenderer(signals.SignalEmitter):
     """Cell Renderer for booleans
-    https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView"""
+    https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
     def __init__(self):
         signals.SignalEmitter.__init__(self)
         self.create_signal("clicked")
@@ -113,7 +113,7 @@ class CheckboxCellRenderer(signals.SignalEmitter):
 
 class GTKCustomCellRenderer(gtk.GenericCellRenderer):
     """Handles the GTK hide of CustomCellRenderer
-    https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView"""
+    https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
 
     def on_get_size(self, widget, cell_area=None):
         wrapper = wrappermap.wrapper(self)
@@ -189,7 +189,7 @@ gobject.type_register(GTKCustomCellRenderer)
 
 class CustomCellRenderer(object):
     """Customizable Cell Renderer
-    https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView"""
+    https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
     def __init__(self):
         self._renderer = GTKCustomCellRenderer()
         wrappermap.add(self._renderer, self)
@@ -212,7 +212,7 @@ class CustomCellRenderer(object):
 
 class MiroTreeView(gtk.TreeView):
     """Extends the GTK TreeView widget to help implement TableView
-    https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView"""
+    https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
     # Add a tiny bit of padding so that the user can drag feeds below
     # the table, i.e. to the bottom row, as a top-level
     PAD_BOTTOM = 3
@@ -350,7 +350,7 @@ def gtk_target_list(types):
 
 class HotspotTracker(object):
     """Handles tracking hotspots.
-    https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView"""
+    https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
 
     def __init__(self, treeview, event):
         self.treeview = treeview
@@ -492,7 +492,7 @@ class TableColumn(signals.SignalEmitter):
         return self._column.get_sort_order() == gtk.SORT_ASCENDING
 
 class TableView(Widget):
-    """https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView"""
+    """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
 
     draws_selection = False
 
@@ -1080,7 +1080,7 @@ class TableView(Widget):
         return self._widget.get_left_offset()
 
 class TableModel(object):
-    """https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView"""
+    """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
     MODEL_CLASS = gtk.ListStore
 
     def __init__(self, *column_types):
@@ -1166,7 +1166,7 @@ class TableModel(object):
         return self._model[iter]
 
 class TreeTableModel(TableModel):
-    """https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView"""
+    """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
     MODEL_CLASS = gtk.TreeStore
 
     def append(self, *column_values):

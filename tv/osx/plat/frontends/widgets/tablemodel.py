@@ -166,7 +166,7 @@ class TableModelBase(signals.SignalEmitter):
         return iter(self.row_list)
 
 class TableRow(object):
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView for a description of the API for this class."""
+    """See https://develop.participatoryculture.org/index.php/WidgetAPITableView for a description of the API for this class."""
     def __init__(self, column_values):
         self.update_values(column_values)
 
@@ -183,7 +183,7 @@ class TableRow(object):
         return iter(self.values)
 
 class TableModel(TableModelBase):
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView for a description of the API for this class."""
+    """See https://develop.participatoryculture.org/index.php/WidgetAPITableView for a description of the API for this class."""
     def __init__(self, *column_types):
         TableModelBase.__init__(self, column_types)
         self.row_indexes = {}
@@ -250,7 +250,7 @@ class TreeNode(NSObject, TableRow):
         return iter(self.children)
 
 class TreeTableModel(TableModelBase):
-    """https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView"""
+    """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
     def __init__(self, *column_values):
         TableModelBase.__init__(self, *column_values)
         self.iter_for_item = {}

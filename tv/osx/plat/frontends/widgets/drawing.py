@@ -38,7 +38,7 @@ from objc import YES, NO, nil
 from miro.plat import utils
 
 class ImageSurface:
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
+    """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self, image):
         """Create a new ImageSurface."""
         self.image = image.nsimage.copy()
@@ -73,7 +73,7 @@ def convert_widget_color(color, alpha=1.0):
     
 
 class DrawingStyle(object):
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
+    """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self, bg_color=None, text_color=None):
         self.use_custom_style = True
         self.use_custom_titlebar_background = True
@@ -90,7 +90,7 @@ class DrawingStyle(object):
     default_bg_color = convert_cocoa_color(NSColor.textBackgroundColor())
 
 class DrawingContext:
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
+    """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self, view, drawing_area, rect):
         self.view = view
         self.path = NSBezierPath.bezierPath()
@@ -189,7 +189,7 @@ class DrawingContext:
         context.restoreGraphicsState()
 
 class Gradient(object):
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
+    """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self, x1, y1, x2, y2):
         self.x1, self.y1, self.x2, self.y2 = x1, y1, x2, y2
         self.start_color = None
