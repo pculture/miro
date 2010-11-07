@@ -156,8 +156,11 @@ class PlaybackManager (signals.SignalEmitter):
         self.position = 0
         self._calc_id_to_position()
         self.presentation_mode = presentation_mode
-        self._start_tracking_items()
         self._play_current()
+        if self.playlist is None:
+            # _play_current found that PLAY_IN_MIRO was set to False
+            return
+        self._start_tracking_items()
         if self.presentation_mode != 'fit-to-bounds':
             self.fullscreen()
 
