@@ -77,6 +77,9 @@ class PlaybackManager (signals.SignalEmitter):
         app.info_updater.item_changed_callbacks.add('manual', 'playback-list',
                 self._on_items_changed)
 
+    def player_ready(self):
+        return self.player is not None and self.open_successful
+
     def _on_items_changed(self, message):
         if self.playlist is None:
             return
@@ -239,7 +242,7 @@ class PlaybackManager (signals.SignalEmitter):
             self.update_timeout = None
 
     def notify_update(self):
-        if self.player is not None:
+        if self.player_ready():
             elapsed = self.player.get_elapsed_playback_time()
             total = self.player.get_total_playback_time()
             self.emit('playback-did-progress', elapsed, total)
@@ -314,7 +317,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.removing_video_display = False
 
     def update_current_resume_time(self, resume_time=-1):
-        if not self.open_successful or self.player is None:
+        if not self.player_ready():
             return
         item_info = self.playlist[self.position]
         if app.config.get(prefs.RESUME_VIDEOS_MODE):
@@ -522,6 +525,8 @@ class PlaybackManager (signals.SignalEmitter):
             self.play_next_item(False)
 
     def play_next_item(self, save_resume_time=True):
+        if not self.player_ready():
+            return
         self.play_from_position(self.position + 1, save_resume_time)
 
     def play_prev_item(self, save_resume_time=True, from_user=False):
@@ -539,6 +544,8 @@ class PlaybackManager (signals.SignalEmitter):
         # to the beginning of the item.
         #
         # otherwise, we move to the previous item in the play list.
+        if not self.player_ready():
+            return
         if from_user:
             current_time = self.player.get_elapsed_playback_time()
             if current_time > 3:
