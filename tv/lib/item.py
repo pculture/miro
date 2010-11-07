@@ -272,28 +272,33 @@ class FeedParserValues(object):
     def _calc_release_date(self):
         # FIXME - this is awful.  need to handle site-specific things
         # a different way.
-        #
-        # also need to clean up this awful try/except code.
-        if "youtube.com" in self._calc_url():
+        release_date = None
+
+        # if this is not a youtube url, then we try to use
+        # updated_parsed from either the enclosure or the entry
+        if "youtube.com" not in self._calc_url():
             try:
-                return datetime(*self.first_video_enclosure.published_parsed[0:7])
+                release_date = self.first_video_enclosure.updated_parsed
             except AttributeError:
                 try:
-                    return datetime(*self.entry.published_parsed[0:7])
+                    release_date = self.entry.updated_parsed
                 except AttributeError:
                     pass
 
-        try:
-            return datetime(*self.first_video_enclosure.updated_parsed[0:7])
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        # if this is a youtube url and/or there was no updated_parsed,
+        # then we try to use the published_parsed from either the
+        # enclosure or the entry
+        if release_date is None:
             try:
-                return datetime(*self.entry.updated_parsed[0:7])
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
-                pass
+                release_date = self.first_video_enclosure.published_parsed
+            except AttributeError:
+                try:
+                    release_date = self.entry.published_parsed
+                except AttributeError:
+                    pass
+
+        if release_date is not None:
+            return datetime(*release_date[0:7])
 
         return datetime.min
 
