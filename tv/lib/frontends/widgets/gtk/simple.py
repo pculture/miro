@@ -46,6 +46,8 @@ class Image(object):
 
 class ResizedImage(Image):
     def __init__(self, image, width, height):
+        width = int(width)
+        height = int(height)
         self.pixbuf = image.pixbuf.scale_simple(width, height,
                 gtk.gdk.INTERP_BILINEAR)
         self.width = width

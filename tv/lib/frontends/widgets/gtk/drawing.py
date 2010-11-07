@@ -47,7 +47,8 @@ class ImageSurface:
         format = cairo.FORMAT_RGB24
         if image.pixbuf.get_has_alpha():
             format = cairo.FORMAT_ARGB32
-        self.image = cairo.ImageSurface(format, image.width, image.height)
+        self.image = cairo.ImageSurface(
+            format, int(image.width), int(image.height))
         context = cairo.Context(self.image)
         gdkcontext = gtk.gdk.CairoContext(context)
         gdkcontext.set_source_pixbuf(image.pixbuf, 0, 0)
