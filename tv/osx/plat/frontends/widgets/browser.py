@@ -42,7 +42,7 @@ from miro import config
 from miro.plat.frontends.widgets.base import Widget
 
 class Browser(Widget):
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
+    """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self):
         Widget.__init__(self)
         self.url = None

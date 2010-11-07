@@ -73,7 +73,7 @@ def _unpack_row_column(value):
 
 class HotspotTracker(object):
     """Contains the info on the currently tracked hotspot.  See:
-    https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView
+    https://develop.participatoryculture.org/index.php/WidgetAPITableView
     """
     def __init__(self, tableview, point):
         self.tableview = tableview

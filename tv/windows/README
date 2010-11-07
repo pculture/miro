@@ -12,7 +12,7 @@ Summary
 This is the Gtk-Windows port of Miro.
 
 Instructions and build requirements are documented at
-https://develop.participatoryculture.org/trac/democracy/wiki/WindowsBuildDocs
+https://develop.participatoryculture.org/index.php/WindowsBuildDocs
 
 The shell scripts are written for CYGWIN, but otherwise CYGWIN is not reuired
 to build Miro.

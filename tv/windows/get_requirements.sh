@@ -7,7 +7,7 @@ echo "Instructions for installing" > README.txt
 echo "===========================" >> README.txt
 echo "" >> README.txt
 echo "Instructions are at:" >> README.txt
-echo "https://develop.participatoryculture.org/trac/democracy/wiki/WindowsBuildDocs" >> README.txt
+echo "https://develop.participatoryculture.org/index.php/WindowsBuildDocs" >> README.txt
 
 
 echo "Fetching Python 2.6.5"

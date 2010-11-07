@@ -57,7 +57,7 @@ class SizedControl(Widget):
         self.view.setFont_(font)
 
 class BaseTextEntry(SizedControl):
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
+    """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self, initial_text=None):
         SizedControl.__init__(self)
         self.view = self.make_view()
@@ -218,7 +218,7 @@ class MiroButton(NSButton):
         return YES
 
 class Checkbox(SizedControl):
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
+    """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self, label):
         SizedControl.__init__(self)
         self.create_signal('toggled')
@@ -252,7 +252,7 @@ class Checkbox(SizedControl):
         self.view.setEnabled_(False)
 
 class Button(SizedControl):
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
+    """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self, label, style='normal'):
         SizedControl.__init__(self)
         self.color = None
