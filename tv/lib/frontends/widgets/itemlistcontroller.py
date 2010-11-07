@@ -44,6 +44,7 @@ from urlparse import urljoin
 from miro import app
 from miro import messages
 from miro import subscription
+from miro import prefs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import itemcontextmenu
@@ -191,9 +192,11 @@ class ItemListController(object):
         playable = self.filter_playable_items(items)
         if len(playable) == 0:
             return
-        if len(self.get_selection()) <= 1:
-            # User has 0 or 1 items selected, if more items get added
-            # to the item list, we should play them.
+        if ((app.config.get(prefs.PLAY_IN_MIRO)
+             and len(self.get_selection()) <= 1)):
+            # User is playing items in Miro and has 0 or 1 items
+            # selected, if more items get added to the item list, we
+            # should play them.
             item_list = self._playback_item_view().item_list
             self._items_added_callback = item_list.connect('items-added',
                     self._on_items_added_during_playback)
