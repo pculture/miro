@@ -270,6 +270,19 @@ class FeedParserValues(object):
         return None
 
     def _calc_release_date(self):
+        # FIXME - this is awful.  need to handle site-specific things
+        # a different way.
+        #
+        # also need to clean up this awful try/except code.
+        if "youtube.com" in self._calc_url():
+            try:
+                return datetime(*self.first_video_enclosure.published_parsed[0:7])
+            except AttributeError:
+                try:
+                    return datetime(*self.entry.published_parsed[0:7])
+                except AttributeError:
+                    pass
+
         try:
             return datetime(*self.first_video_enclosure.updated_parsed[0:7])
         except (SystemExit, KeyboardInterrupt):
@@ -280,8 +293,9 @@ class FeedParserValues(object):
             except (SystemExit, KeyboardInterrupt):
                 raise
             except:
-                return datetime.min
+                pass
 
+        return datetime.min
 
 class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     """An item corresponds to a single entry in a feed.  It has a

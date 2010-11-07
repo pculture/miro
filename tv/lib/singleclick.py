@@ -87,7 +87,8 @@ def _build_entry(url, content_type, additional=None):
     """Given a url, content type and additional metadata, builds and
     returns a FeedParserDict.
     """
-    entry = {'updated_parsed': time.gmtime(time.time()),
+    entry = {'published_parsed': time.gmtime(time.time()),
+             'updated_parsed': time.gmtime(time.time()),
              'enclosures': [{'url': url, 'type': unicode(content_type)}]}
 
     if additional is not None:
