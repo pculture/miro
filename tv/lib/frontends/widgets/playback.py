@@ -160,7 +160,7 @@ class PlaybackManager (signals.SignalEmitter):
             self.fullscreen()
 
     def append_item(self, item_info):
-        if not self.is_playing:
+        if self.playlist is None:
             raise ValueError("Can't append items when not playing")
         self._append_item(item_info)
 
