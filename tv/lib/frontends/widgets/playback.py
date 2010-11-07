@@ -476,11 +476,7 @@ class PlaybackManager (signals.SignalEmitter):
         item_info = self.playlist[self.position]
         if not config.get(prefs.PLAY_IN_MIRO):
             if self.is_playing:
-                self.player.stop()
-                self.player = None
-                if self.video_display is not None:
-                    self.remove_video_display()
-                    self.video_display = None
+                self.stop(save_resume_time=False)
             # FIXME - do this to avoid "currently playing green thing.
             # should be a better way.
             self.playlist = None
