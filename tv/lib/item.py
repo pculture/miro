@@ -349,7 +349,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self._look_for_downloader()
         self.setup_common()
         self.split_item()
-        app.item_info_cache.item_created(self)
 
     def setup_restored(self):
         self.setup_common()
@@ -361,6 +360,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.expiring = None
         self.showMoreInfo = False
         self.updating_movie_info = False
+
+    def after_setup_new(self):
+        app.item_info_cache.item_created(self)
 
     def signal_change(self, needs_save=True):
         app.item_info_cache.item_changed(self)

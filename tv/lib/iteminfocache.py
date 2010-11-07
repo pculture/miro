@@ -191,6 +191,9 @@ class ItemInfoCache(object):
             # signal_change() called in Item.setup_restored(), while we were
             # doing a failsafe load
             return
+        if item.id not in self.id_to_info:
+            # signal_change() called inside setup_new(), just ignor it
+            return
         info = messages.ItemInfo(item)
         self.id_to_info[item.id] = info
         if item.id in self._infos_added:
