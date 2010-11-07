@@ -473,9 +473,97 @@ class SearchToolbar(DisplayToolbar):
     def hide(self):
         self.hideable.hide()
 
+class DownloadStatusToolbar(DisplayToolbar):
+    """Widget that shows free space and download and upload speed status."""
+
+    def __init__(self):
+        DisplayToolbar.__init__(self)
+
+        h = widgetset.HBox(spacing=5)
+
+        self._free_disk_label = widgetset.Label("")
+        self._free_disk_label.set_size(widgetconst.SIZE_SMALL)
+
+        h.pack_start(widgetutil.align_left(self._free_disk_label,
+            top_pad=10, left_pad=20, bottom_pad=10), expand=True)
+
+        first_label = widgetset.Label("")
+        first_label.set_size(widgetconst.SIZE_SMALL)
+        self._first_label = first_label
+
+        h.pack_start(widgetutil.align_right(self._first_label,
+            left_pad=10, top_pad=10, bottom_pad=10, right_pad=10))
+
+        second_label = widgetset.Label("")
+        second_label.set_size(widgetconst.SIZE_SMALL)
+        self._second_label = second_label
+
+        h.pack_start(widgetutil.align_right(self._second_label,
+            top_pad=10, bottom_pad=10, right_pad=20, left_pad=10))
+
+        self.add(h)
+
+        app.frontend_config_watcher.connect('changed', self.on_config_change)
+
+    def on_config_change(self, obj, key, value):
+        if ((key == prefs.PRESERVE_X_GB_FREE.key
+             or key == prefs.PRESERVE_DISK_SPACE.key)):
+            self.update_free_space()
+
+    def update_free_space(self):
+        """Updates the free space text on the downloads tab.
+
+        amount -- the total number of bytes free.
+        """
+        amount = get_available_bytes_for_movies()
+        if app.config.get(prefs.PRESERVE_DISK_SPACE):
+            available = (app.config.get(prefs.PRESERVE_X_GB_FREE) * 1024 * 1024 * 1024)
+            available = amount - available
+
+            if available < 0:
+                available = available * -1.0
+                text = _(
+                    "%(available)s below downloads space limit (%(amount)s "
+                    "free on disk)",
+                    {"amount": displaytext.size_string(amount),
+                     "available": displaytext.size_string(available)}
+                )
+            else:
+                text = _(
+                    "%(available)s free for downloads (%(amount)s free "
+                    "on disk)",
+                    {"amount": displaytext.size_string(amount),
+                     "available": displaytext.size_string(available)}
+                )
+        else:
+            text = _("%(amount)s free on disk",
+                     {"amount": displaytext.size_string(amount)})
+        self._free_disk_label.set_text(text)
+
+    def update_rates(self, down_bps, up_bps):
+        text_up = text_down = ''
+        if up_bps >= 10:
+            text_up = _("%(rate)s uploading",
+                        {"rate": displaytext.download_rate(up_bps)})
+        if down_bps >= 10:
+            text_down = _("%(rate)s downloading",
+                          {"rate": displaytext.download_rate(down_bps)})
+
+        if text_up and text_down:
+            self._first_label.set_text(text_down)
+            self._second_label.set_text(text_up)
+        elif text_up:
+            self._first_label.set_text(text_up)
+            self._second_label.set_text('')
+        elif text_down:
+            self._first_label.set_text(text_down)
+            self._second_label.set_text('')
+        else:
+            self._first_label.set_text('')
+            self._second_label.set_text('')
+
 class DownloadToolbar(DisplayToolbar):
-    """Widget that shows free space, pause/resume/... buttons for
-    downloads, and other data.
+    """Widget that pause/resume/... buttons for downloads, and other data.
 
     :signal pause-all: All downloads should be paused
     :signal resume-all: All downloads should be resumed
@@ -491,12 +579,6 @@ class DownloadToolbar(DisplayToolbar):
         vbox.pack_start(sep)
 
         h = widgetset.HBox(spacing=5)
-
-        self._free_disk_label = widgetset.Label("")
-        self._free_disk_label.set_size(widgetconst.SIZE_SMALL)
-
-        h.pack_start(widgetutil.align_left(self._free_disk_label,
-            top_pad=5, left_pad=10), expand=True)
 
         self.create_signal('pause-all')
         self.create_signal('resume-all')
@@ -536,59 +618,8 @@ class DownloadToolbar(DisplayToolbar):
 
         h = widgetset.HBox(spacing=10)
 
-        first_label = widgetset.Label("")
-        first_label.set_size(widgetconst.SIZE_SMALL)
-        self._first_label = first_label
-
-        h.pack_start(widgetutil.align_left(self._first_label,
-            left_pad=10, bottom_pad=5))
-
-        second_label = widgetset.Label("")
-        second_label.set_size(widgetconst.SIZE_SMALL)
-        self._second_label = second_label
-
-        h.pack_start(widgetutil.align_left(self._second_label,
-            bottom_pad=5))
-
         vbox.pack_start(h)
         self.add(vbox)
-
-        app.frontend_config_watcher.connect('changed', self.on_config_change)
-
-    def on_config_change(self, obj, key, value):
-        if ((key == prefs.PRESERVE_X_GB_FREE.key
-             or key == prefs.PRESERVE_DISK_SPACE.key)):
-            self.update_free_space()
-
-    def update_free_space(self):
-        """Updates the free space text on the downloads tab.
-
-        amount -- the total number of bytes free.
-        """
-        amount = get_available_bytes_for_movies()
-        if app.config.get(prefs.PRESERVE_DISK_SPACE):
-            available = (app.config.get(prefs.PRESERVE_X_GB_FREE) * 1024 * 1024 * 1024)
-            available = amount - available
-
-            if available < 0:
-                available = available * -1.0
-                text = _(
-                    "%(available)s below downloads space limit (%(amount)s "
-                    "free on disk)",
-                    {"amount": displaytext.size_string(amount),
-                     "available": displaytext.size_string(available)}
-                )
-            else:
-                text = _(
-                    "%(available)s free for downloads (%(amount)s free "
-                    "on disk)",
-                    {"amount": displaytext.size_string(amount),
-                     "available": displaytext.size_string(available)}
-                )
-        else:
-            text = _("%(amount)s free on disk",
-                     {"amount": displaytext.size_string(amount)})
-        self._free_disk_label.set_text(text)
 
     def _on_pause_button_clicked(self, widget):
         self.emit('pause-all')
@@ -601,28 +632,6 @@ class DownloadToolbar(DisplayToolbar):
 
     def _on_settings_button_clicked(self, widget):
         self.emit('settings')
-
-    def update_rates(self, down_bps, up_bps):
-        text_up = text_down = ''
-        if up_bps >= 10:
-            text_up = _("%(rate)s uploading",
-                        {"rate": displaytext.download_rate(up_bps)})
-        if down_bps >= 10:
-            text_down = _("%(rate)s downloading",
-                          {"rate": displaytext.download_rate(down_bps)})
-
-        if text_up and text_down:
-            self._first_label.set_text(text_down)
-            self._second_label.set_text(text_up)
-        elif text_up:
-            self._first_label.set_text(text_up)
-            self._second_label.set_text('')
-        elif text_down:
-            self._first_label.set_text(text_down)
-            self._second_label.set_text('')
-        else:
-            self._first_label.set_text('')
-            self._second_label.set_text('')
 
 class FeedToolbar(DisplayToolbar):
     """Toolbar that appears below the title in a feed.
@@ -1001,6 +1010,7 @@ class ItemContainerWidget(widgetset.VBox):
         self.normal_view_vbox = widgetset.VBox()
         self.list_view_vbox = widgetset.VBox()
         self.titlebar_vbox = widgetset.VBox()
+        self.statusbar_vbox = widgetset.VBox()
         self.list_empty_mode_vbox = widgetset.VBox()
         self.toolbar = toolbar
         self.toolbar.connect('list-view-clicked', self.switch_to_list_view)
@@ -1010,6 +1020,7 @@ class ItemContainerWidget(widgetset.VBox):
         self.background = ItemListBackground()
         self.background.add(self.normal_view_vbox)
         self.pack_start(self.background, expand=True)
+        self.pack_start(self.statusbar_vbox)
         self.in_list_view = False
         self.list_empty_mode = False
 

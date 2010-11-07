@@ -34,7 +34,7 @@ from miro.gtcache import gettext as _
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets.itemlistwidgets import (
     ItemView, HideableSection, ItemContainerWidget, DownloadToolbar,
-    ItemListTitlebar)
+    DownloadStatusToolbar, ItemListTitlebar)
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import itemlist
@@ -63,8 +63,6 @@ class DownloadsController(itemlistcontroller.ItemListController):
         self.toolbar.connect("cancel-all", self._on_cancel_all)
         self.toolbar.connect("settings", self._on_settings)
 
-        self._update_free_space()
-
         self.widget.titlebar_vbox.pack_start(self.toolbar)
 
         vbox = widgetset.VBox()
@@ -79,6 +77,11 @@ class DownloadsController(itemlistcontroller.ItemListController):
         scroller.add(background)
 
         self.widget.normal_view_vbox.pack_start(scroller, expand=True)
+
+        self.status_toolbar = DownloadStatusToolbar()
+        self.widget.statusbar_vbox.pack_start(self.status_toolbar)
+
+        self._update_free_space()
 
     def make_titlebar(self):
         image_path = resources.path("images/icon-downloading_large.png")
@@ -113,7 +116,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
         self.set_search(search_text)
 
     def _update_free_space(self):
-        self.toolbar.update_free_space()
+        self.status_toolbar.update_free_space()
 
     def _on_pause_all(self, widget):
         messages.PauseAllDownloads().send_to_backend()
@@ -154,7 +157,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
         self._expand_lists_initially()
 
     def on_items_changed(self):
-        self.toolbar.update_rates(
+        self.status_toolbar.update_rates(
             downloader.total_down_rate, downloader.total_up_rate)
 
         if len(self.indydownloads_view.item_list.get_items()) > 0:
