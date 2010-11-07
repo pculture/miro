@@ -55,6 +55,7 @@ from miro.frontends.widgets import separator
 from miro.frontends.widgets import menus
 from miro.plat.frontends.widgets import widgetset
 from miro.plat import resources
+from miro import config, prefs
 
 class ItemListDragHandler(object):
     def allowed_actions(self):
@@ -189,9 +190,11 @@ class ItemListController(object):
         playable = self.filter_playable_items(items)
         if len(playable) == 0:
             return
-        if len(self.get_selection()) <= 1:
-            # User has 0 or 1 items selected, if more items get added
-            # to the item list, we should play them.
+        if ((config.get(prefs.PLAY_IN_MIRO)
+             and len(self.get_selection()) <= 1)):
+            # User is playing items in Miro and has 0 or 1 items
+            # selected, if more items get added to the item list, we
+            # should play them.
             item_list = self._playback_item_view().item_list
             self._item_added_callback = item_list.connect('item-added',
                     self._on_new_item_during_playback)
