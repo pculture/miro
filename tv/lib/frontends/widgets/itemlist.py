@@ -436,6 +436,14 @@ class ItemList(signals.SignalEmitter):
                 next_item_info = None
             self._iter_map[item_info.id] = iter
 
+    def _insert_items(self, to_add, already_sorted):
+        if len(to_add) == 0:
+            return
+        if not already_sorted:
+            self._sorter.sort_items(to_add)
+        self._insert_sorted_items(to_add)
+        self.emit('items-added', to_add)
+
     def add_items(self, item_list, already_sorted=False):
         to_add = []
         for item in item_list:
@@ -443,10 +451,7 @@ class ItemList(signals.SignalEmitter):
                 to_add.append(item)
             else:
                 self._hidden_items[item.id] = item
-        if not already_sorted:
-            self._sorter.sort_items(to_add)
-        self._insert_sorted_items(to_add)
-        self.emit('items-added', to_add)
+        self._insert_items(to_add, already_sorted)
 
     def update_items(self, changed_items, already_sorted=False):
         to_add = []
@@ -466,10 +471,7 @@ class ItemList(signals.SignalEmitter):
                     del self._hidden_items[info.id]
                 else:
                     self._hidden_items[info.id] = info
-        if not already_sorted:
-            self._sorter.sort_items(to_add)
-        self._insert_sorted_items(to_add)
-        self.emit('items-added', to_add)
+        self._insert_items(to_add, already_sorted)
 
     def remove_item(self, id):
         try:

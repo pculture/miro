@@ -182,7 +182,7 @@ class ItemListController(object):
             self._play_item_list(items, presentation_mode)
 
     def _on_items_added_during_playback(self, item_list, new_items):
-        for item_info in item_list:
+        for item_info in new_items:
             app.playback_manager.append_item(item_info)
             
     def filter_playable_items(self, items):
