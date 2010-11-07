@@ -166,6 +166,11 @@ class PlaybackManager (signals.SignalEmitter):
         if self.playlist is None:
             raise ValueError("Can't append items when not playing")
         self._append_item(item_info)
+        self.id_to_position[item_info.id] = len(self.playlist) - 1
+        # need to reset our TrackItemsManually view, since we now have a new
+        # id to track
+        self._stop_tracking_items()
+        self._start_tracking_items()
 
     def _append_item(self, item_info):
         if not item_info.is_container_item:
