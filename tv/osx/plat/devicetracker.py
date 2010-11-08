@@ -41,7 +41,7 @@ class DeviceTracker(object):
                                          kCFRunLoopDefaultMode)
         assert FSEventStreamStart(stream)
 
-        for volume in diskutil(list, '').VolumesFromDisks:
+        for volume in diskutil('list', '').VolumesFromDisks:
             self._disk_mounted('/Volumes/%s' % volume)
 
     def streamCallback(self, stream, clientInfo, numEvents, eventPaths,
@@ -66,7 +66,7 @@ class DeviceTracker(object):
             logging.info('unknown device: %r' % device_name)
             return
         self._info_for_volume[volume] = device_info
-        info = messages.DeviceInfo(volume, device_info, volume,
+        info = messages.DeviceInfo(volume, device_info, volume + '/',
                                    database, volume_info.TotalSize,
                                    volume_info.FreeSpace)
         devices.device_connected(info)

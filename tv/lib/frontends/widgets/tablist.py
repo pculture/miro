@@ -701,11 +701,12 @@ class DevicesList(TabList, TabUpdaterMixin):
 
     def add(self, info):
         TabList.add(self, info)
-        if info.mount:
+        if info.mount and not info.info.has_multiple_devices:
             self._add_fake_tabs(info)
 
     def update(self, info):
-        if info.mount and not self.get_child_count(info.id):
+        if info.mount and not info.info.has_multiple_devices and \
+                not self.get_child_count(info.id):
             self._add_fake_tabs(info)
         elif not info.mount and self.get_child_count(info.id):
             parent_iter = self.iter_map[info.id]

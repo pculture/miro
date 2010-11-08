@@ -2003,6 +2003,8 @@ class DeviceItem(object):
 
         if isinstance(self.video_path, unicode):
             self.video_path = utf8_to_filename(self.video_path.encode('utf8'))
+        if isinstance(self.screenshot, unicode):
+            self.screenshot = utf8_to_filename(self.screenshot.encode('utf8'))
         if self.name is None:
             self.name = filename_to_unicode(os.path.basename(self.video_path))
         if self.file_format is None:
@@ -2114,15 +2116,13 @@ class DeviceItem(object):
 
     @returns_filename
     def get_filename(self):
-        return utf8_to_filename(os.path.join(self.device.mount,
-                                             self.video_path).encode('utf8'))
+        return os.path.join(self.device.mount, self.video_path)
 
     @returns_filename
     def get_thumbnail(self):
         if self.screenshot:
-            return utf8_to_filename(
-                os.path.join(self.device.mount,
-                             self.screenshot).encode('utf8'))
+            return os.path.join(self.device.mount,
+                                self.screenshot)
         elif self.file_type == 'audio':
             return resources.path("images/thumb-default-audio.png")
         else:
@@ -2141,13 +2141,16 @@ class DeviceItem(object):
         return self.license
 
     def _migrate_thumbnail(self):
-        if self.screenshot and self.screenshot.startswith(app.config.get(
-            prefs.ICON_CACHE_DIRECTORY)):
-            # migrate the screenshot onto the device
-            basename = os.path.basename(self.screenshot)
-            shutil.move(self.screenshot,
-                        os.path.join(self.device.mount, '.miro', basename))
-            self.screenshot = os.path.join('.miro', basename)
+        if self.screenshot:
+            if self.screenshot.startswith(app.config.get(
+                    prefs.ICON_CACHE_DIRECTORY)):
+                # migrate the screenshot onto the device
+                basename = os.path.basename(self.screenshot)
+                shutil.move(self.screenshot,
+                            os.path.join(self.device.mount, '.miro', basename))
+                self.screenshot = os.path.join('.miro', basename)
+            elif self.screenshot.startswith(resources.root()):
+                self.screenshot = None # don't save a default thumbnail
 
     def signal_change(self):
         self._migrate_thumbnail()
