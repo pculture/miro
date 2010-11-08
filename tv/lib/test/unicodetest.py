@@ -55,7 +55,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
             self.assert_(name in ["base", "type", "encoding", "version",
                                   "href", "rel"])
         elif isinstance(parsed, time.struct_time):
-            self.assert_(name in ["updated_parsed"])
+            self.assert_(name in ["updated_parsed", "published_parsed"])
         elif isinstance(parsed, types.IntType):
             self.assert_(name in ["updated_parsed", "bozo"])
         else:

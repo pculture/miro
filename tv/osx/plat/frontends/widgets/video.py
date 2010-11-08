@@ -280,6 +280,7 @@ class VideoWindow (NSWindow):
             screenWithMenuBar = screens[0]
             if self.screen() == screenWithMenuBar:
                 SetSystemUIMode(kUIModeAllHidden, 0)
+        self.makeKeyAndOrderFront_(nil)
         self.setFrame_display_animate_(self.screen().frame(), YES, YES)
         self.is_fullscreen = True
         self.palette.enter_fullscreen(self)

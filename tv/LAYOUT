@@ -24,7 +24,7 @@ LAYOUT
 
   OSX platform specific code.
 
-* ``resources``
+* ``resources/``
 
   Cross-platform resource files distributed with the application.
   Includes GUI assets that are (or could be) shared across platforms,

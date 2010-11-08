@@ -410,6 +410,7 @@ class DDBObject(signals.SignalEmitter):
             # when setup_new() is being run
             app.db.remember_object(self)
             self.setup_new(*args, **kwargs)
+            self.after_setup_new()
             # handle setup_new() calling remove()
             if not self.id_exists():
                 return
@@ -460,6 +461,10 @@ class DDBObject(signals.SignalEmitter):
 
     def setup_new(self):
         """Initialize a newly created object."""
+        pass
+
+    def after_setup_new(self):
+        """Called immediately after setup_new returns."""
         pass
 
     def setup_restored(self):

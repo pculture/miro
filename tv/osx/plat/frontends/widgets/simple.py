@@ -39,7 +39,7 @@ from miro.plat.frontends.widgets.base import Widget, SimpleBin, FlippedView
 """A collection of various simple widgets."""
 
 class Image(object):
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
+    """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self, path):
         self.nsimage = NSImage.alloc().initByReferencingFile_(filename_to_unicode(path))
         self.width = self.nsimage.size().width
@@ -68,7 +68,7 @@ class NSImageDisplay (NSView):
         self.image.nsimage.drawInRect_fromRect_operation_fraction_(rect, NSZeroRect, NSCompositeSourceOver, 1.0)
 
 class ImageDisplay(Widget):
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
+    """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self, image):
         Widget.__init__(self)
         self.image = image
@@ -89,7 +89,7 @@ class AnimatedImageDisplay(Widget):
         return self.nsimage.size().width, self.nsimage.size().height
 
 class Label(Widget):
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
+    """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self, text="", wrap=False):
         Widget.__init__(self)
         self.view = NSTextField.alloc().init()

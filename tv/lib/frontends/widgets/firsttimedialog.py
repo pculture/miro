@@ -42,7 +42,8 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro import gtcache
 from miro.plat.utils import filename_to_unicode, FilenameType
-from miro.plat.resources import get_default_search_dir
+from miro.plat.resources import (get_default_search_dir,
+                                get_plat_media_player_name_path)
 
 import os
 
@@ -264,6 +265,20 @@ class FirstTimeDialog(widgetset.Window):
         group_box.pack_start(widgetutil.align_left(restrict_rb, left_pad=30))
         group_box.pack_start(widgetutil.align_left(search_rb, left_pad=30))
 
+        # XXX: we can think about providing a list of media players installed
+        # and search through those, but righ tnow the code doesn't handle
+        # a list of search directories to search.
+        (name, path) = get_plat_media_player_name_path()
+        if path:
+            import_rb = widgetset.RadioButton(
+                _("Import from %(player)s as watched folder" % \
+                dict(player=name)), rbg2)
+            self.search_directory = path
+            group_box.pack_start(widgetutil.align_left(import_rb, left_pad=30))
+        else:
+            # can't import - import_rb doesn't exist.
+            import_rb = None
+
         search_entry = widgetset.TextEntry()
         search_entry.set_width(20)
         change_button = widgetset.Button(_("Change"))
@@ -297,6 +312,9 @@ class FirstTimeDialog(widgetset.Window):
 
                 self.next_page()
             else:
+                if rbg2.get_selected() == import_rb:
+                    # Add watched folder
+                    app.watched_folder_manager.add(self.search_directory)
                 self.on_close()
 
         search_button = widgetset.Button(_("Search"))
@@ -313,6 +331,7 @@ class FirstTimeDialog(widgetset.Window):
         vbox.pack_start(widgetutil.align_right(hbox))
 
         def handle_radio_button_clicked(widget):
+            # Uggh  this is a bit messy.
             if widget is no_rb:
                 group_box.disable()
                 search_entry.disable()
@@ -321,15 +340,20 @@ class FirstTimeDialog(widgetset.Window):
 
             elif widget is yes_rb:
                 group_box.enable()
-                switch_mode("search")
-                if rbg2.get_selected() is restrict_rb:
+                if rbg2.get_selected() is restrict_rb or \
+                  rbg2.get_selected() is import_rb:
                     search_entry.disable()
                     change_button.disable()
                 else:
                     search_entry.enable()
                     change_button.enable()
 
-            elif widget is restrict_rb:
+                if rbg2.get_selected() is import_rb:
+                    switch_mode("finish")
+                else:
+                    switch_mode("search")
+
+            elif widget is restrict_rb or widget is import_rb:
                 search_entry.disable()
                 change_button.disable()
 
@@ -337,10 +361,17 @@ class FirstTimeDialog(widgetset.Window):
                 search_entry.enable()
                 change_button.enable()
 
+            if widget is restrict_rb or widget is search_rb:
+                switch_mode("search")
+            if widget is import_rb:
+                switch_mode("finish")
+
         no_rb.connect('clicked', handle_radio_button_clicked)
         yes_rb.connect('clicked', handle_radio_button_clicked)
         restrict_rb.connect('clicked', handle_radio_button_clicked)
         search_rb.connect('clicked', handle_radio_button_clicked)
+        if import_rb:
+            import_rb.connect('clicked', handle_radio_button_clicked)
 
         handle_radio_button_clicked(restrict_rb)
         handle_radio_button_clicked(no_rb)

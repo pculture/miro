@@ -48,13 +48,13 @@ class DrawingView(FlippedView):
         wrappermap.wrapper(self).draw(context, self.layout_manager)
 
 class DrawingArea(drawing.DrawingMixin, Widget):
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
+    """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self):
         Widget.__init__(self)
         self.view = DrawingView.alloc().init()
 
 class Background(drawing.DrawingMixin, SimpleBin):
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
+    """See https://develop.participatoryculture.org/index.php/WidgetAPI for a description of the API for this class."""
     def __init__(self):
         SimpleBin.__init__(self)
         self.view = DrawingView.alloc().init()

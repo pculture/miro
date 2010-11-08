@@ -43,7 +43,9 @@ class MediaKeyHandler(object):
         self.bus_object.connect_to_signal(
             'MediaPlayerKeyPressed', self.handle_mediakey)
 
-    def handle_mediakey(self, *mmkeys):
+    def handle_mediakey(self, application, *mmkeys):
+        if application != 'Miro':
+            return
         for key in mmkeys:
             if key == "Play":
                 app.widgetapp.on_play_clicked()

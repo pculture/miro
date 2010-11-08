@@ -12,7 +12,7 @@ Summary
 This is the Linux port of Miro.
 
 Instructions and build requirements are documented at
-https://develop.participatoryculture.org/trac/democracy/wiki/LinuxBuildDocs
+https://develop.participatoryculture.org/index.php/LinuxBuildDocs
 
 There are also helper build scripts located in ``tv/linux/helperscripts/``
 which will install dependencies for some systems.  Note that these scripts

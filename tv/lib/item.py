@@ -272,18 +272,37 @@ class FeedParserValues(object):
         return None
 
     def _calc_release_date(self):
-        try:
-            return datetime(*self.first_video_enclosure.updated_parsed[0:7])
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            try:
-                return datetime(*self.entry.updated_parsed[0:7])
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
-                return datetime.min
+        # FIXME - this is awful.  need to handle site-specific things
+        # a different way.
+        release_date = None
 
+        # if this is not a youtube url, then we try to use
+        # updated_parsed from either the enclosure or the entry
+        if "youtube.com" not in self._calc_url():
+            try:
+                release_date = self.first_video_enclosure.updated_parsed
+            except AttributeError:
+                try:
+                    release_date = self.entry.updated_parsed
+                except AttributeError:
+                    pass
+
+        # if this is a youtube url and/or there was no updated_parsed,
+        # then we try to use the published_parsed from either the
+        # enclosure or the entry
+        if release_date is None:
+            try:
+                release_date = self.first_video_enclosure.published_parsed
+            except AttributeError:
+                try:
+                    release_date = self.entry.published_parsed
+                except AttributeError:
+                    pass
+
+        if release_date is not None:
+            return datetime(*release_date[0:7])
+
+        return datetime.min
 
 class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     """An item corresponds to a single entry in a feed.  It has a
@@ -332,7 +351,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self._look_for_downloader()
         self.setup_common()
         self.split_item()
-        app.item_info_cache.item_created(self)
 
     def setup_restored(self):
         self.setup_common()
@@ -344,6 +362,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.expiring = None
         self.showMoreInfo = False
         self.updating_movie_info = False
+
+    def after_setup_new(self):
+        app.item_info_cache.item_created(self)
 
     def signal_change(self, needs_save=True):
         app.item_info_cache.item_changed(self)
