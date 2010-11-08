@@ -198,16 +198,16 @@ class MovieDataUpdater(signals.SignalEmitter):
            tags = meta['tags'].__dict__['_DictProxy__dict']
        else:
            tags = meta['tags']
-       info = meta['info'].__dict__
+       info = {}
+       if 'info' in meta:
+           info = meta['info'].__dict__
        data = {}
-       discard = ('MCDI', 'APIC')
+       discard = ('MCDI', 'APIC', 'PRIV')
        for key, value in tags.items():
            if not key.split(':')[0] in discard:
-               data[str(key)] = str(value)
+               data[unicode(key)] = unicode(value)
        for key, value in info.items():
-           data['info_', key] = str(value)
-#       if data == {}:
-#           data = None
+           data[u'info_' + key] = unicode(value)
        return data
 
     def kill_process(self, pid):
