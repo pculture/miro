@@ -248,12 +248,12 @@ class SchemaDict(SchemaReprContainer):
             try:
                 self.keySchema.validate(key)
             except ValidationError:
-                raise ValidationError("key %r has the wrong type" % key)
+                raise ValidationError("key %r has the wrong type: %s" % (key, type(key)))
             try:
                 self.valueSchema.validate(value)
             except ValidationError:
-                raise ValidationError("value %r (key: %r) has the wrong type"
-                        % (value, key))
+                raise ValidationError("value %r (key: %r) has the wrong type: %s"
+                        % (value, key, type(value)))
 
 class SchemaStatusContainer(SchemaReprContainer):
     """Version of SchemaReprContainer that stores the status dict for
@@ -418,7 +418,7 @@ class ItemSchema(MultiClassObjectSchema):
         ('shortFilename', SchemaFilename(noneOk=True)),
         ('offsetPath', SchemaFilename(noneOk=True)),
         ('file_type', SchemaString(noneOk=True)),
-        ('metadata', SchemaDict(SchemaBinary(noneOk=False),SchemaBinary(noneOk=True),noneOk=True)),
+        ('metadata', SchemaDict(SchemaString(noneOk=False),SchemaString(noneOk=True),noneOk=False)),
     ]
 
     indexes = (
