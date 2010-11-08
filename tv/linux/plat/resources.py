@@ -43,6 +43,8 @@ import os
 import urllib
 import platform
 
+from miro.gtcache import gettext as _
+
 RESOURCE_ROOT = os.path.abspath(
     os.environ.get('MIRO_RESOURCE_ROOT', '/usr/share/miro/resources/'))
 SHARE_ROOT = os.path.abspath(
@@ -127,3 +129,7 @@ def get_osname():
 
 def get_default_search_dir():
     return os.path.expanduser("~/")
+
+# Expand me: pick up Linux media players.
+def get_plat_media_player_name_path():
+    return (None, None)
