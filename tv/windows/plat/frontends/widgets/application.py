@@ -29,6 +29,7 @@
 import logging
 import os
 import sys
+import platform
 import traceback
 import webbrowser
 from urlparse import urlparse
@@ -58,6 +59,11 @@ from miro.plat.frontends.widgets.threads import call_on_ui_thread
 
 class WindowsApplication(Application):
     def run(self):
+        logging.info("Windows version:   %s %s %s %s", 
+                     platform.system(),
+                     platform.release(),
+                     platform.machine(),
+                     sys.getwindowsversion()[-1])
         logging.info("Python version:    %s", sys.version)
         logging.info("Gtk+ version:      %s", gtk.gtk_version)
         logging.info("PyGObject version: %s", gtk.ver)

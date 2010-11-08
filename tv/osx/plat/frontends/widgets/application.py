@@ -31,6 +31,7 @@ import re
 import sys
 import struct
 import logging
+import platform
 import urlparse
 import traceback
 import time
@@ -74,6 +75,10 @@ class OSXApplication(Application):
         self.gotQuit = False
 
     def run(self):
+        logging.info("OSX version:       %s %s %s",
+                     platform.system(),
+                     platform.release(),
+                     platform.machine())
         try:
             import libtorrent
             logging.info("libtorrent:        %s", libtorrent.version)
