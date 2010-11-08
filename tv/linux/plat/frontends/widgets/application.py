@@ -36,6 +36,7 @@ import gobject
 import os
 import gconf
 import shutil
+import platform
 
 try:
     import pynotify
@@ -111,7 +112,11 @@ class LinuxApplication(Application):
         self._setup_webkit()
         self.startup()
         set_properties(props_to_set)
-
+        
+        logging.info("Linux version:     %s %s %s",
+                     platform.system(),
+                     platform.release(),
+                     platform.machine())
         logging.info("Python version:    %s", sys.version)
         logging.info("Gtk+ version:      %s", gtk.gtk_version)
         logging.info("PyGObject version: %s", gtk.ver)

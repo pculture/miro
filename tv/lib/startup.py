@@ -41,7 +41,6 @@ import os
 import config
 import traceback
 import threading
-import platform
 import time
 
 from miro.clock import clock
@@ -223,7 +222,6 @@ def startup():
     """
     logging.info("Starting up %s", app.config.get(prefs.LONG_APP_NAME))
     logging.info("Version:    %s", app.config.get(prefs.APP_VERSION))
-    logging.info("OS:         %s %s %s", platform.system(), platform.release(), platform.machine())
     logging.info("Revision:   %s", app.config.get(prefs.APP_REVISION))
     logging.info("Builder:    %s", app.config.get(prefs.BUILD_MACHINE))
     logging.info("Build Time: %s", app.config.get(prefs.BUILD_TIME))
