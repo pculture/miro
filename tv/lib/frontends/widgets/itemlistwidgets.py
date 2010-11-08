@@ -494,6 +494,7 @@ class DownloadStatusToolbar(DisplayToolbar):
 
         first_label = widgetset.Label("")
         first_label.set_size(widgetconst.SIZE_SMALL)
+        first_label.set_size_request(100, -1)
         self._first_label = first_label
 
         h.pack_start(widgetutil.align_right(self._first_label,
@@ -501,6 +502,7 @@ class DownloadStatusToolbar(DisplayToolbar):
 
         second_label = widgetset.Label("")
         second_label.set_size(widgetconst.SIZE_SMALL)
+        second_label.set_size_request(100, -1)
         self._second_label = second_label
 
         h.pack_start(widgetutil.align_right(self._second_label,
