@@ -511,10 +511,8 @@ class DownloadStatusToolbar(DisplayToolbar):
         # Now, auto-detect the size required.
         first_label.set_text(text_up)
         width1, height1 = first_label.get_size_request()
-        print 'width 1 is ', width1
         first_label.set_text(text_down)
         width2, height2 = first_label.get_size_request()
-        print 'width 2 is ', width2
         
         first_label.set_size_request(max(width1, width2), -1)
         self._first_label = first_label
