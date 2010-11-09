@@ -340,8 +340,8 @@ class FirstTimeDialog(widgetset.Window):
 
             elif widget is yes_rb:
                 group_box.enable()
-                if rbg2.get_selected() is restrict_rb or \
-                  rbg2.get_selected() is import_rb:
+                if (rbg2.get_selected() is restrict_rb or
+                  rbg2.get_selected() is import_rb):
                     search_entry.disable()
                     change_button.disable()
                 else:
