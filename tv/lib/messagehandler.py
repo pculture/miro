@@ -1375,7 +1375,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         else:
             feed_.set_auto_download_mode(message.setting)
 
-    def handle_trac_kdownload_count(self, message):
+    def handle_track_download_count(self, message):
         if self.download_count_tracker is None:
             self.download_count_tracker = DownloadCountTracker()
         self.download_count_tracker.send_message()
