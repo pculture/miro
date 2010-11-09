@@ -188,6 +188,21 @@ class ProgressSort(ItemSort):
         else:
             return -1
 
+class ArtistSort(ItemSort):
+    KEY = 'artist'
+    def sort_key(self, item):
+        return util.name_sort_key(item.artist)
+
+class AlbumSort(ItemSort):
+    KEY = 'album'
+    def sort_key(self, item):
+        return util.name_sort_key(item.album)
+
+class TitleSort(ItemSort):
+    KEY = 'title'
+    def sort_key(self, item):
+        return util.name_sort_key(item.title)
+
 SORT_KEY_MAP = {
     DateSort.KEY:         DateSort,
     NameSort.KEY:         NameSort,
@@ -200,6 +215,9 @@ SORT_KEY_MAP = {
     ETASort.KEY:          ETASort,
     DownloadRateSort.KEY: DownloadRateSort,
     ProgressSort.KEY:     ProgressSort,
+    ArtistSort.KEY:       ArtistSort,
+    AlbumSort.KEY:        AlbumSort,
+    TitleSort.KEY:        TitleSort,
 }
 
 class ItemListGroup(object):
