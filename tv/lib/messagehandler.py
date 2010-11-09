@@ -1518,6 +1518,12 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                                    message.device.remaining)
         devices.device_changed(info)
 
+    def handle_delete_device_video(self, message):
+        os.unlink(message.item.video_path)
+        messages.ItemsChanged('device', message.item.device.id,
+                              [], [],
+                              [message.item.id]).send_to_frontend()
+
     def handle_device_eject(self, message):
         devicetracker.tracker.eject(message.device)
 

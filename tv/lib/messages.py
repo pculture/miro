@@ -804,6 +804,12 @@ class DeviceSyncMedia(BackendMessage):
         self.device = device
         self.item_ids = item_ids
 
+class DeleteDeviceVideo(BackendMessage):
+    """Ask the backend to delete a video from a device.
+    """
+    def __init__(self, item):
+        self.item = item
+
 class DeviceEject(BackendMessage):
     """Ask the backend to eject the given device.
     """
@@ -1036,7 +1042,7 @@ class ItemInfo(object):
     # bump this whenever you change the ItemInfo class, or change on of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description())
-    VERSION = 0
+    VERSION = 1
 
     def __init__(self, item):
         self.name = item.get_title()
@@ -1090,6 +1096,9 @@ class ItemInfo(object):
             self.download_info = PendingDownloadInfo()
         else:
             self.download_info = None
+
+        ## Device-specific stuff
+        self.device = getattr(item, 'device', None)
 
         ## Torrent-specific stuff
         self.leechers = self.seeders = self.up_rate = None

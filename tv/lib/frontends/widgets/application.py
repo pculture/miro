@@ -446,8 +446,14 @@ class Application:
         folder_count = len([s for s in selection if s.is_container_item])
         total_count = len(selection)
 
+        def _delete_video(item):
+            if item.device:
+                messages.DeleteDeviceVideo(item).send_to_backend()
+            else:
+                messages.DeleteVideo(item.id).send_to_backend()
+
         if total_count == 1 and external_count == folder_count == 0:
-            messages.DeleteVideo(selection[0].id).send_to_backend()
+            _delete_video(selection[0])
             return
 
         title = ngettext('Remove item', 'Remove items', total_count)
@@ -501,14 +507,14 @@ class Application:
         if ret in (dialogs.BUTTON_OK, dialogs.BUTTON_DELETE_FILE,
                 dialogs.BUTTON_DELETE):
             for mem in selection:
-                messages.DeleteVideo(mem.id).send_to_backend()
+                _delete_video(mem)
 
         elif ret == dialogs.BUTTON_REMOVE_ENTRY:
             for mem in selection:
                 if mem.is_external:
                     messages.RemoveVideoEntry(mem.id).send_to_backend()
                 else:
-                    messages.DeleteVideo(mem.id).send_to_backend()
+                    _delete_video(mem)
 
     def edit_item(self):
         selection = app.item_list_controller_manager.get_selection()
@@ -1281,7 +1287,6 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def handle_device_changed(self, message):
         current_display = app.display_manager.get_current_display()
         if isinstance(current_display, displays.DeviceDisplay):
-            # XXX if we're in the device display, do something
             current_display.controller.handle_device_changed(message.device)
 
     def handle_play_movie(self, message):
