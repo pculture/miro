@@ -139,7 +139,6 @@ class LinuxApplication(Application):
         except ImportError:
             logging.exception("pycurl won't load")
         renderers.init_renderer()
-        self.mediakeyhandler = mediakeys.get_media_key_handler()
         gtk.main()
         app.controller.on_shutdown()
 
@@ -210,6 +209,9 @@ class LinuxApplication(Application):
         # check x, y to make sure the window is visible and fix it
         # if not
         self.window.check_position_and_fix()
+
+        # handle media keys
+        self.mediakeyhandler = mediakeys.get_media_key_handler(self.window)
 
     def quit_ui(self):
         gtk.main_quit()

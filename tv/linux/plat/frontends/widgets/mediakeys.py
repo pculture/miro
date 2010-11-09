@@ -32,7 +32,7 @@ import dbus
 from miro import app
 
 class MediaKeyHandler(object):
-    def __init__(self):
+    def __init__(self, app_window):
         self.bus = dbus.Bus(dbus.Bus.TYPE_SESSION)
         self.bus_object = self.bus.get_object(
             'org.gnome.SettingsDaemon', '/org/gnome/SettingsDaemon/MediaKeys')
@@ -42,6 +42,8 @@ class MediaKeyHandler(object):
 
         self.bus_object.connect_to_signal(
             'MediaPlayerKeyPressed', self.handle_mediakey)
+
+        app_window.connect("active-change", self.on_window_focus)
 
     def handle_mediakey(self, application, *mmkeys):
         if application != 'Miro':
@@ -56,8 +58,13 @@ class MediaKeyHandler(object):
             elif key == "Previous":
                 app.widgetapp.on_previous_clicked()
 
-def get_media_key_handler():
+    def on_window_focus(self, window):
+        self.bus_object.GrabMediaPlayerKeys(
+            "Miro", 0, dbus_interface='org.gnome.SettingsDaemon.MediaKeys')
+        return False
+
+def get_media_key_handler(app_window):
     try:
-        return MediaKeyHandler()
+        return MediaKeyHandler(app_window)
     except dbus.DBusException:
         logging.debug("cannot load MediaKeyHandler")
