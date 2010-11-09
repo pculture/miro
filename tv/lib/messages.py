@@ -1085,6 +1085,16 @@ class ItemInfo(object):
         self.seeding_status = item.torrent_seeding_status()
         self.mime_type = item.enclosure_type
         self.file_url = item.url
+        self.title = self.name
+        if self.title.find(".") > 0:
+            self.title = self.title.rsplit(".", 1)[0]
+        self.artist = self.album = ""
+        if 'TPE1' in item.metadata:
+            self.artist = item.metadata['TPE1']
+        if 'TALB' in item.metadata:
+            self.album = item.metadata['TALB']
+        if 'TIT2' in item.metadata:
+            self.title = item.metadata['TIT2']
 
         if item.downloader:
             self.download_info = DownloadInfo(item.downloader)
