@@ -41,17 +41,14 @@ threads.
 
 import logging
 import re
-import urlparse
 
 from miro.gtcache import gettext as _
 from miro.folder import ChannelFolder, PlaylistFolder
 from miro.plat import resources
 from miro import app
-from miro import feed
 from miro import guide
 from miro import prefs
 from miro import util
-from miro import filetypes
 
 class MessageHandler(object):
     def __init__(self):
