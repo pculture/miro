@@ -289,7 +289,10 @@ class ListItemView(widgetset.TableView):
         self._current_sort_column = None
         self._set_initial_widths = False
         self._make_column('', style.StateCircleRenderer(), 'state', False)
-        self._make_column(_('Title'), style.NameRenderer(), 'name')
+        self._make_column(_('Title'), style.TitleRenderer(), 'title')
+        self._make_column(_('Artist'), style.ArtistRenderer(), 'artist')
+        self._make_column(_('Album'), style.AlbumRenderer(), 'album')
+        self._make_column(_('Filename'), style.NameRenderer(), 'name')
         if display_channel:
             self._make_column(_('Feed'), style.FeedNameRenderer(),
                     'feed-name')
@@ -364,6 +367,9 @@ class ListItemView(widgetset.TableView):
                 'size': (65, 0),    # size
                 'eta': (50, 0),    # eta
                 'rate': (75, 0),    # download rate
+                'artist': (85, 0),
+                'album': (85, 0),
+                'title': (85, 0),
             }
 
             for key in width_specs.keys():
