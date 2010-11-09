@@ -1299,6 +1299,18 @@ class SizeRenderer(ListViewRenderer):
     def _setup_layout(self):
         self.text = displaytext.size_string(self.info.size)
 
+class ArtistRenderer(ListViewRenderer):
+    def _setup_layout(self):
+        self.text = self.info.artist
+
+class AlbumRenderer(ListViewRenderer):
+    def _setup_layout(self):
+        self.text = self.info.album
+
+class TitleRenderer(ListViewRenderer):
+    def _setup_layout(self):
+        self.text = self.info.title
+
 class StateCircleRenderer(widgetset.CustomCellRenderer):
     min_width = 25
 
