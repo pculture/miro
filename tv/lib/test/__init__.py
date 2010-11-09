@@ -39,6 +39,7 @@ config.load_temporary()
 
 import unittest
 
+from miro.test.importtest import *
 from miro.test.conversionstest import *
 from miro.test.flashscrapertest import *
 from miro.test.unicodetest import *
@@ -67,7 +68,6 @@ from miro.test.itemtest import *
 from miro.test.filetypestest import *
 
 # platform specific tests
-
 if app.config.get(prefs.APP_PLATFORM) == "linux":
     from miro.test.gtcachetest import *
     from miro.test.downloadertest import *
