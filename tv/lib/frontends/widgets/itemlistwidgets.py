@@ -513,7 +513,10 @@ class DownloadStatusToolbar(DisplayToolbar):
         width1, height1 = first_label.get_size_request()
         first_label.set_text(text_down)
         width2, height2 = first_label.get_size_request()
-        
+
+        # Don't forget to reset the label to blank after we are done fiddling
+        # with it.
+        first_label.set_text("")
         first_label.set_size_request(max(width1, width2), -1)
         first_label.set_alignment(widgetconst.TEXT_JUSTIFY_RIGHT)
         self._first_label = first_label
