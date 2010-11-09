@@ -171,7 +171,7 @@ class DeviceSyncManager(object):
 
         if not self.waiting:
             for signal, callback in (
-                ('task-done', self._conversion_done_callback),
+                ('task-staged', self._conversion_staged_callback),
                 ('task-removed', self._conversion_removed_callback),
                 ('all-tasks-removed', self._conversion_removed_callback)):
                 self.signal_handles.append(conversion_manager.connect(
@@ -206,13 +206,13 @@ class DeviceSyncManager(object):
             self.waiting = set()
         self._check_finished()
 
-    def _conversion_done_callback(self, conversion_manager, task):
+    def _conversion_staged_callback(self, conversion_manager, task):
         try:
             self.waiting.remove(task.item_info)
         except KeyError:
             pass # missing for some reason
         else:
-            if task.is_finished(): # successful!
+            if not task.error: # successful!
                 self._add_item(task.final_output_path, task.item_info)
         self._check_finished()
 
@@ -226,7 +226,6 @@ class DeviceSyncManager(object):
             feed_url=item_info.feed_url,
             description=item_info.description,
             release_date=time.mktime(item_info.release_date.timetuple()),
-            size=item_info.size,
             duration=item_info.duration * 1000,
             permalink=item_info.permalink,
             commentslink=item_info.commentslink,

@@ -158,7 +158,7 @@ class VideoConversionManager(signals.SignalEmitter):
                                              'thread-did-start',
                                              'begin-loop',
                                              'end-loop',
-                                             'task-done',
+                                             'task-staged',
                                              'task-removed',
                                              'all-tasks-removed',
                                        )
@@ -343,6 +343,7 @@ class VideoConversionManager(signals.SignalEmitter):
                 else:
                     task.error = _("Reason unknown--check log")
                     self._notify_tasks_count()
+                self.emit('task-staged', task)
 
         except Queue.Empty, e:
             pass
@@ -412,8 +413,6 @@ class VideoConversionManager(signals.SignalEmitter):
         message.send_to_frontend()
 
     def _notify_task_changed(self, task):
-        if task.done_running():
-            self.emit('task-done', task)
         info = messages.VideoConversionTaskInfo(task)
         message = messages.VideoConversionTaskChanged(info)
         message.send_to_frontend()
