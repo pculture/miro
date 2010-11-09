@@ -283,7 +283,6 @@ class Test_import_itunes(MiroTestCase):
         self.assertEquals(path, None)
 
     def test_badfile(self):
-        pass
         self._clean_tmpf()
         path1 = "/Users/xxx/Music/iTunes/iTunes Music/"
         file_snippet1 = file_template % dict(path=(self.file_url + path1))
