@@ -2031,6 +2031,8 @@ class DeviceItem(object):
         if self.file_format is None:
             self.file_format = filename_to_unicode(
                 os.path.splitext(self.video_path)[1])
+            if self.file_type == 'audio':
+                self.file_format = self.file_format + ' audio'
         if self.size is None:
             self.size = os.path.getsize(self.get_filename())
         if self.release_date is None:
@@ -2075,7 +2077,7 @@ class DeviceItem(object):
 
     @staticmethod
     def is_external():
-        return True
+        return False
 
     def get_release_date_obj(self):
         return datetime.fromtimestamp(self.release_date)
@@ -2167,17 +2169,16 @@ class DeviceItem(object):
                     prefs.ICON_CACHE_DIRECTORY)):
                 # migrate the screenshot onto the device
                 basename = os.path.basename(self.screenshot)
-                shutil.move(self.screenshot,
-                            os.path.join(self.device.mount, '.miro', basename))
+                shutil.copyfile(self.screenshot,
+                                os.path.join(self.device.mount, '.miro',
+                                             basename))
                 self.screenshot = os.path.join('.miro', basename)
             elif self.screenshot.startswith(resources.root()):
                 self.screenshot = None # don't save a default thumbnail
 
     def signal_change(self):
         self._migrate_thumbnail()
-        for index, data in enumerate(self.device.database[self.file_type]):
-            if data['video_path'] == self.video_path:
-                self.device.database[self.file_type][index] = self.to_dict()
+        self.device.database[self.file_type][self.video_path] = self.to_dict()
 
         from miro import devices
         devices.write_database(self.device.mount, self.device.database)
@@ -2190,8 +2191,9 @@ class DeviceItem(object):
     def to_dict(self):
         data = {}
         for k, v in self.__dict__.items():
-            if v is not None and k not in ('device', 'file_type', 'id'):
-                if k in ('video_path', 'screenshot'):
+            if v is not None and k not in ('device', 'file_type', 'id',
+                                           'video_path'):
+                if k == 'screenshot':
                     v = filename_to_unicode(v)
                 data[k] = v
         return data

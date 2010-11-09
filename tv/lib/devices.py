@@ -183,7 +183,7 @@ class DeviceSyncManager(object):
     def _exists(self, item_info):
         if item_info.file_type not in self.device.database:
             return False
-        for existing in self.device.database[item_info.file_type]:
+        for existing in self.device.database[item_info.file_type].values():
             if item_info.file_url and \
                     existing.get('url') == item_info.file_url:
                 return True
@@ -241,7 +241,8 @@ class DeviceSyncManager(object):
         device_item._migrate_thumbnail()
         database = self.device.database
         database.setdefault(device_item.file_type, [])
-        database[device_item.file_type].append(device_item.to_dict())
+        database[device_item.file_type][device_item.video_path] = \
+            device_item.to_dict()
         messages.ItemsChanged('device', '%s-%s' % (self.device.id,
                                                    device_item.file_type),
                               [messages.ItemInfo(device_item)], # added
@@ -301,16 +302,18 @@ def device_disconnected(info):
     message.send_to_frontend()
 
 def scan_device_for_files(device):
-    new_items = {'video': [], 'audio': []}
     known_files = set()
-    def _exists(item):
+    to_remove = []
+    def _exists(item_path):
         return os.path.exists(os.path.join(device.mount,
-                                           item['video_path']))
+                                           item_path))
     for item_type in ('video', 'audio'):
-        for device_item in device.database.get(item_type, []):
-            if _exists(device_item):
-                new_items[item_type].append(device_item)
-                known_files.add(os.path.normcase(device_item['video_path']))
+        device.database.setdefault(item_type, {})
+        for item_path in device.database[item_type]:
+            if _exists(item_path):
+                known_files.add(os.path.normcase(item_path))
+            else:
+                to_remove.append((item_type, item_path))
 
     for filename in fileutil.miro_allfiles(device.mount):
         short_filename = filename[len(device.mount):]
@@ -322,11 +325,9 @@ def scan_device_for_files(device):
             item_type = 'audio'
         else:
             continue
-        new_items[item_type].append({
-                'video_path': ufilename
-                })
+        device.database[item_type][ufilename] = {}
 
-    for item_type in ('video', 'audio'):
-        device.database[item_type] = new_items[item_type]
+    for item_type, item_path in to_remove:
+        del device.database[item_type][item_path]
 
     write_database(device.mount, device.database)

@@ -435,8 +435,8 @@ class DeviceItemTracker(object):
         if item_type not in ('video', 'audio'):
             return
         items = [item.DeviceItem(device=self.device, file_type=item_type,
-                                 **args)
-                 for args in self.device.database[item_type]]
+                                 video_path=path, **args)
+                 for path, args in self.device.database[item_type].items()]
         infos = [messages.ItemInfo(i) for i in items]
 
         messages.ItemList(self.type, self.id, infos).send_to_frontend()
