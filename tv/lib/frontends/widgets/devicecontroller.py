@@ -248,12 +248,12 @@ class DeviceController(object):
         pass
 
 class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
-    type = 'device'
-    id = None
     unwatched_label = u'' # everything is marked as played
 
     def __init__(self, device):
         self.device = device
+        self.id = device.id
+        self.type = 'device-%s' % device.tab_type
         self.image_filename = 'icon-%s_large.png' % device.tab_type
         self.title = u'%s on %s' % (device.name, device.info.name)
         itemlistcontroller.AudioVideoItemsController.__init__(self)
