@@ -325,7 +325,9 @@ class PlaybackManager (signals.SignalEmitter):
         self.removing_video_display = False
 
     def update_current_resume_time(self, resume_time=-1):
-        if not self.player_ready():
+        if not self.player_ready() and resume_time == -1:
+            # we want to see what the current time is, but the player hasn't
+            # started playing yet.  Just return
             return
         item_info = self.playlist[self.position]
         if app.config.get(prefs.RESUME_VIDEOS_MODE):
