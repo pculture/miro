@@ -75,6 +75,9 @@ libvlc_MediaStateChanged = 5
  libvlc_Ended,
  libvlc_Error) = range(8)
 
+# Win32 Function
+EnableWindow = ctypes.windll.user32.EnableWindow
+
 class VLCError(Exception):
     pass
 
@@ -442,6 +445,7 @@ class VLCRenderer(object):
 
         widget.add_events(gtk.gdk.EXPOSURE_MASK)
         widget.connect('expose-event', self._on_expose)
+        EnableWindow(hwnd, 0)
 
     def unset_widget(self):
         self.hwnd = None
