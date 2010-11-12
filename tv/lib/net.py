@@ -305,7 +305,7 @@ class AsyncSocket(object):
         eventloop.call_in_thread(onAddressLookup, handleGetAddrInfoException,
                 socket.getaddrinfo, "getAddrInfo - %s:%s" % (host, port), host, port)
 
-    def acceptConnection(self, family, host, port, callback, errback):
+    def accept_connection(self, family, host, port, callback, errback):
         def finishAccept():
             eventloop.remove_read_callback(self.socket)
             (self.socket, addr) = self.socket.accept()

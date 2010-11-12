@@ -222,14 +222,14 @@ class ControllerDaemon(Daemon):
         Daemon.__init__(self)
         if socket.has_ipv6:
             try:
-                self.stream.acceptConnection(socket.AF_INET6, '::1', 0,
-                                             self.on_connection, self.on_error)
+                self.stream.accept_connection(socket.AF_INET6, '::1', 0,
+                        self.on_connection, self.on_error)
             except StandardError:
-                self.stream.acceptConnection(socket.AF_INET, '127.0.0.1', 0,
-                                             self.on_connection, self.on_error)
+                self.stream.accept_connection(socket.AF_INET, '127.0.0.1', 0,
+                        self.on_connection, self.on_error)
         else:
-            self.stream.acceptConnection(socket.AF_INET, '127.0.0.1', 0,
-                                         self.on_connection, self.on_error)
+            self.stream.accept_connection(socket.AF_INET, '127.0.0.1', 0,
+                    self.on_connection, self.on_error)
         self.addr = self.stream.addr
         self.port = self.stream.port
         self._setup_config()
