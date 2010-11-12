@@ -1,3 +1,31 @@
+# Miro - an RSS based video player application
+# Copyright (C) 2010 Participatory Culture Foundation
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+#
+# In addition, as a special exception, the copyright holders give
+# permission to link the code of portions of this program with the OpenSSL
+# library.
+#
+# You must obey the GNU General Public License in all respects for all of
+# the code used other than OpenSSL. If you modify file(s) with this
+# exception, you may extend this exception to your version of the file(s),
+# but you are not obligated to do so. If you do not wish to do so, delete
+# this exception statement from your version. If you delete this exception
+# statement from all source files in the program, then also delete it here.
+
 from glob import glob
 import json
 import os, os.path
@@ -15,6 +43,21 @@ from miro.plat import resources
 from miro.plat.utils import filename_to_unicode
 
 class DeviceInfo(object):
+    """
+    Object which contains various information about a specific supported
+    device.
+
+    name: User-visible name of the device
+    device_name: the name of the device as reported through USB
+    vendor_id: integer version of the device's USB vendor ID
+    product_id: integer version of the device's USB product ID
+    video_conversion: the Miro conversion name for video to this device
+    video_path: mount-relative path to where the videos should be placed
+    audio_conversion: the Miro conversion name for audio to this device
+    audio_path: mount-relative path to where audio files should be placed
+    audio_types: audio MIME types this device supports
+    mount_instructions: text to show the user about how to mount their device
+    """
     has_multiple_devices = False
 
     def __init__(self, section, parser):
@@ -42,6 +85,10 @@ class DeviceInfo(object):
             return None
 
 class MultipleDeviceInfo(object):
+    """
+    Like DeviceInfo, but represents a device we can't figure out just from the
+    USB information.
+    """
     has_multiple_devices = True
 
     def __init__(self, *args):
@@ -57,9 +104,17 @@ class MultipleDeviceInfo(object):
         self.devices[info.name] = info
 
     def get_device(self, name):
+        """
+        Get a given device by the user-visible name.
+
+        Returns a DeviceInfo object.
+        """
         return self.devices[name]
 
 class DeviceManager(object):
+    """
+    Manages the list of devices that Miro knows about.
+    """
     def __init__(self):
         self.device_by_name = {}
         self.device_by_id = {}
@@ -95,10 +150,18 @@ class DeviceManager(object):
         return info
 
     def get_device(self, device_name, device_type=None):
+        """
+        Get a DeviceInfo (or MultipleDeviceInfo) object given the device's USB
+        name.
+        """
         info = self.device_by_name[device_name]
         return self._get_device_from_info(info, device_type)
 
     def get_device_by_id(self, vendor_id, product_id, device_type=None):
+        """
+        Get a DeviceInfo (or MultipleDeviceInfo) object give the device's USB
+        vendor and product IDs.
+        """
         info = self.device_by_id[(vendor_id, product_id)]
         return self._get_device_from_info(info, device_type)
 
@@ -261,12 +324,22 @@ class DeviceSyncManager(object):
 
 
 def load_database(mount):
+    """
+    Returns a dictionary of the JSON database that lives on the given device.
+
+    The database lives at [MOUNT]/.miro/json
+    """
     file_name = os.path.join(mount, '.miro', 'json')
     if not os.path.exists(file_name):
         return {}
     return json.load(file(file_name))
 
 def write_database(mount, database):
+    """
+    Writes the given dictionary to the device.
+
+    The database lives at [MOUNT]/.miro/json
+    """
     try:
         os.makedirs(os.path.join(mount, '.miro'))
     except OSError:
@@ -274,6 +347,9 @@ def write_database(mount, database):
     json.dump(database, file(os.path.join(mount, '.miro', 'json'), 'w'))
 
 def device_connected(info):
+    """
+    Helper for device trackers which sends a connected message for the device.
+    """
     if info.mount:
         scan_device_for_files(info)
     message = messages.TabsChanged('devices',
@@ -283,6 +359,9 @@ def device_connected(info):
     message.send_to_frontend()
 
 def device_changed(info):
+    """
+    Helper for device trackers which sends a changed message for the device.
+    """
     if info.mount:
         scan_device_for_files(info)
     message = messages.TabsChanged('devices',
@@ -294,6 +373,10 @@ def device_changed(info):
 
 
 def device_disconnected(info):
+    """
+    Helper for device trackers which sends a disconnected message for the
+    device.
+    """
     message = messages.TabsChanged('devices',
                                   [],
                                   [],

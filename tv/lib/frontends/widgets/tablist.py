@@ -689,6 +689,8 @@ class DevicesList(TabList, TabUpdaterMixin):
             'icon': imagepool.get_surface(
                 resources.path('images/icon-%s.png' % name.lower()))
             }
+
+        # hack to create a DeviceInfo without dealing with __init__
         di = messages.DeviceInfo.__new__(messages.DeviceInfo)
         di.__dict__ = info.__dict__.copy()
         di.__dict__.update(new_data)

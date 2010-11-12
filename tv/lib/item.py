@@ -2003,6 +2003,9 @@ class DeviceItem(object):
     """
     An item which lives on a device.  There's a separate, per-device JSON
     database, so this implements the necessary Item logic for those files.
+
+    A lot of these methods are just returning data that ItemInfo wants and that
+    we don't care about.
     """
     def __init__(self, **kwargs):
         for required in ('video_path', 'file_type', 'device'):
