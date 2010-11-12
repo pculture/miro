@@ -177,6 +177,17 @@ class Renderer:
         self.playbin = None
         self.audiosink = None
 
+    def invoke_select_callback(self, success=False):
+        if success:
+            callback = self.select_callbacks[0]
+        else:
+            callback = self.select_callbacks[1]
+        self.select_callbacks = None
+        try:
+            callback()
+        except StandardError:
+            logging.stacktrace("Error calling renderer callback")
+
     def on_bus_message(self, bus, message):
         """receives message posted on the GstBus"""
         if message.src is not self.playbin:
@@ -185,18 +196,16 @@ class Renderer:
         if message.type == gst.MESSAGE_ERROR:
             err, debug = message.parse_error()
             if self.select_callbacks is not None:
-                self.select_callbacks[1]()
-                self.select_callbacks = None
+                self.invoke_select_callback(success=False)
                 logging.error("on_bus_message: gstreamer error: %s", err)
             else:
                 err, debug = message.parse_error()
-                logging.error("on_bus_message: gstreamer error: %s", err)
+                logging.error("on_bus_message (after callbacks): gstreamer error: %s", err)
         elif message.type == gst.MESSAGE_STATE_CHANGED:
             prev, new, pending = message.parse_state_changed()
             if ((new == gst.STATE_PAUSED
                  and self.select_callbacks is not None)):
-                self.select_callbacks[0]()
-                self.select_callbacks = None
+                self.invoke_select_callback(success=True)
                 self.finish_select_file()
         elif message.type == gst.MESSAGE_EOS:
             app.playback_manager.on_movie_finished()
