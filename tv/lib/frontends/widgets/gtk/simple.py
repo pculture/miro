@@ -101,6 +101,20 @@ class Label(Widget):
     def set_wrap(self, wrap):
         self._widget.set_line_wrap(wrap)
 
+    def set_alignment(self, alignment):
+        # default to left.
+        gtkalignment = gtk.JUSTIFY_LEFT
+        if alignment == widgetconst.TEXT_JUSTIFY_LEFT:
+            gtkalignment = gtk.JUSTIFY_LEFT
+        elif alignment == widgetconst.TEXT_JUSTIFY_RIGHT:
+            gtkalignment = gtk.JUSTIFY_RIGHT
+        elif alignment == widgetconst.TEXT_JUSTIFY_CENTER:
+            gtkalignment = gtk.JUSTIFY_CENTER
+        self._widget.set_justify(gtkalignment)
+
+    def get_alignment(self):
+        return self._widget.get_justify()
+
     def set_text(self, text):
         self._widget.set_text(text)
 

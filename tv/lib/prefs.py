@@ -156,7 +156,7 @@ HELP_URL          = Pref(key='HelpURL', default=u"http://www.getmiro.com/help/",
                          platformSpecific=False)
 BUG_REPORT_URL    = Pref(key='ReportURL', default=u"http://www.getmiro.com/bug.html",
                          platformSpecific=False)
-TRANSLATE_URL     = Pref(key='TranslateURL', default=u"https://translations.launchpad.net/democracy/trunk/+pots/democracyplayer",
+TRANSLATE_URL     = Pref(key='TranslateURL', default=u"http://develop.participatoryculture.org/index.php/TranslationGuide",
                          platformSpecific=False)
 PLANET_URL        = Pref(key='PlanetURL', default=u"http://planet.getmiro.com/",
                          platformSpecific=False)

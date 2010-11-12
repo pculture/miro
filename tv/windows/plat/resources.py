@@ -32,7 +32,6 @@ import sys
 import urllib
 import platform
 
-from miro.gtcache import gettext as _
 from miro.plat import specialfolders
 
 def appRoot():
@@ -89,7 +88,3 @@ def get_osname():
 
 def get_default_search_dir():
     return specialfolders.get_special_folder("My Videos")
-
-# XXX: expand me: pick up Windows media players.
-def get_plat_media_player_name_path():
-    return (_("Windows Media Player"), None)

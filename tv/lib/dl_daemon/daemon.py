@@ -205,13 +205,16 @@ class DownloaderDaemon(Daemon):
         self.shutdown = True
         eventloop.shutdown()
         logging.info("Cleaning up libcurl")
+        httpclient.stop_thread()
         httpclient.cleanup_libcurl()
         from miro.dl_daemon import download
         download.shutdown()
         import threading
         for thread in threading.enumerate():
             if thread != threading.currentThread() and not thread.isDaemon():
+                logging.info("joining with %s", thread)
                 thread.join()
+        logging.info("handle_close() done")
 
 class ControllerDaemon(Daemon):
     def __init__(self):
@@ -219,14 +222,14 @@ class ControllerDaemon(Daemon):
         Daemon.__init__(self)
         if socket.has_ipv6:
             try:
-                self.stream.acceptConnection(socket.AF_INET6, '::1', 0,
-                                             self.on_connection, self.on_error)
+                self.stream.accept_connection(socket.AF_INET6, '::1', 0,
+                        self.on_connection, self.on_error)
             except StandardError:
-                self.stream.acceptConnection(socket.AF_INET, '127.0.0.1', 0,
-                                             self.on_connection, self.on_error)
+                self.stream.accept_connection(socket.AF_INET, '127.0.0.1', 0,
+                        self.on_connection, self.on_error)
         else:
-            self.stream.acceptConnection(socket.AF_INET, '127.0.0.1', 0,
-                                         self.on_connection, self.on_error)
+            self.stream.accept_connection(socket.AF_INET, '127.0.0.1', 0,
+                    self.on_connection, self.on_error)
         self.addr = self.stream.addr
         self.port = self.stream.port
         self._setup_config()

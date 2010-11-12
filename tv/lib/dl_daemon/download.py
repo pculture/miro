@@ -182,6 +182,7 @@ def shutdown():
         _downloads[dlid].shutdown()
     logging.info("Shutting down torrent session...")
     TORRENT_SESSION.shutdown()
+    logging.info("shutdown() finished")
 
 def restore_downloader(downloader):
     if downloader['dlid'] in _downloads:

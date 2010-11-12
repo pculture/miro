@@ -36,6 +36,7 @@ import gobject
 import os
 import gconf
 import shutil
+import platform
 
 try:
     import pynotify
@@ -111,7 +112,11 @@ class LinuxApplication(Application):
         self._setup_webkit()
         self.startup()
         set_properties(props_to_set)
-
+        
+        logging.info("Linux version:     %s %s %s",
+                     platform.system(),
+                     platform.release(),
+                     platform.machine())
         logging.info("Python version:    %s", sys.version)
         logging.info("Gtk+ version:      %s", gtk.gtk_version)
         logging.info("PyGObject version: %s", gtk.ver)
@@ -132,7 +137,6 @@ class LinuxApplication(Application):
         except ImportError:
             logging.exception("pycurl won't load")
         renderers.init_renderer()
-        self.mediakeyhandler = mediakeys.get_media_key_handler()
         gtk.main()
         app.controller.on_shutdown()
 
@@ -196,6 +200,9 @@ class LinuxApplication(Application):
         # check x, y to make sure the window is visible and fix it
         # if not
         self.window.check_position_and_fix()
+
+        # handle media keys
+        self.mediakeyhandler = mediakeys.get_media_key_handler(self.window)
 
     def quit_ui(self):
         gtk.main_quit()

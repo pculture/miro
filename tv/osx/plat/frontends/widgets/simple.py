@@ -163,6 +163,20 @@ class Label(Widget):
     def get_text(self):
         self.view.stringValue()
 
+    def set_alignment(self, alignment):
+        # default to left.
+        nsalignment = NSLeftTextAlignment
+        if alignment == widgetconst.TEXT_JUSTIFY_LEFT:
+            gtkalignment = NSLeftTextAlignment
+        elif alignment == widgetconst.TEXT_JUSTIFY_RIGHT:
+            gtkalignment = NSRightTextAlignment
+        elif alignment == widgetconst.TEXT_JUSTIFY_CENTER:
+            gtkalignment = NSCenterTextAlignment
+        self.view.setAlignment_(alignment)
+      
+    def get_alignment(self, alignment):
+        return self.view.alignment()
+
     def set_wrap(self, wrap):
         self.wrap = True
         self.invalidate_size_request()

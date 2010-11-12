@@ -99,7 +99,7 @@ def import_itunes_path(path):
         parser.parse(os.path.join(path, ITUNES_XML_FILE))
         music_path = file_path_xlat(handler.music_path)
         return music_path
-    except IOError:
+    except (IOError, xml.sax.SAXParseException):
         pass
     return music_path
 

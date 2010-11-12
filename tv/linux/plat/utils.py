@@ -43,6 +43,8 @@ from miro.util import returns_unicode, returns_binary, check_u, check_b
 import miro
 from miro.plat import options
 
+from miro.gtcache import gettext as _
+
 FilenameType = str
 
 # We need to define samefile for the portable code.  Lucky for us, this is
@@ -394,3 +396,7 @@ def begin_thread_loop(context_object):
 def finish_thread_loop(context_object):
     # used for testing
     pass
+
+# Expand me: pick up Linux media players.
+def get_plat_media_player_name_path():
+    return (None, None)

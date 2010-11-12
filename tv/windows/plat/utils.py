@@ -47,6 +47,7 @@ import urllib
 from miro.util import returns_unicode, check_u
 from miro.util import AutoLoggingStream
 from miro import fileutil
+from miro.gtcache import gettext as _
 
 _locale_initialized = False
 FilenameType = unicode
@@ -400,3 +401,7 @@ def begin_thread_loop(context_object):
 
 def finish_thread_loop(context_object):
     pass
+
+# XXX: expand me: pick up Windows media players.
+def get_plat_media_player_name_path():
+    return (_("Windows Media Player"), None)

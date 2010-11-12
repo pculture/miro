@@ -41,9 +41,9 @@ from miro.frontends.widgets import dialogs
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro import gtcache
-from miro.plat.utils import filename_to_unicode, FilenameType
-from miro.plat.resources import (get_default_search_dir,
-                                get_plat_media_player_name_path)
+from miro.plat.utils import (filename_to_unicode, FilenameType,
+                             get_plat_media_player_name_path)
+from miro.plat.resources import get_default_search_dir
 
 import os
 
@@ -340,8 +340,8 @@ class FirstTimeDialog(widgetset.Window):
 
             elif widget is yes_rb:
                 group_box.enable()
-                if rbg2.get_selected() is restrict_rb or \
-                  rbg2.get_selected() is import_rb:
+                if (rbg2.get_selected() is restrict_rb or
+                  rbg2.get_selected() is import_rb):
                     search_entry.disable()
                     change_button.disable()
                 else:

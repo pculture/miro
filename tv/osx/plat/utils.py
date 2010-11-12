@@ -45,6 +45,8 @@ from AppKit import *
 
 from miro import app
 from miro import prefs
+from miro.gtcache import gettext as _
+from miro.importmedia import import_itunes_path
 from miro.util import returns_unicode, returns_binary, check_u, check_b
 from miro.plat.filenames import (os_filename_to_filename_type,
                                  filename_type_to_os_filename, FilenameType)
@@ -500,3 +502,7 @@ def begin_thread_loop(context_object):
 
 def finish_thread_loop(context_object):
     del context_object.autorelease_pool
+
+def get_plat_media_player_name_path():
+    itunespath = os.path.join(os.path.expanduser("~"), "Music", "iTunes")
+    return (_("iTunes"), import_itunes_path(itunespath))
