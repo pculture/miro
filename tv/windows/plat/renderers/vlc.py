@@ -528,6 +528,10 @@ class VLCRenderer(object):
             self.play_from_time = seconds
             return
         t = int(seconds * 1000)
+        if t == 0:
+            # I have no clue why this this is, but setting time=1
+            # (1/1000th of a second) fixes #15079
+            t = 1
         libvlc.libvlc_media_player_set_time(
             self.media_player, ctypes.c_longlong(t), self.exc.ref())
         try:
