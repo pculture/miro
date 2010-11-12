@@ -31,6 +31,7 @@
 import ctypes
 import os
 import logging
+from miro.plat import specialfolders
 
 class FT_FaceRec(ctypes.Structure):
     _fields_ = [
@@ -71,8 +72,8 @@ def _get_font_info(path):
         freetype.FT_Done_Face(face)
         return name
     else:
-        raise ValueError("Couldn't load freetype font: %s (error: %s)", path,
-                rv)
+        raise ValueError("Couldn't load freetype font: %s (error: %s)" % (path,
+                rv))
 
 def get_font_info(path):
     global _font_cache
@@ -86,7 +87,7 @@ def get_font_info(path):
 
 def get_all_font_info():
     check_init()
-    font_dir = "C:\\WINDOWS\\Fonts"
+    font_dir = specialfolders.get_special_folder("Fonts")
     infos = {}
     for filename in os.listdir(font_dir):
         if not (filename.lower().endswith('.ttf') or 

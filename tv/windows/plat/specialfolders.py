@@ -30,12 +30,14 @@
 
 import ctypes
 import os
-from miro import u3info
+# from miro import u3info
 
 GetShortPathName = ctypes.windll.kernel32.GetShortPathNameW
 
+
 _specialFolderCSIDLs = {
-    'AppData': 0x001a,
+    "Fonts": 20,
+    "AppData": 0x001a,
     "My Music": 0x000d,
     "My Pictures": 0x0027,
     "My Videos": 0x000e,
@@ -63,10 +65,11 @@ def get_special_folder(name):
 
     The path to the folder will be returned, or None if the lookup fails
     """
+    csidl = _specialFolderCSIDLs[name]
+
     buf = ctypes.create_unicode_buffer(260)
     buf2 = ctypes.create_unicode_buffer(1024) 
     SHGetSpecialFolderPath = ctypes.windll.shell32.SHGetSpecialFolderPathW
-    csidl = _specialFolderCSIDLs[name]
     if SHGetSpecialFolderPath(None, buf, csidl, False):
         if GetShortPathName(buf, buf2, 1024):
             return buf2.value
@@ -77,13 +80,10 @@ def get_special_folder(name):
 
 commonAppDataDirectory = get_special_folder("Common AppData")
 appDataDirectory = get_special_folder("AppData")
-if u3info.u3_active:
-    baseMoviesDirectory = u3info.DEVICE_DOCUMENT_PREFIX + '\\' + "Videos"
-    nonVideoDirectory = u3info.DEVICE_DOCUMENT_PREFIX
-else:
-    baseMoviesDirectory = get_special_folder('My Videos')
-    nonVideoDirectory = get_special_folder('Desktop')
-    # The "My Videos" folder isn't guaranteed to be listed. If it isn't
-    # there, we do this hack.
-    if baseMoviesDirectory is None:
-        baseMoviesDirectory = os.path.join(get_special_folder('My Documents'), 'My Videos')
+
+baseMoviesDirectory = get_special_folder('My Videos')
+nonVideoDirectory = get_special_folder('Desktop')
+# The "My Videos" folder isn't guaranteed to be listed. If it isn't
+# there, we do this hack.
+if baseMoviesDirectory is None:
+    baseMoviesDirectory = os.path.join(get_special_folder('My Documents'), 'My Videos')
