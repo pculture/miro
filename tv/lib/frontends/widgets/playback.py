@@ -492,7 +492,8 @@ class PlaybackManager (signals.SignalEmitter):
             # should be a better way.
             self.playlist = None
             app.widgetapp.open_file(item_info.video_path)
-            messages.MarkItemWatched(item_info.id).send_to_backend()
+            if not item_info.item_watched:
+                messages.MarkItemWatched(item_info.id).send_to_backend()
             return
 
         volume = app.config.get(prefs.VOLUME_LEVEL)
@@ -520,7 +521,8 @@ class PlaybackManager (signals.SignalEmitter):
 
     def _on_ready_to_play(self, obj):
         self.open_finished = True
-        self.schedule_mark_as_watched(self.playlist[self.position].id)
+        if not self.playlist[self.postion].item_watched:
+            self.schedule_mark_as_watched(self.playlist[self.position].id)
         if isinstance(self.player, widgetset.VideoPlayer):
             self.player.select_subtitle_encoding(self.initial_subtitle_encoding)
         self.play()

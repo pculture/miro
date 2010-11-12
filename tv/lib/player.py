@@ -38,6 +38,7 @@ class Player(signals.SignalEmitter):
 
     def setup(self, item_info, volume):
         self.item_info_id = item_info.id
+        self.item_was_watched = item_info.item_viewed
         self.set_item(item_info, self._open_success, self._open_error)
         self.set_volume(volume)
 
@@ -45,7 +46,8 @@ class Player(signals.SignalEmitter):
         self.emit('ready-to-play')
 
     def _open_error(self):
-        messages.MarkItemWatched(self.item_info_id).send_to_backend()
+        if not self.item_was_watched:
+            messages.MarkItemWatched(self.item_info_id).send_to_backend()
         self.emit('cant-play')
 
     def skip_forward(self):

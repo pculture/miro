@@ -529,7 +529,8 @@ class VideoDisplay(Display):
         self.emit('ready-to-play')
 
     def _open_error(self):
-        messages.MarkItemWatched(self.item_info_id).send_to_backend()
+        if not self.item_was_watched:
+            messages.MarkItemWatched(self.item_info_id).send_to_backend()
         self.show_play_external()
         self.emit('cant-play')
 
@@ -537,6 +538,7 @@ class VideoDisplay(Display):
         self.show_renderer()
         self.cant_play_widget.set_video_path(item_info.video_path)
         self.item_info_id = item_info.id
+        self.item_was_watched = item_info.item_viewed
         self.renderer.set_item(item_info, self._open_success, self._open_error)
         self.renderer.set_volume(volume)
 
