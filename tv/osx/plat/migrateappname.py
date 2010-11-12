@@ -36,7 +36,7 @@ def migrateSupport(oldAppName, newAppName):
 
     from AppKit import NSBundle
 
-    prefsPath = os.path.expanduser('~/Library/Preferences')
+    prefsPath = os.path.expanduser('~/Library/Preferences').decode('utf-8')
     newDomain = NSBundle.mainBundle().bundleIdentifier()
     newPrefs = '%s.plist' % os.path.join(prefsPath, newDomain)
     oldDomain = newDomain.replace(newAppName, oldAppName)

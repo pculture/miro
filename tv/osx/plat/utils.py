@@ -220,7 +220,7 @@ def filename_to_unicode(filename, path = None):
     if path:
         check_b(path)
     check_b(filename)
-    return filename.decode('utf-8','replace')
+    return filename.decode('utf-8', 'replace')
 
 @returns_unicode
 def make_url_safe(string, safe='/'):
@@ -386,6 +386,7 @@ def exit_miro(return_code):
 
 def movie_data_program_info(movie_path, thumbnail_path):
     main_bundle = NSBundle.mainBundle()
+    bundle_path = main_bundle.bundlePath()
     rsrc_path = main_bundle.resourcePath()
     script_path = os.path.join(rsrc_path, 'qt_extractor.py')
     options = main_bundle.infoDictionary().get('PyOptions')
@@ -397,20 +398,37 @@ def movie_data_program_info(movie_path, thumbnail_path):
         py_version = main_bundle.infoDictionary().get('PythonInfoDict').get('PythonShortVersion')
         py_exe_path = os.path.join(main_bundle.privateFrameworksPath(), "Python.framework", "Versions", py_version, "bin", 'python')
         env = {'PYTHONHOME': rsrc_path, 'MIRO_BUNDLE_PATH': main_bundle.bundlePath()}
+    # XXX
+    # Unicode kludge.  This wouldn't be a problem once we switch to Python 3.
+    # Only need to do conversion on the py_exe_path and script_path - 
+    # movie_path and thumbnail_path are Python 2 strings.
+    py_exe_path = py_exe_path.encode('utf-8')
+    script_path = script_path.encode('utf-8')
+    # ... et tu, environment variables.
+    for k in env.keys():
+        try:
+            check_b(env[k])
+        except:
+            env[k] = env[k].encode('utf-8')
     return ((py_exe_path, script_path, movie_path, thumbnail_path), env)
 
 ###############################################################################
 
 def get_ffmpeg_executable_path():
     bundle_path = NSBundle.mainBundle().bundlePath()
-    return os.path.join(bundle_path, "Contents", "Helpers", "ffmpeg")
+    # XXX Unicode kludge.  This wouldn't be a problem once we switch to 
+    # Python 3.
+    path = os.path.join(bundle_path, "Contents", "Helpers", "ffmpeg")
+    return path.encode('utf-8')
 
 def customize_ffmpeg_parameters(default_parameters):
     return default_parameters
 
 def get_ffmpeg2theora_executable_path():
     bundle_path = NSBundle.mainBundle().bundlePath()
-    return os.path.join(bundle_path, "Contents", "Helpers", "ffmpeg2theora")
+    # Unicode kludge.  This wouldn't be a problem once we switch to Python 3.
+    path = os.path.join(bundle_path, "Contents", "Helpers", "ffmpeg2theora")
+    return path.encode('utf-8')
 
 def customize_ffmpeg2theora_parameters(default_parameters):
     return default_parameters
