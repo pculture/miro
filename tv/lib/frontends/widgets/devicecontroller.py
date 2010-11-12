@@ -31,6 +31,7 @@
 import datetime
 
 from miro import app
+from miro import devices
 from miro import displaytext
 from miro import messages
 from miro import util
@@ -257,6 +258,9 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         self.image_filename = 'icon-%s_large.png' % device.tab_type
         self.title = u'%s on %s' % (device.name, device.info.name)
         itemlistcontroller.AudioVideoItemsController.__init__(self)
+        if ('%s_sort_state' % self.type) in device.database:
+            sort_key, ascending = device.database['%s_sort_state' % self.type]
+            self.on_sort_changed(self, sort_key, ascending)
 
     def build_header_toolbar(self):
         return itemlistwidgets.HeaderToolbar()
@@ -283,3 +287,5 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         self.list_item_view.change_sort_indicator(sort_key, ascending)
         self.device.database['%s_sort_state' % self.type] = (sort_key,
                                                              ascending)
+        devices.write_database(self.device.mount,
+                               self.device.database)
