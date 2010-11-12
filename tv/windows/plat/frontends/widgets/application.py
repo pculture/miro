@@ -63,7 +63,7 @@ class WindowsApplication(Application):
                      platform.system(),
                      platform.release(),
                      platform.machine(),
-                     sys.getwindowsversion()[-1])
+                     sys.getwindowsversion())
         logging.info("Python version:    %s", sys.version)
         logging.info("Gtk+ version:      %s", gtk.gtk_version)
         logging.info("PyGObject version: %s", gtk.ver)
