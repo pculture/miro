@@ -58,7 +58,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.is_playing_audio = False
         self.is_paused = False
         self.is_suspended = False
-        self.open_successful = False
+        self.open_finished = False
         self.playlist = None
         self.position = 0
         self.mark_as_watched_timeout = None
@@ -79,7 +79,7 @@ class PlaybackManager (signals.SignalEmitter):
                 self._on_items_changed)
 
     def player_ready(self):
-        return self.player is not None and self.open_successful
+        return self.player is not None and self.open_finished
 
     def _on_items_changed(self, message):
         if self.playlist is None:
@@ -486,7 +486,7 @@ class PlaybackManager (signals.SignalEmitter):
 
         volume = config.get(prefs.VOLUME_LEVEL)
         self.emit('selecting-file', item_info)
-        self.open_successful = False
+        self.open_finished = False
         self._setup_player(item_info, volume)
 
     def _play_current(self, new_position=None, save_resume_time=True):
@@ -508,13 +508,14 @@ class PlaybackManager (signals.SignalEmitter):
             self.stop(save_resume_time)
 
     def _on_ready_to_play(self, obj):
-        self.open_successful = True
+        self.open_finished = True
         self.schedule_mark_as_watched(self.playlist[self.position].id)
         if isinstance(self.player, widgetset.VideoPlayer):
             self.player.select_subtitle_encoding(self.initial_subtitle_encoding)
         self.play()
 
     def _on_cant_play(self, obj):
+        self.open_finished = True
         self.emit('cant-play-file')
         if isinstance(obj, widgetset.AudioPlayer):
             self.play_next_item(False)
