@@ -243,6 +243,10 @@ class AsyncSocket(object):
 
         self.connectionErrback = errback
         def handleGetAddrInfoException(e):
+            if self.connectionErrback is None:
+                # called connectionErrback while we were waiting for
+                # getaddrinfo
+                return
             trap_call(self, errback, ConnectionError(e[1] + " (host: %s)" % host))
         def createSocketHandle(family):
             try:
@@ -254,6 +258,10 @@ class AsyncSocket(object):
             self.socket.setblocking(0)
             return self.socket
         def onAddressLookup(addresses):
+            if self.connectionErrback is None:
+                # called connectionErrback while we were waiting for
+                # getaddrinfo
+                return
             connected = 0;
             msgs = []
             for entry in addresses:
@@ -335,10 +343,10 @@ class AsyncSocket(object):
             self.stopReadTimeout()
             self.socket.close()
             self.socket = None
-            if self.connectionErrback is not None:
-                error = NetworkError(_("Connection closed"))
-                trap_call(self, self.connectionErrback, error)
-                self.connectionErrback = None
+        if self.connectionErrback is not None:
+            error = NetworkError(_("Connection closed"))
+            trap_call(self, self.connectionErrback, error)
+            self.connectionErrback = None
 
     def isOpen(self):
         return self.socket is not None

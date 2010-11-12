@@ -236,7 +236,7 @@ class FakeStream:
         self.dsiabledReadTimeout = disabledReadTimeout
         callback(self)
 
-    def accept_connection(self, host, port, callback, errback):
+    def accept_connection(self, family, host, port, callback, errback):
         errback()
 
     def close_connection(self):
@@ -376,7 +376,7 @@ class WeirdCloseConnectionTest(AsyncSocketTest):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             conn = net.AsyncSocket()
-            conn.accept_connection('127.0.0.1', 0, self.callback, self.errback)
+            conn.accept_connection(socket.AF_INET, '127.0.0.1', 0, self.callback, self.errback)
             sock.connect((conn.addr, conn.port))
             conn.close_connection()
             self.runEventLoop(timeout=1, timeoutNormal=True)
