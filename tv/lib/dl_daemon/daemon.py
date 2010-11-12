@@ -204,13 +204,16 @@ class DownloaderDaemon(Daemon):
         self.shutdown = True
         eventloop.shutdown()
         logging.info("Cleaning up libcurl")
+        httpclient.stop_thread()
         httpclient.cleanup_libcurl()
         from miro.dl_daemon import download
         download.shutdown()
         import threading
         for thread in threading.enumerate():
             if thread != threading.currentThread() and not thread.isDaemon():
+                logging.info("joining with %s", thread)
                 thread.join()
+        logging.info("handle_close() done")
 
 class ControllerDaemon(Daemon):
     def __init__(self):
