@@ -1252,6 +1252,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """
         if self.title:
             return self.title
+        if 'title' in self.metadata:
+            return self.metadata['title']
         if self.is_external() and self.is_downloaded_torrent():
             if self.get_filename() is not None:
                 basename = os.path.basename(self.get_filename())
