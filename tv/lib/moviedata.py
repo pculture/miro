@@ -192,29 +192,51 @@ class MovieDataUpdater(signals.SignalEmitter):
         return pipe.stdout.read()
 
     def read_metadata(self, item):
-       meta = mutagen.File(item.filename).__dict__
-       tags = None
-       if '_DictProxy__dict' in meta['tags'].__dict__:
-           tags = meta['tags'].__dict__['_DictProxy__dict']
-       else:
-           tags = meta['tags']
-       info = {}
-       if 'info' in meta:
-           info = meta['info'].__dict__
-       data = {}
-       if 'TALB' in tags:
-           data[u'album'] = unicode(tags['TALB'])
-       if '' in tags:
-           data[u'artist'] = unicode(tags['TPE2'])
-       if 'TIT2' in tags:
-           data[u'title'] = unicode(tags['TIT2'])
-       discard = ('MCDI', 'APIC', 'PRIV')
-       for key, value in tags.items():
-           if not key.split(':')[0] in discard:
-               data[unicode(key)] = unicode(value)
-       for key, value in info.items():
-           data[u'info_' + key] = unicode(value)
-       return data
+        duration = -1
+        tags = None
+        info = {}
+        data = {}
+        DISCARD = ['MCDI', 'APIC', 'PRIV']
+
+        try:
+            meta = mutagen.File(item.filename).__dict__
+        except (AttributeError, IOError):
+            return (-1, {})
+
+        try:
+            tags = meta['tags'].__dict__['_DictProxy__dict']
+        except (AttributeError, KeyError):
+            tags = meta['tags']
+
+        if 'info' in meta:
+            info = meta['info'].__dict__
+        if 'length' in info:
+            duration = int(info['length'] * 1000)
+            del info['length']
+
+        for key, value in tags.items():
+            if not key.split(':')[0] in DISCARD:
+                try:
+                    if (len(value[0]) > 1):
+                        value = value[0]
+                except TypeError:
+                    pass
+                data[unicode(key)] = unicode(value)
+        for key, value in info.items():
+            data[u'info_' + key] = unicode(value)
+
+        if 'TALB' in data:
+            data[u'album'] = data['TALB']
+        if 'TPE1' in data:
+            data[u'artist'] = data['TPE1']
+        elif 'TPE2' in data:
+            data[u'artist'] = data['TPE2']
+        elif 'TPE3' in data:
+            data[u'artist'] = data['TPE3']
+        if 'TIT2' in data:
+            data[u'title'] = data['TIT2']
+
+        return data
 
     def kill_process(self, pid):
         try:
