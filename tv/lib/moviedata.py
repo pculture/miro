@@ -202,6 +202,12 @@ class MovieDataUpdater(signals.SignalEmitter):
        if 'info' in meta:
            info = meta['info'].__dict__
        data = {}
+       if 'TALB' in tags:
+           data[u'album'] = unicode(tags['TALB'])
+       if '' in tags:
+           data[u'artist'] = unicode(tags['TPE2'])
+       if 'TIT2' in tags:
+           data[u'title'] = unicode(tags['TIT2'])
        discard = ('MCDI', 'APIC', 'PRIV')
        for key, value in tags.items():
            if not key.split(':')[0] in discard:

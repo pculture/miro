@@ -1262,6 +1262,18 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return self.entry_title
         return _('no title')
 
+    @returns_unicode
+    def get_artist(self):
+        if 'artist' in self.metadata:
+            return self.metadata['artist']
+        return u''
+
+    @returns_unicode
+    def get_album(self):
+        if 'album' in self.metadata:
+            return self.metadata['album']
+        return u''
+
     def set_title(self, title):
         self.confirm_db_thread()
         self.title = title
