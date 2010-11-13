@@ -131,44 +131,49 @@ class MovieDataUpdater(signals.SignalEmitter):
                 # implemented.
                 self.emit('end-loop')
                 break
-            try:
-                duration = -1
-                screenshot_worked = False
-                screenshot = None
-                command_line, env = mdi.program_info
-                stdout = self.run_movie_data_program(command_line, env)
+            mediatype = "audio"
+            (duration, mdi.item.metadata) = self.read_metadata(mdi.item)
+            if (duration > -1):
+                logging.debug("moviedata: %s %s", duration, mediatype)
 
-                # if the moviedata program tells us to try again, we move
-                # along without updating the item at all
-                if TRY_AGAIN_RE.search(stdout):
-                    continue
+                self.update_finished(mdi.item, duration, FilenameType(""), mediatype)
+            else:
+                try:
+                    duration = -1
+                    screenshot_worked = False
+                    screenshot = None
 
-                if duration == -1:
-                    duration = self.parse_duration(stdout)
-                mediatype = self.parse_type(stdout)
-                if THUMBNAIL_SUCCESS_RE.search(stdout):
-                    screenshot_worked = True
-                if ((screenshot_worked and
-                     fileutil.exists(mdi.thumbnail_path))):
-                    screenshot = mdi.thumbnail_path
-                else:
-                    # All the programs failed, maybe it's an audio
-                    # file?  Setting it to "" instead of None, means
-                    # that we won't try to take the screenshot again.
-                    screenshot = FilenameType("")
-                logging.debug("moviedata: %s %s %s", duration, screenshot, 
-                              mediatype)
+                    command_line, env = mdi.program_info
+                    stdout = self.run_movie_data_program(command_line, env)
 
-                if (mediatype == 'audio'):
-                    mdi.item.metadata = self.read_metadata(mdi.item)
+                    # if the moviedata program tells us to try again, we move
+                    # along without updating the item at all
+                    if TRY_AGAIN_RE.search(stdout):
+                        continue
 
-                self.update_finished(mdi.item, duration, screenshot, mediatype)
-            except StandardError:
-                if self.in_shutdown:
-                    break
-                signals.system.failed_exn(
-                    "When running external movie data program")
-                self.update_finished(mdi.item, -1, None, None)
+                    if duration == -1:
+                        duration = self.parse_duration(stdout)
+                    mediatype = self.parse_type(stdout)
+                    if THUMBNAIL_SUCCESS_RE.search(stdout):
+                        screenshot_worked = True
+                    if ((screenshot_worked and
+                         fileutil.exists(mdi.thumbnail_path))):
+                        screenshot = mdi.thumbnail_path
+                    else:
+                        # All the programs failed, maybe it's an audio
+                        # file?  Setting it to "" instead of None, means
+                        # that we won't try to take the screenshot again.
+                        screenshot = FilenameType("")
+                    logging.debug("moviedata: %s %s %s", duration, screenshot,
+                                  mediatype)
+
+                    self.update_finished(mdi.item, duration, screenshot, mediatype)
+                except StandardError:
+                    if self.in_shutdown:
+                        break
+                    signals.system.failed_exn(
+                        "When running external movie data program")
+                    self.update_finished(mdi.item, -1, None, None)
             self.emit('end-loop')
 
     def run_movie_data_program(self, command_line, env):
@@ -236,7 +241,7 @@ class MovieDataUpdater(signals.SignalEmitter):
         if 'TIT2' in data:
             data[u'title'] = data['TIT2']
 
-        return data
+        return (duration, data)
 
     def kill_process(self, pid):
         try:
