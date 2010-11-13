@@ -1276,6 +1276,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         except KeyError:
             return u''
 
+    def get_track(self):
+        try:
+            return self.metadata['track']
+        except KeyError:
+            return -1
+
     def set_title(self, title):
         self.confirm_db_thread()
         self.title = title

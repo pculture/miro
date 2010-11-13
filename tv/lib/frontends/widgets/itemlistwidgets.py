@@ -292,6 +292,7 @@ class ListItemView(widgetset.TableView):
         self._make_column(_('Name'), style.NameRenderer(), 'name')
         self._make_column(_('Artist'), style.ArtistRenderer(), 'artist')
         self._make_column(_('Album'), style.AlbumRenderer(), 'album')
+        self._make_column(_('Track'), style.TrackRenderer(), 'track')
         if display_channel:
             self._make_column(_('Feed'), style.FeedNameRenderer(),
                     'feed-name')
@@ -368,6 +369,7 @@ class ListItemView(widgetset.TableView):
                 'rate': (75, 0),    # download rate
                 'artist': (85, 0),
                 'album': (85, 0),
+                'track': (50, 0),
             }
 
             for key in width_specs.keys():

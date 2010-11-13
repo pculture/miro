@@ -1307,6 +1307,10 @@ class AlbumRenderer(ListViewRenderer):
     def _setup_layout(self):
         self.text = self.info.album
 
+class TrackRenderer(ListViewRenderer):
+    def _setup_layout(self):
+        self.text = displaytext.integer(self.info.track)
+
 class StateCircleRenderer(widgetset.CustomCellRenderer):
     min_width = 25
 

@@ -193,3 +193,8 @@ def duration(seconds):
         return time_string(seconds)
     else:
         return ''
+
+def integer(num):
+    if num < 0:
+        return ""
+    return str(num)

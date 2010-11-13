@@ -240,6 +240,8 @@ class MovieDataUpdater(signals.SignalEmitter):
             data[u'artist'] = data['TPE3']
         if 'TIT2' in data:
             data[u'title'] = data['TIT2']
+        if 'TRCK' in data:
+            data[u'track'] = data['TRCK'].split('/')[0]
 
         return (duration, data)
 
