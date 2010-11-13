@@ -1264,15 +1264,17 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @returns_unicode
     def get_artist(self):
-        if 'artist' in self.metadata:
+        try:
             return self.metadata['artist']
-        return u''
+        except KeyError:
+            return u''
 
     @returns_unicode
     def get_album(self):
-        if 'album' in self.metadata:
+        try:
             return self.metadata['album']
-        return u''
+        except KeyError:
+            return u''
 
     def set_title(self, title):
         self.confirm_db_thread()
