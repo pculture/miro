@@ -1311,6 +1311,10 @@ class TrackRenderer(ListViewRenderer):
     def _setup_layout(self):
         self.text = displaytext.integer(self.info.track)
 
+class YearRenderer(ListViewRenderer):
+    def _setup_layout(self):
+        self.text = displaytext.integer(self.info.year)
+
 class StateCircleRenderer(widgetset.CustomCellRenderer):
     min_width = 25
 

@@ -293,6 +293,7 @@ class ListItemView(widgetset.TableView):
         self._make_column(_('Artist'), style.ArtistRenderer(), 'artist')
         self._make_column(_('Album'), style.AlbumRenderer(), 'album')
         self._make_column(_('Track'), style.TrackRenderer(), 'track')
+        self._make_column(_('Year'), style.YearRenderer(), 'year')
         if display_channel:
             self._make_column(_('Feed'), style.FeedNameRenderer(),
                     'feed-name')
@@ -370,6 +371,7 @@ class ListItemView(widgetset.TableView):
                 'artist': (85, 0),
                 'album': (85, 0),
                 'track': (50, 0),
+                'year': (55, 0),
             }
 
             for key in width_specs.keys():

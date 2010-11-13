@@ -242,6 +242,10 @@ class MovieDataUpdater(signals.SignalEmitter):
             data[u'title'] = data['TIT2']
         if 'TRCK' in data:
             data[u'track'] = data['TRCK'].split('/')[0]
+        if 'TDRC' in data:
+            data[u'year'] = data['TDRC']
+        elif 'TYER' in data:
+            data[u'year'] = data['TYER']
 
         return (duration, data)
 

@@ -1282,6 +1282,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         except KeyError:
             return -1
 
+    def get_year(self):
+        try:
+            return self.metadata['year']
+        except KeyError:
+            return -1
+
     def set_title(self, title):
         self.confirm_db_thread()
         self.title = title
