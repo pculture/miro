@@ -246,6 +246,8 @@ class MovieDataUpdater(signals.SignalEmitter):
             data[u'year'] = data['TDRC']
         elif 'TYER' in data:
             data[u'year'] = data['TYER']
+        if 'TCON' in data:
+            data[u'genre'] = data['TCON']
 
         return (duration, data)
 

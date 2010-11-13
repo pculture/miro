@@ -1315,6 +1315,10 @@ class YearRenderer(ListViewRenderer):
     def _setup_layout(self):
         self.text = displaytext.integer(self.info.year)
 
+class GenreRenderer(ListViewRenderer):
+    def _setup_layout(self):
+        self.text = self.info.genre
+
 class StateCircleRenderer(widgetset.CustomCellRenderer):
     min_width = 25
 

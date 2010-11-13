@@ -1089,6 +1089,7 @@ class ItemInfo(object):
         self.album = item.get_album()
         self.track = item.get_track()
         self.year = item.get_year()
+        self.genre = item.get_genre()
 
         if item.downloader:
             self.download_info = DownloadInfo(item.downloader)
