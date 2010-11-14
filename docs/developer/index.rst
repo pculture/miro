@@ -3,10 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Miro Developer Documentation
-============================
+Miro Developer API
+==================
 
-This is Miro Developer Documentation for Miro 3.0.
+This is Miro Developer API for Miro 3.0.
 
 Contents:
 
@@ -14,11 +14,8 @@ Contents:
    :maxdepth: 2
 
    manual
-   project
-   conventions
    howto
    dev_howto
-   translating
    searchengine_modules
    utility_modules
    platform_modules

@@ -1,29 +1,28 @@
-===========
-This manual
-===========
+========
+This API
+========
 
-About this manual
-=================
+About this API
+==============
 
-This manual is developer-focused and will codify out-of-line
-documentation, standard practices, how-to documents and other things
-for the Miro project.
+This is the API for the Miro code base.  A quick check will show it's
+woefully incomplete, but it's a start and it's something we're working
+on.
 
-It is versioned alongside Miro--3.0 of this document corresponds to
-Miro 3.0.
+For coding conventions, standards, et al--see the developer wiki at:
+
+http://develop.participatoryculture.org/index.php/MiroStart
+
+The API is versioned alongside Miro.
 
 
 How to help
 ===========
 
-This document is not and never will be complete.  It will grow
-alongside Miro.
+This API is not and never will be complete.  It will grow alongside Miro.
 
 Documentation for modules, classes, functions and methods is done in
 docstrings in the source code.
-
-Documentation for how-tos, architecture, standard practices and that
-sort of thing is in the documentation source.
 
 I'm very interested in getting help to continue documenting things and
 fixing existing documentation.  If you'd like to help, hop on IRC on
@@ -55,4 +54,3 @@ another:
 * Nick Nassar
 * Chris Webber
 * Will Kahn-Greene
-
