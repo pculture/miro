@@ -413,6 +413,15 @@ def format_size_for_user(nbytes, zero_string="", with_decimals=True,
         return zero_string
 
 def clamp_text(text, max_length=20):
+    """Clamps text to a maximum length and ...
+
+    :param text: the string to clamp
+    :param max_length: the maximum length for the text--minimum is 4.
+
+    :returns: clamped text
+    """
+    if max_length < 4:
+        max_length = 3
     if len(text) > max_length:
         return text[:max_length-3] + '...'
     else:
