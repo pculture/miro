@@ -285,7 +285,7 @@ class ListItemView(widgetset.TableView):
         self.display_download_info = display_download_info
         self.create_signal('sort-changed')
         self.item_list = item_list
-        self._sort_name_to_column = {}
+        self._column_name_to_column = {}
         self._current_sort_column = None
         self._set_initial_widths = False
         self._make_column('', style.StateCircleRenderer(), 'state', False)
@@ -317,7 +317,7 @@ class ListItemView(widgetset.TableView):
         self.html_stripper = util.HTMLStripper()
 
     def get_tooltip(self, iter, column):
-        if column == self._sort_name_to_column['name']:
+        if column == self._column_name_to_column['name']:
             info = self.item_list.model[iter][0]
             text, links = self.html_stripper.strip(info.description)
             if text:
@@ -325,7 +325,7 @@ class ListItemView(widgetset.TableView):
                     text = text[:994] + ' [...]'
                 return text
 
-        elif column == self._sort_name_to_column['state']:
+        elif column == self._column_name_to_column['state']:
             info = self.item_list.model[iter][0]
             # this logic is replicated in style.StateCircleRenderer
             # with text from style.StatusRenderer
@@ -339,15 +339,15 @@ class ListItemView(widgetset.TableView):
                 return _("Newly Available")
         return None
 
-    def _make_column(self, header, renderer, sort_name, resizable=True):
+    def _make_column(self, header, renderer, column_name, resizable=True):
         column = widgetset.TableColumn(header, renderer, info=0)
         if resizable:
             column.set_resizable(True)
             column.set_min_width(renderer.min_width)
         if header and renderer.right_aligned:
             column.set_right_aligned(True)
-        column.connect_weak('clicked', self._on_column_clicked, sort_name)
-        self._sort_name_to_column[sort_name] = column
+        column.connect_weak('clicked', self._on_column_clicked, column_name)
+        self._column_name_to_column[column_name] = column
         self.add_column(column)
 
     def do_size_allocated(self, width, height):
@@ -377,7 +377,7 @@ class ListItemView(widgetset.TableView):
             }
 
             for key in width_specs.keys():
-                if key not in self._sort_name_to_column:
+                if key not in self._column_name_to_column:
                     # column not visible on this view
                     del width_specs[key]
 
@@ -386,17 +386,17 @@ class ListItemView(widgetset.TableView):
             extra_width = max(available_width - min_width, 0)
             total_weight = sum(spec[1] for spec in width_specs.values())
             for name, spec in width_specs.items():
-                column = self._sort_name_to_column[name]
+                column = self._column_name_to_column[name]
                 extra = int(extra_width * spec[1] / total_weight)
                 column.set_width(spec[0] + extra)
 
-    def _on_column_clicked(self, column, sort_name):
+    def _on_column_clicked(self, column, column_name):
         ascending = not (column.get_sort_indicator_visible() and
                 column.get_sort_order_ascending())
-        self.emit('sort-changed', sort_name, ascending)
+        self.emit('sort-changed', column_name, ascending)
 
-    def change_sort_indicator(self, sort_name, ascending):
-        new_sort_column = self._sort_name_to_column[sort_name]
+    def change_sort_indicator(self, column_name, ascending):
+        new_sort_column = self._column_name_to_column[column_name]
         if self._current_sort_column is None:
             new_sort_column.set_sort_indicator_visible(True)
         elif self._current_sort_column is not new_sort_column:
@@ -872,11 +872,11 @@ class HeaderToolbar(widgetset.Background):
         self.filter_switch.toggle('view-non-feed')
         self.switch_to_view_all_if_necessary()
 
-    def change_sort_indicator(self, sort_name, ascending):
-        if not sort_name in self._button_map:
+    def change_sort_indicator(self, column_name, ascending):
+        if not column_name in self._button_map:
             return
         for name, button in self._button_map.iteritems():
-            if name == sort_name:
+            if name == column_name:
                 if ascending:
                     button.set_sort_state(SortBarButton.SORT_UP)
                 else:
