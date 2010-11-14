@@ -451,6 +451,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 "'uploading', 'uploading-paused'))) AND "
                 '(duration IS NULL OR '
                 'screenshot IS NULL OR '
+                'metadata IS NULL OR '
                 'NOT item.media_type_checked)',
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
                 limit=10)

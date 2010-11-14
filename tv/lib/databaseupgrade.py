@@ -2815,3 +2815,8 @@ def upgrade120(cursor):
     """Create the item_info_cache table"""
     cursor.execute("CREATE TABLE item_info_cache"
             "(id INTEGER PRIMARY KEY, pickle BLOB)")
+
+def upgrade121(cursor):
+    """Create the metadata column in item; reread all metadata accordingly;"""
+    """add column to view table for keeping track of enabled ListView columns"""
+    cursor.execute("ALTER TABLE item ADD COLUMN metadata pythonrepr")
