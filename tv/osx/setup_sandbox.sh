@@ -124,6 +124,7 @@ for pkg in "setuptools-0.6c11" \
            "pyobjc-framework-Quartz-2.2" \
            "pyobjc-framework-ScriptingBridge-2.2" \
            "pyobjc-framework-WebKit-2.2" \
+           "pyobjc-framework-FSEvents-2.2" \
            "altgraph-0.6.7" \
            "macholib-1.2.1" \
            "modulegraph-0.7.3" \

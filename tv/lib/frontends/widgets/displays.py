@@ -45,6 +45,7 @@ from miro.frontends.widgets import downloadscontroller
 from miro.frontends.widgets import videoconversionscontroller
 from miro.frontends.widgets import feedcontroller
 from miro.frontends.widgets import itemlistcontroller
+from miro.frontends.widgets import devicecontroller
 from miro.frontends.widgets import playlist
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
@@ -122,6 +123,7 @@ class DisplayManager(object):
                 VideoConversionsDisplay,
                 GuideDisplay,
                 MultipleSelectionDisplay,
+                DeviceDisplay,
                 DummyDisplay,
         ]
         # displays that we keep alive all the time
@@ -215,6 +217,26 @@ class GuideDisplay(TabDisplay):
     def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
         self.widget = selected_tabs[0].browser
+
+class DeviceDisplay(TabDisplay):
+    @staticmethod
+    def should_display(tab_type, selected_tabs):
+        return tab_type == 'device' and len(selected_tabs) == 1
+
+    def __init__(self, tab_type, selected_tabs):
+        Display.__init__(self)
+        device = selected_tabs[0]
+        if getattr(device, 'fake', False):
+            self.controller = devicecontroller.DeviceItemController(device)
+        else:
+            self.controller = devicecontroller.DeviceController(device)
+        self.widget = self.controller.widget
+
+    def on_selected(self):
+        self.controller.start_tracking()
+
+    def cleanup(self):
+        self.controller.stop_tracking()
 
 class SiteDisplay(TabDisplay):
     _open_sites = {} # maps site ids -> BrowserNav objects for them
@@ -507,7 +529,8 @@ class VideoDisplay(Display):
         self.emit('ready-to-play')
 
     def _open_error(self):
-        messages.MarkItemWatched(self.item_info_id).send_to_backend()
+        if not self.item_was_watched:
+            messages.MarkItemWatched(self.item_info_id).send_to_backend()
         self.show_play_external()
         self.emit('cant-play')
 
@@ -515,6 +538,7 @@ class VideoDisplay(Display):
         self.show_renderer()
         self.cant_play_widget.set_video_path(item_info.video_path)
         self.item_info_id = item_info.id
+        self.item_was_watched = item_info.item_viewed
         self.renderer.set_item(item_info, self._open_success, self._open_error)
         self.renderer.set_volume(volume)
 

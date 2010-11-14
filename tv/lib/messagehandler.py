@@ -37,6 +37,7 @@ import os
 from miro import app
 from miro import autoupdate
 from miro import database
+from miro import devices
 from miro import downloader
 from miro import eventloop
 from miro import feed
@@ -51,19 +52,20 @@ from miro import singleclick
 from miro import subscription
 from miro import tabs
 from miro import opml
-from miro import searchengines
+from miro import videoconversion
 from miro.feed import Feed, lookup_feed
 from miro.gtcache import gettext as _
 from miro.playlist import SavedPlaylist
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
-from miro.xhtmltools import urlencode
 
 from miro.plat.utils import make_url_safe
+from miro.plat import devicetracker
 
 import shutil
 
 class ViewTracker(object):
-    """Handles tracking views for TrackGuides, TrackChannels, TrackPlaylist and TrackItems."""
+    """Handles tracking views for TrackGuides, TrackChannels, TrackPlaylist and
+    TrackItems."""
     type = None
     InfoClass = None
 
@@ -115,7 +117,8 @@ class ViewTracker(object):
         retval = []
         for obj in changed:
             info = self.InfoClass(obj)
-            if obj.id not in self._last_sent_info or info.__dict__ != self._last_sent_info[obj.id].__dict__:
+            if obj.id not in self._last_sent_info or \
+                    info.__dict__ != self._last_sent_info[obj.id].__dict__:
                 retval.append(info)
                 self._last_sent_info[obj.id] = info
         return retval
@@ -130,7 +133,8 @@ class ViewTracker(object):
         # We don't send messages immediately so that if an object gets changed
         # multiple times, only one callback gets sent.
         if not self.changes_pending:
-            eventloop.add_urgent_call(self.send_messages, 'view tracker update' )
+            eventloop.add_urgent_call(self.send_messages,
+                                      'view tracker update' )
             self.changes_pending = True
 
     def add_callbacks(self):
@@ -361,7 +365,8 @@ class ManualItemTracker(ItemTrackerBase):
         self.views = []
         for pos in xrange(0, len(id_list), 950):
             bite_sized_list = id_list[pos:pos+950]
-            place_holders = ', '.join('?' for i in xrange(len(bite_sized_list)))
+            place_holders = ', '.join('?' for i in xrange(
+                    len(bite_sized_list)))
             self.views.append(item.Item.make_view(
                 'id in (%s)' % place_holders, tuple(bite_sized_list)))
         ItemTrackerBase.__init__(self)
@@ -417,6 +422,28 @@ class FolderItemsTracker(ItemTrackerBase):
         self.id = folder_id
         ItemTrackerBase.__init__(self)
 
+class DeviceItemTracker(object):
+    type = 'device'
+    def __init__(self, device):
+        self.device = device
+        self.id = device.id
+
+    def send_initial_list(self):
+        if '-' not in self.id:
+            return
+        real_id, item_type = self.id.rsplit('-', 1)
+        if item_type not in ('video', 'audio'):
+            return
+        items = [item.DeviceItem(device=self.device, file_type=item_type,
+                                 video_path=path, **args)
+                 for path, args in self.device.database[item_type].items()]
+        infos = [messages.ItemInfo(i) for i in items]
+
+        messages.ItemList(self.type, self.id, infos).send_to_frontend()
+
+    def unlink(self):
+        pass
+
 def make_item_tracker(message):
     if message.type == 'downloads':
         return DownloadingItemsTracker()
@@ -446,6 +473,8 @@ def make_item_tracker(message):
             return PlaylistFolderItemTracker(playlist)
     elif message.type == 'manual':
         return ManualItemTracker(message.id, message.ids_to_track)
+    elif message.type == 'device':
+        return DeviceItemTracker(message.id)
     else:
         logging.warn("Unknown TrackItems type: %s", message.type)
 
@@ -625,6 +654,9 @@ class BackendMessageHandler(messages.MessageHandler):
             self.playlist_tracker.unlink()
             self.playlist_tracker = None
 
+    def handle_track_devices(self, message):
+        devicetracker.tracker.start_tracking()
+
     def handle_mark_feed_seen(self, message):
         try:
             try:
@@ -633,35 +665,43 @@ class BackendMessageHandler(messages.MessageHandler):
                 feed_ = ChannelFolder.get_by_id(message.id)
             feed_.mark_as_viewed()
         except database.ObjectNotFoundError:
-            logging.warning("handle_mark_feed_seen: can't find feed by id %s", message.id)
+            logging.warning("handle_mark_feed_seen: can't find feed by id %s",
+                            message.id)
 
     def handle_mark_item_watched(self, message):
         try:
             item_ = item.Item.get_by_id(message.id)
             item_.mark_item_seen()
         except database.ObjectNotFoundError:
-            logging.warning("handle_mark_item_seen: can't find item by id %s", message.id)
+            logging.warning("handle_mark_item_seen: can't find item by id %s",
+                            message.id)
 
     def handle_mark_item_unwatched(self, message):
         try:
             item_ = item.Item.get_by_id(message.id)
             item_.mark_item_unseen()
         except database.ObjectNotFoundError:
-            logging.warning("handle_mark_item_unwatched: can't find item by id %s", message.id)
+            logging.warning(
+                "handle_mark_item_unwatched: can't find item by id %s",
+                message.id)
 
     def handle_set_item_subtitle_encoding(self, message):
         try:
             item_ = item.Item.get_by_id(message.id)
             item_.set_subtitle_encoding(message.encoding)
         except database.ObjectNotFoundError:
-            logging.warning("handle_change_subtitle_encoding: can't find item by id %s", message.id)
+            logging.warning(
+                "handle_change_subtitle_encoding: can't find item by id %s",
+                message.id)
 
     def handle_set_item_resume_time(self, message):
         try:
             item_ = item.Item.get_by_id(message.id)
             item_.set_resume_time(message.resume_time)
         except database.ObjectNotFoundError:
-            logging.warning("handle_set_item_resume_time: can't find item by id %s", message.id)
+            logging.warning(
+                "handle_set_item_resume_time: can't find item by id %s",
+                message.id)
 
     def handle_set_item_media_type(self, message):
         for id in message.video_ids:
@@ -687,7 +727,8 @@ class BackendMessageHandler(messages.MessageHandler):
                 channel.set_expiration(u"feed", expire_time)
 
         except database.ObjectNotFoundError:
-            logging.warning("handle_set_feed_expire: can't find feed by id %s", channel_info.id)
+            logging.warning("handle_set_feed_expire: can't find feed by id %s",
+                            channel_info.id)
 
     def handle_set_feed_max_new(self, message):
         channel_info = message.channel_info
@@ -701,7 +742,9 @@ class BackendMessageHandler(messages.MessageHandler):
                 channel.set_max_new(value)
 
         except database.ObjectNotFoundError:
-            logging.warning("handle_set_feed_max_new: can't find feed by id %s", channel_info.id)
+            logging.warning(
+                "handle_set_feed_max_new: can't find feed by id %s",
+                channel_info.id)
 
     def handle_set_feed_max_old_items(self, message):
         channel_info = message.channel_info
@@ -712,14 +755,17 @@ class BackendMessageHandler(messages.MessageHandler):
             channel.set_max_old_items(max_old_items)
 
         except database.ObjectNotFoundError:
-            logging.warning("handle_set_feed_max_new: can't find feed by id %s", channel_info.id)
+            logging.warning(
+                "handle_set_feed_max_new: can't find feed by id %s",
+                channel_info.id)
 
     def handle_clean_feed(self, message):
         channel_id = message.channel_id
         try:
             obj = feed.Feed.get_by_id(channel_id)
         except database.ObjectNotFoundError:
-            logging.warn("handle_clean_feed: object not found id: %s" % channel_id)
+            logging.warn("handle_clean_feed: object not found id: %s",
+                         channel_id)
         else:
             obj.clean_old_items()
 
@@ -921,7 +967,10 @@ class BackendMessageHandler(messages.MessageHandler):
             item_view = item.Item.playlist_view(playlist.id)
         playlist_item_ids = [i.id for i in item_view]
         if set(playlist_item_ids) != set(message.item_ids):
-            logging.warn("PlaylistReordered: Not all ids present in the new order\nOriginal Ids: %s\nNew ids: %s", playlist_item_ids, message.item_ids)
+            logging.warn(
+                """PlaylistReordered: Not all ids present in the new order
+Original Ids: %s
+New ids: %s""", playlist_item_ids, message.item_ids)
             return
         playlist.reorder(message.item_ids)
         playlist.signal_change()
@@ -957,7 +1006,7 @@ class BackendMessageHandler(messages.MessageHandler):
         url = feed.make_search_url(sei.name, term)
 
         if not lookup_feed(url):
-            f = Feed(url, section=section)
+            Feed(url, section=section)
 
     def handle_new_feed_search_url(self, message):
         url = message.url
@@ -1016,7 +1065,8 @@ class BackendMessageHandler(messages.MessageHandler):
         SavedPlaylist(name, ids)
 
     def handle_download_url(self, message):
-        singleclick.add_download(message.url, message.handle_unknown_callback, message.metadata)
+        singleclick.add_download(message.url, message.handle_unknown_callback,
+                                 message.metadata)
 
     def handle_open_individual_file(self, message):
         commandline.parse_command_line_args([message.filename])
@@ -1071,9 +1121,12 @@ class BackendMessageHandler(messages.MessageHandler):
             # it's possible this playlist is really a playlist folder with
             # playlists in it.
             try:
-                playlists = list(SavedPlaylist.folder_view(message.playlist_id))
+                playlists = list(SavedPlaylist.folder_view(
+                        message.playlist_id))
             except database.ObjectNotFoundError:
-                logging.warn("RemoveVideosFromPlaylist: playlist not found -- %s", message.playlist_id)
+                logging.warn(
+                    "RemoveVideosFromPlaylist: playlist not found -- %s",
+                    message.playlist_id)
                 return
 
         not_removed = []
@@ -1146,7 +1199,8 @@ class BackendMessageHandler(messages.MessageHandler):
         try:
             item_ = item.Item.get_by_id(message.id)
         except database.ObjectNotFoundError:
-            logging.warn("CancelAutoDownload: Item not found -- %s", message.id)
+            logging.warn("CancelAutoDownload: Item not found -- %s",
+                         message.id)
         else:
             item_.cancel_auto_download()
 
@@ -1209,7 +1263,8 @@ class BackendMessageHandler(messages.MessageHandler):
         try:
             item_ = item.Item.get_by_id(message.id)
         except database.ObjectNotFoundError:
-            logging.warn("handle_start_upload: Item not found -- %s", message.id)
+            logging.warn("handle_start_upload: Item not found -- %s",
+                         message.id)
         else:
             if item_.parent_id is not None:
                 # use the parent torrent file
@@ -1225,7 +1280,8 @@ class BackendMessageHandler(messages.MessageHandler):
         try:
             item_ = item.Item.get_by_id(message.id)
         except database.ObjectNotFoundError:
-            logging.warn("handle_stop_upload: Item not found -- %s", message.id)
+            logging.warn("handle_stop_upload: Item not found -- %s",
+                         message.id)
         else:
             if item_.parent_id is not None:
                 # use the parent torrent file
@@ -1314,7 +1370,8 @@ class BackendMessageHandler(messages.MessageHandler):
         try:
             feed_ = feed.Feed.get_by_id(message.id)
         except database.ObjectNotFoundError:
-            logging.warn("AutodownloadChange: Feed not found -- %s", message.id)
+            logging.warn("AutodownloadChange: Feed not found -- %s",
+                         message.id)
         else:
             feed_.set_auto_download_mode(message.setting)
 
@@ -1382,7 +1439,8 @@ class BackendMessageHandler(messages.MessageHandler):
             elif len(feeds) > 1:
                 title = _('Subscribed to new feeds:')
                 body = '\n'.join(
-                    [' - %s' % feed.get('title', feed['url']) for feed in feeds])
+                    [' - %s' % feed.get('title', feed['url'])
+                     for feed in feeds])
             messages.NotifyUser(
                 title, body, 'feed-subscribe').send_to_frontend()
         if 'download' in added or 'download' in ignored:
@@ -1393,7 +1451,8 @@ class BackendMessageHandler(messages.MessageHandler):
         app.config.set(prefs.MOVIES_DIRECTORY, message.path)
         if message.migrate:
             self._migrate(old_path, message.path)
-        messages.UpdateFeed(feed.Feed.get_directory_feed().id).send_to_backend()
+        message = messages.UpdateFeed(feed.Feed.get_directory_feed().id)
+        message.send_to_backend()
 
     def _migrate(self, old_path, new_path):
         to_migrate = list(downloader.RemoteDownloader.finished_view())
@@ -1447,3 +1506,33 @@ class BackendMessageHandler(messages.MessageHandler):
         m =messages.CurrentFrontendState(state.list_view_displays,
                 state.sort_states, state.active_filters)
         m.send_to_frontend()
+
+    def handle_set_device_type(self, message):
+        message.device.database['device_name'] = message.name
+        devices.write_database(message.device.mount, message.device.database)
+        info = messages.DeviceInfo(message.device.id,
+                                   message.device.info.devices[message.name],
+                                   message.device.mount,
+                                   message.device.database,
+                                   message.device.size,
+                                   message.device.remaining)
+        devices.device_changed(info)
+
+    def handle_delete_device_video(self, message):
+        os.unlink(message.item.video_path)
+        messages.ItemsChanged('device', message.item.device.id,
+                              [], [],
+                              [message.item.id]).send_to_frontend()
+
+    def handle_device_eject(self, message):
+        devicetracker.tracker.eject(message.device)
+
+    def handle_device_sync_media(self, message):
+        try:
+            item_infos = [messages.ItemInfo(item.Item.get_by_id(id))
+                          for id in message.item_ids]
+        except database.ObjectNotFoundError:
+            logging.warn("EditItem: Items not found -- %s", message.item_ids)
+            return
+
+        devices.DeviceSyncManager(message.device, item_infos).start()

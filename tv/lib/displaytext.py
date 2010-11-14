@@ -161,6 +161,8 @@ def release_date(rdate):
     If the rdate is below the minimum date, then this returns an
     empty string.
     """
+    if rdate is None:
+        return ''
     if rdate > datetime.datetime.min:
         # figure out the date pieces, convert to unicode, then split
         # it on "::" so we can run gettext on it allowing translators
@@ -178,6 +180,8 @@ def release_date_slashes(rdate):
     If the rdate is below the minimum date, then this returns an
     empty string.
     """
+    if rdate is None:
+        return ''
     if rdate > datetime.datetime.min:
         # note: %x is locale-appropriate
         return strftime_to_unicode(rdate.strftime("%x"))

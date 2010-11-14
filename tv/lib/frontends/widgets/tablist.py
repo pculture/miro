@@ -52,7 +52,8 @@ def send_new_order():
             
     message = messages.TabsReordered()
     append_items(app.tab_list_manager.feed_list.view.model, u'feed')
-    append_items(app.tab_list_manager.audio_feed_list.view.model, u'audio-feed')
+    append_items(app.tab_list_manager.audio_feed_list.view.model,
+                 u'audio-feed')
     append_items(app.tab_list_manager.playlist_list.view.model, u'playlist')
     message.send_to_backend()
 
@@ -110,6 +111,43 @@ class TabBlinkerMixin(object):
         # double check that the tab still exists
         if id in self.iter_map:
             self.view.unblink_tab(self.iter_map[id])
+
+class TabUpdaterMixin(object):
+    def __init__(self):
+        self.updating_animations = {}
+
+    def start_updating(self, id_):
+        # The spinning wheel is constantly updating the cell value, between 
+        # validating the cell value for the drag and drop and the actual drop
+        # the cell value most likely changes, and some GUI toolkits may get
+        # confused.
+        #
+        # We'll let the underlying platform code figure out what's the best
+        # thing to do here.
+        self.view.set_volatile(True)
+        if id_ in self.updating_animations:
+            return
+        timer_id = timer.add(0, self.pulse_updating_animation, id_)
+        self.updating_animations[id_] = timer_id
+
+    def stop_updating(self, id_):
+        self.view.set_volatile(False)
+        if id_ not in self.updating_animations:
+            return
+        self.view.stop_updating_image(self.iter_map[id_])
+        timer_id = self.updating_animations.pop(id_)
+        timer.cancel(timer_id)
+
+    def pulse_updating_animation(self, id_):
+        try:
+            iter = self.iter_map[id_]
+        except KeyError:
+            # feed was removed
+            del self.updating_animations[id_]
+            return
+        self.view.pulse_updating_image(iter)
+        timer_id = timer.add(0.1, self.pulse_updating_animation, id_)
+        self.updating_animations[id_] = timer_id
 
 class StaticTabListBase(TabBlinkerMixin):
 
@@ -198,10 +236,12 @@ class LibraryTabList(StaticTabListBase):
                 self.view.model_changed()
 
     def update_download_count(self, count, non_downloading_count):
-        self.update_count('downloading', 'downloading', count, non_downloading_count)
+        self.update_count('downloading', 'downloading', count,
+                          non_downloading_count)
 
     def update_conversions_count(self, running_count, other_count):
-        self.update_count('conversions', 'downloading', running_count, other_count)
+        self.update_count('conversions', 'downloading', running_count,
+                          other_count)
 
     def update_new_video_count(self, count):
         self.update_count('videos', 'unwatched', count)
@@ -391,7 +431,8 @@ class TabListDropHandler(object):
         dest_tablist.view.unselect_all()
         dragged_ids = set([int(id) for id in data.split('-')])
         expanded_rows = [id for id in dragged_ids if \
-                source_tablist.view.is_row_expanded(source_tablist.iter_map[id])]
+                source_tablist.view.is_row_expanded(
+                source_tablist.iter_map[id])]
         reorderer = TabDnDReorder()
         try:
             new_iters = reorderer.reorder(
@@ -474,6 +515,30 @@ class PlaylistListDropHandler(TabListDropHandler):
         return TabListDropHandler.accept_drop(self, table_view, model, typ,
                 source_actions, parent, position, data)
 
+class DeviceDropHandler(object):
+    def __init__(self, tablist):
+        self.tablist = tablist
+
+    def allowed_actions(self):
+        return widgetset.DRAG_ACTION_COPY
+
+    def allowed_types(self):
+        return ('downloaded-item',)
+
+    def validate_drop(self, widget, model, type, source_actions, parent,
+                      position):
+        if position == -1 and parent and type in self.allowed_types():
+            device = model[parent][0]
+            if device.mount and not getattr(device, 'fake', False):
+                return widgetset.DRAG_ACTION_COPY
+        return widgetset.DRAG_ACTION_NONE
+
+    def accept_drop(self, widget, model, type, source_actions, parent,
+                    position, data):
+        video_ids = [int(id) for id in data.split('-')]
+        device = model[parent][0]
+        messages.DeviceSyncMedia(device, video_ids).send_to_backend()
+
 class PlaylistListDragHandler(TabListDragHandler):
     item_type = 'playlist'
     folder_type = 'playlist-with-folder'
@@ -489,10 +554,12 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
 
     ALLOW_MULTIPLE = True
 
+    render_class = style.TabRenderer
+
     def __init__(self):
         signals.SignalEmitter.__init__(self)
         self.create_signal('tab-name-changed')
-        self.view = TabListView(style.TabRenderer())
+        self.view = TabListView(self.render_class())
         self.view.allow_multiple_select(self.ALLOW_MULTIPLE)
         self.view.connect_weak('key-press', self.on_key_press)
         self.view.connect('row-expanded', self.on_row_expanded_change, True)
@@ -595,6 +662,85 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
         """For subclasses to override."""
         pass
 
+
+class DevicesList(TabList, TabUpdaterMixin):
+    type = 'device'
+
+    ALLOW_MULTIPLE = False
+
+    render_class = style.DeviceTabRenderer
+
+    def __init__(self):
+        TabList.__init__(self)
+        TabUpdaterMixin.__init__(self)
+        self.view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
+        self.view.set_drag_dest(DeviceDropHandler(self))
+
+    def on_row_expanded_change(self, view, iter, expanded):
+        # don't bother doing anything
+        pass
+
+    def _fake_info(self, info, name):
+        new_data = {
+            'fake': True,
+            'tab_type': name.lower(),
+            'id': '%s-%s' % (info.id, name.lower()),
+            'name': name,
+            'icon': imagepool.get_surface(
+                resources.path('images/icon-%s.png' % name.lower()))
+            }
+
+        # hack to create a DeviceInfo without dealing with __init__
+        di = messages.DeviceInfo.__new__(messages.DeviceInfo)
+        di.__dict__ = info.__dict__.copy()
+        di.__dict__.update(new_data)
+        return di
+
+    def _add_fake_tabs(self, info):
+        TabList.add(self, self._fake_info(info, 'Video'), info.id)
+        TabList.add(self, self._fake_info(info, 'Audio'), info.id)
+        self.set_folder_expanded(info.id, True)
+
+    def add(self, info):
+        TabList.add(self, info)
+        if info.mount and not info.info.has_multiple_devices:
+            self._add_fake_tabs(info)
+
+    def update(self, info):
+        if info.mount and not info.info.has_multiple_devices and \
+                not self.get_child_count(info.id):
+            self._add_fake_tabs(info)
+        elif not info.mount and self.get_child_count(info.id):
+            parent_iter = self.iter_map[info.id]
+            model = self.view.model
+            next_iter = model.child_iter(parent_iter)
+            while next_iter is not None:
+                iter = next_iter
+                next_iter = model.next_iter(next_iter)
+                model.remove(iter)
+        TabList.update(self, info)
+
+    def init_info(self, info):
+        info.unwatched = info.available = 0
+        if not getattr(info, 'fake', False):
+            thumb_path = resources.path('images/phone.png')
+            info.icon = imagepool.get_surface(thumb_path)
+            if getattr(info, 'is_updating', False):
+                self.start_updating(info.id)
+            else:
+                self.stop_updating(info.id)
+
+    def on_hotspot_clicked(self, view, hotspot, iter):
+        if hotspot == 'eject-device':
+            info = view.model[iter][0]
+            messages.DeviceEject(info).send_to_backend()
+
+    def on_delete_key_pressed(self):
+        pass
+
+    def on_context_menu(self, table_view):
+        pass
+
 class SiteList(TabList):
     type = 'site'
 
@@ -643,13 +789,13 @@ class NestedTabList(TabList):
         else:
             return self.make_multiple_context_menu()
 
-class FeedList(NestedTabList):
+class FeedList(NestedTabList, TabUpdaterMixin):
     type = 'feed'
 
     def __init__(self):
         TabList.__init__(self)
+        TabUpdaterMixin.__init__(self)
         self.setup_dnd()
-        self.updating_animations = {}
 
     def setup_dnd(self):
         self.view.set_drag_source(FeedListDragHandler())
@@ -658,47 +804,12 @@ class FeedList(NestedTabList):
     def on_delete_key_pressed(self):
         app.widgetapp.remove_current_feed()
 
-    def feed_is_updating(self, info):
-        # Tell the tableview that the table may be volatile.
-        #
-        # The spinning wheel is constantly updating the cell value, between 
-        # validating the cell value for the drag and drop and the actual drop
-        # the cell value most likely changes, and some GUI toolkits may get
-        # confused.
-        #
-        # We'll let the underlying platform code figure out what's the best
-        # thing to do here.
-        self.view.set_volatile(True)
-        if info.id in self.updating_animations:
-            return
-        timer_id = timer.add(0, self.pulse_updating_animation, info.id)
-        self.updating_animations[info.id] = timer_id
-
-    def feed_not_updating(self, info):
-        self.view.set_volatile(False)
-        if info.id not in self.updating_animations:
-            return
-        self.view.stop_updating_image(self.iter_map[info.id])
-        timer_id = self.updating_animations.pop(info.id)
-        timer.cancel(timer_id)
-
-    def pulse_updating_animation(self, id):
-        try:
-            iter = self.iter_map[id]
-        except KeyError:
-            # feed was removed
-            del self.updating_animations[id]
-            return
-        self.view.pulse_updating_image(iter)
-        timer_id = timer.add(0.1, self.pulse_updating_animation, id)
-        self.updating_animations[id] = timer_id
-
     def init_info(self, info):
         info.icon = imagepool.get_surface(info.tab_icon, size=(16, 16))
         if info.is_updating:
-            self.feed_is_updating(info)
+            self.start_updating(info.id)
         else:
-            self.feed_not_updating(info)
+            self.stop_updating(info.id)
 
     def get_feeds(self):
         infos = [self.view.model[i][0] for i in self.iter_map.values()]
@@ -725,7 +836,8 @@ class FeedList(NestedTabList):
 
         menu.append((_('Rename'), app.widgetapp.rename_something))
         if not obj.has_original_title:
-            menu.append((_('Revert Feed Name'), app.widgetapp.revert_feed_name))
+            menu.append((_('Revert Feed Name'),
+                         app.widgetapp.revert_feed_name))
         menu.append((_('Copy URL to clipboard'), app.widgetapp.copy_feed_url))
         menu.append((_('Remove'), app.widgetapp.remove_current_feed))
         return menu
@@ -799,6 +911,8 @@ class TabListBox(widgetset.Scroller):
         vbox.pack_start(tlm.static_tab_list.view)
         vbox.pack_start(self.build_header(_('LIBRARY')))
         vbox.pack_start(tlm.library_tab_list.view)
+        vbox.pack_start(self.build_header(_('DEVICES')))
+        vbox.pack_start(tlm.devices_list.view)
         vbox.pack_start(self.build_header(_('WEBSITES')))
         vbox.pack_start(tlm.site_list.view)
         vbox.pack_start(self.build_header(_('VIDEO FEEDS')))

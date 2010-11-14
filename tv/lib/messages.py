@@ -41,17 +41,14 @@ threads.
 
 import logging
 import re
-import urlparse
 
 from miro.gtcache import gettext as _
 from miro.folder import ChannelFolder, PlaylistFolder
 from miro.plat import resources
 from miro import app
-from miro import feed
 from miro import guide
 from miro import prefs
 from miro import util
-from miro import filetypes
 
 class MessageHandler(object):
     def __init__(self):
@@ -300,6 +297,11 @@ class TrackWatchedFolders(BackendMessage):
 
 class StopTrackingWatchedFolders(BackendMessage):
     """Stop tracking watched folders.
+    """
+    pass
+
+class TrackDevices(BackendMessage):
+    """Start tracking devices.
     """
     pass
 
@@ -784,6 +786,33 @@ class QueryFrontendState(BackendMessage):
     """
     pass
 
+class SetDeviceType(BackendMessage):
+    """
+    Tell the backend which specific type of device we're dealing with.
+    """
+    def __init__(self, device, name):
+        self.device = device
+        self.name = name
+
+class DeviceSyncMedia(BackendMessage):
+    """Ask the backend to sync media to the given device.
+    """
+    def __init__(self, device, item_ids):
+        self.device = device
+        self.item_ids = item_ids
+
+class DeleteDeviceVideo(BackendMessage):
+    """Ask the backend to delete a video from a device.
+    """
+    def __init__(self, item):
+        self.item = item
+
+class DeviceEject(BackendMessage):
+    """Ask the backend to eject the given device.
+    """
+    def __init__(self, device):
+        self.device = device
+
 # Frontend Messages
 
 class FrontendQuit(FrontendMessage):
@@ -1010,7 +1039,7 @@ class ItemInfo(object):
     # bump this whenever you change the ItemInfo class, or change on of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description())
-    VERSION = 0
+    VERSION = 1
 
     def __init__(self, item):
         self.name = item.get_title()
@@ -1064,6 +1093,9 @@ class ItemInfo(object):
             self.download_info = PendingDownloadInfo()
         else:
             self.download_info = None
+
+        ## Device-specific stuff
+        self.device = getattr(item, 'device', None)
 
         ## Torrent-specific stuff
         self.leechers = self.seeders = self.up_rate = None
@@ -1311,7 +1343,7 @@ class VideoConversionTaskInfo(object):
 
     :param key: id for the conversion task
     :param state: current state of the conversion.  One of: "pending",
-        "running", "failed", or "finished"
+        "running", "failed", or "finished"de
     :param progress: how far the conversion task is
     :param error: user-friendly string for describing conversion errors (if any)
     :param output_path: path to the converted video (or None)
@@ -1381,6 +1413,24 @@ class VideoConversionTaskChanged(FrontendMessage):
     """
     def __init__(self, task):
         self.task = task
+
+class DeviceInfo(object):
+    """Tracks the state of an attached device.
+    """
+    def __init__(self, id, device_info, mount, database, size, remaining):
+        self.id = id
+        self.mount = mount
+        self.database = database
+        self.size = size
+        self.remaining = remaining
+        self.info = device_info
+        self.name = device_info.name
+
+class DeviceChanged(FrontendMessage):
+    """Informs the frontend that a device has changed state.
+    """
+    def __init__(self, device):
+        self.device = device
 
 class MessageToUser(FrontendMessage):
     """Lets the backend send messages directly to the user.

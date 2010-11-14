@@ -680,6 +680,7 @@ class TableView(Widget):
         self.create_signal('row-double-clicked')
         self.model = model
         self.columns = []
+        self.drag_source = None
         self.context_menu_callback = None
         if self.is_tree():
             self.create_signal('row-expanded')
