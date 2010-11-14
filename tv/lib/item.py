@@ -1252,8 +1252,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """
         if self.title:
             return self.title
-        if 'title' in self.metadata:
+        try:
             return self.metadata['title']
+        except (KeyError, TypeError):
+            pass
         if self.is_external() and self.is_downloaded_torrent():
             if self.get_filename() is not None:
                 basename = os.path.basename(self.get_filename())
@@ -1266,33 +1268,33 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def get_artist(self):
         try:
             return self.metadata['artist']
-        except KeyError:
+        except (KeyError, TypeError):
             return u''
 
     @returns_unicode
     def get_album(self):
         try:
             return self.metadata['album']
-        except KeyError:
+        except (KeyError, TypeError):
             return u''
 
     def get_track(self):
         try:
             return self.metadata['track']
-        except KeyError:
+        except (KeyError, TypeError):
             return -1
 
     def get_year(self):
         try:
             return self.metadata['year']
-        except KeyError:
+        except (KeyError, TypeError):
             return -1
 
     @returns_unicode
     def get_genre(self):
         try:
             return self.metadata['genre']
-        except KeyError:
+        except (KeyError, TypeError):
             return u''
 
     def set_title(self, title):
