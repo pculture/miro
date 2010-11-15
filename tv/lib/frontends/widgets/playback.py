@@ -59,6 +59,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.is_paused = False
         self.is_suspended = False
         self.open_finished = False
+        self.open_successful = False
         self.playlist = None
         self.position = 0
         self.mark_as_watched_timeout = None
@@ -80,6 +81,9 @@ class PlaybackManager (signals.SignalEmitter):
 
     def player_ready(self):
         return self.player is not None and self.open_finished
+
+    def player_playing(self):
+        return self.player is not None and self.open_successful
 
     def _on_items_changed(self, message):
         if self.playlist is None:
@@ -248,7 +252,7 @@ class PlaybackManager (signals.SignalEmitter):
             self.update_timeout = None
 
     def notify_update(self):
-        if self.player_ready():
+        if self.player_playing():
             elapsed = self.player.get_elapsed_playback_time()
             total = self.player.get_total_playback_time()
             self.emit('playback-did-progress', elapsed, total)
@@ -323,7 +327,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.removing_video_display = False
 
     def update_current_resume_time(self, resume_time=-1):
-        if not self.player_ready():
+        if not self.player_playing():
             return
         item_info = self.playlist[self.position]
         if config.get(prefs.RESUME_VIDEOS_MODE):
@@ -486,7 +490,7 @@ class PlaybackManager (signals.SignalEmitter):
 
         volume = config.get(prefs.VOLUME_LEVEL)
         self.emit('selecting-file', item_info)
-        self.open_finished = False
+        self.open_successful = self.open_finished = False
         self._setup_player(item_info, volume)
 
     def _play_current(self, new_position=None, save_resume_time=True):
@@ -508,7 +512,7 @@ class PlaybackManager (signals.SignalEmitter):
             self.stop(save_resume_time)
 
     def _on_ready_to_play(self, obj):
-        self.open_finished = True
+        self.open_successful = self.open_finished = True
         self.schedule_mark_as_watched(self.playlist[self.position].id)
         if isinstance(self.player, widgetset.VideoPlayer):
             self.player.select_subtitle_encoding(self.initial_subtitle_encoding)
