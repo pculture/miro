@@ -252,6 +252,167 @@ class UtilTest(unittest.TestCase):
         self.assertEqual(selected_combination['href'],
                          u'http://example.org/1.ogg')
 
+    def test_clamp_text(self):
+        # limit 20
+        self.assertRaises(TypeError, util.clamp_text, None)
+        self.assertEqual('', util.clamp_text(''))
+        self.assertEqual('1', util.clamp_text('1'))
+        self.assertEqual('12345678901234567890', util.clamp_text('12345678901234567890'))
+        self.assertEqual('12345678901234567...', util.clamp_text('123456789012345678901'))
+        self.assertEqual('12345678901234567...', util.clamp_text('12345678901234567890 1234 1234 1234'))
+
+        # limit 4
+        self.assertRaises(TypeError, util.clamp_text, None, 4)
+        self.assertEqual('', util.clamp_text('', 4))
+        self.assertEqual('1', util.clamp_text('1', 4))
+        self.assertEqual('1...', util.clamp_text('12345678901234567890', 4))
+        self.assertEqual('1...', util.clamp_text('123456789012345678901', 4))
+        self.assertEqual('1...', util.clamp_text('12345678901234567890 1234 1234 1234', 4))
+
+
+    def test_check_u(self):
+        util.check_u(None)
+        util.check_u(u'abc')
+        util.check_u(u'&*@!#)*) !@)( !@# !)@(#')
+
+        self.assertRaises(util.MiroUnicodeError, util.check_u, 'abc')
+        self.assertRaises(util.MiroUnicodeError, util.check_u, '&*@!#)*) !@)( !@# !)@(#')
+
+    def test_check_b(self):
+
+        util.check_b(None);
+        util.check_b("abc");
+
+        self.assertRaises(util.MiroUnicodeError, util.check_b, 42)
+        self.assertRaises(util.MiroUnicodeError, util.check_b, [])
+        self.assertRaises(util.MiroUnicodeError, util.check_b, ['1','2'])
+        self.assertRaises(util.MiroUnicodeError, util.check_b, {})
+        self.assertRaises(util.MiroUnicodeError, util.check_b, {'a': 1, 'b':2})
+
+    def test_check_f(self):
+
+        def testName(text):
+            from miro.plat.utils import FilenameType
+
+            correctType = FilenameType(text)
+            util.check_f(correctType)
+
+            incorrectType = text
+            if FilenameType == str:
+                incorrectType = unicode(text)
+
+            self.assertRaises(util.MiroUnicodeError, util.check_f, incorrectType)
+
+        util.check_f(None)
+        testName("")
+        testName("abc.txt")
+        testName("./xyz.avi")
+
+
+    def assertEqualWithType(self, expected, expectedType, val):
+        self.assertEqual(val, expected)
+        self.assertTrue(isinstance(val, expectedType), "Not of type " + str(expectedType))
+
+    def test_unicodify(self):
+
+        self.assertEqual(None, util.unicodify(None))
+
+        # Int
+        self.assertEqualWithType(5, int, util.unicodify(5))
+
+        # String
+        self.assertEqualWithType('abc', unicode, util.unicodify('abc'))
+
+        # List
+        res = util.unicodify(['abc', '123'])
+        self.assertEqualWithType('abc', unicode, res[0])
+        self.assertEqualWithType('123', unicode, res[1])
+
+        # Dict
+        res = util.unicodify({'a': 'abc', 'b': '123'})
+        self.assertEqualWithType('abc', unicode, res['a'])
+        self.assertEqualWithType('123', unicode, res['b'])
+
+        # List of dicts
+        res = util.unicodify([{'a': 'abc', 'b': '$$$'}, {'y': u'25', 'z': '28'}])
+        self.assertEqualWithType('abc', unicode, res[0]['a'])
+        self.assertEqualWithType('$$$', unicode, res[0]['b'])
+        self.assertEqualWithType('25', unicode, res[1]['y'])
+        self.assertEqualWithType('28', unicode, res[1]['z'])
+
+    def test_quote_unicode_url(self):
+        # Non-unicode
+        self.assertRaises(util.MiroUnicodeError, util.quote_unicode_url, 'http://www.example.com')
+
+        # Unicode, no substitution
+        self.assertEqualWithType('http://www.example.com', unicode, util.quote_unicode_url(u'http://www.example.com'))
+
+        # Unicode, substitution
+        self.assertEqualWithType(u'http://www.example.com/fran%C3%83%C2%A7ois', unicode, util.quote_unicode_url(u'http://www.example.com/françois'))
+
+
+    def test_call_command(self):
+        """ Currently only works on Linux and OSX """
+
+        # Command doesn't exist
+        self.assertRaises(OSError, util.call_command, 'thiscommanddoesntexist')
+
+        # Command exists but invalid option and returns error code
+        self.assertRaises(OSError, util.call_command,  'ps', '-')
+
+        # Valid command
+        pid = int(os.getpid())
+        stdout = util.call_command('ps', '-p', str(pid), '-o', 'pid=')
+        pid_read = int(stdout)
+        self.assertEqual(pid, pid_read)
+
+    def test_to_uni(self):
+        # try it twice to make sure the cached value is correct as well
+        for i in range(0,2):
+            self.assertEqualWithType('', unicode, util.to_uni(''))
+            self.assertEqualWithType('', unicode, util.to_uni(u''))
+            self.assertEqualWithType('abc', unicode, util.to_uni('abc'))
+            self.assertEqualWithType('abc', unicode, util.to_uni(u'abc'))
+            self.assertEqualWithType('!@^)!@%I*', unicode, util.to_uni('!@^)!@%I*'))
+            self.assertEqualWithType('!@^)!@%I*', unicode, util.to_uni(u'!@^)!@%I*'))
+
+    def test_escape(self):
+        # try it twice to make sure the cached value is correct as well
+        for i in range(0,2):
+            self.assertEqualWithType('', unicode, util.escape(''))
+            self.assertEqualWithType('&amp;', unicode, util.escape('&'))
+            self.assertEqualWithType('&lt;', unicode, util.escape('<'))
+            self.assertEqualWithType('&gt;', unicode, util.escape('>'))
+            self.assertEqualWithType('la &amp; &lt;html&gt;', unicode, util.escape('la & <html>'))
+
+    def test_entity_replace(self):
+        self.assertEqual('', util.entity_replace(''))
+        self.assertEqual('abcd yz XXX i!@#$%^&*()= 123 <>&', util.entity_replace('abcd yz XXX i!@#$%^&*()= 123 <>&'))
+        self.assertEqual('&#35;', util.entity_replace('&#35;'))
+        self.assertEqual('\'', util.entity_replace('&#39;'))
+        self.assertEqual('\'', util.entity_replace('&apos;'))
+        self.assertEqual('"', util.entity_replace('&#34;'))
+        self.assertEqual('"', util.entity_replace('&quot;'))
+        self.assertEqual('&', util.entity_replace('&#38;'))
+        self.assertEqual('&', util.entity_replace('&amp;'))
+        self.assertEqual('<', util.entity_replace('&#60;'))
+        self.assertEqual('<', util.entity_replace('&lt;'))
+        self.assertEqual('>', util.entity_replace('&#62;'))
+        self.assertEqual('>', util.entity_replace('&gt;'))
+        self.assertEqual('abcd yz XX<X i!@#$%^&*()=& 123 <>&', util.entity_replace('abcd yz XX&lt;X i!@#$%^&*()=&#38; 123 <>&'))
+
+    def test_ascii_lower(self):
+        self.assertEqual('', util.ascii_lower(''))
+        self.assertEqual('a', util.ascii_lower('a'))
+        self.assertEqual('a', util.ascii_lower('A'))
+        self.assertEqual('ab', util.ascii_lower('AB'))
+        self.assertEqual('a b', util.ascii_lower('A B'))
+        self.assertEqual('a b', util.ascii_lower('a B'))
+        self.assertEqual('a-b', util.ascii_lower('A-B'))
+        self.assertEqual('\xD1', util.ascii_lower('\xD1'))
+        self.assertEqual(';2%/*()_-?+z', util.ascii_lower(';2%/*()_-?+Z'))
+
+
 class DownloadUtilsTest(unittest.TestCase):
     def check_clean_filename(self, filename, test_against):
         self.assertEquals(download_utils.clean_filename(filename),
@@ -537,3 +698,71 @@ class Test_name_sort_key(unittest.TestCase):
             ):
             inlist.sort(key=util.name_sort_key)
             self.assertEquals(inlist, outlist)
+
+
+class Test_gather_media_files(unittest.TestCase):
+    def setUp(self):
+        unittest.TestCase.setUp(self)
+
+        self.tempdir = tempfile.mkdtemp()
+        if not os.path.exists(self.tempdir):
+            os.makedirs(self.tempdir)
+
+        self.expectedFiles = []
+
+    def tearDown(self):
+        unittest.TestCase.tearDown(self)
+        shutil.rmtree(self.tempdir, ignore_errors=True)
+
+    def add_file(self, filepath, expected):
+        """Create a file in the temporary directory"""
+        fullfilepath = os.path.join(self.tempdir, filepath)
+        dirname = os.path.dirname(fullfilepath)
+        if not os.path.exists(dirname):
+            os.makedirs(dirname)
+
+        filep = open(fullfilepath, "w")
+        filep.write("lalala")
+        filep.close()
+
+        if expected:
+            self.expectedFiles.append(fullfilepath)
+
+    def verify_results(self):
+
+        finder = util.gather_media_files(self.tempdir)
+        found = []
+
+        try:
+            while(True):
+                num_parsed, found = finder.next()
+        except StopIteration:
+            self.assertEquals(set(found), set(self.expectedFiles))
+
+    def test_empty_dir(self):
+        self.verify_results()
+
+    def test_dir_without_media(self):
+        self.add_file('index.html', False)
+        self.verify_results()
+        self.add_file('README.txt', False)
+        self.verify_results()
+
+    def test_dir_with_media(self):
+        self.add_file('test.ogv', True)
+        self.verify_results()
+        self.add_file('test.avi', True)
+        self.verify_results()
+
+    def test_dir_mixed_files(self):
+        self.add_file('index.html', False)
+        self.add_file('test.ogv', True)
+        self.verify_results()
+
+    def test_subdirs(self):
+        self.add_file('aaa/index.html', False)
+        self.verify_results()
+        self.add_file('bbb/test.ogv', True)
+        self.verify_results()
+        self.add_file('test.ogv', True)
+        self.verify_results()
