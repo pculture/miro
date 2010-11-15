@@ -133,6 +133,11 @@ for pkg in "setuptools-0.6c11" \
            "psyco-1.6"
 do
     cd $WORK_DIR
+    if [[ ! -e $BKIT_DIR/$pkg.tar.gz ]]; then
+        echo "$pkg.tar.gz isn't in the binary kit.  aborting..."
+        exit 1
+    fi
+
     tar -zxf $BKIT_DIR/$pkg.tar.gz
     cd $WORK_DIR/$pkg
     
