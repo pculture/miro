@@ -186,7 +186,7 @@ class Renderer:
         try:
             callback()
         except StandardError:
-            logging.stacktrace("Error calling renderer callback")
+            logging.exception("Error calling renderer callback")
 
     def on_bus_message(self, bus, message):
         """receives message posted on the GstBus"""
