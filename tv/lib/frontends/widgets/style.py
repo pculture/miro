@@ -1275,6 +1275,10 @@ class StatusRenderer(ListViewRenderer):
             hbox.pack_space(8)
             hbox.pack(cellpack.Hotspot('keep', button))
 
+class RatingRenderer(ListViewRenderer):
+    def _setup_layout(self):
+        self.text = "todo"
+
 class ETARenderer(ListViewRenderer):
     right_aligned = True
 

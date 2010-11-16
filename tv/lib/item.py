@@ -1299,6 +1299,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         except (KeyError, TypeError):
             return u''
 
+    def get_rating(self):
+        return self.rating
+
     def set_title(self, title):
         self.confirm_db_thread()
         self.title = title

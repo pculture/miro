@@ -295,6 +295,7 @@ class ListItemView(widgetset.TableView):
         self._make_column(_('Track'), style.TrackRenderer(), 'track')
         self._make_column(_('Year'), style.YearRenderer(), 'year')
         self._make_column(_('Genre'), style.GenreRenderer(), 'genre')
+        self._make_column(_('Rating'), style.RatingRenderer(), 'rating')
         if display_channel:
             self._make_column(_('Feed'), style.FeedNameRenderer(),
                     'feed-name')
@@ -374,6 +375,7 @@ class ListItemView(widgetset.TableView):
                 'track': (50, 0),
                 'year': (55, 0),
                 'genre': (65, 0),
+                'rating': (60, 0),
             }
 
             for key in width_specs.keys():
