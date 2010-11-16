@@ -247,16 +247,16 @@ class DeviceSyncManager(object):
         if item_info.file_type not in self.device.database:
             return False
         for existing in self.device.database[item_info.file_type].values():
-            if item_info.file_url and \
-                    existing.get('url') == item_info.file_url:
+            if (item_info.file_url and
+                existing.get('url') == item_info.file_url):
                 return True
-            elif (item_info.name, item_info.description, item_info.size,
-                  item_info.duration) == \
+            elif ((item_info.name, item_info.description, item_info.size,
+                   item_info.duration) ==
                   (existing.get('name'), existing.get('description'),
-                   existing.get('size'), existing.get('duration')):
-                  # if a bunch of qualities are the same, we'll call it close
-                  # enough
-                  return True
+                   existing.get('size'), existing.get('duration'))):
+                # if a bunch of qualities are the same, we'll call it close
+                # enough
+                return True
         return False
 
     def _conversion_removed_callback(self, conversion_manager, task=None):

@@ -116,8 +116,8 @@ class ViewTracker(object):
         retval = []
         for obj in changed:
             info = self.InfoClass(obj)
-            if obj.id not in self._last_sent_info or \
-                    info.__dict__ != self._last_sent_info[obj.id].__dict__:
+            if (obj.id not in self._last_sent_info or
+                info.__dict__ != self._last_sent_info[obj.id].__dict__):
                 retval.append(info)
                 self._last_sent_info[obj.id] = info
         return retval
