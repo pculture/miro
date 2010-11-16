@@ -1353,6 +1353,7 @@ class FrontendStatesStore(object):
         self.current_displays = set(message.list_view_displays)
         self.sort_states = message.sort_states
         self.active_filters = message.active_filters
+        self.current_columns = set(message.list_view_columns)
 
     def _key(self, typ, id_):
         return '%s:%s' % (typ, id_)

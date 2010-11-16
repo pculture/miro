@@ -1473,10 +1473,12 @@ class SearchComplete(FrontendMessage):
 class CurrentFrontendState(FrontendMessage):
     """Returns the latest data saved with SaveFrontendState.
     """
-    def __init__(self, list_view_displays, sort_states, active_filters):
+    def __init__(self, list_view_displays, sort_states, active_filters,
+            list_view_columns):
         self.list_view_displays = list_view_displays
         self.sort_states = sort_states
         self.active_filters = active_filters
+        self.list_view_columns = list_view_columns
 
 class OpenInExternalBrowser(FrontendMessage):
     """Opens the specified url in an external browser.

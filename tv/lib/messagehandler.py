@@ -1498,12 +1498,13 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         state.list_view_displays = message.list_view_displays
         state.sort_states = message.sort_states
         state.active_filters = message.active_filters
+        state.list_view_colums = message.list_view_columns
         state.signal_change()
 
     def handle_query_frontend_state(self, message):
         state = self._get_widgets_frontend_state()
         m =messages.CurrentFrontendState(state.list_view_displays,
-                state.sort_states, state.active_filters)
+                state.sort_states, state.active_filters, state.list_view_columns)
         m.send_to_frontend()
 
     def handle_set_device_type(self, message):
