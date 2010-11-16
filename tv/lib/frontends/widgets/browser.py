@@ -196,7 +196,6 @@ class BrowserNav(widgetset.VBox):
         self.toolbar = BrowserToolbar()
         self.guide_info = guide_info
         self.home_url = guide_info.url
-        self.browser.navigate(guide_info.url)
         self.pack_start(self.toolbar, expand=False)
         self.pack_start(separator.HThinSeparator((0.6, 0.6, 0.6)))
         self.pack_start(self.browser, expand=True)
@@ -211,6 +210,16 @@ class BrowserNav(widgetset.VBox):
 
         self.browser.connect_weak('net-start', self._on_net_start)
         self.browser.connect_weak('net-stop', self._on_net_stop)
+
+    def viewport_created(self):
+        super(widgetset.VBox, self).viewport_created()
+        self.load_guide()
+
+    def load_guide(self):
+        # This guy is separate from __init__() - otherwise it will show 
+        # empty frame with no indication of the channel guide loading because
+        # the widgets have not been drawn yet.
+        self.browser.navigate(self.guide_info.url)
 
     def enable_disable_navigation(self):
         if self.browser.can_go_back():
