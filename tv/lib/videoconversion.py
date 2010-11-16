@@ -36,6 +36,7 @@ import tempfile
 import threading
 import subprocess
 import time
+import errno
 
 from glob import glob
 from ConfigParser import SafeConfigParser, NoOptionError
@@ -586,9 +587,8 @@ class VideoConversionTask(object):
         if os.name != "nt":
             kwargs["close_fds"] = True
 
-        self.process_handle = subprocess.Popen(args, **kwargs)
-
         try:
+            self.process_handle = subprocess.Popen(args, **kwargs)
             for line in self.readlines():
                 old_progress = self.progress
 
@@ -607,6 +607,11 @@ class VideoConversionTask(object):
 
                 if old_progress != self.progress:
                     self._notify_progress()
+
+        except OSError, ose:
+            if ose.errno == errno.ENOENT:
+                self.error = _("%(program)s does not exist.", {"program": self.get_executable()})
+
         finally:
             self._stop_logging(self.progress < 1.0)
             if self.is_failed():
