@@ -65,7 +65,7 @@ class DeviceTracker(object):
     def _devicesChanged(self):
         # re-poll the devices, and figure out what, if anything, is different
         volumes = set()
-        for device in usbutils.connectedDevices():
+        for device in usbutils.connected_devices():
             volume = device['volume']
             volumes.add(volume)
             if volume not in self._connected:
@@ -135,6 +135,6 @@ class DeviceTracker(object):
         if info.id not in self._connected:
             return
         usb_info = self._connected[info.id]
-        usbutils.deviceEject(usb_info['devInst'])
+        usbutils.device_eject(usb_info['devInst'])
 
 tracker = DeviceTracker()
