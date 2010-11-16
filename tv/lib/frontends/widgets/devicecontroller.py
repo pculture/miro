@@ -33,6 +33,7 @@ import datetime
 from miro import app
 from miro import devices
 from miro import displaytext
+from miro.gtcache import gettext as _
 from miro import messages
 from miro import util
 
@@ -96,8 +97,8 @@ class DeviceMountedView(widgetset.VBox):
         self.pack_start(self.tab_container, expand=True)
 
         vbox = widgetset.VBox()
-        label = widgetset.Label("To copy media onto the device, drag it onto \
-the sidebar.")
+        label = widgetset.Label(_("To copy media onto the device, drag it "
+                                  "onto the sidebar."))
         label.set_size(1.5)
         vbox.pack_start(widgetutil.align_center(label, top_pad=50))
         self.device_size = SizeWidget()
@@ -152,7 +153,7 @@ class UnknownDeviceView(widgetset.VBox):
     def __init__(self):
         widgetset.VBox.__init__(self)
         label = widgetset.Label()
-        label.set_text("We're not exactly sure what kind of phone this is.")
+        label.set_text(_("We're not exactly sure what kind of phone this is."))
         label.set_bold(True)
         label.set_size(1.5)
         self.pack_start(widgetutil.align_center(label, left_pad=20, top_pad=50,
@@ -182,7 +183,7 @@ class UnknownDeviceView(widgetset.VBox):
                 self.device,
                 buttons_to_device_name[rbg.get_selected()]).send_to_backend()
 
-        select = widgetset.Button('This is my device')
+        select = widgetset.Button(_('This is my device'))
         select.connect('clicked', _clicked)
         self.device_choices.pack_start(widgetutil.pad(select, top=40))
 
@@ -190,7 +191,7 @@ class DeviceUnmountedView(widgetset.VBox):
     def __init__(self):
         widgetset.VBox.__init__(self)
         label = widgetset.Label()
-        label.set_text('This phone is not yet mounted.')
+        label.set_text(_('This phone is not yet mounted.'))
         label.set_bold(True)
         label.set_size(1.5)
         self.pack_start(widgetutil.align_center(label, left_pad=20, top_pad=50,
