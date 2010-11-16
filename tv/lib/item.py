@@ -341,6 +341,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.subtitle_encoding = None
         self.setup_new_icon_cache()
         self.metadata = {}
+        self.rating = None
         # Initalize FileItem attributes to None
         self.deleted = self.shortFilename = self.offsetPath = None
 

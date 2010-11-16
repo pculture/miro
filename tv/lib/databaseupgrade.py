@@ -2818,5 +2818,7 @@ def upgrade120(cursor):
 
 def upgrade121(cursor):
     """Create the metadata column in item; reread all metadata accordingly;"""
+    """add column to item to store ratings;"""
     """add column to view table for keeping track of enabled ListView columns"""
     cursor.execute("ALTER TABLE item ADD COLUMN metadata pythonrepr")
+    cursor.execute("ALTER TABLE item ADD COLUMN rating integer")

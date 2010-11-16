@@ -419,6 +419,7 @@ class ItemSchema(MultiClassObjectSchema):
         ('offsetPath', SchemaFilename(noneOk=True)),
         ('file_type', SchemaString(noneOk=True)),
         ('metadata', SchemaDict(SchemaString(noneOk=False),SchemaString(noneOk=True),noneOk=False)),
+        ('rating', SchemaInt(noneOk=True)),
     ]
 
     indexes = (
