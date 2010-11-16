@@ -2822,3 +2822,5 @@ def upgrade121(cursor):
     """add column to view table for keeping track of enabled ListView columns"""
     cursor.execute("ALTER TABLE item ADD COLUMN metadata pythonrepr")
     cursor.execute("ALTER TABLE item ADD COLUMN rating integer")
+    cursor.execute("ALTER TABLE widgets_frontend_state "
+            "ADD COLUMN list_view_columns pythonrepr")
