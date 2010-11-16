@@ -538,7 +538,7 @@ class VideoDisplay(Display):
         self.show_renderer()
         self.cant_play_widget.set_video_path(item_info.video_path)
         self.item_info_id = item_info.id
-        self.item_was_watched = item_info.item_viewed
+        self.item_was_watched = item_info.video_watched
         self.renderer.set_item(item_info, self._open_success, self._open_error)
         self.renderer.set_volume(volume)
 

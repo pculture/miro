@@ -525,7 +525,7 @@ class PlaybackManager (signals.SignalEmitter):
 
     def _on_ready_to_play(self, obj):
         self.open_successful = self.open_finished = True
-        if not self.playlist[self.position].item_viewed:
+        if not self.playlist[self.position].video_watched:
             self.schedule_mark_as_watched(self.playlist[self.position].id)
         if isinstance(self.player, widgetset.VideoPlayer):
             self.player.select_subtitle_encoding(self.initial_subtitle_encoding)

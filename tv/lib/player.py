@@ -38,7 +38,7 @@ class Player(signals.SignalEmitter):
 
     def setup(self, item_info, volume):
         self.item_info_id = item_info.id
-        self.item_was_watched = item_info.item_viewed
+        self.item_was_watched = item_info.video_watched
         self.set_item(item_info, self._open_success, self._open_error)
         self.set_volume(volume)
 
