@@ -1531,7 +1531,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             item_infos = [messages.ItemInfo(item.Item.get_by_id(id))
                           for id in message.item_ids]
         except database.ObjectNotFoundError:
-            logging.warn("EditItem: Items not found -- %s", message.item_ids)
+            logging.warn("HandleDeviceSyncMedia: Items not found -- %s",
+                         message.item_ids)
             return
 
         devices.DeviceSyncManager(message.device, item_infos).start()

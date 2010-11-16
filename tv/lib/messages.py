@@ -1342,7 +1342,7 @@ class VideoConversionTaskInfo(object):
 
     :param key: id for the conversion task
     :param state: current state of the conversion.  One of: "pending",
-        "running", "failed", or "finished"de
+        "running", "failed", or "finished"
     :param progress: how far the conversion task is
     :param error: user-friendly string for describing conversion errors (if any)
     :param output_path: path to the converted video (or None)

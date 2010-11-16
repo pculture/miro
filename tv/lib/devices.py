@@ -198,7 +198,7 @@ class DeviceSyncManager(object):
         video_target_folder = os.path.join(self.device.mount,
                                            self.device.info.video_path)
         try:
-            os.makedirs(audio_target_folder)
+            os.makedirs(video_target_folder)
         except OSError:
             pass
 
