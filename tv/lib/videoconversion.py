@@ -611,6 +611,8 @@ class VideoConversionTask(object):
         except OSError, ose:
             if ose.errno == errno.ENOENT:
                 self.error = _("%(program)s does not exist.", {"program": self.get_executable()})
+            else:
+                logging.exception("Exception in Popen: %s %s", args, kwargs)
 
         finally:
             self._stop_logging(self.progress < 1.0)
