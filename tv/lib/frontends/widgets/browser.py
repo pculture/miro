@@ -212,7 +212,7 @@ class BrowserNav(widgetset.VBox):
         self.browser.connect_weak('net-stop', self._on_net_stop)
 
     def viewport_created(self):
-        super(widgetset.VBox, self).viewport_created()
+        super(BrowserNav, self).viewport_created()
         self.load_guide()
 
     def load_guide(self):
