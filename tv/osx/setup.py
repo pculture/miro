@@ -39,7 +39,9 @@ import datetime
 import subprocess
 
 from glob import glob
-from distutils.util import get_platform
+# from distutils.util import get_platform
+from distutils.file_util import copy_file
+from distutils.dir_util import mkpath
 
 # =============================================================================
 # Find the top of the source tree and set the search path accordingly
@@ -98,27 +100,37 @@ from miro import util
 # Utility function used to extract stuff from the binary kit
 # =============================================================================
 
+def copy_binaries(source, target, binaries):
+    mkpath(target)
+    for mem in binaries:
+        copy_file(os.path.join(BKIT_DIR, source, mem), target, update=True)
+
 def extract_binaries(source, target, force=True):
     if force and os.path.exists(target):
         shutil.rmtree(target, True)
 
     if os.path.exists(target):
         print "    (all skipped, already there)"
-    else:
+        return
+
+    if not os.path.exists(target):
         os.makedirs(target)
-        rootpath = os.path.join(BKIT_DIR, source)
-        binaries = glob(os.path.join(rootpath, '*.tar.gz'))
-        if len(binaries) == 0:
-            print "    (all skipped, not found in binary kit)"
-        else:
-            for binary in binaries:
-                tar = tarfile.open(binary, 'r:gz')
-                try:
-                    for member in tar.getmembers():
-                        if os.path.basename(member.name) not in ('._Icon\r', 'Icon\r'):
-                            tar.extract(member, target)
-                finally:
-                    tar.close()
+
+    rootpath = os.path.join(BKIT_DIR, source)
+    binaries = glob(os.path.join(rootpath, '*.tar.gz'))
+
+    if len(binaries) == 0:
+        print "    (all skipped, not found in binary kit)"
+        return
+
+    for binary in binaries:
+        tar = tarfile.open(binary, 'r:gz')
+        try:
+            for member in tar.getmembers():
+                if os.path.basename(member.name) not in ('._Icon\r', 'Icon\r'):
+                    tar.extract(member, target)
+        finally:
+            tar.close()
 
 # =============================================================================
 # A theme archive file
@@ -441,7 +453,8 @@ class MiroBuild (py2app):
 
     def copy_conversion_helpers(self):
         print 'Copying video conversion helpers to application bundle'
-        extract_binaries('helpers', self.helpersRoot, self.force_update)
+        copy_binaries('ffmpeg/bin/', self.helpersRoot, ["ffmpeg"])
+        copy_binaries('ffmpeg2theora/bin/', self.helpersRoot, ["ffmpeg2theora"])
 
     def copy_portable_resources(self):
         print "Copying portable resources to application bundle"
