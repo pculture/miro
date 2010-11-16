@@ -897,7 +897,6 @@ class ChannelInfo(object):
     """
     def __init__(self, channel_obj):
         import time
-        start = time.time()
         self.name = channel_obj.get_title()
         self.id = channel_obj.id
         self.section = channel_obj.section

@@ -36,11 +36,9 @@ from urlparse import urlparse
 import _winreg
 
 import gtk
-import win32gui
 
 from miro.gtcache import gettext as _
 from miro import app
-from miro import eventloop
 from miro import prefs
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets.application import Application

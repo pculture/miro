@@ -52,7 +52,6 @@ from miro import singleclick
 from miro import subscription
 from miro import tabs
 from miro import opml
-from miro import videoconversion
 from miro.feed import Feed, lookup_feed
 from miro.gtcache import gettext as _
 from miro.playlist import SavedPlaylist
