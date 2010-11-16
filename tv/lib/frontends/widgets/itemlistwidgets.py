@@ -50,6 +50,7 @@ from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import segmented
 from miro.frontends.widgets import separator
+from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.utils import get_available_bytes_for_movies
@@ -490,15 +491,13 @@ class DownloadStatusToolbar(DisplayToolbar):
         self._free_disk_label.set_size(widgetconst.SIZE_SMALL)
 
         h.pack_start(widgetutil.align_left(self._free_disk_label,
-            top_pad=10, left_pad=20, bottom_pad=10), expand=True)
+                     top_pad=10, bottom_pad=10, left_pad=20), expand=True)
 
 
         # Sigh.  We want to fix these sizes so they don't jump about
         # but different languages will have different sizes for these
         # things.  What we do is, try to work out a decent size for it then
         # reserve that amount of space suitable for the user's locale.
-        # Both these labels can be used for upload and download so we 
-        # just need to test one.
         placeholder_bps = 500 * 1024
         text_up = _("%(rate)s uploading",
                     {"rate": displaytext.download_rate(placeholder_bps)})
@@ -514,24 +513,36 @@ class DownloadStatusToolbar(DisplayToolbar):
         first_label.set_text(text_down)
         width2, height2 = first_label.get_size_request()
 
+        first_image = widgetutil.HideableWidget(widgetset.ImageDisplay(
+                          widgetset.Image(resources.path('images/up.png'))))
+        self._first_image = first_image
+        h.pack_start(widgetutil.align_middle(widgetutil.align_right(
+                     self._first_image)))
+
         # Don't forget to reset the label to blank after we are done fiddling
         # with it.
         first_label.set_text("")
-        first_label.set_size_request(max(width1, width2), -1)
+        first_label.set_size_request(width1, -1)
         first_label.set_alignment(widgetconst.TEXT_JUSTIFY_RIGHT)
         self._first_label = first_label
 
-        h.pack_start(widgetutil.align_right(self._first_label,
-            left_pad=10, top_pad=10, bottom_pad=10, right_pad=10))
+        h.pack_start(widgetutil.align_middle(widgetutil.align_right(
+                     self._first_label, right_pad=20)))
+
+        second_image = widgetutil.HideableWidget(widgetset.ImageDisplay(
+                           widgetset.Image(resources.path('images/down.png'))))
+        self._second_image = second_image
+        h.pack_start(widgetutil.align_middle(widgetutil.align_right(
+                     self._second_image)))
 
         second_label = widgetset.Label("")
         second_label.set_size(widgetconst.SIZE_SMALL)
         second_label.set_alignment(widgetconst.TEXT_JUSTIFY_RIGHT)
-        second_label.set_size_request(max(width1, width2), -1)
+        second_label.set_size_request(width2, -1)
         self._second_label = second_label
 
-        h.pack_start(widgetutil.align_right(self._second_label,
-            top_pad=10, bottom_pad=10, right_pad=20, left_pad=10))
+        h.pack_start(widgetutil.align_middle(widgetutil.align_right(
+                     self._second_label, right_pad=20)))
 
         v.pack_start(h)
         self.add(v)
@@ -582,18 +593,18 @@ class DownloadStatusToolbar(DisplayToolbar):
             text_down = _("%(rate)s downloading",
                           {"rate": displaytext.download_rate(down_bps)})
 
-        if text_up and text_down:
-            self._first_label.set_text(text_down)
-            self._second_label.set_text(text_up)
-        elif text_up:
-            self._first_label.set_text(text_up)
-            self._second_label.set_text('')
-        elif text_down:
-            self._first_label.set_text(text_down)
-            self._second_label.set_text('')
+        # first label is always used for upload, while second label is
+        # always used for download.  This prevents the text jumping around.
+        self._first_label.set_text(text_up)
+        self._second_label.set_text(text_down)
+        if text_up:
+            self._first_image.show()
         else:
-            self._first_label.set_text('')
-            self._second_label.set_text('')
+            self._first_image.hide()
+        if text_down:
+            self._second_image.show()
+        else:
+            self._second_image.hide()
 
 class DownloadToolbar(DisplayToolbar):
     """Widget that pause/resume/... buttons for downloads, and other data.
