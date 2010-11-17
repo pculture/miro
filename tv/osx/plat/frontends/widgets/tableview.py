@@ -1107,8 +1107,10 @@ class TableView(Widget):
     def set_volatile(self, volatile):
         if volatile:
             self.data_source.setDragSource_(None)
+            self.data_source.setDragDest_(None)
         else:
             self.data_source.setDragSource_(self.drag_source)
+            self.data_source.setDragDest_(self.drag_dest)
 
     def set_drag_source(self, drag_source):
         self.drag_source = drag_source
