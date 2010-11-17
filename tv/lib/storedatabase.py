@@ -54,6 +54,7 @@ import datetime
 import traceback
 import time
 import os
+import sys
 from cStringIO import StringIO
 
 try:
@@ -268,7 +269,7 @@ class LiveStorage:
             self.startup_version = self.current_version = self._get_version()
         elif choice == dialogs.BUTTON_SUBMIT_REPORT:
             report = crashreport.format_crash_report("Upgrading Database",
-                    with_exception=True, details=None)
+                    exc_info=sys.exc_info(), details=None)
             raise UpgradeErrorSendCrashReport(report)
         else:
             raise UpgradeError()

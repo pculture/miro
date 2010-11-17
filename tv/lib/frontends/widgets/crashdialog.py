@@ -44,7 +44,7 @@ from miro.dialogs import BUTTON_IGNORE, BUTTON_SUBMIT_REPORT
 
 IGNORE_ERRORS = -1
 
-def run_dialog(obj, report):
+def run_dialog(report):
     window = MainDialog(_("Internal Error"))
     try:
         try:
