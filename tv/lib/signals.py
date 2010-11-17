@@ -33,6 +33,7 @@ GObject-like signal handling for Miro.
 
 import itertools
 import logging
+import sys
 import weakref
 
 from miro import crashreport
@@ -237,8 +238,12 @@ class SystemSignals(SignalEmitter):
         """Used to emit the error signal.  Formats a nice crash report."""
 
         logging.info ("failed() called; generating crash report.")
+        if with_exception:
+            exc_info = sys.exc_info()
+        else:
+            exc_info = None
         self.emit('error', crashreport.format_crash_report(when,
-            with_exception, details))
+            exc_info, details))
 
 
 system = SystemSignals()

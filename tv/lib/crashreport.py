@@ -38,7 +38,7 @@ from miro import app
 from miro import prefs
 from miro import util
 
-def format_crash_report(when, with_exception, details):
+def format_crash_report(when, exc_info, details):
     header = ""
     header += "App:        %s\n" % app.config.get(prefs.LONG_APP_NAME)
     header += "Publisher:  %s\n" % app.config.get(prefs.PUBLISHER)
@@ -54,9 +54,9 @@ def format_crash_report(when, with_exception, details):
     header += "When:       %s\n" % when
     header += "\n"
 
-    if with_exception:
+    if exc_info:
         header += "Exception\n---------\n"
-        header += ''.join(traceback.format_exception(*sys.exc_info()))
+        header += ''.join(traceback.format_exception(*exc_info))
         header += "\n"
     if details:
         header += "Details: %s\n" % (details, )

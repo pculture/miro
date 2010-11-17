@@ -43,10 +43,12 @@ It also holds:
 import cProfile
 import os
 import logging
+import sys
 import urllib
 
 from miro import app
 from miro import config
+from miro import crashreport
 from miro import prefs
 from miro import feed
 from miro import startup
@@ -103,6 +105,11 @@ class Application:
         self.unwatched_count = 0
         app.frontend_config_watcher = config.ConfigWatcher(call_on_ui_thread)
 
+    def exception_handler(self, type, value, traceback):
+        report = crashreport.format_crash_report("in frontend thread",
+            exc_info=(type, value, traceback), details=None)
+        self.handle_crash_report(report)
+
     def startup(self):
         """Connects to signals, installs handlers, and calls :meth:`startup`
         from the :mod:`miro.startup` module.
@@ -117,6 +124,9 @@ class Application:
         requesting data from the backend.  Also sets up managers,
         initializes the ui, and displays the :class:`MiroWindow`.
         """
+        # First thing, hook up an exception handler to send exceptions to the
+        # backend.
+        sys.excepthook = self.exception_handler
         # Send a couple messages to the backend, when we get responses,
         # WidgetsMessageHandler() will call build_window()
         messages.TrackGuides().send_to_backend()
@@ -935,14 +945,14 @@ class Application:
         print "Up to date! -- not implemented"
 
     def handle_error(self, obj, report):
-        call_on_ui_thread(self._handle_error, obj, report)
+        call_on_ui_thread(self.handle_crash_report, report)
 
-    def _handle_error(self, obj, report):
+    def handle_crash_report(self, report):
         if self.ignore_errors:
             logging.warn("Ignoring Error:\n%s", report)
             return
 
-        ret = crashdialog.run_dialog(obj, report)
+        ret = crashdialog.run_dialog(report)
         if ret == crashdialog.IGNORE_ERRORS:
             self.ignore_errors = True
 
