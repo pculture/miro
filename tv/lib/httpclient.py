@@ -155,7 +155,7 @@ class MalformedURL(NetworkError):
 class UnknownHostError(NetworkError):
     """A file: URL doesn't exist"""
     def __init__(self, host):
-        NetworkError.__init__(self, _('Unknow Host'),
+        NetworkError.__init__(self, _('Unknown Host'),
             _('The domainname "%(host)s" couldn\'t be found', {"host": host}))
 
 class FileURLNotFoundError(NetworkError):
