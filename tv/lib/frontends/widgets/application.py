@@ -124,9 +124,6 @@ class Application:
         requesting data from the backend.  Also sets up managers,
         initializes the ui, and displays the :class:`MiroWindow`.
         """
-        # First thing, hook up an exception handler to send exceptions to the
-        # backend.
-        sys.excepthook = self.exception_handler
         # Send a couple messages to the backend, when we get responses,
         # WidgetsMessageHandler() will call build_window()
         messages.TrackGuides().send_to_backend()

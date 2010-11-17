@@ -155,6 +155,10 @@ class LinuxApplication(Application):
         elif key == prefs.RUN_AT_STARTUP.key:
             self.update_autostart(value)
 
+    def startup_ui(self):
+        sys.excepthook = self.exception_handler
+        Application.startup_ui(self)
+
     def _set_default_icon(self):
         # set the icon so that it doesn't flash when the window is
         # realized in Application.build_window().
