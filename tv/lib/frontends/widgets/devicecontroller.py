@@ -255,13 +255,29 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
     def __init__(self, device):
         self.device = device
         self.id = device.id
-        self.type = 'device-%s' % device.tab_type
-        self.image_filename = 'icon-%s_large.png' % device.tab_type
+        tab_type = device.tab_type
+        self.type = 'device-%s' % tab_type
+        self.image_filename = 'icon-%s_large.png' % tab_type
         self.title = u'%s on %s' % (device.name, device.info.name)
         itemlistcontroller.AudioVideoItemsController.__init__(self)
-        if ('%s_sort_state' % self.type) in device.database:
-            sort_key, ascending = device.database['%s_sort_state' % self.type]
+        if ('%s_sort_state' % tab_type) in device.database:
+            sort_key, ascending = device.database['%s_sort_state' % tab_type]
             self.on_sort_changed(self, sort_key, ascending)
+        if ('%s_view' % tab_type) in device.database:
+            view_type = device.database['%s_view' % tab_type]
+        elif tab_type == 'audio':
+            view_type = 'list'
+        else:
+            view_type = 'normal'
+
+        if view_type == 'list':
+            self.widget.switch_to_list_view()
+        else:
+            self.widget.switch_to_normal_view()
+
+        self.widget.toolbar.connect('list-view-clicked', self.save_list_view)
+        self.widget.toolbar.connect('normal-view-clicked',
+                                    self.save_normal_view)
 
     def build_header_toolbar(self):
         return itemlistwidgets.HeaderToolbar()
@@ -284,9 +300,21 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         sorter = itemlist.SORT_KEY_MAP[sort_key](ascending)
         self.item_list_group.set_sort(sorter)
         self.list_item_view.model_changed()
-        self.widget.toolbar.change_sort_indicator(sort_key, ascending)
-        self.list_item_view.change_sort_indicator(sort_key, ascending)
-        self.device.database['%s_sort_state' % self.type] = (sort_key,
-                                                             ascending)
+        sort = (sort_key, ascending)
+        self.widget.toolbar.change_sort_indicator(*sort)
+        self.list_item_view.change_sort_indicator(*sort)
+        self.device.database['%s_sort_state' % self.device.tab_type] = sort
         devices.write_database(self.device.mount,
                                self.device.database)
+
+    def save_list_view(self, toolbar=None):
+        self.device.database['%s_view' % self.device.tab_type] = 'list'
+        devices.write_database(self.device.mount,
+                               self.device.database)
+
+    def save_normal_view(self, toolbar=None):
+        self.device.database['%s_view' % self.device.tab_type] = 'normal'
+        devices.write_database(self.device.mount,
+                               self.device.database)
+
+
