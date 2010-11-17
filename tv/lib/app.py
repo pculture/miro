@@ -53,6 +53,9 @@ config = None
 # low-level parser for the "app.config" file
 configfile = None
 
+# manages the known devices
+device_manager = None
+
 # signal emiters for when config data changes
 backend_config_watcher = None
 frontend_config_watcher = None

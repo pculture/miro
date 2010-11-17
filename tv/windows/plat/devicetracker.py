@@ -80,7 +80,7 @@ class DeviceTracker(object):
     def _get_device_info(self, device):
         mount = device['mount']
 	database = devices.load_database(mount)
-        device_info = devices.device_manager.get_device_by_id(
+        device_info = app.device_manager.get_device_by_id(
 	    device['vendor_id'], device['product_id'],
             database.get('device_name'))
         if not os.path.exists(mount):

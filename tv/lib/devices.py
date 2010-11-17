@@ -118,6 +118,7 @@ class DeviceManager(object):
     def __init__(self):
         self.device_by_name = {}
         self.device_by_id = {}
+        self.startup()
 
     def _add_device(self, info):
         device_name = info.device_name
@@ -165,8 +166,6 @@ class DeviceManager(object):
         info = self.device_by_id[(vendor_id, product_id)]
         return self._get_device_from_info(info, device_type)
 
-
-device_manager = DeviceManager()
 
 class DeviceSyncManager(object):
     """

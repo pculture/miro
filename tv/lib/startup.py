@@ -277,7 +277,8 @@ def finish_startup(obj, thread):
 
     logging.info("Loading video converters...")
     videoconversion.conversion_manager.startup()
-    devices.device_manager.startup()
+    app.device_manager = devices.DeviceManager()
+
     searchengines.create_engines()
     setup_global_feeds()
     # call fix_database_inconsistencies() ASAP after the manual feed is set up

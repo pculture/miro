@@ -31,6 +31,7 @@ import os
 
 import gio
 
+from miro import app
 from miro.plat.frontends.widgets import timer
 from miro import devices
 from miro import messages
@@ -68,7 +69,7 @@ class DeviceTracker(object):
                 remaining = statinfo.f_frsize * statinfo.f_bavail
                 database = devices.load_database(mount_path)
 
-        device_info = devices.device_manager.get_device(
+        device_info = app.device_manager.get_device(
             drive.get_name(),
             database.get('device_name', None))
 

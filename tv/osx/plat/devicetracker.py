@@ -36,6 +36,7 @@ from FSEvents import *
 
 from miro.plat.frontends.widgets import threads
 
+from miro import app
 from miro import devices
 from miro import messages
 
@@ -88,7 +89,7 @@ class DeviceTracker(object):
         device_name = disk_info.MediaName[:-6] # strip off ' Media'
         database = devices.load_database(volume)
         try:
-            device_info = devices.device_manager.get_device(
+            device_info = app.device_manager.get_device(
                 device_name, database.get('device_name'))
         except KeyError:
             logging.info('unknown device: %r' % device_name)
