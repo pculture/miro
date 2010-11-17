@@ -40,7 +40,6 @@ from objc import YES, NO, nil, signature
 from AppKit import *
 from Foundation import *
 from PyObjCTools import Conversion
-from ExceptionHandling import NSExceptionHandler, NSLogAndHandleEveryExceptionMask, NSStackTraceKey
 
 from miro import app
 from miro import prefs
@@ -299,8 +298,6 @@ class AppController(NSObject):
         self.growl_notifier.register()
 
     def applicationWillFinishLaunching_(self, notification):
-        NSExceptionHandler.defaultExceptionHandler().setExceptionHandlingMask_(NSLogAndHandleEveryExceptionMask)
-        NSExceptionHandler.defaultExceptionHandler().setDelegate_(self)
 
         man = NSAppleEventManager.sharedAppleEventManager()
         man.setEventHandler_andSelector_forEventClass_andEventID_(
@@ -351,28 +348,6 @@ class AppController(NSObject):
 
         ensureDownloadDaemonIsTerminated()    
         app.controller.on_shutdown()
-
-    def exceptionHandler_shouldLogException_mask_(self, handler, exception, mask):
-        logging.warn("Unhandled exception: %s", exception.name())
-        if os.path.exists("/usr/bin/atos"):
-            stack = exception.userInfo().objectForKey_(NSStackTraceKey)
-            if stack is None:
-                print "No stack available"
-            else:
-                pid = NSNumber.numberWithInt_(NSProcessInfo.processInfo().processIdentifier()).stringValue()
-                args = NSMutableArray.arrayWithCapacity_(20)
-                args.addObject_("-p")
-                args.addObject_(pid);
-                args.addObjectsFromArray_(stack.componentsSeparatedByString_("  "))
-            
-                task = NSTask.alloc().init()
-                task.setLaunchPath_("/usr/bin/atos");
-                task.setArguments_(args);
-                task.launch();
-        else:
-            import traceback
-            traceback.print_stack()
-        return NO
 
     def applicationShouldHandleReopen_hasVisibleWindows_(self, appl, flag):
         if app.widgetapp is not None and app.widgetapp.window is not None:
