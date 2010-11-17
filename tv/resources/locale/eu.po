@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-09-13 19:48+0000\n"
-"Last-Translator: Julen <Unknown>\n"
+"PO-Revision-Date: 2010-11-14 11:19+0000\n"
+"Last-Translator: Aitzol <Unknown>\n"
 "Language-Team: Basque <eu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-10-20 16:53+0000\n"
+"X-Launchpad-Export-Date: 2010-11-17 17:54+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
@@ -336,7 +336,7 @@ msgstr ""
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:41
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:49
 msgid "Enable tray icon"
-msgstr ""
+msgstr "Ipini Miro tresnako barran"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:45
 msgid "When I click the red close button:"
@@ -2059,7 +2059,7 @@ msgstr "%(name)s jarioaren izen berria idatzi"
 #: ../../lib/frontends/widgets/application.py:736
 #: ../../lib/frontends/widgets/tablist.py:766 ../../lib/playlist.py:202
 msgid "Rename Playlist"
-msgstr "Erreprodukzio-zerrendaren berrizendatu"
+msgstr "Erreprodukzio-zerrenda berrizendatu"
 
 #: ../../lib/frontends/widgets/application.py:737
 #, python-format

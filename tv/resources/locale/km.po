@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2010-10-20 16:53+0000\n"
+"X-Launchpad-Export-Date: 2010-11-17 17:54+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
@@ -998,7 +998,7 @@ msgstr ""
 
 #: ../../lib/dialogs.py:124
 msgid "Open in External Browser"
-msgstr ""
+msgstr "បើក​ក្នុង​កម្មវិធី​រុករក​ខាង​ក្រៅ"
 
 #: ../../lib/dialogs.py:125
 msgid "Don't Install"
@@ -1912,8 +1912,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/application.py:444
 msgid "Remove item"
 msgid_plural "Remove items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "យកវត្ថុ​​ចេញ"
 
 #: ../../lib/frontends/widgets/application.py:448
 msgid ""

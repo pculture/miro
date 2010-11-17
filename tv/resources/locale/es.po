@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-10-06 07:53+0000\n"
-"Last-Translator: fjuarez <Unknown>\n"
+"PO-Revision-Date: 2010-11-04 01:36+0000\n"
+"Last-Translator: Cristofano Varacolaci <Unknown>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-10-20 16:53+0000\n"
+"X-Launchpad-Export-Date: 2010-11-17 17:53+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../lib/frontends/widgets/statictabs.py:44
@@ -912,7 +912,7 @@ msgstr ""
 #: ../../lib/videoconversion.py:88
 #, python-format
 msgid "%(name)s (%(mediatype)s)"
-msgstr ""
+msgstr "%(name)s (%(mediatype)s)"
 
 #: ../../lib/videoconversion.py:344
 msgid "Reason unknown"
@@ -921,7 +921,7 @@ msgstr "Razón desconocida"
 #: ../../lib/videoconversion.py:764
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
-msgstr ""
+msgstr "%(original_name)s (Convertido a %(format)s)"
 
 #: ../../lib/messages.py:1120 ../../lib/item.py:1127
 msgid "queued for download"
@@ -1210,7 +1210,7 @@ msgstr "Enviar un informe de error"
 #: ../../lib/controller.py:160
 #, python-format
 msgid "Sending Crash Report (%(progress)d%%)"
-msgstr ""
+msgstr "Enviando Reporte de Error (%(progress)d%%)"
 
 #: ../../lib/displaytext.py:61
 #, python-format
@@ -2707,7 +2707,7 @@ msgstr "Error: %(error)s"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:312
 msgid "Troubleshoot"
-msgstr ""
+msgstr "Resolver problema"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:314
 msgid "Open log"
@@ -2905,7 +2905,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/diagnostics.py:129
 #, python-format
 msgid "%(databasecount)s: Delete"
-msgstr ""
+msgstr "%(databasecount)s: Eliminar"
 
 #: ../../lib/frontends/widgets/diagnostics.py:81
 #: ../../lib/frontends/widgets/gtk/trayicon.py:115
@@ -2946,7 +2946,7 @@ msgstr "Obtejos db totales en memoria:"
 
 #: ../../lib/frontends/widgets/diagnostics.py:127
 msgid "Total db backups:"
-msgstr ""
+msgstr "Total copias de seguridad de base de datos:"
 
 #: ../../lib/frontends/widgets/browser.py:93
 msgid "Open in browser"
@@ -3226,7 +3226,7 @@ msgstr "Comprobar si hay contenido nuevo:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:362
 msgid "Auto-download setting:"
-msgstr ""
+msgstr "b"
 
 #: ../../lib/frontends/widgets/prefpanel.py:368
 msgid "Remember this many old items:"
@@ -3550,11 +3550,11 @@ msgstr "La autorización ha fallado"
 
 #: ../../lib/httpclient.py:148
 msgid "Authorization canceled"
-msgstr ""
+msgstr "Autorización cancelada"
 
 #: ../../lib/httpclient.py:149
 msgid "Authorization canceled by user"
-msgstr ""
+msgstr "Autorización cancelada por el usuario"
 
 #: ../../lib/httpclient.py:153
 msgid "Invalid URL"

@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-10-13 15:01+0000\n"
-"Last-Translator: Ertan Yıldız <Unknown>\n"
+"PO-Revision-Date: 2010-11-08 02:42+0000\n"
+"Last-Translator: muratcevikgs@gmail.com <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2010-10-20 16:53+0000\n"
+"X-Launchpad-Export-Date: 2010-11-17 17:55+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../lib/frontends/widgets/menus.py:291
@@ -86,7 +86,7 @@ msgstr "Tercihler..."
 #: ../../osx/plat/frontends/widgets/osxmenus.py:172
 #, python-format
 msgid "Quit %(appname)s"
-msgstr "%(appname)s'dan Çık"
+msgstr "%(appname)s'i Kapat"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:176
 msgid "Close Window"
@@ -163,7 +163,7 @@ msgstr "Altyazıları Kapat"
 #: ../../lib/frontends/widgets/menus.py:323
 #: ../../lib/frontends/widgets/gtk/video.py:380
 msgid "None Available"
-msgstr "Mevcut Yok"
+msgstr "Hiçbiri Uygun Değil"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:386
 #: ../../lib/frontends/widgets/gtk/video.py:413
@@ -195,7 +195,7 @@ msgstr "Güney-Doğu Avrupa"
 
 #: ../../windows/plat/renderers/vlc.py:704
 msgid "Ukrainian"
-msgstr ""
+msgstr "Ukraynaca"
 
 #: ../../windows/plat/renderers/vlc.py:707
 #: ../../windows/plat/renderers/vlc.py:709
@@ -206,11 +206,11 @@ msgstr "Batı Avrupa"
 #: ../../windows/plat/renderers/vlc.py:708
 #: ../../linux/plat/renderers/gstreamerrenderer.py:591
 msgid "Celtic"
-msgstr ""
+msgstr "Keltçe"
 
 #: ../../windows/plat/renderers/vlc.py:710
 msgid "Esperanto"
-msgstr ""
+msgstr "Esperanto"
 
 #: ../../windows/plat/renderers/vlc.py:711
 #: ../../windows/plat/renderers/vlc.py:712
@@ -218,24 +218,24 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:593
 #: ../../linux/plat/renderers/gstreamerrenderer.py:594
 msgid "Greek"
-msgstr ""
+msgstr "Yunanca"
 
 #: ../../windows/plat/renderers/vlc.py:715
 #: ../../linux/plat/renderers/gstreamerrenderer.py:604
 msgid "East Asian"
-msgstr ""
+msgstr "Doğu Asya"
 
 #: ../../windows/plat/renderers/vlc.py:716
 msgid "Universal Chinese"
-msgstr ""
+msgstr "Evrensel Çince"
 
 #: ../../windows/plat/renderers/vlc.py:717
 msgid "Simplified Chinese"
-msgstr "Çince (Basit)"
+msgstr "Basitleştirilmiş Çince"
 
 #: ../../windows/plat/renderers/vlc.py:718
 msgid "Simplified Chinese Unix"
-msgstr ""
+msgstr "Basitleştirilmiş Çince (Unix)"
 
 #: ../../windows/plat/renderers/vlc.py:719
 #: ../../windows/plat/renderers/vlc.py:721
@@ -260,11 +260,11 @@ msgstr "Korece"
 
 #: ../../windows/plat/renderers/vlc.py:724
 msgid "Traditional Chinese"
-msgstr "Çince (Geleneksel)"
+msgstr "Geleneksel Çince"
 
 #: ../../windows/plat/renderers/vlc.py:725
 msgid "Traditional Chinese Unix"
-msgstr ""
+msgstr "Geleneksel Çince (Unix)"
 
 #: ../../windows/plat/renderers/vlc.py:726
 msgid "Hong-Kong Supplementary"
@@ -273,7 +273,7 @@ msgstr ""
 #: ../../windows/plat/renderers/vlc.py:729
 #: ../../linux/plat/renderers/gstreamerrenderer.py:620
 msgid "SE and SW Asian"
-msgstr ""
+msgstr "Güneydoğu ve Güney Batı Asya"
 
 #: ../../windows/plat/renderers/vlc.py:730
 #: ../../windows/plat/renderers/vlc.py:731
@@ -287,7 +287,7 @@ msgstr "Türkçe"
 #: ../../windows/plat/renderers/vlc.py:732
 #: ../../linux/plat/renderers/gstreamerrenderer.py:626
 msgid "Thai"
-msgstr ""
+msgstr "Tai Dili"
 
 #: ../../windows/plat/renderers/vlc.py:733
 #: ../../windows/plat/renderers/vlc.py:734
@@ -295,12 +295,12 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:632
 #: ../../linux/plat/renderers/gstreamerrenderer.py:633
 msgid "Vietnamese"
-msgstr ""
+msgstr "Vietnamca"
 
 #: ../../windows/plat/renderers/vlc.py:737
 #: ../../linux/plat/renderers/gstreamerrenderer.py:635
 msgid "Middle Eastern"
-msgstr ""
+msgstr "Orta Doğu"
 
 #: ../../windows/plat/renderers/vlc.py:738
 #: ../../windows/plat/renderers/vlc.py:739
@@ -318,7 +318,7 @@ msgstr "Arapça"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:642
 #: ../../linux/plat/renderers/gstreamerrenderer.py:643
 msgid "Hebrew"
-msgstr ""
+msgstr "İbranice"
 
 #: ../../windows/plat/renderers/vlc.py:744
 #: ../../linux/plat/renderers/gstreamerrenderer.py:647
@@ -328,7 +328,7 @@ msgstr ""
 #: ../../linux/plat/renderers/gstreamerrenderer.py:651
 #: ../../linux/plat/renderers/gstreamerrenderer.py:652
 msgid "Unicode"
-msgstr "Evrensel kod"
+msgstr "Unicode"
 
 #: ../../windows/plat/renderers/vlc.py:745
 #: ../../windows/plat/renderers/vlc.py:746
@@ -340,7 +340,7 @@ msgstr "Evrensel"
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:41
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:49
 msgid "Enable tray icon"
-msgstr "Simgeyi görev çubuğunda göster"
+msgstr "Sistem tepsisinde göster"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:45
 msgid "When I click the red close button:"
@@ -348,7 +348,7 @@ msgstr "Kırmızı kapat düğmesine tıkladığımda:"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:48
 msgid "Close to tray so that downloads can continue."
-msgstr "İndirmelerin devam edebilmesi için görev çubuğu çekmecesine kapatın."
+msgstr "İndirmelerin devam etmesi için sistem tepsisine gönder."
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:49
 #, python-format
@@ -357,15 +357,15 @@ msgstr "%(appname)s'dan tamamen çık."
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:58
 msgid "System Default"
-msgstr ""
+msgstr "Sistem Varsayılanı"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:64
 msgid "Subtitle font:"
-msgstr ""
+msgstr "Altyazı Fontu:"
 
 #: ../../windows/plat/frontends/widgets/application.py:148
 msgid "Close to tray?"
-msgstr "Görev çubuğu çekmecesine kapat?"
+msgstr "Sistem tepsisine gönder?"
 
 #: ../../windows/plat/frontends/widgets/application.py:149
 #, python-format
@@ -373,17 +373,17 @@ msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
-"Kırmızı kapat düğmesini tıkladığınızda, %(appname)s'yu sistem çubuğuna "
-"küçültülmeyi mi, yoksa tamamen kapatmayı mı istersiniz?  Bu ayarı daha sonra "
+"Kırmızı kapat düğmesine tıkladığınızda, %(appname)s'yu sistem tepsisine "
+"göndermeyi mi, ya da kapatmayı mı istersiniz? Bu ayarı daha sonra "
 "Seçenekler'den değiştirebilirsiniz."
 
 #: ../../windows/plat/frontends/widgets/application.py:208
 msgid "Error Bombing Item"
-msgstr "Ögeyi Bombalama Hatası"
+msgstr "Hata: Nesne Başarısız"
 
 #: ../../windows/plat/frontends/widgets/application.py:210
 msgid "Error Recommending Item"
-msgstr "Ögeyi Önerme Hatası"
+msgstr "Hata: Nesne Önerilemedi"
 
 #: ../../windows/plat/frontends/widgets/application.py:212
 msgid "Error Opening Website"
@@ -424,7 +424,7 @@ msgstr ""
 
 #: ../../windows/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
-msgstr "Adobe Flash kur"
+msgstr "Adobe Flash'ı yükle"
 
 #: ../../windows/plat/frontends/widgets/flash.py:71
 #, python-format
@@ -435,10 +435,6 @@ msgid ""
 "You should quit %(appname)s now and start it up again after Adobe Flash has "
 "been installed."
 msgstr ""
-"Tarayıcınız Adobe Flash indirip kurabileceğiniz ağ sayfasını açacak.\n"
-"\n"
-"%(appname)s 'dan şimdi çıkıp Adobe Flash kurulduktan sonra tekrar "
-"başlatmalısınız."
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:486
 #, python-format
@@ -461,35 +457,35 @@ msgstr "Hırvatça"
 #: ../../linux/plat/renderers/gstreamerrenderer.py:578
 #: ../../linux/plat/renderers/gstreamerrenderer.py:579
 msgid "Cyrillic"
-msgstr ""
+msgstr "Kiril Alfabesi"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:580
 msgid "Cyrillic/Russian"
-msgstr ""
+msgstr "Kiril/Rusça"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:581
 #: ../../linux/plat/renderers/gstreamerrenderer.py:582
 msgid "Cyrillic/Ukrainian"
-msgstr ""
+msgstr "Kiril/Ukraynaca"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:584
 #: ../../linux/plat/renderers/gstreamerrenderer.py:585
 #: ../../linux/plat/renderers/gstreamerrenderer.py:586
 msgid "Central European"
-msgstr "Orta Avrupa"
+msgstr "Merkezi Avrupa"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:587
 #: ../../linux/plat/renderers/gstreamerrenderer.py:588
 msgid "Romanian"
-msgstr ""
+msgstr "Romanya"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:595
 msgid "Icelandic"
-msgstr ""
+msgstr "İzlandaca"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:596
 msgid "Nordic"
-msgstr ""
+msgstr "Kuzeybatı Avrupa"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:597
 msgid "South European"
@@ -522,15 +518,15 @@ msgstr "Ermenice"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:622
 msgid "Georgian"
-msgstr ""
+msgstr "Gürcü Dili"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:623
 msgid "Gujarati"
-msgstr ""
+msgstr "Gujarat"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:624
 msgid "Gurmukhi"
-msgstr ""
+msgstr "Gurmukhi"
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:625
 msgid "Hindi"
@@ -565,7 +561,7 @@ msgstr ""
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:97
 msgid "ffmpeg binary path:"
-msgstr ""
+msgstr "ffmpeg dosya yolu"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:104
 msgid "ffmpeg2theora binary path:"
@@ -585,7 +581,7 @@ msgstr "Veritabanını Yükselt"
 
 #: ../../lib/startup.py:126
 msgid "Database Error"
-msgstr ""
+msgstr "Veritabanı Hatası"
 
 #: ../../lib/startup.py:127
 #, python-format
@@ -729,7 +725,7 @@ msgstr "bağlantı yok - %s içinde yeniden deneniyor"
 
 #: ../../lib/downloader.py:544
 msgid "no connection - retrying soon"
-msgstr ""
+msgstr "Bağlantı yok-Yeniden deneniyor."
 
 #: ../../lib/downloader.py:568 ../../lib/downloader.py:576
 #: ../../lib/httpclient.py:211 ../../lib/httpclient.py:672
@@ -886,7 +882,7 @@ msgstr ""
 
 #: ../../lib/videoconversion.py:344
 msgid "Reason unknown"
-msgstr ""
+msgstr "Nedeni bilinmeyen"
 
 #: ../../lib/videoconversion.py:764
 #, python-format
@@ -1068,7 +1064,7 @@ msgstr ""
 
 #: ../../lib/dialogs.py:215
 msgid "Login Required"
-msgstr ""
+msgstr "Giriş gerekli"
 
 #: ../../lib/storedatabase.py:248
 #, python-format
@@ -1368,7 +1364,7 @@ msgstr "Hata"
 
 #: ../../lib/frontends/widgets/style.py:257
 msgid "Queued for Auto-download"
-msgstr ""
+msgstr "Otomatik indirme için sıraya koy"
 
 #: ../../lib/frontends/widgets/style.py:258
 #: ../../lib/frontends/widgets/style.py:1203
@@ -1682,7 +1678,7 @@ msgstr "Bir altyazı dosyası seçin"
 
 #: ../../lib/frontends/widgets/menus.py:332
 msgid "Convert"
-msgstr ""
+msgstr "Dönüştür"
 
 #: ../../lib/frontends/widgets/menus.py:334
 #: ../../lib/frontends/widgets/menus.py:346
@@ -1719,7 +1715,7 @@ msgstr "_Miro Gezegen"
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:68
 #: ../../lib/frontends/widgets/itemcontextmenu.py:296
 msgid "Show Conversion Folder"
-msgstr ""
+msgstr "Dönüştürülen dosyaları göster"
 
 #: ../../lib/frontends/widgets/menus.py:390
 msgid "_Encoding"
@@ -1727,7 +1723,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/menus.py:393
 msgid "Default (UTF-8)"
-msgstr ""
+msgstr "Varsayılan (UTF-8)"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:180
 msgid "Save Search"
@@ -1819,7 +1815,7 @@ msgstr "%(rate)s indiriliyor"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:644
 msgid "Auto-download"
-msgstr ""
+msgstr "Otomatik indir"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:649
 #: ../../lib/frontends/widgets/prefpanel.py:332
@@ -2590,15 +2586,15 @@ msgstr "Yol:"
 #: ../../lib/frontends/widgets/statictabs.py:126
 #: ../../lib/frontends/widgets/prefpanel.py:730
 msgid "Conversions"
-msgstr ""
+msgstr "Dönüştürülenler"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:62
 msgid "Stop All Conversions"
-msgstr ""
+msgstr "Tüm dönüştürmeleri durdur"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:74
 msgid "Clear Finished Conversions"
-msgstr ""
+msgstr "Biten dönüştürmeleri temizle"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:272
 #, python-format
@@ -2612,7 +2608,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:312
 msgid "Troubleshoot"
-msgstr ""
+msgstr "Sorun giderme"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:314
 msgid "Open log"
@@ -2625,7 +2621,7 @@ msgstr "Temizle"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:327
 msgid "Completed"
-msgstr ""
+msgstr "Tamamlandı"
 
 #: ../../lib/frontends/widgets/downloadscontroller.py:86
 #: ../../lib/frontends/widgets/prefpanel.py:726
@@ -2903,7 +2899,7 @@ msgstr "Beslemeye Devam Et"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:126
 #: ../../lib/frontends/widgets/itemcontextmenu.py:227
 msgid "Convert to..."
-msgstr ""
+msgstr "Şuna dönüştür..."
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:129
 #: ../../lib/frontends/widgets/itemcontextmenu.py:257
@@ -3129,7 +3125,7 @@ msgstr "Yeni içerik için kontrol et"
 
 #: ../../lib/frontends/widgets/prefpanel.py:362
 msgid "Auto-download setting:"
-msgstr ""
+msgstr "Otomatik indirme ayarları:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:368
 msgid "Remember this many old items:"
@@ -3222,7 +3218,7 @@ msgstr "klasör"
 
 #: ../../lib/frontends/widgets/prefpanel.py:537
 msgid "visible"
-msgstr ""
+msgstr "Mevcut"
 
 #: ../../lib/frontends/widgets/prefpanel.py:585
 msgid "Add Watched Folder"
@@ -3455,7 +3451,7 @@ msgstr "Yetkilendirme başarısız"
 
 #: ../../lib/httpclient.py:148
 msgid "Authorization canceled"
-msgstr ""
+msgstr "Yetkilendirme iptal"
 
 #: ../../lib/httpclient.py:149
 msgid "Authorization canceled by user"
@@ -3504,11 +3500,11 @@ msgstr "Yazma hatası"
 
 #: ../../lib/httpclient.py:365
 msgid "Website"
-msgstr ""
+msgstr "Websayfası"
 
 #: ../../lib/httpclient.py:370
 msgid "Proxy"
-msgstr ""
+msgstr "Proksi"
 
 #: ../../lib/net.py:75
 #, python-format

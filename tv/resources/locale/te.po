@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-10-20 16:53+0000\n"
+"X-Launchpad-Export-Date: 2010-11-17 17:54+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
@@ -712,7 +712,7 @@ msgstr "కలాపం"
 #: ../../lib/downloader.py:336 ../../lib/httpclient.py:134
 #: ../../lib/httpclient.py:165
 msgid "File not found"
-msgstr "ఫైలు కనుబడలేదు"
+msgstr "దస్త్రము కనబడలేదు"
 
 #: ../../lib/downloader.py:337
 msgid "Flash URL Scraping Error"
@@ -960,7 +960,7 @@ msgstr "వలసపంపవద్దు"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:140
 #: ../../lib/frontends/widgets/itemcontextmenu.py:241
 msgid "Download"
-msgstr "దిగుమతించు"
+msgstr "దిగుమతిచేయి"
 
 #: ../../lib/dialogs.py:107
 msgid "Remove Entry"
@@ -2694,7 +2694,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/crashdialog.py:48
 msgid "Internal Error"
-msgstr "అంతర్గత పొరపాటు"
+msgstr ""
 
 #: ../../lib/frontends/widgets/crashdialog.py:54
 #, python-format
@@ -2928,7 +2928,7 @@ msgstr "నడుపు"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:104
 msgid "Play Just This Item"
-msgstr ""
+msgstr "ఈ అంశమును మాత్రమే ఆడించు"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:106
 #: ../../lib/frontends/widgets/itemcontextmenu.py:205
@@ -2993,14 +2993,14 @@ msgstr "డిస్కులో ఫైలు"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:161
 msgid "View"
-msgstr "చూపించు"
+msgstr "దర్శనం"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:199
 #, python-format
 msgid "%(count)d Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
-msgstr[0] "%(count)d దింపుకున్న ఐటము"
-msgstr[1] "%(count)d దింపుకున్న ఐటములు"
+msgstr[0] "%(count)d దిగుమతయిన అంశము"
+msgstr[1] "%(count)d దిగుమతయిన అంశములు"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:233
 #, python-format
@@ -3013,8 +3013,8 @@ msgstr[1] "%(count)d అందుబాటులోవున్న అంశా�
 #, python-format
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
-msgstr[0] "%(count)d దింపుకుంటున్న ఐటము"
-msgstr[1] "%(count)d దింపుకుంటున్న ఐటములు"
+msgstr[0] "%(count)d దిగుమతి కాబడుతున్న అంశము"
+msgstr[1] "%(count)d దిగుమతి కాబడుతున్న అంశములు"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:263
 #, python-format
@@ -3025,11 +3025,11 @@ msgstr[1] "%(count)d నిలిపివేసిన అంశాలు"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:281
 msgid "Restart Upload"
-msgstr "ఎక్కింపును మళ్ళీ మొదలుపెట్టు"
+msgstr "ఎగుమతి ని మళ్లీ ప్రారంభించు"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:310
 msgid "Remove From Playlist"
-msgstr "ప్లేలిస్టు నుంచి తీసెయ్యి"
+msgstr "ప్లేలిస్టు నుంచి తొలగించు"
 
 #: ../../lib/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -3517,7 +3517,7 @@ msgstr "తప్పుడు URL"
 #: ../../lib/httpclient.py:154
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr "\"%(url)s\" సరైన URL కాదు"
+msgstr ""
 
 #: ../../lib/httpclient.py:159
 msgid "Unknow Host"

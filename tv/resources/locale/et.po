@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-10-17 10:51+0000\n"
-"Last-Translator: mahfiaz <mahfiaz@gmail.com>\n"
+"PO-Revision-Date: 2010-11-15 21:45+0000\n"
+"Last-Translator: lyyser <Unknown>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-10-20 16:53+0000\n"
+"X-Launchpad-Export-Date: 2010-11-17 17:54+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
@@ -43,15 +43,15 @@ msgstr "Kustuta"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:210
 msgid "Pop Out"
-msgstr "Pop välja"
+msgstr "Plõks välja"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:213
 msgid "Pop In"
-msgstr "Pop sees"
+msgstr "Plõks sees"
 
 #: ../../osx/plat/frontends/widgets/application.py:193
 msgid "Download Completed"
-msgstr "Allalaadimine valmis"
+msgstr "Allalaadimine lõpetatud"
 
 #: ../../osx/plat/frontends/widgets/application.py:194
 #, python-format
@@ -65,7 +65,7 @@ msgstr "Teenused"
 #: ../../osx/plat/frontends/widgets/osxmenus.py:161
 #, python-format
 msgid "Hide %(appname)s"
-msgstr "Taanda %(appname)s"
+msgstr "Peida %(appname)s"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:163
 msgid "Hide Others"
@@ -223,11 +223,11 @@ msgstr "Ida-Aasia"
 
 #: ../../windows/plat/renderers/vlc.py:716
 msgid "Universal Chinese"
-msgstr ""
+msgstr "Universaalne Hiina"
 
 #: ../../windows/plat/renderers/vlc.py:717
 msgid "Simplified Chinese"
-msgstr "Hiina (lihtsustatud)"
+msgstr "Lihtsustatud hiina"
 
 #: ../../windows/plat/renderers/vlc.py:718
 msgid "Simplified Chinese Unix"
@@ -357,7 +357,7 @@ msgstr "Süsteemi vaikeväärtus"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:64
 msgid "Subtitle font:"
-msgstr ""
+msgstr "Subtiitri font:"
 
 #: ../../windows/plat/frontends/widgets/application.py:148
 msgid "Close to tray?"
@@ -556,15 +556,15 @@ msgstr "Video renderdaja:"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:91
 msgid "Binaries to use:"
-msgstr ""
+msgstr "Kasuta kahendfaile:"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:97
 msgid "ffmpeg binary path:"
-msgstr ""
+msgstr "ffmpeg kahendfaili asukoht:"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:104
 msgid "ffmpeg2theora binary path:"
-msgstr ""
+msgstr "ffmpeg2theora kahendfaili asukoht:"
 
 #: ../../lib/dbupgradeprogress.py:60
 msgid "Upgrading Old Database"
@@ -599,6 +599,20 @@ msgid ""
 "To help us fix problems like this in the future, please file a bug report at "
 "%(url)s."
 msgstr ""
+"Meil on kahju kuid %(appname)s ei suutnud käivituda kuna tekkis probleem "
+"andmebaasiga:\n"
+"\n"
+"Viga: %(error)s\n"
+"\n"
+"On võimalik, et teie andmebaasi fail on rikutud ja on kasutamiskõlbmatu.\n"
+"\n"
+"Te võite uue alguse teha ja teie vigane andmebaas eemaldatakse, aga te peate "
+"uuesti lisama oma meediafailid ja uudisevoogid. Kui te tahate seda teha, "
+"vajutage alusta uuesti nuppu ja taaskäivita %(appname)s.\n"
+"\n"
+"\n"
+"Et aidata meid probleemide parandamisega nagu see siis palun esitage "
+"vearaport aadressil %(url)s."
 
 #: ../../lib/startup.py:148
 msgid "Unknown Error"
@@ -628,7 +642,7 @@ msgstr ""
 
 #: ../../lib/startup.py:512
 msgid "Submitting Crash Report"
-msgstr "Saadan kokku jooksmise teate"
+msgstr "Saadan krahhi raporti."
 
 #: ../../lib/startup.py:514
 #, python-format
@@ -650,7 +664,8 @@ msgstr "Viga uudisvoo laadimisel"
 #: ../../lib/feed.py:846
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
-msgstr "Ei suudetud laadida voogu asukohas %(url)s (%(errordescription)s)."
+msgstr ""
+"Ei suutnud laadida uudisevoogu aadressil %(url)s (%(errordescription)s)."
 
 #: ../../lib/feed.py:849
 msgid "Would you like to keep the feed?"
@@ -1671,7 +1686,7 @@ msgstr "Vali subtiitri fail..."
 
 #: ../../lib/frontends/widgets/menus.py:332
 msgid "Convert"
-msgstr ""
+msgstr "Konverdi"
 
 #: ../../lib/frontends/widgets/menus.py:334
 #: ../../lib/frontends/widgets/menus.py:346
@@ -2194,7 +2209,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/firsttimedialog.py:178
 #: ../../lib/frontends/widgets/prefpanel.py:312
 msgid "Language:"
-msgstr ""
+msgstr "Keel:"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:186
 #: ../../lib/frontends/widgets/firsttimedialog.py:228
@@ -2272,8 +2287,8 @@ msgstr "Otsing meedia failidele"
 #, python-format
 msgid "parsed %(count)s file"
 msgid_plural "parsed %(count)s files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "parsitud %(count)s fail"
+msgstr[1] "parsitud %(count)s failid"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:406
 #, python-format
@@ -3215,7 +3230,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:531
 msgid "folder"
-msgstr ""
+msgstr "kaust"
 
 #: ../../lib/frontends/widgets/prefpanel.py:537
 msgid "visible"
@@ -3499,11 +3514,11 @@ msgstr ""
 
 #: ../../lib/httpclient.py:365
 msgid "Website"
-msgstr ""
+msgstr "Veebileht"
 
 #: ../../lib/httpclient.py:370
 msgid "Proxy"
-msgstr ""
+msgstr "Proksi"
 
 #: ../../lib/net.py:75
 #, python-format

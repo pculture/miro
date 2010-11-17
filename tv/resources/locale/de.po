@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-09-27 19:57+0000\n"
-"Last-Translator: Habi <david.haberthuer@gmail.com>\n"
+"PO-Revision-Date: 2010-10-22 15:53+0000\n"
+"Last-Translator: Rise-T <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-10-20 16:53+0000\n"
+"X-Launchpad-Export-Date: 2010-11-17 17:54+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
@@ -340,7 +340,7 @@ msgstr "Symbol im Infobereich anzeigen."
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:45
 msgid "When I click the red close button:"
-msgstr "Aktion beim Klicken auf die rote Schließen-Schaltfläche:"
+msgstr "Aktion beim Klicken auf die rote \"Schließen\"-Schaltfläche:"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:48
 msgid "Close to tray so that downloads can continue."
@@ -371,9 +371,9 @@ msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
-"Soll beim Klicken auf die rote Schließen-Schaltfläche %(appname)s in den "
-"Infobereich minimiert oder beendet werden? Die hier getroffene Auswahl kann "
-"später unter \"Einstellungen\" verändert werden."
+"Soll beim Klicken auf die rote \"Schließen\"-Schaltfläche %(appname)s in den "
+"Infobereich minimiert oder vollständig beendet werden? Die hier getroffene "
+"Auswahl kann später unter \"Einstellungen\" verändert werden."
 
 #: ../../windows/plat/frontends/widgets/application.py:208
 msgid "Error Bombing Item"
@@ -604,16 +604,16 @@ msgid ""
 "To help us fix problems like this in the future, please file a bug report at "
 "%(url)s."
 msgstr ""
-"Entschuldigung, %(appname)s konnte aufgrund eines Problemes mit der "
+"Entschuldigung, %(appname)s konnte auf Grund eines Problems mit der "
 "Datenbank nicht gestartet werden:\n"
 "Fehler: %(error)s\n"
-"Möglicherweise ist die Datenbank beschädigt und kann nicht mehr verwendet "
-"werden.\n"
+"Möglicherweise ist die Datenbank beschädigt und kann daher nicht mehr "
+"verwendet werden.\n"
 "Bei einem kompletten Neustart von %(appname)s wird die beschädigte Datenbank "
 "entfernt. Alle Feeds und Medien-Dateien müssen aber neu hinzugefügt werden. "
-"Falls dies gewünscht ist, bitte den Neustart-Button drücken und %(appname)s "
-"neu starten.\n"
-"Um solche Probleme in Zukunft zu vermeiden, bitten wir dich, unter %(url)s "
+"Falls dies gewünscht ist, bitte auf die \"Neustart\"-Schaltfläche klicken, "
+"um %(appname)s neu zu starten.\n"
+"Um solche Probleme zukünftig zu vermeiden, bitten wir Sie, unter %(url)s "
 "einen Fehlerbericht zu erstellen. Danke!"
 
 #: ../../lib/startup.py:148
@@ -639,7 +639,7 @@ msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
 "must download the latest version of %(appname)s and run that."
 msgstr ""
-"Ihre Videobibliothek wurde mit einer neueren Version von %(appname)s "
+"Ihre Medien-Datenbank wurde mit einer neueren Version von %(appname)s "
 "gespeichert. Bitte laden Sie die aktuelle %(appname)s Version herunter und "
 "starten Sie diese."
 
@@ -911,7 +911,7 @@ msgstr "%(name)s (%(mediatype)s)"
 
 #: ../../lib/videoconversion.py:344
 msgid "Reason unknown"
-msgstr ""
+msgstr "Ursache unbekannt"
 
 #: ../../lib/videoconversion.py:764
 #, python-format
@@ -1043,7 +1043,7 @@ msgstr "Nicht jetzt"
 
 #: ../../lib/dialogs.py:121
 msgid "Close to Tray"
-msgstr "In den Infobereich minimieren."
+msgstr "In den Infobereich minimieren"
 
 #: ../../lib/dialogs.py:122
 msgid "Launch Miro"
@@ -1116,16 +1116,16 @@ msgid ""
 "Finally, you can start fresh and your damaged database will be removed, but "
 "you will have to re-add your feeds and media files."
 msgstr ""
-"%(appname)s war es, auf Grund von Fehlern, leider unmöglich Ihre Datenbank "
-"zu erweitern.\n"
-"Überprüfen Sie, ob Sie über genug freien Speicherplatz auf Ihrer Festplatter "
-"verfügen. Wenn nicht, beenden Sie %(appname)s, schaffen Sie freien "
-"Speicherplatz und starten Sie %(appname)s neu.\n"
-"Wenn sie über genug freien Speicherplatz verfügen, helfen Sie uns bei der "
-"Problemlösung, indem Sie einen Fehlerbericht erstellen und an unsere "
-"Fehlerdatenbank übermitteln.\n"
-"Nun können Sie neu anfangen. Ihre fehlerhafte Datenbank wird entfernt, aber "
-"Sie müssen auch ihre Feeds und Mediendateien neu hinzufügen."
+"%(appname)s war es auf Grund von Fehlern leider nicht möglich, Ihre "
+"Datenbank zu aktualisieren.\n"
+"Überprüfen Sie, ob genügend freier Speicherplatz auf Ihrer Festplatte "
+"vorhanden ist. Falls dies nicht der Fall ist, beenden Sie %(appname)s, "
+"schaffen Sie freien Speicherplatz und starten Sie %(appname)s neu.\n"
+"Wenn Sie jedoch über genügend freien Speicherplatz verfügen, helfen Sie uns "
+"bei der Problembehebung, in dem Sie einen Fehlerbericht erstellen und an "
+"unsere Fehlerdatenbank übermitteln.\n"
+"Nun können Sie neu anfangen. Ihre fehlerhafte Datenbank wird entfernt, Sie "
+"müssen allerdings Ihre Feeds und Mediendateien neu hinzufügen."
 
 #: ../../lib/storedatabase.py:324
 msgid "Database was created by a newer version of Miro "
@@ -1141,8 +1141,8 @@ msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
-"Die Datenbank wurde erfolgreich gesichert. Jetzt kann sicher beendet werden, "
-"ohne möglichen Datenverlust."
+"Die Datenbank wurde erfolgreich gesichert. %(appname)s kann jetzt gefahrlos "
+"beendet werden."
 
 #: ../../lib/storedatabase.py:776
 #, python-format
@@ -1206,7 +1206,7 @@ msgstr "Fehlerbericht wird übermittelt"
 #: ../../lib/controller.py:160
 #, python-format
 msgid "Sending Crash Report (%(progress)d%%)"
-msgstr ""
+msgstr "Sende Fehlerbericht (%(progress)d%%)"
 
 #: ../../lib/displaytext.py:61
 #, python-format
@@ -1519,7 +1519,7 @@ msgstr "_Herunterladen"
 
 #: ../../lib/frontends/widgets/menus.py:208
 msgid "Check _Version"
-msgstr "auf Updates _überprüfen"
+msgstr "Auf Updates _überprüfen"
 
 #: ../../lib/frontends/widgets/menus.py:210
 msgid "_Remove Item"
@@ -1883,7 +1883,7 @@ msgstr "Alle"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:650
 #: ../../lib/frontends/widgets/prefpanel.py:331
 msgid "New"
-msgstr "neu"
+msgstr "Neue"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:651
 #: ../../lib/frontends/widgets/prefpanel.py:333
@@ -2231,13 +2231,15 @@ msgstr ""
 msgid "You have %(count)d conversion in progress.  Quit anyway?"
 msgid_plural ""
 "You have %(count)d conversions in progress or pending.  Quit anyway?"
-msgstr[0] "%(count)d Konversionen laufen noch. Trotzdem beenden?"
-msgstr[1] "%(count)d Konversionen laufen oder warten noch. Trotzdem beenden?"
+msgstr[0] "%(count)d Konvertierungen laufen noch. Trotzdem beenden?"
+msgstr[1] ""
+"%(count)d Konvertierungen laufen oder warten noch. Trotzdem beenden?"
 
 #: ../../lib/frontends/widgets/application.py:856
 msgid "Warn me when I attempt to quit with conversions in progress"
 msgstr ""
-"Warnung, wenn das Programm mit noch laufenden Konversionen beendet wird"
+"Warnung beim Versuch, das Programm während noch laufender Konvertierungen zu "
+"beenden."
 
 #: ../../lib/frontends/widgets/application.py:1040
 msgid "Upgrading database"
@@ -2274,7 +2276,7 @@ msgstr ""
 #: ../../lib/frontends/widgets/firsttimedialog.py:151
 #: ../../lib/frontends/widgets/prefpanel.py:306
 msgid "System default"
-msgstr "Standardeinstellungen"
+msgstr "Systemvorgabe"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:174
 msgid "Update"
@@ -2303,9 +2305,8 @@ msgid ""
 "can be downloaded in the background, ready when you want to watch."
 msgstr ""
 "Wir empfehlen, dass %(name)s beim Start des Rechners ebenfalls gestartet "
-"wird. So werden laufende Downloads beendet und neue Mediendateien werden "
-"automatisch im Hintergrund heruntergeladen, so dass sie dann zum anschauen "
-"bereit sind, wenn du bereit bist."
+"wird. So können laufende Downloads vervollständigt, und neue Mediendateien "
+"automatisch im Hintergrund heruntergeladen werden."
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:209
 #, python-format
@@ -2404,7 +2405,7 @@ msgstr[1] "Vor %(count)d Monaten"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Items:"
-msgstr "abgelaufene Einträge"
+msgstr "Automatisches Löschen heruntergeladener Mediendateien:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:95
 #, python-format
@@ -2433,7 +2434,7 @@ msgstr "Vor 1 Monat angesehen"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
-msgstr "Veraltete Ticker-Einträge"
+msgstr "Automatisches Löschen der Feed-Einträge:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:139
 #, python-format
@@ -2471,7 +2472,8 @@ msgstr "Ältere Objekte wurden entfernt"
 #: ../../lib/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause auto-downloading when this many items are unplayed:"
 msgstr ""
-"Automatischer Download pausieren, wenn noch so viele Dateien ungespielt sind:"
+"Automatischen Download pausieren, falls folgende Anzahl von Elementen noch "
+"nicht abgespielt wurde:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
@@ -2692,7 +2694,7 @@ msgstr "Stoppe alle Konvertierungen"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:74
 msgid "Clear Finished Conversions"
-msgstr "Beendete Konversionen entfernen."
+msgstr "Beendete Konvertierungen entfernen."
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:272
 #, python-format
@@ -2852,7 +2854,7 @@ msgstr "VIDEO FEEDS"
 
 #: ../../lib/frontends/widgets/tablist.py:795
 msgid "AUDIO FEEDS"
-msgstr "AUDIOFEEDS"
+msgstr "AUDIO FEEDS"
 
 #: ../../lib/frontends/widgets/tablist.py:797
 msgid "PLAYLISTS"
@@ -3175,7 +3177,9 @@ msgstr "Warnen wenn das Programm beendet wird während Downloads aktiv sind."
 
 #: ../../lib/frontends/widgets/prefpanel.py:299
 msgid "Warn me if I attempt to quit with conversions in progress."
-msgstr "Warnung bei Beenden, falls noch Konversionen laufen."
+msgstr ""
+"Warnung beim Versuch, das Programm während noch laufender Konvertierungen zu "
+"beenden."
 
 #: ../../lib/frontends/widgets/prefpanel.py:315
 msgid "(Changing the language requires you to restart Miro.)"
@@ -3238,7 +3242,7 @@ msgstr "Einstellungen Auto-Download:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:368
 msgid "Remember this many old items:"
-msgstr "Soviele alte Elemente behalten:"
+msgstr "Anzahl der zu behaltenden alten Elemente:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:369
 msgid "(in addition to the current contents)"
@@ -3283,7 +3287,7 @@ msgstr "Endport:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:454
 msgid "Automatically forward ports.  (UPNP)"
-msgstr "Automatische Portweiterleitung. (UPNP)"
+msgstr "Automatische Portweiterleitung (UPNP)."
 
 #: ../../lib/frontends/widgets/prefpanel.py:458
 msgid "Ignore unencrypted connections."
@@ -3381,11 +3385,11 @@ msgstr "Video- und Audioelemente laufen normalerweise ab nach:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:661
 msgid "Play media in Miro."
-msgstr "Medium in Miro abspielen"
+msgstr "Medium in Miro abspielen."
 
 #: ../../lib/frontends/widgets/prefpanel.py:662
 msgid "Always play videos in a separate window."
-msgstr "Videos immer in einem eigenen Fenster abspielen"
+msgstr "Videos immer in einem eigenen Fenster abspielen."
 
 #: ../../lib/frontends/widgets/prefpanel.py:663
 msgid ""
@@ -3400,19 +3404,19 @@ msgstr "Untertitel automatisch einschalten wenn verfügbar."
 
 #: ../../lib/frontends/widgets/prefpanel.py:668
 msgid "Play video and audio items one after another"
-msgstr "Video- und Audioelemente nacheinander abspielen"
+msgstr "Video- und Audioelemente nacheinander abspielen."
 
 #: ../../lib/frontends/widgets/prefpanel.py:669
 msgid "Stop after each video or audio item"
-msgstr "Nach jedem Video- oder Audioelement anhalten"
+msgstr "Nach jedem Video- oder Audioelement anhalten."
 
 #: ../../lib/frontends/widgets/prefpanel.py:711
 msgid "Allow this many concurrent conversions:"
-msgstr "Soviele gleichzeitige Konversionen zulassen:"
+msgstr "Anzahl der gleichzeitig zulässigen Konvertierungen:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:712
 msgid "(changing this will not apply to currently running conversions)"
-msgstr "(Änderung beeinflusst die momentan laufenden Konversionen nicht)"
+msgstr "(Änderung beeinflusst die momentan laufenden Konvertierungen nicht)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:724
 msgid "General"
@@ -3561,11 +3565,11 @@ msgstr "Autorisierung fehlgeschlagen"
 
 #: ../../lib/httpclient.py:148
 msgid "Authorization canceled"
-msgstr ""
+msgstr "Authorisation abgebrochen"
 
 #: ../../lib/httpclient.py:149
 msgid "Authorization canceled by user"
-msgstr ""
+msgstr "Authorisation durch Benutzer abgebrochen"
 
 #: ../../lib/httpclient.py:153
 msgid "Invalid URL"

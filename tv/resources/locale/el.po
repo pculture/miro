@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-10-08 00:02+0000\n"
+"PO-Revision-Date: 2010-11-01 19:06+0000\n"
 "Last-Translator: Atheos <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-10-20 16:53+0000\n"
+"X-Launchpad-Export-Date: 2010-11-17 17:54+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
@@ -572,15 +572,15 @@ msgstr "Διαδρομή δυαδικού ffmpeg2theora:"
 
 #: ../../lib/dbupgradeprogress.py:60
 msgid "Upgrading Old Database"
-msgstr "Γίνεται αναβάθμιση της παλιάς βάσης δεδομένων"
+msgstr "Αναβάθμιση της παλιάς βάσης δεδομένων"
 
 #: ../../lib/dbupgradeprogress.py:66
 msgid "Converting Old Database"
-msgstr "Γίνεται μετατροπή της παλιάς βάσης δεδομένων"
+msgstr "Μετατροπή της παλιάς βάσης δεδομένων"
 
 #: ../../lib/dbupgradeprogress.py:78
 msgid "Upgrading Database"
-msgstr "Γίνεται αναβάθμιση της βάσης δεδομένων"
+msgstr "Αναβάθμιση της βάσης δεδομένων"
 
 #: ../../lib/startup.py:126
 msgid "Database Error"
@@ -648,7 +648,7 @@ msgstr ""
 
 #: ../../lib/startup.py:512
 msgid "Submitting Crash Report"
-msgstr "Γίνεται υποβολή αναφοράς σφάλματος"
+msgstr "Υποβολή αναφοράς σφάλματος"
 
 #: ../../lib/startup.py:514
 #, python-format
@@ -744,7 +744,7 @@ msgstr "Σφάλμα ανάκτησης της διεύθυνσης (URL) του
 
 #: ../../lib/downloader.py:535
 msgid "starting up"
-msgstr "γίνεται εκκίνηση"
+msgstr "εκκίνηση"
 
 #: ../../lib/downloader.py:542
 #, python-format
@@ -871,7 +871,7 @@ msgstr "Έγινε συνδρομή σε νέες ροές:"
 
 #: ../../lib/messagehandler.py:1372
 msgid "Migrating Files"
-msgstr "Γίνεται μεταφορά αρχείων"
+msgstr "Μεταφορά αρχείων"
 
 #: ../../lib/commandline.py:115
 msgid "Subscription error"
@@ -1207,16 +1207,16 @@ msgstr "Περιεχόμενα:"
 
 #: ../../lib/item.py:1504
 msgid "starting up..."
-msgstr "γίνεται εκκίνηση..."
+msgstr "εκκίνηση..."
 
 #: ../../lib/controller.py:139
 msgid "Sending Crash Report"
-msgstr "Γίνεται αποστολή αναφοράς σφάλματος"
+msgstr "Αποστολή αναφοράς σφάλματος"
 
 #: ../../lib/controller.py:160
 #, python-format
 msgid "Sending Crash Report (%(progress)d%%)"
-msgstr "Γίνεται αποστολή αναφοράς σφάλματος (%(progress)d%%)"
+msgstr "Αποστολή αναφοράς σφάλματος (%(progress)d%%)"
 
 #: ../../lib/displaytext.py:61
 #, python-format
@@ -1786,7 +1786,7 @@ msgstr "Εμφάνιση φακέλου μετατροπής"
 
 #: ../../lib/frontends/widgets/menus.py:390
 msgid "_Encoding"
-msgstr "_Γίνεται κωδικοποίηση"
+msgstr "_Κωδικοποίηση"
 
 #: ../../lib/frontends/widgets/menus.py:393
 msgid "Default (UTF-8)"
@@ -1880,7 +1880,7 @@ msgstr "%(rate)s αποστολής"
 #: ../../lib/frontends/widgets/itemlistwidgets.py:610
 #, python-format
 msgid "%(rate)s downloading"
-msgstr "%(rate)s λήψης"
+msgstr "Λήψη με %(rate)s"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:644
 msgid "Auto-download"
@@ -2254,7 +2254,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/application.py:1040
 msgid "Upgrading database"
-msgstr "Γίνεται αναβάθμιση της βάσης δεδομένων"
+msgstr "Αναβάθμιση της βάσης δεδομένων"
 
 #: ../../lib/frontends/widgets/application.py:1232
 msgid "Message"
@@ -2335,7 +2335,7 @@ msgstr "< Προηγούμενο"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:239
 msgid "Finding Files"
-msgstr "Γίνεται εύρεση αρχείων"
+msgstr "Εύρεση αρχείων"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:242
 #, python-format
@@ -2374,7 +2374,7 @@ msgstr "Τέλος"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:353
 msgid "Searching for media files"
-msgstr "Γίνεται αναζήτηση για αρχεία πολυμέσων"
+msgstr "Αναζήτηση για αρχεία πολυμέσων"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:401
 #, python-format
@@ -2428,19 +2428,19 @@ msgstr "Προβλήθηκε %(expiration)s (Προεπιλογή)"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
-msgstr "Προβλήθηκε πριν από 1 μέρα"
+msgstr "Προβλήθηκε πριν από 1 ημέρα"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr "Προβλήθηκε πριν από 3 μέρες"
+msgstr "Προβλήθηκε πριν από 3 ημέρες"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
-msgstr "Προβλήθηκε πριν από 6 μέρες"
+msgstr "Προβλήθηκε πριν από 6 ημέρες"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:100
 msgid "Watched 10 days ago"
-msgstr "Προβλήθηκε πριν από 10 μέρες"
+msgstr "Προβλήθηκε πριν από 10 ημέρες"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
@@ -2752,7 +2752,7 @@ msgstr "Λήψεις ροής"
 
 #: ../../lib/frontends/widgets/downloadscontroller.py:104
 msgid "Seeding"
-msgstr "Γίνεται διαμοιρασμός"
+msgstr "Διαμοιρασμός"
 
 #: ../../lib/frontends/widgets/crashdialog.py:48
 msgid "Internal Error"
@@ -3078,8 +3078,8 @@ msgstr[1] "%(count)d διαθέσιμα αντικείμενα"
 #, python-format
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
-msgstr[0] "Γίνεται λήψη %(count)d αντικειμένου"
-msgstr[1] "Γίνεται λήψη %(count)d αντικειμένων"
+msgstr[0] "Λήψη %(count)d αντικειμένου"
+msgstr[1] "Λήψη %(count)d αντικειμένων"
 
 #: ../../lib/frontends/widgets/itemcontextmenu.py:263
 #, python-format
@@ -3256,7 +3256,7 @@ msgstr "Ρύθμιση αυτόματης λήψης:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:368
 msgid "Remember this many old items:"
-msgstr "Να θυμάται τόσα παλαιά αντικείμενα:"
+msgstr "Να θυμάται τόσα παλιά αντικείμενα:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:369
 msgid "(in addition to the current contents)"
@@ -3402,7 +3402,7 @@ msgstr "Αναπαραγωγή μέσων στο Miro."
 
 #: ../../lib/frontends/widgets/prefpanel.py:662
 msgid "Always play videos in a separate window."
-msgstr "Πάντα να γίνεται αναπαραγωγή βίντεο σε ξεχωριστό παράθυρο."
+msgstr "Πάντα να αναπαράγονται τα βίντεο σε ξεχωριστό παράθυρο."
 
 #: ../../lib/frontends/widgets/prefpanel.py:663
 msgid ""
