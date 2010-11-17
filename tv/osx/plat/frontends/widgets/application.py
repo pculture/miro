@@ -67,6 +67,14 @@ from miro.gtcache import gettext as _
 GROWL_GENERIC_NOTIFICATION = u'Misc'
 GROWL_DOWNLOAD_COMPLETE_NOTIFICATION = u'Download Complete'
 
+class MiroApplication(NSApplication):
+    def sendEvent_(self, event):
+        try:
+            NSApplication.sendEvent_(self, event)
+        except:
+            # should we just catch StandardError here?
+            app.widgetapp.exception_handler(*sys.exc_info())
+
 class OSXApplication(Application):
 
     def __init__(self):
@@ -91,7 +99,10 @@ class OSXApplication(Application):
         except ImportError:
             logging.exception("pycurl won't load")
         self.app_controller = AppController.alloc().initWithApp_(self)
-        NSApplication.sharedApplication().setDelegate_(self.app_controller)
+        # ensure that our NSApplication subclass gets created as the NSApp
+        # singleton
+        miroapp = MiroApplication.sharedApplication()
+        miroapp.setDelegate_(self.app_controller)
         NSApplicationMain(sys.argv)        
 
     def connect_to_signals(self):
