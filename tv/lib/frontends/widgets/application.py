@@ -1373,6 +1373,10 @@ class FrontendStatesStore(object):
                 ascending = True
             return itemlist.SORT_KEY_MAP[sort_key](ascending)
         return None
+    
+    def query_columns_state(self, type, id):
+        key = self._key(type, id)
+        return self.current_columns
 
     def query_filters(self, typ, id_):
         return self.active_filters.get(self._key(typ, id_), [])
@@ -1401,5 +1405,6 @@ class FrontendStatesStore(object):
 
     def save_state(self):
         m = messages.SaveFrontendState(list(self.current_displays),
-                self.sort_states, self.active_filters)
+                self.sort_states, self.active_filters,
+                list(self.current_columns))
         m.send_to_backend()

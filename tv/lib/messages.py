@@ -776,10 +776,12 @@ class ReportCrash(BackendMessage):
 class SaveFrontendState(BackendMessage):
     """Save data for the frontend.
     """
-    def __init__(self, list_view_displays, sort_states, active_filters):
+    def __init__(self, list_view_displays, sort_states, active_filters,
+            list_view_columns):
         self.list_view_displays = list_view_displays
         self.sort_states = sort_states
         self.active_filters = active_filters
+        self.list_view_columns = list_view_columns
 
 class QueryFrontendState(BackendMessage):
     """Ask for a CurrentFrontendState message to be sent back.

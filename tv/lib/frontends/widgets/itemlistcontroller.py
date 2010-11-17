@@ -93,6 +93,8 @@ class ItemListController(object):
         self._search_text = ''
         self._init_widget()
         item_lists = set(iv.item_list for iv in self.all_item_views())
+        enabled_columns = app.frontend_states_memory.query_columns_state(
+                type, id)
         sorter = app.frontend_states_memory.query_sort_state(type, id)
         self.item_list_group = itemlist.ItemListGroup(item_lists, sorter)
         self._init_item_views()
