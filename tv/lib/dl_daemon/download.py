@@ -696,6 +696,12 @@ class HTTPDownloader(BGDownloader):
         # update shortFilename based on the headers.  This will affect
         # how we move the file once the download is finished
         self.shortFilename = clean_filename(info['filename'])
+        if self.expectedContentType is not None:
+            ext_content_type = self.expectedContentType
+        else:
+            ext_content_type = info.get('content-type')
+        self.shortFilename = check_filename_extension(self.shortFilename,
+                ext_content_type)
 
     def on_download_error(self, error):
         if isinstance(error, httpclient.ResumeFailed):
