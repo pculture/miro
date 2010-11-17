@@ -699,7 +699,8 @@ class DevicesList(TabList, TabUpdaterMixin):
     def _add_fake_tabs(self, info):
         TabList.add(self, self._fake_info(info, 'Video'), info.id)
         TabList.add(self, self._fake_info(info, 'Audio'), info.id)
-        self.set_folder_expanded(info.id, True)
+        # OS X doesn't listen if we do it immediately, so wait a bit
+        timer.add(0, self.set_folder_expanded, info.id, True)
 
     def add(self, info):
         TabList.add(self, info)
