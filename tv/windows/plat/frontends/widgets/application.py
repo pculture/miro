@@ -98,6 +98,10 @@ class WindowsApplication(Application):
         xulrunnerbrowser.shutdown()
         app.controller.on_shutdown()
 
+    def startup_ui(self):
+        sys.excepthook = self.exception_handler
+        Application.startup_ui(self)
+
     def on_pref_changed(self, key, value):
         """Any time a preference changes, this gets notified so that we
         can adjust things.
