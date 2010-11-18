@@ -62,7 +62,8 @@ class DeviceTracker(object):
     @threads.on_ui_thread
     def start_tracking(self):
         stream = FSEventStreamCreate(kCFAllocatorDefault,
-                                     self.streamCallback, None,
+                                     self.streamCallback,
+                                     kFSEventStreamCreateFlagNoDefer,
                                      ['/Volumes/'],
                                      kFSEventStreamEventIdSinceNow,
                                      STREAM_INTERVAL, 0)
