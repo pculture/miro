@@ -129,5 +129,3 @@ class DeviceTracker(object):
     def _eject_callback(self, drive, result, user_info):
         if not drive.eject_finish(result):
             logging.warn('eject failed for %r' % drive)
-
-tracker = DeviceTracker()

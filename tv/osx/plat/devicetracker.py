@@ -111,4 +111,3 @@ class DeviceTracker(object):
     def eject(self, device):
         diskutil('eject', device.mount)
 
-tracker = DeviceTracker()

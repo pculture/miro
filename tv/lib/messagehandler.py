@@ -58,7 +58,6 @@ from miro.playlist import SavedPlaylist
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 
 from miro.plat.utils import make_url_safe
-from miro.plat import devicetracker
 
 import shutil
 
@@ -654,7 +653,7 @@ class BackendMessageHandler(messages.MessageHandler):
             self.playlist_tracker = None
 
     def handle_track_devices(self, message):
-        devicetracker.tracker.start_tracking()
+        app.device_tracker.start_tracking()
 
     def handle_mark_feed_seen(self, message):
         try:
@@ -1524,7 +1523,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                               [message.item.id]).send_to_frontend()
 
     def handle_device_eject(self, message):
-        devicetracker.tracker.eject(message.device)
+        app.device_tracker.eject(message.device)
 
     def handle_device_sync_media(self, message):
         try:

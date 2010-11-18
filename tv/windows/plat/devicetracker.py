@@ -137,5 +137,3 @@ class DeviceTracker(object):
             return
         usb_info = self._connected[info.id]
         usbutils.device_eject(usb_info['devInst'])
-
-tracker = DeviceTracker()

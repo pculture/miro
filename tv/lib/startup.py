@@ -80,6 +80,8 @@ from miro import searchengines
 from miro import storedatabase
 from miro import videoconversion
 from miro import devices
+from miro.plat import devicetracker
+
 
 DEBUG_DB_MEM_USAGE = False
 mem_usage_test_event = threading.Event()
@@ -278,6 +280,7 @@ def finish_startup(obj, thread):
     logging.info("Loading video converters...")
     videoconversion.conversion_manager.startup()
     app.device_manager = devices.DeviceManager()
+    app.device_tracker = devicetracker.DeviceTracker()
 
     searchengines.create_engines()
     setup_global_feeds()
