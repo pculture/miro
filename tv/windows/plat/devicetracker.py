@@ -112,6 +112,7 @@ class DeviceTracker(object):
 	except KeyError:
             logging.debug('unknown device connected: %r' % (device,))
             return
+        logging.debug('seen device: %r' % (device,))
         if not info.mount:
             # we don't get notified :( so poll instead
             timer.add(0.5, self._check_device_mount, device)

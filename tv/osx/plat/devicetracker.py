@@ -92,8 +92,9 @@ class DeviceTracker(object):
             device_info = app.device_manager.get_device(
                 device_name, database.get('device_name'))
         except KeyError:
-            logging.info('unknown device: %r' % device_name)
+            logging.debug('unknown device connected: %r' % device_name)
             return
+        logging.debug('seen device: %r' % device_name)
         self._info_for_volume[volume] = device_info
         info = messages.DeviceInfo(volume, device_info, volume + '/',
                                    database, volume_info.TotalSize,

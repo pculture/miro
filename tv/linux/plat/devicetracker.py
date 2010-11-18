@@ -82,8 +82,9 @@ class DeviceTracker(object):
         try:
             info = self._get_device_info(drive)
         except KeyError:
-            logging.debug('unknown device connected: %s' % drive.get_name())
+            logging.debug('unknown device connected: %r' % drive.get_name())
             return
+        logging.debug('seen device: %r', drive.get_name())
         if info.id in self._disconnecting:
             # Gio sends a disconnect/connect pair when the device is mounted so
             # we wait a little and check for spurious ones
