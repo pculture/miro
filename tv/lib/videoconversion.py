@@ -668,6 +668,9 @@ class FFMpegConversionTask(VideoConversionTask):
     def get_parameters(self):
         default_parameters = build_parameters(
             self.input_path, self.temp_output_path, self.converter_info)
+        # insert -strict experimental
+        default_parameters.insert(0, 'experimental')
+        default_parameters.insert(0, '-strict')
         return utils.customize_ffmpeg_parameters(default_parameters)
 
     def readlines(self):
