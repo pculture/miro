@@ -101,7 +101,9 @@ XULRUNNER_SDK_BIN_PATH = os.path.join(XULRUNNER_SDK_PATH, 'bin')
 VLC_PATH = os.path.join(BINARY_KIT_ROOT, 'libvlc')
 LIBTORRENT_PATH = os.path.join(BINARY_KIT_ROOT, 'libtorrent')
 
-FFMPEG_PATH = os.path.join(BINARY_KIT_ROOT, 'ffmpeg')
+FFMPEG_PATH = os.path.join(
+    BINARY_KIT_ROOT, 'ffmpeg', 'ffmpeg-r25766-swscale-r32562-mingw32-static')
+FFMPEG2THEORA_PATH = os.path.join(BINARY_KIT_ROOT, 'ffmpeg2theora')
 
 VCREDIST90_PATH = os.path.join(BINARY_KIT_ROOT, 'vc90redist')
 
@@ -252,7 +254,9 @@ data_files.extend(find_data_files(
 data_files.append(('', [os.path.join(VLC_PATH, 'libvlc.dll')]))
 data_files.append(('', [os.path.join(VLC_PATH, 'libvlccore.dll')]))
 data_files.append(('', [os.path.join(LIBTORRENT_PATH, 'libtorrent.pyd')]))
-data_files.append(('', iglob(os.path.join(FFMPEG_PATH, '*'))))
+data_files.append(('', [
+            os.path.join(FFMPEG_PATH, 'bin', 'ffmpeg.exe'),
+            os.path.join(FFMPEG2THEORA_PATH, 'bin', 'ffmpeg2theora.exe')]))
 data_files.extend(find_data_files('Microsoft.VC90.CRT',
     os.path.join(VCREDIST90_PATH, 'Microsoft.VC90.CRT')))
 
