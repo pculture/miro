@@ -29,6 +29,7 @@
 """Controller for Devices tab.
 """
 import datetime
+import operator
 
 from miro import app
 from miro import devices
@@ -78,19 +79,111 @@ class SizeWidget(widgetset.HBox):
             self.progress.set_progress(0)
             self.text.set_text('not mounted')
 
+class SyncWidget(widgetset.HBox):
+    list_label = _("Sync These Feeds")
+
+    def __init__(self):
+        widgetset.HBox.__init__(self)
+        first_column = widgetset.VBox()
+        self.sync_library = widgetset.Checkbox(self.title)
+        self.sync_library.connect('toggled', self.sync_library_toggled)
+        first_column.pack_start(self.sync_library)
+        self.sync_group = widgetset.RadioButtonGroup()
+        widgetset.RadioButton(self.all_label, self.sync_group)
+        widgetset.RadioButton(self.unwatched_label, self.sync_group)
+        for button in self.sync_group.get_buttons():
+            button.disable()
+            first_column.pack_start(button)
+        self.pack_start(widgetutil.pad(first_column, 20, 0, 20, 20))
+
+        second_column = widgetset.VBox()
+        second_column.pack_start(widgetset.Label(self.list_label))
+        self.feed_list = widgetset.VBox()
+        feeds = self.get_feeds()
+        if feeds:
+            for info in feeds:
+                self.feed_list.pack_start(widgetset.Checkbox(info.name))
+        else:
+            self.sync_library.disable()
+        scroller = widgetset.Scroller(False, True)
+        scroller.set_child(self.feed_list)
+        second_column.pack_start(scroller, expand=True)
+        self.feed_list.disable()
+        self.pack_start(widgetutil.pad(second_column, 20, 20, 20, 20),
+                        expand=True)
+
+    def get_feeds(self):
+        feeds = []
+        table_model = self.tab_list().view.model
+        iter_ = table_model.first_iter()
+        if iter_ is None:
+            self.sync_library.disable()
+        else:
+            while iter_ is not None:
+                row = table_model[iter_]
+                if row[0].is_folder:
+                    child_iter = table_model.child_iter(iter_)
+                    while child_iter is not None:
+                        row = table_model[child_iter]
+                        feeds.append(row[0])
+                        child_iter = table_model.next_iter(child_iter)
+                else:
+                    feeds.append(row[0])
+                iter_ = table_model.next_iter(iter_)
+        feeds.sort(key=operator.attrgetter('name'))
+        return feeds
+
+    def sync_library_toggled(self, obj):
+        if self.sync_library.get_checked():
+            for button in self.sync_group.get_buttons():
+                button.enable()
+            self.feed_list.enable()
+        else:
+            for button in self.sync_group.get_buttons():
+                button.disable()
+            self.feed_list.disable()
+
+
+class VideoFeedSyncWidget(SyncWidget):
+    file_type = 'video'
+    title = _("Sync Video Library")
+    all_label = _("All videos")
+    unwatched_label = _("Only unwatched videos")
+
+    def tab_list(self):
+        return app.tab_list_manager.feed_list
+
+class AudioFeedSyncWidget(SyncWidget):
+    file_type = 'audio'
+    title = _("Sync Audio Library")
+    all_label = _("All audio")
+    unwatched_label =_("Only unplayed audio")
+
+    def tab_list(self):
+        return app.tab_list_manager.audio_feed_list
+
+class PlaylistSyncWidget(SyncWidget):
+    list_label = _("Sync These Playlists")
+    title = _("Sync Playlists")
+    all_label =_("All items")
+    unwatched_label = _("Only unwatched items")
+
+    def tab_list(self):
+        return app.tab_list_manager.playlist_list
+
 class DeviceMountedView(widgetset.VBox):
     def __init__(self):
         widgetset.VBox.__init__(self)
 
-        # self.button_row = segmented.SegmentedButtonsRow()
-        # for name in ('Main', 'Video', 'Audio', 'Playlists'):
-        #     button = DeviceTabButtonSegment(name.lower(), name,
-        #                                     self._tab_clicked)
-        #     self.button_row.add_button(name.lower(), button)
-        #
-        # self.button_row.set_active('main')
-        # self.pack_start(widgetutil.align_center(
-        #                 self.button_row.make_widget()))
+        self.button_row = segmented.SegmentedButtonsRow()
+        for name in ('Main', 'Video', 'Audio', 'Playlists'):
+            button = DeviceTabButtonSegment(name.lower(), name,
+                                            self._tab_clicked)
+            self.button_row.add_button(name.lower(), button)
+
+        self.button_row.set_active('main')
+        self.pack_start(widgetutil.align_center(
+                        self.button_row.make_widget()))
 
         self.tabs = {}
         self.tab_container = widgetset.SolidBackground((1, 1, 1))
@@ -108,6 +201,10 @@ class DeviceMountedView(widgetset.VBox):
         vbox.pack_end(alignment)
 
         self.add_tab('main', vbox)
+        self.add_tab('video', widgetutil.align_center(VideoFeedSyncWidget()))
+        self.add_tab('audio', widgetutil.align_center(AudioFeedSyncWidget()))
+        self.add_tab('playlists',
+                     widgetutil.align_center(PlaylistSyncWidget()))
 
     def add_tab(self, key, widget):
         if not self.tabs:
@@ -118,7 +215,9 @@ class DeviceMountedView(widgetset.VBox):
         self.device_size.set_size(device.size, device.remaining)
 
     def _tab_clicked(self, button):
-        self.button_row.set_active(button.key)
+        key = button.key
+        self.button_row.set_active(key)
+        self.tab_container.set_child(self.tabs[key])
 
 class DeviceItemList(itemlist.ItemList):
 
