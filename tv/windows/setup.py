@@ -253,7 +253,8 @@ data_files.append(('', [os.path.join(VLC_PATH, 'libvlc.dll')]))
 data_files.append(('', [os.path.join(VLC_PATH, 'libvlccore.dll')]))
 data_files.append(('', [os.path.join(LIBTORRENT_PATH, 'libtorrent.pyd')]))
 data_files.append(('', iglob(os.path.join(FFMPEG_PATH, '*'))))
-data_files.append(('', iglob(os.path.join(VCREDIST90_PATH, '*'))))
+data_files.extend(find_data_files('Microsoft.VC90.CRT',
+    os.path.join(VCREDIST90_PATH, 'Microsoft.VC90.CRT')))
 
 # handle the resources subdirectories.
 for dir in ('searchengines', 'images', 'conversions', 'devices'):
