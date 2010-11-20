@@ -257,6 +257,7 @@ data_files.append(('', [os.path.join(LIBTORRENT_PATH, 'libtorrent.pyd')]))
 data_files.append(('', [
             os.path.join(FFMPEG_PATH, 'bin', 'ffmpeg.exe'),
             os.path.join(FFMPEG2THEORA_PATH, 'bin', 'ffmpeg2theora.exe')]))
+data_files.append(('', glob(os.path.join(FFMPEG_PATH, 'presets', '*.ffpreset'))))
 data_files.extend(find_data_files('Microsoft.VC90.CRT',
     os.path.join(VCREDIST90_PATH, 'Microsoft.VC90.CRT')))
 
