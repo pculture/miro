@@ -71,13 +71,13 @@ class WatchedFolderManager(signals.SignalEmitter):
             self.model.remove(iter)
         self.emit('changed')
 
-    def change_visible(self, id, visible):
+    def change_visible(self, id_, visible):
         """Change if a watched folder is visible or not."""
-        messages.SetWatchedFolderVisible(id, visible).send_to_backend()
+        messages.SetWatchedFolderVisible(id_, visible).send_to_backend()
 
-    def remove(self, id):
+    def remove(self, id_):
         """Remove a watched folder."""
-        messages.DeleteWatchedFolder(id).send_to_backend()
+        messages.DeleteWatchedFolder(id_).send_to_backend()
 
     def add(self, path):
         """Add a new watched folder.  It will be initially visible."""

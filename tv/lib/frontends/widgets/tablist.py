@@ -609,8 +609,8 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
             iter = self.view.append_tab(info)
         self.iter_map[info.id] = iter
 
-    def set_folder_expanded(self, id, expanded):
-        self.view.set_row_expanded(self.iter_map[id], expanded)
+    def set_folder_expanded(self, id_, expanded):
+        self.view.set_row_expanded(self.iter_map[id_], expanded)
 
     def update(self, info):
         self.init_info(info)

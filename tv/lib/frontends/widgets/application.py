@@ -105,9 +105,9 @@ class Application:
         self.unwatched_count = 0
         app.frontend_config_watcher = config.ConfigWatcher(call_on_ui_thread)
 
-    def exception_handler(self, type, value, traceback):
+    def exception_handler(self, typ, value, traceback):
         report = crashreport.format_crash_report("in frontend thread",
-            exc_info=(type, value, traceback), details=None)
+            exc_info=(typ, value, traceback), details=None)
         self.handle_crash_report(report)
 
     def startup(self):
@@ -1352,14 +1352,14 @@ class FrontendStatesStore(object):
         self.sort_states = message.sort_states
         self.active_filters = message.active_filters
 
-    def _key(self, type, id):
-        return '%s:%s' % (type, id)
+    def _key(self, typ, id_):
+        return '%s:%s' % (typ, id_)
 
-    def query_list_view(self, type, id):
-        return self._key(type, id) in self.current_displays
+    def query_list_view(self, typ, id_):
+        return self._key(typ, id_) in self.current_displays
 
-    def query_sort_state(self, type, id):
-        key = self._key(type, id)
+    def query_sort_state(self, typ, id_):
+        key = self._key(typ, id_)
         if key in self.sort_states:
             state = self.sort_states[key]
             if state.startswith('-'):
@@ -1371,29 +1371,29 @@ class FrontendStatesStore(object):
             return itemlist.SORT_KEY_MAP[sort_key](ascending)
         return None
 
-    def query_filters(self, type, id):
-        return self.active_filters.get(self._key(type, id), [])
+    def query_filters(self, typ, id_):
+        return self.active_filters.get(self._key(typ, id_), [])
 
     def set_filters(self, type, id, filters):
         self.active_filters[self._key(type, id)] = filters
         self.save_state()
 
-    def set_sort_state(self, type, id, sorter):
+    def set_sort_state(self, typ, id_, sorter):
         # we have a ItemSort object and we need to create a string that will
         # represent it.  Use the sort key, with '-' prepended if the sort is
         # descending (for example: "date", "-name", "-size", ...)
         state = sorter.KEY
         if not sorter.is_ascending():
             state = '-' + state
-        self.sort_states[self._key(type, id)] = state
+        self.sort_states[self._key(typ, id_)] = state
         self.save_state()
 
-    def set_list_view(self, type, id):
-        self.current_displays.add(self._key(type, id))
+    def set_list_view(self, typ, id_):
+        self.current_displays.add(self._key(typ, id_))
         self.save_state()
 
-    def set_std_view(self, type, id):
-        self.current_displays.discard(self._key(type, id))
+    def set_std_view(self, typ, id_):
+        self.current_displays.discard(self._key(typ, id_))
         self.save_state()
 
     def save_state(self):

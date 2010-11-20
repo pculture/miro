@@ -89,17 +89,17 @@ class InlineSearchMemory(object):
     def __init__(self):
         self._memory = {}
 
-    def set_search(self, type, id, text):
-        self._memory[(type, id)] = text
+    def set_search(self, typ, id_, text):
+        self._memory[(typ, id_)] = text
 
-    def get_search(self, type, id):
-        return self._memory.get((type, id), '')
+    def get_search(self, typ, id_):
+        return self._memory.get((typ, id_), '')
 
-    def forget_search(self, type, id):
+    def forget_search(self, typ, id_):
         # We should call this when channels/playlists get deleted to
         # free up the memory, but it's so small that it's not worth
         # worrying about.
         try:
-            del self._memory[(type, id)]
+            del self._memory[(typ, id_)]
         except KeyError:
             pass

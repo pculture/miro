@@ -53,13 +53,13 @@ class DropHandler(signals.SignalEmitter):
     def allowed_types(self):
         return ('downloaded-item',)
 
-    def validate_drop(self, table_view, model, type, source_actions, parent,
+    def validate_drop(self, table_view, model, typ, source_actions, parent,
             position):
         if position != -1 and type == 'downloaded-item':
             return widgetset.DRAG_ACTION_MOVE
         return widgetset.DRAG_ACTION_NONE
 
-    def accept_drop(self, table_view, model, type, source_actions, parent,
+    def accept_drop(self, table_view, model, typ, source_actions, parent,
             position, data):
         dragged_ids = set([int(id) for id in data.split('-')])
         if position >= 0:

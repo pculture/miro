@@ -634,8 +634,8 @@ class DiskSpacePanel(PanelBuilder):
         note = widgetset.Label(_('GB'))
         attach_boolean(cbx, prefs.PRESERVE_DISK_SPACE, (limit,))
 
-        def set_library_filter(self, type, filter):
-            self.library[type] = filter
+        def set_library_filter(self, typ, filter):
+            self.library[typ] = filter
         attach_float(limit, prefs.PRESERVE_X_GB_FREE, create_float_checker(min=0.0))
 
         grid.pack(cbx)

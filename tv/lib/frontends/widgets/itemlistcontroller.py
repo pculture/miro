@@ -81,14 +81,14 @@ class ItemListController(object):
     
     :attribute widget: Widget used to display this controller
     """
-    def __init__(self, type, id):
+    def __init__(self, typ, id_):
         """Construct a ItemListController.
 
         type and id are the same as in the constructor to
         messages.TrackItems
         """
-        self.type = type
-        self.id = id
+        self.type = typ
+        self.id = id_
         self.current_item_view = None
         self._search_text = ''
         self._init_widget()
