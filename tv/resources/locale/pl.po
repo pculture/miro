@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: Democracy Player\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-10-23 18:12+0000\n"
-"Last-Translator: Adam Czabara <kolofaza@o2.pl>\n"
+"PO-Revision-Date: 2010-11-20 21:04+0000\n"
+"Last-Translator: Simon Drums <Unknown>\n"
 "Language-Team: Piotr Szmitkowski <pszmitkowski@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-11-17 17:54+0000\n"
+"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-Language: Polish\n"
@@ -565,7 +565,7 @@ msgstr "ścieżka pliku binarnergo ffmpeg"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:104
 msgid "ffmpeg2theora binary path:"
-msgstr ""
+msgstr "ffmpeg2theora binarna ścieżka:"
 
 #: ../../lib/dbupgradeprogress.py:60
 msgid "Upgrading Old Database"
@@ -581,7 +581,7 @@ msgstr "Aktualizacja bazy danych"
 
 #: ../../lib/startup.py:126
 msgid "Database Error"
-msgstr ""
+msgstr "Błąd bazy danych"
 
 #: ../../lib/startup.py:127
 #, python-format
@@ -628,7 +628,7 @@ msgstr ""
 
 #: ../../lib/startup.py:512
 msgid "Submitting Crash Report"
-msgstr ""
+msgstr "Przesyłanie Raportu Błędu"
 
 #: ../../lib/startup.py:514
 #, python-format
@@ -726,7 +726,7 @@ msgstr "brak połączenia - ponowna próba za %s"
 
 #: ../../lib/downloader.py:544
 msgid "no connection - retrying soon"
-msgstr ""
+msgstr "brak połączenia - spróbuj za chwilę"
 
 #: ../../lib/downloader.py:568 ../../lib/downloader.py:576
 #: ../../lib/httpclient.py:211 ../../lib/httpclient.py:672
@@ -888,7 +888,7 @@ msgstr ""
 
 #: ../../lib/videoconversion.py:344
 msgid "Reason unknown"
-msgstr ""
+msgstr "Przyczyna nieznana"
 
 #: ../../lib/videoconversion.py:764
 #, python-format
@@ -1374,7 +1374,7 @@ msgstr "Błąd"
 
 #: ../../lib/frontends/widgets/style.py:257
 msgid "Queued for Auto-download"
-msgstr ""
+msgstr "W kolejce do Auto-pobierania"
 
 #: ../../lib/frontends/widgets/style.py:258
 #: ../../lib/frontends/widgets/style.py:1203
@@ -1652,11 +1652,11 @@ msgstr "_Zatrzymaj"
 
 #: ../../lib/frontends/widgets/menus.py:299
 msgid "_Next Item"
-msgstr ""
+msgstr "_Następna pozycja"
 
 #: ../../lib/frontends/widgets/menus.py:302
 msgid "_Previous Item"
-msgstr ""
+msgstr "_Poprzednia pozycja"
 
 #: ../../lib/frontends/widgets/menus.py:306
 msgid "Skip _Forward"
@@ -1692,7 +1692,7 @@ msgstr "Wybierz plik z napisami..."
 
 #: ../../lib/frontends/widgets/menus.py:332
 msgid "Convert"
-msgstr ""
+msgstr "Konwertuj"
 
 #: ../../lib/frontends/widgets/menus.py:334
 #: ../../lib/frontends/widgets/menus.py:346
@@ -1729,15 +1729,15 @@ msgstr "_Planeta Miro"
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:68
 #: ../../lib/frontends/widgets/itemcontextmenu.py:296
 msgid "Show Conversion Folder"
-msgstr ""
+msgstr "Wyświetl Folder konwersji"
 
 #: ../../lib/frontends/widgets/menus.py:390
 msgid "_Encoding"
-msgstr ""
+msgstr "_Kodowanie"
 
 #: ../../lib/frontends/widgets/menus.py:393
 msgid "Default (UTF-8)"
-msgstr ""
+msgstr "Domyślnie (UTF-8)"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:180
 msgid "Save Search"
@@ -1829,7 +1829,7 @@ msgstr "Pobieranie: %(rate)s"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:644
 msgid "Auto-download"
-msgstr ""
+msgstr "Auto-pobieranie"
 
 #: ../../lib/frontends/widgets/itemlistwidgets.py:649
 #: ../../lib/frontends/widgets/prefpanel.py:332
@@ -2186,7 +2186,7 @@ msgstr[1] ""
 
 #: ../../lib/frontends/widgets/application.py:856
 msgid "Warn me when I attempt to quit with conversions in progress"
-msgstr ""
+msgstr "Ostrzeż gdy anuluje podczas nieukończonej konwersji"
 
 #: ../../lib/frontends/widgets/application.py:1040
 msgid "Upgrading database"
@@ -2261,7 +2261,7 @@ msgstr "« Wstecz"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:239
 msgid "Finding Files"
-msgstr ""
+msgstr "Znajduję pliki"
 
 #: ../../lib/frontends/widgets/firsttimedialog.py:242
 #, python-format
@@ -2348,7 +2348,7 @@ msgstr[2] "%(count)d miesięcy temu"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Items:"
-msgstr ""
+msgstr "Auto-wygasanie pozycji:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:95
 #, python-format
@@ -2414,7 +2414,7 @@ msgstr "Stare elementy zostały usunięte"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause auto-downloading when this many items are unplayed:"
-msgstr ""
+msgstr "Pauzuj auto-pobieranie gdy wiele pozycji jest nie odtwożonych:"
 
 #: ../../lib/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
@@ -2447,7 +2447,7 @@ msgstr "Wyszukiwanie wideo"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:477
 msgid "No Results"
-msgstr ""
+msgstr "Brak wyników"
 
 #: ../../lib/frontends/widgets/itemlistcontroller.py:481
 msgid ""
@@ -2639,7 +2639,7 @@ msgstr "Zatrzymaj wszystkie konwersje"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:74
 msgid "Clear Finished Conversions"
-msgstr ""
+msgstr "Wyczyść ukończone konwersje"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:272
 #, python-format
@@ -2657,16 +2657,16 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:314
 msgid "Open log"
-msgstr ""
+msgstr "Otwórz log (rejestr)"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:316
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:335
 msgid "Clear"
-msgstr ""
+msgstr "Wyczyść"
 
 #: ../../lib/frontends/widgets/videoconversionscontroller.py:327
 msgid "Completed"
-msgstr ""
+msgstr "Zakończono"
 
 #: ../../lib/frontends/widgets/downloadscontroller.py:86
 #: ../../lib/frontends/widgets/prefpanel.py:726
@@ -3134,7 +3134,7 @@ msgstr "Ostrzegaj przed zakończeniem programu podczas pobierania"
 
 #: ../../lib/frontends/widgets/prefpanel.py:299
 msgid "Warn me if I attempt to quit with conversions in progress."
-msgstr ""
+msgstr "Ostrzeż jeśli anuluję podczas postępu konwersji."
 
 #: ../../lib/frontends/widgets/prefpanel.py:315
 msgid "(Changing the language requires you to restart Miro.)"
@@ -3190,7 +3190,7 @@ msgstr "Aktualizuj"
 
 #: ../../lib/frontends/widgets/prefpanel.py:362
 msgid "Auto-download setting:"
-msgstr ""
+msgstr "Auto-pobieranie ustawienia:"
 
 #: ../../lib/frontends/widgets/prefpanel.py:368
 msgid "Remember this many old items:"
@@ -3283,7 +3283,7 @@ msgstr "katalog"
 
 #: ../../lib/frontends/widgets/prefpanel.py:537
 msgid "visible"
-msgstr ""
+msgstr "widoczne"
 
 #: ../../lib/frontends/widgets/prefpanel.py:585
 msgid "Add Watched Folder"
@@ -3366,7 +3366,7 @@ msgstr ""
 
 #: ../../lib/frontends/widgets/prefpanel.py:712
 msgid "(changing this will not apply to currently running conversions)"
-msgstr ""
+msgstr "(zmiana tego nie wpłynie na już uruchomione konwersje)"
 
 #: ../../lib/frontends/widgets/prefpanel.py:724
 msgid "General"
@@ -3483,7 +3483,7 @@ msgstr ""
 
 #: ../../lib/httpclient.py:112
 msgid "Please retry later"
-msgstr ""
+msgstr "Proszę sprubuj później"
 
 #: ../../lib/httpclient.py:116
 #, python-format
@@ -3515,11 +3515,11 @@ msgstr "Autoryzacja się nie powiodła"
 
 #: ../../lib/httpclient.py:148
 msgid "Authorization canceled"
-msgstr ""
+msgstr "Autoryzacja anulowana"
 
 #: ../../lib/httpclient.py:149
 msgid "Authorization canceled by user"
-msgstr ""
+msgstr "Autoryzacja anulowana przez użytkownika"
 
 #: ../../lib/httpclient.py:153
 msgid "Invalid URL"
@@ -3532,7 +3532,7 @@ msgstr "„%(url)s” nie jest poprawnym adresem URL"
 
 #: ../../lib/httpclient.py:159
 msgid "Unknow Host"
-msgstr ""
+msgstr "Nieznany Host"
 
 #: ../../lib/httpclient.py:160
 #, python-format
@@ -3560,15 +3560,15 @@ msgstr "Nie można zapisać do %(filename)s"
 
 #: ../../lib/httpclient.py:181
 msgid "Write error"
-msgstr ""
+msgstr "Zapisz błąd"
 
 #: ../../lib/httpclient.py:365
 msgid "Website"
-msgstr ""
+msgstr "Strona Web"
 
 #: ../../lib/httpclient.py:370
 msgid "Proxy"
-msgstr ""
+msgstr "Proxy"
 
 #: ../../lib/net.py:75
 #, python-format
@@ -3612,7 +3612,7 @@ msgstr "Aby zapisać ten plik wideo potrzeba %(amount)s MB"
 
 #: ../../lib/dl_daemon/download.py:722
 msgid "no content"
-msgstr ""
+msgstr "bez zawartości"
 
 #: ../../lib/dl_daemon/download.py:864
 msgid "BitTorrent failure"

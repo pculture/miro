@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-10-27 10:33+0000\n"
-"Last-Translator: David Bengtsson <Unknown>\n"
+"PO-Revision-Date: 2010-11-21 19:59+0000\n"
+"Last-Translator: Bljardkungen <honungs_macka@hotmail.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-17 17:54+0000\n"
+"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
@@ -51,12 +51,12 @@ msgstr "Fäll in"
 
 #: ../../osx/plat/frontends/widgets/application.py:193
 msgid "Download Completed"
-msgstr "Hämtningen slutförd"
+msgstr "Hämtningen är slutförd"
 
 #: ../../osx/plat/frontends/widgets/application.py:194
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr "Hämtningen av videon \"%s\" är slutförd."
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:159
 msgid "Services"
@@ -114,7 +114,7 @@ msgstr "Visa halv storlek"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:197
 msgid "Present Actual Size"
-msgstr "Visa verklig storlek"
+msgstr "Visa originalstorlek"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:200
 msgid "Present Double Size"
@@ -138,7 +138,7 @@ msgstr "Huvudfönster"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:219
 msgid "Bring All to Front"
-msgstr "Ta fram alla"
+msgstr "Flytta fram alla"
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:221
 msgid "Window"
@@ -159,7 +159,7 @@ msgstr "Inaktivera undertexter"
 #: ../../lib/frontends/widgets/menus.py:323
 #: ../../lib/frontends/widgets/gtk/video.py:380
 msgid "None Available"
-msgstr "Ingen tillgänglig"
+msgstr ""
 
 #: ../../osx/plat/frontends/widgets/osxmenus.py:386
 #: ../../lib/frontends/widgets/gtk/video.py:413
@@ -206,7 +206,7 @@ msgstr "Keltisk"
 
 #: ../../windows/plat/renderers/vlc.py:710
 msgid "Esperanto"
-msgstr "Esperanto"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:711
 #: ../../windows/plat/renderers/vlc.py:712
@@ -243,7 +243,7 @@ msgstr "Japansk"
 
 #: ../../windows/plat/renderers/vlc.py:720
 msgid "Japanese Unix"
-msgstr "Unix-japansk"
+msgstr "Japansk Unix"
 
 #: ../../windows/plat/renderers/vlc.py:722
 #: ../../windows/plat/renderers/vlc.py:723
@@ -256,11 +256,11 @@ msgstr "Koreansk"
 
 #: ../../windows/plat/renderers/vlc.py:724
 msgid "Traditional Chinese"
-msgstr "Traditionell kinesisk"
+msgstr "Tratitionell kinesiska"
 
 #: ../../windows/plat/renderers/vlc.py:725
 msgid "Traditional Chinese Unix"
-msgstr "Traditionell Unix-kinesisk"
+msgstr "Traditionell kinesisk Unix"
 
 #: ../../windows/plat/renderers/vlc.py:726
 msgid "Hong-Kong Supplementary"
@@ -296,7 +296,7 @@ msgstr "Vietnamesisk"
 #: ../../windows/plat/renderers/vlc.py:737
 #: ../../linux/plat/renderers/gstreamerrenderer.py:635
 msgid "Middle Eastern"
-msgstr "Mellanöstisk"
+msgstr ""
 
 #: ../../windows/plat/renderers/vlc.py:738
 #: ../../windows/plat/renderers/vlc.py:739
@@ -340,11 +340,11 @@ msgstr "Aktivera notifieringsikon"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:45
 msgid "When I click the red close button:"
-msgstr "När jag klickar på den röda stängknappen:"
+msgstr "När jag trycker på den röda avstängningsknappen"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:48
 msgid "Close to tray so that downloads can continue."
-msgstr "Stäng till notifieringsytan så att hämtningar kan fortsätta."
+msgstr "Minimera till aktivitetsfältet så att hämtningar kan fortsätta."
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:49
 #, python-format
@@ -353,7 +353,7 @@ msgstr "Avsluta %(appname)s helt."
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:58
 msgid "System Default"
-msgstr "Systemstandard"
+msgstr "Systemets standardalternativ"
 
 #: ../../windows/plat/frontends/widgets/prefpanelset.py:64
 msgid "Subtitle font:"
@@ -361,7 +361,7 @@ msgstr "Typsnitt för undertext:"
 
 #: ../../windows/plat/frontends/widgets/application.py:148
 msgid "Close to tray?"
-msgstr "Stäng till notifieringsytan?"
+msgstr "Minimera till aktivitetsfältet?"
 
 #: ../../windows/plat/frontends/widgets/application.py:149
 #, python-format
@@ -369,32 +369,32 @@ msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
-"När du klickar på den röda stängknappen, vill du att %(appname)s ska stängas "
-"till notifieringsytan eller avslutas? Du kan ändra denna inställning senare "
-"i alternativen."
+"När du trycker på den röda stäng knappen, vill du att %(appname)s ska "
+"minimeras till systemfältet eller avslutas? Du kan ändra detta alternativ "
+"senare i Inställningarna."
 
 #: ../../windows/plat/frontends/widgets/application.py:208
 msgid "Error Bombing Item"
-msgstr "Fel vid bombning av objekt"
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/application.py:210
 msgid "Error Recommending Item"
-msgstr "Fel vid rekommendation av objekt"
+msgstr ""
 
 #: ../../windows/plat/frontends/widgets/application.py:212
 msgid "Error Opening Website"
-msgstr "Fel vid öppning av webbplats"
+msgstr "Fel vid hämtning av hemsidan"
 
 #: ../../windows/plat/frontends/widgets/application.py:217
 #, python-format
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr ""
-"Ett fel uppstod vid öppning av %(url)s. Försök igen om ett par sekunder."
+"Ett fel uppstod när %(url)s öppnades.  Försök igen om ett par sekunder."
 
 #: ../../windows/plat/frontends/widgets/update.py:148
 msgid "Update Available"
-msgstr "Uppdatering tillgänglig"
+msgstr "Uppdatering finns tillgänglig"
 
 #: ../../windows/plat/frontends/widgets/update.py:152
 #, python-format
@@ -403,7 +403,7 @@ msgstr "En ny version av %(appname)s finns tillgänglig för hämtning."
 
 #: ../../windows/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
-msgstr "Vill du hämta det nu?"
+msgstr "Vill du hämta den nu?"
 
 #: ../../windows/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
@@ -415,8 +415,8 @@ msgid ""
 "For the best %(appname)s experience, we suggest you install Adobe Flash.  "
 "Would you like to do this now?"
 msgstr ""
-"För den bästa upplevelsen av %(appname)s, föreslår vi att du installerar "
-"Adobe Flash. Vill du göra det nu?"
+"För bäst upplevelse av %(appname)s, rekommenderar vi att du installerar "
+"Adobe Flash. Vill du göra detta nu?"
 
 #: ../../windows/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
@@ -431,9 +431,10 @@ msgid ""
 "You should quit %(appname)s now and start it up again after Adobe Flash has "
 "been installed."
 msgstr ""
-"Din webbläsare kommer att läsa in webbplatsen där du kan hämta och "
+"Din webbläsare kommer att ladda webbsidan där du kan ladda ner och "
 "installera Adobe Flash.\n"
-"Du bör avsluta %(appname)s nu och starta det igen efter Adobe Flash har "
+"\n"
+"Du bör avsluta %(appname)s nu, och starta det igen efter att Adobe Flash har "
 "installerats."
 
 #: ../../linux/plat/renderers/gstreamerrenderer.py:486
@@ -548,7 +549,7 @@ msgstr "Renderingsalternativ:"
 #, python-format
 msgid "You must restart %(appname)s for renderer changes to take effect."
 msgstr ""
-"Du måste starta om %(appname)s för att renderingsändringarna ska få effekt."
+"Du måste starta om %(appname)s för att renderingsändringarna ska börja gälla."
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:79
 msgid "Video renderer:"
@@ -556,7 +557,7 @@ msgstr "Videorenderare:"
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:91
 msgid "Binaries to use:"
-msgstr "Binärfiler att använda:"
+msgstr ""
 
 #: ../../linux/plat/frontends/widgets/prefpanelset.py:97
 msgid "ffmpeg binary path:"
@@ -641,7 +642,7 @@ msgstr ""
 
 #: ../../lib/startup.py:512
 msgid "Submitting Crash Report"
-msgstr "Skickar in kraschrapport"
+msgstr "Skickar felrapport"
 
 #: ../../lib/startup.py:514
 #, python-format
@@ -651,10 +652,10 @@ msgid ""
 "Do you want to include entire program database including all video and feed "
 "metadata with crash report? This will help us diagnose the issue."
 msgstr ""
-"%(appname)s kommer nu att skicka in en kraschrapport till vår kraschdatabas\n"
+"%(appname)s kommer nu att skicka en felrapport till vår kraschregister\n"
 "\n"
 "Vill du inkludera hela programdatabasen som innehåller all video- och "
-"flödesmetadata med krashrapporten? Det kommer att hjälpa oss diagnostisera "
+"flödesmetadata med felrapporten? Det kommer att hjälpa oss diagnostisera "
 "problemet."
 
 #: ../../lib/feed.py:844
@@ -718,7 +719,7 @@ msgstr "Sök"
 
 #: ../../lib/feed.py:2267
 msgid "Playing File"
-msgstr "Spelar upp fil"
+msgstr "Spelar fil"
 
 #: ../../lib/downloader.py:268
 msgid "activity"
@@ -731,7 +732,7 @@ msgstr "Filen hittades inte"
 
 #: ../../lib/downloader.py:337
 msgid "Flash URL Scraping Error"
-msgstr "Skrapningsfel för Flash-webbadress"
+msgstr ""
 
 #: ../../lib/downloader.py:535
 msgid "starting up"

@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-11-16 20:24+0000\n"
+"PO-Revision-Date: 2010-11-20 17:49+0000\n"
 "Last-Translator: Kim Hansen <Unknown>\n"
 "Language-Team: Danish <da@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-11-17 17:55+0000\n"
+"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../lib/frontends/widgets/style.py:260
@@ -891,7 +891,7 @@ msgstr ""
 #: ../../lib/videoconversion.py:88
 #, python-format
 msgid "%(name)s (%(mediatype)s)"
-msgstr ""
+msgstr "%(name)s (%(mediatype)s)"
 
 #: ../../lib/videoconversion.py:344
 msgid "Reason unknown"
@@ -900,7 +900,7 @@ msgstr ""
 #: ../../lib/videoconversion.py:764
 #, python-format
 msgid "%(original_name)s (Converted to %(format)s)"
-msgstr ""
+msgstr "%(original_name)s (Converted to %(format)s)"
 
 #: ../../lib/messages.py:1120 ../../lib/item.py:1127
 msgid "queued for download"
@@ -908,7 +908,7 @@ msgstr "i kø for hentning"
 
 #: ../../lib/dialogs.py:93
 msgid "Ok"
-msgstr "Ok"
+msgstr "O.k."
 
 #: ../../lib/dialogs.py:94
 msgid "Apply"
@@ -926,7 +926,7 @@ msgstr "Annuller"
 
 #: ../../lib/dialogs.py:97
 msgid "Done"
-msgstr "Færdig"
+msgstr "Fuldført"
 
 #: ../../lib/dialogs.py:98 ../../lib/frontends/widgets/firsttimedialog.py:215
 #: ../../lib/frontends/widgets/firsttimedialog.py:254
@@ -940,19 +940,19 @@ msgstr "Nej"
 
 #: ../../lib/dialogs.py:100
 msgid "Quit"
-msgstr "Slut"
+msgstr "Afslut"
 
 #: ../../lib/dialogs.py:101
 msgid "Continue"
-msgstr "Forsæt"
+msgstr "Fortsæt"
 
 #: ../../lib/dialogs.py:102
 msgid "Ignore"
-msgstr "Se bort fra"
+msgstr "Ignorer"
 
 #: ../../lib/dialogs.py:103
 msgid "Submit Crash Report"
-msgstr "Send feljrapport"
+msgstr "Indsend nedbrudsrapport"
 
 #: ../../lib/dialogs.py:104
 msgid "Migrate"
@@ -968,7 +968,7 @@ msgstr "Migrer ikke"
 #: ../../lib/frontends/widgets/itemcontextmenu.py:140
 #: ../../lib/frontends/widgets/itemcontextmenu.py:241
 msgid "Download"
-msgstr "Download"
+msgstr "Hent"
 
 #: ../../lib/dialogs.py:107
 msgid "Remove Entry"
@@ -1023,7 +1023,7 @@ msgstr "Fjern"
 
 #: ../../lib/dialogs.py:120
 msgid "Not Now"
-msgstr "Ikke endnu"
+msgstr "Ikke nu"
 
 #: ../../lib/dialogs.py:121
 msgid "Close to Tray"
@@ -1039,7 +1039,7 @@ msgstr "Hent alligevel"
 
 #: ../../lib/dialogs.py:124
 msgid "Open in External Browser"
-msgstr "Åben i ekstern browser"
+msgstr "Åbn i ekstern browser"
 
 #: ../../lib/dialogs.py:125
 msgid "Don't Install"
@@ -1077,7 +1077,7 @@ msgstr ""
 
 #: ../../lib/dialogs.py:215
 msgid "Login Required"
-msgstr ""
+msgstr "Logind krævet"
 
 #: ../../lib/storedatabase.py:248
 #, python-format
@@ -1113,7 +1113,7 @@ msgstr ""
 
 #: ../../lib/storedatabase.py:324
 msgid "Database was created by a newer version of Miro "
-msgstr "Databasen er oprettet af en nyere version af Miro "
+msgstr ""
 
 #: ../../lib/storedatabase.py:713
 #, python-format
@@ -1186,27 +1186,27 @@ msgstr "Sender nedbrudsrapport"
 #: ../../lib/controller.py:160
 #, python-format
 msgid "Sending Crash Report (%(progress)d%%)"
-msgstr ""
+msgstr "Sender nedbrudsrapport (%(progress)d%%)"
 
 #: ../../lib/displaytext.py:61
 #, python-format
 msgid "%(size)s GB/s"
-msgstr ""
+msgstr "%(size)s GB/s"
 
 #: ../../lib/displaytext.py:64
 #, python-format
 msgid "%(size)s MB/s"
-msgstr ""
+msgstr "%(size)s MB/s"
 
 #: ../../lib/displaytext.py:67
 #, python-format
 msgid "%(size)s kB/s"
-msgstr ""
+msgstr "%(size)s kB/s"
 
 #: ../../lib/displaytext.py:70
 #, python-format
 msgid "%(size)s B/s"
-msgstr ""
+msgstr "%(size)s B/s"
 
 #: ../../lib/displaytext.py:86
 #, python-format
@@ -1239,22 +1239,22 @@ msgstr[1] "%(num)d sekunder"
 #: ../../lib/displaytext.py:111
 #, python-format
 msgid "%(size)s GB"
-msgstr ""
+msgstr "%(size)s GB"
 
 #: ../../lib/displaytext.py:114
 #, python-format
 msgid "%(size)s MB"
-msgstr ""
+msgstr "%(size)s MB"
 
 #: ../../lib/displaytext.py:117
 #, python-format
 msgid "%(size)s KB"
-msgstr ""
+msgstr "%(size)s KB"
 
 #: ../../lib/displaytext.py:119
 #, python-format
 msgid "%(size)s B"
-msgstr ""
+msgstr "%(size)s B"
 
 #: ../../lib/displaytext.py:124
 #, python-format
@@ -1342,7 +1342,7 @@ msgstr "Vis indhold"
 #: ../../lib/frontends/widgets/style.py:242
 #: ../../lib/frontends/widgets/itemcontextmenu.py:146
 msgid "Web Page"
-msgstr "Webside"
+msgstr "Hjemmeside"
 
 #: ../../lib/frontends/widgets/style.py:243
 msgid "File URL"
@@ -1358,11 +1358,11 @@ msgstr "Filtype"
 
 #: ../../lib/frontends/widgets/style.py:246
 msgid "Seeders"
-msgstr "Seedere"
+msgstr "Seeders"
 
 #: ../../lib/frontends/widgets/style.py:247
 msgid "Leechers"
-msgstr "Leechere"
+msgstr "Leechers"
 
 #: ../../lib/frontends/widgets/style.py:248
 msgid "Upload Rate"
@@ -1415,12 +1415,12 @@ msgstr "Stop med at sende"
 #: ../../lib/frontends/widgets/style.py:592
 #: ../../lib/frontends/widgets/style.py:1214
 msgid "paused"
-msgstr "pauset"
+msgstr "standset"
 
 #: ../../lib/frontends/widgets/style.py:822
 #, python-format
 msgid "Resume at %(resumetime)s"
-msgstr "Genoptag afspilning om %(resumetime)s"
+msgstr "Genoptag om %(resumetime)s"
 
 #: ../../lib/frontends/widgets/style.py:1084
 msgid "Remove from playlist"
@@ -1428,7 +1428,7 @@ msgstr "Fjern fra afspilningsliste"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:58
 msgid "New Search Feed"
-msgstr "Tilføj avanceret feed"
+msgstr ""
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:59
 msgid "A search feed contains items that match a search term."

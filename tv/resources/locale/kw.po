@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-09-30 12:19-0400\n"
-"PO-Revision-Date: 2010-11-17 12:08+0000\n"
+"PO-Revision-Date: 2010-11-18 13:23+0000\n"
 "Last-Translator: Nicky Rowe <Unknown>\n"
 "Language-Team: Cornish <kw@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n==3) ? 2 : 3;\n"
-"X-Launchpad-Export-Date: 2010-11-17 17:54+0000\n"
+"X-Launchpad-Export-Date: 2010-11-21 21:33+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../osx/plat/frontends/widgets/overlay.py:121
@@ -1374,338 +1374,338 @@ msgstr "Folen lecyans"
 
 #: ../../lib/frontends/widgets/style.py:245
 msgid "File Type"
-msgstr ""
+msgstr "Sort an restren"
 
 #: ../../lib/frontends/widgets/style.py:246
 msgid "Seeders"
-msgstr ""
+msgstr "Hasoryon"
 
 #: ../../lib/frontends/widgets/style.py:247
 msgid "Leechers"
-msgstr ""
+msgstr "Gelyoryon"
 
 #: ../../lib/frontends/widgets/style.py:248
 msgid "Upload Rate"
-msgstr ""
+msgstr "Toth ughcarga"
 
 #: ../../lib/frontends/widgets/style.py:249
 msgid "Upload Total"
-msgstr ""
+msgstr "Sum ughcarga"
 
 #: ../../lib/frontends/widgets/style.py:250
 msgid "Down Rate"
-msgstr ""
+msgstr "Toth iscarga"
 
 #: ../../lib/frontends/widgets/style.py:251
 msgid "Down Total"
-msgstr ""
+msgstr "Sum iscarga"
 
 #: ../../lib/frontends/widgets/style.py:252
 msgid "Up/Down Ratio"
-msgstr ""
+msgstr "Kebmyns ugh/is"
 
 #: ../../lib/frontends/widgets/style.py:254
 msgid "Download Torrent"
-msgstr ""
+msgstr "Iscarga torrent"
 
 #: ../../lib/frontends/widgets/style.py:255
 #: ../../lib/dl_daemon/download.py:557
 msgid "Error"
-msgstr ""
+msgstr "Gwall"
 
 #: ../../lib/frontends/widgets/style.py:257
 msgid "Queued for Auto-download"
-msgstr ""
+msgstr "Lostys rag awto-iscarga"
 
 #: ../../lib/frontends/widgets/style.py:258
 #: ../../lib/frontends/widgets/style.py:1203
 #: ../../lib/frontends/widgets/itemlistwidgets.py:329
 #: ../../lib/frontends/widgets/itemlistcontroller.py:598
 msgid "Unplayed"
-msgstr ""
+msgstr "Dissenys"
 
 #: ../../lib/frontends/widgets/style.py:259
 msgid "Currently Playing"
-msgstr ""
+msgstr "Ow seny lebmyn"
 
 #: ../../lib/frontends/widgets/style.py:260
 #: ../../lib/frontends/widgets/style.py:1221
 #: ../../lib/frontends/widgets/itemlistwidgets.py:332
 msgid "Newly Available"
-msgstr ""
+msgstr "Cavadow en nowyth"
 
 #: ../../lib/frontends/widgets/style.py:263
 msgid "Stop seeding"
-msgstr ""
+msgstr "Hedhy hasa"
 
 #: ../../lib/frontends/widgets/style.py:592
 #: ../../lib/frontends/widgets/style.py:1214
 msgid "paused"
-msgstr ""
+msgstr "hockys"
 
 #: ../../lib/frontends/widgets/style.py:822
 #, python-format
 msgid "Resume at %(resumetime)s"
-msgstr ""
+msgstr "Daskemeres orth %(resumetime)s"
 
 #: ../../lib/frontends/widgets/style.py:1084
 msgid "Remove from playlist"
-msgstr ""
+msgstr "Dilea dhort canrol"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:58
 msgid "New Search Feed"
-msgstr ""
+msgstr "Feed whilans nowyth"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:59
 msgid "A search feed contains items that match a search term."
-msgstr ""
+msgstr "Ma feed whilans ow senjy taclow eus ow machya tra whilans."
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:75
 msgid "Search for:"
-msgstr ""
+msgstr "Whilas:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:82
 msgid "In this:"
-msgstr ""
+msgstr "En an:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:89
 msgid "Feed:"
-msgstr ""
+msgstr "Feed-ma:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:96
 msgid "Search engine:"
-msgstr ""
+msgstr "Jynn whilas-ma:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:102
 #: ../../lib/frontends/widgets/newfeed.py:60
 msgid "URL:"
-msgstr ""
+msgstr "URL-ma:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:136
 msgid "Add new feed to this section:"
-msgstr ""
+msgstr "Keworra feed nowyth dhe'n trogh-ma:"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:139
 #: ../../lib/frontends/widgets/newfeed.py:72
 #: ../../lib/frontends/widgets/newfolder.py:71
 msgid "video"
-msgstr ""
+msgstr "video"
 
 #: ../../lib/frontends/widgets/newsearchfeed.py:140
 #: ../../lib/frontends/widgets/newfeed.py:73
 #: ../../lib/frontends/widgets/newfolder.py:72
 msgid "audio"
-msgstr ""
+msgstr "audio"
 
 #: ../../lib/frontends/widgets/playback.py:608
 msgid "Open Subtitles File..."
-msgstr ""
+msgstr "Egery restren istitlys..."
 
 #: ../../lib/frontends/widgets/playback.py:609
 msgid "Subtitle files"
-msgstr ""
+msgstr "Restrednow istitlys"
 
 #: ../../lib/frontends/widgets/menus.py:203
 msgid "_File"
-msgstr ""
+msgstr "_Restren"
 
 #: ../../lib/frontends/widgets/menus.py:204
 msgid "_Open"
-msgstr ""
+msgstr "_Egery"
 
 #: ../../lib/frontends/widgets/menus.py:206
 msgid "_Download Item"
-msgstr ""
+msgstr "_Iscarga an dra"
 
 #: ../../lib/frontends/widgets/menus.py:208
 msgid "Check _Version"
-msgstr ""
+msgstr "Checkya _versyon"
 
 #: ../../lib/frontends/widgets/menus.py:210
 msgid "_Remove Item"
-msgstr ""
+msgstr "_Dilea an dra"
 
 #: ../../lib/frontends/widgets/menus.py:213
 msgid "_Remove Items"
-msgstr ""
+msgstr "_Dilea taclow"
 
 #: ../../lib/frontends/widgets/menus.py:214
 msgid "_Edit Item"
-msgstr ""
+msgstr "_Chanjya an dra"
 
 #: ../../lib/frontends/widgets/menus.py:216
 msgid "Save Item _As"
-msgstr ""
+msgstr "Gwitha an dra _avel"
 
 #: ../../lib/frontends/widgets/menus.py:219
 msgid "Save Items _As"
-msgstr ""
+msgstr "Gwitha taclow _avel"
 
 #: ../../lib/frontends/widgets/menus.py:220
 msgid "Copy Item _URL"
-msgstr ""
+msgstr "Copia _URL an dra"
 
 #: ../../lib/frontends/widgets/menus.py:224
 msgid "_Preferences"
-msgstr ""
+msgstr "_Dowisyanjow"
 
 #: ../../lib/frontends/widgets/menus.py:225
 msgid "_Quit"
-msgstr ""
+msgstr "_Qwitya"
 
 #: ../../lib/frontends/widgets/menus.py:228
 msgid "_Sidebar"
-msgstr ""
+msgstr "_Bar tu"
 
 #: ../../lib/frontends/widgets/menus.py:229
 msgid "Add _Feed"
-msgstr ""
+msgstr "Keworra _feed"
 
 #: ../../lib/frontends/widgets/menus.py:231
 #: ../../lib/frontends/widgets/application.py:582
 msgid "Add Website"
-msgstr ""
+msgstr "Keworra gwiasva"
 
 #: ../../lib/frontends/widgets/menus.py:233
 msgid "New Searc_h Feed"
-msgstr ""
+msgstr "Feed w_hilans nowyth"
 
 #: ../../lib/frontends/widgets/menus.py:235
 msgid "New _Folder"
-msgstr ""
+msgstr "_Plegel nowyth"
 
 #: ../../lib/frontends/widgets/menus.py:239
 msgid "Re_name"
-msgstr ""
+msgstr "Das_henwel"
 
 #: ../../lib/frontends/widgets/menus.py:242
 msgid "Re_name Feed"
-msgstr ""
+msgstr "Das_henwel an feed"
 
 #: ../../lib/frontends/widgets/menus.py:243
 msgid "Re_name Website"
-msgstr ""
+msgstr "Das_henwel an wiasva"
 
 #: ../../lib/frontends/widgets/menus.py:244
 msgid "_Remove"
-msgstr ""
+msgstr "_Dilea"
 
 #: ../../lib/frontends/widgets/menus.py:248
 msgid "_Remove Feed"
-msgstr ""
+msgstr "_Dilea an feed"
 
 #: ../../lib/frontends/widgets/menus.py:249
 msgid "_Remove Feeds"
-msgstr ""
+msgstr "_Dilea feeds"
 
 #: ../../lib/frontends/widgets/menus.py:250
 msgid "_Remove Folder"
-msgstr ""
+msgstr "_Dilea an blegel"
 
 #: ../../lib/frontends/widgets/menus.py:251
 msgid "_Remove Folders"
-msgstr ""
+msgstr "_Dilea plegellow"
 
 #: ../../lib/frontends/widgets/menus.py:252
 msgid "_Remove Website"
-msgstr ""
+msgstr "_Dilea an wiasva"
 
 #: ../../lib/frontends/widgets/menus.py:253
 msgid "_Remove Websites"
-msgstr ""
+msgstr "_Dilea gwiasvaow"
 
 #: ../../lib/frontends/widgets/menus.py:254
 msgid "_Update Feed"
-msgstr ""
+msgstr "_Nowedha an feed"
 
 #: ../../lib/frontends/widgets/menus.py:257
 msgid "_Update Feeds"
-msgstr ""
+msgstr "_Nowedha feeds"
 
 #: ../../lib/frontends/widgets/menus.py:258
 msgid "Update _All Feeds"
-msgstr ""
+msgstr "Nowedha _pub feed"
 
 #: ../../lib/frontends/widgets/menus.py:262
 msgid "_Import Feeds (OPML)"
-msgstr ""
+msgstr "_Ymperthy feeds (OMPL)"
 
 #: ../../lib/frontends/widgets/menus.py:264
 msgid "E_xport Feeds (OPML)"
-msgstr ""
+msgstr "E_sperthy feeds (OPML)"
 
 #: ../../lib/frontends/widgets/menus.py:267
 msgid "_Share with a Friend"
-msgstr ""
+msgstr "_Kevradna gen cothman"
 
 #: ../../lib/frontends/widgets/menus.py:269
 msgid "Copy URL"
-msgstr ""
+msgstr "Copia an URL"
 
 #: ../../lib/frontends/widgets/menus.py:273
 msgid "_Playlists"
-msgstr ""
+msgstr "_Canrolyow"
 
 #: ../../lib/frontends/widgets/menus.py:274
 msgid "New _Playlist"
-msgstr ""
+msgstr "_Canrol nowyth"
 
 #: ../../lib/frontends/widgets/menus.py:277
 msgid "New Playlist Fol_der"
-msgstr ""
+msgstr "Ple_gel canrolyow nowyth"
 
 #: ../../lib/frontends/widgets/menus.py:281
 msgid "Re_name Playlist"
-msgstr ""
+msgstr "Das_henwel canrol"
 
 #: ../../lib/frontends/widgets/menus.py:283
 msgid "_Remove Playlist"
-msgstr ""
+msgstr "_Dilea an ganrol"
 
 #: ../../lib/frontends/widgets/menus.py:286
 msgid "_Remove Playlists"
-msgstr ""
+msgstr "_Dilea canrolyow"
 
 #: ../../lib/frontends/widgets/menus.py:287
 msgid "_Remove Playlist Folders"
-msgstr ""
+msgstr "_Dilea plegellow canrolyow"
 
 #: ../../lib/frontends/widgets/menus.py:288
 msgid "_Remove Playlist Folder"
-msgstr ""
+msgstr "_Dilea plegel canrolyow"
 
 #: ../../lib/frontends/widgets/menus.py:291
 msgid "P_layback"
-msgstr ""
+msgstr "D_asseny"
 
 #: ../../lib/frontends/widgets/menus.py:292
 #: ../../lib/frontends/widgets/menus.py:294
 msgid "_Play"
-msgstr ""
+msgstr "_Seny"
 
 #: ../../lib/frontends/widgets/menus.py:295
 msgid "_Pause"
-msgstr ""
+msgstr "_Hockya"
 
 #: ../../lib/frontends/widgets/menus.py:296
 msgid "_Stop"
-msgstr ""
+msgstr "_Hedhy"
 
 #: ../../lib/frontends/widgets/menus.py:299
 msgid "_Next Item"
-msgstr ""
+msgstr "_Nessa tra"
 
 #: ../../lib/frontends/widgets/menus.py:302
 msgid "_Previous Item"
-msgstr ""
+msgstr "_Kens tra"
 
 #: ../../lib/frontends/widgets/menus.py:306
 msgid "Skip _Forward"
-msgstr ""
+msgstr "Skypya en-_rag"
 
 #: ../../lib/frontends/widgets/menus.py:308
 msgid "Skip _Back"
-msgstr ""
+msgstr "Skypya war _dhelergh"
 
 #: ../../lib/frontends/widgets/menus.py:311
 msgid "Volume _Up"
