@@ -496,7 +496,7 @@ class PlaybackManager (signals.SignalEmitter):
             # should be a better way.
             self.playlist = None
             app.widgetapp.open_file(item_info.video_path)
-            if not item_info.item_watched:
+            if not item_info.item_viewed:
                 messages.MarkItemWatched(item_info.id).send_to_backend()
             return
 
