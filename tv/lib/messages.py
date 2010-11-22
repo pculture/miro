@@ -1019,6 +1019,12 @@ class ItemInfo(object):
                         generic, like "audio"
     :param license: this file's license, if known.
     :param mime_type: mime-type of the enclosure that would be downloaded
+    :param artist: the primary artist of the track
+    :param album: the track's album of origin
+    :param track: the track number within the album
+    :param year: the track's year of release
+    :param genre: the track's genre
+    :param rating: the user's rating of the track
     :param file_url: URL of the enclosure that would be downloaded
     :param download_info: DownloadInfo object containing info about the
                           download (or None)
