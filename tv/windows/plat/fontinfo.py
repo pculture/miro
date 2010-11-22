@@ -66,6 +66,7 @@ def check_init():
 
 def _get_font_info(path):
     face = FT_FACE()
+    path = path.encode('utf-8')
     rv = freetype.FT_New_Face(library, path, 0, ctypes.byref(face))
     if rv == 0:
         name = "%s %s" % (face.contents.family_name, face.contents.style_name)
