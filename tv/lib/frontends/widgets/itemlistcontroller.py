@@ -91,10 +91,10 @@ class ItemListController(object):
         self.id = id_
         self.current_item_view = None
         self._search_text = ''
+        self.enabled_columns = app.frontend_states_memory.query_columns_state(
+                type, id)
         self._init_widget()
         item_lists = set(iv.item_list for iv in self.all_item_views())
-        enabled_columns = app.frontend_states_memory.query_columns_state(
-                type, id)
         sorter = app.frontend_states_memory.query_sort_state(type, id)
         self.item_list_group = itemlist.ItemListGroup(item_lists, sorter)
         self._init_item_views()
@@ -123,7 +123,7 @@ class ItemListController(object):
                 sorter.KEY, sorter.is_ascending())
 
     def build_list_item_view(self):
-        return itemlistwidgets.ListItemView(self.item_list)
+        return itemlistwidgets.ListItemView(self.item_list, self.enabled_columns)
 
     def build_header_toolbar(self):
         return itemlistwidgets.HeaderToolbar()
@@ -560,7 +560,7 @@ class AudioVideoItemsController(SimpleItemListController):
         return itemlistwidgets.ItemView(self.item_list, True)
     def build_list_item_view(self):
         return itemlistwidgets.ListItemView(self.item_list,
-                display_download_info=False)
+                self.enabled_columns, display_download_info=False)
 
     def build_header_toolbar(self):
         toolbar = itemlistwidgets.LibraryHeaderToolbar(self.unwatched_label)
@@ -621,7 +621,7 @@ class OtherItemsController(SimpleItemListController):
 
     def build_list_item_view(self):
         return itemlistwidgets.ListItemView(self.item_list,
-                display_download_info=False)
+                self.enabled_columns, display_download_info=False)
 
 #    def build_item_view(self):
 #        return itemlistwidgets.ItemView(self.item_list, True)

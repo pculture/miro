@@ -122,7 +122,7 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
 
     def build_list_item_view(self):
         return itemlistwidgets.ListItemView(self.item_list,
-                display_download_info=False)
+                self.enabled_columns, display_download_info=False)
 
     def make_drop_handler(self):
         handler = DropHandler(self.id, self.item_view)

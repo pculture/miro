@@ -278,34 +278,49 @@ class ItemView(widgetset.TableView):
 class ListItemView(widgetset.TableView):
     """TableView that displays a list of items using the list view."""
 
-    def __init__(self, item_list, display_channel=True,
+    def __init__(self, item_list, enabled_columns, display_channel=True,
             display_download_info=True):
         widgetset.TableView.__init__(self, item_list.model)
         self.display_channel = display_channel
         self.display_download_info = display_download_info
+        self.enabled_columns = enabled_columns
         self.create_signal('sort-changed')
         self.item_list = item_list
         self._column_name_to_column = {}
         self._current_sort_column = None
         self._set_initial_widths = False
-        self._make_column('', style.StateCircleRenderer(), 'state', False)
-        self._make_column(_('Name'), style.NameRenderer(), 'name')
-        self._make_column(_('Artist'), style.ArtistRenderer(), 'artist')
-        self._make_column(_('Album'), style.AlbumRenderer(), 'album')
-        self._make_column(_('Track'), style.TrackRenderer(), 'track')
-        self._make_column(_('Year'), style.YearRenderer(), 'year')
-        self._make_column(_('Genre'), style.GenreRenderer(), 'genre')
-        self._make_column(_('Rating'), style.RatingRenderer(), 'rating')
-        if display_channel:
+        if 'state' in enabled_columns:
+            self._make_column('', style.StateCircleRenderer(), 'state', False)
+        if 'name' in enabled_columns:
+            self._make_column(_('Name'), style.NameRenderer(), 'name')
+        if 'artist' in enabled_columns:
+            self._make_column(_('Artist'), style.ArtistRenderer(), 'artist')
+        if 'album' in enabled_columns:
+            self._make_column(_('Album'), style.AlbumRenderer(), 'album')
+        if 'track' in enabled_columns:
+            self._make_column(_('Track'), style.TrackRenderer(), 'track')
+        if 'year' in enabled_columns:
+            self._make_column(_('Year'), style.YearRenderer(), 'year')
+        if 'genre' in enabled_columns:
+            self._make_column(_('Genre'), style.GenreRenderer(), 'genre')
+        if 'rating' in enabled_columns:
+            self._make_column(_('Rating'), style.RatingRenderer(), 'rating')
+        if display_channel and 'feed-name' in enabled_columns:
             self._make_column(_('Feed'), style.FeedNameRenderer(),
                     'feed-name')
-        self._make_column(_('Date'), style.DateRenderer(), 'date')
-        self._make_column(_('Length'), style.LengthRenderer(), 'length')
-        self._make_column(_('Status'), style.StatusRenderer(), 'status')
-        self._make_column(_('Size'), style.SizeRenderer(), 'size')
+        if 'date' in enabled_columns:
+            self._make_column(_('Date'), style.DateRenderer(), 'date')
+        if 'length' in enabled_columns:
+            self._make_column(_('Length'), style.LengthRenderer(), 'length')
+        if 'status' in enabled_columns:
+            self._make_column(_('Status'), style.StatusRenderer(), 'status')
+        if 'size' in enabled_columns:
+            self._make_column(_('Size'), style.SizeRenderer(), 'size')
         if display_download_info:
-            self._make_column(_('ETA'), style.ETARenderer(), 'eta')
-            self._make_column(_('Speed'), style.DownloadRateRenderer(),
+            if 'eta' in enabled_columns:
+                self._make_column(_('ETA'), style.ETARenderer(), 'eta')
+            if 'rate' in enabled_columns:
+                self._make_column(_('Speed'), style.DownloadRateRenderer(),
                               'rate')
         self.set_show_headers(True)
         self.set_columns_draggable(True)
@@ -398,6 +413,9 @@ class ListItemView(widgetset.TableView):
         self.emit('sort-changed', column_name, ascending)
 
     def change_sort_indicator(self, column_name, ascending):
+        if not column_name in self._column_name_to_column:
+            # column not visible
+            column_name = 'name' # TODO: better handling of this case
         new_sort_column = self._column_name_to_column[column_name]
         if self._current_sort_column is None:
             new_sort_column.set_sort_indicator_visible(True)
