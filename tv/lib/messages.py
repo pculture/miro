@@ -1092,7 +1092,6 @@ class ItemInfo(object):
         self.media_type_checked = item.media_type_checked
         self.seeding_status = item.torrent_seeding_status()
         self.mime_type = item.enclosure_type
-        self.file_url = item.url
         self.artist = item.get_artist()
         self.album = item.get_album()
         self.track = item.get_track()
