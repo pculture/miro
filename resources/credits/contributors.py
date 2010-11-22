@@ -37,7 +37,9 @@ import os
 
 import bugzillalib
 
-USAGE = "Usage: contributors.py <git-prev-rev> <git-rev> <bugzilla-milestone> [<output-file>]"
+BADNAMES = ("build", "miro")
+
+USAGE = "Usage: contributors.py <git-prev-rev> <git-rev> <bugzilla-milestone> [<bugzilla-milestone> ...]"
 
 HELP = """
 arguments:
@@ -51,11 +53,8 @@ arguments:
       release.
 
    bugzilla-milestone
-      The Bugzilla milestone for all bugs in this release.
-
-   output-file
-      If not specified, this defaults to stdout.  If it is specified, then
-      the list of contributors is saved to the file at this path.
+      One or more Bugzilla milestones for bugs in this release and this
+      series.
 """
 
 def execute(line):
@@ -209,10 +208,12 @@ def main(argv):
 
     prevrev = argv[0]
     rev = argv[1]
-    milestone = argv[2]
+    milestones = argv[2:]
 
     git_authors = get_git_authors(prevrev, rev)
-    reporters = get_bugzilla_reporters(milestone)
+    reporters = {}
+    for milestone in milestones:
+        reporters.update(get_bugzilla_reporters(milestone))
     addtl = get_additional_contributors("additional.txt")
 
     print_stats("git", git_authors)
