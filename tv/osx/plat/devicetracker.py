@@ -84,9 +84,15 @@ class DeviceTracker(object):
 
     def _disk_mounted(self, volume):
         volume_info = diskutil('info', volume)
+        if not volume_info:
+            logging.debug('unknown device connected @ %r' % volume)
+            return
         if volume_info.BusProtocol != 'USB':
             return # don't care about non-USB devices
         disk_info = diskutil('info', volume_info.ParentWholeDisk)
+        if not disk_info:
+            logging.debug('unknown device connected @ %r' % volume)
+            return
         device_name = disk_info.MediaName[:-6] # strip off ' Media'
         database = devices.load_database(volume)
         try:
