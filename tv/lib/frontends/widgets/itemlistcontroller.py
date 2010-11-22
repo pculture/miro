@@ -623,13 +623,6 @@ class OtherItemsController(SimpleItemListController):
         return itemlistwidgets.ListItemView(self.item_list,
                 self.enabled_columns, display_download_info=False)
 
-#    def build_item_view(self):
-#        return itemlistwidgets.ItemView(self.item_list, True)
-#
-#    def build_list_item_view(self):
-#        return itemlistwidgets.ListItemView(self.item_list,
-#                display_download_info=False)
-
 class FolderContentsController(SimpleItemListController):
     """Controller object for feeds."""
 
