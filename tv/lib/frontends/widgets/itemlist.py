@@ -198,10 +198,25 @@ class AlbumSort(ItemSort):
     def sort_key(self, item):
         return util.name_sort_key(item.album)
 
-class TitleSort(ItemSort):
-    KEY = 'title'
+class TrackSort(ItemSort):
+    KEY = 'track'
     def sort_key(self, item):
-        return util.name_sort_key(item.title)
+        return item.track
+
+class YearSort(ItemSort):
+    KEY = 'year'
+    def sort_key(self, item):
+        return item.year
+
+class GenreSort(ItemSort):
+    KEY = 'genre'
+    def sort_key(self, item):
+        return item.genre
+
+class RatingSort(ItemSort):
+    KEY = 'rating'
+    def sort_key(self, item):
+        return item.rating
 
 SORT_KEY_MAP = {
     DateSort.KEY:         DateSort,
@@ -217,7 +232,10 @@ SORT_KEY_MAP = {
     ProgressSort.KEY:     ProgressSort,
     ArtistSort.KEY:       ArtistSort,
     AlbumSort.KEY:        AlbumSort,
-    TitleSort.KEY:        TitleSort,
+    TrackSort.KEY:        TrackSort,
+    YearSort.KEY:         YearSort,
+    GenreSort.KEY:        GenreSort,
+    RatingSort.KEY:       RatingSort,
 }
 
 class ItemListGroup(object):
