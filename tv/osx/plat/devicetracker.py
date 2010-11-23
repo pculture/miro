@@ -42,12 +42,16 @@ from miro import messages
 
 STREAM_INTERVAL = 0.5
 
-def diskutil(cmd, pathOrDisk):
-    args = ['diskutil', cmd, '-plist']
-    if pathOrDisk:
-        args.append(pathOrDisk)
+def diskutil(cmd, path_or_disk, use_plist=True):
+    args = ['diskutil', cmd]
+    if use_plist:
+        args.append('-plist')
+    if path_or_disk:
+        args.append(path_or_disk)
     proc = subprocess.Popen(args, stdout=subprocess.PIPE)
     stdout, stderr = proc.communicate()
+    if not use_plist:
+        return stdout
     try:
         return plistlib.readPlistFromString(stdout)
     except:
@@ -116,5 +120,5 @@ class DeviceTracker(object):
         devices.device_disconnected(info)
 
     def eject(self, device):
-        diskutil('eject', device.mount)
+        diskutil('eject', device.mount, use_plist=False)
 
