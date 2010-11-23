@@ -389,7 +389,7 @@ def scan_device_for_files(device):
     def _exists(item_path):
         return os.path.exists(os.path.join(device.mount,
                                            item_path))
-    for item_type in ('video', 'audio'):
+    for item_type in ('video', 'audio', 'other'):
         device.database.setdefault(item_type, {})
         for item_path in device.database[item_type]:
             if _exists(item_path):

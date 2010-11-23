@@ -2180,16 +2180,30 @@ class DeviceItem(object):
                 self.screenshot = None # don't save a default thumbnail
 
     def signal_change(self):
+        from miro import devices # avoid circular imports
+        from miro import messages
+
+        ignored, current_file_type = self.device.id.split('-', 1)
+        if self.file_type != current_file_type:
+            # remove the old item from the database
+            if self.video_path in self.device.database[current_file_type]:
+                del self.device.database[current_file_type][self.video_path]
+                message = messages.ItemsChanged('device', self.device.id,
+                                                [], [], [self.id])
+                message.send_to_frontend()
+
         self._migrate_thumbnail()
         self.device.database[self.file_type][self.video_path] = self.to_dict()
 
-        from miro import devices
         devices.write_database(self.device.mount, self.device.database)
 
-        from miro import messages
-        message = messages.ItemsChanged('device', self.device.id,
-                                        [], [messages.ItemInfo(self)], [])
-        message.send_to_frontend()
+
+        if self.file_type != 'other':
+            print 'changing', self.id, self.video_path
+            # don't notify about 'other' items
+            message = messages.ItemsChanged('device', self.device.id,
+                                            [], [messages.ItemInfo(self)], [])
+            message.send_to_frontend()
 
     def to_dict(self):
         data = {}
