@@ -95,9 +95,9 @@ def write_pid(short_app_name, pid):
     """
     global PIDFILE
     # NOTE: we want to open the file in a mode the standard open()
-    # doesn't support.  We want to create the file if nessecary, but
+    # doesn't support.  We want to create the file if necessary, but
     # not truncate it if it's already around.  We can't truncate it
-    # because on unix we haven't locked the file yet.
+    # because on Unix we haven't locked the file yet.
     fd = os.open(get_data_filename(short_app_name), os.O_WRONLY | os.O_CREAT)
     PIDFILE = os.fdopen(fd, 'w')
     if os.name != "nt":
