@@ -206,9 +206,12 @@ class VideoConversionManager(signals.SignalEmitter):
     def lookup_converter(self, converter_id):
         return self.converters.lookup_converter(converter_id)
 
-    def start_conversion(self, converter_id, item_info, target_folder=None):
+    def start_conversion(self, converter_id, item_info, target_folder=None,
+                         create_item=True):
         converter_info = self.converters.lookup_converter(converter_id)
-        task = self._make_conversion_task(converter_info, item_info, target_folder)
+        task = self._make_conversion_task(converter_info, item_info,
+                                          target_folder,
+                                          create_item)
         if ((task is not None
              and task.get_executable() is not None
              and not self._has_running_task(task.key)
@@ -222,13 +225,16 @@ class VideoConversionManager(signals.SignalEmitter):
         msg.update(kw)
         self.message_queue.put(msg)
         
-    def _make_conversion_task(self, converter_info, item_info, target_folder):
+    def _make_conversion_task(self, converter_info, item_info, target_folder,
+                              create_item):
         if target_folder is None:
             target_folder = get_conversions_folder()
         if converter_info.executable == 'ffmpeg':
-            return FFMpegConversionTask(converter_info, item_info, target_folder)
+            return FFMpegConversionTask(converter_info, item_info,
+                                        target_folder, create_item)
         elif converter_info.executable == 'ffmpeg2theora':
-            return FFMpeg2TheoraConversionTask(converter_info, item_info, target_folder)
+            return FFMpeg2TheoraConversionTask(converter_info, item_info,
+                                               target_folder, create_item)
         return None
     
     def _check_task_loop(self):
@@ -338,8 +344,10 @@ class VideoConversionManager(signals.SignalEmitter):
                 if os.path.exists(source):
                     shutil.move(source, destination)
                     shutil.rmtree(os.path.dirname(source))
-                    _create_item_for_conversion(destination, source_info,
-                                                conversion_name)
+                    if task.create_item:
+                        _create_item_for_conversion(destination,
+                                                    source_info,
+                                                    conversion_name)
                     clean_up(task.temp_output_path, file_and_directory=True)
                 else:
                     task.error = _("Reason unknown--check log")
@@ -508,13 +516,15 @@ def clean_up(temp_file, file_and_directory=False, attempts=0):
                     (temp_file, file_and_directory, attempts+1))
 
 class VideoConversionTask(object):
-    def __init__(self, converter_info, item_info, target_folder):
+    def __init__(self, converter_info, item_info, target_folder,
+                 create_item):
         self.temp_dir = utils.FilenameType(tempfile.mkdtemp("miro-conversion"))
         self.item_info = item_info
         self.converter_info = converter_info
         self.input_path = item_info.video_path
         self.final_output_path, self.temp_output_path = build_output_paths(
             item_info, self.temp_dir, target_folder, converter_info)
+        self.create_item = create_item
 
         logging.debug("temp_output_path: %s  final_output_path: %s", self.temp_output_path, self.final_output_path)
 

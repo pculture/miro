@@ -240,7 +240,8 @@ class DeviceSyncManager(object):
                         signal, callback))
 
         self.waiting.add(info)
-        start_conversion(conversion, info, target)
+        start_conversion(conversion, info, target,
+                         create_item=False)
 
     def _exists(self, item_info):
         if item_info.file_type not in self.device.database:
