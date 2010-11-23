@@ -905,7 +905,7 @@ class LiveStorage:
         return save_name
 
     def dumpDatabase(self):
-        output = open(next_free_filename(os.path.join(app.config.get(prefs.SUPPORT_DIRECTORY), "database-dump.xml")), 'w')
+        output = open(next_free_filename(os.path.join(app.config.get(prefs.SUPPORT_DIRECTORY), "database-dump.xml")), 'wb')
         def indent(level):
             output.write('    ' * level)
         def output_object(table_name, values):

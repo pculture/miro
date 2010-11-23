@@ -343,7 +343,7 @@ def write_database(mount, database):
         os.makedirs(os.path.join(mount, '.miro'))
     except OSError:
         pass
-    json.dump(database, file(os.path.join(mount, '.miro', 'json'), 'w'))
+    json.dump(database, file(os.path.join(mount, '.miro', 'json'), 'wb'))
 
 def device_connected(info):
     """
