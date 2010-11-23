@@ -523,6 +523,16 @@ def check_f(text):
         raise MiroUnicodeError, (u"text %r is not a valid filename type" %
                                  text)
 
+def returns_file(func):
+    """Decorator that raises an exception if the function doesn't
+    return a file object
+    """
+    def check_func(*args, **kwargs):
+        result = func(*args, **kwargs)
+        if result and type(result) != file:
+            raise ValueError('returns_file: not a open file object')
+        return result
+
 def returns_filename(func):
     """Decorator that raises an exception if the function doesn't
     return a filename
