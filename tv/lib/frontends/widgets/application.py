@@ -856,12 +856,14 @@ class Application:
                 ("The next time the the message is handled, Miro will "
                     "write out profile timing data for it."),
                 message_labels)
-        message_obj = message_choices[index]
-        message_label = message_labels[index]
-        title = _("Select File to write Profile to")
-        path = dialogs.ask_for_save_pathname(title,
-                'miro-profile-%s.prof' % message_label.lower())
-        self.message_handler.profile_next_message(message_obj, path)
+        if index is not None:
+            message_obj = message_choices[index]
+            message_label = message_labels[index]
+            title = _("Select File to write Profile to")
+            path = dialogs.ask_for_save_pathname(title,
+                    'miro-profile-%s.prof' % message_label.lower())
+            if path is not None:
+                self.message_handler.profile_next_message(message_obj, path)
 
     def on_close(self):
         """This is called when the close button is pressed."""
