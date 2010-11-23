@@ -481,7 +481,7 @@ class MiroUnicodeError(StandardError):
     pass
 
 def check_u(text):
-    """Raise an exception if input isn't unicode
+    """Raises an exception if input isn't unicode
     """
     if text is not None and not isinstance(text, unicode):
         raise MiroUnicodeError(u"text %r is not a unicode string (type:%s)" %
@@ -505,7 +505,7 @@ def check_b(text):
         raise MiroUnicodeError, (u"text \"%s\" is not a binary string" % text)
 
 def returns_binary(func):
-    """Decorator that raised an exception if the function doesn't
+    """Decorator that raises an exception if the function doesn't
     return unicode
     """
     def check_func(*args, **kwargs):
@@ -516,7 +516,7 @@ def returns_binary(func):
     return check_func
 
 def check_f(text):
-    """Returns exception if input isn't a filename type
+    """Raises exception if input isn't a filename type
     """
     from miro.plat.utils import FilenameType
     if text is not None and not isinstance(text, FilenameType):
@@ -524,7 +524,7 @@ def check_f(text):
                                  text)
 
 def returns_filename(func):
-    """Decorator that raised an exception if the function doesn't
+    """Decorator that raises an exception if the function doesn't
     return a filename
     """
     def check_func(*args, **kwargs):
