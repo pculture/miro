@@ -223,6 +223,12 @@ class MovieDataUpdater(signals.SignalEmitter):
         if 'length' in info:
             duration = int(info['length'] * 1000)
             del info['length']
+        else:
+            try:
+                dur = meta['seektable'].__dict__['seekpoints'].pop()[1]
+                duration = int(dur / 100)
+            except (KeyError, AttributeError, TypeError, IndexError):
+                pass
 
         for key, value in tags.items():
             if not key.split(':')[0] in DISCARD:
