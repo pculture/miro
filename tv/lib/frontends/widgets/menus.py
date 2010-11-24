@@ -611,6 +611,68 @@ def on_subtitle_encoding(converter):
     else:
         app.playback_manager.select_subtitle_encoding(converter)
 
+# View menu
+
+@action_handler("State")
+def on_state():
+    app.widgetapp.toggle_column('state')
+
+@action_handler("Name")
+def on_name():
+    app.widgetapp.toggle_column('name')
+
+@action_handler("Artist")
+def on_artist():
+    app.widgetapp.toggle_column('artist')
+
+@action_handler("Album")
+def on_artist():
+    app.widgetapp.toggle_column('album')
+
+@action_handler("Track")
+def on_track():
+    app.widgetapp.toggle_column('track')
+
+@action_handler("Year")
+def on_year():
+    app.widgetapp.toggle_column('year')
+
+@action_handler("Genre")
+def on_genre():
+    app.widgetapp.toggle_column('genre')
+
+@action_handler("Rating")
+def on_rating():
+    app.widgetapp.toggle_column('rating')
+
+@action_handler("Feed")
+def on_feed():
+    app.widgetapp.toggle_column('feed')
+
+@action_handler("Date")
+def on_date():
+    app.widgetapp.toggle_column('date')
+
+@action_handler("Length")
+def on_length():
+    app.widgetapp.toggle_column('length')
+
+@action_handler("Status")
+def on_status():
+    app.widgetapp.toggle_column('status')
+
+@action_handler("Size")
+def on_size():
+    app.widgetapp.toggle_column('size')
+
+@action_handler("ETA")
+def on_eta():
+    app.widgetapp.toggle_column('eta')
+
+@action_handler("Rate")
+def on_length():
+    app.widgetapp.toggle_column('rate')
+
 # Help menu
 @action_handler("About")
 def on_about():

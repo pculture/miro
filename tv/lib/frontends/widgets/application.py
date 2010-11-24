@@ -1392,11 +1392,20 @@ class FrontendStatesStore(object):
         state = sorter.KEY
         if not sorter.is_ascending():
             state = '-' + state
-        self.sort_states[self._key(typ, id_)] = state
+        self.sort_states[self._key(type, id)] = state
         self.save_state()
 
+<<<<<<< HEAD
     def set_list_view(self, typ, id_):
         self.current_displays.add(self._key(typ, id_))
+=======
+    def set_columns_state(self, type, id, columns):
+        self.current_columns = columns
+        self.save_state()
+
+    def set_list_view(self, type, id):
+        self.current_displays.add(self._key(type, id))
+>>>>>>> Attach handlers to columns.
         self.save_state()
 
     def set_std_view(self, typ, id_):

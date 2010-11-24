@@ -243,6 +243,10 @@ class ItemListController(object):
         self.list_item_view.change_sort_indicator(sort_key, ascending)
         app.frontend_states_memory.set_sort_state(self.type, self.id, sorter)
 
+    def on_toggle_column(self, column):
+        self.enabled_columns ^= set([column])
+        app.frontend_states_memory.set_columns_state(self.enabled_columns)
+
     def on_key_press(self, view, key, mods):
         if key == menus.DELETE:
             return self.handle_delete()
