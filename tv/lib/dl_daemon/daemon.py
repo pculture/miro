@@ -94,15 +94,22 @@ def write_pid(short_app_name, pid):
     On Linux/OS X, we use the fcntl.lockf() function.
     """
     global PIDFILE
-    # NOTE: we want to open the file in a mode the standard open()
-    # doesn't support.  We want to create the file if necessary, but
-    # not truncate it if it's already around.  We can't truncate it
-    # because on Unix we haven't locked the file yet.
-    fd = os.open(get_data_filename(short_app_name), os.O_WRONLY | os.O_CREAT)
-    PIDFILE = os.fdopen(fd, 'w')
-    if os.name != "nt":
-        import fcntl
-        fcntl.lockf(PIDFILE, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    # Try to remove the pidfile, and then create it from scratch.
+    while True:
+        try:
+            os.remove(get_data_filename(short_app_name))
+        except OSError:
+            pass
+        try:
+            mask = os.O_WRONLY | os.O_CREAT | os.O_EXCL
+            fd = os.open(get_data_filename(short_app_name), mask)
+            PIDFILE = os.fdopen(fd, 'w')
+        except OSError:
+            # boh boh.  Try again.
+            continue
+        if os.name != "nt":
+            import fcntl
+            fcntl.lockf(PIDFILE, fcntl.LOCK_EX | fcntl.LOCK_NB)
 
     PIDFILE.write("%s\n" % pid)
     PIDFILE.flush()
