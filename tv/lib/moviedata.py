@@ -241,14 +241,18 @@ class MovieDataUpdater(signals.SignalEmitter):
         for key, value in info.items():
             data[u'info_' + key] = unicode(value)
 
-        if 'TALB' in data:
+        if 'ALBUM' in data:
+            data[u'album'] = data['ALBUM']
+        elif 'TALB' in data:
             data[u'album'] = data['TALB']
         else:
             try:
                 data[u'album'] = unicode(tags['WM/AlbumTitle'][0])
             except (KeyError, TypeError):
                 pass
-        if 'TPE1' in data:
+        if 'ARTIST' in data:
+            data[u'artist'] = data['ARTIST']
+        elif 'TPE1' in data:
             data[u'artist'] = data['TPE1']
         elif 'TPE2' in data:
             data[u'artist'] = data['TPE2']
@@ -305,7 +309,9 @@ class MovieDataUpdater(signals.SignalEmitter):
                 data[u'year'] = unicode(tags['WM/Year'][0])
             except (KeyError, TypeError):
                 pass
-        if 'TCON' in data:
+        if 'GENRE' in data:
+            data[u'genre'] = data['GENRE']
+        elif 'TCON' in data:
             data[u'genre'] = data['TCON']
         else:
             try:
