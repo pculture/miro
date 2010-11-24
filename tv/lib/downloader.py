@@ -453,12 +453,13 @@ class RemoteDownloader(DDBObject):
                 newfilename = os.path.join(directory, short_filename)
                 if newfilename == filename:
                     return
-                newfilename = next_free_filename(newfilename)
+                newfilename, fp = next_free_filename(newfilename)
                 def callback():
                     self.status['filename'] = newfilename
                     self.signal_change(needs_signal_item=False)
                     self._file_migrated(filename)
                 fileutil.migrate_file(filename, newfilename, callback)
+                fp.close()
         for i in self.item_list:
             i.migrate_children(directory)
 

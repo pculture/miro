@@ -337,7 +337,7 @@ class VideoConversionManager(signals.SignalEmitter):
                     logging.warn("Couldn't find task for key %s", msg['key'])
                     return
                 source = task.temp_output_path
-                destination = next_free_filename(task.final_output_path)
+                destination, fp = next_free_filename(task.final_output_path)
                 source_info = task.item_info
                 conversion_name = task.converter_info.name
 
@@ -352,6 +352,7 @@ class VideoConversionManager(signals.SignalEmitter):
                 else:
                     task.error = _("Reason unknown--check log")
                     self._notify_tasks_count()
+                fp.close()
                 self.emit('task-staged', task)
 
         except Queue.Empty, e:

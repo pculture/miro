@@ -205,8 +205,7 @@ class IconCache(DDBObject):
                 else:
                     tmp_filename = os.path.join(cachedir, info["filename"]) + ".part"
 
-                tmp_filename = next_free_filename(tmp_filename)
-                output = fileutil.open_file(tmp_filename, 'wb')
+                tmp_filename, output = next_free_filename(tmp_filename)
                 output.write(info["body"])
                 output.close()
             except IOError:
@@ -228,7 +227,7 @@ class IconCache(DDBObject):
             self.filename = u'.'.join(parts)
             self.filename = unicode_to_filename(self.filename, cachedir)
             self.filename = os.path.join(cachedir, self.filename)
-            self.filename = next_free_filename(self.filename)
+            self.filename, fp = next_free_filename(self.filename)
             needs_save = True
 
             try:
@@ -236,6 +235,7 @@ class IconCache(DDBObject):
             except OSError:
                 self.filename = None
                 needs_save = True
+            fp.close()
 
             etag = unicodify(info.get("etag"))
             modified = unicodify(info.get("modified"))

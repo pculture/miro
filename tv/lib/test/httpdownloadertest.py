@@ -37,7 +37,7 @@ class HTTPDownloaderTest(EventLoopTest):
     def setUp(self):
         EventLoopTest.setUp(self)
         download.chatter = False
-        download.next_free_filename = lambda x: self.make_temp_path()
+        download.next_free_filename = lambda x: self.make_temp_path_fileobj()
         download._downloads = {}
         self.start_http_server()
         # screen-redirect is a 302 redirect to linux-screen.jpg, which is a

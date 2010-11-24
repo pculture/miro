@@ -36,7 +36,7 @@ import logging
 from miro import filetypes
 from miro import util
 
-from miro.util import check_f, check_u, returns_filename
+from miro.util import check_f, check_u, returns_filename, returns_file
 from miro.plat.utils import unicode_to_filename, unmake_url_safe
 from miro.fileutil import expand_filename
 
@@ -137,29 +137,49 @@ def check_filename_extension(filename, content_type):
             filename += guessed_ext
     return filename
 
-@returns_filename
+@returns_file
 def next_free_filename(name):
     """Finds a filename that's unused and similar the the file we want
-    to download
-    """
+    to download and returns an open file handle to it.
+    """ 
     check_f(name)
-    if not access(expand_filename(name), F_OK):
-        return name
+    mask = os.O_CREAT | os.O_EXCL | os.O_RDWR
+    # Try with the name supplied.
+    try:
+        fd = os.open(expand_filename(name), mask)
+        fp = os.fdopen(fd, 'wb')
+        return expand_filename(name), fp
+    except OSError:
+        pass
+    # Boh boh ... did't work.  Let's try to create a variant name and 
+    # open that instead.
     parts = name.split('.')
     count = 1
     if len(parts) == 1:
         newname = "%s.%s" % (name, count)
-        while access(expand_filename(newname), F_OK):
-            count += 1
-            newname = "%s.%s" % (name, count)
+        while True:
+            try:
+                fd = os.open(expand_filename(newname), mask)
+                fp = os.fdopen(fd, 'wb')
+                break
+            except OSError:
+                count += 1
+                newname = "%s.%s" % (name, count)
+                continue
     else:
         parts[-1:-1] = [str(count)]
         newname = '.'.join(parts)
-        while access(expand_filename(newname), F_OK):
-            count += 1
-            parts[-2] = str(count)
-            newname = '.'.join(parts)
-    return newname
+        while True:
+            try:
+                fd = os.open(expand_filename(newname), mask)
+                fp = os.fdopen(fd, 'wb')
+                break
+            except OSError:
+                count += 1
+                parts[-2] = str(count)
+                newname = '.'.join(parts)
+                continue
+    return expand_filename(newname), fp
 
 @returns_filename
 def filename_from_url(url, clean=False):

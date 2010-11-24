@@ -525,13 +525,19 @@ def check_f(text):
 
 def returns_file(func):
     """Decorator that raises an exception if the function doesn't
-    return a file object
+    return a filename, file object
     """
     def check_func(*args, **kwargs):
-        result = func(*args, **kwargs)
-        if result and type(result) != file:
-            raise ValueError('returns_file: not a open file object')
+        try:
+            result = func(*args, **kwargs)
+            filename, fileobj = result
+            if result is not None and type(fileobj) != file:
+                raise ValueError('returns_file: not a valid file object')
+            check_f(filename)
+        except ValueError:
+            raise ValueError('returns_file: not a name, fileobj tuple')
         return result
+    return check_func
 
 def returns_filename(func):
     """Decorator that raises an exception if the function doesn't

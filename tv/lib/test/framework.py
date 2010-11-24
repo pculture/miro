@@ -167,6 +167,12 @@ class MiroTestCase(unittest.TestCase):
         fp.close()
         app.config.set(prefs.DOWNLOADER_LOG_PATHNAME, filename)
 
+    # Like make_temp_path() but returns a name as well as an open file object.
+    def make_temp_path_fileobj(self, extension=".xml"):
+        handle, filename = tempfile.mkstemp(extension, dir=self.tempdir)
+        fp = fdopen(handle, 'wb')
+        return filename, fp
+
     def make_temp_path(self, extension=".xml"):
         handle, filename = tempfile.mkstemp(extension, dir=self.tempdir)
         os.close(handle)

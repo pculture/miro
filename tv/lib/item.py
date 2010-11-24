@@ -1974,11 +1974,12 @@ filename was %s""", stringify(self.filename))
         if self.filename == new_filename:
             return
         if fileutil.exists(self.filename):
-            new_filename = next_free_filename(new_filename)
+            new_filename, fp = next_free_filename(new_filename)
             def callback():
                 self.filename = new_filename
                 self.signal_change()
             fileutil.migrate_file(self.filename, new_filename, callback)
+            fp.close()
         elif fileutil.exists(new_filename):
             self.filename = new_filename
             self.signal_change()

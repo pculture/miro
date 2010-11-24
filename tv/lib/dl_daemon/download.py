@@ -455,8 +455,12 @@ class BGDownloader(object):
         if not torrent:
             # this is an ascii filename and needs to be fixed
             filename = clean_filename(filename)
-        self.filename = next_free_filename(
-            os.path.join(download_dir, filename))
+        self.filename, fp = next_free_filename(
+                                os.path.join(download_dir, filename))
+        # We can close this object now the file's been created, I guess.
+        # This will linger in the filesystem namespace, caller is responsible
+        # for cleaning this up (which I think it does).
+        fp.close()
 
     def move_to_movies_directory(self):
         """Move our downloaded file from the Incomplete Downloads
@@ -486,11 +490,12 @@ class BGDownloader(object):
         newfilename = os.path.join(directory, self.shortFilename)
         if newfilename == self.filename:
             return
-        newfilename = next_free_filename(newfilename)
+        newfilename, fp = next_free_filename(newfilename)
         def callback():
             self.filename = newfilename
             self.update_client()
         fileutil.migrate_file(self.filename, newfilename, callback)
+        fp.close()
 
     def get_eta(self):
         """Returns a float with the estimated number of seconds left.
