@@ -232,39 +232,73 @@ class MovieDataUpdater(signals.SignalEmitter):
 
         if 'TALB' in data:
             data[u'album'] = data['TALB']
+        else:
+            try:
+                data[u'album'] = unicode(tags['WM/AlbumTitle'][0])
+            except (KeyError, TypeError):
+                pass
         if 'TPE1' in data:
             data[u'artist'] = data['TPE1']
         elif 'TPE2' in data:
             data[u'artist'] = data['TPE2']
         elif 'TPE3' in data:
             data[u'artist'] = data['TPE3']
+        elif 'Author' in tags:
+            data[u'artist'] = unicode(tags['Author'][0])
+        else:
+            try:
+                data[u'artist'] = unicode(tags['WM/AlbumArtist'][0])
+            except (KeyError, TypeError):
+                try:
+                    data[u'artist'] = unicode(tags['WM/Composer'][0])
+                except (KeyError, TypeError):
+                    pass
         if 'TIT2' in data:
             data[u'title'] = data['TIT2']
+        elif 'Title' in tags:
+            data[u'title'] = unicode(tags['Title'][0])
         try:
             data[u'track'] = unicode(int(data['TRCK'].split('/')[0]))
         except (KeyError, ValueError):
-            num = ''
-            filename = item.get_url().rsplit('/', 1)[1]
-            if not filename:
-                filename = item.get_filename().rsplit('/', 1)[1]
-            for char in filename:
-                if not char.isdigit():
-                    break
-                num += char
             try:
-                num = int(num)
-                if num > 0:
-                    while num > 100:
-                        num -= 100
-                    data[u'track'] = unicode(num)
-            except ValueError:
-                pass
+                track = unicode(tags['WM/TrackNumber'][0]).split('/')[0]
+                data[u'track'] = unicode(int(track))
+            except (KeyError, TypeError, ValueError):
+                num = ''
+                filename = item.get_url().rsplit('/', 1)[1]
+                if not filename:
+                    filename = item.get_filename().rsplit('/', 1)[1]
+                for char in filename:
+                    if not char.isdigit():
+                        break
+                    num += char
+                try:
+                    num = int(num)
+                    if num > 0:
+                        while num > 100:
+                            num -= 100
+                        data[u'track'] = unicode(num)
+                except ValueError:
+                    pass
         if 'TDRC' in data:
             data[u'year'] = data['TDRC']
         elif 'TYER' in data:
             data[u'year'] = data['TYER']
+        else:
+            try:
+                data[u'year'] = unicode(tags['WM/Year'][0])
+            except (KeyError, TypeError):
+                pass
         if 'TCON' in data:
             data[u'genre'] = data['TCON']
+        else:
+            try:
+                data[u'genre'] = unicode(tags['WM/Genre'][0])
+            except (KeyError, TypeError):
+                try:
+                    data[u'genre'] = unicode(tags['WM/ProviderStyle'][0])
+                except (KeyError, TypeError):
+                    pass
 
         return (duration, data)
 
