@@ -240,8 +240,25 @@ class MovieDataUpdater(signals.SignalEmitter):
             data[u'artist'] = data['TPE3']
         if 'TIT2' in data:
             data[u'title'] = data['TIT2']
-        if 'TRCK' in data:
-            data[u'track'] = data['TRCK'].split('/')[0]
+        try:
+            data[u'track'] = unicode(int(data['TRCK'].split('/')[0]))
+        except (KeyError, ValueError):
+            num = ''
+            filename = item.get_url().rsplit('/', 1)[1]
+            if not filename:
+                filename = item.get_filename().rsplit('/', 1)[1]
+            for char in filename:
+                if not char.isdigit():
+                    break
+                num += char
+            try:
+                num = int(num)
+                if num > 0:
+                    while num > 100:
+                        num -= 100
+                    data[u'track'] = unicode(num)
+            except ValueError:
+                pass
         if 'TDRC' in data:
             data[u'year'] = data['TDRC']
         elif 'TYER' in data:
