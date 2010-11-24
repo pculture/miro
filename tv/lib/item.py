@@ -1258,13 +1258,23 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return self.metadata['title']
         except (KeyError, TypeError):
             pass
-        if self.is_external() and self.is_downloaded_torrent():
-            if self.get_filename() is not None:
-                basename = os.path.basename(self.get_filename())
-                return filename_to_unicode(basename + os.path.sep)
+        if self.get_filename() is not None:
+            return self._filename_to_title(self.get_filename())
         if self.entry_title is not None:
             return self.entry_title
         return _('no title')
+
+    @returns_unicode
+    def _filename_to_title(self, filename):
+        title = os.path.basename(filename)
+        title = title.rsplit('.', 1)[0]
+        title = title.replace('_', ' ')
+        title = title.lstrip('0123456789. -')
+        t2 = []
+        for word in title.split(' '):
+            t2.append(word.capitalize())
+        title = ' '.join(t2)
+        return unicode(title)
 
     @returns_unicode
     def get_artist(self):
