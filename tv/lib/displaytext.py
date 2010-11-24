@@ -197,4 +197,8 @@ def duration(seconds):
 def integer(num):
     if num < 0:
         return ""
+    try:
+        num = int(num)
+    except (ValueError, TypeError):
+        return ""
     return str(num)
