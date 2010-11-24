@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""itemcontextmenu.py -- Handle popping up an context menu for an item
+"""itemcontextmenu.py -- Handle popping up a context menu for an item
 """
 
 from miro import app
