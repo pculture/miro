@@ -201,12 +201,12 @@ class AlbumSort(ItemSort):
 class TrackSort(ItemSort):
     KEY = 'track'
     def sort_key(self, item):
-        return item.track
+        return int(item.track)
 
 class YearSort(ItemSort):
     KEY = 'year'
     def sort_key(self, item):
-        return item.year
+        return int(item.year)
 
 class GenreSort(ItemSort):
     KEY = 'genre'
