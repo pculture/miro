@@ -237,7 +237,7 @@ class MovieDataUpdater(signals.SignalEmitter):
                         value = value[0]
                 except TypeError:
                     pass
-                data[unicode(key)] = unicode(value)
+                data[unicode(key).upper()] = unicode(value)
         for key, value in info.items():
             data[u'info_' + key] = unicode(value)
 
@@ -272,29 +272,34 @@ class MovieDataUpdater(signals.SignalEmitter):
             data[u'track'] = unicode(int(data['TRCK'].split('/')[0]))
         except (KeyError, ValueError):
             try:
-                track = unicode(tags['WM/TrackNumber'][0]).split('/')[0]
-                data[u'track'] = unicode(int(track))
-            except (KeyError, TypeError, ValueError):
-                num = ''
-                filename = item.get_url().rsplit('/', 1)[1]
-                if not filename:
-                    filename = item.get_filename().rsplit('/', 1)[1]
-                for char in filename:
-                    if not char.isdigit():
-                        break
-                    num += char
+                data[u'track'] = unicode(int(tags['TRACKNUMBER'][0].split('/')[0]))
+            except (KeyError, ValueError):
                 try:
-                    num = int(num)
-                    if num > 0:
-                        while num > 100:
-                            num -= 100
-                        data[u'track'] = unicode(num)
-                except ValueError:
-                    pass
+                    track = unicode(tags['WM/TrackNumber'][0]).split('/')[0]
+                    data[u'track'] = unicode(int(track))
+                except (KeyError, ValueError):
+                    num = ''
+                    filename = item.get_url().rsplit('/', 1)[1]
+                    if not filename:
+                        filename = item.get_filename().rsplit('/', 1)[1]
+                    for char in filename:
+                        if not char.isdigit():
+                            break
+                        num += char
+                    try:
+                        num = int(num)
+                        if num > 0:
+                            while num > 100:
+                                num -= 100
+                            data[u'track'] = unicode(num)
+                    except ValueError:
+                        pass
         if 'TDRC' in data:
             data[u'year'] = data['TDRC']
         elif 'TYER' in data:
             data[u'year'] = data['TYER']
+        elif 'DATE' in data:
+            data[u'year'] = data['DATE']
         else:
             try:
                 data[u'year'] = unicode(tags['WM/Year'][0])
