@@ -820,6 +820,7 @@ class BTDownloader(BGDownloader):
         self.seeders = -1
         self.leechers = -1
         self.last_fast_resume_update = clock()
+        self.metainfo_updated = self.fast_resume_data_updated = False
         if restore is not None:
             self.firstTime = False
             self.restore_state(restore)
@@ -968,6 +969,7 @@ class BTDownloader(BGDownloader):
     def update_fast_resume_data(self):
         self.last_fast_resume_update = clock()
         self.fastResumeData = lt.bencode(self.torrent.write_resume_data())
+        self.fast_resume_data_updated = True
 
     def handle_error(self, shortReason, reason):
         self._shutdown_torrent()
@@ -999,8 +1001,12 @@ class BTDownloader(BGDownloader):
         data = BGDownloader.get_status(self)
         data['upRate'] = self.upRate
         data['uploaded'] = self.uploaded
-        data['metainfo'] = self.metainfo
-        data['fastResumeData'] = self.fastResumeData
+        if self.metainfo_updated:
+            data['metainfo'] = self.metainfo
+            self.metainfo_updated = False
+        if self.fast_resume_data_updated:
+            data['fastResumeData'] = self.fastResumeData
+            self.fast_resume_data_updated = False
         data['activity'] = self.activity
         data['dlerType'] = 'BitTorrent'
         data['seeders'] = self.seeders
@@ -1088,6 +1094,7 @@ class BTDownloader(BGDownloader):
 
     def handle_metainfo(self, metainfo):
         self.metainfo = metainfo
+        self.metainfo_updated = True
         self.got_metainfo()
 
     def check_description(self, data):

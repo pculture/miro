@@ -246,8 +246,12 @@ class RemoteDownloader(DDBObject):
         # print data
         if self is not None:
             # FIXME - this should get fixed.
-            metainfo = data.pop('metainfo', None)
-            fast_resume_data = data.pop('fastResumeData', None)
+            metainfo = data.pop('metainfo', self.metainfo)
+            fast_resume_data = data.pop('fastResumeData',
+                    self.fast_resume_data)
+            # for metainfo and fast_resume_data, the downloader process
+            # doesn't send the keys if they haven't changed.  Therefore, use
+            # our current values if the key isn't present
             current = (self.status, self.metainfo, self.fast_resume_data)
             new = (data, metainfo, fast_resume_data)
             try:
