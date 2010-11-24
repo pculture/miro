@@ -250,6 +250,7 @@ class MovieDataUpdater(signals.SignalEmitter):
                 data[u'album'] = unicode(tags['WM/AlbumTitle'][0])
             except (KeyError, TypeError):
                 pass
+
         if 'ARTIST' in data:
             data[u'artist'] = data['ARTIST']
         elif 'TPE1' in data:
@@ -268,10 +269,12 @@ class MovieDataUpdater(signals.SignalEmitter):
                     data[u'artist'] = unicode(tags['WM/Composer'][0])
                 except (KeyError, TypeError):
                     pass
+
         if 'TIT2' in data:
             data[u'title'] = data['TIT2']
         elif 'Title' in tags:
             data[u'title'] = unicode(tags['Title'][0])
+
         try:
             data[u'track'] = unicode(int(data['TRCK'].split('/')[0]))
         except (KeyError, ValueError):
@@ -298,17 +301,19 @@ class MovieDataUpdater(signals.SignalEmitter):
                             data[u'track'] = unicode(num)
                     except ValueError:
                         pass
-        if 'TDRC' in data:
+
+        if 'TDRC' in data and data['TDRC'].isdigit():
             data[u'year'] = data['TDRC']
-        elif 'TYER' in data:
+        elif 'TYER' in data and data['TYER'].isdigit():
             data[u'year'] = data['TYER']
-        elif 'DATE' in data:
+        elif 'DATE' in data and data['DATE'].isdigit():
             data[u'year'] = data['DATE']
         else:
             try:
-                data[u'year'] = unicode(tags['WM/Year'][0])
+                data[u'year'] = unicode(int(tags['WM/Year'][0]))
             except (KeyError, TypeError):
                 pass
+
         if 'GENRE' in data:
             data[u'genre'] = data['GENRE']
         elif 'TCON' in data:
