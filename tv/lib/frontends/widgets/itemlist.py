@@ -191,17 +191,23 @@ class ProgressSort(ItemSort):
 class ArtistSort(ItemSort):
     KEY = 'artist'
     def sort_key(self, item):
-        return util.name_sort_key(item.artist)
+        return [util.name_sort_key(item.artist),
+                util.name_sort_key(item.album),
+                int(item.track)]
 
 class AlbumSort(ItemSort):
     KEY = 'album'
     def sort_key(self, item):
-        return util.name_sort_key(item.album)
+        return [util.name_sort_key(item.album),
+                int(item.track),
+                util.name_sort_key(item.artist)]
 
 class TrackSort(ItemSort):
     KEY = 'track'
     def sort_key(self, item):
-        return int(item.track)
+        return [int(item.track),
+                util.name_sort_key(item.artist),
+                util.name_sort_key(item.album)]
 
 class YearSort(ItemSort):
     KEY = 'year'
