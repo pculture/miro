@@ -331,6 +331,9 @@ def launch_download_daemon(oldpid, env):
             "Miro_Downloader.exe") 
     startupinfo = subprocess.STARTUPINFO()
     startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    logging.info("Running downloader daemon: %r", downloaderPath)
+    if not os.path.exists(downloaderPath[1:-1]):
+        logging.warn("Downloader process path doesn't exist!")
     subprocess.Popen(downloaderPath, stdout=subprocess.PIPE,
             stderr=subprocess.PIPE, 
             stdin=subprocess.PIPE,

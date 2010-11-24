@@ -166,6 +166,9 @@ class MovieDataUpdater(signals.SignalEmitter):
 
     def run_movie_data_program(self, command_line, env):
         start_time = time.time()
+        logging.info("Running movie data process: %r", command_line)
+        if not os.path.exists(command_line[0]):
+            logging.warn("Movie data process doesn't exist!")
         pipe = subprocess.Popen(command_line, stdout=subprocess.PIPE,
                 stdin=subprocess.PIPE, stderr=subprocess.PIPE, env=env,
                 startupinfo=util.no_console_startupinfo())
