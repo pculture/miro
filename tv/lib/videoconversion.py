@@ -795,5 +795,5 @@ def _create_item_for_conversion(filename, source_info, conversion_name):
     new_item = models.FileItem(filename, feed_id=manual_feed.id,
             fp_values=fp_values)
 
+utils.setup_ffmpeg_presets()
 conversion_manager = VideoConversionManager()
-

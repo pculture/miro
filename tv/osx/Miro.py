@@ -93,10 +93,6 @@ def launch_application():
         if os.path.isdir(theme_dir):
             theme = os.path.basename(themeDir)
 
-    os.environ['FFMPEG_DATADIR'] = os.path.join(
-            bundle.resourcePath().encode('utf-8'),
-            'ffmpeg-presets')
-
     from miro import bootstrap
     bootstrap.bootstrap()
 
