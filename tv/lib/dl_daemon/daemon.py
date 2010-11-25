@@ -103,13 +103,14 @@ def write_pid(short_app_name, pid):
         try:
             mask = os.O_WRONLY | os.O_CREAT | os.O_EXCL
             fd = os.open(get_data_filename(short_app_name), mask)
-            PIDFILE = os.fdopen(fd, 'w')
+            PIDFILE = os.fdopen(fd, 'wb')
         except OSError:
             # boh boh.  Try again.
             continue
         if os.name != "nt":
             import fcntl
             fcntl.lockf(PIDFILE, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        break
 
     PIDFILE.write("%s\n" % pid)
     PIDFILE.flush()
