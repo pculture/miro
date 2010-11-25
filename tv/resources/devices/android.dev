@@ -36,3 +36,9 @@ vendor_id: 22b8
 product_id: 42a3
 name: Motorola A955
 video_conversion: droid
+
+[Galaxy Tab]
+vendor_id: 04e8
+product_id: 681d
+name: SAMSUNG SAMSUNG_Android
+video_conversion: galaxytab

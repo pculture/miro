@@ -31,3 +31,6 @@ ssize: 480x320
 
 [Behold II]
 ssize: 480x320
+
+[Galaxy Tab]
+ssize: 1024x800
