@@ -81,7 +81,7 @@ def launch_application():
 
     from miro.plat.utils import initialize_locale
     initialize_locale()
-    
+
     from glob import glob
     theme = None
     bundle = Foundation.NSBundle.mainBundle()
@@ -92,6 +92,9 @@ def launch_application():
         theme_dir = theme_dirs[0]
         if os.path.isdir(theme_dir):
             theme = os.path.basename(themeDir)
+
+    os.environ['FFMPEG_DATADIR'] = os.path.join(bundle.resourcePath(),
+            'ffmpeg-presets')
 
     from miro import bootstrap
     bootstrap.bootstrap()

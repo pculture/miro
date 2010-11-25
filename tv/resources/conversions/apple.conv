@@ -3,9 +3,9 @@ name: Apple Devices
 executable: ffmpeg
 extension: mp4
 ssize: 480x320
-parameters: -i {input} -f mp4 -acodec aac -ab 160000 -vcodec mpeg4 -b 1200k -mbd 2 -cmp 2 -subcmp 2 -s {ssize} -r 20 {output}
+parameters: -i {input} -acodec aac -ab 160k -s {ssize} -vcodec libx264 -vpre slow -vpre ipod640 -b 1200k -f mp4 -threads 0 {output}
 mediatype: video
-            
+
 [iPhone]
 
 [iPod Touch]
@@ -16,6 +16,12 @@ mediatype: video
 
 [iPad / iPhone G4]
 ssize: 640x480
+
+[iPhone 4 / iPod Touch 4]
+ssize: 640x480
+
+[iPad]
+ssize: 1024x768
 
 [Apple Universal]
 ssize: 1280x720

@@ -355,6 +355,7 @@ class MiroBuild (py2app):
         self.precompile_site_pyc()
         self.copy_quicktime_components()
         self.copy_conversion_helpers()
+        self.copy_ffmpeg_presets()
         self.copy_portable_resources()
         self.copy_config_file()
         self.copy_localization_files()
@@ -455,6 +456,12 @@ class MiroBuild (py2app):
         print 'Copying video conversion helpers to application bundle'
         copy_binaries('ffmpeg/bin/', self.helpersRoot, ["ffmpeg"])
         copy_binaries('ffmpeg2theora/bin/', self.helpersRoot, ["ffmpeg2theora"])
+
+    def copy_ffmpeg_presets(self):
+        preset_source_dir = os.path.join(BKIT_DIR, 'ffmpeg', 'presets')
+        preset_dest_dir = os.path.join(self.rsrcRoot, 'ffmpeg-presets')
+        preset_list = os.listdir(preset_source_dir)
+        copy_binaries('ffmpeg/presets/', preset_dest_dir, preset_list)
 
     def copy_portable_resources(self):
         print "Copying portable resources to application bundle"
