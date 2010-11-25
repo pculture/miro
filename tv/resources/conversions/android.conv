@@ -2,7 +2,7 @@
 name: Android Devices
 executable: ffmpeg
 extension: mp4
-parameters: -i {input} -f mp4 -vcodec mpeg4 -sameq -s {ssize} -acodec aac -ab 160000 -r 18 {output}
+parameters: -i {input} -y -acodec aac -ab 160k -s {ssize} -vcodec libx264 -vpre slow -crf 22 -f mp4 -threads 0 {output}
 mediatype: video
 
 [G2]
