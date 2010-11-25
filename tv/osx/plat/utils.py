@@ -414,6 +414,11 @@ def movie_data_program_info(movie_path, thumbnail_path):
 
 ###############################################################################
 
+def setup_ffmpeg_presets():
+    os.environ['FFMPEG_DATADIR'] = os.path.join(
+            NSBundle.mainBundle().resourcePath().encode('utf-8'),
+            'ffmpeg-presets')
+
 def get_ffmpeg_executable_path():
     bundle_path = NSBundle.mainBundle().bundlePath()
     # XXX Unicode kludge.  This wouldn't be a problem once we switch to 
