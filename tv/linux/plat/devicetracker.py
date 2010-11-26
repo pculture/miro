@@ -127,5 +127,8 @@ class DeviceTracker(object):
                     gio.MOUNT_UNMOUNT_NONE, None, None)
 
     def _eject_callback(self, drive, result, user_info):
-        if not drive.eject_finish(result):
-            logging.warn('eject failed for %r' % drive)
+        try:
+            drive.eject_finish(result)
+        except gio.Error:
+            # XXX notify the user in some way?
+            logging.exception('eject failed for %r' % drive)
