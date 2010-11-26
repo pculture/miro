@@ -11,7 +11,7 @@ mediatype: video
 extension: mp4
 executable: ffmpeg
 extension: mp4
-parameters: -i {input} -acodec aac -ab 96k -vcodec libx264 -vpre slow -crf 22 {output}
+parameters: -i {input} -acodec aac -ab 96k -vcodec libx264 -vpre slow -f mp4 -crf 22 {output}
 mediatype: video
 
 [MP3]
