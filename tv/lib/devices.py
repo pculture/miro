@@ -28,6 +28,7 @@
 
 from glob import glob
 import json
+import logging
 import os, os.path
 import shutil
 import time
@@ -332,7 +333,11 @@ def load_database(mount):
     file_name = os.path.join(mount, '.miro', 'json')
     if not os.path.exists(file_name):
         return {}
-    return json.load(file(file_name))
+    try:
+        return json.load(file(file_name, 'rb'))
+    except ValueError:
+        logging.exception('error loading JSON db on %s' % mount)
+        return {}
 
 def write_database(mount, database):
     """
