@@ -103,6 +103,8 @@ SUBTITLE_FONT               = Pref(key='subtitleFont',          default=None,  p
 # language setting: "system" uses system default; all other languages are overrides
 LANGUAGE                    = Pref(key='language',              default="system", platformSpecific=False)
 MAX_CONCURRENT_CONVERSIONS  = Pref(key='maxConcurrentConversions', default=1, platformSpecific=False)
+SHARE_MEDIA                 = Pref(key='ShareMedia',            default=False, platformSpecific=False)
+SHARE_DISCOVERABLE          = Pref(key='ShareDiscoverable',     default=False, platformSpecific=False)
 
 # This doesn't need to be defined on the platform, but it can be overridden there if the platform wants to.
 SHOW_ERROR_DIALOG           = Pref(key='showErrorDialog',       default=True,  platformSpecific=True)
