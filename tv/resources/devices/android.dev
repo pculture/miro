@@ -3,7 +3,7 @@ vendor_id: 0bb4
 product_id: 0ff9
 name: HTC Android Phone
 audio_conversion: mp3
-audio_types: audio/mpeg audio/x-ms-wma audio/mp4a-latm audio/3gpp audio/mp4 audio/aac audio/vnd.rn-realaudio audio/x-midi audio/x-wav application/ogg
+audio_types: .mp3 .wma .m4a .aac .mid .wav .oga
 mount_instructions=Your phone must be in 'USB storage mode' in order for Miro to sync files to it.\nTo mount your phone, select 'Turn on USB storage' from the notifications.
 video_path: Miro
 audio_path: Miro
