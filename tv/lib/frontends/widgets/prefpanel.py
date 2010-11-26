@@ -658,6 +658,24 @@ class DiskSpacePanel(PanelBuilder):
 
         return grid.make_table()
 
+class SharingPanel(PanelBuilder):
+    def build_widget(self):
+        vbox = widgetset.VBox()
+
+        sharing_cbx = widgetset.Checkbox(_('Turn on media sharing.'))
+        share_discoverable_cbx = widgetset.Checkbox(
+                                   _('Make music library discoverable.'))
+        attach_boolean(sharing_cbx, prefs.SHARE_MEDIA,
+                                      (share_discoverable_cbx,))
+        attach_boolean(share_discoverable_cbx, prefs.SHARE_DISCOVERABLE)
+        vbox.pack_start(widgetutil.align_left(sharing_cbx, bottom_pad=6))
+        vbox.pack_start(widgetutil.align_left(share_discoverable_cbx,
+                                              bottom_pad=6))
+
+        pack_extras(vbox, "sharing")
+
+        return vbox
+
 class PlaybackPanel(PanelBuilder):
     def build_widget(self):
         v = widgetset.VBox()
@@ -731,6 +749,7 @@ add_panel("downloads", _("Downloads"), DownloadsPanel, 'images/pref-tab-download
 add_panel("folders", _("Folders"), FoldersPanel, 'images/pref-tab-folders.png')
 add_panel("disk_space", _("Disk space"), DiskSpacePanel, 'images/pref-tab-disk-space.png')
 add_panel("playback", _("Playback"), PlaybackPanel, 'images/pref-tab-playback.png')
+add_panel("sharing", _("Sharing"), SharingPanel, 'images/pref-tab-general.png')
 add_panel("conversions", _("Conversions"), ConversionsPanel, 'images/pref-tab-conversions.png')
 
 class PreferencesWindow(widgetset.PreferencesWindow):
