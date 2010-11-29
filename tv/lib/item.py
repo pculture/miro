@@ -2184,7 +2184,17 @@ class DeviceItem(object):
         from miro import devices # avoid circular imports
         from miro import messages
 
-        ignored, current_file_type = self.device.id.split('-', 1)
+        if not os.path.exists(
+            os.path.join(self.device.mount, self.video_path)):
+            # file was removed from the filesystem
+            del self.device.database[self.file_type][self.video_path]
+            devices.write_database(self.device.mount, self.device.database)
+            message = messages.ItemsChanged('device', self.device.id,
+                                            [], [], [self.id])
+            message.send_to_frontend()
+            return
+
+        ignored, current_file_type = self.device.id.rsplit('-', 1)
         if self.file_type != current_file_type:
             # remove the old item from the database
             if self.video_path in self.device.database[current_file_type]:
@@ -2200,8 +2210,6 @@ class DeviceItem(object):
 
 
         if self.file_type != 'other':
-            print 'changing', self.id, self.video_path
-            # don't notify about 'other' items
             message = messages.ItemsChanged('device', self.device.id,
                                             [], [messages.ItemInfo(self)], [])
             message.send_to_frontend()
