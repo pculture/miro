@@ -138,7 +138,7 @@ class MovieDataUpdater(signals.SignalEmitter):
                 if self.in_shutdown:
                     break
                 signals.system.failed_exn("When parsing mutagen metadata")
-            if (duration > -1):
+            if duration > -1:
                 logging.debug("moviedata: %s %s", duration, mediatype)
 
                 self.update_finished(mdi.item, duration, FilenameType(""), mediatype)
