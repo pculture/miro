@@ -65,15 +65,15 @@ class DeviceTracker(object):
 
     @threads.on_ui_thread
     def start_tracking(self):
-        stream = FSEventStreamCreate(kCFAllocatorDefault,
-                                     self.streamCallback,
-                                     kFSEventStreamCreateFlagNoDefer,
-                                     ['/Volumes/'],
-                                     kFSEventStreamEventIdSinceNow,
-                                     STREAM_INTERVAL, 0)
-        FSEventStreamScheduleWithRunLoop(stream, CFRunLoopGetCurrent(),
+        self.stream = FSEventStreamCreate(kCFAllocatorDefault,
+                                          self.streamCallback,
+                                          kFSEventStreamCreateFlagNoDefer,
+                                          ['/Volumes/'],
+                                          kFSEventStreamEventIdSinceNow,
+                                          STREAM_INTERVAL, 0)
+        FSEventStreamScheduleWithRunLoop(self.stream, CFRunLoopGetCurrent(),
                                          kCFRunLoopDefaultMode)
-        assert FSEventStreamStart(stream)
+        assert FSEventStreamStart(self.stream)
 
         for volume in diskutil('list', '').VolumesFromDisks:
             self._disk_mounted('/Volumes/%s' % volume)
