@@ -28,6 +28,7 @@ aptitude install \
     python-gst0.10 \
     python-gconf \
     python-pycurl \
+    python-mutagen \
     gstreamer0.10-ffmpeg \
     gstreamer0.10-plugins-base \
     gstreamer0.10-plugins-good \

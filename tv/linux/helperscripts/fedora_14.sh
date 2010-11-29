@@ -27,5 +27,6 @@ yum install \
    rb_libtorrent-python \
    pywebkitgtk \
    gstreamer-python \
+   python-mutagen \
    ffmpeg \
    ffmpeg2theora
