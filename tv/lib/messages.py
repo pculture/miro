@@ -1046,7 +1046,7 @@ class ItemInfo(object):
     # bump this whenever you change the ItemInfo class, or change on of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description())
-    VERSION = 1
+    VERSION = 2
 
     def __init__(self, item):
         self.name = item.get_title()
