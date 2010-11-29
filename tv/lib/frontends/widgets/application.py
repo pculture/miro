@@ -1354,6 +1354,11 @@ class FrontendStatesStore(object):
         self.sort_states = message.sort_states
         self.active_filters = message.active_filters
         self.current_columns = set(message.list_view_columns)
+        # this next part is ugly, but it won't matter much until the listview
+        # branch needs to use it so... I'll cross that bridge. --Kaz
+        if not self.current_columns:
+            self.current_columns = set([u'state', u'name', u'feed-name', u'eta',
+                u'rate', u'artist', u'album', u'track', u'year', u'genre'])
 
     def _key(self, typ, id_):
         return '%s:%s' % (typ, id_)
