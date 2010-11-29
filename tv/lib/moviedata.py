@@ -131,7 +131,7 @@ class MovieDataUpdater(signals.SignalEmitter):
                 # implemented.
                 self.emit('end-loop')
                 break
-            mediatype = "audio"
+            mediatype = mdi.item.mediatype or "audio"
             try:
                 (duration, mdi.item.metadata) = self.read_metadata(mdi.item)
             except StandardError:
