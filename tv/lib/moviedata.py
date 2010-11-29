@@ -131,7 +131,6 @@ class MovieDataUpdater(signals.SignalEmitter):
                 # implemented.
                 self.emit('end-loop')
                 break
-            mediatype = mdi.item.mediatype or "audio"
             try:
                 (duration, mdi.item.metadata) = self.read_metadata(mdi.item)
             except StandardError:
@@ -139,9 +138,11 @@ class MovieDataUpdater(signals.SignalEmitter):
                     break
                 signals.system.failed_exn("When parsing mutagen metadata")
             if duration > -1:
+                mediatype = mdi.item.mediatype or "audio"
+                screenshot = mdi.item.screenshot or FilenameType("")
                 logging.debug("moviedata: %s %s", duration, mediatype)
 
-                self.update_finished(mdi.item, duration, FilenameType(""), mediatype)
+                self.update_finished(mdi.item, duration, screenshot, mediatype)
             else:
                 try:
                     duration = -1
