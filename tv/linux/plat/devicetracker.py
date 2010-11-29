@@ -79,6 +79,9 @@ class DeviceTracker(object):
                                    database, size, remaining)
 
     def _drive_connected(self, volume_monitor, drive):
+        if drive is None:
+            # can happen when a CD is inserted
+            return
         try:
             info = self._get_device_info(drive)
         except KeyError:
@@ -94,6 +97,9 @@ class DeviceTracker(object):
         devices.device_connected(info)
 
     def _drive_changed(self, volume_monitor, drive):
+        if drive is None:
+            # can happen when a CD is inserted
+            return
         try:
             info = self._get_device_info(drive)
         except KeyError:
@@ -104,6 +110,9 @@ class DeviceTracker(object):
         self._drive_changed(volume_monitor, mount.get_drive())
 
     def _drive_disconnected(self, volume_monitor, drive):
+        if drive is None:
+            # can happen when a CD is inserted
+            return
         try:
             info = self._get_device_info(drive)
         except KeyError:
