@@ -388,12 +388,12 @@ def device_disconnected(info):
                                   [info.id])
     message.send_to_frontend()
 
-def scan_device_for_files(device):
-    known_files = set()
-    to_remove = []
+def clean_database(device):
     def _exists(item_path):
         return os.path.exists(os.path.join(device.mount,
                                            item_path))
+    known_files = set()
+    to_remove = []
     for item_type in ('video', 'audio', 'other'):
         device.database.setdefault(item_type, {})
         for item_path in device.database[item_type]:
@@ -401,6 +401,14 @@ def scan_device_for_files(device):
                 known_files.add(os.path.normcase(item_path))
             else:
                 to_remove.append((item_type, item_path))
+
+    for item_type, item_path in to_remove:
+        del device.database[item_type][item_path]
+
+    return known_files
+
+def scan_device_for_files(device):
+    known_files = clean_database(device)
 
     for filename in fileutil.miro_allfiles(device.mount):
         short_filename = filename[len(device.mount):]
@@ -413,8 +421,5 @@ def scan_device_for_files(device):
         else:
             continue
         device.database[item_type][ufilename] = {}
-
-    for item_type, item_path in to_remove:
-        del device.database[item_type][item_path]
 
     write_database(device.mount, device.database)

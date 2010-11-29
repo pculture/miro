@@ -432,6 +432,7 @@ class DeviceItemTracker(object):
         real_id, item_type = self.id.rsplit('-', 1)
         if item_type not in ('video', 'audio'):
             return
+        devices.clean_database(self.device)
         items = [item.DeviceItem(device=self.device, file_type=item_type,
                                  video_path=path, **args)
                  for path, args in self.device.database[item_type].items()]
