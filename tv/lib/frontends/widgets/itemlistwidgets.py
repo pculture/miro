@@ -417,11 +417,9 @@ class ListItemView(widgetset.TableView):
             # column not visible
             column_name = 'name' # TODO: better handling of this case
         new_sort_column = self._column_name_to_column[column_name]
-        if self._current_sort_column is None:
-            new_sort_column.set_sort_indicator_visible(True)
-        elif self._current_sort_column is not new_sort_column:
+        if not self._current_sort_column in (new_sort_column, None):
             self._current_sort_column.set_sort_indicator_visible(False)
-            new_sort_column.set_sort_indicator_visible(True)
+        new_sort_column.set_sort_indicator_visible(True)
         new_sort_column.set_sort_order(ascending)
         self._current_sort_column = new_sort_column
 
