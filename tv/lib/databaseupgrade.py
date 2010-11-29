@@ -2820,7 +2820,12 @@ def upgrade121(cursor):
     """Create the metadata column in item; reread all metadata accordingly;"""
     """add column to item to store ratings;"""
     """add column to view table for keeping track of enabled ListView columns"""
+    """initialize enabled columns to reasonable default"""
+    enabled_columns = [u'state', u'name', u'feed-name', u'eta', u'rate',
+            u'artist', u'album', u'track', u'year', u'genre']
     cursor.execute("ALTER TABLE item ADD COLUMN metadata pythonrepr")
     cursor.execute("ALTER TABLE item ADD COLUMN rating integer")
     cursor.execute("ALTER TABLE widgets_frontend_state "
             "ADD COLUMN list_view_columns pythonrepr")
+    cursor.execute("UPDATE widgets_frontend_state SET list_view_columns=?",
+            (repr(enabled_columns),))
