@@ -110,6 +110,13 @@ def abspath(path):
     path = collapse_filename(path)
     return path
 
+def is_windows_file_in_use_error(exception):
+    if not isinstance(exception, Exception):
+        raise TypeError("%r is not an exception" % exception)
+    try:
+        return exception.errno == 13 and exception.winerror == 32
+    except AttributeError:
+        return False
 
 def migrate_file(source, dest, callback, retry_after=10, retry_for=60):
     """Try to migrate a file, if this works, callback is called.  If
@@ -131,7 +138,7 @@ def migrate_file(source, dest, callback, retry_after=10, retry_for=60):
         except EnvironmentError:
             pass
         if retry_for > 0:
-            if e.errno == 13:
+            if is_windows_file_in_use_error(e):
                 # permission denied, assume this means it's open by
                 # another process on windows.
                 logging.info('Retrying migration')
@@ -176,7 +183,7 @@ def delete(path, retry_after=10, retry_for=60):
             logging.warn("asked to delete '%s' but it's not there." % path)
     except EnvironmentError, e:
         logging.warn("Error deleting %s", path)
-        if retry_for > 0 and e.errno == 13:
+        if retry_for > 0 and is_windows_file_in_use_error(e):
             # permission denied, assume this means it's open by another
             # process on windows.
             deletes_in_progress.add(path)
