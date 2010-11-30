@@ -304,7 +304,51 @@ class FeedParserValues(object):
 
         return datetime.min
 
-class Item(DDBObject, iconcache.IconCacheOwnerMixin):
+class ItemBase(object):
+    """
+    Base class for Item (lives in the database) and DeviceItem (lives on the
+    device's database.
+
+    Right now, the only methods work across both are the metadata methods.
+    """
+
+    @returns_unicode
+    def get_artist(self):
+        try:
+            return self.metadata['artist']
+        except (KeyError, TypeError):
+            return u''
+
+    @returns_unicode
+    def get_album(self):
+        try:
+            return self.metadata['album']
+        except (KeyError, TypeError):
+            return u''
+
+    def get_track(self):
+        try:
+            return self.metadata['track']
+        except (KeyError, TypeError):
+            return -1
+
+    def get_year(self):
+        try:
+            return self.metadata['year']
+        except (KeyError, TypeError):
+            return -1
+
+    @returns_unicode
+    def get_genre(self):
+        try:
+            return self.metadata['genre']
+        except (KeyError, TypeError):
+            return u''
+
+    def get_rating(self):
+        return self.rating
+
+class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
     """An item corresponds to a single entry in a feed.  It has a
     single url associated with it.
     """
@@ -1276,42 +1320,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         title = ' '.join(t2)
         return unicode(title)
 
-    @returns_unicode
-    def get_artist(self):
-        try:
-            return self.metadata['artist']
-        except (KeyError, TypeError):
-            return u''
-
-    @returns_unicode
-    def get_album(self):
-        try:
-            return self.metadata['album']
-        except (KeyError, TypeError):
-            return u''
-
-    def get_track(self):
-        try:
-            return self.metadata['track']
-        except (KeyError, TypeError):
-            return -1
-
-    def get_year(self):
-        try:
-            return self.metadata['year']
-        except (KeyError, TypeError):
-            return -1
-
-    @returns_unicode
-    def get_genre(self):
-        try:
-            return self.metadata['genre']
-        except (KeyError, TypeError):
-            return u''
-
-    def get_rating(self):
-        return self.rating
-
     def set_title(self, title):
         self.confirm_db_thread()
         self.title = title
@@ -2053,7 +2061,7 @@ filename was %s""", stringify(self.filename))
                             self.filename, parent_file)
         Item.setup_links(self)
 
-class DeviceItem(object):
+class DeviceItem(ItemBase):
     """
     An item which lives on a device.  There's a separate, per-device JSON
     database, so this implements the necessary Item logic for those files.
@@ -2077,6 +2085,8 @@ class DeviceItem(object):
         self.resumeTime = 0
         self.subtitle_encoding = self.enclosure_type = None
         self.description = u''
+        self.metadata = {}
+        self.rating = None
         self.__dict__.update(kwargs)
 
         if isinstance(self.video_path, unicode):
@@ -2100,6 +2110,9 @@ class DeviceItem(object):
 
     @returns_unicode
     def get_title(self):
+        if 'title' in self.metadata:
+            return self.metadata.get('title')
+
         return self.name or u''
 
     @returns_unicode
@@ -2165,7 +2178,7 @@ class DeviceItem(object):
 
     @returns_unicode
     def get_url(self):
-        return self.url
+        return self.url or u''
 
     @returns_unicode
     def get_link(self):
