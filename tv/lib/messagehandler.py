@@ -441,7 +441,7 @@ class DeviceItemTracker(object):
         messages.ItemList(self.type, self.id, infos).send_to_frontend()
 
     def unlink(self):
-        pass
+        devices.clean_database(self.device)
 
 def make_item_tracker(message):
     if message.type == 'downloads':
@@ -1519,7 +1519,13 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         devices.device_changed(info)
 
     def handle_delete_device_video(self, message):
-        os.unlink(message.item.video_path)
+        item = message.item
+        device = message.item.device
+        if os.path.exists(item.video_path):
+            os.unlink(item.video_path)
+        if (item.thumbnail and item.thumbnail.startswith(device.mount) and
+            os.path.exists(item.thumbnail)):
+            os.unlink(item.thumbnail)
         messages.ItemsChanged('device', message.item.device.id,
                               [], [],
                               [message.item.id]).send_to_frontend()
