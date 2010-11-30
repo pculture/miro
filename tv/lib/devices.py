@@ -206,7 +206,7 @@ class DeviceSyncManager(object):
             if self._exists(info):
                 continue # don't recopy stuff
             if info.file_type == 'audio':
-                if info.file_format in self.device.info.audio_types:
+                if info.file_format.split()[0] in self.device.info.audio_types:
                     final_path = os.path.join(audio_target_folder,
                                               os.path.basename(
                             info.video_path))
