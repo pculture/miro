@@ -32,7 +32,6 @@ import datetime
 import operator
 
 from miro import app
-from miro import devices
 from miro import displaytext
 from miro.gtcache import gettext as _
 from miro import messages
@@ -379,17 +378,11 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         self.widget.toolbar.change_sort_indicator(*sort)
         self.list_item_view.change_sort_indicator(*sort)
         self.device.database['%s_sort_state' % self.device.tab_type] = sort
-        devices.write_database(self.device.mount,
-                               self.device.database)
 
     def save_list_view(self, toolbar=None):
         self.device.database['%s_view' % self.device.tab_type] = 'list'
-        devices.write_database(self.device.mount,
-                               self.device.database)
 
     def save_normal_view(self, toolbar=None):
         self.device.database['%s_view' % self.device.tab_type] = 'normal'
-        devices.write_database(self.device.mount,
-                               self.device.database)
 
 

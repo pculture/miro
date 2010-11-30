@@ -1509,7 +1509,6 @@ New ids: %s""", playlist_item_ids, message.item_ids)
 
     def handle_set_device_type(self, message):
         message.device.database['device_name'] = message.name
-        devices.write_database(message.device.mount, message.device.database)
         info = messages.DeviceInfo(message.device.id,
                                    message.device.info.devices[message.name],
                                    message.device.mount,
