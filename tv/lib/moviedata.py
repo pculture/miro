@@ -131,6 +131,7 @@ class MovieDataUpdater(signals.SignalEmitter):
                 # implemented.
                 self.emit('end-loop')
                 break
+            duration = -1
             try:
                 (duration, mdi.item.metadata) = self.read_metadata(mdi.item)
             except StandardError:
@@ -138,14 +139,13 @@ class MovieDataUpdater(signals.SignalEmitter):
                     break
                 signals.system.failed_exn("When parsing mutagen metadata")
             if duration > -1:
-                mediatype = mdi.item.mediatype or "audio"
+                mediatype = mdi.item.file_type or "audio"
                 screenshot = mdi.item.screenshot or FilenameType("")
                 logging.debug("moviedata: %s %s", duration, mediatype)
 
                 self.update_finished(mdi.item, duration, screenshot, mediatype)
             else:
                 try:
-                    duration = -1
                     screenshot_worked = False
                     screenshot = None
 
@@ -209,8 +209,12 @@ class MovieDataUpdater(signals.SignalEmitter):
         data = {}
         DISCARD = ['MCDI', 'APIC', 'PRIV']
 
+        filename = item.get_filename()
+        if filename is None:
+            return (-1, {})
+
         try:
-            meta = mutagen.File(item.filename).__dict__
+            meta = mutagen.File(filename).__dict__
         except (AttributeError, IOError):
             return (-1, {})
 
@@ -230,15 +234,18 @@ class MovieDataUpdater(signals.SignalEmitter):
                 duration = int(dur / 100)
             except (KeyError, AttributeError, TypeError, IndexError):
                 pass
-
-        for key, value in tags.items():
-            if not key.split(':')[0] in DISCARD:
-                try:
-                    if (len(value[0]) > 1):
-                        value = value[0]
-                except TypeError:
-                    pass
-                data[unicode(key).upper()] = unicode(value)
+        if tags is not None:
+            for key, value in tags.items():
+                if not key.split(':')[0] in DISCARD:
+                    try:
+                        if (len(value[0]) > 1):
+                            value = value[0]
+                    except TypeError:
+                        pass
+                    try:
+                        data[unicode(key).upper()] = unicode(value)
+                    except UnicodeError:
+                        pass
         for key, value in info.items():
             data[u'info_' + key] = unicode(value)
 
@@ -287,9 +294,9 @@ class MovieDataUpdater(signals.SignalEmitter):
                     data[u'track'] = unicode(int(track))
                 except (KeyError, ValueError):
                     num = ''
-                    filename = item.get_url().rsplit('/', 1)[1]
-                    if not filename:
-                        filename = item.get_filename().rsplit('/', 1)[1]
+                    full_path = item.get_url() or item.get_filename()
+                    filename = full_path.rsplit('/', 1)[1] # XXX replace with
+                                                           # basename()?
                     for char in filename:
                         if not char.isdigit():
                             break
