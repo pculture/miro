@@ -109,6 +109,12 @@ def remove(auth):
     global password_list
     password_list.remove(auth)
 
+def remove_by_url_and_realm(url, realm):
+    global password_list
+    auth = password_list.find(url, realm)
+    if auth is not None:
+        password_list.remove(auth)
+
 password_list = None
 callback_tracker = None
 
