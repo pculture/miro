@@ -132,13 +132,13 @@ class MovieDataUpdater(signals.SignalEmitter):
                 self.emit('end-loop')
                 break
             try:
-                (duration, mdi.item.metadata) = self.read_metadata(mdi.item)
+                (mime_mediatype, duration, mdi.item.metadata) = self.read_metadata(mdi.item)
             except StandardError:
                 if self.in_shutdown:
                     break
                 signals.system.failed_exn("When parsing mutagen metadata")
-            if duration > -1:
-                mediatype = mdi.item.mediatype or "audio"
+            if duration > -1 and mime_mediatype is not "video":
+                mediatype = mdi.item.file_type or mime_mediatype or "audio"
                 screenshot = mdi.item.screenshot or FilenameType("")
                 logging.debug("moviedata: %s %s", duration, mediatype)
 
@@ -203,21 +203,40 @@ class MovieDataUpdater(signals.SignalEmitter):
         return pipe.stdout.read()
 
     def read_metadata(self, item):
+        mediatype = None
         duration = -1
-        tags = None
+        tags = {}
         info = {}
         data = {}
         DISCARD = ['MCDI', 'APIC', 'PRIV']
 
         try:
-            meta = mutagen.File(item.filename).__dict__
+            muta = mutagen.File(item.filename)
+            meta = muta.__dict__
         except (AttributeError, IOError):
-            return (-1, {})
+            return (mediatype, duration, data)
+
+        mimetypes = []
+        try:
+            mimetypes = muta.mime
+        except AttributeError:
+            pass
+        for mime in mimetypes:
+            if mime.startswith('audio/'):
+                mediatype = 'audio'
+                break
+            if mime.startswith('video/'):
+                mediatype = 'video'
+                break
+
+        if not meta:
+            return (mediatype, duration, rate)
 
         try:
             tags = meta['tags'].__dict__['_DictProxy__dict']
         except (AttributeError, KeyError):
             tags = meta['tags']
+        tags = tags or {}
 
         if 'info' in meta:
             info = meta['info'].__dict__
@@ -328,7 +347,7 @@ class MovieDataUpdater(signals.SignalEmitter):
                 except (KeyError, TypeError):
                     pass
 
-        return (duration, data)
+        return (mediatype, duration, data)
 
     def kill_process(self, pid):
         try:
