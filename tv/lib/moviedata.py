@@ -57,7 +57,8 @@ THUMBNAIL_SUCCESS_RE = re.compile("Miro-Movie-Data-Thumbnail: Success")
 TRY_AGAIN_RE = re.compile("Miro-Try-Again: True")
 
 def thumbnail_directory():
-    dir_ = os.path.join(app.config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
+    dir_ = os.path.join(app.config.get(prefs.ICON_CACHE_DIRECTORY),
+                        "extracted")
     try:
         fileutil.makedirs(dir_)
     except (KeyboardInterrupt, SystemExit):
@@ -173,7 +174,8 @@ class MovieDataUpdater(signals.SignalEmitter):
                     logging.debug("moviedata: %s %s %s", duration, screenshot,
                                   mediatype)
 
-                    self.update_finished(mdi.item, duration, screenshot, mediatype)
+                    self.update_finished(mdi.item, duration, screenshot,
+                                         mediatype)
                 except StandardError:
                     if self.in_shutdown:
                         break
@@ -287,7 +289,8 @@ class MovieDataUpdater(signals.SignalEmitter):
             data[u'track'] = unicode(int(data['TRCK'].split('/')[0]))
         except (KeyError, ValueError):
             try:
-                data[u'track'] = unicode(int(tags['TRACKNUMBER'][0].split('/')[0]))
+                data[u'track'] = unicode(
+                    int(tags['TRACKNUMBER'][0].split('/')[0]))
             except (KeyError, ValueError):
                 try:
                     track = unicode(tags['WM/TrackNumber'][0]).split('/')[0]
