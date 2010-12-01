@@ -69,8 +69,9 @@ class SharingManagerBackend(object):
                                                 self.handle_items_changed)
 
     def get_items(self):
-        # XXX Guard against handle_item_list not having been run yet ...
-        # XXX dodge
+        # FIXME Guard against handle_item_list not having been run yet?
+        # But if it hasn't been run, it really means at there are no items
+        # (at least, in the eyes of Miro at this stage).
         # return [x.id, x.name + '.mp3' for x in self.items]
         return [x.name.encode('utf-8') + '.mp3' for x in self.items]
 
@@ -104,7 +105,10 @@ class SharingManager(object):
 
         if sharing != self.sharing:
             if sharing:
-                self.enable_sharing()
+                # TODO: if this didn't work, should we set a timer to retry
+                # at some point in the future?
+                if not self.enable_sharing():
+                    return
             else:
                 self.disable_discover()
                 self.disable_sharing()
@@ -132,15 +136,21 @@ class SharingManager(object):
         del self.mdns_ref
 
     def server_thread(self):
-        name = app.config.get(prefs.SHARE_NAME)
-        self.server = libdaap.make_daap_server(self.backend, name=name)
         libdaap.runloop(self.server)
 
     def enable_sharing(self):
-        self.thread = threading.Thread(target=self.server_thread,
-                                       name='DAAP Server Thread')
-        self.thread.start()
-        self.sharing = True
+        try:
+            name = app.config.get(prefs.SHARE_NAME)
+            self.server = libdaap.make_daap_server(self.backend, name=name)
+            self.thread = threading.Thread(target=self.server_thread,
+                                           name='DAAP Server Thread')
+            self.thread.start()
+            self.sharing = True
+        except OSError:
+            # Woups.  Mostly probably the bind() failed due to EADDRINUSE.
+            self.sharing = False
+
+        return self.sharing
 
     def disable_sharing(self):
         self.sharing = False
