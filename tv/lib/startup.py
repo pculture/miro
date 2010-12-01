@@ -80,6 +80,7 @@ from miro import searchengines
 from miro import storedatabase
 from miro import videoconversion
 from miro import devices
+from miro import sharing
 from miro.plat import devicetracker
 
 
@@ -281,6 +282,7 @@ def finish_startup(obj, thread):
     videoconversion.conversion_manager.startup()
     app.device_manager = devices.DeviceManager()
     app.device_tracker = devicetracker.DeviceTracker()
+    app.sharing_manager = sharing.SharingManager()
 
     searchengines.create_engines()
     setup_global_feeds()
