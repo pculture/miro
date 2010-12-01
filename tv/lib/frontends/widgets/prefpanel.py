@@ -661,16 +661,27 @@ class DiskSpacePanel(PanelBuilder):
 class SharingPanel(PanelBuilder):
     def build_widget(self):
         vbox = widgetset.VBox()
+        grid = dialogwidgets.ControlGrid()
 
         sharing_cbx = widgetset.Checkbox(_('Turn on media sharing.'))
         share_discoverable_cbx = widgetset.Checkbox(
                                    _('Make music library discoverable.'))
+        share_txt = widgetset.TextEntry()
+
         attach_boolean(sharing_cbx, prefs.SHARE_MEDIA,
-                                      (share_discoverable_cbx,))
+                                      (share_discoverable_cbx, share_txt))
         attach_boolean(share_discoverable_cbx, prefs.SHARE_DISCOVERABLE)
+        attach_text(share_txt, prefs.SHARE_NAME,
+                    check_function=lambda x: not x.strip() == '')
+
         vbox.pack_start(widgetutil.align_left(sharing_cbx, bottom_pad=6))
         vbox.pack_start(widgetutil.align_left(share_discoverable_cbx,
                                               bottom_pad=6))
+
+        grid.pack_label(_("Share Name:"),
+                        dialogwidgets.ControlGrid.ALIGN_RIGHT)
+        grid.pack(share_txt)
+        vbox.pack_start(widgetutil.align_left(grid.make_table()))
 
         pack_extras(vbox, "sharing")
 
