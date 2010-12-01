@@ -28,14 +28,12 @@
 
 """Controller for Devices tab.
 """
-import datetime
 import operator
 
 from miro import app
 from miro import displaytext
 from miro.gtcache import gettext as _
 from miro import messages
-from miro import util
 
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import itemlist
@@ -216,6 +214,7 @@ class DeviceMountedView(widgetset.VBox):
     def _tab_clicked(self, button):
         key = button.key
         self.button_row.set_active(key)
+        self.tab_container.remove()
         self.tab_container.set_child(self.tabs[key])
 
 class DeviceItemList(itemlist.ItemList):
