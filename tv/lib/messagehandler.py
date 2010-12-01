@@ -41,6 +41,7 @@ from miro import devices
 from miro import downloader
 from miro import eventloop
 from miro import feed
+from miro import playlist
 from miro.frontendstate import WidgetsFrontendState
 from miro import guide
 from miro import fileutil
@@ -1531,6 +1532,35 @@ New ids: %s""", playlist_item_ids, message.item_ids)
 
     def handle_device_eject(self, message):
         app.device_tracker.eject(message.device)
+
+    def handle_device_sync_feeds(self, message):
+        items = set()
+        for video_id in message.video_ids:
+            feed_ = feed.Feed.get_by_id(video_id)
+            if message.video_type == 'all':
+                view = feed_.downloaded_items
+            else:
+                view = feed_.unwatched_items
+            for item_ in view:
+                items.add(item_)
+
+        for audio_id in message.audio_ids:
+            feed_ = feed.Feed.get_by_id(video_id)
+            if message.audio_type == 'all':
+                view = feed_.downloaded_items
+            else:
+                view = feed_.unwatched_items
+            for item_ in view:
+                items.add(item_)
+
+        for playlist_id in message.playlist_ids:
+            view = playlist.PlaylistItemMap.playlist_view(playlist_id)
+            for item_ in view:
+                item.add(item_)
+
+        if items:
+            item_infos = [messages.ItemInfo(item_) for item_ in items]
+            devices.DeviceSyncManager(message.device, item_infos).start()
 
     def handle_device_sync_media(self, message):
         try:

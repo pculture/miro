@@ -796,6 +796,21 @@ class SetDeviceType(BackendMessage):
         self.device = device
         self.name = name
 
+class DeviceSyncFeeds(BackendMessage):
+    """
+    Ask the backend to sync the given feeds/playlists.
+    """
+    def __init__(self, device,
+                 video_type, video_ids,
+                 audio_type, audio_ids,
+                 playlist_ids):
+        self.device = device
+        self.video_type = video_type
+        self.video_ids = video_ids
+        self.audio_type = audio_type
+        self.audio_ids = audio_ids
+        self.playlist_ids = playlist_ids
+
 class DeviceSyncMedia(BackendMessage):
     """Ask the backend to sync media to the given device.
     """

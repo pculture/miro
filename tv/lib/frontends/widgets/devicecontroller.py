@@ -87,13 +87,16 @@ class SyncWidget(widgetset.HBox):
         self.sync_library.connect('toggled', self.sync_library_toggled)
         first_column.pack_start(self.sync_library)
         self.sync_group = widgetset.RadioButtonGroup()
-        all_button = widgetset.RadioButton(self.all_label, self.sync_group)
-        all_button.connect('clicked', self.all_button_clicked)
-        widgetset.RadioButton(self.unwatched_label,
-                                                 self.sync_group)
-        for button in self.sync_group.get_buttons():
-            button.disable()
-            first_column.pack_start(button)
+        if self.file_type != 'playlists':
+            # don't actually need to create buttons for playlists, since we
+            # always sync all items
+            all_button = widgetset.RadioButton(self.all_label, self.sync_group)
+            all_button.connect('clicked', self.all_button_clicked)
+            widgetset.RadioButton(self.unwatched_label,
+                                  self.sync_group)
+            for button in self.sync_group.get_buttons():
+                button.disable()
+                first_column.pack_start(button)
         self.pack_start(widgetutil.pad(first_column, 20, 0, 20, 20))
 
         second_column = widgetset.VBox()
@@ -126,10 +129,11 @@ class SyncWidget(widgetset.HBox):
         self.sync_library.set_checked(
             this_sync.get('enabled', False))
 
-        all_feeds = this_sync.get('all', True)
-        # True == 1, False == 0
-        self.sync_group.set_selected(
-            self.sync_group.get_buttons()[not all_feeds])
+        if self.file_type != 'playlists':
+            all_feeds = this_sync.get('all', True)
+            # True == 1, False == 0
+            self.sync_group.set_selected(
+                self.sync_group.get_buttons()[not all_feeds])
 
         for item in this_sync.get('items', []):
             if item in self.info_map:
@@ -186,6 +190,19 @@ class SyncWidget(widgetset.HBox):
                 items.remove(key)
         this_sync['items'] = list(items)
 
+    def find_info_by_key(self, key, tab_list):
+        return tab_list.find_feed_with_url(key)
+
+    def checked_feeds(self):
+        if not self.sync_library.get_checked():
+            return []
+        tab_list = self.tab_list()
+        feeds = []
+        for key in self.device.database['sync'][self.file_type].get('items',
+                                                                    ()):
+            feeds.append(self.find_info_by_key(key, tab_list).id)
+        return feeds
+
 class VideoFeedSyncWidget(SyncWidget):
     file_type = 'video'
     title = _("Sync Video Library")
@@ -217,8 +234,12 @@ class PlaylistSyncWidget(SyncWidget):
     def info_key(self, info):
         return info.name
 
+    def find_info_by_key(self, key, tab_list):
+        return tab_list.find_playlist_with_name(key)
+
 class DeviceMountedView(widgetset.VBox):
     def __init__(self):
+        self.device = None
         widgetset.VBox.__init__(self)
 
         self.button_row = segmented.SegmentedButtonsRow()
@@ -240,6 +261,12 @@ class DeviceMountedView(widgetset.VBox):
                                   "onto the sidebar."))
         label.set_size(1.5)
         vbox.pack_start(widgetutil.align_center(label, top_pad=50))
+
+        button = widgetset.Button('Sync Now')
+        button.set_size(1.5)
+        button.connect('clicked', self.sync_clicked)
+        vbox.pack_start(widgetutil.align_center(button, top_pad=50))
+
         self.device_size = SizeWidget()
         alignment = widgetset.Alignment(0.5, 1, 0, 0, bottom_pad=15,
                                         right_pad=20)
@@ -258,6 +285,7 @@ class DeviceMountedView(widgetset.VBox):
         self.tabs[key] = widget
 
     def set_device(self, device):
+        self.device = device
         self.device_size.set_size(device.size, device.remaining)
         for name in 'video', 'audio', 'playlists':
             tab = self.tabs[name]
@@ -268,6 +296,24 @@ class DeviceMountedView(widgetset.VBox):
         self.button_row.set_active(key)
         self.tab_container.remove()
         self.tab_container.set_child(self.tabs[key])
+
+    def sync_clicked(self, obj):
+        sync_type = {}
+        sync_ids = {}
+        for file_type in 'video', 'audio', 'playlists':
+            this_sync = self.device.database['sync'][file_type]
+            widget = self.tabs[file_type].child
+            sync_type[file_type] = (this_sync.get('all', True) and 'all' or
+                                    'unwatched')
+            sync_ids[file_type] = widget.checked_feeds()
+
+        message = messages.DeviceSyncFeeds(self.device,
+                                           sync_type['video'],
+                                           sync_ids['video'],
+                                           sync_type['audio'],
+                                           sync_ids['audio'],
+                                           sync_ids['playlists'])
+        message.send_to_backend()
 
 class DeviceItemList(itemlist.ItemList):
 

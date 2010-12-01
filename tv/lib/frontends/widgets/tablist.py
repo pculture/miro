@@ -879,6 +879,13 @@ class PlaylistList(NestedTabList):
         infos = [self.view.model[i][0] for i in self.iter_map.values()]
         return infos
 
+    def find_playlist_with_name(self, name):
+        for iter in self.iter_map.values():
+            info = self.view.model[iter][0]
+            if info.name == name:
+                return info
+        return None
+
     def make_folder_context_menu(self, obj):
         return [
             (_('Rename Playlist Folder'), app.widgetapp.rename_something),
