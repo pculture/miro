@@ -38,6 +38,7 @@ from miro import item
 from miro import fileutil
 from miro import filetypes
 from miro import messages
+from miro import signals
 from miro import videoconversion
 
 from miro.plat import resources
@@ -206,7 +207,7 @@ class DeviceSyncManager(object):
             if self._exists(info):
                 continue # don't recopy stuff
             if info.file_type == 'audio':
-                if info.enclosure_format in self.device.info.audio_types:
+                if info.file_format.split()[0] in self.device.info.audio_types:
                     final_path = os.path.join(audio_target_folder,
                                               os.path.basename(
                             info.video_path))
@@ -314,7 +315,6 @@ class DeviceSyncManager(object):
     def _check_finished(self):
         if not self.waiting:
             # finished!
-            write_database(self.device.mount, self.device.database)
             for handle in self.signal_handles:
                 videoconversion.conversion_manager.disconnect(handle)
             self.signal_handles = None
@@ -322,6 +322,41 @@ class DeviceSyncManager(object):
                 self.device.is_updating = False # stop the spinner
                 messages.TabsChanged('devices', [], [self.device],
                                      []).send_to_frontend()
+
+class DeviceDatabase(dict, signals.SignalEmitter):
+
+    def __init__(self, data=None, parent=None):
+        if data:
+            dict.__init__(self, data)
+        else:
+            dict.__init__(self)
+        signals.SignalEmitter.__init__(self, 'changed')
+        self.parent = parent
+
+    def __getitem__(self, key):
+        value = super(DeviceDatabase, self).__getitem__(key)
+        if isinstance(value, dict) and not isinstance(value, DeviceDatabase):
+            value = self[key] = DeviceDatabase(value, self.parent or self)
+        return value
+
+    def __setitem__(self, key, value):
+        super(DeviceDatabase, self).__setitem__(key, value)
+        if self.parent:
+            self.parent.notify_changed()
+        else:
+            self.notify_changed()
+
+    def notify_changed(self):
+        self.emit('changed')
+
+
+class DatabaseSaveManager(object):
+    def __init__(self, mount, database):
+        self.mount = mount
+        database.connect('changed', self.database_changed)
+
+    def database_changed(self, database):
+        write_database(self.mount, database)
 
 
 def load_database(mount):
@@ -334,10 +369,13 @@ def load_database(mount):
     if not os.path.exists(file_name):
         return {}
     try:
-        return json.load(file(file_name, 'rb'))
+        db = json.load(file(file_name, 'rb'))
     except ValueError:
         logging.exception('error loading JSON db on %s' % mount)
-        return {}
+        db = {}
+    ddb = DeviceDatabase(db)
+    DatabaseSaveManager(mount, ddb)
+    return ddb
 
 def write_database(mount, database):
     """
@@ -421,5 +459,3 @@ def scan_device_for_files(device):
         else:
             continue
         device.database[item_type][ufilename] = {}
-
-    write_database(device.mount, device.database)

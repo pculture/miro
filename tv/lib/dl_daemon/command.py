@@ -103,6 +103,11 @@ class AskForHTTPAuthCommand(Command):
             c.send()
         httpauth.ask_for_http_auth(callback, *args)
 
+class RemoveHTTPAuthCommand(Command):
+    def action(self):
+        from miro import httpauth
+        httpauth.remove_by_url_and_realm(*self.args)
+
 class UpdateDownloadStatus(Command):
     def action(self):
         from miro.downloader import RemoteDownloader

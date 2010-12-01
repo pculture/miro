@@ -53,6 +53,12 @@ def find_http_auth(url, auth_header=None):
         realm = None
     return password_list.find(url, realm)
 
+def remove(auth):
+    global password_list
+    password_list.remove(auth)
+    from miro.dl_daemon import daemon
+    command.RemoveHTTPAuthCommand(daemon.LAST_DAEMON, auth.url, auth.realm).send()
+
 def update_passwords(passwords):
     global password_list
     password_list.replace_passwords(passwords)
