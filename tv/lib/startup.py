@@ -282,7 +282,6 @@ def finish_startup(obj, thread):
     videoconversion.conversion_manager.startup()
     app.device_manager = devices.DeviceManager()
     app.device_tracker = devicetracker.DeviceTracker()
-    app.sharing_manager = sharing.SharingManager()
 
     searchengines.create_engines()
     setup_global_feeds()
@@ -294,6 +293,9 @@ def finish_startup(obj, thread):
     setup_theme()
     install_message_handler()
     downloader.init_controller()
+
+    # Call this late, after the message handlers have been installed.
+    app.sharing_manager = sharing.SharingManager()
 
     eventloop.add_urgent_call(check_firsttime, "check first time")
 

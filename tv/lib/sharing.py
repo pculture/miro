@@ -32,13 +32,47 @@ import threading
 from miro import app
 from miro import config
 from miro import eventloop
+from miro import messages
 from miro import prefs
 
 import libdaap
 
-class NullBackend(object):
-    def get_files(self):
-        return []
+class SharingManagerBackend(object):
+    types = ['videos', 'audios']
+    id    = None        # Must be None
+    items = []          # Item list
+
+    def handle_item_list(self, message):
+        for x in message.items:
+            self.items.append(x)
+
+    def handle_items_changed(self, message):
+        for x in message.removed:
+            self.items.remove(x)
+        # No changed items?  I don't think we actually care since we don't
+        # need to redisplay it.
+        for x in message.added:
+            self.items.append(x)
+
+    def start_tracking(self):
+        for t in self.types:
+            app.info_updater.item_list_callbacks.add(t, self.id,
+                                                self.handle_item_list)
+            app.info_updater.item_changed_callbacks.add(t, self.id,
+                                                self.handle_items_changed)
+
+    def stop_tracking(self):
+        for t in self.types:
+            app.info_updater.item_list_callbacks.remove(t, self.id,
+                                                self.handle_item_list)
+            app.info_updater.item_changed_callbacks.remove(t, self.id,
+                                                self.handle_items_changed)
+
+    def get_items(self):
+        # XXX Guard against handle_item_list not having been run yet ...
+        # XXX dodge
+        # return [x.id, x.name + '.mp3' for x in self.items]
+        return [x.name.encode('utf-8') + '.mp3' for x in self.items]
 
 class SharingManager(object):
     def __init__(self):
@@ -49,6 +83,14 @@ class SharingManager(object):
                  args=args))
         self.callback_handle = self.config_watcher.connect('changed',
                                self.on_config_changed)
+        # Create the sharing server backend that keeps track of all the list
+        # of items available.  Don't know whether we can just query it on the
+        # fly, maybe that's a better idea.
+        self.backend = SharingManagerBackend()
+        # We can turn it on dynamically but if it's not too much work we'd
+        # like to get these before so that turning it on and off is not too
+        # onerous?
+        self.backend.start_tracking()
         # Enable sharing if necessary.
         self.twiddle_sharing()
 
@@ -91,8 +133,7 @@ class SharingManager(object):
 
     def server_thread(self):
         name = app.config.get(prefs.SHARE_NAME)
-        backend = NullBackend()
-        self.server = libdaap.make_daap_server(backend, name=name)
+        self.server = libdaap.make_daap_server(self.backend, name=name)
         libdaap.runloop(self.server)
 
     def enable_sharing(self):
