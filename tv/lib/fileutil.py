@@ -111,8 +111,19 @@ def abspath(path):
     return path
 
 def is_windows_file_in_use_error(exception):
+    """Check if an exception was caused by a file being in use on windows
+
+    This is for errors like #15312, where we try to delete/move a file on
+    windows and fail because of it's filesystem semantics.  To work around
+    that we need to check if an error is caused by the windows weirdness, or
+    if it's some other filesystem error.
+    """
     if not isinstance(exception, Exception):
         raise TypeError("%r is not an exception" % exception)
+    # errno 13 is permission denied, windows error 32 is that the file is in
+    # use.  For non WindowsErrors winerror isn't set and for non OSErrors,
+    # errno isn't set.  If either of those attributes are missing, then we can
+    # safely return False
     try:
         return exception.errno == 13 and exception.winerror == 32
     except AttributeError:
