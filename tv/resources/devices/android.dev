@@ -40,5 +40,5 @@ video_conversion: droid
 [Galaxy Tab]
 vendor_id: 04e8
 product_id: 681d
-name: SAMSUNG SAMSUNG_Android
+name: SAMSUNG SGH-T849
 video_conversion: galaxytab

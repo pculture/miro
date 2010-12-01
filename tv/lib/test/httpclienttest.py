@@ -2,6 +2,7 @@ import rfc822
 import os
 import pycurl
 import urllib
+import pickle
 from cStringIO import StringIO
 
 from miro import dialogs
@@ -707,6 +708,14 @@ class HTTPAuthBackendTest(EventLoopTest):
         self.assertEquals(httpauth.find_http_auth(url5,
             'Basic realm="Other Protected Space"'), None)
 
+    def test_remove(self):
+        url = 'http://example.com/foo.html'
+        header = 'Basic realm="Protected Space"'
+        auth = self.ask_for_http_auth(url, header)
+        self.assertEquals(httpauth.find_http_auth(url, header), auth)
+        httpauth.remove(auth)
+        self.assertEquals(httpauth.find_http_auth(url, header), None)
+
     def test_basic_two_domains_same_realm(self):
         # test that if two domains have the same realm, we don't allow 1
         # password to overwrite the other #14613
@@ -786,6 +795,12 @@ class HTTPAuthBackendTestDLDaemonVersion(HTTPAuthBackendTest):
                 self._setup_httpauth()
 
             def send(self, command, callback):
+                # run the command back and forth through pickle to simulate
+                # sending it over the wire.  This ensures ojects things like
+                # lists are seen as copies rather than the same object (see
+                # UpdatePasswords for an example)
+                command = pickle.loads(pickle.dumps(command))
+                command.set_daemon(self)
                 command.action()
 
         from miro.dl_daemon.private import httpauth
@@ -812,6 +827,21 @@ class HTTPAuthBackendTestDLDaemonVersion(HTTPAuthBackendTest):
         self.assertNotEquals(auth, None)
         self.assertEquals(auth.username, 'user')
         self.assertEquals(auth.password, 'password')
+
+    def test_remove_from_main_process(self):
+        # This is test_remove using the daemon's httpauth.py, but we also test
+        # that it's removed from the main process
+        import miro.httpauth
+        url = 'http://example.com/foo.html'
+        header = 'Basic realm="Protected Space"'
+        auth = self.ask_for_http_auth(url, header)
+        self.assertEquals(httpauth.find_http_auth(url, header), auth)
+        self.assertEquals(miro.httpauth.find_http_auth(url, header), auth)
+        httpauth.remove(auth)
+        # wait for RemoveHTTPAuthCommand to be run
+        self.runPendingIdles()
+        self.assertEquals(httpauth.find_http_auth(url, header), None)
+        self.assertEquals(miro.httpauth.find_http_auth(url, header), None)
 
 class BadURLTest(HTTPClientTestBase):
     def setUp(self):

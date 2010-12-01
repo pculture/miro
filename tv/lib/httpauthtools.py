@@ -82,6 +82,15 @@ class HTTPAuthPassword(object):
     def __repr__(self):
         return "<miro.httpauthtools.HTTPAuthPassword %s %s %s>" % (self.scheme, self.domain, self.realm)
 
+    def __eq__(self, other):
+        my_data = (self.username, self.password, self.url, self.auth_header)
+        try:
+            other_data = (other.username, other.password, other.url,
+                    other.auth_header)
+        except AttributeError:
+            return False
+        return my_data == other_data
+
     def calc_domain_list(self):
         if self.domain is None:
             self.domain_list = None

@@ -32,7 +32,6 @@ import datetime
 import operator
 
 from miro import app
-from miro import devices
 from miro import displaytext
 from miro.gtcache import gettext as _
 from miro import messages
@@ -224,30 +223,6 @@ class DeviceItemList(itemlist.ItemList):
     def filter(self, item_info):
         return True
 
-class DeviceItemInfo(object):
-    is_playable = True
-    video_watched = True
-    expiration_date = None
-    item_viewed = True
-    downloaded = True
-    downloader = download_info = None
-    is_container_item = False
-    pending_auto_dl = pending_manual_dl = False
-    state = "downloaded"
-    stripper = util.HTMLStripper()
-
-    def __init__(self, d):
-        self.__dict__.update(d)
-        for field in ('release_date',):
-            val = getattr(self, field)
-            if val is not None:
-                setattr(self, field, datetime.datetime.fromtimestamp(val))
-        self.video_path = self.video_path.encode('utf8')
-        self.description_text, self.description_links = self.stripper.strip(
-            self.description)
-        image_path = resources.path('images/thumb-default-video.png')
-        self.icon = imagepool.get_surface(image_path)
-
 class UnknownDeviceView(widgetset.VBox):
     def __init__(self):
         widgetset.VBox.__init__(self)
@@ -403,17 +378,11 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         self.widget.toolbar.change_sort_indicator(*sort)
         self.list_item_view.change_sort_indicator(*sort)
         self.device.database['%s_sort_state' % self.device.tab_type] = sort
-        devices.write_database(self.device.mount,
-                               self.device.database)
 
     def save_list_view(self, toolbar=None):
         self.device.database['%s_view' % self.device.tab_type] = 'list'
-        devices.write_database(self.device.mount,
-                               self.device.database)
 
     def save_normal_view(self, toolbar=None):
         self.device.database['%s_view' % self.device.tab_type] = 'normal'
-        devices.write_database(self.device.mount,
-                               self.device.database)
 
 
