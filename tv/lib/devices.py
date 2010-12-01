@@ -448,6 +448,8 @@ def clean_database(device):
 def scan_device_for_files(device):
     known_files = clean_database(device)
 
+    device.database.setdefault('sync', {})
+
     for filename in fileutil.miro_allfiles(device.mount):
         short_filename = filename[len(device.mount):]
         ufilename = filename_to_unicode(short_filename)

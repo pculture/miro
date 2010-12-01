@@ -80,14 +80,17 @@ class SyncWidget(widgetset.HBox):
     list_label = _("Sync These Feeds")
 
     def __init__(self):
+        self.device = None
         widgetset.HBox.__init__(self)
         first_column = widgetset.VBox()
         self.sync_library = widgetset.Checkbox(self.title)
         self.sync_library.connect('toggled', self.sync_library_toggled)
         first_column.pack_start(self.sync_library)
         self.sync_group = widgetset.RadioButtonGroup()
-        widgetset.RadioButton(self.all_label, self.sync_group)
-        widgetset.RadioButton(self.unwatched_label, self.sync_group)
+        all_button = widgetset.RadioButton(self.all_label, self.sync_group)
+        all_button.connect('clicked', self.all_button_clicked)
+        widgetset.RadioButton(self.unwatched_label,
+                                                 self.sync_group)
         for button in self.sync_group.get_buttons():
             button.disable()
             first_column.pack_start(button)
@@ -96,10 +99,14 @@ class SyncWidget(widgetset.HBox):
         second_column = widgetset.VBox()
         second_column.pack_start(widgetset.Label(self.list_label))
         self.feed_list = widgetset.VBox()
+        self.info_map = {}
         feeds = self.get_feeds()
         if feeds:
             for info in feeds:
-                self.feed_list.pack_start(widgetset.Checkbox(info.name))
+                checkbox = widgetset.Checkbox(info.name)
+                checkbox.connect('toggled', self.feed_toggled, info)
+                self.feed_list.pack_start(checkbox)
+                self.info_map[self.info_key(info)] = checkbox
         else:
             self.sync_library.disable()
         scroller = widgetset.Scroller(False, True)
@@ -108,6 +115,25 @@ class SyncWidget(widgetset.HBox):
         self.feed_list.disable()
         self.pack_start(widgetutil.pad(second_column, 20, 20, 20, 20),
                         expand=True)
+
+    def set_device(self, device):
+        self.device = device
+        sync = self.device.database['sync']
+        if self.file_type not in sync:
+            sync[self.file_type] = {}
+
+        this_sync = sync[self.file_type]
+        self.sync_library.set_checked(
+            this_sync.get('enabled', False))
+
+        all_feeds = this_sync.get('all', True)
+        # True == 1, False == 0
+        self.sync_group.set_selected(
+            self.sync_group.get_buttons()[not all_feeds])
+
+        for item in this_sync.get('items', []):
+            if item in self.info_map:
+                self.info_map[item].set_checked(True)
 
     def get_feeds(self):
         feeds = []
@@ -130,8 +156,12 @@ class SyncWidget(widgetset.HBox):
         feeds.sort(key=operator.attrgetter('name'))
         return feeds
 
+    def info_key(self, info):
+        return info.url
+
     def sync_library_toggled(self, obj):
-        if self.sync_library.get_checked():
+        checked = obj.get_checked()
+        if checked:
             for button in self.sync_group.get_buttons():
                 button.enable()
             self.feed_list.enable()
@@ -139,7 +169,22 @@ class SyncWidget(widgetset.HBox):
             for button in self.sync_group.get_buttons():
                 button.disable()
             self.feed_list.disable()
+        self.device.database['sync'][self.file_type]['enabled'] = checked
 
+    def all_button_clicked(self, obj):
+        self.device.database['sync'][self.file_type]['all'] = \
+            obj.get_selected()
+
+    def feed_toggled(self, obj, info):
+        this_sync = self.device.database['sync'][self.file_type]
+        key = self.info_key(info)
+        items = set(this_sync.get('items', []))
+        if obj.get_checked():
+            items.add(key)
+        else:
+            if key in items:
+                items.remove(key)
+        this_sync['items'] = list(items)
 
 class VideoFeedSyncWidget(SyncWidget):
     file_type = 'video'
@@ -160,6 +205,7 @@ class AudioFeedSyncWidget(SyncWidget):
         return app.tab_list_manager.audio_feed_list
 
 class PlaylistSyncWidget(SyncWidget):
+    file_type = 'playlists'
     list_label = _("Sync These Playlists")
     title = _("Sync Playlists")
     all_label =_("All items")
@@ -167,6 +213,9 @@ class PlaylistSyncWidget(SyncWidget):
 
     def tab_list(self):
         return app.tab_list_manager.playlist_list
+
+    def info_key(self, info):
+        return info.name
 
 class DeviceMountedView(widgetset.VBox):
     def __init__(self):
@@ -210,6 +259,9 @@ class DeviceMountedView(widgetset.VBox):
 
     def set_device(self, device):
         self.device_size.set_size(device.size, device.remaining)
+        for name in 'video', 'audio', 'playlists':
+            tab = self.tabs[name]
+            tab.child.set_device(device)
 
     def _tab_clicked(self, button):
         key = button.key
