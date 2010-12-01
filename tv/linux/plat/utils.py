@@ -365,13 +365,6 @@ def customize_ffmpeg_parameters(params):
     :returns: list of modified parameters that will get passed to
         ffmpeg
     """
-    # on Linux, we need to pass libfaac instead of aac for the -acodec
-    # if it's there.
-    if "-acodec" in params:
-        ind = params.index("-acodec")
-        if params[ind+1] == "aac":
-            params[ind+1] = "libfaac"
-
     return params
 
 def get_ffmpeg2theora_executable_path():
