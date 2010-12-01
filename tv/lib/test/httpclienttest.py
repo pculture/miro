@@ -798,7 +798,9 @@ class HTTPAuthBackendTestDLDaemonVersion(HTTPAuthBackendTest):
                 # run the command back and forth through pickle to simulate
                 # sending it over the wire.  This ensures ojects things like
                 # lists are seen as copies rather than the same object (see
-                # UpdatePasswords for an example)
+                # UpdatePasswords for an example).  We could use the copy
+                # module, but I (BDK) wanted to simulate what happens between
+                # the downloader and main process as closely as possible.
                 command = pickle.loads(pickle.dumps(command))
                 command.set_daemon(self)
                 command.action()
