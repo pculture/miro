@@ -127,6 +127,7 @@ for pkg in "setuptools-0.6c11" \
            "pyobjc-framework-FSEvents-2.2" \
            "altgraph-0.6.7" \
            "macholib-1.2.1" \
+           "mutagen-1.20" \
            "modulegraph-0.7.3" \
            "py2app-0.4.3" \
            "Pyrex-0.9.9" \
