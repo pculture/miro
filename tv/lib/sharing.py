@@ -41,7 +41,7 @@ import libdaap
 # Helper utilities
 # Translate neutral constants to native protocol constants with this, or
 # fixup strings if necessary.
-def daap_item_fixup(entry):
+def daap_item_fixup(item_id, entry):
     daapitem = []
     # no need for id -> miid because that's the indexing key.
 
@@ -56,6 +56,7 @@ def daap_item_fixup(entry):
         daapitem.append(attribute)
 
     # Manual ones
+    daapitem.append(('miid', item_id))
 
     # Also has movie or tv shows but Miro doesn't support it so make it
     # a generic video.
@@ -68,10 +69,13 @@ def daap_item_fixup(entry):
     
 class SharingManagerBackend(object):
     types = ['videos', 'audios']
-    id    = None            # Must be None
-    items = dict()          # Neutral format - not really needed.
-    daapitems = dict()      # DAAP format XXX - index via the items
-    daapplaylists = dict()  # Playlist, in daap format
+    id    = None                # Must be None
+    items = dict()              # Neutral format - not really needed.
+    daapitems = dict()          # DAAP format XXX - index via the items
+    # XXX daapplaylist should be hidden from view. 
+    daap_playlists = dict()     # Playlist, in daap format
+    playlist_item_map = dict()  # Playlist -> item mapping
+
 
     def register_protos(self, proto):
         pass
@@ -99,22 +103,27 @@ class SharingManagerBackend(object):
                     attributes.append((q, getattr(x, p)))
             attributes.append(('mpco', 0))    # Parent container ID
             attributes.append(('mimc', 0))    # Item count
-            self.daapplaylists[x.id] = attributes
+            self.daap_playlists[x.id] = attributes
 
     def handle_playlist_added(self, obj, added):
         self.make_daap_playlists(added)
 
     def handle_playlist_changed(self, obj, changed):
         for x in changed:
-            del self.daapplaylists[x.id]
+            del self.daap_playlists[x.id]
         self.make_daap_playlists(changed)
 
     def handle_playlist_removed(self, obj, removed):
         for x in removed:
-            del self.daapplaylists[x.id]
+            del self.daap_playlists[x.id]
 
     def populate_playlists(self):
         self.make_daap_playlists(playlist.SavedPlaylist.make_view())
+        for playlist_id in self.daap_playlists.keys():
+            # Save the position as well?  But I don't think it matters, remote
+            # guy can sort himself.
+            self.playlist_item_map[playlist_id] = [x.item_id
+              for x in playlist.PlaylistItemMap.playlist_view(playlist_id)]
 
     def start_tracking(self):
         for t in self.types:
@@ -148,18 +157,23 @@ class SharingManagerBackend(object):
 
     def get_playlists(self):
         playlists = []
-        for k in self.daapplaylists.keys():
-            playlists.append(('mlit', self.daapplaylists[k]))
+        for k in self.daap_playlists.keys():
+            playlists.append(('mlit', self.daap_playlists[k]))
         return playlists
 
-    def get_items(self):
+    def get_items(self, playlist_id=None):
         # FIXME Guard against handle_item_list not having been run yet?
         # But if it hasn't been run, it really means at there are no items
         # (at least, in the eyes of Miro at this stage).
         # XXX cache me.  Ideally we cache this per-protocol then we create
         # this eagerly, then the self.items becomes a mapping from proto
         # to a list of items.
-        return self.daapitems
+
+        # Easy: just return
+        if not playlist_id:
+            return self.daapitems
+        return [x for x in self.daapitems
+                  if x.id in playlist_item_map[playlist_id]]
 
     def make_item_dict(self, items):
         # See lib/messages.py for a list of full fields that can be obtained
@@ -186,7 +200,7 @@ class SharingManagerBackend(object):
             self.items[x.id] = dict(name=name, size=size, duration=duration,
                                   file_type=file_type, path=path,
                                   enclosure_format=e)
-            self.daapitems[x.id] = daap_item_fixup(self.items[x.id])
+            self.daapitems[x.id] = daap_item_fixup(x.id, self.items[x.id])
 
 class SharingManager(object):
     def __init__(self):
