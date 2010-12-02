@@ -159,7 +159,7 @@ class FeedParserValues(object):
         except KeyError:
             return None
         if isinstance(thumb, str):
-            return thumb
+            return unicode(thumb)
         try:
             if isinstance(thumb, unicode):
                 return thumb.encode('utf-8')
