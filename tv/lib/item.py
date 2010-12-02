@@ -1310,7 +1310,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
 
     @returns_unicode
     def _filename_to_title(self, filename):
-        title = os.path.basename(filename)
+        title = filename_to_unicode(os.path.basename(filename))
         title = title.rsplit('.', 1)[0]
         title = title.replace('_', ' ')
         title = title.lstrip('0123456789. -')
