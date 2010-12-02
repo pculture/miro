@@ -35,7 +35,6 @@ from miro import eventloop
 from miro import messages
 from miro import prefs
 
-from const import *
 import libdaap
 
 # Helper utilities
@@ -60,9 +59,9 @@ def daap_item_fixup(entry):
     # Also has movie or tv shows but Miro doesn't support it so make it
     # a generic video.
     if entry['file_type'] == 'video':
-        daapitem.append(('aeMK', DAAP_MEDIAKIND_VIDEO))
+        daapitem.append(('aeMK', libdaap.DAAP_MEDIAKIND_VIDEO))
     else:
-        daapitem.append(('aeMK', DAAP_MEDIAKIND_AUDIO))
+        daapitem.append(('aeMK', libdaap.DAAP_MEDIAKIND_AUDIO))
 
     return daapitem
     
