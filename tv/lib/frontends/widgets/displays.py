@@ -124,6 +124,7 @@ class DisplayManager(object):
                 GuideDisplay,
                 MultipleSelectionDisplay,
                 DeviceDisplay,
+                SharingDisplay,
                 DummyDisplay,
         ]
         # displays that we keep alive all the time
@@ -360,6 +361,17 @@ class PlaylistDisplay(ItemListDisplay):
 
     def make_controller(self, playlist_info):
         return playlist.PlaylistView(playlist_info)
+
+class SharingDisplay(PlaylistDisplay):
+    def on_selected(self):
+        pass
+        #PlaylistDisplay.on_selected(self)
+        #self.controller.start_tracking()
+
+    def cleanup(self):
+        pass
+        #self.controller.stop_tracking()
+        #PlaylistDisplay.cleanup(self)
 
 class SearchDisplay(ItemListDisplay):
     @staticmethod
