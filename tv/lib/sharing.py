@@ -33,6 +33,7 @@ from miro import app
 from miro import config
 from miro import eventloop
 from miro import messages
+from miro import playlist
 from miro import prefs
 
 import libdaap
@@ -67,9 +68,10 @@ def daap_item_fixup(entry):
     
 class SharingManagerBackend(object):
     types = ['videos', 'audios']
-    id    = None        # Must be None
-    items = dict()      # Neutral format - not really needed.
-    daapitems = dict()  # DAAP format XXX - index via the items
+    id    = None            # Must be None
+    items = dict()          # Neutral format - not really needed.
+    daapitems = dict()      # DAAP format XXX - index via the items
+    daapplaylists = dict()  # Playlist, in daap format
 
     def register_protos(self, proto):
         pass
@@ -85,12 +87,50 @@ class SharingManagerBackend(object):
         self.make_item_dict(message.added)
         self.make_item_dict(message.changed)
 
+    # Note: this should really be a util function and be separated
+    def make_daap_playlists(self, items):
+        mappings = [('title', 'minm'), ('id', 'miid'), ('id', 'mper')]
+        for x in items:
+            attributes = []
+            for p, q in mappings:
+                if isinstance(getattr(x, p), unicode):
+                    attributes.append((q, getattr(x, p).encode('utf-8')))
+                else:
+                    attributes.append((q, getattr(x, p)))
+            attributes.append(('mpco', 0))    # Parent container ID
+            attributes.append(('mimc', 0))    # Item count
+            self.daapplaylists[x.id] = attributes
+
+    def handle_playlist_added(self, obj, added):
+        self.make_daap_playlists(added)
+
+    def handle_playlist_changed(self, obj, changed):
+        for x in changed:
+            del self.daapplaylists[x.id]
+        self.make_daap_playlists(changed)
+
+    def handle_playlist_removed(self, obj, removed):
+        for x in removed:
+            del self.daapplaylists[x.id]
+
+    def populate_playlists(self):
+        self.make_daap_playlists(playlist.SavedPlaylist.make_view())
+
     def start_tracking(self):
         for t in self.types:
             app.info_updater.item_list_callbacks.add(t, self.id,
                                                 self.handle_item_list)
             app.info_updater.item_changed_callbacks.add(t, self.id,
                                                 self.handle_items_changed)
+
+        self.populate_playlists()
+
+        app.info_updater.connect('playlists-added',
+                                 self.handle_playlist_added)
+        app.info_updater.connect('playlists-changed',
+                                 self.handle_playlist_changed)
+        app.info_updater.connect('playlists-removed',
+                                 self.handle_playlist_removed)
 
     def stop_tracking(self):
         for t in self.types:
@@ -99,8 +139,18 @@ class SharingManagerBackend(object):
             app.info_updater.item_changed_callbacks.remove(t, self.id,
                                                 self.handle_items_changed)
 
+        app.info_updater.disconnect(self.handle_playlist_added)
+        app.info_updater.disconnect(self.handle_playlist_changed)
+        app.info_updater.disconnect(self.handle_playlist_removed)
+
     def get_filepath(self, itemid):
         return self.items[itemid]['path']
+
+    def get_playlists(self):
+        playlists = []
+        for k in self.daapplaylists.keys():
+            playlists.append(('mlit', self.daapplaylists[k]))
+        return playlists
 
     def get_items(self):
         # FIXME Guard against handle_item_list not having been run yet?
