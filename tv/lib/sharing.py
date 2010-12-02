@@ -101,8 +101,9 @@ class SharingManagerBackend(object):
                     attributes.append((q, getattr(x, p).encode('utf-8')))
                 else:
                     attributes.append((q, getattr(x, p)))
+            count = len(self.get_items(playlist_id=x.id))
             attributes.append(('mpco', 0))    # Parent container ID
-            attributes.append(('mimc', 0))    # Item count
+            attributes.append(('mimc', count))    # Item count
             self.daap_playlists[x.id] = attributes
 
     def handle_playlist_added(self, obj, added):
@@ -172,8 +173,12 @@ class SharingManagerBackend(object):
         # Easy: just return
         if not playlist_id:
             return self.daapitems
-        return [x for x in self.daapitems
-                  if x.id in playlist_item_map[playlist_id]]
+        # XXX Somehow cache this?
+        playlist = dict()
+        for x in self.daapitems.keys():
+            if x in self.playlist_item_map[playlist_id]:
+                playlist[x] = self.daapitems[x]
+        return playlist
 
     def make_item_dict(self, items):
         # See lib/messages.py for a list of full fields that can be obtained
