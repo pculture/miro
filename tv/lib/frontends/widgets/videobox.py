@@ -420,7 +420,7 @@ class VolumeSlider(widgetset.CustomSlider):
         return True
 
     def size_request(self, layout):
-        return (self.track.width, self.knob.height)
+        return (self.track.width, max(self.track.height, self.knob.height))
 
     def slider_size(self):
         return self.knob.width
