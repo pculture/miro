@@ -34,8 +34,8 @@ from miro import config
 from miro import eventloop
 from miro import messages
 from miro import prefs
-from miro.const import *
 
+from const import *
 import libdaap
 
 # Helper utilities
