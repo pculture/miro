@@ -1302,10 +1302,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
             return self.metadata['title']
         except (KeyError, TypeError):
             pass
-        if self.get_filename() is not None:
-            return self._filename_to_title(self.get_filename())
         if self.entry_title is not None:
             return self.entry_title
+        if self.get_filename() is not None:
+            return self._filename_to_title(self.get_filename())
         return _('no title')
 
     @returns_unicode
