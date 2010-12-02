@@ -34,25 +34,55 @@ from miro import config
 from miro import eventloop
 from miro import messages
 from miro import prefs
+from miro.const import *
 
 import libdaap
 
+# Helper utilities
+# Translate neutral constants to native protocol constants with this, or
+# fixup strings if necessary.
+def daap_item_fixup(entry):
+    daapitem = dict()
+    # no need for id -> miid because that's the indexing key.
+
+    # Easy ones - can do a direct translation
+    mapping = [('name', 'minm'), ('enclosure_format', 'asfm'),
+               ('size', 'assz'), ('duration', 'astm')]
+    for p, q in mapping:
+        daapitem[q] = entry[p]
+        if isinstance(daapitem[q], unicode):
+            daapitem[q] = daapitem[q].encode('utf-8')
+
+    # Manual ones
+
+    # Also has movie or tv shows but Miro doesn't support it so make it
+    # a generic video.
+    if entry['file_type'] == 'video':
+        daapitem['aeMK'] = DAAP_MEDIAKIND_VIDEO
+    else:
+        daapitem['aeMK'] = DAAP_MEDIAKIND_AUDIO
+
+    return daapitem
+    
 class SharingManagerBackend(object):
     types = ['videos', 'audios']
     id    = None        # Must be None
-    items = []          # Item list
+    items = dict()      # Neutral format - not really needed.
+    daapitems = dict()  # DAAP format XXX - index via the items
+
+    def register_protos(self, proto):
+        pass
 
     def handle_item_list(self, message):
-        for x in message.items:
-            self.items.append(x)
+        self.make_item_dict(message.items)
 
     def handle_items_changed(self, message):
+        # If items are changed, just redelete and recreate the entry.
         for x in message.removed:
-            self.items.remove(x)
-        # No changed items?  I don't think we actually care since we don't
-        # need to redisplay it.
-        for x in message.added:
-            self.items.append(x)
+            del self.items[x.id]
+            del self.daapitems[x.id]
+        self.make_item_dict(message.added)
+        self.make_item_dict(message.changed)
 
     def start_tracking(self):
         for t in self.types:
@@ -68,12 +98,44 @@ class SharingManagerBackend(object):
             app.info_updater.item_changed_callbacks.remove(t, self.id,
                                                 self.handle_items_changed)
 
+    def get_filepath(self, itemid):
+        return self.items[itemid]['path']
+
     def get_items(self):
         # FIXME Guard against handle_item_list not having been run yet?
         # But if it hasn't been run, it really means at there are no items
         # (at least, in the eyes of Miro at this stage).
-        # return [x.id, x.name + '.mp3' for x in self.items]
-        return [x.name.encode('utf-8') + '.mp3' for x in self.items]
+        # XXX cache me.  Ideally we cache this per-protocol then we create
+        # this eagerly, then the self.items becomes a mapping from proto
+        # to a list of items.
+        return self.daapitems
+
+    def make_item_dict(self, items):
+        # See lib/messages.py for a list of full fields that can be obtained
+        # from an ItemInfo.  Note that, this only contains partial information
+        # as it does not contain metadata about the item.  We do make one or
+        # two assumptions here, in particular the file_type will always either
+        # be video or audio.  For the actual file extension we strip it off
+        # from the actual file path.  We create a dict object for this,
+        # which is not very economical.  Is it possible to just keep a 
+        # reference to the ItemInfo object?
+        interested_fields = ['id', 'name', 'size', 'file_type', 'file_format',
+                             'video_path', 'duration']
+        for x in items:
+            name = x.name
+            size = x.size
+            duration = x.duration
+            file_type = x.file_type
+            path = x.video_path
+            f, e = os.path.splitext(path)
+            # Note! sometimes this doesn't work because the file has no
+            # extension!
+            if e:
+                e = e[1:]
+            self.items[x.id] = dict(name=name, size=size, duration=duration,
+                                  file_type=file_type, path=path,
+                                  enclosure_format=e)
+            self.daapitems[x.id] = daap_item_fixup(self.items[x.id])
 
 class SharingManager(object):
     def __init__(self):
