@@ -1317,8 +1317,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
         t2 = []
         for word in title.split(' '):
             t2.append(word.capitalize())
-        title = ' '.join(t2)
-        return unicode(title)
+        title = u' '.join(t2)
+        return title
 
     def set_title(self, title):
         self.confirm_db_thread()
