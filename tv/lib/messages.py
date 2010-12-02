@@ -1459,6 +1459,16 @@ class DeviceChanged(FrontendMessage):
     def __init__(self, device):
         self.device = device
 
+class DeviceSyncChanged(FrontendMessage):
+    """Informs the frontend that the status of a device sync has changed.  This
+    includes starting and stopping.
+    """
+    def __init__(self, sync_manager):
+        self.device = sync_manager.device
+        self.finished = sync_manager.is_finished()
+        self.progress = sync_manager.get_progress()
+        self.eta = sync_manager.get_eta()
+
 class MessageToUser(FrontendMessage):
     """Lets the backend send messages directly to the user.
     """

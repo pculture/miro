@@ -55,26 +55,48 @@ class DeviceTabButtonSegment(segmented.TextButtonSegment):
     COLOR = (1, 1, 1)
     TEXT_COLOR = {True: COLOR, False: COLOR}
 
-class SizeWidget(widgetset.HBox):
-    def __init__(self, size=None, remaining=None):
+class LabeledProgressWidget(widgetset.HBox):
+    def __init__(self):
         widgetset.HBox.__init__(self)
         self.progress = widgetset.ProgressBar()
         self.progress.set_size_request(500, -1)
         self.text = widgetset.Label()
         self.pack_start(self.progress, padding=20)
         self.pack_start(self.text)
+
+    def set_progress(self, progress):
+        self.progress.set_progress(progress)
+
+    def set_text(self, text):
+        self.text.set_text(text)
+
+class SizeWidget(LabeledProgressWidget):
+    def __init__(self, size=None, remaining=None):
+        LabeledProgressWidget.__init__(self)
         self.set_size(size, remaining)
 
     def set_size(self, size, remaining):
         self.size = size
         self.remaining = remaining
         if size and remaining:
-            self.progress.set_progress(1 - float(remaining) / size)
-            self.text.set_text('%s free' % displaytext.size_string(
+            self.set_progress(1 - float(remaining) / size)
+            self.set_text('%s free' % displaytext.size_string(
                     remaining))
         else:
-            self.progress.set_progress(0)
-            self.text.set_text('not mounted')
+            self.set_progress(0)
+            self.set_text('not mounted')
+
+class SyncProgressWidget(LabeledProgressWidget):
+    def __init__(self):
+        LabeledProgressWidget.__init__(self)
+        self.set_status(0, None)
+
+    def set_status(self, progress, eta):
+        self.set_progress(progress)
+        if eta is not None:
+            self.set_text(displaytext.time_string(int(eta)))
+        else:
+            self.set_text(_('unknown'))
 
 class SyncWidget(widgetset.HBox):
     list_label = _("Sync These Feeds")
@@ -262,10 +284,14 @@ class DeviceMountedView(widgetset.VBox):
         label.set_size(1.5)
         vbox.pack_start(widgetutil.align_center(label, top_pad=50))
 
+        self.sync_container = widgetset.Background()
+        self.sync_container.set_size_request(500, -1)
         button = widgetset.Button('Sync Now')
         button.set_size(1.5)
         button.connect('clicked', self.sync_clicked)
-        vbox.pack_start(widgetutil.align_center(button, top_pad=50))
+        self.sync_container.set_child(widgetutil.align_center(button))
+        vbox.pack_start(widgetutil.align_center(self.sync_container,
+                                                top_pad=50))
 
         self.device_size = SizeWidget()
         alignment = widgetset.Alignment(0.5, 1, 0, 0, bottom_pad=15,
@@ -298,6 +324,7 @@ class DeviceMountedView(widgetset.VBox):
         self.tab_container.set_child(self.tabs[key])
 
     def sync_clicked(self, obj):
+
         sync_type = {}
         sync_ids = {}
         for file_type in 'video', 'audio', 'playlists':
@@ -314,6 +341,21 @@ class DeviceMountedView(widgetset.VBox):
                                            sync_ids['audio'],
                                            sync_ids['playlists'])
         message.send_to_backend()
+
+
+    def set_sync_status(self, progress, eta):
+        if not isinstance(self.sync_container.child, SyncProgressWidget):
+            self._old_child = self.sync_container.child
+            self.sync_container.remove()
+            self.sync_container.set_child(SyncProgressWidget())
+
+        self.sync_container.child.set_status(progress, eta)
+
+    def sync_finished(self):
+        self.sync_container.remove()
+        self.sync_container.set_child(self._old_child)
+        del self._old_child
+
 
 class DeviceItemList(itemlist.ItemList):
 
@@ -405,14 +447,37 @@ class DeviceWidget(widgetset.VBox):
         icon = imagepool.get(image_path)
         return DeviceTitlebar(device.name, icon)
 
+    def set_sync_status(self, progress, eta):
+        view = self.device_view.child
+        if isinstance(view, DeviceMountedView):
+            view.set_sync_status(progress, eta)
+
+    def sync_finished(self):
+        view = self.device_view.child
+        if isinstance(view, DeviceMountedView):
+            view.sync_finished()
+
+
 class DeviceController(object):
     def __init__(self, device):
         self.device = device
         self.widget = DeviceWidget(device)
 
     def handle_device_changed(self, device):
+        if device.id != self.device.id:
+            # not our device
+            return
         self.device = device
         self.widget.set_device(device)
+
+    def handle_device_sync_changed(self, message):
+        if message.device.id != self.device.id:
+            return # not our device
+
+        if message.finished:
+            self.widget.sync_finished()
+        else:
+            self.widget.set_sync_status(message.progress, message.eta)
 
     def start_tracking(self):
         pass

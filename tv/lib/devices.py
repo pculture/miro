@@ -34,6 +34,7 @@ import shutil
 import time
 from ConfigParser import SafeConfigParser
 
+from miro import app
 from miro import item
 from miro import fileutil
 from miro import filetypes
@@ -115,11 +116,13 @@ class MultipleDeviceInfo(object):
 
 class DeviceManager(object):
     """
-    Manages the list of devices that Miro knows about.
+    Manages the list of devices that Miro knows about, as well as managing the
+    current syncs for devices.
     """
     def __init__(self):
         self.device_by_name = {}
         self.device_by_id = {}
+        self.syncs_in_progress = {}
         self.startup()
 
     def _add_device(self, info):
@@ -168,47 +171,50 @@ class DeviceManager(object):
         info = self.device_by_id[(vendor_id, product_id)]
         return self._get_device_from_info(info, device_type)
 
+    def get_sync_for_device(self, device):
+        """
+        Returns a DeviceSyncManager for the given device.  If one exists,
+        return that one, otherwise build a new one and return that.
+        """
+        if device.id not in self.syncs_in_progress:
+            dsm = DeviceSyncManager(device)
+            self.syncs_in_progress[device.id] = dsm
+
+        return self.syncs_in_progress[device.id]
+
 
 class DeviceSyncManager(object):
     """
-    Represents a list of ItemInfos to sync to a device.
+    Represents a sync in progress to a given device.
     """
-    def __init__(self, device, item_infos):
+    def __init__(self, device):
         self.device = device
-        self.was_updating = False
-        self.item_infos = item_infos
+        self.start_time = time.time()
+        self.etas = {}
         self.signal_handles = []
         self.waiting = set()
 
-    def start(self):
-        """
-        Start syncing to the device.
-        """
-        self.was_updating = getattr(self.device, 'is_updating', False)
         self.device.is_updating = True # start the spinner
         messages.TabsChanged('devices', [], [self.device],
                              []).send_to_frontend()
 
-        audio_target_folder = os.path.join(self.device.mount,
-                                           self.device.info.audio_path)
-        try:
-            os.makedirs(audio_target_folder)
-        except OSError:
-            pass
+        self.audio_target_folder = os.path.join(device.mount,
+                                                device.info.audio_path)
+        if not os.path.exists(self.audio_target_folder):
+            os.makedirs(self.audio_target_folder)
 
-        video_target_folder = os.path.join(self.device.mount,
-                                           self.device.info.video_path)
-        try:
-            os.makedirs(video_target_folder)
-        except OSError:
-            pass
+        self.video_target_folder = os.path.join(device.mount,
+                                                device.info.video_path)
+        if not os.path.exists(self.video_target_folder):
+            os.makedirs(self.video_target_folder)
 
-        for info in self.item_infos:
+    def add_items(self, item_infos):
+        for info in item_infos:
             if self._exists(info):
                 continue # don't recopy stuff
             if info.file_type == 'audio':
                 if info.file_format.split()[0] in self.device.info.audio_types:
-                    final_path = os.path.join(audio_target_folder,
+                    final_path = os.path.join(self.audio_target_folder,
                                               os.path.basename(
                             info.video_path))
                     try:
@@ -221,11 +227,11 @@ class DeviceSyncManager(object):
                 else:
                     self.start_conversion(self.device.info.audio_conversion,
                                           info,
-                                          audio_target_folder)
+                                          self.audio_target_folder)
             elif info.file_type == 'video':
                 self.start_conversion(self.device.info.video_conversion,
                                       info,
-                                      video_target_folder)
+                                      self.video_target_folder)
 
         self._check_finished()
 
@@ -235,6 +241,7 @@ class DeviceSyncManager(object):
 
         if not self.waiting:
             for signal, callback in (
+                ('task-changed', self._conversion_changed_callback),
                 ('task-staged', self._conversion_staged_callback),
                 ('task-removed', self._conversion_removed_callback),
                 ('all-tasks-removed', self._conversion_removed_callback)):
@@ -261,19 +268,26 @@ class DeviceSyncManager(object):
                 return True
         return False
 
+    def _conversion_changed_callback(self, conversion_manager, task):
+        self.etas[task.key] = task.get_eta()
+        self._send_sync_changed()
+
     def _conversion_removed_callback(self, conversion_manager, task=None):
         if task is not None:
             try:
-                self.waiting.remove(task)
+                self.waiting.remove(task.item_info)
+                del self.etas[task.key]
             except KeyError:
                 pass
         else: # remove all tasks
+            self.etas = {}
             self.waiting = set()
         self._check_finished()
 
     def _conversion_staged_callback(self, conversion_manager, task):
         try:
             self.waiting.remove(task.item_info)
+            del self.etas[task.key]
         except KeyError:
             pass # missing for some reason
         else:
@@ -318,10 +332,36 @@ class DeviceSyncManager(object):
             for handle in self.signal_handles:
                 videoconversion.conversion_manager.disconnect(handle)
             self.signal_handles = None
-            if not self.was_updating:
-                self.device.is_updating = False # stop the spinner
-                messages.TabsChanged('devices', [], [self.device],
-                                     []).send_to_frontend()
+            self.device.is_updating = False # stop the spinner
+            messages.TabsChanged('devices', [], [self.device],
+                                 []).send_to_frontend()
+            del app.device_manager.syncs_in_progress[self.device.id]
+        self._send_sync_changed()
+
+    def _send_sync_changed(self):
+        message = messages.DeviceSyncChanged(self)
+        message.send_to_frontend()
+
+    def is_finished(self):
+        if self.waiting:
+            return False
+        return self.device.id not in app.device_manager.syncs_in_progress
+
+    def get_eta(self):
+        etas = [eta for eta in self.etas.values() if eta is not None]
+        if not etas:
+            return
+        longest_eta = max(etas)
+        return longest_eta
+
+    def get_progress(self):
+        eta = self.get_eta()
+        if eta is None:
+            return 0.0 # no progress
+        total_time = time.time() - self.start_time
+        total_eta = total_time + eta
+        return total_time / total_eta
+
 
 class DeviceDatabase(dict, signals.SignalEmitter):
 

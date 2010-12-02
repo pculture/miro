@@ -41,7 +41,6 @@ from miro import devices
 from miro import downloader
 from miro import eventloop
 from miro import feed
-from miro import playlist
 from miro.frontendstate import WidgetsFrontendState
 from miro import guide
 from miro import fileutil
@@ -55,7 +54,7 @@ from miro import tabs
 from miro import opml
 from miro.feed import Feed, lookup_feed
 from miro.gtcache import gettext as _
-from miro.playlist import SavedPlaylist
+from miro.playlist import SavedPlaylist, PlaylistItemMap
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 
 from miro.plat.utils import make_url_safe
@@ -1554,13 +1553,14 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 items.add(item_)
 
         for playlist_id in message.playlist_ids:
-            view = playlist.PlaylistItemMap.playlist_view(playlist_id)
+            view = PlaylistItemMap.playlist_view(playlist_id)
             for item_ in view:
                 item.add(item_)
 
         if items:
             item_infos = [messages.ItemInfo(item_) for item_ in items]
-            devices.DeviceSyncManager(message.device, item_infos).start()
+            dsm = app.device_manager.get_sync_for_device(message.device)
+            dsm.add_items(item_infos)
 
     def handle_device_sync_media(self, message):
         try:
@@ -1571,4 +1571,5 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                          message.item_ids)
             return
 
-        devices.DeviceSyncManager(message.device, item_infos).start()
+        dsm = app.device_manager.get_sync_for_device(message.device)
+        dsm.add_items(item_infos)

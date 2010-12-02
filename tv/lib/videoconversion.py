@@ -160,6 +160,7 @@ class VideoConversionManager(signals.SignalEmitter):
                                              'thread-did-start',
                                              'begin-loop',
                                              'end-loop',
+                                             'task-changed',
                                              'task-staged',
                                              'task-removed',
                                              'all-tasks-removed',
@@ -435,6 +436,7 @@ class VideoConversionManager(signals.SignalEmitter):
         message.send_to_frontend()
 
     def _notify_task_changed(self, task):
+        self.emit('task-changed', task)
         info = messages.VideoConversionTaskInfo(task)
         message = messages.VideoConversionTaskChanged(info)
         message.send_to_frontend()
@@ -669,9 +671,7 @@ class VideoConversionTask(object):
             self.log_path = None
     
     def _notify_progress(self):
-        info = messages.VideoConversionTaskInfo(self)
-        message = messages.VideoConversionTaskChanged(info)
-        message.send_to_frontend()
+        conversion_manager._notify_task_changed(self)
 
     def interrupt(self):
         if hasattr(self.process_handle, "pid"):

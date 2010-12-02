@@ -1298,6 +1298,11 @@ class WidgetsMessageHandler(messages.MessageHandler):
         if isinstance(current_display, displays.DeviceDisplay):
             current_display.controller.handle_device_changed(message.device)
 
+    def handle_device_sync_changed(self, message):
+        current_display = app.display_manager.get_current_display()
+        if isinstance(current_display, displays.DeviceDisplay):
+            current_display.handle_device_sync_changed(message)
+
     def handle_play_movie(self, message):
         app.playback_manager.start_with_items(message.item_infos)
 
