@@ -247,7 +247,7 @@ class LibraryTabList(StaticTabListBase):
         self.update_count('videos', 'unwatched', count)
 
     def update_new_audio_count(self, count):
-        self.update_count('audios', 'unwatched', count)
+        self.update_count('music', 'unwatched', count)
     
     def update_count(self, key, attr, count, other_count=0):
         if key in self.auto_tabs:

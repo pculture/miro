@@ -394,7 +394,7 @@ class VideoItemsTracker(ItemTrackerBase):
         ItemTrackerBase.__init__(self)
 
 class AudioItemsTracker(ItemTrackerBase):
-    type = 'audios'
+    type = 'music'
     id = None
     def __init__(self):
         self.view = item.Item.watchable_audio_view()
@@ -449,7 +449,7 @@ def make_item_tracker(message):
         return DownloadingItemsTracker()
     elif message.type == 'videos':
         return VideoItemsTracker()
-    elif message.type == 'audios':
+    elif message.type == 'music':
         return AudioItemsTracker()
     elif message.type == 'others':
         return OtherItemsTracker()

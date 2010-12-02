@@ -608,10 +608,10 @@ class VideoItemsController(AudioVideoItemsController):
     unwatched_label =  _('Unwatched')
 
 class AudioItemsController(AudioVideoItemsController):
-    type = 'audios'
+    type = 'music'
     id = None
     image_filename = 'icon-audio_large.png'
-    title = _("Audio")
+    title = _("Music")
     unwatched_label = _('Unplayed')
 
 class OtherItemsController(SimpleItemListController):

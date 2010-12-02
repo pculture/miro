@@ -396,7 +396,7 @@ class VideoItemsDisplay(AudioVideoItemsDisplay):
         return itemlistcontroller.VideoItemsController()
 
 class AudioItemsDisplay(AudioVideoItemsDisplay):
-    tab_id = 'audios'
+    tab_id = 'music'
 
     def make_controller(self):
         return itemlistcontroller.AudioItemsController()

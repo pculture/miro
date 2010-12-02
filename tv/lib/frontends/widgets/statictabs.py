@@ -105,8 +105,8 @@ class VideoLibraryTab(StaticTab):
     media_type = u'video'
 
 class AudioLibraryTab(StaticTab):
-    id = 'audios'
-    name = _('Audio')
+    id = 'music'
+    name = _('Music')
     icon_name = 'icon-audio'
     media_type = u'audio'
 
