@@ -196,7 +196,7 @@ def attach_text(widget, descriptor, check_function=None):
         that checks the value for appropriateness
     """
     def text_changed(widget):
-        v = widget.get_text().strip()
+        v = widget.get_text().strip().encode('utf-8')
         if check_function != None:
             if not check_function(widget, v):
                 return
