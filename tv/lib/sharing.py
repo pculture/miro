@@ -47,7 +47,7 @@ def daap_item_fixup(item_id, entry):
 
     # Easy ones - can do a direct translation
     mapping = [('name', 'minm'), ('enclosure_format', 'asfm'),
-               ('size', 'assz'), ('duration', 'astm')]
+               ('size', 'assz')]
     for p, q in mapping:
         if isinstance(entry[p], unicode):
             attribute = (q, entry[p].encode('utf-8'))
@@ -56,8 +56,11 @@ def daap_item_fixup(item_id, entry):
         daapitem.append(attribute)
 
     # Manual ones
-    daapitem.append(('miid', item_id))
 
+    # Tack on the ID.
+    daapitem.append(('miid', item_id))
+    # Convert the duration to milliseconds, as expected.
+    daapitem.append(('astm', entry['duration'] * 1000))
     # Also has movie or tv shows but Miro doesn't support it so make it
     # a generic video.
     if entry['file_type'] == 'video':
