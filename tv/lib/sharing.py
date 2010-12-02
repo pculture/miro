@@ -42,25 +42,27 @@ import libdaap
 # Translate neutral constants to native protocol constants with this, or
 # fixup strings if necessary.
 def daap_item_fixup(entry):
-    daapitem = dict()
+    daapitem = []
     # no need for id -> miid because that's the indexing key.
 
     # Easy ones - can do a direct translation
     mapping = [('name', 'minm'), ('enclosure_format', 'asfm'),
                ('size', 'assz'), ('duration', 'astm')]
     for p, q in mapping:
-        daapitem[q] = entry[p]
-        if isinstance(daapitem[q], unicode):
-            daapitem[q] = daapitem[q].encode('utf-8')
+        if isinstance(entry[p], unicode):
+            attribute = (q, entry[p].encode('utf-8'))
+        else:
+            attribute = (q, entry[p])
+        daapitem.append(attribute)
 
     # Manual ones
 
     # Also has movie or tv shows but Miro doesn't support it so make it
     # a generic video.
     if entry['file_type'] == 'video':
-        daapitem['aeMK'] = DAAP_MEDIAKIND_VIDEO
+        daapitem.append(('aeMK', DAAP_MEDIAKIND_VIDEO))
     else:
-        daapitem['aeMK'] = DAAP_MEDIAKIND_AUDIO
+        daapitem.append(('aeMK', DAAP_MEDIAKIND_AUDIO))
 
     return daapitem
     
