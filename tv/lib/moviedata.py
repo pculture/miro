@@ -209,10 +209,6 @@ class MovieDataUpdater(signals.SignalEmitter):
         data = {}
         DISCARD = ['MCDI', 'APIC', 'PRIV']
 
-        filename = item.get_filename()
-        if filename is None:
-            return (-1, {})
-
         try:
             muta = mutagen.File(item.filename)
             meta = muta.__dict__
