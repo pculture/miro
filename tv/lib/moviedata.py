@@ -219,18 +219,12 @@ class MovieDataUpdater(signals.SignalEmitter):
         except (AttributeError, IOError):
             return (mediatype, duration, data)
 
-        mimetypes = []
-        try:
-            mimetypes = muta.mime
-        except AttributeError:
-            pass
-        for mime in mimetypes:
-            if mime.startswith('audio/'):
-                mediatype = 'audio'
-                break
-            if mime.startswith('video/'):
-                mediatype = 'video'
-                break
+        if hasattr(muta, 'mime'):
+            for mime in muta.mime:
+                category = mime.split('/')[0]
+                if category in ('audio', 'video'):
+                    mediatype = category
+                    break
 
         if not meta:
             return (mediatype, duration, rate)
