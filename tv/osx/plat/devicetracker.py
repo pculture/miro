@@ -87,6 +87,8 @@ class DeviceTracker(object):
                 self._disk_mounted(path)
             elif mask & kFSEventStreamEventFlagUnmount:
                 self._disk_unmounted(path)
+            else:
+                logging.debug('unknown mask %i: %s' % (mask, path))
 
     def _disk_mounted(self, volume):
         volume_info = diskutil('info', volume)
