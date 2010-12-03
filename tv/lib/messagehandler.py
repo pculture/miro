@@ -1555,7 +1555,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         for playlist_id in message.playlist_ids:
             view = PlaylistItemMap.playlist_view(playlist_id)
             for item_ in view:
-                item.add(item_)
+                items.add(item_)
 
         if items:
             item_infos = [messages.ItemInfo(item_) for item_ in items]
