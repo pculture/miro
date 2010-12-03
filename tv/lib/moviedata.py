@@ -133,8 +133,9 @@ class MovieDataUpdater(signals.SignalEmitter):
                 self.emit('end-loop')
                 break
             duration = -1
+            metadata = {}
             try:
-                (mime_mediatype, duration, mdi.item.metadata) = self.read_metadata(mdi.item)
+                (mime_mediatype, duration, metadata) = self.read_metadata(mdi.item)
             except StandardError:
                 if self.in_shutdown:
                     break
@@ -144,7 +145,8 @@ class MovieDataUpdater(signals.SignalEmitter):
                 screenshot = mdi.item.screenshot or FilenameType("")
                 logging.debug("moviedata: %s %s", duration, mediatype)
 
-                self.update_finished(mdi.item, duration, screenshot, mediatype)
+                self.update_finished(mdi.item, duration, screenshot, mediatype,
+                        metadata)
             else:
                 try:
                     screenshot_worked = False
@@ -175,13 +177,13 @@ class MovieDataUpdater(signals.SignalEmitter):
                                   mediatype)
 
                     self.update_finished(mdi.item, duration, screenshot,
-                                         mediatype)
+                                         mediatype, metadata)
                 except StandardError:
                     if self.in_shutdown:
                         break
                     signals.system.failed_exn(
                         "When running external movie data program")
-                    self.update_finished(mdi.item, -1, None, None)
+                    self.update_finished(mdi.item, -1, None, None, metadata)
             self.emit('end-loop')
 
     def run_movie_data_program(self, command_line, env):
@@ -385,10 +387,11 @@ class MovieDataUpdater(signals.SignalEmitter):
             return None
 
     @as_idle
-    def update_finished(self, item, duration, screenshot, mediatype):
+    def update_finished(self, item, duration, screenshot, mediatype, metadata):
         if item.id_exists():
             item.duration = duration
             item.screenshot = screenshot
+            item.metadata = metadata
             item.updating_movie_info = False
             if mediatype is not None:
                 item.file_type = unicode(mediatype)
