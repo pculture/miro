@@ -2824,9 +2824,14 @@ def upgrade121(cursor):
     enabled_columns = [u'state', u'name', u'feed-name', u'eta', u'rate',
             u'artist', u'album', u'track', u'year', u'genre']
     cursor.execute("ALTER TABLE item ADD COLUMN metadata pythonrepr")
-    cursor.execute("UPDATE item SET metadata=?", (repr({}),))
     cursor.execute("ALTER TABLE item ADD COLUMN rating integer")
     cursor.execute("ALTER TABLE widgets_frontend_state "
             "ADD COLUMN list_view_columns pythonrepr")
     cursor.execute("UPDATE widgets_frontend_state SET list_view_columns=?",
             (repr(enabled_columns),))
+
+def upgrade122(cursor):
+    """Commit 9764e4c and previous changes left metadata in a potentially"""
+    """incorrect state. This triggers a rescan of all items that claim to"""
+    """have no attached metadata to resolve the issue."""
+    cursor.execute("UPDATE item SET metadata=NULL WHERE metadata='{}'")

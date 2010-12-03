@@ -418,7 +418,8 @@ class ItemSchema(MultiClassObjectSchema):
         ('shortFilename', SchemaFilename(noneOk=True)),
         ('offsetPath', SchemaFilename(noneOk=True)),
         ('file_type', SchemaString(noneOk=True)),
-        ('metadata', SchemaDict(SchemaString(noneOk=False),SchemaString(noneOk=True),noneOk=False)),
+        ('metadata',
+            SchemaDict(SchemaString(noneOk=False),SchemaString(noneOk=True),noneOk=True)),
         ('rating', SchemaInt(noneOk=True)),
     ]
 
@@ -685,7 +686,7 @@ class DBLogEntrySchema(DDBObjectSchema):
     def handle_malformed_list_view_displays(row):
         return []
 
-VERSION = 121
+VERSION = 122
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,
