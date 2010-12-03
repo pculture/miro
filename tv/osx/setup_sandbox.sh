@@ -131,6 +131,8 @@ for pkg in "setuptools-0.6c11" \
            "modulegraph-0.7.3" \
            "py2app-0.4.3" \
            "Pyrex-0.9.9" \
+           "pybonjour-1.1.1" \
+           "pydaap-20101202" \
            "psyco-1.6"
 do
     cd $WORK_DIR
