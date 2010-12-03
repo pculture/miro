@@ -40,6 +40,8 @@ from miro import app
 from miro import devices
 from miro import messages
 
+kFSEVentStreamCreateFlagIgnoreSelf = 0x08 # not defined for some reason
+
 STREAM_INTERVAL = 0.5
 
 def diskutil(cmd, path_or_disk, use_plist=True):
@@ -72,7 +74,8 @@ class DeviceTracker(object):
                                           ['/Volumes/'],
                                           kFSEventStreamEventIdSinceNow,
                                           STREAM_INTERVAL,
-                                          kFSEventStreamCreateFlagNoDefer)
+                                          kFSEventStreamCreateFlagNoDefer |
+                                          kFSEventStreamCreateFlagIgnoreSelf)
         FSEventStreamScheduleWithRunLoop(self.stream, CFRunLoopGetCurrent(),
                                          kCFRunLoopDefaultMode)
         assert FSEventStreamStart(self.stream)
