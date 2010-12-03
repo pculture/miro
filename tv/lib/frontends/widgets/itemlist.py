@@ -510,7 +510,13 @@ class ItemList(signals.SignalEmitter):
                 # Item not already displayed
                 if should_show:
                     to_add.append(info)
-                    del self._hidden_items[info.id]
+                    try:
+                        del self._hidden_items[info.id]
+                    except KeyError:
+                        # This shouldn't happen, but does for some reason.
+                        # Just log a warning and try to work with it.
+                        logging.warn("Item %s was not in _iter_map nor "
+                                "_hidden_items", info.id)
                 else:
                     self._hidden_items[info.id] = info
         self._insert_items(to_add, already_sorted)
