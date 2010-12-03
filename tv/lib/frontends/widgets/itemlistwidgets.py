@@ -523,23 +523,18 @@ class DownloadStatusToolbar(DisplayToolbar):
 
 
         # Sigh.  We want to fix these sizes so they don't jump about
-        # but different languages will have different sizes for these
-        # things.  What we do is, try to work out a decent size for it then
-        # reserve that amount of space suitable for the user's locale.
-        placeholder_bps = 500 * 1024
-        text_up = _("%(rate)s uploading",
+        # so reserve the maximum size for these things.  The upload and 
+        # download are both the same so we only need to auto-detect for one.
+        placeholder_bps = 1000 * 1024    # 1000 kb/s - not rounded 1 MB/s yet
+        text_up = _("%(rate)s",
                     {"rate": displaytext.download_rate(placeholder_bps)})
-        text_down = _("%(rate)s downloading",
-                      {"rate": displaytext.download_rate(placeholder_bps)})
 
         first_label = widgetset.Label("")
         first_label.set_size(widgetconst.SIZE_SMALL)
 
         # Now, auto-detect the size required.
         first_label.set_text(text_up)
-        width1, height1 = first_label.get_size_request()
-        first_label.set_text(text_down)
-        width2, height2 = first_label.get_size_request()
+        width, height = first_label.get_size_request()
 
         first_image = widgetutil.HideableWidget(widgetset.ImageDisplay(
                           widgetset.Image(resources.path('images/up.png'))))
@@ -550,8 +545,7 @@ class DownloadStatusToolbar(DisplayToolbar):
         # Don't forget to reset the label to blank after we are done fiddling
         # with it.
         first_label.set_text("")
-        first_label.set_size_request(width1, -1)
-        first_label.set_alignment(widgetconst.TEXT_JUSTIFY_RIGHT)
+        first_label.set_size_request(width, -1)
         self._first_label = first_label
 
         h.pack_start(widgetutil.align_middle(widgetutil.align_right(
@@ -565,8 +559,7 @@ class DownloadStatusToolbar(DisplayToolbar):
 
         second_label = widgetset.Label("")
         second_label.set_size(widgetconst.SIZE_SMALL)
-        second_label.set_alignment(widgetconst.TEXT_JUSTIFY_RIGHT)
-        second_label.set_size_request(width2, -1)
+        second_label.set_size_request(width, -1)
         self._second_label = second_label
 
         h.pack_start(widgetutil.align_middle(widgetutil.align_right(
@@ -615,10 +608,10 @@ class DownloadStatusToolbar(DisplayToolbar):
     def update_rates(self, down_bps, up_bps):
         text_up = text_down = ''
         if up_bps >= 10:
-            text_up = _("%(rate)s uploading",
+            text_up = _("%(rate)s",
                         {"rate": displaytext.download_rate(up_bps)})
         if down_bps >= 10:
-            text_down = _("%(rate)s downloading",
+            text_down = _("%(rate)s",
                           {"rate": displaytext.download_rate(down_bps)})
 
         # first label is always used for upload, while second label is
