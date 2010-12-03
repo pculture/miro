@@ -48,7 +48,8 @@ def diskutil(cmd, path_or_disk, use_plist=True):
         args.append('-plist')
     if path_or_disk:
         args.append(path_or_disk)
-    proc = subprocess.Popen(args, stdout=subprocess.PIPE)
+    proc = subprocess.Popen(args, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE)
     stdout, stderr = proc.communicate()
     if not use_plist:
         return stdout
