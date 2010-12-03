@@ -2817,10 +2817,11 @@ def upgrade120(cursor):
             "(id INTEGER PRIMARY KEY, pickle BLOB)")
 
 def upgrade121(cursor):
-    """Create the metadata column in item; reread all metadata accordingly;"""
-    """add column to item to store ratings;"""
-    """add column to view table for keeping track of enabled ListView columns"""
-    """initialize enabled columns to reasonable default"""
+    """Create the metadata column in item; reread all metadata accordingly;
+    add column to item to store ratings;
+    add column to view table for keeping track of enabled ListView columns
+    initialize enabled columns to reasonable default
+    """
     enabled_columns = [u'state', u'name', u'feed-name', u'eta', u'rate',
             u'artist', u'album', u'track', u'year', u'genre']
     cursor.execute("ALTER TABLE item ADD COLUMN metadata pythonrepr")
@@ -2831,7 +2832,8 @@ def upgrade121(cursor):
             (repr(enabled_columns),))
 
 def upgrade122(cursor):
-    """Commit 9764e4c and previous changes left metadata in a potentially"""
-    """incorrect state. This triggers a rescan of all items that claim to"""
-    """have no attached metadata to resolve the issue."""
+    """Commit 9764e4c and previous changes left metadata in a potentially
+    incorrect state. This triggers a rescan of all items that claim to
+    have no attached metadata to resolve the issue.
+    """
     cursor.execute("UPDATE item SET metadata=NULL WHERE metadata='{}'")
