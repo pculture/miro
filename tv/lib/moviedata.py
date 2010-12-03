@@ -207,7 +207,6 @@ class MovieDataUpdater(signals.SignalEmitter):
         tags = {}
         info = {}
         data = {}
-        DISCARD = ['MCDI', 'APIC', 'PRIV']
 
         try:
             muta = mutagen.File(item.filename)
@@ -222,128 +221,69 @@ class MovieDataUpdater(signals.SignalEmitter):
                     mediatype = category
                     break
 
-        if not meta:
-            return (mediatype, duration, rate)
-
-        try:
-            tags = meta['tags'].__dict__['_DictProxy__dict']
-        except (AttributeError, KeyError):
-            tags = meta['tags']
+        tags = meta['tags']
+        if hasattr(tags, '__dict__') and '_DictProxy__dict' in tags.__dict__:
+            tags = tags.__dict__['_DictProxy__dict']
         tags = tags or {}
 
         if 'info' in meta:
             info = meta['info'].__dict__
         if 'length' in info:
             duration = int(info['length'] * 1000)
-            del info['length']
         else:
             try:
                 dur = meta['seektable'].__dict__['seekpoints'].pop()[1]
                 duration = int(dur / 100)
             except (KeyError, AttributeError, TypeError, IndexError):
                 pass
-        if tags is not None:
-            for key, value in tags.items():
-                if not key.split(':')[0] in DISCARD:
-                    try:
-                        if (len(value[0]) > 1):
-                            value = value[0]
-                    except TypeError:
-                        pass
-                    try:
-                        data[unicode(key).upper()] = unicode(value)
-                    except UnicodeError:
-                        pass
-        for key, value in info.items():
-            data[u'info_' + key] = unicode(value)
 
-        if 'ALBUM' in data:
-            data[u'album'] = data['ALBUM']
-        elif 'TALB' in data:
-            data[u'album'] = data['TALB']
-        else:
-            try:
-                data[u'album'] = unicode(tags['WM/AlbumTitle'][0])
-            except (KeyError, TypeError):
-                pass
+        TAG_MAP = {
+                'album': ('ALBUM', 'TALB', 'WM/AlbumTitle'),
+                'artist': ('ARTIST', 'TPE1', 'TPE2', 'TPE3', 'Author',
+                    'WM/AlbumArtist', 'WM/Composer'),
+                'title': ('TIT2', 'Title'),
+                'track': ('TRCK', 'TRACKNUMBER', 'WM/TrackNumber'),
+                'year': ('TDRC', 'TYER', 'DATE', 'WM/Year'),
+                'genre': ('GENRE', 'TCON', 'WM/Genre', 'WM/ProviderStyle'),
+                }
 
-        if 'ARTIST' in data:
-            data[u'artist'] = data['ARTIST']
-        elif 'TPE1' in data:
-            data[u'artist'] = data['TPE1']
-        elif 'TPE2' in data:
-            data[u'artist'] = data['TPE2']
-        elif 'TPE3' in data:
-            data[u'artist'] = data['TPE3']
-        elif 'Author' in tags:
-            data[u'artist'] = unicode(tags['Author'][0])
-        else:
-            try:
-                data[u'artist'] = unicode(tags['WM/AlbumArtist'][0])
-            except (KeyError, TypeError):
-                try:
-                    data[u'artist'] = unicode(tags['WM/Composer'][0])
-                except (KeyError, TypeError):
-                    pass
-
-        if 'TIT2' in data:
-            data[u'title'] = data['TIT2']
-        elif 'Title' in tags:
-            data[u'title'] = unicode(tags['Title'][0])
-
-        try:
-            data[u'track'] = unicode(int(data['TRCK'].split('/')[0]))
-        except (KeyError, ValueError):
-            try:
-                data[u'track'] = unicode(
-                    int(tags['TRACKNUMBER'][0].split('/')[0]))
-            except (KeyError, ValueError):
-                try:
-                    track = unicode(tags['WM/TrackNumber'][0]).split('/')[0]
-                    data[u'track'] = unicode(int(track))
-                except (KeyError, ValueError):
-                    num = ''
-                    full_path = item.get_url() or item.get_filename()
-                    filename = full_path.rsplit('/', 1)[1] # XXX replace with
-                                                           # basename()?
-                    for char in filename:
-                        if not char.isdigit():
+        for tag, sources in TAG_MAP.items():
+            for source in sources:
+                if source in tags:
+                    value = tags[source]
+                    while isinstance(value, list):
+                        if not value:
+                            value = None
                             break
-                        num += char
-                    try:
-                        num = int(num)
-                        if num > 0:
-                            while num > 100:
-                                num -= 100
-                            data[u'track'] = unicode(num)
-                    except ValueError:
-                        pass
+                        value = value[0]
+                    if value:
+                        data[unicode(tag)] = unicode(value)
+                        break
 
-        if 'TDRC' in data and data['TDRC'].isdigit():
-            data[u'year'] = data['TDRC']
-        elif 'TYER' in data and data['TYER'].isdigit():
-            data[u'year'] = data['TYER']
-        elif 'DATE' in data and data['DATE'].isdigit():
-            data[u'year'] = data['DATE']
-        else:
-            try:
-                data[u'year'] = unicode(int(tags['WM/Year'][0]))
-            except (KeyError, TypeError):
-                pass
-
-        if 'GENRE' in data:
-            data[u'genre'] = data['GENRE']
-        elif 'TCON' in data:
-            data[u'genre'] = data['TCON']
-        else:
-            try:
-                data[u'genre'] = unicode(tags['WM/Genre'][0])
-            except (KeyError, TypeError):
-                try:
-                    data[u'genre'] = unicode(tags['WM/ProviderStyle'][0])
-                except (KeyError, TypeError):
-                    pass
-
+        if 'year' in data:
+            if not data['year'].isdigit():
+                del data['year']
+        if 'track' in data:
+            track = data['track'].split('/')[0]
+            if track.isdigit():
+                data[u'track'] = unicode(int(track))
+            else:
+                del data['track']
+        if 'track' not in data:
+            num = ''
+            full_path = item.get_url() or item.get_filename()
+            filename = os.path.basename(full_path)
+            
+            for char in filename:
+                if not char.isdigit():
+                    break
+                num += char
+            if num.isdigit():
+                num = int(num)
+                if num > 0:
+                    while num > 100:
+                        num -= 100
+                    data[u'track'] = unicode(num)
         return (mediatype, duration, data)
 
     def kill_process(self, pid):
