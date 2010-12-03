@@ -248,7 +248,7 @@ def get_torrent_info_hash(path):
     f = open(path, 'rb')
     try:
         data = f.read()
-        if data[0] != 'd':
+        if not data or data[0] != 'd':
             # File doesn't start with 'd', bailout  (see #12301)
             raise ValueError("%s is not a valid torrent" % path)
         metainfo = lt.bdecode(data)
