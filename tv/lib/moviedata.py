@@ -135,8 +135,8 @@ class MovieDataUpdater(signals.SignalEmitter):
             duration = -1
             metadata = {}
             (mime_mediatype, duration, metadata) = self.read_metadata(mdi.item)
-            if duration > -1 and mime_mediatype is not "video":
-                mediatype = mdi.item.file_type or mime_mediatype or "audio"
+            if duration > -1 and mime_mediatype is not 'video':
+                mediatype = 'audio'
                 screenshot = mdi.item.screenshot or FilenameType("")
                 logging.debug("moviedata: %s %s", duration, mediatype)
 
@@ -228,6 +228,8 @@ class MovieDataUpdater(signals.SignalEmitter):
 
         if 'info' in meta:
             info = meta['info'].__dict__
+        if 'fps' in info or 'gsst' in tags:
+            mediatype = 'video'
         if 'length' in info:
             duration = int(info['length'] * 1000)
         else:
