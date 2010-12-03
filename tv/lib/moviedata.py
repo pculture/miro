@@ -134,12 +134,7 @@ class MovieDataUpdater(signals.SignalEmitter):
                 break
             duration = -1
             metadata = {}
-            try:
-                (mime_mediatype, duration, metadata) = self.read_metadata(mdi.item)
-            except StandardError:
-                if self.in_shutdown:
-                    break
-                signals.system.failed_exn("When parsing mutagen metadata")
+            (mime_mediatype, duration, metadata) = self.read_metadata(mdi.item)
             if duration > -1 and mime_mediatype is not "video":
                 mediatype = mdi.item.file_type or mime_mediatype or "audio"
                 screenshot = mdi.item.screenshot or FilenameType("")
