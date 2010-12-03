@@ -40,7 +40,7 @@ from miro import app
 from miro import devices
 from miro import messages
 
-kFSEVentStreamCreateFlagIgnoreSelf = 0x08 # not defined for some reason
+kFSEventStreamCreateFlagIgnoreSelf = 0x08 # not defined for some reason
 
 STREAM_INTERVAL = 0.5
 
