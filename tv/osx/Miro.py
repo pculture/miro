@@ -108,11 +108,17 @@ def launch_application():
             self.streams = streams
         def write(self, *args):
             for s in self.streams:
-                s.write(*args)
+                try:
+                    s.write(*args)
+                except IOError:
+                    pass
             self.flush()
         def flush(self):
             for s in self.streams:
-                s.flush()
+                try:
+                    s.flush()
+                except IOError:
+                    pass
 
     log_file = app.config.get(prefs.LOG_PATHNAME)
     if log_file:
