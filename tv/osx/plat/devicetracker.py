@@ -68,10 +68,11 @@ class DeviceTracker(object):
     def start_tracking(self):
         self.stream = FSEventStreamCreate(kCFAllocatorDefault,
                                           self.streamCallback,
-                                          kFSEventStreamCreateFlagNoDefer,
+                                          None,
                                           ['/Volumes/'],
                                           kFSEventStreamEventIdSinceNow,
-                                          STREAM_INTERVAL, 0)
+                                          STREAM_INTERVAL,
+                                          kFSEventStreamCreateFlagNoDefer)
         FSEventStreamScheduleWithRunLoop(self.stream, CFRunLoopGetCurrent(),
                                          kCFRunLoopDefaultMode)
         assert FSEventStreamStart(self.stream)
