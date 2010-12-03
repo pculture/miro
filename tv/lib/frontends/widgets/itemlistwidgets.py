@@ -554,8 +554,10 @@ class DownloadStatusToolbar(DisplayToolbar):
         second_image = widgetutil.HideableWidget(widgetset.ImageDisplay(
                            widgetset.Image(resources.path('images/down.png'))))
         self._second_image = second_image
+        # NB: pad the top by 1px - Morgan reckons it looks better when
+        # the icon is moved down by 1px.
         h.pack_start(widgetutil.align_middle(widgetutil.align_right(
-                     self._second_image)))
+                     self._second_image), top_pad=1))
 
         second_label = widgetset.Label("")
         second_label.set_size(widgetconst.SIZE_SMALL)
