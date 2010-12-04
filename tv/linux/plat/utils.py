@@ -334,6 +334,10 @@ def get_logical_cpu_count():
             return ncpus
     return 1
 
+def setup_ffmpeg_presets():
+    # the linux distro should handle this
+    pass
+
 def get_ffmpeg_executable_path():
     """Returns the location of the ffmpeg binary.
 

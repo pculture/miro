@@ -565,9 +565,13 @@ class PlaybackManager (signals.SignalEmitter):
             self._play_current(new_position, save_resume_time)
 
     def skip_forward(self):
+        if not self.player_ready():
+            return
         self.player.skip_forward()
 
     def skip_backward(self):
+        if not self.player_ready():
+            return
         self.player.skip_backward()
 
     def toggle_fullscreen(self):

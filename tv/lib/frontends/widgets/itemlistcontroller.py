@@ -181,7 +181,12 @@ class ItemListController(object):
 
     def _on_new_item_during_playback(self, item_list, item_info,
                                      next_item_info):
-        app.playback_manager.append_item(item_info)
+        if app.playback_manager.is_playing:
+            app.playback_manager.append_item(item_info)
+        else:
+            # Not sure exactly how this happens, but #15341 reports it.  Let's
+            # do some defensive programming
+            self._disconnect_item_added_callback()
             
     def filter_playable_items(self, items):
         return [i for i in items if i.is_playable]
@@ -355,8 +360,11 @@ class ItemListController(object):
     def _playback_will_stop(self, playback_manager):
         self._on_playback_change(playback_manager)
         if self._item_added_callback is not None:
-            self._playback_item_list.disconnect(self._item_added_callback)
-            self._playback_item_list = self._item_added_callback = None
+            self._disconnect_item_added_callback()
+
+    def _disconnect_item_added_callback(self):
+        self._playback_item_list.disconnect(self._item_added_callback)
+        self._playback_item_list = self._item_added_callback = None
 
     def handle_item_list(self, message):
         """Handle an ItemList message meant for this ItemContainer."""

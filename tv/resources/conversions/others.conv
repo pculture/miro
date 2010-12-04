@@ -6,18 +6,18 @@ executable: ffmpeg
 extension: mp4
 parameters: -i {input} -s 320x240 -b 512000 -ar 24000 -ab 64000 -f psp -r 29.97 {output}
 mediatype: video
-            
+
 [MP4]
 extension: mp4
 executable: ffmpeg
 extension: mp4
-parameters: -i {input} -f mp4 -vcodec mpeg4 -sameq -r 20 {output}
+parameters: -i {input} -acodec aac -ab 96k -vcodec libx264 -vpre slow -f mp4 -crf 22 {output}
 mediatype: video
 
 [MP3]
 executable: ffmpeg
 extension: mp3
-parameters: -i {input} -f mp3 {output}
+parameters: -i {input} -f mp3 -y {output}
 mediatype: audio
 
 [Ogg Theora]

@@ -43,6 +43,7 @@ from ConfigParser import SafeConfigParser, NoOptionError
 from miro import app
 from miro.download_utils import next_free_filename
 from miro import eventloop
+from miro import fileutil
 from miro import item
 from miro import models
 from miro import util
@@ -331,8 +332,7 @@ class VideoConversionManager(signals.SignalEmitter):
                 conversion_name = task.converter_info.name
 
                 if os.path.exists(source):
-                    shutil.move(source, destination)
-                    shutil.rmtree(os.path.dirname(source))
+                    self._move_finished_file(source, destination)
                     _create_item_for_conversion(destination, source_info,
                                                 conversion_name)
                     clean_up(task.temp_output_path, file_and_directory=True)
@@ -342,7 +342,19 @@ class VideoConversionManager(signals.SignalEmitter):
 
         except Queue.Empty, e:
             pass
-    
+
+    def _move_finished_file(self, source, destination):
+        try:
+            shutil.move(source, destination)
+        except OSError, e:
+            if fileutil.is_windows_file_in_use_error(e):
+                # File is in use on windows (#15312) try to copy
+                # the file, then use fileutil.delete.
+                shutil.copy(source, destination)
+                fileutil.delete(source)
+            else:
+                raise
+
     def pending_tasks_count(self):
         return len(self.pending_tasks)
     
@@ -770,5 +782,5 @@ def _create_item_for_conversion(filename, source_info, conversion_name):
     new_item = models.FileItem(filename, feed_id=manual_feed.id,
             fp_values=fp_values)
 
+utils.setup_ffmpeg_presets()
 conversion_manager = VideoConversionManager()
-

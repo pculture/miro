@@ -361,6 +361,9 @@ def get_logical_cpu_count():
             return ncpus
     return 1
 
+def setup_ffmpeg_presets():
+    os.environ['FFMPEG_DATADIR'] = resources.appRoot()
+
 def get_ffmpeg_executable_path():
     return os.path.join(resources.appRoot(), "ffmpeg.exe")
 
