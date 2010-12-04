@@ -1457,7 +1457,7 @@ class SharingInfo(object):
         self.name = name
         self.host = host
         self.port = port
-        self.mount = False  # XXX - fixme
+        self.mount = False
 
 class DeviceInfo(object):
     """Tracks the state of an attached device.
