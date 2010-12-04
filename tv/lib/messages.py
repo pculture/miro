@@ -300,6 +300,11 @@ class StopTrackingWatchedFolders(BackendMessage):
     """
     pass
 
+class TrackSharing(BackendMessage):
+    """Start tracking media shares.
+    """
+    pass
+
 class TrackDevices(BackendMessage):
     """Start tracking devices.
     """
@@ -1440,6 +1445,19 @@ class VideoConversionTaskChanged(FrontendMessage):
     """
     def __init__(self, task):
         self.task = task
+
+class SharingInfo(object):
+    """Tracks the state of an extent share."""
+    def __init__(self, added, name, host, port):
+        # We need to create a unique identifier for indexing.  Fortunately
+        # this may be non-numeric.  We just combine the name, host, port
+        # as our index.
+        self.id = (name, host, port)
+        self.added = added
+        self.name = name
+        self.host = host
+        self.port = port
+        self.mount = False  # XXX - fixme
 
 class DeviceInfo(object):
     """Tracks the state of an attached device.

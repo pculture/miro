@@ -239,6 +239,7 @@ class Application:
         messages.TrackNewAudioCount().send_to_backend()
         messages.TrackUnwatchedCount().send_to_backend()
         messages.TrackDevices().send_to_backend()
+        messages.TrackSharing().send_to_backend()
 
     def get_main_window_dimensions(self):
         """Override this to provide platform-specific Main Window dimensions.
@@ -1184,6 +1185,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
             return app.tab_list_manager.site_list
         elif message.type == 'devices':
             return app.tab_list_manager.devices_list
+        elif message.type == 'sharing':
+            return app.tab_list_manager.sharing_list
         else:
             raise ValueError("Unknown Type: %s" % message.type)
 

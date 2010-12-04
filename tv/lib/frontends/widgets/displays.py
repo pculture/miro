@@ -46,6 +46,7 @@ from miro.frontends.widgets import videoconversionscontroller
 from miro.frontends.widgets import feedcontroller
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import devicecontroller
+from miro.frontends.widgets import sharingcontroller
 from miro.frontends.widgets import playlist
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
@@ -362,16 +363,24 @@ class PlaylistDisplay(ItemListDisplay):
     def make_controller(self, playlist_info):
         return playlist.PlaylistView(playlist_info)
 
-class SharingDisplay(PlaylistDisplay):
+class SharingDisplay(ItemListDisplay):
+    @staticmethod
+    def should_display(tab_type, selected_tabs):
+        return tab_type == 'sharing' and len(selected_tabs) == 1
+
     def on_selected(self):
-        pass
-        #PlaylistDisplay.on_selected(self)
-        #self.controller.start_tracking()
+        # No need to track manually - ItemListDisplay does for us
+        ItemListDisplay.on_selected(self)
+        # XXX Need to connect a signal when the playlist or the music 
+        # library on the remote box changes.
 
     def cleanup(self):
-        pass
-        #self.controller.stop_tracking()
-        #PlaylistDisplay.cleanup(self)
+        # No need to cleanup tracking manually - ItemListDisplay does for us
+        ItemListDisplay.cleanup(self)
+        # XXX need to disconnect a signal if we have done so in on_selected()
+
+    def make_controller(self, tab):
+        return sharingcontroller.SharingView(tab)
 
 class SearchDisplay(ItemListDisplay):
     @staticmethod

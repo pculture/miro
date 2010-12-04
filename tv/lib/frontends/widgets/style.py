@@ -232,6 +232,11 @@ class DeviceTabRenderer(TabRenderer):
         else:
             return hotspot_info[0]
 
+# XXX This is quite similar to the DeviceTabRenderer that we might want to try
+# and combine the two.
+class SharingTabRenderer(DeviceTabRenderer):
+    pass
+
 class FakeDownloadInfo(object):
     # Fake download info object used to size items
     def __init__(self):

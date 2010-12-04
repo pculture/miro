@@ -663,29 +663,6 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
         pass
 
 
-class SharingList(TabList):
-    type = 'sharing'
-    render_class = style.DeviceTabRenderer
-
-    def __init__(self):
-        TabList.__init__(self)
-        self.view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
-        
-    def on_row_expanded_change(self, view, iter, expanded):
-        pass
-
-    def on_delete_key_pressed(self):
-        pass
-
-    def on_context_menu(self, table_view):
-        pass
-
-    def on_hotspot_clicked(self, view, hotspot, iter):
-        print 'HOTSPOT CLICKED'
-
-    def init_info(self, info):
-        info.unwatched = info.available = 0
-
 class DevicesList(TabList, TabUpdaterMixin):
     type = 'device'
 
@@ -878,6 +855,32 @@ class AudioFeedList(FeedList):
         self.view.set_drag_dest(FeedListDropHandler(self))
 
     type = 'audio-feed'
+
+class SharingList(TabList):
+    type = 'sharing'
+    render_class = style.SharingTabRenderer
+    ALLOW_MULTIPLE = False
+
+    def __init__(self):
+        TabList.__init__(self)
+        self.view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
+        
+    def on_row_expanded_change(self, view, iter, expanded):
+        pass
+
+    def on_delete_key_pressed(self):
+        pass
+
+    def on_context_menu(self, table_view):
+        pass
+
+    def on_hotspot_clicked(self, view, hotspot, iter):
+        print 'HOTSPOT CLICKED'
+
+    def init_info(self, info):
+        info.unwatched = info.available = 0
+        thumb_path = resources.path('images/phone.png')
+        info.icon = imagepool.get_surface(thumb_path)
 
 class PlaylistList(NestedTabList):
     type = 'playlist'

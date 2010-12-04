@@ -69,7 +69,38 @@ def daap_item_fixup(item_id, entry):
         daapitem.append(('aeMK', libdaap.DAAP_MEDIAKIND_AUDIO))
 
     return daapitem
-    
+
+class SharingInfo(object):
+    """
+    Object which represents information about a media share.
+    """
+    pass
+
+class SharingTracker(object):
+    def __init__(self):
+        pass
+
+    def mdns_callback(self, added, fullname, host, port):
+        info = messages.SharingInfo(added, fullname, host, port)
+        message = messages.TabsChanged('sharing', [info], [], [])
+        message.send_to_frontend()
+
+    def server_thread(self):
+        libdaap.browse_mdns(self.mdns_callback)
+
+    def start_tracking(self):
+        # sigh.  New thread.  Unfortunately it's kind of hard to integrate
+        # it into the application runloop ...
+        self.thread = threading.Thread(target=self.server_thread,
+                                       name='mDNS Browser Thread')
+        self.thread.start()
+
+    # Don't call this - the current pydaap API has a limitation in which
+    # the browser thread is unable to exit from its runloop, so we can't
+    # exactly stop tracking.
+    def stop_tracking(self):
+        raise NotImplementedError()
+ 
 class SharingManagerBackend(object):
     types = ['videos', 'audios']
     id    = None                # Must be None

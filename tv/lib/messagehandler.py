@@ -420,6 +420,19 @@ class FolderItemsTracker(ItemTrackerBase):
         self.id = folder_id
         ItemTrackerBase.__init__(self)
 
+class SharingItemTracker(object):
+    type = 'sharing'
+    def __init__(self, tab):
+        self.tab = tab
+        self.id = tab.id
+
+    def send_initial_list(self):
+        infos = []
+        messages.ItemList(self.type, self.id, infos).send_to_frontend()
+ 
+    def unlink(self):
+        pass
+
 class DeviceItemTracker(object):
     type = 'device'
     def __init__(self, device):
@@ -474,6 +487,8 @@ def make_item_tracker(message):
         return ManualItemTracker(message.id, message.ids_to_track)
     elif message.type == 'device':
         return DeviceItemTracker(message.id)
+    elif message.type == 'sharing':
+        return SharingItemTracker(message.id)
     else:
         logging.warn("Unknown TrackItems type: %s", message.type)
 
@@ -652,6 +667,9 @@ class BackendMessageHandler(messages.MessageHandler):
         if self.playlist_tracker:
             self.playlist_tracker.unlink()
             self.playlist_tracker = None
+
+    def handle_track_sharing(self, message):
+        app.sharing_tracker.start_tracking()
 
     def handle_track_devices(self, message):
         app.device_tracker.start_tracking()
