@@ -432,12 +432,47 @@ class SharingItemTracker(object):
                                        name='DAAP Client Thread')
         self.thread.start()
 
+    def sharing_item(self, rawitem):
+        sharing_item = item.SharingItem(
+            id=rawitem['id'],
+            duration=rawitem['duration'],
+            size=rawitem['size'],
+            name=rawitem['name'].decode('utf-8'),
+            file_type=u'audio'    # XXX for now 
+        )
+        return sharing_item
+            
     def client_thread(self):
         # The id actually encodes (name, host, port).
         name, host, port = self.id
         self.client = libdaap.make_daap_client(host, port)
         if not self.client.connect():
-            pass    # XXX what to do here?
+            pass    # XXX Send failure back to user
+        added = []
+        # XXX no API for this?  And what about playlists?
+        # XXX dodgy - shouldn't do this directly
+        # Find the base playlist, then suck all data out of it and then
+        # return as a ItemsChanged message
+        for k in self.client.playlists.keys():
+            if self.client.playlists[k]['base']:
+                break
+        # Maybe we have looped through here without a base playlist.  Then
+        # the server is broken.
+        if not self.client.playlists[k]['base']:
+            return
+        items = self.client.items[k]
+        for k in items.keys():
+            added.append(messages.ItemInfo(self.sharing_item(items[k])))
+
+        # Though, I think it would be okay to send the message from here
+        # we pass it to the backend thread to do the honors.
+        message = messages.ItemsChanged(self.type, self.id, added, [], [])
+        eventloop.add_urgent_call(self.send_changed_message,
+                                  name='DAAP client send changed message',
+                                  args=(message,))
+
+    def send_changed_message(self, message):
+        message.send_to_frontend()
 
     def send_initial_list(self):
         # Send empty stuff to it initially.  We will send more via changed.

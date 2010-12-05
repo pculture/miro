@@ -88,12 +88,8 @@ class SharingView(itemlistcontroller.SimpleItemListController):
 
     def handle_items_changed(self, message):
         print 'handle items changed'
-        try:
-            itemlistcontroller.SimpleItemListController.handle_items_changed(self,
-                    message)
-        # XXX fixme - WIP 
-        except AttributeError:
-            pass
+        itemlistcontroller.SimpleItemListController.handle_items_changed(self,
+                                                                      message)
 
     def mdns_callback(added, fullname, host, port):
         print 'Status: Added = %s name = %s host = %s port = %s' % (added, fullname, host, port)
@@ -105,7 +101,7 @@ class SharingView(itemlistcontroller.SimpleItemListController):
         print 'START TRACKING: tab id', self.tab.id
         app.info_updater.item_list_callbacks.add('sharing', self.tab.id,
                                                  self.handle_item_list)
-        app.info_updater.item_list_callbacks.add('sharing', self.tab.id,
+        app.info_updater.item_changed_callbacks.add('sharing', self.tab.id,
                                                  self.handle_items_changed)
         messages.TrackItems('sharing', self.tab).send_to_backend()
 
@@ -113,6 +109,6 @@ class SharingView(itemlistcontroller.SimpleItemListController):
         print 'STOP TRACKING: tab id', self.tab.id
         app.info_updater.item_list_callbacks.remove('sharing', self.tab.id,
                                                  self.handle_item_list)
-        app.info_updater.item_list_callbacks.remove('sharing', self.tab.id,
+        app.info_updater.item_changed_callbacks.remove('sharing', self.tab.id,
                                                  self.handle_items_changed)
         messages.StopTrackingItems('sharing', self.tab).send_to_backend()

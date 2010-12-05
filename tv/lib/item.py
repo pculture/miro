@@ -307,7 +307,7 @@ class FeedParserValues(object):
 class ItemBase(object):
     """
     Base class for Item (lives in the database) and DeviceItem (lives on the
-    device's database.
+    device's database) and SharingItem (lives remotely on a media share).
 
     Right now, the only methods work across both are the metadata methods.
     """
@@ -2289,26 +2289,211 @@ class DeviceItem(ItemBase):
                 data[k] = v
         return data
 
-class SharingItem(DeviceItem):
+class SharingItem(ItemBase):
     """
-    An item which lives on a remote share.  There's some scope for factoring
-    in with the DeviceItem.  Either way, there's no database backend to support
-    us so we need to do this manually.  We subclass it and get rid of the
-    device-specific bits and then replace with our own which is a little dodgy,
-    really should be doing it via a base class and have both subclass that.
+    An item which lives on a remote share.  There's some scope for sharing
+    with the DeviceItem but for now it's subclassed from ItemBase (like
+    DeviceItem is).
     """
-    def signal_change(self):
-        # Implement me
-        pass
+    def __init__(self, **kwargs):
+        for required in ('id', 'file_type'):
+            if required not in kwargs:
+                raise TypeError('SharingItem requires %s argument' % required)
+        self.name = self.file_format = self.size = None
+        self.release_date = self.feed_name = self.feed_id = None
+        self.keep = self.media_type_checked = True
+        self.updating_movie_info = self.isContainerItem = False
+        self.url = self.payment_link = None
+        self.comments_link = self.permalink = self.file_url = None
+        self.license = self.downloader = None
+        self.duration = self.screenshot = self.thumbnail_url = None
+        self.resumeTime = 0
+        self.subtitle_encoding = self.enclosure_type = None
+        self.description = u''
+        self.metadata = {}
+        self.rating = None
+        self.__dict__.update(kwargs)
+        self.video_path = None
 
-    def remove(self, needs_save=True):
-        pass
+        # These are probably required but we can't work out what it is
+        # because stuff lives on a remote share.  Oh well.
+        if self.size is None:
+            self.size = 0
+        if self.release_date is None:
+            self.release_date = 0
+        if self.duration is None:
+            self.duration = 0
+        if self.file_format is None:
+            self.file_format = u''
 
-    def _migrate_thumbnail(self):
-        pass
+    @returns_unicode
+    def get_title(self):
+        if 'title' in self.metadata:
+            return self.metadata.get('title')
 
+        return self.name or u''
+
+    @returns_unicode
+    def get_source(self):
+        return None    # XXX?
+
+    @staticmethod
+    def id_exists():
+        return True
+
+    @staticmethod
+    def get_feed_url():
+        return None
+
+    @returns_unicode
+    def get_description(self):
+        return self.description
+
+    @staticmethod
+    def get_state():
+        return u'saved'
+
+    @staticmethod
+    def get_viewed():
+        return True
+
+    @staticmethod
+    def is_downloaded():
+        return True
+
+    @staticmethod
+    def is_external():
+        return False
+
+    def get_release_date_obj(self):
+        return datetime.fromtimestamp(self.release_date)
+
+    @staticmethod
+    def get_seen():
+        return True
+
+    @staticmethod
+    def is_playable():
+        return True
+
+    @staticmethod
+    def looks_like_torrent():
+        return False
+
+    @staticmethod
+    def torrent_seeding_status():
+        return None
+
+    def get_size(self):
+        return self.size
+
+    def get_duration_value(self):
+        if self.duration in (-1, None):
+            return 0
+        return self.duration / 1000
+
+    @returns_unicode
+    def get_url(self):
+        return self.url or u''
+
+    @returns_unicode
+    def get_link(self):
+        return self.permalink
+
+    @returns_unicode
+    def get_comments_link(self):
+        return self.comments_link
+
+    @returns_unicode
+    def get_payment_link(self):
+        return self.payment_link
+
+    def has_shareable_url(self):
+        return bool(self.get_url)
+
+    @staticmethod
+    def show_save_button():
+        return False
+
+    @staticmethod
+    def is_pending_manual_download():
+        return False
+
+    @staticmethod
+    def is_pending_auto_download():
+        return False
+
+    @returns_filename
     def get_filename(self):
         return None
+
+    @returns_filename
+    def get_thumbnail(self):
+        # Default album artwork, sorry.
+        if self.file_type == 'audio':
+            return resources.path("images/thumb-default-audio.png")
+        else:
+            return resources.path("images/thumb-default-video.png")
+
+    @returns_unicode
+    def get_thumbnail_url(self):
+        return self.thumbnail_url or u''
+
+    @returns_unicode
+    def get_format(self):
+        return self.file_format
+
+    @returns_unicode
+    def get_license(self):
+        return self.license
+
+    def _migrate_thumbnail(self):
+        # I don't think daap supports sending album artwork over.  Oh well.
+        # We can support this later if it turns out it's not true.
+        pass
+
+    def remove(self, save=True):
+        from miro import messages # avoid circular imports
+
+        ignored, current_file_type = self.device.id.rsplit('-', 1)
+        if self.video_path in self.device.database[current_file_type]:
+            del self.device.database[current_file_type][self.video_path]
+            message = messages.ItemsChanged('device', self.device.id,
+                                            [], [], [self.id])
+            message.send_to_frontend()
+
+    def signal_change(self):
+        from miro import messages # avoid circular imports
+
+        if not os.path.exists(
+            os.path.join(self.device.mount, self.video_path)):
+            # file was removed from the filesystem
+            self.remove()
+            return
+
+        ignored, current_file_type = self.device.id.rsplit('-', 1)
+
+        if self.file_type != current_file_type:
+            # remove the old item from the database
+            self.remove(save=False)
+
+        self._migrate_thumbnail()
+        self.device.database[self.file_type][self.video_path] = self.to_dict()
+
+        if self.file_type != 'other':
+            message = messages.ItemsChanged('device', self.device.id,
+                                            [], [messages.ItemInfo(self)], [])
+            message.send_to_frontend()
+
+    def to_dict(self):
+        data = {}
+        for k, v in self.__dict__.items():
+            if v is not None and k not in ('file_type', 'id',
+                                           'video_path'):
+                if k == 'screenshot':
+                    v = filename_to_unicode(v)
+                data[k] = v
+        return data
 
 def fp_values_for_file(filename, title=None, description=None):
     data = {
