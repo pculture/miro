@@ -77,13 +77,6 @@ class SharingView(itemlistcontroller.SimpleItemListController):
     # XXX this should never be empty
     def build_widget(self):
         itemlistcontroller.SimpleItemListController.build_widget(self)
-        text = _('No available music shares detected.')
-        self.widget.list_empty_mode_vbox.pack_start(
-                itemlistwidgets.EmptyListHeader(text))
-        text = _('Miro did not detect any available media shares. You '
-                'can share your own media by enabling it in the Preferences.')
-        self.widget.list_empty_mode_vbox.pack_start(
-                itemlistwidgets.EmptyListDescription(text))
 
     def handle_item_list(self, message):
         print 'handle item list'
@@ -92,7 +85,6 @@ class SharingView(itemlistcontroller.SimpleItemListController):
             print 'type', type(message.items[0])
         itemlistcontroller.SimpleItemListController.handle_item_list(self,
                 message)
-        self.check_for_empty_list()
 
     def handle_items_changed(self, message):
         print 'handle items changed'
@@ -102,11 +94,6 @@ class SharingView(itemlistcontroller.SimpleItemListController):
         # XXX fixme - WIP 
         except AttributeError:
             pass
-        self.check_for_empty_list()
-
-    def check_for_empty_list(self):
-        list_empty = (self.item_list.get_count() == 0)
-        self.widget.set_list_empty_mode(list_empty)
 
     def mdns_callback(added, fullname, host, port):
         print 'Status: Added = %s name = %s host = %s port = %s' % (added, fullname, host, port)

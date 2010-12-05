@@ -32,6 +32,7 @@ from miro import app
 from miro import prefs
 from miro import signals
 from miro import videoconversion
+from miro import messages
 
 from miro.gtcache import gettext as _
 
@@ -808,7 +809,11 @@ class MenuStateManager(signals.SignalEmitter):
 
     def _handle_sharing_selection(self, selected_shares):
         selected_share = selected_shares[0]
-        # Any groups to enable, while this is active?  I don't think so?
+        # If not already mounted then set the mount flag to True, because
+        # user has clicked on it.
+        if not selected_share.mount:
+            selected_share.mount = True
+        # XXX Enable the playlist group
 
     def _handle_device_selection(self, selected_devices):
         selected_device = selected_devices[0]

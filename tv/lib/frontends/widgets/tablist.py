@@ -662,30 +662,6 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
         """For subclasses to override."""
         pass
 
-
-class SharingList(TabList):
-    type = 'sharing'
-    render_class = style.DeviceTabRenderer
-
-    def __init__(self):
-        TabList.__init__(self)
-        self.view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
-        
-    def on_row_expanded_change(self, view, iter, expanded):
-        pass
-
-    def on_delete_key_pressed(self):
-        pass
-
-    def on_context_menu(self, table_view):
-        pass
-
-    def on_hotspot_clicked(self, view, hotspot, iter):
-        print 'HOTSPOT CLICKED'
-
-    def init_info(self, info):
-        info.unwatched = info.available = 0
-
 class DevicesList(TabList, TabUpdaterMixin):
     type = 'device'
 
@@ -898,7 +874,11 @@ class SharingList(TabList):
         pass
 
     def on_hotspot_clicked(self, view, hotspot, iter):
-        print 'HOTSPOT CLICKED'
+        if hotspot == 'eject-device':
+            print 'HOTSPOT CLICKED'
+            info = view.model[iter][0]
+            info.mount = False
+            messages.SharingEject(info).send_to_backend()
 
     def init_info(self, info):
         info.unwatched = info.available = 0

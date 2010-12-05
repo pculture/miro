@@ -1459,6 +1459,12 @@ class SharingInfo(object):
         self.port = port
         self.mount = False
 
+class SharingEject(BackendMessage):
+    """Tells the backend that the user has requested the share be disconnected.
+    """
+    def __init__(self, share):
+        self.tab = share
+
 class DeviceInfo(object):
     """Tracks the state of an attached device.
     """

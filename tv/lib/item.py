@@ -2289,6 +2289,27 @@ class DeviceItem(ItemBase):
                 data[k] = v
         return data
 
+class SharingItem(DeviceItem):
+    """
+    An item which lives on a remote share.  There's some scope for factoring
+    in with the DeviceItem.  Either way, there's no database backend to support
+    us so we need to do this manually.  We subclass it and get rid of the
+    device-specific bits and then replace with our own which is a little dodgy,
+    really should be doing it via a base class and have both subclass that.
+    """
+    def signal_change(self):
+        # Implement me
+        pass
+
+    def remove(self, needs_save=True):
+        pass
+
+    def _migrate_thumbnail(self):
+        pass
+
+    def get_filename(self):
+        return None
+
 def fp_values_for_file(filename, title=None, description=None):
     data = {
             'enclosures': [{'url': resources.url(filename)}]

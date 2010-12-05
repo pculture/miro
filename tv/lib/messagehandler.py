@@ -32,7 +32,10 @@
 import itertools
 import logging
 import time
+import threading
 import os
+
+import libdaap
 
 from miro import app
 from miro import autoupdate
@@ -425,8 +428,22 @@ class SharingItemTracker(object):
     def __init__(self, tab):
         self.tab = tab
         self.id = tab.id
+        self.thread = threading.Thread(target=self.server_thread, 
+                                       name='DAAP Client Thread')
+        self.thread.start()
+
+    def server_thread(self):
+        # The id actually encodes (name, host, port).
+        name, host, port = self.id
+        self.client = libdaap.make_daap_client(host, port)
+        if not self.client.connect():
+            pass    # XXX what to do here?
 
     def send_initial_list(self):
+        # Send empty stuff to it initially.  We will send more via changed.
+        # The reason is even though the local network is fast, we don't
+        # don't know when the data is going to arrive.  So, just handle
+        # it as a changed message, which is just as good.
         infos = []
         messages.ItemList(self.type, self.id, infos).send_to_frontend()
  
@@ -670,6 +687,10 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_track_sharing(self, message):
         app.sharing_tracker.start_tracking()
+
+    def handle_sharing_eject(self, message):
+        #app.sharing_tracker.eject(message.device)
+        print 'HANDLE SHARING EJECT'
 
     def handle_track_devices(self, message):
         app.device_tracker.start_tracking()
