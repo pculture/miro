@@ -428,11 +428,11 @@ class SharingItemTracker(object):
     def __init__(self, tab):
         self.tab = tab
         self.id = tab.id
-        self.thread = threading.Thread(target=self.server_thread, 
+        self.thread = threading.Thread(target=self.client_thread,
                                        name='DAAP Client Thread')
         self.thread.start()
 
-    def server_thread(self):
+    def client_thread(self):
         # The id actually encodes (name, host, port).
         name, host, port = self.id
         self.client = libdaap.make_daap_client(host, port)
