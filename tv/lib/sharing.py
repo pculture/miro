@@ -305,16 +305,15 @@ class SharingManager(object):
         libdaap.runloop(self.server)
 
     def enable_sharing(self):
-        try:
-            name = app.config.get(prefs.SHARE_NAME)
-            self.server = libdaap.make_daap_server(self.backend, name=name)
-            self.thread = threading.Thread(target=self.server_thread,
-                                           name='DAAP Server Thread')
-            self.thread.start()
-            self.sharing = True
-        except OSError:
-            # Woups.  Mostly probably the bind() failed due to EADDRINUSE.
+        name = app.config.get(prefs.SHARE_NAME)
+        self.server = libdaap.make_daap_server(self.backend, name=name)
+        if not server:
             self.sharing = False
+            return
+        self.thread = threading.Thread(target=self.server_thread,
+                                       name='DAAP Server Thread')
+        self.thread.start()
+        self.sharing = True
 
         return self.sharing
 
