@@ -307,7 +307,7 @@ class SharingManager(object):
     def enable_sharing(self):
         name = app.config.get(prefs.SHARE_NAME)
         self.server = libdaap.make_daap_server(self.backend, name=name)
-        if not server:
+        if not self.server:
             self.sharing = False
             return
         self.thread = threading.Thread(target=self.server_thread,
