@@ -78,10 +78,10 @@ class LowerBox(widgetset.Background):
         self.separator_color_inactive = (135.0/255.0, 135.0/255.0, 135.0/255.0)
         self.highlight_color_inactive = (239.0/255.0, 239.0/255.0, 239.0/255.0)
 
-    def size_request(self, layout):
+    def size_request(self, layout_manager):
         return (0, 63)
 
-    def draw(self, context, layout):
+    def draw(self, context, layout_manager):
         if self.get_window().is_active():
             image = self.image
             highlight_color = self.highlight_color
@@ -114,26 +114,26 @@ class TabRenderer(widgetset.CustomCellRenderer):
     TITLE_FONT_SIZE = 0.82
     BOLD_TITLE = False
 
-    def get_size(self, style, layout):
+    def get_size(self, style, layout_manager):
         if hasattr(self.data, 'tall') and self.data.tall:
             min_height = self.MIN_HEIGHT_TALL
         else:
             min_height = self.MIN_HEIGHT
         return (self.MIN_WIDTH, max(min_height,
-            layout.font(self.TITLE_FONT_SIZE).line_height()))
+            layout_manager.font(self.TITLE_FONT_SIZE).line_height()))
 
         return (self.MIN_WIDTH, max(self.MIN_HEIGHT,
-            layout.font(self.TITLE_FONT_SIZE).line_height()))
+            layout_manager.font(self.TITLE_FONT_SIZE).line_height()))
 
-    def render(self, context, layout, selected, hotspot, hover):
-        layout.set_text_color(context.style.text_color)
+    def render(self, context, layout_manager, selected, hotspot, hover):
+        layout_manager.set_text_color(context.style.text_color)
         bold = False
         if selected:
             bold = True
         elif not hasattr(self.data, "bolded") or self.data.bolded:
             bold = self.BOLD_TITLE
-        layout.set_font(self.TITLE_FONT_SIZE, bold=bold)
-        titlebox = layout.textbox(self.data.name)
+        layout_manager.set_font(self.TITLE_FONT_SIZE, bold=bold)
+        titlebox = layout_manager.textbox(self.data.name)
 
         hbox = cellpack.HBox(spacing=4)
         if hasattr(self.data, "id") and (self.data.id == 'guide' or self.data.id == 'search'):
@@ -144,9 +144,9 @@ class TabRenderer(widgetset.CustomCellRenderer):
                 xalign=0.5, xscale=0.0, min_width=16)
         hbox.pack(alignment)
         hbox.pack(cellpack.align_middle(cellpack.TruncatedTextLine(titlebox)), expand=True)
-        layout.set_font(0.77)
-        layout.set_text_color(widgetutil.WHITE)
-        self.pack_bubbles(hbox, layout)
+        layout_manager.set_font(0.77)
+        layout_manager.set_text_color(widgetutil.WHITE)
+        self.pack_bubbles(hbox, layout_manager)
         hbox.pack_space(2)
         alignment = cellpack.Alignment(hbox, yscale=0.0, yalign=0.5)
         if self.blink:
@@ -156,7 +156,7 @@ class TabRenderer(widgetset.CustomCellRenderer):
             renderer = alignment
         renderer.render_layout(context)
 
-    def pack_bubbles(self, hbox, layout):
+    def pack_bubbles(self, hbox, layout_manager):
         if self.updating_frame > -1:
             image_name = 'icon-updating-%s' % self.updating_frame
             updating_image = widgetutil.make_surface(image_name)
@@ -165,15 +165,15 @@ class TabRenderer(widgetset.CustomCellRenderer):
             hbox.pack(alignment)
         else:
             if self.data.unwatched > 0:
-                self.pack_bubble(hbox, layout, self.data.unwatched,
+                self.pack_bubble(hbox, layout_manager, self.data.unwatched,
                         UNPLAYED_COLOR)
             if self.data.available > 0:
-                self.pack_bubble(hbox, layout, self.data.available,
+                self.pack_bubble(hbox, layout_manager, self.data.available,
                         AVAILABLE_COLOR)
 
-    def pack_bubble(self, hbox, layout, count, color):
-        radius = (layout.current_font.line_height() + 2) / 2.0
-        background = cellpack.Background(layout.textbox(str(count)),
+    def pack_bubble(self, hbox, layout_manager, count, color):
+        radius = (layout_manager.current_font.line_height() + 2) / 2.0
+        background = cellpack.Background(layout_manager.textbox(str(count)),
                 margin=(1, radius, 1, radius))
         background.set_callback(self.draw_bubble, color)
         hbox.pack(cellpack.align_middle(background))
@@ -199,22 +199,22 @@ class TabRenderer(widgetset.CustomCellRenderer):
 class StaticTabRenderer(TabRenderer):
     BOLD_TITLE = True
 
-    def pack_bubbles(self, hbox, layout):
+    def pack_bubbles(self, hbox, layout_manager):
         if self.data.unwatched > 0:
-            self.pack_bubble(hbox, layout, self.data.unwatched,
+            self.pack_bubble(hbox, layout_manager, self.data.unwatched,
                     UNPLAYED_COLOR)
         if self.data.downloading > 0:
-            self.pack_bubble(hbox, layout, self.data.downloading,
+            self.pack_bubble(hbox, layout_manager, self.data.downloading,
                     DOWNLOADING_COLOR)
 
 class DeviceTabRenderer(TabRenderer):
 
-    def pack_bubbles(self, hbox, layout):
+    def pack_bubbles(self, hbox, layout_manager):
         if getattr(self.data, 'fake', False):
             return
         self.hbox = None
         if self.updating_frame > -1:
-            return TabRenderer.pack_bubbles(self, hbox, layout)
+            return TabRenderer.pack_bubbles(self, hbox, layout_manager)
         if self.data.mount:
             eject_image = widgetutil.make_surface('icon-eject')
             hotspot = cellpack.Hotspot('eject-device', eject_image)
@@ -223,7 +223,7 @@ class DeviceTabRenderer(TabRenderer):
             hbox.pack(alignment)
             self.hbox = hbox
 
-    def hotspot_test(self, style, layout, x, y, width, height):
+    def hotspot_test(self, style, layout_manager, x, y, width, height):
         if self.hbox is None:
             return None
         hotspot_info = self.hbox.find_hotspot(x, y, width, height)
@@ -319,19 +319,19 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         self.show_details = False
         self.selected = False
 
-    def get_size(self, style, layout):
+    def get_size(self, style, layout_manager):
         if self.show_details:
-            return self._calculate_size(style, layout)
-        cached_size_parameters = (style.use_custom_style, layout.font)
+            return self._calculate_size(style, layout_manager)
+        cached_size_parameters = (style.use_custom_style, layout_manager.font)
         if cached_size_parameters != self.cached_size_parameters:
             # Reset the cache values
             self.cached_size = None
             self.cached_size_parameters = cached_size_parameters
         if self.cached_size is None:
-            self.cached_size = self._calculate_size(style, layout)
+            self.cached_size = self._calculate_size(style, layout_manager)
         return self.cached_size
 
-    def _calculate_size(self, style, layout):
+    def _calculate_size(self, style, layout_manager):
         self.download_info = FakeDownloadInfo()
         self.show_progress_bar = True
         self.setup_style(style)
@@ -339,22 +339,22 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         self.selected = False
         self.hover = False
         if self.show_details:
-            left_size = self.pack_left(layout).get_size()[1]
-            right_side = self.pack_right(layout)
+            left_size = self.pack_left(layout_manager).get_size()[1]
+            right_side = self.pack_right(layout_manager)
             self.right_side_width = right_side.get_size()[0]
-            main_size = self.pack_main(layout).get_size()[1]
+            main_size = self.pack_main(layout_manager).get_size()[1]
             info_bar_size = 48
             total_size = max(left_size, main_size + info_bar_size)
-            total_size += self.add_background(self.pack_flap(layout)).get_size()[1]
+            total_size += self.add_background(self.pack_flap(layout_manager)).get_size()[1]
         else:
-            sizer = self.add_background(self.pack_left(layout))
+            sizer = self.add_background(self.pack_left(layout_manager))
             total_size = sizer.get_size()[1]
         return self.MIN_WIDTH, max(137, total_size)
 
     def calc_show_progress_bar(self):
         self.show_progress_bar = (self.data.state in ('downloading', 'paused'))
 
-    def hotspot_test(self, style, layout, x, y, width, height):
+    def hotspot_test(self, style, layout_manager, x, y, width, height):
         self.download_info = self.data.download_info
         self.calc_show_progress_bar()
         self.setup_style(style)
@@ -362,13 +362,13 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         self.selected = False
         # Assume the mouse is over the cell, since we got a mouse click
         self.hover = True
-        packing = self.pack_all(layout)
+        packing = self.pack_all(layout_manager)
         hotspot_info = packing.find_hotspot(x, y, width, height)
         if hotspot_info is None:
             return None
         hotspot, x, y, width, height = hotspot_info
         if hotspot == 'description':
-            textbox = self.make_description(layout)
+            textbox = self.make_description(layout_manager)
             textbox.set_width(width)
             index = textbox.char_at(x, y)
             if index is None:
@@ -392,11 +392,11 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             inner.set_callback(background_drawer)
         return cellpack.Background(inner, margin=(5, 20, 5, 20))
 
-    def make_description(self, layout):
-        layout.set_font(0.85, family=widgetset.ITEM_DESC_FONT)
-        layout.set_text_color(self.ITEM_DESC_COLOR)
+    def make_description(self, layout_manager):
+        layout_manager.set_font(0.85, family=widgetset.ITEM_DESC_FONT)
+        layout_manager.set_text_color(self.ITEM_DESC_COLOR)
         text, links = ItemRenderer.html_stripper.strip(self.data.description)
-        textbox = layout.textbox("")
+        textbox = layout_manager.textbox("")
         pos = 0
         for start, end, url in links:
             textbox.append_text(text[pos:start])
@@ -407,17 +407,17 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         self.description_links = links
         return textbox
 
-    def pack_main(self, layout):
+    def pack_main(self, layout_manager):
         vbox = cellpack.VBox()
-        layout.set_font(1.1, family=widgetset.ITEM_TITLE_FONT, bold=True)
-        layout.set_text_color(self.ITEM_TITLE_COLOR)
-        title = layout.textbox(self.data.name)
+        layout_manager.set_font(1.1, family=widgetset.ITEM_TITLE_FONT, bold=True)
+        layout_manager.set_text_color(self.ITEM_TITLE_COLOR)
+        title = layout_manager.textbox(self.data.name)
         # FIXME - title should wrap to the next line instead of being
         # truncated; ben said this might be hard/impossible
         if not self.show_details:
             vbox.pack(cellpack.ClippedTextBox(title))
         else:
-            main_width = self._calculate_main_width(layout)
+            main_width = self._calculate_main_width(layout_manager)
             title.set_width(main_width)
             vbox.pack(title)
 
@@ -428,36 +428,36 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             hbox = cellpack.HBox()
             hbox.pack(cellpack.align_middle(self.channel_title_icon))
             hbox.pack_space(4)
-            layout.set_font(0.8, family="Helvetica", bold=True)
-            hbox.pack(layout.textbox(self.FROM_TEXT))
+            layout_manager.set_font(0.8, family="Helvetica", bold=True)
+            hbox.pack(layout_manager.textbox(self.FROM_TEXT))
             hbox.pack_space(6)
-            layout.set_font(0.8, family="Helvetica")
-            hbox.pack(cellpack.ClippedTextBox(layout.textbox(self.data.feed_name)), expand=True)
+            layout_manager.set_font(0.8, family="Helvetica")
+            hbox.pack(cellpack.ClippedTextBox(layout_manager.textbox(self.data.feed_name)), expand=True)
             vbox.pack(hbox)
 
         vbox.pack_space(6)
 
         if self.show_details:
-            description = self.make_description(layout)
+            description = self.make_description(layout_manager)
             description.set_wrap_style('word')
             description.set_width(main_width)
         else:
-            description = cellpack.ClippedTextBox(self.make_description(layout))
+            description = cellpack.ClippedTextBox(self.make_description(layout_manager))
         vbox.pack(cellpack.Hotspot('description', description), expand=True)
 
         if self.show_details and self.data.video_path:
             vbox.pack_space(6)
-            layout.set_font(0.8, family="Helvetica", bold=True)
-            filename_textbox = layout.textbox(self.FILE_NAME_TEXT)
+            layout_manager.set_font(0.8, family="Helvetica", bold=True)
+            filename_textbox = layout_manager.textbox(self.FILE_NAME_TEXT)
             filename_textbox.append_text(" ")
-            filename_textbox.append_text(utils.filename_to_unicode(self.data.video_path), font=layout.font(0.8, family="Helvetica"))
+            filename_textbox.append_text(utils.filename_to_unicode(self.data.video_path), font=layout_manager.font(0.8, family="Helvetica"))
             filename_textbox.set_width(main_width)
             filename_textbox.set_wrap_style('char')
             vbox.pack(cellpack.align_bottom(filename_textbox), expand=True)
 
         return vbox
 
-    def _calculate_main_width(self, layout):
+    def _calculate_main_width(self, layout_manager):
         # Calculate the width available to the main area.  This lets us know
         # where to wrap the title and description in show_details mode.
         #
@@ -472,87 +472,87 @@ class ItemRenderer(widgetset.CustomCellRenderer):
                 + 20) # padding between main and right
         return self.total_width - static_width - self.right_side_width
 
-    def set_info_left_color(self, layout):
+    def set_info_left_color(self, layout_manager):
         if self.use_custom_style:
-            layout.set_text_color((0.27, 0.27, 0.27))
+            layout_manager.set_text_color((0.27, 0.27, 0.27))
         else:
-            layout.set_text_color(self.text_color)
+            layout_manager.set_text_color(self.text_color)
 
-    def set_info_right_color(self, layout):
+    def set_info_right_color(self, layout_manager):
         if self.use_custom_style:
-            layout.set_text_color((0.44, 0.44, 0.44))
+            layout_manager.set_text_color((0.44, 0.44, 0.44))
         else:
-            layout.set_text_color(self.text_color)
+            layout_manager.set_text_color(self.text_color)
 
-    def create_pseudo_table(self, layout, rows):
+    def create_pseudo_table(self, layout_manager, rows):
         table = cellpack.Table(len(rows), 2, col_spacing=10, row_spacing=2)
 
         row_counter = 0
         for left_col, right_col, hotspot in rows:
             if left_col == None:
-                table.pack(layout.textbox(""), row_counter, 0)
-                table.pack(layout.textbox(""), row_counter, 1)
+                table.pack(layout_manager.textbox(""), row_counter, 0)
+                table.pack(layout_manager.textbox(""), row_counter, 1)
                 row_counter += 1
                 continue
-            layout.set_font(0.70, bold=True)
-            self.set_info_left_color(layout)
+            layout_manager.set_font(0.70, bold=True)
+            self.set_info_left_color(layout_manager)
             # FIXME - change this column to right-aligned
-            table.pack(layout.textbox(left_col), row_counter, 0)
+            table.pack(layout_manager.textbox(left_col), row_counter, 0)
 
-            layout.set_font(0.70)
-            self.set_info_right_color(layout)
+            layout_manager.set_font(0.70)
+            self.set_info_right_color(layout_manager)
             if hotspot:
                 pack_widget = cellpack.Hotspot(
                     hotspot,
-                    layout.textbox(right_col, underline=True))
+                    layout_manager.textbox(right_col, underline=True))
             else:
-                pack_widget = layout.textbox(right_col)
+                pack_widget = layout_manager.textbox(right_col)
             table.pack(pack_widget, row_counter, 1, expand=True)
 
             row_counter += 1
         return table
 
-    def pack_right(self, layout):
+    def pack_right(self, layout_manager):
         vbox = cellpack.VBox(spacing=3)
 
         # release date
         release_date = displaytext.release_date(self.data.release_date)
-        layout.set_text_color((0.4, 0.4, 0.4))
-        layout.set_font(0.75, family="Helvetica", bold=True)
-        vbox.pack(cellpack.align_right(layout.textbox(release_date)))
+        layout_manager.set_text_color((0.4, 0.4, 0.4))
+        layout_manager.set_font(0.75, family="Helvetica", bold=True)
+        vbox.pack(cellpack.align_right(layout_manager.textbox(release_date)))
 
         # size and duration
         duration = displaytext.duration(self.data.duration)
         size = displaytext.size_string(self.data.size)
 
-        layout.set_font(0.75, family="Helvetica")
-        self.set_info_right_color(layout)
+        layout_manager.set_font(0.75, family="Helvetica")
+        self.set_info_right_color(layout_manager)
 
         if duration and size:
             hbox = cellpack.HBox(spacing=10)
-            hbox.pack(cellpack.Alignment(layout.textbox(duration), xalign=1.0, xscale=0.0), expand=True)
+            hbox.pack(cellpack.Alignment(layout_manager.textbox(duration), xalign=1.0, xscale=0.0), expand=True)
             hbox.pack(cellpack.align_middle(self.separator))
-            hbox.pack(cellpack.Alignment(layout.textbox(size), xalign=1.0, xscale=0.0, min_width=50))
+            hbox.pack(cellpack.Alignment(layout_manager.textbox(size), xalign=1.0, xscale=0.0, min_width=50))
             vbox.pack(cellpack.align_right(hbox))
         elif duration:
-            vbox.pack(cellpack.align_right(layout.textbox(duration)))
+            vbox.pack(cellpack.align_right(layout_manager.textbox(duration)))
         elif size:
-            vbox.pack(cellpack.align_right(layout.textbox(size)))
+            vbox.pack(cellpack.align_right(layout_manager.textbox(size)))
 
         if self.data.expiration_date and self.data.is_playable:
             text = displaytext.expiration_date(self.data.expiration_date)
-            layout.set_text_color((0.4, 0.4, 0.4))
-            layout.set_font(0.75, family="Helvetica")
-            vbox.pack(cellpack.align_right(layout.textbox(text)))
+            layout_manager.set_text_color((0.4, 0.4, 0.4))
+            layout_manager.set_font(0.75, family="Helvetica")
+            vbox.pack(cellpack.align_right(layout_manager.textbox(text)))
         else:
-            layout.set_font(0.75, family="Helvetica")
-            vbox.pack(layout.textbox(""))
+            layout_manager.set_font(0.75, family="Helvetica")
+            vbox.pack(layout_manager.textbox(""))
 
         if not self.show_details:
-            details_text = layout.textbox(self.SHOW_MORE_TEXT)
+            details_text = layout_manager.textbox(self.SHOW_MORE_TEXT)
             details_image = cellpack.align_middle(widgetutil.make_surface('show-more-info'))
         else:
-            details_text = layout.textbox(self.SHOW_LESS_TEXT)
+            details_text = layout_manager.textbox(self.SHOW_LESS_TEXT)
             details_image = cellpack.align_middle(widgetutil.make_surface('show-less-info'))
         hbox = cellpack.HBox(spacing=5)
         hbox.pack(details_text)
@@ -562,9 +562,9 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         return cellpack.pad(vbox, right=8)
 
-    def _make_button(self, layout, text, hotspot_name, disabled=False,
+    def _make_button(self, layout_manager, text, hotspot_name, disabled=False,
             icon=None):
-        button = layout.button(text, self.hotspot==hotspot_name, disabled=disabled, style='webby')
+        button = layout_manager.button(text, self.hotspot==hotspot_name, disabled=disabled, style='webby')
         if disabled:
             return button
         if icon:
@@ -572,29 +572,29 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         hotspot = cellpack.Hotspot(hotspot_name, button)
         return hotspot
 
-    def pack_flap(self, layout):
+    def pack_flap(self, layout_manager):
         vbox = cellpack.VBox()
         hbox = cellpack.HBox(spacing=15)
 
-        layout.set_font(0.77)
+        layout_manager.set_font(0.77)
 
-        comments_hotspot = self._make_button(layout, self.COMMENTS_TEXT,
+        comments_hotspot = self._make_button(layout_manager, self.COMMENTS_TEXT,
                 'visit_comments', not self.data.commentslink)
         hbox.pack(cellpack.align_left(comments_hotspot), expand=True)
 
-        reveal_hotspot = self._make_button(layout, self.REVEAL_IN_TEXT,
+        reveal_hotspot = self._make_button(layout_manager, self.REVEAL_IN_TEXT,
                 'show_local_file', not self.data.downloaded)
         hbox.pack(cellpack.align_center(reveal_hotspot))
 
-        permalink_hotspot = self._make_button(layout, self.WEB_PAGE_TEXT,
+        permalink_hotspot = self._make_button(layout_manager, self.WEB_PAGE_TEXT,
                 'visit_webpage', not self.data.permalink)
         hbox.pack(cellpack.align_center(permalink_hotspot))
 
-        fileurl_hotspot = self._make_button(layout, self.FILE_URL_TEXT,
+        fileurl_hotspot = self._make_button(layout_manager, self.FILE_URL_TEXT,
                 'visit_filelink', not (self.data.file_url and not self.data.file_url.startswith('file:')))
         hbox.pack(cellpack.align_center(fileurl_hotspot))
 
-        license_hotspot = self._make_button(layout, self.LICENSE_PAGE_TEXT,
+        license_hotspot = self._make_button(layout_manager, self.LICENSE_PAGE_TEXT,
                                             'visit_license',
                                             not util.is_url(self.data.license))
         hbox.pack(cellpack.align_center(license_hotspot))
@@ -608,31 +608,31 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         # don't count space between the normal content and the flap
         return vbox
 
-    def download_textbox(self, layout):
+    def download_textbox(self, layout_manager):
         dl_info = self.download_info
-        layout.set_font(0.80, bold=True)
-        layout.set_text_color((1.0, 1.0, 1.0))
+        layout_manager.set_font(0.80, bold=True)
+        layout_manager.set_text_color((1.0, 1.0, 1.0))
         if dl_info.state == 'paused' or dl_info.rate == 0:
             if dl_info.state == 'paused':
-                return layout.textbox(_('paused'))
+                return layout_manager.textbox(_('paused'))
             else:
-                return layout.textbox(dl_info.startup_activity)
+                return layout_manager.textbox(dl_info.startup_activity)
         parts = []
         if dl_info.rate > 0:
             parts.append(displaytext.download_rate(dl_info.rate))
         if self.data.size > 0 and dl_info.rate > 0:
             parts.append(displaytext.time_string(dl_info.eta))
 
-        return layout.textbox(' - '.join(parts))
+        return layout_manager.textbox(' - '.join(parts))
 
-    def pack_download_status(self, layout):
+    def pack_download_status(self, layout_manager):
         hbox = cellpack.HBox()
         if not self.download_info or self.download_info.state != 'paused':
             left_button = cellpack.Hotspot('pause', self.pause_button)
         else:
             left_button = cellpack.Hotspot('resume', self.resume_button)
         hbox.pack(cellpack.pad(cellpack.align_left(left_button), left=3))
-        hbox.pack(cellpack.align_middle(cellpack.align_center(self.download_textbox(layout))), expand=True)
+        hbox.pack(cellpack.align_middle(cellpack.align_center(self.download_textbox(layout_manager))), expand=True)
         hbox.pack(cellpack.pad(cellpack.align_right(cellpack.Hotspot('cancel', self.cancel_button)), right=3))
 
         background = cellpack.Background(cellpack.align_middle(hbox), min_width=356, min_height=20)
@@ -646,10 +646,10 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         background.set_callback(self.draw_thumbnail)
         return cellpack.align_top(cellpack.Hotspot(hotspot_name, background))
 
-    def _make_thumbnail_text_button(self, layout, hotspot_name, text):
-        layout.set_font(0.75, bold=True)
-        layout.set_text_color((1, 1, 1))
-        text = layout.textbox(text)
+    def _make_thumbnail_text_button(self, layout_manager, hotspot_name, text):
+        layout_manager.set_font(0.75, bold=True)
+        layout_manager.set_text_color((1, 1, 1))
+        text = layout_manager.textbox(text)
         radius = max(int((text.get_size()[1] + 1) / 2), 9)
         background = cellpack.Background(cellpack.align_middle(text),
                 min_height=radius*2,
@@ -657,7 +657,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         background.set_callback(self.draw_thumbnail_bubble)
         return self._make_thumbnail_button(hotspot_name, background, 0.5, 0.5)
 
-    def pack_left(self, layout):
+    def pack_left(self, layout_manager):
         vbox = cellpack.VBox(spacing=6)
         thumbnail = cellpack.DrawingArea(154, 105, self.draw_thumbnail)
         if self.data.downloaded:
@@ -703,7 +703,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
                 (self.UP_DOWN_RATIO_TEXT, "%0.2f" % self.data.up_down_ratio, None))
 
         if details_rows:
-            details_box = self.create_pseudo_table(layout, details_rows)
+            details_box = self.create_pseudo_table(layout_manager, details_rows)
             vbox.pack(cellpack.align_center(details_box), expand=True)
         return vbox
 
@@ -735,15 +735,15 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         context.arc(x + inner_width, y + radius + y_offset, radius, -PI/2, PI/2)
         context.fill()
 
-    def pack_infobar(self, layout):
+    def pack_infobar(self, layout_manager):
         if self.show_progress_bar:
-            return cellpack.align_bottom(self.pack_download_status(layout))
+            return cellpack.align_bottom(self.pack_download_status(layout_manager))
 
         stack = cellpack.Stack()
 
         main_hbox = cellpack.HBox(spacing=10)
 
-        layout.set_font(0.85)
+        layout_manager.set_font(0.85)
         if self.data.downloaded:
             if self.data.is_playable:
                 if ((app.playback_manager.get_playing_item()
@@ -757,7 +757,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
                 else:
                     button = cellpack.Hotspot('play', self.play_button)
             else:
-                button = self._make_button(layout, self.REVEAL_IN_TEXT,
+                button = self._make_button(layout_manager, self.REVEAL_IN_TEXT,
                         'show_local_file')
             main_hbox.pack(cellpack.align_middle(button))
 
@@ -766,7 +766,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
                 text = self.DOWNLOAD_TORRENT_TEXT
             else:
                 text = self.DOWNLOAD_TEXT
-            hotspot = self._make_button(layout, text, 'download',
+            hotspot = self._make_button(layout_manager, text, 'download',
                     icon=self.download_arrow)
             main_hbox.pack(cellpack.align_middle(cellpack.align_middle(hotspot)))
 
@@ -774,7 +774,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             # cancel the autodownload
             if self.data.pending_auto_dl:
                 hotspot = self._make_button(
-                    layout, self.CANCEL_TEXT, 'cancel_auto_download')
+                    layout_manager, self.CANCEL_TEXT, 'cancel_auto_download')
                 main_hbox.pack(cellpack.align_middle(cellpack.align_middle(hotspot)))
 
         # If we are going to display an emblem (unwatched, expiring, etc).
@@ -786,12 +786,12 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         emblem_hbox.pack_space(main_width)
 
         if self.data.download_info and self.data.download_info.state == 'failed':
-            layout.set_font(0.80, bold=True)
+            layout_manager.set_font(0.80, bold=True)
 
             emblem_hbox.pack(cellpack.align_middle(self.alert_image))
-            emblem_hbox.pack(cellpack.align_middle(layout.textbox(self.ERROR_TEXT)))
-            emblem_hbox.pack(cellpack.align_middle(layout.textbox(u"-")))
-            emblem_hbox.pack(cellpack.align_middle(layout.textbox(self.data.download_info.short_reason_failed)))
+            emblem_hbox.pack(cellpack.align_middle(layout_manager.textbox(self.ERROR_TEXT)))
+            emblem_hbox.pack(cellpack.align_middle(layout_manager.textbox(u"-")))
+            emblem_hbox.pack(cellpack.align_middle(layout_manager.textbox(self.data.download_info.short_reason_failed)))
 
             emblem_color = (1.0, 252.0 / 255.0, 183.0 / 255.0)
             emblem = cellpack.Background(emblem_hbox, margin=(4, 20, 4, 4))
@@ -801,7 +801,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         elif self.data.pending_auto_dl:
             # emblem_hbox.pack(cellpack.align_middle(self.alert_image))
-            emblem_hbox.pack(cellpack.align_middle(layout.textbox(self.QUEUED_TEXT)))
+            emblem_hbox.pack(cellpack.align_middle(layout_manager.textbox(self.QUEUED_TEXT)))
 
             emblem_color = (1.0, 252.0 / 255.0, 183.0 / 255.0)
             emblem = cellpack.Background(emblem_hbox, margin=(4, 20, 4, 4))
@@ -811,10 +811,10 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         elif (self.data.downloaded and app.playback_manager.get_playing_item() and
                 app.playback_manager.get_playing_item().id == self.data.id):
-            layout.set_font(0.80, bold=True)
-            layout.set_text_color((1, 1, 1))
+            layout_manager.set_font(0.80, bold=True)
+            layout_manager.set_text_color((1, 1, 1))
 
-            emblem_hbox.pack(cellpack.align_middle(layout.textbox(self.CURRENTLY_PLAYING_TEXT)))
+            emblem_hbox.pack(cellpack.align_middle(layout_manager.textbox(self.CURRENTLY_PLAYING_TEXT)))
             emblem_hbox.pack_space(2)
 
             emblem_color = UNPLAYED_COLOR
@@ -825,10 +825,10 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         elif (self.data.downloaded and not self.data.video_watched and
                 self.data.is_playable):
-            layout.set_font(0.80, bold=True)
-            layout.set_text_color((1, 1, 1))
+            layout_manager.set_font(0.80, bold=True)
+            layout_manager.set_text_color((1, 1, 1))
 
-            emblem_hbox.pack(cellpack.align_middle(layout.textbox(self.UNPLAYED_TEXT)))
+            emblem_hbox.pack(cellpack.align_middle(layout_manager.textbox(self.UNPLAYED_TEXT)))
             emblem_hbox.pack_space(2)
 
             emblem_color = UNPLAYED_COLOR
@@ -840,23 +840,23 @@ class ItemRenderer(widgetset.CustomCellRenderer):
               and self.data.item_viewed
               and self.data.resume_time > 0
               and app.config.get(prefs.RESUME_VIDEOS_MODE)):
-            layout.set_font(0.80, bold=True)
-            layout.set_text_color((154.0 / 255.0, 174.0 / 255.0, 181.0 / 255.0))
+            layout_manager.set_font(0.80, bold=True)
+            layout_manager.set_text_color((154.0 / 255.0, 174.0 / 255.0, 181.0 / 255.0))
 
             # text = displaytext.expiration_date(self.data.expiration_date)
             text = _("Resume at %(resumetime)s",
                      {"resumetime": displaytext.short_time_string(self.data.resume_time)})
-            emblem_hbox.pack(cellpack.align_middle(layout.textbox(text)))
+            emblem_hbox.pack(cellpack.align_middle(layout_manager.textbox(text)))
             emblem_color = (232.0 / 255.0, 240.0 / 255.0, 242.0 / 255.0)
             emblem = cellpack.Background(emblem_hbox, margin=(4, 4, 4, 4))
             emblem.set_callback(self.draw_emblem, emblem_color)
 
             stack.pack(cellpack.align_left(emblem))
         elif not self.data.item_viewed and self.data.state == "new":
-            layout.set_font(0.80, bold=True)
-            layout.set_text_color((1, 1, 1))
+            layout_manager.set_font(0.80, bold=True)
+            layout_manager.set_text_color((1, 1, 1))
 
-            emblem_hbox.pack(cellpack.align_middle(layout.textbox(self.NEWLY_AVAILABLE_TEXT)))
+            emblem_hbox.pack(cellpack.align_middle(layout_manager.textbox(self.NEWLY_AVAILABLE_TEXT)))
             emblem_hbox.pack_space(2)
 
             emblem_color = AVAILABLE_COLOR
@@ -868,59 +868,59 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         main_hbox.pack_space(2, expand=True)
 
         if self.data.is_external or self.data.downloaded:
-            main_hbox.pack(self.pack_video_buttons(layout))
+            main_hbox.pack(self.pack_video_buttons(layout_manager))
 
         stack.pack(main_hbox)
 
         return cellpack.align_bottom(cellpack.pad(stack, top=5, bottom=6))
 
-    def pack_video_buttons(self, layout):
+    def pack_video_buttons(self, layout_manager):
         hbox = cellpack.HBox(spacing=5)
-        layout.set_font(0.85)
+        layout_manager.set_font(0.85)
         if self.data.is_container_item:
-            hotspot = self._make_button(layout, self.SHOW_CONTENTS_TEXT,
+            hotspot = self._make_button(layout_manager, self.SHOW_CONTENTS_TEXT,
                     'show_contents')
             hbox.pack(cellpack.align_middle(hotspot))
         if self.data.expiration_date:
-            hotspot = self._make_button(layout, self.KEEP_TEXT, 'keep')
+            hotspot = self._make_button(layout_manager, self.KEEP_TEXT, 'keep')
             hbox.pack(cellpack.align_middle(hotspot))
 
-        hotspot = self._make_button(layout, self.REMOVE_TEXT, 'delete')
+        hotspot = self._make_button(layout_manager, self.REMOVE_TEXT, 'delete')
 
         hbox.pack(cellpack.align_middle(hotspot))
         if (self.data.download_info is not None
                 and self.data.download_info.torrent):
             if self.data.download_info.state in ("uploading", "uploading-paused"):
-                hotspot = self._make_button(layout, self.STOP_SEEDING_TEXT,
+                hotspot = self._make_button(layout_manager, self.STOP_SEEDING_TEXT,
                     'stop_seeding')
                 hbox.pack(cellpack.align_middle(hotspot))
 
         return hbox
 
-    def pack_all(self, layout):
+    def pack_all(self, layout_manager):
         outer_vbox = cellpack.VBox()
 
         outer_hbox = cellpack.HBox()
-        outer_hbox.pack(self.pack_left(layout))
+        outer_hbox.pack(self.pack_left(layout_manager))
         outer_hbox.pack_space(18)
 
         vbox = cellpack.VBox()
         vbox.pack_space(5)
         inner_hbox = cellpack.HBox()
-        right_side = self.pack_right(layout)
+        right_side = self.pack_right(layout_manager)
         self.right_side_width = right_side.get_size()[0]
-        inner_hbox.pack(self.pack_main(layout), expand=True)
+        inner_hbox.pack(self.pack_main(layout_manager), expand=True)
         inner_hbox.pack_space(20)
         inner_hbox.pack(right_side)
         vbox.pack(inner_hbox, expand=True)
 
-        vbox.pack(self.pack_infobar(layout))
+        vbox.pack(self.pack_infobar(layout_manager))
 
         outer_hbox.pack(vbox, expand=True)
         outer_vbox.pack(outer_hbox)
         if self.show_details:
             outer_hbox.pack_space(12)
-            outer_vbox.pack_end(self.pack_flap(layout))
+            outer_vbox.pack_end(self.pack_flap(layout_manager))
         return self.add_background(outer_vbox)
 
     def setup_style(self, style):
@@ -930,14 +930,14 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         else:
             self.text_color = style.text_color
 
-    def render(self, context, layout, selected, hotspot, hover):
+    def render(self, context, layout_manager, selected, hotspot, hover):
         self.download_info = self.data.download_info
         self.calc_show_progress_bar()
         self.setup_style(context.style)
         self.hotspot = hotspot
         self.selected = selected
         self.hover = hover
-        packing = self.pack_all(layout)
+        packing = self.pack_all(layout_manager)
         packing.render_layout(context)
 
     def make_border_path(self, context, x, y, width, height, inset):
@@ -1097,17 +1097,17 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         context.stroke()
 
 class PlaylistItemRenderer(ItemRenderer):
-    def pack_video_buttons(self, layout):
+    def pack_video_buttons(self, layout_manager):
         hbox = cellpack.HBox(spacing=5)
-        layout.set_font(0.85)
+        layout_manager.set_font(0.85)
         if self.data.is_container_item:
-            hotspot = self._make_button(layout, self.SHOW_CONTENTS_TEXT,
+            hotspot = self._make_button(layout_manager, self.SHOW_CONTENTS_TEXT,
                     'show_contents')
             hbox.pack(cellpack.align_middle(hotspot))
         if self.data.expiration_date:
-            hotspot = self._make_button(layout, _('Keep'), 'keep')
+            hotspot = self._make_button(layout_manager, _('Keep'), 'keep')
             hbox.pack(cellpack.align_middle(hotspot))
-        hotspot = self._make_button(layout, _('Remove from playlist'), 'remove')
+        hotspot = self._make_button(layout_manager, _('Remove from playlist'), 'remove')
         hbox.pack(cellpack.align_middle(hotspot))
         return hbox
 
@@ -1119,93 +1119,93 @@ class ListViewRenderer(widgetset.CustomCellRenderer):
     min_width = 50
     right_aligned = False
 
-    def get_size(self, style, layout):
-        return 5, self.calc_height(style, layout)
+    def get_size(self, style, layout_manager):
+        return 5, self.calc_height(style, layout_manager)
 
-    def calc_height(self, style, layout):
-        return layout.font(self.font_size, bold=self.bold).line_height()
+    def calc_height(self, style, layout_manager):
+        return layout_manager.font(self.font_size, bold=self.bold).line_height()
 
-    def hotspot_test(self, style, layout, x, y, width, height):
+    def hotspot_test(self, style, layout_manager, x, y, width, height):
         self.hotspot = None
         self.selected = False
         self.style = style
-        packing = self.layout(layout)
+        packing = self.layout_manager(layout_manager)
         hotspot_info = packing.find_hotspot(x, y, width, height)
         if hotspot_info is None:
             return None
         else:
             return hotspot_info[0]
 
-    def render(self, context, layout, selected, hotspot, hover):
+    def render(self, context, layout_manager, selected, hotspot, hover):
         self.hotspot = hotspot
         self.style = context.style
         self.selected = selected
-        packing = self.layout(layout)
+        packing = self.layout_manager(layout_manager)
         packing.render_layout(context)
 
-    def layout(self, layout):
-        self._setup_layout()
-        layout.set_font(self.font_size, bold=self.bold)
+    def layout_manager(self, layout_manager):
+        self._setup_layout_manager()
+        layout_manager.set_font(self.font_size, bold=self.bold)
         if not self.selected and self.style.use_custom_style:
-            layout.set_text_color(self.color)
+            layout_manager.set_text_color(self.color)
         else:
-            layout.set_text_color(self.style.text_color)
-        textbox = layout.textbox(self.text)
+            layout_manager.set_text_color(self.style.text_color)
+        textbox = layout_manager.textbox(self.text)
         if self.right_aligned:
             textbox.set_alignment('right')
         hbox = cellpack.HBox()
         textline = cellpack.TruncatedTextLine(textbox)
         hbox.pack(cellpack.align_middle(textline), expand=True)
-        layout.set_font(self.font_size, bold=False)
-        self._pack_extra(layout, hbox)
+        layout_manager.set_font(self.font_size, bold=False)
+        self._pack_extra(layout_manager, hbox)
         return hbox
 
-    def _setup_layout(self):
-        """Prepare to layout the cell.  This method must set the text
+    def _setup_layout_manager(self):
+        """Prepare to layout_manager the cell.  This method must set the text
         attribute and may also set the color, bold or other attributes.
         """
         raise NotImplementedError()
 
-    def _pack_extra(self, layout, hbox):
-        """Pack extra stuff in the hbox that we created in layout()."""
+    def _pack_extra(self, layout_manager, hbox):
+        """Pack extra stuff in the hbox that we created in layout_manager()."""
         pass
 
 class NameRenderer(ListViewRenderer):
     button_font_size = 0.77
 
-    def calc_height(self, style, layout):
-        default = ListViewRenderer.calc_height(self, style, layout)
-        button = layout.button(_("Download"))
+    def calc_height(self, style, layout_manager):
+        default = ListViewRenderer.calc_height(self, style, layout_manager)
+        button = layout_manager.button(_("Download"))
         return max(default, button.get_size()[1])
 
-    def _setup_layout(self):
+    def _setup_layout_manager(self):
         self.text = self.info.name
         self.bold = self.info.downloaded
 
-    def _pack_extra(self, layout, hbox):
+    def _pack_extra(self, layout_manager, hbox):
         if not (self.info.downloaded or
                 self.info.state in ('downloading', 'paused')):
-            layout.set_font(self.button_font_size)
-            button = layout.button(_('Download'))
+            layout_manager.set_font(self.button_font_size)
+            button = layout_manager.button(_('Download'))
             hbox.pack(cellpack.align_middle(cellpack.Hotspot('download',
                 button)))
 
 class DescriptionRenderer(ListViewRenderer):
     color = (0.6, 0.6, 0.6)
 
-    def _setup_layout(self):
+    def _setup_layout_manager(self):
         self.text = self.info.description_text.replace('\n', ' ')
 
 class FeedNameRenderer(ListViewRenderer):
-    def _setup_layout(self):
+    def _setup_layout_manager(self):
         self.text = self.info.feed_name
 
 class DateRenderer(ListViewRenderer):
-    def _setup_layout(self):
+    def _setup_layout_manager(self):
         self.text = displaytext.release_date_slashes(self.info.release_date)
 
 class LengthRenderer(ListViewRenderer):
-    def _setup_layout(self):
+    def _setup_layout_manager(self):
         self.text = displaytext.duration(self.info.duration)
 
 class StatusRenderer(ListViewRenderer):
@@ -1220,7 +1220,7 @@ class StatusRenderer(ListViewRenderer):
         self.cancel_button = imagepool.get_surface(resources.path(
             'images/cancel-button.png'))
 
-    def _setup_layout(self):
+    def _setup_layout_manager(self):
         if self.info.downloaded:
             if not self.info.is_playable:
                 self.text = ''
@@ -1249,13 +1249,13 @@ class StatusRenderer(ListViewRenderer):
         else:
             self.text = ''
 
-    def layout(self, layout):
+    def layout_manager(self, layout_manager):
         if self.info.state in ('downloading', 'paused'):
-            return self.pack_progress_bar(layout)
+            return self.pack_progress_bar(layout_manager)
         else:
-            return ListViewRenderer.layout(self, layout)
+            return ListViewRenderer.layout_manager(self, layout_manager)
 
-    def pack_progress_bar(self, layout):
+    def pack_progress_bar(self, layout_manager):
         progress_bar = ItemProgressBarDrawer(self.info)
         hbox = cellpack.HBox(spacing=2)
         if self.info.state == 'downloading':
@@ -1269,20 +1269,20 @@ class StatusRenderer(ListViewRenderer):
         hbox.pack(cellpack.align_middle(hotspot))
         return hbox
 
-    def _pack_extra(self, layout, hbox):
+    def _pack_extra(self, layout_manager, hbox):
         if self.info.expiration_date:
-            button = layout.button(_('Keep'), self.hotspot=='keep')
+            button = layout_manager.button(_('Keep'), self.hotspot=='keep')
             hbox.pack_space(8)
             hbox.pack(cellpack.Hotspot('keep', button))
 
 class RatingRenderer(ListViewRenderer):
-    def _setup_layout(self):
+    def _setup_layout_manager(self):
         self.text = "todo"
 
 class ETARenderer(ListViewRenderer):
     right_aligned = True
 
-    def _setup_layout(self):
+    def _setup_layout_manager(self):
         self.text = ''
         if self.info.state == 'downloading':
             eta = self.info.download_info.eta
@@ -1291,7 +1291,7 @@ class ETARenderer(ListViewRenderer):
 
 class DownloadRateRenderer(ListViewRenderer):
     right_aligned = True
-    def _setup_layout(self):
+    def _setup_layout_manager(self):
         if self.info.state == 'downloading':
             self.text = displaytext.download_rate(self.info.download_info.rate)
         else:
@@ -1300,27 +1300,27 @@ class DownloadRateRenderer(ListViewRenderer):
 class SizeRenderer(ListViewRenderer):
     right_aligned = True
 
-    def _setup_layout(self):
+    def _setup_layout_manager(self):
         self.text = displaytext.size_string(self.info.size)
 
 class ArtistRenderer(ListViewRenderer):
-    def _setup_layout(self):
+    def _setup_layout_manager(self):
         self.text = self.info.artist
 
 class AlbumRenderer(ListViewRenderer):
-    def _setup_layout(self):
+    def _setup_layout_manager(self):
         self.text = self.info.album
 
 class TrackRenderer(ListViewRenderer):
-    def _setup_layout(self):
+    def _setup_layout_manager(self):
         self.text = displaytext.integer(self.info.track)
 
 class YearRenderer(ListViewRenderer):
-    def _setup_layout(self):
+    def _setup_layout_manager(self):
         self.text = displaytext.integer(self.info.year)
 
 class GenreRenderer(ListViewRenderer):
-    def _setup_layout(self):
+    def _setup_layout_manager(self):
         self.text = self.info.genre
 
 class StateCircleRenderer(widgetset.CustomCellRenderer):
@@ -1336,10 +1336,10 @@ class StateCircleRenderer(widgetset.CustomCellRenderer):
             'images/status-icon-downloading.png'))
         self.width, self.height = self.unwatched_icon.get_size()
 
-    def get_size(self, style, layout):
+    def get_size(self, style, layout_manager):
         return self.width, self.height
 
-    def render(self, context, layout, selected, hotspot, hover):
+    def render(self, context, layout_manager, selected, hotspot, hover):
         if self.info.state == 'downloading':
             icon = self.downloading_icon
         elif self.info.downloaded and self.info.is_playable and not self.info.video_watched:
