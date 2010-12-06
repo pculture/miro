@@ -104,11 +104,9 @@ class SharingView(itemlistcontroller.SimpleItemListController):
                                                  self.handle_item_list)
         app.info_updater.item_changed_callbacks.add('sharing', self.tab.id,
                                                  self.handle_items_changed)
-        #messages.TrackItems('sharing', self.tab).send_to_backend()
 
     def stop_tracking(self):
         app.info_updater.item_list_callbacks.remove('sharing', self.tab.id,
                                                  self.handle_item_list)
         app.info_updater.item_changed_callbacks.remove('sharing', self.tab.id,
                                                  self.handle_items_changed)
-        #messages.StopTrackingItems('sharing', self.tab).send_to_backend()
