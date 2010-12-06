@@ -66,7 +66,6 @@ class DeviceTracker(object):
     def __init__(self):
         self._info_for_volume = {}
 
-    @threads.on_ui_thread
     def start_tracking(self):
         self.stream = FSEventStreamCreate(kCFAllocatorDefault,
                                           self.streamCallback,
@@ -76,12 +75,12 @@ class DeviceTracker(object):
                                           STREAM_INTERVAL,
                                           kFSEventStreamCreateFlagNoDefer |
                                           kFSEventStreamCreateFlagIgnoreSelf)
-        FSEventStreamScheduleWithRunLoop(self.stream, CFRunLoopGetCurrent(),
+        FSEventStreamScheduleWithRunLoop(self.stream, CFRunLoopGetMain(),
                                          kCFRunLoopDefaultMode)
-        assert FSEventStreamStart(self.stream)
+        FSEventStreamStart(self.stream)
 
         for volume in diskutil('list', '').VolumesFromDisks:
-            self._disk_mounted('/Volumes/%s' % volume)
+            self._disk_mounted(volume)
 
     def streamCallback(self, stream, clientInfo, numEvents, eventPaths,
                         eventMasks, eventIDs):
@@ -90,8 +89,6 @@ class DeviceTracker(object):
                 self._disk_mounted(path)
             elif mask & kFSEventStreamEventFlagUnmount:
                 self._disk_unmounted(path)
-            else:
-                logging.debug('unknown mask %i: %s' % (mask, path))
 
     def _disk_mounted(self, volume):
         volume_info = diskutil('info', volume)
@@ -100,6 +97,7 @@ class DeviceTracker(object):
             return
         if volume_info.BusProtocol != 'USB':
             return # don't care about non-USB devices
+        volume = volume_info.MountPoint
         disk_info = diskutil('info', volume_info.ParentWholeDisk)
         if not disk_info:
             logging.debug('unknown device connected @ %r' % volume)
