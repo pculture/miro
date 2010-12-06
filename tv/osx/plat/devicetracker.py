@@ -60,7 +60,7 @@ def diskutil(cmd, path_or_disk, use_plist=True):
     except:
         logging.debug(
             'error parsing plist for command: diskutil %s -plist %s\n%s' % (
-                cmd, pathOrDisk, stdout))
+                cmd, path_or_disk, stdout))
 
 class DeviceTracker(object):
     def __init__(self):
