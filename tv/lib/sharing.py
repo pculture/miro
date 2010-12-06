@@ -27,6 +27,7 @@
 # statement from all source files in the program, then also delete it here.
 
 import os
+import socket
 import threading
 
 from miro import app
@@ -84,6 +85,11 @@ class SharingTracker(object):
         # NB: Filter out myself. 
         added_list = []
         removed_list = []
+        # First check to see if it's myself.
+        my_hostname, my_port = app.sharing_manager.mdns_myself()
+        print 'MYSELF %s %s RECEIVED %s %s' % (my_hostname, my_port, host, port)
+        if my_hostname == host and my_port == port:
+            return
         # Need to come up with a unique ID for the share.  Use 
         # (name, host, port)
         share_id = (fullname, host, port)
@@ -124,7 +130,7 @@ class SharingManagerBackend(object):
     # XXX daapplaylist should be hidden from view. 
     daap_playlists = dict()     # Playlist, in daap format
     playlist_item_map = dict()  # Playlist -> item mapping
-
+    my_mdns = (None, None)      # No entry
 
     def register_protos(self, proto):
         pass
@@ -276,6 +282,9 @@ class SharingManager(object):
         # Enable sharing if necessary.
         self.twiddle_sharing()
 
+    def mdns_myself(self):
+        return self.my_mdns
+
     def on_config_changed(self, obj, key, value):
         # We actually know what's changed but it's so simple let's not bother.
         self.twiddle_sharing()
@@ -309,12 +318,16 @@ class SharingManager(object):
     def enable_discover(self):
         name = app.config.get(prefs.SHARE_NAME)
         address, port = self.server.server_address
+        # XXX should use IP?  Anyway append a dot because mDNSResponder
+        # sends an full dns name, with a dot at the end.
+        self.my_mdns = (socket.gethostname() + '.', port)
         self.mdns_ref = libdaap.install_mdns(name, port=port)
         self.discoverable = True
 
     def disable_discover(self):
         self.discoverable = False
         libdaap.uninstall_mdns(self.mdns_ref)
+        self.my_mdns = (None, None)
         del self.mdns_ref
 
     def server_thread(self):
