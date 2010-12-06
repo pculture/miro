@@ -739,7 +739,7 @@ class DevicesList(TabList, TabUpdaterMixin):
         pass
 
     def on_context_menu(self, table_view):
-        pass
+        return []
 
 class SiteList(TabList):
     type = 'site'
@@ -872,7 +872,7 @@ class SharingList(TabList):
         pass
 
     def on_context_menu(self, table_view):
-        pass
+        return []
 
     def on_row_clicked(self, view, iter):
         info = view.model[iter][0]
