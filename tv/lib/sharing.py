@@ -82,8 +82,14 @@ class SharingTracker(object):
 
     def mdns_callback(self, added, fullname, host, port):
         # NB: Filter out myself. 
-        info = messages.SharingInfo(added, fullname, host, port)
-        message = messages.TabsChanged('sharing', [info], [], [])
+        added_list = []
+        removed_list = []
+        info = messages.SharingInfo(fullname, host, port)
+        if added:
+            added_list.append(info)
+        else:
+            removed_list.append(info)
+        message = messages.TabsChanged('sharing', added_list, [], removed_list) 
         message.send_to_frontend()
 
     def server_thread(self):
@@ -96,6 +102,11 @@ class SharingTracker(object):
                                        name='mDNS Browser Thread')
         self.thread.start()
 
+    def eject(self, share):
+        # There isn't really anything we need to do when we eject a share.
+        # No need to unmount or whatever.
+        pass
+    
     # Don't call this - the current pydaap API has a limitation in which
     # the browser thread is unable to exit from its runloop, so we can't
     # exactly stop tracking.

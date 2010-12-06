@@ -98,17 +98,17 @@ class SharingView(itemlistcontroller.SimpleItemListController):
         libdaap.browse_mdns(self.mdns_callback)
 
     def start_tracking(self):
-        print 'START TRACKING: tab id', self.tab.id
+        # Note: Track items is done on tab clicked, which connects to the
+        # share.  See tablist.py
         app.info_updater.item_list_callbacks.add('sharing', self.tab.id,
                                                  self.handle_item_list)
         app.info_updater.item_changed_callbacks.add('sharing', self.tab.id,
                                                  self.handle_items_changed)
-        messages.TrackItems('sharing', self.tab).send_to_backend()
+        #messages.TrackItems('sharing', self.tab).send_to_backend()
 
     def stop_tracking(self):
-        print 'STOP TRACKING: tab id', self.tab.id
         app.info_updater.item_list_callbacks.remove('sharing', self.tab.id,
                                                  self.handle_item_list)
         app.info_updater.item_changed_callbacks.remove('sharing', self.tab.id,
                                                  self.handle_items_changed)
-        messages.StopTrackingItems('sharing', self.tab).send_to_backend()
+        #messages.StopTrackingItems('sharing', self.tab).send_to_backend()

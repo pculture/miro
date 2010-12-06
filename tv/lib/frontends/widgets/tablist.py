@@ -878,10 +878,14 @@ class SharingList(TabList):
         info = view.model[iter][0]
         info.mount = True
         self.view.model_changed()
+        # Track this tab for music
+        messages.TrackItems('sharing', info).send_to_backend()
 
     def on_hotspot_clicked(self, view, hotspot, iter):
         if hotspot == 'eject-device':
+            # Don't track this tab anymore for music.
             info = view.model[iter][0]
+            messages.StopTrackingItems('sharing', info).send_to_backend()
             info.mount = False
             messages.SharingEject(info).send_to_backend()
 

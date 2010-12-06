@@ -428,6 +428,7 @@ class SharingItemTracker(object):
     def __init__(self, tab):
         self.tab = tab
         self.id = tab.id
+        self.items = []
         self.thread = threading.Thread(target=self.client_thread,
                                        name='DAAP Client Thread')
         self.thread.start()
@@ -462,7 +463,9 @@ class SharingItemTracker(object):
             return
         items = self.client.items[k]
         for k in items.keys():
-            added.append(messages.ItemInfo(self.sharing_item(items[k])))
+            item = messages.ItemInfo(self.sharing_item(items[k]))
+            added.append(item)
+            self.items.append(item)
 
         # Though, I think it would be okay to send the message from here
         # we pass it to the backend thread to do the honors.
@@ -483,7 +486,15 @@ class SharingItemTracker(object):
         messages.ItemList(self.type, self.id, infos).send_to_frontend()
  
     def unlink(self):
-        pass
+        # XXX no API for this?  And what about playlists?
+        # XXX dodgy - shouldn't do this directly
+        removed = []
+        for i in self.items:
+            removed.append(i.id)
+        message = messages.ItemsChanged(self.type, self.id, [], [], removed)
+        message.send_to_frontend()
+        print 'XXX NEED TO STOP THREAD'
+
 
 class DeviceItemTracker(object):
     type = 'device'
@@ -723,9 +734,11 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_track_sharing(self, message):
         app.sharing_tracker.start_tracking()
 
+    def handle_stop_tracking_sharing(self, message):
+        pass
+
     def handle_sharing_eject(self, message):
-        #app.sharing_tracker.eject(message.device)
-        print 'HANDLE SHARING EJECT'
+        app.sharing_tracker.eject(message.tab)
 
     def handle_track_devices(self, message):
         app.device_tracker.start_tracking()
