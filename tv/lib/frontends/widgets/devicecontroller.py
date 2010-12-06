@@ -150,6 +150,8 @@ class SyncWidget(widgetset.HBox):
         this_sync = sync[self.file_type]
         self.sync_library.set_checked(
             this_sync.get('enabled', False))
+        # OS X doesn't send the callback when we toggle it manually (#15392)
+        self.sync_library_toggled(self.sync_library)
 
         if self.file_type != 'playlists':
             all_feeds = this_sync.get('all', True)
@@ -160,6 +162,7 @@ class SyncWidget(widgetset.HBox):
         for item in this_sync.get('items', []):
             if item in self.info_map:
                 self.info_map[item].set_checked(True)
+
 
     def get_feeds(self):
         feeds = []
