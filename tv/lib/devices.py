@@ -209,11 +209,13 @@ class DeviceSyncManager(object):
             os.makedirs(self.video_target_folder)
 
     def add_items(self, item_infos):
+        device_info = self.device.info
         for info in item_infos:
             if self._exists(info):
                 continue # don't recopy stuff
             if info.file_type == 'audio':
-                if info.file_format.split()[0] in self.device.info.audio_types:
+                if (info.file_format and
+                    info.file_format.split()[0] in device_info.audio_types):
                     final_path = os.path.join(self.audio_target_folder,
                                               os.path.basename(
                             info.video_path))
@@ -225,11 +227,13 @@ class DeviceSyncManager(object):
                     else:
                         self._add_item(final_path, info)
                 else:
-                    self.start_conversion(self.device.info.audio_conversion,
+                    logging.debug('unable to detect format of %r: %s' % (
+                            info.video_path, info.file_format))
+                    self.start_conversion(device_info.audio_conversion,
                                           info,
                                           self.audio_target_folder)
             elif info.file_type == 'video':
-                self.start_conversion(self.device.info.video_conversion,
+                self.start_conversion(device_info.video_conversion,
                                       info,
                                       self.video_target_folder)
 
