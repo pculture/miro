@@ -81,6 +81,7 @@ class SharingTracker(object):
         pass
 
     def mdns_callback(self, added, fullname, host, port):
+        # NB: Filter out myself. 
         info = messages.SharingInfo(added, fullname, host, port)
         message = messages.TabsChanged('sharing', [info], [], [])
         message.send_to_frontend()
@@ -293,7 +294,8 @@ class SharingManager(object):
 
     def enable_discover(self):
         name = app.config.get(prefs.SHARE_NAME)
-        self.mdns_ref = libdaap.install_mdns(name)
+        address, port = self.server.server_address
+        self.mdns_ref = libdaap.install_mdns(name, port=port)
         self.discoverable = True
 
     def disable_discover(self):
