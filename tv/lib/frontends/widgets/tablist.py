@@ -863,6 +863,7 @@ class SharingList(TabList):
     def __init__(self):
         TabList.__init__(self)
         self.view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
+        self.view.connect_weak('row-clicked', self.on_row_clicked)
         
     def on_row_expanded_change(self, view, iter, expanded):
         pass
@@ -873,9 +874,13 @@ class SharingList(TabList):
     def on_context_menu(self, table_view):
         pass
 
+    def on_row_clicked(self, view, iter):
+        info = view.model[iter][0]
+        info.mount = True
+        self.view.model_changed()
+
     def on_hotspot_clicked(self, view, hotspot, iter):
         if hotspot == 'eject-device':
-            print 'HOTSPOT CLICKED'
             info = view.model[iter][0]
             info.mount = False
             messages.SharingEject(info).send_to_backend()

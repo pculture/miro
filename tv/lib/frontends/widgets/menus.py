@@ -809,10 +809,6 @@ class MenuStateManager(signals.SignalEmitter):
 
     def _handle_sharing_selection(self, selected_shares):
         selected_share = selected_shares[0]
-        # If not already mounted then set the mount flag to True, because
-        # user has clicked on it.
-        if not selected_share.mount:
-            selected_share.mount = True
         # XXX Enable the playlist group
 
     def _handle_device_selection(self, selected_devices):
