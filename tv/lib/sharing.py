@@ -84,11 +84,14 @@ class SharingTracker(object):
         # NB: Filter out myself. 
         added_list = []
         removed_list = []
-        info = messages.SharingInfo(fullname, host, port)
+        # Need to come up with a unique ID for the share.  Use 
+        # (name, host, port)
+        share_id = (fullname, host, port)
+        info = messages.SharingInfo(share_id, fullname, host, port)
         if added:
             added_list.append(info)
         else:
-            removed_list.append(info)
+            removed_list.append(share_id)
         message = messages.TabsChanged('sharing', added_list, [], removed_list) 
         message.send_to_frontend()
 
