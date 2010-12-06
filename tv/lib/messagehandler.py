@@ -1544,7 +1544,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 items.add(item_)
 
         for audio_id in message.audio_ids:
-            feed_ = feed.Feed.get_by_id(video_id)
+            feed_ = feed.Feed.get_by_id(audio_id)
             if message.audio_type == 'all':
                 view = feed_.downloaded_items
             else:
