@@ -2837,3 +2837,9 @@ def upgrade122(cursor):
     have no attached metadata to resolve the issue.
     """
     cursor.execute("UPDATE item SET metadata=NULL WHERE metadata='{}'")
+
+def upgrade123(cursor):
+    """Add field to track column widths; NULL uses defaults
+    """
+    cursor.execute("ALTER TABLE widgets_frontend_state "
+            "ADD COLUMN list_view_column_widths pythonrepr")

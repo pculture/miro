@@ -296,8 +296,8 @@ class ListItemView(widgetset.TableView):
             'rate': ['Speed', style.DownloadRateRenderer()],
             }
 
-    def __init__(self, item_list, enabled_columns, display_channel=True,
-            display_download_info=True):
+    def __init__(self, item_list, enabled_columns, column_widths,
+            display_channel=True, display_download_info=True):
         widgetset.TableView.__init__(self, item_list.model)
         self.display_channel = display_channel
         self.display_download_info = display_download_info
@@ -306,7 +306,7 @@ class ListItemView(widgetset.TableView):
         self.item_list = item_list
         self._column_name_to_column = {}
         self._current_sort_column = None
-        self._set_initial_widths = False
+        self._set_initial_widths = bool(column_widths)
         display_columns = enabled_columns
         if not display_channel and 'feed-name' in display_columns:
             display_columns.remove('feed-name')

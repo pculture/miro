@@ -37,3 +37,4 @@ class WidgetsFrontendState(DDBObject):
         self.sort_states = dict()
         self.active_filters = dict()
         self.list_view_columns = list()
+        self.list_view_column_widths = dict()

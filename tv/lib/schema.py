@@ -667,6 +667,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('sort_states', SchemaDict(SchemaBinary(),
             SchemaBinary())),
         ('list_view_columns', SchemaList(SchemaString())),
+        ('list_view_column_widths', SchemaDict(SchemaString(), SchemaInt())),
     ]
 
     @staticmethod
@@ -686,7 +687,7 @@ class DBLogEntrySchema(DDBObjectSchema):
     def handle_malformed_list_view_displays(row):
         return []
 
-VERSION = 122
+VERSION = 123
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,
