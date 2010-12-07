@@ -168,6 +168,7 @@ class ItemContextMenuHandler(object):
 
     def _make_context_menu_multiple(self, selection):
         """Make the context menu for multiple items."""
+        device = []
         watched = []
         unwatched = []
         downloaded = []
@@ -179,7 +180,9 @@ class ItemContextMenuHandler(object):
         for info in selection:
             if info.downloaded:
                 downloaded.append(info)
-                if info.video_watched:
+                if info.device:
+                    device.append(info)
+                elif info.video_watched:
                     watched.append(info)
                     if info.expiration_date:
                         expiring.append(info)
@@ -197,14 +200,22 @@ class ItemContextMenuHandler(object):
 
         menu = []
         if downloaded:
-            menu.append((ngettext('%(count)d Downloaded Item',
-                                  '%(count)d Downloaded Items',
-                                  len(downloaded),
-                                  {"count": len(downloaded)}),
-                         None))
+            if device:
+                menu.append((ngettext('%(count)d Device Item',
+                                      '%(count)d Device Items',
+                                      len(downloaded),
+                                      {"count": len(downloaded)}),
+                             None))
+            else:
+                menu.append((ngettext('%(count)d Downloaded Item',
+                                      '%(count)d Downloaded Items',
+                                      len(downloaded),
+                                      {"count": len(downloaded)}),
+                             None))
             menu.append((_('Play'), app.widgetapp.play_selection)),
-            menu.append((_('Add to Playlist'),
-                app.widgetapp.add_to_playlist))
+            if not device:
+                menu.append((_('Add to Playlist'),
+                             app.widgetapp.add_to_playlist))
             self._add_remove_context_menu_item(menu, selection)
             if watched:
                 def mark_unwatched():
@@ -222,10 +233,10 @@ class ItemContextMenuHandler(object):
                         if item.expiration_date:
                             messages.KeepVideo(item.id).send_to_backend()
                 menu.append((_('Keep'), keep_videos))
-
-            menu.append(None)
-            convert_menu = self._make_convert_menu()
-            menu.append((_('Convert to...'), convert_menu))
+            if not device:
+                menu.append(None)
+                convert_menu = self._make_convert_menu()
+                menu.append((_('Convert to...'), convert_menu))
             
 
         if available:
