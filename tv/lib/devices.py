@@ -43,7 +43,7 @@ from miro import signals
 from miro import videoconversion
 
 from miro.plat import resources
-from miro.plat.utils import filename_to_unicode
+from miro.plat.utils import filename_to_unicode, unicode_to_filename
 
 class DeviceInfo(object):
     """
@@ -304,10 +304,16 @@ class DeviceSyncManager(object):
         self._check_finished()
 
     def _add_item(self, final_path, item_info):
+        dirname, basename = os.path.split(final_path)
+        _, extension = os.path.splitext(basename)
+        new_basename = "%s%s" % (unicode_to_filename(item_info.name),
+                                 extension)
+        new_path = os.path.join(dirname, new_basename)
+        os.rename(final_path, new_path)
         device_item = item.DeviceItem(
             device=self.device,
             file_type=item_info.file_type,
-            video_path=final_path[len(self.device.mount):],
+            video_path=new_path[len(self.device.mount):],
             name=item_info.name,
             feed_name=item_info.feed_name,
             feed_url=item_info.feed_url,
