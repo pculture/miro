@@ -2193,7 +2193,7 @@ class DeviceItem(ItemBase):
         return self.payment_link
 
     def has_shareable_url(self):
-        return bool(self.get_url)
+        return bool(self.get_url())
 
     @staticmethod
     def show_save_button():

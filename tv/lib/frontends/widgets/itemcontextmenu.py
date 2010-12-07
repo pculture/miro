@@ -99,30 +99,32 @@ class ItemContextMenuHandler(object):
             menu = [
                 (_('Play'), app.widgetapp.play_selection),
             ]
-            if app.config.get(prefs.PLAY_IN_MIRO):
-                menu.append((_('Play Just This Item'), play_and_stop))
-                menu.append((_('Play Externally'), play_externally))
-            menu.append((_('Add to Playlist'), app.widgetapp.add_to_playlist))
+            if not item.device:
+                if app.config.get(prefs.PLAY_IN_MIRO):
+                    menu.append((_('Play Just This Item'), play_and_stop))
+                    menu.append((_('Play Externally'), play_externally))
+                menu.append((_('Add to Playlist'), app.widgetapp.add_to_playlist))
             self._add_remove_context_menu_item(menu, [item])
-            menu.append((_("Edit Item"), app.widgetapp.edit_item))
-            if item.video_watched:
-                menu.append((_('Mark as Unplayed'),
-                    messages.MarkItemUnwatched(item.id).send_to_backend))
-            else:
-                menu.append((_('Mark as Played'),
-                    messages.MarkItemWatched(item.id).send_to_backend))
-            if item.expiration_date:
-                menu.append((_('Keep'),
-                    messages.KeepVideo(item.id).send_to_backend))
-            if item.seeding_status == 'seeding':
-                menu.append((_('Stop Seeding'), messages.StopUpload(item.id).send_to_backend))
-            elif item.seeding_status == 'stopped':
-                menu.append((_('Resume Seeding'), messages.StartUpload(item.id).send_to_backend))
+            if not item.device:
+                menu.append((_("Edit Item"), app.widgetapp.edit_item))
+                if item.video_watched:
+                    menu.append((_('Mark as Unplayed'),
+                        messages.MarkItemUnwatched(item.id).send_to_backend))
+                else:
+                    menu.append((_('Mark as Played'),
+                        messages.MarkItemWatched(item.id).send_to_backend))
+                if item.expiration_date:
+                    menu.append((_('Keep'),
+                        messages.KeepVideo(item.id).send_to_backend))
+                if item.seeding_status == 'seeding':
+                    menu.append((_('Stop Seeding'), messages.StopUpload(item.id).send_to_backend))
+                elif item.seeding_status == 'stopped':
+                    menu.append((_('Resume Seeding'), messages.StartUpload(item.id).send_to_backend))
 
-            menu.append(None)
+                menu.append(None)
 
-            convert_menu = self._make_convert_menu()
-            menu.append((_('Convert to...'), convert_menu))
+                convert_menu = self._make_convert_menu()
+                menu.append((_('Convert to...'), convert_menu))
         elif item.download_info is not None and item.download_info.state != 'failed':
             menu = [
                     (_('Cancel Download'),
@@ -141,7 +143,7 @@ class ItemContextMenuHandler(object):
             ]
 
         view_menu = []
-        if not item.is_external:
+        if not item.is_external and item.permalink:
             view_menu.append((_('Web Page'), lambda: app.widgetapp.open_url(item.permalink)))
         if item.commentslink and item.commentslink != item.permalink:
             view_menu.append((_('Comments'), lambda: app.widgetapp.open_url(item.commentslink)))
