@@ -278,6 +278,23 @@ class ItemView(widgetset.TableView):
 class ListItemView(widgetset.TableView):
     """TableView that displays a list of items using the list view."""
 
+    columns_map = {
+            'name': ['Name', style.NameRenderer()],
+            'artist': ['Artist', style.ArtistRenderer()],
+            'album': ['Album', style.AlbumRenderer()],
+            'track': ['Track', style.TrackRenderer()],
+            'year': ['Year', style.YearRenderer()],
+            'genre': ['Genre', style.GenreRenderer()],
+            'rating': ['Rating', style.RatingRenderer()],
+            'date': ['Date', style.DateRenderer()],
+            'length': ['Length', style.LengthRenderer()],
+            'status': ['Status', style.StatusRenderer()],
+            'size': ['Size', style.SizeRenderer()],
+            'feed-name': ['Feed', style.FeedNameRenderer()],
+            'eta': ['ETA', style.ETARenderer()],
+            'rate': ['Speed', style.DownloadRateRenderer()],
+            }
+
     def __init__(self, item_list, enabled_columns, display_channel=True,
             display_download_info=True):
         widgetset.TableView.__init__(self, item_list.model)
@@ -289,39 +306,16 @@ class ListItemView(widgetset.TableView):
         self._column_name_to_column = {}
         self._current_sort_column = None
         self._set_initial_widths = False
+        display_columns = enabled_columns
+        if not display_channel:
+            display_columns = enabled_columns - set('feed-name')
+        if not display_download_info:
+            display_columns = enabled_columns - set(['eta', 'rate'])
         if 'state' in enabled_columns:
             self._make_column('', style.StateCircleRenderer(), 'state', False)
-        if 'name' in enabled_columns:
-            self._make_column(_('Name'), style.NameRenderer(), 'name')
-        if 'artist' in enabled_columns:
-            self._make_column(_('Artist'), style.ArtistRenderer(), 'artist')
-        if 'album' in enabled_columns:
-            self._make_column(_('Album'), style.AlbumRenderer(), 'album')
-        if 'track' in enabled_columns:
-            self._make_column(_('Track'), style.TrackRenderer(), 'track')
-        if 'year' in enabled_columns:
-            self._make_column(_('Year'), style.YearRenderer(), 'year')
-        if 'genre' in enabled_columns:
-            self._make_column(_('Genre'), style.GenreRenderer(), 'genre')
-        if 'rating' in enabled_columns:
-            self._make_column(_('Rating'), style.RatingRenderer(), 'rating')
-        if display_channel and 'feed-name' in enabled_columns:
-            self._make_column(_('Feed'), style.FeedNameRenderer(),
-                    'feed-name')
-        if 'date' in enabled_columns:
-            self._make_column(_('Date'), style.DateRenderer(), 'date')
-        if 'length' in enabled_columns:
-            self._make_column(_('Length'), style.LengthRenderer(), 'length')
-        if 'status' in enabled_columns:
-            self._make_column(_('Status'), style.StatusRenderer(), 'status')
-        if 'size' in enabled_columns:
-            self._make_column(_('Size'), style.SizeRenderer(), 'size')
-        if display_download_info:
-            if 'eta' in enabled_columns:
-                self._make_column(_('ETA'), style.ETARenderer(), 'eta')
-            if 'rate' in enabled_columns:
-                self._make_column(_('Speed'), style.DownloadRateRenderer(),
-                              'rate')
+        for name, data in ListItemView.columns_map.items():
+            if name in enabled_columns:
+                self._make_column(_(data[0]), data[1], name)
         self.set_show_headers(True)
         self.set_columns_draggable(True)
         self.set_column_spacing(12)
