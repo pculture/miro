@@ -171,12 +171,16 @@ class DeviceManager(object):
         info = self.device_by_id[(vendor_id, product_id)]
         return self._get_device_from_info(info, device_type)
 
-    def get_sync_for_device(self, device):
+    def get_sync_for_device(self, device, create=True):
         """
         Returns a DeviceSyncManager for the given device.  If one exists,
         return that one, otherwise build a new one and return that.
+
+        If create is False, return None instead of creating a new sync manager.
         """
         if device.id not in self.syncs_in_progress:
+            if not create:
+                return None
             dsm = DeviceSyncManager(device)
             self.syncs_in_progress[device.id] = dsm
 

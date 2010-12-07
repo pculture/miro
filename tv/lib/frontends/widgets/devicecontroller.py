@@ -321,6 +321,11 @@ class DeviceMountedView(widgetset.VBox):
         for name in 'video', 'audio', 'playlists':
             tab = self.tabs[name]
             tab.child.set_device(device)
+        sync_manager = app.device_manager.get_sync_for_device(device,
+                                                              create=False)
+        if sync_manager is not None:
+            self.set_sync_status(sync_manager.get_progress(),
+                                 sync_manager.get_eta())
 
     def _tab_clicked(self, button):
         key = button.key
@@ -329,7 +334,6 @@ class DeviceMountedView(widgetset.VBox):
         self.tab_container.set_child(self.tabs[key])
 
     def sync_clicked(self, obj):
-
         sync_type = {}
         sync_ids = {}
         for file_type in 'video', 'audio', 'playlists':
