@@ -225,7 +225,9 @@ class SyncWidget(widgetset.HBox):
         feeds = []
         for key in self.device.database['sync'][self.file_type].get('items',
                                                                     ()):
-            feeds.append(self.find_info_by_key(key, tab_list).id)
+            feed = self.find_info_by_key(key, tab_list)
+            if feed is not None:
+                feeds.append(feed.id)
         return feeds
 
 class VideoFeedSyncWidget(SyncWidget):
