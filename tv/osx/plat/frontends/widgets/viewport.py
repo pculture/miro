@@ -66,8 +66,11 @@ class Viewport(object):
     def queue_redraw(self):
         opaque_view = self.view.opaqueAncestor()
         if opaque_view is not None:
-            rect = opaque_view.convertRect_fromView_(self.view.bounds(), self.view)
+            rect = opaque_view.convertRect_fromView_(self.area(), self.view)
             opaque_view.setNeedsDisplayInRect_(rect)
+
+    def redraw_now(self):
+        self.view.displayRect_(self.area())
 
 class BorrowedViewport(Viewport):
     """Used when a widget uses the NSView of one of it's ancestors.  We store
@@ -95,9 +98,3 @@ class BorrowedViewport(Viewport):
 
     def get_height(self):
         return self.placement.size.height
-
-    def queue_redraw(self):
-        opaque_view = self.view.opaqueAncestor()
-        if opaque_view is not None:
-            rect = opaque_view.convertRect_fromView_(self.placement, self.view)
-            opaque_view.setNeedsDisplayInRect_(rect)

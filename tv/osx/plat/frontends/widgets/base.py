@@ -166,6 +166,10 @@ class Widget(signals.SignalEmitter):
         if self.viewport:
             self.viewport.queue_redraw()
 
+    def redraw_now(self):
+        if self.viewport:
+            self.viewport.redraw_now()
+
     def relative_position(self, other_widget):
         """Get the position of another widget, relative to this widget."""
         basePoint = self.viewport.view.convertPoint_fromView_(

@@ -353,6 +353,7 @@ def get_menu():
         # Devel build, add menu items
         help_menu.append(Separator())
         help_menu.append(MenuItem(_("Profile Message"), "ProfileMessage"))
+        help_menu.append(MenuItem(_("Profile Redraw"), "ProfileRedraw"))
     return mbar
 
 def _get_convert_menu():
@@ -705,6 +706,10 @@ def on_planet():
 @action_handler("ProfileMessage")
 def on_profile_message():
     app.widgetapp.setup_profile_message()
+
+@action_handler("ProfileRedraw")
+def on_profile_redraw():
+    app.widgetapp.profile_redraw()
 
 def generate_action_groups(menu_structure):
     """Takes a menu structure and returns a map of action group name to

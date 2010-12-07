@@ -865,6 +865,34 @@ class Application:
             if path is not None:
                 self.message_handler.profile_next_message(message_obj, path)
 
+    def profile_redraw(self):
+        """Devel method: profile time to redraw part of the interface."""
+
+        # NOTE: strings are purposefully untranslated.  Should we spend
+        # translator time these strings?
+        message_labels = ['Right Side', 'Left Side']
+
+        index = dialogs.ask_for_choice(
+                ("Select Area to Profile"),
+                ("Miro will redraw the widget in that area 10 times and "
+                    "write out profile timing data for it."),
+                message_labels)
+        if index is not None:
+            if index == 0:
+                widget = self.window.splitter.right
+            else:
+                widget = self.window.splitter.left
+
+            title = _("Select File to write Profile to")
+            path = dialogs.ask_for_save_pathname(title,
+                    'miro-profile-redraw.prof')
+            if path is not None:
+                def profile_code():
+                    for x in xrange(10):
+                        widget.redraw_now()
+                cProfile.runctx('profile_code()', globals(), locals(),
+                        path)
+
     def on_close(self):
         """This is called when the close button is pressed."""
         self.quit()
