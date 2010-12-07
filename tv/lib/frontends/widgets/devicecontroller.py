@@ -317,6 +317,7 @@ class DeviceMountedView(widgetset.VBox):
 
     def set_device(self, device):
         self.device = device
+        self.device.database.set_bulk_mode(True)
         self.device_size.set_size(device.size, device.remaining)
         for name in 'video', 'audio', 'playlists':
             tab = self.tabs[name]
@@ -326,6 +327,7 @@ class DeviceMountedView(widgetset.VBox):
         if sync_manager is not None:
             self.set_sync_status(sync_manager.get_progress(),
                                  sync_manager.get_eta())
+        self.device.database.set_bulk_mode(False)
 
     def _tab_clicked(self, button):
         key = button.key

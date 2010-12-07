@@ -380,6 +380,7 @@ class DeviceDatabase(dict, signals.SignalEmitter):
             dict.__init__(self)
         signals.SignalEmitter.__init__(self, 'changed')
         self.parent = parent
+        self.bulk_mode = False
 
     def __getitem__(self, key):
         value = super(DeviceDatabase, self).__getitem__(key)
@@ -395,7 +396,13 @@ class DeviceDatabase(dict, signals.SignalEmitter):
             self.notify_changed()
 
     def notify_changed(self):
-        self.emit('changed')
+        if not self.bulk_mode:
+            self.emit('changed')
+
+    def set_bulk_mode(self, bulk):
+        self.bulk_mode = bulk
+        if not bulk:
+            self.notify_changed()
 
 
 class DatabaseSaveManager(object):
@@ -488,14 +495,18 @@ def clean_database(device):
             else:
                 to_remove.append((item_type, item_path))
 
-    for item_type, item_path in to_remove:
-        del device.database[item_type][item_path]
+    if to_remove:
+        device.database.set_bulk_mode(True)
+        for item_type, item_path in to_remove:
+            del device.database[item_type][item_path]
+        device.database.set_bulk_mode(False)
 
     return known_files
 
 def scan_device_for_files(device):
     known_files = clean_database(device)
 
+    device.database.set_bulk_mode(True)
     device.database.setdefault('sync', {})
 
     for filename in fileutil.miro_allfiles(device.mount):
@@ -509,3 +520,5 @@ def scan_device_for_files(device):
         else:
             continue
         device.database[item_type][ufilename] = {}
+
+    device.database.set_bulk_mode(False)
