@@ -279,6 +279,7 @@ class ListItemView(widgetset.TableView):
     """TableView that displays a list of items using the list view."""
 
     columns_map = {
+            'state': ['', style.StateCircleRenderer(), False],
             'name': ['Name', style.NameRenderer()],
             'artist': ['Artist', style.ArtistRenderer()],
             'album': ['Album', style.AlbumRenderer()],
@@ -307,15 +308,19 @@ class ListItemView(widgetset.TableView):
         self._current_sort_column = None
         self._set_initial_widths = False
         display_columns = enabled_columns
-        if not display_channel:
-            display_columns = enabled_columns - set('feed-name')
+        if not display_channel and 'feed-name' in display_columns:
+            display_columns.remove('feed-name')
         if not display_download_info:
-            display_columns = enabled_columns - set(['eta', 'rate'])
-        if 'state' in enabled_columns:
-            self._make_column('', style.StateCircleRenderer(), 'state', False)
-        for name, data in ListItemView.columns_map.items():
-            if name in enabled_columns:
-                self._make_column(_(data[0]), data[1], name)
+            if 'eta' in display_columns:
+                display_columns.remove('eta')
+            if 'rate' in display_columns:
+                display_columns.remove('rate')
+        for name in enabled_columns:
+            data = ListItemView.columns_map[name]
+            resizable = True
+            if len(data) > 2:
+                resizable = data[2]
+            self._make_column(_(data[0]), data[1], name, resizable)
         self.set_show_headers(True)
         self.set_columns_draggable(True)
         self.set_column_spacing(12)
