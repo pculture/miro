@@ -505,7 +505,6 @@ class SharingItemTracker(object):
             removed.append(i.id)
         message = messages.ItemsChanged(self.type, self.id, [], [], removed)
         message.send_to_frontend()
-        print 'XXX NEED TO STOP THREAD'
 
 
 class DeviceItemTracker(object):
