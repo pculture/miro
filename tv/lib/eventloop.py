@@ -50,6 +50,8 @@ from miro import util
 
 from miro.clock import clock
 
+from miro.plat.utils import thread_body
+
 cumulative = {}
 
 class DelayedCall(object):
@@ -164,7 +166,8 @@ class ThreadPool(object):
     def init_threads(self):
         while len(self.threads) < ThreadPool.THREADS:
             t = threading.Thread(name='ThreadPool - %d' % len(self.threads),
-                                 target=self.thread_loop)
+                                 target=thread_body,
+                                 args=[self.thread_loop])
             t.setDaemon(True)
             t.start()
             self.threads.append(t)
