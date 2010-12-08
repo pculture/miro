@@ -477,14 +477,7 @@ class SharingItemTracker(object):
             added.append(item)
             self.items.append(item)
 
-        # Though, I think it would be okay to send the message from here
-        # we pass it to the backend thread to do the honors.
         message = messages.ItemsChanged(self.type, self.id, added, [], [])
-        eventloop.add_urgent_call(self.send_changed_message,
-                                  name='DAAP client send changed message',
-                                  args=(message,))
-
-    def send_changed_message(self, message):
         print 'SENDING changed message %d items' % len(message.added)
         message.send_to_frontend()
 
