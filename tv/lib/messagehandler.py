@@ -359,8 +359,8 @@ class PlaylistFolderItemTracker(ItemTrackerBase):
 class ManualItemTracker(ItemTrackerBase):
     type = 'manual'
 
-    def __init__(self, id, id_list):
-        self.id = id
+    def __init__(self, id_, id_list):
+        self.id = id_
         # SQLite can only handle 999 variables at once.  If there are more ids
         # than that, we need to split things up (#12020)
         self.views = []
@@ -673,29 +673,29 @@ class BackendMessageHandler(messages.MessageHandler):
         logging.debug("handling backend %s", message)
         eventloop.add_urgent_call(method, name, args=(message,))
 
-    def folder_class_for_type(self, type):
-        if type in ('feed', 'audio-feed'):
+    def folder_class_for_type(self, typ):
+        if typ in ('feed', 'audio-feed'):
             return ChannelFolder
-        elif type == 'playlist':
+        elif typ == 'playlist':
             return PlaylistFolder
         else:
-            raise ValueError("Unknown Type: %s" % type)
+            raise ValueError("Unknown Type: %s" % typ)
 
-    def ddb_object_class_for_type(self, type):
-        if type == 'feed':
+    def ddb_object_class_for_type(self, typ):
+        if typ == 'feed':
             return feed.Feed
-        elif type == 'audio-feed':
+        elif typ == 'audio-feed':
             return feed.Feed
-        elif type == 'playlist':
+        elif typ == 'playlist':
             return SavedPlaylist
-        elif type == 'feed-folder':
+        elif typ == 'feed-folder':
             return ChannelFolder
-        elif type == 'playlist-folder':
+        elif typ == 'playlist-folder':
             return PlaylistFolder
-        elif type == 'site':
+        elif typ == 'site':
             return guide.ChannelGuide
         else:
-            raise ValueError("Unknown Type: %s" % type)
+            raise ValueError("Unknown Type: %s" % typ)
 
     def handle_frontend_started(self, message):
         # add a little bit more delay to let things simmer down a bit.  The

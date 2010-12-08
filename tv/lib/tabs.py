@@ -45,12 +45,12 @@ class TabOrder(database.DDBObject):
     track playlists/playlist folders.
     """
 
-    def setup_new(self, type):
-        """Construct a TabOrder.  type should be either ``channel`` or
+    def setup_new(self, typ):
+        """Construct a TabOrder.  typ should be either ``channel`` or
         ``playlist``.
         """
         check_u(type)
-        self.type = type
+        self.type = typ
         self.tab_ids = []
         self._setup_views()
         to_sort = self.id_to_tab.values()
@@ -108,10 +108,10 @@ class TabOrder(database.DDBObject):
             tracker.connect("removed", self._on_remove_tab)
 
     @classmethod
-    def view_for_type(cls, type):
+    def view_for_type(cls, typ):
         """View based on tab type.
         """
-        return cls.make_view('type=?', (type,))
+        return cls.make_view('type=?', (typ,))
 
     @classmethod
     def site_order(cls):

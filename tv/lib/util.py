@@ -62,7 +62,7 @@ PREFERRED_TYPES = [
     'video/x-xvid', 'video/x-divx', 'video/x-wmv',
     'video/x-msmpeg', 'video/x-flv']
 
-PREFERRED_TYPES_ORDER = dict((type, i) for i, type in
+PREFERRED_TYPES_ORDER = dict((typ, i) for i, typ in
                              enumerate(PREFERRED_TYPES))
 
 MAX_TORRENT_SIZE = 500 * (2**10) # 500k
@@ -240,6 +240,11 @@ def make_dummy_socket_pair():
             port += 10
 
 def get_torrent_info_hash(path):
+    """get_torrent_info_hash(path)
+    
+    NOTE: Important.  These OS functions can throw IOError or OSError.  Make
+    sure you catch these in the caller.
+    """
     if os.path.getsize(path) > MAX_TORRENT_SIZE:
         # file is too large, bailout.  (see #12301)
         raise ValueError("%s is not a valid torrent" % path)

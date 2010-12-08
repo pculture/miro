@@ -81,11 +81,18 @@ def _scrape_youtube_url(url, callback):
     components = urlparse.urlsplit(url)
     params = cgi.parse_qs(components[3])
 
+    video_id = None
     if components[2] == u'/watch' and 'v' in params:
-        video_id = params['v'][0]
+        try:
+            video_id = params['v'][0]
+        except IndexError:
+            pass
     elif components[2].startswith('/v/'):
-        video_id = re.compile(r'/v/([\w-]+)').match(components[2]).group(1)
-    else:
+        m = re.compile(r'/v/([\w-]+)').match(components[2])
+        if m is not None:
+            video_id = m.group(1)
+
+    if video_id is None:
         logging.warning('_scrape_youtube_url: unable to scrape YouTube Video URL')
         callback(None)
         return
