@@ -558,4 +558,5 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
     def save_normal_view(self, toolbar=None):
         self.device.database['%s_view' % self.device.tab_type] = 'normal'
 
-
+    def handle_device_changed(self, device):
+        self.device = device
