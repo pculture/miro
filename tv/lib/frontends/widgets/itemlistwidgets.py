@@ -310,11 +310,8 @@ class ListItemView(widgetset.TableView):
         display_columns = enabled_columns
         if not display_channel and 'feed-name' in display_columns:
             display_columns.remove('feed-name')
-        if not display_download_info:
-            if 'eta' in display_columns:
-                display_columns.remove('eta')
-            if 'rate' in display_columns:
-                display_columns.remove('rate')
+        if display_download_info:
+            display_columns = [u'name', u'feed-name', u'status', u'eta', u'rate']
         for name in display_columns:
             data = ListItemView.columns_map[name]
             resizable = True
