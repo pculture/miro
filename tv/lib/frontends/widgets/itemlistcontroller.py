@@ -119,10 +119,6 @@ class ItemListController(object):
         self.widget.toolbar.connect_weak('sort-changed', self.on_sort_changed)
         self.list_item_view.connect_weak('sort-changed', self.on_sort_changed)
         self.build_widget()
-        sorter = self.item_list.get_sort()
-        if sorter is not None:
-            self.widget.toolbar.change_sort_indicator(
-                sorter.KEY, sorter.is_ascending())
 
     def build_list_item_view(self):
         return itemlistwidgets.ListItemView(self.item_list,
