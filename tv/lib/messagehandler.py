@@ -429,10 +429,10 @@ class SharingItemTracker(object):
         self.tab = tab
         self.id = tab.id
         self.items = []
-        self.thread = threading.Thread(target=thread_body,
-                                       args=[self.client_thread],
-                                       name='DAAP Client Thread')
-        self.thread.start()
+        eventloop.call_in_thread(self.client_connect_callback,
+                                 self.client_connect_error_callback,
+                                 self.client_connect,
+                                 'DAAP client connect')
 
     def sharing_item(self, rawitem):
         sharing_item = item.SharingItem(
@@ -443,12 +443,20 @@ class SharingItemTracker(object):
             file_type=u'audio'    # XXX for now 
         )
         return sharing_item
-            
-    def client_thread(self):
+
+    def client_connect_callback(self, unused):
+        pass
+
+    def client_connect_error_callback(self, unused):
+        pass    # XXX pass error back to user
+
+    def client_connect(self):
+        print 'client_thread: running'
         # The id actually encodes (name, host, port).
         name, host, port = self.id
         self.client = libdaap.make_daap_client(host, port)
         if not self.client.connect():
+            print 'CANNOT CONNECT'
             pass    # XXX Send failure back to user
         added = []
         # XXX no API for this?  And what about playlists?
@@ -461,6 +469,7 @@ class SharingItemTracker(object):
         # Maybe we have looped through here without a base playlist.  Then
         # the server is broken.
         if not self.client.playlists[k]['base']:
+            print 'no base list?'
             return
         items = self.client.items[k]
         for k in items.keys():
@@ -476,9 +485,11 @@ class SharingItemTracker(object):
                                   args=(message,))
 
     def send_changed_message(self, message):
+        print 'SENDING changed message %d items' % len(message.added)
         message.send_to_frontend()
 
     def send_initial_list(self):
+        print 'SEND INITIAL LIST'
         # Send empty stuff to it initially.  We will send more via changed.
         # The reason is even though the local network is fast, we don't
         # don't know when the data is going to arrive.  So, just handle
