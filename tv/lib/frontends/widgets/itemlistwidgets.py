@@ -329,7 +329,8 @@ class ListItemView(widgetset.TableView):
         self.html_stripper = util.HTMLStripper()
 
     def get_tooltip(self, iter, column):
-        if column == self._column_name_to_column['name']:
+        if ('name' in self._column_name_to_column and
+                self._column_name_to_column['name'] == column):
             info = self.item_list.model[iter][0]
             text, links = self.html_stripper.strip(info.description)
             if text:
@@ -337,7 +338,8 @@ class ListItemView(widgetset.TableView):
                     text = text[:994] + ' [...]'
                 return text
 
-        elif column == self._column_name_to_column['state']:
+        elif ('state' in self._column_name_to_column and
+                self._column_name_to_column['state'] is column):
             info = self.item_list.model[iter][0]
             # this logic is replicated in style.StateCircleRenderer
             # with text from style.StatusRenderer
