@@ -429,6 +429,7 @@ class SharingItemTracker(object):
         self.tab = tab
         self.id = tab.id
         self.items = []
+        self.connect_event = threading.Event()
         eventloop.call_in_thread(self.client_connect_callback,
                                  self.client_connect_error_callback,
                                  self.client_connect,
@@ -443,6 +444,21 @@ class SharingItemTracker(object):
             file_type=u'audio'    # XXX for now 
         )
         return sharing_item
+
+    def client_disconnect_error_callback(self, unused):
+        pass
+
+    def client_disconnect_callback(self, unused):
+        pass
+
+    def client_disconnect(self):
+        def disconnect():
+            self.client.close()
+        # As close() can block, run in separate thread.
+        eventloop.call_in_thread(self.client_connect_callback,
+                                 self.client_connect_error_callback,
+                                 disconnect,
+                                 'DAAP client disconnect')
 
     def client_connect_callback(self, unused):
         pass
