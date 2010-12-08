@@ -658,7 +658,7 @@ class RemoteDownloader(DDBObject):
             return
         if self.get_state() in (u'downloading', u'offline'):
             self.restart()
-        if self.get_state() in (u'uploading'):
+        if self.get_state() == u'uploading':
             if ((self.manualUpload
                  or (app.config.get(prefs.LIMIT_UPLOAD_RATIO)
                      and self.get_upload_ratio() < app.config.get(prefs.UPLOAD_RATIO)))):
