@@ -315,7 +315,7 @@ class ListItemView(widgetset.TableView):
                 display_columns.remove('eta')
             if 'rate' in display_columns:
                 display_columns.remove('rate')
-        for name in enabled_columns:
+        for name in display_columns:
             data = ListItemView.columns_map[name]
             resizable = True
             if len(data) > 2:
