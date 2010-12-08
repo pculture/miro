@@ -249,7 +249,7 @@ class TextBox(object):
         line_height = 0
         alignment = self.layout.get_alignment()
         for i in xrange(self.layout.get_line_count()):
-            line = self.layout.get_line(i)
+            line = self.layout.get_line_readonly(i)
             extents = line.get_pixel_extents()[1]
             next_line_height = line_height + extents[3]
             if next_line_height > height:
