@@ -279,7 +279,7 @@ class ListItemView(widgetset.TableView):
     """TableView that displays a list of items using the list view."""
 
     columns_map = {
-            'state': ['', style.StateCircleRenderer(), False],
+            'state': ['_', style.StateCircleRenderer(), False],
             'name': ['Name', style.NameRenderer()],
             'artist': ['Artist', style.ArtistRenderer()],
             'album': ['Album', style.AlbumRenderer()],
