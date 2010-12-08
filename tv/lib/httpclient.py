@@ -55,6 +55,7 @@ from miro import signals
 from miro import util
 from miro.gtcache import gettext as _
 from miro.xhtmltools import url_encode_dict, multipart_encode
+from miro.plat import utils
 from miro.plat.resources import get_osname
 from miro.net import NetworkError, ConnectionError, ConnectionTimeout
 
@@ -757,8 +758,9 @@ class LibCURLManager(eventloop.SimpleEventLoop):
         self.after_perform_callbacks = []
 
     def start(self):
-        self.thread = threading.Thread(target=self.loop,
-                name="LibCURL Event Loop")
+        self.thread = threading.Thread(target=utils.thread_body,
+                                       args=[self.loop],
+                                       name="LibCURL Event Loop")
         self.thread.start()
 
     def stop(self):

@@ -511,3 +511,11 @@ def finish_thread_loop(context_object):
 def get_plat_media_player_name_path():
     itunespath = os.path.join(os.path.expanduser("~"), "Music", "iTunes")
     return (_("iTunes"), import_itunes_path(itunespath))
+
+# Band-aid: you need to create autorelease pool for each thread, we did it
+# for the downloader loop, but not for everything else.  Need an API to
+# properly create threads, and stuff.
+def thread_body(func, *args, **kwargs):
+    pool = NSAutoreleasePool.alloc().init()
+    func(*args, **kwargs)
+    del pool

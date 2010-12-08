@@ -408,3 +408,7 @@ def finish_thread_loop(context_object):
 # XXX: expand me: pick up Windows media players.
 def get_plat_media_player_name_path():
     return (_("Windows Media Player"), None)
+
+def thread_body(func, *args, **kwargs):
+    func(*args, *kwargs)
+

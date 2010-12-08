@@ -242,7 +242,9 @@ class VideoConversionManager(signals.SignalEmitter):
     def _check_task_loop(self):
         if self.task_loop is None:
             self.quit_flag = False
-            self.task_loop = threading.Thread(target=self._loop, name="Conversion Loop")
+            self.task_loop = threading.Thread(target=utils.thread_body,
+                                              args=[self._loop],
+                                              name="Conversion Loop")
             self.task_loop.setDaemon(True)
             self.task_loop.start()
 

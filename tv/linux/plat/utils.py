@@ -397,3 +397,7 @@ def finish_thread_loop(context_object):
 # Expand me: pick up Linux media players.
 def get_plat_media_player_name_path():
     return (None, None)
+
+def thread_body(func, *args, **kwargs):
+    func(*args, **kwargs)
+

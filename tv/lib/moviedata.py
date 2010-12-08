@@ -42,7 +42,8 @@ from miro import prefs
 from miro import signals
 from miro import util
 from miro import fileutil
-from miro.plat.utils import FilenameType, kill_process, movie_data_program_info
+from miro.plat.utils import (FilenameType, kill_process,
+                             movie_data_program_info, thread_body)
 
 # Time in seconds that we wait for the utility to execute.  If it goes
 # longer than this, we assume it's hung and kill it.
@@ -117,7 +118,8 @@ class MovieDataUpdater(signals.SignalEmitter):
 
     def start_thread(self):
         self.thread = threading.Thread(name='Movie Data Thread',
-                                       target=self.thread_loop)
+                                       target=thread_body,
+                                       args=[self.thread_loop])
         self.thread.setDaemon(True)
         self.thread.start()
 
