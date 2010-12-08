@@ -240,6 +240,11 @@ def make_dummy_socket_pair():
             port += 10
 
 def get_torrent_info_hash(path):
+    """get_torrent_info_hash(path)
+    
+    NOTE: Important.  These OS functions can throw IOError or OSError.  Make
+    sure you catch these in the caller.
+    """
     if os.path.getsize(path) > MAX_TORRENT_SIZE:
         # file is too large, bailout.  (see #12301)
         raise ValueError("%s is not a valid torrent" % path)
