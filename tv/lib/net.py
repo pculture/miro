@@ -625,8 +625,8 @@ class ConnectionHandler(object):
             lastState = self.state
             self.readHandler()
 
-    def closeCallback(self, stream, type):
-        self.handle_close(type)
+    def closeCallback(self, stream, typ):
+        self.handle_close(typ)
 
     def handle_close(self, typ):
         """Handle our stream becoming closed.  Type is either socket.SHUT_RD,

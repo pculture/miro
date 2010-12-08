@@ -2191,13 +2191,13 @@ def upgrade87(cursor):
     cursor.execute("PRAGMA table_info('feed')")
     for column_info in cursor.fetchall():
         column = column_info[1]
-        type = column_info[2]
+        typ = column_info[2]
         columns.append(column)
-        if type == 'TIMESTAMP':
-            type = 'timestamp'
+        if typ == 'TIMESTAMP':
+            typ = 'timestamp'
         if column == 'id':
-            type += ' PRIMARY KEY'
-        columns_with_type.append("%s %s" % (column, type))
+            typ += ' PRIMARY KEY'
+        columns_with_type.append("%s %s" % (column, typ))
     cursor.execute("ALTER TABLE feed RENAME TO old_feed")
     cursor.execute("CREATE TABLE feed (%s)" % ', '.join(columns_with_type))
     cursor.execute("INSERT INTO feed (%s) SELECT %s FROM old_feed" %

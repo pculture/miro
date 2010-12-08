@@ -739,8 +739,8 @@ class TabsReordered(BackendMessage):
             u'playlist': []}
         self.folder_children = {}
 
-    def append(self, info, type):
-        self.toplevels[type].append(info)
+    def append(self, info, typ):
+        self.toplevels[typ].append(info)
         if info.is_folder:
             self.folder_children[info.id] = []
 

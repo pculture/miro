@@ -356,8 +356,8 @@ class PlaylistFolderItemTracker(ItemTrackerBase):
 class ManualItemTracker(ItemTrackerBase):
     type = 'manual'
 
-    def __init__(self, id, id_list):
-        self.id = id
+    def __init__(self, id_, id_list):
+        self.id = id_
         # SQLite can only handle 999 variables at once.  If there are more ids
         # than that, we need to split things up (#12020)
         self.views = []

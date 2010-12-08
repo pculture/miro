@@ -108,10 +108,10 @@ class TabOrder(database.DDBObject):
             tracker.connect("removed", self._on_remove_tab)
 
     @classmethod
-    def view_for_type(cls, type):
+    def view_for_type(cls, typ):
         """View based on tab type.
         """
-        return cls.make_view('type=?', (type,))
+        return cls.make_view('type=?', (typ,))
 
     @classmethod
     def site_order(cls):

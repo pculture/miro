@@ -123,11 +123,11 @@ def _create_db_schema(cursor):
 def _calc_sqlite_types(object_schema):
     types = []
     for name, schema_item in object_schema.fields:
-        type = _sqlite_type_map[schema_item.__class__]
+        typ = _sqlite_type_map[schema_item.__class__]
         if name != 'id':
-            types.append('%s %s' % (name, type))
+            types.append('%s %s' % (name, typ))
         else:
-            types.append('%s %s PRIMARY KEY' % (name, type))
+            types.append('%s %s PRIMARY KEY' % (name, typ))
     return ', '.join(types)
 
 def _execute_insert_sql(cursor, savable):

@@ -521,13 +521,13 @@ class LiveStorage:
             max_id = max(max_id, self.cursor.fetchone()[0])
         return max_id
 
-    def get_obj_by_id(self, id):
+    def get_obj_by_id(self, id_):
         """Get a particular DDBObject.
 
         This will throw a KeyError if id is not in the database, or if the
         object for id has not been loaded yet.
         """
-        return self._object_map[id]
+        return self._object_map[id_]
 
     def table_name(self, klass):
         return self._schema_map[klass].table_name
