@@ -1363,8 +1363,8 @@ class FrontendStatesStore(object):
         # this next part is ugly, but it won't matter much until the listview
         # branch needs to use it so... I'll cross that bridge. --Kaz
         if not self.current_columns:
-            self.current_columns = [u'state', u'name', u'feed-name', u'eta',
-                u'rate', u'artist', u'album', u'track', u'year', u'genre']
+            self.current_columns = [u'state', u'name', u'feed-name', 
+                u'artist', u'album', u'track', u'year', u'genre']
 
     def _key(self, typ, id_):
         return '%s:%s' % (typ, id_)

@@ -2822,7 +2822,7 @@ def upgrade121(cursor):
     add column to view table for keeping track of enabled ListView columns
     initialize enabled columns to reasonable default
     """
-    enabled_columns = [u'state', u'name', u'feed-name', u'eta', u'rate',
+    enabled_columns = [u'state', u'name', u'feed-name',
             u'artist', u'album', u'track', u'year', u'genre']
     cursor.execute("ALTER TABLE item ADD COLUMN metadata pythonrepr")
     cursor.execute("ALTER TABLE item ADD COLUMN rating integer")
