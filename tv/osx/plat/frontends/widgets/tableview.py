@@ -553,7 +553,7 @@ class TableViewCommon(object):
         point = self.convertPoint_fromView_(event.locationInWindow(), nil)
         row = self.rowAtPoint_(point)
         selection = self.selectedRowIndexes()
-        if not selection.containsIndex_(row):
+        if row != -1 and not selection.containsIndex_(row):
             index_set = NSIndexSet.alloc().initWithIndex_(row)
             self.selectRowIndexes_byExtendingSelection_(index_set, NO)
         wrapper = wrappermap.wrapper(self)
