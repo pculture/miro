@@ -290,7 +290,6 @@ class DeviceMountedView(widgetset.VBox):
         vbox.pack_start(widgetutil.align_center(label, top_pad=50))
 
         self.sync_container = widgetset.Background()
-        self.sync_container.set_size_request(500, -1)
         button = widgetset.Button('Sync Now')
         button.set_size(1.5)
         button.connect('clicked', self.sync_clicked)
