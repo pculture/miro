@@ -92,12 +92,6 @@ class SharingView(itemlistcontroller.SimpleItemListController):
         itemlistcontroller.SimpleItemListController.handle_items_changed(self,
                                                                       message)
 
-    def mdns_callback(added, fullname, host, port):
-        print 'Status: Added = %s name = %s host = %s port = %s' % (added, fullname, host, port)
-
-    def server_thread(self):
-        libdaap.browse_mdns(self.mdns_callback)
-
     def start_tracking(self):
         # Note: Track items is done on tab clicked, which connects to the
         # share.  See tablist.py
