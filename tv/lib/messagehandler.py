@@ -489,9 +489,16 @@ class SharingItemTracker(object):
         # it as a changed message, which is just as good.
         infos = []
         messages.ItemList(self.type, self.id, infos).send_to_frontend()
-
+ 
     def unlink(self):
-        pass
+        # XXX no API for this?  And what about playlists?
+        # XXX dodgy - shouldn't do this directly
+        removed = []
+        for i in self.items:
+            removed.append(i.id)
+        message = messages.ItemsChanged(self.type, self.id, [], [], removed)
+        message.send_to_frontend()
+
 
 class DeviceItemTracker(object):
     type = 'device'
