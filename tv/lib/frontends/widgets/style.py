@@ -1326,6 +1326,8 @@ class GenreRenderer(ListViewRenderer):
 class StateCircleRenderer(widgetset.CustomCellRenderer):
     min_width = 25
 
+    right_aligned = False
+
     def __init__(self):
         widgetset.CustomCellRenderer.__init__(self)
         self.unwatched_icon = imagepool.get_surface(resources.path(
