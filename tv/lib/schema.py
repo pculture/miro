@@ -667,7 +667,8 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('sort_states', SchemaDict(SchemaBinary(),
             SchemaBinary())),
         ('list_view_columns', SchemaList(SchemaString())),
-        ('list_view_column_widths', SchemaDict(SchemaString(), SchemaInt())),
+        ('list_view_column_widths', SchemaDict(SchemaString(), SchemaInt(),
+            noneOk=True)),
     ]
 
     @staticmethod
