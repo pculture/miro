@@ -247,7 +247,7 @@ def get_torrent_info_hash(path):
     import libtorrent as lt
     f = open(path, 'rb')
     try:
-        data = f.read()
+        data = f.read(MAX_TORRENT_SIZE)
         if not data or data[0] != 'd':
             # File doesn't start with 'd', bailout  (see #12301)
             raise ValueError("%s is not a valid torrent" % path)
