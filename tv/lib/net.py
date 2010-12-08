@@ -466,10 +466,10 @@ class AsyncSocket(object):
         self.close_connection()
         if self.closeCallback:
             if operation == 'read':
-                type = socket.SHUT_RD
+                typ = socket.SHUT_RD
             else:
-                type = socket.SHUT_WR
-            trap_call(self, self.closeCallback, self, type)
+                typ = socket.SHUT_WR
+            trap_call(self, self.closeCallback, self, typ)
 
 class AsyncSSLStream(AsyncSocket):
     def __init__(self, closeCallback=None):
@@ -628,7 +628,7 @@ class ConnectionHandler(object):
     def closeCallback(self, stream, type):
         self.handle_close(type)
 
-    def handle_close(self, type):
+    def handle_close(self, typ):
         """Handle our stream becoming closed.  Type is either socket.SHUT_RD,
         or socket.SHUT_WR.
         """

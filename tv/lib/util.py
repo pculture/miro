@@ -62,7 +62,7 @@ PREFERRED_TYPES = [
     'video/x-xvid', 'video/x-divx', 'video/x-wmv',
     'video/x-msmpeg', 'video/x-flv']
 
-PREFERRED_TYPES_ORDER = dict((type, i) for i, type in
+PREFERRED_TYPES_ORDER = dict((typ, i) for i, typ in
                              enumerate(PREFERRED_TYPES))
 
 MAX_TORRENT_SIZE = 500 * (2**10) # 500k

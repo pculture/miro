@@ -200,9 +200,9 @@ class TrackItems(BackendMessage):
     id should be the id of a feed/playlist. For new, downloading and library
     it is ignored.
     """
-    def __init__(self, type, id):
-        self.type = type
-        self.id = id
+    def __init__(self, typ, id_):
+        self.type = typ
+        self.id = id_
 
 class TrackItemsManually(BackendMessage):
     """Track a manually specified list of items.
@@ -210,17 +210,17 @@ class TrackItemsManually(BackendMessage):
     ItemList and ItemsChanged messages will have "manual" as the type and
     will use the id specified in the constructed.
     """
-    def __init__(self, id, ids_to_track):
-        self.id = id
+    def __init__(self, id_, ids_to_track):
+        self.id = id_
         self.ids_to_track = ids_to_track
         self.type = 'manual'
 
 class StopTrackingItems(BackendMessage):
     """Stop tracking items for a feed.
     """
-    def __init__(self, type, id):
-        self.type = type
-        self.id = id
+    def __init__(self, typ, id_):
+        self.type = typ
+        self.id = id_
 
 class TrackDownloadCount(BackendMessage):
     """Start tracking the number of downloading items.  After this message is
@@ -357,53 +357,53 @@ class RenameObject(BackendMessage):
     :param id: id of the object to rename
     :param new_name: new name for the object
     """
-    def __init__(self, type, id, new_name):
-        self.type = type
-        self.id = id
+    def __init__(self, typ, id_, new_name):
+        self.type = typ
+        self.id = id_
         self.new_name = util.to_uni(new_name)
 
 class UpdateFeed(BackendMessage):
     """Updates a feed.
     """
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, id_):
+        self.id = id_
 
 class UpdateFeedFolder(BackendMessage):
     """Updates the feeds in a feed folder.
     """
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, id_):
+        self.id = id_
 
 class MarkFeedSeen(BackendMessage):
     """Mark a feed as seen.
     """
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, id_):
+        self.id = id_
 
 class MarkItemWatched(BackendMessage):
     """Mark an item as watched.
     """
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, id_):
+        self.id = id_
 
 class MarkItemUnwatched(BackendMessage):
     """Mark an item as unwatched.
     """
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, id_):
+        self.id = id_
 
 class SetItemSubtitleEncoding(BackendMessage):
     """Mark an item as watched.
     """
-    def __init__(self, id, encoding):
-        self.id = id
+    def __init__(self, id_, encoding):
+        self.id = id_
         self.encoding = encoding
 
 class SetItemResumeTime(BackendMessage):
     """Set an item resume time.
     """
-    def __init__(self, id, time):
-        self.id = id
+    def __init__(self, id_, time):
+        self.id = id_
         self.resume_time = time
 
 class SetItemMediaType(BackendMessage):
@@ -421,8 +421,8 @@ class UpdateAllFeeds(BackendMessage):
 class DeleteFeed(BackendMessage):
     """Delete a feed.
     """
-    def __init__(self, id, is_folder, keep_items):
-        self.id = id
+    def __init__(self, id_, is_folder, keep_items):
+        self.id = id_
         self.is_folder = is_folder
         self.keep_items = keep_items
 
@@ -434,21 +434,21 @@ class DeleteWatchedFolder(BackendMessage):
        This separate from DeleteFeed since not all watched folders are
        visible.
     """
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, id_):
+        self.id = id_
 
 class DeletePlaylist(BackendMessage):
     """Delete a playlist.
     """
-    def __init__(self, id, is_folder):
-        self.id = id
+    def __init__(self, id_, is_folder):
+        self.id = id_
         self.is_folder = is_folder
 
 class DeleteSite(BackendMessage):
     """Delete an external channel guide.
     """
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, id_):
+        self.id = id_
 
 class NewGuide(BackendMessage):
     """Create a new channel guide.
@@ -496,8 +496,8 @@ class NewWatchedFolder(BackendMessage):
 class SetWatchedFolderVisible(BackendMessage):
     """Changes if a watched folder is visible in the tab list or not.
     """
-    def __init__(self, id, visible):
-        self.id = id
+    def __init__(self, id_, visible):
+        self.id = id_
         self.visible = visible
 
 class NewPlaylist(BackendMessage):
@@ -600,22 +600,22 @@ class Search(BackendMessage):
 class CancelAutoDownload(BackendMessage):
     """Cancels the autodownload for an item.
     """
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, id_):
+        self.id = id_
 
 class StartDownload(BackendMessage):
     """Start downloading an item.
     """
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, id_):
+        self.id = id_
     def __repr__(self):
         return BackendMessage.__repr__(self) + (", id: %s" % self.id)
 
 class CancelDownload(BackendMessage):
     """Cancel downloading an item.
     """
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, id_):
+        self.id = id_
 
 class CancelAllDownloads(BackendMessage):
     """Cancels all downloading items.
@@ -630,8 +630,8 @@ class PauseAllDownloads(BackendMessage):
 class PauseDownload(BackendMessage):
     """Pause downloading an item.
     """
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, id_):
+        self.id = id_
 
 class ResumeAllDownloads(BackendMessage):
     """Resumes all downloading items.
@@ -641,47 +641,47 @@ class ResumeAllDownloads(BackendMessage):
 class ResumeDownload(BackendMessage):
     """Resume downloading an item.
     """
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, id_):
+        self.id = id_
 
 class StartUpload(BackendMessage):
     """Start uploading a torrent.
     """
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, id_):
+        self.id = id_
 
 class StopUpload(BackendMessage):
     """Stop uploading a torrent.
     """
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, id_):
+        self.id = id_
 
 class KeepVideo(BackendMessage):
     """Cancel the auto-expiration of an item's video.
     """
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, id_):
+        self.id = id_
     def __repr__(self):
         return BackendMessage.__repr__(self) + (", id: %s" % self.id)
 
 class SaveItemAs(BackendMessage):
     """Saves an item in the dark clutches of Miro to somewhere else.
     """
-    def __init__(self, id, filename):
-        self.id = id
+    def __init__(self, id_, filename):
+        self.id = id_
         self.filename = filename
 
 class RemoveVideoEntry(BackendMessage):
     """Remove the entry for an external video.
     """
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, id_):
+        self.id = id_
 
 class DeleteVideo(BackendMessage):
     """Delete the video for an item's video.
     """
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, id_):
+        self.id = id_
     def __repr__(self):
         return BackendMessage.__repr__(self) + (", id: %s" % self.id)
 
@@ -695,8 +695,8 @@ class EditItem(BackendMessage):
 class RevertFeedTitle(BackendMessage):
     """Reverts the feed's title back to the original.
     """
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, id_):
+        self.id = id_
 
 class PlayAllUnwatched(BackendMessage):
     """Figures out all the unwatched items and plays them.
@@ -707,9 +707,9 @@ class PlayAllUnwatched(BackendMessage):
 class FolderExpandedChange(BackendMessage):
     """Inform the backend when a folder gets expanded/collapsed.
     """
-    def __init__(self, type, id, expanded):
-        self.type = type
-        self.id = id
+    def __init__(self, typ, id_, expanded):
+        self.type = typ
+        self.id = id_
         self.expanded = expanded
 
 class AutodownloadChange(BackendMessage):
@@ -717,8 +717,8 @@ class AutodownloadChange(BackendMessage):
     setting for a feed.  The possible setting values are ``all``,
     ``new`` and ``off``.
     """
-    def __init__(self, id, setting):
-        self.id = id
+    def __init__(self, id_, setting):
+        self.id = id_
         self.setting = setting
 
 class TabsReordered(BackendMessage):
@@ -754,8 +754,8 @@ class PlaylistReordered(BackendMessage):
     :param item_ids: List of ids for item in the playlist, in their new
                      order.
     """
-    def __init__(self, id, item_ids):
-        self.id = id
+    def __init__(self, id_, item_ids):
+        self.id = id_
         self.item_ids = item_ids
 
 class SubscriptionLinkClicked(BackendMessage):
@@ -1239,8 +1239,8 @@ class TabList(FrontendMessage):
     :param expanded_folders: set containing ids of the folders that should
                              be initially expanded.
     """
-    def __init__(self, type):
-        self.type = type
+    def __init__(self, typ):
+        self.type = typ
         self.toplevels = []
         self.folder_children = {}
         self.expanded_folders = set()
@@ -1268,8 +1268,8 @@ class TabsChanged(FrontendMessage):
     :param section: ``audio``, ``video``, or None (used for channels and
                     channel folders)
     """
-    def __init__(self, type, added, changed, removed, section=None):
-        self.type = type
+    def __init__(self, typ, added, changed, removed, section=None):
+        self.type = typ
         self.added = added
         self.changed = changed
         self.removed = removed
@@ -1282,9 +1282,9 @@ class ItemList(FrontendMessage):
     :param id: id of the object being tracked (same as in TrackItems)
     :param items: list of ItemInfo objects
     """
-    def __init__(self, type, id, item_infos):
-        self.type = type
-        self.id = id
+    def __init__(self, typ, id_, item_infos):
+        self.type = typ
+        self.id = id_
         self.items = item_infos
 
 class ItemsChanged(FrontendMessage):
@@ -1297,9 +1297,9 @@ class ItemsChanged(FrontendMessage):
     :param changed: set containing an ItemInfo for each changed item.
     :param removed: set containing ids for each item that was removed
     """
-    def __init__(self, type, id, added, changed, removed):
-        self.type = type
-        self.id = id
+    def __init__(self, typ, id_, added, changed, removed):
+        self.type = typ
+        self.id = id_
         self.added = added
         self.changed = changed
         self.removed = removed
@@ -1445,8 +1445,8 @@ class VideoConversionTaskChanged(FrontendMessage):
 class DeviceInfo(object):
     """Tracks the state of an attached device.
     """
-    def __init__(self, id, device_info, mount, database, size, remaining):
-        self.id = id
+    def __init__(self, id_, device_info, mount, database, size, remaining):
+        self.id = id_
         self.mount = mount
         self.database = database
         self.size = size
