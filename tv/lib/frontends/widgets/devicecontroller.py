@@ -150,6 +150,8 @@ class SyncWidget(widgetset.HBox):
         this_sync = sync[self.file_type]
         self.sync_library.set_checked(
             this_sync.get('enabled', False))
+        # OS X doesn't send the callback when we toggle it manually (#15392)
+        self.sync_library_toggled(self.sync_library)
 
         if self.file_type != 'playlists':
             all_feeds = this_sync.get('all', True)
@@ -160,6 +162,7 @@ class SyncWidget(widgetset.HBox):
         for item in this_sync.get('items', []):
             if item in self.info_map:
                 self.info_map[item].set_checked(True)
+
 
     def get_feeds(self):
         feeds = []
@@ -222,7 +225,9 @@ class SyncWidget(widgetset.HBox):
         feeds = []
         for key in self.device.database['sync'][self.file_type].get('items',
                                                                     ()):
-            feeds.append(self.find_info_by_key(key, tab_list).id)
+            feed = self.find_info_by_key(key, tab_list)
+            if feed is not None:
+                feeds.append(feed.id)
         return feeds
 
 class VideoFeedSyncWidget(SyncWidget):
@@ -312,10 +317,17 @@ class DeviceMountedView(widgetset.VBox):
 
     def set_device(self, device):
         self.device = device
+        self.device.database.set_bulk_mode(True)
         self.device_size.set_size(device.size, device.remaining)
         for name in 'video', 'audio', 'playlists':
             tab = self.tabs[name]
             tab.child.set_device(device)
+        sync_manager = app.device_manager.get_sync_for_device(device,
+                                                              create=False)
+        if sync_manager is not None:
+            self.set_sync_status(sync_manager.get_progress(),
+                                 sync_manager.get_eta())
+        self.device.database.set_bulk_mode(False)
 
     def _tab_clicked(self, button):
         key = button.key
@@ -324,7 +336,6 @@ class DeviceMountedView(widgetset.VBox):
         self.tab_container.set_child(self.tabs[key])
 
     def sync_clicked(self, obj):
-
         sync_type = {}
         sync_ids = {}
         for file_type in 'video', 'audio', 'playlists':

@@ -1586,12 +1586,14 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         state.sort_states = message.sort_states
         state.active_filters = message.active_filters
         state.list_view_columns = message.list_view_columns
+        state.list_view_column_widths = message.list_view_column_widths
         state.signal_change()
 
     def handle_query_frontend_state(self, message):
         state = self._get_widgets_frontend_state()
         m =messages.CurrentFrontendState(state.list_view_displays,
-                state.sort_states, state.active_filters, state.list_view_columns)
+                state.sort_states, state.active_filters,
+                state.list_view_columns, state.list_view_column_widths)
         m.send_to_frontend()
 
     def handle_set_device_type(self, message):
@@ -1631,7 +1633,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 items.add(item_)
 
         for audio_id in message.audio_ids:
-            feed_ = feed.Feed.get_by_id(video_id)
+            feed_ = feed.Feed.get_by_id(audio_id)
             if message.audio_type == 'all':
                 view = feed_.downloaded_items
             else:
@@ -1642,7 +1644,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         for playlist_id in message.playlist_ids:
             view = PlaylistItemMap.playlist_view(playlist_id)
             for item_ in view:
-                item.add(item_)
+                items.add(item_)
 
         if items:
             item_infos = [messages.ItemInfo(item_) for item_ in items]

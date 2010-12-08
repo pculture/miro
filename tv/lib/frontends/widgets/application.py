@@ -1363,12 +1363,13 @@ class FrontendStatesStore(object):
         self.current_displays = set(message.list_view_displays)
         self.sort_states = message.sort_states
         self.active_filters = message.active_filters
-        self.current_columns = set(message.list_view_columns)
+        self.current_columns = message.list_view_columns
+        self.column_widths = message.list_view_column_widths
         # this next part is ugly, but it won't matter much until the listview
         # branch needs to use it so... I'll cross that bridge. --Kaz
         if not self.current_columns:
-            self.current_columns = set([u'state', u'name', u'feed-name', u'eta',
-                u'rate', u'artist', u'album', u'track', u'year', u'genre'])
+            self.current_columns = [u'state', u'name', u'feed-name', u'eta',
+                u'rate', u'artist', u'album', u'track', u'year', u'genre']
 
     def _key(self, typ, id_):
         return '%s:%s' % (typ, id_)
@@ -1393,6 +1394,10 @@ class FrontendStatesStore(object):
         key = self._key(type, id)
         return self.current_columns
 
+    def query_column_widths(self, type, id):
+        key = self._key(type, id)
+        return self.column_widths
+
     def query_filters(self, typ, id_):
         return self.active_filters.get(self._key(typ, id_), [])
 
@@ -1414,6 +1419,10 @@ class FrontendStatesStore(object):
         self.current_columns = columns
         self.save_state()
 
+    def set_column_widths(self, typ, id_, column_widths):
+        self.column_widths = column_widths
+        self.save_state()
+
     def set_list_view(self, typ, id_):
         self.current_displays.add(self._key(typ, id_))
         self.save_state()
@@ -1425,5 +1434,5 @@ class FrontendStatesStore(object):
     def save_state(self):
         m = messages.SaveFrontendState(list(self.current_displays),
                 self.sort_states, self.active_filters,
-                list(self.current_columns))
+                self.current_columns, self.column_widths)
         m.send_to_backend()

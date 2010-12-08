@@ -40,6 +40,8 @@ from miro import app
 from miro import devices
 from miro import messages
 
+kFSEventStreamCreateFlagIgnoreSelf = 0x08 # not defined for some reason
+
 STREAM_INTERVAL = 0.5
 
 def diskutil(cmd, path_or_disk, use_plist=True):
@@ -48,7 +50,8 @@ def diskutil(cmd, path_or_disk, use_plist=True):
         args.append('-plist')
     if path_or_disk:
         args.append(path_or_disk)
-    proc = subprocess.Popen(args, stdout=subprocess.PIPE)
+    proc = subprocess.Popen(args, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE)
     stdout, stderr = proc.communicate()
     if not use_plist:
         return stdout
@@ -57,26 +60,27 @@ def diskutil(cmd, path_or_disk, use_plist=True):
     except:
         logging.debug(
             'error parsing plist for command: diskutil %s -plist %s\n%s' % (
-                cmd, pathOrDisk, stdout))
+                cmd, path_or_disk, stdout))
 
 class DeviceTracker(object):
     def __init__(self):
         self._info_for_volume = {}
 
-    @threads.on_ui_thread
     def start_tracking(self):
         self.stream = FSEventStreamCreate(kCFAllocatorDefault,
                                           self.streamCallback,
-                                          kFSEventStreamCreateFlagNoDefer,
+                                          None,
                                           ['/Volumes/'],
                                           kFSEventStreamEventIdSinceNow,
-                                          STREAM_INTERVAL, 0)
-        FSEventStreamScheduleWithRunLoop(self.stream, CFRunLoopGetCurrent(),
+                                          STREAM_INTERVAL,
+                                          kFSEventStreamCreateFlagNoDefer |
+                                          kFSEventStreamCreateFlagIgnoreSelf)
+        FSEventStreamScheduleWithRunLoop(self.stream, CFRunLoopGetMain(),
                                          kCFRunLoopDefaultMode)
-        assert FSEventStreamStart(self.stream)
+        FSEventStreamStart(self.stream)
 
         for volume in diskutil('list', '').VolumesFromDisks:
-            self._disk_mounted('/Volumes/%s' % volume)
+            self._disk_mounted(volume)
 
     def streamCallback(self, stream, clientInfo, numEvents, eventPaths,
                         eventMasks, eventIDs):
@@ -93,6 +97,7 @@ class DeviceTracker(object):
             return
         if volume_info.BusProtocol != 'USB':
             return # don't care about non-USB devices
+        volume = volume_info.MountPoint
         disk_info = diskutil('info', volume_info.ParentWholeDisk)
         if not disk_info:
             logging.debug('unknown device connected @ %r' % volume)

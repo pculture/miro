@@ -1086,7 +1086,10 @@ class BTDownloader(BGDownloader):
                 if not metainfo:
                     raise RuntimeError()
                 name = metainfo['info']['name']
-            except RuntimeError:
+            # Note: handle KeyError as well because bdecode() may return
+            # an object with no 'info' key, or with 'info' key but no 'name'
+            # key.  This allows us to catch lousily made torrent files.
+            except (KeyError, RuntimeError):
                 self.handle_corrupt_torrent()
                 return
             self.shortFilename = utf8_to_filename(name)

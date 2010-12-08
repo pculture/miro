@@ -54,7 +54,8 @@ class SizedControl(Widget):
             font = NSFont.systemFontOfSize_(NSFont.smallSystemFontSize())
             self.view.cell().setControlSize_(NSSmallControlSize)
         else:
-            raise ValueError("Unknown size: %s" % size)
+            self.view.cell().setControlSize_(NSRegularControlSize)
+            font = NSFont.systemFontOfSize_(NSFont.systemFontSize() * size)
         self.view.setFont_(font)
 
 class BaseTextEntry(SizedControl):

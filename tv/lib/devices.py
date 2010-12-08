@@ -43,7 +43,7 @@ from miro import signals
 from miro import videoconversion
 
 from miro.plat import resources
-from miro.plat.utils import filename_to_unicode
+from miro.plat.utils import filename_to_unicode, unicode_to_filename
 
 class DeviceInfo(object):
     """
@@ -171,12 +171,16 @@ class DeviceManager(object):
         info = self.device_by_id[(vendor_id, product_id)]
         return self._get_device_from_info(info, device_type)
 
-    def get_sync_for_device(self, device):
+    def get_sync_for_device(self, device, create=True):
         """
         Returns a DeviceSyncManager for the given device.  If one exists,
         return that one, otherwise build a new one and return that.
+
+        If create is False, return None instead of creating a new sync manager.
         """
         if device.id not in self.syncs_in_progress:
+            if not create:
+                return None
             dsm = DeviceSyncManager(device)
             self.syncs_in_progress[device.id] = dsm
 
@@ -209,11 +213,13 @@ class DeviceSyncManager(object):
             os.makedirs(self.video_target_folder)
 
     def add_items(self, item_infos):
+        device_info = self.device.info
         for info in item_infos:
             if self._exists(info):
                 continue # don't recopy stuff
             if info.file_type == 'audio':
-                if info.file_format.split()[0] in self.device.info.audio_types:
+                if (info.file_format and
+                    info.file_format.split()[0] in device_info.audio_types):
                     final_path = os.path.join(self.audio_target_folder,
                                               os.path.basename(
                             info.video_path))
@@ -225,11 +231,13 @@ class DeviceSyncManager(object):
                     else:
                         self._add_item(final_path, info)
                 else:
-                    self.start_conversion(self.device.info.audio_conversion,
+                    logging.debug('unable to detect format of %r: %s' % (
+                            info.video_path, info.file_format))
+                    self.start_conversion(device_info.audio_conversion,
                                           info,
                                           self.audio_target_folder)
             elif info.file_type == 'video':
-                self.start_conversion(self.device.info.video_conversion,
+                self.start_conversion(device_info.video_conversion,
                                       info,
                                       self.video_target_folder)
 
@@ -296,10 +304,16 @@ class DeviceSyncManager(object):
         self._check_finished()
 
     def _add_item(self, final_path, item_info):
+        dirname, basename = os.path.split(final_path)
+        _, extension = os.path.splitext(basename)
+        new_basename = "%s%s" % (unicode_to_filename(item_info.name),
+                                 extension)
+        new_path = os.path.join(dirname, new_basename)
+        os.rename(final_path, new_path)
         device_item = item.DeviceItem(
             device=self.device,
             file_type=item_info.file_type,
-            video_path=final_path[len(self.device.mount):],
+            video_path=new_path[len(self.device.mount):],
             name=item_info.name,
             feed_name=item_info.feed_name,
             feed_url=item_info.feed_url,
@@ -372,6 +386,7 @@ class DeviceDatabase(dict, signals.SignalEmitter):
             dict.__init__(self)
         signals.SignalEmitter.__init__(self, 'changed')
         self.parent = parent
+        self.bulk_mode = False
 
     def __getitem__(self, key):
         value = super(DeviceDatabase, self).__getitem__(key)
@@ -387,7 +402,13 @@ class DeviceDatabase(dict, signals.SignalEmitter):
             self.notify_changed()
 
     def notify_changed(self):
-        self.emit('changed')
+        if not self.bulk_mode:
+            self.emit('changed')
+
+    def set_bulk_mode(self, bulk):
+        self.bulk_mode = bulk
+        if not bulk:
+            self.notify_changed()
 
 
 class DatabaseSaveManager(object):
@@ -480,14 +501,18 @@ def clean_database(device):
             else:
                 to_remove.append((item_type, item_path))
 
-    for item_type, item_path in to_remove:
-        del device.database[item_type][item_path]
+    if to_remove:
+        device.database.set_bulk_mode(True)
+        for item_type, item_path in to_remove:
+            del device.database[item_type][item_path]
+        device.database.set_bulk_mode(False)
 
     return known_files
 
 def scan_device_for_files(device):
     known_files = clean_database(device)
 
+    device.database.set_bulk_mode(True)
     device.database.setdefault('sync', {})
 
     for filename in fileutil.miro_allfiles(device.mount):
@@ -501,3 +526,5 @@ def scan_device_for_files(device):
         else:
             continue
         device.database[item_type][ufilename] = {}
+
+    device.database.set_bulk_mode(False)
