@@ -60,6 +60,10 @@ cdef extern from "gtk/gtk.h":
                                      char* text)
     cdef void gtk_tooltip_set_text (GtkTooltip  *tooltip, char *text)
 
+cdef extern from "pango/pango.h":
+    ctypedef struct PangoLayout
+    cdef void pango_layout_set_height(PangoLayout *layout, int height)
+
 cdef extern from "Python.h":
     ctypedef struct PyObject
 
@@ -101,3 +105,10 @@ def set_tooltip_text(object tooltip, text):
     pygobject = <PyGObject *>tooltip
     gtk_tooltip = <GtkTooltip*>(pygobject_get(pygobject))
     gtk_tooltip_set_text(gtk_tooltip, text)
+
+def set_pango_layout_height(object layout, height):
+    cdef PangoLayout* pango_layout
+    cdef PyGObject *pygobject
+    pygobject = <PyGObject *>layout
+    pango_layout = <PangoLayout*>(pygobject_get(pygobject))
+    pango_layout_set_height(pango_layout, height)

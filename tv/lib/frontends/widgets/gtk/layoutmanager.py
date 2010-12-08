@@ -39,6 +39,7 @@ import gtk
 import pango
 
 from miro.plat.frontends.widgets import use_native_buttons
+from miro.frontends.widgets.gtk import pygtkhacks
 
 class LayoutManager(object):
     def __init__(self, widget):
@@ -171,6 +172,14 @@ class TextBox(object):
             self.layout.set_width(-1)
         self.width = width
 
+    def set_height(self, height):
+        if height is not None:
+            # not sure why set_height isn't in the python bindings, but it
+            # isn't
+            pygtkhacks.set_pango_layout_height(self.layout,
+                int(height * pango.SCALE))
+        self.height = height
+
     def set_wrap_style(self, wrap):
         if wrap == 'word':
             self.layout.set_wrap(pango.WRAP_WORD_CHAR)
@@ -231,6 +240,7 @@ class TextBox(object):
 
     def draw(self, context, x, y, width, height):
         self.set_width(width)
+        self.set_height(height)
         self.ensure_layout()
         cairo_context = context.context
         cairo_context.save()
