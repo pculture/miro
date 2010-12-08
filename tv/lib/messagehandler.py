@@ -60,7 +60,7 @@ from miro.gtcache import gettext as _
 from miro.playlist import SavedPlaylist, PlaylistItemMap
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 
-from miro.plat.utils import make_url_safe
+from miro.plat.utils import make_url_safe, thread_body
 
 import shutil
 
@@ -429,7 +429,8 @@ class SharingItemTracker(object):
         self.tab = tab
         self.id = tab.id
         self.items = []
-        self.thread = threading.Thread(target=self.client_thread,
+        self.thread = threading.Thread(target=thread_body,
+                                       args=[self.client_thread],
                                        name='DAAP Client Thread')
         self.thread.start()
 

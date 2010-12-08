@@ -37,6 +37,8 @@ from miro import messages
 from miro import playlist
 from miro import prefs
 
+from miro.plat.utils import thread_body
+
 import libdaap
 
 # Helper utilities
@@ -107,7 +109,8 @@ class SharingTracker(object):
     def start_tracking(self):
         # sigh.  New thread.  Unfortunately it's kind of hard to integrate
         # it into the application runloop ...
-        self.thread = threading.Thread(target=self.server_thread,
+        self.thread = threading.Thread(target=thread_body,
+                                       args=[self.server_thread],
                                        name='mDNS Browser Thread')
         self.thread.start()
 
@@ -339,7 +342,8 @@ class SharingManager(object):
         if not self.server:
             self.sharing = False
             return
-        self.thread = threading.Thread(target=self.server_thread,
+        self.thread = threading.Thread(target=thread_body,
+                                       args=[self.server_thread],
                                        name='DAAP Server Thread')
         self.thread.start()
         self.sharing = True
