@@ -317,7 +317,8 @@ class ListItemView(widgetset.TableView):
             resizable = True
             if len(data) > 2:
                 resizable = data[2]
-            self._make_column(_(data[0]), data[1], name, resizable)
+            self._make_column(_(data[0]), data[1],
+                name.encode('utf-8', 'replace'), resizable)
         self.set_show_headers(True)
         self.set_columns_draggable(True)
         self.set_column_spacing(12)
