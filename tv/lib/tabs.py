@@ -49,7 +49,7 @@ class TabOrder(database.DDBObject):
         """Construct a TabOrder.  typ should be either ``channel`` or
         ``playlist``.
         """
-        check_u(type)
+        check_u(typ)
         self.type = typ
         self.tab_ids = []
         self._setup_views()
