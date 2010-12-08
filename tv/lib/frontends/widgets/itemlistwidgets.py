@@ -379,14 +379,14 @@ class ListItemView(widgetset.TableView):
                 'feed-name': (70, 0.5),  # channel name
                 'date': (85, 0),   # date
                 'length': (60, 0),   # duration
-                'status': (160, 0),   # status
+                'status': (160, 0.2),   # status
                 'size': (65, 0),    # size
                 'eta': (50, 0),    # eta
                 'rate': (75, 0),    # download rate
-                'artist': (85, 0),
-                'album': (85, 0),
-                'track': (50, 0),
-                'year': (55, 0),
+                'artist': (110, 0.7),
+                'album': (100, 0.7),
+                'track': (30, 0),
+                'year': (40, 0),
                 'genre': (65, 0),
                 'rating': (60, 0),
             }
