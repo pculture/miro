@@ -47,7 +47,6 @@ import libdaap
 # fixup strings if necessary.
 def daap_item_fixup(item_id, entry):
     daapitem = []
-    # no need for id -> miid because that's the indexing key.
 
     # Easy ones - can do a direct translation
     mapping = [('name', 'minm'), ('enclosure_format', 'asfm'),
