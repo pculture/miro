@@ -279,21 +279,21 @@ class ListItemView(widgetset.TableView):
     """TableView that displays a list of items using the list view."""
 
     columns_map = {
-            'state': ['_', style.StateCircleRenderer(), False],
-            'name': ['Name', style.NameRenderer()],
-            'artist': ['Artist', style.ArtistRenderer()],
-            'album': ['Album', style.AlbumRenderer()],
-            'track': ['Track', style.TrackRenderer()],
-            'year': ['Year', style.YearRenderer()],
-            'genre': ['Genre', style.GenreRenderer()],
-            'rating': ['Rating', style.RatingRenderer()],
-            'date': ['Date', style.DateRenderer()],
-            'length': ['Length', style.LengthRenderer()],
-            'status': ['Status', style.StatusRenderer()],
-            'size': ['Size', style.SizeRenderer()],
-            'feed-name': ['Feed', style.FeedNameRenderer()],
-            'eta': ['ETA', style.ETARenderer()],
-            'rate': ['Speed', style.DownloadRateRenderer()],
+            'state': [u'', style.StateCircleRenderer(), False],
+            'name': [_('Name'), style.NameRenderer()],
+            'artist': [_('Artist'), style.ArtistRenderer()],
+            'album': [_('Album'), style.AlbumRenderer()],
+            'track': [_('Track'), style.TrackRenderer()],
+            'year': [_('Year'), style.YearRenderer()],
+            'genre': [_('Genre'), style.GenreRenderer()],
+            'rating': [_('Rating'), style.RatingRenderer()],
+            'date': [_('Date'), style.DateRenderer()],
+            'length': [_('Length'), style.LengthRenderer()],
+            'status': [_('Status'), style.StatusRenderer()],
+            'size': [_('Size'), style.SizeRenderer()],
+            'feed-name': [_('Feed'), style.FeedNameRenderer()],
+            'eta': [_('ETA'), style.ETARenderer()],
+            'rate': [_('Speed'), style.DownloadRateRenderer()],
             }
 
     def __init__(self, item_list, enabled_columns, column_widths,
@@ -317,7 +317,7 @@ class ListItemView(widgetset.TableView):
             resizable = True
             if len(data) > 2:
                 resizable = data[2]
-            self._make_column(_(data[0]), data[1],
+            self._make_column(data[0], data[1],
                 name.encode('utf-8', 'replace'), resizable)
         self.set_show_headers(True)
         self.set_columns_draggable(True)
