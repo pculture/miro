@@ -29,12 +29,14 @@
 """miro.frontends.profilewidgets -- Psuedo-frontend for profiling the UI
 """
 
+import types
+
 from miro.plat.frontends.widgets import application as plat_application
 from miro.frontends.profilewidgets import tests
 from miro.frontends.profilewidgets import portable
 from miro.frontends.widgets import application
 
-def run_application(props_to_set, theme):
+def run_application():
     application = build_platform_app()
     portable.setup()
 
@@ -42,12 +44,13 @@ def run_application(props_to_set, theme):
     # backend.  Dirty, but it works.
     application.startup = tests.startup
     application.setup_globals()
-    application.run(props_to_set)
+    application.run()
 
 def build_platform_app():
     for name in dir(plat_application):
         obj = getattr(plat_application, name)
-        if (issubclass(obj, application.Application)
+        if (type(obj) is types.ClassType
+                and issubclass(obj, application.Application)
                 and obj is not application.Application):
             return obj()
     raise AssertionError("Can't find application class")

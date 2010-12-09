@@ -167,6 +167,11 @@ def parse_command_line_args(args):
     if not _started_up:
         _command_line_args.extend(args)
         return
+
+    for i in xrange(len(args)):
+        if args[i].startswith('file://'):
+            args[i] = args[i][len('file://'):]
+
     reset_command_line_view()
 
     added_videos = False

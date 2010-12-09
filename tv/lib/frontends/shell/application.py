@@ -39,8 +39,7 @@ from miro import app
 from miro import startup
 from miro import messages
 
-def run_application(props_to_set):
-    # FIXME - ignoring props_to_set
+def run_application():
     messages.FrontendMessage.install_handler(MessageHandler())
     startup.startup()
     print 'startup exit'

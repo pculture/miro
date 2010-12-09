@@ -66,6 +66,9 @@ from miro.gtcache import gettext as _
 GROWL_GENERIC_NOTIFICATION = u'Misc'
 GROWL_DOWNLOAD_COMPLETE_NOTIFICATION = u'Download Complete'
 
+def run_application():
+    OSXApplication().run()
+
 class MiroApplication(NSApplication):
     def sendEvent_(self, event):
         try:

@@ -61,12 +61,10 @@ def setup_logging():
     from miro import util
     util.setup_logging()
 
-def run_application(props_to_set, theme):
+def run_application():
     setup_logging()
     app.controller = controller.Controller()
-    app.config.load(theme)
 
-    # FIXME - ignoring props_to_set
     print "Starting up %s" % app.config.get(prefs.LONG_APP_NAME)
     print "Version:    %s" % app.config.get(prefs.APP_VERSION)
     print "OS:         %s %s %s" % (platform.system(), platform.release(), platform.machine())

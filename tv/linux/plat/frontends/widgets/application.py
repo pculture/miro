@@ -52,7 +52,6 @@ from miro import prefs
 from miro.frontends.widgets.application import Application
 # from miro.plat.frontends.widgets import threads
 from miro.plat import renderers, options
-from miro.plat.utils import set_properties
 from miro.plat.config import gconf_lock
 from miro.frontends.widgets.gtk import trayicon
 from miro.plat import resources
@@ -98,20 +97,17 @@ def set_bool(key, value): return _set_pref('window/' + key, 'set_bool', value)
 def set_player_int(key, value): return _set_pref(key, 'set_int', value)
 def set_player_bool(key, value): return _set_pref(key, 'set_bool', value)
 
-def run_application(props_to_set, theme):
-    from miro import startup
-    startup.initialize(theme)
-    LinuxApplication().run(props_to_set)
+def run_application():
+    LinuxApplication().run()
 
 class LinuxApplication(Application):
-    def run(self, props_to_set):
+    def run(self):
         gobject.set_application_name(app.config.get(prefs.SHORT_APP_NAME))
         os.environ["PULSE_PROP_media.role"] = "video"
 
         gtk.gdk.threads_init()
         self._setup_webkit()
         self.startup()
-        set_properties(props_to_set)
         
         logging.info("Linux version:     %s %s %s",
                      platform.system(),

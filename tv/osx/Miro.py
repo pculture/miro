@@ -26,6 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import optparse
 import os
 import sys
 import logging
@@ -75,7 +76,7 @@ def launch_unit_tests():
     
 # =============================================================================
 
-def launch_application():
+def launch_application(parsed_options, args):
     from miro.plat import migrateappname
     migrateappname.migrateSupport('Democracy', 'Miro')
 
@@ -95,9 +96,6 @@ def launch_application():
 
     from miro import bootstrap
     bootstrap.bootstrap()
-
-    from miro import startup
-    startup.initialize(theme)
 
     from miro import app
     from miro import prefs
@@ -126,10 +124,18 @@ def launch_application():
         sys.stdout = AutoflushingTeeStream([h, sys.stdout])
         sys.stderr = AutoflushingTeeStream([h, sys.stderr])
 
-    # Kick off the application
+    # handle command line args
+    if parsed_options.debugmode:
+        if parsed_options.debugmode.lower() in ("y", "yes"):
+            app.debugmode = True
+        else:
+            app.debugmode = False
+    from miro import commandline
+    commandline.set_command_line_args(args)
 
-    from miro.plat.frontends.widgets.application import OSXApplication
-    OSXApplication().run()
+    # Kick off the application
+    from miro import startfrontend
+    startfrontend.run_application(parsed_options.frontend, {}, theme)
 
 # =============================================================================
 
@@ -178,11 +184,35 @@ def launch_downloader_daemon():
 
 activate_psyco()
 
+usage = "usage: %prog [options] [torrent files] [video files]"
+parser = optparse.OptionParser(usage=usage)
+parser.add_option('--frontend',
+                  dest='frontend', metavar='<FRONTEND>',
+                  help='Frontend to use (widgets, cli, shell).')
+parser.set_defaults(frontend="widgets")
+
+parser.add_option('--download-daemon',
+                  dest='download_daemon',
+                  action='store_true',
+                  help='Start Downloader Process')
+parser.set_defaults(download_daemon=False)
+
+group = optparse.OptionGroup(parser, "Debugging options")
+group.add_option('--debug',
+                 dest='debugmode',
+                 metavar='<YESNO>',
+                 help='Puts Miro in debug mode for easier debugging.')
+parser.set_defaults(debugmode="")
+group.add_option('--unittest',
+                 dest='unittest', action='store_true',
+                 help='Run unittests instead of launching the program.')
+parser.set_defaults(unittest=False)
+(parsed_options, args) = parser.parse_args()
+
 # Launch player or downloader, depending on command line parameter`
-if "download_daemon" in sys.argv:
+if parsed_options.download_daemon:
     launch_downloader_daemon()
-elif "unittest" in sys.argv:
+elif parsed_options.unittest:
     launch_unit_tests()
 else:
-    launch_application()
-
+    launch_application(parsed_options, args)

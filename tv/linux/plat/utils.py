@@ -302,17 +302,6 @@ def exit_miro(return_code):
     """
     sys.exit(return_code)
 
-def set_properties(props):
-    """Sets a bunch of command-line specified properites.
-
-    Linux only.
-
-    :param props: a list of pref/value tuples
-    """
-    for pref, val in props:
-        logging.info("Setting preference: %s -> %s", pref.alias, val)
-        app.config.set(pref, val)
-
 def movie_data_program_info(movie_path, thumbnail_path):
     """Returns the necessary information for Miro to run the media
     item info extractor program.
