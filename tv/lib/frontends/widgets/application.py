@@ -132,13 +132,7 @@ class Application:
         messages.QueryFrontendState().send_to_backend()
         messages.TrackChannels().send_to_backend()
 
-        app.item_list_controller_manager = \
-                itemlistcontroller.ItemListControllerManager()
-        app.menu_manager = menus.MenuStateManager()
-        app.playback_manager = playback.PlaybackManager()
-        app.search_manager = search.SearchManager()
-        app.inline_search_memory = search.InlineSearchMemory()
-        app.tab_list_manager = tablistmanager.TabListManager()
+        self.setup_globals()
         self.ui_initialized = True
 
         self.window = MiroWindow(app.config.get(prefs.LONG_APP_NAME),
@@ -146,6 +140,15 @@ class Application:
         self.window.connect_weak('key-press', self.on_key_press)
         self._window_show_callback = self.window.connect_weak('show',
                 self.on_window_show)
+
+    def setup_globals(self):
+        app.item_list_controller_manager = \
+                itemlistcontroller.ItemListControllerManager()
+        app.menu_manager = menus.MenuStateManager()
+        app.playback_manager = playback.PlaybackManager()
+        app.search_manager = search.SearchManager()
+        app.inline_search_memory = search.InlineSearchMemory()
+        app.tab_list_manager = tablistmanager.TabListManager()
 
     def on_config_changed(self, obj, key, value):
         """Any time a preference changes, this gets notified so that we
