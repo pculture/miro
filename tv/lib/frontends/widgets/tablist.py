@@ -878,14 +878,21 @@ class SharingList(TabList):
         info = view.model[iter][0]
         info.mount = True
         self.view.model_changed()
-        # Track this tab for music
-        messages.TrackItems('sharing', info).send_to_backend()
+        current_display = app.display_manager.get_current_display()
+        # The displays don't disappear automatically so handle the case
+        # where the user disconnects and then immediately reconnects to 
+        # the same share.  Won't have this problem if the display just
+        # disappears automatically but it doesn't.
+        try:
+            if current_display.id == info.id:
+                tracker = app.sharing_tracker.get_tracker(info)
+        except AttributeError:
+            pass
 
     def on_hotspot_clicked(self, view, hotspot, iter):
         if hotspot == 'eject-device':
             # Don't track this tab anymore for music.
             info = view.model[iter][0]
-            messages.StopTrackingItems('sharing', info).send_to_backend()
             info.mount = False
             messages.SharingEject(info).send_to_backend()
 

@@ -428,94 +428,14 @@ class SharingItemTracker(object):
     def __init__(self, tab):
         self.tab = tab
         self.id = tab.id
-        self.items = []
-        self.connect_event = threading.Event()
-        eventloop.call_in_thread(self.client_connect_callback,
-                                 self.client_connect_error_callback,
-                                 self.client_connect,
-                                 'DAAP client connect')
+        self.tracker = app.sharing_tracker.get_tracker(self.tab)
 
-    def sharing_item(self, rawitem):
-        sharing_item = item.SharingItem(
-            id=rawitem['id'],
-            duration=rawitem['duration'],
-            size=rawitem['size'],
-            name=rawitem['name'].decode('utf-8'),
-            file_type=u'audio'    # XXX for now 
-        )
-        return sharing_item
-
-    def client_disconnect_error_callback(self, unused):
+    def unlink(self):
         pass
-
-    def client_disconnect_callback(self, unused):
-        pass
-
-    def client_disconnect(self):
-        def disconnect():
-            self.client.close()
-        # As close() can block, run in separate thread.
-        eventloop.call_in_thread(self.client_connect_callback,
-                                 self.client_connect_error_callback,
-                                 disconnect,
-                                 'DAAP client disconnect')
-
-    def client_connect_callback(self, unused):
-        pass
-
-    def client_connect_error_callback(self, unused):
-        pass    # XXX pass error back to user
-
-    def client_connect(self):
-        print 'client_thread: running'
-        # The id actually encodes (name, host, port).
-        name, host, port = self.id
-        self.client = libdaap.make_daap_client(host, port)
-        if not self.client.connect():
-            print 'CANNOT CONNECT'
-            pass    # XXX Send failure back to user
-        added = []
-        # XXX no API for this?  And what about playlists?
-        # XXX dodgy - shouldn't do this directly
-        # Find the base playlist, then suck all data out of it and then
-        # return as a ItemsChanged message
-        for k in self.client.playlists.keys():
-            if self.client.playlists[k]['base']:
-                break
-        # Maybe we have looped through here without a base playlist.  Then
-        # the server is broken.
-        if not self.client.playlists[k]['base']:
-            print 'no base list?'
-            return
-        items = self.client.items[k]
-        for k in items.keys():
-            item = messages.ItemInfo(self.sharing_item(items[k]))
-            added.append(item)
-            self.items.append(item)
-
-        message = messages.ItemsChanged(self.type, self.id, added, [], [])
-        print 'SENDING changed message %d items' % len(message.added)
-        message.send_to_frontend()
 
     def send_initial_list(self):
-        print 'SEND INITIAL LIST'
-        # Send empty stuff to it initially.  We will send more via changed.
-        # The reason is even though the local network is fast, we don't
-        # don't know when the data is going to arrive.  So, just handle
-        # it as a changed message, which is just as good.
-        infos = []
-        messages.ItemList(self.type, self.id, infos).send_to_frontend()
+        self.tracker.get_items()
  
-    def unlink(self):
-        # XXX no API for this?  And what about playlists?
-        # XXX dodgy - shouldn't do this directly
-        removed = []
-        for i in self.items:
-            removed.append(i.id)
-        message = messages.ItemsChanged(self.type, self.id, [], [], removed)
-        message.send_to_frontend()
-
-
 class DeviceItemTracker(object):
     type = 'device'
     def __init__(self, device):

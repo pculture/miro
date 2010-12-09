@@ -33,6 +33,7 @@ import threading
 from miro import app
 from miro import config
 from miro import eventloop
+from miro import item
 from miro import messages
 from miro import playlist
 from miro import prefs
@@ -73,15 +74,16 @@ def daap_item_fixup(item_id, entry):
 
     return daapitem
 
-class SharingInfo(object):
-    """
-    Object which represents information about a media share.
-    """
-    pass
+#class SharingInfo(object):
+#    """
+#    Object which represents information about a media share.
+#    """
+#    pass
 
 class SharingTracker(object):
+    type = 'sharing'
     def __init__(self):
-        pass
+        self.trackers = dict()
 
     def mdns_callback(self, added, fullname, host, port):
         # NB: Filter out myself. 
@@ -115,16 +117,97 @@ class SharingTracker(object):
         self.thread.start()
 
     def eject(self, share):
-        # There isn't really anything we need to do when we eject a share.
-        # No need to unmount or whatever.
-        pass
-    
-    # Don't call this - the current pydaap API has a limitation in which
-    # the browser thread is unable to exit from its runloop, so we can't
-    # exactly stop tracking.
+        tracker = self.trackers[share.id]
+        del self.trackers[share.id]
+        tracker.disconnect()
+
+    def get_tracker(self, share):
+        try:
+            return self.trackers[share.id]
+        except KeyError:
+            print 'CREATING NEW TRACKER'
+            self.trackers[share.id] = SharingItemTrackerImpl(share)
+            return self.trackers[share.id]
+
     def stop_tracking(self):
         raise NotImplementedError()
- 
+
+class SharingItemTrackerImpl(object):
+    type = 'sharing'
+    def __init__(self, share):
+        self.share = share
+        self.id = share.id
+        self.items = []
+        eventloop.call_in_thread(self.client_connect_callback,
+                                 self.client_connect_error_callback,
+                                 self.client_connect,
+                                 'DAAP client connect')
+
+    def sharing_item(self, rawitem):
+        sharing_item = item.SharingItem(
+            id=rawitem['id'],
+            duration=rawitem['duration'],
+            size=rawitem['size'],
+            name=rawitem['name'].decode('utf-8'),
+            file_type=u'audio'    # XXX for now
+        )
+        return sharing_item
+
+    def disconnect(self):
+        ids = [item.id for item in self.get_items()]
+        message = messages.ItemsChanged(self.type, self.id, [], [], ids)
+        print 'SENDING removed message'
+        message.send_to_frontend()
+        # No need to clean out our list of items as we are going away anyway.
+        # As close() can block, run in separate thread.
+        eventloop.call_in_thread(self.client_disconnect_callback,
+                                 self.client_disconnect_error_callback,
+                                 lambda: self.client.disconnect(),
+                                 'DAAP client disconnect')
+
+    def client_disconnect_error_callback(self, unused):
+        pass
+
+    def client_disconnect_callback(self, unused):
+        pass
+
+    def client_connect(self):
+        print 'client_thread: running'
+        # The id actually encodes (name, host, port).
+        name, host, port = self.id
+        self.client = libdaap.make_daap_client(host, port)
+        if not self.client.connect():
+            print 'CANNOT CONNECT'
+            pass    # XXX Send failure back to user
+        # XXX no API for this?  And what about playlists?
+        # XXX dodgy - shouldn't do this directly
+        # Find the base playlist, then suck all data out of it and then
+        # return as a ItemsChanged message
+        for k in self.client.playlists.keys():
+            if self.client.playlists[k]['base']:
+                break
+        # Maybe we have looped through here without a base playlist.  Then
+        # the server is broken.
+        if not self.client.playlists[k]['base']:
+            print 'no base list?'
+            return
+        items = self.client.items[k]
+        for k in items.keys():
+            item = messages.ItemInfo(self.sharing_item(items[k]))
+            self.items.append(item)
+
+    def client_connect_callback(self, unused):
+        self.connected = True
+        message = messages.ItemsChanged(self.type, self.id, self.items, [], [])
+        print 'SENDING changed message %d items' % len(message.added)
+        message.send_to_frontend()
+
+    def client_connect_error_callback(self, unused):
+        pass    # XXX pass error back to user
+
+    def get_items(self):
+        return self.items
+
 class SharingManagerBackend(object):
     types = ['videos', 'audios']
     id    = None                # Must be None
