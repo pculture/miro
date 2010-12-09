@@ -74,12 +74,6 @@ def daap_item_fixup(item_id, entry):
 
     return daapitem
 
-#class SharingInfo(object):
-#    """
-#    Object which represents information about a media share.
-#    """
-#    pass
-
 class SharingTracker(object):
     type = 'sharing'
     def __init__(self):
