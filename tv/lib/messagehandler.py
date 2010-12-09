@@ -441,7 +441,7 @@ class DeviceItemTracker(object):
         messages.ItemList(self.type, self.id, infos).send_to_frontend()
 
     def unlink(self):
-        devices.clean_database(self.device)
+        pass
 
 def make_item_tracker(message):
     if message.type == 'downloads':

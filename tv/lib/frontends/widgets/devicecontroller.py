@@ -316,8 +316,10 @@ class DeviceMountedView(widgetset.VBox):
 
     def set_device(self, device):
         self.device = device
-        self.device.database.set_bulk_mode(True)
         self.device_size.set_size(device.size, device.remaining)
+        if not self.device.mount:
+            return
+        self.device.database.set_bulk_mode(True)
         for name in 'video', 'audio', 'playlists':
             tab = self.tabs[name]
             tab.child.set_device(device)
@@ -558,4 +560,6 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         self.device.database['%s_view' % self.device.tab_type] = 'normal'
 
     def handle_device_changed(self, device):
+        if self.device.id != device.id:
+            return
         self.device = device
