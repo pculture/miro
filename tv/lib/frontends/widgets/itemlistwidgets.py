@@ -297,9 +297,8 @@ class ListItemView(widgetset.TableView):
     }
 
     def __init__(self, item_list, enabled_columns, column_widths,
-            display_channel=True, display_download_info=True):
+            display_download_info=True):
         widgetset.TableView.__init__(self, item_list.model)
-        self.display_channel = display_channel
         self.display_download_info = display_download_info
         self.enabled_columns = enabled_columns
         self.create_signal('sort-changed')
@@ -308,8 +307,6 @@ class ListItemView(widgetset.TableView):
         self._current_sort_column = None
         self._set_initial_widths = bool(column_widths)
         display_columns = enabled_columns
-        if not display_channel and 'feed-name' in display_columns:
-            display_columns.remove('feed-name')
         if display_download_info:
             display_columns = [u'name', u'feed-name', u'status', u'eta', u'rate']
         for name in display_columns:
