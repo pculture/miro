@@ -33,6 +33,7 @@ import cProfile
 import os
 import datetime
 import pstats
+import random
 import tempfile
 
 from miro import app
@@ -82,7 +83,7 @@ class ProfiledCode(object):
         cProfile.runctx('self.profiled_code()', globals(), locals(), path)
         self.tear_down()
         stats = pstats.Stats(path)
-        stats.strip_dirs().sort_stats('cumulative').print_stats(0.2)
+        stats.strip_dirs().sort_stats('cumulative').print_stats(0.4)
         os.unlink(path)
         app.widgetapp.quit_ui()
 
@@ -97,6 +98,7 @@ class ProfiledCode(object):
 
 class ProfileItemView(ProfiledCode):
     def set_up(self):
+        self.setup_text()
         self.item_list = itemlist.ItemList()
         self.item_list.set_sort(itemlist.DateSort(True))
         self.item_list.add_items(self.generate_items())
@@ -105,12 +107,66 @@ class ProfileItemView(ProfiledCode):
         scroller.add(self.item_view)
         self.vbox.pack_start(scroller, expand=True)
 
+    def setup_text(self):
+        # 200 words of lorem ipsum
+        lorem = ("Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+                "Vivamus enim tortor, volutpat at blandit nec, posuere "
+                "id dui.  Sed pharetra porta nibh sed blandit. Praesent "
+                "vitae enim ac elit condimentum bibendum eu eu tellus. "
+                "Maecenas diam neque, rhoncus sit amet eleifend et, "
+                "ornare sed sem.  Vestibulum sollicitudin pretium "
+                "hendrerit. Nam venenatis, ligula nec laoreet euismod, "
+                "ligula augue tempor mauris, nec semper leo massa et "
+                "velit. Cras viverra ultricies est ac egestas. Nulla "
+                "pulvinar elit nec orci ultrices in aliquet risus "
+                "tempor. Fusce vitae lorem sapien, in lacinia tortor. "
+                "Cum sociis natoque penatibus et magnis dis parturient "
+                "montes, nascetur ridiculus mus. Maecenas nec justo "
+                "velit.  Quisque tempus laoreet risus.  Aenean urna "
+                "arcu, consectetur at accumsan sit amet, tempor rutrum "
+                "tortor. Ut bibendum libero id nulla vehicula vel "
+                "viverra magna dignissim. Aliquam malesuada metus "
+                "ultricies nunc feugiat viverra. Curabitur vel leo "
+                "sapien. Cum sociis natoque penatibus et magnis dis "
+                "parturient montes, nascetur ridiculus mus. Vestibulum "
+                "fermentum massa et augue adipiscing et imperdiet lorem "
+                "aliquet. Pellentesque posuere vestibulum tortor, eu "
+                "facilisis nibh venenatis eu.  Fusce eleifend, felis "
+                "varius commodo fringilla, dui nisl porttitor lacus, et "
+                "gravida est ipsum a arcu. Fusce vitae mi ut diam "
+                "blandit ornare. Sed viverra metus at massa viverra.  ")
+        lorem = lorem.split()
+        self.names = iter(' '.join(random.sample(lorem, 5))
+                for x in xrange(1000))
+        descriptions = []
+        for x in xrange(1000):
+            random.shuffle(lorem)
+            p1 = ' '.join(lorem)
+            random.shuffle(lorem)
+            p2 = ' '.join(lorem)
+            random.shuffle(lorem)
+            p3 = ' '.join(lorem)
+            descriptions.append("\n".join((p1, p2, p3)))
+        self.descriptions = iter(descriptions)
+
     def make_item_view(self):
         self.item_view = itemlistwidgets.ItemView(self.item_list)
 
     def profiled_code(self):
-        for x in xrange(10):
+        for x in xrange(30):
             self.item_view.redraw_now()
+            for item in self.item_list:
+                self.mutate_item(item)
+                self.item_list.update_item(item)
+            self.item_view.model_changed()
+
+    def mutate_item(self, item):
+        # make sure an items text is unique so the text layout isn't cached
+        item.name = self.names.next()
+        item.description = self.descriptions.next()
+        item.release_date += datetime.timedelta(days=1)
+        item.duration += 1
+        item.size += 1
 
     def generate_items(self):
         item_info_template = {
@@ -142,28 +198,6 @@ class ProfileItemView(ProfiledCode):
          'mime_type': u'video/quicktime',
          'up_total': None,
          'children': [],
-         'description': u'<p>This week\'s first clip takes us to Botswana\'s '
-         'Okavango Delta, where Brad Bestelink films a pair of lions and a lo'
-         'ne hippo bull.</p>\n<p>In the forests of Thailand\'s Kaeng Krachan '
-         'National Park, cameraman Darryl Sweetland encounters a tortoise wit'
-         'h an unusual adaptation.</p>\n<p>Next, a black-backed jackal remain'
-         's alert as it feeds on the remains of a carcass in South Africa\'s '
-         'Free State.</p>\n<p>Finally, cameraman Graeme Duane films the numer'
-         'ous cichlid species that inhabit Lake Malawi.</p><br /><img src="ht'
-         'tp://podcast.earth-touch.com/images/upload/stories/PC1510/storythum'
-         'b.jpg" /><div class="feedflare">\n<a href="http://feeds.feedburner.'
-         'com/~ff/earth-touch_podcast_720p?a=s9hm49puBzo:Ac3ddk2VfCI:yIl2AUo'
-         'C8zA"><img src="http://feeds.feedburner.com/~ff/earth-touch_podcas'
-         't_720p?d=yIl2AUoC8zA" border="0" /></a> <a href="http://feeds.feed'
-         'burner.com/~ff/earth-touch_podcast_720p?a=s9hm49puBzo:Ac3ddk2VfCI:'
-         'qj6IDK7rITs"><img src="http://feeds.feedburner.com/~ff/earth-touc'
-         'h_podcast_720p?d=qj6IDK7rITs" border="0" /></a> <a href="http://f'
-         'eeds.feedburner.com/~ff/earth-touch_podcast_720p?a=s9hm49puBzo:Ac'
-         '3ddk2VfCI:V_sGLiPBpWU"><img src="http://feeds.feedburner.com/~ff/'
-         'earth-touch_podcast_720p?i=s9hm49puBzo:Ac3ddk2VfCI:V_sGLiPBpWU" '
-         'border="0" /></a>\n</div><img src="http://feeds.feedburner.com/~'
-         'r/earth-touch_podcast_720p/~4/s9hm49puBzo" height="1" width="1" />',
-         'name': u'Wildlife podcast, week 15 2010',
          'track': -1,
          'resume_time': 0,
          'pending_auto_dl': False,
@@ -194,6 +228,7 @@ class ProfileItemView(ProfiledCode):
         for x in xrange(30):
             item_info = messages.ItemInfo.__new__(messages.ItemInfo)
             item_info.__dict__ = item_info_template.copy()
+            self.mutate_item(item_info)
             retval.append(item_info)
         return retval
 
