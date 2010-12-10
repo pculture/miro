@@ -633,3 +633,221 @@ def align_center(packer):
 def pad(packer, top=0, left=0, bottom=0, right=0):
     """Add padding to a packer."""
     return Padding(packer, top, right, bottom, left)
+
+class LayoutRect(object):
+    """Lightweight object use to track rectangles inside a layout
+
+    :attribute x: top coordinate, read-write
+    :attribute y: left coordinate, read-write
+    :attribute width: width of the rect, read-write
+    :attribute height: height of the rect, read-write
+    """
+
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+
+    def __str__(self):
+        return "LayoutRect(%s, %s, %s, %s)" % (self.x, self.y, self.width,
+                self.height)
+
+    def __eq__(self, other):
+        my_values = (self.x, self.y, self.width, self.height)
+        try:
+            other_values = (other.x, other.y, other.width, other.height)
+        except AttributeError:
+            return value
+        return my_values == other_values
+
+    def subsection(self, left, right, top, bottom):
+        """Create a new LayoutRect from inside this one."""
+        return LayoutRect(self.x + left, self.y + top,
+                self.width - left - right, self.height - top - bottom)
+
+    def right_side(self, width):
+        """Create a new LayoutRect from the right side of this one."""
+        return LayoutRect(self.right - width, self.y, width, self.height)
+
+    def left_side(self, width):
+        """Create a new LayoutRect from the left side of this one."""
+        return LayoutRect(self.x, self.y, width, self.height)
+
+    def top_side(self, height):
+        """Create a new LayoutRect from the top side of this one."""
+        return LayoutRect(self.x, self.y, self.width, height)
+
+    def bottom_side(self, height):
+        """Create a new LayoutRect from the bottom side of this one."""
+        return LayoutRect(self.x, self.bottom - height, self.width, height)
+
+    def is_point_inside(self, x, y):
+        return (self.x <= x < self.x + self.width
+                and self.y <= y < self.y + self.height)
+
+    def get_right(self):
+        return self.x + self.width
+    def set_right(self, right):
+        self.x = right - self.width
+    right = property(get_right, set_right)
+
+    def get_bottom(self):
+        return self.y + self.height
+    def set_bottom(self, bottom):
+        self.y = bottom - self.height
+    bottom = property(get_bottom, set_bottom)
+
+class Layout(object):
+    """Store the layout for a cell
+
+    Layouts are lightweight objects that keep track of where stuff is inside a
+    cell.  They can be used for both rendering and hotspot tracking.
+
+    :attribute last_rect: the LayoutRect most recently added to the layout
+    """
+
+    def __init__(self):
+        self._rects = []
+        self.last_rect = None
+
+    def rect_count(self):
+        """Get the number of rects in this layout."""
+        return len(self._rects)
+
+    def add(self, x, y, width, height, drawing_function=None,
+            hotspot=None):
+        """Add a new element to this Layout
+
+        :param x: x coordinate
+        :param y: y coordinate
+        :param width: width
+        :param height: height
+        :param drawing_function: if set, call this function to render the
+                element on a DrawingContext
+        :param hotspot: if set, the hotspot for this element
+
+        :returns: LayoutRect of the added element
+        """
+        return self.add_rect(LayoutRect(x, y, width, height),
+                drawing_function, hotspot)
+
+    def add_rect(self, layout_rect, drawing_function=None, hotspot=None):
+        """Add a new element to this Layout using a LayoutRect
+
+        :param layout_rect: LayoutRect object for positioning
+        :param drawing_function: if set, call this function to render the
+                element on a DrawingContext
+        :param hotspot: if set, the hotspot for this element
+        :returns: LayoutRect of the added element
+        """
+        self.last_rect = layout_rect
+        value = (layout_rect, drawing_function, hotspot)
+        self._rects.append(value)
+        return layout_rect
+
+    def add_text_line(self, textbox, x, y, width, hotspot=None):
+        """Add one line of text from a text box to the layout
+
+        This is convenience method that's equivelent to:
+            self.add(x, y, width, textbox.font.line_height(), textbox.draw,
+                    hotspot)
+        """
+        return self.add(x, y, width, textbox.font.line_height(), textbox.draw,
+                hotspot)
+
+    def add_image(self, image, x, y, hotspot=None):
+        """Add an ImageSurface to the layout
+
+        This is convenience method that's equivelent to:
+            self.add(x, y, image.width, image.height, image.draw, hotspot)
+        """
+        width, height = image.get_size()
+        return self.add(x, y, width, height, image.draw, hotspot)
+
+    def merge(self, layout):
+        """Add another layout's elements with this one
+        """
+        self._rects.extend(layout._rects)
+        self.last_rect = layout.last_rect
+
+    def translate(self, delta_x, delta_y):
+        """Move each element inside this layout """
+        for rect, _, _ in self._rects:
+            rect.x += delta_x
+            rect.y += delta_y
+
+    def max_width(self):
+        """Get the max width of the elements in current group."""
+        return max(rect.width for (rect, _, _) in self._rects)
+
+    def max_height(self):
+        """Get the max height of the elements in current group."""
+        return max(rect.height for (rect, _, _) in self._rects)
+
+    def center_x(self, left=None, right=None):
+        """Center each rect inside this layout horizontally.
+
+        The left and right arguments control the area to center the rects to.
+        If one is missing, it will be calculated using largest width of the
+        layout.  If both are missing, a ValueError will be thrown.
+
+        :param left: left-side of the area to center to
+        :param right: right-side of the area to center to
+        """
+        if left is None:
+            if right is None:
+                raise ValueError("both left and right are None")
+            left = right - self.max_width()
+        elif right is None:
+            right = left + self.max_width()
+        area_width = right - left
+        for rect, _, _ in self._rects:
+            rect.x = left + (area_width - rect.width) // 2
+
+    def center_y(self, top=None, bottom=None):
+        """Center each rect inside this layout vertically.
+
+        The top and bottom arguments control the area to center the rects to.
+        If one is missing, it will be calculated using largest height in the
+        layout.  If both are missing, a ValueError will be thrown.
+
+        :param top: top of the area to center to
+        :param bottom: bottom of the area to center to
+        """
+        if top is None:
+            if bottom is None:
+                raise ValueError("both top and bottom are None")
+            top = bottom - self.max_height()
+        elif bottom is None:
+            bottom = top + self.max_height()
+        area_height = bottom - top
+        for rect, _, _ in self._rects:
+            rect.y = top + (area_height - rect.height) // 2
+
+    def find_hotspot(self, x, y):
+        """Find a hotspot inside our rects.
+
+        If (x, y) is inside any of the rects for this layout and that rect has
+        a hotspot set, a 3-tuple containing the hotspot name, and the x, y
+        coordinates relative to the hotspot rect.  If no rect is found, we
+        return None.
+
+        :param x: x coordinate to check
+        :param y: y coordinate to check
+        """
+        for rect, drawing_function, hotspot in self._rects:
+            if hotspot is not None and rect.is_point_inside(x, y):
+                return hotspot, x - rect.x, y - rect.y
+        return None
+
+    def draw(self, context):
+        """Render each layout rect onto context
+
+        :param context: a DrawingContext to draw on
+        """
+
+        for rect, drawing_function, hotspot in self._rects:
+            if drawing_function is not None:
+                drawing_function(context, rect.x, rect.y, rect.width,
+                        rect.height)
