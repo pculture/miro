@@ -108,7 +108,10 @@ class Application:
     def exception_handler(self, typ, value, traceback):
         report = crashreport.format_crash_report("in frontend thread",
             exc_info=(typ, value, traceback), details=None)
-        self.handle_crash_report(report)
+        # we might be inside of some UI function where we can't run a dialog
+        # box.  For example cell renderers on GTK.  Use call_on_ui_thread() to
+        # get a fresh main loop iteration.
+        call_on_ui_thread(lambda: self.handle_crash_report(report))
 
     def startup(self):
         """Connects to signals, installs handlers, and calls :meth:`startup`
