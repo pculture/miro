@@ -50,7 +50,7 @@ import datetime
 import time
 from types import NoneType
 from miro.plat.utils import FilenameType
-from miro.frontendstate import WidgetsFrontendState
+from miro.displaystate import DisplayState
 
 class ValidationError(Exception):
     """Error thrown when we try to save invalid data."""
@@ -679,23 +679,21 @@ class ThemeHistorySchema(DDBObjectSchema):
     def handle_malformed_pastThemes(row):
         return []
 
-class WidgetsFrontendStateSchema(DDBObjectSchema):
-    klass = WidgetsFrontendState
-    table_name = 'widgets_frontend_state'
+class DisplayStateSchema(DDBObjectSchema):
+    klass = DisplayState
+    table_name = 'display_state'
     fields = DDBObjectSchema.fields + [
-        ('list_view_displays', SchemaList(SchemaBinary())),
-        ('active_filters', SchemaDict(SchemaBinary(),
-            SchemaList(SchemaBinary()))),
-        ('sort_states', SchemaDict(SchemaBinary(),
-            SchemaBinary())),
-        ('list_view_columns', SchemaList(SchemaString())),
-        ('list_view_column_widths', SchemaDict(SchemaString(), SchemaInt(),
-            noneOk=True)),
+        ('type', SchemaString()),
+        ('id_', SchemaString(noneOk=True)),
+        ('is_list_view', SchemaBool(noneOk=True)),
+        ('active_filters', SchemaList(SchemaBinary(), noneOk=True)),
+        ('sort_state', SchemaBinary(noneOk=True)),
+        ('columns', SchemaList(SchemaTuple(SchemaString(), SchemaInt()), noneOk=True)),
     ]
 
-    @staticmethod
-    def handle_malformed_list_view_displays(row):
-        return []
+    indexes = (
+        ('display_state_display', ('type', 'id_')),
+    )
 
 class DBLogEntrySchema(DDBObjectSchema):
     klass = DBLogEntry
@@ -710,7 +708,7 @@ class DBLogEntrySchema(DDBObjectSchema):
     def handle_malformed_list_view_displays(row):
         return []
 
-VERSION = 123
+VERSION = 124
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,
@@ -721,6 +719,6 @@ object_schemas = [
     SingleFeedImplSchema,
     PlaylistSchema, ChannelFolderSchema, PlaylistFolderSchema,
     PlaylistItemMapSchema, PlaylistFolderItemMapSchema,
-    TabOrderSchema, ThemeHistorySchema, WidgetsFrontendStateSchema,
+    TabOrderSchema, ThemeHistorySchema, DisplayStateSchema,
     DBLogEntrySchema,
 ]

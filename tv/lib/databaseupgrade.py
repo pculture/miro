@@ -2843,3 +2843,47 @@ def upgrade123(cursor):
     """
     cursor.execute("ALTER TABLE widgets_frontend_state "
             "ADD COLUMN list_view_column_widths pythonrepr")
+
+def upgrade124(cursor):
+    """Change dict entries in WidgetsFrontendState to rows in DisplayState.
+    Values not set in WFS will be None in DS, meaning "default".
+    Since we're changing columns over to display-dependent defaults,
+    it's probably best to ignore existing column settings.
+    """
+    cursor.execute("CREATE TABLE display_state "
+        "(id integer PRIMARY KEY, type text, id_ text, is_list_view integer, "
+        "active_filters pythonrepr, sort_state blob, columns pythonrepr)")
+    cursor.execute("SELECT list_view_displays, active_filters, sort_states "
+        "FROM widgets_frontend_state")
+    (list_view_displays, all_active_filters, sort_states) = cursor.fetchone()
+    list_view_displays = eval(list_view_displays, {})
+    all_active_filters = eval(all_active_filters, {})
+    sort_states = eval(sort_states, {})
+
+    displays = (set(list_view_displays) | set(all_active_filters.keys()) |
+        set(sort_states.keys()))
+    for display in displays:
+        typ, id_ = display.split(':')
+        is_list_view = None
+        active_filters = None
+        sort_state = None
+        columns = None
+        if display in list_view_displays:
+            is_list_view = 1
+            list_view_displays.remove(display)
+        if display in all_active_filters:
+            active_filters = repr(all_active_filters[display])
+            del all_active_filters[display]
+        if display in sort_states:
+            sort_state = sort_states[display]
+            del sort_states[display]
+        cursor.execute("INSERT INTO display_state "
+            "(id, type, id_, is_list_view, active_filters, sort_state, columns) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (get_next_id(cursor),
+                typ, id_, is_list_view, active_filters, sort_state, columns))
+    if list_view_displays or all_active_filters or sort_states:
+        logging.warn("Values unconverted in upgrade124: (%s), (%s), (%s)" %
+            (repr(list_view_displays), repr(all_active_filters),
+            repr(sort_states)))
+    cursor.execute("DROP TABLE widgets_frontend_state")
