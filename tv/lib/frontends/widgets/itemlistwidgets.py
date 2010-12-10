@@ -318,6 +318,7 @@ class ListItemView(widgetset.TableView):
         widgetset.TableView.__init__(self, item_list.model)
         self.column_state = columns
         self.create_signal('sort-changed')
+        self.create_signal('columns-changed')
         self.item_list = item_list
         self._column_name_to_column = {}
         self._current_sort_column = None
@@ -338,6 +339,17 @@ class ListItemView(widgetset.TableView):
         self.set_fixed_height(True)
         self.allow_multiple_select(True)
         self.html_stripper = util.HTMLStripper()
+
+    def _get_ui_column_state(self):
+        for i, (name, width) in enumerate(self.column_state):
+            column = self._column_name_to_column[name]
+            width = column.get_width()
+            self.column_state[i] = (name, width)
+
+    def on_unrealize(self, treeview):
+        self._get_ui_column_state()
+        self.emit('columns-changed', self.column_state)
+        super(ListItemView, self).on_unrealize(treeview)
 
     def get_tooltip(self, iter, column):
         if ('name' in self._column_name_to_column and
@@ -388,14 +400,17 @@ class ListItemView(widgetset.TableView):
             weights = {}
             for name, width in self.column_state:
                 weights[name] = self.WIDTH_WEIGHT[name]
-            total_weight = sum(weight for weight in weights.values())
-            for name, width in self.column_state:
+            total_weight = sum(weight for weight in weights.values()) or 1
+            diff = 0 # prevent cumulative rounding errors
+            for i, (name, width) in enumerate(self.column_state):
                 weight = weights[name]
+                extra = extra_width * weight / total_weight + diff
+                diff = extra - int(extra)
+                width += int(extra)
+                self.column_state[i] = (name, width)
                 column = self._column_name_to_column[name]
-                extra = int(extra_width * weight / total_weight)
-                width += extra
-                weights[name] = 0
                 column.set_width(width)
+            self.emit('columns-changed', self.column_state)
 
     def _on_column_clicked(self, column, column_name):
         ascending = not (column.get_sort_indicator_visible() and
