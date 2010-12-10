@@ -1075,7 +1075,9 @@ class ItemInfo(object):
     # bump this whenever you change the ItemInfo class, or change on of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description())
-    VERSION = 2
+    VERSION = 3
+
+    html_stripper = util.HTMLStripper()
 
     def __init__(self, item):
         self.name = item.get_title()
@@ -1084,6 +1086,8 @@ class ItemInfo(object):
         self.feed_name = item.get_source()
         self.feed_url = item.get_feed_url()
         self.description = item.get_description()
+        self.description_stripped = (
+                ItemInfo.html_stripper.strip(self.description))
         self.state = item.get_state()
         self.release_date = item.get_release_date_obj()
         self.size = item.get_size()

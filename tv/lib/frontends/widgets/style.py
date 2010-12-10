@@ -286,8 +286,6 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     REMOVE_TEXT = _("Remove")
     STOP_SEEDING_TEXT = _("Stop seeding")
 
-    html_stripper = util.HTMLStripper()
-
     def __init__(self, display_channel=True):
         widgetset.CustomCellRenderer.__init__(self)
         self.separator = imagepool.get_surface(resources.path(
@@ -395,7 +393,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     def make_description(self, layout_manager):
         layout_manager.set_font(0.85, family=widgetset.ITEM_DESC_FONT)
         layout_manager.set_text_color(self.ITEM_DESC_COLOR)
-        text, links = ItemRenderer.html_stripper.strip(self.data.description)
+        text, links = self.data.description_stripped
         textbox = layout_manager.textbox("")
         pos = 0
         for start, end, url in links:

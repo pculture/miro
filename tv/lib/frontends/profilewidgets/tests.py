@@ -38,6 +38,7 @@ import tempfile
 
 from miro import app
 from miro import messages
+from miro import util
 from miro.plat.frontends.widgets import threads
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import dialogs
@@ -98,6 +99,7 @@ class ProfiledCode(object):
 
 class ProfileItemView(ProfiledCode):
     def set_up(self):
+        self.html_stripper = util.HTMLStripper()
         self.setup_text()
         self.item_list = itemlist.ItemList()
         self.item_list.set_sort(itemlist.DateSort(True))
@@ -164,6 +166,7 @@ class ProfileItemView(ProfiledCode):
         # make sure an items text is unique so the text layout isn't cached
         item.name = self.names.next()
         item.description = self.descriptions.next()
+        item.description_stripped = self.html_stripper.strip(item.description)
         item.release_date += datetime.timedelta(days=1)
         item.duration += 1
         item.size += 1
