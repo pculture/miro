@@ -140,7 +140,7 @@ class MovieDataUpdater(signals.SignalEmitter):
             if duration > -1 and mime_mediatype is not 'video':
                 mediatype = 'audio'
                 screenshot = mdi.item.screenshot or FilenameType("")
-                logging.debug("moviedata: %s %s", duration, mediatype)
+                logging.debug("moviedata: mutagen %s %s", duration, mediatype)
 
                 self.update_finished(mdi.item, duration, screenshot, mediatype,
                         metadata)
@@ -170,7 +170,7 @@ class MovieDataUpdater(signals.SignalEmitter):
                         # file?  Setting it to "" instead of None, means
                         # that we won't try to take the screenshot again.
                         screenshot = FilenameType("")
-                    logging.debug("moviedata: %s %s %s", duration, screenshot,
+                    logging.debug("moviedata: mdp %s %s %s", duration, screenshot,
                                   mediatype)
 
                     self.update_finished(mdi.item, duration, screenshot,
