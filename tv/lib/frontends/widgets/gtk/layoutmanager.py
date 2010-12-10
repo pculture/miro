@@ -38,8 +38,20 @@ import cairo
 import gtk
 import pango
 
+from miro import util
 from miro.plat.frontends.widgets import use_native_buttons
 from miro.frontends.widgets.gtk import pygtkhacks
+
+class FontCache(util.Cache):
+    def get(self, context, description, scale_factor, bold, italic):
+        key = (context, description, scale_factor, bold, italic)
+        return util.Cache.get(self, key)
+
+    def create_new_value(self, key):
+        (context, description, scale_factor, bold, italic) = key
+        return Font(context, description, scale_factor, bold, italic)
+
+_font_cache = FontCache(512)
 
 class LayoutManager(object):
     def __init__(self, widget):
@@ -72,8 +84,8 @@ class LayoutManager(object):
             self.pango_context.set_base_dir(pango.DIRECTION_LTR)
 
     def font(self, scale_factor, bold=False, italic=False, family=None):
-        return Font(self.pango_context, self.style_font_desc, scale_factor,
-                bold, italic)
+        return _font_cache.get(self.pango_context, self.style_font_desc,
+                scale_factor, bold, italic)
 
     def set_font(self, scale_factor, bold=False, italic=False, family=None):
         self.current_font = self.font(scale_factor, bold, italic)
@@ -137,7 +149,7 @@ class TextBox(object):
         self.font = font
         self.color = color
         self.layout.set_font_description(font.description.copy())
-        self.width = None
+        self.width = self.height = None
 
     def set_text(self, text, font=None, color=None, underline=False):
         self.text_chunks = []
@@ -200,12 +212,30 @@ class TextBox(object):
 
     def ensure_layout(self):
         if not self.text_set:
-            self.layout.set_text(''.join(self.text_chunks))
+            text = ''.join(self.text_chunks)
+            if len(text) > 100:
+                text = text[:self._calc_text_cutoff()]
+            self.layout.set_text(text)
             attr_list = pango.AttrList()
             for attr in self.attributes:
                 attr_list.insert(attr)
             self.layout.set_attributes(attr_list)
             self.text_set = True
+
+    def _calc_text_cutoff(self):
+        """This method is a bit of a hack...  GTK slows down if we pass too
+        much text to the layout.  Even text that falls below our height has a
+        performance penalty.  Try not to have too much more than is necessary.
+        """
+        if None in (self.width, self.height):
+            return -1
+
+        chars_per_line = (self.width * pango.SCALE //
+                self.font.get_font_metrics().get_approximate_char_width())
+        lines_available = self.height // self.font.line_height()
+        # overestimate these because it's better to have too many characters
+        # than too little.
+        return int(chars_per_line * lines_available * 1.2)
 
     def line_count(self):
         self.ensure_layout()
