@@ -242,8 +242,10 @@ class SimpleEventLoop(signals.SignalEmitter):
                 if err == errno.EINTR:
                     logging.warning ("eventloop: %s", detail)
                 else:
+                    self.emit('end-loop')
                     raise
             if self.quit_flag:
+                self.emit('end-loop')
                 break
             if self.wake_receiver.fileno() in read_fds_ready:
                 self._slurp_waker_data()
