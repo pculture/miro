@@ -563,7 +563,9 @@ class VideoConversionTask(object):
         
     def run(self):
         self.progress = 0
-        self.thread = threading.Thread(target=self._loop, name="Conversion Task")
+        self.thread = threading.Thread(target=utils.thread_body,
+                                       args=[self._loop],
+                                       name="Conversion Task")
         self.thread.setDaemon(True)
         self.thread.start()
 
