@@ -221,6 +221,8 @@ class VideoConversionManager(signals.SignalEmitter):
             self._check_task_loop()
             self.pending_tasks.append(task)
             self._notify_task_added(task)
+
+        return task
     
     def _enqueue_message(self, message, **kw):
         msg = {'message': message}

@@ -183,8 +183,11 @@ class DeviceManager(object):
                 return None
             dsm = DeviceSyncManager(device)
             self.syncs_in_progress[device.id] = dsm
-
-        return self.syncs_in_progress[device.id]
+            return dsm
+        else:
+            dsm = self.syncs_in_progress[device.id]
+            dsm.set_device(device)
+            return dsm
 
 
 class DeviceSyncManager(object):
@@ -211,6 +214,9 @@ class DeviceSyncManager(object):
                                                 device.info.video_path)
         if not os.path.exists(self.video_target_folder):
             os.makedirs(self.video_target_folder)
+
+    def set_device(self, device):
+        self.device = device
 
     def add_items(self, item_infos):
         device_info = self.device.info
@@ -256,9 +262,9 @@ class DeviceSyncManager(object):
                 self.signal_handles.append(conversion_manager.connect(
                         signal, callback))
 
-        self.waiting.add(info)
-        start_conversion(conversion, info, target,
-                         create_item=False)
+        task = start_conversion(conversion, info, target,
+                                create_item=False)
+        self.waiting.add(task.key)
 
     def _exists(self, item_info):
         if item_info.file_type not in self.device.database:
@@ -283,7 +289,7 @@ class DeviceSyncManager(object):
     def _conversion_removed_callback(self, conversion_manager, task=None):
         if task is not None:
             try:
-                self.waiting.remove(task.item_info)
+                self.waiting.remove(task.key)
                 del self.etas[task.key]
             except KeyError:
                 pass
@@ -294,7 +300,7 @@ class DeviceSyncManager(object):
 
     def _conversion_staged_callback(self, conversion_manager, task):
         try:
-            self.waiting.remove(task.item_info)
+            self.waiting.remove(task.key)
             del self.etas[task.key]
         except KeyError:
             pass # missing for some reason
@@ -375,6 +381,10 @@ class DeviceSyncManager(object):
         total_time = time.time() - self.start_time
         total_eta = total_time + eta
         return total_time / total_eta
+
+    def cancel(self):
+        for key in self.waiting:
+            videoconversion.conversion_manager.cancel(key)
 
 
 class DeviceDatabase(dict, signals.SignalEmitter):
@@ -468,6 +478,11 @@ def device_changed(info):
     """
     if info.mount:
         scan_device_for_files(info)
+    else:
+        sync_manager = app.device_manager.get_sync_for_device(info,
+                                                              create=False)
+        if sync_manager:
+            sync_manager.cancel()
     message = messages.TabsChanged('devices',
                                    [],
                                    [info],
@@ -481,6 +496,11 @@ def device_disconnected(info):
     Helper for device trackers which sends a disconnected message for the
     device.
     """
+    sync_manager = app.device_manager.get_sync_for_device(info,
+                                                          create=False)
+    if sync_manager:
+        sync_manager.cancel()
+
     message = messages.TabsChanged('devices',
                                   [],
                                   [],

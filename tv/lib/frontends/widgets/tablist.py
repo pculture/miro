@@ -708,6 +708,10 @@ class DevicesList(TabList, TabUpdaterMixin):
             self._add_fake_tabs(info)
 
     def update(self, info):
+        if not self.has_info(info.id):
+            # this gets called if a sync is in progress when the device
+            # disappears
+            return
         if info.mount and not info.info.has_multiple_devices and \
                 not self.get_child_count(info.id):
             self._add_fake_tabs(info)
