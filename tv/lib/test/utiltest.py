@@ -1,6 +1,3 @@
-# coding=latin-1
-# The above comment is required, because it includes non-latin characters
-# as an inline string in the source, we need to have this here as per PEP 263.
 import os
 import tempfile
 import shutil
@@ -351,7 +348,7 @@ class UtilTest(unittest.TestCase):
         self.assertEqualWithType('http://www.example.com', unicode, util.quote_unicode_url(u'http://www.example.com'))
 
         # Unicode, substitution
-        self.assertEqualWithType(u'http://www.example.com/fran%C3%83%C2%A7ois', unicode, util.quote_unicode_url(u'http://www.example.com/françois'))
+        self.assertEqualWithType(u'http://www.example.com/fran%C3%83%C2%A7ois', unicode, util.quote_unicode_url(u'http://www.example.com/fran\xc3\xa7ois'))
 
 
     def test_call_command(self):
