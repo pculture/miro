@@ -1,3 +1,6 @@
+# coding=latin-1
+# The above comment is required, because it includes non-latin characters
+# as an inline string in the source, we need to have this here as per PEP 263.
 import os
 import tempfile
 import shutil
