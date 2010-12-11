@@ -68,7 +68,7 @@ def dirfilt(root, dirs):
     """
     removelist = []
     ws = NSWorkspace.sharedWorkspace()
-    for d in dirp:
+    for d in dirs:
         if ws.isFilePackageAtPath_(os.path.join(root, d)):
             removelist.append(d)
     for x in removelist:
