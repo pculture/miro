@@ -773,62 +773,66 @@ class AboutDialog(Dialog):
                 app.config.get(prefs.APP_REVISION_NUM))
         else:
             version = "%s" % app.config.get(prefs.APP_VERSION)
-        name_label = gtk.Label('<span size="xx-large" weight="bold">%s %s</span>' % (
+        name_label = gtk.Label(
+            '<span size="xx-large" weight="bold">%s %s</span>' % (
                 app.config.get(prefs.SHORT_APP_NAME), version))
         name_label.set_use_markup(True)
         self.packing_vbox.pack_start(name_label)
-        copyright_text = _('%(copyright)s.  See license.txt file for details.\n'
-                           '%(trademark)s') % (
+        copyright_text = _(
+            '%(copyright)s.  See license.txt file for details.\n'
+            '%(trademark)s',
             {"copyright": app.config.get(prefs.COPYRIGHT),
              "trademark": app.config.get(prefs.TRADEMARK)})
         copyright_label = gtk.Label('<small>%s</small>' % copyright_text)
         copyright_label.set_use_markup(True)
         copyright_label.set_justify(gtk.JUSTIFY_CENTER)
         self.packing_vbox.pack_start(copyright_label)
-        self.packing_vbox.pack_start(gtk.Label(app.config.get(prefs.PROJECT_URL)))
 
-        # get adopters, remove newlines, and wrap it
-        adopters_data = open(resources.path('ADOPTERS'), 'r').read()
-        first_double_newline = adopters_data.find('\n\n')
-        adopters_data = adopters_data[first_double_newline+2:-1].replace('\n', ', ')
+        # FIXME - make the project url clickable
+        self.packing_vbox.pack_start(
+            gtk.Label(app.config.get(prefs.PROJECT_URL)))
+
+        contributor_label = gtk.Label(
+            _("Thank you to all the people who contributed to Miro "
+              "%(version)s:",
+              {"version": app.config.get(prefs.APP_VERSION)}))
+        contributor_label.set_justify(gtk.JUSTIFY_CENTER)
+        self.packing_vbox.pack_start(contributor_label)
 
         # get contributors, remove newlines and wrap it
         contributors = open(resources.path('CREDITS'), 'r').readlines()
-        contributors = [c[2:].strip() for c in contributors if c.startswith("* ")]
+        contributors = [c[2:].strip()
+                        for c in contributors if c.startswith("* ")]
         contributors = ", ".join(contributors)
 
-        contributors = "\n\nThank you to all the people who contributed to Miro 3.5:\n\n" + contributors
+        # show contributors
+        contrib_buffer = gtk.TextBuffer()
+        contrib_buffer.set_text(contributors)
 
-        adopters_data = adopters_data + contributors
+        contrib_view = gtk.TextView(contrib_buffer)
+        contrib_view.set_editable(False)
+        contrib_view.set_cursor_visible(False)
+        contrib_view.set_wrap_mode(gtk.WRAP_WORD)
+        contrib_window = gtk.ScrolledWindow()
+        contrib_window.set_policy(gtk.POLICY_NEVER, gtk.POLICY_ALWAYS)
+        contrib_window.add(contrib_view)
+        contrib_window.set_size_request(-1, 100)
+        self.packing_vbox.pack_start(contrib_window)
 
-        # show the adopters
-        adopters_buffer = gtk.TextBuffer()
-        adopters_buffer.set_text(adopters_data)
-        iter = adopters_buffer.get_start_iter()
-        adopters_buffer.insert(iter,
-            'Thank you to the following people who have adopted '
-            'lines of Miro code to help support development! '
-            'To help fund continued Miro development, visit the ')
-        adopt_link_tag = adopters_buffer.create_tag(
-            foreground='blue', underline=pango.UNDERLINE_SINGLE)
-        adopt_link_tag.connect('event', self.on_adopt_link_event)
-        adopters_buffer.insert_with_tags(iter, 'donation page',
-                                         adopt_link_tag)
-        adopters_buffer.insert(iter, '.\n\n')
-        adopters_view = gtk.TextView(adopters_buffer)
-        adopters_view.set_editable(False)
-        adopters_view.set_cursor_visible(False)
-        adopters_view.set_wrap_mode(gtk.WRAP_WORD)
-        adopters_window = gtk.ScrolledWindow()
-        adopters_window.set_policy(gtk.POLICY_NEVER, gtk.POLICY_ALWAYS)
-        adopters_window.add(adopters_view)
-        adopters_window.set_size_request(-1, 100)
-        self.packing_vbox.pack_start(adopters_window)
+        # FIXME - make the project url clickable
+        donate_label = gtk.Label(
+            _("To help fund continued Miro development, visit the "
+              "donation page at:"))
+        donate_label.set_justify(gtk.JUSTIFY_CENTER)
+        self.packing_vbox.pack_start(donate_label)
+
+        self.packing_vbox.pack_start(
+            gtk.Label(app.config.get(prefs.DONATE_URL)))
 
         self.add_button(_("Close"))
         self._window.set_has_separator(False)
 
-    def on_adopt_link_event(self, texttag, widget, event, iter):
+    def on_contrib_link_event(self, texttag, widget, event, iter_):
         if event.type == gtk.gdk.BUTTON_PRESS:
             resources.open_url('http://getmiro.com/donate/')
 
