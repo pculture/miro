@@ -2296,7 +2296,7 @@ class SharingItem(ItemBase):
     DeviceItem is).
     """
     def __init__(self, **kwargs):
-        for required in ('id', 'file_type'):
+        for required in ('video_path', 'id', 'file_type'):
             if required not in kwargs:
                 raise TypeError('SharingItem requires %s argument' % required)
         self.name = self.file_format = self.size = None
