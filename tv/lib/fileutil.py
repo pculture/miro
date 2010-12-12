@@ -343,9 +343,9 @@ class FilenameType(PlatformFilenameType):
 
     handler = file_handler
 
-    def set_handler(self, handler):
+    def set_handler(self, handler, args):
         self.handler = handler
         self.args = args
 
     def urlize(self):
-       return self.handler(self, *self.args)
+        return self.handler(self, *self.args)

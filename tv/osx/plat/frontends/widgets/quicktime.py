@@ -194,7 +194,13 @@ class Player(player.Player):
     def get_movie_from_file(self, path):
         osfilename = utils.filename_type_to_os_filename(path)
         print 'TRYING TO OPEN %s' % osfilename
-        url = NSURL.fileURLWithPath_(osfilename)
+        try:
+            print 'TYPE', type(path)
+            print path.urlize()
+            url = NSURL.URLWithString_(path.urlize())
+            print 'URL', url
+        except:
+            url = NSURL.fileURLWithPath_(osfilename)
         qtmovie, error = QTMovie.movieWithURL_error_(url, None)
         if qtmovie is None or error is not None:
             print 'DIDNT WORK 1'

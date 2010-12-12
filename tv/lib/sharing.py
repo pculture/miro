@@ -143,6 +143,8 @@ class SharingItemTrackerImpl(object):
             size=rawitem['size'],
             name=rawitem['name'].decode('utf-8'),
             file_type=u'audio',   # XXX for now
+            host=self.client.host,
+            port=self.client.port,
             video_path=self.client.daap_get_file_request(rawitem['id'])
         )
         return sharing_item

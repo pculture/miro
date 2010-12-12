@@ -2297,7 +2297,7 @@ class SharingItem(ItemBase):
     DeviceItem is).
     """
     def __init__(self, **kwargs):
-        for required in ('video_path', 'id', 'file_type'):
+        for required in ('video_path', 'id', 'file_type', 'host', 'port'):
             if required not in kwargs:
                 raise TypeError('SharingItem requires %s argument' % required)
         self.name = self.file_format = self.size = None
@@ -2427,7 +2427,13 @@ class SharingItem(ItemBase):
 
     @returns_filename
     def get_filename(self):
-        return self.video_path
+        # For daap, sent it to be the same as http as it is basically
+        # http with a different port.
+        def daap_handler(path, host, port):
+            return 'http://%s:%s%s' % (host, port, path)
+        fn = FilenameType(self.video_path)
+        fn.set_handler(daap_handler, [self.host, self.port])
+        return fn
 
     @returns_filename
     def get_thumbnail(self):
