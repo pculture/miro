@@ -434,8 +434,9 @@ class SharingItemTracker(object):
         pass
 
     def send_initial_list(self):
-        self.tracker.get_items()
- 
+        infos = self.tracker.get_items() 
+        messages.ItemList(self.type, self.id, infos).send_to_frontend()
+
 class DeviceItemTracker(object):
     type = 'device'
     def __init__(self, device):
