@@ -45,7 +45,7 @@ from miro.plat import options
 
 from miro.gtcache import gettext as _
 
-FilenameType = str
+PlatformFilenameType = str
 
 # We need to define samefile for the portable code.  Lucky for us, this is
 # very easy.

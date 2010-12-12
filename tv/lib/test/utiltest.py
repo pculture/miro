@@ -9,7 +9,7 @@ import unittest
 from miro.test.framework import MiroTestCase
 from miro import download_utils
 from miro import util
-from miro.plat.utils import FilenameType
+from miro.fileutil import FilenameType
 
 # We're going to override this so we can guarantee that if the order
 # changes later that it doesn't really affect us.

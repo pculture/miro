@@ -18,10 +18,10 @@ from miro import schema
 from miro import signals
 from miro import tabs
 from miro import theme
+from miro.fileutil import FilenameType
 import shutil
 from miro import storedatabase
 from miro.plat import resources
-from miro.plat.utils import FilenameType
 
 from miro.test.framework import MiroTestCase, EventLoopTest
 from miro.schema import (SchemaString, SchemaInt, SchemaFloat,

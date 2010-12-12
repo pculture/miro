@@ -83,7 +83,6 @@ from miro.frontends.widgets.widgetconst import MAX_VOLUME
 from miro.frontends.widgets.window import MiroWindow
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.frontends.widgets.widgetset import Rect
-from miro.plat.utils import FilenameType
 from miro import fileutil
 
 class Application:

@@ -62,6 +62,7 @@ from miro import searchengines
 from miro import fileutil
 from miro import search
 from miro import models
+from miro.fileutil import FilenameType
 
 _charset = locale.getpreferredencoding()
 
@@ -2313,7 +2314,6 @@ class SharingItem(ItemBase):
         self.metadata = {}
         self.rating = None
         self.__dict__.update(kwargs)
-        self.video_path = None
 
         # These are probably required but we can't work out what it is
         # because stuff lives on a remote share.  Oh well.
@@ -2325,6 +2325,8 @@ class SharingItem(ItemBase):
             self.duration = 0
         if self.file_format is None:
             self.file_format = u''
+        # Transform the video_path into a FilenameType.
+        self.video_path = FilenameType(self.video_path)
 
     @returns_unicode
     def get_title(self):
@@ -2425,7 +2427,7 @@ class SharingItem(ItemBase):
 
     @returns_filename
     def get_filename(self):
-        return None
+        return self.video_path
 
     @returns_filename
     def get_thumbnail(self):

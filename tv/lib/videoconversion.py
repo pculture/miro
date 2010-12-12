@@ -53,6 +53,7 @@ from miro import app
 from miro import signals
 from miro import messages
 from miro.gtcache import gettext as _
+from miro.fileutil import FilenameType
 from miro.plat import utils
 from miro.plat import resources
 
@@ -479,7 +480,7 @@ def build_output_paths(item_info, temp_dir, target_folder, converter_info):
 
     target_name = "%s.%s.%s" % (title, converter_info.identifier,
                                 converter_info.extension)
-    final_path = utils.FilenameType(os.path.join(target_folder, target_name))
+    final_path = FilenameType(os.path.join(target_folder, target_name))
 
     temp_path = os.path.join(temp_dir, basename)
 
@@ -535,7 +536,7 @@ def clean_up(temp_file, file_and_directory=False, attempts=0):
 class VideoConversionTask(object):
     def __init__(self, converter_info, item_info, target_folder,
                  create_item):
-        self.temp_dir = utils.FilenameType(tempfile.mkdtemp("miro-conversion"))
+        self.temp_dir = FilenameType(tempfile.mkdtemp("miro-conversion"))
         self.item_info = item_info
         self.converter_info = converter_info
         self.input_path = item_info.video_path

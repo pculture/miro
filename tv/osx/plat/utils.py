@@ -48,8 +48,9 @@ from miro import prefs
 from miro.gtcache import gettext as _
 from miro.importmedia import import_itunes_path
 from miro.util import returns_unicode, returns_binary, check_u, check_b
-from miro.plat.filenames import (os_filename_to_filename_type,
-                                 filename_type_to_os_filename, FilenameType)
+from miro.plat.filenames import (PlatformFilenameType,
+                                 os_filename_to_filename_type,
+                                 filename_type_to_os_filename)
 from miro.plat.frontends.widgets.threads import on_ui_thread
 
 # We need to define samefile for the portable code.  Lucky for us, this is

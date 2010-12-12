@@ -7,9 +7,9 @@ from miro import app
 from miro import messagehandler
 from miro import messages
 from miro import models
+from miro.fileutil import FilenameType
 from miro.test.framework import EventLoopTest
 from miro.test import messagetest
-from miro.plat.utils import FilenameType
 
 class PerformanceTest(EventLoopTest):
     def setUp(self):

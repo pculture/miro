@@ -28,7 +28,7 @@
 
 from miro.util import returns_binary
 
-FilenameType = str
+PlatformFilenameType = str
 
 @returns_binary
 def os_filename_to_filename_type(filename):
@@ -36,7 +36,7 @@ def os_filename_to_filename_type(filename):
     into a FilenameType
     """
     if isinstance(filename, str):
-        return FilenameType(filename)
+        return PlatformFilenameType(filename)
     return filename.encode('utf-8', 'replace')
 
 def filename_type_to_os_filename(filename):

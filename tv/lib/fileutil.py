@@ -37,6 +37,8 @@ import shutil
 
 from miro import u3info
 
+from miro.plat.utils import PlatformFilenameType
+
 def makedirs(path):
     path = expand_filename(path)
     return os.makedirs(path)
@@ -322,3 +324,28 @@ def collapse_filename(filename):
                 return u3info.DEVICE_DOCUMENT_PREFIX
             return u3info.DEVICE_DOCUMENT_PREFIX + '\\' + filename
     return filename
+
+class FilenameType(PlatformFilenameType):
+    """FilenameType: the file representation for a given platform.
+    It defaults to local files but can be specified to be remote files by
+    passing an appropriate url handler.
+
+    It defaults to file for legacy support, a lot of places depend on this.
+
+    Note to platform implementors: the PlatformFileType must be a string-type
+    basetype, so either unicode or str.  Nothing else.
+    """
+    base_type = PlatformFilenameType
+    args = []
+
+    def file_handler(self, path):
+        return 'file://' + path
+
+    handler = file_handler
+
+    def set_handler(self, handler):
+        self.handler = handler
+        self.args = args
+
+    def urlize(self):
+       return self.handler(self, *self.args)

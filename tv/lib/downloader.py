@@ -46,9 +46,10 @@ from miro import eventloop
 from miro import httpclient
 from miro import models
 from miro import prefs
-from miro.plat.utils import samefile, FilenameType, unicode_to_filename
+from miro.plat.utils import samefile, unicode_to_filename
 from miro import flashscraper
 from miro import fileutil
+from miro.fileutil import FilenameType
 
 daemon_starter = None
 

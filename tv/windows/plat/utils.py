@@ -50,7 +50,7 @@ from miro import fileutil
 from miro.gtcache import gettext as _
 
 _locale_initialized = False
-FilenameType = unicode
+PlatformFilenameType = unicode
 
 def dirfilt(root, dirs):
     """

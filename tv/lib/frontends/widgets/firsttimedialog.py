@@ -33,6 +33,7 @@ from miro import app
 from miro import prefs
 from miro import util
 from miro import messages
+from miro.fileutil import FilenameType
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import threads
 from miro.frontends.widgets import widgetutil
@@ -41,7 +42,7 @@ from miro.frontends.widgets import dialogs
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro import gtcache
-from miro.plat.utils import (filename_to_unicode, FilenameType,
+from miro.plat.utils import (filename_to_unicode, 
                              get_plat_media_player_name_path)
 from miro.plat.resources import get_default_search_dir
 
