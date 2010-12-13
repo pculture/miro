@@ -2315,6 +2315,9 @@ class SharingItem(ItemBase):
         self.rating = None
         self.__dict__.update(kwargs)
 
+        # Share item is always remote object.
+        self.remote = True
+
         # These are probably required but we can't work out what it is
         # because stuff lives on a remote share.  Oh well.
         if self.size is None:
