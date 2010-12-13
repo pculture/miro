@@ -157,10 +157,16 @@ pyobjc_version = objc.__version__
 pyobjc_version = pyobjc_version.split('.')
 pyobjc_version = int(pyobjc_version[0])
 
+# XXX bz:15481.  This shouldn't be synchronous.
+attrib = Foundation.NSMutableDictionary.dictionary()
+no = Foundation.NSNumber.alloc().initWithBool_(objc.NO)
+attrib['QTMovieFileNameAttribute'] = movie_path
+attrib['QTMovieOpenAsyncOKAttribute'] = no
+
 if pyobjc_version == 2:
-    qtmovie, error = QTKit.QTMovie.movieWithFile_error_(movie_path, None)
+    qtmovie, error = QTKit.QTMovie.movieWithAttributes_error_(attrib, None)
 else:
-    qtmovie, error = QTKit.QTMovie.movieWithFile_error_(movie_path)
+    qtmovie, error = QTKit.QTMovie.movieWithAttributes_error_(attrib)
 if qtmovie is None or error is not objc.nil:
     print "Miro-Movie-Data-Length: -1"
     print "Miro-Movie-Data-Thumbnail: Failure"
@@ -174,15 +180,6 @@ duration = extract_duration(qtmovie)
 print "Miro-Movie-Data-Length: %s" % duration
 
 if movie_type == "video":
-    max_load_state = 100000
-    if utils.getMajorOSVersion() < 10:
-        max_load_state = 20000
-    while True:
-        load_state = qtmovie.attributeForKey_(QTKit.QTMovieLoadStateAttribute)
-        if load_state >= max_load_state  or load_state == -1:
-            break
-        time.sleep(0.1)
-
     thmb_result = extract_thumbnail(qtmovie, thumb_path)
     print "Miro-Movie-Data-Thumbnail: %s" % thmb_result
 else:
