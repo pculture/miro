@@ -197,7 +197,12 @@ class Player(player.Player):
             url = NSURL.URLWithString_(path.urlize())
         except:
             url = NSURL.fileURLWithPath_(osfilename)
-        qtmovie, error = QTMovie.movieWithURL_error_(url, None)
+        attributes = NSMutableDictionary.dictionary()
+        # XXX bz:15481.  This shouldn't be synchronous.
+        no = NSNumber.alloc().initWithBool_(NO)
+        attributes['QTMovieURLAttribute'] = url
+        attributes['QTMovieOpenAsyncOKAttribute'] = no
+        qtmovie, error = QTMovie.movieWithAttributes_error_(attributes, None)
         if qtmovie is None or error is not None:
             return None
         if not self.can_open_file(qtmovie):
