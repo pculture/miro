@@ -54,7 +54,7 @@ from miro import tabs
 from miro import opml
 from miro.feed import Feed, lookup_feed
 from miro.gtcache import gettext as _
-from miro.playlist import SavedPlaylist, PlaylistItemMap
+from miro.playlist import SavedPlaylist
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 
 from miro.plat.utils import make_url_safe
@@ -1555,7 +1555,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 items.add(item_)
 
         for playlist_id in message.playlist_ids:
-            view = PlaylistItemMap.playlist_view(playlist_id)
+            view = item.Item.playlist_view(playlist_id)
             for item_ in view:
                 items.add(item_)
 
