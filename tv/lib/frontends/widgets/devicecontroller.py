@@ -537,8 +537,9 @@ class DeviceController(object):
             self.widget.set_sync_status(message.progress, message.eta)
 
     def start_tracking(self):
-        if self.device.mount:
-            sync_state = self.widget.get_view()._get_sync_state()
+        view = self.widget.get_view()
+        if isinstance(view, DeviceMountedView):
+            sync_state = view._get_sync_state()
             message = messages.QuerySyncInformation(self.device,
                                                     *sync_state)
             message.send_to_backend()
