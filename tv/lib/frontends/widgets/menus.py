@@ -808,8 +808,7 @@ class MenuStateManager(signals.SignalEmitter):
             self.states["sites"].append("RenameSomething")
 
     def _handle_sharing_selection(self, selected_shares):
-        selected_share = selected_shares[0]
-        # XXX Enable the playlist group
+        pass
 
     def _handle_device_selection(self, selected_devices):
         selected_device = selected_devices[0]
