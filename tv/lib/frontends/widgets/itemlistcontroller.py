@@ -561,8 +561,7 @@ class AudioVideoItemsController(SimpleItemListController):
     def build_item_view(self):
         return itemlistwidgets.ItemView(self.item_list, True)
     def build_list_item_view(self):
-        return itemlistwidgets.ListItemView(self.item_list,
-                self.columns, display_download_info=False)
+        return itemlistwidgets.ListItemView(self.item_list, self.columns)
 
     def build_header_toolbar(self):
         toolbar = itemlistwidgets.LibraryHeaderToolbar(self.unwatched_label)
@@ -622,8 +621,7 @@ class OtherItemsController(SimpleItemListController):
         return itemlistwidgets.ItemView(self.item_list, True)
 
     def build_list_item_view(self):
-        return itemlistwidgets.ListItemView(self.item_list,
-                self.columns, display_download_info=False)
+        return itemlistwidgets.ListItemView(self.item_list, self.columns)
 
 class FolderContentsController(SimpleItemListController):
     """Controller object for feeds."""
