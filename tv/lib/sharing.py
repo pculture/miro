@@ -114,22 +114,21 @@ class SharingTracker(object):
         del self.trackers[share.id]
         tracker.disconnect()
 
-    def get_tracker(self, share):
+    def get_tracker(self, share_id):
         try:
-            return self.trackers[share.id]
+            return self.trackers[share_id]
         except KeyError:
             print 'CREATING NEW TRACKER'
-            self.trackers[share.id] = SharingItemTrackerImpl(share)
-            return self.trackers[share.id]
+            self.trackers[share_id] = SharingItemTrackerImpl(share_id)
+            return self.trackers[share_id]
 
     def stop_tracking(self):
         raise NotImplementedError()
 
 class SharingItemTrackerImpl(object):
     type = 'sharing'
-    def __init__(self, share):
-        self.share = share
-        self.id = share.id
+    def __init__(self, share_id):
+        self.id = share_id
         self.items = []
         eventloop.call_in_thread(self.client_connect_callback,
                                  self.client_connect_error_callback,

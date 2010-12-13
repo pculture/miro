@@ -1101,6 +1101,12 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         context.set_color((1, 1, 1))
         context.stroke()
 
+class SharingItemRenderer(ItemRenderer):
+    def pack_video_buttons(self, layout):
+        # N'uthing to display here.
+        hbox = cellpack.HBox(spacing=5)
+        return hbox
+
 class PlaylistItemRenderer(ItemRenderer):
     def pack_video_buttons(self, layout):
         hbox = cellpack.HBox(spacing=5)
