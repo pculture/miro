@@ -438,12 +438,13 @@ def load_database(mount):
     """
     file_name = os.path.join(mount, '.miro', 'json')
     if not os.path.exists(file_name):
-        return DeviceDatabase()
-    try:
-        db = json.load(file(file_name, 'rb'))
-    except ValueError:
-        logging.exception('error loading JSON db on %s' % mount)
         db = {}
+    else:
+        try:
+            db = json.load(file(file_name, 'rb'))
+        except ValueError:
+            logging.exception('error loading JSON db on %s' % mount)
+            db = {}
     ddb = DeviceDatabase(db)
     DatabaseSaveManager(mount, ddb)
     return ddb
