@@ -1534,7 +1534,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
     def handle_device_eject(self, message):
         app.device_tracker.eject(message.device)
 
-    def handle_device_sync_feeds(self, message):
+    @staticmethod
+    def _get_sync_items_for_message(message):
         items = set()
         for video_id in message.video_ids:
             feed_ = feed.Feed.get_by_id(video_id)
@@ -1559,6 +1560,19 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             for item_ in view:
                 items.add(item_)
 
+        return items
+
+    def handle_query_sync_information(self, message):
+        items = self._get_sync_items_for_message(message)
+        video_count = sum(1 for item_ in items if item_.file_type == 'video')
+        audio_count = sum(1 for item_ in items if item_.file_type == 'audio')
+        message = messages.CurrentSyncInformation(message.device,
+                                                  video_count,
+                                                  audio_count)
+        message.send_to_frontend()
+
+    def handle_device_sync_feeds(self, message):
+        items = self._get_sync_items_for_message(message)
         if items:
             item_infos = [messages.ItemInfo(item_) for item_ in items]
             dsm = app.device_manager.get_sync_for_device(message.device)

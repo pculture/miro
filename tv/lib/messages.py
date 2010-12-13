@@ -797,6 +797,19 @@ class SetDeviceType(BackendMessage):
         self.device = device
         self.name = name
 
+class QuerySyncInformation(BackendMessage):
+    """
+    Ask for a CurrentSyncInformation to be sent back for the given device.
+    """
+    def __init__(self, device, video_type, video_ids, audio_type, audio_ids,
+                 playlist_ids):
+        self.device = device
+        self.video_type = video_type
+        self.video_ids = video_ids
+        self.audio_type = audio_type
+        self.audio_ids = audio_ids
+        self.playlist_ids = playlist_ids
+
 class DeviceSyncFeeds(BackendMessage):
     """
     Ask the backend to sync the given feeds/playlists.
@@ -1459,6 +1472,14 @@ class DeviceChanged(FrontendMessage):
     """
     def __init__(self, device):
         self.device = device
+
+class CurrentSyncInformation(FrontendMessage):
+    """Informs the frontend of what the current sync would look like.
+    """
+    def __init__(self, device, video_count, audio_count):
+        self.device = device
+        self.video_count = video_count
+        self.audio_count = audio_count
 
 class DeviceSyncChanged(FrontendMessage):
     """Informs the frontend that the status of a device sync has changed.  This

@@ -1329,6 +1329,11 @@ class WidgetsMessageHandler(messages.MessageHandler):
         if isinstance(current_display, displays.DeviceDisplay):
             current_display.controller.handle_device_changed(message.device)
 
+    def handle_current_sync_information(self, message):
+        current_display = app.display_manager.get_current_display()
+        if isinstance(current_display, displays.DeviceDisplay):
+            current_display.handle_current_sync_information(message)
+
     def handle_device_sync_changed(self, message):
         current_display = app.display_manager.get_current_display()
         if isinstance(current_display, displays.DeviceDisplay):

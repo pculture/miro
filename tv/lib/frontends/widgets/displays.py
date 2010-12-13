@@ -238,6 +238,10 @@ class DeviceDisplay(TabDisplay):
     def cleanup(self):
         self.controller.stop_tracking()
 
+    def handle_current_sync_information(self, message):
+        if not getattr(self.controller.device, 'fake', False):
+            self.controller.handle_current_sync_information(message)
+
     def handle_device_sync_changed(self, message):
         if not getattr(self.controller.device, 'fake', False):
             self.controller.handle_device_sync_changed(message)
