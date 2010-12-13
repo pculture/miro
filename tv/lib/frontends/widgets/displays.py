@@ -371,13 +371,10 @@ class SharingDisplay(ItemListDisplay):
     def on_selected(self):
         # No need to track manually - ItemListDisplay does for us
         ItemListDisplay.on_selected(self)
-        # XXX Need to connect a signal when the playlist or the music 
-        # library on the remote box changes.
 
     def cleanup(self):
         # No need to cleanup tracking manually - ItemListDisplay does for us
         ItemListDisplay.cleanup(self)
-        # XXX need to disconnect a signal if we have done so in on_selected()
 
     def make_controller(self, tab):
         return sharingcontroller.SharingView(tab)
