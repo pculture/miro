@@ -139,7 +139,10 @@ class DeviceManager(object):
 
     def startup(self):
         # load devices
-        devices = glob(resources.path('devices/*.dev'))
+        self.load_devices(resources.path('devices/*.dev'))
+
+    def load_devices(self, path):
+        devices = glob(path)
         for device_desc in devices:
             parser = SafeConfigParser()
             parser.readfp(open(device_desc))
