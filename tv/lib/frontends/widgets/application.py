@@ -104,6 +104,7 @@ class Application:
         self.paused_count = 0
         self.unwatched_count = 0
         app.frontend_config_watcher = config.ConfigWatcher(call_on_ui_thread)
+        self.crash_reports_to_handle = []
 
     def exception_handler(self, typ, value, traceback):
         report = crashreport.format_crash_report("in frontend thread",
@@ -981,13 +982,21 @@ class Application:
         call_on_ui_thread(self.handle_crash_report, report)
 
     def handle_crash_report(self, report):
-        if self.ignore_errors:
-            logging.warn("Ignoring Error:\n%s", report)
+        self.crash_reports_to_handle.append(report)
+        if len(self.crash_reports_to_handle) > 1:
+            # another call to handle_crash_report() is running a dialog, wait
+            # until it returns
             return
 
-        ret = crashdialog.run_dialog(report)
-        if ret == crashdialog.IGNORE_ERRORS:
-            self.ignore_errors = True
+        while self.crash_reports_to_handle:
+            report = self.crash_reports_to_handle[0]
+            if self.ignore_errors:
+                logging.warn("Ignoring Error:\n%s", report)
+            else:
+                ret = crashdialog.run_dialog(report)
+                if ret == crashdialog.IGNORE_ERRORS:
+                    self.ignore_errors = True
+            self.crash_reports_to_handle = self.crash_reports_to_handle[1:]
 
     def on_backend_shutdown(self, obj):
         logging.info('Shutting down...')
