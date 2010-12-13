@@ -1130,6 +1130,9 @@ class ItemInfo(object):
         ## Device-specific stuff
         self.device = getattr(item, 'device', None)
 
+        ## Sharing specific stuff
+        self.remote = getattr(item, 'remote', False)
+
         ## Torrent-specific stuff
         self.leechers = self.seeders = self.up_rate = None
         self.down_rate = self.up_total = self.down_total = None
