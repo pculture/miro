@@ -137,12 +137,20 @@ class SharingItemTrackerImpl(object):
                                  'DAAP client connect')
 
     def sharing_item(self, rawitem):
+        file_type = u'audio'    # fallback
+        if rawitem['file_type'] == libdaap.DAAP_MEDIAKIND_AUDIO:
+            file_type = u'audio'
+        if rawitem['file_type'] in [libdaap.DAAP_MEDIAKIND_TV,
+                                    libdaap.DAAP_MEDIAKIND_MOVIE,
+                                    libdaap.DAAP_MEDIAKIND_VIDEO
+                                   ]:
+            file_type = u'video'
         sharing_item = item.SharingItem(
             id=rawitem['id'],
             duration=rawitem['duration'],
             size=rawitem['size'],
             name=rawitem['name'].decode('utf-8'),
-            file_type=u'audio',   # XXX for now
+            file_type=file_type,
             host=self.client.host,
             port=self.client.port,
             video_path=self.client.daap_get_file_request(rawitem['id'])
