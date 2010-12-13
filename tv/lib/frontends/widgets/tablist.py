@@ -885,7 +885,7 @@ class SharingList(TabList):
         # disappears automatically but it doesn't.
         try:
             if current_display.id == info.id:
-                tracker = app.sharing_tracker.get_tracker(info)
+                tracker = app.sharing_tracker.get_tracker(info.id)
         except AttributeError:
             pass
 
