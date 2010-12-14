@@ -100,6 +100,7 @@ XULRUNNER_SDK_BIN_PATH = os.path.join(XULRUNNER_SDK_PATH, 'bin')
 
 VLC_PATH = os.path.join(BINARY_KIT_ROOT, 'libvlc')
 LIBTORRENT_PATH = os.path.join(BINARY_KIT_ROOT, 'libtorrent')
+MUTAGEN_PATH = os.path.join(BINARY_KIT_ROOT, 'mutagen-1.20')
 
 FFMPEG_PATH = os.path.join(
     BINARY_KIT_ROOT, 'ffmpeg', 'ffmpeg-r25766-swscale-r32562-mingw32-static')
@@ -165,6 +166,7 @@ from miro import util
 # put the libtorrent extension on the path, so py2exe can find the
 # .pyd file
 sys.path.insert(0, LIBTORRENT_PATH)
+sys.path.insert(0, MUTAGEN_PATH)
 
 #### Extensions ####
 
@@ -634,7 +636,8 @@ if __name__ == "__main__":
                 'packages': [
                     'encodings',
                     ],
-                'includes': 'cairo, pango, pangocairo, atk, gobject, gio, libtorrent',
+                'includes': ('cairo, pango, pangocairo, atk, gobject, '
+                             'gio, libtorrent, mutagen'),
                 },
             },
         )
