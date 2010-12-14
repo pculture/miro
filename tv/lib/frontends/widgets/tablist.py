@@ -898,7 +898,9 @@ class SharingList(TabList):
             # share that we are ejecting from.
             name, host, port = info.id
             item = app.playback_manager.get_playing_item()
-            remote_item = item.remote
+            remote_item = False
+            if item and item.remote:
+                remote_item = True
             if remote_item and item.host == host and item.port == port:
                 app.playback_manager.stop(save_resume_time=False)
             messages.SharingEject(info.id).send_to_backend()
