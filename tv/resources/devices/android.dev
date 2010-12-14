@@ -42,3 +42,8 @@ vendor_id: 04e8
 product_id: 681d
 name: SAMSUNG SGH-T849
 video_conversion: galaxytab
+
+[Epic]
+name: SAMSUNG SPH-D700 Card
+video_conversion: epic
+
