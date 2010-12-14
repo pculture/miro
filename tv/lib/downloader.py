@@ -761,9 +761,9 @@ def cleanup_incomplete_downloads():
         if f not in files_in_use:
             try:
                 if fileutil.isfile(f):
-                    fileutil.remove (f)
+                    fileutil.remove(f)
                 elif fileutil.isdir(f):
-                    fileutil.rmtree (f)
+                    fileutil.rmtree(f)
             except OSError:
                 # FIXME - maybe a permissions error?
                 pass
