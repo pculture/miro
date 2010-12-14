@@ -296,17 +296,39 @@ class ListItemView(widgetset.TableView):
         'rate': [_('Speed'), style.DownloadRateRenderer()],
     }
 
+    WIDTH_WEIGHT = {
+        'state': 0,     # bump
+        'name': 1,      # title
+        'feed-name': 0.5,
+        'date': 0,
+        'length': 0,
+        'status': 0.2,
+        'size': 0,
+        'eta': 0,
+        'rate': 0,      # download rate
+        'artist': 0.7,
+        'album': 0.7,
+        'track': 0,
+        'year': 0,
+        'genre': 0,
+        'rating': 0,
+    }
+
     def __init__(self, item_list, columns):
         widgetset.TableView.__init__(self, item_list.model)
         enabled_columns = []
+        self.width_specs = {}
         for name_width in columns:
-            enabled_columns.append(name_width[0])
+            name, width = name_width
+            enabled_columns.append(name)
+            weight = self.WIDTH_WEIGHT[name]
+            self.width_specs[name] = (width, weight)
         self.enabled_columns = enabled_columns
         self.create_signal('sort-changed')
         self.item_list = item_list
         self._column_name_to_column = {}
         self._current_sort_column = None
-        self._set_initial_widths = False # TODO something else here
+        self._set_initial_widths = False
         display_columns = enabled_columns
         for name in display_columns:
             data = ListItemView.columns_map[name]
@@ -367,26 +389,7 @@ class ListItemView(widgetset.TableView):
             # Set this immediately, because changing the widths of
             # widgets below can invoke another size-allocate signal
             self._set_initial_widths = True
-            # width_specs contains the info we need to give columns their
-            # initial size.  It maps column names to
-            # (min_width, extra_width_weighting)
-            width_specs = {
-                'state': (20, 0),    # bump
-                'name': (130, 1),   # title
-                'feed-name': (70, 0.5),  # channel name
-                'date': (85, 0),   # date
-                'length': (60, 0),   # duration
-                'status': (160, 0.2),   # status
-                'size': (65, 0),    # size
-                'eta': (50, 0),    # eta
-                'rate': (75, 0),    # download rate
-                'artist': (110, 0.7),
-                'album': (100, 0.7),
-                'track': (30, 0),
-                'year': (40, 0),
-                'genre': (65, 0),
-                'rating': (60, 0),
-            }
+            width_specs = self.width_specs
 
             for key in width_specs.keys():
                 if key not in self._column_name_to_column:
@@ -401,6 +404,9 @@ class ListItemView(widgetset.TableView):
                 column = self._column_name_to_column[name]
                 extra = int(extra_width * spec[1] / total_weight)
                 column.set_width(spec[0] + extra)
+                # Adjusted columns can't have weight or they'll be larger
+                # than dragged to. Is there some better way to do this?
+                self.width_specs[name] = (spec[0] + extra, 0)
 
     def _on_column_clicked(self, column, column_name):
         ascending = not (column.get_sort_indicator_visible() and
