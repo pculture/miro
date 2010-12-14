@@ -665,7 +665,6 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             layout_manager.set_font(0.80, bold=bold)
             layout_manager.set_text_color(text_color)
             textbox = layout_manager.textbox(text)
-            textbox.ensure_layout()
             text_width, text_height = textbox.get_size()
             layout.add(x, 4, text_width, text_height, textbox.draw)
 
