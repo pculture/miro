@@ -838,6 +838,11 @@ class DeviceEject(BackendMessage):
 
 # Frontend Messages
 
+class SharingConnectFailed(FrontendMessage):
+    """Tell the frontend the request to connect a share failed."""
+    def __init__(self, share):
+        self.share = share
+
 class FrontendQuit(FrontendMessage):
     """The frontend should exit."""
     pass

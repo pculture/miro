@@ -1091,6 +1091,15 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def profile_next_message(self, message_obj, path):
         self._profile_info = (message_obj, path)
 
+    def handle_sharing_connect_failed(self, message):
+        name, host, port = message.share
+        title = _('Connect failed')
+        fmtargs = dict(name=name)
+        description = _('Connection to share %(name)s failed.\n\n'
+                        'The share is either unreachable or incompatible '
+                        'with Miro sharing.' % fmtargs)
+        dialogs.show_message(title, description, dialogs.INFO_MESSAGE)
+        
     def handle_frontend_quit(self, message):
         app.widgetapp.do_quit()
 

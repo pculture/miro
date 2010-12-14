@@ -180,8 +180,9 @@ class SharingItemTrackerImpl(object):
         name, host, port = self.id
         self.client = libdaap.make_daap_client(host, port)
         if not self.client.connect():
-            print 'CANNOT CONNECT'
-            pass    # XXX Send failure back to user
+            # XXX API does not allow us to send more detailed results
+            # back to the poor user.
+            raise IOError('Cannot connect')
         # XXX no API for this?  And what about playlists?
         # XXX dodgy - shouldn't do this directly
         # Find the base playlist, then suck all data out of it and then
@@ -206,7 +207,9 @@ class SharingItemTrackerImpl(object):
         message.send_to_frontend()
 
     def client_connect_error_callback(self, unused):
-        pass    # XXX pass error back to user
+        self.disconnect()
+        m = messages.SharingConnectFailed(self.id)
+        m.send_to_frontend()
 
     def get_items(self):
         return self.items
