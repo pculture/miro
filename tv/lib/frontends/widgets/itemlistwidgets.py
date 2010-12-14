@@ -279,22 +279,22 @@ class ListItemView(widgetset.TableView):
     """TableView that displays a list of items using the list view."""
 
     columns_map = {
-            'state': [u'', style.StateCircleRenderer(), False],
-            'name': [_('Name'), style.NameRenderer()],
-            'artist': [_('Artist'), style.ArtistRenderer()],
-            'album': [_('Album'), style.AlbumRenderer()],
-            'track': [_('Track'), style.TrackRenderer()],
-            'year': [_('Year'), style.YearRenderer()],
-            'genre': [_('Genre'), style.GenreRenderer()],
-            'rating': [_('Rating'), style.RatingRenderer()],
-            'date': [_('Date'), style.DateRenderer()],
-            'length': [_('Length'), style.LengthRenderer()],
-            'status': [_('Status'), style.StatusRenderer()],
-            'size': [_('Size'), style.SizeRenderer()],
-            'feed-name': [_('Feed'), style.FeedNameRenderer()],
-            'eta': [_('ETA'), style.ETARenderer()],
-            'rate': [_('Speed'), style.DownloadRateRenderer()],
-            }
+        'state': [u'', style.StateCircleRenderer(), False],
+        'name': [_('Name'), style.NameRenderer()],
+        'artist': [_('Artist'), style.ArtistRenderer()],
+        'album': [_('Album'), style.AlbumRenderer()],
+        'track': [_('Track'), style.TrackRenderer()],
+        'year': [_('Year'), style.YearRenderer()],
+        'genre': [_('Genre'), style.GenreRenderer()],
+        'rating': [_('Rating'), style.RatingRenderer()],
+        'date': [_('Date'), style.DateRenderer()],
+        'length': [_('Length'), style.LengthRenderer()],
+        'status': [_('Status'), style.StatusRenderer()],
+        'size': [_('Size'), style.SizeRenderer()],
+        'feed-name': [_('Feed'), style.FeedNameRenderer()],
+        'eta': [_('ETA'), style.ETARenderer()],
+        'rate': [_('Speed'), style.DownloadRateRenderer()],
+    }
 
     def __init__(self, item_list, enabled_columns, column_widths,
             display_channel=True, display_download_info=True):
