@@ -339,12 +339,22 @@ class ListItemView(widgetset.TableView):
         self.set_fixed_height(True)
         self.allow_multiple_select(True)
         self.html_stripper = util.HTMLStripper()
+        self.inverse_columns_map = {}
+        for name, values in self.columns_map.items():
+            title = values[0]
+            self.inverse_columns_map[title] = unicode(name)
 
     def _get_ui_column_state(self):
-        for i, (name, width) in enumerate(self.column_state):
+        widths = {}
+        for (name, width) in self.column_state:
             column = self._column_name_to_column[name]
             width = column.get_width()
-            self.column_state[i] = (name, width)
+            widths[name] = width
+        new_column_state = []
+        for title in self.get_columns():
+            name = self.inverse_columns_map[title]
+            new_column_state.append((name, widths[name]));
+        self.column_state = new_column_state
 
     def on_unrealize(self, treeview):
         self._get_ui_column_state()

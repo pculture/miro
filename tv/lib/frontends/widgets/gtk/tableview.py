@@ -685,6 +685,13 @@ class TableView(Widget):
         column.renderer._renderer.set_property('xpad', self._renderer_xpad)
         column.renderer._renderer.set_property('ypad', self._renderer_ypad)
 
+    def get_columns(self):
+        titles = []
+        columns = self._widget.get_columns()
+        for column in columns:
+            titles.append(column.get_title())
+        return titles
+
     def column_count(self):
         return len(self._widget.get_columns())
 
