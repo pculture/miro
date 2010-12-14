@@ -195,7 +195,7 @@ class Player(player.Player):
         osfilename = utils.filename_type_to_os_filename(path)
         try:
             url = NSURL.URLWithString_(path.urlize())
-        except:
+        except AttributeError:
             url = NSURL.fileURLWithPath_(osfilename)
         attributes = NSMutableDictionary.dictionary()
         # XXX bz:15481.  This shouldn't be synchronous.
