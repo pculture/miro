@@ -116,6 +116,8 @@ class ItemListController(object):
         self.widget.list_view_vbox.pack_start(scroller, expand=True)
         self.widget.toolbar.connect_weak('sort-changed', self.on_sort_changed)
         self.list_item_view.connect_weak('sort-changed', self.on_sort_changed)
+        self.list_item_view.connect_weak('columns-changed',
+            self.on_columns_changed)
         self.build_widget()
 
     def build_list_item_view(self):
@@ -239,6 +241,10 @@ class ItemListController(object):
         self.list_item_view.change_sort_indicator(sort_key, ascending)
         display = (self.type, self.id)
         app.display_state.set_sort_state(display, sorter)
+
+    def on_columns_changed(self, object, columns):
+        key = (self.type, self.id)
+        app.display_state.set_columns_state(key, columns)
 
     def on_toggle_column(self, column):
         self.enabled_columns ^= set([column])
