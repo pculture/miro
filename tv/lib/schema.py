@@ -207,6 +207,28 @@ class SchemaReprContainer(SchemaItem):
             else:
                 self.validateTypes(obj, self.VALID_TYPES)
 
+class SchemaTuple(SchemaReprContainer):
+    """Special case of SchemaReprContainer that stores a simple tuple
+    """
+    def __init__(self, *childSchemas, **kargs):
+        noneOk = False
+        if 'noneOk' in kargs:
+            noneOk = kargs[noneOk]
+        super(SchemaTuple, self).__init__(noneOk)
+        self.childSchemas = childSchemas
+
+    def validate(self, data):
+        if data is None:
+            super(SchemaTuple, self).validate(data)
+            return
+        self.validateType(data, tuple)
+        for i, value in enumerate(data):
+            try:
+                self.childSchemas[i].validate(value)
+            except ValidationError:
+                raise ValidationError("%r (index: %s) has the wrong type" %
+                                      (value, i))
+
 class SchemaList(SchemaReprContainer):
     """Special case of SchemaReprContainer that stores a simple list
 
