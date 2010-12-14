@@ -316,21 +316,13 @@ class ListItemView(widgetset.TableView):
 
     def __init__(self, item_list, columns):
         widgetset.TableView.__init__(self, item_list.model)
-        enabled_columns = []
-        self.width_specs = {}
-        for name_width in columns:
-            name, width = name_width
-            enabled_columns.append(name)
-            weight = self.WIDTH_WEIGHT[name]
-            self.width_specs[name] = (width, weight)
-        self.enabled_columns = enabled_columns
+        self.column_state = columns
         self.create_signal('sort-changed')
         self.item_list = item_list
         self._column_name_to_column = {}
         self._current_sort_column = None
         self._set_initial_widths = False
-        display_columns = enabled_columns
-        for name in display_columns:
+        for name, width in self.column_state:
             data = ListItemView.columns_map[name]
             resizable = True
             if len(data) > 2:
@@ -389,24 +381,21 @@ class ListItemView(widgetset.TableView):
             # Set this immediately, because changing the widths of
             # widgets below can invoke another size-allocate signal
             self._set_initial_widths = True
-            width_specs = self.width_specs
-
-            for key in width_specs.keys():
-                if key not in self._column_name_to_column:
-                    # column not visible on this view
-                    del width_specs[key]
 
             available_width = self.width_for_columns(width)
-            min_width = sum(spec[0] for spec in width_specs.values())
+            min_width = sum(width for name, width in self.column_state)
             extra_width = max(available_width - min_width, 0)
-            total_weight = sum(spec[1] for spec in width_specs.values())
-            for name, spec in width_specs.items():
+            weights = {}
+            for name, width in self.column_state:
+                weights[name] = self.WIDTH_WEIGHT[name]
+            total_weight = sum(weight for weight in weights.values())
+            for name, width in self.column_state:
+                weight = weights[name]
                 column = self._column_name_to_column[name]
-                extra = int(extra_width * spec[1] / total_weight)
-                column.set_width(spec[0] + extra)
-                # Adjusted columns can't have weight or they'll be larger
-                # than dragged to. Is there some better way to do this?
-                self.width_specs[name] = (spec[0] + extra, 0)
+                extra = int(extra_width * weight / total_weight)
+                width += extra
+                weights[name] = 0
+                column.set_width(width)
 
     def _on_column_clicked(self, column, column_name):
         ascending = not (column.get_sort_indicator_visible() and
