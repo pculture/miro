@@ -425,9 +425,10 @@ class FolderItemsTracker(ItemTrackerBase):
 
 class SharingItemTracker(object):
     type = 'sharing'
-    def __init__(self, share_id):
-        self.id = share_id
-        self.tracker = app.sharing_tracker.get_tracker(self.id)
+    def __init__(self, tab):
+        self.tab = tab
+        self.id = tab.id
+        self.tracker = app.sharing_tracker.get_tracker(self.tab, self.id)
 
     def unlink(self):
         pass
@@ -678,7 +679,7 @@ class BackendMessageHandler(messages.MessageHandler):
         pass
 
     def handle_sharing_eject(self, message):
-        app.sharing_tracker.eject(message.tab)
+        app.sharing_tracker.eject(message.share_id)
 
     def handle_track_devices(self, message):
         app.device_tracker.start_tracking()

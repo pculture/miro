@@ -1092,6 +1092,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
         self._profile_info = (message_obj, path)
 
     def handle_sharing_connect_failed(self, message):
+        tab = message.tab
+        tab.mount = False
         name, host, port = message.share
         title = _('Connect failed')
         fmtargs = dict(name=name)

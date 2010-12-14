@@ -885,7 +885,7 @@ class SharingList(TabList):
         # disappears automatically but it doesn't.
         try:
             if current_display.id == info.id:
-                tracker = app.sharing_tracker.get_tracker(info.id)
+                tracker = app.sharing_tracker.get_tracker(info, info.id)
         except AttributeError:
             pass
 
@@ -901,7 +901,7 @@ class SharingList(TabList):
             remote_item = item.remote
             if remote_item and item.host == host and item.port == port:
                 app.playback_manager.stop(save_resume_time=False)
-            messages.SharingEject(info).send_to_backend()
+            messages.SharingEject(info.id).send_to_backend()
 
     def init_info(self, info):
         info.unwatched = info.available = 0

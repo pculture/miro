@@ -840,7 +840,8 @@ class DeviceEject(BackendMessage):
 
 class SharingConnectFailed(FrontendMessage):
     """Tell the frontend the request to connect a share failed."""
-    def __init__(self, share):
+    def __init__(self, tab, share):
+        self.tab = tab
         self.share = share
 
 class FrontendQuit(FrontendMessage):
@@ -1473,8 +1474,8 @@ class SharingInfo(object):
 class SharingEject(BackendMessage):
     """Tells the backend that the user has requested the share be disconnected.
     """
-    def __init__(self, share):
-        self.tab = share
+    def __init__(self, share_id):
+        self.share_id = share_id
 
 class DeviceInfo(object):
     """Tracks the state of an attached device.

@@ -109,17 +109,17 @@ class SharingTracker(object):
                                        name='mDNS Browser Thread')
         self.thread.start()
 
-    def eject(self, share):
-        tracker = self.trackers[share.id]
-        del self.trackers[share.id]
+    def eject(self, share_id):
+        tracker = self.trackers[share_id]
+        del self.trackers[share_id]
         tracker.disconnect()
 
-    def get_tracker(self, share_id):
+    def get_tracker(self, tab, share_id):
         try:
             return self.trackers[share_id]
         except KeyError:
             print 'CREATING NEW TRACKER'
-            self.trackers[share_id] = SharingItemTrackerImpl(share_id)
+            self.trackers[share_id] = SharingItemTrackerImpl(tab, share_id)
             return self.trackers[share_id]
 
     def stop_tracking(self):
@@ -127,7 +127,10 @@ class SharingTracker(object):
 
 class SharingItemTrackerImpl(object):
     type = 'sharing'
-    def __init__(self, share_id):
+    def __init__(self, tab, share_id):
+        # The tab should ONLY be used to help us bail from a failed
+        # connection.
+        self.tab = tab
         self.id = share_id
         self.items = []
         eventloop.call_in_thread(self.client_connect_callback,
@@ -207,9 +210,9 @@ class SharingItemTrackerImpl(object):
         message.send_to_frontend()
 
     def client_connect_error_callback(self, unused):
-        self.disconnect()
-        m = messages.SharingConnectFailed(self.id)
-        m.send_to_frontend()
+        # If it didn't work, immediately disconnect ourselves.
+        messages.SharingEject(self.id).send_to_backend()
+        messages.SharingConnectFailed(self.tab, self.id).send_to_frontend()
 
     def get_items(self):
         return self.items
