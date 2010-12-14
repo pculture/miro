@@ -156,7 +156,10 @@ class DisplayManager(object):
 
         self.selected_tab_list = selected_tab_list
         self.selected_tabs = selected_tabs
-        tab_type = selected_tab_list.type
+        if hasattr(selected_tabs[0], 'type'):
+            tab_type = selected_tabs[0].type
+        else:
+            tab_type = selected_tab_list.type
 
         for display in self.permanent_displays:
             if display.should_display(tab_type, selected_tabs):
@@ -288,15 +291,15 @@ class ItemListDisplayMixin(object):
         app.item_list_controller_manager.controller_destroyed(self.controller)
 
     def remember_state(self):
-        display = (self.type, self.id)
+        key = (self.type, self.id)
         if self.controller.widget.in_list_view:
-            app.display_state.set_list_view(display)
+            app.display_state.set_list_view(key)
         else:
-            app.display_state.set_std_view(display)
+            app.display_state.set_std_view(key)
 
     def restore_state(self):
-        display = (self.type, self.id)
-        if app.display_state.is_list_view(display):
+        key = (self.type, self.id)
+        if app.display_state.is_list_view(key):
             self.widget.switch_to_list_view()
 
 class ItemListDisplay(ItemListDisplayMixin, TabDisplay):
@@ -370,7 +373,7 @@ class PlaylistDisplay(ItemListDisplay):
 class SearchDisplay(ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        return tab_type == 'static' and selected_tabs[0].id == 'search'
+        return tab_type == 'search' and selected_tabs[0].id == 'search'
 
     def make_controller(self, tab):
         return itemlistcontroller.SearchController()
@@ -380,7 +383,7 @@ class AudioVideoItemsDisplay(ItemListDisplay):
         Display.__init__(self)
         self.controller = self.make_controller()
         self.widget = self.controller.widget
-        self.type = 'library'
+        self.type = self.__class__.tab_type
         self.id = self.__class__.tab_id
 
     def remember_state(self):
@@ -398,16 +401,19 @@ class AudioVideoItemsDisplay(ItemListDisplay):
 
     @classmethod
     def should_display(cls, tab_type, selected_tabs):
-        return tab_type == 'library' and selected_tabs[0].id == cls.tab_id
+        return (hasattr(selected_tabs[0], 'type') and selected_tabs[0].type is
+            cls.tab_type)
 
 class VideoItemsDisplay(AudioVideoItemsDisplay):
-    tab_id = 'videos'
+    tab_type = 'videos'
+    tab_id = 'library'
 
     def make_controller(self):
         return itemlistcontroller.VideoItemsController()
 
 class AudioItemsDisplay(AudioVideoItemsDisplay):
-    tab_id = 'music'
+    tab_type = 'music'
+    tab_id = 'library'
 
     def make_controller(self):
         return itemlistcontroller.AudioItemsController()
@@ -415,7 +421,7 @@ class AudioItemsDisplay(AudioVideoItemsDisplay):
 class OtherItemsDisplay(ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        return tab_type == 'library' and selected_tabs[0].id == 'others'
+        return tab_type == 'others'
 
     def make_controller(self, tab):
         return itemlistcontroller.OtherItemsController()
@@ -423,7 +429,7 @@ class OtherItemsDisplay(ItemListDisplay):
 class DownloadingDisplay(ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        return tab_type == 'library' and selected_tabs[0].id == 'downloading'
+        return tab_type == 'downloading'
 
     def make_controller(self, tab):
         return downloadscontroller.DownloadsController()
@@ -431,7 +437,7 @@ class DownloadingDisplay(ItemListDisplay):
 class VideoConversionsDisplay(TabDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        return tab_type == 'library' and selected_tabs[0].id == 'conversions'
+        return tab_type == 'conversions' and selected_tabs[0].id == 'library'
 
     def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)

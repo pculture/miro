@@ -379,7 +379,7 @@ class ManualItemTracker(ItemTrackerBase):
         messages.ItemList(self.type, self.id, infos).send_to_frontend()
 
 class DownloadingItemsTracker(ItemTrackerBase):
-    type = 'downloads'
+    type = 'downloading'
     id = None
     def __init__(self):
         self.view = item.Item.download_tab_view()
@@ -444,7 +444,7 @@ class DeviceItemTracker(object):
         pass
 
 def make_item_tracker(message):
-    if message.type == 'downloads':
+    if message.type == 'downloading':
         return DownloadingItemsTracker()
     elif message.type == 'videos':
         return VideoItemsTracker()
