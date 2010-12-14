@@ -1044,6 +1044,9 @@ class ItemInfo(object):
     :param file_format: User-facing format description.  Possibly the
                         file type,  pulled from the mime_type, or more
                         generic, like "audio"
+    :param remote: is this item from a media share or local?
+    :param host: machine hosting the item, only valid if remote is set
+    :param port: port to connect to for item, only valid if remote is set
     :param license: this file's license, if known.
     :param mime_type: mime-type of the enclosure that would be downloaded
     :param artist: the primary artist of the track
@@ -1073,7 +1076,7 @@ class ItemInfo(object):
     # bump this whenever you change the ItemInfo class, or change on of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description())
-    VERSION = 2
+    VERSION = 3
 
     def __init__(self, item):
         self.name = item.get_title()
