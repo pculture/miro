@@ -95,6 +95,9 @@ class SharingTracker(object):
             added_list.append(info)
         else:
             removed_list.append(share_id)
+        # XXX should not remove this tab if it is currently mounted.  The
+        # mDNS going away just means it is no longer published, doesn't
+        # mean it's not available.
         message = messages.TabsChanged('sharing', added_list, [], removed_list) 
         message.send_to_frontend()
 
