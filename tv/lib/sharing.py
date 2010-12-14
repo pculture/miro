@@ -128,8 +128,6 @@ class SharingTracker(object):
 class SharingItemTrackerImpl(object):
     type = 'sharing'
     def __init__(self, tab, share_id):
-        # The tab should ONLY be used to help us bail from a failed
-        # connection.
         self.tab = tab
         self.id = share_id
         self.items = []
@@ -161,7 +159,7 @@ class SharingItemTrackerImpl(object):
 
     def disconnect(self):
         ids = [item.id for item in self.get_items()]
-        message = messages.ItemsChanged(self.type, self.id, [], [], ids)
+        message = messages.ItemsChanged(self.type, self.tab, [], [], ids)
         print 'SENDING removed message'
         message.send_to_frontend()
         # No need to clean out our list of items as we are going away anyway.
@@ -205,7 +203,7 @@ class SharingItemTrackerImpl(object):
 
     def client_connect_callback(self, unused):
         self.connected = True
-        message = messages.ItemsChanged(self.type, self.id, self.items, [], [])
+        message = messages.ItemsChanged(self.type, self.tab, self.items, [], [])
         print 'SENDING changed message %d items' % len(message.added)
         message.send_to_frontend()
 

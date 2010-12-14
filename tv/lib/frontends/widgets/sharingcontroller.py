@@ -58,7 +58,6 @@ class SharingView(itemlistcontroller.SimpleItemListController):
     def __init__(self, tab):
         self.type = 'sharing'
         self.tab = tab
-        #self.id = tab.id
         self.id = tab
         print 'SELF.id = ', self.id
         self.title = tab.name
