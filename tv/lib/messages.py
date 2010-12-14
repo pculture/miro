@@ -1132,6 +1132,9 @@ class ItemInfo(object):
 
         ## Sharing specific stuff
         self.remote = getattr(item, 'remote', False)
+        if self.remote:
+            self.host = item.host
+            self.port = item.port
 
         ## Torrent-specific stuff
         self.leechers = self.seeders = self.up_rate = None
