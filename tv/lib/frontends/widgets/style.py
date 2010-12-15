@@ -337,7 +337,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         hotspot_info = layout.find_hotspot(x, y)
         if hotspot_info is None:
             return None
-        hotspot, x, y, width, height = hotspot_info
+        hotspot, x, y = hotspot_info
         if hotspot == 'description':
             textbox = self.make_description(layout_manager)
             textbox.set_width(width)
