@@ -41,6 +41,7 @@ from miro.plat.utils import launch_download_daemon, kill_process
 from miro import signals
 from miro import trapcall
 from miro.net import ConnectionHandler
+from miro import util
 
 SIZE_OF_INT = calcsize("I")
 
@@ -226,18 +227,10 @@ class DownloaderDaemon(Daemon):
 
 class ControllerDaemon(Daemon):
     def __init__(self):
-        import socket
         Daemon.__init__(self)
-        if socket.has_ipv6:
-            try:
-                self.stream.accept_connection(socket.AF_INET6, '::1', 0,
-                        self.on_connection, self.on_error)
-            except StandardError:
-                self.stream.accept_connection(socket.AF_INET, '127.0.0.1', 0,
-                        self.on_connection, self.on_error)
-        else:
-            self.stream.accept_connection(socket.AF_INET, '127.0.0.1', 0,
-                    self.on_connection, self.on_error)
+        family, addr = util.localhost_family_and_addr()
+        self.stream.accept_connection(family, addr, 0, self.on_connection,
+                self.on_error)
         self.addr = self.stream.addr
         self.port = self.stream.port
         self._setup_config()
