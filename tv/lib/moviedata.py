@@ -203,7 +203,19 @@ class MovieDataUpdater(signals.SignalEmitter):
             return ''
         return pipe.stdout.read()
 
+    def _mediatype_from_mime(self, mimes):
+        for mime in mimes:
+            category = mime.split('/')[0]
+            if category == 'video':
+                return category
+        for mime in mimes:
+            category = mime.split('/')[0]
+            if category == 'audio':
+                return category
+        return None
+
     def read_metadata(self, item):
+        VIDEO_EXTENSIONS = ('m4v','mp4')
         mediatype = None
         duration = -1
         tags = {}
@@ -216,12 +228,10 @@ class MovieDataUpdater(signals.SignalEmitter):
         except (AttributeError, IOError):
             return (mediatype, duration, data)
 
-        if hasattr(muta, 'mime'):
-            for mime in muta.mime:
-                category = mime.split('/')[0]
-                if category in ('audio', 'video'):
-                    mediatype = category
-                    break
+        if item.filename.rsplit('.')[1] in VIDEO_EXTENSIONS:
+            mediatype = 'video'
+        elif hasattr(muta, 'mime'):
+            mediatype = self._mediatype_from_mime(muta.mime)
 
         tags = meta['tags']
         if hasattr(tags, '__dict__') and '_DictProxy__dict' in tags.__dict__:
