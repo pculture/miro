@@ -462,6 +462,9 @@ def write_database(mount, database):
 
     The database lives at [MOUNT]/.miro/json
     """
+    if not os.path.exists(mount):
+        # device disappeared, so we can't write to it
+        return
     try:
         os.makedirs(os.path.join(mount, '.miro'))
     except OSError:
