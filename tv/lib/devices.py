@@ -32,7 +32,6 @@ import logging
 import os, os.path
 import shutil
 import time
-from ConfigParser import SafeConfigParser
 
 from miro import app
 from miro import item
@@ -45,7 +44,30 @@ from miro import videoconversion
 from miro.plat import resources
 from miro.plat.utils import filename_to_unicode, unicode_to_filename
 
-class DeviceInfo(object):
+class BaseDeviceInfo(object):
+    """
+    Base class for device information.
+    """
+
+    def __getattr__(self, key):
+        try:
+            return self.__dict__[key]
+        except (AttributeError, KeyError):
+            if key == 'parent' or not hasattr(self, 'parent'):
+                raise AttributeError(key)
+            else:
+                return getattr(self.parent, key)
+
+    def validate(self):
+        required = ['name', 'device_name', 'vendor_id', 'product_id',
+                    'video_conversion', 'video_path',
+                    'audio_conversion', 'audio_path', 'audio_types',
+                    'mount_instructions']
+        for key in required:
+            getattr(self, key)
+
+
+class DeviceInfo(BaseDeviceInfo):
     """
     Object which contains various information about a specific supported
     device.
@@ -60,51 +82,32 @@ class DeviceInfo(object):
     audio_path: mount-relative path to where audio files should be placed
     audio_types: audio MIME types this device supports
     mount_instructions: text to show the user about how to mount their device
+    parent (optional): a MultipleDeviceInfo instance which has this device's
+                       info
     """
     has_multiple_devices = False
 
-    def __init__(self, section, parser):
-        self.name = section.decode('utf8')
-        self.device_name = self._get(section, parser, 'name')
-        self.vendor_id = int(self._get(section, parser, 'vendor_id'), 16)
-        self.product_id = int(self._get(section, parser, 'product_id'), 16)
-        self.video_conversion = self._get(section, parser, 'video_conversion')
-        self.video_path = self._get(section, parser, 'video_path')
-        self.audio_conversion = self._get(section, parser, 'audio_conversion')
-        self.audio_path = self._get(section, parser, 'audio_path')
-        self.audio_types = self._get(section, parser, 'audio_types').split()
-        self.mount_instructions = self._get(
-            section, parser, 'mount_instructions').decode('utf8').replace(
-            '\\n', '\n')
+    def __init__(self, name, **kwargs):
+        self.name = name
+        self.__dict__.update(kwargs)
 
-    def _get(self, section, parser, name):
-        try:
-            return parser.get(section, name)
-        except KeyError:
-            pass
-        try:
-            return parser.get('DEFAULT', name)
-        except KeyError:
-            return None
-
-class MultipleDeviceInfo(object):
+class MultipleDeviceInfo(BaseDeviceInfo):
     """
     Like DeviceInfo, but represents a device we can't figure out just from the
     USB information.
     """
     has_multiple_devices = True
 
-    def __init__(self, *args):
-        self.device_name = self.name = args[0].device_name
-        self.vendor_id = args[0].vendor_id
-        self.product_id = args[0].product_id
-        self.mount_instructions = args[0].mount_instructions
+    def __init__(self, device_name, children, **kwargs):
+        self.device_name = self.name = device_name
+        self.__dict__.update(kwargs)
         self.devices = {}
-        for info in args:
+        for info in children:
             self.add_device(info)
 
     def add_device(self, info):
         self.devices[info.name] = info
+        info.parent = self
 
     def get_device(self, name):
         """
@@ -113,6 +116,10 @@ class MultipleDeviceInfo(object):
         Returns a DeviceInfo object.
         """
         return self.devices[name]
+
+    def validate(self):
+        for child in self.devices.values():
+            child.validate()
 
 class DeviceManager(object):
     """
@@ -126,29 +133,26 @@ class DeviceManager(object):
         self.startup()
 
     def _add_device(self, info):
-        device_name = info.device_name
-        if device_name in self.device_by_name:
-            existing = self.device_by_name[device_name]
-            if isinstance(existing, MultipleDeviceInfo):
-                existing.add_device(info)
-                return
-            else:
-                info = MultipleDeviceInfo(existing, info)
-        self.device_by_name[device_name] = info
-        self.device_by_id[(info.vendor_id, info.product_id)] = info
+        try:
+            info.validate()
+        except:
+            logging.exception('error validating device %s', info.name)
+        else:
+            self.device_by_name[info.device_name] = info
+            self.device_by_id[(info.vendor_id, info.product_id)] = info
 
     def startup(self):
         # load devices
-        self.load_devices(resources.path('devices/*.dev'))
+        self.load_devices(resources.path('devices/*.py'))
 
     def load_devices(self, path):
         devices = glob(path)
         for device_desc in devices:
-            parser = SafeConfigParser()
-            parser.readfp(open(device_desc))
-            for section in parser.sections():
-                info = DeviceInfo(section, parser)
-                self._add_device(info)
+            global_dict = {}
+            execfile(device_desc, global_dict)
+            if 'devices' in global_dict:
+                for info in global_dict['devices']:
+                    self._add_device(info)
 
     @staticmethod
     def _get_device_from_info(info, device_type):

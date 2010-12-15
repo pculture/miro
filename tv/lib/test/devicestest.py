@@ -29,6 +29,7 @@
 import os
 import json
 
+from miro.gtcache import gettext as _
 from miro.test.framework import MiroTestCase
 
 from miro import devices
@@ -42,39 +43,41 @@ class DeviceManagerTest(MiroTestCase):
 
     def test_empty(self):
         dm = devices.DeviceManager()
-        dm.load_devices(os.path.join(self.tempdir, "*.dev"))
-        self.assertRaises(KeyError, dm.get_device, "abc")
+        dm.load_devices(os.path.join(self.tempdir, "*.py"))
+        self.assertRaises(KeyError, dm.get_device, "py")
         self.assertRaises(KeyError, dm.get_device_by_id, 0, 0)
 
     def test_parsing(self):
         self.build_config_file(
-            "foo.dev",
-            "[DEFAULT]\n"
-            "vendor_id: 0x1234\n"
-            "product_id: 0x4567\n"
-            "name: Foo\n"
-            "audio_conversion: mp3\n"
-            "audio_types: .mp3 .aac\n"
-            "mount_instructions: Mount Instructions\\nOver multiple lines\n"
-            "video_path: Video\n"
-            "audio_path: Audio\n"
-            "\n"
-            "[Target1]\n"
-            "vendor_id: 0x890a\n"
-            "product_id: 0xbcde\n"
-            "name: Bar\n"
-            "video_conversion: mp4\n"
-            "\n"
-            "[Target2]\n"
-            "video_conversion: mp4\n"
-            "\n"
-            "[Target3]\n"
-            "video_conversion: mp4\n"
-            "\n"
-            )
+            "foo.py",
+            """from miro.gtcache import gettext as _
+from miro.devices import DeviceInfo, MultipleDeviceInfo
+defaults = {
+    "audio_conversion": "mp3",
+    "audio_types": ".mp3 .aac".split(),
+    "mount_instructions": _("Mount Instructions\\nOver multiple lines"),
+    "video_path": "Video",
+    "audio_path": "Audio",
+    }
+target1 = DeviceInfo("Target1",
+                     vendor_id=0x890a,
+                     product_id=0xbcde,
+                     device_name="Bar",
+                     video_conversion="mp4",
+                     **defaults)
+target2 = DeviceInfo('Target2',
+                     video_conversion="mp4")
+target3 = DeviceInfo('Target3',
+                     video_conversion="mp4")
+multiple = MultipleDeviceInfo('Foo', [target2, target3],
+                              vendor_id=0x1234,
+                              product_id=0x4567,
+                              **defaults)
+devices = [target1, multiple]
+""")
 
         dm = devices.DeviceManager()
-        dm.load_devices(os.path.join(self.tempdir, "*.dev"))
+        dm.load_devices(os.path.join(self.tempdir, "*.py"))
 
         # a single device
         device = dm.get_device("Bar")
@@ -90,7 +93,7 @@ class DeviceManagerTest(MiroTestCase):
         # these are a special case
         self.assertFalse(device.has_multiple_devices)
         self.assertEqual(device.mount_instructions,
-                         'Mount Instructions\nOver multiple lines')
+                         _('Mount Instructions\nOver multiple lines'))
         self.assertEqual(device.audio_types, ['.mp3', '.aac'])
 
         # both devices have the same ID
@@ -101,11 +104,23 @@ class DeviceManagerTest(MiroTestCase):
         self.assertEquals(device.vendor_id, 0x1234)
         self.assertEquals(device.product_id, 0x4567)
         self.assertEqual(device.mount_instructions,
-                         'Mount Instructions\nOver multiple lines')
+                         _('Mount Instructions\nOver multiple lines'))
 
         single = device.get_device('Target2')
         self.assertFalse(single.has_multiple_devices)
         self.assertEqual(single.name, 'Target2')
+
+    def test_invalid_device(self):
+        self.build_config_file(
+            "foo.py",
+            """from miro.devices import DeviceInfo
+target1 = DeviceInfo("Target1")
+devices = [target1]
+""")
+        dm = devices.DeviceManager()
+        dm.load_devices(os.path.join(self.tempdir, "*.py"))
+        self.assertRaises(KeyError, dm.get_device, "Target1")
+        self.assertRaises(KeyError, dm.get_device_by_id, 0, 0)
 
 class DeviceHelperTest(MiroTestCase):
 
