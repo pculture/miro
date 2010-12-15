@@ -137,6 +137,13 @@ def launch_application(parsed_options, args):
     from miro import startfrontend
     startfrontend.run_application(parsed_options.frontend, {}, theme)
 
+    # This code is useless, but it tells py2app that we need to import these
+    # modules
+    import miro.plat.frontends.widgets.application
+    import miro.frontends.cli.application
+    import miro.frontends.profilewidgets.application
+    import miro.frontends.shell.application
+
 # =============================================================================
 
 def launch_downloader_daemon():
@@ -196,6 +203,10 @@ parser.add_option('--download-daemon',
                   action='store_true',
                   help='Start Downloader Process')
 parser.set_defaults(download_daemon=False)
+
+parser.add_option('-p',
+                  dest='pid',
+                  help='Processor id (used by OS X)')
 
 group = optparse.OptionGroup(parser, "Debugging options")
 group.add_option('--debug',
