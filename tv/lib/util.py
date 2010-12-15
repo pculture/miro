@@ -1070,4 +1070,4 @@ class Cache(object):
             new_dict[key] = self.dict[key]
             new_access_times[key] = time
         self.dict = new_dict
-        sself.access_times = new_access_times
+        self.access_times = new_access_times
