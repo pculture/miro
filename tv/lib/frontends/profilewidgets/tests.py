@@ -32,6 +32,7 @@
 import cProfile
 import os
 import datetime
+import itertools
 import pstats
 import random
 import tempfile
@@ -59,8 +60,10 @@ def pick_test():
     choices = [
         ProfileItemView,
         ProfileListItemView,
+        ProfileItemViewSearch,
+        ProfileItemViewSearchMostlyMatching,
     ]
-    labels = [c.__name__ for c in choices]
+    labels = [c.friendly_name() for c in choices]
     index = dialogs.ask_for_choice('Pick Test',
             'Choose which test you want to run', labels)
     if index is None:
@@ -68,6 +71,8 @@ def pick_test():
     return choices[index]()
 
 class ProfiledCode(object):
+    stats_cutoff = 0.4
+
     def startup(self):
         window = widgetset.MainWindow('Miro Profiler', widgetset.Rect(100,
             100, 700, 500))
@@ -84,7 +89,8 @@ class ProfiledCode(object):
         cProfile.runctx('self.profiled_code()', globals(), locals(), path)
         self.tear_down()
         stats = pstats.Stats(path)
-        stats.strip_dirs().sort_stats('cumulative').print_stats(0.4)
+        stats = stats.strip_dirs().sort_stats('cumulative')
+        stats.print_stats(self.stats_cutoff)
         os.unlink(path)
         app.widgetapp.quit_ui()
 
@@ -97,13 +103,24 @@ class ProfiledCode(object):
     def profiled_code(self):
         pass
 
+    @classmethod
+    def friendly_name(self):
+        raise NotImplementedError()
+
 class ProfileItemView(ProfiledCode):
+    descriptions_to_generate = 1000
+
+    @classmethod
+    def friendly_name(cls):
+        return "Profile rendering items"
+
     def set_up(self):
         self.html_stripper = util.HTMLStripper()
+        self.id_counter = itertools.count()
         self.setup_text()
         self.item_list = itemlist.ItemList()
         self.item_list.set_sort(itemlist.DateSort(True))
-        self.item_list.add_items(self.generate_items())
+        self.item_list.add_items(self.generate_items(30))
         self.make_item_view()
         scroller = widgetset.Scroller(False, True)
         scroller.add(self.item_view)
@@ -139,9 +156,9 @@ class ProfileItemView(ProfiledCode):
                 "blandit ornare. Sed viverra metus at massa viverra.  ")
         lorem = lorem.split()
         self.names = iter(' '.join(random.sample(lorem, 5))
-                for x in xrange(1000))
+                for x in xrange(self.descriptions_to_generate))
         descriptions = []
-        for x in xrange(1000):
+        for x in xrange(self.descriptions_to_generate):
             random.shuffle(lorem)
             p1 = ' '.join(lorem)
             random.shuffle(lorem)
@@ -171,7 +188,7 @@ class ProfileItemView(ProfiledCode):
         item.duration += 1
         item.size += 1
 
-    def generate_items(self):
+    def generate_items(self, count):
         item_info_template = {
          'down_rate': None,
          'rating': None,
@@ -183,7 +200,6 @@ class ProfileItemView(ProfiledCode):
          'feed_id': 31,
          'year': -1,
          'duration': 0,
-         'id': 170,
          'size': 328195214,
          'album': u'',
          'media_type_checked': False,
@@ -228,16 +244,49 @@ class ProfileItemView(ProfiledCode):
          'up_down_ratio': 0.0
          }
         retval = []
-        for x in xrange(30):
+        for x in xrange(count):
             item_info = messages.ItemInfo.__new__(messages.ItemInfo)
             item_info.__dict__ = item_info_template.copy()
             self.mutate_item(item_info)
+            item_info.id = self.id_counter.next()
             retval.append(item_info)
         return retval
 
 class ProfileListItemView(ProfileItemView):
+    @classmethod
+    def friendly_name(cls):
+        return "Profile rendering items in list view"
+
     def make_item_view(self):
         enabled_columns = [u'state', u'name', u'feed-name', u'eta', u'rate',
                 u'artist', u'album', u'track', u'year', u'genre']
         self.item_view = itemlistwidgets.ListItemView(self.item_list,
                 enabled_columns)
+
+class ProfileItemViewSearch(ProfileItemView):
+    descriptions_to_generate = 10000
+    stats_cutoff = 0.6
+
+    @classmethod
+    def friendly_name(cls):
+        return "Profile setting search text"
+
+    def set_up(self):
+        ProfileItemView.set_up(self)
+        # add some more items
+        self.item_list.add_items(self.generate_items(8000))
+
+    def profiled_code(self):
+        self.item_view.start_bulk_change()
+        self.item_list.set_search_text("not going to find me")
+        self.item_view.model_changed()
+
+class ProfileItemViewSearchMostlyMatching(ProfileItemViewSearch):
+    @classmethod
+    def friendly_name(cls):
+        return "Profile setting search text when the items match"
+
+    def profiled_code(self):
+        self.item_view.start_bulk_change()
+        self.item_list.set_search_text("Lorem")
+        self.item_view.model_changed()
