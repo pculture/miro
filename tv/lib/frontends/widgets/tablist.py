@@ -202,7 +202,7 @@ class LibraryTabList(StaticTabListBase):
         self.add(statictabs.AudioLibraryTab())
         self.auto_tabs = {'downloading': statictabs.DownloadsTab(),
                           'conversions': statictabs.VideoConversionsTab(),
-                          'others': statictabs.OtherLibraryTab()}
+                          'others': statictabs.OthersTab()}
         self.view.model_changed()
 
     def update_auto_tab_count(self, name, count):

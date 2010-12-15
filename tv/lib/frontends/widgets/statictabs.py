@@ -114,9 +114,9 @@ class AudioLibraryTab(StaticTab):
     icon_name = 'icon-audio'
     media_type = u'audio'
 
-class OtherLibraryTab(StaticTab):
+class OthersTab(StaticTab):
     type = 'others'
-    id = 'library'
+    id = 'others'
     name = _('Other')
     icon_name = 'icon-other'
     media_type = u'other'
