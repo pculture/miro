@@ -95,6 +95,15 @@ class SharingTracker(object):
             added_list.append(info)
         else:
             removed_list.append(share_id)
+            # XXX we should not be simply stopping because the mDNS share
+            # disappears.  AND we should not be calling this from backend
+            # due to RACE!
+            item = app.playback_manager.get_playing_item()
+            remote_item = False
+            if item and item.remote:
+                remote_item = True
+            if remote_item and item.host == host and item.port == port:
+                app.playback_manager.stop(save_resume_time=False)
         # XXX should not remove this tab if it is currently mounted.  The
         # mDNS going away just means it is no longer published, doesn't
         # mean it's not available.
