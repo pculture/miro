@@ -786,19 +786,18 @@ class ReportCrash(BackendMessage):
         self.text = text
         self.send_report = send_report
 
-class SaveFrontendState(BackendMessage):
-    """Save data for the frontend.
+class SaveDisplayState(BackendMessage):
+    """Save changes to one display for the frontend
     """
-    def __init__(self, list_view_displays, sort_states, active_filters,
-            list_view_columns, list_view_column_widths):
-        self.list_view_displays = list_view_displays
-        self.sort_states = sort_states
+    def __init__(self, key, is_list_view, active_filters, sort_state, columns):
+        self.key = key
+        self.is_list_view = is_list_view
         self.active_filters = active_filters
-        self.list_view_columns = list_view_columns
-        self.list_view_column_widths = list_view_column_widths
+        self.sort_state = sort_state
+        self.columns = columns
 
-class QueryFrontendState(BackendMessage):
-    """Ask for a CurrentFrontendState message to be sent back.
+class QueryDisplayStates(BackendMessage):
+    """Ask for a CurrentDisplayStates message to be sent back.
     """
     pass
 
@@ -1547,16 +1546,21 @@ class SearchComplete(FrontendMessage):
         self.query = query
         self.result_count = result_count
 
-class CurrentFrontendState(FrontendMessage):
-    """Returns the latest data saved with SaveFrontendState.
+class CurrentDisplayStates(FrontendMessage):
+    """Returns the states of all displays
     """
-    def __init__(self, list_view_displays, sort_states, active_filters,
-            list_view_columns, list_view_column_widths):
-        self.list_view_displays = list_view_displays
-        self.sort_states = sort_states
+    def __init__(self, display_infos):
+        self.displays = display_infos
+
+class DisplayInfo(object):
+    """Contains the state of a single display
+    """
+    def __init__(self, key, is_list_view, active_filters, sort_state, columns):
+        self.key = key
+        self.is_list_view = is_list_view
         self.active_filters = active_filters
-        self.list_view_columns = list_view_columns
-        self.list_view_column_widths = list_view_column_widths
+        self.sort_state = sort_state
+        self.columns = columns
 
 class OpenInExternalBrowser(FrontendMessage):
     """Opens the specified url in an external browser.

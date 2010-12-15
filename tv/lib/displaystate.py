@@ -26,15 +26,17 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""miro.frontendstate -- Objects that store data for the frontends.
+"""miro.displaystate -- Object that stores data for each display.
 """
 
 from miro.database import DDBObject
 
-class WidgetsFrontendState(DDBObject):
-    def setup_new(self):
-        self.list_view_displays = list()
-        self.sort_states = dict()
-        self.active_filters = dict()
-        self.list_view_columns = list()
-        self.list_view_column_widths = dict()
+class DisplayState(DDBObject):
+    def setup_new(self, display):
+        self.type = display[0]
+        self.id_ = display[1]
+        # None = use default:
+        self.is_list_view = None
+        self.active_filters = None
+        self.sort_state = None
+        self.columns = None

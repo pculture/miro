@@ -91,13 +91,11 @@ class ItemListController(object):
         self.id = id_
         self.current_item_view = None
         self._search_text = ''
-        self.enabled_columns = app.frontend_states_memory.query_columns_state(
-                typ, id_)
-        self.column_widths = app.frontend_states_memory.query_column_widths(
-                typ, id_)
+        display = (typ, id_)
+        self.columns = app.display_state.get_columns(display)
         self._init_widget()
         item_lists = set(iv.item_list for iv in self.all_item_views())
-        sorter = app.frontend_states_memory.query_sort_state(typ, id_)
+        sorter = app.display_state.get_sort_state(display)
         self.item_list_group = itemlist.ItemListGroup(item_lists, sorter)
         self._init_item_views()
         self.initialize_search()
@@ -240,11 +238,13 @@ class ItemListController(object):
             item_view.model_changed()
         self.widget.toolbar.change_sort_indicator(sort_key, ascending)
         self.list_item_view.change_sort_indicator(sort_key, ascending)
-        app.frontend_states_memory.set_sort_state(self.type, self.id, sorter)
+        display = (self.type, self.id)
+        app.display_state.set_sort_state(display, sorter)
 
     def on_toggle_column(self, column):
         self.enabled_columns ^= set([column])
-        app.frontend_states_memory.set_columns_state(self.enabled_columns)
+        display = (self.type, self.id)
+        app.display_state[display].set_columns_state(self.enabled_columns)
 
     def on_key_press(self, view, key, mods):
         if key == menus.DELETE:

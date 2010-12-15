@@ -288,13 +288,15 @@ class ItemListDisplayMixin(object):
         app.item_list_controller_manager.controller_destroyed(self.controller)
 
     def remember_state(self):
+        display = (self.type, self.id)
         if self.controller.widget.in_list_view:
-            app.frontend_states_memory.set_list_view(self.type, self.id)
+            app.display_state.set_list_view(display)
         else:
-            app.frontend_states_memory.set_std_view(self.type, self.id)
+            app.display_state.set_std_view(display)
 
     def restore_state(self):
-        if app.frontend_states_memory.query_list_view(self.type, self.id):
+        display = (self.type, self.id)
+        if app.display_state.is_list_view(display):
             self.widget.switch_to_list_view()
 
 class ItemListDisplay(ItemListDisplayMixin, TabDisplay):
@@ -384,11 +386,12 @@ class AudioVideoItemsDisplay(ItemListDisplay):
     def remember_state(self):
         ItemListDisplay.remember_state(self)
         filters = self.widget.toolbar.active_filters()
-        app.frontend_states_memory.set_filters(self.type, self.id, filters)
+        display = (self.type, self.id)
+        app.display_state.set_filters(display, filters)
 
     def restore_state(self):
-        initial_filters = app.frontend_states_memory.query_filters(self.type,
-                self.id)
+        display = (self.type, self.id)
+        initial_filters = app.display_state.get_filters(display)
         if initial_filters:
             self.controller.set_item_filters(initial_filters)
         ItemListDisplay.restore_state(self)

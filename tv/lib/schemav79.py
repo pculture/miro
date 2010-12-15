@@ -53,7 +53,6 @@ import datetime
 import time
 from types import NoneType
 from miro.plat.utils import FilenameType
-from miro.frontendstate import WidgetsFrontendState
 
 class ValidationError(Exception):
     """Error thrown when we try to save invalid data."""

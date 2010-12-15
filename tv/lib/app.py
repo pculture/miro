@@ -103,7 +103,7 @@ playback_manager = None
 watched_folder_manager = None
 
 # keeps track of frontend states
-frontend_states_memory = None
+display_state = {}
 
 # gtk/windows video renderer
 video_renderer = None

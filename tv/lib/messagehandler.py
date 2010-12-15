@@ -41,7 +41,7 @@ from miro import devices
 from miro import downloader
 from miro import eventloop
 from miro import feed
-from miro.frontendstate import WidgetsFrontendState
+from miro.displaystate import DisplayState
 from miro import guide
 from miro import fileutil
 from miro import commandline
@@ -1505,26 +1505,37 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         app.controller.send_bug_report(message.report, message.text,
                                        message.send_report)
 
-    def _get_widgets_frontend_state(self):
+    def _get_display_state(self, key):
+        key = (unicode(str(key[0]), 'utf-8', 'replace'),
+            unicode(str(key[1]), 'utf-8', 'replace'))
         try:
-            return WidgetsFrontendState.make_view().get_singleton()
+            return DisplayState.make_view("type=? AND id_=?",
+                key).get_singleton()
         except database.ObjectNotFoundError:
-            return WidgetsFrontendState()
+            return DisplayState(key)
 
-    def handle_save_frontend_state(self, message):
-        state = self._get_widgets_frontend_state()
-        state.list_view_displays = message.list_view_displays
-        state.sort_states = message.sort_states
+    def handle_save_display_state(self, message):
+        state = self._get_display_state(message.key)
+        state.is_list_view = message.is_list_view
         state.active_filters = message.active_filters
-        state.list_view_columns = message.list_view_columns
-        state.list_view_column_widths = message.list_view_column_widths
+        state.sort_state = message.sort_state
+        state.columns = message.columns
         state.signal_change()
+        
+    def _get_display_states(self):
+        states = []
+        for display in DisplayState.make_view():
+            key = (unicode(str(display.type), 'utf-8', 'replace'),
+                unicode(str(display.id_), 'utf-8', 'replace'))
+            display_info = messages.DisplayInfo(key,
+                display.is_list_view, display.active_filters,
+                display.sort_state, display.columns)
+            states.append(display_info)
+        return states
 
-    def handle_query_frontend_state(self, message):
-        state = self._get_widgets_frontend_state()
-        m =messages.CurrentFrontendState(state.list_view_displays,
-                state.sort_states, state.active_filters,
-                state.list_view_columns, state.list_view_column_widths)
+    def handle_query_display_states(self, message):
+        states = self._get_display_states()
+        m = messages.CurrentDisplayStates(states)
         m.send_to_frontend()
 
     def handle_set_device_type(self, message):
