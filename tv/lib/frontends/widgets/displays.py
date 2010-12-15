@@ -437,7 +437,7 @@ class DownloadingDisplay(ItemListDisplay):
 class VideoConversionsDisplay(TabDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        return tab_type == 'conversions' and selected_tabs[0].id == 'library'
+        return tab_type == 'conversions'
 
     def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
