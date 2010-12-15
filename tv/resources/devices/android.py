@@ -1,3 +1,5 @@
+from miro import app
+from miro import prefs
 from miro.devices import DeviceInfo, MultipleDeviceInfo
 from miro.gtcache import gettext as _
 
@@ -5,9 +7,11 @@ defaults = {
     'audio_conversion': 'mp3',
     'audio_types': '.mp3 .wma .m4a .aac .mid .wav .oga'.split(),
     'mount_instructions': _("Your phone must be in 'USB storage mode' in "
-                            "order for Miro to sync files to it.\n"
+                            "order for %(shortappname)s to sync files to it.\n"
                             "To mount your phone, select 'Turn on USB "
-                            "storage' from the notifications."),
+                            "storage' from the notifications.",
+                            {'shortappname':
+                                 app.config.get(prefs.SHORT_APP_NAME)}),
     'video_path': 'Miro',
     'audio_path': 'Miro'
     }
