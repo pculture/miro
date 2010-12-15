@@ -296,19 +296,21 @@ class ListItemView(widgetset.TableView):
         'rate': [_('Speed'), style.DownloadRateRenderer()],
     }
 
-    def __init__(self, item_list, enabled_columns, column_widths,
-            display_download_info=True):
+    def __init__(self, item_list, columns, display_download_info=True):
         widgetset.TableView.__init__(self, item_list.model)
         self.display_download_info = display_download_info
+        enabled_columns = []
+        for name_width in columns:
+            enabled_columns.append(name_width[0])
         self.enabled_columns = enabled_columns
         self.create_signal('sort-changed')
         self.item_list = item_list
         self._column_name_to_column = {}
         self._current_sort_column = None
-        self._set_initial_widths = bool(column_widths)
+        self._set_initial_widths = False # TODO something else here
         display_columns = enabled_columns
-        if display_download_info:
-            display_columns = [u'name', u'feed-name', u'status', u'eta', u'rate']
+#        if display_download_info:
+#            display_columns = [u'name', u'feed-name', u'status', u'eta', u'rate']
         for name in display_columns:
             data = ListItemView.columns_map[name]
             resizable = True

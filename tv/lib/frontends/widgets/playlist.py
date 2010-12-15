@@ -121,9 +121,7 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
         return PlaylistItemView(self.item_list, self.id)
 
     def build_list_item_view(self):
-        return itemlistwidgets.ListItemView(self.item_list,
-                self.enabled_columns, self.column_widths,
-                display_download_info=False)
+        return itemlistwidgets.ListItemView(self.item_list, self.columns)
 
     def make_drop_handler(self):
         handler = DropHandler(self.id, self.item_view)

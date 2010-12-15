@@ -57,8 +57,7 @@ class FeedController(itemlistcontroller.ItemListController):
         itemlistcontroller.ItemListController.__init__(self, 'feed', id)
 
     def build_list_item_view(self):
-        return itemlistwidgets.ListItemView(self.item_list,
-                self.enabled_columns, self.column_widths)
+        return itemlistwidgets.ListItemView(self.item_list, self.columns)
 
     def make_context_menu_handler(self):
         return itemcontextmenu.ItemContextMenuHandler()
