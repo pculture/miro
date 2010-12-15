@@ -502,6 +502,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
                 limit=10)
 
     @classmethod
+    def unique_others_view(cls):
+        return cls.make_view("item.file_type='other' AND "
+                "((is_file_item AND NOT deleted) OR "
+                "(rd.maiN_item_id=item.id AND "
+                "rd.state in ('finished', 'uploading', 'uploading-paused')))",
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
+
+    @classmethod
     def unique_new_video_view(cls):
         return cls.make_view("NOT item.seen AND "
                 "item.file_type='video' AND "

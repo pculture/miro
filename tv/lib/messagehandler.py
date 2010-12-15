@@ -531,6 +531,13 @@ class PausedCountTracker(CountTracker):
     def make_message(self, count):
         return messages.PausedCountChanged(count)
 
+class OthersCountTracker(CountTracker):
+    def get_view(self):
+        return item.Item.unique_others_view()
+
+    def make_message(self, count):
+        return messages.OthersCountChanged(count)
+
 class NewVideoCountTracker(CountTracker):
     def get_view(self):
         return item.Item.unique_new_video_view()
@@ -563,6 +570,7 @@ class BackendMessageHandler(messages.MessageHandler):
         self.watched_folder_tracker = None
         self.download_count_tracker = None
         self.paused_count_tracker = None
+        self.others_count_tracker = None
         self.new_video_count_tracker = None
         self.new_audio_count_tracker = None
         self.unwatched_count_tracker = None
@@ -1393,6 +1401,16 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         if self.paused_count_tracker:
             self.paused_count_tracker.stop_tracking()
             self.paused_count_tracker = None
+
+    def handle_track_others_count(self, message):
+        if self.others_count_tracker is None:
+            self.others_count_tracker = OthersCountTracker()
+        self.others_count_tracker.send_message()
+
+    def handle_stop_tracking_others_count(self, message):
+        if self.others_count_tracker:
+            self.others_count_tracker.stop_tracking()
+            self.others_count_tracker = None
 
     def handle_track_new_video_count(self, message):
         if self.new_video_count_tracker is None:

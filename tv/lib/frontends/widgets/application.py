@@ -242,6 +242,7 @@ class Application:
         messages.TrackPlaylists().send_to_backend()
         messages.TrackDownloadCount().send_to_backend()
         messages.TrackPausedCount().send_to_backend()
+        messages.TrackOthersCount().send_to_backend()
         messages.TrackNewVideoCount().send_to_backend()
         messages.TrackNewAudioCount().send_to_backend()
         messages.TrackUnwatchedCount().send_to_backend()
@@ -1292,6 +1293,10 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_paused_count_changed(self, message):
         app.widgetapp.paused_count = message.count
+
+    def handle_others_count_changed(self, message):
+        library_tab_list = app.tab_list_manager.library_tab_list
+        library_tab_list.update_others_count(message.count)
 
     def handle_new_video_count_changed(self, message):
         library_tab_list = app.tab_list_manager.library_tab_list

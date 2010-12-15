@@ -247,6 +247,19 @@ class StopTrackingPausedCount(BackendMessage):
     """Stop tracking the paused count."""
     pass
 
+class TrackOthersCount(BackendMessage):
+    """Start tracking the number of 'other' items.  When this message is
+    received the backend will send a corresponding
+    OthersCountChanged message.  It will also send
+    OthersCountChanged whenever the count changes.
+    """
+    pass
+
+class StopTrackingOthersCount(BackendMessage):
+    """Stop tracking the 'other' count.
+    """
+    pass
+
 class TrackNewVideoCount(BackendMessage):
     """Start tracking the number of new videos.  When this message is
     received the backend will send a corresponding
@@ -1361,6 +1374,12 @@ class DownloadCountChanged(FrontendMessage):
 class PausedCountChanged(FrontendMessage):
     """Informs the frontend that number of paused downloading items
     has changed.
+    """
+    def __init__(self, count):
+        self.count = count
+
+class OthersCountChanged(FrontendMessage):
+    """Informs the frontend that the number of 'other' items has changed.
     """
     def __init__(self, count):
         self.count = count

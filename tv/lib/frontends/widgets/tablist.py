@@ -200,9 +200,9 @@ class LibraryTabList(StaticTabListBase):
     def build_tabs(self):
         self.add(statictabs.VideoLibraryTab())
         self.add(statictabs.AudioLibraryTab())
-        self.add(statictabs.OtherLibraryTab())
         self.auto_tabs = {'downloading': statictabs.DownloadsTab(),
-                          'conversions': statictabs.VideoConversionsTab()}
+                          'conversions': statictabs.VideoConversionsTab(),
+                          'others': statictabs.OtherLibraryTab()}
         self.view.model_changed()
 
     def update_auto_tab_count(self, name, count):
@@ -212,6 +212,7 @@ class LibraryTabList(StaticTabListBase):
         else:
             self.auto_tabs_to_show.discard(name)
             self.remove_auto_tab_if_not_selected(name)
+
 
     def show_auto_tab(self, name):
         try:
@@ -242,6 +243,10 @@ class LibraryTabList(StaticTabListBase):
     def update_conversions_count(self, running_count, other_count):
         self.update_count('conversions', 'downloading', running_count,
                           other_count)
+
+    def update_others_count(self, count):
+        self.update_count('others', 'others', count) # second param no special
+                                                     # meaning for this case... ?
 
     def update_new_video_count(self, count):
         self.update_count('videos', 'unwatched', count)
