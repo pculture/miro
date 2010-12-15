@@ -39,7 +39,6 @@
 #include "nsCOMPtr.h"
 #include "nsComponentManagerUtils.h"
 #include "nsEmbedCID.h"
-#include "nsEmbedString.h"
 #include "nsIDOMWindow.h"
 #include "nsIInterfaceRequestorUtils.h"
 #include "nsISupportsImpl.h"
@@ -105,6 +104,7 @@ nsresult MiroBrowserEmbed::init(unsigned long parentWindow, int x,
             NS_GET_IID(nsIWebProgressListener));
     NS_ENSURE_SUCCESS(rv, rv);
     mWebNavigation = do_QueryInterface(mWebBrowser);
+    loadURI("about:blank");
     return NS_OK;
 }
 
@@ -151,7 +151,8 @@ PRBool MiroBrowserEmbed::is_enabled()
 // Load a URI into the browser
 nsresult MiroBrowserEmbed::loadURI(const char* uri)
 {
-    mWebNavigation->LoadURI(NS_ConvertASCIItoUTF16(uri).get(),
+    mCurrentURI = NS_ConvertASCIItoUTF16(uri);
+    mWebNavigation->LoadURI(PromiseFlatString(mCurrentURI).get(),
             nsIWebNavigation::LOAD_FLAGS_NONE, 0, 0, 0);
     return NS_OK;
 }

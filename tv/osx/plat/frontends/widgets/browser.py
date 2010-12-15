@@ -65,6 +65,11 @@ class Browser(Widget):
 
     def viewport_created(self):
         Widget.viewport_created(self)
+        if self.view.isLoading():
+            # We haven't set up our delegates yet, but have already started
+            # loading a webpage.  Send the net-start signal now because the
+            # delegate will miss it.
+            self.emit("net-start")
         self._set_webkit_delegates(self.delegate)
 
     def remove_viewport(self):
