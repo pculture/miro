@@ -215,7 +215,7 @@ class MovieDataUpdater(signals.SignalEmitter):
         return None
 
     def read_metadata(self, item):
-        VIDEO_EXTENSIONS = ('m4v','mp4')
+        VIDEO_EXTENSIONS = ('.m4v','.mp4')
         mediatype = None
         duration = -1
         tags = {}
@@ -228,7 +228,7 @@ class MovieDataUpdater(signals.SignalEmitter):
         except (AttributeError, IOError):
             return (mediatype, duration, data)
 
-        if item.filename.rsplit('.')[1] in VIDEO_EXTENSIONS:
+        if os.path.splitext(item.filename)[1].lower() in VIDEO_EXTENSIONS:
             mediatype = 'video'
         elif hasattr(muta, 'mime'):
             mediatype = self._mediatype_from_mime(muta.mime)
