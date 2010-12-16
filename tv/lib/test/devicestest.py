@@ -30,6 +30,7 @@ import os
 import json
 
 from miro.gtcache import gettext as _
+from miro.plat import utils
 from miro.test.framework import MiroTestCase
 
 from miro import devices
@@ -56,8 +57,8 @@ defaults = {
     "audio_conversion": "mp3",
     "audio_types": ".mp3 .aac".split(),
     "mount_instructions": _("Mount Instructions\\nOver multiple lines"),
-    "video_path": "Video",
-    "audio_path": "Audio",
+    "video_path": u"Video",
+    "audio_path": u"Audio",
     }
 target1 = DeviceInfo("Target1",
                      vendor_id=0x890a,
@@ -89,7 +90,9 @@ devices = [target1, multiple]
         self.assertEqual(device.device_name, 'Bar')
         self.assertEqual(device.video_conversion, "mp4")
         self.assertEqual(device.audio_path, 'Audio')
+        self.assertTrue(isinstance(device.audio_path, utils.FilenameType))
         self.assertEqual(device.video_path, 'Video')
+        self.assertTrue(isinstance(device.video_path, utils.FilenameType))
         # these are a special case
         self.assertFalse(device.has_multiple_devices)
         self.assertEqual(device.mount_instructions,

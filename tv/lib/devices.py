@@ -90,6 +90,10 @@ class DeviceInfo(BaseDeviceInfo):
     def __init__(self, name, **kwargs):
         self.name = name
         self.__dict__.update(kwargs)
+        if 'audio_path' in kwargs:
+            self.audio_path = unicode_to_filename(self.audio_path)
+        if 'video_path' in kwargs:
+            self.video_path = unicode_to_filename(self.video_path)
 
 class MultipleDeviceInfo(BaseDeviceInfo):
     """
@@ -101,6 +105,10 @@ class MultipleDeviceInfo(BaseDeviceInfo):
     def __init__(self, device_name, children, **kwargs):
         self.device_name = self.name = device_name
         self.__dict__.update(kwargs)
+        if 'audio_path' in kwargs:
+            self.audio_path = unicode_to_filename(self.audio_path)
+        if 'video_path' in kwargs:
+            self.video_path = unicode_to_filename(self.video_path)
         self.devices = {}
         for info in children:
             self.add_device(info)
