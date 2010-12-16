@@ -83,6 +83,7 @@ def _build_header(channel):
     v.pack_start(widgetutil.align_left(lab))
 
     lab = widgetset.Label(clamp_text(channel.url, 80))
+    lab.set_selectable(True)
     lab.set_size(widgetconst.SIZE_SMALL)
     lab.set_color(widgetconst.DIALOG_NOTE_COLOR)
     v.pack_start(widgetutil.align_left(lab))
