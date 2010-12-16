@@ -2853,6 +2853,8 @@ def upgrade124(cursor):
     cursor.execute("CREATE TABLE display_state "
         "(id integer PRIMARY KEY, type text, id_ text, is_list_view integer, "
         "active_filters pythonrepr, sort_state blob, columns pythonrepr)")
+    cursor.execute("CREATE INDEX display_state_display "
+        "ON display_state (type, id_)")
     cursor.execute("SELECT list_view_displays, active_filters, sort_states "
         "FROM widgets_frontend_state")
     (list_view_displays, all_active_filters, sort_states) = cursor.fetchone()
