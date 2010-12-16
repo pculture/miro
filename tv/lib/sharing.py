@@ -461,7 +461,6 @@ class SharingManager(object):
     def disable_sharing(self):
         self.sharing = False
         self.server.shutdown()
-        self.thread.join()
         del self.thread
         del self.server
 
