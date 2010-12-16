@@ -226,7 +226,7 @@ class SharingItemTrackerImpl(object):
 
     def client_connect_error_callback(self, unused):
         # If it didn't work, immediately disconnect ourselves.
-        messages.SharingEject(self.id).send_to_backend()
+        app.sharing_tracker.eject(self.id)
         messages.SharingConnectFailed(self.tab, self.id).send_to_frontend()
 
     def get_items(self):
