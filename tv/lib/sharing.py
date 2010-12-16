@@ -135,6 +135,13 @@ class SharingTracker(object):
     def stop_tracking(self):
         raise NotImplementedError()
 
+# Synchronization issues: The messagehandler.SharingItemTracker() creates
+# one of these for each share it connects to.  If this is an initial connection
+# the send_initial_list() will be empty and it will send the actual list
+# after connected, which must happen strictly after send_initial_list() as
+# both are scheduled to run on the backend thread.  If this is not an initial
+# connection then send_initial_list() would already have been populated so
+# we are fine there.
 class SharingItemTrackerImpl(object):
     type = 'sharing'
     def __init__(self, tab, share_id):
