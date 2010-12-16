@@ -12,6 +12,7 @@ from miro import downloader
 from miro import item
 from miro import feed
 from miro import folder
+from miro import displaystate
 from miro import guide
 from miro import schema
 from miro import signals
@@ -541,6 +542,7 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
         self.tab_order = tabs.TabOrder(u'channel')
         self.guide = guide.ChannelGuide(u'http://example.com/')
         self.theme_hist = theme.ThemeHistory()
+        self.display_state = displaystate.DisplayState((u'testtype',u'testid'))
 
     def check_fixed_value(self, obj, column_name, value, disk_value=None):
         obj = self.reload_object(obj)
@@ -595,6 +597,14 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
         app.db.cursor.execute("UPDATE theme_history "
                 "SET pastThemes='[1, 2; 3 ]' WHERE id=?", (self.theme_hist.id,))
         self.check_fixed_value(self.theme_hist, 'pastThemes', [])
+
+    def test_corrupt_display_state(self):
+        app.db.cursor.execute("UPDATE display_state SET "
+                "active_filters=?, sort_state=?, columns=?",
+                (self.display_state.id, 'gibberish', 'nonsense', 'what'))
+        self.check_fixed_value(self.display_state, 'active_filters', None)
+        self.check_fixed_value(self.display_state, 'sort_state', None)
+        self.check_fixed_value(self.display_state, 'columns', None)
 
     def test_corrupt_link_history(self):
         # TODO: should test ScraperFeedIpml.linkHistory, but it's not so easy
