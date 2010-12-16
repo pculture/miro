@@ -79,12 +79,10 @@ class SharingTracker(object):
         self.trackers = dict()
 
     def mdns_callback(self, added, fullname, host, port):
-        # NB: Filter out myself. 
         added_list = []
         removed_list = []
         # First check to see if it's myself.
         my_hostname, my_port = app.sharing_manager.mdns_myself()
-        print 'MYSELF %s %s RECEIVED %s %s' % (my_hostname, my_port, host, port)
         if my_hostname == host and my_port == port:
             return
         # Need to come up with a unique ID for the share.  Use 
