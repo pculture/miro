@@ -76,7 +76,7 @@ class LoggingStreamTest(unittest.TestCase):
         self.assertEquals(len(self.warnings), 1)
         self.assertEquals(self.warnings[0], '(from stdout) Hello World')
         self.assertEquals(len(self.errors), 1)
-        self.assertEquals(self.errors[0], '(from stderr) ' + 
+        self.assertEquals(self.errors[0], '(from stderr) ' +
             "LotsofData" * 200)
 
     def test_unicode_write(self):
@@ -226,7 +226,7 @@ class UtilTest(unittest.TestCase):
              u'http://example.org/3.mp4',
              u'http://example.org/2.mov',
              u'http://example.org/5.mpeg'])
-            
+
     def test_get_first_video_enclosure(self):
         """
         Test for util.get_first_video_enclosure
@@ -342,13 +342,17 @@ class UtilTest(unittest.TestCase):
 
     def test_quote_unicode_url(self):
         # Non-unicode
-        self.assertRaises(util.MiroUnicodeError, util.quote_unicode_url, 'http://www.example.com')
+        self.assertRaises(util.MiroUnicodeError, util.quote_unicode_url,
+            'http://www.example.com')
 
         # Unicode, no substitution
-        self.assertEqualWithType('http://www.example.com', unicode, util.quote_unicode_url(u'http://www.example.com'))
+        self.assertEqualWithType('http://www.example.com', unicode,
+            util.quote_unicode_url(u'http://www.example.com'))
 
         # Unicode, substitution
-        self.assertEqualWithType(u'http://www.example.com/fran%C3%83%C2%A7ois', unicode, util.quote_unicode_url(u'http://www.example.com/fran\xc3\xa7ois'))
+        self.assertEqualWithType(u'http://www.example.com/fran%C3%83%C2%A7ois',
+            unicode,
+            util.quote_unicode_url(u'http://www.example.com/fran\xc3\xa7ois'))
 
 
     def test_call_command(self):
@@ -427,7 +431,7 @@ class DownloadUtilsTest(unittest.TestCase):
         self.check_clean_filename(long_filename, long_filename[:100])
         # total file length isn't over the limit, so the extension
         # stays the same
-        self.check_clean_filename('abc' + long_extension, 
+        self.check_clean_filename('abc' + long_extension,
                                   'abc' + long_extension)
         self.check_clean_filename(long_filename + long_extension,
                                   long_filename[:50] + long_extension[:50])
@@ -540,7 +544,7 @@ class MatrixTest(unittest.TestCase):
 
         self.assertEquals(list(m.row(0)), [1, 3, 5])
         self.assertEquals(list(m.row(1)), [2, 4, 6])
-        
+
     def test_remove(self):
         m = util.Matrix(1, 2)
         m[0,0] = 1
@@ -551,7 +555,7 @@ class MatrixTest(unittest.TestCase):
         self.assertEquals(m[0,0], 1)
         self.assertEquals(m[0,1], None)
 
-class Test_gather_subtitles_files(unittest.TestCase):
+class TestGatherSubtitlesFiles(unittest.TestCase):
     def setUp(self):
         unittest.TestCase.setUp(self)
         self.tempdir = tempfile.mkdtemp()
@@ -626,7 +630,7 @@ class Test_gather_subtitles_files(unittest.TestCase):
         self.assertEquals(
             sub_files, util.gather_subtitle_files(FilenameType(movie_file)))
 
-class Test_copy_subtitle_file(unittest.TestCase):
+class TestCopySubtitleFile(unittest.TestCase):
     def setUp(self):
         unittest.TestCase.setUp(self)
         self.tempdir = tempfile.mkdtemp()
@@ -677,7 +681,7 @@ class Test_copy_subtitle_file(unittest.TestCase):
         self.assert_(os.path.exists(expected))
         self.assertEqual(expected, ret)
 
-class Test_name_sort_key(unittest.TestCase):
+class TestNameSortKey(unittest.TestCase):
     def test_simple(self):
         for testcase in ((None, None),
                          (u'', [u'']),
@@ -700,7 +704,7 @@ class Test_name_sort_key(unittest.TestCase):
             self.assertEquals(inlist, outlist)
 
 
-class Test_gather_media_files(unittest.TestCase):
+class TestGatherMediaFiles(unittest.TestCase):
     def setUp(self):
         unittest.TestCase.setUp(self)
 
@@ -729,7 +733,6 @@ class Test_gather_media_files(unittest.TestCase):
             self.expectedFiles.append(fullfilepath)
 
     def verify_results(self):
-
         finder = util.gather_media_files(self.tempdir)
         found = []
 
