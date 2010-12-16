@@ -600,12 +600,14 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
 
     def test_corrupt_display_state(self):
         app.db.cursor.execute("UPDATE display_state SET "
-                "active_filters=?, sort_state=?, columns=? "
-                "WHERE id=?", ('gibberish', 'non.sense', 'w@h$a%t',
+                "active_filters=?, sort_state=?, columns=?, is_list_view=? "
+                "WHERE id=?", ('gibberish', 'non.sense', 'w@h$a%t', True,
                     self.display_state.id))
         self.check_fixed_value(self.display_state, 'active_filters', None)
         self.check_fixed_value(self.display_state, 'sort_state', None)
         self.check_fixed_value(self.display_state, 'columns', None)
+        # check that fields with valid values were salvaged
+        self.assertEquals(self.display_state.is_list_view, True)
 
     def test_corrupt_link_history(self):
         # TODO: should test ScraperFeedIpml.linkHistory, but it's not so easy
