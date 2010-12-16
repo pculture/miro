@@ -600,8 +600,9 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
 
     def test_corrupt_display_state(self):
         app.db.cursor.execute("UPDATE display_state SET "
-                "active_filters=?, sort_state=?, columns=?",
-                (self.display_state.id, 'gibberish', 'nonsense', 'what'))
+                "active_filters=?, sort_state=?, columns=? "
+                "WHERE id=?", ('gibberish', 'non.sense', 'w@h$a%t',
+                    self.display_state.id))
         self.check_fixed_value(self.display_state, 'active_filters', None)
         self.check_fixed_value(self.display_state, 'sort_state', None)
         self.check_fixed_value(self.display_state, 'columns', None)
