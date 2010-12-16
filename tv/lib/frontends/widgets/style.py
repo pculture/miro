@@ -526,7 +526,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
                 button_layout.last_rect.right)
         if self.data.is_external or self.data.downloaded:
             right_buttons = self.layout_video_buttons(layout_manager)
-            left_side = rect.right - right_buttons.last_rect.right
+            # move the buttons so they are at the end of the rect
+            left_side = rect.width - right_buttons.last_rect.right
             right_buttons.translate(left_side, 0)
             emblem_layout.merge(right_buttons)
 
