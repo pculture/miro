@@ -223,12 +223,13 @@ class MovieDataUpdater(signals.SignalEmitter):
         data = {}
 
         try:
-            muta = mutagen.File(item.filename)
+            muta = mutagen.File(item.get_filename())
             meta = muta.__dict__
         except (AttributeError, IOError):
             return (mediatype, duration, data)
 
-        if os.path.splitext(item.filename)[1].lower() in VIDEO_EXTENSIONS:
+        if os.path.splitext(
+            item.get_filename())[1].lower() in VIDEO_EXTENSIONS:
             mediatype = 'video'
         elif hasattr(muta, 'mime'):
             mediatype = self._mediatype_from_mime(muta.mime)
