@@ -102,14 +102,14 @@ class SearchTab(StaticTab):
 
 class VideoLibraryTab(StaticTab):
     type = 'videos'
-    id = 'library'
+    id = 'videos'
     name = _('Video')
     icon_name = 'icon-video'
     media_type = u'video'
 
 class AudioLibraryTab(StaticTab):
     type = 'music'
-    id = 'library'
+    id = 'music'
     name = _('Music')
     icon_name = 'icon-audio'
     media_type = u'audio'
