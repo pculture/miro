@@ -1476,6 +1476,9 @@ class DisplayStatesStore(object):
         # TODO: special stuff for converting
     }
 
+    DEFAULT['device-video'] = DEFAULT['videos']
+    DEFAULT['device-audio'] = DEFAULT['music']
+
     def __init__(self, message):
         self.displays = {}
         for display in message.displays:
