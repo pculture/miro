@@ -369,6 +369,7 @@ class SharingManager(object):
     def __init__(self):
         self.sharing = False
         self.discoverable = False
+        self.my_mdns = (None, None)
         self.config_watcher = config.ConfigWatcher(
             lambda func, *args: eventloop.add_idle(func, 'config watcher',
                  args=args))
