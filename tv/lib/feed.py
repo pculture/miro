@@ -2117,7 +2117,7 @@ class DirectoryFeedImpl(DirectoryScannerImplBase):
 
     @returns_unicode
     def get_title(self):
-        return _(u'Local Files')
+        return _('Local Files')
 
 class SearchFeedImpl(RSSMultiFeedBase):
     """Search and Search Results feeds
@@ -2126,7 +2126,7 @@ class SearchFeedImpl(RSSMultiFeedBase):
         self.engine = searchengines.get_search_engines()[0].name
         self.query = u''
         RSSMultiFeedBase.setup_new(self, url=u'dtv:search', ufeed=ufeed,
-                                   title=_(u'Search'))
+                                   title=_('Search'))
         self.initialUpdate = True
         self.searching = False
         self.set_update_frequency(-1)
@@ -2226,7 +2226,7 @@ class SearchFeedImpl(RSSMultiFeedBase):
 
     @returns_unicode
     def get_title(self):
-        return _(u'Search')
+        return _('Search')
 
 class SearchDownloadsFeedImpl(FeedImpl):
     def setup_new(self, ufeed):
@@ -2236,7 +2236,7 @@ class SearchDownloadsFeedImpl(FeedImpl):
 
     @returns_unicode
     def get_title(self):
-        return _(u'Search')
+        return _('Search')
 
 class ManualFeedImpl(FeedImpl):
     """Downloaded Videos/Torrents that have been added using by the
@@ -2251,7 +2251,7 @@ class ManualFeedImpl(FeedImpl):
 
     @returns_unicode
     def get_title(self):
-        return _(u'Local Files')
+        return _('Local Files')
 
 class SingleFeedImpl(FeedImpl):
     """Single Video that is playing that has been added by the user
@@ -2265,7 +2265,7 @@ class SingleFeedImpl(FeedImpl):
 
     @returns_unicode
     def get_title(self):
-        return _(u'Playing File')
+        return _('Playing File')
 
 LINK_PATTERN = re.compile("<(a|embed)\s[^>]*(href|src)\s*=\s*\"([^\"]*)\"[^>]*>(.*?)</a(.*)", re.S)
 IMG_PATTERN = re.compile(".*<img\s.*?src\s*=\s*\"(.*?)\".*?>", re.S)

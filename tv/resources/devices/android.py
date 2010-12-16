@@ -6,7 +6,7 @@ from miro.gtcache import gettext as _
 defaults = {
     'audio_conversion': 'mp3',
     'audio_types': '.mp3 .wma .m4a .aac .mid .wav .oga'.split(),
-    'mount_instructions': _(u"Your phone must be in 'USB storage mode' in "
+    'mount_instructions': _("Your phone must be in 'USB storage mode' in "
                             "order for %(shortappname)s to sync files to it.\n"
                             "To mount your phone, select 'Turn on USB "
                             "storage' from the notifications.",
