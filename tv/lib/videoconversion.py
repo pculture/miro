@@ -231,8 +231,6 @@ class VideoConversionManager(signals.SignalEmitter):
         
     def _make_conversion_task(self, converter_info, item_info, target_folder,
                               create_item):
-        if target_folder is None:
-            target_folder = get_conversions_folder()
         if converter_info.executable == 'ffmpeg':
             return FFMpegConversionTask(converter_info, item_info,
                                         target_folder, create_item)
@@ -353,7 +351,9 @@ class VideoConversionManager(signals.SignalEmitter):
                         _create_item_for_conversion(destination,
                                                     source_info,
                                                     conversion_name)
-                    clean_up(task.temp_output_path, file_and_directory=True)
+                    if not task.temp_output_path.endswith('.tmp'): # temp dir
+                        clean_up(task.temp_output_path,
+                                 file_and_directory=True)
                 else:
                     task.error = _("Reason unknown--check log")
                     self._notify_tasks_count()
@@ -466,16 +466,21 @@ class VideoConversionManager(signals.SignalEmitter):
         self._notify_tasks_count()
         self.quit_flag = True
 
-def build_output_paths(item_info, temp_dir, target_folder, converter_info):
+def build_output_paths(item_info, target_folder, converter_info):
     """Returns final_output_path and temp_output_path.
 
     We base the temp path on temp filenames.
     We base the final path on the item title.
     """
+    if target_folder is None:
+        use_temp_dir = True
+        target_folder = get_conversions_folder()
+    else:
+        use_temp_dir = False
     input_path = item_info.video_path
     basename = os.path.basename(input_path)
 
-    title = utils.unicode_to_filename(item_info.name, temp_dir).strip()
+    title = utils.unicode_to_filename(item_info.name, target_folder).strip()
     if not title:
         title = basename
 
@@ -483,7 +488,12 @@ def build_output_paths(item_info, temp_dir, target_folder, converter_info):
                                 converter_info.extension)
     final_path = utils.FilenameType(os.path.join(target_folder, target_name))
 
-    temp_path = os.path.join(temp_dir, basename)
+    if not use_temp_dir:
+        # convert directly onto the device
+        temp_path = final_path + '.tmp'
+    else:
+        temp_dir = utils.FilenameType(tempfile.mkdtemp("miro-conversion"))
+        temp_path = os.path.join(temp_dir, basename)
 
     return (final_path, temp_path)
 
@@ -537,12 +547,11 @@ def clean_up(temp_file, file_and_directory=False, attempts=0):
 class VideoConversionTask(object):
     def __init__(self, converter_info, item_info, target_folder,
                  create_item):
-        self.temp_dir = utils.FilenameType(tempfile.mkdtemp("miro-conversion"))
         self.item_info = item_info
         self.converter_info = converter_info
         self.input_path = item_info.video_path
         self.final_output_path, self.temp_output_path = build_output_paths(
-            item_info, self.temp_dir, target_folder, converter_info)
+            item_info, target_folder, converter_info)
         self.create_item = create_item
 
         logging.debug("temp_output_path: %s  final_output_path: %s", self.temp_output_path, self.final_output_path)
@@ -683,8 +692,10 @@ class VideoConversionTask(object):
         if hasattr(self.process_handle, "pid"):
             logging.info("killing conversion task %d", self.process_handle.pid)
             utils.kill_process(self.process_handle.pid)
-            if os.path.exists(self.temp_output_path) and self.progress < 1.0:
-                clean_up(self.temp_output_path, file_and_directory=True)
+            if not self.temp_output_path.endswith('.tmp'): # temp file
+                if (os.path.exists(self.temp_output_path) and
+                    self.progress < 1.0):
+                    clean_up(self.temp_output_path, file_and_directory=True)
 
 class FFMpegConversionTask(VideoConversionTask):
     DURATION_RE = re.compile(r'Duration: (\d\d):(\d\d):(\d\d)\.(\d\d)(, start:.*)?(, bitrate:.*)?')
