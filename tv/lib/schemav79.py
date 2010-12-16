@@ -463,6 +463,9 @@ class ManualFeedImplSchema(FeedImplSchema):
     # no addition fields over FeedImplSchema
 
 class SingleFeedImplSchema(FeedImplSchema):
+    """
+    NB: This type of feed no longer exists as of version 125.
+    """
     klass = None
     classString = 'single-feed-impl'
     # no addition fields over FeedImplSchema

@@ -618,7 +618,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
             "not isContainerItem AND "
             "(deleted IS NULL or not deleted) AND "
             "(is_file_item OR rd.main_item_id=item.id) AND "
-            "(feed.origURL IS NULL OR feed.origURL!= 'dtv:singleFeed') AND "
+            "feed.origURL IS NULL AND "
             "item.file_type='video'",
             joins={'feed': 'item.feed_id=feed.id',
                    'remote_downloader as rd': 'item.downloader_id=rd.id'})
@@ -629,7 +629,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
             "not isContainerItem AND "
             "(deleted IS NULL or not deleted) AND "
             "(is_file_item OR rd.main_item_id=item.id) AND "
-            "(feed.origURL IS NULL OR feed.origURL!= 'dtv:singleFeed') AND "
+            "feed.origURL IS NULL AND "
             "item.file_type='audio'",
             joins={'feed': 'item.feed_id=feed.id',
                    'remote_downloader as rd': 'item.downloader_id=rd.id'})
@@ -637,9 +637,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
     @classmethod
     def watchable_other_view(cls):
         return cls.make_view(
-            "(deleted IS NULL OR not deleted) AND "
+            "(deleted IS NULL OR nrot deleted) AND "
             "(is_file_item OR rd.id IS NOT NULL) AND "
-            "(parent_id IS NOT NULL or feed.origURL != 'dtv:singleFeed') AND "
+            "parent_id IS NOT NULL AND "
             "item.file_type='other'",
             joins={'feed': 'item.feed_id=feed.id',
                    'remote_downloader as rd': 'rd.main_item_id=item.id'})
@@ -1969,8 +1969,7 @@ class FileItem(Item):
         else:
             # external item that the user deleted in Miro
             url = self.get_feed_url()
-            if ((url.startswith("dtv:manualFeed")
-                 or url.startswith("dtv:singleFeed"))):
+            if url.startswith("dtv:manualFeed"):
                 self.remove()
             else:
                 self.make_deleted()

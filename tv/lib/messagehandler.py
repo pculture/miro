@@ -1563,6 +1563,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                               [message.item.id]).send_to_frontend()
 
     def handle_device_eject(self, message):
+        devices.write_database(message.device.mount, message.device.database)
         app.device_tracker.eject(message.device)
 
     @staticmethod

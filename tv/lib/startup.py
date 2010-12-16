@@ -385,7 +385,6 @@ def on_frontend_started():
 
 def setup_global_feeds():
     setup_global_feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
-    setup_global_feed(u'dtv:singleFeed', initiallyAutoDownloadable=False)
     setup_global_feed(u'dtv:search', initiallyAutoDownloadable=False)
     setup_global_feed(u'dtv:searchDownloads')
     setup_global_feed(u'dtv:directoryfeed')

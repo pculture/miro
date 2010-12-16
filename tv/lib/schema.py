@@ -355,7 +355,7 @@ from miro.feed import (Feed, FeedImpl, RSSFeedImpl, SavedSearchFeedImpl,
                        ScraperFeedImpl)
 from miro.feed import (SearchFeedImpl, DirectoryWatchFeedImpl,
                        DirectoryFeedImpl, SearchDownloadsFeedImpl)
-from miro.feed import ManualFeedImpl, SingleFeedImpl
+from miro.feed import ManualFeedImpl
 from miro.folder import ChannelFolder, PlaylistFolder, PlaylistFolderItemMap
 from miro.guide import ChannelGuide
 from miro.item import Item, FileItem
@@ -562,11 +562,6 @@ class ManualFeedImplSchema(FeedImplSchema):
     table_name = 'manual_feed_impl'
     # no addition fields over FeedImplSchema
 
-class SingleFeedImplSchema(FeedImplSchema):
-    klass = SingleFeedImpl
-    table_name = 'single_feed_impl'
-    # no addition fields over FeedImplSchema
-
 class RemoteDownloaderSchema(DDBObjectSchema):
     klass = RemoteDownloader
     table_name = 'remote_downloader'
@@ -708,7 +703,7 @@ class DBLogEntrySchema(DDBObjectSchema):
     def handle_malformed_list_view_displays(row):
         return []
 
-VERSION = 124
+VERSION = 125
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,
@@ -716,7 +711,6 @@ object_schemas = [
     SearchFeedImplSchema, DirectoryFeedImplSchema, DirectoryWatchFeedImplSchema,
     SearchDownloadsFeedImplSchema, RemoteDownloaderSchema,
     ChannelGuideSchema, ManualFeedImplSchema,
-    SingleFeedImplSchema,
     PlaylistSchema, ChannelFolderSchema, PlaylistFolderSchema,
     PlaylistItemMapSchema, PlaylistFolderItemMapSchema,
     TabOrderSchema, ThemeHistorySchema, DisplayStateSchema,

@@ -2887,3 +2887,7 @@ def upgrade124(cursor):
             (repr(list_view_displays), repr(all_active_filters),
             repr(sort_states)))
     cursor.execute("DROP TABLE widgets_frontend_state")
+
+def upgrade125(cursor):
+    """Remove old dtv:singleFeed table."""
+    cursor.execute("DROP TABLE single_feed_impl")
