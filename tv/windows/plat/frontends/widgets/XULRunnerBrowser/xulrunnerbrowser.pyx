@@ -224,6 +224,8 @@ cdef class XULRunnerBrowser:
         cdef nsresult rv
         cdef char *uri
         rv = self.browser.getCurrentURI(&uri);
+        if not uri:
+            return None
         self._check_result('MiroBrowserEmbed.get_current_uri', rv)
         return PyString_FromString(uri)
 
