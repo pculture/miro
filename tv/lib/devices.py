@@ -135,7 +135,7 @@ class DeviceManager(object):
     def _add_device(self, info):
         try:
             info.validate()
-        except:
+        except AttributeError:
             logging.exception('error validating device %s', info.name)
         else:
             self.device_by_name[info.device_name] = info
