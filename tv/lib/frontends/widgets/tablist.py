@@ -848,6 +848,7 @@ class FeedList(NestedTabList, TabUpdaterMixin):
         if not obj.has_original_title:
             menu.append((_('Revert Feed Name'),
                          app.widgetapp.revert_feed_name))
+        menu.append((_('Settings'), app.widgetapp.feed_settings))
         menu.append((_('Copy URL to clipboard'), app.widgetapp.copy_feed_url))
         menu.append((_('Remove'), app.widgetapp.remove_current_feed))
         return menu

@@ -79,6 +79,7 @@ from miro.frontends.widgets import rundialog
 from miro.frontends.widgets import watchedfolders
 from miro.frontends.widgets import quitconfirmation
 from miro.frontends.widgets import firsttimedialog
+from miro.frontends.widgets import feedsettingspanel
 from miro.frontends.widgets.widgetconst import MAX_VOLUME
 from miro.frontends.widgets.window import MiroWindow
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
@@ -694,6 +695,11 @@ class Application:
             return
 
         messages.ExportSubscriptions(filepath).send_to_backend()
+
+    def feed_settings(self):
+        t, channel_infos = app.tab_list_manager.get_selection()
+        if t in ('feed', 'audio-feed') and len(channel_infos) == 1:
+            feedsettingspanel.run_dialog(channel_infos[0])
 
     def copy_feed_url(self):
         t, channel_infos = app.tab_list_manager.get_selection()
