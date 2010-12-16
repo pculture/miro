@@ -35,7 +35,6 @@ import logging
 import tempfile
 import threading
 import subprocess
-import time
 import errno
 
 from glob import glob
@@ -49,7 +48,6 @@ from miro import item
 from miro import models
 from miro import util
 from miro import prefs
-from miro import app
 from miro import signals
 from miro import messages
 from miro.gtcache import gettext as _
@@ -77,12 +75,16 @@ class VideoConverterInfo(object):
     def __init__(self, name, parser):
         self.name = name
         self.mediatype = self._get_config_value(name, parser, "mediatype", {})
-        self.identifier = VideoConverterInfo.NON_WORD_CHARS.sub("", name).lower()
-        self.executable = self._get_config_value(name, parser, "executable", {})
-        self.parameters = self._get_config_value(name, parser, "parameters", {})
+        self.identifier = VideoConverterInfo.NON_WORD_CHARS.sub("",
+                                                                name).lower()
+        self.executable = self._get_config_value(name, parser,
+                                                 "executable", {})
+        self.parameters = self._get_config_value(name, parser,
+                                                 "parameters", {})
         self.extension = self._get_config_value(name, parser, "extension", {})
         self.screen_size = self._get_config_value(name, parser, "ssize", {})
-        self.platforms = self._get_config_value(name, parser, "only_on", {'only_on': None})
+        self.platforms = self._get_config_value(name, parser, "only_on",
+                                                {'only_on': None})
         self.displayname = _("%(name)s (%(mediatype)s)",
                              {"name": self.name, "mediatype": self.mediatype})
 
@@ -264,7 +266,8 @@ class VideoConversionManager(signals.SignalEmitter):
         self._process_message_queue()
         
         notify_count = False
-        max_concurrent_tasks = int(app.config.get(prefs.MAX_CONCURRENT_CONVERSIONS))
+        max_concurrent_tasks = int(app.config.get(
+                prefs.MAX_CONCURRENT_CONVERSIONS))
         if ((self.pending_tasks_count() > 0
              and self.running_tasks_count() < max_concurrent_tasks)):
             task = self.pending_tasks.pop()
@@ -360,7 +363,7 @@ class VideoConversionManager(signals.SignalEmitter):
                 fp.close()
                 self.emit('task-staged', task)
 
-        except Queue.Empty, e:
+        except Queue.Empty:
             pass
 
     def _move_finished_file(self, source, destination):
@@ -554,7 +557,8 @@ class VideoConversionTask(object):
             item_info, target_folder, converter_info)
         self.create_item = create_item
 
-        logging.debug("temp_output_path: %s  final_output_path: %s", self.temp_output_path, self.final_output_path)
+        logging.debug("temp_output_path: %s  final_output_path: %s",
+                      self.temp_output_path, self.final_output_path)
 
         self.key = "%s->%s" % (self.input_path, self.final_output_path)
         self.thread = None
@@ -650,7 +654,8 @@ class VideoConversionTask(object):
 
         except OSError, ose:
             if ose.errno == errno.ENOENT:
-                self.error = _("%(program)s does not exist.", {"program": self.get_executable()})
+                self.error = _("%(program)s does not exist.",
+                               {"program": self.get_executable()})
             else:
                 logging.exception("Exception in Popen: %s %s", args, kwargs)
 
@@ -661,7 +666,9 @@ class VideoConversionTask(object):
     
     def _start_logging(self, executable, params):
         log_folder = os.path.dirname(app.config.get(prefs.LOG_PATHNAME))
-        self.log_path = os.path.join(log_folder, "conversion-%d-to-%s.log" % (self.item_info.id, self.converter_info.identifier))
+        self.log_path = os.path.join(log_folder,
+                                     "conversion-%d-to-%s.log" % (
+                self.item_info.id, self.converter_info.identifier))
         self.log_file = file(self.log_path, "w")
         self._log_progress("STARTING CONVERSION")
         self._log_progress("-> Item: %s" % util.stringify(self.item_info.name))
@@ -698,9 +705,12 @@ class VideoConversionTask(object):
                     clean_up(self.temp_output_path, file_and_directory=True)
 
 class FFMpegConversionTask(VideoConversionTask):
-    DURATION_RE = re.compile(r'Duration: (\d\d):(\d\d):(\d\d)\.(\d\d)(, start:.*)?(, bitrate:.*)?')
-    PROGRESS_RE = re.compile(r'(?:frame=.* fps=.* q=.* )?size=.* time=(.*) bitrate=(.*)')
-    LAST_PROGRESS_RE = re.compile(r'frame=.* fps=.* q=.* Lsize=.* time=(.*) bitrate=(.*)')
+    DURATION_RE = re.compile(r'Duration: (\d\d):(\d\d):(\d\d)\.(\d\d)'
+                             '(, start:.*)?(, bitrate:.*)?')
+    PROGRESS_RE = re.compile(r'(?:frame=.* fps=.* q=.* )?size=.* time=(.*) '
+                             'bitrate=(.*)')
+    LAST_PROGRESS_RE = re.compile(r'frame=.* fps=.* q=.* Lsize=.* time=(.*) '
+                                  'bitrate=(.*)')
 
     def get_executable(self):
         return utils.get_ffmpeg_executable_path()
@@ -735,7 +745,6 @@ class FFMpegConversionTask(VideoConversionTask):
                 hours = match.group(1)
                 minutes = match.group(2)
                 seconds = match.group(3)
-                frames = match.group(4)
                 self.duration = (
                     (int(hours) * 60 * 60) +
                     (int(minutes) * 60) +
@@ -752,14 +761,17 @@ class FFMpegConversionTask(VideoConversionTask):
 class FFMpeg2TheoraConversionTask(VideoConversionTask):
     DURATION_RE = re.compile(r'f2t ;duration: ([^;]*);')
 
-    PROGRESS_RE1 = re.compile(r'\{"duration":(.*), "position":(.*), "audio_kbps":.*, "video_kbps":.*, "remaining":.*\}')
+    PROGRESS_RE1 = re.compile(r'\{"duration":(.*), "position":(.*), '
+                              '"audio_kbps":.*, "video_kbps":.*, '
+                              '"remaining":.*\}')
     RESULT_RE1 = re.compile(r'\{"result": "(.*)"\}')
 
     PROGRESS_RE2 = re.compile(r'f2t ;position: ([^;]*);')
     RESULT_RE2 = re.compile(r'f2t ;result: ([^;]*);')
 
     def __init__(self, converter_info, item_info, target_folder):
-        VideoConversionTask.__init__(self, converter_info, item_info, target_folder)
+        VideoConversionTask.__init__(self, converter_info, item_info,
+                                     target_folder)
         self.platform = app.config.get(prefs.APP_PLATFORM)
 
     def get_executable(self):
@@ -821,8 +833,8 @@ def _create_item_for_conversion(filename, source_info, conversion_name):
     fp_values = item.fp_values_for_file(filename, name,
             source_info.description)
     manual_feed = models.Feed.get_manual_feed()
-    new_item = models.FileItem(filename, feed_id=manual_feed.id,
-            fp_values=fp_values)
+    models.FileItem(filename, feed_id=manual_feed.id,
+                    fp_values=fp_values)
 
 utils.setup_ffmpeg_presets()
 conversion_manager = VideoConversionManager()
