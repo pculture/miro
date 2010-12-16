@@ -217,7 +217,7 @@ def clean_filename(filename):
     """Given either a filename or a unicode "filename" return a valid
     clean version of it.
     """
-    for char in ( ':', '?', '<', '>', '|', '*', '\\', '/', '"', '\'', '%'):
+    for char in (':', '?', '<', '>', '|', '*', '\\', '/', '"', '\'', '%'):
         filename = filename.replace(char, '')
     if len(filename) == 0:
         return unicode_to_filename(u'_')
