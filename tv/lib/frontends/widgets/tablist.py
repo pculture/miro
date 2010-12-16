@@ -881,11 +881,14 @@ class SharingList(TabList):
         # The displays don't disappear automatically so handle the case
         # where the user disconnects and then immediately reconnects to 
         # the same share.  Won't have this problem if the display just
-        # disappears automatically but it doesn't.
+        # disappears automatically but it doesn't.  To work around the
+        # problem, we stop tracking items then immediately start tracking
+        # items again.
         current_display = app.display_manager.get_current_display()
         try:
             if current_display.id == info.id:
-                tracker = app.sharing_tracker.get_tracker(info, info.id)
+                current_display.controller.stop_tracking()
+                current_display.controller.start_tracking()
         except AttributeError:
             pass
 
