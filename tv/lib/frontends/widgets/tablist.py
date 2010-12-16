@@ -878,11 +878,11 @@ class SharingList(TabList):
         info = view.model[iter][0]
         info.mount = True
         self.view.model_changed()
-        current_display = app.display_manager.get_current_display()
         # The displays don't disappear automatically so handle the case
         # where the user disconnects and then immediately reconnects to 
         # the same share.  Won't have this problem if the display just
         # disappears automatically but it doesn't.
+        current_display = app.display_manager.get_current_display()
         try:
             if current_display.id == info.id:
                 tracker = app.sharing_tracker.get_tracker(info, info.id)
