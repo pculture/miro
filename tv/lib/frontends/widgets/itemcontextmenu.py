@@ -142,6 +142,8 @@ class ItemContextMenuHandler(object):
                     messages.StartDownload(item.id).send_to_backend)
             ]
 
+        menu.append((_('Copy URL to clipboard'), app.widgetapp.copy_item_url))
+
         view_menu = []
         if not item.is_external and item.permalink:
             view_menu.append((_('Web Page'), lambda: app.widgetapp.open_url(item.permalink)))
