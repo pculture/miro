@@ -93,7 +93,7 @@ def ask_for_http_auth(callback, url, auth_header, location):
 
     auth_scheme, realm, domain = decode_auth_header(auth_header)
 
-    def handleLoginResponse(dialog):
+    def handle_login_response(dialog):
         if dialog.choice == dialogs.BUTTON_OK:
             callback_tracker.run_callbacks(url, realm, dialog.username,
                     dialog.password, auth_header)
@@ -103,7 +103,7 @@ def ask_for_http_auth(callback, url, auth_header, location):
     run_dialog = (not callback_tracker.has_callback(url, realm))
     callback_tracker.add_callback(callback, url, realm)
     if run_dialog:
-        dialogs.HTTPAuthDialog(location, realm).run(handleLoginResponse)
+        dialogs.HTTPAuthDialog(location, realm).run(handle_login_response)
 
 def remove(auth):
     global password_list

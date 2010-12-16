@@ -171,11 +171,13 @@ class ViewTracker(object):
         self.changed.add(obj)
         self.schedule_send_messages()
 
-    def old_on_object_added(self, obj, id):
+    def old_on_object_added(self, obj, id_):
         self.on_object_added(None, obj)
-    def old_on_object_changed(self, obj, id):
+
+    def old_on_object_changed(self, obj, id_):
         self.on_object_changed(None, obj)
-    def old_on_object_removed(self, obj, id):
+
+    def old_on_object_removed(self, obj, id_):
         self.on_object_removed(None, obj)
 
     def unlink(self):

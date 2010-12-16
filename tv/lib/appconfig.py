@@ -50,7 +50,7 @@ class AppConfig(object):
 
     def load_theme(self, theme):
         if theme is not None:
-            logging.info("Using theme %s" % theme)
+            logging.info("Using theme %s", theme)
             theme_app_config = resources.theme_path(theme, 'app.config')
             try:
                 self.theme_vars = util.read_simple_config_file(theme_app_config)

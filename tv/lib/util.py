@@ -494,7 +494,8 @@ def setup_logging():
     """Adds TIMING and JSALERT logging levels.
     """
     logging.addLevelName(15, "STACK TRACE")
-    logging.stacktrace = lambda msg, *args, **kargs: logging.log(15, "%s\n%s" % ("".join(traceback.format_stack()), msg) , *args, **kargs)
+    logging.stacktrace = lambda msg, *args, **kargs: logging.log(
+        15, "%s\n%s" % ("".join(traceback.format_stack()), msg), *args, **kargs)
 
     logging.addLevelName(25, "TIMING")
     logging.timing = lambda msg, *args, **kargs: logging.log(25, msg, *args, **kargs)
@@ -1095,3 +1096,6 @@ class Cache(object):
             new_access_times[key] = time
         self.dict = new_dict
         self.access_times = new_access_times
+
+    def create_new_value(self, val):
+        raise NotImplementedError()
