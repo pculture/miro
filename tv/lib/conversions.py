@@ -768,9 +768,9 @@ class FFMpeg2TheoraConversionTask(ConversionTask):
     PROGRESS_RE2 = re.compile(r'f2t ;position: ([^;]*);')
     RESULT_RE2 = re.compile(r'f2t ;result: ([^;]*);')
 
-    def __init__(self, converter_info, item_info, target_folder):
+    def __init__(self, converter_info, item_info, target_folder, create_item):
         ConversionTask.__init__(self, converter_info, item_info,
-                                target_folder)
+                                target_folder, create_item)
         self.platform = app.config.get(prefs.APP_PLATFORM)
 
     def get_executable(self):
