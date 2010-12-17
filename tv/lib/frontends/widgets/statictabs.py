@@ -127,7 +127,7 @@ class DownloadsTab(StaticTab):
     name = _('Downloading')
     icon_name = 'icon-downloading'
 
-class VideoConversionsTab(StaticTab):
+class ConversionsTab(StaticTab):
     type = 'conversions'
     id = 'conversions'
     name = _('Conversions')

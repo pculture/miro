@@ -31,7 +31,7 @@
 from miro import app
 from miro import prefs
 from miro import signals
-from miro import videoconversion
+from miro import conversions
 
 from miro.gtcache import gettext as _
 
@@ -360,7 +360,7 @@ def get_menu():
 
 def _get_convert_menu():
     menu = list()
-    sections = videoconversion.conversion_manager.get_converters()
+    sections = conversions.conversion_manager.get_converters()
     for index, section in enumerate(sections):
         for converter in section[1]:
             handler_name = make_convert_handler(converter)

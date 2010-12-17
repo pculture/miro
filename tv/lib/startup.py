@@ -78,7 +78,7 @@ from miro import theme
 from miro import util
 from miro import searchengines
 from miro import storedatabase
-from miro import videoconversion
+from miro import conversions
 from miro import devices
 from miro.plat import devicetracker
 
@@ -278,7 +278,7 @@ def finish_startup(obj, thread):
     app.item_info_cache.load()
 
     logging.info("Loading video converters...")
-    videoconversion.conversion_manager.startup()
+    conversions.conversion_manager.startup()
     app.device_manager = devices.DeviceManager()
     app.device_tracker = devicetracker.DeviceTracker()
 

@@ -39,7 +39,7 @@ from miro import fileutil
 from miro import filetypes
 from miro import messages
 from miro import signals
-from miro import videoconversion
+from miro import conversions
 
 from miro.plat import resources
 from miro.plat.utils import filename_to_unicode, unicode_to_filename
@@ -265,7 +265,7 @@ class DeviceSyncManager(object):
         self._check_finished()
 
     def start_conversion(self, conversion, info, target):
-        conversion_manager = videoconversion.conversion_manager
+        conversion_manager = conversions.conversion_manager
         start_conversion = conversion_manager.start_conversion
 
         if not self.waiting:
@@ -365,7 +365,7 @@ class DeviceSyncManager(object):
         if not self.waiting:
             # finished!
             for handle in self.signal_handles:
-                videoconversion.conversion_manager.disconnect(handle)
+                conversions.conversion_manager.disconnect(handle)
             self.signal_handles = None
             self.device.is_updating = False # stop the spinner
             messages.TabsChanged('devices', [], [self.device],
@@ -399,7 +399,7 @@ class DeviceSyncManager(object):
 
     def cancel(self):
         for key in self.waiting:
-            videoconversion.conversion_manager.cancel(key)
+            conversions.conversion_manager.cancel(key)
 
 
 class DeviceDatabase(dict, signals.SignalEmitter):

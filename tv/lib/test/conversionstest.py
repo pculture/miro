@@ -4,7 +4,7 @@ from miro.test.framework import MiroTestCase, EventLoopTest
 
 from miro import app
 from miro import prefs
-from miro import videoconversion
+from miro import conversions
 
 class ConverterManagerTest(MiroTestCase):
     def build_config_file(self, filename, data):
@@ -14,7 +14,7 @@ class ConverterManagerTest(MiroTestCase):
         fp.close()
 
     def test_empty(self):
-        cm = videoconversion.ConverterManager()
+        cm = conversions.ConverterManager()
         cm.load_converters(os.path.join(self.tempdir, "*.conv"))
         self.assertEquals(len(cm.get_converters()), 0)
         self.assertRaises(KeyError, cm.lookup_converter, "abc")
@@ -31,7 +31,7 @@ class ConverterManagerTest(MiroTestCase):
             "parameters: -i {input}\n"
             )
 
-        cm = videoconversion.ConverterManager()
+        cm = conversions.ConverterManager()
         cm.load_converters(os.path.join(self.tempdir, "*.conv"))
 
         self.assertEqual(len(cm.get_converters()), 1)
@@ -57,7 +57,7 @@ class ConverterManagerTest(MiroTestCase):
             "parameters: -i {input}\n"
             "only_on: %(platform)s\n" % {"platform": app.config.get(prefs.APP_PLATFORM)}
             )
-        cm = videoconversion.ConverterManager()
+        cm = conversions.ConverterManager()
         cm.load_converters(os.path.join(self.tempdir, "*.conv"))
         
         self.assertEqual(len(cm.get_converters()), 1)

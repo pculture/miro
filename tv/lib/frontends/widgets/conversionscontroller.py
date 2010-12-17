@@ -41,9 +41,9 @@ from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import itemlistwidgets
 from miro.plat.frontends.widgets import widgetset
 
-from miro.videoconversion import conversion_manager
+from miro.conversions import conversion_manager
 
-class VideoConversionsController(object):
+class ConversionsController(object):
 
     def __init__(self):
         self.widget = widgetset.VBox()
@@ -52,7 +52,7 @@ class VideoConversionsController(object):
     def build_widget(self):
         image_path = resources.path("images/icon-conversions_large.png")
         icon = imagepool.get(image_path)
-        titlebar = VideoConversionsTitleBar(_("Conversions"), icon)
+        titlebar = ConversionsTitleBar(_("Conversions"), icon)
         self.widget.pack_start(titlebar)
 
         sep = separator.HSeparator((0.85, 0.85, 0.85), (0.95, 0.95, 0.95))
@@ -85,7 +85,7 @@ class VideoConversionsController(object):
         
         self.iter_map = dict()
         self.model = widgetset.TableModel('object')
-        self.table = VideoConversionTableView(self.model)
+        self.table = ConversionTableView(self.model)
         self.table.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
         scroller = widgetset.Scroller(False, True)
         scroller.add(self.table)
@@ -175,17 +175,17 @@ class VideoConversionsController(object):
             self.clear_finished_button.disable()
 
 
-class VideoConversionsTitleBar(itemlistwidgets.ItemListTitlebar):
+class ConversionsTitleBar(itemlistwidgets.ItemListTitlebar):
     def _build_titlebar_extra(self):
         pass
 
 
-class VideoConversionTableView(widgetset.TableView):
+class ConversionTableView(widgetset.TableView):
     def __init__(self, model):
         widgetset.TableView.__init__(self, model)
         self.set_show_headers(False)
 
-        self.renderer = VideoConversionCellRenderer()
+        self.renderer = ConversionCellRenderer()
         self.column = widgetset.TableColumn('conversion', self.renderer, data=0)
         self.column.set_min_width(600)
         self.add_column(self.column)
@@ -208,7 +208,7 @@ class ConversionProgressBarColorSet(object):
     BORDER_GRADIENT_TOP = (0.58, 0.58, 0.58)
     BORDER_GRADIENT_BOTTOM = (0.68, 0.68, 0.68)
 
-class VideoConversionCellRenderer(style.ItemRenderer):
+class ConversionCellRenderer(style.ItemRenderer):
     THUMB_WIDTH = 120
     THUMB_HEIGHT = 82
     PENDING_TASK_TEXT_COLOR = (0.8, 0.8, 0.8)

@@ -55,7 +55,7 @@ from miro import startup
 from miro import signals
 from miro import messages
 from miro import eventloop
-from miro import videoconversion
+from miro import conversions
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import dialogs
@@ -372,7 +372,7 @@ class Application:
             self.reveal_file(filename)
 
     def reveal_conversions_folder(self):
-        self.reveal_file(videoconversion.get_conversions_folder())
+        self.reveal_file(conversions.get_conversions_folder())
 
     def open_video(self):
         title = _('Open Files...')
@@ -570,7 +570,7 @@ class Application:
     def convert_items(self, converter_id):
         selection = app.item_list_controller_manager.get_selection()
         for item_info in selection:
-            videoconversion.convert(converter_id, item_info)
+            conversions.convert(converter_id, item_info)
 
     def copy_item_url(self):
         selection = app.item_list_controller_manager.get_selection()
@@ -938,8 +938,8 @@ class Application:
         return True
     
     def _confirm_quit_if_converting(self):
-        running_count = videoconversion.conversion_manager.running_tasks_count()
-        pending_count = videoconversion.conversion_manager.pending_tasks_count()
+        running_count = conversions.conversion_manager.running_tasks_count()
+        pending_count = conversions.conversion_manager.pending_tasks_count()
         conversions_count = running_count + pending_count
         if app.config.get(prefs.WARN_IF_CONVERTING_ON_QUIT) and conversions_count > 0:
             ret = quitconfirmation.rundialog(
@@ -1320,35 +1320,35 @@ class WidgetsMessageHandler(messages.MessageHandler):
         app.widgetapp.unwatched_count = message.count
         app.widgetapp.handle_unwatched_count_changed()
 
-    def handle_video_conversions_count_changed(self, message):
+    def handle_conversions_count_changed(self, message):
         library_tab_list = app.tab_list_manager.library_tab_list
         library_tab_list.update_conversions_count(message.running_count,
                 message.other_count)
 
-    def handle_video_conversion_tasks_list(self, message):
+    def handle_conversion_tasks_list(self, message):
         current_display = app.display_manager.get_current_display()
-        if isinstance(current_display, displays.VideoConversionsDisplay):
+        if isinstance(current_display, displays.ConversionsDisplay):
             current_display.controller.handle_task_list(message.running_tasks,
                     message.pending_tasks, message.finished_tasks)
 
-    def handle_video_conversion_task_created(self, message):
+    def handle_conversion_task_created(self, message):
         current_display = app.display_manager.get_current_display()
-        if isinstance(current_display, displays.VideoConversionsDisplay):
+        if isinstance(current_display, displays.ConversionsDisplay):
             current_display.controller.handle_task_added(message.task)
 
-    def handle_video_conversion_task_removed(self, message):
+    def handle_conversion_task_removed(self, message):
         current_display = app.display_manager.get_current_display()
-        if isinstance(current_display, displays.VideoConversionsDisplay):
+        if isinstance(current_display, displays.ConversionsDisplay):
             current_display.controller.handle_task_removed(message.task)
 
-    def handle_all_video_conversion_task_removed(self, message):
+    def handle_all_conversion_task_removed(self, message):
         current_display = app.display_manager.get_current_display()
-        if isinstance(current_display, displays.VideoConversionsDisplay):
+        if isinstance(current_display, displays.ConversionsDisplay):
             current_display.controller.handle_all_tasks_removed()
 
-    def handle_video_conversion_task_changed(self, message):
+    def handle_conversion_task_changed(self, message):
         current_display = app.display_manager.get_current_display()
-        if isinstance(current_display, displays.VideoConversionsDisplay):
+        if isinstance(current_display, displays.ConversionsDisplay):
             current_display.controller.handle_task_changed(message.task)
 
     def handle_device_changed(self, message):

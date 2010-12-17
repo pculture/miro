@@ -36,7 +36,7 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.plat import resources
 from miro.plat.frontends.widgets import file_navigator_name
-from miro.videoconversion import conversion_manager
+from miro.conversions import conversion_manager
 
 
 class ItemContextMenuHandler(object):

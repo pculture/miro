@@ -1401,7 +1401,7 @@ class UnwatchedCountChanged(FrontendMessage):
     def __init__(self, count):
         self.count = count
 
-class VideoConversionTaskInfo(object):
+class ConversionTaskInfo(object):
     """Tracks the state of an conversion task.
 
     :param key: id for the conversion task
@@ -1435,7 +1435,7 @@ class VideoConversionTaskInfo(object):
         self.eta = task.get_eta()
         self.target = task.converter_info.displayname
 
-class VideoConversionTasksList(FrontendMessage):
+class ConversionTasksList(FrontendMessage):
     """Send the current list of running and pending conversion tasks to the 
        frontend.
     """
@@ -1444,31 +1444,31 @@ class VideoConversionTasksList(FrontendMessage):
         self.pending_tasks = pending_tasks
         self.finished_tasks = finished_tasks
 
-class VideoConversionsCountChanged(FrontendMessage):
+class ConversionsCountChanged(FrontendMessage):
     """Informs the frontend that number of running conversions has changed.
     """
     def __init__(self, running_count, other_count):
         self.running_count = running_count
         self.other_count = other_count
 
-class VideoConversionTaskCreated(FrontendMessage):
+class ConversionTaskCreated(FrontendMessage):
     """Informs the frontend that a conversion task has been created.
     """
     def __init__(self, task):
         self.task = task
 
-class VideoConversionTaskRemoved(FrontendMessage):
+class ConversionTaskRemoved(FrontendMessage):
     """Informs the frontend that a conversion task has been removed.
     """
     def __init__(self, task):
         self.task = task
 
-class AllVideoConversionTaskRemoved(FrontendMessage):
+class AllConversionTaskRemoved(FrontendMessage):
     """Informs the frontend that all conversion tasks have been removed.
     """
     pass
 
-class VideoConversionTaskChanged(FrontendMessage):
+class ConversionTaskChanged(FrontendMessage):
     """Informs the frontend that a conversion task has changed.
 
     This is sent when a conversion task changes state, or when a running task
