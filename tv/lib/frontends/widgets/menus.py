@@ -202,6 +202,8 @@ def get_menu():
                              groups=["NonPlaying"]),
                     MenuItem(_("_Download Item"), "NewDownload",
                              groups=["NonPlaying"]),
+                    MenuItem(_("_Import Media"), "ImportMedia",
+                             groups=["NonPlaying"]),
                     MenuItem(_("Check _Version"), "CheckVersion"),
                     Separator(),
                     MenuItem(_("_Remove Item"), "RemoveItems",
@@ -457,6 +459,10 @@ def on_open():
 @action_handler("NewDownload")
 def on_new_download():
     app.widgetapp.new_download()
+
+@action_handler("ImportMedia")
+def on_import_media():
+    app.widgetapp.import_media()
 
 @action_handler("CheckVersion")
 def on_check_version():

@@ -436,6 +436,11 @@ class Application:
         if url is not None:
             messages.DownloadURL(url).send_to_backend()
 
+    def import_media(self):
+        directory = dialogs.ask_for_directory(_("Import Media From..."))
+        if directory is not None:
+            app.watched_folder_manager.add(directory)
+
     def check_version(self):
         # this gets called by the backend, so it has to send a message to
         # the frontend to open a dialog
