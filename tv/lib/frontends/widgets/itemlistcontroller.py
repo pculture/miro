@@ -374,11 +374,7 @@ class ItemListController(object):
 
     def handle_item_list(self, message):
         """Handle an ItemList message meant for this ItemContainer."""
-        for item_view in self.all_item_views():
-            item_view.start_bulk_change()
         self.item_list_group.add_items(message.items)
-        for item_view in self.all_item_views():
-            item_view.model_changed()
         self.on_initial_list()
 
     def handle_items_changed(self, message):
