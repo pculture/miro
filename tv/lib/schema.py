@@ -690,6 +690,14 @@ class DisplayStateSchema(DDBObjectSchema):
         ('display_state_display', ('type', 'id_')),
     )
 
+    @staticmethod
+    def handle_malformed_active_filters(value):
+        return None
+
+    @staticmethod
+    def handle_malformed_columns(value):
+        return None
+
 class DBLogEntrySchema(DDBObjectSchema):
     klass = DBLogEntry
     table_name = 'db_log_entry'
