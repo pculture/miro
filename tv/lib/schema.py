@@ -699,10 +699,6 @@ class DBLogEntrySchema(DDBObjectSchema):
         ('description', SchemaString()),
     ]
 
-    @staticmethod
-    def handle_malformed_list_view_displays(row):
-        return []
-
 VERSION = 125
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
