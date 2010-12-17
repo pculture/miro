@@ -2893,3 +2893,16 @@ def upgrade124(cursor):
 def upgrade125(cursor):
     """Remove old dtv:singleFeed table."""
     cursor.execute("DROP TABLE single_feed_impl")
+
+def upgrade126(cursor):
+    """Remove dtv:singleFeed data from the database.
+    """
+    cursor.execute("SELECT id FROM feed WHERE origURL='dtv:singleFeed'")
+    row = cursor.fetchone()
+    if row is not None:
+        single_feed_id = row[0]
+        cursor.execute("SELECT id from feed WHERE origURL='dtv:manualFeed'")
+        manual_feed_id = cursor.fetchone()[0]
+        cursor.execute("UPDATE item SET feed_id=? WHERE feed_id=?",
+                       (manual_feed_id, single_feed_id))
+        cursor.execute("DELETE FROM feed WHERE origURL='dtv:singleFeed'")
