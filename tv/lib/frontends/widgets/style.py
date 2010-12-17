@@ -940,6 +940,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
 class PlaylistItemRenderer(ItemRenderer):
     def layout_video_buttons(self, layout_manager):
+        layout = cellpack.Layout()
         layout_manager.set_font(0.85)
         x = 0
 
