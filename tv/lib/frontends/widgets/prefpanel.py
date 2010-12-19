@@ -665,7 +665,7 @@ class SharingPanel(PanelBuilder):
 
         sharing_cbx = widgetset.Checkbox(_('Share my media library.'))
         share_discoverable_cbx = widgetset.Checkbox(
-                                   _('Make my music library discoverable.'))
+                                   _('Make my media library discoverable.'))
         share_txt = widgetset.TextEntry()
 
         attach_boolean(sharing_cbx, prefs.SHARE_MEDIA,
