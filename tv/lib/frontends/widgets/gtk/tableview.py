@@ -523,6 +523,8 @@ class TableView(Widget):
         self.create_signal('selection-changed')
         self.create_signal('hotspot-clicked')
         self.create_signal('row-double-clicked')
+        self.create_signal('row-activated')
+        self.wrapped_widget_connect('row-activated', self.on_row_activated)
         self.wrapped_widget_connect('row-expanded', self.on_row_expanded)
         self.wrapped_widget_connect('row-collapsed', self.on_row_collapsed)
         self.wrapped_widget_connect('button-press-event', self.on_button_press)
@@ -865,6 +867,10 @@ class TableView(Widget):
             self.handled_last_button_press = True
             return True
         self.handled_last_button_press = False
+
+    def on_row_activated(self, treeview, path, view_column):
+        iter_ = treeview.get_model().get_iter(path[0])
+        self.emit('row-activated', iter_)
 
     def make_context_menu(self):
         def gen_menu(menu_items):
