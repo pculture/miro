@@ -1501,6 +1501,7 @@ class DisplayStatesStore(object):
         # TODO: special stuff for converting
     }
 
+    DEFAULT['sharing'] = DEFAULT['playlist']
     DEFAULT['device-video'] = DEFAULT['videos']
     DEFAULT['device-audio'] = DEFAULT['music']
 

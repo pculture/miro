@@ -67,11 +67,6 @@ class SharingView(itemlistcontroller.SimpleItemListController):
     def build_item_view(self):
         return SharingItemView(self.item_list, self.id)
 
-    def build_list_item_view(self):
-        return itemlistwidgets.ListItemView(self.item_list,
-                self.enabled_columns, self.column_widths,
-                display_download_info=False)
-
     def handle_delete(self):
         pass
 
