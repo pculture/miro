@@ -25,16 +25,4 @@
 # but you are not obligated to do so. If you do not wish to do so, delete
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
-
-"""miro.frontendstate -- Objects that store data for the frontends.
-"""
-
-from miro.database import DDBObject
-
-class WidgetsFrontendState(DDBObject):
-    def setup_new(self):
-        self.list_view_displays = list()
-        self.sort_states = dict()
-        self.active_filters = dict()
-        self.list_view_columns = list()
-        self.list_view_column_widths = dict()
+pass

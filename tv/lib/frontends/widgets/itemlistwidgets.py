@@ -279,48 +279,57 @@ class ListItemView(widgetset.TableView):
     """TableView that displays a list of items using the list view."""
 
     columns_map = {
-            'state': ['', style.StateCircleRenderer(), False],
-            'name': ['Name', style.NameRenderer()],
-            'artist': ['Artist', style.ArtistRenderer()],
-            'album': ['Album', style.AlbumRenderer()],
-            'track': ['Track', style.TrackRenderer()],
-            'year': ['Year', style.YearRenderer()],
-            'genre': ['Genre', style.GenreRenderer()],
-            'rating': ['Rating', style.RatingRenderer()],
-            'date': ['Date', style.DateRenderer()],
-            'length': ['Length', style.LengthRenderer()],
-            'status': ['Status', style.StatusRenderer()],
-            'size': ['Size', style.SizeRenderer()],
-            'feed-name': ['Feed', style.FeedNameRenderer()],
-            'eta': ['ETA', style.ETARenderer()],
-            'rate': ['Speed', style.DownloadRateRenderer()],
-            }
+        'state': [u'', style.StateCircleRenderer(), False],
+        'name': [_('Name'), style.NameRenderer()],
+        'artist': [_('Artist'), style.ArtistRenderer()],
+        'album': [_('Album'), style.AlbumRenderer()],
+        'track': [_('Track'), style.TrackRenderer()],
+        'year': [_('Year'), style.YearRenderer()],
+        'genre': [_('Genre'), style.GenreRenderer()],
+        'rating': [_('Rating'), style.RatingRenderer()],
+        'date': [_('Date'), style.DateRenderer()],
+        'length': [_('Length'), style.LengthRenderer()],
+        'status': [_('Status'), style.StatusRenderer()],
+        'size': [_('Size'), style.SizeRenderer()],
+        'feed-name': [_('Feed'), style.FeedNameRenderer()],
+        'eta': [_('ETA'), style.ETARenderer()],
+        'rate': [_('Speed'), style.DownloadRateRenderer()],
+    }
 
-    def __init__(self, item_list, enabled_columns, column_widths,
-            display_channel=True, display_download_info=True):
+    WIDTH_WEIGHT = {
+        'state': 0,     # bump
+        'name': 1,      # title
+        'feed-name': 0.5,
+        'date': 0,
+        'length': 0,
+        'status': 0.2,
+        'size': 0,
+        'eta': 0,
+        'rate': 0,      # download rate
+        'artist': 0.7,
+        'album': 0.7,
+        'track': 0,
+        'year': 0,
+        'genre': 0,
+        'rating': 0,
+    }
+
+    def __init__(self, item_list, columns):
         widgetset.TableView.__init__(self, item_list.model)
-        self.display_channel = display_channel
-        self.display_download_info = display_download_info
-        self.enabled_columns = enabled_columns
+        self.column_state = columns
         self.create_signal('sort-changed')
+        self.create_signal('columns-changed')
         self.item_list = item_list
         self._column_name_to_column = {}
         self._current_sort_column = None
-        self._set_initial_widths = bool(column_widths)
-        display_columns = enabled_columns
-        if not display_channel and 'feed-name' in display_columns:
-            display_columns.remove('feed-name')
-        if not display_download_info:
-            if 'eta' in display_columns:
-                display_columns.remove('eta')
-            if 'rate' in display_columns:
-                display_columns.remove('rate')
-        for name in display_columns:
+        self._set_initial_widths = False
+        for name, width in self.column_state:
             data = ListItemView.columns_map[name]
             resizable = True
             if len(data) > 2:
                 resizable = data[2]
-            self._make_column(_(data[0]), data[1], name, resizable)
+            self._make_column(data[0], data[1],
+                name.encode('utf-8', 'replace'), resizable)
         self.set_show_headers(True)
         self.set_columns_draggable(True)
         self.set_column_spacing(12)
@@ -330,9 +339,31 @@ class ListItemView(widgetset.TableView):
         self.set_fixed_height(True)
         self.allow_multiple_select(True)
         self.html_stripper = util.HTMLStripper()
+        self.inverse_columns_map = {}
+        for name, values in self.columns_map.items():
+            title = values[0]
+            self.inverse_columns_map[title] = unicode(name)
+
+    def _get_ui_column_state(self):
+        widths = {}
+        for (name, width) in self.column_state:
+            column = self._column_name_to_column[name]
+            width = column.get_width()
+            widths[name] = width
+        new_column_state = []
+        for title in self.get_columns():
+            name = self.inverse_columns_map[title]
+            new_column_state.append((name, widths[name]));
+        self.column_state = new_column_state
+
+    def on_unrealize(self, treeview):
+        self._get_ui_column_state()
+        self.emit('columns-changed', self.column_state)
+        super(ListItemView, self).on_unrealize(treeview)
 
     def get_tooltip(self, iter, column):
-        if column == self._column_name_to_column['name']:
+        if ('name' in self._column_name_to_column and
+                self._column_name_to_column['name'] == column):
             info = self.item_list.model[iter][0]
             text, links = self.html_stripper.strip(info.description)
             if text:
@@ -340,7 +371,8 @@ class ListItemView(widgetset.TableView):
                     text = text[:994] + ' [...]'
                 return text
 
-        elif column == self._column_name_to_column['state']:
+        elif ('state' in self._column_name_to_column and
+                self._column_name_to_column['state'] is column):
             info = self.item_list.model[iter][0]
             # this logic is replicated in style.StateCircleRenderer
             # with text from style.StatusRenderer
@@ -371,40 +403,24 @@ class ListItemView(widgetset.TableView):
             # Set this immediately, because changing the widths of
             # widgets below can invoke another size-allocate signal
             self._set_initial_widths = True
-            # width_specs contains the info we need to give columns their
-            # initial size.  It maps column names to
-            # (min_width, extra_width_weighting)
-            width_specs = {
-                'state': (20, 0),    # bump
-                'name': (130, 1),   # title
-                'feed-name': (70, 0.5),  # channel name
-                'date': (85, 0),   # date
-                'length': (60, 0),   # duration
-                'status': (160, 0),   # status
-                'size': (65, 0),    # size
-                'eta': (50, 0),    # eta
-                'rate': (75, 0),    # download rate
-                'artist': (85, 0),
-                'album': (85, 0),
-                'track': (50, 0),
-                'year': (55, 0),
-                'genre': (65, 0),
-                'rating': (60, 0),
-            }
-
-            for key in width_specs.keys():
-                if key not in self._column_name_to_column:
-                    # column not visible on this view
-                    del width_specs[key]
 
             available_width = self.width_for_columns(width)
-            min_width = sum(spec[0] for spec in width_specs.values())
+            min_width = sum(width for name, width in self.column_state)
             extra_width = max(available_width - min_width, 0)
-            total_weight = sum(spec[1] for spec in width_specs.values())
-            for name, spec in width_specs.items():
+            weights = {}
+            for name, width in self.column_state:
+                weights[name] = self.WIDTH_WEIGHT[name]
+            total_weight = sum(weight for weight in weights.values()) or 1
+            diff = 0 # prevent cumulative rounding errors
+            for i, (name, width) in enumerate(self.column_state):
+                weight = weights[name]
+                extra = extra_width * weight / total_weight + diff
+                diff = extra - int(extra)
+                width += int(extra)
+                self.column_state[i] = (name, width)
                 column = self._column_name_to_column[name]
-                extra = int(extra_width * spec[1] / total_weight)
-                column.set_width(spec[0] + extra)
+                column.set_width(width)
+            self.emit('columns-changed', self.column_state)
 
     def _on_column_clicked(self, column, column_name):
         ascending = not (column.get_sort_indicator_visible() and

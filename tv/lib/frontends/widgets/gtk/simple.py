@@ -123,6 +123,9 @@ class Label(Widget):
     def get_text(self):
         self._widget.get_text().decode('utf-8')
 
+    def set_selectable(self, val):
+        self._widget.set_selectable(val)
+
     def set_attr(self, attr):
         attr.end_index = 65535
         self.attr_list.change(attr)

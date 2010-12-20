@@ -247,6 +247,19 @@ class StopTrackingPausedCount(BackendMessage):
     """Stop tracking the paused count."""
     pass
 
+class TrackOthersCount(BackendMessage):
+    """Start tracking the number of 'other' items.  When this message is
+    received the backend will send a corresponding
+    OthersCountChanged message.  It will also send
+    OthersCountChanged whenever the count changes.
+    """
+    pass
+
+class StopTrackingOthersCount(BackendMessage):
+    """Stop tracking the 'other' count.
+    """
+    pass
+
 class TrackNewVideoCount(BackendMessage):
     """Start tracking the number of new videos.  When this message is
     received the backend will send a corresponding
@@ -778,19 +791,18 @@ class ReportCrash(BackendMessage):
         self.text = text
         self.send_report = send_report
 
-class SaveFrontendState(BackendMessage):
-    """Save data for the frontend.
+class SaveDisplayState(BackendMessage):
+    """Save changes to one display for the frontend
     """
-    def __init__(self, list_view_displays, sort_states, active_filters,
-            list_view_columns, list_view_column_widths):
-        self.list_view_displays = list_view_displays
-        self.sort_states = sort_states
+    def __init__(self, key, is_list_view, active_filters, sort_state, columns):
+        self.key = key
+        self.is_list_view = is_list_view
         self.active_filters = active_filters
-        self.list_view_columns = list_view_columns
-        self.list_view_column_widths = list_view_column_widths
+        self.sort_state = sort_state
+        self.columns = columns
 
-class QueryFrontendState(BackendMessage):
-    """Ask for a CurrentFrontendState message to be sent back.
+class QueryDisplayStates(BackendMessage):
+    """Ask for a CurrentDisplayStates message to be sent back.
     """
     pass
 
@@ -801,6 +813,19 @@ class SetDeviceType(BackendMessage):
     def __init__(self, device, name):
         self.device = device
         self.name = name
+
+class QuerySyncInformation(BackendMessage):
+    """
+    Ask for a CurrentSyncInformation to be sent back for the given device.
+    """
+    def __init__(self, device, video_type, video_ids, audio_type, audio_ids,
+                 playlist_ids):
+        self.device = device
+        self.video_type = video_type
+        self.video_ids = video_ids
+        self.audio_type = audio_type
+        self.audio_ids = audio_ids
+        self.playlist_ids = playlist_ids
 
 class DeviceSyncFeeds(BackendMessage):
     """
@@ -1078,6 +1103,8 @@ class ItemInfo(object):
     # Item.get_description())
     VERSION = 3
 
+    html_stripper = util.HTMLStripper()
+
     def __init__(self, item):
         self.name = item.get_title()
         self.id = item.id
@@ -1085,6 +1112,8 @@ class ItemInfo(object):
         self.feed_name = item.get_source()
         self.feed_url = item.get_feed_url()
         self.description = item.get_description()
+        self.description_stripped = (
+                ItemInfo.html_stripper.strip(self.description))
         self.state = item.get_state()
         self.release_date = item.get_release_date_obj()
         self.size = item.get_size()
@@ -1368,6 +1397,12 @@ class PausedCountChanged(FrontendMessage):
     def __init__(self, count):
         self.count = count
 
+class OthersCountChanged(FrontendMessage):
+    """Informs the frontend that the number of 'other' items has changed.
+    """
+    def __init__(self, count):
+        self.count = count
+
 class NewVideoCountChanged(FrontendMessage):
     """Informs the frontend that number of new videos has changed.
     """
@@ -1386,7 +1421,7 @@ class UnwatchedCountChanged(FrontendMessage):
     def __init__(self, count):
         self.count = count
 
-class VideoConversionTaskInfo(object):
+class ConversionTaskInfo(object):
     """Tracks the state of an conversion task.
 
     :param key: id for the conversion task
@@ -1420,7 +1455,7 @@ class VideoConversionTaskInfo(object):
         self.eta = task.get_eta()
         self.target = task.converter_info.displayname
 
-class VideoConversionTasksList(FrontendMessage):
+class ConversionTasksList(FrontendMessage):
     """Send the current list of running and pending conversion tasks to the 
        frontend.
     """
@@ -1429,31 +1464,31 @@ class VideoConversionTasksList(FrontendMessage):
         self.pending_tasks = pending_tasks
         self.finished_tasks = finished_tasks
 
-class VideoConversionsCountChanged(FrontendMessage):
+class ConversionsCountChanged(FrontendMessage):
     """Informs the frontend that number of running conversions has changed.
     """
     def __init__(self, running_count, other_count):
         self.running_count = running_count
         self.other_count = other_count
 
-class VideoConversionTaskCreated(FrontendMessage):
+class ConversionTaskCreated(FrontendMessage):
     """Informs the frontend that a conversion task has been created.
     """
     def __init__(self, task):
         self.task = task
 
-class VideoConversionTaskRemoved(FrontendMessage):
+class ConversionTaskRemoved(FrontendMessage):
     """Informs the frontend that a conversion task has been removed.
     """
     def __init__(self, task):
         self.task = task
 
-class AllVideoConversionTaskRemoved(FrontendMessage):
+class AllConversionTaskRemoved(FrontendMessage):
     """Informs the frontend that all conversion tasks have been removed.
     """
     pass
 
-class VideoConversionTaskChanged(FrontendMessage):
+class ConversionTaskChanged(FrontendMessage):
     """Informs the frontend that a conversion task has changed.
 
     This is sent when a conversion task changes state, or when a running task
@@ -1498,6 +1533,14 @@ class DeviceChanged(FrontendMessage):
     def __init__(self, device):
         self.device = device
 
+class CurrentSyncInformation(FrontendMessage):
+    """Informs the frontend of what the current sync would look like.
+    """
+    def __init__(self, device, video_count, audio_count):
+        self.device = device
+        self.video_count = video_count
+        self.audio_count = audio_count
+
 class DeviceSyncChanged(FrontendMessage):
     """Informs the frontend that the status of a device sync has changed.  This
     includes starting and stopping.
@@ -1541,16 +1584,21 @@ class SearchComplete(FrontendMessage):
         self.query = query
         self.result_count = result_count
 
-class CurrentFrontendState(FrontendMessage):
-    """Returns the latest data saved with SaveFrontendState.
+class CurrentDisplayStates(FrontendMessage):
+    """Returns the states of all displays
     """
-    def __init__(self, list_view_displays, sort_states, active_filters,
-            list_view_columns, list_view_column_widths):
-        self.list_view_displays = list_view_displays
-        self.sort_states = sort_states
+    def __init__(self, display_infos):
+        self.displays = display_infos
+
+class DisplayInfo(object):
+    """Contains the state of a single display
+    """
+    def __init__(self, key, is_list_view, active_filters, sort_state, columns):
+        self.key = key
+        self.is_list_view = is_list_view
         self.active_filters = active_filters
-        self.list_view_columns = list_view_columns
-        self.list_view_column_widths = list_view_column_widths
+        self.sort_state = sort_state
+        self.columns = columns
 
 class OpenInExternalBrowser(FrontendMessage):
     """Opens the specified url in an external browser.

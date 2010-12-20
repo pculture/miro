@@ -263,7 +263,7 @@ class ItemListGroup(object):
         """
         self.item_lists = item_lists
         if sorter is None:
-            self.set_sort(DateSort(False))
+            self.set_sort(ArtistSort(False))
         else:
             self.set_sort(sorter)
         self._throbber_timeouts = {}

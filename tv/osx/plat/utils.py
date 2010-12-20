@@ -353,11 +353,11 @@ def launch_download_daemon(oldpid, env):
     os_version = int(os_info[2].split('.')[0])
     if os_version < 9:
         launch_path = exe
-        launch_arguments = [u'download_daemon']
+        launch_arguments = [u'--download-daemon']
     else:
         arch = subprocess.Popen("arch", stdout=subprocess.PIPE).communicate()[0].strip()
         launch_path = '/usr/bin/arch'
-        launch_arguments = ['-%s' % arch, exe, u'download_daemon']
+        launch_arguments = ['-%s' % arch, exe, u'--download-daemon']
 
     global dlTask
     dlTask = NSTask.alloc().init()

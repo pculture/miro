@@ -163,6 +163,9 @@ class Label(Widget):
     def get_text(self):
         self.view.stringValue()
 
+    def set_selectable(self, val):
+        self.view.setSelectable_(val)
+
     def set_alignment(self, alignment):
         # default to left.
         nsalignment = NSLeftTextAlignment

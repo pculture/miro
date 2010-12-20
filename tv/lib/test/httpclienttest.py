@@ -13,6 +13,8 @@ from miro import signals
 from miro.plat import resources
 from miro.test.framework import EventLoopTest, uses_httpclient
 
+from miro.gtcache import gettext as _
+
 TEST_PATH = 'test.txt'
 TEST_BODY = 'Miro HTTP Test\n'
 
@@ -902,8 +904,10 @@ class NetworkErrorTest(HTTPClientTestBase):
         self.grab_url(url)
         self.assert_(isinstance(self.grab_url_error,
             httpclient.UnexpectedStatusCode))
+        # FIXME: It'd be nice if we could check a HTTP code rather than a
+        # static message.
         self.assertEquals(self.grab_url_error.friendlyDescription,
-                "File not found")
+                _("File not found"))
 
     @uses_httpclient
     def test_bad_domain_name(self):

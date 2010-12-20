@@ -78,7 +78,7 @@ from miro import theme
 from miro import util
 from miro import searchengines
 from miro import storedatabase
-from miro import videoconversion
+from miro import conversions
 from miro import devices
 from miro import sharing
 from miro.plat import devicetracker
@@ -279,7 +279,7 @@ def finish_startup(obj, thread):
     app.item_info_cache.load()
 
     logging.info("Loading video converters...")
-    videoconversion.conversion_manager.startup()
+    conversions.conversion_manager.startup()
     app.device_manager = devices.DeviceManager()
     app.device_tracker = devicetracker.DeviceTracker()
 
@@ -390,7 +390,6 @@ def on_frontend_started():
 
 def setup_global_feeds():
     setup_global_feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
-    setup_global_feed(u'dtv:singleFeed', initiallyAutoDownloadable=False)
     setup_global_feed(u'dtv:search', initiallyAutoDownloadable=False)
     setup_global_feed(u'dtv:searchDownloads')
     setup_global_feed(u'dtv:directoryfeed')

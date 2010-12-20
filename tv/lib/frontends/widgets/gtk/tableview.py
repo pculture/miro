@@ -462,6 +462,9 @@ class TableColumn(signals.SignalEmitter):
     def set_width(self, width):
         self._column.props.fixed_width = width
 
+    def get_width(self):
+        return self._column.get_width()
+
     def _header_clicked(self, tablecolumn):
         self.emit('clicked')
 
@@ -538,6 +541,7 @@ class TableView(Widget):
         weak_connect(self.selection, 'changed', self.on_selection_changed)
         self._connect_hotspot_signals()
         self.layout_manager = LayoutManager(self._widget)
+        self.selected = None
         if hasattr(self, 'get_tooltip'):
             self._widget.set_property('has-tooltip', True)
             self.wrapped_widget_connect('query-tooltip', self.on_tooltip)
@@ -682,6 +686,13 @@ class TableView(Widget):
         column._column.set_reorderable(self._columns_draggable)
         column.renderer._renderer.set_property('xpad', self._renderer_xpad)
         column.renderer._renderer.set_property('ypad', self._renderer_ypad)
+
+    def get_columns(self):
+        titles = []
+        columns = self._widget.get_columns()
+        for column in columns:
+            titles.append(column.get_title())
+        return titles
 
     def column_count(self):
         return len(self._widget.get_columns())
@@ -1069,8 +1080,25 @@ class TableView(Widget):
                 return True
         return False
 
+    def _save_selection(self):
+        model, paths = self.selection.get_selected_rows()
+        if len(paths) > 0:
+            self.selected = []
+            for path in paths:
+                self.selected.append(gtk.TreeRowReference(model, path))
+        else:
+            self.selected = None
+
+    def _restore_selection(self):
+        if self.selected:
+            for row in self.selected:
+                path = row.get_path()
+                if path:
+                    self.selection.select_path(path)
+
     def start_bulk_change(self):
         self._widget.freeze_child_notify()
+        self._save_selection()
         self._widget.set_model(None)
         self._disconnect_hotspot_signals()
         self.in_bulk_change = True
@@ -1078,6 +1106,7 @@ class TableView(Widget):
     def model_changed(self):
         if self.in_bulk_change:
             self._widget.set_model(self.model._model)
+            self._restore_selection()
             self._widget.thaw_child_notify()
             self._connect_hotspot_signals()
             if self.hotspot_tracker:

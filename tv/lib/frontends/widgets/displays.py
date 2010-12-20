@@ -42,7 +42,7 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import browser
 from miro.frontends.widgets import downloadscontroller
-from miro.frontends.widgets import videoconversionscontroller
+from miro.frontends.widgets import conversionscontroller
 from miro.frontends.widgets import feedcontroller
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import devicecontroller
@@ -121,7 +121,7 @@ class DisplayManager(object):
                 SearchDisplay,
                 OtherItemsDisplay,
                 DownloadingDisplay,
-                VideoConversionsDisplay,
+                ConversionsDisplay,
                 GuideDisplay,
                 MultipleSelectionDisplay,
                 DeviceDisplay,
@@ -158,7 +158,10 @@ class DisplayManager(object):
 
         self.selected_tab_list = selected_tab_list
         self.selected_tabs = selected_tabs
-        tab_type = selected_tab_list.type
+        if hasattr(selected_tabs[0], 'type'):
+            tab_type = selected_tabs[0].type
+        else:
+            tab_type = selected_tab_list.type
 
         for display in self.permanent_displays:
             if display.should_display(tab_type, selected_tabs):
@@ -240,6 +243,10 @@ class DeviceDisplay(TabDisplay):
     def cleanup(self):
         self.controller.stop_tracking()
 
+    def handle_current_sync_information(self, message):
+        if not getattr(self.controller.device, 'fake', False):
+            self.controller.handle_current_sync_information(message)
+
     def handle_device_sync_changed(self, message):
         if not getattr(self.controller.device, 'fake', False):
             self.controller.handle_device_sync_changed(message)
@@ -286,13 +293,15 @@ class ItemListDisplayMixin(object):
         app.item_list_controller_manager.controller_destroyed(self.controller)
 
     def remember_state(self):
+        key = (self.type, self.id)
         if self.controller.widget.in_list_view:
-            app.frontend_states_memory.set_list_view(self.type, self.id)
+            app.display_state.set_list_view(key)
         else:
-            app.frontend_states_memory.set_std_view(self.type, self.id)
+            app.display_state.set_std_view(key)
 
     def restore_state(self):
-        if app.frontend_states_memory.query_list_view(self.type, self.id):
+        key = (self.type, self.id)
+        if app.display_state.is_list_view(key):
             self.widget.switch_to_list_view()
 
 class ItemListDisplay(ItemListDisplayMixin, TabDisplay):
@@ -382,7 +391,7 @@ class SharingDisplay(ItemListDisplay):
 class SearchDisplay(ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        return tab_type == 'static' and selected_tabs[0].id == 'search'
+        return tab_type == 'search' and selected_tabs[0].id == 'search'
 
     def make_controller(self, tab):
         return itemlistcontroller.SearchController()
@@ -392,32 +401,36 @@ class AudioVideoItemsDisplay(ItemListDisplay):
         Display.__init__(self)
         self.controller = self.make_controller()
         self.widget = self.controller.widget
-        self.type = 'library'
+        self.type = self.__class__.tab_type
         self.id = self.__class__.tab_id
 
     def remember_state(self):
         ItemListDisplay.remember_state(self)
         filters = self.widget.toolbar.active_filters()
-        app.frontend_states_memory.set_filters(self.type, self.id, filters)
+        display = (self.type, self.id)
+        app.display_state.set_filters(display, filters)
 
     def restore_state(self):
-        initial_filters = app.frontend_states_memory.query_filters(self.type,
-                self.id)
+        display = (self.type, self.id)
+        initial_filters = app.display_state.get_filters(display)
         if initial_filters:
             self.controller.set_item_filters(initial_filters)
         ItemListDisplay.restore_state(self)
 
     @classmethod
     def should_display(cls, tab_type, selected_tabs):
-        return tab_type == 'library' and selected_tabs[0].id == cls.tab_id
+        return (hasattr(selected_tabs[0], 'type') and selected_tabs[0].type is
+            cls.tab_type)
 
 class VideoItemsDisplay(AudioVideoItemsDisplay):
+    tab_type = 'videos'
     tab_id = 'videos'
 
     def make_controller(self):
         return itemlistcontroller.VideoItemsController()
 
 class AudioItemsDisplay(AudioVideoItemsDisplay):
+    tab_type = 'music'
     tab_id = 'music'
 
     def make_controller(self):
@@ -426,7 +439,7 @@ class AudioItemsDisplay(AudioVideoItemsDisplay):
 class OtherItemsDisplay(ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        return tab_type == 'library' and selected_tabs[0].id == 'others'
+        return tab_type == 'others'
 
     def make_controller(self, tab):
         return itemlistcontroller.OtherItemsController()
@@ -434,19 +447,19 @@ class OtherItemsDisplay(ItemListDisplay):
 class DownloadingDisplay(ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        return tab_type == 'library' and selected_tabs[0].id == 'downloading'
+        return tab_type == 'downloading'
 
     def make_controller(self, tab):
         return downloadscontroller.DownloadsController()
 
-class VideoConversionsDisplay(TabDisplay):
+class ConversionsDisplay(TabDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        return tab_type == 'library' and selected_tabs[0].id == 'conversions'
+        return tab_type == 'conversions'
 
     def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
-        self.controller = videoconversionscontroller.VideoConversionsController()
+        self.controller = conversionscontroller.ConversionsController()
         self.widget = self.controller.widget
 
 class FolderContentsDisplay(ItemListDisplayMixin, Display):

@@ -232,6 +232,22 @@ class AsyncSocket(object):
             self.readTimeout.cancel()
             self.readTimeout = None
 
+    def _pick_address(self, addresses):
+        """Pick the best entry to use from a list of addresses
+        
+        :param addresses: list of address tuples returned by getaddrinfo()
+        :returns: one of the tuples, or None if no address could be found
+        """
+        if util.use_ipv6(): # prefer ipv6 if possible
+            for entry in addresses:
+                if entry[0] == socket.AF_INET6:
+                    return entry
+        # fall back on ipv4
+        for entry in addresses:
+            if entry[0] == socket.AF_INET:
+                return entry
+        return None
+
     def open_connection(self, host, port, callback, errback,
                         disable_read_timeout=None):
         """Open a connection.  On success, callback will be called with this
@@ -257,43 +273,34 @@ class AsyncSocket(object):
 
             self.socket.setblocking(0)
             return self.socket
+
         def onAddressLookup(addresses):
             if self.connectionErrback is None:
                 # called connectionErrback while we were waiting for
                 # getaddrinfo
                 return
-            connected = 0;
-            msgs = []
-            for entry in addresses:
-                address = entry[4][0]
-                try:
-                    if socket.has_ipv6 and entry[0] == socket.AF_INET6:
-                        if createSocketHandle(socket.AF_INET6) == None:
-                            continue
-                        rv = self.socket.connect_ex((address, port))
-                    elif entry[0] == socket.AF_INET:
-                        if createSocketHandle(socket.AF_INET) == None:
-                            continue
-                        rv = self.socket.connect_ex((address, port))
-
-                except socket.gaierror:
-                    trap_call(self, errback, ConnectionError('gaierror'))
-                    return
-                if rv in (0, errno.EINPROGRESS, errno.EWOULDBLOCK):
-                    eventloop.add_write_callback(self.socket, onWriteReady)
-                    self.socketConnectTimeout = eventloop.add_timeout(
-                             SOCKET_CONNECT_TIMEOUT, onWriteTimeout,
-                            "socket connect timeout")
-                    connected = 1;
-                    break;
-
-                try:
-                    msg = errno.errorcode[rv]
-                except KeyError:
-                    msg = "Unknown connection error: %s" % rv
-                msgs.append("Host %s: %s" % msg)
-
-            if connected == 0:
+            entry = self._pick_address(addresses)
+            if entry is None:
+                msg = _("Couldn't find address family to use")
+                trap_call(self, errback, ConnectionError(msg))
+                return
+            try:
+                self.socket = socket.socket(entry[0], socket.SOCK_STREAM)
+            except socket.error, e:
+                trap_call(self, errback, ConnectionError(e[1]))
+                return
+            self.socket.setblocking(0)
+            try:
+                rv = self.socket.connect_ex(entry[4])
+            except socket.gaierror:
+                trap_call(self, errback, ConnectionError('gaierror'))
+                return
+            if rv in (0, errno.EINPROGRESS, errno.EWOULDBLOCK):
+                eventloop.add_write_callback(self.socket, onWriteReady)
+                self.socketConnectTimeout = eventloop.add_timeout(
+                         SOCKET_CONNECT_TIMEOUT, onWriteTimeout,
+                        "socket connect timeout")
+            else:
                 fullmsg = "Connection failed: %s" % string.join(msgs);
                 trap_call(self, errback, ConnectionError(fullmsg))
         def onWriteReady():
@@ -332,8 +339,10 @@ class AsyncSocket(object):
 
         if self.socket.family == socket.AF_INET:
             (self.addr, self.port) = self.socket.getsockname()
-        else:
+        elif self.socket.family == socket.AF_INET6:
             (self.addr, self.port, self.flowinfo, self.scopeid) = self.socket.getsockname()
+        else:
+            raise ValueError("Unknown socket family: %s", self.socket.family)
         self.socket.listen(63)
         eventloop.add_read_callback(self.socket, finishAccept)
 

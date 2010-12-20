@@ -26,47 +26,25 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""``miro.appconfig`` -- Contains the AppConfig class, which handles
-holding the values of ``app.config``.
-
-If Miro is using a theme, then the theme's app.config value overrides
-the default one.
+"""miro.frontends.profilewidgets.portable -- Setup or Fake portable code
 """
 
-import logging
-import traceback
+import threading
 
-from miro import util
-from miro.plat import resources
+from miro import app
+from miro import models
+from miro import iteminfocache
+from miro import storedatabase
+from miro import searchengines
 
-class AppConfig(object):
-    def __init__(self, theme=None):
-        self.theme_vars = {}
 
-        app_config_path = resources.path('app.config')
-        self.default_vars = util.read_simple_config_file(app_config_path)
+def setup():
+    searchengines.create_engines()
+    app.controller = FakeController()
 
-        self.load_theme(theme)
+class FakeController(object):
+    def shutdown(self):
+        pass
 
-    def load_theme(self, theme):
-        if theme is not None:
-            logging.info("Using theme %s", theme)
-            theme_app_config = resources.theme_path(theme, 'app.config')
-            try:
-                self.theme_vars = util.read_simple_config_file(theme_app_config)
-            except EnvironmentError:
-                logging.warn("Error loading theme: %s\n%s", 
-                        theme_app_config, traceback.format_exc())
-
-    def get(self, key, use_theme_data=True):
-        if use_theme_data and key in self.theme_vars:
-            return self.theme_vars[key]
-        else:
-            return self.default_vars[key]
-
-    def __getitem__(self, key):
-        return self.get(key, use_theme_data=True)
-
-    def contains(self, key, use_theme_data=True):
-        return ((use_theme_data and key in self.theme_vars) or 
-                (key in self.default_vars))
+    def on_shutdown(self):
+        pass

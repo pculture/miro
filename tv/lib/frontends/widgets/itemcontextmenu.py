@@ -36,7 +36,7 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.plat import resources
 from miro.plat.frontends.widgets import file_navigator_name
-from miro.videoconversion import conversion_manager
+from miro.conversions import conversion_manager
 
 
 class ItemContextMenuHandler(object):
@@ -141,6 +141,8 @@ class ItemContextMenuHandler(object):
                 (_('Download'),
                     messages.StartDownload(item.id).send_to_backend)
             ]
+
+        menu.append((_('Copy URL to clipboard'), app.widgetapp.copy_item_url))
 
         view_menu = []
         if not item.is_external and item.permalink:

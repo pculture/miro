@@ -37,7 +37,7 @@ It also holds:
 * :class:`InfoUpdaterCallbackList` -- tracks the list of callbacks for
   info updater
 * :class:`WidgetsMessageHandler` -- frontend message handler
-* :class:`FrontendStatesStore` -- stores state of the frontend
+* :class:`DisplayStateStore` -- stores state of each display 
 """
 
 import cProfile
@@ -55,7 +55,7 @@ from miro import startup
 from miro import signals
 from miro import messages
 from miro import eventloop
-from miro import videoconversion
+from miro import conversions
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import dialogs
@@ -79,6 +79,7 @@ from miro.frontends.widgets import rundialog
 from miro.frontends.widgets import watchedfolders
 from miro.frontends.widgets import quitconfirmation
 from miro.frontends.widgets import firsttimedialog
+from miro.frontends.widgets import feedsettingspanel
 from miro.frontends.widgets.widgetconst import MAX_VOLUME
 from miro.frontends.widgets.window import MiroWindow
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
@@ -103,11 +104,15 @@ class Application:
         self.paused_count = 0
         self.unwatched_count = 0
         app.frontend_config_watcher = config.ConfigWatcher(call_on_ui_thread)
+        self.crash_reports_to_handle = []
 
     def exception_handler(self, typ, value, traceback):
         report = crashreport.format_crash_report("in frontend thread",
             exc_info=(typ, value, traceback), details=None)
-        self.handle_crash_report(report)
+        # we might be inside of some UI function where we can't run a dialog
+        # box.  For example cell renderers on GTK.  Use call_on_ui_thread() to
+        # get a fresh main loop iteration.
+        call_on_ui_thread(lambda: self.handle_crash_report(report))
 
     def startup(self):
         """Connects to signals, installs handlers, and calls :meth:`startup`
@@ -128,16 +133,10 @@ class Application:
         messages.TrackGuides().send_to_backend()
         messages.QuerySearchInfo().send_to_backend()
         messages.TrackWatchedFolders().send_to_backend()
-        messages.QueryFrontendState().send_to_backend()
+        messages.QueryDisplayStates().send_to_backend()
         messages.TrackChannels().send_to_backend()
 
-        app.item_list_controller_manager = \
-                itemlistcontroller.ItemListControllerManager()
-        app.menu_manager = menus.MenuStateManager()
-        app.playback_manager = playback.PlaybackManager()
-        app.search_manager = search.SearchManager()
-        app.inline_search_memory = search.InlineSearchMemory()
-        app.tab_list_manager = tablistmanager.TabListManager()
+        self.setup_globals()
         self.ui_initialized = True
 
         self.window = MiroWindow(app.config.get(prefs.LONG_APP_NAME),
@@ -145,6 +144,15 @@ class Application:
         self.window.connect_weak('key-press', self.on_key_press)
         self._window_show_callback = self.window.connect_weak('show',
                 self.on_window_show)
+
+    def setup_globals(self):
+        app.item_list_controller_manager = \
+                itemlistcontroller.ItemListControllerManager()
+        app.menu_manager = menus.MenuStateManager()
+        app.playback_manager = playback.PlaybackManager()
+        app.search_manager = search.SearchManager()
+        app.inline_search_memory = search.InlineSearchMemory()
+        app.tab_list_manager = tablistmanager.TabListManager()
 
     def on_config_changed(self, obj, key, value):
         """Any time a preference changes, this gets notified so that we
@@ -234,6 +242,7 @@ class Application:
         messages.TrackPlaylists().send_to_backend()
         messages.TrackDownloadCount().send_to_backend()
         messages.TrackPausedCount().send_to_backend()
+        messages.TrackOthersCount().send_to_backend()
         messages.TrackNewVideoCount().send_to_backend()
         messages.TrackNewAudioCount().send_to_backend()
         messages.TrackUnwatchedCount().send_to_backend()
@@ -363,7 +372,7 @@ class Application:
             self.reveal_file(filename)
 
     def reveal_conversions_folder(self):
-        self.reveal_file(videoconversion.get_conversions_folder())
+        self.reveal_file(conversions.get_conversions_folder())
 
     def open_video(self):
         title = _('Open Files...')
@@ -426,6 +435,11 @@ class Application:
                 _('The address you entered is not a valid url.\nPlease check the URL and try again.\n\nEnter the URL of the item to download'))
         if url is not None:
             messages.DownloadURL(url).send_to_backend()
+
+    def import_media(self):
+        directory = dialogs.ask_for_directory(_("Import Media From..."))
+        if directory is not None:
+            app.watched_folder_manager.add(directory)
 
     def check_version(self):
         # this gets called by the backend, so it has to send a message to
@@ -556,11 +570,10 @@ class Application:
     def convert_items(self, converter_id):
         selection = app.item_list_controller_manager.get_selection()
         for item_info in selection:
-            videoconversion.convert(converter_id, item_info)
+            conversions.convert(converter_id, item_info)
 
     def copy_item_url(self):
         selection = app.item_list_controller_manager.get_selection()
-        selection = [s for s in selection if s.downloaded]
 
         if not selection and app.playback_manager.is_playing:
             selection = [app.playback_manager.get_playing_item()]
@@ -686,6 +699,11 @@ class Application:
             return
 
         messages.ExportSubscriptions(filepath).send_to_backend()
+
+    def feed_settings(self):
+        t, channel_infos = app.tab_list_manager.get_selection()
+        if t in ('feed', 'audio-feed') and len(channel_infos) == 1:
+            feedsettingspanel.run_dialog(channel_infos[0])
 
     def copy_feed_url(self):
         t, channel_infos = app.tab_list_manager.get_selection()
@@ -865,6 +883,34 @@ class Application:
             if path is not None:
                 self.message_handler.profile_next_message(message_obj, path)
 
+    def profile_redraw(self):
+        """Devel method: profile time to redraw part of the interface."""
+
+        # NOTE: strings are purposefully untranslated.  Should we spend
+        # translator time these strings?
+        message_labels = ['Right Side', 'Left Side']
+
+        index = dialogs.ask_for_choice(
+                ("Select Area to Profile"),
+                ("Miro will redraw the widget in that area 10 times and "
+                    "write out profile timing data for it."),
+                message_labels)
+        if index is not None:
+            if index == 0:
+                widget = self.window.splitter.right
+            else:
+                widget = self.window.splitter.left
+
+            title = _("Select File to write Profile to")
+            path = dialogs.ask_for_save_pathname(title,
+                    'miro-profile-redraw.prof')
+            if path is not None:
+                def profile_code():
+                    for x in xrange(10):
+                        widget.redraw_now()
+                cProfile.runctx('profile_code()', globals(), locals(),
+                        path)
+
     def on_close(self):
         """This is called when the close button is pressed."""
         self.quit()
@@ -892,8 +938,8 @@ class Application:
         return True
     
     def _confirm_quit_if_converting(self):
-        running_count = videoconversion.conversion_manager.running_tasks_count()
-        pending_count = videoconversion.conversion_manager.pending_tasks_count()
+        running_count = conversions.conversion_manager.running_tasks_count()
+        pending_count = conversions.conversion_manager.pending_tasks_count()
         conversions_count = running_count + pending_count
         if app.config.get(prefs.WARN_IF_CONVERTING_ON_QUIT) and conversions_count > 0:
             ret = quitconfirmation.rundialog(
@@ -947,13 +993,21 @@ class Application:
         call_on_ui_thread(self.handle_crash_report, report)
 
     def handle_crash_report(self, report):
-        if self.ignore_errors:
-            logging.warn("Ignoring Error:\n%s", report)
+        self.crash_reports_to_handle.append(report)
+        if len(self.crash_reports_to_handle) > 1:
+            # another call to handle_crash_report() is running a dialog, wait
+            # until it returns
             return
 
-        ret = crashdialog.run_dialog(report)
-        if ret == crashdialog.IGNORE_ERRORS:
-            self.ignore_errors = True
+        while self.crash_reports_to_handle:
+            report = self.crash_reports_to_handle[0]
+            if self.ignore_errors:
+                logging.warn("Ignoring Error:\n%s", report)
+            else:
+                ret = crashdialog.run_dialog(report)
+                if ret == crashdialog.IGNORE_ERRORS:
+                    self.ignore_errors = True
+            self.crash_reports_to_handle = self.crash_reports_to_handle[1:]
 
     def on_backend_shutdown(self, obj):
         logging.info('Shutting down...')
@@ -1076,7 +1130,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
         self._pre_startup_messages = set([
             'guide-list',
             'search-info',
-            'frontend-state',
+            'display-states',
         ])
         if app.config.get(prefs.OPEN_CHANNEL_ON_STARTUP) is not None or \
                 app.config.get(prefs.OPEN_FOLDER_ON_STARTUP) is not None:
@@ -1265,6 +1319,10 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def handle_paused_count_changed(self, message):
         app.widgetapp.paused_count = message.count
 
+    def handle_others_count_changed(self, message):
+        library_tab_list = app.tab_list_manager.library_tab_list
+        library_tab_list.update_others_count(message.count)
+
     def handle_new_video_count_changed(self, message):
         library_tab_list = app.tab_list_manager.library_tab_list
         library_tab_list.update_new_video_count(message.count)
@@ -1277,41 +1335,46 @@ class WidgetsMessageHandler(messages.MessageHandler):
         app.widgetapp.unwatched_count = message.count
         app.widgetapp.handle_unwatched_count_changed()
 
-    def handle_video_conversions_count_changed(self, message):
+    def handle_conversions_count_changed(self, message):
         library_tab_list = app.tab_list_manager.library_tab_list
         library_tab_list.update_conversions_count(message.running_count,
                 message.other_count)
 
-    def handle_video_conversion_tasks_list(self, message):
+    def handle_conversion_tasks_list(self, message):
         current_display = app.display_manager.get_current_display()
-        if isinstance(current_display, displays.VideoConversionsDisplay):
+        if isinstance(current_display, displays.ConversionsDisplay):
             current_display.controller.handle_task_list(message.running_tasks,
                     message.pending_tasks, message.finished_tasks)
 
-    def handle_video_conversion_task_created(self, message):
+    def handle_conversion_task_created(self, message):
         current_display = app.display_manager.get_current_display()
-        if isinstance(current_display, displays.VideoConversionsDisplay):
+        if isinstance(current_display, displays.ConversionsDisplay):
             current_display.controller.handle_task_added(message.task)
 
-    def handle_video_conversion_task_removed(self, message):
+    def handle_conversion_task_removed(self, message):
         current_display = app.display_manager.get_current_display()
-        if isinstance(current_display, displays.VideoConversionsDisplay):
+        if isinstance(current_display, displays.ConversionsDisplay):
             current_display.controller.handle_task_removed(message.task)
 
-    def handle_all_video_conversion_task_removed(self, message):
+    def handle_all_conversion_task_removed(self, message):
         current_display = app.display_manager.get_current_display()
-        if isinstance(current_display, displays.VideoConversionsDisplay):
+        if isinstance(current_display, displays.ConversionsDisplay):
             current_display.controller.handle_all_tasks_removed()
 
-    def handle_video_conversion_task_changed(self, message):
+    def handle_conversion_task_changed(self, message):
         current_display = app.display_manager.get_current_display()
-        if isinstance(current_display, displays.VideoConversionsDisplay):
+        if isinstance(current_display, displays.ConversionsDisplay):
             current_display.controller.handle_task_changed(message.task)
 
     def handle_device_changed(self, message):
         current_display = app.display_manager.get_current_display()
         if isinstance(current_display, displays.DeviceDisplay):
             current_display.controller.handle_device_changed(message.device)
+
+    def handle_current_sync_information(self, message):
+        current_display = app.display_manager.get_current_display()
+        if isinstance(current_display, displays.DeviceDisplay):
+            current_display.handle_current_sync_information(message)
 
     def handle_device_sync_changed(self, message):
         current_display = app.display_manager.get_current_display()
@@ -1341,9 +1404,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
         if app.widgetapp.ui_initialized:
             app.search_manager.handle_search_complete(message)
 
-    def handle_current_frontend_state(self, message):
-        app.frontend_states_memory = FrontendStatesStore(message)
-        self._saw_pre_startup_message('frontend-state')
+    def handle_current_display_states(self, message):
+        app.display_state = DisplayStatesStore(message)
+        self._saw_pre_startup_message('display-states')
 
     def handle_progress_dialog_start(self, message):
         self.progress_dialog = dialogs.ProgressDialog(message.title)
@@ -1362,87 +1425,166 @@ class WidgetsMessageHandler(messages.MessageHandler):
         library_tab_list = app.tab_list_manager.library_tab_list
         library_tab_list.blink_tab("downloading")
 
-class FrontendStatesStore(object):
-    """Stores which views were left in list mode by the user.
-    """
+class DisplayStatesStore(object):
+    DEFAULT = {
+        'videos': {
+            'is_list_view': False,
+            'active_filters': ['view-all'],
+            'sort_state': 'name',
+            'columns': [(u'state', 20), (u'name', 130), (u'length', 60),
+                (u'feed-name', 70), (u'rating', 60), (u'size', 65)],
+        },
+        'music': {
+            'is_list_view': True,
+            'active_filters': ['view-all'],
+            'sort_state': 'artist',
+            'columns': [(u'state', 20), (u'name', 130), (u'artist', 110),
+                (u'album', 100), (u'track', 30), (u'feed-name', 70),
+                (u'length', 60), (u'genre', 65), (u'year', 40),
+                (u'rating', 60), (u'size', 65)],
+        },
+        'others': {
+            'is_list_view': True,
+            'active_filters': ['view-all'],
+            'sort_state': 'name',
+            'columns': [(u'name', 130), (u'feed-name', 70), (u'size', 65)],
+        },
+        'downloading': {
+            'is_list_view': False,
+            'sort_state': 'eta',
+            'columns': [(u'name', 130), (u'feed-name', 70), (u'status', 160),
+                (u'eta', 80), (u'rate', 80)],
+        },
+        # TODO: no display has this type yet
+        'all-feed-video': {
+            'is_list_view': False,
+            'active_filters': ['view-all'],
+            'sort_state': 'feed',
+            'columns': [(u'state', 20), (u'name', 130), (u'length', 60),
+                (u'feed-name', 70), (u'length', 60), (u'status', 160),
+                (u'size', 65)],
+         },
+        # TODO: rename to 'video-feed'
+        'feed': {
+            'is_list_view': False,
+            'active_filters': ['view-all'],
+            'sort_state': 'date',
+            'columns': [(u'state', 20), (u'name', 130), (u'length', 60),
+                (u'status', 160), (u'size', 65)],
+        },
+        'audio-feed': {
+            'is_list_view': True,
+            'active_filters': ['view-all'],
+            'sort_state': 'date',
+            'columns': [(u'state', 20), (u'name', 130), (u'length', 60),
+                (u'status', 160), (u'size', 65)],
+        },
+        # TODO: replace 'playlist' with 'audio-playlist' and 'video-'playlist'
+        'playlist': {
+            'is_list_view': True,
+            'active_filters': ['view-all'],
+            'sort_state': 'artist',
+            'columns': [(u'state', 20), (u'name', 130), (u'artist', 110),
+                (u'album', 100), (u'track', 30), (u'feed-name', 70),
+                (u'length', 60), (u'genre', 65), (u'year', 40),
+                (u'rating', 60), (u'size', 65)],
+        },
+        'search': {
+            'is_list_view': True,
+            'active_filters': ['view-all'],
+            'sort_state': 'artist',
+            'columns': [(u'state', 20), (u'name', 130), (u'artist', 110),
+                (u'album', 100), (u'track', 30), (u'feed-name', 70),
+                (u'length', 60), (u'genre', 65), (u'year', 40),
+                (u'rating', 60), (u'size', 65)],
+        },
+        # TODO: special stuff for converting
+    }
 
-    # Maybe this should get its own module, but it seems small enough to
-    # me -- BDK
+    DEFAULT['device-video'] = DEFAULT['videos']
+    DEFAULT['device-audio'] = DEFAULT['music']
 
     def __init__(self, message):
-        self.current_displays = set(message.list_view_displays)
-        self.sort_states = message.sort_states
-        self.active_filters = message.active_filters
-        self.current_columns = message.list_view_columns
-        self.column_widths = message.list_view_column_widths
-        # this next part is ugly, but it won't matter much until the listview
-        # branch needs to use it so... I'll cross that bridge. --Kaz
-        if not self.current_columns:
-            self.current_columns = [u'state', u'name', u'feed-name', u'eta',
-                u'rate', u'artist', u'album', u'track', u'year', u'genre']
+        self.displays = {}
+        for display in message.displays:
+            self.displays[display.key] = display
 
-    def _key(self, typ, id_):
-        return '%s:%s' % (typ, id_)
+    def _get_display(self, key):
+        key = (unicode(str(key[0]), 'utf-8', 'replace'),
+            unicode(str(key[1]), 'utf-8', 'replace'))
+        if not key in self.displays:
+            new_display = messages.DisplayInfo(key, None, None, None, None)
+            self.displays[key] = new_display
+            self.save_state(key)
+        return self.displays[key]
 
-    def query_list_view(self, typ, id_):
-        return self._key(typ, id_) in self.current_displays
+    def is_list_view(self, key):
+        display = self._get_display(key)
+        if display.is_list_view is None:
+            return self.DEFAULT[key[0]]['is_list_view']
+        return display.is_list_view
 
-    def query_sort_state(self, typ, id_):
-        key = self._key(typ, id_)
-        if key in self.sort_states:
-            state = self.sort_states[key]
-            if state.startswith('-'):
-                sort_key = state[1:]
-                ascending = False
-            else:
-                sort_key = state
-                ascending = True
-            return itemlist.SORT_KEY_MAP[sort_key](ascending)
-        return None
-    
-    def query_columns_state(self, type, id):
-        key = self._key(type, id)
-        return self.current_columns
+    def get_sort_state(self, key):
+        display = self._get_display(key)
+        # previous behavior allowed for an unsorted state;
+        # now, None = default sort for display_type
+        sort_state = display.sort_state
+        if sort_state is None:
+            sort_state = self.DEFAULT[key[0]]['sort_state']
+        return self._get_sorter(sort_state)
 
-    def query_column_widths(self, type, id):
-        key = self._key(type, id)
-        return self.column_widths
+    def _get_sorter(self, state):
+        ascending = True
+        if state.startswith('-'):
+            state = state[1:]
+            ascending = False
+        return itemlist.SORT_KEY_MAP[state](ascending)
 
-    def query_filters(self, typ, id_):
-        return self.active_filters.get(self._key(typ, id_), [])
+    def get_columns(self, key):
+        display = self._get_display(key)
+        if display.columns is None:
+            return self.DEFAULT[key[0]]['columns']
+        return display.columns
 
-    def set_filters(self, type, id, filters):
-        self.active_filters[self._key(type, id)] = filters
-        self.save_state()
+    def get_filters(self, key):
+        display = self._get_display(key)
+        if display.active_filters is None:
+            return self.DEFAULT[key[0]]['active_filters']
+        return display.active_filters
 
-    def set_sort_state(self, typ, id_, sorter):
-        # we have a ItemSort object and we need to create a string that will
-        # represent it.  Use the sort key, with '-' prepended if the sort is
-        # descending (for example: "date", "-name", "-size", ...)
+    def set_filters(self, key, filters):
+        display = self._get_display(key)
+        display.active_filters = filters
+        self.save_state(key)
+
+    def set_sort_state(self, key, sorter):
+        display = self._get_display(key)
+        # we have an ItemSort object and need to create a string to
+        # represent it. Use the sort key, with '-' prepended if the
+        # sort is descending (e.g. "date", "-name", "-size", ...)
         state = sorter.KEY
         if not sorter.is_ascending():
             state = '-' + state
-        self.sort_states[self._key(typ, id_)] = state
-        self.save_state()
+        display.sort_state = state
+        self.save_state(key)
 
-    def set_columns_state(self, typ, id_, columns):
-        self.current_columns = columns
-        self.save_state()
+    def set_columns_state(self, key, columns):
+        display = self._get_display(key)
+        display.columns = columns
+        self.save_state(key)
 
-    def set_column_widths(self, typ, id_, column_widths):
-        self.column_widths = column_widths
-        self.save_state()
+    def set_list_view(self, key):
+        display = self._get_display(key)
+        display.is_list_view = True
+        self.save_state(key)
 
-    def set_list_view(self, typ, id_):
-        self.current_displays.add(self._key(typ, id_))
-        self.save_state()
+    def set_std_view(self, key):
+        display = self._get_display(key)
+        display.is_list_view = False
+        self.save_state(key)
 
-    def set_std_view(self, typ, id_):
-        self.current_displays.discard(self._key(typ, id_))
-        self.save_state()
-
-    def save_state(self):
-        m = messages.SaveFrontendState(list(self.current_displays),
-                self.sort_states, self.active_filters,
-                self.current_columns, self.column_widths)
+    def save_state(self, key):
+        display = self._get_display(key)
+        m = messages.SaveDisplayState(key, display.is_list_view,
+            display.active_filters, display.sort_state, display.columns)
         m.send_to_backend()

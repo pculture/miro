@@ -186,7 +186,7 @@ class ThemeHistory(DDBObject):
             try:
                 pl = playlist.SavedPlaylist.get_by_title(default)
             except ObjectNotFoundError:
-                playlist.SavedPlaylist(_(u"Example Playlist"))
+                playlist.SavedPlaylist(_("Example Playlist"))
 
         default_guides = [
             (u"http://www.clearbits.net/", u"ClearBits"),

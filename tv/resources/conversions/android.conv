@@ -34,3 +34,6 @@ ssize: 480x320
 
 [Galaxy Tab]
 ssize: 1024x800
+
+[Epic]
+ssize: 800x480

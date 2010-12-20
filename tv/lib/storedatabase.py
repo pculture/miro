@@ -99,6 +99,7 @@ _sqlite_type_map = {
         schema.SchemaDateTime: 'timestamp',
         schema.SchemaTimeDelta: 'pythonrepr',
         schema.SchemaReprContainer: 'pythonrepr',
+        schema.SchemaTuple: 'pythonrepr',
         schema.SchemaDict: 'pythonrepr',
         schema.SchemaList: 'pythonrepr',
         schema.SchemaStatusContainer: 'pythonrepr',
@@ -944,6 +945,7 @@ class SQLiteConverter(object):
 
         repr_types = (schema.SchemaTimeDelta,
                 schema.SchemaReprContainer,
+                schema.SchemaTuple,
                 schema.SchemaDict,
                 schema.SchemaList,
                 )

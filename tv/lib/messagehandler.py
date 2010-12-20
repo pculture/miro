@@ -44,7 +44,7 @@ from miro import devices
 from miro import downloader
 from miro import eventloop
 from miro import feed
-from miro.frontendstate import WidgetsFrontendState
+from miro.displaystate import DisplayState
 from miro import guide
 from miro import fileutil
 from miro import commandline
@@ -57,7 +57,7 @@ from miro import tabs
 from miro import opml
 from miro.feed import Feed, lookup_feed
 from miro.gtcache import gettext as _
-from miro.playlist import SavedPlaylist, PlaylistItemMap
+from miro.playlist import SavedPlaylist
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 
 from miro.plat.utils import make_url_safe, thread_body
@@ -174,11 +174,13 @@ class ViewTracker(object):
         self.changed.add(obj)
         self.schedule_send_messages()
 
-    def old_on_object_added(self, obj, id):
+    def old_on_object_added(self, obj, id_):
         self.on_object_added(None, obj)
-    def old_on_object_changed(self, obj, id):
+
+    def old_on_object_changed(self, obj, id_):
         self.on_object_changed(None, obj)
-    def old_on_object_removed(self, obj, id):
+
+    def old_on_object_removed(self, obj, id_):
         self.on_object_removed(None, obj)
 
     def unlink(self):
@@ -382,7 +384,7 @@ class ManualItemTracker(ItemTrackerBase):
         messages.ItemList(self.type, self.id, infos).send_to_frontend()
 
 class DownloadingItemsTracker(ItemTrackerBase):
-    type = 'downloads'
+    type = 'downloading'
     id = None
     def __init__(self):
         self.view = item.Item.download_tab_view()
@@ -458,10 +460,10 @@ class DeviceItemTracker(object):
         messages.ItemList(self.type, self.id, infos).send_to_frontend()
 
     def unlink(self):
-        devices.clean_database(self.device)
+        pass
 
 def make_item_tracker(message):
-    if message.type == 'downloads':
+    if message.type == 'downloading':
         return DownloadingItemsTracker()
     elif message.type == 'videos':
         return VideoItemsTracker()
@@ -550,6 +552,13 @@ class PausedCountTracker(CountTracker):
     def make_message(self, count):
         return messages.PausedCountChanged(count)
 
+class OthersCountTracker(CountTracker):
+    def get_view(self):
+        return item.Item.unique_others_view()
+
+    def make_message(self, count):
+        return messages.OthersCountChanged(count)
+
 class NewVideoCountTracker(CountTracker):
     def get_view(self):
         return item.Item.unique_new_video_view()
@@ -582,6 +591,7 @@ class BackendMessageHandler(messages.MessageHandler):
         self.watched_folder_tracker = None
         self.download_count_tracker = None
         self.paused_count_tracker = None
+        self.others_count_tracker = None
         self.new_video_count_tracker = None
         self.new_audio_count_tracker = None
         self.unwatched_count_tracker = None
@@ -1422,6 +1432,16 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             self.paused_count_tracker.stop_tracking()
             self.paused_count_tracker = None
 
+    def handle_track_others_count(self, message):
+        if self.others_count_tracker is None:
+            self.others_count_tracker = OthersCountTracker()
+        self.others_count_tracker.send_message()
+
+    def handle_stop_tracking_others_count(self, message):
+        if self.others_count_tracker:
+            self.others_count_tracker.stop_tracking()
+            self.others_count_tracker = None
+
     def handle_track_new_video_count(self, message):
         if self.new_video_count_tracker is None:
             self.new_video_count_tracker = NewVideoCountTracker()
@@ -1515,26 +1535,37 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         app.controller.send_bug_report(message.report, message.text,
                                        message.send_report)
 
-    def _get_widgets_frontend_state(self):
+    def _get_display_state(self, key):
+        key = (unicode(str(key[0]), 'utf-8', 'replace'),
+            unicode(str(key[1]), 'utf-8', 'replace'))
         try:
-            return WidgetsFrontendState.make_view().get_singleton()
+            return DisplayState.make_view("type=? AND id_=?",
+                key).get_singleton()
         except database.ObjectNotFoundError:
-            return WidgetsFrontendState()
+            return DisplayState(key)
 
-    def handle_save_frontend_state(self, message):
-        state = self._get_widgets_frontend_state()
-        state.list_view_displays = message.list_view_displays
-        state.sort_states = message.sort_states
+    def handle_save_display_state(self, message):
+        state = self._get_display_state(message.key)
+        state.is_list_view = message.is_list_view
         state.active_filters = message.active_filters
-        state.list_view_columns = message.list_view_columns
-        state.list_view_column_widths = message.list_view_column_widths
+        state.sort_state = message.sort_state
+        state.columns = message.columns
         state.signal_change()
+        
+    def _get_display_states(self):
+        states = []
+        for display in DisplayState.make_view():
+            key = (unicode(str(display.type), 'utf-8', 'replace'),
+                unicode(str(display.id_), 'utf-8', 'replace'))
+            display_info = messages.DisplayInfo(key,
+                display.is_list_view, display.active_filters,
+                display.sort_state, display.columns)
+            states.append(display_info)
+        return states
 
-    def handle_query_frontend_state(self, message):
-        state = self._get_widgets_frontend_state()
-        m =messages.CurrentFrontendState(state.list_view_displays,
-                state.sort_states, state.active_filters,
-                state.list_view_columns, state.list_view_column_widths)
+    def handle_query_display_states(self, message):
+        states = self._get_display_states()
+        m = messages.CurrentDisplayStates(states)
         m.send_to_frontend()
 
     def handle_set_device_type(self, message):
@@ -1560,9 +1591,11 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                               [message.item.id]).send_to_frontend()
 
     def handle_device_eject(self, message):
+        devices.write_database(message.device.mount, message.device.database)
         app.device_tracker.eject(message.device)
 
-    def handle_device_sync_feeds(self, message):
+    @staticmethod
+    def _get_sync_items_for_message(message):
         items = set()
         for video_id in message.video_ids:
             feed_ = feed.Feed.get_by_id(video_id)
@@ -1583,10 +1616,23 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 items.add(item_)
 
         for playlist_id in message.playlist_ids:
-            view = PlaylistItemMap.playlist_view(playlist_id)
+            view = item.Item.playlist_view(playlist_id)
             for item_ in view:
                 items.add(item_)
 
+        return items
+
+    def handle_query_sync_information(self, message):
+        items = self._get_sync_items_for_message(message)
+        video_count = sum(1 for item_ in items if item_.file_type == 'video')
+        audio_count = sum(1 for item_ in items if item_.file_type == 'audio')
+        message = messages.CurrentSyncInformation(message.device,
+                                                  video_count,
+                                                  audio_count)
+        message.send_to_frontend()
+
+    def handle_device_sync_feeds(self, message):
+        items = self._get_sync_items_for_message(message)
         if items:
             item_infos = [messages.ItemInfo(item_) for item_ in items]
             dsm = app.device_manager.get_sync_for_device(message.device)

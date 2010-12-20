@@ -50,7 +50,7 @@ import datetime
 import time
 from types import NoneType
 from miro.plat.utils import PlatformFilenameType
-from miro.frontendstate import WidgetsFrontendState
+from miro.displaystate import DisplayState
 
 class ValidationError(Exception):
     """Error thrown when we try to save invalid data."""
@@ -207,6 +207,28 @@ class SchemaReprContainer(SchemaItem):
             else:
                 self.validateTypes(obj, self.VALID_TYPES)
 
+class SchemaTuple(SchemaReprContainer):
+    """Special case of SchemaReprContainer that stores a simple tuple
+    """
+    def __init__(self, *childSchemas, **kargs):
+        noneOk = False
+        if 'noneOk' in kargs:
+            noneOk = kargs[noneOk]
+        super(SchemaTuple, self).__init__(noneOk)
+        self.childSchemas = childSchemas
+
+    def validate(self, data):
+        if data is None:
+            super(SchemaTuple, self).validate(data)
+            return
+        self.validateType(data, tuple)
+        for i, value in enumerate(data):
+            try:
+                self.childSchemas[i].validate(value)
+            except ValidationError:
+                raise ValidationError("%r (index: %s) has the wrong type" %
+                                      (value, i))
+
 class SchemaList(SchemaReprContainer):
     """Special case of SchemaReprContainer that stores a simple list
 
@@ -333,7 +355,7 @@ from miro.feed import (Feed, FeedImpl, RSSFeedImpl, SavedSearchFeedImpl,
                        ScraperFeedImpl)
 from miro.feed import (SearchFeedImpl, DirectoryWatchFeedImpl,
                        DirectoryFeedImpl, SearchDownloadsFeedImpl)
-from miro.feed import ManualFeedImpl, SingleFeedImpl
+from miro.feed import ManualFeedImpl
 from miro.folder import ChannelFolder, PlaylistFolder, PlaylistFolderItemMap
 from miro.guide import ChannelGuide
 from miro.item import Item, FileItem
@@ -540,11 +562,6 @@ class ManualFeedImplSchema(FeedImplSchema):
     table_name = 'manual_feed_impl'
     # no addition fields over FeedImplSchema
 
-class SingleFeedImplSchema(FeedImplSchema):
-    klass = SingleFeedImpl
-    table_name = 'single_feed_impl'
-    # no addition fields over FeedImplSchema
-
 class RemoteDownloaderSchema(DDBObjectSchema):
     klass = RemoteDownloader
     table_name = 'remote_downloader'
@@ -657,23 +674,29 @@ class ThemeHistorySchema(DDBObjectSchema):
     def handle_malformed_pastThemes(row):
         return []
 
-class WidgetsFrontendStateSchema(DDBObjectSchema):
-    klass = WidgetsFrontendState
-    table_name = 'widgets_frontend_state'
+class DisplayStateSchema(DDBObjectSchema):
+    klass = DisplayState
+    table_name = 'display_state'
     fields = DDBObjectSchema.fields + [
-        ('list_view_displays', SchemaList(SchemaBinary())),
-        ('active_filters', SchemaDict(SchemaBinary(),
-            SchemaList(SchemaBinary()))),
-        ('sort_states', SchemaDict(SchemaBinary(),
-            SchemaBinary())),
-        ('list_view_columns', SchemaList(SchemaString())),
-        ('list_view_column_widths', SchemaDict(SchemaString(), SchemaInt(),
-            noneOk=True)),
+        ('type', SchemaString()),
+        ('id_', SchemaString(noneOk=True)),
+        ('is_list_view', SchemaBool(noneOk=True)),
+        ('active_filters', SchemaList(SchemaBinary(), noneOk=True)),
+        ('sort_state', SchemaBinary(noneOk=True)),
+        ('columns', SchemaList(SchemaTuple(SchemaString(), SchemaInt()), noneOk=True)),
     ]
 
+    indexes = (
+        ('display_state_display', ('type', 'id_')),
+    )
+
     @staticmethod
-    def handle_malformed_list_view_displays(row):
-        return []
+    def handle_malformed_active_filters(value):
+        return None
+
+    @staticmethod
+    def handle_malformed_columns(value):
+        return None
 
 class DBLogEntrySchema(DDBObjectSchema):
     klass = DBLogEntry
@@ -684,11 +707,7 @@ class DBLogEntrySchema(DDBObjectSchema):
         ('description', SchemaString()),
     ]
 
-    @staticmethod
-    def handle_malformed_list_view_displays(row):
-        return []
-
-VERSION = 123
+VERSION = 126
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,
@@ -696,9 +715,8 @@ object_schemas = [
     SearchFeedImplSchema, DirectoryFeedImplSchema, DirectoryWatchFeedImplSchema,
     SearchDownloadsFeedImplSchema, RemoteDownloaderSchema,
     ChannelGuideSchema, ManualFeedImplSchema,
-    SingleFeedImplSchema,
     PlaylistSchema, ChannelFolderSchema, PlaylistFolderSchema,
     PlaylistItemMapSchema, PlaylistFolderItemMapSchema,
-    TabOrderSchema, ThemeHistorySchema, WidgetsFrontendStateSchema,
+    TabOrderSchema, ThemeHistorySchema, DisplayStateSchema,
     DBLogEntrySchema,
 ]

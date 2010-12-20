@@ -55,7 +55,7 @@ class DropHandler(signals.SignalEmitter):
 
     def validate_drop(self, table_view, model, typ, source_actions, parent,
             position):
-        if position != -1 and type == 'downloaded-item':
+        if position != -1 and typ == 'downloaded-item':
             return widgetset.DRAG_ACTION_MOVE
         return widgetset.DRAG_ACTION_NONE
 
@@ -121,9 +121,7 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
         return PlaylistItemView(self.item_list, self.id)
 
     def build_list_item_view(self):
-        return itemlistwidgets.ListItemView(self.item_list,
-                self.enabled_columns, self.column_widths,
-                display_download_info=False)
+        return itemlistwidgets.ListItemView(self.item_list, self.columns)
 
     def make_drop_handler(self):
         handler = DropHandler(self.id, self.item_view)

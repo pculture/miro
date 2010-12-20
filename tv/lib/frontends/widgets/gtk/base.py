@@ -191,6 +191,11 @@ class Widget(signals.SignalEmitter):
         if self._widget:
             self._widget.queue_draw()
 
+    def redraw_now(self):
+        if self._widget:
+            self._widget.queue_draw()
+            self._widget.window.process_updates(True)
+
     def forward_signal(self, signal_name, forwarded_signal_name=None):
         """Add a callback so that when the GTK widget emits a signal, we emit
         signal from the wrapper widget.

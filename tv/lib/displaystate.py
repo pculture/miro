@@ -26,40 +26,17 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""miro.frontends.shell -- A quick shell for debugging Miro
-innards.
+"""miro.displaystate -- Object that stores data for each display.
 """
 
-import readline
-import rlcompleter
-import code
-import threading
+from miro.database import DDBObject
 
-from miro import app
-from miro import startup
-from miro import messages
-
-def run_application():
-    messages.FrontendMessage.install_handler(MessageHandler())
-    startup.startup()
-    print 'startup exit'
-
-class MessageHandler(messages.MessageHandler):
-    def handle(self, message):
-        if isinstance(message, messages.StartupSuccess):
-            self.run_shell()
-        else:
-            print 'got message: ', message
-
-    def run_shell(self):
-        print
-        print '** starting shell**'
-        print
-        imported_objects = {}
-        for mod in ('database', 'feed', 'item', 'models'):
-            imported_objects[mod] = getattr(__import__('miro.%s' % mod), mod)
-        readline.set_completer(rlcompleter.Completer(imported_objects).complete)
-        readline.parse_and_bind("tab:complete")
-        code.interact(local=imported_objects)
-
-        app.controller.shutdown()
+class DisplayState(DDBObject):
+    def setup_new(self, display):
+        self.type = display[0]
+        self.id_ = display[1]
+        # None = use default:
+        self.is_list_view = None
+        self.active_filters = None
+        self.sort_state = None
+        self.columns = None

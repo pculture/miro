@@ -33,6 +33,7 @@ import operator
 from miro import app
 from miro import displaytext
 from miro.gtcache import gettext as _
+from miro.gtcache import ngettext
 from miro import messages
 
 from miro.frontends.widgets import imagepool
@@ -290,11 +291,14 @@ class DeviceMountedView(widgetset.VBox):
         vbox.pack_start(widgetutil.align_center(label, top_pad=50))
 
         self.sync_container = widgetset.Background()
-        self.sync_container.set_size_request(500, -1)
-        button = widgetset.Button('Sync Now')
-        button.set_size(1.5)
-        button.connect('clicked', self.sync_clicked)
-        self.sync_container.set_child(widgetutil.align_center(button))
+        sync_vbox = widgetset.VBox()
+        self.sync_button = widgetset.Button('Sync Now')
+        self.sync_button.set_size(1.5)
+        self.sync_button.connect('clicked', self.sync_clicked)
+        sync_vbox.pack_start(self.sync_button)
+        self.sync_state = widgetset.Label()
+        sync_vbox.pack_start(self.sync_state)
+        self.sync_container.set_child(widgetutil.align_center(sync_vbox))
         vbox.pack_start(widgetutil.align_center(self.sync_container,
                                                 top_pad=50))
 
@@ -317,8 +321,10 @@ class DeviceMountedView(widgetset.VBox):
 
     def set_device(self, device):
         self.device = device
-        self.device.database.set_bulk_mode(True)
         self.device_size.set_size(device.size, device.remaining)
+        if not self.device.mount:
+            return
+        self.device.database.set_bulk_mode(True)
         for name in 'video', 'audio', 'playlists':
             tab = self.tabs[name]
             tab.child.set_device(device)
@@ -334,8 +340,13 @@ class DeviceMountedView(widgetset.VBox):
         self.button_row.set_active(key)
         self.tab_container.remove()
         self.tab_container.set_child(self.tabs[key])
+        if key == 'main':
+            sync_state = self._get_sync_state()
+            message = messages.QuerySyncInformation(self.device,
+                                                    *sync_state)
+            message.send_to_backend()
 
-    def sync_clicked(self, obj):
+    def _get_sync_state(self):
         sync_type = {}
         sync_ids = {}
         for file_type in 'video', 'audio', 'playlists':
@@ -344,15 +355,35 @@ class DeviceMountedView(widgetset.VBox):
             sync_type[file_type] = (this_sync.get('all', True) and 'all' or
                                     'unwatched')
             sync_ids[file_type] = widget.checked_feeds()
+        return (sync_type['video'],
+                sync_ids['video'],
+                sync_type['audio'],
+                sync_ids['audio'],
+                sync_ids['playlists'])
 
+    def sync_clicked(self, obj):
         message = messages.DeviceSyncFeeds(self.device,
-                                           sync_type['video'],
-                                           sync_ids['video'],
-                                           sync_type['audio'],
-                                           sync_ids['audio'],
-                                           sync_ids['playlists'])
+                                           *self._get_sync_state())
         message.send_to_backend()
 
+    def current_sync_information(self, video_count, audio_count):
+        if video_count == 0 and audio_count == 0:
+            self.sync_state.set_text(_('Up to date'))
+            self.sync_button.disable()
+        else:
+            self.sync_button.enable()
+            counts = []
+            if video_count:
+                counts.append(ngettext('%(count)d video file',
+                                       '%(count)d video files',
+                                       video_count,
+                                       {"count": video_count}))
+            if audio_count:
+                counts.append(ngettext('%(count)d audio file',
+                                       '%(count)d audio files',
+                                       audio_count,
+                                       {"count": audio_count}))
+            self.sync_state.set_text('\n'.join(counts))
 
     def set_sync_status(self, progress, eta):
         if not isinstance(self.sync_container.child, SyncProgressWidget):
@@ -458,15 +489,23 @@ class DeviceWidget(widgetset.VBox):
         icon = imagepool.get(image_path)
         return DeviceTitlebar(device.name, icon)
 
+    def current_sync_information(self, video_count, audio_count):
+        view = self.get_view()
+        if isinstance(view, DeviceMountedView):
+            view.current_sync_information(video_count, audio_count)
+
     def set_sync_status(self, progress, eta):
-        view = self.device_view.child
+        view = self.get_view()
         if isinstance(view, DeviceMountedView):
             view.set_sync_status(progress, eta)
 
     def sync_finished(self):
-        view = self.device_view.child
+        view = self.get_view()
         if isinstance(view, DeviceMountedView):
             view.sync_finished()
+
+    def get_view(self):
+        return self.device_view.child
 
 
 class DeviceController(object):
@@ -481,6 +520,13 @@ class DeviceController(object):
         self.device = device
         self.widget.set_device(device)
 
+    def handle_current_sync_information(self, message):
+        if message.device.id != self.device.id:
+            return # not our device
+
+        self.widget.current_sync_information(message.video_count,
+                                             message.audio_count)
+
     def handle_device_sync_changed(self, message):
         if message.device.id != self.device.id:
             return # not our device
@@ -491,7 +537,12 @@ class DeviceController(object):
             self.widget.set_sync_status(message.progress, message.eta)
 
     def start_tracking(self):
-        pass
+        view = self.widget.get_view()
+        if isinstance(view, DeviceMountedView):
+            sync_state = view._get_sync_state()
+            message = messages.QuerySyncInformation(self.device,
+                                                    *sync_state)
+            message.send_to_backend()
 
     def stop_tracking(self):
         pass
@@ -559,4 +610,6 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         self.device.database['%s_view' % self.device.tab_type] = 'normal'
 
     def handle_device_changed(self, device):
+        if self.device.id != device.id:
+            return
         self.device = device

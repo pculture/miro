@@ -41,7 +41,7 @@ codeset = None # The default codeset of our locale (always lower case)
 
 def get_languages():
     from miro import iso639
-    
+
     lang_paths = []
 
     for path, dirs, files in os.walk(app.config.get(prefs.GETTEXT_PATHNAME)):
@@ -50,7 +50,7 @@ def get_languages():
 
     codes = [path.split(os.sep)[-2] for path in lang_paths]
     langs = []
-    for i, code in enumerate(codes):
+    for code in codes:
         if "_" in code:
             langcode, country = code.split("_")
             country = " (%s)" % country
@@ -63,7 +63,7 @@ def get_languages():
             lang = code
         else:
             lang = lang['name'] + country
-        # XXX
+        # FIXME
         # note that this isn't completely correct, technically
         # it is <lang>_<region>.<encoding> (e.g. zh_TW.Big5).  But in 2010
         # the system is usually smart enough to figure this out.  The
@@ -73,11 +73,10 @@ def get_languages():
     langs.sort(key=lambda x: x[1])
 
     langs.insert(0, ("en", "English"))
-    
+
     return langs
 
 def init():
-    import logging
     global _gtcache
     global codeset
     _gtcache = {}
@@ -87,7 +86,6 @@ def init():
     language = app.config.get(prefs.LANGUAGE)
 
     if language != "system":
-        import os
         os.environ["LANGUAGE"] = language
 
     # try to set the locale to the platform default, but if that fails
@@ -176,7 +174,8 @@ def gettext(text, values=None):
 
     except ValueError:
         import logging
-        logging.warn("gtcache.gettext: translation has bad formatting characters.  returning english form.  '%s'", text)
+        logging.warn("gtcache.gettext: translation has bad formatting "
+            "characters.  returning english form.  '%s'", text)
         _gtcache[text] = text
         return text % values
 
@@ -210,7 +209,8 @@ def ngettext(text1, text2, count, values=None):
 
     except ValueError:
         import logging
-        logging.warn("gtcache.ngettext: translation has bad formatting characters.  returning english form.  '%s'", text1)
+        logging.warn("gtcache.ngettext: translation has bad formatting "
+            "characters.  returning english form.  '%s'", text1)
         if count == 1:
             return text1 % values
         else:

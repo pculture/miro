@@ -54,27 +54,27 @@ class DeviceTracker(object):
     def _get_device_info(self, drive):
         id_ = drive.get_identifier('unix-device')
         mount_path = size = remaining = None
-        database = {}
+        database = devices.DeviceDatabase()
         volumes = drive.get_volumes()
         if volumes:
             volume = volumes[0]
             mount = volume.get_mount()
             if mount:
                 mount_path = mount.get_root().get_path()
-                if mount_path[-1] != os.path.sep:
-                    mount_path = mount_path + os.path.sep # make sure it ends
-                                                          # with a /
-                statinfo = os.statvfs(mount_path)
-                size = statinfo.f_frsize * statinfo.f_blocks
-                remaining = statinfo.f_frsize * statinfo.f_bavail
-                database = devices.load_database(mount_path)
+                if mount_path and os.path.exists(mount_path):
+                    if mount_path[-1] != os.path.sep:
+                        mount_path = mount_path + os.path.sep # make sure it
+                                                              # ends with a /
+                    statinfo = os.statvfs(mount_path)
+                    size = statinfo.f_frsize * statinfo.f_blocks
+                    remaining = statinfo.f_frsize * statinfo.f_bavail
+                    database = devices.load_database(mount_path)
 
         device_info = app.device_manager.get_device(
             drive.get_name(),
             database.get('device_name', None))
 
         self._unix_device_to_drive[id_] = drive
-
         return messages.DeviceInfo(id_, device_info, mount_path,
                                    database, size, remaining)
 

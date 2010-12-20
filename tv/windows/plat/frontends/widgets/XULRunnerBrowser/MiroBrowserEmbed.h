@@ -41,6 +41,7 @@
 #define __PCF_MIRO_BROWSER_EMBED_H__
 
 #include "nsCOMPtr.h"
+#include "nsEmbedString.h"
 #include "nsIWebBrowserChrome.h"
 #include "nsIEmbeddingSiteWindow.h"
 #include "nsIWebBrowser.h"
@@ -138,6 +139,7 @@ protected:
     focusCallback mFocusCallback;
     uriCallback mURICallback;
     networkCallback mNetworkCallback;
+    nsString mCurrentURI;
     void* mFocusCallbackData;
     void* mURICallbackData;
     void* mNetworkCallbackData;

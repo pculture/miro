@@ -91,13 +91,11 @@ class ItemListController(object):
         self.id = id_
         self.current_item_view = None
         self._search_text = ''
-        self.enabled_columns = app.frontend_states_memory.query_columns_state(
-                type, id)
-        self.column_widths = app.frontend_states_memory.query_column_widths(
-                type, id)
+        display = (typ, id_)
+        self.columns = app.display_state.get_columns(display)
         self._init_widget()
         item_lists = set(iv.item_list for iv in self.all_item_views())
-        sorter = app.frontend_states_memory.query_sort_state(type, id)
+        sorter = app.display_state.get_sort_state(display)
         self.item_list_group = itemlist.ItemListGroup(item_lists, sorter)
         self._init_item_views()
         self.initialize_search()
@@ -118,15 +116,12 @@ class ItemListController(object):
         self.widget.list_view_vbox.pack_start(scroller, expand=True)
         self.widget.toolbar.connect_weak('sort-changed', self.on_sort_changed)
         self.list_item_view.connect_weak('sort-changed', self.on_sort_changed)
+        self.list_item_view.connect_weak('columns-changed',
+            self.on_columns_changed)
         self.build_widget()
-        sorter = self.item_list.get_sort()
-        if sorter is not None:
-            self.widget.toolbar.change_sort_indicator(
-                sorter.KEY, sorter.is_ascending())
 
     def build_list_item_view(self):
-        return itemlistwidgets.ListItemView(self.item_list,
-                self.enabled_columns, self.column_widths)
+        return itemlistwidgets.ListItemView(self.item_list, self.columns)
 
     def build_header_toolbar(self):
         return itemlistwidgets.HeaderToolbar()
@@ -244,11 +239,17 @@ class ItemListController(object):
             item_view.model_changed()
         self.widget.toolbar.change_sort_indicator(sort_key, ascending)
         self.list_item_view.change_sort_indicator(sort_key, ascending)
-        app.frontend_states_memory.set_sort_state(self.type, self.id, sorter)
+        display = (self.type, self.id)
+        app.display_state.set_sort_state(display, sorter)
+
+    def on_columns_changed(self, object, columns):
+        key = (self.type, self.id)
+        app.display_state.set_columns_state(key, columns)
 
     def on_toggle_column(self, column):
         self.enabled_columns ^= set([column])
-        app.frontend_states_memory.set_columns_state(self.enabled_columns)
+        display = (self.type, self.id)
+        app.display_state[display].set_columns_state(self.enabled_columns)
 
     def on_key_press(self, view, key, mods):
         if key == menus.DELETE:
@@ -373,11 +374,7 @@ class ItemListController(object):
 
     def handle_item_list(self, message):
         """Handle an ItemList message meant for this ItemContainer."""
-        for item_view in self.all_item_views():
-            item_view.start_bulk_change()
         self.item_list_group.add_items(message.items)
-        for item_view in self.all_item_views():
-            item_view.model_changed()
         self.on_initial_list()
 
     def handle_items_changed(self, message):
@@ -566,9 +563,7 @@ class AudioVideoItemsController(SimpleItemListController):
     def build_item_view(self):
         return itemlistwidgets.ItemView(self.item_list, True)
     def build_list_item_view(self):
-        return itemlistwidgets.ListItemView(self.item_list,
-                self.enabled_columns, self.column_widths,
-                display_download_info=False)
+        return itemlistwidgets.ListItemView(self.item_list, self.columns)
 
     def build_header_toolbar(self):
         toolbar = itemlistwidgets.LibraryHeaderToolbar(self.unwatched_label)
@@ -628,9 +623,7 @@ class OtherItemsController(SimpleItemListController):
         return itemlistwidgets.ItemView(self.item_list, True)
 
     def build_list_item_view(self):
-        return itemlistwidgets.ListItemView(self.item_list,
-                self.enabled_columns, self.column_widths,
-                display_download_info=False)
+        return itemlistwidgets.ListItemView(self.item_list, self.columns)
 
 class FolderContentsController(SimpleItemListController):
     """Controller object for feeds."""

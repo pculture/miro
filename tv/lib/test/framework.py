@@ -248,6 +248,11 @@ class MiroTestCase(unittest.TestCase):
     def assertSameSet(self, list1, list2):
         self.assertEquals(set(list1), set(list2))
 
+    def assertSameList(self, list1, list2):
+        for i in xrange(len(list1)):
+            self.assertEquals(list1[i], list2[i])
+        self.assertEquals(len(list1), len(list2))
+
     def assertDictEquals(self, dict1, dict2):
         self.assertSameSet(dict1.keys(), dict2.keys())
         for k in dict1:

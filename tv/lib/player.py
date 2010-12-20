@@ -29,12 +29,11 @@
 from miro import signals
 from miro import messages
 
-###############################################################################
-
 class Player(signals.SignalEmitter):
-
     def __init__(self):
         signals.SignalEmitter.__init__(self, 'cant-play', 'ready-to-play')
+        self.item_info_id = None
+        self.item_was_watched = None
 
     def setup(self, item_info, volume):
         self.item_info_id = item_info.id
@@ -70,4 +69,20 @@ class Player(signals.SignalEmitter):
         self.seek_to(resume_time / self.get_total_playback_time())
         self.play()
 
-###############################################################################
+    def set_item(self, item_info, success_callback, error_callback):
+        raise NotImplementedError()
+
+    def set_volume(self, volume):
+        raise NotImplementedError()
+
+    def get_total_playback_time(self):
+        raise NotImplementedError()
+
+    def get_elapsed_playback_time(self):
+        raise NotImplementedError()
+
+    def seek_to(self, position):
+        raise NotImplementedError()
+
+    def play(self):
+        raise NotImplementedError()

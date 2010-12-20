@@ -427,6 +427,9 @@ class PlaybackManager (signals.SignalEmitter):
             return self.playlist[self.position]
         return None
 
+    def is_playing_id(self, id_):
+        return self.playlist and self.playlist[self.position].id == id_
+
     def _setup_player(self, item_info, volume):
         def _handle_successful_sniff(item_type):
             self._finish_setup_player(item_info, item_type, volume)

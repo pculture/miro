@@ -100,6 +100,7 @@ XULRUNNER_SDK_BIN_PATH = os.path.join(XULRUNNER_SDK_PATH, 'bin')
 
 VLC_PATH = os.path.join(BINARY_KIT_ROOT, 'libvlc')
 LIBTORRENT_PATH = os.path.join(BINARY_KIT_ROOT, 'libtorrent')
+MUTAGEN_PATH = os.path.join(BINARY_KIT_ROOT, 'mutagen-1.20')
 
 FFMPEG_PATH = os.path.join(
     BINARY_KIT_ROOT, 'ffmpeg', 'ffmpeg-r25766-swscale-r32562-mingw32-static')
@@ -165,6 +166,7 @@ from miro import util
 # put the libtorrent extension on the path, so py2exe can find the
 # .pyd file
 sys.path.insert(0, LIBTORRENT_PATH)
+sys.path.insert(0, MUTAGEN_PATH)
 
 #### Extensions ####
 
@@ -177,6 +179,7 @@ pygtkhacks_ext = Extension(
     library_dirs=[GTK_LIB_PATH],
     libraries=[
         'gtk-win32-2.0',
+        'pango-1.0',
         ]
     )
 
@@ -266,8 +269,6 @@ for dir in ('searchengines', 'images', 'conversions', 'devices'):
     dest_dir = os.path.join('resources', dir)
     source_dir = os.path.join(resources_dir, dir)
     data_files.extend(find_data_files(dest_dir, source_dir))
-
-data_files.append(('resources', [os.path.join(root_dir, 'ADOPTERS')]))
 
 locale_temp_dir = os.path.join(os.path.dirname(__file__), "build", "locale")
 
@@ -635,7 +636,8 @@ if __name__ == "__main__":
                 'packages': [
                     'encodings',
                     ],
-                'includes': 'cairo, pango, pangocairo, atk, gobject, gio, libtorrent',
+                'includes': ('cairo, pango, pangocairo, atk, gobject, '
+                             'gio, libtorrent, mutagen'),
                 },
             },
         )

@@ -2822,7 +2822,7 @@ def upgrade121(cursor):
     add column to view table for keeping track of enabled ListView columns
     initialize enabled columns to reasonable default
     """
-    enabled_columns = [u'state', u'name', u'feed-name', u'eta', u'rate',
+    enabled_columns = [u'state', u'name', u'feed-name',
             u'artist', u'album', u'track', u'year', u'genre']
     cursor.execute("ALTER TABLE item ADD COLUMN metadata pythonrepr")
     cursor.execute("ALTER TABLE item ADD COLUMN rating integer")
@@ -2843,3 +2843,66 @@ def upgrade123(cursor):
     """
     cursor.execute("ALTER TABLE widgets_frontend_state "
             "ADD COLUMN list_view_column_widths pythonrepr")
+
+def upgrade124(cursor):
+    """Change dict entries in WidgetsFrontendState to rows in DisplayState.
+    Values not set in WFS will be None in DS, meaning "default".
+    Since we're changing columns over to display-dependent defaults,
+    it's probably best to ignore existing column settings.
+    """
+    cursor.execute("CREATE TABLE display_state "
+        "(id integer PRIMARY KEY, type text, id_ text, is_list_view integer, "
+        "active_filters pythonrepr, sort_state blob, columns pythonrepr)")
+    cursor.execute("CREATE INDEX display_state_display "
+        "ON display_state (type, id_)")
+    cursor.execute("SELECT list_view_displays, active_filters, sort_states "
+        "FROM widgets_frontend_state")
+    (list_view_displays, all_active_filters, sort_states) = cursor.fetchone()
+    list_view_displays = eval(list_view_displays, {})
+    all_active_filters = eval(all_active_filters, {})
+    sort_states = eval(sort_states, {})
+
+    displays = (set(list_view_displays) | set(all_active_filters.keys()) |
+        set(sort_states.keys()))
+    for display in displays:
+        typ, id_ = display.split(':')
+        is_list_view = None
+        active_filters = None
+        sort_state = None
+        columns = None
+        if display in list_view_displays:
+            is_list_view = 1
+            list_view_displays.remove(display)
+        if display in all_active_filters:
+            active_filters = repr(all_active_filters[display])
+            del all_active_filters[display]
+        if display in sort_states:
+            sort_state = sort_states[display]
+            del sort_states[display]
+        cursor.execute("INSERT INTO display_state "
+            "(id, type, id_, is_list_view, active_filters, sort_state, columns) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (get_next_id(cursor),
+                typ, id_, is_list_view, active_filters, sort_state, columns))
+    if list_view_displays or all_active_filters or sort_states:
+        logging.warn("Values unconverted in upgrade124: (%s), (%s), (%s)" %
+            (repr(list_view_displays), repr(all_active_filters),
+            repr(sort_states)))
+    cursor.execute("DROP TABLE widgets_frontend_state")
+
+def upgrade125(cursor):
+    """Remove old dtv:singleFeed table."""
+    cursor.execute("DROP TABLE single_feed_impl")
+
+def upgrade126(cursor):
+    """Remove dtv:singleFeed data from the database.
+    """
+    cursor.execute("SELECT id FROM feed WHERE origURL='dtv:singleFeed'")
+    row = cursor.fetchone()
+    if row is not None:
+        single_feed_id = row[0]
+        cursor.execute("SELECT id from feed WHERE origURL='dtv:manualFeed'")
+        manual_feed_id = cursor.fetchone()[0]
+        cursor.execute("UPDATE item SET feed_id=? WHERE feed_id=?",
+                       (manual_feed_id, single_feed_id))
+        cursor.execute("DELETE FROM feed WHERE origURL='dtv:singleFeed'")

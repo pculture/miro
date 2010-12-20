@@ -53,7 +53,6 @@ import datetime
 import time
 from types import NoneType
 from miro.plat.utils import PlatformFilenameType
-from miro.frontendstate import WidgetsFrontendState
 
 class ValidationError(Exception):
     """Error thrown when we try to save invalid data."""
@@ -464,6 +463,9 @@ class ManualFeedImplSchema(FeedImplSchema):
     # no addition fields over FeedImplSchema
 
 class SingleFeedImplSchema(FeedImplSchema):
+    """
+    NB: This type of feed no longer exists as of version 125.
+    """
     klass = None
     classString = 'single-feed-impl'
     # no addition fields over FeedImplSchema

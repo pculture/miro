@@ -141,7 +141,7 @@ class MovieDataUpdater(signals.SignalEmitter):
             if duration > -1 and mime_mediatype is not 'video':
                 mediatype = 'audio'
                 screenshot = mdi.item.screenshot or FilenameType("")
-                logging.debug("moviedata: %s %s", duration, mediatype)
+                logging.debug("moviedata: mutagen %s %s", duration, mediatype)
 
                 self.update_finished(mdi.item, duration, screenshot, mediatype,
                         metadata)
@@ -171,7 +171,7 @@ class MovieDataUpdater(signals.SignalEmitter):
                         # file?  Setting it to "" instead of None, means
                         # that we won't try to take the screenshot again.
                         screenshot = FilenameType("")
-                    logging.debug("moviedata: %s %s %s", duration, screenshot,
+                    logging.debug("moviedata: mdp %s %s %s", duration, screenshot,
                                   mediatype)
 
                     self.update_finished(mdi.item, duration, screenshot,
@@ -204,7 +204,19 @@ class MovieDataUpdater(signals.SignalEmitter):
             return ''
         return pipe.stdout.read()
 
+    def _mediatype_from_mime(self, mimes):
+        for mime in mimes:
+            category = mime.split('/')[0]
+            if category == 'video':
+                return category
+        for mime in mimes:
+            category = mime.split('/')[0]
+            if category == 'audio':
+                return category
+        return None
+
     def read_metadata(self, item):
+        VIDEO_EXTENSIONS = ('.m4v','.mp4')
         mediatype = None
         duration = -1
         tags = {}
@@ -212,17 +224,16 @@ class MovieDataUpdater(signals.SignalEmitter):
         data = {}
 
         try:
-            muta = mutagen.File(item.filename)
+            muta = mutagen.File(item.get_filename())
             meta = muta.__dict__
         except (AttributeError, IOError):
             return (mediatype, duration, data)
 
-        if hasattr(muta, 'mime'):
-            for mime in muta.mime:
-                category = mime.split('/')[0]
-                if category in ('audio', 'video'):
-                    mediatype = category
-                    break
+        if os.path.splitext(
+            item.get_filename())[1].lower() in VIDEO_EXTENSIONS:
+            mediatype = 'video'
+        elif hasattr(muta, 'mime'):
+            mediatype = self._mediatype_from_mime(muta.mime)
 
         tags = meta['tags']
         if hasattr(tags, '__dict__') and '_DictProxy__dict' in tags.__dict__:
@@ -243,28 +254,46 @@ class MovieDataUpdater(signals.SignalEmitter):
                 pass
 
         TAG_MAP = {
-                'album': ('ALBUM', 'TALB', 'WM/AlbumTitle'),
-                'artist': ('ARTIST', 'TPE1', 'TPE2', 'TPE3', 'Author',
-                    'WM/AlbumArtist', 'WM/Composer'),
-                'title': ('TIT2', 'Title'),
-                'track': ('TRCK', 'TRACKNUMBER', 'WM/TrackNumber'),
-                'year': ('TDRC', 'TYER', 'DATE', 'WM/Year'),
-                'genre': ('GENRE', 'TCON', 'WM/Genre', 'WM/ProviderStyle'),
+                'album': ('album', 'talb', 'wm/albumtitle', u'\uFFFDalb'),
+                'artist': ('artist', 'tpe1', 'tpe2', 'tpe3', 'author',
+                    'albumartist', 'composer', u'\uFFFDart'),
+                'title': ('tit2', 'title', u'\uFFFDnam'),
+                'track': ('trck', 'tracknumber'),
+                'year': ('tdrc', 'tyer', 'date', 'year'),
+                'genre': ('genre', 'tcon', 'providerstyle', u'\uFFFDgen'),
                 }
+
+        tags_cleaned = {}
+        for key, value in tags.items():
+            key = str(key)
+            if key.startswith('PRIV:'):
+                key = key.split('PRIV:')[1]
+            key = key.split(':')[0]
+            if key.startswith('WM/'):
+                key = key.split('WM/')[1]
+            key = key.decode('utf-8', 'replace')
+            key = key.lower()
+            while isinstance(value, list):
+                if not value:
+                    value = None
+                    break
+                value = value[0]
+            if value:
+                if not isinstance(value, basestring):
+                    value = str(value)
+                if isinstance(value, str):
+                    value = unicode(value, 'utf-8', 'replace')
+                tags_cleaned[key] = value.lstrip()
+        tags = tags_cleaned
 
         for tag, sources in TAG_MAP.items():
             for source in sources:
                 if source in tags:
-                    value = tags[source]
-                    while isinstance(value, list):
-                        if not value:
-                            value = None
-                            break
-                        value = value[0]
-                    if value:
-                        data[unicode(tag)] = unicode(value)
-                        break
+                    data[unicode(tag)] = tags[source]
+                    break
 
+        if 'purd' in data:
+            data[u'year'] = data['purd'].split('-')[0]
         if 'year' in data:
             if not data['year'].isdigit():
                 del data['year']
@@ -274,6 +303,11 @@ class MovieDataUpdater(signals.SignalEmitter):
                 data[u'track'] = unicode(int(track))
             else:
                 del data['track']
+        if 'trkn' in data:
+            track = data['trkn']
+            if isinstance(track, tuple):
+                track = track[0]
+            data[u'track'] = unicode(track)
         if 'track' not in data:
             num = ''
             full_path = item.get_url() or item.get_filename()

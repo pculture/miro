@@ -34,6 +34,8 @@ up the testsuite.
 from miro import app
 from miro import prefs
 from miro import config
+from miro import httpclient
+from miro.test import framework
 
 config.load_temporary()
 
@@ -41,6 +43,7 @@ import unittest
 
 from miro.test.importtest import *
 from miro.test.conversionstest import *
+from miro.test.devicestest import *
 from miro.test.flashscrapertest import *
 from miro.test.unicodetest import *
 from miro.test.datastructurestest import *
@@ -66,6 +69,7 @@ from miro.test.iconcachetest import *
 from miro.test.databasetest import *
 from miro.test.itemtest import *
 from miro.test.filetypestest import *
+from miro.test.cellpacktest import *
 
 # platform specific tests
 if app.config.get(prefs.APP_PLATFORM) == "linux":
@@ -95,14 +99,25 @@ class MiroTestLoader(unittest.TestLoader):
             obj = getattr(performancetest, name)
             globals()[name] = obj
 
+class MiroTestRunner(unittest.TextTestRunner):
+    def run(self, suite):
+        self.before_run()
+        try:
+            return unittest.TextTestRunner.run(self, suite)
+        finally:
+            self.after_run()
+
+    def before_run(self):
+        # libcurl can only be initialized/cleaned up once per run, so this code
+        # can't go in the setUp/tearDown methosd.
+        httpclient.init_libcurl()
+
+    def after_run(self):
+        httpclient.cleanup_libcurl()
+        from miro.test import framework
+        framework.clean_up_temp_files()
+
 def run_tests():
-    import sys
-    from miro import httpclient
     from miro import test
-    # libcurl can only be initialized/cleaned up once per run, so this code
-    # can't go in the setUp/tearDown methosd.
-    httpclient.init_libcurl()
-    unittest.main(module=test, testLoader=MiroTestLoader())
-    httpclient.cleanup_libcurl()
-    from miro.test import framework
-    framework.clean_up_temp_files()
+    unittest.main(module=test, testLoader=MiroTestLoader(), testRunner =
+            MiroTestRunner())

@@ -12,7 +12,7 @@ from miro import downloader
 from miro import item
 from miro import feed
 from miro import folder
-from miro import frontendstate
+from miro import displaystate
 from miro import guide
 from miro import schema
 from miro import signals
@@ -542,7 +542,7 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
         self.tab_order = tabs.TabOrder(u'channel')
         self.guide = guide.ChannelGuide(u'http://example.com/')
         self.theme_hist = theme.ThemeHistory()
-        self.widgets_frontend_state = frontendstate.WidgetsFrontendState()
+        self.display_state = displaystate.DisplayState((u'testtype',u'testid'))
 
     def check_fixed_value(self, obj, column_name, value, disk_value=None):
         obj = self.reload_object(obj)
@@ -598,12 +598,17 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
                 "SET pastThemes='[1, 2; 3 ]' WHERE id=?", (self.theme_hist.id,))
         self.check_fixed_value(self.theme_hist, 'pastThemes', [])
 
-    def test_corrupt_list_view_displays(self):
-        app.db.cursor.execute("UPDATE widgets_frontend_state "
-                "SET list_view_displays='[1, 2; 3 ]' WHERE id=?",
-                (self.widgets_frontend_state.id,))
-        self.check_fixed_value(self.widgets_frontend_state,
-                'list_view_displays', [])
+    def test_corrupt_display_state(self):
+        app.db.cursor.execute("UPDATE display_state SET "
+                "active_filters=?, sort_state=?, columns=?, is_list_view=? "
+                "WHERE id=?", ('{baddata', 'CANARY', '{baddata', True,
+                    self.display_state.id))
+        self.check_fixed_value(self.display_state, 'active_filters', None)
+        self.check_fixed_value(self.display_state, 'columns', None)
+        # check that fields with valid values were salvaged
+        reloaded = self.reload_object(self.display_state)
+        self.assertEquals(reloaded.sort_state, 'CANARY')
+        self.assertEquals(reloaded.is_list_view, True)
 
     def test_corrupt_link_history(self):
         # TODO: should test ScraperFeedIpml.linkHistory, but it's not so easy

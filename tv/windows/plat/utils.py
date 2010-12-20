@@ -410,5 +410,5 @@ def get_plat_media_player_name_path():
     return (_("Windows Media Player"), None)
 
 def thread_body(func, *args, **kwargs):
-    func(*args, *kwargs)
+    func(*args, **kwargs)
 

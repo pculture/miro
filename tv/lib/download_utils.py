@@ -26,7 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from os import access, F_OK
+# FIXME - seems unneeded
+# from os import access, F_OK
 from urlparse import urlparse
 from urllib import unquote
 import os.path
@@ -84,7 +85,7 @@ def parse_url(url, split_path=False):
         host = host[0:host.rfind(':')]
 
     if scheme == '' and util.chatter:
-        logging.warn("%r has no scheme" % url)
+        logging.warn("%r has no scheme", url)
 
     if ':' in host:
         host, port = host.split(':')
@@ -93,7 +94,7 @@ def parse_url(url, split_path=False):
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
-            logging.warn("invalid port for %r" % url)
+            logging.warn("invalid port for %r", url)
             port = default_port(scheme)
     else:
         port = default_port(scheme)
@@ -217,7 +218,7 @@ def clean_filename(filename):
     """Given either a filename or a unicode "filename" return a valid
     clean version of it.
     """
-    for char in ( ':', '?', '<', '>', '|', '*', '\\', '/', '"', '\'', '%'):
+    for char in (':', '?', '<', '>', '|', '*', '\\', '/', '"', '\'', '%'):
         filename = filename.replace(char, '')
     if len(filename) == 0:
         return unicode_to_filename(u'_')

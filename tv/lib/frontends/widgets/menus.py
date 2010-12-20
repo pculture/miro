@@ -31,8 +31,7 @@
 from miro import app
 from miro import prefs
 from miro import signals
-from miro import videoconversion
-from miro import messages
+from miro import conversions
 
 from miro.gtcache import gettext as _
 
@@ -203,6 +202,8 @@ def get_menu():
                              groups=["NonPlaying"]),
                     MenuItem(_("_Download Item"), "NewDownload",
                              groups=["NonPlaying"]),
+                    MenuItem(_("_Import Media"), "ImportMedia",
+                             groups=["NonPlaying"]),
                     MenuItem(_("Check _Version"), "CheckVersion"),
                     Separator(),
                     MenuItem(_("_Remove Item"), "RemoveItems",
@@ -354,11 +355,12 @@ def get_menu():
         # Devel build, add menu items
         help_menu.append(Separator())
         help_menu.append(MenuItem(_("Profile Message"), "ProfileMessage"))
+        help_menu.append(MenuItem(_("Profile Redraw"), "ProfileRedraw"))
     return mbar
 
 def _get_convert_menu():
     menu = list()
-    sections = videoconversion.conversion_manager.get_converters()
+    sections = conversions.conversion_manager.get_converters()
     for index, section in enumerate(sections):
         for converter in section[1]:
             handler_name = make_convert_handler(converter)
@@ -457,6 +459,10 @@ def on_open():
 @action_handler("NewDownload")
 def on_new_download():
     app.widgetapp.new_download()
+
+@action_handler("ImportMedia")
+def on_import_media():
+    app.widgetapp.import_media()
 
 @action_handler("CheckVersion")
 def on_check_version():
@@ -706,6 +712,10 @@ def on_planet():
 @action_handler("ProfileMessage")
 def on_profile_message():
     app.widgetapp.setup_profile_message()
+
+@action_handler("ProfileRedraw")
+def on_profile_redraw():
+    app.widgetapp.profile_redraw()
 
 def generate_action_groups(menu_structure):
     """Takes a menu structure and returns a map of action group name to

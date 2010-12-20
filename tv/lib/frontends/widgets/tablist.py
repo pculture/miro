@@ -200,9 +200,9 @@ class LibraryTabList(StaticTabListBase):
     def build_tabs(self):
         self.add(statictabs.VideoLibraryTab())
         self.add(statictabs.AudioLibraryTab())
-        self.add(statictabs.OtherLibraryTab())
         self.auto_tabs = {'downloading': statictabs.DownloadsTab(),
-                          'conversions': statictabs.VideoConversionsTab()}
+                          'conversions': statictabs.ConversionsTab(),
+                          'others': statictabs.OthersTab()}
         self.view.model_changed()
 
     def update_auto_tab_count(self, name, count):
@@ -212,6 +212,7 @@ class LibraryTabList(StaticTabListBase):
         else:
             self.auto_tabs_to_show.discard(name)
             self.remove_auto_tab_if_not_selected(name)
+
 
     def show_auto_tab(self, name):
         try:
@@ -242,6 +243,10 @@ class LibraryTabList(StaticTabListBase):
     def update_conversions_count(self, running_count, other_count):
         self.update_count('conversions', 'downloading', running_count,
                           other_count)
+
+    def update_others_count(self, count):
+        self.update_count('others', 'others', count) # second param no special
+                                                     # meaning for this case... ?
 
     def update_new_video_count(self, count):
         self.update_count('videos', 'unwatched', count)
@@ -707,6 +712,10 @@ class DevicesList(TabList, TabUpdaterMixin):
             self._add_fake_tabs(info)
 
     def update(self, info):
+        if not self.has_info(info.id):
+            # this gets called if a sync is in progress when the device
+            # disappears
+            return
         if info.mount and not info.info.has_multiple_devices and \
                 not self.get_child_count(info.id):
             self._add_fake_tabs(info)
@@ -838,6 +847,7 @@ class FeedList(NestedTabList, TabUpdaterMixin):
         if not obj.has_original_title:
             menu.append((_('Revert Feed Name'),
                          app.widgetapp.revert_feed_name))
+        menu.append((_('Settings'), app.widgetapp.feed_settings))
         menu.append((_('Copy URL to clipboard'), app.widgetapp.copy_feed_url))
         menu.append((_('Remove'), app.widgetapp.remove_current_feed))
         return menu

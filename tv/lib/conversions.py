@@ -35,7 +35,6 @@ import logging
 import tempfile
 import threading
 import subprocess
-import time
 import errno
 
 from glob import glob
@@ -49,7 +48,6 @@ from miro import item
 from miro import models
 from miro import util
 from miro import prefs
-from miro import app
 from miro import signals
 from miro import messages
 from miro.gtcache import gettext as _
@@ -69,23 +67,28 @@ def get_conversions_folder():
         os.mkdir(target_folder)
     return target_folder
 
-class VideoConverterInfo(object):
+NON_WORD_CHARS = re.compile(r"[^a-zA-Z0-9]+")
+
+class ConverterInfo(object):
     """Holds the data for a specific conversion that allows us to
     convert to this target.
     """
-    NON_WORD_CHARS = re.compile(r"[^a-zA-Z0-9]+")
 
     def __init__(self, name, parser):
         self.name = name
         self.mediatype = self._get_config_value(name, parser, "mediatype", {})
-        self.identifier = VideoConverterInfo.NON_WORD_CHARS.sub("", name).lower()
-        self.executable = self._get_config_value(name, parser, "executable", {})
-        self.parameters = self._get_config_value(name, parser, "parameters", {})
+        self.identifier = NON_WORD_CHARS.sub("", name).lower()
+        self.executable = self._get_config_value(name, parser,
+                                                 "executable", {})
+        self.parameters = self._get_config_value(name, parser,
+                                                 "parameters", {})
         self.extension = self._get_config_value(name, parser, "extension", {})
         self.screen_size = self._get_config_value(name, parser, "ssize", {})
-        self.platforms = self._get_config_value(name, parser, "only_on", {'only_on': None})
-        self.displayname = _("%(name)s (%(mediatype)s)",
-                             {"name": self.name, "mediatype": self.mediatype})
+        self.platforms = self._get_config_value(name, parser, "only_on",
+                                                {'only_on': None})
+        self.displayname = _(
+            "%(name)s (%(mediatype)s)",
+            {"name": self.name, "mediatype": self.mediatype})
 
     def _get_config_value(self, section, parser, key, defaults):
         try:
@@ -94,8 +97,8 @@ class VideoConverterInfo(object):
             return defaults.get(key)
 
 class ConverterManager(object):
-    """Manages converter .conv files which define the various conversions
-    that Miro knows how to do.
+    """Manages converter .conv files which define the various
+    conversions that Miro knows how to do.
 
     Conversion definition files are defined in
     ``resources/conversions/`` in files ending with ``.conv``.  Files
@@ -105,10 +108,10 @@ class ConverterManager(object):
     See ``resources/conversions/`` for examples.
     """
     def __init__(self):
-        # list of (group, list of VideoConverterInfo items) items
+        # list of (group, list of ConverterInfo items) items
         self.converters = []
 
-        # maps converter_id to VideoConverterInfo object
+        # maps converter_id to ConverterInfo object
         self.converter_map = {}
 
     def load_converters(self, path):
@@ -129,7 +132,7 @@ class ConverterManager(object):
                 sections = parser.sections()
                 group_converters = list()
                 for section in sections:
-                    converter_info = VideoConverterInfo(section, parser)
+                    converter_info = ConverterInfo(section, parser)
                     if ((converter_info.platforms is None
                          or platform in converter_info.platforms)):
                         ident = converter_info.identifier
@@ -141,11 +144,11 @@ class ConverterManager(object):
                 definition_file.close()
 
     def lookup_converter(self, converter_id):
-        """Looks up and returns a VideoConverterInfo object by id.
+        """Looks up and returns a ConverterInfo object by id.
 
         :param converter_id: the id of the converter to lookup
 
-        :returns: VideoConverterInfo
+        :returns: ConverterInfo
 
         :raises KeyError: if the converter doesn't exist
         """
@@ -154,17 +157,18 @@ class ConverterManager(object):
     def get_converters(self):
         return self.converters
 
-class VideoConversionManager(signals.SignalEmitter):
+class ConversionManager(signals.SignalEmitter):
     def __init__(self):
-        signals.SignalEmitter.__init__(self, 'thread-will-start',
-                                             'thread-started',
-                                             'thread-did-start',
-                                             'begin-loop',
-                                             'end-loop',
-                                             'task-changed',
-                                             'task-staged',
-                                             'task-removed',
-                                             'all-tasks-removed',
+        signals.SignalEmitter.__init__(self,
+                                       'thread-will-start',
+                                       'thread-started',
+                                       'thread-did-start',
+                                       'begin-loop',
+                                       'end-loop',
+                                       'task-changed',
+                                       'task-staged',
+                                       'task-removed',
+                                       'all-tasks-removed',
                                        )
         self.converters = ConverterManager()
         self.task_loop = None
@@ -212,9 +216,8 @@ class VideoConversionManager(signals.SignalEmitter):
     def start_conversion(self, converter_id, item_info, target_folder=None,
                          create_item=True):
         converter_info = self.converters.lookup_converter(converter_id)
-        task = self._make_conversion_task(converter_info, item_info,
-                                          target_folder,
-                                          create_item)
+        task = self._make_conversion_task(
+            converter_info, item_info, target_folder, create_item)
         if ((task is not None
              and task.get_executable() is not None
              and not self._has_running_task(task.key)
@@ -222,6 +225,8 @@ class VideoConversionManager(signals.SignalEmitter):
             self._check_task_loop()
             self.pending_tasks.append(task)
             self._notify_task_added(task)
+
+        return task
     
     def _enqueue_message(self, message, **kw):
         msg = {'message': message}
@@ -230,8 +235,6 @@ class VideoConversionManager(signals.SignalEmitter):
         
     def _make_conversion_task(self, converter_info, item_info, target_folder,
                               create_item):
-        if target_folder is None:
-            target_folder = get_conversions_folder()
         if converter_info.executable == 'ffmpeg':
             return FFMpegConversionTask(converter_info, item_info,
                                         target_folder, create_item)
@@ -265,7 +268,8 @@ class VideoConversionManager(signals.SignalEmitter):
         self._process_message_queue()
         
         notify_count = False
-        max_concurrent_tasks = int(app.config.get(prefs.MAX_CONCURRENT_CONVERSIONS))
+        max_concurrent_tasks = int(app.config.get(
+                prefs.MAX_CONCURRENT_CONVERSIONS))
         if ((self.pending_tasks_count() > 0
              and self.running_tasks_count() < max_concurrent_tasks)):
             task = self.pending_tasks.pop()
@@ -290,77 +294,77 @@ class VideoConversionManager(signals.SignalEmitter):
     def _process_message_queue(self):
         try:
             msg = self.message_queue.get_nowait()
+        except Queue.Empty:
+            return
 
-            if msg['message'] == 'get_tasks_list':
-                self._notify_tasks_list()
+        if msg['message'] == 'get_tasks_list':
+            self._notify_tasks_list()
 
-            elif msg['message'] == 'cancel':
-                try:
-                    task = self._lookup_task(msg['key'])
-                except KeyError:
-                    logging.warn("Couldn't find task for key %s", msg['key'])
-                    return
-                if task.is_pending():
-                    task_list = self.pending_tasks
-                elif task.is_running():
-                    task_list = self.running_tasks
-                else:
-                    task_list = self.finished_tasks
-                try:
-                    task_list.remove(task)
-                except ValueError:
-                    logging.warn("Task not in list: %s", msg['key'])
-                else:
-                    self._notify_task_removed(task)
-                    self._notify_tasks_count()
-                task.interrupt()
-
-            elif msg['message'] == 'clear_all_finished':
-                for task in self.finished_tasks:
-                    self._notify_task_removed(task)
-                self.finished_tasks = []
-                self._notify_tasks_count()
-
-            elif msg['message'] == 'clear_finished':
-                try:
-                    task = self._lookup_task(msg['key'])
-                except KeyError:
-                    logging.warn("Couldn't find task for key %s", msg['key'])
-                    return
-                self.finished_tasks.remove(task)
+        elif msg['message'] == 'cancel':
+            try:
+                task = self._lookup_task(msg['key'])
+            except KeyError:
+                logging.warn("Couldn't find task for key %s", msg['key'])
+                return
+            if task.is_pending():
+                task_list = self.pending_tasks
+            elif task.is_running():
+                task_list = self.running_tasks
+            else:
+                task_list = self.finished_tasks
+            try:
+                task_list.remove(task)
+            except ValueError:
+                logging.warn("Task not in list: %s", msg['key'])
+            else:
                 self._notify_task_removed(task)
                 self._notify_tasks_count()
+            task.interrupt()
 
-            elif msg['message'] == 'cancel_all':
-                self._terminate()
+        elif msg['message'] == 'clear_all_finished':
+            for task in self.finished_tasks:
+                self._notify_task_removed(task)
+            self.finished_tasks = []
+            self._notify_tasks_count()
+
+        elif msg['message'] == 'clear_finished':
+            try:
+                task = self._lookup_task(msg['key'])
+            except KeyError:
+                logging.warn("Couldn't find task for key %s", msg['key'])
                 return
+            self.finished_tasks.remove(task)
+            self._notify_task_removed(task)
+            self._notify_tasks_count()
+
+        elif msg['message'] == 'cancel_all':
+            self._terminate()
                 
-            elif msg['message'] == 'stage_conversion':
-                try:
-                    task = self._lookup_task(msg['key'])
-                except KeyError:
-                    logging.warn("Couldn't find task for key %s", msg['key'])
-                    return
-                source = task.temp_output_path
-                destination, fp = next_free_filename(task.final_output_path)
-                source_info = task.item_info
-                conversion_name = task.converter_info.name
+        elif msg['message'] == 'stage_conversion':
+            try:
+                task = self._lookup_task(msg['key'])
+            except KeyError:
+                logging.warn("Couldn't find task for key %s", msg['key'])
+                return
+            source = task.temp_output_path
+            destination, fp = next_free_filename(task.final_output_path)
+            source_info = task.item_info
+            conversion_name = task.converter_info.name
 
-                if os.path.exists(source):
-                    self._move_finished_file(source, destination)
-                    if task.create_item:
-                        _create_item_for_conversion(destination,
-                                                    source_info,
-                                                    conversion_name)
-                    clean_up(task.temp_output_path, file_and_directory=True)
-                else:
-                    task.error = _("Reason unknown--check log")
-                    self._notify_tasks_count()
-                fp.close()
-                self.emit('task-staged', task)
-
-        except Queue.Empty, e:
-            pass
+            if os.path.exists(source):
+                self._move_finished_file(source, destination)
+                if task.create_item:
+                    _create_item_for_conversion(destination,
+                                                source_info,
+                                                conversion_name)
+                if not task.temp_output_path.endswith('.tmp'): # temp dir
+                    clean_up(task.temp_output_path,
+                             file_and_directory=True)
+            else:
+                task.error = _("Reason unknown--check log")
+                self._notify_tasks_count()
+            fp.close()
+            self.emit('task-staged', task)
 
     def _move_finished_file(self, source, destination):
         try:
@@ -387,8 +391,8 @@ class VideoConversionManager(signals.SignalEmitter):
         return len(self.finished_tasks)
 
     def _lookup_task(self, key):
-        # linear search here is inefficient, but with < 100 conversions should
-        # be fine
+        # linear search here is inefficient, but with < 100
+        # conversions should be fine
         for task in self.running_tasks:
             if task.key == key:
                 return task
@@ -413,42 +417,42 @@ class VideoConversionManager(signals.SignalEmitter):
         return False
 
     def _make_task_infos(self, task_list):
-        return [messages.VideoConversionTaskInfo(t) for t in task_list]
+        return [messages.ConversionTaskInfo(t) for t in task_list]
     
     def _notify_tasks_list(self):
-        message = messages.VideoConversionTasksList(
+        message = messages.ConversionTasksList(
                 self._make_task_infos(self.running_tasks),
                 self._make_task_infos(self.pending_tasks),
                 self._make_task_infos(self.finished_tasks))
         message.send_to_frontend()
     
     def _notify_task_added(self, task):
-        info = messages.VideoConversionTaskInfo(task)
-        message = messages.VideoConversionTaskCreated(info)
+        info = messages.ConversionTaskInfo(task)
+        message = messages.ConversionTaskCreated(info)
         message.send_to_frontend()
 
     def _notify_task_removed(self, task):
         self.emit('task-removed', task)
-        info = messages.VideoConversionTaskInfo(task)
-        message = messages.VideoConversionTaskRemoved(info)
+        info = messages.ConversionTaskInfo(task)
+        message = messages.ConversionTaskRemoved(info)
         message.send_to_frontend()
     
     def _notify_all_tasks_removed(self):
         self.emit('all-tasks-removed')
-        message = messages.AllVideoConversionTaskRemoved()
+        message = messages.AllConversionTaskRemoved()
         message.send_to_frontend()
 
     def _notify_task_changed(self, task):
         self.emit('task-changed', task)
-        info = messages.VideoConversionTaskInfo(task)
-        message = messages.VideoConversionTaskChanged(info)
+        info = messages.ConversionTaskInfo(task)
+        message = messages.ConversionTaskChanged(info)
         message.send_to_frontend()
     
     def _notify_tasks_count(self):
         running_count = self.running_tasks_count()
         other_count = (self.failed_tasks_count() + self.pending_tasks_count() +
                 self.finished_tasks_count())
-        message = messages.VideoConversionsCountChanged(running_count,
+        message = messages.ConversionsCountChanged(running_count,
                 other_count)
         message.send_to_frontend()
     
@@ -465,16 +469,21 @@ class VideoConversionManager(signals.SignalEmitter):
         self._notify_tasks_count()
         self.quit_flag = True
 
-def build_output_paths(item_info, temp_dir, target_folder, converter_info):
+def build_output_paths(item_info, target_folder, converter_info):
     """Returns final_output_path and temp_output_path.
 
     We base the temp path on temp filenames.
     We base the final path on the item title.
     """
+    if target_folder is None:
+        use_temp_dir = True
+        target_folder = get_conversions_folder()
+    else:
+        use_temp_dir = False
     input_path = item_info.video_path
     basename = os.path.basename(input_path)
 
-    title = utils.unicode_to_filename(item_info.name, temp_dir).strip()
+    title = utils.unicode_to_filename(item_info.name, target_folder).strip()
     if not title:
         title = basename
 
@@ -482,7 +491,12 @@ def build_output_paths(item_info, temp_dir, target_folder, converter_info):
                                 converter_info.extension)
     final_path = FilenameType(os.path.join(target_folder, target_name))
 
-    temp_path = os.path.join(temp_dir, basename)
+    if not use_temp_dir:
+        # convert directly onto the device
+        temp_path = final_path + '.tmp'
+    else:
+        temp_dir = utils.FilenameType(tempfile.mkdtemp("miro-conversion"))
+        temp_path = os.path.join(temp_dir, basename)
 
     return (final_path, temp_path)
 
@@ -492,7 +506,7 @@ def build_parameters(input_path, output_path, converter_info):
 
     :param input_path: absolute path of the file to convert
     :param output_path: absolute path of output file
-    :param converter_info: VideoConverterInfo object
+    :param converter_info: ConverterInfo object
 
     :returns: list of arguments
     """
@@ -533,18 +547,18 @@ def clean_up(temp_file, file_and_directory=False, attempts=0):
                     timeout, clean_up, "conversion clean_up attempt",
                     (temp_file, file_and_directory, attempts+1))
 
-class VideoConversionTask(object):
+class ConversionTask(object):
     def __init__(self, converter_info, item_info, target_folder,
                  create_item):
-        self.temp_dir = FilenameType(tempfile.mkdtemp("miro-conversion"))
         self.item_info = item_info
         self.converter_info = converter_info
         self.input_path = item_info.video_path
         self.final_output_path, self.temp_output_path = build_output_paths(
-            item_info, self.temp_dir, target_folder, converter_info)
+            item_info, target_folder, converter_info)
         self.create_item = create_item
 
-        logging.debug("temp_output_path: %s  final_output_path: %s", self.temp_output_path, self.final_output_path)
+        logging.debug("temp_output_path: %s  final_output_path: %s",
+                      self.temp_output_path, self.final_output_path)
 
         self.key = "%s->%s" % (self.input_path, self.final_output_path)
         self.thread = None
@@ -640,7 +654,8 @@ class VideoConversionTask(object):
 
         except OSError, ose:
             if ose.errno == errno.ENOENT:
-                self.error = _("%(program)s does not exist.", {"program": self.get_executable()})
+                self.error = _("%(program)s does not exist.",
+                               {"program": self.get_executable()})
             else:
                 logging.exception("Exception in Popen: %s %s", args, kwargs)
 
@@ -651,7 +666,9 @@ class VideoConversionTask(object):
     
     def _start_logging(self, executable, params):
         log_folder = os.path.dirname(app.config.get(prefs.LOG_PATHNAME))
-        self.log_path = os.path.join(log_folder, "conversion-%d-to-%s.log" % (self.item_info.id, self.converter_info.identifier))
+        self.log_path = os.path.join(log_folder,
+                                     "conversion-%d-to-%s.log" % (
+                self.item_info.id, self.converter_info.identifier))
         self.log_file = file(self.log_path, "w")
         self._log_progress("STARTING CONVERSION")
         self._log_progress("-> Item: %s" % util.stringify(self.item_info.name))
@@ -682,13 +699,18 @@ class VideoConversionTask(object):
         if hasattr(self.process_handle, "pid"):
             logging.info("killing conversion task %d", self.process_handle.pid)
             utils.kill_process(self.process_handle.pid)
-            if os.path.exists(self.temp_output_path) and self.progress < 1.0:
-                clean_up(self.temp_output_path, file_and_directory=True)
+            if not self.temp_output_path.endswith('.tmp'): # temp file
+                if (os.path.exists(self.temp_output_path) and
+                    self.progress < 1.0):
+                    clean_up(self.temp_output_path, file_and_directory=True)
 
-class FFMpegConversionTask(VideoConversionTask):
-    DURATION_RE = re.compile(r'Duration: (\d\d):(\d\d):(\d\d)\.(\d\d)(, start:.*)?(, bitrate:.*)?')
-    PROGRESS_RE = re.compile(r'(?:frame=.* fps=.* q=.* )?size=.* time=(.*) bitrate=(.*)')
-    LAST_PROGRESS_RE = re.compile(r'frame=.* fps=.* q=.* Lsize=.* time=(.*) bitrate=(.*)')
+class FFMpegConversionTask(ConversionTask):
+    DURATION_RE = re.compile(r'Duration: (\d\d):(\d\d):(\d\d)\.(\d\d)'
+                             '(, start:.*)?(, bitrate:.*)?')
+    PROGRESS_RE = re.compile(r'(?:frame=.* fps=.* q=.* )?size=.* time=(.*) '
+                             'bitrate=(.*)')
+    LAST_PROGRESS_RE = re.compile(r'frame=.* fps=.* q=.* Lsize=.* time=(.*) '
+                                  'bitrate=(.*)')
 
     def get_executable(self):
         return utils.get_ffmpeg_executable_path()
@@ -723,7 +745,6 @@ class FFMpegConversionTask(VideoConversionTask):
                 hours = match.group(1)
                 minutes = match.group(2)
                 seconds = match.group(3)
-                frames = match.group(4)
                 self.duration = (
                     (int(hours) * 60 * 60) +
                     (int(minutes) * 60) +
@@ -737,17 +758,20 @@ class FFMpegConversionTask(VideoConversionTask):
                 return 1.0
         return self.progress
 
-class FFMpeg2TheoraConversionTask(VideoConversionTask):
+class FFMpeg2TheoraConversionTask(ConversionTask):
     DURATION_RE = re.compile(r'f2t ;duration: ([^;]*);')
 
-    PROGRESS_RE1 = re.compile(r'\{"duration":(.*), "position":(.*), "audio_kbps":.*, "video_kbps":.*, "remaining":.*\}')
+    PROGRESS_RE1 = re.compile(r'\{"duration":(.*), "position":(.*), '
+                              '"audio_kbps":.*, "video_kbps":.*, '
+                              '"remaining":.*\}')
     RESULT_RE1 = re.compile(r'\{"result": "(.*)"\}')
 
     PROGRESS_RE2 = re.compile(r'f2t ;position: ([^;]*);')
     RESULT_RE2 = re.compile(r'f2t ;result: ([^;]*);')
 
-    def __init__(self, converter_info, item_info, target_folder):
-        VideoConversionTask.__init__(self, converter_info, item_info, target_folder)
+    def __init__(self, converter_info, item_info, target_folder, create_item):
+        ConversionTask.__init__(self, converter_info, item_info,
+                                target_folder, create_item)
         self.platform = app.config.get(prefs.APP_PLATFORM)
 
     def get_executable(self):
@@ -791,8 +815,8 @@ class FFMpeg2TheoraConversionTask(VideoConversionTask):
         return self.progress
 
 def convert(converter_id, item_info):
-    """Given a converter and an item, this starts the conversion
-    for that item.
+    """Given a converter and an item, this starts the conversion for
+    that item.
     """
     conversion_manager.start_conversion(converter_id, item_info)
 
@@ -800,8 +824,8 @@ def convert(converter_id, item_info):
 def _create_item_for_conversion(filename, source_info, conversion_name):
     """Make a new FileItem for a converted file."""
 
-    # Note: We are adding things to the database.  This function should only
-    # get called in the event loop.
+    # Note: We are adding things to the database.  This function
+    # should only get called in the event loop.
 
     name = _('%(original_name)s (Converted to %(format)s)',
             {'original_name': source_info.name, 'format': conversion_name})
@@ -809,8 +833,9 @@ def _create_item_for_conversion(filename, source_info, conversion_name):
     fp_values = item.fp_values_for_file(filename, name,
             source_info.description)
     manual_feed = models.Feed.get_manual_feed()
-    new_item = models.FileItem(filename, feed_id=manual_feed.id,
-            fp_values=fp_values)
+    models.FileItem(filename, feed_id=manual_feed.id,
+                    fp_values=fp_values)
 
+# FIXME - this should be in an init() and not module-level
 utils.setup_ffmpeg_presets()
-conversion_manager = VideoConversionManager()
+conversion_manager = ConversionManager()

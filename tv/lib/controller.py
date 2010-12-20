@@ -49,7 +49,7 @@ from miro import messages
 from miro import moviedata
 from miro import prefs
 from miro import signals
-from miro import videoconversion
+from miro import conversions
 from miro.plat.utils import exit_miro
 
 BOGON_URL = "http://bogondeflector.pculture.org/index.php"
@@ -64,7 +64,7 @@ class Controller:
     @eventloop.as_urgent
     def shutdown(self):
         logging.info("Shutting down video conversions manager")
-        videoconversion.conversion_manager.shutdown()
+        conversions.conversion_manager.shutdown()
         logging.info("Shutting down Downloader...")
         downloader.shutdown_downloader(self.downloader_shutdown)
 

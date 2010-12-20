@@ -26,40 +26,31 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""miro.frontends.shell -- A quick shell for debugging Miro
-innards.
+"""miro.frontends.profilewidgets -- Psuedo-frontend for profiling the UI
 """
 
-import readline
-import rlcompleter
-import code
-import threading
+import types
 
-from miro import app
-from miro import startup
-from miro import messages
+from miro.plat.frontends.widgets import application as plat_application
+from miro.frontends.profilewidgets import tests
+from miro.frontends.profilewidgets import portable
+from miro.frontends.widgets import application
 
 def run_application():
-    messages.FrontendMessage.install_handler(MessageHandler())
-    startup.startup()
-    print 'startup exit'
+    application = build_platform_app()
+    portable.setup()
 
-class MessageHandler(messages.MessageHandler):
-    def handle(self, message):
-        if isinstance(message, messages.StartupSuccess):
-            self.run_shell()
-        else:
-            print 'got message: ', message
+    # monkey patch the startup method so that we don't startup the miro
+    # backend.  Dirty, but it works.
+    application.startup = tests.startup
+    application.setup_globals()
+    application.run()
 
-    def run_shell(self):
-        print
-        print '** starting shell**'
-        print
-        imported_objects = {}
-        for mod in ('database', 'feed', 'item', 'models'):
-            imported_objects[mod] = getattr(__import__('miro.%s' % mod), mod)
-        readline.set_completer(rlcompleter.Completer(imported_objects).complete)
-        readline.parse_and_bind("tab:complete")
-        code.interact(local=imported_objects)
-
-        app.controller.shutdown()
+def build_platform_app():
+    for name in dir(plat_application):
+        obj = getattr(plat_application, name)
+        if (type(obj) is types.ClassType
+                and issubclass(obj, application.Application)
+                and obj is not application.Application):
+            return obj()
+    raise AssertionError("Can't find application class")

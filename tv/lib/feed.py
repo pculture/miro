@@ -413,7 +413,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             for klass in (FeedImpl, RSSFeedImpl, SavedSearchFeedImpl,
                     ScraperFeedImpl, SearchFeedImpl, DirectoryFeedImpl,
                     DirectoryWatchFeedImpl, SearchDownloadsFeedImpl,
-                    ManualFeedImpl, SingleFeedImpl):
+                    ManualFeedImpl):
                 try:
                     self._actualFeed = klass.get_by_id(self.feed_impl_id)
                     self._actualFeed.ufeed = self
@@ -814,9 +814,6 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             self.visible = False
         elif self.origURL == u"dtv:manualFeed":
             newFeed = ManualFeedImpl(self)
-            self.visible = False
-        elif self.origURL == u"dtv:singleFeed":
-            newFeed = SingleFeedImpl(self)
             self.visible = False
         elif SEARCH_URL_MATCH_RE.match(self.origURL):
             newFeed = SavedSearchFeedImpl(self.origURL, self)
@@ -2117,7 +2114,7 @@ class DirectoryFeedImpl(DirectoryScannerImplBase):
 
     @returns_unicode
     def get_title(self):
-        return _(u'Local Files')
+        return _('Local Files')
 
 class SearchFeedImpl(RSSMultiFeedBase):
     """Search and Search Results feeds
@@ -2126,7 +2123,7 @@ class SearchFeedImpl(RSSMultiFeedBase):
         self.engine = searchengines.get_search_engines()[0].name
         self.query = u''
         RSSMultiFeedBase.setup_new(self, url=u'dtv:search', ufeed=ufeed,
-                                   title=_(u'Search'))
+                                   title=_('Search'))
         self.initialUpdate = True
         self.searching = False
         self.set_update_frequency(-1)
@@ -2226,7 +2223,7 @@ class SearchFeedImpl(RSSMultiFeedBase):
 
     @returns_unicode
     def get_title(self):
-        return _(u'Search')
+        return _('Search')
 
 class SearchDownloadsFeedImpl(FeedImpl):
     def setup_new(self, ufeed):
@@ -2236,7 +2233,7 @@ class SearchDownloadsFeedImpl(FeedImpl):
 
     @returns_unicode
     def get_title(self):
-        return _(u'Search')
+        return _('Search')
 
 class ManualFeedImpl(FeedImpl):
     """Downloaded Videos/Torrents that have been added using by the
@@ -2251,21 +2248,7 @@ class ManualFeedImpl(FeedImpl):
 
     @returns_unicode
     def get_title(self):
-        return _(u'Local Files')
-
-class SingleFeedImpl(FeedImpl):
-    """Single Video that is playing that has been added by the user
-    opening them with democracy.
-    """
-    def setup_new(self, ufeed):
-        FeedImpl.setup_new(self, url=u'dtv:singleFeed', ufeed=ufeed,
-                title=None)
-        self.ufeed.expire = u'never'
-        self.set_update_frequency(-1)
-
-    @returns_unicode
-    def get_title(self):
-        return _(u'Playing File')
+        return _('Local Files')
 
 LINK_PATTERN = re.compile("<(a|embed)\s[^>]*(href|src)\s*=\s*\"([^\"]*)\"[^>]*>(.*?)</a(.*)", re.S)
 IMG_PATTERN = re.compile(".*<img\s.*?src\s*=\s*\"(.*?)\".*?>", re.S)

@@ -835,7 +835,7 @@ class BTDownloader(BGDownloader):
             self.restore_state(restore)
         else:
             self.firstTime = True
-            BGDownloader.__init__(self,url,item)
+            BGDownloader.__init__(self, url, item)
             self.run_downloader()
 
     def _start_torrent(self):

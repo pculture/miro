@@ -39,7 +39,6 @@
 #include "nsCOMPtr.h"
 #include "nsComponentManagerUtils.h"
 #include "nsEmbedCID.h"
-#include "nsEmbedString.h"
 #include "nsIDOMWindow.h"
 #include "nsIInterfaceRequestorUtils.h"
 #include "nsISupportsImpl.h"
@@ -125,6 +124,16 @@ nsresult MiroBrowserEmbed::enable()
     nsresult rv;
     nsCOMPtr<nsIBaseWindow> browserBaseWindow(do_QueryInterface(mWebBrowser));
 
+    // Check if we haven't loaded a URI yet and load about:blank if so,
+    // otherwise Repaint() fails
+    nsIURI *aURI;
+
+    rv = mWebNavigation->GetCurrentURI(&aURI);
+    NS_ENSURE_SUCCESS(rv, rv);
+    if(!aURI) {
+        loadURI("about:blank");
+    }
+
     rv = browserBaseWindow->SetVisibility(PR_TRUE);
     NS_ENSURE_SUCCESS(rv, rv);
     rv = browserBaseWindow->SetEnabled(PR_TRUE);
@@ -151,7 +160,8 @@ PRBool MiroBrowserEmbed::is_enabled()
 // Load a URI into the browser
 nsresult MiroBrowserEmbed::loadURI(const char* uri)
 {
-    mWebNavigation->LoadURI(NS_ConvertASCIItoUTF16(uri).get(),
+    mCurrentURI = NS_ConvertASCIItoUTF16(uri);
+    mWebNavigation->LoadURI(PromiseFlatString(mCurrentURI).get(),
             nsIWebNavigation::LOAD_FLAGS_NONE, 0, 0, 0);
     return NS_OK;
 }
@@ -164,6 +174,10 @@ nsresult MiroBrowserEmbed::getCurrentURI(char ** uri)
 
     rv = mWebNavigation->GetCurrentURI(&aURI);
     NS_ENSURE_SUCCESS(rv, rv);
+    if(!aURI) {
+        *uri = nsnull;
+        return NS_OK;
+    }
 
     rv = aURI->GetSpec(specString);
     NS_ENSURE_SUCCESS(rv, rv);

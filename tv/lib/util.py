@@ -205,6 +205,32 @@ class AutoLoggingStream(StringIO):
         if data:
             self.logging_callback(self.prefix + data)
 
+_use_ipv6 = None
+def use_ipv6():
+    """Should we use ipv6 for networking?"""
+
+    global _use_ipv6
+    if _use_ipv6 is None:
+        if socket.has_ipv6:
+            try:
+                socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+                _use_ipv6 = True
+            except socket.error:
+                _use_ipv6 = False
+        else:
+            _use_ipv6 = False
+    return _use_ipv6
+
+def localhost_family_and_addr():
+    """Returns the tuple (family, address) to use for the localhost.
+
+    This method is aware of ipv6 and tries to use it when possible
+    """
+    if use_ipv6():
+        return (socket.AF_INET6, '::1')
+    else:
+        return (socket.AF_INET, '127.0.0.1')
+
 def make_dummy_socket_pair():
     """Create a pair of sockets connected to each other on the local
     interface.  Used to implement SocketHandler.wakeup().
@@ -215,14 +241,11 @@ def make_dummy_socket_pair():
     try ports between 50000 and 65500.
     """
     port = 0
+    family, addr = localhost_family_and_addr()
     while 1:
         try:
-            if socket.has_ipv6:
-                dummy_server = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
-                dummy_server.bind(("::1", port))
-            else:
-                dummy_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                dummy_server.bind(("127.0.0.1", port))
+            dummy_server = socket.socket(family, socket.SOCK_STREAM)
+            dummy_server.bind((addr, port))
             dummy_server.listen(1)
             server_address = dummy_server.getsockname()
             first = socket.socket(dummy_server.family, socket.SOCK_STREAM)
@@ -238,6 +261,7 @@ def make_dummy_socket_pair():
             if port == 0:
                 port = 50000
             port += 10
+
 
 def get_torrent_info_hash(path):
     """get_torrent_info_hash(path)
@@ -470,7 +494,8 @@ def setup_logging():
     """Adds TIMING and JSALERT logging levels.
     """
     logging.addLevelName(15, "STACK TRACE")
-    logging.stacktrace = lambda msg, *args, **kargs: logging.log(15, "%s\n%s" % ("".join(traceback.format_stack()), msg) , *args, **kargs)
+    logging.stacktrace = lambda msg, *args, **kargs: logging.log(
+        15, "%s\n%s" % ("".join(traceback.format_stack()), msg), *args, **kargs)
 
     logging.addLevelName(25, "TIMING")
     logging.timing = lambda msg, *args, **kargs: logging.log(25, msg, *args, **kargs)
@@ -1070,4 +1095,7 @@ class Cache(object):
             new_dict[key] = self.dict[key]
             new_access_times[key] = time
         self.dict = new_dict
-        sself.access_times = new_access_times
+        self.access_times = new_access_times
+
+    def create_new_value(self, val):
+        raise NotImplementedError()
