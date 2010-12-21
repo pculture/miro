@@ -70,7 +70,7 @@ class SharingView(itemlistcontroller.SimpleItemListController):
     def handle_delete(self):
         pass
 
-    # XXX this should never be empty
+    # note: this should never be empty, so we don't have empty view.
     def build_widget(self):
         itemlistcontroller.SimpleItemListController.build_widget(self)
 
