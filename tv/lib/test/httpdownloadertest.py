@@ -148,6 +148,7 @@ class HTTPDownloaderTest(EventLoopTest):
         restore = self.downloader.lastStatus.copy()
         restore['state'] = 'downloading'
         download._downloads = {}
+        self.httpserver.pause_after(-1)
         self.downloader2 = TestingDownloader(self, restore=restore)
         restoreSize = restore['currentSize']
         self.restarted = False
@@ -159,6 +160,5 @@ class HTTPDownloaderTest(EventLoopTest):
                 self.stopEventLoop(False)
         self.downloader2.start_new_download = start_new_download_intercept
         self.downloader2.statusCallback = status_callback
-        self.httpserver.pause_after(-1)
         self.runEventLoop()
         self.assert_(not self.restarted)
