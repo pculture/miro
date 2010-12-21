@@ -251,8 +251,8 @@ class SharingManagerBackend(object):
     def handle_items_changed(self, message):
         # If items are changed, just redelete and recreate the entry.
         for x in message.removed:
-            del self.items[x.id]
-            del self.daapitems[x.id]
+            del self.items[x]
+            del self.daapitems[x]
         self.make_item_dict(message.added)
         self.make_item_dict(message.changed)
 
