@@ -678,6 +678,9 @@ class TableView(Widget):
         self.create_signal('selection-changed')
         self.create_signal('hotspot-clicked')
         self.create_signal('row-double-clicked')
+        # row-activated is never emitted, but it should be
+        # when space or enter is pressed with a row selected. --Kaz
+        self.create_signal('row-activated')
         self.model = model
         self.columns = []
         self.drag_source = None
