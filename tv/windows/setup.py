@@ -67,7 +67,7 @@ BINARY_KIT_ROOT = "miro-binary-kit-win-%s" % BINARY_KIT_VERSION
 
 if not os.path.exists or not os.path.isdir(BINARY_KIT_ROOT):
     print "Binary kit %s is missing.  Run 'setup_binarykit.sh'." % BINARY_KIT_ROOT
-    sys.exit()
+    sys.exit(1)
 
 ZLIB_INCLUDE_PATH = os.path.join(BINARY_KIT_ROOT, 'zlib', 'include')
 ZLIB_LIB_PATH = os.path.join(BINARY_KIT_ROOT, 'zlib', 'lib')
