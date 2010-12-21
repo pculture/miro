@@ -258,16 +258,24 @@ class SharingManagerBackend(object):
 
     # Note: this should really be a util function and be separated
     def make_daap_playlists(self, items):
-        mappings = [('title', 'minm'), ('id', 'miid'), ('id', 'mper')]
+        # Pants.  We reuse the function but the view from the database is
+        # different to the message the frontend sends to us!  So, minm is
+        # duplicated.
+        mappings = [('name', 'minm'), ('title', 'minm'), ('id', 'miid'),
+                    ('id', 'mper')]
         for x in items:
             attributes = []
             for p, q in mappings:
-                if isinstance(getattr(x, p), unicode):
-                    attributes.append((q, getattr(x, p).encode('utf-8')))
-                else:
-                    attributes.append((q, getattr(x, p)))
+                try:
+                    if isinstance(getattr(x, p), unicode):
+                        attributes.append((q, getattr(x, p).encode('utf-8')))
+                    else:
+                        attributes.append((q, getattr(x, p)))
+                except AttributeError:
+                    # Didn't work.  Oh well, get the next one.
+                    continue
             count = len(self.get_items(playlist_id=x.id))
-            attributes.append(('mpco', 0))    # Parent container ID
+            attributes.append(('mpco', 0))        # Parent container ID
             attributes.append(('mimc', count))    # Item count
             self.daap_playlists[x.id] = attributes
 
@@ -281,7 +289,7 @@ class SharingManagerBackend(object):
 
     def handle_playlist_removed(self, obj, removed):
         for x in removed:
-            del self.daap_playlists[x.id]
+            del self.daap_playlists[x]
 
     def populate_playlists(self):
         self.make_daap_playlists(playlist.SavedPlaylist.make_view())
