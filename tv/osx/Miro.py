@@ -60,7 +60,7 @@ def activate_psyco():
 # =============================================================================
 
 def launch_unit_tests():
-    sys.argv.remove('unittest')
+    sys.argv.remove('--unittest')
 
     import logging
     logging.basicConfig(level=logging.CRITICAL)
