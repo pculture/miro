@@ -99,14 +99,14 @@ group.add_option('--unittest',
                  dest='unittest', action='store_true',
                  help='Run unittests instead of launching the program.')
 parser.set_defaults(unittest=False)
-group.add_option('--convert',
-                 dest='convert', action='store_true',
-                 help='Command line conversion.')
-parser.set_defaults(unittest=False)
 group.add_option('-v',
                  dest='unittest_verbose', action='store_true',
                  help='Run unittests in verbose mode.')
 parser.set_defaults(unittest_verbose=False)
+group.add_option('--convert',
+                 dest='convert', action='store_true',
+                 help='Command line conversion.')
+parser.set_defaults(convert=False)
 group.add_option('--profile',
                  metavar='<FILE>',
                  help='Write profiling information to FILE.')
