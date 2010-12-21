@@ -512,7 +512,19 @@ class CurlTransfer(object):
     def header_func(self, line):
         line = line.strip()
         if line.startswith("HTTP"):
-            curl_manager.call_after_perform(self.check_status_line)
+            # we can't use self.header.getinfo() because we're inside the
+            # perform call.  However, we also can't use call_after_perform()
+            # because that call might happen after a redirect, which might
+            # make us miss the temporary redirect.  So parse the status
+            # ourselves.
+            try:
+                code = self.status_code = int(line.split()[1])
+            except Exception, e:
+                logging.warn("Error parsing status line (%r): %s", line, e)
+                self.status_code = 200
+            else:
+                if 300 <= code <= 399 and code != 301:
+                    self.saw_temporary_redirect = True
             return
         if line == '':
             if 'location' in self.headers:
@@ -549,12 +561,6 @@ class CurlTransfer(object):
             eventloop.add_idle(self.header_callback,
                     'httpclient header callback',
                     args=(self._make_callback_info(),))
-
-    def check_status_line(self):
-        code = self.handle.getinfo(pycurl.RESPONSE_CODE)
-        if 300 <= code <= 399 and code != 301:
-            self.saw_temporary_redirect = True
-        self.status_code = code
 
     def check_response_code(self, code):
         expected_codes = set([200])
