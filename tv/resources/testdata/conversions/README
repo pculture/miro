@@ -1,0 +1,17 @@
+========
+ README
+========
+
+These files are output from ffmpeg/ffmpeg2theora runs from command line
+sequences used by Miro.
+
+To build new ones::
+
+    commandline > output.txt 2>&1
+
+where commandline is the line from Miro.
+
+This is easily done on Linux and OSX and probably more difficult on Windows.
+
+The output is verbatim except for the sake of reducing space used and time it
+takes to run the tests, I sometimes remove progress lines.
