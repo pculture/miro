@@ -274,7 +274,11 @@ class SharingManagerBackend(object):
                 except AttributeError:
                     # Didn't work.  Oh well, get the next one.
                     continue
-            count = len(self.get_items(playlist_id=x.id))
+            # At this point, the item list has not been fully populated yet.
+            # Therefore, it may not be possible to run get_items() and getting
+            # the count attribute.  Instead we use the playlist_item_map.
+            tmp = [y for y in playlist.PlaylistItemMap.playlist_view(x.id)]
+            count = len(tmp)
             attributes.append(('mpco', 0))        # Parent container ID
             attributes.append(('mimc', count))    # Item count
             self.daap_playlists[x.id] = attributes
