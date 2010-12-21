@@ -294,8 +294,6 @@ class SharingManagerBackend(object):
     def populate_playlists(self):
         self.make_daap_playlists(playlist.SavedPlaylist.make_view())
         for playlist_id in self.daap_playlists.keys():
-            # Save the position as well?  But I don't think it matters, remote
-            # guy can sort himself.
             self.playlist_item_map[playlist_id] = [x.item_id
               for x in playlist.PlaylistItemMap.playlist_view(playlist_id)]
 
