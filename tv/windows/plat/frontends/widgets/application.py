@@ -59,9 +59,12 @@ from miro.plat.frontends.widgets.threads import call_on_ui_thread
 
 class WindowsApplication(Application):
     def run(self):
-        logging.info("Windows version:   %s %s %s %s", 
+        winrel = platform.release()
+        if winrel == "post2008Server":
+            winrel += " (could be Windows 7)"
+        logging.info("Windows version:   %s %s %s %s",
                      platform.system(),
-                     platform.release(),
+                     winrel,
                      platform.machine(),
                      sys.getwindowsversion())
         logging.info("Python version:    %s", sys.version)
