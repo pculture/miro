@@ -377,6 +377,8 @@
 	    <key>VERSIONER_PYTHON_PREFER_32_BIT</key>
 	    <string>yes</string>
     </dict>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.video</string>
     <key>LSArchitecturePriority</key>
     <array>
         <string>i386</string>
