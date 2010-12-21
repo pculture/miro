@@ -1,3 +1,4 @@
+import functools
 import rfc822
 import os
 import pycurl
@@ -11,12 +12,23 @@ from miro import httpauth
 from miro import httpclient
 from miro import signals
 from miro.plat import resources
+from miro.test import mock
 from miro.test.framework import EventLoopTest, uses_httpclient
 
 from miro.gtcache import gettext as _
 
 TEST_PATH = 'test.txt'
 TEST_BODY = 'Miro HTTP Test\n'
+
+def uses_mock_httpclient(fun):
+    def _uses_mock_httpclient(self):
+        self.mocked_multi = httpclient.curl_manager.multi = mock.Mock()
+        self.mocked_multi.timeout.return_value = -1
+        self.mocked_multi.fdset.return_value = ([], [], [])
+        self.mocked_multi.perform.return_value = (None, None)
+        return fun(self)
+    wrapped = functools.update_wrapper(_uses_mock_httpclient, fun)
+    return uses_httpclient(wrapped)
 
 class HTTPClientTestBase(EventLoopTest):
     def setUp(self):
@@ -909,9 +921,13 @@ class NetworkErrorTest(HTTPClientTestBase):
         self.assertEquals(self.grab_url_error.friendlyDescription,
                 _("File not found"))
 
-    @uses_httpclient
+    @uses_mock_httpclient
     def test_bad_domain_name(self):
-        self.grab_url('http://unknowndomainname/')
+        def mock_add_handle(handle):
+            error = (handle, pycurl.E_COULDNT_RESOLVE_HOST, 'fake message')
+            self.mocked_multi.info_read.return_value = ([], [], [error])
+        self.mocked_multi.add_handle.side_effect = mock_add_handle
+        self.grab_url('http://pculture.org/')
         self.check_errback_called()
         self.assert_(isinstance(self.grab_url_error,
             httpclient.UnknownHostError))
