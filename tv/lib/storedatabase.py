@@ -530,6 +530,10 @@ class LiveStorage:
         """
         return self._object_map[id_]
 
+    def id_alive(self, id_):
+        """Check if an id_ is exists and is loaded in the databes."""
+        return id_ in self._object_map
+
     def table_name(self, klass):
         return self._schema_map[klass].table_name
 
@@ -552,7 +556,9 @@ class LiveStorage:
 
     def query(self, klass, where, values=None, order_by=None, joins=None,
             limit=None):
-        id_list = list(self.query_ids(klass, where, values, order_by, joins,
+        schema = self._schema_map[klass]
+        id_list = list(self.query_ids(schema.table_name, where, values,
+            order_by, joins,
             limit))
         if self.ensure_objects_loaded(klass, id_list):
             # sometimes objects will call remove() in setup_restored().
@@ -574,12 +580,11 @@ class LiveStorage:
             return True
         return False
 
-    def query_ids(self, klass, where, values=None, order_by=None, joins=None,
-            limit=None):
-        schema = self._schema_map[klass]
+    def query_ids(self, table_name, where, values=None, order_by=None,
+            joins=None, limit=None):
         sql = StringIO()
-        sql.write("SELECT %s.id " % schema.table_name)
-        sql.write(self._get_query_bottom(schema.table_name, where, joins,
+        sql.write("SELECT %s.id " % table_name)
+        sql.write(self._get_query_bottom(table_name, where, joins,
             order_by, limit))
         self.cursor.execute(sql.getvalue(), values)
         return (row[0] for row in self.cursor.fetchall())
@@ -640,11 +645,11 @@ class LiveStorage:
     def persistent_object_count(self):
         return len(self._object_map)
 
-    def query_count(self, klass, where, values=None, joins=None, limit=None):
-        schema = self._schema_map[klass]
+    def query_count(self, table_name, where, values=None, joins=None,
+            limit=None):
         sql = StringIO()
         sql.write('SELECT COUNT(*) ')
-        sql.write(self._get_query_bottom(schema.table_name, where, joins,
+        sql.write(self._get_query_bottom(table_name, where, joins,
             None, limit))
         return self._execute(sql.getvalue(), values)[0][0]
 

@@ -169,6 +169,10 @@ sys.path.insert(0, LIBTORRENT_PATH)
 sys.path.insert(0, MUTAGEN_PATH)
 
 #### Extensions ####
+ngrams_ext = \
+    Extension("miro.ngrams",
+        [os.path.join(portable_dir, 'ngrams.c')],
+    )
 
 pygtkhacks_ext = Extension(
     "miro.frontends.widgets.gtk.pygtkhacks",
@@ -229,6 +233,7 @@ os.environ['PATH'] = ';'.join([
 
 # Private extension modules to build.
 ext_modules = [
+    ngrams_ext,
     pygtkhacks_ext,
     xulrunnerbrowser_ext,
 ]

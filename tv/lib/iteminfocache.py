@@ -55,13 +55,34 @@ from miro import eventloop
 from miro import messages
 from miro import models
 from miro import schema
+from miro import signals
 
-class ItemInfoCache(object):
+class ItemInfoCache(signals.SignalEmitter):
+    """ItemInfoCache stores the latest ItemInfo objects for each item
+
+    ItemInfo objects take a relatively long time to create, and they also
+    require that the Item object be loaded from the database, which also is
+    costly.  This object allows us to shortcut both of those steps.  The main
+    use of this is quickly handling the TrackItems message.
+
+    ItemInfoCache also provides signals to track when ItemInfos get
+    added/change/removed from the system
+
+    Signals:
+        added (obj, item_info) -- an item info object was created
+        changed (obj, item_info) -- an item info object was updated
+        removed (obj, item_info) -- an item info object was removed
+    """
+
     # how often should we save cache data to the DB? (in seconds)
     SAVE_INTERVAL = 30
     VERSION_KEY = 'item_info_cache_db_version'
 
     def __init__(self):
+        signals.SignalEmitter.__init__(self)
+        self.create_signal('added')
+        self.create_signal('changed')
+        self.create_signal('removed')
         self.id_to_info = None
         self.loaded = False
 
@@ -167,14 +188,16 @@ class ItemInfoCache(object):
         app.db.cursor.execute("DELETE FROM item_info_cache "
                 "WHERE id IN (%s)" % id_list)
 
-    def iter_infos(self, view):
-        """Given a view for Item objects, return the ItemInfos for each result
+    def all_infos(self):
+        """Return all ItemInfo objects that in the database.
 
         This method is optimized to avoid constructing Item objects.
         """
-        if view.klass not in (models.Item, models.FileItem):
-            raise ValueError("view is not for Item")
-        return (self.id_to_info[id_] for id_ in view.id_iter())
+        return self.id_to_info.values()
+
+    def get_info(self, id_):
+        """Get the ItemInfo for a given item id"""
+        return self.id_to_info[id_]
 
     def item_created(self, item):
         if not self.loaded:
@@ -185,6 +208,7 @@ class ItemInfoCache(object):
         self.id_to_info[item.id] = info
         self._infos_added[item.id] = info
         self.schedule_save_to_db()
+        self.emit("added", info)
 
     def item_changed(self, item):
         if not self.loaded:
@@ -202,13 +226,14 @@ class ItemInfoCache(object):
         else:
             self._infos_changed[item.id] = info
         self.schedule_save_to_db()
+        self.emit("changed", info)
 
     def item_removed(self, item):
         if not self.loaded:
             # Item.remove() called in Item.setup_restored() while we were
             # doing a failsafe load
             return
-        del self.id_to_info[item.id]
+        info = self.id_to_info.pop(item.id)
 
         if item.id in self._infos_added:
             del self._infos_added[item.id]
@@ -220,6 +245,7 @@ class ItemInfoCache(object):
         else:
             self._infos_deleted.add(item.id)
         self.schedule_save_to_db()
+        self.emit("removed", info)
 
 def create_sql():
     """Get the SQL needed to create the tables we need for the ItemInfo cache

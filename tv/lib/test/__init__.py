@@ -70,6 +70,7 @@ from miro.test.databasetest import *
 from miro.test.itemtest import *
 from miro.test.filetypestest import *
 from miro.test.cellpacktest import *
+from miro.test.searchtest import *
 
 # platform specific tests
 if app.config.get(prefs.APP_PLATFORM) == "linux":

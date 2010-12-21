@@ -1806,8 +1806,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
             for item in self.get_children():
                 item.remove()
         self._remove_from_playlists()
-        app.item_info_cache.item_removed(self)
         DDBObject.remove(self)
+        # need to call this after DDBObject.remove(), so that the item info is
+        # there for ItemInfoFetcher to see.
+        app.item_info_cache.item_removed(self)
 
     def setup_links(self):
         self.split_item()

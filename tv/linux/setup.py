@@ -251,6 +251,11 @@ fi
 
 
 #### Xlib Extension ####
+ngrams_ext = \
+    Extension("miro.ngrams",
+        [os.path.join(portable_dir, 'ngrams.c')],
+    )
+
 xlib_ext = \
     Extension("miro.plat.xlibhelper",
         [os.path.join(platform_package_dir, 'xlibhelper.pyx')],
@@ -479,6 +484,7 @@ class clean(Command):
             shutil.rmtree('./dist/')
 
 ext_modules = []
+ext_modules.append(ngrams_ext)
 ext_modules.append(xlib_ext)
 ext_modules.append(pygtkhacks_ext)
 ext_modules.append(webkitgtkhacks_ext)

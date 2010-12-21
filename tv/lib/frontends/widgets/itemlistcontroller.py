@@ -208,9 +208,8 @@ class ItemListController(object):
         """Set the search for all ItemViews managed by this controller.
         """
         self._search_text = search_text
-        self.item_list_group.set_search_text(search_text)
-        for item_view in self.all_item_views():
-            item_view.model_changed()
+        messages.SetTrackItemsSearch(self.type, self.id,
+                search_text).send_to_backend()
         app.inline_search_memory.set_search(self.type, self.id, search_text)
 
     def _trigger_item(self, item_view, info):
@@ -350,7 +349,8 @@ class ItemListController(object):
 
     def start_tracking(self):
         """Send the message to start tracking items."""
-        messages.TrackItems(self.type, self.id).send_to_backend()
+        messages.TrackItems(self.type, self.id,
+                self._search_text).send_to_backend()
         app.info_updater.item_list_callbacks.add(self.type, self.id,
                 self.handle_item_list)
         app.info_updater.item_changed_callbacks.add(self.type, self.id,

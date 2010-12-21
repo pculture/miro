@@ -18,6 +18,7 @@ from miro import util
 from miro import databaseupgrade
 from miro import prefs
 from miro import searchengines
+from miro import search
 from miro import signals
 from miro import storedatabase
 from miro import subscription
@@ -204,6 +205,11 @@ class MiroTestCase(unittest.TestCase):
     def setup_new_item_info_cache(self):
         app.item_info_cache = iteminfocache.ItemInfoCache()
         app.item_info_cache.load()
+        self.setup_new_item_searcher()
+
+    def setup_new_item_searcher(self):
+        app.item_searcher = search.ItemSearcher()
+        app.item_searcher.initialize()
 
     def reload_database(self, path=':memory:', schema_version=None,
                         object_schemas=None, upgrade=True):

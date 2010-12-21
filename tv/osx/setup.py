@@ -268,6 +268,7 @@ class MiroBuild (py2app):
         self.distribution.ext_modules.append(self.get_growl_ext())
         self.distribution.ext_modules.append(self.get_growl_image_ext())
         self.distribution.ext_modules.append(self.get_fasttypes_ext())
+        self.distribution.ext_modules.append(self.get_ngrams_ext())
 
         self.distribution.packages = [
             'miro',
@@ -337,8 +338,12 @@ class MiroBuild (py2app):
         return Extension("miro.plat._growlImage", sources=growl_image_src, extra_link_args=growl_image_link_args)
     
     def get_fasttypes_ext(self):
-        return Extension("miro.fasttypes", 
+        return Extension("miro.fasttypes",
                 [os.path.join(PORTABLE_DIR, 'fasttypes.c')])
+
+    def get_ngrams_ext(self):
+        return Extension("miro.ngrams",
+                [os.path.join(PORTABLE_DIR, 'ngrams.c')])
     
     def fillTemplate(self, templatepath, outpath, **vars):
         s = open(templatepath, 'rt').read()
