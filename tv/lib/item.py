@@ -1148,10 +1148,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     # TODO: played/seen count updates need to trigger recalculation of auto
     # ratings somewhere
     def mark_item_completed(self):
+        self.confirm_db_thread()
         self.play_count += 1
+        self.signal_change()
 
     def mark_item_skipped(self):
+        self.confirm_db_thread()
         self.skip_count += 1
+        self.signal_change()
 
     def set_rating(self, rating):
         self.confirm_db_thread()
@@ -1888,6 +1892,28 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                     logging.warn("fix_incorrect_torrent_subdir error:\n%s",
                                  traceback.format_exc())
                 self.set_filename(filename_path)
+
+    def get_auto_rating(self):
+        """Guess at a rating based on the number of times the files has been
+        played vs. skipped and the item's age.
+        """
+        # TODO: we may want to take into consideration average ratings for this
+        # artist and this album, total play count and skip counts, and average
+        # manual rating
+        SKIP_FACTOR = 1.5 # rating goes to 1 when user skips 40% of the time
+        UNSKIPPED_FACTOR = 2 # rating goes to 5 when user plays 3 times without
+                             # skipping
+        # TODO: should divide by log of item's age
+        if self.play_count > 0:
+            if self.skip_count > 0:
+                return min(5, max(1, int(self.play_count -
+                    SKIP_FACTOR * self.skip_count)))
+            else:
+                return min(5, int(UNSKIPPED_FACTOR * self.play_count))
+        elif self.skip_count > 0:
+            return 1
+        else:
+            return None
 
     def __str__(self):
         return "Item - %s" % stringify(self.get_title())

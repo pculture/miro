@@ -1120,9 +1120,71 @@ class StatusRenderer(ListViewRenderer):
             hbox.pack_space(8)
             hbox.pack(cellpack.Hotspot('keep', button))
 
-class RatingRenderer(ListViewRenderer):
-    def _setup_layout_manager(self):
-        self.text = "todo"
+class RatingRenderer(widgetset.CustomCellRenderer):
+    ICON_STATES = ('yes', 'no', 'maybe', 'probably', 'unset')
+    def __init__(self):
+        widgetset.CustomCellRenderer.__init__(self)
+        self.icon = {}
+        for state in RatingRenderer.ICON_STATES:
+            path = resources.path('images/star-{}.png'.format(state))
+            self.icon[state] = imagepool.get_surface(path)
+        self.icon_width, self.height = self.icon['yes'].get_size()
+        self.min_width = self.width = self.icon_width * 5 + 5
+        self.hover = None
+        self.layout = None
+
+    def layout_manager(self, layout_manager):
+        hbox = cellpack.HBox()
+        self.pack_icons(hbox)
+        return hbox
+
+    def hotspot_test(self, style, layout_manager, x, y, width, height):
+        packing = self.layout
+        hotspot_info = packing.find_hotspot(x, y, width, height)
+        if hotspot_info is None:
+            return None
+        else:
+            return hotspot_info[0]
+
+    def get_size(self, style, layout_manager):
+        return self.width, self.height
+
+    def render(self, context, layout_manager, selected, hotspot, hover):
+        if hover and self.layout:
+            hotspot_info = self.layout.find_hotspot(hover[0], hover[1], 79, 25)
+            if hotspot_info is None:
+                hover = None
+            else:
+                hover = int(hotspot_info[0].split(':', 1)[1])
+        self.hover = hover
+        self.layout = self.layout_manager(layout_manager)
+        self.layout.render_layout(context)
+
+    def pack_icons(self, hbox):
+        for i in range(5):
+            icon = self._get_icon(i)
+            alignment = cellpack.Alignment(icon, yalign=0.5, yscale=0.0,
+                xalign=0, xscale=0, min_width=self.icon_width)
+            hbox.pack(alignment)
+
+    def _get_icon(self, i):
+        # yes/no for explicit ratings; maybe/no for hover ratings;
+        # probably/no for auto ratings; unset when no explicit, auto, or hover rating
+        state = 'no'
+        if self.hover is not None:
+            if self.hover >= i:
+                state = 'maybe'
+        else:
+            if self.info.rating is not None:
+                if self.info.rating >= i:
+                    state = 'yes'
+            elif self.info.auto_rating is not None:
+                if self.info.auto_rating >= i:
+                    state = 'probably'
+            else:
+                state = 'unset'
+        name = "rate:"+str(i)
+        return cellpack.Hotspot(name, self.icon[state])
 
 class ETARenderer(ListViewRenderer):
     right_aligned = True
