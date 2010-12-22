@@ -270,6 +270,8 @@ for dir in ('searchengines', 'images', 'conversions', 'devices'):
     source_dir = os.path.join(resources_dir, dir)
     data_files.extend(find_data_files(dest_dir, source_dir))
 
+data_files.append(('resources', [os.path.join(root_dir, 'CREDITS')]))
+
 locale_temp_dir = os.path.join(os.path.dirname(__file__), "build", "locale")
 
 def copy_locale_files():
