@@ -388,9 +388,9 @@ class ListItemView(widgetset.TableView):
 
     def _make_column(self, header, renderer, column_name, resizable=True):
         column = widgetset.TableColumn(header, renderer, info=0)
+        column.set_min_width(renderer.min_width)
         if resizable:
             column.set_resizable(True)
-            column.set_min_width(renderer.min_width)
         if hasattr(renderer, 'right_aligned') and renderer.right_aligned:
             column.set_right_aligned(True)
         column.connect_weak('clicked', self._on_column_clicked, column_name)
