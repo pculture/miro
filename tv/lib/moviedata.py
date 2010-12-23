@@ -57,6 +57,18 @@ TYPE_RE = re.compile("Miro-Movie-Data-Type: (audio|video|other)")
 THUMBNAIL_SUCCESS_RE = re.compile("Miro-Movie-Data-Thumbnail: Success")
 TRY_AGAIN_RE = re.compile("Miro-Try-Again: True")
 
+VIDEO_EXTENSIONS = ('.m4v','.mp4')
+TAG_MAP = {
+    'album': ('album', 'talb', 'wm/albumtitle', u'\uFFFDalb'),
+    'artist': ('artist', 'tpe1', 'tpe2', 'tpe3', 'author', 'albumartist',
+        'composer', u'\uFFFDart'),
+    'title': ('tit2', 'title', u'\uFFFDnam'),
+    'track': ('trck', 'tracknumber'),
+    'year': ('tdrc', 'tyer', 'date', 'year'),
+    'genre': ('genre', 'tcon', 'providerstyle', u'\uFFFDgen'),
+}
+
+
 def thumbnail_directory():
     dir_ = os.path.join(app.config.get(prefs.ICON_CACHE_DIRECTORY),
                         "extracted")
@@ -214,8 +226,69 @@ class MovieDataUpdater(signals.SignalEmitter):
                 return category
         return None
 
+    def _sanitize_tags(self, tags):
+        """Strip useless components and strange characters from tag names
+        """
+        tags_cleaned = {}
+        for key, value in tags.items():
+            key = str(key)
+            if key.startswith('PRIV:'):
+                key = key.split('PRIV:')[1]
+            key = key.split(':')[0]
+            if key.startswith('WM/'):
+                key = key.split('WM/')[1]
+            key = key.decode('utf-8', 'replace')
+            key = key.lower()
+            while isinstance(value, list):
+                if not value:
+                    value = None
+                    break
+                value = value[0]
+            if value:
+                if not isinstance(value, basestring):
+                    value = str(value)
+                if isinstance(value, str):
+                    value = unicode(value, 'utf-8', 'replace')
+                tags_cleaned[key] = value.lstrip()
+        return tags_cleaned
+
+    def _special_mappings(self, data, item):
+        """Handle tags that need more than a simple TAG_MAP entry
+        """
+        if 'purd' in data:
+            data[u'year'] = data['purd'].split('-')[0]
+        if 'year' in data:
+            if not data['year'].isdigit():
+                del data['year']
+        if 'track' in data:
+            track = data['track'].split('/')[0]
+            if track.isdigit():
+                data[u'track'] = unicode(int(track))
+            else:
+                del data['track']
+        if 'trkn' in data:
+            track = data['trkn']
+            if isinstance(track, tuple):
+                track = track[0]
+            data[u'track'] = unicode(track)
+        if 'track' not in data:
+            num = ''
+            full_path = item.get_url() or item.get_filename()
+            filename = os.path.basename(full_path)
+            
+            for char in filename:
+                if not char.isdigit():
+                    break
+                num += char
+            if num.isdigit():
+                num = int(num)
+                if num > 0:
+                    while num > 100:
+                        num -= 100
+                    data[u'track'] = unicode(num)
+        return data
+     
     def read_metadata(self, item):
-        VIDEO_EXTENSIONS = ('.m4v','.mp4')
         mediatype = None
         duration = -1
         tags = {}
@@ -252,38 +325,7 @@ class MovieDataUpdater(signals.SignalEmitter):
             except (KeyError, AttributeError, TypeError, IndexError):
                 pass
 
-        TAG_MAP = {
-                'album': ('album', 'talb', 'wm/albumtitle', u'\uFFFDalb'),
-                'artist': ('artist', 'tpe1', 'tpe2', 'tpe3', 'author',
-                    'albumartist', 'composer', u'\uFFFDart'),
-                'title': ('tit2', 'title', u'\uFFFDnam'),
-                'track': ('trck', 'tracknumber'),
-                'year': ('tdrc', 'tyer', 'date', 'year'),
-                'genre': ('genre', 'tcon', 'providerstyle', u'\uFFFDgen'),
-                }
-
-        tags_cleaned = {}
-        for key, value in tags.items():
-            key = str(key)
-            if key.startswith('PRIV:'):
-                key = key.split('PRIV:')[1]
-            key = key.split(':')[0]
-            if key.startswith('WM/'):
-                key = key.split('WM/')[1]
-            key = key.decode('utf-8', 'replace')
-            key = key.lower()
-            while isinstance(value, list):
-                if not value:
-                    value = None
-                    break
-                value = value[0]
-            if value:
-                if not isinstance(value, basestring):
-                    value = str(value)
-                if isinstance(value, str):
-                    value = unicode(value, 'utf-8', 'replace')
-                tags_cleaned[key] = value.lstrip()
-        tags = tags_cleaned
+        tags = self._sanitize_tags(tags)
 
         for tag, sources in TAG_MAP.items():
             for source in sources:
@@ -291,37 +333,8 @@ class MovieDataUpdater(signals.SignalEmitter):
                     data[unicode(tag)] = tags[source]
                     break
 
-        if 'purd' in data:
-            data[u'year'] = data['purd'].split('-')[0]
-        if 'year' in data:
-            if not data['year'].isdigit():
-                del data['year']
-        if 'track' in data:
-            track = data['track'].split('/')[0]
-            if track.isdigit():
-                data[u'track'] = unicode(int(track))
-            else:
-                del data['track']
-        if 'trkn' in data:
-            track = data['trkn']
-            if isinstance(track, tuple):
-                track = track[0]
-            data[u'track'] = unicode(track)
-        if 'track' not in data:
-            num = ''
-            full_path = item.get_url() or item.get_filename()
-            filename = os.path.basename(full_path)
-            
-            for char in filename:
-                if not char.isdigit():
-                    break
-                num += char
-            if num.isdigit():
-                num = int(num)
-                if num > 0:
-                    while num > 100:
-                        num -= 100
-                    data[u'track'] = unicode(num)
+        data = self._special_mappings(data, item)
+
         return (mediatype, duration, data)
 
     def kill_process(self, pid):
