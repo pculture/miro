@@ -157,7 +157,8 @@ def get(descriptor):
         value = os.path.expanduser('~/.miro')
 
     elif descriptor == prefs.ICON_CACHE_DIRECTORY:
-        value = os.path.expanduser('~/.miro/icon-cache')
+        value = get(prefs.SUPPORT_DIRECTORY)
+        value = os.path.expanduser(value, 'icon-cache')
 
     elif descriptor == prefs.SQLITE_PATHNAME:
         value = get(prefs.SUPPORT_DIRECTORY)
