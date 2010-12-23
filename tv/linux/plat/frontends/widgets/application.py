@@ -260,6 +260,10 @@ class LinuxApplication(Application):
         gtk.Clipboard(selection="PRIMARY").set_text(text)
 
     def get_main_window_dimensions(self):
+        """Gets x, y, width, height from config.
+
+        Returns Rect.
+        """
         x = get_int("x") or 100
         y = get_int("y") or 300
         width = get_int("width") or 800
@@ -271,6 +275,8 @@ class LinuxApplication(Application):
         return get_bool("maximized") == True
 
     def set_main_window_dimensions(self, window, x, y, width, height):
+        """Saves x, y, width, height to config.
+        """
         set_int("width", width)
         set_int("height", height)
         set_int("x", x)
