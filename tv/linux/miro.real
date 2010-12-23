@@ -123,12 +123,19 @@ group.add_option('--gconf-name',
                  metavar='<NAME>',
                  help='Use a different name for gconf values than "miro"')
 parser.set_defaults(gconf_name='miro')
+group.add_option('--home',
+                 dest='user_home',
+                 metavar='<DIR>',
+                 help='Like setting $HOME env var, but only in Miro')
+parser.set_defaults(user_home='~/')
+
 parser.add_option_group(group)
 
 (parsed_options, args) = parser.parse_args()
 
-# Setup gconf_name early on so we can load config values
+# Setup gconf_name and home early on so we can load config values
 from miro.plat import options
+options.user_home = parsed_options.user_home
 options.gconf_name = parsed_options.gconf_name
 
 from miro.plat import utils
