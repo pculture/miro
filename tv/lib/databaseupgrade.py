@@ -2907,3 +2907,11 @@ def upgrade126(cursor):
         cursor.execute("UPDATE item SET feed_id=? WHERE feed_id=?",
                        (manual_feed_id, single_feed_id))
         cursor.execute("DELETE FROM feed WHERE origURL='dtv:singleFeed'")
+
+def upgrade127(cursor):
+    """Add play_count and skip_count to item.
+    Set them all to 0, since there's no way to know.
+    """
+    cursor.execute("ALTER TABLE item ADD COLUMN play_count INT")
+    cursor.execute("ALTER TABLE item ADD COLUMN skip_count INT")
+    cursor.execute("UPDATE item SET play_count=0, skip_count=0")

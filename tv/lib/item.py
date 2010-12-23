@@ -397,6 +397,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
         self.setup_new_icon_cache()
         self.metadata = {}
         self.rating = None
+        self.play_count = 0
+        self.skip_count = 0
         # Initalize FileItem attributes to None
         self.deleted = self.shortFilename = self.offsetPath = None
 
