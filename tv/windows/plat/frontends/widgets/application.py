@@ -138,14 +138,11 @@ class WindowsApplication(Application):
             else:
                 self.window._window.unmaximize()
 
-        if trayicon.trayicon_is_supported:
-            self.trayicon = trayicon.Trayicon(icopath)
-            if app.config.get(options.SHOW_TRAYICON):
-                self.trayicon.set_visible(True)
-            else:
-                self.trayicon.set_visible(False)
+        self.trayicon = trayicon.Trayicon(icopath)
+        if app.config.get(options.SHOW_TRAYICON):
+            self.trayicon.set_visible(True)
         else:
-            logging.info("trayicon is not supported.")
+            self.trayicon.set_visible(False)
 
         # check x, y to make sure the window is visible and fix it if
         # not

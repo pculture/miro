@@ -190,12 +190,11 @@ class LinuxApplication(Application):
                 self.window._window.unmaximize()
 
         # handle the trayicon
-        if trayicon.trayicon_is_supported:
-            self.trayicon = trayicon.Trayicon('miro')
-            if app.config.get(options.SHOW_TRAYICON):
-                self.trayicon.set_visible(True)
-            else:
-                self.trayicon.set_visible(False)
+        self.trayicon = trayicon.Trayicon('miro')
+        if app.config.get(options.SHOW_TRAYICON):
+            self.trayicon.set_visible(True)
+        else:
+            self.trayicon.set_visible(False)
 
         # check x, y to make sure the window is visible and fix it
         # if not
@@ -286,9 +285,7 @@ class LinuxApplication(Application):
             return
 
         notification = pynotify.Notification(title, body)
-        if (attach_trayicon
-                and trayicon.trayicon_is_supported
-                and app.config.get(options.SHOW_TRAYICON)):
+        if attach_trayicon and app.config.get(options.SHOW_TRAYICON):
             notification.attach_to_status_icon(self.trayicon)
         if timeout:
             notification.set_timeout(timeout)
