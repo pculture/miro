@@ -297,21 +297,11 @@ class ListItemView(widgetset.TableView):
     }
 
     WIDTH_WEIGHT = {
-        'state': 0,     # bump
-        'name': 1,      # title
-        'feed-name': 0.5,
-        'date': 0,
-        'length': 0,
-        'status': 0.2,
-        'size': 0,
-        'eta': 0,
-        'rate': 0,      # download rate
+        'name': 1,
         'artist': 0.7,
         'album': 0.7,
-        'track': 0,
-        'year': 0,
-        'genre': 0,
-        'rating': 0,
+        'feed-name': 0.5,
+        'status': 0.2,
     }
 
     def __init__(self, item_list, columns):
@@ -409,7 +399,10 @@ class ListItemView(widgetset.TableView):
             extra_width = max(available_width - min_width, 0)
             weights = {}
             for name, width in self.column_state:
-                weights[name] = self.WIDTH_WEIGHT[name]
+                weight = 0
+                if name in self.WIDTH_WEIGHT:
+                    weight = self.WIDTH_WEIGHT[name]
+                weights[name] = weight
             total_weight = sum(weight for weight in weights.values()) or 1
             diff = 0 # prevent cumulative rounding errors
             for i, (name, width) in enumerate(self.column_state):
