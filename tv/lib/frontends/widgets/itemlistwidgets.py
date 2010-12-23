@@ -294,6 +294,8 @@ class ListItemView(widgetset.TableView):
         'feed-name': [_('Feed'), style.FeedNameRenderer()],
         'eta': [_('ETA'), style.ETARenderer()],
         'rate': [_('Speed'), style.DownloadRateRenderer()],
+        'date-added': [_('Date Added'), style.DateAddedRenderer()],
+        'last-played': [_('Last Played'), style.LastPlayedRenderer()],
     }
 
     WIDTH_WEIGHT = {

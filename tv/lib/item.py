@@ -1071,6 +1071,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
                     days=app.config.get(prefs.EXPIRE_AFTER_X_DAYS))
             return self.get_watched_time() + expire_time
 
+    def get_creation_time(self):
+        """Returns the time this Item object was created -
+        i.e. the associated file was added to our database
+        """
+        return self.creationTime
+
     def get_watched_time(self):
         """Returns the most recent watched time of this item or any
         of its child items.

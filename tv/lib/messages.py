@@ -1066,6 +1066,8 @@ class ItemInfo(object):
     :param year: the track's year of release
     :param genre: the track's genre
     :param rating: the user's rating of the track
+    :param date_added: when the item became part of the user's db
+    :param last_played: the date/time the item was last played
     :param file_url: URL of the enclosure that would be downloaded
     :param download_info: DownloadInfo object containing info about the
                           download (or None)
@@ -1087,7 +1089,7 @@ class ItemInfo(object):
     # bump this whenever you change the ItemInfo class, or change on of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description())
-    VERSION = 3
+    VERSION = 4
 
     html_stripper = util.HTMLStripper()
 
@@ -1143,6 +1145,8 @@ class ItemInfo(object):
         self.year = item.get_year()
         self.genre = item.get_genre()
         self.rating = item.get_rating()
+        self.date_added = item.get_creation_time()
+        self.last_played = item.get_watched_time()
 
         if item.downloader:
             self.download_info = DownloadInfo(item.downloader)

@@ -154,7 +154,7 @@ def expiration_date_short(exp_date):
                         math.ceil(offset.seconds/60.0),
                         {"count": math.ceil(offset.seconds/60.0)})
 
-def release_date(rdate):
+def date(rdate):
     """Takes a date object and returns the "month day, year"
     representation.
 
@@ -173,7 +173,7 @@ def release_date(rdate):
     else:
         return ''
 
-def release_date_slashes(rdate):
+def date_slashes(rdate):
     """Takes a date object and returns the "MM/DD/YYYY"
     representation.
 
