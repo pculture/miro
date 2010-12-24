@@ -42,7 +42,7 @@ from miro import prefs
 from miro import signals
 from miro import util
 from miro import fileutil
-from miro.fileutil import FilenameType
+from miro.fileobject import FilenameType
 from miro.plat.utils import (kill_process, movie_data_program_info,
                              thread_body)
 

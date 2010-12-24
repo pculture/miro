@@ -233,7 +233,7 @@ class SharingItemTrackerImpl(object):
         return self.items
 
 class SharingManagerBackend(object):
-    types = ['videos', 'audios']
+    types = ['videos', 'music']
     id    = None                # Must be None
     items = dict()              # Neutral format - not really needed.
     daapitems = dict()          # DAAP format XXX - index via the items

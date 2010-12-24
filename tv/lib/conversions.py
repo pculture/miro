@@ -51,7 +51,7 @@ from miro import prefs
 from miro import signals
 from miro import messages
 from miro.gtcache import gettext as _
-from miro.fileutil import FilenameType
+from miro.fileobject import FilenameType
 from miro.plat import utils
 from miro.plat import resources
 
