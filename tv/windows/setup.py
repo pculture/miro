@@ -634,7 +634,7 @@ if __name__ == "__main__":
         options={
             'py2exe': {
                 'packages': [
-                    'encodings',
+                    'encodings', 'libdaap'
                     ],
                 'includes': ('cairo, pango, pangocairo, atk, gobject, '
                              'gio, libtorrent, mutagen'),

@@ -62,7 +62,7 @@ from miro import searchengines
 from miro import fileutil
 from miro import search
 from miro import models
-from miro.fileutil import FilenameType
+from miro.fileobject import FilenameType
 
 _charset = locale.getpreferredencoding()
 

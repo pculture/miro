@@ -49,7 +49,7 @@ from miro import prefs
 from miro.plat.utils import samefile, unicode_to_filename
 from miro import flashscraper
 from miro import fileutil
-from miro.fileutil import FilenameType
+from miro.fileobject import FilenameType
 
 daemon_starter = None
 
