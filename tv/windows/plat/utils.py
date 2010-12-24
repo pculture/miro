@@ -338,7 +338,12 @@ def launch_download_daemon(oldpid, env):
     downloaderPath = '"%s"' % os.path.join(resources.appRoot(),
             "Miro_Downloader.exe") 
     startupinfo = subprocess.STARTUPINFO()
-    startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    # TEMPORARY: the STARTF_USESHOWWINDOW has been moved into
+    # subprocess._subprocess in Python 2.6.6 and beyond.
+    try:
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    except AttributeError:
+        startupinfo.dwFlags |= subprocess._subprocess.STARTF_USESHOWWINDOW
     subprocess.Popen(downloaderPath, stdout=subprocess.PIPE,
             stderr=subprocess.PIPE, 
             stdin=subprocess.PIPE,
