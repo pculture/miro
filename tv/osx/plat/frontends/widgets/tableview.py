@@ -921,12 +921,18 @@ class TableView(Widget):
         return width
 
     def start_bulk_change(self):
-        # TODO: Implementing this might provide performance benefits
-        pass
+        # stop our model from emitting signals, which is slow if we're
+        # adding/removing/changing a bunch of rows.  Instead, just reload the
+        # model afterwards.
+        self.reload_needed = True
+        self.remember_selection()
+        self.cancel_hotspot_track()
+        self.model.freeze_signals()
 
     def model_changed(self):
         if not self.row_height_set and self.fixed_height:
             self.try_to_set_row_height()
+        self.model.thaw_signals()
         size_changed = False
         if self.reload_needed:
             self.tableview.reloadData()

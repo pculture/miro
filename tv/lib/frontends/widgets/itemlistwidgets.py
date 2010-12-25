@@ -247,33 +247,11 @@ class ItemView(widgetset.TableView):
         self.set_show_headers(False)
         self.allow_multiple_select(True)
         self.set_auto_resizes(True)
+        self.set_fixed_height(True)
         self.set_background_color(widgetutil.WHITE)
-        self._recalculate_heights_queued = False
 
     def build_renderer(self):
         return style.ItemRenderer(self.display_channel)
-
-    def do_size_allocated(self, width, height):
-        if width != self.renderer.total_width:
-            self.renderer.total_width = width
-            # We want to resize the rows with show_details set to
-            # True, because they may have gotten taller/shorter based
-            # on the description getting less/more width.  However, if
-            # the user is quickly resizing the window, we don't want
-            # to flood the system.  Use call_on_ui_thread, which
-            # amounts to waiting until the widget system is idle.
-            if not self._recalculate_heights_queued:
-                self._recalculate_heights_queued = True
-                call_on_ui_thread(self._recalculate_show_details_heights)
-
-    def _recalculate_show_details_heights(self):
-        self._recalculate_heights_queued = False
-        for iter in self.item_list.find_show_details_rows():
-            # We want to make this row's height get re-calculated, so
-            # we use a bit of a hack, we "update" the row to the value
-            # it currently has
-            row = self.item_list.model[iter]
-            self.item_list.model.update(iter, *row)
 
 class ListItemView(widgetset.TableView):
     """TableView that displays a list of items using the list view."""
