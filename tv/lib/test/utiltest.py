@@ -9,7 +9,7 @@ import unittest
 from miro.test.framework import MiroTestCase
 from miro import download_utils
 from miro import util
-from miro.fileutil import FilenameType
+from miro.fileobject import FilenameType
 
 # We're going to override this so we can guarantee that if the order
 # changes later that it doesn't really affect us.
@@ -295,8 +295,6 @@ class UtilTest(unittest.TestCase):
     def test_check_f(self):
 
         def testName(text):
-            from miro.plat.utils import FilenameType
-
             correctType = FilenameType(text)
             util.check_f(correctType)
 

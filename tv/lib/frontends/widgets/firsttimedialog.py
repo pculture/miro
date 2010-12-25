@@ -33,7 +33,7 @@ from miro import app
 from miro import prefs
 from miro import util
 from miro import messages
-from miro.fileutil import FilenameType
+from miro.fileobject import FilenameType
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import threads
 from miro.frontends.widgets import widgetutil

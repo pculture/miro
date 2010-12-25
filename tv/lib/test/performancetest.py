@@ -7,7 +7,7 @@ from miro import app
 from miro import messagehandler
 from miro import messages
 from miro import models
-from miro.fileutil import FilenameType
+from miro.fileobject import FilenameType
 from miro.test.framework import EventLoopTest
 from miro.test import messagetest
 

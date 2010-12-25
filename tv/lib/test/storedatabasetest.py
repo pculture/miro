@@ -18,7 +18,7 @@ from miro import schema
 from miro import signals
 from miro import tabs
 from miro import theme
-from miro.fileutil import FilenameType
+from miro.fileobject import FilenameType
 import shutil
 from miro import storedatabase
 from miro.plat import resources

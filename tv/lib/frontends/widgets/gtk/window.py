@@ -38,7 +38,7 @@ from miro import app
 from miro import prefs
 from miro import signals
 from miro import dialogs
-from miro.fileutil import FilenameType
+from miro.fileobject import FilenameType
 from miro.gtcache import gettext as _
 from miro.frontends.widgets.gtk import wrappermap, widgets
 from miro.frontends.widgets.gtk import keymap

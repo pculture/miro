@@ -7,7 +7,7 @@ from miro import app
 from miro import prefs
 from miro.feed import Feed
 from miro.item import Item, FileItem, FeedParserValues
-from miro.fileutil import FilenameType
+from miro.fileobject import FilenameType
 from miro.downloader import RemoteDownloader
 from miro.test.framework import MiroTestCase
 from miro.singleclick import _build_entry
