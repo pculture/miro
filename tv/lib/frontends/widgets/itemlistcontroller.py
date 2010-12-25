@@ -388,6 +388,8 @@ class ItemListController(object):
         """Handle an ItemList message meant for this ItemContainer."""
         self.item_list_group.add_items(message.items)
         self.on_initial_list()
+        for item_view in self.all_item_views():
+            item_view.model_changed()
 
     def handle_items_changed(self, message):
         """Handle an ItemsChanged message meant for this ItemContainer."""
