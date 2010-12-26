@@ -456,12 +456,20 @@ class Application:
         prefpanel.show_window()
 
     def remove_items(self, selection=None):
+        # remove items that the user has selected
         if not selection:
             selection = app.item_list_controller_manager.get_selection()
             selection = [s for s in selection if s.downloaded]
 
-            if not selection:
-                return
+        # if the user hasn't selected any items, try removing the
+        # item currently playing
+        if not selection:
+            selection = [app.playback_manager.get_playing_item()]
+            if selection:
+                app.playback_manager.on_movie_finished()
+
+        if not selection:
+            return
 
         external_count = len([s for s in selection if s.is_external])
         folder_count = len([s for s in selection if s.is_container_item])
