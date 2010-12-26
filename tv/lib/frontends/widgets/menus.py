@@ -218,7 +218,7 @@ def get_menu():
                              plural=_("Save Items _As")),
                     MenuItem(_("Copy Item _URL"), "CopyItemURL",
                              Shortcut("u", MOD),
-                             groups=["PlayableSelected"]),
+                             groups=["PlayableSelected_PlayPause"]),
                     Separator(),
                     MenuItem(_("_Preferences"), "EditPreferences"),
                     MenuItem(_("_Quit"), "Quit", Shortcut("q", MOD)),

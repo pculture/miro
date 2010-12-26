@@ -463,7 +463,7 @@ class Application:
 
         # if the user hasn't selected any items, try removing the
         # item currently playing
-        if not selection:
+        if not selection and app.playback_manager.is_playing:
             selection = [app.playback_manager.get_playing_item()]
             if selection:
                 app.playback_manager.on_movie_finished()
