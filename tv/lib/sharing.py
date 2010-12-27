@@ -481,7 +481,7 @@ class SharingManager(object):
                         self.mdns_callback(i)
                         continue
                     if server_fileno == i:
-                        self.handle_request()
+                        self.server.handle_request()
             except select.error, (err, errstring):
                 if err == errno.EINTR:
                     continue 
