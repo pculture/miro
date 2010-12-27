@@ -26,8 +26,10 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import errno
 import os
 import socket
+import select
 import threading
 
 from miro import app
@@ -109,11 +111,25 @@ class SharingTracker(object):
         message.send_to_frontend()
 
     def server_thread(self):
-        libdaap.browse_mdns(self.mdns_callback)
+        callback = libdaap.browse_mdns(self.mdns_callback)
+        while True:
+            refs = callback.get_refs()
+            try:
+                r, w, x = select.select(refs, [], [])
+                for i in r:
+                    callback(i)
+            # XXX what to do in case of error?  How to pass back to user?
+            except select.error, (err, errstring):
+                if err == errno.EINTR:
+                    continue
+                else:
+                    pass
+            except:
+                pass
 
     def start_tracking(self):
         # sigh.  New thread.  Unfortunately it's kind of hard to integrate
-        # it into the application runloop ...
+        # it into the application runloop at this moment ...
         self.thread = threading.Thread(target=thread_body,
                                        args=[self.server_thread],
                                        name='mDNS Browser Thread')
@@ -442,17 +458,38 @@ class SharingManager(object):
         # XXX should use IP?  Anyway append a dot because mDNSResponder
         # sends an full dns name, with a dot at the end.
         self.my_mdns = (socket.gethostname() + '.', port)
-        self.mdns_ref = libdaap.install_mdns(name, port=port)
+        self.mdns_callback = libdaap.install_mdns(name, port=port)
+        # not exactly but close enough: it's not actually until the
+        # processing function gets called.
         self.discoverable = True
 
     def disable_discover(self):
         self.discoverable = False
-        libdaap.uninstall_mdns(self.mdns_ref)
+        libdaap.uninstall_mdns(self.mdns_callback)
         self.my_mdns = (None, None)
-        del self.mdns_ref
 
     def server_thread(self):
-        libdaap.runloop(self.server)
+        server_fileno = self.server.fileno()
+        while True:
+            try:
+                rset = [server_fileno]
+                refs = self.mdns_callback.get_refs()
+                rset += refs
+                r, w, x = select.select(rset, [], [])
+                for i in r:
+                    if i in refs:
+                        self.mdns_callback(i)
+                        continue
+                    if server_fileno == i:
+                        self.handle_request()
+            except select.error, (err, errstring):
+                if err == errno.EINTR:
+                    continue 
+                else:
+                    pass
+            # XXX How to pass error, send message to the backend/frontend?
+            except:
+                pass
 
     def enable_sharing(self):
         name = app.config.get(prefs.SHARE_NAME)
