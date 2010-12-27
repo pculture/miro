@@ -34,6 +34,7 @@ import math
 
 from AppKit import *
 from Foundation import *
+from PyObjCTools import AppHelper
 from objc import YES, NO, nil
 
 from miro import signals
@@ -926,10 +927,11 @@ class TableView(Widget):
     def model_changed(self):
         if not self.row_height_set and self.fixed_height:
             self.try_to_set_row_height()
+        size_changed = False
         if self.reload_needed:
             self.tableview.reloadData()
             self.update_selection_after_change()
-            self.invalidate_size_request()
+            size_changed = True
             self.tableview.recalcTrackingRects()
         elif self.iters_to_update:
             if self.fixed_height or not self.height_changed:
@@ -952,21 +954,22 @@ class TableView(Widget):
                     index_set.addIndex_(self.row_for_iter(iter))
                 self.tableview.noteHeightOfRowsWithIndexesChanged_(index_set)
                 self.tableview.recalcTrackingRects()
-            # FIXME
-            # Could get here during shutdown.  Case for example is we
-            # got stuck in a contextual menu and quit was called.  For
-            # some reason when that happens it thinks the tabs have changed
-            # (even during shutdown) and wants to update the tableview.  I
-            # think updating it is probably bogus and updating it is an
-            # error but let's just try and then continue if it didn't work.
-            #
-            # I really don't like this try ... except ... block here.
-            try:
-                self.invalidate_size_request()
-            except AttributeError:
-                pass
+            size_changed = True
         else:
             return
+        if size_changed:
+            # we can't call invalidate_size_request right away because of the
+            # (common) situation where multiple TableViews are connected to
+            # one model.  In that case, we will change that model, then call
+            # model_changed() on the item views in order
+            #
+            # The problem is when the first TableViews calls
+            # invalidate_size_request() and that is propagated up the widget
+            # hierarchy, potentially causing the other TableViews to redraw
+            # their contents.  But they haven't seen the model_changed()
+            # method yet, so we will get an exception when trying to redraw
+            # them.
+            AppHelper.callAfter(self.invalidate_size_request)
         self.height_changed = self.reload_needed = False
         self.iters_to_update = []
 
