@@ -99,13 +99,13 @@ class ItemContextMenuHandler(object):
             menu = [
                 (_('Play'), app.widgetapp.play_selection),
             ]
-            if not item.device:
+            if not (item.device or item.remote):
                 if app.config.get(prefs.PLAY_IN_MIRO):
                     menu.append((_('Play Just This Item'), play_and_stop))
                     menu.append((_('Play Externally'), play_externally))
                 menu.append((_('Add to Playlist'), app.widgetapp.add_to_playlist))
             self._add_remove_context_menu_item(menu, [item])
-            if not item.device:
+            if not (item.device or item.remote):
                 menu.append((_("Edit Item"), app.widgetapp.edit_item))
                 if item.video_watched:
                     menu.append((_('Mark as Unplayed'),
