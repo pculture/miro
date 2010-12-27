@@ -75,6 +75,23 @@ MIME_SUBSITUTIONS = {
     u'QUICKTIME': u'MOV',
 }
 
+def _check_for_image(path, element):
+    """Given an element (which is really a dict), traverses
+    the path in the element and if that turns out to be an image,
+    then it returns True.
+
+    Otherwise it returns False.
+    """
+    for part in path:
+        try:
+            element = element[part]
+        except (KeyError, TypeError):
+            return False
+    if ((isinstance(element, basestring)
+         and element.endswith((".jpg", ".jpeg", ".png", ".gif")))):
+        return True
+    return False
+
 class FeedParserValues(object):
     """Helper class to get values from feedparser entries
 
@@ -136,7 +153,6 @@ class FeedParserValues(object):
 
     def _calc_thumbnail_url(self):
         """Returns a link to the thumbnail of the video.  """
-
         # Try to get the thumbnail specific to the video enclosure
         if self.first_video_enclosure is not None:
             url = self._get_element_thumbnail(self.first_video_enclosure)
@@ -144,8 +160,8 @@ class FeedParserValues(object):
                 return url
 
         # Try to get any enclosure thumbnail
-        if hasattr(self.entry, "enclosures"):
-            for enclosure in self.entry.enclosures:
+        if "enclosures" in self.entry:
+            for enclosure in self.entry["enclosures"]:
                 url = self._get_element_thumbnail(enclosure)
                 if url is not None:
                     return url
@@ -154,20 +170,13 @@ class FeedParserValues(object):
         return self._get_element_thumbnail(self.entry)
 
     def _get_element_thumbnail(self, element):
-        try:
-            thumb = element["thumbnail"]
-        except KeyError:
-            return None
-        if isinstance(thumb, str):
-            return unicode(thumb)
-        try:
-            if isinstance(thumb, unicode):
-                return thumb.encode('utf-8')
-            # We can't get the type??  What to do ....
-            return thumb["url"].decode('ascii', 'replace')
-        except (KeyError, AttributeError, UnicodeEncodeError,
-                UnicodeDecodeError):
-            return None
+        # handles <thumbnail><href>http:...
+        if _check_for_image(("thumbnail", "href"), element):
+            return element["thumbnail"]["href"]
+        if _check_for_image(("thumbnail",), element):
+            return element["thumbnail"]
+
+        return None
 
     def _calc_raw_description(self):
         """Check the enclosure to see if it has a description first.
