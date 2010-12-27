@@ -112,8 +112,7 @@ class TableModelBase(signals.SignalEmitter):
         self.row_list = RowList()
         self.column_types = column_types
         self.create_signal('row-changed')
-        self.create_signal('row-added')
-        self.create_signal('row-will-be-removed')
+        self.create_signal('structure-will-change')
 
     def check_column_values(self, column_values):
         if len(self.column_types) != len(column_values):
@@ -131,8 +130,8 @@ class TableModelBase(signals.SignalEmitter):
         self.emit('row-changed', iter, old_row)
 
     def remove(self, iter):
+        self.emit('structure-will-change')
         row_list = self.containing_list(iter)
-        self.emit('row-will-be-removed', iter)
         rv = row_list.remove(iter)
         if rv == row_list.lastIter():
             rv = None
@@ -211,9 +210,9 @@ class TableModel(TableModelBase):
         return self.row_list
 
     def append(self, *column_values):
+        self.emit('structure-will-change')
         self.row_indexes = {}
         retval = self.row_list.append(TableRow(column_values))
-        self.emit('row-added', retval)
         return retval
 
     def remove(self, iter):
@@ -221,10 +220,10 @@ class TableModel(TableModelBase):
         return TableModelBase.remove(self, iter)
 
     def insert_before(self, iter, *column_values):
+        self.emit('structure-will-change')
         self.row_indexes = {}
         row = TableRow(column_values)
         retval = self.row_list.insertBefore(iter, row)
-        self.emit('row-added', retval)
         return retval
 
     def iter_for_row(self, tableview, row):
@@ -269,8 +268,8 @@ class TreeTableModel(TableModelBase):
         return iter
 
     def append(self, *column_values):
+        self.emit('structure-will-change')
         retval = self.row_list.append(TreeNode.create_(column_values, None))
-        self.emit('row-added', retval)
         return self.remember_iter(retval)
 
     def forget_iter_for_item(self, item):
@@ -283,15 +282,15 @@ class TreeTableModel(TableModelBase):
         return TableModelBase.remove(self, iter)
 
     def insert_before(self, iter, *column_values):
+        self.emit('structure-will-change')
         row = TreeNode.create_(column_values, self.parent_iter(iter))
         retval = self.containing_list(iter).insertBefore(iter, row)
-        self.emit('row-added', retval)
         return self.remember_iter(retval)
 
     def append_child(self, iter, *column_values):
+        self.emit('structure-will-change')
         row_list = self.row_list_for_iter(iter)
         retval = row_list.append(TreeNode.create_(column_values, iter))
-        self.emit('row-added', retval)
         return self.remember_iter(retval)
 
     def child_iter(self, iter):

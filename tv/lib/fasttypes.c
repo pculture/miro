@@ -164,6 +164,11 @@ static PyObject *LinkedListIter_copy(LinkedListIterObject* self, PyObject *obj)
     return (PyObject*)LinkedListIterObject_new(self->list, self->node);
 }
 
+static PyObject *LinkedListIter_valid(LinkedListIterObject* self, PyObject *obj)
+{
+    return PyBool_FromLong(self->node->deleted == 0);
+}
+
 PyObject* LinkedListIter_richcmp(LinkedListIterObject *o1,
         LinkedListIterObject *o2, int opid)
 {
@@ -195,6 +200,9 @@ static PyMethodDef LinkedListIter_methods[] = {
     },
     {"copy", (PyCFunction)LinkedListIter_copy, METH_NOARGS,
              "Duplicate iter",
+    },
+    {"valid", (PyCFunction)LinkedListIter_valid, METH_NOARGS,
+             "Test if the iter is valid",
     },
     {NULL},
 };

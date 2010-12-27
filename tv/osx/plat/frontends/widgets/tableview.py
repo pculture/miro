@@ -707,11 +707,12 @@ class TableView(Widget):
             NSMakeRect(0, 0, 0, HEADER_HEIGHT))
         self.set_show_headers(True)
         self.notifications = NotificationForwarder.create(self.tableview)
+        self._selected_before_change = None
         self.model.connect_weak('row-changed', self.on_row_change)
-        self.model.connect_weak('row-added', self.on_row_added)
-        self.model.connect_weak('row-will-be-removed', self.on_row_removed)
+        self.model.connect_weak('structure-will-change',
+                self.on_model_structure_change)
         self.iters_to_update = []
-        self.height_changed = self.selection_removed = self.reload_needed = False
+        self.height_changed = self.reload_needed = False
 
     def send_hotspot_clicked(self):
         tracker = self.tableview.hotspot_tracker
@@ -738,15 +739,27 @@ class TableView(Widget):
         if self.tableview.hotspot_tracker is not None:
             self.tableview.hotspot_tracker.update_hit()
 
-    def on_row_added(self, model, iter):
-        self.reload_needed = True
-        self.cancel_hotspot_track()
-
-    def on_row_removed(self, model, iter):
-        self.reload_needed = True
-        if self.tableview.isRowSelected_(self.row_for_iter(iter)):
+    def remember_selection(self):
+        if self._selected_before_change is None:
+            index_set = self.tableview.selectedRowIndexes()
+            self._selected_before_change = [
+                    self.model.iter_for_row(self.tableview, i)
+                    for i in index_set.allObjects()]
             self.tableview.deselectAll_(nil)
-            self.selection_removed = True
+
+    def update_selection_after_change(self):
+        new_index_set = NSMutableIndexSet.alloc().init()
+        for iter in self._selected_before_change:
+            if iter.valid():
+                new_index_set.addIndex_(self.row_for_iter(iter))
+        self.tableview.selectRowIndexes_byExtendingSelection_(
+                new_index_set, YES)
+        self.emit('selection-changed')
+        self._selected_before_change = None
+
+    def on_model_structure_change(self, model):
+        self.reload_needed = True
+        self.remember_selection()
         self.cancel_hotspot_track()
 
     def cancel_hotspot_track(self):
@@ -915,9 +928,8 @@ class TableView(Widget):
             self.try_to_set_row_height()
         if self.reload_needed:
             self.tableview.reloadData()
+            self.update_selection_after_change()
             self.invalidate_size_request()
-            if self.selection_removed:
-                self.emit('selection-changed')
             self.tableview.recalcTrackingRects()
         elif self.iters_to_update:
             if self.fixed_height or not self.height_changed:
@@ -955,7 +967,7 @@ class TableView(Widget):
                 pass
         else:
             return
-        self.height_changed = self.selection_removed = self.reload_needed = False
+        self.height_changed = self.reload_needed = False
         self.iters_to_update = []
 
     def width_for_columns(self, width):
