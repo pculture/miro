@@ -492,7 +492,6 @@ class SharingManager(object):
 
     def server_thread(self):
         server_fileno = self.server.fileno()
-        kill_thread = False
         while True:
             try:
                 rset = [server_fileno, self.r]
