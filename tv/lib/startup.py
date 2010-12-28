@@ -86,8 +86,6 @@ from miro import conversions
 from miro import devices
 from miro.plat import devicetracker
 
-import miro.extensions
-
 DEBUG_DB_MEM_USAGE = False
 mem_usage_test_event = threading.Event()
 
