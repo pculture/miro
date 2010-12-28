@@ -82,13 +82,36 @@ class SharingTracker(object):
         self.available_shares = []
         self.r, self.w = os.pipe()
 
+    def calc_local_addresses(self):
+        # Get our own hostname so that we can filter out ourselves if we 
+        # also happen to be broadcasting.  Getaddrinfo() may block so you 
+        # MUST call in auxiliary thread context.
+        #
+        # Why isn't this cached, you may ask?  Because the system may
+        # change IP addresses while this program is running then we'd be
+        # filtering the wrong addresses.  
+        #
+        # XXX can I count on the Bonjour daemon implementation to send me
+        # the add/remove messages when the IP changes?
+        hostname = socket.gethostname()
+        local_addresses = []
+        try:
+            addrinfo = socket.getaddrinfo(hostname, 0, 0, 0, socket.SOL_TCP)
+            for family, socktype, proto, canonname, sockaddr in addrinfo:
+                local_addresses.append(canonname)
+        except socket.error, (err, errstring):
+            # What am I supposed to do here?
+            pass
+
+        return local_addresses
+
     def mdns_callback(self, added, fullname, host, ips, port):
         added_list = []
         removed_list = []
-        # First check to see if it's myself.
-        local_address, local_port = app.sharing_manager.mdns_myself()
+        unused, local_port = app.sharing_manager.get_address()
+        local_addresses = self.calc_local_addresses()
         ip_values = [socket.inet_ntop(k, ips[k]) for k in ips.keys()]
-        if set(local_address + ip_values) and local_port == port:
+        if set(local_addresses + ip_values) and local_port == port:
             return
         # Need to come up with a unique ID for the share.  Use 
         # (name, host, port)
@@ -273,8 +296,8 @@ class SharingManagerBackend(object):
     # XXX daapplaylist should be hidden from view. 
     daap_playlists = dict()     # Playlist, in daap format
     playlist_item_map = dict()  # Playlist -> item mapping
-    my_mdns = (None, None)      # No entry
 
+    # Reserved for future use: you can register new sharing protocols here.
     def register_protos(self, proto):
         pass
 
@@ -420,7 +443,6 @@ class SharingManager(object):
         self.r, self.w = os.pipe()
         self.sharing = False
         self.discoverable = False
-        self.my_mdns = (None, None)
         self.config_watcher = config.ConfigWatcher(
             lambda func, *args: eventloop.add_idle(func, 'config watcher',
                  args=args))
@@ -436,9 +458,6 @@ class SharingManager(object):
         self.backend.start_tracking()
         # Enable sharing if necessary.
         self.twiddle_sharing()
-
-    def mdns_myself(self):
-        return self.my_mdns
 
     def on_config_changed(self, obj, key, value):
         # We actually know what's changed but it's so simple let's not bother.
@@ -470,16 +489,17 @@ class SharingManager(object):
             else:
                 self.disable_discover()
 
+    def get_address(self):
+        server_address = (None, None)
+        try:
+            server_address = self.server.server_address
+        except AttributeError:
+            pass
+        return server_address
+
     def enable_discover(self):
         name = app.config.get(prefs.SHARE_NAME)
         address, port = self.server.server_address
-        # XXX need to call asynchronously
-        hostname = socket.gethostname()
-        addrinfo = socket.getaddrinfo(hostname, port, 0, 0, socket.SOL_TCP)
-        addresses = []
-        for family, socktype, proto, canonname, sockaddr in addrinfo:
-            addresses.append(canonname) 
-        self.my_mdns = addresses, port
         self.mdns_callback = libdaap.install_mdns(name, port=port)
         # not exactly but close enough: it's not actually until the
         # processing function gets called.
@@ -488,7 +508,6 @@ class SharingManager(object):
     def disable_discover(self):
         self.discoverable = False
         libdaap.uninstall_mdns(self.mdns_callback)
-        self.my_mdns = (None, None)
 
     def server_thread(self):
         server_fileno = self.server.fileno()
