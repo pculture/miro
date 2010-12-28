@@ -436,15 +436,6 @@ class DeviceDatabase(dict, signals.SignalEmitter):
             self.notify_changed()
 
 
-class DatabaseSaveManager(object):
-    def __init__(self, mount, database):
-        self.mount = mount
-        database.connect('changed', self.database_changed)
-
-    def database_changed(self, database):
-        write_database(self.mount, database)
-
-
 def load_database(mount):
     """
     Returns a dictionary of the JSON database that lives on the given device.
@@ -461,10 +452,10 @@ def load_database(mount):
             logging.exception('error loading JSON db on %s' % mount)
             db = {}
     ddb = DeviceDatabase(db)
-    DatabaseSaveManager(mount, ddb)
+    ddb.connect('changed', write_database, mount)
     return ddb
 
-def write_database(mount, database):
+def write_database(database, mount):
     """
     Writes the given dictionary to the device.
 

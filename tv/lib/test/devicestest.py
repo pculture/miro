@@ -156,7 +156,7 @@ class DeviceHelperTest(MiroTestCase):
     def test_write_database(self):
         data = {u'a': 2,
                 u'b': {u'c': [5, 6]}}
-        devices.write_database(self.tempdir, data)
+        devices.write_database(data, self.tempdir)
         with open(os.path.join(self.tempdir, '.miro', 'json')) as f:
             new_data = json.load(f)
         self.assertEqual(data, new_data)

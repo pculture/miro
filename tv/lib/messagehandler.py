@@ -1594,7 +1594,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                               [message.item.id]).send_to_frontend()
 
     def handle_device_eject(self, message):
-        devices.write_database(message.device.mount, message.device.database)
+        devices.write_database(message.device.database, message.device.mount)
         app.device_tracker.eject(message.device)
 
     @staticmethod
