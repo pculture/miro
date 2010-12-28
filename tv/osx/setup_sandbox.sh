@@ -27,6 +27,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+set -o errexit
 
 # =============================================================================
 
@@ -120,8 +121,8 @@ for pkg in "setuptools-0.6c11" \
            "pyobjc-framework-Cocoa-2.2" \
            "pyobjc-framework-ExceptionHandling-2.2" \
            "pyobjc-framework-LaunchServices-2.2" \
-           "pyobjc-framework-QTKit-2.2" \
            "pyobjc-framework-Quartz-2.2" \
+           "pyobjc-framework-QTKit-2.2" \
            "pyobjc-framework-ScriptingBridge-2.2" \
            "pyobjc-framework-WebKit-2.2" \
            "pyobjc-framework-FSEvents-2.2" \
