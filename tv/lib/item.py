@@ -2372,6 +2372,12 @@ class SharingItem(ItemBase):
     def get_feed_url():
         return None
 
+    def get_creation_time(self):
+        return None    # XXX?
+
+    def get_watched_time(self):
+        return None
+
     @returns_unicode
     def get_description(self):
         return self.description
