@@ -82,12 +82,13 @@ class SharingTracker(object):
         self.available_shares = []
         self.r, self.w = os.pipe()
 
-    def mdns_callback(self, added, fullname, host, port):
+    def mdns_callback(self, added, fullname, host, ips, port):
         added_list = []
         removed_list = []
         # First check to see if it's myself.
-        my_hostname, my_port = app.sharing_manager.mdns_myself()
-        if my_hostname == host and my_port == port:
+        local_address, local_port = app.sharing_manager.mdns_myself()
+        ip_values = [socket.inet_ntop(k, ips[k]) for k in ips.keys()]
+        if set(local_address + ip_values) and local_port == port:
             return
         # Need to come up with a unique ID for the share.  Use 
         # (name, host, port)
@@ -472,9 +473,13 @@ class SharingManager(object):
     def enable_discover(self):
         name = app.config.get(prefs.SHARE_NAME)
         address, port = self.server.server_address
-        # XXX should use IP?  Anyway append a dot because mDNSResponder
-        # sends an full dns name, with a dot at the end.
-        self.my_mdns = (socket.gethostname() + '.', port)
+        # XXX need to call asynchronously
+        hostname = socket.gethostname()
+        addrinfo = socket.getaddrinfo(hostname, port, 0, 0, socket.SOL_TCP)
+        addresses = []
+        for family, socktype, proto, canonname, sockaddr in addrinfo:
+            addresses.append(canonname) 
+        self.my_mdns = addresses, port
         self.mdns_callback = libdaap.install_mdns(name, port=port)
         # not exactly but close enough: it's not actually until the
         # processing function gets called.
