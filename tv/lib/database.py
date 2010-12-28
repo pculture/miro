@@ -346,10 +346,9 @@ class ViewTracker(signals.SignalEmitter):
             self.emit('removed', self.fetcher.fetch_obj_for_ddb_object(obj))
 
     def remove_objects(self, objects):
-        object_ids = set(o.id for o in objects)
-        for removed_id in self.current_ids.intersection(object_ids):
-            self.current_ids.remove(removed_id)
-            self.emit('removed', self.fetcher.fetch_obj(removed_id))
+        for obj in [o for o in objects if o.id in self.current_ids]:
+            self.current_ids.remove(obj.id)
+            self.emit('removed', obj)
 
     def check_object(self, obj):
         before = (obj.id in self.current_ids)

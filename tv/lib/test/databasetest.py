@@ -1,6 +1,7 @@
 import logging
 
 from miro.test.framework import MiroTestCase
+from miro import app
 from miro import database
 from miro import databaselog
 from miro import item
@@ -131,6 +132,19 @@ class ViewTrackerTest(DatabaseTestCase):
                 joins={'feed': 'feed.id=item.feed_id'}))
         self.i1.remove()
         self.assertEquals(self.remove_callbacks, [self.i1])
+
+    def test_with_bulk(self):
+        self.setup_view(item.Item.make_view("feed.userTitle='booya'",
+                joins={'feed': 'feed.id=item.feed_id'}))
+        app.bulk_sql_manager.start()
+        self.feed2.set_title(u"booya")
+        self.i3.signal_change()
+        self.i2.remove()
+        self.i1.set_title(u"new title")
+        app.bulk_sql_manager.finish()
+        self.assertEquals(self.add_callbacks, [self.i3])
+        self.assertEquals(self.remove_callbacks, [self.i2])
+        self.assertEquals(self.change_callbacks, [self.i1])
 
     def test_unlink(self):
         self.tracker.unlink()
