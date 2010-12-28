@@ -280,7 +280,6 @@ class MiroBuild (py2app):
             'miro.frontends.profilewidgets',
             'miro.frontends.shell',
             'miro.frontends.widgets',
-            'miro.extensions',
             'miro.plat',
             'miro.plat.frontends',
             'miro.plat.frontends.widgets'
@@ -313,7 +312,8 @@ class MiroBuild (py2app):
         self.cmpntRoot = os.path.join(self.bundleRoot, 'Components')
         self.helpersRoot = os.path.join(self.bundleRoot, 'Helpers')
         self.prsrcRoot = os.path.join(self.rsrcRoot, 'resources')
-        
+        self.extRoot = os.path.join(self.rsrcRoot, 'extensions')
+
     def get_idletime_ext(self):
         idletime_src = glob(os.path.join(ROOT_DIR, 'osx', 'modules', 'idletime.c'))
         idletime_link_args = ['-framework', 'CoreFoundation', '-framework', 'IOKit']
@@ -367,6 +367,7 @@ class MiroBuild (py2app):
         self.copy_conversion_helpers()
         self.copy_ffmpeg_presets()
         self.copy_portable_resources()
+        self.copy_extensions()
         self.copy_config_file()
         self.copy_localization_files()
         if self.theme is not None:
@@ -504,30 +505,17 @@ class MiroBuild (py2app):
     def copy_extensions(self):
         print "Copying extensions to application bundle"
 
-        if self.force_update and os.path.exists(self.prsrcRoot):
-            shutil.rmtree(self.prsrcRoot, True)
+        if self.force_update and os.path.exists(self.extRoot):
+            shutil.rmtree(self.extRoot, True)
 
-        if not os.path.exists(self.prsrcRoot):
-            os.mkdir(self.prsrcRoot)
+        src = os.path.join(ROOT_DIR, 'extensions')
+        dest = self.extRoot
 
-        resources = ['searchengines', 'images', 'conversions']
-        if self.keep_tests:
-            resources.append('testdata')
-
-        for resource in resources:
-            src = os.path.join(ROOT_DIR, 'resources', resource)
-            rsrcName = os.path.basename(src)
-            if os.path.isdir(src):
-                dest = os.path.join(self.prsrcRoot, rsrcName)
-                copy = shutil.copytree
-            else:
-                dest = os.path.join(self.prsrcRoot, rsrcName)
-                copy = shutil.copy
-            if os.path.exists(dest):
-                print "    (%s skipped, already bundled)" % resource
-            else:
-                print "    %s" % dest
-                copy(src, dest)
+        if os.path.exists(dest):
+            print "    (extensions skipped, already bundled)"
+        else:
+            print "    %s" % dest
+            shutil.copytree(src, dest)
 
     def copy_config_file(self):
         print "Copying config file to application bundle"
