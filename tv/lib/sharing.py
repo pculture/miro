@@ -80,6 +80,7 @@ class SharingTracker(object):
     def __init__(self):
         self.trackers = dict()
         self.available_shares = []
+        self.r, self.w = os.pipe()
 
     def mdns_callback(self, added, fullname, host, port):
         added_list = []
@@ -126,9 +127,13 @@ class SharingTracker(object):
         while True:
             refs = callback.get_refs()
             try:
-                r, w, x = select.select(refs, [], [])
+                r, w, x = select.select(refs + [self.r], [], [])
                 for i in r:
-                    callback(i)
+                    if i in refs:
+                        callback(i)
+                        continue
+                    if i == self.r:
+                        return
             # XXX what to do in case of error?  How to pass back to user?
             except select.error, (err, errstring):
                 if err == errno.EINTR:
@@ -160,7 +165,7 @@ class SharingTracker(object):
             return self.trackers[share_id]
 
     def stop_tracking(self):
-        raise NotImplementedError()
+        os.write(self.w, "b")
 
 # Synchronization issues: The messagehandler.SharingItemTracker() creates
 # one of these for each share it connects to.  If this is an initial connection
@@ -411,6 +416,7 @@ class SharingManagerBackend(object):
 
 class SharingManager(object):
     def __init__(self):
+        self.r, self.w = os.pipe()
         self.sharing = False
         self.discoverable = False
         self.my_mdns = (None, None)
@@ -481,9 +487,10 @@ class SharingManager(object):
 
     def server_thread(self):
         server_fileno = self.server.fileno()
+        kill_thread = False
         while True:
             try:
-                rset = [server_fileno]
+                rset = [server_fileno, self.r]
                 refs = self.mdns_callback.get_refs()
                 rset += refs
                 r, w, x = select.select(rset, [], [])
@@ -493,6 +500,9 @@ class SharingManager(object):
                         continue
                     if server_fileno == i:
                         self.server.handle_request()
+                        continue
+                    if self.r == i:
+                        return
             except select.error, (err, errstring):
                 if err == errno.EINTR:
                     continue 
@@ -518,7 +528,10 @@ class SharingManager(object):
 
     def disable_sharing(self):
         self.sharing = False
-        self.server.shutdown()
+        os.write(self.w, "b")
         del self.thread
         del self.server
 
+    def shutdown(self):
+        if self.sharing:
+            self.disable_sharing()
