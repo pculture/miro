@@ -469,7 +469,7 @@ class FeedParserAttributesTestCase(FeedTestCase):
 
     </channel>
 </rss>
-""" % {'thumburl': resources.url("testdata/democracy-now-unicode-bug.xml")})
+""" % {'thumburl': "http://example.com/thumbnail.jpg"})
 
 
     def test_attributes(self):
