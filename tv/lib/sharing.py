@@ -79,6 +79,7 @@ class SharingTracker(object):
     type = 'sharing'
     def __init__(self):
         self.trackers = dict()
+        self.available_shares = []
 
     def mdns_callback(self, added, fullname, host, port):
         added_list = []
@@ -90,11 +91,21 @@ class SharingTracker(object):
         # Need to come up with a unique ID for the share.  Use 
         # (name, host, port)
         share_id = (fullname, host, port)
+        # Do we have this share on record?  If so then just ignore.
+        # In particular work around a problem with Avahi apparently sending
+        # duplicate messages.
+        if added and share_id in self.available_shares:
+            return
+        if not added and not share_id in self.available_shares:
+            return 
+
         info = messages.SharingInfo(share_id, fullname, host, port)
         if added:
             added_list.append(info)
+            self.available_shares.append(share_id)
         else:
             removed_list.append(share_id)
+            self.available_shares.append(share_id)
             # XXX we should not be simply stopping because the mDNS share
             # disappears.  AND we should not be calling this from backend
             # due to RACE!
