@@ -47,6 +47,7 @@ from miro.folder import ChannelFolder, PlaylistFolder
 from miro.plat import resources
 from miro import app
 from miro import guide
+from miro import search
 from miro import prefs
 from miro import util
 
@@ -199,10 +200,13 @@ class TrackItems(BackendMessage):
 
     id should be the id of a feed/playlist. For new, downloading and library
     it is ignored.
+
+    search_text is an optional search query to filter with
     """
-    def __init__(self, typ, id_):
+    def __init__(self, typ, id_, search_text=None):
         self.type = typ
         self.id = id_
+        self.search_text = search_text
 
 class TrackItemsManually(BackendMessage):
     """Track a manually specified list of items.
@@ -210,10 +214,28 @@ class TrackItemsManually(BackendMessage):
     ItemList and ItemsChanged messages will have "manual" as the type and
     will use the id specified in the constructed.
     """
-    def __init__(self, id_, ids_to_track):
+    def __init__(self, id_, ids_to_track, search_text=None):
         self.id = id_
         self.ids_to_track = ids_to_track
         self.type = 'manual'
+        self.search_text = search_text
+
+class SetTrackItemsSearch(BackendMessage):
+    """Set the search query for a TrackItems message.
+
+    The search query will limit which items get sent back.
+
+    A TrackItems message for the same type/id must have already been sent.
+    The backend will send back an ItemsChanged message with items being
+    added/removed from the list based on the new search.  If multiple
+    SetTrackItemsSearch messages come in quickly, an ItemsChanged message
+    might not be sent back for each one.  The backend may try to only handle
+    the latest one to save processing time
+    """
+    def __init__(self, typ, id_, search_text=None):
+        self.type = typ
+        self.id = id_
+        self.search_text = search_text
 
 class StopTrackingItems(BackendMessage):
     """Stop tracking items for a feed.
@@ -1080,6 +1102,8 @@ class ItemInfo(object):
     :param year: the track's year of release
     :param genre: the track's genre
     :param rating: the user's rating of the track
+    :param date_added: when the item became part of the user's db
+    :param last_played: the date/time the item was last played
     :param file_url: URL of the enclosure that would be downloaded
     :param download_info: DownloadInfo object containing info about the
                           download (or None)
@@ -1101,7 +1125,7 @@ class ItemInfo(object):
     # bump this whenever you change the ItemInfo class, or change on of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description())
-    VERSION = 3
+    VERSION = 5
 
     html_stripper = util.HTMLStripper()
 
@@ -1157,6 +1181,8 @@ class ItemInfo(object):
         self.year = item.get_year()
         self.genre = item.get_genre()
         self.rating = item.get_rating()
+        self.date_added = item.get_creation_time()
+        self.last_played = item.get_watched_time()
 
         if item.downloader:
             self.download_info = DownloadInfo(item.downloader)
@@ -1194,6 +1220,9 @@ class ItemInfo(object):
                 self.up_down_ratio = 0.0
             else:
                 self.up_down_ratio = self.up_total * 1.0 / self.down_total
+
+        # calculate ngrams last since it depends on other data
+        self.search_ngrams = search.calc_ngrams(self)
 
 class DownloadInfo(object):
     """Tracks the download state of an item.

@@ -52,13 +52,24 @@ and what preferences are available, do::
 
    ./run.sh --help
 
-Set the ``HOME`` environment variable to switch where Miro saves database
-and other files::
+There are two ways to run Miro in a test sandbox.
 
-   mkdir /tmp/foo
-   HOME=/tmp/foo ./run.sh
+1. Set the ``HOME`` environment variable to switch where Miro saves database
+   and other files::
 
-.. Note:: Setting ``HOME`` doesn't work in KDE--it causes other problems.
+      mkdir /tmp/foo
+      HOME=/tmp/foo ./run.sh
+
+   This has the problem that it doesn't work if you're using KDE (it causes
+   problems) and it uses your "production" Miro configuration.
+
+2. Run Miro using the ``--home`` and ``--gconf-name`` arguments::
+
+      mkdir /tmp/foo
+      run.sh --home=/tmp/foo --gconf-name=mirotest
+
+   This stores configuration in a different place and uses a differen home
+   without affecting the process environment.
 
 
 Preferences

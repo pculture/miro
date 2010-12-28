@@ -623,6 +623,8 @@ class ConversionTask(object):
 
         args.insert(0, executable)
 
+        logging.debug("Conversion: (%s)", " ".join(args))
+
         kwargs = {"bufsize": 1,
                   "stdout": subprocess.PIPE,
                   "stderr": subprocess.STDOUT,
@@ -633,24 +635,7 @@ class ConversionTask(object):
 
         try:
             self.process_handle = subprocess.Popen(args, **kwargs)
-            for line in self.readlines():
-                old_progress = self.progress
-
-                line = line.strip()
-                self._log_progress(line)
-
-                error = self.check_for_errors(line)
-                if error:
-                    self.error = error
-                    break
-
-                self.progress = self.monitor_progress(line)
-                if self.progress >= 1.0:
-                    self.progress = 1.0
-                    break
-
-                if old_progress != self.progress:
-                    self._notify_progress()
+            self.process_output(line_reader(self.process_handle.stdout))
 
         except OSError, ose:
             if ose.errno == errno.ENOENT:
@@ -663,6 +648,29 @@ class ConversionTask(object):
             self._stop_logging(self.progress < 1.0)
             if self.is_failed():
                 conversion_manager._notify_tasks_count()
+
+    def process_output(self, lines_generator):
+        """Takes a function that's a generator of lines, iterates
+        through the lines and checks for progress and errors.
+        """
+        for line in lines_generator():
+            old_progress = self.progress
+
+            line = line.strip()
+            self._log_progress(line)
+
+            error = self.check_for_errors(line)
+            if error:
+                self.error = error
+                break
+
+            self.progress = self.monitor_progress(line)
+            if self.progress >= 1.0:
+                self.progress = 1.0
+                break
+
+            if old_progress != self.progress:
+                self._notify_progress()
     
     def _start_logging(self, executable, params):
         log_folder = os.path.dirname(app.config.get(prefs.LOG_PATHNAME))
@@ -704,6 +712,25 @@ class ConversionTask(object):
                     self.progress < 1.0):
                     clean_up(self.temp_output_path, file_and_directory=True)
 
+def line_reader(handle):
+    """Builds a line reading generator for the given handle.  This
+    generator breaks on empty strings, \\r and \\n.
+
+    This a little weird, but it makes it really easy to test error
+    checking and progress monitoring.
+    """
+    def _readlines():
+        chars = []
+        c = handle.read(1)
+        while c:
+            if c in ["", "\r", "\n"]:
+                yield "".join(chars)
+                chars = []
+            else:
+                chars.append(c)
+            c = handle.read(1)
+    return _readlines
+
 class FFMpegConversionTask(ConversionTask):
     DURATION_RE = re.compile(r'Duration: (\d\d):(\d\d):(\d\d)\.(\d\d)'
                              '(, start:.*)?(, bitrate:.*)?')
@@ -723,24 +750,13 @@ class FFMpegConversionTask(ConversionTask):
         default_parameters.insert(0, '-strict')
         return utils.customize_ffmpeg_parameters(default_parameters)
 
-    def readlines(self):
-        chars = []
-        c = self.process_handle.stdout.read(1)
-        while c:
-            if c in ["", "\r", "\n"]:
-                yield "".join(chars)
-                chars = []
-            else:
-                chars.append(c)
-            c = self.process_handle.stdout.read(1)
-
     def check_for_errors(self, line):
         if line.startswith(("Unknown", "Error")):
             return line
 
     def monitor_progress(self, line):
         if self.duration is None:
-            match = self.DURATION_RE.match(line)
+            match = FFMpegConversionTask.DURATION_RE.match(line)
             if match is not None:
                 hours = match.group(1)
                 minutes = match.group(2)
@@ -750,10 +766,10 @@ class FFMpegConversionTask(ConversionTask):
                     (int(minutes) * 60) +
                     int(seconds))
         else:
-            match = self.PROGRESS_RE.match(line)
+            match = FFMpegConversionTask.PROGRESS_RE.match(line)
             if match is not None:
                 return float(match.group(1)) / self.duration
-            match = self.LAST_PROGRESS_RE.match(line)
+            match = FFMpegConversionTask.LAST_PROGRESS_RE.match(line)
             if match is not None:
                 return 1.0
         return self.progress
@@ -782,34 +798,28 @@ class FFMpeg2TheoraConversionTask(ConversionTask):
             self.input_path, self.temp_output_path, self.converter_info)
         return utils.customize_ffmpeg2theora_parameters(default_parameters)
 
-    def readlines(self):
-        line = self.process_handle.stdout.readline()
-        while line:
-            yield line
-            line = self.process_handle.stdout.readline()
-
     def check_for_errors(self, line):
         return
 
     def monitor_progress(self, line):
         if line.startswith('f2t'):
             if self.duration is None:
-                match = self.DURATION_RE.match(line)
+                match = FFMpeg2TheoraConversionTask.DURATION_RE.match(line)
                 if match is not None:
                     self.duration = float(match.group(1))
-            match = self.PROGRESS_RE2.match(line)
+            match = FFMpeg2TheoraConversionTask.PROGRESS_RE2.match(line)
             if match is not None:
                 return float(match.group(1)) / self.duration
-            match = self.RESULT_RE2.match(line)
+            match = FFMpeg2TheoraConversionTask.RESULT_RE2.match(line)
             if match is not None:
                 return 1.0
         else:
-            match = self.PROGRESS_RE1.match(line)
+            match = FFMpeg2TheoraConversionTask.PROGRESS_RE1.match(line)
             if match is not None:
                 if self.duration is None:
                     self.duration = float(match.group(1))
                 return float(match.group(2)) / self.duration
-            match = self.RESULT_RE1.match(line)
+            match = FFMpeg2TheoraConversionTask.RESULT_RE1.match(line)
             if match is not None:
                 return 1.0
         return self.progress

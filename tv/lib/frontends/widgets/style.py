@@ -461,7 +461,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         vertical_spacing = 3
 
         # release date
-        release_date = displaytext.release_date(self.data.release_date)
+        release_date = displaytext.date(self.data.release_date)
         layout_manager.set_text_color((0.4, 0.4, 0.4))
         layout_manager.set_font(0.75, family="Helvetica", bold=True)
         textbox = layout_manager.textbox(release_date)
@@ -1060,7 +1060,7 @@ class FeedNameRenderer(ListViewRenderer):
 
 class DateRenderer(ListViewRenderer):
     def _setup_layout_manager(self):
-        self.text = displaytext.release_date_slashes(self.info.release_date)
+        self.text = displaytext.date_slashes(self.info.release_date)
 
 class LengthRenderer(ListViewRenderer):
     def _setup_layout_manager(self):
@@ -1180,6 +1180,14 @@ class YearRenderer(ListViewRenderer):
 class GenreRenderer(ListViewRenderer):
     def _setup_layout_manager(self):
         self.text = self.info.genre
+
+class DateAddedRenderer(ListViewRenderer):
+    def _setup_layout_manager(self):
+        self.text = displaytext.date_slashes(self.info.date_added)
+
+class LastPlayedRenderer(ListViewRenderer):
+    def _setup_layout_manager(self):
+        self.text = displaytext.date_slashes(self.info.last_played)
 
 class StateCircleRenderer(widgetset.CustomCellRenderer):
     min_width = 25

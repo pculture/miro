@@ -208,7 +208,7 @@ def get_menu():
                     Separator(),
                     MenuItem(_("_Remove Item"), "RemoveItems",
                              Shortcut(BKSPACE, MOD),
-                             groups=["PlayablesSelected"],
+                             groups=["PlayablesSelected_PlayPause"],
                              plural=_("_Remove Items")),
                     MenuItem(_("_Edit Item"), "EditItem",
                              groups=["PlayableSelected"]),
@@ -218,7 +218,7 @@ def get_menu():
                              plural=_("Save Items _As")),
                     MenuItem(_("Copy Item _URL"), "CopyItemURL",
                              Shortcut("u", MOD),
-                             groups=["PlayableSelected"]),
+                             groups=["PlayableSelected_PlayPause"]),
                     Separator(),
                     MenuItem(_("_Preferences"), "EditPreferences"),
                     MenuItem(_("_Quit"), "Quit", Shortcut("q", MOD)),
@@ -750,14 +750,19 @@ class MenuStateManager(signals.SignalEmitter):
         self.subtitle_encoding_enabled = False
 
     def reset(self):
-        self.states = { "feed": [], "feeds": [],
-                        "folder": [], "folders": [], 
-                        "site": [], "sites": [],
-                        "plural": [] }
+        self.states = {"feed": [],
+                       "feeds": [],
+                       "folder": [],
+                       "folders": [],
+                       "site": [],
+                       "sites": [],
+                       "plural": []}
         self.enabled_groups = set(['AlwaysOn'])
         if app.playback_manager.is_playing:
             self.enabled_groups.add('PlayPause')
             self.enabled_groups.add('Playing')
+            self.enabled_groups.add('PlayableSelected_PlayPause')
+            self.enabled_groups.add('PlayablesSelected_PlayPause')
             if app.playback_manager.is_playing_audio:
                 # if it's playing audio, then we allow the user to do other
                 # things just as if the window was detached
@@ -885,15 +890,19 @@ class MenuStateManager(signals.SignalEmitter):
                 has_audio = True
         if downloaded:
             self.enabled_groups.add('PlayablesSelected')
+            self.enabled_groups.add('PlayablesSelected_PlayPause')
             if not has_audio:
                 self.enabled_groups.add('PlayableVideosSelected')
             if len(selected_items) == 1:
                 self.enabled_groups.add('PlayableSelected')
+                self.enabled_groups.add('PlayableSelected_PlayPause')
             else:
                 self.states["plural"].append("RemoveItems")
 
         if app.item_list_controller_manager.can_play_items():
             self.enabled_groups.add('PlayPause')
+            self.enabled_groups.add('PlayableSelected_PlayPause')
+            self.enabled_groups.add('PlayablesSelected_PlayPause')
             app.widgetapp.window.videobox.handle_new_selection(True)
         else:
             app.widgetapp.window.videobox.handle_new_selection(False)

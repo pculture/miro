@@ -85,6 +85,8 @@ cd $WORK_DIR/Python-2.6.5
             --with-universal-archs=32-bit
 
 patch -p0 < $BKIT_DIR/patches/Python-2.6.5/setup.py.patch
+patch -p0 < $BKIT_DIR/patches/Python-2.6.5/logging.py.patch
+
 make frameworkinstall
 
 PYTHON_ROOT=$SBOX_DIR/Frameworks/Python.framework/Versions/$PYTHON_VERSION

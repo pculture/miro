@@ -92,8 +92,15 @@ class SignalEmitter(object):
     def __init__(self, *signal_names):
         self.signal_callbacks = {}
         self.id_generator = itertools.count()
+        self._frozen = False
         for name in signal_names:
             self.create_signal(name)
+
+    def freeze_signals(self):
+        self._frozen = True
+
+    def thaw_signals(self):
+        self._frozen = False
 
     def create_signal(self, name):
         self.signal_callbacks[name] = {}
@@ -137,6 +144,8 @@ class SignalEmitter(object):
             self.signal_callbacks[signal] = {}
 
     def emit(self, name, *args):
+        if self._frozen:
+            return
         callback_returned_true = False
         try:
             self_callback = getattr(self, 'do_' + name.replace('-', '_'))

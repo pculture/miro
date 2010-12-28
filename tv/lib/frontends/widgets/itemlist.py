@@ -50,14 +50,6 @@ from miro.plat.utils import filename_to_unicode
 from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
 
-def item_matches_search(item_info, search_text):
-    """Check if an item matches search text."""
-    if search_text == '':
-        return True
-    match_against = [item_info.name, item_info.description]
-    if item_info.video_path is not None:
-        match_against.append(filename_to_unicode(item_info.video_path))
-    return search.match(search_text, match_against)
 
 class ItemSort(object):
     """Class that sorts items in an item list."""
@@ -330,11 +322,6 @@ class ItemListGroup(object):
     def get_sort(self):
         return self._sorter
 
-    def set_search_text(self, search_text):
-        """Update the search for each child list."""
-        for sublist in self.item_lists:
-            sublist.set_search_text(search_text)
-
 class ItemList(signals.SignalEmitter):
     """
     Attributes:
@@ -438,8 +425,8 @@ class ItemList(signals.SignalEmitter):
             return False
         return (not (self.new_only and item_info.item_viewed) and
                 not (self.unwatched_only and item_info.video_watched) and
-                not (self.non_feed_only and (not item_info.is_external and item_info.feed_url != 'dtv:searchDownloads')) and
-                item_matches_search(item_info, self._search_text))
+                not (self.non_feed_only and (not item_info.is_external and
+                    item_info.feed_url != 'dtv:searchDownloads')))
 
     def set_show_details(self, item_id, value):
         """Change the show details value for an item"""
@@ -564,10 +551,6 @@ class ItemList(signals.SignalEmitter):
     def set_filters(self, unwatched, non_feed):
         self.unwatched_only = unwatched
         self.non_feed_only = non_feed
-        self._recalculate_hidden_items()
-
-    def set_search_text(self, search_text):
-        self._search_text = search_text
         self._recalculate_hidden_items()
 
     def _recalculate_hidden_items(self):

@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xml:lang="en">
+	<title type="text">VODO Promoted Works</title>
+	<link rel="self" type="application/atom+xml" href="http://vodo.net/static/html/feed/promoted.xml"/>
+	<rights type="text">No Copyright 2009</rights>
+	<id>http://vodo.net/static/html/feed/promoted.xml</id>
+	<updated>2010-12-27T18:19:40Z</updated>
+	<itunes:image href="http://vodo.net/static/html/feed/icon.png"/>
+	<icon>http://vodo.net/static/html/feed/icon.png</icon>
+	<logo>http://vodo.net/static/html/feed/logo.png</logo>
+	<entry>
+		<title>Pioneer One</title>
+		<link rel="alternate" href="http://vodo.net/pioneerone"/>
+		<link rel="enclosure" type="application/x-bittorrent" href="http://vodo.net/assets/torrents/Pioneer.One.S01E01.REFIX.720p.x264-VODO.torrent"/>
+		<published>2010-12-15-05:52:17 PM</published>
+		<id>07a9de9750158471c3302e4e95edb1107f980fa6</id>
+		<media:thumbnail url="http://vodo.net/media/thumbnails/work_127_pioneerone_uploaded.jpeg"/>
+		<rights>Attribution - Noncommercial - Share Alike</rights>
+		<link rel="license" type="text/html" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"/>
+		<author>
+			<name>Pioneer One</name>
+		</author>
+		<content type="text">&lt;h2&gt;About The Show&lt;/h2&gt;
+
+&lt;p&gt;A mysterious spaceship enters Earth's atmosphere, spreading radiation over hundreds of miles of rural Montana. Officials are quick to bring up the possibility of a terrorist attack, specifically the detonation of a dirty bomb, but an investigation of the debris in Canada uncovers a live human being in a Soviet space suit in an unstable condition. A note handwritten in Russian found at the crash site says that the man is the child of cosmonauts living at a base on Mars.&lt;/p&gt;
+
+&lt;h3&gt;Episode 1&lt;/h3&gt;
+&lt;p&gt;An object in the sky spreads radiation over North America. Fearing terrorism, U.S. Homeland Security agents are dispatched to investigate and contain the damage. What they discover will have drastic implications.&lt;/p&gt;
+
+&lt;h3&gt;Episode 2&lt;/h3&gt;
+&lt;p&gt;Hired Mars expert Dr. Zachary Walzer (Jack Haley) fights to prove the validity of the Mars story. Can he convince the government to mount a manned mission to Mars? Agent in charge Tom Taylor (James Rich) faces pressure from both the Canadians and his own superiors, and has to make a call.&lt;/p&gt;
+&lt;p&gt;The PIONEER ONE story continues with new episode “The Man From Mars”, funded and distributed by YOU!  Producers Josh Bernhard and Bracey Smith have built on the success of the series pilot, produced for just $6000 and released through VODO June 2010 to an audience of millions. On the back of these three new episodes, releasing from now through January/February 2011, Bernhard and Smith are  aiming to raise $60,000 to finish the last two -- including a spectacular season finale.&lt;/p&gt;
+
+&lt;h2&gt;Pioneer One Studio&lt;/h2&gt;
+&lt;p&gt;Get exclusive access behind the scenes of the show by joining the Pioneer One Studio. What's going to happen to this mysterious cosmonaut? Is his story true? What will happen to our agents, now operating on their own? Help the creators tell this story, along with a further 4 seasons mapped out for the future. Inside the Pioneer One Studio, we offer more, exclusive chances to get involved in the production.&lt;/p&gt;
+
+&lt;p&gt;Viewed over a million times and winner of 'Best Drama' at the 2010 NY Television Festival, Pioneer One relies entirely on viewer support for the release of new episodes. Join the Pioneer One Studio on VODO to help support the show and get exclusive behind-the-scenes content.&lt;/p&gt;
+
+&lt;p&gt;This release takes place with the kind support of distribution partners BitTorrent and of course all our other partners in the Distribution Coalition.&lt;/p&gt;
+
+&lt;p&gt;Please help us finish this season - use the links on the right to submit your contribution and receive exclusive content and a backstage pass to the Pioneer One Studio.&lt;/p&gt;</content>
+		<format xmlns="http://xmlns.transmission.cc/FileFormat">
+			<size>1170378590.0</size>
+			<duration>2132.0</duration>
+			<video_codec>H.264</video_codec>
+			<framerate>24.0</framerate>
+			<video_bitrate>4183.0</video_bitrate>
+			<width>1280</width>
+			<height>720</height>
+			<pixel_aspect_ratio>16:9</pixel_aspect_ratio>
+			<audio_codec>AAC</audio_codec>
+			<samplerate>48000.0</samplerate>
+			<channels>2</channels>
+			<audio_bitrate/>
+		</format>
+	</entry>
+	<entry>
+		<title>Snowblind</title>
+		<link rel="alternate" href="http://vodo.net/snowblindmovie"/>
+		<link rel="enclosure" type="application/x-bittorrent" href="http://vodo.net/assets/torrents/Snowblind.2010.Xvid-VODO.torrent"/>
+		<published>2010-11-12-03:45:57 PM</published>
+		<id>1e2e01f8658f59e3f61ce210dfff4b168d371b88</id>
+		<media:thumbnail url="http://vodo.net/assets/thumbnails/snowblindmovie_QM5moDpN.jpeg"/>
+		<rights>Attribution - No Derivative Works</rights>
+		<link rel="license" type="text/html" href="http://creativecommons.org/licenses/by-nd/3.0/"/>
+		<author>
+			<name>Mangofilm</name>
+		</author>
+		<content type="text">&lt;p&gt;A lone gunman gets a last-minute pardon from death row, with the mission to deliver a woman of mysterious powers to an evil Governor. Against the backdrop of a frozen, inhospitable earth, Snowblind fires up the classical love triangle with smoking barrels and a ton of red-hot bullets.&lt;/p&gt;
+&lt;h2&gt;Mangofilm&lt;/h2&gt;
+&lt;p&gt;Snowblind was created by Mangofilm, a posse of German movie enthusiasts who were united by their strong love for 70s and 80s grindhouse cinema. With the daring concept of "cowboys with motorbikes" we were able to draw a lot of professionals to both sides of the camera. A cast of fresh talents from the US, the UK, Australia, Ireland and even South Africa make the film truly international.&lt;/p&gt;
+&lt;p&gt;Snowblind was produced entirely on our private money, and used the help of the online community "wreckamovie.com", which was funded by the makers of internet phenomenon "Star Wreck". After 18 months of hard work, Snowblind had it's world premiere on the 20st Emden International Film Festival on the 7th of June 2010. Since then, the film has toured several countries, winning "Best International Picture" at Belfast's Yellow Fever International Film Festival.&lt;/p&gt;
+&lt;h2&gt;Vampyre Princess 3D&lt;/h2&gt;
+&lt;p&gt;Since we have put every last cent of our private money into Snowblind, we need your help raising the funds to shoot our next feature film. Please use the links below to submit your contribution and receive the following extras:&lt;/p&gt;</content>
+		<format xmlns="http://xmlns.transmission.cc/FileFormat">
+			<size>734660872.0</size>
+			<duration>5520.0</duration>
+			<video_codec>Xvid</video_codec>
+			<framerate>25.0</framerate>
+			<video_bitrate>934.0</video_bitrate>
+			<width>640</width>
+			<height>320</height>
+			<pixel_aspect_ratio>2.0</pixel_aspect_ratio>
+			<audio_codec>mp3</audio_codec>
+			<samplerate>44100.0</samplerate>
+			<channels>2</channels>
+			<audio_bitrate>128.0</audio_bitrate>
+		</format>
+	</entry>
+	<entry>
+		<title>Four Eyed Monsters</title>
+		<link rel="alternate" href="http://vodo.net/foureyedmonsters"/>
+		<link rel="enclosure" type="application/x-bittorrent" href="http://vodo.net/assets/torrents/Four.Eyed.Monsters.HQ.x264-VODO.torrent"/>
+		<published>2010-11-12-01:09:17 AM</published>
+		<id>d1e6adbc9c6d0d7fc8ad7a2b88d73b8790482db8</id>
+		<media:thumbnail url="http://vodo.net/media/thumbnails/work_142_foureyedmonsters_uploaded.jpeg"/>
+		<rights>Attribution - Share Alike</rights>
+		<link rel="license" type="text/html" href="http://creativecommons.org/licenses/by-sa/3.0/"/>
+		<author>
+			<name>Arin Crumley @ Susan Buice</name>
+		</author>
+		<content type="text">&lt;p&gt;Arin Crumley has never had a girlfriend, so he goes to the place where he finds everything else; the internet.  Stuck in a rut, Susan Buice waits tables hoping to become inspired by life.   They decide to meet up with the pretense to only communicate through hand-written notes.  They fall in love with this experiment and continue to relate solely through videos, emails, drawings and physical intimacy for the next 4 months.  As their lives merge they’re taken on a roller coaster that could have only ever existed in this modern era of digital love.&lt;/p&gt;
+&lt;h2&gt;The co-create&lt;/h2&gt;
+&lt;p&gt;The Co-Create is a group of filmmakers, artists and musicians who put together Four Eyed Monsters and are working on several new projects.  Become a member of their Vodo Studio where you'll find downloads of music, regular rough cut their new films and a community of reactions and feedback helping the team refine their creations so that more material can be released to the public here on Vodo.net.&lt;/p&gt;</content>
+		<format xmlns="http://xmlns.transmission.cc/FileFormat">
+			<size>1142270734.0</size>
+			<duration>4200.0</duration>
+			<video_codec>H.264</video_codec>
+			<framerate>29.97</framerate>
+			<video_bitrate>1987.0</video_bitrate>
+			<width>864</width>
+			<height>480</height>
+			<pixel_aspect_ratio>1.8</pixel_aspect_ratio>
+			<audio_codec>AAC</audio_codec>
+			<samplerate>48000.0</samplerate>
+			<channels>2</channels>
+			<audio_bitrate>164.0</audio_bitrate>
+		</format>
+	</entry>
+	<entry>
+		<title>Person of Interest</title>
+		<link rel="alternate" href="http://vodo.net/personofinterest"/>
+		<link rel="enclosure" type="application/x-bittorrent" href="http://vodo.net/assets/torrents/Person.of.Interest.2010.720p.x264-VODO.torrent"/>
+		<published>2010-10-03-03:56:45 PM</published>
+		<id>0a0fce6e943949b4d50c2759af0c39b5f9356c14</id>
+		<media:thumbnail url="http://vodo.net/media/thumbnails/work_130.jpeg"/>
+		<rights>Attribution - Noncommercial - No Derivative Works</rights>
+		<link rel="license" type="text/html" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"/>
+		<author>
+			<name>Gregory Bayne &amp; J. Reuben Appelman</name>
+		</author>
+		<content type="text">&lt;p&gt;
+A veteran of the war in Iraq, and self-proclaimed American Patriot, becomes convinced that the federal government is setting him up as the fall guy in a soon-to-be terrorist attack on American soil ~ yet his reactions to the paranoia unmistakably parallel that of a would-be terrorist.&lt;/p&gt;
+&lt;p&gt;
+At once controversial and definitive, vehemently proactive, and overwhelmingly relevant in a political climate charged with uncertainties, Person of Interest gives voice to a disenfranchised generation of soldiers, while bravely prodding at the seams of homegrown terrorism in the United States. &lt;/p&gt;
+
+&lt;p&gt;This film can also be watched online at &lt;a href="http://veehd.com/video/4532684_Person-of-Interest-2010"&gt;VeeHD&lt;/a&gt;&lt;/p&gt;</content>
+		<format xmlns="http://xmlns.transmission.cc/FileFormat">
+			<size>2354813314.0</size>
+			<duration>4298.0</duration>
+			<video_codec>x264</video_codec>
+			<framerate>23.976</framerate>
+			<video_bitrate>4201.0</video_bitrate>
+			<width>1248</width>
+			<height>704</height>
+			<pixel_aspect_ratio>16:9</pixel_aspect_ratio>
+			<audio_codec>AAC</audio_codec>
+			<samplerate>44100.0</samplerate>
+			<channels>2</channels>
+			<audio_bitrate>192.0</audio_bitrate>
+		</format>
+	</entry>
+	<entry>
+		<title>The Yes Men Fix The World - P2P Edition</title>
+		<link rel="alternate" href="http://vodo.net/theyesmen"/>
+		<link rel="enclosure" type="application/x-bittorrent" href="http://vodo.net/assets/torrents/The.Yes.Men.Fix.The.World.P2P.Edition.2010.Xvid-VODO.torrent"/>
+		<published>2010-07-23-10:47:58 AM</published>
+		<id>2be808c54b33c17ed6a2f8396404a52152bf3047</id>
+		<media:thumbnail url="http://vodo.net/media/thumbnails/yesmen_thumbnail.jpg"/>
+		<rights>Attribution - Noncommercial - No Derivative Works</rights>
+		<link rel="license" type="text/html" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"/>
+		<author>
+			<name>The Yes Men</name>
+		</author>
+		<content type="text">THE YES MEN FIX THE WORLD is a screwball true story about two gonzo political activists who, posing as top executives of giant corporations, lie their way into big business conferences and pull off the world's most outrageous pranks. This peer-to-peer special edition of the film is unique: it is preceded by an EXCLUSIVE VIDEO of the Yes Men impersonating the United States Chamber of Commerce. Because the Yes Men are being sued for this stunt, p2p is the only way that this film will get seen. Please spread the word!
+
+&lt;h2&gt;From the Yes Men&lt;/h2&gt;
+&lt;p&gt;"We have been impersonating people in power in order to make political points for over a decade. The Yes Men Fix the World is our second feature film. It's won a bucket of awards and accolades, but we're still broke. We are hoping that people who share it will donate some money so that we can do even more outrageous actions.&lt;/p&gt;
+
+&lt;p&gt;How outrageous? Outrageous enough to get us sued! Not long ago The US Chamber of Commerce took us to court for impersonating them. That is why on this special p2p version of the Yes Men Fix the World, we have included an exclusive video that the US Chamber of Commerce does not want you to see. You can only see this surprising film on the exclusive VODO p2p release.&lt;/p&gt;
+
+&lt;p&gt;One final note: making films takes lots of hard work. And money. We busted our asses to make this film and still owe our friends barrels of cash they loaned us. By supporting us and joining the Yes Men Labs, you not only get a membership card and an entry into the prize draw, you also help us to pay all those people back and fund future projects. We're sharing by P2P because we made this film to be watched, and with your help we'll able to carry on with what we love doing." &lt;/p&gt;
+
+&lt;h2&gt;About the Yes Men&lt;/h2&gt;
+&lt;p&gt;The Yes Men are Andy Bichlbaum and Mike Bonanno, a culture jamming activist-duo raising awareness around social problems caused by corporations. Operating under the mission statement of telling the truth and exposing lies, they practice a concept they call "identity correction", in which they impersonate entities that they dislike -- some would call it social engineering on a grand scale! From their offices in Milwaukee, they create and maintain fake websites similar to ones they intend to spoof, which have successfully lead to numerous interview, conference, and TV talk show invitations. These occasions are then used to expose, through parody and surreal humour, the dark motivations of our multinational world.&lt;/p&gt;</content>
+		<format xmlns="http://xmlns.transmission.cc/FileFormat">
+			<size>732904952.0</size>
+			<duration>5739.0</duration>
+			<video_codec>Xvid</video_codec>
+			<framerate>29.97</framerate>
+			<video_bitrate>898.0</video_bitrate>
+			<width>640</width>
+			<height>352</height>
+			<pixel_aspect_ratio>1.82</pixel_aspect_ratio>
+			<audio_codec>mp3</audio_codec>
+			<samplerate>44100.0</samplerate>
+			<channels>2</channels>
+			<audio_bitrate>114.0</audio_bitrate>
+		</format>
+	</entry>
+	<entry>
+		<title>Mixtape #1: VODO's favourite short films</title>
+		<link rel="alternate" href="http://vodo.net/mixtape1"/>
+		<link rel="enclosure" type="application/x-bittorrent" href="http://vodo.net/assets/torrents/VODO.Mixtape.1.2010.Xvid-VODO.torrent"/>
+		<published>2010-03-08-09:20:20 PM</published>
+		<id>7c4614f70d6132c645c54e8594d792fb39759133</id>
+		<media:thumbnail url="http://vodo.net/thumbnails/Mixtape1.jpg"/>
+		<rights>Attribution - Noncommercial - No Derivative Works</rights>
+		<link rel="license" type="text/html" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"/>
+		<author>
+			<name>Various</name>
+		</author>
+		<content type="text">We're proud to be releasing this first VODO MIXTAPE. Actual tape might be a thing of the past, but before P2P, mixtapes were the most popular way of sharing popular culture the world had known -- and once called the 'most widely practiced American art form'. We want to resuscitate the spirit of the mixtape for this VODO MIXTAPE series: compilations of our favourite shorts, the weird, the wild and the wonky, all brought together in a temporary and uncomfortable company.</content>
+		<format xmlns="http://xmlns.transmission.cc/FileFormat">
+			<size>733925376.0</size>
+			<duration>3092.36</duration>
+			<video_codec>XVID</video_codec>
+			<framerate>25.0</framerate>
+			<video_bitrate>1898.0</video_bitrate>
+			<width>608</width>
+			<height>352</height>
+			<pixel_aspect_ratio>16:9</pixel_aspect_ratio>
+			<audio_codec>mp3</audio_codec>
+			<samplerate>44100.0</samplerate>
+			<channels>2</channels>
+			<audio_bitrate>0.0</audio_bitrate>
+		</format>
+	</entry>
+	<entry>
+		<title>The Lionshare</title>
+		<link rel="alternate" href="http://vodo.net/lionshare"/>
+		<link rel="enclosure" type="application/x-bittorrent" href="http://vodo.net/assets/torrents/Lionshare.2009.Legacy.2008.Xvid-VODO.torrent "/>
+		<published>2009-12-17-06:07:50 PM</published>
+		<id>12d50fd7283418a214ce8d689b991a745403e11f</id>
+		<media:thumbnail url="http://vodo.net/thumbnails/Lionshare.jpg"/>
+		<rights>Attribution - Noncommercial</rights>
+		<link rel="license" type="text/html" href="http://creativecommons.org/licenses/by-nc/3.0/"/>
+		<author>
+			<name>Josh Bernhard</name>
+		</author>
+		<content type="text">This the kind of film 'anyone' could have made -- 'anyone', that is, with the talent to prise dialogue (and in-jokes) from their own lives, use the backdrop of their own homes for scenery, friends as actors and their own experiences as scenarios -- and still make it pop. These stories are ours, and we think this is the start of a new kind of cinema.</content>
+		<format xmlns="http://xmlns.transmission.cc/FileFormat">
+			<size>727458506.0</size>
+			<duration>4095.595</duration>
+			<video_codec>XVID</video_codec>
+			<framerate/>
+			<video_bitrate/>
+			<width>624</width>
+			<height>352</height>
+			<pixel_aspect_ratio>16:9</pixel_aspect_ratio>
+			<audio_codec>mp3</audio_codec>
+			<samplerate/>
+			<channels>2</channels>
+			<audio_bitrate/>
+		</format>
+	</entry>
+	<entry>
+		<title>Legacy</title>
+		<link rel="alternate" href="http://vodo.net/legacy"/>
+		<link rel="enclosure" type="application/x-bittorrent" href="http://vodo.net/assets/torrents/Legacy.2009.Xvid-VODO.avi.torrent"/>
+		<published>2009-12-17-06:04:14 PM</published>
+		<id>9f50aa95116199d0c5797ad597f6935ba7ecb38b</id>
+		<media:thumbnail url="http://vodo.net/thumbnails/legacy_jonkajtys.h264-VODO.mp4.jpg"/>
+		<rights>Attribution - Noncommercial - No Derivative Works</rights>
+		<link rel="license" type="text/html" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"/>
+		<author>
+			<name>Grzegorz Jonkajtys</name>
+		</author>
+		<content type="text">Story of an alien arriving on planet Earth, in search of a human specimen.</content>
+		<format xmlns="http://xmlns.transmission.cc/FileFormat">
+			<size/>
+			<duration/>
+			<video_codec/>
+			<framerate/>
+			<video_bitrate/>
+			<width/>
+			<height/>
+			<pixel_aspect_ratio/>
+			<audio_codec/>
+			<samplerate/>
+			<channels/>
+			<audio_bitrate/>
+		</format>
+	</entry>
+	<entry>
+		<title>In Guantanamo</title>
+		<link rel="alternate" href="http://vodo.net/ingitmo"/>
+		<link rel="enclosure" type="application/x-bittorrent" href="http://vodo.net/assets/torrents/In Guantanamo.h264-VODO.mp4.torrent"/>
+		<published>2009-11-05-11:37:55 AM</published>
+		<id>f4e978569bfe29fd064744964b3b9f2f1c0c4042</id>
+		<media:thumbnail url="http://vodo.net/thumbnails/In Guantanamo-mp4.jpg"/>
+		<rights>Attribution - Noncommercial - No Derivative Works</rights>
+		<link rel="license" type="text/html" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"/>
+		<author>
+			<name>David Miller</name>
+		</author>
+		<content type="text">Guantanamo naval base, "Gitmo", covers forty five square miles of Cuba inside an area under a controversial 'permanent lease' to the United States. Since 2002, the base has become synonymous with its detainment facilities for suspected terrorists. Although Barack Obama has given orders for the detention camp to be closed, the facilities remain open to this day. David Miller's quiet, powerful film is the result of three days the filmmaker spent touring the camps in May 2008 as part of a small group of media representatives allowed there. Although the event was presented as a chance to 'see inside' the working of Guantanamo, it was in fact a carefully staged PR exercise designed to yield predictable, stale, controlled media images.</content>
+		<format xmlns="http://xmlns.transmission.cc/FileFormat">
+			<size>249251059.0</size>
+			<duration>1333.0</duration>
+			<video_codec>H.264</video_codec>
+			<framerate>25.0</framerate>
+			<video_bitrate>1327.0</video_bitrate>
+			<width>1024</width>
+			<height>576</height>
+			<pixel_aspect_ratio>16:9</pixel_aspect_ratio>
+			<audio_codec>AAC</audio_codec>
+			<samplerate>48000.0</samplerate>
+			<channels>2</channels>
+			<audio_bitrate>163.0</audio_bitrate>
+		</format>
+	</entry>
+	<entry>
+		<title>Us Now</title>
+		<link rel="alternate" href="http://vodo.net/usnow"/>
+		<link rel="enclosure" type="application/x-bittorrent" href="http://vodo.net/assets/torrents/US_NOW.mp4.torrent"/>
+		<published>2009-10-04-12:12:16 PM</published>
+		<id>24ec1f97b8288b15943096278dcf11c4487416e0</id>
+		<media:thumbnail url="http://vodo.net/thumbnails/US_NOW-mp4.jpg"/>
+		<rights>Attribution - Noncommercial - Share Alike</rights>
+		<link rel="license" type="text/html" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"/>
+		<author>
+			<name>Ivo Gormley</name>
+		</author>
+		<content type="text">Can we all govern? Us Now looks at how 'user' participation could transform the way that countries are governed. It tells the stories of the online networks whose radical self-organising structures threaten to change the fabric of government forever.
+
+Us Now follows the fate of Ebbsfleet United, a football club owned and run by its fans;  Zopa, a bank in which everyone is the manager; and
+Couch Surfing, a vast online network whose members share their homes with strangers.</content>
+		<format xmlns="http://xmlns.transmission.cc/FileFormat">
+			<size>508375554.0</size>
+			<duration>3543.0</duration>
+			<video_codec>H.264</video_codec>
+			<framerate>25.0</framerate>
+			<video_bitrate>958.0</video_bitrate>
+			<width>1024</width>
+			<height>576</height>
+			<pixel_aspect_ratio>16:9</pixel_aspect_ratio>
+			<audio_codec>AAC</audio_codec>
+			<samplerate>48000.0</samplerate>
+			<channels>2</channels>
+			<audio_bitrate>165.0</audio_bitrate>
+		</format>
+	</entry>
+</feed>

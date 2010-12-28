@@ -270,12 +270,9 @@ class FeedController(itemlistcontroller.ItemListController):
                 text = text + u"  |  %s" % downloadingtext
             if autoqueued_count:
                 text = text + u"  |  %s" % queuedtext
-        elif self.full_view.item_list.get_hidden_count() > 0:
+        else:
             text = ngettext("%(count)d Item Matches Search",
                     "%(count)d Items Match Search",
                     items, {"count": items})
-            text = u"|  %s" % text
-        else:
-            text = _("All Items Match Search")
             text = u"|  %s" % text
         self.full_section.set_info(text)

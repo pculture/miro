@@ -247,33 +247,11 @@ class ItemView(widgetset.TableView):
         self.set_show_headers(False)
         self.allow_multiple_select(True)
         self.set_auto_resizes(True)
+        self.set_fixed_height(True)
         self.set_background_color(widgetutil.WHITE)
-        self._recalculate_heights_queued = False
 
     def build_renderer(self):
         return style.ItemRenderer(self.display_channel)
-
-    def do_size_allocated(self, width, height):
-        if width != self.renderer.total_width:
-            self.renderer.total_width = width
-            # We want to resize the rows with show_details set to
-            # True, because they may have gotten taller/shorter based
-            # on the description getting less/more width.  However, if
-            # the user is quickly resizing the window, we don't want
-            # to flood the system.  Use call_on_ui_thread, which
-            # amounts to waiting until the widget system is idle.
-            if not self._recalculate_heights_queued:
-                self._recalculate_heights_queued = True
-                call_on_ui_thread(self._recalculate_show_details_heights)
-
-    def _recalculate_show_details_heights(self):
-        self._recalculate_heights_queued = False
-        for iter in self.item_list.find_show_details_rows():
-            # We want to make this row's height get re-calculated, so
-            # we use a bit of a hack, we "update" the row to the value
-            # it currently has
-            row = self.item_list.model[iter]
-            self.item_list.model.update(iter, *row)
 
 class ListItemView(widgetset.TableView):
     """TableView that displays a list of items using the list view."""
@@ -294,24 +272,16 @@ class ListItemView(widgetset.TableView):
         'feed-name': [_('Feed'), style.FeedNameRenderer()],
         'eta': [_('ETA'), style.ETARenderer()],
         'rate': [_('Speed'), style.DownloadRateRenderer()],
+        'date-added': [_('Date Added'), style.DateAddedRenderer()],
+        'last-played': [_('Last Played'), style.LastPlayedRenderer()],
     }
 
     WIDTH_WEIGHT = {
-        'state': 0,     # bump
-        'name': 1,      # title
-        'feed-name': 0.5,
-        'date': 0,
-        'length': 0,
-        'status': 0.2,
-        'size': 0,
-        'eta': 0,
-        'rate': 0,      # download rate
+        'name': 1,
         'artist': 0.7,
         'album': 0.7,
-        'track': 0,
-        'year': 0,
-        'genre': 0,
-        'rating': 0,
+        'feed-name': 0.5,
+        'status': 0.2,
     }
 
     def __init__(self, item_list, columns):
@@ -388,9 +358,9 @@ class ListItemView(widgetset.TableView):
 
     def _make_column(self, header, renderer, column_name, resizable=True):
         column = widgetset.TableColumn(header, renderer, info=0)
+        column.set_min_width(renderer.min_width)
         if resizable:
             column.set_resizable(True)
-            column.set_min_width(renderer.min_width)
         if hasattr(renderer, 'right_aligned') and renderer.right_aligned:
             column.set_right_aligned(True)
         column.connect_weak('clicked', self._on_column_clicked, column_name)
@@ -409,7 +379,10 @@ class ListItemView(widgetset.TableView):
             extra_width = max(available_width - min_width, 0)
             weights = {}
             for name, width in self.column_state:
-                weights[name] = self.WIDTH_WEIGHT[name]
+                weight = 0
+                if name in self.WIDTH_WEIGHT:
+                    weight = self.WIDTH_WEIGHT[name]
+                weights[name] = weight
             total_weight = sum(weight for weight in weights.values()) or 1
             diff = 0 # prevent cumulative rounding errors
             for i, (name, width) in enumerate(self.column_state):

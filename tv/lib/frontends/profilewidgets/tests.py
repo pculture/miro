@@ -60,8 +60,8 @@ def pick_test():
     choices = [
         ProfileItemView,
         ProfileListItemView,
-        ProfileItemViewSearch,
-        ProfileItemViewSearchMostlyMatching,
+        ProfileItemViewAdd,
+        ProfileItemViewRemove,
     ]
     labels = [c.friendly_name() for c in choices]
     index = dialogs.ask_for_choice('Pick Test',
@@ -108,7 +108,8 @@ class ProfiledCode(object):
         raise NotImplementedError()
 
 class ProfileItemView(ProfiledCode):
-    descriptions_to_generate = 1000
+    descriptions_to_generate = 100
+    initial_items = 30
 
     @classmethod
     def friendly_name(cls):
@@ -120,7 +121,7 @@ class ProfileItemView(ProfiledCode):
         self.setup_text()
         self.item_list = itemlist.ItemList()
         self.item_list.set_sort(itemlist.DateSort(True))
-        self.item_list.add_items(self.generate_items(30))
+        self.item_list.add_items(self.generate_items(self.initial_items))
         self.make_item_view()
         scroller = widgetset.Scroller(False, True)
         scroller.add(self.item_view)
@@ -155,7 +156,7 @@ class ProfileItemView(ProfiledCode):
                 "gravida est ipsum a arcu. Fusce vitae mi ut diam "
                 "blandit ornare. Sed viverra metus at massa viverra.  ")
         lorem = lorem.split()
-        self.names = iter(' '.join(random.sample(lorem, 5))
+        self.names = itertools.cycle(' '.join(random.sample(lorem, 5))
                 for x in xrange(self.descriptions_to_generate))
         descriptions = []
         for x in xrange(self.descriptions_to_generate):
@@ -166,7 +167,7 @@ class ProfileItemView(ProfiledCode):
             random.shuffle(lorem)
             p3 = ' '.join(lorem)
             descriptions.append("\n".join((p1, p2, p3)))
-        self.descriptions = iter(descriptions)
+        self.descriptions = itertools.cycle(descriptions)
 
     def make_item_view(self):
         self.item_view = itemlistwidgets.ItemView(self.item_list)
@@ -263,30 +264,31 @@ class ProfileListItemView(ProfileItemView):
         self.item_view = itemlistwidgets.ListItemView(self.item_list,
                 enabled_columns)
 
-class ProfileItemViewSearch(ProfileItemView):
-    descriptions_to_generate = 10000
-    stats_cutoff = 0.6
+class ProfileItemViewAdd(ProfileItemView):
+    initial_items = 0
 
     @classmethod
     def friendly_name(cls):
-        return "Profile setting search text"
+        return "Profile adding lots of items"
 
     def set_up(self):
         ProfileItemView.set_up(self)
         # add some more items
-        self.item_list.add_items(self.generate_items(8000))
+        self.items_to_add = self.generate_items(10000)
 
     def profiled_code(self):
         self.item_view.start_bulk_change()
-        self.item_list.set_search_text("not going to find me")
+        self.item_list.add_items(self.items_to_add)
         self.item_view.model_changed()
 
-class ProfileItemViewSearchMostlyMatching(ProfileItemViewSearch):
+class ProfileItemViewRemove(ProfileItemView):
+    initial_items = 10000
+
     @classmethod
     def friendly_name(cls):
-        return "Profile setting search text when the items match"
+        return "Profile removing lots of items"
 
     def profiled_code(self):
         self.item_view.start_bulk_change()
-        self.item_list.set_search_text("Lorem")
+        self.item_list.remove_items(range(10000))
         self.item_view.model_changed()

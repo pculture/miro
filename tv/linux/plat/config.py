@@ -140,10 +140,10 @@ def get(descriptor):
     value = descriptor.default
 
     if descriptor == prefs.MOVIES_DIRECTORY:
-        value = os.path.expanduser('~/Videos/Miro')
+        value = os.path.expanduser(os.path.join(options.user_home, 'Videos/Miro'))
 
     elif descriptor == prefs.NON_VIDEO_DIRECTORY:
-        value = os.path.expanduser('~/Desktop')
+        value = os.path.expanduser(os.path.join(options.user_home, 'Desktop'))
 
     elif descriptor == prefs.GETTEXT_PATHNAME:
         value = resources.path("../../locale")
@@ -154,10 +154,11 @@ def get(descriptor):
         value = os.path.exists(destination)
 
     elif descriptor == prefs.SUPPORT_DIRECTORY:
-        value = os.path.expanduser('~/.miro')
+        value = os.path.expanduser(os.path.join(options.user_home, '.miro'))
 
     elif descriptor == prefs.ICON_CACHE_DIRECTORY:
-        value = os.path.expanduser('~/.miro/icon-cache')
+        value = get(prefs.SUPPORT_DIRECTORY)
+        value = os.path.join(value, 'icon-cache')
 
     elif descriptor == prefs.SQLITE_PATHNAME:
         value = get(prefs.SUPPORT_DIRECTORY)

@@ -221,6 +221,45 @@ class MiroTreeView(gtk.TreeView):
         self.drag_dest_at_bottom = False
         self.height_without_pad_bottom = -1
         self.set_enable_search(False)
+        self.scrollbars = []
+        self.scroll_positions = []
+        self.keep_scroll_change = []
+        self.connect('parent-set', self.on_parent_set)
+
+    def on_parent_set(self, widget, old_parent):
+        if isinstance(self.get_parent(), gtk.ScrolledWindow):
+            window = self.get_parent()
+            scrollbars = (window.get_hscrollbar(), window.get_vscrollbar())
+            self.scrollbars = scrollbars
+            self.scroll_positions = []
+            self.keep_scroll_change = []
+            for i, scrollbar in enumerate(scrollbars):
+                self.scroll_positions.append(None)
+                self.keep_scroll_change.append(False)
+                weak_connect(scrollbar, 'change-value',
+                        self.on_bar_change_value, i)
+                weak_connect(scrollbar, 'value-changed',
+                        self.on_bar_value_changed, i)
+
+    def on_bar_change_value(self, range_, scroll, value, bar):
+        self.scroll_positions[bar] = value
+
+    def on_bar_value_changed(self, range_, bar):
+        if self.keep_scroll_change[bar]:
+            self.keep_scroll_change[bar] = False
+            for i, bar in enumerate(self.scrollbars):
+                self.scroll_positions[i] = bar.get_adjustment().get_value()
+            return
+        adj = self.scrollbars[bar].get_adjustment()
+        pos = self.scroll_positions[bar]
+        lower = adj.get_lower()
+        upper = adj.get_upper() - adj.get_page_size()
+        pos = min(max(pos, lower), upper)
+        adj.set_value(pos)
+
+    def set_keep_scroll_changes(self, keep):
+        for i, bar in enumerate(self.scrollbars):
+            self.keep_scroll_change[i] = keep
 
     def do_size_request(self, req):
         gtk.TreeView.do_size_request(self, req)
@@ -237,7 +276,10 @@ class MiroTreeView(gtk.TreeView):
     def do_move_cursor(self, step, count):
         if isinstance(self.get_parent(), gtk.ScrolledWindow):
             # If our parent is a ScrolledWindow, let GTK take care of this
-            return gtk.TreeView.do_move_cursor(self, step, count)
+            self.set_keep_scroll_changes(True)
+            handled = gtk.TreeView.do_move_cursor(self, step, count)
+            self.set_keep_scroll_changes(False)
+            return handled
         else:
             # Otherwise, we have to search up the widget tree for a
             # ScrolledWindow to take care of it
@@ -524,6 +566,8 @@ class TableView(Widget):
         self.create_signal('hotspot-clicked')
         self.create_signal('row-clicked')
         self.create_signal('row-double-clicked')
+        self.create_signal('row-activated')
+        self.wrapped_widget_connect('row-activated', self.on_row_activated)
         self.wrapped_widget_connect('row-expanded', self.on_row_expanded)
         self.wrapped_widget_connect('row-collapsed', self.on_row_collapsed)
         self.wrapped_widget_connect('button-press-event', self.on_button_press)
@@ -874,6 +918,10 @@ class TableView(Widget):
             self.handled_last_button_press = True
             return True
         self.handled_last_button_press = False
+
+    def on_row_activated(self, treeview, path, view_column):
+        iter_ = treeview.get_model().get_iter(path[0])
+        self.emit('row-activated', iter_)
 
     def make_context_menu(self):
         def gen_menu(menu_items):

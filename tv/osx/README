@@ -58,8 +58,8 @@ Running tests
 
 To run unittests on OSX, do::
 
-   ./run.sh unittest
+   ./run.sh --unittest
 
 To run unittests verbosely, do::
 
-   ./run.sh unittest -v
+   ./run.sh --unittest -v

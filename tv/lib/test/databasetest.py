@@ -1,6 +1,7 @@
 import logging
 
 from miro.test.framework import MiroTestCase
+from miro import app
 from miro import database
 from miro import databaselog
 from miro import item
@@ -90,6 +91,34 @@ class ViewTrackerTest(DatabaseTestCase):
         self.assertEquals(self.remove_callbacks, [self.feed, self.feed2])
         self.assertEquals(self.change_callbacks, [self.feed2])
 
+    def test_limiter(self):
+        limiter = TestViewLimiter(self.feed2)
+        view = feed.Feed.make_view("userTitle LIKE 'booya%'")
+        self.feed.set_title(u'booya')
+        self.feed2.set_title(u'booya')
+        self.assertEquals(view.count(), 2)
+        self.assertSameSet(list(view), [self.feed, self.feed2])
+        self.assertSameSet(view.id_list(), [self.feed.id, self.feed2.id])
+        view.limiter = limiter
+        self.assertSameSet(list(view), [self.feed2])
+        self.assertSameSet(view.id_list(), [self.feed2.id])
+        self.assertEquals(view.count(), 1)
+
+    def test_tracker_limiter(self):
+        # limit the tracker to feed2, feed1 should be removed
+        self.tracker.change_limiter(TestViewLimiter(self.feed2))
+        self.assertEquals(self.add_callbacks, [])
+        self.assertEquals(self.remove_callbacks, [self.feed])
+        # changing feed2's title should make it go into the view, since our
+        # limiter won't filter it out.
+        self.feed2.set_title(u"booya")
+        self.assertEquals(self.add_callbacks, [self.feed2])
+        self.assertEquals(self.remove_callbacks, [self.feed])
+        # Setting no limiter causes all feeds to be added back.
+        self.tracker.change_limiter(None)
+        self.assertEquals(self.add_callbacks, [self.feed2, self.feed])
+        self.assertEquals(self.remove_callbacks, [self.feed])
+
     def test_track_creation_add(self):
         self.setup_view(item.Item.make_view("feed.userTitle='booya'",
                 joins={'feed': 'feed.id=item.feed_id'}))
@@ -103,6 +132,19 @@ class ViewTrackerTest(DatabaseTestCase):
                 joins={'feed': 'feed.id=item.feed_id'}))
         self.i1.remove()
         self.assertEquals(self.remove_callbacks, [self.i1])
+
+    def test_with_bulk(self):
+        self.setup_view(item.Item.make_view("feed.userTitle='booya'",
+                joins={'feed': 'feed.id=item.feed_id'}))
+        app.bulk_sql_manager.start()
+        self.feed2.set_title(u"booya")
+        self.i3.signal_change()
+        self.i2.remove()
+        self.i1.set_title(u"new title")
+        app.bulk_sql_manager.finish()
+        self.assertEquals(self.add_callbacks, [self.i3])
+        self.assertEquals(self.remove_callbacks, [self.i2])
+        self.assertEquals(self.change_callbacks, [self.i1])
 
     def test_unlink(self):
         self.tracker.unlink()
@@ -124,6 +166,18 @@ class ViewTrackerTest(DatabaseTestCase):
         tracker = self.view.make_tracker()
         self.clear_ddb_object_cache()
         tracker.check_all_objects()
+
+class TestViewLimiter(database.ViewLimiter):
+    def __init__(self, *feeds_to_include):
+        self.feeds_to_include = feeds_to_include
+    def filter_obj(self, obj):
+        return obj not in self.feeds_to_include
+    def filter_id_list(self, id_list):
+        id_set = set([f.id for f in self.feeds_to_include])
+        return [id for id in id_list if id in id_set]
+    def filter_id_set(self, id_set):
+        my_id_set = set([f.id for f in self.feeds_to_include])
+        return id_set.intersection(my_id_set)
 
 class TestDDBObject(database.DDBObject):
     def setup_new(self, testcase, remove=False):

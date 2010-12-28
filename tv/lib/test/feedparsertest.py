@@ -1,12 +1,13 @@
 import logging
 import os
 import unittest
-from miro import feedparser
-from miro.plat import resources
 
+from miro import feedparser
+from miro.item import FeedParserValues
+from miro.plat import resources
 from miro.test.framework import MiroTestCase
 
-FEEDPARSERTESTS = resources.path("testdata/feedparsertests")
+FPTESTS = resources.path("testdata/feedparsertests")
 
 class FeedParserDictTest(MiroTestCase):
     def test_equality(self):
@@ -50,14 +51,123 @@ class FeedParserDictTest(MiroTestCase):
 
 class FeedParserTest(MiroTestCase):
     def test_ooze(self):
-        feedparser.parse(os.path.join(FEEDPARSERTESTS, "ooze.rss"))
+        feedparser.parse(os.path.join(FPTESTS, "ooze.rss"))
 
     def test_usvideo(self):
         # test for bug 10653
-        d = feedparser.parse(os.path.join(FEEDPARSERTESTS, "usvideo.xml"))
+        d = feedparser.parse(os.path.join(FPTESTS, "usvideo.xml"))
 
         # this should kick up a KeyError and NOT a TypeError
         self.assertRaises(KeyError, lambda: d['url'])
+
+class FeedParserValuesTest(unittest.TestCase):
+    def test_empty(self):
+        fpv = FeedParserValues({})
+        self.assertEquals(fpv.data["license"], None)
+        self.assertEquals(fpv.data["rss_id"], None)
+        self.assertEquals(fpv.data["entry_title"], None)
+        self.assertEquals(fpv.data["thumbnail_url"], None)
+        self.assertEquals(fpv.data["entry_description"], u"")
+        self.assertEquals(fpv.data["link"], u"")
+        self.assertEquals(fpv.data["payment_link"], u"")
+        self.assertEquals(fpv.data["comments_link"], u"")
+        self.assertEquals(fpv.data["url"], u"")
+        self.assertEquals(fpv.data["enclosure_size"], None)
+        self.assertEquals(fpv.data["enclosure_type"], None)
+        self.assertEquals(fpv.data["enclosure_format"], None)
+        # self.assertEquals(fpv.data["releaseDateObj"], None)
+
+    def test_thumbnail_url(self):
+
+        # this feed is an rss 2.0 feed with feedburner stuff in it.
+        # there's a thumbnail for each item:
+        # <rss>
+        #    <item>
+        #        <thumbnail>http:...</thumbnail>
+
+        fn = os.path.join(
+            FPTESTS, "http___feeds_miroguide_com_miroguide_featured.xml")
+        d = feedparser.parse(fn)
+
+        for i, url in (
+            (0, u"http://s3.miroguide.com/static/media/thumbnails/200x134/14094.jpeg"),
+            (1, u"http://s3.miroguide.com/static/media/thumbnails/200x134/5152.jpeg"),
+            (2, u"http://s3.miroguide.com/static/media/thumbnails/200x134/14086.jpeg"),
+            (3, u"http://s3.miroguide.com/static/media/thumbnails/200x134/11717.jpeg"),
+            (4, u"http://s3.miroguide.com/static/media/thumbnails/200x134/13422.jpeg")):
+
+            fpv = FeedParserValues(d.entries[i])
+            self.assertEquals(fpv.data["thumbnail_url"], url)
+
+        fn = os.path.join(
+            FPTESTS, "http___feeds_miroguide_com_miroguide_new.xml")
+        d = feedparser.parse(fn)
+
+        for i, url in (
+            (0, u"http://s3.miroguide.com/static/media/thumbnails/200x134/14280.jpeg"),
+            (1, u"http://s3.miroguide.com/static/media/thumbnails/200x134/11715.jpeg")):
+
+            fpv = FeedParserValues(d.entries[i])
+            self.assertEquals(fpv.data["thumbnail_url"], url)
+
+        # this feed has no thumbnails in the enclosures or in the
+        # items.
+        fn = os.path.join(
+            FPTESTS, "http___feeds_feedburner_com_earth-touch_podcast_720p.xml")
+        d = feedparser.parse(fn)
+
+        for i, url in (
+            (0, None),
+            (1, None)):
+
+            fpv = FeedParserValues(d.entries[i])
+            self.assertEquals(fpv.data["thumbnail_url"], url)
+
+        # this feed has no thumbnails in the enclosures or in the
+        # items.  it's an audio podcast.
+        fn = os.path.join(
+            FPTESTS, "http___feeds_thisamericanlife_org_talpodcast")
+        d = feedparser.parse(fn)
+
+        for i, url in (
+            (0, None),):
+
+            fpv = FeedParserValues(d.entries[i])
+            self.assertEquals(fpv.data["thumbnail_url"], url)
+
+        # thumbnails are in the enclosure
+        # <enclosure>
+        #    <thumbnail>
+        #        <href>http...</href>
+        fn = os.path.join(
+            FPTESTS, "http___vodo_net_feeds_promoted.xml")
+        d = feedparser.parse(fn)
+
+        for i, url in (
+            (0, u'http://vodo.net/media/thumbnails/work_127_pioneerone_uploaded.jpeg'),
+            (1, u'http://vodo.net/assets/thumbnails/snowblindmovie_QM5moDpN.jpeg'),
+            (2, u'http://vodo.net/media/thumbnails/work_142_foureyedmonsters_uploaded.jpeg')):
+
+            fpv = FeedParserValues(d.entries[i])
+            self.assertEquals(fpv.data["thumbnail_url"], url)
+
+        # thumbnails are on the item
+        # <item>
+        #    <thumbnail>
+        #       <href>http:...</href>
+        fn = os.path.join(
+            FPTESTS, "http___www_linktv_org_rss_hq_globalpulse.xml")
+
+        d = feedparser.parse(fn)
+
+        for i, url in (
+            (0, u'http://www.linktv.org/sitecontent/videothumbs/globalpulse20100709.jpg'),
+            (1, u'http://www.linktv.org/sitecontent/videothumbs/globalpulse20100625.jpg'),
+            (2, u'http://www.linktv.org/sitecontent/videothumbs/globalpulse20100611.jpg')):
+
+            fpv = FeedParserValues(d.entries[i])
+            self.assertEquals(fpv.data["thumbnail_url"], url)
+
 
 # FIXME - could use way more feedparser tests
 

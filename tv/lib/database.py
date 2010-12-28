@@ -112,26 +112,108 @@ def confirm_db_thread():
         traceback.print_stack()
         raise DatabaseThreadError, error_string
 
-class View(object):
-    def __init__(self, klass, where, values, order_by, joins, limit):
+class ViewObjectFetcher(object):
+    """Interface for classes that handle retrieving objects for Views.
+
+    Views and ViewTrackers usually return DDBObject subclasses for their
+    methods, but sometimes we want to do things like get ItemInfo objects from
+    app.item_info_cache.  To handle this, View/ViewTrackers just work with
+    object ids and ViewObjectFetcher work to fetch objects for those object
+    ids.
+    """
+    def fetch_obj(self, id_):
+        """Fetch an object for a given id."""
+        raise ImplementedError
+
+    def fetch_obj_for_ddb_object(self, id_):
+        """Fetch an object for a DDBObject."""
+        raise ImplementedError
+
+    def table_name(self):
+        """Return the DB table to query from."""
+
+    def prepare_objects(self, id_list):
+        """Given a list of ids that we want to fetch objects for, do any prep
+        work needed to make sure that they are fetchable.
+
+        prepare_objects may modify id_list in place to remove some of the ids
+        """
+        pass
+
+class DDBObjectFetcher(ViewObjectFetcher):
+    def __init__(self, klass):
         self.klass = klass
+
+    def fetch_obj(self, id_):
+        return app.db.get_obj_by_id(id_)
+
+    def fetch_obj_for_ddb_object(self, ddb_object):
+        return ddb_object
+
+    def table_name(self):
+        return app.db.table_name(self.klass)
+
+    def prepare_objects(self, id_list):
+        if app.db.ensure_objects_loaded(self.klass, id_list):
+            # sometimes objects will call remove() in setup_restored().
+            # We need to filter those out.
+            new_id_list = [id_ for id_ in id_list if app.db.id_alive(id_)]
+            if len(new_id_list) < id_list:
+                id_list[:] = new_id_list # update id_list in-place
+
+class ItemInfoFetcher(ViewObjectFetcher):
+    def table_name(self):
+        return 'item'
+
+    def fetch_obj(self, id_):
+        return app.item_info_cache.get_info(id_)
+
+    def fetch_obj_for_ddb_object(self, item):
+        return app.item_info_cache.get_info(item.id)
+
+class View(object):
+    def __init__(self, fetcher, where, values, order_by, joins, limit):
+        self.fetcher = fetcher
+        self.table_name = fetcher.table_name()
         self.where = where
         self.values = values
         self.order_by = order_by
         self.joins = joins
         self.limit = limit
+        self.limiter = None
+
+    def _query(self):
+        id_list = self._query_ids()
+        self.fetcher.prepare_objects(id_list)
+        for id_ in id_list:
+            yield self.fetcher.fetch_obj(id_)
+
+    def _query_ids(self):
+        return list(app.db.query_ids(self.table_name, self.where, self.values,
+            self.order_by, self.joins, self.limit))
+
+    def _query_count(self):
+        return app.db.query_count(self.table_name, self.where, self.values,
+                self.joins, self.limit)
 
     def __iter__(self):
-        return app.db.query(self.klass, self.where, self.values,
-                            self.order_by, self.joins, self.limit)
+        if self.limiter is None:
+            return self._query()
+        else:
+            return iter(obj for obj in self._query()
+                    if not self.limiter.filter_obj(obj))
 
-    def id_iter(self):
-        return app.db.query_ids(self.klass, self.where, self.values,
-                self.order_by, self.joins, self.limit)
+    def id_list(self):
+        if self.limiter is None:
+            return self._query_ids()
+        else:
+            return self.limiter.filter_id_list(self._query_ids())
 
     def count(self):
-        return app.db.query_count(self.klass, self.where, self.values,
-                                  self.joins, self.limit)
+        if self.limiter is None:
+            return self._query_count()
+        else:
+            return len(self.id_list())
 
     def get_singleton(self):
         results = list(self)
@@ -142,11 +224,11 @@ class View(object):
         else:
             raise TooManyObjects("Too many results returned")
 
-    def make_tracker(self, current_ids=None):
+    def make_tracker(self):
         if self.limit is not None:
             raise ValueError("tracking views with limits not supported")
-        return ViewTracker(self.klass, self.where, self.values, self.joins,
-                current_ids)
+        return ViewTracker(self.fetcher, self.where, self.values, self.joins,
+                self.limiter)
 
 class ViewTrackerManager(object):
     def __init__(self):
@@ -186,20 +268,19 @@ class ViewTrackerManager(object):
             tracker.remove_object(obj)
 
 class ViewTracker(signals.SignalEmitter):
-    def __init__(self, klass, where, values, joins, current_ids):
-        signals.SignalEmitter.__init__(self, 'added', 'removed', 'changed')
-        self.klass = klass
+    def __init__(self, fetcher, where, values, joins, limiter):
+        signals.SignalEmitter.__init__(self, 'added', 'removed', 'changed',
+                'bulk-added', 'bulk-removed', 'bulk-changed')
+        self.fetcher = fetcher
+        self.table_name = fetcher.table_name()
         self.where = where
         if isinstance(values, list):
             raise TypeError("values must be a tuple")
         self.values = values
         self.joins = joins
-        if current_ids is None:
-            self.current_ids = set(app.db.query_ids(klass, where, values,
-                joins=joins))
-        else:
-            self.current_ids = current_ids
-        self.table_name = app.db.table_name(klass)
+        self.limiter = limiter
+        self.bulk_mode = False
+        self.current_ids = self._view_object_ids()
         vt_manager = app.view_tracker_manager
         vt_manager.trackers_for_table(self.table_name).add(self)
 
@@ -207,13 +288,54 @@ class ViewTracker(signals.SignalEmitter):
         vt_manager = app.view_tracker_manager
         vt_manager.trackers_for_table(self.table_name).discard(self)
 
+    def set_bulk_mode(self, bulk_mode):
+        """Set/Unset bulk mode.
+
+        Normally, ViewTrackers emit one added/removed/changed, signal per
+        object.  In bulk mode, they will sometimes also emit the
+        bulk-added/bulk-removed/bulk-changed when a list of objects changes.
+        """
+        self.bulk_mode = bulk_mode
+
+    def change_limiter(self, limiter):
+        """Change our limiter object and invoke add/change/remove callbacks
+
+        limiter should be a subclass of ViewLimiter
+        """
+        self.limiter = limiter
+        if limiter is not None:
+            new_ids = limiter.filter_id_set(self.current_ids_no_limiter)
+        else:
+            new_ids = self.current_ids_no_limiter
+        self._update_current_ids(new_ids)
+
     def _obj_in_view(self, obj):
+        """Check if a single object is in our view."""
         where = '%s.id = ?' % (self.table_name,)
         if self.where:
             where += ' AND (%s)' % (self.where,)
 
         values = (obj.id,) + self.values
-        return app.db.query_count(self.klass, where, values, self.joins) > 0
+        in_db_view = app.db.query_count(self.table_name, where, values,
+                self.joins) > 0
+        if in_db_view:
+            self.current_ids_no_limiter.add(obj.id)
+        else:
+            self.current_ids_no_limiter.discard(obj.id)
+        if self.limiter is None:
+            return in_db_view
+        else:
+            return in_db_view and not self.limiter.filter_obj(obj)
+
+    def _view_object_ids(self):
+        """Get all object ids in our view."""
+        rv = set(app.db.query_ids(self.table_name,
+            self.where, self.values, joins=self.joins))
+        self.current_ids_no_limiter = rv.copy()
+        if self.limiter is None:
+            return rv
+        else:
+            return self.limiter.filter_id_set(rv)
 
     def object_changed(self, obj):
         self.check_object(obj)
@@ -221,46 +343,76 @@ class ViewTracker(signals.SignalEmitter):
     def remove_object(self, obj):
         if obj.id in self.current_ids:
             self.current_ids.remove(obj.id)
-            self.emit('removed', obj)
+            self.emit('removed', self.fetcher.fetch_obj_for_ddb_object(obj))
 
     def remove_objects(self, objects):
-        object_map = dict((o.id, o) for o in objects)
-        object_ids = set(object_map.keys())
-        for removed_id in self.current_ids.intersection(object_ids):
-            self.current_ids.remove(removed_id)
-            self.emit('removed', object_map[removed_id])
+        for obj in [o for o in objects if o.id in self.current_ids]:
+            self.current_ids.remove(obj.id)
+            self.emit('removed', obj)
 
     def check_object(self, obj):
         before = (obj.id in self.current_ids)
         now = self._obj_in_view(obj)
         if before and not now:
             self.current_ids.remove(obj.id)
-            self.emit('removed', obj)
+            self.emit('removed', self.fetcher.fetch_obj_for_ddb_object(obj))
         elif now and not before:
             self.current_ids.add(obj.id)
-            self.emit('added', obj)
+            self.emit('added', self.fetcher.fetch_obj_for_ddb_object(obj))
         elif before and now:
-            self.emit('changed', obj)
+            self.emit('changed', self.fetcher.fetch_obj_for_ddb_object(obj))
+
+    def _emit_for_objects(self, signal, objects):
+        if self.bulk_mode:
+            self.emit('bulk-' + signal, objects)
+        else:
+            for obj in objects:
+                self.emit(signal, obj)
 
     def check_all_objects(self):
-        new_ids = set(app.db.query_ids(self.klass, self.where,
-                                       self.values, joins=self.joins))
         old_ids = self.current_ids
+        self._update_current_ids(self._view_object_ids())
+        # XXX this hits all the IDs, but there doesn't seem to be
+        # a way to check if the objects have actually been
+        # changed.  luckily, this isn't called very often.
+        changed_ids = list(old_ids.intersection(self.current_ids))
+        self.fetcher.prepare_objects(changed_ids)
+        self._emit_for_objects('changed',
+            [self.fetcher.fetch_obj(id_) for id_ in changed_ids])
+
+    def _update_current_ids(self, new_ids):
+        if new_ids == self.current_ids:
+            return
+        added_ids = list(new_ids.difference(self.current_ids))
+        removed_ids = list(self.current_ids.difference(new_ids))
+        self.fetcher.prepare_objects(added_ids)
+        self.fetcher.prepare_objects(removed_ids)
+        self._emit_for_objects('added',
+                [self.fetcher.fetch_obj(id_) for id_ in added_ids])
+        self._emit_for_objects('removed',
+                [self.fetcher.fetch_obj(id_) for id_ in removed_ids])
         self.current_ids = new_ids
-        app.db.ensure_objects_loaded(self.klass, new_ids)
-        app.db.ensure_objects_loaded(self.klass, old_ids)
-        for id_ in new_ids.difference(old_ids):
-            self.emit('added', app.db.get_obj_by_id(id_))
-        for id_ in old_ids.difference(new_ids):
-            self.emit('removed', app.db.get_obj_by_id(id_))
-        for id_ in old_ids.intersection(new_ids):
-            # XXX this hits all the IDs, but there doesn't seem to be
-            # a way to check if the objects have actually been
-            # changed.  luckily, this isn't called very often.
-            self.emit('changed', app.db.get_obj_by_id(id_))
 
     def __len__(self):
         return len(self.current_ids)
+
+class ViewLimiter(object):
+    """Interface for objects that are passed into set_limiter.
+
+    ViewLimiter objects allow us to filter views based on things other than
+    database rows, for example using the search.py module.
+    """
+    def filter_obj(self, obj):
+        """Return True if we should filter out obj from the view."""
+        raise NotImplementedError()
+
+    def filter_id_list(self, id_list):
+        """Remove ids from id_list that shouldn't be in the view."""
+        raise NotImplementedError()
+
+    def filter_id_set(self, id_set):
+        """Remove ids from id_set that shouldn't be in the view."""
+        raise NotImplementedError()
 
 class BulkSQLManager(object):
     def __init__(self):
@@ -434,10 +586,11 @@ class DDBObject(signals.SignalEmitter):
 
     @classmethod
     def make_view(cls, where=None, values=None, order_by=None, joins=None,
-                  limit=None):
+            limit=None):
         if values is None:
             values = ()
-        return View(cls, where, values, order_by, joins, limit)
+        fetcher = DDBObjectFetcher(cls)
+        return View(fetcher, where, values, order_by, joins, limit)
 
     @classmethod
     def get_by_id(cls, id_):

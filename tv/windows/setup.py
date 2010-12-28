@@ -67,7 +67,7 @@ BINARY_KIT_ROOT = "miro-binary-kit-win-%s" % BINARY_KIT_VERSION
 
 if not os.path.exists or not os.path.isdir(BINARY_KIT_ROOT):
     print "Binary kit %s is missing.  Run 'setup_binarykit.sh'." % BINARY_KIT_ROOT
-    sys.exit()
+    sys.exit(1)
 
 ZLIB_INCLUDE_PATH = os.path.join(BINARY_KIT_ROOT, 'zlib', 'include')
 ZLIB_LIB_PATH = os.path.join(BINARY_KIT_ROOT, 'zlib', 'lib')
@@ -169,6 +169,10 @@ sys.path.insert(0, LIBTORRENT_PATH)
 sys.path.insert(0, MUTAGEN_PATH)
 
 #### Extensions ####
+ngrams_ext = \
+    Extension("miro.ngrams",
+        [os.path.join(portable_dir, 'ngrams.c')],
+    )
 
 pygtkhacks_ext = Extension(
     "miro.frontends.widgets.gtk.pygtkhacks",
@@ -229,6 +233,7 @@ os.environ['PATH'] = ';'.join([
 
 # Private extension modules to build.
 ext_modules = [
+    ngrams_ext,
     pygtkhacks_ext,
     xulrunnerbrowser_ext,
 ]
@@ -269,6 +274,8 @@ for dir in ('searchengines', 'images', 'conversions', 'devices'):
     dest_dir = os.path.join('resources', dir)
     source_dir = os.path.join(resources_dir, dir)
     data_files.extend(find_data_files(dest_dir, source_dir))
+
+data_files.append(('resources', [os.path.join(root_dir, 'CREDITS')]))
 
 locale_temp_dir = os.path.join(os.path.dirname(__file__), "build", "locale")
 

@@ -1,0 +1,74 @@
+
+f2t ;duration: 368;
+  Resize: 640x360
+
+f2t ;position: 0.46;audio_kbps: 1;video_kbps: 0;remaining: 799.00
+
+f2t ;position: 0.63;audio_kbps: 1;video_kbps: 54;remaining: 579.47
+
+f2t ;position: 0.73;audio_kbps: 1;video_kbps: 95;remaining: 500.32
+
+f2t ;position: 0.80;audio_kbps: 1;video_kbps: 129;remaining: 458.54
+
+f2t ;position: 0.90;audio_kbps: 1;video_kbps: 153;remaining: 407.48
+
+f2t ;position: 0.95;audio_kbps: 24;video_kbps: 153;remaining: 386.10
+
+f2t ;position: 1.00;audio_kbps: 24;video_kbps: 172;remaining: 366.63
+
+f2t ;position: 1.07;audio_kbps: 24;video_kbps: 193;remaining: 343.66
+
+f2t ;position: 1.13;audio_kbps: 24;video_kbps: 211;remaining: 323.38
+
+f2t ;position: 1.20;audio_kbps: 24;video_kbps: 228;remaining: 305.36
+
+f2t ;position: 1.25;audio_kbps: 46;video_kbps: 228;remaining: 293.56
+
+f2t ;position: 1.27;audio_kbps: 46;video_kbps: 243;remaining: 289.24
+
+f2t ;position: 1.37;audio_kbps: 46;video_kbps: 250;remaining: 268.00
+
+f2t ;position: 1.47;audio_kbps: 46;video_kbps: 256;remaining: 249.66
+
+f2t ;position: 1.51;audio_kbps: 61;video_kbps: 256;remaining: 243.46
+
+f2t ;position: 1.53;audio_kbps: 61;video_kbps: 267;remaining: 238.76
+
+f2t ;position: 1.57;audio_kbps: 61;video_kbps: 284;remaining: 233.66
+
+f2t ;position: 368.37;audio_kbps: 141;video_kbps: 1246;remaining: 0.00
+
+f2t ;position: 368.37;audio_kbps: 141;video_kbps: 1246;remaining: 0.00
+
+f2t ;position: 368.37;audio_kbps: 141;video_kbps: 1246;remaining: 0.00
+
+f2t ;position: 368.37;audio_kbps: 141;video_kbps: 1246;remaining: 0.00
+
+f2t ;position: 368.40;audio_kbps: 141;video_kbps: 1246;remaining: 0.00
+
+f2t ;position: 368.40;audio_kbps: 141;video_kbps: 1246;remaining: 0.00
+
+f2t ;position: 368.40;audio_kbps: 141;video_kbps: 1246;remaining: 0.00
+
+f2t ;position: 368.43;audio_kbps: 141;video_kbps: 1246;remaining: 0.00
+
+f2t ;position: 368.43;audio_kbps: 141;video_kbps: 1247;remaining: 0.00
+
+f2t ;position: 368.43;audio_kbps: 141;video_kbps: 1247;remaining: 0.00
+
+f2t ;position: 368.43;audio_kbps: 141;video_kbps: 1247;remaining: 0.00
+
+f2t ;position: 368.47;audio_kbps: 141;video_kbps: 1247;remaining: 0.00
+
+f2t ;position: 368.47;audio_kbps: 141;video_kbps: 1247;remaining: 0.00
+
+f2t ;position: 368.50;audio_kbps: 141;video_kbps: 1247;remaining: 0.00
+
+f2t ;position: 368.53;audio_kbps: 141;video_kbps: 1247;remaining: 0.00
+
+f2t ;position: 368.53;audio_kbps: 141;video_kbps: 1247;remaining: 0.00
+
+f2t ;position: 368.57;audio_kbps: 141;video_kbps: 1247;remaining: 0.00
+
+
+f2t ;result: ok;

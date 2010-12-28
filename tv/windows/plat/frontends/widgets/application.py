@@ -57,9 +57,12 @@ from miro.plat.frontends.widgets.threads import call_on_ui_thread
 
 class WindowsApplication(Application):
     def run(self):
-        logging.info("Windows version:   %s %s %s %s", 
+        winrel = platform.release()
+        if winrel == "post2008Server":
+            winrel += " (could be Windows 7)"
+        logging.info("Windows version:   %s %s %s %s",
                      platform.system(),
-                     platform.release(),
+                     winrel,
                      platform.machine(),
                      sys.getwindowsversion())
         logging.info("Python version:    %s", sys.version)
@@ -135,14 +138,11 @@ class WindowsApplication(Application):
             else:
                 self.window._window.unmaximize()
 
-        if trayicon.trayicon_is_supported:
-            self.trayicon = trayicon.Trayicon(icopath)
-            if app.config.get(options.SHOW_TRAYICON):
-                self.trayicon.set_visible(True)
-            else:
-                self.trayicon.set_visible(False)
+        self.trayicon = trayicon.Trayicon(icopath)
+        if app.config.get(options.SHOW_TRAYICON):
+            self.trayicon.set_visible(True)
         else:
-            logging.info("trayicon is not supported.")
+            self.trayicon.set_visible(False)
 
         # check x, y to make sure the window is visible and fix it if
         # not
@@ -237,6 +237,10 @@ class WindowsApplication(Application):
         os.startfile(fn)
 
     def get_main_window_dimensions(self):
+        """Gets x, y, width, height from config.
+
+        Returns Rect.
+        """
         max_width = gtk.gdk.screen_width()
         max_height = gtk.gdk.screen_height()
         rect = widgets.Rect.from_string(app.config.get(options.WINDOW_DIMENSIONS))
@@ -248,6 +252,8 @@ class WindowsApplication(Application):
         return app.config.get(options.WINDOW_MAXIMIZED)
 
     def set_main_window_dimensions(self, window, x, y, width, height):
+        """Saves x, y, width, height to config.
+        """
         app.config.set(options.WINDOW_DIMENSIONS, "%s,%s,%s,%s" % (x, y, width, height))
 
     def set_main_window_maximized(self, window, maximized):

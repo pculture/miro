@@ -136,6 +136,7 @@ class ItemListController(object):
             item_view.connect_weak('key-press', self.on_key_press)
             item_view.connect_weak('row-double-clicked',
                     self.on_row_double_clicked)
+            item_view.connect_weak('row-activated', self.on_row_activated)
             item_view.set_context_menu_callback(context_callback)
             item_view.set_drag_source(self.make_drag_handler())
             item_view.set_drag_dest(self.make_drop_handler())
@@ -207,13 +208,11 @@ class ItemListController(object):
         """Set the search for all ItemViews managed by this controller.
         """
         self._search_text = search_text
-        self.item_list_group.set_search_text(search_text)
-        for item_view in self.all_item_views():
-            item_view.model_changed()
+        messages.SetTrackItemsSearch(self.type, self.id,
+                search_text).send_to_backend()
         app.inline_search_memory.set_search(self.type, self.id, search_text)
 
-    def on_row_double_clicked(self, item_view, iter):
-        info = item_view.model[iter][0]
+    def _trigger_item(self, item_view, info):
         if info.downloaded:
             items = item_view.item_list.get_items(start_id=info.id)
             self._play_item_list(items)
@@ -223,6 +222,18 @@ class ItemListController(object):
             messages.ResumeDownload(info.id).send_to_backend()
         elif info.download_info is None:
             messages.StartDownload(info.id).send_to_backend()
+
+
+    def on_row_double_clicked(self, item_view, iter_):
+        info = item_view.model[iter_][0]
+        self._trigger_item(item_view, info)
+
+    def on_row_activated(self, item_view, iter_):
+        info = item_view.model[iter_][0]
+        if app.playback_manager.is_playing_id(info.id):
+            app.playback_manager.play_pause()
+        else:
+            self._trigger_item(item_view, info)
 
     def _toolbar_filter_changed(self):
         for item_view in self.all_item_views():
@@ -338,7 +349,8 @@ class ItemListController(object):
 
     def start_tracking(self):
         """Send the message to start tracking items."""
-        messages.TrackItems(self.type, self.id).send_to_backend()
+        messages.TrackItems(self.type, self.id,
+                self._search_text).send_to_backend()
         app.info_updater.item_list_callbacks.add(self.type, self.id,
                 self.handle_item_list)
         app.info_updater.item_changed_callbacks.add(self.type, self.id,
@@ -376,6 +388,8 @@ class ItemListController(object):
         """Handle an ItemList message meant for this ItemContainer."""
         self.item_list_group.add_items(message.items)
         self.on_initial_list()
+        for item_view in self.all_item_views():
+            item_view.model_changed()
 
     def handle_items_changed(self, message):
         """Handle an ItemsChanged message meant for this ItemContainer."""

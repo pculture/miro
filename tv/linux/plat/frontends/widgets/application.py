@@ -190,12 +190,11 @@ class LinuxApplication(Application):
                 self.window._window.unmaximize()
 
         # handle the trayicon
-        if trayicon.trayicon_is_supported:
-            self.trayicon = trayicon.Trayicon('miro')
-            if app.config.get(options.SHOW_TRAYICON):
-                self.trayicon.set_visible(True)
-            else:
-                self.trayicon.set_visible(False)
+        self.trayicon = trayicon.Trayicon('miro')
+        if app.config.get(options.SHOW_TRAYICON):
+            self.trayicon.set_visible(True)
+        else:
+            self.trayicon.set_visible(False)
 
         # check x, y to make sure the window is visible and fix it
         # if not
@@ -261,6 +260,10 @@ class LinuxApplication(Application):
         gtk.Clipboard(selection="PRIMARY").set_text(text)
 
     def get_main_window_dimensions(self):
+        """Gets x, y, width, height from config.
+
+        Returns Rect.
+        """
         x = get_int("x") or 100
         y = get_int("y") or 300
         width = get_int("width") or 800
@@ -272,6 +275,8 @@ class LinuxApplication(Application):
         return get_bool("maximized") == True
 
     def set_main_window_dimensions(self, window, x, y, width, height):
+        """Saves x, y, width, height to config.
+        """
         set_int("width", width)
         set_int("height", height)
         set_int("x", x)
@@ -286,9 +291,7 @@ class LinuxApplication(Application):
             return
 
         notification = pynotify.Notification(title, body)
-        if (attach_trayicon
-                and trayicon.trayicon_is_supported
-                and app.config.get(options.SHOW_TRAYICON)):
+        if attach_trayicon and app.config.get(options.SHOW_TRAYICON):
             notification.attach_to_status_icon(self.trayicon)
         if timeout:
             notification.set_timeout(timeout)

@@ -251,6 +251,11 @@ fi
 
 
 #### Xlib Extension ####
+ngrams_ext = \
+    Extension("miro.ngrams",
+        [os.path.join(portable_dir, 'ngrams.c')],
+    )
+
 xlib_ext = \
     Extension("miro.plat.xlibhelper",
         [os.path.join(platform_package_dir, 'xlibhelper.pyx')],
@@ -286,6 +291,8 @@ files = [f for f in listfiles(resource_dir) \
 data_files.append(('/usr/share/miro/resources/', files))
 # handle the sub directories.
 for dir in ('searchengines', 'images', 'testdata', 'conversions', 'devices',
+        os.path.join('testdata', 'conversions'),
+        os.path.join('testdata', 'feedparsertests'),
         os.path.join('testdata', 'stripperdata'),
         os.path.join('testdata', 'httpserver'),
         os.path.join('testdata', 'locale', 'fr', 'LC_MESSAGES')):
@@ -477,6 +484,7 @@ class clean(Command):
             shutil.rmtree('./dist/')
 
 ext_modules = []
+ext_modules.append(ngrams_ext)
 ext_modules.append(xlib_ext)
 ext_modules.append(pygtkhacks_ext)
 ext_modules.append(webkitgtkhacks_ext)

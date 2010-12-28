@@ -36,6 +36,7 @@ shouldSyncX = False
 frontend = 'html'
 themeName = None
 gconf_name = None
+user_home = "~/"
 
 from miro.prefs import Pref
 

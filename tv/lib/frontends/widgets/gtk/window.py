@@ -509,7 +509,7 @@ class MainWindow(Window):
         change_label("RemoveAllowed", "RemoveSomething", removeSomething)
         change_label("FeedsSelected", "UpdateFeeds", updateFeeds)
         change_label("PlaylistsSelected", "RemovePlaylists", removePlaylists)
-        change_label("PlayablesSelected", "RemoveItems", removeItems)
+        change_label("PlayablesSelected_PlayPause", "RemoveItems", removeItems)
 
         play_pause = self.menu_structure.get("PlayPauseItem").state_labels[menu_manager.play_pause_state]
         change_label("PlayPause", "PlayPauseItem", play_pause)

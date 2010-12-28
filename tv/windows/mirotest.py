@@ -35,8 +35,11 @@ import logging
 from miro.plat import utils
 utils.initialize_locale()
 
-from miro import gtcache
-gtcache.init()
+from miro import bootstrap
+bootstrap.bootstrap()
+
+# from miro import gtcache
+# gtcache.init()
 
 if "-v" not in sys.argv:
     logging.basicConfig(level=logging.CRITICAL)

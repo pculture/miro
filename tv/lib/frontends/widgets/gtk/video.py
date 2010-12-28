@@ -367,7 +367,6 @@ class VideoDetailsWidget(Background):
     def handle_delete(self, widget, event):
         item_info = self.item_info
         self.reset()
-        app.playback_manager.on_movie_finished()
         app.widgetapp.remove_items([item_info])
 
     def handle_subtitles(self, widget, event):
@@ -626,18 +625,45 @@ class VideoPlayer(player.Player, VBox):
         if not self.overlay:
             return
         if not self.overlay.is_visible():
-            self.show_controls()
+            show_it_all = False
+
+            if event is None:
+                show_it_all = True
+            else:
+                # figures out the monitor that miro is fullscreened on and
+                # gets the monitor geometry for that.
+                if app.playback_manager.detached_window is not None:
+                    gtkwindow = app.playback_manager.detached_window._window
+                else:
+                    gtkwindow = app.widgetapp.window._window
+                gdkwindow = gtkwindow.window
+                screen = gtkwindow.get_screen()
+
+                monitor = screen.get_monitor_at_window(gdkwindow)
+                monitor_geom = screen.get_monitor_geometry(monitor)
+                if event.y > monitor_geom.height - 200:
+                    show_it_all = True
+
+            if show_it_all:
+                self.show_controls()
+            else:
+                self.show_mouse()
             self.schedule_hide_controls(self.HIDE_CONTROLS_TIMEOUT)
         else:
             self.last_motion_time = time.time()
 
-    def show_controls(self):
+    def show_mouse(self):
         _window().window.set_cursor(None)
+
+    def show_controls(self):
+        logging.info("show_controls")
+        self.show_mouse()
         self.overlay.show()
 
     def hide_controls(self):
         _window().window.set_cursor(self.hidden_cursor)
-        self.overlay.close()
+        if self.overlay and self.overlay.is_visible():
+            self.overlay.close()
 
     def on_hide_controls_timeout(self):
         # Check if the mouse moved before the timeout
@@ -654,6 +680,8 @@ class VideoPlayer(player.Player, VBox):
             gobject.source_remove(self.hide_controls_timeout)
 
     def schedule_hide_controls(self, time):
+        if self.hide_controls_timeout is not None:
+            gobject.source_remove(self.hide_controls_timeout)
         self.hide_controls_timeout = gobject.timeout_add(time,
                 self.on_hide_controls_timeout)
         self.last_motion_time = 0
