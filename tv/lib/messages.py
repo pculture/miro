@@ -214,10 +214,11 @@ class TrackItemsManually(BackendMessage):
     ItemList and ItemsChanged messages will have "manual" as the type and
     will use the id specified in the constructed.
     """
-    def __init__(self, id_, ids_to_track):
+    def __init__(self, id_, ids_to_track, search_text=None):
         self.id = id_
         self.ids_to_track = ids_to_track
         self.type = 'manual'
+        self.search_text = search_text
 
 class SetTrackItemsSearch(BackendMessage):
     """Set the search query for a TrackItems message.
