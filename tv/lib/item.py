@@ -2109,6 +2109,7 @@ class DeviceItem(ItemBase):
         self.metadata = {}
         self.rating = None
         self.file_type = None
+        self.creation_time = None
         self.__dict__.update(kwargs)
 
         if isinstance(self.video_path, unicode):
@@ -2124,8 +2125,12 @@ class DeviceItem(ItemBase):
                 self.file_format = self.file_format + ' audio'
         if self.size is None:
             self.size = os.path.getsize(self.get_filename())
-        if self.release_date is None:
-            self.release_date = os.path.getctime(self.get_filename())
+        if self.release_date is None or self.creation_time is None:
+            ctime = os.path.getctime(self.get_filename())
+            if self.release_date is None:
+                self.release_date = ctime
+            if self.creation_time is None:
+                self.creation_time = ctime
         if self.duration is None: # -1 is unknown
             moviedata.movie_data_updater.request_update(self)
         self.id = self.get_filename()
@@ -2173,6 +2178,11 @@ class DeviceItem(ItemBase):
 
     def get_release_date_obj(self):
         return datetime.fromtimestamp(self.release_date)
+
+    def get_creation_time(self):
+        return datetime.fromtimestamp(self.creation_time)
+
+    get_watched_time = get_creation_time # all items are watched immediately
 
     @staticmethod
     def get_seen():
