@@ -251,7 +251,6 @@ class DeviceManager(object):
             return
         if info.mount:
             scan_device_for_files(info)
-        print 'adding', info.name
         messages.TabsChanged('devices', [info], [], []).send_to_frontend()
 
     def device_changed(self, id_, **kwargs):
