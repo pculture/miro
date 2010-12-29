@@ -106,6 +106,10 @@ class SharingTracker(object):
         return local_addresses
 
     def mdns_callback(self, added, fullname, host, ips, port):
+        eventloop.add_urgent_call(self.mdns_callback_backend, "mdns callback",
+                                  args=[added, fullname, host, ips, port])
+
+    def mdns_callback_backend(self, added, fullname, host, ips, port):
         added_list = []
         removed_list = []
         unused, local_port = app.sharing_manager.get_address()
@@ -461,7 +465,7 @@ class SharingManager(object):
 
     def on_config_changed(self, obj, key, value):
         # We actually know what's changed but it's so simple let's not bother.
-        self.twiddle_sharing()
+        eventloop.add_urgent_call(self.twiddle_sharing, "twiddle sharing")
 
     def twiddle_sharing(self):
         sharing = app.config.get(prefs.SHARE_MEDIA)
