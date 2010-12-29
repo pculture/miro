@@ -105,8 +105,6 @@ class DeviceTracker(object):
                                             remaining=volume_info.FreeSpace)
 
     def _disk_unmounted(self, volume):
-        if not volume in self._info_for_volume:
-            return
         app.device_manager.device_disconnected(volume)
 
     def eject(self, device):
