@@ -37,6 +37,7 @@ from miro import app
 from miro import item
 from miro import fileutil
 from miro import filetypes
+from miro.gtcache import gettext as _
 from miro import messages
 from miro import signals
 from miro import conversions
@@ -48,6 +49,13 @@ class BaseDeviceInfo(object):
     """
     Base class for device information.
     """
+
+    def update(self, kwargs):
+        self.__dict__.update(kwargs)
+        if 'audio_path' in kwargs:
+            self.audio_path = unicode_to_filename(self.audio_path)
+        if 'video_path' in kwargs:
+            self.video_path = unicode_to_filename(self.video_path)
 
     def __getattr__(self, key):
         try:
@@ -89,11 +97,7 @@ class DeviceInfo(BaseDeviceInfo):
 
     def __init__(self, name, **kwargs):
         self.name = name
-        self.__dict__.update(kwargs)
-        if 'audio_path' in kwargs:
-            self.audio_path = unicode_to_filename(self.audio_path)
-        if 'video_path' in kwargs:
-            self.video_path = unicode_to_filename(self.video_path)
+        self.update(kwargs)
 
 class MultipleDeviceInfo(BaseDeviceInfo):
     """
@@ -104,11 +108,7 @@ class MultipleDeviceInfo(BaseDeviceInfo):
 
     def __init__(self, device_name, children, **kwargs):
         self.device_name = self.name = device_name
-        self.__dict__.update(kwargs)
-        if 'audio_path' in kwargs:
-            self.audio_path = unicode_to_filename(self.audio_path)
-        if 'video_path' in kwargs:
-            self.video_path = unicode_to_filename(self.video_path)
+        self.update(kwargs)
         self.devices = {}
         for info in children:
             self.add_device(info)
@@ -129,6 +129,22 @@ class MultipleDeviceInfo(BaseDeviceInfo):
         for child in self.devices.values():
             child.validate()
 
+class GenericDeviceInfo(DeviceInfo):
+    """
+    DeviceInfo object used for generic USB Mass Storage devices.
+    """
+    def __init__(self, name):
+        self.name = self.device_name = name
+        self.update({
+                'generic': True,
+                'mount_instructions': _("Your drive must be mounted."),
+                'audio_conversion': 'copy',
+                'audio_types': '',
+                'audio_path': u'Miro',
+                'video_conversion': 'copy',
+                'video_path': u'Miro',
+                })
+
 class DeviceManager(object):
     """
     Manages the list of devices that Miro knows about, as well as managing the
@@ -137,6 +153,7 @@ class DeviceManager(object):
     def __init__(self):
         self.device_by_name = {}
         self.device_by_id = {}
+        self.connected = {}
         self.syncs_in_progress = {}
         self.startup()
 
@@ -185,6 +202,96 @@ class DeviceManager(object):
         """
         info = self.device_by_id[(vendor_id, product_id)]
         return self._get_device_from_info(info, device_type)
+
+
+    def _set_connected(self, id_, kwargs):
+        if kwargs.get('mount'):
+            database = load_database(kwargs['mount'])
+            device_name = database.get('device_name')
+        else:
+            device_name = None
+            database = DeviceDatabase()
+        if 'name' in kwargs:
+            try:
+                info = self.get_device(kwargs['name'],
+                                       device_name)
+            except KeyError:
+                info = GenericDeviceInfo(kwargs.get('visible_name',
+                                                   kwargs['name']))
+        elif 'vendor_id' in kwargs and 'product_id' in kwargs:
+            try:
+                info = self.get_device_by_id(kwargs['vendor_id'],
+                                             kwargs['product_id'],
+                                             device_name)
+            except KeyError:
+                info = GenericDeviceInfo(_('USB Device'))
+        else:
+            raise RuntimeError('connect_device() requires either the device '
+                               'name or vendor/product IDs')
+
+        kwargs.update({
+                'database': database,
+                'device_name': device_name,
+                'info': info})
+
+        info = self.connected[id_] = messages.DeviceInfo(
+            id_, info, kwargs.get('mount'), database,
+            kwargs.get('size'), kwargs.get('remaining'))
+
+        return info
+
+    def device_connected(self, id_, **kwargs):
+        if id_ in self.connected:
+            raise RuntimeError('device_connected() called on connected device')
+
+        info = self._set_connected(id_, kwargs)
+        if hasattr(info.info, 'generic'):
+            # ignore these for now
+            logging.debug('ignoring %r' % info.name)
+            return
+        if info.mount:
+            scan_device_for_files(info)
+        print 'adding', info.name
+        messages.TabsChanged('devices', [info], [], []).send_to_frontend()
+
+    def device_changed(self, id_, **kwargs):
+        if id_ not in self.connected:
+            raise RuntimeError('device_changed() called on unknown device')
+
+        info = self.connected[id_]
+        if hasattr(info.info, 'generic'):
+            # ignore these for now
+            return
+        if info.mount:
+            # turn off the autosaving on the old database
+            info.database.disconnect_all()
+
+        info = self._set_connected(id_, kwargs)
+        if info.mount:
+            scan_device_for_files(info)
+        else:
+            sync_manager = app.device_manager.get_sync_for_device(info,
+                                                                  create=False)
+            if sync_manager:
+                sync_manager.cancel()
+        messages.TabsChanged('devices', [], [info], []).send_to_frontend()
+        messages.DeviceChanged(info).send_to_frontend()
+
+    def device_disconnected(self, id_):
+        if id_ not in self.connected:
+            raise RuntimeError(
+                'device_disconnected() called on unknown device')
+
+        info = self.connected.pop(id_)
+        if hasattr(info.info, 'generic'):
+            # ignore these for now
+            return
+        sync_manager = app.device_manager.get_sync_for_device(info,
+                                                              create=False)
+        if sync_manager:
+            sync_manager.cancel()
+
+        messages.TabsChanged('devices', [], [], [id_]).send_to_frontend()
 
     def get_sync_for_device(self, device, create=True):
         """
@@ -474,53 +581,6 @@ def write_database(database, mount):
         # couldn't write to the device
         # XXX throw up an error?
         pass
-
-def device_connected(info):
-    """
-    Helper for device trackers which sends a connected message for the device.
-    """
-    if info.mount:
-        scan_device_for_files(info)
-    message = messages.TabsChanged('devices',
-                                   [info],
-                                   [],
-                                   [])
-    message.send_to_frontend()
-
-def device_changed(info):
-    """
-    Helper for device trackers which sends a changed message for the device.
-    """
-    if info.mount:
-        scan_device_for_files(info)
-    else:
-        sync_manager = app.device_manager.get_sync_for_device(info,
-                                                              create=False)
-        if sync_manager:
-            sync_manager.cancel()
-    message = messages.TabsChanged('devices',
-                                   [],
-                                   [info],
-                                   [])
-    message.send_to_frontend()
-    messages.DeviceChanged(info).send_to_frontend()
-
-
-def device_disconnected(info):
-    """
-    Helper for device trackers which sends a disconnected message for the
-    device.
-    """
-    sync_manager = app.device_manager.get_sync_for_device(info,
-                                                          create=False)
-    if sync_manager:
-        sync_manager.cancel()
-
-    message = messages.TabsChanged('devices',
-                                  [],
-                                  [],
-                                  [info.id])
-    message.send_to_frontend()
 
 def clean_database(device):
     def _exists(item_path):
