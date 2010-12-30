@@ -1516,7 +1516,7 @@ class DeviceInfo(object):
         self.size = size
         self.remaining = remaining
         self.info = device_info
-        self.name = device_info.name
+        self.name = database.get('settings', {}).get('name', device_info.name)
 
 class DeviceChanged(FrontendMessage):
     """Informs the frontend that a device has changed state.

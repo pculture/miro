@@ -326,20 +326,31 @@ class DeviceSyncManager(object):
         messages.TabsChanged('devices', [], [self.device],
                              []).send_to_frontend()
 
-        self.audio_target_folder = os.path.join(device.mount,
-                                                device.info.audio_path)
+        self.audio_target_folder = os.path.join(
+            device.mount,
+            self._get_path_from_setting('audio_path'))
         if not os.path.exists(self.audio_target_folder):
             os.makedirs(self.audio_target_folder)
 
-        self.video_target_folder = os.path.join(device.mount,
-                                                device.info.video_path)
+        self.video_target_folder = os.path.join(
+            device.mount,
+            self._get_path_from_setting('video_path'))
         if not os.path.exists(self.video_target_folder):
             os.makedirs(self.video_target_folder)
+
+    def _get_path_from_setting(self, setting):
+        device_settings = self.device.database.setdefault('settings', {})
+        device_path = device_settings.get(setting)
+        if device_path is None:
+            return getattr(self.device.info, setting)
+        else:
+            return unicode_to_filename(device_path)
 
     def set_device(self, device):
         self.device = device
 
     def add_items(self, item_infos):
+        device_settings = self.device.database['settings']
         device_info = self.device.info
         for info in item_infos:
             if self._exists(info):
@@ -360,13 +371,17 @@ class DeviceSyncManager(object):
                 else:
                     logging.debug('unable to detect format of %r: %s' % (
                             info.video_path, info.file_format))
-                    self.start_conversion(device_info.audio_conversion,
-                                          info,
-                                          self.audio_target_folder)
+                    self.start_conversion(
+                        (device_settings.get('audio_conversion') or
+                         device_info.audio_conversion),
+                        info,
+                        self.audio_target_folder)
             elif info.file_type == 'video':
-                self.start_conversion(device_info.video_conversion,
-                                      info,
-                                      self.video_target_folder)
+                self.start_conversion(
+                    (device_settings.get('video_conversion') or
+                     device_info.video_conversion),
+                    info,
+                    self.video_target_folder)
 
         self._check_finished()
 

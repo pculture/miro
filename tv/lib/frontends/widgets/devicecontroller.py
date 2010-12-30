@@ -42,6 +42,7 @@ from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import segmented
 from miro.frontends.widgets import widgetutil
+from miro.conversions import conversion_manager
 
 from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
@@ -265,13 +266,109 @@ class PlaylistSyncWidget(SyncWidget):
     def find_info_by_key(self, key, tab_list):
         return tab_list.find_playlist_with_name(key)
 
+class DeviceSettingsWidget(widgetset.VBox):
+
+    def __init__(self):
+        widgetset.VBox.__init__(self)
+        self.boxes = {}
+        self.device = None
+        audio_conversion_names = [_('Device Default')]
+        self.audio_conversion_values = [None]
+        video_conversion_names = [_('Device Default')]
+        self.video_conversion_values = [None]
+        for section_name, converters in conversion_manager.get_converters():
+            for converter in converters:
+                if converter.mediatype == 'video':
+                    video_conversion_names.append(converter.name)
+                    self.video_conversion_values.append(converter.identifier)
+                elif converter.mediatype == 'audio':
+                    audio_conversion_names.append(converter.name)
+                    self.audio_conversion_values.append(converter.identifier)
+        for text, setting, type_ in (
+            (_("Name of Device"), 'name', 'text'),
+            (_("Video Conversion"), 'video_conversion', 'video_conversion'),
+            (_("Audio Conversion"), 'audio_conversion', 'audio_conversion'),
+            (_("Video Location"), 'video_path', 'text'),
+            (_("Audio Location"), 'audio_path', 'text'),
+            (_("Always Show?"), 'always_show', 'bool')
+            ):
+            if type_ == 'text':
+                widget = widgetset.TextEntry()
+            elif type_.endswith('conversion'):
+                if type_ == 'video_conversion':
+                    options = video_conversion_names
+                elif type_ == 'audio_conversion':
+                    options = audio_conversion_names
+                widget = widgetset.OptionMenu(options)
+            elif type_== 'bool':
+                widget = widgetset.Checkbox(text)
+            else:
+                raise RuntimeError('unknown settings widget: %r' % type_)
+            self.boxes[setting] = widget
+            if type_ != 'bool': # has a label already
+                hbox = widgetset.HBox()
+                hbox.pack_start(widgetset.Label(text))
+                hbox.pack_start(widget)
+                self.pack_start(hbox)
+                widget.connect('changed', self.setting_changed, setting)
+            else:
+                self.pack_start(widget)
+                widget.connect('toggled', self.setting_changed, setting)
+
+    def set_device(self, device):
+        self.device = device
+        device_settings = device.database.setdefault('settings', {})
+        for setting in 'name', 'video_path', 'audio_path':
+            self.boxes[setting].set_text(device_settings.get(
+                    setting,
+                    getattr(device.info, setting)))
+        for conversion in 'video', 'audio':
+            value = device_settings.get('%s_conversion' % conversion)
+            if conversion == 'video':
+                index = self.video_conversion_values.index(value)
+            else:
+                index = self.audio_conversion_values.index(value)
+            self.boxes['%s_conversion' % conversion].set_selected(index)
+        if hasattr(device.info, 'generic'):
+            self.boxes['always_show'].enable()
+            self.boxes['always_show'].set_checked(
+                device_settings.get('always_show', False))
+        else:
+            self.boxes['always_show'].disable()
+            self.boxes['always_show'].set_checked(True)
+
+    def setting_changed(self, widget, setting_or_value, setting=None):
+        if self.device is None:
+            return
+        if setting is None:
+            value = None
+            setting = setting_or_value
+        else:
+            value = setting_or_value
+        if setting.endswith('conversion'):
+            if setting == 'video_conversion':
+                values = self.video_conversion_values
+            elif setting == 'audio_conversion':
+                values = self.audio_conversion_values
+            value = values[value] # sends an index
+        elif setting == 'name' or setting.endswith('path'):
+            value = widget.get_text()
+        elif setting == 'always_show':
+            value = widget.get_checked()
+        self.device.database['settings'][setting] = value
+        if setting == 'name':
+            self.device.name = value
+            # need to send a changed message
+            message = messages.TabsChanged('devices', [], [self.device], [])
+            message.send_to_frontend()
+
 class DeviceMountedView(widgetset.VBox):
     def __init__(self):
         self.device = None
         widgetset.VBox.__init__(self)
 
         self.button_row = segmented.SegmentedButtonsRow()
-        for name in ('Main', 'Video', 'Audio', 'Playlists'):
+        for name in ('Main', 'Video', 'Audio', 'Playlists', 'Settings'):
             button = DeviceTabButtonSegment(name.lower(), name,
                                             self._tab_clicked)
             self.button_row.add_button(name.lower(), button)
@@ -313,6 +410,8 @@ class DeviceMountedView(widgetset.VBox):
         self.add_tab('audio', widgetutil.align_center(AudioFeedSyncWidget()))
         self.add_tab('playlists',
                      widgetutil.align_center(PlaylistSyncWidget()))
+        self.add_tab('settings',
+                     widgetutil.align_center(DeviceSettingsWidget()))
 
     def add_tab(self, key, widget):
         if not self.tabs:
@@ -325,7 +424,7 @@ class DeviceMountedView(widgetset.VBox):
         if not self.device.mount:
             return
         self.device.database.set_bulk_mode(True)
-        for name in 'video', 'audio', 'playlists':
+        for name in 'video', 'audio', 'playlists', 'settings':
             tab = self.tabs[name]
             tab.child.set_device(device)
         sync_manager = app.device_manager.get_sync_for_device(device,
