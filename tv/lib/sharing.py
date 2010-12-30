@@ -30,6 +30,7 @@ import errno
 import os
 import socket
 import select
+import struct
 import threading
 
 from miro import app
@@ -43,6 +44,19 @@ from miro import prefs
 from miro.plat.utils import thread_body
 
 import libdaap
+
+# Windows Python does not have inet_ntop().  Sigh.  Fallback to this one,
+# which isn't as good, if we do not have access to it.
+def inet_ntop(af, ip):
+    try:
+        return socket.inet_ntop(af, ip)
+    except AttributeError:
+        if af == socket.AF_INET:
+            return socket.inet_ntoa(ip)
+        if af == soket.AF_INET6:
+            return ':'.join('%x' % bit for bit in struct.unpack('!' + 'H' * 8,
+                                                                ip))
+        raise ValueError('unknown address family %d' % af)
 
 # Helper utilities
 # Translate neutral constants to native protocol constants with this, or
@@ -114,7 +128,7 @@ class SharingTracker(object):
         removed_list = []
         unused, local_port = app.sharing_manager.get_address()
         local_addresses = self.calc_local_addresses()
-        ip_values = [socket.inet_ntop(k, ips[k]) for k in ips.keys()]
+        ip_values = [inet_ntop(k, ips[k]) for k in ips.keys()]
         if set(local_addresses + ip_values) and local_port == port:
             return
         # Need to come up with a unique ID for the share.  Use 
