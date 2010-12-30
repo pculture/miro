@@ -27,6 +27,7 @@
 # statement from all source files in the program, then also delete it here.
 
 from glob import glob
+from fnmatch import fnmatch
 import json
 import logging
 import os, os.path
@@ -129,7 +130,7 @@ class MultipleDeviceInfo(BaseDeviceInfo):
         for child in self.devices.values():
             child.validate()
 
-class GenericDeviceInfo(DeviceInfo):
+class USBMassStorageDeviceInfo(DeviceInfo):
     """
     DeviceInfo object used for generic USB Mass Storage devices.
     """
@@ -153,6 +154,8 @@ class DeviceManager(object):
     def __init__(self):
         self.device_by_name = {}
         self.device_by_id = {}
+        self.generic_devices = []
+        self.generic_devices_by_id = {}
         self.connected = {}
         self.syncs_in_progress = {}
         self.startup()
@@ -163,8 +166,16 @@ class DeviceManager(object):
         except AttributeError:
             logging.exception('error validating device %s', info.name)
         else:
-            self.device_by_name[info.device_name] = info
-            self.device_by_id[(info.vendor_id, info.product_id)] = info
+            if info.product_id is None or '*' in info.device_name:
+                # generic device
+                if info.product_id is not None or '*' not in info.device_name:
+                    logging.debug('invalid generic device %s' % info.name)
+                else:
+                    self.generic_devices.append(info)
+                    self.generic_devices_by_id[info.vendor_id] = info
+            else:
+                self.device_by_name[info.device_name] = info
+                self.device_by_id[(info.vendor_id, info.product_id)] = info
 
     def startup(self):
         # load devices
@@ -192,7 +203,14 @@ class DeviceManager(object):
         Get a DeviceInfo (or MultipleDeviceInfo) object given the device's USB
         name.
         """
-        info = self.device_by_name[device_name]
+        try:
+            info = self.device_by_name[device_name]
+        except KeyError:
+            for info in self.generic_devices:
+                if fnmatch(device_name, info.device_name):
+                    break
+            else:
+                raise
         return self._get_device_from_info(info, device_type)
 
     def get_device_by_id(self, vendor_id, product_id, device_type=None):
@@ -200,7 +218,13 @@ class DeviceManager(object):
         Get a DeviceInfo (or MultipleDeviceInfo) object give the device's USB
         vendor and product IDs.
         """
-        info = self.device_by_id[(vendor_id, product_id)]
+        try:
+            info = self.device_by_id[(vendor_id, product_id)]
+        except KeyError:
+            if vendor_id in self.generic_devices_by_id:
+                info = self.generic_devices_by_id[vendor_id]
+            else:
+                raise
         return self._get_device_from_info(info, device_type)
 
 
@@ -216,7 +240,7 @@ class DeviceManager(object):
                 info = self.get_device(kwargs['name'],
                                        device_name)
             except KeyError:
-                info = GenericDeviceInfo(kwargs.get('visible_name',
+                info = USBMassStorageDeviceInfo(kwargs.get('visible_name',
                                                    kwargs['name']))
         elif 'vendor_id' in kwargs and 'product_id' in kwargs:
             try:
@@ -224,7 +248,7 @@ class DeviceManager(object):
                                              kwargs['product_id'],
                                              device_name)
             except KeyError:
-                info = GenericDeviceInfo(_('USB Device'))
+                info = USBMassStorageDeviceInfo(_('USB Device'))
         else:
             raise RuntimeError('connect_device() requires either the device '
                                'name or vendor/product IDs')
