@@ -495,7 +495,8 @@ class DeviceSyncManager(object):
             license=item_info.license,
             url=item_info.file_url,
             media_type_checked=item_info.media_type_checked,
-            mime_type=item_info.mime_type)
+            mime_type=item_info.mime_type,
+            creation_time=item_info.date_added)
         device_item._migrate_thumbnail()
         database = self.device.database
         database.setdefault(device_item.file_type, [])
