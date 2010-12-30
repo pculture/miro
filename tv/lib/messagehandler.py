@@ -459,7 +459,7 @@ class DeviceItemTracker(object):
         items = [item.DeviceItem(device=self.device, file_type=item_type,
                                  video_path=path, **args)
                  for path, args in self.device.database[item_type].items()]
-        infos = [messages.ItemInfo(i) for i in items]
+        infos = [i.item_info() for i in items]
 
         messages.ItemList(self.type, self.id, infos).send_to_frontend()
 

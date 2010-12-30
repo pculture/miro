@@ -1108,9 +1108,10 @@ class ItemInfo(object):
     :param up_down_ratio: (Torrent only) ratio of uploaded to downloaded
     """
 
-    # bump this whenever you change the ItemInfo class, or change on of the
+    # bump this whenever you change the ItemInfo class, or change one of the
     # functions that ItemInfo uses to get it's attributes (for example
-    # Item.get_description())
+    # Item.get_description()).  Also, you should update
+    # item.DeviceItem.item_info() which creates objects of this type.
     VERSION = 5
 
     html_stripper = util.HTMLStripper()
