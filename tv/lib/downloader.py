@@ -755,7 +755,12 @@ def cleanup_incomplete_downloads():
                     filename = os.path.join(download_dir, filename)
                 files_in_use.add(filename)
 
-    for f in fileutil.listdir(download_dir):
+    try:
+        entries = fileutil.listdir(download_dir)
+    except OSError:
+        entries = []
+
+    for f in entries:
         f = os.path.join(download_dir, f)
         if f not in files_in_use:
             try:
