@@ -27,8 +27,11 @@ tmobile_g1 = DeviceInfo(u'T-Mobile G1',
 tmobile_g2 = DeviceInfo(u'T-Mobile G2',
                         video_conversion='g2')
 
+generic_htc = DeviceInfo(_('Generic %(name)s Device', {'name': 'HTC'}),
+                         video_conversion='hero')
+
 htc_android_device = MultipleDeviceInfo(
-    'HTC Android Phone', [htc_hero, tmobile_g1, tmobile_g2],
+    'HTC Android Phone', [htc_hero, tmobile_g1, tmobile_g2, generic_htc],
     vendor_id=0x0bb4,
     product_id=0x0ff9,
     **defaults)

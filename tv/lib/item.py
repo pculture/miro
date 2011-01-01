@@ -2109,6 +2109,7 @@ class DeviceItem(ItemBase):
         self.metadata = {}
         self.rating = None
         self.file_type = None
+        self.creation_time = None
         self.__dict__.update(kwargs)
 
         if isinstance(self.video_path, unicode):
@@ -2124,114 +2125,95 @@ class DeviceItem(ItemBase):
                 self.file_format = self.file_format + ' audio'
         if self.size is None:
             self.size = os.path.getsize(self.get_filename())
-        if self.release_date is None:
-            self.release_date = os.path.getctime(self.get_filename())
+        if self.release_date is None or self.creation_time is None:
+            ctime = os.path.getctime(self.get_filename())
+            if self.release_date is None:
+                self.release_date = ctime
+            if self.creation_time is None:
+                self.creation_time = ctime
         if self.duration is None: # -1 is unknown
             moviedata.movie_data_updater.request_update(self)
         self.id = self.get_filename()
 
-    @returns_unicode
-    def get_title(self):
-        if 'title' in self.metadata:
-            return self.metadata.get('title')
-
-        return self.name or u''
-
-    @returns_unicode
-    def get_source(self):
-        if self.feed_name is not None:
-            return self.feed_name
-        return self.device.info.name
+    def item_info(self):
+        """
+        Returns an ItemInfo object for this, without going through all the Item
+        API nonsense.
+        """
+        from miro import messages
+        ii = messages.ItemInfo.__new__(messages.ItemInfo)
+        ii.__dict__ = {
+            'name': self.name,
+            'id': self.id,
+            'feed_id': self.feed_id,
+            'feed_name': (self.feed_name is None and self.feed_name or
+                          self.device.name),
+            'feed_url': None,
+            'description': self.description,
+            'description_stripped': ii.html_stripper.strip(self.description),
+            'state': u'saved',
+            'release_date': datetime.fromtimestamp(self.release_date),
+            'size': self.size,
+            'duration': (self.duration not in (-1, None) and
+                         self.duration / 1000 or
+                         0),
+            'resume_time': 0,
+            'permalink': self.permalink,
+            'commentslink': self.comments_link,
+            'payment_link': self.payment_link,
+            'has_shareable_url': bool(self.url),
+            'can_be_saved': False,
+            'pending_manual_dl': False,
+            'pending_auto_dl': False,
+            'expiration_date': None,
+            'item_viewed': True,
+            'downloaded': True,
+            'is_external': False,
+            'video_watched': True,
+            'video_path': self.get_filename(),
+            'thumbnail': self.get_thumbnail(),
+            'thumbnail_url': self.thumbnail_url or u'',
+            'file_format': self.file_format,
+            'license': self.license,
+            'file_url': self.url or u'',
+            'is_container_item': False,
+            'is_playable': True,
+            'children': [],
+            'file_type': self.file_type,
+            'subtitle_encoding': self.subtitle_encoding,
+            'seeding_status': None,
+            'mime_type': self.enclosure_type,
+            'artist': self.metadata.get('artist', u''),
+            'album': self.metadata.get('album', u''),
+            'track': self.metadata.get('track', -1),
+            'year': self.metadata.get('year', -1),
+            'genre': self.metadata.get('genre', u''),
+            'rating': self.rating,
+            'date_added': self.creation_time,
+            'last_played': self.creation_time,
+            'download_info': None,
+            'device': self.device,
+            'leechers': None,
+            'seeders': None,
+            'up_rate': None,
+            'down_rate': None,
+            'up_total': None,
+            'down_total': None,
+            'up_down_ratio': 0.0
+            }
+        ii.search_ngrams = search.calc_ngrams(ii)
+        return ii
 
     @staticmethod
     def id_exists():
         return True
 
-    @staticmethod
-    def get_feed_url():
-        return None
-
-    @returns_unicode
-    def get_description(self):
-        return self.description
-
-    @staticmethod
-    def get_state():
-        return u'saved'
-
-    @staticmethod
-    def get_viewed():
-        return True
-
-    @staticmethod
-    def is_downloaded():
-        return True
-
-    @staticmethod
-    def is_external():
-        return False
-
-    def get_release_date_obj(self):
-        return datetime.fromtimestamp(self.release_date)
-
-    @staticmethod
-    def get_seen():
-        return True
-
-    @staticmethod
-    def is_playable():
-        return True
-
-    @staticmethod
-    def looks_like_torrent():
-        return False
-
-    @staticmethod
-    def torrent_seeding_status():
-        return None
-
-    def get_size(self):
-        return self.size
-
-    def get_duration_value(self):
-        if self.duration in (-1, None):
-            return 0
-        return self.duration / 1000
-
-    @returns_unicode
-    def get_url(self):
-        return self.url or u''
-
-    @returns_unicode
-    def get_link(self):
-        return self.permalink
-
-    @returns_unicode
-    def get_comments_link(self):
-        return self.comments_link
-
-    @returns_unicode
-    def get_payment_link(self):
-        return self.payment_link
-
-    def has_shareable_url(self):
-        return bool(self.get_url())
-
-    @staticmethod
-    def show_save_button():
-        return False
-
-    @staticmethod
-    def is_pending_manual_download():
-        return False
-
-    @staticmethod
-    def is_pending_auto_download():
-        return False
-
     @returns_filename
     def get_filename(self):
         return os.path.join(self.device.mount, self.video_path)
+
+    def get_url(self):
+        return self.url or u''
 
     @returns_filename
     def get_thumbnail(self):
@@ -2242,18 +2224,6 @@ class DeviceItem(ItemBase):
             return resources.path("images/thumb-default-audio.png")
         else:
             return resources.path("images/thumb-default-video.png")
-
-    @returns_unicode
-    def get_thumbnail_url(self):
-        return self.thumbnail_url or u''
-
-    @returns_unicode
-    def get_format(self):
-        return self.file_format
-
-    @returns_unicode
-    def get_license(self):
-        return self.license
 
     def _migrate_thumbnail(self):
         if self.screenshot:
@@ -2298,7 +2268,7 @@ class DeviceItem(ItemBase):
 
         if self.file_type != 'other':
             message = messages.ItemsChanged('device', self.device.id,
-                                            [], [messages.ItemInfo(self)], [])
+                                            [], [self.item_info()], [])
             message.send_to_frontend()
 
     def to_dict(self):

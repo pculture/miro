@@ -125,6 +125,29 @@ devices = [target1]
         self.assertRaises(KeyError, dm.get_device, "Target1")
         self.assertRaises(KeyError, dm.get_device_by_id, 0, 0)
 
+    def test_generic_device(self):
+        self.build_config_file(
+            "foo.py",
+            """from miro.devices import DeviceInfo
+target1 = DeviceInfo("Target1",
+                     device_name='Foo*',
+                     vendor_id=0x1234,
+                     product_id=None,
+                     video_conversion="hero",
+                     audio_conversion="mp3",
+                     audio_types=".mp3 .aac".split(),
+                     mount_instructions=u"",
+                     video_path=u"Video",
+                     audio_path=u"Audio")
+devices = [target1]
+""")
+        dm = devices.DeviceManager()
+        dm.load_devices(os.path.join(self.tempdir, '*.py'))
+        device = dm.get_device('Foo Bar')
+        self.assertEqual(device.name, "Target1")
+        device = dm.get_device_by_id(0x1234, 0x4567)
+        self.assertEqual(device.name, "Target1")
+
 class DeviceHelperTest(MiroTestCase):
 
     def test_load_database(self):
@@ -156,7 +179,7 @@ class DeviceHelperTest(MiroTestCase):
     def test_write_database(self):
         data = {u'a': 2,
                 u'b': {u'c': [5, 6]}}
-        devices.write_database(self.tempdir, data)
+        devices.write_database(data, self.tempdir)
         with open(os.path.join(self.tempdir, '.miro', 'json')) as f:
             new_data = json.load(f)
         self.assertEqual(data, new_data)

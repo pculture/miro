@@ -33,8 +33,6 @@ import gio
 
 from miro import app
 from miro.plat.frontends.widgets import timer
-from miro import devices
-from miro import messages
 
 class DeviceTracker(object):
     def __init__(self):
@@ -52,59 +50,58 @@ class DeviceTracker(object):
             self._drive_connected(volume_monitor, drive)
 
     def _get_device_info(self, drive):
-        id_ = drive.get_identifier('unix-device')
-        mount_path = size = remaining = None
-        database = devices.DeviceDatabase()
         volumes = drive.get_volumes()
         if volumes:
-            volume = volumes[0]
-            mount = volume.get_mount()
-            if mount:
-                mount_path = mount.get_root().get_path()
-                if mount_path and os.path.exists(mount_path):
-                    if mount_path[-1] != os.path.sep:
-                        mount_path = mount_path + os.path.sep # make sure it
-                                                              # ends with a /
-                    statinfo = os.statvfs(mount_path)
-                    size = statinfo.f_frsize * statinfo.f_blocks
-                    remaining = statinfo.f_frsize * statinfo.f_bavail
-                    database = devices.load_database(mount_path)
+            for volume in volumes:
+                id_ = volume.get_identifier('unix-device')
+                mount = size = remaining = None
+                mount = volume.get_mount()
+                if mount:
+                    mount = mount.get_root().get_path()
+                    if mount and os.path.exists(mount):
+                        if mount[-1] != os.path.sep:
+                            mount = mount + os.path.sep # make sure
+                                                                  # it ends
+                                                                  # with a /
+                        statinfo = os.statvfs(mount)
+                        size = statinfo.f_frsize * statinfo.f_blocks
+                        remaining = statinfo.f_frsize * statinfo.f_bavail
 
-        device_info = app.device_manager.get_device(
-            drive.get_name(),
-            database.get('device_name', None))
-
-        self._unix_device_to_drive[id_] = drive
-        return messages.DeviceInfo(id_, device_info, mount_path,
-                                   database, size, remaining)
+                self._unix_device_to_drive[id_] = drive
+                yield id_, {
+                    'name': drive.get_name(),
+                    'visible_name': volume.get_name(),
+                    'mount': mount,
+                    'size': size,
+                    'remaining': remaining
+                    }
+        elif drive.get_name() != 'CD/DVD Drive':
+            # we tack on the 1 so that the unmounted device maps to the same ID
+            # as the first partition
+            id_ = drive.get_identifier('unix-device') + '1'
+            self._unix_device_to_drive[id_] = drive
+            yield id_, {'name': drive.get_name()}
 
     def _drive_connected(self, volume_monitor, drive):
         if drive is None:
             # can happen when a CD is inserted
             return
-        try:
-            info = self._get_device_info(drive)
-        except KeyError:
-            logging.debug('unknown device connected: %r' % drive.get_name())
-            return
         logging.debug('seen device: %r', drive.get_name())
-        if info.id in self._disconnecting:
-            # Gio sends a disconnect/connect pair when the device is mounted so
-            # we wait a little and check for spurious ones
-            timeout_id = self._disconnecting.pop(info.id)
-            timer.cancel(timeout_id)
-            return
-        devices.device_connected(info)
+        for id_, info in self._get_device_info(drive):
+            if id_ in self._disconnecting:
+                # Gio sends a disconnect/connect pair when the device is
+                # mounted so we wait a little and check for spurious ones
+                timeout_id = self._disconnecting.pop(id_)
+                timer.cancel(timeout_id)
+                return
+            app.device_manager.device_connected(id_, **info)
 
     def _drive_changed(self, volume_monitor, drive):
         if drive is None:
             # can happen when a CD is inserted
             return
-        try:
-            info = self._get_device_info(drive)
-        except KeyError:
-            return
-        devices.device_changed(info)
+        for id_, info in self._get_device_info(drive):
+            app.device_manager.device_changed(id_, **info)
 
     def _mount_added(self, volume_monitor, mount):
         self._drive_changed(volume_monitor, mount.get_drive())
@@ -113,20 +110,17 @@ class DeviceTracker(object):
         if drive is None:
             # can happen when a CD is inserted
             return
-        try:
-            info = self._get_device_info(drive)
-        except KeyError:
-            return
-        timeout_id = timer.add(0.5, self._drive_disconnected_timeout, info)
-        self._disconnecting[info.id] = timeout_id
+        for id_, info in self._get_device_info(drive):
+            timeout_id = timer.add(0.5, self._drive_disconnected_timeout, id_)
+            self._disconnecting[id_] = timeout_id
 
-    def _drive_disconnected_timeout(self, info):
-        del self._disconnecting[info.id]
+    def _drive_disconnected_timeout(self, id_):
+        del self._disconnecting[id_]
         try:
-            del self._unix_device_to_drive[info.id]
+            del self._unix_device_to_drive[id_]
         except KeyError:
             pass
-        devices.device_disconnected(info)
+        app.device_manager.device_disconnected(id_)
 
     def eject(self, device):
         if device.id not in self._unix_device_to_drive:

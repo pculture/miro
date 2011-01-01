@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Miro - an RSS based video player application
 # Copyright (C) 2005-2010 Participatory Culture Foundation
@@ -27,6 +27,8 @@
 # but you are not obligated to do so. If you do not wish to do so, delete
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
+
+set -o errexit
 
 setup_binarykit.sh
 python setup.py bdist_miro

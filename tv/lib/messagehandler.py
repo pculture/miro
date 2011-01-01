@@ -459,7 +459,7 @@ class DeviceItemTracker(object):
         items = [item.DeviceItem(device=self.device, file_type=item_type,
                                  video_path=path, **args)
                  for path, args in self.device.database[item_type].items()]
-        infos = [messages.ItemInfo(i) for i in items]
+        infos = [i.item_info() for i in items]
 
         messages.ItemList(self.type, self.id, infos).send_to_frontend()
 
@@ -1573,13 +1573,11 @@ New ids: %s""", playlist_item_ids, message.item_ids)
 
     def handle_set_device_type(self, message):
         message.device.database['device_name'] = message.name
-        info = messages.DeviceInfo(message.device.id,
-                                   message.device.info.devices[message.name],
-                                   message.device.mount,
-                                   message.device.database,
-                                   message.device.size,
-                                   message.device.remaining)
-        devices.device_changed(info)
+        app.device_manager.device_changed(message.device.id,
+                                          name=message.name,
+                                          mount=message.device.mount,
+                                          size=message.device.size,
+                                          remaining=message.device.remaining)
 
     def handle_delete_device_video(self, message):
         item = message.item
@@ -1594,7 +1592,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                               [message.item.id]).send_to_frontend()
 
     def handle_device_eject(self, message):
-        devices.write_database(message.device.mount, message.device.database)
+        devices.write_database(message.device.database, message.device.mount)
         app.device_tracker.eject(message.device)
 
     @staticmethod

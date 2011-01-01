@@ -41,6 +41,7 @@ terms.
 import re
 import sys
 import unicodedata
+import logging
 
 from miro import search
 from miro import signals
