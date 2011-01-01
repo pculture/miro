@@ -361,7 +361,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>$appRevisionNum</string>
+	<string>$appVersion</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.5</string>
 	<key>NSHumanReadableCopyright</key>
