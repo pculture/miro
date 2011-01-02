@@ -251,6 +251,7 @@ class SharingItemTrackerImpl(object):
     def disconnect(self):
         ids = [item.id for item in self.get_items()]
         message = messages.ItemsChanged(self.type, self.tab, [], [], ids)
+        self.items = []
         print 'SENDING removed message'
         message.send_to_frontend()
         # No need to clean out our list of items as we are going away anyway.
@@ -324,9 +325,9 @@ class SharingManagerBackend(object):
 
     def handle_items_changed(self, message):
         # If items are changed, just redelete and recreate the entry.
-        for x in message.removed:
-            del self.items[x]
-            del self.daapitems[x]
+        for itemid in message.removed:
+            del self.items[itemid]
+            del self.daapitems[itemid]
         self.make_item_dict(message.added)
         self.make_item_dict(message.changed)
 
