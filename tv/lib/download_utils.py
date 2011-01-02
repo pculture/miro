@@ -79,6 +79,7 @@ def parse_url(url, split_path=False):
     url = fix_file_urls(url)
     (scheme, host, path, params, query, fragment) = \
              util.unicodify(list(urlparse(url)))
+
     # Filter invalid URLs with duplicated ports
     # (http://foo.bar:123:123/baz) which seem to be part of #441.
     if host.count(':') > 1:
@@ -91,9 +92,7 @@ def parse_url(url, split_path=False):
         host, port = host.split(':')
         try:
             port = int(port)
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except ValueError:
             logging.warn("invalid port for %r", url)
             port = default_port(scheme)
     else:
@@ -103,8 +102,8 @@ def parse_url(url, split_path=False):
     scheme = scheme.lower()
 
     path = path.replace('|', ':') 
-    # Windows drive names are often specified as "C|\foo\bar"
 
+    # Windows drive names are often specified as "C|\foo\bar"
     if path == '' or not path.startswith('/'):
         path = '/' + path
     elif scheme.startswith("file") and re.match(r'/[a-zA-Z]:', path):
@@ -113,12 +112,12 @@ def parse_url(url, split_path=False):
     full_path = path
     if split_path:
         return scheme, host, port, full_path, params, query
-    else:
-        if params:
-            full_path += ';%s' % params
-        if query:
-            full_path += '?%s' % query
-        return scheme, host, port, full_path
+
+    if params:
+        full_path += ';%s' % params
+    if query:
+        full_path += '?%s' % query
+    return scheme, host, port, full_path
 
 def get_file_url_path(url):
     scheme, host, port, path = parse_url(url)
@@ -152,6 +151,7 @@ def next_free_filename(name):
         return expand_filename(name), fp
     except OSError:
         pass
+
     # Boh boh ... did't work.  Let's try to create a variant name and 
     # open that instead.
     parts = name.split('.')
@@ -180,7 +180,7 @@ def next_free_filename(name):
                 parts[-2] = str(count)
                 newname = '.'.join(parts)
                 continue
-    return expand_filename(newname), fp
+    return (expand_filename(newname), fp)
 
 @returns_filename
 def filename_from_url(url, clean=False):
@@ -208,9 +208,7 @@ def filename_from_url(url, clean=False):
             return clean_filename(ret)
         else:
             return unicode_to_filename(ret)
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
+    except (TypeError, KeyError, AttributeError, UnicodeDecodeError):
         return unicode_to_filename(u'unknown')
 
 @returns_filename
@@ -227,7 +225,7 @@ def clean_filename(filename):
         ext = ext[:MAX_FILENAME_EXTENSION_LENGTH]
         base = base[:MAX_FILENAME_LENGTH-len(ext)]
         filename = base + ext
-    if type(filename) == str:
+    if isinstance(filename, str):
         return unicode_to_filename(filename.decode('ascii', 'replace'))
     else:
         return unicode_to_filename(filename)

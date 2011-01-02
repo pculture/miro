@@ -547,11 +547,11 @@ class BGDownloader(object):
 
     def handle_network_error(self, error):
         if isinstance(error, httpclient.NetworkError):
-            if (isinstance(error, httpclient.MalformedURL)
-                 or isinstance(error, httpclient.UnknownHostError)
-                 or isinstance(error, httpclient.AuthorizationFailed)
-                 or isinstance(error, httpclient.ProxyAuthorizationFailed)
-                 or isinstance(error, httpclient.UnexpectedStatusCode)):
+            if (isinstance(error, (httpclient.MalformedURL,
+                                   httpclient.UnknownHostError,
+                                   httpclient.AuthorizationFailed,
+                                   httpclient.ProxyAuthorizationFailed,
+                                   httpclient.UnexpectedStatusCode))):
                 self.handle_error(error.getFriendlyDescription(),
                                   error.getLongDescription())
                 self.retryCount = -1 # reset retryCount

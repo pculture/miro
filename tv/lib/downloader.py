@@ -384,9 +384,9 @@ class RemoteDownloader(DDBObject):
         parent = os.path.join(fileutil.expand_filename(filename),
                               os.path.pardir)
         parent = os.path.normpath(parent)
-        moviesDir = fileutil.expand_filename(app.config.get(prefs.MOVIES_DIRECTORY))
-        if ((os.path.exists(parent) and os.path.exists(moviesDir)
-             and not samefile(parent, moviesDir)
+        movies_dir = fileutil.expand_filename(app.config.get(prefs.MOVIES_DIRECTORY))
+        if ((os.path.exists(parent) and os.path.exists(movies_dir)
+             and not samefile(parent, movies_dir)
              and len(os.listdir(parent)) == 0)):
             try:
                 os.rmdir(parent)
