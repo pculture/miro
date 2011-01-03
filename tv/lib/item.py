@@ -399,6 +399,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
         self.rating = None
         self.play_count = 0
         self.skip_count = 0
+        self.cover_art = None
         # Initalize FileItem attributes to None
         self.deleted = self.shortFilename = self.offsetPath = None
 
@@ -1319,6 +1320,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
                 return resources.path("images/thumb-default-audio.png")
             else:
                 return resources.path("images/thumb-default-video.png")
+    
+    def get_cover_art(self):
+        return self.cover_art
 
     def is_downloaded_torrent(self):
         return (self.isContainerItem and self.has_downloader() and

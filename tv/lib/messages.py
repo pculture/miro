@@ -1121,7 +1121,7 @@ class ItemInfo(object):
     # bump this whenever you change the ItemInfo class, or change one of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description()).
-    VERSION = 6
+    VERSION = 7
 
     html_stripper = util.HTMLStripper()
 
@@ -1190,6 +1190,7 @@ class ItemInfo(object):
         self.rating = item.get_rating()
         self.date_added = item.get_creation_time()
         self.last_played = item.get_watched_time()
+        self.cover_art = item.get_cover_art()
 
         if item.downloader:
             self.download_info = DownloadInfo(item.downloader)
