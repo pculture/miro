@@ -717,6 +717,24 @@ class BackendMessageHandler(messages.MessageHandler):
                 "handle_mark_item_unwatched: can't find item by id %s",
                 message.id)
 
+    def handle_mark_item_completed(self, message):
+        try:
+            item_ = item.Item.get_by_id(message.id)
+            item_.mark_item_completed()
+        except database.ObjectNotFoundError:
+            logging.warning(
+                "handle_mark_item_completed: can't find item by id %s",
+                message.id)
+
+    def handle_mark_item_skipped(self, message):
+        try:
+            item_ = item.Item.get_by_id(message.id)
+            item_.mark_item_skipped()
+        except database.ObjectNotFoundError:
+            logging.warning(
+                "handle_mark_item_skipped: can't find item by id %s",
+                message.id)
+
     def handle_set_item_subtitle_encoding(self, message):
         try:
             item_ = item.Item.get_by_id(message.id)

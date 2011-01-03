@@ -429,6 +429,14 @@ class MarkItemUnwatched(BackendMessage):
     def __init__(self, id_):
         self.id = id_
 
+class MarkItemCompleted(BackendMessage):
+    def __init__(self, id_):
+        self.id = id_
+
+class MarkItemSkipped(BackendMessage):
+    def __init__(self, id_):
+        self.id = id_
+
 class SetItemSubtitleEncoding(BackendMessage):
     """Mark an item as watched.
     """

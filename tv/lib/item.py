@@ -1188,6 +1188,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
                         item.mark_item_unseen(False)
             self.recalc_feed_counts()
 
+    # TODO: played/seen count updates need to trigger recalculation of auto
+    # ratings somewhere
+    def mark_item_completed(self):
+        self.play_count += 1
+
+    def mark_item_skipped(self):
+        self.skip_count += 1
+
     @returns_unicode
     def get_rss_id(self):
         self.confirm_db_thread()
