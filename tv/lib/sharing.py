@@ -40,6 +40,7 @@ from miro import item
 from miro import messages
 from miro import playlist
 from miro import prefs
+from miro import util
 
 from miro.plat.utils import thread_body
 
@@ -94,7 +95,7 @@ class SharingTracker(object):
     def __init__(self):
         self.trackers = dict()
         self.available_shares = []
-        self.r, self.w = os.pipe()
+        self.r, self.w = util.make_dummy_socket_pair()
 
     def calc_local_addresses(self):
         # Get our own hostname so that we can filter out ourselves if we 
@@ -207,7 +208,8 @@ class SharingTracker(object):
             return self.trackers[share_id]
 
     def stop_tracking(self):
-        os.write(self.w, "b")
+        # What to do in case of socket error here?
+        self.w.send("b")
 
 # Synchronization issues: The messagehandler.SharingItemTracker() creates
 # one of these for each share it connects to.  If this is an initial connection
@@ -459,7 +461,7 @@ class SharingManagerBackend(object):
 
 class SharingManager(object):
     def __init__(self):
-        self.r, self.w = os.pipe()
+        self.r, self.w = util.make_dummy_socket_pair()
         self.sharing = False
         self.discoverable = False
         self.config_watcher = config.ConfigWatcher(
@@ -573,7 +575,8 @@ class SharingManager(object):
 
     def disable_sharing(self):
         self.sharing = False
-        os.write(self.w, "b")
+        # What to do in case of socket error here?
+        self.w.send("b")
         del self.thread
         del self.server
 
