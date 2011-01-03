@@ -493,7 +493,8 @@ class SharingManager(object):
                 if not self.enable_sharing():
                     return
             else:
-                self.disable_discover()
+                if self.discoverable:
+                    self.disable_discover()
                 self.disable_sharing()
 
         # Short-circuit: if we have just disabled the share, then we don't
