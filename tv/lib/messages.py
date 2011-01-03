@@ -1337,7 +1337,8 @@ class GuideList(FrontendMessage):
             # for it to have a default channel guide persisted, but when you
             # set the channel guide via the DTV_CHANNELGUIDE_URL, then there's
             # no default guide.  So we generate one here.  Bug #11027.
-            cg = guide.ChannelGuide(util.to_uni(app.config.get(prefs.CHANNEL_GUIDE_URL)))
+            cg = guide.ChannelGuide(util.to_uni(app.config.get(
+                        prefs.CHANNEL_GUIDE_URL)))
             cg_info = GuideInfo(cg)
             self.default_guide = [cg_info]
         elif len(self.default_guide) > 1:
@@ -1501,7 +1502,8 @@ class ConversionTaskInfo(object):
     :param state: current state of the conversion.  One of: "pending",
         "running", "failed", or "finished"
     :param progress: how far the conversion task is
-    :param error: user-friendly string for describing conversion errors (if any)
+    :param error: user-friendly string for describing conversion
+                  errors (if any)
     :param output_path: path to the converted video (or None)
     :param log_path: path to the log file for the conversion
     :param item_name: name of the item being converted
