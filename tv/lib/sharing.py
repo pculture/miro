@@ -460,6 +460,8 @@ class SharingManagerBackend(object):
             self.daapitems[x.id] = daap_item_fixup(x.id, self.items[x.id])
 
 class SharingManager(object):
+    CMD_QUIT = 'quit'
+    CMD_NOP  = 'nop'
     def __init__(self):
         self.r, self.w = util.make_dummy_socket_pair()
         self.sharing = False
@@ -521,11 +523,18 @@ class SharingManager(object):
 
     def enable_discover(self):
         name = app.config.get(prefs.SHARE_NAME)
+        # At this point the server must be available, because we'd otherwise
+        # have no clue what port to register for with Bonjour.
         address, port = self.server.server_address
         self.mdns_callback = libdaap.install_mdns(name, port=port)
         # not exactly but close enough: it's not actually until the
         # processing function gets called.
         self.discoverable = True
+        # Reload the server thread: if we are only toggling between it
+        # being advertised, then the server loop is already running in
+        # the select() loop and won't know that we need to process the
+        # registration.
+        self.w.send(self.CMD_NOP)
 
     def disable_discover(self):
         self.discoverable = False
@@ -549,7 +558,15 @@ class SharingManager(object):
                         self.server.handle_request()
                         continue
                     if self.r == i:
-                        return
+                        cmd = self.r.recv(1024)
+                        print 'CMD', cmd
+                        if cmd == self.CMD_QUIT:
+                            return
+                        elif cmd == self.CMD_NOP:
+                            print 'RELOAD'
+                            continue
+                        else:
+                            raise 
             except select.error, (err, errstring):
                 if err == errno.EINTR:
                     continue 
@@ -576,7 +593,7 @@ class SharingManager(object):
     def disable_sharing(self):
         self.sharing = False
         # What to do in case of socket error here?
-        self.w.send("b")
+        self.w.send(self.CMD_QUIT)
         del self.thread
         del self.server
 
