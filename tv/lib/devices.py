@@ -505,7 +505,7 @@ class DeviceSyncManager(object):
             device_item.to_dict()
         messages.ItemsChanged('device', '%s-%s' % (self.device.id,
                                                    device_item.file_type),
-                              [device_item.item_info()], # added
+                              [messages.ItemInfo(device_item)], # added
                               [], []).send_to_frontend() # changed, removed
 
     def _check_finished(self):
