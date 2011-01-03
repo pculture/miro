@@ -53,7 +53,6 @@ class DeviceTitlebar(itemlistwidgets.ItemListTitlebar):
         pass
 
 class DeviceTabButtonSegment(segmented.TextButtonSegment):
-
     MARGIN = 20
     COLOR = (1, 1, 1)
     TEXT_COLOR = {True: COLOR, False: COLOR}
@@ -268,7 +267,6 @@ class PlaylistSyncWidget(SyncWidget):
         return tab_list.find_playlist_with_name(key)
 
 class DeviceSettingsWidget(widgetset.VBox):
-
     def __init__(self):
         widgetset.VBox.__init__(self)
         self.boxes = {}
@@ -498,9 +496,7 @@ class DeviceMountedView(widgetset.VBox):
         self.sync_container.set_child(self._old_child)
         del self._old_child
 
-
 class DeviceItemList(itemlist.ItemList):
-
     def filter(self, item_info):
         return True
 
@@ -606,7 +602,6 @@ class DeviceWidget(widgetset.VBox):
 
     def get_view(self):
         return self.device_view.child
-
 
 class DeviceController(object):
     def __init__(self, device):

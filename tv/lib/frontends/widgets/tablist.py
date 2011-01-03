@@ -151,7 +151,6 @@ class TabUpdaterMixin(object):
         self.updating_animations[id_] = timer_id
 
 class StaticTabListBase(TabBlinkerMixin):
-
     def __init__(self):
         self.iter_map = {}
         self.doing_change = False 
@@ -667,7 +666,6 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
     def on_delete_key_pressed(self):
         """For subclasses to override."""
         pass
-
 
 class DevicesList(TabList, TabUpdaterMixin):
     type = 'device'

@@ -1358,7 +1358,6 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         return entry
 
 class RSSFeedImpl(RSSFeedImplBase):
-
     def setup_new(self, url, ufeed, title=None, initialHTML=None, etag=None,
                   modified=None):
         RSSFeedImplBase.setup_new(self, url, ufeed, title)
