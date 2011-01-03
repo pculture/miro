@@ -1113,7 +1113,7 @@ class ItemInfo(object):
     # bump this whenever you change the ItemInfo class, or change one of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description()).
-    VERSION = 5
+    VERSION = 6
 
     html_stripper = util.HTMLStripper()
 
@@ -1129,6 +1129,7 @@ class ItemInfo(object):
         self.search_ngrams = search.calc_ngrams(self)
 
     def _from_item(self, item):
+        self.device = None
         self.name = item.get_title()
         self.feed_id = item.feed_id
         self.feed_name = item.get_source()
