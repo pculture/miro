@@ -534,7 +534,9 @@ class SharingManager(object):
         while True:
             try:
                 rset = [server_fileno, self.r]
-                refs = self.mdns_callback.get_refs()
+                refs = []
+                if self.discoverable:
+                    refs += self.mdns_callback.get_refs()
                 rset += refs
                 r, w, x = select.select(rset, [], [])
                 for i in r:
