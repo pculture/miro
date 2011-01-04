@@ -878,6 +878,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         context.restore()
 
     def draw_thumbnail(self, context, x, y, width, height):
+        logging.debug(self.data.thumbnail)
         icon = imagepool.get_surface(self.data.thumbnail, (154, 105))
         widgetutil.draw_rounded_icon(context, icon, x, y, 154, 105)
         self.thumb_overlay.draw(context, x, y, 154, 105)

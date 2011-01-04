@@ -1311,6 +1311,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
             return resources.path(fileutil.expand_filename(path))
         elif self.isContainerItem:
             return resources.path("images/thumb-default-folder.png")
+        elif self.cover_art:
+            path = self.cover_art
+            return resources.path(fileutil.expand_filename(path))
         else:
             feed = self.get_feed()
             if feed.thumbnail_valid():
