@@ -495,8 +495,8 @@ class SimpleItemListController(ItemListController):
         self.widget.set_list_empty_mode(list_empty)
 
 class SearchController(SimpleItemListController):
-    type = 'search'
-    id = None
+    type = u'search'
+    id = u'search'
     image_filename = 'icon-search_large.png'
     title = _("Video Search")
 
@@ -621,22 +621,22 @@ class AudioVideoItemsController(SimpleItemListController):
         self.widget.toolbar.set_active_filters(filters)
 
 class VideoItemsController(AudioVideoItemsController):
-    type = 'videos'
-    id = None
+    type = u'videos'
+    id = u'videos'
     image_filename = 'icon-video_large.png'
     title = _("Video")
     unwatched_label =  _('Unwatched')
 
 class AudioItemsController(AudioVideoItemsController):
-    type = 'music'
-    id = None
+    type = u'music'
+    id = u'music'
     image_filename = 'icon-audio_large.png'
     title = _("Music")
     unwatched_label = _('Unplayed')
 
 class OtherItemsController(SimpleItemListController):
-    type = 'others'
-    id = None
+    type = u'others'
+    id = u'others'
     image_filename = 'icon-other_large.png'
     title = _("Other")
 
@@ -650,7 +650,7 @@ class FolderContentsController(SimpleItemListController):
     """Controller object for feeds."""
 
     def __init__(self, folder_info):
-        self.type = 'folder-contents'
+        self.type = u'folder-contents'
         self.id = folder_info.id
         self.title = folder_info.name
         self.info = folder_info

@@ -649,7 +649,7 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         self.device = device
         self.id = device.id
         tab_type = device.tab_type
-        self.type = 'device-%s' % tab_type
+        self.type = u'device-%s' % tab_type
         self.image_filename = 'icon-%s_large.png' % tab_type
         self.title = u'%s on %s' % (device.name, device.info.name)
         itemlistcontroller.AudioVideoItemsController.__init__(self)

@@ -173,7 +173,7 @@ class StaticTabList(StaticTabListBase):
     """Handles the static tabs (the tabs on top that are always the same)."""
     def __init__(self):
         StaticTabListBase.__init__(self)
-        self.type = 'static'
+        self.type = u'static'
         self.view = TabListView(style.StaticTabRenderer(),
                 widgetset.TableModel)
         self.view.allow_multiple_select(False)
@@ -188,7 +188,7 @@ class LibraryTabList(StaticTabListBase):
     """Handles all Library related tabs - Video, Audio, Downloading..."""
     def __init__(self):
         StaticTabListBase.__init__(self)
-        self.type = 'library'
+        self.type = u'library'
         self.view = TabListView(style.StaticTabRenderer())
         self.view.allow_multiple_select(False)
         self.view.set_fixed_height(False)
@@ -476,12 +476,12 @@ class FeedListDropHandler(TabListDropHandler):
     folder_types = ('feed-with-folder', 'audio-feed-with-folder')
 
 class FeedListDragHandler(TabListDragHandler):
-    item_type = 'feed'
-    folder_type = 'feed-with-folder'
+    item_type = u'feed'
+    folder_type = u'feed-with-folder'
 
 class AudioFeedListDragHandler(TabListDragHandler):
-    item_type = 'audio-feed'
-    folder_type = 'audio-feed-with-folder'
+    item_type = u'audio-feed'
+    folder_type = u'audio-feed-with-folder'
 
 class PlaylistListDropHandler(TabListDropHandler):
     item_types = ('playlist',)
@@ -545,8 +545,8 @@ class DeviceDropHandler(object):
         messages.DeviceSyncMedia(device, video_ids).send_to_backend()
 
 class PlaylistListDragHandler(TabListDragHandler):
-    item_type = 'playlist'
-    folder_type = 'playlist-with-folder'
+    item_type = u'playlist'
+    folder_type = u'playlist-with-folder'
 
 class TabList(signals.SignalEmitter, TabBlinkerMixin):
     """Handles a list of tabs on the left-side of Miro.
@@ -668,7 +668,7 @@ class TabList(signals.SignalEmitter, TabBlinkerMixin):
         pass
 
 class DevicesList(TabList, TabUpdaterMixin):
-    type = 'device'
+    type = u'device'
 
     ALLOW_MULTIPLE = False
 
@@ -751,7 +751,7 @@ class DevicesList(TabList, TabUpdaterMixin):
         pass
 
 class SiteList(TabList):
-    type = 'site'
+    type = u'site'
 
     ALLOW_MULTIPLE = True
 
@@ -799,7 +799,7 @@ class NestedTabList(TabList):
             return self.make_multiple_context_menu()
 
 class FeedList(NestedTabList, TabUpdaterMixin):
-    type = 'feed'
+    type = u'feed'
 
     def __init__(self):
         TabList.__init__(self)
@@ -863,10 +863,10 @@ class AudioFeedList(FeedList):
         self.view.set_drag_source(AudioFeedListDragHandler())
         self.view.set_drag_dest(FeedListDropHandler(self))
 
-    type = 'audio-feed'
+    type = u'audio-feed'
 
 class PlaylistList(NestedTabList):
-    type = 'playlist'
+    type = u'playlist'
 
     def __init__(self):
         TabList.__init__(self)
