@@ -444,6 +444,9 @@ class ItemSchema(MultiClassObjectSchema):
         ('metadata',
             SchemaDict(SchemaString(noneOk=False),SchemaString(noneOk=True),noneOk=True)),
         ('rating', SchemaInt(noneOk=True)),
+        ('play_count', SchemaInt()),
+        ('skip_count', SchemaInt()),
+        ('cover_art', SchemaFilename(noneOk=True)),
     ]
 
     indexes = (
@@ -708,7 +711,7 @@ class DBLogEntrySchema(DDBObjectSchema):
         ('description', SchemaString()),
     ]
 
-VERSION = 126
+VERSION = 128
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,

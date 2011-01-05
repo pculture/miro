@@ -40,6 +40,7 @@ This module defines the messages that are passed between the two
 threads.
 """
 
+import datetime
 import logging
 import re
 
@@ -425,6 +426,14 @@ class MarkItemWatched(BackendMessage):
 class MarkItemUnwatched(BackendMessage):
     """Mark an item as unwatched.
     """
+    def __init__(self, id_):
+        self.id = id_
+
+class MarkItemCompleted(BackendMessage):
+    def __init__(self, id_):
+        self.id = id_
+
+class MarkItemSkipped(BackendMessage):
     def __init__(self, id_):
         self.id = id_
 
@@ -1111,15 +1120,25 @@ class ItemInfo(object):
 
     # bump this whenever you change the ItemInfo class, or change one of the
     # functions that ItemInfo uses to get it's attributes (for example
-    # Item.get_description()).  Also, you should update
-    # item.DeviceItem.item_info() which creates objects of this type.
-    VERSION = 5
+    # Item.get_description()).
+    VERSION = 7
 
     html_stripper = util.HTMLStripper()
 
     def __init__(self, item):
-        self.name = item.get_title()
         self.id = item.id
+
+        if hasattr(item, 'device'): # DeviceItem
+            self._from_device_item(item)
+        else:
+            self._from_item(item)
+
+        # calculate ngrams last since it depends on other data
+        self.search_ngrams = search.calc_ngrams(self)
+
+    def _from_item(self, item):
+        self.device = None
+        self.name = item.get_title()
         self.feed_id = item.feed_id
         self.feed_name = item.get_source()
         self.feed_url = item.get_feed_url()
@@ -1171,6 +1190,7 @@ class ItemInfo(object):
         self.rating = item.get_rating()
         self.date_added = item.get_creation_time()
         self.last_played = item.get_watched_time()
+        self.cover_art = item.get_cover_art()
 
         if item.downloader:
             self.download_info = DownloadInfo(item.downloader)
@@ -1178,9 +1198,6 @@ class ItemInfo(object):
             self.download_info = PendingDownloadInfo()
         else:
             self.download_info = None
-
-        ## Device-specific stuff
-        self.device = getattr(item, 'device', None)
 
         ## Torrent-specific stuff
         self.leechers = self.seeders = self.up_rate = None
@@ -1203,8 +1220,63 @@ class ItemInfo(object):
             else:
                 self.up_down_ratio = self.up_total * 1.0 / self.down_total
 
-        # calculate ngrams last since it depends on other data
-        self.search_ngrams = search.calc_ngrams(self)
+    def _from_device_item(self, item):
+        self.name = item.name
+        self.feed_id = item.feed_id
+        self.feed_name = (item.feed_name is None and item.feed_name or
+                          item.device.name)
+        self.feed_url = None
+        self.description = item.description
+        self.description_stripped = self.html_stripper.strip(item.description)
+        self.state = u'saved'
+        self.release_date = datetime.datetime.fromtimestamp(item.release_date)
+        self.size = item.size
+        self.duration = (item.duration not in (-1, None) and
+                         item.duration / 1000 or
+                         0)
+        self.resume_time = 0
+        self.permalink = item.permalink
+        self.commentslink = item.comments_link
+        self.payment_link = item.payment_link
+        self.has_shareable_url = bool(item.url)
+        self.can_be_saved = False
+        self.pending_manual_dl = False
+        self.pending_auto_dl = False
+        self.expiration_date = None
+        self.item_viewed = True
+        self.downloaded = True
+        self.is_external = False
+        self.video_watched = True
+        self.video_path = item.get_filename()
+        self.thumbnail = item.get_thumbnail()
+        self.thumbnail_url = item.thumbnail_url or u''
+        self.file_format = item.file_format
+        self.license = item.license
+        self.file_url = item.url or u''
+        self.is_container_item = False
+        self.is_playable = True
+        self.children = []
+        self.file_type = item.file_type
+        self.subtitle_encoding = item.subtitle_encoding
+        self.seeding_status = None
+        self.mime_type = item.enclosure_type
+        self.artist = item.metadata.get('artist', u'')
+        self.album = item.metadata.get('album', u'')
+        self.track = item.metadata.get('track', -1)
+        self.year = item.metadata.get('year', -1)
+        self.genre = item.metadata.get('genre', u'')
+        self.rating = item.rating
+        self.date_added = item.creation_time
+        self.last_played = item.creation_time
+        self.download_info = None
+        self.device = item.device
+        self.leechers = None
+        self.seeders = None
+        self.up_rate = None
+        self.down_rate = None
+        self.up_total = None
+        self.down_total = None
+        self.up_down_ratio = 0.
 
 class DownloadInfo(object):
     """Tracks the download state of an item.
@@ -1275,7 +1347,8 @@ class GuideList(FrontendMessage):
             # for it to have a default channel guide persisted, but when you
             # set the channel guide via the DTV_CHANNELGUIDE_URL, then there's
             # no default guide.  So we generate one here.  Bug #11027.
-            cg = guide.ChannelGuide(util.to_uni(app.config.get(prefs.CHANNEL_GUIDE_URL)))
+            cg = guide.ChannelGuide(util.to_uni(app.config.get(
+                        prefs.CHANNEL_GUIDE_URL)))
             cg_info = GuideInfo(cg)
             self.default_guide = [cg_info]
         elif len(self.default_guide) > 1:
@@ -1439,7 +1512,8 @@ class ConversionTaskInfo(object):
     :param state: current state of the conversion.  One of: "pending",
         "running", "failed", or "finished"
     :param progress: how far the conversion task is
-    :param error: user-friendly string for describing conversion errors (if any)
+    :param error: user-friendly string for describing conversion
+                  errors (if any)
     :param output_path: path to the converted video (or None)
     :param log_path: path to the log file for the conversion
     :param item_name: name of the item being converted

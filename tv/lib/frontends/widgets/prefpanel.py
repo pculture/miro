@@ -615,7 +615,6 @@ class FoldersPanel(PanelBuilder):
         return grid.make_table()
 
     def on_window_open(self):
-
         def query_lib(self, type):
             return self.library[type]
         self.watched_folder_helper.connect_signals()

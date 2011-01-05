@@ -397,6 +397,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
         self.setup_new_icon_cache()
         self.metadata = {}
         self.rating = None
+        self.play_count = 0
+        self.skip_count = 0
+        self.cover_art = None
         # Initalize FileItem attributes to None
         self.deleted = self.shortFilename = self.offsetPath = None
 
@@ -1186,6 +1189,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
                         item.mark_item_unseen(False)
             self.recalc_feed_counts()
 
+    # TODO: played/seen count updates need to trigger recalculation of auto
+    # ratings somewhere
+    def mark_item_completed(self):
+        self.play_count += 1
+
+    def mark_item_skipped(self):
+        self.skip_count += 1
+
     @returns_unicode
     def get_rss_id(self):
         self.confirm_db_thread()
@@ -1300,6 +1311,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
             return resources.path(fileutil.expand_filename(path))
         elif self.isContainerItem:
             return resources.path("images/thumb-default-folder.png")
+        elif self.cover_art:
+            path = self.cover_art
+            return resources.path(fileutil.expand_filename(path))
         else:
             feed = self.get_feed()
             if feed.thumbnail_valid():
@@ -1309,6 +1323,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
                 return resources.path("images/thumb-default-audio.png")
             else:
                 return resources.path("images/thumb-default-video.png")
+    
+    def get_cover_art(self):
+        return self.cover_art
 
     def is_downloaded_torrent(self):
         return (self.isContainerItem and self.has_downloader() and
@@ -2137,75 +2154,6 @@ class DeviceItem(ItemBase):
             moviedata.movie_data_updater.request_update(self)
         self.id = self.get_filename()
 
-    def item_info(self):
-        """
-        Returns an ItemInfo object for this, without going through all the Item
-        API nonsense.
-        """
-        from miro import messages
-        ii = messages.ItemInfo.__new__(messages.ItemInfo)
-        ii.__dict__ = {
-            'name': self.name,
-            'id': self.id,
-            'feed_id': self.feed_id,
-            'feed_name': (self.feed_name is None and self.feed_name or
-                          self.device.name),
-            'feed_url': None,
-            'description': self.description,
-            'description_stripped': ii.html_stripper.strip(self.description),
-            'state': u'saved',
-            'release_date': datetime.fromtimestamp(self.release_date),
-            'size': self.size,
-            'duration': (self.duration not in (-1, None) and
-                         self.duration / 1000 or
-                         0),
-            'resume_time': 0,
-            'permalink': self.permalink,
-            'commentslink': self.comments_link,
-            'payment_link': self.payment_link,
-            'has_shareable_url': bool(self.url),
-            'can_be_saved': False,
-            'pending_manual_dl': False,
-            'pending_auto_dl': False,
-            'expiration_date': None,
-            'item_viewed': True,
-            'downloaded': True,
-            'is_external': False,
-            'video_watched': True,
-            'video_path': self.get_filename(),
-            'thumbnail': self.get_thumbnail(),
-            'thumbnail_url': self.thumbnail_url or u'',
-            'file_format': self.file_format,
-            'license': self.license,
-            'file_url': self.url or u'',
-            'is_container_item': False,
-            'is_playable': True,
-            'children': [],
-            'file_type': self.file_type,
-            'subtitle_encoding': self.subtitle_encoding,
-            'seeding_status': None,
-            'mime_type': self.enclosure_type,
-            'artist': self.metadata.get('artist', u''),
-            'album': self.metadata.get('album', u''),
-            'track': self.metadata.get('track', -1),
-            'year': self.metadata.get('year', -1),
-            'genre': self.metadata.get('genre', u''),
-            'rating': self.rating,
-            'date_added': self.creation_time,
-            'last_played': self.creation_time,
-            'download_info': None,
-            'device': self.device,
-            'leechers': None,
-            'seeders': None,
-            'up_rate': None,
-            'down_rate': None,
-            'up_total': None,
-            'down_total': None,
-            'up_down_ratio': 0.0
-            }
-        ii.search_ngrams = search.calc_ngrams(ii)
-        return ii
-
     @staticmethod
     def id_exists():
         return True
@@ -2270,7 +2218,7 @@ class DeviceItem(ItemBase):
 
         if self.file_type != 'other':
             message = messages.ItemsChanged('device', self.device.id,
-                                            [], [self.item_info()], [])
+                                            [], [messages.ItemInfo(self)], [])
             message.send_to_frontend()
 
     def to_dict(self):

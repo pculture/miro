@@ -76,7 +76,6 @@ class BaseDeviceInfo(object):
         for key in required:
             getattr(self, key)
 
-
 class DeviceInfo(BaseDeviceInfo):
     """
     Object which contains various information about a specific supported
@@ -335,7 +334,6 @@ class DeviceManager(object):
             dsm.set_device(device)
             return dsm
 
-
 class DeviceSyncManager(object):
     """
     Represents a sync in progress to a given device.
@@ -505,7 +503,7 @@ class DeviceSyncManager(object):
             device_item.to_dict()
         messages.ItemsChanged('device', '%s-%s' % (self.device.id,
                                                    device_item.file_type),
-                              [device_item.item_info()], # added
+                              [messages.ItemInfo(device_item)], # added
                               [], []).send_to_frontend() # changed, removed
 
     def _check_finished(self):
@@ -548,9 +546,7 @@ class DeviceSyncManager(object):
         for key in self.waiting:
             conversions.conversion_manager.cancel(key)
 
-
 class DeviceDatabase(dict, signals.SignalEmitter):
-
     def __init__(self, data=None, parent=None):
         if data:
             dict.__init__(self, data)
@@ -581,7 +577,6 @@ class DeviceDatabase(dict, signals.SignalEmitter):
         self.bulk_mode = bulk
         if not bulk:
             self.notify_changed()
-
 
 def load_database(mount):
     """

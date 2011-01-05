@@ -45,7 +45,6 @@ from miro.plat.frontends.widgets import widgetset
 from miro.conversions import conversion_manager
 
 class ConversionsController(object):
-
     def __init__(self):
         self.widget = widgetset.VBox()
         self.build_widget()
@@ -175,11 +174,9 @@ class ConversionsController(object):
         else:
             self.clear_finished_button.disable()
 
-
 class ConversionsTitleBar(itemlistwidgets.ItemListTitlebar):
     def _build_titlebar_extra(self):
         pass
-
 
 class ConversionTableView(widgetset.TableView):
     def __init__(self, model):

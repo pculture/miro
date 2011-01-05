@@ -67,7 +67,6 @@ ERROR_COLOR = (0.90, 0.0, 0.0)
 BLINK_COLOR = css_to_color('#fffb83')
 
 class LowerBox(widgetset.Background):
-
     def __init__(self):
         widgetset.Background.__init__(self)
 
@@ -106,7 +105,6 @@ class LowerBox(widgetset.Background):
 
     def is_opaque(self):
         return True
-
 
 class TabRenderer(widgetset.CustomCellRenderer):
     MIN_WIDTH = 25
@@ -209,7 +207,6 @@ class StaticTabRenderer(TabRenderer):
                     DOWNLOADING_COLOR)
 
 class DeviceTabRenderer(TabRenderer):
-
     def pack_bubbles(self, hbox, layout_manager):
         if getattr(self.data, 'fake', False):
             return
@@ -881,6 +878,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         context.restore()
 
     def draw_thumbnail(self, context, x, y, width, height):
+        logging.debug(self.data.thumbnail)
         icon = imagepool.get_surface(self.data.thumbnail, (154, 105))
         widgetutil.draw_rounded_icon(context, icon, x, y, 154, 105)
         self.thumb_overlay.draw(context, x, y, 154, 105)
@@ -937,7 +935,6 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         context.rel_line_to(inner_width-10, 0)
         context.arc(x + inner_width, y + radius + y_offset, radius, -PI/2, PI/2)
         context.fill()
-
 
 class PlaylistItemRenderer(ItemRenderer):
     def layout_video_buttons(self, layout_manager):

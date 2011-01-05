@@ -398,6 +398,8 @@ class PlaybackManager (signals.SignalEmitter):
             pass
 
     def on_movie_finished(self):
+        id_ = self.playlist[self.position].id
+        messages.MarkItemCompleted(id_).send_to_backend()
         self.update_current_resume_time(0)
         self.play_next_item(False)
 
@@ -516,6 +518,9 @@ class PlaybackManager (signals.SignalEmitter):
         """
         if new_position == None:
             new_position = self.position
+        else:
+            id_ = self.playlist[self.position].id
+            messages.MarkItemSkipped(id_).send_to_backend()
 
         self.cancel_update_timer()
         self.cancel_mark_as_watched()
