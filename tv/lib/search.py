@@ -101,6 +101,12 @@ class BooleanSearch:
 
 def _calc_search_text(item_info):
     match_against = [ item_info.name, item_info.description ]
+    match_against.append(item_info.artist)
+    match_against.append(item_info.album)
+    match_against.append(item_info.genre)
+    match_against.append(item_info.feed_name)
+    if item_info.download_info and item_info.download_info.torrent:
+        match_against.append(u'torrent')
     if item_info.video_path:
         filename = os.path.basename(item_info.video_path)
         match_against.append(filename_to_unicode(filename))
