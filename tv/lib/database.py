@@ -433,8 +433,12 @@ class BulkSQLManager(object):
     def finish(self):
         if not self.active:
             raise ValueError("BulkSQLManager.finish() called twice")
-        self.commit()
-        self.active = False
+        try:
+            self.commit()
+        finally:
+            # Ensure that this flag always get set back to False even in the
+            # face of any exception thrown from commit() method.
+            self.active = False
 
     def commit(self):
         for x in range(100):
