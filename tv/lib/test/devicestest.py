@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2010 Participatory Culture Foundation
+# Copyright (C) 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

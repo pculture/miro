@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2010 Participatory Culture Foundation
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,16 +31,18 @@
 """
 
 from datetime import datetime, timedelta
+import locale
+import os.path
+import shutil
+import traceback
+import logging
+
 from miro.gtcache import gettext as _
 from miro.util import (check_u, returns_unicode, check_f, returns_filename,
                        quote_unicode_url, stringify, get_first_video_enclosure,
                        entity_replace)
 from miro.plat.utils import (filename_to_unicode, unicode_to_filename,
                              utf8_to_filename)
-import locale
-import os.path
-import shutil
-import traceback
 
 from miro.download_utils import clean_filename, next_free_filename
 from miro.feedparser import FeedParserDict
@@ -56,7 +59,6 @@ from miro import prefs
 from miro.plat import resources
 from miro import util
 from miro import moviedata
-import logging
 from miro import filetypes
 from miro import searchengines
 from miro import fileutil
