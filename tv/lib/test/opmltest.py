@@ -6,6 +6,8 @@ from miro import autodiscover
 from miro import feed
 from miro import opml
 
+from miro.plat.utils import FilenameType
+
 from miro.test.framework import MiroTestCase
 
 URL_1 = "http://www.domain-1.com/videos/rss.xml"
@@ -278,7 +280,7 @@ class TestImporter(unittest.TestCase):
 class TestExporter(MiroTestCase):
     def _get_export(self, media_tabs, site_tabs):
         return opml.Exporter().export_content(
-            "/tmp/foo.opml", media_tabs, site_tabs)
+            FilenameType("/tmp/foo.opml"), media_tabs, site_tabs)
 
     def test_simple(self):
         feed1 = feed.Feed(u"http://example.com/feed/")
