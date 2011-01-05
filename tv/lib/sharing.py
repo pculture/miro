@@ -91,6 +91,11 @@ def daap_item_fixup(item_id, entry):
     return daapitem
 
 class SharingTracker(object):
+    """The sharing tracker is responsible for listening for available music
+    shares and the main client connection code.  For each connected share,
+    there is a separate SharingItemTrackerImpl() instance which is basically
+    a backend for messagehandler.SharingItemTracker().
+    """
     type = 'sharing'
     def __init__(self):
         self.trackers = dict()
@@ -219,6 +224,11 @@ class SharingTracker(object):
 # connection then send_initial_list() would already have been populated so
 # we are fine there.
 class SharingItemTrackerImpl(object):
+    """This is the backend for the SharingItemTracker the messagehandler file.
+    This backend class allows the item tracker to be persistent even as the
+    user switches across different tabs in the sidebar, until the disconnect
+    button is clicked.
+    """
     type = 'sharing'
     def __init__(self, tab, share_id):
         self.tab = tab
@@ -295,6 +305,7 @@ class SharingItemTrackerImpl(object):
             item = messages.ItemInfo(self.sharing_item(items[k]))
             self.items.append(item)
 
+    # NB: this runs in the eventloop (backend) thread.
     def client_connect_callback(self, unused):
         self.connected = True
         message = messages.ItemsChanged(self.type, self.tab, self.items, [], [])
@@ -310,6 +321,9 @@ class SharingItemTrackerImpl(object):
         return self.items
 
 class SharingManagerBackend(object):
+    """SharingManagerBackend is the bridge between pydaap and Miro.  It
+    pushes Miro media items to pydaap so pydaap can serve them to the outside
+    world."""
     types = ['videos', 'music']
     id    = None                # Must be None
     items = dict()              # Neutral format - not really needed.
@@ -460,6 +474,10 @@ class SharingManagerBackend(object):
             self.daapitems[x.id] = daap_item_fixup(x.id, self.items[x.id])
 
 class SharingManager(object):
+    """SharingManager is the sharing server.  It publishes Miro media items
+    to the outside world.  One part is the server instance and the other
+    part is the service publishing, both are handled here.
+    """
     CMD_QUIT = 'quit'
     CMD_NOP  = 'nop'
     def __init__(self):
