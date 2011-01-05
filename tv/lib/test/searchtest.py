@@ -60,7 +60,7 @@ class SearchTest(MiroTestCase):
         self._check_search('eco', [self.item2])
         self._check_search('irst', [self.item1])
         # check 0/1 characters as an edge case
-        self._check_search('c', [self.item2])
+        self._check_search('d', [self.item2])
         self._check_search('', [self.item1, self.item2])
         # Check that case doesn't matter
         self._check_search('FiRsT', [self.item1])

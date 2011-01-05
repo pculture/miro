@@ -104,7 +104,8 @@ def _calc_search_text(item_info):
     match_against.append(item_info.artist)
     match_against.append(item_info.album)
     match_against.append(item_info.genre)
-    match_against.append(item_info.feed_name)
+    if item_info.feed_name is not None:
+        match_against.append(item_info.feed_name)
     if item_info.download_info and item_info.download_info.torrent:
         match_against.append(u'torrent')
     if item_info.video_path:
