@@ -42,6 +42,61 @@ util.setup_logging()
 # just have to make sure you clean up what you changed. Usually, that
 # is handled transparently through one of these test cases
 
+import sys
+
+skipped_tests = []
+
+def skipping(reason):
+    def _skipping(*args, **kwargs):
+        global skipped_tests
+        skipped_tests.append("%s.%s: %s" % 
+                             (args[0].__module__, 
+                              args[0].__name__,
+                              reason))
+    return _skipping
+
+def identity(fun):
+    return fun
+
+def only_on_platform(*platforms):
+    """Decorator for running a test only on the listed platforms.
+    
+    Example::
+
+        @only_on_platform('win32')
+        def test_something_that_works_on_win32(self):
+            print "ha!  nothing works on win32!"
+            assert False
+
+    .. Note::
+
+       Valid platform strings are from sys.platform and NOT from the
+       Miro platform names.  Use 'win32', 'linux', and 'osx'.
+    """
+    if sys.platform in platforms:
+        return identity
+    else:
+        return skipping("only_on_platform %s" % platforms)
+
+def skip_for_platforms(*platforms):
+    """Decorator for skipping a test on the listed platforms.
+    
+    Example::
+
+        @skip_for_platform('win32')
+        def test_something_that_fails_on_win32(self):
+            ...
+
+    .. Note::
+
+       Valid platform strings are from sys.platform and NOT from the
+       Miro platform names.  Use 'win32', 'linux', and 'osx'.
+    """
+    if sys.platform in platforms:
+        return skipping("skip_for_platforms %s" % platforms)
+    else:
+        return identity
+
 class HadToStopEventLoop(Exception):
     pass
 
@@ -134,12 +189,6 @@ class MiroTestCase(unittest.TestCase):
 
     def on_windows(self):
         return self.platform == "windows"
-
-    def on_linux(self):
-        return self.platform == "linux"
-
-    def on_osx(self):
-        return self.platform == "osx"
 
     def tearDown(self):
         signals.system.disconnect_all()

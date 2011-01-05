@@ -3,7 +3,7 @@ import tempfile
 import shutil
 import unittest
 
-from miro.test.framework import MiroTestCase
+from miro.test.framework import MiroTestCase, skip_for_platforms
 from miro import download_utils
 from miro import util
 from miro.plat.utils import FilenameType
@@ -354,17 +354,17 @@ class UtilTest(unittest.TestCase):
             unicode,
             util.quote_unicode_url(u'http://www.example.com/fran\xc3\xa7ois'))
 
-
-    def test_call_command(self):
-        """ Currently only works on Linux and OSX """
-
-        # Command doesn't exist
+    def test_call_command_failure(self):
+        # command doesn't exist
         self.assertRaises(OSError, util.call_command, 'thiscommanddoesntexist')
 
-        # Command exists but invalid option and returns error code
-        self.assertRaises(OSError, util.call_command,  'ps', '-')
+        # command exists but invalid option and returns error code.
+        # 
+        # Note: on win32, this probably requires cygwin.
+        self.assertRaises(OSError, util.call_command,  'ps', '--badarg')
 
-        # Valid command
+    @skip_for_platforms('win32')
+    def test_call_command_success(self):
         pid = int(os.getpid())
         stdout = util.call_command('ps', '-p', str(pid), '-o', 'pid=')
         pid_read = int(stdout)
@@ -763,9 +763,9 @@ class TestGatherMediaFiles(unittest.TestCase):
         self.verify_results()
 
     def test_subdirs(self):
-        self.add_file('aaa/index.html', False)
+        self.add_file(os.path.join('aaa', 'index.html'), False)
         self.verify_results()
-        self.add_file('bbb/test.ogv', True)
+        self.add_file(os.path.join('bbb', 'test.ogv'), True)
         self.verify_results()
         self.add_file('test.ogv', True)
         self.verify_results()
