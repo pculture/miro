@@ -58,7 +58,7 @@ def skipping(reason):
 def identity(fun):
     return fun
 
-def only_on_platform(*platforms):
+def only_on_platforms(*platforms):
     """Decorator for running a test only on the listed platforms.
     
     Example::
