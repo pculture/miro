@@ -348,11 +348,12 @@ class ViewTracker(signals.SignalEmitter):
         removed_ids = list(self.current_ids.difference(new_ids))
         self.fetcher.prepare_objects(added_ids)
         self.fetcher.prepare_objects(removed_ids)
+        self.current_ids = new_ids # set current_ids here so that len() returns
+                                   # the correct value
         self._emit_for_objects('added',
                 [self.fetcher.fetch_obj(id_) for id_ in added_ids])
         self._emit_for_objects('removed',
                 [self.fetcher.fetch_obj(id_) for id_ in removed_ids])
-        self.current_ids = new_ids
 
     def __len__(self):
         return len(self.current_ids)

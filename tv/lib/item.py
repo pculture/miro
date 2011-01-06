@@ -538,6 +538,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def feed_available_view(cls, feed_id):
         return cls.make_view("feed_id=? AND NOT autoDownloaded "
                 "AND downloadedTime IS NULL AND "
+                "NOT is_file_item AND " # FileItems are not available
                 "feed.last_viewed <= item.creationTime",
                 (feed_id,),
                 joins={'feed': 'item.feed_id=feed.id'})
@@ -649,7 +650,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """Update each view tracker that care's about the item's
         folder (both playlist and channel folders).
         """
-
         for tracker in app.view_tracker_manager.trackers_for_ddb_class(cls):
             # bit of a hack here.  We only need to update ViewTrackers
             # that care about the item's folder.  This seems like a
@@ -1907,7 +1907,6 @@ class FileItem(Item):
         self.shortFilename = clean_filename(os.path.basename(self.filename))
         self.was_downloaded = False
         if mark_seen:
-            self.mark_seen = True
             self.watchedTime = datetime.now()
         if not fileutil.isdir(self.filename):
             # If our file isn't a directory, then we know we are definitely

@@ -2093,7 +2093,8 @@ class DirectoryWatchFeedImpl(DirectoryScannerImplBase):
     def _after_update(self):
         if self.firstUpdate:
             self.firstUpdate = False
-            self.signal_change()
+        self.ufeed.recalc_counts()
+        self.signal_change()
 
 class DirectoryFeedImpl(DirectoryScannerImplBase):
     """A feed of all of the Movies we find in the movie folder that don't
