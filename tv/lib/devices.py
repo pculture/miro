@@ -36,7 +36,6 @@ import shutil
 import time
 
 from miro import app
-from miro import item
 from miro import fileutil
 from miro import filetypes
 from miro import prefs
@@ -547,7 +546,7 @@ class DeviceSyncManager(object):
         for key in self.waiting:
             conversions.conversion_manager.cancel(key)
 
-class DeviceItem(item.ItemBase):
+class DeviceItem(object):
     """
     An item which lives on a device.  There's a separate, per-device JSON
     database, so this implements the necessary Item logic for those files.

@@ -313,51 +313,7 @@ class FeedParserValues(object):
 
         return datetime.min
 
-class ItemBase(object):
-    """
-    Base class for Item (lives in the database) and DeviceItem (lives on the
-    device's database.
-
-    Right now, the only methods work across both are the metadata methods.
-    """
-
-    @returns_unicode
-    def get_artist(self):
-        try:
-            return self.metadata['artist']
-        except (KeyError, TypeError):
-            return u''
-
-    @returns_unicode
-    def get_album(self):
-        try:
-            return self.metadata['album']
-        except (KeyError, TypeError):
-            return u''
-
-    def get_track(self):
-        try:
-            return self.metadata['track']
-        except (KeyError, TypeError):
-            return -1
-
-    def get_year(self):
-        try:
-            return self.metadata['year']
-        except (KeyError, TypeError):
-            return -1
-
-    @returns_unicode
-    def get_genre(self):
-        try:
-            return self.metadata['genre']
-        except (KeyError, TypeError):
-            return u''
-
-    def get_rating(self):
-        return self.rating
-
-class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
+class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     """An item corresponds to a single entry in a feed.  It has a
     single url associated with it.
     """
@@ -1321,7 +1277,43 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin, ItemBase):
                 return resources.path("images/thumb-default-audio.png")
             else:
                 return resources.path("images/thumb-default-video.png")
-    
+
+    @returns_unicode
+    def get_artist(self):
+        try:
+            return self.metadata['artist']
+        except (KeyError, TypeError):
+            return u''
+
+    @returns_unicode
+    def get_album(self):
+        try:
+            return self.metadata['album']
+        except (KeyError, TypeError):
+            return u''
+
+    def get_track(self):
+        try:
+            return self.metadata['track']
+        except (KeyError, TypeError):
+            return -1
+
+    def get_year(self):
+        try:
+            return self.metadata['year']
+        except (KeyError, TypeError):
+            return -1
+
+    @returns_unicode
+    def get_genre(self):
+        try:
+            return self.metadata['genre']
+        except (KeyError, TypeError):
+            return u''
+
+    def get_rating(self):
+        return self.rating
+
     def get_cover_art(self):
         return self.cover_art
 
