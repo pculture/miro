@@ -71,3 +71,18 @@ def _convert_if_feedparser_dict(obj):
     if isinstance(obj, feedparser.FeedParserDict):
         return normalize_feedparser_dict(obj)
     return obj
+
+from miro import app
+from miro import prefs
+USER_AGENT = (feedparser.USER_AGENT + " %s/%s (%s)" %
+              (app.config.get(prefs.SHORT_APP_NAME),
+               app.config.get(prefs.APP_VERSION),
+               app.config.get(prefs.PROJECT_URL)))
+
+def parse(url_file_stream_or_string):
+    return feedparser.parse(url_file_stream_or_string, USER_AGENT)
+
+def sanitizeHTML(htmlSource, encoding):
+    return feedparser.sanitizeHTML(htmlSource, encoding)
+
+FeedParserDict = feedparser.FeedParserDict

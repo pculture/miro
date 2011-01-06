@@ -2,25 +2,32 @@ import logging
 import os
 import unittest
 
-from miro import feedparser
+from miro import feedparserutil
 from miro.item import FeedParserValues
 from miro.plat import resources
 from miro.test.framework import MiroTestCase
 
-FPTESTS = resources.path("testdata/feedparsertests")
+FPTESTINPUT = resources.path("testdata/feedparsertests/feeds")
+FPTESTOUTPUT = resources.path("testdata/feedparsertests/output")
+
+def _parse_feed(inputfile):
+    fn = os.path.join(FPTESTINPUT, inputfile)
+    d = feedparserutil.parse(fn)
+    assert "bozo_exception" not in d, ("Feed didn't parse: %s" % d["bozo_exception"])
+    return d
 
 class FeedParserDictTest(MiroTestCase):
     def test_equality(self):
         # feedparserdicts are equal if for all keys k, either
-        # the two feedparserdicts have the same value, or 
+        # the two feedparserdicts have the same value, or
         # one of the feedparserdicts doesn't have the key.
-        a = feedparser.FeedParserDict()
+        a = feedparserutil.FeedParserDict()
         a["href"] = "hello"
-        b = feedparser.FeedParserDict()
+        b = feedparserutil.FeedParserDict()
         b["url"] = "hello"
-        c = feedparser.FeedParserDict()
+        c = feedparserutil.FeedParserDict()
         c["href"] = "hi"
-        d = feedparser.FeedParserDict()
+        d = feedparserutil.FeedParserDict()
         d["href"] = "hi"
         d["what"] = "hello"
         self.assertEqual(a.equal(a), True)
@@ -33,13 +40,13 @@ class FeedParserDictTest(MiroTestCase):
     def test_inequality(self):
         # feedparserdicts are inequal if for some key k, the
         # two feedparserdicts have different values.
-        a = feedparser.FeedParserDict()
+        a = feedparserutil.FeedParserDict()
         a["href"] = "hello"
-        b = feedparser.FeedParserDict()
+        b = feedparserutil.FeedParserDict()
         b["url"] = "hello"
-        c = feedparser.FeedParserDict()
+        c = feedparserutil.FeedParserDict()
         c["href"] = "hi"
-        d = feedparser.FeedParserDict()
+        d = feedparserutil.FeedParserDict()
         d["href"] = "hi"
         d["what"] = "hello"
         self.assertEqual(a.equal(c), False)
@@ -51,11 +58,11 @@ class FeedParserDictTest(MiroTestCase):
 
 class FeedParserTest(MiroTestCase):
     def test_ooze(self):
-        feedparser.parse(os.path.join(FPTESTS, "ooze.rss"))
+        feedparserutil.parse(os.path.join(FPTESTINPUT, "ooze.rss"))
 
     def test_usvideo(self):
         # test for bug 10653
-        d = feedparser.parse(os.path.join(FPTESTS, "usvideo.xml"))
+        d = feedparserutil.parse(os.path.join(FPTESTINPUT, "usvideo.xml"))
 
         # this should kick up a KeyError and NOT a TypeError
         self.assertRaises(KeyError, lambda: d['url'])
@@ -85,9 +92,7 @@ class FeedParserValuesTest(unittest.TestCase):
         #    <item>
         #        <thumbnail>http:...</thumbnail>
 
-        fn = os.path.join(
-            FPTESTS, "http___feeds_miroguide_com_miroguide_featured.xml")
-        d = feedparser.parse(fn)
+        d = _parse_feed("http___feeds_miroguide_com_miroguide_featured.xml")
 
         for i, url in (
             (0, u"http://s3.miroguide.com/static/media/thumbnails/200x134/14094.jpeg"),
@@ -100,8 +105,8 @@ class FeedParserValuesTest(unittest.TestCase):
             self.assertEquals(fpv.data["thumbnail_url"], url)
 
         fn = os.path.join(
-            FPTESTS, "http___feeds_miroguide_com_miroguide_new.xml")
-        d = feedparser.parse(fn)
+            FPTESTINPUT, "http___feeds_miroguide_com_miroguide_new.xml")
+        d = feedparserutil.parse(fn)
 
         for i, url in (
             (0, u"http://s3.miroguide.com/static/media/thumbnails/200x134/14280.jpeg"),
@@ -113,8 +118,8 @@ class FeedParserValuesTest(unittest.TestCase):
         # this feed has no thumbnails in the enclosures or in the
         # items.
         fn = os.path.join(
-            FPTESTS, "http___feeds_feedburner_com_earth-touch_podcast_720p.xml")
-        d = feedparser.parse(fn)
+            FPTESTINPUT, "http___feeds_feedburner_com_earth-touch_podcast_720p.xml")
+        d = feedparserutil.parse(fn)
 
         for i, url in (
             (0, None),
@@ -126,8 +131,8 @@ class FeedParserValuesTest(unittest.TestCase):
         # this feed has no thumbnails in the enclosures or in the
         # items.  it's an audio podcast.
         fn = os.path.join(
-            FPTESTS, "http___feeds_thisamericanlife_org_talpodcast")
-        d = feedparser.parse(fn)
+            FPTESTINPUT, "http___feeds_thisamericanlife_org_talpodcast.xml")
+        d = feedparserutil.parse(fn)
 
         for i, url in (
             (0, None),):
@@ -140,8 +145,8 @@ class FeedParserValuesTest(unittest.TestCase):
         #    <thumbnail>
         #        <href>http...</href>
         fn = os.path.join(
-            FPTESTS, "http___vodo_net_feeds_promoted.xml")
-        d = feedparser.parse(fn)
+            FPTESTINPUT, "http___vodo_net_feeds_promoted.xml")
+        d = feedparserutil.parse(fn)
 
         for i, url in (
             (0, u'http://vodo.net/media/thumbnails/work_127_pioneerone_uploaded.jpeg'),
@@ -156,9 +161,9 @@ class FeedParserValuesTest(unittest.TestCase):
         #    <thumbnail>
         #       <href>http:...</href>
         fn = os.path.join(
-            FPTESTS, "http___www_linktv_org_rss_hq_globalpulse.xml")
+            FPTESTINPUT, "http___www_linktv_org_rss_hq_globalpulse.xml")
 
-        d = feedparser.parse(fn)
+        d = feedparserutil.parse(fn)
 
         for i, url in (
             (0, u'http://www.linktv.org/sitecontent/videothumbs/globalpulse20100709.jpg'),

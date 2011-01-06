@@ -291,9 +291,14 @@ files = [f for f in listfiles(resource_dir) \
         if os.path.basename(f) != 'app.config.template']
 data_files.append(('/usr/share/miro/resources/', files))
 # handle the sub directories.
-for dir in ('searchengines', 'images', 'testdata', 'conversions', 'devices',
+for dir in ('searchengines',
+        'images',
+        'testdata',
+        'conversions',
+        'devices',
         os.path.join('testdata', 'conversions'),
-        os.path.join('testdata', 'feedparsertests'),
+        os.path.join('testdata', 'feedparsertests', 'feeds'),
+        os.path.join('testdata', 'feedparsertests', 'output'),
         os.path.join('testdata', 'stripperdata'),
         os.path.join('testdata', 'httpserver'),
         os.path.join('testdata', 'locale', 'fr', 'LC_MESSAGES')):

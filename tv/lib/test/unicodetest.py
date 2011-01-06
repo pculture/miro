@@ -5,7 +5,7 @@ import types
 from miro import feed
 from miro import item
 from miro import database
-from miro import feedparser
+from miro import feedparserutil
 from miro import app
 from miro import dialogs
 import framework
@@ -41,7 +41,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     def force_feed_parser_callback(self, my_feed):
         # a hack to get the feed to update without eventloop
         feedimpl = my_feed.actualFeed
-        feedimpl.feedparser_callback(feedparser.parse(feedimpl.initialHTML))
+        feedimpl.feedparser_callback(feedparserutil.parse(feedimpl.initialHTML))
 
     def is_proper_feed_parser_dict(self, parsed, name="top"):
         if isinstance(parsed, types.DictionaryType):
@@ -116,7 +116,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.choice = dialogs.BUTTON_YES
 
         my_feed = self.make_feed(u"file://" + self.filename)
-        
+
         self.assertEqual(self.num_dialogs, 1)
         my_feed.update()
         self.assertEqual(my_feed.items.count(), 1)
@@ -134,7 +134,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.choice = dialogs.BUTTON_YES
 
         my_feed = self.make_feed(u"file://" + self.filename)
-        
+
         self.assertEqual(self.num_dialogs,1)
         my_feed.update()
         self.assertEqual(my_feed.items.count(),1)
@@ -152,7 +152,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.choice = dialogs.BUTTON_YES
 
         my_feed = self.make_feed(u"file://" + self.filename)
-        
+
         self.assertEqual(self.num_dialogs,1)
         my_feed.update()
         self.assertEqual(my_feed.items.count(),1)
@@ -169,7 +169,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.choice = dialogs.BUTTON_YES
 
         my_feed = self.make_feed(u"file://" + self.filename)
-        
+
         self.assertEqual(self.num_dialogs, 1)
         my_feed.update()
         # Either the item isn't added or it's added with an ascii URL
@@ -188,7 +188,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.choice = dialogs.BUTTON_YES
 
         my_feed = self.make_feed(u"file://" + self.filename)
-        
+
         self.assertEqual(self.num_dialogs, 1)
         my_feed.update()
         # Either the item isn't added or it's added with an ascii URL
@@ -207,7 +207,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.choice = dialogs.BUTTON_YES
 
         my_feed = self.make_feed(u"file://" + self.filename)
-        
+
         self.assertEqual(self.num_dialogs, 1)
         my_feed.update()
         # Either the item isn't added or it's added with an ascii URL
@@ -226,7 +226,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.choice = dialogs.BUTTON_YES
 
         my_feed = self.make_feed(u"file://" + self.filename)
-        
+
         self.assertEqual(self.num_dialogs, 1)
         my_feed.update()
 
@@ -248,7 +248,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.choice = dialogs.BUTTON_YES
 
         my_feed = self.make_feed(u"file://" + self.filename)
-        
+
         self.assertEqual(self.num_dialogs, 1)
         my_feed.update()
 
@@ -270,7 +270,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.choice = dialogs.BUTTON_YES
 
         my_feed = self.make_feed(u"file://" + self.filename)
-        
+
         self.assertEqual(self.num_dialogs, 1)
         my_feed.update()
 

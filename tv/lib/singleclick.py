@@ -36,7 +36,7 @@ import logging
 import urlparse
 import os.path
 import time
-from miro.feedparser import FeedParserDict
+from miro.feedparserutil import FeedParserDict
 
 from miro import app
 from miro import dialogs

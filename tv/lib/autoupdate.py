@@ -38,7 +38,7 @@ import logging
 from miro import app
 from miro import prefs
 from miro import eventloop
-from miro import feedparser
+from miro import feedparserutil
 from miro import signals
 
 from miro.httpclient import grab_url
@@ -77,7 +77,7 @@ def _handle_app_cast(data, up_to_date_callback):
     """Handle appcast data when it's correctly fetched
     """
     try:
-        appcast = feedparser.parse(data['body'])
+        appcast = feedparserutil.parse(data['body'])
         if appcast['bozo'] == '1':
             return
 

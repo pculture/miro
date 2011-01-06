@@ -4,7 +4,6 @@ from datetime import datetime
 from time import sleep
 
 from miro import app
-from miro import feedparser
 from miro import prefs
 from miro import dialogs
 from miro import database
@@ -133,7 +132,7 @@ class FeedTestCase(EventLoopTest):
 class SimpleFeedTestCase(FeedTestCase):
     def setUp(self):
         FeedTestCase.setUp(self)
-        # Based on 
+        # Based on
         # http://cyber.law.harvard.edu/blogs/gems/tech/rss2sample.xml
 
         # this rss feed has no enclosures.
@@ -289,7 +288,7 @@ class EnclosureFeedTestCase(FeedTestCase):
       <item>
          <enclosure url="http://downhillbattle.org/key/gallery/jalabel_nov28.jpg" />
       </item>
-      
+
    </channel>
 </rss>""")
 
@@ -394,7 +393,7 @@ class OldItemExpireTest(FeedTestCase):
             self.processThreads()
             self.process_idles()
             sleep(0.1)
-        self.assertEquals(Item.make_view().count(), 6)            
+        self.assertEquals(Item.make_view().count(), 6)
         self.feed.set_max_old_items(2)
         self.feed.actualFeed.clean_old_items()
         while self.feed.actualFeed.updating:
@@ -440,7 +439,7 @@ class FeedParserAttributesTestCase(FeedTestCase):
             os.remove(self.tempdb)
         self.reload_database(self.tempdb)
         self.write_feed()
-        self.parsed_feed = feedparser.parse(self.filename)
+        self.parsed_feed = feedparserutil.parse(self.filename)
         self.make_feed()
         self.save_then_restore_db()
 

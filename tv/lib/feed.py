@@ -99,15 +99,13 @@ def default_tablist_feed_icon_path():
 # If you run into Unicode crashes, adding that function in the
 # appropriate place should fix it.
 
-# Universal Feed Parser http://feedparser.org/
-# Licensed under Python license
-from miro import feedparser
+from miro import feedparserutil
 
 def add_feed_from_file(fn):
     """Adds a new feed using USM
     """
     check_f(fn)
-    d = feedparser.parse(fn)
+    d = feedparserutil.parse(fn)
     if d.feed.has_key('links'):
         for link in d.feed['links']:
             if link['rel'] == 'start' or link['rel'] == 'self':
@@ -1427,7 +1425,7 @@ class RSSFeedImpl(RSSFeedImplBase):
         self.ufeed.confirm_db_thread()
         eventloop.call_in_thread(self.feedparser_callback,
                                self.feedparser_errback,
-                               feedparser.parse,
+                               feedparserutil.parse,
                                "Feedparser callback - %s" % self.url, html)
 
     def update(self):
@@ -1585,7 +1583,7 @@ class RSSMultiFeedBase(RSSFeedImplBase):
         in_thread = False
         if in_thread:
             try:
-                parsed = feedparser.parse(html)
+                parsed = feedparserutil.parse(html)
                 self.feedparser_callback(parsed, url)
             except (SystemExit, KeyboardInterrupt):
                 raise
@@ -1596,7 +1594,7 @@ class RSSMultiFeedBase(RSSFeedImplBase):
             eventloop.call_in_thread(
                 lambda parsed, url=url: self.feedparser_callback(parsed, url),
                 lambda e, url=url: self.feedparser_errback(e, url),
-                feedparser.parse, "Feedparser callback - %s" % url, html)
+                feedparserutil.parse, "Feedparser callback - %s" % url, html)
 
     def update(self):
         self.ufeed.confirm_db_thread()
@@ -1796,7 +1794,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
             if item.get_url() == link:
                 return
         # Anywhere we call this, we need to convert the input back to unicode
-        title = feedparser.sanitizeHTML(title, "utf-8").decode('utf-8')
+        title = feedparserutil.sanitizeHTML(title, "utf-8").decode('utf-8')
         if dict_.has_key('thumbnail') > 0:
             fp_dict = FeedParserDict({'title': title,
                 'enclosures': [FeedParserDict({'url': link,
