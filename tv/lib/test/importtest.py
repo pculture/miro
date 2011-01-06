@@ -271,11 +271,6 @@ class Test_import_itunes(MiroTestCase):
         self.tmpf = os.fdopen(fd, 'w')
         self.file_url = "file://localhost"
 
-    def tearDown(self):
-        MiroTestCase.tearDown(self)
-        self.tmpf.close()
-        os.unlink(self.tmpf_path)
-
     def _clean_tmpf(self):
         self.tmpf.truncate(0)
         self.tmpf.seek(0)
@@ -299,7 +294,7 @@ class Test_import_itunes(MiroTestCase):
     def test_goodfile(self):
         # Our file templates.  Try a vanilla version and one with escapes.
         # NB:
-        # This is only supported on the Mac at the moment, when 
+        # This is only supported on the Mac at the moment, when
         # windows support arrives we will need to extract the paths and
         # see what it looks like and add a test here.
         path1 = "/Users/xxx/Music/iTunes/iTunes%20Music/"
