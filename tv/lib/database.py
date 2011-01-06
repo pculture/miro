@@ -122,11 +122,11 @@ class ViewObjectFetcher(object):
     """
     def fetch_obj(self, id_):
         """Fetch an object for a given id."""
-        raise ImplementedError
+        raise NotImplementedError
 
     def fetch_obj_for_ddb_object(self, id_):
         """Fetch an object for a DDBObject."""
-        raise ImplementedError
+        raise NotImplementedError
 
     def table_name(self):
         """Return the DB table to query from."""
@@ -179,7 +179,6 @@ class View(object):
         self.order_by = order_by
         self.joins = joins
         self.limit = limit
-        self.limiter = None
 
     def _query(self):
         id_list = self._query_ids()
@@ -196,23 +195,13 @@ class View(object):
                 self.joins, self.limit)
 
     def __iter__(self):
-        if self.limiter is None:
-            return self._query()
-        else:
-            return iter(obj for obj in self._query()
-                    if not self.limiter.filter_obj(obj))
+        return self._query()
 
     def id_list(self):
-        if self.limiter is None:
-            return self._query_ids()
-        else:
-            return self.limiter.filter_id_list(self._query_ids())
+        return self._query_ids()
 
     def count(self):
-        if self.limiter is None:
-            return self._query_count()
-        else:
-            return len(self.id_list())
+        return self._query_count()
 
     def get_singleton(self):
         results = list(self)
@@ -226,8 +215,7 @@ class View(object):
     def make_tracker(self):
         if self.limit is not None:
             raise ValueError("tracking views with limits not supported")
-        return ViewTracker(self.fetcher, self.where, self.values, self.joins,
-                self.limiter)
+        return ViewTracker(self.fetcher, self.where, self.values, self.joins)
 
 class ViewTrackerManager(object):
     def __init__(self):
@@ -267,7 +255,7 @@ class ViewTrackerManager(object):
             tracker.remove_object(obj)
 
 class ViewTracker(signals.SignalEmitter):
-    def __init__(self, fetcher, where, values, joins, limiter):
+    def __init__(self, fetcher, where, values, joins):
         signals.SignalEmitter.__init__(self, 'added', 'removed', 'changed',
                 'bulk-added', 'bulk-removed', 'bulk-changed')
         self.fetcher = fetcher
@@ -277,7 +265,6 @@ class ViewTracker(signals.SignalEmitter):
             raise TypeError("values must be a tuple")
         self.values = values
         self.joins = joins
-        self.limiter = limiter
         self.bulk_mode = False
         self.current_ids = self._view_object_ids()
         vt_manager = app.view_tracker_manager
@@ -296,18 +283,6 @@ class ViewTracker(signals.SignalEmitter):
         """
         self.bulk_mode = bulk_mode
 
-    def change_limiter(self, limiter):
-        """Change our limiter object and invoke add/change/remove callbacks
-
-        limiter should be a subclass of ViewLimiter
-        """
-        self.limiter = limiter
-        if limiter is not None:
-            new_ids = limiter.filter_id_set(self.current_ids_no_limiter)
-        else:
-            new_ids = self.current_ids_no_limiter
-        self._update_current_ids(new_ids)
-
     def _obj_in_view(self, obj):
         """Check if a single object is in our view."""
         where = '%s.id = ?' % (self.table_name,)
@@ -315,26 +290,13 @@ class ViewTracker(signals.SignalEmitter):
             where += ' AND (%s)' % (self.where,)
 
         values = (obj.id,) + self.values
-        in_db_view = app.db.query_count(self.table_name, where, values,
+        return app.db.query_count(self.table_name, where, values,
                 self.joins) > 0
-        if in_db_view:
-            self.current_ids_no_limiter.add(obj.id)
-        else:
-            self.current_ids_no_limiter.discard(obj.id)
-        if self.limiter is None:
-            return in_db_view
-        else:
-            return in_db_view and not self.limiter.filter_obj(obj)
 
     def _view_object_ids(self):
         """Get all object ids in our view."""
-        rv = set(app.db.query_ids(self.table_name,
-            self.where, self.values, joins=self.joins))
-        self.current_ids_no_limiter = rv.copy()
-        if self.limiter is None:
-            return rv
-        else:
-            return self.limiter.filter_id_set(rv)
+        return set(app.db.query_ids(self.table_name,
+                                    self.where, self.values, joins=self.joins))
 
     def object_changed(self, obj):
         self.check_object(obj)
@@ -395,23 +357,6 @@ class ViewTracker(signals.SignalEmitter):
     def __len__(self):
         return len(self.current_ids)
 
-class ViewLimiter(object):
-    """Interface for objects that are passed into set_limiter.
-
-    ViewLimiter objects allow us to filter views based on things other than
-    database rows, for example using the search.py module.
-    """
-    def filter_obj(self, obj):
-        """Return True if we should filter out obj from the view."""
-        raise NotImplementedError()
-
-    def filter_id_list(self, id_list):
-        """Remove ids from id_list that shouldn't be in the view."""
-        raise NotImplementedError()
-
-    def filter_id_set(self, id_set):
-        """Remove ids from id_set that shouldn't be in the view."""
-        raise NotImplementedError()
 
 class BulkSQLManager(object):
     def __init__(self):

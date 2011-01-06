@@ -47,8 +47,10 @@ from miro import guide
 from miro import fileutil
 from miro import commandline
 from miro import item
+from miro import itemsource
 from miro import messages
 from miro import prefs
+from miro import search
 from miro import singleclick
 from miro import subscription
 from miro import tabs
@@ -286,60 +288,83 @@ class WatchedFolderTracker(ViewTracker):
         info_list = self._make_added_list(feed.Feed.watched_folder_view())
         messages.WatchedFolderList(info_list).send_to_frontend()
 
-class ItemSearchLimiter(database.ViewLimiter):
+class ItemSearchLimiter(itemsource.SourceLimiter):
     """ViewLimiter that filters out items that don't match a search query"""
     def __init__(self, query):
         self.query = query
 
-    def filter_obj(self, item):
-        return not app.item_searcher.item_matches(item.id, self.query)
+    def filter_info(self, info):
+        return not search.item_matches(info, self.query)
 
-    def filter_id_list(self, id_list):
-        # NOTE: using set operations kills the order of id_list, but this
-        # doesn't matter for ItemTrackers
-        return list(self.filter_id_set(set(id_list)))
+    def filter_list(self, info_list):
+        return search.list_matches(info_list, self.query)
 
-    def filter_id_set(self, id_set):
-        matching_ids = set(app.item_searcher.search(self.query))
-        return id_set & matching_ids
-
-class ItemTrackerBase(ViewTracker):
-    # we get ItemInfo objects from our views, so we don't need any conversions
-    info_factory = lambda self, obj: obj
+class SourceTrackerBase(ViewTracker):
+    # we only deal with ItemInfo objects, so we don't need to create anything
+    info_factory = lambda self, info: info
 
     def __init__(self, search_text):
-        self.current_search_text = self.last_search_text = search_text
-        for view in self.get_object_views():
-            view.fetcher = database.ItemInfoFetcher()
-            if search_text is not None:
-                view.limiter = ItemSearchLimiter(search_text)
         ViewTracker.__init__(self)
+        self.current_search_text = self.last_search_text = search_text
+        self.sent_initial_list = False
+        if search_text:
+            for source in self.trackers:
+                source.set_limiter(ItemSearchLimiter(search_text))
 
-    def make_changed_message(self, added, changed, removed):
-        return messages.ItemsChanged(self.type, self.id,
-                added, changed, removed)
+    def get_sources(self):
+        return [self.source]
 
-    def get_object_views(self):
-        return [self.view]
+    def add_callbacks(self):
+        for source in self.get_sources():
+            source.connect('added', self.on_object_added)
+            source.connect('changed', self.on_object_changed)
+            source.connect('removed', self.on_object_removed)
+            source.connect('new-list', self.on_new_list)
+            self.trackers.append(source)
+
+    def on_new_list(self, source, infos):
+        if not self.sent_initial_list:
+            # don't send this until we send ItemList()
+            return
+        # XXX is it faster to just re-send the initial list?
+        current_infos = {}
+        for info in infos:
+            if info.id not in self._last_sent_info:
+                self.on_object_added(source, info)
+            else:
+                current_infos[info.id] = info
+        for info in self._last_sent_info.values():
+            if info.id in current_infos:
+                self.on_object_changed(source, current_infos[info.id])
+            else:
+                self.on_object_removed(source, info)
+        self.schedule_send_messages()
 
     def send_initial_list(self):
         infos = []
-        for view in self.get_object_views():
-            infos.extend(self._make_added_list(view))
+        for source in self.trackers:
+            infos.extend(source.fetch())
+        self._last_sent_info.update([(info.id, info) for info in infos])
         messages.ItemList(self.type, self.id, infos).send_to_frontend()
+        self.sent_initial_list = True
+
+    def make_changed_message(self, added, changed, removed):
+        return messages.ItemsChanged(self.type, self.id, added, changed,
+                                     removed)
 
     def send_messages(self):
         if self.current_search_text != self.last_search_text:
             self._update_search()
+
         ViewTracker.send_messages(self)
 
     def _update_search(self):
-        if self.current_search_text is None:
+        if not self.current_search_text:
             limiter = None
         else:
             limiter = ItemSearchLimiter(self.current_search_text)
-        for tracker in self.trackers:
-            tracker.change_limiter(limiter)
+        for source in self.trackers:
+            source.set_limiter(limiter)
         self.last_search_text = self.current_search_text
 
     def set_search_text(self, search_text):
@@ -349,35 +374,44 @@ class ItemTrackerBase(ViewTracker):
         self.current_search_text = search_text
         self.schedule_send_messages()
 
-class FeedItemTracker(ItemTrackerBase):
+class DatabaseSourceTrackerBase(SourceTrackerBase):
+
+    def get_sources(self):
+        return [itemsource.DatabaseItemSource(view) for view in
+                self.get_object_views()]
+
+    def get_object_views(self):
+        return [self.view]
+
+class FeedItemTracker(DatabaseSourceTrackerBase):
     type = 'feed'
     def __init__(self, feed, search_text):
         self.view = feed.visible_items
         self.id = feed.id
-        ItemTrackerBase.__init__(self, search_text)
+        DatabaseSourceTrackerBase.__init__(self, search_text)
 
-class FeedFolderItemTracker(ItemTrackerBase):
+class FeedFolderItemTracker(DatabaseSourceTrackerBase):
     type = 'feed'
     def __init__(self, folder, search_text):
         self.view = item.Item.visible_folder_view(folder.id)
         self.id = folder.id
-        ItemTrackerBase.__init__(self, search_text)
+        DatabaseSourceTrackerBase.__init__(self, search_text)
 
-class PlaylistItemTracker(ItemTrackerBase):
+class PlaylistItemTracker(DatabaseSourceTrackerBase):
     type = 'playlist'
     def __init__(self, playlist, search_text):
         self.view = item.Item.playlist_view(playlist.id)
         self.id = playlist.id
-        ItemTrackerBase.__init__(self, search_text)
+        DatabaseSourceTrackerBase.__init__(self, search_text)
 
-class PlaylistFolderItemTracker(ItemTrackerBase):
+class PlaylistFolderItemTracker(DatabaseSourceTrackerBase):
     type = 'playlist'
     def __init__(self, playlist, search_text):
         self.view = item.Item.playlist_folder_view(playlist.id)
         self.id = playlist.id
-        ItemTrackerBase.__init__(self, search_text)
+        DatabaseSourceTrackerBase.__init__(self, search_text)
 
-class ManualItemTracker(ItemTrackerBase):
+class ManualItemTracker(DatabaseSourceTrackerBase):
     type = 'manual'
 
     def __init__(self, id_, id_list, search_text):
@@ -391,81 +425,61 @@ class ManualItemTracker(ItemTrackerBase):
                     len(bite_sized_list)))
             self.views.append(item.Item.make_view(
                 'id in (%s)' % place_holders, tuple(bite_sized_list)))
-        ItemTrackerBase.__init__(self, search_text)
+        DatabaseSourceTrackerBase.__init__(self, search_text)
 
     def get_object_views(self):
         return self.views
 
-    def send_initial_list(self):
-        infos = []
-        for view in self.views:
-            infos.extend(self._make_added_list(view))
-        messages.ItemList(self.type, self.id, infos).send_to_frontend()
-
-class DownloadingItemsTracker(ItemTrackerBase):
+class DownloadingItemsTracker(DatabaseSourceTrackerBase):
     type = 'downloading'
     id = None
     def __init__(self, search_text):
         self.view = item.Item.download_tab_view()
-        ItemTrackerBase.__init__(self, search_text)
+        DatabaseSourceTrackerBase.__init__(self, search_text)
 
-class VideoItemsTracker(ItemTrackerBase):
+class VideoItemsTracker(DatabaseSourceTrackerBase):
     type = 'videos'
     id = None
     def __init__(self, search_text):
         self.view = item.Item.watchable_video_view()
-        ItemTrackerBase.__init__(self, search_text)
+        DatabaseSourceTrackerBase.__init__(self, search_text)
 
-class AudioItemsTracker(ItemTrackerBase):
+class AudioItemsTracker(DatabaseSourceTrackerBase):
     type = 'music'
     id = None
     def __init__(self, search_text):
         self.view = item.Item.watchable_audio_view()
-        ItemTrackerBase.__init__(self, search_text)
+        DatabaseSourceTrackerBase.__init__(self, search_text)
 
-class OtherItemsTracker(ItemTrackerBase):
+class OtherItemsTracker(DatabaseSourceTrackerBase):
     type = 'others'
     id = None
     def __init__(self, search_text):
         self.view = item.Item.watchable_other_view()
-        ItemTrackerBase.__init__(self, search_text)
+        DatabaseSourceTrackerBase.__init__(self, search_text)
 
-class SearchItemsTracker(ItemTrackerBase):
+class SearchItemsTracker(DatabaseSourceTrackerBase):
     type = 'search'
     id = None
     def __init__(self, search_text):
         self.view = item.Item.search_item_view()
-        ItemTrackerBase.__init__(self, search_text)
+        DatabaseSourceTrackerBase.__init__(self, search_text)
 
-class FolderItemsTracker(ItemTrackerBase):
+class FolderItemsTracker(DatabaseSourceTrackerBase):
     type = 'folder-contents'
     def __init__(self, folder_id, search_text):
         self.view = item.Item.folder_contents_view(folder_id)
         self.id = folder_id
-        ItemTrackerBase.__init__(self, search_text)
+        DatabaseSourceTrackerBase.__init__(self, search_text)
 
-class DeviceItemTracker(object):
+class DeviceItemTracker(SourceTrackerBase):
     type = 'device'
-    def __init__(self, device):
+    def __init__(self, device, search_text):
         self.device = device
         self.id = device.id
+        self.source = itemsource.DeviceItemSource(device)
 
-    def send_initial_list(self):
-        if '-' not in self.id:
-            return
-        real_id, item_type = self.id.rsplit('-', 1)
-        if item_type not in ('video', 'audio'):
-            return
-        devices.clean_database(self.device)
-        items = [item.DeviceItem(device=self.device, file_type=item_type,
-                                 video_path=path, **args)
-                 for path, args in self.device.database[item_type].items()]
-        infos = [messages.ItemInfo(i) for i in items]
-
-        messages.ItemList(self.type, self.id, infos).send_to_frontend()
-
-    def unlink(self):
-        pass
+        SourceTrackerBase.__init__(self, search_text)
 
 def make_item_tracker(message):
     if message.type == 'downloading':
@@ -498,7 +512,7 @@ def make_item_tracker(message):
         return ManualItemTracker(message.id, message.ids_to_track,
                 message.search_text)
     elif message.type == 'device':
-        return DeviceItemTracker(message.id)
+        return DeviceItemTracker(message.id, message.search_text)
     else:
         logging.warn("Unknown TrackItems type: %s", message.type)
 
@@ -836,8 +850,8 @@ class BackendMessageHandler(messages.MessageHandler):
             obj.set_title(message.new_name)
 
     def handle_play_all_unwatched(self, message):
-        item_infos = [messages.ItemInfo(i) for i in
-                item.Item.newly_downloaded_view()]
+        item_infos = itemsource.DatabaseSource(
+            item.Item.newly_downloaded_view()).fetch()
         messages.PlayMovie(item_infos).send_to_frontend()
 
     def handle_folder_expanded_change(self, message):
@@ -1209,7 +1223,9 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 feed.items.count()).send_to_frontend()
 
     def item_tracker_key(self, message):
-        if message.type != 'manual':
+        if message.type == 'device':
+            return (message.type, message.id.id)
+        elif message.type != 'manual':
             return (message.type, message.id)
         else:
             # make sure the item list is a tuple, so it can be hashed.
@@ -1601,14 +1617,13 @@ New ids: %s""", playlist_item_ids, message.item_ids)
     def handle_delete_device_video(self, message):
         item = message.item
         device = message.item.device
+        del device.database[item.file_type][item.id]
         if os.path.exists(item.video_path):
             os.unlink(item.video_path)
         if (item.thumbnail and item.thumbnail.startswith(device.mount) and
             os.path.exists(item.thumbnail)):
             os.unlink(item.thumbnail)
-        messages.ItemsChanged('device', message.item.device.id,
-                              [], [],
-                              [message.item.id]).send_to_frontend()
+        device.database.emit('item-removed', item)
 
     def handle_device_eject(self, message):
         devices.write_database(message.device.database, message.device.mount)
@@ -1616,15 +1631,15 @@ New ids: %s""", playlist_item_ids, message.item_ids)
 
     @staticmethod
     def _get_sync_items_for_message(message):
-        items = set()
+        views = []
+        infos = set()
         for video_id in message.video_ids:
             feed_ = feed.Feed.get_by_id(video_id)
             if message.video_type == 'all':
                 view = feed_.downloaded_items
             else:
                 view = feed_.unwatched_items
-            for item_ in view:
-                items.add(item_)
+            views.append(view)
 
         for audio_id in message.audio_ids:
             feed_ = feed.Feed.get_by_id(audio_id)
@@ -1632,36 +1647,38 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                 view = feed_.downloaded_items
             else:
                 view = feed_.unwatched_items
-            for item_ in view:
-                items.add(item_)
+            views.append(view)
 
         for playlist_id in message.playlist_ids:
-            view = item.Item.playlist_view(playlist_id)
-            for item_ in view:
-                items.add(item_)
+            views.append(item.Item.playlist_view(playlist_id))
 
-        return items
+        for view in views:
+            source = itemsource.DatabaseItemSource(view)
+            try:
+                infos.update(source.fetch())
+            finally:
+                source.unlink()
+        return infos
 
     def handle_query_sync_information(self, message):
-        items = self._get_sync_items_for_message(message)
-        video_count = sum(1 for item_ in items if item_.file_type == 'video')
-        audio_count = sum(1 for item_ in items if item_.file_type == 'audio')
+        infos = self._get_sync_items_for_message(message)
+        video_count = sum(1 for info in infos if info.file_type == 'video')
+        audio_count = sum(1 for info in infos if info.file_type == 'audio')
         message = messages.CurrentSyncInformation(message.device,
                                                   video_count,
                                                   audio_count)
         message.send_to_frontend()
 
     def handle_device_sync_feeds(self, message):
-        items = self._get_sync_items_for_message(message)
-        if items:
-            item_infos = [messages.ItemInfo(item_) for item_ in items]
+        infos = self._get_sync_items_for_message(message)
+        if infos:
             dsm = app.device_manager.get_sync_for_device(message.device)
-            dsm.add_items(item_infos)
+            dsm.add_items(infos)
 
     def handle_device_sync_media(self, message):
         try:
-            item_infos = [messages.ItemInfo(item.Item.get_by_id(id))
-                          for id in message.item_ids]
+            item_infos = [itemsource.DatabaseItemSource.get_by_id(id_)
+                          for id_ in message.item_ids]
         except database.ObjectNotFoundError:
             logging.warn("HandleDeviceSyncMedia: Items not found -- %s",
                          message.item_ids)

@@ -32,15 +32,10 @@
 To make incremental search fast, we index the n-grams for each item.
 """
 
-import collections
-import logging
 import os
 import re
 
-from miro import app
-from miro import fileutil
 from miro import ngrams
-from miro import prefs
 from miro.plat.utils import filename_to_unicode
 
 QUOTEKILLER = re.compile(r'(?<!\\)"')
@@ -118,109 +113,61 @@ def calc_ngrams(item_info):
     words = WORDMATCHER.findall(_calc_search_text(item_info))
     return ngrams.breakup_list(words, 1, NGRAM_MAX)
 
-class ItemSearcher(object):
-    """Index Item objects so that they can be searched quickly """
+def _ngrams_for_term(term):
+    """Given a term, return a list of N-grams that we should search for.
 
-    def __init__(self):
-        # map N-grams -> set of item ids
-        self._ngram_map = collections.defaultdict(set)
-        # map item id -> set of N-grams
-        self._ngrams_for_item = {}
-        self._initialized = False
+    If the term is shorter than NGRAM_MAX, this is just the term itself.
+    If it's longer, we split it up into a bunch of N-grams to search for.
+    """
+    if len(term) <= NGRAM_MAX:
+        return [term]
+    else:
+        # Note that we only need to use the longest N-grams, since shorter
+        # N-grams will just be substrings of those.
+        return ngrams.breakup_word(term, NGRAM_MAX, NGRAM_MAX)
 
-    def initialize(self):
-        """Initialize search data.
+def item_matches(item_info, search_text):
+    """Test if a single ItemInfo matches a search
 
-        This method might take a few seconds, it's safe to wait a while to
-        invoke this.  If search() is called in the meantime, then we will
-        initialize then.
-        """
-        if self._initialized:
-            return
-        logging.info("Loading item search data")
-        for item_info in app.item_info_cache.all_infos():
-            self._add_item(item_info)
-        app.item_info_cache.connect("added", self.on_info_added)
-        app.item_info_cache.connect("changed", self.on_info_changed)
-        app.item_info_cache.connect("removed", self.on_info_removed)
-        self._initialized = True
+    :param item_info: ItemInfo to test
+    :param search_text: search_text to search with
 
-    def _add_item(self, item_info):
-        for ngram in item_info.search_ngrams:
-            self._ngram_map[ngram].add(item_info.id)
-        self._ngrams_for_item[item_info.id] = set(item_info.search_ngrams)
+    :returns: True if the item matches the search string
+    """
+    parsed_search = _get_boolean_search(search_text)
+    item_ngrams = item_info.search_ngrams
 
-    def _remove_item(self, item_info):
-        for ngram in self._ngrams_for_item.pop(item_info.id):
-            self._ngram_map[ngram].discard(item_info.id)
+    for term in parsed_search.positive_terms:
+        if not set(_ngrams_for_term(term)).issubset(item_ngrams):
+            return False
+    for term in parsed_search.negative_terms:
+        if set(_ngrams_for_term(term)).issubset(item_ngrams):
+            return False
+    return True
 
-    def on_info_added(self, obj, item_info):
-        self._add_item(item_info)
+def list_matches(item_infos, search_text):
+    """
+    Optimized version of item_matches() which filters a iterable
+    of item_infos.
 
-    def on_info_changed(self, obj, item_info):
-        self._remove_item(item_info)
-        self._add_item(item_info)
+    Right now, the optimization is for a short search string and a lot of
+    items (the typical case).  This will probably be slow for long search
+    strings since we'll need to iterate over all of the terms.
+    """
+    parsed_search = _get_boolean_search(search_text)
+    positive_set = set()
+    negative_set = set()
+    for term in parsed_search.positive_terms:
+        positive_set |= set(_ngrams_for_term(term))
+    for term in parsed_search.negative_terms:
+        negative_set |= set(_ngrams_for_term(term))
 
-    def on_info_removed(self, obj, item_info):
-        self._remove_item(item_info)
+    for info in item_infos:
+        item_ngrams_set = set(info.search_ngrams)
+        match = positive_set.issubset(item_ngrams_set)
+        if match and negative_set:
+            match = negative_set.isdisjoint(item_ngrams_set)
 
-    def _ngrams_for_term(self, term):
-        """Given a term, return a list of N-grams that we should search for.
+        if match:
+            yield info
 
-        If the term is shorter than NGRAM_MAX, this is just the term itself.
-        If it's longer, we split it up into a bunch of N-grams to search for.
-        """
-        if len(term) <= NGRAM_MAX:
-            return [term]
-        else:
-            # Note that we only need to use the longest N-grams, since shorter
-            # N-grams will just be substrings of those.
-            return ngrams.breakup_word(term, NGRAM_MAX, NGRAM_MAX)
-
-    def _term_search(self, term):
-        grams = self._ngrams_for_term(term)
-        rv = self._ngram_map[grams[0]]
-        for gram in grams[1:]:
-            rv.intersection_update(self._ngram_map[gram])
-        return rv
-
-    def search(self, search_text):
-        """Search through the index items.
-
-        :param search_text: search_text to search with
-
-        :returns: set of ids that match the search
-        """
-        self.initialize()
-        parsed_search = _get_boolean_search(search_text)
-
-        if parsed_search.positive_terms:
-            matching_ids = self._term_search(parsed_search.positive_terms[0])
-            for term in parsed_search.positive_terms[1:]:
-                matching_ids.intersection_update(self._term_search(term))
-        else:
-            matching_ids = set(self._ngrams_for_item.keys())
-
-        for term in parsed_search.negative_terms:
-            matching_ids.difference_update(self._term_search(term))
-        return matching_ids
-
-    def item_matches(self, item_id, search_text):
-        """Test if a single item matches a search
-
-        :param item_id: object id of the item to test
-        :param search_text: search_text to search with
-
-        :returns: True if the item matches the search string
-        """
-        self.initialize()
-        parsed_search = _get_boolean_search(search_text)
-        item_ngrams = self._ngrams_for_item[item_id]
-
-        for term in parsed_search.positive_terms:
-            if not set(self._ngrams_for_term(term)).issubset(item_ngrams):
-                return False
-        for term in parsed_search.negative_terms:
-            if set(self._ngrams_for_term(term)).issubset(item_ngrams):
-                return False
-        return True

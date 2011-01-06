@@ -53,7 +53,7 @@ import logging
 
 from miro import app
 from miro import eventloop
-from miro import messages
+from miro import itemsource
 from miro import models
 from miro import schema
 from miro import signals
@@ -108,7 +108,8 @@ class ItemInfoCache(signals.SignalEmitter):
         self.loaded = True
 
     def version(self):
-        return "%s-%s" % (schema.VERSION, messages.ItemInfo.VERSION)
+        return "%s-%s" % (schema.VERSION,
+                          itemsource.DatabaseItemSource.VERSION)
 
     def _info_to_blob(self, info):
         return buffer(cPickle.dumps(info))
@@ -140,8 +141,11 @@ class ItemInfoCache(signals.SignalEmitter):
         """
 
         self.id_to_info = {}
-        for item in models.Item.make_view():
-            self.id_to_info[item.id] = messages.ItemInfo(item)
+        source = itemsource.DatabaseItemSource(models.Item.make_view(),
+                                               use_cache=False)
+        for info in source.fetch():
+            self.id_to_info[info.id] = info
+        source.unlink()
 
     def schedule_save_to_db(self):
         if self._save_dc is None:
@@ -205,7 +209,7 @@ class ItemInfoCache(signals.SignalEmitter):
             # New item created in Item.setup_restored(), while we were doing a
             # failsafe load
             return
-        info = messages.ItemInfo(item)
+        info = itemsource.DatabaseItemSource._item_info_for(item)
         self.id_to_info[item.id] = info
         self._infos_added[item.id] = info
         self.schedule_save_to_db()
@@ -219,7 +223,7 @@ class ItemInfoCache(signals.SignalEmitter):
         if item.id not in self.id_to_info:
             # signal_change() called inside setup_new(), just ignor it
             return
-        info = messages.ItemInfo(item)
+        info = itemsource.DatabaseItemSource._item_info_for(item)
         self.id_to_info[item.id] = info
         if item.id in self._infos_added:
             # no need to update if we insert the new values

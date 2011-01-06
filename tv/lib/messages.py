@@ -1118,165 +1118,20 @@ class ItemInfo(object):
     :param up_down_ratio: (Torrent only) ratio of uploaded to downloaded
     """
 
-    # bump this whenever you change the ItemInfo class, or change one of the
-    # functions that ItemInfo uses to get it's attributes (for example
-    # Item.get_description()).
-    VERSION = 7
-
     html_stripper = util.HTMLStripper()
 
-    def __init__(self, item):
-        self.id = item.id
+    def __init__(self, id_, **kwargs):
+        self.id = id_
 
-        if hasattr(item, 'device'): # DeviceItem
-            self._from_device_item(item)
-        else:
-            self._from_item(item)
+        self.__dict__.update(kwargs) # we're just a thin wrapper around some
+                                     # data
 
-        # calculate ngrams last since it depends on other data
-        self.search_ngrams = search.calc_ngrams(self)
-
-    def _from_item(self, item):
-        self.device = None
-        self.name = item.get_title()
-        self.feed_id = item.feed_id
-        self.feed_name = item.get_source()
-        self.feed_url = item.get_feed_url()
-        self.description = item.get_description()
-        self.description_stripped = (
-                ItemInfo.html_stripper.strip(self.description))
-        self.state = item.get_state()
-        self.release_date = item.get_release_date_obj()
-        self.size = item.get_size()
-        self.duration = item.get_duration_value()
-        self.resume_time = item.resumeTime
-        self.permalink = item.get_link()
-        self.commentslink = item.get_comments_link()
-        self.payment_link = item.get_payment_link()
-        self.has_sharable_url = item.has_shareable_url()
-        self.can_be_saved = item.show_save_button()
-        self.pending_manual_dl = item.is_pending_manual_download()
-        self.pending_auto_dl = item.is_pending_auto_download()
-        if not item.keep and not item.is_external():
-            self.expiration_date = item.get_expiration_time()
-        else:
-            self.expiration_date = None
-        self.item_viewed = item.get_viewed()
-        self.downloaded = item.is_downloaded()
-        self.is_external = item.is_external()
-        self.video_watched = item.get_seen()
-        self.video_path = item.get_filename()
-        self.thumbnail = item.get_thumbnail()
-        self.thumbnail_url = item.get_thumbnail_url()
-        self.file_format = item.get_format()
-        self.license = item.get_license()
-        self.file_url = item.get_url()
-        self.is_container_item = item.isContainerItem
-        self.is_playable = item.is_playable()
-        if item.isContainerItem:
-            self.children = [ItemInfo(i) for i in item.get_children()]
-        else:
-            self.children = []
-        self.file_type = item.file_type
-        self.subtitle_encoding = item.subtitle_encoding
-        self.media_type_checked = item.media_type_checked
-        self.seeding_status = item.torrent_seeding_status()
-        self.mime_type = item.enclosure_type
-        self.artist = item.get_artist()
-        self.album = item.get_album()
-        self.track = item.get_track()
-        self.year = item.get_year()
-        self.genre = item.get_genre()
-        self.rating = item.get_rating()
-        self.date_added = item.get_creation_time()
-        self.last_played = item.get_watched_time()
-        self.cover_art = item.get_cover_art()
-
-        if item.downloader:
-            self.download_info = DownloadInfo(item.downloader)
-        elif self.state == 'downloading':
-            self.download_info = PendingDownloadInfo()
-        else:
-            self.download_info = None
-
-        ## Torrent-specific stuff
-        self.leechers = self.seeders = self.up_rate = None
-        self.down_rate = self.up_total = self.down_total = None
-        self.up_down_ratio = 0.0
-        if item.looks_like_torrent() and hasattr(item.downloader, 'status'):
-            status = item.downloader.status
-            if item.is_transferring():
-                # gettorrentdetails only
-                self.leechers = status.get('leechers', 0)
-                self.seeders = status.get('seeders', 0)
-                self.up_rate = status.get('upRate', 0)
-                self.down_rate = status.get('rate', 0)
-
-            # gettorrentdetailsfinished & gettorrentdetails
-            self.up_total = status.get('uploaded', 0)
-            self.down_total = status.get('currentSize', 0)
-            if self.down_total <= 0:
-                self.up_down_ratio = 0.0
-            else:
-                self.up_down_ratio = self.up_total * 1.0 / self.down_total
-
-    def _from_device_item(self, item):
-        self.name = item.name
-        self.feed_id = item.feed_id
-        self.feed_name = (item.feed_name is None and item.feed_name or
-                          item.device.name)
-        self.feed_url = None
-        self.description = item.description
-        self.description_stripped = self.html_stripper.strip(item.description)
-        self.state = u'saved'
-        self.release_date = datetime.datetime.fromtimestamp(item.release_date)
-        self.size = item.size
-        self.duration = (item.duration not in (-1, None) and
-                         item.duration / 1000 or
-                         0)
-        self.resume_time = 0
-        self.permalink = item.permalink
-        self.commentslink = item.comments_link
-        self.payment_link = item.payment_link
-        self.has_shareable_url = bool(item.url)
-        self.can_be_saved = False
-        self.pending_manual_dl = False
-        self.pending_auto_dl = False
-        self.expiration_date = None
-        self.item_viewed = True
-        self.downloaded = True
-        self.is_external = False
-        self.video_watched = True
-        self.video_path = item.get_filename()
-        self.thumbnail = item.get_thumbnail()
-        self.thumbnail_url = item.thumbnail_url or u''
-        self.file_format = item.file_format
-        self.license = item.license
-        self.file_url = item.url or u''
-        self.is_container_item = False
-        self.is_playable = True
-        self.children = []
-        self.file_type = item.file_type
-        self.subtitle_encoding = item.subtitle_encoding
-        self.seeding_status = None
-        self.mime_type = item.enclosure_type
-        self.artist = item.metadata.get('artist', u'')
-        self.album = item.metadata.get('album', u'')
-        self.track = item.metadata.get('track', -1)
-        self.year = item.metadata.get('year', -1)
-        self.genre = item.metadata.get('genre', u'')
-        self.rating = item.rating
-        self.date_added = item.creation_time
-        self.last_played = item.creation_time
-        self.download_info = None
-        self.device = item.device
-        self.leechers = None
-        self.seeders = None
-        self.up_rate = None
-        self.down_rate = None
-        self.up_total = None
-        self.down_total = None
-        self.up_down_ratio = 0.
+        # stuff we can calculate, if it wasn't stored
+        if not hasattr(self, 'description_stripped'):
+            self.description_stripped = ItemInfo.html_stripper.strip(
+                self.description)
+        if not hasattr(self, 'search_ngrams'):
+            self.search_ngrams = search.calc_ngrams(self)
 
 class DownloadInfo(object):
     """Tracks the download state of an item.

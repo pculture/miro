@@ -33,7 +33,6 @@
 from datetime import datetime, timedelta
 import locale
 import os.path
-import shutil
 import traceback
 import logging
 
@@ -41,8 +40,7 @@ from miro.gtcache import gettext as _
 from miro.util import (check_u, returns_unicode, check_f, returns_filename,
                        quote_unicode_url, stringify, get_first_video_enclosure,
                        entity_replace)
-from miro.plat.utils import (filename_to_unicode, unicode_to_filename,
-                             utf8_to_filename)
+from miro.plat.utils import filename_to_unicode, unicode_to_filename
 
 from miro.download_utils import clean_filename, next_free_filename
 from miro.feedparser import FeedParserDict
@@ -2100,136 +2098,6 @@ filename was %s""", stringify(self.filename))
                     logging.warn("%s is not a subdirectory of %s",
                             self.filename, parent_file)
         Item.setup_links(self)
-
-class DeviceItem(ItemBase):
-    """
-    An item which lives on a device.  There's a separate, per-device JSON
-    database, so this implements the necessary Item logic for those files.
-
-    A lot of these methods are just returning data that ItemInfo wants and that
-    we don't care about.
-    """
-    def __init__(self, **kwargs):
-        for required in ('video_path', 'file_type', 'device'):
-            if required not in kwargs:
-                raise TypeError('DeviceItem must be given a "%s" argument'
-                                % required)
-        self.name = self.file_format = self.size = None
-        self.release_date = self.feed_name = self.feed_id = None
-        self.keep = self.media_type_checked = True
-        self.updating_movie_info = self.isContainerItem = False
-        self.url = self.payment_link = None
-        self.comments_link = self.permalink = self.file_url = None
-        self.license = self.downloader = self.release_date = None
-        self.duration = self.screenshot = self.thumbnail_url = None
-        self.resumeTime = 0
-        self.subtitle_encoding = self.enclosure_type = None
-        self.description = u''
-        self.metadata = {}
-        self.rating = None
-        self.file_type = None
-        self.creation_time = None
-        self.__dict__.update(kwargs)
-
-        if isinstance(self.video_path, unicode):
-            self.video_path = utf8_to_filename(self.video_path.encode('utf8'))
-        if isinstance(self.screenshot, unicode):
-            self.screenshot = utf8_to_filename(self.screenshot.encode('utf8'))
-        if self.name is None:
-            self.name = filename_to_unicode(os.path.basename(self.video_path))
-        if self.file_format is None:
-            self.file_format = filename_to_unicode(
-                os.path.splitext(self.video_path)[1])
-            if self.file_type == 'audio':
-                self.file_format = self.file_format + ' audio'
-        if self.size is None:
-            self.size = os.path.getsize(self.get_filename())
-        if self.release_date is None or self.creation_time is None:
-            ctime = os.path.getctime(self.get_filename())
-            if self.release_date is None:
-                self.release_date = ctime
-            if self.creation_time is None:
-                self.creation_time = ctime
-        if self.duration is None: # -1 is unknown
-            moviedata.movie_data_updater.request_update(self)
-        self.id = self.get_filename()
-
-    @staticmethod
-    def id_exists():
-        return True
-
-    @returns_filename
-    def get_filename(self):
-        return os.path.join(self.device.mount, self.video_path)
-
-    def get_url(self):
-        return self.url or u''
-
-    @returns_filename
-    def get_thumbnail(self):
-        if self.screenshot:
-            return os.path.join(self.device.mount,
-                                self.screenshot)
-        elif self.file_type == 'audio':
-            return resources.path("images/thumb-default-audio.png")
-        else:
-            return resources.path("images/thumb-default-video.png")
-
-    def _migrate_thumbnail(self):
-        if self.screenshot:
-            if self.screenshot.startswith(app.config.get(
-                    prefs.ICON_CACHE_DIRECTORY)):
-                # migrate the screenshot onto the device
-                basename = os.path.basename(self.screenshot)
-                shutil.copyfile(self.screenshot,
-                                os.path.join(self.device.mount, '.miro',
-                                             basename))
-                self.screenshot = os.path.join('.miro', basename)
-            elif self.screenshot.startswith(resources.root()):
-                self.screenshot = None # don't save a default thumbnail
-
-    def remove(self, save=True):
-        from miro import messages # avoid circular imports
-
-        ignored, current_file_type = self.device.id.rsplit('-', 1)
-        if self.video_path in self.device.database[current_file_type]:
-            del self.device.database[current_file_type][self.video_path]
-            message = messages.ItemsChanged('device', self.device.id,
-                                            [], [], [self.id])
-            message.send_to_frontend()
-
-    def signal_change(self):
-        from miro import messages # avoid circular imports
-
-        if not os.path.exists(
-            os.path.join(self.device.mount, self.video_path)):
-            # file was removed from the filesystem
-            self.remove()
-            return
-
-        ignored, current_file_type = self.device.id.rsplit('-', 1)
-
-        if self.file_type != current_file_type:
-            # remove the old item from the database
-            self.remove(save=False)
-
-        self._migrate_thumbnail()
-        self.device.database[self.file_type][self.video_path] = self.to_dict()
-
-        if self.file_type != 'other':
-            message = messages.ItemsChanged('device', self.device.id,
-                                            [], [messages.ItemInfo(self)], [])
-            message.send_to_frontend()
-
-    def to_dict(self):
-        data = {}
-        for k, v in self.__dict__.items():
-            if v is not None and k not in ('device', 'file_type', 'id',
-                                           'video_path'):
-                if k == 'screenshot':
-                    v = filename_to_unicode(v)
-                data[k] = v
-        return data
 
 def fp_values_for_file(filename, title=None, description=None):
     data = {
