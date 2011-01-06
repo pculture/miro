@@ -841,7 +841,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
              and self.downloader.get_state() == "downloading")):
             filename = os.path.basename(self.downloader.get_filename())
             if self.title != filename:
-                self.set_title(filename_to_unicode(filename))
+                # we skip set_title() since we're already in the DB
+                # thread/signal_change()
+                self.title = filename_to_unicode(filename)
 
     def recalc_feed_counts(self):
         self.get_feed().recalc_counts()
