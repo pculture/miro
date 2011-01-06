@@ -888,6 +888,13 @@ class DeviceEject(BackendMessage):
     def __init__(self, device):
         self.device = device
 
+class RateItem(BackendMessage):
+    """Assign a rating (1-5) to an item.
+    """
+    def __init__(self, id_, rating):
+        self.id = id_
+        self.rating = rating
+
 # Frontend Messages
 
 class FrontendQuit(FrontendMessage):

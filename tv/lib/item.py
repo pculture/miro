@@ -1153,6 +1153,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def mark_item_skipped(self):
         self.skip_count += 1
 
+    def set_rating(self, rating):
+        self.confirm_db_thread()
+        self.rating = rating
+        self.signal_change()
+
     @returns_unicode
     def get_rss_id(self):
         self.confirm_db_thread()

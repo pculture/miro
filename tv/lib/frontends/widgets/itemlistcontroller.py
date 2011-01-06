@@ -333,6 +333,12 @@ class ItemListController(object):
             self._play_item_list(items)
         elif name == 'play_pause':
             app.playback_manager.play_pause()
+        elif name.startswith('rate:'):
+            rating = int(name.split(':', 1)[1])
+            messages.RateItem(item_info.id, rating).send_to_backend()
+        else:
+            logging.debug("ItemView doesn't know how to handle hotspot %s.",
+                name)
 
     def on_selection_changed(self, item_view):
         if ((item_view is not self.current_item_view
