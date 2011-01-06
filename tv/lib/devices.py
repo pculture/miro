@@ -631,7 +631,6 @@ class DeviceItem(object):
                 self.screenshot = None # don't save a default thumbnail
 
     def remove(self, save=True):
-        print 'calling remove on', self.id, self.device.id
         ignored, current_file_type = self.device.id.rsplit('-', 1)
         if self.video_path in self.device.database[current_file_type]:
             del self.device.database[current_file_type][self.video_path]
