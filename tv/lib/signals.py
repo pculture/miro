@@ -39,6 +39,9 @@ import weakref
 
 from miro import crashreport
 
+class NestedSignalError(Exception):
+    pass
+
 class WeakMethodReference:
     """Used to handle weak references to a method.
 
@@ -99,6 +102,7 @@ class SignalEmitter(object):
     def __init__(self, *signal_names):
         self.signal_callbacks = {}
         self.id_generator = itertools.count()
+        self._currently_emitting = set()
         self._frozen = False
         for name in signal_names:
             self.create_signal(name)
@@ -167,6 +171,18 @@ class SignalEmitter(object):
     def emit(self, name, *args):
         if self._frozen:
             return
+        if name in self._currently_emitting:
+            raise NestedSignalError("Can't emit %s while handling %s" %
+                    (name, name))
+        self._currently_emitting.add(name)
+        try:
+            callback_returned_true = self._run_signal(name, args)
+        finally:
+            self._currently_emitting.discard(name)
+            self.clear_old_weak_references()
+        return callback_returned_true
+
+    def _run_signal(self, name, args):
         callback_returned_true = False
         try:
             self_callback = getattr(self, 'do_' + name.replace('-', '_'))
@@ -180,7 +196,6 @@ class SignalEmitter(object):
                 if callback.invoke(self, args):
                     callback_returned_true = True
                     break
-        self.clear_old_weak_references()
         return callback_returned_true
 
     def clear_old_weak_references(self):

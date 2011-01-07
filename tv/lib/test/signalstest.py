@@ -52,6 +52,14 @@ class SignalsTest(MiroTestCase):
         self.assertRaises(ValueError, self.signaller.connect_weak,
                 'signal1', callback_obj.callback)
 
+    def test_nested_call(self):
+        def callback(obj):
+            # emiting signal1 while handling signal 1 should raise an error
+            obj.emit('signal1')
+        self.signaller.connect('signal1', callback)
+        self.assertRaises(signals.NestedSignalError, self.signaller.emit,
+                'signal1')
+
     def test_disconnect(self):
         id = self.signaller.connect('signal1', self.callback)
         self.signaller.disconnect(id)
