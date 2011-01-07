@@ -1503,17 +1503,7 @@ class DisplayStatesStore(object):
         for display in message.displays:
             self.displays[display.key] = display
 
-    def _norm_key(self, key):
-        if isinstance(key[1], int):
-            key = (key[0], unicode(key[1]))
-        key2 = (unicode(str(key[0]), 'utf-8', 'replace'),
-            unicode(str(key[1]), 'utf-8', 'replace'))
-        if key is not key2:
-            logging.debug(repr(key))
-        return key
-
     def _get_display(self, key):
-        key = self._norm_key(key)
         if not key in self.displays:
             new_display = messages.DisplayInfo(key, None, None, None, None)
             self.displays[key] = new_display
@@ -1521,14 +1511,12 @@ class DisplayStatesStore(object):
         return self.displays[key]
 
     def is_list_view(self, key):
-        key = self._norm_key(key)
         display = self._get_display(key)
         if display.is_list_view is None:
             return self.DEFAULT[key[0]]['is_list_view']
         return display.is_list_view
 
     def get_sort_state(self, key):
-        key = self._norm_key(key)
         display = self._get_display(key)
         # previous behavior allowed for an unsorted state;
         # now, None = default sort for display_type
@@ -1545,27 +1533,23 @@ class DisplayStatesStore(object):
         return itemlist.SORT_KEY_MAP[state](ascending)
 
     def get_columns(self, key):
-        key = self._norm_key(key)
         display = self._get_display(key)
         if display.columns is None:
             return self.DEFAULT[key[0]]['columns']
         return display.columns
 
     def get_filters(self, key):
-        key = self._norm_key(key)
         display = self._get_display(key)
         if display.active_filters is None:
             return self.DEFAULT[key[0]]['active_filters']
         return display.active_filters
 
     def set_filters(self, key, filters):
-        key = self._norm_key(key)
         display = self._get_display(key)
         display.active_filters = filters
         self.save_state(key)
 
     def set_sort_state(self, key, sorter):
-        key = self._norm_key(key)
         display = self._get_display(key)
         # we have an ItemSort object and need to create a string to
         # represent it. Use the sort key, with '-' prepended if the
@@ -1577,25 +1561,21 @@ class DisplayStatesStore(object):
         self.save_state(key)
 
     def set_columns_state(self, key, columns):
-        key = self._norm_key(key)
         display = self._get_display(key)
         display.columns = columns
         self.save_state(key)
 
     def set_list_view(self, key):
-        key = self._norm_key(key)
         display = self._get_display(key)
         display.is_list_view = True
         self.save_state(key)
 
     def set_std_view(self, key):
-        key = self._norm_key(key)
         display = self._get_display(key)
         display.is_list_view = False
         self.save_state(key)
 
     def save_state(self, key):
-        key = self._norm_key(key)
         display = self._get_display(key)
         m = messages.SaveDisplayState(key, display.is_list_view,
             display.active_filters, display.sort_state, display.columns)
