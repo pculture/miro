@@ -32,7 +32,7 @@
 VERSION="$(cat binary_kit_version)"
 
 BINARYKIT="miro-binary-kit-win-${VERSION}.tar.gz"
-BINARYKITURL="http://pculture.org/binarykits/${BINARYKIT}"
+BINARYKITURL="http://binarykits.pculture.org/${BINARYKIT}"
 
 if [ -d "miro-binary-kit-win-${VERSION}" ]
 then
