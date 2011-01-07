@@ -361,6 +361,9 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             pos = end
         if pos < len(text):
             textbox.append_text(text[pos:])
+        if (self.data.children and self.data.download_info and
+            self.data.download_info.finished):
+            textbox.append(u'<BR>' + _('Contents appear in the library'))
         self.description_links = links
         return textbox
 

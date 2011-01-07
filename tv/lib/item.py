@@ -1398,18 +1398,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         If the item is a torrent, then it adds some additional text.
         """
         if self.description:
-            if self.is_downloaded_torrent():
-                return (unicode(self.description) + u'<BR>' +
-                        _('Contents appear in the library'))
-            else:
-                return unicode(self.description)
+            return unicode(self.description)
 
         if self.entry_description:
-            if self.is_downloaded_torrent():
-                return (unicode(self.entry_description) + u'<BR>' +
-                        _('Contents appear in the library'))
-            else:
-                return unicode(self.entry_description)
+            return unicode(self.entry_description)
+
         if self.is_external() and self.is_downloaded_torrent():
             lines = [_('Contents:')]
             lines.extend(filename_to_unicode(child.offsetPath)
