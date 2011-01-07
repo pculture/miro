@@ -744,9 +744,17 @@ class TableView(Widget):
     def remember_selection(self):
         if self._selected_before_change is None:
             index_set = self.tableview.selectedRowIndexes()
-            self._selected_before_change = [
-                    self.model.iter_for_row(self.tableview, i)
-                    for i in index_set.allObjects()]
+            i = index_set.firstIndex()
+            self._selected_before_change = []
+            while True:
+                if i == NSNotFound:
+                    break
+                self._selected_before_change.append(
+                    self.model.iter_for_row(self.tableview, i))
+                i = index_set.indexGreaterThanIndex_(i)
+            #self._selected_before_change = [
+            #        self.model.iter_for_row(self.tableview, i)
+            #        for i in all_objects]
             self.tableview.deselectAll_(nil)
 
     def update_selection_after_change(self):
