@@ -194,6 +194,7 @@ class ItemListController(object):
         playable = self.filter_playable_items(items)
         if len(playable) == 0:
             return
+        app.playback_manager.stop()
         if ((app.config.get(prefs.PLAY_IN_MIRO)
              and len(self.get_selection()) <= 1)):
             # User is playing items in Miro and has 0 or 1 items

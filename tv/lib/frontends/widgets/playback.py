@@ -151,9 +151,6 @@ class PlaybackManager (signals.SignalEmitter):
     
     def start_with_items(self, item_infos, presentation_mode='fit-to-bounds'):
         if self.is_playing:
-            # If we get here and we are already playing something it most
-            # certainly means that the currently playing item is an audio one
-            # which leaves the UI free to start another item, so stop first.
             self.stop()
         self.playlist = []
         for info in item_infos:
