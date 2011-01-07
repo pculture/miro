@@ -1017,11 +1017,18 @@ class ListViewRenderer(widgetset.CustomCellRenderer):
 
 class NameRenderer(ListViewRenderer):
     button_font_size = 0.77
+    
+    def __init__(self):
+        ListViewRenderer.__init__(self)
+        self.button = None
 
     def calc_height(self, style, layout_manager):
         default = ListViewRenderer.calc_height(self, style, layout_manager)
-        button = layout_manager.button(_("Download"))
-        return max(default, button.get_size()[1])
+        if self.button is None:
+            height = 0
+        else:
+            height = button.get_size()[1]
+        return max(default, height)
 
     def _setup_layout_manager(self):
         self.text = self.info.name
@@ -1030,10 +1037,11 @@ class NameRenderer(ListViewRenderer):
     def _pack_extra(self, layout_manager, hbox):
         if not (self.info.downloaded or
                 self.info.state in ('downloading', 'paused')):
-            layout_manager.set_font(self.button_font_size)
-            button = layout_manager.button(_('Download'))
+            if self.button is None:
+                layout_manager.set_font(self.button_font_size)
+                self.button = layout_manager.button(_("Download"))
             hbox.pack(cellpack.align_middle(cellpack.Hotspot('download',
-                button)))
+                self.button)))
 
 class DescriptionRenderer(ListViewRenderer):
     color = (0.6, 0.6, 0.6)
