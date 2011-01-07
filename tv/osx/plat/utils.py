@@ -58,6 +58,15 @@ _locale_initialized = False
 
 dlTask = None
 
+def appstore_edition():
+    """Returns True if this is a Mac App Store Edition of Miro.
+    It is differentiated by having a appStore file in the resources
+    directory inside the application bundle.
+    """
+    appstore_file = os.path.join(NSBundle.mainBundle().resourcePath(),
+                                 'appStore')
+    return os.path.exists(appstore_file)
+
 ###############################################################################
 #### Helper method used to get the free space on the disk where downloaded ####
 #### movies are stored                                                     ####
