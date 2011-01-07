@@ -110,7 +110,7 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
     image_filename = 'playlist-icon.png'
 
     def __init__(self, playlist_info):
-        self.type = 'playlist'
+        self.type = u'playlist'
         self.id = playlist_info.id
         self.title = playlist_info.name
         self.is_folder = playlist_info.is_folder

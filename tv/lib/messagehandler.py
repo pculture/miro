@@ -233,7 +233,7 @@ class TabTracker(ViewTracker):
         response.send_to_frontend()
 
 class ChannelTracker(TabTracker):
-    type = 'feed'
+    type = u'feed'
     info_factory = messages.ChannelInfo
 
     def get_object_views(self):
@@ -243,7 +243,7 @@ class ChannelTracker(TabTracker):
         return tabs.TabOrder.video_feed_order()
 
 class AudioChannelTracker(TabTracker):
-    type = 'audio-feed'
+    type = u'audio-feed'
     info_factory = messages.ChannelInfo
 
     def get_object_views(self):
@@ -253,7 +253,7 @@ class AudioChannelTracker(TabTracker):
         return tabs.TabOrder.audio_feed_order()
 
 class PlaylistTracker(TabTracker):
-    type = 'playlist'
+    type = u'playlist'
     info_factory = messages.PlaylistInfo
 
     def get_object_views(self):
@@ -384,35 +384,35 @@ class DatabaseSourceTrackerBase(SourceTrackerBase):
         return [self.view]
 
 class FeedItemTracker(DatabaseSourceTrackerBase):
-    type = 'feed'
+    type = u'feed'
     def __init__(self, feed, search_text):
         self.view = feed.visible_items
         self.id = feed.id
         DatabaseSourceTrackerBase.__init__(self, search_text)
 
 class FeedFolderItemTracker(DatabaseSourceTrackerBase):
-    type = 'feed'
+    type = u'feed'
     def __init__(self, folder, search_text):
         self.view = item.Item.visible_folder_view(folder.id)
         self.id = folder.id
         DatabaseSourceTrackerBase.__init__(self, search_text)
 
 class PlaylistItemTracker(DatabaseSourceTrackerBase):
-    type = 'playlist'
+    type = u'playlist'
     def __init__(self, playlist, search_text):
         self.view = item.Item.playlist_view(playlist.id)
         self.id = playlist.id
         DatabaseSourceTrackerBase.__init__(self, search_text)
 
 class PlaylistFolderItemTracker(DatabaseSourceTrackerBase):
-    type = 'playlist'
+    type = u'playlist'
     def __init__(self, playlist, search_text):
         self.view = item.Item.playlist_folder_view(playlist.id)
         self.id = playlist.id
         DatabaseSourceTrackerBase.__init__(self, search_text)
 
 class ManualItemTracker(DatabaseSourceTrackerBase):
-    type = 'manual'
+    type = u'manual'
 
     def __init__(self, id_, id_list, search_text):
         self.id = id_
@@ -431,50 +431,50 @@ class ManualItemTracker(DatabaseSourceTrackerBase):
         return self.views
 
 class DownloadingItemsTracker(DatabaseSourceTrackerBase):
-    type = 'downloading'
-    id = None
+    type = u'downloading'
+    id = u'downloading'
     def __init__(self, search_text):
         self.view = item.Item.download_tab_view()
         DatabaseSourceTrackerBase.__init__(self, search_text)
 
 class VideoItemsTracker(DatabaseSourceTrackerBase):
-    type = 'videos'
-    id = None
+    type = u'videos'
+    id = u'videos'
     def __init__(self, search_text):
         self.view = item.Item.watchable_video_view()
         DatabaseSourceTrackerBase.__init__(self, search_text)
 
 class AudioItemsTracker(DatabaseSourceTrackerBase):
-    type = 'music'
-    id = None
+    type = u'music'
+    id = u'music'
     def __init__(self, search_text):
         self.view = item.Item.watchable_audio_view()
         DatabaseSourceTrackerBase.__init__(self, search_text)
 
 class OtherItemsTracker(DatabaseSourceTrackerBase):
-    type = 'others'
-    id = None
+    type = u'others'
+    id = u'others'
     def __init__(self, search_text):
         self.view = item.Item.watchable_other_view()
         DatabaseSourceTrackerBase.__init__(self, search_text)
 
 class SearchItemsTracker(DatabaseSourceTrackerBase):
-    type = 'search'
-    id = None
+    type = u'search'
+    id = u'search'
     def __init__(self, search_text):
         self.view = item.Item.search_item_view()
         DatabaseSourceTrackerBase.__init__(self, search_text)
 
 class FolderItemsTracker(DatabaseSourceTrackerBase):
-    type = 'folder-contents'
+    type = u'folder-contents'
     def __init__(self, folder_id, search_text):
         self.view = item.Item.folder_contents_view(folder_id)
         self.id = folder_id
         DatabaseSourceTrackerBase.__init__(self, search_text)
 
 class DeviceItemTracker(SourceTrackerBase):
-    type = 'device'
-    def __init__(self, device, search_text):
+    type = u'device'
+    def __init__(self, device):
         self.device = device
         self.id = device.id
         self.source = itemsource.DeviceItemSource(device)
@@ -748,6 +748,14 @@ class BackendMessageHandler(messages.MessageHandler):
             logging.warning(
                 "handle_mark_item_skipped: can't find item by id %s",
                 message.id)
+
+    def handle_rate_item(self, message):
+        try:
+            item_ = item.Item.get_by_id(message.id)
+            item_.set_rating(message.rating)
+        except database.ObjectNotFoundError:
+            logging.warning(
+                "handle_rate_item: can't find item by id %s", message.id)
 
     def handle_set_item_subtitle_encoding(self, message):
         try:
@@ -1574,8 +1582,6 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                                        message.send_report)
 
     def _get_display_state(self, key):
-        key = (unicode(str(key[0]), 'utf-8', 'replace'),
-            unicode(str(key[1]), 'utf-8', 'replace'))
         try:
             return DisplayState.make_view("type=? AND id_=?",
                 key).get_singleton()
@@ -1593,8 +1599,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
     def _get_display_states(self):
         states = []
         for display in DisplayState.make_view():
-            key = (unicode(str(display.type), 'utf-8', 'replace'),
-                unicode(str(display.id_), 'utf-8', 'replace'))
+            key = (display.type, display.id_)
             display_info = messages.DisplayInfo(key,
                 display.is_list_view, display.active_filters,
                 display.sort_state, display.columns)

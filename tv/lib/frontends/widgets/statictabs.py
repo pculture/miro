@@ -36,7 +36,7 @@ from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 
 class StaticTab(object):
-    type = 'static'
+    type = u'static'
     def __init__(self):
         self.unwatched = self.downloading = 0
         self.icon = widgetutil.make_surface(self.icon_name)
@@ -95,41 +95,41 @@ class ChannelGuideTab(StaticTab):
                 self.icon = surface
 
 class SearchTab(StaticTab):
-    type = 'search'
-    id = 'search'
+    type = u'search'
+    id = u'search'
     name = _('Video Search')
     icon_name = 'icon-search'
     tall = True
 
 class VideoLibraryTab(StaticTab):
-    type = 'videos'
-    id = 'videos'
+    type = u'videos'
+    id = u'videos'
     name = _('Video')
     icon_name = 'icon-video'
     media_type = u'video'
 
 class AudioLibraryTab(StaticTab):
-    type = 'music'
-    id = 'music'
+    type = u'music'
+    id = u'music'
     name = _('Music')
     icon_name = 'icon-audio'
     media_type = u'audio'
 
 class OthersTab(StaticTab):
-    type = 'others'
-    id = 'others'
+    type = u'others'
+    id = u'others'
     name = _('Other')
     icon_name = 'icon-other'
     media_type = u'other'
 
 class DownloadsTab(StaticTab):
-    type = 'downloading'
-    id = 'downloading'
+    type = u'downloading'
+    id = u'downloading'
     name = _('Downloading')
     icon_name = 'icon-downloading'
 
 class ConversionsTab(StaticTab):
-    type = 'conversions'
-    id = 'conversions'
+    type = u'conversions'
+    id = u'conversions'
     name = _('Conversions')
     icon_name = 'icon-conversions'

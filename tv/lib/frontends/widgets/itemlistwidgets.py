@@ -40,6 +40,8 @@ forward those signals on.  It's the job of ItemListController
 subclasses to handle the logic involved.
 """
 
+import logging
+
 from miro import app
 from miro import prefs
 from miro import displaytext
@@ -256,35 +258,17 @@ class ItemView(widgetset.TableView):
 
 class ListItemView(widgetset.TableView):
     """TableView that displays a list of items using the list view."""
-
-    columns_map = {
-        'state': [u'', style.StateCircleRenderer(), False],
-        'name': [_('Name'), style.NameRenderer()],
-        'artist': [_('Artist'), style.ArtistRenderer()],
-        'album': [_('Album'), style.AlbumRenderer()],
-        'track': [_('Track'), style.TrackRenderer()],
-        'year': [_('Year'), style.YearRenderer()],
-        'genre': [_('Genre'), style.GenreRenderer()],
-        'rating': [_('Rating'), style.RatingRenderer()],
-        'date': [_('Date'), style.DateRenderer()],
-        'length': [_('Length'), style.LengthRenderer()],
-        'status': [_('Status'), style.StatusRenderer()],
-        'size': [_('Size'), style.SizeRenderer()],
-        'feed-name': [_('Feed'), style.FeedNameRenderer()],
-        'eta': [_('ETA'), style.ETARenderer()],
-        'rate': [_('Speed'), style.DownloadRateRenderer()],
-        'date-added': [_('Date Added'), style.DateAddedRenderer()],
-        'last-played': [_('Last Played'), style.LastPlayedRenderer()],
+    COLUMN_RENDERERS = {
+        'state': style.StateCircleRenderer, 'name': style.NameRenderer,
+        'artist': style.ArtistRenderer, 'album': style.AlbumRenderer,
+        'track': style.TrackRenderer, 'year': style.YearRenderer,
+        'genre': style.GenreRenderer, 'rating': style.RatingRenderer,
+        'date': style.DateRenderer, 'length': style.LengthRenderer,
+        'status': style.StatusRenderer, 'size': style.SizeRenderer,
+        'feed-name': style.FeedNameRenderer, 'eta': style.ETARenderer,
+        'rate': style.DownloadRateRenderer, 'date-added': style.DateAddedRenderer,
+        'last-played': style.LastPlayedRenderer,
     }
-
-    WIDTH_WEIGHT = {
-        'name': 1,
-        'artist': 0.7,
-        'album': 0.7,
-        'feed-name': 0.5,
-        'status': 0.2,
-    }
-
     def __init__(self, item_list, columns):
         widgetset.TableView.__init__(self, item_list.model)
         self.column_state = columns
@@ -295,12 +279,11 @@ class ListItemView(widgetset.TableView):
         self._current_sort_column = None
         self._set_initial_widths = False
         for name, width in self.column_state:
-            data = ListItemView.columns_map[name]
-            resizable = True
-            if len(data) > 2:
-                resizable = data[2]
-            self._make_column(data[0], data[1],
-                name.encode('utf-8', 'replace'), resizable)
+            resizable = not name in widgetconst.NO_RESIZE_COLUMNS
+            pad = not name in widgetconst.NO_PAD_COLUMNS
+            header = widgetconst.COLUMN_LABELS[name]
+            renderer = ListItemView.COLUMN_RENDERERS[name]()
+            self._make_column(header, renderer, name, resizable, pad)
         self.set_show_headers(True)
         self.set_columns_draggable(True)
         self.set_column_spacing(12)
@@ -310,10 +293,9 @@ class ListItemView(widgetset.TableView):
         self.set_fixed_height(True)
         self.allow_multiple_select(True)
         self.html_stripper = util.HTMLStripper()
-        self.inverse_columns_map = {}
-        for name, values in self.columns_map.items():
-            title = values[0]
-            self.inverse_columns_map[title] = unicode(name)
+        self.column_by_label = {}
+        for name, label in widgetconst.COLUMN_LABELS.items():
+            self.column_by_label[label] = unicode(name)
 
     def _get_ui_column_state(self):
         widths = {}
@@ -322,8 +304,8 @@ class ListItemView(widgetset.TableView):
             width = column.get_width()
             widths[name] = width
         new_column_state = []
-        for title in self.get_columns():
-            name = self.inverse_columns_map[title]
+        for label in self.get_columns():
+            name = self.column_by_label[label]
             new_column_state.append((name, widths[name]));
         self.column_state = new_column_state
 
@@ -357,11 +339,14 @@ class ListItemView(widgetset.TableView):
                 return _("Newly Available")
         return None
 
-    def _make_column(self, header, renderer, column_name, resizable=True):
+    def _make_column(self, header, renderer, column_name, resizable=True,
+            pad=True):
         column = widgetset.TableColumn(header, renderer, info=0)
         column.set_min_width(renderer.min_width)
         if resizable:
             column.set_resizable(True)
+        if not pad:
+            column.set_no_pad()
         if hasattr(renderer, 'right_aligned') and renderer.right_aligned:
             column.set_right_aligned(True)
         column.connect_weak('clicked', self._on_column_clicked, column_name)
@@ -381,8 +366,8 @@ class ListItemView(widgetset.TableView):
             weights = {}
             for name, width in self.column_state:
                 weight = 0
-                if name in self.WIDTH_WEIGHT:
-                    weight = self.WIDTH_WEIGHT[name]
+                if name in widgetconst.COLUMN_WIDTH_WEIGHTS:
+                    weight = widgetconst.COLUMN_WIDTH_WEIGHTS[name]
                 weights[name] = weight
             total_weight = sum(weight for weight in weights.values()) or 1
             diff = 0 # prevent cumulative rounding errors
@@ -402,14 +387,15 @@ class ListItemView(widgetset.TableView):
         self.emit('sort-changed', column_name, ascending)
 
     def change_sort_indicator(self, column_name, ascending):
-        if not column_name in self._column_name_to_column:
-            # column not visible
-            column_name = 'name' # TODO: better handling of this case
-        new_sort_column = self._column_name_to_column[column_name]
+        new_sort_column = self._column_name_to_column.get(column_name)
         if not self._current_sort_column in (new_sort_column, None):
             self._current_sort_column.set_sort_indicator_visible(False)
-        new_sort_column.set_sort_indicator_visible(True)
-        new_sort_column.set_sort_order(ascending)
+        if new_sort_column is None:
+            logging.warn("ListItemView tried to sort by column %s, "
+                "which doesn't exist", repr(column_name))
+        else:
+            new_sort_column.set_sort_indicator_visible(True)
+            new_sort_column.set_sort_order(ascending)
         self._current_sort_column = new_sort_column
 
 class HideableSection(widgetutil.HideableWidget):
