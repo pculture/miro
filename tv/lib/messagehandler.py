@@ -477,7 +477,7 @@ class FolderItemsTracker(DatabaseSourceTrackerBase):
 
 class SharingItemTracker(SourceTrackerBase):
     type = u'sharing'
-    def __init__(self, tab):
+    def __init__(self, tab, search_text):
         self.tab = tab
         self.id = tab.id
         print 'NO ITEM SOURCE, CRASH ....'
@@ -488,7 +488,7 @@ class SharingItemTracker(SourceTrackerBase):
 
 class DeviceItemTracker(SourceTrackerBase):
     type = u'device'
-    def __init__(self, device):
+    def __init__(self, device, search_text):
         self.device = device
         self.id = device.id
         self.source = itemsource.DeviceItemSource(device)
