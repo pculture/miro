@@ -1426,7 +1426,7 @@ class DisplayStatesStore(object):
             'active_filters': ['view-all'],
             'sort_state': 'name',
             'columns': [(u'state', 20), (u'name', 130), (u'length', 60),
-                (u'feed-name', 70), (u'rating', 60), (u'size', 65)],
+                (u'feed-name', 70), (u'rating', 75), (u'size', 65)],
         },
         'music': {
             'is_list_view': True,
@@ -1435,7 +1435,7 @@ class DisplayStatesStore(object):
             'columns': [(u'state', 20), (u'name', 130), (u'artist', 110),
                 (u'album', 100), (u'track', 30), (u'feed-name', 70),
                 (u'length', 60), (u'genre', 65), (u'year', 40),
-                (u'rating', 60), (u'size', 65)],
+                (u'rating', 75), (u'size', 65)],
         },
         'others': {
             'is_list_view': True,
@@ -1481,7 +1481,7 @@ class DisplayStatesStore(object):
             'columns': [(u'state', 20), (u'name', 130), (u'artist', 110),
                 (u'album', 100), (u'track', 30), (u'feed-name', 70),
                 (u'length', 60), (u'genre', 65), (u'year', 40),
-                (u'rating', 60), (u'size', 65)],
+                (u'rating', 75), (u'size', 65)],
         },
         'search': {
             'is_list_view': True,
@@ -1490,7 +1490,7 @@ class DisplayStatesStore(object):
             'columns': [(u'state', 20), (u'name', 130), (u'artist', 110),
                 (u'album', 100), (u'track', 30), (u'feed-name', 70),
                 (u'length', 60), (u'genre', 65), (u'year', 40),
-                (u'rating', 60), (u'size', 65)],
+                (u'rating', 75), (u'size', 65)],
         },
         # TODO: special stuff for converting
     }
@@ -1504,8 +1504,6 @@ class DisplayStatesStore(object):
             self.displays[display.key] = display
 
     def _get_display(self, key):
-        key = (unicode(str(key[0]), 'utf-8', 'replace'),
-            unicode(str(key[1]), 'utf-8', 'replace'))
         if not key in self.displays:
             new_display = messages.DisplayInfo(key, None, None, None, None)
             self.displays[key] = new_display

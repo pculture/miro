@@ -4,7 +4,6 @@ from miro.plat.frontends.widgets.sparkleupdater import _get_host_version
 from miro.test.framework import MiroTestCase
 
 class SparkleUpdaterTest(MiroTestCase):
-
     def test_minimum_version_parsing(self):
         info = dict()
         self.assertEqual(_get_minimum_system_version(info), [0, 0, 0])

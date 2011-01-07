@@ -36,6 +36,30 @@ class SignalsTest(MiroTestCase):
         self.signaller.emit('signal1', 'foo')
         self.check_single_callback(self.signaller, 'foo')
 
+    def test_double_connect(self):
+        handle = self.signaller.connect('signal1', self.callback)
+        # double connect raises error
+        self.assertRaises(ValueError, self.signaller.connect, 'signal1',
+                self.callback)
+        # connecting to another function doesn't
+        self.signaller.connect('signal1', lambda: 0)
+        # disconnecting then re-connecting should be okay
+        self.signaller.disconnect(handle)
+        self.signaller.connect('signal1', self.callback)
+        # try for weak callbacks
+        callback_obj = WeakCallbackTester(self)
+        self.signaller.connect_weak('signal1', callback_obj.callback)
+        self.assertRaises(ValueError, self.signaller.connect_weak,
+                'signal1', callback_obj.callback)
+
+    def test_nested_call(self):
+        def callback(obj):
+            # emiting signal1 while handling signal 1 should raise an error
+            obj.emit('signal1')
+        self.signaller.connect('signal1', callback)
+        self.assertRaises(signals.NestedSignalError, self.signaller.emit,
+                'signal1')
+
     def test_disconnect(self):
         id = self.signaller.connect('signal1', self.callback)
         self.signaller.disconnect(id)

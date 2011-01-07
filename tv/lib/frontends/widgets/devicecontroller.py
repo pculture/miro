@@ -649,7 +649,7 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         self.device = device
         self.id = device.id
         tab_type = device.tab_type
-        self.type = 'device-%s' % tab_type
+        self.type = u'device-%s' % tab_type
         self.image_filename = 'icon-%s_large.png' % tab_type
         self.title = u'%s on %s' % (device.name, device.info.name)
         itemlistcontroller.AudioVideoItemsController.__init__(self)
@@ -680,7 +680,8 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
                 self.handle_item_list)
         app.info_updater.item_changed_callbacks.add('device', self.device.id,
                 self.handle_items_changed)
-        messages.TrackItems('device', self.device).send_to_backend()
+        messages.TrackItems('device', self.device,
+                            self._search_text).send_to_backend()
 
     def stop_tracking(self):
         app.info_updater.item_list_callbacks.remove('device', self.device.id,
@@ -708,3 +709,10 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         if self.device.id != device.id:
             return
         self.device = device
+
+    def set_search(self, search_text):
+        """Set the search for all ItemViews managed by this controller.
+        """
+        self._search_text = search_text
+        messages.SetTrackItemsSearch('device', self.device,
+                search_text).send_to_backend()

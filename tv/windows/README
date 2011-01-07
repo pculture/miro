@@ -14,11 +14,30 @@ This is the Gtk-Windows port of Miro.
 Instructions and build requirements are documented at
 https://develop.participatoryculture.org/index.php/WindowsBuildDocs
 
-The shell scripts are written for CYGWIN, but otherwise CYGWIN is not reuired
-to build Miro.
+All shell scripts are written for cygwin, but otherwise cygwin is not reuired
+to build Miro.  Having said that, we exclusively use cygwin and don't
+know whether it works for other bash environments.
 
 If you have problems, visit us on ``#miro-hackers`` on
 ``irc.freenode.net``.
+
+
+Setting up a build environment
+==============================
+
+Follow the instructions at:
+https://develop.participatoryculture.org/index.php/WindowsBuildDocs
+
+That sets up Visual Studio and Python.
+
+.. Note::
+
+   We don't support mingw or the gcc compiler for Miro on Windows.
+   We only support Visual Studio 2008 Express with Python from 
+   python.org.
+
+   We would love to get help switching to mingw.  If you're interested
+   in helping out, please let us know.
 
 
 Build and run
@@ -28,16 +47,16 @@ To compile and run Miro in the current directory, do::
 
    ./run.sh
 
-This does the following two steps:
+This does the following steps:
 
 1. ``setup_binarykit.sh``
 2. ``python setup.py bdist_miro``
 3. ``dist\Miro.exe``
 
-If you have the required dependencies it should build Miro and run it.
+If you have the required dependencies, it should build Miro and run it.
 
 See
-https://develop.participatoryculture.org/projects/dtv/wiki/WindowsBuildDocs
+https://develop.participatoryculture.org/index.php/WindowsBuildDocs
 for more information on building and executing the Gtk-Windows
 platform code.  The information at this url is considered the
 authoritative source.

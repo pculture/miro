@@ -265,7 +265,7 @@ class ListItemView(widgetset.TableView):
         'track': [_('Track'), style.TrackRenderer()],
         'year': [_('Year'), style.YearRenderer()],
         'genre': [_('Genre'), style.GenreRenderer()],
-        'rating': [_('Rating'), style.RatingRenderer()],
+        'rating': [_('Rating'), style.RatingRenderer(), False, False],
         'date': [_('Date'), style.DateRenderer()],
         'length': [_('Length'), style.LengthRenderer()],
         'status': [_('Status'), style.StatusRenderer()],
@@ -299,8 +299,11 @@ class ListItemView(widgetset.TableView):
             resizable = True
             if len(data) > 2:
                 resizable = data[2]
-            self._make_column(data[0], data[1],
-                name.encode('utf-8', 'replace'), resizable)
+            pad = True
+            if len(data) > 3:
+                pad = data[3]
+            self._make_column(data[0], data[1], name.encode('utf-8', 'replace'),
+                resizable, pad)
         self.set_show_headers(True)
         self.set_columns_draggable(True)
         self.set_column_spacing(12)
@@ -357,11 +360,14 @@ class ListItemView(widgetset.TableView):
                 return _("Newly Available")
         return None
 
-    def _make_column(self, header, renderer, column_name, resizable=True):
+    def _make_column(self, header, renderer, column_name, resizable=True,
+            pad=True):
         column = widgetset.TableColumn(header, renderer, info=0)
         column.set_min_width(renderer.min_width)
         if resizable:
             column.set_resizable(True)
+        if not pad:
+            column.set_no_pad()
         if hasattr(renderer, 'right_aligned') and renderer.right_aligned:
             column.set_right_aligned(True)
         column.connect_weak('clicked', self._on_column_clicked, column_name)

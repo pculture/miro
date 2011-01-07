@@ -279,8 +279,6 @@ def finish_startup(obj, thread):
     app.item_info_cache = iteminfocache.ItemInfoCache()
     app.item_info_cache.load()
 
-    app.item_searcher = search.ItemSearcher()
-
     logging.info("Loading video converters...")
     conversions.conversion_manager.startup()
     app.device_manager = devices.DeviceManager()
@@ -382,8 +380,6 @@ def on_frontend_started():
     # Delay running high CPU/IO operations for a bit
     eventloop.add_timeout(5, downloader.startup_downloader,
             "start downloader daemon")
-    eventloop.add_timeout(10, app.item_searcher.initialize,
-            "initialize search index")
     eventloop.add_timeout(30, feed.start_updates, "start feed updates")
     eventloop.add_timeout(60, item.update_incomplete_movie_data,
             "update movie data")

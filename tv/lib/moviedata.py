@@ -159,7 +159,7 @@ class Image(object):
         mime = apic.mime.lower()
         if not '/' in mime:
             # some files arbitrarily drop the 'image/' component
-            mime = "image/{}".format(mime)
+            mime = "image/{0}".format(mime)
         if mime in Image.MIME_EXTENSION_MAP:
             self.extension = Image.MIME_EXTENSION_MAP[mime]
         else:
@@ -379,7 +379,7 @@ class MovieDataUpdater(signals.SignalEmitter):
             # no attached image is definitively cover art. use the first one.
             cover_image = images[0]
 
-        cover_filename = "{}.{}.{}".format(os.path.basename(filename),
+        cover_filename = "{0}.{1}.{2}".format(os.path.basename(filename),
                          util.random_string(5), image.extension)
         cover_path = os.path.join(image_directory('cover-art'), cover_filename)
         try:
@@ -387,7 +387,7 @@ class MovieDataUpdater(signals.SignalEmitter):
             file_handle.write(image.data) 
         except IOError:
             logging.warn(
-                "Couldn't write cover art file: {}".format(cover_path))
+                "Couldn't write cover art file: {0}".format(cover_path))
             cover_path = None
         return cover_path
     
