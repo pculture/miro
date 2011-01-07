@@ -378,14 +378,12 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         dl_info = self.download_info
         layout_manager.set_font(0.80, bold=True)
         layout_manager.set_text_color((1.0, 1.0, 1.0))
-        if dl_info.state == 'paused' or dl_info.rate == 0:
-            if dl_info.state == 'paused':
-                return layout_manager.textbox(_('paused'))
-            else:
-                return layout_manager.textbox(dl_info.startup_activity)
+        if dl_info.state == 'paused':
+            return layout_manager.textbox(_('paused'))
+        if dl_info.rate == 0 and dl_info.downloaded_size <= 0:
+            return layout_manager.textbox(dl_info.startup_activity)
         parts = []
-        if dl_info.rate > 0:
-            parts.append(displaytext.download_rate(dl_info.rate))
+        parts.append(displaytext.download_rate(dl_info.rate))
         if self.data.size > 0 and dl_info.rate > 0:
             parts.append(displaytext.time_string(dl_info.eta))
 
@@ -1020,7 +1018,7 @@ class ListViewRenderer(widgetset.CustomCellRenderer):
 
 class NameRenderer(ListViewRenderer):
     button_font_size = 0.77
-    
+
     def __init__(self):
         ListViewRenderer.__init__(self)
         self.button = None
@@ -1352,7 +1350,7 @@ class ProgressBarDrawer(cellpack.Packer):
         context.set_color(self.color_set.PROGRESS_BORDER_BOTTOM)
         context.fill()
         self._non_progress_rectangle(context)
-        gradient = widgetset.Gradient(self.x + self.progress_width, self.y, 
+        gradient = widgetset.Gradient(self.x + self.progress_width, self.y,
                                       self.x + self.progress_width, self.y + self.height)
         gradient.set_start_color(self.color_set.BORDER_GRADIENT_TOP)
         gradient.set_end_color(self.color_set.BORDER_GRADIENT_BOTTOM)

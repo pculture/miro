@@ -945,15 +945,25 @@ class BTDownloader(BGDownloader):
                         float(status.download_payload_rate))
         except ZeroDivisionError:
             self.eta = 0
+
         if status.state == lt.torrent_status.states.queued_for_checking:
-            self.activity = "waiting to check existing files"
+            self.activity = _("waiting to check existing files")
         elif status.state == lt.torrent_status.states.checking_files:
-            self.activity = "checking existing files"
+            self.activity = _("checking existing files")
         elif status.state == lt.torrent_status.states.allocating:
-            self.activity = "allocating disk space"
+            self.activity = _("allocating disk space")
         else:
             self.activity = None
+
         self.currentSize = status.total_wanted_done
+
+        # logging.debug("update_status: (activity: %s) (rate: %s) "
+        #               "(s: %s l: %s) (total_wanted_done: %s)",
+        #               self.activity,
+        #               self.rate,
+        #               self.seeders,
+        #               self.leechers,
+        #               self.currentSize)
         if ((self.state == "downloading"
              and status.state == lt.torrent_status.states.seeding)):
             self.move_to_movies_directory()
@@ -1140,11 +1150,12 @@ class BTDownloader(BGDownloader):
                 try:
                     metainfoFile = open(path, 'rb')
                 except IOError:
-                    self.handle_error(_("Torrent file deleted"),
-                                     _("The torrent file for this item was deleted "
-                                       "outside of %(appname)s.",
-                                       {"appname": app.config.get(prefs.SHORT_APP_NAME)}
-                                       ))
+                    self.handle_error(
+                        _("Torrent file deleted"),
+                        _("The torrent file for this item was deleted "
+                          "outside of %(appname)s.",
+                          {"appname": app.config.get(prefs.SHORT_APP_NAME)}
+                          ))
 
                     return
                 try:
