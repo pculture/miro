@@ -752,9 +752,6 @@ class TableView(Widget):
                 self._selected_before_change.append(
                     self.model.iter_for_row(self.tableview, i))
                 i = index_set.indexGreaterThanIndex_(i)
-            #self._selected_before_change = [
-            #        self.model.iter_for_row(self.tableview, i)
-            #        for i in all_objects]
             self.tableview.deselectAll_(nil)
 
     def update_selection_after_change(self):
