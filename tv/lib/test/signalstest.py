@@ -60,6 +60,18 @@ class SignalsTest(MiroTestCase):
         self.assertRaises(signals.NestedSignalError, self.signaller.emit,
                 'signal1')
 
+    def test_nested_call_different_objects(self):
+        # emiting the same signal on a different object should be okay
+        signaller2 = TestSignaller()
+        self.signaller.connect('signal1',
+                lambda obj: signaller2.emit('signal1'))
+        self.signaller.emit('signal1')
+        # but a cycle should raise an error
+        signaller2.connect('signal1',
+                lambda obj: self.signaller.emit('signal1'))
+        self.assertRaises(signals.NestedSignalError, self.signaller.emit,
+                'signal1')
+
     def test_disconnect(self):
         id = self.signaller.connect('signal1', self.callback)
         self.signaller.disconnect(id)
