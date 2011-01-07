@@ -31,7 +31,7 @@
 Holds functions that return import directories and other platform-oriented
 functions.
 
-.. note::
+.. Note::
 
    Some of these functions are probably not absolutely correct in the
    face of funny characters in the input paths. In particular,
