@@ -71,6 +71,9 @@ class Callback:
     def invoke(self, obj, args):
         return self.func(obj, *(args + self.extra_args))
 
+    def compare_function(self, func):
+        return self.func == func
+
     def is_dead(self):
         return False
 
@@ -78,6 +81,9 @@ class WeakCallback:
     def __init__(self, method, extra_args):
         self.ref = WeakMethodReference(method)
         self.extra_args = extra_args
+
+    def compare_function(self, func):
+        return self.ref() == func
 
     def invoke(self, obj, args):
         callback = self.ref()
@@ -112,10 +118,20 @@ class SignalEmitter(object):
         except KeyError:
             raise KeyError("Signal: %s doesn't exist" % signal_name)
 
+    def _check_already_connected(self, name, func):
+        for callback in self.get_callbacks(name).values():
+            if callback.compare_function(func):
+                raise ValueError("signal %s already connected to %s" %
+                        (name, func))
+
     def connect(self, name, func, *extra_args):
         """Connect a callback to a signal.  Returns an callback handle that
         can be passed into disconnect().
+
+        If func is already connected to the signal, then a ValueError will be
+        raised.
         """
+        self._check_already_connected(name, func)
         id_ = self.id_generator.next()
         callbacks = self.get_callbacks(name)
         callbacks[id_] = Callback(func, extra_args)
@@ -125,7 +141,11 @@ class SignalEmitter(object):
         """Connect a callback weakly.  Callback must be a method of some
         object.  We create a weak reference to the method, so that the
         connection doesn't keep the object from being garbage collected.
+
+        If method is already connected to the signal, then a ValueError will be
+        raised.
         """
+        self._check_already_connected(name, method)
         if not hasattr(method, 'im_self'):
             raise TypeError("connect_weak must be called with object methods")
         id_ = self.id_generator.next()
