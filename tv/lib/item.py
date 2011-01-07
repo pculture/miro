@@ -2127,11 +2127,13 @@ filename was %s""", stringify(self.filename))
 # temporarily disable - I'll remove it later on
 """
 class SharingItem(ItemBase):
-    """
+"""
+"""
     An item which lives on a remote share.  There's some scope for sharing
     with the DeviceItem but for now it's subclassed from ItemBase (like
     DeviceItem is).
-    """
+"""
+"""
     def __init__(self, **kwargs):
         for required in ('video_path', 'id', 'file_type', 'host', 'port'):
             if required not in kwargs:
