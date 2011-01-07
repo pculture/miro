@@ -1430,7 +1430,7 @@ class DisplayStatesStore(object):
             if not isinstance(key[1], int):
                 logging.warn("display id %s should be a unicode or int", repr(key[1]))
             key = (key[0], unicode(key[1]))
-        if not isinstance(key[1], unicode):
+        if not isinstance(key[0], unicode):
             logging.warn("display type %s should be a unicode", repr(key[0]))
             key = (unicode(key[0]), key[1])
         if not key in self.displays:
