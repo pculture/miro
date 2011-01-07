@@ -474,7 +474,7 @@ class FolderItemsTracker(DatabaseSourceTrackerBase):
 
 class DeviceItemTracker(SourceTrackerBase):
     type = u'device'
-    def __init__(self, device):
+    def __init__(self, device, search_text):
         self.device = device
         self.id = device.id
         self.source = itemsource.DeviceItemSource(device)
