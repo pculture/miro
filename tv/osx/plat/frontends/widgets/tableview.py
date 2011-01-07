@@ -596,7 +596,11 @@ class TableColumn(signals.SignalEmitter):
         self.renderer = renderer
         self.sort_order_ascending = True
         self.sort_indicator_visible = False
+        self.can_pad = True
         renderer.setDataCell_(self._column)
+
+    def set_no_pad(self):
+        self.can_pad = False
 
     def set_right_aligned(self, right_aligned):
         if right_aligned:

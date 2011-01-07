@@ -1134,7 +1134,7 @@ class RatingRenderer(widgetset.CustomCellRenderer):
         widgetset.CustomCellRenderer.__init__(self)
         self.icon = {}
         for state in RatingRenderer.ICON_STATES:
-            path = resources.path('images/star-{}.png'.format(state))
+            path = resources.path('images/star-%s.png' % state)
             self.icon[state] = imagepool.get_surface(path)
         self.icon_width, self.height = self.icon['yes'].get_size()
         self.min_width = self.width = self.icon_width * 5 + 5
