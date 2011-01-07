@@ -974,18 +974,7 @@ class TableView(Widget):
         else:
             return
         if size_changed:
-            # we can't call invalidate_size_request right away because of the
-            # (common) situation where multiple TableViews are connected to
-            # one model.  In that case, we will change that model, then call
-            # model_changed() on the item views in order
-            #
-            # The problem is when the first TableViews calls
-            # invalidate_size_request() and that is propagated up the widget
-            # hierarchy, potentially causing the other TableViews to redraw
-            # their contents.  But they haven't seen the model_changed()
-            # method yet, so we will get an exception when trying to redraw
-            # them.
-            AppHelper.callAfter(self.invalidate_size_request)
+            self.invalidate_size_request()
         self.height_changed = self.reload_needed = False
         self.iters_to_update = []
 

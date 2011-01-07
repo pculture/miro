@@ -355,10 +355,8 @@ class ListItemView(widgetset.TableView):
 
     def do_size_allocated(self, width, height):
         if not self._set_initial_widths:
-            width -= 20 # allow some room for a scrollbar
-            # Set this immediately, because changing the widths of
-            # widgets below can invoke another size-allocate signal
             self._set_initial_widths = True
+            width -= 20 # allow some room for a scrollbar
 
             available_width = self.width_for_columns(width)
             min_width = sum(width for name, width in self.column_state)

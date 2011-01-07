@@ -31,6 +31,7 @@
 
 from AppKit import *
 from Foundation import *
+from PyObjCTools import AppHelper
 from objc import YES, NO, nil
 
 from miro import signals
@@ -58,6 +59,7 @@ class Widget(signals.SignalEmitter):
         self.parent_is_scroller = False
         self.manual_size_request = None
         self.cached_size_request = None
+        self._will_invalidate_size_request = False
         self._disabled = False
 
     def set_size_request(self, width, height):
@@ -82,6 +84,15 @@ class Widget(signals.SignalEmitter):
             return self.cached_size_request
 
     def invalidate_size_request(self):
+        # don't figure out the size immediately, this could lead to weirdness
+        # and could be inefficent if we do something else to invalidate the
+        # size request in the current event.
+        if not self._will_invalidate_size_request:
+            AppHelper.callAfter(self._invalidate_size_request)
+            self._will_invalidate_size_request = True
+
+    def _invalidate_size_request(self):
+        self._will_invalidate_size_request = False
         if hasattr(self, 'view') and self.view is not None:
             scroll_view = self.view.enclosingScrollView()
             if scroll_view is not None:
