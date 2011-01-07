@@ -783,22 +783,35 @@ def _on_config_change(obj, key, value):
     if key == prefs.UPSTREAM_TORRENT_LIMIT.key:
         kill_uploaders()
 
-def limit_uploaders():
-    tracker = RemoteDownloader.auto_uploader_view().make_tracker()
-    tracker.connect('added', kill_uploaders)
-    app.backend_config_watcher.connect("changed", _on_config_change)
-    kill_uploaders()
 
 class DownloadDaemonStarter(object):
     def __init__(self):
         RemoteDownloader.initialize_daemon()
         self.downloads_at_startup = list(RemoteDownloader.make_view())
         self.started = False
+        self._config_callback_handle = None
+        self._download_tracker = None
+
+    def limit_uploaders(self):
+        view = RemoteDownloader.auto_uploader_view()
+        self._download_tracker = view.make_tracker()
+        self._download_tracker.connect('added', kill_uploaders)
+        self._config_callback_handle = app.backend_config_watcher.connect(
+                "changed", _on_config_change)
+        kill_uploaders()
+
+    def disconnect_signals(self):
+        if self._download_tracker is not None:
+            self._download_tracker.unlink()
+            self._download_tracker = None
+        if self._config_callback_handle is not None:
+            app.backend_config_watcher.disconnect(self._config_callback_handle)
+            self._config_callback_handle = None
 
     def startup(self):
         cleanup_incomplete_downloads()
         RemoteDownloader.dldaemon.start_downloader_daemon()
-        limit_uploaders()
+        self.limit_uploaders()
         self.restart_downloads()
         self.started = True
 
@@ -807,6 +820,7 @@ class DownloadDaemonStarter(object):
             downloader.restart_on_startup_if_needed()
 
     def shutdown(self, callback):
+        self.disconnect_signals()
         self.shutdown_callback = callback
         if not self.started:
             self._on_shutdown()
