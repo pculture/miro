@@ -13,14 +13,6 @@ MIROPYTHONPATH = $(SITE32PATH):$(SITE64PATH)
 
 .PHONY: build run test pylint
 
-clean:
-	-rm -rf build dist
-	-rm -rf miro.1.gz miro.real.1.gz
-	-rm miro
-	-rm plat/xlibhelper.c 
-	-rm ../lib/frontends/widgets/gtk/pygtkhacks.c
-	-rm -rf tmp
-
 build:
 	$(python) setup.py install --root=./dist --prefix=$(prefix)
 
