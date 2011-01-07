@@ -35,6 +35,8 @@ from objc import YES, NO, nil
 from PyObjCTools import AppHelper
 
 from miro import signals
+from miro import app
+from miro import prefs
 from miro.frontends.widgets import widgetconst
 from miro.plat.frontends.widgets import osxmenus
 from miro.plat.frontends.widgets import wrappermap
@@ -449,7 +451,11 @@ class DirectorySelectDialog(FileDialogBase):
 
 class AboutDialog(DialogBase):
     def run(self):
-        NSApplication.sharedApplication().orderFrontStandardAboutPanel_(nil)
+        optionsDictionary = dict()
+        revision = app.config.get(prefs.APP_REVISION_NUM)
+        if revision:
+            optionsDictionary['Version'] = revision
+        NSApplication.sharedApplication().orderFrontStandardAboutPanelWithOptions_(optionsDictionary)
     def destroy(self):
         pass
 
