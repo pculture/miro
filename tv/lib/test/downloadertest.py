@@ -14,14 +14,16 @@ class DownloaderTest(EventLoopTest):
     def setup_state(self):
         self.url = u'http://pculture.org/feeds_test/unittest-feed-1.rss'
         self.feed = models.Feed(self.url)
-        downloader.init_controller()
-        downloader.startup_downloader()
         self.log_file = os.path.join(self.tempdir, 'miro-download-unit-tests')
         app.config.set(prefs.DOWNLOADER_LOG_PATHNAME, self.log_file)
         self.movies_dir = os.path.join(self.tempdir, 'movies-dir')
         if not os.path.exists(self.movies_dir):
             os.makedirs(self.movies_dir)
         app.config.set(prefs.MOVIES_DIRECTORY, self.movies_dir)
+
+        # initialize and start the downloader after fixing the MOVIES_DIRECTORY
+        downloader.init_controller()
+        downloader.startup_downloader()
 
     def tearDown(self):
         downloader.shutdown_downloader(

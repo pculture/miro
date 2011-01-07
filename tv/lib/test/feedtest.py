@@ -16,8 +16,21 @@ from miro.feed import validate_feed_url, normalize_feed_url, Feed
 
 from miro.test.framework import MiroTestCase, EventLoopTest
 
-class FakeDownloader:
-    pass
+class FakeDownloader(object):
+    def __init__(self):
+        self.current_size = 0
+        self.rate = 0
+        self.state = 'downloading'
+
+    def get_current_size(self):
+        return self.current_size
+
+    def get_rate(self):
+        return self.rate
+
+    def get_state(self):
+        return self.state
+
 
 class AcceptScrapeTestDelegate:
     def __init__(self):
@@ -469,7 +482,7 @@ class FeedParserAttributesTestCase(FeedTestCase):
 
     </channel>
 </rss>
-""" % {'thumburl': resources.url("testdata/democracy-now-unicode-bug.xml")})
+""" % {'thumburl': "http://example.com/thumbnail.jpg"})
 
 
     def test_attributes(self):

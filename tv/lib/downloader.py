@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2010 Participatory Culture Foundation
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -385,9 +386,9 @@ class RemoteDownloader(DDBObject):
         parent = os.path.join(fileutil.expand_filename(filename),
                               os.path.pardir)
         parent = os.path.normpath(parent)
-        moviesDir = fileutil.expand_filename(app.config.get(prefs.MOVIES_DIRECTORY))
-        if ((os.path.exists(parent) and os.path.exists(moviesDir)
-             and not samefile(parent, moviesDir)
+        movies_dir = fileutil.expand_filename(app.config.get(prefs.MOVIES_DIRECTORY))
+        if ((os.path.exists(parent) and os.path.exists(movies_dir)
+             and not samefile(parent, movies_dir)
              and len(os.listdir(parent)) == 0)):
             try:
                 os.rmdir(parent)
@@ -756,7 +757,12 @@ def cleanup_incomplete_downloads():
                     filename = os.path.join(download_dir, filename)
                 files_in_use.add(filename)
 
-    for f in fileutil.listdir(download_dir):
+    try:
+        entries = fileutil.listdir(download_dir)
+    except OSError:
+        entries = []
+
+    for f in entries:
         f = os.path.join(download_dir, f)
         if f not in files_in_use:
             try:

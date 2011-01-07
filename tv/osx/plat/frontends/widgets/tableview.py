@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2010 Participatory Culture Foundation
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -604,7 +605,11 @@ class TableColumn(signals.SignalEmitter):
         self.renderer = renderer
         self.sort_order_ascending = True
         self.sort_indicator_visible = False
+        self.can_pad = True
         renderer.setDataCell_(self._column)
+
+    def set_no_pad(self):
+        self.can_pad = False
 
     def set_right_aligned(self, right_aligned):
         if right_aligned:
@@ -753,9 +758,14 @@ class TableView(Widget):
     def remember_selection(self):
         if self._selected_before_change is None:
             index_set = self.tableview.selectedRowIndexes()
-            self._selected_before_change = [
-                    self.model.iter_for_row(self.tableview, i)
-                    for i in index_set.allObjects()]
+            i = index_set.firstIndex()
+            self._selected_before_change = []
+            while True:
+                if i == NSNotFound:
+                    break
+                self._selected_before_change.append(
+                    self.model.iter_for_row(self.tableview, i))
+                i = index_set.indexGreaterThanIndex_(i)
             self.tableview.deselectAll_(nil)
 
     def update_selection_after_change(self):

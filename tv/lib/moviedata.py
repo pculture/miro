@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2010 Participatory Culture Foundation
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -67,12 +68,13 @@ TAG_MAP = {
     'track': ('trck', 'tracknumber'),
     'year': ('tdrc', 'tyer', 'date', 'year'),
     'genre': ('genre', 'tcon', 'providerstyle', u'\uFFFDgen'),
+    'cover-art': ('\uFFFDart', 'apic', 'covr'),
 }
+NOFLATTEN_TAGS = ('cover-art',)
 
 
-def thumbnail_directory():
-    dir_ = os.path.join(app.config.get(prefs.ICON_CACHE_DIRECTORY),
-                        "extracted")
+def image_directory(subdir):
+    dir_ = os.path.join(app.config.get(prefs.ICON_CACHE_DIRECTORY), subdir)
     try:
         fileutil.makedirs(dir_)
     except (KeyboardInterrupt, SystemExit):
@@ -101,7 +103,7 @@ class MovieDataInfo(object):
         # different directories.
         thumbnail_filename = '%s.%s.png' % (os.path.basename(self.video_path),
                                             util.random_string(5))
-        self.thumbnail_path = os.path.join(thumbnail_directory(),
+        self.thumbnail_path = os.path.join(image_directory('extracted'),
                                            thumbnail_filename)
         if hasattr(app, 'in_unit_tests'):
             self._program_info = None
@@ -120,6 +122,61 @@ class MovieDataInfo(object):
         self._program_info = (command_line, env)
 
     program_info = property(_get_program_info)
+
+class UnknownImageObjectException(Exception):
+    """Image uses this when mutagen gives us something strange.
+    """
+    pass
+
+class Image(object):
+    """Utility class to represent a cover art image.
+    Normalizes mutagen's various image objects into one class
+    so that we can use them all the same way.
+    """
+    JPEG_EXTENSION = 'jpg'
+    PNG_EXTENSION = 'png'
+    # keep images of unknown formats; maybe we can use them later:
+    UNKNOWN_EXTENSION = 'bin'
+    MIME_EXTENSION_MAP = {
+        'image/jpeg': JPEG_EXTENSION,
+        'image/jpg': JPEG_EXTENSION,
+        'image/png': PNG_EXTENSION,
+    }
+    def __init__(self, image_object):
+        self.is_cover_art = True
+        self.extension = Image.UNKNOWN_EXTENSION
+        self.data = None
+        if isinstance(image_object, mutagen.id3.APIC):
+            self._parse_APIC(image_object)
+        elif isinstance(image_object, mutagen.mp4.MP4Cover):
+            self._parse_MP4(image_object)
+        else:
+            raise UnknownImageObjectException()
+
+    def _parse_APIC(self, apic):
+        COVER_ART_TYPE = 3
+        if apic.type is not COVER_ART_TYPE:
+            self.is_cover_art = False
+        mime = apic.mime.lower()
+        if not '/' in mime:
+            # some files arbitrarily drop the 'image/' component
+            mime = "image/{0}".format(mime)
+        if mime in Image.MIME_EXTENSION_MAP:
+            self.extension = Image.MIME_EXTENSION_MAP[mime]
+        else:
+            logging.warn("Unknown image mime type: %s", mime)
+        self.data = apic.data
+
+    def _parse_MP4(self, mp4):
+        MP4_EXTENSION_MAP = {
+            mutagen.mp4.MP4Cover.FORMAT_JPEG: Image.JPEG_EXTENSION,
+            mutagen.mp4.MP4Cover.FORMAT_PNG: Image.PNG_EXTENSION,
+        }
+        if mp4.imageformat in MP4_EXTENSION_MAP:
+            self.extension = MP4_EXTENSION_MAP[mp4.imageformat]
+        else:
+            logging.warn("Unknown MP4 image type code: %s", mp4.imageformat)
+        self.data = str(mp4)
 
 class MovieDataUpdater(signals.SignalEmitter):
     def __init__ (self):
@@ -149,14 +206,16 @@ class MovieDataUpdater(signals.SignalEmitter):
                 break
             duration = -1
             metadata = {}
-            (mime_mediatype, duration, metadata) = self.read_metadata(mdi.item)
+            cover_art = FilenameType("")
+            file_info = self.read_metadata(mdi.item)
+            (mime_mediatype, duration, metadata, cover_art) = file_info
             if duration > -1 and mime_mediatype is not 'video':
                 mediatype = 'audio'
                 screenshot = mdi.item.screenshot or FilenameType("")
                 logging.debug("moviedata: mutagen %s %s", duration, mediatype)
 
                 self.update_finished(mdi.item, duration, screenshot, mediatype,
-                        metadata)
+                                     metadata, cover_art)
             else:
                 try:
                     screenshot_worked = False
@@ -187,13 +246,14 @@ class MovieDataUpdater(signals.SignalEmitter):
                                   mediatype)
 
                     self.update_finished(mdi.item, duration, screenshot,
-                                         mediatype, metadata)
+                                         mediatype, metadata, cover_art)
                 except StandardError:
                     if self.in_shutdown:
                         break
                     signals.system.failed_exn(
                         "When running external movie data program")
-                    self.update_finished(mdi.item, -1, None, None, metadata)
+                    self.update_finished(mdi.item, -1, None, None, metadata,
+                                         cover_art)
             self.emit('end-loop')
 
     def run_movie_data_program(self, command_line, env):
@@ -227,7 +287,7 @@ class MovieDataUpdater(signals.SignalEmitter):
                 return category
         return None
 
-    def _sanitize_tags(self, tags):
+    def _sanitize_keys(self, tags):
         """Strip useless components and strange characters from tag names
         """
         tags_cleaned = {}
@@ -240,6 +300,14 @@ class MovieDataUpdater(signals.SignalEmitter):
                 key = key.split('WM/')[1]
             key = key.decode('utf-8', 'replace')
             key = key.lower()
+            tags_cleaned[key] = value
+        return tags_cleaned
+
+    def _sanitize_values(self, tags):
+        """Flatten values into simple unicode strings
+        """
+        tags_cleaned = {}
+        for key, value in tags.items():
             while isinstance(value, list):
                 if not value:
                     value = None
@@ -288,10 +356,46 @@ class MovieDataUpdater(signals.SignalEmitter):
                         num -= 100
                     data[u'track'] = unicode(num)
         return data
-     
+
+    def _make_cover_art_file(self, filename, objects):
+        if not isinstance(objects, list):
+            objects = [objects]
+
+        images = []
+        for image_object in objects:
+            try:
+               image = Image(image_object)
+            except UnknownImageObjectException:
+               logging.debug("Couldn't parse image object of type %s",
+                             type(image_object))
+            else:
+               images.append(image)
+
+        cover_image = None
+        for candidate in images:
+            if candidate.is_cover_art:
+                cover_image = candidate
+                break
+        if cover_image is None:
+            # no attached image is definitively cover art. use the first one.
+            cover_image = images[0]
+
+        cover_filename = "{0}.{1}.{2}".format(os.path.basename(filename),
+                         util.random_string(5), image.extension)
+        cover_path = os.path.join(image_directory('cover-art'), cover_filename)
+        try:
+            file_handle = fileutil.open_file(cover_path, 'wb')
+            file_handle.write(image.data) 
+        except IOError:
+            logging.warn(
+                "Couldn't write cover art file: {0}".format(cover_path))
+            cover_path = None
+        return cover_path
+    
     def read_metadata(self, item):
         mediatype = None
         duration = -1
+        cover_art = None
         tags = {}
         info = {}
         data = {}
@@ -300,7 +404,7 @@ class MovieDataUpdater(signals.SignalEmitter):
             muta = mutagen.File(item.get_filename())
             meta = muta.__dict__
         except (AttributeError, IOError):
-            return (mediatype, duration, data)
+            return (mediatype, duration, data, cover_art)
 
         if os.path.splitext(
             item.get_filename())[1].lower() in VIDEO_EXTENSIONS:
@@ -326,17 +430,27 @@ class MovieDataUpdater(signals.SignalEmitter):
             except (KeyError, AttributeError, TypeError, IndexError):
                 pass
 
-        tags = self._sanitize_tags(tags)
+        tags = self._sanitize_keys(tags)
+        nonflattened_tags = tags.copy()
+        tags = self._sanitize_values(tags)
 
         for tag, sources in TAG_MAP.items():
             for source in sources:
                 if source in tags:
-                    data[unicode(tag)] = tags[source]
+                    if tag in NOFLATTEN_TAGS:
+                        data[unicode(tag)] = nonflattened_tags[source]
+                    else:
+                        data[unicode(tag)] = tags[source]
                     break
 
         data = self._special_mappings(data, item)
 
-        return (mediatype, duration, data)
+        if 'cover-art' in data:
+            image_data = data['cover-art']
+            cover_art = self._make_cover_art_file(item.get_filename(), image_data)
+            del data['cover-art']
+
+        return (mediatype, duration, data, cover_art)
 
     def kill_process(self, pid):
         try:
@@ -364,11 +478,13 @@ class MovieDataUpdater(signals.SignalEmitter):
             return None
 
     @as_idle
-    def update_finished(self, item, duration, screenshot, mediatype, metadata):
+    def update_finished(self, item, duration, screenshot, mediatype, metadata,
+                        cover_art):
         if item.id_exists():
             item.duration = duration
             item.screenshot = screenshot
             item.metadata = metadata
+            item.cover_art = cover_art
             item.updating_movie_info = False
             if mediatype is not None:
                 item.file_type = unicode(mediatype)

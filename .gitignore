@@ -11,6 +11,7 @@ tv/linux/plat/frontends/widgets/pluginsdir.cpp
 tv/linux/plat/frontends/widgets/mozprompt.c
 tv/linux/plat/frontends/widgets/mozprompt.h
 tv/linux/plat/frontends/widgets/httpobserver.c
+tv/windows/miro-binary-kit-win-*
 tv/windows/build
 tv/windows/dist
 tv/windows/plat/frontends/widgets/XULRunnerBrowser/xulrunnerbrowser.cpp

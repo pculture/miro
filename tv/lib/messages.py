@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2010 Participatory Culture Foundation
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -39,6 +40,7 @@ This module defines the messages that are passed between the two
 threads.
 """
 
+import datetime
 import logging
 import re
 
@@ -429,6 +431,14 @@ class MarkItemWatched(BackendMessage):
 class MarkItemUnwatched(BackendMessage):
     """Mark an item as unwatched.
     """
+    def __init__(self, id_):
+        self.id = id_
+
+class MarkItemCompleted(BackendMessage):
+    def __init__(self, id_):
+        self.id = id_
+
+class MarkItemSkipped(BackendMessage):
     def __init__(self, id_):
         self.id = id_
 
@@ -883,6 +893,13 @@ class DeviceEject(BackendMessage):
     def __init__(self, device):
         self.device = device
 
+class RateItem(BackendMessage):
+    """Assign a rating (1-5) to an item.
+    """
+    def __init__(self, id_, rating):
+        self.id = id_
+        self.rating = rating
+
 # Frontend Messages
 
 class SharingConnectFailed(FrontendMessage):
@@ -1122,107 +1139,20 @@ class ItemInfo(object):
     :param up_down_ratio: (Torrent only) ratio of uploaded to downloaded
     """
 
-    # bump this whenever you change the ItemInfo class, or change on of the
-    # functions that ItemInfo uses to get it's attributes (for example
-    # Item.get_description())
-    VERSION = 5
-
     html_stripper = util.HTMLStripper()
 
-    def __init__(self, item):
-        self.name = item.get_title()
-        self.id = item.id
-        self.feed_id = item.feed_id
-        self.feed_name = item.get_source()
-        self.feed_url = item.get_feed_url()
-        self.description = item.get_description()
-        self.description_stripped = (
-                ItemInfo.html_stripper.strip(self.description))
-        self.state = item.get_state()
-        self.release_date = item.get_release_date_obj()
-        self.size = item.get_size()
-        self.duration = item.get_duration_value()
-        self.resume_time = item.resumeTime
-        self.permalink = item.get_link()
-        self.commentslink = item.get_comments_link()
-        self.payment_link = item.get_payment_link()
-        self.has_sharable_url = item.has_shareable_url()
-        self.can_be_saved = item.show_save_button()
-        self.pending_manual_dl = item.is_pending_manual_download()
-        self.pending_auto_dl = item.is_pending_auto_download()
-        if not item.keep and not item.is_external():
-            self.expiration_date = item.get_expiration_time()
-        else:
-            self.expiration_date = None
-        self.item_viewed = item.get_viewed()
-        self.downloaded = item.is_downloaded()
-        self.is_external = item.is_external()
-        self.video_watched = item.get_seen()
-        self.video_path = item.get_filename()
-        self.thumbnail = item.get_thumbnail()
-        self.thumbnail_url = item.get_thumbnail_url()
-        self.file_format = item.get_format()
-        self.license = item.get_license()
-        self.file_url = item.get_url()
-        self.is_container_item = item.isContainerItem
-        self.is_playable = item.is_playable()
-        if item.isContainerItem:
-            self.children = [ItemInfo(i) for i in item.get_children()]
-        else:
-            self.children = []
-        self.file_type = item.file_type
-        self.subtitle_encoding = item.subtitle_encoding
-        self.media_type_checked = item.media_type_checked
-        self.seeding_status = item.torrent_seeding_status()
-        self.mime_type = item.enclosure_type
-        self.artist = item.get_artist()
-        self.album = item.get_album()
-        self.track = item.get_track()
-        self.year = item.get_year()
-        self.genre = item.get_genre()
-        self.rating = item.get_rating()
-        self.date_added = item.get_creation_time()
-        self.last_played = item.get_watched_time()
+    def __init__(self, id_, **kwargs):
+        self.id = id_
 
-        if item.downloader:
-            self.download_info = DownloadInfo(item.downloader)
-        elif self.state == 'downloading':
-            self.download_info = PendingDownloadInfo()
-        else:
-            self.download_info = None
+        self.__dict__.update(kwargs) # we're just a thin wrapper around some
+                                     # data
 
-        ## Device-specific stuff
-        self.device = getattr(item, 'device', None)
-
-        ## Sharing specific stuff
-        self.remote = getattr(item, 'remote', False)
-        if self.remote:
-            self.host = item.host
-            self.port = item.port
-
-        ## Torrent-specific stuff
-        self.leechers = self.seeders = self.up_rate = None
-        self.down_rate = self.up_total = self.down_total = None
-        self.up_down_ratio = 0.0
-        if item.looks_like_torrent() and hasattr(item.downloader, 'status'):
-            status = item.downloader.status
-            if item.is_transferring():
-                # gettorrentdetails only
-                self.leechers = status.get('leechers', 0)
-                self.seeders = status.get('seeders', 0)
-                self.up_rate = status.get('upRate', 0)
-                self.down_rate = status.get('rate', 0)
-
-            # gettorrentdetailsfinished & gettorrentdetails
-            self.up_total = status.get('uploaded', 0)
-            self.down_total = status.get('currentSize', 0)
-            if self.down_total <= 0:
-                self.up_down_ratio = 0.0
-            else:
-                self.up_down_ratio = self.up_total * 1.0 / self.down_total
-
-        # calculate ngrams last since it depends on other data
-        self.search_ngrams = search.calc_ngrams(self)
+        # stuff we can calculate, if it wasn't stored
+        if not hasattr(self, 'description_stripped'):
+            self.description_stripped = ItemInfo.html_stripper.strip(
+                self.description)
+        if not hasattr(self, 'search_ngrams'):
+            self.search_ngrams = search.calc_ngrams(self)
 
 class DownloadInfo(object):
     """Tracks the download state of an item.
@@ -1293,7 +1223,8 @@ class GuideList(FrontendMessage):
             # for it to have a default channel guide persisted, but when you
             # set the channel guide via the DTV_CHANNELGUIDE_URL, then there's
             # no default guide.  So we generate one here.  Bug #11027.
-            cg = guide.ChannelGuide(util.to_uni(app.config.get(prefs.CHANNEL_GUIDE_URL)))
+            cg = guide.ChannelGuide(util.to_uni(app.config.get(
+                        prefs.CHANNEL_GUIDE_URL)))
             cg_info = GuideInfo(cg)
             self.default_guide = [cg_info]
         elif len(self.default_guide) > 1:
@@ -1457,7 +1388,8 @@ class ConversionTaskInfo(object):
     :param state: current state of the conversion.  One of: "pending",
         "running", "failed", or "finished"
     :param progress: how far the conversion task is
-    :param error: user-friendly string for describing conversion errors (if any)
+    :param error: user-friendly string for describing conversion
+                  errors (if any)
     :param output_path: path to the converted video (or None)
     :param log_path: path to the log file for the conversion
     :param item_name: name of the item being converted
@@ -1554,7 +1486,7 @@ class DeviceInfo(object):
         self.size = size
         self.remaining = remaining
         self.info = device_info
-        self.name = device_info.name
+        self.name = database.get('settings', {}).get('name', device_info.name)
 
 class DeviceChanged(FrontendMessage):
     """Informs the frontend that a device has changed state.

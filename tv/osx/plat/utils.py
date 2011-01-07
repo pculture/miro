@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2010 Participatory Culture Foundation
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -60,6 +61,15 @@ from os.path import samefile
 _locale_initialized = False
 
 dlTask = None
+
+def appstore_edition():
+    """Returns True if this is a Mac App Store Edition of Miro.
+    It is differentiated by having a appStore file in the resources
+    directory inside the application bundle.
+    """
+    appstore_file = os.path.join(NSBundle.mainBundle().resourcePath(),
+                                 'appStore')
+    return os.path.exists(appstore_file)
 
 def dirfilt(root, dirs):
     """

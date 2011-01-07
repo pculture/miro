@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2010 Participatory Culture Foundation
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,17 +32,19 @@
 FIXME - talk about Feed architecture here
 """
 
-from HTMLParser import HTMLParser, HTMLParseError
-from cStringIO import StringIO
-from datetime import datetime, timedelta
-from miro.gtcache import gettext as _
-from miro.feedparser import FeedParserDict
-from urlparse import urljoin
-from miro.xhtmltools import (unescape, xhtmlify, fix_xml_header,
-                             fix_html_header, urlencode)
 import os
 import re
 import xml
+from urlparse import urljoin
+from HTMLParser import HTMLParser, HTMLParseError
+from cStringIO import StringIO
+from datetime import datetime, timedelta
+import logging
+
+from miro.gtcache import gettext as _
+from miro.feedparser import FeedParserDict
+from miro.xhtmltools import (unescape, xhtmlify, fix_xml_header,
+                             fix_html_header, urlencode)
 
 from miro.database import DDBObject, ObjectNotFoundError
 from miro.httpclient import grab_url
@@ -66,7 +69,6 @@ from miro.plat.utils import filename_to_unicode, make_url_safe, unmake_url_safe
 from miro import filetypes
 from miro.item import FeedParserValues
 from miro import searchengines
-import logging
 from miro.clock import clock
 
 WHITESPACE_PATTERN = re.compile(r"^[ \t\r\n]*$")
@@ -252,10 +254,21 @@ class FeedImpl(DDBObject):
     def schedule_update_events(self, firstTriggerDelay):
         self.cancel_update_events()
         if firstTriggerDelay >= 0:
-            self.scheduler = eventloop.add_timeout(firstTriggerDelay, self.update, "Feed update (%s)" % self.get_title())
+            self.scheduler = eventloop.add_timeout(
+                firstTriggerDelay, self.update,
+                "Feed update (%s)" % self.get_title())
         else:
             if self.updateFreq > 0:
-                self.scheduler = eventloop.add_timeout(self.updateFreq, self.update, "Feed update (%s)" % self.get_title())
+                logging.info("scheduling update in %s minutes (%s)",
+                             self.updateFreq,
+                             self.get_title())
+                self.scheduler = eventloop.add_timeout(
+                    self.updateFreq, self.update,
+                    "Feed update (%s)" % self.get_title())
+            else:
+                logging.info("updateFreq is %s: skipping update (%s)",
+                             self.updateFreq,
+                             self.get_title())
 
     def cancel_update_events(self):
         if hasattr(self, 'scheduler') and self.scheduler is not None:
@@ -1201,17 +1214,17 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                 else:
                     logging.info('unknown url type %s, not generating enclosure' % url)
 
-        channelTitle = None
+        channel_title = None
         try:
-            channelTitle = parsed["feed"]["title"]
+            channel_title = parsed["feed"]["title"]
         except KeyError:
             try:
-                channelTitle = parsed["channel"]["title"]
+                channel_title = parsed["channel"]["title"]
             except KeyError:
                 pass
 
-        if channelTitle != None and self._allow_feed_to_override_title():
-            self.title = channelTitle
+        if channel_title != None and self._allow_feed_to_override_title():
+            self.title = channel_title
         if (parsed.feed.has_key('image') and
                 parsed.feed.image.has_key('url') and
                 self._allow_feed_to_override_thumbnail()):
@@ -1266,7 +1279,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                         except:
                             pass
             if new and fp_values.first_video_enclosure is not None:
-                self._handle_new_entry(entry, fp_values, channelTitle)
+                self._handle_new_entry(entry, fp_values, channel_title)
 
     def _allow_feed_to_override_title(self):
         """Should the RSS feed override the default title?
@@ -1345,7 +1358,6 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         return entry
 
 class RSSFeedImpl(RSSFeedImplBase):
-
     def setup_new(self, url, ufeed, title=None, initialHTML=None, etag=None,
                   modified=None):
         RSSFeedImplBase.setup_new(self, url, ufeed, title)
@@ -1450,7 +1462,7 @@ class RSSFeedImpl(RSSFeedImplBase):
     def _update_errback(self, error):
         if not self.ufeed.id_exists():
             return
-        logging.warn("WARNING: error in Feed.update for %s -- %s", 
+        logging.warn("WARNING: error in Feed.update for %s -- %s",
             self.ufeed, stringify(error))
         self.schedule_update_events(-1)
         self.updating = False
@@ -1460,6 +1472,7 @@ class RSSFeedImpl(RSSFeedImplBase):
         if not self.ufeed.id_exists():
             return
         if info.get('status') == 304:
+            logging.debug("_update_callback: status 304 (%s)", self.ufeed)
             self.schedule_update_events(-1)
             self.updating = False
             self.ufeed.signal_change()
@@ -1478,7 +1491,7 @@ class RSSFeedImpl(RSSFeedImplBase):
             self.modified = unicodify(info['last-modified'])
         else:
             self.modified = None
-        self.call_feedparser (html)
+        self.call_feedparser(html)
 
     @returns_unicode
     def get_license(self):
@@ -1617,6 +1630,7 @@ class RSSMultiFeedBase(RSSFeedImplBase):
         if not self.ufeed.id_exists():
             return
         if info.get('status') == 304:
+            logging.debug("_update_callback: status 304 (%s)", self.ufeed)
             self.schedule_update_events(-1)
             self.updating -= 1
             self.check_update_finished()
@@ -1867,11 +1881,11 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         if not self.initialHTML is None:
             html = self.initialHTML
             self.initialHTML = None
-            redirURL = self.url
+            redir_url = self.url
             status = 200
             charset = self.initialCharset
             self.initialCharset = None
-            subLinks = self.scrape_links(html, redirURL, charset=charset,
+            subLinks = self.scrape_links(html, redir_url, charset=charset,
                                         setTitle=True)
             self.process_links(subLinks, 0, 0)
             self.check_done()
@@ -1922,7 +1936,8 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
                 finally:
                     self.ufeed.signal_change()
             return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')], linkDict)
-        except (xml.sax.SAXException, ValueError, IOError, xml.sax.SAXNotRecognizedException):
+        except (xml.sax.SAXException, ValueError, IOError,
+                xml.sax.SAXNotRecognizedException):
             (links, linkDict) = self.scrape_html_links(html, baseurl,
                                                      setTitle=setTitle,
                                                      charset=charset)
@@ -1970,7 +1985,7 @@ class DirectoryScannerImplBase(FeedImpl):
         pass
 
     def set_update_frequency(self, frequency):
-        newFreq = frequency*60
+        newFreq = frequency * 60
         if newFreq != self.updateFreq:
             self.updateFreq = newFreq
             self.schedule_update_events(-1)
@@ -2078,7 +2093,8 @@ class DirectoryWatchFeedImpl(DirectoryScannerImplBase):
     def _after_update(self):
         if self.firstUpdate:
             self.firstUpdate = False
-            self.signal_change()
+        self.ufeed.recalc_counts()
+        self.signal_change()
 
 class DirectoryFeedImpl(DirectoryScannerImplBase):
     """A feed of all of the Movies we find in the movie folder that don't
@@ -2185,7 +2201,7 @@ class SearchFeedImpl(RSSMultiFeedBase):
         self.update()
         self.ufeed.signal_change()
 
-    def _handle_new_entry(self, entry, fp_values, channelTitle):
+    def _handle_new_entry(self, entry, fp_values, channel_title):
         """Handle getting a new entry from a feed."""
         url = fp_values.data['url']
         if url is not None:
@@ -2209,7 +2225,7 @@ class SearchFeedImpl(RSSMultiFeedBase):
                             if not fp_values.compare_to_item(item):
                                 item.update_from_feed_parser_values(fp_values)
                             return
-        RSSMultiFeedBase._handle_new_entry(self, entry, fp_values, channelTitle)
+        RSSMultiFeedBase._handle_new_entry(self, entry, fp_values, channel_title)
 
     def update_finished(self):
         self.searching = False

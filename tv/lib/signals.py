@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2010 Participatory Culture Foundation
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -38,6 +39,9 @@ import weakref
 
 from miro import crashreport
 
+class NestedSignalError(Exception):
+    pass
+
 class WeakMethodReference:
     """Used to handle weak references to a method.
 
@@ -70,6 +74,9 @@ class Callback:
     def invoke(self, obj, args):
         return self.func(obj, *(args + self.extra_args))
 
+    def compare_function(self, func):
+        return self.func == func
+
     def is_dead(self):
         return False
 
@@ -77,6 +84,9 @@ class WeakCallback:
     def __init__(self, method, extra_args):
         self.ref = WeakMethodReference(method)
         self.extra_args = extra_args
+
+    def compare_function(self, func):
+        return self.ref() == func
 
     def invoke(self, obj, args):
         callback = self.ref()
@@ -92,6 +102,7 @@ class SignalEmitter(object):
     def __init__(self, *signal_names):
         self.signal_callbacks = {}
         self.id_generator = itertools.count()
+        self._currently_emitting = set()
         self._frozen = False
         for name in signal_names:
             self.create_signal(name)
@@ -111,10 +122,20 @@ class SignalEmitter(object):
         except KeyError:
             raise KeyError("Signal: %s doesn't exist" % signal_name)
 
+    def _check_already_connected(self, name, func):
+        for callback in self.get_callbacks(name).values():
+            if callback.compare_function(func):
+                raise ValueError("signal %s already connected to %s" %
+                        (name, func))
+
     def connect(self, name, func, *extra_args):
         """Connect a callback to a signal.  Returns an callback handle that
         can be passed into disconnect().
+
+        If func is already connected to the signal, then a ValueError will be
+        raised.
         """
+        self._check_already_connected(name, func)
         id_ = self.id_generator.next()
         callbacks = self.get_callbacks(name)
         callbacks[id_] = Callback(func, extra_args)
@@ -124,7 +145,11 @@ class SignalEmitter(object):
         """Connect a callback weakly.  Callback must be a method of some
         object.  We create a weak reference to the method, so that the
         connection doesn't keep the object from being garbage collected.
+
+        If method is already connected to the signal, then a ValueError will be
+        raised.
         """
+        self._check_already_connected(name, method)
         if not hasattr(method, 'im_self'):
             raise TypeError("connect_weak must be called with object methods")
         id_ = self.id_generator.next()
@@ -146,6 +171,18 @@ class SignalEmitter(object):
     def emit(self, name, *args):
         if self._frozen:
             return
+        if name in self._currently_emitting:
+            raise NestedSignalError("Can't emit %s while handling %s" %
+                    (name, name))
+        self._currently_emitting.add(name)
+        try:
+            callback_returned_true = self._run_signal(name, args)
+        finally:
+            self._currently_emitting.discard(name)
+            self.clear_old_weak_references()
+        return callback_returned_true
+
+    def _run_signal(self, name, args):
         callback_returned_true = False
         try:
             self_callback = getattr(self, 'do_' + name.replace('-', '_'))
@@ -159,7 +196,6 @@ class SignalEmitter(object):
                 if callback.invoke(self, args):
                     callback_returned_true = True
                     break
-        self.clear_old_weak_references()
         return callback_returned_true
 
     def clear_old_weak_references(self):

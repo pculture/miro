@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2010 Participatory Culture Foundation
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -400,6 +401,8 @@ class PlaybackManager (signals.SignalEmitter):
             pass
 
     def on_movie_finished(self):
+        id_ = self.playlist[self.position].id
+        messages.MarkItemCompleted(id_).send_to_backend()
         self.update_current_resume_time(0)
         self.play_next_item(False)
 
@@ -518,6 +521,9 @@ class PlaybackManager (signals.SignalEmitter):
         """
         if new_position == None:
             new_position = self.position
+        else:
+            id_ = self.playlist[self.position].id
+            messages.MarkItemSkipped(id_).send_to_backend()
 
         self.cancel_update_timer()
         self.cancel_mark_as_watched()

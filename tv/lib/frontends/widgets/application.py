@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2010 Participatory Culture Foundation
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -80,7 +81,7 @@ from miro.frontends.widgets import watchedfolders
 from miro.frontends.widgets import quitconfirmation
 from miro.frontends.widgets import firsttimedialog
 from miro.frontends.widgets import feedsettingspanel
-from miro.frontends.widgets.widgetconst import MAX_VOLUME
+from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets.window import MiroWindow
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.frontends.widgets.widgetset import Rect
@@ -324,7 +325,7 @@ class Application:
 
     def up_volume(self):
         slider = self.window.videobox.volume_slider
-        v = min(slider.get_value() + 0.05, MAX_VOLUME)
+        v = min(slider.get_value() + 0.05, widgetconst.MAX_VOLUME)
         slider.set_value(v)
         self.on_volume_change(slider, v)
         self.on_volume_set(slider)
@@ -1434,93 +1435,14 @@ class WidgetsMessageHandler(messages.MessageHandler):
         library_tab_list.blink_tab("downloading")
 
 class DisplayStatesStore(object):
-    DEFAULT = {
-        'videos': {
-            'is_list_view': False,
-            'active_filters': ['view-all'],
-            'sort_state': 'name',
-            'columns': [(u'state', 20), (u'name', 130), (u'length', 60),
-                (u'feed-name', 70), (u'rating', 60), (u'size', 65)],
-        },
-        'music': {
-            'is_list_view': True,
-            'active_filters': ['view-all'],
-            'sort_state': 'artist',
-            'columns': [(u'state', 20), (u'name', 130), (u'artist', 110),
-                (u'album', 100), (u'track', 30), (u'feed-name', 70),
-                (u'length', 60), (u'genre', 65), (u'year', 40),
-                (u'rating', 60), (u'size', 65)],
-        },
-        'others': {
-            'is_list_view': True,
-            'active_filters': ['view-all'],
-            'sort_state': 'name',
-            'columns': [(u'name', 130), (u'feed-name', 70), (u'size', 65)],
-        },
-        'downloading': {
-            'is_list_view': False,
-            'sort_state': 'eta',
-            'columns': [(u'name', 130), (u'feed-name', 70), (u'status', 160),
-                (u'eta', 80), (u'rate', 80)],
-        },
-        # TODO: no display has this type yet
-        'all-feed-video': {
-            'is_list_view': False,
-            'active_filters': ['view-all'],
-            'sort_state': 'feed',
-            'columns': [(u'state', 20), (u'name', 130), (u'length', 60),
-                (u'feed-name', 70), (u'length', 60), (u'status', 160),
-                (u'size', 65)],
-         },
-        # TODO: rename to 'video-feed'
-        'feed': {
-            'is_list_view': False,
-            'active_filters': ['view-all'],
-            'sort_state': 'date',
-            'columns': [(u'state', 20), (u'name', 130), (u'length', 60),
-                (u'status', 160), (u'size', 65)],
-        },
-        'audio-feed': {
-            'is_list_view': True,
-            'active_filters': ['view-all'],
-            'sort_state': 'date',
-            'columns': [(u'state', 20), (u'name', 130), (u'length', 60),
-                (u'status', 160), (u'size', 65)],
-        },
-        # TODO: replace 'playlist' with 'audio-playlist' and 'video-'playlist'
-        'playlist': {
-            'is_list_view': True,
-            'active_filters': ['view-all'],
-            'sort_state': 'artist',
-            'columns': [(u'state', 20), (u'name', 130), (u'artist', 110),
-                (u'album', 100), (u'track', 30), (u'feed-name', 70),
-                (u'length', 60), (u'genre', 65), (u'year', 40),
-                (u'rating', 60), (u'size', 65)],
-        },
-        'search': {
-            'is_list_view': True,
-            'active_filters': ['view-all'],
-            'sort_state': 'artist',
-            'columns': [(u'state', 20), (u'name', 130), (u'artist', 110),
-                (u'album', 100), (u'track', 30), (u'feed-name', 70),
-                (u'length', 60), (u'genre', 65), (u'year', 40),
-                (u'rating', 60), (u'size', 65)],
-        },
-        # TODO: special stuff for converting
-    }
-
-    DEFAULT['sharing'] = DEFAULT['playlist']
-    DEFAULT['device-video'] = DEFAULT['videos']
-    DEFAULT['device-audio'] = DEFAULT['music']
-
     def __init__(self, message):
         self.displays = {}
         for display in message.displays:
             self.displays[display.key] = display
 
     def _get_display(self, key):
-        key = (unicode(str(key[0]), 'utf-8', 'replace'),
-            unicode(str(key[1]), 'utf-8', 'replace'))
+        if not isinstance(key[1], unicode):
+            key = (key[0], unicode(key[1]))
         if not key in self.displays:
             new_display = messages.DisplayInfo(key, None, None, None, None)
             self.displays[key] = new_display
@@ -1530,7 +1452,7 @@ class DisplayStatesStore(object):
     def is_list_view(self, key):
         display = self._get_display(key)
         if display.is_list_view is None:
-            return self.DEFAULT[key[0]]['is_list_view']
+            return key[0] in widgetconst.DEFAULT_LIST_VIEW_DISPLAYS
         return display.is_list_view
 
     def get_sort_state(self, key):
@@ -1539,7 +1461,12 @@ class DisplayStatesStore(object):
         # now, None = default sort for display_type
         sort_state = display.sort_state
         if sort_state is None:
-            sort_state = self.DEFAULT[key[0]]['sort_state']
+            if key[0] in widgetconst.DEFAULT_SORT_COLUMN:
+                sort_state = widgetconst.DEFAULT_SORT_COLUMN[key[0]]
+            else:
+                logging.warn("display type %s does not have an entry in "
+                    "widgetconst.DEFAULT_SORT_COLUMN", repr(key[0]))
+                return None
         return self._get_sorter(sort_state)
 
     def _get_sorter(self, state):
@@ -1552,13 +1479,30 @@ class DisplayStatesStore(object):
     def get_columns(self, key):
         display = self._get_display(key)
         if display.columns is None:
-            return self.DEFAULT[key[0]]['columns']
+            if key[0] not in widgetconst.COLUMNS_AVAILABLE:
+                logging.warn("display type %s does not have an entry in "
+                    "widgetconst.COLUMNS_AVAILABLE", repr(key[0]))
+                return []
+            # default to all columns available for view; we may want to change
+            # this later
+            names = widgetconst.COLUMNS_AVAILABLE[key[0]]
+            widths = widgetconst.DEFAULT_COLUMN_WIDTHS
+            columns = list()
+            for name in names:
+                if name in widths:
+                    column = (unicode(name), widths[name])
+                else:
+                    column = (unicode(name), 60)
+                    logging.warn("column %s does not have an entry in "
+                        "widgetconst.DEFAULT_COLUMN_WIDTHS", repr(name))
+                columns.append(column)
+            return columns
         return display.columns
 
     def get_filters(self, key):
         display = self._get_display(key)
         if display.active_filters is None:
-            return self.DEFAULT[key[0]]['active_filters']
+            return widgetconst.DEFAULT_DISPLAY_FILTERS
         return display.active_filters
 
     def set_filters(self, key, filters):

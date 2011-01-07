@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2010 Participatory Culture Foundation
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -170,11 +171,15 @@ class GTKCustomCellRenderer(gtk.GenericCellRenderer):
             hotspot = hotspot_tracker.name
         else:
             hotspot = None
-        widget_wrapper.layout_manager.reset()
-        hover = (self.path, self.column) == widget_wrapper.hover_info
+        if (self.path, self.column) == widget_wrapper.hover_info:
+            hover = widget_wrapper.hover_pos
+            hover = (hover[0] - xpad, hover[1] - ypad)
+        else:
+            hover = None
         # NOTE: CustomCellRenderer.cell_data_func() sets up its attributes
         # from the model itself, so we don't have to worry about setting them
         # here.
+        widget_wrapper.layout_manager.reset()
         owner.render(context, widget_wrapper.layout_manager, selected,
                 hotspot, hover)
 
@@ -467,7 +472,8 @@ class HotspotTracker(object):
         # views in response to a hotspot being clicked.
         if self.treeview.flags() & gtk.REALIZED:
             cell_area = self.treeview.get_cell_area(self.path, self.column)
-            self.treeview.queue_draw_area(cell_area.x, cell_area.y,
+            x, y = self.treeview.tree_to_widget_coords(cell_area.x, cell_area.y)
+            self.treeview.queue_draw_area(x, y,
                     cell_area.width, cell_area.height)
 
 class TableColumn(signals.SignalEmitter):
@@ -487,6 +493,7 @@ class TableColumn(signals.SignalEmitter):
         renderer.setup_attributes(self._column, attrs)
         self.renderer = renderer
         weak_connect(self._column, 'clicked', self._header_clicked)
+        self.can_pad = True
 
     def set_right_aligned(self, right_aligned):
         """Horizontal alignment of the header label."""
@@ -513,6 +520,9 @@ class TableColumn(signals.SignalEmitter):
     def set_resizable(self, resizable):
         """Set if the user can resize the column."""
         self._column.set_resizable(resizable)
+
+    def set_no_pad(self):
+        self.can_pad = False
 
     def set_sort_indicator_visible(self, visible):
         """Show/Hide the sort indicator for this column."""
@@ -555,6 +565,7 @@ class TableView(Widget):
         self.context_menu_callback = self.drag_source = self.drag_dest = None
         self.hotspot_tracker = None
         self.hover_info = None
+        self.hover_pos = None
         self.in_bulk_change = False
         self.handled_last_button_press = False
         self.delaying_press = False
@@ -667,7 +678,8 @@ class TableView(Widget):
         """Set the amount of space between columns."""
         self._renderer_xpad = space / 2
         for column in self.columns:
-            column.renderer._renderer.set_property('xpad', self._renderer_xpad)
+            if column.can_pad:
+                column.renderer._renderer.set_property('xpad', self._renderer_xpad)
 
     def set_row_spacing(self, space):
         """Set the amount of space between columns."""
@@ -990,28 +1002,29 @@ class TableView(Widget):
         self.hotspot_tracker = None
         self.drag_button_down = False
 
-    def _redraw_cell(self, path, column):
-        cell_area = self._widget.get_cell_area(path, column)
-        self._widget.queue_draw_area(cell_area.x, cell_area.y,
-                cell_area.width, cell_area.height)
+    def _redraw_cell(self, treeview, path, column):
+        cell_area = treeview.get_cell_area(path, column)
+        x, y = treeview.convert_bin_window_to_widget_coords(cell_area.x, cell_area.y)
+        treeview.queue_draw_area(x, y, cell_area.width, cell_area.height)
 
     def _update_hover(self, treeview, event):
-        old_hover_info = self.hover_info
+        old_hover_info, old_hover_pos = self.hover_info, self.hover_pos
         path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
         if path_info is None:
             self.hover_info = None
+            self.hover_pos = None
         else:
-            self.hover_info = path_info[:2]
-        if old_hover_info != self.hover_info:
-            if old_hover_info is not None:
-                self._redraw_cell(*old_hover_info)
+            path, column = path_info[:2]
+            self.hover_info = path, column
+            self.hover_pos = path_info[2:]
+        if old_hover_info != self.hover_info or old_hover_pos != self.hover_pos:
+            if old_hover_info != self.hover_info and old_hover_info is not None:
+                self._redraw_cell(treeview, *old_hover_info)
             if self.hover_info is not None:
-                self._redraw_cell(*self.hover_info)
+                self._redraw_cell(treeview, *self.hover_info)
 
     def on_motion_notify(self, treeview, event):
-        # We don't use hovers for 2.0, so let's this is disabled to save some
-        # CPU cycles
-        # self._update_hover(treeview, event)
+        self._update_hover(treeview, event)
 
         if self.hotspot_tracker:
             self.hotspot_tracker.update_position(event)

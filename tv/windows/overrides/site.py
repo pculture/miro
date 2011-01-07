@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2010 Participatory Culture Foundation
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -50,7 +51,7 @@ import __builtin__
 # to import the warnings module during Py_Initialize. Python is
 # designed to deal with this case and gracefully notice that it was
 # provided later.
-import warnings 
+import warnings
 
 def makepath(*paths):
     dir = os.path.abspath(os.path.join(*paths))

@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2009-2010 Participatory Culture Foundation
+# Copyright (C) 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -50,6 +51,7 @@ from miro import autodiscover
 from miro import subscription
 from miro import feed
 from miro import item
+from miro import itemsource
 from miro import httpclient
 from miro import download_utils
 from miro.util import get_torrent_info_hash
@@ -232,7 +234,8 @@ def parse_command_line_args(args):
     # to use Miro to play videos and Miro goes to play a video
     # externally, then it causes an infinite loop and dies.
     if added_videos and app.config.get(prefs.PLAY_IN_MIRO):
-        item_infos = [messages.ItemInfo(i) for i in _command_line_videos]
+        item_infos = [itemsource.DatabaseItemSource._item_info_for(i)
+                      for i in _command_line_videos]
         messages.PlayMovie(item_infos).send_to_frontend()
 
     if added_downloads:

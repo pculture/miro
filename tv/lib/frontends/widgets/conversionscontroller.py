@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2010 Participatory Culture Foundation
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -44,7 +45,6 @@ from miro.plat.frontends.widgets import widgetset
 from miro.conversions import conversion_manager
 
 class ConversionsController(object):
-
     def __init__(self):
         self.widget = widgetset.VBox()
         self.build_widget()
@@ -174,11 +174,9 @@ class ConversionsController(object):
         else:
             self.clear_finished_button.disable()
 
-
 class ConversionsTitleBar(itemlistwidgets.ItemListTitlebar):
     def _build_titlebar_extra(self):
         pass
-
 
 class ConversionTableView(widgetset.TableView):
     def __init__(self, model):

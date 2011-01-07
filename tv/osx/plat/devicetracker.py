@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2010 Participatory Culture Foundation
+# Copyright (C) 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,11 +35,7 @@ from AppKit import *
 from Foundation import *
 from FSEvents import *
 
-from miro.plat.frontends.widgets import threads
-
 from miro import app
-from miro import devices
-from miro import messages
 
 kFSEventStreamCreateFlagIgnoreSelf = 0x08 # not defined for some reason
 
@@ -63,8 +60,6 @@ def diskutil(cmd, path_or_disk, use_plist=True):
                 cmd, path_or_disk, stdout))
 
 class DeviceTracker(object):
-    def __init__(self):
-        self._info_for_volume = {}
 
     def start_tracking(self):
         self.stream = FSEventStreamCreate(kCFAllocatorDefault,
@@ -103,26 +98,15 @@ class DeviceTracker(object):
             logging.debug('unknown device connected @ %r' % volume)
             return
         device_name = disk_info.MediaName[:-6] # strip off ' Media'
-        database = devices.load_database(volume)
-        try:
-            device_info = app.device_manager.get_device(
-                device_name, database.get('device_name'))
-        except KeyError:
-            logging.debug('unknown device connected: %r' % device_name)
-            return
         logging.debug('seen device: %r' % device_name)
-        self._info_for_volume[volume] = device_info
-        info = messages.DeviceInfo(volume, device_info, volume + '/',
-                                   database, volume_info.TotalSize,
-                                   volume_info.FreeSpace)
-        devices.device_connected(info)
+        app.device_manager.device_connected(volume,
+                                            name=device_name,
+                                            mount=volume + '/',
+                                            size=volume_info.TotalSize,
+                                            remaining=volume_info.FreeSpace)
 
     def _disk_unmounted(self, volume):
-        if not volume in self._info_for_volume:
-            return
-        device_info = self._info_for_volume.pop(volume)
-        info = messages.DeviceInfo(volume, device_info, volume, {}, None, None)
-        devices.device_disconnected(info)
+        app.device_manager.device_disconnected(volume)
 
     def eject(self, device):
         diskutil('eject', device.mount, use_plist=False)

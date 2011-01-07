@@ -1,7 +1,7 @@
 import os
 import tempfile
 import urllib
-from miro.test.framework import MiroTestCase
+from miro.test.framework import MiroTestCase, only_on_platforms
 from StringIO import StringIO
 
 from miro.importmedia import import_itunes_path
@@ -260,19 +260,16 @@ file_template = """<?xml version="1.0" encoding="UTF-8"?>
 
 class Test_import_itunes(MiroTestCase):
     def setUp(self):
+        MiroTestCase.setUp(self)
         ITUNES_FILE = "iTunes Music Library.xml"
 
         # import_itunes_path expects a named file directory path that
         # contains filename ITUNES_FILE underneath it.
         fd = -1
-        self.tmpf_path = os.path.join(tempfile.gettempdir(), ITUNES_FILE)
+        self.tmpf_path = os.path.join(self.tempdir, ITUNES_FILE)
         fd = os.open(self.tmpf_path, os.O_RDWR | os.O_CREAT | os.O_EXCL)
-        tmpf = os.fdopen(fd, 'w')
-        self.tmpf = tmpf
+        self.tmpf = os.fdopen(fd, 'w')
         self.file_url = "file://localhost"
-
-    def tearDown(self):
-        os.unlink(self.tmpf_path)
 
     def _clean_tmpf(self):
         self.tmpf.truncate(0)
@@ -284,8 +281,6 @@ class Test_import_itunes(MiroTestCase):
 
     def test_badfile(self):
         self._clean_tmpf()
-        path1 = "/Users/xxx/Music/iTunes/iTunes Music/"
-        file_snippet1 = file_template % dict(path=(self.file_url + path1))
 
         # write some junk to the file and see what happens.
         self.tmpf.write('JUNKJUNKJUNKJUNKJUNK')
@@ -295,10 +290,11 @@ class Test_import_itunes(MiroTestCase):
         path = import_itunes_path(tmpf_dir)
         self.assertEquals(path, None)
 
+    @only_on_platforms('osx')
     def test_goodfile(self):
         # Our file templates.  Try a vanilla version and one with escapes.
         # NB:
-        # This is only supported on the Mac at the moment, when 
+        # This is only supported on the Mac at the moment, when
         # windows support arrives we will need to extract the paths and
         # see what it looks like and add a test here.
         path1 = "/Users/xxx/Music/iTunes/iTunes%20Music/"

@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2010 Participatory Culture Foundation
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -317,7 +318,7 @@ class ItemListDisplay(ItemListDisplayMixin, TabDisplay):
         raise NotImplementedError()
 
 class FeedDisplay(ItemListDisplay):
-    TAB_TYPE = 'feed'
+    TAB_TYPE = u'feed'
     UPDATER_SIGNAL_NAME = 'feeds-changed'
 
     @classmethod
@@ -346,7 +347,7 @@ class FeedDisplay(ItemListDisplay):
         return feedcontroller.FeedController(tab.id, tab.is_folder, tab.is_directory_feed)
 
 class AudioFeedDisplay(FeedDisplay):
-    TAB_TYPE = 'audio-feed'
+    TAB_TYPE = u'audio-feed'
     UPDATER_SIGNAL_NAME = 'audio-feeds-changed'
 
 class PlaylistDisplay(ItemListDisplay):
@@ -419,19 +420,19 @@ class AudioVideoItemsDisplay(ItemListDisplay):
 
     @classmethod
     def should_display(cls, tab_type, selected_tabs):
-        return (hasattr(selected_tabs[0], 'type') and selected_tabs[0].type is
+        return (hasattr(selected_tabs[0], 'type') and selected_tabs[0].type ==
             cls.tab_type)
 
 class VideoItemsDisplay(AudioVideoItemsDisplay):
-    tab_type = 'videos'
-    tab_id = 'videos'
+    tab_type = u'videos'
+    tab_id = u'videos'
 
     def make_controller(self):
         return itemlistcontroller.VideoItemsController()
 
 class AudioItemsDisplay(AudioVideoItemsDisplay):
-    tab_type = 'music'
-    tab_id = 'music'
+    tab_type = u'music'
+    tab_id = u'music'
 
     def make_controller(self):
         return itemlistcontroller.AudioItemsController()
@@ -464,7 +465,7 @@ class ConversionsDisplay(TabDisplay):
 
 class FolderContentsDisplay(ItemListDisplayMixin, Display):
     def __init__(self, info):
-        self.type = 'folder-contents'
+        self.type = u'folder-contents'
         self.id = info.id
         self.controller = itemlistcontroller.FolderContentsController(info)
         self.widget = self.controller.widget

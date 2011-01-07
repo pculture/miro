@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2010 Participatory Culture Foundation
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -2906,3 +2907,16 @@ def upgrade126(cursor):
         cursor.execute("UPDATE item SET feed_id=? WHERE feed_id=?",
                        (manual_feed_id, single_feed_id))
         cursor.execute("DELETE FROM feed WHERE origURL='dtv:singleFeed'")
+
+def upgrade127(cursor):
+    """Add play_count and skip_count to item.
+    Set them all to 0, since there's no way to know.
+    """
+    cursor.execute("ALTER TABLE item ADD COLUMN play_count integer")
+    cursor.execute("ALTER TABLE item ADD COLUMN skip_count integer")
+    cursor.execute("UPDATE item SET play_count=0, skip_count=0")
+
+def upgrade128(cursor):
+    """Add cover_art to item.
+    """
+    cursor.execute("ALTER TABLE item ADD COLUMN cover_art TEXT")

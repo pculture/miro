@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2010 Participatory Culture Foundation
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -76,8 +77,14 @@ from miro.test.searchtest import *
 if app.config.get(prefs.APP_PLATFORM) == "linux":
     from miro.test.gtcachetest import *
     from miro.test.downloadertest import *
-elif app.config.get(prefs.APP_PLATFORM) == "osx":
+else:
+    framework.skipped_tests.append("miro.test.gtcachetest tests: not linux")
+    framework.skipped_tests.append("miro.test.downloadertest tests: not linux")
+
+if app.config.get(prefs.APP_PLATFORM) == "osx":
     from miro.test.sparkletest import *
+else:
+    framework.skipped_tests.append("miro.test.sparkletest tests: not osx")
 
 class MiroTestLoader(unittest.TestLoader):
     def loadTestsFromNames(self, names, module):
@@ -117,6 +124,8 @@ class MiroTestRunner(unittest.TextTestRunner):
         httpclient.cleanup_libcurl()
         from miro.test import framework
         framework.clean_up_temp_files()
+        for mem in framework.skipped_tests:
+            print "Skipped: %s" % mem
 
 def run_tests():
     from miro import test

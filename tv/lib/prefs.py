@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2010 Participatory Culture Foundation
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -153,7 +154,7 @@ AUTOUPDATE_URL    = Pref(key='AutoupdateURL',   default=default_autoupdate,
                          platformSpecific=False)
 DONATE_URL        = Pref(key='DonateURL', default=u"http://www.getmiro.com/donate/",
                          platformSpecific=False)
-TROUBLESHOOT_URL  = Pref(key='TroubleshootURL', default=u"http://www.getmiro.com/userguide/troubleshooting.html",
+TROUBLESHOOT_URL  = Pref(key='TroubleshootURL', default=u"http://manual.getmiro.com/troubleshooting.html",
                          platformSpecific=False)
 HELP_URL          = Pref(key='HelpURL', default=u"http://www.getmiro.com/help/",
                          platformSpecific=False)

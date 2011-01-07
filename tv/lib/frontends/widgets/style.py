@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2010 Participatory Culture Foundation
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -66,7 +67,6 @@ ERROR_COLOR = (0.90, 0.0, 0.0)
 BLINK_COLOR = css_to_color('#fffb83')
 
 class LowerBox(widgetset.Background):
-
     def __init__(self):
         widgetset.Background.__init__(self)
 
@@ -105,7 +105,6 @@ class LowerBox(widgetset.Background):
 
     def is_opaque(self):
         return True
-
 
 class TabRenderer(widgetset.CustomCellRenderer):
     MIN_WIDTH = 25
@@ -208,7 +207,6 @@ class StaticTabRenderer(TabRenderer):
                     DOWNLOADING_COLOR)
 
 class DeviceTabRenderer(TabRenderer):
-
     def pack_bubbles(self, hbox, layout_manager):
         if getattr(self.data, 'fake', False):
             return
@@ -1030,11 +1028,18 @@ class ListViewRenderer(widgetset.CustomCellRenderer):
 
 class NameRenderer(ListViewRenderer):
     button_font_size = 0.77
+    
+    def __init__(self):
+        ListViewRenderer.__init__(self)
+        self.button = None
 
     def calc_height(self, style, layout_manager):
         default = ListViewRenderer.calc_height(self, style, layout_manager)
-        button = layout_manager.button(_("Download"))
-        return max(default, button.get_size()[1])
+        if self.button is None:
+            height = 0
+        else:
+            height = button.get_size()[1]
+        return max(default, height)
 
     def _setup_layout_manager(self):
         self.text = self.info.name
@@ -1043,10 +1048,11 @@ class NameRenderer(ListViewRenderer):
     def _pack_extra(self, layout_manager, hbox):
         if not (self.info.downloaded or
                 self.info.state in ('downloading', 'paused')):
-            layout_manager.set_font(self.button_font_size)
-            button = layout_manager.button(_('Download'))
+            if self.button is None:
+                layout_manager.set_font(self.button_font_size)
+                self.button = layout_manager.button(_("Download"))
             hbox.pack(cellpack.align_middle(cellpack.Hotspot('download',
-                button)))
+                self.button)))
 
 class DescriptionRenderer(ListViewRenderer):
     color = (0.6, 0.6, 0.6)
@@ -1133,9 +1139,71 @@ class StatusRenderer(ListViewRenderer):
             hbox.pack_space(8)
             hbox.pack(cellpack.Hotspot('keep', button))
 
-class RatingRenderer(ListViewRenderer):
-    def _setup_layout_manager(self):
-        self.text = "todo"
+class RatingRenderer(widgetset.CustomCellRenderer):
+    ICON_STATES = ('yes', 'no', 'maybe', 'probably', 'unset')
+    def __init__(self):
+        widgetset.CustomCellRenderer.__init__(self)
+        self.icon = {}
+        for state in RatingRenderer.ICON_STATES:
+            path = resources.path('images/star-%s.png' % state)
+            self.icon[state] = imagepool.get_surface(path)
+        self.icon_width, self.height = self.icon['yes'].get_size()
+        self.min_width = self.width = self.icon_width * 5 + 5
+        self.hover = None
+        self.layout = None
+
+    def layout_manager(self, layout_manager):
+        hbox = cellpack.HBox()
+        self.pack_icons(hbox)
+        return hbox
+
+    def hotspot_test(self, style, layout_manager, x, y, width, height):
+        packing = self.layout
+        hotspot_info = packing.find_hotspot(x, y, width, height)
+        if hotspot_info is None:
+            return None
+        else:
+            return hotspot_info[0]
+
+    def get_size(self, style, layout_manager):
+        return self.width, self.height
+
+    def render(self, context, layout_manager, selected, hotspot, hover):
+        if hover and self.layout:
+            hotspot_info = self.layout.find_hotspot(hover[0], hover[1], 79, 25)
+            if hotspot_info is None:
+                hover = None
+            else:
+                hover = int(hotspot_info[0].split(':', 1)[1])
+        self.hover = hover
+        self.layout = self.layout_manager(layout_manager)
+        self.layout.render_layout(context)
+
+    def pack_icons(self, hbox):
+        for i in range(5):
+            icon = self._get_icon(i)
+            alignment = cellpack.Alignment(icon, yalign=0.5, yscale=0.0,
+                xalign=0, xscale=0, min_width=self.icon_width)
+            hbox.pack(alignment)
+
+    def _get_icon(self, i):
+        # yes/no for explicit ratings; maybe/no for hover ratings;
+        # probably/no for auto ratings; unset when no explicit, auto, or hover rating
+        state = 'no'
+        if self.hover is not None:
+            if self.hover >= i:
+                state = 'maybe'
+        else:
+            if self.info.rating is not None:
+                if self.info.rating >= i:
+                    state = 'yes'
+            elif self.info.auto_rating is not None:
+                if self.info.auto_rating >= i:
+                    state = 'probably'
+            else:
+                state = 'unset'
+        name = "rate:"+str(i)
+        return cellpack.Hotspot(name, self.icon[state])
 
 class ETARenderer(ListViewRenderer):
     right_aligned = True

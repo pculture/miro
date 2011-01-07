@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2010 Participatory Culture Foundation
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -332,6 +333,12 @@ class ItemListController(object):
             self._play_item_list(items)
         elif name == 'play_pause':
             app.playback_manager.play_pause()
+        elif name.startswith('rate:'):
+            rating = int(name.split(':', 1)[1])
+            messages.RateItem(item_info.id, rating).send_to_backend()
+        else:
+            logging.debug("ItemView doesn't know how to handle hotspot %s.",
+                name)
 
     def on_selection_changed(self, item_view):
         if ((item_view is not self.current_item_view
@@ -488,8 +495,8 @@ class SimpleItemListController(ItemListController):
         self.widget.set_list_empty_mode(list_empty)
 
 class SearchController(SimpleItemListController):
-    type = 'search'
-    id = None
+    type = u'search'
+    id = u'search'
     image_filename = 'icon-search_large.png'
     title = _("Video Search")
 
@@ -614,22 +621,22 @@ class AudioVideoItemsController(SimpleItemListController):
         self.widget.toolbar.set_active_filters(filters)
 
 class VideoItemsController(AudioVideoItemsController):
-    type = 'videos'
-    id = None
+    type = u'videos'
+    id = u'videos'
     image_filename = 'icon-video_large.png'
     title = _("Video")
     unwatched_label =  _('Unwatched')
 
 class AudioItemsController(AudioVideoItemsController):
-    type = 'music'
-    id = None
+    type = u'music'
+    id = u'music'
     image_filename = 'icon-audio_large.png'
     title = _("Music")
     unwatched_label = _('Unplayed')
 
 class OtherItemsController(SimpleItemListController):
-    type = 'others'
-    id = None
+    type = u'others'
+    id = u'others'
     image_filename = 'icon-other_large.png'
     title = _("Other")
 
@@ -643,7 +650,7 @@ class FolderContentsController(SimpleItemListController):
     """Controller object for feeds."""
 
     def __init__(self, folder_info):
-        self.type = 'folder-contents'
+        self.type = u'folder-contents'
         self.id = folder_info.id
         self.title = folder_info.name
         self.info = folder_info

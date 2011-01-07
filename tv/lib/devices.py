@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2010 Participatory Culture Foundation
+# Copyright (C) 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,6 +28,7 @@
 # statement from all source files in the program, then also delete it here.
 
 from glob import glob
+from fnmatch import fnmatch
 import json
 import logging
 import os, os.path
@@ -34,20 +36,31 @@ import shutil
 import time
 
 from miro import app
-from miro import item
 from miro import fileutil
 from miro import filetypes
+from miro import prefs
+from miro.gtcache import gettext as _
 from miro import messages
 from miro import signals
 from miro import conversions
+from miro import moviedata
+from miro.util import returns_filename
 
 from miro.plat import resources
-from miro.plat.utils import filename_to_unicode, unicode_to_filename
+from miro.plat.utils import (filename_to_unicode, unicode_to_filename,
+                             utf8_to_filename)
 
 class BaseDeviceInfo(object):
     """
     Base class for device information.
     """
+
+    def update(self, kwargs):
+        self.__dict__.update(kwargs)
+        if 'audio_path' in kwargs:
+            self.audio_path = unicode_to_filename(self.audio_path)
+        if 'video_path' in kwargs:
+            self.video_path = unicode_to_filename(self.video_path)
 
     def __getattr__(self, key):
         try:
@@ -65,7 +78,6 @@ class BaseDeviceInfo(object):
                     'mount_instructions']
         for key in required:
             getattr(self, key)
-
 
 class DeviceInfo(BaseDeviceInfo):
     """
@@ -89,11 +101,7 @@ class DeviceInfo(BaseDeviceInfo):
 
     def __init__(self, name, **kwargs):
         self.name = name
-        self.__dict__.update(kwargs)
-        if 'audio_path' in kwargs:
-            self.audio_path = unicode_to_filename(self.audio_path)
-        if 'video_path' in kwargs:
-            self.video_path = unicode_to_filename(self.video_path)
+        self.update(kwargs)
 
 class MultipleDeviceInfo(BaseDeviceInfo):
     """
@@ -104,11 +112,7 @@ class MultipleDeviceInfo(BaseDeviceInfo):
 
     def __init__(self, device_name, children, **kwargs):
         self.device_name = self.name = device_name
-        self.__dict__.update(kwargs)
-        if 'audio_path' in kwargs:
-            self.audio_path = unicode_to_filename(self.audio_path)
-        if 'video_path' in kwargs:
-            self.video_path = unicode_to_filename(self.video_path)
+        self.update(kwargs)
         self.devices = {}
         for info in children:
             self.add_device(info)
@@ -129,6 +133,22 @@ class MultipleDeviceInfo(BaseDeviceInfo):
         for child in self.devices.values():
             child.validate()
 
+class USBMassStorageDeviceInfo(DeviceInfo):
+    """
+    DeviceInfo object used for generic USB Mass Storage devices.
+    """
+    def __init__(self, name):
+        self.name = self.device_name = name
+        self.update({
+                'generic': True,
+                'mount_instructions': _("Your drive must be mounted."),
+                'audio_conversion': 'copy',
+                'audio_types': '',
+                'audio_path': u'Miro',
+                'video_conversion': 'copy',
+                'video_path': u'Miro',
+                })
+
 class DeviceManager(object):
     """
     Manages the list of devices that Miro knows about, as well as managing the
@@ -137,6 +157,9 @@ class DeviceManager(object):
     def __init__(self):
         self.device_by_name = {}
         self.device_by_id = {}
+        self.generic_devices = []
+        self.generic_devices_by_id = {}
+        self.connected = {}
         self.syncs_in_progress = {}
         self.startup()
 
@@ -146,8 +169,16 @@ class DeviceManager(object):
         except AttributeError:
             logging.exception('error validating device %s', info.name)
         else:
-            self.device_by_name[info.device_name] = info
-            self.device_by_id[(info.vendor_id, info.product_id)] = info
+            if info.product_id is None or '*' in info.device_name:
+                # generic device
+                if info.product_id is not None or '*' not in info.device_name:
+                    logging.debug('invalid generic device %s' % info.name)
+                else:
+                    self.generic_devices.append(info)
+                    self.generic_devices_by_id[info.vendor_id] = info
+            else:
+                self.device_by_name[info.device_name] = info
+                self.device_by_id[(info.vendor_id, info.product_id)] = info
 
     def startup(self):
         # load devices
@@ -175,7 +206,14 @@ class DeviceManager(object):
         Get a DeviceInfo (or MultipleDeviceInfo) object given the device's USB
         name.
         """
-        info = self.device_by_name[device_name]
+        try:
+            info = self.device_by_name[device_name]
+        except KeyError:
+            for info in self.generic_devices:
+                if fnmatch(device_name, info.device_name):
+                    break
+            else:
+                raise
         return self._get_device_from_info(info, device_type)
 
     def get_device_by_id(self, vendor_id, product_id, device_type=None):
@@ -183,8 +221,103 @@ class DeviceManager(object):
         Get a DeviceInfo (or MultipleDeviceInfo) object give the device's USB
         vendor and product IDs.
         """
-        info = self.device_by_id[(vendor_id, product_id)]
+        try:
+            info = self.device_by_id[(vendor_id, product_id)]
+        except KeyError:
+            if vendor_id in self.generic_devices_by_id:
+                info = self.generic_devices_by_id[vendor_id]
+            else:
+                raise
         return self._get_device_from_info(info, device_type)
+
+
+    def _set_connected(self, id_, kwargs):
+        if kwargs.get('mount'):
+            database = load_database(kwargs['mount'])
+            device_name = database.get('device_name')
+        else:
+            device_name = None
+            database = DeviceDatabase()
+        if 'name' in kwargs:
+            try:
+                info = self.get_device(kwargs['name'],
+                                       device_name)
+            except KeyError:
+                info = USBMassStorageDeviceInfo(kwargs.get('visible_name',
+                                                   kwargs['name']))
+        elif 'vendor_id' in kwargs and 'product_id' in kwargs:
+            try:
+                info = self.get_device_by_id(kwargs['vendor_id'],
+                                             kwargs['product_id'],
+                                             device_name)
+            except KeyError:
+                info = USBMassStorageDeviceInfo(_('USB Device'))
+        else:
+            raise RuntimeError('connect_device() requires either the device '
+                               'name or vendor/product IDs')
+
+        kwargs.update({
+                'database': database,
+                'device_name': device_name,
+                'info': info})
+
+        info = self.connected[id_] = messages.DeviceInfo(
+            id_, info, kwargs.get('mount'), database,
+            kwargs.get('size'), kwargs.get('remaining'))
+
+        return info
+
+    def device_connected(self, id_, **kwargs):
+        if id_ in self.connected:
+            raise RuntimeError('device_connected() called on connected device')
+
+        info = self._set_connected(id_, kwargs)
+        if hasattr(info.info, 'generic'):
+            # ignore these for now
+            logging.debug('ignoring %r' % info.name)
+            return
+        if info.mount:
+            scan_device_for_files(info)
+        messages.TabsChanged('devices', [info], [], []).send_to_frontend()
+
+    def device_changed(self, id_, **kwargs):
+        if id_ not in self.connected:
+            raise RuntimeError('device_changed() called on unknown device')
+
+        info = self.connected[id_]
+        if hasattr(info.info, 'generic'):
+            # ignore these for now
+            return
+        if info.mount:
+            # turn off the autosaving on the old database
+            info.database.disconnect_all()
+
+        info = self._set_connected(id_, kwargs)
+        if info.mount:
+            scan_device_for_files(info)
+        else:
+            sync_manager = app.device_manager.get_sync_for_device(info,
+                                                                  create=False)
+            if sync_manager:
+                sync_manager.cancel()
+        messages.TabsChanged('devices', [], [info], []).send_to_frontend()
+        messages.DeviceChanged(info).send_to_frontend()
+
+    def device_disconnected(self, id_):
+        if id_ not in self.connected:
+            raise RuntimeError(
+                'device_disconnected() called on unknown device')
+
+        info = self.connected.pop(id_)
+        if hasattr(info.info, 'generic'):
+            # ignore these for now
+            return
+        sync_manager = app.device_manager.get_sync_for_device(info,
+                                                              create=False)
+        if sync_manager:
+            sync_manager.cancel()
+
+        messages.TabsChanged('devices', [], [], [id_]).send_to_frontend()
 
     def get_sync_for_device(self, device, create=True):
         """
@@ -204,7 +337,6 @@ class DeviceManager(object):
             dsm.set_device(device)
             return dsm
 
-
 class DeviceSyncManager(object):
     """
     Represents a sync in progress to a given device.
@@ -220,20 +352,31 @@ class DeviceSyncManager(object):
         messages.TabsChanged('devices', [], [self.device],
                              []).send_to_frontend()
 
-        self.audio_target_folder = os.path.join(device.mount,
-                                                device.info.audio_path)
+        self.audio_target_folder = os.path.join(
+            device.mount,
+            self._get_path_from_setting('audio_path'))
         if not os.path.exists(self.audio_target_folder):
             os.makedirs(self.audio_target_folder)
 
-        self.video_target_folder = os.path.join(device.mount,
-                                                device.info.video_path)
+        self.video_target_folder = os.path.join(
+            device.mount,
+            self._get_path_from_setting('video_path'))
         if not os.path.exists(self.video_target_folder):
             os.makedirs(self.video_target_folder)
+
+    def _get_path_from_setting(self, setting):
+        device_settings = self.device.database.setdefault('settings', {})
+        device_path = device_settings.get(setting)
+        if device_path is None:
+            return getattr(self.device.info, setting)
+        else:
+            return unicode_to_filename(device_path)
 
     def set_device(self, device):
         self.device = device
 
     def add_items(self, item_infos):
+        device_settings = self.device.database['settings']
         device_info = self.device.info
         for info in item_infos:
             if self._exists(info):
@@ -254,13 +397,17 @@ class DeviceSyncManager(object):
                 else:
                     logging.debug('unable to detect format of %r: %s' % (
                             info.video_path, info.file_format))
-                    self.start_conversion(device_info.audio_conversion,
-                                          info,
-                                          self.audio_target_folder)
+                    self.start_conversion(
+                        (device_settings.get('audio_conversion') or
+                         device_info.audio_conversion),
+                        info,
+                        self.audio_target_folder)
             elif info.file_type == 'video':
-                self.start_conversion(device_info.video_conversion,
-                                      info,
-                                      self.video_target_folder)
+                self.start_conversion(
+                    (device_settings.get('video_conversion') or
+                     device_info.video_conversion),
+                    info,
+                    self.video_target_folder)
 
         self._check_finished()
 
@@ -331,7 +478,7 @@ class DeviceSyncManager(object):
                                  extension)
         new_path = os.path.join(dirname, new_basename)
         os.rename(final_path, new_path)
-        device_item = item.DeviceItem(
+        device_item = DeviceItem(
             device=self.device,
             file_type=item_info.file_type,
             video_path=new_path[len(self.device.mount):],
@@ -350,16 +497,14 @@ class DeviceSyncManager(object):
             license=item_info.license,
             url=item_info.file_url,
             media_type_checked=item_info.media_type_checked,
-            mime_type=item_info.mime_type)
+            mime_type=item_info.mime_type,
+            creation_time=time.mktime(item_info.date_added.timetuple()))
         device_item._migrate_thumbnail()
         database = self.device.database
         database.setdefault(device_item.file_type, [])
         database[device_item.file_type][device_item.video_path] = \
             device_item.to_dict()
-        messages.ItemsChanged('device', '%s-%s' % (self.device.id,
-                                                   device_item.file_type),
-                              [messages.ItemInfo(device_item)], # added
-                              [], []).send_to_frontend() # changed, removed
+        database.emit('item-added', device_item)
 
     def _check_finished(self):
         if not self.waiting:
@@ -401,15 +546,134 @@ class DeviceSyncManager(object):
         for key in self.waiting:
             conversions.conversion_manager.cancel(key)
 
+class DeviceItem(object):
+    """
+    An item which lives on a device.  There's a separate, per-device JSON
+    database, so this implements the necessary Item logic for those files.
+    """
+    def __init__(self, **kwargs):
+        for required in ('video_path', 'file_type', 'device'):
+            if required not in kwargs:
+                raise TypeError('DeviceItem must be given a "%s" argument'
+                                % required)
+        self.name = self.file_format = self.size = None
+        self.release_date = self.feed_name = self.feed_id = None
+        self.keep = self.media_type_checked = True
+        self.updating_movie_info = self.isContainerItem = False
+        self.url = self.payment_link = None
+        self.comments_link = self.permalink = self.file_url = None
+        self.license = self.downloader = None
+        self.duration = self.screenshot = self.thumbnail_url = None
+        self.resumeTime = 0
+        self.subtitle_encoding = self.enclosure_type = None
+        self.description = u''
+        self.metadata = {}
+        self.rating = None
+        self.file_type = None
+        self.creation_time = None
+        self.__dict__.update(kwargs)
+
+        if isinstance(self.video_path, unicode):
+            self.video_path = utf8_to_filename(self.video_path.encode('utf8'))
+        if isinstance(self.screenshot, unicode):
+            self.screenshot = utf8_to_filename(self.screenshot.encode('utf8'))
+        if self.name is None:
+            self.name = filename_to_unicode(os.path.basename(self.video_path))
+        if self.file_format is None:
+            self.file_format = filename_to_unicode(
+                os.path.splitext(self.video_path)[1])
+            if self.file_type == 'audio':
+                self.file_format = self.file_format + ' audio'
+        if self.size is None:
+            self.size = os.path.getsize(self.get_filename())
+        if self.release_date is None or self.creation_time is None:
+            ctime = os.path.getctime(self.get_filename())
+            if self.release_date is None:
+                self.release_date = ctime
+            if self.creation_time is None:
+                self.creation_time = ctime
+        if self.duration is None: # -1 is unknown
+            moviedata.movie_data_updater.request_update(self)
+        self.id = self.video_path
+
+    @staticmethod
+    def id_exists():
+        return True
+
+    @returns_filename
+    def get_filename(self):
+        return os.path.join(self.device.mount, self.video_path)
+
+    def get_url(self):
+        return self.url or u''
+
+    @returns_filename
+    def get_thumbnail(self):
+        if self.screenshot:
+            return os.path.join(self.device.mount,
+                                self.screenshot)
+        elif self.file_type == 'audio':
+            return resources.path("images/thumb-default-audio.png")
+        else:
+            return resources.path("images/thumb-default-video.png")
+
+    def _migrate_thumbnail(self):
+        if self.screenshot:
+            if self.screenshot.startswith(app.config.get(
+                    prefs.ICON_CACHE_DIRECTORY)):
+                # migrate the screenshot onto the device
+                basename = os.path.basename(self.screenshot)
+                shutil.copyfile(self.screenshot,
+                                os.path.join(self.device.mount, '.miro',
+                                             basename))
+                self.screenshot = os.path.join('.miro', basename)
+            elif self.screenshot.startswith(resources.root()):
+                self.screenshot = None # don't save a default thumbnail
+
+    def remove(self, save=True):
+        ignored, current_file_type = self.device.id.rsplit('-', 1)
+        if self.video_path in self.device.database[current_file_type]:
+            del self.device.database[current_file_type][self.video_path]
+        if save:
+            self.device.database.emit('item-removed', self)
+
+    def signal_change(self):
+        if not os.path.exists(
+            os.path.join(self.device.mount, self.video_path)):
+            # file was removed from the filesystem
+            self.remove()
+            return
+
+        ignored, current_file_type = self.device.id.rsplit('-', 1)
+
+        if self.file_type != current_file_type:
+            # remove the old item from the database
+            self.remove(save=False)
+
+        self._migrate_thumbnail()
+        self.device.database[self.file_type][self.video_path] = self.to_dict()
+
+        if self.file_type != 'other':
+            self.device.database.emit('item-changed', self)
+
+    def to_dict(self):
+        data = {}
+        for k, v in self.__dict__.items():
+            if v is not None and k not in ('device', 'file_type', 'id',
+                                           'video_path'):
+                if k == 'screenshot':
+                    v = filename_to_unicode(v)
+                data[k] = v
+        return data
 
 class DeviceDatabase(dict, signals.SignalEmitter):
-
     def __init__(self, data=None, parent=None):
         if data:
             dict.__init__(self, data)
         else:
             dict.__init__(self)
-        signals.SignalEmitter.__init__(self, 'changed')
+        signals.SignalEmitter.__init__(self, 'changed', 'item-added',
+                                       'item-changed', 'item-removed')
         self.parent = parent
         self.bulk_mode = False
 
@@ -435,16 +699,6 @@ class DeviceDatabase(dict, signals.SignalEmitter):
         if not bulk:
             self.notify_changed()
 
-
-class DatabaseSaveManager(object):
-    def __init__(self, mount, database):
-        self.mount = mount
-        database.connect('changed', self.database_changed)
-
-    def database_changed(self, database):
-        write_database(self.mount, database)
-
-
 def load_database(mount):
     """
     Returns a dictionary of the JSON database that lives on the given device.
@@ -461,10 +715,10 @@ def load_database(mount):
             logging.exception('error loading JSON db on %s' % mount)
             db = {}
     ddb = DeviceDatabase(db)
-    DatabaseSaveManager(mount, ddb)
+    ddb.connect('changed', write_database, mount)
     return ddb
 
-def write_database(mount, database):
+def write_database(database, mount):
     """
     Writes the given dictionary to the device.
 
@@ -483,53 +737,6 @@ def write_database(mount, database):
         # couldn't write to the device
         # XXX throw up an error?
         pass
-
-def device_connected(info):
-    """
-    Helper for device trackers which sends a connected message for the device.
-    """
-    if info.mount:
-        scan_device_for_files(info)
-    message = messages.TabsChanged('devices',
-                                   [info],
-                                   [],
-                                   [])
-    message.send_to_frontend()
-
-def device_changed(info):
-    """
-    Helper for device trackers which sends a changed message for the device.
-    """
-    if info.mount:
-        scan_device_for_files(info)
-    else:
-        sync_manager = app.device_manager.get_sync_for_device(info,
-                                                              create=False)
-        if sync_manager:
-            sync_manager.cancel()
-    message = messages.TabsChanged('devices',
-                                   [],
-                                   [info],
-                                   [])
-    message.send_to_frontend()
-    messages.DeviceChanged(info).send_to_frontend()
-
-
-def device_disconnected(info):
-    """
-    Helper for device trackers which sends a disconnected message for the
-    device.
-    """
-    sync_manager = app.device_manager.get_sync_for_device(info,
-                                                          create=False)
-    if sync_manager:
-        sync_manager.cancel()
-
-    message = messages.TabsChanged('devices',
-                                  [],
-                                  [],
-                                  [info.id])
-    message.send_to_frontend()
 
 def clean_database(device):
     def _exists(item_path):

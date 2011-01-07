@@ -11,7 +11,7 @@ from miro.playlist import SavedPlaylist
 from miro.folder import PlaylistFolder, ChannelFolder
 from miro.singleclick import _build_entry
 from miro.tabs import TabOrder
-from miro import iteminfocache
+from miro import itemsource
 from miro import messages
 from miro import messagehandler
 
@@ -351,20 +351,6 @@ class FeedTrackTest(TrackerTest):
         self.feed2.remove()
         self.check_message_count(2)
 
-class FakeDownloader(object):
-    def __init__(self):
-        self.current_size = 0
-        self.rate = 0
-        self.state = 'downloading'
-
-    def get_current_size(self):
-        return self.current_size
-
-    def get_rate(self):
-        return self.rate
-
-    def get_state(self):
-        return self.state
 
 class FeedItemTrackTest(TrackerTest):
     def setUp(self):
@@ -630,7 +616,7 @@ class ItemInfoCacheErrorTest(MiroTestCase):
         self.setup_new_item_info_cache()
         for item in self.items:
             cache_info = app.item_info_cache.id_to_info[item.id]
-            real_info = messages.ItemInfo(item)
+            real_info = itemsource.DatabaseItemSource._item_info_for(item)
             self.assertEquals(cache_info.__dict__, real_info.__dict__)
         # it should also delete all data from the item cache table
         app.db.cursor.execute("SELECT COUNT(*) FROM item_info_cache")
@@ -644,7 +630,7 @@ class ItemInfoCacheErrorTest(MiroTestCase):
             app.db.cursor.execute("SELECT pickle FROM item_info_cache "
                     "WHERE id=%s" % item.id)
             db_info = cPickle.loads(str(app.db.cursor.fetchone()[0]))
-            real_info = messages.ItemInfo(item)
+            real_info = itemsource.DatabaseItemSource._item_info_for(item)
             self.assertEquals(db_info.__dict__, real_info.__dict__)
 
     def test_failsafe_load_item_change(self):
@@ -699,7 +685,7 @@ class ItemInfoCacheErrorTest(MiroTestCase):
     def test_item_info_version(self):
         app.db.finish_transaction()
         app.item_info_cache.save()
-        messages.ItemInfo.VERSION += 1
+        itemsource.DatabaseItemSource.VERSION += 1
         # We should delete the old cache data because ItemInfoCache.VERSION
         # has changed
         self.setup_new_item_info_cache()

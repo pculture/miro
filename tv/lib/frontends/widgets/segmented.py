@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2010 Participatory Culture Foundation
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -40,7 +41,6 @@ def _get_image(name):
     return imagepool.get_surface(path)
 
 class SegmentedButtonsRow(object):
-
     def __init__(self, label=None, behavior='radio'):
         self.buttons_list = list()
         self.buttons_map = dict()
@@ -110,7 +110,6 @@ class SegmentedButtonsRow(object):
         button.set_active(not button.active)
 
 class ButtonSegment(widgetset.CustomButton):
-    
     PARTS = {
         'off-far-left':     _get_image('segmented-off-far-left'),
         'off-middle-left':  _get_image('segmented-off-middle-left'),
@@ -157,9 +156,7 @@ class ButtonSegment(widgetset.CustomButton):
         surface.set_images(left, center, right)
         surface.draw(context, 0, 0, context.width)
 
-
 class TextButtonSegment(ButtonSegment):
-    
     MARGIN = 12
     TEXT_COLOR = { True: (0.86, 0.86, 0.86), False: (0.5, 0.5, 0.5) }
     
@@ -183,9 +180,7 @@ class TextButtonSegment(ButtonSegment):
         layout.set_font(0.8)
         return layout.textbox(self.title)
 
-
 class ImageButtonSegment(ButtonSegment):
-
     MARGIN = 7
     IMAGE_ALPHA = { True: 1.0, False: 0.4 }
 

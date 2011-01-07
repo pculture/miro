@@ -1,5 +1,6 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2010 Participatory Culture Foundation
+# Copyright (C) 2010, 2011
+# Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,8 +35,6 @@ import ctypes
 from miro.plat.frontends.widgets import timer
 from miro.plat import usbutils
 from miro import app
-from miro import devices
-from miro import messages
 
 GWL_WNDPROC = -4
 WndProcType = ctypes.WINFUNCTYPE(ctypes.c_long, ctypes.c_int, ctypes.c_uint,
@@ -79,23 +78,17 @@ class DeviceTracker(object):
 
     def _get_device_info(self, device):
         mount = device['mount']
-	database = devices.load_database(mount)
-        device_info = app.device_manager.get_device_by_id(
-	    device['vendor_id'], device['product_id'],
-            database.get('device_name'))
-        if not os.path.exists(mount):
-            mount = size = remaining = None
-	else:
+        if os.path.exists(mount):
             available = ctypes.wintypes.LARGE_INTEGER()
             total = ctypes.wintypes.LARGE_INTEGER()
             ctypes.windll.kernel32.GetDiskFreeSpaceExW(unicode(mount),
                                                        ctypes.byref(available),
 						       ctypes.byref(total),
                                                        None)
-	    remaining = available.value
-	    size = total.value
-        return messages.DeviceInfo(device['volume'], device_info, mount,
-				   database, size, remaining)
+            device['size'] = total.value
+            device['remaining'] = available.value
+
+        return device['volume'], device
 
     def _check_device_mount(self, device):
         if device['volume'] not in self._connected:
@@ -107,30 +100,20 @@ class DeviceTracker(object):
         timer.add(0.5, self._check_device_mount, device)
 
     def _device_connected(self, device):
-        try:
-           info = self._get_device_info(device)
-	except KeyError:
-            logging.debug('unknown device connected: %r' % (device,))
-            return
+        id_, info = self._get_device_info(device)
         logging.debug('seen device: %r' % (device,))
-        if not info.mount:
+        if not info['mount']:
             # we don't get notified :( so poll instead
             timer.add(0.5, self._check_device_mount, device)
-	devices.device_connected(info)
+        app.device_manager.device_connected(id_, **info)
 
     def _device_changed(self, device):
-        try:
-            info = self._get_device_info(device)
-        except KeyError:
-            return
-        devices.device_changed(info)
+        id_, info = self._get_device_info(device)
+        app.device_manager.device_changed(id_, **info)
 
     def _device_disconnected(self, device):
-        try:
-            info = self._get_device_info(device)
-        except KeyError:
-            return
-        devices.device_disconnected(info)
+        id_, info = self._get_device_info(device)
+        app.device_manager.device_disconnected(id_)
 
     def eject(self, info):
         if info.id not in self._connected:
