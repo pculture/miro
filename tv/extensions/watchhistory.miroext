@@ -2,5 +2,4 @@
 name = Watch History
 version = core
 enabled_by_default = True
-load_priority = 50
 module = watchhistory

@@ -28,6 +28,9 @@
 
 """miro.extensionmanager -- Extension manager that loads and manages
 extensions.
+
+For more information on the extension system see:
+http://develop.participatoryculture.org/index.php/ExtensionSystem
 """
 
 import traceback
@@ -37,14 +40,12 @@ import sys
 import ConfigParser
 import glob
 from miro import app
-# from miro import config
 from miro import prefs
 from miro import messages
 from miro import signals
 
 class Extension:
     def __init__(self):
-        self.load_priority = 50
         self.name = "Unknown"
         self.version = "0.0"
         self.ext_module = None
@@ -63,7 +64,6 @@ def get_extensions(ext_dir):
     * extension.name (string)
     * extension.version (string)
     * extension.module (string)
-    * extension.load_priority (int)
     * [optional] extension.enabled_by_default (bool)
     """
     if not os.path.isdir(ext_dir):
@@ -88,7 +88,6 @@ def get_extensions(ext_dir):
             e = Extension()
             e.name = cf.get("extension", "name")
             e.version = cf.get("extension", "version")
-            e.load_priority = cf.getint("extension", "load_priority")
             e.ext_module = cf.get("extension", "module")
 
             if cf.has_option("extension", "enabled_by_default"):
@@ -97,10 +96,10 @@ def get_extensions(ext_dir):
                 e.enabled = e.enabled_by_default
 
             extensions.append(e)
-        except (ConfigParser.NoSectionError, 
-                ConfigParser.NoOptionError, 
+        except (ConfigParser.NoSectionError,
+                ConfigParser.NoOptionError,
                 ConfigParser.ParsingError), err:
-            logging.warning("Extension file %s is malformed.\n%s", 
+            logging.warning("Extension file %s is malformed.\n%s",
                             f, traceback.format_exc())
 
     return extensions
@@ -151,7 +150,7 @@ class ExtensionManager(object):
         """
         logging.info("extension manager: importing: %r", ext)
         __import__(ext.ext_module)
-        
+
     def load_extension(self, ext):
         """Loads an extension by calling the ``load`` function.
 
@@ -206,8 +205,8 @@ class ExtensionManager(object):
 
         self.extensions = extensions
 
-        # sort all of the extensions collected by load priority
-        extensions.sort(key=lambda ext: ext.load_priority)
+        # FIXME - if we need extensions to load in a certain order
+        # this is the place we'd sort them
 
         for mem in extensions:
             if not self.should_load(mem):
