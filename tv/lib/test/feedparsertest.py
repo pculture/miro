@@ -25,8 +25,8 @@ def _parse_feed(inputfile):
     """
     fn = os.path.join(FPTESTINPUT, inputfile)
     d = feedparserutil.parse(fn)
-    assert "bozo_exception" not in d, ("Feed didn't parse: %s %s" %
-                                       (fn, d["bozo_exception"]))
+    assert (not d["bozo"] or "entries" in d), ("Feed didn't parse: %s %s" %
+                                               (fn, d["bozo_exception"]))
     return d
 
 class FeedParserDictTest(MiroTestCase):
@@ -85,15 +85,18 @@ class FeedParserTest(MiroTestCase):
 # go awry, makes it easier to see test progress from the command line
 # (lots of little tests rather than one big test), and increases the
 # test count appropriately.
-for mem in os.listdir(FPTESTINPUT):
-    def _test(self):
+def _test_closure(mem):
+    def _actual_test(self):
         d = _parse_feed(mem)
         fp = open(os.path.join(FPTESTOUTPUT, "%s.output" % mem), "r")
         output = fp.read()
         fp.close()
         self.assertEquals(pprint.pformat(d), output)
+    return _actual_test
 
-    setattr(FeedParserTest, 'test_%s' % mem.replace(".", ""), _test)
+for mem in os.listdir(FPTESTINPUT):
+    setattr(FeedParserTest, 'test_%s' % mem.replace(".", ""),
+            _test_closure(mem))
 
 class FeedParserValuesTest(unittest.TestCase):
     def test_empty(self):
