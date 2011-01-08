@@ -359,6 +359,8 @@ class ItemListController(object):
         """Send the message to start tracking items."""
         messages.TrackItems(self.type, self.id,
                 self._search_text).send_to_backend()
+        if self.type == u'sharing':
+            print 'REGISTERING ', self.type, ' ', self.id
         app.info_updater.item_list_callbacks.add(self.type, self.id,
                 self.handle_item_list)
         app.info_updater.item_changed_callbacks.add(self.type, self.id,

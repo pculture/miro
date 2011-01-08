@@ -55,13 +55,13 @@ class SharingItemView(itemlistwidgets.ItemView):
 class SharingView(itemlistcontroller.SimpleItemListController):
     image_filename = 'playlist-icon.png'
 
-    def __init__(self, tab):
+    def __init__(self, share):
         self.type = u'sharing'
-        self.tab = tab
-        self.id = tab
+        self.share = share
+        self.id = share
         print 'SELF.id = ', self.id
-        self.title = tab.name
-        #self.is_folder = tab.is_folder
+        self.title = share.name
+        #self.is_folder = share.is_folder
         itemlistcontroller.SimpleItemListController.__init__(self)
 
     def build_item_view(self):

@@ -253,35 +253,100 @@ class SharingItemSource(ItemSource):
         print 'SHARING ITEM SOURCE INIT'
         ItemSource.__init__(self)
         self.tracker = tracker
+        self.signal_handles = []
         for signal in 'added', 'changed', 'removed':
             signal_callback = getattr(self, signal)
             # Use SQLite to create an in-memory database using a temp file, 
             # and then
             # chuck away the data.  Then the OS can page in and out as 
             # necessary 
-            #handle = self.device.database.connect('item-%s' % signal,
-            #                                      self._emit_from_db,
-            #                                      signal_callback)
-            #self.signal_handles.append(handle)
+            handle = self.tracker.connect('%s' % signal,
+                                          self._emit_from_db,
+                                          signal_callback)
+            self.signal_handles.append(handle)
+
+    def _item_info_for(self, item):
+        return messages.ItemInfo(
+            item.id,
+            name = item.name,
+            feed_id = item.feed_id,
+            feed_name = None,
+            feed_url = None,
+            description = item.description,
+            state = u'saved',
+            release_date = datetime.datetime.fromtimestamp(item.release_date),
+            size = item.size,
+            duration = (item.duration not in (-1, None) and
+                        item.duration / 1000 or 0),
+            resume_time = 0,
+            permalink = item.permalink,
+            commentslink = item.comments_link,
+            payment_link = item.payment_link,
+            has_shareable_url = bool(item.url),
+            can_be_saved = False,
+            pending_manual_dl = False,
+            pending_auto_dl = False,
+            expiration_date = None,
+            item_viewed = True,
+            downloaded = True,
+            is_external = False,
+            video_watched = True,
+            video_path = item.get_filename(),
+            thumbnail = item.get_thumbnail(),
+            thumbnail_url = item.thumbnail_url or u'',
+            file_format = item.file_format,
+            license = item.license,
+            file_url = item.url or u'',
+            is_container_item = False,
+            is_playable = True,
+            children = [],
+            file_type = item.file_type,
+            subtitle_encoding = item.subtitle_encoding,
+            seeding_status = None,
+            media_type_checked = True,
+            has_sharable_url = False,
+            mime_type = item.enclosure_type,
+            artist = item.metadata.get('artist', u''),
+            album = item.metadata.get('album', u''),
+            track = item.metadata.get('track', -1),
+            year = item.metadata.get('year', -1),
+            genre = item.metadata.get('genre', u''),
+            rating = item.rating,
+            date_added = item.creation_time,
+            last_played = item.creation_time,
+            download_info = None,
+            device = None,
+            remote = True,
+            leechers = None,
+            seeders = None,
+            up_rate = None,
+            down_rate = None,
+            up_total = None,
+            down_total = None,
+            up_down_ratio = 0,
+            play_count=0,
+            skip_count=0,
+            cover_art=None)
 
     def _emit_from_db(self, database, item, signal_callback):
-        if item.file_type != self.type:
-            return # don't care about other types of items
+        #if item.file_type != self.type:
+        #    return # don't care about other types of items
         if not isinstance(item, messages.ItemInfo):
             info = self._item_info_for(item)
         else:
             info = item
+        print 'ADDED ITEM'
         signal_callback(info)
 
     def fetch_all(self):
         print 'FETCH ALL'
-        return []
+        return [self._item_info_for(item) for item in self.tracker.get_items()]
 
     def unlink(self):
         print 'SHARING ITEM SOURCE UNLINK'
-        #for handle in self.signal_handles:
-        #    self.device.database.disconnect(handle)
-        #self.signal_handles = []
+        for handle in self.signal_handles:
+            self.tracker.disconnect(handle)
+        self.signal_handles = []
 
 class DeviceItemSource(ItemSource):
     """

@@ -42,10 +42,12 @@ from miro import item
 from miro import messages
 from miro import playlist
 from miro import prefs
+from miro import signals
 from miro import util
 from miro.fileobject import FilenameType
 from miro.util import returns_filename
 
+from miro.plat import resources
 from miro.plat.utils import thread_body
 
 import libdaap
@@ -285,14 +287,15 @@ class SharingTracker(object):
     def eject(self, share_id):
         tracker = self.trackers[share_id]
         del self.trackers[share_id]
-        tracker.disconnect()
+        tracker.client_disconnect()
 
-    def get_tracker(self, tab, share_id):
+    def get_tracker(self, share, share_id):
+        share_id = share.id
         try:
             return self.trackers[share_id]
         except KeyError:
             print 'CREATING NEW TRACKER'
-            self.trackers[share_id] = SharingItemTrackerImpl(tab, share_id)
+            self.trackers[share_id] = SharingItemTrackerImpl(share, share_id)
             return self.trackers[share_id]
 
     def stop_tracking(self):
@@ -306,7 +309,7 @@ class SharingTracker(object):
 # both are scheduled to run on the backend thread.  If this is not an initial
 # connection then send_initial_list() would already have been populated so
 # we are fine there.
-class SharingItemTrackerImpl(object):
+class SharingItemTrackerImpl(signals.SignalEmitter):
     """This is the backend for the SharingItemTracker the messagehandler file.
     This backend class allows the item tracker to be persistent even as the
     user switches across different tabs in the sidebar, until the disconnect
@@ -321,6 +324,9 @@ class SharingItemTrackerImpl(object):
                                  self.client_connect_error_callback,
                                  self.client_connect,
                                  'DAAP client connect')
+        signals.SignalEmitter.__init__(self)
+        for sig in 'added', 'changed', 'removed':
+            self.create_signal(sig)
 
     def sharing_item(self, rawitem):
         file_type = u'audio'    # fallback
@@ -343,7 +349,7 @@ class SharingItemTrackerImpl(object):
         )
         return sharing_item
 
-    def disconnect(self):
+    def client_disconnect(self):
         ids = [item.id for item in self.get_items()]
         message = messages.ItemsChanged(self.type, self.tab, [], [], ids)
         self.items = []
@@ -385,16 +391,15 @@ class SharingItemTrackerImpl(object):
             return
         items = self.client.items[k]
         print 'XXX CREATE ITEM INFO'
-        #for k in items.keys():
-        #    item = messages.ItemInfo(self.sharing_item(items[k]))
-        #    self.items.append(item)
+        for k in items.keys():
+            item = self.sharing_item(items[k])
+            self.items.append(item)
 
     # NB: this runs in the eventloop (backend) thread.
     def client_connect_callback(self, unused):
-        self.connected = True
-        message = messages.ItemsChanged(self.type, self.tab, self.items, [], [])
-        print 'SENDING changed message %d items' % len(message.added)
-        message.send_to_frontend()
+        # XXX Can't bulk add: talk to Paul
+        for item in self.items:
+            self.emit('added', item)
 
     def client_connect_error_callback(self, unused):
         # If it didn't work, immediately disconnect ourselves.

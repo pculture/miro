@@ -45,7 +45,7 @@ TEXT_JUSTIFY_RIGHT = 1
 TEXT_JUSTIFY_CENTER = 2
 
 # Display State defaults
-DEFAULT_LIST_VIEW_DISPLAYS = set(['music', 'others', 'audio-feed', 'playlist', 'search'])
+DEFAULT_LIST_VIEW_DISPLAYS = set(['sharing', 'music', 'others', 'audio-feed', 'playlist', 'search'])
 DEFAULT_DISPLAY_FILTERS = ['view-all']
 DEFAULT_COLUMN_WIDTHS = {
     'state': 20, 'name': 130, 'artist': 110, 'album': 100, 'track': 30,
@@ -81,6 +81,8 @@ COLUMN_WIDTH_WEIGHTS = {
 COLUMNS_AVAILABLE = {
     'videos': ['state', 'name', 'length', 'feed-name', 'size'],
     'music': ['state', 'name', 'artist', 'album', 'track', 'feed-name',
+        'length', 'genre', 'year', 'rating', 'size'],
+    'sharing': ['state', 'name', 'artist', 'album', 'track', 'feed-name',
         'length', 'genre', 'year', 'rating', 'size'],
     'others': ['name', 'feed-name', 'size', 'rating'],
         'downloading': ['name', 'feed-name', 'status', 'eta', 'rate'],

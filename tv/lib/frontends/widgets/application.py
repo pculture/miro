@@ -1099,6 +1099,9 @@ class InfoUpdater(signals.SignalEmitter):
 
     def handle_items_changed(self, message):
         callback_list = self.item_changed_callbacks
+        print 'HANDLE ITEMS CHANGED'
+        print 'type', message.type
+        print 'id', message.id
         for callback in callback_list.get(message.type, message.id):
             callback(message)
 
