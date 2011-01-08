@@ -50,7 +50,7 @@ DEFAULT_DISPLAY_FILTERS = ['view-all']
 DEFAULT_COLUMN_WIDTHS = {
     'state': 20, 'name': 130, 'artist': 110, 'album': 100, 'track': 30,
     'feed-name': 70, 'length': 60, 'genre': 65, 'year': 40, 'rating': 75,
-    'size': 65, 'status': 70,
+    'size': 65, 'status': 70, 'date': 70, 'eta': 60, 'rate': 60,
 }
 DEFAULT_SORT_COLUMN = {
     'videos': 'name', 'music': 'artist', 'others': 'name',
@@ -83,11 +83,11 @@ COLUMNS_AVAILABLE = {
     'music': ['state', 'name', 'artist', 'album', 'track', 'feed-name',
         'length', 'genre', 'year', 'rating', 'size'],
     'others': ['name', 'feed-name', 'size', 'rating'],
-        'downloading': ['name', 'feed-name', 'status', 'eta', 'rate'],
+    'downloading': ['name', 'feed-name', 'status', 'eta', 'rate'],
     'all-feed-video': ['state', 'name', 'feed-name', 'length', 'status',
         'size'],
-    'feed': ['state', 'name', 'length', 'status', 'size'],
-    'audio-feed': ['state', 'name', 'length', 'status', 'size'],
+    'feed': ['state', 'name', 'length', 'status', 'size', 'date'],
+    'audio-feed': ['state', 'name', 'length', 'status', 'size', 'date'],
     'playlist': ['state', 'name', 'artist', 'album', 'track', 'feed-name',
         'length', 'genre', 'year', 'rating', 'size'],
     'search': ['state', 'name', 'artist', 'album', 'track', 'feed-name',
