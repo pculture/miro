@@ -31,8 +31,12 @@
 
 __all__ = [
     "signals",
-    "get_support_directory"
+    "get_support_directory",
+    "APIVERSION"
     ]
+
+# increase this by 1 every time the API changes
+APIVERSION = 0
 
 from miro import signals
 
@@ -48,6 +52,12 @@ class PlatformNotSupported(ExtensionException):
 class FrontendNotSupported(ExtensionException):
     """Raise this in ``load`` when the extension doesn't support the
     frontend Miro is using.
+    """
+    pass
+
+class APIVersionNotSupported(ExtensionException):
+    """Raise this in ``load`` when the extension doesn't support this
+    version of the API.
     """
     pass
 
@@ -94,5 +104,3 @@ def get_frontend():
 def get_support_directory():
     from miro import app, prefs
     return app.config.get(prefs.SUPPORT_DIRECTORY)
-
-
