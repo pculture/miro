@@ -432,7 +432,7 @@ class ManualItemTracker(DatabaseSourceTrackerBase):
 
 class DownloadingItemsTracker(DatabaseSourceTrackerBase):
     type = u'downloading'
-    id = None
+    id = u'downloading'
     def __init__(self, search_text):
         self.view = item.Item.download_tab_view()
         DatabaseSourceTrackerBase.__init__(self, search_text)
