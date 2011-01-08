@@ -56,7 +56,7 @@ class SharingView(itemlistcontroller.SimpleItemListController):
     image_filename = 'playlist-icon.png'
 
     def __init__(self, tab):
-        self.type = 'sharing'
+        self.type = u'sharing'
         self.tab = tab
         self.id = tab
         print 'SELF.id = ', self.id
