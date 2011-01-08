@@ -47,6 +47,7 @@ from miro.frontends.widgets import conversionscontroller
 from miro.frontends.widgets import feedcontroller
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import devicecontroller
+from miro.frontends.widgets import sharingcontroller
 from miro.frontends.widgets import playlist
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
@@ -125,6 +126,7 @@ class DisplayManager(object):
                 GuideDisplay,
                 MultipleSelectionDisplay,
                 DeviceDisplay,
+                SharingDisplay,
                 DummyDisplay,
         ]
         # displays that we keep alive all the time
@@ -371,6 +373,22 @@ class PlaylistDisplay(ItemListDisplay):
     def make_controller(self, playlist_info):
         return playlist.PlaylistView(playlist_info)
 
+class SharingDisplay(ItemListDisplay):
+    @staticmethod
+    def should_display(tab_type, selected_tabs):
+        return tab_type == 'sharing' and len(selected_tabs) == 1
+
+    def on_selected(self):
+        # No need to track manually - ItemListDisplay does for us
+        ItemListDisplay.on_selected(self)
+
+    def cleanup(self):
+        # No need to cleanup tracking manually - ItemListDisplay does for us
+        ItemListDisplay.cleanup(self)
+
+    def make_controller(self, tab):
+        return sharingcontroller.SharingView(tab)
+
 class SearchDisplay(ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
@@ -583,7 +601,19 @@ class VideoDisplay(Display):
     def cleanup(self):
         if self._showing_renderer:
             self._prepare_remove_renderer()
-        self.renderer.teardown()
+        # FIXME
+        #
+        # This isn't just feel-good defensive programming.
+        #
+        # When the tab disappears abnormally and it is a video display it 
+        # is destroyed.  That's fine.  However, it will happily try to 
+        # select a new tab, which tries to remove the video display again 
+        # because it is connected to 'removed' signal and calls 
+        # on_display_removed.  So we may end up calling the cleanup
+        # twice.  I think the proper fix is to ensure that cleanup can only
+        # be called once, but right now it's not too bad hopefully.
+        if self.renderer:
+            self.renderer.teardown()
         self.renderer = None
 
 class MultipleSelectionDisplay(TabDisplay):

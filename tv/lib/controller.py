@@ -68,6 +68,10 @@ class Controller:
         conversions.conversion_manager.shutdown()
         logging.info("Shutting down Downloader...")
         downloader.shutdown_downloader(self.downloader_shutdown)
+        logging.info("Shutting down Sharing Manager")
+        app.sharing_manager.shutdown()
+        logging.info("Shutting down Sharing Tracker")
+        app.sharing_tracker.stop_tracking()
 
     def downloader_shutdown(self):
         logging.info("Shutting down libCURL thread")

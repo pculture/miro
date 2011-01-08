@@ -40,6 +40,7 @@ class TabListManager(object):
         self.static_tab_list = tablist.StaticTabList()
         self.library_tab_list = tablist.LibraryTabList()
         self.devices_list = tablist.DevicesList()
+        self.sharing_list = tablist.SharingList()
         self.site_list = tablist.SiteList()
         self.feed_list = tablist.FeedList()
         self.audio_feed_list = tablist.AudioFeedList()
@@ -101,8 +102,8 @@ class TabListManager(object):
     def all_tab_lists(self):
         return (
             self.static_tab_list, self.library_tab_list, self.devices_list,
-            self.site_list, self.feed_list, self.audio_feed_list,
-            self.playlist_list)
+            self.sharing_list, self.site_list, self.feed_list,
+            self.audio_feed_list, self.playlist_list)
 
     def select_guide(self):
         self.select_static_tab(0)
@@ -174,8 +175,10 @@ class TabListManager(object):
     def handle_no_tabs_selected(self):
         model = self.selected_tab_list.view.model
         iter = model.first_iter()
-        if iter is None:
-            # We deleted all the feeds/playlists, select the guide instead
+        if iter is None or self.selected_tab_list.type == 'sharing':
+            # We deleted all the feeds/playlists, or it is the sharing tab.
+            # Select the guide instead.  Note, we don't want to automatically
+            # connect to the next available share.
             self.select_guide()
         else:
             self.selected_tab_list.view.select(iter)

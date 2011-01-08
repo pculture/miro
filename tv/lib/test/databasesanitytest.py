@@ -11,7 +11,7 @@ from miro import feed
 from miro import databasesanity
 from miro import database
 from miro import util
-from miro.plat.utils import FilenameType
+from miro.fileobject import FilenameType
 
 from miro.test.framework import MiroTestCase
 

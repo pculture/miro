@@ -1,6 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
-# Participatory Culture Foundation
+# Copyright (C) 2010 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,20 +26,37 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from miro.util import returns_binary
 
-PlatformFilenameType = str
+"""The file object encapsulates data about the filename object.
+"""
 
-@returns_binary
-def os_filename_to_filename_type(filename):
-    """Takes filename given by Python or the PyObjC bridge and turn it
-    into a FilenameType
+import logging
+import os
+import shutil
+
+from miro.plat.utils import PlatformFilenameType
+
+class FilenameType(PlatformFilenameType):
+    """FilenameType: the file representation for a given platform.
+    It defaults to local files but can be specified to be remote files by
+    passing an appropriate url handler.
+
+    It defaults to file for legacy support, a lot of places depend on this.
+
+    Note to platform implementors: the PlatformFileType must be a string-type
+    basetype, so either unicode or str.  Nothing else.
     """
-    if isinstance(filename, str):
-        return PlatformFilenameType(filename)
-    return filename.encode('utf-8', 'replace')
+    base_type = PlatformFilenameType
+    args = []
 
-def filename_type_to_os_filename(filename):
-    """Takes a FilenameType and turn it into something the PyObjC bridge accepts.
-    """
-    return filename.decode('utf-8')
+    def file_handler(self, path):
+        return 'file://' + path
+
+    handler = file_handler
+
+    def set_handler(self, handler, args):
+        self.handler = handler
+        self.args = args
+
+    def urlize(self):
+        return self.handler(self, *self.args)

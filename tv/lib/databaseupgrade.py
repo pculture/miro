@@ -743,9 +743,9 @@ def unicodify(d):
     return d
 
 def upgrade41(objectList):
-    from miro.plat.utils import FilenameType
+    from miro.plat.utils import PlatformFilenameType
     # This is where John Lennon's ghost sings "Binary Fields Forever"
-    if FilenameType == str:
+    if PlatformFilenameType == str:
         binaryFields = ['filename', 'videoFilename', 'shortFilename',
                         'offsetPath', 'initialHTML', 'status', 'channelName']
         icStrings = ['etag', 'modified', 'url']

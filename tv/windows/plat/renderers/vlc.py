@@ -244,6 +244,12 @@ class VLCSniffer(object):
         """starts playing the specified file"""
         filename = iteminfo.video_path
 
+        # Convert to URL if necessary
+        try:
+            filename = iteminfo.video_path.urlize()
+        except AttributeError:
+            filename = 'file://' + iteminfo.video_path
+
         # filenames coming in are unicode objects, VLC expects utf-8
         # strings.
         filename = filename.encode('utf-8')
@@ -251,12 +257,13 @@ class VLCSniffer(object):
         self.callback_info = (success_callback, error_callback)
         self.play_state = STOPPED
 
-        media = libvlc.libvlc_media_new(self.vlc, ctypes.c_char_p(filename),
+        media = libvlc.libvlc_media_new(self.vlc,
+                ctypes.c_char_p(filename),
                 self.exc.ref())
         self.exc.check()
         if media is None:
             raise AssertionError(
-                "libvlc_media_new returned NULL for %s" % filename)
+                "libvlc_media_new returned_location NULL for %s" % filename)
         event_manager = libvlc.libvlc_media_event_manager(media, 
                                                           self.exc.ref())
         self.exc.check()
@@ -431,7 +438,12 @@ class VLCRenderer(object):
 
     def select_file(self, iteminfo, callback, errback):
         """starts playing the specified file"""
-        filename = iteminfo.video_path
+
+        # Convert to URL if necessary
+        try:
+            filename = iteminfo.video_path.urlize()
+        except AttributeError:
+            filename = 'file://' + iteminfo.video_path
 
         # filenames coming in are unicode objects, VLC expects utf-8
         # strings.
@@ -443,7 +455,8 @@ class VLCRenderer(object):
         self.play_from_time = None
         self.play_state = STOPPED
 
-        media = libvlc.libvlc_media_new(self.vlc, ctypes.c_char_p(filename),
+        media = libvlc.libvlc_media_new(self.vlc,
+                                        ctypes.c_char_p(filename),
                                         self.exc.ref())
         self.exc.check()
         if media is None:

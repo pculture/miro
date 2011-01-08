@@ -748,7 +748,7 @@ class DevicesList(TabList, TabUpdaterMixin):
         pass
 
     def on_context_menu(self, table_view):
-        pass
+        return []
 
 class SiteList(TabList):
     type = u'site'
@@ -865,6 +865,64 @@ class AudioFeedList(FeedList):
 
     type = u'audio-feed'
 
+class SharingList(TabList):
+    type = 'sharing'
+    render_class = style.SharingTabRenderer
+    ALLOW_MULTIPLE = False
+
+    def __init__(self):
+        TabList.__init__(self)
+        self.view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
+        self.view.connect_weak('row-clicked', self.on_row_clicked)
+        
+    def on_row_expanded_change(self, view, iter, expanded):
+        pass
+
+    def on_delete_key_pressed(self):
+        pass
+
+    def on_context_menu(self, table_view):
+        return []
+
+    def on_row_clicked(self, view, iter):
+        info = view.model[iter][0]
+        info.mount = True
+        self.view.model_changed()
+        # The displays don't disappear automatically so handle the case
+        # where the user disconnects and then immediately reconnects to 
+        # the same share.  Won't have this problem if the display just
+        # disappears automatically but it doesn't.  To work around the
+        # problem, we stop tracking items then immediately start tracking
+        # items again.
+        current_display = app.display_manager.get_current_display()
+        try:
+            if current_display.id == info.id:
+                current_display.controller.stop_tracking()
+                current_display.controller.start_tracking()
+        except AttributeError:
+            pass
+
+    def on_hotspot_clicked(self, view, hotspot, iter):
+        if hotspot == 'eject-device':
+            # Don't track this tab anymore for music.
+            info = view.model[iter][0]
+            info.mount = False
+            # We must stop the playback if we are playing from the same
+            # share that we are ejecting from.
+            name, host, port = info.id
+            item = app.playback_manager.get_playing_item()
+            remote_item = False
+            if item and item.remote:
+                remote_item = True
+            if remote_item and item.host == host and item.port == port:
+                app.playback_manager.stop(save_resume_time=False)
+            messages.SharingEject(info.id).send_to_backend()
+
+    def init_info(self, info):
+        info.unwatched = info.available = 0
+        thumb_path = resources.path('images/phone.png')
+        info.icon = imagepool.get_surface(thumb_path)
+
 class PlaylistList(NestedTabList):
     type = u'playlist'
 
@@ -930,6 +988,8 @@ class TabListBox(widgetset.Scroller):
         vbox.pack_start(tlm.library_tab_list.view)
         vbox.pack_start(self.build_header(_('DEVICES')))
         vbox.pack_start(tlm.devices_list.view)
+        vbox.pack_start(self.build_header(_('SHARING')))
+        vbox.pack_start(tlm.sharing_list.view)
         vbox.pack_start(self.build_header(_('WEBSITES')))
         vbox.pack_start(tlm.site_list.view)
         vbox.pack_start(self.build_header(_('VIDEO FEEDS')))

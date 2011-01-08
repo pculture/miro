@@ -33,7 +33,10 @@
 import itertools
 import logging
 import time
+import threading
 import os
+
+import libdaap
 
 from miro import app
 from miro import autoupdate
@@ -60,7 +63,7 @@ from miro.gtcache import gettext as _
 from miro.playlist import SavedPlaylist
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 
-from miro.plat.utils import make_url_safe
+from miro.plat.utils import make_url_safe, thread_body
 
 import shutil
 
@@ -472,6 +475,17 @@ class FolderItemsTracker(DatabaseSourceTrackerBase):
         self.id = folder_id
         DatabaseSourceTrackerBase.__init__(self, search_text)
 
+class SharingItemTracker(SourceTrackerBase):
+    type = u'sharing'
+    def __init__(self, tab, search_text):
+        self.tab = tab
+        self.id = tab.id
+        print 'NO ITEM SOURCE, CRASH ....'
+        self.source = None    # XXX fill me in
+        self.tracker = app.sharing_tracker.get_tracker(self.tab, self.id)
+
+        SourceTrackerBase.__init__(self, search_text)
+
 class DeviceItemTracker(SourceTrackerBase):
     type = u'device'
     def __init__(self, device, search_text):
@@ -513,6 +527,8 @@ def make_item_tracker(message):
                 message.search_text)
     elif message.type == 'device':
         return DeviceItemTracker(message.id, message.search_text)
+    elif message.type == 'sharing':
+        return SharingItemTracker(message.id, message.search_text)
     else:
         logging.warn("Unknown TrackItems type: %s", message.type)
 
@@ -699,6 +715,15 @@ class BackendMessageHandler(messages.MessageHandler):
         if self.playlist_tracker:
             self.playlist_tracker.unlink()
             self.playlist_tracker = None
+
+    def handle_track_sharing(self, message):
+        app.sharing_tracker.start_tracking()
+
+    def handle_stop_tracking_sharing(self, message):
+        pass
+
+    def handle_sharing_eject(self, message):
+        app.sharing_tracker.eject(message.share_id)
 
     def handle_track_devices(self, message):
         app.device_tracker.start_tracking()

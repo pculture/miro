@@ -43,8 +43,9 @@ from miro import prefs
 from miro import signals
 from miro import util
 from miro import fileutil
-from miro.plat.utils import (FilenameType, kill_process,
-                             movie_data_program_info, thread_body)
+from miro.fileobject import FilenameType
+from miro.plat.utils import (kill_process, movie_data_program_info,
+                             thread_body)
 
 # Time in seconds that we wait for the utility to execute.  If it goes
 # longer than this, we assume it's hung and kill it.

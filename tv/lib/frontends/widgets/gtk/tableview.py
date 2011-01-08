@@ -575,6 +575,7 @@ class TableView(Widget):
         self.create_signal('row-collapsed')
         self.create_signal('selection-changed')
         self.create_signal('hotspot-clicked')
+        self.create_signal('row-clicked')
         self.create_signal('row-double-clicked')
         self.create_signal('row-activated')
         self.wrapped_widget_connect('row-activated', self.on_row_activated)
@@ -869,6 +870,14 @@ class TableView(Widget):
                 iter = treeview.get_model().get_iter(path_info[0])
                 self.emit('row-double-clicked', iter)
             return
+
+        # Check for single click.  Emit the event but keep on running
+        # so we can handle stuff like drag and drop.
+        if event.type == gtk.gdk.BUTTON_PRESS:
+            path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
+            if path_info is not None:
+                iter = treeview.get_model().get_iter(path_info[0])
+                self.emit('row-clicked', iter)
 
         if self.hotspot_tracker is None:
             hotspot_tracker = HotspotTracker(treeview, event)

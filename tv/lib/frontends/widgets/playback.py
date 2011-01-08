@@ -332,6 +332,9 @@ class PlaybackManager (signals.SignalEmitter):
             # started playing yet.  Just return
             return
         item_info = self.playlist[self.position]
+        # If it is a remote object, don't bother saving the resume time.
+        if getattr(item_info, 'remote', False):
+            return
         if app.config.get(prefs.RESUME_VIDEOS_MODE):
             if resume_time == -1:
                 resume_time = self.player.get_elapsed_playback_time()

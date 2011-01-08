@@ -549,8 +549,8 @@ def returns_binary(func):
 def check_f(text):
     """Raises exception if input isn't a filename type
     """
-    from miro.plat.utils import FilenameType
-    if text is not None and not isinstance(text, FilenameType):
+    from miro.plat.utils import PlatformFilenameType
+    if text is not None and not isinstance(text, PlatformFilenameType):
         raise MiroUnicodeError, (u"text %r is not a valid filename type" %
                                  text)
 

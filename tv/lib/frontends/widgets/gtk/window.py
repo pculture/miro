@@ -39,6 +39,7 @@ from miro import app
 from miro import prefs
 from miro import signals
 from miro import dialogs
+from miro.fileobject import FilenameType
 from miro.gtcache import gettext as _
 from miro.frontends.widgets.gtk import wrappermap, widgets
 from miro.frontends.widgets.gtk import keymap
@@ -718,10 +719,10 @@ class FileOpenDialog(FileDialogBase):
         self._window.add_filter(f)
 
     def get_filenames(self):
-        return [utils.FilenameType(f) for f in self._files]
+        return [FilenameType(f) for f in self._files]
 
     def get_filename(self):
-        return utils.FilenameType(self._files[0])
+        return FilenameType(self._files[0])
 
 class FileSaveDialog(FileDialogBase):
     def __init__(self, title):
@@ -739,7 +740,7 @@ class FileSaveDialog(FileDialogBase):
         self._window.set_current_name(text)
 
     def get_filename(self):
-        return utils.FilenameType(self._files[0])
+        return FilenameType(self._files[0])
 
 class DirectorySelectDialog(FileDialogBase):
     def __init__(self, title):
@@ -757,7 +758,7 @@ class DirectorySelectDialog(FileDialogBase):
         self._window.set_filename(text)
 
     def get_directory(self):
-        return utils.FilenameType(self._files[0])
+        return FilenameType(self._files[0])
 
 class AboutDialog(Dialog):
     def __init__(self):

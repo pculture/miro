@@ -52,6 +52,7 @@ from miro import prefs
 from miro import signals
 from miro import messages
 from miro.gtcache import gettext as _
+from miro.fileobject import FilenameType
 from miro.plat import utils
 from miro.plat import resources
 
@@ -489,7 +490,7 @@ def build_output_paths(item_info, target_folder, converter_info):
 
     target_name = "%s.%s.%s" % (title, converter_info.identifier,
                                 converter_info.extension)
-    final_path = utils.FilenameType(os.path.join(target_folder, target_name))
+    final_path = FilenameType(os.path.join(target_folder, target_name))
 
     if not use_temp_dir:
         # convert directly onto the device
