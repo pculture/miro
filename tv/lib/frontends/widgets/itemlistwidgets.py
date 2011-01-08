@@ -346,7 +346,7 @@ class ListItemView(widgetset.TableView):
         if resizable:
             column.set_resizable(True)
         if not pad:
-            column.set_no_pad()
+            column.set_do_horizontal_padding(pad)
         if hasattr(renderer, 'right_aligned') and renderer.right_aligned:
             column.set_right_aligned(True)
         column.connect_weak('clicked', self._on_column_clicked, column_name)

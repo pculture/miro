@@ -493,7 +493,7 @@ class TableColumn(signals.SignalEmitter):
         renderer.setup_attributes(self._column, attrs)
         self.renderer = renderer
         weak_connect(self._column, 'clicked', self._header_clicked)
-        self.can_pad = True
+        self.do_horizontal_padding = True
 
     def set_right_aligned(self, right_aligned):
         """Horizontal alignment of the header label."""
@@ -521,8 +521,8 @@ class TableColumn(signals.SignalEmitter):
         """Set if the user can resize the column."""
         self._column.set_resizable(resizable)
 
-    def set_no_pad(self):
-        self.can_pad = False
+    def set_do_horizontal_padding(self, horizontal_padding):
+        self.do_horizontal_padding = False
 
     def set_sort_indicator_visible(self, visible):
         """Show/Hide the sort indicator for this column."""
@@ -677,7 +677,7 @@ class TableView(Widget):
         """Set the amount of space between columns."""
         self._renderer_xpad = space / 2
         for column in self.columns:
-            if column.can_pad:
+            if column.do_horizontal_padding:
                 column.renderer._renderer.set_property('xpad', self._renderer_xpad)
 
     def set_row_spacing(self, space):
