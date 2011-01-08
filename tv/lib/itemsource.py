@@ -114,7 +114,7 @@ class DatabaseItemSource(ItemSource):
     # bump this whenever you change the ItemInfo class, or change one of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description()).
-    VERSION = 8
+    VERSION = 9
 
     def __init__(self, view, use_cache=True):
         ItemSource.__init__(self)
@@ -185,6 +185,7 @@ class DatabaseItemSource(ItemSource):
             'up_total': None,
             'down_total': None,
             'up_down_ratio': 0.0,
+            'remote': False,
             'device': None,
             'play_count': item.play_count,
             'skip_count': item.skip_count,
@@ -316,6 +317,7 @@ class DeviceItemSource(ItemSource):
             last_played = item.creation_time,
             download_info = None,
             device = item.device,
+            remote = False,
             leechers = None,
             seeders = None,
             up_rate = None,
