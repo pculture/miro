@@ -30,6 +30,7 @@
 import os
 import re
 import stat
+import time
 from threading import RLock
 from copy import copy
 import sys
@@ -815,6 +816,8 @@ class HTTPDownloader(BGDownloader):
 class BTDownloader(BGDownloader):
     # update fast resume every 5 minutes
     FAST_RESUME_UPDATE_INTERVAL = 60 * 5
+    # reannounce at most every 30 seconds
+    REANNOUNCE_LIMIT = 30
 
     def __init__(self, url=None, item=None, restore=None):
         self.metainfo = None
@@ -838,6 +841,9 @@ class BTDownloader(BGDownloader):
             self.firstTime = True
             BGDownloader.__init__(self, url, item)
             self.run_downloader()
+
+        self.item = item
+        self._last_reannounce_time = time.time()
 
     def _start_torrent(self):
         try:
@@ -885,6 +891,39 @@ class BTDownloader(BGDownloader):
         else:
             TORRENT_SESSION.add_torrent(self)
 
+    def scrape_tracker(self):
+        logging.debug("%s: no metainfo--rescraping", self.item)
+
+        # if we have no metainfo, then try rescraping
+        try:
+            self.torrent.scrape_tracker()
+        except Exception:
+            # FIXME - lock this exception down
+            logging.exception("unable to scrape tracker")
+
+    def reannounce_to_peers(self):
+        """Reannounce this peer to all the other peers.
+
+        This method ensures we don't try to reannounce too often.
+        """
+        time_now = time.time()
+        if time_now < (self._last_reannounce_time + self.REANNOUNCE_LIMIT):
+            # reannounce every REANNOUNCE_LIMIT seconds at most
+            return
+
+        logging.debug("%s: reannouncing to peers", self.item)
+        self._last_reannounce_time = time_now
+        if not self.metainfo or len(self.torrent.trackers()) == 0:
+            return
+
+        if self.rate <= 0:
+            # if the rate is 0, then try reannouncing
+            try:
+                self.torrent.force_reannounce()
+            except Exception:
+                # FIXME - lock this exception down
+                logging.exception("unable to reannounce to peers")
+
     def _shutdown_torrent(self):
         try:
             TORRENT_SESSION.remove_torrent(self)
@@ -921,6 +960,29 @@ class BTDownloader(BGDownloader):
         except:
             logging.exception("Error resuming torrent")
 
+    def _debug_print_peers(self):
+        peers = self.torrent.get_peer_info()
+        logging.debug("peers (%s):", self.item)
+        for i, mem in enumerate(peers):
+            if mem.flags & mem.connecting or mem.flags & mem.handshake:
+                continue
+            logging.debug("%4s: %12s down_speed %8s ip %20s progress %s",
+                          i,
+                          mem.client,
+                          mem.down_speed,
+                          mem.ip,
+                          mem.progress)
+
+    def _debug_print_status(self):
+        logging.debug("update_status (%s): (activity: %s) (rate: %s) "
+                      "(s: %s l: %s) (total_wanted_done: %s)",
+                      self.item,
+                      self.activity,
+                      self.rate,
+                      self.seeders,
+                      self.leechers,
+                      self.currentSize)
+
     def update_status(self):
         """
         activity -- string specifying what's currently happening or None for
@@ -946,6 +1008,11 @@ class BTDownloader(BGDownloader):
         except ZeroDivisionError:
             self.eta = 0
 
+        # FIXME - this needs some more examination before it's
+        # enabled.
+        # if self.rate == 0:
+        #     self.reannounce_to_peers()
+
         if status.state == lt.torrent_status.states.queued_for_checking:
             self.activity = _("waiting to check existing files")
         elif status.state == lt.torrent_status.states.checking_files:
@@ -957,13 +1024,10 @@ class BTDownloader(BGDownloader):
 
         self.currentSize = status.total_wanted_done
 
-        # logging.debug("update_status: (activity: %s) (rate: %s) "
-        #               "(s: %s l: %s) (total_wanted_done: %s)",
-        #               self.activity,
-        #               self.rate,
-        #               self.seeders,
-        #               self.leechers,
-        #               self.currentSize)
+        # these are useful for debugging torrent issues
+        # self._debug_print_status()
+        # self._debug_print_peers()
+
         if ((self.state == "downloading"
              and status.state == lt.torrent_status.states.seeding)):
             self.move_to_movies_directory()
