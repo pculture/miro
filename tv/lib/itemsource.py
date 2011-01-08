@@ -242,6 +242,47 @@ class DatabaseItemSource(ItemSource):
         # XXX should this be part of the ItemSource API?
         return app.item_info_cache.get_info(id_)
 
+class SharingItemSource(ItemSource):
+    """
+    An ItemSource which pulls data from a remote media share.
+    XXX should we use the database somehow so that the OS can decide
+    XXX can decide to write this data to secondary storage if it feels
+    XXX like it?
+    """
+    def __init__(self, tracker):
+        print 'SHARING ITEM SOURCE INIT'
+        ItemSource.__init__(self)
+        self.tracker = tracker
+        for signal in 'added', 'changed', 'removed':
+            signal_callback = getattr(self, signal)
+            # Use SQLite to create an in-memory database using a temp file, 
+            # and then
+            # chuck away the data.  Then the OS can page in and out as 
+            # necessary 
+            #handle = self.device.database.connect('item-%s' % signal,
+            #                                      self._emit_from_db,
+            #                                      signal_callback)
+            #self.signal_handles.append(handle)
+
+    def _emit_from_db(self, database, item, signal_callback):
+        if item.file_type != self.type:
+            return # don't care about other types of items
+        if not isinstance(item, messages.ItemInfo):
+            info = self._item_info_for(item)
+        else:
+            info = item
+        signal_callback(info)
+
+    def fetch_all(self):
+        print 'FETCH ALL'
+        return []
+
+    def unlink(self):
+        print 'SHARING ITEM SOURCE UNLINK'
+        #for handle in self.signal_handles:
+        #    self.device.database.disconnect(handle)
+        #self.signal_handles = []
+
 class DeviceItemSource(ItemSource):
     """
     An ItemSource which pulls its data from a device's JSON database.

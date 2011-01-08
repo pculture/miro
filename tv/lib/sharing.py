@@ -32,7 +32,9 @@ import socket
 import select
 import struct
 import threading
+import time
 
+from miro.gtcache import gettext as _
 from miro import app
 from miro import config
 from miro import eventloop
@@ -41,6 +43,8 @@ from miro import messages
 from miro import playlist
 from miro import prefs
 from miro import util
+from miro.fileobject import FilenameType
+from miro.util import returns_filename
 
 from miro.plat.utils import thread_body
 
@@ -90,13 +94,92 @@ def daap_item_fixup(item_id, entry):
 
     return daapitem
 
+class SharingItem(object):
+    """
+    An item which lives on a remote share.
+    """
+    def __init__(self, **kwargs):
+        for required in ('video_path', 'id', 'file_type', 'host', 'port'):
+            if required not in kwargs:
+                raise TypeError('SharingItem must be given a "%s" argument'
+                                % required)
+        self.name = self.file_format = self.size = None
+        self.release_date = self.feed_name = self.feed_id = None
+        self.keep = self.media_type_checked = True
+        self.updating_movie_info = self.isContainerItem = False
+        self.url = self.payment_link = None
+        self.comments_link = self.permalink = self.file_url = None
+        self.license = self.downloader = None
+        self.duration = self.screenshot = self.thumbnail_url = None
+        self.resumeTime = 0
+        self.subtitle_encoding = self.enclosure_type = None
+        self.description = u''
+        self.metadata = {}
+        self.rating = None
+        self.file_type = None
+        self.creation_time = None
+
+        self.__dict__.update(kwargs)
+
+        self.video_path = FilenameType(self.video_path)
+        if self.name is None:
+            self.name = _("Unknown")
+        # Do we care about file_format?
+        if self.file_format is None:
+            pass
+        if self.size is None:
+            self.size = 0
+        if self.release_date is None or self.creation_time is None:
+            now = time.time()
+            if self.release_date is None:
+                self.release_date = now
+            if self.creation_time is None:
+                self.creation_time = now
+        if self.duration is None: # -1 is unknown
+            self.duration = 0
+
+    @staticmethod
+    def id_exists():
+        return True
+
+    @returns_filename
+    def get_filename(self):
+        # For daap, sent it to be the same as http as it is basically
+        # http with a different port.
+        def daap_handler(path, host, port):
+            return 'http://%s:%s%s' % (host, port, path)
+        fn = FilenameType(self.video_path)
+        fn.set_handler(daap_handler, [self.host, self.port])
+        return fn
+
+    def get_url(self):
+        return self.url or u''
+
+    @returns_filename
+    def get_thumbnail(self):
+        # What about cover art?
+        if self.file_type == 'audio':
+            return resources.path("images/thumb-default-audio.png")
+        else:
+            return resources.path("images/thumb-default-video.png")
+
+    def _migrate_thumbnail(self):
+        # This should not ever do anything useful.  We don't have a backing
+        # database to safe this stuff.
+        pass
+
+    def remove(self, save=True):
+        # This should never do anything useful, we don't have a backing
+        # database. Yet.
+        pass
+
 class SharingTracker(object):
     """The sharing tracker is responsible for listening for available music
     shares and the main client connection code.  For each connected share,
     there is a separate SharingItemTrackerImpl() instance which is basically
     a backend for messagehandler.SharingItemTracker().
     """
-    type = 'sharing'
+    type = u'sharing'
     def __init__(self):
         self.trackers = dict()
         self.available_shares = []
@@ -229,7 +312,7 @@ class SharingItemTrackerImpl(object):
     user switches across different tabs in the sidebar, until the disconnect
     button is clicked.
     """
-    type = 'sharing'
+    type = u'sharing'
     def __init__(self, tab, share_id):
         self.tab = tab
         self.id = share_id
@@ -248,7 +331,7 @@ class SharingItemTrackerImpl(object):
                                     libdaap.DAAP_MEDIAKIND_VIDEO
                                    ]:
             file_type = u'video'
-        sharing_item = item.SharingItem(
+        sharing_item = SharingItem(
             id=rawitem['id'],
             duration=rawitem['duration'],
             size=rawitem['size'],
@@ -301,9 +384,10 @@ class SharingItemTrackerImpl(object):
             print 'no base list?'
             return
         items = self.client.items[k]
-        for k in items.keys():
-            item = messages.ItemInfo(self.sharing_item(items[k]))
-            self.items.append(item)
+        print 'XXX CREATE ITEM INFO'
+        #for k in items.keys():
+        #    item = messages.ItemInfo(self.sharing_item(items[k]))
+        #    self.items.append(item)
 
     # NB: this runs in the eventloop (backend) thread.
     def client_connect_callback(self, unused):

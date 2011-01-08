@@ -477,12 +477,11 @@ class FolderItemsTracker(DatabaseSourceTrackerBase):
 
 class SharingItemTracker(SourceTrackerBase):
     type = u'sharing'
-    def __init__(self, tab, search_text):
-        self.tab = tab
-        self.id = tab.id
-        print 'NO ITEM SOURCE, CRASH ....'
-        self.source = None    # XXX fill me in
-        self.tracker = app.sharing_tracker.get_tracker(self.tab, self.id)
+    def __init__(self, share, search_text):
+        self.share = share
+        self.id = share.id
+        self.tracker = app.sharing_tracker.get_tracker(self.share, self.id)
+        self.source = itemsource.SharingItemSource(self.tracker)
 
         SourceTrackerBase.__init__(self, search_text)
 

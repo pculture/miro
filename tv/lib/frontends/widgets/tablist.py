@@ -866,7 +866,7 @@ class AudioFeedList(FeedList):
     type = u'audio-feed'
 
 class SharingList(TabList):
-    type = 'sharing'
+    type = u'sharing'
     render_class = style.SharingTabRenderer
     ALLOW_MULTIPLE = False
 
