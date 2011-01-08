@@ -3,3 +3,8 @@
 ========
 
 This directory holds core extensions for Miro.
+
+For documentation on extensions and how they're implemented, see
+`ExtensionSystem`_.
+
+.. ExtensionSystem: http://develop.participatoryculture.org/index.php/ExtensionSystem
