@@ -55,10 +55,17 @@ def startup():
 
     from miro.plat import commandline
     args = commandline.get_command_line()[1:]
+
     if '--theme' in args:
         index = args.index('--theme')
-        theme = args[index + 1]
+        theme = args[index+1]
         del args[index:index+1]
+
+    if '--debug' in args:
+        index = args.index('--debug')
+        del args[index]
+        from miro import app
+        app.debugmode = True
 
     from miro import startup
     startup.initialize(theme)

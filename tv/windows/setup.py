@@ -39,7 +39,7 @@ import subprocess
 import zipfile as zip
 from glob import glob, iglob
 from xml.sax.saxutils import escape
-from distutils import sysconfig 
+from distutils import sysconfig
 from distutils.core import Command
 import distutils.command.install_data
 from distutils.ccompiler import new_compiler
@@ -198,7 +198,7 @@ xulrunnerbrowser_ext = Extension(
         portable_xpcom_dir,
         ] + GTK_INCLUDE_DIRS,
     define_macros=[
-        ("XP_WIN", 1), 
+        ("XP_WIN", 1),
         ("XPCOM_GLUE", 1),
         ("PCF_USING_XULRUNNER19", 1),
         ],
@@ -229,7 +229,7 @@ xulrunnerbrowser_ext = Extension(
 
 # Setting the path here allows py2exe to find the DLLS
 os.environ['PATH'] = ';'.join([
-        OPENSSL_LIB_PATH, ZLIB_RUNTIME_LIBRARY_PATH, 
+        OPENSSL_LIB_PATH, ZLIB_RUNTIME_LIBRARY_PATH,
         LIBTORRENT_PATH, GTK_BIN_PATH, os.environ['PATH']])
 
 # Private extension modules to build.
@@ -305,7 +305,7 @@ template_vars = util.read_simple_config_file(app_config)
 
 # pixmap for the about dialog
 icon_path = os.path.join("icons", "hicolor", "128x128", "apps")
-data_files.append((os.path.join("resources", icon_path), 
+data_files.append((os.path.join("resources", icon_path),
                    [os.path.join(platform_dir, icon_path, "miro.png")]))
 
 ###########################################################################
@@ -315,7 +315,6 @@ class install_data(distutils.command.install_data.install_data):
     """install_data extends to default implementation so that it
     automatically installs app.config from app.config.template.
     """
-
     def install_app_config(self):
         template = os.path.join(resources_dir, 'app.config.template')
         dest = os.path.join(self.install_dir, 'resources', 'app.config')
@@ -379,10 +378,12 @@ py2exe.build_exe.isSystemDLL = isSystemDLL
 class bdist_miro(Command):
     description = "Build Miro"
 
-    user_options = []
+    user_options = [
+        ('test', None, 'Install test bits.')
+        ]
 
     def initialize_options(self):
-        pass
+        self.test = False
 
     def finalize_options(self):
         pass
@@ -390,27 +391,8 @@ class bdist_miro(Command):
     def run(self):
         self.run_command('py2exe')
         self.copy_ico()
-
-    def copy_ico(self):
-        dist_dir = self.get_finalized_command('py2exe').dist_dir
-        shortappname = template_vars["shortAppName"]
-        self.copy_file("Miro.ico", 
-                       os.path.join(dist_dir, "%s.ico" % shortappname))
-
-class bdist_test(Command):
-    description = "Builds Miro with unit tests"
-
-    user_options = []
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        self.run_command('bdist_miro')
-        self.copy_test_data()
+        if self.test:
+            self.copy_test_data()
 
     def copy_test_data(self):
         # copy test data over
@@ -418,6 +400,12 @@ class bdist_test(Command):
 
         self.copy_tree(os.path.join(resources_dir, 'testdata'),
                        os.path.join(dist_dir, 'resources', 'testdata'))
+
+    def copy_ico(self):
+        dist_dir = self.get_finalized_command('py2exe').dist_dir
+        shortappname = template_vars["shortAppName"]
+        self.copy_file("Miro.ico",
+                       os.path.join(dist_dir, "%s.ico" % shortappname))
 
 class runmiro(Command):
     description = "build Miro and start it up"
@@ -512,8 +500,8 @@ class bdist_nsis(Command):
             output_file = "%s-nozugo" % output_file
         if self.mozilla:
             output_file = '%s-mozilla' % output_file
-            
-        output_file = (output_file % 
+
+        output_file = (output_file %
                        (template_vars['shortAppName'], template_vars['appVersion']))
         nsis_vars['CONFIG_OUTPUT_FILE'] = '%s.exe' % output_file
         nsis_vars['CONFIG_TWOSTAGE'] = "No"
@@ -532,7 +520,7 @@ class bdist_nsis(Command):
             output_file = '%s-%s-generic-twostage.exe'
         else:
             output_file = "%s-%s-twostage.exe"
-        output_file = (output_file % 
+        output_file = (output_file %
                        (template_vars['shortAppName'], template_vars['appVersion']))
         nsis_vars['CONFIG_OUTPUT_FILE'] = output_file
         nsis_vars['CONFIG_TWOSTAGE'] = "Yes"
@@ -565,7 +553,7 @@ class bdist_nsis(Command):
         for filename in iglob(wildcard):
             if filename[:length] == self.dist_dir:
                 filename = filename[length:]
-                while (len(filename) > 0 
+                while (len(filename) > 0
                        and (filename[0] == '/' or filename[0] == '\\')):
                     filename = filename[1:]
             print "Compressing %s" % filename
@@ -575,7 +563,7 @@ class bdist_nsis(Command):
         length = len(self.dist_dir)
         if filename[:length] == self.dist_dir:
             filename = filename[length:]
-            while (len(filename) > 0 
+            while (len(filename) > 0
                    and (filename[0] == '/' or filename[0] == '\\')):
                 filename = filename[1:]
         print "Compressing %s" % filename
@@ -602,11 +590,18 @@ if __name__ == "__main__":
             ],
         console=[
             {
+                # runs miro from the console--for debugging
+                'script': 'Miro.py',
+                'dest_base': 'mirodebug',
+                'icon_resources': [(0, "Miro.ico")],
+                },
+            {
                 'script': 'moviedata_util.py',
                 'dest_base': '%s_MovieData' % template_vars['shortAppName'],
                 'icon_resources': [(0, "Miro.ico")],
                 },
             {
+                # test runner
                 'script': 'mirotest.py',
                 'dest_base': 'mirotest',
                 'icon_resources': [(0, "Miro.ico")],
@@ -636,7 +631,6 @@ if __name__ == "__main__":
             'install_data': install_data,
             'bdist_miro': bdist_miro,
             'bdist_nsis': bdist_nsis,
-            'bdist_test': bdist_test,
             'runmiro': runmiro,
             },
         options={

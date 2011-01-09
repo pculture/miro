@@ -33,18 +33,19 @@ Holds utility methods that are platform-specific.
 
 import ctypes
 import _winreg
-from miro import app
-from miro import prefs
 import os
 import logging
 from logging.handlers import RotatingFileHandler
+import subprocess
+import sys
+import urllib
+
+from miro import app
+from miro import prefs
 from miro.plat import config as plat_config
 from miro.plat import prelogger
 from miro.plat import proxyfind
 from miro.plat import resources
-import subprocess
-import sys
-import urllib
 from miro.util import returns_unicode, check_u
 from miro.util import AutoLoggingStream
 from miro import fileutil
@@ -64,7 +65,7 @@ def samefile(path1, path2):
     return getLongPathName(path1) == getLongPathName(path2)
 
 def getLongPathName(path):
-    buf = ctypes.create_unicode_buffer(260) 
+    buf = ctypes.create_unicode_buffer(260)
     GetLongPathName = ctypes.windll.kernel32.GetLongPathNameW
     rv = GetLongPathName(path, buf, 260)
     if rv == 0 or rv > 260:
@@ -79,7 +80,7 @@ def get_available_bytes_for_movies():
     totalSpace = ctypes.c_ulonglong(0)
     rv = ctypes.windll.kernel32.GetDiskFreeSpaceExW(unicode(moviesDir),
             ctypes.byref(availableSpace), ctypes.byref(totalSpace),
-            ctypes.byref(freeSpace)) 
+            ctypes.byref(freeSpace))
     if rv == 0:
         print "GetDiskFreeSpaceExW failed, returning bogus value!"
         return 100 * 1024 * 1024 * 1024
@@ -133,7 +134,7 @@ def _get_locale():
         return _langs[code]
     except KeyError:
         # we don't know the language for this code
-        logging.warning("Don't know what locale to choose for code '%s' (%s)", 
+        logging.warning("Don't know what locale to choose for code '%s' (%s)",
                         code, hex(code))
     return None
 
@@ -155,7 +156,7 @@ class ApatheticRotatingFileHandler(RotatingFileHandler):
     def doRollover(self):
         # If you shut down Miro then start it up again immediately afterwards,
         # then we get in this squirrely situation where the log is opened
-        # by another process.  We ignore the exception, but make sure we 
+        # by another process.  We ignore the exception, but make sure we
         # have an open file.  (bug #11228)
         try:
             RotatingFileHandler.doRollover(self)
@@ -175,16 +176,12 @@ class ApatheticRotatingFileHandler(RotatingFileHandler):
         return RotatingFileHandler.shouldRollover(self, record)
 
     def handleError(self, record):
-        # ignore logging errors that occur rather than printing them to 
+        # ignore logging errors that occur rather than printing them to
         # stdout/stderr which isn't helpful to us
         pass
 
-_loggingSetup = False
+FORMAT = "%(asctime)s %(levelname)-8s %(name)s: %(message)s"
 def setup_logging(in_downloader=False):
-    global _loggingSetup
-    if _loggingSetup:
-        return
-
     if in_downloader:
         if os.environ.get('MIRO_APP_VERSION', "").endswith("git"):
             level = logging.DEBUG
@@ -198,31 +195,38 @@ def setup_logging(in_downloader=False):
             return
 
     else:
-        level = logging.DEBUG
-        pathname = app.config.get(prefs.LOG_PATHNAME)
+        if app.debugmode:
+            level = logging.DEBUG
+        else:
+            level = logging.INFO
         logging.basicConfig(level=level,
-                            stream=sys.stdout)
+                            format=FORMAT)
+        pathname = app.config.get(prefs.LOG_PATHNAME)
 
-    logger = logging.getLogger('')
-    # logger.setLevel(level)
     rotater = ApatheticRotatingFileHandler(
         pathname, mode="a", maxBytes=100000, backupCount=5)
+
+    formatter = logging.Formatter(FORMAT)
     rotater.setLevel(level)
-    formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
     rotater.setFormatter(formatter)
-    logger.addHandler(rotater)
+    logging.getLogger('').addHandler(rotater)
     rotater.doRollover()
     try:
         for record in prelogger.remove():
             logger.handle(record)
     except ValueError:
         logging.info("No records from prelogger.")
-    sys.stdout = AutoLoggingStream(logging.warn, '(from stdout) ')
-    sys.stderr = AutoLoggingStream(logging.error, '(from stderr) ')
+
+    if app.debugmode:
+        stdouthandler = logging.StreamHandler(sys.stdout)
+        stdouthandler.setLevel(level)
+        stdouthandler.setFormatter(formatter)
+        logging.getLogger('').addHandler(stdouthandler)
+    else:
+        sys.stdout = AutoLoggingStream(logging.warn, '(from stdout) ')
+        sys.stderr = AutoLoggingStream(logging.error, '(from stderr) ')
 
     logging.info("Logging set up to %s at level %s", pathname, level)
-
-    _loggingSetup = True
 
 @returns_unicode
 def utf8_to_filename(filename):
@@ -263,7 +267,7 @@ def unicode_to_filename(filename, path=None):
     # Keep this a little shorter than the max length, so we can run
     # nextFilename
     MAX_LEN = 200
-    
+
     badchars = ('/', '\000', '\\', ':', '*', '?', "'", '"', '<', '>', '|', "\n", "\r")
     for mem in badchars:
         filename = filename.replace(mem, "_")
@@ -297,7 +301,7 @@ def make_url_safe(string, safe='/'):
 
 @returns_unicode
 def unmake_url_safe(string):
-    """Undoes make_url_safe. 
+    """Undoes make_url_safe.
     """
     check_u(string)
     return urllib.unquote(string.encode('ascii')).decode('utf_8')
@@ -337,7 +341,7 @@ def launch_download_daemon(oldpid, env):
     # errors on some Windows machines.  Why it only happens on some is
     # a mystery of the universe.  Bug #9274.
     downloaderPath = '"%s"' % os.path.join(resources.appRoot(),
-            "Miro_Downloader.exe") 
+            "Miro_Downloader.exe")
     startupinfo = subprocess.STARTUPINFO()
     # TEMPORARY: the STARTF_USESHOWWINDOW has been moved into
     # subprocess._subprocess in Python 2.6.6 and beyond.
@@ -346,7 +350,7 @@ def launch_download_daemon(oldpid, env):
     except AttributeError:
         startupinfo.dwFlags |= subprocess._subprocess.STARTF_USESHOWWINDOW
     subprocess.Popen(downloaderPath, stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE, 
+            stderr=subprocess.PIPE,
             stdin=subprocess.PIPE,
             startupinfo=startupinfo)
 

@@ -33,4 +33,4 @@ set -o errexit
 
 setup_binarykit.sh
 python setup.py bdist_miro
-cd dist && Miro.exe
+cd dist && mirodebug.exe --debug
