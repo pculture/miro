@@ -1167,6 +1167,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
                         'The share is either unreachable or incompatible '
                         'with Miro sharing.' % fmtargs)
         dialogs.show_message(title, description, dialogs.INFO_MESSAGE)
+        app.tab_list_manager.select_guide()
         
     def handle_frontend_quit(self, message):
         app.widgetapp.do_quit()
