@@ -888,19 +888,6 @@ class SharingList(TabList):
         info = view.model[iter][0]
         info.mount = True
         self.view.model_changed()
-        # The displays don't disappear automatically so handle the case
-        # where the user disconnects and then immediately reconnects to 
-        # the same share.  Won't have this problem if the display just
-        # disappears automatically but it doesn't.  To work around the
-        # problem, we stop tracking items then immediately start tracking
-        # items again.
-        current_display = app.display_manager.get_current_display()
-        try:
-            if current_display.id == info.id:
-                current_display.controller.stop_tracking()
-                current_display.controller.start_tracking()
-        except AttributeError:
-            pass
 
     def on_hotspot_clicked(self, view, hotspot, iter):
         if hotspot == 'eject-device':
@@ -916,6 +903,8 @@ class SharingList(TabList):
                 remote_item = True
             if remote_item and item.host == host and item.port == port:
                 app.playback_manager.stop(save_resume_time=False)
+            # Default to select the guide.  There's nothing more to see here.
+            app.tab_list_manager.select_guide()
             messages.SharingEject(info.id).send_to_backend()
 
     def init_info(self, info):
