@@ -354,8 +354,15 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         return sharing_item
 
     def client_disconnect(self):
-        # No need to do anything here as the display pane gets destroyed.
-        pass
+        client = self.client
+        self.client = None
+        playlist_ids = [playlist.id for playlist in self.playlists]
+        message = messages.TabsChanged(self.type, [], [], playlist_ids)
+        message.send_to_frontend()
+        eventloop.call_in_thread(self.client_connect_callback,
+                                 self.client_connect_error_callback,
+                                 client.disconnect,
+                                 'DAAP client connect')
 
     def client_disconnect_error_callback(self, unused):
         pass
