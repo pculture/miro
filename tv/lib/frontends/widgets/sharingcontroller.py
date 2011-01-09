@@ -60,7 +60,6 @@ class SharingView(itemlistcontroller.SimpleItemListController):
         self.share = share
         self.id = share.id
         self.title = share.name
-        #self.is_folder = share.is_folder
         itemlistcontroller.SimpleItemListController.__init__(self)
 
     def build_item_view(self):
