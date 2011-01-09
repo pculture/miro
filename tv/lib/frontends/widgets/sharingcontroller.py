@@ -58,8 +58,7 @@ class SharingView(itemlistcontroller.SimpleItemListController):
     def __init__(self, share):
         self.type = u'sharing'
         self.share = share
-        self.id = share
-        print 'SELF.id = ', self.id
+        self.id = share.id
         self.title = share.name
         #self.is_folder = share.is_folder
         itemlistcontroller.SimpleItemListController.__init__(self)
@@ -73,16 +72,3 @@ class SharingView(itemlistcontroller.SimpleItemListController):
     # note: this should never be empty, so we don't have empty view.
     def build_widget(self):
         itemlistcontroller.SimpleItemListController.build_widget(self)
-
-    def handle_item_list(self, message):
-        print 'handle item list'
-        print 'length of message = ', len(message.items)
-        if len(message.items) > 0:
-            print 'type', type(message.items[0])
-        itemlistcontroller.SimpleItemListController.handle_item_list(self,
-                message)
-
-    def handle_items_changed(self, message):
-        print 'handle items changed'
-        itemlistcontroller.SimpleItemListController.handle_items_changed(self,
-                                                                      message)

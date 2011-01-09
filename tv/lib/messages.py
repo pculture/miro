@@ -904,9 +904,8 @@ class RateItem(BackendMessage):
 
 class SharingConnectFailed(FrontendMessage):
     """Tell the frontend the request to connect a share failed."""
-    def __init__(self, tab, share):
-        self.tab = tab
-        self.share = share
+    def __init__(self, share):
+        self.tab = share
 
 class FrontendQuit(FrontendMessage):
     """The frontend should exit."""
@@ -1473,8 +1472,8 @@ class SharingInfo(object):
 class SharingEject(BackendMessage):
     """Tells the backend that the user has requested the share be disconnected.
     """
-    def __init__(self, share_id):
-        self.share_id = share_id
+    def __init__(self, share):
+        self.share = share
 
 class DeviceInfo(object):
     """Tracks the state of an attached device.

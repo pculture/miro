@@ -67,9 +67,6 @@ from miro.plat.utils import make_url_safe, thread_body
 
 import shutil
 
-# XXX temporary
-from sqlite3 import InterfaceError
-
 class ViewTracker(object):
     """Handles tracking views for TrackGuides, TrackChannels, TrackPlaylist and
     TrackItems."""
@@ -482,11 +479,11 @@ class FolderItemsTracker(DatabaseSourceTrackerBase):
 
 class SharingItemTracker(SourceTrackerBase):
     type = u'sharing'
-    def __init__(self, share, search_text):
+    def __init__(self, share_id, search_text):
         # The identifier needs to match up with the id in the sharing
         # display controller.
-        self.id = share
-        self.tracker = app.sharing_tracker.get_tracker(self.id, self.id.id)
+        self.id = share_id
+        self.tracker = app.sharing_tracker.get_tracker(self.id)
         self.source = itemsource.SharingItemSource(self.tracker)
 
         SourceTrackerBase.__init__(self, search_text)
@@ -728,7 +725,7 @@ class BackendMessageHandler(messages.MessageHandler):
         pass
 
     def handle_sharing_eject(self, message):
-        app.sharing_tracker.eject(message.share_id)
+        app.sharing_tracker.eject(message.share.id)
 
     def handle_track_devices(self, message):
         app.device_tracker.start_tracking()
@@ -1615,20 +1612,17 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         try:
             return DisplayState.make_view("type=? AND id_=?",
                 key).get_singleton()
+        # XXX FIXME
         except database.ObjectNotFoundError:
             return DisplayState(key)
 
     def handle_save_display_state(self, message):
-        print 'TALK TO KAZ'
-        try:
-            state = self._get_display_state(message.key)
-            state.is_list_view = message.is_list_view
-            state.active_filters = message.active_filters
-            state.sort_state = message.sort_state
-            state.columns = message.columns
-            state.signal_change()
-        except InterfaceError:
-            pass
+        state = self._get_display_state(message.key)
+        state.is_list_view = message.is_list_view
+        state.active_filters = message.active_filters
+        state.sort_state = message.sort_state
+        state.columns = message.columns
+        state.signal_change()
         
     def _get_display_states(self):
         states = []

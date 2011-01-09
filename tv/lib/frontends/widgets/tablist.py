@@ -896,7 +896,8 @@ class SharingList(TabList):
             info.mount = False
             # We must stop the playback if we are playing from the same
             # share that we are ejecting from.
-            name, host, port = info.id
+            host = info.host
+            port = info.port
             item = app.playback_manager.get_playing_item()
             remote_item = False
             if item and item.remote:
@@ -905,7 +906,7 @@ class SharingList(TabList):
                 app.playback_manager.stop(save_resume_time=False)
             # Default to select the guide.  There's nothing more to see here.
             app.tab_list_manager.select_guide()
-            messages.SharingEject(info.id).send_to_backend()
+            messages.SharingEject(info).send_to_backend()
 
     def init_info(self, info):
         info.unwatched = info.available = 0

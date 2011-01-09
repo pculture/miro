@@ -34,6 +34,8 @@ import struct
 import threading
 import time
 
+from hashlib import md5
+
 from miro.gtcache import gettext as _
 from miro import app
 from miro import config
@@ -184,7 +186,7 @@ class SharingTracker(object):
     type = u'sharing'
     def __init__(self):
         self.trackers = dict()
-        self.available_shares = []
+        self.available_shares = dict()
         self.r, self.w = util.make_dummy_socket_pair()
 
     def calc_local_addresses(self):
@@ -223,23 +225,25 @@ class SharingTracker(object):
         if set(local_addresses + ip_values) and local_port == port:
             return
         # Need to come up with a unique ID for the share.  Use 
-        # (name, host, port)
-        share_id = (fullname, host, port)
+        # (name, host, port) and generate a hash of it.
+        # XXX is there anything better we can do than repr()?
+        share_id = unicode(md5(repr((fullname, host, port))).hexdigest())
         # Do we have this share on record?  If so then just ignore.
         # In particular work around a problem with Avahi apparently sending
         # duplicate messages.
-        if added and share_id in self.available_shares:
+        if added and share_id in self.available_shares.keys():
             return
-        if not added and not share_id in self.available_shares:
+        if not added and not share_id in self.available_shares.keys():
             return 
 
         info = messages.SharingInfo(share_id, fullname, host, port)
         if added:
             added_list.append(info)
-            self.available_shares.append(share_id)
+            self.available_shares[share_id] = info
         else:
             removed_list.append(share_id)
-            self.available_shares.append(share_id)
+            del self.available_shares[share_id]
+            self.available_
             # XXX we should not be simply stopping because the mDNS share
             # disappears.  AND we should not be calling this from backend
             # due to RACE!
@@ -289,13 +293,13 @@ class SharingTracker(object):
         del self.trackers[share_id]
         tracker.client_disconnect()
 
-    def get_tracker(self, share, share_id):
-        share_id = share.id
+    def get_tracker(self, share_id):
         try:
             return self.trackers[share_id]
         except KeyError:
             print 'CREATING NEW TRACKER'
-            self.trackers[share_id] = SharingItemTrackerImpl(share, share_id)
+            share = self.available_shares[share_id]
+            self.trackers[share_id] = SharingItemTrackerImpl(share)
             return self.trackers[share_id]
 
     def stop_tracking(self):
@@ -316,9 +320,8 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
     button is clicked.
     """
     type = u'sharing'
-    def __init__(self, tab, share_id):
-        self.tab = tab
-        self.id = share_id
+    def __init__(self, share):
+        self.share = share
         self.items = []
         eventloop.call_in_thread(self.client_connect_callback,
                                  self.client_connect_error_callback,
@@ -350,17 +353,8 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         return sharing_item
 
     def client_disconnect(self):
-        ids = [item.id for item in self.get_items()]
-        message = messages.ItemsChanged(self.type, self.tab, [], [], ids)
-        self.items = []
-        print 'SENDING removed message'
-        message.send_to_frontend()
-        # No need to clean out our list of items as we are going away anyway.
-        # As close() can block, run in separate thread.
-        eventloop.call_in_thread(self.client_disconnect_callback,
-                                 self.client_disconnect_error_callback,
-                                 lambda: self.client.disconnect(),
-                                 'DAAP client disconnect')
+        # No need to do anything here as the display pane gets destroyed.
+        pass
 
     def client_disconnect_error_callback(self, unused):
         pass
@@ -371,7 +365,8 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
     def client_connect(self):
         print 'client_thread: running'
         # The id actually encodes (name, host, port).
-        name, host, port = self.id
+        host = self.share.host
+        port = self.share.port
         self.client = libdaap.make_daap_client(host, port)
         if not self.client.connect():
             # XXX API does not allow us to send more detailed results
@@ -403,8 +398,8 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
 
     def client_connect_error_callback(self, unused):
         # If it didn't work, immediately disconnect ourselves.
-        app.sharing_tracker.eject(self.id)
-        messages.SharingConnectFailed(self.tab, self.id).send_to_frontend()
+        app.sharing_tracker.eject(self.share_id)
+        messages.SharingConnectFailed(self.share).send_to_frontend()
 
     def get_items(self):
         return self.items
