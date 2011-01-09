@@ -249,10 +249,11 @@ class SharingItemSource(ItemSource):
     XXX can decide to write this data to secondary storage if it feels
     XXX like it?
     """
-    def __init__(self, tracker):
-        print 'SHARING ITEM SOURCE INIT'
+    def __init__(self, tracker, playlist_id=None):
+        print 'SHARING ITEM SOURCE INIT playlist_id', playlist_id
         ItemSource.__init__(self)
         self.tracker = tracker
+        self.playlist_id = playlist_id
         self.signal_handles = []
         for signal in 'added', 'changed', 'removed':
             signal_callback = getattr(self, signal)
@@ -343,7 +344,8 @@ class SharingItemSource(ItemSource):
 
     def fetch_all(self):
         print 'FETCH ALL'
-        return [self._item_info_for(item) for item in self.tracker.get_items()]
+        return [self._item_info_for(item) for item in 
+                self.tracker.get_items(playlist_id=self.playlist_id)]
 
     def unlink(self):
         print 'SHARING ITEM SOURCE UNLINK'

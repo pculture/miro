@@ -1459,7 +1459,8 @@ class ConversionTaskChanged(FrontendMessage):
 
 class SharingInfo(object):
     """Tracks the state of an extent share."""
-    def __init__(self, share_id, name, host, port, parent_id=None):
+    def __init__(self, share_id, name, host, port, parent_id=None,
+                 playlist_id=None):
         # We need to create a unique identifier for indexing.  Fortunately
         # this may be non-numeric.  We just combine the name, host, port
         # as our index.
@@ -1468,6 +1469,7 @@ class SharingInfo(object):
         self.host = host
         self.port = port
         self.mount = False
+        self.playlist_id = playlist_id
         if parent_id is not None:
             self.is_folder = False
             self.parent_id = parent_id

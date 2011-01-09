@@ -165,7 +165,7 @@ class ViewTracker(object):
             self.send_messages()
         self.added.append(obj)
         self.schedule_send_messages()
-        print 'ADDED ONE BUY'
+        print 'ADDED ONE GUY'
 
     def on_object_removed(self, tracker, obj):
         if self.tabs_being_reordered:
@@ -479,12 +479,12 @@ class FolderItemsTracker(DatabaseSourceTrackerBase):
 
 class SharingItemTracker(SourceTrackerBase):
     type = u'sharing'
-    def __init__(self, share_id, search_text):
-        # The identifier needs to match up with the id in the sharing
-        # display controller.
-        self.id = share_id
-        self.tracker = app.sharing_tracker.get_tracker(self.id)
-        self.source = itemsource.SharingItemSource(self.tracker)
+    def __init__(self, share, search_text):
+        share_id = share.parent_id if share.parent_id else share.id
+        self.id = share
+        self.tracker = app.sharing_tracker.get_tracker(share_id)
+        self.source = itemsource.SharingItemSource(self.tracker,
+                                                   share.playlist_id)
 
         SourceTrackerBase.__init__(self, search_text)
 

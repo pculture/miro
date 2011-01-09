@@ -68,24 +68,32 @@ class SharingView(itemlistcontroller.SimpleItemListController):
     def handle_delete(self):
         pass
 
-    # Grumble ... ids are unique but we use it to itentify the particular
-    # share.  But with playlists, the id does not just identify the share,
-    # so we actually want the parent's id to get the correct tracker.  We
-    # just override the id temporarily so we don't have to duplicate a whole
-    # bunch of code from the ItemListController.
+    # Grumble ... we need to override it as the id identifies the tab, not
+    # the share, but we only have one tracker per share.  Send the 
+    # actual SharingInfo over which contains everything the backend needs
+    # to work out what to do.
     def start_tracking(self):
-        saved_id = self.id
-        if self.share.parent_id:
-            self.id = self.share.parent_id
-        itemlistcontroller.SimpleItemListController.start_tracking(self)
-        self.id = saved_id
+        messages.TrackItems(self.type, self.share,
+                            self._search_text).send_to_backend()
+        app.info_updater.item_list_callbacks.add(self.type, self.share,
+                                                 self.handle_item_list)
+        app.info_updater.item_changed_callbacks.add(self.type, self.share,
+                                                 self.handle_items_changed)
+        self._playback_callbacks = [
+            app.playback_manager.connect('selecting-file',
+                                         self._on_playback_change),
+            app.playback_manager.connect('will-stop',
+                                         self._playback_will_stop),
+        ]
 
     def stop_tracking(self):
-        saved_id = self.id
-        if self.share.parent_id:
-            self.id = self.share.parent_id
-        itemlistcontroller.SimpleItemListController.stop_tracking(self)
-        self.id = saved_id
+        messages.StopTrackingItems(self.type, self.share).send_to_backend()
+        app.info_updater.item_list_callbacks.remove(self.type, self.share,
+                                                 self.handle_item_list)
+        app.info_updater.item_changed_callbacks.remove(self.type, self.share,
+                                                 self.handle_items_changed)
+        for handle in self._playback_callbacks:
+            app.playback_manager.disconnect(handle)
 
     # note: this should never be empty, so we don't have empty view.
     def build_widget(self):

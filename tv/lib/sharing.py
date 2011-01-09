@@ -228,6 +228,7 @@ class SharingTracker(object):
         # (name, host, port) and generate a hash of it.
         # XXX is there anything better we can do than repr()?
         share_id = unicode(md5(repr((fullname, host, port))).hexdigest())
+        print 'MDNS CALLBACK share_id', share_id
         # Do we have this share on record?  If so then just ignore.
         # In particular work around a problem with Avahi apparently sending
         # duplicate messages.
@@ -332,7 +333,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         for sig in 'added', 'changed', 'removed':
             self.create_signal(sig)
 
-    def sharing_item(self, rawitem):
+    def sharing_item(self, rawitem, k):
         file_type = u'audio'    # fallback
         if rawitem['file_type'] == libdaap.DAAP_MEDIAKIND_AUDIO:
             file_type = u'audio'
@@ -349,7 +350,8 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             file_type=file_type,
             host=self.client.host,
             port=self.client.port,
-            video_path=self.client.daap_get_file_request(rawitem['id'])
+            video_path=self.client.daap_get_file_request(rawitem['id']),
+            playlist_id=k
         )
         return sharing_item
 
@@ -395,7 +397,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         items = self.client.items[k]
         print 'XXX CREATE ITEM INFO'
         for k in items.keys():
-            item = self.sharing_item(items[k])
+            item = self.sharing_item(items[k], k)
             self.items.append(item)
         for k in self.client.playlists.keys():
             playlist = self.client.playlists[k]
@@ -409,11 +411,13 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                                         playlist['name'],
                                         host,
                                         port,
-                                        parent_id=self.share.id)
+                                        parent_id=self.share.id,
+                                        playlist_id=k)
             self.playlists.append(info)
 
     # NB: this runs in the eventloop (backend) thread.
     def client_connect_callback(self, unused):
+        print 'SENDING %d playlists' % len(self.playlists)
         message = messages.TabsChanged('sharing', self.playlists, [], [])
         message.send_to_frontend()
         # Send a list of all the items to the main sharing tab.
@@ -428,6 +432,10 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
     def get_items(self, playlist_id=None):
         if not playlist_id:
             return self.items
+        else:
+            return [item for item in self.items if  
+                    item.playlist_id == playlist_id]
+      
 
 class SharingManagerBackend(object):
     """SharingManagerBackend is the bridge between pydaap and Miro.  It
