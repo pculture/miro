@@ -175,10 +175,8 @@ class TabListManager(object):
     def handle_no_tabs_selected(self):
         model = self.selected_tab_list.view.model
         iter = model.first_iter()
-        if iter is None or self.selected_tab_list.type == 'sharing':
-            # We deleted all the feeds/playlists, or it is the sharing tab.
-            # Select the guide instead.  Note, we don't want to automatically
-            # connect to the next available share.
+        if iter is None:
+            # We deleted all the feeds/playlists, select the guide instead
             self.select_guide()
         else:
             self.selected_tab_list.view.select(iter)
