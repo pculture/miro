@@ -398,7 +398,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
 
     def client_connect_error_callback(self, unused):
         # If it didn't work, immediately disconnect ourselves.
-        app.sharing_tracker.eject(self.share_id)
+        app.sharing_tracker.eject(self.share.id)
         messages.SharingConnectFailed(self.share).send_to_frontend()
 
     def get_items(self):
