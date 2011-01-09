@@ -3,7 +3,7 @@ README
 ======
 
 :Author: Will Kahn-Greene <will.guaraldi at pculture dot org>
-:Date: Januayr 14, 2010
+:Date: January 9th, 2011
 
 
 Summary
@@ -14,9 +14,9 @@ This is the Gtk-Windows port of Miro.
 Instructions and build requirements are documented at
 https://develop.participatoryculture.org/index.php/WindowsBuildDocs
 
-All shell scripts are written for cygwin, but otherwise cygwin is not reuired
-to build Miro.  Having said that, we exclusively use cygwin and don't
-know whether it works for other bash environments.
+All shell scripts are written for cygwin, but otherwise cygwin is not
+required to build Miro.  Having said that, we exclusively use cygwin
+bash and don't actively support other environments.
 
 If you have problems, visit us on ``#miro-hackers`` on
 ``irc.freenode.net``.
@@ -32,8 +32,8 @@ That sets up Visual Studio and Python.
 
 .. Note::
 
-   We don't support mingw or the gcc compiler for Miro on Windows.
-   We only support Visual Studio 2008 Express with Python from 
+   We don't support mingw or the gcc compiler for Miro on Windows.  We
+   only support Visual Studio 2008 Express with Python from
    python.org.
 
    We would love to get help switching to mingw.  If you're interested
@@ -47,13 +47,8 @@ To compile and run Miro in the current directory, do::
 
    ./run.sh
 
-This does the following steps:
-
-1. ``setup_binarykit.sh``
-2. ``python setup.py bdist_miro``
-3. ``dist\Miro.exe``
-
-If you have the required dependencies, it should build Miro and run it.
+If you have the required dependencies, it should build Miro and run
+it logging stuff to stdout in your console.
 
 See
 https://develop.participatoryculture.org/index.php/WindowsBuildDocs
@@ -62,12 +57,12 @@ platform code.  The information at this url is considered the
 authoritative source.
 
 
-To build an installer
-=====================
+To build a Miro installer
+=========================
 
 To build an installer, do::
 
-    python setup.py bdist_nsis   
+    python setup.py bdist_nsis
 
 That'll build Miro, then wrap it in a NullSoft installer.  The
 resulting files will be something like::
