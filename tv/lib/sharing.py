@@ -323,6 +323,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
     def __init__(self, share):
         self.share = share
         self.items = []
+        self.playlists = []
         eventloop.call_in_thread(self.client_connect_callback,
                                  self.client_connect_error_callback,
                                  self.client_connect,
@@ -364,7 +365,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
 
     def client_connect(self):
         print 'client_thread: running'
-        # The id actually encodes (name, host, port).
+        name = self.share.name
         host = self.share.host
         port = self.share.port
         self.client = libdaap.make_daap_client(host, port)
@@ -389,10 +390,26 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         for k in items.keys():
             item = self.sharing_item(items[k])
             self.items.append(item)
+        for k in self.client.playlists.keys():
+            playlist = self.client.playlists[k]
+            if playlist['base']:
+                continue
+            # XXX is there anything better we can do than repr()?
+            playlist_id = unicode(md5(repr((name,
+                                            host,
+                                            port, k))).hexdigest())
+            info = messages.SharingInfo(playlist_id,
+                                        playlist['name'],
+                                        host,
+                                        port,
+                                        parent_id=self.share.id)
+            self.playlists.append(info)
 
     # NB: this runs in the eventloop (backend) thread.
     def client_connect_callback(self, unused):
-        # XXX Can't bulk add: talk to Paul
+        message = messages.TabsChanged('sharing', self.playlists, [], [])
+        message.send_to_frontend()
+        # Send a list of all the items to the main sharing tab.
         for item in self.items:
             self.emit('added', item)
 
@@ -401,8 +418,9 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         app.sharing_tracker.eject(self.share.id)
         messages.SharingConnectFailed(self.share).send_to_frontend()
 
-    def get_items(self):
-        return self.items
+    def get_items(self, playlist_id=None):
+        if not playlist_id:
+            return self.items
 
 class SharingManagerBackend(object):
     """SharingManagerBackend is the bridge between pydaap and Miro.  It

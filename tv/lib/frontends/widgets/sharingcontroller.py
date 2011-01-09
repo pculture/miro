@@ -68,6 +68,25 @@ class SharingView(itemlistcontroller.SimpleItemListController):
     def handle_delete(self):
         pass
 
+    # Grumble ... ids are unique but we use it to itentify the particular
+    # share.  But with playlists, the id does not just identify the share,
+    # so we actually want the parent's id to get the correct tracker.  We
+    # just override the id temporarily so we don't have to duplicate a whole
+    # bunch of code from the ItemListController.
+    def start_tracking(self):
+        saved_id = self.id
+        if self.share.parent_id:
+            self.id = self.share.parent_id
+        itemlistcontroller.SimpleItemListController.start_tracking(self)
+        self.id = saved_id
+
+    def stop_tracking(self):
+        saved_id = self.id
+        if self.share.parent_id:
+            self.id = self.share.parent_id
+        itemlistcontroller.SimpleItemListController.stop_tracking(self)
+        self.id = saved_id
+
     # note: this should never be empty, so we don't have empty view.
     def build_widget(self):
         itemlistcontroller.SimpleItemListController.build_widget(self)

@@ -865,7 +865,7 @@ class AudioFeedList(FeedList):
 
     type = u'audio-feed'
 
-class SharingList(TabList):
+class SharingList(NestedTabList):
     type = u'sharing'
     render_class = style.SharingTabRenderer
     ALLOW_MULTIPLE = False
@@ -886,7 +886,9 @@ class SharingList(TabList):
 
     def on_row_clicked(self, view, iter):
         info = view.model[iter][0]
-        info.mount = True
+        # Only display disconnect icon for the share entry not the playlists.
+        if not info.parent_id:
+            info.mount = True
         self.view.model_changed()
 
     def on_hotspot_clicked(self, view, hotspot, iter):
@@ -910,7 +912,10 @@ class SharingList(TabList):
 
     def init_info(self, info):
         info.unwatched = info.available = 0
-        thumb_path = resources.path('images/phone.png')
+        if info.is_folder:
+            thumb_path = resources.path('images/phone.png')
+        else:
+            thumb_path = resources.path('images/icon-playlist.png')
         info.icon = imagepool.get_surface(thumb_path)
 
 class PlaylistList(NestedTabList):
