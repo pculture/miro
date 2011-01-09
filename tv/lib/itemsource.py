@@ -312,6 +312,7 @@ class SharingItemSource(ItemSource):
             year = item.metadata.get('year', -1),
             genre = item.metadata.get('genre', u''),
             rating = item.rating,
+            auto_rating = None,
             date_added = item.creation_time,
             last_played = item.creation_time,
             download_info = None,
@@ -326,7 +327,9 @@ class SharingItemSource(ItemSource):
             up_down_ratio = 0,
             play_count=0,
             skip_count=0,
-            cover_art=None)
+            cover_art=None,
+            host=item.host,
+            port=item.port)
 
     def _emit_from_db(self, database, item, signal_callback):
         #if item.file_type != self.type:
