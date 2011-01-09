@@ -485,6 +485,7 @@ class SharingManagerBackend(object):
             # At this point, the item list has not been fully populated yet.
             # Therefore, it may not be possible to run get_items() and getting
             # the count attribute.  Instead we use the playlist_item_map.
+            print 'WARNING: this is a db call, FIXME!'
             tmp = [y for y in playlist.PlaylistItemMap.playlist_view(x.id)]
             count = len(tmp)
             attributes.append(('mpco', 0))        # Parent container ID
