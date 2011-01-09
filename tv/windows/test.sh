@@ -31,6 +31,6 @@
 
 set -o errexit
 
-python setup.py bdist_test
-cd dist
-mirotest.exe $@
+setup_binarykit.sh
+python setup.py bdist_miro --test
+cd dist && mirodebug.exe --unittest $@

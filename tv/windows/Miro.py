@@ -27,9 +27,13 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Startup the Main Miro process."""
+"""Startup the main Miro process or run unittests.
+"""
 
-def startup():
+import sys
+import logging
+
+def startup(argv):
     theme = None
     # Should have code to figure out the theme.
 
@@ -81,9 +85,34 @@ def startup():
     WindowsApplication().run()
     pipe_server.quit()
 
+def test_startup(argv):
+    import sys
+    import logging
+    logging.basicConfig(level=logging.CRITICAL)
+
+    from miro import app
+    app.debugmode = True
+
+    from miro.plat import utils
+    utils.initialize_locale()
+
+    from miro import bootstrap
+    bootstrap.bootstrap()
+
+    from miro import test
+    from miro.plat import resources
+
+    sys.path.append(resources.appRoot())
+    test.run_tests()
+
+if __name__ == "__main__":
+    if "--unittest" in sys.argv:
+        sys.argv.remove("--unittest")
+        test_startup(sys.argv)
+    else:
+        startup(sys.argv)
+
     # sys.exit isn't sufficient--need to really end the process
     from miro.plat.utils import exit_miro
     exit_miro(0)
 
-if __name__ == "__main__":
-    startup()

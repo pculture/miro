@@ -183,17 +183,18 @@ class ApatheticRotatingFileHandler(RotatingFileHandler):
 FORMAT = "%(asctime)s %(levelname)-8s %(name)s: %(message)s"
 def setup_logging(in_downloader=False):
     if in_downloader:
-        if os.environ.get('MIRO_APP_VERSION', "").endswith("git"):
+        if 'MIRO_IN_UNIT_TESTS' in os.environ:
+            level = logging.WARN
+        elif os.environ.get('MIRO_DEBUGMODE', '') == True:
             level = logging.DEBUG
         else:
             level = logging.INFO
         logging.basicConfig(level=level,
+                            format='%(asctime)s %(levelname)-8s %(message)s',
                             stream=sys.stderr)
         pathname = os.environ.get("DEMOCRACY_DOWNLOADER_LOG")
         if not pathname:
-            _loggingSetup = True
             return
-
     else:
         if app.debugmode:
             level = logging.DEBUG
@@ -326,8 +327,19 @@ def launch_download_daemon(oldpid, env):
     kill_process(oldpid)
     for key, value in env.items():
         os.environ[key] = value
-    os.environ['DEMOCRACY_DOWNLOADER_LOG'] = app.config.get(prefs.DOWNLOADER_LOG_PATHNAME)
-    os.environ['MIRO_APP_VERSION'] = app.config.get(prefs.APP_VERSION)
+
+    environ = os.environ.copy()
+    environ['DEMOCRACY_DOWNLOADER_LOG'] = app.config.get(prefs.DOWNLOADER_LOG_PATHNAME)
+    environ['MIRO_APP_VERSION'] = app.config.get(prefs.APP_VERSION)
+    if hasattr(app, 'in_unit_tests'):
+        environ['MIRO_IN_UNIT_TESTS'] = '1'
+    environ.update(env)
+
+    # on windows, subprocess can ONLY accept strings (no unicode)
+    # in environment values.  at present this affects FFMPEG_DATADIR
+    # which doesn't matter in the downloader, so we remove it.
+    del environ["FFMPEG_DATADIR"]
+
     # Start the downloader.  We use the subprocess module to turn off
     # the console.  One slightly awkward thing is that the current
     # process might not have a valid stdin/stdout/stderr, so we create
@@ -350,9 +362,10 @@ def launch_download_daemon(oldpid, env):
     except AttributeError:
         startupinfo.dwFlags |= subprocess._subprocess.STARTF_USESHOWWINDOW
     subprocess.Popen(downloaderPath, stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            stdin=subprocess.PIPE,
-            startupinfo=startupinfo)
+                     stderr=subprocess.PIPE,
+                     stdin=subprocess.PIPE,
+                     startupinfo=startupinfo,
+                     env=environ)
 
 def exit_miro(return_code):
     """Python's sys.exit isn't sufficient in a Windows

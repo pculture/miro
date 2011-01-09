@@ -600,12 +600,6 @@ if __name__ == "__main__":
                 'dest_base': '%s_MovieData' % template_vars['shortAppName'],
                 'icon_resources': [(0, "Miro.ico")],
                 },
-            {
-                # test runner
-                'script': 'mirotest.py',
-                'dest_base': 'mirotest',
-                'icon_resources': [(0, "Miro.ico")],
-                }
             ],
         ext_modules=ext_modules,
         packages=[
