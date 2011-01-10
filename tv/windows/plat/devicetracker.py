@@ -45,24 +45,25 @@ class DeviceTracker(object):
         self._connected = {}
 
     def start_tracking(self):
-	self._wndprocWrapped = WndProcType(self._wndproc) # keep it around to
+	self._wndproc_wrapped = WndProcType(self._wndproc) # keep it around to
                                                           # avoid GC
         self._oldwndproc = ctypes.windll.user32.SetWindowLongW(
 		app.widgetapp.window._window.window.handle,
-		GWL_WNDPROC, self._wndprocWrapped)
+		GWL_WNDPROC, self._wndproc_wrapped)
 
-        self._devicesChanged()
+        self._devices_changed()
 
     def _wndproc(self, hwnd, msg, wparam, lparam):
         if msg == 537 and wparam == 7:
             #previousChange, self._lastChange = self._lastChange, time.time()
             #if self._lastChange - previousChange > 0.25:
-            self._devicesChanged()
+            self._devices_changed()
         return ctypes.windll.user32.CallWindowProcW(self._oldwndproc, hwnd,
                                                     msg, wparam, lparam)
 
-    def _devicesChanged(self):
-        # re-poll the devices, and figure out what, if anything, is different
+    def _devices_changed(self):
+        # re-poll the devices, and figure out what, if anything, is
+        # different
         volumes = set()
         for device in usbutils.connected_devices():
             volume = device['volume']
@@ -81,10 +82,11 @@ class DeviceTracker(object):
         if os.path.exists(mount):
             available = ctypes.wintypes.LARGE_INTEGER()
             total = ctypes.wintypes.LARGE_INTEGER()
-            ctypes.windll.kernel32.GetDiskFreeSpaceExW(unicode(mount),
-                                                       ctypes.byref(available),
-						       ctypes.byref(total),
-                                                       None)
+            ctypes.windll.kernel32.GetDiskFreeSpaceExW(
+                unicode(mount),
+                ctypes.byref(available),
+                ctypes.byref(total),
+                None)
             device['size'] = total.value
             device['remaining'] = available.value
 

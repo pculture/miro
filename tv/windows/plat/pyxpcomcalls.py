@@ -28,7 +28,9 @@
 # statement from all source files in the program, then also delete it here.
 
 
-# Create and store python callbacks so we can call them from XPCOM land
+"""
+Create and store python callbacks so we can call them from XPCOM land
+"""
 
 from xpcom import components
 

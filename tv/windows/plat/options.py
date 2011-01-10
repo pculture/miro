@@ -32,21 +32,24 @@
 
 from miro.prefs import Pref
 
-SHOW_TRAYICON = Pref(key="showTrayicon",
-                     default=True,
-                     platformSpecific=False)
+SHOW_TRAYICON = Pref(
+    key="showTrayicon",
+    default=True,
+    platformSpecific=False)
 
-WINDOW_DIMENSIONS = Pref(key="windowdimensions",
-                         default="100,100,800,600",
-                         platformSpecific=False)
+WINDOW_DIMENSIONS = Pref(
+    key="windowdimensions",
+    default="100,100,800,600",
+    platformSpecific=False)
 
-WINDOW_MAXIMIZED = Pref(key="windowmaximized",
-                        default=False,
-                        platformSpecific=False)
+WINDOW_MAXIMIZED = Pref(
+    key="windowmaximized",
+    default=False,
+    platformSpecific=False)
 
-WINDOWS_ICON = Pref(key='windowsIcon',
-                    default=None,
-                    # this is platform specific, but if we set this to
-                    # True then it won't look up the value in the
-                    # theme's app.config file
-                    platformSpecific=False)
+WINDOWS_ICON = Pref(
+    key='windowsIcon',
+    default=None,
+    # this is platform specific, but if we set this to True then it
+    # won't look up the value in the theme's app.config file
+    platformSpecific=False)

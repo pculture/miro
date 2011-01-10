@@ -102,7 +102,7 @@ def test_startup(argv):
     from miro import test
     from miro.plat import resources
 
-    sys.path.append(resources.appRoot())
+    sys.path.append(resources.app_root())
     test.run_tests()
 
 if __name__ == "__main__":

@@ -27,7 +27,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""screensaver.py -- Enable/Disable the screensaver."""
+"""screensaver.py -- Enable/Disable the screensaver.
+"""
 
 import ctypes
 import ctypes.wintypes
@@ -38,7 +39,6 @@ SystemParametersInfo = ctypes.windll.user32.SystemParametersInfoA
 SPI_GETSCREENSAVEACTIVE = 16
 SPI_SETSCREENSAVEACTIVE = 17
 
-
 class WindowsScreenSaverManager(object):
     def __init__(self):
         self.was_active = None
@@ -46,11 +46,11 @@ class WindowsScreenSaverManager(object):
     def check_screen_saver_disabled(self):
         # Workaround for a bug in windows 2000
         # (http://support.microsoft.com/kb/318781)
-        handle = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, 
+        handle = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER,
                 "Control Panel\\Desktop", 0, _winreg.KEY_QUERY_VALUE)
         try:
-            # We just try to query the value, if the key is missing then the
-            # screensaver is disabled
+            # We just try to query the value, if the key is missing
+            # then the screensaver is disabled
             _winreg.QueryValueEx(handle, "SCRNSAVE.EXE")
         except WindowsError:
             rv = True
@@ -80,7 +80,7 @@ class WindowsScreenSaverManager(object):
             SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, 1, None, 0)
         self.was_active = None
 
-
 def create_manager():
-    """Return an object that can disable/enable the screensaver."""
+    """Return an object that can disable/enable the screensaver.
+    """
     return WindowsScreenSaverManager()

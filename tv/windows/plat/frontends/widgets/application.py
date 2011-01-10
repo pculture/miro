@@ -117,7 +117,7 @@ class WindowsApplication(Application):
     def _set_default_icon(self):
         # we set the icon first (if available) so that it doesn't flash
         # on when the window is realized in Application.build_window()
-        icopath = os.path.join(resources.appRoot(), "Miro.ico")
+        icopath = os.path.join(resources.app_root(), "Miro.ico")
         if app.config.get(prefs.THEME_NAME) and app.config.get(options.WINDOWS_ICON):
             themeIcoPath = resources.theme_path(app.config.get(prefs.THEME_NAME),
                                                 app.config.get(options.WINDOWS_ICON))
@@ -305,7 +305,7 @@ class WindowsApplication(Application):
     def handle_first_time(self, callback):
         self._set_default_icon()
         Application.handle_first_time(self, callback)
-        
+
     def handle_update_available(self, obj, item):
         call_on_ui_thread(self.show_update_available, item)
 

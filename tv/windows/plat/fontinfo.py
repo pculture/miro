@@ -73,8 +73,8 @@ def _get_font_info(path):
         freetype.FT_Done_Face(face)
         return name
     else:
-        raise ValueError("Couldn't load freetype font: %s (error: %s)" % (path,
-                rv))
+        raise ValueError("Couldn't load freetype font: %s (error: %s)" %
+                         (path, rv))
 
 def get_font_info(path):
     global _font_cache
@@ -91,7 +91,7 @@ def get_all_font_info():
     font_dir = specialfolders.get_special_folder("Fonts")
     infos = {}
     for filename in os.listdir(font_dir):
-        if not (filename.lower().endswith('.ttf') or 
+        if not (filename.lower().endswith('.ttf') or
                 filename.lower().endswith('.ttc')):
             continue
         path = os.path.join(font_dir, filename)

@@ -132,7 +132,6 @@ def get_device_interface_detail(interface):
 def device_eject(devInst):
     CM_Request_Device_Eject(devInst, None, None, 0, 0)
 
-
 def get_parent(devInst):
     parent = ctypes.wintypes.DWORD(0)
     CM_Get_Parent(ctypes.byref(parent), devInst, 0)
@@ -158,8 +157,8 @@ def get_path_name(volume):
 
 def connected_devices():
     """
-    Returns a generator which returns small dictionaries of data representing
-    the connected USB storage devices.
+    Returns a generator which returns small dictionaries of data
+    representing the connected USB storage devices.
     """
     interface_index = 0
     while True:
@@ -180,11 +179,11 @@ def connected_devices():
             get_parent(deviceParent)).split('\\', 2)
         vendor_id, product_id = [int(id[-4:], 16) for id in ids.split('&')]
         yield {
-                'volume': volume_name,
-                'mount': drive_name,
-                'vendor_id': vendor_id,
-                'product_id': product_id,
-                'serial': serial,
-                'devInst': get_parent(deviceParent)
-                }
+            'volume': volume_name,
+            'mount': drive_name,
+            'vendor_id': vendor_id,
+            'product_id': product_id,
+            'serial': serial,
+            'devInst': get_parent(deviceParent)
+            }
 

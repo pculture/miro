@@ -38,11 +38,13 @@ kernel32.GetCommandLineW.restype = ctypes.c_wchar_p
 shell32.CommandLineToArgvW.restype = ctypes.POINTER(ctypes.c_wchar_p)
 
 def get_command_line_string():
-    """Get the command line as a unicode string."""
+    """Get the command line as a unicode string.
+    """
     return kernel32.GetCommandLineW()
 
 def parse_command_line_string(cmd_line):
-    """Parse the command line and return a list of arguments."""
+    """Parse the command line and return a list of arguments.
+    """
     num_args = ctypes.c_int()
     array = shell32.CommandLineToArgvW(cmd_line, ctypes.byref(num_args))
     rv = [array[i] for i in xrange(num_args.value)]
