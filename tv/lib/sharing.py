@@ -537,13 +537,6 @@ class SharingManagerBackend(object):
         return playlists
 
     def get_items(self, playlist_id=None):
-        # FIXME Guard against handle_item_list not having been run yet?
-        # But if it hasn't been run, it really means at there are no items
-        # (at least, in the eyes of Miro at this stage).
-        # XXX cache me.  Ideally we cache this per-protocol then we create
-        # this eagerly, then the self.items becomes a mapping from proto
-        # to a list of items.
-
         # Easy: just return
         if not playlist_id:
             return self.daapitems
