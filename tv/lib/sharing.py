@@ -425,8 +425,8 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         messages.SharingConnectFailed(self.share).send_to_frontend()
 
     def get_items(self, playlist_id=None):
-        if not playlist_id:
-            return self.items[k]
+        if not playlist_id and self.base_playlist is not None:
+            return self.items[self.base_playlist]
         else:
             return [item for item in self.items if  
                     item.playlist_id == playlist_id]
