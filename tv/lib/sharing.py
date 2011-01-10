@@ -432,7 +432,7 @@ class SharingManagerBackend(object):
     pushes Miro media items to pydaap so pydaap can serve them to the outside
     world."""
     types = ['videos', 'music']
-    id    = None                # Must be None
+    id    = u'sharing-manager-backend'
     items = dict()              # Neutral format - not really needed.
     daapitems = dict()          # DAAP format XXX - index via the items
     # XXX daapplaylist should be hidden from view. 
@@ -444,6 +444,7 @@ class SharingManagerBackend(object):
         pass
 
     def handle_item_list(self, message):
+        print 'THIS HANDLE ITEM LIST IS CALLED with items', len(message.items)
         self.make_item_dict(message.items)
 
     def handle_items_changed(self, message):
@@ -510,6 +511,8 @@ class SharingManagerBackend(object):
                                                 self.handle_item_list)
             app.info_updater.item_changed_callbacks.add(t, self.id,
                                                 self.handle_items_changed)
+            print 'TRACKING ITEMS type %s id %s' % (t, self.id)
+            messages.TrackItems(t, self.id).send_to_backend()
 
         self.populate_playlists()
 
@@ -522,6 +525,8 @@ class SharingManagerBackend(object):
 
     def stop_tracking(self):
         for t in self.types:
+            message = messages.StopTrackingItems(self.type, self.id)
+            message.send_to_backend()
             app.info_updater.item_list_callbacks.remove(t, self.id,
                                                 self.handle_item_list)
             app.info_updater.item_changed_callbacks.remove(t, self.id,
