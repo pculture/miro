@@ -1161,19 +1161,20 @@ class WidgetsMessageHandler(messages.MessageHandler):
         share = message.share
         host = share.host
         port = share.port
-        item = app.playback_manager.get_playing_item()
-        if item and item.remote and item.host == host and item.port == port:
-            app.playback_manager.stop(save_resume_time=False)
+        if share.mount:
+            item = app.playback_manager.get_playing_item()
+            if (item and item.remote and
+              item.host == host and item.port == port):
+                app.playback_manager.stop(save_resume_time=False)
         message = messages.TabsChanged('sharing', [], [], [share.id])
         typ, selected_tabs = app.tab_list_manager.get_selection()
-        print 'TYPE', typ
-        print 'SELECTED TABS', selected_tabs
         if typ == u'sharing' and share in selected_tabs:
             app.tab_list_manager.select_guide()
         # Call directly: already in frontend.
         self.handle_tabs_changed(message)
         # Now, reply to backend, and eject the share.
-        messages.SharingEject(share).send_to_backend()
+        if share.mount:
+            messages.SharingEject(share).send_to_backend()
         
     def handle_sharing_connect_failed(self, message):
         message.share.mount = False
