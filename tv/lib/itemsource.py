@@ -339,7 +339,6 @@ class SharingItemSource(ItemSource):
             info = self._item_info_for(item)
         else:
             info = item
-        print 'ADDED ITEM'
         signal_callback(info)
 
     def fetch_all(self):

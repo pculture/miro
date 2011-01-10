@@ -164,7 +164,6 @@ class ViewTracker(object):
             self.send_messages()
         self.added.append(obj)
         self.schedule_send_messages()
-        print 'ADDED ONE GUY'
 
     def on_object_removed(self, tracker, obj):
         if self.tabs_being_reordered:
