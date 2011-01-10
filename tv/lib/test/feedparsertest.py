@@ -91,6 +91,10 @@ def _test_closure(mem):
         fp = open(os.path.join(FPTESTOUTPUT, "%s.output" % mem), "r")
         output = fp.read()
         fp.close()
+        if 'entries' in d:
+            d = d['entries']
+        else:
+            d = d['bozo_exception']
         self.assertEquals(pprint.pformat(d), output)
     return _actual_test
 
