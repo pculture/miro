@@ -103,7 +103,6 @@ class ViewTracker(object):
                 self._make_changed_list(self.changed),
                 self._make_removed_list(self.removed))
         if message.added or message.changed or message.removed:
-            print 'SENDING TO FRONTEND'
             message.send_to_frontend()
         self.reset_changes()
 
@@ -442,6 +441,13 @@ class DownloadingItemsTracker(DatabaseSourceTrackerBase):
         self.view = item.Item.download_tab_view()
         DatabaseSourceTrackerBase.__init__(self, search_text)
 
+class SharingBackendItemsTracker(DatabaseSourceTrackerBase):
+    type = u'sharing-backend'
+    id = u'sharing-backend'
+    def __init__(self, search_text):
+        self.view = item.Item.watchable_view()
+        DatabaseSourceTrackerBase.__init__(self, search_text)
+
 class VideoItemsTracker(DatabaseSourceTrackerBase):
     type = u'videos'
     id = u'videos'
@@ -531,6 +537,8 @@ def make_item_tracker(message):
         return DeviceItemTracker(message.id, message.search_text)
     elif message.type == 'sharing':
         return SharingItemTracker(message.id, message.search_text)
+    elif message.type == 'sharing-backend':
+        return SharingBackendItemsTracker(message.search_text)
     else:
         logging.warn("Unknown TrackItems type: %s", message.type)
 

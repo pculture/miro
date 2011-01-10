@@ -431,8 +431,8 @@ class SharingManagerBackend(object):
     """SharingManagerBackend is the bridge between pydaap and Miro.  It
     pushes Miro media items to pydaap so pydaap can serve them to the outside
     world."""
-    types = ['videos', 'music']
-    id    = u'sharing-manager-backend'
+    type = u'sharing-backend'
+    id = u'sharing-backend'
     items = dict()              # Neutral format - not really needed.
     daapitems = dict()          # DAAP format XXX - index via the items
     # XXX daapplaylist should be hidden from view. 
@@ -506,13 +506,11 @@ class SharingManagerBackend(object):
               for x in playlist.PlaylistItemMap.playlist_view(playlist_id)]
 
     def start_tracking(self):
-        for t in self.types:
-            app.info_updater.item_list_callbacks.add(t, self.id,
-                                                self.handle_item_list)
-            app.info_updater.item_changed_callbacks.add(t, self.id,
-                                                self.handle_items_changed)
-            print 'TRACKING ITEMS type %s id %s' % (t, self.id)
-            messages.TrackItems(t, self.id).send_to_backend()
+        app.info_updater.item_list_callbacks.add(self.type, self.id,
+                                                 self.handle_item_list)
+        app.info_updater.item_changed_callbacks.add(self.type, self.id,
+                                                    self.handle_items_changed)
+        messages.TrackItems(self.type, self.id).send_to_backend()
 
         self.populate_playlists()
 
@@ -524,13 +522,11 @@ class SharingManagerBackend(object):
                                  self.handle_playlist_removed)
 
     def stop_tracking(self):
-        for t in self.types:
-            message = messages.StopTrackingItems(self.type, self.id)
-            message.send_to_backend()
-            app.info_updater.item_list_callbacks.remove(t, self.id,
-                                                self.handle_item_list)
-            app.info_updater.item_changed_callbacks.remove(t, self.id,
-                                                self.handle_items_changed)
+        messages.StopTrackingItems(self.type, self.id).send_to_backend()
+        app.info_updater.item_list_callbacks.remove(self.type, self.id,
+                                                    self.handle_item_list)
+        app.info_updater.item_changed_callbacks.remove(self.type, self.id,
+                                                    self.handle_items_changed)
 
         app.info_updater.disconnect(self.handle_playlist_added)
         app.info_updater.disconnect(self.handle_playlist_changed)

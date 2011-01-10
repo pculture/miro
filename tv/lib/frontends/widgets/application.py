@@ -1332,6 +1332,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
         app.info_updater.handle_tabs_changed(message)
 
     def handle_item_list(self, message):
+        print 'XXXX HANDLE ITEM LIST', message.type, message.id
         app.info_updater.handle_item_list(message)
         if app.menu_manager:
             app.menu_manager.update_menus()

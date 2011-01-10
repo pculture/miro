@@ -593,6 +593,16 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                    'remote_downloader as rd': 'item.downloader_id=rd.id'})
 
     @classmethod
+    def watchable_view(cls):
+        return cls.make_view(
+            "not isContainerItem AND "
+            "(deleted IS NULL or not deleted) AND "
+            "(is_file_item OR rd.main_item_id=item.id) AND "
+            "NOT item.file_type='audio'",
+            joins={'feed': 'item.feed_id=feed.id',
+                   'remote_downloader as rd': 'item.downloader_id=rd.id'})
+
+    @classmethod
     def watchable_audio_view(cls):
         return cls.make_view(
             "not isContainerItem AND "
