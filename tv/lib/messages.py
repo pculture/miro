@@ -437,6 +437,13 @@ class MarkItemSkipped(BackendMessage):
     def __init__(self, id_):
         self.id = id_
 
+class SetItemIsPlaying(BackendMessage):
+    """Set when an item begins playing; unset when it stops.
+    """
+    def __init__(self, id_, is_playing):
+        self.id = id_
+        self.is_playing = is_playing
+
 class SetItemSubtitleEncoding(BackendMessage):
     """Mark an item as watched.
     """
@@ -1116,6 +1123,7 @@ class ItemInfo(object):
     :param children: for container items the children of the item.
     :param is_playable: is this item a audio/video file, or a container that
                         contains audio/video files inside.
+    :param is_playing: Whether item is the currently playing (or paused) item
     :param leechers: (Torrent only) number of leeching clients
     :param seeders: (Torrent only) number of seeding clients
     :param up_rate: (Torrent only) how fast we're uploading data

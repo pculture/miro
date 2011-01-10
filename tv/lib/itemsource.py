@@ -114,7 +114,7 @@ class DatabaseItemSource(ItemSource):
     # bump this whenever you change the ItemInfo class, or change one of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description()).
-    VERSION = 8
+    VERSION = 9
 
     def __init__(self, view, use_cache=True):
         ItemSource.__init__(self)
@@ -190,6 +190,7 @@ class DatabaseItemSource(ItemSource):
             'skip_count': item.skip_count,
             'cover_art': item.get_cover_art(),
             'auto_rating': item.get_auto_rating(),
+            'is_playing': item.is_playing(),
             }
         if item.isContainerItem:
             info['children'] = [DatabaseItemSource._item_info_for(i) for i in

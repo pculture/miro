@@ -64,6 +64,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.position = 0
         self.mark_as_watched_timeout = None
         self.update_timeout = None
+        self.last_playing = None
         self.presentation_mode = 'fit-to-bounds'
         self.create_signal('selecting-file')
         self.create_signal('cant-play-file')
@@ -278,6 +279,11 @@ class PlaybackManager (signals.SignalEmitter):
         self.schedule_update()
         self.is_paused = False
         self.is_suspended = False
+        id_ = self.playlist[self.position].id
+        if self.last_playing:
+            messages.SetItemIsPlaying(self.last_playing, False).send_to_backend()
+        self.last_playing = id_
+        messages.SetItemIsPlaying(id_, True).send_to_backend()
         app.menu_manager.update_menus()
 
     def pause(self):
@@ -297,6 +303,9 @@ class PlaybackManager (signals.SignalEmitter):
         if not self.is_playing:
             return
         self._stop_tracking_items()
+        id_ = self.playlist[self.position].id
+        messages.SetItemIsPlaying(id_, False).send_to_backend()
+        self.last_playing = None
         if save_resume_time:
             self.update_current_resume_time()
         self.cancel_update_timer()

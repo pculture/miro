@@ -749,6 +749,15 @@ class BackendMessageHandler(messages.MessageHandler):
                 "handle_mark_item_skipped: can't find item by id %s",
                 message.id)
 
+    def handle_set_item_is_playing(self, message):
+        try:
+            item_ = item.Item.get_by_id(message.id)
+            item_.set_is_playing(message.is_playing)
+        except database.ObjectNotFoundError:
+            logging.warning(
+                "set_item_is_playing: can't find item by id %s",
+                message.id)
+
     def handle_rate_item(self, message):
         try:
             item_ = item.Item.get_by_id(message.id)
