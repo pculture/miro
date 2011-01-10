@@ -315,6 +315,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         self.share = share
         self.items = []
         self.playlists = []
+        self.base_playlist = None    # Temporary
         eventloop.call_in_thread(self.client_connect_callback,
                                  self.client_connect_error_callback,
                                  self.client_connect,
@@ -378,17 +379,21 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         # return as a ItemsChanged message
         for k in self.client.playlists.keys():
             if self.client.playlists[k]['base']:
+                self.base_playlist = k
                 break
         # Maybe we have looped through here without a base playlist.  Then
         # the server is broken.
         if not self.client.playlists[k]['base']:
             print 'no base list?'
             return
-        items = self.client.items[k]
-        print 'XXX CREATE ITEM INFO'
-        for k in items.keys():
-            item = self.sharing_item(items[k], k)
-            self.items.append(item)
+        # Build the items
+        for k in self.client.items.keys():
+            items = self.client.items[k]
+            print 'XXX CREATE ITEM INFO'
+            for itemkey in items.keys():
+                item = self.sharing_item(items[itemkey], k)
+                self.items.append(item)
+        # Build the playlists
         for k in self.client.playlists.keys():
             playlist = self.client.playlists[k]
             if playlist['base']:
@@ -421,7 +426,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
 
     def get_items(self, playlist_id=None):
         if not playlist_id:
-            return self.items
+            return self.items[k]
         else:
             return [item for item in self.items if  
                     item.playlist_id == playlist_id]
@@ -546,6 +551,7 @@ class SharingManagerBackend(object):
         if not playlist_id:
             return self.daapitems
         # XXX Somehow cache this?
+        print 'GET_ITEMS', playlist_id
         playlist = dict()
         for x in self.daapitems.keys():
             if x in self.playlist_item_map[playlist_id]:
