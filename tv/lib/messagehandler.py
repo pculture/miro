@@ -886,7 +886,7 @@ class BackendMessageHandler(messages.MessageHandler):
             logging.warn("folder not found: %s" % id)
         else:
             for feed in f.get_children_view():
-                feed.update()
+                feed.schedule_update_events(0)
 
     def handle_update_all_feeds(self, message):
         for f in feed.Feed.make_view():
