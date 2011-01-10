@@ -217,8 +217,6 @@ class SharingTracker(object):
                                   args=[added, fullname, host, ips, port])
 
     def mdns_callback_backend(self, added, fullname, host, ips, port):
-        added_list = []
-        removed_list = []
         unused, local_port = app.sharing_manager.get_address()
         local_addresses = self.calc_local_addresses()
         ip_values = [inet_ntop(k, ips[k]) for k in ips.keys()]
@@ -237,28 +235,20 @@ class SharingTracker(object):
         if not added and not share_id in self.available_shares.keys():
             return 
 
-        info = messages.SharingInfo(share_id, fullname, host, port)
         if added:
-            added_list.append(info)
+            info = messages.SharingInfo(share_id, fullname, host, port)
             self.available_shares[share_id] = info
+            messages.TabsChanged('sharing', [info], [], []).send_to_frontend()
         else:
-            removed_list.append(share_id)
+            # XXX The mDNS going away just means it is no longer published, 
+            # doesn't necessarily mean it's not available.  So, anyway, there's
+            # a bit more work involved for the frontend than just the tabs 
+            # have changed, so we use a SharingDisappeared message which takes
+            # care of stopping playback (if applicable), then disconnecting
+            # the share and removing the tab.
+            victim = self.available_shares[share_id]
             del self.available_shares[share_id]
-            self.available_
-            # XXX we should not be simply stopping because the mDNS share
-            # disappears.  AND we should not be calling this from backend
-            # due to RACE!
-            item = app.playback_manager.get_playing_item()
-            remote_item = False
-            if item and item.remote:
-                remote_item = True
-            if remote_item and item.host == host and item.port == port:
-                app.playback_manager.stop(save_resume_time=False)
-        # XXX should not remove this tab if it is currently mounted.  The
-        # mDNS going away just means it is no longer published, doesn't
-        # mean it's not available.
-        message = messages.TabsChanged('sharing', added_list, [], removed_list) 
-        message.send_to_frontend()
+            messages.SharingDisappeared(victim).send_to_frontend()
 
     def server_thread(self):
         callback = libdaap.browse_mdns(self.mdns_callback)

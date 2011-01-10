@@ -1157,10 +1157,27 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def profile_next_message(self, message_obj, path):
         self._profile_info = (message_obj, path)
 
+    def handle_sharing_disappeared(self, message):
+        share = message.share
+        host = share.host
+        port = share.port
+        item = app.playback_manager.get_playing_item()
+        if item and item.remote and item.host == host and item.port == port:
+            app.playback_manager.stop(save_resume_time=False)
+        message = messages.TabsChanged('sharing', [], [], [share.id])
+        typ, selected_tabs = app.tab_list_manager.get_selection()
+        print 'TYPE', typ
+        print 'SELECTED TABS', selected_tabs
+        if typ == u'sharing' and share in selected_tabs:
+            app.tab_list_manager.select_guide()
+        # Call directly: already in frontend.
+        self.handle_tabs_changed(message)
+        # Now, reply to backend, and eject the share.
+        messages.SharingEject(share).send_to_backend()
+        
     def handle_sharing_connect_failed(self, message):
-        tab = message.tab
-        tab.mount = False
-        name = tab.name
+        message.share.mount = False
+        name = message.share.name
         title = _('Connect failed')
         fmtargs = dict(name=name)
         description = _('Connection to share %(name)s failed.\n\n'

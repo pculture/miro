@@ -905,7 +905,12 @@ class RateItem(BackendMessage):
 class SharingConnectFailed(FrontendMessage):
     """Tell the frontend the request to connect a share failed."""
     def __init__(self, share):
-        self.tab = share
+        self.share = share
+
+class SharingDisappeared(FrontendMessage):
+    """Tell the frontend that the share has somehow disappeared."""
+    def __init__(self, share):
+        self.share = share
 
 class FrontendQuit(FrontendMessage):
     """The frontend should exit."""
