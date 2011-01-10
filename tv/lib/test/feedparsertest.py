@@ -70,6 +70,35 @@ class FeedParserDictTest(MiroTestCase):
         self.assertEqual(d.equal(a), False)
 
 class FeedParserTest(MiroTestCase):
+    def eq_output(self, str1, str2):
+        # we do this to allow the strings to match on windows where
+        # eol is different.  this is safe because end of line
+        # sequences don't matter when doing feedparsing.
+        str1 = str1.replace('\\r\\n', '\\n')
+        str2 = str2.replace('\\r\\n', '\\n')
+
+        # we do this crazy thing for comparisons because otherwise
+        # we're comparing one massive string to another and it becomes
+        # very very difficult to debug because it spams the console.
+        # so we do the comparison character by character and if we hit
+        # a difference, we print a small context.
+        length = min(len(str1), len(str2))
+        for i in range(length):
+            if str1[i] != str2[i]:
+                start = max(0, i-2)
+                end = min(length, i+10)
+                self.assertEquals(
+                    str1[i:], str2[i:],
+                    ("Strings differ at index %s:\n%s\n%s" %
+                     (i, str1[start:end], str2[start:end])))
+
+        # if the lengths of the two strings are different, then we
+        # point that out here.
+        if length > len(str1):
+            self.assertEquals("EOS", str2[length:])
+        elif length > len(str2):
+            self.assertEquals(str1[length:], "EOS")
+
     def test_ooze(self):
         feedparserutil.parse(os.path.join(FPTESTINPUT, "ooze.rss"))
 
@@ -95,7 +124,7 @@ def _test_closure(mem):
             d = d['entries']
         else:
             d = d['bozo_exception']
-        self.assertEquals(pprint.pformat(d), output)
+        self.eq_output(pprint.pformat(d), output)
     return _actual_test
 
 for mem in os.listdir(FPTESTINPUT):
