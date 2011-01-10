@@ -485,15 +485,18 @@ class SharingManagerBackend(object):
         eventloop.add_urgent_call(lambda: self.make_daap_playlists(added))
 
     def handle_playlist_changed(self, obj, changed):
-        for x in changed:
-            del self.daap_playlists[x.id]
-        eventloop.add_urgent_call(lambda: self.make_daap_playlists(changed))
+        def _handle_playlist_changed():
+            for x in changed:
+                del self.daap_playlists[x.id]
+            self.make_daap_playlists(changed)
+        eventloop.add_urgent_call(lambda: self.make_daap_playlists())
 
     def handle_playlist_removed(self, obj, removed):
-        def _handle_playlist_removed(objects):
+        def _handle_playlist_removed():
             for x in removed:
                 del self.daap_playlists[x]
-        eventloop.add_urgent_call(lambda: _handle_playlist_removed(removed))
+        _handle_playlist_removed(removed)
+        eventloop.add_urgent_call(lambda: _handle_playlist_removed())
 
     def populate_playlists(self):
         self.make_daap_playlists(playlist.SavedPlaylist.make_view())
