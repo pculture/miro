@@ -1099,9 +1099,6 @@ class InfoUpdater(signals.SignalEmitter):
 
     def handle_items_changed(self, message):
         callback_list = self.item_changed_callbacks
-        print 'HANDLE ITEMS CHANGED'
-        print 'type', message.type
-        print 'id', message.id
         for callback in callback_list.get(message.type, message.id):
             callback(message)
 
@@ -1332,7 +1329,6 @@ class WidgetsMessageHandler(messages.MessageHandler):
         app.info_updater.handle_tabs_changed(message)
 
     def handle_item_list(self, message):
-        print 'XXXX HANDLE ITEM LIST', message.type, message.id
         app.info_updater.handle_item_list(message)
         if app.menu_manager:
             app.menu_manager.update_menus()
