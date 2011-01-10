@@ -475,7 +475,6 @@ class SharingManagerBackend(object):
             # At this point, the item list has not been fully populated yet.
             # Therefore, it may not be possible to run get_items() and getting
             # the count attribute.  Instead we use the playlist_item_map.
-            print 'WARNING: this is a db call, FIXME!'
             tmp = [y for y in playlist.PlaylistItemMap.playlist_view(x.id)]
             count = len(tmp)
             attributes.append(('mpco', 0))        # Parent container ID
@@ -483,16 +482,18 @@ class SharingManagerBackend(object):
             self.daap_playlists[x.id] = attributes
 
     def handle_playlist_added(self, obj, added):
-        self.make_daap_playlists(added)
+        eventloop.add_urgent_call(lambda: self.make_daap_playlists(added))
 
     def handle_playlist_changed(self, obj, changed):
         for x in changed:
             del self.daap_playlists[x.id]
-        self.make_daap_playlists(changed)
+        eventloop.add_urgent_call(lambda: self.make_daap_playlists(changed))
 
     def handle_playlist_removed(self, obj, removed):
-        for x in removed:
-            del self.daap_playlists[x]
+        def _handle_playlist_removed(objects):
+            for x in removed:
+                del self.daap_playlists[x]
+        eventloop.add_urgent_call(lambda: _handle_playlist_removed(removed))
 
     def populate_playlists(self):
         self.make_daap_playlists(playlist.SavedPlaylist.make_view())
