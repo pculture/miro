@@ -42,7 +42,7 @@ from miro.frontends.widgets import menus
 from miro.frontends.widgets.menus import MOD, CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, ESCAPE
 from miro.plat.frontends.widgets import wrappermap
 
-from miro.plat.utils import appstore_edition
+from miro.plat.appstore import appstore_edition
 
 STD_ACTION_MAP = {
     "HideMiro":         (NSApp(), 'hide:'),

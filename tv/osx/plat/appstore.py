@@ -26,9 +26,15 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from miro.plat.appstore import appstore_edition
+import os
+from Foundation import NSBundle
 
-if appstore_edition():
-    AUTOUPDATE = False
-else:
-    AUTOUPDATE = True
+def appstore_edition():
+    """Returns True if this is a Mac App Store Edition of Miro.
+    It is differentiated by having a appStore file in the resources
+    directory inside the application bundle.
+    """
+    appstore_file = os.path.join(NSBundle.mainBundle().resourcePath(),
+                                 'appStore')
+    return os.path.exists(appstore_file)
+
