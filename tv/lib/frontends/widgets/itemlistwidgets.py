@@ -281,7 +281,6 @@ class ListItemView(widgetset.TableView):
         self._current_sort_column = None
         self._set_initial_widths = False
         for name in self.columns_enabled:
-            width = self.column_widths[name]
             resizable = not name in widgetconst.NO_RESIZE_COLUMNS
             pad = not name in widgetconst.NO_PAD_COLUMNS
             header = widgetconst.COLUMN_LABELS[name]
@@ -356,32 +355,35 @@ class ListItemView(widgetset.TableView):
         self._column_name_to_column[column_name] = column
         self.add_column(column)
 
-    def do_size_allocated(self, width, height):
+    def do_size_allocated(self, total_width, height):
         if not self._set_initial_widths:
             self._set_initial_widths = True
-            width -= 20 # allow some room for a scrollbar
+            total_width -= 20 # allow some room for a scrollbar
 
-            available_width = self.width_for_columns(width)
-            min_width = sum(self.column_widths.values())
-            extra_width = max(available_width - min_width, 0)
-            weights = {}
+            total_weight = 0
+            min_width = 0
             for name in self.columns_enabled:
-                weight = 0
-                if name in widgetconst.COLUMN_WIDTH_WEIGHTS:
-                    weight = widgetconst.COLUMN_WIDTH_WEIGHTS[name]
-                weights[name] = weight
-            total_weight = sum(weight for weight in weights.values()) or 1
+                if name in widgetconst.NO_RESIZE_COLUMNS:
+                    width = self._column_name_to_column[name].get_width()
+                    self.column_widths[name] = width
+                elif name in widgetconst.COLUMN_WIDTH_WEIGHTS:
+                    total_weight += widgetconst.COLUMN_WIDTH_WEIGHTS[name]
+                min_width += self.column_widths[name]
+            if total_weight is 0:
+                total_weight = 1
+
+            available_width = self.width_for_columns(total_width)
+            extra_width = max(available_width - min_width, 0)
+            
             diff = 0 # prevent cumulative rounding errors
             for name in self.columns_enabled:
-                weight = weights[name]
+                weight = widgetconst.COLUMN_WIDTH_WEIGHTS.get(name, 0)
                 extra = extra_width * weight / total_weight + diff
                 diff = extra - int(extra)
                 width = self.column_widths[name]
                 width += int(extra)
-                self.column_widths[name] = width
                 column = self._column_name_to_column[name]
                 column.set_width(width)
-            self.emit('column-widths-changed', self.column_widths)
 
     def _on_column_clicked(self, column, column_name):
         ascending = not (column.get_sort_indicator_visible() and
