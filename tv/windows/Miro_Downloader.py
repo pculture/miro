@@ -29,9 +29,9 @@
 
 """Startup the Miro downloader process."""
 
-from miro.dl_daemon import Democracy_Downloader
+from miro.dl_daemon import MiroDownloader
 try:
-    Democracy_Downloader.launch()
-except:
+    MiroDownloader.launch()
+except Exception:
     import logging
     logging.exception("downloader death by exception.")
