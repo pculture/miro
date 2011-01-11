@@ -168,11 +168,7 @@ def populate_menu():
         extract_menu_item(menubar, "Donate")
     ]
 
-    if appstore_edition():
-        miroMenuItems += [
-            menus.MenuItem(_("Check _Version"), "AppStoreCheckVersion")
-        ]
-    else:
+    if not appstore_edition():
         miroMenuItems += [
             extract_menu_item(menubar, "CheckVersion")
         ]
