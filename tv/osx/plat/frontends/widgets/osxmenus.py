@@ -185,6 +185,8 @@ def populate_menu():
     closeWinItem = menus.MenuItem(_("Close Window"), "CloseWindow", 
                                   menus.Shortcut("w", MOD))
     menubar.get("FileMenu").append(closeWinItem)
+    # Don't duplicate the update thingy on Mac.
+    menubar.get("FileMenu").remove("CheckVersion")
 
     # Edit menu
     editMenuItems = [
