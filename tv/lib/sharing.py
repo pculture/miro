@@ -333,6 +333,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                                     libdaap.DAAP_MEDIAKIND_VIDEO
                                    ]:
             file_type = u'video'
+        enclosure = rawitem['enclosure']
         sharing_item = SharingItem(
             id=rawitem['id'],
             duration=rawitem['duration'],
@@ -342,6 +343,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             host=self.client.host,
             port=self.client.port,
             video_path=self.client.daap_get_file_request(rawitem['id']),
+                                                         filetype=enclosure)
             playlist_id=k
         )
         return sharing_item
