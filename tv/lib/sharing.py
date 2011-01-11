@@ -583,7 +583,7 @@ class SharingManagerBackend(object):
         app.info_updater.disconnect(self.handle_playlist_removed)
 
     def get_filepath(self, itemid):
-        return self.items[itemid]['path']
+        return self.daapitems[itemid]['path']
 
     def get_playlists(self):
         playlists = []
@@ -634,7 +634,9 @@ class SharingManagerBackend(object):
             else:
                 itemprop['com.apple.itunes.mediakind'] = (
                   libdaap.DAAP_MEDIAKIND_AUDIO)
-
+            # don't forget to set the path..
+            # ok: it is ignored since this is not valid dmap/daap const.
+            itemprop['path'] = item.video_path
             self.daapitems[item.id] = itemprop
 
 class SharingManager(object):
