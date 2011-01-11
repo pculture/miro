@@ -61,15 +61,6 @@ _locale_initialized = False
 
 dlTask = None
 
-def appstore_edition():
-    """Returns True if this is a Mac App Store Edition of Miro.
-    It is differentiated by having a appStore file in the resources
-    directory inside the application bundle.
-    """
-    appstore_file = os.path.join(NSBundle.mainBundle().resourcePath(),
-                                 'appStore')
-    return os.path.exists(appstore_file)
-
 def dirfilt(root, dirs):
     """
     Platform hook to filter out any directories that should not be
