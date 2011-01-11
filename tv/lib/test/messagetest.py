@@ -667,9 +667,9 @@ class ItemInfoCacheErrorTest(MiroTestCase):
         # ensure that Item calls signal_change in setup_restored
         old_setup_restored = Item.setup_restored
         def new_setup_restored(self):
+            old_setup_restored(self)
             self.title = u'new title2'
             self.signal_change()
-            old_setup_restored(self)
         Item.setup_restored = new_setup_restored
         try:
             # Causes the items to be loaded from the db
