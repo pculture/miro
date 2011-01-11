@@ -373,42 +373,42 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
             # XXX API does not allow us to send more detailed results
             # back to the poor user.
             raise IOError('Cannot connect')
-        # XXX no API for this?  And what about playlists?
-        # XXX dodgy - shouldn't do this directly
-        # Find the base playlist, then suck all data out of it and then
-        # return as a ItemsChanged message
-        for k in self.client.playlists.keys():
-            if self.client.playlists[k]['base']:
+        if not self.client.databases():
+            raise IOError('Cannot get database')
+        playlists = self.client.playlists()
+        if playlists is None:
+            raise IOError('Cannot get playlist')
+        for k in playlists.keys():
+            if playlists[k]['base']:
+                if self.base_playlist:
+                    print 'WARNING: more than one base playlist found'
                 self.base_playlist = k
-                break
-        # Maybe we have looped through here without a base playlist.  Then
-        # the server is broken.
-        if not self.client.playlists[k]['base']:
-            print 'no base list?'
-            return
-        # Build the items
-        for k in self.client.items.keys():
-            items = self.client.items[k]
-            print 'XXX CREATE ITEM INFO'
+            # This isn't the playlist id of the remote share, this is the
+            # playlist id we use internally.
+            # XXX is there anything better we can do than repr()?
+            if not playlists[k]['base']:
+                # XXX only add playlist if it not base playlist.  We don't
+                # explicitly show base playlist.
+                playlist_id = unicode(md5(repr((name,
+                                                host,
+                                                port, k))).hexdigest())
+                info = messages.SharingInfo(playlist_id,
+                                            playlists[k]['name'],
+                                            host,
+                                            port,
+                                            parent_id=self.share.id,
+                                            playlist_id=k)
+                self.playlists.append(info)
+
+            items = self.client.items(playlist_id=k)
             for itemkey in items.keys():
                 item = self.sharing_item(items[itemkey], k)
                 self.items.append(item)
-        # Build the playlists
-        for k in self.client.playlists.keys():
-            playlist = self.client.playlists[k]
-            if playlist['base']:
-                continue
-            # XXX is there anything better we can do than repr()?
-            playlist_id = unicode(md5(repr((name,
-                                            host,
-                                            port, k))).hexdigest())
-            info = messages.SharingInfo(playlist_id,
-                                        playlist['name'],
-                                        host,
-                                        port,
-                                        parent_id=self.share.id,
-                                        playlist_id=k)
-            self.playlists.append(info)
+
+        # Maybe we have looped through here without a base playlist.  Then
+        # the server is broken?
+        if not self.base_playlist:
+            print 'WARNING: no base playlist?'
 
     # NB: this runs in the eventloop (backend) thread.
     def client_connect_callback(self, unused):
@@ -426,8 +426,10 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
 
     def get_items(self, playlist_id=None):
         if not playlist_id and self.base_playlist is not None:
-            return self.items[self.base_playlist]
+            print 'returning %d items' % len(self.items)
+            return self.items
         else:
+            print 'other '
             return [item for item in self.items if  
                     item.playlist_id == playlist_id]
       
