@@ -75,6 +75,20 @@ daap_mapping = {
     'daap.songtracknumber': 'track'
 }
 
+daap_rmapping = {
+    'enclosure': 'daap.songformat',
+    'file_type': 'com.apple.itunes.mediakind',
+    'id': 'dmap.itemid',
+    'name': 'dmap.itemname',
+    'duration': 'daap.songtime',
+    'size': 'daap.songsize',
+    'artist': 'daap.songartist',
+    'album': 'daap.songalbum',
+    'year': 'daap.songyear',
+    'genre': 'daap.songgenre',
+    'track': 'daap.songtracknumber'
+}
+
 # Windows Python does not have inet_ntop().  Sigh.  Fallback to this one,
 # which isn't as good, if we do not have access to it.
 def inet_ntop(af, ip):
@@ -458,10 +472,8 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
 
     def get_items(self, playlist_id=None):
         if not playlist_id and self.base_playlist is not None:
-            print 'returning %d items' % len(self.items)
             return self.items
         else:
-            print 'other '
             return [item for item in self.items if  
                     item.playlist_id == playlist_id]
       
@@ -483,7 +495,6 @@ class SharingManagerBackend(object):
         pass
 
     def handle_item_list(self, message):
-        print 'THIS HANDLE ITEM LIST IS CALLED with items', len(message.items)
         self.make_item_dict(message.items)
 
     def handle_items_changed(self, message):
@@ -593,31 +604,38 @@ class SharingManagerBackend(object):
         return playlist
 
     def make_item_dict(self, items):
-        # See lib/messages.py for a list of full fields that can be obtained
-        # from an ItemInfo.  Note that, this only contains partial information
-        # as it does not contain metadata about the item.  We do make one or
-        # two assumptions here, in particular the file_type will always either
-        # be video or audio.  For the actual file extension we strip it off
-        # from the actual file path.  We create a dict object for this,
-        # which is not very economical.  Is it possible to just keep a 
-        # reference to the ItemInfo object?
-        interested_fields = ['id', 'name', 'size', 'file_type', 'file_format',
-                             'video_path', 'duration']
-        for x in items:
-            name = x.name
-            size = x.size
-            duration = x.duration
-            file_type = x.file_type
-            path = x.video_path
-            f, e = os.path.splitext(path)
+        # See the daap_rmapping/daap_mapping for a list of mappings that
+        # we do.
+        for item in items:
+            itemprop = dict()
+            for attr in daap_rmapping.keys():
+                daap_string = daap_rmapping[attr]
+                itemprop[daap_string] = getattr(item, attr, None)
+                if isinstance(itemprop[daap_string], unicode):
+                    itemprop[daap_string] = (
+                      itemprop[daap_string].encode('utf-8'))
+                # Fixup the year, etc being -1.  XXX should read the daap
+                # type then determine what to do.
+                if itemprop[daap_string] == -1:
+                    itemprop[daap_string] = 0
+                # Fixup track number: it is a string?
+                if daap_string == 'daap.songtracknumber':
+                    itemprop[daap_string] = int(itemprop[daap_string])
+            # Fixup the enclosure format.
+            f, e = os.path.splitext(item.video_path)
             # Note! sometimes this doesn't work because the file has no
             # extension!
-            if e:
-                e = e[1:]
-            self.items[x.id] = dict(name=name, size=size, duration=duration,
-                                  file_type=file_type, path=path,
-                                  enclosure_format=e)
-            self.daapitems[x.id] = daap_item_fixup(x.id, self.items[x.id])
+            e = e[1:] if e else None
+            itemprop['daap.songformat'] = e
+            # Fixup the media kind: XXX what about u'other'?
+            if itemprop['com.apple.itunes.mediakind'] == u'video':
+                itemprop['com.apple.itunes.mediakind'] = (
+                  libdaap.DAAP_MEDIAKIND_VIDEO)
+            else:
+                itemprop['com.apple.itunes.mediakind'] = (
+                  libdaap.DAAP_MEDIAKIND_AUDIO)
+
+            self.daapitems[item.id] = itemprop
 
 class SharingManager(object):
     """SharingManager is the sharing server.  It publishes Miro media items
