@@ -54,6 +54,27 @@ from miro.plat.utils import thread_body
 
 import libdaap
 
+DAAP_META = ('dmap.itemkind,dmap.itemid,dmap.itemname,' +
+             'dmap.containeritemid,dmap.parentcontainerid,' +
+             'daap.songtime,daap.songsize,daap.songformat,' +
+             'daap.songartist,daap.songalbum,daap.songgenre,' +
+             'daap.songyear,daap.songtracknumber,daap.songuserrating,' +
+             'com.apple.itunes.mediakind')
+
+daap_mapping = {
+    'daap.songformat': 'enclosure',
+    'com.apple.itunes.mediakind': 'file_type',
+    'dmap.itemid': 'id',
+    'dmap.itemname': 'name',
+    'daap.songtime': 'duration',
+    'daap.songsize': 'size',
+    'daap.songartist': 'artist',
+    'daap.songalbum': 'album',
+    'daap.songyear': 'year',
+    'daap.songgenre': 'genre',
+    'daap.songtracknumber': 'track'
+}
+
 # Windows Python does not have inet_ntop().  Sigh.  Fallback to this one,
 # which isn't as good, if we do not have access to it.
 def inet_ntop(af, ip):
@@ -324,28 +345,37 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         for sig in 'added', 'changed', 'removed':
             self.create_signal(sig)
 
-    def sharing_item(self, rawitem, k):
+    def sharing_item(self, rawitem, playlist_id):
+        kwargs = dict()
+        for k in rawitem.keys():
+            try:
+                key = daap_mapping[k]
+            except KeyError:
+                # Got something back we don't really care about.
+                continue
+            kwargs[key] = rawitem[k]
+            if isinstance(rawitem[k], str):
+                kwargs[key] = kwargs[key].decode('utf-8')
+
+        # Fix this up.
         file_type = u'audio'    # fallback
-        if rawitem['file_type'] == libdaap.DAAP_MEDIAKIND_AUDIO:
+        if kwargs['file_type'] == libdaap.DAAP_MEDIAKIND_AUDIO:
             file_type = u'audio'
-        if rawitem['file_type'] in [libdaap.DAAP_MEDIAKIND_TV,
+        if kwargs['file_type'] in [libdaap.DAAP_MEDIAKIND_TV,
                                     libdaap.DAAP_MEDIAKIND_MOVIE,
                                     libdaap.DAAP_MEDIAKIND_VIDEO
                                    ]:
             file_type = u'video'
-        enclosure = rawitem['enclosure']
-        sharing_item = SharingItem(
-            id=rawitem['id'],
-            duration=rawitem['duration'],
-            size=rawitem['size'],
-            name=rawitem['name'].decode('utf-8'),
-            file_type=file_type,
-            host=self.client.host,
-            port=self.client.port,
-            video_path=self.client.daap_get_file_request(rawitem['id']),
-                                                         filetype=enclosure)
-            playlist_id=k
-        )
+        kwargs['file_type'] = file_type
+        kwargs['video_path'] = self.client.daap_get_file_request(
+                                   kwargs['id'],
+                                   kwargs['enclosure'])
+        kwargs['host'] = self.client.host
+        kwargs['port'] = self.client.port
+        kwargs['file_type'] = file_type
+        kwargs['playlist_id'] = playlist_id
+
+        sharing_item = SharingItem(**kwargs)
         return sharing_item
 
     def client_disconnect(self):
@@ -402,7 +432,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                                             playlist_id=k)
                 self.playlists.append(info)
 
-            items = self.client.items(playlist_id=k)
+            items = self.client.items(playlist_id=k, meta=DAAP_META)
             for itemkey in items.keys():
                 item = self.sharing_item(items[itemkey], k)
                 self.items.append(item)

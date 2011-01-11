@@ -92,6 +92,8 @@ COLUMNS_AVAILABLE = {
     'audio-feed': ['state', 'name', 'length', 'status', 'size'],
     'playlist': ['state', 'name', 'artist', 'album', 'track', 'feed-name',
         'length', 'genre', 'year', 'rating', 'size'],
+    'sharing': ['state', 'name', 'artist', 'album', 'track',
+        'length', 'genre', 'year', 'rating', 'size'],
     'search': ['state', 'name', 'artist', 'album', 'track', 'feed-name',
         'length', 'genre', 'year', 'rating', 'size'],
 }
