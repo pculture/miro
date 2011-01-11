@@ -871,7 +871,7 @@ class SharingList(NestedTabList):
     ALLOW_MULTIPLE = False
 
     def __init__(self):
-        TabList.__init__(self)
+        NestedTabList.__init__(self)
         self.view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
         self.view.connect_weak('row-clicked', self.on_row_clicked)
         
