@@ -1435,7 +1435,7 @@ class DisplayStatesStore(object):
             logging.warn("display type %s should be a unicode", repr(key[0]))
             key = (unicode(key[0]), key[1])
         if not key in self.displays:
-            new_display = messages.DisplayInfo(key, None, None, None, None)
+            new_display = messages.DisplayInfo(key)
             self.displays[key] = new_display
             self.save_state(key)
         return self.displays[key]

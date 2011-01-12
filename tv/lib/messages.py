@@ -1530,7 +1530,8 @@ class CurrentDisplayStates(FrontendMessage):
 class DisplayInfo(object):
     """Contains the state of a single display
     """
-    def __init__(self, key, is_list_view, active_filters, sort_state, columns):
+    def __init__(self, key, is_list_view=None, active_filters=None,
+            sort_state=None, columns=None):
         self.key = key
         self.is_list_view = is_list_view
         self.active_filters = active_filters
