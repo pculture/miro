@@ -161,6 +161,7 @@ def populate_menu():
     if not appstore_edition():
         miroMenuItems += [
             extract_menu_item(menubar, "CheckVersion")
+        ]
 
     miroMenuItems += [
         menus.Separator(),
