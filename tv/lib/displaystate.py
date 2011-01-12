@@ -40,4 +40,5 @@ class DisplayState(DDBObject):
         self.is_list_view = None
         self.active_filters = None
         self.sort_state = None
-        self.columns = None
+        self.columns_enabled = None
+        self.column_widths = None

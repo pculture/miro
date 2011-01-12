@@ -1467,28 +1467,28 @@ class DisplayStatesStore(object):
             ascending = False
         return itemlist.SORT_KEY_MAP[state](ascending)
 
-    def get_columns(self, key):
+    def get_columns_enabled(self, key):
         display = self._get_display(key)
-        if display.columns is None:
-            if key[0] not in widgetconst.COLUMNS_AVAILABLE:
-                logging.warn("display type %s does not have an entry in "
-                    "widgetconst.COLUMNS_AVAILABLE", repr(key[0]))
-                return []
+        columns_enabled = display.columns_enabled
+        if columns_enabled is None:
             # default to all columns available for view; we may want to change
             # this later
-            names = widgetconst.COLUMNS_AVAILABLE[key[0]]
-            widths = widgetconst.DEFAULT_COLUMN_WIDTHS
-            columns = list()
-            for name in names:
-                if name in widths:
-                    column = (unicode(name), widths[name])
-                else:
-                    column = (unicode(name), 60)
-                    logging.warn("column %s does not have an entry in "
-                        "widgetconst.DEFAULT_COLUMN_WIDTHS", repr(name))
-                columns.append(column)
-            return columns
-        return display.columns
+            columns_enabled = widgetconst.COLUMNS_AVAILABLE[key[0]]
+        return columns_enabled
+
+    def get_column_widths(self, key):
+        display = self._get_display(key)
+        column_widths = display.column_widths
+        if column_widths is None:
+            column_widths = {}
+            for name in self.get_columns_enabled(key):
+                column_widths[name] = widgetconst.DEFAULT_COLUMN_WIDTHS[name]
+        return column_widths
+
+    def get_column_width(self, key, name):
+        display = self._get_display(key)
+        column_widths = self.get_column_widths(key)
+        return column_widths[name]
 
     def get_filters(self, key):
         display = self._get_display(key)
@@ -1512,9 +1512,16 @@ class DisplayStatesStore(object):
         display.sort_state = state
         self.save_state(key)
 
-    def set_columns_state(self, key, columns):
+    def set_columns_enabled(self, key, enabled):
         display = self._get_display(key)
-        display.columns = columns
+        display.columns_enabled = enabled
+        self.save_state(key)
+
+    def update_column_widths(self, key, widths):
+        display = self._get_display(key)
+        if display.column_widths is None:
+            display.column_widths = self.get_column_widths(key)
+        display.column_widths.update(widths)
         self.save_state(key)
 
     def set_list_view(self, key):
@@ -1530,5 +1537,6 @@ class DisplayStatesStore(object):
     def save_state(self, key):
         display = self._get_display(key)
         m = messages.SaveDisplayState(key, display.is_list_view,
-            display.active_filters, display.sort_state, display.columns)
+            display.active_filters, display.sort_state, display.columns_enabled,
+            display.column_widths)
         m.send_to_backend()

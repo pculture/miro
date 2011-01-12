@@ -2920,3 +2920,25 @@ def upgrade128(cursor):
     """Add cover_art to item.
     """
     cursor.execute("ALTER TABLE item ADD COLUMN cover_art TEXT")
+
+def upgrade129(cursor):
+    """Separate DisplayState.columns into columns_enabled and column_widths
+    """
+    cursor.execute("SELECT id, columns FROM display_state")
+    columns = {}
+    for id_, column_state in cursor.fetchall():
+        if column_state is None:
+            name_list, width_map = None, None
+        else:
+            column_state = eval(column_state)
+            names, widths = zip(*column_state)
+            name_list = repr(list(names))
+            width_map = repr(dict(column_state))
+        columns[id_] = (name_list, width_map)
+    remove_column(cursor, 'display_state', ['columns'])
+    cursor.execute("ALTER TABLE display_state ADD COLUMN columns_enabled pythonrepr")
+    cursor.execute("ALTER TABLE display_state ADD COLUMN column_widths pythonrepr")
+    for id_, column_state in columns.items():
+        name_list, width_map = column_state[0], column_state[1]
+        cursor.execute("UPDATE display_state SET columns_enabled=?,"
+            "column_widths=? WHERE id=?", (name_list, width_map, id_))
