@@ -39,6 +39,7 @@ import time
 from miro.feedparserutil import FeedParserDict
 
 from miro import app
+from miro import amazon
 from miro import dialogs
 from miro import item
 from miro import feed
@@ -217,6 +218,10 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
             if  flashscraper.is_maybe_flashscrapable(url):
                 entry = _build_entry(url, 'video/x-flv', additional=metadata)
                 download_video(entry)
+                return
+
+            if amazon.is_amazon_content_type(content_type):
+                amazon.download_file(url, handle_unknown_callback)
                 return
 
             if filetypes.is_maybe_feed_content_type(content_type):

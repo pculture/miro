@@ -384,6 +384,17 @@ def finish_thread_loop(context_object):
     # used for testing
     pass
 
+def get_cookie_path():
+    """
+    Returns the path to a Netscape-style cookie file for Curl to use.
+
+    Nothing is written to this file, but we use the cookies for downloading
+    from Amazon.
+    """
+    return os.path.join(
+        app.config.get(prefs.SUPPORT_DIRECTORY),
+        'cookies.txt')
+
 # Expand me: pick up Linux media players.
 def get_plat_media_player_name_path():
     return (None, None)

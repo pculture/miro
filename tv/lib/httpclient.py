@@ -201,6 +201,7 @@ class TransferOptions(object):
         self.post_vars = post_vars
         self.post_files = post_files
         self.write_file = write_file
+        self.requires_cookies = False
         self.head_request = False
         self.invalid_url = False
         # _cancel_on_body_data is an internal attribute used for grab_headers.
@@ -248,6 +249,11 @@ class TransferOptions(object):
         handle.setopt(pycurl.NOPROGRESS, 1)
         handle.setopt(pycurl.NOSIGNAL, 1)
         handle.setopt(pycurl.CONNECTTIMEOUT, net.SOCKET_CONNECT_TIMEOUT)
+        if self.requires_cookies:
+            # we don't do this for every request, since on OS X this generates
+            # a new cookies.txt file
+            handle.setopt(pycurl.COOKIEFILE, utils.get_cookie_path())
+
         # The following 2 settings makes it so that if we don't receive any
         # data after SOCKET_READ_TIMEOUT, the transfer ends in an error
         handle.setopt(pycurl.LOW_SPEED_LIMIT, 1)

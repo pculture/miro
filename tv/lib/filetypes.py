@@ -67,8 +67,10 @@ MIMETYPES_EXT_MAP = {
     'audio/mp4':        ['.m4a'],
     'audio/x-ms-wma':   ['.wma'],
     'audio/x-matroska': ['.mka'],
-    
-    'application/x-bittorrent': ['.torrent']
+
+    'application/x-bittorrent': ['.torrent'],
+
+    'audio/x-amzxml': ['.amz']
 }
 
 EXT_MIMETYPES_MAP = {}
