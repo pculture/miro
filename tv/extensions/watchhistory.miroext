@@ -1,5 +1,5 @@
 [extension]
 name = Watch History
 version = core
-enabled_by_default = True
+enabled_by_default = False
 module = watchhistory
