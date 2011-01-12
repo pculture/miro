@@ -30,12 +30,24 @@
 import logging
 import os
 import time
-import csv
 
 from miro import app
 from miro import api
 
 my_logger = logging.getLogger('watchhistory')
+
+class CSVWriter(object):
+    def __init__(self, fp):
+        self.fp = fp
+
+    def writerow(self, row):
+        for i, mem in enumerate(row):
+            mem = str(mem)
+            if "," in mem:
+                mem = "\"" + mem.replace("\"", "\\\"") + "\""
+            row[i] = mem
+        self.fp.write(",".join(row) + os.linesep)
+        self.fp.flush()
 
 class WatchHistory():
     def __init__(self):
@@ -49,7 +61,7 @@ class WatchHistory():
         # open log file
         logfile = os.path.join(api.get_support_directory(), "watched.csv")
         fp = open(logfile, "ab")
-        self.csv_writer = csv.writer(fp)
+        self.csv_writer = CSVWriter(fp)
 
         # connect to will-play
         app.playback_manager.connect('selecting-file', self.handle_select_file)
@@ -63,7 +75,6 @@ class WatchHistory():
             row = [
                 time.ctime(),
                 self.item_info.name,
-
                 self.item_info.duration]
             self.csv_writer.writerow(row)
             # we wipe out self.item_info because will-play gets called

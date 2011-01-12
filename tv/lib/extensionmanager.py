@@ -44,6 +44,9 @@ from miro import prefs
 from miro import messages
 from miro import signals
 
+# need to do this otherwise py2exe won't pick up the api module
+from miro import api
+
 class Extension:
     def __init__(self):
         self.name = "Unknown"
