@@ -520,6 +520,12 @@ def _dateFromString(s):
     return _origDateFromString(s)
 plistlib._dateFromString = _dateFromString
 
+def _timestamp(dt):
+    try:
+        return str(int(time.mktime(dt.timetuple())))
+    except (ValueError, OverflowError):
+        return '2082787201' # far in the future
+
 def _generate_netscape_cookies(final_path, plist_path):
     cookies_plist = plistlib.readPlist(plist_path)
     with file(final_path, 'w') as cookie_file:
@@ -529,7 +535,7 @@ def _generate_netscape_cookies(final_path, plist_path):
                         'TRUE',
                         cookie['Path'],
                         'FALSE',
-                        str(cookie['Expires']),
+                        _timestamp(cookie['Expires']),
                         cookie['Name'],
                         cookie['Value']]))
             cookie_file.write('\n')
