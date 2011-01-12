@@ -447,6 +447,7 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
   Delete   "${directory}\ffmpeg2theora.exe"
   Delete   "${directory}\*.ffpreset"
 
+  RMDir /r "${directory}\extensions"
   RMDir /r "${directory}\etc"
   RMDir /r "${directory}\lib"
   RMDir /r "${directory}\share"
@@ -741,6 +742,7 @@ unzipok:
   File  /r etc
   File  /r lib
   File  /r share
+  File  /r extensions
   File  /r resources
   File  /r xulrunner
   File  /r vlc-plugins
@@ -953,7 +955,7 @@ Function .onInit
   IfErrors +3 0
   StrCpy $ZUGO_COUNTRY "SW"
   ClearErrors
- 
+
 
   ; get the country Zugo thinks we're in
   StrCmp $ZUGO_COUNTRY "" 0 +8
