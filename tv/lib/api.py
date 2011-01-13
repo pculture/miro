@@ -30,9 +30,15 @@
 """
 
 __all__ = [
+    "APIVERSION",
     "signals",
+    "ExtensionException",
+    "PlatformNotSupported",
+    "FrontendNotSupported",
+    "APIVersionNotSupported",
+    "get_platform",
+    "get_frontend",
     "get_support_directory",
-    "APIVERSION"
     ]
 
 # increase this by 1 every time the API changes
