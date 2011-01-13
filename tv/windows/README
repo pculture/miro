@@ -57,6 +57,14 @@ platform code.  The information at this url is considered the
 authoritative source.
 
 
+To run the unit tests
+=====================
+
+Do::
+
+    ./test.sh
+
+
 To build a Miro installer
 =========================
 
@@ -71,11 +79,3 @@ resulting files will be something like::
     dist\Miro-2.0-git.exe
 
 The second one is the "full" installer.
-
-
-To run the unit tests
-=====================
-
-Do::
-
-    ./test.sh
