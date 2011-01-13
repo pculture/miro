@@ -1133,6 +1133,7 @@ class RatingRenderer(widgetset.CustomCellRenderer):
     ICON_STATES = ('yes', 'no', 'maybe', 'probably', 'unset')
     def __init__(self):
         widgetset.CustomCellRenderer.__init__(self)
+        self.want_hover = True
         self.icon = {}
         for state in RatingRenderer.ICON_STATES:
             path = resources.path('images/star-%s.png' % state)

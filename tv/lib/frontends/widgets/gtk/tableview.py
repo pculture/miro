@@ -197,6 +197,7 @@ class CustomCellRenderer(object):
     https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
     def __init__(self):
         self._renderer = GTKCustomCellRenderer()
+        self.want_hover = False
         wrappermap.add(self._renderer, self)
 
     def setup_attributes(self, column, attr_map):
@@ -1001,13 +1002,14 @@ class TableView(Widget):
     def _update_hover(self, treeview, event):
         old_hover_info, old_hover_pos = self.hover_info, self.hover_pos
         path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
-        if path_info is None:
-            self.hover_info = None
-            self.hover_pos = None
-        else:
+        if (path_info and
+                self.gtk_column_to_wrapper[path_info[1]].renderer.want_hover):
             path, column = path_info[:2]
             self.hover_info = path, column
             self.hover_pos = path_info[2:]
+        else:
+            self.hover_info = None
+            self.hover_pos = None
         if old_hover_info != self.hover_info or old_hover_pos != self.hover_pos:
             if old_hover_info != self.hover_info and old_hover_info is not None:
                 self._redraw_cell(treeview, *old_hover_info)
