@@ -99,27 +99,6 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
     def get_url(self):
         return self.url
 
-    def get_first_url(self):
-        # FIXME - this is only used by get_last_visited_url
-        if self.is_default():
-            return app.config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL)
-        else:
-            return self.url
-
-    def get_last_visited_url(self):
-        # FIXME - this doens't look used
-        if self.lastVisitedURL is not None:
-            logging.info("First URL is %s", self.lastVisitedURL)
-            return self.lastVisitedURL
-        else:
-            if self.firstTime:
-                self.firstTime = False
-                logging.info("First URL is %s", self.get_first_url())
-                return self.get_first_url()
-            else:
-                logging.info("First URL is %s", self.get_url())
-                return self.get_url()
-
     def is_default(self):
         return self.url == app.config.get(prefs.CHANNEL_GUIDE_URL)
 
