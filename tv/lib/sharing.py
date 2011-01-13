@@ -423,10 +423,11 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         pass
 
     def client_connect(self):
-        print 'client_thread: running'
         name = self.share.name
         host = self.share.host
         port = self.share.port
+        returned_items = []
+        returned_playlists = []
         self.client = libdaap.make_daap_client(host, port)
         if not self.client.connect():
             # XXX API does not allow us to send more detailed results
@@ -457,21 +458,27 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
                                             port,
                                             parent_id=self.share.id,
                                             playlist_id=k)
-                self.playlists.append(info)
+                returned_playlists.append(info)
 
             items = self.client.items(playlist_id=k, meta=DAAP_META)
             for itemkey in items.keys():
                 item = self.sharing_item(items[itemkey], k)
-                self.items.append(item)
+                returned_items.append(item)
 
         # Maybe we have looped through here without a base playlist.  Then
         # the server is broken?
         if not self.base_playlist:
             print 'WARNING: no base playlist?'
 
+        # We don't append these items directly to the object and let
+        # the success callback to do it to prevent race.
+        return (returned_items, returned_playlists)
+
     # NB: this runs in the eventloop (backend) thread.
-    def client_connect_callback(self, unused):
-        print 'SENDING %d playlists' % len(self.playlists)
+    def client_connect_callback(self, args):
+        returned_items, returned_playlists = args
+        self.items = returned_items
+        self.returned_playlists = returned_playlists
         message = messages.TabsChanged('sharing', self.playlists, [], [])
         message.send_to_frontend()
         # Send a list of all the items to the main sharing tab.
