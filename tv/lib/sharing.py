@@ -650,6 +650,7 @@ class SharingManager(object):
         self.r, self.w = util.make_dummy_socket_pair()
         self.sharing = False
         self.discoverable = False
+        self.mdns_present = libdaap.mdns_init()
         self.config_watcher = config.ConfigWatcher(
             lambda func, *args: eventloop.add_idle(func, 'config watcher',
                  args=args))
@@ -764,7 +765,7 @@ class SharingManager(object):
     def enable_sharing(self):
         # Can we actually enable sharing.  The Bonjour client-side libraries
         # might not be installed, then we can't do anything.
-        if not libdaap.mdns_enabled:
+        if not self.mdns_present:
             # XXX do something here on Windows/Linux.  Probably platform
             # specific hook.
             self.sharing = False
