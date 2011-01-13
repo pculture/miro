@@ -269,6 +269,7 @@ class ListItemView(widgetset.TableView):
         'rate': style.DownloadRateRenderer, 'date-added': style.DateAddedRenderer,
         'last-played': style.LastPlayedRenderer,
     }
+    COLUMN_PADDING = 12
     def __init__(self, item_list, columns_enabled, column_widths):
         widgetset.TableView.__init__(self, item_list.model)
         self.columns_enabled = columns_enabled
@@ -288,7 +289,7 @@ class ListItemView(widgetset.TableView):
             self._make_column(header, renderer, name, resizable, pad)
         self.set_show_headers(True)
         self.set_columns_draggable(True)
-        self.set_column_spacing(12)
+        self.set_column_spacing(self.COLUMN_PADDING)
         self.set_row_spacing(8)
         self.set_grid_lines(False, True)
         self.set_alternate_row_backgrounds(True)
@@ -351,6 +352,11 @@ class ListItemView(widgetset.TableView):
             column.set_do_horizontal_padding(pad)
         if hasattr(renderer, 'right_aligned') and renderer.right_aligned:
             column.set_right_aligned(True)
+        if column_name in widgetconst.NO_RESIZE_COLUMNS:
+            self.column_widths[column_name] = renderer.min_width
+            if pad:
+                self.column_widths[column_name] += self.COLUMN_PADDING
+            column.set_width(renderer.min_width)
         column.connect_weak('clicked', self._on_column_clicked, column_name)
         self._column_name_to_column[column_name] = column
         self.add_column(column)
@@ -363,10 +369,7 @@ class ListItemView(widgetset.TableView):
             total_weight = 0
             min_width = 0
             for name in self.columns_enabled:
-                if name in widgetconst.NO_RESIZE_COLUMNS:
-                    width = self._column_name_to_column[name].get_width()
-                    self.column_widths[name] = width
-                elif name in widgetconst.COLUMN_WIDTH_WEIGHTS:
+                if name in widgetconst.COLUMN_WIDTH_WEIGHTS:
                     total_weight += widgetconst.COLUMN_WIDTH_WEIGHTS[name]
                 min_width += self.column_widths[name]
             if total_weight is 0:

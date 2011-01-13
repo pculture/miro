@@ -1022,6 +1022,8 @@ class NameRenderer(ListViewRenderer):
     def __init__(self):
         ListViewRenderer.__init__(self)
         self.button = None
+        path = resources.path('images/download-arrow.png')
+        self.download_icon = imagepool.get_surface(path)
 
     def calc_height(self, style, layout_manager):
         default = ListViewRenderer.calc_height(self, style, layout_manager)
@@ -1033,7 +1035,6 @@ class NameRenderer(ListViewRenderer):
 
     def _setup_layout_manager(self):
         self.text = self.info.name
-        self.bold = self.info.downloaded
 
     def _pack_extra(self, layout_manager, hbox):
         if not (self.info.downloaded or
@@ -1041,6 +1042,7 @@ class NameRenderer(ListViewRenderer):
             if self.button is None:
                 layout_manager.set_font(self.button_font_size)
                 self.button = layout_manager.button(_("Download"))
+                self.button.set_icon(self.download_icon)
             hbox.pack(cellpack.align_middle(cellpack.Hotspot('download',
                 self.button)))
 
@@ -1063,16 +1065,15 @@ class LengthRenderer(ListViewRenderer):
         self.text = displaytext.duration(self.info.duration)
 
 class StatusRenderer(ListViewRenderer):
+    BUTTONS = ('pause', 'resume', 'cancel', 'keep')
     bold = True
 
     def __init__(self):
         ListViewRenderer.__init__(self)
-        self.pause_button = imagepool.get_surface(resources.path(
-            'images/pause-button.png'))
-        self.resume_button = imagepool.get_surface(resources.path(
-            'images/resume-button.png'))
-        self.cancel_button = imagepool.get_surface(resources.path(
-            'images/cancel-button.png'))
+        self.button = {}
+        for button in self.BUTTONS:
+            path = resources.path('images/%s-button.png' % button)
+            self.button[button] = imagepool.get_surface(path)
 
     def _setup_layout_manager(self):
         if self.info.downloaded:
@@ -1113,24 +1114,27 @@ class StatusRenderer(ListViewRenderer):
         progress_bar = ItemProgressBarDrawer(self.info)
         hbox = cellpack.HBox(spacing=2)
         if self.info.state == 'downloading':
-            hotspot = cellpack.Hotspot('pause', self.pause_button)
+            hotspot = cellpack.Hotspot('pause', self.button['pause'])
         else:
-            hotspot = cellpack.Hotspot('resume', self.resume_button)
+            hotspot = cellpack.Hotspot('resume', self.button['resume'])
         hbox.pack(cellpack.align_middle(hotspot))
         drawing_area = cellpack.DrawingArea(20, 10, progress_bar.draw)
         hbox.pack(cellpack.align_middle(drawing_area), expand=True)
-        hotspot = cellpack.Hotspot('cancel', self.cancel_button)
+        hotspot = cellpack.Hotspot('cancel', self.button['cancel'])
         hbox.pack(cellpack.align_middle(hotspot))
         return hbox
 
     def _pack_extra(self, layout_manager, hbox):
         if self.info.expiration_date:
-            button = layout_manager.button(_('Keep'), self.hotspot=='keep')
+            button = self.button['keep']
+            hotspot = cellpack.Hotspot('keep', self.button['keep'])
             hbox.pack_space(8)
-            hbox.pack(cellpack.Hotspot('keep', button))
+            hbox.pack(hotspot)
 
 class RatingRenderer(widgetset.CustomCellRenderer):
-    ICON_STATES = ('yes', 'no', 'maybe', 'probably', 'unset')
+    ICON_STATES = ('yes', 'no', 'probably', 'unset')
+    ICON_HORIZONTAL_SPACING = 2
+    HOTSPOT_VERTICAL_PADDING = 8
     def __init__(self):
         widgetset.CustomCellRenderer.__init__(self)
         self.want_hover = True
@@ -1139,7 +1143,10 @@ class RatingRenderer(widgetset.CustomCellRenderer):
             path = resources.path('images/star-%s.png' % state)
             self.icon[state] = imagepool.get_surface(path)
         self.icon_width, self.height = self.icon['yes'].get_size()
-        self.min_width = self.width = self.icon_width * 5 + 5
+        self.height += self.HOTSPOT_VERTICAL_PADDING
+        self.icon_width += self.ICON_HORIZONTAL_SPACING
+        # TODO: find what makes the following +4 necessary
+        self.width = self.min_width = self.icon_width * 5 + 4
         self.hover = None
         self.layout = None
 
@@ -1161,7 +1168,8 @@ class RatingRenderer(widgetset.CustomCellRenderer):
 
     def render(self, context, layout_manager, selected, hotspot, hover):
         if hover and self.layout:
-            hotspot_info = self.layout.find_hotspot(hover[0], hover[1], 79, 25)
+            hotspot_info = self.layout.find_hotspot(hover[0], hover[1],
+                self.width, self.height)
             if hotspot_info is None:
                 hover = None
             else:
@@ -1173,24 +1181,30 @@ class RatingRenderer(widgetset.CustomCellRenderer):
     def pack_icons(self, hbox):
         for i in range(5):
             icon = self._get_icon(i)
-            alignment = cellpack.Alignment(icon, yalign=0.5, yscale=0.0,
-                xalign=0, xscale=0, min_width=self.icon_width)
+            alignment = cellpack.Alignment(icon,
+                yalign=0.5, yscale=0.0, xalign=0.5, xscale=0,
+                min_width=self.icon_width, min_height=self.height)
             hbox.pack(alignment)
 
     def _get_icon(self, i):
         # yes/no for explicit ratings; maybe/no for hover ratings;
         # probably/no for auto ratings; unset when no explicit, auto, or hover rating
-        state = 'no'
         if self.hover is not None:
             if self.hover >= i:
-                state = 'maybe'
+                state = 'yes'
+            else:
+                state = 'no'
         else:
             if self.info.rating is not None:
                 if self.info.rating >= i:
                     state = 'yes'
+                else:
+                    state = 'no'
             elif self.info.auto_rating is not None:
                 if self.info.auto_rating >= i:
                     state = 'probably'
+                else:
+                    state = 'unset'
             else:
                 state = 'unset'
         name = "rate:"+str(i)
@@ -1249,31 +1263,34 @@ class LastPlayedRenderer(ListViewRenderer):
         self.text = displaytext.date_slashes(self.info.last_played)
 
 class StateCircleRenderer(widgetset.CustomCellRenderer):
+    ICON_STATES = ('normal', 'new', 'playing', 'downloading')
     min_width = 25
 
     def __init__(self):
         widgetset.CustomCellRenderer.__init__(self)
-        self.unwatched_icon = imagepool.get_surface(resources.path(
-            'images/status-icon-newly-downloaded.png'))
-        self.new_icon = imagepool.get_surface(resources.path(
-            'images/status-icon-new.png'))
-        self.downloading_icon = imagepool.get_surface(resources.path(
-            'images/status-icon-downloading.png'))
-        self.width, self.height = self.unwatched_icon.get_size()
+        self.icon = {}
+        for state in StateCircleRenderer.ICON_STATES:
+            path = resources.path('images/status-icon-%s.png' % state)
+            self.icon[state] = imagepool.get_surface(path)
+        size = self.icon[StateCircleRenderer.ICON_STATES[0]].get_size()
+        self.width, self.height = size
+        self.layout = None
 
     def get_size(self, style, layout_manager):
         return self.width, self.height
 
     def render(self, context, layout_manager, selected, hotspot, hover):
         if self.info.state == 'downloading':
-            icon = self.downloading_icon
+            icon = self.icon['downloading']
+        elif self.info.is_playing:
+            icon = self.icon['playing']
         elif self.info.downloaded and self.info.is_playable and not self.info.video_watched:
-            icon = self.unwatched_icon
+            icon = self.icon['new']
         elif (not self.info.item_viewed and not self.info.expiration_date and
                 not self.info.is_external and not self.info.downloaded):
-            icon = self.new_icon
+            icon = self.icon['new']
         else:
-            return
+            icon = self.icon['normal']
         x = int((context.width - self.width) / 2)
         y = int((context.height - self.height) / 2)
         icon.draw(context, x, y, self.width, self.height)

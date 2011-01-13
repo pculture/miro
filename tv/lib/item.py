@@ -1942,6 +1942,7 @@ class FileItem(Item):
         self.was_downloaded = False
         if mark_seen:
             self.watchedTime = datetime.now()
+            self.seen = True
         if not fileutil.isdir(self.filename):
             # If our file isn't a directory, then we know we are definitely
             # not a container item.  Note that the opposite isn't true in the

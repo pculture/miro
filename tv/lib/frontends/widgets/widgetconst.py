@@ -68,7 +68,7 @@ COLUMN_LABELS = {
     u'date-added': _('Date Added'), u'last-played': _('Last Played'),
 }
 NO_RESIZE_COLUMNS = set(['state', 'rating'])
-NO_PAD_COLUMNS = set(['rating'])
+NO_PAD_COLUMNS = set()
 COLUMN_WIDTH_WEIGHTS = {
     u'name': 1.0,
     u'artist': 0.7,
