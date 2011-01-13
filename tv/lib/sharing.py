@@ -286,7 +286,7 @@ class SharingTracker(object):
             messages.SharingDisappeared(victim).send_to_frontend()
 
     def server_thread(self):
-        callback = libdaap.browse_mdns(self.mdns_callback)
+        callback = libdaap.mdns_browse(self.mdns_callback)
         while True:
             refs = callback.get_refs()
             try:
@@ -711,7 +711,7 @@ class SharingManager(object):
         # At this point the server must be available, because we'd otherwise
         # have no clue what port to register for with Bonjour.
         address, port = self.server.server_address
-        self.mdns_callback = libdaap.install_mdns(name, port=port)
+        self.mdns_callback = libdaap.mdns_register_service(name, port=port)
         # not exactly but close enough: it's not actually until the
         # processing function gets called.
         self.discoverable = True
@@ -723,7 +723,7 @@ class SharingManager(object):
 
     def disable_discover(self):
         self.discoverable = False
-        libdaap.uninstall_mdns(self.mdns_callback)
+        libdaap.mdns_unregister_service(self.mdns_callback)
 
     def server_thread(self):
         server_fileno = self.server.fileno()
