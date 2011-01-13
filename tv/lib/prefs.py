@@ -105,7 +105,7 @@ SUBTITLE_FONT               = Pref(key='subtitleFont',          default=None,  p
 LANGUAGE                    = Pref(key='language',              default="system", platformSpecific=False)
 MAX_CONCURRENT_CONVERSIONS  = Pref(key='maxConcurrentConversions', default=1, platformSpecific=False)
 SHARE_MEDIA                 = Pref(key='ShareMedia',            default=False, platformSpecific=False)
-SHARE_DISCOVERABLE          = Pref(key='ShareDiscoverable',     default=False, platformSpecific=False)
+SHARE_DISCOVERABLE          = Pref(key='ShareDiscoverable',     default=True, platformSpecific=False)
 SHARE_NAME                  = Pref(key='ShareName',             default="Miro Share", platformSpecific=False)
 
 # This doesn't need to be defined on the platform, but it can be overridden there if the platform wants to.

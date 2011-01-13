@@ -664,19 +664,13 @@ class SharingPanel(PanelBuilder):
         grid = dialogwidgets.ControlGrid()
 
         sharing_cbx = widgetset.Checkbox(_('Share my media library.'))
-        share_discoverable_cbx = widgetset.Checkbox(
-                                   _('Make my media library discoverable.'))
         share_txt = widgetset.TextEntry()
 
-        attach_boolean(sharing_cbx, prefs.SHARE_MEDIA,
-                                      (share_discoverable_cbx, share_txt))
-        attach_boolean(share_discoverable_cbx, prefs.SHARE_DISCOVERABLE)
+        attach_boolean(sharing_cbx, prefs.SHARE_MEDIA, [share_txt])
         attach_text(share_txt, prefs.SHARE_NAME,
                     check_function=lambda x: not x.strip() == '')
 
         vbox.pack_start(widgetutil.align_left(sharing_cbx, bottom_pad=6))
-        vbox.pack_start(widgetutil.align_left(share_discoverable_cbx,
-                                              bottom_pad=6))
 
         grid.pack_label(_("Share Name:"),
                         dialogwidgets.ControlGrid.ALIGN_RIGHT)

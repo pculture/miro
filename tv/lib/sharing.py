@@ -673,12 +673,13 @@ class SharingManager(object):
     def twiddle_sharing(self):
         sharing = app.config.get(prefs.SHARE_MEDIA)
         discoverable = app.config.get(prefs.SHARE_DISCOVERABLE)
-
         if sharing != self.sharing:
             if sharing:
                 # TODO: if this didn't work, should we set a timer to retry
                 # at some point in the future?
                 if not self.enable_sharing():
+                    # if it didn't work then it must be false regardless.
+                    self.discoverable = False
                     return
             else:
                 if self.discoverable:
