@@ -332,13 +332,26 @@ class SharingTracker(object):
         # What to do in case of socket error here?
         self.w.send("b")
 
-# Synchronization issues: The messagehandler.SharingItemTracker() creates
-# one of these for each share it connects to.  If this is an initial connection
-# the send_initial_list() will be empty and it will send the actual list
-# after connected, which must happen strictly after send_initial_list() as
-# both are scheduled to run on the backend thread.  If this is not an initial
-# connection then send_initial_list() would already have been populated so
-# we are fine there.
+# Synchronization issues: this code is a bit sneaky, so here is an explanation
+# of how it works.  When you click on a share tab in the frontend, the 
+# display (the item list controller) starts tracking the items.  It does
+# so by sending a message to the backend.  If it was previously unconnected
+# a new SharingItemTrackerImpl() will be created, and connect() is called,
+# which may take an indeterminate period of time, so this is farmed off
+# to an external thread.  When the connection is successful, a callback will
+# be called which is run on the backend (eventloop) thread which adds the
+# items and playlists to the SharingItemTrackerImpl tracker object. 
+# At the same time, handle_item_list() is called after the tracker is created
+# which will be empty at this time, because the items have not yet been added.
+# (recall that the callback runs in the eventloop, we are already in the 
+# eventloop so this could not have happened prior to handle_item_list()
+# being called).
+#
+# The SharingItemTrackerImpl() object is designed to be persistent until
+# disconnection happens.  If you click on a tab that's already connected,
+# it finds the appropriate tracker and calls handle_item_list.  Either it is
+# already populated, or if connection is still in process will return empty
+# list until the connection success callback is called.
 class SharingItemTrackerImpl(signals.SignalEmitter):
     """This is the backend for the SharingItemTracker the messagehandler file.
     This backend class allows the item tracker to be persistent even as the
