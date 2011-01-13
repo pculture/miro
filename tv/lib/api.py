@@ -48,6 +48,8 @@ APIVERSION = 0
 from miro import signals
 
 class ExtensionException(StandardError):
+    """Base exception class for Extension-related exceptions.
+    """
     pass
 
 class PlatformNotSupported(ExtensionException):
@@ -81,11 +83,8 @@ def get_platform():
     """
     try:
         from miro import plat
-    except ImportError:
-        return "unknown"
-    try:
         return plat.PLATFORMNAME.lower()
-    except AttributeError:
+    except (ImportError, AttributeError):
         return "unknown"
 
 def get_frontend():
@@ -101,13 +100,18 @@ def get_frontend():
     """
     try:
         from miro import plat
-    except ImportError:
-        return "unknown"
-    try:
         return plat.FRONTEND.lower()
-    except AttributeError:
+    except (ImportError, AttributeError):
         return "unknown"
 
 def get_support_directory():
+    """Returns the absolute path of the support directory for this
+    user.  This is where you could store database files or other
+    similar data.
+
+    Example:
+
+    >>> path = api.get_support_directory()
+    """
     from miro import app, prefs
     return app.config.get(prefs.SUPPORT_DIRECTORY)
