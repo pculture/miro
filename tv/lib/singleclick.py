@@ -202,14 +202,17 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
 
         handle_unknown_callback(url)
 
-    def callback(headers):
+    def callback(headers, content_type=None):
         """We need to figure out if the URL is a external video link,
         or a link to a feed.
         """
+        print 'callback for', url, headers, content_type
         if check_url_exists(url):
             return
 
-        content_type = headers.get("content-type")
+        if content_type is None:
+            content_type = headers.get("content-type")
+
         if content_type:
             if filetypes.is_feed_content_type(content_type):
                 add_feeds([url])
@@ -238,7 +241,11 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
         else:
             handle_unknown_callback(url)
 
-    httpclient.grab_headers(url, callback, errback)
+    if metadata and 'mime_type' in metadata:
+        # we've already got the mime type, don't do another call
+        callback(None, metadata['mime_type'])
+    else:
+        httpclient.grab_headers(url, callback, errback)
 
 def download_video(fp_dict):
     """Takes a feedparser dict, generates an item.Item, adds the item
