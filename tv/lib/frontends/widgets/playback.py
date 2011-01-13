@@ -398,6 +398,9 @@ class PlaybackManager (signals.SignalEmitter):
             pass
 
     def on_movie_finished(self):
+        # Don't go to the database backend if remote item, if won't work.
+        if self.playlist[self.position].remote:
+            return
         id_ = self.playlist[self.position].id
         messages.MarkItemCompleted(id_).send_to_backend()
         self.update_current_resume_time(0)
@@ -519,8 +522,9 @@ class PlaybackManager (signals.SignalEmitter):
         if new_position == None:
             new_position = self.position
         else:
-            id_ = self.playlist[self.position].id
-            messages.MarkItemSkipped(id_).send_to_backend()
+            if not self.playlist[self.position].remote:
+                id_ = self.playlist[self.position].id
+                messages.MarkItemSkipped(id_).send_to_backend()
 
         self.cancel_update_timer()
         self.cancel_mark_as_watched()
