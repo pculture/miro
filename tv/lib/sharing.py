@@ -411,8 +411,8 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         playlist_ids = [playlist.id for playlist in self.playlists]
         message = messages.TabsChanged(self.type, [], [], playlist_ids)
         message.send_to_frontend()
-        eventloop.call_in_thread(self.client_connect_callback,
-                                 self.client_connect_error_callback,
+        eventloop.call_in_thread(self.client_disconnect_callback,
+                                 self.client_disconnect_error_callback,
                                  client.disconnect,
                                  'DAAP client connect')
 
