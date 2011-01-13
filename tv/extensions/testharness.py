@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Copyright (C) 2010, 2011
 # Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
@@ -27,18 +27,37 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""miro.displaystate -- Object that stores data for each display.
+"""Test harness for core extensions.
 """
 
-from miro.database import DDBObject
+import os
+import unittest
+import sys
+import logging
 
-class DisplayState(DDBObject):
-    def setup_new(self, display):
-        self.type = display[0]
-        self.id_ = display[1]
-        # None = use default:
-        self.is_list_view = None
-        self.active_filters = None
-        self.sort_state = None
-        self.columns_enabled = None
-        self.column_widths = None
+def get_test_suites():
+    """
+    Goes through all core extensions and returns a suite of their tests.
+    """
+    from miro import extensionmanager
+
+    pwd = os.path.dirname(__file__)
+    extensions = extensionmanager.get_extensions(pwd)
+    extensions.sort()
+
+    suites = []
+
+    for mem in extensions:
+        try:
+            __import__(mem[2])
+        except ImportError:
+            logging.exception("import error with %s", mem[1])
+            continue
+
+        try:
+            testsuite = getattr(sys.modules[mem[2]], "testsuite")
+            suites.append(testsuite())
+        except Exception:
+            logging.exception("testsuite failed for %s", mem[1])
+
+    return suites

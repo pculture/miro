@@ -437,6 +437,13 @@ class MarkItemSkipped(BackendMessage):
     def __init__(self, id_):
         self.id = id_
 
+class SetItemIsPlaying(BackendMessage):
+    """Set when an item begins playing; unset when it stops.
+    """
+    def __init__(self, id_, is_playing):
+        self.id = id_
+        self.is_playing = is_playing
+
 class SetItemSubtitleEncoding(BackendMessage):
     """Mark an item as watched.
     """
@@ -821,12 +828,14 @@ class ReportCrash(BackendMessage):
 class SaveDisplayState(BackendMessage):
     """Save changes to one display for the frontend
     """
-    def __init__(self, key, is_list_view, active_filters, sort_state, columns):
+    def __init__(self, key, is_list_view, active_filters, sort_state,
+            columns_enabled, column_widths):
         self.key = key
         self.is_list_view = is_list_view
         self.active_filters = active_filters
         self.sort_state = sort_state
-        self.columns = columns
+        self.columns_enabled = columns_enabled
+        self.column_widths = column_widths
 
 class QueryDisplayStates(BackendMessage):
     """Ask for a CurrentDisplayStates message to be sent back.
@@ -1116,6 +1125,7 @@ class ItemInfo(object):
     :param children: for container items the children of the item.
     :param is_playable: is this item a audio/video file, or a container that
                         contains audio/video files inside.
+    :param is_playing: Whether item is the currently playing (or paused) item
     :param leechers: (Torrent only) number of leeching clients
     :param seeders: (Torrent only) number of seeding clients
     :param up_rate: (Torrent only) how fast we're uploading data
@@ -1522,12 +1532,14 @@ class CurrentDisplayStates(FrontendMessage):
 class DisplayInfo(object):
     """Contains the state of a single display
     """
-    def __init__(self, key, is_list_view, active_filters, sort_state, columns):
+    def __init__(self, key, is_list_view=None, active_filters=None,
+            sort_state=None, columns_enabled=None, column_widths=None):
         self.key = key
         self.is_list_view = is_list_view
         self.active_filters = active_filters
         self.sort_state = sort_state
-        self.columns = columns
+        self.columns_enabled = columns_enabled
+        self.column_widths = column_widths
 
 class OpenInExternalBrowser(FrontendMessage):
     """Opens the specified url in an external browser.

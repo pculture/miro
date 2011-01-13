@@ -1028,7 +1028,7 @@ class NameRenderer(ListViewRenderer):
         if self.button is None:
             height = 0
         else:
-            height = button.get_size()[1]
+            height = self.button.get_size()[1]
         return max(default, height)
 
     def _setup_layout_manager(self):

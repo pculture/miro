@@ -749,6 +749,15 @@ class BackendMessageHandler(messages.MessageHandler):
                 "handle_mark_item_skipped: can't find item by id %s",
                 message.id)
 
+    def handle_set_item_is_playing(self, message):
+        try:
+            item_ = item.Item.get_by_id(message.id)
+            item_.set_is_playing(message.is_playing)
+        except database.ObjectNotFoundError:
+            logging.warning(
+                "set_item_is_playing: can't find item by id %s",
+                message.id)
+
     def handle_rate_item(self, message):
         try:
             item_ = item.Item.get_by_id(message.id)
@@ -1593,7 +1602,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         state.is_list_view = message.is_list_view
         state.active_filters = message.active_filters
         state.sort_state = message.sort_state
-        state.columns = message.columns
+        state.columns_enabled = message.columns_enabled
+        state.column_widths = message.column_widths
         state.signal_change()
         
     def _get_display_states(self):
@@ -1602,7 +1612,8 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             key = (display.type, display.id_)
             display_info = messages.DisplayInfo(key,
                 display.is_list_view, display.active_filters,
-                display.sort_state, display.columns)
+                display.sort_state, display.columns_enabled,
+                display.column_widths)
             states.append(display_info)
         return states
 

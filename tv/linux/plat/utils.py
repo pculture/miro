@@ -96,6 +96,7 @@ def initialize_locale():
     global _locale_initialized
     _locale_initialized = True
 
+FORMAT = "%(asctime)s %(levelname)-8s %(name)s: %(message)s"
 def setup_logging(in_downloader=False):
     """Sets up logging using the Python logging module.
 
@@ -109,9 +110,7 @@ def setup_logging(in_downloader=False):
             level = logging.DEBUG
         else:
             level = logging.INFO
-        logging.basicConfig(level=level,
-                            format='%(asctime)s %(levelname)-8s %(message)s',
-                            stream=sys.stdout)
+        logging.basicConfig(level=level, format=FORMAT, stream=sys.stdout)
         pathname = os.environ.get("DEMOCRACY_DOWNLOADER_LOG")
         if not pathname:
             return
@@ -121,7 +120,7 @@ def setup_logging(in_downloader=False):
         else:
             level = logging.INFO
         logging.basicConfig(level=level,
-                            format='%(asctime)s %(levelname)-8s %(message)s')
+                            format=FORMAT)
         pathname = app.config.get(prefs.LOG_PATHNAME)
 
     try:
@@ -137,7 +136,7 @@ def setup_logging(in_downloader=False):
             pathname, mode="w", maxBytes=100000,
             backupCount=5)
             
-    formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
+    formatter = logging.Formatter(FORMAT)
     rotater.setFormatter(formatter)
     logging.getLogger('').addHandler(rotater)
     rotater.doRollover()
@@ -295,7 +294,7 @@ def launch_download_daemon(oldpid, env):
     dl_daemon_path = os.path.join(miro_path, 'dl_daemon')
 
     # run the Miro_Downloader script
-    script = os.path.join(dl_daemon_path, 'Democracy_Downloader.py')
+    script = os.path.join(dl_daemon_path, 'MiroDownloader.py')
     os.spawnle(os.P_NOWAIT, sys.executable, sys.executable, script, environ)
 
 def exit_miro(return_code):
@@ -383,6 +382,17 @@ def begin_thread_loop(context_object):
 def finish_thread_loop(context_object):
     # used for testing
     pass
+
+def get_cookie_path():
+    """
+    Returns the path to a Netscape-style cookie file for Curl to use.
+
+    Nothing is written to this file, but we use the cookies for downloading
+    from Amazon.
+    """
+    return os.path.join(
+        app.config.get(prefs.SUPPORT_DIRECTORY),
+        'cookies.txt')
 
 # Expand me: pick up Linux media players.
 def get_plat_media_player_name_path():

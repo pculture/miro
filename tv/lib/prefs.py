@@ -186,6 +186,10 @@ DOWNLOADER_LOG_PATHNAME = \
     Pref(key='DownloaderLogPathname', default=None, platformSpecific=True)
 GETTEXT_PATHNAME = \
     Pref(key='GetTextPathname', default=None, platformSpecific=True)
+ENABLED_EXTENSIONS = \
+    Pref(key='EnabledExtensions', default=[], platformSpecific=False)
+DISABLED_EXTENSIONS = \
+    Pref(key='DisabledExtensions', default=[], platformSpecific=False)
 HTTP_PROXY_SCHEME = \
     Pref(key='HttpProxyScheme', default='http', platformSpecific=True)
 HTTP_PROXY_ACTIVE = \

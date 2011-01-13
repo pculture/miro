@@ -39,6 +39,7 @@ import errno
 import signal
 import locale
 import subprocess
+import plistlib
 
 from objc import NO, YES, nil
 from Foundation import *
@@ -508,6 +509,58 @@ def begin_thread_loop(context_object):
 
 def finish_thread_loop(context_object):
     del context_object.autorelease_pool
+
+# monkeypatch _dateFromString to support >4 char years because apple.com sets a
+# cookie for Y10K :(
+_origDateFromString = plistlib._dateFromString
+def _dateFromString(s):
+    if s.find('-') > 4: # 10000+ year
+        year, rest = s.split('-', 1)
+        s = '9999-%s' % rest
+    return _origDateFromString(s)
+plistlib._dateFromString = _dateFromString
+
+def _timestamp(dt):
+    try:
+        return str(int(time.mktime(dt.timetuple())))
+    except (ValueError, OverflowError):
+        return '2082787201' # far in the future
+
+def _generate_netscape_cookies(final_path, plist_path):
+    cookies_plist = plistlib.readPlist(plist_path)
+    with file(final_path, 'w') as cookie_file:
+        for cookie in cookies_plist:
+            cookie_file.write('\t'.join([
+                        cookie['Domain'],
+                        'TRUE',
+                        cookie['Path'],
+                        'FALSE',
+                        _timestamp(cookie['Expires']),
+                        cookie['Name'],
+                        cookie['Value']]))
+            cookie_file.write('\n')
+
+
+def get_cookie_path():
+    """
+    Returns the path to a Netscape-style cookie file for Curl to use.
+
+    Nothing is written to this file, but we use the cookies for downloading
+    from Amazon.
+
+    Since OS X doesn't have a real cookies file, we generate one!
+    """
+    final_path = os.path.join(
+        app.config.get(prefs.SUPPORT_DIRECTORY),
+        'cookies.txt')
+    plist_path = os.path.expanduser('~/Library/Cookies/Cookies.plist')
+    if not os.path.exists(plist_path):
+        # nothing to convert
+        return ''
+    if not os.path.exists(final_path) or \
+            os.stat(final_path).st_mtime < os.stat(plist_path).st_mtime:
+        _generate_netscape_cookies(final_path, plist_path)
+    return final_path
 
 def get_plat_media_player_name_path():
     itunespath = os.path.join(os.path.expanduser("~"), "Music", "iTunes")

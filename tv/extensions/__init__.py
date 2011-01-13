@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Copyright (C) 2010, 2011
 # Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
@@ -26,19 +26,4 @@
 # but you are not obligated to do so. If you do not wish to do so, delete
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
-
-"""miro.displaystate -- Object that stores data for each display.
-"""
-
-from miro.database import DDBObject
-
-class DisplayState(DDBObject):
-    def setup_new(self, display):
-        self.type = display[0]
-        self.id_ = display[1]
-        # None = use default:
-        self.is_list_view = None
-        self.active_filters = None
-        self.sort_state = None
-        self.columns_enabled = None
-        self.column_widths = None
+pass

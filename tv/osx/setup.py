@@ -312,7 +312,8 @@ class MiroBuild (py2app):
         self.cmpntRoot = os.path.join(self.bundleRoot, 'Components')
         self.helpersRoot = os.path.join(self.bundleRoot, 'Helpers')
         self.prsrcRoot = os.path.join(self.rsrcRoot, 'resources')
-        
+        self.extRoot = os.path.join(self.rsrcRoot, 'extensions')
+
     def get_idletime_ext(self):
         idletime_src = glob(os.path.join(ROOT_DIR, 'osx', 'modules', 'idletime.c'))
         idletime_link_args = ['-framework', 'CoreFoundation', '-framework', 'IOKit']
@@ -366,6 +367,7 @@ class MiroBuild (py2app):
         self.copy_conversion_helpers()
         self.copy_ffmpeg_presets()
         self.copy_portable_resources()
+        self.copy_extensions()
         self.copy_config_file()
         self.copy_localization_files()
         if self.theme is not None:
@@ -499,6 +501,21 @@ class MiroBuild (py2app):
             else:
                 print "    %s" % dest
                 copy(src, dest)
+
+    def copy_extensions(self):
+        print "Copying extensions to application bundle"
+
+        if self.force_update and os.path.exists(self.extRoot):
+            shutil.rmtree(self.extRoot, True)
+
+        src = os.path.join(ROOT_DIR, 'extensions')
+        dest = self.extRoot
+
+        if os.path.exists(dest):
+            print "    (extensions skipped, already bundled)"
+        else:
+            print "    %s" % dest
+            shutil.copytree(src, dest)
 
     def copy_config_file(self):
         print "Copying config file to application bundle"

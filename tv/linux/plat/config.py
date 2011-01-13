@@ -126,6 +126,21 @@ class GconfDict:
                 client.set_int(fullkey, value)
             elif isinstance(value, float):
                 client.set_float(fullkey, value)
+            elif isinstance(value, list):
+                # this is lame, but there isn't enough information to
+                # figure it out another way
+                if len(value) == 0 or isinstance(value[0], str):
+                    list_type = gconf.VALUE_STRING
+                elif isinstance(value[0], int):
+                    list_type = gconf.VALUE_INT
+                elif isinstance(value[0], float):
+                    list_type = gconf.VALUE_FLOAT
+                elif isinstance(value[0], bool):
+                    list_type = gconf.VALUE_BOOL
+                else:
+                    raise TypeError("unknown gconf type %s" % type(value[0]))
+
+                client.set_list(fullkey, list_type, value)
             else:
                 raise TypeError()
         finally:

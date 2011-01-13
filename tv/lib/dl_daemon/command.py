@@ -157,8 +157,8 @@ class ShutDownResponseCommand(Command):
 class InitialConfigCommand(Command):
     def action(self):
         app.config.set_dictionary(*self.args, **self.kws)
-        from miro.dl_daemon import Democracy_Downloader
-        Democracy_Downloader.finish_startup_after_config()
+        from miro.dl_daemon import MiroDownloader
+        MiroDownloader.finish_startup_after_config()
 
 class UpdateConfigCommand(Command):
     def action(self):

@@ -56,6 +56,7 @@ from miro.plat import renderers, options
 from miro.plat.config import gconf_lock
 from miro.frontends.widgets.gtk import trayicon
 from miro.plat import resources
+from miro.plat.utils import get_cookie_path
 from miro.plat.frontends.widgets import mediakeys
 
 from miro.frontends.widgets.gtk.widgetset import Rect
@@ -138,8 +139,7 @@ class LinuxApplication(Application):
         app.controller.on_shutdown()
 
     def _setup_webkit(self):
-        support_dir = app.config.get(prefs.SUPPORT_DIRECTORY)
-        cookie_path = os.path.join(support_dir, 'cookies.txt')
+        cookie_path = get_cookie_path()
         webkitgtkhacks.setup_cookie_storage(cookie_path)
 
     def on_config_changed(self, obj, key, value):
