@@ -761,6 +761,14 @@ class SharingManager(object):
                 pass
 
     def enable_sharing(self):
+        # Can we actually enable sharing.  The Bonjour client-side libraries
+        # might not be installed, then we can't do anything.
+        if not libdaap.mdns_enabled:
+            # XXX do something here on Windows/Linux.  Probably platform
+            # specific hook.
+            self.sharing = False
+            return
+
         name = app.config.get(prefs.SHARE_NAME)
         self.server = libdaap.make_daap_server(self.backend, name=name)
         if not self.server:
