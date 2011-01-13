@@ -269,16 +269,19 @@ class ListItemView(widgetset.TableView):
         'rate': style.DownloadRateRenderer, 'date-added': style.DateAddedRenderer,
         'last-played': style.LastPlayedRenderer,
     }
-    def __init__(self, item_list, columns):
+    def __init__(self, item_list, columns_enabled, column_widths):
         widgetset.TableView.__init__(self, item_list.model)
-        self.column_state = columns
+        self.columns_enabled = columns_enabled
+        self.column_widths = column_widths
         self.create_signal('sort-changed')
-        self.create_signal('columns-changed')
+        self.create_signal('columns-enabled-changed')
+        self.create_signal('column-widths-changed')
         self.item_list = item_list
         self._column_name_to_column = {}
         self._current_sort_column = None
         self._set_initial_widths = False
-        for name, width in self.column_state:
+        for name in self.columns_enabled:
+            width = self.column_widths[name]
             resizable = not name in widgetconst.NO_RESIZE_COLUMNS
             pad = not name in widgetconst.NO_PAD_COLUMNS
             header = widgetconst.COLUMN_LABELS[name]
@@ -295,23 +298,23 @@ class ListItemView(widgetset.TableView):
         self.html_stripper = util.HTMLStripper()
         self.column_by_label = {}
         for name, label in widgetconst.COLUMN_LABELS.items():
-            self.column_by_label[label] = unicode(name)
+            self.column_by_label[label] = name
 
     def _get_ui_column_state(self):
+        enabled = []
         widths = {}
-        for (name, width) in self.column_state:
-            column = self._column_name_to_column[name]
-            width = column.get_width()
-            widths[name] = width
-        new_column_state = []
         for label in self.get_columns():
             name = self.column_by_label[label]
-            new_column_state.append((name, widths[name]));
-        self.column_state = new_column_state
+            enabled.append(name)
+            column = self._column_name_to_column[name]
+            widths[name] = column.get_width()
+        self.columns_enabled = enabled
+        self.column_widths = widths
 
     def on_unrealize(self, treeview):
         self._get_ui_column_state()
-        self.emit('columns-changed', self.column_state)
+        self.emit('column-widths-changed', self.column_widths)
+        self.emit('columns-enabled-changed', self.columns_enabled)
         super(ListItemView, self).on_unrealize(treeview)
 
     def get_tooltip(self, iter, column):
@@ -359,25 +362,26 @@ class ListItemView(widgetset.TableView):
             width -= 20 # allow some room for a scrollbar
 
             available_width = self.width_for_columns(width)
-            min_width = sum(width for name, width in self.column_state)
+            min_width = sum(self.column_widths.values())
             extra_width = max(available_width - min_width, 0)
             weights = {}
-            for name, width in self.column_state:
+            for name in self.columns_enabled:
                 weight = 0
                 if name in widgetconst.COLUMN_WIDTH_WEIGHTS:
                     weight = widgetconst.COLUMN_WIDTH_WEIGHTS[name]
                 weights[name] = weight
             total_weight = sum(weight for weight in weights.values()) or 1
             diff = 0 # prevent cumulative rounding errors
-            for i, (name, width) in enumerate(self.column_state):
+            for name in self.columns_enabled:
                 weight = weights[name]
                 extra = extra_width * weight / total_weight + diff
                 diff = extra - int(extra)
+                width = self.column_widths[name]
                 width += int(extra)
-                self.column_state[i] = (name, width)
+                self.column_widths[name] = width
                 column = self._column_name_to_column[name]
                 column.set_width(width)
-            self.emit('columns-changed', self.column_state)
+            self.emit('column-widths-changed', self.column_widths)
 
     def _on_column_clicked(self, column, column_name):
         ascending = not (column.get_sort_indicator_visible() and

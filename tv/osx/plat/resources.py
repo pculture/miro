@@ -38,6 +38,11 @@ def root():
     path = os.path.join(bundle.getBundleResourcePath(), u'resources')
     return path.encode('utf-8')
 
+def extension_roots():
+    syspath = os.path.join(bundle.getBundleResourcePath(), u'extensions')
+    syspath = syspath.encode('utf-8')
+    return [syspath, "%(supportdir)s/extensions"]
+
 # Find the full path to a resource data file. 'relative_path' is
 # expected to be supplied in Unix format, with forward-slashes as
 # separators. The output, though, uses the native platform separator.

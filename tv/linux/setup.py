@@ -93,6 +93,7 @@ portable_xpcom_dir = os.path.join(portable_frontend_dir, 'widgets', 'gtk',
 dl_daemon_dir = os.path.join(portable_dir, 'dl_daemon')
 test_dir = os.path.join(portable_dir, 'test')
 resource_dir = os.path.join(root_dir, 'resources')
+extensions_dir = os.path.join(root_dir, 'extensions')
 platform_dir = os.path.join(root_dir, 'linux')
 platform_package_dir = os.path.join(platform_dir, 'plat')
 platform_widgets_dir = os.path.join(platform_package_dir, 'frontends',
@@ -282,7 +283,9 @@ webkitgtkhacks_ext = \
 
 #### Build the data_files list ####
 def listfiles(path):
-    return [f for f in glob(os.path.join(path, '*')) if os.path.isfile(f)]
+    all_files = [f for f in glob(os.path.join(path, '*')) if os.path.isfile(f)
+                 if not f.endswith("~")]
+    return all_files
 
 data_files = []
 # append the root resource directory.
@@ -290,6 +293,7 @@ data_files = []
 files = [f for f in listfiles(resource_dir) \
         if os.path.basename(f) != 'app.config.template']
 data_files.append(('/usr/share/miro/resources/', files))
+
 # handle the sub directories.
 for dir in ('searchengines',
         'images',
@@ -305,6 +309,15 @@ for dir in ('searchengines',
     source_dir = os.path.join(resource_dir, dir)
     dest_dir = os.path.join('/usr/share/miro/resources/', dir)
     data_files.append((dest_dir, listfiles(source_dir)))
+
+# add extension files
+for root, dirs, files in os.walk(extensions_dir):
+    extroot = root[len(extensions_dir)+1:]
+    files = [os.path.join(root, f) for f in files
+             if (not f.endswith("~") and not "#" in f)]
+    data_files.append((
+        os.path.join('/usr/share/miro/resources/extensions/', extroot),
+        files))
 
 for mem in ["24", "48", "72", "128"]:
     d = os.path.join("icons", "hicolor", "%sx%s" % (mem, mem), "apps")

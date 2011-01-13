@@ -687,7 +687,8 @@ class DisplayStateSchema(DDBObjectSchema):
         ('is_list_view', SchemaBool(noneOk=True)),
         ('active_filters', SchemaList(SchemaBinary(), noneOk=True)),
         ('sort_state', SchemaBinary(noneOk=True)),
-        ('columns', SchemaList(SchemaTuple(SchemaString(), SchemaInt()), noneOk=True)),
+        ('columns_enabled', SchemaList(SchemaString(), noneOk=True)),
+        ('column_widths', SchemaDict(SchemaString(), SchemaInt(), noneOk=True)),
     ]
 
     indexes = (
@@ -699,7 +700,11 @@ class DisplayStateSchema(DDBObjectSchema):
         return None
 
     @staticmethod
-    def handle_malformed_columns(value):
+    def handle_malformed_columns_enabled(value):
+        return None
+
+    @staticmethod
+    def handle_malformed_column_widths(value):
         return None
 
 class DBLogEntrySchema(DDBObjectSchema):
@@ -711,7 +716,7 @@ class DBLogEntrySchema(DDBObjectSchema):
         ('description', SchemaString()),
     ]
 
-VERSION = 128
+VERSION = 129
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,

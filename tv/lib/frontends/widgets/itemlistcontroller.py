@@ -93,7 +93,8 @@ class ItemListController(object):
         self.current_item_view = None
         self._search_text = ''
         display = (typ, id_)
-        self.columns = app.display_state.get_columns(display)
+        self.columns_enabled = app.display_state.get_columns_enabled(display)
+        self.column_widths = app.display_state.get_column_widths(display)
         self._init_widget()
         item_lists = set(iv.item_list for iv in self.all_item_views())
         sorter = app.display_state.get_sort_state(display)
@@ -117,12 +118,15 @@ class ItemListController(object):
         self.widget.list_view_vbox.pack_start(scroller, expand=True)
         self.widget.toolbar.connect_weak('sort-changed', self.on_sort_changed)
         self.list_item_view.connect_weak('sort-changed', self.on_sort_changed)
-        self.list_item_view.connect_weak('columns-changed',
-            self.on_columns_changed)
+        self.list_item_view.connect_weak('columns-enabled-changed',
+            self.on_columns_enabled_changed)
+        self.list_item_view.connect_weak('column-widths-changed',
+            self.on_column_widths_changed)
         self.build_widget()
 
     def build_list_item_view(self):
-        return itemlistwidgets.ListItemView(self.item_list, self.columns)
+        return itemlistwidgets.ListItemView(self.item_list,
+                self.columns_enabled, self.column_widths)
 
     def build_header_toolbar(self):
         return itemlistwidgets.HeaderToolbar()
@@ -255,9 +259,13 @@ class ItemListController(object):
         display = (self.type, self.id)
         app.display_state.set_sort_state(display, sorter)
 
-    def on_columns_changed(self, object, columns):
+    def on_columns_enabled_changed(self, object, columns_enabled):
         key = (self.type, self.id)
-        app.display_state.set_columns_state(key, columns)
+        app.display_state.set_columns_enabled(key, columns_enabled)
+
+    def on_column_widths_changed(self, object, column_widths):
+        key = (self.type, self.id)
+        app.display_state.update_column_widths(key, column_widths)
 
     def on_toggle_column(self, column):
         self.enabled_columns ^= set([column])
@@ -584,8 +592,6 @@ class SearchController(SimpleItemListController):
 class AudioVideoItemsController(SimpleItemListController):
     def build_item_view(self):
         return itemlistwidgets.ItemView(self.item_list, True)
-    def build_list_item_view(self):
-        return itemlistwidgets.ListItemView(self.item_list, self.columns)
 
     def build_header_toolbar(self):
         toolbar = itemlistwidgets.LibraryHeaderToolbar(self.unwatched_label)
@@ -643,9 +649,6 @@ class OtherItemsController(SimpleItemListController):
 
     def build_item_view(self):
         return itemlistwidgets.ItemView(self.item_list, True)
-
-    def build_list_item_view(self):
-        return itemlistwidgets.ListItemView(self.item_list, self.columns)
 
 class FolderContentsController(SimpleItemListController):
     """Controller object for feeds."""

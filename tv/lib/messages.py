@@ -828,12 +828,14 @@ class ReportCrash(BackendMessage):
 class SaveDisplayState(BackendMessage):
     """Save changes to one display for the frontend
     """
-    def __init__(self, key, is_list_view, active_filters, sort_state, columns):
+    def __init__(self, key, is_list_view, active_filters, sort_state,
+            columns_enabled, column_widths):
         self.key = key
         self.is_list_view = is_list_view
         self.active_filters = active_filters
         self.sort_state = sort_state
-        self.columns = columns
+        self.columns_enabled = columns_enabled
+        self.column_widths = column_widths
 
 class QueryDisplayStates(BackendMessage):
     """Ask for a CurrentDisplayStates message to be sent back.
@@ -1530,12 +1532,14 @@ class CurrentDisplayStates(FrontendMessage):
 class DisplayInfo(object):
     """Contains the state of a single display
     """
-    def __init__(self, key, is_list_view, active_filters, sort_state, columns):
+    def __init__(self, key, is_list_view=None, active_filters=None,
+            sort_state=None, columns_enabled=None, column_widths=None):
         self.key = key
         self.is_list_view = is_list_view
         self.active_filters = active_filters
         self.sort_state = sort_state
-        self.columns = columns
+        self.columns_enabled = columns_enabled
+        self.column_widths = column_widths
 
 class OpenInExternalBrowser(FrontendMessage):
     """Opens the specified url in an external browser.

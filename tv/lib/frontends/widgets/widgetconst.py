@@ -45,53 +45,53 @@ TEXT_JUSTIFY_RIGHT = 1
 TEXT_JUSTIFY_CENTER = 2
 
 # Display State defaults
-DEFAULT_LIST_VIEW_DISPLAYS = set(['music', 'others', 'audio-feed', 'playlist', 'search'])
-DEFAULT_DISPLAY_FILTERS = ['view-all']
+DEFAULT_LIST_VIEW_DISPLAYS = set([u'music', u'others', u'audio-feed', u'playlist', u'search'])
+DEFAULT_DISPLAY_FILTERS = [u'view-all']
 DEFAULT_COLUMN_WIDTHS = {
-    'state': 20, 'name': 130, 'artist': 110, 'album': 100, 'track': 30,
-    'feed-name': 70, 'length': 60, 'genre': 65, 'year': 40, 'rating': 75,
-    'size': 65, 'status': 70, 'date': 70, 'eta': 60, 'rate': 60,
+    u'state': 20, u'name': 130, u'artist': 110, u'album': 100, u'track': 30,
+    u'feed-name': 70, u'length': 60, u'genre': 65, u'year': 40, u'rating': 75,
+    u'size': 65, u'status': 70, u'date': 70, u'eta': 60, u'rate': 60,
 }
 DEFAULT_SORT_COLUMN = {
-    'videos': 'name', 'music': 'artist', 'others': 'name',
-    'downloading': 'eta', 'all-feed-video': 'feed-name', 'feed': 'date',
-    'audio-feed': 'date', 'playlist': 'artist', 'search': 'artist',
+    u'videos': 'name', u'music': 'artist', u'others': 'name',
+    u'downloading': 'eta', u'all-feed-video': 'feed-name', u'feed': 'date',
+    u'audio-feed': 'date', u'playlist': 'artist', u'search': 'artist',
 }
 
 # column properties
 COLUMN_LABELS = {
-    'state': u'', 'name': _('Name'), 'artist': _('Artist'),
-    'album': _('Album'), 'track': _('Track'), 'year': _('Year'),
-    'genre': _('Genre'), 'rating': _('Rating'), 'date': _('Date'),
-    'length': _('Length'), 'status': _('Status'), 'size': _('Size'),
-    'feed-name': _('Feed'), 'eta': _('ETA'), 'rate': _('Speed'),
-    'date-added': _('Date Added'), 'last-played': _('Last Played'),
+    u'state': u'', u'name': _('Name'), u'artist': _('Artist'),
+    u'album': _('Album'), u'track': _('Track'), u'year': _('Year'),
+    u'genre': _('Genre'), u'rating': _('Rating'), u'date': _('Date'),
+    u'length': _('Length'), u'status': _('Status'), u'size': _('Size'),
+    u'feed-name': _('Feed'), u'eta': _('ETA'), u'rate': _('Speed'),
+    u'date-added': _('Date Added'), u'last-played': _('Last Played'),
 }
 NO_RESIZE_COLUMNS = set(['state', 'rating'])
 NO_PAD_COLUMNS = set(['rating'])
 COLUMN_WIDTH_WEIGHTS = {
-    'name': 1,
-    'artist': 0.7,
-    'album': 0.7,
-    'feed-name': 0.5,
-    'status': 0.2,
+    u'name': 1.0,
+    u'artist': 0.7,
+    u'album': 0.7,
+    u'feed-name': 0.5,
+    u'status': 0.2,
 }
 
 # Display State default; also used to populate View menu
 COLUMNS_AVAILABLE = {
-    'videos': ['state', 'name', 'length', 'feed-name', 'size'],
-    'music': ['state', 'name', 'artist', 'album', 'track', 'feed-name',
-        'length', 'genre', 'year', 'rating', 'size'],
-    'others': ['name', 'feed-name', 'size', 'rating'],
-    'downloading': ['name', 'feed-name', 'status', 'eta', 'rate'],
-    'all-feed-video': ['state', 'name', 'feed-name', 'length', 'status',
-        'size'],
-    'feed': ['state', 'name', 'length', 'status', 'size', 'date'],
-    'audio-feed': ['state', 'name', 'length', 'status', 'size', 'date'],
-    'playlist': ['state', 'name', 'artist', 'album', 'track', 'feed-name',
-        'length', 'genre', 'year', 'rating', 'size'],
-    'search': ['state', 'name', 'artist', 'album', 'track', 'feed-name',
-        'length', 'genre', 'year', 'rating', 'size'],
+    u'videos': [u'state', u'name', u'length', u'feed-name', u'size'],
+    u'music': [u'state', u'name', u'artist', u'album', u'track', u'feed-name',
+        u'length', u'genre', u'year', u'rating', u'size'],
+    u'others': [u'name', u'feed-name', u'size', u'rating'],
+    u'downloading': [u'name', u'feed-name', u'status', u'eta', u'rate'],
+    u'all-feed-video': [u'state', u'name', u'feed-name', u'length', u'status',
+        u'size'],
+    u'feed': [u'state', u'name', u'length', u'status', u'size', u'date'],
+    u'audio-feed': [u'state', u'name', u'length', u'status', u'size', u'date'],
+    u'playlist': [u'state', u'name', u'artist', u'album', u'track', u'feed-name',
+        u'length', u'genre', u'year', u'rating', u'size'],
+    u'search': [u'state', u'name', u'artist', u'album', u'track', u'feed-name',
+        u'length', u'genre', u'year', u'rating', u'size'],
 }
 
 # TODO: no display has type 'all-feed-video' yet

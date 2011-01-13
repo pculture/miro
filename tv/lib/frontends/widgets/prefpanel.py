@@ -723,6 +723,112 @@ class ConversionsPanel(PanelBuilder):
 
         return vbox
 
+class _ExtensionsHelper(object):
+    def __init__(self):
+        self._model = widgetset.TableModel('boolean', 'text')
+        self._iter_map = {}
+
+        self._table = widgetset.TableView(self._model)
+        checkbox_cell_renderer = widgetset.CheckboxCellRenderer()
+        checkbox_cell_renderer.set_control_size(widgetconst.SIZE_SMALL)
+        checkbox_cell_renderer.connect('clicked', self._on_enabled_clicked)
+        enabled_column = widgetset.TableColumn(
+            _('enabled'), checkbox_cell_renderer, value=0)
+        enabled_column.set_min_width(70)
+        extension_cell_renderer = widgetset.CellRenderer()
+        extension_cell_renderer.set_text_size(widgetconst.SIZE_SMALL)
+        extension_column = widgetset.TableColumn(
+            _('extension'), extension_cell_renderer, value=1)
+        extension_column.set_min_width(400)
+        self._table.add_column(enabled_column)
+        self._table.add_column(extension_column)
+        self._table.set_fixed_height(True)
+        self._table.allow_multiple_select(False)
+        self._table.set_alternate_row_backgrounds(True)
+        self.details_button = widgetset.Button(_("Details"))
+        self.details_button.set_size(widgetconst.SIZE_SMALL)
+        self.details_button.connect('clicked', self._details_clicked)
+        self.button_box = widgetset.VBox()
+        self.button_box.pack_start(self.details_button)
+        scroller = widgetset.Scroller(False, True)
+        scroller.set_has_borders(True)
+        scroller.add(self._table)
+        scroller.set_size_request(-1, 120)
+        self.extensions_list = widgetset.VBox()
+        self.extensions_list.pack_start(scroller)
+
+    def load(self):
+        logging.info(">>> loading extensions table")
+        for ext in app.extension_manager.extensions:
+            logging.info(">>> adding extension %r", ext)
+            iter_ = self._model.append(ext.loaded, ext.name)
+            self._iter_map[ext.name] = iter_
+
+    def unload(self):
+        # wipe everything out
+        for key in self._iter_map.keys():
+            iter_ = self._iter_map.pop(key)
+            self._model.remove(iter_)
+
+    def _on_enabled_clicked(self, renderer, iter_):
+        # FIXME - if this fails, then we need to check/uncheck
+        # appropriately and throw up a dialog.
+        #
+        # or maybe we should just throw up the crash dialog?
+        row = self._model[iter_]
+        ext = app.extension_manager.get_extension_by_name(row[1])
+        if not row[0]:
+            app.extension_manager.enable_extension(ext)
+
+            try:
+                app.extension_manager.import_extension(ext)
+            except ImportError, ie:
+                logging.exception("import error")
+                return
+
+            try:
+                app.extension_manager.load_extension(ext)
+            except StandardError, ie:
+                logging.exception("load error")
+                return
+        else:
+            app.extension_manager.disable_extension(ext)
+            try:
+                app.extension_manager.unload_extension(ext)
+            except StandardError, ie:
+                logging.exception("unload error")
+                return
+        self.update_model()
+
+    def update_model(self):
+        for key, iter_ in self._iter_map.items():
+            ext = app.extension_manager.get_extension_by_name(key)
+            self._model.update_value(iter_, 0, ext.loaded)
+        self._table.model_changed()
+
+    def _details_clicked(self, button):
+        ## iter = self._table.get_selected()
+        ## if iter is not None:
+        ##     id = app.watched_folder_manager.model[iter][0]
+        ##     app.watched_folder_manager.remove(id)
+        # FIXME
+        logging.info("details clicked")
+        pass
+
+class ExtensionsPanel(PanelBuilder):
+    def build_widget(self):
+        grid = dialogwidgets.ControlGrid()
+        self.extensions_helper = _ExtensionsHelper()
+
+        grid.pack(self.extensions_helper.extensions_list, pad_right=12)
+        grid.pack(self.extensions_helper.button_box)
+        return grid.make_table()
+
+    def on_window_open(self):
+        self.extensions_helper.load()
+
+    def on_window_closed(self):
+        self.extensions_helper.unload()
 
 # Add the initial panels
 add_panel("general", _("General"), GeneralPanel, 'images/pref-tab-general.png')
@@ -732,6 +838,7 @@ add_panel("folders", _("Folders"), FoldersPanel, 'images/pref-tab-folders.png')
 add_panel("disk_space", _("Disk space"), DiskSpacePanel, 'images/pref-tab-disk-space.png')
 add_panel("playback", _("Playback"), PlaybackPanel, 'images/pref-tab-playback.png')
 add_panel("conversions", _("Conversions"), ConversionsPanel, 'images/pref-tab-conversions.png')
+add_panel("extensions", _("Extensions"), ExtensionsPanel, 'images/pref-tab-general.png')
 
 class PreferencesWindow(widgetset.PreferencesWindow):
     def __init__(self):
