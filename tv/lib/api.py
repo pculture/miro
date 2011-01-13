@@ -28,6 +28,12 @@
 # statement from all source files in the program, then also delete it here.
 
 """miro.api -- API for extensions.
+
+.. Note::
+
+   This API is missing a lot of important stuff.  If you're interested in
+   building extensions or are otherwise interested in fleshing out the
+   API, come hang out with us on #miro-hackers on Freenode on IRC.
 """
 
 __all__ = [
