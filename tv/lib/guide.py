@@ -61,6 +61,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
         self.setup_new_icon_cache()
         self.favicon = None
         self.firstTime = True
+        self.store = False
         if url:
             self.historyLocation = 0
             self.history = [self.url]

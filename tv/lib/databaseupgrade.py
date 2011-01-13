@@ -2942,3 +2942,55 @@ def upgrade129(cursor):
         name_list, width_map = column_state[0], column_state[1]
         cursor.execute("UPDATE display_state SET columns_enabled=?,"
             "column_widths=? WHERE id=?", (name_list, width_map, id_))
+
+def upgrade130(cursor):
+    """
+    Adds a 'store' flag to the Guide table.  We'll use this for new things like
+    Amazon, eMusic, etc.
+    """
+    cursor.execute("ALTER TABLE channel_guide ADD COLUMN store integer")
+
+def upgrade131(cursor):
+    """Adds the Amazon MP3 Store as a site for anyone who doesn't
+    already have it and isn't using a theme.
+    """
+    # if the user is using a theme, we don't do anything
+    if not app.config.get(prefs.THEME_NAME) == prefs.THEME_NAME.default:
+        return
+
+    store_url = (u'http://www.amazon.com/b?_encoding=UTF8&site-redirect=&'
+                 'node=163856011&tag=pcultureorg-20&linkCode=ur2&camp=1789&'
+                 'creative=9325')
+    favicon_url = u'http://www.amazon.com/favicon.ico'
+    cursor.execute("SELECT count(*) FROM channel_guide WHERE url=?",
+                   (store_url,))
+    count = cursor.fetchone()[0]
+    if count > 0:
+        return
+
+    next_id = get_next_id(cursor)
+
+    cursor.execute("INSERT INTO channel_guide "
+                   "(id, url, allowedURLs, updated_url, favicon, firstTime, "
+                   "store) "
+                   "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                   (next_id, store_url, "[]", store_url,
+                    favicon_url, True, True))
+
+    # add the new Audio Guide to the site tablist
+    cursor.execute('SELECT tab_ids FROM taborder_order WHERE type=?',
+                   ('site',))
+    row = cursor.fetchone()
+    if row is not None:
+        try:
+            tab_ids = eval_container(row[0])
+        except StandardError:
+            tab_ids = []
+        tab_ids.append(next_id)
+        cursor.execute('UPDATE taborder_order SET tab_ids=? WHERE type=?',
+                       (repr(tab_ids), 'site'))
+    else:
+        # no site taborder (#11985).  We will create the TabOrder
+        # object on startup, so no need to do anything here
+        pass
+
