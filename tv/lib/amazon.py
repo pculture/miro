@@ -35,7 +35,10 @@ from xml.dom import minidom
 
 
 from miro import httpclient
-from miro import des
+try:
+    import pyDes as des
+except ImportError:
+    from miro import des
 
 # keys courtesy of Steven C. Colbert's pymazon
 AMAZON_DES_KEY = '\x29\xAB\x9D\x18\xB2\x44\x9E\x31'
