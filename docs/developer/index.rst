@@ -3,10 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Miro Developer API
-==================
+Miro Extensions API
+===================
 
-This is Miro Developer API for Miro 3.0.
+This is the Miro Extensions API documentation covering APIVERSION |version|.
 
 Contents:
 
@@ -14,16 +14,7 @@ Contents:
    :maxdepth: 2
 
    manual
-   howto
-   dev_howto
-   searchengine_modules
-   utility_modules
-   platform_modules
-   backend_modules
-   database_modules
-   frontend_widgets_modules
-   frontend_platform_widgets_modules
-   linux_renderer
+   extensionapi
 
 Indices and tables
 ==================
