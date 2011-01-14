@@ -102,37 +102,6 @@ def inet_ntop(af, ip):
                                                                 ip))
         raise ValueError('unknown address family %d' % af)
 
-# Helper utilities
-# Translate neutral constants to native protocol constants with this, or
-# fixup strings if necessary.
-def daap_item_fixup(item_id, entry):
-    daapitem = []
-
-    # Easy ones - can do a direct translation
-    mapping = [('name', 'minm'), ('enclosure_format', 'asfm'),
-               ('size', 'assz')]
-    for p, q in mapping:
-        if isinstance(entry[p], unicode):
-            attribute = (q, entry[p].encode('utf-8'))
-        else:
-            attribute = (q, entry[p])
-        daapitem.append(attribute)
-
-    # Manual ones
-
-    # Tack on the ID.
-    daapitem.append(('miid', item_id))
-    # Convert the duration to milliseconds, as expected.
-    daapitem.append(('astm', entry['duration'] * 1000))
-    # Also has movie or tv shows but Miro doesn't support it so make it
-    # a generic video.
-    if entry['file_type'] == 'video':
-        daapitem.append(('aeMK', libdaap.DAAP_MEDIAKIND_VIDEO))
-    else:
-        daapitem.append(('aeMK', libdaap.DAAP_MEDIAKIND_AUDIO))
-
-    return daapitem
-
 class SharingItem(object):
     """
     An item which lives on a remote share.
@@ -439,21 +408,22 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         if playlists is None:
             raise IOError('Cannot get playlist')
         for k in playlists.keys():
-            if playlists[k]['base']:
+            is_base_playlist = playlists[k]['daap.baseplaylist']
+            if is_base_playlist:
                 if self.base_playlist:
                     print 'WARNING: more than one base playlist found'
                 self.base_playlist = k
             # This isn't the playlist id of the remote share, this is the
             # playlist id we use internally.
             # XXX is there anything better we can do than repr()?
-            if not playlists[k]['base']:
+            if not is_base_playlist:
                 # XXX only add playlist if it not base playlist.  We don't
                 # explicitly show base playlist.
                 playlist_id = unicode(md5(repr((name,
                                                 host,
                                                 port, k))).hexdigest())
                 info = messages.SharingInfo(playlist_id,
-                                            playlists[k]['name'],
+                                            playlists[k]['dmap.itemname'],
                                             host,
                                             port,
                                             parent_id=self.share.id,
@@ -478,7 +448,7 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
     def client_connect_callback(self, args):
         returned_items, returned_playlists = args
         self.items = returned_items
-        self.returned_playlists = returned_playlists
+        self.playlists = returned_playlists
         message = messages.TabsChanged('sharing', self.playlists, [], [])
         message.send_to_frontend()
         # Send a list of all the items to the main sharing tab.
@@ -525,32 +495,39 @@ class SharingManagerBackend(object):
         self.make_item_dict(message.added)
         self.make_item_dict(message.changed)
 
-    # Note: this should really be a util function and be separated
     def make_daap_playlists(self, items):
-        # Pants.  We reuse the function but the view from the database is
-        # different to the message the frontend sends to us!  So, minm is
-        # duplicated.
-        mappings = [('name', 'minm'), ('title', 'minm'), ('id', 'miid'),
-                    ('id', 'mper')]
-        for x in items:
-            attributes = []
-            for p, q in mappings:
-                try:
-                    if isinstance(getattr(x, p), unicode):
-                        attributes.append((q, getattr(x, p).encode('utf-8')))
-                    else:
-                        attributes.append((q, getattr(x, p)))
-                except AttributeError:
-                    # Didn't work.  Oh well, get the next one.
-                    continue
-            # At this point, the item list has not been fully populated yet.
-            # Therefore, it may not be possible to run get_items() and getting
-            # the count attribute.  Instead we use the playlist_item_map.
-            tmp = [y for y in playlist.PlaylistItemMap.playlist_view(x.id)]
-            count = len(tmp)
-            attributes.append(('mpco', 0))        # Parent container ID
-            attributes.append(('mimc', count))    # Item count
-            self.daap_playlists[x.id] = attributes
+        for item in items:
+            itemprop = dict()
+            for attr in daap_rmapping.keys():
+               daap_string = daap_rmapping[attr]
+               itemprop[daap_string] = getattr(item, attr, None)
+               # XXX Pants.
+               if (daap_string == 'dmap.itemname' and
+                 itemprop[daap_string] == None):
+                   itemprop[daap_string] = getattr(item, 'title', None)
+               if isinstance(itemprop[daap_string], unicode):
+                   itemprop[daap_string] = (
+                     itemprop[daap_string].encode('utf-8'))
+            daap_string = 'dmap.itemcount'
+            if daap_string == 'dmap.itemcount':
+                # At this point, the item list has not been fully populated 
+                # yet.  Therefore, it may not be possible to run 
+                # get_items() and getting the count attribute.  Instead we 
+                # use the playlist_item_map.
+                tmp = [y for y in 
+                       playlist.PlaylistItemMap.playlist_view(item.id)]
+                count = len(tmp)
+                itemprop[daap_string] = count
+            daap_string = 'dmap.parentcontainerid'
+            if daap_string == 'dmap.parentcontainerid':
+                itemprop[daap_string] = 0
+                #attributes.append(('mpco', 0)) # Parent container ID
+                #attributes.append(('mimc', count))    # Item count
+                #self.daap_playlists[x.id] = attributes
+            daap_string = 'dmap.persistentid'
+            if daap_string == 'dmap.persistentid':
+                itemprop[daap_string] = item.id
+            self.daap_playlists[item.id] = itemprop
 
     def handle_playlist_added(self, obj, added):
         eventloop.add_urgent_call(lambda: self.make_daap_playlists(added),
@@ -606,10 +583,7 @@ class SharingManagerBackend(object):
         return self.daapitems[itemid]['path']
 
     def get_playlists(self):
-        playlists = []
-        for k in self.daap_playlists.keys():
-            playlists.append(('mlit', self.daap_playlists[k]))
-        return playlists
+        return self.daap_playlists
 
     def get_items(self, playlist_id=None):
         # Easy: just return
@@ -792,7 +766,7 @@ class SharingManager(object):
             return
 
         name = app.config.get(prefs.SHARE_NAME)
-        self.server = libdaap.make_daap_server(self.backend, name=name)
+        self.server = libdaap.make_daap_server(self.backend, debug=True, name=name)
         if not self.server:
             self.sharing = False
             return
