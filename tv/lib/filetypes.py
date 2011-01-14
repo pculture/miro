@@ -70,6 +70,7 @@ MIMETYPES_EXT_MAP = {
 
     'application/x-bittorrent': ['.torrent'],
 
+    'audio/x-mpegurl':  ['.m3u'],
     'audio/x-amzxml': ['.amz']
 }
 

@@ -54,14 +54,15 @@ def is_amazon_content_type(content_type):
     """
     Returns True if this is a content type from Amazon.
     """
-    return content_type == 'audio/x-amzxml'
+    return content_type in ('audio/x-amzxml',
+                            'audio/x-mpegurl')
 
 def download_file(url, handle_unknown_callback):
     """
     Deals with turning an .amz file into some real downloads.
     """
     def callback(data):
-        _amz_callback(data, handle_unknown_callback)
+        _amazon_callback(data, handle_unknown_callback)
 
     options = httpclient.TransferOptions(url)
     options.requires_cookies = True
@@ -69,7 +70,7 @@ def download_file(url, handle_unknown_callback):
                                        handle_unknown_callback)
     transfer.start()
 
-def _amz_callback(data, handle_unknown_callback):
+def _amazon_callback(data, handle_unknown_callback):
     if data['status'] != 200:
         handle_unknown_callback(data)
         return
@@ -78,6 +79,12 @@ def _amz_callback(data, handle_unknown_callback):
         handle_unknown_callback(data)
         return
 
+    if data['content-type'] == 'audio/x-amzxml': # .amz file:
+        _amz_callback(data)
+    elif data['content-type'] == 'audio/x-mpegurl': # .m3u file:
+        _m3u_callback(data)
+
+def _amz_callback(data):
     content = decrypt_amz(base64.b64decode(data['body'])).rstrip('\x00\x08')
 
     dom = minidom.parseString(content)
@@ -101,3 +108,14 @@ def _amz_callback(data, handle_unknown_callback):
                     additional['length'] = int(value) / 1000
         entry = _build_entry(url, 'audio/mp3', additional)
         download_video(entry)
+
+def _m3u_callback(data):
+    from miro.singleclick import _build_entry, download_video
+
+    for line in data['body'].split('\n'):
+        line = line.strip()
+        if line.startswith('#'): # comment
+            continue
+        elif line:
+            entry = _build_entry(line.decode('utf8'), 'audio/mp3')
+            download_video(entry)
