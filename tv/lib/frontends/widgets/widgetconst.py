@@ -94,6 +94,9 @@ COLUMNS_AVAILABLE = {
         u'length', u'genre', u'year', u'rating', u'size'],
 }
 
+COLUMNS_AVAILABLE['device-video'] = COLUMNS_AVAILABLE['video']
+COLUMNS_AVAILABLE['device-audio'] = COLUMNS_AVAILABLE['music']
+
 # TODO: no display has type 'all-feed-video' yet
 # TODO: rename 'feed' to 'video-feed'
 # TODO: replace 'playlist' with 'audio-playlist' and 'video-playlist'
