@@ -222,8 +222,7 @@ class SharingTracker(object):
 
     def try_to_add(self, share_id, fullname, host, port):
         def success(unused):
-            info = messages.SharingInfo(share_id, fullname, host, port)
-            self.available_shares[share_id] = info
+            info = self.available_shares[share_id]
             messages.TabsChanged('sharing', [info], [], []).send_to_frontend()
 
         def failure(unused):
@@ -260,6 +259,10 @@ class SharingTracker(object):
             return 
 
         if added:
+            # Create the SharingInfo eagerly, so that duplicate messages
+            # can use it to filter out.
+            info = messages.SharingInfo(share_id, fullname, host, port)
+            self.available_shares[share_id] = info
             self.try_to_add(share_id, fullname, host, port)
         else:
             # XXX The mDNS going away just means it is no longer published, 
