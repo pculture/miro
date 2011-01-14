@@ -163,7 +163,7 @@ class DeviceManager(object):
         self.syncs_in_progress = {}
         self.startup()
 
-    def _add_device(self, info):
+    def add_device(self, info):
         try:
             info.validate()
         except AttributeError:
@@ -180,6 +180,10 @@ class DeviceManager(object):
                 self.device_by_name[info.device_name] = info
                 self.device_by_id[(info.vendor_id, info.product_id)] = info
 
+    def remove_device(self, info):
+        # FIXME - need this
+        pass
+
     def startup(self):
         # load devices
         self.load_devices(resources.path('devices/*.py'))
@@ -191,7 +195,7 @@ class DeviceManager(object):
             execfile(device_desc, global_dict)
             if 'devices' in global_dict:
                 for info in global_dict['devices']:
-                    self._add_device(info)
+                    self.add_device(info)
 
     @staticmethod
     def _get_device_from_info(info, device_type):
