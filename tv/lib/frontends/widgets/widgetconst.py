@@ -94,11 +94,13 @@ COLUMNS_AVAILABLE = {
         u'length', u'genre', u'year', u'rating', u'size'],
 }
 
-COLUMNS_AVAILABLE[u'device-video'] = COLUMNS_AVAILABLE[u'videos']
-COLUMNS_AVAILABLE[u'device-audio'] = COLUMNS_AVAILABLE[u'music']
+COLUMNS_AVAILABLE[u'device-videos'] = COLUMNS_AVAILABLE[u'videos']
+COLUMNS_AVAILABLE[u'device-music'] = COLUMNS_AVAILABLE[u'music']
+
+DEFAULT_SORT_COLUMN[u'device-videos'] = SORT_COLUMN[u'videos']
+DEFAULT_SORT_COLUMN[u'device-music'] = SORT_COLUMN[u'music']
 
 # TODO: no display has type 'all-feed-video' yet
 # TODO: rename 'feed' to 'video-feed'
 # TODO: replace 'playlist' with 'audio-playlist' and 'video-playlist'
 # TODO: special stuff for 'converting' type
-# TODO: handle future display types 'device-video' and 'device-audio' ?
