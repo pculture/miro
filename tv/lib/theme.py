@@ -190,13 +190,18 @@ class ThemeHistory(DDBObject):
                 playlist.SavedPlaylist(_("Example Playlist"))
 
         default_guides = [
-            (u"http://www.clearbits.net/", u"ClearBits"),
-            (u"http://www.youtorrent.com/", u"YouTorrent"),
-            (u"https://www.miroguide.com/audio/", u"Miro Audio Guide")
+            (u"http://www.clearbits.net/", u"ClearBits", False),
+            (u"http://www.youtorrent.com/", u"YouTorrent", False),
+            (u"https://www.miroguide.com/audio/", u"Miro Audio Guide", False),
+            (u'http://www.amazon.com/b?_encoding=UTF8&site-redirect=&'
+             'node=163856011&tag=pcultureorg-20&linkCode=ur2&camp=1789&'
+             'creative=9325', u"Amazon MP3 Store", True)
             ]
         for default in default_guides:
             try:
                 cg = guide.ChannelGuide.get_by_url(default[0])
             except ObjectNotFoundError:
                 cg = guide.ChannelGuide(default[0])
+                cg.store = default[2] # before title because title saves the
+                                      # object
                 cg.set_title(default[1])

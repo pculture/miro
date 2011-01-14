@@ -2972,10 +2972,10 @@ def upgrade131(cursor):
 
     cursor.execute("INSERT INTO channel_guide "
                    "(id, url, allowedURLs, updated_url, favicon, firstTime, "
-                   "store) "
-                   "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                   "store, userTitle) "
+                   "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                    (next_id, store_url, "[]", store_url,
-                    favicon_url, True, True))
+                    favicon_url, True, True, u"Amazon MP3 Store"))
 
     # add the new Audio Guide to the site tablist
     cursor.execute('SELECT tab_ids FROM taborder_order WHERE type=?',
