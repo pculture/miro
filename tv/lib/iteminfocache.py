@@ -112,7 +112,15 @@ class ItemInfoCache(signals.SignalEmitter):
                           itemsource.DatabaseItemSource.VERSION)
 
     def _info_to_blob(self, info):
-        return buffer(cPickle.dumps(info))
+        if hasattr(info, 'source'):
+            old_source = info.source
+            del info.source
+        else:
+            old_source = None
+        blob = buffer(cPickle.dumps(info))
+        if old_source:
+            info.source = old_source
+        return blob
 
     def _blob_to_info(self, blob):
         return cPickle.loads(str(blob))

@@ -279,11 +279,11 @@ class PlaybackManager (signals.SignalEmitter):
         self.schedule_update()
         self.is_paused = False
         self.is_suspended = False
-        id_ = self.playlist[self.position].id
+        info = self.playlist[self.position]
         if self.last_playing:
             messages.SetItemIsPlaying(self.last_playing, False).send_to_backend()
-        self.last_playing = id_
-        messages.SetItemIsPlaying(id_, True).send_to_backend()
+        self.last_playing = info
+        messages.SetItemIsPlaying(info, True).send_to_backend()
         app.menu_manager.update_menus()
 
     def pause(self):
@@ -303,8 +303,8 @@ class PlaybackManager (signals.SignalEmitter):
         if not self.is_playing:
             return
         self._stop_tracking_items()
-        id_ = self.playlist[self.position].id
-        messages.SetItemIsPlaying(id_, False).send_to_backend()
+        info = self.playlist[self.position]
+        messages.SetItemIsPlaying(info, False).send_to_backend()
         self.last_playing = None
         if save_resume_time:
             self.update_current_resume_time()
@@ -356,7 +356,7 @@ class PlaybackManager (signals.SignalEmitter):
                 resume_time = 0
         else:
             resume_time = 0
-        m = messages.SetItemResumeTime(item_info.id, resume_time)
+        m = messages.SetItemResumeTime(item_info, resume_time)
         m.send_to_backend()
 
     def fast_forward(self):
@@ -404,29 +404,29 @@ class PlaybackManager (signals.SignalEmitter):
             pass
 
     def on_movie_finished(self):
-        id_ = self.playlist[self.position].id
-        messages.MarkItemCompleted(id_).send_to_backend()
+        info = self.playlist[self.position]
+        messages.MarkItemCompleted(info).send_to_backend()
         self.update_current_resume_time(0)
         self.play_next_item(False)
 
-    def schedule_mark_as_watched(self, id_):
+    def schedule_mark_as_watched(self, info):
         # Note: mark_as_watched time should match the minimum resume
         # time in update_current_resume_time.
-        self.mark_as_watched_timeout = timer.add(3, self.mark_as_watched, id_)
+        self.mark_as_watched_timeout = timer.add(3, self.mark_as_watched, info)
 
     def cancel_mark_as_watched(self):
         if self.mark_as_watched_timeout is not None:
             timer.cancel(self.mark_as_watched_timeout)
             self.mark_as_watched_timeout = None
 
-    def mark_as_watched(self, id_):
+    def mark_as_watched(self, info):
         self.mark_as_watched_timeout = None
         # if we're in a state we don't think we should be in, then we don't
         # want to mark the item as watched.
-        if not self.playlist or self.playlist[self.position].id != id_:
+        if not self.playlist or self.playlist[self.position].id != info.id:
             logging.warning("mark_as_watched: not marking the item as watched because we're in a weird state")
             return
-        messages.MarkItemWatched(id_).send_to_backend()
+        messages.MarkItemWatched(info).send_to_backend()
 
     def get_playing_item(self):
         if self.playlist:
@@ -508,8 +508,7 @@ class PlaybackManager (signals.SignalEmitter):
             # should be a better way.
             self.playlist = None
             app.widgetapp.open_file(item_info.video_path)
-            if not item_info.item_viewed:
-                messages.MarkItemWatched(item_info.id).send_to_backend()
+            messages.MarkItemWatched(item_info).send_to_backend()
             return
 
         volume = app.config.get(prefs.VOLUME_LEVEL)
@@ -525,8 +524,8 @@ class PlaybackManager (signals.SignalEmitter):
         if new_position == None:
             new_position = self.position
         else:
-            id_ = self.playlist[self.position].id
-            messages.MarkItemSkipped(id_).send_to_backend()
+            info = self.playlist[self.position]
+            messages.MarkItemSkipped(info).send_to_backend()
 
         self.cancel_update_timer()
         self.cancel_mark_as_watched()
@@ -541,7 +540,7 @@ class PlaybackManager (signals.SignalEmitter):
     def _on_ready_to_play(self, obj):
         self.open_successful = self.open_finished = True
         if not self.playlist[self.position].video_watched:
-            self.schedule_mark_as_watched(self.playlist[self.position].id)
+            self.schedule_mark_as_watched(self.playlist[self.position])
         if isinstance(self.player, widgetset.VideoPlayer):
             self.player.select_subtitle_encoding(self.initial_subtitle_encoding)
         self.play()
@@ -663,7 +662,7 @@ class PlaybackManager (signals.SignalEmitter):
         if self.is_playing:
             item_info = self.playlist[self.position]
             self.player.select_subtitle_encoding(encoding)
-            messages.SetItemSubtitleEncoding(item_info.id,
+            messages.SetItemSubtitleEncoding(item_info,
                     encoding).send_to_backend()
 
 class DetachedWindow(widgetset.Window):

@@ -33,12 +33,10 @@ from miro import messages
 class Player(signals.SignalEmitter):
     def __init__(self):
         signals.SignalEmitter.__init__(self, 'cant-play', 'ready-to-play')
-        self.item_info_id = None
-        self.item_was_watched = None
+        self.item_info = None
 
     def setup(self, item_info, volume):
-        self.item_info_id = item_info.id
-        self.item_was_watched = item_info.video_watched
+        self.item_info = item_info
         self.set_item(item_info, self._open_success, self._open_error)
         self.set_volume(volume)
 
@@ -46,8 +44,7 @@ class Player(signals.SignalEmitter):
         self.emit('ready-to-play')
 
     def _open_error(self):
-        if not self.item_was_watched:
-            messages.MarkItemWatched(self.item_info_id).send_to_backend()
+        messages.MarkItemWatched(self.item_info).send_to_backend()
         self.emit('cant-play')
 
     def skip_forward(self):

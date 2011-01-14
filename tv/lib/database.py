@@ -161,14 +161,21 @@ class DDBObjectFetcher(ViewObjectFetcher):
                 id_list[:] = new_id_list # update id_list in-place
 
 class ItemInfoFetcher(ViewObjectFetcher):
+    def __init__(self, source):
+        self.source = source
+
     def table_name(self):
         return 'item'
 
     def fetch_obj(self, id_):
-        return app.item_info_cache.get_info(id_)
+        info = app.item_info_cache.get_info(id_)
+        info.source = self.source
+        return info
 
     def fetch_obj_for_ddb_object(self, item):
-        return app.item_info_cache.get_info(item.id)
+        info =  app.item_info_cache.get_info(item.id)
+        info.source = self.source
+        return info
 
 class View(object):
     def __init__(self, fetcher, where, values, order_by, joins, limit):

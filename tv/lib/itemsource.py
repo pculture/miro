@@ -28,10 +28,13 @@
 # statement from all source files in the program, then also delete it here.
 
 import datetime
+import logging
+import os.path
 
 from miro import app
 from miro import database
 from miro import devices
+from miro import item
 from miro import messages
 from miro import signals
 
@@ -46,6 +49,7 @@ class ItemSource(signals.SignalEmitter):
         self.limiter = None
         self.current_ids = set()
 
+    # Methods to implement for sources
     def fetch_all(self):
         """
         Returns a list of ItemInfo objects representing all the A/V items this
@@ -60,6 +64,69 @@ class ItemSource(signals.SignalEmitter):
         """
         pass
 
+    def mark_watched(self, info):
+        """
+        Mark the given ItemInfo as watched.  Should also send a 'changed'
+        message.
+        """
+        pass
+
+    def mark_unwatched(self, info):
+        """
+        Mark the given ItemInfo as unwatched.  Should also send a 'changed'
+        message.
+        """
+        pass
+
+    def mark_completed(self, info):
+        """
+        Mark the given ItemInfo as completed.  Should also send a 'changed'
+        message.
+        """
+        pass
+
+    def mark_skipped(self, info):
+        """
+        Mark the given ItemInfo as skipped.  Should also send a 'changed'
+        message.
+        """
+        pass
+
+    def set_is_playing(self, info, is_playing):
+        """
+        Mark the given ItemInfo as playing, based on the is_playing bool.
+        Should also send a 'changed' message, if the is_playing state changed.
+        """
+        pass
+
+    def set_rating(self, info, rating):
+        """
+        Rate the given ItemInfo.  Should also send a 'changed'
+        message if the rating changed.
+        """
+        pass
+
+    def set_subtitle_encoding(self, info, encoding):
+        """
+        Set the subtitle encoding the given ItemInfo.  Should also send a
+        'changed' message if the encoding changed.
+        """
+        pass
+
+    def set_resume_time(self, info, resume_time):
+        """
+        Set the resume time for the given ItemInfo.  Should also send a
+        'changed' message.
+        """
+        pass
+
+    def delete(self, info):
+        """
+        Delete the given ItemInfo.  Should also send a 'removed' message.
+        """
+        pass
+
+    # Methods users of ItemSource can use as well
     def added(self, info):
         if self.limiter is None or not self.limiter.filter_info(info):
             self.current_ids.add(info.id)
@@ -123,7 +190,7 @@ class DatabaseItemSource(ItemSource):
         self.view = view
 
         if use_cache:
-            self.view.fetcher = database.ItemInfoFetcher()
+            self.view.fetcher = database.ItemInfoFetcher(self)
 
         self.tracker = self.view.make_tracker()
         self.tracker.connect('added', self._emit_from_db, self.added)
@@ -219,6 +286,10 @@ class DatabaseItemSource(ItemSource):
             if info['down_total'] > 0:
                 info['up_down_ratio'] = float(info['up_total'] /
                                               info['down_total'])
+
+        # technically, we should set the source here, too.  But it's set when
+        # we get ItemInfos from the cache, which is the only way normal Miro
+        # interacts with the infos.
         return messages.ItemInfo(item.id, **info)
 
     def fetch_all(self):
@@ -236,6 +307,111 @@ class DatabaseItemSource(ItemSource):
 
     def unlink(self):
         self.tracker.unlink()
+
+    def mark_watched(self, info):
+        """
+        Mark the given ItemInfo as watched.  Should also send a 'changed'
+        message.
+        """
+        try:
+            item_ = item.Item.get_by_id(info.id)
+            item_.mark_item_seen()
+        except database.ObjectNotFoundError:
+            logging.warning("mark_watched: can't find item by id %s" % info.id)
+
+    def mark_unwatched(self, info):
+        """
+        Mark the given ItemInfo as unwatched.  Should also send a 'changed'
+        message.
+        """
+        try:
+            item_ = item.Item.get_by_id(info.id)
+            item_.mark_item_unseen()
+        except database.ObjectNotFoundError:
+            logging.warning("mark_unwatched: can't find item by id %s" % (
+                info.id,))
+
+    def mark_completed(self, info):
+        """
+        Mark the given ItemInfo as completed.  Should also send a 'changed'
+        message.
+        """
+        try:
+            item_ = item.Item.get_by_id(info.id)
+            item_.mark_item_completed()
+        except database.ObjectNotFoundError:
+            logging.warning("mark_completed: can't find item by id %s" % (
+                info.id,))
+
+    def mark_skipped(self, info):
+        """
+        Mark the given ItemInfo as skipped.  Should also send a 'changed'
+        message.
+        """
+        try:
+            item_ = item.Item.get_by_id(info.id)
+            item_.mark_item_skipped()
+        except database.ObjectNotFoundError:
+            logging.warning("mark_skipped: can't find item by id %s" % info.id)
+
+    def set_is_playing(self, info, is_playing):
+        """
+        Mark the given ItemInfo as playing, based on the is_playing bool.
+        Should also send a 'changed' message, if the is_playing state changed.
+        """
+        try:
+            item_ = item.Item.get_by_id(info.id)
+            item_.set_is_playing(is_playing)
+        except database.ObjectNotFoundError:
+            logging.warning("mark_is_playing: can't find item by id %s" % (
+                info.id,))
+
+    def set_rating(self, info, rating):
+        """
+        Rate the given ItemInfo.  Should also send a 'changed'
+        message if the rating changed.
+        """
+        try:
+            item_ = item.Item.get_by_id(info.id)
+            item_.set_rating(rating)
+        except database.ObjectNotFoundError:
+            logging.warning("set_rating: can't find item by id %s" % info.id)
+
+    def set_subtitle_encoding(self, info, encoding):
+        """
+        Set the subtitle encoding the given ItemInfo.  Should also send a
+        'changed' message if the encoding changed.
+        """
+        try:
+            item_ = item.Item.get_by_id(info.id)
+            item_.set_subtitle_encoding(encoding)
+        except database.ObjectNotFoundError:
+            logging.warning(
+                "set_subtitle_encoding: can't find item by id %s" % info.id)
+
+    def set_resume_time(self, info, resume_time):
+        """
+        Set the resume time for the given ItemInfo.  Should also send a
+        'changed' message.
+        """
+        try:
+            item_ = item.Item.get_by_id(info.id)
+            item_.set_resume_time(resume_time)
+        except database.ObjectNotFoundError:
+            logging.warning("set_resume_time: can't find item by id %s" % (
+                info.id,))
+
+    def delete(self, info):
+        """
+        Delete the given ItemInfo.  Should also send a 'removed' message.
+        """
+        try:
+            item_ = item.Item.get_by_id(info.id)
+        except database.ObjectNotFoundError:
+            logging.warn("delete: Item not found -- %s",  info.id)
+        else:
+            item_.delete_files()
+            item_.expire()
 
     @staticmethod
     def get_by_id(id_):
@@ -270,6 +446,7 @@ class DeviceItemSource(ItemSource):
     def _item_info_for(self, item):
         return messages.ItemInfo(
             item.id,
+            source=self,
             name = item.name,
             feed_id = item.feed_id,
             feed_name = (item.feed_name is None and item.feed_name or
@@ -327,6 +504,16 @@ class DeviceItemSource(ItemSource):
             play_count=0,
             skip_count=0,
             cover_art=None)
+
+    def delete(self, info):
+        device = info.device
+        del device.database[item.file_type][info.id]
+        if os.path.exists(info.video_path):
+            os.unlink(info.video_path)
+        if (info.thumbnail and info.thumbnail.startswith(device.mount) and
+            os.path.exists(info.thumbnail)):
+            os.unlink(info.thumbnail)
+        device.database.emit('item-removed', item)
 
     def fetch_all(self):
         return [self._item_info_for(devices.DeviceItem(

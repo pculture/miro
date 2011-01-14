@@ -477,10 +477,7 @@ class Application:
         total_count = len(selection)
 
         def _delete_video(item):
-            if item.device:
-                messages.DeleteDeviceVideo(item).send_to_backend()
-            else:
-                messages.DeleteVideo(item.id).send_to_backend()
+            messages.DeleteVideo(item).send_to_backend()
 
         if total_count == 1 and external_count == folder_count == 0:
             _delete_video(selection[0])
