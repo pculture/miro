@@ -425,35 +425,42 @@ class MarkFeedSeen(BackendMessage):
 class MarkItemWatched(BackendMessage):
     """Mark an item as watched.
     """
-    def __init__(self, id_):
-        self.id = id_
+    def __init__(self, info):
+        self.info = info
 
 class MarkItemUnwatched(BackendMessage):
     """Mark an item as unwatched.
     """
-    def __init__(self, id_):
-        self.id = id_
+    def __init__(self, info):
+        self.info = info
 
 class MarkItemCompleted(BackendMessage):
-    def __init__(self, id_):
-        self.id = id_
+    def __init__(self, info):
+        self.info = info
 
 class MarkItemSkipped(BackendMessage):
-    def __init__(self, id_):
-        self.id = id_
+    def __init__(self, info):
+        self.info = info
+
+class SetItemIsPlaying(BackendMessage):
+    """Set when an item begins playing; unset when it stops.
+    """
+    def __init__(self, info, is_playing):
+        self.info = info
+        self.is_playing = is_playing
 
 class SetItemSubtitleEncoding(BackendMessage):
     """Mark an item as watched.
     """
-    def __init__(self, id_, encoding):
-        self.id = id_
+    def __init__(self, info, encoding):
+        self.info = info
         self.encoding = encoding
 
 class SetItemResumeTime(BackendMessage):
     """Set an item resume time.
     """
-    def __init__(self, id_, time):
-        self.id = id_
+    def __init__(self, info, time):
+        self.info = info
         self.resume_time = time
 
 class SetItemMediaType(BackendMessage):
@@ -881,12 +888,6 @@ class DeviceSyncMedia(BackendMessage):
         self.device = device
         self.item_ids = item_ids
 
-class DeleteDeviceVideo(BackendMessage):
-    """Ask the backend to delete a video from a device.
-    """
-    def __init__(self, item):
-        self.item = item
-
 class DeviceEject(BackendMessage):
     """Ask the backend to eject the given device.
     """
@@ -896,8 +897,8 @@ class DeviceEject(BackendMessage):
 class RateItem(BackendMessage):
     """Assign a rating (1-5) to an item.
     """
-    def __init__(self, id_, rating):
-        self.id = id_
+    def __init__(self, info, rating):
+        self.info = info
         self.rating = rating
 
 # Frontend Messages
@@ -1079,6 +1080,7 @@ class ItemInfo(object):
 
     :param name: name of the item
     :param id: object id
+    :param source: the ItemSource this ItemInfo was generated from
     :param feed_id: id for the items feed
     :param feed_name: name of the feed item is attached to
     :param feed_url: URL of the feed item is attached to 

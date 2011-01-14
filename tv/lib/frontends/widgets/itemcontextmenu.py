@@ -95,7 +95,7 @@ class ItemContextMenuHandler(object):
 
             def play_externally():
                 app.widgetapp.open_file(item.video_path)
-                messages.MarkItemWatched(item.id).send_to_backend()
+                messages.MarkItemWatched(item).send_to_backend()
 
             menu = [
                 (_('Play'), app.widgetapp.play_selection),
@@ -110,10 +110,10 @@ class ItemContextMenuHandler(object):
                 menu.append((_("Edit Item"), app.widgetapp.edit_item))
                 if item.video_watched:
                     menu.append((_('Mark as Unplayed'),
-                        messages.MarkItemUnwatched(item.id).send_to_backend))
+                        messages.MarkItemUnwatched(item).send_to_backend))
                 else:
                     menu.append((_('Mark as Played'),
-                        messages.MarkItemWatched(item.id).send_to_backend))
+                        messages.MarkItemWatched(item).send_to_backend))
                 if item.expiration_date:
                     menu.append((_('Keep'),
                         messages.KeepVideo(item.id).send_to_backend))
@@ -223,12 +223,12 @@ class ItemContextMenuHandler(object):
             if watched:
                 def mark_unwatched():
                     for item in watched:
-                        messages.MarkItemUnwatched(item.id).send_to_backend()
+                        messages.MarkItemUnwatched(item).send_to_backend()
                 menu.append((_('Mark as Unplayed'), mark_unwatched))
             if unwatched:
                 def mark_watched():
                     for item in unwatched:
-                        messages.MarkItemWatched(item.id).send_to_backend()
+                        messages.MarkItemWatched(item).send_to_backend()
                 menu.append((_('Mark as Played'), mark_watched))
             if expiring:
                 def keep_videos():

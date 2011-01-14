@@ -749,72 +749,36 @@ class BackendMessageHandler(messages.MessageHandler):
                             message.id)
 
     def handle_mark_item_watched(self, message):
-        try:
-            item_ = item.Item.get_by_id(message.id)
-            item_.mark_item_seen()
-        except database.ObjectNotFoundError:
-            logging.warning("handle_mark_item_seen: can't find item by id %s",
-                            message.id)
+        message.info.source.mark_watched(message.info)
 
     def handle_mark_item_unwatched(self, message):
-        try:
-            item_ = item.Item.get_by_id(message.id)
-            item_.mark_item_unseen()
-        except database.ObjectNotFoundError:
-            logging.warning(
-                "handle_mark_item_unwatched: can't find item by id %s",
-                message.id)
+        message.info.source.mark_unwatched(message.info)
 
     def handle_mark_item_completed(self, message):
-        try:
-            item_ = item.Item.get_by_id(message.id)
-            item_.mark_item_completed()
-        except database.ObjectNotFoundError:
-            logging.warning(
-                "handle_mark_item_completed: can't find item by id %s",
-                message.id)
+        message.info.source.mark_completed(message.info)
 
     def handle_mark_item_skipped(self, message):
-        try:
-            item_ = item.Item.get_by_id(message.id)
-            item_.mark_item_skipped()
-        except database.ObjectNotFoundError:
-            logging.warning(
-                "handle_mark_item_skipped: can't find item by id %s",
-                message.id)
+        message.info.source.mark_skipped(message.info)
+
+    def handle_set_item_is_playing(self, message):
+        message.info.source.set_is_playing(message.info, message.is_playing)
 
     def handle_rate_item(self, message):
-        try:
-            item_ = item.Item.get_by_id(message.id)
-            item_.set_rating(message.rating)
-        except database.ObjectNotFoundError:
-            logging.warning(
-                "handle_rate_item: can't find item by id %s", message.id)
+        message.info.source.set_ratting(message.info, message.rating)
 
     def handle_set_item_subtitle_encoding(self, message):
-        try:
-            item_ = item.Item.get_by_id(message.id)
-            item_.set_subtitle_encoding(message.encoding)
-        except database.ObjectNotFoundError:
-            logging.warning(
-                "handle_change_subtitle_encoding: can't find item by id %s",
-                message.id)
+        message.info.source.set_subtitle_encoding(message.info,
+                                                  message.encoding)
 
     def handle_set_item_resume_time(self, message):
-        try:
-            item_ = item.Item.get_by_id(message.id)
-            item_.set_resume_time(message.resume_time)
-        except database.ObjectNotFoundError:
-            logging.warning(
-                "handle_set_item_resume_time: can't find item by id %s",
-                message.id)
+        message.info.source.set_resume_time(message.info, message.resume_time)
 
     def handle_set_item_media_type(self, message):
-        for id in message.video_ids:
+        for id_ in message.video_ids:
             try:
-                item_ = item.Item.get_by_id(id)
+                item_ = item.Item.get_by_id(id_)
             except database.ObjectNotFoundError:
-                logging.warn("SetItemMediaType: Item not found -- %s", id)
+                logging.warn("SetItemMediaType: Item not found -- %s", id_)
                 continue
             item_.set_file_type(message.media_type)
 
@@ -1442,13 +1406,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             item_.expire()
 
     def handle_delete_video(self, message):
-        try:
-            item_ = item.Item.get_by_id(message.id)
-        except database.ObjectNotFoundError:
-            logging.warn("DeleteVideo: Item not found -- %s", message.id)
-        else:
-            item_.delete_files()
-            item_.expire()
+        message.info.source.delete(message.info)
 
     def handle_rename_video(self, message):
         try:
@@ -1653,17 +1611,6 @@ New ids: %s""", playlist_item_ids, message.item_ids)
                                           mount=message.device.mount,
                                           size=message.device.size,
                                           remaining=message.device.remaining)
-
-    def handle_delete_device_video(self, message):
-        item = message.item
-        device = message.item.device
-        del device.database[item.file_type][item.id]
-        if os.path.exists(item.video_path):
-            os.unlink(item.video_path)
-        if (item.thumbnail and item.thumbnail.startswith(device.mount) and
-            os.path.exists(item.thumbnail)):
-            os.unlink(item.thumbnail)
-        device.database.emit('item-removed', item)
 
     def handle_device_eject(self, message):
         devices.write_database(message.device.database, message.device.mount)
