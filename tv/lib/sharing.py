@@ -220,6 +220,26 @@ class SharingTracker(object):
         eventloop.add_urgent_call(self.mdns_callback_backend, "mdns callback",
                                   args=[added, fullname, host, ips, port])
 
+    def try_to_add(self, share_id, fullname, host, port):
+        def success(unused):
+            info = messages.SharingInfo(share_id, fullname, host, port)
+            self.available_shares[share_id] = info
+            messages.TabsChanged('sharing', [info], [], []).send_to_frontend()
+
+        def failure(unused):
+            pass
+
+        def testconnect():
+            client = libdaap.make_daap_client(host, port)
+            if not client.connect() or client.databases() is None:
+                raise IOError('test connect failed')
+            client.disconnect()
+
+        eventloop.call_in_thread(success,
+                                 failure,
+                                 testconnect,
+                                 'DAAP test connect')
+
     def mdns_callback_backend(self, added, fullname, host, ips, port):
         unused, local_port = app.sharing_manager.get_address()
         local_addresses = self.calc_local_addresses()
@@ -240,9 +260,7 @@ class SharingTracker(object):
             return 
 
         if added:
-            info = messages.SharingInfo(share_id, fullname, host, port)
-            self.available_shares[share_id] = info
-            messages.TabsChanged('sharing', [info], [], []).send_to_frontend()
+            self.try_to_add(share_id, fullname, host, port)
         else:
             # XXX The mDNS going away just means it is no longer published, 
             # doesn't necessarily mean it's not available.  So, anyway, there's
@@ -408,7 +426,9 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         if playlists is None:
             raise IOError('Cannot get playlist')
         for k in playlists.keys():
-            is_base_playlist = playlists[k]['daap.baseplaylist']
+            is_base_playlist = None
+            if playlists[k].has_key('daap.baseplaylist'):
+                is_base_playlist = playlists[k]['daap.baseplaylist']
             if is_base_playlist:
                 if self.base_playlist:
                     print 'WARNING: more than one base playlist found'
