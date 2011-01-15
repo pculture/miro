@@ -94,8 +94,8 @@ COLUMNS_AVAILABLE = {
         u'length', u'genre', u'year', u'rating', u'size'],
 }
 
-COLUMNS_AVAILABLE['device-video'] = COLUMNS_AVAILABLE['video']
-COLUMNS_AVAILABLE['device-audio'] = COLUMNS_AVAILABLE['music']
+COLUMNS_AVAILABLE[u'device-video'] = COLUMNS_AVAILABLE[u'videos']
+COLUMNS_AVAILABLE[u'device-audio'] = COLUMNS_AVAILABLE[u'music']
 
 # TODO: no display has type 'all-feed-video' yet
 # TODO: rename 'feed' to 'video-feed'
