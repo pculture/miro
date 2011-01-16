@@ -294,7 +294,7 @@ class PlaybackManager (signals.SignalEmitter):
             app.menu_manager.update_menus()
 
     def fullscreen(self):
-        if not self.is_playing:
+        if not self.is_playing or not self.video_display:
             return
         self.emit('will-fullscreen')
         self.toggle_fullscreen()
