@@ -377,6 +377,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.expiring = None
         self.showMoreInfo = False
         self.updating_movie_info = False
+        self.playing = False
 
     def after_setup_new(self):
         app.item_info_cache.item_created(self)
@@ -1918,6 +1919,15 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return 1
         else:
             return None
+
+    def set_is_playing(self, playing):
+        old_playing = self.playing
+        self.playing = playing
+        if playing != old_playing:
+            self.signal_change()
+
+    def is_playing(self):
+        return self.playing
 
     def __str__(self):
         return "Item - %s" % stringify(self.get_title())
