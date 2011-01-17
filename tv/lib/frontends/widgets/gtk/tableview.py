@@ -61,6 +61,7 @@ class CellRenderer(object):
     https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
     def __init__(self):
         self._renderer = gtk.CellRendererText()
+        self.want_hover = False
 
     def setup_attributes(self, column, attr_map):
         column.add_attribute(self._renderer, 'text', attr_map['value'])
@@ -105,6 +106,7 @@ class CheckboxCellRenderer(signals.SignalEmitter):
         self.create_signal("clicked")
         self._renderer = GTKCheckboxCellRenderer()
         wrappermap.add(self._renderer, self)
+        self.want_hover = False
 
     def set_control_size(self, size):
         pass
