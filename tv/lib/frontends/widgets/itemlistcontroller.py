@@ -201,6 +201,8 @@ class ItemListController(object):
         app.playback_manager.stop()
         if ((app.config.get(prefs.PLAY_IN_MIRO)
              and len(self.get_selection()) <= 1)):
+            if self._items_added_callback is not None:
+                self._playback_item_list.disconnect(self._items_added_callback)
             # User is playing items in Miro and has 0 or 1 items
             # selected, if more items get added to the item list, we
             # should play them.
