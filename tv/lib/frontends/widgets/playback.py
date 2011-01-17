@@ -64,6 +64,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.position = 0
         self.mark_as_watched_timeout = None
         self.update_timeout = None
+        self.last_playing = None
         self.presentation_mode = 'fit-to-bounds'
         self.create_signal('selecting-file')
         self.create_signal('cant-play-file')
