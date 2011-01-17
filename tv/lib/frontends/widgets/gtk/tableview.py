@@ -716,7 +716,7 @@ class TableView(Widget):
         column = self.columns.pop(index)
         del self.attr_map_for_column[column._column]
         del self.gtk_column_to_wrapper[column._column]
-        self._widget.remove_column(index)
+        self._widget.remove_column(column)
 
     def width_for_columns(self, total_width):
         # as far as I can tell, GTK includes the column spacing in the column
