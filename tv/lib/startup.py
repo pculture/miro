@@ -247,8 +247,10 @@ def startup():
 
 @startup_function
 def load_extensions():
-    ext_dirs = miro.plat.resources.extension_roots()
-    app.extension_manager = extensionmanager.ExtensionManager(ext_dirs)
+    core_ext_dirs = miro.plat.resources.extension_core_roots()
+    user_ext_dirs = miro.plat.resources.extension_user_roots()
+    app.extension_manager = extensionmanager.ExtensionManager(
+        core_ext_dirs, user_ext_dirs)
     app.extension_manager.load_extensions()
 
 @startup_function

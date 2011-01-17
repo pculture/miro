@@ -98,6 +98,7 @@ platform_dir = os.path.join(root_dir, 'linux')
 platform_package_dir = os.path.join(platform_dir, 'plat')
 platform_widgets_dir = os.path.join(platform_package_dir, 'frontends',
                                     'widgets')
+platform_extensions_dir = os.path.join(platform_dir, 'extensions')
 
 # insert the root_dir to the beginning of sys.path so that we can
 # pick up portable and other packages
@@ -310,9 +311,18 @@ for dir in ('searchengines',
     dest_dir = os.path.join('/usr/share/miro/resources/', dir)
     data_files.append((dest_dir, listfiles(source_dir)))
 
-# add extension files
+# add core extension files
 for root, dirs, files in os.walk(extensions_dir):
     extroot = root[len(extensions_dir)+1:]
+    files = [os.path.join(root, f) for f in files
+             if (not f.endswith("~") and not "#" in f)]
+    data_files.append((
+        os.path.join('/usr/share/miro/resources/extensions/', extroot),
+        files))
+
+# add core platform extension files
+for root, dirs, files in os.walk(platform_extensions_dir):
+    extroot = root[len(platform_extensions_dir)+1:]
     files = [os.path.join(root, f) for f in files
              if (not f.endswith("~") and not "#" in f)]
     data_files.append((

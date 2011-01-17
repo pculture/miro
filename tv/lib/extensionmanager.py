@@ -109,10 +109,17 @@ def get_extensions(ext_dir):
     return extensions
 
 class ExtensionManager(object):
-    def __init__(self, ext_dirs):
-        self.ext_dirs = ext_dirs
+    def __init__(self, core_ext_dirs, user_ext_dirs):
+        self.core_ext_dirs = core_ext_dirs
+        self.user_ext_dirs = user_ext_dirs
         self.enabled_extensions = app.config.get(prefs.ENABLED_EXTENSIONS)
         self.disabled_extensions = app.config.get(prefs.DISABLED_EXTENSIONS)
+
+        # list of core extensions--we keep this list to know whether we
+        # can make this extension enabled_by_default
+        self.core_extensions = []
+
+        # list of all extensions--core and user
         self.extensions = []
 
     def get_extension_by_name(self, name):
@@ -130,7 +137,7 @@ class ExtensionManager(object):
         if ext.name in self.enabled_extensions:
             return True
 
-        if ext.enabled_by_default:
+        if ext in self.core_extensions and ext.enabled_by_default:
             self.enable_extension(ext)
         else:
             self.disable_extension(ext)
@@ -192,7 +199,16 @@ class ExtensionManager(object):
         """Loads all extensions that are enabled.
         """
         extensions = []
-        for d in self.ext_dirs:
+        for d in self.core_ext_dirs:
+            logging.info("Loading core extensions in %s", d)
+            exts = get_extensions(d)
+            if exts:
+                sys.path.insert(0, d)
+                extensions.extend(exts)
+
+        self.core_extensions = list(extensions)
+
+        for d in self.user_ext_dirs:
             try:
                 d = d % {
                     "supportdir": app.config.get(prefs.SUPPORT_DIRECTORY)
@@ -201,7 +217,7 @@ class ExtensionManager(object):
                 logging.exception("bad extension directory '%s'", d)
                 continue
 
-            logging.info("Loading extensions in %s", d)
+            logging.info("Loading user extensions in %s", d)
             exts = get_extensions(d)
             if exts:
                 sys.path.insert(0, d)

@@ -778,8 +778,6 @@ class _ExtensionsHelper(object):
         row = self._model[iter_]
         ext = app.extension_manager.get_extension_by_name(row[1])
         if not row[0]:
-            app.extension_manager.enable_extension(ext)
-
             try:
                 app.extension_manager.import_extension(ext)
             except ImportError, ie:
@@ -791,7 +789,11 @@ class _ExtensionsHelper(object):
             except StandardError, ie:
                 logging.exception("load error")
                 return
+
+            # only enable if there are no errors
+            app.extension_manager.enable_extension(ext)
         else:
+            # always disable even if there are errors
             app.extension_manager.disable_extension(ext)
             try:
                 app.extension_manager.unload_extension(ext)
