@@ -732,10 +732,10 @@ class RemoveVideoEntry(BackendMessage):
 class DeleteVideo(BackendMessage):
     """Delete the video for an item's video.
     """
-    def __init__(self, id_):
-        self.id = id_
+    def __init__(self, info):
+        self.info = info
     def __repr__(self):
-        return BackendMessage.__repr__(self) + (", id: %s" % self.id)
+        return BackendMessage.__repr__(self) + (", info: %s" % self.info)
 
 class EditItem(BackendMessage):
     """Changes a bunch of things on an item.
