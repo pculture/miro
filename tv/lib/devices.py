@@ -36,6 +36,7 @@ import shutil
 import time
 
 from miro import app
+from miro import eventloop
 from miro import fileutil
 from miro import filetypes
 from miro import prefs
@@ -764,11 +765,14 @@ def clean_database(device):
 
     return known_files
 
+@eventloop.idle_iterator
 def scan_device_for_files(device):
+    # XXX is this as_idle() safe?
     known_files = clean_database(device)
 
     device.database.set_bulk_mode(True)
     device.database.setdefault('sync', {})
+    count = 0
 
     for filename in fileutil.miro_allfiles(device.mount):
         short_filename = filename[len(device.mount):]
@@ -782,5 +786,9 @@ def scan_device_for_files(device):
         else:
             continue
         device.database[item_type][ufilename] = {}
+        count += 1
+        if count == 50:
+            count = 0
+            yield # let other idle functions run
 
     device.database.set_bulk_mode(False)
