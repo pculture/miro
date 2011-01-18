@@ -140,6 +140,29 @@ class ExpiredViewTest(MiroTestCase):
 
         self.assertEquals(list(f3.expiring_items()), [i5])
 
+class ItemRatingTest(MiroTestCase):
+    def test_get_auto_rating(self):
+        feed = Feed(u'http://example.com/1')
+        item = Item(fp_values_for_url(u'http://example.com/1/item1'),
+                feed_id=feed.id)
+
+        # no rating if it hasn't been played/skipped
+        item.play_count = 0
+        item.skip_count = 0
+        self.assertEquals(item.get_auto_rating(), None)
+
+        item.play_count = 0
+        item.skip_count = 1
+        self.assertEquals(item.get_auto_rating(), 1)
+
+        item.play_count = 5
+        item.skip_count = 5
+        self.assertEquals(item.get_auto_rating(), 1)
+
+        item.play_count = 5
+        item.skip_count = 0
+        self.assertEquals(item.get_auto_rating(), 5)
+
 class ItemRemoveTest(MiroTestCase):
     def test_watched_time_reset(self):
         feed = Feed(u'http://example.com/1')
