@@ -38,7 +38,7 @@ It also holds:
 * :class:`InfoUpdaterCallbackList` -- tracks the list of callbacks for
   info updater
 * :class:`WidgetsMessageHandler` -- frontend message handler
-* :class:`DisplayStateStore` -- stores state of each display 
+* :class:`DisplayStateStore` -- stores state of each display
 """
 
 import cProfile
@@ -279,7 +279,7 @@ class Application:
 
     def on_volume_set(self, slider):
         self.on_volume_value_set(slider.get_value())
-    
+
     def on_volume_value_set(self, value):
         app.config.set(prefs.VOLUME_LEVEL, value)
         app.config.save()
@@ -466,7 +466,7 @@ class Application:
         # item currently playing
         if not selection and app.playback_manager.is_playing:
             selection = [app.playback_manager.get_playing_item()]
-            if selection:
+            if selection[0]:
                 app.playback_manager.on_movie_finished()
 
         if not selection:
@@ -833,7 +833,7 @@ class Application:
         t, infos = app.tab_list_manager.get_selection()
         if t == 'site':
             self.remove_sites(infos)
-    
+
     def remove_sites(self, infos):
         title = ngettext('Remove website', 'Remove websites', len(infos))
         description = ngettext(
@@ -874,7 +874,7 @@ class Application:
                     obj is not messages.FrontendMessage):
                 message_choices.append(obj)
                 message_labels.append(name)
-            
+
         index = dialogs.ask_for_choice(
                 ("Select Message to Profile"),
                 ("The next time the the message is handled, Miro will "
@@ -942,7 +942,7 @@ class Application:
             )
             return ret
         return True
-    
+
     def _confirm_quit_if_converting(self):
         running_count = conversions.conversion_manager.running_tasks_count()
         pending_count = conversions.conversion_manager.pending_tasks_count()
@@ -982,7 +982,7 @@ class Application:
         signals.system.connect('new-dialog', self.handle_dialog)
         signals.system.connect('shutdown', self.on_backend_shutdown)
         app.frontend_config_watcher.connect("changed", self.on_config_changed)
-    
+
     def handle_unwatched_count_changed(self):
         pass
 
@@ -1305,7 +1305,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def handle_download_count_changed(self, message):
         app.widgetapp.download_count = message.count
         library_tab_list = app.tab_list_manager.library_tab_list
-        library_tab_list.update_download_count(message.count, 
+        library_tab_list.update_download_count(message.count,
                                                message.non_downloading_count)
 
     def handle_paused_count_changed(self, message):
