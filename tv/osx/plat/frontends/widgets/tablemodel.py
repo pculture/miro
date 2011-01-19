@@ -279,6 +279,7 @@ class TreeTableModel(TableModelBase):
             self.forget_iter_for_item(child)
 
     def remove(self, iter):
+        self.emit('structure-will-change')
         self.forget_iter_for_item(iter.value())
         return TableModelBase.remove(self, iter)
 

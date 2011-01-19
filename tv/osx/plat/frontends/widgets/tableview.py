@@ -724,6 +724,7 @@ class TableView(Widget):
         self.set_show_headers(True)
         self.notifications = NotificationForwarder.create(self.tableview)
         self._selected_before_change = None
+        self._ignore_selection_changed = False
         self.model.connect_weak('row-changed', self.on_row_change)
         self.model.connect_weak('structure-will-change',
                 self.on_model_structure_change)
@@ -773,8 +774,10 @@ class TableView(Widget):
         for iter in self._selected_before_change:
             if iter.valid():
                 new_index_set.addIndex_(self.row_for_iter(iter))
+        self._ignore_selection_changed = True
         self.tableview.selectRowIndexes_byExtendingSelection_(
                 new_index_set, YES)
+        self._ignore_selection_changed = False
         self.emit('selection-changed')
         self._selected_before_change = None
 
@@ -799,7 +802,8 @@ class TableView(Widget):
         self.emit('row-collapsed', self.model.iter_for_item[item])
 
     def on_selection_change(self, notification):
-        self.emit('selection-changed')
+        if not self._ignore_selection_changed:
+            self.emit('selection-changed')
 
     def on_column_resize(self, notification):
         if not self.auto_resizing:
