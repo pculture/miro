@@ -78,6 +78,7 @@ from miro.frontends.widgets import playback
 from miro.frontends.widgets import search
 from miro.frontends.widgets import rundialog
 from miro.frontends.widgets import watchedfolders
+from miro.frontends.widgets import stores
 from miro.frontends.widgets import quitconfirmation
 from miro.frontends.widgets import firsttimedialog
 from miro.frontends.widgets import feedsettingspanel
@@ -102,6 +103,7 @@ class Application:
         messages.FrontendMessage.install_handler(self.message_handler)
         app.info_updater = InfoUpdater()
         app.watched_folder_manager = watchedfolders.WatchedFolderManager()
+        app.store_manager = stores.StoreManager()
         self.download_count = 0
         self.paused_count = 0
         self.unwatched_count = 0
@@ -1259,6 +1261,13 @@ class WidgetsMessageHandler(messages.MessageHandler):
         app.widgetapp.default_guide_info = message.default_guide
         self.initial_guides = message.added_guides
         self._saw_pre_startup_message('guide-list')
+        app.store_manager.handle_guide_list(message.added_guides)
+        app.store_manager.handle_guide_list(message.invisible_guides)
+
+    def handle_guides_changed(self, message):
+        app.store_manager.handle_guides_changed(message.added,
+                                                message.changed,
+                                                message.removed)
 
     def update_default_guide(self, guide_info):
         app.widgetapp.default_guide_info = guide_info

@@ -660,7 +660,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('userTitle', SchemaString(noneOk=True)),
         ('icon_cache_id', SchemaInt(noneOk=True)),
         ('firstTime', SchemaBool()),
-        ('store', SchemaBool()),
+        ('store', SchemaInt()),
     ]
 
     @staticmethod
@@ -717,7 +717,7 @@ class DBLogEntrySchema(DDBObjectSchema):
         ('description', SchemaString()),
     ]
 
-VERSION = 131
+VERSION = 132
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,

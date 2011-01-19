@@ -723,6 +723,63 @@ class ConversionsPanel(PanelBuilder):
 
         return vbox
 
+class _StoreHelper(object):
+    def __init__(self):
+        self._table = widgetset.TableView(app.store_manager.model)
+        store_cell_renderer = widgetset.CellRenderer()
+        store_cell_renderer.set_text_size(widgetconst.SIZE_SMALL)
+        store_column = widgetset.TableColumn(
+            _('Store'), store_cell_renderer, value=1)
+        store_column.set_min_width(400)
+        checkbox_cell_renderer = widgetset.CheckboxCellRenderer()
+        checkbox_cell_renderer.set_control_size(widgetconst.SIZE_SMALL)
+        checkbox_cell_renderer.connect('clicked', self._on_visible_clicked)
+        visible_column = widgetset.TableColumn(
+            _('Visible'), checkbox_cell_renderer, value=2)
+        visible_column.set_min_width(50)
+        self._table.add_column(store_column)
+        self._table.add_column(visible_column)
+        self._table.set_fixed_height(True)
+        self._table.allow_multiple_select(False)
+        self._table.set_alternate_row_backgrounds(True)
+        scroller = widgetset.Scroller(False, True)
+        scroller.set_has_borders(True)
+        scroller.add(self._table)
+        scroller.set_size_request(-1, 120)
+        self.store_list = widgetset.VBox()
+        self.store_list.pack_start(scroller)
+
+    def connect_signals(self):
+        self._changed_signal = app.store_manager.connect('changed',
+                self._on_stores_changed)
+
+    def disconnect_signals(self):
+        app.store_manager.disconnect(self._changed_signal)
+
+    def _on_stores_changed(self, manager):
+        self._table.model_changed()
+
+    def _on_visible_clicked(self, renderer, iter):
+        row = app.store_manager.model[iter]
+        app.store_manager.change_visible(row[0], not row[2])
+
+
+class StoresPanel(PanelBuilder):
+    def build_widget(self):
+        grid = dialogwidgets.ControlGrid()
+        self.store_helper = _StoreHelper()
+
+        grid.pack_label(_('MP3 stores:'), span=2)
+        grid.end_line(spacing=0)
+        grid.pack(self.store_helper.store_list, pad_right=12)
+        return grid.make_table()
+
+    def on_window_open(self):
+        self.store_helper.connect_signals()
+
+    def on_window_closed(self):
+        self.store_helper.disconnect_signals()
+
 class _ExtensionsHelper(object):
     def __init__(self):
         self._model = widgetset.TableModel('boolean', 'text')
@@ -840,6 +897,7 @@ add_panel("folders", _("Folders"), FoldersPanel, 'images/pref-tab-folders.png')
 add_panel("disk_space", _("Disk space"), DiskSpacePanel, 'images/pref-tab-disk-space.png')
 add_panel("playback", _("Playback"), PlaybackPanel, 'images/pref-tab-playback.png')
 add_panel("conversions", _("Conversions"), ConversionsPanel, 'images/pref-tab-conversions.png')
+add_panel("stores", _("Stores"), StoresPanel, 'images/pref-tab-downloads.png')
 add_panel("extensions", _("Extensions"), ExtensionsPanel, 'images/pref-tab-general.png')
 
 class PreferencesWindow(widgetset.PreferencesWindow):

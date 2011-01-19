@@ -1051,6 +1051,8 @@ class GuideInfo(object):
         self.id = guide.id
         self.url = guide.get_url()
         self.default = guide.is_default()
+        self.store = bool(guide.store)
+        self.visible = guide.is_visible()
         self.allowed_urls = guide.allowedURLs
         self.favicon = guide.get_favicon_path()
         self.faviconIsDefault = not (guide.icon_cache and
@@ -1199,7 +1201,9 @@ class GuideList(FrontendMessage):
     """Sends the frontend the initial list of channel guides
 
     :param default_guide: The Default channel guide
-    :param guides: list added channel guides
+    :param added_guides: list added channel guides
+    :param invisible_guides: list of guides which aren't visible (used by
+                             StoreManager)
     """
     def __init__(self, guides):
         self.default_guide = [g for g in guides if g.default]
@@ -1216,7 +1220,28 @@ class GuideList(FrontendMessage):
             logging.warning("Multiple default guides!  Picking the first one.")
             self.default_guide = [self.default_guide[0]]
         self.default_guide = self.default_guide[0]
-        self.added_guides = [g for g in guides if not g.default]
+        self.added_guides = [g for g in guides if not g.default and g.visible]
+        self.invisible_guides = [g for g in guides if not g.visible]
+
+class GuidesChanged(FrontendMessage):
+    """Informs the frontend that the guide list has changed.
+
+    :param added: GuideInfo object for each added guide.
+                  The list will be in the same order that they were added.
+    :param changed: The list of GuideInfo for each changed guide.
+    :param removed: list of ids for each guide that was removed.
+    """
+    def __init__(self, added, changed, removed):
+        self.added = added
+        self.changed = changed
+        self.removed = removed
+
+class SetGuideVisible(BackendMessage):
+    """Changes if a guide is visible in the tab list or not.
+    """
+    def __init__(self, id_, visible):
+        self.id = id_
+        self.visible = visible
 
 class TabList(FrontendMessage):
     """Sends the frontend the current list of channels and playlists

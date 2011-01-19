@@ -48,6 +48,9 @@ from miro import fileutil
 class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
     ICON_CACHE_VITAL = True
 
+    # constants for the 'store' variable
+    STORE_NOT_STORE, STORE_VISIBLE, STORE_INVISIBLE = range(3)
+
     def setup_new(self, url, allowedURLs=None):
         check_u(url)
         # FIXME - clean up the allowedURLs thing here
@@ -80,7 +83,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
     @classmethod
     def site_view(cls):
         default_url = app.config.get(prefs.CHANNEL_GUIDE_URL)
-        return cls.make_view('url != ?', (default_url,))
+        return cls.make_view('url != ? AND store != ?', (default_url, cls.STORE_INVISIBLE))
 
     @classmethod
     def get_by_url(cls, url):
@@ -101,6 +104,9 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def is_default(self):
         return self.url == app.config.get(prefs.CHANNEL_GUIDE_URL)
+
+    def is_visible(self):
+        return self.store != self.STORE_INVISIBLE
 
     def get_folder(self):
         return None

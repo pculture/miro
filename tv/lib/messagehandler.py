@@ -271,6 +271,30 @@ class GuideTracker(ViewTracker):
     def make_changed_message(self, added, changed, removed):
         return messages.TabsChanged('guide', added, changed, removed)
 
+    def send_messages(self):
+        message = messages.GuidesChanged(
+            [self.info_factory(g) for g in self.added],
+            [self.info_factory(g) for g in self.changed],
+            [g.id for g in self.removed])
+        message.send_to_frontend()
+
+        # now that we've sent the GuidesChanged message, fix the changed
+        # message for the hidden flag
+        changed, self.changed = self.changed, set()
+        for obj in changed:
+            is_visible = obj.is_visible()
+            if obj.id in self._last_sent_info:
+                was_visible = self._last_sent_info[obj.id].visible
+            else:
+                was_visible = False
+            if is_visible and not was_visible: # newly shown
+                self.added.append(obj)
+            elif not is_visible and was_visible: # newly hidden
+                self.removed.add(obj)
+            else:
+                self.changed.add(obj)
+        ViewTracker.send_messages(self)
+
     def send_initial_list(self):
         info_list = self._make_added_list(guide.ChannelGuide.make_view())
         messages.GuideList(info_list).send_to_frontend()
@@ -1015,6 +1039,16 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         url = message.url
         if guide.get_guide_by_url(url) is None:
             guide.ChannelGuide(url, [u'*'])
+
+    def handle_set_guide_visible(self, message):
+        g = guide.ChannelGuide.get_by_id(message.id)
+        if not g.store:
+            return
+        if message.visible:
+            g.store = g.STORE_VISIBLE
+        else:
+            g.store = g.STORE_INVISIBLE
+        g.signal_change()
 
     def handle_new_feed(self, message):
         url = message.url
