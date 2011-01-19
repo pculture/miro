@@ -346,7 +346,7 @@ class ItemListController(object):
             app.playback_manager.play_pause()
         elif name.startswith('rate:'):
             rating = int(name.split(':', 1)[1])
-            messages.RateItem(item_info.id, rating).send_to_backend()
+            messages.RateItem(item_info, rating).send_to_backend()
         else:
             logging.debug("ItemView doesn't know how to handle hotspot %s.",
                 name)
