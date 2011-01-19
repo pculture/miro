@@ -496,7 +496,7 @@ def build_output_paths(item_info, target_folder, converter_info):
         # convert directly onto the device
         temp_path = final_path + '.tmp'
     else:
-        temp_dir = utils.FilenameType(tempfile.mkdtemp("miro-conversion"))
+        temp_dir = FilenameType(tempfile.mkdtemp("miro-conversion"))
         temp_path = os.path.join(temp_dir, basename)
 
     return (final_path, temp_path)
