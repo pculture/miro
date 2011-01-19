@@ -58,7 +58,7 @@ TYPE_RE = re.compile("Miro-Movie-Data-Type: (audio|video|other)")
 THUMBNAIL_SUCCESS_RE = re.compile("Miro-Movie-Data-Thumbnail: Success")
 TRY_AGAIN_RE = re.compile("Miro-Try-Again: True")
 
-VIDEO_EXTENSIONS = ('.m4v','.mp4')
+VIDEO_EXTENSIONS = ('.m4v','.mp4','.mpg')
 TAG_MAP = {
     'album': ('album', 'talb', 'wm/albumtitle', u'\uFFFDalb'),
     'artist': ('artist', 'tpe1', 'tpe2', 'tpe3', 'author', 'albumartist',
