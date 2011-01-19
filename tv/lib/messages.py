@@ -828,14 +828,8 @@ class ReportCrash(BackendMessage):
 class SaveDisplayState(BackendMessage):
     """Save changes to one display for the frontend
     """
-    def __init__(self, key, is_list_view, active_filters, sort_state,
-            columns_enabled, column_widths):
-        self.key = key
-        self.is_list_view = is_list_view
-        self.active_filters = active_filters
-        self.sort_state = sort_state
-        self.columns_enabled = columns_enabled
-        self.column_widths = column_widths
+    def __init__(self, display_info):
+        self.display_info = display_info
 
 class QueryDisplayStates(BackendMessage):
     """Ask for a CurrentDisplayStates message to be sent back.
@@ -1527,14 +1521,28 @@ class CurrentDisplayStates(FrontendMessage):
 class DisplayInfo(object):
     """Contains the state of a single display
     """
-    def __init__(self, key, is_list_view=None, active_filters=None,
-            sort_state=None, columns_enabled=None, column_widths=None):
+    def __init__(self, key, display=None):
         self.key = key
-        self.is_list_view = is_list_view
-        self.active_filters = active_filters
-        self.sort_state = sort_state
-        self.columns_enabled = columns_enabled
-        self.column_widths = column_widths
+        try:
+            self.is_list_view = display.is_list_view
+        except StandardError:
+            self.is_list_view = None
+        try:
+            self.active_filters = display.active_filters[:]
+        except StandardError:
+            self.active_filters = None
+        try:
+            self.sort_state = display.sort_state
+        except StandardError:
+            self.sort_state = None
+        try:
+            self.columns_enabled = display.columns_enabled[:]
+        except StandardError:
+            self.columns_enabled = None
+        try:
+            self.column_widths = display.column_widths.copy()
+        except StandardError:
+            self.column_widths = None
 
 class OpenInExternalBrowser(FrontendMessage):
     """Opens the specified url in an external browser.

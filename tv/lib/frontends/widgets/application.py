@@ -1533,7 +1533,5 @@ class DisplayStatesStore(object):
 
     def save_state(self, key):
         display = self._get_display(key)
-        m = messages.SaveDisplayState(key, display.is_list_view,
-            display.active_filters, display.sort_state, display.columns_enabled,
-            display.column_widths)
+        m = messages.SaveDisplayState(display)
         m.send_to_backend()

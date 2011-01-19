@@ -1547,22 +1547,20 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             return DisplayState(key)
 
     def handle_save_display_state(self, message):
-        state = self._get_display_state(message.key)
-        state.is_list_view = message.is_list_view
-        state.active_filters = message.active_filters
-        state.sort_state = message.sort_state
-        state.columns_enabled = message.columns_enabled
-        state.column_widths = message.column_widths
+        info = message.display_info
+        state = self._get_display_state(info.key)
+        state.is_list_view = info.is_list_view
+        state.active_filters = info.active_filters
+        state.sort_state = info.sort_state
+        state.columns_enabled = info.columns_enabled
+        state.column_widths = info.column_widths
         state.signal_change()
         
     def _get_display_states(self):
         states = []
         for display in DisplayState.make_view():
             key = (display.type, display.id_)
-            display_info = messages.DisplayInfo(key,
-                display.is_list_view, display.active_filters,
-                display.sort_state, display.columns_enabled,
-                display.column_widths)
+            display_info = messages.DisplayInfo(key, display)
             states.append(display_info)
         return states
 
