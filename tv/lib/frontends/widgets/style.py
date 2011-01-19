@@ -1146,7 +1146,7 @@ class RatingRenderer(widgetset.CustomCellRenderer):
         self.height += self.HOTSPOT_VERTICAL_PADDING
         self.icon_width += self.ICON_HORIZONTAL_SPACING
         # TODO: find what makes the following +4 necessary
-        self.width = self.min_width = self.icon_width * 5 + 4
+        self.width = self.min_width = int(self.icon_width * 5) + 4
         self.hover = None
         self.layout = None
 
