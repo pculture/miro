@@ -11,14 +11,17 @@ tv/linux/plat/frontends/widgets/pluginsdir.cpp
 tv/linux/plat/frontends/widgets/mozprompt.c
 tv/linux/plat/frontends/widgets/mozprompt.h
 tv/linux/plat/frontends/widgets/httpobserver.c
+
 tv/windows/miro-binary-kit-win-*
 tv/windows/build
 tv/windows/dist
 tv/windows/plat/frontends/widgets/XULRunnerBrowser/xulrunnerbrowser.cpp
 tv/windows/plat/frontends/widgets/XULRunnerBrowser/xulrunnerbrowser.h
+
 tv/osx/Miro.app
 tv/osx/build
 tv/osx/miro-binary-kit-osx-*
+
 tv/lib/frontends/widgets/gtk/pygtkhacks.c
 tv/lib/frontends/widgets/gtk/webkitgtkhacks.c
 
@@ -27,3 +30,7 @@ tv/lib/frontends/widgets/gtk/webkitgtkhacks.c
 
 .DS_Store
 sandbox_*
+
+docs/developer/_build/
+docs/developer/build/
+docs/developer/dist/
