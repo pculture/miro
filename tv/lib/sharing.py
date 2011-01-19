@@ -498,7 +498,6 @@ class SharingManagerBackend(object):
     world."""
     type = u'sharing-backend'
     id = u'sharing-backend'
-    items = dict()              # Neutral format - not really needed.
     daapitems = dict()          # DAAP format XXX - index via the items
     # XXX daapplaylist should be hidden from view. 
     daap_playlists = dict()     # Playlist, in daap format
@@ -514,7 +513,6 @@ class SharingManagerBackend(object):
     def handle_items_changed(self, message):
         # If items are changed, just redelete and recreate the entry.
         for itemid in message.removed:
-            del self.items[itemid]
             del self.daapitems[itemid]
         self.make_item_dict(message.added)
         self.make_item_dict(message.changed)
