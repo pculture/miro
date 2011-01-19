@@ -730,7 +730,7 @@ class BackendMessageHandler(messages.MessageHandler):
         message.info.source.set_is_playing(message.info, message.is_playing)
 
     def handle_rate_item(self, message):
-        message.info.source.set_ratting(message.info, message.rating)
+        message.info.source.set_rating(message.info, message.rating)
 
     def handle_set_item_subtitle_encoding(self, message):
         message.info.source.set_subtitle_encoding(message.info,
