@@ -265,15 +265,16 @@ class SharingTracker(object):
             self.available_shares[share_id] = info
             self.try_to_add(share_id, fullname, host, port)
         else:
-            # XXX The mDNS going away just means it is no longer published, 
-            # doesn't necessarily mean it's not available.  So, anyway, there's
-            # a bit more work involved for the frontend than just the tabs 
-            # have changed, so we use a SharingDisappeared message which takes
-            # care of stopping playback (if applicable), then disconnecting
-            # the share and removing the tab.
-            victim = self.available_shares[share_id]
-            del self.available_shares[share_id]
-            messages.SharingDisappeared(victim).send_to_frontend()
+            # The mDNS publish is going away.  Are we connected?  If we
+            # are connected, keep it around.  If not, make it disappear.
+            # SharingDisappeared() kicks off the necessary bits in the 
+            # frontend for us.
+            # Future work: we may want to update the name of the share in the
+            # sidebar if we detect it is actually a rename?
+            if not share_id in self.trackers.keys():
+                victim = self.available_shares[share_id]
+                del self.available_shares[share_id]
+                messages.SharingDisappeared(victim).send_to_frontend()
 
     def server_thread(self):
         callback = libdaap.mdns_browse(self.mdns_callback)
@@ -667,6 +668,7 @@ class SharingManager(object):
         self.r, self.w = util.make_dummy_socket_pair()
         self.sharing = False
         self.discoverable = False
+        self.name = ''
         self.mdns_present = libdaap.mdns_init()
         self.config_watcher = config.ConfigWatcher(
             lambda func, *args: eventloop.add_idle(func, 'config watcher',
@@ -691,6 +693,8 @@ class SharingManager(object):
     def twiddle_sharing(self):
         sharing = app.config.get(prefs.SHARE_MEDIA)
         discoverable = app.config.get(prefs.SHARE_DISCOVERABLE)
+        name = app.config.get(prefs.SHARE_NAME)
+        name_changed = name != self.name
         if sharing != self.sharing:
             if sharing:
                 # TODO: if this didn't work, should we set a timer to retry
@@ -709,6 +713,12 @@ class SharingManager(object):
         # would already have been disabled anyway.
         if not self.sharing:
             return
+
+        # Did we change the name?  If we have, then disable the share publish
+        # first, and update what's kept in the server.
+        if name_changed and self.discoverable:
+            self.disable_discover()
+            self.server.set_name(name)
 
         if discoverable != self.discoverable:
             if discoverable:
