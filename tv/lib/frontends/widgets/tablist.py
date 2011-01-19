@@ -748,7 +748,7 @@ class DevicesList(TabList, TabUpdaterMixin):
         pass
 
     def on_context_menu(self, table_view):
-        pass
+        return []
 
 class SiteList(TabList):
     type = u'site'
