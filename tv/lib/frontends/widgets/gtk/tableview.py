@@ -38,6 +38,7 @@ import gtk
 import pango
 
 from miro import signals
+from miro import infolist
 from miro.frontends.widgets.gtk import pygtkhacks
 from miro.frontends.widgets.gtk import drawing
 from miro.frontends.widgets.gtk import wrappermap
@@ -218,14 +219,23 @@ class CustomCellRenderer(object):
     def hotspot_test(self, style, layout, x, y, width, height):
         return None
 
+class InfoListRenderer(CustomCellRenderer):
+    """Customizable Cell Renderer
+    https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
+
+    def cell_data_func(self, column, cell, model, iter, attr_map):
+        self.info, self.attrs = model.get_row(iter)
+        cell.column = column
+        cell.path = model.get_path(iter)
+
 class MiroTreeView(gtk.TreeView):
     """Extends the GTK TreeView widget to help implement TableView
     https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
     # Add a tiny bit of padding so that the user can drag feeds below
     # the table, i.e. to the bottom row, as a top-level
     PAD_BOTTOM = 3
-    def __init__(self, model=None):
-        gtk.TreeView.__init__(self, model)
+    def __init__(self):
+        gtk.TreeView.__init__(self):
         self.drag_dest_at_bottom = False
         self.height_without_pad_bottom = -1
         self.set_enable_search(False)
@@ -556,8 +566,9 @@ class TableView(Widget):
 
     def __init__(self, model):
         Widget.__init__(self)
-        self.model = model
-        self.set_widget(MiroTreeView(model._model))
+        self.set_widget(MiroTreeView())
+        self.model.add_to_tableview(self._widget)
+        self._model = self._widget.get_model()
         self.selection = self._widget.get_selection()
         self.columns = []
         self.attr_map_for_column = {}
@@ -607,16 +618,16 @@ class TableView(Widget):
 
     def _connect_hotspot_signals(self):
         self._hotspot_callback_handles = []
-        self._hotspot_callback_handles.append(weak_connect(self.model._model,
+        self._hotspot_callback_handles.append(weak_connect(self._model,
             'row-inserted', self.on_row_inserted))
-        self._hotspot_callback_handles.append(weak_connect(self.model._model,
+        self._hotspot_callback_handles.append(weak_connect(self._model,
             'row-deleted', self.on_row_deleted))
-        self._hotspot_callback_handles.append(weak_connect(self.model._model,
+        self._hotspot_callback_handles.append(weak_connect(self._model,
             'row-changed', self.on_row_changed))
 
     def _disconnect_hotspot_signals(self):
         for handle in self._hotspot_callback_handles:
-            self.model._model.disconnect(handle)
+            self._model.disconnect(handle)
 
     def set_gradient_highlight(self, gradient):
         # This is just an OS X thing.
@@ -669,14 +680,6 @@ class TableView(Widget):
                     column.renderer._renderer.set_property(
                             'cell-background-set', False)
 
-    def _check_attr_map(self, attrs):
-        for value in attrs.values():
-            if not isinstance(value, int):
-                msg = "Attribute values must be integers, not %r" % value
-                raise TypeError(msg)
-            if value < 0 or value >= len(self.model._column_types):
-                raise ValueError("Attribute index out of range: %s" % value)
-
     def set_column_spacing(self, space):
         """Set the amount of space between columns."""
         self._renderer_xpad = space / 2
@@ -705,7 +708,7 @@ class TableView(Widget):
         self._widget.set_grid_lines(setting)
 
     def add_column(self, column):
-        self._check_attr_map(column.attrs)
+        self.model.check_new_column(column)
         self._widget.append_column(column._column)
         self.columns.append(column)
         self.attr_map_for_column[column._column] = column.attrs
@@ -808,14 +811,14 @@ class TableView(Widget):
         return self.selection.unselect_all()
 
     def set_row_expanded(self, iter, expanded):
-        path = self.model._model.get_path(iter)
+        path = self._model.get_path(iter)
         if expanded:
             self._widget.expand_row(path, False)
         else:
             self._widget.collapse_row(path)
 
     def is_row_expanded(self, iter):
-        path = self.model._model.get_path(iter)
+        path = self._model.get_path(iter)
         return self._widget.row_expanded(path)
 
     def set_context_menu_callback(self, callback):
@@ -1069,7 +1072,7 @@ class TableView(Widget):
         equivalent position to send to the GTK code if the drag_dest validates
         the drop.
         """
-        model = self.model._model
+        model = self._model
         try:
             gtk_path, gtk_position = self._widget.get_dest_row_at_pos(x, y)
         except TypeError:
@@ -1170,7 +1173,7 @@ class TableView(Widget):
 
     def model_changed(self):
         if self.in_bulk_change:
-            self._widget.set_model(self.model._model)
+            self._widget.set_model(self._model)
             self._restore_selection()
             self._widget.thaw_child_notify()
             self._connect_hotspot_signals()
@@ -1195,6 +1198,9 @@ class TableModel(object):
         else:
             self.convert_row_for_gtk = self.convert_row_for_gtk_fast
             self.convert_value_for_gtk = self.convert_value_for_gtk_fast
+
+    def add_to_tableview(self, widget):
+        widget.set_model(self._model)
 
     def map_types(self, miro_column_types):
         type_map = {
@@ -1222,6 +1228,13 @@ class TableModel(object):
     def convert_row_for_gtk_slow(self, column_values):
         return tuple(self.convert_value_for_gtk(c) for c in column_values)
 
+    def check_new_column(self, column):
+        for value in column.attrs.values():
+            if not isinstance(value, int):
+                msg = "Attribute values must be integers, not %r" % value
+                raise TypeError(msg)
+            if value < 0 or value >= len(self.model._column_types):
+                raise ValueError("Attribute index out of range: %s" % value)
 
     # If we don't store image data, we can don't need to do any work to
     # convert row data to gtk
@@ -1297,3 +1310,15 @@ class TreeTableModel(TableModel):
 
     def parent_iter(self, iter):
         return self._model.iter_parent(iter)
+
+class InfoListModel(infolist.InfoList):
+    # InfoList is a special model for quick handling of ItemInfo lists
+    # we we wrap it slightly so that it matches some of the TableModel
+    # interface
+    def check_new_column(self, column):
+        if not isinstance(column.renderer, InfoListRenderer):
+            raise TypeError("InfoListModel only supports InfoListRenderer")
+        for value in column.attrs.values():
+            if value not in ('info', 'attrs'):
+                msg = "Attribute values can only be 'info' or 'attrs', not %r"
+                raise TypeError(msg % value)

@@ -73,6 +73,7 @@ from miro.test.itemtest import *
 from miro.test.filetypestest import *
 from miro.test.cellpacktest import *
 from miro.test.searchtest import *
+from miro.test.infolisttest import *
 
 # platform specific tests
 

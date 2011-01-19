@@ -24,6 +24,7 @@ tv/osx/miro-binary-kit-osx-*
 
 tv/lib/frontends/widgets/gtk/pygtkhacks.c
 tv/lib/frontends/widgets/gtk/webkitgtkhacks.c
+tv/lib/frontends/widgets/infolist/infolist.c
 
 *pyc
 *~

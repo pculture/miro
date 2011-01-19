@@ -63,7 +63,7 @@ def only_on_platforms(*platforms):
     
     Example::
 
-        @only_on_platform('win32')
+        @only_on_platforms('win32')
         def test_something_that_works_on_win32(self):
             print "ha!  nothing works on win32!"
             assert False
@@ -92,7 +92,11 @@ def skip_for_platforms(*platforms):
        Valid platform strings are from sys.platform and NOT from the
        Miro platform names.  Use 'win32', 'linux', and 'osx'.
     """
-    if sys.platform in platforms:
+    if sys.platform == 'linux2':
+        sys_platform = 'linux'
+    else:
+        sys_platform = sys.platform
+    if sys_platform in platforms:
         return skipping("skip_for_platforms %s" % platforms)
     else:
         return identity
@@ -158,7 +162,28 @@ def uses_httpclient(fun):
             httpclient.stop_thread()
     return functools.update_wrapper(_uses_httpclient, fun)
 
+def decorate_all_tests(class_dict, bases, decorator):
+    for name, func in class_dict.iteritems():
+        if name.startswith("test"):
+            class_dict[name] = decorator[func]
+    for cls in bases:
+        for name in dir(cls):
+            if name.startswith("test"):
+                class_dict[name] = decorator(getattr(cls, name))
+
+class MiroTestCaseMetaclass(type):
+    def __new__(meta, classname, bases, class_dict):
+        if '__skip_for_platforms__' in class_dict:
+            decorate_all_tests(class_dict, bases,
+                    skip_for_platforms(*class_dict['__skip_for_platforms__']))
+        if '__only_on_platforms__' in class_dict:
+            decorate_all_tests(class_dict, bases,
+                    only_on_platforms(*class_dict['__only_on_platforms__']))
+        return type.__new__(meta, classname, bases, class_dict)
+
 class MiroTestCase(unittest.TestCase):
+    __metaclass__ = MiroTestCaseMetaclass
+
     def setUp(self):
         self.tempdir = tempfile.mkdtemp()
         if not os.path.exists(self.tempdir):

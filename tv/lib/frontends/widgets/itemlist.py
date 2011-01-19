@@ -44,6 +44,7 @@ import sys
 import unicodedata
 import logging
 
+from miro import infolist
 from miro import search
 from miro import signals
 from miro import util
@@ -218,6 +219,8 @@ class RatingSort(ItemSort):
     def sort_key(self, item):
         return item.rating
 
+DEFAULT_SORT = ArtistSort(False)
+
 SORT_KEY_MAP = {
     DateSort.KEY:         DateSort,
     NameSort.KEY:         NameSort,
@@ -257,7 +260,7 @@ class ItemListGroup(object):
         """
         self.item_lists = item_lists
         if sorter is None:
-            self.set_sort(ArtistSort(False))
+            self.set_sort(DEFAULT_SORT)
         else:
             self.set_sort(sorter)
         self._throbber_timeouts = {}
@@ -290,22 +293,20 @@ class ItemListGroup(object):
 
         Note: This method will sort item_list
         """
-        self._sorter.sort_items(item_list)
         for item_info in item_list:
             self._setup_info(item_info)
         for sublist in self.item_lists:
-            sublist.add_items(item_list, already_sorted=True)
+            sublist.add_items(item_list)
 
     def update_items(self, changed_items):
         """Update items.
 
         Note: This method will sort changed_items
         """
-        self._sorter.sort_items(changed_items)
         for item_info in changed_items:
             self._setup_info(item_info)
         for sublist in self.item_lists:
-            sublist.update_items(changed_items, already_sorted=True)
+            sublist.update_items(changed_items)
 
     def remove_items(self, removed_ids):
         """Remove items from the list."""
@@ -345,9 +346,8 @@ class ItemList(signals.SignalEmitter):
     def __init__(self):
         signals.SignalEmitter.__init__(self)
         self.create_signal('items-added')
-        self.model = widgetset.TableModel('object', 'boolean', 'integer')
-        self._iter_map = {}
-        self._sorter = None
+        self.model = itemlist.ItemList(DEFAULT_SORT.sort_key)
+        self._sorter = DEFAULT_SORT
         self._search_text = ''
         self.new_only = False
         self.unwatched_only = False
@@ -359,7 +359,7 @@ class ItemList(signals.SignalEmitter):
 
     def set_sort(self, sorter):
         self._sorter = sorter
-        self._resort_items()
+        self.model.change_sort(sorter.sort_key)
 
     def get_sort(self):
         return self._sorter
@@ -374,48 +374,28 @@ class ItemList(signals.SignalEmitter):
 
     def get_items(self, start_id=None):
         """Get a list of ItemInfo objects in this list"""
-        return list(self.iter_items(start_id))
+        rv = self.model.info_list()
+        if start_id is not None:
+            for idx in xrange(len(rv)):
+                if rv[idx].id == start_id:
+                    break
+            return rv[idx:]
+        return rv
 
     def iter_items(self, start_id=None):
         """Iterate through ItemInfo objects in this list"""
-        if start_id is None:
-            for row in self.model:
-                yield row[0]
+        info_list = self.model.info_list()
+        if start_id is not None:
+            for start_id_index in xrange(len(info_list)):
+                if info_list[start_id_index].id == start_id:
+                    break
         else:
-            iter = self._iter_map[start_id]
-            while iter is not None:
-                yield self.model[iter][0]
-                iter = self.model.next_iter(iter)
+            start_id_index = 0
+        for i in xrange(start_id_index, len(info_list)):
+            yield info_list[i]
 
     def __iter__(self):
         return self.iter_items()
-
-    def _resort_items(self):
-        rows = []
-        iter = self.model.first_iter()
-        while iter is not None:
-            rows.append(tuple(self.model[iter]))
-            iter = self.model.remove(iter)
-        self._sorter.sort_item_rows(rows)
-        for row in rows:
-            self._iter_map[row[0].id] = self.model.append(*row)
-
-    def _resort_item(self, info):
-        """Put an item into it's correct position using the current sort."""
-        itr = self._iter_map[info.id]
-        row = tuple(self.model[itr])
-        self.model.remove(itr)
-
-        itr = self.model.first_iter()
-        while itr is not None:
-            current_info = self.model[itr][0]
-            if(self._sorter.compare(info, current_info) < 1):
-                new_itr = self.model.insert_before(itr, *row)
-                break
-            itr = self.model.next_iter(itr)
-        else:
-            new_itr = self.model.append(*row)
-        self._iter_map[info.id] = new_itr
 
     def filter(self, item_info):
         """Can be overrided by subclasses to filter out items from the list.
@@ -432,105 +412,62 @@ class ItemList(signals.SignalEmitter):
 
     def set_show_details(self, item_id, value):
         """Change the show details value for an item"""
-        iter = self._iter_map[item_id]
-        self.model.update_value(iter, 1, value)
-
-    def find_show_details_rows(self):
-        """Return a list of iters for rows with in show details mode."""
-        retval = []
-        iter = self.model.first_iter()
-        while iter is not None:
-            if self.model[iter][1]:
-                retval.append(iter)
-            iter = self.model.next_iter(iter)
-        return retval
+        try:
+            self.model.set_attr(item_id, 'show-details', value)
+        except KeyError:
+            pass
 
     def update_throbber(self, item_id):
         try:
-            iter = self._iter_map[item_id]
+            counter = self.model.get_attr(item_id, 'throbber-value', 0)
         except KeyError:
-            pass
-        else:
-            counter = self.model[iter][2]
-            self.model.update_value(iter, 2, counter + 1)
+            return
+        counter = self.model.set_attr(item_id, 'throbber-value', counter + 1)
 
-    def _insert_sorted_items(self, item_list):
-        pos = self.model.first_iter()
-        for item_info in item_list:
-            while (pos is not None and
-                    self._sorter.compare(self.model[pos][0], item_info) < 0):
-                pos = self.model.next_iter(pos)
-            iter = self.model.insert_before(pos, item_info, False, 0)
-            if pos is not None:
-                next_item_info = self.model[pos][0]
-            else:
-                next_item_info = None
-            self._iter_map[item_info.id] = iter
-
-    def _insert_items(self, to_add, already_sorted):
+    def _insert_items(self, to_add):
         if len(to_add) == 0:
             return
-        if not already_sorted:
-            self._sorter.sort_items(to_add)
-        self._insert_sorted_items(to_add)
+        self.model.insert_infos(to_add)
         self.emit('items-added', to_add)
 
-    def add_items(self, item_list, already_sorted=False):
+    def add_items(self, item_list):
         to_add = []
         for item in item_list:
             if self._should_show_item(item):
                 to_add.append(item)
             else:
                 self._hidden_items[item.id] = item
-        self._insert_items(to_add, already_sorted)
+        self._insert_items(to_add)
 
-    def update_items(self, changed_items, already_sorted=False):
+    def update_items(self, changed_items):
         to_add = []
+        to_remove = []
+        to_update = []
         for info in changed_items:
             should_show = self._should_show_item(info)
-            if info.id in self._iter_map:
-                # Item already displayed
-                if not should_show:
-                    self.remove_item(info.id)
-                    self._hidden_items[info.id] = info
-                else:
-                    self.update_item(info)
-            else:
+            if info.id in self._hidden_items:
                 # Item not already displayed
                 if should_show:
                     to_add.append(info)
-                    try:
-                        del self._hidden_items[info.id]
-                    except KeyError:
-                        # This shouldn't happen, but does for some reason.
-                        # Just log a warning and try to work with it.
-                        logging.warn("Item %s was not in _iter_map nor "
-                                "_hidden_items", info.id)
+                    del self._hidden_items[info.id]
                 else:
                     self._hidden_items[info.id] = info
+            else:
+                # Item already displayed
+                if not should_show:
+                    to_remove.append(info.id)
+                    self._hidden_items[info.id] = info
+                else:
+                    to_update.append(info)
         self._insert_items(to_add, already_sorted)
-
-    def remove_item(self, id):
-        try:
-            iter = self._iter_map.pop(id)
-        except KeyError:
-            # The item is hidden
-            del self._hidden_items[id]
-        else:
-            self.model.remove(iter)
-
-    def update_item(self, info):
-        iter = self._iter_map[info.id]
-        old_item = self.model[iter][0]
-        self.model.update_value(iter, 0, info)
-        if self.resort_on_update and self._sorter.compare(info, old_item):
-            # If we've changed the sort value of the item, then we need to
-            # re-sort the list (#12003).
-            self._resort_item(info)
+        self.model.update_infos(to_update, resort=self.resort_on_update)
+        self.model.remove_ids(to_remove)
 
     def remove_items(self, id_list):
-        for id in id_list:
-            self.remove_item(id)
+        self.model.remove_ids(id_list)
+        for id- in id_list:
+            if id_ in self._hidden_items:
+                del self._hidden_items[id_]
 
     def set_new_only(self, new_only):
         """Set if only new items are to be displayed (default False)."""
@@ -556,14 +493,21 @@ class ItemList(signals.SignalEmitter):
         self._recalculate_hidden_items()
 
     def _recalculate_hidden_items(self):
-        newly_matching = self._find_newly_matching_items()
-        removed = self._remove_non_matching_items()
-        self._sorter.sort_items(newly_matching)
-        self._insert_sorted_items(newly_matching)
-        for item in removed:
-            self._hidden_items[item.id] = item
-        for item in newly_matching:
-            del self._hidden_items[item.id]
+        info_list_at_start self.model.info_list()
+
+        newly_matching = []
+        for item in self._hidden_items.values():
+            if self.should_show(item):
+                newly_matching.append(item)
+                del self._hidden_items[item.id]
+        self._insert_items(newly_matching)
+
+        newly_unmatching_ids = []
+        for item in info_list_at_start:
+            if not self.should_show(item):
+                newly_unmatching_ids.append(item.id)
+                self._hidden_items[item.id] = item
+        self.model.remove_ids(newly_unmatching_ids)
 
     def move_items(self, insert_before, item_ids):
         """Move a group of items inside the list.
@@ -576,26 +520,6 @@ class ItemList(signals.SignalEmitter):
         new_iters = _ItemReorderer().reorder(self.model, insert_before,
                 item_ids)
         self._iter_map.update(new_iters)
-
-    def _find_newly_matching_items(self):
-        retval = []
-        for item in self._hidden_items.values():
-            if self._should_show_item(item):
-                retval.append(item)
-        return retval
-
-    def _remove_non_matching_items(self):
-        removed = []
-        iter = self.model.first_iter()
-        while iter is not None:
-            item = self.model[iter][0]
-            if not self._should_show_item(item):
-                iter = self.model.remove(iter)
-                del self._iter_map[item.id]
-                removed.append(item)
-            else:
-                iter = self.model.next_iter(iter)
-        return removed
 
 class IndividualDownloadItemList(ItemList):
     """ItemList that only displays single downloads items.
