@@ -275,7 +275,7 @@ class TabListDragHandler(object):
         return (self.item_type, self.folder_type)
 
     def begin_drag(self, tableview, rows):
-        typ = self.item_type
+        typ = self.item_type.encode('ascii', 'replace')
         for r in rows:
             if r[0].is_folder:
                 typ = self.folder_type
