@@ -52,7 +52,7 @@ from miro.util import returns_filename
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat import resources
 from miro.plat.utils import thread_body
-from miro.plat.bonjour import install_bonjour
+from miro.plat.frontends.widgets.bonjour import install_bonjour
 
 import libdaap
 

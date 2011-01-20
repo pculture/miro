@@ -45,7 +45,7 @@ def install_bonjour():
         "to do this now?"
     )
     ret = dialogs.show_choice_dialog(title, description,
-            [dialogs.BUTTON_YES, dialogs.BUTTON_NO_NOW])
+            [dialogs.BUTTON_YES, dialogs.BUTTON_NOT_NOW])
 
     if ret is None or ret == dialogs.BUTTON_NOT_NOW:
         logging.info('no bonjour, user clicked no')
@@ -61,4 +61,4 @@ def install_bonjour():
             "the changes to take effect."
         )
         dialogs.show_message(title, description)
-        logging.info('no bonjour, user clicked yes'
+        logging.info('no bonjour, user clicked yes')
