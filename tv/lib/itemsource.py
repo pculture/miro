@@ -507,7 +507,8 @@ class SharingItemSource(ItemSource):
             skip_count=0,
             cover_art=None,
             host=item.host,
-            port=item.port)
+            port=item.port,
+            is_playing=False)
 
     def _emit_from_db(self, database, item, signal_callback):
         #if item.file_type != self.type:
