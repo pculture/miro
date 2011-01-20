@@ -602,11 +602,13 @@ class CorruptDDBObjectReprTest(StoreDatabaseTest):
 
     def test_corrupt_display_state(self):
         app.db.cursor.execute("UPDATE display_state SET "
-                "active_filters=?, sort_state=?, columns=?, is_list_view=? "
-                "WHERE id=?", ('{baddata', 'CANARY', '{baddata', True,
+                "active_filters=?, sort_state=?, columns_enabled=?, "
+                "column_widths=?, is_list_view=? WHERE id=?",
+                ('{baddata', 'CANARY', '{baddata', '{baddata', True,
                     self.display_state.id))
         self.check_fixed_value(self.display_state, 'active_filters', None)
-        self.check_fixed_value(self.display_state, 'columns', None)
+        self.check_fixed_value(self.display_state, 'columns_enabled', None)
+        self.check_fixed_value(self.display_state, 'column_widths', None)
         # check that fields with valid values were salvaged
         reloaded = self.reload_object(self.display_state)
         self.assertEquals(reloaded.sort_state, 'CANARY')

@@ -1,19 +1,24 @@
-========
-This API
-========
+==============
+Extensions API
+==============
 
 About this API
 ==============
 
-This is the API for the Miro code base.  A quick check will show it's
-woefully incomplete, but it's a start and it's something we're working
-on.
+This is the documentation for the Extensions API for Miro.
+
+Currently, the API is pretty bare.  Over time, the API will grow as
+people write extensions and functionality is required.  It's a start 
+and it's something we're working on where "we" includes you, too.
 
 For coding conventions, standards, et al--see the developer wiki at:
 
-http://develop.participatoryculture.org/index.php/MiroStart
+* http://develop.participatoryculture.org/index.php/MiroStart
 
-The API is versioned alongside Miro.
+For details on extensions, see:
+
+* http://develop.participatoryculture.org/index.php/ExtensionSystem
+* http://develop.participatoryculture.org/index.php/ExtensionAPI
 
 
 How to help
@@ -24,9 +29,9 @@ This API is not and never will be complete.  It will grow alongside Miro.
 Documentation for modules, classes, functions and methods is done in
 docstrings in the source code.
 
-I'm very interested in getting help to continue documenting things and
-fixing existing documentation.  If you'd like to help, hop on IRC on
-the ``#miro-hackers`` channel on Freenode.
+Your work will help flesh out this API.  If you're writing an extension
+or are otherwise interested in Miro extensions, hop on IRC on the
+``#miro-hackers`` channel on Freenode and join the conversation.
 
 
 Colphon
@@ -46,11 +51,4 @@ Contributors
 This list of people contributed to this manual in some form or
 another:
 
-* Ben Dean-Kamasura
-* Luc Heinrich
-* Chris Lahey
-* Paul Swartz
-* Janet Dragovich
-* Nick Nassar
-* Chris Webber
 * Will Kahn-Greene

@@ -157,6 +157,10 @@ class Browser(widgetset.Browser):
         else:
             logging.debug("got %s", url)
 
+        if mimetype:
+            metadata = {'mime_type': mimetype}
+        else:
+            metadata = None
         if url in self.seen_cache:
             del self.seen_cache[url]
             return True
@@ -171,7 +175,8 @@ class Browser(widgetset.Browser):
 
         if filetypes.is_maybe_rss_url(url):
             logging.debug("miro wants to handle %s", url)
-            messages.DownloadURL(url, unknown_callback).send_to_backend()
+            messages.DownloadURL(url, unknown_callback,
+                                 metadata).send_to_backend()
             return False
 
         # parse the path out of the url and run that through the filetypes
@@ -180,12 +185,14 @@ class Browser(widgetset.Browser):
         ret = urlparse(url)
         if filetypes.is_allowed_filename(ret[2]):
             logging.debug("miro wants to handle %s", url)
-            messages.DownloadURL(url, unknown_callback).send_to_backend()
+            messages.DownloadURL(url, unknown_callback,
+                                 metadata).send_to_backend()
             return False
 
         if mimetype is not None and filetypes.is_allowed_mimetype(mimetype):
             logging.debug("miro wants to handle %s", url)
-            messages.DownloadURL(url, unknown_callback).send_to_backend()
+            messages.DownloadURL(url, unknown_callback,
+                                 metadata).send_to_backend()
             return False
 
         return True

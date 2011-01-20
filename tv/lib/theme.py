@@ -30,6 +30,8 @@
 """``miro.theme`` -- Holds the ThemeHistory object.
 """
 
+import urllib
+
 from miro.gtcache import gettext as _
 import logging
 from miro import app
@@ -190,13 +192,34 @@ class ThemeHistory(DDBObject):
                 playlist.SavedPlaylist(_("Example Playlist"))
 
         default_guides = [
-            (u"http://www.clearbits.net/", u"ClearBits"),
-            (u"http://www.youtorrent.com/", u"YouTorrent"),
-            (u"https://www.miroguide.com/audio/", u"Miro Audio Guide")
+            (u"http://www.clearbits.net/", u"ClearBits", False),
+            (u"http://www.youtorrent.com/", u"YouTorrent", False),
+            (u"https://www.miroguide.com/audio/", u"Miro Audio Guide", False),
+            (u'http://www.amazon.com/b?_encoding=UTF8&site-redirect=&'
+             'node=163856011&tag=pcultureorg-20&linkCode=ur2&camp=1789&'
+             'creative=9325', u"Amazon MP3 Store", True)
             ]
         for default in default_guides:
             try:
                 cg = guide.ChannelGuide.get_by_url(default[0])
             except ObjectNotFoundError:
                 cg = guide.ChannelGuide(default[0])
+                cg.store = default[2] # before title because title saves the
+                                      # object
                 cg.set_title(default[1])
+
+        base_url = u"http://www.amazon.com/gp/redirect.html?ie=UTF8&location=%s&tag=pcultureorg-20&linkCode=ur2&camp=1789&creative=9325"
+        other_stores = (
+            ('http://www.amazon.fr/T%C3%A9l%C3%A9charger-Musique-mp3/b/ref=sa_menu_mp31?ie=UTF8&node=77196031', u'Amazon Téléchargements MP3 (FR)'),
+            ('http://www.amazon.de/MP3-Musik-Downloads/b/ref=sa_menu_mp31?ie=UTF8&node=77195031', u'Amazon MP3-Downloads (DE/AT/CH)'),
+            ('http://www.amazon.co.jp/MP3-%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89-%E9%9F%B3%E6%A5%BD%E9%85%8D%E4%BF%A1-DRM%E3%83%95%E3%83%AA%E3%83%BC/b/ref=sa_menu_dmusic1?ie=UTF8&node=2128134051', u'Amazon MP3ダウンロード (JP)'),
+            ('http://www.amazon.co.uk/MP3-Music-Download/b/ref=sa_menu_dm1?ie=UTF8&node=77197031', u'Amazon MP3 Downloads (UK)'))
+
+        for url, name in other_stores:
+            store_url = base_url % urllib.quote(url, safe='')
+            try:
+                cg = guide.ChannelGuide.get_by_url(store_url)
+            except ObjectNotFoundError:
+                cg = guide.ChannelGuide(store_url)
+                cg.store = cg.STORE_INVISIBLE
+                cg.set_title(name)

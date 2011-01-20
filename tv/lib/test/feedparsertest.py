@@ -25,8 +25,8 @@ def _parse_feed(inputfile):
     """
     fn = os.path.join(FPTESTINPUT, inputfile)
     d = feedparserutil.parse(fn)
-    assert "bozo_exception" not in d, ("Feed didn't parse: %s %s" %
-                                       (fn, d["bozo_exception"]))
+    assert (not d["bozo"] or "entries" in d), ("Feed didn't parse: %s %s" %
+                                               (fn, d["bozo_exception"]))
     return d
 
 class FeedParserDictTest(MiroTestCase):
@@ -70,6 +70,35 @@ class FeedParserDictTest(MiroTestCase):
         self.assertEqual(d.equal(a), False)
 
 class FeedParserTest(MiroTestCase):
+    def eq_output(self, str1, str2):
+        # we do this to allow the strings to match on windows where
+        # eol is different.  this is safe because end of line
+        # sequences don't matter when doing feedparsing.
+        str1 = str1.replace('\\r\\n', '\\n')
+        str2 = str2.replace('\\r\\n', '\\n')
+
+        # we do this crazy thing for comparisons because otherwise
+        # we're comparing one massive string to another and it becomes
+        # very very difficult to debug because it spams the console.
+        # so we do the comparison character by character and if we hit
+        # a difference, we print a small context.
+        length = min(len(str1), len(str2))
+        for i in range(length):
+            if str1[i] != str2[i]:
+                start = max(0, i-2)
+                end = min(length, i+10)
+                self.assertEquals(
+                    str1[i:], str2[i:],
+                    ("Strings differ at index %s:\n%s\n%s" %
+                     (i, str1[start:end], str2[start:end])))
+
+        # if the lengths of the two strings are different, then we
+        # point that out here.
+        if length > len(str1):
+            self.assertEquals("EOS", str2[length:])
+        elif length > len(str2):
+            self.assertEquals(str1[length:], "EOS")
+
     def test_ooze(self):
         feedparserutil.parse(os.path.join(FPTESTINPUT, "ooze.rss"))
 
@@ -85,15 +114,22 @@ class FeedParserTest(MiroTestCase):
 # go awry, makes it easier to see test progress from the command line
 # (lots of little tests rather than one big test), and increases the
 # test count appropriately.
-for mem in os.listdir(FPTESTINPUT):
-    def _test(self):
+def _test_closure(mem):
+    def _actual_test(self):
         d = _parse_feed(mem)
         fp = open(os.path.join(FPTESTOUTPUT, "%s.output" % mem), "r")
         output = fp.read()
         fp.close()
-        self.assertEquals(pprint.pformat(d), output)
+        if 'entries' in d:
+            d = d['entries']
+        else:
+            d = d['bozo_exception']
+        self.eq_output(pprint.pformat(d), output)
+    return _actual_test
 
-    setattr(FeedParserTest, 'test_%s' % mem.replace(".", ""), _test)
+for mem in os.listdir(FPTESTINPUT):
+    setattr(FeedParserTest, 'test_%s' % mem.replace(".", ""),
+            _test_closure(mem))
 
 class FeedParserValuesTest(unittest.TestCase):
     def test_empty(self):

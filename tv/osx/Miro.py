@@ -172,8 +172,8 @@ def launch_downloader_daemon():
     eventloop.connect('thread-did-start', endLoop)
     
     # And launch
-    from miro.dl_daemon import Democracy_Downloader
-    Democracy_Downloader.launch()
+    from miro.dl_daemon import MiroDownloader
+    MiroDownloader.launch()
 
     # Wait for the event loop thread to finish.
     # Although this is theorically not necessary since the event loop thread is

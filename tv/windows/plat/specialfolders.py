@@ -27,7 +27,9 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Contains the locations of special windows folders like "My Documents"."""
+"""Contains the locations of special windows folders like "My
+Documents".
+"""
 
 import ctypes
 import os
@@ -35,8 +37,7 @@ import os
 
 GetShortPathName = ctypes.windll.kernel32.GetShortPathNameW
 
-
-_specialFolderCSIDLs = {
+_special_folder_CSIDLs = {
     "Fonts": 20,
     "AppData": 0x001a,
     "My Music": 0x000d,
@@ -52,7 +53,7 @@ def get_short_path_name(name):
     """Given a path, returns the shortened path name.
     """
     buf = ctypes.c_wchar_p(name)
-    buf2 = ctypes.create_unicode_buffer(1024) 
+    buf2 = ctypes.create_unicode_buffer(1024)
 
     if GetShortPathName(buf, buf2, 1024):
         return buf2.value
@@ -60,16 +61,17 @@ def get_short_path_name(name):
         return buf.value
 
 def get_special_folder(name):
-    """Get the location of a special folder.  name should be one of the
-    following: 'AppData', 'My Music', 'My Pictures', 'My Videos', 
+    """Get the location of a special folder.  name should be one of
+    the following: 'AppData', 'My Music', 'My Pictures', 'My Videos',
     'My Documents', 'Desktop'.
 
-    The path to the folder will be returned, or None if the lookup fails
+    The path to the folder will be returned, or None if the lookup
+    fails
     """
-    csidl = _specialFolderCSIDLs[name]
+    csidl = _special_folder_CSIDLs[name]
 
     buf = ctypes.create_unicode_buffer(260)
-    buf2 = ctypes.create_unicode_buffer(1024) 
+    buf2 = ctypes.create_unicode_buffer(1024)
     SHGetSpecialFolderPath = ctypes.windll.shell32.SHGetSpecialFolderPathW
     if SHGetSpecialFolderPath(None, buf, csidl, False):
         if GetShortPathName(buf, buf2, 1024):
@@ -79,12 +81,13 @@ def get_special_folder(name):
     else:
         return None
 
-commonAppDataDirectory = get_special_folder("Common AppData")
-appDataDirectory = get_special_folder("AppData")
+common_app_data_directory = get_special_folder("Common AppData")
+app_data_directory = get_special_folder("AppData")
 
-baseMoviesDirectory = get_special_folder('My Videos')
-nonVideoDirectory = get_special_folder('Desktop')
+base_movies_directory = get_special_folder('My Videos')
+non_video_directory = get_special_folder('Desktop')
 # The "My Videos" folder isn't guaranteed to be listed. If it isn't
 # there, we do this hack.
-if baseMoviesDirectory is None:
-    baseMoviesDirectory = os.path.join(get_special_folder('My Documents'), 'My Videos')
+if base_movies_directory is None:
+    base_movies_directory = os.path.join(
+        get_special_folder('My Documents'), 'My Videos')

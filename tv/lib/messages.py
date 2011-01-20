@@ -737,10 +737,10 @@ class RemoveVideoEntry(BackendMessage):
 class DeleteVideo(BackendMessage):
     """Delete the video for an item's video.
     """
-    def __init__(self, id_):
-        self.id = id_
+    def __init__(self, info):
+        self.info = info
     def __repr__(self):
-        return BackendMessage.__repr__(self) + (", id: %s" % self.id)
+        return BackendMessage.__repr__(self) + (", info: %s" % self.info)
 
 class EditItem(BackendMessage):
     """Changes a bunch of things on an item.
@@ -833,12 +833,8 @@ class ReportCrash(BackendMessage):
 class SaveDisplayState(BackendMessage):
     """Save changes to one display for the frontend
     """
-    def __init__(self, key, is_list_view, active_filters, sort_state, columns):
-        self.key = key
-        self.is_list_view = is_list_view
-        self.active_filters = active_filters
-        self.sort_state = sort_state
-        self.columns = columns
+    def __init__(self, display_info):
+        self.display_info = display_info
 
 class QueryDisplayStates(BackendMessage):
     """Ask for a CurrentDisplayStates message to be sent back.
@@ -1070,6 +1066,8 @@ class GuideInfo(object):
         self.id = guide.id
         self.url = guide.get_url()
         self.default = guide.is_default()
+        self.store = bool(guide.store)
+        self.visible = guide.is_visible()
         self.allowed_urls = guide.allowedURLs
         self.favicon = guide.get_favicon_path()
         self.faviconIsDefault = not (guide.icon_cache and
@@ -1136,6 +1134,7 @@ class ItemInfo(object):
     :param children: for container items the children of the item.
     :param is_playable: is this item a audio/video file, or a container that
                         contains audio/video files inside.
+    :param is_playing: Whether item is the currently playing (or paused) item
     :param leechers: (Torrent only) number of leeching clients
     :param seeders: (Torrent only) number of seeding clients
     :param up_rate: (Torrent only) how fast we're uploading data
@@ -1220,7 +1219,9 @@ class GuideList(FrontendMessage):
     """Sends the frontend the initial list of channel guides
 
     :param default_guide: The Default channel guide
-    :param guides: list added channel guides
+    :param added_guides: list added channel guides
+    :param invisible_guides: list of guides which aren't visible (used by
+                             StoreManager)
     """
     def __init__(self, guides):
         self.default_guide = [g for g in guides if g.default]
@@ -1237,7 +1238,28 @@ class GuideList(FrontendMessage):
             logging.warning("Multiple default guides!  Picking the first one.")
             self.default_guide = [self.default_guide[0]]
         self.default_guide = self.default_guide[0]
-        self.added_guides = [g for g in guides if not g.default]
+        self.added_guides = [g for g in guides if not g.default and g.visible]
+        self.invisible_guides = [g for g in guides if not g.visible]
+
+class GuidesChanged(FrontendMessage):
+    """Informs the frontend that the guide list has changed.
+
+    :param added: GuideInfo object for each added guide.
+                  The list will be in the same order that they were added.
+    :param changed: The list of GuideInfo for each changed guide.
+    :param removed: list of ids for each guide that was removed.
+    """
+    def __init__(self, added, changed, removed):
+        self.added = added
+        self.changed = changed
+        self.removed = removed
+
+class SetGuideVisible(BackendMessage):
+    """Changes if a guide is visible in the tab list or not.
+    """
+    def __init__(self, id_, visible):
+        self.id = id_
+        self.visible = visible
 
 class TabList(FrontendMessage):
     """Sends the frontend the current list of channels and playlists
@@ -1568,12 +1590,28 @@ class CurrentDisplayStates(FrontendMessage):
 class DisplayInfo(object):
     """Contains the state of a single display
     """
-    def __init__(self, key, is_list_view, active_filters, sort_state, columns):
+    def __init__(self, key, display=None):
         self.key = key
-        self.is_list_view = is_list_view
-        self.active_filters = active_filters
-        self.sort_state = sort_state
-        self.columns = columns
+        try:
+            self.is_list_view = display.is_list_view
+        except StandardError:
+            self.is_list_view = None
+        try:
+            self.active_filters = display.active_filters[:]
+        except StandardError:
+            self.active_filters = None
+        try:
+            self.sort_state = display.sort_state
+        except StandardError:
+            self.sort_state = None
+        try:
+            self.columns_enabled = display.columns_enabled[:]
+        except StandardError:
+            self.columns_enabled = None
+        try:
+            self.column_widths = display.column_widths.copy()
+        except StandardError:
+            self.column_widths = None
 
 class OpenInExternalBrowser(FrontendMessage):
     """Opens the specified url in an external browser.

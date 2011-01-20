@@ -39,6 +39,8 @@ USAGE = "testgenerator.py <input-dir> <output-dir>"
 def run_parser(feedparser, inputdir, outputdir, mem):
     output = feedparser.parse(os.path.join(inputdir, mem))
     f = open(os.path.join(outputdir, "%s.output" % mem), "w")
+    if 'entries' in output:
+        output = output['entries']
     f.write(pprint.pformat(output))
     f.close()
 

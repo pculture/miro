@@ -27,7 +27,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""proxyfind.py.  Get proxy info from windows."""
+"""proxyfind.py.  Get proxy info from windows.
+"""
 
 from ctypes import Structure, byref, windll
 from ctypes.wintypes import LPWSTR, BOOL
@@ -55,8 +56,8 @@ def get_proxy_info():
     try:
         winhttp = windll.winhttp
     except WindowsError:
-        # We couldn't load the winhttp module.  Maybe the user doesn't have
-        # SP1 or later?  (#11522)
+        # We couldn't load the winhttp module.  Maybe the user doesn't
+        # have SP1 or later?  (#11522)
         logging.warn("WindowsError when loading winhttp")
         return None
     else:
@@ -67,7 +68,7 @@ def get_proxy_info():
     proxy_info.host, proxy_info.port = \
             parse_host_and_port(ie_proxy_info.lpszProxy)
     if ie_proxy_info.lpszProxyBypass is not None:
-        proxy_info.ignore_hosts = re.split("[;\s]*", 
+        proxy_info.ignore_hosts = re.split("[;\s]*",
                 ie_proxy_info.lpszProxyBypass)
     return proxy_info
 

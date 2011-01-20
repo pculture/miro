@@ -35,7 +35,7 @@ import platform
 
 from miro.plat import specialfolders
 
-def appRoot():
+def app_root():
     """Determine the directory the .exe file is located in.  Taken from the
     WhereAmI recipe on the py2exe website.
     """
@@ -43,7 +43,13 @@ def appRoot():
     return os.path.dirname(exe_path)
 
 def root():
-    return os.path.join(appRoot(), 'resources')
+    return os.path.join(app_root(), 'resources')
+
+def extension_core_roots():
+    return [os.path.join(app_root(), 'extensions')]
+
+def extension_user_roots():
+    return ["%(supportdir)s/extensions"]
 
 def share_path(path):
     return os.path.join(root(), path)
@@ -66,25 +72,23 @@ def url(relative_path):
     absolute_path = absolute_path.encode('utf_8')
     return u"file:///" + urllib.quote(absolute_path, safe=":~\\")
 
-def _getThemeDirectory():
-    # We don't get the publisher and long app name from the config so
+def _get_theme_directory():
+    # we don't get the publisher and long app name from the config so
     # changing the app name doesn't change the support directory
-    path = os.path.join(specialfolders.commonAppDataDirectory,
+    path = os.path.join(specialfolders.common_app_data_directory,
                         u'Participatory Culture Foundation',
                         u'Miro',
                         u'Themes')
-    try:
+    if not os.path.exists(path):
         os.makedirs(path)
-    except:
-        pass
     return path
 
 def theme_path(theme, relative_path):
-    return os.path.join(_getThemeDirectory(), theme, relative_path)
+    return os.path.join(_get_theme_directory(), theme, relative_path)
 
 def get_osname():
     osname = '%s %s %s' % (platform.system(), platform.release(),
-            platform.machine())
+                           platform.machine())
     return osname
 
 def get_default_search_dir():

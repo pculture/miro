@@ -36,6 +36,7 @@ import shutil
 import time
 
 from miro import app
+from miro import eventloop
 from miro import fileutil
 from miro import filetypes
 from miro import prefs
@@ -163,7 +164,7 @@ class DeviceManager(object):
         self.syncs_in_progress = {}
         self.startup()
 
-    def _add_device(self, info):
+    def add_device(self, info):
         try:
             info.validate()
         except AttributeError:
@@ -180,6 +181,10 @@ class DeviceManager(object):
                 self.device_by_name[info.device_name] = info
                 self.device_by_id[(info.vendor_id, info.product_id)] = info
 
+    def remove_device(self, info):
+        # FIXME - need this
+        pass
+
     def startup(self):
         # load devices
         self.load_devices(resources.path('devices/*.py'))
@@ -191,7 +196,7 @@ class DeviceManager(object):
             execfile(device_desc, global_dict)
             if 'devices' in global_dict:
                 for info in global_dict['devices']:
-                    self._add_device(info)
+                    self.add_device(info)
 
     @staticmethod
     def _get_device_from_info(info, device_type):
@@ -760,11 +765,14 @@ def clean_database(device):
 
     return known_files
 
+@eventloop.idle_iterator
 def scan_device_for_files(device):
+    # XXX is this as_idle() safe?
     known_files = clean_database(device)
 
     device.database.set_bulk_mode(True)
     device.database.setdefault('sync', {})
+    count = 0
 
     for filename in fileutil.miro_allfiles(device.mount):
         short_filename = filename[len(device.mount):]
@@ -778,5 +786,9 @@ def scan_device_for_files(device):
         else:
             continue
         device.database[item_type][ufilename] = {}
+        count += 1
+        if count == 50:
+            count = 0
+            yield # let other idle functions run
 
     device.database.set_bulk_mode(False)

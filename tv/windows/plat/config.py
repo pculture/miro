@@ -47,13 +47,13 @@ from miro.plat import specialfolders
 
 proxy_info = proxyfind.get_proxy_info()
 
-def _getSupportDirectory():
+def _get_support_directory():
     if u3info.u3_active:
         path = u3info.APP_DATA_PREFIX
     else:
         # We don't get the publisher and long app name from the config so
         # changing the app name doesn't change the support directory
-        path = os.path.join(specialfolders.appDataDirectory,
+        path = os.path.join(specialfolders.app_data_directory,
                             u'Participatory Culture Foundation',
                             u'Miro',
                             u'Support')
@@ -64,11 +64,12 @@ def _getSupportDirectory():
         pass
     return path
 
-def _getConfigFile():
-    return fileutil.expand_filename(os.path.join(_getSupportDirectory(), "preferences.bin"))
+def _get_config_file():
+    return fileutil.expand_filename(
+        os.path.join(_get_support_directory(), "preferences.bin"))
 
 def load():
-    save_file = _getConfigFile()
+    save_file = _get_config_file()
 
     # if Miro died while saving the config file, then it's likely there's
     # a save_file.new floating around and that's the one we want to use.
@@ -79,15 +80,15 @@ def load():
     if os.path.exists(save_file):
         try:
             return cPickle.load(open(save_file))
-        except:
-            logging.warn("Error loading config: %s", traceback.format_exc())
+        except cPickle.UnpicklingError:
+            logging.exception("error loading config")
     return {}
 
 def save(data):
-    # save to a new file and if that's successful then rename it.  this
-    # reduces the chance that the user ends up with a hosed preferences
-    # file.
-    save_file = _getConfigFile()
+    # save to a new file and if that's successful then rename it.
+    # this reduces the chance that the user ends up with a hosed
+    # preferences file.
+    save_file = _get_config_file()
     new_file = save_file + ".new"
     try:
         f = open(new_file, 'w')
@@ -105,19 +106,21 @@ def save(data):
 
 def get(descriptor):
     if descriptor == prefs.MOVIES_DIRECTORY:
-        return os.path.join(specialfolders.baseMoviesDirectory, app.configfile['shortAppName'])
+        return os.path.join(
+            specialfolders.base_movies_directory,
+            app.configfile['shortAppName'])
 
     elif descriptor == prefs.NON_VIDEO_DIRECTORY:
-        return specialfolders.nonVideoDirectory
+        return specialfolders.non_video_directory
 
     elif descriptor == prefs.GETTEXT_PATHNAME:
         return resources.path("locale")
 
     elif descriptor == prefs.SUPPORT_DIRECTORY:
-        return fileutil.expand_filename(_getSupportDirectory())
+        return fileutil.expand_filename(_get_support_directory())
 
     elif descriptor == prefs.ICON_CACHE_DIRECTORY:
-        return os.path.join(_getSupportDirectory(), 'icon-cache')
+        return os.path.join(_get_support_directory(), 'icon-cache')
 
     elif descriptor == prefs.SQLITE_PATHNAME:
         path = get(prefs.SUPPORT_DIRECTORY)
@@ -128,7 +131,7 @@ def get(descriptor):
             directory = u3info.app_data_path
         else:
             directory = tempfile.gettempdir()
-        return os.path.join(directory, 
+        return os.path.join(directory,
                 ('%s.log' % app.configfile['shortAppName']))
 
     elif descriptor == prefs.DOWNLOADER_LOG_PATHNAME:
@@ -141,20 +144,22 @@ def get(descriptor):
 
     elif descriptor == prefs.RUN_AT_STARTUP:
         import logging
-        # We use the legacy startup registry key, so legacy versions
+        # we use the legacy startup registry key, so legacy versions
         # of Windows have a chance
         # http://support.microsoft.com/?kbid=270035
 
         try:
-            folder = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER,
-                                     "Software\Microsoft\Windows\CurrentVersion\Run")
+            folder = _winreg.OpenKey(
+                _winreg.HKEY_CURRENT_USER,
+                "Software\Microsoft\Windows\CurrentVersion\Run")
         except WindowsError, e:
             # 2 indicates that the key doesn't exist yet, so
             # RUN_AT_STARTUP is clearly False
             if e.errno == 2:
-                logging.exception("=== windowserror kicked up at open key ===")
+                logging.exception("windowserror kicked up at open key")
                 return False
             raise
+
         long_app_name = app.configfile['longAppName']
         count = 0
         while True:
@@ -162,10 +167,10 @@ def get(descriptor):
                 name, val, type_ = _winreg.EnumValue(folder, count)
                 count += 1
                 if name == long_app_name:
-                    return True                    
+                    return True
             except WindowsError, e:
-                # 22 indicates there are no more items in this folder to
-                # iterate through.
+                # 22 indicates there are no more items in this folder
+                # to iterate through.
                 if e.errno == 22:
                     return False
                 else:
@@ -180,9 +185,9 @@ def get(descriptor):
         return proxy_info.port
     elif descriptor == prefs.HTTP_PROXY_IGNORE_HOSTS:
         return proxy_info.ignore_hosts
-    # Proxy authorization isn't suppored on windows, so the following keys are
-    # ignored:
-    # 
+    # Proxy authorization isn't suppored on windows, so the following
+    # keys are ignored:
+    #
     # HTTP_PROXY_AUTHORIZATION_ACTIVE
     # HTTP_PROXY_AUTHORIZATION_USERNAME
     # HTTP_PROXY_AUTHORIZATION_PASSWORD

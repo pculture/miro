@@ -74,6 +74,9 @@ from miro.test.cellpacktest import *
 from miro.test.searchtest import *
 
 # platform specific tests
+
+# FIXME - rework this so that platform specific tests are handled
+# by decorators instead.
 if app.config.get(prefs.APP_PLATFORM) == "linux":
     from miro.test.gtcachetest import *
     from miro.test.downloadertest import *
@@ -82,7 +85,7 @@ else:
     framework.skipped_tests.append("miro.test.downloadertest tests: not linux")
 
 if app.config.get(prefs.APP_PLATFORM) == "osx":
-    from miro.test.sparkletest import *
+    from miro.test.osxsparkletest import *
 else:
     framework.skipped_tests.append("miro.test.sparkletest tests: not osx")
 

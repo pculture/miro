@@ -30,9 +30,10 @@
 """
 Handle logging before we are ready to write it out to disk.
 
-This module defines the PreLogger class, which simply remembers logging
-records instead of outputing them somewhere.  In plat.util.setup_logging(), we
-retrieve records and write them out to disk after logging is setup.
+This module defines the PreLogger class, which simply remembers
+logging records instead of outputing them somewhere.  In
+plat.util.setup_logging(), we retrieve records and write them out to
+disk after logging is setup.
 """
 
 import logging
@@ -48,7 +49,8 @@ class PreLogger(logging.Handler):
 _handler = None
 
 def install():
-    """Install a logger to remember records before we have logging setup.
+    """Install a logger to remember records before we have logging
+    setup.
     """
     global _handler
     if _handler is not None:
@@ -59,7 +61,9 @@ def install():
     logger.setLevel(logging.DEBUG)
 
 def remove():
-    """Remove the pre logger.  Return a list of records that it logged. """
+    """Remove the pre logger.  Return a list of records that it
+    logged.
+    """
     global _handler
     if _handler is None:
         raise ValueError("Prelogger not installed")

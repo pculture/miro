@@ -44,7 +44,7 @@ from miro.frontends.widgets import menus
 from miro.frontends.widgets.menus import MOD, CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, ESCAPE
 from miro.plat.frontends.widgets import wrappermap
 
-from miro.plat.utils import appstore_edition
+from miro.plat.appstore import appstore_edition
 
 STD_ACTION_MAP = {
     "HideMiro":         (NSApp(), 'hide:'),
@@ -145,18 +145,6 @@ def extract_menu_item(menu_structure, action):
         return menu
     return None
 
-@menus.action_handler("AppStoreCheckVersion")
-def on_check_version():
-    title = _('Software Update')
-    desc = _('You are running a copy of Miro downloaded from the Mac App '
-            'store.\n\n' + 
-            'To stay up to date with the latest version of Miro, please ' +
-            'visit the Mac App Store.'
-           )
-    # Sigh, the import must be here.  Doesn't like it when it's at the top.
-    from miro.frontends.widgets import dialogs
-    dialogs.show_message(title, desc)
-
 _menu_structure = None
 def populate_menu():
     short_appname = app.config.get(prefs.SHORT_APP_NAME)
@@ -170,11 +158,7 @@ def populate_menu():
         extract_menu_item(menubar, "Donate")
     ]
 
-    if appstore_edition():
-        miroMenuItems += [
-            menus.MenuItem(_("Check _Version"), "AppStoreCheckVersion")
-        ]
-    else:
+    if not appstore_edition():
         miroMenuItems += [
             extract_menu_item(menubar, "CheckVersion")
         ]

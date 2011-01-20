@@ -61,6 +61,7 @@ class CellRenderer(object):
     https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
     def __init__(self):
         self._renderer = gtk.CellRendererText()
+        self.want_hover = False
 
     def setup_attributes(self, column, attr_map):
         column.add_attribute(self._renderer, 'text', attr_map['value'])
@@ -105,6 +106,7 @@ class CheckboxCellRenderer(signals.SignalEmitter):
         self.create_signal("clicked")
         self._renderer = GTKCheckboxCellRenderer()
         wrappermap.add(self._renderer, self)
+        self.want_hover = False
 
     def set_control_size(self, size):
         pass
@@ -197,6 +199,7 @@ class CustomCellRenderer(object):
     https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
     def __init__(self):
         self._renderer = GTKCustomCellRenderer()
+        self.want_hover = False
         wrappermap.add(self._renderer, self)
 
     def setup_attributes(self, column, attr_map):
@@ -493,7 +496,7 @@ class TableColumn(signals.SignalEmitter):
         renderer.setup_attributes(self._column, attrs)
         self.renderer = renderer
         weak_connect(self._column, 'clicked', self._header_clicked)
-        self.can_pad = True
+        self.do_horizontal_padding = True
 
     def set_right_aligned(self, right_aligned):
         """Horizontal alignment of the header label."""
@@ -521,8 +524,8 @@ class TableColumn(signals.SignalEmitter):
         """Set if the user can resize the column."""
         self._column.set_resizable(resizable)
 
-    def set_no_pad(self):
-        self.can_pad = False
+    def set_do_horizontal_padding(self, horizontal_padding):
+        self.do_horizontal_padding = False
 
     def set_sort_indicator_visible(self, visible):
         """Show/Hide the sort indicator for this column."""
@@ -678,7 +681,7 @@ class TableView(Widget):
         """Set the amount of space between columns."""
         self._renderer_xpad = space / 2
         for column in self.columns:
-            if column.can_pad:
+            if column.do_horizontal_padding:
                 column.renderer._renderer.set_property('xpad', self._renderer_xpad)
 
     def set_row_spacing(self, space):
@@ -1010,13 +1013,14 @@ class TableView(Widget):
     def _update_hover(self, treeview, event):
         old_hover_info, old_hover_pos = self.hover_info, self.hover_pos
         path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
-        if path_info is None:
-            self.hover_info = None
-            self.hover_pos = None
-        else:
+        if (path_info and
+                self.gtk_column_to_wrapper[path_info[1]].renderer.want_hover):
             path, column = path_info[:2]
             self.hover_info = path, column
             self.hover_pos = path_info[2:]
+        else:
+            self.hover_info = None
+            self.hover_pos = None
         if old_hover_info != self.hover_info or old_hover_pos != self.hover_pos:
             if old_hover_info != self.hover_info and old_hover_info is not None:
                 self._redraw_cell(treeview, *old_hover_info)

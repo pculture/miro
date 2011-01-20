@@ -573,7 +573,7 @@ class DeviceItemSource(ItemSource):
             permalink = item.permalink,
             commentslink = item.comments_link,
             payment_link = item.payment_link,
-            has_shareable_url = bool(item.url),
+            has_sharable_url = bool(item.url),
             can_be_saved = False,
             pending_manual_dl = False,
             pending_auto_dl = False,
@@ -582,6 +582,7 @@ class DeviceItemSource(ItemSource):
             downloaded = True,
             is_external = False,
             video_watched = True,
+            media_type_checked = item.media_type_checked,
             video_path = item.get_filename(),
             thumbnail = item.get_thumbnail(),
             thumbnail_url = item.thumbnail_url or u'',
@@ -615,7 +616,19 @@ class DeviceItemSource(ItemSource):
             up_down_ratio = 0,
             play_count=0,
             skip_count=0,
-            cover_art=None)
+            cover_art=None,
+            auto_rating=0,
+            is_playing=False)
+
+    def delete(self, info):
+        device = info.device
+        del device.database[item.file_type][info.id]
+        if os.path.exists(info.video_path):
+            os.unlink(info.video_path)
+        if (info.thumbnail and info.thumbnail.startswith(device.mount) and
+            os.path.exists(info.thumbnail)):
+            os.unlink(info.thumbnail)
+        device.database.emit('item-removed', item)
 
     def delete(self, info):
         device = info.device

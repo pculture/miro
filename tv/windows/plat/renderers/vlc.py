@@ -132,7 +132,7 @@ STOPPED, PAUSED, PLAYING = range(3)
 
 class VLCSniffer(object):
     def __init__(self):
-        plugin_dir = os.path.join(resources.appRoot(), 'vlc-plugins')
+        plugin_dir = os.path.join(resources.app_root(), 'vlc-plugins')
         self.exc = VLCException()
 
         # Note: if you need vlc output to stdout, remove the --quiet
@@ -178,7 +178,7 @@ class VLCSniffer(object):
 
     def handle_event(self, obj, type_, state, arg2):
         if type_ != libvlc_MediaStateChanged:
-            return 
+            return
         if obj != self.media_playing:
             return
         if self.callback_info is None:
@@ -263,18 +263,18 @@ class VLCSniffer(object):
         self.exc.check()
         if media is None:
             raise AssertionError(
-                "libvlc_media_new returned_location NULL for %s" % filename)
-        event_manager = libvlc.libvlc_media_event_manager(media, 
+                "libvlc_media_new returned NULL for %s" % filename)
+        event_manager = libvlc.libvlc_media_event_manager(media,
                                                           self.exc.ref())
         self.exc.check()
-        libvlc.libvlc_event_attach(event_manager, 
+        libvlc.libvlc_event_attach(event_manager,
                                    libvlc_MediaStateChanged,
-                                   self._callback_ref, 
-                                   None, 
+                                   self._callback_ref,
+                                   None,
                                    self.exc.ref())
         self.exc.check()
         try:
-            libvlc.libvlc_media_player_set_media(self.media_player, 
+            libvlc.libvlc_media_player_set_media(self.media_player,
                                                  media,
                                                  self.exc.ref())
             self.exc.check()
@@ -293,7 +293,7 @@ class VLCSniffer(object):
 class VLCRenderer(object):
     def __init__(self):
         logging.info("Initializing VLC")
-        plugin_dir = os.path.join(resources.appRoot(), 'vlc-plugins')
+        plugin_dir = os.path.join(resources.app_root(), 'vlc-plugins')
         self.exc = VLCException()
 
         # Note: if you need vlc output to stdout, remove the --quiet
@@ -433,7 +433,7 @@ class VLCRenderer(object):
     def _on_expose(self, widget, event):
         gc = widget.style.black_gc
         widget.persistent_window.draw_rectangle(
-            gc, True, event.area.x, event.area.y, 
+            gc, True, event.area.x, event.area.y,
             event.area.width, event.area.height)
 
     def select_file(self, iteminfo, callback, errback):
@@ -462,7 +462,7 @@ class VLCRenderer(object):
         if media is None:
             raise AssertionError(
                 "libvlc_media_new returned NULL for %s" % filename)
-        event_manager = libvlc.libvlc_media_event_manager(media, 
+        event_manager = libvlc.libvlc_media_event_manager(media,
                                                           self.exc.ref())
         self.exc.check()
         libvlc.libvlc_event_attach(event_manager, libvlc_MediaStateChanged,
@@ -575,7 +575,7 @@ class VLCRenderer(object):
         if self._rate == rate:
             return
         self._rate = rate
-        libvlc.libvlc_media_player_set_rate(self.media_player, 
+        libvlc.libvlc_media_player_set_rate(self.media_player,
                 ctypes.c_float(rate), self.exc.ref())
         try:
             self.exc.check()
@@ -604,7 +604,7 @@ class VLCRenderer(object):
                 ctypes.c_char_p('freetype-font'),
                 ctypes.c_char_p(font_path))
         logging.info("Setting VLC subtitle font: %s", font_path)
-        
+
     def get_subtitle_tracks(self):
         return self.subtitle_info
 
@@ -644,7 +644,7 @@ class VLCRenderer(object):
 
     def disable_subtitles(self):
         self._set_active_subtitle_track(0)
-        
+
     def _set_active_subtitle_track(self, track_index):
         count = libvlc.libvlc_video_get_spu_count(
             self.media_player, self.exc.ref())
@@ -659,7 +659,7 @@ class VLCRenderer(object):
             logging.warn("Subtitle track too high: %s (count: %s)",
                     track_index, count)
 
-        libvlc.libvlc_video_set_spu(self.media_player, track_index, 
+        libvlc.libvlc_video_set_spu(self.media_player, track_index,
                                     self.exc.ref())
         try:
             self.exc.check()

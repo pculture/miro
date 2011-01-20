@@ -48,6 +48,9 @@ from miro import fileutil
 class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
     ICON_CACHE_VITAL = True
 
+    # constants for the 'store' variable
+    STORE_NOT_STORE, STORE_VISIBLE, STORE_INVISIBLE = range(3)
+
     def setup_new(self, url, allowedURLs=None):
         check_u(url)
         # FIXME - clean up the allowedURLs thing here
@@ -61,6 +64,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
         self.setup_new_icon_cache()
         self.favicon = None
         self.firstTime = True
+        self.store = False
         if url:
             self.historyLocation = 0
             self.history = [self.url]
@@ -79,7 +83,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
     @classmethod
     def site_view(cls):
         default_url = app.config.get(prefs.CHANNEL_GUIDE_URL)
-        return cls.make_view('url != ?', (default_url,))
+        return cls.make_view('url != ? AND store != ?', (default_url, cls.STORE_INVISIBLE))
 
     @classmethod
     def get_by_url(cls, url):
@@ -98,29 +102,11 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
     def get_url(self):
         return self.url
 
-    def get_first_url(self):
-        # FIXME - this is only used by get_last_visited_url
-        if self.is_default():
-            return app.config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL)
-        else:
-            return self.url
-
-    def get_last_visited_url(self):
-        # FIXME - this doens't look used
-        if self.lastVisitedURL is not None:
-            logging.info("First URL is %s", self.lastVisitedURL)
-            return self.lastVisitedURL
-        else:
-            if self.firstTime:
-                self.firstTime = False
-                logging.info("First URL is %s", self.get_first_url())
-                return self.get_first_url()
-            else:
-                logging.info("First URL is %s", self.get_url())
-                return self.get_url()
-
     def is_default(self):
         return self.url == app.config.get(prefs.CHANNEL_GUIDE_URL)
+
+    def is_visible(self):
+        return self.store != self.STORE_INVISIBLE
 
     def get_folder(self):
         return None

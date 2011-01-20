@@ -274,6 +274,30 @@ class GuideTracker(ViewTracker):
     def make_changed_message(self, added, changed, removed):
         return messages.TabsChanged('guide', added, changed, removed)
 
+    def send_messages(self):
+        message = messages.GuidesChanged(
+            [self.info_factory(g) for g in self.added],
+            [self.info_factory(g) for g in self.changed],
+            [g.id for g in self.removed])
+        message.send_to_frontend()
+
+        # now that we've sent the GuidesChanged message, fix the changed
+        # message for the hidden flag
+        changed, self.changed = self.changed, set()
+        for obj in changed:
+            is_visible = obj.is_visible()
+            if obj.id in self._last_sent_info:
+                was_visible = self._last_sent_info[obj.id].visible
+            else:
+                was_visible = False
+            if is_visible and not was_visible: # newly shown
+                self.added.append(obj)
+            elif not is_visible and was_visible: # newly hidden
+                self.removed.add(obj)
+            else:
+                self.changed.add(obj)
+        ViewTracker.send_messages(self)
+
     def send_initial_list(self):
         info_list = self._make_added_list(guide.ChannelGuide.make_view())
         messages.GuideList(info_list).send_to_frontend()
@@ -435,7 +459,7 @@ class ManualItemTracker(DatabaseSourceTrackerBase):
 
 class DownloadingItemsTracker(DatabaseSourceTrackerBase):
     type = u'downloading'
-    id = None
+    id = u'downloading'
     def __init__(self, search_text):
         self.view = item.Item.download_tab_view()
         DatabaseSourceTrackerBase.__init__(self, search_text)
@@ -764,7 +788,7 @@ class BackendMessageHandler(messages.MessageHandler):
         message.info.source.set_is_playing(message.info, message.is_playing)
 
     def handle_rate_item(self, message):
-        message.info.source.set_ratting(message.info, message.rating)
+        message.info.source.set_rating(message.info, message.rating)
 
     def handle_set_item_subtitle_encoding(self, message):
         message.info.source.set_subtitle_encoding(message.info,
@@ -884,7 +908,7 @@ class BackendMessageHandler(messages.MessageHandler):
             logging.warn("folder not found: %s" % id)
         else:
             for feed in f.get_children_view():
-                feed.update()
+                feed.schedule_update_events(0)
 
     def handle_update_all_feeds(self, message):
         for f in feed.Feed.make_view():
@@ -1049,6 +1073,16 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         url = message.url
         if guide.get_guide_by_url(url) is None:
             guide.ChannelGuide(url, [u'*'])
+
+    def handle_set_guide_visible(self, message):
+        g = guide.ChannelGuide.get_by_id(message.id)
+        if not g.store:
+            return
+        if message.visible:
+            g.store = g.STORE_VISIBLE
+        else:
+            g.store = g.STORE_INVISIBLE
+        g.signal_change()
 
     def handle_new_feed(self, message):
         url = message.url
@@ -1582,20 +1616,20 @@ New ids: %s""", playlist_item_ids, message.item_ids)
             return DisplayState(key)
 
     def handle_save_display_state(self, message):
-        state = self._get_display_state(message.key)
-        state.is_list_view = message.is_list_view
-        state.active_filters = message.active_filters
-        state.sort_state = message.sort_state
-        state.columns = message.columns
+        info = message.display_info
+        state = self._get_display_state(info.key)
+        state.is_list_view = info.is_list_view
+        state.active_filters = info.active_filters
+        state.sort_state = info.sort_state
+        state.columns_enabled = info.columns_enabled
+        state.column_widths = info.column_widths
         state.signal_change()
         
     def _get_display_states(self):
         states = []
         for display in DisplayState.make_view():
             key = (display.type, display.id_)
-            display_info = messages.DisplayInfo(key,
-                display.is_list_view, display.active_filters,
-                display.sort_state, display.columns)
+            display_info = messages.DisplayInfo(key, display)
             states.append(display_info)
         return states
 

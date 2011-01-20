@@ -62,6 +62,7 @@ def diskutil(cmd, path_or_disk, use_plist=True):
 class DeviceTracker(object):
 
     def start_tracking(self):
+        self._mounted_volumes = set()
         self.stream = FSEventStreamCreate(kCFAllocatorDefault,
                                           self.streamCallback,
                                           None,
@@ -76,6 +77,7 @@ class DeviceTracker(object):
 
         for volume in diskutil('list', '').VolumesFromDisks:
             self._disk_mounted(volume)
+
 
     def streamCallback(self, stream, clientInfo, numEvents, eventPaths,
                         eventMasks, eventIDs):
@@ -99,6 +101,7 @@ class DeviceTracker(object):
             return
         device_name = disk_info.MediaName[:-6] # strip off ' Media'
         logging.debug('seen device: %r' % device_name)
+        self._mounted_volumes.add(volume)
         app.device_manager.device_connected(volume,
                                             name=device_name,
                                             mount=volume + '/',
@@ -106,7 +109,9 @@ class DeviceTracker(object):
                                             remaining=volume_info.FreeSpace)
 
     def _disk_unmounted(self, volume):
-        app.device_manager.device_disconnected(volume)
+        if volume in self._mounted_volumes:
+            self._mounted_volumes.remove(volume)
+            app.device_manager.device_disconnected(volume)
 
     def eject(self, device):
         diskutil('eject', device.mount, use_plist=False)

@@ -27,13 +27,14 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""pipeipc.py -- Create a windows named pipe to controll IPC between different
-Miro processes.
+"""pipeipc.py -- Create a windows named pipe to controll IPC between
+different Miro processes.
 
-The first proccess to start creates a named pipe, then a thread that listens
-to that pipe.  Subsequent processes send a message over that pipe containing
-command line arguments.  When the first process receives a message from the
-pipe, we try to open them using the commandline module.
+The first proccess to start creates a named pipe, then a thread that
+listens to that pipe.  Subsequent processes send a message over that
+pipe containing command line arguments.  When the first process
+receives a message from the pipe, we try to open them using the
+commandline module.
 """
 
 import cPickle as pickle
@@ -60,14 +61,16 @@ PIPE_WAIT = 0x00000000
 
 MIRO_IPC_PIPE_NAME = r'\\.\pipe\MiroIPC'
 
-
 class PipeExists(Exception):
     """We tried to create a named pipe, but it already exists.  Probably a
     different Miro instance created it.
     """
+    pass
 
 class QuitThread(Exception):
-    """Raised to exit out of the pipe listening thread."""
+    """Raised to exit out of the pipe listening thread.
+    """
+    pass
 
 class PipeError(IOError):
     """An IO Error occurred on a pipe."""
@@ -95,7 +98,7 @@ class OVERLAPPED(ctypes.Structure):
 class Server(object):
     def __init__(self):
         self.pipe = kernel32.CreateNamedPipeA(
-                MIRO_IPC_PIPE_NAME, 
+                MIRO_IPC_PIPE_NAME,
                 PIPE_ACCESS_DUPLEX | FILE_FLAG_OVERLAPPED,
                 PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE | PIPE_WAIT,
                 1, 51200, 51200, 100, None)
@@ -172,7 +175,7 @@ class Server(object):
         if not rv and kernel32.GetLastError() == ERROR_IO_PENDING:
             self._wait_for_pipe()
             rv = self._process_overlap(c_length)
-        if not rv: 
+        if not rv:
             raise PipeError("WriteFile")
 
     def _log_error(self, name):
@@ -194,8 +197,9 @@ class Server(object):
 
 class MessageHandler(object):
     def handle_message(self, data):
-        # import this stuff inside the function, so that import errors don't
-        # mess with other code, which is part of the startup process
+        # import this stuff inside the function, so that import errors
+        # don't mess with other code, which is part of the startup
+        # process
         from miro import app
         from miro import eventloop
         from miro.commandline import parse_command_line_args
@@ -206,7 +210,7 @@ class MessageHandler(object):
             logging.warn("Error unpickling message (%r)" % data)
         else:
             args = commandline.parse_command_line_string(cmd_line)
-            eventloop.add_idle(parse_command_line_args, 
+            eventloop.add_idle(parse_command_line_args,
                     'parse command line', args=(args[1:],))
             if (hasattr(app, "widgetapp") and app.widgetapp is not None and
                     app.widgetapp.window is not None):

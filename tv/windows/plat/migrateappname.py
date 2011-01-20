@@ -33,15 +33,15 @@ import os.path
 from miro import app
 from miro import prefs
 from miro.plat import resources
-from miro.plat.specialfolders import baseMoviesDirectory, appDataDirectory
+from miro.plat.specialfolders import base_movies_directory, app_data_directory
 import _winreg
 
 def migrateSupport(oldAppName, newAppName):
     global migratedSupport
     migratedSupport = False
     # This gets called before config is set up, so we have to cheat
-    oldSupportDir = os.path.join(appDataDirectory, app.configfile['publisher'], oldAppName, 'Support')
-    newSupportDir = os.path.join(appDataDirectory, app.configfile['publisher'], newAppName, 'Support')
+    oldSupportDir = os.path.join(app_data_directory, app.configfile['publisher'], oldAppName, 'Support')
+    newSupportDir = os.path.join(app_data_directory, app.configfile['publisher'], newAppName, 'Support')
 
     # Migrate support
     if os.path.exists(oldSupportDir):
@@ -82,12 +82,12 @@ def migrateSupport(oldAppName, newAppName):
         return True
     else:
         return False
-    
+
 def migrateVideos(oldAppName, newAppName):
     global migratedSupport
     if migratedSupport:
-        oldDefault = os.path.join(baseMoviesDirectory, oldAppName)
-        newDefault = os.path.join(baseMoviesDirectory, newAppName)
+        oldDefault = os.path.join(base_movies_directory, oldAppName)
+        newDefault = os.path.join(base_movies_directory, newAppName)
         videoDir = app.config.get(prefs.MOVIES_DIRECTORY)
         if videoDir == newDefault:
             app.controller.changeMoviesDirectory(newDefault, True)

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Miro - an RSS based video player application
 # Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
 # Participatory Culture Foundation
@@ -2920,3 +2921,107 @@ def upgrade128(cursor):
     """Add cover_art to item.
     """
     cursor.execute("ALTER TABLE item ADD COLUMN cover_art TEXT")
+
+def upgrade129(cursor):
+    """Separate DisplayState.columns into columns_enabled and column_widths
+    """
+    cursor.execute("SELECT id, columns FROM display_state")
+    columns = {}
+    for id_, column_state in cursor.fetchall():
+        if column_state is None:
+            name_list, width_map = None, None
+        else:
+            column_state = eval(column_state)
+            names, widths = zip(*column_state)
+            name_list = repr(list(names))
+            width_map = repr(dict(column_state))
+        columns[id_] = (name_list, width_map)
+    remove_column(cursor, 'display_state', ['columns'])
+    cursor.execute("ALTER TABLE display_state ADD COLUMN columns_enabled pythonrepr")
+    cursor.execute("ALTER TABLE display_state ADD COLUMN column_widths pythonrepr")
+    for id_, column_state in columns.items():
+        name_list, width_map = column_state[0], column_state[1]
+        cursor.execute("UPDATE display_state SET columns_enabled=?,"
+            "column_widths=? WHERE id=?", (name_list, width_map, id_))
+
+def upgrade130(cursor):
+    """
+    Adds a 'store' flag to the Guide table.  We'll use this for new things like
+    Amazon, eMusic, etc.
+    """
+    cursor.execute("ALTER TABLE channel_guide ADD COLUMN store integer")
+
+def upgrade131(cursor):
+    """Adds the Amazon MP3 Store as a site for anyone who doesn't
+    already have it and isn't using a theme.
+    """
+    # if the user is using a theme, we don't do anything
+    if not app.config.get(prefs.THEME_NAME) == prefs.THEME_NAME.default:
+        return
+
+    store_url = (u'http://www.amazon.com/b?_encoding=UTF8&site-redirect=&'
+                 'node=163856011&tag=pcultureorg-20&linkCode=ur2&camp=1789&'
+                 'creative=9325')
+    favicon_url = u'http://www.amazon.com/favicon.ico'
+    cursor.execute("SELECT count(*) FROM channel_guide WHERE url=?",
+                   (store_url,))
+    count = cursor.fetchone()[0]
+    if count > 0:
+        return
+
+    next_id = get_next_id(cursor)
+
+    cursor.execute("INSERT INTO channel_guide "
+                   "(id, url, allowedURLs, updated_url, favicon, firstTime, "
+                   "store, userTitle) "
+                   "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                   (next_id, store_url, "[]", store_url,
+                    favicon_url, True, True, u"Amazon MP3 Store"))
+
+    # add the new Audio Guide to the site tablist
+    cursor.execute('SELECT tab_ids FROM taborder_order WHERE type=?',
+                   ('site',))
+    row = cursor.fetchone()
+    if row is not None:
+        try:
+            tab_ids = eval_container(row[0])
+        except StandardError:
+            tab_ids = []
+        tab_ids.append(next_id)
+        cursor.execute('UPDATE taborder_order SET tab_ids=? WHERE type=?',
+                       (repr(tab_ids), 'site'))
+    else:
+        # no site taborder (#11985).  We will create the TabOrder
+        # object on startup, so no need to do anything here
+        pass
+
+
+def upgrade132(cursor):
+    base_url = "http://www.amazon.com/gp/redirect.html?ie=UTF8&location=%s&tag=pcultureorg-20&linkCode=ur2&camp=1789&creative=9325"
+    favicon_url = u'http://www.amazon.com/favicon.ico'
+    direct_urls = (
+        ('http://www.amazon.fr/T%C3%A9l%C3%A9charger-Musique-mp3/b/ref=sa_menu_mp31?ie=UTF8&node=77196031', u'Amazon Téléchargements MP3 (FR)'),
+        ('http://www.amazon.de/MP3-Musik-Downloads/b/ref=sa_menu_mp31?ie=UTF8&node=77195031', u'Amazon MP3-Downloads (DE/AT/CH)'),
+        ('http://www.amazon.co.jp/MP3-%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89-%E9%9F%B3%E6%A5%BD%E9%85%8D%E4%BF%A1-DRM%E3%83%95%E3%83%AA%E3%83%BC/b/ref=sa_menu_dmusic1?ie=UTF8&node=2128134051', u'Amazon MP3ダウンロード (JP)'),
+        ('http://www.amazon.co.uk/MP3-Music-Download/b/ref=sa_menu_dm1?ie=UTF8&node=77197031', u'Amazon MP3 Downloads (UK)'))
+
+    for url, name in direct_urls:
+        store_url = base_url % urllib.quote(url, safe='')
+        cursor.execute("SELECT count(*) FROM channel_guide WHERE url=?",
+                       (store_url,))
+        count = cursor.fetchone()[0]
+        if count > 0:
+            continue
+
+        next_id = get_next_id(cursor)
+
+        cursor.execute("INSERT INTO channel_guide "
+                   "(id, url, allowedURLs, updated_url, favicon, firstTime, "
+                   "store, userTitle) "
+                   "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                   (next_id, store_url, "[]", store_url,
+                    favicon_url, True, 2, name)) # 2 is a
+                                                 # non-visible store
+
+    # the stores aren't visible by default, so don't worry about putting them
+    # in the taborder

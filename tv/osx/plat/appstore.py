@@ -27,26 +27,14 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Miro test utility -- console application for running unit tests.
-"""
+import os
+from Foundation import NSBundle
 
-import sys
-import logging
-
-from miro.plat import utils
-utils.initialize_locale()
-
-from miro import bootstrap
-bootstrap.bootstrap()
-
-# from miro import gtcache
-# gtcache.init()
-
-if "-v" not in sys.argv:
-    logging.basicConfig(level=logging.CRITICAL)
-
-from miro import test
-from miro.plat import resources
-
-sys.path.append(resources.appRoot())
-test.run_tests()
+def appstore_edition():
+    """Returns True if this is a Mac App Store Edition of Miro.
+    It is differentiated by having a appStore file in the resources
+    directory inside the application bundle.
+    """
+    appstore_file = os.path.join(NSBundle.mainBundle().resourcePath(),
+                                 'appStore')
+    return os.path.exists(appstore_file)

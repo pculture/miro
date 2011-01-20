@@ -114,6 +114,21 @@ class FFMpegConversionTaskTest(MiroTestCase):
         finally:
             f.close()
 
+    def test_error_while_decoding_stream(self):
+        f = open(os.path.join(DATA, "ffmpeg.error_while_decoding_stream.txt"), "r")
+        try:
+            lines = conversions.line_reader(f)
+            mock = MockFFMpegConversionTask()
+            mock.process_output(lines)
+
+            # no errors and progress equals 1.0
+            self.assertEquals(mock.error, None)
+            self.assertEquals(mock.progress, 1.0)
+            self.assertEquals(mock.duration, 33)
+        finally:
+            f.close()
+
+
 class MockFFMpeg2TheoraConversionTask(conversions.FFMpeg2TheoraConversionTask):
     def __init__(self):
         # not calling superclass init because it does a bunch of

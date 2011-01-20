@@ -31,6 +31,9 @@
 """
 
 import logging
+import sys
+import os
+import threading
 
 config_loaded = False
 from miro import app
@@ -47,9 +50,6 @@ def launch():
     # Make all output flush immediately.
     # Don't add extra import statements here.  If there's a problem importing
     # something we want to see the error in the log.
-    import logging
-    import sys
-    import os
     from miro import util
 
     sys.stdout = util.AutoFlushingStream(sys.stdout)
@@ -69,8 +69,6 @@ def launch():
     log_versions()
 
     # Start of normal imports
-    import threading
-
     from miro.dl_daemon import daemon
     from miro import httpclient
 

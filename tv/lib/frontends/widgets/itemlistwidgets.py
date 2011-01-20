@@ -269,16 +269,19 @@ class ListItemView(widgetset.TableView):
         'rate': style.DownloadRateRenderer, 'date-added': style.DateAddedRenderer,
         'last-played': style.LastPlayedRenderer,
     }
-    def __init__(self, item_list, columns):
+    COLUMN_PADDING = 12
+    def __init__(self, item_list, columns_enabled, column_widths):
         widgetset.TableView.__init__(self, item_list.model)
-        self.column_state = columns
+        self.columns_enabled = columns_enabled
+        self.column_widths = column_widths
         self.create_signal('sort-changed')
-        self.create_signal('columns-changed')
+        self.create_signal('columns-enabled-changed')
+        self.create_signal('column-widths-changed')
         self.item_list = item_list
         self._column_name_to_column = {}
         self._current_sort_column = None
         self._set_initial_widths = False
-        for name, width in self.column_state:
+        for name in self.columns_enabled:
             resizable = not name in widgetconst.NO_RESIZE_COLUMNS
             pad = not name in widgetconst.NO_PAD_COLUMNS
             header = widgetconst.COLUMN_LABELS[name]
@@ -286,7 +289,7 @@ class ListItemView(widgetset.TableView):
             self._make_column(header, renderer, name, resizable, pad)
         self.set_show_headers(True)
         self.set_columns_draggable(True)
-        self.set_column_spacing(12)
+        self.set_column_spacing(self.COLUMN_PADDING)
         self.set_row_spacing(8)
         self.set_grid_lines(False, True)
         self.set_alternate_row_backgrounds(True)
@@ -295,23 +298,23 @@ class ListItemView(widgetset.TableView):
         self.html_stripper = util.HTMLStripper()
         self.column_by_label = {}
         for name, label in widgetconst.COLUMN_LABELS.items():
-            self.column_by_label[label] = unicode(name)
+            self.column_by_label[label] = name
 
     def _get_ui_column_state(self):
+        enabled = []
         widths = {}
-        for (name, width) in self.column_state:
-            column = self._column_name_to_column[name]
-            width = column.get_width()
-            widths[name] = width
-        new_column_state = []
         for label in self.get_columns():
             name = self.column_by_label[label]
-            new_column_state.append((name, widths[name]));
-        self.column_state = new_column_state
+            enabled.append(name)
+            column = self._column_name_to_column[name]
+            widths[name] = column.get_width()
+        self.columns_enabled = enabled
+        self.column_widths = widths
 
     def on_unrealize(self, treeview):
         self._get_ui_column_state()
-        self.emit('columns-changed', self.column_state)
+        self.emit('column-widths-changed', self.column_widths)
+        self.emit('columns-enabled-changed', self.columns_enabled)
         super(ListItemView, self).on_unrealize(treeview)
 
     def get_tooltip(self, iter, column):
@@ -346,38 +349,44 @@ class ListItemView(widgetset.TableView):
         if resizable:
             column.set_resizable(True)
         if not pad:
-            column.set_no_pad()
+            column.set_do_horizontal_padding(pad)
         if hasattr(renderer, 'right_aligned') and renderer.right_aligned:
             column.set_right_aligned(True)
+        if column_name in widgetconst.NO_RESIZE_COLUMNS:
+            self.column_widths[column_name] = renderer.min_width
+            if pad:
+                self.column_widths[column_name] += self.COLUMN_PADDING
+            column.set_width(renderer.min_width)
         column.connect_weak('clicked', self._on_column_clicked, column_name)
         self._column_name_to_column[column_name] = column
         self.add_column(column)
 
-    def do_size_allocated(self, width, height):
+    def do_size_allocated(self, total_width, height):
         if not self._set_initial_widths:
             self._set_initial_widths = True
-            width -= 20 # allow some room for a scrollbar
+            total_width -= 20 # allow some room for a scrollbar
 
-            available_width = self.width_for_columns(width)
-            min_width = sum(width for name, width in self.column_state)
-            extra_width = max(available_width - min_width, 0)
-            weights = {}
-            for name, width in self.column_state:
-                weight = 0
+            total_weight = 0
+            min_width = 0
+            for name in self.columns_enabled:
                 if name in widgetconst.COLUMN_WIDTH_WEIGHTS:
-                    weight = widgetconst.COLUMN_WIDTH_WEIGHTS[name]
-                weights[name] = weight
-            total_weight = sum(weight for weight in weights.values()) or 1
+                    total_weight += widgetconst.COLUMN_WIDTH_WEIGHTS[name]
+                min_width += self.column_widths[name]
+            if total_weight is 0:
+                total_weight = 1
+
+            available_width = self.width_for_columns(total_width)
+            extra_width = max(available_width - min_width, 0)
+            
             diff = 0 # prevent cumulative rounding errors
-            for i, (name, width) in enumerate(self.column_state):
-                weight = weights[name]
+            for name in self.columns_enabled:
+                weight = widgetconst.COLUMN_WIDTH_WEIGHTS.get(name, 0)
                 extra = extra_width * weight / total_weight + diff
                 diff = extra - int(extra)
+                width = self.column_widths[name]
                 width += int(extra)
-                self.column_state[i] = (name, width)
                 column = self._column_name_to_column[name]
                 column.set_width(width)
-            self.emit('columns-changed', self.column_state)
 
     def _on_column_clicked(self, column, column_name):
         ascending = not (column.get_sort_indicator_visible() and

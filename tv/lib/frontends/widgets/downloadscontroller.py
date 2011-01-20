@@ -49,7 +49,7 @@ from miro.plat.frontends.widgets import widgetset
 class DownloadsController(itemlistcontroller.ItemListController):
     def __init__(self):
         itemlistcontroller.ItemListController.__init__(self, u'downloading',
-                                                       None)
+                                                       u'downloading')
         for item_list in self.item_list_group.item_lists:
             item_list.resort_on_update = True
 

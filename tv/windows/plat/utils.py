@@ -33,22 +33,22 @@ Holds utility methods that are platform-specific.
 
 import ctypes
 import _winreg
-from miro import app
-from miro import prefs
 import os
 import logging
 from logging.handlers import RotatingFileHandler
+import subprocess
+import sys
+import urllib
+
+from miro import app
+from miro import prefs
 from miro.plat import config as plat_config
 from miro.plat import prelogger
 from miro.plat import proxyfind
 from miro.plat import resources
-import subprocess
-import sys
-import urllib
 from miro.util import returns_unicode, check_u
 from miro.util import AutoLoggingStream
 from miro import fileutil
-from miro.gtcache import gettext as _
 
 _locale_initialized = False
 PlatformFilenameType = unicode
@@ -61,10 +61,10 @@ def dirfilt(root, dirs):
     return dirs
 
 def samefile(path1, path2):
-    return getLongPathName(path1) == getLongPathName(path2)
+    return get_long_path_name(path1) == get_long_path_name(path2)
 
-def getLongPathName(path):
-    buf = ctypes.create_unicode_buffer(260) 
+def get_long_path_name(path):
+    buf = ctypes.create_unicode_buffer(260)
     GetLongPathName = ctypes.windll.kernel32.GetLongPathNameW
     rv = GetLongPathName(path, buf, 260)
     if rv == 0 or rv > 260:
@@ -73,21 +73,23 @@ def getLongPathName(path):
         return buf.value
 
 def get_available_bytes_for_movies():
-    moviesDir = fileutil.expand_filename(app.config.get(prefs.MOVIES_DIRECTORY))
-    freeSpace = ctypes.c_ulonglong(0)
-    availableSpace = ctypes.c_ulonglong(0)
-    totalSpace = ctypes.c_ulonglong(0)
-    rv = ctypes.windll.kernel32.GetDiskFreeSpaceExW(unicode(moviesDir),
-            ctypes.byref(availableSpace), ctypes.byref(totalSpace),
-            ctypes.byref(freeSpace)) 
+    movies_dir = fileutil.expand_filename(
+        app.config.get(prefs.MOVIES_DIRECTORY))
+    free_space = ctypes.c_ulonglong(0)
+    available_space = ctypes.c_ulonglong(0)
+    total_space = ctypes.c_ulonglong(0)
+    rv = ctypes.windll.kernel32.GetDiskFreeSpaceExW(
+        unicode(movies_dir),
+        ctypes.byref(available_space), ctypes.byref(total_space),
+        ctypes.byref(free_space))
     if rv == 0:
         print "GetDiskFreeSpaceExW failed, returning bogus value!"
         return 100 * 1024 * 1024 * 1024
-    return availableSpace.value
+    return available_space.value
 
-#############################################################################
-# Windows specific locale                                                   #
-#############################################################################
+########################################################################
+# Windows specific locale                                              #
+########################################################################
 # see Language Identifier Constants and Strings (Windows):
 # http://msdn.microsoft.com/en-us/library/dd318693%28VS.85%29.aspx
 _langs = {
@@ -133,7 +135,7 @@ def _get_locale():
         return _langs[code]
     except KeyError:
         # we don't know the language for this code
-        logging.warning("Don't know what locale to choose for code '%s' (%s)", 
+        logging.warning("Don't know what locale to choose for code '%s' (%s)",
                         code, hex(code))
     return None
 
@@ -148,15 +150,15 @@ def initialize_locale():
     _locale_initialized = True
 
 class ApatheticRotatingFileHandler(RotatingFileHandler):
-    """The whole purpose of this class is to prevent rotation errors from
-    percolating up into stdout/stderr and popping up a dialog that's not
-    particularly useful to users or us.
+    """The whole purpose of this class is to prevent rotation errors
+    from percolating up into stdout/stderr and popping up a dialog
+    that's not particularly useful to users or us.
     """
     def doRollover(self):
-        # If you shut down Miro then start it up again immediately afterwards,
-        # then we get in this squirrely situation where the log is opened
-        # by another process.  We ignore the exception, but make sure we 
-        # have an open file.  (bug #11228)
+        # If you shut down Miro then start it up again immediately
+        # afterwards, then we get in this squirrely situation where
+        # the log is opened by another process.  We ignore the
+        # exception, but make sure we have an open file.  (bug #11228)
         try:
             RotatingFileHandler.doRollover(self)
         except WindowsError:
@@ -168,61 +170,66 @@ class ApatheticRotatingFileHandler(RotatingFileHandler):
                 pass
 
     def shouldRollover(self, record):
-        # if doRollover doesn't work, then we don't want to find ourselves
-        # in a situation where we're trying to do things on a closed stream.
+        # if doRollover doesn't work, then we don't want to find
+        # ourselves in a situation where we're trying to do things on
+        # a closed stream.
         if self.stream.closed:
             self.stream = open(self.baseFilename, "a")
         return RotatingFileHandler.shouldRollover(self, record)
 
     def handleError(self, record):
-        # ignore logging errors that occur rather than printing them to 
+        # ignore logging errors that occur rather than printing them to
         # stdout/stderr which isn't helpful to us
         pass
 
-_loggingSetup = False
+FORMAT = "%(asctime)s %(levelname)-8s %(name)s: %(message)s"
 def setup_logging(in_downloader=False):
-    global _loggingSetup
-    if _loggingSetup:
-        return
-
     if in_downloader:
-        if os.environ.get('MIRO_APP_VERSION', "").endswith("git"):
+        if 'MIRO_IN_UNIT_TESTS' in os.environ:
+            level = logging.WARN
+        elif os.environ.get('MIRO_DEBUGMODE', '') == True:
             level = logging.DEBUG
         else:
             level = logging.INFO
         logging.basicConfig(level=level,
+                            format='%(asctime)s %(levelname)-8s %(message)s',
                             stream=sys.stderr)
         pathname = os.environ.get("DEMOCRACY_DOWNLOADER_LOG")
         if not pathname:
-            _loggingSetup = True
             return
-
     else:
-        level = logging.DEBUG
-        pathname = app.config.get(prefs.LOG_PATHNAME)
+        if app.debugmode:
+            level = logging.DEBUG
+        else:
+            level = logging.INFO
         logging.basicConfig(level=level,
-                            stream=sys.stdout)
+                            format=FORMAT)
+        pathname = app.config.get(prefs.LOG_PATHNAME)
 
-    logger = logging.getLogger('')
-    # logger.setLevel(level)
     rotater = ApatheticRotatingFileHandler(
         pathname, mode="a", maxBytes=100000, backupCount=5)
+
+    formatter = logging.Formatter(FORMAT)
     rotater.setLevel(level)
-    formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
     rotater.setFormatter(formatter)
-    logger.addHandler(rotater)
+    logging.getLogger('').addHandler(rotater)
     rotater.doRollover()
     try:
         for record in prelogger.remove():
             logger.handle(record)
     except ValueError:
         logging.info("No records from prelogger.")
-    sys.stdout = AutoLoggingStream(logging.warn, '(from stdout) ')
-    sys.stderr = AutoLoggingStream(logging.error, '(from stderr) ')
+
+    if app.debugmode:
+        stdouthandler = logging.StreamHandler(sys.stdout)
+        stdouthandler.setLevel(level)
+        stdouthandler.setFormatter(formatter)
+        logging.getLogger('').addHandler(stdouthandler)
+    else:
+        sys.stdout = AutoLoggingStream(logging.warn, '(from stdout) ')
+        sys.stderr = AutoLoggingStream(logging.error, '(from stderr) ')
 
     logging.info("Logging set up to %s at level %s", pathname, level)
-
-    _loggingSetup = True
 
 @returns_unicode
 def utf8_to_filename(filename):
@@ -232,14 +239,16 @@ def utf8_to_filename(filename):
 
 @returns_unicode
 def unicode_to_filename(filename, path=None):
-    """Takes in a unicode string representation of a filename and creates a
-    valid byte representation of it attempting to preserve extensions
+    """Takes in a unicode string representation of a filename and
+    creates a valid byte representation of it attempting to preserve
+    extensions
 
-    This is not guaranteed to give the same results every time it is run,
-    not is it garanteed to reverse the results of filename_to_unicode
+    This is not guaranteed to give the same results every time it is
+    run, not is it garanteed to reverse the results of
+    filename_to_unicode
     """
     @returns_unicode
-    def shortenFilename(filename):
+    def shorten_filename(filename):
         check_u(filename)
         # Find the first part and the last part
         pieces = filename.split(u".")
@@ -263,24 +272,26 @@ def unicode_to_filename(filename, path=None):
     # Keep this a little shorter than the max length, so we can run
     # nextFilename
     MAX_LEN = 200
-    
-    badchars = ('/', '\000', '\\', ':', '*', '?', "'", '"', '<', '>', '|', "\n", "\r")
+
+    badchars = ('/', '\000', '\\', ':', '*', '?', "'", '"',
+                '<', '>', '|', "\n", "\r")
     for mem in badchars:
         filename = filename.replace(mem, "_")
 
-    newFilename = filename
-    while len(newFilename) > MAX_LEN:
-        newFilename = shortenFilename(newFilename)
+    new_filename = filename
+    while len(new_filename) > MAX_LEN:
+        new_filename = shorten_filename(new_filename)
 
-    return newFilename
+    return new_filename
 
 @returns_unicode
 def filename_to_unicode(filename, path=None):
-    """Given a filename in raw bytes, return the unicode representation
+    """Given a filename in raw bytes, return the unicode
+    representation.
 
     Since this is not guaranteed to give the same results every time
     it is run, not is it garanteed to reverse the results of
-    unicode_to_filename
+    unicode_to_filename.
     """
     if path:
         check_u(path)
@@ -289,30 +300,31 @@ def filename_to_unicode(filename, path=None):
 
 @returns_unicode
 def make_url_safe(string, safe='/'):
-    """Takes in a byte string or a unicode string and does the right thing
-    to make a URL
+    """Takes in a byte string or a unicode string and does the right
+    thing to make a URL
     """
     check_u(string)
     return urllib.quote(string.encode('utf_8'), safe=safe).decode('ascii')
 
 @returns_unicode
 def unmake_url_safe(string):
-    """Undoes make_url_safe. 
+    """Undoes make_url_safe.
     """
     check_u(string)
     return urllib.unquote(string.encode('ascii')).decode('utf_8')
 
 def kill_process(pid):
-    # Kill the old process, if it exists
+    """Kill the old process, if it exists.
+    """
     if pid is not None:
-        # This isn't guaranteed to kill the process, but it's likely the
-        # best we can do
-        # See http://support.microsoft.com/kb/q178893/
+        # This isn't guaranteed to kill the process, but it's likely
+        # the best we can do See
+        # http://support.microsoft.com/kb/q178893/
         # http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/347462
         try:
             PROCESS_TERMINATE = 1
-            handle = ctypes.windll.kernel32.OpenProcess(PROCESS_TERMINATE,
-                                                        False, pid)
+            handle = ctypes.windll.kernel32.OpenProcess(
+                PROCESS_TERMINATE, False, pid)
             ctypes.windll.kernel32.TerminateProcess(handle, -1)
             ctypes.windll.kernel32.CloseHandle(handle)
         except ValueError:
@@ -322,22 +334,33 @@ def launch_download_daemon(oldpid, env):
     kill_process(oldpid)
     for key, value in env.items():
         os.environ[key] = value
-    os.environ['DEMOCRACY_DOWNLOADER_LOG'] = app.config.get(prefs.DOWNLOADER_LOG_PATHNAME)
-    os.environ['MIRO_APP_VERSION'] = app.config.get(prefs.APP_VERSION)
-    # Start the downloader.  We use the subprocess module to turn off
+
+    environ = os.environ.copy()
+    environ['DEMOCRACY_DOWNLOADER_LOG'] = app.config.get(prefs.DOWNLOADER_LOG_PATHNAME)
+    environ['MIRO_APP_VERSION'] = app.config.get(prefs.APP_VERSION)
+    if hasattr(app, 'in_unit_tests'):
+        environ['MIRO_IN_UNIT_TESTS'] = '1'
+    environ.update(env)
+
+    # on windows, subprocess can ONLY accept strings (no unicode) in
+    # environment values.  at present this affects FFMPEG_DATADIR
+    # which doesn't matter in the downloader, so we remove it.
+    del environ["FFMPEG_DATADIR"]
+
+    # start the downloader.  We use the subprocess module to turn off
     # the console.  One slightly awkward thing is that the current
     # process might not have a valid stdin/stdout/stderr, so we create
     # a pipe to it that we never actually use.
 
-    # Note that we use "Miro" instead of the app name here, so custom
+    # note that we use "Miro" instead of the app name here, so custom
     # versions will work
 
-    # Note that the application filename has to be in double-quotes
+    # note that the application filename has to be in double-quotes
     # otherwise it kicks up "%1 is not a valid Win32 application"
     # errors on some Windows machines.  Why it only happens on some is
     # a mystery of the universe.  Bug #9274.
-    downloaderPath = '"%s"' % os.path.join(resources.appRoot(),
-            "Miro_Downloader.exe") 
+    downloader_path = '"%s"' % os.path.join(resources.app_root(),
+                                           "Miro_Downloader.exe")
     startupinfo = subprocess.STARTUPINFO()
     # TEMPORARY: the STARTF_USESHOWWINDOW has been moved into
     # subprocess._subprocess in Python 2.6.6 and beyond.
@@ -345,10 +368,11 @@ def launch_download_daemon(oldpid, env):
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     except AttributeError:
         startupinfo.dwFlags |= subprocess._subprocess.STARTF_USESHOWWINDOW
-    subprocess.Popen(downloaderPath, stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE, 
-            stdin=subprocess.PIPE,
-            startupinfo=startupinfo)
+    subprocess.Popen(downloader_path, stdout=subprocess.PIPE,
+                     stderr=subprocess.PIPE,
+                     stdin=subprocess.PIPE,
+                     startupinfo=startupinfo,
+                     env=environ)
 
 def exit_miro(return_code):
     """Python's sys.exit isn't sufficient in a Windows
@@ -357,7 +381,7 @@ def exit_miro(return_code):
     ctypes.windll.kernel32.ExitProcess(return_code)
 
 def movie_data_program_info(movie_path, thumbnail_path):
-    exe_path = os.path.join(resources.appRoot(), 'Miro_MovieData.exe')
+    exe_path = os.path.join(resources.app_root(), 'Miro_MovieData.exe')
     cmd_line = (exe_path, movie_path, thumbnail_path)
     env = None
     return (cmd_line, env)
@@ -366,17 +390,17 @@ def get_logical_cpu_count():
     try:
         import multiprocessing
         return multiprocessing.cpu_count()
-    except ImportError, e:
+    except ImportError:
         ncpus = int(os.environ["NUMBER_OF_PROCESSORS"]);
         if ncpus > 0:
             return ncpus
     return 1
 
 def setup_ffmpeg_presets():
-    os.environ['FFMPEG_DATADIR'] = resources.appRoot()
+    os.environ['FFMPEG_DATADIR'] = resources.app_root()
 
 def get_ffmpeg_executable_path():
-    return os.path.join(resources.appRoot(), "ffmpeg.exe")
+    return os.path.join(resources.app_root(), "ffmpeg.exe")
 
 def customize_ffmpeg_parameters(params):
     from miro.plat.specialfolders import get_short_path_name
@@ -385,13 +409,13 @@ def customize_ffmpeg_parameters(params):
     if ind != -1 and len(params) > ind + 2:
         params[ind+1] = get_short_path_name(params[ind+1])
 
-    # FIXME - assumes the last item is {output}
+    # FIXME - assumes the last item is {output}.
     # look at last item output
     params[-1] = get_short_path_name(params[-1])
     return params
 
 def get_ffmpeg2theora_executable_path():
-    return os.path.join(resources.appRoot(), "ffmpeg2theora.exe")
+    return os.path.join(resources.app_root(), "ffmpeg2theora.exe")
 
 def customize_ffmpeg2theora_parameters(params):
     from miro.plat.specialfolders import get_short_path_name
@@ -400,7 +424,7 @@ def customize_ffmpeg2theora_parameters(params):
     if ind != -1 and len(params) > ind + 2:
         params[ind+1] = get_short_path_name(params[ind+1])
 
-    # FIXME - assumes the last item is {input}
+    # FIXME - assumes the last item is {input}.
     # look at last item input
     params[-1] = get_short_path_name(params[-1])
     return params
@@ -411,9 +435,20 @@ def begin_thread_loop(context_object):
 def finish_thread_loop(context_object):
     pass
 
+def get_cookie_path():
+    """
+    Returns the path to a Netscape-style cookie file for Curl to use.
+
+    Nothing is written to this file, but we use the cookies for downloading
+    from Amazon.
+    """
+    return os.path.join(
+        app.config.get(prefs.SUPPORT_DIRECTORY),
+        'cookies.txt')
+
 # XXX: expand me: pick up Windows media players.
 def get_plat_media_player_name_path():
-    return (_("Windows Media Player"), None)
+    return ("Windows Media Player", None)
 
 def thread_body(func, *args, **kwargs):
     func(*args, **kwargs)

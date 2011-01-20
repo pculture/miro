@@ -33,95 +33,107 @@ import os
 import gio
 
 from miro import app
-from miro.plat.frontends.widgets import timer
 
 class DeviceTracker(object):
     def __init__(self):
         self._unix_device_to_drive = {}
-        self._disconnecting = {}
+        self._drive_has_volumes = {}
 
     def start_tracking(self):
         volume_monitor = gio.volume_monitor_get()
         volume_monitor.connect('drive-connected', self._drive_connected)
-        volume_monitor.connect('drive-changed', self._drive_changed)
+        volume_monitor.connect('volume-added', self._volume_added)
+        volume_monitor.connect('volume-changed', self._volume_changed)
         volume_monitor.connect('mount-added', self._mount_added)
+        volume_monitor.connect('volume-removed', self._volume_removed)
         volume_monitor.connect('drive-disconnected', self._drive_disconnected)
 
         for drive in volume_monitor.get_connected_drives():
             self._drive_connected(volume_monitor, drive)
+            volumes = drive.get_volumes()
+            if volumes:
+                for volume in volumes:
+                    self._volume_added(volume_monitor, volume)
 
-    def _get_device_info(self, drive):
-        volumes = drive.get_volumes()
-        if volumes:
-            for volume in volumes:
-                id_ = volume.get_identifier('unix-device')
-                mount = size = remaining = None
-                mount = volume.get_mount()
-                if mount:
-                    mount = mount.get_root().get_path()
-                    if mount and os.path.exists(mount):
-                        if mount[-1] != os.path.sep:
-                            mount = mount + os.path.sep # make sure
-                                                                  # it ends
-                                                                  # with a /
-                        statinfo = os.statvfs(mount)
-                        size = statinfo.f_frsize * statinfo.f_blocks
-                        remaining = statinfo.f_frsize * statinfo.f_bavail
-
-                self._unix_device_to_drive[id_] = drive
-                yield id_, {
-                    'name': drive.get_name(),
-                    'visible_name': volume.get_name(),
-                    'mount': mount,
-                    'size': size,
-                    'remaining': remaining
-                    }
-        elif drive.get_name() != 'CD/DVD Drive':
-            # we tack on the 1 so that the unmounted device maps to the same ID
-            # as the first partition
-            id_ = drive.get_identifier('unix-device') + '1'
-            self._unix_device_to_drive[id_] = drive
-            yield id_, {'name': drive.get_name()}
+    def _get_volume_info(self, volume):
+        id_ = volume.get_identifier('unix-device')
+        mount = size = remaining = None
+        mount = volume.get_mount()
+        if mount:
+            mount = mount.get_root().get_path()
+            if mount and os.path.exists(mount):
+                if mount[-1] != os.path.sep:
+                    mount = mount + os.path.sep # make sure it ends with a /
+                statinfo = os.statvfs(mount)
+                size = statinfo.f_frsize * statinfo.f_blocks
+                remaining = statinfo.f_frsize * statinfo.f_bavail
+        return id_, {
+            'name': volume.get_drive().get_name(),
+            'visible_name': volume.get_name(),
+            'mount': mount,
+            'size': size,
+            'remaining': remaining
+            }
 
     def _drive_connected(self, volume_monitor, drive):
         if drive is None:
             # can happen when a CD is inserted
             return
         logging.debug('seen device: %r', drive.get_name())
-        for id_, info in self._get_device_info(drive):
-            if id_ in self._disconnecting:
-                # Gio sends a disconnect/connect pair when the device is
-                # mounted so we wait a little and check for spurious ones
-                timeout_id = self._disconnecting.pop(id_)
-                timer.cancel(timeout_id)
-                return
-            app.device_manager.device_connected(id_, **info)
-
-    def _drive_changed(self, volume_monitor, drive):
-        if drive is None:
-            # can happen when a CD is inserted
-            return
-        for id_, info in self._get_device_info(drive):
-            app.device_manager.device_changed(id_, **info)
-
-    def _mount_added(self, volume_monitor, mount):
-        self._drive_changed(volume_monitor, mount.get_drive())
+        id_ = drive.get_identifier('unix-device')
+        volumes = drive.get_volumes()
+        if volumes:
+            # so we ignore the disconnected event, instead deferring to the
+            # volume events
+            self._drive_has_volumes[id_] = 0
+        else:
+            self._unix_device_to_drive[id_] = drive
+            app.device_manager.device_connected(id_, name=drive.get_name())
 
     def _drive_disconnected(self, volume_monitor, drive):
         if drive is None:
             # can happen when a CD is inserted
             return
-        for id_, info in self._get_device_info(drive):
-            timeout_id = timer.add(0.5, self._drive_disconnected_timeout, id_)
-            self._disconnecting[id_] = timeout_id
-
-    def _drive_disconnected_timeout(self, id_):
-        del self._disconnecting[id_]
-        try:
+        id_ = drive.get_identifier('unix-device')
+        if self._drive_has_volumes.get(id_):
+            # don't send an event; the volumes will do that
+            del self._drive_has_volumes[id_]
+        else:
             del self._unix_device_to_drive[id_]
-        except KeyError:
-            pass
+            app.device_manager.device_disconnected(id_)
+
+    def _volume_added(self, volume_monitor, volume):
+        id_, info  = self._get_volume_info(volume)
+        self._unix_device_to_drive[id_] = volume.get_drive()
+        app.device_manager.device_connected(id_, **info)
+        drive_id = volume.get_drive().get_identifier('unix-device')
+        self._drive_has_volumes[drive_id] += 1
+
+    def _volume_changed(self, volume_monitor, volume):
+        try:
+            id_, info = self._get_volume_info(volume)
+        except AttributeError:
+            # comes up when the device is rudely removed
+            return
+        else:
+            app.device_manager.device_changed(id_, **info)
+
+    def _mount_added(self, volume_monitor, mount):
+        self._volume_changed(volume_monitor, mount.get_volume())
+
+    def _volume_removed(self, volume_monitor, volume):
+        id_ = volume.get_identifier('unix-device')
+        del self._unix_device_to_drive[id_]
         app.device_manager.device_disconnected(id_)
+        drive = volume.get_drive()
+        if drive is None: # can be None on force-disconnect
+            return
+        drive_id = drive .get_identifier('unix-device')
+        self._drive_has_volumes[drive_id] -= 1
+        if self._drive_has_volumes[drive_id] == 0:
+            # re-add the bare device
+            del self._drive_has_volumes[drive_id]
+            self._drive_connected(volume_monitor, volume.get_drive())
 
     def eject(self, device):
         if device.id not in self._unix_device_to_drive:

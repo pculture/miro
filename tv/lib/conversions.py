@@ -189,28 +189,28 @@ class ConversionManager(signals.SignalEmitter):
 
     def cancel_all(self):
         self._enqueue_message("cancel_all")
-    
+
     def cancel(self, key):
         self._enqueue_message("cancel", key=key)
 
     def clear_finished_conversions(self):
         self._enqueue_message("clear_all_finished")
-    
+
     def schedule_staging(self, key):
         self._enqueue_message("stage_conversion", key=key)
-    
+
     def clear_failed_task(self, key):
         self._enqueue_message("cancel", key=key)
 
     def clear_finished_task(self, key):
         self._enqueue_message("clear_finished", key=key)
-    
+
     def fetch_tasks_list(self):
         self._enqueue_message("get_tasks_list")
-    
+
     def get_converters(self):
         return self.converters.get_converters()
-    
+
     def lookup_converter(self, converter_id):
         return self.converters.lookup_converter(converter_id)
 
@@ -228,12 +228,12 @@ class ConversionManager(signals.SignalEmitter):
             self._notify_task_added(task)
 
         return task
-    
+
     def _enqueue_message(self, message, **kw):
         msg = {'message': message}
         msg.update(kw)
         self.message_queue.put(msg)
-        
+
     def _make_conversion_task(self, converter_info, item_info, target_folder,
                               create_item):
         if converter_info.executable == 'ffmpeg':
@@ -243,7 +243,7 @@ class ConversionManager(signals.SignalEmitter):
             return FFMpeg2TheoraConversionTask(converter_info, item_info,
                                                target_folder, create_item)
         return None
-    
+
     def _check_task_loop(self):
         if self.task_loop is None:
             self.quit_flag = False
@@ -264,10 +264,10 @@ class ConversionManager(signals.SignalEmitter):
             time.sleep(0.5)
         logging.debug("Conversions manager thread loop finished.")
         self.task_loop = None
-    
+
     def _run_loop_cycle(self):
         self._process_message_queue()
-        
+
         notify_count = False
         max_concurrent_tasks = int(app.config.get(
                 prefs.MAX_CONCURRENT_CONVERSIONS))
@@ -288,10 +288,10 @@ class ConversionManager(signals.SignalEmitter):
                 notify_count = True
                 if task.is_finished():
                     self.schedule_staging(task.key)
-        
+
         if notify_count:
             self._notify_tasks_count()
-                
+
     def _process_message_queue(self):
         try:
             msg = self.message_queue.get_nowait()
@@ -340,7 +340,7 @@ class ConversionManager(signals.SignalEmitter):
 
         elif msg['message'] == 'cancel_all':
             self._terminate()
-                
+
         elif msg['message'] == 'stage_conversion':
             try:
                 task = self._lookup_task(msg['key'])
@@ -381,10 +381,10 @@ class ConversionManager(signals.SignalEmitter):
 
     def pending_tasks_count(self):
         return len(self.pending_tasks)
-    
+
     def running_tasks_count(self):
         return len([t for t in self.running_tasks if not t.is_failed()])
-        
+
     def failed_tasks_count(self):
         return len([t for t in self.running_tasks if t.is_failed()])
 
@@ -404,7 +404,7 @@ class ConversionManager(signals.SignalEmitter):
             if task.key == key:
                 return task
         raise KeyError("%s not found" % key)
-    
+
     def _has_running_task(self, key):
         for task in self.running_tasks:
             if task.key == key:
@@ -419,14 +419,14 @@ class ConversionManager(signals.SignalEmitter):
 
     def _make_task_infos(self, task_list):
         return [messages.ConversionTaskInfo(t) for t in task_list]
-    
+
     def _notify_tasks_list(self):
         message = messages.ConversionTasksList(
                 self._make_task_infos(self.running_tasks),
                 self._make_task_infos(self.pending_tasks),
                 self._make_task_infos(self.finished_tasks))
         message.send_to_frontend()
-    
+
     def _notify_task_added(self, task):
         info = messages.ConversionTaskInfo(task)
         message = messages.ConversionTaskCreated(info)
@@ -437,7 +437,7 @@ class ConversionManager(signals.SignalEmitter):
         info = messages.ConversionTaskInfo(task)
         message = messages.ConversionTaskRemoved(info)
         message.send_to_frontend()
-    
+
     def _notify_all_tasks_removed(self):
         self.emit('all-tasks-removed')
         message = messages.AllConversionTaskRemoved()
@@ -448,7 +448,7 @@ class ConversionManager(signals.SignalEmitter):
         info = messages.ConversionTaskInfo(task)
         message = messages.ConversionTaskChanged(info)
         message.send_to_frontend()
-    
+
     def _notify_tasks_count(self):
         running_count = self.running_tasks_count()
         other_count = (self.failed_tasks_count() + self.pending_tasks_count() +
@@ -456,7 +456,7 @@ class ConversionManager(signals.SignalEmitter):
         message = messages.ConversionsCountChanged(running_count,
                 other_count)
         message.send_to_frontend()
-    
+
     def _terminate(self):
         if len(self.pending_tasks) > 0:
             logging.debug("Clearing pending conversion tasks...")
@@ -528,7 +528,7 @@ def clean_up(temp_file, file_and_directory=False, attempts=0):
         try:
             os.remove(temp_file)
         except EnvironmentError, e:
-            logging.debug("clean_up: %s kicked up while removing %s", 
+            logging.debug("clean_up: %s kicked up while removing %s",
                           e, temp_file)
             timeout = 1.0 * attempts
             eventloop.add_timeout(
@@ -541,7 +541,7 @@ def clean_up(temp_file, file_and_directory=False, attempts=0):
             try:
                 os.rmdir(path)
             except EnvironmentError, e:
-                logging.debug("clean_up: %s kicked up while removing %s", 
+                logging.debug("clean_up: %s kicked up while removing %s",
                               e, path)
                 timeout = 1.0 * attempts
                 eventloop.add_timeout(
@@ -570,13 +570,13 @@ class ConversionTask(object):
         self.process_handle = None
         self.error = None
         self.start_time = time.time()
-    
+
     def get_executable(self):
         raise NotImplementedError()
-    
+
     def get_parameters(self):
         raise NotImplementedError()
-        
+
     def run(self):
         self.progress = 0
         self.thread = threading.Thread(target=utils.thread_body,
@@ -601,7 +601,7 @@ class ConversionTask(object):
 
     def is_pending(self):
         return self.thread is None
-        
+
     def is_running(self):
         return self.thread is not None and self.thread.isAlive()
 
@@ -613,8 +613,8 @@ class ConversionTask(object):
 
     def is_failed(self):
         return (self.error or
-                (self.process_handle is not None and 
-                 self.process_handle.returncode is not None and 
+                (self.process_handle is not None and
+                 self.process_handle.returncode is not None and
                  self.process_handle.returncode != 0))
 
     def _loop(self):
@@ -672,7 +672,7 @@ class ConversionTask(object):
 
             if old_progress != self.progress:
                 self._notify_progress()
-    
+
     def _start_logging(self, executable, params):
         log_folder = os.path.dirname(app.config.get(prefs.LOG_PATHNAME))
         self.log_path = os.path.join(log_folder,
@@ -685,7 +685,7 @@ class ConversionTask(object):
         self._log_progress("-> Executable: %s" % executable)
         self._log_progress("-> Parameters: %s" % ' '.join(params))
         self._log_progress("")
-    
+
     def _log_progress(self, line):
         if not self.log_file.closed:
             self.log_file.write(line + "\n")
@@ -700,7 +700,7 @@ class ConversionTask(object):
         if not keep_file:
             clean_up(self.log_path)
             self.log_path = None
-    
+
     def _notify_progress(self):
         conversion_manager._notify_task_changed(self)
 
@@ -752,7 +752,12 @@ class FFMpegConversionTask(ConversionTask):
         return utils.customize_ffmpeg_parameters(default_parameters)
 
     def check_for_errors(self, line):
-        if line.startswith(("Unknown", "Error")):
+        if line.startswith("Unknown"):
+            return line
+
+        if line.startswith("Error"):
+            if line.startswith("Error while decoding stream"):
+                return
             return line
 
     def monitor_progress(self, line):
