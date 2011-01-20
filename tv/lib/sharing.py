@@ -691,7 +691,7 @@ class SharingManager(object):
     def twiddle_sharing(self):
         sharing = app.config.get(prefs.SHARE_MEDIA)
         discoverable = app.config.get(prefs.SHARE_DISCOVERABLE)
-        name = app.config.get(prefs.SHARE_NAME)
+        name = app.config.get(prefs.SHARE_NAME).encode('utf-8')
         name_changed = name != self.name
         if sharing != self.sharing:
             if sharing:
@@ -733,7 +733,7 @@ class SharingManager(object):
         return server_address
 
     def enable_discover(self):
-        name = app.config.get(prefs.SHARE_NAME)
+        name = app.config.get(prefs.SHARE_NAME).encode('utf-8')
         # At this point the server must be available, because we'd otherwise
         # have no clue what port to register for with Bonjour.
         address, port = self.server.server_address
@@ -796,7 +796,7 @@ class SharingManager(object):
             self.sharing = False
             return
 
-        name = app.config.get(prefs.SHARE_NAME)
+        name = app.config.get(prefs.SHARE_NAME).encode('utf-8')
         self.server = libdaap.make_daap_server(self.backend, debug=True, name=name)
         if not self.server:
             self.sharing = False
