@@ -37,6 +37,7 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro import messages
 
+from miro.frontends.widgets import imagebutton
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistcontroller
@@ -57,48 +58,89 @@ class DeviceTabButtonSegment(segmented.TextButtonSegment):
     COLOR = (1, 1, 1)
     TEXT_COLOR = {True: COLOR, False: COLOR}
 
-class LabeledProgressWidget(widgetset.HBox):
+class SizeWidget(widgetset.VBox):
     def __init__(self):
-        widgetset.HBox.__init__(self)
-        self.progress = widgetset.ProgressBar()
-        self.progress.set_size_request(500, -1)
-        self.text = widgetset.Label()
-        self.pack_start(self.progress, padding=20)
-        self.pack_start(self.text)
+        widgetset.VBox.__init__(self)
+        # first line: size remaining on the left, sync status on the right
+        line = widgetset.HBox()
+        self.size_label = widgetset.Label(u"")
+        self.size_label.set_bold(True)
+        self.sync_label = widgetset.Label(u"")
+        line.pack_start(self.size_label)
+        line.pack_end(self.sync_label)
+        self.pack_start(line)
 
-    def set_progress(self, progress):
-        self.progress.set_progress(progress)
-
-    def set_text(self, text):
-        self.text.set_text(text)
-
-class SizeWidget(LabeledProgressWidget):
-    def __init__(self, size=None, remaining=None):
-        LabeledProgressWidget.__init__(self)
-        self.set_size(size, remaining)
+        # second line: bigger; size status on left, sync button on right
+        line = widgetset.HBox()
+        self.progress = widgetset.ProgressBar() # TODO: replace with prettier
+        self.progress.set_size_request(500, 50)
+        self.sync_button = widgetset.Button(u"Sync Now")
+        self.sync_button.set_size_request(-1, 50)
+        line.pack_start(self.progress)
+        line.pack_end(self.sync_button)
+        self.pack_start(line)
 
     def set_size(self, size, remaining):
-        self.size = size
-        self.remaining = remaining
         if size and remaining:
-            self.set_progress(1 - float(remaining) / size)
-            self.set_text('%s free' % displaytext.size_string(
-                    remaining))
+            self.progress.set_progress(1 - float(remaining) / size)
+            self.size_label.set_text(
+                _("%(used)s used / %(total)s total - %(percent)i%% full", {
+                    'used': displaytext.size_string(size - remaining),
+                    'total': displaytext.size_string(size),
+                    'percent': 100 * float(remaining) / size}))
         else:
-            self.set_progress(0)
-            self.set_text('not mounted')
+            self.progress.set_progress(0)
+            self.size_label.set_text(u"")
 
-class SyncProgressWidget(LabeledProgressWidget):
+    def set_sync_state(self, video_count, audio_count):
+        count = video_count + audio_count
+        if count:
+            self.sync_label.set_text(
+                ngettext('1 file selected to sync',
+                         '%(count)i files selected to sync',
+                         count,
+                         {'count': count}))
+            self.sync_button.enable()
+        else:
+            self.sync_label.set_text(_("Up to date"))
+            self.sync_button.disable()
+
+class SyncProgressWidget(widgetset.Background):
     def __init__(self):
-        LabeledProgressWidget.__init__(self)
-        self.set_status(0, None)
+        widgetset.Background.__init__(self)
+
+        vbox = widgetset.VBox()
+        # first line: sync progess and cancel button
+        line = widgetset.HBox()
+        self.sync_progress = widgetset.ProgressBar()
+        self.cancel_button = widgetset.Button(u"X") #'sync-cancel')
+        line.pack_start(widgetutil.pad(self.sync_progress, 5, 5, 5, 5))
+        line.pack_end(widgetutil.pad(self.cancel_button, 5, 5, 5, 5))
+        vbox.pack_start(line)
+
+        # second line: time remaining, all the way to the right
+        line = widgetset.HBox()
+        self.sync_remaining = widgetset.Label(u"")
+        self.sync_remaining.set_bold(True)
+        line.pack_end(widgetutil.align_right(self.sync_remaining, 5, 5, 5, 5))
+        vbox.pack_start(line)
+
+        self.add(vbox)
 
     def set_status(self, progress, eta):
-        self.set_progress(progress)
-        if eta is not None:
-            self.set_text(displaytext.time_string(int(eta)))
+        self.sync_progress.set_progress(progress)
+        if eta:
+            self.sync_remaining.set_text(
+                _('%(eta)s left',
+                  {'eta': displaytext.time_string(int(eta))}))
         else:
-            self.set_text(_('unknown'))
+            self.sync_remaining.set_text(u"")
+
+    def draw(self, context, layout):
+        widgetutil.round_rect(context, 0, 0, context.width,
+                              context.height + 5, 5)
+        context.set_color((0.5, 0.5, 1.0))
+        context.fill()
 
 class SyncWidget(widgetset.HBox):
     list_label = _("Sync These Feeds")
@@ -377,32 +419,34 @@ class DeviceMountedView(widgetset.VBox):
                         self.button_row.make_widget()))
 
         self.tabs = {}
-        self.tab_container = widgetset.SolidBackground((1, 1, 1))
+        self.tab_container = widgetset.Background()
         self.pack_start(self.tab_container, expand=True)
 
         vbox = widgetset.VBox()
-        label = widgetset.Label(_("To copy media onto the device, drag it "
-                                  "onto the sidebar."))
+        label = widgetset.Label(_("Drag individual video and audio files "
+                                  "onto the device in the sidebar to copy "
+                                  "them."))
         label.set_size(1.5)
         vbox.pack_start(widgetutil.align_center(label, top_pad=50))
-
-        self.sync_container = widgetset.Background()
-        sync_vbox = widgetset.VBox()
-        self.sync_button = widgetset.Button('Sync Now')
-        self.sync_button.set_size(1.5)
-        self.sync_button.connect('clicked', self.sync_clicked)
-        sync_vbox.pack_start(self.sync_button)
-        self.sync_state = widgetset.Label()
-        sync_vbox.pack_start(self.sync_state)
-        self.sync_container.set_child(widgetutil.align_center(sync_vbox))
-        vbox.pack_start(widgetutil.align_center(self.sync_container,
-                                                top_pad=50))
+        label = widgetset.Label(_("Use these options and the tabs above for "
+                                  "automatic syncing."))
+        label.set_size(1.5)
+        vbox.pack_start(widgetutil.align_center(label, top_pad=10))
 
         self.device_size = SizeWidget()
-        alignment = widgetset.Alignment(0.5, 1, 0, 0, bottom_pad=15,
+        self.device_size.sync_button.connect('clicked', self.sync_clicked)
+        alignment = widgetset.Alignment(0.5, 1, 0, 0, top_pad=15,
+                                        bottom_pad=15,
                                         right_pad=20)
         alignment.add(self.device_size)
-        vbox.pack_end(alignment)
+        background = widgetset.SolidBackground((0.6, 0.6, 0.6))
+        background.add(alignment)
+        vbox.pack_end(background)
+
+        self.sync_container = widgetset.Background()
+        vbox.pack_end(widgetutil.align_center(self.sync_container))
+        
+
 
         self.add_tab('main', vbox)
         self.add_tab('video', widgetutil.align_center(VideoFeedSyncWidget()))
@@ -465,36 +509,21 @@ class DeviceMountedView(widgetset.VBox):
         message.send_to_backend()
 
     def current_sync_information(self, video_count, audio_count):
-        if video_count == 0 and audio_count == 0:
-            self.sync_state.set_text(_('Up to date'))
-            self.sync_button.disable()
-        else:
-            self.sync_button.enable()
-            counts = []
-            if video_count:
-                counts.append(ngettext('%(count)d video file',
-                                       '%(count)d video files',
-                                       video_count,
-                                       {"count": video_count}))
-            if audio_count:
-                counts.append(ngettext('%(count)d audio file',
-                                       '%(count)d audio files',
-                                       audio_count,
-                                       {"count": audio_count}))
-            self.sync_state.set_text('\n'.join(counts))
+        self.device_size.set_sync_state(video_count, audio_count)
 
     def set_sync_status(self, progress, eta):
         if not isinstance(self.sync_container.child, SyncProgressWidget):
-            self._old_child = self.sync_container.child
-            self.sync_container.remove()
-            self.sync_container.set_child(SyncProgressWidget())
-
+            widget = SyncProgressWidget()
+            widget.cancel_button.connect('clicked', self.cancel_sync)
+            self.sync_container.set_child(widget)
         self.sync_container.child.set_status(progress, eta)
 
+    def cancel_sync(self, obj):
+        message = messages.CancelDeviceSync(self.device)
+        message.send_to_backend()
+
     def sync_finished(self):
-        self.sync_container.remove()
-        self.sync_container.set_child(self._old_child)
-        del self._old_child
+        self.sync_container.child.remove()
 
 class DeviceItemList(itemlist.ItemList):
     def filter(self, item_info):

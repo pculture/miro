@@ -879,6 +879,12 @@ class DeviceSyncMedia(BackendMessage):
         self.device = device
         self.item_ids = item_ids
 
+class CancelDeviceSync(BackendMessage):
+    """Ask the backend to cancel any sync in progress.
+    """
+    def __init__(self, device):
+        self.device = device
+
 class DeviceEject(BackendMessage):
     """Ask the backend to eject the given device.
     """

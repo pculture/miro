@@ -1672,3 +1672,9 @@ New ids: %s""", playlist_item_ids, message.item_ids)
 
         dsm = app.device_manager.get_sync_for_device(message.device)
         dsm.add_items(item_infos)
+
+    def handle_cancel_device_sync(self, message):
+        dsm = app.device_manager.get_sync_for_device(message.device,
+                                                     create=False)
+        if dsm:
+            dsm.cancel()
