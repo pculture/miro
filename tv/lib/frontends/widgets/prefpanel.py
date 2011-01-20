@@ -668,14 +668,16 @@ class SharingPanel(PanelBuilder):
         sharing_cbx = widgetset.Checkbox(_('Share my media library.'))
         share_txt = widgetset.TextEntry()
 
-        if not app.sharing_manager.mdns_present:
-            sharing_cbx.disable()
-            share_txt.disable()
-            
         attach_boolean(sharing_cbx, prefs.SHARE_MEDIA, [share_txt])
         attach_text(share_txt, prefs.SHARE_NAME,
                     check_function=lambda w, x: not x.strip() == '')
 
+        # Do this after the attach so we can override the preference
+        # values.
+        if not app.sharing_manager.mdns_present:
+            sharing_cbx.disable()
+            share_txt.disable()
+            
         vbox.pack_start(widgetutil.align_left(sharing_cbx, bottom_pad=6))
 
         grid.pack_label(_("Share Name:"),
