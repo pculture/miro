@@ -510,13 +510,13 @@ class DeviceItemSource(ItemSource):
 
     def delete(self, info):
         device = info.device
-        del device.database[item.file_type][info.id]
+        del device.database[info.file_type][info.id]
         if os.path.exists(info.video_path):
             os.unlink(info.video_path)
         if (info.thumbnail and info.thumbnail.startswith(device.mount) and
             os.path.exists(info.thumbnail)):
             os.unlink(info.thumbnail)
-        device.database.emit('item-removed', item)
+        device.database.emit('item-removed', info)
 
     def fetch_all(self):
         return [self._item_info_for(devices.DeviceItem(
