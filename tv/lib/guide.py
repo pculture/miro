@@ -86,6 +86,10 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
         return cls.make_view('url != ? AND store != ?', (default_url, cls.STORE_INVISIBLE))
 
     @classmethod
+    def visible_view(cls):
+        return cls.make_view('store != ?', (cls.STORE_INVISIBLE,))
+    
+    @classmethod
     def get_by_url(cls, url):
         return cls.make_view('url=?', (url,)).get_singleton()
 
@@ -252,5 +256,5 @@ def get_guide_by_url(url):
         return None
 
 def download_guides():
-    for guide in ChannelGuide.make_view():
+    for guide in ChannelGuide.visible_view():
         guide.download_guide()
