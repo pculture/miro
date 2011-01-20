@@ -49,10 +49,8 @@ from miro import util
 from miro.fileobject import FilenameType
 from miro.util import returns_filename
 
-from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat import resources
 from miro.plat.utils import thread_body
-from miro.plat.frontends.widgets.bonjour import install_bonjour
 
 import libdaap
 
@@ -791,12 +789,11 @@ class SharingManager(object):
 
     def enable_sharing(self):
         # Can we actually enable sharing.  The Bonjour client-side libraries
-        # might not be installed.  If that's the case, then override the
-        # user's wishes.
+        # might not be installed.  This could happen if the user previously
+        # have the libraries installed and has it enabled, but then uninstalled
+        # it in the meantime, so handle this case as fail-safe.
         if not self.mdns_present:
-            app.config.set(prefs.SHARE_MEDIA, False)
             self.sharing = False
-            call_on_ui_thread(install_bonjour)
             return
 
         name = app.config.get(prefs.SHARE_NAME)

@@ -27,21 +27,22 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import os
 import logging
 
+from miro import app
+from miro import prefs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 
-# We hope distributions will add it into their requirements, but if they
-# don't then at least display a message saying they got got install something.
+# We can't really do much here ...
 def install_bonjour():
     title = _("Install Bonjour")
     description = _(
-        "In order to share your media library, you will need to install "
-        "the Avahi libraries for Apple Bonjour mDNSResponder "
-        "compatibility.\n\n"
-        "Miro will now disable sharing, but you may come back here anytime"
-        "to enable sharing once this library is installed."
+        "Miro has determined that your system is most likely missing "
+        "the Avahi mDNSResponder compatibility library.  Please refer " 
+        "to your operating system documentation on how you can install "
+        "this library."
     )
     dialogs.show_message(title, description)
-    logging.error('No bonjour library installed')
+    logging.info('install bonjour clicked')

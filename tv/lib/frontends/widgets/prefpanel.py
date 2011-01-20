@@ -61,6 +61,8 @@ from miro.frontends.widgets import dialogwidgets
 from miro.frontends.widgets.widgetutil import build_control_line
 from miro.plat import resources
 from miro.plat.utils import filename_to_unicode, get_logical_cpu_count
+from miro.plat.frontends.widgets.bonjour import install_bonjour
+from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.gtcache import gettext as _
 from miro import gtcache
 
@@ -666,6 +668,10 @@ class SharingPanel(PanelBuilder):
         sharing_cbx = widgetset.Checkbox(_('Share my media library.'))
         share_txt = widgetset.TextEntry()
 
+        if not app.sharing_manager.mdns_present:
+            sharing_cbx.disable()
+            share_txt.disable()
+            
         attach_boolean(sharing_cbx, prefs.SHARE_MEDIA, [share_txt])
         attach_text(share_txt, prefs.SHARE_NAME,
                     check_function=lambda w, x: not x.strip() == '')
@@ -677,9 +683,23 @@ class SharingPanel(PanelBuilder):
         grid.pack(share_txt)
         vbox.pack_start(widgetutil.align_left(grid.make_table()))
 
+        if not app.sharing_manager.mdns_present:
+            text = _("Bonjour is required for sharing. "
+                     "Click on 'Install Bonjour' to install.")
+            label = widgetset.Label()
+            label.set_text(text)
+            vbox.pack_start(widgetutil.align_center(label, top_pad=30,
+                                                    bottom_pad=6))
+            button = widgetset.Button(_("Install Bonjour"))
+            button.connect('clicked', self.install_bonjour_clicked)
+            vbox.pack_start(widgetutil.align_center(button, bottom_pad=6))
+
         pack_extras(vbox, "sharing")
 
         return vbox
+
+    def install_bonjour_clicked(self, button):
+        call_on_ui_thread(install_bonjour)
 
 class PlaybackPanel(PanelBuilder):
     def build_widget(self):

@@ -27,21 +27,22 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import os
 import logging
 
+from miro import app
+from miro import prefs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 
-# Huh?  No Bonjour?  On a Mac?  Rather than crash, maybe just display a 
-# hopefully, mildly useful message.
+# We can't really do much here ... this shouldn't happen on the Mac
+# but it's better than cold hard crash?
 def install_bonjour():
     title = _("Install Bonjour")
     description = _(
-        "Bonjour Services is required in order to share your media library."
-        "It is a standard component of Mac OS X, but your installation does "
-        "not appear to have them.\n\n"
-        "Miro will now disable sharing, but you may come back here anytime"
-        "to enable sharing once your Mac installation is repaired."
+        "Miro has determined that your system may be "
+        "missing the Bonjour components, a standard part of "
+        "Mac OS X installations.  Please review your Mac OS X installation."
     )
     dialogs.show_message(title, description)
-    logging.error('No bonjour library installed')
+    logging.info('install bonjour clicked')

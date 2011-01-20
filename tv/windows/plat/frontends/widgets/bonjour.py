@@ -35,30 +35,18 @@ from miro import prefs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 
+bonjour_install_supported = True
+
 BONJOUR_URL = "http://support.apple.com/kb/DL999"
 
 def install_bonjour():
+    app.widgetapp.open_url(BONJOUR_URL)
     title = _("Install Bonjour")
     description = _(
-        "In order to share your media library, you will need to install "
-        "the Bonjour Print Services for Windows package.  Would you like "
-        "to do this now?"
+        "Your browser will load the web-site where you can download "
+        "and install Bonjour.\n\n"
+        "When the installation is finished, simply restart Miro for "
+        "the changes to take effect."
     )
-    ret = dialogs.show_choice_dialog(title, description,
-            [dialogs.BUTTON_YES, dialogs.BUTTON_NOT_NOW])
-
-    if ret is None or ret == dialogs.BUTTON_NOT_NOW:
-        logging.info('no bonjour, user clicked no')
-        return
-
-    if ret == dialogs.BUTTON_YES:
-        app.widgetapp.open_url(BONJOUR_URL)
-        title = _("Install Bonjour")
-        description = _(
-            "Your browser will load the web-site where you can download "
-            "and install Bonjour.\n\n"
-            "When the installation is finished, simply restart Miro for "
-            "the changes to take effect."
-        )
-        dialogs.show_message(title, description)
-        logging.info('no bonjour, user clicked yes')
+    dialogs.show_message(title, description)
+    logging.info('Taking to Bonjour download landing page')
