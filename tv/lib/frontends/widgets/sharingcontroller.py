@@ -42,8 +42,6 @@ from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import style
 
-import libdaap
-
 class SharingItemView(itemlistwidgets.ItemView):
     def __init__(self, item_list, playlist_id):
         itemlistwidgets.ItemView.__init__(self, item_list)
