@@ -458,6 +458,15 @@ class FeedItemTrackTest(TrackerTest):
         self.assertEquals(len(self.test_handler.messages), 2)
         self.check_changed_message(1, changed=[self.items[0]])
 
+    def test_multiple_updates(self):
+        # see #15782
+        self.items[0].set_title(u'new name')
+        self.items[0].set_title(u'new name2')
+        self.items[0].set_title(u'new name3')
+        self.runUrgentCalls()
+        self.assertEquals(len(self.test_handler.messages), 2)
+        self.check_changed_message(1, changed=[self.items[0]])
+
     def test_add(self):
         self.make_item(u'http://example.com/3')
         self.make_item(u'http://example.com/4')

@@ -78,30 +78,26 @@ class ViewTracker(object):
         self._last_sent_info = {}
 
     def reset_changes(self):
-        self.changed = set()
-        self.removed = set()
-        self.added =  []
+        self.changed = {}
+        self.removed = {}
+        self.added =  {}
+        self.added_order = []
         # Need to use a list because added messages must be sent in the same
         # order they were received
         self.changes_pending = False
 
     def send_messages(self):
-        # Try to reduce the number of messages we're sending out.
-        self.changed -= self.removed
-        self.changed -= set(self.added)
-
-        for i in reversed(xrange(len(self.added))):
-            if self.added[i] in self.removed:
-                # Object was removed before we sent the add message, just
-                # don't send any message
-                self.removed.remove(self.added.pop(i))
         message = self.make_changed_message(
-                self._make_added_list(self.added),
-                self._make_changed_list(self.changed),
+                self._make_added_list(self._get_added_objects()),
+                self._make_changed_list(self.changed.values()),
                 self._make_removed_list(self.removed))
         if message.added or message.changed or message.removed:
             message.send_to_frontend()
         self.reset_changes()
+
+    def _get_added_objects(self):
+        """Get the objects in added in the order that we saw them."""
+        return [obj for obj in self.added_order if obj.id in self.added]
 
     def make_changed_message(self, added, changed, removed):
         raise NotImplementedError()
@@ -124,10 +120,10 @@ class ViewTracker(object):
                 self._last_sent_info[obj.id] = info
         return retval
 
-    def _make_removed_list(self, removed):
-        for obj in removed:
+    def _make_removed_list(self, removed_dict):
+        for obj in removed_dict.values():
             del self._last_sent_info[obj.id]
-        return [obj.id for obj in removed]
+        return removed_dict.keys()
 
     def schedule_send_messages(self):
         # We don't send messages immediately so that if an object gets changed
@@ -155,11 +151,12 @@ class ViewTracker(object):
             # update _last_sent_info
             self._make_new_info(obj)
             return
-        if obj in self.changed:
+        if obj.id in self.changed:
             # object was already removed, we need to send that message out
             # before we send the add message.
             self.send_messages()
-        self.added.append(obj)
+        self.added[obj.id] = obj
+        self.added_order.append(obj)
         self.schedule_send_messages()
 
     def on_object_removed(self, tracker, obj):
@@ -167,14 +164,26 @@ class ViewTracker(object):
             # even though we're not sending messages, update _last_sent_info
             del self._last_sent_info[obj.id]
             return
-        self.removed.add(obj)
+        if obj.id in self.added:
+            # object added, then removed, just ignore it
+            del self.added[obj.id]
+        elif obj.id in self.changed:
+            # object changed, then removed, just send the removeal
+            del self.changed[obj.id]
+            self.removed[obj.id] = obj
+        else:
+            self.removed[obj.id] = obj
         self.schedule_send_messages()
 
     def on_object_changed(self, tracker, obj):
         # Don't pay attention to tabs_being_reordered here.  This lets us
         # update the new/unwatched counts when channels are added/removed from
         # folders (#10988)
-        self.changed.add(obj)
+        if obj.id in self.added:
+            # object added, then changed, just send the addition
+            self.added[obj.id] = obj
+        else:
+            self.changed[obj.id] = obj
         self.schedule_send_messages()
 
     def on_bulk_added(self, emitter, objects):
