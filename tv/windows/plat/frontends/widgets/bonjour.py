@@ -40,7 +40,6 @@ bonjour_install_supported = True
 BONJOUR_URL = "http://support.apple.com/kb/DL999"
 
 def install_bonjour():
-    app.widgetapp.open_url(BONJOUR_URL)
     title = _("Install Bonjour")
     description = _(
         "Your browser will load the web-site where you can download "
@@ -50,3 +49,4 @@ def install_bonjour():
     )
     dialogs.show_message(title, description)
     logging.info('Taking to Bonjour download landing page')
+    app.widgetapp.open_url(BONJOUR_URL)
