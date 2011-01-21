@@ -272,7 +272,6 @@ class ListItemView(widgetset.TableView):
     COLUMN_PADDING = 12
     def __init__(self, item_list, columns_enabled, column_widths):
         widgetset.TableView.__init__(self, item_list.model)
-        self.columns_enabled = columns_enabled
         self.column_widths = column_widths
         self.create_signal('sort-changed')
         self.create_signal('columns-enabled-changed')
@@ -280,13 +279,7 @@ class ListItemView(widgetset.TableView):
         self.item_list = item_list
         self._column_name_to_column = {}
         self._current_sort_column = None
-        self._set_initial_widths = False
-        for name in self.columns_enabled:
-            resizable = not name in widgetconst.NO_RESIZE_COLUMNS
-            pad = not name in widgetconst.NO_PAD_COLUMNS
-            header = widgetconst.COLUMN_LABELS[name]
-            renderer = ListItemView.COLUMN_RENDERERS[name]()
-            self._make_column(header, renderer, name, resizable, pad)
+        self.update_columns(columns_enabled)
         self.set_show_headers(True)
         self.set_columns_draggable(True)
         self.set_column_spacing(self.COLUMN_PADDING)
@@ -341,6 +334,24 @@ class ListItemView(widgetset.TableView):
                   and not info.is_external):
                 return _("Newly Available")
         return None
+
+    def update_columns(self, columns_enabled):
+        self.columns_enabled = columns_enabled
+        for name in self.columns_enabled:
+            if name in self._column_name_to_column:
+                continue
+            resizable = not name in widgetconst.NO_RESIZE_COLUMNS
+            pad = not name in widgetconst.NO_PAD_COLUMNS
+            header = widgetconst.COLUMN_LABELS[name]
+            renderer = ListItemView.COLUMN_RENDERERS[name]()
+            self._make_column(header, renderer, name, resizable, pad)
+        for name, column in self._column_name_to_column.items():
+            if name in self.columns_enabled:
+                continue
+            index = self.columns.index(column)
+            self.remove_column(index)
+            del self._column_name_to_column[name]
+        self._set_initial_widths = False
 
     def _make_column(self, header, renderer, column_name, resizable=True,
             pad=True):
