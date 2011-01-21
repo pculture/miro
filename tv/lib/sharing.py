@@ -284,9 +284,14 @@ class SharingTracker(object):
                 messages.SharingDisappeared(victim).send_to_frontend()
 
     def server_thread(self):
-        callback = libdaap.mdns_browse(self.mdns_callback)
+        if app.sharing_manager.mdns_present:
+            callback = libdaap.mdns_browse(self.mdns_callback)
+        else:
+            callback = None
         while True:
-            refs = callback.get_refs()
+            refs = []
+            if callback is not None:
+                refs = callback.get_refs()
             try:
                 r, w, x = select.select(refs + [self.r], [], [])
                 for i in r:

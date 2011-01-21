@@ -216,9 +216,8 @@ class ConversionManager(signals.SignalEmitter):
 
     def start_conversion(self, converter_id, item_info, target_folder=None,
                          create_item=True):
-        converter_info = self.converters.lookup_converter(converter_id)
         task = self._make_conversion_task(
-            converter_info, item_info, target_folder, create_item)
+            converter_id, item_info, target_folder, create_item)
         if ((task is not None
              and task.get_executable() is not None
              and not self._has_running_task(task.key)
@@ -234,8 +233,11 @@ class ConversionManager(signals.SignalEmitter):
         msg.update(kw)
         self.message_queue.put(msg)
 
-    def _make_conversion_task(self, converter_info, item_info, target_folder,
+    def _make_conversion_task(self, converter_id, item_info, target_folder,
                               create_item):
+        if converter_id == 'copy':
+            return CopyConversionTask(item_info, target_folder, create_item)
+        converter_info = self.converters.lookup_converter(converter_id)
         if converter_info.executable == 'ffmpeg':
             return FFMpegConversionTask(converter_info, item_info,
                                         target_folder, create_item)
@@ -350,8 +352,7 @@ class ConversionManager(signals.SignalEmitter):
             source = task.temp_output_path
             destination, fp = next_free_filename(task.final_output_path)
             source_info = task.item_info
-            conversion_name = task.converter_info.name
-
+            conversion_name = task.get_display_name()
             if os.path.exists(source):
                 self._move_finished_file(source, destination)
                 if task.create_item:
@@ -488,8 +489,11 @@ def build_output_paths(item_info, target_folder, converter_info):
     if not title:
         title = basename
 
-    target_name = "%s.%s.%s" % (title, converter_info.identifier,
-                                converter_info.extension)
+    if converter_info:
+        target_name = "%s.%s.%s" % (title, converter_info.identifier,
+                                    converter_info.extension)
+    else:
+        target_name = basename
     final_path = FilenameType(os.path.join(target_folder, target_name))
 
     if not use_temp_dir:
@@ -576,6 +580,9 @@ class ConversionTask(object):
 
     def get_parameters(self):
         raise NotImplementedError()
+
+    def get_display_name(self):
+        return self.converter_info.displayname
 
     def run(self):
         self.progress = 0
@@ -731,6 +738,31 @@ def line_reader(handle):
                 chars.append(c)
             c = handle.read(1)
     return _readlines
+
+class CopyConversionTask(ConversionTask):
+
+    def __init__(self, item_info, target_folder, create_item):
+        ConversionTask.__init__(self, None, item_info, target_folder,
+                                create_item)
+
+    def get_executable(self):
+        return "copy" # never actually executed
+
+    def get_display_name(self):
+        return _("Copy")
+
+    def run(self):
+        shutil.copyfile(self.input_path, self.temp_output_path)
+        self.progress = 1
+
+    def is_pending(self):
+        return not bool(self.progress)
+
+    def is_running(self):
+        return False # never running, since running is basically a no-op
+
+    def done_running(self):
+        return bool(self.progress)
 
 class FFMpegConversionTask(ConversionTask):
     DURATION_RE = re.compile(r'Duration: (\d\d):(\d\d):(\d\d)\.(\d\d)'

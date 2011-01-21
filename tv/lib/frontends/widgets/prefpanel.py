@@ -860,9 +860,7 @@ class _ExtensionsHelper(object):
         self.extensions_list.pack_start(scroller)
 
     def load(self):
-        logging.info(">>> loading extensions table")
         for ext in app.extension_manager.extensions:
-            logging.info(">>> adding extension %r", ext)
             iter_ = self._model.append(ext.loaded, ext.name)
             self._iter_map[ext.name] = iter_
 
