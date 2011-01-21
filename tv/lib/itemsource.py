@@ -446,6 +446,7 @@ class SharingItemSource(ItemSource):
     def _item_info_for(self, item):
         return messages.ItemInfo(
             item.id,
+            source = self,
             name = item.name,
             feed_id = item.feed_id,
             feed_name = None,
