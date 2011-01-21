@@ -1603,15 +1603,11 @@ class DisplayStatesStore(object):
             display.columns_enabled.append(column)
         self.save_state(key)
 
-    def set_list_view(self, key):
+    def set_is_list_view(self, key, is_list_view):
         display = self._get_display(key)
-        display.is_list_view = True
+        display.is_list_view = is_list_view
         self.save_state(key)
-
-    def set_std_view(self, key):
-        display = self._get_display(key)
-        display.is_list_view = False
-        self.save_state(key)
+        app.menu_manager.update_menus()
 
     def save_state(self, key):
         display = self._get_display(key)

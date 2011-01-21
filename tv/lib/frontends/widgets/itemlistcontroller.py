@@ -135,10 +135,9 @@ class ItemListController(object):
         key = (self.type, self.id)
         if self.is_list_view:
             self.widget.switch_to_list_view()
-            app.display_state.set_list_view(key)
         else:
             self.widget.switch_to_normal_view()
-            app.display_state.set_std_view(key)
+        app.display_state.set_is_list_view(key, is_list_view)
 
     def build_list_item_view(self):
         return itemlistwidgets.ListItemView(self.item_list,
