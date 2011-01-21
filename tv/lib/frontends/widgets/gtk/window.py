@@ -262,17 +262,27 @@ class WindowBase(signals.SignalEmitter):
                 action_group.add_action_with_accel(extra_action,
                                                    get_accel_string(shortcut))
 
-    def make_check_action(self, action, label, groups, callback, index,
+    def _raw_check_action(self, action, label, groups, callback, index,
                           group=None):
         gtk_action = gtk.RadioAction(action, label, None, None, index)
         if group is not None:
             gtk_action.set_group(group)
         gtk_action.connect("activate", callback, index)
+
+    def make_check_action(self, action, check_group, label, groups, shortcuts):
+        gtk_action = gtk.ToggleAction(action, label, None, None)
+        callback = menus.lookup_handler(gtk_action.get_name())
+        if callback is not None:
+            gtk_action.connect("toggled", self.on_activate, callback)
+        if check_group not in self.check_groups:
+            self.check_groups[check_group] = list()
+        self.check_groups[check_group].append(gtk_action)
         self.action_groups[groups[0]].add_action(gtk_action)
 
     def make_actions(self):
         self.action_groups = {}
         self.radio_group_actions = {}
+        self.check_groups = {}
 
         for name in self.menu_action_groups.keys():
             self.action_groups[name] = gtk.ActionGroup(name)
@@ -287,17 +297,20 @@ class WindowBase(signals.SignalEmitter):
             elif isinstance(mem, menus.RadioMenuItem):
                 self.make_radio_action(mem.action, mem.radio_group, mem.label,
                         mem.groups, mem.shortcuts)
+            elif isinstance(mem, menus.CheckMenuItem):
+                self.make_check_action(mem.action, mem.check_group, mem.label,
+                        mem.groups, mem.shortcuts)
             elif isinstance(mem, menus.MenuItem):
                 self.make_action(mem.action, mem.label, mem.groups,
                         mem.shortcuts)
 
 
         # make a bunch of SubtitleTrack# actions
-        self.make_check_action("SubtitlesDisabled", _("Disable Subtitles"),
+        self._raw_check_action("SubtitlesDisabled", _("Disable Subtitles"),
                                ["AlwaysOn"], self.on_subtitles_change, -1)
         radio_group = self.action_groups["AlwaysOn"].get_action("SubtitlesDisabled")
         for i in range(199):
-            self.make_check_action("SubtitleTrack%d" % i, "", ["AlwaysOn"],
+            self._raw_check_action("SubtitleTrack%d" % i, "", ["AlwaysOn"],
                                    self.on_subtitles_change, i, radio_group)
 
         for action_group in self.action_groups.values():
@@ -440,6 +453,7 @@ class MainWindow(Window):
         self.create_signal('save-maximized')
         app.menu_manager.connect('enabled-changed', self.on_menu_change)
         app.menu_manager.connect('radio-group-changed', self.on_radio_change)
+        app.menu_manager.connect('checked-changed', self.on_checked_change)
         app.playback_manager.connect('did-start-playing', self.on_playback_change)
         app.playback_manager.connect('will-play', self.on_playback_change)
         app.playback_manager.connect('did-stop', self.on_playback_change)
@@ -521,6 +535,16 @@ class MainWindow(Window):
             if action.get_name() == value:
                 action.set_active(True)
                 return
+
+    def on_checked_change(self, menu_manager, check_group, values):
+        group = self.check_groups[check_group]
+        for action in group:
+            name = action.get_name()
+            if name in values:
+                checked = values[name]
+                action.handler_block_by_func(self.on_activate)
+                action.set_active(checked)
+                action.handler_unblock_by_func(self.on_activate)
 
     def on_playback_change(self, playback_manager, *extra_args):
         self._ignore_on_subtitles_change = True
