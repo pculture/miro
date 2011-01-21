@@ -282,26 +282,27 @@ class GuideTracker(ViewTracker):
 
     def send_messages(self):
         message = messages.GuidesChanged(
-            [self.info_factory(g) for g in self.added],
-            [self.info_factory(g) for g in self.changed],
-            [g.id for g in self.removed])
+            [self.info_factory(g) for g in self._get_added_objects()],
+            [self.info_factory(g) for g in self.changed.values()],
+            self.removed.keys())
         message.send_to_frontend()
 
         # now that we've sent the GuidesChanged message, fix the changed
         # message for the hidden flag
-        changed, self.changed = self.changed, set()
-        for obj in changed:
+        changed, self.changed = self.changed, {}
+        for obj in changed.values():
             is_visible = obj.is_visible()
             if obj.id in self._last_sent_info:
                 was_visible = self._last_sent_info[obj.id].visible
             else:
                 was_visible = False
             if is_visible and not was_visible: # newly shown
-                self.added.append(obj)
+                self.added[obj.id] = obj
+                self.added_order.append(obj)
             elif not is_visible and was_visible: # newly hidden
-                self.removed.add(obj)
+                self.removed[obj.id] = obj
             else:
-                self.changed.add(obj)
+                self.changed[obj.id] = obj
         ViewTracker.send_messages(self)
 
     def send_initial_list(self):
