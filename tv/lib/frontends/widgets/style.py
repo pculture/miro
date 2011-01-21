@@ -230,6 +230,11 @@ class DeviceTabRenderer(TabRenderer):
         else:
             return hotspot_info[0]
 
+# XXX This is quite similar to the DeviceTabRenderer that we might want to try
+# and combine the two.
+class SharingTabRenderer(DeviceTabRenderer):
+    pass
+
 class FakeDownloadInfo(object):
     # Fake download info object used to size items
     def __init__(self):
@@ -935,6 +940,12 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         context.rel_line_to(inner_width-10, 0)
         context.arc(x + inner_width, y + radius + y_offset, radius, -PI/2, PI/2)
         context.fill()
+
+class SharingItemRenderer(ItemRenderer):
+    def pack_video_buttons(self, layout):
+        # N'uthing to display here.
+        hbox = cellpack.HBox(spacing=5)
+        return hbox
 
 class PlaylistItemRenderer(ItemRenderer):
     def layout_video_buttons(self, layout_manager):

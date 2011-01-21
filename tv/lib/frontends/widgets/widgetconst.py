@@ -45,7 +45,7 @@ TEXT_JUSTIFY_RIGHT = 1
 TEXT_JUSTIFY_CENTER = 2
 
 # Display State defaults
-DEFAULT_LIST_VIEW_DISPLAYS = set([u'music', u'others', u'audio-feed', u'playlist', u'search'])
+DEFAULT_LIST_VIEW_DISPLAYS = set([u'sharing', u'music', u'others', u'audio-feed', u'playlist', u'search'])
 DEFAULT_DISPLAY_FILTERS = [u'view-all']
 DEFAULT_COLUMN_WIDTHS = {
     u'state': 20, u'name': 130, u'artist': 110, u'album': 100, u'track': 30,
@@ -94,9 +94,11 @@ COLUMNS_AVAILABLE = {
         u'length', u'genre', u'year', u'rating', u'size'],
 }
 
+COLUMNS_AVAILABLE[u'sharing'] = COLUMNS_AVAILABLE[u'videos']
 COLUMNS_AVAILABLE[u'device-video'] = COLUMNS_AVAILABLE[u'videos']
 COLUMNS_AVAILABLE[u'device-audio'] = COLUMNS_AVAILABLE[u'music']
 
+DEFAULT_SORT_COLUMN[u'sharing'] = DEFAULT_SORT_COLUMN[u'videos']
 DEFAULT_SORT_COLUMN[u'device-video'] = DEFAULT_SORT_COLUMN[u'videos']
 DEFAULT_SORT_COLUMN[u'device-audio'] = DEFAULT_SORT_COLUMN[u'music']
 

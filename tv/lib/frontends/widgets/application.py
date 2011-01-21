@@ -86,7 +86,6 @@ from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets.window import MiroWindow
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.frontends.widgets.widgetset import Rect
-from miro.plat.utils import FilenameType
 from miro import fileutil
 
 class Application:
@@ -251,6 +250,7 @@ class Application:
         messages.TrackNewAudioCount().send_to_backend()
         messages.TrackUnwatchedCount().send_to_backend()
         messages.TrackDevices().send_to_backend()
+        messages.TrackSharing().send_to_backend()
 
     def get_main_window_dimensions(self):
         """Override this to provide platform-specific Main Window dimensions.
@@ -1153,6 +1153,36 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def profile_next_message(self, message_obj, path):
         self._profile_info = (message_obj, path)
 
+    def handle_sharing_disappeared(self, message):
+        share = message.share
+        host = share.host
+        port = share.port
+        if share.mount:
+            item = app.playback_manager.get_playing_item()
+            if (item and item.remote and
+              item.host == host and item.port == port):
+                app.playback_manager.stop(save_resume_time=False)
+        message = messages.TabsChanged('sharing', [], [], [share.id])
+        typ, selected_tabs = app.tab_list_manager.get_selection()
+        if typ == u'sharing' and share in selected_tabs:
+            app.tab_list_manager.select_guide()
+        # Call directly: already in frontend.
+        self.handle_tabs_changed(message)
+        # Now, reply to backend, and eject the share.
+        if share.mount:
+            messages.SharingEject(share).send_to_backend()
+        
+    def handle_sharing_connect_failed(self, message):
+        message.share.mount = False
+        name = message.share.name
+        title = _('Connect failed')
+        fmtargs = dict(name=name)
+        description = _('Connection to share %(name)s failed.\n\n'
+                        'The share is either unreachable or incompatible '
+                        'with Miro sharing.' % fmtargs)
+        dialogs.show_message(title, description, dialogs.INFO_MESSAGE)
+        app.tab_list_manager.select_guide()
+        
     def handle_frontend_quit(self, message):
         app.widgetapp.do_quit()
 
@@ -1247,6 +1277,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
             return app.tab_list_manager.site_list
         elif message.type == 'devices':
             return app.tab_list_manager.devices_list
+        elif message.type == 'sharing':
+            return app.tab_list_manager.sharing_list
         else:
             raise ValueError("Unknown Type: %s" % message.type)
 
@@ -1305,11 +1337,13 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_item_list(self, message):
         app.info_updater.handle_item_list(message)
-        app.menu_manager.update_menus()
+        if app.menu_manager:
+            app.menu_manager.update_menus()
 
     def handle_items_changed(self, message):
         app.info_updater.handle_items_changed(message)
-        app.menu_manager.update_menus()
+        if app.menu_manager:
+            app.menu_manager.update_menus()
 
     def handle_download_count_changed(self, message):
         app.widgetapp.download_count = message.count

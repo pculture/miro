@@ -607,6 +607,7 @@ if __name__ == "__main__":
         ext_modules=ext_modules,
         packages=[
             'miro',
+            'miro.libdaap',
             'miro.dl_daemon',
             'miro.dl_daemon.private',
             'miro.frontends',
@@ -633,7 +634,7 @@ if __name__ == "__main__":
         options={
             'py2exe': {
                 'packages': [
-                    'encodings',
+                    'encodings'
                     ],
                 'includes': ('cairo, pango, pangocairo, atk, gobject, '
                              'gio, libtorrent, mutagen'),

@@ -1,6 +1,5 @@
-# Miro - an RSS based video player application
-# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
-# Participatory Culture Foundation
+# pydaap - a Python-based daap media sharing library
+# Copyright (C) 2010 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,20 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from miro.util import returns_binary
+from libdaap import *
+from const import *
 
-PlatformFilenameType = str
-
-@returns_binary
-def os_filename_to_filename_type(filename):
-    """Takes filename given by Python or the PyObjC bridge and turn it
-    into a FilenameType
-    """
-    if isinstance(filename, str):
-        return PlatformFilenameType(filename)
-    return filename.encode('utf-8', 'replace')
-
-def filename_type_to_os_filename(filename):
-    """Takes a FilenameType and turn it into something the PyObjC bridge accepts.
-    """
-    return filename.decode('utf-8')
+# TODO: import constants from pybonjour or do a portable mapping between them
+# so we can refer to it in callbacks.

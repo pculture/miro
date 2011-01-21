@@ -62,6 +62,7 @@ from miro import searchengines
 from miro import fileutil
 from miro import search
 from miro import models
+from miro.fileobject import FilenameType
 
 _charset = locale.getpreferredencoding()
 
@@ -589,6 +590,16 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             "(deleted IS NULL or not deleted) AND "
             "(is_file_item OR rd.main_item_id=item.id) AND "
             "item.file_type='video'",
+            joins={'feed': 'item.feed_id=feed.id',
+                   'remote_downloader as rd': 'item.downloader_id=rd.id'})
+
+    @classmethod
+    def watchable_view(cls):
+        return cls.make_view(
+            "not isContainerItem AND "
+            "(deleted IS NULL or not deleted) AND "
+            "(is_file_item OR rd.main_item_id=item.id) AND "
+            "NOT item.file_type='audio'",
             joins={'feed': 'item.feed_id=feed.id',
                    'remote_downloader as rd': 'item.downloader_id=rd.id'})
 

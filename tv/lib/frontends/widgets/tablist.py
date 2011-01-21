@@ -865,6 +865,62 @@ class AudioFeedList(FeedList):
 
     type = u'audio-feed'
 
+class SharingList(NestedTabList):
+    type = u'sharing'
+    render_class = style.SharingTabRenderer
+    ALLOW_MULTIPLE = False
+
+    def __init__(self):
+        NestedTabList.__init__(self)
+        self.view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
+        self.view.connect_weak('row-clicked', self.on_row_clicked)
+        
+    def on_row_expanded_change(self, view, iter, expanded):
+        pass
+
+    def on_delete_key_pressed(self):
+        pass
+
+    def on_context_menu(self, table_view):
+        return []
+
+    def on_row_clicked(self, view, iter):
+        info = view.model[iter][0]
+        # Only display disconnect icon for the share entry not the playlists.
+        if not info.parent_id:
+            info.mount = True
+        self.view.model_changed()
+
+    def on_hotspot_clicked(self, view, hotspot, iter):
+        if hotspot == 'eject-device':
+            # Don't track this tab anymore for music.
+            info = view.model[iter][0]
+            info.mount = False
+            # We must stop the playback if we are playing from the same
+            # share that we are ejecting from.
+            host = info.host
+            port = info.port
+            item = app.playback_manager.get_playing_item()
+            remote_item = False
+            if item and item.remote:
+                remote_item = True
+            if remote_item and item.host == host and item.port == port:
+                app.playback_manager.stop(save_resume_time=False)
+            # Default to select the guide.  There's nothing more to see here.
+            typ, selected_tabs = app.tab_list_manager.get_selection()
+            if typ == u'sharing' and (info == selected_tabs[0] or
+              getattr(selected_tabs[0], 'parent_id', None) == info.id):
+                app.tab_list_manager.select_guide()
+            messages.SharingEject(info).send_to_backend()
+
+    def init_info(self, info):
+        info.unwatched = info.available = 0
+        if info.is_folder:
+            thumb_path = resources.path('images/phone.png')
+        else:
+            thumb_path = resources.path('images/icon-playlist.png')
+        info.icon = imagepool.get_surface(thumb_path)
+
 class PlaylistList(NestedTabList):
     type = u'playlist'
 
@@ -930,6 +986,8 @@ class TabListBox(widgetset.Scroller):
         vbox.pack_start(tlm.library_tab_list.view)
         vbox.pack_start(self.build_header(_('DEVICES')))
         vbox.pack_start(tlm.devices_list.view)
+        vbox.pack_start(self.build_header(_('SHARING')))
+        vbox.pack_start(tlm.sharing_list.view)
         vbox.pack_start(self.build_header(_('WEBSITES')))
         vbox.pack_start(tlm.site_list.view)
         vbox.pack_start(self.build_header(_('VIDEO FEEDS')))

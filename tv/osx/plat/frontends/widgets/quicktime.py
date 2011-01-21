@@ -194,7 +194,10 @@ class Player(player.Player):
 
     def get_movie_from_file(self, path):
         osfilename = utils.filename_type_to_os_filename(path)
-        url = NSURL.fileURLWithPath_(osfilename)
+        try:
+            url = NSURL.URLWithString_(path.urlize())
+        except AttributeError:
+            url = NSURL.fileURLWithPath_(osfilename)
         attributes = NSMutableDictionary.dictionary()
         # XXX bz:15481.  This shouldn't be synchronous.
         no = NSNumber.alloc().initWithBool_(NO)

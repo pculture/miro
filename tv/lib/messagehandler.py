@@ -33,6 +33,7 @@
 import itertools
 import logging
 import time
+import threading
 import os
 
 from miro import app
@@ -60,7 +61,7 @@ from miro.gtcache import gettext as _
 from miro.playlist import SavedPlaylist
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 
-from miro.plat.utils import make_url_safe
+from miro.plat.utils import make_url_safe, thread_body
 
 import shutil
 
@@ -471,6 +472,13 @@ class DownloadingItemsTracker(DatabaseSourceTrackerBase):
         self.view = item.Item.download_tab_view()
         DatabaseSourceTrackerBase.__init__(self, search_text)
 
+class SharingBackendItemsTracker(DatabaseSourceTrackerBase):
+    type = u'sharing-backend'
+    id = u'sharing-backend'
+    def __init__(self, search_text):
+        self.view = item.Item.watchable_view()
+        DatabaseSourceTrackerBase.__init__(self, search_text)
+
 class VideoItemsTracker(DatabaseSourceTrackerBase):
     type = u'videos'
     id = u'videos'
@@ -505,6 +513,17 @@ class FolderItemsTracker(DatabaseSourceTrackerBase):
         self.view = item.Item.folder_contents_view(folder_id)
         self.id = folder_id
         DatabaseSourceTrackerBase.__init__(self, search_text)
+
+class SharingItemTracker(SourceTrackerBase):
+    type = u'sharing'
+    def __init__(self, share, search_text):
+        share_id = share.parent_id if share.parent_id else share.id
+        self.id = share
+        self.tracker = app.sharing_tracker.get_tracker(share_id)
+        self.source = itemsource.SharingItemSource(self.tracker,
+                                                   share.playlist_id)
+
+        SourceTrackerBase.__init__(self, search_text)
 
 class DeviceItemTracker(SourceTrackerBase):
     type = u'device'
@@ -547,6 +566,10 @@ def make_item_tracker(message):
                 message.search_text)
     elif message.type == 'device':
         return DeviceItemTracker(message.id, message.search_text)
+    elif message.type == 'sharing':
+        return SharingItemTracker(message.id, message.search_text)
+    elif message.type == 'sharing-backend':
+        return SharingBackendItemsTracker(message.search_text)
     else:
         logging.warn("Unknown TrackItems type: %s", message.type)
 
@@ -733,6 +756,15 @@ class BackendMessageHandler(messages.MessageHandler):
         if self.playlist_tracker:
             self.playlist_tracker.unlink()
             self.playlist_tracker = None
+
+    def handle_track_sharing(self, message):
+        app.sharing_tracker.start_tracking()
+
+    def handle_stop_tracking_sharing(self, message):
+        pass
+
+    def handle_sharing_eject(self, message):
+        app.sharing_tracker.eject(message.share.id)
 
     def handle_track_devices(self, message):
         app.device_tracker.start_tracking()
@@ -1587,6 +1619,7 @@ New ids: %s""", playlist_item_ids, message.item_ids)
         try:
             return DisplayState.make_view("type=? AND id_=?",
                 key).get_singleton()
+        # XXX FIXME
         except database.ObjectNotFoundError:
             return DisplayState(key)
 

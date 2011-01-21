@@ -51,7 +51,7 @@ from miro.util import AutoLoggingStream
 from miro import fileutil
 
 _locale_initialized = False
-FilenameType = unicode
+PlatformFilenameType = unicode
 
 def dirfilt(root, dirs):
     """

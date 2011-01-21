@@ -180,7 +180,11 @@ class Window(signals.SignalEmitter):
 
     def update_size_constraints(self):
         width, height = self.content_widget.get_size_request()
-        self.nswindow.setContentMinSize_(NSSize(width, height))
+        # It is possible the window is torn down between the size invalidate
+        # request and the actual size invalidation invocation.  So check
+        # to see if nswindow is there if not then do not do anything.
+        if self.nswindow:
+            self.nswindow.setContentMinSize_(NSSize(width, height))
 
     def get_content_widget(self):
         return self.content_widget

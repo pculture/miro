@@ -323,3 +323,4 @@ def collapse_filename(filename):
                 return u3info.DEVICE_DOCUMENT_PREFIX
             return u3info.DEVICE_DOCUMENT_PREFIX + '\\' + filename
     return filename
+

@@ -84,6 +84,7 @@ from miro import searchengines
 from miro import storedatabase
 from miro import conversions
 from miro import devices
+from miro import sharing
 from miro.plat import devicetracker
 
 DEBUG_DB_MEM_USAGE = False
@@ -304,6 +305,10 @@ def finish_startup(obj, thread):
     setup_theme()
     install_message_handler()
     downloader.init_controller()
+
+    # Call this late, after the message handlers have been installed.
+    app.sharing_manager = sharing.SharingManager()
+    app.sharing_tracker = sharing.SharingTracker()
 
     eventloop.add_urgent_call(check_firsttime, "check first time")
 

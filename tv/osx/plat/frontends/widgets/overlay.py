@@ -149,6 +149,8 @@ class OverlayPalette (NSWindowController):
     def setup(self, item_info, renderer, video_window):
         from miro.frontends.widgets import widgetutil
         self.item_info = item_info
+        if item_info.remote:
+            self.deleteButton.setEnabled_(False)
         self.renderer = renderer
         self.titleLabel.setStringValue_(item_info.name)
         try:

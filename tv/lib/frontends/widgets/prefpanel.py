@@ -61,6 +61,8 @@ from miro.frontends.widgets import dialogwidgets
 from miro.frontends.widgets.widgetutil import build_control_line
 from miro.plat import resources
 from miro.plat.utils import filename_to_unicode, get_logical_cpu_count
+from miro.plat.frontends.widgets.bonjour import install_bonjour
+from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.gtcache import gettext as _
 from miro import gtcache
 
@@ -658,6 +660,49 @@ class DiskSpacePanel(PanelBuilder):
 
         return grid.make_table()
 
+class SharingPanel(PanelBuilder):
+    def build_widget(self):
+        vbox = widgetset.VBox()
+        grid = dialogwidgets.ControlGrid()
+
+        sharing_cbx = widgetset.Checkbox(_('Share my media library.'))
+        share_txt = widgetset.TextEntry()
+
+        attach_boolean(sharing_cbx, prefs.SHARE_MEDIA, [share_txt])
+        attach_text(share_txt, prefs.SHARE_NAME,
+                    check_function=lambda w, x: not x.strip() == '')
+
+        # Do this after the attach so we can override the preference
+        # values.
+        if not app.sharing_manager.mdns_present:
+            sharing_cbx.disable()
+            share_txt.disable()
+            
+        vbox.pack_start(widgetutil.align_left(sharing_cbx, bottom_pad=6))
+
+        grid.pack_label(_("Share Name:"),
+                        dialogwidgets.ControlGrid.ALIGN_RIGHT)
+        grid.pack(share_txt)
+        vbox.pack_start(widgetutil.align_left(grid.make_table()))
+
+        if not app.sharing_manager.mdns_present:
+            text = _("Bonjour is required for sharing. "
+                     "Click on 'Install Bonjour' to install.")
+            label = widgetset.Label()
+            label.set_text(text)
+            vbox.pack_start(widgetutil.align_center(label, top_pad=30,
+                                                    bottom_pad=6))
+            button = widgetset.Button(_("Install Bonjour"))
+            button.connect('clicked', self.install_bonjour_clicked)
+            vbox.pack_start(widgetutil.align_center(button, bottom_pad=6))
+
+        pack_extras(vbox, "sharing")
+
+        return vbox
+
+    def install_bonjour_clicked(self, button):
+        call_on_ui_thread(install_bonjour)
+
 class PlaybackPanel(PanelBuilder):
     def build_widget(self):
         v = widgetset.VBox()
@@ -896,6 +941,7 @@ add_panel("downloads", _("Downloads"), DownloadsPanel, 'images/pref-tab-download
 add_panel("folders", _("Folders"), FoldersPanel, 'images/pref-tab-folders.png')
 add_panel("disk_space", _("Disk space"), DiskSpacePanel, 'images/pref-tab-disk-space.png')
 add_panel("playback", _("Playback"), PlaybackPanel, 'images/pref-tab-playback.png')
+add_panel("sharing", _("Sharing"), SharingPanel, 'images/pref-tab-general.png')
 add_panel("conversions", _("Conversions"), ConversionsPanel, 'images/pref-tab-conversions.png')
 add_panel("stores", _("Stores"), StoresPanel, 'images/pref-tab-downloads.png')
 add_panel("extensions", _("Extensions"), ExtensionsPanel, 'images/pref-tab-general.png')

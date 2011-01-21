@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Copyright (C) 2008, 2009, 2010, 2011
 # Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
@@ -27,20 +27,26 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from miro.util import returns_binary
+import os
+import logging
 
-PlatformFilenameType = str
+from miro import app
+from miro import prefs
+from miro.gtcache import gettext as _
+from miro.frontends.widgets import dialogs
 
-@returns_binary
-def os_filename_to_filename_type(filename):
-    """Takes filename given by Python or the PyObjC bridge and turn it
-    into a FilenameType
-    """
-    if isinstance(filename, str):
-        return PlatformFilenameType(filename)
-    return filename.encode('utf-8', 'replace')
+bonjour_install_supported = True
 
-def filename_type_to_os_filename(filename):
-    """Takes a FilenameType and turn it into something the PyObjC bridge accepts.
-    """
-    return filename.decode('utf-8')
+BONJOUR_URL = "http://support.apple.com/kb/DL999"
+
+def install_bonjour():
+    title = _("Install Bonjour")
+    description = _(
+        "Your browser will load the web-site where you can download "
+        "and install Bonjour.\n\n"
+        "When the installation is finished, simply restart Miro for "
+        "the changes to take effect."
+    )
+    dialogs.show_message(title, description)
+    logging.info('Taking to Bonjour download landing page')
+    app.widgetapp.open_url(BONJOUR_URL)

@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011
+# Copyright (C) 2008, 2009, 2010, 2011
 # Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
@@ -27,20 +27,22 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from miro.util import returns_binary
+import os
+import logging
 
-PlatformFilenameType = str
+from miro import app
+from miro import prefs
+from miro.gtcache import gettext as _
+from miro.frontends.widgets import dialogs
 
-@returns_binary
-def os_filename_to_filename_type(filename):
-    """Takes filename given by Python or the PyObjC bridge and turn it
-    into a FilenameType
-    """
-    if isinstance(filename, str):
-        return PlatformFilenameType(filename)
-    return filename.encode('utf-8', 'replace')
-
-def filename_type_to_os_filename(filename):
-    """Takes a FilenameType and turn it into something the PyObjC bridge accepts.
-    """
-    return filename.decode('utf-8')
+# We can't really do much here ...
+def install_bonjour():
+    title = _("Install Bonjour")
+    description = _(
+        "Miro has determined that your system is most likely missing "
+        "the Avahi mDNSResponder compatibility library.  Please refer " 
+        "to your operating system documentation on how you can install "
+        "this library."
+    )
+    dialogs.show_message(title, description)
+    logging.info('install bonjour clicked')

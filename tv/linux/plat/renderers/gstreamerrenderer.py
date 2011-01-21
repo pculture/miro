@@ -83,7 +83,11 @@ class Sniffer:
         self.bus.add_signal_watch()
         self.watch_id = self.bus.connect("message", self.on_bus_message)
 
-        self.playbin.set_property("uri", "file://%s" % filename)
+        try:
+            url = filename.urlize()
+        except AttributeError:
+            url = 'file://' + filename
+        self.playbin.set_property("uri", url)
         self.playbin.set_state(gst.STATE_PAUSED)
 
     def result(self, success_callback, error_callback):
@@ -225,7 +229,11 @@ class Renderer:
 
         self.iteminfo = iteminfo
 
-        self.playbin.set_property("uri", "file://%s" % iteminfo.video_path)
+        try:
+            url = iteminfo.video_path.urlize()
+        except AttributeError:
+            url = 'file://' + iteminfo.video_path
+        self.playbin.set_property("uri", url)
 
     def finish_select_file(self):
         pass

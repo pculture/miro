@@ -337,6 +337,11 @@ class StopTrackingWatchedFolders(BackendMessage):
     """
     pass
 
+class TrackSharing(BackendMessage):
+    """Start tracking media shares.
+    """
+    pass
+
 class TrackDevices(BackendMessage):
     """Start tracking devices.
     """
@@ -900,6 +905,16 @@ class RateItem(BackendMessage):
 
 # Frontend Messages
 
+class SharingConnectFailed(FrontendMessage):
+    """Tell the frontend the request to connect a share failed."""
+    def __init__(self, share):
+        self.share = share
+
+class SharingDisappeared(FrontendMessage):
+    """Tell the frontend that the share has somehow disappeared."""
+    def __init__(self, share):
+        self.share = share
+
 class FrontendQuit(FrontendMessage):
     """The frontend should exit."""
     pass
@@ -1103,6 +1118,9 @@ class ItemInfo(object):
     :param file_format: User-facing format description.  Possibly the
                         file type,  pulled from the mime_type, or more
                         generic, like "audio"
+    :param remote: is this item from a media share or local?
+    :param host: machine hosting the item, only valid if remote is set
+    :param port: port to connect to for item, only valid if remote is set
     :param license: this file's license, if known.
     :param mime_type: mime-type of the enclosure that would be downloaded
     :param artist: the primary artist of the track
@@ -1473,6 +1491,32 @@ class ConversionTaskChanged(FrontendMessage):
     """
     def __init__(self, task):
         self.task = task
+
+class SharingInfo(object):
+    """Tracks the state of an extent share."""
+    def __init__(self, share_id, name, host, port, parent_id=None,
+                 playlist_id=None):
+        # We need to create a unique identifier for indexing.  Fortunately
+        # this may be non-numeric.  We just combine the name, host, port
+        # as our index.
+        self.id = share_id
+        self.name = name
+        self.host = host
+        self.port = port
+        self.mount = False
+        self.playlist_id = playlist_id
+        if parent_id is not None:
+            self.is_folder = False
+            self.parent_id = parent_id
+        else:
+            self.parent_id = None
+            self.is_folder = True
+
+class SharingEject(BackendMessage):
+    """Tells the backend that the user has requested the share be disconnected.
+    """
+    def __init__(self, share):
+        self.share = share
 
 class DeviceInfo(object):
     """Tracks the state of an attached device.

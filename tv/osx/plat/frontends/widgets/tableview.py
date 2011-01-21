@@ -538,6 +538,15 @@ class TableViewCommon(object):
                 wrapper.emit('row-double-clicked', iter)
             return
 
+        # Like clickCount() == 2 but keep running so we can get to run the 
+        # hotspot tracker et al.
+        if event.clickCount() == 1:
+            wrapper = wrappermap.wrapper(self)
+            row = self.rowAtPoint_(point)
+            if row != -1:
+                iter = wrapper.model.iter_for_row(self, row)
+                wrapper.emit('row-clicked', iter)
+
         hotspot_tracker = HotspotTracker(self, point)
         if hotspot_tracker.hit:
             self.hotspot_tracker = hotspot_tracker
@@ -684,6 +693,7 @@ class TableView(Widget):
         self.create_signal('selection-changed')
         self.create_signal('hotspot-clicked')
         self.create_signal('row-double-clicked')
+        self.create_signal('row-clicked')
         # row-activated is never emitted, but it should be
         # when space or enter is pressed with a row selected. --Kaz
         self.create_signal('row-activated')

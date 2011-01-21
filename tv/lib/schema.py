@@ -50,7 +50,7 @@ Go to the bottom of this file for the current database schema.
 import datetime
 import time
 from types import NoneType
-from miro.plat.utils import FilenameType
+from miro.plat.utils import PlatformFilenameType
 from miro.displaystate import DisplayState
 
 class ValidationError(Exception):
@@ -138,7 +138,7 @@ class SchemaFilename(SchemaSimpleItem):
     """Defines the SchemaFilename type."""
     def validate(self, data):
         super(SchemaSimpleItem, self).validate(data)
-        self.validateType(data, FilenameType)
+        self.validateType(data, PlatformFilenameType)
 
 class SchemaURL(SchemaSimpleItem):
     """Defines the SchemaURL type."""
@@ -302,7 +302,7 @@ class SchemaStatusContainer(SchemaReprContainer):
 
     def _binary_fields(self):
         rv = ('metainfo', 'fastResumeData')
-        if FilenameType != unicode:
+        if PlatformFilenameType != unicode:
             rv += self.filename_fields
         return rv
 
