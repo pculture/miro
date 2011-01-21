@@ -118,6 +118,17 @@ class RadioMenuItem(MenuItem):
                 **state_labels)
         self.radio_group = radio_group
 
+class CheckMenuItem(MenuItem):
+    """MenuItem that has a check mark.
+
+    :param check_group: the group this menu item is in
+    """
+    def __init__(self, label, action, check_group, shortcuts=None,
+            groups=None, **state_labels):
+        MenuItem.__init__(self, label, action, shortcuts, groups,
+                **state_labels)
+        self.check_group = check_group
+
 class Separator:
     """This denotes a separator in the menu.
     """
