@@ -278,6 +278,7 @@ class ListItemView(widgetset.TableView):
         self.create_signal('column-widths-changed')
         self.item_list = item_list
         self._column_name_to_column = {}
+        self._column_by_label = {}
         self._current_sort_column = None
         self.update_columns(columns_enabled)
         self.set_show_headers(True)
@@ -289,15 +290,12 @@ class ListItemView(widgetset.TableView):
         self.set_fixed_height(True)
         self.allow_multiple_select(True)
         self.html_stripper = util.HTMLStripper()
-        self.column_by_label = {}
-        for name, label in widgetconst.COLUMN_LABELS.items():
-            self.column_by_label[label] = name
 
     def _get_ui_column_state(self):
         enabled = []
         widths = {}
         for label in self.get_columns():
-            name = self.column_by_label[label]
+            name = self._column_by_label[label]
             enabled.append(name)
             column = self._column_name_to_column[name]
             widths[name] = column.get_width()
@@ -345,6 +343,7 @@ class ListItemView(widgetset.TableView):
             header = widgetconst.COLUMN_LABELS[name]
             renderer = ListItemView.COLUMN_RENDERERS[name]()
             self._make_column(header, renderer, name, resizable, pad)
+            self._column_by_label[header] = name
         for name, column in self._column_name_to_column.items():
             if name in self.columns_enabled:
                 continue
