@@ -60,6 +60,9 @@ class SharingView(itemlistcontroller.SimpleItemListController):
         self.title = share.name
         itemlistcontroller.SimpleItemListController.__init__(self)
 
+    def make_drag_handler(self):
+        return None
+
     def build_item_view(self):
         return SharingItemView(self.item_list, self.id)
 
