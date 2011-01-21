@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Miro - an RSS based video player application
 # Copyright (C) 2007, 2008, 2009, 2010, 2011
 # Participatory Culture Foundation
