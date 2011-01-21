@@ -34,13 +34,21 @@ import socket
 import errno
 import sys
 
+try:
+    WindowsError
+except NameError:
+    WindowsError = OSError
+
 # mdns_init(): adapted for Miro: pybonjour is always available.
 def mdns_init():
     try:
-        import pybonjour
-    except ImportError:
-        from miro import pybonjour
-    global pybonjour
+        try:
+            import pybonjour
+        except ImportError:
+            from miro.libdaap import pybonjour
+        global pybonjour
+    except (OSError, WindowsError):
+        return False
     return True
 
 # Dummy object
