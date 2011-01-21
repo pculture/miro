@@ -339,6 +339,12 @@ class Application:
         self.on_volume_change(slider, v)
         self.on_volume_set(slider)
 
+    def toggle_column(self, name):
+        current_display = app.display_manager.get_current_display()
+        key = (current_display.type, current_display.id)
+        app.display_state.toggle_column(key, unicode(name))
+        current_display.update_columns_enabled()
+
     def share_item(self, item):
         share_items = {"file_url": item.file_url,
                        "item_name": item.name.encode('utf-8')}
@@ -1586,6 +1592,15 @@ class DisplayStatesStore(object):
         if display.column_widths is None:
             display.column_widths = self.get_column_widths(key)
         display.column_widths.update(widths)
+        self.save_state(key)
+
+    def toggle_column(self, key, column):
+        display = self._get_display(key)
+        display.columns_enabled = self.get_columns_enabled(key)
+        try:
+            display.columns_enabled.remove(column)
+        except ValueError:
+            display.columns_enabled.append(column)
         self.save_state(key)
 
     def set_list_view(self, key):
