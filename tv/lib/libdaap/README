@@ -5,3 +5,8 @@ http://git.participatoryculture.org/pydaap/
 Local, tasteful adapations only please, otherwise changes should
 be reflected in the main pydaap repository.
 
+pybonjour version: 1.1.1, available from: http://code.google.com/p/pybonjour/
+
+pydaap: commit id master 4e64004baad19e230ded4da6a50ca34430e28ff0
+
+If you update these packages please keep this in sync.
