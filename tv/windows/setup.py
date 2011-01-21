@@ -636,7 +636,7 @@ if __name__ == "__main__":
                     'encodings'
                     ],
                 'includes': ('cairo, pango, pangocairo, atk, gobject, '
-                             'gio, libtorrent, mutagen, libdaap'),
+                             'gio, libtorrent, mutagen'),
                 },
             },
         )
