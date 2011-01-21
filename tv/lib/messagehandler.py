@@ -151,7 +151,7 @@ class ViewTracker(object):
             # update _last_sent_info
             self._make_new_info(obj)
             return
-        if obj.id in self.changed:
+        if obj.id in self.removed:
             # object was already removed, we need to send that message out
             # before we send the add message.
             self.send_messages()
