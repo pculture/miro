@@ -493,9 +493,15 @@ class MainWindow(Window):
     def on_menu_change(self, menu_manager):
         for name, action_group in self.action_groups.items():
             if name in menu_manager.enabled_groups:
+                action_group.set_visible(True)
                 action_group.set_sensitive(True)
             else:
-                action_group.set_sensitive(False)
+                # TODO: don't hard-code this here; probably put a "hide when not
+                # checked" property on check menu class --Kaz
+                if name.startswith('column-'):
+                    action_group.set_visible(False)
+                else:
+                    action_group.set_sensitive(False)
 
         removeSomething = self.menu_structure.get("RemoveSomething").label
         updateFeeds = self.menu_structure.get("UpdateFeeds").label
