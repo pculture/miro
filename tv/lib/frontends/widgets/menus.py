@@ -705,6 +705,7 @@ class MenuStateManager(signals.SignalEmitter):
         signals.SignalEmitter.__init__(self)
         self.create_signal('enabled-changed')
         self.create_signal('radio-group-changed')
+        self.create_signal('checked-changed')
         self.enabled_groups = set(['AlwaysOn'])
         self.states = {}
         self.play_pause_state = "play"
@@ -901,6 +902,19 @@ class MenuStateManager(signals.SignalEmitter):
         is_list_view = app.display_state.is_list_view(key)
         if not is_list_view:
             return
+        enabled = app.display_state.get_columns_enabled(key)
+
+        columns = []
+        for k, v in widgetconst.COLUMNS_AVAILABLE.items():
+            columns.extend(v)
+        columns = set(columns)
+
+        checks = {}
+        for column in columns:
+            handler_name = 'ToggleColumn-' + column
+            checks[handler_name] = column in enabled
+
+        self.emit('checked-changed', 'ListView', checks)
         self.enabled_groups.add('ListView')
         for column in widgetconst.COLUMNS_AVAILABLE[key[0]]:
             self.enabled_groups.add('column-%s' % column)
