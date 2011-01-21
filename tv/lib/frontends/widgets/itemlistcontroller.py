@@ -93,6 +93,7 @@ class ItemListController(object):
         self.current_item_view = None
         self._search_text = ''
         display = (typ, id_)
+        self.is_list_view = app.display_state.is_list_view(display)
         self.columns_enabled = app.display_state.get_columns_enabled(display)
         self.column_widths = app.display_state.get_column_widths(display)
         self._init_widget()
@@ -110,12 +111,17 @@ class ItemListController(object):
 
     def _init_widget(self):
         toolbar = self.build_header_toolbar()
-        self.widget = itemlistwidgets.ItemContainerWidget(toolbar)
+        self.widget = itemlistwidgets.ItemContainerWidget(toolbar,
+            self.is_list_view)
         self.item_list = itemlist.ItemList()
         self.list_item_view = self.build_list_item_view()
         scroller = widgetset.Scroller(True, True)
         scroller.add(self.list_item_view)
         self.widget.list_view_vbox.pack_start(scroller, expand=True)
+        self.widget.toolbar.connect_weak('list-view-clicked',
+            self.set_is_list_view, True)
+        self.widget.toolbar.connect_weak('normal-view-clicked',
+            self.set_is_list_view, False)
         self.widget.toolbar.connect_weak('sort-changed', self.on_sort_changed)
         self.list_item_view.connect_weak('sort-changed', self.on_sort_changed)
         self.list_item_view.connect_weak('columns-enabled-changed',
@@ -123,6 +129,16 @@ class ItemListController(object):
         self.list_item_view.connect_weak('column-widths-changed',
             self.on_column_widths_changed)
         self.build_widget()
+
+    def set_is_list_view(self, _widget, is_list_view):
+        self.is_list_view = is_list_view
+        key = (self.type, self.id)
+        if self.is_list_view:
+            self.widget.switch_to_list_view()
+            app.display_state.set_list_view(key)
+        else:
+            self.widget.switch_to_normal_view()
+            app.display_state.set_std_view(key)
 
     def build_list_item_view(self):
         return itemlistwidgets.ListItemView(self.item_list,

@@ -278,7 +278,6 @@ class ItemListDisplayMixin(object):
     def on_selected(self):
         app.item_list_controller_manager.controller_created(self.controller)
         self.controller.start_tracking()
-        self.restore_state()
 
     def on_activate(self):
         app.item_list_controller_manager.controller_displayed(self.controller)
@@ -287,23 +286,10 @@ class ItemListDisplayMixin(object):
     def on_deactivate(self):
         app.item_list_controller_manager.controller_no_longer_displayed(
                 self.controller)
-        self.remember_state()
 
     def cleanup(self):
         self.controller.stop_tracking()
         app.item_list_controller_manager.controller_destroyed(self.controller)
-
-    def remember_state(self):
-        key = (self.type, self.id)
-        if self.controller.widget.in_list_view:
-            app.display_state.set_list_view(key)
-        else:
-            app.display_state.set_std_view(key)
-
-    def restore_state(self):
-        key = (self.type, self.id)
-        if app.display_state.is_list_view(key):
-            self.widget.switch_to_list_view()
 
 class ItemListDisplay(ItemListDisplayMixin, TabDisplay):
     def __init__(self, tab_type, selected_tabs):
@@ -406,7 +392,6 @@ class AudioVideoItemsDisplay(ItemListDisplay):
         self.id = self.__class__.tab_id
 
     def remember_state(self):
-        ItemListDisplay.remember_state(self)
         filters = self.widget.toolbar.active_filters()
         display = (self.type, self.id)
         app.display_state.set_filters(display, filters)
@@ -416,7 +401,6 @@ class AudioVideoItemsDisplay(ItemListDisplay):
         initial_filters = app.display_state.get_filters(display)
         if initial_filters:
             self.controller.set_item_filters(initial_filters)
-        ItemListDisplay.restore_state(self)
 
     @classmethod
     def should_display(cls, tab_type, selected_tabs):

@@ -1064,25 +1064,27 @@ class ItemContainerWidget(widgetset.VBox):
     :attribute toolbar: HeaderToolbar for the widget
     """
 
-    def __init__(self, toolbar):
+    def __init__(self, toolbar, in_list_view):
         widgetset.VBox.__init__(self)
-        self._list_view_displayed = False
         self.normal_view_vbox = widgetset.VBox()
         self.list_view_vbox = widgetset.VBox()
         self.titlebar_vbox = widgetset.VBox()
         self.statusbar_vbox = widgetset.VBox()
         self.list_empty_mode_vbox = widgetset.VBox()
         self.toolbar = toolbar
-        self.toolbar.connect('list-view-clicked', self.switch_to_list_view)
-        self.toolbar.connect('normal-view-clicked', self.switch_to_normal_view)
         self.pack_start(self.titlebar_vbox)
         self.pack_start(self.toolbar)
         self.background = ItemListBackground()
-        self.background.add(self.normal_view_vbox)
         self.pack_start(self.background, expand=True)
         self.pack_start(self.statusbar_vbox)
-        self.in_list_view = False
+        self.in_list_view = in_list_view
         self.list_empty_mode = False
+        if self.in_list_view:
+            self.background.add(self.list_view_vbox)
+            self.toolbar.switch_to_list_view()
+        else:
+            self.background.add(self.normal_view_vbox)
+            self.toolbar.switch_to_normal_view()
 
     def switch_to_list_view(self, toolbar=None):
         if not self.in_list_view:
