@@ -52,7 +52,7 @@ _guide_url_to_icon_map = {
     }
 
 class ChannelGuideTab(StaticTab):
-    id = 'guide'
+    id = u'guide'
     name = u''
     icon_name = 'icon-guide'
     tall = True
