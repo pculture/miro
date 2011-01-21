@@ -271,7 +271,7 @@ class ListItemView(widgetset.TableView):
     COLUMN_PADDING = 12
     def __init__(self, item_list, columns_enabled, column_widths):
         widgetset.TableView.__init__(self, item_list.model)
-        self.column_widths = column_widths
+        self.column_widths = {}
         self.create_signal('sort-changed')
         self.create_signal('columns-enabled-changed')
         self.create_signal('column-widths-changed')
@@ -279,7 +279,7 @@ class ListItemView(widgetset.TableView):
         self._column_name_to_column = {}
         self._column_by_label = {}
         self._current_sort_column = None
-        self.update_columns(columns_enabled)
+        self.update_columns(columns_enabled, column_widths)
         self.set_show_headers(True)
         self.set_columns_draggable(True)
         self.set_column_spacing(self.COLUMN_PADDING)
@@ -332,8 +332,9 @@ class ListItemView(widgetset.TableView):
                 return _("Newly Available")
         return None
 
-    def update_columns(self, columns_enabled):
+    def update_columns(self, columns_enabled, column_widths):
         self.columns_enabled = columns_enabled
+        self.column_widths.update(column_widths)
         for name in self.columns_enabled:
             if name in self._column_name_to_column:
                 continue

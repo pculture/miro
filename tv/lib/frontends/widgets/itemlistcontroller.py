@@ -150,7 +150,9 @@ class ItemListController(object):
     def update_columns_enabled(self):
         key = (self.type, self.id)
         self.columns_enabled = app.display_state.get_columns_enabled(key)
-        self.list_item_view.update_columns(self.columns_enabled)
+        self.column_widths = app.display_state.get_column_widths(key)
+        self.list_item_view.update_columns(self.columns_enabled,
+            self.column_widths)
 
     def _init_item_views(self):
         self.context_menu_handler = self.make_context_menu_handler()
