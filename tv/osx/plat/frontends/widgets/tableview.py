@@ -642,6 +642,9 @@ class TableColumn(signals.SignalEmitter):
     def set_width(self, width):
         self._column.setWidth_(width)
 
+    def get_width(self):
+        return self._column.width()
+
     def set_resizable(self, resizable):
         mask = 0
         if resizable:

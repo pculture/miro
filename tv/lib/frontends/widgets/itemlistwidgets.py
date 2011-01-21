@@ -279,6 +279,7 @@ class ListItemView(widgetset.TableView):
         self._column_name_to_column = {}
         self._column_by_label = {}
         self._current_sort_column = None
+        self._real_column_widths = {}
         self.update_columns(columns_enabled, column_widths)
         self.set_show_headers(True)
         self.set_columns_draggable(True)
@@ -297,9 +298,12 @@ class ListItemView(widgetset.TableView):
             name = self._column_by_label[label]
             enabled.append(name)
             column = self._column_name_to_column[name]
-            widths[name] = column.get_width()
+            width = column.get_width()
+            if width != self._real_column_widths[name]:
+                widths[name] = width 
         self.columns_enabled = enabled
-        self.column_widths = widths
+        self._real_column_widths.update(widths)
+        self.column_widths.update(widths)
 
     def on_unrealize(self, treeview):
         self._get_ui_column_state()
@@ -389,7 +393,7 @@ class ListItemView(widgetset.TableView):
                 total_weight = 1
 
             available_width = self.width_for_columns(total_width)
-            extra_width = max(available_width - min_width, 0)
+            extra_width = available_width - min_width
             
             diff = 0 # prevent cumulative rounding errors
             for name in self.columns_enabled:
@@ -400,6 +404,7 @@ class ListItemView(widgetset.TableView):
                 width += int(extra)
                 column = self._column_name_to_column[name]
                 column.set_width(width)
+                self._real_column_widths[name] = column.get_width()
 
     def _on_column_clicked(self, column, column_name):
         ascending = not (column.get_sort_indicator_visible() and
