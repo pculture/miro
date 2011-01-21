@@ -607,8 +607,8 @@ if __name__ == "__main__":
         ext_modules=ext_modules,
         packages=[
             'miro',
-            'miro.dl_daemon',
             'miro.libdaap',
+            'miro.dl_daemon',
             'miro.dl_daemon.private',
             'miro.frontends',
             'miro.frontends.widgets',
