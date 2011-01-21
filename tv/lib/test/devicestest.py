@@ -31,7 +31,7 @@ import os
 import json
 
 from miro.gtcache import gettext as _
-from miro.plat import utils
+from miro import fileobject
 from miro.test.framework import MiroTestCase
 
 from miro import devices
@@ -91,9 +91,9 @@ devices = [target1, multiple]
         self.assertEqual(device.device_name, 'Bar')
         self.assertEqual(device.video_conversion, "mp4")
         self.assertEqual(device.audio_path, 'Audio')
-        self.assertTrue(isinstance(device.audio_path, utils.FilenameType))
+        self.assertTrue(isinstance(device.audio_path, fileobject.FilenameType))
         self.assertEqual(device.video_path, 'Video')
-        self.assertTrue(isinstance(device.video_path, utils.FilenameType))
+        self.assertTrue(isinstance(device.video_path, fileobject.FilenameType))
         # these are a special case
         self.assertFalse(device.has_multiple_devices)
         self.assertEqual(device.mount_instructions,
