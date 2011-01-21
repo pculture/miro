@@ -52,7 +52,10 @@ from miro.util import returns_filename
 from miro.plat import resources
 from miro.plat.utils import thread_body
 
-import libdaap
+try:
+    import libdaap
+except ImportError:
+    from miro import libdaap
 
 DAAP_META = ('dmap.itemkind,dmap.itemid,dmap.itemname,' +
              'dmap.containeritemid,dmap.parentcontainerid,' +
