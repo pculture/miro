@@ -608,6 +608,7 @@ if __name__ == "__main__":
         packages=[
             'miro',
             'miro.dl_daemon',
+            'miro.libdaap',
             'miro.dl_daemon.private',
             'miro.frontends',
             'miro.frontends.widgets',
@@ -636,7 +637,7 @@ if __name__ == "__main__":
                     'encodings'
                     ],
                 'includes': ('cairo, pango, pangocairo, atk, gobject, '
-                             'gio, libtorrent, mutagen, libdaap'),
+                             'gio, libtorrent, mutagen'),
                 },
             },
         )
