@@ -6,7 +6,7 @@ from miro import autodiscover
 from miro import feed
 from miro import opml
 
-from miro.plat.utils import FilenameType
+from miro.fileobject import FilenameType
 
 from miro.test.framework import MiroTestCase
 
