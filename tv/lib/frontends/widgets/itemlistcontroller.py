@@ -147,6 +147,11 @@ class ItemListController(object):
     def build_header_toolbar(self):
         return itemlistwidgets.HeaderToolbar()
 
+    def update_columns_enabled(self):
+        key = (self.type, self.id)
+        self.columns_enabled = app.display_state.get_columns_enabled(key)
+        self.list_item_view.update_columns(self.columns_enabled)
+
     def _init_item_views(self):
         self.context_menu_handler = self.make_context_menu_handler()
         context_callback = self.context_menu_handler.callback

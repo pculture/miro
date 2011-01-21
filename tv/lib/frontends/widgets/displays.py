@@ -291,6 +291,9 @@ class ItemListDisplayMixin(object):
         self.controller.stop_tracking()
         app.item_list_controller_manager.controller_destroyed(self.controller)
 
+    def update_columns_enabled(self):
+        self.controller.update_columns_enabled()
+
 class ItemListDisplay(ItemListDisplayMixin, TabDisplay):
     def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
