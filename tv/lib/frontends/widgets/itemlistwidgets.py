@@ -340,7 +340,10 @@ class ListItemView(widgetset.TableView):
                 continue
             resizable = not name in widgetconst.NO_RESIZE_COLUMNS
             pad = not name in widgetconst.NO_PAD_COLUMNS
-            header = widgetconst.COLUMN_LABELS[name]
+            if name == 'state':
+                header = u''
+            else:
+                header = widgetconst.COLUMN_LABELS[name]
             renderer = ListItemView.COLUMN_RENDERERS[name]()
             self._make_column(header, renderer, name, resizable, pad)
             self._column_by_label[header] = name

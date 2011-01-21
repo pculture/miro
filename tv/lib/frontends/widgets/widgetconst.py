@@ -60,7 +60,7 @@ DEFAULT_SORT_COLUMN = {
 
 # column properties
 COLUMN_LABELS = {
-    u'state': u'', u'name': _('Name'), u'artist': _('Artist'),
+    u'state': _('State'), u'name': _('Name'), u'artist': _('Artist'),
     u'album': _('Album'), u'track': _('Track'), u'year': _('Year'),
     u'genre': _('Genre'), u'rating': _('Rating'), u'date': _('Date'),
     u'length': _('Length'), u'status': _('Status'), u'size': _('Size'),
