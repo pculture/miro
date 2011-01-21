@@ -64,6 +64,10 @@ DAAP_META = ('dmap.itemkind,dmap.itemid,dmap.itemname,' +
              'daap.songyear,daap.songtracknumber,daap.songuserrating,' +
              'com.apple.itunes.mediakind')
 
+# Conversion factor between our local duration (10th of a second)
+# vs daap which is millisecond.
+DURATION_SCALE = 1000
+
 daap_mapping = {
     'daap.songformat': 'enclosure',
     'com.apple.itunes.mediakind': 'file_type',
@@ -396,6 +400,9 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         kwargs['file_type'] = file_type
         kwargs['playlist_id'] = playlist_id
 
+        # Duration: daap uses millisecond, so we need to scale it.
+        kwargs['duration'] /= DURATION_SCALE
+
         sharing_item = SharingItem(**kwargs)
         return sharing_item
 
@@ -640,6 +647,9 @@ class SharingManagerBackend(object):
                 # Fixup track number: it is a string?
                 if daap_string == 'daap.songtracknumber':
                     itemprop[daap_string] = int(itemprop[daap_string])
+                # Fixup the duration: need to convert to millisecond.
+                if daap_string == 'daap.songtime':
+                    itemprop[daap_string] *= DURATION_SCALE
             # Fixup the enclosure format.
             f, e = os.path.splitext(item.video_path)
             # Note! sometimes this doesn't work because the file has no
