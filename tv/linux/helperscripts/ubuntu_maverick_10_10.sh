@@ -21,6 +21,7 @@ aptitude install \
     libsoup2.4-dev
 
 aptitude install \
+    libavahi-compat-libdnssd1 \
     libtorrent-rasterbar6 \
     python-libtorrent \
     libwebkit-1.0-2 \
