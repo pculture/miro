@@ -533,6 +533,7 @@ setup(name='miro',
     ext_modules=ext_modules,
     packages = [
         'miro',
+        'miro.libdaap',
         'miro.dl_daemon',
         'miro.test',
         'miro.dl_daemon.private',
