@@ -226,3 +226,23 @@ class SubtitleEncodingTest(MiroTestCase):
         self.item2.mark_item_seen()
         self.item1.mark_item_seen()
         self.assertEquals(self.item1.subtitle_encoding, None)
+
+class ItemSearchTest(MiroTestCase):
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.feed = Feed(u'http://example.com/1')
+        self.item1 = Item(fp_values_for_url(u'http://example.com/1/item1'),
+                feed_id=self.feed.id)
+        self.item2 = Item(fp_values_for_url(u'http://example.com/1/item2'),
+                feed_id=self.feed.id)
+
+    def test_matches_search(self):
+        self.item1.set_title(u"miro is cool")
+        self.assertEquals(self.item1.matches_search('miro'), True)
+        self.assertEquals(self.item1.matches_search('iro'), True)
+        self.assertEquals(self.item1.matches_search('c'), True)
+        self.assertEquals(self.item1.matches_search('miro is'), True)
+        self.assertEquals(self.item1.matches_search('ool m'), True)
+        self.assertEquals(self.item1.matches_search('miros'), False)
+        self.assertEquals(self.item1.matches_search('iscool'), False)
+        self.assertEquals(self.item1.matches_search('cool -miro'), False)

@@ -774,20 +774,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         return u'other'
 
     def matches_search(self, search_string):
-        if search_string is None:
+        if search_string is None or search_string == '':
             return True
-        search_string = search_string.lower()
-        title = self.get_title() or u''
-        desc = self.get_description() or u''
-        if self.get_filename():
-            filename = filename_to_unicode(self.get_filename())
-        else:
-            filename = u''
-        if search.match(search_string, [title.lower(), desc.lower(),
-                                       filename.lower()]):
-            return True
-        else:
-            return False
+        my_info = app.item_info_cache.get_info(self.id)
+        return search.item_matches(my_info, search_string)
 
     def _remove_from_playlists(self):
         models.PlaylistItemMap.remove_item_from_playlists(self)
