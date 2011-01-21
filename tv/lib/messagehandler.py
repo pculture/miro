@@ -36,8 +36,6 @@ import time
 import threading
 import os
 
-import libdaap
-
 from miro import app
 from miro import autoupdate
 from miro import database
