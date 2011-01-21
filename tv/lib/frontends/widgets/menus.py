@@ -33,6 +33,7 @@ from miro import app
 from miro import prefs
 from miro import signals
 from miro import conversions
+from miro.frontends.widgets import widgetconst
 
 from miro.gtcache import gettext as _
 
@@ -340,6 +341,9 @@ def get_menu():
                             ]),
                     ]),
 
+            Menu(_("_View"), "ViewMenu", _get_view_menu(),
+                groups=["ListView"]),
+
             Menu(_("Convert"), "ConvertMenu", _get_convert_menu()),
 
             Menu(_("_Help"), "HelpMenu", [
@@ -384,7 +388,6 @@ def _get_convert_menu():
     menu.append(Separator())
     menu.append(MenuItem(_("Show Conversion Folder"), "RevealConversionFolder"))
     return menu
-
 
 def add_subtitle_encoding_menu(menubar, category_label, *encodings):
     """Helper method to set up the subtitles encoding menu.
@@ -462,6 +465,9 @@ def group_action_handler(action_prefix):
 
 def make_convert_handler(converter):
     return "ConvertItemTo-" + converter.identifier
+
+def make_column_toggle_handler(name):
+    return "ToggleColumn-" + name
 
 # File menu
 @action_handler("Open")
@@ -809,6 +815,8 @@ class MenuStateManager(signals.SignalEmitter):
 
     def _update_menus_for_selected_tabs(self):
         selection_type, selected_tabs = app.tab_list_manager.get_selection()
+        if len(selected_tabs) == 1:
+            app.menu_manager._update_view_menu(selection_type, selected_tabs)
         if selection_type is None:
             pass
         elif selection_type in ('feed', 'audio-feed'):
@@ -884,3 +892,30 @@ class MenuStateManager(signals.SignalEmitter):
         self._update_menus_for_selected_items()
         self._set_play_pause()
         self.emit('enabled-changed')
+
+    def _update_view_menu(self, display_type, selected_tabs):
+        try:
+            key = (selected_tabs[0].type, selected_tabs[0].id)
+        except AttributeError:
+            return
+        is_list_view = app.display_state.is_list_view(key)
+        if not is_list_view:
+            return
+        self.enabled_groups.add('ListView')
+        for column in widgetconst.COLUMNS_AVAILABLE[key[0]]:
+            self.enabled_groups.add('column-%s' % column)
+
+def _get_view_menu():
+    columns = []
+    for k, v in widgetconst.COLUMNS_AVAILABLE.items():
+        columns.extend(v)
+    columns = set(columns)
+    columns = sorted(columns, key=lambda name: widgetconst.COLUMN_LABELS[name])
+
+    menu = list()
+    for name in columns:
+        groups = ['column-%s' % name]
+        label = widgetconst.COLUMN_LABELS[name]
+        handler_name = make_column_toggle_handler(name)
+        menu.append(CheckMenuItem(label, handler_name, 'ListView', groups=groups))
+    return menu
