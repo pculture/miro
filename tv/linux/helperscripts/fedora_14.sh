@@ -14,6 +14,7 @@
 yum groupinstall "Development Tools" "Development Libraries"
 
 yum install \
+   avahi-compat-libdns_sd \
    Pyrex \
    python-devel \
    pygtk2-devel \
