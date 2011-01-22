@@ -299,7 +299,7 @@ class UtilTest(unittest.TestCase):
             util.check_f(correctType)
 
             incorrectType = text
-            if FilenameType == str:
+            if isinstance(text, str):
                 incorrectType = unicode(text)
 
             self.assertRaises(util.MiroUnicodeError, util.check_f, incorrectType)
