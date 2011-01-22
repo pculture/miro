@@ -109,16 +109,19 @@ class InfoListTestBase(MiroTestCase):
             to_move.append(self.correct_infos[self.find_info_index(move_id)])
         # push id_ back before the id_list
         move_id = id_
-        while move_id in id_list:
-            id_index = self.find_info_index(move_id)
-            if id_index > 0:
-                move_id = self.correct_infos[id_index-1].id
-            else:
-                move_id = -1 # oops we are not before the start of the list
-                break
+        if move_id is not None:
+            while move_id in id_list:
+                id_index = self.find_info_index(move_id)
+                if id_index > 0:
+                    move_id = self.correct_infos[id_index-1].id
+                else:
+                    move_id = -1 # oops we are not before the start of the list
+                    break
         self.correct_infos = [i for i in self.correct_infos 
                 if i not in to_move]
-        if move_id > -1:
+        if move_id is None:
+            self.correct_infos = self.correct_infos + to_move
+        elif move_id > -1:
             id_index = self.find_info_index(move_id)
             self.correct_infos[id_index:id_index] = to_move
         else:
@@ -200,6 +203,8 @@ class InfoListDataTest(InfoListTestBase):
         self.check_update_sort(None)
         self.check_insert(self.make_infos('m', 'i', 'r', 'o'))
         self.check_move_before(1, [3, 2])
+        # try move_before with target=None
+        self.check_move_before(None, [1, 2])
         # try move_before when 1 element is in the list
         self.check_move_before(2, [0, 2, 1])
         # test edge cases
@@ -303,14 +308,14 @@ class InfoListGTKTest(InfoListDataTest):
             check_path = (x,)
             self.assertEquals(gtk_model.get_path(it), check_path)
             iter_for_path = gtk_model.get_iter(check_path)
-            self.assertEquals(self.infolist.get_row(iter_for_path),
-                    self.infolist.get_row(it))
+            self.assertEquals(self.infolist.row_for_iter(iter_for_path),
+                    self.infolist.row_for_iter(it))
             it = gtk_model.iter_next(it)
 
     def on_row_inserted(self, obj, path, it):
         try:
             # check that that our current model reflects the insert
-            info, attrs = self.infolist.get_row(it)
+            info, attrs = self.infolist.row_for_iter(it)
             if self.sorter is not None:
                 self.tracked_infos.append(info)
                 self.sort_info_list(self.tracked_infos)
@@ -332,7 +337,7 @@ class InfoListGTKTest(InfoListDataTest):
             # check path points to the correct info
             self.assertEquals(len(path), 1)
             info = self.tracked_infos[path[0]]
-            model_info, attrs = self.infolist.get_row(it)
+            model_info, attrs = self.infolist.row_for_iter(it)
             self.assertEquals(info.id, model_info.id)
             # update tracked_infos to reflect the change
             self.tracked_infos[path[0]] = model_info
@@ -362,9 +367,10 @@ class InfoListGTKTest(InfoListDataTest):
             # check new_order.
             # NOTE: tracked_infos contains our updates, but is in the old
             # order at this point
-            correct_new_order = []
-            for info in self.tracked_infos:
-                correct_new_order.append(self.find_info_index(info.id))
+            correct_new_order = [0 for i in xrange(len(self.tracked_infos))]
+            for old_index, info in enumerate(self.tracked_infos):
+                new_index = self.find_info_index(info.id)
+                correct_new_order[new_index] = old_index
             # FIXME: new_order is not available in python
             # new_order == correct_new_order
 
@@ -436,7 +442,7 @@ class InfoListCocoaTest(InfoListDataTest):
         self.assertEquals(rows, len(info_list))
         data_source_rows = []
         for i in xrange(rows):
-            info, attrs = self.infolist.get_row(i)
+            info, attrs = self.infolist.row_for_iter(i)
             data_source_rows.append(info)
 
         self.assertEquals(data_source_rows, info_list)

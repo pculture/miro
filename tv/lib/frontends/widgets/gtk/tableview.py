@@ -224,7 +224,7 @@ class InfoListRenderer(CustomCellRenderer):
     https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
 
     def cell_data_func(self, column, cell, model, iter, attr_map):
-        self.info, self.attrs = model.get_row(iter)
+        self.info, self.attrs = wrappermap.wrapper(model).row_for_iter(iter)
         cell.column = column
         cell.path = model.get_path(iter)
 
@@ -235,7 +235,7 @@ class MiroTreeView(gtk.TreeView):
     # the table, i.e. to the bottom row, as a top-level
     PAD_BOTTOM = 3
     def __init__(self):
-        gtk.TreeView.__init__(self):
+        gtk.TreeView.__init__(self)
         self.drag_dest_at_bottom = False
         self.height_without_pad_bottom = -1
         self.set_enable_search(False)
@@ -567,8 +567,10 @@ class TableView(Widget):
     def __init__(self, model):
         Widget.__init__(self)
         self.set_widget(MiroTreeView())
+        self.model = model
         self.model.add_to_tableview(self._widget)
         self._model = self._widget.get_model()
+        wrappermap.add(self._model, model)
         self.selection = self._widget.get_selection()
         self.columns = []
         self.attr_map_for_column = {}
@@ -604,6 +606,7 @@ class TableView(Widget):
         self.wrapped_widget_connect('drag-end', self.on_drag_end)
         self.wrapped_widget_connect('drag-motion', self.on_drag_motion)
         self.wrapped_widget_connect('drag-leave', self.on_drag_leave)
+        self.wrapped_widget_connect('drag-drop', self.on_drag_drop)
         self.wrapped_widget_connect('drag-data-received',
                 self.on_drag_data_received)
         self.wrapped_widget_connect('unrealize', self.on_unrealize)
@@ -840,8 +843,11 @@ class TableView(Widget):
             targets = gtk_target_list(drag_dest.allowed_types())
             self._widget.enable_model_drag_dest(targets,
                     drag_dest.allowed_actions())
+            self._widget.drag_dest_set(0, targets,
+                    drag_dest.allowed_actions())
         else:
             self._widget.unset_rows_drag_dest()
+            self._widget.drag_dest_unset()
 
     def on_row_expanded(self, widget, iter, path):
         self.emit('row-expanded', iter)
@@ -1043,7 +1049,7 @@ class TableView(Widget):
                 treeview.drag_check_threshold(self.drag_start_x,
                     self.drag_start_y, int(event.x), int(event.y))):
             model, row_paths = treeview.get_selection().get_selected_rows()
-            rows = [model[path] for path in row_paths]
+            rows = self.model.get_rows(row_paths)
             drag_data = self.drag_source.begin_drag(self, rows)
             if drag_data is None:
                 return True
@@ -1130,8 +1136,19 @@ class TableView(Widget):
     def on_drag_leave(self, treeview, drag_context, timestamp):
         treeview.unset_drag_dest_row()
 
+    def on_drag_drop(self, treeview, drag_context, x, y, timestamp):
+        # prevent the default handler
+        treeview.emit_stop_by_name('drag-drop')
+        target = self.find_type(drag_context)
+        if target == "NONE":
+            return False
+        treeview.drag_get_data(drag_context, target, timestamp)
+        treeview.unset_drag_dest_row()
+
     def on_drag_data_received(self, treeview, drag_context, x, y, selection,
             info, timestamp):
+        # prevent the default handler
+        treeview.emit_stop_by_name('drag-data-received')
         if not self.drag_dest:
             return
         type = self.find_type(drag_context)
@@ -1233,7 +1250,7 @@ class TableModel(object):
             if not isinstance(value, int):
                 msg = "Attribute values must be integers, not %r" % value
                 raise TypeError(msg)
-            if value < 0 or value >= len(self.model._column_types):
+            if value < 0 or value >= len(self._column_types):
                 raise ValueError("Attribute index out of range: %s" % value)
 
     # If we don't store image data, we can don't need to do any work to
@@ -1281,6 +1298,9 @@ class TableModel(object):
     def __getitem__(self, iter):
         return self._model[iter]
 
+    def get_rows(self, row_paths):
+        return [self._model[path] for path in row_paths]
+
 class TreeTableModel(TableModel):
     """https://develop.participatoryculture.org/index.php/WidgetAPITableView"""
     MODEL_CLASS = gtk.TreeStore
@@ -1322,3 +1342,6 @@ class InfoListModel(infolist.InfoList):
             if value not in ('info', 'attrs'):
                 msg = "Attribute values can only be 'info' or 'attrs', not %r"
                 raise TypeError(msg % value)
+
+    def get_rows(self, row_paths):
+        return [self.nth_row(path[0]) for path in row_paths]

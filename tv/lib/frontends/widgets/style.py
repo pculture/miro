@@ -242,7 +242,7 @@ class FakeDownloadInfo(object):
         self.rate = 0
         self.downloaded_size = 0
 
-class ItemRenderer(widgetset.CustomCellRenderer):
+class ItemRenderer(widgetset.InfoListRenderer):
     MIN_WIDTH = 600
     BORDER_COLOR_TOP = css_to_color('#d0d0d0')
     BORDER_COLOR_BOTTOM = css_to_color('#9c9c9c')
@@ -292,7 +292,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     PLAYLIST_REMOVE_TEXT = _('Remove from playlist')
 
     def __init__(self, display_channel=True):
-        widgetset.CustomCellRenderer.__init__(self)
+        widgetset.InfoListRenderer.__init__(self)
         self.separator = imagepool.get_surface(resources.path(
             'images/separator.png'))
         self.cancel_button = imagepool.get_surface(resources.path(
@@ -326,10 +326,10 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         return self.MIN_WIDTH, 137
 
     def calc_show_progress_bar(self):
-        self.show_progress_bar = (self.data.state in ('downloading', 'paused'))
+        self.show_progress_bar = (self.info.state in ('downloading', 'paused'))
 
     def hotspot_test(self, style, layout_manager, x, y, width, height):
-        self.download_info = self.data.download_info
+        self.download_info = self.info.download_info
         self.calc_show_progress_bar()
         self.setup_style(style)
         self.hotspot = None
@@ -357,7 +357,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     def make_description(self, layout_manager):
         layout_manager.set_font(0.85, family=widgetset.ITEM_DESC_FONT)
         layout_manager.set_text_color(self.ITEM_DESC_COLOR)
-        text, links = self.data.description_stripped
+        text, links = self.info.description_stripped
         textbox = layout_manager.textbox("")
         pos = 0
         for start, end, url in links:
@@ -366,8 +366,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             pos = end
         if pos < len(text):
             textbox.append_text(text[pos:])
-        if (self.data.children and self.data.download_info and
-            self.data.download_info.finished):
+        if (self.info.children and self.info.download_info and
+            self.info.download_info.finished):
             textbox.append(u'<BR>' + _('Contents appear in the library'))
         self.description_links = links
         return textbox
@@ -389,7 +389,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             return layout_manager.textbox(dl_info.startup_activity)
         parts = []
         parts.append(displaytext.download_rate(dl_info.rate))
-        if self.data.size > 0 and dl_info.rate > 0:
+        if self.info.size > 0 and dl_info.rate > 0:
             parts.append(displaytext.time_string(dl_info.eta))
 
         return layout_manager.textbox(' - '.join(parts))
@@ -429,18 +429,18 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     def layout_center(self, layout, layout_manager, rect):
         layout_manager.set_font(1.1, family=widgetset.ITEM_TITLE_FONT, bold=True)
         layout_manager.set_text_color(self.ITEM_TITLE_COLOR)
-        title = layout_manager.textbox(self.data.name)
+        title = layout_manager.textbox(self.info.name)
         layout.add_text_line(title, rect.x, rect.y, rect.width)
 
-        if ((not self.data.is_external
+        if ((not self.info.is_external
              and self.display_channel
-             and self.data.feed_name is not None)):
+             and self.info.feed_name is not None)):
             # layout channel info just below the title
 
             channel_info_layout = cellpack.Layout()
             channel_info_layout.add_image(self.channel_title_icon, rect.x, 0)
             channel_info = layout_manager.textbox(self.CHANNEL_INFO_TEXT
-                    % {'channel': self.data.feed_name})
+                    % {'channel': self.info.feed_name})
             channel_info_layout.add_text_line(channel_info,
                     channel_info_layout.last_rect.right + 4, 0,
                     rect.width - self.channel_title_icon.width - 4)
@@ -460,7 +460,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         vertical_spacing = 3
 
         # release date
-        release_date = displaytext.date(self.data.release_date)
+        release_date = displaytext.date(self.info.release_date)
         layout_manager.set_text_color((0.4, 0.4, 0.4))
         layout_manager.set_font(0.75, family="Helvetica", bold=True)
         textbox = layout_manager.textbox(release_date)
@@ -468,8 +468,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         layout.add_text_line(textbox, rect.x, rect.y, rect.width)
 
         # size and duration
-        duration = displaytext.duration(self.data.duration)
-        size = displaytext.size_string(self.data.size)
+        duration = displaytext.duration(self.info.duration)
+        size = displaytext.size_string(self.info.size)
 
         layout_manager.set_font(0.75, family="Helvetica")
         self.set_info_right_color(layout_manager)
@@ -506,9 +506,9 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         current_y = layout.last_rect.bottom + vertical_spacing
 
-        if self.data.expiration_date and self.data.is_playable:
+        if self.info.expiration_date and self.info.is_playable:
             layout_manager.set_font(0.75, family="Helvetica")
-            text = displaytext.expiration_date(self.data.expiration_date)
+            text = displaytext.expiration_date(self.info.expiration_date)
             layout_manager.set_text_color((0.4, 0.4, 0.4))
             textbox = layout_manager.textbox(text)
             textbox.set_alignment('right')
@@ -528,7 +528,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         button_layout = self.layout_emblem_buttons(layout_manager)
         emblem_layout = self.layout_emblem(layout_manager,
                 button_layout.last_rect.right)
-        if self.data.is_external or self.data.downloaded:
+        if self.info.is_external or self.info.downloaded:
             right_buttons = self.layout_video_buttons(layout_manager)
             # move the buttons so they are at the end of the rect
             left_side = rect.width - right_buttons.last_rect.right
@@ -548,7 +548,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         main_hbox.pack_space(2, expand=True)
 
-        if self.data.is_external or self.data.downloaded:
+        if self.info.is_external or self.info.downloaded:
             main_hbox.pack(self.pack_video_buttons(layout_manager))
 
         stack.pack(main_hbox)
@@ -565,10 +565,10 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         layout = cellpack.Layout()
 
         layout_manager.set_font(0.85)
-        if self.data.downloaded:
-            if self.data.is_playable:
-                if ((app.playback_manager.get_playing_item()
-                     and app.playback_manager.get_playing_item().id == self.data.id)):
+        if self.info.downloaded:
+            if self.info.is_playable:
+                playing_item = app.playback_manager.get_playing_item()
+                if (playing_item and playing_item.id == self.info.id):
                     hotspot = 'play_pause'
                     if app.playback_manager.is_paused:
                         button = self.play_button
@@ -583,7 +583,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
                 hotspot = 'show_local_file'
             layout.add_image(button, 0, 0, hotspot)
         else:
-            if self.data.mime_type == 'application/x-bittorrent':
+            if self.info.mime_type == 'application/x-bittorrent':
                 text = self.DOWNLOAD_TORRENT_TEXT
             else:
                 text = self.DOWNLOAD_TEXT
@@ -593,7 +593,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
             # if it's pending autodownload, we add a cancel button to
             # cancel the autodownload
-            if self.data.pending_auto_dl:
+            if self.info.pending_auto_dl:
                 button = self._make_button(layout_manager, self.CANCEL_TEXT,
                         'cancel_auto_download')
                 layout.add_image(button, layout.last_rect.right + 10, 0,
@@ -618,37 +618,37 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         bold = False
         text_color = self.ITEM_DESC_COLOR
 
-        if (self.data.download_info
-                and self.data.download_info.state == 'failed'):
+        if (self.info.download_info
+                and self.info.download_info.state == 'failed'):
             bold = True
             image = self.alert_image
             text = u"%s-%s" % (self.ERROR_TEXT,
-                    self.data.download_info.short_reason_failed)
+                    self.info.download_info.short_reason_failed)
             self.emblem_color = (1.0, 252.0 / 255.0, 183.0 / 255.0)
-        elif self.data.pending_auto_dl:
+        elif self.info.pending_auto_dl:
             text = self.QUEUED_TEXT
             self.emblem_color = (1.0, 252.0 / 255.0, 183.0 / 255.0)
-        elif (self.data.downloaded
-                and app.playback_manager.is_playing_id(self.data.id)):
+        elif (self.info.downloaded
+                and app.playback_manager.is_playing_id(self.info.id)):
             text_color = widgetutil.WHITE
             text = self.CURRENTLY_PLAYING_TEXT
             self.emblem_color = UNPLAYED_COLOR
-        elif self.data.downloaded and not self.data.video_watched:
+        elif self.info.downloaded and not self.info.video_watched:
             text_color = widgetutil.WHITE
             bold = True
             text = self.UNPLAYED_TEXT
             self.emblem_color = UNPLAYED_COLOR
-        elif (self.data.is_playable
-              and self.data.item_viewed
-              and self.data.resume_time > 0
+        elif (self.info.is_playable
+              and self.info.item_viewed
+              and self.info.resume_time > 0
               and app.config.get(prefs.RESUME_VIDEOS_MODE)):
             bold = True
             text_color = (154.0 / 255.0, 174.0 / 255.0, 181.0 / 255.0)
             self.emblem_color = (232.0 / 255.0, 240.0 / 255.0, 242.0 / 255.0)
             text = _("Resume at %(resumetime)s",
-                     {"resumetime": displaytext.short_time_string(self.data.resume_time)})
+                     {"resumetime": displaytext.short_time_string(self.info.resume_time)})
             margin_right = 6
-        elif not self.data.item_viewed and self.data.state == "new":
+        elif not self.info.item_viewed and self.info.state == "new":
             bold = True
             text_color = widgetutil.WHITE
             text = self.NEWLY_AVAILABLE_TEXT
@@ -681,12 +681,12 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         layout = cellpack.Layout()
         x = 0
         layout_manager.set_font(0.85)
-        if self.data.is_container_item:
+        if self.info.is_container_item:
             button = self._make_button(layout_manager, self.SHOW_CONTENTS_TEXT,
                     'show_contents')
             layout.add_image(button, 0, 0, 'show_contents')
             x = layout.last_rect.right + 5
-        if self.data.expiration_date:
+        if self.info.expiration_date:
             button = self._make_button(layout_manager, self.KEEP_TEXT, 'keep')
             layout.add_image(button, x, 0, 'keep')
             x = layout.last_rect.right + 5
@@ -695,9 +695,9 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         layout.add_image(button, x, 0, 'delete')
         x = layout.last_rect.right + 5
 
-        if (self.data.download_info is not None
-                and self.data.download_info.torrent):
-            if self.data.download_info.state in ("uploading", "uploading-paused"):
+        if (self.info.download_info is not None
+                and self.info.download_info.torrent):
+            if self.info.download_info.state in ("uploading", "uploading-paused"):
                 button = self._make_button(layout_manager,
                         self.STOP_SEEDING_TEXT, 'stop_seeding')
                 layout.add_image(button, x, 0, 'stop_seeding')
@@ -724,7 +724,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         text_rect = our_rect.subsection(3 + left_button.width,
                 3 + self.cancel_button.width, 0, our_rect.height-line_height)
 
-        layout.add_rect(our_rect, ItemProgressBarDrawer(self.data).draw)
+        layout.add_rect(our_rect, ItemProgressBarDrawer(self.info).draw)
         inner_layout = cellpack.Layout()
         inner_layout.add_image(left_button, our_rect.x + 3, our_rect.y,
                 left_hotspot)
@@ -746,7 +746,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             self.text_color = style.text_color
 
     def render(self, context, layout_manager, selected, hotspot, hover):
-        self.download_info = self.data.download_info
+        self.download_info = self.info.download_info
         self.calc_show_progress_bar()
         self.setup_style(context.style)
         self.hotspot = hotspot
@@ -884,7 +884,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         context.restore()
 
     def draw_thumbnail(self, context, x, y, width, height):
-        icon = imagepool.get_surface(self.data.thumbnail, (154, 105))
+        icon = imagepool.get_surface(self.info.thumbnail, (154, 105))
         widgetutil.draw_rounded_icon(context, icon, x, y, 154, 105)
         self.thumb_overlay.draw(context, x, y, 154, 105)
 
@@ -953,12 +953,12 @@ class PlaylistItemRenderer(ItemRenderer):
         layout_manager.set_font(0.85)
         x = 0
 
-        if self.data.is_container_item:
+        if self.info.is_container_item:
             button = self._make_button(layout_manager, self.SHOW_CONTENTS_TEXT,
                     'show_contents')
             layout.add_image(button, 0, 0, 'show_contents')
             x = layout.last_rect.right + 5
-        if self.data.expiration_date:
+        if self.info.expiration_date:
             button = self._make_button(layout_manager, self.KEEP_TEXT, 'keep')
             layout.add_image(button, x, 0, 'show_contents')
             x = layout.last_rect.right + 5
@@ -969,7 +969,7 @@ class PlaylistItemRenderer(ItemRenderer):
         return layout
 
 # Renderers for the list view
-class ListViewRenderer(widgetset.CustomCellRenderer):
+class ListViewRenderer(widgetset.InfoListRenderer):
     bold = False
     color = (0.17, 0.17, 0.17)
     font_size = 0.82
@@ -1142,12 +1142,12 @@ class StatusRenderer(ListViewRenderer):
             hbox.pack_space(8)
             hbox.pack(hotspot)
 
-class RatingRenderer(widgetset.CustomCellRenderer):
+class RatingRenderer(widgetset.InfoListRenderer):
     ICON_STATES = ('yes', 'no', 'probably', 'unset')
     ICON_HORIZONTAL_SPACING = 2
     HOTSPOT_VERTICAL_PADDING = 8
     def __init__(self):
-        widgetset.CustomCellRenderer.__init__(self)
+        widgetset.InfoListRenderer.__init__(self)
         self.want_hover = True
         self.icon = {}
         for state in RatingRenderer.ICON_STATES:
@@ -1273,12 +1273,12 @@ class LastPlayedRenderer(ListViewRenderer):
     def _setup_layout_manager(self):
         self.text = displaytext.date_slashes(self.info.last_played)
 
-class StateCircleRenderer(widgetset.CustomCellRenderer):
+class StateCircleRenderer(widgetset.InfoListRenderer):
     ICON_STATES = ('normal', 'new', 'playing', 'downloading')
     min_width = 25
 
     def __init__(self):
-        widgetset.CustomCellRenderer.__init__(self)
+        widgetset.InfoListRenderer.__init__(self)
         self.icon = {}
         for state in StateCircleRenderer.ICON_STATES:
             path = resources.path('images/status-icon-%s.png' % state)

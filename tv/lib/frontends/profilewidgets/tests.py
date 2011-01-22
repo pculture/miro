@@ -178,7 +178,7 @@ class ProfileItemView(ProfiledCode):
             self.item_view.redraw_now()
             for item in self.item_list:
                 self.mutate_item(item)
-                self.item_list.update_item(item)
+            self.item_list.update_items(self.item_list)
             self.item_view.model_changed()
 
     def mutate_item(self, item):
@@ -223,6 +223,7 @@ class ProfileItemView(ProfiledCode):
          'resume_time': 0,
          'pending_auto_dl': False,
          'is_playable': False,
+         'is_playing': False,
          'subtitle_encoding': None,
          'downloaded': False,
          'item_viewed': False,
@@ -262,8 +263,14 @@ class ProfileListItemView(ProfileItemView):
     def make_item_view(self):
         enabled_columns = [u'state', u'name', u'feed-name', u'eta', u'rate',
                 u'artist', u'album', u'track', u'year', u'genre']
+        column_widths = {}
+        for name in enabled_columns:
+            if name != 'name':
+                column_widths[name] = 40
+            else:
+                column_widths[name] = 150
         self.item_view = itemlistwidgets.ListItemView(self.item_list,
-                enabled_columns)
+                enabled_columns, column_widths)
 
 class ProfileItemViewAdd(ProfileItemView):
     initial_items = 0

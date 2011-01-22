@@ -86,6 +86,8 @@ cdef extern from "infolist-nodelist.h":
             InfoListNode* node, InfoListNode* new_node) except -1
     int infolist_nodelist_remove(InfoListNodeList* nodelist,
             InfoListNode* node) except -1
+    InfoListNode* infolist_nodelist_nth_node(InfoListNodeList* nodelist,
+            int n) except NULL
     int infolist_nodelist_check_nodes(InfoListNodeList* nodelist) except -1
 
 cdef extern from "infolist-idmap.h":
@@ -438,6 +440,9 @@ cdef class InfoList:
         If target_id is in id_list, then the infos will be moved just before
         the first info before target_id that is not in the list.
 
+        If target_id is None, then the infos will be moved to the end of the
+        list.
+
         Raises a ValueError if a sort is set
         """
         cdef InfoListNode** node_array # stores the nodes to move
@@ -453,14 +458,20 @@ cdef class InfoList:
                 sizeof(InfoListNode*) * count)
         try:
             # fetch first, in case of key error
-            target_node = fetch_node(self.id_map, target_id)
+            if target_id is not None:
+                target_node = fetch_node(self.id_map, target_id)
+            else:
+                target_node = infolist_nodelist_tail(self.nodelist).next
             for 0 <= i < count:
                 node_array[i] = fetch_node(self.id_map, id_list[i])
+            # move target_id before the nodes in node_array
+            if target_id is not None:
+                for 0 <= i < count:
+                    if node_array[i].id == target_node.id:
+                        target_node = target_node.prev
             # remove infos then re-enter them
             infolistplat_will_reorder_nodes(self.nodelist)
             for 0 <= i < count:
-                if node_array[i].id == target_node.id:
-                    target_node = target_node.prev
                 infolist_nodelist_remove(self.nodelist, node_array[i])
             for 0 <= i < count:
                 infolist_nodelist_insert_before(self.nodelist, target_node,
@@ -468,44 +479,6 @@ cdef class InfoList:
             infolistplat_nodes_reordered(self.nodelist)
         finally:
             PyMem_Free(node_array)
-
-    def insert_before(self, target_id, info_list):
-        """Insert rows in the middle of the list
-
-        The infos in info_list will be added just before the one with
-        target_id.
-
-        Raises a ValueError if a sort is set
-        """
-        cdef InfoListNode** node_array # stores the nodes to move
-        cdef InfoListNode* target_node
-        cdef int count
-
-        if self.sort_mode != INFOLIST_SORT_NONE:
-            raise ValueError("insert_before() called with a sort set")
-
-        node_array = NULL
-        count = len(id_list)
-        node_array = <InfoListNode**>PyMem_Malloc(
-                sizeof(InfoListNode*) * count)
-        try:
-            # fetch first, in case of key error
-            target_node = fetch_node(self.id_map, target_id)
-            for 0 <= i < count:
-                node_array[i] = fetch_node(self.id_map, id_list[i])
-            # remove infos then re-enter them
-            infolistplat_will_reorder_nodes(self.nodelist)
-            for 0 <= i < count:
-                if node_array[i].id == target_node.id:
-                    target_node = target_node.prev
-                infolist_nodelist_remove(self.nodelist, node_array[i])
-            for 0 <= i < count:
-                infolist_nodelist_insert_before(self.nodelist, target_node,
-                        node_array[i])
-            infolistplat_nodes_reordered(self.nodelist)
-        finally:
-            PyMem_Free(node_array)
-
 
     def set_attr(self, id_, name, value):
         cdef dict attrs
@@ -582,7 +555,7 @@ cdef class InfoList:
         """Add this infolist to a TableView object."""
         infolistplat_add_to_tableview(self.nodelist, tableview)
 
-    def get_row(self, pos):
+    def row_for_iter(self, pos):
         """Get a (info, attr_dict) tuple for a row in this list.
 
         pos is platform-specific, on gtk it's a gtk.TreeIter object.
@@ -594,6 +567,16 @@ cdef class InfoList:
         node = infolistplat_node_for_pos(self.nodelist, pos)
         return (infolist_node_get_info(node),
                 infolist_node_get_attr_dict(node))
+
+    def nth_row(self, index):
+        cdef InfoListNode* node
+
+        node = infolist_nodelist_nth_node(self.nodelist, index)
+        return (infolist_node_get_info(node),
+                infolist_node_get_attr_dict(node))
+
+    def __getitem__(self, pos):
+        return self.row_for_iter(pos)
 
     def _sanity_check(self):
         """Debugging function that tests if the list structure is sane."""

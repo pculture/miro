@@ -44,7 +44,6 @@ import sys
 import unicodedata
 import logging
 
-from miro import infolist
 from miro import search
 from miro import signals
 from miro import util
@@ -58,10 +57,10 @@ class ItemSort(object):
     """Class that sorts items in an item list."""
 
     def __init__(self, ascending):
-        self._reverse = not ascending
+        self.reverse = not ascending
 
     def is_ascending(self):
-        return not self._reverse
+        return not self.reverse
 
     def sort_key(self, item):
         """Return a value that can be used to sort item.
@@ -69,25 +68,6 @@ class ItemSort(object):
         Must be implemented by subclasses.
         """
         raise NotImplementedError()
-
-    def compare(self, item, other):
-        """Compare two items
-
-        Returns -1 if item < other, 1 if other > item and 0 if item == other
-        (same as cmp)
-        """
-        if self._reverse:
-            return -cmp(self.sort_key(item), self.sort_key(other))
-        else:
-            return cmp(self.sort_key(item), self.sort_key(other))
-
-    def sort_items(self, item_list):
-        """Sort a list of items (in place)."""
-        item_list.sort(key=self.sort_key, reverse=self._reverse)
-
-    def sort_item_rows(self, rows):
-        rows.sort(key=lambda row: self.sort_key(row[0]),
-                reverse=self._reverse)
 
 class DateSort(ItemSort):
     KEY = 'date'
@@ -252,17 +232,14 @@ class ItemListGroup(object):
     each child list.
     """
 
-    def __init__(self, item_lists, sorter):
+    def __init__(self, item_lists, sorter=None):
         """Construct in ItemLists.
 
         item_lists is a list of ItemList objects that should be grouped
         together.
         """
         self.item_lists = item_lists
-        if sorter is None:
-            self.set_sort(DEFAULT_SORT)
-        else:
-            self.set_sort(sorter)
+        self.set_sort(sorter)
         self._throbber_timeouts = {}
 
     def _throbber_timeout(self, id):
@@ -346,8 +323,8 @@ class ItemList(signals.SignalEmitter):
     def __init__(self):
         signals.SignalEmitter.__init__(self)
         self.create_signal('items-added')
-        self.model = itemlist.ItemList(DEFAULT_SORT.sort_key)
-        self._sorter = DEFAULT_SORT
+        self.model = widgetset.InfoListModel(None)
+        self._sorter = None
         self._search_text = ''
         self.new_only = False
         self.unwatched_only = False
@@ -359,7 +336,10 @@ class ItemList(signals.SignalEmitter):
 
     def set_sort(self, sorter):
         self._sorter = sorter
-        self.model.change_sort(sorter.sort_key)
+        if sorter is not None:
+            self.model.change_sort(sorter.sort_key, sorter.reverse)
+        else:
+            self.model.change_sort(None)
 
     def get_sort(self):
         return self._sorter
@@ -427,7 +407,7 @@ class ItemList(signals.SignalEmitter):
     def _insert_items(self, to_add):
         if len(to_add) == 0:
             return
-        self.model.insert_infos(to_add)
+        self.model.add_infos(to_add)
         self.emit('items-added', to_add)
 
     def add_items(self, item_list):
@@ -459,15 +439,18 @@ class ItemList(signals.SignalEmitter):
                     self._hidden_items[info.id] = info
                 else:
                     to_update.append(info)
-        self._insert_items(to_add, already_sorted)
+        self._insert_items(to_add)
         self.model.update_infos(to_update, resort=self.resort_on_update)
         self.model.remove_ids(to_remove)
 
     def remove_items(self, id_list):
-        self.model.remove_ids(id_list)
-        for id- in id_list:
+        ids_in_model = []
+        for id_ in id_list:
             if id_ in self._hidden_items:
                 del self._hidden_items[id_]
+            else:
+                ids_in_model.append(id_)
+        self.model.remove_ids(ids_in_model)
 
     def set_new_only(self, new_only):
         """Set if only new items are to be displayed (default False)."""
@@ -493,7 +476,7 @@ class ItemList(signals.SignalEmitter):
         self._recalculate_hidden_items()
 
     def _recalculate_hidden_items(self):
-        info_list_at_start self.model.info_list()
+        info_list_at_start = self.model.info_list()
 
         newly_matching = []
         for item in self._hidden_items.values():
@@ -516,10 +499,11 @@ class ItemList(signals.SignalEmitter):
         insert_before should be an iterator, or None to position the items at
         the end of the list.
         """
-
-        new_iters = _ItemReorderer().reorder(self.model, insert_before,
-                item_ids)
-        self._iter_map.update(new_iters)
+        if insert_before is not None:
+            insert_before_id = insert_before.id
+        else:
+            insert_before_id = None
+        self.model.move_before(insert_before_id, list(item_ids))
 
 class IndividualDownloadItemList(ItemList):
     """ItemList that only displays single downloads items.

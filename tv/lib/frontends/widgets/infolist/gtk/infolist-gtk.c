@@ -378,19 +378,14 @@ infolistplat_node_added(InfoListNodeList* nodelist,
         miro_list_store = MIRO_LIST_STORE(nodelist->plat_data);
         iter.stamp      = miro_list_store->stamp;
         iter.user_data  = node;
-        if(!infolist_node_is_sentinal(node->next)) {
+        if(!infolist_node_is_sentinal(node->prev)) {
                 // we call infolist_nodelist_calc_positions() before we start
                 // inserting, then add nodes from the end of the list.  We
-                // can calculate our position using the next node.
-                row = node->next->position;
+                // can calculate our position using the previous node.
+                row = node->prev->position + 1;
         } else {
-                row = nodelist->node_count - 1;
+                row = 0;
         }
-        // set the position for this row, so that if a node is inserted before
-        // it, then our position is correct.  Of course, every node after this
-        // one now has an incorrect position, but since rows are inserted
-        // back-to-front, this doesn't matter
-        node->position = row;
         miro_list_store_set_path_row(miro_list_store, row);
         gtk_tree_model_row_inserted(GTK_TREE_MODEL(miro_list_store),
                                     miro_list_store->path,
@@ -414,6 +409,9 @@ infolistplat_node_changed(InfoListNodeList* nodelist,
         miro_list_store = MIRO_LIST_STORE(nodelist->plat_data);
         iter.stamp      = miro_list_store->stamp;
         iter.user_data  = node;
+        // node->position should still be valid from the
+        // infolist_nodelist_calc_positions() call in
+        // infolistplat_will_change_nodes
         miro_list_store_set_path_row(miro_list_store, node->position);
         gtk_tree_model_row_changed(GTK_TREE_MODEL(miro_list_store),
                                    miro_list_store->path,
@@ -434,6 +432,11 @@ infolistplat_node_removed(InfoListNodeList* nodelist,
         MiroListStore* miro_list_store;
 
         miro_list_store = MIRO_LIST_STORE(nodelist->plat_data);
+        // node->position should still be valid from the
+        // infolist_nodelist_calc_positions() call in
+        // infolistplat_will_change_nodes.  Note that node->position will be
+        // invalid for all nodes after this one, but since we remove things in
+        // back-to-front order this doesn't matter
         miro_list_store_set_path_row(miro_list_store, node->position);
         gtk_tree_model_row_deleted(GTK_TREE_MODEL(miro_list_store),
                                    miro_list_store->path);
@@ -465,8 +468,11 @@ infolistplat_nodes_reordered(InfoListNodeList* nodelist)
         }
         path = gtk_tree_path_new();
         node = infolist_nodelist_head(nodelist);
+        // node->position was set in infolistplat_will_reorder_nodes(), it
+        // contains the old position.
         for(i = 0; i < nodelist->node_count; i++) {
-                new_order[node->position] = i;
+                new_order[i] = node->position;
+                node = node->next;
         }
         gtk_tree_model_rows_reordered(GTK_TREE_MODEL(miro_list_store), path,
                                       NULL, new_order);

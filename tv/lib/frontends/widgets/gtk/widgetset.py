@@ -53,9 +53,10 @@ from miro.frontends.widgets.gtk.window import Window, MainWindow, Dialog, \
      FileOpenDialog, FileSaveDialog, DirectorySelectDialog, AboutDialog, \
      AlertDialog
 from miro.frontends.widgets.gtk.preferenceswindow import PreferencesWindow
-from miro.frontends.widgets.gtk.tableview import TableView, TableModel, \
-     TableColumn, TreeTableModel, CellRenderer, ImageCellRenderer, \
-     CheckboxCellRenderer, CustomCellRenderer
+from miro.frontends.widgets.gtk.tableview import (TableView, TableModel,
+        InfoListModel, TableColumn, TreeTableModel, CellRenderer,
+        ImageCellRenderer, CheckboxCellRenderer, CustomCellRenderer,
+        InfoListRenderer)
 from miro.frontends.widgets.gtk.simple import Image, ImageDisplay, \
      AnimatedImageDisplay, Label, Scroller, Expander, SolidBackground, \
      ProgressBar

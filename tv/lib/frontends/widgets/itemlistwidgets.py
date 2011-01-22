@@ -242,8 +242,7 @@ class ItemView(widgetset.TableView):
         self.set_draws_selection(False)
         self.renderer = self.build_renderer()
         self.renderer.total_width = -1
-        self.column = widgetset.TableColumn('item', self.renderer, data=0,
-                show_details=1, throbber_counter=2)
+        self.column = widgetset.TableColumn('item', self.renderer)
         self.set_column_spacing(0)
         self.column.set_min_width(self.renderer.MIN_WIDTH)
         self.add_column(self.column)
@@ -308,10 +307,10 @@ class ListItemView(widgetset.TableView):
         self.emit('columns-enabled-changed', self.columns_enabled)
         super(ListItemView, self).on_unrealize(treeview)
 
-    def get_tooltip(self, iter, column):
+    def get_tooltip(self, iter_, column):
         if ('name' in self._column_name_to_column and
                 self._column_name_to_column['name'] == column):
-            info = self.item_list.model[iter][0]
+            info = self.item_list.model[iter_][0]
             text, links = self.html_stripper.strip(info.description)
             if text:
                 if len(text) > 1000:
@@ -320,7 +319,7 @@ class ListItemView(widgetset.TableView):
 
         elif ('state' in self._column_name_to_column and
                 self._column_name_to_column['state'] is column):
-            info = self.item_list.model[iter][0]
+            info = self.item_list.model[iter_][0]
             # this logic is replicated in style.StateCircleRenderer
             # with text from style.StatusRenderer
             if info.state == 'downloading':
@@ -357,7 +356,7 @@ class ListItemView(widgetset.TableView):
 
     def _make_column(self, header, renderer, column_name, resizable=True,
             pad=True):
-        column = widgetset.TableColumn(header, renderer, info=0)
+        column = widgetset.TableColumn(header, renderer)
         column.set_min_width(renderer.min_width)
         if resizable:
             column.set_resizable(True)

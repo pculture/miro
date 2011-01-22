@@ -370,13 +370,8 @@ infolist_nodelist_node_index(InfoListNodeList* nodelist,
 
         CHECK_IN_LIST(node, -1);
 
-        rv = 0;
-        pos = infolist_nodelist_head(nodelist);
-        while(pos != node) {
-                rv++;
-                pos = pos->next;
-        }
-        return rv;
+        infolist_nodelist_calc_positions(nodelist);
+        return node->position;
 }
 
 int

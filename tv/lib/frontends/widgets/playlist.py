@@ -42,11 +42,12 @@ from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import style
 
 class DropHandler(signals.SignalEmitter):
-    def __init__(self, playlist_id, item_view):
+    def __init__(self, playlist_id, item_view, sorter):
         signals.SignalEmitter.__init__(self)
         self.create_signal('new-order')
         self.playlist_id = playlist_id
         self.item_view = item_view
+        self.sorter = sorter
 
     def allowed_actions(self):
         return widgetset.DRAG_ACTION_MOVE
@@ -63,15 +64,19 @@ class DropHandler(signals.SignalEmitter):
     def accept_drop(self, table_view, model, typ, source_actions, parent,
             position, data):
         dragged_ids = set([int(id) for id in data.split('-')])
-        if position >= 0:
-            insert_iter = model.nth_iter(position)
+        if 0 <= position < len(model):
+            insert_info = model.nth_row(position)[0]
         else:
-            insert_iter = None
+            insert_info = None
+        self.item_view.item_list.set_sort(None)
         try:
-            self.item_view.item_list.move_items(insert_iter, dragged_ids)
+            self.item_view.item_list.move_items(insert_info, dragged_ids)
         finally:
             self.item_view.model_changed()
-        self.emit('new-order', [row[0].id for row in model])
+        new_order = [info.id for info in model.info_list()]
+        self.sorter.set_new_order(new_order)
+        self.item_view.item_list.set_sort(self.sorter)
+        self.emit('new-order', new_order)
         return True
 
 class PlaylistSort(itemlist.ItemSort):
@@ -85,7 +90,8 @@ class PlaylistSort(itemlist.ItemSort):
 
     def add_items(self, item_list):
         for item in item_list:
-            self.positions[item.id] = self.current_postion.next()
+            if item.id not in self.positions:
+                self.positions[item.id] = self.current_postion.next()
 
     def forget_items(self, id_list):
         for id in id_list:
@@ -96,6 +102,7 @@ class PlaylistSort(itemlist.ItemSort):
             for id in id_order)
 
     def sort_key(self, item):
+        print 'sort key for %s: %s' % (item.name, self.positions[item.id])
         return self.positions[item.id]
 
 class PlaylistItemView(itemlistwidgets.ItemView):
@@ -122,7 +129,7 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
         return PlaylistItemView(self.item_list, self.id)
 
     def make_drop_handler(self):
-        handler = DropHandler(self.id, self.item_view)
+        handler = DropHandler(self.id, self.item_view, self._sorter)
         handler.connect('new-order', self._on_new_order)
         return handler
 
@@ -166,5 +173,4 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
         self.widget.set_list_empty_mode(list_empty)
 
     def _on_new_order(self, drop_handler, order):
-        self._sorter.set_new_order(order)
         messages.PlaylistReordered(self.id, order).send_to_backend()

@@ -298,11 +298,10 @@ class ItemListController(object):
         app.widgetapp.remove_items(self.get_selection())
         return True
 
-    def on_hotspot_clicked(self, itemview, name, iter):
+    def on_hotspot_clicked(self, itemview, name, iter_):
         """Hotspot handler for ItemViews."""
 
-        item_info = itemview.model[iter][0]
-        show_details = itemview.model[iter][1]
+        item_info, attrs = itemview.model[iter_]
         if name in ('download', 'thumbnail-download'):
             messages.StartDownload(item_info.id).send_to_backend()
         elif name == 'pause':
@@ -322,10 +321,6 @@ class ItemListController(object):
         elif name == 'remove':
             messages.RemoveVideosFromPlaylist(
                 itemview.playlist_id, [item_info.id]).send_to_backend()
-        elif name == 'details_toggle':
-            itemview.model.update_value(iter, 1, not show_details)
-            itemview.model_changed()
-            itemview.invalidate_size_request()
         elif name == 'visit_webpage':
             app.widgetapp.open_url(item_info.permalink)
         elif name == 'visit_comments':
