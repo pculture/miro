@@ -862,7 +862,7 @@ class _ExtensionsHelper(object):
         scroller = widgetset.Scroller(False, True)
         scroller.set_has_borders(True)
         scroller.add(self.details)
-        scroller.set_size_request(-1, 200)
+        scroller.set_size_request(-1, 150)
         self.extension_details = widgetset.VBox()
         self.extension_details.pack_start(scroller)
 
@@ -945,6 +945,13 @@ class ExtensionsPanel(PanelBuilder):
     def build_widget(self):
         grid = dialogwidgets.ControlGrid()
         self.extensions_helper = _ExtensionsHelper()
+
+        message_grid = dialogwidgets.ControlGrid()
+
+        grid.pack_label(
+            _("Extensions are a beta feature.  Developers interested "
+              "in writing extensions can learn more on our wiki."))
+        grid.end_line(spacing=8)
 
         grid.pack_label(_("Extensions:"))
         grid.end_line(spacing=0)
