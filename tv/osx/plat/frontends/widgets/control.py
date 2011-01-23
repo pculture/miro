@@ -153,7 +153,6 @@ class SearchTextEntry(BaseTextEntry):
         return MiroSearchTextField.alloc().init()
 
 class MultilineTextEntry(Widget):
-
     def __init__(self, initial_text=None):
         Widget.__init__(self)
         if initial_text is None:
@@ -206,6 +205,13 @@ class MultilineTextEntry(Widget):
         if self.parent_is_scroller:
             width -= NSScroller.scrollerWidth()
         return (width, height)
+
+    def set_editable(self, editable):
+        if editable:
+            self.view.setEditable_(YES)
+        else:
+            self.view.setEditable_(NO)
+
     
 class MiroButton(NSButton):
     

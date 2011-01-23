@@ -847,17 +847,26 @@ class _ExtensionsHelper(object):
         self._table.set_fixed_height(True)
         self._table.allow_multiple_select(False)
         self._table.set_alternate_row_backgrounds(True)
-        self.details_button = widgetset.Button(_("Details"))
-        self.details_button.set_size(widgetconst.SIZE_SMALL)
-        self.details_button.connect('clicked', self._details_clicked)
-        self.button_box = widgetset.VBox()
-        self.button_box.pack_start(self.details_button)
+        self._table.connect('row-clicked', self._show_details)
+
         scroller = widgetset.Scroller(False, True)
         scroller.set_has_borders(True)
         scroller.add(self._table)
         scroller.set_size_request(-1, 120)
         self.extensions_list = widgetset.VBox()
         self.extensions_list.pack_start(scroller)
+
+        self.details = widgetset.MultilineTextEntry()
+        self.details.set_editable(False)
+        scroller = widgetset.Scroller(False, True)
+        scroller.set_has_borders(True)
+        scroller.add(self.details)
+        scroller.set_size_request(-1, 200)
+        self.extension_details = widgetset.VBox()
+        self.extension_details.pack_start(scroller)
+
+        # FIXME - when the user clicks on a row, show the details
+        # in the details box
 
     def load(self):
         for ext in app.extension_manager.extensions:
@@ -869,6 +878,18 @@ class _ExtensionsHelper(object):
         for key in self._iter_map.keys():
             iter_ = self._iter_map.pop(key)
             self._model.remove(iter_)
+
+    def _show_details(self, renderer, iter_):
+        row = self._model[iter_]
+        ext = app.extension_manager.get_extension_by_name(row[1])
+
+        text = []
+        text.append(_("Name:  %(extensionname)s",
+                      {"extensionname": ext.name}))
+        text.append(_("Version:  %(extensionversion)s",
+                      {"extensionversion": ext.version}))
+        # FIXME - add description here
+        self.details.set_text("\n".join(text))
 
     def _on_enabled_clicked(self, renderer, iter_):
         # FIXME - if this fails, then we need to check/uncheck
@@ -908,22 +929,20 @@ class _ExtensionsHelper(object):
             self._model.update_value(iter_, 0, ext.loaded)
         self._table.model_changed()
 
-    def _details_clicked(self, button):
-        ## iter = self._table.get_selected()
-        ## if iter is not None:
-        ##     id = app.watched_folder_manager.model[iter][0]
-        ##     app.watched_folder_manager.remove(id)
-        # FIXME
-        logging.info("details clicked")
-        pass
-
 class ExtensionsPanel(PanelBuilder):
     def build_widget(self):
         grid = dialogwidgets.ControlGrid()
         self.extensions_helper = _ExtensionsHelper()
 
-        grid.pack(self.extensions_helper.extensions_list, pad_right=12)
-        grid.pack(self.extensions_helper.button_box)
+        grid.pack_label(_("Extensions:"))
+        grid.end_line(spacing=0)
+        grid.pack(self.extensions_helper.extensions_list)
+        grid.end_line(spacing=4)
+        grid.pack_label(_("Details:"))
+        grid.end_line(spacing=0)
+        grid.pack(self.extensions_helper.extension_details)
+
+        # FIXME - add preferences button here
         return grid.make_table()
 
     def on_window_open(self):
