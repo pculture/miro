@@ -599,7 +599,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             "not isContainerItem AND "
             "(deleted IS NULL or not deleted) AND "
             "(is_file_item OR rd.main_item_id=item.id) AND "
-            "NOT item.file_type='audio'",
+            "NOT item.file_type='other'",
             joins={'feed': 'item.feed_id=feed.id',
                    'remote_downloader as rd': 'item.downloader_id=rd.id'})
 
