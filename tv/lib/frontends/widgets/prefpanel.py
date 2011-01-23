@@ -888,7 +888,9 @@ class _ExtensionsHelper(object):
                       {"extensionname": ext.name}))
         text.append(_("Version:  %(extensionversion)s",
                       {"extensionversion": ext.version}))
-        # FIXME - add description here
+        text.append("")
+        text.append(_("Description:"))
+        text.append(ext.description)
         self.details.set_text("\n".join(text))
 
     def _on_enabled_clicked(self, renderer, iter_):

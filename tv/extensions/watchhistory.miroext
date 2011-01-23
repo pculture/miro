@@ -3,3 +3,11 @@ name = Watch History
 version = core
 enabled_by_default = False
 module = watchhistory
+description = This is a test extension that shows basic
+    structure for what extensions should look like.
+    .
+    It's otherwise not very interesting.
+    .
+    Every time you play an item, Watch History records the
+    name of the item you played and the time you played it
+    in a CSV file in your support directory.
