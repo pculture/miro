@@ -38,16 +38,33 @@ import unittest
 import pprint
 import os
 
-# need to set timezone to GMT so that datetimes are correct
-os.environ["TZ"] = "GMT+00"
-
 # need to use the right feedparser
 sys.path.insert(0, os.path.join(os.pardir, os.pardir, os.pardir, "lib"))
 
+from time import struct_time
+
 USAGE = "testgenerator.py <input-dir> <output-dir>"
+
+def convert_datetime(elem):
+    """Takes part of a FeedParserDict and converts any
+    time.struct_time instances to appropriate timezone-agnostic
+    strings.
+    """
+    if isinstance(elem, struct_time):
+        return "DATETIME"
+    if isinstance(elem, tuple):
+        return tuple([convert_datetime(e) for e in elem])
+    if isinstance(elem, list):
+        return [convert_datetime(e) for e in elem]
+    if isinstance(elem, dict):
+        for key, val in elem.items():
+            elem[key] = convert_datetime(val)
+        return elem
+    return elem
 
 def run_parser(feedparser, inputdir, outputdir, mem):
     output = feedparser.parse(os.path.join(inputdir, mem))
+    output = convert_datetime(output)
     f = open(os.path.join(outputdir, "%s.output" % mem), "w")
     if 'entries' in output:
         output = output['entries']

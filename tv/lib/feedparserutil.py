@@ -85,4 +85,21 @@ def parse(url_file_stream_or_string):
 def sanitizeHTML(htmlSource, encoding):
     return feedparser.sanitizeHTML(htmlSource, encoding)
 
+def convert_datetime(elem):
+    """Takes part of a FeedParserDict and converts any
+    time.struct_time instances to appropriate timezone-agnostic
+    strings.
+    """
+    if isinstance(elem, struct_time):
+        return "DATETIME"
+    if isinstance(elem, tuple):
+        return tuple([convert_datetime(e) for e in elem])
+    if isinstance(elem, list):
+        return [convert_datetime(e) for e in elem]
+    if isinstance(elem, dict):
+        for key, val in elem.items():
+            elem[key] = convert_datetime(val)
+        return elem
+    return elem
+
 FeedParserDict = feedparser.FeedParserDict

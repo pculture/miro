@@ -33,10 +33,6 @@ up the testsuite.
 """
 
 import os
-
-# need to set timezone to GMT so that datetime comparisons work
-os.environ["TZ"] = "GMT+00"
-
 from miro import app
 from miro import prefs
 from miro import config

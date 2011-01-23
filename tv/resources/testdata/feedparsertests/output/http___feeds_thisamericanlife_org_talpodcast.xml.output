@@ -33,4 +33,4 @@
                    'type': 'text/plain',
                    'value': u'#305: The This American Life Holiday Spectacular'},
   'updated': u'Mon, 27 Dec 2010 01:00:00 +0000',
-  'updated_parsed': time.struct_time(tm_year=2010, tm_mon=12, tm_mday=26, tm_hour=20, tm_min=0, tm_sec=0, tm_wday=6, tm_yday=360, tm_isdst=0)}]
+  'updated_parsed': 'DATETIME'}]

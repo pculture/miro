@@ -2,6 +2,7 @@ import logging
 import os
 import unittest
 import pprint
+import time
 
 from miro import feedparserutil
 from miro.item import FeedParserValues
@@ -117,6 +118,7 @@ class FeedParserTest(MiroTestCase):
 def _test_closure(mem):
     def _actual_test(self):
         d = _parse_feed(mem)
+        d = feedparserutil.convert_datetime(d)
         fp = open(os.path.join(FPTESTOUTPUT, "%s.output" % mem), "r")
         output = fp.read()
         fp.close()
@@ -125,6 +127,7 @@ def _test_closure(mem):
         else:
             d = d['bozo_exception']
         self.eq_output(pprint.pformat(d), output)
+
     return _actual_test
 
 for mem in os.listdir(FPTESTINPUT):
