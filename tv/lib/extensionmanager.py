@@ -238,12 +238,8 @@ class ExtensionManager(object):
                 continue
             try:
                 self.import_extension(mem)
-            except ImportError, ie:
-                logging.exception("Import error when importing %r", mem)
-                continue
-
-            try:
                 self.load_extension(mem)
-            except StandardError, se:
-                logging.exception("Load error when loading %r", mem)
+            except StandardError, ie:
+                logging.exception("Import/Load error when loading %r.  Disabling.", mem)
+                self.disable_extension(mem)
                 continue
