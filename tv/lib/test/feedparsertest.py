@@ -85,8 +85,8 @@ class FeedParserTest(MiroTestCase):
         length = min(len(str1), len(str2))
         for i in range(length):
             if str1[i] != str2[i]:
-                start = max(0, i-2)
-                end = min(length, i+10)
+                start = max(0, i-10)
+                end = min(length, i+20)
                 self.assertEquals(
                     str1[i:], str2[i:],
                     ("Strings differ at index %s:\n%s\n%s" %

@@ -31,8 +31,18 @@
 Generates feedparser tests.
 """
 import sys
-import os
+
+# even though we don't use unittest, we need this because it weirdly
+# causes feedparser to use GMT instead of the local timezone.
+import unittest
 import pprint
+import os
+
+# need to set timezone to GMT so that datetimes are correct
+os.environ["TZ"] = "GMT+00"
+
+# need to use the right feedparser
+sys.path.insert(0, os.path.join(os.pardir, os.pardir, os.pardir, "lib"))
 
 USAGE = "testgenerator.py <input-dir> <output-dir>"
 
@@ -52,14 +62,6 @@ def main(argv):
 
     inputdir = os.path.abspath(argv[0])
     outputdir = os.path.abspath(argv[1])
-
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.pardir,
-            os.pardir,
-            os.pardir,
-            "lib"))
 
     import feedparser
 
