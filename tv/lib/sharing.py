@@ -649,8 +649,9 @@ class SharingManagerBackend(object):
                 # type then determine what to do.
                 if itemprop[daap_string] == -1:
                     itemprop[daap_string] = 0
-                # Fixup track number: it is a string?
-                if daap_string == 'daap.songtracknumber':
+                # Fixup: these are stored as string?
+                if daap_string in ('daap.songtracknumber',
+                                   'daap.songyear'):
                     itemprop[daap_string] = int(itemprop[daap_string])
                 # Fixup the duration: need to convert to millisecond.
                 if daap_string == 'daap.songtime':
