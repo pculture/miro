@@ -104,6 +104,9 @@ class WindowsApplication(Application):
     def startup_ui(self):
         sys.excepthook = self.exception_handler
         Application.startup_ui(self)
+        call_on_ui_thread(migrateappname.migrateVideos, 'Democracy', 'Miro')
+        call_on_ui_thread(flash.check_flash_install)
+        call_on_ui_thread(bonjour.check_bonjour_install)
 
     def on_config_changed(self, obj, key, value):
         """Any time a preference changes, this gets notified so that we
@@ -196,12 +199,6 @@ class WindowsApplication(Application):
 
     def on_new_window(self, uri):
         self.open_url(uri)
-
-    def startup_ui(self):
-        Application.startup_ui(self)
-        call_on_ui_thread(migrateappname.migrateVideos, 'Democracy', 'Miro')
-        call_on_ui_thread(flash.check_flash_install)
-        call_on_ui_thread(bonjour.check_bonjour_install)
 
     def open_url(self, url):
         # It looks like the maximum URL length is about 2k. I can't
