@@ -52,7 +52,7 @@ def install_bonjour(startup=False):
                '%(appname)s has determined that your system is most '
                'likely missing the Avahi mDNSResponder compatibility '
                'library.  Please refer to your operating system '
-               'documentation on how you can install this library.')
+               'documentation on how you can install this library.',
                {"appname": app.config.get(prefs.SHORT_APP_NAME)}
               )
     if startup:
