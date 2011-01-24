@@ -292,13 +292,15 @@ class MovieDataUpdater(signals.SignalEmitter):
         """
         tags_cleaned = {}
         for key, value in tags.items():
-            key = str(key)
+            if not isinstance(key, basestring):
+                key = str(key)
+            if isinstance(key , str):
+                key = unicode(key, 'utf-8', 'replace')
             if key.startswith('PRIV:'):
                 key = key.split('PRIV:')[1]
             key = key.split(':')[0]
             if key.startswith('WM/'):
                 key = key.split('WM/')[1]
-            key = key.decode('utf-8', 'replace')
             key = key.lower()
             tags_cleaned[key] = value
         return tags_cleaned
