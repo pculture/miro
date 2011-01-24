@@ -220,13 +220,13 @@ def get_menu():
                     Separator(),
                     MenuItem(_("_Remove Item"), "RemoveItems",
                              Shortcut(BKSPACE, MOD),
-                             groups=["PlayablesSelected_PlayPause"],
+                             groups=["LocalPlayablesSelected_PlayPause"],
                              plural=_("_Remove Items")),
                     MenuItem(_("_Edit Item"), "EditItem",
-                             groups=["PlayableSelected"]),
+                             groups=["LocalPlayableSelected"]),
                     MenuItem(_("Save Item _As"), "SaveItem",
                              Shortcut("s", MOD),
-                             groups=["PlayableSelected"],
+                             groups=["LocalPlayableSelected"],
                              plural=_("Save Items _As")),
                     MenuItem(_("Copy Item _URL"), "CopyItemURL",
                              Shortcut("u", MOD),
@@ -377,7 +377,7 @@ def _get_convert_menu():
         for converter in section[1]:
             handler_name = make_convert_handler(converter)
             item = MenuItem(converter.displayname, handler_name,
-                            groups=["PlayablesSelected"])
+                            groups=["LocalPlayablesSelected"])
             menu.append(item)
         if index+1 < len(sections):
             menu.append(Separator())
@@ -773,7 +773,10 @@ class MenuStateManager(signals.SignalEmitter):
         if app.playback_manager.is_playing:
             self.enabled_groups.add('PlayPause')
             self.enabled_groups.add('Playing')
-            self.enabled_groups.add('PlayableSelected_PlayPause')
+            if not app.playback_manager.get_playing_item().remote:
+                self.enabled_groups.add('LocalPlayableSelected_PlayPause')
+                self.enabled_groups.add('LocalPlayableSelected_PlayPause')
+            self.enabled_groups.add('PlayablesSelected_PlayPause')
             self.enabled_groups.add('PlayablesSelected_PlayPause')
             if app.playback_manager.is_playing_audio:
                 # if it's playing audio, then we allow the user to do other
@@ -895,17 +898,27 @@ class MenuStateManager(signals.SignalEmitter):
         selected_items = app.item_list_controller_manager.get_selection()
         downloaded = False
         has_audio = False
+        is_remote = False
         for item in selected_items:
             if item.downloaded:
                 downloaded = True
             if item.file_type == 'audio':
                 has_audio = True
+            if item.remote:
+                is_remote = True
+
         if downloaded:
+            if not is_remote:
+                self.enabled_groups.add('LocalPlayablesSelected')
+                self.enabled_groups.add('LocalPlayablesSelected_PlayPause')
             self.enabled_groups.add('PlayablesSelected')
             self.enabled_groups.add('PlayablesSelected_PlayPause')
             if not has_audio:
                 self.enabled_groups.add('PlayableVideosSelected')
             if len(selected_items) == 1:
+                if not is_remote:
+                    self.enabled_groups.add('LocalPlayableSelected')
+                    self.enabled_groups.add('LocalPlayableSelected_PlayPause')
                 self.enabled_groups.add('PlayableSelected')
                 self.enabled_groups.add('PlayableSelected_PlayPause')
             else:
@@ -913,6 +926,9 @@ class MenuStateManager(signals.SignalEmitter):
 
         if app.item_list_controller_manager.can_play_items():
             self.enabled_groups.add('PlayPause')
+            if not is_remote:
+                self.enabled_groups.add('LocalPlayableSelected_PlayPause')
+                self.enabled_groups.add('LocalPlayablesSelected_PlayPause')
             self.enabled_groups.add('PlayableSelected_PlayPause')
             self.enabled_groups.add('PlayablesSelected_PlayPause')
             app.widgetapp.window.videobox.handle_new_selection(True)

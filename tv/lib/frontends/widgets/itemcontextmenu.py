@@ -161,10 +161,14 @@ class ItemContextMenuHandler(object):
                 reveal_text = _('File on Disk')
             view_menu.append((reveal_text, lambda: app.widgetapp.check_then_reveal_file(item.video_path)))
 
-        menu.append(None)
-        menu.append((_('View'), view_menu))
+        if not item.remote:
+            menu.append(None)
+            menu.append((_('View'), view_menu))
 
         if item.has_sharable_url:
+            # Append the separator if it was skipped
+            if item.remote:
+                menu.append(None)
             menu.append((_('Share'), lambda: app.widgetapp.share_item(item)))
 
         return menu
