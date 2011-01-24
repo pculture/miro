@@ -64,9 +64,11 @@ def install_bonjour(startup=False):
     if not startup:
         dialogs.show_message(title, description)
     else:
+        # Buttons in this order because if the window is destroyed by the 
+        # "X" button it becomes -1 which is the last element of the list.
         ret = dialogs.show_choice_dialog(title, description,
-                                         [dialogs.BUTTON_YES,
-                                          dialogs.BUTTON_NO
+                                         [dialogs.BUTTON_NO,
+                                          dialogs.BUTTON_YES
                                          ])
         if ret is None or ret == dialogs.BUTTON_YES:
             return
