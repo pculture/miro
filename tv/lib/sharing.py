@@ -406,7 +406,8 @@ class SharingItemTrackerImpl(signals.SignalEmitter):
         kwargs['playlist_id'] = playlist_id
 
         # Duration: daap uses millisecond, so we need to scale it.
-        kwargs['duration'] /= DURATION_SCALE
+        if kwargs['duration'] is not None:
+            kwargs['duration'] /= DURATION_SCALE
 
         sharing_item = SharingItem(**kwargs)
         return sharing_item
