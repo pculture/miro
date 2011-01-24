@@ -39,23 +39,38 @@ def check_bonjour_install():
     request_count = app.config.get(prefs.BONJOUR_REQUEST_COUNT)
     if app.sharing_manager.mdns_present or request_count > 0:
         return
-    install_bonjour()
+    install_bonjour(startup=True)
 
 # We can't really do much here ...
-def install_bonjour():
+def install_bonjour(startup=False):
     title = _("Install Bonjour")
-    description = _('For the best %(appname)s experience, we suggest you '
-                    'install Bonjour.  Installing Bonjour will '
-                    'allow you share your media library with other '
-                    '%(appname)s users on your network, as well as stream '
-                    'media from other %(appname)s users on your network.\n\n'
-                    '%(appname)s has determined that your system is most '
-                    'likely missing the Avahi mDNSResponder compatibility '
-                    'library.  Please refer to your operating system '
-                    'documentation on how you can install this library.\n\n'
-                    'Would you like %(appname)s to warn you on next '
-                    'startup?',
-                    {"appname": app.config.get(prefs.SHORT_APP_NAME)}
-                   )
-    dialogs.show_message(title, description)
-    logging.info('install bonjour clicked')
+    rawtext = ('For the best %(appname)s experience, we suggest you '
+               'install Bonjour.  Installing Bonjour will '
+               'allow you share your media library with other '
+               '%(appname)s users on your network, as well as stream '
+               'media from other %(appname)s users on your network.\n\n'
+               '%(appname)s has determined that your system is most '
+               'likely missing the Avahi mDNSResponder compatibility '
+               'library.  Please refer to your operating system '
+               'documentation on how you can install this library.')
+               {"appname": app.config.get(prefs.SHORT_APP_NAME)}
+              )
+    if startup:
+        rawtext = ('\n\nWould you like %(appname)s to warn you on next '
+                   'startup?',
+                   {"appname": app.config.get(prefs.SHORT_APP_NAME)}
+                  )
+    description = _(rawtext)
+    if not startup:
+        dialogs.show_message(title, description)
+    else:
+        ret = dialogs.show_choice_dialog(title, description,
+                                         [dialogs.BUTTON_YES,
+                                          dialogs.BUTTON_NOT_NOW,
+                                          dialogs.BUTTON_NO
+                                         ])
+        if ret is None or ret == dialogs.BUTTON_YES:
+            return
+        else:
+            app.config.set(prefs.BONJOUR_REQUEST_COUNT, 1)
+
