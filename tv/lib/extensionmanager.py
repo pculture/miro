@@ -52,6 +52,7 @@ class Extension:
     def __init__(self):
         self.name = "Unknown"
         self.version = "0.0"
+        self.description = "No description"
         self.ext_module = None
         # whether or not to enable this extension by default
         self.enabled_by_default = False
@@ -68,6 +69,7 @@ def get_extensions(ext_dir):
     * extension.name (string)
     * extension.version (string)
     * extension.module (string)
+    * [optional] extension.description (string)
     * [optional] extension.enabled_by_default (bool)
     """
     if not os.path.isdir(ext_dir):
@@ -93,6 +95,9 @@ def get_extensions(ext_dir):
             e.name = cf.get("extension", "name")
             e.version = cf.get("extension", "version")
             e.ext_module = cf.get("extension", "module")
+
+            if cf.has_option("extension", "description"):
+                e.description = cf.get("extension", "description")
 
             if cf.has_option("extension", "enabled_by_default"):
                 e.enabled_by_default = cf.getboolean(
@@ -233,12 +238,8 @@ class ExtensionManager(object):
                 continue
             try:
                 self.import_extension(mem)
-            except ImportError, ie:
-                logging.exception("Import error when importing %r", mem)
-                continue
-
-            try:
                 self.load_extension(mem)
-            except StandardError, se:
-                logging.exception("Load error when loading %r", mem)
+            except StandardError, ie:
+                logging.exception("Import/Load error when loading %r.  Disabling.", mem)
+                self.disable_extension(mem)
                 continue

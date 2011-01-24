@@ -65,6 +65,7 @@ from miro.plat.frontends.widgets.bonjour import install_bonjour
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.gtcache import gettext as _
 from miro import gtcache
+from miro.frontends.widgets import dialogs
 
 # Note: we do an additional import from prefpanelset half way down the file.
 
@@ -861,7 +862,7 @@ class _ExtensionsHelper(object):
         scroller = widgetset.Scroller(False, True)
         scroller.set_has_borders(True)
         scroller.add(self.details)
-        scroller.set_size_request(-1, 200)
+        scroller.set_size_request(-1, 150)
         self.extension_details = widgetset.VBox()
         self.extension_details.pack_start(scroller)
 
@@ -888,7 +889,9 @@ class _ExtensionsHelper(object):
                       {"extensionname": ext.name}))
         text.append(_("Version:  %(extensionversion)s",
                       {"extensionversion": ext.version}))
-        # FIXME - add description here
+        text.append("")
+        text.append(_("Description:"))
+        text.append(ext.description)
         self.details.set_text("\n".join(text))
 
     def _on_enabled_clicked(self, renderer, iter_):
@@ -899,27 +902,36 @@ class _ExtensionsHelper(object):
         row = self._model[iter_]
         ext = app.extension_manager.get_extension_by_name(row[1])
         if not row[0]:
+            # enable extension
             try:
                 app.extension_manager.import_extension(ext)
-            except ImportError, ie:
-                logging.exception("import error")
-                return
-
-            try:
                 app.extension_manager.load_extension(ext)
             except StandardError, ie:
-                logging.exception("load error")
+                logging.exception("extension import or load error")
+                msg = _("Extension %(extensionname)s failed to load: "
+                        "%(errormessage)s",
+                        {"extensionname": row[1],
+                         "errormessage": str(ie)})
+                dialogs.show_message(
+                    _("Extension failed to load"), msg)
                 return
 
-            # only enable if there are no errors
+            # only mark extension as enabled if there are no errors.
             app.extension_manager.enable_extension(ext)
         else:
-            # always disable even if there are errors
+            # always mark extension as disabled even if there are
+            # errors.
             app.extension_manager.disable_extension(ext)
             try:
                 app.extension_manager.unload_extension(ext)
             except StandardError, ie:
-                logging.exception("unload error")
+                logging.exception("extension unload error")
+                msg = _("Extension %(extensionname)s failed to unload: "
+                        "%(errormessage)s",
+                        {"extensionname": row[1],
+                         "errormessage": str(ie)})
+                dialogs.show_message(
+                    _("Extension failed to unload"), msg)
                 return
         self.update_model()
 
@@ -933,6 +945,13 @@ class ExtensionsPanel(PanelBuilder):
     def build_widget(self):
         grid = dialogwidgets.ControlGrid()
         self.extensions_helper = _ExtensionsHelper()
+
+        message_grid = dialogwidgets.ControlGrid()
+
+        grid.pack_label(
+            _("Extensions are a beta feature.  Developers interested "
+              "in writing extensions can learn more on our wiki."))
+        grid.end_line(spacing=8)
 
         grid.pack_label(_("Extensions:"))
         grid.end_line(spacing=0)

@@ -46,6 +46,7 @@ frontend.  It should input these arguments:
 # theme / properties in a different place for each frontend.
 
 import string
+import logging
 
 from miro import app
 from miro import startup
