@@ -52,12 +52,12 @@ def install_bonjour(startup=False):
                '%(appname)s has determined that your system is most '
                'likely missing the Avahi mDNSResponder compatibility '
                'library.  Please refer to your operating system '
-               'documentation on how you can install this library.',
+               'documentation on how you can install this library.' %
                {"appname": app.config.get(prefs.SHORT_APP_NAME)}
               )
     if startup:
-        rawtext = ('\n\nWould you like %(appname)s to warn you on next '
-                   'startup?',
+        rawtext += ('\n\nWould you like %(appname)s to warn you on next '
+                   'startup?' % 
                    {"appname": app.config.get(prefs.SHORT_APP_NAME)}
                   )
     description = _(rawtext)
@@ -66,7 +66,6 @@ def install_bonjour(startup=False):
     else:
         ret = dialogs.show_choice_dialog(title, description,
                                          [dialogs.BUTTON_YES,
-                                          dialogs.BUTTON_NOT_NOW,
                                           dialogs.BUTTON_NO
                                          ])
         if ret is None or ret == dialogs.BUTTON_YES:
