@@ -157,6 +157,7 @@ class LinuxApplication(Application):
     def startup_ui(self):
         sys.excepthook = self.exception_handler
         Application.startup_ui(self)
+        call_on_ui_thread(bonjour.check_bonjour_install)
 
     def _set_default_icon(self):
         # set the icon so that it doesn't flash when the window is
@@ -233,10 +234,6 @@ class LinuxApplication(Application):
             except OSError:
                 logging.exception("Problems removing autostart dir.")
 
-    def startup_ui(self):
-        Application.startup_ui(self)
-        call_on_ui_thread(bonjour.check_bonjour_install)
-        
     def open_url(self, url):
         resources.open_url(url)
 
