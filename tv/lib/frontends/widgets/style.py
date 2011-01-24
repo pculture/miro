@@ -688,7 +688,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             x = layout.last_rect.right + 5
         if self.data.expiration_date:
             button = self._make_button(layout_manager, self.KEEP_TEXT, 'keep')
-            layout.add_image(button, x, 0, 'show_contents')
+            layout.add_image(button, x, 0, 'keep')
             x = layout.last_rect.right + 5
 
         button = self._make_button(layout_manager, self.REMOVE_TEXT, 'delete')
