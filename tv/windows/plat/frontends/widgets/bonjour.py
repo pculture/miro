@@ -39,6 +39,31 @@ bonjour_install_supported = True
 
 BONJOUR_URL = "http://support.apple.com/kb/DL999"
 
+def check_bonjour_install():
+    request_count = app.config.get(prefs.BONJOUR_REQUEST_COUNT)
+    if app.sharing_manager.mdns_present or request_count > 0:
+        return
+    title = _('Install Bonjour')
+    description = _('For the best %(appname)s experience, we suggest you '
+                    'install Bonjour.  Installing Bonjour will '
+                    'allow you share your media library with other '
+                    '%(appname)s users on your network, as well as stream '
+                    'media from other %(appname)s users on your network. '
+                    'Would you like to do this now?',
+                    {"appname": app.config.get(prefs.SHORT_APP_NAME)}
+                   )
+    ret = dialogs.show_choice_dialog(title, description,
+                                     [dialogs.BUTTON_YES,
+                                      dialogs.BUTTON_NOT_NOW,
+                                      dialogs.BUTTON_NO
+                                     ])
+    if ret is None or ret == dialogs.BUTTON_NOT_NOW:
+        return
+    elif ret == dialogs.BUTTON_YES:
+        install_bonjour()
+    else:
+        app.config.set(prefs.BONJOUR_REQUEST_COUNT, 1)
+
 def install_bonjour():
     title = _("Install Bonjour")
     description = _(

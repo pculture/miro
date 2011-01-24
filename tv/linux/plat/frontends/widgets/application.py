@@ -58,6 +58,8 @@ from miro.frontends.widgets.gtk import trayicon
 from miro.plat import resources
 from miro.plat.utils import get_cookie_path
 from miro.plat.frontends.widgets import mediakeys
+from miro.plat.frontends.widgets import bonjour
+from miro.plat.frontends.widgets.threads import call_on_ui_thread
 
 from miro.frontends.widgets.gtk.widgetset import Rect
 from miro.frontends.widgets.gtk import webkitgtkhacks
@@ -231,6 +233,10 @@ class LinuxApplication(Application):
             except OSError:
                 logging.exception("Problems removing autostart dir.")
 
+    def startup_ui(self):
+        Application.startup_ui(self)
+        call_on_ui_thread(bonjour.check_bonjour_install)
+        
     def open_url(self, url):
         resources.open_url(url)
 

@@ -52,6 +52,7 @@ from miro.plat.frontends.widgets import xulrunnerbrowser
 from miro.frontends.widgets.gtk import trayicon
 from miro.frontends.widgets.gtk import persistentwindow
 from miro.frontends.widgets.gtk import widgets
+from miro.plat.frontends.widgets import bonjour
 from miro.plat.frontends.widgets import flash
 from miro.plat.frontends.widgets import update
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
@@ -200,6 +201,7 @@ class WindowsApplication(Application):
         Application.startup_ui(self)
         call_on_ui_thread(migrateappname.migrateVideos, 'Democracy', 'Miro')
         call_on_ui_thread(flash.check_flash_install)
+        call_on_ui_thread(bonjour.check_bonjour_install)
 
     def open_url(self, url):
         # It looks like the maximum URL length is about 2k. I can't

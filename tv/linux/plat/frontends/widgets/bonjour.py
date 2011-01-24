@@ -35,14 +35,27 @@ from miro import prefs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 
+def check_bonjour_install():
+    request_count = app.config.get(prefs.BONJOUR_REQUEST_COUNT)
+    if app.sharing_manager.mdns_present or request_count > 0:
+        return
+    install_bonjour()
+
 # We can't really do much here ...
 def install_bonjour():
     title = _("Install Bonjour")
-    description = _(
-        "Miro has determined that your system is most likely missing "
-        "the Avahi mDNSResponder compatibility library.  Please refer " 
-        "to your operating system documentation on how you can install "
-        "this library."
-    )
+    description = _('For the best %(appname)s experience, we suggest you '
+                    'install Bonjour.  Installing Bonjour will '
+                    'allow you share your media library with other '
+                    '%(appname)s users on your network, as well as stream '
+                    'media from other %(appname)s users on your network.\n\n'
+                    '%(appname)s has determined that your system is most '
+                    'likely missing the Avahi mDNSResponder compatibility '
+                    'library.  Please refer to your operating system '
+                    'documentation on how you can install this library.\n\n'
+                    'Would you like %(appname)s to warn you on next '
+                    'startup?',
+                    {"appname": app.config.get(prefs.SHORT_APP_NAME)}
+                   )
     dialogs.show_message(title, description)
     logging.info('install bonjour clicked')

@@ -97,6 +97,7 @@ MAX_OLD_ITEMS_DEFAULT       = Pref(key='maxOldItemsDefault',    default=20,    p
 USE_UPNP                    = Pref(key='useUpnp',               default=True,  platformSpecific=False)
 BT_ENC_REQ                  = Pref(key='BitTorrentEncReq',      default=False, platformSpecific=False)
 CHANNEL_AUTO_DEFAULT        = Pref(key='ChannelAutoDefault',    default=u"new", platformSpecific=False)
+BONJOUR_REQUEST_COUNT       = Pref(key='bonjourRequestCount',   default=0,     platformSpecific=False)
 FLASH_REQUEST_COUNT         = Pref(key='flashRequestCount',     default=0,     platformSpecific=False)
 ENABLE_SUBTITLES            = Pref(key='enableSubtitles',       default=False, platformSpecific=False)
 SUBTITLE_ENCODING           = Pref(key='subtitleEncoding',      default=None,  platformSpecific=False)
