@@ -45,10 +45,11 @@ def check_bonjour_install():
         return
     title = _('Install Bonjour')
     description = _('For the best %(appname)s experience, we suggest you '
-                    'install Bonjour.  Installing Bonjour will '
+                    'install Bonjour, which is distributed as a part of '
+                    'Print Services.\n\nInstalling Bonjour will '
                     'allow you share your media library with other '
                     '%(appname)s users on your network, as well as stream '
-                    'media from other %(appname)s users on your network. '
+                    'media from other %(appname)s users on your network.\n\n'
                     'Would you like to do this now?',
                     {"appname": app.config.get(prefs.SHORT_APP_NAME)}
                    )
