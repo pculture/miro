@@ -44,23 +44,35 @@ def check_bonjour_install():
 # We can't really do much here ...
 def install_bonjour(startup=False):
     title = _("Install Bonjour")
-    rawtext = ('For the best %(appname)s experience, we suggest you '
-               'install Bonjour.  Installing Bonjour will '
-               'allow you share your media library with other '
-               '%(appname)s users on your network, as well as stream '
-               'media from other %(appname)s users on your network.\n\n'
-               '%(appname)s has determined that your system is most '
-               'likely missing the Avahi mDNSResponder compatibility '
-               'library.  Please refer to your operating system '
-               'documentation on how you can install this library.' %
-               {"appname": app.config.get(prefs.SHORT_APP_NAME)}
-              )
     if startup:
-        rawtext += ('\n\nWould you like %(appname)s to warn you on next '
-                   'startup?' % 
-                   {"appname": app.config.get(prefs.SHORT_APP_NAME)}
-                  )
-    description = _(rawtext)
+        description = _('For the best %(appname)s experience, we suggest you '
+                        'install Bonjour.  Installing Bonjour will '
+                        'allow you share your media library with other '
+                        '%(appname)s users on your network, as well as stream '
+                        'media from other %(appname)s users on your '
+                        'network.\n\n'
+                        '%(appname)s has determined that your system is most '
+                        'likely missing the Avahi mDNSResponder compatibility '
+                        'library.  Please refer to your operating system '
+                        'documentation on how you can install this library.',
+                        {"appname": app.config.get(prefs.SHORT_APP_NAME)}
+                       )
+    else:
+        description = _('For the best %(appname)s experience, we suggest you '
+                        'install Bonjour.  Installing Bonjour will '
+                        'allow you share your media library with other '
+                        '%(appname)s users on your network, as well as stream '
+                        'media from other %(appname)s users on your '
+                        'network.\n\n'
+                        '%(appname)s has determined that your system is most '
+                        'likely missing the Avahi mDNSResponder compatibility '
+                        'library.  Please refer to your operating system '
+                        'documentation on how you can install this '
+                        'library.\n\n'
+                        'Would you like %(appname)s to warn you on next '
+                        'startup?',
+                        {"appname": app.config.get(prefs.SHORT_APP_NAME)}
+                       )
     if not startup:
         dialogs.show_message(title, description)
     else:
