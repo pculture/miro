@@ -302,7 +302,7 @@ class GuideTracker(ViewTracker):
                 self.added_order.append(obj)
             elif not is_visible and was_visible: # newly hidden
                 self.removed[obj.id] = obj
-            else:
+            elif is_visible:
                 self.changed[obj.id] = obj
         ViewTracker.send_messages(self)
 
