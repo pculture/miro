@@ -43,6 +43,7 @@ from miro import prefs
 from miro import signals
 from miro import util
 from miro import fileutil
+from miro import filetypes
 from miro.fileobject import FilenameType
 from miro.plat.utils import (kill_process, movie_data_program_info,
                              thread_body)
@@ -59,7 +60,6 @@ TYPE_RE = re.compile("Miro-Movie-Data-Type: (audio|video|other)")
 THUMBNAIL_SUCCESS_RE = re.compile("Miro-Movie-Data-Thumbnail: Success")
 TRY_AGAIN_RE = re.compile("Miro-Try-Again: True")
 
-VIDEO_EXTENSIONS = ('.m4v','.mp4','.mpg')
 TAG_MAP = {
     'album': ('album', 'talb', 'wm/albumtitle', u'\uFFFDalb'),
     'artist': ('artist', 'tpe1', 'tpe2', 'tpe3', 'author', 'albumartist',
@@ -277,15 +277,22 @@ class MovieDataUpdater(signals.SignalEmitter):
         return pipe.stdout.read()
 
     def _mediatype_from_mime(self, mimes):
+        audio = False
+        other = False
         for mime in mimes:
-            category = mime.split('/')[0]
-            if category == 'video':
-                return category
-        for mime in mimes:
-            category = mime.split('/')[0]
-            if category == 'audio':
-                return category
-        return None
+            ext = filetypes.guess_extension(mime)
+            if ext in filetypes.VIDEO_EXTENSIONS:
+                return 'video'
+            if ext in filetypes.AUDIO_EXTENSIONS:
+                audio = True
+            if ext in filetypes.OTHER_EXTENSIONS:
+                other = True
+        if audio:
+            return 'audio'
+        elif other:
+            return 'other'
+        else:
+            return None
 
     def _sanitize_keys(self, tags):
         """Strip useless components and strange characters from tag names
@@ -408,9 +415,11 @@ class MovieDataUpdater(signals.SignalEmitter):
         except (AttributeError, IOError):
             return (mediatype, duration, data, cover_art)
 
-        if os.path.splitext(
-            item.get_filename())[1].lower() in VIDEO_EXTENSIONS:
+        filename = item.get_filename()
+        if filetypes.is_video_filename(filename):
             mediatype = 'video'
+        elif filetypes.is_audio_filename(filename):
+            mediatype = 'audio'
         elif hasattr(muta, 'mime'):
             mediatype = self._mediatype_from_mime(muta.mime)
 
