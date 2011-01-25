@@ -248,7 +248,7 @@ class VLCSniffer(object):
         try:
             filename = iteminfo.video_path.urlize()
         except AttributeError:
-            filename = 'file://' + iteminfo.video_path
+            filename = iteminfo.video_path
 
         # filenames coming in are unicode objects, VLC expects utf-8
         # strings.
@@ -443,7 +443,7 @@ class VLCRenderer(object):
         try:
             filename = iteminfo.video_path.urlize()
         except AttributeError:
-            filename = 'file://' + iteminfo.video_path
+            filename = iteminfo.video_path
 
         # filenames coming in are unicode objects, VLC expects utf-8
         # strings.
