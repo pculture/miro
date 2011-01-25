@@ -130,7 +130,12 @@ class SharingItem(object):
         self.resumeTime = 0
         self.subtitle_encoding = self.enclosure_type = None
         self.description = u''
-        self.metadata = {}
+        self.album = None
+        self.artist = None
+        self.title_tag = None
+        self.track = None
+        self.year = None
+        self.genre = None
         self.rating = None
         self.file_type = None
         self.creation_time = None
@@ -733,7 +738,8 @@ class SharingManagerBackend(object):
                 # Fixup: these are stored as string?
                 if daap_string in ('daap.songtracknumber',
                                    'daap.songyear'):
-                    itemprop[daap_string] = int(itemprop[daap_string])
+                    if itemprop[daap_string] is not None:
+                        itemprop[daap_string] = int(itemprop[daap_string])
                 # Fixup the duration: need to convert to millisecond.
                 if daap_string == 'daap.songtime':
                     itemprop[daap_string] *= DURATION_SCALE

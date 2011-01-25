@@ -168,26 +168,26 @@ class ArtistSort(ItemSort):
     def sort_key(self, item):
         return [util.name_sort_key(item.artist),
                 util.name_sort_key(item.album),
-                int(item.track)]
+                item.track]
 
 class AlbumSort(ItemSort):
     KEY = 'album'
     def sort_key(self, item):
         return [util.name_sort_key(item.album),
-                int(item.track),
+                item.track,
                 util.name_sort_key(item.artist)]
 
 class TrackSort(ItemSort):
     KEY = 'track'
     def sort_key(self, item):
-        return [int(item.track),
+        return [item.track,
                 util.name_sort_key(item.artist),
                 util.name_sort_key(item.album)]
 
 class YearSort(ItemSort):
     KEY = 'year'
     def sort_key(self, item):
-        return int(item.year)
+        return item.year
 
 class GenreSort(ItemSort):
     KEY = 'genre'

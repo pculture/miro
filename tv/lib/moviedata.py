@@ -70,6 +70,10 @@ TAG_MAP = {
     'genre': ('genre', 'tcon', 'providerstyle', u'\uFFFDgen'),
     'cover-art': ('\uFFFDart', 'apic', 'covr'),
 }
+TAG_TYPES = {
+    'album': unicode, 'artist': unicode, 'title': unicode, 'track': int,
+    'year': int, 'genre': unicode,
+}
 NOFLATTEN_TAGS = ('cover-art',)
 
 
@@ -219,7 +223,11 @@ class MovieDataUpdater(signals.SignalEmitter):
             if duration > -1 and mime_mediatype is not 'video':
                 mediatype = 'audio'
                 screenshot = mdi.item.screenshot or FilenameType("")
-                logging.debug("moviedata: mutagen %s %s", duration, mediatype)
+                if cover_art is None:
+                    logging.debug("moviedata: mutagen %s %s", duration, mediatype)
+                else:
+                    logging.debug("moviedata: mutagen %s %s %s",
+                                  duration, cover_art, mediatype)
 
                 self.update_finished(mdi.item, duration, screenshot, mediatype,
                                      metadata, cover_art)
@@ -468,6 +476,13 @@ class MovieDataUpdater(signals.SignalEmitter):
             cover_art = self._make_cover_art_file(item.get_filename(), image_data)
             del data['cover-art']
 
+        for tag, value in data.items():
+            if not isinstance(value, TAG_TYPES[tag]):
+                try:
+                    data[tag] = TAG_TYPES[tag](value)
+                except ValueError:
+                    logging.debug("Invalid type for tag %s: %s", tag, repr(value))
+                    del data[tag]
         return (mediatype, duration, data, cover_art)
 
     def kill_process(self, pid):
@@ -502,8 +517,13 @@ class MovieDataUpdater(signals.SignalEmitter):
         if item.id_exists():
             item.duration = duration
             item.screenshot = screenshot
-            item.metadata = metadata
             item.cover_art = cover_art
+            item.album = metadata.get('album', None)
+            item.artist = metadata.get('artist', None)
+            item.title_tag = metadata.get('title', None)
+            item.track = metadata.get('track', None)
+            item.year = metadata.get('year', None)
+            item.genre = metadata.get('genre', None)
             if mediatype is not None:
                 item.file_type = unicode(mediatype)
                 item.media_type_checked = True

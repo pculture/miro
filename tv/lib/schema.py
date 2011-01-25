@@ -441,8 +441,12 @@ class ItemSchema(MultiClassObjectSchema):
         ('shortFilename', SchemaFilename(noneOk=True)),
         ('offsetPath', SchemaFilename(noneOk=True)),
         ('file_type', SchemaString(noneOk=True)),
-        ('metadata',
-            SchemaDict(SchemaString(noneOk=False),SchemaString(noneOk=True),noneOk=True)),
+        ('album', SchemaString(noneOk=True)),
+        ('artist', SchemaString(noneOk=True)),
+        ('title_tag', SchemaString(noneOk=True)),
+        ('track', SchemaInt(noneOk=True)),
+        ('year', SchemaInt(noneOk=True)),
+        ('genre', SchemaString(noneOk=True)),
         ('rating', SchemaInt(noneOk=True)),
         ('play_count', SchemaInt()),
         ('skip_count', SchemaInt()),
@@ -717,7 +721,7 @@ class DBLogEntrySchema(DDBObjectSchema):
         ('description', SchemaString()),
     ]
 
-VERSION = 133
+VERSION = 134
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,

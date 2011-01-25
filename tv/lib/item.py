@@ -350,7 +350,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.was_downloaded = False
         self.subtitle_encoding = None
         self.setup_new_icon_cache()
-        self.metadata = {}
+        self.album = None
+        self.artist = None
+        self.title_tag = None
+        self.track = None
+        self.year = None
+        self.genre = None
         self.rating = None
         self.play_count = 0
         self.skip_count = 0
@@ -461,11 +466,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def next_10_incomplete_movie_data_view(cls):
+#                'metadata IS NULL OR '
         return cls.make_view("(is_file_item OR (rd.state in ('finished', "
                 "'uploading', 'uploading-paused'))) AND "
                 '(duration IS NULL OR '
                 'screenshot IS NULL OR '
-                'metadata IS NULL OR '
                 'NOT item.media_type_checked)',
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
                 limit=10)
@@ -1284,39 +1289,27 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @returns_unicode
     def get_artist(self):
-        try:
-            return self.metadata['artist']
-        except (KeyError, TypeError):
-            return u''
+        return self.artist
 
     @returns_unicode
     def get_album(self):
-        try:
-            return self.metadata['album']
-        except (KeyError, TypeError):
-            return u''
+        return self.album
 
     def get_track(self):
-        try:
-            return self.metadata['track']
-        except (KeyError, TypeError):
-            return -1
+        return self.track
 
     def get_year(self):
-        try:
-            return self.metadata['year']
-        except (KeyError, TypeError):
-            return -1
+        return self.year
 
     @returns_unicode
     def get_genre(self):
-        try:
-            return self.metadata['genre']
-        except (KeyError, TypeError):
-            return u''
+        return self.genre
 
     def get_rating(self):
         return self.rating
+
+    def get_title_tag(self):
+        return self.title_tag
 
     def get_cover_art(self):
         return self.cover_art
@@ -1331,10 +1324,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """
         if self.title:
             return self.title
-        try:
-            return self.metadata['title']
-        except (KeyError, TypeError):
-            pass
+        if self.title_tag:
+            return self.title_tag
         if self.entry_title is not None:
             return self.entry_title
         if self.get_filename() is not None:

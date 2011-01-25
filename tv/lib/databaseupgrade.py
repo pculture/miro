@@ -3062,3 +3062,31 @@ def upgrade133(cursor):
         # no channel tab order? the user is out of luck for saving their tab
         # order
         pass
+
+def upgrade134(cursor):
+    """Split item.metadata into scalar fields.
+    """
+    cursor.execute("SELECT id, metadata FROM item")
+    items = []
+    for id_, metadata in cursor.fetchall():
+        try:
+            data = eval(metadata)
+        except TypeError:
+            data = {}
+        album = data.get('album', None)
+        artist = data.get('artist', None)
+        title_tag = data.get('title', None)
+        track = data.get('track', None)
+        year = data.get('year', None)
+        genre = data.get('genre', None)
+        items.append((album, artist, title_tag, track, year, genre, id_))
+    remove_column(cursor, 'item', ['metadata'])
+    cursor.execute("ALTER TABLE item ADD COLUMN album text")
+    cursor.execute("ALTER TABLE item ADD COLUMN artist text")
+    cursor.execute("ALTER TABLE item ADD COLUMN title_tag text")
+    cursor.execute("ALTER TABLE item ADD COLUMN track integer")
+    cursor.execute("ALTER TABLE item ADD COLUMN year integer")
+    cursor.execute("ALTER TABLE item ADD COLUMN genre text")
+    for data in items:
+        cursor.execute("UPDATE item SET album=?, artist=?, title_tag=?,"
+            "track=?, year=?, genre=? WHERE id=?", data)

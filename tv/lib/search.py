@@ -96,9 +96,12 @@ class BooleanSearch:
 
 def _calc_search_text(item_info):
     match_against = [ item_info.name, item_info.description ]
-    match_against.append(item_info.artist)
-    match_against.append(item_info.album)
-    match_against.append(item_info.genre)
+    if item_info.artist is not None:
+        match_against.append(item_info.artist)
+    if item_info.album is not None:
+        match_against.append(item_info.album)
+    if item_info.genre is not None:
+        match_against.append(item_info.genre)
     if item_info.feed_name is not None:
         match_against.append(item_info.feed_name)
     if item_info.download_info and item_info.download_info.torrent:
