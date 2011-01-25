@@ -869,4 +869,6 @@ class SharingManager(object):
 
     def shutdown(self):
         if self.sharing:
+            if self.discoverable:
+                self.disable_discover()
             self.disable_sharing()
