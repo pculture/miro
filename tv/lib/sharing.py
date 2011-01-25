@@ -572,9 +572,13 @@ class SharingManagerBackend(object):
                                   "SharingManagerBackend: playlist added")
 
     def handle_playlist_changed(self, obj, changed):
-        for x in changed:
-            del self.daap_playlists[x.id]
-        eventloop.add_urgent_call(lambda: self.make_daap_playlists(changed),
+        def _handle_playlist_changed():
+            # We could just overwrite everything without actually deleting
+            # the object.
+            for x in changed:
+                del self.daap_playlists[x.id]
+            self.make_daap_playlists(changed)
+        eventloop.add_urgent_call(lambda: _handle_playlist_changed(),
                                   "SharingManagerBackend: playlist changed")
 
     def handle_playlist_removed(self, obj, removed):
