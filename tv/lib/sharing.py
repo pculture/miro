@@ -723,10 +723,7 @@ class SharingManager(object):
         self.discoverable = False
         self.name = ''
         self.mdns_present = libdaap.mdns_init()
-        self.config_watcher = config.ConfigWatcher(
-            lambda func, *args: eventloop.add_idle(func, 'config watcher',
-                 args=args))
-        self.callback_handle = self.config_watcher.connect('changed',
+        self.callback_handle = app.backend_config_watcher.connect('changed',
                                self.on_config_changed)
         # Create the sharing server backend that keeps track of all the list
         # of items available.  Don't know whether we can just query it on the
@@ -743,8 +740,7 @@ class SharingManager(object):
         listen_keys = ['ShareMedia', 'ShareDiscoverable', 'ShareName']
         if not key in listen_keys:
             return
-        # We actually know what's changed but it's so simple let's not bother.
-        eventloop.add_urgent_call(self.twiddle_sharing, "twiddle sharing")
+        self.twiddle_sharing()
 
     def twiddle_sharing(self):
         sharing = app.config.get(prefs.SHARE_MEDIA)
