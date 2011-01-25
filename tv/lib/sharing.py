@@ -568,15 +568,18 @@ class SharingManagerBackend(object):
             self.daap_playlists[item.id] = itemprop
 
     def handle_playlist_added(self, obj, added):
-        eventloop.add_urgent_call(lambda: self.make_daap_playlists(added),
+        playlists = [x for x in added if not x.is_folder]
+        eventloop.add_urgent_call(lambda: self.make_daap_playlists(playlists),
                                   "SharingManagerBackend: playlist added")
 
     def handle_playlist_changed(self, obj, changed):
         def _handle_playlist_changed():
             # We could just overwrite everything without actually deleting
-            # the object.
+            # the object.  A missing key means it's a folder, and we skip
+            # over it.
             for x in changed:
-                del self.daap_playlists[x.id]
+                if self.daap_playlists.has_key(x.id):
+                    del self.daap_playlists[x.id]
             self.make_daap_playlists(changed)
         eventloop.add_urgent_call(lambda: _handle_playlist_changed(),
                                   "SharingManagerBackend: playlist changed")
@@ -584,7 +587,9 @@ class SharingManagerBackend(object):
     def handle_playlist_removed(self, obj, removed):
         def _handle_playlist_removed():
             for x in removed:
-                del self.daap_playlists[x]
+                # Missing key means it's a folder and we skip over it.
+                if self.daap_playlists.has_key(x):
+                    del self.daap_playlists[x]
         eventloop.add_urgent_call(lambda: _handle_playlist_removed(),
                                   "SharingManagerBackend: playlist removed")
 
