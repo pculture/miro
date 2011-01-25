@@ -1142,7 +1142,7 @@ class StatusRenderer(ListViewRenderer):
             hbox.pack_space(8)
             hbox.pack(hotspot)
 
-class RatingRenderer(widgetset.InfoListRenderer):
+class RatingRenderer(ListViewRenderer):
     ICON_STATES = ('yes', 'no', 'probably', 'unset')
     ICON_HORIZONTAL_SPACING = 2
     HOTSPOT_VERTICAL_PADDING = 8
@@ -1174,8 +1174,8 @@ class RatingRenderer(widgetset.InfoListRenderer):
         else:
             return hotspot_info[0]
 
-    def get_size(self, style, layout_manager):
-        return self.width, self.height
+    def calc_height(self, style, layout_manager):
+        return self.height
 
     def render(self, context, layout_manager, selected, hotspot, hover):
         if hover and self.layout:
@@ -1273,7 +1273,7 @@ class LastPlayedRenderer(ListViewRenderer):
     def _setup_layout_manager(self):
         self.text = displaytext.date_slashes(self.info.last_played)
 
-class StateCircleRenderer(widgetset.InfoListRenderer):
+class StateCircleRenderer(ListViewRenderer):
     ICON_STATES = ('normal', 'new', 'playing', 'downloading')
     min_width = 25
 
@@ -1287,8 +1287,8 @@ class StateCircleRenderer(widgetset.InfoListRenderer):
         self.width, self.height = size
         self.layout = None
 
-    def get_size(self, style, layout_manager):
-        return self.width, self.height
+    def calc_height(self, style, layout_manager):
+        return self.height
 
     def render(self, context, layout_manager, selected, hotspot, hover):
         if self.info.state == 'downloading':
