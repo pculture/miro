@@ -977,10 +977,8 @@ class ListViewRenderer(widgetset.InfoListRenderer):
     right_aligned = False
 
     def get_size(self, style, layout_manager):
-        return 5, self.calc_height(style, layout_manager)
-
-    def calc_height(self, style, layout_manager):
-        return layout_manager.font(self.font_size, bold=self.bold).line_height()
+        self.height = layout_manager.font(self.font_size, bold=self.bold).line_height()
+        return 5, self.height
 
     def hotspot_test(self, style, layout_manager, x, y, width, height):
         self.hotspot = None
@@ -1028,21 +1026,13 @@ class ListViewRenderer(widgetset.InfoListRenderer):
         pass
 
 class NameRenderer(ListViewRenderer):
-    button_font_size = 0.77
+    button_font_size = self.font_size * (0.77 / 0.82)
 
     def __init__(self):
         ListViewRenderer.__init__(self)
         self.button = None
         path = resources.path('images/download-arrow.png')
         self.download_icon = imagepool.get_surface(path)
-
-    def calc_height(self, style, layout_manager):
-        default = ListViewRenderer.calc_height(self, style, layout_manager)
-        if self.button is None:
-            height = 0
-        else:
-            height = self.button.get_size()[1]
-        return max(default, height)
 
     def _setup_layout_manager(self):
         self.text = self.info.name
@@ -1153,8 +1143,9 @@ class RatingRenderer(ListViewRenderer):
         for state in RatingRenderer.ICON_STATES:
             path = resources.path('images/star-%s.png' % state)
             self.icon[state] = imagepool.get_surface(path)
-        self.icon_width, self.height = self.icon['yes'].get_size()
-        self.height += self.HOTSPOT_VERTICAL_PADDING
+        self.icon_width, self.icon_height = self.icon['yes'].get_size()
+        # TODO: size icon based on self.height
+        self.icon_height += self.HOTSPOT_VERTICAL_PADDING
         self.icon_width += self.ICON_HORIZONTAL_SPACING
         # TODO: find what makes the following +4 necessary
         self.width = self.min_width = int(self.icon_width * 5) + 4
@@ -1174,9 +1165,6 @@ class RatingRenderer(ListViewRenderer):
         else:
             return hotspot_info[0]
 
-    def calc_height(self, style, layout_manager):
-        return self.height
-
     def render(self, context, layout_manager, selected, hotspot, hover):
         if hover and self.layout:
             hotspot_info = self.layout.find_hotspot(hover[0], hover[1],
@@ -1194,7 +1182,7 @@ class RatingRenderer(ListViewRenderer):
             icon = self._get_icon(i)
             alignment = cellpack.Alignment(icon,
                 yalign=0.5, yscale=0.0, xalign=0.5, xscale=0,
-                min_width=self.icon_width, min_height=self.height)
+                min_width=self.icon_width, min_height=self.icon_height)
             hbox.pack(alignment)
 
     def _get_icon(self, i):
@@ -1275,7 +1263,7 @@ class LastPlayedRenderer(ListViewRenderer):
 
 class StateCircleRenderer(ListViewRenderer):
     ICON_STATES = ('normal', 'new', 'playing', 'downloading')
-    min_width = 25
+    min_width = 10
 
     def __init__(self):
         widgetset.InfoListRenderer.__init__(self)
@@ -1284,11 +1272,8 @@ class StateCircleRenderer(ListViewRenderer):
             path = resources.path('images/status-icon-%s.png' % state)
             self.icon[state] = imagepool.get_surface(path)
         size = self.icon[StateCircleRenderer.ICON_STATES[0]].get_size()
-        self.width, self.height = size
+        self.width, self.icon_height = size
         self.layout = None
-
-    def calc_height(self, style, layout_manager):
-        return self.height
 
     def render(self, context, layout_manager, selected, hotspot, hover):
         if self.info.state == 'downloading':
@@ -1303,8 +1288,8 @@ class StateCircleRenderer(ListViewRenderer):
         else:
             icon = self.icon['normal']
         x = int((context.width - self.width) / 2)
-        y = int((context.height - self.height) / 2)
-        icon.draw(context, x, y, self.width, self.height)
+        y = int((context.height - self.icon_height) / 2)
+        icon.draw(context, x, y, self.width, self.icon_height)
 
 class ProgressBarColorSet(object):
     PROGRESS_BASE_TOP = (0.92, 0.53, 0.21)
