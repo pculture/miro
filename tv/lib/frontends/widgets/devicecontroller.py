@@ -43,6 +43,7 @@ from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import segmented
+from miro.frontends.widgets import style
 from miro.frontends.widgets import widgetutil
 from miro.conversions import conversion_manager
 
@@ -58,6 +59,45 @@ class DeviceTabButtonSegment(segmented.TextButtonSegment):
     COLOR = (1, 1, 1)
     TEXT_COLOR = {True: COLOR, False: COLOR}
 
+class SizeProgressBar(widgetset.Background):
+    GRADIENT_COLOR_TOP = style.css_to_color('#080808')
+    GRADIENT_COLOR_BOTTOM = style.css_to_color('#515151')
+    SIZE_COLOR_TOP = style.css_to_color('#829ac8')
+    SIZE_COLOR_BOTTOM = style.css_to_color('#697fb0')
+    SIZE_BORDER = style.css_to_color('#060606')
+
+    def __init__(self):
+        widgetset.Background.__init__(self)
+        self.size_ratio = 0.0
+
+    def set_progress(self, progress):
+        self.size_ratio = progress
+        self.queue_redraw()
+
+    def draw(self, context, layout):
+        context.save()
+        widgetutil.round_rect(context, 0, 0, context.width, context.height, 5)
+        context.clip() # now we can just draw rectangles
+        gradient = widgetset.Gradient(0, 0, 0, context.height)
+        gradient.set_start_color(self.GRADIENT_COLOR_TOP)
+        gradient.set_end_color(self.GRADIENT_COLOR_BOTTOM)
+        context.rectangle(0, 0, context.width, context.height)
+        context.gradient_fill(gradient)
+        progress_width = context.width * self.size_ratio
+        context.rectangle(0, 0, progress_width, context.height)
+        context.set_color(self.SIZE_BORDER)
+        context.fill()
+        if progress_width > 2:
+            gradient = widgetset.Gradient(1, 1, 1, context.height - 2)
+            gradient.set_start_color(self.SIZE_COLOR_TOP)
+            gradient.set_end_color(self.SIZE_COLOR_BOTTOM)
+            widgetutil.round_rect_reverse(context, 1, 1, progress_width - 2,
+                                          context.height - 2, 4)
+            context.gradient_fill(gradient)
+            context.rectangle(6, 1, progress_width - 7, context.height - 2)
+            context.gradient_fill(gradient)
+        context.restore()
+
 class SizeWidget(widgetset.VBox):
     def __init__(self):
         widgetset.VBox.__init__(self)
@@ -68,16 +108,16 @@ class SizeWidget(widgetset.VBox):
         self.sync_label = widgetset.Label(u"")
         line.pack_start(self.size_label)
         line.pack_end(self.sync_label)
-        self.pack_start(line)
+        self.pack_start(widgetutil.pad(line, bottom=10))
 
         # second line: bigger; size status on left, sync button on right
         line = widgetset.HBox()
-        self.progress = widgetset.ProgressBar() # TODO: replace with prettier
-        self.progress.set_size_request(500, 50)
-        self.sync_button = widgetset.Button(u"Sync Now")
-        self.sync_button.set_size_request(-1, 50)
+        self.progress = SizeProgressBar()
+        self.progress.set_size_request(425, 35)
+        self.sync_button = widgetset.Button(_("Sync Now"))
+        self.sync_button.set_size_request(100, 35)
         line.pack_start(self.progress)
-        line.pack_end(self.sync_button)
+        line.pack_end(widgetutil.pad(self.sync_button, left=50))
         self.pack_start(line)
 
     def set_size(self, size, remaining):
@@ -105,6 +145,37 @@ class SizeWidget(widgetset.VBox):
             self.sync_label.set_text(_("Up to date"))
             self.sync_button.disable()
 
+class SyncProgressBar(widgetset.Background):
+    PROGRESS_GRADIENT_TOP = (1, 1, 1)
+    PROGRESS_GRADIENT_BOTTOM = style.css_to_color('#a0a0a0')
+
+    BACKGROUND_GRADIENT_TOP = style.css_to_color('#0c0c0e')
+    BACKGROUND_GRADIENT_BOTTOM = style.css_to_color('#3f4346')
+
+    def __init__(self):
+        widgetset.Background.__init__(self)
+        self.progress_ratio = 0.0
+
+    def set_progress(self, progress):
+        self.progress_ratio = progress
+        self.queue_redraw()
+
+    def draw(self, context, layout):
+        widgetutil.circular_rect(context, 0, 0, context.width, context.height)
+        gradient = widgetset.Gradient(0, 0, 0, context.height)
+        gradient.set_start_color(self.BACKGROUND_GRADIENT_TOP)
+        gradient.set_end_color(self.BACKGROUND_GRADIENT_BOTTOM)
+        context.gradient_fill(gradient)
+        progress_width = context.width * self.progress_ratio
+        if progress_width > 2:
+            widgetutil.circular_rect_negative(context, 1, 1,
+                                              progress_width - 2,
+                                              context.height - 2)
+            gradient = widgetset.Gradient(1, 1, 1, context.height - 2)
+            gradient.set_start_color(self.PROGRESS_GRADIENT_TOP)
+            gradient.set_end_color(self.PROGRESS_GRADIENT_BOTTOM)
+            context.gradient_fill(gradient)
+
 class SyncProgressWidget(widgetset.Background):
     def __init__(self):
         widgetset.Background.__init__(self)
@@ -112,9 +183,10 @@ class SyncProgressWidget(widgetset.Background):
         vbox = widgetset.VBox()
         # first line: sync progess and cancel button
         line = widgetset.HBox()
-        self.sync_progress = widgetset.ProgressBar()
+        self.sync_progress = SyncProgressBar()
+        self.sync_progress.set_size_request(400, 10)
         self.cancel_button = widgetset.Button(u"X") #'sync-cancel')
-        line.pack_start(widgetutil.pad(self.sync_progress, 5, 5, 5, 5))
+        line.pack_start(widgetutil.pad(self.sync_progress, 10, 10, 5, 5))
         line.pack_end(widgetutil.pad(self.cancel_button, 5, 5, 5, 5))
         vbox.pack_start(line)
 
@@ -125,7 +197,7 @@ class SyncProgressWidget(widgetset.Background):
         line.pack_end(widgetutil.align_right(self.sync_remaining, 5, 5, 5, 5))
         vbox.pack_start(line)
 
-        self.add(vbox)
+        self.add(widgetutil.pad(vbox, 10, 10, 10, 10))
 
     def set_status(self, progress, eta):
         self.sync_progress.set_progress(progress)
@@ -137,9 +209,15 @@ class SyncProgressWidget(widgetset.Background):
             self.sync_remaining.set_text(u"")
 
     def draw(self, context, layout):
+        # we draw the rectangle off the bottom so that it's flat
         widgetutil.round_rect(context, 0, 0, context.width,
-                              context.height + 5, 5)
-        context.set_color((0.5, 0.5, 1.0))
+                              context.height + 10, 10)
+
+        context.set_color(style.css_to_color('#9199bd'))
+        context.fill()
+        widgetutil.round_rect_reverse(context, 1, 1, context.width - 2,
+                                      context.height + 10, 10)
+        context.set_color(style.css_to_color('#bec1d0'))
         context.fill()
 
 class SyncWidget(widgetset.HBox):
@@ -439,14 +517,12 @@ class DeviceMountedView(widgetset.VBox):
                                         bottom_pad=15,
                                         right_pad=20)
         alignment.add(self.device_size)
-        background = widgetset.SolidBackground((0.6, 0.6, 0.6))
+        background = widgetset.SolidBackground((0.643, 0.643, 0.643))
         background.add(alignment)
         vbox.pack_end(background)
 
         self.sync_container = widgetset.Background()
         vbox.pack_end(widgetutil.align_center(self.sync_container))
-        
-
 
         self.add_tab('main', vbox)
         self.add_tab('video', widgetutil.align_center(VideoFeedSyncWidget()))
