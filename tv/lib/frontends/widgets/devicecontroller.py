@@ -55,9 +55,25 @@ class DeviceTitlebar(itemlistwidgets.ItemListTitlebar):
         pass
 
 class DeviceTabButtonSegment(segmented.TextButtonSegment):
+    PARTS = {
+        'off-far-left':     segmented._get_image('device-off-far-left'),
+        'off-middle-left':  segmented._get_image('device-off-middle-left'),
+        'off-center':       segmented._get_image('device-off-center'),
+        'off-middle-right': segmented._get_image('device-off-middle-right'),
+        'off-far-right':    segmented._get_image('device-off-far-right'),
+        'on-far-left':      segmented._get_image('device-on-far-left'),
+        'on-middle-left':   segmented._get_image('device-on-middle-left'),
+        'on-center':        segmented._get_image('device-on-center'),
+        'on-middle-right':  segmented._get_image('device-on-middle-right'),
+        'on-far-right':     segmented._get_image('device-on-far-right')
+    }
+
     MARGIN = 20
-    COLOR = (1, 1, 1)
-    TEXT_COLOR = {True: COLOR, False: COLOR}
+    TEXT_COLOR = {True: (1, 1, 1), False: style.css_to_color('#424242')}
+
+    def size_request(self, layout):
+        width, _ = segmented.TextButtonSegment.size_request(self, layout)
+        return width, 23
 
 class SizeProgressBar(widgetset.Background):
     GRADIENT_COLOR_TOP = style.css_to_color('#080808')
@@ -487,6 +503,7 @@ class DeviceMountedView(widgetset.VBox):
         widgetset.VBox.__init__(self)
 
         self.button_row = segmented.SegmentedButtonsRow()
+
         for name in ('Main', 'Video', 'Audio', 'Playlists', 'Settings'):
             button = DeviceTabButtonSegment(name.lower(), name,
                                             self._tab_clicked)
