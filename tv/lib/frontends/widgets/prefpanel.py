@@ -671,7 +671,7 @@ class SharingPanel(PanelBuilder):
 
         attach_boolean(sharing_cbx, prefs.SHARE_MEDIA, [share_txt])
         attach_text(share_txt, prefs.SHARE_NAME,
-                    check_function=lambda w, x: not x.strip() == '')
+                    check_function=lambda w, v: not v.strip() == '')
 
         # Do this after the attach so we can override the preference
         # values.

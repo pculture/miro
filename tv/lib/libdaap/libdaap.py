@@ -629,7 +629,7 @@ def mdns_browse(callback):
            # Strip away the '_daap._tcp...'
            try:
                fullname = fullname[:fullname.rindex('._daap._tcp')]
-           except IndexError:
+           except (ValueError, IndexError):
                pass
            self.user_callback(added, fullname, hosttarget, ips, port)
     callback_obj = BrowseCallback(callback)

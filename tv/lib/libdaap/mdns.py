@@ -95,20 +95,25 @@ class BonjourCallbacks(object):
         if errorCode != pybonjour.kDNSServiceErr_NoError:
             return
 
-        host = HostObject()
         if (flags & pybonjour.kDNSServiceFlagsAdd):
+            host = HostObject()
             host.added = True
+            ref = pybonjour.DNSServiceResolve(0,
+                                              interfaceIndex,
+                                              serviceName,
+                                              regtype,
+                                              replyDomain,
+                                              self.resolve_callback)
+            self.host[ref.fileno()] = host
+            self.add_ref(ref)
         else:
-            host.added = False
+            # Avahi won't let us query if the share is being deleted ... bah.
+            self.user_callback(False,
+                               serviceName,
+                               '',
+                               [],
+                               0)
 
-        ref = pybonjour.DNSServiceResolve(0,
-                                          interfaceIndex,
-                                          serviceName,
-                                          regtype,
-                                          replyDomain,
-                                          self.resolve_callback)
-        self.host[ref.fileno()] = host
-        self.add_ref(ref)
 
     def query_callback(self, sdRef, flags, interfaceIndex, errorCode, fullname,
                        rrtype, rrclass, rdata, ttl):

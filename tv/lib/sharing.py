@@ -255,19 +255,23 @@ class SharingTracker(object):
                                  'DAAP test connect')
 
     def mdns_callback_backend(self, added, fullname, host, ips, port):
-        unused, local_port = app.sharing_manager.get_address()
-        local_addresses = self.calc_local_addresses()
-        ip_values = [inet_ntop(k, ips[k]) for k in ips.keys()]
-        if set(local_addresses + ip_values) and local_port == port:
+        # This name is supposed to be unique.  We rely on the zeroconf daemon 
+        # not to lie to us, but there's no other way.  Because on removal, 
+        # Avahi can't do a name query, so we have no
+        # hostname, port, or IP address information!
+        if fullname == app.config.get(prefs.SHARE_NAME):
             return
-        # Need to come up with a unique ID for the share.  Use 
-        # (name, host, port) and generate a hash of it.
-        # XXX is there anything better we can do than repr()?
-        share_id = unicode(md5(repr((fullname, host, port))).hexdigest())
-        print 'MDNS CALLBACK share_id', share_id
+        # Need to come up with a unique ID for the share.  Use the name
+        # only since that's supposed to be unique.  We rely on the 
+        # zeroconf daemon not telling us garbage.  Why name only though?
+        # Because on removal, Avahi can't do a name query, so we have no
+        # hostname, port, or IP address information!
+        share_id = unicode(fullname)
+        print 'gotten MDNS CALLBACK share_id'
         # Do we have this share on record?  If so then just ignore.
         # In particular work around a problem with Avahi apparently sending
-        # duplicate messages.
+        # duplicate messages, maybe it's doing that once for IPv4 then again
+        # for IPv6?
         if added and share_id in self.available_shares.keys():
             return
         if not added and not share_id in self.available_shares.keys():
@@ -736,6 +740,9 @@ class SharingManager(object):
         self.twiddle_sharing()
 
     def on_config_changed(self, obj, key, value):
+        listen_keys = ['ShareMedia', 'ShareDiscoverable', 'ShareName']
+        if not key in listen_keys:
+            return
         # We actually know what's changed but it's so simple let's not bother.
         eventloop.add_urgent_call(self.twiddle_sharing, "twiddle sharing")
 
