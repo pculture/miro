@@ -358,13 +358,9 @@ class MiroBuild (py2app):
                     os.path.join(INFOLIST_DIR, 'infolist-idmap.cpp'),
                     os.path.join(INFOLIST_DIR, 'infolist.pyx'),
                     os.path.join(INFOLIST_DIR, 'cocoa', 'infolist-cocoa.m'),
-                    os.path.join(INFOLIST_DIR, 'cocoa',
-                        'MiroInfoListDataSource.m'),
                     ],
                 include_dirs = [
                     INFOLIST_DIR,
-                    os.path.join(SANDBOX_DIR, 'pkg', 'pyobjc-core-2.2',
-                        'Modules', 'objc'),
                     ],
                 )
 

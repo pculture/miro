@@ -33,43 +33,27 @@
 
 #include <Python.h>
 #include "infolist-nodelist.h"
-#import <Cocoa/Cocoa.h>
-#import "pyobjc-api.h"
-#import "MiroInfoListDataSource.h"
+
+/* All these hooks are basically noops.  Cocoa is so much simpler than GTK
+ * here.
+ */
 
 int
 infolistplat_init(void)
 {
-        PyObject* infolist_mod;
-        int rv;
-
-        infolist_mod = PyImport_ImportModule("miro.infolist");
-        if(!infolist_mod) return -1;
-        rv = PyObjC_ImportAPI(infolist_mod);
-        Py_DECREF(infolist_mod);
-        return rv;
+        return 0;
 }
 
 
 int
 infolistplat_nodelist_created(InfoListNodeList* nodelist)
 {
-        MiroInfoListDataSource* dataSource;
-
-        dataSource = [[MiroInfoListDataSource alloc]
-                initWithNodelist: nodelist];
-        [dataSource retain];
-        nodelist->plat_data = dataSource;
         return 0;
 }
 
 int
 infolistplat_nodelist_will_destroy(InfoListNodeList* nodelist)
 {
-        MiroInfoListDataSource* dataSource;
-
-        dataSource = nodelist->plat_data;
-        [dataSource release];
         return 0;
 }
 
@@ -112,7 +96,6 @@ infolistplat_node_removed(InfoListNodeList* nodelist,
 void
 infolistplat_will_reorder_nodes(InfoListNodeList* nodelist)
 {
-        infolist_nodelist_calc_positions(nodelist);
 }
 
 int
@@ -125,16 +108,7 @@ int
 infolistplat_add_to_tableview(InfoListNodeList* nodelist,
                               PyObject* pyobject)
 {
-        id tableview;
-
-        tableview = PyObjCObject_GetObject(pyobject);
-        if(![tableview isKindOfClass: [NSTableView class]]) {
-                PyErr_SetString(PyExc_TypeError,
-                                "param must be a NSTableView");
-                return -1;
-        }
-        [tableview setDataSource: nodelist->plat_data];
-        return 0;
+        return -1; // shouldn't be called on OS X
 }
 
 InfoListNode*

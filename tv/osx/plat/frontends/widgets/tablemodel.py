@@ -32,10 +32,11 @@
 import itertools
 
 from AppKit import NSDragOperationNone, NSTableViewDropOn, protocols
-from Foundation import NSObject, NSNotFound
+from Foundation import NSObject, NSNotFound, NSMutableIndexSet
 from objc import YES, NO, nil
 
 from miro import fasttypes
+from miro import infolist
 from miro import signals
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets.simple import Image
@@ -115,10 +116,41 @@ class TableModelBase(signals.SignalEmitter):
         self.create_signal('row-changed')
         self.create_signal('structure-will-change')
 
+    def remember_selection(self, tableview):
+        """Remember the selection for a NSTableView using this model
+
+        Returns an object that can be passed to restore_selection() after
+        changes have been made to the model.
+
+        :param tableview: NSTableView to operate on
+
+        :returns: opaque object that can be passed to restore_selection
+        """
+        indexes = list_from_nsindexset(tableview.selectedRowIndexes())
+        return [self.iter_for_row(tableview, i) for i in indexes]
+
+    def restore_selection(self, tableview, old_selection):
+        """Restore the selection for a NSTableView using this model
+
+        :param tableview: NSTableView to operate on
+        :param old_selection: return value from remember_selection()
+        """
+        if not old_selection:
+            return
+        new_index_set = NSMutableIndexSet.alloc().init()
+        for iter in old_selection:
+            if iter.valid():
+                new_index_set.addIndex_(tableview.row_of_iter(iter))
+        tableview.selectRowIndexes_byExtendingSelection_(new_index_set, YES)
+
     def check_column_values(self, column_values):
         if len(self.column_types) != len(column_values):
             raise ValueError("Wrong number of columns")
         # We might want to do more typechecking here
+
+    def get_column_data(self, row, column):
+        attr_map = column.identifier()
+        return dict((name, row[index]) for name, index in attr_map.items())
 
     def update_value(self, iter, index, value):
         old_row = list(iter.value().values)
@@ -192,7 +224,8 @@ class TableModel(TableModelBase):
         if row not in self.row_indexes:
             self.row_indexes[row] = index
 
-    def get_index_of_row(self, row):
+    def row_of_iter(self, iter):
+        row = iter.value()
         try:
             return self.row_indexes[row]
         except KeyError:
@@ -229,6 +262,79 @@ class TableModel(TableModelBase):
 
     def iter_for_row(self, tableview, row):
         return self.row_list.nth_iter(row)
+
+class InfoListModel(infolist.InfoList, signals.SignalEmitter):
+    # Wrap InfoList into to a model that we can use.
+    #
+    # Note: iterators here are just row indexes (type int)
+
+    def __init__(self, *args, **kwargs):
+        infolist.InfoList.__init__(self, *args, **kwargs)
+        signals.SignalEmitter.__init__(self, 'structure-will-change', 'row-changed')
+
+    def first_iter(self):
+        if len(self) > 0:
+            return 0
+        else:
+            raise IndexError()
+
+    def remember_selection(self, tableview):
+        indexes = list_from_nsindexset(tableview.selectedRowIndexes())
+        return [self[i][0].id for i in indexes]
+
+    def restore_selection(self, tableview, old_selection):
+        """Restore the selection for a NSTableView using this model
+
+        :param tableview: NSTableView to operate on
+        :param old_selection: return value from remember_selection()
+        """
+        if not old_selection:
+            return
+        new_index_set = NSMutableIndexSet.alloc().init()
+        for id_ in old_selection:
+            try:
+                index = self.index_of_id(id_)
+            except KeyError:
+                pass
+            else:
+                new_index_set.addIndex_(index)
+        tableview.selectRowIndexes_byExtendingSelection_(new_index_set, YES)
+
+    def add_infos(self, *args, **kwargs):
+        self.emit('structure-will-change')
+        infolist.InfoList.add_infos(self, *args, **kwargs)
+
+    def remove_infos(self, *args, **kwargs):
+        self.emit('structure-will-change')
+        infolist.InfoList.remove_infos(self, *args, **kwargs)
+
+    def update_infos(self, *args, **kwargs):
+        self.emit('structure-will-change')
+        # HACK: update_infos might only change rows, so we maybe we only need
+        # to emit 'row-changed' here.  But most of the time we will re-sort
+        # things so it seems simpler just to emit structure-will-change
+        infolist.InfoList.update_infos(self, *args, **kwargs)
+
+    def remove_all(self, *args, **kwargs):
+        self.emit('structure-will-change')
+        infolist.InfoList.remove_all(self, *args, **kwargs)
+
+    def move_before(self, *args, **kwargs):
+        self.emit('structure-will-change')
+        infolist.InfoList.move_before(self, *args, **kwargs)
+
+    def change_sort(self, *args, **kwargs):
+        self.emit('structure-will-change')
+        infolist.InfoList.change_sort(self, *args, **kwargs)
+
+    def iter_for_row(self, tableview, row):
+        return row # iterators are just the row index
+
+    def row_of_iter(self, iter):
+        return iter # iterators are just the row index
+
+    def get_column_data(self, row, column):
+        return row
 
 class TreeNode(NSObject, TableRow):
     """A row in a TreeTableModel"""
@@ -324,10 +430,6 @@ class TreeTableModel(TableModelBase):
     def iter_for_row(self, tableview, row):
         return self.iter_for_item[tableview.itemAtRow_(row)]
 
-def get_column_data(row, column):
-    attr_map = column.identifier()
-    return dict((name, row[index]) for name, index in attr_map.items())
-
 class DataSourceBase(NSObject):
     def initWithModel_(self, model):
         self.model = model
@@ -390,7 +492,7 @@ class MiroTableViewDataSource(DataSourceBase, protocols.NSTableDataSource):
     def tableView_objectValueForTableColumn_row_(self, table_view, column, row):
         node = self.model.nth_iter(row).value()
         self.model.remember_row_at_index(node, row)
-        return get_column_data(node.values, column)
+        return self.model.get_column_data(node.values, column)
 
     def tableView_writeRowsWithIndexes_toPasteboard_(self, tableview, rowIndexes,
             pasteboard):
@@ -417,6 +519,22 @@ class MiroTableViewDataSource(DataSourceBase, protocols.NSTableDataSource):
         return self.acceptDrop_dragInfo_parentIter_position_(tableview, 
                 drag_info, parent, position)
 
+class MiroInfoListDataSource(MiroTableViewDataSource):
+    def translateRow_operation_(self, row, operation):
+        if operation == NSTableViewDropOn:
+            return (row,), -1
+        else:
+            return None, row
+    def tableView_objectValueForTableColumn_row_(self, table_view, column, row):
+        return self.model[row]
+
+    def tableView_writeRowsWithIndexes_toPasteboard_(self, tableview,
+            rowIndexes, pasteboard):
+        indexes = list_from_nsindexset(rowIndexes)
+        data = [self.model[i] for i in indexes]
+        return self.view_writeColumnData_ToPasteboard_(tableview, data,
+                pasteboard)
+
 class MiroOutlineViewDataSource(DataSourceBase, protocols.NSOutlineViewDataSource):
     def outlineView_child_ofItem_(self, view, child, item):
         if item is nil:
@@ -439,7 +557,7 @@ class MiroOutlineViewDataSource(DataSourceBase, protocols.NSOutlineViewDataSourc
 
     def outlineView_objectValueForTableColumn_byItem_(self, view, column,
             item):
-        return get_column_data(item.values, column)
+        return self.model.get_column_data(item.values, column)
 
     def outlineView_writeItems_toPasteboard_(self, outline_view, items, 
             pasteboard):

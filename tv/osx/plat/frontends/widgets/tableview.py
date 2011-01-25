@@ -114,8 +114,9 @@ class HotspotTracker(object):
             self.redraw_cell()
 
     def set_cell_data(self):
-        row = self.tableview.dataSource().model[self.iter]
-        value_dict = tablemodel.get_column_data(row, self.table_column)
+        model = self.tableview.dataSource().model
+        row = model[self.iter]
+        value_dict = model.get_column_data(row, self.table_column)
         self.cell.setObjectValue_(value_dict)
 
     def calc_hotspot(self):
@@ -290,13 +291,15 @@ class CustomTableCell(NSCell):
                 self.hotspot, view.cell_is_hovered(self.row, self.column))
         NSGraphicsContext.currentContext().restoreGraphicsState()
 
-    def setObjectValue_(self, value_dict):
-        self.value_dict = value_dict
+    def setObjectValue_(self, value):
+        self.object_value = value
 
     def set_wrapper_data(self):
-        self.wrapper.__dict__.update(self.value_dict)
+        self.wrapper.__dict__.update(self.object_value)
 
 class CustomCellRenderer(object):
+    CellClass = CustomTableCell
+
     def __init__(self):
         self.outline_column = False
 
@@ -309,18 +312,29 @@ class CustomCellRenderer(object):
         # 2) The Wrapper should only needs to stay around as long as the
         # NSCell that it's wrapping is around.  Once the column gets removed
         # from the table, the wrapper can be deleted.
-        nscell = CustomTableCell.alloc().init()
+        nscell = self.CellClass.alloc().init()
         nscell.wrapper = self
         column.setDataCell_(nscell)
 
     def hotspot_test(self, style, layout, x, y, width, height):
         return None
 
+class InfoListTableCell(CustomTableCell):
+    def set_wrapper_data(self):
+        self.wrapper.info, self.wrapper.attrs = self.object_value
+
+class InfoListRenderer(CustomCellRenderer):
+    CellClass = InfoListTableCell
+
+    def hotspot_test(self, style, layout, x, y, width, height):
+        return None
+
 def calc_row_height(view, model_row):
     row_height = 0
+    model = view.dataSource().model
     for column in view.tableColumns():
         cell = column.dataCell()
-        value_dict = tablemodel.get_column_data(model_row, column)
+        value_dict = model.get_column_data(model_row, column)
         cell.setObjectValue_(value_dict)
         cell_height = cell.calcHeight_(view)
         row_height = max(row_height, cell_height)
@@ -701,7 +715,10 @@ class TableView(Widget):
         self.columns = []
         self.drag_source = None
         self.context_menu_callback = None
-        if self.is_tree():
+        if isinstance(model, tablemodel.InfoListModel):
+            self.tableview = MiroTableView.alloc().init()
+            self.data_source = tablemodel.MiroInfoListDataSource.alloc()
+        elif self.is_tree():
             self.create_signal('row-expanded')
             self.create_signal('row-collapsed')
             self.tableview = MiroOutlineView.alloc().init()
@@ -758,28 +775,17 @@ class TableView(Widget):
 
     def remember_selection(self):
         if self._selected_before_change is None:
-            index_set = self.tableview.selectedRowIndexes()
-            i = index_set.firstIndex()
-            self._selected_before_change = []
-            while True:
-                if i == NSNotFound:
-                    break
-                self._selected_before_change.append(
-                    self.model.iter_for_row(self.tableview, i))
-                i = index_set.indexGreaterThanIndex_(i)
+            self._selected_before_change = self.model.remember_selection(
+                    self.tableview)
             self.tableview.deselectAll_(nil)
 
     def update_selection_after_change(self):
-        new_index_set = NSMutableIndexSet.alloc().init()
-        for iter in self._selected_before_change:
-            if iter.valid():
-                new_index_set.addIndex_(self.row_for_iter(iter))
         self._ignore_selection_changed = True
-        self.tableview.selectRowIndexes_byExtendingSelection_(
-                new_index_set, YES)
+        self.model.restore_selection(self.tableview,
+                self._selected_before_change)
         self._ignore_selection_changed = False
-        self.emit('selection-changed')
         self._selected_before_change = None
+        self.emit('selection-changed')
 
     def on_model_structure_change(self, model):
         self.reload_needed = True
@@ -971,17 +977,17 @@ class TableView(Widget):
                         self.tableview.reloadItem_(iter.value())
                 else:
                     for iter in self.iters_to_update:
-                        row = self.row_for_iter(iter)
+                        row = self.row_of_iter(iter)
                         rect = self.tableview.rectOfRow_(row)
                         self.tableview.setNeedsDisplayInRect_(rect)
             else:
                 # our rows can change height inform Cocoa that their heights
                 # might have changed (this will redraw them)
-                rows_to_change = [ self.row_for_iter(iter) for iter in \
+                rows_to_change = [ self.row_of_iter(iter) for iter in \
                     self.iters_to_update]
                 index_set = NSMutableIndexSet.alloc().init()
                 for iter in self.iters_to_update:
-                    index_set.addIndex_(self.row_for_iter(iter))
+                    index_set.addIndex_(self.row_of_iter(iter))
                 self.tableview.noteHeightOfRowsWithIndexesChanged_(index_set)
                 self.tableview.recalcTrackingRects()
             size_changed = True
@@ -1120,18 +1126,18 @@ class TableView(Widget):
     def num_rows_selected(self):
         return self.tableview.selectedRowIndexes().count()
 
-    def row_for_iter(self, iter):
+    def row_of_iter(self, iter):
         if self.is_tree():
             return self.tableview.rowForItem_(iter.value())
         else:
-            return self.model.get_index_of_row(iter.value())
+            return self.model.row_of_iter(iter)
 
     def select(self, iter):
-        index_set = NSIndexSet.alloc().initWithIndex_(self.row_for_iter(iter))
+        index_set = NSIndexSet.alloc().initWithIndex_(self.row_of_iter(iter))
         self.tableview.selectRowIndexes_byExtendingSelection_(index_set, YES)
 
     def unselect(self, iter):
-        self.tableview.deselectRow_(self.row_for_iter(iter))
+        self.tableview.deselectRow_(self.row_of_iter(iter))
 
     def unselect_all(self):
         self.tableview.deselectAll_(nil)

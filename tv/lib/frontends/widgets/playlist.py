@@ -102,7 +102,6 @@ class PlaylistSort(itemlist.ItemSort):
             for id in id_order)
 
     def sort_key(self, item):
-        print 'sort key for %s: %s' % (item.name, self.positions[item.id])
         return self.positions[item.id]
 
 class PlaylistItemView(itemlistwidgets.ItemView):

@@ -86,6 +86,8 @@ cdef extern from "infolist-nodelist.h":
             InfoListNode* node, InfoListNode* new_node) except -1
     int infolist_nodelist_remove(InfoListNodeList* nodelist,
             InfoListNode* node) except -1
+    int infolist_nodelist_node_index(InfoListNodeList* nodelist,
+            InfoListNode* node) except -1
     InfoListNode* infolist_nodelist_nth_node(InfoListNodeList* nodelist,
             int n) except NULL
     int infolist_nodelist_check_nodes(InfoListNodeList* nodelist) except -1
@@ -498,6 +500,10 @@ cdef class InfoList:
 
     def get_info(self, id_):
         return infolist_node_get_info(fetch_node(self.id_map, id_))
+
+    def index_of_id(self, id_):
+        return infolist_nodelist_node_index(self.nodelist,
+                fetch_node(self.id_map, id_))
 
     def get_sort_key(self, id_):
         return infolist_node_get_sort_key(fetch_node(self.id_map, id_))
