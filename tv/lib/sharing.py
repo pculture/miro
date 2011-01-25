@@ -293,6 +293,11 @@ class SharingTracker(object):
             if callback is not None:
                 refs = callback.get_refs()
             try:
+                # Once we get a shutdown signal (from self.r/self.w socketpair)
+                # we return immediately.  I think this is okay since we are 
+                # passive listener and we only stop tracking on shutdown,
+                #  OS will help us close all outstanding sockets including that
+                # for this listener when this process terminates.
                 r, w, x = select.select(refs + [self.r], [], [])
                 for i in r:
                     if i in refs:
