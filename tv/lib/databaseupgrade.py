@@ -3090,3 +3090,12 @@ def upgrade134(cursor):
     for data in items:
         cursor.execute("UPDATE item SET album=?, artist=?, title_tag=?,"
             "track=?, year=?, genre=? WHERE id=?", data)
+ 
+def upgrade135(cursor):
+    """Basic metadata versioning
+    """
+    cursor.execute("ALTER TABLE item ADD COLUMN metadata_version integer")
+    cursor.execute("UPDATE item SET metadata_version=1")
+    cursor.execute("UPDATE item SET metadata_version=0 WHERE album IS NULL AND "
+        "artist IS NULL AND title_tag IS NULL AND track IS NULL AND year IS NULL "
+        "AND genre IS NULL")

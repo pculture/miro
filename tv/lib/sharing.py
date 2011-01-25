@@ -136,6 +136,7 @@ class SharingItem(object):
         self.track = None
         self.year = None
         self.genre = None
+        self.metadata_version = 0
         self.rating = None
         self.file_type = None
         self.creation_time = None

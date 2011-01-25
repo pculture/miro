@@ -360,6 +360,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.play_count = 0
         self.skip_count = 0
         self.cover_art = None
+        self.metadata_version = 0
         # Initalize FileItem attributes to None
         self.deleted = self.shortFilename = self.offsetPath = None
 
@@ -466,12 +467,16 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def next_10_incomplete_movie_data_view(cls):
-#                'metadata IS NULL OR '
         return cls.make_view("(is_file_item OR (rd.state in ('finished', "
                 "'uploading', 'uploading-paused'))) AND "
                 '(duration IS NULL OR '
                 'screenshot IS NULL OR '
+                '(metadata_version < ? AND '
+                '(album IS NULL OR artist IS NULL OR title_tag IS NULL OR '
+                'track IS NULL OR year IS NULL OR genre IS NULL OR '
+                'cover_art IS NULL)) OR '
                 'NOT item.media_type_checked)',
+                (moviedata.METADATA_VERSION,),
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
                 limit=10)
 

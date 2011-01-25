@@ -76,6 +76,9 @@ TAG_TYPES = {
 }
 NOFLATTEN_TAGS = ('cover-art',)
 
+# increment this after adding to TAG_MAP or changing read_metadata() in a way
+# that will increase data identified (will not change values already extracted)
+METADATA_VERSION = 1
 
 def image_directory(subdir):
     dir_ = os.path.join(app.config.get(prefs.ICON_CACHE_DIRECTORY), subdir)
@@ -524,6 +527,7 @@ class MovieDataUpdater(signals.SignalEmitter):
             item.track = metadata.get('track', None)
             item.year = metadata.get('year', None)
             item.genre = metadata.get('genre', None)
+            item.metadata_version = METADATA_VERSION
             if mediatype is not None:
                 item.file_type = unicode(mediatype)
                 item.media_type_checked = True

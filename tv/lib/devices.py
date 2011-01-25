@@ -625,6 +625,7 @@ class DeviceItem(object):
         self.rating = None
         self.file_type = None
         self.creation_time = None
+        self.metadata_version = 0
         self.__dict__.update(kwargs)
 
         if isinstance(self.video_path, unicode):
