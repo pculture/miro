@@ -605,7 +605,8 @@ def mdns_register_service(name, service='_daap._tcp', port=DEFAULT_PORT,
         callback=mdns_callback)
 
 def mdns_unregister_service(mdns_object):
-    mdns_object.close()
+    for ref in mdns_object.get_refs():
+        ref.close()
 
 def mdns_browse(callback):
     # This class allows us to make a callback and then do some post-processing
