@@ -581,7 +581,7 @@ class SharingManagerBackend(object):
         def _handle_playlist_removed():
             for x in removed:
                 del self.daap_playlists[x]
-        eventloop.add_urgent_call(lambda: _handle_playlist_removed(removed),
+        eventloop.add_urgent_call(lambda: _handle_playlist_removed(),
                                   "SharingManagerBackend: playlist removed")
 
     def populate_playlists(self):
