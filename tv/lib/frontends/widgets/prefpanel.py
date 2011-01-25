@@ -662,16 +662,30 @@ class DiskSpacePanel(PanelBuilder):
         return grid.make_table()
 
 class SharingPanel(PanelBuilder):
+    def on_window_open(self):
+        self.old_name = app.config.get(prefs.SHARE_NAME)
+
+    def on_window_closed(self):
+        if self.old_name != self.new_name and not self.new_name == '':
+            app.config.set(prefs.SHARE_NAME, self.new_name)
+
     def build_widget(self):
         vbox = widgetset.VBox()
         grid = dialogwidgets.ControlGrid()
 
         sharing_cbx = widgetset.Checkbox(_('Share my media library.'))
+        def text_changed(widget):
+            self.new_name = widget.get_text().strip().encode('utf-8')
         share_txt = widgetset.TextEntry()
+        share_txt.connect('changed', text_changed)
 
         attach_boolean(sharing_cbx, prefs.SHARE_MEDIA, [share_txt])
+        # Why is check function always false?  Because we don't want to
+        # continually reload (unpublish and republish) the share as the
+        # user is typing.  On_window_open() and open_window_closed() takes
+        # care of this.
         attach_text(share_txt, prefs.SHARE_NAME,
-                    check_function=lambda w, v: not v.strip() == '')
+                    check_function=lambda w, v: False)
 
         # Do this after the attach so we can override the preference
         # values.

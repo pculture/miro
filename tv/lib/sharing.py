@@ -259,7 +259,7 @@ class SharingTracker(object):
         # not to lie to us, but there's no other way.  Because on removal, 
         # Avahi can't do a name query, so we have no
         # hostname, port, or IP address information!
-        if fullname == app.config.get(prefs.SHARE_NAME):
+        if fullname == app.config.get(prefs.SHARE_NAME).encode('utf-8'):
             return
         # Need to come up with a unique ID for the share.  Use the name
         # only since that's supposed to be unique.  We rely on the 
