@@ -118,6 +118,7 @@ class HotspotTracker(object):
         row = model[self.iter]
         value_dict = model.get_column_data(row, self.table_column)
         self.cell.setObjectValue_(value_dict)
+        self.cell.set_wrapper_data()
 
     def calc_hotspot(self):
         self.set_cell_data()
