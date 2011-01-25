@@ -33,6 +33,7 @@ import select
 import struct
 import threading
 import time
+import uuid
 
 from hashlib import md5
 
@@ -227,13 +228,20 @@ class SharingTracker(object):
         eventloop.add_urgent_call(self.mdns_callback_backend, "mdns callback",
                                   args=[added, fullname, host, ips, port])
 
-    def try_to_add(self, share_id, fullname, host, port):
+    def try_to_add(self, share_id, fullname, host, port, uuid):
         def success(unused):
             info = self.available_shares[share_id]
+            # It's been deleted or worse, deleted and recreated!
+            if not info or info.connect_uuid != uuid:
+                return
+            info.connect_uuid = None
             messages.TabsChanged('sharing', [info], [], []).send_to_frontend()
 
         def failure(unused):
-            pass
+            info = self.available_shares[share_id]
+            if not info or info.connect_uuid != uuid:
+                return
+            info.connect_uuid = None
 
         def testconnect():
             client = libdaap.make_daap_client(host, port)
@@ -267,10 +275,16 @@ class SharingTracker(object):
 
         if added:
             # Create the SharingInfo eagerly, so that duplicate messages
-            # can use it to filter out.
+            # can use it to filter out.  We also create a unique stamp on it,
+            # in case of errant implementations that try to register, delete,
+            # and re-register the share.  The try_to_add() success/failure
+            # callback can check whether info is still valid and if so, if it
+            # is this particular info (if not, the uuid will be different and
+            # and so should ignore).
             info = messages.SharingInfo(share_id, fullname, host, port)
+            info.connect_uuid = uuid.uuid4()
             self.available_shares[share_id] = info
-            self.try_to_add(share_id, fullname, host, port)
+            self.try_to_add(share_id, fullname, host, port, info.connect_uuid)
         else:
             # The mDNS publish is going away.  Are we connected?  If we
             # are connected, keep it around.  If not, make it disappear.
@@ -281,7 +295,10 @@ class SharingTracker(object):
             if not share_id in self.trackers.keys():
                 victim = self.available_shares[share_id]
                 del self.available_shares[share_id]
-                messages.SharingDisappeared(victim).send_to_frontend()
+                # Only tell the frontend if the share's been tested because
+                # otherwise the TabsChanged() message wouldn't have arrived.
+                if victim.connect_uuid is None:
+                    messages.SharingDisappeared(victim).send_to_frontend()
 
     def server_thread(self):
         if app.sharing_manager.mdns_present:
