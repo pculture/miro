@@ -44,7 +44,7 @@ def check_bonjour_install():
 # We can't really do much here ...
 def install_bonjour(startup=False):
     title = _("Install Bonjour")
-    if startup:
+    if not startup:
         description = _('For the best %(appname)s experience, we suggest you '
                         'install Bonjour.  Installing Bonjour will '
                         'allow you share your media library with other '
