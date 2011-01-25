@@ -259,7 +259,7 @@ cdef class InfoList:
 
 
         :param new_infos: an iterable with the infos
-        :param before_id: an iterable with the infos
+        :param before_id: an id to insert before
         """
         cdef InfoListNode* pos
         cdef InfoListNode* new_node
@@ -282,11 +282,12 @@ cdef class InfoList:
             # prepare the insert
             for 0 <= i < count:
                 info = new_infos[i]
-                if infolist_idmap_get(self.id_map, info.id) != NULL:
+                if infolist_idmap_get(self.id_map, hash(info.id)) != NULL:
                     raise ValueError("Info with id %s already in list" %
                             info.id)
                 sort_key = self.sort_key_func(info)
-                node_array[i] = infolist_node_new(info.id, info, sort_key, {})
+                node_array[i] = infolist_node_new(hash(info.id), info,
+                        sort_key, {})
                 infos_created += 1
             # insert nodes in reversed order, this makes calculating rows
             # simpler in the GTK code
@@ -295,7 +296,7 @@ cdef class InfoList:
                 if before_id is None:
                     pos = infolist_nodelist_tail(self.nodelist).next
                 else:
-                    pos = fetch_node(self.id_map, before_id)
+                    pos = fetch_node(self.id_map, hash(before_id))
                 #for 0 <= i < count:
                 for count > i >= 0:
                     new_node = node_array[i]
@@ -345,7 +346,7 @@ cdef class InfoList:
         try:
             # fetch first, in case of key error
             for 0 <= i < count:
-                node_array[i] = fetch_node(self.id_map, infos[i].id)
+                node_array[i] = fetch_node(self.id_map, hash(infos[i].id))
             infolistplat_will_change_nodes(self.nodelist)
             for 0 <= i < count:
                 node = node_array[i]
@@ -402,7 +403,7 @@ cdef class InfoList:
         try:
             # fetch all nodes first in case of KeyError
             for 0 <= i < count:
-                to_remove[i] = fetch_node(self.id_map, id_list[i])
+                to_remove[i] = fetch_node(self.id_map, hash(id_list[i]))
             infolistplat_will_remove_nodes(self.nodelist)
             # order nodes last-to-first so that we call
             # infolistplat_node_removed in that order
@@ -461,11 +462,11 @@ cdef class InfoList:
         try:
             # fetch first, in case of key error
             if target_id is not None:
-                target_node = fetch_node(self.id_map, target_id)
+                target_node = fetch_node(self.id_map, hash(target_id))
             else:
                 target_node = infolist_nodelist_tail(self.nodelist).next
             for 0 <= i < count:
-                node_array[i] = fetch_node(self.id_map, id_list[i])
+                node_array[i] = fetch_node(self.id_map, hash(id_list[i]))
             # move target_id before the nodes in node_array
             if target_id is not None:
                 for 0 <= i < count:
@@ -484,29 +485,32 @@ cdef class InfoList:
 
     def set_attr(self, id_, name, value):
         cdef dict attrs
-        attrs = infolist_node_get_attr_dict(fetch_node(self.id_map, id_))
+        attrs = infolist_node_get_attr_dict(fetch_node(self.id_map,
+            hash(id_)))
         attrs[name] = value
 
     def unset_attr(self, id_, name):
         cdef dict attrs
-        attrs = infolist_node_get_attr_dict(fetch_node(self.id_map, id_))
+        attrs = infolist_node_get_attr_dict(fetch_node(self.id_map,
+            hash(id_)))
         if name in attrs:
             del attrs[name]
 
     def get_attr(self, id_, name):
         cdef dict attrs
-        attrs = infolist_node_get_attr_dict(fetch_node(self.id_map, id_))
+        attrs = infolist_node_get_attr_dict(fetch_node(self.id_map,
+            hash(id_)))
         return attrs[name]
 
     def get_info(self, id_):
-        return infolist_node_get_info(fetch_node(self.id_map, id_))
+        return infolist_node_get_info(fetch_node(self.id_map, hash(id_)))
 
     def index_of_id(self, id_):
         return infolist_nodelist_node_index(self.nodelist,
-                fetch_node(self.id_map, id_))
+                fetch_node(self.id_map, hash(id_)))
 
     def get_sort_key(self, id_):
-        return infolist_node_get_sort_key(fetch_node(self.id_map, id_))
+        return infolist_node_get_sort_key(fetch_node(self.id_map, hash(id_)))
 
     def change_sort(self, sort_key_func, reverse=False):
         cdef InfoListNode** nodes
@@ -589,7 +593,7 @@ cdef class InfoList:
         infolist_nodelist_check_nodes(self.nodelist)
         info_list = self.info_list()
         for info in info_list:
-            if info is not self.get_info(info.id):
+            if info is not self.get_info(hash(info.id)):
                 raise AssertionError("id_map for %s is wrong" % info.id)
 
         for i in xrange(len(info_list) - 1):

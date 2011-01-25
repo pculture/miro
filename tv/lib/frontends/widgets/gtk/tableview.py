@@ -1338,10 +1338,6 @@ class InfoListModel(infolist.InfoList):
     def check_new_column(self, column):
         if not isinstance(column.renderer, InfoListRenderer):
             raise TypeError("InfoListModel only supports InfoListRenderer")
-        for value in column.attrs.values():
-            if value not in ('info', 'attrs'):
-                msg = "Attribute values can only be 'info' or 'attrs', not %r"
-                raise TypeError(msg % value)
 
     def get_rows(self, row_paths):
         return [self.nth_row(path[0]) for path in row_paths]

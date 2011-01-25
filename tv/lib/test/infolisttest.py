@@ -213,6 +213,17 @@ class InfoListDataTest(InfoListTestBase):
         self.check_update_sort(self.sort_key_func)
         self.assertRaises(ValueError, self.infolist.move_before, 0, [1, 2])
 
+    def test_non_integer_id(self):
+        infos = self.make_infos('m', 'i', 'r', 'o', 'p', 'c', 'f')
+        for i in infos:
+            i.id = i.name # id is the initial name of the info
+        self.check_insert(infos[:4])
+        self.check_update('m', 'ZZZ', 'r', 'ABC')
+        self.check_update_sort(None)
+        self.check_add_with_before_id('m', infos[4:])
+        self.check_move_before('m', ['o', 'p', 'c'])
+        self.check_remove('m', 'i', 'c')
+
     def test_add_info_with_before_id(self):
         self.check_update_sort(None)
         self.check_insert(self.make_infos('m', 'i', 'r', 'o'))

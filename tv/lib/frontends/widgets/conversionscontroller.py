@@ -83,8 +83,7 @@ class ConversionsController(object):
         toolbar.add(hbox)
         self.widget.pack_start(toolbar)
         
-        self.iter_map = dict()
-        self.model = widgetset.TableModel('object')
+        self.model = widgetset.InfoListModel(None)
         self.table = ConversionTableView(self.model)
         self.table.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
         scroller = widgetset.Scroller(False, True)
@@ -120,46 +119,48 @@ class ConversionsController(object):
             app.widgetapp.reveal_file(task.output_path)
 
     def handle_task_list(self, running_tasks, pending_tasks, finished_tasks):
-        for task in running_tasks:
-            self.iter_map[task.key] = self.model.append(task)
-        for task in pending_tasks:
-            self.iter_map[task.key] = self.model.append(task)
-        for task in finished_tasks:
-            self.iter_map[task.key] = self.model.append(task)
+        self.model.add_infos(running_tasks)
+        self.model.add_infos(pending_tasks)
+        self.model.add_infos(finished_tasks)
         self.table.model_changed()
         self._update_buttons_state()
 
     def handle_task_added(self, task):
-        if task.key not in self.iter_map:
-            self.iter_map[task.key] = self.model.append(task)
+        try:
+            self.model.add_infos([task])
+        except ValueError:
+            pass # task already added
+        else:
             self.table.model_changed()
-        self._update_buttons_state()
+            self._update_buttons_state()
     
     def handle_all_tasks_removed(self):
-        for key in self.iter_map.keys():
-            itr = self.iter_map.pop(key)
-            self.model.remove(itr)
+        self.model.remove_all()
         self.table.model_changed()
         self._update_buttons_state()
     
     def handle_task_removed(self, task):
-        if task.key in self.iter_map:
-            itr = self.iter_map.pop(task.key)
-            self.model.remove(itr)
+        try:
+            self.model.remove_ids([task.id])
+        except KeyError:
+            pass # task already removed
+        else:
             self.table.model_changed()
             self._update_buttons_state()
     
     def handle_task_changed(self, task):
-        if task.key in self.iter_map:
-            itr = self.iter_map[task.key]
-            self.model.update_value(itr, 0, task)
+        try:
+            self.model.update_infos([task], resort=False)
+        except KeyError:
+            pass # task already removed
+        else:
             self.table.model_changed()
             self._update_buttons_state()
     
     def _update_buttons_state(self):
         finished_count = not_finished_count = 0
-        for row in self.model:
-            if row[0].state == 'finished':
+        for info in self.model.info_list():
+            if info.state == 'finished':
                 finished_count += 1
             else:
                 not_finished_count += 1
@@ -184,7 +185,7 @@ class ConversionTableView(widgetset.TableView):
         self.set_show_headers(False)
 
         self.renderer = ConversionCellRenderer()
-        self.column = widgetset.TableColumn('conversion', self.renderer, data=0)
+        self.column = widgetset.TableColumn('conversion', self.renderer)
         self.column.set_min_width(600)
         self.add_column(self.column)
 
@@ -252,29 +253,29 @@ class ConversionCellRenderer(style.ItemRenderer):
 
     def _pack_info(self, layout):
         vbox = cellpack.VBox()
-        if self.data.state == 'pending':
+        if self.info.state == 'pending':
             layout.set_text_color(self.PENDING_TASK_TEXT_COLOR)
         else:
             layout.set_text_color(self.ITEM_TITLE_COLOR)
         layout.set_font(1.1, bold=True)
-        title = cellpack.ClippedTextLine(layout.textbox(self.data.item_name))
+        title = cellpack.ClippedTextLine(layout.textbox(self.info.item_name))
         vbox.pack(cellpack.pad(title, top=12))
 
         layout.set_font(0.8)
-        if self.data.state == 'pending':
+        if self.info.state == 'pending':
             layout.set_text_color(self.PENDING_TASK_TEXT_COLOR)
         else:
             layout.set_text_color(self.ITEM_DESC_COLOR)
         info_label = layout.textbox(
             _("Conversion to %(format)s",
-              {"format": self.data.target}))
+              {"format": self.info.target}))
         vbox.pack(cellpack.pad(info_label, top=4))
 
-        if self.data.state == 'failed':
+        if self.info.state == 'failed':
             vbox.pack(self._pack_failure_info(layout), expand=True)
-        elif self.data.state == 'running':
+        elif self.info.state == 'running':
             vbox.pack(self._pack_progress(layout), expand=True)
-        elif self.data.state == 'finished':
+        elif self.info.state == 'finished':
             vbox.pack(self._pack_finished_info(layout), expand=True)
         else:
             vbox.pack(self._pack_pending_controls(layout), expand=True)
@@ -288,7 +289,7 @@ class ConversionCellRenderer(style.ItemRenderer):
         hbox.pack(cellpack.align_middle(cellpack.align_center(self._progress_textbox(layout))), expand=True)
         hbox.pack(cellpack.pad(cellpack.align_right(cellpack.Hotspot('interrupt', self.INTERRUPT_BUTTON)), right=3))
         background = cellpack.Background(cellpack.align_middle(hbox), min_width=356, min_height=20)
-        background.set_callback(style.ProgressBarDrawer(self.data.progress, ConversionProgressBarColorSet).draw)
+        background.set_callback(style.ProgressBarDrawer(self.info.progress, ConversionProgressBarColorSet).draw)
         
         vbox.pack_end(cellpack.pad(background, bottom=12))
         
@@ -300,7 +301,7 @@ class ConversionCellRenderer(style.ItemRenderer):
         layout.set_font(0.8, bold=True)
         layout.set_text_color(self.FAILED_TASK_TEXT_COLOR)
         info_label2 = layout.textbox(
-            _("Failed: %(error)s", {"error": self.data.error}))
+            _("Failed: %(error)s", {"error": self.info.error}))
         vbox.pack(cellpack.pad(cellpack.TruncatedTextLine(info_label2), top=4))
         
         # this resets the font so that the buttons aren't bold
@@ -348,9 +349,9 @@ class ConversionCellRenderer(style.ItemRenderer):
     def _progress_textbox(self, layout):
         layout.set_font(0.8, bold=True)
         layout.set_text_color((1.0, 1.0, 1.0))
-        progress = int(self.data.progress * 100)
+        progress = int(self.info.progress * 100)
         parts = ["%d%%" % progress]
-        eta = self.data.eta
+        eta = self.info.eta
         if eta:
             parts.append(displaytext.time_string(eta))
         
@@ -358,8 +359,8 @@ class ConversionCellRenderer(style.ItemRenderer):
 
     def _draw_thumbnail(self, context, x, y, width, height):
         fraction = 1.0
-        if not self.data.state == 'running':
+        if not self.info.state == 'running':
             fraction = 0.4
-        icon = imagepool.get_surface(self.data.item_thumbnail, (width, height))
+        icon = imagepool.get_surface(self.info.item_thumbnail, (width, height))
         widgetutil.draw_rounded_icon(context, icon, x, y, width, height, fraction=fraction)
         self.THUMB_OVERLAY.draw(context, x, y, width, height, fraction=fraction)

@@ -1430,7 +1430,7 @@ class ConversionTaskInfo(object):
     :param item_thumbnail: thumbnail for the item being converted
     """
     def __init__(self, task):
-        self.key = task.key
+        self.id = self.key = task.key
         if task.is_finished():
             self.state = 'finished'
             self.output_path = task.final_output_path
