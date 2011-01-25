@@ -609,7 +609,7 @@ class CurlTransfer(object):
         elif info['status'] == 407:
             self.handle_proxy_auth()
         elif info['status'] >= 500 and info['status'] < 600:
-            logging.info("possibly temporary error")
+            logging.info("httpclient: possibly temporary http error: HTTP %s", info['status'])
             self.call_errback(PossiblyTemporaryError(info['status']))
         else:
             self.call_errback(UnexpectedStatusCode(info['status']))

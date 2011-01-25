@@ -1470,7 +1470,8 @@ class RSSFeedImpl(RSSFeedImplBase):
         if not self.ufeed.id_exists():
             return
         if info.get('status') == 304:
-            logging.debug("_update_callback: status 304 (%s)", self.ufeed)
+            logging.debug("RSSFeedImpl: _update_callback: "
+                          "status 304 (%s)", self.ufeed)
             self.schedule_update_events(-1)
             self.updating = False
             self.ufeed.signal_change()
@@ -1628,7 +1629,8 @@ class RSSMultiFeedBase(RSSFeedImplBase):
         if not self.ufeed.id_exists():
             return
         if info.get('status') == 304:
-            logging.debug("_update_callback: status 304 (%s)", self.ufeed)
+            logging.debug("RSSMultiFeedBase: _update_callback: "
+                          "status 304 (%s)", self.ufeed)
             self.schedule_update_events(-1)
             self.updating -= 1
             self.check_update_finished()
