@@ -110,13 +110,16 @@ class SizeProgressBar(widgetset.Background):
             widgetutil.round_rect_reverse(context, 1, 1, progress_width - 2,
                                           context.height - 2, 4)
             context.gradient_fill(gradient)
-            context.rectangle(6, 1, progress_width - 7, context.height - 2)
-            context.gradient_fill(gradient)
+            if progress_width > 13:
+                context.rectangle(6, 1, progress_width - 7, context.height - 2)
+                context.gradient_fill(gradient)
         context.restore()
 
-class SizeWidget(widgetset.VBox):
+class SizeWidget(widgetset.Background):
     def __init__(self):
-        widgetset.VBox.__init__(self)
+        self.in_progress = False
+        widgetset.Background.__init__(self)
+        vbox = widgetset.VBox()
         # first line: size remaining on the left, sync status on the right
         line = widgetset.HBox()
         self.size_label = widgetset.Label(u"")
@@ -124,7 +127,7 @@ class SizeWidget(widgetset.VBox):
         self.sync_label = widgetset.Label(u"")
         line.pack_start(self.size_label)
         line.pack_end(self.sync_label)
-        self.pack_start(widgetutil.pad(line, bottom=10))
+        vbox.pack_start(widgetutil.pad(line, bottom=10))
 
         # second line: bigger; size status on left, sync button on right
         line = widgetset.HBox()
@@ -134,7 +137,16 @@ class SizeWidget(widgetset.VBox):
         self.sync_button.set_size_request(100, 35)
         line.pack_start(self.progress)
         line.pack_end(widgetutil.pad(self.sync_button, left=50))
-        self.pack_start(line)
+        vbox.pack_start(line)
+        self.add(widgetutil.align(vbox, 0.5, 1, 0, 0, top_pad=15,
+                                  bottom_pad=15, right_pad=20))
+
+    def draw(self, context, layout):
+        gradient = widgetset.Gradient(0, 0, 0, context.height)
+        gradient.set_start_color(style.css_to_color('#c2c2c2'))
+        gradient.set_end_color(style.css_to_color('#a3a3a3'))
+        context.rectangle(0, 0, context.width, context.height)
+        context.gradient_fill(gradient)
 
     def set_size(self, size, remaining):
         if size and remaining:
@@ -148,7 +160,13 @@ class SizeWidget(widgetset.VBox):
             self.progress.set_progress(0)
             self.size_label.set_text(u"")
 
+    def get_text(self):
+        return self.sync_label.get_text()
+
     def set_sync_state(self, video_count, audio_count):
+        if self.in_progress:
+            # don't update sync state while we're syncing
+            return
         count = video_count + audio_count
         if count:
             self.sync_label.set_text(
@@ -160,6 +178,16 @@ class SizeWidget(widgetset.VBox):
         else:
             self.sync_label.set_text(_("Up to date"))
             self.sync_button.disable()
+
+    def set_in_progress(self, progress):
+        self.in_progress = progress
+        if progress:
+            self.sync_label.set_text(u"")
+            self.sync_button.set_text(_("In Progress"))
+            self.sync_button.disable()
+        else:
+            self.sync_button.set_text(_("Sync Now"))
+            self.set_sync_state(0, 0)
 
 class SyncProgressBar(widgetset.Background):
     PROGRESS_GRADIENT_TOP = (1, 1, 1)
@@ -183,14 +211,15 @@ class SyncProgressBar(widgetset.Background):
         gradient.set_end_color(self.BACKGROUND_GRADIENT_BOTTOM)
         context.gradient_fill(gradient)
         progress_width = context.width * self.progress_ratio
-        if progress_width > 2:
-            widgetutil.circular_rect_negative(context, 1, 1,
-                                              progress_width - 2,
-                                              context.height - 2)
-            gradient = widgetset.Gradient(1, 1, 1, context.height - 2)
-            gradient.set_start_color(self.PROGRESS_GRADIENT_TOP)
-            gradient.set_end_color(self.PROGRESS_GRADIENT_BOTTOM)
-            context.gradient_fill(gradient)
+        if progress_width < context.height:
+            progress_width = context.height
+        widgetutil.circular_rect_negative(context, 1, 1,
+                                          progress_width - 2,
+                                          context.height - 2)
+        gradient = widgetset.Gradient(1, 1, 1, context.height - 2)
+        gradient.set_start_color(self.PROGRESS_GRADIENT_TOP)
+        gradient.set_end_color(self.PROGRESS_GRADIENT_BOTTOM)
+        context.gradient_fill(gradient)
 
 class SyncProgressWidget(widgetset.Background):
     def __init__(self):
@@ -208,12 +237,17 @@ class SyncProgressWidget(widgetset.Background):
 
         # second line: time remaining, all the way to the right
         line = widgetset.HBox()
+        self.sync_files = widgetset.Label(u"")
         self.sync_remaining = widgetset.Label(u"")
         self.sync_remaining.set_bold(True)
+        line.pack_start(widgetutil.align_left(self.sync_files, 5, 5, 5, 5))
         line.pack_end(widgetutil.align_right(self.sync_remaining, 5, 5, 5, 5))
         vbox.pack_start(line)
 
         self.add(widgetutil.pad(vbox, 10, 10, 10, 10))
+
+    def set_text(self, text):
+        self.sync_files.set_text(text)
 
     def set_status(self, progress, eta):
         self.sync_progress.set_progress(progress)
@@ -242,6 +276,7 @@ class SyncWidget(widgetset.HBox):
     def __init__(self):
         self.device = None
         widgetset.HBox.__init__(self)
+        self.create_signal('changed')
         first_column = widgetset.VBox()
         self.sync_library = widgetset.Checkbox(self.title)
         self.sync_library.connect('toggled', self.sync_library_toggled)
@@ -337,10 +372,12 @@ class SyncWidget(widgetset.HBox):
                 button.disable()
             self.feed_list.disable()
         self.device.database['sync'][self.file_type]['enabled'] = checked
+        self.emit('changed')
 
     def all_button_clicked(self, obj):
         self.device.database['sync'][self.file_type]['all'] = \
             obj.get_selected()
+        self.emit('changed')
 
     def feed_toggled(self, obj, info):
         this_sync = self.device.database['sync'][self.file_type]
@@ -352,6 +389,7 @@ class SyncWidget(widgetset.HBox):
             if key in items:
                 items.remove(key)
         this_sync['items'] = list(items)
+        self.emit('changed')
 
     def find_info_by_key(self, key, tab_list):
         return tab_list.find_feed_with_url(key)
@@ -402,9 +440,9 @@ class PlaylistSyncWidget(SyncWidget):
     def find_info_by_key(self, key, tab_list):
         return tab_list.find_playlist_with_name(key)
 
-class DeviceSettingsWidget(widgetset.VBox):
+class DeviceSettingsWidget(widgetset.Background):
     def __init__(self):
-        widgetset.VBox.__init__(self)
+        widgetset.Background.__init__(self)
         self.boxes = {}
         self.device = None
         audio_conversion_names = [_('Device Default')]
@@ -419,13 +457,15 @@ class DeviceSettingsWidget(widgetset.VBox):
                 elif converter.mediatype == 'audio':
                     audio_conversion_names.append(converter.name)
                     self.audio_conversion_values.append(converter.identifier)
+        widgets = []
         for text, setting, type_ in (
             (_("Name of Device"), 'name', 'text'),
             (_("Video Conversion"), 'video_conversion', 'video_conversion'),
             (_("Audio Conversion"), 'audio_conversion', 'audio_conversion'),
-            (_("Video Location"), 'video_path', 'text'),
-            (_("Audio Location"), 'audio_path', 'text'),
-            (_("Always Show?"), 'always_show', 'bool')
+            (_("Store video in this directory"), 'video_path', 'text'),
+            (_("Store audio in this directory"), 'audio_path', 'text'),
+            (_("Always show this device, even if "
+               "'show all devices' is turned off"), 'always_show', 'bool')
             ):
             if type_ == 'text':
                 widget = widgetset.TextEntry()
@@ -441,14 +481,21 @@ class DeviceSettingsWidget(widgetset.VBox):
                 raise RuntimeError('unknown settings widget: %r' % type_)
             self.boxes[setting] = widget
             if type_ != 'bool': # has a label already
-                hbox = widgetset.HBox()
-                hbox.pack_start(widgetset.Label(text))
-                hbox.pack_start(widget)
-                self.pack_start(hbox)
+                widgets.append((widgetset.Label(text), widget))
                 widget.connect('changed', self.setting_changed, setting)
             else:
-                self.pack_start(widget)
+                widgets.append((widget,))
                 widget.connect('toggled', self.setting_changed, setting)
+        table = widgetset.Table(2, len(widgets))
+        for row, widget in enumerate(widgets):
+            if len(widget) == 1: # checkbox
+                table.pack(widget[0], 0, row, column_span=2)
+            else:
+                table.pack(widgetutil.align_right(widget[0]), 0, row)
+                table.pack(widgetutil.align_left(widget[1]), 1, row)
+        table.set_column_spacing(15)
+        table.set_row_spacing(20)
+        self.set_child(widgetutil.align(table, 0.5, top_pad=50))
 
     def set_device(self, device):
         self.device = device
@@ -504,8 +551,13 @@ class DeviceMountedView(widgetset.VBox):
 
         self.button_row = segmented.SegmentedButtonsRow()
 
-        for name in ('Main', 'Video', 'Audio', 'Playlists', 'Settings'):
-            button = DeviceTabButtonSegment(name.lower(), name,
+        for key, name in (
+            ('main', _('Main')),
+            ('video', _('Video')),
+            ('audio', _('Audio')),
+            ('playlists', _('Playlists')),
+            ('settings', _('Settings'))):
+            button = DeviceTabButtonSegment(key, name,
                                             self._tab_clicked)
             self.button_row.add_button(name.lower(), button)
 
@@ -530,16 +582,10 @@ class DeviceMountedView(widgetset.VBox):
 
         self.device_size = SizeWidget()
         self.device_size.sync_button.connect('clicked', self.sync_clicked)
-        alignment = widgetset.Alignment(0.5, 1, 0, 0, top_pad=15,
-                                        bottom_pad=15,
-                                        right_pad=20)
-        alignment.add(self.device_size)
-        background = widgetset.SolidBackground((0.643, 0.643, 0.643))
-        background.add(alignment)
-        vbox.pack_end(background)
+        self.pack_end(self.device_size)
 
         self.sync_container = widgetset.Background()
-        vbox.pack_end(widgetutil.align_center(self.sync_container))
+        self.pack_end(widgetutil.align_center(self.sync_container))
 
         self.add_tab('main', vbox)
         self.add_tab('video', widgetutil.align_center(VideoFeedSyncWidget()))
@@ -552,6 +598,8 @@ class DeviceMountedView(widgetset.VBox):
     def add_tab(self, key, widget):
         if not self.tabs:
             self.tab_container.set_child(widget)
+        if key not in ('main', 'settings'):
+            widget.child.connect('changed', self.sync_settings_changed)
         self.tabs[key] = widget
 
     def set_device(self, device):
@@ -575,11 +623,6 @@ class DeviceMountedView(widgetset.VBox):
         self.button_row.set_active(key)
         self.tab_container.remove()
         self.tab_container.set_child(self.tabs[key])
-        if key == 'main':
-            sync_state = self._get_sync_state()
-            message = messages.QuerySyncInformation(self.device,
-                                                    *sync_state)
-            message.send_to_backend()
 
     def _get_sync_state(self):
         sync_type = {}
@@ -596,6 +639,12 @@ class DeviceMountedView(widgetset.VBox):
                 sync_ids['audio'],
                 sync_ids['playlists'])
 
+    def sync_settings_changed(self, obj):
+        sync_state = self._get_sync_state()
+        message = messages.QuerySyncInformation(self.device,
+                                                *sync_state)
+        message.send_to_backend()
+
     def sync_clicked(self, obj):
         message = messages.DeviceSyncFeeds(self.device,
                                            *self._get_sync_state())
@@ -609,6 +658,8 @@ class DeviceMountedView(widgetset.VBox):
             widget = SyncProgressWidget()
             widget.cancel_button.connect('clicked', self.cancel_sync)
             self.sync_container.set_child(widget)
+            widget.set_text(self.device_size.get_text())
+            self.device_size.set_in_progress(True)
         self.sync_container.child.set_status(progress, eta)
 
     def cancel_sync(self, obj):
@@ -616,7 +667,9 @@ class DeviceMountedView(widgetset.VBox):
         message.send_to_backend()
 
     def sync_finished(self):
-        self.sync_container.child.remove()
+        self.sync_container.remove()
+        self.device_size.set_in_progress(False)
+        self.sync_settings_changed(self)
 
 class DeviceItemList(itemlist.ItemList):
     def filter(self, item_info):
