@@ -307,8 +307,8 @@ def finish_startup(obj, thread):
     downloader.init_controller()
 
     # Call this late, after the message handlers have been installed.
-    app.sharing_manager = sharing.SharingManager()
     app.sharing_tracker = sharing.SharingTracker()
+    app.sharing_manager = sharing.SharingManager()
 
     eventloop.add_urgent_call(check_firsttime, "check first time")
 

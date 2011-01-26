@@ -196,10 +196,17 @@ class SharingTracker(object):
     a backend for messagehandler.SharingItemTracker().
     """
     type = u'sharing'
+    # These need to be the same size.
+    CMD_QUIT = 'quit'
+    CMD_PAUSE = 'paus'
+    CMD_RESUME = 'resm'
+
     def __init__(self):
         self.trackers = dict()
         self.available_shares = dict()
         self.r, self.w = util.make_dummy_socket_pair()
+        self.paused = True
+        self.event = threading.Event()
 
     def calc_local_addresses(self):
         # Get our own hostname so that we can filter out ourselves if we 
@@ -255,10 +262,6 @@ class SharingTracker(object):
                                  'DAAP test connect')
 
     def mdns_callback_backend(self, added, fullname, host, ips, port):
-        # This name is supposed to be unique.  We rely on the zeroconf daemon 
-        # not to lie to us, but there's no other way.  Also, don't rely on 
-        # what's in the config, in the event of a name clash the name used
-        # could be different to what's requested.
         if fullname == app.sharing_manager.name:
             return
         # Need to come up with a unique ID for the share.  Use the name
@@ -305,13 +308,30 @@ class SharingTracker(object):
                     messages.SharingDisappeared(victim).send_to_frontend()
 
     def server_thread(self):
+        # Wait for the resume message from the sharing manager as 
+        # startup protocol of this thread.
+        while True:
+            try:
+                r, w, x = select.select([self.r], [], [])
+                if self.r in r:
+                    cmd = self.r.recv(4)
+                    if cmd == SharingTracker.CMD_RESUME:
+                        self.paused = False
+                        break
+                    raise
+            except select.error, (err, errstring):
+                if err == errno.EINTR:
+                    continue
+            except:
+                raise
+
         if app.sharing_manager.mdns_present:
             callback = libdaap.mdns_browse(self.mdns_callback)
         else:
             callback = None
         while True:
             refs = []
-            if callback is not None:
+            if callback is not None and not self.paused:
                 refs = callback.get_refs()
             try:
                 # Once we get a shutdown signal (from self.r/self.w socketpair)
@@ -320,12 +340,21 @@ class SharingTracker(object):
                 #  OS will help us close all outstanding sockets including that
                 # for this listener when this process terminates.
                 r, w, x = select.select(refs + [self.r], [], [])
+                if self.r in r:
+                    cmd = self.r.recv(4)
+                    if cmd == SharingTracker.CMD_QUIT:
+                        return
+                    if cmd == SharingTracker.CMD_PAUSE:
+                        self.pause = True
+                        self.event.set()
+                        continue
+                    if cmd == SharingTracker.CMD_RESUME:
+                        self.pause = False
+                        continue
+                    raise
                 for i in r:
                     if i in refs:
                         callback(i)
-                        continue
-                    if i == self.r:
-                        return
             # XXX what to do in case of error?  How to pass back to user?
             except select.error, (err, errstring):
                 if err == errno.EINTR:
@@ -359,7 +388,20 @@ class SharingTracker(object):
 
     def stop_tracking(self):
         # What to do in case of socket error here?
-        self.w.send(self.CMD_QUIT)
+        self.w.send(SharingTracker.CMD_QUIT)
+
+    # pause/resume is only meant to be used by the sharing manager.
+    # Pause needs to be synchronous because we want to make sure this module
+    # is in a quiescent state.
+    def pause(self):
+        # What to do in case of socket error here?
+        self.w.send(SharingTracker.CMD_PAUSE)
+        self.event.wait()
+        self.event.clear()
+
+    def resume(self):
+        # What to do in case of socket error here?
+        self.w.send(SharingTracker.CMD_RESUME)
 
 # Synchronization issues: this code is a bit sneaky, so here is an explanation
 # of how it works.  When you click on a share tab in the frontend, the 
@@ -736,6 +778,8 @@ class SharingManager(object):
         self.backend.start_tracking()
         # Enable sharing if necessary.
         self.twiddle_sharing()
+        if not self.mdns_present:
+            app.sharing_tracker.resume()
 
     def on_config_changed(self, obj, key, value):
         listen_keys = ['ShareMedia', 'ShareDiscoverable', 'ShareName']
@@ -771,6 +815,7 @@ class SharingManager(object):
         # first, and update what's kept in the server.
         if name_changed and self.discoverable:
             self.disable_discover()
+            app.sharing_tracker.pause()
             self.server.set_name(name)
 
         if discoverable != self.discoverable:
@@ -789,6 +834,7 @@ class SharingManager(object):
 
     def mdns_register_callback(self, name):
         self.name = name
+        app.sharing_tracker.resume()
 
     def enable_discover(self):
         name = app.config.get(prefs.SHARE_NAME).encode('utf-8')
@@ -805,7 +851,7 @@ class SharingManager(object):
         # being advertised, then the server loop is already running in
         # the select() loop and won't know that we need to process the
         # registration.
-        self.w.send(self.CMD_NOP)
+        self.w.send(SharingManager.CMD_NOP)
 
     def disable_discover(self):
         self.discoverable = False
@@ -831,9 +877,9 @@ class SharingManager(object):
                     if self.r == i:
                         cmd = self.r.recv(4)
                         print 'CMD', cmd
-                        if cmd == self.CMD_QUIT:
+                        if cmd == SharingManager.CMD_QUIT:
                             return
-                        elif cmd == self.CMD_NOP:
+                        elif cmd == SharingManager.CMD_NOP:
                             print 'RELOAD'
                             continue
                         else:
@@ -873,7 +919,7 @@ class SharingManager(object):
     def disable_sharing(self):
         self.sharing = False
         # What to do in case of socket error here?
-        self.w.send(self.CMD_QUIT)
+        self.w.send(SharingManager.CMD_QUIT)
         del self.thread
         del self.server
 
