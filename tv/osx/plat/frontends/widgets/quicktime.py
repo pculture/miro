@@ -176,7 +176,6 @@ class Player(player.Player):
             self.movie_notifications.disconnect()
         self.movie_notifications = None
         self.movie = None
-        self.item_info = None
 
     def set_item(self, item_info, callback, errback, force_subtitles=False):
         threads.warn_if_not_on_main_thread('quicktime.Player.set_item')
@@ -184,13 +183,14 @@ class Player(player.Player):
         self.reset()
         if qtmovie is not None:
             self.movie = qtmovie
-            self.item_info = item_info
             self.movie_notifications = NotificationForwarder.create(self.movie)
             self.movie_notifications.connect(self.handle_movie_notification, QTMovieDidEndNotification)
             self.setup_subtitles(force_subtitles)
-            callback()
+            # call the callback in an idle call, the rest of the Player code
+            # expects it
+            threads.call_on_ui_thread(callback)
         else:
-            errback()
+            threads.call_on_ui_thread(errback)
 
     def get_movie_from_file(self, path):
         osfilename = utils.filename_type_to_os_filename(path)
