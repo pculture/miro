@@ -365,9 +365,6 @@ int
 infolist_nodelist_node_index(InfoListNodeList* nodelist,
                              InfoListNode* node)
 {
-        int rv;
-        InfoListNode* pos;
-
         CHECK_IN_LIST(node, -1);
 
         infolist_nodelist_calc_positions(nodelist);
