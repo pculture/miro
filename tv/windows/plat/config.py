@@ -126,6 +126,10 @@ def get(descriptor):
         path = get(prefs.SUPPORT_DIRECTORY)
         return os.path.join(path, 'sqlitedb')
 
+    elif descriptor == prefs.CRASH_PATHNAME:
+        directory = tempfile.gettempdir()
+        return os.path.join(directory, "crashes")
+
     elif descriptor == prefs.LOG_PATHNAME:
         if u3info.u3_active:
             directory = u3info.app_data_path

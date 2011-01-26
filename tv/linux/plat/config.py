@@ -180,6 +180,10 @@ def get(descriptor):
         value = get(prefs.SUPPORT_DIRECTORY)
         value = os.path.join(value, 'sqlitedb')
 
+    elif descriptor == prefs.CRASH_PATHNAME:
+        value = get(prefs.SUPPORT_DIRECTORY)
+        value = os.path.join(value, 'crashes')
+
     elif descriptor == prefs.LOG_PATHNAME:
         value = get(prefs.SUPPORT_DIRECTORY)
         value = os.path.join(value, 'miro.log')

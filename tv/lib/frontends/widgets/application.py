@@ -1039,12 +1039,16 @@ class Application:
 
         while self.crash_reports_to_handle:
             report = self.crash_reports_to_handle[0]
+            # if we're ignoring this error, log it
             if self.ignore_errors:
-                logging.warn("Ignoring Error:\n%s", report)
+                headers = crashreport.extract_headers(report)
+                logging.warn("Ignoring Error:\n%s", headers)
             else:
                 ret = crashdialog.run_dialog(report)
                 if ret == crashdialog.IGNORE_ERRORS:
                     self.ignore_errors = True
+            # save the crash report to disk
+            crashreport.save_crash_report(report)
             self.crash_reports_to_handle = self.crash_reports_to_handle[1:]
 
     def on_backend_shutdown(self, obj):

@@ -30,10 +30,12 @@
 """crashreport.py -- Format crash reports."""
 
 import logging
+import os
 import sys
 import threading
 import time
 import traceback
+import random
 
 from miro import app
 from miro import prefs
@@ -120,7 +122,44 @@ def format_crash_report(when, exc_info, details):
     # instead of the report from the dialog box. (Note that we don't
     # do this until we've already read the log into the dialog
     # message.)
-    logging.info ("----- CRASH REPORT (DANGER CAN HAPPEN) -----")
-    logging.info (header)
-    logging.info ("----- END OF CRASH REPORT -----")
+    logging.info("----- CRASH REPORT (DANGER CAN HAPPEN) -----")
+    logging.info(header)
+    logging.info("----- END OF CRASH REPORT -----")
+
     return report
+
+def extract_headers(report):
+    """Takes the headers out of the report which includes the log
+    files.  This makes it easier to log the headers and only the
+    headers so the log files don't grow exponentially.
+    """
+    if END_HEADERS in report:
+        return report[:report.find(END_HEADERS)]
+    return report
+
+def save_crash_report(report):
+    try:
+        crash_dir = app.config.get(prefs.CRASH_PATHNAME)
+
+        if not os.path.exists(crash_dir):
+            os.makedirs(crash_dir)
+
+        # we use a timestamp so that crash reports are easy to identify
+        # for users.
+        # we add a random bit at the end to reduce the likelihood that
+        # if Miro is being crash-tastic that one report will stomp on
+        # another one.  we don't kill ourselves for file-name uniqueness
+        # though since we're in the middle of a crash and it's better
+        # to be simple about it.
+        timestamp = time.strftime("%Y-%m-%d-%H%M%S", time.localtime())
+        fn = os.path.join(
+            crash_dir,
+            "crashreport-%s-%s.txt" % (timestamp, random.randint(0, 10000)))
+
+        logging.info("saving crash report file to: %s", fn)
+
+        f = open(fn, "w")
+        f.write(report)
+        f.close()
+    except (OSError, IOError):
+        logging.exception("exception while saving crash report")

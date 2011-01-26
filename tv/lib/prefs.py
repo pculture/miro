@@ -185,6 +185,8 @@ ICON_CACHE_DIRECTORY = \
     Pref(key='IconCacheDirectory', default=None, platformSpecific=True)
 SQLITE_PATHNAME = \
     Pref(key='SQLLitePathname',    default=None, platformSpecific=True)
+CRASH_PATHNAME = \
+    Pref(key='CrashPathname',      default=None, platformSpecific=True)
 LOG_PATHNAME = \
     Pref(key='LogPathname',      default=None, platformSpecific=True)
 DOWNLOADER_LOG_PATHNAME = \

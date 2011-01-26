@@ -33,6 +33,7 @@ import cPickle
 from struct import pack, unpack, calcsize
 import tempfile
 from miro import app
+from miro import crashreport
 from miro import prefs
 from miro import eventloop
 from miro import httpauth
@@ -205,7 +206,10 @@ class DownloaderDaemon(Daemon):
         signals.system.connect('error', self.handle_error)
 
     def handle_error(self, obj, report):
-        logging.error("Error: %s (%r) %s", obj, obj, report)
+        # reduce the amount of stuff we dump to the log since it gets
+        # repeated in the next crash
+        headers = crashreport.extract_headers(report)
+        logging.error("Error: %s (%r) %s", obj, obj, headers)
         command.DownloaderErrorCommand(self, report).send()
 
     def handle_close(self, type_):
