@@ -1026,7 +1026,7 @@ class ListViewRenderer(widgetset.InfoListRenderer):
         pass
 
 class NameRenderer(ListViewRenderer):
-    button_font_size = self.font_size * (0.77 / 0.82)
+    button_font_size = ListViewRenderer.font_size * (0.77 / 0.82)
 
     def __init__(self):
         ListViewRenderer.__init__(self)
