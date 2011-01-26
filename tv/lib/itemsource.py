@@ -632,16 +632,6 @@ class DeviceItemSource(ItemSource):
             os.unlink(info.thumbnail)
         device.database.emit('item-removed', info)
 
-    def delete(self, info):
-        device = info.device
-        del device.database[item.file_type][info.id]
-        if os.path.exists(info.video_path):
-            os.unlink(info.video_path)
-        if (info.thumbnail and info.thumbnail.startswith(device.mount) and
-            os.path.exists(info.thumbnail)):
-            os.unlink(info.thumbnail)
-        device.database.emit('item-removed', item)
-
     def fetch_all(self):
         return [self._item_info_for(devices.DeviceItem(
                     video_path=video_path,
