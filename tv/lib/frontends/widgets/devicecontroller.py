@@ -839,19 +839,7 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         return itemlistwidgets.HeaderToolbar()
 
     def start_tracking(self):
-        app.info_updater.item_list_callbacks.add('device', self.device.id,
-                self.handle_item_list)
-        app.info_updater.item_changed_callbacks.add('device', self.device.id,
-                self.handle_items_changed)
-        messages.TrackItems('device', self.device,
-                            self._search_text).send_to_backend()
-
-    def stop_tracking(self):
-        app.info_updater.item_list_callbacks.remove('device', self.device.id,
-                self.handle_item_list)
-        app.info_updater.item_changed_callbacks.remove(
-            'device',self.device.id, self.handle_items_changed)
-        messages.StopTrackingItems('device', self.device).send_to_backend()
+        self.track_item_lists('device', self.device.id)
 
     def on_sort_changed(self, obj, sort_key, ascending):
         sorter = itemlist.SORT_KEY_MAP[sort_key](ascending)
@@ -877,5 +865,4 @@ class DeviceItemController(itemlistcontroller.AudioVideoItemsController):
         """Set the search for all ItemViews managed by this controller.
         """
         self._search_text = search_text
-        messages.SetTrackItemsSearch('device', self.device,
-                search_text).send_to_backend()
+        messages.SetTrackItemsSearch('device', self.device).send_to_backend()

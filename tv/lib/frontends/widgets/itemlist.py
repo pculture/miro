@@ -325,7 +325,6 @@ class ItemList(signals.SignalEmitter):
         self.create_signal('items-added')
         self.model = widgetset.InfoListModel(None)
         self._sorter = None
-        self._search_text = ''
         self.new_only = False
         self.unwatched_only = False
         self.non_feed_only = False

@@ -481,55 +481,6 @@ class FeedItemTrackTest(TrackerTest):
         self.assertEquals(len(self.test_handler.messages), 2)
         self.check_changed_message(1, removed=[self.items[1]])
 
-    def test_search(self):
-        # add a search that only matches our first item
-        messages.SetTrackItemsSearch('feed', self.feed.id,
-                'first').send_to_backend()
-        self.runUrgentCalls()
-        self.assertEquals(len(self.test_handler.messages), 2)
-        self.check_changed_message(1, removed=[self.items[1]])
-        # make second item match, (we should match even though there's extra
-        # text on both sites)
-        self.items[1].set_title(u'foofirstbar')
-        self.runUrgentCalls()
-        self.assertEquals(len(self.test_handler.messages), 3)
-        self.check_changed_message(2, added=[self.items[1]])
-        # make the first item not match anymore
-        self.items[0].set_title(u'pcf is cool')
-        self.runUrgentCalls()
-        self.assertEquals(len(self.test_handler.messages), 4)
-        self.check_changed_message(3, removed=[self.items[0]])
-        # check changing the search so neither match
-        messages.SetTrackItemsSearch('feed', self.feed.id,
-                'notineither').send_to_backend()
-        self.runUrgentCalls()
-        self.assertEquals(len(self.test_handler.messages), 5)
-        self.check_changed_message(4, removed=[self.items[1]])
-        # Check single character search as an edge case
-        messages.SetTrackItemsSearch('feed', self.feed.id,
-                'p').send_to_backend()
-        self.runUrgentCalls()
-        self.assertEquals(len(self.test_handler.messages), 6)
-        self.check_changed_message(5, added=[self.items[0]])
-        # Setting search to empty should match all items
-        messages.SetTrackItemsSearch('feed', self.feed.id,
-                '').send_to_backend()
-        self.runUrgentCalls()
-        self.assertEquals(len(self.test_handler.messages), 7)
-        self.check_changed_message(6, added=[self.items[1]])
-
-    def test_initial_search(self):
-        # add a search that only matches our first item
-        messages.StopTrackingItems('feed', self.feed.id).send_to_backend()
-        self.runUrgentCalls()
-        messages.TrackItems('feed', self.feed.id,
-                'first'
-                ).send_to_backend()
-        self.runUrgentCalls()
-        message_with_search = self.test_handler.messages[1]
-        self.assertEquals(len(message_with_search.items), 1)
-        self.check_info_list(list(message_with_search.items), [self.items[0]])
-
     def test_stop(self):
         messages.StopTrackingItems('feed', self.feed.id).send_to_backend()
         self.runUrgentCalls()

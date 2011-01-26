@@ -53,6 +53,7 @@ from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
+from miro.frontends.widgets import search
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import menus
 from miro.plat.frontends.widgets import widgetset
@@ -92,6 +93,9 @@ class ItemListController(object):
         self.id = id_
         self.current_item_view = None
         self._search_text = ''
+        self.search_filter = search.SearchFilter()
+        self.search_filter.connect("initial-list", self.handle_item_list)
+        self.search_filter.connect("items-changed", self.handle_items_changed)
         display = (typ, id_)
         self.is_list_view = app.display_state.is_list_view(display)
         self.columns_enabled = app.display_state.get_columns_enabled(display)
@@ -103,6 +107,8 @@ class ItemListController(object):
         self._init_item_views()
         self.initialize_search()
         sorter = self.item_list_group.get_sort()
+        self._playback_callbacks = []
+        self._track_items_keys = None
         self.widget.toolbar.change_sort_indicator(
             sorter.KEY, sorter.is_ascending())
         self.list_item_view.change_sort_indicator(
@@ -238,8 +244,7 @@ class ItemListController(object):
         """Set the search for all ItemViews managed by this controller.
         """
         self._search_text = search_text
-        messages.SetTrackItemsSearch(self.type, self.id,
-                search_text).send_to_backend()
+        self.search_filter.set_search(search_text)
         app.inline_search_memory.set_search(self.type, self.id, search_text)
 
     def _trigger_item(self, item_view, info):
@@ -384,28 +389,45 @@ class ItemListController(object):
 
     def start_tracking(self):
         """Send the message to start tracking items."""
-        messages.TrackItems(self.type, self.id,
-                self._search_text).send_to_backend()
-        app.info_updater.item_list_callbacks.add(self.type, self.id,
-                self.handle_item_list)
-        app.info_updater.item_changed_callbacks.add(self.type, self.id,
-                self.handle_items_changed)
-        self._playback_callbacks = [
+        self.track_item_lists(self.type, self.id)
+        self.track_playback()
+
+    def stop_tracking(self):
+        """Send the message to stop tracking items."""
+        self.cancel_track_item_lists()
+        self.cancel_track_playback()
+
+    def track_item_lists(self, type_, id_):
+        messages.TrackItems(type_, id_).send_to_backend()
+        app.info_updater.item_list_callbacks.add(type_, id_,
+                self.search_filter.handle_item_list)
+        app.info_updater.item_changed_callbacks.add(type_, id_,
+                self.search_filter.handle_items_changed)
+        self._track_items_keys = (type_, id_)
+
+    def cancel_track_item_lists(self):
+        if self._track_items_keys is None:
+            return # never started tracking
+        (type_, id_) = self._track_items_keys
+        messages.StopTrackingItems(type_, id_).send_to_backend()
+        app.info_updater.item_list_callbacks.remove(type_, id_,
+                self.search_filter.handle_item_list)
+        app.info_updater.item_changed_callbacks.remove(type_, id_,
+                self.search_filter.handle_items_changed)
+        self._track_items_keys = None
+
+    def track_playback(self):
+        self._playback_callbacks.extend([
             app.playback_manager.connect('selecting-file',
                 self._on_playback_change),
             app.playback_manager.connect('will-stop',
                 self._playback_will_stop),
-        ]
+        ])
 
-    def stop_tracking(self):
-        """Send the message to stop tracking items."""
-        messages.StopTrackingItems(self.type, self.id).send_to_backend()
-        app.info_updater.item_list_callbacks.remove(self.type, self.id,
-                self.handle_item_list)
-        app.info_updater.item_changed_callbacks.remove(self.type, self.id,
-                self.handle_items_changed)
+    def cancel_track_playback(self):
         for handle in self._playback_callbacks:
             app.playback_manager.disconnect(handle)
+        self._playback_callbacks = []
 
     def _on_playback_change(self, playback_manager, *args):
         # The currently playing item has changed, redraw the view to
@@ -419,20 +441,20 @@ class ItemListController(object):
             self._playback_item_list.disconnect(self._items_added_callback)
             self._playback_item_list = self._items_added_callback = None
 
-    def handle_item_list(self, message):
+    def handle_item_list(self, obj, items):
         """Handle an ItemList message meant for this ItemContainer."""
-        self.item_list_group.add_items(message.items)
-        self.on_initial_list()
+        self.item_list_group.add_items(items)
         for item_view in self.all_item_views():
             item_view.model_changed()
+        self.on_initial_list()
 
-    def handle_items_changed(self, message):
+    def handle_items_changed(self, obj, added, changed, removed):
         """Handle an ItemsChanged message meant for this ItemContainer."""
         for item_view in self.all_item_views():
             item_view.start_bulk_change()
-        self.item_list_group.remove_items(message.removed)
-        self.item_list_group.update_items(message.changed)
-        self.item_list_group.add_items(message.added)
+        self.item_list_group.remove_items(removed)
+        self.item_list_group.update_items(changed)
+        self.item_list_group.add_items(added)
         for item_view in self.all_item_views():
             item_view.model_changed()
         self.on_items_changed()

@@ -44,17 +44,13 @@ class ItemSource(signals.SignalEmitter):
     signals are sent to allow listeners to update their view of this source.
     """
     def __init__(self):
-        signals.SignalEmitter.__init__(self, 'added', 'changed', 'removed',
-                                       'new-list')
-        self.limiter = None
-        self.current_ids = set()
+        signals.SignalEmitter.__init__(self, 'added', 'changed', 'removed')
 
     # Methods to implement for sources
     def fetch_all(self):
         """
         Returns a list of ItemInfo objects representing all the A/V items this
-        source knows about.  Code that interacts with a source should use
-        fetch() instead, so that it goes through the limiter.
+        source knows about.
         """
         raise NotImplementedError
 
@@ -128,50 +124,13 @@ class ItemSource(signals.SignalEmitter):
 
     # Methods users of ItemSource can use as well
     def added(self, info):
-        if self.limiter is None or not self.limiter.filter_info(info):
-            self.current_ids.add(info.id)
-            self.emit('added', info)
+        self.emit('added', info)
 
     def changed(self, info):
-        before = info.id in self.current_ids
-        if self.limiter is None:
-            now = True
-        else:
-            now = not self.limiter.filter_info(info)
-        if before and now:
-            self.emit('changed', info)
-        elif now and not before:
-            self.emit('added', info)
-            self.current_ids.add(info.id)
-        elif before and not now:
-            self.emit('removed', info)
-            self.current_ids.remove(info.id)
+        self.emit('changed', info)
 
     def removed(self, info):
-        if self.limiter is None or not self.limiter.filter_info(info):
-            if info.id in self.current_ids:
-                self.current_ids.remove(info.id)
-                self.emit('removed', info)
-
-    def set_limiter(self, limiter):
-        """
-        Set the current limiter and reset the list.
-        """
-        self.limiter = limiter
-        infos = self.fetch() # resets current_ids
-        self.emit('new-list', infos)
-
-    def fetch(self):
-        """
-        Fetch all the ItemInfos which match the current limiter.
-        """
-        if self.limiter is None:
-            infos = self.fetch_all()
-        else:
-            infos = self.limiter.filter_list(self.fetch_all())
-        infos = list(infos)
-        self.current_ids = set(info.id for info in infos)
-        return infos
+        self.emit('removed', info)
 
 class DatabaseItemSource(ItemSource):
     """
@@ -183,15 +142,10 @@ class DatabaseItemSource(ItemSource):
     # Item.get_description()).
     VERSION = 10
 
-    def __init__(self, view, use_cache=True):
+    def __init__(self, view):
         ItemSource.__init__(self)
-        # use_cache=False for priming the cache
-        self.use_cache = use_cache
         self.view = view
-
-        if use_cache:
-            self.view.fetcher = database.ItemInfoFetcher(self)
-
+        self.view.fetcher = database.ItemInfoFetcher(self)
         self.tracker = self.view.make_tracker()
         self.tracker.connect('added', self._emit_from_db, self.added)
         self.tracker.connect('changed', self._emit_from_db, self.changed)
@@ -294,16 +248,9 @@ class DatabaseItemSource(ItemSource):
         return messages.ItemInfo(item.id, **info)
 
     def fetch_all(self):
-        if self.use_cache:
-            return list(iter(self.view))
-        else:
-            return [self._item_info_for(i) for i in self.view]
+        return list(self.view)
 
-    def _emit_from_db(self, vt, obj, signal_method):
-        if self.use_cache:
-            info = obj
-        else:
-            info = self._item_info_for(obj)
+    def _emit_from_db(self, vt, info, signal_method):
         signal_method(info)
 
     def unlink(self):
@@ -647,17 +594,3 @@ class DeviceItemSource(ItemSource):
         for handle in self.signal_handles:
             self.device.database.disconnect(handle)
         self.signal_handles = []
-
-class SourceLimiter(object):
-    """Interface for objects that are passed into ItemSource.set_limiter.
-
-    SourceLimiter objects allow us to filter sets of items in Python, rather
-    than through the database.
-    """
-    def filter_info(self, info):
-        """Return True if we should filter out info from fetch()."""
-        raise NotImplementedError()
-
-    def filter_list(self, infos):
-        """Only return infos which should be part of fetch()."""
-        raise NotImplementedError()

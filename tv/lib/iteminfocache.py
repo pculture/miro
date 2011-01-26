@@ -149,11 +149,9 @@ class ItemInfoCache(signals.SignalEmitter):
         """
 
         self.id_to_info = {}
-        source = itemsource.DatabaseItemSource(models.Item.make_view(),
-                                               use_cache=False)
-        for info in source.fetch():
+        for item in models.Item.make_view():
+            info = itemsource.DatabaseItemSource._item_info_for(item)
             self.id_to_info[info.id] = info
-        source.unlink()
 
     def schedule_save_to_db(self):
         if self._save_dc is None:

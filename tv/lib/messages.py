@@ -202,13 +202,10 @@ class TrackItems(BackendMessage):
 
     id should be the id of a feed/playlist. For new, downloading and library
     it is ignored.
-
-    search_text is an optional search query to filter with
     """
-    def __init__(self, typ, id_, search_text=None):
+    def __init__(self, typ, id_):
         self.type = typ
         self.id = id_
-        self.search_text = search_text
 
 class TrackItemsManually(BackendMessage):
     """Track a manually specified list of items.
@@ -216,28 +213,10 @@ class TrackItemsManually(BackendMessage):
     ItemList and ItemsChanged messages will have "manual" as the type and
     will use the id specified in the constructed.
     """
-    def __init__(self, id_, ids_to_track, search_text=None):
+    def __init__(self, id_, ids_to_track):
         self.id = id_
         self.ids_to_track = ids_to_track
         self.type = 'manual'
-        self.search_text = search_text
-
-class SetTrackItemsSearch(BackendMessage):
-    """Set the search query for a TrackItems message.
-
-    The search query will limit which items get sent back.
-
-    A TrackItems message for the same type/id must have already been sent.
-    The backend will send back an ItemsChanged message with items being
-    added/removed from the list based on the new search.  If multiple
-    SetTrackItemsSearch messages come in quickly, an ItemsChanged message
-    might not be sent back for each one.  The backend may try to only handle
-    the latest one to save processing time
-    """
-    def __init__(self, typ, id_, search_text=None):
-        self.type = typ
-        self.id = id_
-        self.search_text = search_text
 
 class StopTrackingItems(BackendMessage):
     """Stop tracking items for a feed.

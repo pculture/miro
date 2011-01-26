@@ -74,27 +74,8 @@ class SharingView(itemlistcontroller.SimpleItemListController):
     # actual SharingInfo over which contains everything the backend needs
     # to work out what to do.
     def start_tracking(self):
-        messages.TrackItems(self.type, self.share,
-                            self._search_text).send_to_backend()
-        app.info_updater.item_list_callbacks.add(self.type, self.share,
-                                                 self.handle_item_list)
-        app.info_updater.item_changed_callbacks.add(self.type, self.share,
-                                                 self.handle_items_changed)
-        self._playback_callbacks = [
-            app.playback_manager.connect('selecting-file',
-                                         self._on_playback_change),
-            app.playback_manager.connect('will-stop',
-                                         self._playback_will_stop),
-        ]
-
-    def stop_tracking(self):
-        messages.StopTrackingItems(self.type, self.share).send_to_backend()
-        app.info_updater.item_list_callbacks.remove(self.type, self.share,
-                                                 self.handle_item_list)
-        app.info_updater.item_changed_callbacks.remove(self.type, self.share,
-                                                 self.handle_items_changed)
-        for handle in self._playback_callbacks:
-            app.playback_manager.disconnect(handle)
+        self.track_item_lists(self.type, self.share)
+        self.track_playback()
 
     # note: this should never be empty, so we don't have empty view.
     def build_widget(self):

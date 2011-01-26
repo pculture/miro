@@ -31,7 +31,7 @@
 
 To make incremental search fast, we index the n-grams for each item.
 """
-
+import collections
 import os
 import re
 
@@ -171,3 +171,76 @@ def list_matches(item_infos, search_text):
         if match:
             yield info
 
+class ItemSearcher(object):
+    """Index Item objects so that they can be searched quickly """
+
+    def __init__(self):
+        # map N-grams -> set of item ids
+        self._ngram_map = collections.defaultdict(set)
+        # map item id -> set of N-grams
+        self._ngrams_for_item = {}
+
+    def add_item(self, item_info):
+        """Add an item info to the index."""
+        self._add_item(item_info)
+
+    def update_item(self, item_info):
+        """Update the index based on an item info changing."""
+        self._remove_item(item_info.id)
+        self._add_item(item_info)
+
+    def remove_item(self, item_id):
+        """Remove an item from the index."""
+        self._remove_item(item_id)
+
+    def _add_item(self, item_info):
+        for ngram in item_info.search_ngrams:
+            self._ngram_map[ngram].add(item_info.id)
+        self._ngrams_for_item[item_info.id] = set(item_info.search_ngrams)
+
+    def _remove_item(self, item_id):
+        for ngram in self._ngrams_for_item.pop(item_id):
+            self._ngram_map[ngram].discard(item_id)
+
+    def _ngrams_for_term(self, term):
+        """Given a term, return a list of N-grams that we should search for.
+
+        If the term is shorter than NGRAM_MAX, this is just the term itself.
+        If it's longer, we split it up into a bunch of N-grams to search for.
+        """
+        if len(term) <= NGRAM_MAX:
+            return [term]
+        else:
+            # Note that we only need to use the longest N-grams, since shorter
+            # N-grams will just be substrings of those.
+            return ngrams.breakup_word(term, NGRAM_MAX, NGRAM_MAX)
+
+    def _term_search(self, term):
+        grams = self._ngrams_for_term(term)
+        rv = self._ngram_map[grams[0]]
+        for gram in grams[1:]:
+            rv.intersection_update(self._ngram_map[gram])
+        return rv
+
+    def search(self, search_text):
+        """Search through the index items.
+
+        :param search_text: search_text to search with
+
+        :returns: set of ids that match the search
+        """
+        parsed_search = _get_boolean_search(search_text)
+
+        if parsed_search.positive_terms:
+            first_term = parsed_search.positive_terms[0]
+            # note that we need to copy the results of _term_search here, we
+            # don't want our calls to intersection_update to change it.
+            matching_ids = set(self._term_search(first_term))
+            for term in parsed_search.positive_terms[1:]:
+                matching_ids.intersection_update(self._term_search(term))
+        else:
+            matching_ids = set(self._ngrams_for_item.keys())
+
+        for term in parsed_search.negative_terms:
+            matching_ids.difference_update(self._term_search(term))
+        return matching_ids
