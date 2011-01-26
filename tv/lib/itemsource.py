@@ -181,7 +181,7 @@ class DatabaseItemSource(ItemSource):
     # bump this whenever you change the ItemInfo class, or change one of the
     # functions that ItemInfo uses to get it's attributes (for example
     # Item.get_description()).
-    VERSION = 9
+    VERSION = 10
 
     def __init__(self, view, use_cache=True):
         ItemSource.__init__(self)
