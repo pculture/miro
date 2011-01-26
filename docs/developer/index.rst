@@ -6,7 +6,7 @@
 Miro Developer Documentation
 ============================
 
-This is Miro Developer Documentation for Miro 3.0.
+This is Miro Developer Documentation for Miro 3.5.
 
 Contents:
 
