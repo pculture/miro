@@ -674,12 +674,16 @@ class SharingPanel(PanelBuilder):
         grid = dialogwidgets.ControlGrid()
 
         sharing_cbx = widgetset.Checkbox(_('Share my media library.'))
+        sharing_warnonquit_cbx = widgetset.Checkbox(
+            _('Warn on quit when others are connected to my media library.'))
         def text_changed(widget):
             self.new_name = widget.get_text().strip().encode('utf-8')
         share_txt = widgetset.TextEntry()
         share_txt.connect('changed', text_changed)
 
         attach_boolean(sharing_cbx, prefs.SHARE_MEDIA, [share_txt])
+        attach_boolean(sharing_warnonquit_cbx, prefs.SHARE_WARN_ON_QUIT,
+                       [sharing_warnonquit_cbx, share_txt])
         # Why is check function always false?  Because we don't want to
         # continually reload (unpublish and republish) the share as the
         # user is typing.  On_window_open() and open_window_closed() takes
@@ -692,8 +696,11 @@ class SharingPanel(PanelBuilder):
         if not app.sharing_manager.mdns_present:
             sharing_cbx.disable()
             share_txt.disable()
+            sharing_warnonquit.disable()
             
         vbox.pack_start(widgetutil.align_left(sharing_cbx, bottom_pad=6))
+        vbox.pack_start(widgetutil.align_left(sharing_warnonquit_cbx,
+                                              bottom_pad=6))
 
         grid.pack_label(_("Share Name:"),
                         dialogwidgets.ControlGrid.ALIGN_RIGHT)

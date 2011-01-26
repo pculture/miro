@@ -926,8 +926,32 @@ class Application:
     def quit(self):
         ok1 = self._confirm_quit_if_downloading()
         ok2 = self._confirm_quit_if_converting()
-        if ok1 and ok2:
+        ok3 = self._confirm_quit_if_sharing()
+        if ok1 and ok2 and ok3:
             self.do_quit()
+
+    def _confirm_quit_if_sharing(self):
+        # Pre-grab variables so test and the message is consistent.
+        is_sharing = app.sharing_manager.sharing
+        session_count = app.sharing_manager.server.session_count()
+        if (app.config.get(prefs.SHARE_WARN_ON_QUIT) and 
+            is_sharing and session_count > 0):
+            ret = quitconfirmation.rundialog(
+                _("Are you sure you want to quit?"),
+                ngettext(
+                    ("You have %(count)d active connection to your media "
+                     "library. Quit anyway?"),
+                    ("You have %(count)d active connections to your media "
+                     "library. Quit anyway?"),
+                    session_count,
+                    {"count": session_count}
+                ),
+                _("Warn me when I attempt to quit when others are connected "
+                  "to my media library"),
+                prefs.WARN_IF_DOWNLOADING_ON_QUIT
+            )
+            return ret
+        return True
 
     def _confirm_quit_if_downloading(self):
         if app.config.get(prefs.WARN_IF_DOWNLOADING_ON_QUIT) and self.download_count > 0:
