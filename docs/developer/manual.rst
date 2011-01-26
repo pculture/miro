@@ -20,6 +20,10 @@ For details on extensions, see:
 * http://develop.participatoryculture.org/index.php/ExtensionSystem
 * http://develop.participatoryculture.org/index.php/ExtensionAPI
 
+The reason we have documentation in two different places is that this
+documentation is specific to Miro releases and the documentation
+in the wiki is general.
+
 
 How to help
 ===========

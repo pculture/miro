@@ -14,7 +14,9 @@ Contents:
    :maxdepth: 2
 
    manual
+   status
    extensionapi
+   example
 
 Indices and tables
 ==================
