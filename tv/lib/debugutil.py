@@ -39,6 +39,7 @@ writing and finally got around to persisting to the code-base.
 
 import logging
 import traceback
+import time
 
 def logwrap(fun):
     """Function decorator that wraps a function and logs when it
@@ -54,12 +55,14 @@ def logwrap(fun):
     if fun.__name__ == "_wrapped_fun":
         return fun
     def _wrapped_fun(*args, **kwargs):
-        name = "%s %s" % (fun.__module__, fun.__name__)
+        name = "%s %s %s" % (time.time(), fun.__module__, fun.__name__)
+        ret = None
         try:
             logging.info("START: %s", name)
-            return fun(*args, **kwargs)
+            ret = fun(*args, **kwargs)
+            return ret
         finally:
-            logging.info("END:   %s", name)
+            logging.info("END:   %s ret: %s", name, ret)
     return _wrapped_fun
 
 def instrument_class(klass):
