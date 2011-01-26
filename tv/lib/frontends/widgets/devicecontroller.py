@@ -163,11 +163,10 @@ class SizeWidget(widgetset.Background):
     def get_text(self):
         return self.sync_label.get_text()
 
-    def set_sync_state(self, video_count, audio_count):
+    def set_sync_state(self, count):
         if self.in_progress:
             # don't update sync state while we're syncing
             return
-        count = video_count + audio_count
         if count:
             self.sync_label.set_text(
                 ngettext('1 file selected to sync',
@@ -187,7 +186,7 @@ class SizeWidget(widgetset.Background):
             self.sync_button.disable()
         else:
             self.sync_button.set_text(_("Sync Now"))
-            self.set_sync_state(0, 0)
+            self.set_sync_state(0)
 
 class SyncProgressBar(widgetset.Background):
     PROGRESS_GRADIENT_TOP = (1, 1, 1)
@@ -210,9 +209,9 @@ class SyncProgressBar(widgetset.Background):
         gradient.set_start_color(self.BACKGROUND_GRADIENT_TOP)
         gradient.set_end_color(self.BACKGROUND_GRADIENT_BOTTOM)
         context.gradient_fill(gradient)
-        progress_width = context.width * self.progress_ratio
-        if progress_width < context.height:
-            progress_width = context.height
+        progress_width = (
+            (context.width - context.height) * self.progress_ratio +
+            context.height)
         widgetutil.circular_rect_negative(context, 1, 1,
                                           progress_width - 2,
                                           context.height - 2)
@@ -282,16 +281,7 @@ class SyncWidget(widgetset.HBox):
         self.sync_library.connect('toggled', self.sync_library_toggled)
         first_column.pack_start(self.sync_library)
         self.sync_group = widgetset.RadioButtonGroup()
-        if self.file_type != 'playlists':
-            # don't actually need to create buttons for playlists, since we
-            # always sync all items
-            all_button = widgetset.RadioButton(self.all_label, self.sync_group)
-            all_button.connect('clicked', self.all_button_clicked)
-            widgetset.RadioButton(self.unwatched_label,
-                                  self.sync_group)
-            for button in self.sync_group.get_buttons():
-                button.disable()
-                first_column.pack_start(button)
+        self.extra_buttons(first_column)
         self.pack_start(widgetutil.pad(first_column, 20, 0, 20, 20))
 
         second_column = widgetset.VBox()
@@ -313,6 +303,9 @@ class SyncWidget(widgetset.HBox):
         self.feed_list.disable()
         self.pack_start(widgetutil.pad(second_column, 20, 20, 20, 20),
                         expand=True)
+
+    def extra_buttons(self, first_column):
+        pass
 
     def set_device(self, device):
         self.device = device
@@ -339,22 +332,23 @@ class SyncWidget(widgetset.HBox):
 
     def get_feeds(self):
         feeds = []
-        table_model = self.tab_list().view.model
-        iter_ = table_model.first_iter()
-        if iter_ is None:
-            self.sync_library.disable()
-        else:
-            while iter_ is not None:
-                row = table_model[iter_]
-                if row[0].is_folder:
-                    child_iter = table_model.child_iter(iter_)
-                    while child_iter is not None:
-                        row = table_model[child_iter]
+        for tab_list in self.tab_lists():
+            table_model = tab_list.view.model
+            iter_ = table_model.first_iter()
+            if iter_ is None:
+                self.sync_library.disable()
+            else:
+                while iter_ is not None:
+                    row = table_model[iter_]
+                    if row[0].is_folder:
+                        child_iter = table_model.child_iter(iter_)
+                        while child_iter is not None:
+                            row = table_model[child_iter]
+                            feeds.append(row[0])
+                            child_iter = table_model.next_iter(child_iter)
+                    else:
                         feeds.append(row[0])
-                        child_iter = table_model.next_iter(child_iter)
-                else:
-                    feeds.append(row[0])
-                iter_ = table_model.next_iter(iter_)
+                    iter_ = table_model.next_iter(iter_)
         feeds.sort(key=operator.attrgetter('name'))
         return feeds
 
@@ -397,42 +391,41 @@ class SyncWidget(widgetset.HBox):
     def checked_feeds(self):
         if not self.sync_library.get_checked():
             return []
-        tab_list = self.tab_list()
         feeds = []
-        for key in self.device.database['sync'][self.file_type].get('items',
-                                                                    ()):
-            feed = self.find_info_by_key(key, tab_list)
-            if feed is not None:
-                feeds.append(feed.id)
+        items = self.device.database['sync'][self.file_type].get('items', ())
+        for key in items:
+            for tab_list in self.tab_lists():
+                feed = self.find_info_by_key(key, tab_list)
+                if feed is not None:
+                    feeds.append(feed.id)
         return feeds
 
-class VideoFeedSyncWidget(SyncWidget):
-    file_type = 'video'
-    title = _("Sync Video Library")
-    all_label = _("All videos")
-    unwatched_label = _("Only unwatched videos")
+class PodcastSyncWidget(SyncWidget):
+    file_type = 'podcast'
+    title = _("Sync Podcasts")
+    all_label = _("All items")
+    unwatched_label = _("Only unplayed items")
 
-    def tab_list(self):
-        return app.tab_list_manager.feed_list
+    def extra_buttons(self, first_column):
+        all_button = widgetset.RadioButton(self.all_label, self.sync_group)
+        all_button.connect('clicked', self.all_button_clicked)
+        widgetset.RadioButton(self.unwatched_label,
+                              self.sync_group)
+        for button in self.sync_group.get_buttons():
+            button.disable()
+            first_column.pack_start(button)
 
-class AudioFeedSyncWidget(SyncWidget):
-    file_type = 'audio'
-    title = _("Sync Audio Library")
-    all_label = _("All audio")
-    unwatched_label =_("Only unplayed audio")
-
-    def tab_list(self):
-        return app.tab_list_manager.audio_feed_list
+    def tab_lists(self):
+        return (app.tab_list_manager.feed_list,
+                app.tab_list_manager.audio_feed_list)
 
 class PlaylistSyncWidget(SyncWidget):
     file_type = 'playlists'
     list_label = _("Sync These Playlists")
     title = _("Sync Playlists")
-    all_label =_("All items")
-    unwatched_label = _("Only unwatched items")
 
-    def tab_list(self):
-        return app.tab_list_manager.playlist_list
+    def tab_lists(self):
+        return (app.tab_list_manager.playlist_list,)
 
     def info_key(self, info):
         return info.name
@@ -553,8 +546,7 @@ class DeviceMountedView(widgetset.VBox):
 
         for key, name in (
             ('main', _('Main')),
-            ('video', _('Video')),
-            ('audio', _('Audio')),
+            ('podcasts', _('Podcasts')),
             ('playlists', _('Playlists')),
             ('settings', _('Settings'))):
             button = DeviceTabButtonSegment(key, name,
@@ -588,8 +580,7 @@ class DeviceMountedView(widgetset.VBox):
         self.pack_end(widgetutil.align_center(self.sync_container))
 
         self.add_tab('main', vbox)
-        self.add_tab('video', widgetutil.align_center(VideoFeedSyncWidget()))
-        self.add_tab('audio', widgetutil.align_center(AudioFeedSyncWidget()))
+        self.add_tab('podcasts', widgetutil.align_center(PodcastSyncWidget()))
         self.add_tab('playlists',
                      widgetutil.align_center(PlaylistSyncWidget()))
         self.add_tab('settings',
@@ -608,7 +599,7 @@ class DeviceMountedView(widgetset.VBox):
         if not self.device.mount:
             return
         self.device.database.set_bulk_mode(True)
-        for name in 'video', 'audio', 'playlists', 'settings':
+        for name in 'podcasts', 'playlists', 'settings':
             tab = self.tabs[name]
             tab.child.set_device(device)
         sync_manager = app.device_manager.get_sync_for_device(device,
@@ -627,16 +618,14 @@ class DeviceMountedView(widgetset.VBox):
     def _get_sync_state(self):
         sync_type = {}
         sync_ids = {}
-        for file_type in 'video', 'audio', 'playlists':
-            this_sync = self.device.database['sync'][file_type]
+        for file_type in 'podcasts', 'playlists':
+            this_sync = self.device.database['sync'].get(file_type, {})
             widget = self.tabs[file_type].child
             sync_type[file_type] = (this_sync.get('all', True) and 'all' or
                                     'unwatched')
             sync_ids[file_type] = widget.checked_feeds()
-        return (sync_type['video'],
-                sync_ids['video'],
-                sync_type['audio'],
-                sync_ids['audio'],
+        return (sync_type['podcasts'],
+                sync_ids['podcasts'],
                 sync_ids['playlists'])
 
     def sync_settings_changed(self, obj):
@@ -650,8 +639,8 @@ class DeviceMountedView(widgetset.VBox):
                                            *self._get_sync_state())
         message.send_to_backend()
 
-    def current_sync_information(self, video_count, audio_count):
-        self.device_size.set_sync_state(video_count, audio_count)
+    def current_sync_information(self, count):
+        self.device_size.set_sync_state(count)
 
     def set_sync_status(self, progress, eta):
         if not isinstance(self.sync_container.child, SyncProgressWidget):
@@ -760,10 +749,10 @@ class DeviceWidget(widgetset.VBox):
         icon = imagepool.get(image_path)
         return DeviceTitlebar(device.name, icon)
 
-    def current_sync_information(self, video_count, audio_count):
+    def current_sync_information(self, count):
         view = self.get_view()
         if isinstance(view, DeviceMountedView):
-            view.current_sync_information(video_count, audio_count)
+            view.current_sync_information(count)
 
     def set_sync_status(self, progress, eta):
         view = self.get_view()
@@ -794,8 +783,7 @@ class DeviceController(object):
         if message.device.id != self.device.id:
             return # not our device
 
-        self.widget.current_sync_information(message.video_count,
-                                             message.audio_count)
+        self.widget.current_sync_information(message.count)
 
     def handle_device_sync_changed(self, message):
         if message.device.id != self.device.id:

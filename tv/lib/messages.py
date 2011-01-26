@@ -853,13 +853,10 @@ class QuerySyncInformation(BackendMessage):
     """
     Ask for a CurrentSyncInformation to be sent back for the given device.
     """
-    def __init__(self, device, video_type, video_ids, audio_type, audio_ids,
-                 playlist_ids):
+    def __init__(self, device, feed_type, feed_ids, playlist_ids):
         self.device = device
-        self.video_type = video_type
-        self.video_ids = video_ids
-        self.audio_type = audio_type
-        self.audio_ids = audio_ids
+        self.feed_type = feed_type
+        self.feed_ids = feed_ids
         self.playlist_ids = playlist_ids
 
 class DeviceSyncFeeds(BackendMessage):
@@ -867,14 +864,11 @@ class DeviceSyncFeeds(BackendMessage):
     Ask the backend to sync the given feeds/playlists.
     """
     def __init__(self, device,
-                 video_type, video_ids,
-                 audio_type, audio_ids,
+                 feed_type, feed_ids,
                  playlist_ids):
         self.device = device
-        self.video_type = video_type
-        self.video_ids = video_ids
-        self.audio_type = audio_type
-        self.audio_ids = audio_ids
+        self.feed_type = feed_type
+        self.feed_ids = feed_ids
         self.playlist_ids = playlist_ids
 
 class DeviceSyncMedia(BackendMessage):
@@ -1539,10 +1533,9 @@ class DeviceChanged(FrontendMessage):
 class CurrentSyncInformation(FrontendMessage):
     """Informs the frontend of what the current sync would look like.
     """
-    def __init__(self, device, video_count, audio_count):
+    def __init__(self, device, count):
         self.device = device
-        self.video_count = video_count
-        self.audio_count = audio_count
+        self.count = count
 
 class DeviceSyncChanged(FrontendMessage):
     """Informs the frontend that the status of a device sync has changed.  This

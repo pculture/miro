@@ -1662,17 +1662,9 @@ New ids: %s""", playlist_item_ids, message.item_ids)
     def _get_sync_items_for_message(message):
         views = []
         infos = set()
-        for video_id in message.video_ids:
-            feed_ = feed.Feed.get_by_id(video_id)
-            if message.video_type == 'all':
-                view = feed_.downloaded_items
-            else:
-                view = feed_.unwatched_items
-            views.append(view)
-
-        for audio_id in message.audio_ids:
-            feed_ = feed.Feed.get_by_id(audio_id)
-            if message.audio_type == 'all':
+        for feed_id in message.feed_ids:
+            feed_ = feed.Feed.get_by_id(feed_id)
+            if message.feed_type == 'all':
                 view = feed_.downloaded_items
             else:
                 view = feed_.unwatched_items
@@ -1691,11 +1683,10 @@ New ids: %s""", playlist_item_ids, message.item_ids)
 
     def handle_query_sync_information(self, message):
         infos = self._get_sync_items_for_message(message)
-        video_count = sum(1 for info in infos if info.file_type == 'video')
-        audio_count = sum(1 for info in infos if info.file_type == 'audio')
+        count = sum(1 for info in infos
+                    if info.file_type in ('video', 'audio'))
         message = messages.CurrentSyncInformation(message.device,
-                                                  video_count,
-                                                  audio_count)
+                                                  count)
         message.send_to_frontend()
 
     def handle_device_sync_feeds(self, message):
