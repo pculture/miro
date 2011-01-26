@@ -39,6 +39,8 @@ from miro import app
 from miro import prefs
 from miro import util
 
+END_HEADERS = "ENDHEADERS\n"
+
 def format_crash_report(when, exc_info, details):
     header = ""
     header += "App:        %s\n" % app.config.get(prefs.LONG_APP_NAME)
@@ -75,9 +77,10 @@ def format_crash_report(when, exc_info, details):
     header += "Current: %s\n" % threading.currentThread().getName()
     header += "Active:\n"
     for t in threading.enumerate():
-        header += " - %s%s\n" % \
-            (t.getName(),
-             t.isDaemon() and ' [Daemon]' or '')
+        isdaemon = t.isDaemon() and ' [Daemon]' or ''
+        header += " - %s%s\n" % (t.getName(), isdaemon)
+
+    header += END_HEADERS
 
     # Combine the header with the logfile contents, if available, to
     # make the dialog box crash message. {{{ and }}} are Trac
@@ -85,32 +88,32 @@ def format_crash_report(when, exc_info, details):
     # report is pasted into a ticket.
     report = "{{{\n%s}}}\n" % header
 
-    def read_log(logFile, logName="Log"):
+    def read_log(log_file, log_name="Log"):
         try:
-            f = open(logFile, "rt")
-            logContents = "%s\n---\n" % logName
-            logContents += f.read()
+            f = open(log_file, "rt")
+            log_contents = "%s\n---\n" % log_name
+            log_contents += f.read()
             f.close()
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
-            logContents = ''
-        return logContents
+            log_contents = ''
+        return log_contents
 
-    logFile = app.config.get(prefs.LOG_PATHNAME)
-    downloaderLogFile = app.config.get(prefs.DOWNLOADER_LOG_PATHNAME)
-    if logFile is None:
-        logContents = "No logfile available on this platform.\n"
+    log_file = app.config.get(prefs.LOG_PATHNAME)
+    downloader_log_file = app.config.get(prefs.DOWNLOADER_LOG_PATHNAME)
+    if log_file is None:
+        log_contents = "No logfile available on this platform.\n"
     else:
-        logContents = read_log(logFile)
-    if downloaderLogFile is not None:
-        if logContents is not None:
-            logContents += "\n" + read_log(downloaderLogFile, "Downloader Log")
+        log_contents = read_log(log_file)
+    if downloader_log_file is not None:
+        if log_contents is not None:
+            log_contents += "\n" + read_log(downloader_log_file, "Downloader Log")
         else:
-            logContents = read_log(downloaderLogFile)
+            log_contents = read_log(downloader_log_file)
 
-    if logContents is not None:
-        report += "{{{\n%s}}}\n" % util.stringify(logContents)
+    if log_contents is not None:
+        report += "{{{\n%s}}}\n" % util.stringify(log_contents)
 
     # Dump the header for the report we just generated to the log, in
     # case there are multiple failures or the user sends in the log
