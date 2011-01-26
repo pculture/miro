@@ -304,9 +304,9 @@ class InfoListModel(infolist.InfoList, signals.SignalEmitter):
         self.emit('structure-will-change')
         infolist.InfoList.add_infos(self, *args, **kwargs)
 
-    def remove_infos(self, *args, **kwargs):
+    def remove_ids(self, *args, **kwargs):
         self.emit('structure-will-change')
-        infolist.InfoList.remove_infos(self, *args, **kwargs)
+        infolist.InfoList.remove_ids(self, *args, **kwargs)
 
     def update_infos(self, *args, **kwargs):
         self.emit('structure-will-change')
@@ -328,7 +328,10 @@ class InfoListModel(infolist.InfoList, signals.SignalEmitter):
         infolist.InfoList.change_sort(self, *args, **kwargs)
 
     def iter_for_row(self, tableview, row):
-        return row # iterators are just the row index
+        if 0 <= row < len(self):
+            return row # iterators are just the row index
+        else:
+            return None
 
     def row_of_iter(self, tableview, iter):
         return iter # iterators are just the row index
@@ -528,6 +531,7 @@ class MiroInfoListDataSource(MiroTableViewDataSource):
             return (row,), -1
         else:
             return None, row
+
     def tableView_objectValueForTableColumn_row_(self, table_view, column, row):
         return self.model[row]
 

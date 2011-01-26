@@ -335,8 +335,8 @@ def calc_row_height(view, model_row):
     model = view.dataSource().model
     for column in view.tableColumns():
         cell = column.dataCell()
-        value_dict = model.get_column_data(model_row, column)
-        cell.setObjectValue_(value_dict)
+        data = model.get_column_data(model_row, column)
+        cell.setObjectValue_(data)
         cell_height = cell.calcHeight_(view)
         row_height = max(row_height, cell_height)
     if row_height == 0:
@@ -370,10 +370,11 @@ class TableViewDelegate(NSObject):
 
 class VariableHeightTableViewDelegate(TableViewDelegate):
     def tableView_heightOfRow_(self, table_view, row):
-        iter = table_view.dataSource().model.iter_for_row(table_view, row)
+        model = table_view.dataSource().model
+        iter = model.iter_for_row(table_view, row)
         if iter is None:
             return 12
-        return calc_row_height(table_view, iter.value().values)
+        return calc_row_height(table_view, model[iter])
 
 class OutlineViewDelegate(NSObject):
     def outlineView_willDisplayCell_forTableColumn_item_(self, view, cell,
