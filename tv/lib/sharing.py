@@ -715,8 +715,9 @@ class SharingManager(object):
     to the outside world.  One part is the server instance and the other
     part is the service publishing, both are handled here.
     """
+    # These commands should all be of the same size.
     CMD_QUIT = 'quit'
-    CMD_NOP  = 'nop'
+    CMD_NOP  = 'noop'
     def __init__(self):
         self.r, self.w = util.make_dummy_socket_pair()
         self.sharing = False
@@ -828,7 +829,7 @@ class SharingManager(object):
                         self.server.handle_request()
                         continue
                     if self.r == i:
-                        cmd = self.r.recv(1024)
+                        cmd = self.r.recv(4)
                         print 'CMD', cmd
                         if cmd == self.CMD_QUIT:
                             return
