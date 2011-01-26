@@ -83,7 +83,7 @@ def skip_for_platforms(*platforms):
     
     Example::
 
-        @skip_for_platform('win32')
+        @skip_for_platforms('win32')
         def test_something_that_fails_on_win32(self):
             ...
 
