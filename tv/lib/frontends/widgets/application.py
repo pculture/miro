@@ -938,10 +938,8 @@ class Application:
 
     def _confirm_quit_if_sharing(self):
         # Pre-grab variables so test and the message is consistent.
-        is_sharing = app.sharing_manager.sharing
-        session_count = app.sharing_manager.server.session_count()
-        if (app.config.get(prefs.SHARE_WARN_ON_QUIT) and 
-            is_sharing and session_count > 0):
+        session_count = app.sharing_manager.session_count()
+        if (app.config.get(prefs.SHARE_WARN_ON_QUIT) and session_count > 0):
             ret = quitconfirmation.rundialog(
                 _("Are you sure you want to quit?"),
                 ngettext(

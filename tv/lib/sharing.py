@@ -781,6 +781,12 @@ class SharingManager(object):
         if not self.mdns_present:
             app.sharing_tracker.resume()
 
+    def session_count(self):
+        if self.sharing:
+            return self.server.session_count()
+        else:
+            return 0
+
     def on_config_changed(self, obj, key, value):
         listen_keys = ['ShareMedia', 'ShareDiscoverable', 'ShareName']
         if not key in listen_keys:
