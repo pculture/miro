@@ -781,12 +781,9 @@ class TableView(Widget):
             self.tableview.deselectAll_(nil)
 
     def update_selection_after_change(self):
-        self._ignore_selection_changed = True
         self.model.restore_selection(self.tableview,
                 self._selected_before_change)
-        self._ignore_selection_changed = False
         self._selected_before_change = None
-        self.emit('selection-changed')
 
     def on_model_structure_change(self, model):
         self.reload_needed = True
@@ -809,8 +806,17 @@ class TableView(Widget):
         self.emit('row-collapsed', self.model.iter_for_item[item])
 
     def on_selection_change(self, notification):
+        self._emit_selection_changed()
+
+    def _emit_selection_changed(self):
         if not self._ignore_selection_changed:
-            self.emit('selection-changed')
+            # don't bother sending out a second selection-changed signal if
+            # the handler changes the selection (#15767)
+            self._ignore_selection_changed = True
+            try:
+                self.emit('selection-changed')
+            finally:
+                self._ignore_selection_changed = False
 
     def on_column_resize(self, notification):
         if not self.auto_resizing:

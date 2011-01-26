@@ -857,7 +857,13 @@ class TableView(Widget):
 
     def on_selection_changed(self, selection):
         if not self.ignore_selection_changed:
-            self.emit('selection-changed')
+            # don't bother sending out a second selection-changed signal if
+            # the handler changes the selection (#15767)
+            self.ignore_selection_changed = True
+            try:
+                self.emit('selection-changed')
+            finally:
+                self.ignore_selection_changed = False
 
     def on_row_inserted(self, model, path, iter):
         if self.hotspot_tracker:
