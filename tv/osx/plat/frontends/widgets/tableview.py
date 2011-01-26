@@ -1128,10 +1128,7 @@ class TableView(Widget):
         return self.tableview.selectedRowIndexes().count()
 
     def row_of_iter(self, iter):
-        if self.is_tree():
-            return self.tableview.rowForItem_(iter.value())
-        else:
-            return self.model.row_of_iter(iter)
+        return self.model.row_of_iter(self.tableview, iter)
 
     def select(self, iter):
         index_set = NSIndexSet.alloc().initWithIndex_(self.row_of_iter(iter))

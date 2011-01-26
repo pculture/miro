@@ -140,7 +140,7 @@ class TableModelBase(signals.SignalEmitter):
         new_index_set = NSMutableIndexSet.alloc().init()
         for iter in old_selection:
             if iter.valid():
-                new_index_set.addIndex_(tableview.row_of_iter(iter))
+                new_index_set.addIndex_(self.row_of_iter(tableview, iter))
         tableview.selectRowIndexes_byExtendingSelection_(new_index_set, YES)
 
     def check_column_values(self, column_values):
@@ -224,7 +224,7 @@ class TableModel(TableModelBase):
         if row not in self.row_indexes:
             self.row_indexes[row] = index
 
-    def row_of_iter(self, iter):
+    def row_of_iter(self, tableview, iter):
         row = iter.value()
         try:
             return self.row_indexes[row]
@@ -330,7 +330,7 @@ class InfoListModel(infolist.InfoList, signals.SignalEmitter):
     def iter_for_row(self, tableview, row):
         return row # iterators are just the row index
 
-    def row_of_iter(self, iter):
+    def row_of_iter(self, tableview, iter):
         return iter # iterators are just the row index
 
     def get_column_data(self, row, column):
@@ -429,6 +429,9 @@ class TreeTableModel(TableModelBase):
 
     def iter_for_row(self, tableview, row):
         return self.iter_for_item[tableview.itemAtRow_(row)]
+
+    def row_of_iter(self, tableview, iter):
+        return tableview.rowForItem_(iter.value())
 
 class DataSourceBase(NSObject):
     def initWithModel_(self, model):
