@@ -94,6 +94,7 @@ GTK_INCLUDE_DIRS = [
 ]
 
 PYGOBJECT_INCLUDE_DIR = os.path.join(BINARY_KIT_ROOT, 'pygobject')
+PYGTK_INCLUDE_DIR = os.path.join(BINARY_KIT_ROOT, 'pygtk')
 
 # path to the Mozilla "xulrunner-sdk" distribution.
 XULRUNNER_SDK_PATH = os.path.join(BINARY_KIT_ROOT, 'xulrunner-sdk')
@@ -151,7 +152,7 @@ platform_package_dir = os.path.join(platform_dir, 'plat')
 widgets_dir = os.path.join(platform_package_dir, 'frontends', 'widgets')
 portable_dir = os.path.join(root_dir, 'lib')
 portable_widgets_dir = os.path.join(portable_dir, 'frontends', 'widgets')
-infolist_dir = os.path.join(widgets_dir, 'infolist')
+infolist_dir = os.path.join(portable_widgets_dir, 'infolist')
 portable_xpcom_dir = os.path.join(portable_widgets_dir, 'gtk', 'xpcom')
 test_dir = os.path.join(root_dir, 'resources')
 resources_dir = os.path.join(root_dir, 'resources')
@@ -237,8 +238,19 @@ infolist_ext = \
             os.path.join(infolist_dir, 'infolist.pyx'),
             os.path.join(infolist_dir, 'gtk', 'infolist-gtk.c'),
         ],
-        **parse_pkg_config('pkg-config',
-            'pygobject-2.0 pygtk-2.0 gtk+-2.0 glib-2.0 ')
+        include_dirs=GTK_INCLUDE_DIRS + [
+            PYGOBJECT_INCLUDE_DIR,
+            PYGTK_INCLUDE_DIR,
+            infolist_dir,
+            os.path.join(infolist_dir, 'gtk'),
+        ],
+        library_dirs=[GTK_LIB_PATH],
+        libraries=[
+            'gobject-2.0',
+            'glib-2.0',
+            'gtk-win32-2.0',
+            'pango-1.0',
+            ],
     )
 
 # Setting the path here allows py2exe to find the DLLS

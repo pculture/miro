@@ -33,15 +33,18 @@
 
 #ifdef __GNUC__
 #include <ext/hash_map>
-#else
-#include <hash_map>
-#endif
-#include "infolist-idmap.h"
-#include "Python.h"
-
 namespace std {
         using namespace __gnu_cxx; // needed to use hash_map
 }
+#else
+// WINDOWS
+#include <hash_map>
+namespace std {
+        using namespace stdext; // needed to use hash_map
+}
+#endif
+#include "infolist-idmap.h"
+#include "Python.h"
 
 typedef std::hash_map<int, InfoListNode*> HashMapType;
 
