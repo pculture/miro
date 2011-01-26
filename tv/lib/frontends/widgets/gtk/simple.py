@@ -122,7 +122,7 @@ class Label(Widget):
         self._widget.set_text(text)
 
     def get_text(self):
-        self._widget.get_text().decode('utf-8')
+        return self._widget.get_text().decode('utf-8')
 
     def set_selectable(self, val):
         self._widget.set_selectable(val)
