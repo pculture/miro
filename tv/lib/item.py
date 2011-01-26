@@ -958,15 +958,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self._remove_from_playlists()
         if not self.is_external():
             self.delete_files()
-        if self.screenshot:
-            try:
-                fileutil.remove(self.screenshot)
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
-                pass
-        # This should be done even if screenshot = ""
-        self.screenshot = None
+            self.delete_external_metadata()
         if self.is_external():
             if self.is_downloaded():
                 if self.isContainerItem:
@@ -1813,10 +1805,25 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             for item in self.get_children():
                 item.migrate(newdir)
 
+    def delete_external_metadata(self):
+        if self.screenshot:
+            try:
+                fileutil.remove(self.screenshot)
+            except StandardError:
+                pass
+            self.screenshot = None
+        if self.cover_art:
+            try:
+                fileutil.remove(self.cover_art)
+            except StandardError:
+                pass
+            self.cover_art = None
+
     def remove(self):
         if self.has_downloader():
             self.set_downloader(None)
         self.remove_icon_cache()
+        self.delete_external_metadata()
         if self.isContainerItem:
             for item in self.get_children():
                 item.remove()
@@ -1834,7 +1841,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return
         eventloop.add_idle(self.check_deleted, 'checking item deleted')
         if self.screenshot and not fileutil.exists(self.screenshot):
+            logging.warn("file disappeared: %s", self.screenshot)
             self.screenshot = None
+            self.signal_change()
+        if self.cover_art and not fileutil.exists(self.cover_art):
+            logging.warn("file disappeared: %s", self.cover_art)
+            self.cover_art = None
             self.signal_change()
 
     def check_deleted(self):
@@ -2037,6 +2049,7 @@ class FileItem(Item):
             old_parent.expire()
 
     def make_deleted(self):
+        self.delete_external_metadata()
         self._remove_from_playlists()
         self.downloadedTime = None
         self.parent_id = None

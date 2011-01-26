@@ -630,6 +630,9 @@ class DeviceItemSource(ItemSource):
         if (info.thumbnail and info.thumbnail.startswith(device.mount) and
             os.path.exists(info.thumbnail)):
             os.unlink(info.thumbnail)
+        if (info.cover_art and info.cover_art.startswith(device.mount) and
+            os.path.exists(info.cover_art)):
+            os.unlink(info.cover_art)
         device.database.emit('item-removed', info)
 
     def fetch_all(self):
