@@ -256,10 +256,10 @@ class SharingTracker(object):
 
     def mdns_callback_backend(self, added, fullname, host, ips, port):
         # This name is supposed to be unique.  We rely on the zeroconf daemon 
-        # not to lie to us, but there's no other way.  Because on removal, 
-        # Avahi can't do a name query, so we have no
-        # hostname, port, or IP address information!
-        if fullname == app.config.get(prefs.SHARE_NAME).encode('utf-8'):
+        # not to lie to us, but there's no other way.  Also, don't rely on 
+        # what's in the config, in the event of a name clash the name used
+        # could be different to what's requested.
+        if fullname == app.sharing_manager.name:
             return
         # Need to come up with a unique ID for the share.  Use the name
         # only since that's supposed to be unique.  We rely on the 
@@ -359,7 +359,7 @@ class SharingTracker(object):
 
     def stop_tracking(self):
         # What to do in case of socket error here?
-        self.w.send("b")
+        self.w.send(self.CMD_QUIT)
 
 # Synchronization issues: this code is a bit sneaky, so here is an explanation
 # of how it works.  When you click on a share tab in the frontend, the 
@@ -786,12 +786,17 @@ class SharingManager(object):
             pass
         return server_address
 
+    def mdns_register_callback(self, name):
+        self.name = name
+
     def enable_discover(self):
         name = app.config.get(prefs.SHARE_NAME).encode('utf-8')
         # At this point the server must be available, because we'd otherwise
         # have no clue what port to register for with Bonjour.
         address, port = self.server.server_address
-        self.mdns_callback = libdaap.mdns_register_service(name, port=port)
+        self.mdns_callback = libdaap.mdns_register_service(name,
+                                                  self.mdns_register_callback,
+                                                  port=port)
         # not exactly but close enough: it's not actually until the
         # processing function gets called.
         self.discoverable = True
@@ -851,7 +856,8 @@ class SharingManager(object):
             return
 
         name = app.config.get(prefs.SHARE_NAME).encode('utf-8')
-        self.server = libdaap.make_daap_server(self.backend, debug=True, name=name)
+        self.server = libdaap.make_daap_server(self.backend, debug=True,
+                                               name=name)
         if not self.server:
             self.sharing = False
             return

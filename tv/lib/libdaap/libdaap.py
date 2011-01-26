@@ -582,14 +582,6 @@ class DaapHttpRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if endconn:
             self.wfile.close()
 
-# Default mdns register callback.
-def mdns_callback(sdRef, flags, errorCode, name, regtype, domain):
-    # XXX error handling?
-    if errorCode != mdns.pybonjour.kDNSServiceErr_NoError:
-        pass
-    else:
-        pass
-
 def mdns_init():
     return mdns.mdns_init()
 
@@ -599,14 +591,25 @@ def mdns_init():
 # calling your supplied callback internally in due course.  Note: do NOT 
 # assume when select returns and you call the callback object your supplied
 # callback is called because there may be insufficient data, for example.
-def mdns_register_service(name, service='_daap._tcp', port=DEFAULT_PORT,
-                 mdns_callback=mdns_callback):
+def mdns_register_service(name, register_callback,
+                          service='_daap._tcp', port=DEFAULT_PORT):
+    class RegisterCallback(object):
+        def __init__(self, user_callback):
+            self.user_callback = user_callback
+
+        def mdns_register_callback(self, sdRef, flags, errorCode, name,
+                                   regtype, domain):
+            # XXX error handling?
+            if errorCode != mdns.pybonjour.kDNSServiceErr_NoError:
+                pass
+            else:
+                self.user_callback(name)
+    register_callback_obj = RegisterCallback(register_callback)
     return mdns.bonjour_register_service(name, '_daap._tcp', port=port,
-        callback=mdns_callback)
+        callback=register_callback_obj.mdns_register_callback)
 
 def mdns_unregister_service(mdns_object):
-    for ref in mdns_object.get_refs():
-        ref.close()
+    mdns_object.close()
 
 def mdns_browse(callback):
     # This class allows us to make a callback and then do some post-processing
