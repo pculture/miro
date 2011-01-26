@@ -45,6 +45,9 @@ class FilenameType(PlatformFilenameType):
 
     Note to platform implementors: the PlatformFileType must be a string-type
     basetype, so either unicode or str.  Nothing else.
+
+    NOTE: This is a transitional object.  You should NOT use it for anything
+    other than DAAP at the moment.
     """
     base_type = PlatformFilenameType
     args = []
