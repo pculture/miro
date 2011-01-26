@@ -1137,14 +1137,18 @@ class RatingRenderer(ListViewRenderer):
     ICON_HORIZONTAL_SPACING = 2
     HOTSPOT_VERTICAL_PADDING = 8
     def __init__(self):
-        widgetset.InfoListRenderer.__init__(self)
+        ListViewRenderer.__init__(self)
         self.want_hover = True
         self.icon = {}
+        # TODO: to support scaling, we need not to check min_height until after
+        # the renderer first gets its layout_manager
+#        self.icon_height = int(self.height * 9.0 / 14.0)
+        self.icon_height = 9
+        self.icon_width = self.icon_height
         for state in RatingRenderer.ICON_STATES:
             path = resources.path('images/star-%s.png' % state)
-            self.icon[state] = imagepool.get_surface(path)
-        self.icon_width, self.icon_height = self.icon['yes'].get_size()
-        # TODO: size icon based on self.height
+            self.icon[state] = imagepool.get_surface(path,
+                               (self.icon_width, self.icon_height))
         self.icon_height += self.HOTSPOT_VERTICAL_PADDING
         self.icon_width += self.ICON_HORIZONTAL_SPACING
         # TODO: find what makes the following +4 necessary
@@ -1263,19 +1267,29 @@ class LastPlayedRenderer(ListViewRenderer):
 
 class StateCircleRenderer(ListViewRenderer):
     ICON_STATES = ('normal', 'new', 'playing', 'downloading')
-    min_width = 10
-
+    ICON_PROPORTIONS = 7.0 / 9.0 # width / height
+    min_width = 7
     def __init__(self):
-        widgetset.InfoListRenderer.__init__(self)
+        ListViewRenderer.__init__(self)
         self.icon = {}
+        self.set_up = False
+
+    def setup(self, layout_manager):
+        self.set_up = True
+        self.icon = {}
+        self.get_size(None, layout_manager)
+        self.icon_height = int(self.height / 2.0)
+        self.width = int(self.icon_height * self.ICON_PROPORTIONS + 0.5)
+        # FIXME: by the time min_width is set below, it doesn't matter --Kaz
+        self.min_width = self.width
         for state in StateCircleRenderer.ICON_STATES:
             path = resources.path('images/status-icon-%s.png' % state)
-            self.icon[state] = imagepool.get_surface(path)
-        size = self.icon[StateCircleRenderer.ICON_STATES[0]].get_size()
-        self.width, self.icon_height = size
-        self.layout = None
+            self.icon[state] = imagepool.get_surface(path,
+                    (self.width, self.icon_height))
 
     def render(self, context, layout_manager, selected, hotspot, hover):
+        if not self.set_up:
+            self.setup(layout_manager)
         if self.info.state == 'downloading':
             icon = self.icon['downloading']
         elif self.info.is_playing:
