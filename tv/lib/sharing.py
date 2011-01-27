@@ -318,6 +318,9 @@ class SharingTracker(object):
                     if cmd == SharingTracker.CMD_RESUME:
                         self.paused = False
                         break
+                    # User quit very quickly.
+                    elif cmd == SharingTracker.CMD_QUIT:
+                        return
                     raise ValueError('bad startup message received')
             except select.error, (err, errstring):
                 if err == errno.EINTR:
