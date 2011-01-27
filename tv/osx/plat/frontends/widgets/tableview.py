@@ -428,10 +428,11 @@ class TableViewCommon(object):
         self.SuperClass.addTableColumn_(self, column)
 
     def removeTableColumn_(self, column):
-        del self.column_index_map[column]
-        for after_index in xrange(index+1, len(self.tableColumns())):
-            self.column_index_map[column_list[after_index]] -= 1
         self.SuperClass.removeTableColumn_(self, column)
+        removed = self.column_index_map.pop(column)
+        for key, index in self.column_index_map.items():
+            if index > removed:
+                self.column_index_map[key] -= 1
 
     def moveColumn_toColumn_(self, src, dest):
         # Need to switch the TableColumn objects too
@@ -1058,7 +1059,7 @@ class TableView(Widget):
         return len(self.tableview.tableColumns())
 
     def remove_column(self, index):
-        columns = self.columns.pop(index)
+        column = self.columns.pop(index)
         self.tableview.removeTableColumn_(column._column)
         self.invalidate_size_request()
 
