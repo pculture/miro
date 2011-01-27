@@ -143,7 +143,7 @@ class SearchFilter(signals.SignalEmitter):
         if not self.query:
             # special case, just send out the list and calculate the index
             # later
-            self.emit('item-changed', message.added, message.changed,
+            self.emit('items-changed', message.added, message.changed,
                     message.removed)
             self._pending_adds.extend(message.added)
             self._pending_changes.extend(message.changed)
