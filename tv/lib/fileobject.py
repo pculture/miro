@@ -34,8 +34,36 @@ import logging
 import os
 import shutil
 
-from miro.plat.utils import PlatformFilenameType
+from miro.plat.utils import (unicode_to_filename, PlatformFilenameType)
 
+# FilenameType is currently a transitional object and as such is incomplete.
+# You should NOT use its urlize functionality for anything other than DAAP
+# objects.  In particular, the file_handler() is not supposed to work well now.
+#
+# One problem in Miro is filename handling is a bit iffy at the moment, 
+# transforming from string to unicode and then back maybe several times 
+# is not good practice and error prone.  What we need is a file object
+# which encapsulates all this information.
+#
+# Ground rules: all interactions with the filesystem should uninterpreted
+# byte string (other than subject to OS/file system limitations).  This
+# means 'str' type.
+#
+# For all internal manipulation, it should be in unicode.  So, the moment
+# you read in something, display something or grab a new filename from the
+# user it's unicode.  If you need to keep the filename around for writing
+# later, you should make the unicode a copy, so you don't lose any info
+# between conversions.
+#
+# When you write, if you only have a unicode copy or the file has been
+# renamed in the meantime, use the unicode copy and convert back to string
+# to interact with the filesystem.  If no file rename has occurred, use
+# the original 'str'.
+#
+# That's how it should happen.  We'll get there...
+# Interesting reading: http://docs.python.org/howto/unicode.html
+# We kind of, sort of, but not really do what they describe there, which is
+# where all this filename iffiness is coming from.
 class FilenameType(PlatformFilenameType):
     """FilenameType: the file representation for a given platform.
     It defaults to local files but can be specified to be remote files by
@@ -46,18 +74,21 @@ class FilenameType(PlatformFilenameType):
     Note to platform implementors: the PlatformFileType must be a string-type
     basetype, so either unicode or str.  Nothing else.
 
-    NOTE: This is a transitional object.  You should NOT use it for anything
-    other than DAAP at the moment.
+    NOTE: This is a transitional object.  You should NOT use its urlize()
+    functionality other than for DAAP at the moment.
     """
     base_type = PlatformFilenameType
-    args = []
+    def __init__(self, string):
+        PlatformFilenameType.__init__(self, string)
+        self.args = []
+        self.handler = self.file_handler    # Default to file handler.
 
     def file_handler(self, path):
+        if isinstance(path, unicode):
+            path = unicode_to_filename(path)
         return 'file://' + path
 
-    handler = file_handler
-
-    def set_handler(self, handler, args):
+    def set_urlize_handler(self, handler, args):
         self.handler = handler
         self.args = args
 

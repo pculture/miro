@@ -165,7 +165,7 @@ class SharingItem(object):
         def daap_handler(path, host, port):
             return 'http://%s:%s%s' % (host, port, path)
         fn = FilenameType(self.video_path)
-        fn.set_handler(daap_handler, [self.host, self.port])
+        fn.set_urlize_handler(daap_handler, [self.host, self.port])
         return fn
 
     def get_url(self):
