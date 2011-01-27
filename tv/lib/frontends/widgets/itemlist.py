@@ -479,14 +479,14 @@ class ItemList(signals.SignalEmitter):
 
         newly_matching = []
         for item in self._hidden_items.values():
-            if self.should_show(item):
+            if self._should_show_item(item):
                 newly_matching.append(item)
                 del self._hidden_items[item.id]
         self._insert_items(newly_matching)
 
         newly_unmatching_ids = []
         for item in info_list_at_start:
-            if not self.should_show(item):
+            if not self._should_show_item(item):
                 newly_unmatching_ids.append(item.id)
                 self._hidden_items[item.id] = item
         self.model.remove_ids(newly_unmatching_ids)
