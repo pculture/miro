@@ -92,9 +92,10 @@ def access(path, *args, **kwargs):
     path = expand_filename(path)
     return os.access(path, *args, **kwargs)
 
-def move(path):
-    path = expand_filename(path)
-    shutil.move (path)
+def move(src, dest):
+    src = expand_filename(src)
+    dest = expand_filename(dest)
+    shutil.move(src, dest)
 
 def rmdir(path):
     path = expand_filename(path)
@@ -323,4 +324,3 @@ def collapse_filename(filename):
                 return u3info.DEVICE_DOCUMENT_PREFIX
             return u3info.DEVICE_DOCUMENT_PREFIX + '\\' + filename
     return filename
-
