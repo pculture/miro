@@ -59,7 +59,6 @@ class Widget(signals.SignalEmitter):
         self.parent_is_scroller = False
         self.manual_size_request = None
         self.cached_size_request = None
-        self._will_invalidate_size_request = False
         self._disabled = False
 
     def set_size_request(self, width, height):
@@ -84,28 +83,22 @@ class Widget(signals.SignalEmitter):
             return self.cached_size_request
 
     def invalidate_size_request(self):
-        # don't figure out the size immediately, this could lead to weirdness
-        # and could be inefficent if we do something else to invalidate the
-        # size request in the current event.
-        if not self._will_invalidate_size_request:
-            AppHelper.callAfter(self._invalidate_size_request)
-            self._will_invalidate_size_request = True
+        _size_request_manager.add_widget(self)
 
-    def _invalidate_size_request(self):
-        self._will_invalidate_size_request = False
+    def do_invalidate_size_request(self):
         if hasattr(self, 'view') and self.view is not None:
             scroll_view = self.view.enclosingScrollView()
             if scroll_view is not None:
                 scrolled_view = scroll_view.contentView()
                 current_scroll_position = scrolled_view.bounds().origin
-                self.do_invalidate_size_request()
+                self.request_new_size()
                 scrolled_view.scrollPoint_(current_scroll_position)
             else:
-                self.do_invalidate_size_request()
+                self.request_new_size()
         else:
-            self.do_invalidate_size_request()
+            self.request_new_size()
 
-    def do_invalidate_size_request(self):
+    def request_new_size(self):
         """Recalculate the size request for this widget."""
         old_size_request = self.cached_size_request
         self.cached_size_request = None
@@ -259,8 +252,8 @@ class Container(Widget):
     def children_changed(self):
         self.invalidate_size_request()
 
-    def _invalidate_size_request(self):
-        Widget._invalidate_size_request(self)
+    def do_invalidate_size_request(self):
+        Widget.do_invalidate_size_request(self)
         if self.viewport:
             self.place_children()
 
@@ -360,3 +353,35 @@ class FlippedView(NSView):
         if self.background:
             self.background.set()
             NSBezierPath.fillRect_(rect)
+
+class SizeRequestManager(object):
+    """Helper object to manage size requests
+
+    If something changes in a widget that makes us want to request a new size,
+    we avoid calculating it immediately.  The reason is that the
+    new-size-request will cascade all the way up the widget tree, and then
+    result in our widget being placed.  We don't necessary want all of this
+    action to happen while we are in the middle of handling an event
+    (especially with TableView).  It's also inefficient to calculate things
+    immediately, since we might do something else to invalidate the size
+    request in the current event.
+
+    SizeRequestManager stores which widgets need to have their size
+    recalculated, then calls do_invalidate_size_request() using callAfter
+    """
+
+    def __init__(self):
+        self.widgets_to_request = set()
+
+    def add_widget(self, widget):
+        if len(self.widgets_to_request) == 0:
+            AppHelper.callAfter(self._run_requests)
+        self.widgets_to_request.add(widget)
+
+    def _run_requests(self):
+        this_run = self.widgets_to_request
+        self.widgets_to_request = set()
+        for widget in this_run:
+            widget.do_invalidate_size_request()
+
+_size_request_manager = SizeRequestManager()
