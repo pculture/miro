@@ -44,6 +44,7 @@ from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import segmented
 from miro.frontends.widgets import style
+from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
 from miro.conversions import conversion_manager
 
@@ -269,23 +270,19 @@ class SyncProgressWidget(widgetset.Background):
         context.set_color(style.css_to_color('#bec1d0'))
         context.fill()
 
-class SyncWidget(widgetset.HBox):
+class SyncWidget(widgetset.VBox):
     list_label = _("Sync These Feeds")
 
     def __init__(self):
         self.device = None
-        widgetset.HBox.__init__(self)
+        self.bulk_change = False
+        widgetset.VBox.__init__(self)
         self.create_signal('changed')
-        first_column = widgetset.VBox()
         self.sync_library = widgetset.Checkbox(self.title)
         self.sync_library.connect('toggled', self.sync_library_toggled)
-        first_column.pack_start(self.sync_library)
-        self.sync_group = widgetset.RadioButtonGroup()
-        self.extra_buttons(first_column)
-        self.pack_start(widgetutil.pad(first_column, 20, 0, 20, 20))
+        self.pack_start(self.sync_library)
+        self._pack_extra_buttons()
 
-        second_column = widgetset.VBox()
-        second_column.pack_start(widgetset.Label(self.list_label))
         self.feed_list = widgetset.VBox()
         self.info_map = {}
         feeds = self.get_feeds()
@@ -299,12 +296,22 @@ class SyncWidget(widgetset.HBox):
             self.sync_library.disable()
         scroller = widgetset.Scroller(False, True)
         scroller.set_child(self.feed_list)
-        second_column.pack_start(scroller, expand=True)
         self.feed_list.disable()
-        self.pack_start(widgetutil.pad(second_column, 20, 20, 20, 20),
+        self.pack_start(widgetutil.pad(scroller, top=20, bottom=5),
                         expand=True)
 
-    def extra_buttons(self, first_column):
+        line = widgetset.HBox()
+        button = widgetset.Button(_("Select none"))
+        button.set_size(widgetconst.SIZE_SMALL)
+        button.connect('clicked', self.select_clicked, False)
+        line.pack_end(button)
+        button = widgetset.Button(_("Select all"))
+        button.set_size(widgetconst.SIZE_SMALL)
+        button.connect('clicked', self.select_clicked, True)
+        line.pack_end(button)
+        self.pack_start(widgetutil.pad(line, bottom=20))
+
+    def _pack_extra_buttons(self):
         pass
 
     def set_device(self, device):
@@ -321,14 +328,20 @@ class SyncWidget(widgetset.HBox):
 
         if self.file_type != 'playlists':
             all_feeds = this_sync.get('all', True)
-            # True == 1, False == 0
-            self.sync_group.set_selected(
-                self.sync_group.get_buttons()[not all_feeds])
+            self.sync_unwatched.set_checked(not all_feeds)
 
         for item in this_sync.get('items', []):
             if item in self.info_map:
                 self.info_map[item].set_checked(True)
 
+    def select_clicked(self, obj, value):
+        self.bulk_change = True
+        self.device.database.set_bulk_mode(True)
+        for box in self.info_map.values():
+            box.set_checked(value)
+        self.device.database.set_bulk_mode(False)
+        self.bulk_change = False
+        self.emit('changed')
 
     def get_feeds(self):
         feeds = []
@@ -358,20 +371,13 @@ class SyncWidget(widgetset.HBox):
     def sync_library_toggled(self, obj):
         checked = obj.get_checked()
         if checked:
-            for button in self.sync_group.get_buttons():
-                button.enable()
             self.feed_list.enable()
         else:
-            for button in self.sync_group.get_buttons():
-                button.disable()
             self.feed_list.disable()
         self.device.database['sync'][self.file_type]['enabled'] = checked
-        self.emit('changed')
-
-    def all_button_clicked(self, obj):
-        self.device.database['sync'][self.file_type]['all'] = \
-            obj.get_selected()
-        self.emit('changed')
+        if not self.bulk_change:
+            self.emit('changed')
+        return checked # make it easy for subclass
 
     def feed_toggled(self, obj, info):
         this_sync = self.device.database['sync'][self.file_type]
@@ -383,7 +389,8 @@ class SyncWidget(widgetset.HBox):
             if key in items:
                 items.remove(key)
         this_sync['items'] = list(items)
-        self.emit('changed')
+        if not self.bulk_change:
+            self.emit('changed')
 
     def find_info_by_key(self, key, tab_list):
         return tab_list.find_feed_with_url(key)
@@ -401,19 +408,24 @@ class SyncWidget(widgetset.HBox):
         return feeds
 
 class PodcastSyncWidget(SyncWidget):
-    file_type = 'podcast'
+    file_type = 'podcasts'
     title = _("Sync Podcasts")
-    all_label = _("All items")
-    unwatched_label = _("Only unplayed items")
 
-    def extra_buttons(self, first_column):
-        all_button = widgetset.RadioButton(self.all_label, self.sync_group)
-        all_button.connect('clicked', self.all_button_clicked)
-        widgetset.RadioButton(self.unwatched_label,
-                              self.sync_group)
-        for button in self.sync_group.get_buttons():
-            button.disable()
-            first_column.pack_start(button)
+    def _pack_extra_buttons(self):
+        self.sync_unwatched = widgetset.Checkbox(_("Only sync unplayed items"))
+        self.sync_unwatched.connect('toggled', self.unwatched_toggled)
+        self.pack_start(widgetutil.pad(self.sync_unwatched, left=20))
+
+    def unwatched_toggled(self, obj):
+        all_items = (not obj.get_checked())
+        self.device.database['sync'][self.file_type]['all'] = all_items
+        self.emit('changed')
+
+    def sync_library_toggled(self, obj):
+        if SyncWidget.sync_library_toggled(self, obj):
+            self.sync_unwatched.enable()
+        else:
+            self.sync_unwatched.disable()
 
     def tab_lists(self):
         return (app.tab_list_manager.feed_list,
