@@ -34,6 +34,7 @@ import logging
 import os
 import shutil
 
+from miro.xhtmltools import urlencode
 from miro.plat.utils import (unicode_to_filename, PlatformFilenameType)
 
 # FilenameType is currently a transitional object and as such is incomplete.
@@ -84,9 +85,7 @@ class FilenameType(PlatformFilenameType):
         self.handler = self.file_handler    # Default to file handler.
 
     def file_handler(self, path):
-        if isinstance(path, unicode):
-            path = unicode_to_filename(path)
-        return 'file://' + path
+        return 'file://' + urlencode(path)
 
     def set_urlize_handler(self, handler, args):
         self.handler = handler

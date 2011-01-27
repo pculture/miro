@@ -47,7 +47,6 @@ import logging
 import urllib2
 import urlparse
 
-from miro.xhtmltools import urlencode
 from miro import httpclient
 from miro import singleclick
 from miro import feed

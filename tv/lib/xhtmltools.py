@@ -117,12 +117,18 @@ def unescape(data):
     return xml.sax.saxutils.unescape(data)
 
 def urlencode(data):
-    """Encodes string for use in a URL"""
+    """Encodes string for use in a URL
+
+    Use this method for a path or query section of a URL.  Don't use it for
+    the domain name part
+
+    :returns: a url-encoded bytestring.
+    """
     if isinstance(data, unicode):
         data = data.encode('utf-8', 'replace')
     else:
         data = str(data)
-    return unicode(quote(data))
+    return quote(data)
 
 def xhtmlify(data, add_top_tags=False, filter_font_tags=False):
     """Returns XHTMLified version of HTML document"""

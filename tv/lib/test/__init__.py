@@ -74,6 +74,7 @@ from miro.test.filetypestest import *
 from miro.test.cellpacktest import *
 from miro.test.searchtest import *
 from miro.test.infolisttest import *
+from miro.test.fileobjecttest import *
 
 # platform specific tests
 

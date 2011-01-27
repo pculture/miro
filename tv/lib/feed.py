@@ -44,7 +44,7 @@ import logging
 from miro.gtcache import gettext as _
 from miro.feedparser import FeedParserDict
 from miro.xhtmltools import (unescape, xhtmlify, fix_xml_header,
-                             fix_html_header, urlencode)
+                             fix_html_header)
 
 from miro.database import DDBObject, ObjectNotFoundError
 from miro.httpclient import grab_url
