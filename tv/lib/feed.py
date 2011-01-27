@@ -596,7 +596,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.in_folder():
             self.get_folder().signal_change()
         self.signal_change()
-        self.signal_items()
+        for item in self.available_items:
+            item.signal_change(needs_save=False)
 
     def start_manual_download(self):
         next_ = None
