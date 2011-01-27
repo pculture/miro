@@ -79,8 +79,10 @@ class FilenameType(PlatformFilenameType):
     functionality other than for DAAP at the moment.
     """
     base_type = PlatformFilenameType
+    def __new__(cls, s):
+        return PlatformFilenameType.__new__(cls, s)
+
     def __init__(self, string):
-        PlatformFilenameType.__init__(self, string)
         self.args = []
         self.handler = self.file_handler    # Default to file handler.
 
