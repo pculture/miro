@@ -696,7 +696,7 @@ class SharingPanel(PanelBuilder):
         if not app.sharing_manager.mdns_present:
             sharing_cbx.disable()
             share_txt.disable()
-            sharing_warnonquit.disable()
+            sharing_warnonquit_cbx.disable()
             
         vbox.pack_start(widgetutil.align_left(sharing_cbx, bottom_pad=6))
         vbox.pack_start(widgetutil.align_left(sharing_warnonquit_cbx,
