@@ -98,7 +98,7 @@ class Controller:
             app.config.save()
 
             logging.info("Shutting down icon cache updates")
-            iconcache.iconCacheUpdater.shutdown()
+            iconcache.icon_cache_updater.shutdown()
             logging.info("Shutting down movie data updates")
             moviedata.movie_data_updater.shutdown()
 

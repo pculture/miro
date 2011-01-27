@@ -1262,7 +1262,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         to signal the right set of items.
         """
         self.confirm_db_thread()
-        if self.icon_cache is not None and self.icon_cache.isValid():
+        if self.icon_cache is not None and self.icon_cache.is_valid():
             path = self.icon_cache.get_filename()
             return resources.path(fileutil.expand_filename(path))
         elif self.screenshot:

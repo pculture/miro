@@ -651,7 +651,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         """
         self.signal_change(needs_save=False)
         for item in self.items:
-            if not item.icon_cache or not (item.icon_cache.isValid() or
+            if not item.icon_cache or not (item.icon_cache.is_valid() or
                     item.screenshot or
                     item.isContainerItem):
                 item.signal_change(needs_save=False)
@@ -1119,7 +1119,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.actualFeed.remove()
 
     def thumbnail_valid(self):
-        return self.icon_cache and self.icon_cache.isValid()
+        return self.icon_cache and self.icon_cache.is_valid()
 
     def calc_tablist_thumbnail(self):
         if self.thumbnail_valid():
