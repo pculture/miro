@@ -318,12 +318,12 @@ class SharingTracker(object):
                     if cmd == SharingTracker.CMD_RESUME:
                         self.paused = False
                         break
-                    raise
+                    raise ValueError('bad startup message received')
             except select.error, (err, errstring):
                 if err == errno.EINTR:
                     continue
             except:
-                raise
+                raise ValueError('unknown error during select')
 
         if app.sharing_manager.mdns_present:
             callback = libdaap.mdns_browse(self.mdns_callback)
