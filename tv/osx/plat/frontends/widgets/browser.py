@@ -94,6 +94,7 @@ class Browser(Widget):
         # gets called when we need to re-show our view after
         # _hack_remove_viewport()
         self._set_webkit_delegates(self.delegate)
+        self.queue_redraw()
 
     def calc_size_request(self):
         return (200, 100) # Seems like a reasonable minimum size
