@@ -43,6 +43,7 @@ from miro.gtcache import gettext as _
 from miro.frontends.widgets import menus
 from miro.frontends.widgets.menus import MOD, CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, ESCAPE
 from miro.plat.frontends.widgets import wrappermap
+from miro.frontends.widgets.widgetconst import COLUMNS_AVAILABLE
 
 from miro.plat.appstore import appstore_edition
 
@@ -100,6 +101,47 @@ def make_modifier_mask(shortcut):
         mask |= MODIFIERS_MAP[modifier]
     return mask
 
+VIEW_ITEM_MAP = {}
+
+class CheckMenuHandler(NSObject):
+    def handleMenuItem_(self, sender):
+        state = sender.state()
+        if state == NSOnState:
+            new_state = NSOffState
+        else:
+            new_state = NSOnState
+        sender.setState_(new_state)
+        NSApp().delegate().handleMenuItem_(sender)
+
+check_menu_handler = CheckMenuHandler.alloc().init()
+
+def update_view_menu_state():
+    display = app.display_manager.get_current_display()
+    try:
+        key = (display.type, display.id)
+    except AttributeError:
+        return
+    if not app.display_state.is_list_view(key):
+        return
+    enabled = app.display_state.get_columns_enabled(key)
+
+    columns = []
+    for k, v in COLUMNS_AVAILABLE.items():
+        columns.extend(v)
+    columns = set(columns)
+
+    for column in columns:
+        menu_item = VIEW_ITEM_MAP[column]
+        hidden = not column in COLUMNS_AVAILABLE[key[0]]
+        menu_item.setHidden_(hidden)
+        if hidden:
+            continue
+        if column in enabled:
+            state = NSOnState
+        else:
+            state = NSOffState
+        menu_item.setState_(state)
+
 def make_menu_item(menu_item):
     nsmenuitem = NSMenuItem.alloc().init()
     nsmenuitem.setTitleWithMnemonic_(menu_item.label.replace("_", "&"))
@@ -120,7 +162,12 @@ def make_menu_item(menu_item):
             nsmenuitem.setAction_(STD_ACTION_MAP[menu_item.action][1])
         else:
             nsmenuitem.setRepresentedObject_(menu_item.action)
-            nsmenuitem.setTarget_(NSApp().delegate())
+            if isinstance(menu_item, menus.CheckMenuItem):
+                nsmenuitem.setTarget_(check_menu_handler)
+                column = menu_item.action.split('-', 1)[1]
+                VIEW_ITEM_MAP[column] = nsmenuitem
+            else:
+                nsmenuitem.setTarget_(NSApp().delegate())
             nsmenuitem.setAction_('handleMenuItem:')
     return nsmenuitem
 
@@ -349,6 +396,11 @@ def on_menu_change(menu_manager):
     play_pause_menu_item = main_menu.itemAtIndex_(5).submenu().itemAtIndex_(0)
     play_pause = _menu_structure.get("PlayPauseItem").state_labels[app.menu_manager.play_pause_state]
     play_pause_menu_item.setTitleWithMnemonic_(play_pause.replace("_", "&"))
+
+    update_view_menu_state()
+    # Calling update() here does not result in
+    # AppController.validateUserInterfaceItem_() running. Why?? -Kaz
+    main_menu.update()
 
 def on_playback_change(playback_manager):
     main_menu = NSApp().mainMenu()
