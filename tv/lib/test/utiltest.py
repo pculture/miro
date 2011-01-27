@@ -5,6 +5,7 @@ import os
 import tempfile
 import shutil
 import unittest
+import sys
 
 from miro.test.framework import MiroTestCase, skip_for_platforms
 from miro import download_utils
@@ -260,18 +261,23 @@ class UtilTest(unittest.TestCase):
         self.assertRaises(TypeError, util.clamp_text, None)
         self.assertEqual('', util.clamp_text(''))
         self.assertEqual('1', util.clamp_text('1'))
-        self.assertEqual('12345678901234567890', util.clamp_text('12345678901234567890'))
-        self.assertEqual('12345678901234567...', util.clamp_text('123456789012345678901'))
-        self.assertEqual('12345678901234567...', util.clamp_text('12345678901234567890 1234 1234 1234'))
+        self.assertEqual('12345678901234567890',
+                         util.clamp_text('12345678901234567890'))
+        self.assertEqual('12345678901234567...',
+                         util.clamp_text('123456789012345678901'))
+        self.assertEqual('12345678901234567...',
+                         util.clamp_text('12345678901234567890 1234 1234 1234'))
 
         # limit 4
         self.assertRaises(TypeError, util.clamp_text, None, 4)
         self.assertEqual('', util.clamp_text('', 4))
         self.assertEqual('1', util.clamp_text('1', 4))
-        self.assertEqual('1...', util.clamp_text('12345678901234567890', 4))
-        self.assertEqual('1...', util.clamp_text('123456789012345678901', 4))
-        self.assertEqual('1...', util.clamp_text('12345678901234567890 1234 1234 1234', 4))
-
+        self.assertEqual(
+            '1...', util.clamp_text('12345678901234567890', 4))
+        self.assertEqual(
+            '1...', util.clamp_text('123456789012345678901', 4))
+        self.assertEqual(
+            '1...', util.clamp_text('12345678901234567890 1234 1234 1234', 4))
 
     def test_check_u(self):
         util.check_u(None)
@@ -279,10 +285,10 @@ class UtilTest(unittest.TestCase):
         util.check_u(u'&*@!#)*) !@)( !@# !)@(#')
 
         self.assertRaises(util.MiroUnicodeError, util.check_u, 'abc')
-        self.assertRaises(util.MiroUnicodeError, util.check_u, '&*@!#)*) !@)( !@# !)@(#')
+        self.assertRaises(util.MiroUnicodeError,
+                          util.check_u, '&*@!#)*) !@)( !@# !)@(#')
 
     def test_check_b(self):
-
         util.check_b(None);
         util.check_b("abc");
 
@@ -293,22 +299,22 @@ class UtilTest(unittest.TestCase):
         self.assertRaises(util.MiroUnicodeError, util.check_b, {'a': 1, 'b':2})
 
     def test_check_f(self):
+        def test_name(text):
+            correct_type = FilenameType(text)
+            util.check_f(correct_type)
 
-        def testName(text):
-            correctType = FilenameType(text)
-            util.check_f(correctType)
+            if sys.platform == 'win32':
+                incorrect_type = str(text)
+            else:
+                incorrect_type = unicode(text)
 
-            incorrectType = text
-            if isinstance(text, str):
-                incorrectType = unicode(text)
-
-            self.assertRaises(util.MiroUnicodeError, util.check_f, incorrectType)
+            self.assertRaises(util.MiroUnicodeError,
+                              util.check_f, incorrect_type)
 
         util.check_f(None)
-        testName("")
-        testName("abc.txt")
-        testName("./xyz.avi")
-
+        test_name("")
+        test_name("abc.txt")
+        test_name("./xyz.avi")
 
     def assertEqualWithType(self, expected, expectedType, val):
         self.assertEqual(val, expected)
@@ -360,7 +366,7 @@ class UtilTest(unittest.TestCase):
         self.assertRaises(OSError, util.call_command, 'thiscommanddoesntexist')
 
         # command exists but invalid option and returns error code.
-        # 
+        #
         # Note: on win32, this probably requires cygwin.
         self.assertRaises(OSError, util.call_command,  'ps', '--badarg')
 
