@@ -40,7 +40,6 @@ from miro.plat.utils import unicode_to_filename
 from miro import app
 from miro import prefs
 from miro import fileutil
-import random
 
 RUNNING_MAX = 3
 
@@ -168,7 +167,8 @@ class IconCache(DDBObject):
             self.needsUpdate = False
             self.request_update(True)
         elif error is not None:
-            eventloop.add_timeout(3600, self.request_update, "Thumbnail request for %s" % url)
+            eventloop.add_timeout(
+                3600, self.request_update, "Thumbnail request for %s" % url)
         icon_cache_updater.update_finished()
 
     def update_icon_cache(self, url, info):
@@ -193,7 +193,8 @@ class IconCache(DDBObject):
 
             # We have to update it, and if we can't write to the file, we
             # should pick a new filename.
-            if self.filename and not fileutil.access(self.filename, os.R_OK | os.W_OK):
+            if ((self.filename and
+                 not fileutil.access(self.filename, os.R_OK | os.W_OK))):
                 self.filename = None
 
             cachedir = app.config.get(prefs.ICON_CACHE_DIRECTORY)
@@ -210,6 +211,14 @@ class IconCache(DDBObject):
                     tmp_filename = os.path.join(cachedir, info["filename"]) + ".part"
 
                 tmp_filename, output = next_free_filename(tmp_filename)
+
+                # FIXME - this fixes 15773 where files were getting
+                # saved in a non-binary fashion.  i have no clue why
+                # closing and reopening the file as wb fixes the
+                # corruption problem since next_free_filename always
+                # seems to open it as wb.
+                output.close()
+                output = open(tmp_filename, "wb")
                 output.write(info["body"])
                 output.close()
             except IOError:
@@ -217,29 +226,27 @@ class IconCache(DDBObject):
                 return
 
             if self.filename:
-                self.remove_file(self.filename)
+                filename = self.filename
+                self.filename = None
+                self.remove_file(filename)
 
-            # Create a new filename always to avoid browser caching in case a
-            # file changes.
-            # Add a random unique id
-            parts = unicodify(info["filename"]).split('.')
-            uid = u"%08d" % random.randint(0, 99999999)
-            if len(parts) == 1:
-                parts.append(uid)
-            else:
-                parts[-1:-1] = [uid]
-            self.filename = u'.'.join(parts)
-            self.filename = unicode_to_filename(self.filename, cachedir)
-            self.filename = os.path.join(cachedir, self.filename)
-            self.filename, fp = next_free_filename(self.filename)
+            filename = info["filename"]
+            filename = unicode_to_filename(filename, cachedir)
+            filename = os.path.join(cachedir, filename)
+            filename, fp = next_free_filename(filename)
             needs_save = True
 
-            try:
-                fileutil.rename(tmp_filename, self.filename)
-            except OSError:
-                self.filename = None
-                needs_save = True
+            # we need to move the file here--so we close the file
+            # pointer and then move the file.
             fp.close()
+            try:
+                self.remove_file(filename)
+                fileutil.rename(tmp_filename, filename)
+            except (IOError, OSError):
+                logging.exception("iconcache: fileutil.move failed")
+                filename = None
+
+            self.filename = filename
 
             etag = unicodify(info.get("etag"))
             modified = unicodify(info.get("modified"))
