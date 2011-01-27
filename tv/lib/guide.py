@@ -88,7 +88,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
     @classmethod
     def visible_view(cls):
         return cls.make_view('store != ?', (cls.STORE_INVISIBLE,))
-    
+
     @classmethod
     def get_by_url(cls, url):
         return cls.make_view('url=?', (url,)).get_singleton()
@@ -140,7 +140,8 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
             parser.feed(info["body"])
             parser.close()
         except (HTMLParseError, UnicodeDecodeError), parser_error:
-            logging.debug("Ignoring error when parsing guide %s: %s", self.updated_url, parser_error)
+            logging.debug("Ignoring error when parsing guide %s: %s",
+                          self.updated_url, parser_error)
 
         if parser:
             if parser.title:
