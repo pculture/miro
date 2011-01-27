@@ -258,6 +258,9 @@ class Container(Widget):
 
     def children_changed(self):
         self.invalidate_size_request()
+
+    def _invalidate_size_request(self):
+        Widget._invalidate_size_request(self)
         if self.viewport:
             self.place_children()
 
