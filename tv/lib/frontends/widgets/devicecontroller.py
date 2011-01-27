@@ -280,7 +280,7 @@ class SyncWidget(widgetset.VBox):
         self.create_signal('changed')
         self.sync_library = widgetset.Checkbox(self.title)
         self.sync_library.connect('toggled', self.sync_library_toggled)
-        self.pack_start(self.sync_library)
+        self.pack_start(widgetutil.pad(self.sync_library, top=50))
         self._pack_extra_buttons()
 
         self.feed_list = widgetset.VBox()
