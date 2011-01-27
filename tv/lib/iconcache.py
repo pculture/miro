@@ -230,7 +230,7 @@ class IconCache(DDBObject):
                 self.filename = None
                 self.remove_file(filename)
 
-            filename = info["filename"]
+            filename = unicode(info["filename"])
             filename = unicode_to_filename(filename, cachedir)
             filename = os.path.join(cachedir, filename)
             filename, fp = next_free_filename(filename)
