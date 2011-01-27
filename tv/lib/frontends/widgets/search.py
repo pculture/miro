@@ -36,6 +36,7 @@ from miro import search
 from miro import signals
 from miro import messages
 from miro import searchengines
+from miro.plat.frontends.widgets.threads import call_on_ui_thread
 
 class SearchManager(signals.SignalEmitter):
     """Keeps track of search terms.
@@ -119,8 +120,19 @@ class SearchFilter(signals.SignalEmitter):
         self.query = ''
         self.all_items = {} # maps id to item info
         self.matching_ids = set()
+        self._pending_adds = []
+        self._pending_changes = []
+        self._pending_removals = []
 
     def handle_item_list(self, message):
+        if not self.query:
+            # special case, just send out the list and calculate the index
+            # later
+            self.emit("initial-list", message.items)
+            self._pending_adds.extend(message.items)
+            self._schedule_indexing()
+            return
+        self._ensure_index_ready()
         self._add_items(message.items)
         matches = self.searcher.search(self.query)
         self.emit("initial-list",
@@ -128,6 +140,18 @@ class SearchFilter(signals.SignalEmitter):
         self.matching_ids = matches
 
     def handle_items_changed(self, message):
+        if not self.query:
+            # special case, just send out the list and calculate the index
+            # later
+            self.emit('item-changed', message.added, message.changed,
+                    message.removed)
+            self._pending_adds.extend(message.added)
+            self._pending_changes.extend(message.changed)
+            self._pending_removals.extend(message.removed)
+            self._schedule_indexing()
+            return
+        self._ensure_index_ready()
+
         self._add_items(message.added)
         self._update_items(message.changed)
         self._remove_ids(message.removed)
@@ -150,6 +174,7 @@ class SearchFilter(signals.SignalEmitter):
         self.matching_ids = matches
 
     def set_search(self, query):
+        self._ensure_index_ready()
         self.query = query
         matches = self.searcher.search(self.query)
         added = matches - self.matching_ids
@@ -173,3 +198,37 @@ class SearchFilter(signals.SignalEmitter):
         for id_ in id_list:
             del self.all_items[id_]
             self.searcher.remove_item(id_)
+
+    def _ensure_index_ready(self):
+        if (self._pending_adds or self._pending_changes
+                or self._pending_removals):
+            self._add_items(self._pending_adds)
+            self._update_items(self._pending_changes)
+            self._remove_ids(self._pending_removals)
+            self._pending_adds = []
+            self._pending_changes = []
+            self._pending_removals = []
+            self.matching_ids = self.searcher.search(self.query)
+
+    def _schedule_indexing(self):
+        call_on_ui_thread(self._do_index_pass)
+
+    def _do_index_pass(self):
+        # find a chunk of items, process them, then schedule another call
+        CHUNK_SIZE = 250
+        if self._pending_adds:
+            processor = self._add_items
+            pending_list = self._pending_adds
+        elif self._pending_changes:
+            processor = self._update_items
+            pending_list = self._pending_changes
+        elif self._pending_removals:
+            processor = self._remove_ids
+            pending_list = self._pending_removals
+        else:
+            self.matching_ids = self.searcher.search(self.query)
+            return # all done
+        # process the last CHUNK_SIZE elements of the list, then remove them
+        processor(pending_list[-CHUNK_SIZE:])
+        pending_list[-CHUNK_SIZE:] = []
+        self._schedule_indexing()
