@@ -121,9 +121,10 @@ class PlaybackManager (signals.SignalEmitter):
         self._play_current()
 
     def _on_playing_changed(self, playlist):
-        # FIXME: should update the display based on the new value of
-        # self.get_playing_item()
-        pass
+        new_info = self.get_playing_item()
+        if self.detached_window:
+            if self.detached_window.get_title() != new_info.name:
+                self.detached_window.set_title(new_info.name)
 
     def prepare_attached_playback(self):
         self.emit('will-play-attached')
@@ -631,7 +632,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
             # update currently_playing in case it's been changed
             self.currently_playing = self.model.get_info(
                             self.currently_playing.id)
-        if old_currently_playing is not self.currently_playing:
+        if old_currently_playing.id is not self.currently_playing.id:
             self.emit("position-changed")
         else:
             # Note that we aren't quite sure that we actually changed the info

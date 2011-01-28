@@ -113,6 +113,9 @@ class Window(signals.SignalEmitter):
     def set_title(self, title):
         self.nswindow.setTitle_(title)
 
+    def get_title(self):
+        return self.nswindow.title()
+
     def on_frame_change(self, notification):
         self.place_child()
 

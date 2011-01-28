@@ -376,6 +376,9 @@ class Window(WindowBase):
     def set_title(self, title):
         self._window.set_title(title)
 
+    def get_title(self):
+        self._window.get_title()
+
     def show(self):
         if self not in alive_windows:
             raise ValueError("Window destroyed")
