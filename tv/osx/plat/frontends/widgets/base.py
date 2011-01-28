@@ -31,9 +31,9 @@
 
 from AppKit import *
 from Foundation import *
-from PyObjCTools import AppHelper
 from objc import YES, NO, nil
 
+from miro import app
 from miro import signals
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets.viewport import Viewport, BorrowedViewport
@@ -83,7 +83,7 @@ class Widget(signals.SignalEmitter):
             return self.cached_size_request
 
     def invalidate_size_request(self):
-        _size_request_manager.add_widget(self)
+        app.size_request_manager.add_widget(self)
 
     def do_invalidate_size_request(self):
         if hasattr(self, 'view') and self.view is not None:
@@ -353,35 +353,3 @@ class FlippedView(NSView):
         if self.background:
             self.background.set()
             NSBezierPath.fillRect_(rect)
-
-class SizeRequestManager(object):
-    """Helper object to manage size requests
-
-    If something changes in a widget that makes us want to request a new size,
-    we avoid calculating it immediately.  The reason is that the
-    new-size-request will cascade all the way up the widget tree, and then
-    result in our widget being placed.  We don't necessary want all of this
-    action to happen while we are in the middle of handling an event
-    (especially with TableView).  It's also inefficient to calculate things
-    immediately, since we might do something else to invalidate the size
-    request in the current event.
-
-    SizeRequestManager stores which widgets need to have their size
-    recalculated, then calls do_invalidate_size_request() using callAfter
-    """
-
-    def __init__(self):
-        self.widgets_to_request = set()
-
-    def add_widget(self, widget):
-        if len(self.widgets_to_request) == 0:
-            AppHelper.callAfter(self._run_requests)
-        self.widgets_to_request.add(widget)
-
-    def _run_requests(self):
-        this_run = self.widgets_to_request
-        self.widgets_to_request = set()
-        for widget in this_run:
-            widget.do_invalidate_size_request()
-
-_size_request_manager = SizeRequestManager()
