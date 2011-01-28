@@ -122,16 +122,6 @@ class ItemSource(signals.SignalEmitter):
         """
         pass
 
-    # Methods users of ItemSource can use as well
-    def added(self, info):
-        self.emit('added', info)
-
-    def changed(self, info):
-        self.emit('changed', info)
-
-    def removed(self, info):
-        self.emit('removed', info)
-
 class DatabaseItemSource(ItemSource):
     """
     An ItemSource which pulls its data from the database, along with
@@ -145,11 +135,11 @@ class DatabaseItemSource(ItemSource):
     def __init__(self, view):
         ItemSource.__init__(self)
         self.view = view
-        self.view.fetcher = database.ItemInfoFetcher(self)
+        self.view.fetcher = database.IDOnlyFetcher()
         self.tracker = self.view.make_tracker()
-        self.tracker.connect('added', self._emit_from_db, self.added)
-        self.tracker.connect('changed', self._emit_from_db, self.changed)
-        self.tracker.connect('removed', self._emit_from_db, self.removed)
+        self.tracker.connect('added', self._on_tracker_added)
+        self.tracker.connect('changed', self._on_tracker_changed)
+        self.tracker.connect('removed', self._on_tracker_removed)
 
     @staticmethod
     def _item_info_for(item):
@@ -248,10 +238,21 @@ class DatabaseItemSource(ItemSource):
         return messages.ItemInfo(item.id, **info)
 
     def fetch_all(self):
-        return list(self.view)
+        return [self._get_info(id_) for id_ in self.view]
 
-    def _emit_from_db(self, vt, info, signal_method):
-        signal_method(info)
+    def _get_info(self, id_):
+        info = app.item_info_cache.get_info(id_)
+        info.source = self
+        return info
+
+    def _on_tracker_added(self, tracker, id_):
+        self.emit("added", self._get_info(id_))
+
+    def _on_tracker_changed(self, tracker, id_):
+        self.emit("changed", self._get_info(id_))
+
+    def _on_tracker_removed(self, tracker, id_):
+        self.emit("removed", id_)
 
     def unlink(self):
         self.tracker.unlink()
@@ -378,17 +379,15 @@ class SharingItemSource(ItemSource):
         ItemSource.__init__(self)
         self.tracker = tracker
         self.playlist_id = playlist_id
-        self.signal_handles = []
-        for signal in 'added', 'changed', 'removed':
-            signal_callback = getattr(self, signal)
-            # Use SQLite to create an in-memory database using a temp file, 
-            # and then
-            # chuck away the data.  Then the OS can page in and out as 
-            # necessary 
-            handle = self.tracker.connect('%s' % signal,
-                                          self._emit_from_db,
-                                          signal_callback)
-            self.signal_handles.append(handle)
+        # Use SQLite to create an in-memory database using a temp file, 
+        # and then
+        # chuck away the data.  Then the OS can page in and out as 
+        # necessary 
+        self.signal_handles = [
+            self.tracker.connect('added', self._on_tracker_added),
+            self.tracker.connect('changed', self._on_tracker_changed),
+            self.tracker.connect('removed', self._on_tracker_removed),
+        ]
 
     def _item_info_for(self, item):
         return messages.ItemInfo(
@@ -458,14 +457,20 @@ class SharingItemSource(ItemSource):
             port=item.port,
             is_playing=False)
 
-    def _emit_from_db(self, database, item, signal_callback):
-        #if item.file_type != self.type:
-        #    return # don't care about other types of items
-        if not isinstance(item, messages.ItemInfo):
-            info = self._item_info_for(item)
+    def _ensure_info(self, obj):
+        if not isinstance(obj, messages.ItemInfo):
+            return self._item_info_for(obj)
         else:
-            info = item
-        signal_callback(info)
+            return obj
+
+    def _on_tracker_added(self, tracker, item):
+        self.emit("added", self._ensure_info(item))
+
+    def _on_tracker_changed(self, tracker, item):
+        self.emit("changed", self._ensure_info(item))
+
+    def _on_tracker_removed(self, tracker, item):
+        self.emit("removed", item.id)
 
     def fetch_all(self):
         print 'FETCH ALL'
@@ -486,22 +491,32 @@ class DeviceItemSource(ItemSource):
         ItemSource.__init__(self)
         self.device = device
         self.type = device.id.rsplit('-', 1)[1]
-        self.signal_handles = []
-        for signal in 'added', 'changed', 'removed':
-            signal_callback = getattr(self, signal)
-            handle = self.device.database.connect('item-%s' % signal,
-                                                  self._emit_from_db,
-                                                  signal_callback)
-            self.signal_handles.append(handle)
+        self.signal_handles = [
+            device.database.connect('item-added', self._on_device_added),
+            device.database.connect('item-changed', self._on_device_changed),
+            device.database.connect('item-removed', self._on_device_removed),
+        ]
 
-    def _emit_from_db(self, database, item, signal_callback):
+    def _ensure_info(self, item):
+        if not isinstance(item, messages.ItemInfo):
+            return self._item_info_for(item)
+        else:
+            return item
+
+    def _on_device_added(self, database, item):
         if item.file_type != self.type:
             return # don't care about other types of items
-        if not isinstance(item, messages.ItemInfo):
-            info = self._item_info_for(item)
-        else:
-            info = item
-        signal_callback(info)
+        self.emit("added", self._ensure_info(item))
+
+    def _on_device_changed(self, database, item):
+        if item.file_type != self.type:
+            return # don't care about other types of items
+        self.emit("changed", self._ensure_info(item))
+
+    def _on_device_removed(self, database, item):
+        if item.file_type != self.type:
+            return # don't care about other types of items
+        self.emit("removed", item.id)
 
     def _item_info_for(self, item):
         return messages.ItemInfo(

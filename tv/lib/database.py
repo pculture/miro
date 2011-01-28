@@ -160,22 +160,20 @@ class DDBObjectFetcher(ViewObjectFetcher):
             if len(new_id_list) < id_list:
                 id_list[:] = new_id_list # update id_list in-place
 
-class ItemInfoFetcher(ViewObjectFetcher):
-    def __init__(self, source):
-        self.source = source
+class IDOnlyFetcher(ViewObjectFetcher):
+    """Fetcher that just emits the IDs of objects
+
+    This can be more efficient in some cases
+    """
 
     def table_name(self):
         return 'item'
 
     def fetch_obj(self, id_):
-        info = app.item_info_cache.get_info(id_)
-        info.source = self.source
-        return info
+        return id_
 
     def fetch_obj_for_ddb_object(self, item):
-        info =  app.item_info_cache.get_info(item.id)
-        info.source = self.source
-        return info
+        return item.id
 
 class View(object):
     def __init__(self, fetcher, where, values, order_by, joins, limit):
@@ -316,7 +314,7 @@ class ViewTracker(signals.SignalEmitter):
     def remove_objects(self, objects):
         for obj in [o for o in objects if o.id in self.current_ids]:
             self.current_ids.remove(obj.id)
-            self.emit('removed', obj)
+            self.emit('removed', self.fetcher.fetch_obj_for_ddb_object(obj))
 
     def check_object(self, obj):
         before = (obj.id in self.current_ids)

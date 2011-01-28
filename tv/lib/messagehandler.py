@@ -80,7 +80,7 @@ class ViewTracker(object):
 
     def reset_changes(self):
         self.changed = {}
-        self.removed = {}
+        self.removed = set()
         self.added =  {}
         self.added_order = []
         # Need to use a list because added messages must be sent in the same
@@ -121,10 +121,10 @@ class ViewTracker(object):
                 self._last_sent_info[obj.id] = info
         return retval
 
-    def _make_removed_list(self, removed_dict):
-        for obj in removed_dict.values():
-            del self._last_sent_info[obj.id]
-        return removed_dict.keys()
+    def _make_removed_list(self, removed_set):
+        for id_ in removed_set:
+            del self._last_sent_info[id_]
+        return list(removed_set)
 
     def schedule_send_messages(self):
         # We don't send messages immediately so that if an object gets changed
@@ -161,19 +161,22 @@ class ViewTracker(object):
         self.schedule_send_messages()
 
     def on_object_removed(self, tracker, obj):
+        self.on_object_id_removed(tracker, obj.id)
+
+    def on_object_id_removed(self, tracker, id_):
         if self.tabs_being_reordered:
             # even though we're not sending messages, update _last_sent_info
-            del self._last_sent_info[obj.id]
+            del self._last_sent_info[id_]
             return
-        if obj.id in self.added:
+        if id_ in self.added:
             # object added, then removed, just ignore it
-            del self.added[obj.id]
-        elif obj.id in self.changed:
+            del self.added[id_]
+        elif id_ in self.changed:
             # object changed, then removed, just send the removeal
-            del self.changed[obj.id]
-            self.removed[obj.id] = obj
+            del self.changed[id_]
+            self.removed.add(id_)
         else:
-            self.removed[obj.id] = obj
+            self.removed.add(id_)
         self.schedule_send_messages()
 
     def on_object_changed(self, tracker, obj):
@@ -193,7 +196,7 @@ class ViewTracker(object):
 
     def on_bulk_removed(self, emitter, objects):
         for obj in objects:
-            self.on_object_removed(emitter, obj)
+            self.on_object_id_removed(emitter, obj.id)
 
     def on_bulk_changed(self, emitter, objects):
         for obj in objects:
@@ -285,7 +288,7 @@ class GuideTracker(ViewTracker):
         message = messages.GuidesChanged(
             [self.info_factory(g) for g in self._get_added_objects()],
             [self.info_factory(g) for g in self.changed.values()],
-            self.removed.keys())
+            list(self.removed))
         message.send_to_frontend()
 
         # now that we've sent the GuidesChanged message, fix the changed
@@ -301,7 +304,7 @@ class GuideTracker(ViewTracker):
                 self.added[obj.id] = obj
                 self.added_order.append(obj)
             elif not is_visible and was_visible: # newly hidden
-                self.removed[obj.id] = obj
+                self.removed.add(obj.id)
             elif is_visible:
                 self.changed[obj.id] = obj
         ViewTracker.send_messages(self)
@@ -338,7 +341,7 @@ class SourceTrackerBase(ViewTracker):
         for source in self.get_sources():
             source.connect('added', self.on_object_added)
             source.connect('changed', self.on_object_changed)
-            source.connect('removed', self.on_object_removed)
+            source.connect('removed', self.on_object_id_removed)
             self.trackers.append(source)
 
     def send_initial_list(self):
