@@ -379,10 +379,6 @@ class SharingItemSource(ItemSource):
         ItemSource.__init__(self)
         self.tracker = tracker
         self.playlist_id = playlist_id
-        # Use SQLite to create an in-memory database using a temp file, 
-        # and then
-        # chuck away the data.  Then the OS can page in and out as 
-        # necessary 
         self.signal_handles = [
             self.tracker.connect('added', self._on_tracker_added),
             self.tracker.connect('changed', self._on_tracker_changed),
