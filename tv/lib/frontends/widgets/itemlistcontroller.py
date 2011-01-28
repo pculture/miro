@@ -477,6 +477,10 @@ class ItemListController(object):
         yield self.item_view
         yield self.list_item_view
 
+    def no_longer_displayed(self):
+        if self.list_item_view:
+            self.list_item_view.on_undisplay()
+
 class SimpleItemListController(ItemListController):
     def __init__(self):
         ItemListController.__init__(self, self.type, self.id)
@@ -711,6 +715,8 @@ class ItemListControllerManager(object):
         if item_list_controller is not self.displayed:
             logging.warn("controller is not displayed in "
                     "controller_no_longer_displayed()")
+        else:
+            self.displayed.no_longer_displayed()
         self.displayed = None
 
     def controller_created(self, item_list_controller):
@@ -745,3 +751,7 @@ class ItemListControllerManager(object):
                 if info.is_playable:
                     return True
         return False
+
+    def undisplay_controller(self):
+        if self.displayed:
+            self.controller_no_longer_displayed(self.displayed)

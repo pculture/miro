@@ -1004,6 +1004,7 @@ class Application:
             if app.playback_manager.is_playing:
                 app.playback_manager.stop()
             app.display_manager.deselect_all_displays()
+            app.item_list_controller_manager.undisplay_controller()
         if self.window is not None:
             self.window.destroy()
         app.controller.shutdown()

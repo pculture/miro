@@ -292,24 +292,25 @@ class ListItemView(widgetset.TableView):
         self.html_stripper = util.HTMLStripper()
 
     def _get_ui_column_state(self):
+        if not self._set_initial_widths:
+            return
         enabled = []
         widths = {}
         for label in self.get_columns():
             name = self._column_by_label[label]
             enabled.append(name)
             column = self._column_name_to_column[name]
-            width = column.get_width()
+            width = int(column.get_width())
             if width != self._real_column_widths[name]:
                 widths[name] = width 
         self.columns_enabled = enabled
         self._real_column_widths.update(widths)
         self.column_widths.update(widths)
 
-    def on_unrealize(self, treeview):
+    def on_undisplay(self):
         self._get_ui_column_state()
         self.emit('column-widths-changed', self.column_widths)
         self.emit('columns-enabled-changed', self.columns_enabled)
-        super(ListItemView, self).on_unrealize(treeview)
 
     def get_tooltip(self, iter_, column):
         if ('name' in self._column_name_to_column and
@@ -381,7 +382,6 @@ class ListItemView(widgetset.TableView):
     def do_size_allocated(self, total_width, height):
         if not self._set_initial_widths:
             self._set_initial_widths = True
-            total_width -= 20 # allow some room for a scrollbar
 
             total_weight = 0
             min_width = 0
@@ -404,7 +404,7 @@ class ListItemView(widgetset.TableView):
                 width += int(extra)
                 column = self._column_name_to_column[name]
                 column.set_width(width)
-                self._real_column_widths[name] = column.get_width()
+                self._real_column_widths[name] = int(column.get_width())
 
     def _on_column_clicked(self, column, column_name):
         ascending = not (column.get_sort_indicator_visible() and

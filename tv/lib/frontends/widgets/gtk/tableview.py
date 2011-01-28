@@ -727,7 +727,8 @@ class TableView(Widget):
     def width_for_columns(self, total_width):
         # as far as I can tell, GTK includes the column spacing in the column
         # widths
-        return total_width
+        scrollbar = 20 # TODO: query the actual width
+        return total_width - scrollbar
 
     def set_auto_resizes(self, setting):
         # FIXME: to be implemented.

@@ -955,11 +955,11 @@ class TableView(Widget):
         if self.auto_resize:
             # Table auto-resizes, we can shrink to min-width for each column
             width = sum(column.minWidth() for column in columns)
+            width += self.tableview.intercellSpacing().width * self.column_count()
         else:
             # Table doesn't auto-resize, the columns can't get smaller than
             # their current width
             width = sum(column.width() for column in columns)
-        width += self.tableview.intercellSpacing().width * self.column_count()
         return width
 
     def start_bulk_change(self):
@@ -1015,7 +1015,8 @@ class TableView(Widget):
         the table's columns.
         """
         spacing = self.tableview.intercellSpacing().width * self.column_count()
-        return width - spacing
+        scrollbar = 40 # TODO: query actual width
+        return width - spacing - scrollbar
 
     def set_column_spacing(self, column_spacing):
         spacing = self.tableview.intercellSpacing()
@@ -1062,6 +1063,13 @@ class TableView(Widget):
         column = self.columns.pop(index)
         self.tableview.removeTableColumn_(column._column)
         self.invalidate_size_request()
+
+    def get_columns(self):
+        titles = []
+        columns = self.tableview.tableColumns()
+        for column in columns:
+            titles.append(column.headerCell().stringValue())
+        return titles
 
     def set_background_color(self, (red, green, blue)):
         color = NSColor.colorWithDeviceRed_green_blue_alpha_(red, green, blue,
