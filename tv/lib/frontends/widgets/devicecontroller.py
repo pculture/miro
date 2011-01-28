@@ -294,8 +294,10 @@ class SyncWidget(widgetset.VBox):
                 self.info_map[self.info_key(info)] = checkbox
         else:
             self.sync_library.disable()
+        background = widgetset.SolidBackground(style.css_to_color('#dddddd'))
+        background.add(self.feed_list)
         scroller = widgetset.Scroller(False, True)
-        scroller.set_child(self.feed_list)
+        scroller.set_child(background)
         self.feed_list.disable()
         self.pack_start(widgetutil.pad(scroller, top=20, bottom=5),
                         expand=True)
