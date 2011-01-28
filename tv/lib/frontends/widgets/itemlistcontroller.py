@@ -193,7 +193,16 @@ class ItemListController(object):
 
     def play_selection(self, presentation_mode='fit-to-bounds'):
         """Play the currently selected items."""
-        self._play_item_list(None, presentation_mode)
+        selection = self.get_selection()
+        if len(selection) == 0:
+            start_id = None
+        elif len(selection) == 1:
+            start_id = selection[0].id
+        else:
+            selected_ids = [i.id for i in selection]
+            selected_ids.sort(key=self.item_list.model.index_of_id)
+            start_id = selected_ids[0]
+        self._play_item_list(start_id, presentation_mode)
 
     def can_play_items(self):
         for info in self.item_list.model.info_list():
