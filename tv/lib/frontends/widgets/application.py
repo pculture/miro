@@ -1104,8 +1104,10 @@ class InfoUpdaterCallbackList(object):
 class InfoUpdater(signals.SignalEmitter):
     """Track channel/item updates from the backend.
 
-    To track item updates, use ``add_item_callback()``.  To track tab
-    updates, connect to one of the signals below.
+    To track item updates, use the item_list_callbacks and
+    item_changed_callbacks attributes, both are instances of
+    InfoUpdaterCallbackList.  To track tab updates, connect to one of the
+    signals below.
 
     Signals:
 
