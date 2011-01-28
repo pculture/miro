@@ -45,7 +45,7 @@ TEXT_JUSTIFY_RIGHT = 1
 TEXT_JUSTIFY_CENTER = 2
 
 # Display State defaults
-DEFAULT_LIST_VIEW_DISPLAYS = set([u'sharing', u'music', u'others', u'audio-feed', u'playlist', u'search'])
+DEFAULT_LIST_VIEW_DISPLAYS = set([u'sharing', u'music', u'others', u'playlist', u'search'])
 DEFAULT_DISPLAY_FILTERS = [u'view-all']
 DEFAULT_COLUMN_WIDTHS = {
     u'state': 20, u'name': 130, u'artist': 110, u'album': 100, u'track': 30,
@@ -55,7 +55,7 @@ DEFAULT_COLUMN_WIDTHS = {
 DEFAULT_SORT_COLUMN = {
     u'videos': 'name', u'music': 'artist', u'others': 'name',
     u'downloading': 'eta', u'all-feed-video': 'feed-name', u'feed': 'date',
-    u'audio-feed': 'date', u'playlist': 'artist', u'search': 'artist',
+    u'feed': 'date', u'playlist': 'artist', u'search': 'artist',
 }
 
 # column properties
@@ -87,7 +87,6 @@ COLUMNS_AVAILABLE = {
     u'all-feed-video': [u'state', u'name', u'feed-name', u'length', u'status',
         u'size'],
     u'feed': [u'state', u'name', u'length', u'status', u'size', u'date'],
-    u'audio-feed': [u'state', u'name', u'length', u'status', u'size', u'date'],
     u'playlist': [u'state', u'name', u'artist', u'album', u'track', u'feed-name',
         u'length', u'genre', u'year', u'rating', u'size'],
     u'search': [u'state', u'name', u'artist', u'album', u'track', u'feed-name',

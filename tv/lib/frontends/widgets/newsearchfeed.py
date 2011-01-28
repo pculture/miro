@@ -50,9 +50,9 @@ def run_dialog():
 
     In the case of "Create Feed", returns a tuple of:
 
-    * ("feed", ChannelInfo, search_term str, section str)
-    * ("search_engine", SearchEngineInfo, search_term str, section str)
-    * ("url", url str, search_term str, section str)
+    * ("feed", ChannelInfo, search_term str)
+    * ("search_engine", SearchEngineInfo, search_term str)
+    * ("url", url str, search_term str)
 
     In the case of "Cancel", returns None.
     """
@@ -60,7 +60,6 @@ def run_dialog():
     description = _('A search feed contains items that match a search term.')
 
     channels = app.tab_list_manager.feed_list.get_feeds()
-    channels += app.tab_list_manager.audio_feed_list.get_feeds()
     channels = [ci for ci in channels if not ci.is_folder]
     channels.sort(key=lambda x: util.name_sort_key(x.name))
 
@@ -133,41 +132,24 @@ def run_dialog():
 
             extra.pack_start(widgetutil.align_top(hb2, top_pad=6))
 
-            hb3 = widgetset.HBox()
-            hb3.pack_start(widgetutil.align_top(widgetset.Label(_('Add new feed to this section:')), top_pad=3), padding=5)
-
-            rbg_section = widgetset.RadioButtonGroup()
-            video_rb = widgetset.RadioButton(_("video"), rbg_section)
-            audio_rb = widgetset.RadioButton(_("audio"), rbg_section)
-            hb3.pack_start(video_rb)
-            hb3.pack_start(audio_rb)
-            extra.pack_start(widgetutil.align_top(hb3, top_pad=6))
-
             window.set_extra_widget(extra)
             response = window.run()
 
             if response == 0 and searchterm.get_text():
                 term = searchterm.get_text()
                 selected_option = rbg.get_selected()
-                if rbg_section.get_selected() == video_rb:
-                    section = u"video"
-                else:
-                    section = u"audio"
                 if selected_option is channel_rb:
                     return ("feed",
                             channels[channel_option.get_selected()],
-                            term,
-                            section)
+                            term)
                 elif selected_option is search_engine_rb:
                     return ("search_engine",
                             search_engines[search_engine_option.get_selected()],
-                            term,
-                            section)
+                            term)
                 else:
                     return ("url",
                             url_text.get_text(),
-                            term,
-                            section)
+                            term)
         except StandardError:
             logging.exception("newsearchfeed threw exception.")
     finally:

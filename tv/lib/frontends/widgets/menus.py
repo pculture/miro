@@ -820,7 +820,7 @@ class MenuStateManager(signals.SignalEmitter):
             app.menu_manager._update_view_menu(selection_type, selected_tabs)
         if selection_type is None:
             pass
-        elif selection_type in ('feed', 'audio-feed'):
+        elif selection_type == 'feed':
             app.menu_manager._handle_feed_selection(selected_tabs)
         elif selection_type == 'playlist':
             app.menu_manager._handle_playlist_selection(selected_tabs)

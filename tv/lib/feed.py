@@ -361,7 +361,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     ICON_CACHE_VITAL = True
 
     def setup_new(self, url, initiallyAutoDownloadable=None,
-                 section=u'video', search_term=None, title=None):
+                 search_term=None, title=None):
         check_u(url)
         if initiallyAutoDownloadable == None:
             mode = app.config.get(prefs.CHANNEL_AUTO_DEFAULT)
@@ -383,7 +383,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             self.autoDownloadable = initiallyAutoDownloadable
             self.getEverything = False
 
-        self.section = section
+        self.section = u'' # not used anymore
         self.maxNew = 3
         self.maxOldItems = None
         self.expire = u"system"
@@ -473,16 +473,12 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         return cls.make_view('folder_id=?', (id,))
 
     @classmethod
-    def visible_video_view(cls):
-        return cls.make_view("visible AND section='video'")
+    def visible_view(cls):
+        return cls.make_view("visible")
 
     @classmethod
     def watched_folder_view(cls):
         return cls.make_view("origURL LIKE 'dtv:directoryfeed:%'")
-
-    @classmethod
-    def visible_audio_view(cls):
-        return cls.make_view("visible AND section='audio'")
 
     def on_db_insert(self):
         self.generate_feed(True)

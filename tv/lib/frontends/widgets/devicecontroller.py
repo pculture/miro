@@ -347,22 +347,22 @@ class SyncWidget(widgetset.VBox):
 
     def get_feeds(self):
         feeds = []
-        for tab_list in self.tab_lists():
-            table_model = tab_list.view.model
-            iter_ = table_model.first_iter()
-            if iter_ is None:
-                self.sync_library.disable()
-            else:
-                while iter_ is not None:
-                    row = table_model[iter_]
-                    if row[0].is_folder:
-                        child_iter = table_model.child_iter(iter_)
-                        while child_iter is not None:
-                            row = table_model[child_iter]
-                            feeds.append(row[0])
-                            child_iter = table_model.next_iter(child_iter)
-                    else:
+        tab_list = self.tab_list()
+        table_model = tab_list.view.model
+        iter_ = table_model.first_iter()
+        if iter_ is None:
+            self.sync_library.disable()
+        else:
+            while iter_ is not None:
+                row = table_model[iter_]
+                if row[0].is_folder:
+                    child_iter = table_model.child_iter(iter_)
+                    while child_iter is not None:
+                        row = table_model[child_iter]
                         feeds.append(row[0])
+                        child_iter = table_model.next_iter(child_iter)
+                else:
+                    feeds.append(row[0])
                     iter_ = table_model.next_iter(iter_)
         feeds.sort(key=operator.attrgetter('name'))
         return feeds
@@ -402,11 +402,11 @@ class SyncWidget(widgetset.VBox):
             return []
         feeds = []
         items = self.device.database['sync'][self.file_type].get('items', ())
+        tab_list = self.tab_list()
         for key in items:
-            for tab_list in self.tab_lists():
-                feed = self.find_info_by_key(key, tab_list)
-                if feed is not None:
-                    feeds.append(feed.id)
+            feed = self.find_info_by_key(key, tab_list)
+            if feed is not None:
+                feeds.append(feed.id)
         return feeds
 
 class PodcastSyncWidget(SyncWidget):
@@ -429,17 +429,16 @@ class PodcastSyncWidget(SyncWidget):
         else:
             self.sync_unwatched.disable()
 
-    def tab_lists(self):
-        return (app.tab_list_manager.feed_list,
-                app.tab_list_manager.audio_feed_list)
+    def tab_list(self):
+        return app.tab_list_manager.feed_list
 
 class PlaylistSyncWidget(SyncWidget):
     file_type = 'playlists'
     list_label = _("Sync These Playlists")
     title = _("Sync Playlists")
 
-    def tab_lists(self):
-        return (app.tab_list_manager.playlist_list,)
+    def tab_list(self):
+        return app.tab_list_manager.playlist_list
 
     def info_key(self, info):
         return info.name

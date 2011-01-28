@@ -134,7 +134,7 @@ class ThemeHistory(DDBObject):
             self._install_default_feeds()
         signals.system.theme_first_run(self.theme)
 
-    def _add_default(self, default, section):
+    def _add_default(self, default):
         # folder
         if isinstance(default, tuple) and isinstance(default[1], list):
             defaultFolder = default
@@ -142,45 +142,34 @@ class ThemeHistory(DDBObject):
                 c_folder = folder.ChannelFolder.get_by_title(defaultFolder[0])
             except ObjectNotFoundError:
                 c_folder = folder.ChannelFolder(defaultFolder[0])
-                c_folder.section = section
                 c_folder.signal_change()
             for url, autodownload in defaultFolder[1]:
-                logging.info("adding feed %s in section %s" % (url, section))
+                logging.info("adding feed %s" % (url,))
                 d_feed = feed.lookup_feed(default[0])
                 if d_feed is None:
                     d_feed = feed.Feed(url, initiallyAutoDownloadable=autodownload)
                     d_feed.set_folder(c_folder)
-                    d_feed.section = section
                     d_feed.signal_change()
         # feed
         else:
             d_feed = feed.lookup_feed(default[0])
             if d_feed is None:
-                logging.info("adding feed %s in section %s" % (default, section))
+                logging.info("adding feed %s" % (default,))
                 d_feed = feed.Feed(default[0], initiallyAutoDownloadable=default[1])
-                d_feed.section = section
                 d_feed.signal_change()
 
     @as_urgent
     def _install_default_feeds(self):
         logging.info("Adding default feeds")
-        default_video_feeds = []
-        default_video_feeds.extend([
+        default_feeds = [
             (u'http://vodo.net/feeds/promoted', False),
             (u'http://feeds.feedburner.com/earth-touch_podcast_720p', False),
             (u'http://www.linktv.org/rss/hq/globalpulse.xml', False),
-            ])
-
-        default_audio_feeds = []
-        default_audio_feeds.extend([
             (u'http://feeds.thisamericanlife.org/talpodcast', False)
-            ])
+            ]
 
-        for default in default_video_feeds:
-            self._add_default(default, u"video")
-
-        for default in default_audio_feeds:
-            self._add_default(default, u"audio")
+        for default in default_feeds:
+            self._add_default(default)
 
         # create example playlist
         default_playlists = [

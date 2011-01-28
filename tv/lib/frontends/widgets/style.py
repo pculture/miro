@@ -108,6 +108,7 @@ class LowerBox(widgetset.Background):
 
 class TabRenderer(widgetset.CustomCellRenderer):
     MIN_WIDTH = 25
+    MIN_ICON_WIDTH = 16
     MIN_HEIGHT = 24
     MIN_HEIGHT_TALL = 28
     TITLE_FONT_SIZE = 0.82
@@ -135,12 +136,9 @@ class TabRenderer(widgetset.CustomCellRenderer):
         titlebox = layout_manager.textbox(self.data.name)
 
         hbox = cellpack.HBox(spacing=4)
-        if hasattr(self.data, "id") and (self.data.id == 'guide' or self.data.id == 'search'):
-            hbox.pack_space(6)
-        else:
-            hbox.pack_space(2)
+        self.pack_leading_space(hbox)
         alignment = cellpack.Alignment(self.data.icon, yalign=0.5, yscale=0.0,
-                xalign=0.5, xscale=0.0, min_width=16)
+                xalign=0.5, xscale=0.0, min_width=self.MIN_ICON_WIDTH)
         hbox.pack(alignment)
         hbox.pack(cellpack.align_middle(cellpack.TruncatedTextLine(titlebox)), expand=True)
         layout_manager.set_font(0.77)
@@ -154,6 +152,9 @@ class TabRenderer(widgetset.CustomCellRenderer):
         else:
             renderer = alignment
         renderer.render_layout(context)
+
+    def pack_leading_space(self, hbox):
+        hbox.pack_space(2)
 
     def pack_bubbles(self, hbox, layout_manager):
         if self.updating_frame > -1:
@@ -196,7 +197,11 @@ class TabRenderer(widgetset.CustomCellRenderer):
         context.fill()
 
 class StaticTabRenderer(TabRenderer):
+    MIN_ICON_WIDTH = 22
     BOLD_TITLE = True
+
+    def pack_leading_space(self, hbox):
+        hbox.pack_space(6)
 
     def pack_bubbles(self, hbox, layout_manager):
         if self.data.unwatched > 0:

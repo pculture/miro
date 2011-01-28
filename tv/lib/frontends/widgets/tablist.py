@@ -53,8 +53,6 @@ def send_new_order():
             
     message = messages.TabsReordered()
     append_items(app.tab_list_manager.feed_list.view.model, u'feed')
-    append_items(app.tab_list_manager.audio_feed_list.view.model,
-                 u'audio-feed')
     append_items(app.tab_list_manager.playlist_list.view.model, u'playlist')
     message.send_to_backend()
 
@@ -419,16 +417,7 @@ class TabListDropHandler(object):
 
     def accept_drop(self, table_view, model, typ, source_actions, parent,
             position, data):
-        if (typ in ('feed', 'feed-with-folder')
-                and self.tablist == app.tab_list_manager.audio_feed_list):
-            source_tablist = app.tab_list_manager.feed_list
-            dest_tablist = self.tablist
-        elif (typ in ('audio-feed', 'audio-feed-with-folder')
-                and self.tablist == app.tab_list_manager.feed_list):
-            source_tablist = app.tab_list_manager.audio_feed_list
-            dest_tablist = self.tablist
-        else:
-            source_tablist = dest_tablist = self.tablist
+        source_tablist = dest_tablist = self.tablist
         selected_infos = app.tab_list_manager.get_selection()[1]
         selected_rows = [info.id for info in selected_infos]
         source_tablist.doing_change = dest_tablist.doing_change = True
@@ -472,16 +461,12 @@ class TabListDropHandler(object):
         return True
 
 class FeedListDropHandler(TabListDropHandler):
-    item_types = ('feed', 'audio-feed')
-    folder_types = ('feed-with-folder', 'audio-feed-with-folder')
+    item_types = ('feed',)
+    folder_types = ('feed-with-folder',)
 
 class FeedListDragHandler(TabListDragHandler):
     item_type = u'feed'
     folder_type = u'feed-with-folder'
-
-class AudioFeedListDragHandler(TabListDragHandler):
-    item_type = u'audio-feed'
-    folder_type = u'audio-feed-with-folder'
 
 class PlaylistListDropHandler(TabListDropHandler):
     item_types = ('playlist',)
@@ -858,13 +843,6 @@ class FeedList(NestedTabList, TabUpdaterMixin):
             (_('Remove'), app.widgetapp.remove_current_feed)
         ]
 
-class AudioFeedList(FeedList):
-    def setup_dnd(self):
-        self.view.set_drag_source(AudioFeedListDragHandler())
-        self.view.set_drag_dest(FeedListDropHandler(self))
-
-    type = u'audio-feed'
-
 class SharingList(NestedTabList):
     type = u'sharing'
     render_class = style.SharingTabRenderer
@@ -990,10 +968,8 @@ class TabListBox(widgetset.Scroller):
         vbox.pack_start(tlm.sharing_list.view)
         vbox.pack_start(self.build_header(_('WEBSITES')))
         vbox.pack_start(tlm.site_list.view)
-        vbox.pack_start(self.build_header(_('VIDEO FEEDS')))
+        vbox.pack_start(self.build_header(_('PODCASTS')))
         vbox.pack_start(tlm.feed_list.view)
-        vbox.pack_start(self.build_header(_('AUDIO FEEDS')))
-        vbox.pack_start(tlm.audio_feed_list.view)
         vbox.pack_start(self.build_header(_('PLAYLISTS')))
         vbox.pack_start(tlm.playlist_list.view)
         return vbox

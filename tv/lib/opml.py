@@ -62,9 +62,8 @@ class Exporter(object):
         required arguments, then writes the result to the file at
         pathname.
         """
-        video_order = tabs.TabOrder.video_feed_order()
-        audio_order = tabs.TabOrder.audio_feed_order()
-        media_tabs = video_order.get_all_tabs() + audio_order.get_all_tabs()
+        feed_order = tabs.TabOrder.feed_order()
+        media_tabs = feed_order.get_all_tabs()
 
         site_order = tabs.TabOrder.site_order()
         site_tabs = site_order.get_all_tabs()
@@ -127,9 +126,8 @@ class Exporter(object):
         if self.current_folder is not None:
             self._close_folder_entry()
         self.current_folder = folder
-        self.io.write(u'\t<outline text=%s miro:section=%s>\n' % (
-            saxutils.quoteattr(folder.get_title()),
-            saxutils.quoteattr(folder.section)))
+        self.io.write(u'\t<outline text=%s>\n' % (
+            saxutils.quoteattr(folder.get_title()),))
 
     def _close_folder_entry(self):
         self.io.write(u'\t</outline>\n')
@@ -169,10 +167,9 @@ class Exporter(object):
 
         self.io.write(spacer)
         self.io.write(
-            u'<outline type="rss" text=%s xmlUrl=%s miro:section=%s %s/>\n' % (
+            u'<outline type="rss" text=%s xmlUrl=%s %s/>\n' % (
                 saxutils.quoteattr(thefeed.get_title()),
                 saxutils.quoteattr(thefeed.get_base_url()),
-                saxutils.quoteattr(thefeed.section),
                 extra_args))
 
     def _write_site_entry(self, site):
@@ -309,10 +306,6 @@ class Importer(object):
         if search_term:
             subscription['search_term'] = search_term
 
-        section = unicode(entry.getAttribute('miro:section'))
-        if section in (u'audio', u'video'):
-            subscription['section'] = section
-
         title = entry.getAttribute("text")
         if title is not None and title != '' and title != url:
             subscription['title'] = title
@@ -341,10 +334,7 @@ class Importer(object):
 
     def _handle_folder_entry(self, entry):
         title = entry.getAttribute("text")
-        section = unicode(entry.getAttribute("miro:section"))
-        if section not in (u'audio', u'video'):
-            section = u'video'
-        folder = {'type': 'folder', 'title': title, 'section': section}
+        folder = {'type': 'folder', 'title': title}
         children = self._walk_outline(entry)
         if children is not None:
             folder['children'] = children

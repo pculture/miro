@@ -43,7 +43,6 @@ class TabListManager(object):
         self.sharing_list = tablist.SharingList()
         self.site_list = tablist.SiteList()
         self.feed_list = tablist.FeedList()
-        self.audio_feed_list = tablist.AudioFeedList()
         self.playlist_list = tablist.PlaylistList()
         self.widget_to_tablist = {}
         for tab_list in self.all_tab_lists():
@@ -90,20 +89,11 @@ class TabListManager(object):
             self.selected_tab_list = tab_list
             self.update_selected_tabs()
 
-    def which_tablist_has_id(self, feed_id):
-        """
-        Find out whether the video feed list or the audio feed list has this id
-        """
-        for tablist in self.feed_list, self.audio_feed_list:
-            if tablist.has_info(feed_id):
-                return tablist
-        raise ValueError("Unknown feed id.  %s" % feed_id)
-
     def all_tab_lists(self):
         return (
             self.static_tab_list, self.library_tab_list, self.devices_list,
             self.sharing_list, self.site_list, self.feed_list,
-            self.audio_feed_list, self.playlist_list)
+            self.playlist_list)
 
     def select_guide(self):
         self.select_static_tab(0)
@@ -114,24 +104,21 @@ class TabListManager(object):
 
     def select_startup_default(self):
         if app.config.get(prefs.OPEN_CHANNEL_ON_STARTUP) is not None:
-            # try regular feeds first, followed by audio feeds
-            for tab_list in self.feed_list, self.audio_feed_list:
-                info = tab_list.find_feed_with_url(
-                    app.config.get(prefs.OPEN_CHANNEL_ON_STARTUP))
-                if info is not None:
-                    self._select_from_tab_list(
-                        tab_list,
-                        tab_list.iter_map[info.id])
-                    return
+            info = self.feed_list.find_feed_with_url(
+                app.config.get(prefs.OPEN_CHANNEL_ON_STARTUP))
+            if info is not None:
+                self._select_from_tab_list(
+                    self.feed_list,
+                    self.feed_list.iter_map[info.id])
+                return
 
         if app.config.get(prefs.OPEN_FOLDER_ON_STARTUP) is not None:
-            for tab_list in self.feed_list, self.audio_feed_list:
-                for iter in tab_list.iter_map.values():
-                    info = tab_list.view.model[iter][0]
-                    if info.is_folder and info.name == app.config.get(
-                        prefs.OPEN_FOLDER_ON_STARTUP):
-                        self._select_from_tab_list(tab_list, iter)
-                        return
+            for iter in self.feed_list.iter_map.values():
+                info = self.feed_list.view.model[iter][0]
+                if info.is_folder and info.name == app.config.get(
+                    prefs.OPEN_FOLDER_ON_STARTUP):
+                    self._select_from_tab_list(self.feed_list, iter)
+                    return
         # if we get here, the fallback default is the Guide
         self.select_guide()
 

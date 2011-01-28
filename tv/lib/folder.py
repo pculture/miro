@@ -82,8 +82,8 @@ class FolderBase(DDBObject):
         raise NotImplementedError()
 
 class ChannelFolder(FolderBase):
-    def setup_new(self, title, section=u'video'):
-        self.section = section
+    def setup_new(self, title):
+        self.section = u'' # not used anymore
         FolderBase.setup_new(self, title)
 
     def remove(self, move_items_to=None):
@@ -98,18 +98,6 @@ class ChannelFolder(FolderBase):
             else:
                 child.remove(move_items_to)
         DDBObject.remove(self)
-
-    @classmethod
-    def video_view(cls):
-        """Returns all 'video' folders.
-        """
-        return cls.make_view("section='video'")
-
-    @classmethod
-    def audio_view(cls):
-        """Returns all 'audio' folders.
-        """
-        return cls.make_view("section='audio'")
 
     @classmethod
     def get_by_title(cls, title):

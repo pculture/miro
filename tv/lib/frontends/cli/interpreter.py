@@ -75,8 +75,7 @@ class MiroInterpreter(cmd.Cmd):
 
     @run_in_event_loop
     def init_database_objects(self):
-        self.video_feed_tabs = tabs.TabOrder.video_feed_order()
-        self.audio_feed_tabs = tabs.TabOrder.audio_feed_order()
+        self.feed_tabs = tabs.TabOrder.feed_order()
         self.playlist_tabs = tabs.TabOrder.playlist_order()
         self.tab_changed()
 
@@ -135,13 +134,7 @@ class MiroInterpreter(cmd.Cmd):
     @run_in_event_loop
     def do_feed(self, line):
         """feed <name> -- Selects a feed by name."""
-        for tab in self.video_feed_tabs.get_all_tabs():
-            if tab.get_title() == line:
-                self.tab = tab
-                self.tab.type = "feed"
-                self.tab_changed()
-                return
-        for tab in self.audio_feed_tabs.get_all_tabs():
+        for tab in self.feed_tabs.get_all_tabs():
             if tab.get_title() == line:
                 self.tab = tab
                 self.tab.type = "feed"
@@ -152,11 +145,7 @@ class MiroInterpreter(cmd.Cmd):
     @run_in_event_loop
     def do_rmfeed(self, line):
         """rmfeed <name> -- Deletes a feed."""
-        for tab in self.video_feed_tabs.get_all_tabs():
-            if tab.get_title() == line:
-                tab.remove()
-                return
-        for tab in self.audio_feed_tabs.get_all_tabs():
+        for tab in self.feed_tabs.get_all_tabs():
             if tab.get_title() == line:
                 tab.remove()
                 return
@@ -164,11 +153,11 @@ class MiroInterpreter(cmd.Cmd):
 
     @run_in_event_loop
     def complete_feed(self, text, line, begidx, endidx):
-        return self.handle_tab_complete(text, list(self.video_feed_tabs.get_all_tabs()) + list(self.audio_feed_tabs.get_all_tabs()))
+        return self.handle_tab_complete(text, list(self.feed_tabs.get_all_tabs()))
 
     @run_in_event_loop
     def complete_rmfeed(self, text, line, begidx, endidx):
-        return self.handle_tab_complete(text, list(self.video_feed_tabs.get_all_tabs()) + list(self.audio_feed_tabs.get_all_tabs()))
+        return self.handle_tab_complete(text, list(self.feed_tabs.get_all_tabs()))
 
     @run_in_event_loop
     def complete_playlist(self, text, line, begidx, endidx):
@@ -208,10 +197,8 @@ class MiroInterpreter(cmd.Cmd):
     @run_in_event_loop
     def do_feeds(self, line):
         """feeds -- Lists all feeds."""
-        print "VIDEO FEEDS"
-        self._print_feeds(self.video_feed_tabs.get_all_tabs())
-        print "AUDIO FEEDS"
-        self._print_feeds(self.audio_feed_tabs.get_all_tabs())
+        print "FEEDS"
+        self._print_feeds(self.feed_tabs.get_all_tabs())
 
     @run_in_event_loop
     def do_play(self, line):

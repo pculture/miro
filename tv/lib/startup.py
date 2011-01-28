@@ -416,7 +416,6 @@ def setup_tabs():
             current_tab_orders[0].restore_tab_list()
     setup_tab_order(u'site')
     setup_tab_order(u'channel')
-    setup_tab_order(u'audio-channel')
     setup_tab_order(u'playlist')
 
 def is_first_time():

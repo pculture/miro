@@ -250,20 +250,10 @@ class ChannelTracker(TabTracker):
     info_factory = messages.ChannelInfo
 
     def get_object_views(self):
-        return feed.Feed.visible_video_view(), ChannelFolder.video_view()
+        return feed.Feed.visible_view(), ChannelFolder.make_view()
 
     def get_tab_order(self):
-        return tabs.TabOrder.video_feed_order()
-
-class AudioChannelTracker(TabTracker):
-    type = u'audio-feed'
-    info_factory = messages.ChannelInfo
-
-    def get_object_views(self):
-        return feed.Feed.visible_audio_view(), ChannelFolder.audio_view()
-
-    def get_tab_order(self):
-        return tabs.TabOrder.audio_feed_order()
+        return tabs.TabOrder.feed_order()
 
 class PlaylistTracker(TabTracker):
     type = u'playlist'
@@ -609,7 +599,6 @@ class BackendMessageHandler(messages.MessageHandler):
         messages.MessageHandler.__init__(self)
         self.frontend_startup_callback = frontend_startup_callback
         self.channel_tracker = None
-        self.audio_channel_tracker = None
         self.playlist_tracker = None
         self.guide_tracker = None
         self.watched_folder_tracker = None
@@ -629,7 +618,7 @@ class BackendMessageHandler(messages.MessageHandler):
         eventloop.add_urgent_call(method, name, args=(message,))
 
     def folder_class_for_type(self, typ):
-        if typ in ('feed', 'audio-feed'):
+        if typ == 'feed':
             return ChannelFolder
         elif typ == 'playlist':
             return PlaylistFolder
@@ -638,8 +627,6 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def ddb_object_class_for_type(self, typ):
         if typ == 'feed':
-            return feed.Feed
-        elif typ == 'audio-feed':
             return feed.Feed
         elif typ == 'playlist':
             return SavedPlaylist
@@ -666,10 +653,7 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_track_channels(self, message):
         if not self.channel_tracker:
             self.channel_tracker = ChannelTracker()
-        if not self.audio_channel_tracker:
-            self.audio_channel_tracker = AudioChannelTracker()
         self.channel_tracker.send_initial_list()
-        self.audio_channel_tracker.send_initial_list()
 
     def handle_stop_tracking_channels(self, message):
         if self.channel_tracker:
@@ -926,57 +910,22 @@ class BackendMessageHandler(messages.MessageHandler):
         # re-aranging things
         if self.channel_tracker:
             self.channel_tracker.tabs_being_reordered = True
-        if self.audio_channel_tracker:
-            self.audio_channel_tracker.tabs_being_reordered = True
         try:
             self._do_handle_tabs_reordered(message)
         finally:
             if self.channel_tracker:
                 self.channel_tracker.tabs_being_reordered = False
-            if self.audio_channel_tracker:
-                self.audio_channel_tracker.tabs_being_reordered = False
 
     def _do_handle_tabs_reordered(self, message):
-        video_order = tabs.TabOrder.video_feed_order()
-        audio_order = tabs.TabOrder.audio_feed_order()
+        feed_order = tabs.TabOrder.feed_order()
         playlist_order = tabs.TabOrder.playlist_order()
-
-        # make sure all the items are in the right places
-        video_ids = set(info.id for info in message.toplevels['feed'])
-        audio_ids = set(info.id for info in message.toplevels['audio-feed'])
-
-        for obj in tabs.TabOrder.video_feed_order().get_all_tabs():
-            if obj.id in audio_ids:
-                obj.section = u'audio'
-                obj.signal_change()
-        for obj in tabs.TabOrder.audio_feed_order().get_all_tabs():
-            if obj.id in video_ids:
-                obj.section = u'video'
-                obj.signal_change()
-
-        for id_, feeds in message.folder_children.iteritems():
-            try:
-                feed_folder = ChannelFolder.get_by_id(id_)
-            except database.ObjectNotFoundError:
-                continue
-            for mem in feeds:
-                try:
-                    mem = feed.Feed.get_by_id(mem.id)
-                except database.ObjectNotFoundError:
-                    continue
-                if feed_folder.section != mem.section:
-                    mem.section = feed_folder.section
-                    mem.signal_change()
 
         for info_type, info_list in message.toplevels.iteritems():
             folder_class = self.folder_class_for_type(info_type)
 
             if info_type == 'feed':
                 child_class = feed.Feed
-                tab_order = video_order
-            elif info_type == 'audio-feed':
-                child_class = feed.Feed
-                tab_order = audio_order
+                tab_order = feed_order
             elif info_type == 'playlist':
                 child_class = SavedPlaylist
                 tab_order = playlist_order
@@ -1044,58 +993,47 @@ New ids: %s""", playlist_item_ids, message.item_ids)
     def handle_new_feed(self, message):
         url = message.url
         if not lookup_feed(url):
-            Feed(url, section=message.section)
+            Feed(url)
 
     def handle_new_feed_search_feed(self, message):
         search_term = message.search_term
         channel_info = message.channel_info
-        section = message.section
         url = channel_info.base_href
 
         if channel_info.search_term:
             search_term = search_term + " " + channel_info.search_term
 
         if not lookup_feed(url, search_term):
-            Feed(url, section=section, search_term=search_term,
+            Feed(url, search_term=search_term,
                     title=channel_info.name)
 
     def handle_new_feed_search_engine(self, message):
         sei = message.search_engine_info
         term = message.search_term
-        section = message.section
 
         url = feed.make_search_url(sei.name, term)
 
         if not lookup_feed(url):
-            Feed(url, section=section)
+            Feed(url)
 
     def handle_new_feed_search_url(self, message):
         url = message.url
         search_term = message.search_term
-        section = message.section
 
         normalized = feed.normalize_feed_url(url)
 
         if not lookup_feed(url, search_term):
-            Feed(normalized, section=section, search_term=search_term)
+            Feed(normalized, search_term=search_term)
 
     def handle_new_feed_folder(self, message):
-        folder = ChannelFolder(message.name, message.section)
+        folder = ChannelFolder(message.name)
 
         if message.child_feed_ids is not None:
-            section = message.section
             for id in message.child_feed_ids:
                 feed_ = feed.Feed.get_by_id(id)
                 feed_.set_folder(folder)
-                if feed_.section != section:
-                    feed_.section = section
-                    feed_.signal_change()
-            if section == u'video':
-                tab_order = tabs.TabOrder.video_feed_order()
-                tracker = self.channel_tracker
-            else:
-                tab_order = tabs.TabOrder.audio_feed_order()
-                tracker = self.audio_channel_tracker
+            tab_order = tabs.TabOrder.feed_order()
+            tracker = self.channel_tracker
             tab_order.move_tabs_after(folder.id, message.child_feed_ids)
             tab_order.signal_change()
             tracker.send_whole_list = True

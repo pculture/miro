@@ -82,11 +82,8 @@ class TabOrder(database.DDBObject):
         if self.type == u'site':
             tab_views = (guide.ChannelGuide.site_view(),)
         elif self.type == u'channel':
-            tab_views = (feed.Feed.visible_video_view(),
-                    folder.ChannelFolder.video_view())
-        elif self.type == u'audio-channel':
-            tab_views = (feed.Feed.visible_audio_view(),
-                    folder.ChannelFolder.audio_view())
+            tab_views = (feed.Feed.visible_view(),
+                    folder.ChannelFolder.make_view())
         elif self.type == u'playlist':
             tab_views = (playlist.SavedPlaylist.make_view(),
                     folder.PlaylistFolder.make_view())
@@ -121,16 +118,10 @@ class TabOrder(database.DDBObject):
         return cls.view_for_type(u'site').get_singleton()
 
     @classmethod
-    def video_feed_order(cls):
+    def feed_order(cls):
         """View of feeds based on order.
         """
         return cls.view_for_type(u'channel').get_singleton()
-
-    @classmethod
-    def audio_feed_order(cls):
-        """View of audio feeds based on order.
-        """
-        return cls.view_for_type(u'audio-channel').get_singleton()
 
     @classmethod
     def playlist_order(cls):

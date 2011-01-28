@@ -495,33 +495,29 @@ class NewGuide(BackendMessage):
 class NewFeed(BackendMessage):
     """Creates a new feed.
     """
-    def __init__(self, url, section=u"video"):
+    def __init__(self, url):
         self.url = util.to_uni(url)
-        self.section = section
 
 class NewFeedSearchFeed(BackendMessage):
     """Creates a new feed based on a search through a feed.
     """
-    def __init__(self, channel_info, search_term, section=u"video"):
+    def __init__(self, channel_info, search_term):
         self.channel_info = channel_info
         self.search_term = search_term
-        self.section = section
 
 class NewFeedSearchEngine(BackendMessage):
     """Creates a new feed from a search engine.
     """
-    def __init__(self, search_engine_info, search_term, section=u"video"):
+    def __init__(self, search_engine_info, search_term):
         self.search_engine_info = search_engine_info
         self.search_term = search_term
-        self.section = section
 
 class NewFeedSearchURL(BackendMessage):
     """Creates a new feed from a url.
     """
-    def __init__(self, url, search_term, section):
+    def __init__(self, url, search_term):
         self.url = url
         self.search_term = search_term
-        self.section = section
 
 class NewWatchedFolder(BackendMessage):
     """Creates a new watched folder.
@@ -546,9 +542,8 @@ class NewPlaylist(BackendMessage):
 class NewFeedFolder(BackendMessage):
     """Create a new feed folder.
     """
-    def __init__(self, name, section, child_feed_ids):
+    def __init__(self, name, child_feed_ids):
         self.name = util.to_uni(name)
-        self.section = section
         self.child_feed_ids = child_feed_ids
 
 class NewPlaylistFolder(BackendMessage):
@@ -771,7 +766,6 @@ class TabsReordered(BackendMessage):
     def __init__(self):
         self.toplevels = {
             u'feed': [],
-            u'audio-feed': [],
             u'playlist': []}
         self.folder_children = {}
 
@@ -946,7 +940,6 @@ class ChannelInfo(object):
     :param name: channel name
     :param url: channel url (None for channel folders)
     :param id: object id
-    :param section: which section this is in (audio or video)
     :param tab_icon: path to this channel's tab icon
     :param thumbnail: path to this channel's thumbnail
     :param num_downloaded: number of downloaded items in the feed
@@ -972,7 +965,6 @@ class ChannelInfo(object):
         import time
         self.name = channel_obj.get_title()
         self.id = channel_obj.id
-        self.section = channel_obj.section
         self.unwatched = channel_obj.num_unwatched()
         self.available = channel_obj.num_available()
         self.has_downloading = channel_obj.has_downloading_items()
@@ -1281,15 +1273,12 @@ class TabsChanged(FrontendMessage):
                   list will be in the same order that the tabs were added.
     :param changed: list of ChannelInfo/PlaylistInfos for each changed tab.
     :param removed: list of ids for each tab that was removed
-    :param section: ``audio``, ``video``, or None (used for channels and
-                    channel folders)
     """
-    def __init__(self, typ, added, changed, removed, section=None):
+    def __init__(self, typ, added, changed, removed):
         self.type = typ
         self.added = added
         self.changed = changed
         self.removed = removed
-        self.section = section
 
 class ItemList(FrontendMessage):
     """Sends the frontend the initial list of items for a feed

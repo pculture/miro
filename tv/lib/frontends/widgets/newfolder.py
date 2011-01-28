@@ -48,7 +48,7 @@ def _run_dialog(title, description, default_type):
     """Creates and launches the New Folder dialog.  This dialog waits for
     the user to press "Create Folder" or "Cancel".
 
-    Returns a tuple of the (name, section).
+    Returns a the name, or None.
     """
     window = MainDialog(title, description)
     try:
@@ -67,32 +67,16 @@ def _run_dialog(title, description, default_type):
             h.pack_start(name_entry, expand=True)
             extra.pack_start(h, padding=5)
 
-            lab = widgetset.Label(_('Folder should go in this section:'))
-            rbg = widgetset.RadioButtonGroup()
-            video_rb = widgetset.RadioButton(_("video"), rbg)
-            audio_rb = widgetset.RadioButton(_("audio"), rbg)
-            if default_type == 'feed':
-                video_rb.set_selected()
-            else:
-                audio_rb.set_selected()
-
-            extra.pack_start(widgetutil.build_hbox((lab, video_rb, audio_rb)))
-
             window.set_extra_widget(extra)
 
             response = window.run()
 
             if response == 0:
-                if rbg.get_selected() == video_rb:
-                    section = u"video"
-                else:
-                    section = u"audio"
-
                 name = name_entry.get_text()
                 if name:
-                    return (name, section)
+                    return name
             
-            return (None, None)
+            return None
 
         except StandardError:
             logging.exception("newfeed threw exception.")
@@ -103,13 +87,9 @@ def run_dialog(default_type):
     """Creates and launches the New Folder dialog.  This dialog waits for
     the user to press "Create Folder" or "Cancel".
 
-    Returns a tuple of the (name, section).
+    Returns the name, or None.
     """
     title = _('Create Feed Folder')
 
-    name, section = _run_dialog(_('Create Feed Folder'),
+    return _run_dialog(_('Create Feed Folder'),
             _('Enter the name of the folder to add'), default_type)
-    if name == None:
-        return (None, None)
-
-    return (name, section)

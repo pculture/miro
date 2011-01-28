@@ -256,8 +256,7 @@ class Testfind_subscribe_links(MiroTestCase):
                 '&thumbnail1=http%3A//pculture.org/image.jpeg'
                 '&feed1=http%3A//pculture.org/feed.xml'
                 '&link1=http%3A//pculture.org/page.html'
-                '&trackback1=http%3A//pculture.org/trackpack.cgi'
-                '&section1=audio')
+                '&trackback1=http%3A//pculture.org/trackpack.cgi')
         feeds = subscription.find_subscribe_links(url)
         self.assertEquals(len(feeds), 1)
         self.assertDictEquals(feeds[0],
@@ -270,7 +269,6 @@ class Testfind_subscribe_links(MiroTestCase):
                 'feed': 'http://pculture.org/feed.xml',
                 'link': 'http://pculture.org/page.html',
                 'trackback': 'http://pculture.org/trackpack.cgi',
-                'section': u'audio',
         })
 
     def test_query_encoded_wrong(self):

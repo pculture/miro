@@ -102,15 +102,13 @@ class TestImporter(unittest.TestCase):
         subs = _get_subs("""\
   <outline type="rss"
     text="GeekBeat.TV (Large MP4)"
-    xmlUrl="http://revision3.com/geekbeattv/feed/MP4-Large"
-    miro:section="video" />
+    xmlUrl="http://revision3.com/geekbeattv/feed/MP4-Large" />
 """)
         feed = subs[0]
 
         self.assertEquals(feed['type'], 'feed')
         self.assertEquals(
             feed['url'], u"http://revision3.com/geekbeattv/feed/MP4-Large")
-        self.assertEquals(feed['section'], u"video")
         self.assertEquals(
             feed['title'], u"GeekBeat.TV (Large MP4)")
         
@@ -119,7 +117,6 @@ class TestImporter(unittest.TestCase):
   <outline type="rss"
     text="The Economist: All video"
     xmlUrl="http://feeds2.feedburner.com/feedroom/xDDO"
-    miro:section="video"
     miro:autoDownload="off"/>  
 """)
         feed = subs[0]
@@ -127,7 +124,6 @@ class TestImporter(unittest.TestCase):
         self.assertEquals(feed['type'], 'feed')
         self.assertEquals(
             feed['url'], u"http://feeds2.feedburner.com/feedroom/xDDO")
-        self.assertEquals(feed['section'], u"video")
         self.assertEquals(
             feed['title'], u"The Economist: All video")
         self.assertEquals(
@@ -152,7 +148,6 @@ class TestImporter(unittest.TestCase):
         subs = _get_subs("""\
   <outline type="rss"
     xmlUrl="http://feeds2.feedburner.com/feedroom/xDDO"
-    miro:section="video"
     miro:autoDownload="off"/>  
 """)
         self.assert_("title" not in subs[0])
@@ -162,7 +157,6 @@ class TestImporter(unittest.TestCase):
   <outline type="rss"
     xmlUrl="http://feeds2.feedburner.com/feedroom/xDDO"
     text=""
-    miro:section="video"
     miro:autoDownload="off"/>  
 """)
         self.assert_("title" not in subs[0])
@@ -172,30 +166,10 @@ class TestImporter(unittest.TestCase):
   <outline type="rss"
     xmlUrl="http://feeds2.feedburner.com/feedroom/xDDO"
     text="http://feeds2.feedburner.com/feedroom/xDDO"
-    miro:section="video"
     miro:autoDownload="off"/>  
 """)
         self.assert_("title" not in subs[0])
 
-    def test_section(self):
-        # if there's no section, there won't be a section key
-        subs = _get_subs("""\
-  <outline type="rss"
-    xmlUrl="http://feeds2.feedburner.com/feedroom/xDDO"
-    miro:autoDownload="off"/>  
-""")
-        self.assert_("section" not in subs[0])
-
-        # if the section isn't "audio" or "video", there won't be
-        # a section key
-        subs = _get_subs("""\
-  <outline type="rss"
-    xmlUrl="http://feeds2.feedburner.com/feedroom/xDDO"
-    miro:section="foo"
-    miro:autoDownload="off"/>  
-""")
-        self.assert_("section" not in subs[0])
-        
     def test_auto_download(self):
         # if there's no autodownload, then there's no key
         subs = _get_subs("""\

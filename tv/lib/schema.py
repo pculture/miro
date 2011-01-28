@@ -478,7 +478,7 @@ class FeedSchema(DDBObjectSchema):
         ('fallBehind', SchemaInt()),
         ('expire', SchemaString()),
         ('expireTime', SchemaTimeDelta(noneOk=True)),
-        ('section', SchemaString()),
+        ('section', SchemaString()), # not used anymore
         ('visible', SchemaBool()),
         ('last_viewed', SchemaDateTime()),
     ]
@@ -598,7 +598,7 @@ class ChannelFolderSchema(DDBObjectSchema):
     fields = DDBObjectSchema.fields + [
         ('expanded', SchemaBool()),
         ('title', SchemaString()),
-        ('section', SchemaString()),
+        ('section', SchemaString()), # not used any more
     ]
 
 class PlaylistFolderSchema(DDBObjectSchema):
@@ -717,7 +717,7 @@ class DBLogEntrySchema(DDBObjectSchema):
         ('description', SchemaString()),
     ]
 
-VERSION = 132
+VERSION = 133
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, SavedSearchFeedImplSchema,

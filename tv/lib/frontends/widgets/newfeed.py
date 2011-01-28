@@ -48,7 +48,7 @@ def _run_dialog(title, description, initial_text):
     """Creates and launches the New Feed dialog.  This dialog waits for
     the user to press "Create Feed" or "Cancel".
 
-    Returns a tuple of the (url, section).
+    Returns the URL, or None.
     """
     window = MainDialog(title, description)
     try:
@@ -68,25 +68,13 @@ def _run_dialog(title, description, initial_text):
             h.pack_start(url_entry, expand=True)
             extra.pack_start(h, padding=5)
 
-            lab = widgetset.Label(_('Feed should go in this section:'))
-            rbg = widgetset.RadioButtonGroup()
-            video_rb = widgetset.RadioButton(_("video"), rbg)
-            audio_rb = widgetset.RadioButton(_("audio"), rbg)
-
-            extra.pack_start(widgetutil.build_hbox((lab, video_rb, audio_rb)))
-
             window.set_extra_widget(extra)
 
             response = window.run()
 
             if response == 0:
-                if rbg.get_selected() == video_rb:
-                    section = u"video"
-                else:
-                    section = u"audio"
-
                 text = url_entry.get_text()
-                return (text, section)
+                return text
             
             return (None, None)
 
@@ -99,7 +87,7 @@ def run_dialog():
     """Creates and launches the New Feed dialog.  This dialog waits for
     the user to press "Create Feed" or "Cancel".
 
-    Returns a tuple of the (url, section).
+    Returns the URL, or None.
     """
     text = app.widgetapp.get_clipboard_text()
     if text and feed.validate_feed_url(text):
@@ -111,13 +99,13 @@ def run_dialog():
     description = _('Enter the URL of the feed to add')
 
     while 1:
-        text, section = _run_dialog(title, description, initial_text=text)
+        text = _run_dialog(title, description, initial_text=text)
         if text == None:
-            return (None, None)
+            return None
 
         normalized_url = feed.normalize_feed_url(text)
         if feed.validate_feed_url(normalized_url):
-            return (normalized_url, section)
+            return normalized_url
 
         title = _('Add Feed - Invalid URL')
         description = _('The address you entered is not a valid url.\nPlease check the URL and try again.\n\nEnter the URL of the feed to add')

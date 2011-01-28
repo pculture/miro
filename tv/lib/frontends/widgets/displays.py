@@ -115,7 +115,6 @@ class DisplayManager(object):
     def __init__(self):
         # displays that we construct when the user clicks on them
         self.on_demand_display_classes = [
-                AudioFeedDisplay,
                 FeedDisplay,
                 PlaylistDisplay,
                 SiteDisplay,
@@ -334,10 +333,6 @@ class FeedDisplay(ItemListDisplay):
     def make_controller(self, tab):
         self.feed_id = tab.id
         return feedcontroller.FeedController(tab.id, tab.is_folder, tab.is_directory_feed)
-
-class AudioFeedDisplay(FeedDisplay):
-    TAB_TYPE = u'audio-feed'
-    UPDATER_SIGNAL_NAME = 'audio-feeds-changed'
 
 class PlaylistDisplay(ItemListDisplay):
     @staticmethod
@@ -613,8 +608,6 @@ class MultipleSelectionDisplay(TabDisplay):
         self.child_count = self.folder_count = self.folder_child_count = 0
         if tab_type == 'feed':
             tab_list = app.tab_list_manager.feed_list
-        elif tab_type == 'audio-feed':
-            tab_list = app.tab_list_manager.audio_feed_list
         elif tab_type == 'site':
             tab_list = app.tab_list_manager.site_list
         else:
@@ -639,7 +632,7 @@ class MultipleSelectionDisplay(TabDisplay):
         # NOTE: we need to use ngettext because some languages have multiple
         # plural forms.
         if self.folder_count > 0:
-            if tab_type in ('feed', 'audio-feed'):
+            if tab_type == 'feed':
                 label_parts.append(ngettext(
                         '%(count)d Feed Folder Selected',
                         '%(count)d Feed Folders Selected',
@@ -665,7 +658,7 @@ class MultipleSelectionDisplay(TabDisplay):
         if self.child_count > 0 and self.folder_count > 0:
             label_parts.append('')
         if self.child_count > 0:
-            if tab_type in ('feed', 'audio-feed'):
+            if tab_type == 'feed':
                 label_parts.append(ngettext(
                         '%(count)d Feed Selected',
                         '%(count)d Feeds Selected',
@@ -698,7 +691,7 @@ class MultipleSelectionDisplay(TabDisplay):
         return hbox
 
     def _on_delete_clicked(self, button):
-        if self.type in ('feed', 'audio-feed'):
+        if self.type == 'feed':
             app.widgetapp.remove_current_feed()
         elif self.type == 'site':
             app.widgetapp.remove_current_site()
@@ -706,10 +699,8 @@ class MultipleSelectionDisplay(TabDisplay):
             app.widgetapp.remove_current_playlist()
 
     def _on_new_folder_clicked(self, button):
-        if self.type in ('feed', 'audio-feed'):
-            section = {"feed": u"video", "audio-feed": u"audio"}
-            app.widgetapp.add_new_feed_folder(add_selected=True,
-                    default_type=self.type)
+        if self.type == 'feed':
+            app.widgetapp.add_new_feed_folder(add_selected=True)
         else:
             app.widgetapp.add_new_playlist_folder(add_selected=True)
 

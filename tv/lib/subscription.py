@@ -59,7 +59,7 @@ SUBSCRIBE_HOSTS = ('subscribe.getdemocracy.com', 'subscribe.getmiro.com')
 # if you update this list, also update the list on
 # subscribe.getmiro.com/geturls.php
 ADDITIONAL_KEYS =  ('title', 'description', 'length', 'type', 'thumbnail',
-                    'feed', 'link', 'trackback', 'section')
+                    'feed', 'link', 'trackback')
 
 # =========================================================================
 
@@ -131,12 +131,6 @@ class Subscriber(object):
     command-line additions).
     """
 
-    def _get_section(self, subscription):
-        section = subscription.get('section', None)
-        if section not in (u'audio', u'video'):
-            section = u'video'
-        return section
-
     def add_subscriptions(self, subscriptions_list, parent_folder=None):
         """
         We loop through the list of subscriptions, creating things as
@@ -192,14 +186,12 @@ class Subscriber(object):
             {
             'type': 'folder',
             'title': name of the folder,
-            'section': one of ['audio', 'video'],
             'children': a list of sub-feeds
             }
         """
         assert parent_folder is None, "no nested folders"
         title = folder_dict['title']
-        section = self._get_section(folder_dict)
-        obj = folder.ChannelFolder(title, section)
+        obj = folder.ChannelFolder(title)
         return self.add_subscriptions(folder_dict['children'], obj)
 
     def handle_feed(self, feed_dict, parent_folder):
@@ -210,7 +202,6 @@ class Subscriber(object):
             'type': 'feed',
             'url': URL of the RSS/Atom feed
             'title': name of the feed (optional),
-            'section': one of ['audio', 'video'] (ignored if it's in a folder),
             'search_term': terms for which this feed is a search (optional),
             'auto_download': one of 'all', 'new', 'off' (optional),
             'expiry_time': one of 'system', 'never', an integer of hours
@@ -222,12 +213,7 @@ class Subscriber(object):
         search_term = feed_dict.get('search_term')
         f = feed.lookup_feed(url, search_term)
         if f is None:
-            if parent_folder:
-                section = parent_folder.section
-            else:
-                section = self._get_section(feed_dict)
-
-            f = feed.Feed(url, section=section, search_term=search_term)
+            f = feed.Feed(url, search_term=search_term)
             title = feed_dict.get('title')
             if title is not None and title != '':
                 f.set_title(title)

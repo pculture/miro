@@ -356,7 +356,7 @@ class Application:
 
     def share_feed(self):
         t, channel_infos = app.tab_list_manager.get_selection()
-        if t in ('feed', 'audio-feed') and len(channel_infos) == 1:
+        if t == 'feed' and len(channel_infos) == 1:
             ci = channel_infos[0]
             share_items = {"feed_url": ci.base_href}
             query_string = "&".join(["%s=%s" % (key, urllib.quote(val)) for key, val in share_items.items()])
@@ -600,9 +600,9 @@ class Application:
             app.widgetapp.copy_text_to_clipboard(selection.file_url)
 
     def add_new_feed(self):
-        url, section = newfeed.run_dialog()
+        url = newfeed.run_dialog()
         if url is not None:
-            messages.NewFeed(url, section).send_to_backend()
+            messages.NewFeed(url).send_to_backend()
 
     def add_new_search_feed(self):
         data = newsearchfeed.run_dialog()
@@ -618,14 +618,14 @@ class Application:
             messages.NewFeedSearchURL(data[1], data[2], data[3]).send_to_backend()
 
     def add_new_feed_folder(self, add_selected=False, default_type='feed'):
-        name, section = newfolder.run_dialog(default_type)
+        name = newfolder.run_dialog(default_type)
         if name is not None:
             if add_selected:
                 t, infos = app.tab_list_manager.get_selection()
                 child_ids = [info.id for info in infos]
             else:
                 child_ids = None
-            messages.NewFeedFolder(name, section, child_ids).send_to_backend()
+            messages.NewFeedFolder(name, child_ids).send_to_backend()
 
     def add_new_guide(self):
         url = self.ask_for_url(_('Add Website'),
@@ -640,14 +640,14 @@ class Application:
 
     def remove_something(self):
         t, infos = app.tab_list_manager.get_selection_and_children()
-        if t in ('feed', 'audio-feed'):
+        if t == 'feed':
             self.remove_feeds(infos)
         elif t in('site'):
             self.remove_sites(infos)
 
     def remove_current_feed(self):
         t, channel_infos = app.tab_list_manager.get_selection_and_children()
-        if t in ('feed', 'audio-feed'):
+        if t == 'feed':
             self.remove_feeds(channel_infos)
 
     def remove_feeds(self, channel_infos):
@@ -678,7 +678,7 @@ class Application:
 
     def update_selected_feeds(self):
         t, channel_infos = app.tab_list_manager.get_selection()
-        if t in ('feed', 'audio-feed'):
+        if t == 'feed':
             for ci in channel_infos:
                 if ci.is_folder:
                     messages.UpdateFeedFolder(ci.id).send_to_backend()
@@ -716,12 +716,12 @@ class Application:
 
     def feed_settings(self):
         t, channel_infos = app.tab_list_manager.get_selection()
-        if t in ('feed', 'audio-feed') and len(channel_infos) == 1:
+        if t == 'feed' and len(channel_infos) == 1:
             feedsettingspanel.run_dialog(channel_infos[0])
 
     def copy_feed_url(self):
         t, channel_infos = app.tab_list_manager.get_selection()
-        if t in ('feed', 'audio-feed') and len(channel_infos) == 1:
+        if t == 'feed' and len(channel_infos) == 1:
             app.widgetapp.copy_text_to_clipboard(channel_infos[0].url)
 
     def copy_site_url(self):
@@ -771,7 +771,7 @@ class Application:
         t, channel_infos = app.tab_list_manager.get_selection()
         info = channel_infos[0]
 
-        if t in ('feed', 'audio-feed') and info.is_folder:
+        if t == 'feed' and info.is_folder:
             t = 'feed-folder'
         elif t == 'playlist' and info.is_folder:
             t = 'playlist-folder'
@@ -781,7 +781,7 @@ class Application:
             description = _('Enter a new name for the feed folder %(name)s',
                             {"name": info.name})
 
-        elif t in ('feed', 'audio-feed'):
+        elif t == 'feed':
             title = _('Rename Feed')
             description = _('Enter a new name for the feed %(name)s',
                             {"name": info.name})
@@ -1062,7 +1062,7 @@ class InfoUpdaterCallbackList(object):
     def add(self, type_, id_, callback):
         """Adds the callback to the list for ``type_`` ``id_``.
 
-        :param type_: the type of the thing (feed, audio-feed, site, ...)
+        :param type_: the type of the thing (feed, site, ...)
         :param id_: the id for the thing
         :param callback: the callback function to add
         """
@@ -1072,7 +1072,7 @@ class InfoUpdaterCallbackList(object):
     def remove(self, type_, id_, callback):
         """Removes the callback from the list for ``type_`` ``id_``.
 
-        :param type_: the type of the thing (feed, audio-feed, site, ...)
+        :param type_: the type of the thing (feed, site, ...)
         :param id_: the id for the thing
         :param callback: the callback function to remove
         """
@@ -1085,7 +1085,7 @@ class InfoUpdaterCallbackList(object):
     def get(self, type_, id_):
         """Get the list of callbacks for ``type_``, ``id_``.
 
-        :param type_: the type of the thing (feed, audio-feed, site, ...)
+        :param type_: the type of the thing (feed, site, ...)
         :param id_: the id for the thing
         """
         key = (type_, id_)
@@ -1105,12 +1105,9 @@ class InfoUpdater(signals.SignalEmitter):
 
     Signals:
 
-    * feeds-added (self, info_list) -- New video feeds were added
-    * feeds-changed (self, info_list) -- Video feeds were changed
-    * feeds-removed (self, info_list) -- Video feeds were removed
-    * audio-feeds-added (self, info_list) -- New audio feeds were added
-    * audio-feeds-changed (self, info_list) -- Audio feeds were changed
-    * audio-feeds-removed (self, info_list) -- Audio feeds were removed
+    * feeds-added (self, info_list) -- New feeds were added
+    * feeds-changed (self, info_list) -- Feeds were changed
+    * feeds-removed (self, info_list) -- Feeds were removed
     * sites-added (self, info_list) -- New sites were added
     * sites-changed (self, info_list) -- Sites were changed
     * sites-removed (self, info_list) -- Sites were removed
@@ -1120,7 +1117,7 @@ class InfoUpdater(signals.SignalEmitter):
     """
     def __init__(self):
         signals.SignalEmitter.__init__(self)
-        for prefix in ('feeds', 'audio-feeds', 'sites', 'playlists'):
+        for prefix in ('feeds', 'sites', 'playlists'):
             self.create_signal('%s-added' % prefix)
             self.create_signal('%s-changed' % prefix)
             self.create_signal('%s-removed' % prefix)
@@ -1141,8 +1138,6 @@ class InfoUpdater(signals.SignalEmitter):
     def handle_tabs_changed(self, message):
         if message.type == 'feed':
             signal_start = 'feeds'
-        elif message.type == 'audio-feed':
-            signal_start = 'audio-feeds'
         elif message.type == 'guide':
             signal_start = 'sites'
         elif message.type == 'playlist':
@@ -1301,8 +1296,6 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def tablist_for_message(self, message):
         if message.type == 'feed':
             return app.tab_list_manager.feed_list
-        elif message.type == 'audio-feed':
-            return app.tab_list_manager.audio_feed_list
         elif message.type == 'playlist':
             return app.tab_list_manager.playlist_list
         elif message.type == 'guide':

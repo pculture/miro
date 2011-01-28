@@ -3025,3 +3025,40 @@ def upgrade132(cursor):
 
     # the stores aren't visible by default, so don't worry about putting them
     # in the taborder
+
+def upgrade133(cursor):
+    """
+    Moves the tab ids from the 'audio-channel' TabOrder to the bottom of the
+    'channel' TabOrder.
+    """
+    cursor.execute('SELECT tab_ids FROM taborder_order WHERE type=?',
+                   ('audio-channel',))
+    row = cursor.fetchone()
+    if row is not None:
+        try:
+            audio_tab_ids = eval_container(row[0])
+        except StandardError:
+            audio_tab_ids = []
+    else:
+        # no audio channel tab order, so we're done
+        return
+
+    cursor.execute('DELETE FROM taborder_order WHERE type=?',
+                   ('audio-channel',))
+
+
+    cursor.execute('SELECT tab_ids FROM taborder_order WHERE type=?',
+                   ('channel',))
+    row = cursor.fetchone()
+    if row is not None:
+        try:
+            channel_tab_ids = eval_container(row[0])
+        except StandardError:
+            channel_tab_ids = []
+        tab_ids = channel_tab_ids + audio_tab_ids
+        cursor.execute('UPDATE taborder_order SET tab_ids=? WHERE type=?',
+                       (repr(tab_ids), 'channel'))
+    else:
+        # no channel tab order? the user is out of luck for saving their tab
+        # order
+        pass

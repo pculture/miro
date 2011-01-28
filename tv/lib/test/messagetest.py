@@ -70,7 +70,6 @@ class TrackerTest(EventLoopTest):
         self.backend_message_handler = messagehandler.BackendMessageHandler(None)
         messages.BackendMessage.install_handler(self.backend_message_handler)
         self.channelTabOrder = TabOrder(u'channel')
-        self.audioChannelTabOrder = TabOrder(u'audio-channel')
         self.playlistTabOrder = TabOrder(u'playlist')
         # Adding a guide ensures that if we remove all our
         # channel/playlist tabs the selection code won't go crazy.
@@ -311,8 +310,8 @@ class FeedTrackTest(TrackerTest):
         self.feed2 = Feed(u'http://example.com/2')
         self.feed_folder = ChannelFolder(u'test channel folder')
         m = messages.TabsReordered()
-        m.toplevels['feed'] = [messages.ChannelInfo(self.feed1)]
-        m.toplevels['audio-feed'] = [messages.ChannelInfo(self.feed_folder)]
+        m.toplevels['feed'] = [messages.ChannelInfo(self.feed1),
+                               messages.ChannelInfo(self.feed_folder)]
         m.folder_children[self.feed_folder.id] = \
                 [messages.ChannelInfo(self.feed2)]
         m.send_to_backend()
@@ -329,27 +328,24 @@ class FeedTrackTest(TrackerTest):
 
     def check_changed_message_type(self, message):
         self.assertEquals(type(message), messages.TabsChanged)
-        self.assert_(message.type in ('feed', 'audio-feed'))
+        self.assertEquals(message.type, 'feed')
 
     def test_initial_list(self):
-        self.check_message_count(2)
+        self.check_message_count(1)
         message1 = self.test_handler.messages[0]
         self.assert_(isinstance(message1, messages.TabList))
         self.assertEquals(message1.type, 'feed')
-        self.check_info_list(message1.toplevels, [self.feed1])
-        self.assertEquals(message1.folder_children, {})
-        message2 = self.test_handler.messages[1]
-        self.assertEquals(message2.type, 'audio-feed')
-        self.check_info_list(message2.toplevels, [self.feed_folder])
-        self.check_info_list(message2.folder_children[self.feed_folder.id],
+        self.check_info_list(message1.toplevels, [self.feed1,
+                                                  self.feed_folder])
+        self.check_info_list(message1.folder_children[self.feed_folder.id],
                              [self.feed2])
-        self.assertEquals(len(message2.folder_children), 1)
+        self.assertEquals(len(message1.folder_children), 1)
 
     def test_added(self):
         f = Feed(u'http://example.com/3')
         self.runUrgentCalls()
-        self.check_message_count(3)
-        self.check_changed_message(2, added=[f])
+        self.check_message_count(2)
+        self.check_changed_message(1, added=[f])
 
     def test_added_order(self):
         f1 = Feed(u'http://example.com/3')
@@ -360,20 +356,20 @@ class FeedTrackTest(TrackerTest):
         self.runUrgentCalls()
         # We want the ChannelAdded messages to come in the same order
         # the feeds were added
-        self.check_changed_message(2, added=[f1, f2, f3, f4, f5])
+        self.check_changed_message(1, added=[f1, f2, f3, f4, f5])
 
     @uses_httpclient
     def test_removed(self):
         self.feed2.remove()
         self.runUrgentCalls()
-        self.check_message_count(3)
-        self.check_changed_message(2, removed=[self.feed2])
+        self.check_message_count(2)
+        self.check_changed_message(1, removed=[self.feed2])
 
     def test_change(self):
         self.feed1.set_title(u"Booya")
         self.runUrgentCalls()
-        self.check_message_count(3)
-        self.check_changed_message(2, changed=[self.feed1])
+        self.check_message_count(2)
+        self.check_changed_message(1, changed=[self.feed1])
 
     @uses_httpclient
     def test_reduce_number_of_messages(self):
@@ -385,18 +381,18 @@ class FeedTrackTest(TrackerTest):
         # We don't need to see that f1 was added because it got
         # removed immediately after.  We don't need to see that f2 was
         # changed because it will have the updated info in added.
-        self.check_message_count(3)
-        self.check_changed_message(2, added=[f2])
+        self.check_message_count(2)
+        self.check_changed_message(1, added=[f2])
 
     @uses_httpclient
     def test_stop(self):
-        self.check_message_count(2)
+        self.check_message_count(1)
         messages.StopTrackingChannels().send_to_backend()
         self.runUrgentCalls()
         self.feed1.set_title(u"Booya")
         f = Feed(u'http://example.com/3')
         self.feed2.remove()
-        self.check_message_count(2)
+        self.check_message_count(1)
 
 
 class FeedItemTrackTest(TrackerTest):

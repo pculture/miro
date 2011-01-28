@@ -37,6 +37,8 @@ from miro.frontends.widgets import widgetutil
 
 class StaticTab(object):
     type = u'static'
+    tall = True
+
     def __init__(self):
         self.unwatched = self.downloading = 0
         self.icon = widgetutil.make_surface(self.icon_name)
@@ -55,7 +57,6 @@ class ChannelGuideTab(StaticTab):
     id = u'guide'
     name = u''
     icon_name = 'icon-guide'
-    tall = True
 
     def __init__(self):
         StaticTab.__init__(self)
@@ -99,12 +100,11 @@ class SearchTab(StaticTab):
     id = u'search'
     name = _('Video Search')
     icon_name = 'icon-search'
-    tall = True
 
 class VideoLibraryTab(StaticTab):
     type = u'videos'
     id = u'videos'
-    name = _('Video')
+    name = _('Videos')
     icon_name = 'icon-video'
     media_type = u'video'
 
@@ -118,7 +118,7 @@ class AudioLibraryTab(StaticTab):
 class OthersTab(StaticTab):
     type = u'others'
     id = u'others'
-    name = _('Other')
+    name = _('Misc')
     icon_name = 'icon-other'
     media_type = u'other'
 
