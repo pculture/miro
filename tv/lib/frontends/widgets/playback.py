@@ -634,27 +634,9 @@ class PlaybackPlaylist(signals.SignalEmitter):
 
     def _on_items_changed(self, tracker, added, changed, removed):
         old_currently_playing = self.currently_playing
-        removed_set = set(removed)
-        if (self.currently_playing
-                and self.currently_playing.id in removed_set):
-            # our playing item is gone, move to the next item, this uses the
-            # order of items before the change, which hopefully should sill be
-            # okay.
-            new_position = self._index_before_change + 1
-            before_change = self._items_before_change
-            while (new_position < len(before_change)
-                    and before_change[new_position].id in removed_set):
-                new_position += 1
-            try:
-                self.currently_playing = before_change[new_position]
-            except IndexError:
-                # reached end of list
-                self.currently_playing = None
-        if self.currently_playing is not None:
-            # update currently_playing in case it's been changed
-            self.currently_playing = self.model.get_info(
-                            self.currently_playing.id)
-        if (self.currently_playing is None 
+        if self.currently_playing:
+            self._update_currently_playing_after_changes(removed)
+        if (self.currently_playing is None
                 or old_currently_playing.id is not self.currently_playing.id):
             self.emit("position-changed")
         else:
@@ -663,6 +645,24 @@ class PlaybackPlaylist(signals.SignalEmitter):
             self.emit("playing-info-changed")
         del self._index_before_change
         del self._items_before_change
+
+    def _update_currently_playing_after_changes(self, infos_removed):
+        removed_set = set(infos_removed)
+        def position_removed(old_index):
+            old_info = self._items_before_change[old_index]
+            return (old_info.id in removed_set
+                    or not self.model.get_info(old_info.id).is_playable)
+
+        new_position = self._index_before_change
+        while position_removed(new_position):
+            new_position += 1
+            if new_position >= len(self._items_before_change):
+                self.currently_playing = None
+                return
+        # Note: this is usefull even if we haven't changed positions, because
+        # it gets us the new ItemInfo
+        self.currently_playing = self.model.get_info(
+                self._items_before_change[new_position].id)
 
     def _info_is_playable(self, item_info):
         return not item_info.is_container_item and item_info.is_playable
