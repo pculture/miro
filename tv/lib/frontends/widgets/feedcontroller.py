@@ -54,7 +54,6 @@ class FeedController(itemlistcontroller.ItemListController):
     def __init__(self, id, is_folder, is_directory_feed):
         self.is_folder = is_folder
         self.is_directory_feed = is_directory_feed
-        self._show_more_count = 0
         itemlistcontroller.ItemListController.__init__(self, u'feed', id)
 
     def make_context_menu_handler(self):
@@ -65,7 +64,8 @@ class FeedController(itemlistcontroller.ItemListController):
         icon = imagepool.get(feed_info.thumbnail, size=(41, 41))
         self._make_item_views()
 
-        add_icon_box = not self.is_folder and not feed_info.thumbnail.startswith(resources.root())
+        add_icon_box = (not self.is_folder
+                and not feed_info.thumbnail.startswith(resources.root()))
         if feed_info.is_directory_feed:
             self.titlebar = itemlistwidgets.ItemListTitlebar(feed_info.name, icon,
                     add_icon_box=add_icon_box)
@@ -80,31 +80,15 @@ class FeedController(itemlistcontroller.ItemListController):
             self.widget.titlebar_vbox.pack_start(sep)
             self.widget.titlebar_vbox.pack_start(self._make_toolbar(feed_info))
 
-        vbox = widgetset.VBox()
-        vbox.pack_start(self.downloading_section)
-        vbox.pack_start(self.full_section)
-        vbox.pack_start(self.downloaded_section)
-
         background = widgetset.SolidBackground((1, 1, 1))
-        background.add(vbox)
+        background.add(self.item_view)
 
         scroller = widgetset.Scroller(False, True)
         scroller.add(background)
 
         self.widget.normal_view_vbox.pack_start(scroller, expand=True)
 
-    def _show_all(self):
-        self._show_more_count = 0
-        self.full_view.item_list.set_new_only(False)
-        self.full_view.model_changed()
-        self.show_more_container.hide()
-
-    def _on_show_more(self, button):
-        self._show_all()
-
     def _on_search_changed(self, widget, search_text):
-        if self.full_view.item_list.new_only:
-            self._show_all()
         self.set_search(search_text)
         self._update_counts()
 
@@ -113,25 +97,8 @@ class FeedController(itemlistcontroller.ItemListController):
         messages.NewFeedSearchFeed(info, search_text).send_to_backend()
 
     def _make_item_views(self):
-        self.downloading_view = itemlistwidgets.ItemView(
-                itemlist.DownloadingItemList(), self.is_folder)
-        self.downloaded_view = itemlistwidgets.ItemView(
-                itemlist.DownloadedItemList(), self.is_folder)
-        self.full_view = itemlistwidgets.ItemView(itemlist.ItemList(), self.is_folder)
-        self.downloading_section = itemlistwidgets.HideableSection(
-                "", self.downloading_view)
-        self.downloaded_section = itemlistwidgets.HideableSection(
-                _("Downloaded"), self.downloaded_view)
-
-        self.show_more_button = widgetset.Button('')
-        self.show_more_button.connect('clicked', self._on_show_more)
-        self.show_more_container = widgetutil.HideableWidget(
-                widgetutil.align_left(self.show_more_button, 2, 2, 10, 0))
-        full_section_vbox = widgetset.VBox(spacing=2)
-        full_section_vbox.pack_start(self.full_view, expand=True)
-        full_section_vbox.pack_start(self.show_more_container)
-        self.full_section = itemlistwidgets.HideableSection(
-                _("Full Feed"), full_section_vbox)
+        self.item_view = itemlistwidgets.ItemView(itemlist.ItemList(),
+                self.is_folder)
 
     def _make_toolbar(self, feed_info):
         toolbar = itemlistwidgets.FeedToolbar()
@@ -153,12 +120,6 @@ class FeedController(itemlistcontroller.ItemListController):
                 self._on_auto_download_changed)
         return toolbar
 
-    def normal_item_views(self):
-        return [self.downloading_view, self.full_view, self.downloaded_view]
-
-    def default_item_view(self):
-        return self.downloaded_view
-
     def _on_remove_feed(self, widget):
         info = widgetutil.get_feed_info(self.id)
         app.widgetapp.remove_feeds([info])
@@ -173,41 +134,15 @@ class FeedController(itemlistcontroller.ItemListController):
     def _on_auto_download_changed(self, widget, setting):
         messages.AutodownloadChange(self.id, setting).send_to_backend()
 
-    def _expand_lists_initially(self):
-        item_downloaded = self.downloaded_view.item_list.get_count() > 0
-        feed_info = widgetutil.get_feed_info(self.id)
-        autodownload_mode = feed_info.autodownload_mode
-        self.downloaded_section.expand()
-        self.full_section.show()
-        all_items = self.full_view.item_list.get_items()
-        viewed_items = [item for item in all_items \
-                if item.downloaded or item.item_viewed]
-        if not (item_downloaded and len(all_items) == len(viewed_items)):
-            self.full_section.expand()
-        if item_downloaded and 0 < len(viewed_items) < len(all_items):
-            text = ngettext('Show %(count)d More Item',
-                            'Show %(count)d More Items',
-                            len(viewed_items),
-                            {"count": len(viewed_items)})
-            self.show_more_button.set_text(text + u" >>")
-            self.show_more_button.set_size(widgetconst.SIZE_SMALL)
-            self.show_more_container.show()
-            self.full_view.item_list.set_new_only(True)
-            self.full_view.model_changed()
-            self._show_more_count = len(viewed_items)
-        else:
-            self._show_more_count = 0
-
     def on_initial_list(self):
-        # We wait for the initial list of items to pack our item views because
-        # we need to know which ones should be expanded
-        self._expand_lists_initially()
         self._update_counts()
 
     def on_items_changed(self):
         self._update_counts()
 
     def _update_counts(self):
+        # FIXME: either find out a UI for these counts or delete them.
+        return 
         downloads = self.downloading_view.item_list.get_count()
         watchable = self.downloaded_view.item_list.get_count()
         full_count = (self.full_view.item_list.get_count() +

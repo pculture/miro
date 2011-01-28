@@ -91,7 +91,6 @@ class ItemListController(object):
         """
         self.type = typ
         self.id = id_
-        self.current_item_view = None
         self._search_text = ''
         self.search_filter = search.SearchFilter()
         self.search_filter.connect("initial-list", self.handle_item_list)
@@ -145,6 +144,13 @@ class ItemListController(object):
             self.widget.switch_to_normal_view()
         app.display_state.set_is_list_view(key, is_list_view)
 
+    def get_current_item_view(self):
+        if self.is_list_view:
+            return self.list_item_view
+        else:
+            return self.item_view
+    current_item_view = property(get_current_item_view)
+
     def build_list_item_view(self):
         return itemlistwidgets.ListItemView(self.item_list,
                 self.columns_enabled, self.column_widths)
@@ -163,8 +169,8 @@ class ItemListController(object):
         self.context_menu_handler = self.make_context_menu_handler()
         context_callback = self.context_menu_handler.callback
         for item_view in self.all_item_views():
-            item_view.connect_weak(
-                'selection-changed', self.on_selection_changed)
+            item_view.connect_weak('selection-changed',
+                    self.on_selection_changed)
             item_view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
             item_view.connect_weak('key-press', self.on_key_press)
             item_view.connect_weak('row-double-clicked',
@@ -185,21 +191,13 @@ class ItemListController(object):
         ItemInfos.
         """
         item_view = self.current_item_view
-        if item_view is None:
-            return []
         return [item_view.model[i][0] for i in item_view.get_selection()]
-
-    def _playback_item_view(self):
-        if self.current_item_view is None:
-            return self.default_item_view()
-        else:
-            return self.current_item_view
 
     def get_selection_for_playing(self):
         return list(self.iter_selection_for_playing())
 
     def iter_selection_for_playing(self):
-        item_view = self._playback_item_view()
+        item_view = self.current_item_view
         selection = self.get_selection()
         if len(selection) == 0:
             return item_view.item_list.iter_items()
@@ -234,7 +232,7 @@ class ItemListController(object):
             # User is playing items in Miro and has 0 or 1 items
             # selected, if more items get added to the item list, we
             # should play them.
-            item_list = self._playback_item_view().item_list
+            item_list = self.current_item_view.item_list
             self._items_added_callback = item_list.connect('items-added',
                     self._on_items_added_during_playback)
             self._playback_item_list = item_list
@@ -374,17 +372,6 @@ class ItemListController(object):
                 name)
 
     def on_selection_changed(self, item_view):
-        if ((item_view is not self.current_item_view
-             and item_view.num_rows_selected() == 0)):
-            # This is the result of us calling unselect_all() below
-            return
-
-        if item_view is not self.current_item_view:
-            self.current_item_view = item_view
-            for other_view in self.normal_item_views():
-                if other_view is not item_view:
-                    other_view.unselect_all()
-
         app.menu_manager.update_menus()
 
     def start_tracking(self):
@@ -486,18 +473,9 @@ class ItemListController(object):
         """Build the widget for this controller."""
         raise NotImplementedError()
 
-    def normal_item_views(self):
-        """Return a list of ItemViews used by this controller."""
-        raise NotImplementedError()
-
     def all_item_views(self):
-        for item_view in self.normal_item_views():
-            yield item_view
+        yield self.item_view
         yield self.list_item_view
-
-    def default_item_view(self):
-        """ItemView play from if no videos are selected."""
-        raise NotImplementedError()
 
 class SimpleItemListController(ItemListController):
     def __init__(self):
@@ -523,12 +501,6 @@ class SimpleItemListController(ItemListController):
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
         self.check_for_empty_list()
-
-    def normal_item_views(self):
-        return [self.item_view]
-
-    def default_item_view(self):
-        return self.item_view
 
     def _make_icon(self):
         image_path = resources.path("images/%s" % self.image_filename)
