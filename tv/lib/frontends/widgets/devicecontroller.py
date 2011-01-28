@@ -156,7 +156,7 @@ class SizeWidget(widgetset.Background):
                 _("%(used)s used / %(total)s total - %(percent)i%% full", {
                     'used': displaytext.size_string(size - remaining),
                     'total': displaytext.size_string(size),
-                    'percent': 100 * float(remaining) / size}))
+                    'percent': 100 * (1 - float(remaining) / size)}))
         else:
             self.progress.set_progress(0)
             self.size_label.set_text(u"")
