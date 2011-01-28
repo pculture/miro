@@ -1278,8 +1278,8 @@ class StateCircleRenderer(ListViewRenderer):
         self.set_up = True
         self.icon = {}
         self.get_size(None, layout_manager)
-        self.icon_height = int(self.height / 2.0)
-        self.width = int(self.icon_height * self.ICON_PROPORTIONS + 0.5)
+        self.width = int(self.height / 2.0)
+        self.icon_height = int(self.width / self.ICON_PROPORTIONS + 0.5)
         # FIXME: by the time min_width is set below, it doesn't matter --Kaz
         self.min_width = self.width
         for state in StateCircleRenderer.ICON_STATES:
