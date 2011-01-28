@@ -62,7 +62,8 @@ class FeedController(itemlistcontroller.ItemListController):
     def build_widget(self):
         feed_info = widgetutil.get_feed_info(self.id)
         icon = imagepool.get(feed_info.thumbnail, size=(41, 41))
-        self._make_item_views()
+        self.item_view = itemlistwidgets.ItemView(self.item_list,
+                self.is_folder)
 
         add_icon_box = (not self.is_folder
                 and not feed_info.thumbnail.startswith(resources.root()))
@@ -88,6 +89,34 @@ class FeedController(itemlistcontroller.ItemListController):
 
         self.widget.normal_view_vbox.pack_start(scroller, expand=True)
 
+    def build_header_toolbar(self):
+        toolbar = itemlistwidgets.ChannelHeaderToolbar()
+        toolbar.connect_weak('view-all-clicked', self.on_view_all_clicked)
+        toolbar.connect_weak('only-downloaded-clicked',
+                self.on_only_download_clicked)
+        toolbar.connect_weak('only-newly-available-clicked',
+                self.on_only_newly_available_clicked)
+        return toolbar
+
+    def on_view_all_clicked(self, button):
+        self.widget.toolbar.set_active_filter('view-all')
+        self.item_list.view_all()
+        self._toolbar_filter_changed()
+
+    def on_only_download_clicked(self, button):
+        self.widget.toolbar.set_active_filter('only-downloaded')
+        self.item_list.set_filters(False, False, False, True)
+        self._toolbar_filter_changed()
+
+    def on_only_newly_available_clicked(self, button):
+        self.widget.toolbar.set_active_filter('only-newly-available')
+        self.item_list.set_filters(False, False, True, False)
+        self._toolbar_filter_changed()
+
+    def check_for_empty_list(self):
+        # TODO: should we do something here?
+        pass
+
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
         self._update_counts()
@@ -95,10 +124,6 @@ class FeedController(itemlistcontroller.ItemListController):
     def _on_save_search(self, widget, search_text):
         info = widgetutil.get_feed_info(self.id)
         messages.NewFeedSearchFeed(info, search_text).send_to_backend()
-
-    def _make_item_views(self):
-        self.item_view = itemlistwidgets.ItemView(itemlist.ItemList(),
-                self.is_folder)
 
     def _make_toolbar(self, feed_info):
         toolbar = itemlistwidgets.FeedToolbar()

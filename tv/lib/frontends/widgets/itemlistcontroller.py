@@ -637,7 +637,7 @@ class AudioVideoItemsController(SimpleItemListController):
         else:
             unwatched = 'view-unwatched' in filters
             non_feed = 'view-non-feed' in filters
-            self.item_list.set_filters(unwatched, non_feed)
+            self.item_list.set_filters(unwatched, non_feed, False, False)
         self.widget.toolbar.set_active_filters(filters)
 
 class VideoItemsController(AudioVideoItemsController):

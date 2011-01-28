@@ -858,9 +858,6 @@ class HeaderToolbar(widgetset.Background):
         self._button_hbox_container.hide()
         self.view_switch.set_active('list-view')
 
-    def _on_view_all_clicked(self, button):
-        self.emit('view-all-clicked')
-
     def switch_to_view_all(self):
         self.filter_switch.set_active('view-all')
         self.filter_switch.set_active('view-unwatched', False)
@@ -871,16 +868,10 @@ class HeaderToolbar(widgetset.Background):
                     and not self.filter_switch.is_active('view-non-feed'))
         self.filter_switch.set_active('view-all', view_all)
 
-    def _on_toggle_unwatched_clicked(self, button):
-        self.emit('toggle-unwatched-clicked')
-
     def toggle_unwatched_only(self):
         self.filter_switch.toggle('view-unwatched')
         self.switch_to_view_all_if_necessary()
 
-    def _on_toggle_non_feed_clicked(self, button):
-        self.emit('toggle-non-feed-clicked')
-        
     def toggle_non_feed_only(self):
         self.filter_switch.toggle('view-non-feed')
         self.switch_to_view_all_if_necessary()
@@ -922,6 +913,35 @@ class HeaderToolbar(widgetset.Background):
             button.set_sort_state(SortBarButton.SORT_DOWN)
         self.emit('sort-changed', self._current_sort_key, self._ascending)
 
+    def make_filter_switch(self, *args, **kwargs):
+        """Helper method to make a SegmentedButtonsRow that switches between
+        filters.
+        """
+        self.filter_switch = segmented.SegmentedButtonsRow(*args, **kwargs)
+
+    def add_filter(self, button_name, signal_name, label):
+        """Helper method to add a button to the SegmentedButtonsRow made in
+        make_filter_switch()
+
+        :param button_name: name of the button
+        :param signal_name: signal to emit
+        :param label: human readable label for the button
+        """
+
+        self.create_signal(signal_name)
+        def callback(button):
+            self.emit(signal_name)
+        self.filter_switch.add_text_button(button_name, label, callback)
+
+    def add_filter_switch(self, *active_filters):
+        for filter_name in active_filters:
+            self.filter_switch.set_active(filter_name)
+        self._hbox.pack_start(widgetutil.align_middle(
+            self.filter_switch.make_widget(), left_pad=12))
+
+    def set_active_filter(self, filter_name):
+        self.filter_switch.set_active(filter_name)
+
     def size_request(self, layout):
         width, height = self._hbox.get_size_request()
         return width, max(height, 30)
@@ -946,28 +966,35 @@ class LibraryHeaderToolbar(HeaderToolbar):
         self.unwatched_label = unwatched_label
         HeaderToolbar.__init__(self)
 
-    def create_signals(self):
-        HeaderToolbar.create_signals(self)
-        self.create_signal('view-all-clicked')
-        self.create_signal('toggle-unwatched-clicked')
-        self.create_signal('toggle-non-feed-clicked')
-
     def pack_hbox_extra(self):
-        self.filter_switch = segmented.SegmentedButtonsRow(behavior='custom')
+        self.make_filter_switch(behavior='custom')
         # this "All" is different than other "All"s in the codebase, so it
         # needs to be clarified
-        self.filter_switch.add_text_button('view-all',
-                                           declarify(_('View|All')),
-                                           self._on_view_all_clicked)
-        self.filter_switch.add_text_button('view-unwatched',
-                                           self.unwatched_label,
-                                           self._on_toggle_unwatched_clicked)
-        self.filter_switch.add_text_button('view-non-feed',
-                                           _('Non Feed'),
-                                           self._on_toggle_non_feed_clicked)
-        self.filter_switch.set_active('view-all')
-        self._hbox.pack_start(widgetutil.align_middle(
-            self.filter_switch.make_widget(), left_pad=12))
+        self.add_filter('view-all', 'view-all-clicked',
+                         declarify(_('View|All')))
+        self.add_filter('view-unwatched', 'toggle-unwatched-clicked',
+                        self.unwatched_label)
+        self.add_filter('view-non-feed', 'toggle-non-feed-clicked',
+                        _('Non Feed'))
+        self.add_filter_switch('view-all')
+
+    def set_active_filters(self, filters):
+        filter_set = set(filters)
+        for filter in self.filter_switch.all_buttons():
+            self.filter_switch.set_active(filter, filter in filter_set)
+
+class ChannelHeaderToolbar(HeaderToolbar):
+    def pack_hbox_extra(self):
+        self.make_filter_switch(behavior='radio')
+        # this "All" is different than other "All"s in the codebase, so it
+        # needs to be clarified
+        self.add_filter('view-all', 'view-all-clicked',
+                         declarify(_('View|All')))
+        self.add_filter('only-downloaded', 'only-downloaded-clicked',
+                        _('Download Only'))
+        self.add_filter('only-newly-available',
+                        'only-newly-available-clicked', _('New Only'))
+        self.add_filter_switch('view-all')
 
     def set_active_filters(self, filters):
         filter_set = set(filters)

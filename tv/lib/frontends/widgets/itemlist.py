@@ -313,6 +313,8 @@ class ItemList(signals.SignalEmitter):
 
     new_only -- Are we only displaying the new items?
     unwatched_only -- Are we only displaying the unwatched items?
+    downloading_only -- Are we only displaying the downloading items?
+    downloaded_only -- Are we only displaying the downloaded items?
     non_feed_only -- Are we only displaying file items?
     resort_on_update -- Should we re-sort the list when items change?
 
@@ -327,6 +329,8 @@ class ItemList(signals.SignalEmitter):
         self._sorter = None
         self.new_only = False
         self.unwatched_only = False
+        self.downloading_only = False
+        self.downloaded_only = False
         self.non_feed_only = False
         self.resort_on_update = False
         self._hidden_items = {}
@@ -386,6 +390,13 @@ class ItemList(signals.SignalEmitter):
             return False
         return (not (self.new_only and item_info.item_viewed) and
                 not (self.unwatched_only and item_info.video_watched) and
+                not (self.downloading_only and
+                    (item_info.download_info is None or
+                    item_info.download_info.state not in
+                        ('downloading', 'paused'))) and
+                not (self.downloaded_only and
+                    (item_info.download_info is None or
+                        not item_info.download_info.finished)) and
                 not (self.non_feed_only and (not item_info.is_external and
                     item_info.feed_url != 'dtv:searchDownloads')))
 
@@ -458,6 +469,7 @@ class ItemList(signals.SignalEmitter):
 
     def view_all(self):
         self.unwatched_only = False
+        self.downloaded_only = False
         self.non_feed_only = False
         self._recalculate_hidden_items()
 
@@ -469,9 +481,11 @@ class ItemList(signals.SignalEmitter):
         self.non_feed_only = not self.non_feed_only
         self._recalculate_hidden_items()
 
-    def set_filters(self, unwatched, non_feed):
+    def set_filters(self, unwatched, non_feed, downloading, downloaded):
         self.unwatched_only = unwatched
         self.non_feed_only = non_feed
+        self.downloading_only = downloading
+        self.downloaded_only = downloaded
         self._recalculate_hidden_items()
 
     def _recalculate_hidden_items(self):
