@@ -505,9 +505,36 @@ cdef class InfoList:
     def get_info(self, id_):
         return infolist_node_get_info(fetch_node(self.id_map, hash(id_)))
 
+    def get_first_info(self):
+        cdef InfoListNode* node
+
+        node = infolist_nodelist_head(self.nodelist)
+        if infolist_node_is_sentinal(node):
+            return None
+        else:
+            return infolist_node_get_info(node)
+
     def index_of_id(self, id_):
         return infolist_nodelist_node_index(self.nodelist,
                 fetch_node(self.id_map, hash(id_)))
+
+    def get_next_info(self, id_):
+        cdef InfoListNode* node
+        
+        node = fetch_node(self.id_map, hash(id_)).next
+        if infolist_node_is_sentinal(node):
+            return None
+        else:
+            return infolist_node_get_info(node)
+
+    def get_prev_info(self, id_):
+        cdef InfoListNode* node
+        
+        node = fetch_node(self.id_map, hash(id_)).prev
+        if infolist_node_is_sentinal(node):
+            return None
+        else:
+            return infolist_node_get_info(node)
 
     def get_sort_key(self, id_):
         return infolist_node_get_sort_key(fetch_node(self.id_map, hash(id_)))

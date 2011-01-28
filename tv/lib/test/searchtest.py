@@ -9,7 +9,7 @@ from miro import itemsource
 from miro.item import FeedParserValues
 from miro.singleclick import _build_entry
 from miro.test.framework import MiroTestCase
-from miro.frontends.widgets.search import SearchFilter
+from miro.frontends.widgets.itemtrack import SearchFilter
 
 class NGramTest(MiroTestCase):
     def test_simple(self):
@@ -155,17 +155,11 @@ class SearchFilterTest(MiroTestCase):
         self.added_objects = []
         self.changed_objects = []
         self.removed_objects = []
-        self.filterer = self.make_filterer()
+        self.filterer = SearchFilter()
         self.info1 = self.make_info(u'info one')
         self.info2 = self.make_info(u'info two')
         self.info3 = self.make_info(u'info three')
         self.info4 = self.make_info(u'info four')
-
-    def make_filterer(self):
-        filterer = SearchFilter()
-        filterer.connect("initial-list", self.on_initial_list)
-        filterer.connect("items-changed", self.on_items_changed)
-        return filterer
 
     def make_info(self, title):
         additional = {'title': title}
@@ -174,35 +168,24 @@ class SearchFilterTest(MiroTestCase):
         item = models.Item(FeedParserValues(entry), feed_id=self.feed.id)
         return itemsource.DatabaseItemSource._item_info_for(item)
 
-    def on_initial_list(self, filterer, objects):
-        if self.initial_list:
-            raise AssertionError("Got initial list twice")
-        self.initial_list = objects
+    def check_initial_list_filter(self, initial_list, filtered_list):
+        self.assertEquals(self.filterer.filter_initial_list(initial_list),
+                filtered_list)
 
-    def on_items_changed(self, filterer, added, changed, removed):
-        self.added_objects.extend(added)
-        self.changed_objects.extend(changed)
-        self.removed_objects.extend(removed)
+    def check_changed_filter(self, added, changed, removed,
+            filtered_added, filtered_changed, filtered_removed):
+        removed_ids = [i.id for i in removed]
+        filtered_removed_ids = [i.id for i in filtered_removed]
+        results = self.filterer.filter_changes(added, changed, removed_ids)
+        self.assertSameSet(results[0], filtered_added)
+        self.assertSameSet(results[1], filtered_changed)
+        self.assertSameSet(results[2], filtered_removed_ids)
 
-    def check_initial_list_callback(self, infos):
-        self.assertSameSet(self.initial_list, infos)
-
-    def check_changed_callbacks(self, added, changed, removed):
-        removed = [i.id for i in removed]
-        self.assertSameSet(self.added_objects, added)
-        self.assertSameSet(self.changed_objects, changed)
-        self.assertSameSet(self.removed_objects, removed)
-
-    def clear_callback_objects(self, clear_initial_list=False):
-        self.added_objects = []
-        self.changed_objects = []
-        self.removed_objects = []
-        if clear_initial_list:
-            self.initial_list = []
-
-    def send_item_list_message(self, infos):
-        message = messages.ItemList('mytpe', 123, infos)
-        self.filterer.handle_item_list(message)
+    def check_search_change(self, query, filtered_added, filtered_removed):
+        filtered_removed_ids = [i.id for i in filtered_removed]
+        results = self.filterer.set_search(query)
+        self.assertSameSet(results[0], filtered_added)
+        self.assertSameSet(results[1], filtered_removed_ids)
 
     def send_items_changed_message(self, added, changed, removed):
         removed = [i.id for i in removed]
@@ -215,68 +198,47 @@ class SearchFilterTest(MiroTestCase):
 
     def test_initial_list(self):
         # try with no search just to see
-        self.send_item_list_message([self.info1, self.info2])
-        self.check_initial_list_callback([self.info1, self.info2])
-        self.check_changed_callbacks([], [], [])
+        self.check_initial_list_filter([self.info1, self.info2],
+            [self.info1, self.info2])
         # try again with a search set
-        self.clear_callback_objects(clear_initial_list=True)
-        self.filterer = self.make_filterer()
+        self.filterer = SearchFilter()
         self.filterer.set_search("two")
-        self.send_item_list_message([self.info1, self.info2])
-        self.check_initial_list_callback([self.info2])
-        self.check_changed_callbacks([], [], [])
+        self.check_initial_list_filter([self.info1, self.info2], [self.info2])
 
     def test_change_search(self):
-        # setup initial state
-        self.send_item_list_message([self.info1, self.info2])
-        self.clear_callback_objects()
-        # try changing the search
-        self.filterer.set_search("two")
-        # info1 doesn't match the search, it should be removed
-        self.check_changed_callbacks([], [], [self.info1])
-
-        self.clear_callback_objects()
-        self.filterer.set_search("one")
+        self.filterer.filter_initial_list([self.info1, self.info2])
+        # info1 doesn't matches the search, it should be removed
+        self.check_search_change("two", [], [self.info1])
         # info1 matches now, item2 doesn't
-        self.check_changed_callbacks([self.info1], [], [self.info2])
+        self.check_search_change("one", [self.info1], [self.info2])
 
     def test_add(self):
         # setup initial state
-        self.send_item_list_message([self.info1, self.info2])
+        self.filterer.filter_initial_list([self.info1, self.info2])
         self.filterer.set_search("three")
-        self.clear_callback_objects()
-        # see what happens when new objects come in
-        self.send_items_changed_message([self.info3, self.info4], [], [])
-        # only info3 matched the search, it should be the only one added
-        self.check_changed_callbacks([self.info3], [], [])
+        # only info3 matches the search, it should be the only one added
+        self.check_changed_filter([self.info3, self.info4], [], [],
+                [self.info3], [], [])
 
     def test_update(self):
         # setup initial state
-        self.send_item_list_message([self.info1, self.info2, self.info3])
+        infos = [self.info1, self.info2, self.info3]
+        self.filterer.filter_initial_list(infos)
         self.filterer.set_search("three")
-        self.clear_callback_objects()
-        # see what happens when objects change
-        self.update_info(self.info1, u'three')
-        self.send_items_changed_message([],
-                [self.info1, self.info2, self.info3], [])
         # info1 now matches the search, it should be added
         # info3 matched the search before and now, so it should be changed
-        self.check_changed_callbacks([self.info1], [self.info3], [])
-        # try it a different way
-        self.clear_callback_objects()
-        self.update_info(self.info1, u'one')
-        self.send_items_changed_message([],
-                [self.info1, self.info2, self.info3], [])
-        # info1 no longer matches the search, it should be added
+        self.update_info(self.info1, u'three')
+        self.check_changed_filter([], infos, [],
+            [self.info1], [self.info3], [])
+        # info1 no longer matches the search, it should be removed
         # info3 matched the search before and now, so it should be changed
-        self.check_changed_callbacks([], [self.info3], [self.info1])
+        self.update_info(self.info1, u'one')
+        self.check_changed_filter([], infos, [],
+            [], [self.info3], [self.info1])
 
     def test_remove(self):
-        # setup initial state
-        self.send_item_list_message([self.info1, self.info2])
+        self.filterer.filter_initial_list([self.info1, self.info2])
         self.filterer.set_search("two")
-        self.clear_callback_objects()
-        # see what happens when objects are removed
-        self.send_items_changed_message([], [], [self.info1, self.info2])
-        # only info2 matched the search, so removed should only include it
-        self.check_changed_callbacks([], [], [self.info2])
+        # only info2 matches the search, so removed should only include it
+        self.check_changed_filter([], [], [self.info1, self.info2],
+                [], [], [self.info2])

@@ -61,10 +61,8 @@ class PlaybackManager (signals.SignalEmitter):
         self.open_finished = False
         self.open_successful = False
         self.playlist = None
-        self.position = 0
         self.mark_as_watched_timeout = None
         self.update_timeout = None
-        self.last_playing = None
         self.presentation_mode = 'fit-to-bounds'
         self.create_signal('selecting-file')
         self.create_signal('cant-play-file')
@@ -77,60 +75,12 @@ class PlaybackManager (signals.SignalEmitter):
         self.create_signal('did-stop')
         self.create_signal('will-fullscreen')
         self.create_signal('playback-did-progress')
-        app.info_updater.item_changed_callbacks.add('manual', 'playback-list',
-                self._on_items_changed)
 
     def player_ready(self):
         return self.player is not None and self.open_finished
 
     def player_playing(self):
         return self.player is not None and self.open_successful
-
-    def _on_items_changed(self, message):
-        if self.playlist is None:
-            return
-        deleted = message.removed[:]
-        for info in message.changed:
-            if info.id not in self.id_to_position:
-                # item was removed from our playlist already
-                continue
-            if not info.downloaded:
-                deleted.append(info.id)
-            else:
-                self.playlist[self.id_to_position[info.id]] = info
-        if len(deleted) > 0:
-            self._handle_items_deleted(deleted)
-
-    def _handle_items_deleted(self, id_list):
-        if self.playlist is None:
-            return
-        to_delete = []
-        deleting_current = False
-        # Figure out what which items are in our playlist.
-        for id in id_list:
-            try:
-                pos = self.id_to_position[id]
-            except KeyError:
-                continue
-            to_delete.append(pos)
-            if pos == self.position:
-                deleting_current = True
-        if len(to_delete) == 0:
-            return
-        # Delete those items (we need to do it last to first)
-        to_delete.sort(reverse=True)
-        for pos in to_delete:
-            del self.playlist[pos]
-            if pos < self.position:
-                self.position -= 1
-        if self.position >= len(self.playlist):
-            # we deleted the current movie and all the ones after it
-            self.stop(save_resume_time=False)
-        elif deleting_current:
-            self.play_from_position(self.position, save_resume_time=False)
-        if self.playlist is not None:
-            # Recalculate id_to_position, since the playlist has changed
-            self._calc_id_to_position()
 
     def set_volume(self, volume):
         self.volume = volume
@@ -149,54 +99,32 @@ class PlaybackManager (signals.SignalEmitter):
             self.play()
         else:
             self.pause()
-    
-    def start_with_items(self, item_infos, presentation_mode='fit-to-bounds'):
+
+    def start(self, start_id, item_tracker,
+            presentation_mode='fit-to-bounds'):
         if self.is_playing:
             self.stop()
-        self.playlist = []
-        for info in item_infos:
-            self._append_item(info)
-        self.position = 0
-        self._calc_id_to_position()
+        self.playlist = PlaybackPlaylist(item_tracker, start_id)
+        self.playlist.connect("position-changed", self._on_position_changed)
+        self.playlist.connect("playing-info-changed",
+                self._on_playing_changed)
         self.presentation_mode = presentation_mode
         self._play_current()
         if self.playlist is None:
             # _play_current found that PLAY_IN_MIRO was set to False
             return
-        self._start_tracking_items()
         if self.presentation_mode != 'fit-to-bounds':
             self.fullscreen()
 
-    def append_item(self, item_info):
-        if not self.is_playing:
-            raise ValueError("Can't append items when not playing")
-        self._append_item(item_info)
-        self.id_to_position[item_info.id] = len(self.playlist) - 1
-        # need to reset our TrackItemsManually view, since we now have a new
-        # id to track
-        self._stop_tracking_items()
-        self._start_tracking_items()
+    def _on_position_changed(self, playlist):
+        self._not_skipped_by_user = True
+        self._play_current()
 
-    def _append_item(self, item_info):
-        if not item_info.is_container_item:
-            self.playlist.append(item_info)
-        else:
-            playlables = [i for i in item_info.children if i.is_playable]
-            self.playlist.extend(playlables)
+    def _on_playing_changed(self, playlist):
+        # FIXME: should update the display based on the new value of
+        # self.get_playing_item()
+        pass
 
-    def _start_tracking_items(self):
-        id_list = [info.id for info in self.playlist]
-        m = messages.TrackItemsManually('playback-list', id_list)
-        m.send_to_backend()
-
-    def _stop_tracking_items(self):
-        m = messages.StopTrackingItems('manual', 'playback-list')
-        m.send_to_backend()
-
-    def _calc_id_to_position(self):
-        self.id_to_position = dict((info.id, i) for i, info in
-                enumerate(self.playlist))
-    
     def prepare_attached_playback(self):
         self.emit('will-play-attached')
         splitter = app.widgetapp.window.splitter
@@ -218,7 +146,7 @@ class PlaybackManager (signals.SignalEmitter):
             detached_window_frame = widgetset.Rect(0, 0, 800, 600)
         else:
             detached_window_frame = widgetset.Rect.from_string(detached_window_frame)
-        title = self.playlist[self.position].name
+        title = self.playlist.currently_playing.name
         self.detached_window = DetachedWindow(title, detached_window_frame)
         self.align = widgetset.DetachedWindowHolder()
         self.align.add(self.video_display.widget)
@@ -267,7 +195,7 @@ class PlaybackManager (signals.SignalEmitter):
             return
         duration = self.player.get_total_playback_time()
         self.emit('will-play', duration)
-        resume_time = self.playlist[self.position].resume_time
+        resume_time = self.playlist.currently_playing.resume_time
         if start_at > 0:
             self.player.play_from_time(start_at)
         elif (app.config.get(prefs.RESUME_VIDEOS_MODE)
@@ -279,11 +207,6 @@ class PlaybackManager (signals.SignalEmitter):
         self.schedule_update()
         self.is_paused = False
         self.is_suspended = False
-        info = self.playlist[self.position]
-        if self.last_playing:
-            messages.SetItemIsPlaying(self.last_playing, False).send_to_backend()
-        self.last_playing = info
-        messages.SetItemIsPlaying(info, True).send_to_backend()
         app.menu_manager.update_menus()
 
     def pause(self):
@@ -299,15 +222,13 @@ class PlaybackManager (signals.SignalEmitter):
         self.emit('will-fullscreen')
         self.toggle_fullscreen()
 
-    def stop(self, save_resume_time=True):
+    def stop(self):
         if not self.is_playing:
             return
-        self._stop_tracking_items()
-        info = self.playlist[self.position]
-        messages.SetItemIsPlaying(info, False).send_to_backend()
-        self.last_playing = None
-        if save_resume_time:
+        if self.get_playing_item() is not None:
             self.update_current_resume_time()
+        self.playlist.finished()
+        self.playlist = None
         self.cancel_update_timer()
         self.cancel_mark_as_watched()
         self.is_playing = False
@@ -322,7 +243,6 @@ class PlaybackManager (signals.SignalEmitter):
             self.video_display = None
         self.is_fullscreen = False
         self.previous_left_widget = None
-        self.position = 0
         self.playlist = None
         self.emit('did-stop')
 
@@ -336,11 +256,13 @@ class PlaybackManager (signals.SignalEmitter):
         self.removing_video_display = False
 
     def update_current_resume_time(self, resume_time=-1):
+        if self._not_skipped_by_user:
+            return
         if not self.player_playing() and resume_time == -1:
             # we want to see what the current time is, but the player hasn't
             # started playing yet.  Just return
             return
-        item_info = self.playlist[self.position]
+        item_info = self.playlist.currently_playing
         if app.config.get(prefs.RESUME_VIDEOS_MODE):
             if resume_time == -1:
                 resume_time = self.player.get_elapsed_playback_time()
@@ -404,10 +326,11 @@ class PlaybackManager (signals.SignalEmitter):
             pass
 
     def on_movie_finished(self):
-        info = self.playlist[self.position]
-        messages.MarkItemCompleted(info).send_to_backend()
+        m = messages.MarkItemCompleted(self.playlist.currently_playing)
+        m.send_to_backend()
         self.update_current_resume_time(0)
-        self.play_next_item(False)
+        self._not_skipped_by_user = True
+        self.play_next_item()
 
     def schedule_mark_as_watched(self, info):
         # Note: mark_as_watched time should match the minimum resume
@@ -423,18 +346,19 @@ class PlaybackManager (signals.SignalEmitter):
         self.mark_as_watched_timeout = None
         # if we're in a state we don't think we should be in, then we don't
         # want to mark the item as watched.
-        if not self.playlist or self.playlist[self.position].id != info.id:
-            logging.warning("mark_as_watched: not marking the item as watched because we're in a weird state")
+        if not self.playlist or self.get_playing_item().id != info.id:
+            logging.warning("mark_as_watched: not marking the item as "
+                    "watched because we're in a weird state")
             return
         messages.MarkItemWatched(info).send_to_backend()
 
     def get_playing_item(self):
-        if self.playlist:
-            return self.playlist[self.position]
-        return None
+        if self.playlist is None:
+            return None
+        return self.playlist.currently_playing
 
     def is_playing_id(self, id_):
-        return self.playlist and self.playlist[self.position].id == id_
+        return self.playlist and self.playlist.is_playing_id(id_)
 
     def _setup_player(self, item_info, volume):
         def _handle_successful_sniff(item_type):
@@ -499,69 +423,67 @@ class PlaybackManager (signals.SignalEmitter):
         self.player.connect('ready-to-play', self._on_ready_to_play)
         self.is_playing_audio = True
 
-    def _select_current(self):
-        item_info = self.playlist[self.position]
-        if not app.config.get(prefs.PLAY_IN_MIRO):
-            if self.is_playing:
-                self.stop(save_resume_time=False)
+    def _play_current(self):
+        self.cancel_update_timer()
+        self.cancel_mark_as_watched()
+        self._not_skipped_by_user = False
+
+        info_to_play = self.get_playing_item()
+        if info_to_play is None: # end of the playlist
+            self.stop()
+            return
+
+        play_in_miro = app.config.get(prefs.PLAY_IN_MIRO)
+        if self.is_playing:
+            self.player.stop(will_play_another=play_in_miro)
+
+        if not play_in_miro:
             # FIXME - do this to avoid "currently playing green thing.
             # should be a better way.
             self.playlist = None
-            app.widgetapp.open_file(item_info.video_path)
-            messages.MarkItemWatched(item_info).send_to_backend()
+            app.widgetapp.open_file(info_to_play.video_path)
+            messages.MarkItemWatched(info_to_play).send_to_backend()
             return
 
         volume = app.config.get(prefs.VOLUME_LEVEL)
-        self.emit('selecting-file', item_info)
+        self.emit('selecting-file', info_to_play)
         self.open_successful = self.open_finished = False
-        self._setup_player(item_info, volume)
-
-    def _play_current(self, new_position=None, save_resume_time=True):
-        """If you pass in new_position, then this will attempt to play
-        that and will update self.position ONLY if the new_position
-        doesn't exceed the bounds of the playlist.
-        """
-        if new_position == None:
-            new_position = self.position
-        else:
-            info = self.playlist[self.position]
-            messages.MarkItemSkipped(info).send_to_backend()
-
-        self.cancel_update_timer()
-        self.cancel_mark_as_watched()
-        if self.playlist is not None and (0 <= new_position < len(self.playlist)):
-            self.position = new_position
-            if self.is_playing:
-                self.player.stop(True)
-            self._select_current()
-        else:
-            self.stop(save_resume_time)
+        self._setup_player(info_to_play, volume)
 
     def _on_ready_to_play(self, obj):
         self.open_successful = self.open_finished = True
-        if not self.playlist[self.position].video_watched:
-            self.schedule_mark_as_watched(self.playlist[self.position])
+        playing_item = self.get_playing_item()
+        if not playing_item.video_watched:
+            self.schedule_mark_as_watched(playing_item)
         if isinstance(self.player, widgetset.VideoPlayer):
             self.player.select_subtitle_encoding(self.initial_subtitle_encoding)
         self.play()
 
     def _on_cant_play(self, obj):
         self.open_finished = True
+        self._not_skipped_by_user = True
         self.emit('cant-play-file')
         if isinstance(obj, widgetset.AudioPlayer):
-            self.play_next_item(False)
+            self.play_next_item()
 
-    def play_next_item(self, save_resume_time=True):
+    def _handle_skip(self):
+        playing = self.get_playing_item()
+        if not self._not_skipped_by_user and playing is not None:
+            self.update_current_resume_time()
+            messages.MarkItemSkipped(playing).send_to_backend()
+
+    def play_next_item(self):
         if not self.player_ready():
             return
-        self.play_from_position(self.position + 1, save_resume_time)
+        self._handle_skip()
+        if app.config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
+            self.stop(save_resume_time)
+        else:
+            self.playlist.select_next_item()
+            self._play_current()
 
-    def play_prev_item(self, save_resume_time=True, from_user=False):
+    def play_prev_item(self, from_user=False):
         """
-        :param save_resume_time: whether or not to save the resume
-                                 time of the currently playing item
-                                 before switching to the previous
-                                 item.
         :param from_user: whether or not play_prev_item is being
                           called as a resume of the user pressing a
                           'prev' button or menu item.
@@ -578,18 +500,12 @@ class PlaybackManager (signals.SignalEmitter):
             if current_time > 3:
                 self.seek_to(0)
                 return
-
-        self.play_from_position(self.position - 1, save_resume_time)
-
-    def play_from_position(self, new_position, save_resume_time=True):
-        self.cancel_update_timer()
-        self.cancel_mark_as_watched()
+        self._handle_skip()
         if app.config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
             self.stop(save_resume_time)
         else:
-            if save_resume_time:
-                self.update_current_resume_time()
-            self._play_current(new_position, save_resume_time)
+            self.playlist.select_previous_item()
+            self._play_current()
 
     def skip_forward(self):
         if not self.player_ready():
@@ -660,10 +576,90 @@ class PlaybackManager (signals.SignalEmitter):
 
     def select_subtitle_encoding(self, encoding):
         if self.is_playing:
-            item_info = self.playlist[self.position]
             self.player.select_subtitle_encoding(encoding)
-            messages.SetItemSubtitleEncoding(item_info,
+            messages.SetItemSubtitleEncoding(self.get_playing_item(),
                     encoding).send_to_backend()
+
+class PlaybackPlaylist(signals.SignalEmitter):
+    def __init__(self, item_tracker, start_id):
+        signals.SignalEmitter.__init__(self, 'position-changed',
+                'playing-info-changed')
+        self.item_tracker = item_tracker
+        self.model = item_tracker.item_list.model
+        self._items_changed_callback = item_tracker.connect(
+                'items-changed', self._on_items_changed)
+        self.currently_playing = None
+        self._pick_initial_item(start_id)
+
+    def _pick_initial_item(self, start_id):
+        if start_id:
+            # The call to _find_playable here covers the corner case where
+            # start_id belogns to a container item with playable children.  In
+            # that case is_playing is True, but we still can't directly play
+            # it
+            start_item = self._find_playable(self.model.get_info(start_id))
+        else:
+            start_item = self._find_playable(self.model.get_first_info())
+        self._set_currently_playing(start_item)
+
+    def finished(self):
+        self._set_currently_playing(None)
+        self.item_tracker.disconnect(self._items_changed_callback)
+        self.item_tracker = None
+        self.model = None
+        self.disconnect_all()
+
+    def select_previous_item(self):
+        prev_item = self.model.get_prev_info(self.currently_playing.id)
+        self.currently_playing = self._find_playable(prev_item,
+                backwards=True)
+
+    def select_next_item(self):
+        next_item = self.model.get_next_info(self.currently_playing.id)
+        self.currently_playing = self._find_playable(next_item)
+
+    def is_playing_id(self, id_):
+        return self.currently_playing and self.currently_playing.id == id_
+
+    def _on_items_changed(self, tracker, added, changed, removed):
+        old_currently_playing = self.currently_playing
+        if self.currently_playing and self.currently_playing.id in removed:
+            # our playing item is gone, what should we do?  For now, let's
+            # just stop playback.
+            self.currently_playing = None
+        if self.currently_playing is not None:
+            # update currently_playing in case it's been changed
+            self.currently_playing = self.model.get_info(
+                            self.currently_playing.id)
+        if old_currently_playing is not self.currently_playing:
+            self.emit("position-changed")
+        else:
+            # Note that we aren't quite sure that we actually changed the info
+            # here, but emit our signal just to be sure
+            self.emit("playing-info-changed")
+
+    def _info_is_playable(self, item_info):
+        return not item_info.is_container_item and item_info.is_playable
+
+    def _find_playable(self, item_info, backwards=False):
+        if backwards:
+            iter_func = self.model.get_prev_info
+        else:
+            iter_func = self.model.get_next_info
+
+        while item_info is not None and not self._info_is_playable(item_info):
+            item_info = iter_func(item_info.id)
+        return item_info
+
+    def _send_item_is_playing(self, info, value):
+        messages.SetItemIsPlaying(info, value).send_to_backend()
+
+    def _set_currently_playing(self, new_info):
+        if self.currently_playing:
+            self._send_item_is_playing(self.currently_playing, False)
+        self.currently_playing = new_info
+        if self.currently_playing:
+            self._send_item_is_playing(self.currently_playing, True)
 
 class DetachedWindow(widgetset.Window):
     def __init__(self, title, rect):

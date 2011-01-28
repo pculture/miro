@@ -50,10 +50,10 @@ from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
+from miro.frontends.widgets import itemtrack
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
-from miro.frontends.widgets import search
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import menus
 from miro.plat.frontends.widgets import widgetset
@@ -92,9 +92,7 @@ class ItemListController(object):
         self.type = typ
         self.id = id_
         self._search_text = ''
-        self.search_filter = search.SearchFilter()
-        self.search_filter.connect("initial-list", self.handle_item_list)
-        self.search_filter.connect("items-changed", self.handle_items_changed)
+        self.item_tracker = None
         display = (typ, id_)
         self.is_list_view = app.display_state.is_list_view(display)
         self.columns_enabled = app.display_state.get_columns_enabled(display)
@@ -106,8 +104,8 @@ class ItemListController(object):
         self._init_item_views()
         self.initialize_search()
         sorter = self.item_list_group.get_sort()
+        self._item_tracker_callbacks = []
         self._playback_callbacks = []
-        self._track_items_keys = None
         self.widget.toolbar.change_sort_indicator(
             sorter.KEY, sorter.is_ascending())
         self.list_item_view.change_sort_indicator(
@@ -193,36 +191,22 @@ class ItemListController(object):
         item_view = self.current_item_view
         return [item_view.model[i][0] for i in item_view.get_selection()]
 
-    def get_selection_for_playing(self):
-        return list(self.iter_selection_for_playing())
-
-    def iter_selection_for_playing(self):
-        item_view = self.current_item_view
-        selection = self.get_selection()
-        if len(selection) == 0:
-            return item_view.item_list.iter_items()
-        elif len(selection) == 1:
-            id = selection[0].id
-            return item_view.item_list.iter_items(start_id=id)
-        else:
-            return iter(selection)
-        
     def play_selection(self, presentation_mode='fit-to-bounds'):
         """Play the currently selected items."""
-        items = self.get_selection_for_playing()
-        if len(items) > 0:
-            self._play_item_list(items, presentation_mode)
+        self._play_item_list(None, presentation_mode)
 
-    def _on_items_added_during_playback(self, item_list, new_items):
-        for item_info in new_items:
-            app.playback_manager.append_item(item_info)
-            
-    def filter_playable_items(self, items):
-        return [i for i in items if i.is_playable]
+    def can_play_items(self):
+        for info in self.item_list.model.info_list():
+            if info.is_playable:
+                return True
+        return False
 
-    def _play_item_list(self, items, presentation_mode='fit-to-bounds'):
-        playable = self.filter_playable_items(items)
-        if len(playable) == 0:
+    def _play_item_list(self, start_id, presentation_mode='fit-to-bounds'):
+        if start_id is None and not self.can_play_items():
+            return
+        elif (start_id is not None and not
+                self.item_list.model.get_info(start_id).is_playable):
+            logging.warn("_play_item_list called with unplayable item")
             return
         app.playback_manager.stop()
         if ((app.config.get(prefs.PLAY_IN_MIRO)
@@ -233,22 +217,22 @@ class ItemListController(object):
             # selected, if more items get added to the item list, we
             # should play them.
             item_list = self.current_item_view.item_list
-            self._items_added_callback = item_list.connect('items-added',
-                    self._on_items_added_during_playback)
             self._playback_item_list = item_list
-        app.playback_manager.start_with_items(playable, presentation_mode)
+        app.playback_manager.start(start_id, self.item_tracker,
+                presentation_mode)
 
     def set_search(self, search_text):
         """Set the search for all ItemViews managed by this controller.
         """
         self._search_text = search_text
-        self.search_filter.set_search(search_text)
+        if self.item_tracker:
+            self.item_tracker.set_search(search_text)
         app.inline_search_memory.set_search(self.type, self.id, search_text)
 
     def _trigger_item(self, item_view, info):
         if info.downloaded:
             items = item_view.item_list.get_items(start_id=info.id)
-            self._play_item_list(items)
+            self._play_item_list(info.id)
         elif info.state == 'downloading':
             messages.PauseDownload(info.id).send_to_backend()
         elif info.state == 'paused':
@@ -359,9 +343,7 @@ class ItemListController(object):
             else:
                 app.widgetapp.open_url(urljoin(base_href, url))
         elif name in ('play', 'thumbnail-play'):
-            id = item_info.id
-            items = itemview.item_list.get_items(start_id=id)
-            self._play_item_list(items)
+            self._play_item_list(item_info.id)
         elif name == 'play_pause':
             app.playback_manager.play_pause()
         elif name.startswith('rate:'):
@@ -385,23 +367,31 @@ class ItemListController(object):
         self.cancel_track_playback()
 
     def track_item_lists(self, type_, id_):
-        messages.TrackItems(type_, id_).send_to_backend()
-        app.info_updater.item_list_callbacks.add(type_, id_,
-                self.search_filter.handle_item_list)
-        app.info_updater.item_changed_callbacks.add(type_, id_,
-                self.search_filter.handle_items_changed)
-        self._track_items_keys = (type_, id_)
+        if self.item_tracker is not None:
+            raise AssertionError("called track_item_lists() twice")
+        # FIXME: we're not really using multiple items anymore, hence the
+        # following hack.  We should remove ItemListGroup though
+        if len(self.item_list_group.item_lists) != 1:
+            raise AssertionError("wrong number of item lists: %s",
+                    len(self.item_list_group.item_lists))
+        item_list = list(self.item_list_group.item_lists)[0]
+        item_tracker = itemtrack.ItemListTracker(type_, id_, item_list)
+        item_tracker.set_search(self._search_text)
+        self._item_tracker_callbacks = [
+            item_tracker.connect("initial-list", self.handle_item_list),
+            item_tracker.connect("items-will-change",
+                self.handle_items_will_change),
+            item_tracker.connect("items-changed", self.handle_items_changed),
+        ]
+        self.item_tracker = item_tracker
 
     def cancel_track_item_lists(self):
-        if self._track_items_keys is None:
+        if self.item_tracker is None:
             return # never started tracking
-        (type_, id_) = self._track_items_keys
-        messages.StopTrackingItems(type_, id_).send_to_backend()
-        app.info_updater.item_list_callbacks.remove(type_, id_,
-                self.search_filter.handle_item_list)
-        app.info_updater.item_changed_callbacks.remove(type_, id_,
-                self.search_filter.handle_items_changed)
-        self._track_items_keys = None
+        for handle in self._item_tracker_callbacks:
+            self.item_tracker.disconnect(handle)
+        self.item_tracker = None
+        self._item_tracker_callbacks = []
 
     def track_playback(self):
         self._playback_callbacks.extend([
@@ -428,20 +418,18 @@ class ItemListController(object):
             self._playback_item_list.disconnect(self._items_added_callback)
             self._playback_item_list = self._items_added_callback = None
 
+    def handle_items_will_change(self, obj):
+        for item_view in self.all_item_views():
+            item_view.start_bulk_change()
+
     def handle_item_list(self, obj, items):
         """Handle an ItemList message meant for this ItemContainer."""
-        self.item_list_group.add_items(items)
         for item_view in self.all_item_views():
             item_view.model_changed()
         self.on_initial_list()
 
     def handle_items_changed(self, obj, added, changed, removed):
         """Handle an ItemsChanged message meant for this ItemContainer."""
-        for item_view in self.all_item_views():
-            item_view.start_bulk_change()
-        self.item_list_group.remove_items(removed)
-        self.item_list_group.update_items(changed)
-        self.item_list_group.add_items(added)
         for item_view in self.all_item_views():
             item_view.model_changed()
         self.on_items_changed()
@@ -735,22 +723,9 @@ class ItemListControllerManager(object):
         else:
             return self.displayed.get_selection()
 
-    def get_current_playlist(self):
-        """Get the items that would be played if we started playback.
-        """
-        if self.displayed is not None:
-            selection = self.displayed.get_selection_for_playing()
-            return self.displayed.filter_playable_items(selection)
-        else:
-            return []
-
     def can_play_items(self):
         """Can we play any items currently?"""
-        if self.displayed is not None:
-            for info in self.displayed.iter_selection_for_playing():
-                if info.is_playable:
-                    return True
-        return False
+        return self.displayed and self.displayed.can_play_items()
 
     def undisplay_controller(self):
         if self.displayed:

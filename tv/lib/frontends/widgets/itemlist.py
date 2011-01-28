@@ -302,7 +302,7 @@ class ItemListGroup(object):
     def get_sort(self):
         return self._sorter
 
-class ItemList(signals.SignalEmitter):
+class ItemList(object):
     """
     Attributes:
 
@@ -317,14 +317,9 @@ class ItemList(signals.SignalEmitter):
     downloaded_only -- Are we only displaying the downloaded items?
     non_feed_only -- Are we only displaying file items?
     resort_on_update -- Should we re-sort the list when items change?
-
-    Signals:
-      items-added(new_items): items were added to the list
     """
 
     def __init__(self):
-        signals.SignalEmitter.__init__(self)
-        self.create_signal('items-added')
         self.model = widgetset.InfoListModel(None)
         self._sorter = None
         self.new_only = False
@@ -418,7 +413,6 @@ class ItemList(signals.SignalEmitter):
         if len(to_add) == 0:
             return
         self.model.add_infos(to_add)
-        self.emit('items-added', to_add)
 
     def add_items(self, item_list):
         to_add = []

@@ -50,6 +50,29 @@ class InfoListTestBase(MiroTestCase):
             self.assertEquals([self.sorter(i) for i in
                     self.infolist.info_list()], [self.sorter(i) for i in
                         check_against])
+
+        # test index_of_id(), get_prev_info() and get_next_info()
+        list_of_infos = self.infolist.info_list()
+        for i, info in enumerate(list_of_infos):
+            self.assertEquals(self.infolist.index_of_id(info.id), i)
+            if i > 0:
+                self.assertEquals(self.infolist.get_prev_info(info.id),
+                        list_of_infos[i-1])
+            else:
+                self.assertEquals(self.infolist.get_prev_info(info.id), None)
+            if i < len(list_of_infos) - 1:
+                self.assertEquals(self.infolist.get_next_info(info.id),
+                        list_of_infos[i+1])
+            else:
+                self.assertEquals(self.infolist.get_next_info(info.id), None)
+
+        # test get_first_info()
+        if list_of_infos:
+            self.assertEquals(self.infolist.get_first_info(),
+                    list_of_infos[0])
+        else:
+            self.assertEquals(self.infolist.get_first_info(), None)
+
         self.infolist._sanity_check()
 
     def check_insert(self, infos):
