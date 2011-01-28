@@ -154,18 +154,11 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
         self.widget.list_empty_mode_vbox.pack_start(
                 itemlistwidgets.EmptyListDescription(text))
 
-    def handle_item_list(self, obj, items):
-        self._sorter.add_items(items)
-        itemlistcontroller.SimpleItemListController.handle_item_list(self,
-                obj, items)
-        self.check_for_empty_list()
-
-    def handle_items_changed(self, obj, added, changed, removed):
+    def handle_items_will_change(self, obj, added, changed, removed):
+        itemlistcontroller.SimpleItemListController.handle_items_will_change(
+                self, obj, added, changed, removed)
         self._sorter.add_items(added)
         self._sorter.forget_items(removed)
-        itemlistcontroller.SimpleItemListController.handle_items_changed(self,
-                obj, added, changed, removed)
-        self.check_for_empty_list()
 
     def check_for_empty_list(self):
         list_empty = (self.item_list.get_count() == 0)

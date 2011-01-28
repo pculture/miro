@@ -117,14 +117,14 @@ class ItemListTracker(signals.SignalEmitter):
 
     def on_item_list(self, message):
         items = self.search_filter.filter_initial_list(message.items)
-        self.emit("items-will-change")
+        self.emit("items-will-change", items, [], [])
         self.item_list.add_items(items)
         self.emit("initial-list", items)
 
     def on_items_changed(self, message):
         added, changed, removed = self.search_filter.filter_changes(
                 message.added, message.changed, message.removed)
-        self.emit("items-will-change")
+        self.emit("items-will-change", added, changed, removed)
         self.item_list.add_items(added)
         self.item_list.update_items(changed)
         self.item_list.remove_items(removed)

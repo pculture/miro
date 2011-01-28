@@ -427,7 +427,7 @@ class ItemListController(object):
             self._playback_item_list.disconnect(self._items_added_callback)
             self._playback_item_list = self._items_added_callback = None
 
-    def handle_items_will_change(self, obj):
+    def handle_items_will_change(self, obj, added, changed, removed):
         for item_view in self.all_item_views():
             item_view.start_bulk_change()
 

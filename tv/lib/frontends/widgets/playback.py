@@ -626,7 +626,7 @@ class PlaybackPlaylist(signals.SignalEmitter):
     def is_playing_id(self, id_):
         return self.currently_playing and self.currently_playing.id == id_
 
-    def _on_items_will_change(self, tracker):
+    def _on_items_will_change(self, tracker, added, changed, removed):
         if self.currently_playing:
             self._items_before_change = self.model.info_list()
             self._index_before_change = self.model.index_of_id(
